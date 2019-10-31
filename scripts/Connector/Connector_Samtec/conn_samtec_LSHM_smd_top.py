@@ -40,7 +40,7 @@ datasheet = 'http://suddendocs.samtec.com/prints/lshm-1xx-xx.x-x-dv-a-x-x-tr-foo
 #pins_per_row per row
 pins_per_row_range = [5,10,20,30,40,50]
 
-#Molex part number
+#Samtec part number
 #n = number of circuits per row
 part_code = "LSHM-1{n:02d}-xx.x-x-DV-{shield:s}"
 
@@ -91,7 +91,7 @@ def generate_one_footprint(pins_per_row, params, configuration):
     footprint_name = footprint_name.replace('__','_')
 
     kicad_mod = Footprint(footprint_name, FootprintType.SMD)
-    kicad_mod.setDescription("Molex {:s}, {:s}, {:d} Pins per row ({:s}), generated with kicad-footprint-generator".format(series_long, mpn, pins_per_row, datasheet))
+    kicad_mod.setDescription("Samtec {:s}, {:s}, {:d} Pins per row ({:s}), generated with kicad-footprint-generator".format(series_long, mpn, pins_per_row, datasheet))
     kicad_mod.setTags(configuration['keyword_fp_string'].format(series=series,
         orientation=orientation_str, man=manufacturer,
         entry=configuration['entry_direction'][orientation]))
