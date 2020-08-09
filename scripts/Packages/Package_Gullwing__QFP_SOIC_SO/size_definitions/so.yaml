@@ -62,6 +62,18 @@ SO-24_5.3x15mm_P1.27mm:
   num_pins_x: 0
   num_pins_y: 12
 
+SO-24_7.5x15.4mm_P1.27mm:
+  size_source: 'https://www.st.com/resource/en/datasheet/l6219.pdf'
+  body_size_x: 7.4 .. 7.6
+  body_size_y: 15.2 .. 15.6
+  overall_height: 2.35 .. 2.65
+  overall_size_x: 10.0 .. 10.65
+  lead_width: 0.33 .. 0.51
+  lead_len: 0.40 .. 1.27
+  pitch: 1.27
+  num_pins_x: 0
+  num_pins_y: 12
+
 SO-8_4.0x5.0mm_P1.27mm:
   size_source: 'https://www.nxp.com/docs/en/data-sheet/PCF8523.pdf'
   body_size_x:
