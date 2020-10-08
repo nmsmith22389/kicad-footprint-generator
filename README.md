@@ -1,30 +1,42 @@
-# kicad-3d-models-in-freecad
-kicad 3d models in freecad:
-this is a repo of 3d models done in freeCAD and exported in STEP and in VRML to be used in kicad 3d-viewer and in kicad StepUp tool
-with kicad StepUp it is possible to align the 3d-viewer and the 3d PCB and modules board in STEP, so to be able to obtain a perfectly identical represaentation in kicad 3d-viewer and in FreeCAD or MCAD software.
+KiCad 3d Model Generator Scripts
+===
+This repository contains a number of scripts to generate STEP AP214 3D models and VRML 3D models for use with the KiCad EDA system
 
-The only requirements, different from the actual way of using kicad is to substitute Wings3D with FreeCAD
-and, obviously, populate the 3D models with STEP lib...
+The parametric scripts are derived from CadQuery scripts for generating
+QFP, DIP and pinHeaders models in X3D format.  
+author **hyOzd**  
+author site: <https://bitbucket.org/hyOzd/freecad-macros/>  
+These were greatly extended by **easyw** in the repository <https://github.com/easyw/kicad-3d-models-in-freecad>
 
-The repo will have models starting from a FreeCAD project modeled in mm with a standar origin and orientation
+Requirements to run these scripts:  
+[CadQuery 2](https://github.com/CadQuery/cadquery)  
+[Python 3](https://www.python.org/)  
+[OpenCascade 7](https://dev.opencascade.org/doc/overview/html/index.html)
 
-                                            -----> STEP model exported (union of parts)
+Some modules still to be converted require  
+[CadQuery
+module](https://github.com/jmwright/cadquery-freecad-module/archive/master.zip/)
+version 0.30  
+[FreeCAD](http://freecadweb.org/) version 0.15 or later
 
-                                            -----> VRML model exported (scaled 1/2.54)
+Credits
+=======
 
+author **hyOzd**  
+author site: <https://bitbucket.org/hyOzd/freecad-macros/>  
+FreeCAD & cadquery tools:  
+libraries to export generated models in STEP & VRML format  
+- cad tools functions  
+Copyright (c) 2015 **Maurice** <https://launchpad.net/~easyw>  
 
-# REQUIREMENTS
-- [x] FreeCAD 0.17
-- [x] CadQuery 1.2.0 
+Copyright
+=========
 
-If you would like to share your models, I'll be happy to add these to the 3D repo!!! :)
+This document *README* and all the materials and files at the repository
+are  
+Copyright © 2015 by Maurice.  
+Copyright © 2020 by the KiCad EDA project  
 
-thank you for any suggestion and feedback,
-
-Maurice
-
-Risk disclaimer
----------------
-
-*USE 3D CAD DATA AT YOUR OWN RISK +
-DO NOT RELY UPON ANY INFORMATION FOUND HERE WITHOUT INDEPENDENT VERIFICATION.*
+License
+=======
+Please see the [LICENSE file](LICENSE) for licensing details
