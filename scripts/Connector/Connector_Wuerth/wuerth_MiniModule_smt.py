@@ -75,7 +75,7 @@ def generate_one_footprint(pincount, configuration):
                                 size=pad_size, type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT, layers=Pad.LAYERS_SMT))
 
 
-    # Silkscreen: rectangle with cutout for alignment pin
+    # Silkscreen: 
     silk_offset = 0.2 #configuration["silk_fab_offset"]
     silk_pin1_x = -pad_size[0]/2 - silk_offset
     silk_pin2_x = silk_pin1_x + x_offset 
@@ -101,6 +101,10 @@ def generate_one_footprint(pincount, configuration):
 
     kicad_mod.append(PolygoneLine(polygone=silk_poly_1, layer="F.SilkS"))
     kicad_mod.append(PolygoneLine(polygone=silk_poly_2, layer="F.SilkS"))
+
+    # Pin1 marker on silkscreen
+    kicad_mod.append(Text(type='user', text="1", at=[silk_pin1_x-0.5, silk_upper_y-0.6], size=[0.8,0.8], layer="F.SilkS"))
+    kicad_mod.append(Text(type='user', text="2", at=[silk_pin2_x-0.5, silk_lower_y+0.6], size=[0.8,0.8], layer="F.SilkS"))
 
     # Courtyard
     body_edge = {'left': fab_offset[0] , 'right': fab_offset[0] + width, 'top': fab_offset[1] - 1,
