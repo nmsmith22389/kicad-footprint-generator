@@ -12,11 +12,11 @@ sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))  # load parent p
 from footprint_text_fields import addTextFields
 
 series = "WR-MM"
-manufacturer = 'Wuerth'
-orientation = 'V'
+manufacturer = "Wuerth"
+orientation = "V"
 number_of_rows = 2
-datasheet = 'https://www.we-online.de/katalog/datasheet/690367180472.pdf'
-mpn_pattern = "69036718{n:02}72"
+datasheet_pattern = "https://www.we-online.de/katalog/datasheet/{mpn}.pdf"
+mpn_pattern = "69036719{n:02}72"
 
 drill_size = 0.85
 annular_ring = 0.25
@@ -37,6 +37,7 @@ def roundToBase(value, base):
 
 def generate_one_footprint(pincount, configuration):
     mpn = mpn_pattern.format(n=pincount)
+    datasheet = datasheet_pattern.format(mpn=mpn)
     orientation_str = configuration['orientation_options'][orientation]
     footprint_name = configuration['fp_name_dual_pitch_format_string'] \
         .format(man=manufacturer,
@@ -51,16 +52,15 @@ def generate_one_footprint(pincount, configuration):
 
     kicad_mod = Footprint(footprint_name)
     kicad_mod.setDescription(
-        "{:s} {:s} series connector, {:s} ({:s}), generated with kicad-footprint-generator".format(
-            manufacturer, series, mpn, datasheet))
+        f"{manufacturer} {series} series connector, {mpn} ({datasheet}), generated with kicad-footprint-generator")
     kicad_mod.setTags(configuration['keyword_fp_string']
-                      .format(series=series,
+                      .format(series=f"Mini Module {series}",
                               orientation=orientation_str,
                               man=manufacturer,
                               entry=configuration['entry_direction'][orientation]))
 
     # physical outline for fab layer
-    width = pincount * 1.27 + 2
+    width = pincount * 1.27 + 4.6
     # upper right corner of fab-rectangle
     fab_offset = [(width - (pincount - 1) * offset) / 2, - (height - 2.54) / 2]
 
@@ -81,27 +81,13 @@ def generate_one_footprint(pincount, configuration):
     kicad_mod.append(Pad(type=Pad.TYPE_NPTH, shape=Pad.SHAPE_CIRCLE, drill=align_hole_diameter, at=align_hole_position,
                          size=align_hole_diameter, layers=Pad.LAYERS_NPTH))
 
-    # Silkscreen: rectangle with cutout for alignment pin
+    # Silkscreen: rectangle
     silk_offset = configuration["silk_fab_offset"]
     silk_right_x = fab_offset[0] + silk_offset
     silk_left_x = fab_offset[0] - width - silk_offset
     silk_upper_y = fab_offset[1] - silk_offset
     silk_lower_y = fab_offset[1] + height + silk_offset
-
-    # cutout for alignment pin: calculate size so offset to hole is silk_pad_clearance
-    hole_x_offset = silk_right_x - align_hole_position[0]
-    radius = align_hole_diameter / 2 + configuration["silk_pad_clearance"]
-    hole_y_offset = sqrt(radius ** 2 - hole_x_offset ** 2)
-
-    silk_poly = [
-        {'x': silk_right_x, 'y': align_hole_position[1] - hole_y_offset},
-        {'x': silk_right_x, 'y': silk_upper_y},
-        {'x': silk_left_x, 'y': silk_upper_y},
-        {'x': silk_left_x, 'y': silk_lower_y},
-        {'x': silk_right_x, 'y': silk_lower_y},
-        {'x': silk_right_x, 'y': align_hole_position[1] + hole_y_offset},
-    ]
-    kicad_mod.append(PolygoneLine(polygone=silk_poly, layer="F.SilkS"))
+    kicad_mod.append(RectLine(start=[silk_left_x, silk_lower_y], end=[silk_right_x, silk_upper_y], layer="F.SilkS"))
 
     # Courtyard
     body_edge = {'left': fab_offset[0] - width, 'right': fab_offset[0], 'top': fab_offset[1],
