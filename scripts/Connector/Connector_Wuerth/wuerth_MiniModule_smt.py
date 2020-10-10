@@ -18,16 +18,17 @@ number_of_rows = 2
 datasheet = 'https://www.we-online.de/katalog/datasheet/690367290476.pdf'
 mpn_pattern = "69036729{n:02}76"
 
-pad_size=[1.5,3]
+pad_size = [1.5, 3]
 
 pitch = 2.54
 pitch_y = 1.5 + pad_size[1]
 height = 5
 x_offset = 1.27
-y_offset = 1.5 + 3 
+y_offset = 1.5 + 3
 
 package_offset_x = (9.68 - 3.81) / 2
 package_offset_y = (pitch_y - height) / 2
+
 
 def roundToBase(value, base):
     return round(value / base) * base
@@ -67,22 +68,27 @@ def generate_one_footprint(pincount, configuration):
                               layer='F.Fab', width=configuration['fab_line_width']))
 
     # Pads
-    kicad_mod.append(PadArray(initial=1, start=[0, 0], increment=2,
-                                x_spacing=pitch, pincount = pincount // 2,
-                                size=pad_size, type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT, layers=Pad.LAYERS_SMT))
-    kicad_mod.append(PadArray(initial=2, start=[x_offset, y_offset], increment=2,
-                                x_spacing=pitch, pincount = pincount // 2,
-                                size=pad_size, type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT, layers=Pad.LAYERS_SMT))
+    kicad_mod.append(PadArray(initial=1, increment=2,
+                              start=[0, 0],
+                              x_spacing=pitch,
+                              pincount=pincount // 2,
+                              size=pad_size,
+                              type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT, layers=Pad.LAYERS_SMT))
+    kicad_mod.append(PadArray(initial=2, increment=2,
+                              start=[x_offset, y_offset],
+                              x_spacing=pitch,
+                              pincount=pincount // 2,
+                              size=pad_size,
+                              type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT, layers=Pad.LAYERS_SMT))
 
-
-    # Silkscreen: 
-    silk_offset = 0.2 #configuration["silk_fab_offset"]
-    silk_pin1_x = -pad_size[0]/2 - silk_offset
-    silk_pin2_x = silk_pin1_x + x_offset 
+    # Silkscreen:
+    silk_offset = 0.2  # configuration["silk_fab_offset"]
+    silk_pin1_x = -pad_size[0] / 2 - silk_offset
+    silk_pin2_x = silk_pin1_x + x_offset
     silk_pin9_x = (pincount / 2 - 1) * pitch + pad_size[0] / 2 + silk_offset
-    silk_pin10_x = silk_pin9_x + x_offset 
+    silk_pin10_x = silk_pin9_x + x_offset
     silk_right_x = fab_offset[0] + width + silk_offset
-    silk_left_x = fab_offset[0]  - silk_offset
+    silk_left_x = fab_offset[0] - silk_offset
     silk_upper_y = fab_offset[1] - silk_offset
     silk_lower_y = fab_offset[1] + height + silk_offset
 
@@ -103,11 +109,23 @@ def generate_one_footprint(pincount, configuration):
     kicad_mod.append(PolygoneLine(polygone=silk_poly_2, layer="F.SilkS"))
 
     # Pin1 marker on silkscreen
-    kicad_mod.append(Text(type='user', text="1", at=[silk_pin1_x-0.5, silk_upper_y-0.6], size=[0.8,0.8], layer="F.SilkS"))
-    kicad_mod.append(Text(type='user', text="2", at=[silk_pin2_x-0.5, silk_lower_y+0.6], size=[0.8,0.8], layer="F.SilkS"))
+    kicad_mod.append(Text(
+        type='user',
+        text="1",
+        at=[silk_pin1_x - 0.5, silk_upper_y - 0.6],
+        size=[0.8, 0.8],
+        layer="F.SilkS"))
+    kicad_mod.append(Text(
+        type='user',
+        text="2",
+        at=[silk_pin2_x - 0.5, silk_lower_y + 0.6],
+        size=[0.8, 0.8],
+        layer="F.SilkS"))
 
     # Courtyard
-    body_edge = {'left': fab_offset[0] , 'right': fab_offset[0] + width, 'top': fab_offset[1] - 1,
+    body_edge = {'left': fab_offset[0],
+                 'right': fab_offset[0] + width,
+                 'top': fab_offset[1] - 1,
                  'bottom': fab_offset[1] + height + 1}
     courtyard_offset = configuration["courtyard_offset"]["connector"]
     cx1 = roundToBase(body_edge["left"] - courtyard_offset, configuration['courtyard_grid'])
