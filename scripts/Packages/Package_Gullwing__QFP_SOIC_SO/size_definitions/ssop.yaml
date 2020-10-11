@@ -2,7 +2,7 @@ FileHeader:
   library_Suffix: 'SO'
   device_type: 'SSOP'
 
-SSOP-8_5.3x3mm_P0.65mm:
+SSOP-8_5.30x3.00mm_P0.65mm:
   size_source: 'https://www.jedec.org/system/files/docs/Mo-150b.pdf variant AA'
   height:
     overall: .. 2.0
@@ -15,194 +15,150 @@ SSOP-8_5.3x3mm_P0.65mm:
   body_size_x: 5.0 .. 5.3 .. 5.6
   pitch: 0.65
   lead_len: 0.55 .. 0.75 .. 0.95
+  num_pins_x: 0
   num_pins_y: 4
 
-SSOP-14_5.3x6.2mm_P0.65mm:
+SSOP-14_5.30x6.20mm_P0.65mm:
   size_source: 'https://www.jedec.org/system/files/docs/Mo-150b.pdf variant AB'
-  body_size_x:
-    minimum: 5.0
-    maximum: 5.6
-  body_size_y:
-    minimum: 5.9
-    maximum: 6.5
-  overall_size_x:
-    minimum: 7.4
-    maximum: 8.2
-  lead_width:
-    minimum: 0.22
-    maximum: 0.38
-  lead_len:
-    minimum: 0.55
-    maximum: 0.95
+  height:
+    overall: .. 2.0
+    standoff: 0.05 ..
+    body: 1.65 .. 1.75 .. 1.85
+  lead_width: 0.22 .. 0.38
+  lead_height: 0.09 .. 0.25
+  body_size_y: 5.90 .. 6.20 .. 6.50
+  overall_size_x: 7.40 .. 7.80 .. 8.20
+  body_size_x: 5.0 .. 5.3 .. 5.6
   pitch: 0.65
+  lead_len: 0.55 .. 0.75 .. 0.95
   num_pins_x: 0
   num_pins_y: 7
 
-SSOP-16_5.3x6.2mm_P0.65mm:
+SSOP-16_5.30x6.20mm_P0.65mm:
   size_source: 'https://www.jedec.org/system/files/docs/Mo-150b.pdf variant AC'
-  body_size_x:
-    minimum: 5.0
-    maximum: 5.6
-  body_size_y:
-    minimum: 5.9
-    maximum: 6.5
-  overall_size_x:
-    minimum: 7.4
-    maximum: 8.2
-  lead_width:
-    minimum: 0.22
-    maximum: 0.38
-  lead_len:
-    minimum: 0.55
-    maximum: 0.95
+  height:
+    overall: .. 2.0
+    standoff: 0.05 ..
+    body: 1.65 .. 1.75 .. 1.85
+  lead_width: 0.22 .. 0.38
+  lead_height: 0.09 .. 0.25
+  body_size_y: 5.90 .. 6.20 .. 6.50
+  overall_size_x: 7.40 .. 7.80 .. 8.20
+  body_size_x: 5.0 .. 5.3 .. 5.6
   pitch: 0.65
+  lead_len: 0.55 .. 0.75 .. 0.95
   num_pins_x: 0
   num_pins_y: 8
 
-SSOP-18_5.3x7.2mm_P0.65mm:
+SSOP-18_5.30x7.20mm_P0.65mm:
   size_source: 'https://www.jedec.org/system/files/docs/Mo-150b.pdf variant AD'
-  body_size_x:
-    minimum: 5.0
-    maximum: 5.6
-  body_size_y:
-    minimum: 6.9
-    maximum: 7.5
-  overall_size_x:
-    minimum: 7.4
-    maximum: 8.2
-  lead_width:
-    minimum: 0.22
-    maximum: 0.38
-  lead_len:
-    minimum: 0.55
-    maximum: 0.95
+  height:
+    overall: .. 2.0
+    standoff: 0.05 ..
+    body: 1.65 .. 1.75 .. 1.85
+  lead_width: 0.22 .. 0.38
+  lead_height: 0.09 .. 0.25
+  body_size_y: 6.90 .. 7.20 .. 7.50
+  overall_size_x: 7.40 .. 7.80 .. 8.20
+  body_size_x: 5.00 .. 5.30 .. 5.60
   pitch: 0.65
+  lead_len: 0.55 .. 0.75 .. 0.95
   num_pins_x: 0
   num_pins_y: 9
 
-SSOP-20_5.3x7.2mm_P0.65mm:
+SSOP-20_5.30x7.20mm_P0.65mm:
   size_source: 'https://www.jedec.org/system/files/docs/Mo-150b.pdf variant AE'
-  body_size_x:
-    minimum: 5.0
-    maximum: 5.6
-  body_size_y:
-    minimum: 6.9
-    maximum: 7.5
-  overall_size_x:
-    minimum: 7.4
-    maximum: 8.2
-  lead_width:
-    minimum: 0.22
-    maximum: 0.38
-  lead_len:
-    minimum: 0.55
-    maximum: 0.95
+  height:
+    overall: .. 2.0
+    standoff: 0.05 ..
+    body: 1.65 .. 1.75 .. 1.85
+  lead_width: 0.22 .. 0.38
+  lead_height: 0.09 .. 0.25
+  body_size_y: 6.90 .. 7.20 .. 7.50
+  overall_size_x: 7.40 .. 7.80 .. 8.20
+  body_size_x: 5.0 .. 5.3 .. 5.6
   pitch: 0.65
+  lead_len: 0.55 .. 0.75 .. 0.95
   num_pins_x: 0
   num_pins_y: 10
 
-SSOP-22_5.3x8.2mm_P0.65mm:
+SSOP-22_5.30x8.20mm_P0.65mm:
   size_source: 'https://www.jedec.org/system/files/docs/Mo-150b.pdf variant AF'
-  body_size_x:
-    minimum: 5.0
-    maximum: 5.6
-  body_size_y:
-    minimum: 7.9
-    maximum: 8.5
-  overall_size_x:
-    minimum: 7.4
-    maximum: 8.2
-  lead_width:
-    minimum: 0.22
-    maximum: 0.38
-  lead_len:
-    minimum: 0.55
-    maximum: 0.95
+  height:
+    overall: .. 2.0
+    standoff: 0.05 ..
+    body: 1.65 .. 1.75 .. 1.85
+  lead_width: 0.22 .. 0.38
+  lead_height: 0.09 .. 0.25
+  body_size_y: 7.90 .. 8.20 .. 8.50
+  overall_size_x: 7.40 .. 7.80 .. 8.20
+  body_size_x: 5.0 .. 5.3 .. 5.6
   pitch: 0.65
+  lead_len: 0.55 .. 0.75 .. 0.95
   num_pins_x: 0
   num_pins_y: 11
 
-SSOP-24_5.3x8.2mm_P0.65mm:
+SSOP-24_5.30x8.20mm_P0.65mm:
   size_source: 'https://www.jedec.org/system/files/docs/Mo-150b.pdf variant AG'
-  body_size_x:
-    minimum: 5.0
-    maximum: 5.6
-  body_size_y:
-    minimum: 7.9
-    maximum: 8.5
-  overall_size_x:
-    minimum: 7.4
-    maximum: 8.2
-  lead_width:
-    minimum: 0.22
-    maximum: 0.38
-  lead_len:
-    minimum: 0.55
-    maximum: 0.95
+  height:
+    overall: .. 2.0
+    standoff: 0.05 ..
+    body: 1.65 .. 1.75 .. 1.85
+  lead_width: 0.22 .. 0.38
+  lead_height: 0.09 .. 0.25
+  body_size_y: 7.90 .. 8.20 .. 8.50
+  overall_size_x: 7.40 .. 7.80 .. 8.20
+  body_size_x: 5.0 .. 5.3 .. 5.6
   pitch: 0.65
+  lead_len: 0.55 .. 0.75 .. 0.95
   num_pins_x: 0
   num_pins_y: 12
 
-SSOP-28_5.3x10.2mm_P0.65mm:
+SSOP-28_5.30x10.20mm_P0.65mm:
   size_source: 'https://www.jedec.org/system/files/docs/Mo-150b.pdf variant AH'
-  body_size_x:
-    minimum: 5.0
-    maximum: 5.6
-  body_size_y:
-    minimum: 9.9
-    maximum: 10.5
-  overall_size_x:
-    minimum: 7.4
-    maximum: 8.2
-  lead_width:
-    minimum: 0.22
-    maximum: 0.38
-  lead_len:
-    minimum: 0.55
-    maximum: 0.95
+  height:
+    overall: .. 2.0
+    standoff: 0.05 ..
+    body: 1.65 .. 1.75 .. 1.85
+  lead_width: 0.22 .. 0.38
+  lead_height: 0.09 .. 0.25
+  body_size_y: 9.90 .. 10.20 .. 10.50
+  overall_size_x: 7.40 .. 7.80 .. 8.20
+  body_size_x: 5.0 .. 5.3 .. 5.6
   pitch: 0.65
+  lead_len: 0.55 .. 0.75 .. 0.95
   num_pins_x: 0
   num_pins_y: 14
 
-SSOP-30_5.3x10.2mm_P0.65mm:
+SSOP-30_5.30x10.20mm_P0.65mm:
   size_source: 'https://www.jedec.org/system/files/docs/Mo-150b.pdf variant AJ'
-  body_size_x:
-    minimum: 5.0
-    maximum: 5.6
-  body_size_y:
-    minimum: 9.9
-    maximum: 10.5
-  overall_size_x:
-    minimum: 7.4
-    maximum: 8.2
-  lead_width:
-    minimum: 0.22
-    maximum: 0.38
-  lead_len:
-    minimum: 0.55
-    maximum: 0.95
+  height:
+    overall: .. 2.0
+    standoff: 0.05 ..
+    body: 1.65 .. 1.75 .. 1.85
+  lead_width: 0.22 .. 0.38
+  lead_height: 0.09 .. 0.25
+  body_size_y: 9.90 .. 10.20 .. 10.50
+  overall_size_x: 7.40 .. 7.80 .. 8.20
+  body_size_x: 5.0 .. 5.3 .. 5.6
   pitch: 0.65
+  lead_len: 0.55 .. 0.75 .. 0.95
   num_pins_x: 0
   num_pins_y: 15
 
-SSOP-38_5.3x12.6mm_P0.65mm:
+SSOP-38_5.30x12.60mm_P0.65mm:
   size_source: 'https://www.jedec.org/system/files/docs/Mo-150b.pdf variant AK'
-  body_size_x:
-    minimum: 5.0
-    maximum: 5.6
-  body_size_y:
-    minimum: 12.3
-    maximum: 12.9
-  overall_size_x:
-    minimum: 7.4
-    maximum: 8.2
-  lead_width:
-    minimum: 0.22
-    maximum: 0.38
-  lead_len:
-    minimum: 0.55
-    maximum: 0.95
+  height:
+    overall: .. 2.0
+    standoff: 0.05 ..
+    body: 1.65 .. 1.75 .. 1.85
+  lead_width: 0.22 .. 0.38
+  lead_height: 0.09 .. 0.25
+  body_size_y: 12.30 .. 12.60 .. 12.90
+  overall_size_x: 7.40 .. 7.80 .. 8.20
+  body_size_x: 5.0 .. 5.3 .. 5.6
   pitch: 0.65
+  lead_len: 0.55 .. 0.75 .. 0.95
   num_pins_x: 0
   num_pins_y: 19
 
