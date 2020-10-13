@@ -23,6 +23,26 @@ SSOP-20_5.3x7.2mm_P0.65mm:
   num_pins_x: 0
   num_pins_y: 10
 
+SSOP-16_5.3x6.2mm_P0.65mm:
+  size_source: 'https://assets.nexperia.com/documents/data-sheet/74HC_HCT165.pdf#page=14'
+  body_size_x:
+    minimum: 5.2
+    maximum: 5.4
+  body_size_y:
+    minimum: 6.0
+    maximum: 6.4
+  overall_size_x:
+    minimum: 7.6
+    maximum: 7.9
+  lead_width:
+    minimum: 0.25
+    maximum: 0.38
+  lead_len:
+    minimum: 0.63
+    maximum: 1.03
+  pitch: 0.65
+  num_pins_x: 0
+  num_pins_y: 8
 
 SSOP-8_3.9x5.05mm_P1.27mm:
   size_source: 'http://www.fujitsu.com/downloads/MICRO/fsa/pdf/products/memory/fram/MB85RS16-DS501-00014-6v0-E.pdf'
@@ -86,3 +106,24 @@ SSOP-32_11.3x20.5mm_P1.27mm:
   pitch: 1.27
   num_pins_x: 0
   num_pins_y: 16
+
+SSOP-48_5.3x12.8mm_P0.5mm:
+  size_source: 'https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/ltc-legacy-ssop/05081887_A_G48.pdf'
+  body_size_x:
+    minimum: 5.00
+    maximum: 5.60
+  body_size_y:
+    minimum: 12.50
+    maximum: 13.10
+  overall_size_x:
+    minimum: 7.40
+    maximum: 8.20
+  lead_width:
+    minimum: 0.20
+    maximum: 0.315
+  lead_len:
+    minimum: 0.55
+    maximum: 0.95
+  pitch: 0.50
+  num_pins_x: 0
+  num_pins_y: 24

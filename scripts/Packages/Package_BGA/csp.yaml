@@ -456,3 +456,30 @@ ST_WLCSP-180_Die451:
   layout_x: 13
   layout_y: 14
   row_skips: [[], [], [], [], [], [], [7], [7], [], [], [], [], [], []]
+WLCSP-16_1.409x1.409mm_P0.35mm:
+  description: "WLCSP-16"
+  size_source: 'http://www.latticesemi.com/view_document?document_id=213'
+  body_size_x: 1.409
+  body_size_y: 1.409
+  pitch: 0.35
+  pad_diameter: 0.2
+  layout_x: 4
+  layout_y: 4
+WLCSP-8_1.551x2.284mm_P0.5mm:
+  description: "WLCSP-8"
+  size_source: "https://www.adestotech.com/wp-content/uploads/AT25SL321_112.pdf#page=75"
+  body_size_x: 1.551
+  body_size_y: 2.284
+  pitch: 0.5
+  pad_diameter: 0.2
+  layout_x: 2
+  layout_y: 4
+WLCSP-4-X1-WLB0909-4_0.89x0.89mm_P0.5mm:
+  description: "X1-WLB0909"
+  size_source: 'https://www.diodes.com/assets/Datasheets/AP22913.pdf'
+  body_size_x: 0.89
+  body_size_y: 0.89
+  pitch: 0.5
+  pad_diameter: 0.235 # even though ball_diameter is 0.235 analog recommends a landing pad of 0.235
+  layout_x: 2
+  layout_y: 2
