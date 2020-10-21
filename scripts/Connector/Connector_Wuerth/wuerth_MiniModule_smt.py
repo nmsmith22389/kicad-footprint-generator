@@ -61,31 +61,32 @@ def generate_one_footprint(pincount, configuration):
     # physical outline for fab layer
     width = (pincount / 2 - 1) * pitch + x_offset + 2 * package_offset_x
     # upper left corner of fab-rectangle
-    fab_offset = [-package_offset_x, package_offset_y]
+    fab_offset = [-width / 2, -height / 2]
 
     # fab outline
     kicad_mod.append(RectLine(start=fab_offset, end=[fab_offset[0] + width, fab_offset[1] + height],
                               layer='F.Fab', width=configuration['fab_line_width']))
 
     # Pads
+    pad_1_x = -(pincount / 4) * pitch + 0.5 * x_offset
     kicad_mod.append(PadArray(initial=1, increment=2,
-                              start=[0, 0],
+                              start=[pad_1_x, -y_offset / 2],
                               x_spacing=pitch,
                               pincount=pincount // 2,
                               size=pad_size,
                               type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT, layers=Pad.LAYERS_SMT))
     kicad_mod.append(PadArray(initial=2, increment=2,
-                              start=[x_offset, y_offset],
+                              start=[pad_1_x + x_offset, y_offset / 2],
                               x_spacing=pitch,
                               pincount=pincount // 2,
                               size=pad_size,
                               type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT, layers=Pad.LAYERS_SMT))
 
     # Silkscreen:
-    silk_offset = 0.2  # configuration["silk_fab_offset"]
-    silk_pin1_x = -pad_size[0] / 2 - silk_offset
+    silk_offset = configuration["silk_fab_offset"]
+    silk_pin1_x = pad_1_x - pad_size[0] / 2 - silk_offset
     silk_pin2_x = silk_pin1_x + x_offset
-    silk_pin9_x = (pincount / 2 - 1) * pitch + pad_size[0] / 2 + silk_offset
+    silk_pin9_x = pad_1_x + (pincount / 2 - 1) * pitch + pad_size[0] / 2 + silk_offset
     silk_pin10_x = silk_pin9_x + x_offset
     silk_right_x = fab_offset[0] + width + silk_offset
     silk_left_x = fab_offset[0] - silk_offset
