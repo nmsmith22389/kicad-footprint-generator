@@ -27,7 +27,7 @@ class ChamferSelPadGrid(CornerSelection):
         :param chamfer_select:
             * A list of bools do directly set the corners
               (top left, top right, bottom right, bottom left)
-            * A dict with keys (Constands see below)
+            * A dict with keys (Constants see below)
             * The integer 1 means all corners and edges
             * The integer 0 means no corners, no edges
 
@@ -36,7 +36,7 @@ class ChamferSelPadGrid(CornerSelection):
             * ChamferSelPadGrid.RIGHT_EDGE
             * ChamferSelPadGrid.BOTTOM_EDGE
             * ChamferSelPadGrid.LEFT_EDGE
-            * Plus all constands inherited from CornerSelection
+            * Plus all constants inherited from CornerSelection
 
     """
 
@@ -251,7 +251,7 @@ class ChamferedPadGrid(Node):
         self.padargs.pop('round_radius_handler', None)
 
     def chamferAvoidCircle(self, center, diameter, clearance=0):
-        r""" set the chamfer such that the pad avoids a cricle located at near corner.
+        r""" set the chamfer such that the pad avoids a circle located at near corner.
 
         :param center: (``Vector2D``) --
            The center of the circle ot avoid

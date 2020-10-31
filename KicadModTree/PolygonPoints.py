@@ -118,7 +118,7 @@ class PolygonPoints(object):
     def cut(self, other):
         r""" Cut other polygon points from self
 
-        As kicad has no native support for cuting one polygon from the other,
+        As kicad has no native support for cutting one polygon from the other,
         the cut is done by connecting the nearest points of the two polygons
         with two lines on top of each other.
 

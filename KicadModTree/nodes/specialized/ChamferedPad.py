@@ -28,7 +28,7 @@ class CornerSelection():
         :param chamfer_select:
             * A list of bools do directly set the corners
               (top left, top right, bottom right, bottom left)
-            * A dict with keys (constands see below)
+            * A dict with keys (constants see below)
             * The integer 1 means all corners
             * The integer 0 means no corners
 
@@ -343,7 +343,7 @@ class ChamferedPad(Node):
                 )
 
     def chamferAvoidCircle(self, center, diameter, clearance=0):
-        r""" set the chamfer such that the pad avoids a cricle located at near corner.
+        r""" set the chamfer such that the pad avoids a circle located at near corner.
 
         :param center: (``Vector2D``) --
            The center of the circle ot avoid
@@ -354,7 +354,7 @@ class ChamferedPad(Node):
         """
 
         relative_center = Vector2D(center) - self.at
-        # pad and circle are symetric so we do not care which corner the
+        # pad and circle are symmetric so we do not care which corner the
         # reference circle is located at.
         #  -> move it to bottom right to get only positive relative coordinates.
         relative_center = Vector2D([abs(v) for v in relative_center])
@@ -362,7 +362,7 @@ class ChamferedPad(Node):
 
         # Where should the chamfer be if the center of the reference circle
         # would be in line with the pad edges
-        # (meaning exactly at the bottome right corner)
+        # (meaning exactly at the bottom right corner)
         reference_point = relative_center - sqrt(2)*(clearance+d/2)
         self.chamfer_size = self.size/2 - reference_point
 

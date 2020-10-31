@@ -24,7 +24,7 @@ This is my new approach, using a render tree for footprint generation.
 ADVANTAGES:
 
 * simple point transformations
-* automatic calculation of courtjard,...
+* automatic calculation of courtyard,...
 * simple duplication of rendering structures
 
 '''

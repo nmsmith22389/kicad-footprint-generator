@@ -312,7 +312,7 @@ class RingPad(Node):
         self.is_circle = _id == 0
 
     def _initNumber(self, **kwargs):
-        self.number = kwargs.get('number', "")  # default to an un-numbered pad
+        self.number = kwargs.get('number', "")  # default to an unnumbered pad
 
     def _initNumAnchor(self, **kwargs):
         self.num_anchor = int(kwargs.get('num_anchor', 1))
