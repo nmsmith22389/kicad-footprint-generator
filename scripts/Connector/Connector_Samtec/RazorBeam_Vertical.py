@@ -226,7 +226,7 @@ def generate_one_footprint(param, config, default_lib):
     fp.append(Text(type = 'reference', text = 'REF**',
                    at = (0, -text_y),
                    layer = "F.SilkS"))
-    fp.append(Text(type = 'user', text = '%R',
+    fp.append(Text(type = 'user', text = '${REFERENCE}',
                    at = (0, -text_y),
                    layer = "F.Fab"))
     fp.append(Text(type = 'value', text=param['name'],
