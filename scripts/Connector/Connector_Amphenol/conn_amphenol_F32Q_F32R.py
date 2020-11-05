@@ -146,8 +146,6 @@ def generate_one_footprint(family, pincount, configuration):
     # create silkscreen outline
     kicad_mod.append(PolygoneLine(
         polygone=[
-            (pad1_x - pad_width/2 - silk_clearance, pad_y - pad_height/2 - silk_clearance),
-            (pad1_x + pad_x_span + pad_width/2 + silk_clearance, pad_y - pad_height/2 - silk_clearance),
             (pad1_x + pad_x_span + pad_width/2 + silk_clearance, tab_y - tab_height/2 - silk_clearance),
             (tab_x + tab_width/2 + silk_clearance, tab_y - tab_height/2 - silk_clearance),
             (tab_x + tab_width/2 + silk_clearance, actuator_y1 - ear_height - configuration['silk_line_width']/2),
@@ -158,16 +156,7 @@ def generate_one_footprint(family, pincount, configuration):
             (-tab_x - tab_width/2 - silk_clearance, actuator_y1 - ear_height - configuration['silk_line_width']/2),
             (-tab_x - tab_width/2 - silk_clearance, tab_y - tab_height/2 - silk_clearance),
             (pad1_x - pad_width/2 - silk_clearance, tab_y - tab_height/2 - silk_clearance),
-            (pad1_x - pad_width/2 - silk_clearance, pad_y - pad_height/2 - silk_clearance)],
-        layer='F.SilkS', width=configuration['silk_line_width']))
-
-    # create silkscreen pin 1 marker
-    kicad_mod.append(PolygoneLine(
-        polygone=[
-            (pad1_x-0.2, pad_y - pad_height/2 - silk_clearance - configuration['silk_line_width']*2 - 0.5),
-            (pad1_x, pad_y - pad_height/2 - silk_clearance - configuration['silk_line_width']*2),
-            (pad1_x+0.2, pad_y - pad_height/2 - silk_clearance - configuration['silk_line_width']*2 - 0.5),
-            (pad1_x-0.2, pad_y - pad_height/2 - silk_clearance - configuration['silk_line_width']*2 - 0.5)],
+            (pad1_x - pad_width/2 - silk_clearance, pad_y - pad_height/2 + configuration['silk_line_width']/2)],
         layer='F.SilkS', width=configuration['silk_line_width']))
 
     # create courtyard
