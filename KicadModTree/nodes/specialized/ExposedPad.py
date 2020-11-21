@@ -56,7 +56,7 @@ class ExposedPad(Node):
           If only a single integer given, x and y direction use the same count.
         * *paste_between_vias* (``int``, ``[int, int]``)
           Alternative for paste_layout with more control.
-          This defines how many pads will be between 4 via's in x and y direction.
+          This defines how many pads will be between 4 vias in x and y direction.
           If only a single integer given, x and y direction use the same count.
         * *paste_rings_outside* (``int``, ``[int, int]``)
           Alternative for paste_layout with more control.
