@@ -19,7 +19,7 @@ To be able to create custom Nodes, I separated the system in two parts. Base nod
 and specialized nodes which alter the behavior of base nodes (for example positioning), or represent a specialized usage of base nodes (for example RectLine).
 
 When you serialize your footprint, the serialize command only has to handle base nodes, because all other nodes are based upon the base nodes.
-This allows us to write specialized nodes without worrying about the File Handlers or other core systems.
+This allows us to write specialized nodes without worrying about the FileHandlers or other core systems.
 You simply create you special node, and the framework knows how to handle it seamlessly.
 
 

@@ -60,39 +60,39 @@ class ExposedPad(Node):
           If only a single integer given, x and y direction use the same count.
         * *paste_rings_outside* (``int``, ``[int, int]``)
           Alternative for paste_layout with more control.
-          Defines the number of rings outside of the via's in x and y direction.
+          Defines the number of rings outside of the vias in x and y direction.
           If only a single integer given, x and y direction use the same count.
         * *paste_coverage* (``float``) --
           how much of the mask free area is covered with paste. (default: 0.65)
 
         * *via_layout* (``int``, ``[int, int]``) --
           thermal via layout specification.
-          How many via's in x and y direction.
+          How many vias in x and y direction.
           If only a single integer given, x and y direction use the same count.
-          default: no via's added
+          default: no vias added
         * *via_grid* (``int``, ``Vector2D``) --
           thermal via grid specification.
-          Grid used for thermal via's in x and y direction.
+          Grid used for thermal vias in x and y direction.
           If only a single integer given, x and y direction use the same count.
           If none is given then the via grid will be automatically calculated
           to have them distributed across the main pad.
         * *via_drill* (``float``) --
           via drill diameter (default: 0.3)
         * *via_tented* (VIA_TENTED, VIA_TENTED_TOP_ONLY, VIA_TENTED_BOTTOM_ONLY, VIA_NOT_TENTED) --
-          Determines which side of the thermal via's is covered in solder mask.
-          On the top only via's outside the defined mask area can be covered in solder mask.
+          Determines which side of the thermal vias is covered in solder mask.
+          On the top only vias outside the defined mask area can be covered in solder mask.
           default: VIA_TENTED
         * *min_annular_ring* (``float``) --
-          Annular ring for thermal via's. (default: 0.15)
+          Annular ring for thermal vias. (default: 0.15)
         * *bottom_pad_Layers* (``[layer string]``) --
           Select layers for the bottom pad (default: [B.Cu]) --
-          Ignored if no thermal via's are added.
+          Ignored if no thermal vias are added.
           If None or empty no pad is added.
         * *bottom_pad_min_size* (``float``, ``Vector2D``) --
           Minimum size for bottom pad. default: (0,0)
           Ignored if no bottom pad given.
         * *paste_avoid_via* (``bool``) --
-          Paste automatically generated to avoid via's (default: false)
+          Paste automatically generated to avoid vias (default: false)
         * *via_paste_clearance* (``float``)
           Clearance between paste and via drills (default: 0.05)
           Only used if paste_avoid_via is set.
@@ -211,7 +211,7 @@ class ExposedPad(Node):
                 ])
 
     def __viasInMaskCount(self, idx):
-        r""" Determine the number of via's within the solder mask area
+        r""" Determine the number of vias within the solder mask area
 
         :param idx: (``int``) --
            determines if the x or y direction is used.
@@ -222,7 +222,7 @@ class ExposedPad(Node):
             return int(self.paste_area_size[idx]//(self.via_grid[idx]))
 
     def _initPasteForAvoidingVias(self, **kwargs):
-        self.via_clarance = kwargs.get('via_paste_clearance', 0.05)
+        self.via_clarance = kwargs.get('via_paste_clarance', 0.05)
 
         # check get against none to allow the caller to use None as the sign to ignore these.
         if kwargs.get('paste_between_vias') is not None\
