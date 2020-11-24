@@ -1,0 +1,289 @@
+M1:
+  series_prefix: SMTSO
+  footprint:
+    ring:
+      id: 2.5
+      od: 4.19
+      paste:
+        clearance: 0.4
+        id: 2.7
+        od: 3.99
+    npth: 2.5
+  mechanical:
+    id: M1
+    od: 3.66
+    od1: 2.41
+    h1: 0.48
+  parts:
+    SMTSO-M1-1ET:
+      datasheet: http://www.pemnet.com/fastening_products/pdf/kdata.pdf
+      h: 1
+    SMTSO-M1-2ET:
+      datasheet: http://www.pemnet.com/fastening_products/pdf/kdata.pdf
+      h: 2
+    SMTSO-M1-3ET:
+      datasheet: http://www.pemnet.com/fastening_products/pdf/kdata.pdf
+      h: 3
+
+M1.2:
+  series_prefix: SMTSO
+  footprint:
+    ring:
+      id: 2.5
+      od: 4.19
+      paste:
+        clearance: 0.4
+        id: 2.7
+        od: 3.99
+    npth: 2.5
+  mechanical:
+    id: M1.2
+    od: 3.66
+    od1: 2.41
+    h1: 0.48
+  parts:
+    SMTSO-M12-1ET:
+      datasheet: http://www.pemnet.com/fastening_products/pdf/kdata.pdf
+      h: 1
+    SMTSO-M12-2ET:
+      datasheet: http://www.pemnet.com/fastening_products/pdf/kdata.pdf
+      h: 2
+    SMTSO-M12-3ET:
+      datasheet: http://www.pemnet.com/fastening_products/pdf/kdata.pdf
+      h: 3
+
+M1.4:
+  series_prefix: SMTSO
+  footprint:
+    ring:
+      id: 2.5
+      od: 4.19
+      paste:
+        clearance: 0.4
+        id: 2.7
+        od: 3.99
+    npth: 2.5
+  mechanical:
+    id: M1.4
+    od: 3.66
+    od1: 2.41
+    h1: 0.48
+  parts:
+    SMTSO-M14-1ET:
+      datasheet: http://www.pemnet.com/fastening_products/pdf/kdata.pdf
+      h: 1
+    SMTSO-M14-2ET:
+      datasheet: http://www.pemnet.com/fastening_products/pdf/kdata.pdf
+      h: 2
+    SMTSO-M14-3ET:
+      datasheet: http://www.pemnet.com/fastening_products/pdf/kdata.pdf
+      h: 3
+
+M1.6:
+  series_prefix: SMTSO
+  footprint:
+    ring:
+      id: 2.5
+      od: 4.19
+      paste:
+        clearance: 0.4
+        id: 2.7
+        od: 3.99
+    npth: 2.5
+  mechanical:
+    id: M1.6
+    od: 3.66
+    od1: 2.41
+    h1: 0.48
+  parts:
+    SMTSO-M16-1ET:
+      datasheet: http://www.pemnet.com/fastening_products/pdf/kdata.pdf
+      h: 1
+    SMTSO-M16-2ET:
+      datasheet: http://www.pemnet.com/fastening_products/pdf/kdata.pdf
+      h: 2
+    SMTSO-M16-3ET:
+      datasheet: http://www.pemnet.com/fastening_products/pdf/kdata.pdf
+      h: 3
+
+M2:
+  series_prefix: SMTSO
+  footprint:
+    ring:
+      id: 3.73
+      od: 6.2
+      paste:
+        clearance: 0.4
+        id: 3.93
+        od: 6
+    npth: 3.73
+  mechanical:
+    id: M2
+    od: 5.56
+    od1: 3.6
+    h1: 1.53
+  parts:
+    SMTSO-M2-2ET:
+      datasheet: http://www.pemnet.com/fastening_products/pdf/kdata.pdf
+      h: 2
+    SMTSO-M2-3ET:
+      datasheet: http://www.pemnet.com/fastening_products/pdf/kdata.pdf
+      h: 3
+    SMTSO-M2-4ET:
+      datasheet: http://www.pemnet.com/fastening_products/pdf/kdata.pdf
+      h: 4
+    SMTSO-M2-6ET:
+      datasheet: http://www.pemnet.com/fastening_products/pdf/kdata.pdf
+      h: 6
+    SMTSO-M2-8ET:
+      datasheet: http://www.pemnet.com/fastening_products/pdf/kdata.pdf
+      h: 8
+    SMTSO-M2-10ET:
+      datasheet: http://www.pemnet.com/fastening_products/pdf/kdata.pdf
+      h: 10
+
+M2.5:
+  series_prefix: SMTSO
+  footprint:
+    ring:
+      id: 4.22
+      od: 6.2
+      paste:
+        clearance: 0.4
+        id: 4.42
+        od: 6
+    npth: 4.22
+  mechanical:
+    id: M2.5
+    od: 5.56
+    od1: 4.09
+    h1: 1.53
+  parts:
+    SMTSO-M25-2ET:
+      datasheet: http://www.pemnet.com/fastening_products/pdf/kdata.pdf
+      h: 2
+    SMTSO-M25-3ET:
+      datasheet: http://www.pemnet.com/fastening_products/pdf/kdata.pdf
+      h: 3
+    SMTSO-M25-4ET:
+      datasheet: http://www.pemnet.com/fastening_products/pdf/kdata.pdf
+      h: 4
+    SMTSO-M25-6ET:
+      datasheet: http://www.pemnet.com/fastening_products/pdf/kdata.pdf
+      h: 6
+    SMTSO-M25-8ET:
+      datasheet: http://www.pemnet.com/fastening_products/pdf/kdata.pdf
+      h: 8
+    SMTSO-M25-10ET:
+      datasheet: http://www.pemnet.com/fastening_products/pdf/kdata.pdf
+      h: 10
+
+M3:
+  series_prefix: SMTSO
+  footprint:
+    ring:
+      id: 4.22
+      od: 6.2
+      paste:
+        clearance: 0.4
+        id: 4.42
+        od: 6
+    npth: 4.22
+  mechanical:
+    id: M3
+    od: 5.56
+    od1: 4.09
+    h1: 1.53
+  parts:
+    SMTSO-M3-2ET:
+      datasheet: http://www.pemnet.com/fastening_products/pdf/kdata.pdf
+      h: 2
+    SMTSO-M3-3ET:
+      datasheet: http://www.pemnet.com/fastening_products/pdf/kdata.pdf
+      h: 3
+    SMTSO-M3-4ET:
+      datasheet: http://www.pemnet.com/fastening_products/pdf/kdata.pdf
+      h: 4
+    SMTSO-M3-6ET:
+      datasheet: http://www.pemnet.com/fastening_products/pdf/kdata.pdf
+      h: 6
+    SMTSO-M3-8ET:
+      datasheet: http://www.pemnet.com/fastening_products/pdf/kdata.pdf
+      h: 8
+    SMTSO-M3-10ET:
+      datasheet: http://www.pemnet.com/fastening_products/pdf/kdata.pdf
+      h: 10
+
+M3.5:
+  series_prefix: SMTSO
+  footprint:
+    ring:
+      id: 5.41
+      od: 7.77
+      paste:
+        clearance: 0.4
+        id: 5.61
+        od: 7.57
+    npth: 5.41
+  mechanical:
+    id: M3.5
+    od: 7.14
+    od1: 5.28
+    h1: 1.53
+  parts:
+    SMTSO-M35-2ET:
+      datasheet: http://www.pemnet.com/fastening_products/pdf/kdata.pdf
+      h: 2
+    SMTSO-M35-3ET:
+      datasheet: http://www.pemnet.com/fastening_products/pdf/kdata.pdf
+      h: 3
+    SMTSO-M35-4ET:
+      datasheet: http://www.pemnet.com/fastening_products/pdf/kdata.pdf
+      h: 4
+    SMTSO-M35-6ET:
+      datasheet: http://www.pemnet.com/fastening_products/pdf/kdata.pdf
+      h: 6
+    SMTSO-M35-8ET:
+      datasheet: http://www.pemnet.com/fastening_products/pdf/kdata.pdf
+      h: 8
+    SMTSO-M35-10ET:
+      datasheet: http://www.pemnet.com/fastening_products/pdf/kdata.pdf
+      h: 10
+
+M4:
+  series_prefix: SMTSO
+  footprint:
+    ring:
+      id: 6.35
+      od: 9.37
+      paste:
+        clearance: 0.4
+        id: 6.55
+        od: 9.17
+    npth: 6.35
+  mechanical:
+    id: M4
+    od: 8.74
+    od1: 6.22
+    h1: 1.53
+  parts:
+    SMTSO-M4-2ET:
+      datasheet: http://www.pemnet.com/fastening_products/pdf/kdata.pdf
+      h: 2
+    SMTSO-M4-3ET:
+      datasheet: http://www.pemnet.com/fastening_products/pdf/kdata.pdf
+      h: 3
+    SMTSO-M4-4ET:
+      datasheet: http://www.pemnet.com/fastening_products/pdf/kdata.pdf
+      h: 4
+    SMTSO-M4-6ET:
+      datasheet: http://www.pemnet.com/fastening_products/pdf/kdata.pdf
+      h: 6
+    SMTSO-M4-8ET:
+      datasheet: http://www.pemnet.com/fastening_products/pdf/kdata.pdf
+      h: 8
+    SMTSO-M4-10ET:
+      datasheet: http://www.pemnet.com/fastening_products/pdf/kdata.pdf
+      h: 10
+
+
