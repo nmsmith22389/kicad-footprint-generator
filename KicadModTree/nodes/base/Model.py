@@ -16,6 +16,8 @@
 from KicadModTree.Vector import *
 from KicadModTree.nodes.Node import Node
 
+from KicadModTree.KiCadVars import KiCadVars
+
 
 class Model(Node):
     r"""Add a 3D-Model to the render tree
@@ -42,7 +44,7 @@ class Model(Node):
 
     def __init__(self, **kwargs):
         Node.__init__(self)
-        self.filename = kwargs['filename']
+        self.filename = kwargs['filename'].replace ('${KISYS3DMOD}', KiCadVars._3D_model_dir_var)
         self.at = Vector3D(kwargs.get('at', [0, 0, 0]))
         self.scale = Vector3D(kwargs.get('scale', [1, 1, 1]))
         self.rotate = Vector3D(kwargs.get('rotate', [0, 0, 0]))
