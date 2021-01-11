@@ -187,7 +187,7 @@ def generate_one_footprint(param, config, default_lib):
     
     # 3D model path
     library = param.get('library', default_lib)
-    model_path = os.path.join("${KISYS3DMOD}",
+    model_path = os.path.join("${KICAD6_3DMODEL_DIR}",
                               library+".3dshapes",
                               param['name'] + ".wrl")
     fp.append(Model(filename = model_path))
