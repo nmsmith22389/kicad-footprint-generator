@@ -120,7 +120,7 @@ def generate_one_footprint(pins_per_row, variant, configuration):
     A = B + 6.65
     C = B + variant_params[variant]["C_minus_B"]
 
-    pad_row_1_y = +2.15 + (pad_size[1] / 2)
+    pad_row_1_y = 2.15 + (pad_size[1] / 2) - 0.285
     pad1_x = -B / 2
 
     mount_pad_x = C / 2 - (mount_pad_size[0] / 2 if is_solder_mp else 0)
@@ -129,7 +129,7 @@ def generate_one_footprint(pins_per_row, variant, configuration):
     tab_w = 1.4
     tab_l = 1.4
 
-    body_edge = {"left": -A / 2, "right": A / 2, "bottom": 2.47}
+    body_edge = {"left": -A / 2, "right": A / 2, "bottom": mount_pad_y + 2.47}
     body_edge["top"] = body_edge["bottom"] - 4.37
 
     chamfer = {"x": 1.2, "y": 0.63}
@@ -357,7 +357,6 @@ def generate_one_footprint(pins_per_row, variant, configuration):
     CrtYd_poly_t = [
         {"x": pad1_x + B / 2, "y": cy_top},
         {"x": cy_pad_left, "y": cy_top},
-        {"x": cy_pad_left, "y": cy_body_top},
         {"x": cy_body_left, "y": cy_body_top},
     ]
     CrtYd_poly_m = [

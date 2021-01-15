@@ -57,7 +57,6 @@ pincount_range = list(range(2, 13))
 row = 5.5
 
 pad_size = [1.27, 2.92]
-pitch_y = 0
 
 mount_hole_diameter = 2.41
 
@@ -102,7 +101,7 @@ def generate_one_footprint(pins, configuration):
     A = B + 6.65
     C = B + 4.3
     # D = pitch_y + PadSiseY
-    pad_row_1_y = -pitch_y / 2
+    pad_row_1_y = 9.90 / 2 + 0.17
     pad1_x = -B / 2
 
     mount_pad_x = C / 2
