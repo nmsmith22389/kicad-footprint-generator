@@ -199,6 +199,40 @@ if __name__ == '__main__':
                                   tags_additional=[], lib_name='${KICAD6_3DMODEL_DIR}/'+classname, classname=classname, classname_description=classname_description, 
                                   webpage=webpage, script_generated_note=script_generated_note)
 
+    pins=range(2,13+1)
+    rm=3.81
+    package_height=7.3
+    leftbottom_offset=[1.9, 3.6]
+    ddrill=1.1
+    pad=[2,2]
+    screw_diameter=3
+    bevel_height=[]
+    slit_screw=True
+    screw_pin_offset=[0,0]
+    secondHoleDiameter=0
+    secondHoleOffset=[0,0]
+    thirdHoleDiameter=0
+    thirdHoleOffset=[0,-4]
+    fourthHoleDiameter=0
+    fourthHoleOffset=[0,0]
+    fabref_offset=[0,3]
+    nibbleSize=[]
+    nibblePos=[]
+    pin_to_mfr = {            2:1727010,  3:1727023,  4:1727036,  5:1727049,  6:1727052,  7:1727065,  8:1727078,
+                  9:1727081, 10:1727094, 11:1727104, 12:1727117, 13:1931754}
+    for p in pins:
+        name="MKDS-1-{0}-{1:2.3}".format(p,rm);
+        webpage="http://www.phoenixcontact.com/us/products/{0}/pdf".format(pin_to_mfr[p]);
+        classname_description="Terminal Block Phoenix {0}".format(name);
+        footprint_name="TerminalBlock_Phoenix_{0}_1x{2:02}_P{1:3.2f}mm_Horizontal".format(name, rm, p)
+        makeTerminalBlockStd(footprint_name=footprint_name, 
+                                  pins=p, rm=rm, 
+                                  package_height=package_height, leftbottom_offset=leftbottom_offset, 
+                                  ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, bevel_height=bevel_height, slit_screw=slit_screw, screw_pin_offset=screw_pin_offset, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset, 
+                                  nibbleSize=nibbleSize, nibblePos=nibblePos, fabref_offset=fabref_offset,
+                                  tags_additional=[], lib_name='${KICAD6_3DMODEL_DIR}/'+classname, classname=classname, classname_description=classname_description, 
+                                  webpage=webpage, script_generated_note=script_generated_note)
+
      
     
      
