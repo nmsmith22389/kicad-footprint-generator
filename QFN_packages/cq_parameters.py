@@ -8615,5 +8615,32 @@ kicad_naming_params_qfn = {
         rotation = -90,      # rotation if required
         dest_dir_prefix = '../Package_SON.3dshapes',      # destination directory
         ),
+    'HVQFN-24-1EP_4x4mm_P0.5mm_EP2.1x2.1mm': Params( #
+        #Example - https://www.nxp.com/docs/en/package-information/SOT616-1.pdf
+        c = 0.2,        # pin thickness, body center part height
+#        K=0.2,          # Fillet radius for pin edges
+        L = 0.4,        # pin top flat part length (including fillet radius)
+        fp_s = True,     # True for circular pinmark, False for square pinmark (useful for diodes)
+        fp_r = 0.35,     # first pin indicator radius
+        fp_d = 0.1,     # first pin indicator distance from edge
+        fp_z = 0.02,     # first pin indicator depth
+        ef = 0.0, # 0.05,      # fillet of edges  Note: bigger bytes model with fillet
+        cce = 0.2,      #0.45 chamfer of the epad 1st pin corner
+        D = 4.0,       # body overall length
+        E = 4.0,       # body overall width
+        A1 = 0.025,  # body-board separation  maui to check
+        A2 = 1.0,  # body height
+        b = 0.25,  # pin width
+        e = 0.5,  # pin (center-to-center) distance
+        m = 0.0,  # margin between pins and body
+        ps = 'rounded',   # rounded pads
+        npx = 6,  # number of pins along X axis (width)
+        npy = 6,  # number of pins along y axis (length)
+        epad = (2.1,2.1), # e Pad #epad = None, # e Pad
+        excluded_pins = None, #no pin excluded
+        modelName = 'HVQFN-24-1EP_4x4mm_P0.5mm_EP2.1x2.1mm', #modelName
+        rotation = 0, # rotation if required
+        dest_dir_prefix = '../Package_DFN_QFN.3dshapes/',      # destination directory
+        ),
 
 }
