@@ -217,9 +217,9 @@ MLF-6-1EP_1.6x1.6mm_P0.5mm_EP0.5x1.26mm:
   #include_suffix_in_3dpath: 'False'
   #include_pad_size: 'fp_name_only' # 'both' | 'none' (default)
 
-MLF-8-1EP_2x2mm_P0.5mm_EP0.6x1.2mm:
+Micrel_MLF-8-1EP_2x2mm_P0.5mm_EP0.6x1.2mm:
   device_type: 'MLF'
-  #manufacturer: 'man'
+  manufacturer: 'Micrel'
   #part_number: 'mpn'
   size_source: 'http://ww1.microchip.com/downloads/en/DeviceDoc/mic23050.pdf'
   # ipc_class: 'qfn' # 'qfn_pull_back'
