@@ -119,7 +119,6 @@ HVQFN-24-1EP_4x4mm_P0.5mm_EP2.1x2.1mm:
   ipc_class: 'qfn' # 'qfn_pull_back'
   body_size_x:
     minimum: 3.9
-    nominal: 4.0
     maximum: 4.1
   body_size_y:
     minimum: 3.9
