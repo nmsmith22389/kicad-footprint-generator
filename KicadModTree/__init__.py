@@ -15,6 +15,7 @@
 
 from KicadModTree.Vector import *
 from KicadModTree.Point import *  # backwards compatibility
+from KicadModTree.Size import *
 
 # all different types of nodes
 from KicadModTree.nodes import *

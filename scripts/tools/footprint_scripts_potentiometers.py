@@ -202,8 +202,8 @@ def makePotentiometerHorizontal(class_name="", wbody=0, hbody=0, dscrew=0, style
             pow_rat = pow_rat + " = 1/{0}W".format(int(1 / R_POW))
     
     tgs = specialtags
-    print tgs
-    print class_name
+    print(tgs)
+    print(class_name)
     tgs.append(class_name)
     if len(pow_rat) > 0:
         tgs.append(pow_rat)
@@ -1050,7 +1050,8 @@ def makeSpindleTrimmer(class_name, wbody, hbody, pinxoffset, pinyoffset, rmx2, r
     # write file
     file_handler = KicadFileHandler(kicad_mod)
     file_handler.writeFile(footprint_name + '.kicad_mod')
-'''if __name__ == '__main__':
+
+if __name__ == '__main__':
 
     # handle arguments
     parser = argparse.ArgumentParser()
@@ -1199,4 +1200,4 @@ def makeSpindleTrimmer(class_name, wbody, hbody, pinxoffset, pinyoffset, rmx2, r
                             screwxoffset=args.screwxoffset, screwyoffset=args.screwyoffset, style=args.style, screwstyle=args.screwstyle, SMD_pads=args.SMD_pads,
                             SMD_padsize=args.SMD_padsize, R_POW=args.R_POW, x_3d=x_3d, s_3d=s_3d, r_3d=r_3d, has3d=args.has3d, specialtags=specialtags,
                             add_description=args.add_description, lib_name=args.lib_name, name_additions=name_additions, script3d=args.script3d, height3d=args.height3d)
-'''
+

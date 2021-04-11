@@ -108,33 +108,33 @@ class Gullwing():
     @staticmethod
     def deviceDimensions(device_size_data):
         dimensions = {
-            'body_size_x': TolerancedSize.fromYaml(device_size_data, base_name='body_size_x'),
-            'body_size_y': TolerancedSize.fromYaml(device_size_data, base_name='body_size_y'),
-            'lead_width': TolerancedSize.fromYaml(device_size_data, base_name='lead_width'),
-            'lead_len': TolerancedSize.fromYaml(device_size_data, base_name='lead_len')
+            'body_size_x': TolerancedSize.from_yaml(device_size_data, base_name='body_size_x'),
+            'body_size_y': TolerancedSize.from_yaml(device_size_data, base_name='body_size_y'),
+            'lead_width': TolerancedSize.from_yaml(device_size_data, base_name='lead_width'),
+            'lead_len': TolerancedSize.from_yaml(device_size_data, base_name='lead_len')
         }
         dimensions['has_EP'] = False
         if 'EP_size_x_min' in device_size_data and 'EP_size_x_max' in device_size_data or 'EP_size_x' in device_size_data:
-            dimensions['EP_size_x'] = TolerancedSize.fromYaml(device_size_data, base_name='EP_size_x')
-            dimensions['EP_size_y'] = TolerancedSize.fromYaml(device_size_data, base_name='EP_size_y')
+            dimensions['EP_size_x'] = TolerancedSize.from_yaml(device_size_data, base_name='EP_size_x')
+            dimensions['EP_size_y'] = TolerancedSize.from_yaml(device_size_data, base_name='EP_size_y')
             dimensions['has_EP'] = True
 
         if 'EP_mask_x' in device_size_data:
-            dimensions['EP_mask_x'] = TolerancedSize.fromYaml(device_size_data, base_name='EP_mask_x')
-            dimensions['EP_mask_y'] = TolerancedSize.fromYaml(device_size_data, base_name='EP_mask_y')
+            dimensions['EP_mask_x'] = TolerancedSize.from_yaml(device_size_data, base_name='EP_mask_x')
+            dimensions['EP_mask_y'] = TolerancedSize.from_yaml(device_size_data, base_name='EP_mask_y')
 
         dimensions['heel_reduction'] = device_size_data.get('heel_reduction', 0)
 
         if 'overall_size_x' in device_size_data or 'overall_size_y' in device_size_data:
             if 'overall_size_x' in device_size_data:
-                dimensions['overall_size_x'] = TolerancedSize.fromYaml(device_size_data, base_name='overall_size_x')
+                dimensions['overall_size_x'] = TolerancedSize.from_yaml(device_size_data, base_name='overall_size_x')
             else:
-                dimensions['overall_size_x'] = TolerancedSize.fromYaml(device_size_data, base_name='overall_size_y')
+                dimensions['overall_size_x'] = TolerancedSize.from_yaml(device_size_data, base_name='overall_size_y')
 
             if 'overall_size_y' in device_size_data:
-                dimensions['overall_size_y'] = TolerancedSize.fromYaml(device_size_data, base_name='overall_size_y')
+                dimensions['overall_size_y'] = TolerancedSize.from_yaml(device_size_data, base_name='overall_size_y')
             else:
-                dimensions['overall_size_y'] = TolerancedSize.fromYaml(device_size_data, base_name='overall_size_x')
+                dimensions['overall_size_y'] = TolerancedSize.from_yaml(device_size_data, base_name='overall_size_x')
         else:
             raise KeyError("Either overall size x or overall size y must be given (Outside to outside lead dimensions)")
 

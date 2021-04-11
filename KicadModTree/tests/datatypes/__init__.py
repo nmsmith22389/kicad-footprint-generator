@@ -15,3 +15,6 @@
 
 from .test_Vector2D import Vector2DTests
 from .test_Vector3D import Vector3DTests
+from .size_test import SizeInit, SizeOperatorTests
+from .size_factory_test import SizeFactoryTests
+from .toleranced_size_test import SimpleTolerancedSizeTests

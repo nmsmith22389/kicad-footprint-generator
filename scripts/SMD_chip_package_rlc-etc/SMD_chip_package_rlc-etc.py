@@ -91,18 +91,19 @@ class TwoTerminalSMDchip():
     @staticmethod
     def deviceDimensions(device_size_data):
         dimensions = {
-            'body_length': TolerancedSize.fromYaml(device_size_data, base_name='body_length'),
-            'body_width': TolerancedSize.fromYaml(device_size_data, base_name='body_width')
+            'body_length': TolerancedSize.from_yaml(device_size_data, base_name='body_length'),
+            'body_width': TolerancedSize.from_yaml(device_size_data, base_name='body_width')
         }
         if 'terminator_spacing_max' in device_size_data and 'terminator_spacing_min' in device_size_data or 'terminator_spacing' in device_size_data:
-            dimensions['terminator_spacing'] = TolerancedSize.fromYaml(device_size_data, base_name='terminator_spacing')
+            dimensions['terminator_spacing'] = TolerancedSize.from_yaml(
+                device_size_data, base_name='terminator_spacing')
         elif 'terminal_length_max' in device_size_data and 'terminal_length_min' in device_size_data or 'terminal_length' in device_size_data:
-            dimensions['terminal_length'] = TolerancedSize.fromYaml(device_size_data, base_name='terminal_length')
+            dimensions['terminal_length'] = TolerancedSize.from_yaml(device_size_data, base_name='terminal_length')
         else:
             raise KeyError("Either terminator spacing or terminal lenght must be included in the size definition.")
 
         if 'terminal_width_min' in device_size_data and 'terminal_width_max' in device_size_data or 'terminal_width' in device_size_data:
-            dimensions['terminal_width'] = TolerancedSize.fromYaml(device_size_data, base_name='terminal_width')
+            dimensions['terminal_width'] = TolerancedSize.from_yaml(device_size_data, base_name='terminal_width')
 
         return dimensions
 

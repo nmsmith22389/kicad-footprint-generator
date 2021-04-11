@@ -22,6 +22,10 @@ from KicadModTree.util.kicad_util import formatFloat
 from math import sqrt, sin, cos, hypot, atan2, degrees, radians
 
 
+def isNumber(v):
+    return isinstance(v, (float, int))
+
+
 class Vector2D(object):
     r"""Representation of a 2D Vector in space
 
@@ -34,11 +38,12 @@ class Vector2D(object):
     >>> Vector2D({'x': 0, 'y':0})
     >>> Vector2D(Vector2D(0, 0))
     """
+
     def __init__(self, coordinates=None, y=None):
         # parse constructor
         if coordinates is None:
             coordinates = {}
-        elif type(coordinates) in [int, float]:
+        elif isNumber(coordinates):
             if y is not None:
                 coordinates = [coordinates, y]
             else:
@@ -92,7 +97,7 @@ class Vector2D(object):
     def __arithmetic_parse(value):
         if isinstance(value, Vector2D):
             return value
-        elif type(value) in [int, float]:
+        elif isNumber(value):
             return Vector2D([value, value])
         else:
             return Vector2D(value)
@@ -297,7 +302,7 @@ class Vector3D(Vector2D):
         # parse constructor
         if coordinates is None:
             coordinates = {}
-        elif type(coordinates) in [int, float]:
+        elif isNumber(coordinates):
             if y is not None:
                 if z is not None:
                     coordinates = [coordinates, y, z]
@@ -353,9 +358,9 @@ class Vector3D(Vector2D):
         other = Vector3D.__arithmetic_parse(other)
 
         return Vector3D({
-                    'x': self.y*other.z - self.z*other.y,
-                    'y': self.z*other.x - self.x*other.z,
-                    'z': self.x*other.y - self.y*other.x})
+            'x': self.y*other.z - self.z*other.y,
+            'y': self.z*other.x - self.x*other.z,
+            'z': self.x*other.y - self.y*other.x})
 
     def dot_product(self, other):
         other = Vector3D.__arithmetic_parse(other)
@@ -366,7 +371,7 @@ class Vector3D(Vector2D):
     def __arithmetic_parse(value):
         if isinstance(value, Vector3D):
             return value
-        elif type(value) in [int, float]:
+        elif isNumber(value):
             return Vector3D([value, value, value])
         else:
             return Vector3D(value)
