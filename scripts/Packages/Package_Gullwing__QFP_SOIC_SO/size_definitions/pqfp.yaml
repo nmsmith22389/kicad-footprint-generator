@@ -2,6 +2,33 @@ FileHeader:
   library_Suffix: 'QFP'
   device_type: 'PQFP'
 
+PQFP-32_5x5mm_P0.5mm:
+  size_source: 'https://www.ti.com/lit/ds/symlink/ads127l01.pdf'
+  force_small_pitch_ipc_definition: True
+  body_size_x:
+    nominal: 5
+    tolerance: 0
+    # minimum:
+    # maximum:
+  body_size_y:
+    nominal: 5
+    tolerance: 0
+  overall_size_x:
+    nominal: 7
+    tolerance: 0
+  overall_size_y:
+    nominal: 7
+    tolerance: 0
+  lead_width:
+    minimum: 0.17
+    maximum: 0.23
+  lead_len:
+    minimum: 0.4
+    maximum: 0.7
+  pitch: 0.5
+  num_pins_x: 8
+  num_pins_y: 8
+
 PQFP-100_14x20mm_P0.65mm:
   size_source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
   force_small_pitch_ipc_definition: True
