@@ -105,7 +105,7 @@ class PadArray(Node):
         if not kwargs.get('pincount'):
             raise KeyError('pincount not declared (like "pincount=10")')
         self.pincount = kwargs.get('pincount')
-        if type(self.pincount) is not int or self.pincount <= 0:
+        if not isinstance(self.pincount, int) or self.pincount <= 0:
             raise ValueError('{pc} is an invalid value for pincount'.format(pc=self.pincount))
 
         if kwargs.get('hidden_pins') and kwargs.get('deleted_pins'):
@@ -117,9 +117,9 @@ class PadArray(Node):
             # deleted pins are filtered out later by pad location (not number)
             self.exclude_pin_list = kwargs.get('hidden_pins')
 
-            if type(self.exclude_pin_list) not in [list, tuple]:
+            if not isinstance(self.exclude_pin_list, (list, tuple)):
                 raise TypeError('exclude pin list must be specified like "exclude_pin_list=[0,1]"')
-            elif any([type(i) not in [int] for i in self.exclude_pin_list]):
+            elif any([not isinstance(i, int) for i in self.exclude_pin_list]):
                 raise ValueError('exclude pin list must be integer value')
 
     # Where to start the aray
@@ -134,16 +134,16 @@ class PadArray(Node):
         # Start takes priority
         if kwargs.get('start'):
             self.startingPosition = kwargs.get('start')
-            if type(self.startingPosition) not in [list, tuple] or not len(self.startingPosition) == 2:
+            if not isinstance(self.startingPosition, (list, tuple)) or not len(self.startingPosition) == 2:
                 raise ValueError('array starting position "start" must be given as an list of length two')
-            if any([type(i) not in [int, float] for i in self.startingPosition]):
+            if any([not isinstance(i, (int, float)) for i in self.startingPosition]):
                 raise ValueError('array starting coordinates must be numerical')
         elif kwargs.get('center'):
             center = kwargs.get('center')
 
-            if type(center) not in [list, tuple] or not len(center) == 2:
+            if not isinstance(center, (list, tuple)) or not len(center) == 2:
                 raise ValueError('array center position "center" must be given as a list of length two')
-            if any([type(i) not in [int, float] for i in center]):
+            if any([not isinstance(i, (int, float)) for i in center]):
                 raise ValueError('array center coordinates must be numerical')
 
             # Now calculate the desired starting position of the array
@@ -155,7 +155,7 @@ class PadArray(Node):
         self.initialPin = kwargs.get('initial', 1)
         if self.initialPin == "":
             self.increment = 0
-        elif type(self.initialPin) is not int or self.initialPin < 1:
+        elif not isinstance(self.initialPin, int) or self.initialPin < 1:
             if not callable(self.increment):
                 raise ValueError('{pn} is not a valid starting pin number if increment is not a function'
                                  .format(pn=self.initialPin))
@@ -177,23 +177,23 @@ class PadArray(Node):
 
         if kwargs.get('spacing'):
             self.spacing = kwargs.get('spacing')
-            if type(self.spacing) not in [list, tuple]:
+            if not isinstance(self.spacing, (list, tuple)):
                 raise TypeError('spacing must be specified like "spacing=[0,1]"')
             elif len(self.spacing) is not 2:
                 raise ValueError('spacing must be supplied as x,y pair')
-            elif any([type(i) not in [int, float] for i in self.spacing]):
+            elif any([not isinstance(i, (int, float)) for i in self.spacing]):
                 raise ValueError('spacing must be numerical value')
             # if 'spacing' is specified, ignore x_spacing and y_spacing
             return
 
         if kwargs.get('x_spacing'):
             self.spacing[0] = kwargs.get('x_spacing')
-            if type(self.spacing[0]) not in [int, float]:
+            if not isinstance(self.spacing[0], (int, float)):
                 raise ValueError('x_spacing must be supplied as numerical value')
 
         if kwargs.get('y_spacing'):
             self.spacing[1] = kwargs.get('y_spacing')
-            if type(self.spacing[1]) not in [int, float]:
+            if not isinstance(self.spacing[1], (int, float)):
                 raise ValueError('y_spacing must be supplied as numerical value')
 
         if all([i == 0 for i in self.spacing]):
@@ -212,13 +212,13 @@ class PadArray(Node):
         # this can be used for creating an array with all the same pad number
         if self.increment == 0:
             pad_numbers = [self.initialPin] * self.pincount
-        elif type(self.increment) == int:
+        elif isinstance(self.increment, int):
             pad_numbers = range(self.initialPin, self.initialPin + (self.pincount * self.increment), self.increment)
         elif callable(self.increment):
             pad_numbers = [self.initialPin]
-            for idx in range(1, self.pincount):
+            for _ in range(1, self.pincount):
                 pad_numbers.append(self.increment(pad_numbers[-1]))
-        elif type(self.increment) == GeneratorType:
+        elif isinstance(self.increment, GeneratorType):
             pad_numbers = [next(self.increment) for i in range(self.pincount)]
         else:
             raise TypeError("Wrong type for increment. It must be either a int, callable or generator.")
@@ -231,14 +231,14 @@ class PadArray(Node):
             delta_size = Vector2D(
                 size_reduction.get('x+', 0) + size_reduction.get('x-', 0),
                 size_reduction.get('y+', 0) + size_reduction.get('y-', 0)
-                )
+            )
 
             end_pad_params['size'] -= delta_size
 
             delta_pos = Vector2D(
                 -size_reduction.get('x+', 0) + size_reduction.get('x-', 0),
                 -size_reduction.get('y+', 0) + size_reduction.get('y-', 0)
-                )/2
+            ) / 2
         else:
             delta_pos = Vector2D(0, 0)
 
@@ -246,12 +246,12 @@ class PadArray(Node):
             includePad = True
 
             # deleted pins are filtered by pad/pin position (they are 'None' in pad_numbers list)
-            if type(number) not in [int, str]:
+            if not isinstance(number, (int, str)):
                 includePad = False
 
             # hidden pins are filtered out by pad number (index of pad_numbers list)
             if not kwargs.get('deleted_pins'):
-                if type(self.initialPin) == 'int':
+                if isinstance(self.initialPin, int):
                     includePad = (self.initialPin + i) not in self.exclude_pin_list
                 else:
                     includePad = number not in self.exclude_pin_list
@@ -260,9 +260,9 @@ class PadArray(Node):
                 current_pad_pos = Vector2D(
                     x_start + i * x_spacing,
                     y_start + i * y_spacing
-                    )
+                )
                 current_pad_params = copy(kwargs)
-                if i == 0 or i == len(pad_numbers)-1:
+                if i == 0 or i == len(pad_numbers) - 1:
                     current_pad_pos += delta_pos
                     current_pad_params = end_pad_params
                 if kwargs.get('type') == Pad.TYPE_THT and number == kwargs.get('tht_pad1_id', 1):
@@ -280,15 +280,15 @@ class PadArray(Node):
                                 number=number, at=current_pad_pos,
                                 corner_selection=kwargs.get('chamfer_corner_selection_first'),
                                 **current_pad_params
-                                ))
+                            ))
                         continue
-                    if i == len(pad_numbers)-1 and 'chamfer_corner_selection_last' in kwargs:
+                    if i == len(pad_numbers) - 1 and 'chamfer_corner_selection_last' in kwargs:
                         pads.append(
                             ChamferedPad(
                                 number=number, at=current_pad_pos,
                                 corner_selection=kwargs.get('chamfer_corner_selection_last'),
                                 **current_pad_params
-                                ))
+                            ))
                         continue
                 pads.append(Pad(number=number, at=current_pad_pos, **current_pad_params))
 
