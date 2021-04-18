@@ -114,37 +114,24 @@ HVQFN-24-1EP_4x4mm_P0.5mm_EP2.6x2.6mm:
   num_pins_y: 6
   
 HVQFN-24-1EP_4x4mm_P0.5mm_EP2.1x2.1mm:
-  device_type: 'HVQFN'
-  size_source: 'https://www.nxp.com/docs/en/package-information/SOT616-1.pdf'
-  ipc_class: 'qfn' # 'qfn_pull_back'
-  body_size_x:
-    minimum: 3.9
-    nominal: 4.0
-    maximum: 4.1
-  body_size_y:
-    minimum: 3.9
-    nominal: 4.0
-    maximum: 4.1
-  overall_height:
-    maximum: 1
-  lead_width:
-    minimum: 0.18
-    maximum: 0.3
-  lead_len:
-    minimum: 0.3
-    maximum: 0.5
-
-  EP_size_x:
-    minimum: 1.95
-    maximum: 2.25
-  EP_size_y:
-    minimum: 1.95
-    maximum: 2.25
-  EP_num_paste_pads: [3, 3]
-
+  description: "24-Lead Plastic Quad Flat, No Lead Package - 4x4 mm Body [HVQFN]; see https://www.nxp.com/docs/en/package-information/SOT616-1.pdfh"
+  pkg_width: 4.0
+  pkg_height: 4.0
   pitch: 0.5
-  num_pins_x: 6
-  num_pins_y: 6
+  n_horz_pads: 6
+  n_vert_pads: 6
+  pad_width: 0.9
+  pad_height: 0.24
+  pad_h_distance: 4.1
+  pad_v_distance: 4.1
+  corner_pads: false
+  center_pad: true
+  center_pad_width: 2.1
+  center_pad_height: 2.1
+  center_pad_h_div: 3
+  center_pad_v_div: 3
+  paste_margin_ratio: -0.1
+  thermal_vias: false
 
 HVQFN-32-1EP_5x5mm_P0.5mm_EP3.1x3.1mm:
   device_type: 'HVQFN'
