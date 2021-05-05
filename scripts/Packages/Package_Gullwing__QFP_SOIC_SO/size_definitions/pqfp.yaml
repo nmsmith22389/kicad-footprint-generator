@@ -3,28 +3,13 @@ FileHeader:
   device_type: 'PQFP'
 
 PQFP-32_5x5mm_P0.5mm:
-  size_source: 'https://www.ti.com/lit/ds/symlink/ads127l01.pdf'
-  force_small_pitch_ipc_definition: True
-  body_size_x:
-    nominal: 5
-    tolerance: 0
-    # minimum:
-    # maximum:
-  body_size_y:
-    nominal: 5
-    tolerance: 0
-  overall_size_x:
-    nominal: 7
-    tolerance: 0
-  overall_size_y:
-    nominal: 7
-    tolerance: 0
-  lead_width:
-    minimum: 0.17
-    maximum: 0.23
-  lead_len:
-    minimum: 0.4
-    maximum: 0.7
+  size_source: 'https://www.ti.com/lit/ds/symlink/ads127l01.pdf#page=87'
+  body_size_x: 4.95 .. 5.05
+  body_size_y: 4.95 .. 5.05
+  overall_size_x: 6.9 .. 7.1
+  overall_size_y: 6.9 .. 7.1
+  lead_width: 0.17 .. 0.23
+  lead_len: 0.4 .. 0.7
   pitch: 0.5
   num_pins_x: 8
   num_pins_y: 8
