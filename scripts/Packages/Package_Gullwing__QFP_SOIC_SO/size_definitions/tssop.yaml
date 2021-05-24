@@ -606,9 +606,12 @@ TSSOP-28-1EP_4.4x9.7mm_P0.65mm_EP2.85x6.7mm:
     minimum: 6.25
     maximum: 6.50
 
-  body_height: 1.10
+  body_height:
+    maximum: 1.10
 
-  lead_width: 0.19 .. 0.30
+  lead_width:
+    minimum: 0.19
+    maximum: 0.30
 
   lead_len: 
     minimum: 0.50
