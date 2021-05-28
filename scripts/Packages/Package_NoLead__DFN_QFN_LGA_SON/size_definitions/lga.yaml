@@ -312,10 +312,10 @@ VLGA-4_2.5x2.0mm:
   #part_number: 'mpn'
   ipc_class: 'qfn_pull_back'
   body_size_x:
-    nominal: 2.5
+    nominal: 2
     tolerance: 0
   body_size_y:
-    nominal: 2
+    nominal: 2.5
     tolerance: 0
   overall_height:
     nominal: 0.84
@@ -330,9 +330,7 @@ VLGA-4_2.5x2.0mm:
     minimum: 0.60
     minimum: 0.70
   lead_center_to_center_x:
-    nominal: 1.65
-  lead_center_to_center_y:
     nominal: 1.25
   pitch: 1.65
   num_pins_x: 0
-  num_pins_y: 4
+  num_pins_y: 2
