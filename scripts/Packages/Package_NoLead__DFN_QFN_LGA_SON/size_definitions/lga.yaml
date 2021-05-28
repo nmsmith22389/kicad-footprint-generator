@@ -306,7 +306,7 @@ Broadcom_LGA-8_2.0x2.0mm:
 
 VLGA-4_2.5x2.0mm:
   device_type: 'VLGA'
-  size_source: 'https://ww1.microchip.com/downloads/en/DeviceDoc/DSC60XX-Ultra-Small-Ultra-Low-Power-MEMS-Oscillator-DS20005625C.pdf'
+  size_source: 'https://ww1.microchip.com/downloads/en/DeviceDoc/DSC60XX-Ultra-Small-Ultra-Low-Power-MEMS-Oscillator-DS20005625C.pdf#page=15'
   library: 'Package_LGA'
   #manufacturer: 'man'
   #part_number: 'mpn'
