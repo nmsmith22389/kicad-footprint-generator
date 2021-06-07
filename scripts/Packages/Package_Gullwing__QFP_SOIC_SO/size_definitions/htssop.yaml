@@ -141,7 +141,7 @@ HTSSOP-20-1EP_4.4x6.5mm_P0.65mm_EP2.85x4mm:
 
   EP_size_x:
     minimum: 2.6
-    maximum: 3.1   
+    maximum: 3.1
   EP_size_y:
     minimum: 3.8
     maximum: 4.2
