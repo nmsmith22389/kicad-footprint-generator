@@ -622,7 +622,7 @@ LFCSP-32-1EP_5x5mm_P0.5mm_EP3.6x3.6mm:
     minimum: 4.9
     nominal: 5
     maximum: 5.1
-  body_height:
+  overall_height:
     minimum: 0.7
     nominal: 0.75
     maximum: 0.8
