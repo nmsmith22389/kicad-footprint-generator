@@ -74,7 +74,7 @@ def generate_one_footprint(pincount, configuration):
     else:
         upper_pincount = bottom_pincount = round(pincount / 2)
 
-    pins_width = pins_width_4pin + (pincount - 4)
+    pins_width = pins_width_4pin + (pincount - 4) * pad_pitch
     pin_edge_offset = -pins_width / 2
 
     kicad_mod.append(PadArray(initial=2, increment=2, pincount=upper_pincount, x_spacing=2 * pad_pitch, start=[pin_edge_offset + pad_pitch, -row_offset],
@@ -86,7 +86,7 @@ def generate_one_footprint(pincount, configuration):
         size=[pad_width, pad_height], layers=Pad.LAYERS_SMT))
 
     # create fab outline
-    housing_width = housing_width_4pin + (pincount - 4)
+    housing_width = housing_width_4pin + (pincount - 4) * pad_pitch
     housing_x_offset = housing_width / 2
 
     body_edge = {
@@ -121,12 +121,20 @@ def generate_one_footprint(pincount, configuration):
 
     kicad_mod.append(PolygoneLine(
         polygone=[
-            [-housing_x_offset, housing_y_offset],
-            [housing_x_offset, housing_y_offset],
-            [housing_x_offset, -housing_y_offset],
+            [pin_edge_offset + pad_pitch - pad_width / 2 - 0.2, -housing_y_offset],
             [-housing_x_offset + pin1_marker_l + silk_offset, -housing_y_offset],
             [-housing_x_offset, -housing_y_offset + pin1_marker_l + silk_offset],
-            [-housing_x_offset, housing_y_offset]],
+            [-housing_x_offset, housing_y_offset],
+            [pin_edge_offset - pad_width / 2 - 0.2, housing_y_offset],
+            [pin_edge_offset - pad_width / 2 - 0.2, housing_y_offset + pad_height / 2]],
+        layer='F.SilkS', width=configuration['silk_line_width']))
+
+    kicad_mod.append(PolygoneLine(
+        polygone=[
+            [-pin_edge_offset + pad_width / 2 + 0.2, housing_y_offset],
+            [housing_x_offset, housing_y_offset],
+            [housing_x_offset, -housing_y_offset],
+            [pin_edge_offset + ((upper_pincount - 1) * 2 + 1) * pad_pitch + pad_width / 2 + 0.2, -housing_y_offset]],
         layer='F.SilkS', width=configuration['silk_line_width']))
 
     # create courtyard
