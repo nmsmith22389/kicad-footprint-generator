@@ -185,6 +185,5 @@ if __name__ == '__main__':
         except yaml.YAMLError as exc:
             print(exc)
 
-    # with pincount(s) and partnumber(s) to be generated, build them all in a nested loop
     for pincount in pincounts:
         generate_one_footprint(pincount, configuration)
