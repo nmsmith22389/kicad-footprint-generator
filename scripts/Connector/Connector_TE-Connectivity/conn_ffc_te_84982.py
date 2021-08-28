@@ -41,7 +41,8 @@ datasheet = "https://www.te.com/commerce/DocumentDelivery/DDEController?Action=s
 
 pincounts = range(4, 31)
 d_between_rows = 1.8        # [mm]
-pad_height = 1.7            # [mm]
+pad_height_odd = 1.7        # [mm]
+pad_height_even = 1.9       # [mm]
 pad_width = 0.6             # [mm]
 pad_pitch = 1.0             # [mm]
 center_to_housing = 1.6     # [mm]
@@ -64,7 +65,8 @@ def generate_one_footprint(pincount, configuration):
     kicad_mod.setTags('TE FPC {:s} Vertical Top'.format(partnumber))
     kicad_mod.setAttribute('smd')
 
-    row_offset = (d_between_rows + pad_height) / 2
+    row_offset_odd = (d_between_rows + pad_height_odd) / 2
+    row_offset_even = (d_between_rows + pad_height_even) / 2
     housing_y_offset = housing_length / 2
 
     # create pads
@@ -77,13 +79,13 @@ def generate_one_footprint(pincount, configuration):
     pins_width = pins_width_4pin + (pincount - 4) * pad_pitch
     pin_edge_offset = -pins_width / 2
 
-    kicad_mod.append(PadArray(initial=2, increment=2, pincount=upper_pincount, x_spacing=2 * pad_pitch, start=[pin_edge_offset + pad_pitch, -row_offset],
+    kicad_mod.append(PadArray(initial=2, increment=2, pincount=upper_pincount, x_spacing=2 * pad_pitch, start=[pin_edge_offset + pad_pitch, -row_offset_even],
         type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT,
-        size=[pad_width, pad_height], layers=Pad.LAYERS_SMT))
+        size=[pad_width, pad_height_even], layers=Pad.LAYERS_SMT))
 
-    kicad_mod.append(PadArray(initial=1, increment=2, pincount=bottom_pincount, x_spacing=2 * pad_pitch, start=[pin_edge_offset, row_offset],
+    kicad_mod.append(PadArray(initial=1, increment=2, pincount=bottom_pincount, x_spacing=2 * pad_pitch, start=[pin_edge_offset, row_offset_odd],
         type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT,
-        size=[pad_width, pad_height], layers=Pad.LAYERS_SMT))
+        size=[pad_width, pad_height_odd], layers=Pad.LAYERS_SMT))
 
     # create fab outline
     housing_width = housing_width_4pin + (pincount - 4) * pad_pitch
@@ -126,7 +128,7 @@ def generate_one_footprint(pincount, configuration):
             [-housing_x_offset, -housing_y_offset + pin1_marker_l + silk_offset],
             [-housing_x_offset, housing_y_offset],
             [pin_edge_offset - pad_width / 2 - 0.2, housing_y_offset],
-            [pin_edge_offset - pad_width / 2 - 0.2, housing_y_offset + pad_height / 2]],
+            [pin_edge_offset - pad_width / 2 - 0.2, housing_y_offset + pad_height_odd / 2]],
         layer='F.SilkS', width=configuration['silk_line_width']))
 
     kicad_mod.append(PolygoneLine(
@@ -144,15 +146,16 @@ def generate_one_footprint(pincount, configuration):
     courtyard_clearance = configuration['courtyard_offset']['connector']
     
     courtyard_x = roundToBase(housing_x_offset + courtyard_clearance, courtyard_precision)
-    courtyard_y = roundToBase(row_offset + pad_height / 2.0 + courtyard_clearance, courtyard_precision)
+    courtyard_y_south = roundToBase(row_offset_odd + pad_height_odd / 2.0 + courtyard_clearance, courtyard_precision)
+    courtyard_y_north = roundToBase(row_offset_even + pad_height_even / 2.0 + courtyard_clearance, courtyard_precision)
     
-    kicad_mod.append(RectLine(start=[-courtyard_x, courtyard_y], end=[courtyard_x, -courtyard_y],
+    kicad_mod.append(RectLine(start=[-courtyard_x, courtyard_y_south], end=[courtyard_x, -courtyard_y_north],
         layer='F.CrtYd', width=configuration['courtyard_line_width']))
 
 
      ######################### Text Fields ###############################
     addTextFields(kicad_mod=kicad_mod, configuration=configuration, body_edges=body_edge,
-        courtyard={'top':-courtyard_y, 'bottom':courtyard_y}, fp_name=footprint_name, text_y_inside_position=[0, 0])
+        courtyard={'top':-courtyard_y_north, 'bottom':courtyard_y_south}, fp_name=footprint_name, text_y_inside_position=[0, 0])
 
 
     ##################### Output and 3d model ############################
