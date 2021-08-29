@@ -131,7 +131,7 @@ def generate_one_footprint(pincount, configuration):
 
     kicad_mod.append(PolygoneLine(
         polygone=[
-            [-pin_edge_offset + pad_width / 2 + 0.2, housing_y_offset],
+            [pin_edge_offset + ((bottom_pincount - 1) * 2) * pad_pitch + pad_width / 2 + 0.2, housing_y_offset],
             [housing_x_offset, housing_y_offset],
             [housing_x_offset, -housing_y_offset],
             [pin_edge_offset + ((upper_pincount - 1) * 2 + 1) * pad_pitch + pad_width / 2 + 0.2, -housing_y_offset]],
