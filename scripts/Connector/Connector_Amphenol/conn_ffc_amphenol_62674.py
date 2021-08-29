@@ -26,7 +26,6 @@ from math import sqrt, ceil, floor
 sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))  # load parent path of KicadModTree
 
 from KicadModTree import *
-from helpers import *
 
 sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))  # load parent path of tools
 from footprint_text_fields import addTextFields
@@ -51,6 +50,11 @@ housing_length = 2.95       # [mm]
 housing_width_4pin = 6.5    # [mm] 
 pins_width_4pin = 1.5       # [mm]
 pin1_marker_l = 0.566       # [mm]
+
+def roundToBase(value, base):
+    if base == 0:
+        return value
+    return round(value/base) * base
 
 def generate_one_footprint(pincount, configuration):
     partnumber = "{0:s}-{1:02g}1120ALF".format(series, pincount)
