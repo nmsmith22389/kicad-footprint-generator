@@ -71,6 +71,15 @@ RESULT_BASIC_NODES = """(module test (layer F.Cu) (tedit 0)
   )
 )"""
 
+RESULT_PAD_OFFSET = """(module test (layer F.Cu) (tedit 0)
+  (pad 1 thru_hole circle (at 0 0) (size 2 2) (drill 1.2) (layers *.Cu *.Mask))
+  (pad 2 thru_hole oval (at 2 0) (size 2 2) (drill 1.2 (offset 0.3 0.1)) (layers *.Cu *.Mask))
+  (pad 3 smd rect (at 4 0) (size 2 2) (drill (offset 0.3 0.1)) (layers F.Cu F.Mask F.Paste))
+  (pad 4 smd rect (at 6 0) (size 2 2) (layers F.Cu F.Mask F.Paste))
+  (pad 5 connect rect (at 8 0) (size 2 2) (drill (offset 0.3 0.1)) (layers F.Cu F.Mask))
+  (pad 6 np_thru_hole rect (at 10 0) (size 2 2) (drill 1.2) (layers *.Cu *.Mask))
+)"""
+
 
 class SimpleFootprintTests(unittest.TestCase):
 
@@ -126,3 +135,28 @@ class SimpleFootprintTests(unittest.TestCase):
 
         file_handler = KicadFileHandler(kicad_mod)
         self.assertEqual(file_handler.serialize(timestamp=0), RESULT_BASIC_NODES)
+
+    def testPadOffset(self):
+        kicad_mod = Footprint("test")
+
+        kicad_mod.append(Pad(number=1, type=Pad.TYPE_THT, shape=Pad.SHAPE_CIRCLE,
+                             at=[0, 0], size=2, drill=1.2,
+                             layers=Pad.LAYERS_THT))
+        kicad_mod.append(Pad(number=2, type=Pad.TYPE_THT, shape=Pad.SHAPE_CIRCLE,
+                             at=[2, 0], size=2, drill=1.2, offset=[0.3, 0.1],
+                             layers=Pad.LAYERS_THT))
+        kicad_mod.append(Pad(number=3, type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT,
+                             at=[4, 0], size=[2, 2], offset=[0.3, 0.1],
+                             layers=Pad.LAYERS_SMT))
+        kicad_mod.append(Pad(number=4, type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT,
+                             at=[6, 0], size=[2, 2],
+                             layers=Pad.LAYERS_SMT))
+        kicad_mod.append(Pad(number=5, type=Pad.TYPE_CONNECT, shape=Pad.SHAPE_RECT,
+                             at=[8, 0], size=[2, 2], drill=1.2, offset=[0.3, 0.1],
+                             layers=['F.Cu', 'F.Mask']))
+        kicad_mod.append(Pad(number=6, type=Pad.TYPE_NPTH, shape=Pad.SHAPE_RECT,
+                             at=[10, 0], size=[2, 2], drill=1.2,
+                             layers=Pad.LAYERS_NPTH))
+
+        file_handler = KicadFileHandler(kicad_mod)
+        self.assertEqual(file_handler.serialize(timestamp=0), RESULT_PAD_OFFSET)

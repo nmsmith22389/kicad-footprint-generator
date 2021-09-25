@@ -308,7 +308,11 @@ class KicadFileHandler(FileHandler):
         return sexpr_primitives
 
     def _serialize_Pad(self, node):
-        sexpr = ['pad', node.number, node.type, node.shape]
+        sexpr = ['pad', node.number, node.type]
+        if node.shape == Pad.SHAPE_CIRCLE and (node.offset.x != 0 or node.offset.y != 0):
+            sexpr.append(Pad.SHAPE_OVAL)
+        else:
+            sexpr.append(node.shape)
 
         position, rotation = node.getRealPosition(node.at, node.rotation)
         if not rotation % 360 == 0:
@@ -318,11 +322,20 @@ class KicadFileHandler(FileHandler):
 
         sexpr.append(['size', node.size.x, node.size.y])
 
+        drill = []
         if node.type in [Pad.TYPE_THT, Pad.TYPE_NPTH]:
             if node.drill.x == node.drill.y:
-                sexpr.append(['drill', node.drill.x])
+                drill = ['drill', node.drill.x]
             else:
-                sexpr.append(['drill', 'oval', node.drill.x, node.drill.y])
+                drill = ['drill', 'oval', node.drill.x, node.drill.y]
+
+        if node.offset.x != 0 or node.offset.y != 0:
+            if not drill:
+                drill.append('drill')
+            drill.append(['offset', node.offset.x, node.offset.y])
+
+        if drill:
+            sexpr.append(drill)
 
         sexpr.append(['layers'] + node.layers)
         if node.shape == Pad.SHAPE_ROUNDRECT:
