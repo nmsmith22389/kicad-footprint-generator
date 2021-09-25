@@ -29,12 +29,12 @@ def formatFloat(val):
 
 def lispString(string):
     '''
-    add quotation marks to string, when it include a white space or is empty
+    add quotation marks to string, when it include a white space, a newline or is empty
     '''
     if type(string) is not str:
         string = str(string)
 
-    if len(string) == 0 or re.match(".*\s.*", string):
+    if len(string) == 0 or re.match(".*\s.*", string) or '\\n' in string:
         return '"{}"'.format(string.replace('"', '\\"'))  # escape text
 
     return string
@@ -168,7 +168,7 @@ class SexprSerializer(object):
         for attr in sexpr:
             if isinstance(attr, (tuple, list)):
                 return_string = self.sexpr_to_string(attr, prefix + " ")
-
+                
                 if loop_ctrl['indentation']:
                     return_string = return_string.replace('\n', '\n ')
                 serial_string += get_separator()

@@ -283,12 +283,18 @@ class RingPad(Node):
           solder mask margin of the pad (default: 0)
         * *minimum_overlap* (``float``) --
           minimum arc overlap. default 0.1
+        * *skip_paste* (``bool``) --
+          remove the paste from this pad. default False
+        * *skip_mask* (``bool``) --
+          remove the mask from this pad. default False
     """
 
     def __init__(self, **kwargs):
         Node.__init__(self)
         self.solder_mask_margin = kwargs.get('solder_mask_margin', 0)
         self.minimum_overlap = kwargs.get('minimum_overlap', 0.1)
+        self.skip_mask = kwargs.get('skip_mask',False)
+        self.skip_paste = kwargs.get('skip_paste',False)
         self._initPosition(**kwargs)
         self._initSize(**kwargs)
         self._initNumber(**kwargs)
@@ -304,7 +310,7 @@ class RingPad(Node):
         if type(_id) not in [int, float] or type(_od) not in [int, float]:
             raise ValueError('ring pad size and inner_diameter only support int or float')
         if _id >= _od:
-            raise ValueError('inner diameter must be larger than size')
+            raise ValueError('inner diameter must be smaller than size')
 
         self.radius = (_id+_od)/4
         self.width = (_od-_id)/2
@@ -356,11 +362,16 @@ class RingPad(Node):
 
     def _generatePads(self):
         self.pads = []
+        layers = ['F.Cu']
         if self.num_paste_zones > 1:
-            layers = ['F.Cu', 'F.Mask']
+            if not self.skip_mask:
+                layers.append('F.Mask')                
             self._generatePastePads()
         else:
-            layers = ['F.Cu', 'F.Mask', 'F.Paste']
+            if not self.skip_mask:
+                layers.append('F.Mask')
+            if not self.skip_paste:
+                layers.append('F.Paste')                
 
         if not self.is_circle:
             self._generateCopperPads()
@@ -409,7 +420,7 @@ class RingPad(Node):
             RingPadPrimitive(
                 number="",
                 at=self.at,
-                width=self.width+2*self.solder_mask_margin,
+                width=w,
                 layers=['F.Mask'],
                 radius=self.radius
                 ))
@@ -418,9 +429,9 @@ class RingPad(Node):
         # kicad_mod.append(c)
         layers = ['F.Cu']
         if self.num_paste_zones == 1:
-            if self.solder_paste_margin == 0:
+            if self.solder_paste_margin == 0 and not self.skip_paste:
                 layers.append('F.Paste')
-            else:
+            elif not self.skip_paste:
                 self.pads.append(
                     RingPadPrimitive(
                         number="",
@@ -429,11 +440,11 @@ class RingPad(Node):
                         layers=['F.Paste'],
                         radius=self.radius
                         ))
-
-        if self.solder_mask_margin == 0:
+        
+        if self.solder_mask_margin == 0 and not self.skip_mask:
             # bug in kicad so any clearance other than 0 needs a workaround
             layers.append('F.Mask')
-        else:
+        elif not self.skip_mask:
             self._generateMaskPads()
         self.pads.append(
             RingPadPrimitive(

@@ -174,13 +174,24 @@ class Pad(Node):
           If this is given then all other round radius specifiers are ignored
           Ignored for every shape except round rect
 
+        * *clearance* (``float``) --
+          clearance margin of the pad (default: 0)
         * *solder_paste_margin_ratio* (``float``) --
           solder paste margin ratio of the pad (default: 0)
         * *solder_paste_margin* (``float``) --
           solder paste margin of the pad (default: 0)
         * *solder_mask_margin* (``float``) --
           solder mask margin of the pad (default: 0)
-
+          
+        * *zone_connect* (``int``) --
+          zone connection type of the pad (default: None)
+          None maps to CONNECT_PARENT, which means connection type is governed
+          by parent footprint.
+        * *thermal_width* (``float``) --
+          thermal relief spoke width of the pad (default: 0)
+        * *thermal_gap* (``float``) --
+          thermal relief gap of the pad (default: 0)
+          
         * *x_mirror* (``[int, float](mirror offset)``) --
           mirror x direction around offset "point"
         * *y_mirror* (``[int, float](mirror offset)``) --
@@ -213,6 +224,13 @@ class Pad(Node):
     LAYERS_CONNECT_FRONT = ['F.Cu', 'F.Mask']
     LAYERS_CONNECT_BACK = ['B.Cu', 'F.Mask']
 
+    CONNECT_PARENT = None
+    CONNECT_NONE = 0
+    CONNECT_THERMAL = 1
+    CONNECT_SOLID = 2
+    _CONNECTS = [CONNECT_PARENT, CONNECT_NONE, CONNECT_THERMAL, CONNECT_SOLID]
+
+
     ANCHOR_CIRCLE = 'circle'
     ANCHOR_RECT = 'rect'
     _ANCHOR_SHAPE = [ANCHOR_CIRCLE, ANCHOR_RECT]
@@ -232,9 +250,13 @@ class Pad(Node):
         self._initSize(**kwargs)
         self._initOffset(**kwargs)
         self._initDrill(**kwargs)  # requires pad type and offset
+        self._initClearance(**kwargs)
         self._initSolderPasteMargin(**kwargs)
         self._initSolderPasteMarginRatio(**kwargs)
         self._initSolderMaskMargin(**kwargs)
+        self._initZoneConnect(**kwargs)
+        self._initThermalWidth(**kwargs)
+        self._initThermalGap(**kwargs)
         self._initLayers(**kwargs)
         self._initMirror(**kwargs)
 
@@ -312,7 +334,10 @@ class Pad(Node):
             self.drill = None
             if kwargs.get('drill'):
                 pass  # TODO: throw warning because drill is not supported
-
+        
+    def _initClearance(self, **kwargs):
+        self.clearance = kwargs.get('clearance', 0)
+        
     def _initSolderPasteMarginRatio(self, **kwargs):
         self.solder_paste_margin_ratio = kwargs.get('solder_paste_margin_ratio', 0)
 
@@ -321,6 +346,17 @@ class Pad(Node):
 
     def _initSolderMaskMargin(self, **kwargs):
         self.solder_mask_margin = kwargs.get('solder_mask_margin', 0)
+   
+    def _initZoneConnect(self, **kwargs):
+        self.zone_connect = kwargs.get('zone_connect', Pad.CONNECT_PARENT)
+        if self.zone_connect not in Pad._CONNECTS:
+            raise ValueError('{zone_connect} is an invalid zone connection for pads'.format(type=self.zone_connect))
+
+    def _initThermalWidth(self, **kwargs):
+        self.thermal_width = kwargs.get('thermal_width', 0)
+
+    def _initThermalGap(self, **kwargs):
+        self.thermal_gap = kwargs.get('thermal_gap', 0)
 
     def _initLayers(self, **kwargs):
         if not kwargs.get('layers'):

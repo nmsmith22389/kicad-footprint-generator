@@ -42,6 +42,8 @@ class Text(Node):
           thickness of the text (default: 0.15)
         * *hide* (``bool``) --
           hide text (default: False)
+        * *justify* (``str``) --
+          justify text (default: 'center')
 
     :Example:
 
@@ -55,6 +57,11 @@ class Text(Node):
     TYPE_VALUE = 'value'
     TYPE_USER = 'user'
     _TYPES = [TYPE_REFERENCE, TYPE_VALUE, TYPE_USER]
+
+    HJUSTIFY_LEFT = 'left'
+    HJUSTIFY_CENTER = 'center'
+    HJUSTIFY_RIGHT = 'right'
+    _HJUSTIFYS = [HJUSTIFY_LEFT, HJUSTIFY_CENTER, HJUSTIFY_RIGHT]
 
     def __init__(self, **kwargs):
         Node.__init__(self)
@@ -71,10 +78,17 @@ class Text(Node):
 
         self.hide = kwargs.get('hide', False)
 
+        self._initJustify(**kwargs)
+
     def _initType(self, **kwargs):
         self.type = kwargs['type']
         if self.type not in Text._TYPES:
             raise ValueError('Illegal type selected for text field.')
+            
+    def _initJustify(self, **kwargs):
+        self.justify = kwargs.get('justify',Text.HJUSTIFY_CENTER)
+        if self.justify not in Text._HJUSTIFYS:
+            raise ValueError('Illegal justify selected for text field.')
 
     def rotate(self, angle, origin=(0, 0), use_degrees=True):
         r""" Rotate text around given origin

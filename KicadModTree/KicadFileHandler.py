@@ -87,6 +87,10 @@ class KicadFileHandler(FileHandler):
         if self.kicad_mod.attribute:
             sexpr.append(['attr', self.kicad_mod.attribute])
             sexpr.append(SexprSerializer.NEW_LINE)
+            
+        if self.kicad_mod.clearance:
+            sexpr.append(['clearance', self.kicad_mod.clearance])
+            sexpr.append(SexprSerializer.NEW_LINE)   
 
         if self.kicad_mod.maskMargin:
             sexpr.append(['solder_mask_margin', self.kicad_mod.maskMargin])
@@ -100,6 +104,18 @@ class KicadFileHandler(FileHandler):
             sexpr.append(['solder_paste_ratio', self.kicad_mod.pasteMarginRatio])
             sexpr.append(SexprSerializer.NEW_LINE)
 
+        if not self.kicad_mod.zoneConnect is None:
+            sexpr.append(['zone_connect', self.kicad_mod.zoneConnect])
+            sexpr.append(SexprSerializer.NEW_LINE)
+            
+        if self.kicad_mod.thermalWidth:
+            sexpr.append(['thermal_width', self.kicad_mod.thermalWidth])
+            sexpr.append(SexprSerializer.NEW_LINE)
+            
+        if self.kicad_mod.thermalGap:
+            sexpr.append(['thermal_gap', self.kicad_mod.thermalGap])
+            sexpr.append(SexprSerializer.NEW_LINE)
+            
         sexpr.extend(self._serializeTree())
 
         return str(SexprSerializer(sexpr))
@@ -244,8 +260,14 @@ class KicadFileHandler(FileHandler):
                     ['size', node.size.x, node.size.y],
                     ['thickness', node.thickness]]]
 
+        jloc = (node.justify != 'center')
         if node.mirror:
-            effects.append(['justify', 'mirror'])
+            if jloc:
+                effects.append(['justify', node.justify, 'mirror'])
+            else:
+                effects.append(['justify', 'mirror'])
+        elif jloc:
+            effects.append(['justify', node.justify])
 
         sexpr.append(effects)
         sexpr.append(SexprSerializer.NEW_LINE)
@@ -255,7 +277,7 @@ class KicadFileHandler(FileHandler):
     def _serialize_Model(self, node):
         sexpr = ['model', node.filename,
                  SexprSerializer.NEW_LINE,
-                 ['at', ['xyz', node.at.x, node.at.y, node.at.z]],
+                 ['at', ['xyz', node.at.x, node.at.y, node.at.z]] if node.offset == [0,0,0] else ['offset', ['xyz', node.offset.x, node.offset.y, node.offset.z]],
                  SexprSerializer.NEW_LINE,
                  ['scale', ['xyz', node.scale.x, node.scale.y, node.scale.z]],
                  SexprSerializer.NEW_LINE,
@@ -323,6 +345,8 @@ class KicadFileHandler(FileHandler):
                 sexpr.append(['drill', node.drill.x])
             else:
                 sexpr.append(['drill', 'oval', node.drill.x, node.drill.y])
+            if node.offset != [0,0]:
+                sexpr[-1] += ['(offset',node.offset.x, node.offset.y, ')']
 
         sexpr.append(['layers'] + node.layers)
         if node.shape == Pad.SHAPE_ROUNDRECT:
@@ -339,14 +363,25 @@ class KicadFileHandler(FileHandler):
             sexpr_primitives = self._serialize_CustomPadPrimitives(node)
             sexpr.append(['primitives', SexprSerializer.NEW_LINE] + sexpr_primitives)
 
-        if node.solder_paste_margin_ratio != 0 or node.solder_mask_margin != 0 or node.solder_paste_margin != 0:
+        if node.solder_paste_margin_ratio != 0 or node.solder_mask_margin != 0 or node.solder_paste_margin != 0 or node.clearance != 0:
             sexpr.append(SexprSerializer.NEW_LINE)
+            if node.clearance != 0:
+                sexpr.append(['clearance', node.clearance])
             if node.solder_mask_margin != 0:
                 sexpr.append(['solder_mask_margin', node.solder_mask_margin])
             if node.solder_paste_margin_ratio != 0:
                 sexpr.append(['solder_paste_margin_ratio', node.solder_paste_margin_ratio])
             if node.solder_paste_margin != 0:
                 sexpr.append(['solder_paste_margin', node.solder_paste_margin])
+
+        if not node.zone_connect is None or node.thermal_width != 0 or node.thermal_gap!=0:
+            sexpr.append(SexprSerializer.NEW_LINE)
+            if not node.zone_connect is None:
+                sexpr.append(['zone_connect', node.zone_connect])
+            if node.thermal_width != 0:
+                sexpr.append(['thermal_width', node.thermal_width])
+            if node.thermal_gap != 0:
+                sexpr.append(['thermal_gap', node.thermal_gap])
 
         return sexpr
 

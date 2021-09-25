@@ -27,11 +27,13 @@ class Model(Node):
         * *filename* (``str``) --
           name of the 3d-model file
         * *at* (``Vector3D``) --
-          position of the model (default: [0, 0, 0])
+          position of the model in inches (default: [0, 0, 0])
+        * *offset* (``Vector3D``) --
+          position of the model in mm (default: [0, 0, 0])
         * *scale* (``Vector3D``) --
           scale of the model (default: [1, 1, 1])
         * *rotate* (``Vector3D``) --
-          rotation of the model (default: [0, 0, 0])
+          rotation of the model in degrees (default: [0, 0, 0])
 
     :Example:
 
@@ -44,6 +46,7 @@ class Model(Node):
         Node.__init__(self)
         self.filename = kwargs['filename']
         self.at = Vector3D(kwargs.get('at', [0, 0, 0]))
+        self.offset = Vector3D(kwargs.get('offset', [0, 0, 0]))
         self.scale = Vector3D(kwargs.get('scale', [1, 1, 1]))
         self.rotate = Vector3D(kwargs.get('rotate', [0, 0, 0]))
 
@@ -52,6 +55,7 @@ class Model(Node):
 
         render_string = ['filename: {filename}'.format(filename=self.filename),
                          'at: {at}'.format(at=self.at.render('(xyz {x} {y} {z})')),
+                         'offset: {offset}'.format(at=self.offset.render('(xyz {x} {y} {z})')),
                          'scale: {scale}'.format(scale=self.scale.render('(xyz {x} {y} {z})')),
                          'rotate: {rotate}'.format(rotate=self.rotate.render('(xyz {x} {y} {z})'))]
 

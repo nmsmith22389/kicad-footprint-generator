@@ -47,9 +47,13 @@ class Footprint(Node):
         self.description = None
         self.tags = None
         self.attribute = None
+        self.clearance = None
         self.maskMargin = None
         self.pasteMargin = None
         self.pasteMarginRatio = None
+        self.zoneConnect = None
+        self.thermalWidth = None
+        self.thermalGap = None
 
     def setName(self, name):
         self.name = name
@@ -63,6 +67,9 @@ class Footprint(Node):
     def setAttribute(self, value):
         self.attribute = value
 
+    def setClearance(self, value):
+        self.clearance = value
+        
     def setMaskMargin(self, value):
         self.maskMargin = value
 
@@ -74,3 +81,12 @@ class Footprint(Node):
         assert abs(value) <= 1, "Solder paste margin must be between -1 and 1. {} is too large.".format(value)
 
         self.pasteMarginRatio = value
+
+    def setZoneConnect(self, value):
+        self.zoneConnect = value
+        
+    def setThermalWidth(self, value):
+        self.thermalWidth = value
+
+    def setThermalGap(self, value):
+        self.thermalGap = value
