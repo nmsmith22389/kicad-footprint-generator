@@ -234,6 +234,7 @@ if __name__ == '__main__':
         [  3.8,2.6,  2.5,      0.8,                          [],                              "http://www.vishay.com/docs/45233/krseries.pdf"],
         [  4.3,1.9,    5,      0.8,                          [],                              "http://www.vishay.com/docs/45233/krseries.pdf"],
         [  4.7,2.5,    5,      0.8,                          [],                              "http://www.vishay.com/docs/45233/krseries.pdf"],
+        [    5,3.5, 6.35,      0.8,                          [],                              "http://www.vishay.com/docs/28549/dseries.pdf"],
         [  5.1,3.2,    5,      0.8,                          [],                              "http://www.vishay.com/docs/45233/krseries.pdf"],
 
         [  7.5,2.5,    5,        1,                          [],                              "http://www.vishay.com/docs/28535/vy2series.pdf"],
@@ -280,7 +281,38 @@ if __name__ == '__main__':
 
 
 
+    ###########################################################
+    # mica capacitors
+    ###########################################################
 
+    #       d    w    rm    ddrill               name_additions                               add_description
+    caps = [
+        [ 6.86,4.83, 3.05,      0.6,                          [],                              "http://www.sharmacomponents.com/datasheet/Mica/SECI%20mica_all.pdf"], #Sharma DM05/SCDM05
+        [  9.9, 5.6,  3.6,      0.6,                          [],                              "https://www.cde.com/resources/catalogs/STD-DIPPED.pdf"], #CDE CD10 (compatible with Sharma DM10/SCDM10)
+        [10.01,5.08,    5,      0.7,                          [],                              "http://www.sharmacomponents.com/datasheet/Mica/SECI%20mica_all.pdf"], #Sharma DM12
+        [ 12.7, 6.4,  5.9,      0.8,                          [],                              "https://www.cde.com/resources/catalogs/STD-DIPPED.pdf"], #CDE CD15 (compatible with Sharma DM15/SCDM15)
+        [ 18.3, 9.4,  8.7,        1,                          [],                              "https://www.cde.com/resources/catalogs/STD-DIPPED.pdf"], #CDE CD19 (compatible with Sharma DM19/SCDM19)
+        [20.07,8.15,11.11,        1,                          [],                              "http://www.sharmacomponents.com/datasheet/Mica/SECI%20mica_all.pdf"], #Sharma DM20/SCDM20
+        [ 21.3,11.9, 11.1,      1.2,                          [],                              "https://www.cde.com/resources/catalogs/STD-DIPPED.pdf"], #CDE CD30 (compatible with Sharma DM30)
+        [ 38.1,12.7,   27,      1.2,                          [],                              "https://www.cde.com/resources/catalogs/STD-DIPPED.pdf"] #CDE CD42 (compatible with Sharma DM42)
+    ]
+
+    script3mkt="CQ_params_C_Mica.py"
+
+    for c in caps:
+        seriesname = "Mica"
+        type = "disc" # this body type works for mica caps
+        w = c[0]
+        d = c[1]
+        w2 = 0
+        rm = c[2]
+        ddrill = c[3]
+        add_description = c[5]
+        name_additions = c[4]
+        makeResistorRadial(seriesname=seriesname, rm=rm, w=w, h=d, ddrill=ddrill, R_POW=R_POW,
+                           type=type, w2=w2, x_3d=[0, 0, 0], s_3d=[1, 1, 1], has3d=1,
+                           specialfpname="", add_description=add_description, name_additions=name_additions,
+                           specialtags=specialtags, classname="C", lib_name="${KISYS3DMOD}/Capacitor_THT", script3d=script3mkt)
 
 
 
@@ -297,7 +329,7 @@ if __name__ == '__main__':
 
     d2=0
     seriesname = "Axial"; w = 3.8; d = 2.6; ddrill = 0.8; R_POW = 0; add_description = "http://www.vishay.com/docs/45231/arseries.pdf"; name_additions = []
-    for rm in [7.5, 10, 12.5, 15]:
+    for rm in [6.35, 7.5, 10, 12.5, 15]:
         makeResistorAxialHorizontal(seriesname=seriesname, rm=rm, rmdisp=rm, w=w, d=d, ddrill=ddrill, R_POW=R_POW,
                                     type=type, d2=d2, x_3d=[0, 0, 0], s_3d=[1, 1, 1], has3d=1,
                                     specialfpname="", add_description=add_description, name_additions=name_additions,

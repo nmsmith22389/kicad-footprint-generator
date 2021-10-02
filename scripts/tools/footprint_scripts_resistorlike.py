@@ -820,7 +820,7 @@ def makeResistorRadial(seriesname, rm, w, h, ddrill, R_POW, innerw=0,innerh=0,rm
         with open(script3d, "a") as myfile:
 
             myfile.write("\n    \"{0}\" : Params(# from Jan Kriege's 3d models\n".format(footprint_name))
-            if seriesname != "Disc" and seriesname !=  "Radial_Tantal":
+            if seriesname not in ["Disc", "Mica", "Radial_Tantal"]:
                 myfile.write("        H = {:0.2f}, # Body Height\n".format(height3d))
             myfile.write("        L = {:0.2f}, # Body Length\n".format(innerw))
             myfile.write("        W = {:0.2f}, # Body Width\n".format(innerh))
