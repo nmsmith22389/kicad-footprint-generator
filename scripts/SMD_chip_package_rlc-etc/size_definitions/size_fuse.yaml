@@ -1,3 +1,27 @@
+SMD_2410:
+    code_imperial: "2410"
+    code_metric: "6125"
+    body_length_min: 5.95
+    body_length_max: 6.25
+    body_width_min: 2.34
+    body_width_max: 2.64
+    terminal_length_min: 0.97
+    terminal_length_max: 1.73
+    ipc_reference: "ipc_spec_larger_or_equal_0603"
+    size_info: '(Body size from: http://www.mouser.com/pdfdocs/TEConnectivitysurfacemountfuses.pdf)'
+
+SMD_2410_HOLDER:
+    code_imperial: "2410Holder"
+    code_metric: "6125Holder"
+    body_length_min: 9.73
+    body_length_max: 9.73
+    body_width_min: 5.03
+    body_width_max: 5.03
+    terminal_length_min: 3.50
+    terminal_length_max: 3.70
+    ipc_reference: "ipc_spec_larger_or_equal_0603"
+    size_info: '(Body size from: https://www.littelfuse.com/~/media/electronics/datasheets/fuses/littelfuse_fuse_154_154t_154l_154tl_datasheet.pdf.pdf)'
+
 SMD_2920:
     code_imperial: "2920"
     code_metric: "7451"
