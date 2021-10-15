@@ -138,25 +138,27 @@ class NoLead():
 
     @staticmethod
     def deviceDimensions(device_size_data, fp_id):
-        unit = device_size_data.get('unit')
+        unit = device_size_data.get('unit', Unit.NONE)
         dimensions = {
-            'body_size_x': TolerancedSize.fromYaml(device_size_data, base_name='body_size_x', unit=unit),
-            'body_size_y': TolerancedSize.fromYaml(device_size_data, base_name='body_size_y', unit=unit),
-            'lead_width': TolerancedSize.fromYaml(device_size_data, base_name='lead_width', unit=unit),
-            'pitch': TolerancedSize.fromYaml(device_size_data, base_name='pitch', unit=unit).nominal
+            'body_size_x': TolerancedSize.from_yaml(device_size_data, base_name='body_size_x', default_unit=unit),
+            'body_size_y': TolerancedSize.from_yaml(device_size_data, base_name='body_size_y', default_unit=unit),
+            'lead_width': TolerancedSize.from_yaml(device_size_data, base_name='lead_width', default_unit=unit),
+            'pitch': TolerancedSize.from_yaml(device_size_data, base_name='pitch', default_unit=unit).nominal
         }
         dimensions['has_EP'] = False
         if 'EP_size_x_min' in device_size_data and 'EP_size_x_max' in device_size_data or 'EP_size_x' in device_size_data:
-            dimensions['EP_size_x'] = TolerancedSize.fromYaml(device_size_data, base_name='EP_size_x', unit=unit)
-            dimensions['EP_size_y'] = TolerancedSize.fromYaml(device_size_data, base_name='EP_size_y', unit=unit)
+            dimensions['EP_size_x'] = TolerancedSize.from_yaml(
+                device_size_data, base_name='EP_size_x', default_unit=unit)
+            dimensions['EP_size_y'] = TolerancedSize.from_yaml(
+                device_size_data, base_name='EP_size_y', default_unit=unit)
             dimensions['has_EP'] = True
             dimensions['EP_center_x'] = TolerancedSize(nominal=0)
             dimensions['EP_center_y'] = TolerancedSize(nominal=0)
             if 'EP_center_x' in device_size_data and 'EP_center_y' in device_size_data:
-                dimensions['EP_center_x'] = TolerancedSize.fromYaml(
-                    device_size_data, base_name='EP_center_x', unit=unit)
-                dimensions['EP_center_y'] = TolerancedSize.fromYaml(
-                    device_size_data, base_name='EP_center_y', unit=unit)
+                dimensions['EP_center_x'] = TolerancedSize.from_yaml(
+                    device_size_data, base_name='EP_center_x', default_unit=unit)
+                dimensions['EP_center_y'] = TolerancedSize.from_yaml(
+                    device_size_data, base_name='EP_center_y', default_unit=unit)
 
         if 'heel_reduction' in device_size_data:
             print(
@@ -165,35 +167,39 @@ class NoLead():
             dimensions['heel_reduction'] = device_size_data.get('heel_reduction', 0)
 
         if 'lead_to_edge' in device_size_data:
-            dimensions['lead_to_edge'] = TolerancedSize.fromYaml(device_size_data, base_name='lead_to_edge', unit=unit)
+            dimensions['lead_to_edge'] = TolerancedSize.from_yaml(
+                device_size_data, base_name='lead_to_edge', default_unit=unit)
 
         if 'lead_center_pos_x' in device_size_data:
-            dimensions['lead_center_pos_x'] = TolerancedSize.fromYaml(
-                device_size_data, base_name='lead_center_pos_x', unit=unit)
+            dimensions['lead_center_pos_x'] = TolerancedSize.from_yaml(
+                device_size_data, base_name='lead_center_pos_x', default_unit=unit)
         if 'lead_center_to_center_x' in device_size_data:
-            dimensions['lead_center_pos_x'] = TolerancedSize.fromYaml(
-                device_size_data, base_name='lead_center_to_center_x', unit=unit) / 2
+            dimensions['lead_center_pos_x'] = TolerancedSize.from_yaml(
+                device_size_data, base_name='lead_center_to_center_x', default_unit=unit) / 2
 
         if 'lead_center_pos_y' in device_size_data:
-            dimensions['lead_center_pos_y'] = TolerancedSize.fromYaml(
-                device_size_data, base_name='lead_center_pos_y', unit=unit)
+            dimensions['lead_center_pos_y'] = TolerancedSize.from_yaml(
+                device_size_data, base_name='lead_center_pos_y', default_unit=unit)
         if 'lead_center_to_center_y' in device_size_data:
-            dimensions['lead_center_pos_y'] = TolerancedSize.fromYaml(
-                device_size_data, base_name='lead_center_to_center_y', unit=unit) / 2
+            dimensions['lead_center_pos_y'] = TolerancedSize.from_yaml(
+                device_size_data, base_name='lead_center_to_center_y', default_unit=unit) / 2
 
         dimensions['lead_len_H'] = None
         dimensions['lead_len_V'] = None
         if 'lead_len_H' in device_size_data and 'lead_len_V' in device_size_data:
-            dimensions['lead_len_H'] = TolerancedSize.fromYaml(device_size_data, base_name='lead_len_H', unit=unit)
-            dimensions['lead_len_V'] = TolerancedSize.fromYaml(device_size_data, base_name='lead_len_V', unit=unit)
+            dimensions['lead_len_H'] = TolerancedSize.from_yaml(
+                device_size_data, base_name='lead_len_H', default_unit=unit)
+            dimensions['lead_len_V'] = TolerancedSize.from_yaml(
+                device_size_data, base_name='lead_len_V', default_unit=unit)
         elif 'lead_len' in device_size_data or (
                 'lead_len_min' in device_size_data and 'lead_len_max' in device_size_data):
-            dimensions['lead_len_H'] = TolerancedSize.fromYaml(device_size_data, base_name='lead_len', unit=unit)
+            dimensions['lead_len_H'] = TolerancedSize.from_yaml(
+                device_size_data, base_name='lead_len', default_unit=unit)
             dimensions['lead_len_V'] = dimensions['lead_len_H']
 
         if 'body_to_inside_lead_edge' in device_size_data:
-            dimensions['body_to_inside_lead_edge'] = TolerancedSize.fromYaml(
-                device_size_data, base_name='body_to_inside_lead_edge', unit=unit)
+            dimensions['body_to_inside_lead_edge'] = TolerancedSize.from_yaml(
+                device_size_data, base_name='body_to_inside_lead_edge', default_unit=unit)
         elif dimensions['lead_len_H'] is None:
             raise KeyError('{}: Either lead lenght or inside lead to edge dimension must be given.'.format(fp_id))
 

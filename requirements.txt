@@ -1,2 +1,5 @@
 pyyaml
 future
+pycodestyle
+pytest
+parameterized

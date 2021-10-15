@@ -13,6 +13,7 @@
 #
 # (C) 2016-2018 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 
+# %%
 import os
 import sys
 import unittest
@@ -23,9 +24,14 @@ from nodes import *  # NOQA
 from datatypes import *  # NOQA
 from moduletests import *  # NOQA
 
+# %%
+
 
 def run_tests():
     unittest.main()
 
+
 if __name__ == '__main__':
     run_tests()
+
+# %%
