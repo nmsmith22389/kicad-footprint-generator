@@ -169,7 +169,7 @@ class ModelGenerator:
         "",
         "https://creativecommons.org/licenses/by-sa/4.0/legalcode",
         "---",
-        "Please refer to http://kicad-pcb.org/libraries/license/ for further clarification of the exception.",
+        "Please refer to https://kicad.org/libraries/license/ for further clarification of the exception.",
         "---",
         "",
         "Risk disclaimer:",
