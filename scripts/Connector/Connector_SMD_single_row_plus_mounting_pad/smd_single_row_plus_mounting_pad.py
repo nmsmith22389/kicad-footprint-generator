@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 
-# Generator for jst smd connectors (single row with two mounting pads)
-
 import sys
 import os
 
@@ -23,6 +21,8 @@ def generate_one_footprint(idx, pincount, series_definition, configuration, grou
     else:
         mpn = series_definition['mpn_format_string'].format(pincount=pincount)
 
+    conn_type = '' if series_definition.get('type') is None else ' ' + series_definition['type']
+    
     pins_toward_bottom = series_definition['pad1_position'] == 'bottom-left'
     needs_additional_silk_pin1_marker = False
 
@@ -61,10 +61,12 @@ def generate_one_footprint(idx, pincount, series_definition, configuration, grou
         mpn=mpn, num_rows=1, pins_per_row=pincount, mounting_pad = "-1MP",
         pitch=series_definition['pitch'], orientation=orientation)
     footprint_name = footprint_name.replace('__', '_')
+    
+    print(footprint_name)
 
     kicad_mod = Footprint(footprint_name)
-    kicad_mod.setDescription("{:s} {:s} series connector, {:s} ({:s}), generated with kicad-footprint-generator".format(group_definition['manufacturer'],
-        series_definition['series'], mpn, series_definition['datasheet']))
+    kicad_mod.setDescription("{:s} {:s} series{:s} connector, {:s} ({:s}), generated with kicad-footprint-generator".format(group_definition['manufacturer'],
+        series_definition['series'], conn_type, mpn, series_definition['datasheet']))
     kicad_mod.setAttribute('smd')
     kicad_mod.setTags(configuration['keyword_fp_string'].format(series=series_definition['series'],
         orientation=orientation, man=group_definition['manufacturer'],
@@ -192,19 +194,36 @@ def generate_one_footprint(idx, pincount, series_definition, configuration, grou
             {'x': body_edge['right'], 'y': body_edge_pin}
         ]
         poly_silk_edge_left = [
-            {'x': body_edge['left'] - configuration['silk_fab_offset'], 'y': silk_y_mp_pin_side},
-            {'x': body_edge['left'] - configuration['silk_fab_offset'], 'y': side_line_y_pin_side + silk_y_offset_pin_side},
             {'x': pad_1_x_outside_edge - pad_edge_silk_center_offset, 'y': body_edge_pin + silk_y_offset_pin_side},
             {'x': pad_1_x_outside_edge - pad_edge_silk_center_offset, 'y': pin_edge_outside}
         ]
+        # need to wrap silk around side of body outline if MPs don't stick up past the body top edge
+        if mount_pad_y_pos - mounting_pad_size[1]/2 > body_edge['top']:
+            poly_silk_edge_left = [
+                {'x': body_edge['left'] - configuration['silk_fab_offset'], 'y': silk_y_mp_pin_side},
+                {'x': body_edge['left'] - configuration['silk_fab_offset'], 'y': side_line_y_pin_side + silk_y_offset_pin_side}
+                ] + poly_silk_edge_left
+        else:
+            poly_silk_edge_left = [
+                {'x': mount_pad_left_x_pos + mounting_pad_size[0]/2 + configuration['silk_pad_clearance'] + configuration['silk_line_width']/2,
+                'y': side_line_y_pin_side + silk_y_offset_pin_side}
+                ] + poly_silk_edge_left
+        
         if abs(pin_edge_outside) - abs(body_edge_pin + silk_y_offset_pin_side) < configuration['silk_line_lenght_min']:
             needs_additional_silk_pin1_marker = True
 
-        poly_silk_edge_right = [
-            {'x': body_edge['right'] + configuration['silk_fab_offset'], 'y': silk_y_mp_pin_side},
-            {'x': body_edge['right'] + configuration['silk_fab_offset'], 'y': side_line_y_pin_side + silk_y_offset_pin_side},
-            {'x': -pad_1_x_outside_edge + pad_edge_silk_center_offset, 'y': body_edge_pin + silk_y_offset_pin_side}
-        ]
+        if mount_pad_y_pos - mounting_pad_size[1]/2 > body_edge['top']:
+            poly_silk_edge_right = [
+                {'x': body_edge['right'] + configuration['silk_fab_offset'], 'y': silk_y_mp_pin_side},
+                {'x': body_edge['right'] + configuration['silk_fab_offset'], 'y': side_line_y_pin_side + silk_y_offset_pin_side},
+                {'x': -pad_1_x_outside_edge + pad_edge_silk_center_offset, 'y': body_edge_pin + silk_y_offset_pin_side}
+            ]
+        else:
+            poly_silk_edge_right = [
+                {'x': -mount_pad_left_x_pos - mounting_pad_size[0]/2 - configuration['silk_pad_clearance'] - configuration['silk_line_width']/2,
+                'y': side_line_y_pin_side + silk_y_offset_pin_side},
+                {'x': -pad_1_x_outside_edge + pad_edge_silk_center_offset, 'y': body_edge_pin + silk_y_offset_pin_side}
+            ]
     kicad_mod.append(PolygoneLine(polygone=poly_fab_pin_side, layer='F.Fab', width=configuration['fab_line_width']))
     if series_definition.get('no_automatic_silk_autline','False') != 'True':
         kicad_mod.append(PolygoneLine(polygone=poly_silk_edge_left, layer='F.SilkS', width=configuration['silk_line_width']))
@@ -368,7 +387,10 @@ def generate_one_footprint(idx, pincount, series_definition, configuration, grou
     ########################### file names ###############################
     model3d_path_prefix = configuration.get('3d_model_prefix','${KICAD6_3DMODEL_DIR}/')
 
-    lib_name = configuration['lib_name_format_string'].format(man=group_definition['manufacturer'],
+    if 'category' in series_definition:
+        lib_name = configuration['lib_name_specific_function_format_string'].format(category=series_definition['category'])
+    else:
+        lib_name = configuration['lib_name_format_string'].format(man=group_definition['manufacturer'],
         series=series_definition['series'])
     model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}.wrl'.format(
         model3d_path_prefix=model3d_path_prefix, lib_name=lib_name, fp_name=footprint_name)

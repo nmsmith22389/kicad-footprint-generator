@@ -119,3 +119,28 @@ device_definition:
     #     # body_fin_width: 0.8
     #     # x body edge relative to nearest pin
     #     rel_body_edge_x: 1.8
+    FH50:
+        series: ''
+        type: 'FFC/FPC'
+        category: 'FFC-FPC'
+        mpn_format_string: 'FH50-{pincount:d}S-0.5H'
+        orientation: 'H'
+        datasheet: 'https://www.hirose.com/product/document?clcode=&productname=&series=FH50&documenttype=Catalog&lang=en&documentid=D49364_en'
+        pinrange: ['list', [28,40,50]]
+        text_inside_pos: 'bottom'
+        pitch: 0.5
+        pad1_position: 'top-left' # 'top-left' | 'bottom-left' -> pin 2 always to the right of pin 1
+        mounting_pad_size: [0.9, 7.4]
+        # x position mounting inner mounting pad edge relative to nearest pad center
+        center_pad_to_mounting_pad_edge: 4.55
+        # y dimensions for pad given relative to mounting pad edge
+        rel_pad_y_outside_edge: 7.4
+        rel_pad_y_inside_edge: 6.3
+        pad_size_x: 0.3
+        # y position for body edge relative to mounting pad edge (positive -> body extends outside bounding box)
+        rel_body_edge_y: 1.2
+        body_size_y: 7.45
+        # body_fin_protrusion: 1.6
+        # body_fin_width: 0.8
+        # x body edge relative to nearest pin
+        rel_body_edge_x: 5.5
