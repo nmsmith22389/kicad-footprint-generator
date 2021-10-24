@@ -38,12 +38,12 @@ device_definition:
         # x position mounting inner mounting pad edge relative to nearest pad center
         center_pad_to_mounting_pad_edge: 3.37 #(D-B)/2
         # y dimensions for pad given relative to mounting pad edge
-        rel_pad_y_outside_edge: 7.4
-        rel_pad_y_inside_edge: 4.8
+        rel_pad_y_outside_edge: 7.4 #4.8+2.6, taken from "Recommended Pattern" diagram
+        rel_pad_y_inside_edge: 4.8 #taken from "Recommended Pattern" diagram
         pad_size_x: 1.2
         # y position for body edge relative to mounting pad edge (positive -> body extends outside bounding box)
-        rel_body_edge_y: 1.025
-        body_size_y: 5.6
+        rel_body_edge_y: 1.025 # tabHeight is 2.2. pad height is 3.3. Tab is 1.575 from body top edge. 1.575-(3.3-2.2)/2
+        body_size_y: 5.6 # directly from top view diagram
         # body_fin_protrusion: 1.6
         # body_fin_width: 0.8
         # x body edge relative to nearest pin
