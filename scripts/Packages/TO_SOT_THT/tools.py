@@ -216,7 +216,7 @@ def addRectAngledBottom(kicad_mod, x1, x2, angled_delta, layer, width, roun=0.00
                                [roundG(xma, roun),roundG(ymi, roun)],
                                [roundG(xmi, roun),roundG(ymi, roun)]], layer=layer, width=width))
 
-# add a circle which is filled with 45° lines
+# add a circle which is filled with 45 deg lines
 def addCircleLF(kicad_mod, center, radius, layer, width, linedist=0.3, roun=0.001):
     trans=Translation(center[0], center[1])
     kicad_mod.append(trans)

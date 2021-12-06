@@ -1,3 +1,10 @@
+'''
+StaggerType1 = StaggerOdd
+StaggerType2 = StaggerEven
+
+TODO: TabUp with staggered leads
+'''
+
 #usr/bin/env python
 
 import sys
@@ -47,18 +54,20 @@ def makeVERT(lib_name, pck, has3d=False, x_3d=[0, 0, 0], s_3d=[1,1,1], lptext="_
     y1=0
     y2=0
     maxpiny=0
-    if pck.staggered_type == 1:
+    if pck.staggered_type == 1: # odd
         y1 = pck.staggered_rm[0]
         yshift = -pck.staggered_rm[0]
         y2 = 0
         maxpiny = pck.staggered_rm[0]
+        pin1_length = maxpiny - t_fabp - h_fabp
         if len(pck.staggered_pad)>0:
             padsize=pck.staggered_pad
-    elif pck.staggered_type == 2:
+    elif pck.staggered_type == 2: # even
         y1 = 0
         yshift = 0
         y2=pck.staggered_rm[0]
         maxpiny = pck.staggered_rm[0]
+        pin1_length = abs(t_fabp + h_fabp)
         if len(pck.staggered_pad) > 0:
             padsize = pck.staggered_pad
 
@@ -92,14 +101,18 @@ def makeVERT(lib_name, pck, has3d=False, x_3d=[0, 0, 0], s_3d=[1,1,1], lptext="_
     footprint_name = pck.name
     for t in pck.more_packnames:
         footprint_name = footprint_name + "_" + t
-    footprint_name = footprint_name + "_Vertical"
+    #footprint_name = footprint_name + "_Vertical"
+    if pck.staggered_type>0:
+        #footprint_name = footprint_name + "_Py{0}mm".format(pck.staggered_rm[0],3)
+        footprint_name = footprint_name + "_P{}x{}mm".format(pck.rm * 2,pck.staggered_rm[0],3)
     for t in pck.fpnametags:
         footprint_name = footprint_name + "_" + t
     if pck.staggered_type>0:
-        footprint_name = footprint_name + "_Py{0}mm".format(pck.staggered_rm[0],3)
+        footprint_name = footprint_name + "_Lead{}mm".format(pin1_length,3)
     if pck.largepads:
         tag_items.append("large Pads")
         footprint_name = footprint_name + lptext
+    footprint_name = footprint_name + "_Vertical"
 
     print(footprint_name)
 
@@ -244,18 +257,20 @@ def makeHOR(lib_name, pck, has3d=False, x_3d=[0, 0, 0], s_3d=[1,1,1], lptext="_L
     y1 = 0
     y2 = 0
     maxpiny = 0
-    if pck.staggered_type == 1:
+    if pck.staggered_type == 1: # odd
         y1 = pck.staggered_rm[1]
         yshift = -pck.staggered_rm[1]
         y2 = 0
         maxpiny = pck.staggered_rm[1]
+        pin1_length = abs(t_fabp) + abs(pck.staggered_rm[1])
         if len(pck.staggered_pad) > 0:
             padsize = pck.staggered_pad
-    elif pck.staggered_type == 2:
+    elif pck.staggered_type == 2: # even
         y1 = 0
         yshift = 0
         y2 = pck.staggered_rm[1]
         maxpiny = pck.staggered_rm[1]
+        pin1_length = abs(t_fabp)
         if len(pck.staggered_pad) > 0:
             padsize = pck.staggered_pad
 
@@ -302,19 +317,23 @@ def makeHOR(lib_name, pck, has3d=False, x_3d=[0, 0, 0], s_3d=[1,1,1], lptext="_L
     txt_b = maxpiny+padsize[1] / 2 + txt_offset
     if len(pck.additional_pin_pad_size) > 0:
         txt_t = txt_t - (pck.additional_pin_pad[1] + pck.additional_pin_pad_size[1] / 2 - h_fabm)
-    tag_items = ["Horizontal", "RM {0}mm".format(pck.rm)]
+    #tag_items = ["Horizontal", "RM {0}mm".format(pck.rm)]
+    tag_items = ["Tab Down", "RM {0}mm".format(pck.rm)]
 
     footprint_name = pck.name
     if len(pck.additional_pin_pad_size) > 0:
         footprint_name = footprint_name + "-1EP"
     for t in pck.more_packnames:
         footprint_name = footprint_name + "_" + t
-    footprint_name = footprint_name + "_Horizontal_TabDown"
+    #footprint_name = footprint_name + "_Horizontal_TabDown"
+    if pck.staggered_type>0:
+        #footprint_name = footprint_name + "_Py{0}mm".format(pck.staggered_rm[1],3)
+        footprint_name = footprint_name + "_P{}x{}mm".format(pck.rm * 2, pck.staggered_rm[1],3)
     for t in pck.fpnametags:
         footprint_name = footprint_name + "_" + t
-
     if pck.staggered_type>0:
-        footprint_name = footprint_name + "_Py{0}mm".format(pck.staggered_rm[1],3)
+        footprint_name = footprint_name + "_Lead{}mm".format(pin1_length,3)
+    footprint_name = footprint_name + "_TabDown"
 
     if pck.largepads:
         tag_items.append("large Pads")
@@ -448,6 +467,7 @@ def makeHOR(lib_name, pck, has3d=False, x_3d=[0, 0, 0], s_3d=[1,1,1], lptext="_L
 
 
 # vertical, mounted-from-Lowerside symbols for rectangular transistors
+# this should not be used since footprints can be mirrored to the bottom side
 def makeVERTLS(lib_name, pck, has3d=False, x_3d=[0, 0, 0], s_3d=[1,1,1], lptext="_LargePads", r_3d=[0, 0, 0]):
     l_fabp = -pck.pin_offset_x
     t_fabp = -pck.pin_offset_z
@@ -484,13 +504,14 @@ def makeVERTLS(lib_name, pck, has3d=False, x_3d=[0, 0, 0], s_3d=[1,1,1], lptext=
     footprint_name = pck.name
     for t in pck.more_packnames:
         footprint_name = footprint_name + "_" + t
-    footprint_name = footprint_name + "_Vertical"
+    #footprint_name = footprint_name + "_Vertical"
     for t in pck.fpnametags:
         footprint_name = footprint_name + "_" + t
-    footprint_name = footprint_name + "_MountFromLS"
+    #footprint_name = footprint_name + "_MountFromLS"
     if pck.largepads:
         tag_items.append("large Pads")
         footprint_name = footprint_name + lptext
+    footprint_name = footprint_name + "_Vertical"
 
     print(footprint_name)
 
@@ -622,6 +643,7 @@ def makeVERTLS(lib_name, pck, has3d=False, x_3d=[0, 0, 0], s_3d=[1,1,1], lptext=
 
 
 # horizontal, mounted-from-Lowerside symbols for rectangular transistors
+# this should not be used since footprint can be mirrored
 def makeHORLS(lib_name, pck, has3d=False, x_3d=[0, 0, 0], s_3d=[1,1,1], lptext="_LargePads", r_3d=[0, 0, 0]):
     l_fabp = -pck.pin_offset_x
     t_fabp = -pck.pin_minlength
@@ -671,10 +693,11 @@ def makeHORLS(lib_name, pck, has3d=False, x_3d=[0, 0, 0], s_3d=[1,1,1], lptext="
         footprint_name = footprint_name + "-1EP"
     for t in pck.more_packnames:
         footprint_name = footprint_name + "_" + t
-    footprint_name = footprint_name + "_Horizontal"
+    #footprint_name = footprint_name + "_Horizontal"
     for t in pck.fpnametags:
         footprint_name = footprint_name + "_" + t
-    footprint_name = footprint_name + "_TabUp_MountFromLS"
+    #footprint_name = footprint_name + "_TabUp_MountFromLS"
+    footprint_name = footprint_name + "_TabUp"
     if pck.largepads:
         tag_items.append("large Pads")
         footprint_name = footprint_name + lptext
@@ -867,9 +890,10 @@ def makeHORREV(lib_name, pck, has3d=False, x_3d=[0, 0, 0], s_3d=[1 ,1,1], lptext
     footprint_name = pck.name
     for t in pck.more_packnames:
         footprint_name = footprint_name + "_" + t
-    footprint_name = footprint_name + "_Horizontal" + "_TabUp"
+    #footprint_name = footprint_name + "_Horizontal" + "_TabUp"
     for t in pck.fpnametags:
         footprint_name = footprint_name + "_" + t
+    footprint_name = footprint_name + "_TabUp"
     if pck.largepads:
         tag_items.append("large Pads")
         footprint_name = footprint_name + lptext

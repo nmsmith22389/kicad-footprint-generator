@@ -229,15 +229,15 @@ class pack:
         self.mounting_hole_pos = [0, 0]  # position of mounting hole from bottom-left
         self.mounting_hole_diameter = 0  # diameter of mounting hole in package
         self.mounting_hole_drill = 0  # diameter of mounting hole drill
-        self.pin_minlength = 0  # min. elongation of pins before 90° bend
+        self.pin_minlength = 0  # min. elongation of pins before 90 deg bend
         self.pinw = [0, 0];  # width,height of pins
         self.tags = []  # description/keywords
         self.pin_offset_x = 0
         self.pin_offset_z = 0
         self.largepads =False
         self.fpnametags =[]
-        self.additional_pin_pad =[] # Position des Zusatz-SMD-Pads
-        self.additional_pin_pad_size = [] # Größe des Zusatz-SMD-Pads
+        self.additional_pin_pad =[] # Position of additional SMD pads
+        self.additional_pin_pad_size = [] # size of additional SMD pads
         self.plastic_angled=[]
         self.metal_angled = []
         self.staggered_type=0 # 0=no staggering, 1=type1-staggering (pin1=fron), 2=type2-staggering (pin1=back)
@@ -250,8 +250,8 @@ class pack:
         self.webpage="";
 
     def __init__(self ,name ,pins=3 ,rm=0, staggered_type=0,largepads=False,pitchy=0,ypinoffset=0):
-        self. additional_pin_pad =[] # Position des Zusatz-SMD-Pads
-        self.additional_pin_pad_size = [] # Größe des Zusatz-SMD-Pads
+        self. additional_pin_pad =[] # Position of additional SMD pads
+        self.additional_pin_pad_size = [] # size of additional SMD pads
         self.largepads =largepads
         self.fpnametags = []
         self.metal_offset_x = 0  # offset of metal from left
@@ -280,7 +280,7 @@ class pack:
             self.mounting_hole_pos = [self.plastic[0] / 2, 16.2]  # position of mounting hole from bottom-left
             self.mounting_hole_diameter = 4.23  # diameter of mounting hole in package
             self.mounting_hole_drill = 4.04  # diameter of mounting hole drill
-            self.pin_minlength = 2.35  # min. elongation of pins before 90° bend
+            self.pin_minlength = 2.35  # min. elongation of pins before 90 deg bend
             self.pinw = [1.15, 0.4];  # width,height of pins
             self.tags = ["SOT-93"]  # description/keywords
             #self.more_packnames.append("SOT-93")
@@ -303,7 +303,7 @@ class pack:
                                       self.plastic[1] - 3.5]  # position of mounting hole from bottom-left
             self.mounting_hole_diameter = 3.2  # diameter of mounting hole in package
             self.mounting_hole_drill = 3.4  # diameter of mounting hole drill
-            self.pin_minlength = 3.0  # min. elongation of pins before 90° bend
+            self.pin_minlength = 3.0  # min. elongation of pins before 90 deg bend
             self.pinw = [1.0, 0.6];  # width,height of pins
             self.tags = []
             self.metal_angled=[1.15,2]
@@ -328,7 +328,7 @@ class pack:
                                       self.plastic[1] - 3.5]  # position of mounting hole from bottom-left
             self.mounting_hole_diameter = 3.2  # diameter of mounting hole in package
             self.mounting_hole_drill = 3.4  # diameter of mounting hole drill
-            self.pin_minlength = 1.6  # min. elongation of pins before 90° bend
+            self.pin_minlength = 1.6  # min. elongation of pins before 90 deg bend
             self.pinw = [1.0, 0.6];  # width,height of pins
             self.tags = []
             self.metal_angled=[1.3,2.3]
@@ -356,7 +356,7 @@ class pack:
                                       self.plastic[1] - 6]  # position of mounting hole from bottom-left
             self.mounting_hole_diameter = 3.3  # diameter of mounting hole in package
             self.mounting_hole_drill = 3.3  # diameter of mounting hole drill
-            self.pin_minlength = 5.08  # min. elongation of pins before 90° bend
+            self.pin_minlength = 5.08  # min. elongation of pins before 90 deg bend
             self.pinw = [1, 0.6];  # width,height of pins
             self.tags = []  # description/keywords
             self.pin_offset_z = self.plastic[2] - (2.8 + 0.3)
@@ -381,7 +381,7 @@ class pack:
                                       self.plastic[1] - 6.17]  # position of mounting hole from bottom-left
             self.mounting_hole_diameter = 3.61  # diameter of mounting hole in package
             self.mounting_hole_drill = 3.6  # diameter of mounting hole drill
-            self.pin_minlength = 5.08  # min. elongation of pins before 90° bend
+            self.pin_minlength = 5.08  # min. elongation of pins before 90 deg bend
             self.pinw = [1.2, 0.6];  # width,height of pins
             self.tags = []
             if (pins==4):
@@ -415,7 +415,7 @@ class pack:
                                       self.metal[1] - 2.8]  # position of mounting hole from bottom-left
             self.mounting_hole_diameter = 3.7  # diameter of mounting hole in package
             self.mounting_hole_drill = 3.5  # diameter of mounting hole drill
-            self.pin_minlength = 3.81  # min. elongation of pins before 90° bend
+            self.pin_minlength = 3.81  # min. elongation of pins before 90 deg bend
             self.pinw = [0.75, 0.5];  # width,height of pins
             self.tags = []  # description/keywords
             self.pin_offset_z = 3.15
@@ -456,7 +456,7 @@ class pack:
                 self.mounting_hole_pos = [self.plastic[0] / 2, 17.5-2.8]  # position of mounting hole from bottom-left
                 self.mounting_hole_diameter = 3.7  # diameter of mounting hole in package
                 self.mounting_hole_drill = 3.5  # diameter of mounting hole drill
-                self.pin_minlength = 3.81  # min. elongation of pins before 90° bend
+                self.pin_minlength = 3.81  # min. elongation of pins before 90 deg bend
                 self.pinw = [0.7, 0.5];  # width,height of pins
                 self.tags = []  # description/keywords
                 self.pin_offset_z = 4.55
@@ -470,12 +470,15 @@ class pack:
                 self.largepads = True
 
         elif (name == "TO-220F"):
+            self.staggered_rm = [3.7,3.8]# y-distance between pins
             if pins==2:
                 self.webpage="http://www.onsemi.com/pub/Collateral/FFPF10F150S-D.pdf"
             if pins==3:
                 self.webpage="http://www.st.com/resource/en/datasheet/stp20nm60.pdf"
             if pins==4:
                 self.webpage="https://www.njr.com/semicon/PDF/package/TO-220F-4_E.pdf"
+                #uncomment below line to generate 3.18mm offset for https://www.fairchildsemi.com/datasheets/KA/KA5M0265R.pdf
+                #self.staggered_rm = [3.18,3.8]
             self.plastic = [10.26, 15.87-6.68, 4.7]  # width,heigth,depth of plastic package, starting at bottom-left
             self.metal = [self.plastic[0], 15.87, 2.52]  # width,heigth,thickness of metal plate, starting at metal_offset from bottom-left
             self.pins = 3  # number of pins
@@ -487,11 +490,10 @@ class pack:
                                       self.metal[1] - 3.3]  # position of mounting hole from bottom-left
             self.mounting_hole_diameter = 3.7  # diameter of mounting hole in package
             self.mounting_hole_drill = 3.5  # diameter of mounting hole drill
-            self.pin_minlength = 3.23  # min. elongation of pins before 90° bend
+            self.pin_minlength = 3.23  # min. elongation of pins before 90 deg bend
             self.pinw = [0.6, 0.7];  # width,height of pins
             self.tags = []  # description/keywords
             self.pin_offset_z = 2.76+0.575/2
-            self.staggered_rm = [3.7,3.8]# y-distance between pins
             self.staggered_pin_offset_z = 4.5  # z-offset of back-pins in staggered mode
             self.staggered_pin_minlength = 2.05  # y-offset of back-pins in staggered mode
             self.staggered_pad = [1.8, 1.8]  # width/height of pads
@@ -523,7 +525,7 @@ class pack:
                 self.mounting_hole_pos = [self.plastic[0] / 2, 17.5-2.8]  # position of mounting hole from bottom-left
                 self.mounting_hole_diameter = 3.7  # diameter of mounting hole in package
                 self.mounting_hole_drill = 3.5  # diameter of mounting hole drill
-                self.pin_minlength = 3.81  # min. elongation of pins before 90° bend
+                self.pin_minlength = 3.81  # min. elongation of pins before 90 deg bend
                 self.pinw = [0.7, 0.5];  # width,height of pins
                 self.tags = []  # description/keywords
                 self.pin_offset_z = 4.29
@@ -552,7 +554,7 @@ class pack:
             self.mounting_hole_pos = [self.plastic[0] / 2, 17.5-2.8]  # position of mounting hole from bottom-left
             self.mounting_hole_diameter = 3.7  # diameter of mounting hole in package
             self.mounting_hole_drill = 3.5  # diameter of mounting hole drill
-            self.pin_minlength = 3.81  # min. elongation of pins before 90° bend
+            self.pin_minlength = 3.81  # min. elongation of pins before 90 deg bend
             self.pinw = [0.7, 0.5];  # width,height of pins
             self.tags = []  # description/keywords
             self.pin_offset_z = 4.55
@@ -583,7 +585,7 @@ class pack:
                                       self.plastic[1] - 3.9]  # position of mounting hole from bottom-left
             self.mounting_hole_diameter = 3.2  # diameter of mounting hole in package
             self.mounting_hole_drill = 3.2  # diameter of mounting hole drill
-            self.pin_minlength = 4  # min. elongation of pins before 90° bend
+            self.pin_minlength = 4  # min. elongation of pins before 90 deg bend
             self.pinw = [0.75, 0.5];  # width,height of pins
             self.tags = []  # description/keywords
             self.pin_offset_z = 2
@@ -605,20 +607,20 @@ class pack:
                                       self.plastic[1] - 3.9]  # position of mounting hole from bottom-left
             self.mounting_hole_diameter = 0  # diameter of mounting hole in package
             self.mounting_hole_drill = 0  # diameter of mounting hole drill
-            self.pin_minlength = 2.5  # min. elongation of pins before 90° bend
+            self.pin_minlength = 2.5  # min. elongation of pins before 90 deg bend
             self.pinw = [0.75, 0.5];  # width,height of pins
             self.tags = ["IPAK"]  # description/keywords
             #self.more_packnames.append("IPAK")
             self.pin_offset_z = 1.27
-            self.additional_pin_pad_size = [5.7, 6.2]  # Größe des Zusatz-SMD-Pads
+            self.additional_pin_pad_size = [5.7, 6.2]  # size of additional SMD pads
             self.metal_offset_x = (self.plastic[0] - self.metal[0]) / 2  # offset of metal from left
             if largepads:
                 self.tags.append("large pads")
                 self.pad = [1.8, 1.8]
-                self.additional_pin_pad_size = [6.3, 6.5]  # Größe des Zusatz-SMD-Pads
+                self.additional_pin_pad_size = [6.3, 6.5]  # size of additional SMD pads
                 self.largepads = True
             self.additional_pin_pad = [self.plastic[0] / 2, self.metal[1] - self.additional_pin_pad_size[
-                1] / 3]  # Position des Zusatz-SMD-Pads
+                1] / 3]  # Position of additional SMD pads
 
         elif (name == "SIPAK"):
             self.plastic = [6.6, 6.4, 2.3]  # width,heigth,depth of plastic package, starting at bottom-left
@@ -632,20 +634,20 @@ class pack:
                                       self.plastic[1] - 3.9]  # position of mounting hole from bottom-left
             self.mounting_hole_diameter = 0  # diameter of mounting hole in package
             self.mounting_hole_drill = 0  # diameter of mounting hole drill
-            self.pin_minlength = 1.02  # min. elongation of pins before 90° bend
+            self.pin_minlength = 1.02  # min. elongation of pins before 90 deg bend
             self.pinw = [0.9, 0.5];  # width,height of pins
             self.tags = []   # description/keywords
             self.pin_offset_z = 1.17+0.25
             self.addpinstext=False
-            self.additional_pin_pad_size = [5.5, 6.2]  # Größe des Zusatz-SMD-Pads
+            self.additional_pin_pad_size = [5.5, 6.2]  # size of additional SMD pads
             self.metal_offset_x = (self.plastic[0] - self.metal[0]) / 2  # offset of metal from left
             if largepads:
                 self.tags.append("large pads")
                 self.pad = [1.8, 1.8]
-                self.additional_pin_pad_size = [6.3, 6.5]  # Größe des Zusatz-SMD-Pads
+                self.additional_pin_pad_size = [6.3, 6.5]  # size of additional SMD pads
                 self.largepads = True
             self.additional_pin_pad = [self.plastic[0] / 2, self.metal[1] - self.additional_pin_pad_size[
-                1] / 3]  # Position des Zusatz-SMD-Pads
+                1] / 3]  # Position of additional SMD pads
 
 
         elif (name == "TO-262"):
@@ -663,20 +665,20 @@ class pack:
                                       self.plastic[1] - 3.9]  # position of mounting hole from bottom-left
             self.mounting_hole_diameter = 0  # diameter of mounting hole in package
             self.mounting_hole_drill = 0  # diameter of mounting hole drill
-            self.pin_minlength = 3.25  # min. elongation of pins before 90° bend
+            self.pin_minlength = 3.25  # min. elongation of pins before 90 deg bend
             self.pinw = [0.8, 0.5];  # width,height of pins
             self.tags = ["IIPAK", "I2PAK"]  # description/keywords
             #self.more_packnames.append("I2PAK")
             self.pin_offset_z = 2.65
-            self.additional_pin_pad_size = [10, 8]  # Größe des Zusatz-SMD-Pads
+            self.additional_pin_pad_size = [10, 8]  # size of additional SMD pads
             self.metal_offset_x = (self.plastic[0] - self.metal[0]) / 2  # offset of metal from left
             if largepads:
                 self.tags.append("large pads")
                 self.pad = [1.8, 1.8]
-                self.additional_pin_pad_size = [6.3, 6.5]  # Größe des Zusatz-SMD-Pads
+                self.additional_pin_pad_size = [6.3, 6.5]  # size of additional SMD pads
                 self.largepads = True
             self.additional_pin_pad = [self.plastic[0] / 2, self.metal[1] - self.additional_pin_pad_size[
-                1] / 3]  # Position des Zusatz-SMD-Pads
+                1] / 3]  # Position of additional SMD pads
         else:
             print("DID NOT FIND '", name,"'")
             self.__init__()
@@ -701,11 +703,11 @@ class pack:
         if self.largepads:
             self.tags.append("large pads")
         if self.staggered_type==1:
-            self.tags.append("staggered type-1")
-            self.fpnametags=["StaggeredType1"]+self.fpnametags
+            self.tags.append("staggered odd")
+            self.fpnametags=["StaggeredOdd"]+self.fpnametags
         if self.staggered_type==2:
-            self.tags.append("staggered type-2")
-            self.fpnametags=["StaggeredType2"] + self.fpnametags
+            self.tags.append("staggered even")
+            self.fpnametags=["StaggeredEven"] + self.fpnametags
 
         if pitchy>0:
             self.staggered_rm = [pitchy,pitchy]  # y-distance between pins
