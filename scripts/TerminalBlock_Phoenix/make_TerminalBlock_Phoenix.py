@@ -47,9 +47,10 @@ if __name__ == '__main__':
     fabref_offset=[0,-3.56]
     nibbleSize=[]
     nibblePos=[]
+    pin_to_mfr = {2:1701100, 3:1701101, 4:1701102, 5:1701103, 6:1701105, 7:1701106, 8:1701107}
     for p in pins:
         name="PTSM-0,5-{0}-{1:1.2}-V-THR".format(p,rm);
-        webpage="http://www.produktinfo.conrad.com/datenblaetter/550000-574999/556444-da-01-de-LEITERPLATTENKL__PTSM_0_5__4_2_5_V_THR.pdf";
+        webpage="http://www.phoenixcontact.com/us/products/{0}/pdf".format(pin_to_mfr[p]);
         classname_description="Terminal Block Phoenix {0}".format(name);
         footprint_name="TerminalBlock_Phoenix_{0}_1x{2:02}_P{1:3.2f}mm_Vertical".format(name, rm, p)
         makeTerminalBlockVertical(footprint_name=footprint_name, 
@@ -84,9 +85,10 @@ if __name__ == '__main__':
     fabref_offset=[0,0]
     nibbleSize=[]
     nibblePos=[]
+    pin_to_mfr = {2:1701092, 3:1701093, 4:1701095, 5:1701096, 6:1701097, 7:1701098, 8:1701099}
     for p in pins:
         name="PTSM-0,5-{0}-{1:1.2}-H-THR".format(p,rm);
-        webpage="http://www.produktinfo.conrad.com/datenblaetter/550000-574999/556441-da-01-de-LEITERPLATTENKL__PTSM_0_5__8_2_5_H_THR.pdf";
+        webpage="http://www.phoenixcontact.com/us/products/{0}/pdf".format(pin_to_mfr[p]);
         classname_description="Terminal Block Phoenix {0}".format(name);
         footprint_name="TerminalBlock_Phoenix_{0}_1x{2:02}_P{1:3.2f}mm_Horizontal".format(name, rm, p)
         makeTerminalBlockStd(footprint_name=footprint_name, 
@@ -226,9 +228,11 @@ if __name__ == '__main__':
     fabref_offset=[0,1.7]
     nibbleSize=[]
     nibblePos=[]
+    pin_to_mfr = {            2:1984617,  3:1984620,  4:1984633,  5:1984646,  6:1984659,  7:1984662,  8:1984675,
+                  9:1984688, 10:1984691, 11:1984701, 12:1984714, 13:1984727, 14:1984730, 15:1984743, 16:1984756}
     for p in pins:
         name="PT-1,5-{0}-{1:1.2}-H".format(p,rm);
-        webpage="";
+        webpage="http://www.phoenixcontact.com/us/products/{0}/pdf".format(pin_to_mfr[p]);
         classname_description="Terminal Block Phoenix {0}".format(name);
         footprint_name="TerminalBlock_Phoenix_{0}_1x{2:02}_P{1:3.2f}mm_Horizontal".format(name, rm, p)
         makeTerminalBlockStd(footprint_name=footprint_name, 
@@ -266,9 +270,11 @@ if __name__ == '__main__':
     fabref_offset=[0,2.4]
     nibbleSize=[]
     nibblePos=[]
+    pin_to_mfr = {            2:1935161,  3:1935174,  4:1935187,  5:1935190,  6:1935200,  7:1935213,  8:1935226,
+                  9:1935239, 10:1935242, 11:1935255, 12:1935268, 13:1935271, 14:1935284, 15:1935297, 16:1935307}
     for p in pins:
         name="PT-1,5-{0}-{1:1.2}-H".format(p,rm);
-        webpage="http://www.mouser.com/ds/2/324/ItemDetail_1935161-922578.pdf";
+        webpage="http://www.phoenixcontact.com/us/products/{0}/pdf".format(pin_to_mfr[p]);
         classname_description="Terminal Block Phoenix {0}".format(name);
         footprint_name="TerminalBlock_Phoenix_{0}_1x{2:02}_P{1:3.2f}mm_Horizontal".format(name, rm, p)
         makeTerminalBlockStd(footprint_name=footprint_name, 
@@ -305,9 +311,10 @@ if __name__ == '__main__':
     fabref_offset=[0,2.0]
     nibbleSize=[]
     nibblePos=[]
+    pin_to_mfr = { 2:1725656,  3:1725669}
     for p in pins:
         name="MPT-0,5-{0}-{1:2.3}".format(p,rm);
-        webpage="http://www.mouser.com/ds/2/324/ItemDetail_1725656-920552.pdf";
+        webpage="http://www.phoenixcontact.com/us/products/{0}/pdf".format(pin_to_mfr[p]);
         classname_description="Terminal Block Phoenix {0}".format(name);
         footprint_name="TerminalBlock_Phoenix_{0}_1x{2:02}_P{1:3.2f}mm_Horizontal".format(name, rm, p)
         makeTerminalBlockStd(footprint_name=footprint_name, 
@@ -343,9 +350,11 @@ if __name__ == '__main__':
     fabref_offset=[0,2.0]
     nibbleSize=[]
     nibblePos=[]
+    pin_to_mfr = {                                    4:1725672,  5:1725685,  6:1725698,  7:1725708,  8:1725711,
+                  9:1725724, 10:1725737, 11:1725740, 12:1725753}
     for p in pins:
         name="MPT-0,5-{0}-{1:2.3}".format(p,rm);
-        webpage="http://www.mouser.com/ds/2/324/ItemDetail_1725672-916605.pdf";
+        webpage="http://www.phoenixcontact.com/us/products/{0}/pdf".format(pin_to_mfr[p]);
         classname_description="Terminal Block Phoenix {0}".format(name);
         footprint_name="TerminalBlock_Phoenix_{0}_1x{2:02}_P{1:3.2f}mm_Horizontal".format(name, rm, p)
         makeTerminalBlockStd(footprint_name=footprint_name, 
