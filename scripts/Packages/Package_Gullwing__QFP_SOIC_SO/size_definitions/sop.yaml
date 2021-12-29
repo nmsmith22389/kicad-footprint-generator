@@ -199,6 +199,25 @@ SOP-8_6.62x9.15mm_P2.54mm:
   num_pins_x: 0
   num_pins_y: 4
 
+SOP-10_3.9x4.9mm_P1mm:
+  size_source: 'https://www.holtek.com/documents/10179/11842/HT42B534-xv110.pdf#page=13'
+  body_size_x: 3.90
+  body_size_y: 4.90
+  overall_height:
+    maximum: 1.75
+
+  overall_size_x: 6.00
+  lead_width:
+    minimum: 0.30
+    maximum: 0.45
+  lead_len:
+    minimum: 0.40
+    maximum: 1.27
+
+  pitch: 1.00
+  num_pins_x: 0
+  num_pins_y: 5
+
 SOP-16_4.4.55x10.3mm_P1.27mm:
   size_source: 'https://toshiba.semicon-storage.com/info/docget.jsp?did=12855&prodName=TLP290-4'
   body_size_x:

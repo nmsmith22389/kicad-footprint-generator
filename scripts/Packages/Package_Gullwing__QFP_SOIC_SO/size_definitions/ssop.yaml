@@ -86,6 +86,34 @@ SSOP-8_5.25x5.24mm_P1.27mm:
   num_pins_x: 0
   num_pins_y: 4
 
+SSOP-10_3.9x4.9mm_P1mm:
+  size_source: 'http://www.st.com/resource/en/datasheet/viper01.pdf#page=28'
+  body_size_x:
+    minimum: 3.80
+    nominal: 3.90
+    maximum: 4.00
+  body_size_y:
+    minimum: 4.80
+    nominal: 4.90
+    maximum: 5.00
+  overall_height:
+    maximum: 1.75
+
+  overall_size_x:
+    minimum: 5.80
+    nominal: 6
+    maximum: 6.20
+  lead_width:
+    minimum: 0.31
+    maximum: 0.51
+  lead_len:
+    minimum: 0.40
+    maximum: 0.90
+
+  pitch: 1.00
+  num_pins_x: 0
+  num_pins_y: 5
+
 SSOP-32_11.3x20.5mm_P1.27mm:
   size_source: 'http://www.issi.com/WW/pdf/61-64C5128AL.pdf'
   body_size_x:
