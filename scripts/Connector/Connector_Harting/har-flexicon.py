@@ -37,7 +37,7 @@ for configuration in range(2, max_configurations + 1):
             number="MP",
             type=Pad.TYPE_SMT,
             shape=Pad.SHAPE_RECT,
-            at=[2.54 * (-1 - (configuration - 1) / 2), 0],
+            at=[-b - 2.54, 0],
             size=[1.1, 6],
             layers=Pad.LAYERS_SMT,
         )
@@ -47,7 +47,7 @@ for configuration in range(2, max_configurations + 1):
             number="MP",
             type=Pad.TYPE_SMT,
             shape=Pad.SHAPE_RECT,
-            at=[2.54 * ((configuration + 1) / 2), 0],
+            at=[b + 2.54, 0],
             size=[1.1, 6],
             layers=Pad.LAYERS_SMT,
         )
@@ -96,4 +96,4 @@ for configuration in range(2, max_configurations + 1):
 
     # Save file
     file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile(Footprint_name + ".kicad_mod")
+    file_handler.writeFile(footprint_name + ".kicad_mod")
