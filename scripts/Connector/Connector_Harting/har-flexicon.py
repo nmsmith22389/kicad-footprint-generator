@@ -18,6 +18,16 @@ for configuration in range(2, max_configurations + 1):
     b = l / 2
     c = b + 4.15
 
+    # Guinding pin left/right spacing
+    gpl_spacing = -0.2
+    gpr_spacing = 0.4
+
+    courtyard_y_up = -3.5
+    courtyard_y_down = 4.1
+
+    fab_up = 0.2
+    fab_down = 0.2
+
     # Pins pads
     for pins in range(0, configuration):
         kicad_mod.append(
@@ -58,7 +68,7 @@ for configuration in range(2, max_configurations + 1):
         Pad(
             type=Pad.TYPE_NPTH,
             shape=Pad.SHAPE_CIRCLE,
-            at=[-b - 1.27, -0.2],
+            at=[-b - 1.27, gpl_spacing],
             drill=1,
             size=1,
             layers=Pad.LAYERS_NPTH,
@@ -68,7 +78,7 @@ for configuration in range(2, max_configurations + 1):
         Pad(
             type=Pad.TYPE_NPTH,
             shape=Pad.SHAPE_CIRCLE,
-            at=[b + 1.27, 0.4],
+            at=[b + 1.27, gpr_spacing],
             drill=1,
             size=1,
             layers=Pad.LAYERS_NPTH,
@@ -80,17 +90,38 @@ for configuration in range(2, max_configurations + 1):
     kicad_mod.append(Text(type="value", text=footprint_name, at=[0, 0], layer="F.Fab"))
 
     # Draw Courtyard
-    kicad_mod.append(RectLine(start=[-c, -3.5], end=[+c, 4.1], layer="F.CrtYd"))
+    kicad_mod.append(
+        RectLine(
+            start=[-c, courtyard_y_up], end=[+c, courtyard_y_down], layer="F.CrtYd"
+        )
+    )
 
     # Draw Fabrication layer
-    kicad_mod.append(RectLine(start=[-a / 2, -3.2], end=[+a / 2, 3.8], layer="F.Fab"))
+    kicad_mod.append(
+        RectLine(
+            start=[-a / 2, courtyard_y_up + fab_up],
+            end=[+a / 2, courtyard_y_down - fab_down],
+            layer="F.Fab",
+        )
+    )
 
     # Draw Silkscreen layer
-    kicad_mod.append(RectLine(start=[-a / 2, -3.2], end=[+a / 2, 3.8], layer="F.SilkS"))
+    kicad_mod.append(
+        RectLine(
+            start=[-a / 2, courtyard_y_up + fab_up],
+            end=[+a / 2, courtyard_y_down - fab_down],
+            layer="F.SilkS",
+        )
+    )
     # Draw pin 1 Silkscreen indicator
     kicad_mod.append(
         PolygoneLine(
-            polygone=[[-c, -3.5 + 1.27], [-c, -3.5], [-c + 1.27, -3.5]], layer="F.SilkS"
+            polygone=[
+                [-c, courtyard_y_up + 1.27],
+                [-c, courtyard_y_up],
+                [-c + 1.27, courtyard_y_up],
+            ],
+            layer="F.SilkS",
         )
     )
 
