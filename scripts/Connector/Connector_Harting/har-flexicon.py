@@ -10,8 +10,17 @@ for series in data:
     for configuration in range(2, max_configurations + 1):
 
         # Setting footprint name
+        vert = "Vertical" if series["vert"] == "True" else "Horizontal"
+
         footprint_name = (
-            series["name_prefix"] + str(configuration).zfill(2) + series["name_suffix"]
+            "Harting_har-flexicon_"
+            + series["name_prefix"]
+            + str(configuration).zfill(2)
+            + series["name_suffix"]
+            + "_1x"
+            + str(configuration).zfill(2)
+            + "-MP_P2.54mm_"
+            + vert
         )
 
         # Init Kicad footprint
