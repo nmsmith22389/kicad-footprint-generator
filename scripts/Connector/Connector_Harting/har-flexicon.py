@@ -128,6 +128,16 @@ for series in data:
                 layer="F.Fab",
             )
         )
+        kicad_mod.append(
+            PolygoneLine(
+                polygone=[
+                    [-b - 0.5, courtyard_y_down - fab_down],
+                    [-b, courtyard_y_down - fab_down - 0.5],
+                    [-b + 0.5, courtyard_y_down - fab_down],
+                ],
+                layer="F.Fab",
+            )
+        )
 
         # Draw Silkscreen layer
         kicad_mod.append(
