@@ -105,10 +105,20 @@ for series in data:
 
         # Minimal text references
         kicad_mod.append(
-            Text(type="reference", text="REF**", at=[0, 0], layer="F.SilkS")
+            Text(
+                type="reference",
+                text="REF**",
+                at=[0, courtyard_y_up - 1],
+                layer="F.SilkS",
+            )
         )
         kicad_mod.append(
-            Text(type="value", text=footprint_name, at=[0, 0], layer="F.Fab")
+            Text(
+                type="value",
+                text=footprint_name,
+                at=[0, courtyard_y_down + 1],
+                layer="F.Fab",
+            )
         )
 
         # Draw Courtyard
