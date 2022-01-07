@@ -26,7 +26,15 @@ for series in data:
         # Init Kicad footprint
         kicad_mod = Footprint(footprint_name)
         kicad_mod.setDescription("har-flexicon")
-        kicad_mod.setTags("example")
+        kicad_mod.setTags("blah")
+        kicad_mod.setAttribute("smd")
+        kicad_mod.append(
+            Model(
+                filename="${KICAD6_3DMODEL_DIR}/Connector_Harting.3dshapes/"
+                + footprint_name
+                + ".wrl"
+            )
+        )
 
         # Basic dimensions
         l = 2.54 * (configuration - 1)
