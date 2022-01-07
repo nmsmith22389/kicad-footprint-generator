@@ -46,17 +46,41 @@ for series in data:
         fab_down = float(series["fab_down"])
 
         # Pins pads
-        for pins in range(0, configuration):
-            kicad_mod.append(
-                Pad(
-                    number=pins + 1,
-                    type=Pad.TYPE_SMT,
-                    shape=Pad.SHAPE_RECT,
-                    at=[2.54 * (pins - (configuration - 1) / 2), 0],
-                    size=[1.1, 6],
-                    layers=Pad.LAYERS_SMT,
-                )
+        kicad_mod.append(
+            PadArray(
+                start=[-b, 0],
+                center=[0, 0],
+                pincount=configuration,
+                x_spacing=2.54,
+                initial=1,
+                type=Pad.TYPE_SMT,
+                shape=Pad.SHAPE_RECT,
+                size=[1.1, 6],
+                layers=Pad.LAYERS_SMT,
             )
+        )
+
+        # Mounting pads
+        kicad_mod.append(
+            Pad(
+                number="MP",
+                type=Pad.TYPE_SMT,
+                shape=Pad.SHAPE_RECT,
+                at=[-b - 2.54, 0],
+                size=[1.1, 6],
+                layers=Pad.LAYERS_SMT,
+            )
+        )
+        kicad_mod.append(
+            Pad(
+                number="MP",
+                type=Pad.TYPE_SMT,
+                shape=Pad.SHAPE_RECT,
+                at=[b + 2.54, 0],
+                size=[1.1, 6],
+                layers=Pad.LAYERS_SMT,
+            )
+        )
 
         # Draw Silkscreen layer
         # Draw dashed upper line
@@ -117,28 +141,6 @@ for series in data:
                 start=[-b - 0.55, courtyard_y_up],
                 end=[-b + 0.55, courtyard_y_up],
                 layer="F.SilkS",
-            )
-        )
-
-        # Mounting pads
-        kicad_mod.append(
-            Pad(
-                number="MP",
-                type=Pad.TYPE_SMT,
-                shape=Pad.SHAPE_RECT,
-                at=[-b - 2.54, 0],
-                size=[1.1, 6],
-                layers=Pad.LAYERS_SMT,
-            )
-        )
-        kicad_mod.append(
-            Pad(
-                number="MP",
-                type=Pad.TYPE_SMT,
-                shape=Pad.SHAPE_RECT,
-                at=[b + 2.54, 0],
-                size=[1.1, 6],
-                layers=Pad.LAYERS_SMT,
             )
         )
 
