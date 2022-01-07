@@ -113,12 +113,9 @@ for series in data:
 
         # Draw pin 1 Silkscreen indicator
         kicad_mod.append(
-            PolygoneLine(
-                polygone=[
-                    [-c, courtyard_y_up + 1.27],
-                    [-c, courtyard_y_up],
-                    [-c + 1.27, courtyard_y_up],
-                ],
+            Line(
+                start=[-b - 0.55, courtyard_y_up],
+                end=[-b + 0.55, courtyard_y_up],
                 layer="F.SilkS",
             )
         )
