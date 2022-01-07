@@ -7,7 +7,7 @@ data = csv.DictReader(open("har-flexicon.csv"))
 max_configurations = 12
 
 for series in data:
-    for configuration in range(2, max_configurations + 1):
+    for configuration in range(12, max_configurations + 1):
 
         # Setting footprint name
         vert = "Vertical" if series["vert"] == "True" else "Horizontal"
@@ -57,6 +57,71 @@ for series in data:
                     layers=Pad.LAYERS_SMT,
                 )
             )
+
+        # Draw Silkscreen layer
+        # Draw dashed upper line
+        for pins in range(-1, configuration):
+            kicad_mod.append(
+                Line(
+                    start=[(2.54 * (pins - (configuration - 1) / 2)) + 0.762, fab_up],
+                    end=[
+                        (2.54 * (pins - (configuration - 1) / 2)) + 0.762 + 1.016,
+                        fab_up,
+                    ],
+                )
+            )
+
+        # Draw vertical lines
+        kicad_mod.append(
+            Line(
+                start=[-a / 2, fab_up],
+                end=[-a / 2, fab_down],
+                layer="F.SilkS",
+            )
+        )
+        kicad_mod.append(
+            Line(
+                start=[+a / 2, fab_up],
+                end=[+a / 2, fab_down],
+                layer="F.SilkS",
+            )
+        )
+
+        # If lower fab layer overlaps pads, draw dashed line
+        if fab_down < 3.302:
+            for pins in range(-1, configuration):
+                kicad_mod.append(
+                    Line(
+                        start=[
+                            (2.54 * (pins - (configuration - 1) / 2)) + 0.762,
+                            fab_down,
+                        ],
+                        end=[
+                            (2.54 * (pins - (configuration - 1) / 2)) + 0.762 + 1.016,
+                            fab_down,
+                        ],
+                    )
+                )
+        else:
+            kicad_mod.append(
+                Line(
+                    start=[+a / 2, fab_down],
+                    end=[-a / 2, fab_down],
+                    layer="F.SilkS",
+                )
+            )
+
+        # Draw pin 1 Silkscreen indicator
+        kicad_mod.append(
+            PolygoneLine(
+                polygone=[
+                    [-c, courtyard_y_up + 1.27],
+                    [-c, courtyard_y_up],
+                    [-c + 1.27, courtyard_y_up],
+                ],
+                layer="F.SilkS",
+            )
+        )
 
         # Mounting pads
         kicad_mod.append(
@@ -142,30 +207,10 @@ for series in data:
             PolygoneLine(
                 polygone=[
                     [-b - 0.5, fab_down],
-                    [-b,  fab_down - 0.5],
-                    [-b + 0.5,  fab_down],
+                    [-b, fab_down - 0.5],
+                    [-b + 0.5, fab_down],
                 ],
                 layer="F.Fab",
-            )
-        )
-
-        # Draw Silkscreen layer
-        kicad_mod.append(
-            RectLine(
-                start=[-a / 2,  fab_up],
-                end=[+a / 2,  fab_down],
-                layer="F.SilkS",
-            )
-        )
-        # Draw pin 1 Silkscreen indicator
-        kicad_mod.append(
-            PolygoneLine(
-                polygone=[
-                    [-c, courtyard_y_up + 1.27],
-                    [-c, courtyard_y_up],
-                    [-c + 1.27, courtyard_y_up],
-                ],
-                layer="F.SilkS",
             )
         )
 
