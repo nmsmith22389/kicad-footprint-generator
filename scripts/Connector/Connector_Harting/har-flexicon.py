@@ -7,7 +7,7 @@ data = csv.DictReader(open("har-flexicon.csv"))
 max_configurations = 12
 
 for series in data:
-    for configuration in range(12, max_configurations + 1):
+    for configuration in range(2, max_configurations + 1):
 
         # Setting footprint name
         vert = "Vertical" if series["vert"] == "True" else "Horizontal"
