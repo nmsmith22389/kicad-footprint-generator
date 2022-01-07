@@ -133,17 +133,17 @@ for series in data:
         # Draw Fabrication layer
         kicad_mod.append(
             RectLine(
-                start=[-a / 2, courtyard_y_up + fab_up],
-                end=[+a / 2, courtyard_y_down - fab_down],
+                start=[-a / 2, fab_up],
+                end=[+a / 2, fab_down],
                 layer="F.Fab",
             )
         )
         kicad_mod.append(
             PolygoneLine(
                 polygone=[
-                    [-b - 0.5, courtyard_y_down - fab_down],
-                    [-b, courtyard_y_down - fab_down - 0.5],
-                    [-b + 0.5, courtyard_y_down - fab_down],
+                    [-b - 0.5, fab_down],
+                    [-b,  fab_down - 0.5],
+                    [-b + 0.5,  fab_down],
                 ],
                 layer="F.Fab",
             )
@@ -152,8 +152,8 @@ for series in data:
         # Draw Silkscreen layer
         kicad_mod.append(
             RectLine(
-                start=[-a / 2, courtyard_y_up + fab_up],
-                end=[+a / 2, courtyard_y_down - fab_down],
+                start=[-a / 2,  fab_up],
+                end=[+a / 2,  fab_down],
                 layer="F.SilkS",
             )
         )
