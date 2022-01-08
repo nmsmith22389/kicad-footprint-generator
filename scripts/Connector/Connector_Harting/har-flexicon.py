@@ -23,7 +23,7 @@ for series in data:
             + vert
         )
 
-        # Init Kicad footprint
+        # Init Kicad footprint properties
         kicad_mod = Footprint(footprint_name)
         kicad_mod.setDescription(
             "Harting har-flexicon series connector, "
@@ -47,7 +47,7 @@ for series in data:
             )
         )
 
-        # Basic dimensions
+        # Basic dimensions from datasheet
         l = 2.54 * (configuration - 1)
         a = l + 7.85
         b = l / 2
@@ -68,7 +68,7 @@ for series in data:
         fab_up = float(series["fab_up"])
         fab_down = float(series["fab_down"])
 
-        # Pins pads
+        # Connector pads
         kicad_modt.append(
             PadArray(
                 start=[-b, y_offset],
@@ -133,7 +133,7 @@ for series in data:
             )
         )
 
-        # If lower fab layer overlaps pads, draw dashed line
+        # If lower fab layer overlaps pads, draw dashed line otherwise draw straight line
         if fab_down < 3.302:
             for pins in range(-1, configuration):
                 kicad_modt.append(
@@ -157,7 +157,7 @@ for series in data:
                 )
             )
 
-        # Draw pin 1 Silkscreen indicator
+        # Draw pin 1 Silkscreen indicator on courtyard border
         kicad_modt.append(
             Line(
                 start=[-b - 0.55, courtyard_y_up],
@@ -166,7 +166,7 @@ for series in data:
             )
         )
 
-        # Guide holes
+        # Guide pin holes
         if series["gp"] == "True":
             kicad_modt.append(
                 Pad(
@@ -232,6 +232,7 @@ for series in data:
                 layer="F.Fab",
             )
         )
+        # Pin 1 arrow
         kicad_modt.append(
             PolygoneLine(
                 polygone=[
