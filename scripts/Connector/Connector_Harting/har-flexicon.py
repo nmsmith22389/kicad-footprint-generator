@@ -25,8 +25,19 @@ for series in data:
 
         # Init Kicad footprint
         kicad_mod = Footprint(footprint_name)
-        kicad_mod.setDescription("har-flexicon")
-        kicad_mod.setTags("blah")
+        kicad_mod.setDescription(
+            "Harting har-flexicon series connector, "
+            + series["name_prefix"]
+            + str(configuration).zfill(2)
+            + series["name_suffix"]
+            + " ("
+            + series["datasheet"]
+            + "), generated with kicad-footprint-generator"
+        )
+        kicad_mod.setTags(
+            "connector Harting har-flexicon "
+            + ("vertical" if series["vert"] == "True" else "horizontal")
+        )
         kicad_mod.setAttribute("smd")
         kicad_mod.append(
             Model(
@@ -42,8 +53,8 @@ for series in data:
         b = l / 2
         c = b + 4.15
 
-        y_offset =float(series["anchor_offset"])
-        kicad_modt = Translation(0,y_offset)
+        y_offset = float(series["anchor_offset"])
+        kicad_modt = Translation(0, y_offset)
         kicad_mod.append(kicad_modt)
 
         # Guinding pin left/right spacing
