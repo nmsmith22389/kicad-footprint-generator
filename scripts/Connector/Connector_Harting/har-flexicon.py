@@ -195,6 +195,14 @@ for series in data:
                 layer="F.Fab",
             )
         )
+        kicad_modt.append(
+            Text(
+                type="user",
+                text="%R",
+                at=[0, 0],
+                layer="F.Fab",
+            )
+        )
 
         # Draw Courtyard
         kicad_modt.append(
