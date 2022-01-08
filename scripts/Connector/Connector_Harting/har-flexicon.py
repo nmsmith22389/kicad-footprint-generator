@@ -42,6 +42,10 @@ for series in data:
         b = l / 2
         c = b + 4.15
 
+        y_offset =float(series["anchor_offset"])
+        kicad_modt = Translation(0,y_offset)
+        kicad_mod.append(kicad_modt)
+
         # Guinding pin left/right spacing
         if series["gp"] == "True":
             gpl_spacing = float(series["gpl"])
@@ -54,10 +58,9 @@ for series in data:
         fab_down = float(series["fab_down"])
 
         # Pins pads
-        kicad_mod.append(
+        kicad_modt.append(
             PadArray(
-                start=[-b, 0],
-                center=[0, 0],
+                start=[-b, y_offset],
                 pincount=configuration,
                 x_spacing=2.54,
                 initial=1,
@@ -69,7 +72,7 @@ for series in data:
         )
 
         # Mounting pads
-        kicad_mod.append(
+        kicad_modt.append(
             Pad(
                 number="MP",
                 type=Pad.TYPE_SMT,
@@ -79,7 +82,7 @@ for series in data:
                 layers=Pad.LAYERS_SMT,
             )
         )
-        kicad_mod.append(
+        kicad_modt.append(
             Pad(
                 number="MP",
                 type=Pad.TYPE_SMT,
@@ -93,7 +96,7 @@ for series in data:
         # Draw Silkscreen layer
         # Draw dashed upper line
         for pins in range(-1, configuration):
-            kicad_mod.append(
+            kicad_modt.append(
                 Line(
                     start=[(2.54 * (pins - (configuration - 1) / 2)) + 0.762, fab_up],
                     end=[
@@ -104,14 +107,14 @@ for series in data:
             )
 
         # Draw vertical lines
-        kicad_mod.append(
+        kicad_modt.append(
             Line(
                 start=[-a / 2, fab_up],
                 end=[-a / 2, fab_down],
                 layer="F.SilkS",
             )
         )
-        kicad_mod.append(
+        kicad_modt.append(
             Line(
                 start=[+a / 2, fab_up],
                 end=[+a / 2, fab_down],
@@ -122,7 +125,7 @@ for series in data:
         # If lower fab layer overlaps pads, draw dashed line
         if fab_down < 3.302:
             for pins in range(-1, configuration):
-                kicad_mod.append(
+                kicad_modt.append(
                     Line(
                         start=[
                             (2.54 * (pins - (configuration - 1) / 2)) + 0.762,
@@ -135,7 +138,7 @@ for series in data:
                     )
                 )
         else:
-            kicad_mod.append(
+            kicad_modt.append(
                 Line(
                     start=[+a / 2, fab_down],
                     end=[-a / 2, fab_down],
@@ -144,7 +147,7 @@ for series in data:
             )
 
         # Draw pin 1 Silkscreen indicator
-        kicad_mod.append(
+        kicad_modt.append(
             Line(
                 start=[-b - 0.55, courtyard_y_up],
                 end=[-b + 0.55, courtyard_y_up],
@@ -154,7 +157,7 @@ for series in data:
 
         # Guide holes
         if series["gp"] == "True":
-            kicad_mod.append(
+            kicad_modt.append(
                 Pad(
                     type=Pad.TYPE_NPTH,
                     shape=Pad.SHAPE_CIRCLE,
@@ -164,7 +167,7 @@ for series in data:
                     layers=Pad.LAYERS_NPTH,
                 )
             )
-            kicad_mod.append(
+            kicad_modt.append(
                 Pad(
                     type=Pad.TYPE_NPTH,
                     shape=Pad.SHAPE_CIRCLE,
@@ -176,7 +179,7 @@ for series in data:
             )
 
         # Minimal text references
-        kicad_mod.append(
+        kicad_modt.append(
             Text(
                 type="reference",
                 text="REF**",
@@ -184,7 +187,7 @@ for series in data:
                 layer="F.SilkS",
             )
         )
-        kicad_mod.append(
+        kicad_modt.append(
             Text(
                 type="value",
                 text=footprint_name,
@@ -194,7 +197,7 @@ for series in data:
         )
 
         # Draw Courtyard
-        kicad_mod.append(
+        kicad_modt.append(
             RectLine(
                 start=[-c, courtyard_y_up],
                 end=[+c, courtyard_y_down],
@@ -203,14 +206,14 @@ for series in data:
         )
 
         # Draw Fabrication layer
-        kicad_mod.append(
+        kicad_modt.append(
             RectLine(
                 start=[-a / 2, fab_up],
                 end=[+a / 2, fab_down],
                 layer="F.Fab",
             )
         )
-        kicad_mod.append(
+        kicad_modt.append(
             PolygoneLine(
                 polygone=[
                     [-b - 0.5, fab_down],
