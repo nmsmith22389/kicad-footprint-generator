@@ -202,7 +202,7 @@ for series in data:
             Text(
                 type="value",
                 text=footprint_name,
-                at=[0, courtyard_y_down + 1],
+                at=[0, fab_down + 1],
                 layer="F.Fab",
             )
         )
