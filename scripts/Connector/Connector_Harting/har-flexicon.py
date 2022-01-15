@@ -109,10 +109,10 @@ for series in data:
         for pins in range(-1, configuration):
             kicad_modt.append(
                 Line(
-                    start=[(2.54 * (pins - (configuration - 1) / 2)) + 0.762, fab_up],
+                    start=[(2.54 * (pins - (configuration - 1) / 2)) + 0.762, fab_up-0.11],
                     end=[
                         (2.54 * (pins - (configuration - 1) / 2)) + 0.762 + 1.016,
-                        fab_up,
+                        fab_up-0.11,
                     ],
                 )
             )
@@ -120,15 +120,15 @@ for series in data:
         # Draw vertical lines
         kicad_modt.append(
             Line(
-                start=[-a / 2, fab_up],
-                end=[-a / 2, fab_down],
+                start=[-a / 2-0.11, fab_up-0.11],
+                end=[-a / 2-0.11, fab_down+0.11],
                 layer="F.SilkS",
             )
         )
         kicad_modt.append(
             Line(
-                start=[+a / 2, fab_up],
-                end=[+a / 2, fab_down],
+                start=[+a / 2+0.11, fab_up-0.11],
+                end=[+a / 2+0.11, fab_down+0.11],
                 layer="F.SilkS",
             )
         )
@@ -140,19 +140,19 @@ for series in data:
                     Line(
                         start=[
                             (2.54 * (pins - (configuration - 1) / 2)) + 0.762,
-                            fab_down,
+                            fab_down+0.11,
                         ],
                         end=[
                             (2.54 * (pins - (configuration - 1) / 2)) + 0.762 + 1.016,
-                            fab_down,
+                            fab_down+0.11,
                         ],
                     )
                 )
         else:
             kicad_modt.append(
                 Line(
-                    start=[+a / 2, fab_down],
-                    end=[-a / 2, fab_down],
+                    start=[+a / 2+0.11, fab_down+0.11],
+                    end=[-a / 2-0.11, fab_down+0.11],
                     layer="F.SilkS",
                 )
             )
