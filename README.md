@@ -1,8 +1,3 @@
-## :warning: 301 Moved Permanently
-Location: https://gitlab.com/kicad/libraries/kicad-footprint-generator
-
----
-
 This repository contains scripts to generate custom KiCAD footprints using python, and a framework which allows us to
 create custom KiCAD footprint. A big bunch of footprints of the KiCad library was developed using this framework.
 
@@ -16,7 +11,7 @@ create custom KiCAD footprint. A big bunch of footprints of the KiCad library wa
 [![Code Climate](https://codeclimate.com/github/pointhi/kicad-footprint-generator/badges/gpa.svg)](https://codeclimate.com/github/pointhi/kicad-footprint-generator)
 [![Documentation Status](https://readthedocs.org/projects/kicad-footprint-generator/badge/?version=latest)](http://kicad-footprint-generator.readthedocs.io/en/latest/?badge=latest)
 
-**Supports:** Python 3.6+
+**Supports:** Python 2.7 and 3.3+
 
 ## About
 
@@ -80,7 +75,7 @@ kicad_mod.setTags("example")
 kicad_mod.append(Text(type='reference', text='REF**', at=[0, -3], layer='F.SilkS'))
 kicad_mod.append(Text(type='value', text=footprint_name, at=[1.5, 3], layer='F.Fab'))
 
-# create silkscreen
+# create silscreen
 kicad_mod.append(RectLine(start=[-2, -2], end=[5, 2], layer='F.SilkS'))
 
 # create courtyard
