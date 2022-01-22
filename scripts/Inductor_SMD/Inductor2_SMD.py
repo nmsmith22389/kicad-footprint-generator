@@ -42,15 +42,6 @@ def inductor(args):
 	kicad_mod.setTags(args["tags"])
 	kicad_mod.setAttribute("smd")
 
-	# set general values, TODO calculate y of labels
-	kicad_mod.append(Text(type="reference", text="REF**", at=[0, -3], layer="F.SilkS"))
-	kicad_mod.append(Text(type="value", text=footprint_name, at=[0, 3], layer="F.Fab"))
-
-	# add another REF indicator on F.Fab in the center
-	size, thickness = fref_size(args)
-	kicad_mod.append(Text(type="user", text="${REFERENCE}", at=[0, 0], layer="F.Fab",
-				size=size, thickness=thickness))
-
 	# draw outline on F.Fab, width is 0.10 as per F5.2 (1)
 	x = args["size"][0] / 2
 	y = args["size"][1] / 2
@@ -84,6 +75,16 @@ def inductor(args):
 	cy = ceiltogrid(y + 0.5, 0.01)
 	kicad_mod.append(RectLine(start=[-cx,-cy], end=[cx,cy],
 				layer='F.CrtYd', width=0.05))
+
+	# write general values outside of courtyard
+	ly = ceiltogrid(cy + 0.5, 0.5)
+	kicad_mod.append(Text(type="reference", text="REF**", at=[0, -ly], layer="F.SilkS"))
+	kicad_mod.append(Text(type="value", text=footprint_name, at=[0, ly], layer="F.Fab"))
+
+	# add another REF indicator on F.Fab in the center
+	size, thickness = fref_size(args)
+	kicad_mod.append(Text(type="user", text="${REFERENCE}", at=[0, 0], layer="F.Fab",
+				size=size, thickness=thickness))
 
 	# create pads
 	px = pad_dist / 2 + args["pad_size"][0] / 2
