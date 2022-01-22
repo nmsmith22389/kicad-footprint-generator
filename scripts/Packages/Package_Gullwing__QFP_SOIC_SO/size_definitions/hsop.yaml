@@ -102,9 +102,11 @@ HSOP-32-1EP_7.5x11.0mm_P0.65mm_EP4.7x4.7mm:
     nominal: 10.3
     tolerance: 0
   lead_width:
-    nominal: 0.3
+    minimum: 0.22
+    maximum: 0.38
   lead_len:
-    nominal: 0.7
+    minimum: 0.5
+    maximum: 0.9
   pitch: 0.65
   num_pins_x: 0
   num_pins_y: 16
@@ -130,9 +132,11 @@ HSOP-54-1EP_7.5x17.9mm_P0.65mm_EP4.6x4.6mm:
     nominal: 10.3
     tolerance: 0
   lead_width:
-    nominal: 0.3
+    minimum: 0.22
+    maximum: 0.38
   lead_len:
-    nominal: 0.7
+    minimum: 0.5
+    maximum: 0.9
   pitch: 0.65
   num_pins_x: 0
   num_pins_y: 27
