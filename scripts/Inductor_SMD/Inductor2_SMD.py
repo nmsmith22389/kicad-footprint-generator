@@ -34,7 +34,7 @@ def inductor(args):
 	pad_dist = args["pad_step"] - args["pad_size"][0]
 
 	# Append dimension specification to the description
-	desc = "%s, %.1fx%.1fmm" % (args["description"], args["size"][0], args["size"][1])
+	desc = "%s, %.1fx%.1fmm (%s)" % (args["description"], args["size"][0], args["size"][1], args["datasheet"])
 
 	# init kicad footprint
 	kicad_mod = Footprint(footprint_name)
