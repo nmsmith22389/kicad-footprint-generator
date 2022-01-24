@@ -41,6 +41,7 @@ pitch = 3.96
 drill = 1.7
 start_pos_x = 0 # Where should pin 1 be located.
 pad_to_pad_clearance = 0.8
+pad_to_board_clearance = 0.35
 max_annular_ring = 1.2 # How much copper should be in y direction?
 min_annular_ring = 0.3
 
@@ -94,7 +95,7 @@ def generate_one_footprint(pincount, configuration):
         'right':end_pos_x + pin_inside_distance,
         'top':-(pin_Y + body_height)
         }
-    body_edge['bottom'] = body_edge['top'] + pin_Y + body_height + pad_size[1]/2
+    body_edge['bottom'] =  pad_size[1]/2 + pad_to_board_clearance
     body_edge['bottom_silk'] = body_edge['top'] + body_height
 
     # create pads
