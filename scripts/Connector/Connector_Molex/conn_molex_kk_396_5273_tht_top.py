@@ -38,7 +38,7 @@ number_of_rows = 1
 datasheet = 'https://www.molex.com/pdm_docs/sd/009652028_sd.pdf'
 
 pitch = 3.96
-drill = 1.7
+drill = 1.8
 start_pos_x = 0 # Where should pin 1 be located.
 pad_to_pad_clearance = 0.8
 max_annular_ring = 1.2 # How much copper should be in y direction?
