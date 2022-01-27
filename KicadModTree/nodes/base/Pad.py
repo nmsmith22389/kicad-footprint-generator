@@ -326,7 +326,7 @@ class Pad(Node):
         self.solder_mask_margin = kwargs.get('solder_mask_margin', 0)
 
     def _initClearance(self, **kwargs):
-        self.clearance = kwargs.get('clearance',0)
+        self.clearance = kwargs.get('clearance', 0)
 
     def _initLayers(self, **kwargs):
         if not kwargs.get('layers'):
