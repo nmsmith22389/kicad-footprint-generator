@@ -127,7 +127,7 @@ def generate_one_footprint(pins, variant, configuration):
     #
     # Add solder nails
     #
-    mount_hole_pad_diameter = mount_hole_diameter + 0.15
+    mount_hole_pad_diameter = mount_hole_diameter + 0.3
     kicad_mod.append(
         Pad(
             at=[-mount_pad_x, mount_pad_y],
