@@ -180,6 +180,8 @@ class Pad(Node):
           solder paste margin of the pad (default: 0)
         * *solder_mask_margin* (``float``) --
           solder mask margin of the pad (default: 0)
+        * *clearance* (``float``) --
+          clearance added to hole radius (default: 0)
 
         * *x_mirror* (``[int, float](mirror offset)``) --
           mirror x direction around offset "point"
@@ -235,6 +237,7 @@ class Pad(Node):
         self._initSolderPasteMargin(**kwargs)
         self._initSolderPasteMarginRatio(**kwargs)
         self._initSolderMaskMargin(**kwargs)
+        self._initClearance(**kwargs)
         self._initLayers(**kwargs)
         self._initMirror(**kwargs)
 
@@ -321,6 +324,9 @@ class Pad(Node):
 
     def _initSolderMaskMargin(self, **kwargs):
         self.solder_mask_margin = kwargs.get('solder_mask_margin', 0)
+
+    def _initClearance(self, **kwargs):
+        self.clearance = kwargs.get('clearance',0)
 
     def _initLayers(self, **kwargs):
         if not kwargs.get('layers'):
