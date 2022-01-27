@@ -35,6 +35,8 @@ sys.path.append(
 )  # load parent path of tools
 from footprint_text_fields import addTextFields
 
+
+
 series = "Micro-Fit_3.0"
 series_long = "Micro-Fit 3.0 Connector System"
 manufacturer = "Molex"
@@ -51,6 +53,17 @@ alternative_codes = [
     "43650-{n:02}09",
 ]
 
+variant_params = {
+    "hand": {
+        "mount_hole_diameter": 2.41,
+        "suffix": ""
+    },
+    "pnp": {
+        "mount_hole_diameter": 2.54,
+        "suffix": "_PnP"
+    },
+}
+
 pitch = 3.0
 pincount_range = list(range(2, 13))
 
@@ -58,10 +71,8 @@ row = 5.5
 
 pad_size = [1.27, 2.92]
 
-mount_hole_diameter = 2.41
 
-
-def generate_one_footprint(pins, configuration):
+def generate_one_footprint(pins, variant, configuration):
     mpn = part_code.format(n=pins)
     alt_mpn = [code.format(n=pins) for code in alternative_codes]
 
@@ -77,6 +88,7 @@ def generate_one_footprint(pins, configuration):
         pitch=pitch,
         orientation=orientation_str,
     )
+    footprint_name += variant_params[variant]["suffix"]
 
     kicad_mod = Footprint(footprint_name)
     kicad_mod.setDescription(
@@ -110,10 +122,12 @@ def generate_one_footprint(pins, configuration):
     body_edge = {"left": -A / 2, "right": A / 2, "top": mount_pad_y - 4.6}
     body_edge["bottom"] = body_edge["top"] + 9.90
 
+    mount_hole_diameter = variant_params[variant]["mount_hole_diameter"]
+
     #
     # Add solder nails
     #
-    mount_hole_pad_diameter = mount_hole_diameter + 1
+    mount_hole_pad_diameter = mount_hole_diameter + 0.15
     kicad_mod.append(
         Pad(
             at=[-mount_pad_x, mount_pad_y],
@@ -155,15 +169,14 @@ def generate_one_footprint(pins, configuration):
     )
 
     #
-    # Add F.Fab
+    # Add F.Fab, F.SilkS, F.CrtYd
     #
-    LayerA = ["F.Fab", "F.SilkS", "F.CrtYd"]
     LineDXA = [
         0,
         configuration["silk_fab_offset"],
         configuration["courtyard_offset"]["connector"],
     ]
-    LindeDeltaA = [
+    LineDeltaA = [
         0,
         configuration["silk_pad_clearance"] + configuration["silk_line_width"] / 2,
         0,
@@ -174,11 +187,11 @@ def generate_one_footprint(pins, configuration):
         configuration["courtyard_line_width"],
     ]
     gridA = [0, 0, configuration["courtyard_grid"]]
-    for i in range(0, 3):
+
+    for i, Layer in enumerate(["F.Fab", "F.SilkS", "F.CrtYd"]):
         LineDX = LineDXA[i]
-        Layer = LayerA[i]
         LineWidth = LineWidthA[i]
-        LindeDelta = LindeDeltaA[i]
+        LineDelta = LineDeltaA[i]
         points = []
         grid = gridA[i]
 
@@ -196,15 +209,15 @@ def generate_one_footprint(pins, configuration):
         points.append([roundToBase(x1, grid), roundToBase(y1, grid)])
         #
         x1 = x1
-        y1 = mount_pad_y - ((mount_hole_pad_diameter / 2) + LineDX + LindeDelta)
+        y1 = mount_pad_y - ((mount_hole_pad_diameter / 2) + LineDX + LineDelta)
         points.append([roundToBase(x1, grid), roundToBase(y1, grid)])
         #
-        if i == 1:  # SilkS
+        if Layer == "F.SilkS":  # SilkS
             kicad_mod.append(
                 PolygoneLine(polygone=points, layer=Layer, width=LineWidth)
             )
             #
-            # Need to do something ugly here, becosue we will do points = []
+            # Need to do something ugly here, because we will do points = []
             # We need to reflect these points already here
             #
             points2 = []
@@ -217,39 +230,27 @@ def generate_one_footprint(pins, configuration):
             #
             points = []
             x1 = x1
-            y1 = mount_pad_y + ((mount_hole_diameter / 2) + LineDX + LindeDelta)
-            points.append([roundToBase(x1, grid), roundToBase(y1, grid)])
-        elif i == 2:  # CrtYd
-            x1 = mount_pad_x + (mount_hole_diameter / 2) + LineDX
-            y1 = y1
-            points.append([roundToBase(x1, grid), roundToBase(y1, grid)])
-            #
-            x1 = x1
-            y1 = mount_pad_y + ((mount_hole_diameter / 2) + LineDX)
-            points.append([roundToBase(x1, grid), roundToBase(y1, grid)])
-            #
-            x1 = (A / 2) + LineDX
-            y1 = y1
+            y1 = mount_pad_y + ((mount_hole_diameter / 2) + LineDX + LineDelta)
             points.append([roundToBase(x1, grid), roundToBase(y1, grid)])
         #
         x1 = x1
         y1 = body_edge["bottom"] + LineDX
         points.append([roundToBase(x1, grid), roundToBase(y1, grid)])
         #
-        x1 = (B / 2) + (pad_size[0] / 2) + LineDX + LindeDelta
+        x1 = (B / 2) + (pad_size[0] / 2) + LineDX + LineDelta
         y1 = y1
         points.append([roundToBase(x1, grid), roundToBase(y1, grid)])
         #
-        if i == 0:
+        if Layer == "F.Fab":
             x1 = 0
             y1 = y1
             points.append([roundToBase(x1, grid), roundToBase(y1, grid)])
 
-        if i == 1:
+        if Layer == "F.SilkS":
             ttx1 = x1
             tty1 = y1 + (pad_size[1] / 2)
 
-        if i == 2:
+        if Layer == "F.CrtYd":
             x1 = x1
             y1 = pad_row_1_y + (pad_size[1] / 2) + LineDX
             ttx1 = x1
@@ -264,11 +265,11 @@ def generate_one_footprint(pins, configuration):
         # Reflect right part around the X-axis
         #
         points2 = []
-        for pp in points:
-            points2.append([0 - pp[0], pp[1]])
+        for point in points:
+            points2.append([0 - point[0], point[1]])
         #
         #
-        if i == 0:  # Fab
+        if Layer == "F.Fab":  # Fab
             # Add pin 1 marker
             tt = len(points2)
             ps = points2[tt - 1]
@@ -280,7 +281,7 @@ def generate_one_footprint(pins, configuration):
             points2[tt - 1] = p3
             points2.append(p4)
             points2.append(ps)
-        elif i == 1:  # silk
+        elif Layer == "F.SilkS":  # silk
             points2.append([roundToBase(0 - ttx1, grid), roundToBase(tty1, grid)])
 
         #
@@ -367,5 +368,6 @@ if __name__ == "__main__":
         except yaml.YAMLError as exc:
             print(exc)
 
-    for pincount in pincount_range:
-        generate_one_footprint(pincount, configuration)
+    for variant in variant_params:
+        for pincount in pincount_range:
+            generate_one_footprint(pincount, variant, configuration)

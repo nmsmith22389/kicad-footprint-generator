@@ -127,7 +127,7 @@ def generate_one_footprint(pins_per_row, variant, configuration):
     mount_pad_y = pad_row_1_y - 2.15 - (pad_size[1] / 2)
 
     tab_w = 1.4
-    tab_l = 1.4
+    tab_l = 2.8
 
     body_edge = {"left": -A / 2, "right": A / 2, "bottom": mount_pad_y + 2.47}
     body_edge["top"] = body_edge["bottom"] - 4.37
