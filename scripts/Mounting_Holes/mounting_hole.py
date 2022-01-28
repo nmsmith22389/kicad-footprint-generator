@@ -238,8 +238,11 @@ def create_pad(configuration, kicad_mod, holeType, holeSize, padSize ):
     #myPad.type = Pad.TYPE_THT
     myPad.number= "1"
 
-    if holeType == '1PAD':
+    if holeType == '1PADf':
         myPad.layers = ['F.Cu', 'F.Mask']
+
+    if holeType == '1PADb':
+        myPad.layers = ['B.Cu', 'B.Mask']
 
     if re.match ('2PAD', holeType):
         myPad.layers = ['*.Cu', '*.Mask']
@@ -268,7 +271,7 @@ if __name__ == "__main__":
 
         for screew_sizes  in screw["data"]:
 
-            for variant in ('', '1PAD', '2PAD', '2PAD+V'):
+            for variant in ('', '1PADf','1PADb', '2PAD', '2PAD+V'):
 
                 N = screew_sizes['Name']
                 #print ("Name=", variant, N, "\n")
