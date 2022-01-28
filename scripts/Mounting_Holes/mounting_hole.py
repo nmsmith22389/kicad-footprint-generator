@@ -38,15 +38,16 @@ lib_name = 'KKKKK'
 ISO273 = {
                     # drill   nominal, fine, medium, coarse
 
-          "M2":     {"drill":  ( 2.0,  2.2,  2.4,  2.6)  , "vias": (6,  0.4)},
-          "M2.5":   {"drill":  ( 2.5,  2.7,  2.9,  3.1)  , "vias": (6,  0.4)},
-          "M3":     {"drill":  ( 3.0,  3.2,  3.4,  3.6)  , "vias": (6,  0.6)},
-          "M3.5":   {"drill":  ( 3.5,  3.7,  3.9,  4.2)  , "vias": (8,  0.6)},
-          "M4":     {"drill":  ( 4.0,  4.3,  4.5,  4.8)  , "vias": (8,  0.8)},
-          "M5":     {"drill":  ( 5.0,  5.3,  5.5,  5.8)  , "vias": (8,  1.0)},
-          "M6":     {"drill":  ( 6.0,  6.4,  6.6,  7.0)  , "vias": (12, 1.1)},
-          "M8":     {"drill":  ( 8.0,  8.4,  9.0, 10.0)  , "vias": (12, 1.4)},
-          "M10":    {"drill":  (10.0, 10.5, 11.0, 12.0)  , "vias": (12, 1.5)},
+          "M1.6":     {"drill":  ( 1.6,  1.7,  1.8,  2.0)  , "vias": (6,  0.3)},
+          "M2.0":     {"drill":  ( 2.0,  2.2,  2.4,  2.6)  , "vias": (6,  0.4)},
+          "M2.5":     {"drill":  ( 2.5,  2.7,  2.9,  3.1)  , "vias": (6,  0.4)},
+          "M3.0":     {"drill":  ( 3.0,  3.2,  3.4,  3.6)  , "vias": (6,  0.6)},
+          "M3.5":     {"drill":  ( 3.5,  3.7,  3.9,  4.2)  , "vias": (8,  0.6)},
+          "M4.0":     {"drill":  ( 4.0,  4.3,  4.5,  4.8)  , "vias": (8,  0.8)},
+          "M5.0":     {"drill":  ( 5.0,  5.3,  5.5,  5.8)  , "vias": (8,  1.0)},
+          "M6.0":     {"drill":  ( 6.0,  6.4,  6.6,  7.0)  , "vias": (12, 1.1)},
+          "M8.0":     {"drill":  ( 8.0,  8.4,  9.0, 10.0)  , "vias": (12, 1.4)},
+         "M10.0":     {"drill":  (10.0, 10.5, 11.0, 12.0)  , "vias": (12, 1.5)},
 }
 
 drill_nom    = 0
@@ -58,15 +59,16 @@ drill_type   = drill_medium                         # <== choose here what drill
 #Torx screws, this is the Head diameter that presses on the pcb
 ISO14580 = {"data":[
 
-    {  "Name": "M2",     "size":  3.8 },
-    {  "Name": "M2.5",   "size":  4.5 },
-    {  "Name": "M3",     "size":  5.5 },
-    {  "Name": "M3.5",   "size":  6.0 },
-    {  "Name": "M4",     "size":  7.0 },
-    {  "Name": "M5",     "size":  8.5 },
-    {  "Name": "M6",     "size": 10.0 },
-    {  "Name": "M8",     "size": 13.0 },
-    {  "Name": "M10",    "size": 16.0 }
+    {  "Name": "M1.6",     "size":  3.0 },   # this one is not normalized
+    {  "Name": "M2.0",     "size":  3.8 },
+    {  "Name": "M2.5",     "size":  4.5 },
+    {  "Name": "M3.0",     "size":  5.5 },
+   #{  "Name": "M3.5",     "size":  6.0 },   # not recommended
+    {  "Name": "M4.0",     "size":  7.0 },
+    {  "Name": "M5.0",     "size":  8.5 },
+    {  "Name": "M6.0",     "size": 10.0 },
+    {  "Name": "M8.0",     "size": 13.0 },
+    {  "Name": "M10.0",    "size": 16.0 }
                ],
     "dataSheet":  "https://www.newfastener.com/wp-content/uploads/2013/03/ISO-14580.pdf",
     "Description":"ISO-14580, ISO-1207, ISO-4762, DIN-82"
@@ -75,12 +77,12 @@ ISO14580 = {"data":[
 #Hexagonal screws with collar
 ISO7380_1 = {"data":[
 
-    {  "Name": "M3",     "size":  5.7 },
-    {  "Name": "M4",     "size":  7.6 },
-    {  "Name": "M5",     "size":  9.5 },
-    {  "Name": "M6",     "size": 10.5 },
-    {  "Name": "M8",     "size": 14.0 },
-    {  "Name": "M10",    "size": 17.5 }
+    {  "Name": "M3.0",     "size":  5.7 },
+    {  "Name": "M4.0",     "size":  7.6 },
+    {  "Name": "M5.0",     "size":  9.5 },
+    {  "Name": "M6.0",     "size": 10.5 },
+    {  "Name": "M8.0",     "size": 14.0 },
+    {  "Name": "M10.0",    "size": 17.5 }
                     ],
     "dataSheet":  "https://cdn.standards.iteh.ai/samples/53671/84df01c5fcce4a91896ac3b0c55ca128/ISO-7380-1-2011.pdf",
     "Description":"ISO-7380, ISO-7380-1"
@@ -89,12 +91,12 @@ ISO7380_1 = {"data":[
 #Hexagonal screws with larger collar
 ISO7380_2 = {"data":[
 
-    {  "Name": "M3",     "size":  6.9 },
-    {  "Name": "M4",     "size":  9.4 },
-    {  "Name": "M5",     "size": 11.8 },
-    {  "Name": "M6",     "size": 13.6 },
-    {  "Name": "M8",     "size": 17.8 },
-    {  "Name": "M10",    "size": 21.9 }
+    {  "Name": "M3.0",     "size":  6.9 },
+    {  "Name": "M4.0",     "size":  9.4 },
+    {  "Name": "M5.0",     "size": 11.8 },
+    {  "Name": "M6.0",     "size": 13.6 },
+    {  "Name": "M8.0",     "size": 17.8 },
+    {  "Name": "M10.0",    "size": 21.9 }
                     ],
     "dataSheet":  "https://cdn.standards.iteh.ai/samples/53672/801ec2c66dfc4359ba76493e3d01d97f/ISO-7380-2-2011.pdf",
     "Description":"ISO-7380-2"
@@ -207,7 +209,9 @@ def create_pad(configuration, kicad_mod, holeType, holeSize, padSize ):
         size  = [0.00000000001, 0.00000000001], #bug somewhere, no way to set that to zero
         drill = holeSize,
         #layers = ['*.Cu', '*.Mask'],
-        layers = ['*.Cu']
+        #layers = ['*.Cu']
+        #layers = ['*.Mask']
+        layers = ['']
     )
 
     # Silk screen circle & courtyard around the screw head
@@ -230,13 +234,10 @@ def create_pad(configuration, kicad_mod, holeType, holeSize, padSize ):
     myPad.size[1] = padSize
     #myPad.type = Pad.TYPE_THT
 
-    if holeType == 'FCu':
+    if holeType == '1PAD':
         myPad.layers = ['F.Cu', 'F.Mask']
 
-    if holeType == 'BCu':
-        myPad.layers = ['B.Cu', 'B.Mask']
-
-    if holeType == 'Via':
+    if re.match ('2PAD', holeType):
         myPad.layers = ['*.Cu', '*.Mask']
         myPad.type = Pad.TYPE_THT       # only biface are really THT
 
@@ -263,7 +264,7 @@ if __name__ == "__main__":
 
         for screew_sizes  in screw["data"]:
 
-            for variant in ('', 'PTH', 'BCu', 'FCu', 'Via'):
+            for variant in ('', '1PAD', '2PAD', '2PAD+V'):
 
                 N = screew_sizes['Name']
                 #print ("Name=", variant, N, "\n")
@@ -284,7 +285,7 @@ if __name__ == "__main__":
 
                 # doAnnularVia(via_count, via_diameter, x_size, y_size)
                 r_vias = (screew_sizes["size"]+ISO273[N]["drill"][drill_type]) / 2
-                if variant == 'Via':
+                if variant == '2PAD+V':
                     doAnnularVia( via_count    = ISO273[N]["vias"][0],
                                   via_diameter = ISO273[N]["vias"][1],
                                   x_size       = r_vias,
