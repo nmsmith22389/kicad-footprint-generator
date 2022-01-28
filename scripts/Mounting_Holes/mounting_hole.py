@@ -69,7 +69,7 @@ ISO14580 = {"data":[
     {  "Name": "M10",    "size": 16.0 }
                ],
     "dataSheet":  "https://www.newfastener.com/wp-content/uploads/2013/03/ISO-14580.pdf",
-    "Description":"ISO14580, ISO1207, ISO4762, ISO82"
+    "Description":"ISO-14580, ISO-1207, ISO-4762, DIN-82"
     }
 
 #Hexagonal screws with collar
@@ -83,7 +83,7 @@ ISO7380_1 = {"data":[
     {  "Name": "M10",    "size": 17.5 }
                     ],
     "dataSheet":  "https://cdn.standards.iteh.ai/samples/53671/84df01c5fcce4a91896ac3b0c55ca128/ISO-7380-1-2011.pdf",
-    "Description":"ISO7380, ISO7380-1"
+    "Description":"ISO-7380, ISO-7380-1"
     }
 
 #Hexagonal screws with larger collar
@@ -97,7 +97,7 @@ ISO7380_2 = {"data":[
     {  "Name": "M10",    "size": 21.9 }
                     ],
     "dataSheet":  "https://cdn.standards.iteh.ai/samples/53672/801ec2c66dfc4359ba76493e3d01d97f/ISO-7380-2-2011.pdf",
-    "Description":"ISO7380-2"
+    "Description":"ISO-7380-2"
     }
 
 screws = [ISO14580, ISO7380_1]  #ISO73380_2
@@ -315,7 +315,7 @@ if __name__ == "__main__":
                 model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}.wrl'.format(
                             model3d_path_prefix=model3d_path_prefix, lib_name=lib_name, fp_name=footprint_name)
                 # KiCad fully handles it !
-                #kicad_mod.append(Model(filename=model_name))
+                kicad_mod.append(Model(filename=model_name))
 
                 output_dir = '{lib_name:s}.pretty/'.format(lib_name=lib_name)
                 if not os.path.isdir(output_dir): #returns false if path does not 
