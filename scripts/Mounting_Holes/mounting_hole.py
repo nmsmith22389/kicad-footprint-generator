@@ -178,7 +178,7 @@ def  doAnnularVia(via_count, via_diameter, x_size, y_size):
         else: # error
             raise "invalid scope_step"
 
-        kicad_mod.append(Pad(number='',
+        kicad_mod.append(Pad(number='1',
                              type=Pad.TYPE_THT,
                              shape=Pad.SHAPE_CIRCLE,
                              at=[step_x, step_y],
@@ -233,6 +233,7 @@ def create_pad(configuration, kicad_mod, holeType, holeSize, padSize ):
     myPad.size[0] = padSize
     myPad.size[1] = padSize
     #myPad.type = Pad.TYPE_THT
+    myPad.number= "1"
 
     if holeType == '1PAD':
         myPad.layers = ['F.Cu', 'F.Mask']
