@@ -215,10 +215,13 @@ def create_pad(configuration, kicad_mod, holeType, holeSize, padSize ):
     )
 
     # Silk screen circle & courtyard around the screw head
-    radius = padSize/2 + nudge
+    radius = padSize/2
+    kicad_mod.append(  Circle( center=[0, 0], radius=radius, layer='F.Fab'))
+    radius += nudge
     kicad_mod.append(  Circle( center=[0, 0], radius=radius, layer='F.SilkS'))
     radius = roundToBase( radius + silk_w, configuration['courtyard_grid'])
     kicad_mod.append(  Circle( center=[0, 0], radius=radius, layer='F.CrtYd'))
+    kicad_mod.setAttribute('through_hole')
 
     if holeType == '':
         # For hole with no copper, set a clearance that extands to the
