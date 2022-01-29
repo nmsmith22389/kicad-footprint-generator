@@ -35,9 +35,10 @@ lib_name = 'KKKKK'
 
 # Metric standart hole size for screws assembly
 # https://cdn.standards.iteh.ai/samples/4183/1a8db2e6de054d2e9bed7d40be64d6e1/ISO-273-1979.pdf
+im = 25.4
 ISO273 = {
-                    # drill   nominal, fine, medium, coarse
-
+            # name              nominal, fine, medium, coarse
+#ISO273 sizes                            H7    H9    H11 (synonyms adjustements ?)
           "M1.6":     {"drill":  ( 1.6,  1.7,  1.8,  2.0)  , "vias": (6,  0.3)},
           "M2.0":     {"drill":  ( 2.0,  2.2,  2.4,  2.6)  , "vias": (6,  0.4)},
           "M2.5":     {"drill":  ( 2.5,  2.7,  2.9,  3.1)  , "vias": (6,  0.4)},
@@ -48,6 +49,23 @@ ISO273 = {
           "M6.0":     {"drill":  ( 6.0,  6.4,  6.6,  7.0)  , "vias": (12, 1.1)},
           "M8.0":     {"drill":  ( 8.0,  8.4,  9.0, 10.0)  , "vias": (12, 1.4)},
          "M10.0":     {"drill":  (10.0, 10.5, 11.0, 12.0)  , "vias": (12, 1.5)},
+
+#ANSI sizes            #                     H7          H9        H11 (found no info about that)
+        "ANSI_0":      {"drill":  ( 0.06 *im,  0.06 *im, 0.06 *im, 0.06 *im  )  , "vias": (6,  0.25   )},
+        "ANSI_1":      {"drill":  ( 5/64 *im,  5/64 *im, 5/64 *im, 5/64 *im  )  , "vias": (6,  0.3969 )},
+        "ANSI_2":      {"drill":  ( 3/32 *im,  3/32 *im, 3/32 *im, 3/32 *im  )  , "vias": (6,  0.3969 )},
+        "ANSI_3":      {"drill":  ( 7/64 *im,  7/64 *im, 7/64 *im, 7/64 *im  )  , "vias": (6,  0.5080 )},
+        "ANSI_4":      {"drill":  ( 1/8  *im,  1/8  *im, 1/8  *im, 1/8  *im  )  , "vias": (6,  0.5080 )},
+        "ANSI_5":      {"drill":  ( 1/8  *im,  1/8  *im, 1/8  *im, 1/8  *im  )  , "vias": (8,  0.7931 )},
+        "ANSI_6":      {"drill":  ( 9/64 *im,  9/64 *im, 9/64 *im, 9/64 *im  )  , "vias": (8,  0.7631 )},
+        "ANSI_7":      {"drill":  ( 5/32 *im,  5/32 *im, 5/32 *im, 5/32 *im  )  , "vias": (8,  0.8382 )},
+        "ANSI_8":      {"drill":  (11/64 *im, 11/64 *im,11/64 *im,11/64 *im  )  , "vias": (8,  0.8382 )},
+        "ANSI_9":      {"drill":  (11/64 *im, 11/64 *im,11/64 *im,11/64 *im  )  , "vias": (10, 1.016  )}, #.4in
+       "ANSI_10":      {"drill":  ( 3/16 *im,  3/16 *im, 3/16 *im, 3/16 *im  )  , "vias": (10, 1.016  )},
+       "ANSI_11":      {"drill":  ( 3/16 *im,  3/16 *im, 3/16 *im, 3/16 *im  )  , "vias": (10, 1.2446 )}, #.41in
+       "ANSI_12":      {"drill":  ( 7/32 *im,  7/32 *im, 7/32 *im, 7/32 *im  )  , "vias": (10, 1.2446 )},
+       "ANSI_14":      {"drill":  ( 1/4  *im,  1/4  *im, 1/4  *im, 1/4  *im  )  , "vias": (12, 1.2446 )}, # 1/4
+
 }
 
 drill_nom    = 0
@@ -102,7 +120,54 @@ ISO7380_2 = {"data":[
     "Description":"ISO-7380-2"
     }
 
-screws = [ISO14580, ISO7380_1]  #ISO73380_2
+
+#Torx screws with normal collar
+imm = 25.4
+Torx = {"data":[
+
+    {  "Name": "ANSI_2",    "size":  .167 *im  },
+    {  "Name": "ANSI_4",    "size":  .219 *im  },
+    {  "Name": "ANSI_6",    "size":  .270 *im  },
+    {  "Name": "ANSI_8",    "size":  .322 *im  },
+    {  "Name": "ANSI_10",   "size":  .373 *im  },
+    {  "Name": "ANSI_12",   "size":  .425 *im  },
+    {  "Name": "ANSI_14",   "size":  .492 *im  }, # 1/4
+                    ],
+    "dataSheet":  "page 74: https://www.nationalengfasteners.com/images/TechnicalDocuments/selfTappingScrewsGuide.pdf",
+    "Description":"Torx Pan Drive Heads"
+    }
+
+#Small head diameter screws
+Fillister = {"data":[
+
+    {  "Name": "ANSI_0",    "size":  .096 *im  },
+    {  "Name": "ANSI_2",    "size":  .140 *im  },
+    {  "Name": "ANSI_4",    "size":  .183 *im  },
+    {  "Name": "ANSI_6",    "size":  .226 *im  },
+    {  "Name": "ANSI_8",    "size":  .270 *im  },
+    {  "Name": "ANSI_10",   "size":  .313 *im  },
+    {  "Name": "ANSI_12",   "size":  .357 *im  },
+    {  "Name": "ANSI_14",   "size":  .414 *im  }, # 1/4
+                    ],
+    "dataSheet":  "page 16: https://www.nationalengfasteners.com/images/TechnicalDocuments/selfTappingScrewsGuide.pdf",
+    "Description":"Fillister screws"
+    }
+#Large head
+Phillips = {"data":[
+
+    {  "Name": "ANSI_4",    "size":  .261 *im  },
+    {  "Name": "ANSI_6",    "size":  .321 *im  },
+    {  "Name": "ANSI_8",    "size":  .380 *im  },
+    {  "Name": "ANSI_10",   "size":  .439 *im  },
+    {  "Name": "ANSI_12",   "size":  .498 *im  },
+    {  "Name": "ANSI_14",   "size":  .576 *im  }, # 1/4
+                    ],
+    "dataSheet":  "page 19: https://www.nationalengfasteners.com/images/TechnicalDocuments/selfTappingScrewsGuide.pdf",
+    "Description":"Phillips Round Wahser Heads"
+    }
+
+# List a screws series to build
+screws = [ISO14580, ISO7380_1, Torx, Fillister, Phillips]  #ISO73380_2
 
 
 # https://stackoverflow.com/questions/4265546/python-round-to-nearest-05
@@ -178,11 +243,11 @@ def  doAnnularVia(via_count, via_diameter, x_size, y_size):
         else: # error
             raise "invalid scope_step"
 
-        kicad_mod.append(Pad(number='1',
+        kicad_mod.append(Pad(number='1',  #needed to connect them to the main pad !
                              type=Pad.TYPE_THT,
                              shape=Pad.SHAPE_CIRCLE,
                              at=[step_x, step_y],
-                             size=[via_diameter+0.3, via_diameter+0.3],
+                             size=[via_diameter+0.2, via_diameter+0.2],
                              drill=via_diameter,
                              layers=['*.Cu', '*.Mask']
                              ))
@@ -236,7 +301,7 @@ def create_pad(configuration, kicad_mod, holeType, holeSize, padSize ):
     myPad.size[0] = padSize
     myPad.size[1] = padSize
     #myPad.type = Pad.TYPE_THT
-    myPad.number= "1"
+    myPad.number= "1"  # needed to route a track
 
     if holeType == '1PADf':
         myPad.layers = ['F.Cu', 'F.Mask']
