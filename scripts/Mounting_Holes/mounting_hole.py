@@ -262,7 +262,7 @@ def create_pad(configuration, kicad_mod, holeType, holeSize, padSize ):
     #    TYPE_THT     = 'thru_hole'
     #    TYPE_SMT     = 'smd'
     #    TYPE_CONNECT = 'connect'
-    #    TYPE_NPTH    = 'np_thru_hole'
+    #    TYPE_NPTH    = 'np_thru_hole'     # cannot use that when there is a PAD, see KiCad Issue #10637
 
     # Default NPTH (basic hole with no copper)
     myPad = Pad(
@@ -300,7 +300,7 @@ def create_pad(configuration, kicad_mod, holeType, holeSize, padSize ):
     #myPad.size = [padSize, padSize] # this syntax is refused
     myPad.size[0] = padSize
     myPad.size[1] = padSize
-    #myPad.type = Pad.TYPE_THT
+    myPad.type = Pad.TYPE_THT
     myPad.number= "1"  # needed to route a track
 
     if holeType == '1PADf':
@@ -311,7 +311,7 @@ def create_pad(configuration, kicad_mod, holeType, holeSize, padSize ):
 
     if re.match ('2PAD', holeType):
         myPad.layers = ['*.Cu', '*.Mask']
-        myPad.type = Pad.TYPE_THT       # only biface are really THT
+        #myPad.type = Pad.TYPE_THT       # only biface are really THT
 
     kicad_mod.append(myPad)
 
