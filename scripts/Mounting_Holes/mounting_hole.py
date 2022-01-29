@@ -304,10 +304,16 @@ def create_pad(configuration, kicad_mod, holeType, holeSize, padSize ):
     myPad.number= "1"  # needed to route a track
 
     if holeType == '1PADf':
-        myPad.layers = ['F.Cu', 'F.Mask']
+        myPad.layers = ['F.Cu', 'F.Mask']  # Logically, a hole is expected not to be tented
+        myPad.layers = ['F.Cu', '*.Mask']  # so excluding mask for the screw head is enougth.
+                                           # That is no true, we need to exclude on both sides
+                                           # see https://gitlab.com/kicad/code/kicad/-/issues/10637
 
     if holeType == '1PADb':
-        myPad.layers = ['B.Cu', 'B.Mask']
+        myPad.layers = ['B.Cu', 'F.Mask']  # Logically, a hole is expected not to be tented
+        myPad.layers = ['B.Cu', '*.Mask']  # so excluding mask for the screw head is enougth.
+                                           # That is no true, we need to exclude on both sides
+                                           # see https://gitlab.com/kicad/code/kicad/-/issues/10637
 
     if re.match ('2PAD', holeType):
         myPad.layers = ['*.Cu', '*.Mask']
