@@ -42,29 +42,29 @@ ISO273 = {
           "M1.6":     {"drill":  ( 1.6,  1.7,  1.8,  2.0)  , "vias": (6,  0.3)},
           "M2.0":     {"drill":  ( 2.0,  2.2,  2.4,  2.6)  , "vias": (6,  0.4)},
           "M2.5":     {"drill":  ( 2.5,  2.7,  2.9,  3.1)  , "vias": (6,  0.4)},
-          "M3.0":     {"drill":  ( 3.0,  3.2,  3.4,  3.6)  , "vias": (6,  0.6)},
-          "M3.5":     {"drill":  ( 3.5,  3.7,  3.9,  4.2)  , "vias": (8,  0.6)},
+          "M3.0":     {"drill":  ( 3.0,  3.2,  3.4,  3.6)  , "vias": (6,  0.4)},
+          "M3.5":     {"drill":  ( 3.5,  3.7,  3.9,  4.2)  , "vias": (8,  0.4)},
           "M4.0":     {"drill":  ( 4.0,  4.3,  4.5,  4.8)  , "vias": (8,  0.8)},
-          "M5.0":     {"drill":  ( 5.0,  5.3,  5.5,  5.8)  , "vias": (8,  1.0)},
-          "M6.0":     {"drill":  ( 6.0,  6.4,  6.6,  7.0)  , "vias": (12, 1.1)},
-          "M8.0":     {"drill":  ( 8.0,  8.4,  9.0, 10.0)  , "vias": (12, 1.4)},
-         "M10.0":     {"drill":  (10.0, 10.5, 11.0, 12.0)  , "vias": (12, 1.5)},
+          "M5.0":     {"drill":  ( 5.0,  5.3,  5.5,  5.8)  , "vias": (8,  0.8)},
+          "M6.0":     {"drill":  ( 6.0,  6.4,  6.6,  7.0)  , "vias": (12, 0.8)},
+          "M8.0":     {"drill":  ( 8.0,  8.4,  9.0, 10.0)  , "vias": (12, 1.2)},
+         "M10.0":     {"drill":  (10.0, 10.5, 11.0, 12.0)  , "vias": (12, 1.2)},
 
 #ANSI sizes            #                     H7          H9        H11 (found no info about that)
         "ANSI_0":      {"drill":  ( 0.06 *im,  0.06 *im, 0.06 *im, 0.06 *im  )  , "vias": (6,  0.25   )},
         "ANSI_1":      {"drill":  ( 5/64 *im,  5/64 *im, 5/64 *im, 5/64 *im  )  , "vias": (6,  0.3969 )},
         "ANSI_2":      {"drill":  ( 3/32 *im,  3/32 *im, 3/32 *im, 3/32 *im  )  , "vias": (6,  0.3969 )},
-        "ANSI_3":      {"drill":  ( 7/64 *im,  7/64 *im, 7/64 *im, 7/64 *im  )  , "vias": (6,  0.5080 )},
-        "ANSI_4":      {"drill":  ( 1/8  *im,  1/8  *im, 1/8  *im, 1/8  *im  )  , "vias": (6,  0.5080 )},
-        "ANSI_5":      {"drill":  ( 1/8  *im,  1/8  *im, 1/8  *im, 1/8  *im  )  , "vias": (8,  0.7931 )},
-        "ANSI_6":      {"drill":  ( 9/64 *im,  9/64 *im, 9/64 *im, 9/64 *im  )  , "vias": (8,  0.7631 )},
+        "ANSI_3":      {"drill":  ( 7/64 *im,  7/64 *im, 7/64 *im, 7/64 *im  )  , "vias": (6,  0.4572 )},
+        "ANSI_4":      {"drill":  ( 1/8  *im,  1/8  *im, 1/8  *im, 1/8  *im  )  , "vias": (6,  0.4572 )},
+        "ANSI_5":      {"drill":  ( 1/8  *im,  1/8  *im, 1/8  *im, 1/8  *im  )  , "vias": (8,  0.5080 )},
+        "ANSI_6":      {"drill":  ( 9/64 *im,  9/64 *im, 9/64 *im, 9/64 *im  )  , "vias": (8,  0.5080 )},
         "ANSI_7":      {"drill":  ( 5/32 *im,  5/32 *im, 5/32 *im, 5/32 *im  )  , "vias": (8,  0.8382 )},
         "ANSI_8":      {"drill":  (11/64 *im, 11/64 *im,11/64 *im,11/64 *im  )  , "vias": (8,  0.8382 )},
-        "ANSI_9":      {"drill":  (11/64 *im, 11/64 *im,11/64 *im,11/64 *im  )  , "vias": (10, 1.016  )}, #.4in
-       "ANSI_10":      {"drill":  ( 3/16 *im,  3/16 *im, 3/16 *im, 3/16 *im  )  , "vias": (10, 1.016  )},
-       "ANSI_11":      {"drill":  ( 3/16 *im,  3/16 *im, 3/16 *im, 3/16 *im  )  , "vias": (10, 1.2446 )}, #.41in
-       "ANSI_12":      {"drill":  ( 7/32 *im,  7/32 *im, 7/32 *im, 7/32 *im  )  , "vias": (10, 1.2446 )},
-       "ANSI_14":      {"drill":  ( 1/4  *im,  1/4  *im, 1/4  *im, 1/4  *im  )  , "vias": (12, 1.2446 )}, # 1/4
+        "ANSI_9":      {"drill":  (11/64 *im, 11/64 *im,11/64 *im,11/64 *im  )  , "vias": (10, 0.8382 )}, #.4in
+       "ANSI_10":      {"drill":  ( 3/16 *im,  3/16 *im, 3/16 *im, 3/16 *im  )  , "vias": (10, 0.8382 )},
+       "ANSI_11":      {"drill":  ( 3/16 *im,  3/16 *im, 3/16 *im, 3/16 *im  )  , "vias": (10, 1.016  )}, #.41in
+       "ANSI_12":      {"drill":  ( 7/32 *im,  7/32 *im, 7/32 *im, 7/32 *im  )  , "vias": (10, 1.016  )},
+       "ANSI_14":      {"drill":  ( 1/4  *im,  1/4  *im, 1/4  *im, 1/4  *im  )  , "vias": (12, 1.016  )}, # 1/4
 
 }
 
@@ -247,6 +247,9 @@ def  doAnnularVia(via_count, via_diameter, x_size, y_size):
                              type=Pad.TYPE_THT,
                              shape=Pad.SHAPE_CIRCLE,
                              at=[step_x, step_y],
+                             #0.3 is minimum to silence footprint checker. But we need really
+                             # smaller ring extension. Not a problem because the extension
+                             # is merged in the main pad
                              size=[via_diameter+0.2, via_diameter+0.2],
                              drill=via_diameter,
                              layers=['*.Cu', '*.Mask']
