@@ -274,7 +274,6 @@ def create_pad(configuration, kicad_mod, holeType, holeSize, padSize ):
         size   = ringSize,
         layers = Pad.LAYERS_THT
     ))
-    kicad_mod.setAttribute('through_hole')
 
     # Add SMD pad for 1PAD variant:
     if holeType == '1PAD':
@@ -324,13 +323,13 @@ if __name__ == "__main__":
                 footprint_name = '{n:s}_{sz:2.1f}mm_{var}'.format( n = N, sz=screew_sizes["size"], var=variant)
                 footprint_name = re.sub ('_$', '', footprint_name)
                 kicad_mod = Footprint(footprint_name)
+                kicad_mod.setAttribute('virtual')
 
                 # init kicad footprint
                 Description = '{des:s} (datasheet:{sheet:s})'.format (des=screw["Description"], 
                                                                     sheet=screw["dataSheet"])
                 kicad_mod.setDescription(Description)
                 kicad_mod.setTags('Mounting Hole')
-                kicad_mod.setTags('through_hole')
 
                 create_pad(configuration, kicad_mod, variant, ISO273[N]["drill"][drill_type], screew_sizes["size"])
 
