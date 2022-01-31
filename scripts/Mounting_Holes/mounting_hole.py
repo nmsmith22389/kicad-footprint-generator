@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 
-# KicadModTree is free software: you can redistribute it and/or
+# This is free software: you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #
-# KicadModTree is distributed in the hope that it will be useful,
+# This is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
@@ -13,7 +13,20 @@
 # You should have received a copy of the GNU General Public License
 # along with kicad-footprint-generator. If not, see < http://www.gnu.org/licenses/ >.
 #
-# (C) 2016 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
+#
+#  Mounting holes footprint generator fo KiCad
+#
+#  Holes:
+#            sizes are standard ISO and ANSI. ISO-273 specifies adjustment
+#            between the screw body and the hole. I did not find equivalent for ANSI.
+#            This generator doen't generate oblong holes
+#
+#  Screws:
+#            the screw serie defines the Pad diameter. For ANSI,
+#            3 sizes are defined (small, normal, large)
+#            for ISO, only normal and large.
+#
+#  2022 by Franck Bourdonnec, <>
 
 
 import sys
@@ -32,7 +45,7 @@ from KicadModTree import *
 
 lib_name = 'MountingHole'
 #during test
-lib_name = 'KKKKK'
+#lib_name = 'KKKKK'
 
 # Metric standart hole size for screws assembly
 # https://cdn.standards.iteh.ai/samples/4183/1a8db2e6de054d2e9bed7d40be64d6e1/ISO-273-1979.pdf
@@ -85,12 +98,12 @@ ISO14580 = {"data":[
    #{  "Name": "M3.5",     "size":  6.0 },   # not recommended
     {  "Name": "M4.0",     "size":  7.0 },
     {  "Name": "M5.0",     "size":  8.5 },
-    {  "Name": "M6.0",     "size": 10.0 },
+   #{  "Name": "M6.0",     "size": 10.0 },   # very similar 7380-1 M6
     {  "Name": "M8.0",     "size": 13.0 },
     {  "Name": "M10.0",    "size": 16.0 }
                ],
     "dataSheet":  "https://www.newfastener.com/wp-content/uploads/2013/03/ISO-14580.pdf",
-    "Description":"ISO-14580, ISO-1207, ISO-4762, DIN-82"
+    "Description":"ISO-14580, ISO-1207, ISO-4762, DIN-82 Normal Head Sizes (M3.5 and M6 removed)"
     }
 
 #Hexagonal screws with collar
@@ -104,7 +117,7 @@ ISO7380_1 = {"data":[
     {  "Name": "M10.0",    "size": 17.5 }
                     ],
     "dataSheet":  "https://cdn.standards.iteh.ai/samples/53671/84df01c5fcce4a91896ac3b0c55ca128/ISO-7380-1-2011.pdf",
-    "Description":"ISO-7380, ISO-7380-1"
+    "Description":"ISO-7380, ISO-7380-1 Large Head Sizes M3 M4 M5 M6 M8 M10"
     }
 
 #Hexagonal screws with larger collar
@@ -123,7 +136,6 @@ ISO7380_2 = {"data":[
 
 
 #Torx screws with normal collar
-imm = 25.4
 Torx = {"data":[
 
     {  "Name": "ANSI_2",    "size":  .167 *im  },
@@ -135,7 +147,7 @@ Torx = {"data":[
     {  "Name": "ANSI_14",   "size":  .492 *im  }, # 1/4
                     ],
     "dataSheet":  "page 74: https://www.nationalengfasteners.com/images/TechnicalDocuments/selfTappingScrewsGuide.pdf",
-    "Description":"Torx Pan Drive Heads"
+    "Description":"Torx Pan Drive Heads #2 #4 #6 #8 #10 #12 ¼"
     }
 
 #Small head diameter screws
@@ -151,7 +163,7 @@ Fillister = {"data":[
     {  "Name": "ANSI_14",   "size":  .414 *im  }, # 1/4
                     ],
     "dataSheet":  "page 16: https://www.nationalengfasteners.com/images/TechnicalDocuments/selfTappingScrewsGuide.pdf",
-    "Description":"Fillister screws"
+    "Description":"Fillister screws #0 #2 #4 #6 #8 #10 #12 ¼"
     }
 #Large head
 Phillips = {"data":[
@@ -164,7 +176,7 @@ Phillips = {"data":[
     {  "Name": "ANSI_14",   "size":  .576 *im  }, # 1/4
                     ],
     "dataSheet":  "page 19: https://www.nationalengfasteners.com/images/TechnicalDocuments/selfTappingScrewsGuide.pdf",
-    "Description":"Phillips Round Wahser Heads"
+    "Description":"Phillips Round Wahser Heads #4 #6 #8 #10 #12 ¼"
     }
 
 # List a screws series to build
