@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 
-# KicadModTree is free software: you can redistribute it and/or
+# This is free software: you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #
-# KicadModTree is distributed in the hope that it will be useful,
+# This is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
@@ -13,12 +13,26 @@
 # You should have received a copy of the GNU General Public License
 # along with kicad-footprint-generator. If not, see < http://www.gnu.org/licenses/ >.
 #
-# (C) 2016 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
+#
+#  Mounting holes footprint generator fo KiCad
+#
+#  Holes:
+#            sizes are standard ISO and ANSI. ISO-273 specifies adjustment
+#            between the screw body and the hole. I did not find equivalent for ANSI.
+#            This generator doen't generate oblong holes
+#
+#  Screws:
+#            the screw serie defines the Pad diameter. For ANSI,
+#            3 sizes are defined (small, normal, large)
+#            for ISO, only normal and large.
+#
+#  2022 by Franck Bourdonnec, <>
 
 
 import sys
 import os
 import re
+import copy as syscopy
 import argparse
 import yaml
 import math
@@ -31,7 +45,7 @@ from KicadModTree import *
 
 lib_name = 'MountingHole'
 #during test
-lib_name = 'KKKKK'
+#lib_name = 'KKKKK'
 
 # Metric standart hole size for screws assembly
 # https://cdn.standards.iteh.ai/samples/4183/1a8db2e6de054d2e9bed7d40be64d6e1/ISO-273-1979.pdf
@@ -42,29 +56,29 @@ ISO273 = {
           "M1.6":     {"drill":  ( 1.6,  1.7,  1.8,  2.0)  , "vias": (6,  0.3)},
           "M2.0":     {"drill":  ( 2.0,  2.2,  2.4,  2.6)  , "vias": (6,  0.4)},
           "M2.5":     {"drill":  ( 2.5,  2.7,  2.9,  3.1)  , "vias": (6,  0.4)},
-          "M3.0":     {"drill":  ( 3.0,  3.2,  3.4,  3.6)  , "vias": (6,  0.6)},
-          "M3.5":     {"drill":  ( 3.5,  3.7,  3.9,  4.2)  , "vias": (8,  0.6)},
+          "M3.0":     {"drill":  ( 3.0,  3.2,  3.4,  3.6)  , "vias": (6,  0.4)},
+          "M3.5":     {"drill":  ( 3.5,  3.7,  3.9,  4.2)  , "vias": (8,  0.4)},
           "M4.0":     {"drill":  ( 4.0,  4.3,  4.5,  4.8)  , "vias": (8,  0.8)},
-          "M5.0":     {"drill":  ( 5.0,  5.3,  5.5,  5.8)  , "vias": (8,  1.0)},
-          "M6.0":     {"drill":  ( 6.0,  6.4,  6.6,  7.0)  , "vias": (12, 1.1)},
-          "M8.0":     {"drill":  ( 8.0,  8.4,  9.0, 10.0)  , "vias": (12, 1.4)},
-         "M10.0":     {"drill":  (10.0, 10.5, 11.0, 12.0)  , "vias": (12, 1.5)},
+          "M5.0":     {"drill":  ( 5.0,  5.3,  5.5,  5.8)  , "vias": (8,  0.8)},
+          "M6.0":     {"drill":  ( 6.0,  6.4,  6.6,  7.0)  , "vias": (12, 0.8)},
+          "M8.0":     {"drill":  ( 8.0,  8.4,  9.0, 10.0)  , "vias": (12, 1.2)},
+         "M10.0":     {"drill":  (10.0, 10.5, 11.0, 12.0)  , "vias": (12, 1.2)},
 
 #ANSI sizes            #                     H7          H9        H11 (found no info about that)
         "ANSI_0":      {"drill":  ( 0.06 *im,  0.06 *im, 0.06 *im, 0.06 *im  )  , "vias": (6,  0.25   )},
         "ANSI_1":      {"drill":  ( 5/64 *im,  5/64 *im, 5/64 *im, 5/64 *im  )  , "vias": (6,  0.3969 )},
         "ANSI_2":      {"drill":  ( 3/32 *im,  3/32 *im, 3/32 *im, 3/32 *im  )  , "vias": (6,  0.3969 )},
-        "ANSI_3":      {"drill":  ( 7/64 *im,  7/64 *im, 7/64 *im, 7/64 *im  )  , "vias": (6,  0.5080 )},
-        "ANSI_4":      {"drill":  ( 1/8  *im,  1/8  *im, 1/8  *im, 1/8  *im  )  , "vias": (6,  0.5080 )},
-        "ANSI_5":      {"drill":  ( 1/8  *im,  1/8  *im, 1/8  *im, 1/8  *im  )  , "vias": (8,  0.7931 )},
-        "ANSI_6":      {"drill":  ( 9/64 *im,  9/64 *im, 9/64 *im, 9/64 *im  )  , "vias": (8,  0.7631 )},
+        "ANSI_3":      {"drill":  ( 7/64 *im,  7/64 *im, 7/64 *im, 7/64 *im  )  , "vias": (6,  0.4572 )},
+        "ANSI_4":      {"drill":  ( 1/8  *im,  1/8  *im, 1/8  *im, 1/8  *im  )  , "vias": (6,  0.4572 )},
+        "ANSI_5":      {"drill":  ( 1/8  *im,  1/8  *im, 1/8  *im, 1/8  *im  )  , "vias": (8,  0.5080 )},
+        "ANSI_6":      {"drill":  ( 9/64 *im,  9/64 *im, 9/64 *im, 9/64 *im  )  , "vias": (8,  0.5080 )},
         "ANSI_7":      {"drill":  ( 5/32 *im,  5/32 *im, 5/32 *im, 5/32 *im  )  , "vias": (8,  0.8382 )},
         "ANSI_8":      {"drill":  (11/64 *im, 11/64 *im,11/64 *im,11/64 *im  )  , "vias": (8,  0.8382 )},
-        "ANSI_9":      {"drill":  (11/64 *im, 11/64 *im,11/64 *im,11/64 *im  )  , "vias": (10, 1.016  )}, #.4in
-       "ANSI_10":      {"drill":  ( 3/16 *im,  3/16 *im, 3/16 *im, 3/16 *im  )  , "vias": (10, 1.016  )},
-       "ANSI_11":      {"drill":  ( 3/16 *im,  3/16 *im, 3/16 *im, 3/16 *im  )  , "vias": (10, 1.2446 )}, #.41in
-       "ANSI_12":      {"drill":  ( 7/32 *im,  7/32 *im, 7/32 *im, 7/32 *im  )  , "vias": (10, 1.2446 )},
-       "ANSI_14":      {"drill":  ( 1/4  *im,  1/4  *im, 1/4  *im, 1/4  *im  )  , "vias": (12, 1.2446 )}, # 1/4
+        "ANSI_9":      {"drill":  (11/64 *im, 11/64 *im,11/64 *im,11/64 *im  )  , "vias": (10, 0.8382 )}, #.4in
+       "ANSI_10":      {"drill":  ( 3/16 *im,  3/16 *im, 3/16 *im, 3/16 *im  )  , "vias": (10, 0.8382 )},
+       "ANSI_11":      {"drill":  ( 3/16 *im,  3/16 *im, 3/16 *im, 3/16 *im  )  , "vias": (10, 1.016  )}, #.41in
+       "ANSI_12":      {"drill":  ( 7/32 *im,  7/32 *im, 7/32 *im, 7/32 *im  )  , "vias": (10, 1.016  )},
+       "ANSI_14":      {"drill":  ( 1/4  *im,  1/4  *im, 1/4  *im, 1/4  *im  )  , "vias": (12, 1.016  )}, # 1/4
 
 }
 
@@ -84,12 +98,12 @@ ISO14580 = {"data":[
    #{  "Name": "M3.5",     "size":  6.0 },   # not recommended
     {  "Name": "M4.0",     "size":  7.0 },
     {  "Name": "M5.0",     "size":  8.5 },
-    {  "Name": "M6.0",     "size": 10.0 },
+   #{  "Name": "M6.0",     "size": 10.0 },   # very similar 7380-1 M6
     {  "Name": "M8.0",     "size": 13.0 },
     {  "Name": "M10.0",    "size": 16.0 }
                ],
     "dataSheet":  "https://www.newfastener.com/wp-content/uploads/2013/03/ISO-14580.pdf",
-    "Description":"ISO-14580, ISO-1207, ISO-4762, DIN-82"
+    "Description":"ISO-14580, ISO-1207, ISO-4762, DIN-82 Normal Head Sizes (M3.5 and M6 removed)"
     }
 
 #Hexagonal screws with collar
@@ -103,7 +117,7 @@ ISO7380_1 = {"data":[
     {  "Name": "M10.0",    "size": 17.5 }
                     ],
     "dataSheet":  "https://cdn.standards.iteh.ai/samples/53671/84df01c5fcce4a91896ac3b0c55ca128/ISO-7380-1-2011.pdf",
-    "Description":"ISO-7380, ISO-7380-1"
+    "Description":"ISO-7380, ISO-7380-1 Large Head Sizes M3 M4 M5 M6 M8 M10"
     }
 
 #Hexagonal screws with larger collar
@@ -122,7 +136,6 @@ ISO7380_2 = {"data":[
 
 
 #Torx screws with normal collar
-imm = 25.4
 Torx = {"data":[
 
     {  "Name": "ANSI_2",    "size":  .167 *im  },
@@ -134,7 +147,7 @@ Torx = {"data":[
     {  "Name": "ANSI_14",   "size":  .492 *im  }, # 1/4
                     ],
     "dataSheet":  "page 74: https://www.nationalengfasteners.com/images/TechnicalDocuments/selfTappingScrewsGuide.pdf",
-    "Description":"Torx Pan Drive Heads"
+    "Description":"Torx Pan Drive Heads #2 #4 #6 #8 #10 #12 ¼"
     }
 
 #Small head diameter screws
@@ -150,7 +163,7 @@ Fillister = {"data":[
     {  "Name": "ANSI_14",   "size":  .414 *im  }, # 1/4
                     ],
     "dataSheet":  "page 16: https://www.nationalengfasteners.com/images/TechnicalDocuments/selfTappingScrewsGuide.pdf",
-    "Description":"Fillister screws"
+    "Description":"Fillister screws #0 #2 #4 #6 #8 #10 #12 ¼"
     }
 #Large head
 Phillips = {"data":[
@@ -163,7 +176,7 @@ Phillips = {"data":[
     {  "Name": "ANSI_14",   "size":  .576 *im  }, # 1/4
                     ],
     "dataSheet":  "page 19: https://www.nationalengfasteners.com/images/TechnicalDocuments/selfTappingScrewsGuide.pdf",
-    "Description":"Phillips Round Wahser Heads"
+    "Description":"Phillips Round Wahser Heads #4 #6 #8 #10 #12 ¼"
     }
 
 # List a screws series to build
@@ -247,6 +260,9 @@ def  doAnnularVia(via_count, via_diameter, x_size, y_size):
                              type=Pad.TYPE_THT,
                              shape=Pad.SHAPE_CIRCLE,
                              at=[step_x, step_y],
+                             #0.3 is minimum to silence footprint checker. But we need really
+                             # smaller ring extension. Not a problem because the extension
+                             # is merged in the main pad
                              size=[via_diameter+0.2, via_diameter+0.2],
                              drill=via_diameter,
                              layers=['*.Cu', '*.Mask']
@@ -255,7 +271,8 @@ def  doAnnularVia(via_count, via_diameter, x_size, y_size):
 
 def create_pad(configuration, kicad_mod, holeType, holeSize, padSize ):
 
-    nudge = configuration['silk_fab_offset']
+    silk_nudge = configuration['silk_fab_offset']
+    crtd_nudge = configuration['courtyard_offset']['connector']
     silk_w = configuration['silk_line_width']
     fab_w = configuration['fab_line_width']
 
@@ -289,9 +306,9 @@ def create_pad(configuration, kicad_mod, holeType, holeSize, padSize ):
     # Silk screen circle & courtyard around the screw head
     radius = padSize/2
     kicad_mod.append(  Circle( center=[0, 0], radius=radius, layer='F.Fab'))
-    radius += nudge
-    kicad_mod.append(  Circle( center=[0, 0], radius=radius, layer='F.SilkS'))
-    radius = roundToBase( radius + silk_w, configuration['courtyard_grid'])
+    kicad_mod.append(  Circle( center=[0, 0], radius=radius+silk_nudge, layer='F.SilkS'))
+
+    radius = roundToBase( radius + crtd_nudge, configuration['courtyard_grid'])
     kicad_mod.append(  Circle( center=[0, 0], radius=radius, layer='F.CrtYd'))
 
 
@@ -308,7 +325,6 @@ if __name__ == "__main__":
             configuration = yaml.safe_load(config_stream)
         except yaml.YAMLError as exc:
             print(exc)
-
 
     #for each Screw type, generate footprint
     for screw in screws:
