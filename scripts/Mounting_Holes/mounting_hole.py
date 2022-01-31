@@ -259,25 +259,33 @@ def create_pad(configuration, kicad_mod, holeType, holeSize, padSize ):
     silk_w = configuration['silk_line_width']
     fab_w = configuration['fab_line_width']
 
-    #    TYPE_THT     = 'thru_hole'
-    #    TYPE_SMT     = 'smd'
-    #    TYPE_CONNECT = 'connect'
-    #    TYPE_NPTH    = 'np_thru_hole'     # cannot use that when there is a PAD, see KiCad Issue #10637
+    if holeType == '' or holeType == '1PAD':
+        ringSize = holeSize + 0.4 # small ring
+    else:
+        ringSize = padSize # big ring
 
-    # Default NPTH (basic hole with no copper)
-    myPad = Pad(
-        number= "",
-        type  = Pad.TYPE_NPTH,
-        shape = Pad.SHAPE_CIRCLE,
-        clearance = 0,
-        at    = [0, 0],
-        size  = [0.00000000001, 0.00000000001], #bug somewhere, no way to set that to zero
-        drill = holeSize,
-        #layers = ['*.Cu', '*.Mask'],
-        #layers = ['*.Cu']
-        #layers = ['*.Mask']
-        layers = ['']
-    )
+    # Always create a pth with a small ring
+    kicad_mod.append(Pad(
+        number = 1,
+        type   = Pad.TYPE_THT,
+        shape  = Pad.SHAPE_CIRCLE,
+        at     = [0, 0],
+        drill  = holeSize,
+        size   = ringSize,
+        layers = Pad.LAYERS_THT
+    ))
+    kicad_mod.setAttribute('through_hole')
+
+    # Add SMD pad for 1PAD variant:
+    if holeType == '1PAD':
+        kicad_mod.append(Pad(
+            number = 1,
+            type = Pad.TYPE_CONNECT,
+            shape  = Pad.SHAPE_CIRCLE,
+            at = [0, 0],
+            size = padSize,
+            layers = Pad.LAYERS_CONNECT_FRONT
+        ))
 
     # Silk screen circle & courtyard around the screw head
     radius = padSize/2
@@ -286,40 +294,6 @@ def create_pad(configuration, kicad_mod, holeType, holeSize, padSize ):
     kicad_mod.append(  Circle( center=[0, 0], radius=radius, layer='F.SilkS'))
     radius = roundToBase( radius + silk_w, configuration['courtyard_grid'])
     kicad_mod.append(  Circle( center=[0, 0], radius=radius, layer='F.CrtYd'))
-    kicad_mod.setAttribute('through_hole')
-
-    if holeType == '':
-        # For hole with no copper, set a clearance that extands to the
-        # courtyard. This protect from zone filling
-        myPad.clearance = radius-holeSize/2
-        kicad_mod.append(myPad)
-        return # nothing more to do for NPTH
-
-
-    # We have a Pad, one or both sides ?
-    #myPad.size = [padSize, padSize] # this syntax is refused
-    myPad.size[0] = padSize
-    myPad.size[1] = padSize
-    myPad.type = Pad.TYPE_THT
-    myPad.number= "1"  # needed to route a track
-
-    if holeType == '1PADf':
-        myPad.layers = ['F.Cu', 'F.Mask']  # Logically, a hole is expected not to be tented
-        myPad.layers = ['F.Cu', '*.Mask']  # so excluding mask for the screw head is enougth.
-                                           # That is no true, we need to exclude on both sides
-                                           # see https://gitlab.com/kicad/code/kicad/-/issues/10637
-
-    if holeType == '1PADb':
-        myPad.layers = ['B.Cu', 'F.Mask']  # Logically, a hole is expected not to be tented
-        myPad.layers = ['B.Cu', '*.Mask']  # so excluding mask for the screw head is enougth.
-                                           # That is no true, we need to exclude on both sides
-                                           # see https://gitlab.com/kicad/code/kicad/-/issues/10637
-
-    if re.match ('2PAD', holeType):
-        myPad.layers = ['*.Cu', '*.Mask']
-        #myPad.type = Pad.TYPE_THT       # only biface are really THT
-
-    kicad_mod.append(myPad)
 
 
 if __name__ == "__main__":
@@ -342,7 +316,7 @@ if __name__ == "__main__":
 
         for screew_sizes  in screw["data"]:
 
-            for variant in ('', '1PADf','1PADb', '2PAD', '2PAD+V'):
+            for variant in ('', '1PAD', '2PAD', '2PAD+V'):
 
                 N = screew_sizes['Name']
                 #print ("Name=", variant, N, "\n")
@@ -358,8 +332,7 @@ if __name__ == "__main__":
                 kicad_mod.setTags('Mounting Hole')
                 kicad_mod.setTags('through_hole')
 
-                # insert the hole and the Pad
-                create_pad(configuration, kicad_mod, variant,  ISO273[N]["drill"][drill_type] ,  screew_sizes["size"] )
+                create_pad(configuration, kicad_mod, variant, ISO273[N]["drill"][drill_type], screew_sizes["size"])
 
                 # doAnnularVia(via_count, via_diameter, x_size, y_size)
                 r_vias = (screew_sizes["size"]+ISO273[N]["drill"][drill_type]) / 2
