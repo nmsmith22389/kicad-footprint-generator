@@ -19,6 +19,7 @@
 import sys
 import os
 import re
+import copy as syscopy
 import argparse
 import yaml
 import math
@@ -258,7 +259,8 @@ def  doAnnularVia(via_count, via_diameter, x_size, y_size):
 
 def create_pad(configuration, kicad_mod, holeType, holeSize, padSize ):
 
-    nudge = configuration['silk_fab_offset']
+    silk_nudge = configuration['silk_fab_offset']
+    crtd_nudge = configuration['courtyard_offset']['connector']
     silk_w = configuration['silk_line_width']
     fab_w = configuration['fab_line_width']
 
@@ -274,53 +276,67 @@ def create_pad(configuration, kicad_mod, holeType, holeSize, padSize ):
         shape = Pad.SHAPE_CIRCLE,
         clearance = 0,
         at    = [0, 0],
-        size  = [0.00000000001, 0.00000000001], #bug somewhere, no way to set that to zero
-        drill = holeSize,
-        #layers = ['*.Cu', '*.Mask'],
-        #layers = ['*.Cu']
-        #layers = ['*.Mask']
-        layers = ['']
+        # The pad is not necessariliy copper and can be any layer
+        size  = [padSize, padSize],  # so we need a size
+        layers = [''],
+        drill = holeSize
     )
 
     # Silk screen circle & courtyard around the screw head
     radius = padSize/2
     kicad_mod.append(  Circle( center=[0, 0], radius=radius, layer='F.Fab'))
-    radius += nudge
-    kicad_mod.append(  Circle( center=[0, 0], radius=radius, layer='F.SilkS'))
-    radius = roundToBase( radius + silk_w, configuration['courtyard_grid'])
+    kicad_mod.append(  Circle( center=[0, 0], radius=radius+silk_nudge, layer='F.SilkS'))
+
+    radius = roundToBase( radius + crtd_nudge, configuration['courtyard_grid'])
     kicad_mod.append(  Circle( center=[0, 0], radius=radius, layer='F.CrtYd'))
     kicad_mod.setAttribute('through_hole')
 
     if holeType == '':
+        # This prevents Tenting of the hole on both sides
+        myPad.layers = ['*.Mask']
         # For hole with no copper, set a clearance that extands to the
-        # courtyard. This protect from zone filling
         myPad.clearance = radius-holeSize/2
+        # hole courtyard. This protect from zone filling under the head screw
         kicad_mod.append(myPad)
         return # nothing more to do for NPTH
 
 
-    # We have a Pad, one or both sides ?
-    #myPad.size = [padSize, padSize] # this syntax is refused
-    myPad.size[0] = padSize
-    myPad.size[1] = padSize
-    myPad.type = Pad.TYPE_THT
+    # An electrical PAD
     myPad.number= "1"  # needed to route a track
 
+    # We have a Pad, one or both sides ?
+    myPad.type = Pad.TYPE_THT              # for now, it needs to be plated to be routed (issue #10637)
+
     if holeType == '1PADf':
-        myPad.layers = ['F.Cu', 'F.Mask']  # Logically, a hole is expected not to be tented
+
+        # Protect the other side from being filled by a zone
+        myPad2 = syscopy.deepcopy(myPad)
+        myPad2.layers = ['B.Mask']
+        myPad2.clearance = radius-holeSize/2
+        kicad_mod.append(myPad2)
+
+        #myPad.layers = ['F.Cu', 'F.Mask']  # Logically, a hole is expected not to be tented
         myPad.layers = ['F.Cu', '*.Mask']  # so excluding mask for the screw head is enougth.
                                            # That is no true, we need to exclude on both sides
                                            # see https://gitlab.com/kicad/code/kicad/-/issues/10637
 
     if holeType == '1PADb':
-        myPad.layers = ['B.Cu', 'F.Mask']  # Logically, a hole is expected not to be tented
+
+        # Protect the other side from being filled by a zone
+        myPad2 = syscopy.deepcopy(myPad)
+        myPad2.layers = ['F.Mask']
+        myPad2.clearance = radius-holeSize/2
+        kicad_mod.append(myPad2)
+
+
+        #myPad.layers = ['B.Cu', 'B.Mask']  # Logically, a hole is expected not to be tented
         myPad.layers = ['B.Cu', '*.Mask']  # so excluding mask for the screw head is enougth.
                                            # That is no true, we need to exclude on both sides
                                            # see https://gitlab.com/kicad/code/kicad/-/issues/10637
 
     if re.match ('2PAD', holeType):
         myPad.layers = ['*.Cu', '*.Mask']
-        #myPad.type = Pad.TYPE_THT       # only biface are really THT
+        myPad.type = Pad.TYPE_THT          # only biface are really THT
 
     kicad_mod.append(myPad)
 
@@ -338,7 +354,6 @@ if __name__ == "__main__":
             configuration = yaml.safe_load(config_stream)
         except yaml.YAMLError as exc:
             print(exc)
-
 
     #for each Screw type, generate footprint
     for screw in screws:
