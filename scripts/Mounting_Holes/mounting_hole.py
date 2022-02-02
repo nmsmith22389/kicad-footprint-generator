@@ -45,10 +45,12 @@ from KicadModTree import *
 
 lib_name = 'MountingHole'
 #during test
-#lib_name = 'KKKKK'
+lib_name = 'KKKKK'
 
-# Metric standart hole size for screws assembly
+# Metric standart hole size for screws assembly:
 # https://cdn.standards.iteh.ai/samples/4183/1a8db2e6de054d2e9bed7d40be64d6e1/ISO-273-1979.pdf
+# and ANSI
+# https://kupdf.net/download/asme-b18-2_5af8645ee2b6f5f20add3040_pdf
 im = 25.4
 ISO273 = {
             # name              nominal, fine, medium, coarse
@@ -64,21 +66,24 @@ ISO273 = {
           "M8.0":     {"drill":  ( 8.0,  8.4,  9.0, 10.0)  , "vias": (12, 1.2)},
          "M10.0":     {"drill":  (10.0, 10.5, 11.0, 12.0)  , "vias": (12, 1.2)},
 
-#ANSI sizes            #                     H7          H9        H11 (found no info about that)
-        "ANSI_0":      {"drill":  ( 0.06 *im,  0.06 *im, 0.06 *im, 0.06 *im  )  , "vias": (6,  0.25   )},
-        "ANSI_1":      {"drill":  ( 5/64 *im,  5/64 *im, 5/64 *im, 5/64 *im  )  , "vias": (6,  0.3969 )},
-        "ANSI_2":      {"drill":  ( 3/32 *im,  3/32 *im, 3/32 *im, 3/32 *im  )  , "vias": (6,  0.3969 )},
-        "ANSI_3":      {"drill":  ( 7/64 *im,  7/64 *im, 7/64 *im, 7/64 *im  )  , "vias": (6,  0.4572 )},
-        "ANSI_4":      {"drill":  ( 1/8  *im,  1/8  *im, 1/8  *im, 1/8  *im  )  , "vias": (6,  0.4572 )},
-        "ANSI_5":      {"drill":  ( 1/8  *im,  1/8  *im, 1/8  *im, 1/8  *im  )  , "vias": (8,  0.5080 )},
-        "ANSI_6":      {"drill":  ( 9/64 *im,  9/64 *im, 9/64 *im, 9/64 *im  )  , "vias": (8,  0.5080 )},
-        "ANSI_7":      {"drill":  ( 5/32 *im,  5/32 *im, 5/32 *im, 5/32 *im  )  , "vias": (8,  0.8382 )},
-        "ANSI_8":      {"drill":  (11/64 *im, 11/64 *im,11/64 *im,11/64 *im  )  , "vias": (8,  0.8382 )},
-        "ANSI_9":      {"drill":  (11/64 *im, 11/64 *im,11/64 *im,11/64 *im  )  , "vias": (10, 0.8382 )}, #.4in
-       "ANSI_10":      {"drill":  ( 3/16 *im,  3/16 *im, 3/16 *im, 3/16 *im  )  , "vias": (10, 0.8382 )},
-       "ANSI_11":      {"drill":  ( 3/16 *im,  3/16 *im, 3/16 *im, 3/16 *im  )  , "vias": (10, 1.016  )}, #.41in
-       "ANSI_12":      {"drill":  ( 7/32 *im,  7/32 *im, 7/32 *im, 7/32 *im  )  , "vias": (10, 1.016  )},
-       "ANSI_14":      {"drill":  ( 1/4  *im,  1/4  *im, 1/4  *im, 1/4  *im  )  , "vias": (12, 1.016  )}, # 1/4
+#ANSI sizes            #                      Close         Normal    Loose
+        "ANSI_0":      {"drill":  ( 0.06 *im, 0.067 *im, 0.076 *im, 0.094 *im  )  , "vias": (6,  0.25   )},
+        "ANSI_1":      {"drill":  ( 5/64 *im, 0.081 *im, 0.089 *im, 0.104 *im  )  , "vias": (6,  0.3969 )},
+        "ANSI_2":      {"drill":  ( 3/32 *im, 0.094 *im, 0.102 *im, 0.116 *im  )  , "vias": (6,  0.3969 )},
+        "ANSI_3":      {"drill":  ( 7/64 *im, 0.106 *im, 0.116 *im, 0.128 *im  )  , "vias": (6,  0.4572 )},
+        "ANSI_4":      {"drill":  ( 1/8  *im, 0.120 *im, 0.128 *im, 0.144 *im  )  , "vias": (6,  0.4572 )},
+        "ANSI_5":      {"drill":  ( 1/8  *im, 0.141 *im, 0.156 *im, 0.172 *im  )  , "vias": (8,  0.5080 )},
+        "ANSI_6":      {"drill":  ( 9/64 *im, 0.154 *im, 0.170 *im, 0.185 *im  )  , "vias": (8,  0.5080 )},
+    #   "ANSI_7":      {"drill":  ( 5/32 *im,  5/32 *im,  5/32 *im,  5/32 *im  )  , "vias": (8,  0.8382 )},
+        "ANSI_8":      {"drill":  (11/64 *im, 0.180 *im, 0.196 *im, 0.213 *im  )  , "vias": (8,  0.8382 )},
+    #   "ANSI_9":      {"drill":  (11/64 *im, 11/64 *im, 11/64 *im, 11/64 *im  )  , "vias": (10, 0.8382 )}, #.4in
+       "ANSI_10":      {"drill":  ( 3/16 *im, 0.206 *im, 0.221 *im, 0.238 *im  )  , "vias": (10, 0.8382 )},
+    #  "ANSI_11":      {"drill":  ( 3/16 *im,  3/16 *im,  3/16 *im,  3/16 *im  )  , "vias": (10, 1.016  )}, #.41in
+    #  "ANSI_12":      {"drill":  ( 7/32 *im,  7/32 *im,  7/32 *im,  7/32 *im  )  , "vias": (10, 1.016  )},
+       "ANSI_14":      {"drill":  ( 9/32 *im, 0.266 *im, 0.281 *im, 0.297 *im  )  , "vias": (12, 1.016  )}, # 1/4
+      "ANSI_516":      {"drill":  (11/32 *im, 0.328 *im, 0.344 *im, 0.359 *im  )  , "vias": (12, 1.016  )}, # 5/16
+       "ANSI_38":      {"drill":  (13/32 *im, 0.391 *im, 0.406 *im, 0.422 *im  )  , "vias": (12, 1.016  )}, # 3/8
+      "ANSI_716":      {"drill":  (15/32 *im, 0.453 *im, 0.469 *im, 0.484 *im  )  , "vias": (12, 1.016  )}, # 7/16
 
 }
 
@@ -143,10 +148,11 @@ Torx = {"data":[
     {  "Name": "ANSI_6",    "size":  .270 *im  },
     {  "Name": "ANSI_8",    "size":  .322 *im  },
     {  "Name": "ANSI_10",   "size":  .373 *im  },
-    {  "Name": "ANSI_12",   "size":  .425 *im  },
+   #{  "Name": "ANSI_12",   "size":  .425 *im  }, uncommon
     {  "Name": "ANSI_14",   "size":  .492 *im  }, # 1/4
+    {  "Name": "ANSI_516",  "size":  .615 *im  }, # 5/16
                     ],
-    "dataSheet":  "page 74: https://www.nationalengfasteners.com/images/TechnicalDocuments/selfTappingScrewsGuide.pdf",
+    "dataSheet":  "page 74: https://www.nationalengfasteners.com/images/TechnicalDocuments/machineScrewGuide.pdf",
     "Description":"Torx Pan Drive Heads #2 #4 #6 #8 #10 #12 ¼"
     }
 
@@ -159,10 +165,12 @@ Fillister = {"data":[
     {  "Name": "ANSI_6",    "size":  .226 *im  },
     {  "Name": "ANSI_8",    "size":  .270 *im  },
     {  "Name": "ANSI_10",   "size":  .313 *im  },
-    {  "Name": "ANSI_12",   "size":  .357 *im  },
+   #{  "Name": "ANSI_12",   "size":  .357 *im  }, uncommon
     {  "Name": "ANSI_14",   "size":  .414 *im  }, # 1/4
+    {  "Name": "ANSI_516",  "size":  .518 *im  }, # 5/16
+    {  "Name": "ANSI_38",   "size":  .622 *im  }, # 3/8
                     ],
-    "dataSheet":  "page 16: https://www.nationalengfasteners.com/images/TechnicalDocuments/selfTappingScrewsGuide.pdf",
+    "dataSheet":  "page 16: https://www.nationalengfasteners.com/images/TechnicalDocuments/machineScrewGuide.pdf",
     "Description":"Fillister screws #0 #2 #4 #6 #8 #10 #12 ¼"
     }
 #Large head
@@ -172,10 +180,11 @@ Phillips = {"data":[
     {  "Name": "ANSI_6",    "size":  .321 *im  },
     {  "Name": "ANSI_8",    "size":  .380 *im  },
     {  "Name": "ANSI_10",   "size":  .439 *im  },
-    {  "Name": "ANSI_12",   "size":  .498 *im  },
+   #{  "Name": "ANSI_12",   "size":  .498 *im  }, uncommon
     {  "Name": "ANSI_14",   "size":  .576 *im  }, # 1/4
+    {  "Name": "ANSI_516",  "size":  .719 *im  }, # 5/16
                     ],
-    "dataSheet":  "page 19: https://www.nationalengfasteners.com/images/TechnicalDocuments/selfTappingScrewsGuide.pdf",
+    "dataSheet":  "page 19: https://www.nationalengfasteners.com/images/TechnicalDocuments/machineScrewGuide.pdf",
     "Description":"Phillips Round Wahser Heads #4 #6 #8 #10 #12 ¼"
     }
 
