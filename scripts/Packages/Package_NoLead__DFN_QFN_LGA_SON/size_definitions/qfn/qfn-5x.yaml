@@ -112,7 +112,7 @@ QFN-56-1EP_7x7mm_P0.4mm_EP5.6x5.6mm:
   #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
   #include_suffix_in_3dpath: 'False'
 
-QFN-56-1EP_7x7mm_P0.4mm_EP3.1x3.1mm:
+QFN-56-1EP_7x7mm_P0.4mm_EP3.2x3.2mm:
   device_type: 'QFN'
   # manufacturer: 'man'
   # part_number: 'mpn'
@@ -164,6 +164,7 @@ QFN-56-1EP_7x7mm_P0.4mm_EP3.1x3.1mm:
   num_pins_y: 14
   # chamfer_edge_pins: 0.25
   # pin_count_grid:
+  # Pin length on the chip is 0.4mm; recommended footprint uses 0.875mm
   pad_length_addition: 0.475
   # suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
   # include_suffix_in_3dpath: 'False'
