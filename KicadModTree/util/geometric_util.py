@@ -363,6 +363,13 @@ class geometricArc():
             kwargs['start'] = p2
             kwargs['end'] = p3
 
+            # Or this, but I don't think the direction is import to maintain here.
+            # probably would be preferable to not rely on `_initFromCenterAndEnd`
+            # and handle the entire creation for this case here.
+            # kwargs['start'] = p3
+            # kwargs['end'] = p2
+            # kwargs['long_way'] = True
+
         elif (p3[0] - p2[0]) == 0:
             # rotate point other direction
             p_temp = p3
