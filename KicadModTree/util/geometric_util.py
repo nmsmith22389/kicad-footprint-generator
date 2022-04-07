@@ -340,14 +340,13 @@ class geometricArc():
                     self.angle = -math.copysign((abs(self.angle) - 360), self.angle)
                 if self.angle == 180:
                     self.angle = -180
-            
         else:
             raise KeyError('Arcs defined with center and endpoint must define the start point.')
 
     def _initFrom3PointArc(self, **kwargs):
 
         if not all(arg in kwargs for arg in ['start', 'midpoint', 'end']):
-            raise KeyError('Arcs defined by 3 points must include start, midpoint, and end points')
+            raise KeyError('Arcs defined by 3 points must define start, midpoint, and end points')
 
         p1 = kwargs['start']
         p2 = kwargs['midpoint']
@@ -360,20 +359,19 @@ class geometricArc():
             p1 = p2
             p2 = p3
             p3 = p_temp
-    
+
         ma = (p2[1] - p1[1]) / (p2[0] - p1[0])
         mb = (p3[1] - p2[1]) / (p3[0] - p2[0])
-        
+
         if (mb - ma) == 0:
             raise RuntimeError("this is not an arc")
 
-        center_x = (ma*mb*(p1[1] - p3[1]) + mb*(p1[0] + p2[0]) - ma * (p2[0] + p3[0])) / (2*(mb - ma))
-        center_y = (-1 / ma) * (center_x - (p1[0] + p2[0]) / 2) + (p1[1] + p2[1]) / 2
+        center_x = ((ma*mb*(p1[1] - p3[1]) + mb*(p1[0] + p2[0]) - ma * (p2[0] + p3[0])) / (2*(mb - ma)))
+        center_y = ((-1 / ma) * (center_x - (p1[0] + p2[0]) / 2) + (p1[1] + p2[1]) / 2)
 
         kwargs['center'] = (center_x, center_y)
 
         self._initFromCenterAndEnd(**kwargs)
-
 
     def rotate(self, angle, origin=(0, 0), use_degrees=True):
         r""" Rotate around given origin

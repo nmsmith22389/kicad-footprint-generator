@@ -78,6 +78,7 @@ RESULT_kx3Point = """(module test (layer F.Cu) (tedit 0)
   (fp_arc (start 0 0) (end 1 0) (angle 90) (layer F.SilkS) (width 0.12))
 )"""
 
+
 class ArcTests(unittest.TestCase):
 
     def testArcsKx90deg(self):
