@@ -76,6 +76,8 @@ RESULT_kx3Point = """(module test (layer F.Cu) (tedit 0)
   (fp_arc (start 0 0) (end 0.707107 -0.707107) (angle -90) (layer F.SilkS) (width 0.12))
   (fp_arc (start 0 0) (end -1 0) (angle -90) (layer F.SilkS) (width 0.12))
   (fp_arc (start 0 0) (end 1 0) (angle 90) (layer F.SilkS) (width 0.12))
+  (fp_arc (start 0 0) (end 0.5 -0.5) (angle -180) (layer F.SilkS) (width 0.12))
+  (fp_arc (start 0 0) (end 0.5 -0.5) (angle -180) (layer F.SilkS) (width 0.12))
 )"""
 
 
@@ -406,7 +408,6 @@ class ArcTests(unittest.TestCase):
             )
         )
 
-        # these next two cases test infinite slope
         kicad_mod.append(
             Arc(
                 start=(-1, 0),
@@ -423,6 +424,22 @@ class ArcTests(unittest.TestCase):
             )
         )
 
+        kicad_mod.append(
+            Arc(
+                start=(-0.5, 0.5),
+                midpoint=(-0.5, -0.5),
+                end=(0.5, -0.5),
+            )
+        )
+
+        kicad_mod.append(
+            Arc(
+                start=(0.5, -0.5),
+                midpoint=(-0.5, -0.5),
+                end=(-0.5, 0.5),
+            )
+        )
+
         file_handler = KicadFileHandler(kicad_mod)
+        file_handler.writeFile('test_3point.kicad_mod')
         self.assertEqual(file_handler.serialize(timestamp=0), RESULT_kx3Point)
-        # file_handler.writeFile('test_3point.kicad_mod')

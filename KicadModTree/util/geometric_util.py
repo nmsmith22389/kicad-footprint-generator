@@ -353,12 +353,25 @@ class geometricArc():
         p3 = kwargs['end']
 
         # prevent divide by zero
-        if ((p2[0] - p1[0]) == 0) or ((p3[0] - p2[0]) == 0):
-            # rearrange points
+        if (p2[0] - p1[0]) == 0:
+            # rotate points
             p_temp = p1
             p1 = p2
             p2 = p3
             p3 = p_temp
+
+            kwargs['start'] = p2
+            kwargs['end'] = p3
+
+        elif (p3[0] - p2[0]) == 0:
+            # rotate point other direction
+            p_temp = p3
+            p3 = p2
+            p2 = p1
+            p1 = p_temp
+
+            kwargs['start'] = p2
+            kwargs['end'] = p1
 
         ma = (p2[1] - p1[1]) / (p2[0] - p1[0])
         mb = (p3[1] - p2[1]) / (p3[0] - p2[0])
@@ -367,7 +380,12 @@ class geometricArc():
             raise RuntimeError("this is not an arc")
 
         center_x = ((ma*mb*(p1[1] - p3[1]) + mb*(p1[0] + p2[0]) - ma * (p2[0] + p3[0])) / (2*(mb - ma)))
-        center_y = ((-1 / ma) * (center_x - (p1[0] + p2[0]) / 2) + (p1[1] + p2[1]) / 2)
+
+        # prevent divide by zero
+        if ma == 0:
+            center_y = ((-1 / mb) * (center_x - (p2[0] + p3[0]) / 2) + (p2[1] + p3[1]) / 2)
+        else:
+            center_y = ((-1 / ma) * (center_x - (p1[0] + p2[0]) / 2) + (p1[1] + p2[1]) / 2)
 
         kwargs['center'] = (center_x, center_y)
 
