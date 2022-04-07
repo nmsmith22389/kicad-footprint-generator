@@ -78,6 +78,10 @@ RESULT_kx3Point = """(module test (layer F.Cu) (tedit 0)
   (fp_arc (start 0 0) (end 1 0) (angle 90) (layer F.SilkS) (width 0.12))
   (fp_arc (start 0 0) (end 0.5 -0.5) (angle -180) (layer F.SilkS) (width 0.12))
   (fp_arc (start 0 0) (end 0.5 -0.5) (angle -180) (layer F.SilkS) (width 0.12))
+  (fp_arc (start -1.5 -1.5) (end -2.5 -1.5) (angle -180) (layer F.SilkS) (width 0.12))
+  (fp_arc (start -1.5 -1.5) (end -0.5 -1.5) (angle -180) (layer F.SilkS) (width 0.12))
+  (fp_arc (start -4 -1.5) (end -3.5 -1) (angle -180) (layer F.SilkS) (width 0.12))
+  (fp_arc (start -4 -1.5) (end -4.5 -2) (angle -180) (layer F.SilkS) (width 0.12))
 )"""
 
 
@@ -440,6 +444,38 @@ class ArcTests(unittest.TestCase):
             )
         )
 
+        kicad_mod.append(
+            Arc(
+                start=(-2.5, -1.5),
+                midpoint=(-1.5, -2.5),
+                end=(-0.5, -1.5),
+            )
+        )
+
+        kicad_mod.append(
+            Arc(
+                start=(-0.5, -1.5),
+                midpoint=(-1.5, -0.5),
+                end=(-2.5, -1.5),
+            )
+        )
+
+        kicad_mod.append(
+            Arc(
+                start=(-3.5, -1),
+                midpoint=(-4.5, -1),
+                end=(-4.5, -2),
+            )
+        )
+
+        kicad_mod.append(
+            Arc(
+                start=(-4.5, -2),
+                midpoint=(-3.5, -2),
+                end=(-3.5, -1),
+            )
+        )
+
         file_handler = KicadFileHandler(kicad_mod)
-        file_handler.writeFile('test_3point.kicad_mod')
+        # file_handler.writeFile('test_3point.kicad_mod')
         self.assertEqual(file_handler.serialize(timestamp=0), RESULT_kx3Point)
