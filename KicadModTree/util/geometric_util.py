@@ -353,7 +353,7 @@ class geometricArc():
         p3 = kwargs['end']
 
         # prevent divide by zero
-        if ((p2[0] - p1[0]) < 1e-12) or ((p3[0] - p2[0]) < 1e-12):
+        if ((p2[0] - p1[0]) == 0) or ((p3[0] - p2[0]) == 0):
             # rearrange points
             p_temp = p1
             p1 = p2
