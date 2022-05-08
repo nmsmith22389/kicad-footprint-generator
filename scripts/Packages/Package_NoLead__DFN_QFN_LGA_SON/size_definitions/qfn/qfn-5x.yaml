@@ -55,7 +55,7 @@ QFN-52-1EP_7x8mm_P0.5mm_EP5.41x6.45mm:
   #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
   #include_suffix_in_3dpath: 'False'
 
-QFN-56-1EP_7x7mm_P0.4mm_EP3.1x3.1mm:
+QFN-56-1EP_7x7mm_P0.4mm_EP3.2x3.2mm:
   device_type: 'QFN'
   #manufacturer: 'man'
   #part_number: 'mpn'
@@ -81,10 +81,10 @@ QFN-56-1EP_7x7mm_P0.4mm_EP3.1x3.1mm:
     tolerance: 0.1
 
   EP_size_x:
-    nominal: 3.1
+    nominal: 3.2
     tolerance: 0.1
   EP_size_y:
-    nominal: 3.1
+    nominal: 3.2
     tolerance: 0.1
   # EP_paste_coverage: 0.65
   EP_num_paste_pads: [2, 2]
