@@ -6390,6 +6390,36 @@ kicad_naming_params_qfn = {
         dest_dir_prefix = '../Package_DFN_QFN.3dshapes/',
         ),
 
+    'QFN-56-1EP_7x7mm_P0.4mm_EP3.2x3.2mm': Params(
+        #
+        # QFN, 56 Pin (https://datasheets.raspberrypi.com/rp2040/rp2040-datasheet.pdf (Page 634)),
+        #
+        c = 0.2,        # pin thickness, body center part height
+#        K=0.2,         # Fillet radius for pin edges
+        L = 0.4,       # pin top flat part length (including fillet radius)
+        fp_s = True,    # True for circular pinmark, False for square pinmark (useful for diodes)
+        fp_r = 0.4,     # first pin indicator radius
+        fp_d = 0.5,     # first pin indicator distance from edge
+        fp_z = 0.1,     # first pin indicator depth
+        ef = 0.0,       # 0.05,      # fillet of edges  Note: bigger bytes model with fillet
+        cce = 0.2,      # 0.45 chamfer of the epad 1st pin corner
+        D = 7.0,      # body overall length
+        E = 7.0,      # body overall width
+        A1 = 0.05,      # body-board separation
+        A2 = 0.9,       # body overall height
+        b = 0.18,      # pin width
+        e = 0.4,       # pin (center-to-center) distance
+        m = 0.0,        # margin between pins and body
+        ps = 'square',  # rounded, square pads
+        npx = 14,      # number of pins along X axis (width)
+        npy = 14,      # number of pins along y axis (length)
+        epad = (3.1, 3.1),    # e Pad #epad = None, # e Pad
+        excluded_pins = None, #no pin excluded
+        modelName = 'QFN-56-1EP_7x7mm_P0.4mm_EP3.2x3.2mm',
+        rotation = -90, # rotation if required
+        dest_dir_prefix = '../Package_DFN_QFN.3dshapes/',
+        ),
+
     'QFN-56-1EP_7x7mm_P0.4mm_EP5.7x5.7mm': Params(
         #
         # 56-Lead Plastic Ultra Thin Quad Flat, No Lead Package (MV) - 7x7x0.4 mm Body [UQFN]; (see Cypress Package Package Output Drawing 001-58740)
