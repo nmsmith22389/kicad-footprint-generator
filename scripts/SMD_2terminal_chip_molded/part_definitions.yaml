@@ -54,7 +54,7 @@ resistor_handsolder_smaller_0402:
 
 antenna:
     fp_lib_name: 'RF_Antenna'
-    size_definitions: ['antenna_chip_devices.yaml']
+    size_definitions: ['antenna_chip.yaml']
     ipc_reference: "ipc_spec_larger_or_equal_0603"
     prefix: 'Johanson'
     description: 'Antenna SMD ({code_metric:s} Metric), square (rectangular) end terminal, IPC_7351 nominal, {size_info:s}, generated with kicad-footprint-generator'
