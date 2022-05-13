@@ -1,9 +1,6 @@
 
 2450AT43F0100:
-    #code_metric: ""
-    manufacturer: 'Johanson'
-    manufacturer_pn: '2450AT43F0100'
-    suffix: '_2400-2500Mhz'
+    custom_name_format: 'Johanson_2450AT43F0100_2400-2500Mhz'
     body_length:
         nominal: 6.0
         tolerance: 0.2
@@ -18,10 +15,7 @@
     description: 'Johanson 2450AT43F0100 SMD antenna 2400-2500Mhz, 1dBi, https://www.johansontechnology.com/datasheets/2450AT43F0100/2450AT43F0100.pdf'
 
 2450AT18x100:
-    #code_metric: ""
-    manufacturer: 'Johanson'
-    manufacturer_pn: '2450AT18x100'
-    suffix: '_2400-2500Mhz'
+    custom_name_format: 'Johanson_2450AT18x100_2400-2500Mhz'
     body_length:
         nominal: 3.2
         tolerance: 0.2
