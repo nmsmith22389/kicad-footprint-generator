@@ -50,6 +50,20 @@ resistor_handsolder_smaller_0402:
         all_sides_rel: 0.9 #-10%
         heel_abs: -0.05 # additional heel reduction
 
+###############################################################################
+
+antenna:
+    fp_lib_name: 'RF_Antenna'
+    size_definitions: ['antenna_chip_devices.yaml']
+    ipc_reference: "ipc_spec_larger_or_equal_0603"
+    prefix: 'Johanson'
+    description: 'Antenna SMD ({code_metric:s} Metric), square (rectangular) end terminal, IPC_7351 nominal, {size_info:s}, generated with kicad-footprint-generator'
+    keywords: 'antenna'
+    ipc_density: 'nominal'
+    pad_length_addition: 0
+    polarization_mark: 'True'
+    suffix: ""
+
 ######################################################################################
 
 capacitor:
