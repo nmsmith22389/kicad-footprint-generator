@@ -160,7 +160,7 @@ base:
             z_mm: 0.1
         pins:
             colour: 'metal grey pins'
-    3d_prefix: '${KISYS3DMOD}/TO_SOT_Packages_SMD.3dshapes'
+    3d_prefix: '${KICAD6_3DMODEL_DIR}/TO_SOT_Packages_SMD.3dshapes'
 variants:
     - pins: 7
       pitch_mm: 1.27
