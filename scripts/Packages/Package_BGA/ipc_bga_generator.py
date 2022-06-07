@@ -54,7 +54,8 @@ def __createFootprintVariant(config, fpParams, fpId):
     pkgY = fpParams["body_size_y"]
     layoutX = fpParams["layout_x"]
     layoutY = fpParams["layout_y"]
-    
+    fFabRefRot = 0
+
     if "additional_tags" in fpParams:
         additionalTag = " " + fpParams["additional_tags"]
     else:
@@ -93,7 +94,11 @@ def __createFootprintVariant(config, fpParams, fpId):
     if "paste_ratio" in fpParams: f.setPasteMarginRatio(fpParams["paste_ratio"])
 
     s1 = [1.0, 1.0]
-    s2 = [min(1.0, round(pkgX / 4.3, 2))] * 2
+    if pkgX < 4.3 and pkgY > pkgX:
+      s2 = [min(1.0, round(pkgY / 4.3, 2))] * 2 # Y size is greater, so rotate F.Fab reference
+      fFabRefRot = -90
+    else:
+      s2 = [min(1.0, round(pkgX / 4.3, 2))] * 2
 
     t1 = 0.15 * s1[0]
     t2 = 0.15 * s2[0]
@@ -163,7 +168,7 @@ def __createFootprintVariant(config, fpParams, fpId):
     f.append(Text(type="value", text=fpId, at=[xCenter, yValue],
                   layer="F.Fab", size=s1, thickness=t1))
     f.append(Text(type="user", text='${REFERENCE}', at=[xCenter, yCenter],
-                  layer="F.Fab", size=s2, thickness=t2))
+                  layer="F.Fab", size=s2, thickness=t2, rotation=fFabRefRot))
 
     # Fab
     f.append(PolygoneLine(polygone=[[xRightFab, yBottomFab],
