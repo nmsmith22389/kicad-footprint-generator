@@ -145,15 +145,16 @@ def __createFootprintVariant(config, fpParams, fpId):
     wSilkS = configuration['silk_line_width']
 
     # silkOffset should comply with pad clearance as well
-    silkOffset = max(silkOffset,
-                     xLeftFab + config['silk_pad_clearance'] + wSilkS / 2.0 -(xPadLeft - fpParams["pad_size"][0] / 2.0 ), 
+    xSilkOffset = max(silkOffset,
+                     xLeftFab + config['silk_pad_clearance'] + wSilkS / 2.0 -(xPadLeft - fpParams["pad_size"][0] / 2.0 ))
+    ySilkOffset = max(silkOffset,
                      yTopFab + config['silk_pad_clearance'] + wSilkS / 2.0 -(yPadTop - fpParams["pad_size"][1] / 2.0 ))
 
-    xLeftSilk = xLeftFab - silkOffset
-    xRightSilk = xRightFab + silkOffset
+    xLeftSilk = xLeftFab - xSilkOffset
+    xRightSilk = xRightFab + xSilkOffset
     xChamferSilk = xLeftSilk + chamfer
-    yTopSilk = yTopFab - silkOffset
-    yBottomSilk = yBottomFab + silkOffset
+    yTopSilk = yTopFab - ySilkOffset
+    yBottomSilk = yBottomFab + ySilkOffset
     yChamferSilk = yTopSilk + chamfer
 
     # Text
