@@ -69,7 +69,7 @@ if __name__ == '__main__':
             socket_width, socket_height, 0, ["SMDSocket", "SmallPads"])
 
     # mid 15.24 DIPs
-    pins=[24,28,32,40,42,48,64]
+    pins=[24,26,28,32,40,42,48,64]
     pinrow_distance=15.24
     package_width=14.73
     socket_width=pinrow_distance+2.54
