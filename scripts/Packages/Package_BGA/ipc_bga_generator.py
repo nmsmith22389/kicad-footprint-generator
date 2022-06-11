@@ -155,12 +155,14 @@ def __createFootprintVariant(config, fpParams, fpId):
     ySilkOffset = max(silkOffset,
                      yTopFab + config['silk_pad_clearance'] + wSilkS / 2.0 -(yPadTop - fpParams["pad_size"][1] / 2.0 ))
 
+    silkChamfer = min(config['fab_bevel_size_absolute'], min(pkgX+2*(xSilkOffset-silkOffset), pkgY+2*(ySilkOffset-silkOffset)) * config['fab_bevel_size_relative'])
+
     xLeftSilk = xLeftFab - xSilkOffset
     xRightSilk = xRightFab + xSilkOffset
-    xChamferSilk = xLeftSilk + chamfer
+    xChamferSilk = xLeftSilk + silkChamfer
     yTopSilk = yTopFab - ySilkOffset
     yBottomSilk = yBottomFab + ySilkOffset
-    yChamferSilk = yTopSilk + chamfer
+    yChamferSilk = yTopSilk + silkChamfer
 
     # Text
     f.append(Text(type="reference", text="REF**", at=[xCenter, yRef],
