@@ -39,6 +39,9 @@ Sensirion_SCD4x-1EP_10.1x10.1mm_P1.25mm_EP4.8x4.8mm:
   lead_width: 0.8
   lead_len: 1.5
 
+  lead_center_pos_x: 4
+  lead_center_pos_y: 4
+
   EP_size_x: 4.8
   EP_size_y: 4.8
   EP_mask_x: 5
