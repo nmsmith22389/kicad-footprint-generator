@@ -71,4 +71,17 @@ kicad_naming_params_tantalum = {
         rotation = 90, # rotation if required
         dest_dir_prefix = '../Diodes_SMD.3dshapes/'
         ),
+    'D_SMF': Params( # from https://www.vishay.com/doc?85881
+        L = 2.8,
+        W = 1.8,
+        H = 1.98,
+        F = 1.0,
+        S = 0.6,
+        T = 0.175,
+        G = 3.7,
+        pml = 0.6,
+        modelName = 'D_SMF', #modelName
+        rotation = 90, # rotation if required
+        dest_dir_prefix = '../Diodes_SMD.3dshapes/'
+        ),
 }

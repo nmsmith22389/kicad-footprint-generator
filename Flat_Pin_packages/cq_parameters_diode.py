@@ -169,6 +169,30 @@ kicad_naming_params_diode = {
         rotation = 0, # rotation if required
         dest_dir_prefix = '../Diodes_SMD.3dshapes/'
         ),
+        'D_SMF': Params( # from https://www.vishay.com/doc?85881
+        the = 5.0,      # body angle in degrees
+        c = 0.25,        # pin thickness, body center part height
+        fp_s = False,     # True for circular pinmark, False for square pinmark (useful for diodes)
+        fp_r = 0.4,     # first pin indicator radius
+        fp_d = 0.1,     # first pin indicator distance from edge
+        fp_z = 0.01,     # first pin indicator depth
+        ef = 0.0, #0.02,      # fillet of edges  Note: bigger bytes model with fillet
+        L = 0.6, #length of pins, if None the pins will be the distance from the body to the overall length
+        D1 = 2.8,       # body length
+        E1 = 1.8,       # body width
+        E = 2.8,        # body overall width  E=E1+2*(S+L+c)
+        A1 = 0.02,  # body-board separation
+        A2 = 0.98,  # body height
+        b = 1.0,  # pin width
+        e = 3.1,  # pin (center-to-center) distance
+        npx = 0,   # number of pins along X axis (width)
+        npy = 1,   # number of pins along y axis (length)
+        epad = None,
+        excluded_pins = None, #no pin excluded
+        modelName = 'D_SMF', #modelName
+        rotation = 0, # rotation if required
+        dest_dir_prefix = '../Diode_SMD.3dshapes/'
+        ),
         'D_TUMD2': Params( # from http://rohmfs.rohm.com/en/products/databook/package/spec/discrete/diodepkg.pdf
         the = 4.0,      # body angle in degrees
         c = 0.17,        # pin thickness, body center part height
