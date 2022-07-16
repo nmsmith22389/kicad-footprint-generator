@@ -46,69 +46,75 @@
 # http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf
 #
 
-import cq_common  # modules parameters
-from cq_common import *
+# import cq_common  # modules parameters
+# from cq_common import *
 
-import sys
-import math
+from .cq_common import cq_parameters_others
 
+import cadquery as cq
+
+# import sys
+# import math
+
+# from collections import namedtuple
+# from collections.abc import Mapping
 
 class cq_keystone():
 
-    def __init__(self):
-        self.body_top_color_key  = 'metal grey pins'    # Top color
-        self.body_color_key      = 'black body'         # Body color
-        self.pin_color_key       = 'metal grey pins'    # Pin color
-        self.npth_pin_color_key  = 'black body'         # NPTH Pin color
+    # def __init__(self):
+    #     self.body_top_color_key  = 'metal grey pins'    # Top color
+    #     self.body_color_key      = 'black body'         # Body color
+    #     self.pin_color_key       = 'metal grey pins'    # Pin color
+    #     self.npth_pin_color_key  = 'black body'         # NPTH Pin color
 
-    def set_colors(self, modelID):
+    # def set_colors(self, modelID):
     
-        params = self.all_params[modelID]
+    #     params = self.all_params[modelID]
     
-        if params.body_top_color_key != None:
-            self.body_top_color_key = params.body_top_color_key
+    #     if params.body_top_color_key != None:
+    #         self.body_top_color_key = params.body_top_color_key
+    #     #
+    #     if params.body_color_key != None:
+    #         self.body_color_key = params.body_color_key
+    #     #
+    #     if params.pin_color_key != None:
+    #         self.pin_color_key = params.pin_color_key
+    #     #
+    #     if params.npth_pin_color_key != None:
+    #         self.npth_pin_color_key = params.npth_pin_color_key
         #
-        if params.body_color_key != None:
-            self.body_color_key = params.body_color_key
-        #
-        if params.pin_color_key != None:
-            self.pin_color_key = params.pin_color_key
-        #
-        if params.npth_pin_color_key != None:
-            self.npth_pin_color_key = params.npth_pin_color_key
-        #
 
 
-    def get_model_name(self, modelID):
-        for n in self.all_params:
-            if n == modelID:
-                return self.all_params[modelID].modelName
-        return 'xxUNKNOWNxxx'
+    # def get_model_name(self, modelID):
+    #     for n in self.all_params:
+    #         if n == modelID:
+    #             return self.all_params[modelID].modelName
+    #     return 'xxUNKNOWNxxx'
 
 
-    def get_dest_3D_dir(self, modelID):
-        for n in self.all_params:
-            if n == modelID:
-                if self.all_params[modelID].dest_dir_prefix != None:
-                    return self.all_params[modelID].dest_dir_prefix
+    # def get_dest_3D_dir(self, modelID):
+    #     for n in self.all_params:
+    #         if n == modelID:
+    #             if self.all_params[modelID].dest_dir_prefix != None:
+    #                 return self.all_params[modelID].dest_dir_prefix
 
-        return 'Fuse.3dshapes'
+    #     return 'Fuse.3dshapes'
 
 
-    def model_exist(self, modelID):
-        for n in self.all_params:
-            if n == modelID:
-                return True
+    # def model_exist(self, modelID):
+    #     for n in self.all_params:
+    #         if n == modelID:
+    #             return True
                 
-        return False
+    #     return False
 
 
-    def get_list_all(self):
-        list = []
-        for n in self.all_params:
-            list.append(n)
+    # def get_list_all(self):
+    #     list = []
+    #     for n in self.all_params:
+    #         list.append(n)
         
-        return list
+    #     return list
 
 
     def set_rotation(self, params):
@@ -127,72 +133,72 @@ class cq_keystone():
         self.translate = (ttdx, ttdy, ttdz)
 
 
-    def make_3D_model(self, modelID):
+    # def make_3D_model(self, modelID):
 
-        destination_dir = self.get_dest_3D_dir(modelID)
-        params = self.all_params[modelID]
+    #     destination_dir = self.get_dest_3D_dir(modelID)
+    #     params = self.all_params[modelID]
 
-        self.set_colors(modelID)
-        self.set_translate(modelID)
-        self.set_rotation(modelID)
-        case_top = self.make_top(modelID)
-        show(case_top)
-        case = self.make_body(modelID)
-        show(case)
+    #     self.set_colors(modelID)
+    #     self.set_translate(modelID)
+    #     self.set_rotation(modelID)
+    #     case_top = self.make_top(modelID)
+    #     show(case_top)
+    #     case = self.make_body(modelID)
+    #     show(case)
 
-        pins = self.make_pin(modelID)
-        show(pins)
+    #     pins = self.make_pin(modelID)
+    #     show(pins)
 
-        npth_pins = self.make_npth_pin(modelID)
-        show(npth_pins)
+    #     npth_pins = self.make_npth_pin(modelID)
+    #     show(npth_pins)
 
-        doc = FreeCAD.ActiveDocument
-        objs=GetListOfObjects(FreeCAD, doc)
+    #     doc = FreeCAD.ActiveDocument
+    #     objs=GetListOfObjects(FreeCAD, doc)
 
-        body_top_color_key = self.body_top_color_key
-        body_color_key = self.body_color_key
-        pin_color_key = self.pin_color_key
-        npth_pin_color_key = self.npth_pin_color_key
+    #     body_top_color_key = self.body_top_color_key
+    #     body_color_key = self.body_color_key
+    #     pin_color_key = self.pin_color_key
+    #     npth_pin_color_key = self.npth_pin_color_key
 
-        body_top_color = shaderColors.named_colors[body_top_color_key].getDiffuseFloat()
-        body_color = shaderColors.named_colors[body_color_key].getDiffuseFloat()
-        pin_color = shaderColors.named_colors[pin_color_key].getDiffuseFloat()
-        npth_pin_color = shaderColors.named_colors[npth_pin_color_key].getDiffuseFloat()
+    #     body_top_color = shaderColors.named_colors[body_top_color_key].getDiffuseFloat()
+    #     body_color = shaderColors.named_colors[body_color_key].getDiffuseFloat()
+    #     pin_color = shaderColors.named_colors[pin_color_key].getDiffuseFloat()
+    #     npth_pin_color = shaderColors.named_colors[npth_pin_color_key].getDiffuseFloat()
 
-        Color_Objects(Gui,objs[0],body_top_color)
-        Color_Objects(Gui,objs[1],body_color)
-        Color_Objects(Gui,objs[2],pin_color)
-        Color_Objects(Gui,objs[3],npth_pin_color)
+    #     Color_Objects(Gui,objs[0],body_top_color)
+    #     Color_Objects(Gui,objs[1],body_color)
+    #     Color_Objects(Gui,objs[2],pin_color)
+    #     Color_Objects(Gui,objs[3],npth_pin_color)
 
-        col_body_top=Gui.ActiveDocument.getObject(objs[0].Name).DiffuseColor[0]
-        col_body=Gui.ActiveDocument.getObject(objs[1].Name).DiffuseColor[0]
-        col_pin=Gui.ActiveDocument.getObject(objs[2].Name).DiffuseColor[0]
-        col_npth_pin=Gui.ActiveDocument.getObject(objs[3].Name).DiffuseColor[0]
+    #     col_body_top=Gui.ActiveDocument.getObject(objs[0].Name).DiffuseColor[0]
+    #     col_body=Gui.ActiveDocument.getObject(objs[1].Name).DiffuseColor[0]
+    #     col_pin=Gui.ActiveDocument.getObject(objs[2].Name).DiffuseColor[0]
+    #     col_npth_pin=Gui.ActiveDocument.getObject(objs[3].Name).DiffuseColor[0]
         
-        material_substitutions={
-            col_body_top[:-1]:body_top_color_key,
-            col_body[:-1]:body_color_key,
-            col_pin[:-1]:pin_color_key,
-            col_npth_pin[:-1]:npth_pin_color_key
-        }
+    #     material_substitutions={
+    #         col_body_top[:-1]:body_top_color_key,
+    #         col_body[:-1]:body_color_key,
+    #         col_pin[:-1]:pin_color_key,
+    #         col_npth_pin[:-1]:npth_pin_color_key
+    #     }
         
-        expVRML.say(material_substitutions)
-        while len(objs) > 1:
-                FuseObjs_wColors(FreeCAD, FreeCADGui, doc.Name, objs[0].Name, objs[1].Name)
-                del objs
-                objs = GetListOfObjects(FreeCAD, doc)
+    #     expVRML.say(material_substitutions)
+    #     while len(objs) > 1:
+    #             FuseObjs_wColors(FreeCAD, FreeCADGui, doc.Name, objs[0].Name, objs[1].Name)
+    #             del objs
+    #             objs = GetListOfObjects(FreeCAD, doc)
 
-        return material_substitutions
+    #     return material_substitutions
 
 
-    def make_top(self, modelID):
+    def make_top(self, params, modelID):
 
-        params = self.all_params[modelID]
+        # params = self.all_params[modelID]
 
         #
         # Make dummy
         #
-        case = cq.Workplane("XY").workplane(offset=0.5).moveTo(0.0, 0.0).circle(0.01 , False).extrude(0.01)
+        case = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=0.5).moveTo(0.0, 0.0).circle(0.01 , False).extrude(0.01)
         
         if self.rotatex > 0.0:
             case = case.rotate((0,0,0), (1,0,0), self.rotatex)
@@ -203,19 +209,19 @@ class cq_keystone():
 
 
 
-    def make_body(self, modelID):
+    def make_body(self, params, modelID):
 
-        params = self.all_params[modelID]
+        # params = self.all_params[modelID]
 
-        W = params.W
-        L = params.L
-        H = params.H
-        pin1 = params.pin1
+        W = params['W']
+        L = params['L']
+        H = params['H']
+        pin1 = params['pin1']
         
         #
         # Make body
         #
-        case = cq.Workplane("XY").workplane(offset=0.0).moveTo(0.0, 0.0).rect(W, L).extrude(H)
+        case = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=0.0).moveTo(0.0, 0.0).rect(W, L).extrude(H)
         
         case = case.faces("<X").edges("<Y").fillet(0.2)
         case = case.faces("<X").edges(">Y").fillet(0.2)
@@ -230,14 +236,14 @@ class cq_keystone():
         ld = L - (t * 2.0)
         wdx = t + (wd / 2.0)
         wdy = 0.0
-        case1 = cq.Workplane("XY").workplane(offset=H / 2.0).moveTo(wdx, wdy).rect(wd - 0.5, ld).extrude((H / 2.0) + 0.2)
+        case1 = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=H / 2.0).moveTo(wdx, wdy).rect(wd - 0.5, ld).extrude((H / 2.0) + 0.2)
         case = case.cut(case1)
-        case1 = cq.Workplane("XY").workplane(offset=H / 2.0).moveTo(wdx - (wd / 2.0), wdy).rect(0.5, ld - 0.5).extrude((H / 2.0) + 0.2)
+        case1 = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=H / 2.0).moveTo(wdx - (wd / 2.0), wdy).rect(0.5, ld - 0.5).extrude((H / 2.0) + 0.2)
         case = case.cut(case1)
         #
-        case1 = cq.Workplane("XY").workplane(offset=H / 2.0).moveTo(0.0 - wdx, wdy).rect(wd - 0.5, ld).extrude((H / 2.0) + 0.2)
+        case1 = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=H / 2.0).moveTo(0.0 - wdx, wdy).rect(wd - 0.5, ld).extrude((H / 2.0) + 0.2)
         case = case.cut(case1)
-        case1 = cq.Workplane("XY").workplane(offset=H / 2.0).moveTo((0.0 - wdx) + (wd / 2.0), wdy).rect(0.5, ld - 0.5).extrude((H / 2.0) + 0.2)
+        case1 = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=H / 2.0).moveTo((0.0 - wdx) + (wd / 2.0), wdy).rect(0.5, ld - 0.5).extrude((H / 2.0) + 0.2)
         case = case.cut(case1)
                           
                           
@@ -262,15 +268,15 @@ class cq_keystone():
         return (case)
 
 
-    def make_pin(self, modelID):
+    def make_pin(self, params, modelID):
 
-        params = self.all_params[modelID]
+        # params = self.all_params[modelID]
 
-        W = params.W
-        L = params.L
-        H = params.H
-        pin1 = params.pin1
-        pin = params.pin
+        W = params['W']
+        L = params['L']
+        H = params['H']
+        pin1 = params['pin1']
+        pin = params['pin']
         
         
         #
@@ -286,7 +292,7 @@ class cq_keystone():
             l = p[4]
             h = p[5]
             if p[0] == 'rect':
-                case1 = cq.Workplane("XY").workplane(offset=0.0).moveTo(x, 0.0 - y).rect(w, l).extrude(0.0 - h)
+                case1 = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=0.0).moveTo(x, 0.0 - y).rect(w, l).extrude(0.0 - h)
                 case1 = case1.faces("<X").edges("<Z").chamfer(w / 4.0, w / 4.0)
                 case1 = case1.faces(">X").edges("<Z").chamfer(w / 4.0, w / 4.0)
         
@@ -343,14 +349,14 @@ class cq_keystone():
         return (case)
 
 
-    def make_npth_pin(self, modelID):
+    def make_npth_pin(self, params, modelID):
 
-        params = self.all_params[modelID]
+        # params = self.all_params[modelID]
 
         #
         # Make dummy
         #
-        case = cq.Workplane("XY").workplane(offset=0.5).moveTo(0.0, 0.0).circle(0.01 , False).extrude(0.01)
+        case = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=0.5).moveTo(0.0, 0.0).circle(0.01 , False).extrude(0.01)
         
         if self.rotatex > 0.0:
             case = case.rotate((0,0,0), (1,0,0), self.rotatex)
@@ -361,45 +367,45 @@ class cq_keystone():
 
         
     ##enabling optional/default values to None
-    def namedtuple_with_defaults(typename, field_names, default_values=()):
+    # def namedtuple_with_defaults(typename, field_names, default_values=()):
 
-        T = collections.namedtuple(typename, field_names)
-        T.__new__.__defaults__ = (None,) * len(T._fields)
-        if isinstance(default_values, collections.Mapping):
-            prototype = T(**default_values)
-        else:
-            prototype = T(*default_values)
-        T.__new__.__defaults__ = tuple(prototype)
-        return T
+    #     T = namedtuple(typename, field_names)
+    #     T.__new__.__defaults__ = (None,) * len(T._fields)
+    #     if isinstance(default_values, Mapping):
+    #         prototype = T(**default_values)
+    #     else:
+    #         prototype = T(*default_values)
+    #     T.__new__.__defaults__ = tuple(prototype)
+    #     return T
         
-    Params = namedtuple_with_defaults("Params", [
-        'modelName',		    # modelName
-        'W',                    # Width
-        'L',                    # Length
-        'H',                    # Height
-        'A1',                   # Body above PCB
-        'pin1',                 # pin1 corner
-        'pin',                  # pins
-        'npth_pin_color_key',   # NPTH Pin color
-        'body_top_color_key',	# Top color
-        'body_color_key',	    # Body colour
-        'pin_color_key',	    # Pin color
-        'dest_dir_prefix'	    # Destination directory
-    ])
+    # Params = namedtuple_with_defaults("Params", [
+    #     'modelName',		    # modelName
+    #     'W',                    # Width
+    #     'L',                    # Length
+    #     'H',                    # Height
+    #     'A1',                   # Body above PCB
+    #     'pin1',                 # pin1 corner
+    #     'pin',                  # pins
+    #     'npth_pin_color_key',   # NPTH Pin color
+    #     'body_top_color_key',	# Top color
+    #     'body_color_key',	    # Body colour
+    #     'pin_color_key',	    # Pin color
+    #     'dest_dir_prefix'	    # Destination directory
+    # ])
 
 
-    all_params = {
+    # all_params = {
 
-        #
-        # http://www.keyelco.com/product-pdf.cfm?p=306
-        # 
-        'Keystone_3568': Params(
-            modelName = 'Fuseholder_Blade_Mini_Keystone_3568',    # Model name
-            W = 16.0,                    # Width
-            L = 6.73,                    # Length
-            H = 7.37,                    # Height
-            A1 = 0.0,                   # Body above PCB
-            pin1 = [-3.04, -1.67],
-            pin = [['rect', 0.0, 0.0, 1.57, 0.4, 2.79], ['rect', 9.92, 0.0, 1.57, 0.4, 2.79], ['rect', 0.0, 3.4, 1.57, 0.4, 2.79], ['rect', 9.92, 3.4, 1.57, 0.4, 2.79]]
-            ),
-    }
+    #     #
+    #     # http://www.keyelco.com/product-pdf.cfm?p=306
+    #     # 
+    #     'Keystone_3568': Params(
+    #         modelName = 'Fuseholder_Blade_Mini_Keystone_3568',    # Model name
+    #         W = 16.0,                    # Width
+    #         L = 6.73,                    # Length
+    #         H = 7.37,                    # Height
+    #         A1 = 0.0,                   # Body above PCB
+    #         pin1 = [-3.04, -1.67],
+    #         pin = [['rect', 0.0, 0.0, 1.57, 0.4, 2.79], ['rect', 9.92, 0.0, 1.57, 0.4, 2.79], ['rect', 0.0, 3.4, 1.57, 0.4, 2.79], ['rect', 9.92, 3.4, 1.57, 0.4, 2.79]]
+    #         ),
+    # }

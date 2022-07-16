@@ -50,23 +50,23 @@ import collections
 from collections import namedtuple
 
 import cadquery as cq
-from Helpers import show
+# from Helpers import show
 
-import FreeCAD, Draft, FreeCADGui
-import ImportGui
-import FreeCADGui as Gui
+# import FreeCAD, Draft, FreeCADGui
+# import ImportGui
+# import FreeCADGui as Gui
 
-import shaderColors
-import exportPartToVRML as expVRML
+# import shaderColors
+# import exportPartToVRML as expVRML
 
 # Import cad_tools
-import cq_cad_tools
+# import cq_cad_tools
 # Reload tools
-from cq_cad_tools import reload_lib
-reload_lib(cq_cad_tools)
+# from cq_cad_tools import reload_lib
+# reload_lib(cq_cad_tools)
 
 # Explicitly load all needed functions
-from cq_cad_tools import FuseObjs_wColors, GetListOfObjects, z_RotateObject, Color_Objects, restore_Main_Tools, exportSTEP, saveFCdoc
+# from cq_cad_tools import FuseObjs_wColors, GetListOfObjects, z_RotateObject, Color_Objects, restore_Main_Tools, exportSTEP, saveFCdoc
 
 
 DestinationDir = "Connector_Wago.3dshapes"
@@ -80,8 +80,8 @@ class cqMakerWagoConn734 ():
     """
     
     def __init__(self, parameter):
-        self.num_pins = parameter.num_pins
-        self.isVertical = True if parameter.ori == 'Vertical' else False
+        self.num_pins = parameter['num_pins']
+        self.isVertical = True if parameter['orientation'] == 'Vertical' else False
 
         # Wago fixed dimensions from data sheet: http://www.farnell.com/datasheets/2157639.pdf
         self.pin_pitch = 3.5
@@ -156,21 +156,21 @@ class cqMakerWagoConn734 ():
         """ create a body to be used for cutting the inner part of the connector.
         :rtype: ``solid``
         """
-        body = cq.Workplane("XY").workplane(offset=self.body_thickness_z)\
+        body = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=self.body_thickness_z)\
             .rect(self.body_lenght - 2.0 * self.body_thickness_x, self.body_width - 2.0 * self.body_thickness_y).extrude(self.body_height)
 
         l = self.body_guide_notch_width
         w = self.body_thickness_y - 0.4
 
         # guide notches on front of body
-        body_guide_notch = cq.Workplane("XY").workplane(offset=self.body_thickness_z)\
+        body_guide_notch = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=self.body_thickness_z)\
             .rect(l, w).extrude(self.body_height)
 
         body = body.union(body_guide_notch.translate(((self.body_lenght - l) / 2.0 - self.body_thickness_x,  -((self.body_width + w) / 2.0 - self.body_thickness_y), 1.8 )))
         body = body.union(body_guide_notch.translate((-((self.body_lenght - l) / 2.0 - self.body_thickness_x) + self.pin_pitch/2.0,  -((self.body_width + w) / 2.0 - self.body_thickness_y), 1.8 )))
 
         # guide notches at sides of body
-        body_guide_notch = cq.Workplane("XY").workplane(offset=self.body_thickness_z)\
+        body_guide_notch = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=self.body_thickness_z)\
             .rect(self.body_lenght - 2.0 * self.body_thickness_x + 0.8, l).extrude(self.body_height)
         
         # the side guide notches are correlated to the positions of the pins, thus we must do an inverse shift of the later performed body offset in y-direction
@@ -185,10 +185,10 @@ class cqMakerWagoConn734 ():
         """ create a body to be used for cutting the pockets at outer left side of the connector.
         :rtype: ``solid``
         """
-        body_i = cq.Workplane("YZ").workplane(offset=-self.body_lenght / 2.0)\
+        body_i = cq.Workplane("YZ").workplane(centerOption="CenterOfMass", offset=-self.body_lenght / 2.0)\
             .rect(self.body_guide_notch_width, 2.0 * (self.body_height - self.body_thickness_y)).extrude(self.body_thickness_x)
 
-        body_o = cq.Workplane("YZ").workplane(offset=-self.body_lenght / 2.0 + 0.4)\
+        body_o = cq.Workplane("YZ").workplane(centerOption="CenterOfMass", offset=-self.body_lenght / 2.0 + 0.4)\
             .rect(self.body_side_pocket_width, 2.0 * (self.body_height - self.body_thickness_y)).extrude(-self.body_thickness_x)
 
         return body_i.union(body_o)
@@ -209,7 +209,7 @@ class cqMakerWagoConn734 ():
 
         # the following unions and cuts are all relative to the positions of the pins and not relative to the center of the body.
         # make a rectangle pad for each pin at the inner bottom of the connector
-        pin_pad = cq.Workplane("XY").workplane(offset=self.body_thickness_z)\
+        pin_pad = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=self.body_thickness_z)\
             .rect(self.pin_pockets_width, self.pin_pockets_width).extrude(1.0)
 
         allPads = self._duplicatePins (pin_pad.translate(self.first_pin_pos))
@@ -236,7 +236,7 @@ class cqMakerWagoConn734 ():
         # for connectors with more or equal 3 pins the most left and most right front pocket has haf height only 
         if self.num_pins >= 3:
             # make body to cut the hight of the most left pocket
-            body_cut = cq.Workplane("XY").workplane(offset=self.body_height / 2.0)\
+            body_cut = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=self.body_height / 2.0)\
                 .rect(self.pin_pockets_width, self.body_width*2.0).extrude(self.body_height)\
                 .translate(self.first_pin_pos)
             # mirror the upper body to cut the height of the most right pocket 
@@ -307,16 +307,13 @@ class cqMakerWagoConn734 ():
         path = cq.Workplane("YZ").lineTo(0.0, self.pin_length - r_mean)\
             .radiusArc((-r_mean, self.pin_length), -r_mean)\
             .lineTo(-self.pin_length_inside_body, self.pin_length+0.0)     
-       
 
-        body = cq.Workplane("XY").rect(self.pin_width, self.pin_thickness).sweep(path)\
-            .edges("<Z").edges(">X").chamfer(self.pin_width/4.0, 1.0)\
-            .edges("<Z").edges("<X").chamfer(self.pin_width/4.0, 1.0)\
-            .edges("<Z").edges("<Y").chamfer(1.0, self.pin_width/4.0)\
-            .edges("<Z").edges(">Y").chamfer(self.pin_width/4.0, 1.0)\
-            .edges("<Y").chamfer(self.pin_width/4.0)\
-            .translate((0.0, 0.0, -self.pin_length_below_body))
-            # I don't know why the <Z chamfer must be done in four steps with mixed parameter. In function _make_straight_pin it worked with one command????
+        # Work around a CAD kernel glitch with the chamfer with the (0.25)
+        body = (cq.Workplane("XY").rect(self.pin_width, self.pin_thickness).sweep(path)
+                .edges("<Z").chamfer(0.25)
+                .edges("<Y").chamfer(self.pin_width/4.0)
+                .translate((0.0, 0.0, -self.pin_length_below_body)))
+
         return body
 
 
@@ -378,7 +375,7 @@ class cqMakerWagoConn734 ():
 
         s = objs[0].Shape
         shape = s.copy()
-        shape.Placement = s.Placement;
+        shape.Placement = s.Placement
         shape.translate(self.offsets)
         objs[0].Placement = shape.Placement
 

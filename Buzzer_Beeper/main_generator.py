@@ -8,14 +8,14 @@
 # This is a
 # Dimensions are from Microchips Packaging Specification document:
 # DS00000049BY. Body drawing is the same as QFP generator#
-
-## requirements
-## cadquery FreeCAD plugin
-##   https://github.com/jmwright/cadquery-freecad-module
-
-## to run the script just do: freecad main_generator.py modelName
-## e.g. c:\freecad\bin\freecad main_generator.py DIP8
-
+#
+## Requirements
+## CadQuery 2.1 commit e00ac83f98354b9d55e6c57b9bb471cdf73d0e96 or newer
+## https://github.com/CadQuery/cadquery
+#
+## To run the script just do: ./generator.py --output_dir [output_directory]
+## e.g. ./generator.py --output_dir /tmp
+#
 ## the script will generate STEP and VRML parametric models
 ## to be used with kicad StepUp script
 
@@ -25,6 +25,12 @@
 #* cadquery script for generating QFP/SOIC/SSOP/TSSOP models in STEP AP214  *
 #*   Copyright (c) 2015                                                     *
 #* Maurice https://launchpad.net/~easyw                                     *
+#* Copyright (c) 2021                                                       *
+#*     Update 2021                                                          *
+#*     jmwright (https://github.com/jmwright)                               *
+#*     Work sponsored by KiCAD Services Corporation                         *
+#*          (https://www.kipro-pcb.com/)                                    *
+#*                                                                          *
 #* All trademarks within this guide belong to their legitimate owners.      *
 #*                                                                          *
 #*   This program is free software; you can redistribute it and/or modify   *
@@ -49,200 +55,236 @@ __title__ = "make Valve 3D models"
 __author__ = "Stefan, based on DIP script"
 __Comment__ = 'make varistor 3D models exported to STEP and VRML for Kicad StepUP script'
 
-___ver___ = "1.3.4 21/06/2020"
+___ver___ = "2.0.0"
 
-# maui import cadquery as cq
-# maui from Helpers import show
-from collections import namedtuple
+import os
+import cadquery as cq
+from _tools import shaderColors, parameters, cq_color_correct
+from _tools import cq_globals
 
-import math
-import sys, os
-import datetime
-from datetime import datetime
-sys.path.append("../_tools")
-import exportPartToVRML as expVRML
-import shaderColors
+from .cq_parameters_tht_generic_round import cq_parameters_tht_generic_round
+from .cq_parameters_murata_PKMCS0909E4000 import cq_parameters_murata_PKMCS0909E4000
+from .cq_parameters_CUI_CST_931RP_A import cq_parameters_CUI_CST_931RP_A
+from .cq_parameters_kingstate_KCG0601 import cq_parameters_kingstate_KCG0601
+from .cq_parameters_EMB84Q_RO_SMT_0825_S_4_R import cq_parameters_EMB84Q_RO_SMT_0825_S_4_R
+from .cq_parameters_ProjectsUnlimited_AI_4228_TWT_R import cq_parameters_ProjectsUnlimited_AI_4228_TWT_R
+from .cq_parameters_ProSignal_ABI_XXX_RC import cq_parameters_ProSignal_ABI_XXX_RC
+from .cq_parameters_StarMicronics_HMB_06_HMB_12 import cq_parameters_StarMicronics_HMB_06_HMB_12
+from .cq_parameters_TDK_PS1240P02BT import cq_parameters_TDK_PS1240P02BT
+from .cq_parameters_PUI_AI_1440_TWT_24V_2_R import cq_parameters_PUI_AI_1440_TWT_24V_2_R
 
+def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
+    """
+    Main entry point into this generator.
+    """
+    models = []
 
-# maui start
-import FreeCAD, Draft, FreeCADGui
-import ImportGui
-import FreeCADGui as Gui
-#from Gui.Command import *
+    all_params = parameters.load_parameters("Buzzer_Beeper")
 
+    if all_params == None:
+        print("ERROR: Model parameters must be provided.")
+        return
 
-outdir=os.path.dirname(os.path.realpath(__file__)+"/../_3Dmodels")
-scriptdir=os.path.dirname(os.path.realpath(__file__))
-sys.path.append(outdir)
-sys.path.append(scriptdir)
-if FreeCAD.GuiUp:
-    from PySide import QtCore, QtGui
+    # Handle the case where no model has been passed
+    if model_to_build is None:
+        print("No variant name is given! building: {0}".format(model_to_build))
 
-# Licence information of the generated models.
-#################################################################################################
-STR_licAuthor = "kicad StepUp"
-STR_licEmail = "ksu"
-STR_licOrgSys = "kicad StepUp"
-STR_licPreProc = "OCC"
-STR_licOrg = "FreeCAD"
+        model_to_build = all_params.keys()[0]
 
-
-#################################################################################################
-
-
-
-
-import cq_parameters_tht_generic_round  # modules parameters
-from cq_parameters_tht_generic_round import *
-
-import cq_parameters_murata_PKMCS0909E4000  # modules parameters
-from cq_parameters_murata_PKMCS0909E4000 import *
-
-import cq_parameters_CUI_CST_931RP_A  # modules parameters
-from cq_parameters_CUI_CST_931RP_A import *
-
-import cq_parameters_kingstate_KCG0601  # modules parameters
-from cq_parameters_kingstate_KCG0601 import *
-
-import cq_parameters_EMB84Q_RO_SMT_0825_S_4_R  # modules parameters
-from cq_parameters_EMB84Q_RO_SMT_0825_S_4_R import *
-
-import cq_parameters_ProjectsUnlimited_AI_4228_TWT_R  # modules parameters
-from cq_parameters_ProjectsUnlimited_AI_4228_TWT_R import *
-
-import cq_parameters_ProSignal_ABI_XXX_RC  # modules parameters
-from cq_parameters_ProSignal_ABI_XXX_RC import *
-
-import cq_parameters_StarMicronics_HMB_06_HMB_12  # modules parameters
-from cq_parameters_StarMicronics_HMB_06_HMB_12 import *
-
-import cq_parameters_TDK_PS1240P02BT  # modules parameters
-from cq_parameters_TDK_PS1240P02BT import *
-
-import cq_parameters_PUI_AI_1440_TWT_24V_2_R  # modules parameters
-from cq_parameters_PUI_AI_1440_TWT_24V_2_R import *
-
-
-
-
-different_models = [
-    cq_parameters_tht_generic_round(),
-    cq_parameters_murata_PKMCS0909E4000(),
-    cq_parameters_CUI_CST_931RP_A(),
-    cq_parameters_kingstate_KCG0601(),
-    cq_parameters_EMB84Q_RO_SMT_0825_S_4_R(),
-    cq_parameters_ProjectsUnlimited_AI_4228_TWT_R(),
-    cq_parameters_ProSignal_ABI_XXX_RC(),
-    cq_parameters_StarMicronics_HMB_06_HMB_12(),
-    cq_parameters_TDK_PS1240P02BT(),
-    cq_parameters_PUI_AI_1440_TWT_24V_2_R(),
-]
-
-
-
-
-
-def make_3D_model(models_dir, model_class, modelName):
-
-    LIST_license = ["",]
-
-    CheckedmodelName = modelName.replace('.', '').replace('-', '_').replace('(', '').replace(')', '')
-    Newdoc = App.newDocument(CheckedmodelName)
-    App.setActiveDocument(CheckedmodelName)
-    Gui.ActiveDocument=Gui.getDocument(CheckedmodelName)
-    destination_dir = model_class.get_dest_3D_dir()
-    
-    material_substitutions = model_class.make_3D_model(modelName)
-    
-    doc = FreeCAD.ActiveDocument
-    doc.Label = CheckedmodelName
-
-    objs=GetListOfObjects(FreeCAD, doc)
-    objs[0].Label = CheckedmodelName
-    restore_Main_Tools()
-
-    script_dir=os.path.dirname(os.path.realpath(__file__))
-    expVRML.say(models_dir)
-    out_dir=models_dir+os.sep+destination_dir
-    if not os.path.exists(out_dir):
-        os.makedirs(out_dir)
-
-    exportSTEP(doc, modelName, out_dir)
-    if LIST_license[0]=="":
-        LIST_license=Lic.LIST_int_license
-        LIST_license.append("")
-    Lic.addLicenseToStep(out_dir+'/', modelName+".step", LIST_license,\
-                       STR_licAuthor, STR_licEmail, STR_licOrgSys, STR_licOrg, STR_licPreProc)
-
-    # scale and export Vrml model
-    scale=1/2.54
-    #exportVRML(doc,modelName,scale,out_dir)
-    del objs
-    objs=GetListOfObjects(FreeCAD, doc)
-    expVRML.say("######################################################################")
-    expVRML.say(objs)
-    expVRML.say("######################################################################")
-    export_objects, used_color_keys = expVRML.determineColors(Gui, objs, material_substitutions)
-    export_file_name=out_dir+os.sep+modelName+'.wrl'
-    colored_meshes = expVRML.getColoredMesh(Gui, export_objects , scale)
-    #expVRML.writeVRMLFile(colored_meshes, export_file_name, used_color_keys)# , LIST_license
-    expVRML.writeVRMLFile(colored_meshes, export_file_name, used_color_keys, LIST_license)
-    #scale=0.3937001
-    #exportVRML(doc,modelName,scale,out_dir)
-    # Save the doc in Native FC format
-    saveFCdoc(App, Gui, doc, modelName,out_dir)
-    #display BBox
-    Gui.activateWorkbench("PartWorkbench")
-    Gui.SendMsgToActiveView("ViewFit")
-    Gui.activeDocument().activeView().viewAxometric()
-    #FreeCADGui.ActiveDocument.activeObject.BoundingBox = True
-
-
-def run():
-    ## # get variant names from command line
-
-    return
-
-#import step_license as L
-import add_license as Lic
-
-# when run from command line
-if __name__ == "__main__" or __name__ == "main_generator":
-
-    FreeCAD.Console.PrintMessage('\r\nRunning...\r\n')
-
-    full_path=os.path.realpath(__file__)
-    expVRML.say(full_path)
-    scriptdir=os.path.dirname(os.path.realpath(__file__))
-    expVRML.say(scriptdir)
-    sub_path = full_path.split(scriptdir)
-    expVRML.say(sub_path)
-    sub_dir_name =full_path.split(os.sep)[-2]
-    expVRML.say(sub_dir_name)
-    sub_path = full_path.split(sub_dir_name)[0]
-    expVRML.say(sub_path)
-    models_dir=sub_path+"_3Dmodels"
-    
-    model_to_build = ''
-    if len(sys.argv) < 3:
-        FreeCAD.Console.PrintMessage('No variant name is given, add a valid model name as an argument or the argument "all"\r\n')
+    # Handle being able to generate all models or just one
+    if model_to_build == "all":
+        models = all_params
     else:
-        model_to_build=sys.argv[2]
+        models = { model_to_build: all_params[model_to_build] }
 
-    found_one = False
-    if len(model_to_build) > 0:
-        if model_to_build == 'all':
-            found_one = True
-            for n in different_models:
-                listall = n.get_list_all()
-                for i in listall:
-                    FreeCAD.Console.PrintMessage('\r\nMaking model :' + i + '\r\n')
-                    make_3D_model(models_dir, n, i)
+    # Step through the selected models
+    for model in models:
+        if output_dir_prefix == None:
+            print("ERROR: An output directory must be provided.")
+            return
         else:
-            for n in different_models:
-                if n.model_exist(model_to_build):
-                    found_one = True
-                    make_3D_model(models_dir, n, model_to_build)
-        
-        if not found_one:
-            FreeCAD.Console.PrintMessage("Parameters for %s doesn't exist, skipping. " % model_to_build)
+            # Construct the final output directory
+            output_dir = os.path.join(output_dir_prefix, all_params[model]['destination_dir'])
+
+        # Safety check to make sure the selected model is valid
+        if not model in all_params.keys():
+            print("Parameters for %s doesn't exist in 'all_params', skipping." % model)
+            continue
+
+        # Wrap the component parts in an assembly so that we can attach colors
+        component = cq.Assembly()
+
+        # Generate the current model
+        if all_params[model]["model_class"] == "cq_parameters_tht_generic_round":
+            cqm = cq_parameters_tht_generic_round()
+
+            # Load the appropriate colors
+            case_top_color = shaderColors.named_colors[all_params[model]["case_top_color_key"]].getDiffuseFloat()
+            body_color = shaderColors.named_colors[all_params[model]["body_color_key"]].getDiffuseFloat()
+            pins_color = shaderColors.named_colors[all_params[model]["pins_color_key"]].getDiffuseFloat()
+            npth_pin_color = shaderColors.named_colors[all_params[model]["npth_pin_color_key"]].getDiffuseFloat()
+
+            # Generate the models
+            case_top = cqm.make_top(all_params[model])
+            case = cqm.make_case(all_params[model])
+            pins = cqm.make_pins(all_params[model])
+            npth_pins = cqm.make_npth_pins(all_params[model])
+
+            component.add(case_top, color=cq_color_correct.Color(case_top_color[0], case_top_color[1], case_top_color[2]))
+            component.add(case, color=cq_color_correct.Color(body_color[0], body_color[1], body_color[2]))
+            component.add(pins, color=cq_color_correct.Color(pins_color[0], pins_color[1], pins_color[2]))
+            component.add(npth_pins, color=cq_color_correct.Color(npth_pin_color[0], npth_pin_color[1], npth_pin_color[2]))
+        elif all_params[model]["model_class"] == "cq_parameters_murata_PKMCS0909E4000":
+            cqm = cq_parameters_murata_PKMCS0909E4000()
+
+            # Load the appropriate colors
+            case_top_color = shaderColors.named_colors[all_params[model]["case_top_color_key"]].getDiffuseFloat()
+            pins_color = shaderColors.named_colors[all_params[model]["pins_color_key"]].getDiffuseFloat()
+
+            # Generate the models
+            case_top = cqm.make_case(all_params[model])
+            pins = cqm.make_pins(all_params[model])
+
+            # Build the assembly
+            component.add(case_top, color=cq_color_correct.Color(case_top_color[0], case_top_color[1], case_top_color[2]))
+            component.add(pins, color=cq_color_correct.Color(pins_color[0], pins_color[1], pins_color[2]))
+        elif all_params[model]["model_class"] == "cq_parameters_CUI_CST_931RP_A":
+            cqm = cq_parameters_CUI_CST_931RP_A()
+
+            # Load the appropriate colors
+            case_top_color = shaderColors.named_colors[all_params[model]["case_top_color_key"]].getDiffuseFloat()
+            pins_color = shaderColors.named_colors[all_params[model]["pins_color_key"]].getDiffuseFloat()
+
+            # Generate the models
+            case_top = cqm.make_case(all_params[model])
+            pins = cqm.make_pins(all_params[model])
+
+            # Build the assembly
+            component.add(case_top, color=cq_color_correct.Color(case_top_color[0], case_top_color[1], case_top_color[2]))
+            component.add(pins, color=cq_color_correct.Color(pins_color[0], pins_color[1], pins_color[2]))
+        elif all_params[model]["model_class"] == "cq_parameters_kingstate_KCG0601":
+            cqm = cq_parameters_kingstate_KCG0601()
+
+            # Load the appropriate colors
+            case_top_color = shaderColors.named_colors[all_params[model]["case_top_color_key"]].getDiffuseFloat()
+            body_color = shaderColors.named_colors[all_params[model]["body_color_key"]].getDiffuseFloat()
+            pins_color = shaderColors.named_colors[all_params[model]["pins_color_key"]].getDiffuseFloat()
+
+            # Generate the models
+            case_top = cqm.make_top(all_params[model])
+            case = cqm.make_case(all_params[model])
+            pins = cqm.make_pins(all_params[model])
+            component.add(case_top, color=cq_color_correct.Color(case_top_color[0], case_top_color[1], case_top_color[2]))
+            component.add(case, color=cq_color_correct.Color(body_color[0], body_color[1], body_color[2]))
+            component.add(pins, color=cq_color_correct.Color(pins_color[0], pins_color[1], pins_color[2]))
+        elif all_params[model]["model_class"] == "cq_parameters_EMB84Q_RO_SMT_0825_S_4_R":
+            cqm = cq_parameters_EMB84Q_RO_SMT_0825_S_4_R()
+
+            # Load the appropriate colors
+            case_top_color = shaderColors.named_colors[all_params[model]["case_top_color_key"]].getDiffuseFloat()
+            pins_color = shaderColors.named_colors[all_params[model]["pins_color_key"]].getDiffuseFloat()
+
+            # Generate the models
+            case_top = cqm.make_case(all_params[model])
+            pins = cqm.make_pins(all_params[model])
+
+            # Build the assembly
+            component.add(case_top, color=cq_color_correct.Color(case_top_color[0], case_top_color[1], case_top_color[2]))
+            component.add(pins, color=cq_color_correct.Color(pins_color[0], pins_color[1], pins_color[2]))
+        elif all_params[model]["model_class"] == "cq_parameters_ProjectsUnlimited_AI_4228_TWT_R":
+            cqm = cq_parameters_ProjectsUnlimited_AI_4228_TWT_R()
+
+            # Load the appropriate colors
+            case_top_color = shaderColors.named_colors[all_params[model]["case_top_color_key"]].getDiffuseFloat()
+            body_color = shaderColors.named_colors[all_params[model]["body_color_key"]].getDiffuseFloat()
+            pins_color = shaderColors.named_colors[all_params[model]["pins_color_key"]].getDiffuseFloat()
+
+            # Generate the models
+            case_top = cqm.make_top(all_params[model])
+            case = cqm.make_case(all_params[model])
+            pins = cqm.make_pins(all_params[model])
+            component.add(case_top, color=cq_color_correct.Color(case_top_color[0], case_top_color[1], case_top_color[2]))
+            component.add(case, color=cq_color_correct.Color(body_color[0], body_color[1], body_color[2]))
+            component.add(pins, color=cq_color_correct.Color(pins_color[0], pins_color[1], pins_color[2]))
+        elif all_params[model]["model_class"] == "cq_parameters_ProSignal_ABI_XXX_RC":
+            cqm = cq_parameters_ProSignal_ABI_XXX_RC()
+
+            # Load the appropriate colors
+            case_top_color = shaderColors.named_colors[all_params[model]["case_top_color_key"]].getDiffuseFloat()
+            pins_color = shaderColors.named_colors[all_params[model]["pins_color_key"]].getDiffuseFloat()
+
+            # Generate the models
+            case_top = cqm.make_case(all_params[model])
+            pins = cqm.make_pins(all_params[model])
+
+            # Build the assembly
+            component.add(case_top, color=cq_color_correct.Color(case_top_color[0], case_top_color[1], case_top_color[2]))
+            component.add(pins, color=cq_color_correct.Color(pins_color[0], pins_color[1], pins_color[2]))
+        elif all_params[model]["model_class"] == "cq_parameters_StarMicronics_HMB_06_HMB_12":
+            cqm = cq_parameters_StarMicronics_HMB_06_HMB_12()
+
+            # Load the appropriate colors
+            case_top_color = shaderColors.named_colors[all_params[model]["case_top_color_key"]].getDiffuseFloat()
+            pins_color = shaderColors.named_colors[all_params[model]["pins_color_key"]].getDiffuseFloat()
+
+            # Generate the models
+            case_top = cqm.make_case(all_params[model])
+            pins = cqm.make_pins(all_params[model])
+
+            # Build the assembly
+            component.add(case_top, color=cq_color_correct.Color(case_top_color[0], case_top_color[1], case_top_color[2]))
+            component.add(pins, color=cq_color_correct.Color(pins_color[0], pins_color[1], pins_color[2]))
+        elif all_params[model]["model_class"] == "cq_parameters_TDK_PS1240P02BT":
+            cqm = cq_parameters_TDK_PS1240P02BT()
+
+            # Load the appropriate colors
+            case_top_color = shaderColors.named_colors[all_params[model]["case_top_color_key"]].getDiffuseFloat()
+            body_color = shaderColors.named_colors[all_params[model]["body_color_key"]].getDiffuseFloat()
+            pins_color = shaderColors.named_colors[all_params[model]["pins_color_key"]].getDiffuseFloat()
+
+            # Generate the models
+            case_top = cqm.make_top(all_params[model])
+            case = cqm.make_case(all_params[model])
+            pins = cqm.make_pins(all_params[model])
+            component.add(case_top, color=cq_color_correct.Color(case_top_color[0], case_top_color[1], case_top_color[2]))
+            component.add(case, color=cq_color_correct.Color(body_color[0], body_color[1], body_color[2]))
+            component.add(pins, color=cq_color_correct.Color(pins_color[0], pins_color[1], pins_color[2]))
+        # cq_parameters_PUI_AI_1440_TWT_24V_2_R
+        elif all_params[model]["model_class"] == "cq_parameters_PUI_AI_1440_TWT_24V_2_R":
+            cqm = cq_parameters_PUI_AI_1440_TWT_24V_2_R()
+
+            # Load the appropriate colors
+            case_top_color = shaderColors.named_colors[all_params[model]["case_top_color_key"]].getDiffuseFloat()
+            body_color = shaderColors.named_colors[all_params[model]["body_color_key"]].getDiffuseFloat()
+            pins_color = shaderColors.named_colors[all_params[model]["pins_color_key"]].getDiffuseFloat()
+
+            # Generate the models
+            case_top = cqm.make_top(all_params[model])
+            case = cqm.make_case(all_params[model])
+            pins = cqm.make_pins(all_params[model])
+            component.add(case_top, color=cq_color_correct.Color(case_top_color[0], case_top_color[1], case_top_color[2]))
+            component.add(case, color=cq_color_correct.Color(body_color[0], body_color[1], body_color[2]))
+            component.add(pins, color=cq_color_correct.Color(pins_color[0], pins_color[1], pins_color[2]))
+        else:
+            print("ERROR: No match found for the model_class")
+            continue
+
+        # Create the output directory if it does not exist
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
+
+        # Export the assembly to STEP
+        component.save(os.path.join(output_dir, model + ".step"), cq.exporters.ExportTypes.STEP, write_pcurves=False)
+
+        # Export the assembly to VRML
+        if enable_vrml:
+            cq.exporters.assembly.exportVRML(component, os.path.join(output_dir, model + ".wrl"), tolerance=cq_globals.VRML_DEVIATION, angularTolerance=cq_globals.VRML_ANGULAR_DEVIATION)
+
+        # Update the license
+        from _tools import add_license
+        add_license.addLicenseToStep(output_dir, model + ".step",
+                                        add_license.LIST_int_license,
+                                        add_license.STR_int_licAuthor,
+                                        add_license.STR_int_licEmail,
+                                        add_license.STR_int_licOrgSys,
+                                        add_license.STR_int_licPreProc)

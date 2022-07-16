@@ -32,12 +32,12 @@
 #****************************************************************************
 
 import cadquery as cq
-from Helpers import show
+# from Helpers import show
 
 ## base parametes & model
 
-from cq_base_model import PartBase
-from cq_base_parameters import CaseType
+from .cq_base_model import PartBase
+from .cq_base_parameters import CaseType
 
 ## model generators
 
@@ -83,21 +83,21 @@ class dip_switch_piano (PartBase):
 
     def makeModelName(self, genericName):
         if self.num_pins == 2 or self.num_pins == 12 or self.num_pins == 22:
-            return 'SW_DIP_SPSTx' + '{:02d}'.format(self.num_pins / 2) + '_Piano_10.8x' + '{:.1f}'.format(self.body_length) + 'mm_W7.62mm_P' + '{:.2f}'.format(self.pin_pitch) + 'mm'
+            return 'SW_DIP_SPSTx' + '{:02d}'.format(int(self.num_pins / 2)) + '_Piano_10.8x' + '{:.1f}'.format(self.body_length) + 'mm_W7.62mm_P' + '{:.2f}'.format(self.pin_pitch) + 'mm'
         else:
-            return 'SW_DIP_SPSTx' + '{:02d}'.format(self.num_pins / 2) + '_Piano_10.8x' + '{:.2f}'.format(self.body_length) + 'mm_W7.62mm_P' + '{:.2f}'.format(self.pin_pitch) + 'mm'
+            return 'SW_DIP_SPSTx' + '{:02d}'.format(int(self.num_pins / 2)) + '_Piano_10.8x' + '{:.2f}'.format(self.body_length) + 'mm_W7.62mm_P' + '{:.2f}'.format(self.pin_pitch) + 'mm'
 
 
     def _make_switchpockets(self):
 
         # create first single button pocket
         pocket = cq.Workplane("XZ", origin=(self.first_pin_pos[0], 0.0, 8.0))\
-                 .workplane(offset=-self.body_width / 2.0 + 3.3)\
+                 .workplane(centerOption="CenterOfMass", offset=-self.body_width / 2.0 + 3.3)\
                  .rect(self.button_width, self.button_base).extrude(-3.3)
 
         # and all buttons pocket (face cutout)
         pocket2 = cq.Workplane("YZ")\
-         .workplane(offset=-self.body_length / 2.0 + 1.0)\
+         .workplane(centerOption="CenterOfMass", offset=-self.body_length / 2.0 + 1.0)\
          .moveTo(self.body_width / 2.0, self.body_height)\
          .line(-3.2, 0.0)\
          .line(0.0, -1.6)\
@@ -170,13 +170,13 @@ class dip_switch_piano (PartBase):
                  .line(w3, 0.0)\
                  .line(0.0, w3)\
                  .line(w3, 0.0)\
-                 .close().extrude(h)
+                 .close().extrude(h + 0.01)
 
-    def make(self):
-        show(self.make_body())
-        show(self.make_pins())
-        show(self.make_buttons())
-        show(self.make_pinmark(self.button_width + 0.2))
+    # def make(self):
+    #     show(self.make_body())
+    #     show(self.make_pins())
+    #     show(self.make_buttons())
+    #     show(self.make_pinmark(self.button_width + 0.2))
 
 
 class dip_switch_piano_cts (dip_switch_piano):
@@ -214,7 +214,7 @@ class dip_switch_piano_cts (dip_switch_piano):
 
 
     def makeModelName(self, genericName):
-        return 'SW_DIP_SPSTx' + '{:02d}'.format(self.num_pins / 2) + '_Piano_CTS_Series194-' + '{:d}'.format(self.num_pins / 2) + 'MSTN_W7.62mm_P' + '{:.2f}'.format(self.pin_pitch) + 'mm'
+        return 'SW_DIP_SPSTx' + '{:02d}'.format(int(self.num_pins / 2)) + '_Piano_CTS_Series194-' + '{:d}'.format(int(self.num_pins / 2)) + 'MSTN_W7.62mm_P' + '{:.2f}'.format(self.pin_pitch) + 'mm'
 
 
 ### EOF ###

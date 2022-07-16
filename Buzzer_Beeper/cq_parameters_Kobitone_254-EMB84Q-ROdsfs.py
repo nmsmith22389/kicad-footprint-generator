@@ -46,8 +46,11 @@
 #****************************************************************************
 
 
-import cq_parameters  # modules parameters
-from cq_parameters import *
+# import cq_parameters  # modules parameters
+# from cq_parameters import *
+
+from collections import namedtuple
+from collections.abc import Mapping
 
 
 class cq_parameters_murata_PKMCS0909E4000():
@@ -75,43 +78,43 @@ class cq_parameters_murata_PKMCS0909E4000():
         return list
 
         
-    def make_3D_model(self, modelName):
+    # def make_3D_model(self, modelName):
 
         
-        destination_dir = self.get_dest_3D_dir()
+    #     destination_dir = self.get_dest_3D_dir()
         
-        case = self.make_case(self.all_params[modelName])
-        pins = self.make_pins(self.all_params[modelName])
-        show(case)
-        show(pins)
+    #     case = self.make_case(self.all_params[modelName])
+    #     pins = self.make_pins(self.all_params[modelName])
+    #     show(case)
+    #     show(pins)
      
-        doc = FreeCAD.ActiveDocument
-        objs=GetListOfObjects(FreeCAD, doc)
+    #     doc = FreeCAD.ActiveDocument
+    #     objs=GetListOfObjects(FreeCAD, doc)
      
-        body_color_key = self.all_params[modelName].body_color_key
-        pin_color_key = self.all_params[modelName].pin_color_key
+    #     body_color_key = self.all_params[modelName].body_color_key
+    #     pin_color_key = self.all_params[modelName].pin_color_key
 
-        body_color = shaderColors.named_colors[body_color_key].getDiffuseFloat()
-        pin_color = shaderColors.named_colors[pin_color_key].getDiffuseFloat()
+    #     body_color = shaderColors.named_colors[body_color_key].getDiffuseFloat()
+    #     pin_color = shaderColors.named_colors[pin_color_key].getDiffuseFloat()
 
-        Color_Objects(Gui,objs[0],body_color)
-        Color_Objects(Gui,objs[1],pin_color)
+    #     Color_Objects(Gui,objs[0],body_color)
+    #     Color_Objects(Gui,objs[1],pin_color)
 
-        col_body=Gui.ActiveDocument.getObject(objs[0].Name).DiffuseColor[0]
-        col_pin=Gui.ActiveDocument.getObject(objs[1].Name).DiffuseColor[0]
+    #     col_body=Gui.ActiveDocument.getObject(objs[0].Name).DiffuseColor[0]
+    #     col_pin=Gui.ActiveDocument.getObject(objs[1].Name).DiffuseColor[0]
         
-        material_substitutions={
-            col_body[:-1]:body_color_key,
-            col_pin[:-1]:pin_color_key,
-        }
+    #     material_substitutions={
+    #         col_body[:-1]:body_color_key,
+    #         col_pin[:-1]:pin_color_key,
+    #     }
         
-        expVRML.say(material_substitutions)
-        while len(objs) > 1:
-                FuseObjs_wColors(FreeCAD, FreeCADGui, doc.Name, objs[0].Name, objs[1].Name)
-                del objs
-                objs = GetListOfObjects(FreeCAD, doc)
+    #     expVRML.say(material_substitutions)
+    #     while len(objs) > 1:
+    #             FuseObjs_wColors(FreeCAD, FreeCADGui, doc.Name, objs[0].Name, objs[1].Name)
+    #             del objs
+    #             objs = GetListOfObjects(FreeCAD, doc)
 
-        return material_substitutions
+    #     return material_substitutions
 
 
     def make_case(self, params):
@@ -194,9 +197,9 @@ class cq_parameters_murata_PKMCS0909E4000():
     ##enabling optional/default values to None
     def namedtuple_with_defaults(typename, field_names, default_values=()):
 
-        T = collections.namedtuple(typename, field_names)
+        T = namedtuple(typename, field_names)
         T.__new__.__defaults__ = (None,) * len(T._fields)
-        if isinstance(default_values, collections.Mapping):
+        if isinstance(default_values, Mapping):
             prototype = T(**default_values)
         else:
             prototype = T(*default_values)
@@ -223,29 +226,29 @@ class cq_parameters_murata_PKMCS0909E4000():
         'dest_dir_prefix'	    # Destination directory
     ])
 
-    all_params = {
+    # all_params = {
 
-        'Buzzer_Murata_PKMCS0909E4000-R1': Params(
-            #
-            # Valve
-            # This model have been auto generated based on the foot print file
-            # A number of parameters have been fixed or guessed, such as A2
-            # 
-            # The foot print that uses this 3D model is Buzzer_Murata_PKMCS0909E4000-R1.kicad_mod
-            # 
-            modelName = 'Buzzer_Murata_PKMCS0909E4000-R1',   # modelName
-            D = 09.00,                  # Body width/diameter
-            E = 09.00,                  # Body length
-            H = 01.90,                  # Body height
-            A1 = 0.03,                  # Body-board separation
-            b = 0.90,                   # Pin diameter
-            center = (0.00, 0.00),      # Body center
-            pin = [(-04.35, 0.0), (04.35, 0.00)],          # Pins
-            body_color_key = 'black body',        # Body color
-            pin_color_key = 'gold pins',  # Pin color
-            rotation = 0,                       # Rotation if required
-            dest_dir_prefix = '../Buzzer_Beeper.3dshapes',      # destination directory
-            ),
+    #     'Buzzer_Murata_PKMCS0909E4000-R1': Params(
+    #         #
+    #         # Valve
+    #         # This model have been auto generated based on the foot print file
+    #         # A number of parameters have been fixed or guessed, such as A2
+    #         # 
+    #         # The foot print that uses this 3D model is Buzzer_Murata_PKMCS0909E4000-R1.kicad_mod
+    #         # 
+    #         modelName = 'Buzzer_Murata_PKMCS0909E4000-R1',   # modelName
+    #         D = 09.00,                  # Body width/diameter
+    #         E = 09.00,                  # Body length
+    #         H = 01.90,                  # Body height
+    #         A1 = 0.03,                  # Body-board separation
+    #         b = 0.90,                   # Pin diameter
+    #         center = (0.00, 0.00),      # Body center
+    #         pin = [(-04.35, 0.0), (04.35, 0.00)],          # Pins
+    #         body_color_key = 'black body',        # Body color
+    #         pin_color_key = 'gold pins',  # Pin color
+    #         rotation = 0,                       # Rotation if required
+    #         dest_dir_prefix = '../Buzzer_Beeper.3dshapes',      # destination directory
+    #         ),
 
-    }
+    # }
         

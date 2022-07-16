@@ -49,33 +49,33 @@
 import operator
 
 import cadquery as cq
-from Helpers import show
+# from Helpers import show
 
-import FreeCAD, Draft, FreeCADGui
-import ImportGui
-import FreeCADGui as Gui
+# import FreeCAD, Draft, FreeCADGui
+# import ImportGui
+# import FreeCADGui as Gui
 
-import shaderColors
-import exportPartToVRML as expVRML
+# import shaderColors
+# import exportPartToVRML as expVRML
 
 # Import cad_tools
-import cq_cad_tools
+# import cq_cad_tools
 # Reload tools
-from cq_cad_tools import reload_lib
-reload_lib(cq_cad_tools)
+# from cq_cad_tools import reload_lib
+# reload_lib(cq_cad_tools)
 # Explicitly load all needed functions
-from cq_cad_tools import FuseObjs_wColors, GetListOfObjects, z_RotateObject, Color_Objects, restore_Main_Tools, exportSTEP, saveFCdoc
+# from cq_cad_tools import FuseObjs_wColors, GetListOfObjects, z_RotateObject, Color_Objects, restore_Main_Tools, exportSTEP, saveFCdoc
 
-import cq_parameters  # modules parameters
-from cq_parameters import ShapeOfTerminal, ButtonType, partParamsTactSwitches
+# import cq_parameters  # modules parameters
+from .cq_parameters import ShapeOfTerminal, ButtonType, partParamsTactSwitches
 
 import collections
 from collections import namedtuple
 
 
-from  cq_base_model import PartBase, Polyline  # modules parameters
+from  .cq_base_model import PartBase, Polyline  # modules parameters
 
-from cq_base_tact_switches import cqMakerTactSwitch, TactSwitchSeries, partsTactSwitches
+from .cq_base_tact_switches import cqMakerTactSwitch, TactSwitchSeries, partsTactSwitches
 
 
 class ButtonType (ButtonType):
@@ -121,7 +121,7 @@ class cqMakerCuKPTS125SxTactSwitch (cqMakerTactSwitch):
         cqMakerTactSwitch.__init__(self, parameter)
         
         # get all entries of the params list as dictionary
-        args = parameter._asdict()
+        args = parameter#._asdict()
         self.pad_bottom_height = 0.3
 
         # for projected button type some more dimensions are needed

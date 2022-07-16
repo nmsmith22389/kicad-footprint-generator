@@ -49,35 +49,36 @@ from __future__ import division
 import sys, os
 import yaml
 import datetime
-sys.path.append("../_tools")
-import add_license
+import cadquery as cq
+# sys.path.append("../_tools")
+# import add_license
 
-if FreeCAD.GuiUp:
-    from PySide import QtCore, QtGui
+# if FreeCAD.GuiUp:
+#     from PySide import QtCore, QtGui
 
-try:
-    Gui.activateWorkbench("CadQueryWorkbench")
-    import cadquery as cq
-    from Helpers import show
-except Exception as e:
-    if QtGui is not None:
-        reply = QtGui.QMessageBox.information(None, "Info ...", "Missing CadQuery 0.3.0 or later Module!\r\n\r\nhttps://github.com/jmwright/cadquery-freecad-module/wiki\n")
+# try:
+#     Gui.activateWorkbench("CadQueryWorkbench")
+#     import cadquery as cq
+#     from Helpers import show
+# except Exception as e:
+#     if QtGui is not None:
+#         reply = QtGui.QMessageBox.information(None, "Info ...", "Missing CadQuery 0.3.0 or later Module!\r\n\r\nhttps://github.com/jmwright/cadquery-freecad-module/wiki\n")
 
-import importlib
-from cqToolsExceptions import *
-import cq_cad_tools
-importlib.reload(cq_cad_tools)
-from cq_cad_tools import multiFuseObjs_wColors, GetListOfObjects, restore_Main_Tools, exportSTEP, close_CQ_Example, saveFCdoc, z_RotateObject, runGeometryCheck
+# import importlib
+# from cqToolsExceptions import *
+# import cq_cad_tools
+# importlib.reload(cq_cad_tools)
+# from cq_cad_tools import multiFuseObjs_wColors, GetListOfObjects, restore_Main_Tools, exportSTEP, close_CQ_Example, saveFCdoc, z_RotateObject, runGeometryCheck
 
-try:
-    close_CQ_Example(App, Gui)
-except:
-    FreeCAD.Console.PrintMessage("Can't close example")
+# try:
+#     close_CQ_Example(App, Gui)
+# except:
+#     FreeCAD.Console.PrintMessage("Can't close example")
     
-import ImportGui
+# import ImportGui
 
-import exportPartToVRML as expVRML
-import shaderColors
+# import exportPartToVRML as expVRML
+# import shaderColors
 
 # License information
 class LICENCE_Info():
@@ -146,16 +147,16 @@ def generate_pins(params, part_params):
         pin = cq.Workplane("XY", (0.1, 0, 0))\
             .moveTo(0, -0.25).lineTo(1.68, -0.25).lineTo(1.88, -0.05).lineTo(1.88, 0.05).lineTo(1.68, 0.25).lineTo(0, 0.25).close()\
             .extrude(0.2)
-        pin = pin.faces(">Z").workplane().center(-0.8, 0).rect(0.2, 0.5).extrude(0.4)
-        pin = pin.faces(">Z").workplane().center(-0.1, 0)\
+        pin = pin.faces(">Z").workplane(centerOption="CenterOfMass").center(-0.8, 0).rect(0.2, 0.5).extrude(0.4)
+        pin = pin.faces(">Z").workplane(centerOption="CenterOfMass").center(-0.1, 0)\
             .moveTo(0, -0.45).lineTo(-1.1, -0.45).lineTo(-1.1, -0.65).lineTo(0.2, -0.65).lineTo(0.2, 0.65).lineTo(-1.1, 0.65).lineTo(-1.1, 0.45).lineTo(0, 0.45).close()\
             .extrude(2.9)
     else:
         pin = cq.Workplane("YZ", (-0.125, 0, 0))\
             .moveTo(-0.4, 0.5).lineTo(-0.4, -2.8).lineTo(-0.1, -3.1).lineTo(0.1, -3.1).lineTo(0.4, -2.8).lineTo(0.4, 0.5).close()\
             .extrude(0.25)
-        pin = pin.faces("<X").workplane().center(0, 1.625).rect(0.8, 0.25).extrude(0.6 if params['type'] == 'Standard' else 1.87)
-        pin = pin.faces(">Z").workplane().center(-(0.6 if params['type'] == 'Standard' else 1.87)/2, 0)\
+        pin = pin.faces("<X").workplane(centerOption="CenterOfMass").center(0, 1.625).rect(0.8, 0.25).extrude(0.6 if params['type'] == 'Standard' else 1.87)
+        pin = pin.faces(">Z").workplane(centerOption="CenterOfMass").center(-(0.6 if params['type'] == 'Standard' else 1.87)/2, 0)\
             .moveTo(0, -0.75).lineTo(-1.15, -0.75).lineTo(-1.15, -1.0).lineTo(0.25, -1.0).lineTo(0.25, 1.0).lineTo(-1.15, 1.0).lineTo(-1.15, 0.75).lineTo(0, 0.75).close()\
             .extrude(3.7)
     

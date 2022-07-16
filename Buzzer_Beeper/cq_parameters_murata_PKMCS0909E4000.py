@@ -46,9 +46,13 @@
 #****************************************************************************
 
 
-import cq_parameters  # modules parameters
-from cq_parameters import *
+# import cq_parameters  # modules parameters
+# from cq_parameters import *
 
+import cadquery as cq
+
+from collections import namedtuple
+from collections.abc import Mapping
 
 class cq_parameters_murata_PKMCS0909E4000():
 
@@ -116,13 +120,13 @@ class cq_parameters_murata_PKMCS0909E4000():
 
     def make_case(self, params):
 
-        D = params.D                # package length
-        E = params.E                # body overall width
-        H = params.H                # body overall height
-        A1 = params.A1              # package height
-        pin = params.pin            # Pins
-        rotation = params.rotation  # Rotation if required
-        center = params.center      # Body center
+        D = params['D']                # package length
+        E = params['E']                # body overall width
+        H = params['H']                # body overall height
+        A1 = params['A1']              # package height
+        pin = params['pin']            # Pins
+        rotation = params['rotation']  # Rotation if required
+        center = params['center']      # Body center
 
         #
         #
@@ -172,13 +176,13 @@ class cq_parameters_murata_PKMCS0909E4000():
         
     def make_pins(self, params):
 
-        D = params.D                # package length
-        E = params.E                # body overall width
-        H = params.H                # body overall height
-        A1 = params.A1              # package height
-        pin = params.pin            # Pins
-        rotation = params.rotation  # Rotation if required
-        center = params.center      # Body center
+        D = params['D']                # package length
+        E = params['E']                # body overall width
+        H = params['H']                # body overall height
+        A1 = params['A1']              # package height
+        pin = params['pin']            # Pins
+        rotation = params['rotation']  # Rotation if required
+        center = params['center']      # Body center
         
         pins = cq.Workplane("XY").workplane(offset=A1).moveTo((D / 2.0) - 0.5, 0).rect(1.0, 3.4).extrude(0.3)
         #
@@ -194,9 +198,9 @@ class cq_parameters_murata_PKMCS0909E4000():
     ##enabling optional/default values to None
     def namedtuple_with_defaults(typename, field_names, default_values=()):
 
-        T = collections.namedtuple(typename, field_names)
+        T = namedtuple(typename, field_names)
         T.__new__.__defaults__ = (None,) * len(T._fields)
-        if isinstance(default_values, collections.Mapping):
+        if isinstance(default_values, Mapping):
             prototype = T(**default_values)
         else:
             prototype = T(*default_values)
@@ -222,29 +226,29 @@ class cq_parameters_murata_PKMCS0909E4000():
         'dest_dir_prefix'	    # Destination directory
     ])
 
-    all_params = {
+    # all_params = {
 
-        'Buzzer_Murata_PKMCS0909E4000-R1': Params(
-            #
-            # Valve
-            # This model have been auto generated based on the foot print file
-            # A number of parameters have been fixed or guessed, such as A2
-            # 
-            # The foot print that uses this 3D model is Buzzer_Murata_PKMCS0909E4000-R1.kicad_mod
-            # 
-            modelName = 'Buzzer_Murata_PKMCS0909E4000-R1',   # modelName
-            D = 09.00,                  # Body width/diameter
-            E = 09.00,                  # Body length
-            H = 01.90,                  # Body height
-            A1 = 0.03,                  # Body-board separation
-            b = 0.90,                   # Pin diameter
-            center = (0.00, 0.00),      # Body center
-            pin = [(-04.35, 0.0), (04.35, 0.00)],          # Pins
-            body_color_key = 'black body',        # Body color
-            pin_color_key = 'gold pins',  # Pin color
-            rotation = 0,                       # Rotation if required
-            dest_dir_prefix = '../Buzzer_Beeper.3dshapes',      # destination directory
-            ),
+    #     'Buzzer_Murata_PKMCS0909E4000-R1': Params(
+    #         #
+    #         # Valve
+    #         # This model have been auto generated based on the foot print file
+    #         # A number of parameters have been fixed or guessed, such as A2
+    #         # 
+    #         # The foot print that uses this 3D model is Buzzer_Murata_PKMCS0909E4000-R1.kicad_mod
+    #         # 
+    #         modelName = 'Buzzer_Murata_PKMCS0909E4000-R1',   # modelName
+    #         D = 09.00,                  # Body width/diameter
+    #         E = 09.00,                  # Body length
+    #         H = 01.90,                  # Body height
+    #         A1 = 0.03,                  # Body-board separation
+    #         b = 0.90,                   # Pin diameter
+    #         center = (0.00, 0.00),      # Body center
+    #         pin = [(-04.35, 0.0), (04.35, 0.00)],          # Pins
+    #         body_color_key = 'black body',        # Body color
+    #         pin_color_key = 'gold pins',  # Pin color
+    #         rotation = 0,                       # Rotation if required
+    #         dest_dir_prefix = '../Buzzer_Beeper.3dshapes',      # destination directory
+    #         ),
 
-    }
+    # }
         

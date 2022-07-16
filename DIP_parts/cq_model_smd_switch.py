@@ -32,12 +32,12 @@
 #****************************************************************************
 
 import cadquery as cq
-from Helpers import show
+# from Helpers import show
 
 ## base parametes & model
 
-from cq_base_model import PartBase
-from cq_base_parameters import PinStyle, CaseType
+from .cq_base_model import PartBase
+from .cq_base_parameters import PinStyle, CaseType
 
 ## model generator
 
@@ -47,7 +47,7 @@ class dip_smd_switch_lowprofile (PartBase):
 
     def __init__(self, params):
         PartBase.__init__(self, params)
-        self.make_me = params.type == CaseType.SMD and params.num_pins >= 2 and params.num_pins <= 24 and params.pin_rows_distance == 7.62
+        self.make_me = params['type'] == CaseType.SMD and params['num_pins'] >= 2 and params['num_pins'] <= 24 and params['pin_rows_distance'] == 7.62
         self.licAuthor = "Terje Io"
         self.licEmail = "https://github.com/terjeio"
         self.destination_dir = "Button_Switch_SMD.3dshapes"
@@ -63,7 +63,7 @@ class dip_smd_switch_lowprofile (PartBase):
         self.body_overall_width = 8.61
         self.body_height = 2.5
         self.body_length = self.num_pins * self.pin_pitch / 2.0 + 1.56
-        self.pin_rows_distance = params.pin_rows_distance - 3.1
+        self.pin_rows_distance = params['pin_rows_distance'] - 3.1
 
         self.body_board_distance = 0.1
         self.button_width = 1.2
@@ -85,9 +85,9 @@ class dip_smd_switch_lowprofile (PartBase):
         # can not be changed 
         #
         if self.num_pins == 2 or self.num_pins == 12 or self.num_pins == 22:
-            return 'SW_DIP_SPSTx' + '{:02d}'.format(self.num_pins / 2) + '_Slide_' + '{:.1f}'.format(self.body_width) + 'x' + '{:.1f}'.format(self.body_length) + 'mm_W8.61mm_P' + '{:.2f}'.format(self.pin_pitch) + 'mm_LowProfile'
+            return 'SW_DIP_SPSTx' + '{:02d}'.format(int(self.num_pins / 2)) + '_Slide_' + '{:.1f}'.format(self.body_width) + 'x' + '{:.1f}'.format(self.body_length) + 'mm_W8.61mm_P' + '{:.2f}'.format(self.pin_pitch) + 'mm_LowProfile'
         else:
-            return 'SW_DIP_SPSTx' + '{:02d}'.format(self.num_pins / 2) + '_Slide_' + '{:.1f}'.format(self.body_width) + 'x' + '{:.2f}'.format(self.body_length) + 'mm_W8.61mm_P' + '{:.2f}'.format(self.pin_pitch) + 'mm_LowProfile'
+            return 'SW_DIP_SPSTx' + '{:02d}'.format(int(self.num_pins / 2)) + '_Slide_' + '{:.1f}'.format(self.body_width) + 'x' + '{:.2f}'.format(self.body_length) + 'mm_W8.61mm_P' + '{:.2f}'.format(self.pin_pitch) + 'mm_LowProfile'
 
     def _make_switchpockets(self):
 
@@ -107,9 +107,9 @@ class dip_smd_switch_lowprofile (PartBase):
         button_length_2 = self.button_length / 2.0
 
         button = cq.Workplane("XY", origin=(self.first_pin_pos[0], 0.0, self.body_height - self.button_pocket_dept - 0.1))\
-                   .rect(self.button_width, self.button_base).extrude(0.1)\
+                   .rect(self.button_width, self.button_base).extrude(0.2)\
                    .faces(">Z").center(0, -self.button_base / 2.0 + button_length_2)\
-                   .rect(self.button_width, self.button_length).extrude(self.button_heigth + 0.1)
+                   .rect(self.button_width, self.button_length).extrude(self.button_heigth + 0.3)
 
         button = button.faces(">Z").workplane(centerOption='CenterOfBoundBox').center(0, -(button_length_2 + o)).hole(d, self.button_heigth)
         button = button.faces(">Z").workplane(centerOption='CenterOfBoundBox').center(0, button_length_2 + o).hole(d, self.button_heigth)
@@ -140,13 +140,13 @@ class dip_smd_switch_lowprofile (PartBase):
                  .line(w3, 0.0)\
                  .line(0.0, w3)\
                  .line(w3, 0.0)\
-                 .close().extrude(h)
+                 .close().extrude(h + 0.01)
 
-    def make(self):
-        show(self.make_body())
-        show(self.make_pins())
-        show(self.make_buttons())
-        show(self.make_pinmark(self.button_width - (0.1 if self.button_width > 1.0 else 0.0)))
+    # def make(self):
+    #     show(self.make_body())
+    #     show(self.make_pins())
+    #     show(self.make_buttons())
+    #     show(self.make_pinmark(self.button_width - (0.1 if self.button_width > 1.0 else 0.0)))
 
 class dip_smd_switch_lowprofile_jpin (dip_smd_switch_lowprofile):
 
@@ -185,9 +185,9 @@ class dip_smd_switch_lowprofile_jpin (dip_smd_switch_lowprofile):
         # can not be changed 
         #
         if self.num_pins == 2 or self.num_pins == 12 or self.num_pins == 22:
-            return 'SW_DIP_SPSTx' + '{:02d}'.format(self.num_pins / 2) + '_Slide_' + '{:.1f}'.format(self.body_width) + 'x' + '{:.1f}'.format(self.body_length) + 'mm_W6.73mm_P' + '{:.2f}'.format(self.pin_pitch) + 'mm_LowProfile_JPin'
+            return 'SW_DIP_SPSTx' + '{:02d}'.format(int(self.num_pins / 2)) + '_Slide_' + '{:.1f}'.format(self.body_width) + 'x' + '{:.1f}'.format(self.body_length) + 'mm_W6.73mm_P' + '{:.2f}'.format(self.pin_pitch) + 'mm_LowProfile_JPin'
         else:
-            return 'SW_DIP_SPSTx' + '{:02d}'.format(self.num_pins / 2) + '_Slide_' + '{:.1f}'.format(self.body_width) + 'x' + '{:.2f}'.format(self.body_length) + 'mm_W6.73mm_P' + '{:.2f}'.format(self.pin_pitch) + 'mm_LowProfile_JPin'
+            return 'SW_DIP_SPSTx' + '{:02d}'.format(int(self.num_pins / 2)) + '_Slide_' + '{:.1f}'.format(self.body_width) + 'x' + '{:.2f}'.format(self.body_length) + 'mm_W6.73mm_P' + '{:.2f}'.format(self.pin_pitch) + 'mm_LowProfile_JPin'
 
 class dip_smd_switch (dip_smd_switch_lowprofile):
 
@@ -232,15 +232,15 @@ class dip_smd_switch (dip_smd_switch_lowprofile):
         # can not be changed 
         #
         if self.num_pins == 6 or self.num_pins == 16:
-            return 'SW_DIP_SPSTx' + '{:02d}'.format(self.num_pins / 2) + '_Slide_' + '{:.2f}'.format(self.body_width) + 'x' + '{:.1f}'.format(self.body_length) + 'mm_W8.61mm_P' + '{:.2f}'.format(self.pin_pitch) + 'mm'
+            return 'SW_DIP_SPSTx' + '{:02d}'.format(int(self.num_pins / 2)) + '_Slide_' + '{:.2f}'.format(self.body_width) + 'x' + '{:.1f}'.format(self.body_length) + 'mm_W8.61mm_P' + '{:.2f}'.format(self.pin_pitch) + 'mm'
         else:
-            return 'SW_DIP_SPSTx' + '{:02d}'.format(self.num_pins / 2) + '_Slide_' + '{:.2f}'.format(self.body_width) + 'x' + '{:.2f}'.format(self.body_length) + 'mm_W8.61mm_P' + '{:.2f}'.format(self.pin_pitch) + 'mm'
+            return 'SW_DIP_SPSTx' + '{:02d}'.format(int(self.num_pins / 2)) + '_Slide_' + '{:.2f}'.format(self.body_width) + 'x' + '{:.2f}'.format(self.body_length) + 'mm_W8.61mm_P' + '{:.2f}'.format(self.pin_pitch) + 'mm'
 
     def _make_switchpockets(self):
 
         # create first pocket
         pocket = cq.Workplane("XY", origin=(self.first_pin_pos[0], 0.0, 0.0))\
-                   .workplane(offset=self.body_height - 1.0)\
+                   .workplane(centerOption="CenterOfMass", offset=self.body_height - 1.0)\
                    .rect(self.button_width, self.button_base).extrude(1.0)
 
         # union and return all pockets
@@ -252,8 +252,8 @@ class dip_smd_switch (dip_smd_switch_lowprofile):
                  .rect(self.body_length, self.body_width).extrude(self.body_height)\
                  .faces(">Z").cut(self._make_switchpockets())
 
-        body.faces("<Z").rect(self.body_length -1.0, self.body_width).cutBlind(self.body_board_pad_height)
-        body.faces("<Z").rect(self.body_length, self.body_width - 3.0).cutBlind(self.body_board_pad_height)
+        body = body.faces("<Z").workplane(centerOption="CenterOfMass", invert=True).rect(self.body_length -1.0, self.body_width).cutBlind(self.body_board_pad_height)
+        body = body.faces("<Z").workplane(centerOption="CenterOfMass", invert=True).rect(self.body_length, self.body_width - 3.0).cutBlind(self.body_board_pad_height)
 
         ##ok = Draft.makeShapeString("OK",'C:\windows\fonts\arial.ttf', 5)
 
@@ -292,6 +292,6 @@ class dip_smd_switch (dip_smd_switch_lowprofile):
                  .line(w3, 0.0)\
                  .line(0.0, w3)\
                  .line(w3, 0.0)\
-                 .close().extrude(h)
+                 .close().extrude(h + 0.01)
 
 ### EOF ###

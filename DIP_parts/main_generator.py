@@ -1,25 +1,37 @@
-# -*- coding: utf8 -*-
 #!/usr/bin/python
-
-## requirements
-## cadquery FreeCAD plugin
-##   https://github.com/jmwright/cadquery-freecad-module
-
-## to run the script just do: freecad main_generator.py modelName
-## e.g. c:\freecad\bin\freecad main_generator.py DIP8
-
-## the script will generate STEP and VRML parametric models
-## to be used with kicad StepUp script
-
-#* These are a FreeCAD & cadquery tools                                     *
-#* to export generated models in STEP & VRML format.                        *
+# -*- coding: utf-8 -*-
+#
+# This is derived from a cadquery script for generating PDIP models in X3D format
+#
+# from https://bitbucket.org/hyOzd/freecad-macros
+# author hyOzd
+# This is a
+# Dimensions are from Microchips Packaging Specification document:
+# DS00000049BY. Body drawing is the same as QFP generator#
+#
+## Requirements
+## CadQuery 2.1 commit e00ac83f98354b9d55e6c57b9bb471cdf73d0e96 or newer
+## https://github.com/CadQuery/cadquery
+#
+## To run the script just do: ./generator.py --output_dir [output_directory]
+## e.g. ./generator.py --output_dir /tmp
+#
+#* These are cadquery tools to export                                       *
+#* generated models in STEP & VRML format.                                  *
 #*                                                                          *
 #* cadquery script for generating DIP socket models in STEP AP214           *
-#* Copyright (c) 2017 Terje Io https://github.com/terjeio                   *
+#* Copyright (c) 2017                                                       *
+#      Terje Io https://github.com/terjeio                                  *
+#* Copyright (c) 2022                                                       *
+#*     Update 2022                                                          *
+#*     jmwright (https://github.com/jmwright)                               *
+#*     Work sponsored by KiCAD Services Corporation                         *
+#*          (https://www.kipro-pcb.com/)                                    *
+#*                                                                          *
 #* All trademarks within this guide belong to their legitimate owners.      *
 #*                                                                          *
 #*   This program is free software; you can redistribute it and/or modify   *
-#*   it under the terms of the GNU Lesser General Public License (LGPL)     *
+#*   it under the terms of the GNU General Public License (GPL)             *
 #*   as published by the Free Software Foundation; either version 2 of      *
 #*   the License, or (at your option) any later version.                    *
 #*   for detail see the LICENCE text file.                                  *
@@ -36,66 +48,168 @@
 #*                                                                          *
 #****************************************************************************
 
-__title__ = "make assorted DIP part 3D models"
-__author__ = "maurice, hyOzd, Stefan, Terje"
-__Comment__ = 'make make assorted DIP part 3D models exported to STEP and VRML'
+__title__ = "main generator for capacitor tht model generators"
+__author__ = "scripts: maurice, hyOzd, Stefan, Terje; models: see cq_model files; update: jmwright"
+__Comment__ = '''This generator loads cadquery model scripts and generates step/wrl files for the official kicad library.'''
 
-___ver___ = "1.0.0 27/11/2017"
+___ver___ = "2.0.0"
 
-import sys, os
+import os
 
-script_dir  = os.path.dirname(os.path.realpath(__file__))
-scripts_root = script_dir.split(script_dir.split(os.sep)[-1])[0]
+import cadquery as cq
+from _tools import shaderColors, parameters, cq_color_correct
+from _tools import cq_globals
 
-sys.path.append(script_dir)
-sys.path.append(scripts_root + "/_tools")
+from .cq_model_piano_switch import dip_switch_piano, dip_switch_piano_cts
+from .cq_model_socket_turned_pin import dip_socket_turned_pin
+from .cq_model_pin_switch import dip_switch, dip_switch_low_profile
+from .cq_model_smd_switch import dip_smd_switch, dip_smd_switch_lowprofile, dip_smd_switch_lowprofile_jpin
+from .cq_model_smd_switch_copal import dip_switch_copal_CHS_A, dip_switch_copal_CHS_B, dip_switch_copal_CVS
+from .cq_model_smd_switch_omron import dip_switch_omron_a6h, dip_switch_omron_a6s
+from .cq_model_smd_switch_kingtek import dip_switch_kingtek_dshp04tj, dip_switch_kingtek_dshp06ts
 
-from cq_model_generator import All, ModelGenerator
+def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
+    """
+    Main entry point into this generator.
+    """
+    models = []
 
-import cq_parameters
-reload(cq_parameters)
+    all_params = parameters.load_parameters("DIP_parts")
 
-import cq_model_socket_turned_pin
-import cq_model_pin_switch
-import cq_model_piano_switch
-import cq_model_smd_switch
-import cq_model_smd_switch_copal
-import cq_model_smd_switch_omron
-import cq_model_smd_switch_kingtek
-reload(cq_model_socket_turned_pin)
-reload(cq_model_pin_switch)
-reload(cq_model_piano_switch)
-reload(cq_model_smd_switch)
-reload(cq_model_smd_switch_copal)
-reload(cq_model_smd_switch_omron)
-reload(cq_model_smd_switch_kingtek)
+    if all_params == None:
+        print("ERROR: Model parameters must be provided.")
+        return
 
-series = [
- cq_model_socket_turned_pin.dip_socket_turned_pin,
- cq_model_pin_switch.dip_switch,
- cq_model_pin_switch.dip_switch_low_profile,
- cq_model_piano_switch.dip_switch_piano,
- cq_model_piano_switch.dip_switch_piano_cts,
- cq_model_smd_switch.dip_smd_switch,
- cq_model_smd_switch.dip_smd_switch_lowprofile,
- cq_model_smd_switch.dip_smd_switch_lowprofile_jpin,
- cq_model_smd_switch_copal.dip_switch_copal_CHS_A,
- cq_model_smd_switch_copal.dip_switch_copal_CHS_B,
- cq_model_smd_switch_copal.dip_switch_copal_CVS,
- cq_model_smd_switch_omron.dip_switch_omron_a6h,
- cq_model_smd_switch_omron.dip_switch_omron_a6s,
- cq_model_smd_switch_kingtek.dip_switch_kingtek_dshp04tj,
- cq_model_smd_switch_kingtek.dip_switch_kingtek_dshp06ts,
-]
+    # Handle the case where no model has been passed
+    if model_to_build is None:
+        print("No variant name is given! building: {0}".format(model_to_build))
 
-family = All # set to All generate all series
+        model_to_build = all_params.keys()[0]
 
-options = sys.argv[2:] if len(sys.argv) >= 3 else []
-#options = [["list"]]
+    # Handle being able to generate all models or just one
+    if model_to_build == "all":
+        models = all_params
+    else:
+        models = { model_to_build: all_params[model_to_build] }
+    # Step through the selected models
+    for model in models:
+        if output_dir_prefix == None:
+            print("ERROR: An output directory must be provided.")
+            return
+        else:
+            # Construct the final output directory
+            output_dir = os.path.join(output_dir_prefix, all_params[model]['destination_dir'])
 
-gen = ModelGenerator(scripts_root, script_dir, saveToKicad=False)
-#gen.kicadStepUptools = False
-gen.setLicense(ModelGenerator.alt_license)
-gen.makeModels(options, series, family, cq_parameters.params())
+        # Safety check to make sure the selected model is valid
+        if not model in all_params.keys():
+            print("Parameters for %s doesn't exist in 'all_params', skipping." % model)
+            continue
 
-### EOF ###
+        # Load the appropriate colors
+        body_color = shaderColors.named_colors[all_params[model]["body_color_key"]].getDiffuseFloat()
+        pins_color = shaderColors.named_colors[all_params[model]["pin_color_key"]].getDiffuseFloat()
+        button_color = shaderColors.named_colors[all_params[model]["button_color_key"]].getDiffuseFloat()
+        mark_color = shaderColors.named_colors[all_params[model]["mark_color_key"]].getDiffuseFloat()
+
+        # Make a model for each type of DIP part
+        for i in range(0, 15):
+            # Choose the right module/method
+            if i == 0:
+                cqm = dip_switch_piano(all_params[model])
+                offsets = (cqm.pin_rows_distance / 2.0, -(cqm.body_length / 2.0) + 1.40 + cqm.pin_width, cqm.body_board_distance)
+            elif i == 1:
+                cqm = dip_switch_piano_cts(all_params[model])
+                offsets = (cqm.pin_rows_distance / 2.0, -(cqm.body_length / 2.0) + 1.85 + cqm.pin_width, cqm.body_board_distance)
+            elif i == 2:
+                cqm = dip_socket_turned_pin(all_params[model])
+                offsets = cqm.offsets
+            elif i == 3:
+                cqm = dip_switch(all_params[model])
+                offsets = (cqm.pin_rows_distance / 2.0, -(cqm.body_length / 2.0) + 1.80 + cqm.pin_width, cqm.body_board_distance)
+            elif i == 4:
+                cqm = dip_switch_low_profile(all_params[model])
+                offsets = (cqm.pin_rows_distance / 2.0, -(cqm.body_length / 2.0) + 1.50 + cqm.pin_width, cqm.body_board_distance)
+            elif i == 5:
+                cqm = dip_smd_switch(all_params[model])
+                offsets = (0, 0, cqm.pin_thickness / 2.0)
+            elif i == 6:
+                cqm = dip_smd_switch_lowprofile(all_params[model])
+                offsets = (0, 0, cqm.pin_thickness / 2.0)
+            elif i == 7:
+                cqm = dip_smd_switch_lowprofile_jpin(all_params[model])
+                offsets = (0, 0, cqm.pin_thickness / 2.0)
+            elif i == 8:
+                cqm = dip_switch_copal_CHS_A(all_params[model])
+                offsets = (0, 0, cqm.pin_thickness / 2.0)
+            elif i == 9:
+                cqm = dip_switch_copal_CHS_B(all_params[model])
+                offsets = (0, 0, cqm.pin_thickness / 2.0)
+            elif i == 10:
+                cqm = dip_switch_copal_CVS(all_params[model])
+                offsets = (0, 0, cqm.pin_thickness / 2.0)
+            elif i == 11:
+                cqm = dip_switch_omron_a6h(all_params[model])
+                offsets = (0, 0, cqm.pin_thickness / 2.0)
+            elif i == 12:
+                cqm = dip_switch_omron_a6s(all_params[model])
+                offsets = (0, 0, cqm.pin_thickness / 2.0)
+            elif i == 13:
+                cqm = dip_switch_kingtek_dshp04tj(all_params[model])
+                offsets = (0, 0, cqm.pin_thickness / 2.0)
+            elif i == 14:
+                cqm = dip_switch_kingtek_dshp06ts(all_params[model])
+                offsets = (0, 0, cqm.pin_thickness / 2.0)
+
+            # Make the parts of the model
+            body = cqm.make_body()
+            pins = cqm.make_pins()
+            if i != 2:
+                buttons = cqm.make_buttons()
+                mark = cqm.make_pinmark(cqm.button_width + 0.2)
+
+            # Get custom colors
+            body_color = shaderColors.named_colors[cqm.color_keys[0]].getDiffuseFloat()
+
+            # Put the parts in the correct position relative to the pads on the board
+            if i != 2:
+                rotation = 90
+            else:
+                rotation = -90
+            body = body.rotate((0, 0, 0), (0, 0, 1), rotation).translate(offsets)
+            pins = pins.rotate((0, 0, 0), (0, 0, 1), rotation).translate(offsets)
+            if i != 2:
+                buttons = buttons.rotate((0, 0, 0), (0, 0, 1), rotation).translate(offsets)
+                mark = mark.rotate((0, 0, 0), (0, 0, 1), rotation).translate(offsets)
+
+            # Used to wrap all the parts into an assembly
+            component = cq.Assembly()
+
+            # Add the parts to the assembly
+            component.add(body, color=cq_color_correct.Color(body_color[0], body_color[1], body_color[2]))
+            component.add(pins, color=cq_color_correct.Color(pins_color[0], pins_color[1], pins_color[2]))
+            if i != 2:
+                component.add(buttons, color=cq_color_correct.Color(button_color[0], button_color[1], button_color[2]))
+                component.add(mark, color=cq_color_correct.Color(mark_color[0], mark_color[1], mark_color[2]))
+
+            # Create the output directory if it does not exist
+            if not os.path.exists(output_dir):
+                os.makedirs(output_dir)
+
+            # Assemble the filename
+            file_name = cqm.makeModelName(model)
+
+            # Export the assembly to STEP
+            component.save(os.path.join(output_dir, file_name + ".step"), cq.exporters.ExportTypes.STEP, write_pcurves=False)
+
+            # Export the assembly to VRML
+            if enable_vrml:
+                cq.exporters.assembly.exportVRML(component, os.path.join(output_dir, file_name + ".wrl"), tolerance=cq_globals.VRML_DEVIATION, angularTolerance=cq_globals.VRML_ANGULAR_DEVIATION)
+
+            # Update the license
+            from _tools import add_license
+            add_license.addLicenseToStep(output_dir, file_name + ".step",
+                                            add_license.LIST_int_license,
+                                            add_license.STR_int_licAuthor,
+                                            add_license.STR_int_licEmail,
+                                            add_license.STR_int_licOrgSys,
+                                            add_license.STR_int_licPreProc)

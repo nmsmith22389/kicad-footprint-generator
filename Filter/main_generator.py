@@ -1,5 +1,5 @@
-# -*- coding: utf-8 -*-
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
 #
 # This is derived from a cadquery script for generating PDIP models in X3D format
 #
@@ -8,27 +8,30 @@
 # This is a
 # Dimensions are from Microchips Packaging Specification document:
 # DS00000049BY. Body drawing is the same as QFP generator#
-
-## requirements
-## cadquery FreeCAD plugin
-##   https://github.com/jmwright/cadquery-freecad-module
-
-## to run the script just do: freecad main_generator.py modelName
-## e.g. c:\freecad\bin\freecad main_generator.py DIP8
-
-## the script will generate STEP and VRML parametric models
-## to be used with kicad StepUp script
-
-#* These are a FreeCAD & cadquery tools                                     *
-#* to export generated models in STEP & VRML format.                        *
+#
+## Requirements
+## CadQuery 2.1 commit e00ac83f98354b9d55e6c57b9bb471cdf73d0e96 or newer
+## https://github.com/CadQuery/cadquery
+#
+## To run the script just do: ./generator.py --output_dir [output_directory]
+## e.g. ./generator.py --output_dir /tmp
+#
+#* These are cadquery tools to export                                       *
+#* generated models in STEP & VRML format.                                  *
 #*                                                                          *
 #* cadquery script for generating QFP/SOIC/SSOP/TSSOP models in STEP AP214  *
-#*   Copyright (c) 2015                                                     *
-#* Maurice https://launchpad.net/~easyw                                     *
+#* Copyright (c) 2015                                                       *
+#*     Maurice https://launchpad.net/~easyw                                 *
+#* Copyright (c) 2022                                                       *
+#*     Update 2022                                                          *
+#*     jmwright (https://github.com/jmwright)                               *
+#*     Work sponsored by KiCAD Services Corporation                         *
+#*          (https://www.kipro-pcb.com/)                                    *
+#*                                                                          *
 #* All trademarks within this guide belong to their legitimate owners.      *
 #*                                                                          *
 #*   This program is free software; you can redistribute it and/or modify   *
-#*   it under the terms of the GNU Lesser General Public License (LGPL)     *
+#*   it under the terms of the GNU General Public License (GPL)             *
 #*   as published by the Free Software Foundation; either version 2 of      *
 #*   the License, or (at your option) any later version.                    *
 #*   for detail see the LICENCE text file.                                  *
@@ -45,185 +48,111 @@
 #*                                                                          *
 #****************************************************************************
 
-__title__ = "make Valve 3D models"
-__author__ = "Stefan, based on Valve script"
-__Comment__ = 'make varistor 3D models exported to STEP and VRML for Kicad StepUP script'
+__title__ = "main generator for making DirecFETs 3D models exported to STEP and VRML"
+__author__ = "scripts: maurice; models: see cq_model files; update: jmwright"
+__Comment__ = '''This generator loads cadquery model scripts and generates step/wrl files for the official kicad library.'''
 
-___ver___ = "1.3.3 14/08/2015"
+___ver___ = "2.0.0"
 
-# maui import cadquery as cq
-# maui from Helpers import show
-from collections import namedtuple
+import os
 
-import math
-import sys, os
-import datetime
-from datetime import datetime
-sys.path.append("../_tools")
-import exportPartToVRML as expVRML
-import shaderColors
+import cadquery as cq
+from _tools import shaderColors, parameters, cq_color_correct
+from _tools import cq_globals
 
+from .cq_kyocera import cq_kyocera
+from .cq_murata import cq_murata
+from .cq_minicircuit import cq_minicircuit
 
-# maui start
-import FreeCAD, Draft, FreeCADGui
-import ImportGui
-import FreeCADGui as Gui
-#from Gui.Command import *
+def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
+    """
+    Main entry point into this generator.
+    """
+    models = []
 
+    all_params = parameters.load_parameters("Filter")
 
-outdir=os.path.dirname(os.path.realpath(__file__) + os.sep + '..' + os.sep + '_3Dmodels')
-scriptdir=os.path.dirname(os.path.realpath(__file__))
-sys.path.append(outdir)
-sys.path.append(scriptdir)
-if FreeCAD.GuiUp:
-    from PySide import QtCore, QtGui
+    if all_params == None:
+        print("ERROR: Model parameters must be provided.")
+        return
 
-# Licence information of the generated models.
-#################################################################################################
-STR_licAuthor = "kicad StepUp"
-STR_licEmail = "ksu"
-STR_licOrgSys = "kicad StepUp"
-STR_licPreProc = "OCC"
-STR_licOrg = "FreeCAD"
+    # Handle the case where no model has been passed
+    if model_to_build is None:
+        print("No variant name is given! building: {0}".format(model_to_build))
 
+        model_to_build = all_params.keys()[0]
 
-#################################################################################################
-
-
-
-
-import cq_kyocera  # modules parameters
-from cq_kyocera import *
-
-import cq_murata  # modules parameters
-from cq_murata import *
-
-import cq_minicircuit  # modules parameters
-from cq_minicircuit import *
-
-
-different_models = [
-    cq_kyocera(),
-    cq_murata(),
-    cq_minicircuit(),
-]
-
-
-
-
-
-def make_3D_model(models_dir, model_class, modelID):
-
-    LIST_license = ["",]
-
-    CheckedmodelName = 'A_' + modelID.replace('.', '').replace('-', '_').replace('(', '').replace(')', '')
-    CheckedmodelName = CheckedmodelName
-    Newdoc = App.newDocument(CheckedmodelName)
-    App.setActiveDocument(CheckedmodelName)
-    Gui.ActiveDocument=Gui.getDocument(CheckedmodelName)
-    destination_dir = model_class.get_dest_3D_dir(modelID)
-
-    material_substitutions = model_class.make_3D_model(modelID)
-    modelName = model_class.get_model_name(modelID)
-    
-    doc = FreeCAD.ActiveDocument
-    doc.Label = CheckedmodelName
-
-    objs=GetListOfObjects(FreeCAD, doc)
-    objs[0].Label = CheckedmodelName
-    restore_Main_Tools()
-
-    script_dir=os.path.dirname(os.path.realpath(__file__))
-    expVRML.say(models_dir)
-    out_dir=models_dir+os.sep+destination_dir
-    if not os.path.exists(out_dir):
-        os.makedirs(out_dir)
-
-    exportSTEP(doc, modelName, out_dir)
-    if LIST_license[0]=="":
-        LIST_license=Lic.LIST_int_license
-        LIST_license.append("")
-    Lic.addLicenseToStep(out_dir + os.sep, modelName+".step", LIST_license,\
-                       STR_licAuthor, STR_licEmail, STR_licOrgSys, STR_licOrg, STR_licPreProc)
-
-    # scale and export Vrml model
-    scale=1/2.54
-    #exportVRML(doc,modelName,scale,out_dir)
-    del objs
-    objs=GetListOfObjects(FreeCAD, doc)
-    expVRML.say("######################################################################")
-    expVRML.say(objs)
-    expVRML.say("######################################################################")
-    export_objects, used_color_keys = expVRML.determineColors(Gui, objs, material_substitutions)
-    export_file_name=out_dir+os.sep+modelName+'.wrl'
-    colored_meshes = expVRML.getColoredMesh(Gui, export_objects , scale)
-    #expVRML.writeVRMLFile(colored_meshes, export_file_name, used_color_keys)# , LIST_license
-    expVRML.writeVRMLFile(colored_meshes, export_file_name, used_color_keys, LIST_license)
-    #scale=0.3937001
-    #exportVRML(doc,modelName,scale,out_dir)
-    # Save the doc in Native FC format
-    saveFCdoc(App, Gui, doc, modelName,out_dir)
-    #display BBox
-    Gui.activateWorkbench("PartWorkbench")
-    Gui.SendMsgToActiveView("ViewFit")
-    Gui.activeDocument().activeView().viewAxometric()
-    #FreeCADGui.ActiveDocument.activeObject.BoundingBox = True
-
-
-def run():
-    ## # get variant names from command line
-
-    return
-
-#import step_license as L
-import add_license as Lic
-
-# when run from command line
-if __name__ == "__main__" or __name__ == "main_generator":
-
-    FreeCAD.Console.PrintMessage('\r\nRunning...\r\n')
-
-    full_path=os.path.realpath(__file__)
-    expVRML.say(full_path)
-    scriptdir=os.path.dirname(os.path.realpath(__file__))
-    expVRML.say(scriptdir)
-    sub_path = full_path.split(scriptdir)
-    expVRML.say(sub_path)
-    sub_dir_name =full_path.split(os.sep)[-2]
-    expVRML.say(sub_dir_name)
-    sub_path = full_path.split(sub_dir_name)[0]
-    expVRML.say(sub_path)
-    models_dir=sub_path+"_3Dmodels"
-
-    model_to_build = ''
-    if len(sys.argv) < 3:
-        FreeCAD.Console.PrintMessage('No variant name is given, add a valid model name as an argument or the argument "all"\r\n')
-        sys.exit()
+    # Handle being able to generate all models or just one
+    if model_to_build == "all":
+        models = all_params
     else:
-        model_to_build=sys.argv[2]
-    
-    found_one = False
-    if len(model_to_build) > 0:
-        if model_to_build == 'all' or model_to_build == 'All' or model_to_build == 'ALL':
-            found_one = True
-            for n in different_models:
-                listall = n.get_list_all()
-                for i in listall:
-                    make_3D_model(models_dir, n, i)
-                    
-        elif model_to_build == 'list':
-                found_one = True
-                FreeCAD.Console.PrintMessage('\r\n')
-                for n in different_models:
-                    listall = n.get_list_all()
-                    for i in listall:
-                        FreeCAD.Console.PrintMessage(i + '\r\n')
-            
+        models = { model_to_build: all_params[model_to_build] }
+    # Step through the selected models
+    for model in models:
+        if output_dir_prefix == None:
+            print("ERROR: An output directory must be provided.")
+            return
         else:
-            for n in different_models:
-                if n.model_exist(model_to_build):
-                    found_one = True
-                    make_3D_model(models_dir, n, model_to_build)
-        
-        if not found_one:
-            print("Parameters for %s doesn't exist, skipping. " % model_to_build)
+            # Construct the final output directory
+            output_dir = os.path.join(output_dir_prefix, all_params[model]['destination_dir'])
+
+        # Safety check to make sure the selected model is valid
+        if not model in all_params.keys():
+            print("Parameters for %s doesn't exist in 'all_params', skipping." % model)
+            continue
+
+        # Load the appropriate colors
+        body_color = shaderColors.named_colors[all_params[model]["body_color_key"]].getDiffuseFloat()
+        pin_color = shaderColors.named_colors[all_params[model]["pin_color_key"]].getDiffuseFloat()
+        body_top_color = shaderColors.named_colors[all_params[model]["body_top_color_key"]].getDiffuseFloat()
+        nth_pin_color = shaderColors.named_colors[all_params[model]["npth_pin_color_key"]].getDiffuseFloat()
+
+        # Choose the right model file
+        if all_params[model]['type'] == 'kyocera':
+            cqm = cq_kyocera()
+        elif all_params[model]['type'] == 'murata':
+            cqm = cq_murata()
+        elif all_params[model]['type'] == 'minicircuit':
+            cqm = cq_minicircuit()
+
+        # Set the rotation and translation of the models
+        cqm.set_rotation(all_params[model])
+        cqm.set_translate(all_params[model])
+
+        # Make the parts of the model
+        body = cqm.make_body(all_params[model])
+        body_top = cqm.make_top(all_params[model])
+        pins = cqm.make_pin(all_params[model])
+        npth_pins = cqm.make_npth_pin(all_params[model])
+
+        # Used to wrap all the parts into an assembly
+        component = cq.Assembly()
+
+        # Add the parts to the assembly
+        component.add(body, color=cq_color_correct.Color(body_color[0], body_color[1], body_color[2]))
+        component.add(body_top, color=cq_color_correct.Color(body_top_color[0], body_top_color[1], body_top_color[2]))
+        component.add(pins, color=cq_color_correct.Color(pin_color[0], pin_color[1], pin_color[2]))
+        component.add(npth_pins, color=cq_color_correct.Color(nth_pin_color[0], nth_pin_color[1], nth_pin_color[2]))
+
+        # Create the output directory if it does not exist
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
+
+        # Assemble the filename
+        file_name = all_params[model]['model_name']
+
+        # Export the assembly to STEP
+        component.save(os.path.join(output_dir, file_name + ".step"), cq.exporters.ExportTypes.STEP, write_pcurves=False)
+
+        # Export the assembly to VRML
+        if enable_vrml:
+            cq.exporters.assembly.exportVRML(component, os.path.join(output_dir, file_name + ".wrl"), tolerance=cq_globals.VRML_DEVIATION, angularTolerance=cq_globals.VRML_ANGULAR_DEVIATION)
+
+        # Update the license
+        from _tools import add_license
+        add_license.addLicenseToStep(output_dir, file_name + ".step",
+                                        add_license.LIST_int_license,
+                                        add_license.STR_int_licAuthor,
+                                        add_license.STR_int_licEmail,
+                                        add_license.STR_int_licOrgSys,
+                                        add_license.STR_int_licPreProc)

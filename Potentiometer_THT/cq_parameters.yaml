@@ -10,7 +10,13 @@ Bourns_3005:
   screw: ['lefttop', 1.52, 3.0, 0.76, 5.54]
   rotation: 0
   pinmark: False
+  body_color_key: 'blue body'
+  pin_color_key: 'metal grey pins'
+  top_color_key: 'metal copper'
+  pinmark_color_key: 'green body'
+  destination_dir: 'Potentiometer_THT.3dshapes'
   source: 'https://www.bourns.com/pdfs/3005.pdf'
+
 Bourns_3006P:
   package_type: 'Bourns_3005'
   file_name: 'Potentiometer_Bourns_3006P_Horizontal'
@@ -23,7 +29,13 @@ Bourns_3006P:
   screw: ['lefttop', 1.52, 2.36, 0.79, 4.70]
   rotation: 0
   pinmark: False
+  body_color_key: 'blue body'
+  pin_color_key: 'metal grey pins'
+  top_color_key: 'metal copper'
+  pinmark_color_key: 'green body'
+  destination_dir: 'Potentiometer_THT.3dshapes'
   source: 'https://www.bourns.com/pdfs/3006.pdf'
+
 Bourns_3006W:
   package_type: 'Bourns_3005'
   file_name: 'Potentiometer_Bourns_3006W_Horizontal'
@@ -36,7 +48,13 @@ Bourns_3006W:
   screw: ['lefttop', 1.52, 2.36, 0.79, 4.70]
   rotation: 0
   pinmark: False
+  body_color_key: 'blue body'
+  pin_color_key: 'metal grey pins'
+  top_color_key: 'metal copper'
+  pinmark_color_key: 'green body'
+  destination_dir: 'Potentiometer_THT.3dshapes'
   source: 'https://www.bourns.com/pdfs/3006.pdf'
+
 Bourns_3006Y:
   package_type: 'Bourns_3005'
   file_name: 'Potentiometer_Bourns_3006Y_Horizontal'
@@ -49,7 +67,13 @@ Bourns_3006Y:
   screw: ['lefttop', 1.52, 2.36, 0.79, 4.70]
   rotation: 0
   pinmark: False
+  body_color_key: 'blue body'
+  pin_color_key: 'metal grey pins'
+  top_color_key: 'metal copper'
+  pinmark_color_key: 'green body'
+  destination_dir: 'Potentiometer_THT.3dshapes'
   source: 'https://www.bourns.com/pdfs/3006.pdf'
+
 Bourns_3009P:
   package_type: 'Bourns_3005'
   file_name: 'Potentiometer_Bourns_3009P_Horizontal'
@@ -62,7 +86,13 @@ Bourns_3009P:
   screw: ['lefttop', 1.52, 2.36, 0.79, 6.98]
   rotation: 0
   pinmark: False
+  body_color_key: 'blue body'
+  pin_color_key: 'metal grey pins'
+  top_color_key: 'metal copper'
+  pinmark_color_key: 'green body'
+  destination_dir: 'Potentiometer_THT.3dshapes'
   source: 'https://www.bourns.com/pdfs/3009.pdf'
+
 Bourns_3009Y:
   package_type: 'Bourns_3005'
   file_name: 'Potentiometer_Bourns_3009Y_Horizontal'
@@ -75,7 +105,13 @@ Bourns_3009Y:
   screw: ['lefttop', 1.52, 2.36, 0.79, 6.98]
   rotation: 0
   pinmark: False
+  body_color_key: 'blue body'
+  pin_color_key: 'metal grey pins'
+  top_color_key: 'metal copper'
+  pinmark_color_key: 'green body'
+  destination_dir: 'Potentiometer_THT.3dshapes'
   source: 'https://www.bourns.com/pdfs/3009.pdf'
+
 Bourns_3299P:
   package_type: 'Bourns_3299P'
   file_name: 'Potentiometer_Bourns_3299P_Horizontal'
@@ -88,7 +124,13 @@ Bourns_3299P:
   screw: ['lefttop', 1.52, 2.0, 0.64, 5.01, 3.645]
   rotation: 0
   pinmark: False
+  body_color_key: 'blue body'
+  pin_color_key: 'metal grey pins'
+  top_color_key: 'metal copper'
+  pinmark_color_key: 'green body'
+  destination_dir: 'Potentiometer_THT.3dshapes'
   source: 'https://www.bourns.com/pdfs/3009.pdf'
+
 Bourns_3299W:
   package_type: 'Bourns_3299W'
   file_name: 'Potentiometer_Bourns_3299W_Vertical'
@@ -101,7 +143,13 @@ Bourns_3299W:
   screw: ['lefttop', 1.52, 2.0, 0.64, 5.01, 1.12]
   rotation: 0
   pinmark: False
+  body_color_key: 'blue body'
+  pin_color_key: 'metal grey pins'
+  top_color_key: 'metal copper'
+  pinmark_color_key: 'green body'
+  destination_dir: 'Potentiometer_THT.3dshapes'
   source: 'https://www.bourns.com/pdfs/3009.pdf'
+
 Bourns_3299X:
   package_type: 'Bourns_3299X'
   file_name: 'Potentiometer_Bourns_3299X_Horizontal'
@@ -114,7 +162,13 @@ Bourns_3299X:
   screw: ['lefttop', 1.52, 2.0, 0.64, 5.01, 1.12]
   rotation: 0
   pinmark: False
+  body_color_key: 'blue body'
+  pin_color_key: 'metal grey pins'
+  top_color_key: 'metal copper'
+  pinmark_color_key: 'green body'
+  destination_dir: 'Potentiometer_THT.3dshapes'
   source: 'https://www.bourns.com/pdfs/3009.pdf'
+
 Bourns_3299Y:
   package_type: 'Bourns_3299Y'
   file_name: 'Potentiometer_Bourns_3299Y_Vertical'
@@ -127,7 +181,13 @@ Bourns_3299Y:
   screw: ['lefttop', 1.52, 2.0, 0.64, 5.01, 1.12]
   rotation: 0
   pinmark: False
+  body_color_key: 'blue body'
+  pin_color_key: 'metal grey pins'
+  top_color_key: 'metal copper'
+  pinmark_color_key: 'green body'
+  destination_dir: 'Potentiometer_THT.3dshapes'
   source: 'https://www.bourns.com/pdfs/3009.pdf'
+
 Bourns_3299Z:
   package_type: 'Bourns_3299Z'
   file_name: 'Potentiometer_Bourns_3299Z_Horizontal'
@@ -140,4 +200,9 @@ Bourns_3299Z:
   screw: ['lefttop', 1.52, 2.0, 0.64, 5.01, 1.12]
   rotation: 0
   pinmark: False
+  body_color_key: 'blue body'
+  pin_color_key: 'metal grey pins'
+  top_color_key: 'metal copper'
+  pinmark_color_key: 'green body'
+  destination_dir: 'Potentiometer_THT.3dshapes'
   source: 'https://www.bourns.com/pdfs/3009.pdf'

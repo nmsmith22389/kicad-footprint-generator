@@ -1,29 +1,33 @@
-# -*- coding: utf8 -*-
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
 #
-# This was originaly derived from a cadquery script for generating PDIP models in X3D format
+# This is derived from a cadquery script for generating PDIP models in X3D format
+#
 # from https://bitbucket.org/hyOzd/freecad-macros
 # author hyOzd
 #
-# Adapted by easyw for step and vrlm export
-# See https://github.com/easyw/kicad-3d-models-in-freecad
-
-## requirements
-## cadquery FreeCAD plugin
-##   https://github.com/jmwright/cadquery-freecad-module
-
-## to run the script just do: freecad scriptName modelName
-## e.g. FreeCAD main_generator.py all
-
-## the script will generate STEP and VRML parametric models
-## to be used with kicad StepUp script
-
-#* These are FreeCAD & cadquery tools                                       *
-#* to export generated models in STEP & VRML format.                        *
+# Dimensions are from Microchips Packaging Specification document:
+# DS00000049BY. Body drawing is the same as QFP generator#
+#
+## Requirements
+## CadQuery 2.1 commit e00ac83f98354b9d55e6c57b9bb471cdf73d0e96 or newer
+## https://github.com/CadQuery/cadquery
+#
+## To run the script just do: ./generator.py --output_dir [output_directory]
+## e.g. ./generator.py --output_dir /tmp
+#
+#* These are cadquery tools to export                                       *
+#* generated models in STEP & VRML format.                                  *
 #*                                                                          *
-#* cadquery script for generating JST-XH models in STEP AP214               *
-#*   Copyright (c) 2016                                                     *
-#* Rene Poeschl https://github.com/poeschlr                                 *
+#* cadquery script for generating QFP/SOIC/SSOP/TSSOP models in STEP AP214  *
+#* Copyright (c) 2015                                                       *
+#*     Maurice https://launchpad.net/~easyw                                 *
+#* Copyright (c) 2022                                                       *
+#*     Update 2022                                                          *
+#*     jmwright (https://github.com/jmwright)                               *
+#*     Work sponsored by KiCAD Services Corporation                         *
+#*          (https://www.kipro-pcb.com/)                                    *
+#*                                                                          *
 #* All trademarks within this guide belong to their legitimate owners.      *
 #*                                                                          *
 #*   This program is free software; you can redistribute it and/or modify   *
@@ -44,362 +48,170 @@
 #*                                                                          *
 #****************************************************************************
 
-__title__ = "make 3D models of phoenix contact connectors (MSTB and MC series)."
-__author__ = "scripts: maurice and hyOzd; models: poeschlr"
-__Comment__ = '''make 3D models of phoenix contact types MSTB and MC.'''
+__title__ = "make Altech connector 3D models exported to STEP and VRML"
+__author__ = "scripts: Stefan; models: see cq_model files; update: jmwright"
+__Comment__ = '''This generator loads cadquery model scripts and generates step/wrl files for the official kicad library.'''
 
-___ver___ = "1.2 03/12/2017"
+___ver___ = "2.0.0"
 
-import sys, os
-import traceback
+import os
 
-import datetime
-from datetime import datetime
-sys.path.append("../_tools")
-import exportPartToVRML as expVRML
-import shaderColors
-import re, fnmatch
-import yaml
+import cadquery as cq
+from _tools import shaderColors, parameters, cq_color_correct
+from _tools import cq_globals
 
-save_memory = True #reducing memory consuming for all generation params
-check_Model = True
-stop_on_first_error = True
-check_log_file = 'check-log.md'
-global_3dpath = '../_3Dmodels/'
+from .cq_models.conn_phoenix_mkds import make_case_MKDS_1_5_10_5_08, make_pins_MKDS_1_5_10_5_08
+from .cq_models.conn_phoenix_mc import generate_part as generate_part_mc
+from .cq_models.conn_phoenix_mstb import generate_part as generate_part_mstb
 
-# Licence information of the generated models.
-#################################################################################################
-STR_licAuthor = "Rene Poeschl"
-STR_licEmail = "poeschlr@gmail.com"
-STR_licOrgSys = ""
-STR_licPreProc = ""
+def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
+    """
+    Main entry point into this generator.
+    """
+    models = []
 
-LIST_license = ["",]
-#################################################################################################
+    all_params = parameters.load_parameters("phoenix_contact")
 
-body_color_key = "green body"
-body_color = shaderColors.named_colors[body_color_key].getDiffuseInt()
-pins_color_key = "metal grey pins"
-pins_color = shaderColors.named_colors[pins_color_key].getDiffuseInt()
-insert_color_key = "gold pins"
-insert_color = shaderColors.named_colors[insert_color_key].getDiffuseInt()
-screw_color_key = "metal grey pins"
-screw_color = shaderColors.named_colors[screw_color_key].getDiffuseInt()
-
-if FreeCAD.GuiUp:
-    from PySide import QtCore, QtGui
-
-#checking requirements
-#######################################################################
-try:
-    # Gui.SendMsgToActiveView("Run")
-#    from Gui.Command import *
-    Gui.activateWorkbench("CadQueryWorkbench")
-    import cadquery as cq
-    from Helpers import show
-    # CadQuery Gui
-except Exception as e: # catch *all* exceptions
-    print(e)
-    msg = "missing CadQuery 0.3.0 or later Module!\r\n\r\n"
-    msg += "https://github.com/jmwright/cadquery-freecad-module/wiki\n"
-    if QtGui is not None:
-        reply = QtGui.QMessageBox.information(None,"Info ...",msg)
-
-#######################################################################
-from Gui.Command import *
-
-# Import cad_tools
-#sys.path.append("../")
-from cqToolsExceptions import *
-import cq_cad_tools
-# Reload tools
-reload(cq_cad_tools)
-# Explicitly load all needed functions
-from cq_cad_tools import GetListOfObjects, restore_Main_Tools,\
- exportSTEP, close_CQ_Example, saveFCdoc, z_RotateObject, multiFuseObjs_wColors,\
- runGeometryCheck
-
-try:
-    close_CQ_Example(App, Gui)
-except:
-    FreeCAD.Console.PrintMessage("can't close example.")
-
-from math import sqrt
-from collections import namedtuple
-#import FreeCAD, Draft, FreeCADGui
-import ImportGui
-
-sys.path.append("cq_models")
-import conn_phoenix_mstb as MSTB
-import conn_phoenix_mc as MC
-
-import add_license as L
-
-if LIST_license[0]=="":
-    LIST_license=L.LIST_int_license
-    LIST_license.append("")
-
-def export_one_part(modul, variant, configuration, log, with_plug=False):
-    if not variant in modul.all_params:
-        FreeCAD.Console.PrintMessage("Parameters for %s doesn't exist in 'M.all_params', skipping." % variant)
+    if all_params == None:
+        print("ERROR: Model parameters must be provided.")
         return
-    LIST_license[0] = "Copyright (C) "+datetime.now().strftime("%Y")+", " + STR_licAuthor
 
-    params = modul.all_params[variant]
-    series_params = modul.seriesParams
-    series = series_params.series_name
+    # Handle the case where no model has been passed
+    if model_to_build is None:
+        print("No variant name is given! building: {0}".format(model_to_build))
 
-    subseries, connector_style = params.series_name.split('-')
-    pitch_mpn = '-{:g}'.format(params.pin_pitch)
-    if series[0] == 'MSTB':
-        pitch_mpn = ''
-        if params.pin_pitch == 5.08:
-            pitch_mpn = '-5,08'
-        elif params.pin_pitch == 7.62:
-            pitch_mpn = '-7,62'
-    lib_name = configuration['lib_name_format_str'].format(series=series[0], style=series[1], pitch=params.pin_pitch)
-    mpn = configuration['mpn_format_string'].format(subseries=subseries, style = connector_style,
-        rating=series[1], num_pins=params.num_pins, pitch=pitch_mpn)
-    FileName = configuration['fp_name_format_string'].format(man = configuration['manufacturer'],
-        series = series[0], mpn = mpn, num_rows = 1,
-        num_pins = params.num_pins, pitch = params.pin_pitch,
-        orientation = configuration['orientation_str'][1] if params.angled else configuration['orientation_str'][0],
-        flanged = configuration['flanged_str'][1] if params.flanged else configuration['flanged_str'][0],
-        mount_hole = configuration['mount_hole_str'][1] if params.mount_hole else configuration['mount_hole_str'][0])
+        model_to_build = all_params.keys()[0]
 
-    destination_dir=global_3dpath+lib_name
-    if with_plug:
-        destination_dir += "__with_plug"
-    destination_dir+=".3dshapes"
+    # Handle being able to generate all models or just one
+    if model_to_build == "all":
+        models = all_params
+    else:
+        models = { model_to_build: all_params[model_to_build] }
+    # Step through the selected models
+    for model in models:
+        if output_dir_prefix == None:
+            print("ERROR: An output directory must be provided.")
+            return
+        else:
+            # Construct the final output directory
+            output_dir = os.path.join(output_dir_prefix, all_params[model]['destination_dir'])
 
-    ModelName = variant
-    ModelName = ModelName.replace(".","_")
-    Newdoc = FreeCAD.newDocument(ModelName)
-    App.setActiveDocument(ModelName)
-    App.ActiveDocument=App.getDocument(ModelName)
-    Gui.ActiveDocument=Gui.getDocument(ModelName)
-    #App.setActiveDocument(ModelName)
-    #Gui.ActiveDocument=Gui.getDocument(ModelName)
-    (pins, body, insert, mount_screw, plug, plug_screws) = modul.generate_part(variant, with_plug)
+        # Safety check to make sure the selected model is valid
+        if not model in all_params.keys():
+            print("Parameters for %s doesn't exist in 'all_params', skipping." % model)
+            continue
 
-    color_attr = body_color + (0,)
-    show(body, color_attr)
+        # Load the appropriate colors
+        body_color = shaderColors.named_colors[all_params[model]["body_color_key"]].getDiffuseFloat()
+        pin_color = shaderColors.named_colors[all_params[model]["pin_color_key"]].getDiffuseFloat()
 
-    color_attr = pins_color + (0,)
-    show(pins, color_attr)
+        # Convert the number of pins to an array of one if there is only one pin
+        num_pins_list = [all_params[model]['num_pins']] if type(all_params[model]['num_pins']).__name__ == "int" else all_params[model]['num_pins']
+        for num_pins in num_pins_list:
+            # Used to wrap all the parts into an assembly
+            component = cq.Assembly()
 
-    if insert is not None:
-        color_attr = insert_color + (0,)
-        show(insert, color_attr)
-    if mount_screw is not None:
-        color_attr = screw_color + (0,)
-        show(mount_screw, color_attr)
-    if plug is not None:
-        color_attr = body_color + (0,)
-        show(plug, color_attr)
+            if model == 'AK300' or model == 'MKDS_1_5':
+                # Make the parts of the model
+                body = make_case_MKDS_1_5_10_5_08(all_params[model], num_pins)
+                pins = make_pins_MKDS_1_5_10_5_08(all_params[model], num_pins)
+                body = body.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
+                pins = pins.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
 
-        color_attr = screw_color + (0,)
-        show(plug_screws, color_attr)
+                # Add the parts to the assembly
+                component.add(body, color=cq_color_correct.Color(body_color[0], body_color[1], body_color[2]))
+                component.add(pins, color=cq_color_correct.Color(pin_color[0], pin_color[1], pin_color[2]))
+            elif model.startswith("MC"):
+                # Grab the extra colors from the parameters
+                insert_color = shaderColors.named_colors[all_params[model]["insert_color_key"]].getDiffuseFloat()
+                screw_color = shaderColors.named_colors[all_params[model]["screw_color_key"]].getDiffuseFloat()
 
-    doc = FreeCAD.ActiveDocument
-    doc.Label=ModelName
-    objs=FreeCAD.ActiveDocument.Objects
-    FreeCAD.Console.PrintMessage(objs)
+                (pins, body, insert, mount_screw, plug, plug_screws) = generate_part_mc(all_params[model], num_pins)
 
-    i=0
-    objs[i].Label = ModelName + "__body"
-    i+=1
-    objs[i].Label = ModelName + "__pins"
-    i+=1
-    if insert is not None:
-        objs[i].Label = ModelName + "__thread_insert"
-        i+=1
-    if mount_screw is not None:
-        objs[i].Label = ModelName + "__mount_screw"
-        i+=1
-    if plug is not None:
-        objs[i].Label = ModelName + "__plug"
-        i+=1
-        objs[i].Label = ModelName + "__plug_screws"
-    restore_Main_Tools()
+                body = body.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation']).translate((0, -3.0, 3.0))
+                pins = pins.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
+                if insert != None:
+                    insert = insert.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
+                if mount_screw != None:
+                    mount_screw = mount_screw.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
 
-    out_dir=destination_dir
-    if not os.path.exists(out_dir):
-        os.makedirs(out_dir)
+                # Add the parts to the assembly
+                component.add(body, color=cq_color_correct.Color(body_color[0], body_color[1], body_color[2]))
+                component.add(pins, color=cq_color_correct.Color(pin_color[0], pin_color[1], pin_color[2]))
+                if insert != None:
+                    component.add(insert, color=cq_color_correct.Color(insert_color[0], insert_color[1], insert_color[2]))
+                if mount_screw != None:
+                    component.add(mount_screw, color=cq_color_correct.Color(screw_color[0], screw_color[1], screw_color[2]))
+                # if plug != None:
+                #     component.add(plug, color=cq_color_correct.Color(screw_color[0], screw_color[1], screw_color[2]))
+                # if plug_screws != None:
+                #     component.add(plug_screws, color=cq_color_correct.Color(screw_color[0], screw_color[1], screw_color[2]))
+            elif model.startswith("MSTB") or model.startswith("GMSTB"):
+                # Grab the extra colors from the parameters
+                insert_color = shaderColors.named_colors[all_params[model]["insert_color_key"]].getDiffuseFloat()
+                screw_color = shaderColors.named_colors[all_params[model]["screw_color_key"]].getDiffuseFloat()
 
-    used_color_keys = [body_color_key, pins_color_key]
-    export_file_name=destination_dir+os.sep+FileName+'.wrl'
+                (pins, body, insert, mount_screw, plug, plug_screws) = generate_part_mstb(all_params[model], num_pins)
+                # print(pins)
+                # Rotate and translate parts so they end up in the correct location/orientation
+                body = body.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
+                if model.startswith("MSTB"):
+                    body = body.translate((0, -3.0, 3.0))
+                pins = pins.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
+                if insert != None:
+                    insert = insert.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
+                if mount_screw != None:
+                    mount_screw = mount_screw.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
+                # if plug != None:
+                #     plug = plug.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
+                # if plug_screws != None:
+                #     plug_screws = plug_screws.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
 
-    export_objects = []
-    i=0
-    export_objects.append(expVRML.exportObject(freecad_object = objs[i],
-            shape_color=body_color_key,
-            face_colors=None))
-    i+=1
-    export_objects.append(expVRML.exportObject(freecad_object = objs[i],
-            shape_color=pins_color_key,
-            face_colors=None))
-    i+=1
-    if insert is not None:
-        export_objects.append(expVRML.exportObject(freecad_object = objs[i],
-                shape_color=insert_color_key,
-                face_colors=None))
-        used_color_keys.append(insert_color_key)
-        i+=1
-    if mount_screw is not None:
-        export_objects.append(expVRML.exportObject(freecad_object = objs[i],
-                shape_color=screw_color_key,
-                face_colors=None))
-        used_color_keys.append(screw_color_key)
-        i+=1
-    if plug is not None:
-        export_objects.append(expVRML.exportObject(freecad_object = objs[i],
-                shape_color=body_color_key,
-                face_colors=None))
-        i+=1
-        export_objects.append(expVRML.exportObject(freecad_object = objs[i],
-                shape_color=screw_color_key,
-                face_colors=None))
-    scale=1/2.54
-    colored_meshes = expVRML.getColoredMesh(Gui, export_objects , scale)
-    expVRML.writeVRMLFile(colored_meshes, export_file_name, used_color_keys, LIST_license)
+                # Add the parts to the assembly
+                component.add(body, color=cq_color_correct.Color(body_color[0], body_color[1], body_color[2]))
+                component.add(pins, color=cq_color_correct.Color(pin_color[0], pin_color[1], pin_color[2]))
+                if insert != None:
+                    component.add(insert, color=cq_color_correct.Color(insert_color[0], insert_color[1], insert_color[2]))
+                if mount_screw != None:
+                    component.add(mount_screw, color=cq_color_correct.Color(screw_color[0], screw_color[1], screw_color[2]))
+                # if plug != None:
+                #     component.add(plug, color=cq_color_correct.Color(screw_color[0], screw_color[1], screw_color[2]))
+                # if plug_screws != None:
+                #     component.add(plug_screws, color=cq_color_correct.Color(screw_color[0], screw_color[1], screw_color[2]))
 
-    fusion = multiFuseObjs_wColors(FreeCAD, FreeCADGui,
-                     ModelName, objs, keepOriginals=True)
+            # Create the output directory if it does not exist
+            if not os.path.exists(output_dir):
+                os.makedirs(output_dir)
 
-    exportSTEP(doc,FileName,out_dir,fusion)
+            # Assemble the filename
+            file_name = all_params[model]['file_name'].format(
+                pin_num = num_pins,
+                pad_pin_num = "0" + str(num_pins) if num_pins < 10 else str(num_pins),
+                row_num = 1,
+                pitch = all_params[model]['pin_pitch'],
+                comma_pitch = str(all_params[model]['pin_pitch']).replace('.', ','),
+                pad_pitch = all_params[model]['pin_pitch'] if len(str(all_params[model]['pin_pitch']).split('.')[1]) == 2 else str(all_params[model]['pin_pitch']) + "0",
+                prefix = all_params[model]['series_name'].split('-')[0],
+                midfix = all_params[model]['series_name'].split('-')[1],
+                orientation = "Horizontal" if "angled" in all_params[model] and all_params[model]['angled'] == True else "Vertical",
+                flanged = "_ThreadedFlange" if "flanged" in all_params[model] and all_params[model]['flanged'] == True else "",
+                mount_hole = "_MountHole" if "mount_hole" in all_params[model] and all_params[model]['mount_hole'] == True else "",
+            )
 
-    step_path = '{dir:s}/{name:s}.step'.format(dir=out_dir, name=FileName)
+            # Export the assembly to STEP
+            component.save(os.path.join(output_dir, file_name + ".step"), cq.exporters.ExportTypes.STEP, write_pcurves=False)
 
-    L.addLicenseToStep(out_dir, '{:s}.step'.format(FileName), LIST_license,\
-        STR_licAuthor, STR_licEmail, STR_licOrgSys, STR_licPreProc)
+            # Export the assembly to VRML
+            if enable_vrml:
+                cq.exporters.assembly.exportVRML(component, os.path.join(output_dir, file_name + ".wrl"), tolerance=cq_globals.VRML_DEVIATION, angularTolerance=cq_globals.VRML_ANGULAR_DEVIATION)
 
-    FreeCAD.activeDocument().recompute()
-    # FreeCADGui.activateWorkbench("PartWorkbench")
-    if save_memory == False and check_Model==False:
-        Gui.SendMsgToActiveView("ViewFit")
-        Gui.activeDocument().activeView().viewAxometric()
-
-
-    # Save the doc in Native FC format
-    saveFCdoc(App, Gui, doc, FileName, out_dir)
-    if save_memory == True or check_Model==True:
-        doc=FreeCAD.ActiveDocument
-        FreeCAD.closeDocument(doc.Name)
-
-    if check_Model==True:
-        runGeometryCheck(App, Gui, step_path,
-            log, ModelName, save_memory=save_memory)
-
-class argparse():
-    def __init__(self):
-        self.config = 'config_phoenix_KLCv3.0.yaml'
-        self.model_filter = '*'
-        self.series = ['mc','mstb']
-        self.with_plug = False
-
-    def parse_args(self, args):
-        for arg in args:
-            if '=' in arg:
-                self.parseValueArg(*arg.split('='))
-            else:
-                self.argSwitchArg(arg)
-
-    def parseValueArg(self, name, value):
-        if name == 'config':
-            self.config = value
-        elif name == 'model_filter':
-            self.model_filter = value
-        elif name == 'series':
-            self.series = value.split(',')
-
-    def argSwitchArg(self, name):
-        if name == '?':
-            self.print_usage()
-            exit()
-        elif name == 'with_plug':
-            self.with_plug = True
-        elif name == 'disable_check':
-            global check_Model
-            check_Model = False
-        elif name == 'disable_Memory_reduction':
-            global save_memory
-            save_memory = False
-        elif name == 'error_tolerant':
-            global stop_on_first_error
-            stop_on_first_error = False
-
-    def print_usage(self):
-        print("Generater script for phoenix contact 3d models.")
-        print('usage: FreeCAD main_generator.py [optional arguments]')
-        print('optional arguments:')
-        print('\tconfig=[config file]: default:config_phoenix_KLCv3.0.yaml')
-        print('\tmodel_filter=[filter using linux file filter syntax]')
-        print('\tseries=[series name],[series name],...')
-        print('switches:')
-        print('\twith_plug')
-        print('\tdisable_check')
-        print('\tdisable_Memory_reduction')
-        print('\terror_tolerant\n')
-
-    def __str__(self):
-        return 'config:{:s}, filter:{:s}, series:{:s}, with_plug:{:d}'.format(
-            self.config, self.model_filter, str(self.series), self.with_plug)
-
-def exportSeries(series_params, log):
-    for variant in series_params.all_params.keys():
-        if model_filter_regobj.match(variant):
-            #FreeCAD.Console.PrintMessage('\r\n'+variant+'\r\n')
-            try:
-                export_one_part(series_params, variant, configuration, log, with_plug)
-            except GeometryError as e:
-                e.print_errors(stop_on_first_error)
-                if stop_on_first_error:
-                    return -1
-            except FreeCADVersionError as e:
-                FreeCAD.Console.PrintError(e)
-                return -1
-    return 0
-
-if __name__ == "__main__" or __name__ == "main_generator":
-
-    FreeCAD.Console.PrintMessage('\r\nRunning...\r\n')
-
-    series_to_build = []
-    modelfilter = ""
-    with_plug = False
-
-    args = argparse()
-    args.parse_args(sys.argv)
-
-    with open(args.config, 'r') as config_stream:
-        try:
-            configuration = yaml.load(config_stream)
-        except yaml.YAMLError as exc:
-            print(exc)
-
-    series_to_build = map(str.lower, args.series)
-    print(args)
-    modelfilter = args.model_filter
-
-    series = []
-    if 'mc' in series_to_build:
-        series += [MC]
-    if 'mstb' in series_to_build:
-        series += [MSTB]
-
-    model_filter_regobj=re.compile(fnmatch.translate(modelfilter))
-    print("########################################")
-
-    print(args.model_filter)
-    with open(check_log_file, 'w') as log:
-        log.write('# Check report for Phoenix Contact 3d model genration\n')
-        for typ in series:
-            try:
-                if exportSeries(typ, log) != 0:
-                    break
-            except Exception as exeption:
-                traceback.print_exc()
-                break
-
-    FreeCAD.Console.PrintMessage('\r\nDone\r\n')
+            # Update the license
+            from _tools import add_license
+            add_license.STR_licAuthor = "Rene Poeschl"
+            add_license.STR_licEmail = "poeschlr@gmail.com"
+            add_license.addLicenseToStep(output_dir, file_name + ".step",
+                                            add_license.LIST_int_license,
+                                            add_license.STR_int_licAuthor,
+                                            add_license.STR_int_licEmail,
+                                            add_license.STR_int_licOrgSys,
+                                            add_license.STR_int_licPreProc)

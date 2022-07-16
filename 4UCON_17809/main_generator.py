@@ -1,29 +1,33 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 #
-# This was originaly derived from a cadquery script for generating PDIP models in X3D format
+# This is derived from a cadquery script for generating PDIP models in X3D format
+#
 # from https://bitbucket.org/hyOzd/freecad-macros
 # author hyOzd
 #
-# Adapted by easyw for step and vrlm export
-# See https://github.com/easyw/kicad-3d-models-in-freecad
-
-## requirements
-## cadquery FreeCAD plugin
-##   https://github.com/jmwright/cadquery-freecad-module
-
-## to run the script just do: freecad scriptName
-## e.g. FreeCAD export_conn_jst_xh.py
-
-## the script will generate STEP and VRML parametric models
-## to be used with kicad StepUp script
-
-#* These are FreeCAD & cadquery tools                                       *
-#* to export generated models in STEP & VRML format.                        *
+# Dimensions are from Microchips Packaging Specification document:
+# DS00000049BY. Body drawing is the same as QFP generator#
+#
+## Requirements
+## CadQuery 2.1 commit e00ac83f98354b9d55e6c57b9bb471cdf73d0e96 or newer
+## https://github.com/CadQuery/cadquery
+#
+## To run the script just do: ./generator.py --output_dir [output_directory]
+## e.g. ./generator.py --output_dir /tmp
+#
+#* These are cadquery tools to export                                       *
+#* generated models in STEP & VRML format.                                  *
 #*                                                                          *
-#* cadquery script for generating JST-XH models in STEP AP214               *
-#*   Copyright (c) 2016                                                     *
-#* Rene Poeschl https://github.com/poeschlr                                 *
+#* cadquery script for generating QFP/SOIC/SSOP/TSSOP models in STEP AP214  *
+#* Copyright (c) 2016                                                       *
+#*     Rene Poeschl https://github.com/poeschlr                             *
+#* Copyright (c) 2022                                                       *
+#*     Update 2022                                                          *
+#*     jmwright (https://github.com/jmwright)                               *
+#*     Work sponsored by KiCAD Services Corporation                         *
+#*          (https://www.kipro-pcb.com/)                                    *
+#*                                                                          *
 #* All trademarks within this guide belong to their legitimate owners.      *
 #*                                                                          *
 #*   This program is free software; you can redistribute it and/or modify   *
@@ -44,198 +48,101 @@
 #*                                                                          *
 #****************************************************************************
 
-__title__ = "make 3D models of 4UCON 17809 series connectors"
-__author__ = "scripts: maurice and hyOzd; models: hackscribble"
-__Comment__ = '''make 3D models of 4UCON 17809 series connectors'''
+__title__ = "make 4UCON 17809 series connector 3D models exported to STEP and VRML"
+__author__ = "scripts: maurice and hyOzd; models: see cq_model files; update: jmwright"
+__Comment__ = '''This generator loads cadquery model scripts and generates step/wrl files for the official kicad library.'''
 
-___ver___ = "0.2 18/06/2020"
+___ver___ = "2.0.0"
 
-
-import sys
 import os
 
-full_path=os.path.realpath(__file__)
-script_dir_name =full_path.split(os.sep)[-2]
-parent_path = full_path.split(script_dir_name)[0]
-out_dir = parent_path + "_3Dmodels" + "/" + script_dir_name
-
-sys.path.append("./")
-sys.path.append("../_tools")
-sys.path.append("cq_models")
-
-import shaderColors
-
-
-# Model details
-#################################################################################################
-
-import conn_4ucon_17809 as UCON_17809
-
-series = [UCON_17809]
-
-body_color_key = "dark grey body"
-body_color = shaderColors.named_colors[body_color_key].getDiffuseInt()
-pins_color_key = "metal grey pins"
-pins_color = shaderColors.named_colors[pins_color_key].getDiffuseInt()
-contacts_color_key = "metal grey pins"
-contacts_color = shaderColors.named_colors[pins_color_key].getDiffuseInt()
-
-#################################################################################################
-
-
-import add_license as L
-
-# Licence information of the generated models
-#################################################################################################
-
-L.STR_int_licAuthor = "Ray Benitez"
-L.STR_int_licEmail = "hackscribble@outlook.com"
-
-#################################################################################################
-
-
-from datetime import datetime
-import exportPartToVRML as expVRML
-import re
-import fnmatch
-
 import cadquery as cq
-from Helpers import show
-from collections import namedtuple
-import FreeCAD
-import Draft
-import ImportGui
+from _tools import shaderColors, parameters, cq_color_correct
+from _tools import cq_globals
+from _tools.parameters import load_aux_parameters
 
-import cq_cad_tools
-from cq_cad_tools import reload_lib
-reload_lib(cq_cad_tools)
+from .cq_models.conn_4ucon_17809 import generate_part
 
-from cq_cad_tools import FuseObjs_wColors, GetListOfObjects, restore_Main_Tools, \
- exportSTEP, close_CQ_Example, saveFCdoc, z_RotateObject, multiFuseObjs_wColors, \
- checkRequirements
+def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
+    """
+    Main entry point into this generator.
+    """
+    models = []
 
-import FreeCADGui as Gui
+    all_params = parameters.load_parameters("4UCON_17809")
 
-if FreeCAD.GuiUp:
-    from PySide import QtCore, QtGui
-
-# checking requirements
-
-try:
-    # Gui.SendMsgToActiveView("Run")
-    Gui.activateWorkbench("CadQueryWorkbench")
-    import cadquery as cq
-    from Helpers import show
-    # CadQuery Gui
-except: # catch *all* exceptions
-    msg="missing CadQuery 0.3.0 or later Module!\r\n\r\n"
-    msg+="https://github.com/jmwright/cadquery-freecad-module/wiki\n"
-    reply = QtGui.QMessageBox.information(None,"Info ...",msg)
-    # maui end
-
-checkRequirements(cq)
-
-
-
-def export_one_part(modul, variant):
-    if not variant in modul.all_params:
-        FreeCAD.Console.PrintMessage("Parameters for %s not found - skipping." % variant)
+    if all_params == None:
+        print("ERROR: Model parameters must be provided.")
         return
-    ModelName = variant
-    ModelName = ModelName.replace(".","_")
-    FileName = modul.all_params[variant].file_name
 
-    FreeCAD.Console.PrintMessage(FileName)
+    # Handle the case where no model has been passed
+    if model_to_build is None:
+        print("No variant name is given! building: {0}".format(model_to_build))
 
-    Newdoc = FreeCAD.newDocument(ModelName)
-    App.setActiveDocument(ModelName)
-    App.ActiveDocument=App.getDocument(ModelName)
-    Gui.ActiveDocument=Gui.getDocument(ModelName)
+        model_to_build = all_params.keys()[0]
 
-    # Model details
-    #################################################################################################
+    # Handle being able to generate all models or just one
+    if model_to_build == "all":
+        models = all_params
+    else:
+        models = { model_to_build: all_params[model_to_build] }
+    # Step through the selected models
+    for model in models:
+        if output_dir_prefix == None:
+            print("ERROR: An output directory must be provided.")
+            return
+        else:
+            # Load the global parameters
+            globals = load_aux_parameters(__file__, "global_parameters.yaml")
 
-    (pins, body, contacts) = modul.generate_part(variant)
+            # Construct the final output directory
+            output_dir = os.path.join(output_dir_prefix, globals['globals']['destination_dir'])
 
-    color_attr = body_color + (0,)
-    show(body, color_attr)
+        # Safety check to make sure the selected model is valid
+        if not model in all_params.keys():
+            print("Parameters for %s doesn't exist in 'all_params', skipping." % model)
+            continue
 
-    color_attr = pins_color + (0,)
-    show(pins, color_attr)
+        # Load the appropriate colors
+        body_color = shaderColors.named_colors[globals['globals']["body_color_key"]].getDiffuseFloat()
+        pin_color = shaderColors.named_colors[globals['globals']["pin_color_key"]].getDiffuseFloat()
+        contact_color = shaderColors.named_colors[globals['globals']["contact_color_key"]].getDiffuseFloat()
 
-    color_attr = contacts_color + (0,)
-    show(contacts, color_attr)
+        # Make the parts of the model
+        (pins, body, contacts) = generate_part(all_params[model], globals['globals'])
+        # body = body.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
+        # pins = pins.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
+        # contacts = contacts.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
 
-    doc = FreeCAD.ActiveDocument
-    doc.Label=ModelName
-    objs=FreeCAD.ActiveDocument.Objects
-    FreeCAD.Console.PrintMessage(objs)
+        # Used to wrap all the parts into an assembly
+        component = cq.Assembly()
 
-    i=0
-    objs[i].Label = ModelName + "__body"
-    i+=1
-    objs[i].Label = ModelName + "__pins"
-    i+=1
-    objs[i].Label = ModelName + "__contacts"
-    i+=1
+        # Add the parts to the assembly
+        component.add(body, color=cq_color_correct.Color(body_color[0], body_color[1], body_color[2]))
+        component.add(pins, color=cq_color_correct.Color(pin_color[0], pin_color[1], pin_color[2]))
+        component.add(contacts, color=cq_color_correct.Color(contact_color[0], contact_color[1], contact_color[2]))
 
-    restore_Main_Tools()
+        # Create the output directory if it does not exist
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
 
-    if not os.path.exists(out_dir):
-        os.makedirs(out_dir)
+        # Assemble the filename
+        file_name = all_params[model]['file_name']
 
-    used_color_keys = [body_color_key, pins_color_key, contacts_color_key]
-    export_file_name=out_dir+os.sep+FileName+'.wrl'
+        # Export the assembly to STEP
+        component.save(os.path.join(output_dir, file_name + ".step"), cq.exporters.ExportTypes.STEP, write_pcurves=False)
 
-    export_objects = []
-    i=0
-    export_objects.append(expVRML.exportObject(freecad_object = objs[i],
-            shape_color=body_color_key,
-            face_colors=None))
-    i+=1
-    export_objects.append(expVRML.exportObject(freecad_object = objs[i],
-            shape_color=pins_color_key,
-            face_colors=None))
-    i+=1
-    export_objects.append(expVRML.exportObject(freecad_object = objs[i],
-            shape_color=contacts_color_key,
-            face_colors=None))
-    i+=1
+        # Export the assembly to VRML
+        if enable_vrml:
+            cq.exporters.assembly.exportVRML(component, os.path.join(output_dir, file_name + ".wrl"), tolerance=cq_globals.VRML_DEVIATION, angularTolerance=cq_globals.VRML_ANGULAR_DEVIATION)
 
-    #################################################################################################
-
-
-    scale=1/2.54
-    colored_meshes = expVRML.getColoredMesh(Gui, export_objects , scale)
-
-    expVRML.writeVRMLFile(colored_meshes, export_file_name, used_color_keys, L.LIST_int_license)
-
-    fusion = multiFuseObjs_wColors(FreeCAD, FreeCADGui,
-                     ModelName, objs, keepOriginals=True)
-
-    exportSTEP(doc,FileName,out_dir,fusion)
-    L.addLicenseToStep(out_dir+'/', FileName+".step", L.LIST_int_license,\
-        L.STR_int_licAuthor, L.STR_int_licEmail, L.STR_int_licOrgSys, L.STR_int_licPreProc)
-
-    saveFCdoc(App, Gui, doc, FileName,out_dir)
-
-    FreeCAD.activeDocument().recompute()
-    FreeCADGui.SendMsgToActiveView("ViewFit")
-    FreeCADGui.activeDocument().activeView().viewAxometric()
-
-
-if __name__ == "__main__":
-
-    FreeCAD.Console.PrintMessage('\r\nRunning...\r\n')
-
-    modelfilter = "*"
-
-    model_filter_regobj=re.compile(fnmatch.translate(modelfilter))
-    for typ in series:
-        for variant in typ.all_params.keys():
-            if model_filter_regobj.match(variant):
-                FreeCAD.Console.PrintMessage('\r\n'+variant+'\r\n')
-                export_one_part(typ, variant)
-
-    FreeCAD.Console.PrintMessage('\r\nDone\r\n')
-
+        # Update the license
+        from _tools import add_license
+        add_license.STR_int_licAuthor = "Ray Benitez"
+        add_license.STR_int_licEmail = "hackscribble@outlook.com"
+        add_license.addLicenseToStep(output_dir, file_name + ".step",
+                                        add_license.LIST_int_license,
+                                        add_license.STR_int_licAuthor,
+                                        add_license.STR_int_licEmail,
+                                        add_license.STR_int_licOrgSys,
+                                        add_license.STR_int_licPreProc)

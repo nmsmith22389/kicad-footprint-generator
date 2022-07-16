@@ -10,8 +10,8 @@
 
 ## file of parametric definitions
 
-import collections
 from collections import namedtuple
+from collections.abc import Mapping
 
 destination_dir="/QFN_packages"
 # destination_dir="./"
@@ -21,9 +21,9 @@ footprints_dir="Housings_DFN_QFN.pretty"
 
 def namedtuple_with_defaults(typename, field_names, default_values=()):
     
-    T = collections.namedtuple(typename, field_names)
+    T = namedtuple(typename, field_names)
     T.__new__.__defaults__ = (None,) * len(T._fields)
-    if isinstance(default_values, collections.Mapping):
+    if isinstance(default_values, Mapping):
         prototype = T(**default_values)
     else:
         prototype = T(*default_values)

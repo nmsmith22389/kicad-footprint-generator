@@ -46,14 +46,19 @@
 #****************************************************************************
 
 
-import cq_parameters  # modules parameters
-from cq_parameters import *
+# import cq_parameters  # modules parameters
+# from cq_parameters import *
 
-import math
-from math import tan, cos, sin, radians, sqrt, atan
+# import math
+# from math import tan, cos, sin, radians, sqrt, atan
 
-import cq_base_model  # modules parameters
-from cq_base_model import *
+# import cq_base_model  # modules parameters
+# from cq_base_model import *
+
+import cadquery as cq
+
+from collections import namedtuple
+from collections.abc import Mapping
 
 class cq_parameters_Resonator_smd_type_2():
 
@@ -61,98 +66,98 @@ class cq_parameters_Resonator_smd_type_2():
         x = 0
 
 
-    def get_dest_3D_dir(self, modelName):
-        for n in self.all_params:
-            if n == modelName:
-                return self.all_params[modelName].dest_dir_prefix
+    # def get_dest_3D_dir(self, modelName):
+    #     for n in self.all_params:
+    #         if n == modelName:
+    #             return self.all_params[modelName].dest_dir_prefix
 
 
-    def get_dest_file_name(self, modelName):
-        for n in self.all_params:
-            if n == modelName:
-                return self.all_params[modelName].filename
+    # def get_dest_file_name(self, modelName):
+    #     for n in self.all_params:
+    #         if n == modelName:
+    #             return self.all_params[modelName].filename
 
 
-    def model_exist(self, modelName):
-        for n in self.all_params:
-            if n == modelName:
-                return True
+    # def model_exist(self, modelName):
+    #     for n in self.all_params:
+    #         if n == modelName:
+    #             return True
                 
-        return False
+    #     return False
         
         
-    def get_list_all(self):
-        list = []
-        for n in self.all_params:
-            list.append(n)
+    # def get_list_all(self):
+    #     list = []
+    #     for n in self.all_params:
+    #         list.append(n)
         
-        return list
+    #     return list
 
         
-    def make_3D_model(self, modelName):
+    # def make_3D_model(self, modelName):
         
-        top = self.make_top(self.all_params[modelName])
-        case = self.make_case(self.all_params[modelName])
-        bottom = self.make_bottom(case, self.all_params[modelName])
-        pins = self.make_pins(self.all_params[modelName])
-        show(top)
-        show(case)
-        show(bottom)
-        show(pins)
+    #     top = self.make_top(self.all_params[modelName])
+    #     case = self.make_case(self.all_params[modelName])
+    #     bottom = self.make_bottom(case, self.all_params[modelName])
+    #     pins = self.make_pins(self.all_params[modelName])
+    #     show(top)
+    #     show(case)
+    #     show(bottom)
+    #     show(pins)
      
-        doc = FreeCAD.ActiveDocument
-        objs=GetListOfObjects(FreeCAD, doc)
+    #     doc = FreeCAD.ActiveDocument
+    #     objs=GetListOfObjects(FreeCAD, doc)
      
-        top_color_key = self.all_params[modelName].top_color_key
-        body_color_key = self.all_params[modelName].body_color_key
-        bottom_color_key = self.all_params[modelName].bottom_color_key
-        pin_color_key = self.all_params[modelName].pin_color_key
+    #     top_color_key = self.all_params[modelName].top_color_key
+    #     body_color_key = self.all_params[modelName].body_color_key
+    #     bottom_color_key = self.all_params[modelName].bottom_color_key
+    #     pin_color_key = self.all_params[modelName].pin_color_key
 
-        top_color = shaderColors.named_colors[top_color_key].getDiffuseFloat()
-        body_color = shaderColors.named_colors[body_color_key].getDiffuseFloat()
-        bottom_color = shaderColors.named_colors[bottom_color_key].getDiffuseFloat()
-        pin_color = shaderColors.named_colors[pin_color_key].getDiffuseFloat()
+    #     top_color = shaderColors.named_colors[top_color_key].getDiffuseFloat()
+    #     body_color = shaderColors.named_colors[body_color_key].getDiffuseFloat()
+    #     bottom_color = shaderColors.named_colors[bottom_color_key].getDiffuseFloat()
+    #     pin_color = shaderColors.named_colors[pin_color_key].getDiffuseFloat()
 
-        Color_Objects(Gui,objs[0], top_color)
-        Color_Objects(Gui,objs[1], body_color)
-        Color_Objects(Gui,objs[2], bottom_color)
-        Color_Objects(Gui,objs[3], pin_color)
+    #     Color_Objects(Gui,objs[0], top_color)
+    #     Color_Objects(Gui,objs[1], body_color)
+    #     Color_Objects(Gui,objs[2], bottom_color)
+    #     Color_Objects(Gui,objs[3], pin_color)
 
-        col_body_top = Gui.ActiveDocument.getObject(objs[0].Name).DiffuseColor[0]
-        col_body = Gui.ActiveDocument.getObject(objs[1].Name).DiffuseColor[0]
-        col_bottom = Gui.ActiveDocument.getObject(objs[2].Name).DiffuseColor[0]
-        col_pin = Gui.ActiveDocument.getObject(objs[3].Name).DiffuseColor[0]
+    #     col_body_top = Gui.ActiveDocument.getObject(objs[0].Name).DiffuseColor[0]
+    #     col_body = Gui.ActiveDocument.getObject(objs[1].Name).DiffuseColor[0]
+    #     col_bottom = Gui.ActiveDocument.getObject(objs[2].Name).DiffuseColor[0]
+    #     col_pin = Gui.ActiveDocument.getObject(objs[3].Name).DiffuseColor[0]
         
-        material_substitutions={
-            col_body_top[:-1]:top_color_key,
-            col_body[:-1]:body_color_key,
-            col_bottom[:-1]:bottom_color_key,
-            col_pin[:-1]:pin_color_key,
-        }
+    #     material_substitutions={
+    #         col_body_top[:-1]:top_color_key,
+    #         col_body[:-1]:body_color_key,
+    #         col_bottom[:-1]:bottom_color_key,
+    #         col_pin[:-1]:pin_color_key,
+    #     }
         
-        expVRML.say(material_substitutions)
-        while len(objs) > 1:
-                FuseObjs_wColors(FreeCAD, FreeCADGui, doc.Name, objs[0].Name, objs[1].Name)
-                del objs
-                objs = GetListOfObjects(FreeCAD, doc)
+    #     expVRML.say(material_substitutions)
+    #     while len(objs) > 1:
+    #             FuseObjs_wColors(FreeCAD, FreeCADGui, doc.Name, objs[0].Name, objs[1].Name)
+    #             del objs
+    #             objs = GetListOfObjects(FreeCAD, doc)
 
-        return material_substitutions
+    #     return material_substitutions
     
     def make_top(self, params):
 
-        type = params.type                  # Model type
-        L = params.L                        # Model length
-        W = params.W                        # Model length
-        H = params.H                        # Model heigth
-        A1 = params.A1                      # Bottom distance to PCB
-        pc = params.p_cnt                   # Number of pins
-        psx = params.p_split_x              # Distance between pins, along length
-        psy = params.p_split_y              # Distance between pins, along width
-        pl = params.p_length                # pin length
-        pw = params.p_width                 # pin width
-        rotation = params.rotation          # Rotation if required
+        type = params['type']                  # Model type
+        L = params['L']                        # Model length
+        W = params['W']                        # Model length
+        H = params['H']                        # Model heigth
+        A1 = params['A1']                      # Bottom distance to PCB
+        pc = params['p_cnt']                   # Number of pins
+        psx = params['p_split_x']              # Distance between pins, along length
+        psy = params['p_split_y']              # Distance between pins, along width
+        pl = params['p_length']                # pin length
+        pw = params['p_width']                 # pin width
+        rotation = params['rotation']          # Rotation if required
         
-        FreeCAD.Console.PrintMessage('make_top ...\r\n')
+        print('make_top ...\r\n')
 
         of = 0.0
         if (type == 1):
@@ -191,19 +196,19 @@ class cq_parameters_Resonator_smd_type_2():
 
     def make_case(self, params):
 
-        type = params.type                  # Model type
-        L = params.L                        # Model length
-        W = params.W                        # Model length
-        H = params.H                        # Model heigth
-        A1 = params.A1                      # Bottom distance to PCB
-        pc = params.p_cnt                   # Number of pins
-        psx = params.p_split_x              # Distance between pins, along length
-        psy = params.p_split_y              # Distance between pins, along width
-        pl = params.p_length                # pin length
-        pw = params.p_width                 # pin width
-        rotation = params.rotation          # Rotation if required
+        type = params['type']                  # Model type
+        L = params['L']                        # Model length
+        W = params['W']                        # Model length
+        H = params['H']                        # Model heigth
+        A1 = params['A1']                      # Bottom distance to PCB
+        pc = params['p_cnt']                   # Number of pins
+        psx = params['p_split_x']              # Distance between pins, along length
+        psy = params['p_split_y']              # Distance between pins, along width
+        pl = params['p_length']                # pin length
+        pw = params['p_width']                 # pin width
+        rotation = params['rotation']          # Rotation if required
         
-        FreeCAD.Console.PrintMessage('make_case ...\r\n')
+        print('make_case ...\r\n')
 
         of = 0.02
         if (type == 1):
@@ -227,19 +232,19 @@ class cq_parameters_Resonator_smd_type_2():
 
     def make_bottom(self, body, params):
 
-        type = params.type                  # Model type
-        L = params.L                        # Model length
-        W = params.W                        # Model length
-        H = params.H                        # Model heigth
-        A1 = params.A1                      # Bottom distance to PCB
-        pc = params.p_cnt                   # Number of pins
-        psx = params.p_split_x              # Distance between pins, along length
-        psy = params.p_split_y              # Distance between pins, along width
-        pl = params.p_length                # pin length
-        pw = params.p_width                 # pin width
-        rotation = params.rotation          # Rotation if required
+        type = params['type']                  # Model type
+        L = params['L']                        # Model length
+        W = params['W']                        # Model length
+        H = params['H']                        # Model heigth
+        A1 = params['A1']                      # Bottom distance to PCB
+        pc = params['p_cnt']                   # Number of pins
+        psx = params['p_split_x']              # Distance between pins, along length
+        psy = params['p_split_y']              # Distance between pins, along width
+        pl = params['p_length']                # pin length
+        pw = params['p_width']                 # pin width
+        rotation = params['rotation']          # Rotation if required
         
-        FreeCAD.Console.PrintMessage('make_bottom ...\r\n')
+        print('make_bottom ...\r\n')
 
         of = 0.0
         if (type == 1):
@@ -277,21 +282,21 @@ class cq_parameters_Resonator_smd_type_2():
         
         
     
-    def make_pins(self, params):
+    def make_pins(self, body, params):
 
-        type = params.type                  # Model type
-        L = params.L                        # Model length
-        W = params.W                        # Model length
-        H = params.H                        # Model heigth
-        A1 = params.A1                      # Bottom distance to PCB
-        pc = params.p_cnt                   # Number of pins
-        psx = params.p_split_x              # Distance between pins, along length
-        psy = params.p_split_y              # Distance between pins, along width
-        pl = params.p_length                # pin length
-        pw = params.p_width                 # pin width
-        rotation = params.rotation          # Rotation if required
+        type = params['type']                  # Model type
+        L = params['L']                        # Model length
+        W = params['W']                        # Model length
+        H = params['H']                        # Model heigth
+        A1 = params['A1']                      # Bottom distance to PCB
+        pc = params['p_cnt']                   # Number of pins
+        psx = params['p_split_x']              # Distance between pins, along length
+        psy = params['p_split_y']              # Distance between pins, along width
+        pl = params['p_length']                # pin length
+        pw = params['p_width']                 # pin width
+        rotation = params['rotation']          # Rotation if required
         
-        FreeCAD.Console.PrintMessage('make_pins ...\r\n')
+        print('make_pins ...\r\n')
 
         pins = None
         pil = pl
@@ -327,9 +332,9 @@ class cq_parameters_Resonator_smd_type_2():
     ##enabling optional/default values to None
     def namedtuple_with_defaults(typename, field_names, default_values=()):
 
-        T = collections.namedtuple(typename, field_names)
+        T = namedtuple(typename, field_names)
         T.__new__.__defaults__ = (None,) * len(T._fields)
-        if isinstance(default_values, collections.Mapping):
+        if isinstance(default_values, Mapping):
             prototype = T(**default_values)
         else:
             prototype = T(*default_values)
@@ -358,150 +363,150 @@ class cq_parameters_Resonator_smd_type_2():
         'dest_dir_prefix'	    # Destination directory
     ])
 
-    all_params = {
+    # all_params = {
 
-        'MicroCrystal_CC1V-T1A': Params(
-            #
-            # https://www.microcrystal.com/fileadmin/Media/Products/32kHz/Datasheet/CC1V-T1A.pdf
-            # 
-            type = 1,               # Model type, 1 = top is slightly larger than body, only one stair step
-            filename = 'Crystal_SMD_MicroCrystal_CC1V-T1A-2Pin_8.0x3.7mm',   # File name
-            L = 8.0,                # Model length
-            W = 3.7,                # Model width
-            H = 1.75,               # Model heigth
-            A1 = 0.0,               # Bottom-board separation
+    #     'MicroCrystal_CC1V-T1A': Params(
+    #         #
+    #         # https://www.microcrystal.com/fileadmin/Media/Products/32kHz/Datasheet/CC1V-T1A.pdf
+    #         # 
+    #         type = 1,               # Model type, 1 = top is slightly larger than body, only one stair step
+    #         filename = 'Crystal_SMD_MicroCrystal_CC1V-T1A-2Pin_8.0x3.7mm',   # File name
+    #         L = 8.0,                # Model length
+    #         W = 3.7,                # Model width
+    #         H = 1.75,               # Model heigth
+    #         A1 = 0.0,               # Bottom-board separation
             
-            p_cnt = 2,              # Number of pins
-            p_split_x = 6.8,        # Distance between pins, along length
-            p_length = 1.2,         # Pin length
-            p_width = 3.5,          # Pin width
+    #         p_cnt = 2,              # Number of pins
+    #         p_split_x = 6.8,        # Distance between pins, along length
+    #         p_length = 1.2,         # Pin length
+    #         p_width = 3.5,          # Pin width
 
-            top_color_key = 'black body',       # Top color
-            body_color_key = 'gold pins',       # Body color
-            bottom_color_key = 'black body',    # Bottom color
-            pin_color_key = 'gold pins',        # Pin color
-            rotation = 0,                       # Rotation if required
-            dest_dir_prefix = 'Crystal.3dshapes',   # destination directory
-            ),
+    #         top_color_key = 'black body',       # Top color
+    #         body_color_key = 'gold pins',       # Body color
+    #         bottom_color_key = 'black body',    # Bottom color
+    #         pin_color_key = 'gold pins',        # Pin color
+    #         rotation = 0,                       # Rotation if required
+    #         dest_dir_prefix = 'Crystal.3dshapes',   # destination directory
+    #         ),
 
-        'MicroCrystal_CC4V-T1A': Params(
-            #
-            # http://cdn-reichelt.de/documents/datenblatt/B400/CC4V-T1A.pdf
-            # 
-            type = 1,               # Model type, 1 = top is slightly larger than body, only one stair step
-            filename = 'Crystal_SMD_MicroCrystal_CC4V-T1A-2Pin_5.0x1.9mm',   # File name
-            L = 5.0,                # Model length
-            W = 1.9,                # Model width
-            H = 0.9,                # Model heigth
-            A1 = 0.0,               # Bottom-board separation
+    #     'MicroCrystal_CC4V-T1A': Params(
+    #         #
+    #         # http://cdn-reichelt.de/documents/datenblatt/B400/CC4V-T1A.pdf
+    #         # 
+    #         type = 1,               # Model type, 1 = top is slightly larger than body, only one stair step
+    #         filename = 'Crystal_SMD_MicroCrystal_CC4V-T1A-2Pin_5.0x1.9mm',   # File name
+    #         L = 5.0,                # Model length
+    #         W = 1.9,                # Model width
+    #         H = 0.9,                # Model heigth
+    #         A1 = 0.0,               # Bottom-board separation
             
-            p_cnt = 2,              # Number of pins
-            p_split_x = 4.1,        # Distance between pins, along length
-            p_length = 0.9,         # Pin length
-            p_width = 1.7,          # Pin width
+    #         p_cnt = 2,              # Number of pins
+    #         p_split_x = 4.1,        # Distance between pins, along length
+    #         p_length = 0.9,         # Pin length
+    #         p_width = 1.7,          # Pin width
 
-            top_color_key = 'black body',       # Top color
-            body_color_key = 'gold pins',       # Body color
-            bottom_color_key = 'black body',    # Bottom color
-            pin_color_key = 'gold pins',        # Pin color
-            rotation = 0,                       # Rotation if required
-            dest_dir_prefix = 'Crystal.3dshapes',   # destination directory
-            ),
+    #         top_color_key = 'black body',       # Top color
+    #         body_color_key = 'gold pins',       # Body color
+    #         bottom_color_key = 'black body',    # Bottom color
+    #         pin_color_key = 'gold pins',        # Pin color
+    #         rotation = 0,                       # Rotation if required
+    #         dest_dir_prefix = 'Crystal.3dshapes',   # destination directory
+    #         ),
 
-        'MicroCrystal_CC5V-T1A': Params(
-            #
-            # http://cdn-reichelt.de/documents/datenblatt/B400/CC5V-T1A.pdf
-            # 
-            type = 1,               # Model type, 1 = top is slightly larger than body, only one stair step
-            filename = 'Crystal_SMD_MicroCrystal_CC5V-T1A-2Pin_4.1x1.5mm',   # File name
-            L = 4.1,                # Model length
-            W = 1.5,                # Model width
-            H = 0.9,                # Model heigth
-            A1 = 0.0,               # Bottom-board separation
+    #     'MicroCrystal_CC5V-T1A': Params(
+    #         #
+    #         # http://cdn-reichelt.de/documents/datenblatt/B400/CC5V-T1A.pdf
+    #         # 
+    #         type = 1,               # Model type, 1 = top is slightly larger than body, only one stair step
+    #         filename = 'Crystal_SMD_MicroCrystal_CC5V-T1A-2Pin_4.1x1.5mm',   # File name
+    #         L = 4.1,                # Model length
+    #         W = 1.5,                # Model width
+    #         H = 0.9,                # Model heigth
+    #         A1 = 0.0,               # Bottom-board separation
             
-            p_cnt = 2,              # Number of pins
-            p_split_x = 3.0,        # Distance between pins, along length
-            p_length = 1.1,         # Pin length
-            p_width = 1.3,          # Pin width
+    #         p_cnt = 2,              # Number of pins
+    #         p_split_x = 3.0,        # Distance between pins, along length
+    #         p_length = 1.1,         # Pin length
+    #         p_width = 1.3,          # Pin width
 
-            top_color_key = 'black body',       # Top color
-            body_color_key = 'gold pins',       # Body color
-            bottom_color_key = 'black body',    # Bottom color
-            pin_color_key = 'gold pins',        # Pin color
-            rotation = 0,                       # Rotation if required
-            dest_dir_prefix = 'Crystal.3dshapes',   # destination directory
-            ),
+    #         top_color_key = 'black body',       # Top color
+    #         body_color_key = 'gold pins',       # Body color
+    #         bottom_color_key = 'black body',    # Bottom color
+    #         pin_color_key = 'gold pins',        # Pin color
+    #         rotation = 0,                       # Rotation if required
+    #         dest_dir_prefix = 'Crystal.3dshapes',   # destination directory
+    #         ),
 
-        'MicroCrystal_CC7V-T1A': Params(
-            #
-            # https://www.microcrystal.com/fileadmin/Media/Products/32kHz/Datasheet/CC7V-T1A.pdf
-            # 
-            type = 1,               # Model type, 1 = top is slightly larger than body, only one stair step
-            filename = 'Crystal_SMD_MicroCrystal_CC7V-T1A-2Pin_3.2x1.5mm',   # File name
-            L = 3.2,                # Model length
-            W = 1.5,                # Model width
-            H = 0.9,                # Model heigth
-            A1 = 0.0,               # Bottom-board separation
+    #     'MicroCrystal_CC7V-T1A': Params(
+    #         #
+    #         # https://www.microcrystal.com/fileadmin/Media/Products/32kHz/Datasheet/CC7V-T1A.pdf
+    #         # 
+    #         type = 1,               # Model type, 1 = top is slightly larger than body, only one stair step
+    #         filename = 'Crystal_SMD_MicroCrystal_CC7V-T1A-2Pin_3.2x1.5mm',   # File name
+    #         L = 3.2,                # Model length
+    #         W = 1.5,                # Model width
+    #         H = 0.9,                # Model heigth
+    #         A1 = 0.0,               # Bottom-board separation
             
-            p_cnt = 2,              # Number of pins
-            p_split_x = 2.2,        # Distance between pins, along length
-            p_length = 1.0,         # Pin length
-            p_width = 1.3,          # Pin width
+    #         p_cnt = 2,              # Number of pins
+    #         p_split_x = 2.2,        # Distance between pins, along length
+    #         p_length = 1.0,         # Pin length
+    #         p_width = 1.3,          # Pin width
 
-            top_color_key = 'black body',       # Top color
-            body_color_key = 'gold pins',       # Body color
-            bottom_color_key = 'black body',    # Bottom color
-            pin_color_key = 'gold pins',        # Pin color
-            rotation = 0,                       # Rotation if required
-            dest_dir_prefix = 'Crystal.3dshapes',   # destination directory
-            ),
+    #         top_color_key = 'black body',       # Top color
+    #         body_color_key = 'gold pins',       # Body color
+    #         bottom_color_key = 'black body',    # Bottom color
+    #         pin_color_key = 'gold pins',        # Pin color
+    #         rotation = 0,                       # Rotation if required
+    #         dest_dir_prefix = 'Crystal.3dshapes',   # destination directory
+    #         ),
 
-        'MicroCrystal_CC8V-T1A': Params(
-            #
-            # https://www.microcrystal.com/fileadmin/Media/Products/32kHz/Datasheet/CC8V-T1A.pdf
-            # 
-            type = 1,               # Model type, 1 = top is slightly larger than body, only one stair step
-            filename = 'Crystal_SMD_MicroCrystal_CC8V-T1A-2Pin_2.0x1.2mm',   # File name
-            L = 2.0,                # Model length
-            W = 1.2,                # Model width
-            H = 0.67,                # Model heigth
-            A1 = 0.0,               # Bottom-board separation
+    #     'MicroCrystal_CC8V-T1A': Params(
+    #         #
+    #         # https://www.microcrystal.com/fileadmin/Media/Products/32kHz/Datasheet/CC8V-T1A.pdf
+    #         # 
+    #         type = 1,               # Model type, 1 = top is slightly larger than body, only one stair step
+    #         filename = 'Crystal_SMD_MicroCrystal_CC8V-T1A-2Pin_2.0x1.2mm',   # File name
+    #         L = 2.0,                # Model length
+    #         W = 1.2,                # Model width
+    #         H = 0.67,                # Model heigth
+    #         A1 = 0.0,               # Bottom-board separation
             
-            p_cnt = 2,              # Number of pins
-            p_split_x = 1.2,        # Distance between pins, along length
-            p_length = 0.8,         # Pin length
-            p_width = 1.0,          # Pin width
+    #         p_cnt = 2,              # Number of pins
+    #         p_split_x = 1.2,        # Distance between pins, along length
+    #         p_length = 0.8,         # Pin length
+    #         p_width = 1.0,          # Pin width
 
-            top_color_key = 'black body',       # Top color
-            body_color_key = 'gold pins',       # Body color
-            bottom_color_key = 'black body',    # Bottom color
-            pin_color_key = 'gold pins',        # Pin color
-            rotation = 0,                       # Rotation if required
-            dest_dir_prefix = 'Crystal.3dshapes',   # destination directory
-            ),
+    #         top_color_key = 'black body',       # Top color
+    #         body_color_key = 'gold pins',       # Body color
+    #         bottom_color_key = 'black body',    # Bottom color
+    #         pin_color_key = 'gold pins',        # Pin color
+    #         rotation = 0,                       # Rotation if required
+    #         dest_dir_prefix = 'Crystal.3dshapes',   # destination directory
+    #         ),
 
-        'MicroCrystal_CM9V-T1A': Params(
-            #
-            # https://www.microcrystal.com/fileadmin/Media/Products/32kHz/Datasheet/CM9V-T1A.pdf
-            # 
-            type = 1,               # Model type, 1 = top is slightly larger than body, only one stair step
-            filename = 'Crystal_SMD_MicroCrystal_CM9V-T1A-2Pin_1.6x1.0mm',   # File name
-            L = 1.6,                # Model length
-            W = 1.0,                # Model width
-            H = 0.5,                # Model heigth
-            A1 = 0.0,               # Bottom-board separation
+    #     'MicroCrystal_CM9V-T1A': Params(
+    #         #
+    #         # https://www.microcrystal.com/fileadmin/Media/Products/32kHz/Datasheet/CM9V-T1A.pdf
+    #         # 
+    #         type = 1,               # Model type, 1 = top is slightly larger than body, only one stair step
+    #         filename = 'Crystal_SMD_MicroCrystal_CM9V-T1A-2Pin_1.6x1.0mm',   # File name
+    #         L = 1.6,                # Model length
+    #         W = 1.0,                # Model width
+    #         H = 0.5,                # Model heigth
+    #         A1 = 0.0,               # Bottom-board separation
             
-            p_cnt = 2,              # Number of pins
-            p_split_x = 1.0,        # Distance between pins, along length
-            p_length = 0.6,         # Pin length
-            p_width = 0.8,          # Pin width
+    #         p_cnt = 2,              # Number of pins
+    #         p_split_x = 1.0,        # Distance between pins, along length
+    #         p_length = 0.6,         # Pin length
+    #         p_width = 0.8,          # Pin width
 
-            top_color_key = 'black body',       # Top color
-            body_color_key = 'gold pins',       # Body color
-            bottom_color_key = 'black body',    # Bottom color
-            pin_color_key = 'gold pins',        # Pin color
-            rotation = 0,                       # Rotation if required
-            dest_dir_prefix = 'Crystal.3dshapes',   # destination directory
-            ),
+    #         top_color_key = 'black body',       # Top color
+    #         body_color_key = 'gold pins',       # Body color
+    #         bottom_color_key = 'black body',    # Bottom color
+    #         pin_color_key = 'gold pins',        # Pin color
+    #         rotation = 0,                       # Rotation if required
+    #         dest_dir_prefix = 'Crystal.3dshapes',   # destination directory
+    #         ),
 
-    }
+    # }

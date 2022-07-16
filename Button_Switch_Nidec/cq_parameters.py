@@ -31,10 +31,10 @@
 #*   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA           *
 #*                                                                          *
 #****************************************************************************
-import FreeCAD
+# import FreeCAD
 
 from collections import namedtuple
-from cq_base_parameters import PartParametersBase, CaseType
+from .cq_base_parameters import PartParametersBase, CaseType
 
 ### use enums (Phyton 3+)
 
@@ -82,7 +82,7 @@ class partParams ():
         # get all entries of the params list as dictionary
         args = params._asdict()
 
-        # Defining all dimensions needed to build the model.
+        # Defining all dimensions needed to build the model.pocket_mid_pin_length
         # If a dimension is part of the given params list, this value must be used
 
         # Dimensions of plastic body

@@ -67,39 +67,42 @@ import sys
 
 # DIRTY HACK TO ALLOW CENTRALICED HELPER SCRIPTS. (freecad cadquery does copy the file to /tmp and we can therefore not use relative paths for importing)
 
-if "module" in __name__ :
-    for path in sys.path:
-        if 'jst/cq_models' in path:
-            p1 = path.replace('jst/cq_models','_tools')
-    if not p1 in sys.path:
-        sys.path.append(p1)
-else:
-    sys.path.append('../_tools')
+# if "module" in __name__ :
+#     for path in sys.path:
+#         if 'jst/cq_models' in path:
+#             p1 = path.replace('jst/cq_models','_tools')
+#     if not p1 in sys.path:
+#         sys.path.append(p1)
+# else:
+#     sys.path.append('../_tools')
 
-from cq_helpers import *
+# from cq_helpers import *
 
 import cadquery as cq
-from Helpers import show
-from collections import namedtuple
-import FreeCAD
-from conn_jst_gh_params import *
+# from Helpers import show
+# from collections import namedtuple
+# import FreeCAD
+# from conn_jst_gh_params import *
 
 
 def generate_pins(params):
-    if params.angled:
+    if params['angled']:
         return generate_angled_pins(params)
     return generate_straight_pins(params)
 
 def generate_straight_pins(params):
-    num_pins = params.num_pins
-    body_width = params.body_width
+    num_pins = params['num_pins']
+    body_width = params['body_width']
+    pin_width = params['pin_width']
+    pin_pitch = params['pin_pitch']
+
     pin_distance = (num_pins-1)*pin_pitch
-    mount_pin = cq.Workplane("YZ").workplane(-pin_width/2)\
+    mount_pin = cq.Workplane("YZ").workplane(-pin_width/2, centerOption="CenterOfMass")\
     	.move(2.475,0).vLine(2.05).hLine(-2.2).vLine(-0.54).hLine(1.55)\
     	.vLine(-0.71).hLine(-2.06).vLine(-0.43).hLine(0.49)\
     	.vLine(-0.37).close().extrude(pin_width)
 
-    signal_pin = cq.Workplane("YZ").workplane(-pin_distance/2 -pin_width/2)\
+    signal_pin = cq.Workplane("YZ").workplane(-pin_distance/2 -pin_width/2, centerOption="CenterOfMass")\
     	.move(-2.4754,0).vLine(0.3).hLine(0.7).vLine(0.35).hLine(0.67).vLine(2.8)\
         .hLine(0.17).line(0.16,-0.4).vLine(-2.4).hLine(0.74).vLine(2.55)\
         .hLine(-0.07).line(0.4,0.4).vLine(-3.35).hLine(-2.44+0.67).vLine(-0.25).close()\
@@ -114,15 +117,18 @@ def generate_straight_pins(params):
     return pins
 
 def generate_angled_pins(params):
-    num_pins = params.num_pins
-    body_width = params.body_width
+    num_pins = params['num_pins']
+    body_width = params['body_width']
+    pin_width = params['pin_width']
+    pin_pitch = params['pin_pitch']
+
     pin_distance = (num_pins-1)*pin_pitch
-    mount_pin = cq.Workplane("YZ").workplane(-pin_width/2)\
+    mount_pin = cq.Workplane("YZ").workplane(-pin_width/2, centerOption="CenterOfMass")\
         .move(-2.475,0).vLine(2.05).hLine(2.2).vLine(-0.54).hLine(-1.55)\
         .vLine(-0.71).hLine(2.06).vLine(-0.43).hLine(-0.49)\
         .vLine(-0.37).close().extrude(pin_width)
 
-    signal_pin = cq.Workplane("YZ").workplane(-pin_distance/2 -pin_width/2)\
+    signal_pin = cq.Workplane("YZ").workplane(-pin_distance/2 -pin_width/2, centerOption="CenterOfMass")\
         .move(2.4754,0).vLine(0.3).hLine(-0.7).vLine(0.35).hLine(-0.67).vLine(1.4196)\
         .hLine(-3.35).line(0.4,-0.4).vLine(0.07).hLine(2.55).vLine(-0.74).hLine(-2.4)\
         .line(-0.4,-0.16).vLine(-0.17).hLine(2.8).vLine(-0.67).close().extrude(pin_width)
@@ -137,27 +143,31 @@ def generate_angled_pins(params):
     return pins
 
 def generate_angled_body(params):
-    num_pins = params.num_pins
-    body_width = params.body_width
-    body_height = params.body_height
-    body_length = params.body_length
+    num_pins = params['num_pins']
+    body_width = params['body_width']
+    body_height = params['body_height']
+    body_length = params['body_length']
     body_off_center_y = 0.0
-    d = params.pin_angle_distance
+    d = params['pin_angle_distance']
     body = generate_straight_body(params)
     body = body.rotate((0,0,0),(1,0,0),90)
     body = body.translate((0,body_off_center_y+1.58,1.62))
     return body
 
 def generate_body(params):
-    if not params.angled:
+    if not params['angled']:
         return generate_straight_body(params)
     return generate_angled_body(params)
 
 def generate_straight_body(params):
-    num_pins = params.num_pins
-    body_width = params.body_width
-    body_height = params.body_height
-    body_length = params.body_length
+    num_pins = params['num_pins']
+    body_width = params['body_width']
+    body_height = params['body_height']
+    body_length = params['body_length']
+    pin_width = params['pin_width']
+    pin_pitch = params['pin_pitch']
+    lock_hole_width = params['lock_hole_width']
+    lock_tab_width = params['lock_tab_width']
     
     top_L_side_cut_width = 1.95
     top_L_side_cut_height = 2.25
@@ -210,9 +220,9 @@ def generate_straight_body(params):
     body_top_L_hole_height = 0.9
     body_top_L_hole_depth = 1
 
-    body = cq.Workplane("XY").workplane()\
+    body = cq.Workplane("XY").workplane(centerOption="CenterOfMass")\
         .box(body_length, body_width, body_height,centered=(True, True, False))
-    R_top_side_L_cut = cq.Workplane("YZ").workplane(-body_length/2).move(-body_width/2, body_height)\
+    R_top_side_L_cut = cq.Workplane("YZ").workplane(-body_length/2, centerOption="CenterOfMass").move(-body_width/2, body_height)\
         .hLine(top_L_side_cut_width).vLine(-top_L_side_cut_short_height)\
         .hLine(-(top_L_side_cut_width-top_L_side_cut_short_width))\
         .vLine(-(top_L_side_cut_height-top_L_side_cut_short_height))\
@@ -221,7 +231,7 @@ def generate_straight_body(params):
     L_top_side_L_cut = R_top_side_L_cut.translate((body_length-top_L_side_cut_depth,0 ,0))
     top_side_L_cut = R_top_side_L_cut.union(L_top_side_L_cut)
 
-    R_bottom_side_L_cut = cq.Workplane("YZ").workplane(-body_length/2).move(body_width/2, 0)\
+    R_bottom_side_L_cut = cq.Workplane("YZ").workplane(-body_length/2, centerOption="CenterOfMass").move(body_width/2, 0)\
         .hLine(-bottom_L_side_cut_width).vLine(bottom_L_side_cut_short_height)\
         .hLine((bottom_L_side_cut_width-bottom_L_side_cut_short_width))\
         .vLine((bottom_L_side_cut_height-bottom_L_side_cut_short_height))\
@@ -233,7 +243,7 @@ def generate_straight_body(params):
     bottom_side_L_cut =R_bottom_side_L_cut.union(L_bottom_side_L_cut)
 
 
-    front_U_cut = cq.Workplane("XY").workplane(body_height)\
+    front_U_cut = cq.Workplane("XY").workplane(body_height, centerOption="CenterOfMass")\
         .move(front_U_width/2, -body_width/2+front_U_y_offset)\
         .vLine(front_U_height).hLine(-front_U_short_width).vLine(-front_U_short_height)\
         .hLine(-(front_U_width-2*front_U_short_width-(num_pins-1)*pin_pitch-front_U_pin_nobs_width)/2)
@@ -247,17 +257,17 @@ def generate_straight_body(params):
         .vLine(front_U_short_height).hLine(-front_U_short_width)\
         .vLine(-front_U_height).close().extrude(-front_U_depth)
 
-    lowerbar = cq.Workplane("YZ").workplane(-body_length/2).move(-body_width/2, 0)\
+    lowerbar = cq.Workplane("YZ").workplane(-body_length/2, centerOption="CenterOfMass").move(-body_width/2, 0)\
         .hLine(0.95).vLine(0.5).hLine(-0.75).vLine(0.15).hLine(-0.2).close().extrude(body_length)
 
-    lock_hole = cq.Workplane("XY").workplane()\
+    lock_hole = cq.Workplane("XY").workplane(centerOption="CenterOfMass")\
         .box(lock_hole_width[num_pins], lock_hole_depth, body_height,centered=(True, True, False))\
         .translate((0, lock_hole_y_offset, 0))
 
-    lock_tab = cq.Workplane("YZ").workplane(-lock_tab_width[num_pins]/2).move(lock_tab_y_offset, lock_tab_z_offset)\
+    lock_tab = cq.Workplane("YZ").workplane(-lock_tab_width[num_pins]/2, centerOption="CenterOfMass").move(lock_tab_y_offset, lock_tab_z_offset)\
         .hLine(lock_tab_depth).line(-lock_tab_depth, lock_tab_height).close().extrude(lock_tab_width[num_pins])
 
-    body_top_square_hole_template = cq.Workplane("XY").workplane()\
+    body_top_square_hole_template = cq.Workplane("XY").workplane(centerOption="CenterOfMass")\
         .box(body_top_square_hole_width, body_top_square_hole_height, body_top_square_hole_depth,centered=(True, True, False))\
         .translate((-(body_length-body_top_square_hole_width)/2+body_top_square_hole_x_offset,\
         (body_width-body_top_square_hole_height)/2-body_top_square_hole_y_offset, body_height-body_top_square_hole_depth))
@@ -295,11 +305,11 @@ def generate_part(params):
 
 
 #opend from within freecad
-if "module" in __name__ :
-    params=series_params.variant_params['side_entry']['param_generator'](6)
-    #params=series_params.variant_params['side_entry']['param_generator'](3)
+# if "module" in __name__ :
+#     params=series_params.variant_params['side_entry']['param_generator'](6)
+#     #params=series_params.variant_params['side_entry']['param_generator'](3)
 
-    (body, pins) = generate_part(params)
-    body = body.translate((0,0,body_off_center_z))
-    show(pins)
-    show(body)
+#     (body, pins) = generate_part(params)
+#     body = body.translate((0,0,body_off_center_z))
+#     show(pins)
+#     show(body)

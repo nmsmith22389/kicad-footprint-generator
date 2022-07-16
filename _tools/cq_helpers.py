@@ -30,7 +30,7 @@ def mirror(chain, direction="x"):
 def poline(points, plane):
     sp = points.pop()
     plane=plane.moveTo(sp[0],sp[1])
-    plane=plane.polyline(points)
+    plane=plane.polyline(points, includeCurrent=True)
     return plane
 
 def union_all(objects):

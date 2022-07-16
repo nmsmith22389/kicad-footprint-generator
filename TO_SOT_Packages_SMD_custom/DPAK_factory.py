@@ -1,14 +1,14 @@
 import sys
 import os
 
-sys.path.append('./')
+# sys.path.append('./')
 
 import cadquery as cq
-from Helpers import show
-from ribbon import Ribbon
+# from Helpers import show
+from .ribbon import Ribbon
 
-import argparse
-import yaml
+# import argparse
+# import yaml
 
 
 class Dimensions(object):
@@ -80,23 +80,23 @@ class Dimensions(object):
 
 class DPAK(object):
 
-    def __init__(self, config_file):
-        self.SERIES = None
-        self.config = None
+    # def __init__(self, config_file):
+    #     self.SERIES = None
+    #     self.config = None
 
 
-    def _load_config(self, config_file):
-        try:
-            devices = yaml.load_all(open(config_file))
-        except Exception as fnfe:
-            print('FACTORY ERROR: when loading configuration: {e:s}'.format(e=fnfe))
-            return
-        config = None
-        for dev in devices:
-            if dev['base']['series'] == self.SERIES:
-                config = dev
-                break
-        return config
+    # def _load_config(self, config_file):
+    #     try:
+    #         devices = yaml.load_all(open(config_file))
+    #     except Exception as fnfe:
+    #         print('FACTORY ERROR: when loading configuration: {e:s}'.format(e=fnfe))
+    #         return
+    #     config = None
+    #     for dev in devices:
+    #         if dev['base']['series'] == self.SERIES:
+    #             config = dev
+    #             break
+    #     return config
 
 
     def _get_dimensions(self, base, variant, cut_pin=False, tab_linked=False):
@@ -107,7 +107,7 @@ class DPAK(object):
 
     def _build_body(self, dim):
 
-        body = cq.Workplane("XY").workplane(offset=dim.nudge_mm).moveTo(dim.body_centre_x_mm, 0)\
+        body = cq.Workplane("XY").workplane(offset=dim.nudge_mm, centerOption="CenterOfMass").moveTo(dim.body_centre_x_mm, 0)\
             .rect(dim.body_x_mm, dim.body_y_mm).extrude(dim.body_z_mm)
 
         body = body\
@@ -116,7 +116,7 @@ class DPAK(object):
             .faces(">Z").edges(">Y").chamfer(dim.chamfer_1, dim.chamfer_2)\
             .faces(">Z").edges("<Y").chamfer(dim.chamfer_1, dim.chamfer_2)\
             .faces("<Z").edges("<X").chamfer(dim.body_waist_z_mm - dim.nudge_mm, dim.chamfer_3)
-        body = body.faces(">Z").workplane().center(dim.marker_offset_x_mm, dim.marker_offset_y_mm).hole(dim.marker_x_mm, depth=dim.marker_z_mm)
+        body = body.faces(">Z").workplane(centerOption="CenterOfMass").center(dim.marker_offset_x_mm, dim.marker_offset_y_mm).hole(dim.marker_x_mm, depth=dim.marker_z_mm)
         return body
 
 
@@ -141,14 +141,14 @@ class DPAK(object):
     def _build_pins(self, dim, cut_pin):
 
         pin = cq.Workplane("XZ")\
-            .workplane(offset=-(dim.pin_y_mm/2.0 + (dim.number_pins - 1) * dim.pin_pitch_mm/2.0))
+            .workplane(offset=-(dim.pin_y_mm/2.0 + (dim.number_pins - 1) * dim.pin_pitch_mm/2.0), centerOption="CenterOfMass")
         pin = Ribbon(pin, dim.pin_profile).drawRibbon().extrude(dim.pin_y_mm)
         pins = pin
         for i in range(0, dim.number_pins):
             pins = pins.union(pin.translate((0, -i * dim.pin_pitch_mm, 0)))
 
         fat_pin = cq.Workplane("XZ")\
-            .workplane(offset=-(dim.pin_fat_y_mm/2.0 + (dim.number_pins - 1) * dim.pin_pitch_mm/2.0))
+            .workplane(offset=-(dim.pin_fat_y_mm/2.0 + (dim.number_pins - 1) * dim.pin_pitch_mm/2.0), centerOption="CenterOfMass")
         fat_pin = Ribbon(fat_pin, dim.pin_profile).drawRibbon().extrude(dim.pin_fat_y_mm)
         fat_pins = fat_pin
         for i in range(0, dim.number_pins):
@@ -176,15 +176,15 @@ class DPAK(object):
         return pins
 
 
-    def _assemble_model(self, base, dim, body, tab, pins):
+    # def _assemble_model(self, base, dim, body, tab, pins):
 
-        model = {'metadata': {'name': dim.name},
-                 'parts':    {'body': {'name': body, 'colour': base['device']['body']['colour']},
-                              'tab':  {'name': tab,  'colour': base['device']['tab' ]['colour']},
-                              'pins': {'name': pins, 'colour': base['device']['pins']['colour']}
-                             }
-                }
-        return model
+    #     model = {'metadata': {'name': dim.name},
+    #              'parts':    {'body': {'name': body, 'colour': base['device']['body']['colour']},
+    #                           'tab':  {'name': tab,  'colour': base['device']['tab' ]['colour']},
+    #                           'pins': {'name': pins, 'colour': base['device']['pins']['colour']}
+    #                          }
+    #             }
+    #     return model
  
 
     def _build_model(self, base, variant, cut_pin=False, tab_linked=False, verbose=False):
@@ -193,29 +193,30 @@ class DPAK(object):
         body = self._build_body(dim)
         tab = self._build_tab(dim)
         pins = self._build_pins(dim, cut_pin)
-        model = self._assemble_model(base, dim, body, tab, pins)
-        return model
+        # model = self._assemble_model(base, dim, body, tab, pins)
+
+        return (body, tab, pins, dim.name)
 
 
-    def build_series(self, verbose=False):
-        print('Building series {p:s}\r\n'.format(p=self.config['base']['description']))
-        base = self.config['base']
-        for variant in self.config['variants']:
-            if 'uncut' in variant['centre_pin']:
-                model = self._build_model(base, variant, verbose=verbose)
-                yield model
-                model = self._build_model(base, variant, tab_linked=True, verbose=verbose)
-                yield model
-            if 'cut' in variant['centre_pin']:
-                model = self._build_model(base, variant, cut_pin=True, verbose=verbose)
-                yield model
+    def build_series(self, base, variant, verbose=False):
+        # print('Building series {p:s}\r\n'.format(p=self.config['base']['description']))
+        # base = self.config['base']
+        # for variant in self.config['variants']:
+        if 'uncut' in variant['centre_pin']:
+            # model = self._build_model(base, variant, verbose=verbose)
+            # yield model
+            return self._build_model(base, variant, tab_linked=True, verbose=verbose)
+            # yield model
+        if 'cut' in variant['centre_pin']:
+            return self._build_model(base, variant, cut_pin=True, verbose=verbose)
+            # yield model
 
 
 class TO252(DPAK):
 
-    def __init__(self, config_file):
-        self.SERIES = 'TO-252'
-        self.config = self._load_config(config_file)
+    # def __init__(self, config_file):
+    #     self.SERIES = 'TO-252'
+    #     self.config = self._load_config(config_file)
 
 
     def _get_dimensions(self, base, variant, cut_pin=False, tab_linked=False):
@@ -269,10 +270,9 @@ class TO252(DPAK):
 
 
 class TO263(DPAK):
-
-    def __init__(self, config_file):
-        self.SERIES = 'TO-263'
-        self.config = self._load_config(config_file)
+    # def __init__(self, config_file):
+    #     self.SERIES = 'TO-263'
+    #     self.config = self._load_config(config_file)
 
 
     def _get_dimensions(self, base, variant, cut_pin=False, tab_linked=False):
@@ -293,10 +293,9 @@ class TO263(DPAK):
 
 
 class TO268(DPAK):
-
-    def __init__(self, config_file):
-        self.SERIES = 'TO-268'
-        self.config = self._load_config(config_file)
+    # def __init__(self, config_file):
+    #     self.SERIES = 'TO-268'
+    #     self.config = self._load_config(config_file)
 
 
     def _get_dimensions(self, base, variant, cut_pin=False, tab_linked=False):
@@ -317,7 +316,7 @@ class TO268(DPAK):
 
     def _build_body(self, dim):
 
-        body = cq.Workplane("XY").workplane(offset=dim.nudge_mm).moveTo(dim.body_centre_x_mm, 0)\
+        body = cq.Workplane("XY").workplane(offset=dim.nudge_mm, centerOption="CenterOfMass").moveTo(dim.body_centre_x_mm, 0)\
             .rect(dim.body_x_mm, dim.body_y_mm).extrude(dim.body_z_mm)\
             .faces(">X").edges("|Z").chamfer(dim.body_corner_mm)
 
@@ -330,9 +329,9 @@ class TO268(DPAK):
         body = body.faces(">X").edges(">Z").chamfer(dim.chamfer_1, dim.chamfer_2)
         body = body.faces("<X").edges(">Z").chamfer(dim.chamfer_1, dim.chamfer_2)
 
-        body = body.faces(">Z").workplane().center(dim.marker_offset_x_mm, 0).hole(dim.marker_x_mm, depth=dim.marker_z_mm)
-        body = body.faces(">Z").workplane().center(-dim.marker_offset_x_mm, dim.body_y_mm / 4.0).hole(dim.marker_x_mm, depth=dim.marker_z_mm)
-        body = body.faces(">Z").workplane().center(-dim.marker_offset_x_mm, -dim.body_y_mm / 4.0).hole(dim.marker_x_mm, depth=dim.marker_z_mm)
+        body = body.faces(">Z").workplane(centerOption="CenterOfMass").center(dim.marker_offset_x_mm, 0).hole(dim.marker_x_mm, depth=dim.marker_z_mm)
+        body = body.faces(">Z").workplane(centerOption="CenterOfMass").center(-dim.marker_offset_x_mm, dim.body_y_mm / 4.0).hole(dim.marker_x_mm, depth=dim.marker_z_mm)
+        body = body.faces(">Z").workplane(centerOption="CenterOfMass").center(-dim.marker_offset_x_mm, -dim.body_y_mm / 4.0).hole(dim.marker_x_mm, depth=dim.marker_z_mm)
 
         return body
 
@@ -356,10 +355,9 @@ class TO268(DPAK):
 
 
 class ATPAK(DPAK):
-
-    def __init__(self, config_file):
-        self.SERIES = 'ATPAK'
-        self.config = self._load_config(config_file)
+    # def __init__(self, config_file):
+    #     self.SERIES = 'ATPAK'
+    #     self.config = self._load_config(config_file)
 
 
     def _get_dimensions(self, base, variant, cut_pin=False, tab_linked=False):
@@ -380,10 +378,9 @@ class ATPAK(DPAK):
 
 
 class HSOF8(DPAK):
-
-    def __init__(self, config_file):
-        self.SERIES = 'HSOF-8'
-        self.config = self._load_config(config_file)
+    # def __init__(self, config_file):
+    #     self.SERIES = 'HSOF-8'
+    #     self.config = self._load_config(config_file)
 
 
     def _get_dimensions(self, base, variant, cut_pin=False, tab_linked=False):
@@ -405,17 +402,17 @@ class HSOF8(DPAK):
 
     def _build_body(self, dim):
 
-        body = cq.Workplane("XY").workplane(offset=dim.nudge_mm).moveTo(dim.body_centre_x_mm, 0)\
+        body = cq.Workplane("XY").workplane(offset=dim.nudge_mm, centerOption="CenterOfMass").moveTo(dim.body_centre_x_mm, 0)\
             .rect(dim.body_x_mm, dim.body_y_mm).extrude(dim.body_z_mm)
 
         # TODO replace hard-coded numbers
         c1 = cq.Workplane("XY")\
-            .workplane(offset=dim.tab_z_mm)\
+            .workplane(offset=dim.tab_z_mm, centerOption="CenterOfMass")\
             .moveTo(0.64, dim.body_y_mm / 2.0)\
             .rect(3.3, 0.4 * 2.0)\
             .extrude(dim.body_z_mm)
         c2 = cq.Workplane("XY")\
-            .workplane(offset=dim.tab_z_mm)\
+            .workplane(offset=dim.tab_z_mm, centerOption="CenterOfMass")\
             .moveTo(0.64, -dim.body_y_mm / 2.0)\
             .rect(3.3, 0.4 * 2.0)\
             .extrude(dim.body_z_mm)
@@ -430,14 +427,14 @@ class HSOF8(DPAK):
         body = body.faces(">X").edges(">Z").chamfer(dim.chamfer_1, dim.chamfer_2)
         body = body.faces("<X").edges(">Z").chamfer(dim.chamfer_1, dim.chamfer_2)
 
-        body = body.faces(">Z").workplane().center(dim.marker_offset_x_mm, 0).hole(dim.marker_x_mm, depth=dim.marker_z_mm)
+        body = body.faces(">Z").workplane(centerOption="CenterOfMass").center(dim.marker_offset_x_mm, 0).hole(dim.marker_x_mm, depth=dim.marker_z_mm)
         return body
 
 
     def _build_pins(self, dim, cut_pin):
 
         pin = cq.Workplane("XZ")\
-            .workplane(offset=-(dim.pin_y_mm/2.0 + (dim.number_pins - 1) * dim.pin_pitch_mm/2.0))
+            .workplane(offset=-(dim.pin_y_mm/2.0 + (dim.number_pins - 1) * dim.pin_pitch_mm/2.0), centerOption="CenterOfMass")
         pin = Ribbon(pin, dim.pin_profile).drawRibbon().extrude(dim.pin_y_mm)
         pins = pin
         for i in range(0, dim.number_pins):
@@ -478,25 +475,24 @@ class HSOF8(DPAK):
         return tab
 
 
-    def build_series(self, verbose=False):
-        print('Building series {p:s}\r\n'.format(p=self.config['base']['description']))
-        base = self.config['base']
-        for variant in self.config['variants']:
-            if 'uncut' in variant['centre_pin']:
-                model = self._build_model(base, variant, verbose=verbose)
-                yield model
-                # model = self._build_model(base, variant, tab_linked=True, verbose=verbose)
-                # yield model
-            if 'cut' in variant['centre_pin']:
-                model = self._build_model(base, variant, cut_pin=True, verbose=verbose)
-                yield model
+    # def build_series(self, verbose=False):
+    #     print('Building series {p:s}\r\n'.format(p=self.config['base']['description']))
+    #     base = self.config['base']
+    #     for variant in self.config['variants']:
+    #         if 'uncut' in variant['centre_pin']:
+    #             model = self._build_model(base, variant, verbose=verbose)
+    #             yield model
+    #             # model = self._build_model(base, variant, tab_linked=True, verbose=verbose)
+    #             # yield model
+    #         if 'cut' in variant['centre_pin']:
+    #             model = self._build_model(base, variant, cut_pin=True, verbose=verbose)
+    #             yield model
 
 
 class SOT669(DPAK):
-
-    def __init__(self, config_file):
-        self.SERIES = 'SOT-669'
-        self.config = self._load_config(config_file)
+    # def __init__(self, config_file):
+    #     self.SERIES = 'SOT-669'
+    #     self.config = self._load_config(config_file)
 
 
     def _get_dimensions(self, base, variant, cut_pin=False, tab_linked=False):
@@ -551,23 +547,22 @@ class SOT669(DPAK):
         return tab
 
 
-    def build_series(self, verbose=False):
-        print('Building series {p:s}\r\n'.format(p=self.config['base']['description']))
-        base = self.config['base']
-        for variant in self.config['variants']:
-            if 'uncut' in variant['centre_pin']:
-                model = self._build_model(base, variant, verbose=verbose)
-                yield model
-            if 'cut' in variant['centre_pin']:
-                model = self._build_model(base, variant, cut_pin=True, verbose=verbose)
-                yield model
+    # def build_series(self, verbose=False):
+    #     print('Building series {p:s}\r\n'.format(p=self.config['base']['description']))
+    #     base = self.config['base']
+    #     for variant in self.config['variants']:
+    #         if 'uncut' in variant['centre_pin']:
+    #             model = self._build_model(base, variant, verbose=verbose)
+    #             yield model
+    #         if 'cut' in variant['centre_pin']:
+    #             model = self._build_model(base, variant, cut_pin=True, verbose=verbose)
+    #             yield model
 
 
 class SOT89(DPAK):
-
-    def __init__(self, config_file):
-        self.SERIES = 'SOT-89'
-        self.config = self._load_config(config_file)
+    # def __init__(self, config_file):
+    #     self.SERIES = 'SOT-89'
+    #     self.config = self._load_config(config_file)
 
 
     def _get_dimensions(self, base, variant, cut_pin=False, tab_linked=False):
@@ -589,17 +584,17 @@ class SOT89(DPAK):
 
     def _build_body(self, dim):
 
-        body = cq.Workplane("XY").workplane(offset=dim.nudge_mm).moveTo(dim.body_centre_x_mm, 0)\
+        body = cq.Workplane("XY").workplane(offset=dim.nudge_mm, centerOption="CenterOfMass").moveTo(dim.body_centre_x_mm, 0)\
             .rect(dim.body_x_mm, dim.body_y_mm).extrude(dim.body_z_mm)
         body = body.faces(">Z").edges(">Z").chamfer(dim.chamfer_2, dim.chamfer_1)
-        body = body.faces(">Z").workplane().center(dim.marker_offset_x_mm, dim.marker_offset_y_mm).hole(dim.marker_x_mm, depth=dim.marker_z_mm)
+        body = body.faces(">Z").workplane(centerOption="CenterOfMass").center(dim.marker_offset_x_mm, dim.marker_offset_y_mm).hole(dim.marker_x_mm, depth=dim.marker_z_mm)
         return body
 
 
     def _build_pins(self, dim, cut_pin):
 
         pin = cq.Workplane("XZ")\
-            .workplane(offset=-(dim.pin_y_mm/2.0 + (dim.number_pins - 1) * dim.pin_pitch_mm/2.0))
+            .workplane(offset=-(dim.pin_y_mm/2.0 + (dim.number_pins - 1) * dim.pin_pitch_mm/2.0), centerOption="CenterOfMass")
         pin = Ribbon(pin, dim.pin_profile).drawRibbon().extrude(dim.pin_y_mm)
         pins = pin
         for i in range(0, dim.number_pins):
@@ -612,65 +607,65 @@ class SOT89(DPAK):
         return pins
 
 
-    def build_series(self, verbose=False):
-        print('Building series {p:s}\r\n'.format(p=self.config['base']['description']))
-        base = self.config['base']
-        for variant in self.config['variants']:
-            if 'uncut' in variant['centre_pin']:
-                model = self._build_model(base, variant, verbose=verbose)
-                yield model
-            if 'cut' in variant['centre_pin']:
-                model = self._build_model(base, variant, cut_pin=True, verbose=verbose)
-                yield model
+    # def build_series(self, verbose=False):
+    #     print('Building series {p:s}\r\n'.format(p=self.config['base']['description']))
+    #     base = self.config['base']
+    #     for variant in self.config['variants']:
+    #         if 'uncut' in variant['centre_pin']:
+    #             model = self._build_model(base, variant, verbose=verbose)
+    #             yield model
+    #         if 'cut' in variant['centre_pin']:
+    #             model = self._build_model(base, variant, cut_pin=True, verbose=verbose)
+    #             yield model
 
 
-class Factory(object):
+# class Factory(object):
 
-    def __init__(self, config_file):
-        self.config_file = config_file
-
-
-    def _parse_command_line(self):
-        parser = argparse.ArgumentParser(description='Select which packages to build')
-        parser.add_argument('package', nargs=argparse.REMAINDER, help='package type to build (e.g. TO252) (default is all types)')
-        args = parser.parse_args()
-        return args
+#     def __init__(self, config_file):
+#         self.config_file = config_file
 
 
-    def get_build_list(self):
-        args = self._parse_command_line()
-        packages = args.package[1:]  # remove program name, which is returned as first argument
-        if not packages:
-            build_list = [TO252(self.config_file), TO263(self.config_file), TO268(self.config_file), ATPAK(self.config_file), HSOF8(self.config_file), SOT669(self.config_file), SOT89(self.config_file)]
-        else:
-            build_list = []
-            if 'TO252' in packages:
-                build_list.append(TO252(self.config_file))
-            if 'TO263' in packages:
-                build_list.append(TO263(self.config_file))
-            if 'TO268' in packages:
-                build_list.append(TO268(self.config_file))
-            if 'ATPAK' in packages:
-                build_list.append(ATPAK(self.config_file))
-            if 'HSOF8' in packages:
-                build_list.append(HSOF8(self.config_file))
-            if 'SOT669' in packages:
-                build_list.append(SOT669(self.config_file))
-            if 'SOT89' in packages:
-                build_list.append(SOT89(self.config_file))
-        return build_list
+#     def _parse_command_line(self):
+#         parser = argparse.ArgumentParser(description='Select which packages to build')
+#         parser.add_argument('package', nargs=argparse.REMAINDER, help='package type to build (e.g. TO252) (default is all types)')
+#         args = parser.parse_args()
+#         return args
+
+
+#     def get_build_list(self):
+#         args = self._parse_command_line()
+#         packages = args.package[1:]  # remove program name, which is returned as first argument
+#         if not packages:
+#             build_list = [TO252(self.config_file), TO263(self.config_file), TO268(self.config_file), ATPAK(self.config_file), HSOF8(self.config_file), SOT669(self.config_file), SOT89(self.config_file)]
+#         else:
+#             build_list = []
+#             if 'TO252' in packages:
+#                 build_list.append(TO252(self.config_file))
+#             if 'TO263' in packages:
+#                 build_list.append(TO263(self.config_file))
+#             if 'TO268' in packages:
+#                 build_list.append(TO268(self.config_file))
+#             if 'ATPAK' in packages:
+#                 build_list.append(ATPAK(self.config_file))
+#             if 'HSOF8' in packages:
+#                 build_list.append(HSOF8(self.config_file))
+#             if 'SOT669' in packages:
+#                 build_list.append(SOT669(self.config_file))
+#             if 'SOT89' in packages:
+#                 build_list.append(SOT89(self.config_file))
+#         return build_list
 
 
 # opened from within FreeCAD
-if "module" in __name__:
+# if "module" in __name__:
 
-    print("Started from CadQuery workbench ...")
+#     print("Started from CadQuery workbench ...")
 
-    CONFIG = '{path:s}/DPAK_config.yaml'.format(path=os.environ.get("MYSCRIPT_DIR"))
-    series = HSOF8(CONFIG)
-    model = series.build_series(verbose=True).next()
+#     CONFIG = '{path:s}/DPAK_config.yaml'.format(path=os.environ.get("MYSCRIPT_DIR"))
+#     series = HSOF8(CONFIG)
+#     model = series.build_series(verbose=True).next()
 
-    for key in model.keys():
-        if key is not '__name':
-            show(model[key]['part'])
+#     for key in model.keys():
+#         if key is not '__name':
+#             show(model[key]['part'])
 

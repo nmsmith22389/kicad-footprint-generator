@@ -1,32 +1,35 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import battery_common
-from battery_common import *
+import math
+import cadquery as cq
+
+# import battery_common
+from .battery_common import *
     
-import battery_pins
-from battery_pins import *
+# import battery_pins
+from .battery_pins import *
 
 
 def make_case_Button1(params):
 
-    manufacture = params.manufacture    # Model name
-    serie = params.serie                # Model name
-    cellsize = params.cellsize          # Battery type
-    cellcnt = params.cellcnt      # Number of battery
-    L = params.L                        # Package width
-    W = params.W                        # Package width
-    H = params.H                        # Package height
-    LC = params.LC                      # Large circle [x pos, y pos, outer diameter, inner diameter, height]
-    BC = params.BC                      # Blend height
-    A1 = params.A1                      # package board seperation
-    pins = params.pins                  # Pins tht/smd, x pos, y pos, 'round/rect', diameter/x size, y size, length
-    npthpins = params.npthpins          # npth holes
-    socket = params.socket              # 'type', centre diameter, length, height
-    spigot = params.spigot              # Spigot, distance from edge to pin 1, height
-    topear = params.topear              # Top ear
-    rotation = params.rotation          # Rotation if required
-    modelname = params.modelname        # Model name
+    # manufacture = params.manufacture     # Model name
+    # serie = params.serie                 # Model name
+    # cellsize = params.cellsize           # Battery type
+    # cellcnt = params.cellcnt             # Number of battery
+    # L = params.L                         # Package width
+    # W = params.W                         # Package width
+    # H = params.H                         # Package height
+    LC = params["LC"]                      # Large circle [x pos, y pos, outer diameter, inner diameter, height]
+    BC = params["BC"]                      # Blend height
+    A1 = params["A1"]                      # package board seperation
+    # pins = params.pins                   # Pins tht/smd, x pos, y pos, 'round/rect', diameter/x size, y size, length
+    npthpins = params["npthpins"]          # npth holes
+    # socket = params.socket               # 'type', centre diameter, length, height
+    spigot = params["spigot"]              # Spigot, distance from edge to pin 1, height
+    # topear = params.topear               # Top ear
+    rotation = params["rotation"]          # Rotation if required
+    # modelname = params.modelname         # Model name
 
     A11 = get_body_offset(params)
     #
@@ -119,24 +122,23 @@ def make_case_Button1(params):
 
 
 def make_case_Button2(params):
-
-    manufacture = params.manufacture    # Model name
-    serie = params.serie                # Model name
-    cellsize = params.cellsize          # Battery type
-    cellcnt = params.cellcnt      # Number of battery
-    L = params.L                        # Package width
-    W = params.W                        # Package width
-    H = params.H                        # Package height
-    LC = params.LC                      # Large circle [x pos, y pos, outer diameter, inner diameter, height]
-    BC = params.BC                      # Blend height
-    A1 = params.A1                      # package board seperation
-    pins = params.pins                  # Pins tht/smd, x pos, y pos, 'round/rect', diameter/x size, y size, length
-    npthpins = params.npthpins          # npth holes
-    socket = params.socket              # 'type', centre diameter, length, height
-    spigot = params.spigot              # Spigot, distance from edge to pin 1, height
-    topear = params.topear              # Top ear
-    rotation = params.rotation          # Rotation if required
-    modelname = params.modelname        # Model name
+    # manufacture = params.manufacture    # Model name
+    # serie = params.serie                # Model name
+    # cellsize = params.cellsize          # Battery type
+    # cellcnt = params.cellcnt      # Number of battery
+    L = params['L']                        # Package width
+    W = params['W']                        # Package width
+    H = params['H']                        # Package height
+    LC = params['LC']                      # Large circle [x pos, y pos, outer diameter, inner diameter, height]
+    # BC = params.BC                      # Blend height
+    A1 = params['A1']                      # package board seperation
+    # pins = params.pins                  # Pins tht/smd, x pos, y pos, 'round/rect', diameter/x size, y size, length
+    npthpins = params['npthpins']          # npth holes
+    # socket = params.socket              # 'type', centre diameter, length, height
+    spigot = params['spigot']              # Spigot, distance from edge to pin 1, height
+    # topear = params.topear              # Top ear
+    rotation = params['rotation']          # Rotation if required
+    # modelname = params.modelname        # Model name
 
     A11 = get_body_offset(params)
     #
@@ -228,23 +230,23 @@ def make_case_Button2(params):
 
 def make_case_Button3(params):
 
-    manufacture = params.manufacture    # Model name
-    serie = params.serie                # Model name
-    cellsize = params.cellsize          # Battery type
-    cellcnt = params.cellcnt      # Number of battery
-    L = params.L                        # Package width
-    W = params.W                        # Package width
-    H = params.H                        # Package height
-    LC = params.LC                      # Large circle [x pos, y pos, outer diameter, inner diameter, height]
-    BC = params.BC                      # Blend height
-    A1 = params.A1                      # package board seperation
-    pins = params.pins                  # Pins tht/smd, x pos, y pos, 'round/rect', diameter/x size, y size, length
-    npthpins = params.npthpins          # npth holes
-    socket = params.socket              # 'type', centre diameter, length, height
-    spigot = params.spigot              # Spigot, distance from edge to pin 1, height
-    topear = params.topear              # Top ear
-    rotation = params.rotation          # Rotation if required
-    modelname = params.modelname        # Model name
+    # manufacture = params.manufacture    # Model name
+    # serie = params.serie                # Model name
+    # cellsize = params.cellsize          # Battery type
+    # cellcnt = params.cellcnt      # Number of battery
+    L = params['L']                        # Package width
+    W = params['W']                        # Package width
+    H = params['H']                        # Package height
+    LC = params['LC']                      # Large circle [x pos, y pos, outer diameter, inner diameter, height]
+    # BC = params.BC                      # Blend height
+    A1 = params['A1']                      # package board seperation
+    # pins = params.pins                  # Pins tht/smd, x pos, y pos, 'round/rect', diameter/x size, y size, length
+    npthpins = params['npthpins']          # npth holes
+    # socket = params.socket              # 'type', centre diameter, length, height
+    spigot = params['spigot']              # Spigot, distance from edge to pin 1, height
+    # topear = params.topear              # Top ear
+    rotation = params['rotation']          # Rotation if required
+    # modelname = params.modelname        # Model name
 
     A11 = get_body_offset(params)
     #
@@ -272,7 +274,7 @@ def make_case_Button3(params):
     case1 = cq.Workplane("XY").workplane(offset=A1 + A11 + 1.0).moveTo(x1, y1).circle(id / 2.0, False).extrude(hh + 2.0)
     case = case.cut(case1)
 
-    FreeCAD.Console.PrintMessage('make_case_Button2 2\r\n')
+    print('make_case_Button2 2\r\n')
     
     #
     # Cut the sides
@@ -327,23 +329,23 @@ def make_case_Button3(params):
 
 def make_case_Button4(params):
 
-    manufacture = params.manufacture    # Model name
-    serie = params.serie                # Model name
-    cellsize = params.cellsize          # Battery type
-    cellcnt = params.cellcnt      # Number of battery
-    L = params.L                        # Package width
-    W = params.W                        # Package width
-    H = params.H                        # Package height
-    LC = params.LC                      # Large circle [x pos, y pos, outer diameter, inner diameter, height]
-    BC = params.BC                      # Blend height
-    A1 = params.A1                      # package board seperation
-    pins = params.pins                  # Pins tht/smd, x pos, y pos, 'round/rect', diameter/x size, y size, length
-    npthpins = params.npthpins          # npth holes
-    socket = params.socket              # 'type', centre diameter, length, height
-    spigot = params.spigot              # Spigot, distance from edge to pin 1, height
-    topear = params.topear              # Top ear
-    rotation = params.rotation          # Rotation if required
-    modelname = params.modelname        # Model name
+    # manufacture = params.manufacture    # Model name
+    # serie = params.serie                # Model name
+    # cellsize = params.cellsize          # Battery type
+    # cellcnt = params.cellcnt      # Number of battery
+    # L = params.L                        # Package width
+    # W = params.W                        # Package width
+    # H = params.H                        # Package height
+    # LC = params.LC                      # Large circle [x pos, y pos, outer diameter, inner diameter, height]
+    # BC = params.BC                      # Blend height
+    A1 = params['A1']                      # package board seperation
+    # pins = params.pins                  # Pins tht/smd, x pos, y pos, 'round/rect', diameter/x size, y size, length
+    # npthpins = params.npthpins          # npth holes
+    # socket = params.socket              # 'type', centre diameter, length, height
+    # spigot = params.spigot              # Spigot, distance from edge to pin 1, height
+    # topear = params.topear              # Top ear
+    # rotation = params.rotation          # Rotation if required
+    # modelname = params.modelname        # Model name
 
     A11 = get_body_offset(params)
     #

@@ -46,12 +46,16 @@
 #****************************************************************************
 
 
-import cq_common  # modules parameters
-from cq_common import *
+import cadquery as cq
+
+# import cq_common  # modules parameters
+from .cq_common import *
 
 import sys
 import math
 
+from collections import namedtuple
+from collections.abc import Mapping
 
 class cq_audio_jack_neutrik():
 
@@ -59,100 +63,100 @@ class cq_audio_jack_neutrik():
         x = 0
 
         
-    def get_model_name(self, modelID):
-        for n in self.all_params:
-            if n == modelID:
-                return self.all_params[modelID].modelName
-        return 'xxUNKNOWNxxx'
+    # def get_model_name(self, modelID):
+    #     for n in self.all_params:
+    #         if n == modelID:
+    #             return self.all_params[modelID].modelName
+    #     return 'xxUNKNOWNxxx'
 
         
-    def get_dest_3D_dir(self, modelID):
-        for n in self.all_params:
-            if n == modelID:
-                return self.all_params[modelID].dest_dir_prefix
-        return 'Capacitor_SMD.3dshapes'
+    # def get_dest_3D_dir(self, modelID):
+    #     for n in self.all_params:
+    #         if n == modelID:
+    #             return self.all_params[modelID].dest_dir_prefix
+    #     return 'Capacitor_SMD.3dshapes'
 
-    def model_exist(self, modelID):
-        for n in self.all_params:
-            if n == modelID:
-                return True
+    # def model_exist(self, modelID):
+    #     for n in self.all_params:
+    #         if n == modelID:
+    #             return True
                 
-        return False
+    #     return False
         
         
-    def get_list_all(self):
-        list = []
-        for n in self.all_params:
-            list.append(n)
+    # def get_list_all(self):
+    #     list = []
+    #     for n in self.all_params:
+    #         list.append(n)
         
-        return list
+    #     return list
 
         
-    def make_3D_model(self, modelID):
+    # def make_3D_model(self, modelID):
         
-        destination_dir = self.get_dest_3D_dir(modelID)
-        params = self.all_params[modelID]
+    #     destination_dir = self.get_dest_3D_dir(modelID)
+    #     params = self.all_params[modelID]
 
-        if modelID == 'Jack_6_35mm_Neutrik':
-            case_top = self.make_top_Jack_3_5mm_Neutrik(params)
-            show(case_top)
-            case = self.make_case_Jack_3_5mm_Neutrik(params)
-            show(case)
-        else:
-            FreeCAD.Console.PrintMessage('\r\n')
-            FreeCAD.Console.PrintMessage('ERROR: Model ID ' + str(modelID) + ' does not exist, exiting')
-            FreeCAD.Console.PrintMessage('\r\n')
-            sys.exit()
+    #     if modelID == 'Jack_6_35mm_Neutrik':
+    #         case_top = self.make_top_Jack_3_5mm_Neutrik(params)
+    #         show(case_top)
+    #         case = self.make_case_Jack_3_5mm_Neutrik(params)
+    #         show(case)
+    #     else:
+    #         FreeCAD.Console.PrintMessage('\r\n')
+    #         FreeCAD.Console.PrintMessage('ERROR: Model ID ' + str(modelID) + ' does not exist, exiting')
+    #         FreeCAD.Console.PrintMessage('\r\n')
+    #         sys.exit()
             
-        pins = self.make_pin(params)
-        show(pins)
+    #     pins = self.make_pin(params)
+    #     show(pins)
             
-        npth_pins = self.make_npth_pins_dummy(params)
-        show(npth_pins)
+    #     npth_pins = self.make_npth_pins_dummy(params)
+    #     show(npth_pins)
      
-        doc = FreeCAD.ActiveDocument
-        objs=GetListOfObjects(FreeCAD, doc)
+    #     doc = FreeCAD.ActiveDocument
+    #     objs=GetListOfObjects(FreeCAD, doc)
      
-        body_top_color_key = params.body_top_color_key
-        body_color_key = params.body_color_key
-        pin_color_key = params.pin_color_key
-        npth_pin_color_key = params.npth_pin_color_key
+    #     body_top_color_key = params.body_top_color_key
+    #     body_color_key = params.body_color_key
+    #     pin_color_key = params.pin_color_key
+    #     npth_pin_color_key = params.npth_pin_color_key
 
-        body_top_color = shaderColors.named_colors[body_top_color_key].getDiffuseFloat()
-        body_color = shaderColors.named_colors[body_color_key].getDiffuseFloat()
-        pin_color = shaderColors.named_colors[pin_color_key].getDiffuseFloat()
-        npth_pin_color = shaderColors.named_colors[npth_pin_color_key].getDiffuseFloat()
+    #     body_top_color = shaderColors.named_colors[body_top_color_key].getDiffuseFloat()
+    #     body_color = shaderColors.named_colors[body_color_key].getDiffuseFloat()
+    #     pin_color = shaderColors.named_colors[pin_color_key].getDiffuseFloat()
+    #     npth_pin_color = shaderColors.named_colors[npth_pin_color_key].getDiffuseFloat()
 
-        Color_Objects(Gui,objs[0],body_top_color)
-        Color_Objects(Gui,objs[1],body_color)
-        Color_Objects(Gui,objs[2],pin_color)
-        Color_Objects(Gui,objs[3],npth_pin_color)
+    #     Color_Objects(Gui,objs[0],body_top_color)
+    #     Color_Objects(Gui,objs[1],body_color)
+    #     Color_Objects(Gui,objs[2],pin_color)
+    #     Color_Objects(Gui,objs[3],npth_pin_color)
 
-        col_body_top=Gui.ActiveDocument.getObject(objs[0].Name).DiffuseColor[0]
-        col_body=Gui.ActiveDocument.getObject(objs[1].Name).DiffuseColor[0]
-        col_pin=Gui.ActiveDocument.getObject(objs[2].Name).DiffuseColor[0]
-        col_npth_pin=Gui.ActiveDocument.getObject(objs[3].Name).DiffuseColor[0]
+    #     col_body_top=Gui.ActiveDocument.getObject(objs[0].Name).DiffuseColor[0]
+    #     col_body=Gui.ActiveDocument.getObject(objs[1].Name).DiffuseColor[0]
+    #     col_pin=Gui.ActiveDocument.getObject(objs[2].Name).DiffuseColor[0]
+    #     col_npth_pin=Gui.ActiveDocument.getObject(objs[3].Name).DiffuseColor[0]
         
-        material_substitutions={
-            col_body_top[:-1]:body_top_color_key,
-            col_body[:-1]:body_color_key,
-            col_pin[:-1]:pin_color_key,
-            col_npth_pin[:-1]:npth_pin_color_key
-        }
+    #     material_substitutions={
+    #         col_body_top[:-1]:body_top_color_key,
+    #         col_body[:-1]:body_color_key,
+    #         col_pin[:-1]:pin_color_key,
+    #         col_npth_pin[:-1]:npth_pin_color_key
+    #     }
         
-        expVRML.say(material_substitutions)
-        while len(objs) > 1:
-                FuseObjs_wColors(FreeCAD, FreeCADGui, doc.Name, objs[0].Name, objs[1].Name)
-                del objs
-                objs = GetListOfObjects(FreeCAD, doc)
+    #     expVRML.say(material_substitutions)
+    #     while len(objs) > 1:
+    #             FuseObjs_wColors(FreeCAD, FreeCADGui, doc.Name, objs[0].Name, objs[1].Name)
+    #             del objs
+    #             objs = GetListOfObjects(FreeCAD, doc)
 
-        return material_substitutions
+    #     return material_substitutions
 
 
     def make_npth_pins_dummy(self, params):
 
-        A1 = params.A1                      # package height
-        rotation = params.rotation          # Rotation if required
+        A1 = params['A1']                      # package height
+        rotation = params['rotation']          # Rotation if required
 
         # Dummy
         case = cq.Workplane("XY").workplane(offset=A1 + 0.2).moveTo(0.0, 0.0).circle(0.01, False).extrude(0.01)
@@ -165,23 +169,23 @@ class cq_audio_jack_neutrik():
 
     def make_top_Jack_3_5mm_Neutrik(self, params):
 
-        W = params.W                # Width
-        L = params.L                # Length
-        H = params.H                # Height
-        BX = params.BX              # Body center X
-        BY = params.BY              # Body center Y
-        AX = params.AX              # Appendix center X
-        AY = params.AY              # Appendix center Y
-        AZ = params.AZ              # Appendix center Z
-        AW = params.AW              # Appendix width
-        AL = params.AL              # Appendix length
-        AW1 = params.AW1            # Appendix width 1
-        AL1 = params.AL1            # Appendix length 1
-        AW2 = params.AW2            # Appendix width 2
-        AL2 = params.AL2            # Appendix length 2
-        pin = params.pin            # pin
-        A1 = params.A1              # package height
-        rotation = params.rotation  # Rotation if required
+        W = params['W']                # Width
+        L = params['L']                # Length
+        H = params['H']                # Height
+        BX = params['BX']              # Body center X
+        BY = params['BY']              # Body center Y
+        AX = params['AX']              # Appendix center X
+        AY = params['AY']              # Appendix center Y
+        AZ = params['AZ']              # Appendix center Z
+        AW = params['AW']              # Appendix width
+        AL = params['AL']              # Appendix length
+        AW1 = params['AW1']            # Appendix width 1
+        AL1 = params['AL1']            # Appendix length 1
+        AW2 = params['AW2']            # Appendix width 2
+        AL2 = params['AL2']            # Appendix length 2
+        pin = params['pin']            # pin
+        A1 = params['A1']              # package height
+        rotation = params['rotation']  # Rotation if required
 
         #
         # Make a hexagon nut
@@ -227,23 +231,23 @@ class cq_audio_jack_neutrik():
 
     def make_case_Jack_3_5mm_Neutrik(self, params):
 
-        W = params.W                # Width
-        L = params.L                # Length
-        H = params.H                # Height
-        BX = params.BX              # Body center X
-        BY = params.BY              # Body center Y
-        AX = params.AX              # Appendix center X
-        AY = params.AY              # Appendix center Y
-        AZ = params.AZ              # Appendix center Z
-        AW = params.AW              # Appendix width
-        AL = params.AL              # Appendix length
-        AW1 = params.AW1            # Appendix width 1
-        AL1 = params.AL1            # Appendix length 1
-        AW2 = params.AW2            # Appendix width 2
-        AL2 = params.AL2            # Appendix length 2
-        pin = params.pin            # pin
-        A1 = params.A1              # package height
-        rotation = params.rotation  # Rotation if required
+        W = params['W']                # Width
+        L = params['L']                # Length
+        H = params['H']                # Height
+        BX = params['BX']              # Body center X
+        BY = params['BY']              # Body center Y
+        AX = params['AX']              # Appendix center X
+        AY = params['AY']              # Appendix center Y
+        AZ = params['AZ']              # Appendix center Z
+        AW = params['AW']              # Appendix width
+        AL = params['AL']              # Appendix length
+        AW1 = params['AW1']            # Appendix width 1
+        AL1 = params['AL1']            # Appendix length 1
+        AW2 = params['AW2']            # Appendix width 2
+        AL2 = params['AL2']            # Appendix length 2
+        pin = params['pin']            # pin
+        A1 = params['A1']              # package height
+        rotation = params['rotation']  # Rotation if required
 
         
         case = cq.Workplane("XY").workplane(offset=0.0).moveTo(0.0, 0.0).rect(W, L).extrude(H)
@@ -319,20 +323,20 @@ class cq_audio_jack_neutrik():
 
     def make_pin(self, params):
 
-        W = params.W                # Width
-        L = params.L                # Length
-        H = params.H                # Height
-        BX = params.BX              # Body center X
-        BY = params.BY              # Body center Y
-        AX = params.AX              # Appendix center X
-        AY = params.AY              # Appendix center Y
-        AZ = params.AZ              # Appendix center Z
-        AW = params.AW              # Appendix width
-        AW1 = params.AW1            # Appendix width 1
-        AL = params.AL              # Appendix length
-        pin = params.pin            # pin
-        A1 = params.A1              # package height
-        rotation = params.rotation  # Rotation if required
+        W = params['W']                # Width
+        L = params['L']                # Length
+        H = params['H']                # Height
+        BX = params['BX']              # Body center X
+        BY = params['BY']              # Body center Y
+        AX = params['AX']              # Appendix center X
+        AY = params['AY']              # Appendix center Y
+        AZ = params['AZ']              # Appendix center Z
+        AW = params['AW']              # Appendix width
+        AW1 = params['AW1']            # Appendix width 1
+        AL = params['AL']              # Appendix length
+        pin = params['pin']            # pin
+        A1 = params['A1']              # package height
+        rotation = params['rotation']  # Rotation if required
 
         case = None
         for n in pin:
@@ -399,9 +403,9 @@ class cq_audio_jack_neutrik():
     ##enabling optional/default values to None
     def namedtuple_with_defaults(typename, field_names, default_values=()):
 
-        T = collections.namedtuple(typename, field_names)
+        T = namedtuple(typename, field_names)
         T.__new__.__defaults__ = (None,) * len(T._fields)
-        if isinstance(default_values, collections.Mapping):
+        if isinstance(default_values, Mapping):
             prototype = T(**default_values)
         else:
             prototype = T(*default_values)
@@ -439,39 +443,39 @@ class cq_audio_jack_neutrik():
 
 
 
-    all_params = {
+    # all_params = {
 
-        'Jack_6_35mm_Neutrik': Params(
-            #
-            # https://www.neutrik.com/media/8582/download/st-nmj6hcd2.pdf?v=1
-            # 
-            modelName = 'Jack_6.35mm_Neutrik_NMJ6HCD2_Horizontal', # modelName
-            W = 20.61,                                      # Body width
-            L = 18.20,                                      # Body length
-            H = 08.14,                                      # Body height
-            BX = -06.40,                                    # Body center X
-            BY = 08.00,                                     # Body center Y
+    #     'Jack_6_35mm_Neutrik': Params(
+    #         #
+    #         # https://www.neutrik.com/media/8582/download/st-nmj6hcd2.pdf?v=1
+    #         # 
+    #         modelName = 'Jack_6.35mm_Neutrik_NMJ6HCD2_Horizontal', # modelName
+    #         W = 20.61,                                      # Body width
+    #         L = 18.20,                                      # Body length
+    #         H = 08.14,                                      # Body height
+    #         BX = -06.40,                                    # Body center X
+    #         BY = 08.00,                                     # Body center Y
             
-            AX = 06.40,                                     # Appendix X
-            AY = 07.78,                                     # Appendix Y
-            AZ = 08.14,                                     # Appendix Z
-            AW = 23.53,                                     # Appendix width
-            AL = 07.00,                                     # Appendix diameter
+    #         AX = 06.40,                                     # Appendix X
+    #         AY = 07.78,                                     # Appendix Y
+    #         AZ = 08.14,                                     # Appendix Z
+    #         AW = 23.53,                                     # Appendix width
+    #         AL = 07.00,                                     # Appendix diameter
 
-            AW1 = 02.00,                                    # Appendix width 1
-            AL1 = 11.00,                                    # Appendix length 1
+    #         AW1 = 02.00,                                    # Appendix width 1
+    #         AL1 = 11.00,                                    # Appendix length 1
 
-            AW2 = 01.50,                                    # Appendix width 2
-            AL2 = 15.00,                                    # Appendix length 2
+    #         AW2 = 01.50,                                    # Appendix width 2
+    #         AL2 = 15.00,                                    # Appendix length 2
 
-            A1 = 0.01,                                      # Body-board separation
+    #         A1 = 0.01,                                      # Body-board separation
 
-            pin = [['bougl', 0.0, 0.0, 1.2, 0.2, 4.0, 14.0, 30.0], ['bougl', -6.35, 0.0, 1.2, 0.2, 4.0, 14.0, 30.0], ['bougl', -12.7, 0.0, 1.2, 0.2, 4.0, 14.0, 30.0], ['bougr', 0.0, 16.23, 1.2, 0.2, 4.0, 14.0, 30.0], ['bougr', -6.35, 16.23, 1.2, 0.2, 4.0, 14.0, 30.0], ['bougr', -12.7, 16.23, 1.2, 0.2, 4.0, 14.0, 30.0]],
-            body_top_color_key  = 'metal aluminum',         # Top color
-            body_color_key      = 'black body',             # Body color
-            pin_color_key       = 'metal silver',           # Pin color
-            npth_pin_color_key  = 'grey body',              # NPTH Pin color
-            rotation = 180,                                 # Rotation if required
-            dest_dir_prefix = 'Connector_Audio.3dshapes',   # destination directory
-            ),
-    }
+    #         pin = [['bougl', 0.0, 0.0, 1.2, 0.2, 4.0, 14.0, 30.0], ['bougl', -6.35, 0.0, 1.2, 0.2, 4.0, 14.0, 30.0], ['bougl', -12.7, 0.0, 1.2, 0.2, 4.0, 14.0, 30.0], ['bougr', 0.0, 16.23, 1.2, 0.2, 4.0, 14.0, 30.0], ['bougr', -6.35, 16.23, 1.2, 0.2, 4.0, 14.0, 30.0], ['bougr', -12.7, 16.23, 1.2, 0.2, 4.0, 14.0, 30.0]],
+    #         body_top_color_key  = 'metal aluminum',         # Top color
+    #         body_color_key      = 'black body',             # Body color
+    #         pin_color_key       = 'metal silver',           # Pin color
+    #         npth_pin_color_key  = 'grey body',              # NPTH Pin color
+    #         rotation = 180,                                 # Rotation if required
+    #         dest_dir_prefix = 'Connector_Audio.3dshapes',   # destination directory
+    #         ),
+    # }

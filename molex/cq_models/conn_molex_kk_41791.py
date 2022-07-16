@@ -64,90 +64,90 @@ class LICENCE_Info():
 
 
 import cadquery as cq
-from Helpers import show
-from collections import namedtuple
-import FreeCAD
+# from Helpers import show
+# from collections import namedtuple
+# import FreeCAD
 
-class series_params():
-    series = "KK-396"
-    manufacturer = 'Molex'
-    #mpn_format_string = '26604{pincount:02d}0'
-    mpn_format_string = 'A-41791-{pincount:04d}'# old pn-name
-    orientation = 'V'
-    datasheet = 'https://www.molex.com/pdm_docs/sd/009652028_sd.pdf'
-    pinrange = range(2,19)
-    mount_pin = ''
+# class series_params():
+#     series = "KK-396"
+#     manufacturer = 'Molex'
+#     #mpn_format_string = '26604{pincount:02d}0'
+#     mpn_format_string = 'A-41791-{pincount:04d}'# old pn-name
+#     orientation = 'V'
+#     datasheet = 'https://www.molex.com/pdm_docs/sd/009652028_sd.pdf'
+#     pinrange = range(2,19)
+#     mount_pin = ''
 
-    number_of_rows = 1
+#     number_of_rows = 1
 
-    body_color_key = "white body"
-    pins_color_key = "metal grey pins"
-    color_keys = [
-        body_color_key,
-        pins_color_key
-    ]
-    obj_suffixes = [
-        '__body',
-        '__pins'
-    ]
+#     body_color_key = "white body"
+#     pins_color_key = "metal grey pins"
+#     color_keys = [
+#         body_color_key,
+#         pins_color_key
+#     ]
+#     obj_suffixes = [
+#         '__body',
+#         '__pins'
+#     ]
 
-    pitch = 3.96
+#     pitch = 3.96
 
-    pin_width = 1.14
-    pin_chamfer_long = 0.3
-    pin_chamfer_short = 0.1
-    pin_height = 18.29                          # The standart pin, other length available
-    pin_depth = 3.6                             # Depth below bottom surface of base
-    pin_inside_distance = (7.77-3.96)/2         # Distance between centre of end pin and end of body (A-B)/2
-    pin_xpos = 5.11                             # Pin and groove not exactly body centered
+#     pin_width = 1.14
+#     pin_chamfer_long = 0.3
+#     pin_chamfer_short = 0.1
+#     pin_height = 18.29                          # The standart pin, other length available
+#     pin_depth = 3.6                             # Depth below bottom surface of base
+#     pin_inside_distance = (7.77-3.96)/2         # Distance between centre of end pin and end of body (A-B)/2
+#     pin_xpos = 5.11                             # Pin and groove not exactly body centered
 
 
-    body_width = 6.88                           # The base
-    body_height = 3.3
-    body_channel_depth = 0.76
-    body_channel_width = 5.35
+#     body_width = 6.88                           # The base
+#     body_height = 3.3
+#     body_channel_depth = 0.76
+#     body_channel_width = 5.35
 
-    full_width = 10.01                          # base+ramp
-    ramp_height = 11.33                         # Full height
-    ramp_notches_pos = (
-        [],         # 0 number of pin
-        [],         # 1
-        [],         # 2
-        [],         # 3
-        [],         # 4
-        [],         # 5
-        [],         # 6
-        [4],        # 7
-        [4],        # 8
-        [5],        # 9
-        [5],        # 10
-        [6],        # 11
-        [4,8],      # 12
-        [4,9],      # 13
-        [5,9],      # 14
-        [5,10],     # 15
-        [5,11],     # 16
-        [6,11],     # 17
-        [6,12]      # 18
-    )
+#     full_width = 10.01                          # base+ramp
+#     ramp_height = 11.33                         # Full height
+#     ramp_notches_pos = (
+#         [],         # 0 number of pin
+#         [],         # 1
+#         [],         # 2
+#         [],         # 3
+#         [],         # 4
+#         [],         # 5
+#         [],         # 6
+#         [4],        # 7
+#         [4],        # 8
+#         [5],        # 9
+#         [5],        # 10
+#         [6],        # 11
+#         [4,8],      # 12
+#         [4,9],      # 13
+#         [5,9],      # 14
+#         [5,10],     # 15
+#         [5,11],     # 16
+#         [6,11],     # 17
+#         [6,12]      # 18
+#     )
     # all other mesures from Molex drawing
 
-calcDim = namedtuple( 'calcDim', ['length'])
+# calcDim = namedtuple( 'calcDim', ['length'])
 
 
-def dimensions(num_pins):
-    length = (num_pins-1) * series_params.pitch + 2 * series_params.pin_inside_distance
-    return calcDim(length = length)
+def dimensions(series_params, num_pins):
+    length = (num_pins-1) * series_params['pitch'] + 2 * series_params['pin_inside_distance']
+    return length
 
-def generate_straight_pin():
-    pin_width=series_params.pin_width
-    pin_depth=series_params.pin_depth
-    pin_height=series_params.pin_height
-    pin_xpos=series_params.pin_xpos
-    chamfer_long = series_params.pin_chamfer_long
-    chamfer_short = series_params.pin_chamfer_short
+def generate_straight_pin(series_params):
+    pin_width=series_params['pin_width']
+    pin_depth=series_params['pin_depth']
+    pin_height=series_params['pin_height']
+    pin_xpos=series_params['pin_xpos']
+    chamfer_long = series_params['pin_chamfer_long']
+    chamfer_short = series_params['pin_chamfer_short']
 
-    pin=cq.Workplane("YZ").workplane(offset=series_params.pin_inside_distance - pin_width/2)\
+    pin=cq.Workplane("YZ").workplane(offset=series_params['pin_inside_distance'] - pin_width/2)\
         .moveTo(pin_xpos-pin_width/2.0, -pin_depth)\
         .rect(pin_width, pin_height, False)\
         .extrude(pin_width)
@@ -163,31 +163,32 @@ def generate_straight_pin():
     return pin
 
 
-def generate_pins(num_pins):
-    pitch=series_params.pitch
-    pin=generate_straight_pin()
+def generate_pins(series_params, num_pins):
+    pitch=series_params['pitch']
+    pin=generate_straight_pin(series_params)
     pins = pin
     for i in range(0, num_pins):
         pins = pins.union(pin.translate((i * pitch, 0, 0)))
     return pins
 
 
-def generate_body(num_pins ,calc_dim):
+def generate_body(series_params, num_pins):
+    length = dimensions(series_params, num_pins)
 
-    pin_inside_distance = series_params.pin_inside_distance
-    pin_width = series_params.pin_width
+    pin_inside_distance = series_params['pin_inside_distance']
+    pin_width = series_params['pin_width']
 
-    body_len = calc_dim.length
-    full_width = series_params.full_width
-    body_width = series_params.body_width
-    body_height = series_params.body_height
+    body_len = length
+    full_width = series_params['full_width']
+    body_width = series_params['body_width']
+    body_height = series_params['body_height']
 
-    body_channel_depth = series_params.body_channel_depth
-    body_channel_width = series_params.body_channel_width
-    body_channel_xpos = series_params.pin_xpos
+    body_channel_depth = series_params['body_channel_depth']
+    body_channel_width = series_params['body_channel_width']
+    body_channel_xpos = series_params['pin_xpos']
 
-    ramp_height = series_params.ramp_height
-    pitch = series_params.pitch
+    ramp_height = series_params['ramp_height']
+    pitch = series_params['pitch']
 
     # Point's coordinates are mesured on the drawing model from Molex
     # 0,0 is bottom left of the _| shape (side view)
@@ -252,7 +253,7 @@ def generate_body(num_pins ,calc_dim):
     # Cut the ramp full height
     plane = body.faces(">Y").workplane()
     cuts_width = 1/3*pitch * 1.2   # *1.2 ensures a little larger than space between cuts under the base
-    for np in series_params.ramp_notches_pos[num_pins]:
+    for np in series_params['ramp_notches_pos'][num_pins]:
         body = plane.moveTo(body_len/2 - np*pitch, 0 ).rect(cuts_width, body_height+ramp_height).cutBlind(-(full_width-body_width))
 
     body = plane.moveTo(+body_len/2, 0).rect(2.5*cuts_width, body_height+ramp_height).cutBlind(-(full_width-body_width))
@@ -276,25 +277,25 @@ def generate_body(num_pins ,calc_dim):
     return body, None
 
 
-def generate_part(num_pins):
-    calc_dim = dimensions(num_pins)
-    pins = generate_pins(num_pins)
-    body, insert = generate_body(num_pins, calc_dim)
+def generate_part(series_params, num_pins):
+    length = dimensions(series_params, num_pins)
+    pins = generate_pins(series_params, num_pins)
+    body, insert = generate_body(series_params, num_pins)
 
     # adjust for matching KiCad expectation
-    body = body.rotate((0, 0, 0),(0, 0, 1), 180).translate(cq.Vector(calc_dim.length-series_params.pin_inside_distance,series_params.pin_xpos,0))
-    pins = pins.rotate((0, 0, 0),(0, 0, 1), 180).translate(cq.Vector(calc_dim.length-series_params.pin_inside_distance,series_params.pin_xpos,0))
+    body = body.rotate((0, 0, 0),(0, 0, 1), 180).translate(cq.Vector(length-series_params['pin_inside_distance'],series_params['pin_xpos'],0))
+    pins = pins.rotate((0, 0, 0),(0, 0, 1), 180).translate(cq.Vector(length-series_params['pin_inside_distance'],series_params['pin_xpos'],0))
 
-    return (body, pins)
+    return (pins, body, insert)
 
 
 # opened from within freecad
-if "module" in __name__:
-    part_to_build = 16
+# if "module" in __name__:
+#     part_to_build = 16
 
-    FreeCAD.Console.PrintMessage("Started from CadQuery: building " +
-                                 str(part_to_build) + "pin variant\n")
-    (body, pins) = generate_part(part_to_build)
+#     FreeCAD.Console.PrintMessage("Started from CadQuery: building " +
+#                                  str(part_to_build) + "pin variant\n")
+#     (body, pins) = generate_part(part_to_build)
 
-    show(pins)
-    show(body)
+#     show(pins)
+#     show(body)

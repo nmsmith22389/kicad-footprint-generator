@@ -1,20 +1,22 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import battery_common
-from battery_common import *
+import cadquery as cq
+
+# import battery_common
+from .battery_common import *
 
 
 def make_case_Seiko_MS621F(params):
 
-    A1 = params.A1              # Body PCB seperation
-    D  = params.D               # Battery diameter
-    H  = params.H               # Battery height
-    PL = params.PL              # Pad length
-    PW = params.PW              # Pad width
-    RW = params.RW              # Right width
-    MT = params.MT              # Metal thickness
-    rotation = params.rotation  # Rotation if required
+    A1 = params['A1']              # Body PCB seperation
+    D  = params['D']               # Battery diameter
+    H  = params['H']               # Battery height
+    # PL = params.PL              # Pad length
+    PW = params['PW']              # Pad width
+    RW = params['RW']              # Right width
+    MT = params['MT']              # Metal thickness
+    rotation = params['rotation']  # Rotation if required
 
     D2 = D * 0.8
     H2 = 0.075
@@ -29,17 +31,17 @@ def make_case_Seiko_MS621F(params):
     # Create body
     #
     case = cq.Workplane("XY").workplane(offset=dh).moveTo(0.0, 0.0).circle(D3 / 2.0, False).extrude(H3)
-    case.edges("<Z").fillet(H3 / 2.2)
+    case = case.edges("<Z").fillet(H3 / 2.2)
     dh = dh + H3
     #
     case1 = cq.Workplane("XY").workplane(offset=dh).moveTo(0.0, 0.0).circle(D2 / 2.0, False).extrude(H2)
-    case1.edges("<Z").fillet(H2 / 2.2)
+    case1 = case1.edges("<Z").fillet(H2 / 2.2)
     case = case.union(case1)
     dh = dh + H2
     #
     case1 = cq.Workplane("XY").workplane(offset=dh).moveTo(0.0, 0.0).circle(D / 2.0, False).extrude(H1)
-    case1.edges("<Z").fillet((H1 / 3.0))
-    case1.edges(">Z").fillet(H1 / 20.0)
+    case1 = case1.edges("<Z").fillet((H1 / 3.0))
+    case1 = case1.edges(">Z").fillet(H1 / 20.0)
     case = case.union(case1)
     dh = dh + H1
     
@@ -57,15 +59,15 @@ def make_case_Seiko_MS621F(params):
 
 def make_pins_Seiko_MS621F(params):
 
-    A1 = params.A1              # Body PCB seperation
-    D  = params.D               # Battery diameter
-    H  = params.H               # Battery height
-    PL = params.PL              # Pad length
-    PW = params.PW              # Pad width
-    RW = params.RW              # Right width
-    RW1 = params.RW1            # Right width 1
-    MT = params.MT              # Metal thickness
-    rotation = params.rotation  # Rotation if required
+    A1 = params['A1']              # Body PCB seperation
+    D  = params['D']               # Battery diameter
+    H  = params['H']               # Battery height
+    PL = params['PL']              # Pad length
+    PW = params['PW']              # Pad width
+    RW = params['RW']              # Right width
+    RW1 = params['RW1']            # Right width 1
+    MT = params['MT']              # Metal thickness
+    rotation = params['rotation']  # Rotation if required
 
     TL = 0.5 # the width of the tounghs
     D2 = D * 0.8
@@ -88,7 +90,7 @@ def make_pins_Seiko_MS621F(params):
     pts.append((D3 * 0.9 + ((D1 - D3) / 2.0) + RW, 0.0 - (PL - TL)))
     pts.append((D3 * 0.9 + ((D1 - D3) / 2.0), 0.0 - (PL - TL)))
     pts.append(((D3 * 0.9 + ((D1 -D3) / 2.0)) - (PL - TL), 0.0))
-    pin = cq.Workplane("XY").workplane(offset=0.0).polyline(pts).close().extrude(MT)
+    pin = cq.Workplane("XY").workplane(offset=0.0).polyline(pts, includeCurrent=True).close().extrude(MT)
 
     x = 0.0 - (D3 * 0.9 + ((D1 - D3) / 2.0) + RW)
     x = x + (PW / 2.0)
@@ -104,7 +106,7 @@ def make_pins_Seiko_MS621F(params):
     pts.append((0.0 - (RW1 - MT) - (RW - RW1) - (D1 * 0.6), H - MT))
     pts.append((0.0 - RW1, H - MT))
     pts.append((0.0 - RW1, 0.0))
-    pin1 = cq.Workplane("XZ").workplane(offset=0.0).polyline(pts).close().extrude(PL)
+    pin1 = cq.Workplane("XZ").workplane(offset=0.0).polyline(pts, includeCurrent=True).close().extrude(PL)
 
     case21 = cq.Workplane("XY").workplane(offset=0.0 - MT).moveTo(0.0 - (PW / 2.0), 0.0 - 1.5).rect(2.0 * PW, PL).extrude(2.0 * MT)
     pin1 = pin1.cut(case21)
@@ -115,7 +117,7 @@ def make_pins_Seiko_MS621F(params):
     pin1 = pin1.cut(case21)
 
     pin1 = pin1.translate((PW / 2.0, PL / 2.0, A1))
-    pin1.faces(">Z").edges(">X").fillet((MT / 2.0))
+    pin1 = pin1.faces(">Z").edges(">X").fillet((MT / 2.0))
     pin = pin.union(pin1)
     
     if (rotation != 0):

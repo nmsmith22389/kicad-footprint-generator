@@ -49,32 +49,32 @@
 import operator
 
 import cadquery as cq
-from Helpers import show
+# from Helpers import show
 
-import FreeCAD, Draft, FreeCADGui
-import ImportGui
-import FreeCADGui as Gui
+# import FreeCAD, Draft, FreeCADGui
+# import ImportGui
+# import FreeCADGui as Gui
 
-import shaderColors
-import exportPartToVRML as expVRML
+# import shaderColors
+# import exportPartToVRML as expVRML
 
 # Import cad_tools
-import cq_cad_tools
+# import cq_cad_tools
 # Reload tools
-from cq_cad_tools import reload_lib
-reload_lib(cq_cad_tools)
+# from .cq_cad_tools import reload_lib
+# reload_lib(cq_cad_tools)
 # Explicitly load all needed functions
-from cq_cad_tools import FuseObjs_wColors, GetListOfObjects, z_RotateObject, Color_Objects, restore_Main_Tools, exportSTEP, saveFCdoc
+# from cq_cad_tools import FuseObjs_wColors, GetListOfObjects, z_RotateObject, Color_Objects, restore_Main_Tools, exportSTEP, saveFCdoc
 
-import cq_parameters  # modules parameters
-from cq_parameters import ShapeOfTerminal, ButtonType, partParamsTactSwitches
+# import cq_parameters  # modules parameters
+from .cq_parameters import ShapeOfTerminal, ButtonType, partParamsTactSwitches
 import collections
 from collections import namedtuple
 
 
-from  cq_base_model import PartBase, Polyline  # modules parameters
+from  .cq_base_model import PartBase, Polyline  # modules parameters
 
-from cq_base_tact_switches import cqMakerTactSwitch, TactSwitchSeries, partsTactSwitches
+from .cq_base_tact_switches import cqMakerTactSwitch, TactSwitchSeries, partsTactSwitches
 
 
 class ButtonType (ButtonType):
@@ -126,9 +126,9 @@ class cqMakerUltraSmallTactSwitch (cqMakerTactSwitch):
     def __init__(self, parameter):
         cqMakerTactSwitch.__init__(self, parameter)
         
-        self.button_side_width = parameter.button_side_width if parameter.button_side_width != None else 2.6                        
-        self.button_side_height = parameter.button_side_height if parameter.button_side_height != None else 1.4                             
-        self.body_length_with_button = parameter.body_length_with_button if parameter.body_length_with_button != None else 4.5                             
+        self.button_side_width = parameter['button_side_width'] if parameter['button_side_width'] != None else 2.6                        
+        self.button_side_height = parameter['button_side_height'] if parameter['button_side_height'] != None else 1.4                             
+        self.body_length_with_button = parameter['body_length_with_button'] if parameter['body_length_with_button'] != None else 4.5                             
         #self. = parameter. if parameter. != None else                              
         
         self.pad_bottom_height = 0.3
@@ -145,7 +145,7 @@ class cqMakerUltraSmallTactSwitch (cqMakerTactSwitch):
 
         paramFunction = cqMakerTactSwitch._serieSwitcher.get(self.serie, None)
         if paramFunction == None:     # not a valid terminal_shape
-            FreeCAD.Console.PrintMessage(str(self.serie) + ' not a valid member of ' + str(TactSwitchSeries))
+            print(str(self.serie) + ' not a valid member of ' + str(TactSwitchSeries))
             self.make_me = False
         else:  # Call the funktion
             paramFunction (self)

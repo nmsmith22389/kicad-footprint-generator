@@ -1,0 +1,50 @@
+D_SMA:
+  L: 5.0  # body overall length (including terminals)
+  W: 2.7  # body overall width
+  H: 2.22  # body overall height
+  F: 1.5  # width of each termination
+  S: 1.14  # length of each termination
+  T: 0.22  # thickness of termination metal
+  G: 2.2  # length of bump underneath body
+  pml: 0.6  # pin mark length
+  model_name: D_SMA #model name
+  rotation: 90 # rotation if required
+  body_color_key: 'black body' # body color
+  mark_color_key: 'light brown label' # mark color
+  pin_color_key: 'metal grey pins' # pin color
+  destination_dir: 'Crystal.3dshapes' #destination directory
+  source: 'https://www.microcrystal.com/fileadmin/Media/Products/32kHz/Datasheet/CC1V-T1A.pdf'
+
+D_SMB:
+  L: 5.3
+  W: 3.55
+  H: 2.15
+  F: 2.0
+  S: 1.03
+  T: 0.22
+  G: 2.6
+  pml: 0.6
+  model_name: D_SMB
+  rotation: 90
+  body_color_key: 'black body'
+  mark_color_key: 'light brown label'
+  pin_color_key: 'metal grey pins'
+  destination_dir: 'Crystal.3dshapes'
+  source: 'https://www.microcrystal.com/fileadmin/Media/Products/32kHz/Datasheet/CC1V-T1A.pdf'
+
+D_SMC:
+  L: 8.0
+  W: 5.9
+  H: 2.31
+  F: 3.0
+  S: 1.14
+  T: 0.22
+  G: 5.0
+  pml: 0.6
+  model_name: D_SMC
+  rotation: 90
+  body_color_key: 'black body'
+  mark_color_key: 'light brown label'
+  pin_color_key: 'metal grey pins'
+  destination_dir: 'Crystal.3dshapes'
+  source: 'https://www.microcrystal.com/fileadmin/Media/Products/32kHz/Datasheet/CC1V-T1A.pdf'

@@ -65,15 +65,15 @@ class LICENCE_Info():
 
 
 import cadquery as cq
-from Helpers import show
+# from Helpers import show
 from collections import namedtuple
-import FreeCAD
+# import FreeCAD
 
 # maui import cadquery as cq
 # maui from Helpers import show
 from math import tan, radians, sqrt
 
-from c_rect_tht_param import *
+from .c_rect_tht_param import *
 
 class series_params():
     fp_name_format = "rect_fp_name"
@@ -102,18 +102,18 @@ def getName(params, configuration):
 all_params = kicad_naming_params_rect_th_cap
 
 def generate_part(params):
-    series = params.series # Series
-    H = params.H    # body height
-    L = params.L    # body length
-    W = params.W    # body width
-    d = params.d     # lead diameter
-    F = params.F     # lead separation (center to center)
-    ll = params.ll   # lead length
-    bs = params.bs   # board separation
+    series = params["series"] # Series
+    H = params["H"]    # body height
+    L = params["L"]    # body length
+    W = params["W"]    # body width
+    d = params["d"]     # lead diameter
+    F = params["F"]     # lead separation (center to center)
+    ll = params["ll"]   # lead length
+    bs = params["bs"]   # board separation
     ef = W/10       # top and bottom edges fillet
     pt = 0.02 # pin thickness (only for MKT)
     pb = F/20
-    rot = params.rotation
+    rot = params["rotation"]
     if series == 'MKS':
         body = cq.Workplane("XY").box(L, W, H)
         body = body.translate((0,0,H/2)).rotate((0,0,0), (0,0,1), 0). \

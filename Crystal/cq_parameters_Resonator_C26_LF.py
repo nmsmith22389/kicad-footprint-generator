@@ -46,14 +46,17 @@
 #****************************************************************************
 
 
-import cq_parameters  # modules parameters
-from cq_parameters import *
+# import cq_parameters  # modules parameters
+# from cq_parameters import *
 
 import math
-from math import tan, cos, sin, radians, sqrt, atan
+from math import sqrt #tan, cos, sin, radians, sqrt, atan
 
-import cq_base_model  # modules parameters
-from cq_base_model import *
+# import cq_base_model  # modules parameters
+from .cq_base_model import *
+
+from collections import namedtuple
+from collections.abc import Mapping
 
 class cq_parameters_Resonator_C26_LF():
 
@@ -61,98 +64,98 @@ class cq_parameters_Resonator_C26_LF():
         x = 0
 
 
-    def get_dest_3D_dir(self, modelName):
-        for n in self.all_params:
-            if n == modelName:
-                return self.all_params[modelName].dest_dir_prefix
+    # def get_dest_3D_dir(self, modelName):
+    #     for n in self.all_params:
+    #         if n == modelName:
+    #             return self.all_params[modelName].dest_dir_prefix
 
 
-    def get_dest_file_name(self, modelName):
-        for n in self.all_params:
-            if n == modelName:
-                return self.all_params[modelName].filename
+    # def get_dest_file_name(self, modelName):
+    #     for n in self.all_params:
+    #         if n == modelName:
+    #             return self.all_params[modelName].filename
 
 
-    def model_exist(self, modelName):
-        for n in self.all_params:
-            if n == modelName:
-                return True
+    # def model_exist(self, modelName):
+    #     for n in self.all_params:
+    #         if n == modelName:
+    #             return True
                 
-        return False
+    #     return False
         
         
-    def get_list_all(self):
-        list = []
-        for n in self.all_params:
-            list.append(n)
+    # def get_list_all(self):
+    #     list = []
+    #     for n in self.all_params:
+    #         list.append(n)
         
-        return list
+    #     return list
 
         
-    def make_3D_model(self, modelName):
+    # def make_3D_model(self, modelName):
         
-        case_top = self.make_top(self.all_params[modelName])
-        case = self.make_case(self.all_params[modelName])
-        pins = self.make_pins(case, self.all_params[modelName])
-        show(case_top)
-        show(case)
-        show(pins)
+    #     case_top = self.make_top(self.all_params[modelName])
+    #     case = self.make_case(self.all_params[modelName])
+    #     pins = self.make_pins(case, self.all_params[modelName])
+    #     show(case_top)
+    #     show(case)
+    #     show(pins)
      
-        doc = FreeCAD.ActiveDocument
-        objs=GetListOfObjects(FreeCAD, doc)
+    #     doc = FreeCAD.ActiveDocument
+    #     objs=GetListOfObjects(FreeCAD, doc)
      
-        body_top_color_key = self.all_params[modelName].body_top_color_key
-        body_color_key = self.all_params[modelName].body_color_key
-        pin_color_key = self.all_params[modelName].pin_color_key
+    #     body_top_color_key = self.all_params[modelName].body_top_color_key
+    #     body_color_key = self.all_params[modelName].body_color_key
+    #     pin_color_key = self.all_params[modelName].pin_color_key
 
-        body_top_color = shaderColors.named_colors[body_top_color_key].getDiffuseFloat()
-        body_color = shaderColors.named_colors[body_color_key].getDiffuseFloat()
-        pin_color = shaderColors.named_colors[pin_color_key].getDiffuseFloat()
+    #     body_top_color = shaderColors.named_colors[body_top_color_key].getDiffuseFloat()
+    #     body_color = shaderColors.named_colors[body_color_key].getDiffuseFloat()
+    #     pin_color = shaderColors.named_colors[pin_color_key].getDiffuseFloat()
 
-        Color_Objects(Gui,objs[0],body_top_color)
-        Color_Objects(Gui,objs[1],body_color)
-        Color_Objects(Gui,objs[2],pin_color)
+    #     Color_Objects(Gui,objs[0],body_top_color)
+    #     Color_Objects(Gui,objs[1],body_color)
+    #     Color_Objects(Gui,objs[2],pin_color)
 
-        col_body_top=Gui.ActiveDocument.getObject(objs[0].Name).DiffuseColor[0]
-        col_body=Gui.ActiveDocument.getObject(objs[1].Name).DiffuseColor[0]
-        col_pin=Gui.ActiveDocument.getObject(objs[2].Name).DiffuseColor[0]
+    #     col_body_top=Gui.ActiveDocument.getObject(objs[0].Name).DiffuseColor[0]
+    #     col_body=Gui.ActiveDocument.getObject(objs[1].Name).DiffuseColor[0]
+    #     col_pin=Gui.ActiveDocument.getObject(objs[2].Name).DiffuseColor[0]
         
-        material_substitutions={
-            col_body_top[:-1]:body_top_color_key,
-            col_body[:-1]:body_color_key,
-            col_pin[:-1]:pin_color_key,
-        }
+    #     material_substitutions={
+    #         col_body_top[:-1]:body_top_color_key,
+    #         col_body[:-1]:body_color_key,
+    #         col_pin[:-1]:pin_color_key,
+    #     }
         
-        expVRML.say(material_substitutions)
-        while len(objs) > 1:
-                FuseObjs_wColors(FreeCAD, FreeCADGui, doc.Name, objs[0].Name, objs[1].Name)
-                del objs
-                objs = GetListOfObjects(FreeCAD, doc)
+    #     expVRML.say(material_substitutions)
+    #     while len(objs) > 1:
+    #             FuseObjs_wColors(FreeCAD, FreeCADGui, doc.Name, objs[0].Name, objs[1].Name)
+    #             del objs
+    #             objs = GetListOfObjects(FreeCAD, doc)
 
-        return material_substitutions
+    #     return material_substitutions
     
     def make_top(self, params):
 
-        type = params.type                  # body type
-        L = params.L                        # top length
-        W = params.W                        # top length
-        A1 = params.A1                      # Body distance to PCB
-        PBD = params.PBD                    # Distance from pin hole to body
+        type = params['type']                  # body type
+        L = params['L']                        # top length
+        W = params['W']                        # top length
+        A1 = params['A1']                      # Body distance to PCB
+        PBD = params['PBD']                    # Distance from pin hole to body
 
-        ph = params.p_hole                  # Distance between pin hole
-        ps = params.p_split                 # distance between legs
-        pl = params.p_length                # pin length
-        pd = params.p_diam                  # pin diameter
+        ph = params['p_hole']                  # Distance between pin hole
+        ps = params['p_split']                 # distance between legs
+        pl = params['p_length']                # pin length
+        pd = params['p_diam']                  # pin diameter
 
-        rotation = params.rotation          # Rotation if required
+        rotation = params['rotation']          # Rotation if required
 
-        FreeCAD.Console.PrintMessage('make_top ...\r\n')
+        print('make_top ...\r\n')
 
         tt = 0.1
         tr = 0.15
         lb = L * tr
         
-        top = cq.Workplane("XY").workplane(offset = tt).moveTo(0.0, 0.0).circle(W / 2.0, False).extrude(L * (1.0 - tt))
+        top = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset = tt).moveTo(0.0, 0.0).circle(W / 2.0, False).extrude(L * (1.0 - tt))
         top = top.faces(">Z").fillet(pd / 1.2)
         
         if (type == 1):
@@ -171,23 +174,23 @@ class cq_parameters_Resonator_C26_LF():
 
     def make_case(self, params):
 
-        type = params.type                  # body type
-        L = params.L                        # top length
-        W = params.W                        # top length
-        A1 = params.A1                      # Body distance to PCB
-        PBD = params.PBD                    # Distance from pin hole to body
+        type = params['type']                  # body type
+        L = params['L']                        # top length
+        W = params['W']                        # top length
+        A1 = params['A1']                      # Body distance to PCB
+        PBD = params['PBD']                    # Distance from pin hole to body
         
-        ph = params.p_hole                  # Distance between pin hole
-        ps = params.p_split                 # distance between legs
-        pl = params.p_length                # pin length
-        pd = params.p_diam                  # pin diameter
+        ph = params['p_hole']                  # Distance between pin hole
+        ps = params['p_split']                 # distance between legs
+        pl = params['p_length']                # pin length
+        pd = params['p_diam']                  # pin diameter
 
-        rotation = params.rotation          # Rotation if required
+        rotation = params['rotation']          # Rotation if required
 
-        FreeCAD.Console.PrintMessage('make_case ...\r\n')
+        print('make_case ...\r\n')
 
         tt = 0.1
-        case = cq.Workplane("XY").workplane(offset=0.0).moveTo(0.0, 0.0).circle(W / 2.0, False).extrude(3.0 * tt)
+        case = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=0.0).moveTo(0.0, 0.0).circle(W / 2.0, False).extrude(3.0 * tt)
         #
 
         if (type == 1):
@@ -206,20 +209,20 @@ class cq_parameters_Resonator_C26_LF():
     
     def make_pins(self, case, params):
 
-        type = params.type                  # body type
-        L = params.L                        # top length
-        W = params.W                        # top length
-        A1 = params.A1                      # Body distance to PCB
-        PBD = params.PBD                    # Distance from pin hole to body
+        type = params['type']                  # body type
+        L = params['L']                        # top length
+        W = params['W']                        # top length
+        A1 = params['A1']                      # Body distance to PCB
+        PBD = params['PBD']                    # Distance from pin hole to body
         
-        ph = params.p_hole                  # Distance between pin hole
-        ps = params.p_split                 # distance between legs
-        pl = params.p_length                # pin length
-        pd = params.p_diam                  # pin diameter
+        ph = params['p_hole']                  # Distance between pin hole
+        ps = params['p_split']                 # distance between legs
+        pl = params['p_length']                # pin length
+        pd = params['p_diam']                  # pin diameter
 
-        rotation = params.rotation          # Rotation if required
+        rotation = params['rotation']          # Rotation if required
 
-        FreeCAD.Console.PrintMessage('make_pins ...\r\n')
+        print('make_pins ...\r\n')
 
         pins = None
         if (type == 1):
@@ -291,9 +294,9 @@ class cq_parameters_Resonator_C26_LF():
     ##enabling optional/default values to None
     def namedtuple_with_defaults(typename, field_names, default_values=()):
 
-        T = collections.namedtuple(typename, field_names)
+        T = namedtuple(typename, field_names)
         T.__new__.__defaults__ = (None,) * len(T._fields)
-        if isinstance(default_values, collections.Mapping):
+        if isinstance(default_values, Mapping):
             prototype = T(**default_values)
         else:
             prototype = T(*default_values)

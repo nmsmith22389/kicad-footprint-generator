@@ -57,113 +57,113 @@ from math import sqrt
 from itertools import chain
 
 #global parameter
-pin_width = 0.64
-pin_depth = 3.4
-pin_inner_lenght = 6.5
-pin_lock_h1 = 1.9
-pin_lock_h2 = 2.5
-pin_lock_d = 0.3
-pin_fillet = 0.2
-pin_bend_radius = 0.05
-pin_pitch = 2.5
-body_corner_x = -2.45
-body_corner_y = -2.35
+# pin_width = 0.64
+# pin_depth = 3.4
+# pin_inner_lenght = 6.5
+# pin_lock_h1 = 1.9
+# pin_lock_h2 = 2.5
+# pin_lock_d = 0.3
+# pin_fillet = 0.2
+# pin_bend_radius = 0.05
+# pin_pitch = 2.5
+# body_corner_x = -2.45
+# body_corner_y = -2.35
 
 
-Params = namedtuple("Params",[
-    'angled',
-    'num_pins',
-    'pin_angle_distance',
-    'pin_angle_length',
-    'body_width',
-    'body_height',
-    'body_length',
-    'zdistance'
-])
+# Params = namedtuple("Params",[
+#     'angled',
+#     'num_pins',
+#     'pin_angle_distance',
+#     'pin_angle_length',
+#     'body_width',
+#     'body_height',
+#     'body_length',
+#     'zdistance'
+# ])
 
-def make_params_angled(num_pins):
-    return Params(
-        angled=True,
-        num_pins=num_pins,
-        pin_angle_distance=9.2-7,
-        pin_angle_length=9.2,
-        body_width=5.75,
-        body_height=7.0,
-        body_length=2*2.45+(num_pins-1)*pin_pitch,
-        zdistance=6.1-5.75
-    )
-def make_params_angled_short(num_pins):
-    return Params(
-        angled=True,
-        num_pins=num_pins,
-        pin_angle_distance=7.6-7,
-        pin_angle_length=7.6,
-        body_width=5.75,
-        body_height=7.0,
-        body_length=2*2.45+(num_pins-1)*pin_pitch,
-        zdistance=6.1-5.75
-    )
-def make_params_straight(num_pins):
-    return Params(
-        angled=False,
-        num_pins=num_pins,
-        pin_angle_distance=0,
-        pin_angle_length=0,
-        body_width=5.75,
-        body_height=7.0,
-        body_length=2*2.45+(num_pins-1)*pin_pitch,
-        zdistance=6.1-5.75
-    )
+# def make_params_angled(num_pins):
+#     return Params(
+#         angled=True,
+#         num_pins=num_pins,
+#         pin_angle_distance=9.2-7,
+#         pin_angle_length=9.2,
+#         body_width=5.75,
+#         body_height=7.0,
+#         body_length=2*2.45+(num_pins-1)*pin_pitch,
+#         zdistance=6.1-5.75
+#     )
+# def make_params_angled_short(num_pins):
+#     return Params(
+#         angled=True,
+#         num_pins=num_pins,
+#         pin_angle_distance=7.6-7,
+#         pin_angle_length=7.6,
+#         body_width=5.75,
+#         body_height=7.0,
+#         body_length=2*2.45+(num_pins-1)*pin_pitch,
+#         zdistance=6.1-5.75
+#     )
+# def make_params_straight(num_pins):
+#     return Params(
+#         angled=False,
+#         num_pins=num_pins,
+#         pin_angle_distance=0,
+#         pin_angle_length=0,
+#         body_width=5.75,
+#         body_height=7.0,
+#         body_length=2*2.45+(num_pins-1)*pin_pitch,
+#         zdistance=6.1-5.75
+#     )
 
-class series_params():
-    series = "XH"
-    manufacturer = 'JST'
-    number_of_rows = 1
+# class series_params():
+#     series = "XH"
+#     manufacturer = 'JST'
+#     number_of_rows = 1
 
-    body_color_key = "white body"
-    pins_color_key = "metal grey pins"
-    color_keys = [
-        body_color_key,
-        pins_color_key
-    ]
-    obj_suffixes = [
-        '__body',
-        '__pins'
-    ]
+#     body_color_key = "white body"
+#     pins_color_key = "metal grey pins"
+#     color_keys = [
+#         body_color_key,
+#         pins_color_key
+#     ]
+#     obj_suffixes = [
+#         '__body',
+#         '__pins'
+#     ]
 
-    pitch = pin_pitch
+#     pitch = pin_pitch
 
-    variant_params = {
-        'top_entry':{
-            'mpn_format_string': 'B{pincount:d}B-XH-A',
-            'orientation': 'V',
-            'datasheet': 'http://www.jst-mfg.com/product/pdf/eng/eXH.pdf',
-            'param_generator': make_params_straight,
-            'pinrange': chain(range(2,17), [20]),
-            'mount_pin': ''
-        },
-        # 'top_entry_boss':{
-        #     'mpn_format_string': 'B{pincount:02}B-XH-AM',
-        #     'orientation': 'V',
-        #     'datasheet': 'http://www.jst-mfg.com/product/pdf/eng/eXH.pdf',
-        #     'param_generator': make_params_straight_boss,
-        #     'pinrange': range(1,13),
-        #     'mount_pin': ''
-        # },
-        'side_entry':{
-            'mpn_format_string': 'S{pincount:d}B-XH-A',
-            'orientation': 'H',
-            'datasheet': 'http://www.jst-mfg.com/product/pdf/eng/eXH.pdf',
-            'param_generator': make_params_angled,
-            'pinrange': range(2, 17),
-            'mount_pin': ''
-        },
-        'side_entry_short':{
-            'mpn_format_string': 'S{pincount:d}B-XH-A-1',
-            'orientation': 'H',
-            'datasheet': 'http://www.jst-mfg.com/product/pdf/eng/eXH.pdf',
-            'param_generator': make_params_angled_short,
-            'pinrange': range(2, 16),
-            'mount_pin': ''
-        }
-    }
+#     variant_params = {
+#         'top_entry':{
+#             'mpn_format_string': 'B{pincount:d}B-XH-A',
+#             'orientation': 'V',
+#             'datasheet': 'http://www.jst-mfg.com/product/pdf/eng/eXH.pdf',
+#             'param_generator': make_params_straight,
+#             'pinrange': chain(range(2,17), [20]),
+#             'mount_pin': ''
+#         },
+#         # 'top_entry_boss':{
+#         #     'mpn_format_string': 'B{pincount:02}B-XH-AM',
+#         #     'orientation': 'V',
+#         #     'datasheet': 'http://www.jst-mfg.com/product/pdf/eng/eXH.pdf',
+#         #     'param_generator': make_params_straight_boss,
+#         #     'pinrange': range(1,13),
+#         #     'mount_pin': ''
+#         # },
+#         'side_entry':{
+#             'mpn_format_string': 'S{pincount:d}B-XH-A',
+#             'orientation': 'H',
+#             'datasheet': 'http://www.jst-mfg.com/product/pdf/eng/eXH.pdf',
+#             'param_generator': make_params_angled,
+#             'pinrange': range(2, 17),
+#             'mount_pin': ''
+#         },
+#         'side_entry_short':{
+#             'mpn_format_string': 'S{pincount:d}B-XH-A-1',
+#             'orientation': 'H',
+#             'datasheet': 'http://www.jst-mfg.com/product/pdf/eng/eXH.pdf',
+#             'param_generator': make_params_angled_short,
+#             'pinrange': range(2, 16),
+#             'mount_pin': ''
+#         }
+#     }

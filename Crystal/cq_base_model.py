@@ -38,7 +38,7 @@
 #
 
 import cadquery as cq
-import FreeCAD
+# import FreeCAD
 
 from math import sin, tan, radians
 
@@ -457,10 +457,10 @@ class PartBase (object):
 
         return cq.Workplane(cq.Plane.XY())\
                  .rect(D_b, E1_b)\
-                 .workplane(offset=A2_b).rect(self.body_length, self.body_width)\
-                 .workplane(offset=pin_area_height).rect(self.body_length, self.body_width)\
+                 .workplane(centerOption="CenterOfMass", offset=A2_b).rect(self.body_length, self.body_width)\
+                 .workplane(centerOption="CenterOfMass", offset=pin_area_height).rect(self.body_length, self.body_width)\
                  .rect(D_t1, E1_t1)\
-                 .workplane(offset=A2_t).rect(D_t2, E1_t2).loft(ruled=True)
+                 .workplane(centerOption="CenterOfMass", offset=A2_t).rect(D_t2, E1_t2).loft(ruled=True)
 
     def _make_straight_pin(self, pin_height=None, style='Rectangular'):
         """ create straight pin
@@ -480,7 +480,7 @@ class PartBase (object):
         if pin_height is None:
             pin_height = self.pin_length + self.body_board_distance
 
-        return Polyline(cq.Workplane("XZ").workplane(offset=-self.pin_thickness / 2.0))\
+        return Polyline(cq.Workplane("XZ").workplane(centerOption="CenterOfMass", offset=-self.pin_thickness / 2.0))\
                           .addPoints([
                                 (self.pin_width / 2.0, 0.0),
                                 (0.0, -(pin_height - self.pin_width)),
@@ -515,7 +515,7 @@ class PartBase (object):
         r_lower_o = r_lower_i + self.pin_thickness # pin lower corner, outer radius
 
         if style == 'SMD': # make a horizontal pin
-            pin = Polyline(cq.Workplane("XY").workplane(offset=-r_lower_o), origin=(0.0, r_lower_o))\
+            pin = Polyline(cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=-r_lower_o), origin=(0.0, r_lower_o))\
                              .addMoveTo(-self.pin_width / 2.0, 0.0)\
                              .addPoint(d, self.pin_length - d)\
                              .addThreePointArc((self.pin_width / 2.0 - d, d), (self.pin_width - d * 2.0, 0.0))\
@@ -527,7 +527,7 @@ class PartBase (object):
                       .translate((0, r_lower_o, - self.pin_thickness))
 
         # make the arc joining the pin segments
-        arc = Polyline(cq.Workplane("YZ").workplane(offset=-self.pin_width / 2.0))\
+        arc = Polyline(cq.Workplane("YZ").workplane(centerOption="CenterOfMass", offset=-self.pin_width / 2.0))\
                          .addArc(r_lower_o, -90, 1)\
                          .addPoint(0, self.pin_thickness)\
                          .addArc(-r_lower_i, -90).make().extrude(self.pin_width)
@@ -536,7 +536,7 @@ class PartBase (object):
 
         if(round(top_length, 6) != 0.0):
             pin = pin.union(cq.Workplane("XZ")\
-                     .workplane(offset=-self.pin_thickness / 2)\
+                     .workplane(centerOption="CenterOfMass", offset=-self.pin_thickness / 2)\
                      .moveTo(self.pin_width / 2.0, r_lower_o-(top_length + r_lower_o))\
                      .line(0, top_length)\
                      .line(-self.pin_width, 0)\
@@ -544,7 +544,7 @@ class PartBase (object):
                      .close().extrude(self.pin_thickness))
         elif (round(top_extension, 6) != 0.0):
             pin = pin.union(cq.Workplane("XZ")\
-                     .workplane(offset=-self.pin_thickness / 2)\
+                     .workplane(centerOption="CenterOfMass", offset=-self.pin_thickness / 2)\
                      .moveTo(self.pin_width / 2.0, 0.0)\
                      .line(0.0, top_extension)\
                      .line(-self.pin_width, 0.0)\

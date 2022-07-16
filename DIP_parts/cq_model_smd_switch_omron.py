@@ -37,7 +37,7 @@ import cadquery as cq
 
 ## model generators
 
-from cq_model_smd_switch import dip_smd_switch_lowprofile
+from .cq_model_smd_switch import dip_smd_switch_lowprofile
 
 class dip_switch_omron_a6h (dip_smd_switch_lowprofile):
 
@@ -68,9 +68,9 @@ class dip_switch_omron_a6h (dip_smd_switch_lowprofile):
 
     def makeModelName(self, genericName):
         if self.num_pins == 10:
-            return 'SW_DIP_SPSTx' + '{:02d}'.format(self.num_pins / 2) + '_Slide_Omron_A6H-0101_W6.15mm_P' + '{:.2f}'.format(self.pin_pitch) + 'mm'
+            return 'SW_DIP_SPSTx' + '{:02d}'.format(int(self.num_pins / 2)) + '_Slide_Omron_A6H-0101_W6.15mm_P' + '{:.2f}'.format(self.pin_pitch) + 'mm'
         else:
-            return 'SW_DIP_SPSTx' + '{:02d}'.format(self.num_pins / 2) + '_Slide_Omron_A6H-' + '{:01d}'.format(self.num_pins / 2) + '101_W6.15mm_P' + '{:.2f}'.format(self.pin_pitch) + 'mm'
+            return 'SW_DIP_SPSTx' + '{:02d}'.format(int(self.num_pins / 2)) + '_Slide_Omron_A6H-' + '{:01d}'.format(int(self.num_pins / 2)) + '101_W6.15mm_P' + '{:.2f}'.format(self.pin_pitch) + 'mm'
 
     def _make_switchpockets(self):
 
@@ -106,7 +106,7 @@ class dip_switch_omron_a6h (dip_smd_switch_lowprofile):
     def _make_buttonsrecess(self):
         depth = -0.2
         return cq.Workplane("XY")\
-                   .workplane(offset=self.body_height)\
+                   .workplane(centerOption="CenterOfMass", offset=self.body_height)\
                    .rect(self.body_length - 1.6, self.body_width - self.button_base).extrude(depth)\
                    .faces("<Z").edges().chamfer(-depth-0.01)
 
@@ -121,9 +121,9 @@ class dip_switch_omron_a6h (dip_smd_switch_lowprofile):
     def make_buttons(self):
 
         button = cq.Workplane("XY", origin=(self.first_pin_pos[0], 0.0, self.body_height - self.button_pocket_dept - 0.1))\
-                   .rect(self.button_width, self.button_base).extrude(0.1)\
+                   .rect(self.button_width, self.button_base).extrude(0.11)\
                    .faces(">Z").center(0, -self.button_base / 2.0 + self.button_length / 2.0 + self.button_pocket_dept)\
-                   .rect(self.button_width, self.button_length).extrude(self.button_heigth + 0.1)
+                   .rect(self.button_width, self.button_length).extrude(self.button_heigth + 0.11)
 
         return self._mirror(button)
 
@@ -161,6 +161,6 @@ class dip_switch_omron_a6s (dip_switch_omron_a6h):
         
 
     def makeModelName(self, genericName):
-        return 'SW_DIP_SPSTx' + '{:02d}'.format(self.num_pins / 2) + '_Slide_Omron_A6S-' + '{:d}'.format(self.num_pins / 2) + '10x_W8.9mm_P' + '{:.2f}'.format(self.pin_pitch) + 'mm'
+        return 'SW_DIP_SPSTx' + '{:02d}'.format(int(self.num_pins / 2)) + '_Slide_Omron_A6S-' + '{:d}'.format(int(self.num_pins / 2)) + '10x_W8.9mm_P' + '{:.2f}'.format(self.pin_pitch) + 'mm'
         
 ### EOF ###

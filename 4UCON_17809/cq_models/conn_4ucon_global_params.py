@@ -1,13 +1,13 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import os
-import sys
+# import os
+# import sys
 
 
 lib_name="Connectors_4UCON"
-out_dir=lib_name+".pretty"+os.sep
-packages_3d=lib_name+".3dshapes"+os.sep
+# out_dir=lib_name+".pretty"+os.sep
+# packages_3d=lib_name+".3dshapes"+os.sep
 
 manufacturer_tag = "4ucon "
 

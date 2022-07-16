@@ -63,69 +63,69 @@ class LICENCE_Info():
     ############################################################################
 
 import cadquery as cq
-from Helpers import show
-from collections import namedtuple
-import FreeCAD
+# from Helpers import show
+# from collections import namedtuple
+# import FreeCAD
 
-class series_params():
+# class series_params():
 
-    series = "Picoflex"
-    series_long = 'Picoflex Ribbon-Cable Connectors'
-    manufacturer = 'Molex'
-    orientation = 'V'
-    number_of_rows = 2
-    datasheet = 'http://www.molex.com/pdm_docs/sd/908140004_sd.pdf'
-    mpn_format_string = "90814-00{pincount:02}"
-    mount_pin = ''
+#     series = "Picoflex"
+#     series_long = 'Picoflex Ribbon-Cable Connectors'
+#     manufacturer = 'Molex'
+#     orientation = 'V'
+#     number_of_rows = 2
+#     datasheet = 'http://www.molex.com/pdm_docs/sd/908140004_sd.pdf'
+#     mpn_format_string = "90814-00{pincount:02}"
+#     mount_pin = ''
 
-    body_color_key = "black body"
-    pins_color_key = "metal grey pins"
-    color_keys = [
-        body_color_key,
-        pins_color_key
-    ]
-    obj_suffixes = [
-        '__body',
-        '__pins'
-    ]
-
-
-    #pins_per_row per row
-    pinrange = (4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26)
-
-    pitch = 1.27
-
-    pin_width = 0.3
-    pin_chamfer_long = 0.25
-    pin_chamfer_short = 0.12
-    pin_height =  3.71					# Heaight above bottom surface of base
-    pin_depth =   1.05					# Depth below bottom surface of base
-    pin_inside_distance = 2.525			# Distance between centre of end pin and end of body
-
-    pig_depth = 2.29                     # Depth below bottom surface of the plastic guidence pin
-    pig_height = 6.05                    # Height above bottom surface of the plastic guidence pin
+#     body_color_key = "black body"
+#     pins_color_key = "metal grey pins"
+#     color_keys = [
+#         body_color_key,
+#         pins_color_key
+#     ]
+#     obj_suffixes = [
+#         '__body',
+#         '__pins'
+#     ]
 
 
-calcDim = namedtuple( 'calcDim', ['length'])
+#     #pins_per_row per row
+#     pinrange = (4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26)
+
+#     pitch = 1.27
+
+#     pin_width = 0.3
+#     pin_chamfer_long = 0.25
+#     pin_chamfer_short = 0.12
+#     pin_height =  3.71					# Heaight above bottom surface of base
+#     pin_depth =   1.05					# Depth below bottom surface of base
+#     pin_inside_distance = 2.525			# Distance between centre of end pin and end of body
+
+#     pig_depth = 2.29                     # Depth below bottom surface of the plastic guidence pin
+#     pig_height = 6.05                    # Height above bottom surface of the plastic guidence pin
 
 
-def dimensions(num_pins):
-    length = (num_pins-1) * series_params.pitch + 2 * series_params.pin_inside_distance
-    return calcDim(length = length)
-
-def generate_straight_pin():
-    pin_width=series_params.pin_width
-    pin_depth=series_params.pin_depth
-    chamfer_long = series_params.pin_chamfer_long
-    chamfer_short = series_params.pin_chamfer_short
+# calcDim = namedtuple( 'calcDim', ['length'])
 
 
-    pin=cq.Workplane("XY").workplane(offset=1.06)\
+def dimensions(series_params, num_pins):
+    length = (num_pins-1) * series_params['pitch'] + 2 * series_params['pin_inside_distance']
+    return length
+
+def generate_straight_pin(series_params):
+    pin_width=series_params['pin_width']
+    pin_depth=series_params['pin_depth']
+    chamfer_long = series_params['pin_chamfer_long']
+    chamfer_short = series_params['pin_chamfer_short']
+
+
+    pin=cq.Workplane("XY").workplane(offset=1.06, centerOption="CenterOfMass")\
         .moveTo(-pin_width/2.0 - 2.05, -pin_width/2.0)\
         .rect(5.98, pin_width, False)\
         .extrude(-pin_depth)
 
-    body = cq.Workplane("XY").workplane(offset=1.06)\
+    body = cq.Workplane("XY").workplane(offset=1.06, centerOption="CenterOfMass")\
         .moveTo(-pin_width/2.0 - 2.05, -pin_width/2.0)\
         .rect(0.95, pin_width, False)\
         .extrude(-0.5)
@@ -134,17 +134,17 @@ def generate_straight_pin():
     return pin
 
 
-def generate_pins(num_pins):
-    pin_pitch=series_params.pitch
-    pin_width=series_params.pin_width
-    chamfer_long = series_params.pin_chamfer_long
-    chamfer_short = series_params.pin_chamfer_short
-    pin_height=series_params.pin_height
+def generate_pins(series_params, num_pins):
+    pin_pitch=series_params['pitch']
+    pin_width=series_params['pin_width']
+    chamfer_long = series_params['pin_chamfer_long']
+    chamfer_short = series_params['pin_chamfer_short']
+    pin_height=series_params['pin_height']
 
-    pins=generate_straight_pin()
+    pins=generate_straight_pin(series_params)
 
     for i in range(1, num_pins):
-        pin=generate_straight_pin()
+        pin=generate_straight_pin(series_params)
         if (i % 2) == 0:
             pins = pins.union(pin.translate((0, -(i * pin_pitch), 0)))
         else:
@@ -153,7 +153,7 @@ def generate_pins(num_pins):
     for i in range(0, num_pins):
         body_x = 0
         body_y = (-pin_width/2.0) - (i * pin_pitch)
-        pinTop=cq.Workplane("XY").workplane(offset=-pin_width/2.0 + 1.06)\
+        pinTop=cq.Workplane("XY").workplane(offset=-pin_width/2.0 + 1.06, centerOption="CenterOfMass")\
             .moveTo(body_x, body_y)\
             .rect(2.54, pin_width, False)\
             .extrude(pin_height)
@@ -168,10 +168,10 @@ def generate_pins(num_pins):
     return pins
 
 
-def generate_body(num_pins ,calc_dim):
-    pin_inside_distance = series_params.pin_inside_distance
-    pin_width = series_params.pin_width
-    pin_pitch = series_params.pitch
+def generate_body(series_params, num_pins):
+    pin_inside_distance = series_params['pin_inside_distance']
+    pin_width = series_params['pin_width']
+    pin_pitch = series_params['pitch']
 
     #
     # Main body block
@@ -182,70 +182,70 @@ def generate_body(num_pins ,calc_dim):
     body_block_y = 2.525
     body_block_width = 5.0
     body_block_height = 1.5
-    body_block_lenght = ((num_pins - 1) * series_params.pitch) + 5.05
+    body_block_length = ((num_pins - 1) * series_params['pitch']) + 5.05
 
-    body_block=cq.Workplane("XY").workplane(offset=1.06)\
+    body_block=cq.Workplane("XY").workplane(offset=1.06, centerOption="CenterOfMass")\
         .moveTo(body_block_x, body_block_y)\
-        .rect(body_block_width, -body_block_lenght, False)\
+        .rect(body_block_width, -body_block_length, False)\
         .extrude(body_block_height)
 
-#    body_block = body_block.faces(">X").edges("<Y").chamfer(series_params.pin_chamfer_short / 2.0,series_params.pin_chamfer_short / 2.0)
-#    body_block = body_block.faces("<X").edges("<Y").chamfer(series_params.pin_chamfer_short / 2.0,series_params.pin_chamfer_short / 2.0)
+#    body_block = body_block.faces(">X").edges("<Y").chamfer(series_params['pin_chamfer_short / 2.0,series_params['pin_chamfer_short / 2.0)
+#    body_block = body_block.faces("<X").edges("<Y").chamfer(series_params['pin_chamfer_short / 2.0,series_params['pin_chamfer_short / 2.0)
 
     #
     # Remove the cutout in main block
     #
     body_width = 0.5
-    body_lenght = 1.5
+    body_length = 1.5
     body_x = body_block_x
-    body_y = body_block_y - (2 * body_lenght)
-    body_y_end = body_y - body_block_lenght - (1 * body_lenght)
+    body_y = body_block_y - (2 * body_length)
+    body_y_end = body_y - body_block_length - (1 * body_length)
     body_height =  body_block_height / 3.0
     while (body_y > body_y_end):
 
-        body = cq.Workplane("XY").workplane(offset=1.06)\
+        body = cq.Workplane("XY").workplane(offset=1.06, centerOption="CenterOfMass")\
                 .moveTo(body_x, body_y)\
-                .rect(body_width, body_lenght, False)\
+                .rect(body_width, body_length, False)\
                 .extrude(body_height)
 #        body_block = body_block.cut(body)
 
-        body = cq.Workplane("XY").workplane(offset=body_block_height - body_height + 1.06)\
+        body = cq.Workplane("XY").workplane(offset=body_block_height - body_height + 1.06, centerOption="CenterOfMass")\
                 .moveTo(body_x, body_y)\
-                .rect(body_width, body_lenght, False)\
+                .rect(body_width, body_length, False)\
                 .extrude(body_height)
         body_block = body_block.cut(body)
 
-        body = cq.Workplane("XY").workplane(offset=body_block_height - body_height + 1.06)\
+        body = cq.Workplane("XY").workplane(offset=body_block_height - body_height + 1.06, centerOption="CenterOfMass")\
                 .moveTo(body_x + body_block_width - body_width, body_y)\
-                .rect(body_width, body_lenght, False)\
+                .rect(body_width, body_length, False)\
                 .extrude(body_height)
         body_block = body_block.cut(body)
 
-        body_y = body_y - (2 * body_lenght)
+        body_y = body_y - (2 * body_length)
 
 
-    body = cq.Workplane("XY").workplane(offset=1.06)\
+    body = cq.Workplane("XY").workplane(offset=1.06, centerOption="CenterOfMass")\
             .moveTo(body_block_width - 1.92, body_block_y)\
-            .rect(0.68, -body_block_lenght, False)\
+            .rect(0.68, -body_block_length, False)\
             .extrude(body_height)
     body_block = body_block.cut(body)
     #
     # Add larger top pig
     #
     body_width = 1.0
-    body_lenght = 4.0
-    body_height = series_params.pig_height
+    body_length = 4.0
+    body_height = series_params['pig_height']
     body_x = -0.25
     body_y = body_block_y - body_width
 
-    body = cq.Workplane("XY").workplane(offset=1.566)\
+    body = cq.Workplane("XY").workplane(offset=1.566, centerOption="CenterOfMass")\
         .moveTo(body_x, body_y)\
-        .rect(body_lenght, body_width, False)\
+        .rect(body_length, body_width, False)\
         .extrude(body_height)
 
-    body = body.faces(">Z").edges(">X").chamfer(series_params.pin_chamfer_long, series_params.pin_chamfer_long)
-    body = body.faces(">Z").edges("<X").chamfer(series_params.pin_chamfer_long, series_params.pin_chamfer_long)
-    body = body.faces(">Z").edges("<Y").chamfer(series_params.pin_chamfer_long, series_params.pin_chamfer_long)
+    body = body.faces(">Z").edges(">X").chamfer(series_params['pin_chamfer_long'], series_params['pin_chamfer_long'])
+    body = body.faces(">Z").edges("<X").chamfer(series_params['pin_chamfer_long'], series_params['pin_chamfer_long'])
+    body = body.faces(">Z").edges("<Y").chamfer(series_params['pin_chamfer_long'], series_params['pin_chamfer_long'])
 
     body_block = body_block.union(body)
 
@@ -253,79 +253,79 @@ def generate_body(num_pins ,calc_dim):
     # Add smaller top pig
     #
     body_width = 1.0
-    body_lenght = 2.4
-    body_height = series_params.pig_height
+    body_length = 2.4
+    body_height = series_params['pig_height']
     body_x = body_block_x
-    body_y = body_block_y - body_block_lenght
+    body_y = body_block_y - body_block_length
 
-    body = cq.Workplane("XY").workplane(offset=1.566)\
+    body = cq.Workplane("XY").workplane(offset=1.566, centerOption="CenterOfMass")\
         .moveTo(body_x, body_y)\
-        .rect(body_lenght, body_width, False)\
+        .rect(body_length, body_width, False)\
         .extrude(body_height)
 
-    body = body.faces(">Z").edges(">X").chamfer(series_params.pin_chamfer_long, series_params.pin_chamfer_long)
-    body = body.faces(">Z").edges("<X").chamfer(series_params.pin_chamfer_long, series_params.pin_chamfer_long)
-    body = body.faces(">Z").edges("<Y").chamfer(series_params.pin_chamfer_long, series_params.pin_chamfer_long)
+    body = body.faces(">Z").edges(">X").chamfer(series_params['pin_chamfer_long'], series_params['pin_chamfer_long'])
+    body = body.faces(">Z").edges("<X").chamfer(series_params['pin_chamfer_long'], series_params['pin_chamfer_long'])
+    body = body.faces(">Z").edges("<Y").chamfer(series_params['pin_chamfer_long'], series_params['pin_chamfer_long'])
 
     body_block = body_block.union(body)
 
     #
-    # Add rectanguler support pig nr 1
+    # Add rectangular support pig nr 1
     #
     body_width = 0.7
-    body_lenght = 0.7
+    body_length = 0.7
     body_height = 1.1
     body_x = (body_block_width / 2) - 0.12
     body_y = body_block_y - body_width
 
-    body = cq.Workplane("XY").workplane(offset=0)\
+    body = cq.Workplane("XY").workplane(offset=0, centerOption="CenterOfMass")\
         .moveTo(body_x, body_y)\
-        .rect(body_lenght, body_width, False)\
+        .rect(body_length, body_width, False)\
         .extrude(body_height)
     body_block = body_block.union(body)
 
     #
-    # Add rectanguler support pig nr 2
+    # Add rectangular support pig nr 2
     #
     body_width = 0.7
-    body_lenght = 0.7
+    body_length = 0.7
     body_height = 1.1
     body_x = (body_block_width / 2) - 0.12
-    body_y = body_block_y - body_block_lenght
+    body_y = body_block_y - body_block_length
 
-    body = cq.Workplane("XY").workplane(offset=0)\
+    body = cq.Workplane("XY").workplane(offset=0, centerOption="CenterOfMass")\
         .moveTo(body_x, body_y)\
-        .rect(body_lenght, body_width, False)\
+        .rect(body_length, body_width, False)\
         .extrude(body_height)
     body_block = body_block.union(body)
 
     #
-    # Add rectanguler support pig nr 3
+    # Add rectangular support pig nr 3
     #
     body_width = 1.54
-    body_lenght = 0.76
+    body_length = 0.76
     body_height = 1.1
     body_x = -(body_block_width / 2) + 1.25
-    body_y = body_block_y - body_block_lenght + 0.2
+    body_y = body_block_y - body_block_length + 0.2
 
-    body = cq.Workplane("XY").workplane(offset=0)\
+    body = cq.Workplane("XY").workplane(offset=0, centerOption="CenterOfMass")\
         .moveTo(body_x, body_y)\
-        .rect(body_lenght, body_width, False)\
+        .rect(body_length, body_width, False)\
         .extrude(body_height)
     body_block = body_block.union(body)
 
     #
-    # Add rectanguler support pig nr 4
+    # Add rectangular support pig nr 4
     #
     body_width = 1.54
-    body_lenght = 0.76
+    body_length = 0.76
     body_height = 1.1
     body_x = -(body_block_width / 2) + 1.25
     body_y = body_block_y - body_width - 0.2
 
-    body = cq.Workplane("XY").workplane(offset=0)\
+    body = cq.Workplane("XY").workplane(offset=0, centerOption="CenterOfMass")\
         .moveTo(body_x, body_y)\
-        .rect(body_lenght, body_width, False)\
+        .rect(body_length, body_width, False)\
         .extrude(body_height)
     body_block = body_block.union(body)
 
@@ -335,37 +335,36 @@ def generate_body(num_pins ,calc_dim):
     #
     body_x = -0.5
     body_y = 1.93
-    body_height = series_params.pig_depth + (body_block_height / 2.0)
+    body_height = series_params['pig_depth'] + (body_block_height / 2.0)
 
-    body = cq.Workplane("XY").workplane(offset=(body_block_height / 2.0) + 1.06)\
+    body = cq.Workplane("XY").workplane(offset=(body_block_height / 2.0) + 1.06, centerOption="CenterOfMass")\
         .moveTo(body_x, body_y)\
         .circle(0.9).extrude(-body_height,False)
 
-    body = body.faces("<Z").edges(">X").chamfer(series_params.pin_chamfer_long, series_params.pin_chamfer_long)
+    body = body.faces("<Z").edges(">X").chamfer(series_params['pin_chamfer_long'], series_params['pin_chamfer_long'])
     body_block = body_block.union(body)
 
     #
     # Add bottom pig at smaller top pig
     #
     body_x = -0.5
-    body_y = -((num_pins - 1) * series_params.pitch) - 1.93
-    body_height = series_params.pig_depth + (body_block_height / 2.0)
+    body_y = -((num_pins - 1) * series_params['pitch']) - 1.93
+    body_height = series_params['pig_depth'] + (body_block_height / 2.0)
 
-    body = cq.Workplane("XY").workplane(offset=(body_block_height / 2.0) + 1.06)\
+    body = cq.Workplane("XY").workplane(offset=(body_block_height / 2.0) + 1.06, centerOption="CenterOfMass")\
         .moveTo(body_x, body_y)\
         .circle(0.9).extrude(-body_height,False)
 
-    body = body.faces("<Z").edges(">X").chamfer(series_params.pin_chamfer_long, series_params.pin_chamfer_long)
+    body = body.faces("<Z").edges(">X").chamfer(series_params['pin_chamfer_long'], series_params['pin_chamfer_long'])
     body_block = body_block.union(body)
 
     return body_block
 
 
-def generate_part(num_pins):
-    calc_dim = dimensions(num_pins)
-    pins = generate_pins(num_pins)
-    body = generate_body(num_pins, calc_dim)
-
+def generate_part(series_params, num_pins):
+    pins = generate_pins(series_params, num_pins)
+    body = generate_body(series_params, num_pins)
+    dummy_latch = cq.Workplane()
     #
     # Move the construction origo 0,0
     # kicad wants SMD to be centered in X and Y direction
@@ -377,16 +376,16 @@ def generate_part(num_pins):
     pins = pins.translate((trans_x, trans_y, 0))
     body = body.translate((trans_x, trans_y, 0))
 
-    return (body,pins)
+    return (pins, body, dummy_latch)
 
 
 # opened from within freecad
-if "module" in __name__:
-    part_to_build = 4
+# if "module" in __name__:
+#     part_to_build = 4
 
-    FreeCAD.Console.PrintMessage("Started from CadQuery: building " +
-                                 str(part_to_build) + "pins variant\n")
-    (body, pins) = generate_part(part_to_build)
+#     FreeCAD.Console.PrintMessage("Started from CadQuery: building " +
+#                                  str(part_to_build) + "pins variant\n")
+#     (body, pins) = generate_part(part_to_build)
 
-    show(pins)
-    show(body)
+#     show(pins)
+#     show(body)

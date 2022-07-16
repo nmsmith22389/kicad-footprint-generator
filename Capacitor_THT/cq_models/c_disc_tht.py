@@ -63,15 +63,15 @@ class LICENCE_Info():
 
 
 import cadquery as cq
-from Helpers import show
+# from Helpers import show
 from collections import namedtuple
-import FreeCAD
+# import FreeCAD
 
 # maui import cadquery as cq
 # maui from Helpers import show
 from math import tan, radians, sqrt, sin
 
-from c_disc_tht_param import *
+from .c_disc_tht_param import *
 
 class series_params():
     fp_name_format = "disc_fp_name"
@@ -104,22 +104,25 @@ def getName(params, configuration):
 all_params = kicad_naming_params_c_disc_th_cap
 
 def generate_part(params):
-    L = params.L    # body length
-    W = params.W    # body width
-    d = params.d     # lead diameter
-    F = params.F     # lead separation (center to center)
-    ll = params.ll   # lead length
-    bs = params.bs   # board separation
-    rot = params.rotation
+    L = params['L']             # body length
+    W = params['W']             # body width
+    d = params['d']             # lead diameter
+    F = params['F']             # lead separation (center to center)
+    ll = params['ll']           # lead length
+    bs = params['bs']           # board separation
+    rot = params['rotation']
 
 
     bend_offset_y = (sin(radians(60.0))*d)/sin(radians(90.0))
     bend_offset_z = (sin(radians(30.0))*d)/sin(radians(90.0))
+
     # draw the leads
     lead1 = cq.Workplane("XY").workplane(offset=-ll).center(-F/2,0).circle(d/2).extrude(ll+L/4-d+bs)
-    lead1 = lead1.union(cq.Workplane("XY").workplane(offset=L/4-d+bs).center(-F/2,0).circle(d/2).center(-F/2+d/2,0).revolve(30,(-F/2+d/2+d,d)).transformed((-30,0,0),(-(-F/2+d/2),d-bend_offset_y,bend_offset_z)).circle(d/2).extrude(L/2))
-    lead1 = lead1.rotate((-F/2,0,0), (0,0,1), -90)
-    lead2 = lead1.rotate((-F/2,0,0), (0,0,1), 180).translate((F,0,0))
+    bend = cq.Workplane("XY").workplane(offset=L/4-d+bs, centerOption="CenterOfMass").center(-F/2,0).circle(d/2).revolve(30,(-F/2+d/2+d,d)).rotateAboutCenter((0, 1, 0), 180).translate((0,0,bend_offset_z)).transformed((-30,0,0),(0,d-bend_offset_y,bend_offset_z)).circle(d/2).extrude(L/2)
+
+    lead1 = lead1.union(bend)
+    lead1 = lead1.rotate((-F/2,0,0), (-F/2, 0, 1), -90)
+    lead2 = lead1.rotate((-F/2,0,0), (-F/2,0,1), 180).translate((F,0,0))
     leads = lead1.union(lead2)
 
     h = W/2
@@ -130,8 +133,8 @@ def generate_part(params):
     point2 = (sqrt((R * R) - (L/4 * L/4))) - (R-h)
 
     #draw the body0
-    body = cq.Workplane("XY").workplane(offset=L/2+bs).moveTo(0, W/2).threePointArc((-L/4, point2),(-L/2, 0),forConstruction=False).threePointArc((-L/4, -point2),(0, -W/2),forConstruction=False).close().revolve()
-    leads = leads.cut(body)
+    body = cq.Workplane("XY").workplane(offset=L/2+bs, centerOption="CenterOfMass").moveTo(0, W/2).threePointArc((-L/4, point2),(-L/2, 0),forConstruction=False).threePointArc((-L/4, -point2),(0, -W/2),forConstruction=False).close().revolve()
+    #leads = leads.cut(body)
     #show(leads)
 
     if series_params.pin_1_on_origin:

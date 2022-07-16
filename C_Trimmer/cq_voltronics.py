@@ -46,12 +46,14 @@
 #****************************************************************************
 
 
-import cq_common  # modules parameters
-from cq_common import *
+# import cq_common  # modules parameters
+from .cq_common import *
 
 import sys
 import math
 
+from collections import namedtuple
+from collections.abc import Mapping
 
 class cq_voltronics():
 
@@ -59,123 +61,123 @@ class cq_voltronics():
         x = 0
 
         
-    def get_model_name(self, modelID):
-        for n in self.all_params:
-            if n == modelID:
-                return self.all_params[modelID].modelName
-        return 'xxUNKNOWNxxx'
+    # def get_model_name(self, modelID):
+    #     for n in self.all_params:
+    #         if n == modelID:
+    #             return self.all_params[modelID].modelName
+    #     return 'xxUNKNOWNxxx'
 
         
-    def get_dest_3D_dir(self, modelID):
-        for n in self.all_params:
-            if n == modelID:
-                return self.all_params[modelID].dest_dir_prefix
-        return 'Capacitor_SMD.3dshapes'
+    # def get_dest_3D_dir(self, modelID):
+    #     for n in self.all_params:
+    #         if n == modelID:
+    #             return self.all_params[modelID].dest_dir_prefix
+    #     return 'Capacitor_SMD.3dshapes'
 
-    def model_exist(self, modelID):
-        for n in self.all_params:
-            if n == modelID:
-                return True
+    # def model_exist(self, modelID):
+    #     for n in self.all_params:
+    #         if n == modelID:
+    #             return True
                 
-        return False
+    #     return False
         
         
-    def get_list_all(self):
-        list = []
-        for n in self.all_params:
-            list.append(n)
+    # def get_list_all(self):
+    #     list = []
+    #     for n in self.all_params:
+    #         list.append(n)
         
-        return list
+    #     return list
 
         
-    def make_3D_model(self, modelID):
+    # def make_3D_model(self, modelID):
         
-        destination_dir = self.get_dest_3D_dir(modelID)
-        params = self.all_params[modelID]
+    #     destination_dir = self.get_dest_3D_dir(modelID)
+    #     params = self.all_params[modelID]
 
         
-        if modelID == 'Voltronics_JN':
-            case_top = self.make_top_Voltronics_JN(params)
-            show(case_top)
-            case = self.make_case_Voltronics_JN_JQ(params)
-            show(case)
-            pins = self.make_pin_Voltronics_JN_JQ(params)
-            show(pins)
-        elif modelID == 'Voltronics_JQ':
-            case_top = self.make_top_Voltronics_JQ(params)
-            show(case_top)
-            case = self.make_case_Voltronics_JN_JQ(params)
-            show(case)
-            pins = self.make_pin_Voltronics_JN_JQ(params)
-            show(pins)
-        elif modelID == 'Voltronics_JR':
-            case_top = self.make_top_Voltronics_JR(params)
-            show(case_top)
-            case = self.make_case_Voltronics_JR(params)
-            show(case)
-            pins = self.make_pin_Voltronics_JR(params)
-            show(pins)
-        elif modelID == 'Voltronics_JV':
-            case_top = self.make_top_Voltronics_JV(params)
-            show(case_top)
-            case = self.make_case_Voltronics_JV(params)
-            show(case)
-            pins = self.make_pin_Voltronics_JV(params)
-            show(pins)
-        elif modelID == 'Voltronics_JZ':
-            case_top = self.make_top_Voltronics_JZ(params)
-            show(case_top)
-            case = self.make_case_Voltronics_JZ(params)
-            show(case)
-            pins = self.make_pin_Voltronics_JZ(params)
-            show(pins)
-        else:
-            FreeCAD.Console.PrintMessage('\r\n')
-            FreeCAD.Console.PrintMessage('ERROR: Model ID ' + str(modelID) + ' does not exist, exiting')
-            FreeCAD.Console.PrintMessage('\r\n')
-            sys.exit()
+    #     if modelID == 'Voltronics_JN':
+    #         case_top = self.make_top_Voltronics_JN(params)
+    #         show(case_top)
+    #         case = self.make_case_Voltronics_JN_JQ(params)
+    #         show(case)
+    #         pins = self.make_pin_Voltronics_JN_JQ(params)
+    #         show(pins)
+    #     elif modelID == 'Voltronics_JQ':
+    #         case_top = self.make_top_Voltronics_JQ(params)
+    #         show(case_top)
+    #         case = self.make_case_Voltronics_JN_JQ(params)
+    #         show(case)
+    #         pins = self.make_pin_Voltronics_JN_JQ(params)
+    #         show(pins)
+    #     elif modelID == 'Voltronics_JR':
+    #         case_top = self.make_top_Voltronics_JR(params)
+    #         show(case_top)
+    #         case = self.make_case_Voltronics_JR(params)
+    #         show(case)
+    #         pins = self.make_pin_Voltronics_JR(params)
+    #         show(pins)
+    #     elif modelID == 'Voltronics_JV':
+    #         case_top = self.make_top_Voltronics_JV(params)
+    #         show(case_top)
+    #         case = self.make_case_Voltronics_JV(params)
+    #         show(case)
+    #         pins = self.make_pin_Voltronics_JV(params)
+    #         show(pins)
+    #     elif modelID == 'Voltronics_JZ':
+    #         case_top = self.make_top_Voltronics_JZ(params)
+    #         show(case_top)
+    #         case = self.make_case_Voltronics_JZ(params)
+    #         show(case)
+    #         pins = self.make_pin_Voltronics_JZ(params)
+    #         show(pins)
+    #     else:
+    #         FreeCAD.Console.PrintMessage('\r\n')
+    #         FreeCAD.Console.PrintMessage('ERROR: Model ID ' + str(modelID) + ' does not exist, exiting')
+    #         FreeCAD.Console.PrintMessage('\r\n')
+    #         sys.exit()
             
             
-        npth_pins = self.make_npth_pins_dummy(params)
-        show(npth_pins)
+    #     npth_pins = self.make_npth_pins_dummy(params)
+    #     show(npth_pins)
      
-        doc = FreeCAD.ActiveDocument
-        objs=GetListOfObjects(FreeCAD, doc)
+    #     doc = FreeCAD.ActiveDocument
+    #     objs=GetListOfObjects(FreeCAD, doc)
      
-        body_top_color_key = params.body_top_color_key
-        body_color_key = params.body_color_key
-        pin_color_key = params.pin_color_key
-        npth_pin_color_key = params.npth_pin_color_key
+    #     body_top_color_key = params.body_top_color_key
+    #     body_color_key = params.body_color_key
+    #     pin_color_key = params.pin_color_key
+    #     npth_pin_color_key = params.npth_pin_color_key
 
-        body_top_color = shaderColors.named_colors[body_top_color_key].getDiffuseFloat()
-        body_color = shaderColors.named_colors[body_color_key].getDiffuseFloat()
-        pin_color = shaderColors.named_colors[pin_color_key].getDiffuseFloat()
-        npth_pin_color = shaderColors.named_colors[npth_pin_color_key].getDiffuseFloat()
+    #     body_top_color = shaderColors.named_colors[body_top_color_key].getDiffuseFloat()
+    #     body_color = shaderColors.named_colors[body_color_key].getDiffuseFloat()
+    #     pin_color = shaderColors.named_colors[pin_color_key].getDiffuseFloat()
+    #     npth_pin_color = shaderColors.named_colors[npth_pin_color_key].getDiffuseFloat()
 
-        Color_Objects(Gui,objs[0],body_top_color)
-        Color_Objects(Gui,objs[1],body_color)
-        Color_Objects(Gui,objs[2],pin_color)
-        Color_Objects(Gui,objs[3],npth_pin_color)
+    #     Color_Objects(Gui,objs[0],body_top_color)
+    #     Color_Objects(Gui,objs[1],body_color)
+    #     Color_Objects(Gui,objs[2],pin_color)
+    #     Color_Objects(Gui,objs[3],npth_pin_color)
 
-        col_body_top=Gui.ActiveDocument.getObject(objs[0].Name).DiffuseColor[0]
-        col_body=Gui.ActiveDocument.getObject(objs[1].Name).DiffuseColor[0]
-        col_pin=Gui.ActiveDocument.getObject(objs[2].Name).DiffuseColor[0]
-        col_npth_pin=Gui.ActiveDocument.getObject(objs[3].Name).DiffuseColor[0]
+    #     col_body_top=Gui.ActiveDocument.getObject(objs[0].Name).DiffuseColor[0]
+    #     col_body=Gui.ActiveDocument.getObject(objs[1].Name).DiffuseColor[0]
+    #     col_pin=Gui.ActiveDocument.getObject(objs[2].Name).DiffuseColor[0]
+    #     col_npth_pin=Gui.ActiveDocument.getObject(objs[3].Name).DiffuseColor[0]
         
-        material_substitutions={
-            col_body_top[:-1]:body_top_color_key,
-            col_body[:-1]:body_color_key,
-            col_pin[:-1]:pin_color_key,
-            col_npth_pin[:-1]:npth_pin_color_key
-        }
+    #     material_substitutions={
+    #         col_body_top[:-1]:body_top_color_key,
+    #         col_body[:-1]:body_color_key,
+    #         col_pin[:-1]:pin_color_key,
+    #         col_npth_pin[:-1]:npth_pin_color_key
+    #     }
         
-        expVRML.say(material_substitutions)
-        while len(objs) > 1:
-                FuseObjs_wColors(FreeCAD, FreeCADGui, doc.Name, objs[0].Name, objs[1].Name)
-                del objs
-                objs = GetListOfObjects(FreeCAD, doc)
+    #     expVRML.say(material_substitutions)
+    #     while len(objs) > 1:
+    #             FuseObjs_wColors(FreeCAD, FreeCADGui, doc.Name, objs[0].Name, objs[1].Name)
+    #             del objs
+    #             objs = GetListOfObjects(FreeCAD, doc)
 
-        return material_substitutions
+    #     return material_substitutions
 
 
     def make_npth_pins_dummy(self, params):
@@ -194,15 +196,15 @@ class cq_voltronics():
 
     def make_top_Voltronics_JN_JQ(self, params):
 
-        W = params.W                # Width
-        L = params.L                # Length
-        L1 = params.L1              # Length 1
-        H = params.H                # Height
-        BH = params.BH              # Body height
-        D = params.D                # Dome diameter
-        SD = params.SD              # Screw diameter
-        A1 = params.A1              # package height
-        rotation = params.rotation  # Rotation if required
+        W = params['W']                # Width
+        L = params['L']                # Length
+        L1 = params['L1']              # Length 1
+        H = params['H']                # Height
+        BH = params['BH']              # Body height
+        D = params['D']                # Dome diameter
+        SD = params['SD']              # Screw diameter
+        A1 = params['A1']              # package height
+        rotation = params['rotation']  # Rotation if required
     
         tw = (L - L1) / 2.0
         #
@@ -218,7 +220,7 @@ class cq_voltronics():
         pts.append((0.0 - (tw), 0.0 - tw))
         pts.append((0.0 - 0.2, 0.0))
 
-        case = cq.Workplane("XY").workplane(offset=0.0).polyline(pts).close().extrude(BH)
+        case = cq.Workplane("XY").workplane(offset=0.0).polyline(pts, includeCurrent=True).close().extrude(BH)
         case = case.faces(">Z").fillet(0.05)
         case = case.translate(((W / 2.0), 0.0 - (L1 / 2.0), 0.0))
         
@@ -235,14 +237,14 @@ class cq_voltronics():
 
     def make_top_Voltronics_JN(self, params):
 
-        W = params.W                # Width
-        L = params.L                # Length
-        L1 = params.L1              # Length 1
-        H = params.H                # Height
-        D = params.D                # Dome diameter
-        SD = params.SD              # Screw diameter
-        A1 = params.A1              # package height
-        rotation = params.rotation  # Rotation if required
+        W = params['W']                # Width
+        L = params['L']                # Length
+        L1 = params['L1']              # Length 1
+        H = params['H']                # Height
+        D = params['D']                # Dome diameter
+        SD = params['SD']              # Screw diameter
+        A1 = params['A1']              # package height
+        rotation = params['rotation']  # Rotation if required
 
         #
         # Make top
@@ -261,14 +263,14 @@ class cq_voltronics():
 
     def make_top_Voltronics_JQ(self, params):
 
-        W = params.W                # Width
-        L = params.L                # Length
-        L1 = params.L1              # Length 1
-        H = params.H                # Height
-        D = params.D                # Dome diameter
-        SD = params.SD              # Screw diameter
-        A1 = params.A1              # package height
-        rotation = params.rotation  # Rotation if required
+        W = params['W']                # Width
+        L = params['L']                # Length
+        L1 = params['L1']              # Length 1
+        H = params['H']                # Height
+        D = params['D']                # Dome diameter
+        SD = params['SD']              # Screw diameter
+        A1 = params['A1']              # package height
+        rotation = params['rotation']  # Rotation if required
 
         #
         # Make top
@@ -288,17 +290,17 @@ class cq_voltronics():
 
     def make_top_Voltronics_JR(self, params):
 
-        W = params.W                # Width
-        W1 = params.W1              # Width 1
-        W2 = params.W2              # Width 2
-        L = params.L                # Length
-        L1 = params.L1              # Length 1
-        H = params.H                # Height
-        BH = params.BH              # Body height
-        D = params.D                # Dome diameter
-        SD = params.SD              # Screw diameter
-        A1 = params.A1              # package height
-        rotation = params.rotation  # Rotation if required
+        W = params['W']                # Width
+        W1 = params['W1']              # Width 1
+        W2 = params['W2']              # Width 2
+        L = params['L']                # Length
+        L1 = params['L1']              # Length 1
+        H = params['H']                # Height
+        BH = params['BH']              # Body height
+        D = params['D']                # Dome diameter
+        SD = params['SD']              # Screw diameter
+        A1 = params['A1']              # package height
+        rotation = params['rotation']  # Rotation if required
 
         tx = 0.15
         #
@@ -318,15 +320,15 @@ class cq_voltronics():
 
     def make_top_Voltronics_JV(self, params):
 
-        W = params.W                # Width
-        L = params.L                # Length
-        L1 = params.L1              # Length 1
-        H = params.H                # Height
-        BH = params.BH              # Body height
-        D = params.D                # Dome diameter
-        SD = params.SD              # Screw diameter
-        A1 = params.A1              # package height
-        rotation = params.rotation  # Rotation if required
+        W = params['W']                # Width
+        L = params['L']                # Length
+        L1 = params['L1']              # Length 1
+        H = params['H']                # Height
+        BH = params['BH']              # Body height
+        D = params['D']                # Dome diameter
+        SD = params['SD']              # Screw diameter
+        A1 = params['A1']              # package height
+        rotation = params['rotation']  # Rotation if required
 
         #
         # Make top
@@ -350,16 +352,16 @@ class cq_voltronics():
 
     def make_top_Voltronics_JZ(self, params):
 
-        W = params.W                # Width
-        W1 = params.W1              # Width 1
-        L = params.L                # Length
-        L1 = params.L1              # Length 1
-        H = params.H                # Height
-        BH = params.BH              # Body height
-        D = params.D                # Dome diameter
-        SD = params.SD              # Screw diameter
-        A1 = params.A1              # package height
-        rotation = params.rotation  # Rotation if required
+        W = params['W']                # Width
+        W1 = params['W1']              # Width 1
+        L = params['L']                # Length
+        L1 = params['L1']              # Length 1
+        H = params['H']                # Height
+        BH = params['BH']              # Body height
+        D = params['D']                # Dome diameter
+        SD = params['SD']              # Screw diameter
+        A1 = params['A1']              # package height
+        rotation = params['rotation']  # Rotation if required
 
         tx = 0.0
         #
@@ -379,17 +381,17 @@ class cq_voltronics():
 
     def make_case_Voltronics_JN_JQ(self, params):
 
-        W = params.W                # Width
-        L = params.L                # Length
-        L1 = params.L1              # Length 1
-        H = params.H                # Height
-        BH = params.BH              # Body height
-        D = params.D                # Dome diameter
-        SD = params.SD              # Screw diameter
-        PW = params.PW              # Pad width
-        PL = params.PL              # Pad length
-        A1 = params.A1              # package height
-        rotation = params.rotation  # Rotation if required
+        W = params['W']                # Width
+        L = params['L']                # Length
+        L1 = params['L1']              # Length 1
+        H = params['H']                # Height
+        BH = params['BH']              # Body height
+        D = params['D']                # Dome diameter
+        SD = params['SD']              # Screw diameter
+        PW = params['PW']              # Pad width
+        PL = params['PL']              # Pad length
+        A1 = params['A1']              # package height
+        rotation = params['rotation']  # Rotation if required
 
         #
         # Make body
@@ -407,17 +409,17 @@ class cq_voltronics():
 
     def make_case_Voltronics_JR(self, params):
 
-        W = params.W                # Width
-        W1 = params.W1              # Width 1
-        W2 = params.W2              # Width 2
-        L = params.L                # Length
-        L1 = params.L1              # Length 1
-        H = params.H                # Height
-        BH = params.BH              # Body height
-        D = params.D                # Dome diameter
-        SD = params.SD              # Screw diameter
-        A1 = params.A1              # package height
-        rotation = params.rotation  # Rotation if required
+        W = params['W']                # Width
+        W1 = params['W1']              # Width 1
+        W2 = params['W2']              # Width 2
+        L = params['L']                # Length
+        L1 = params['L1']              # Length 1
+        H = params['H']                # Height
+        BH = params['BH']              # Body height
+        D = params['D']                # Dome diameter
+        SD = params['SD']              # Screw diameter
+        A1 = params['A1']              # package height
+        rotation = params['rotation']  # Rotation if required
 
         #
         wx = W - W2
@@ -429,7 +431,7 @@ class cq_voltronics():
         pts.append((0.0 - (wx - 0.0), W1))
         pts.append((0.0 - (wx - W1), 0.0))
 
-        case = cq.Workplane("XY").workplane(offset=0.0).polyline(pts).close().extrude(BH)
+        case = cq.Workplane("XY").workplane(offset=0.0).polyline(pts, includeCurrent=True).close().extrude(BH)
         case = case.faces(">Z").fillet(0.05)
         case = case.translate(((W / 2.0) - W2, 0.0 - (L / 2.0), 0.0))
         
@@ -452,17 +454,17 @@ class cq_voltronics():
 
     def make_case_Voltronics_JV(self, params):
 
-        W = params.W                # Width
-        L = params.L                # Length
-        L1 = params.L1              # Length 1
-        H = params.H                # Height
-        BH = params.BH              # Body height
-        D = params.D                # Dome diameter
-        SD = params.SD              # Screw diameter
-        PW = params.PW              # Pad width
-        PL = params.PL              # Pad length
-        A1 = params.A1              # package height
-        rotation = params.rotation  # Rotation if required
+        W = params['W']                # Width
+        L = params['L']                # Length
+        L1 = params['L1']              # Length 1
+        H = params['H']                # Height
+        BH = params['BH']              # Body height
+        D = params['D']                # Dome diameter
+        SD = params['SD']              # Screw diameter
+        PW = params['PW']              # Pad width
+        PL = params['PL']              # Pad length
+        A1 = params['A1']              # package height
+        rotation = params['rotation']  # Rotation if required
 
         #
         # Make body
@@ -480,16 +482,16 @@ class cq_voltronics():
 
     def make_case_Voltronics_JZ(self, params):
 
-        W = params.W                # Width
-        W1 = params.W1              # Width 1
-        L = params.L                # Length
-        L1 = params.L1              # Length 1
-        H = params.H                # Height
-        BH = params.BH              # Body height
-        D = params.D                # Dome diameter
-        SD = params.SD              # Screw diameter
-        A1 = params.A1              # package height
-        rotation = params.rotation  # Rotation if required
+        W = params['W']                # Width
+        W1 = params['W1']              # Width 1
+        L = params['L']                # Length
+        L1 = params['L1']              # Length 1
+        H = params['H']                # Height
+        BH = params['BH']              # Body height
+        D = params['D']                # Dome diameter
+        SD = params['SD']              # Screw diameter
+        A1 = params['A1']              # package height
+        rotation = params['rotation']  # Rotation if required
 
         #
         tx = 0.0
@@ -512,7 +514,7 @@ class cq_voltronics():
         pts.append((0.0 - (W - 0.0), W1))
         pts.append((0.0 - (W - W1), 0.0))
         #
-        case = cq.Workplane("XY").workplane(offset=0.0).polyline(pts).close().extrude(BH)
+        case = cq.Workplane("XY").workplane(offset=0.0).polyline(pts, includeCurrent=True).close().extrude(BH)
         case = case.faces(">Z").fillet(0.05)
         case = case.translate(((W / 2.0), 0.0 - (L / 2.0), 0.0))
         
@@ -535,20 +537,20 @@ class cq_voltronics():
 
     def make_pin_Voltronics_JN_JQ(self, params):
 
-        W = params.W                # Width
-        L = params.L                # Length
-        L1 = params.L1              # Length 1
-        H = params.H                # Height
-        BH = params.BH              # Body height
-        D = params.D                # Dome diameter
-        SD = params.SD              # Screw diameter
-        PW = params.PW              # Pad width
-        PL = params.PL              # Pad length
-        A1 = params.A1              # package height
-        rotation = params.rotation  # Rotation if required
+        W = params['W']                # Width
+        L = params['L']                # Length
+        L1 = params['L1']              # Length 1
+        H = params['H']                # Height
+        BH = params['BH']              # Body height
+        D = params['D']                # Dome diameter
+        SD = params['SD']              # Screw diameter
+        PW = params['PW']              # Pad width
+        PL = params['PL']              # Pad length
+        A1 = params['A1']              # package height
+        rotation = params['rotation']  # Rotation if required
 
-        A1 = params.A1                      # package height
-        rotation = params.rotation          # Rotation if required
+        A1 = params['A1']                      # package height
+        rotation = params['rotation']          # Rotation if required
 
         #
         # Make pin
@@ -571,20 +573,20 @@ class cq_voltronics():
 
     def make_pin_Voltronics_JV(self, params):
 
-        W = params.W                # Width
-        L = params.L                # Length
-        L1 = params.L1              # Length 1
-        H = params.H                # Height
-        BH = params.BH              # Body height
-        D = params.D                # Dome diameter
-        SD = params.SD              # Screw diameter
-        PW = params.PW              # Pad width
-        PL = params.PL              # Pad length
-        A1 = params.A1              # package height
-        rotation = params.rotation  # Rotation if required
+        W = params['W']                # Width
+        L = params['L']                # Length
+        L1 = params['L1']              # Length 1
+        H = params['H']                # Height
+        BH = params['BH']              # Body height
+        D = params['D']                # Dome diameter
+        SD = params['SD']              # Screw diameter
+        PW = params['PW']              # Pad width
+        PL = params['PL']              # Pad length
+        A1 = params['A1']              # package height
+        rotation = params['rotation']  # Rotation if required
 
-        A1 = params.A1                      # package height
-        rotation = params.rotation          # Rotation if required
+        A1 = params['A1']                      # package height
+        rotation = params['rotation']          # Rotation if required
 
         #
         # Make pin
@@ -607,19 +609,19 @@ class cq_voltronics():
 
     def make_pin_Voltronics_JR(self, params):
 
-        W = params.W                # Width
-        W1 = params.W1              # Width 1
-        W2 = params.W2              # Width 2
-        L = params.L                # Length
-        L1 = params.L1              # Length 1
-        H = params.H                # Height
-        BH = params.BH              # Body height
-        D = params.D                # Dome diameter
-        SD = params.SD              # Screw diameter
-        PW = params.PW              # Pad width
-        PL = params.PL              # Pad length
-        A1 = params.A1              # package height
-        rotation = params.rotation  # Rotation if required
+        W = params['W']                # Width
+        W1 = params['W1']              # Width 1
+        W2 = params['W2']              # Width 2
+        L = params['L']                # Length
+        L1 = params['L1']              # Length 1
+        H = params['H']                # Height
+        BH = params['BH']              # Body height
+        D = params['D']                # Dome diameter
+        SD = params['SD']              # Screw diameter
+        PW = params['PW']              # Pad width
+        PL = params['PL']              # Pad length
+        A1 = params['A1']              # package height
+        rotation = params['rotation']  # Rotation if required
 
         tx = 0.15
         #
@@ -639,18 +641,18 @@ class cq_voltronics():
 
     def make_pin_Voltronics_JZ(self, params):
 
-        W = params.W                # Width
-        W1 = params.W1              # Width 1
-        L = params.L                # Length
-        L1 = params.L1              # Length 1
-        H = params.H                # Height
-        BH = params.BH              # Body height
-        D = params.D                # Dome diameter
-        SD = params.SD              # Screw diameter
-        PW = params.PW              # Pad width
-        PL = params.PL              # Pad length
-        A1 = params.A1              # package height
-        rotation = params.rotation  # Rotation if required
+        W = params['W']                # Width
+        W1 = params['W1']              # Width 1
+        L = params['L']                # Length
+        L1 = params['L1']              # Length 1
+        H = params['H']                # Height
+        BH = params['BH']              # Body height
+        D = params['D']                # Dome diameter
+        SD = params['SD']              # Screw diameter
+        PW = params['PW']              # Pad width
+        PL = params['PL']              # Pad length
+        A1 = params['A1']              # package height
+        rotation = params['rotation']  # Rotation if required
 
         #
         # Make pin
@@ -667,9 +669,9 @@ class cq_voltronics():
     ##enabling optional/default values to None
     def namedtuple_with_defaults(typename, field_names, default_values=()):
 
-        T = collections.namedtuple(typename, field_names)
+        T = namedtuple(typename, field_names)
         T.__new__.__defaults__ = (None,) * len(T._fields)
-        if isinstance(default_values, collections.Mapping):
+        if isinstance(default_values, Mapping):
             prototype = T(**default_values)
         else:
             prototype = T(*default_values)
@@ -700,119 +702,119 @@ class cq_voltronics():
 
 
 
-    all_params = {
+    # all_params = {
 
 
-        'Voltronics_JN': Params(
-            #
-            # http://www.knowlescapacitors.com/getmedia/76b68d57-f62f-4666-a976-d23a42593c78/9341_Voltronics-2014_Final-Proof.aspx
-            # 
-            modelName = 'C_Trimmer_Voltronics_JN',   # modelName
-            W = 01.70,                  # Width
-            L = 01.50,                  # Length
-            L1 = 01.00,                 # Length 1
-            H = 00.90,                  # Height
-            BH = 00.80,                 # Body height
-            D = 01.50,                  # Dome diameter
-            SD = 00.80,                 # Screw size
-            A1 = 0.01,                  # Body-board separation
+    #     'Voltronics_JN': Params(
+    #         #
+    #         # http://www.knowlescapacitors.com/getmedia/76b68d57-f62f-4666-a976-d23a42593c78/9341_Voltronics-2014_Final-Proof.aspx
+    #         # 
+    #         modelName = 'C_Trimmer_Voltronics_JN',   # modelName
+    #         W = 01.70,                  # Width
+    #         L = 01.50,                  # Length
+    #         L1 = 01.00,                 # Length 1
+    #         H = 00.90,                  # Height
+    #         BH = 00.80,                 # Body height
+    #         D = 01.50,                  # Dome diameter
+    #         SD = 00.80,                 # Screw size
+    #         A1 = 0.01,                  # Body-board separation
 
-            body_top_color_key  = 'gold pins',          # Top color
-            body_color_key      = 'black body',         # Body color
-            pin_color_key       = 'metal grey pins',    # Pin color
-            npth_pin_color_key  = 'grey body',          # NPTH Pin color
-            rotation = 0,                               # Rotation if required
-            dest_dir_prefix = 'Capacitor_SMD.3dshapes', # destination directory
-            ),
+    #         body_top_color_key  = 'gold pins',          # Top color
+    #         body_color_key      = 'black body',         # Body color
+    #         pin_color_key       = 'metal grey pins',    # Pin color
+    #         npth_pin_color_key  = 'grey body',          # NPTH Pin color
+    #         rotation = 0,                               # Rotation if required
+    #         dest_dir_prefix = 'Capacitor_SMD.3dshapes', # destination directory
+    #         ),
 
-        'Voltronics_JQ': Params(
-            #
-            # http://www.knowlescapacitors.com/getmedia/76b68d57-f62f-4666-a976-d23a42593c78/9341_Voltronics-2014_Final-Proof.aspx
-            # 
-            modelName = 'C_Trimmer_Voltronics_JQ',   # modelName
-            W = 02.70,                  # Width
-            L = 02.20,                  # Length
-            L1 = 01.00,                 # Length 1
-            H = 01.00,                  # Height
-            BH = 00.80,                 # Body height
-            D = 02.20,                  # Dome diameter
-            SD = 00.20,                 # Screw size
-            A1 = 0.01,                  # Body-board separation
+    #     'Voltronics_JQ': Params(
+    #         #
+    #         # http://www.knowlescapacitors.com/getmedia/76b68d57-f62f-4666-a976-d23a42593c78/9341_Voltronics-2014_Final-Proof.aspx
+    #         # 
+    #         modelName = 'C_Trimmer_Voltronics_JQ',   # modelName
+    #         W = 02.70,                  # Width
+    #         L = 02.20,                  # Length
+    #         L1 = 01.00,                 # Length 1
+    #         H = 01.00,                  # Height
+    #         BH = 00.80,                 # Body height
+    #         D = 02.20,                  # Dome diameter
+    #         SD = 00.20,                 # Screw size
+    #         A1 = 0.01,                  # Body-board separation
 
-            body_top_color_key  = 'metal aluminum',     # Top color
-            body_color_key      = 'black body',         # Body color
-            pin_color_key       = 'metal grey pins',    # Pin color
-            npth_pin_color_key  = 'grey body',          # NPTH Pin color
-            rotation = 0,                               # Rotation if required
-            dest_dir_prefix = 'Capacitor_SMD.3dshapes', # destination directory
-            ),
+    #         body_top_color_key  = 'metal aluminum',     # Top color
+    #         body_color_key      = 'black body',         # Body color
+    #         pin_color_key       = 'metal grey pins',    # Pin color
+    #         npth_pin_color_key  = 'grey body',          # NPTH Pin color
+    #         rotation = 0,                               # Rotation if required
+    #         dest_dir_prefix = 'Capacitor_SMD.3dshapes', # destination directory
+    #         ),
 
-        'Voltronics_JR': Params(
-            #
-            # http://www.knowlescapacitors.com/getmedia/76b68d57-f62f-4666-a976-d23a42593c78/9341_Voltronics-2014_Final-Proof.aspx
-            # 
-            modelName = 'C_Trimmer_Voltronics_JR',   # modelName
-            W = 03.50,                  # Width
-            W1 = 00.70,                 # Width 1
-            W2 = 00.40,                 # Width 2
-            L = 03.10,                  # Length
-            L1 = 01.60,                 # Length 1
-            H = 01.15,                  # Height
-            BH = 00.50,                 # Body height
-            D = 03.10,                  # Dome diameter
-            SD = 01.50,                 # Screw size
-            A1 = 0.01,                  # Body-board separation
+    #     'Voltronics_JR': Params(
+    #         #
+    #         # http://www.knowlescapacitors.com/getmedia/76b68d57-f62f-4666-a976-d23a42593c78/9341_Voltronics-2014_Final-Proof.aspx
+    #         # 
+    #         modelName = 'C_Trimmer_Voltronics_JR',   # modelName
+    #         W = 03.50,                  # Width
+    #         W1 = 00.70,                 # Width 1
+    #         W2 = 00.40,                 # Width 2
+    #         L = 03.10,                  # Length
+    #         L1 = 01.60,                 # Length 1
+    #         H = 01.15,                  # Height
+    #         BH = 00.50,                 # Body height
+    #         D = 03.10,                  # Dome diameter
+    #         SD = 01.50,                 # Screw size
+    #         A1 = 0.01,                  # Body-board separation
 
-            body_top_color_key  = 'gold pins',          # Top color
-            body_color_key      = 'white body',         # Body color
-            pin_color_key       = 'metal grey pins',    # Pin color
-            npth_pin_color_key  = 'grey body',          # NPTH Pin color
-            rotation = 0,                               # Rotation if required
-            dest_dir_prefix = 'Capacitor_SMD.3dshapes', # destination directory
-            ),
+    #         body_top_color_key  = 'gold pins',          # Top color
+    #         body_color_key      = 'white body',         # Body color
+    #         pin_color_key       = 'metal grey pins',    # Pin color
+    #         npth_pin_color_key  = 'grey body',          # NPTH Pin color
+    #         rotation = 0,                               # Rotation if required
+    #         dest_dir_prefix = 'Capacitor_SMD.3dshapes', # destination directory
+    #         ),
 
-        'Voltronics_JV': Params(
-            #
-            # http://www.knowlescapacitors.com/getmedia/76b68d57-f62f-4666-a976-d23a42593c78/9341_Voltronics-2014_Final-Proof.aspx
-            # 
-            modelName = 'C_Trimmer_Voltronics_JV',   # modelName
-            W = 03.20,                  # Width
-            L = 02.50,                  # Length
-            L1 = 01.00,                 # Length 1
-            H = 01.25,                  # Height
-            BH = 00.80,                 # Body height
-            D = 02.40,                  # Dome diameter
-            SD = 00.45,                 # Screw size
-            A1 = 0.01,                  # Body-board separation
+    #     'Voltronics_JV': Params(
+    #         #
+    #         # http://www.knowlescapacitors.com/getmedia/76b68d57-f62f-4666-a976-d23a42593c78/9341_Voltronics-2014_Final-Proof.aspx
+    #         # 
+    #         modelName = 'C_Trimmer_Voltronics_JV',   # modelName
+    #         W = 03.20,                  # Width
+    #         L = 02.50,                  # Length
+    #         L1 = 01.00,                 # Length 1
+    #         H = 01.25,                  # Height
+    #         BH = 00.80,                 # Body height
+    #         D = 02.40,                  # Dome diameter
+    #         SD = 00.45,                 # Screw size
+    #         A1 = 0.01,                  # Body-board separation
 
-            body_top_color_key  = 'gold pins',          # Top color
-            body_color_key      = 'black body',         # Body color
-            pin_color_key       = 'metal grey pins',    # Pin color
-            npth_pin_color_key  = 'grey body',          # NPTH Pin color
-            rotation = 0,                               # Rotation if required
-            dest_dir_prefix = 'Capacitor_SMD.3dshapes', # destination directory
-            ),
+    #         body_top_color_key  = 'gold pins',          # Top color
+    #         body_color_key      = 'black body',         # Body color
+    #         pin_color_key       = 'metal grey pins',    # Pin color
+    #         npth_pin_color_key  = 'grey body',          # NPTH Pin color
+    #         rotation = 0,                               # Rotation if required
+    #         dest_dir_prefix = 'Capacitor_SMD.3dshapes', # destination directory
+    #         ),
             
-        'Voltronics_JZ': Params(
-            #
-            # http://www.knowlescapacitors.com/getmedia/76b68d57-f62f-4666-a976-d23a42593c78/9341_Voltronics-2014_Final-Proof.aspx
-            # 
-            modelName = 'C_Trimmer_Voltronics_JZ',   # modelName
-            W = 04.50,                  # Width
-            W1 = 00.50,                 # Width 1
-            L = 03.20,                  # Length
-            L1 = 01.00,                 # Length 1
-            H = 01.50,                  # Height
-            BH = 00.80,                 # Body height
-            D = 03.10,                  # Dome diameter
-            SD = 01.80,                 # Screw size
-            A1 = 0.01,                  # Body-board separation
+    #     'Voltronics_JZ': Params(
+    #         #
+    #         # http://www.knowlescapacitors.com/getmedia/76b68d57-f62f-4666-a976-d23a42593c78/9341_Voltronics-2014_Final-Proof.aspx
+    #         # 
+    #         modelName = 'C_Trimmer_Voltronics_JZ',   # modelName
+    #         W = 04.50,                  # Width
+    #         W1 = 00.50,                 # Width 1
+    #         L = 03.20,                  # Length
+    #         L1 = 01.00,                 # Length 1
+    #         H = 01.50,                  # Height
+    #         BH = 00.80,                 # Body height
+    #         D = 03.10,                  # Dome diameter
+    #         SD = 01.80,                 # Screw size
+    #         A1 = 0.01,                  # Body-board separation
 
-            body_top_color_key  = 'gold pins',          # Top color
-            body_color_key      = 'white body',         # Body color
-            pin_color_key       = 'metal grey pins',    # Pin color
-            npth_pin_color_key  = 'grey body',          # NPTH Pin color
-            rotation = 0,                               # Rotation if required
-            dest_dir_prefix = 'Capacitor_SMD.3dshapes', # destination directory
-            ),
-    }
+    #         body_top_color_key  = 'gold pins',          # Top color
+    #         body_color_key      = 'white body',         # Body color
+    #         pin_color_key       = 'metal grey pins',    # Pin color
+    #         npth_pin_color_key  = 'grey body',          # NPTH Pin color
+    #         rotation = 0,                               # Rotation if required
+    #         dest_dir_prefix = 'Capacitor_SMD.3dshapes', # destination directory
+    #         ),
+    # }

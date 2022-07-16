@@ -1,34 +1,37 @@
-# -*- coding: utf8 -*-
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
 #
 # This is derived from a cadquery script for generating PDIP models in X3D format
 #
 # from https://bitbucket.org/hyOzd/freecad-macros
 # author hyOzd
-# This is a 
+# This is a
 # Dimensions are from Microchips Packaging Specification document:
 # DS00000049BY. Body drawing is the same as QFP generator#
-
-## requirements
-## cadquery FreeCAD plugin
-##   https://github.com/jmwright/cadquery-freecad-module
-
-## to run the script just do: freecad make_gwexport_fc.py modelName
-## e.g. c:\freecad\bin\freecad make_gw_export_fc.py SOIC_8
-
-## the script will generate STEP and VRML parametric models
-## to be used with kicad StepUp script
-
-#* These are a FreeCAD & cadquery tools                                     *
-#* to export generated models in STEP & VRML format.                        *
+#
+## Requirements
+## CadQuery 2.1 commit e00ac83f98354b9d55e6c57b9bb471cdf73d0e96 or newer
+## https://github.com/CadQuery/cadquery
+#
+## To run the script just do: ./generator.py --output_dir [output_directory]
+## e.g. ./generator.py --output_dir /tmp
+#
+#* These are cadquery tools to export                                       *
+#* generated models in STEP & VRML format.                                  *
 #*                                                                          *
 #* cadquery script for generating QFP/SOIC/SSOP/TSSOP models in STEP AP214  *
-#*   Copyright (c) 2015                                                     *
-#* Maurice https://launchpad.net/~easyw                                     *
+#* Copyright (c) 2015                                                       *
+#*     Maurice https://launchpad.net/~easyw                                 *
+#* Copyright (c) 2022                                                       *
+#*     Update 2022                                                          *
+#*     jmwright (https://github.com/jmwright)                               *
+#*     Work sponsored by KiCAD Services Corporation                         *
+#*          (https://www.kipro-pcb.com/)                                    *
+#*                                                                          *
 #* All trademarks within this guide belong to their legitimate owners.      *
 #*                                                                          *
 #*   This program is free software; you can redistribute it and/or modify   *
-#*   it under the terms of the GNU Lesser General Public License (LGPL)     *
+#*   it under the terms of the GNU General Public License (GPL)             *
 #*   as published by the Free Software Foundation; either version 2 of      *
 #*   the License, or (at your option) any later version.                    *
 #*   for detail see the LICENCE text file.                                  *
@@ -45,287 +48,96 @@
 #*                                                                          *
 #****************************************************************************
 
-__title__ = "make DirecFETs 3D models"
-__author__ = "maurice"
-__Comment__ = 'make DirecFETs 3D models exported to STEP and VRML for Kicad StepUP script'
+__title__ = "main generator for making DirecFETs 3D models exported to STEP and VRML"
+__author__ = "scripts: maurice; models: see cq_model files; update: jmwright"
+__Comment__ = '''This generator loads cadquery model scripts and generates step/wrl files for the official kicad library.'''
 
-___ver___ = "1.3.2 09/02/2017"
+___ver___ = "2.0.0"
 
-# thanks to Frank Severinsen Shack for including vrml materials
+import os
 
-# maui import cadquery as cq
-# maui from Helpers import show
-from math import tan, radians, sqrt, sin
-from collections import namedtuple
+import cadquery as cq
+from _tools import shaderColors, parameters, cq_color_correct
+from _tools import cq_globals
 
-import sys, os
-import datetime
-from datetime import datetime
-sys.path.append("../_tools")
-import exportPartToVRML as expVRML
-import shaderColors
+from .directfet_smd import make_chip
 
-body_color_key = "metal grey pins"
-body_color = shaderColors.named_colors[body_color_key].getDiffuseFloat()
-die_color_key = "brown body"
-die_color = shaderColors.named_colors[die_color_key].getDiffuseFloat()
+def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
+    """
+    Main entry point into this generator.
+    """
+    models = []
 
-# maui start
-import FreeCAD, Draft, FreeCADGui
-import ImportGui
-import FreeCADGui as Gui
-#from Gui.Command import *
+    all_params = parameters.load_parameters("Directfet_SMD")
 
-import logging
-logging.getLogger('builder').addHandler(logging.NullHandler())
-#logger = logging.getLogger('builder')
-#logging.info("Begin")
+    if all_params == None:
+        print("ERROR: Model parameters must be provided.")
+        return
 
-outdir=os.path.dirname(os.path.realpath(__file__)+"/../_3Dmodels")
-scriptdir=os.path.dirname(os.path.realpath(__file__))
-sys.path.append(outdir)
-sys.path.append(scriptdir)
+    # Handle the case where no model has been passed
+    if model_to_build is None:
+        print("No variant name is given! building: {0}".format(model_to_build))
 
-#import PySide
-#from PySide import QtGui, QtCore
-if FreeCAD.GuiUp:
-    from PySide import QtCore, QtGui
+        model_to_build = all_params.keys()[0]
 
-# Licence information of the generated models.
-#################################################################################################
-STR_licAuthor = "kicad StepUp"
-STR_licEmail = "ksu"
-STR_licOrgSys = "kicad StepUp"
-STR_licPreProc = "OCC"
-STR_licOrg = "FreeCAD"   
-
-LIST_license = ["",]
-#################################################################################################
-
-
-# Import cad_tools
-import cq_cad_tools
-# Reload tools
-reload(cq_cad_tools)
-# Explicitly load all needed functions
-from cq_cad_tools import FuseObjs_wColors, GetListOfObjects, restore_Main_Tools, \
- exportSTEP, close_CQ_Example, exportVRML, saveFCdoc, z_RotateObject, Color_Objects, \
- CutObjs_wColors, checkRequirements
-
-
-# from export_x3d import exportX3D, Mesh
-try:
-    # Gui.SendMsgToActiveView("Run")
-    from Gui.Command import *                             
-    Gui.activateWorkbench("CadQueryWorkbench")
-    import cadquery as cq
-    from Helpers import show
-    # CadQuery Gui
-except: # catch *all* exceptions
-    msg="missing CadQuery 0.3.0 or later Module!\r\n\r\n"
-    msg+="https://github.com/jmwright/cadquery-freecad-module/wiki\n"
-    reply = QtGui.QMessageBox.information(None,"Info ...",msg)
-    # maui end
-
-#checking requirements
-checkRequirements(cq)
-
-try:
-    close_CQ_Example(App, Gui)
-except: # catch *all* exceptions
-    print "CQ 030 doesn't open example file"
-
-import cq_parameters  # modules parameters
-from cq_parameters import *
-
-all_params= kicad_naming_params_DirecFETs
-#all_params= all_params_DirecFETs
-
-def make_chip(params):
-    # dimensions for DirectFET's
-    A = params.A    # package length 
-    B = params.B    # package width 
-    C = params.C    # wing width
-    D = params.D    # wing length
-
-    M = params.M   # package height
-    P = params.P   # die and body height over board
-    R = params.R   # pad height over board
-
-    if params.die:
-        die_size_x = params.die[0]
-        die_size_y = params.die[1]
-        if len(params.die) > 2:
-            die_pos_x = params.die[2]
-            die_pos_y = params.die[3]
-        else:
-            die_pos_x = 0
-            die_pos_y = 0
-
-    pads = params.pads # pads
-    
-    modelName = params.modelName  # Model Name
-    rotation = params.rotation   # rotation
-
-    top_subtract = B -(B * 0.9)
-    top_width = B - top_subtract
-    top_lenght = (A-2*D)-top_subtract
-
-    ec = (B-C)/2/3  # chamfer of edges
-    shell_thickness = 0.1
-
-    a = sin(45) * ec
-    inner_ec = (a-shell_thickness/4)/sin(45)
-    top_ec = inner_ec
-    
-    # Create a 3D box based on the dimension variables above and fillet it
-    case = cq.Workplane("XY").box(A-2*D,B, (M-(P+R))*0.5, centered=(True, True, False))
-    case.edges("|Z").chamfer(ec)
-    case = case.edges("|Y").edges(">Z").fillet(((M-(P+R))*0.5)+P+R-(M*0.5))
-
-    subtract = cq.Workplane("XY").box(A-2*D-shell_thickness*2,B-shell_thickness*2, ((M-(P+R))*0.5)-0.1, centered=(True, True, False))
-    if inner_ec > 0:
-        subtract.edges("|Z").chamfer(inner_ec)
-    case.cut(subtract)
-    
-    top = cq.Workplane("XY").box(top_lenght,top_width, (M-(P+R))*0.5, centered=(True, True, False))
-    if top_ec > 0:
-        top.edges("|Z").fillet(top_ec)
-    top_fillet = ((M-(P+R))*0.5)*0.9
-    top = top.edges(">Z").fillet(top_fillet)
-    top = top.translate((0,0,(M-P-R)*0.5))
-    case = case.union(top)
-    case = case.translate((0,0,P+R))
-    
-    wing1 = cq.Workplane("XY").box(D,C, M*0.5, centered=(True, True, False)).translate(((A-D)/2,0,0))
-    wing2 = cq.Workplane("XY").box(D,C, M*0.5, centered=(True, True, False)).translate((-(A-D)/2,0,0))
-    case = case.union(wing1).union(wing2)
-    die = cq.Workplane("XY").box(die_size_x, die_size_y, (M-P)*0.5-(P+R), centered=(True, True, False)).translate((die_pos_x,die_pos_y,P+R))
-
-    for Pad in range(len(pads)):
-        if Pad == 0:
-            Pads = cq.Workplane("XY").box(pads[Pad][0], pads[Pad][1], (M-(P+R))*0.5+P, centered=(True, True, False)).translate((pads[Pad][2],pads[Pad][3],R)).edges("<Z").fillet(P*0.9)
-        else:
-            Pads = Pads.union(cq.Workplane("XY").box(pads[Pad][0], pads[Pad][1], (M-(P+R))*0.5+P, centered=(True, True, False)).translate((pads[Pad][2],pads[Pad][3],R)).edges("<Z").fillet(P*0.9))
-    case = case.union(Pads)
-    return (case, die)
-    
-
-
-# The dimensions of the box. These can be modified rather than changing the
-# object's code directly.
-
-#import step_license as L
-import add_license as Lic
-
-# when run from command line
-if __name__ == "__main__" or __name__ == "main_generator":
-    expVRML.say(expVRML.__file__)
-    FreeCAD.Console.PrintMessage('\r\nRunning...\r\n')
-
-    full_path=os.path.realpath(__file__)
-    expVRML.say(full_path)
-    scriside_pins_Thicknessdir=os.path.dirname(os.path.realpath(__file__))
-    expVRML.say(scriptdir)
-    sub_path = full_path.split(scriptdir)
-    expVRML.say(sub_path)
-    sub_dir_name =full_path.split(os.sep)[-2]
-    expVRML.say(sub_dir_name)
-    sub_path = full_path.split(sub_dir_name)[0]
-    expVRML.say(sub_path)
-    models_dir=sub_path+"_3Dmodels"
-    #expVRML.say(models_dir)
-    #stop
-
-    if len(sys.argv) < 3:
-        FreeCAD.Console.PrintMessage('No variant name is given! building 0402')
-        model_to_build='0402'
-    else:
-        model_to_build=sys.argv[2]
-
+    # Handle being able to generate all models or just one
     if model_to_build == "all":
-            variants = all_params.keys()
+        models = all_params
     else:
-            variants = [model_to_build]
+        models = { model_to_build: all_params[model_to_build] }
+    # Step through the selected models
+    for model in models:
+        if output_dir_prefix == None:
+            print("ERROR: An output directory must be provided.")
+            return
+        else:
+            # Construct the final output directory
+            output_dir = os.path.join(output_dir_prefix, all_params[model]['destination_dir'])
 
-    for variant in variants:
-        FreeCAD.Console.PrintMessage('\r\n'+variant)
-        if not variant in all_params:
-            print("Parameters for %s doesn't exist in 'all_params', skipping." % variant)
+        # Safety check to make sure the selected model is valid
+        if not model in all_params.keys():
+            print("Parameters for %s doesn't exist in 'all_params', skipping." % model)
             continue
 
-        ModelName = all_params[variant].modelName
-        CheckedModelName = ModelName.replace('.', '').replace('-', '_').replace('(', '').replace(')', '')
-        Newdoc = App.newDocument(CheckedModelName)
-        App.setActiveDocument(CheckedModelName)
-        Gui.ActiveDocument=Gui.getDocument(CheckedModelName)
-        case, die = make_chip(all_params[variant])
+        # Load the appropriate colors
+        body_color = shaderColors.named_colors[all_params[model]["body_color_key"]].getDiffuseFloat()
+        die_color = shaderColors.named_colors[all_params[model]["die_color_key"]].getDiffuseFloat()
 
-        show(case)
-        show(die)
-   
-        doc = FreeCAD.ActiveDocument
-        objs=GetListOfObjects(FreeCAD, doc)
-        
-        Color_Objects(Gui,objs[0],body_color)
-        Color_Objects(Gui,objs[1],die_color)
+        # Make the parts of the model
+        (body, die) = make_chip(all_params[model])
 
-        col_body=Gui.ActiveDocument.getObject(objs[0].Name).DiffuseColor[0]
-        col_die=Gui.ActiveDocument.getObject(objs[1].Name).DiffuseColor[0]
+        # Put the parts in the correct position relative to the pads on the board
+        # mvY = (all_params[model]['npins'] * all_params[model]['e'] / 4 - all_params[model]['e'] / 2.0)
+        # mvX = (all_params[model]['E'] - 0.254) / 2.0
+        body = body.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])#.translate ((mvX,-mvY,0))
+        die = die.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])#.translate ((mvX,-mvY,0))
 
-        material_substitutions={
-            col_body[:-1]:body_color_key,
-            col_die[:-1]:die_color_key
-        }
+        # Used to wrap all the parts into an assembly
+        component = cq.Assembly()
 
-        expVRML.say(material_substitutions)
+        # Add the parts to the assembly
+        component.add(body, color=cq_color_correct.Color(body_color[0], body_color[1], body_color[2]))
+        component.add(die, color=cq_color_correct.Color(die_color[0], die_color[1], die_color[2]))
 
-        del objs
-        objs=GetListOfObjects(FreeCAD, doc)
-        FuseObjs_wColors(FreeCAD, FreeCADGui, doc.Name, objs[0].Name, objs[1].Name)
-        doc.Label = CheckedModelName
-        objs=GetListOfObjects(FreeCAD, doc)
-        objs[0].Label = CheckedModelName
-        restore_Main_Tools()
-        #rotate if required
-        if (all_params[variant].rotation!=0):
-            rot= all_params[variant].rotation
-            z_RotateObject(doc, rot)
-        #out_dir=destination_dir+all_params[variant].dest_dir_prefix+'/'
-        script_dir=os.path.dirname(os.path.realpath(__file__))
-        ## models_dir=script_dir+"/../_3Dmodels"
-        expVRML.say(models_dir)
-        out_dir=models_dir+destination_dir
-        #out_dir=script_dir+os.sep+destination_dir
-        if not os.path.exists(out_dir):
-            os.makedirs(out_dir)
-        #out_dir="./generated_qfp/"
-        # export STEP model
-        exportSTEP(doc, ModelName, out_dir)
-        if LIST_license[0]=="":
-            LIST_license=Lic.LIST_int_license
-            LIST_license.append("")
-        Lic.addLicenseToStep(out_dir+'/', ModelName+".step", LIST_license,\
-                           STR_licAuthor, STR_licEmail, STR_licOrgSys, STR_licOrg, STR_licPreProc)
-        # scale and export Vrml model
-        scale=1/2.54
-        #exportVRML(doc,ModelName,scale,out_dir)
-        objs=GetListOfObjects(FreeCAD, doc)
-        expVRML.say("######################################################################")
-        expVRML.say(objs)
-        expVRML.say("######################################################################")
-        export_objects, used_color_keys = expVRML.determineColors(Gui, objs, material_substitutions)
+        # Create the output directory if it does not exist
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
 
-        #export_file_name=destination_dir+os.sep+ModelName+'.wrl'
-        #export_file_name=script_dir+os.sep+destination_dir+os.sep+ModelName+'.wrl'
-        export_file_name=out_dir+os.sep+ModelName+'.wrl'
-        colored_meshes = expVRML.getColoredMesh(Gui, export_objects , scale)
-        expVRML.writeVRMLFile(colored_meshes, export_file_name, used_color_keys, LIST_license)
-        # Save the doc in Native FC format
-        saveFCdoc(App, Gui, doc, ModelName,out_dir)
-        #display BBox
-        #FreeCADGui.ActiveDocument.getObject("Part__Feature").BoundingBox = True
-        Gui.activateWorkbench("PartWorkbench")
-        Gui.SendMsgToActiveView("ViewFit")
-        Gui.activeDocument().activeView().viewAxometric()
-        
+        # Assemble the filename
+        file_name = all_params[model]['model_name']
+
+        # Export the assembly to STEP
+        component.save(os.path.join(output_dir, file_name + ".step"), cq.exporters.ExportTypes.STEP, write_pcurves=False)
+
+        # Export the assembly to VRML
+        if enable_vrml:
+            cq.exporters.assembly.exportVRML(component, os.path.join(output_dir, file_name + ".wrl"), tolerance=cq_globals.VRML_DEVIATION, angularTolerance=cq_globals.VRML_ANGULAR_DEVIATION)
+
+        # Update the license
+        from _tools import add_license
+        add_license.addLicenseToStep(output_dir, file_name + ".step",
+                                        add_license.LIST_int_license,
+                                        add_license.STR_int_licAuthor,
+                                        add_license.STR_int_licEmail,
+                                        add_license.STR_int_licOrgSys,
+                                        add_license.STR_int_licPreProc)

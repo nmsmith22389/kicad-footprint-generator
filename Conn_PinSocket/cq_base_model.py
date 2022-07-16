@@ -38,7 +38,7 @@
 #
 
 import cadquery as cq
-import FreeCAD
+# import FreeCAD
 
 from math import sin, tan, radians
 
@@ -359,22 +359,22 @@ class PartBase (object):
         self.rotation = 0
         self.make_me = True
 
-        args = params._asdict()
+        # args = params._asdict()
 
-        self.type = params.type if 'type' in args else "SMD"
+        self.type = params['type'] if 'type' in params else "SMD"
 
-        self.pin_width = params.pin_width if 'pin_width' in args else 0.4
-        self.pin_thickness = params.pin_thickness if 'pin_thickness' in args else 0.2
-        self.pin_length = params.pin_length if 'pin_length' in args else 3.2
-        self.pin_pitch = params.pin_pitch if 'pin_pitch' in args else 2.54
-        self.num_pins = params.num_pins if 'num_pins' in args else 2
-        self.num_pin_rows = params.num_pin_rows if 'num_pin_rows' in args else 2
-        self.pin_rows_distance = params.pin_rows_distance if 'pin_rows_distance' in args else self.pin_pitch
+        self.pin_width = params['pin_width'] if 'pin_width' in params else 0.4
+        self.pin_thickness = params['pin_thickness'] if 'pin_thickness' in params else 0.2
+        self.pin_length = params['pin_length'] if 'pin_length' in params else 3.2
+        self.pin_pitch = params['pin_pitch'] if 'pin_pitch' in params else 2.54
+        self.num_pins = params['num_pins'] if 'num_pins' in params else 2
+        self.num_pin_rows = params['num_pin_rows'] if 'num_pin_rows' in params else 2
+        self.pin_rows_distance = params['pin_rows_distance'] if 'pin_rows_distance' in params else self.pin_pitch
 
-        self.body_width = params.body_width if 'body_width' in args else 5.08
-        self.body_length = params.body_length if 'body_length' in args else 5.08
-        self.body_height = params.body_height if 'body_height' in args else 5.08
-        self.body_board_distance = params.body_board_distance if 'body_board_distance' in args else 0.0
+        self.body_width = params['body_width'] if 'body_width' in params else 5.08
+        self.body_length = params['body_length'] if 'body_length' in params else 5.08
+        self.body_height = params['body_height'] if 'body_height' in params else 5.08
+        self.body_board_distance = params['body_board_distance'] if 'body_board_distance' in params else 0.0
 
 
         # self.type = kwargs.get('type', "SMD")
@@ -415,7 +415,7 @@ class PartBase (object):
             pitch = self.pin_pitch
 
         objs = [obj]
-        for i in range(2, pins + 1):
+        for i in range(2, int(pins) + 1):
             objs.append(obj.translate((-pitch * (i - 1), 0, 0)))
 
         return self._union_all(objs)

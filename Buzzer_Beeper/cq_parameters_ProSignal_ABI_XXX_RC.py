@@ -46,9 +46,13 @@
 #****************************************************************************
 
 
-import cq_parameters  # modules parameters
-from cq_parameters import *
+# import cq_parameters  # modules parameters
+# from cq_parameters import *
 
+import cadquery as cq
+
+from collections import namedtuple
+from collections.abc import Mapping
 
 class cq_parameters_ProSignal_ABI_XXX_RC():
 
@@ -116,14 +120,14 @@ class cq_parameters_ProSignal_ABI_XXX_RC():
 
     def make_case(self, params):
 
-        D = params.D                # package length
-        E = params.E                # body overall width
-        H = params.H                # body overall height
-        A1 = params.A1              # package height
-        pin = params.pin            # Pins
-        npthhole = params.npthhole  # NPTH hole diameter
-        rotation = params.rotation  # Rotation if required
-        center = params.center      # Body center
+        D = params['D']                # package length
+        E = params['E']                # body overall width
+        H = params['H']                # body overall height
+        A1 = params['A1']              # package height
+        pin = params['pin']            # Pins
+        npthhole = params['npthhole']  # NPTH hole diameter
+        rotation = params['rotation']  # Rotation if required
+        center = params['center']      # Body center
         
         #
         #
@@ -151,14 +155,14 @@ class cq_parameters_ProSignal_ABI_XXX_RC():
         
     def make_pins(self, params):
 
-        D = params.D                # package length
-        H = params.H                # body overall height
-        A1 = params.A1              # Body seperation height
-        b = params.b                # pin diameter or pad size
-        ph = params.ph              # pin length
-        rotation = params.rotation  # rotation if required
-        pin = params.pin            # pin/pad cordinates
-        center = params.center      # Body center
+        D = params['D']                # package length
+        H = params['H']                # body overall height
+        A1 = params['A1']              # Body seperation height
+        b = params['b']                # pin diameter or pad size
+        ph = params['ph']              # pin length
+        rotation = params['rotation']  # rotation if required
+        pin = params['pin']            # pin/pad cordinates
+        center = params['center']      # Body center
         
         p = pin[0]
         pins = cq.Workplane("XY").workplane(offset=A1 + 1.0).moveTo(p[0], -p[1]).circle(b / 2.0, False).extrude(0 - (ph + A1 + 1.0))
@@ -179,9 +183,9 @@ class cq_parameters_ProSignal_ABI_XXX_RC():
     ##enabling optional/default values to None
     def namedtuple_with_defaults(typename, field_names, default_values=()):
 
-        T = collections.namedtuple(typename, field_names)
+        T = namedtuple(typename, field_names)
         T.__new__.__defaults__ = (None,) * len(T._fields)
-        if isinstance(default_values, collections.Mapping):
+        if isinstance(default_values, Mapping):
             prototype = T(**default_values)
         else:
             prototype = T(*default_values)
@@ -207,76 +211,76 @@ class cq_parameters_ProSignal_ABI_XXX_RC():
 
 
 
-    all_params = {
+    # all_params = {
 
-        'MagneticBuzzer_ProSignal_ABI-009-RC': Params(
-            #
-            # Valve
-            # This model have been auto generated based on the foot print file
-            # A number of parameters have been fixed or guessed, such as A2
-            # 
-            # The foot print that uses this 3D model is MagneticBuzzer_ProSignal_ABI-009-RC.kicad_mod
-            # 
-            modelName = 'MagneticBuzzer_ProSignal_ABI-009-RC',   # modelName
-            D = 12.00,                  # Body width/diameter
-            H = 09.50,                  # Body height
-            A1 = 0.03,                  # Body-board separation
-            b = 0.90,                   # Pin diameter
-            center = (3.80, 0.00),      # Body center
-            npthhole = 2.6,             # NPTH hole diameter
-            ph = 3.0,                   # Pin length
-            pin = [(0.0, 0.0), (7.60, 0.00)],   # Pins
-            body_color_key = 'black body',      # Body color
-            pin_color_key = 'metal grey pins',  # Pin color
-            rotation = 0,                       # Rotation if required
-            dest_dir_prefix = '../Buzzer_Beeper.3dshapes',      # destination directory
-            ),
+    #     'MagneticBuzzer_ProSignal_ABI-009-RC': Params(
+    #         #
+    #         # Valve
+    #         # This model have been auto generated based on the foot print file
+    #         # A number of parameters have been fixed or guessed, such as A2
+    #         # 
+    #         # The foot print that uses this 3D model is MagneticBuzzer_ProSignal_ABI-009-RC.kicad_mod
+    #         # 
+    #         modelName = 'MagneticBuzzer_ProSignal_ABI-009-RC',   # modelName
+    #         D = 12.00,                  # Body width/diameter
+    #         H = 09.50,                  # Body height
+    #         A1 = 0.03,                  # Body-board separation
+    #         b = 0.90,                   # Pin diameter
+    #         center = (3.80, 0.00),      # Body center
+    #         npthhole = 2.6,             # NPTH hole diameter
+    #         ph = 3.0,                   # Pin length
+    #         pin = [(0.0, 0.0), (7.60, 0.00)],   # Pins
+    #         body_color_key = 'black body',      # Body color
+    #         pin_color_key = 'metal grey pins',  # Pin color
+    #         rotation = 0,                       # Rotation if required
+    #         dest_dir_prefix = '../Buzzer_Beeper.3dshapes',      # destination directory
+    #         ),
 
-        'MagneticBuzzer_ProSignal_ABI-010-RC': Params(
-            #
-            # Valve
-            # This model have been auto generated based on the foot print file
-            # A number of parameters have been fixed or guessed, such as A2
-            # 
-            # The foot print that uses this 3D model is MagneticBuzzer_ProSignal_ABI-010-RC.kicad_mod
-            # 
-            modelName = 'MagneticBuzzer_ProSignal_ABI-010-RC',   # modelName
-            D = 12.00,                  # Body width/diameter
-            H = 09.50,                  # Body height
-            A1 = 0.03,                  # Body-board separation
-            b = 0.90,                   # Pin diameter
-            center = (3.80, 0.00),      # Body center
-            npthhole = 2.8,             # NPTH hole diameter
-            ph = 3.0,                   # Pin length
-            pin = [(0.0, 0.0), (7.60, 0.00)],   # Pins
-            body_color_key = 'black body',      # Body color
-            pin_color_key = 'metal grey pins',  # Pin color
-            rotation = 0,                       # Rotation if required
-            dest_dir_prefix = '../Buzzer_Beeper.3dshapes',      # destination directory
-            ),
+    #     'MagneticBuzzer_ProSignal_ABI-010-RC': Params(
+    #         #
+    #         # Valve
+    #         # This model have been auto generated based on the foot print file
+    #         # A number of parameters have been fixed or guessed, such as A2
+    #         # 
+    #         # The foot print that uses this 3D model is MagneticBuzzer_ProSignal_ABI-010-RC.kicad_mod
+    #         # 
+    #         modelName = 'MagneticBuzzer_ProSignal_ABI-010-RC',   # modelName
+    #         D = 12.00,                  # Body width/diameter
+    #         H = 09.50,                  # Body height
+    #         A1 = 0.03,                  # Body-board separation
+    #         b = 0.90,                   # Pin diameter
+    #         center = (3.80, 0.00),      # Body center
+    #         npthhole = 2.8,             # NPTH hole diameter
+    #         ph = 3.0,                   # Pin length
+    #         pin = [(0.0, 0.0), (7.60, 0.00)],   # Pins
+    #         body_color_key = 'black body',      # Body color
+    #         pin_color_key = 'metal grey pins',  # Pin color
+    #         rotation = 0,                       # Rotation if required
+    #         dest_dir_prefix = '../Buzzer_Beeper.3dshapes',      # destination directory
+    #         ),
 
-        'MagneticBuzzer_ProSignal_ABT-410-RC': Params(
-            #
-            # Valve
-            # This model have been auto generated based on the foot print file
-            # A number of parameters have been fixed or guessed, such as A2
-            # 
-            # The foot print that uses this 3D model is MagneticBuzzer_ProSignal_ABT-410-RC.kicad_mod
-            # 
-            modelName = 'MagneticBuzzer_ProSignal_ABT-410-RC',   # modelName
-            D = 12.00,                   # Body width/diameter
-            H = 08.50,                  # Body height
-            A1 = 0.03,                  # Body-board separation
-            b = 0.50,                   # Pin diameter
-            center = (3.25, 0.00),      # Body center
-            npthhole = 2.3,             # NPTH hole diameter
-            ph = 3.0,                   # Pin length
-            pin = [(0.0, 0.0), (6.50, 0.00)],   # Pins
-            body_color_key = 'black body',      # Body color
-            pin_color_key = 'metal grey pins',  # Pin color
-            rotation = 0,                       # Rotation if required
-            dest_dir_prefix = '../Buzzer_Beeper.3dshapes',      # destination directory
-            ),
+    #     'MagneticBuzzer_ProSignal_ABT-410-RC': Params(
+    #         #
+    #         # Valve
+    #         # This model have been auto generated based on the foot print file
+    #         # A number of parameters have been fixed or guessed, such as A2
+    #         # 
+    #         # The foot print that uses this 3D model is MagneticBuzzer_ProSignal_ABT-410-RC.kicad_mod
+    #         # 
+    #         modelName = 'MagneticBuzzer_ProSignal_ABT-410-RC',   # modelName
+    #         D = 12.00,                   # Body width/diameter
+    #         H = 08.50,                  # Body height
+    #         A1 = 0.03,                  # Body-board separation
+    #         b = 0.50,                   # Pin diameter
+    #         center = (3.25, 0.00),      # Body center
+    #         npthhole = 2.3,             # NPTH hole diameter
+    #         ph = 3.0,                   # Pin length
+    #         pin = [(0.0, 0.0), (6.50, 0.00)],   # Pins
+    #         body_color_key = 'black body',      # Body color
+    #         pin_color_key = 'metal grey pins',  # Pin color
+    #         rotation = 0,                       # Rotation if required
+    #         dest_dir_prefix = '../Buzzer_Beeper.3dshapes',      # destination directory
+    #         ),
 
-    }
+    # }
         

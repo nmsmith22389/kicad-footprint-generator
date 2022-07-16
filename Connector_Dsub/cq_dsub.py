@@ -46,14 +46,21 @@
 # http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf
 #
 
-import cq_common  # modules parameters
-from cq_common import *
+import cadquery as cq
+
+# import cq_common  # modules parameters
+from .cq_common import *
 
 import sys
 import math
 
+from collections import namedtuple
+from collections.abc import Mapping
 
 class cq_dsub():
+
+    rotatex = 0.0
+    translate = (0.0, 0.0, 0.0)
 
     def __init__(self):
         self.body_top_color_key  = 'white body'         # Top color
@@ -76,45 +83,45 @@ class cq_dsub():
         #
 
 
-    def get_model_name(self, modelID, gender):
-        for n in self.all_params:
-            if n == modelID:
-                if self.all_params[modelID].serie == 3:
-                    if gender == 'male':
-                        return 'DSUB-' + str(self.all_params[modelID].pin[1]) + '-HD_Male_' + self.all_params[modelID].modelName
-                    else:
-                        return 'DSUB-' + str(self.all_params[modelID].pin[1]) + '-HD_Female_' + self.all_params[modelID].modelName
-                else:
-                    if gender == 'male':
-                        return 'DSUB-' + str(self.all_params[modelID].pin[1]) + '_Male_' + self.all_params[modelID].modelName
-                    else:
-                        return 'DSUB-' + str(self.all_params[modelID].pin[1]) + '_Female_' + self.all_params[modelID].modelName
-        return 'xxUNKNOWNxxx'
+    # def get_model_name(self, modelID, gender):
+    #     for n in self.all_params:
+    #         if n == modelID:
+    #             if self.all_params[modelID].serie == 3:
+    #                 if gender == 'male':
+    #                     return 'DSUB-' + str(self.all_params[modelID].pin[1]) + '-HD_Male_' + self.all_params[modelID].modelName
+    #                 else:
+    #                     return 'DSUB-' + str(self.all_params[modelID].pin[1]) + '-HD_Female_' + self.all_params[modelID].modelName
+    #             else:
+    #                 if gender == 'male':
+    #                     return 'DSUB-' + str(self.all_params[modelID].pin[1]) + '_Male_' + self.all_params[modelID].modelName
+    #                 else:
+    #                     return 'DSUB-' + str(self.all_params[modelID].pin[1]) + '_Female_' + self.all_params[modelID].modelName
+    #     return 'xxUNKNOWNxxx'
 
 
-    def get_dest_3D_dir(self, modelID):
-        for n in self.all_params:
-            if n == modelID:
-                if self.all_params[modelID].dest_dir_prefix != None:
-                    return self.all_params[modelID].dest_dir_prefix
+    # def get_dest_3D_dir(self, modelID):
+    #     for n in self.all_params:
+    #         if n == modelID:
+    #             if self.all_params[modelID].dest_dir_prefix != None:
+    #                 return self.all_params[modelID].dest_dir_prefix
 
-        return 'Connector_Dsub'
+    #     return 'Connector_Dsub'
 
 
-    def model_exist(self, modelID):
-        for n in self.all_params:
-            if n == modelID:
-                return True
+    # def model_exist(self, modelID):
+    #     for n in self.all_params:
+    #         if n == modelID:
+    #             return True
                 
-        return False
+    #     return False
 
 
-    def get_list_all(self):
-        list = []
-        for n in self.all_params:
-            list.append(n)
+    # def get_list_all(self):
+    #     list = []
+    #     for n in self.all_params:
+    #         list.append(n)
         
-        return list
+    #     return list
 
 
     def set_rotation(self, params):
@@ -137,7 +144,7 @@ class cq_dsub():
         self.rotatey = 0.0          # Rotation around x-axis if required
         self.rotatez = 0.0          # Rotation around y-axis if required
         
-        if params.pin[0] == 'round1':
+        if params['pin'][0] == 'round1':
             self.rotatex = 90.0     # Rotation around x-axis if required
 
 
@@ -160,33 +167,33 @@ class cq_dsub():
         #
         A, B, C, D, E, F, G = self.get_dsub_size(params)
         ttdz = F / 2.0
-        t = params.pin[0]
-        pn = params.pin[1]
-        serie = params.serie
-        pindx = params.pin[2]
-        pindy = params.pin[3]
-        pind = params.pin[4]
-        pinl = params.pin[5]
+        t = params['pin'][0]
+        pn = params['pin'][1]
+        serie = params['serie']
+        pindx = params['pin'][2]
+        pindy = params['pin'][3]
+        pind = params['pin'][4]
+        pinl = params['pin'][5]
 
-        if params.pin[0] == 'round':
+        if params['pin'][0] == 'round':
             self.translate = (0.0, 0.0, 0.0)
         else:
             self.translate = (0.0, 0.0, ttdz)
         
-        if params.translate != None:
-            if len(params.translate) != 3:
-                FreeCAD.Console.PrintMessage('\r\n')
-                FreeCAD.Console.PrintMessage('params.translate length is not 3 for model name ' + params.modelName + '\r\n')
+        if params['translate'] != None:
+            if len(params['translate']) != 3:
+                print('\r\n')
+                print('params.translate length is not 3 for model name ' + params['model_name'] + '\r\n')
                 sys.exit()
                 
-            self.translate = params.translate
+            self.translate = params['translate']
             
         dx, dy, dz = self.translate
         ttdx = dx
         ttdy = dy
         ttdz = dz
 
-        if self.gender == 'male':
+        if params['gender'] == 'male':
             if serie == 2:
                 if pn == 9:
                     ttdx = (2.0 * pindx)
@@ -212,7 +219,7 @@ class cq_dsub():
                 ttdy = pindy
 
 
-        if self.gender == 'female':
+        if params['gender'] == 'female':
             if serie == 2:
                 if pn == 9:
                     ttdx = 0.0 - (2.0 * pindx)
@@ -235,8 +242,8 @@ class cq_dsub():
                     ttdx = 0.0 - ((9.75 * pindx) + (0.0))
 
         #
-        if params.npthserie[0] == 2 or params.npthserie[0] == 3:
-            ttdy = 0.0 - (params.npthserie[1] - 4.4)
+        if params['npthserie'][0] == 2 or params['npthserie'][0] == 3:
+            ttdy = 0.0 - (params['npthserie'][1] - 4.4)
         else:
             if serie == 2:
                 ttdy = 0.0 - (pindy / 2.0)
@@ -246,104 +253,104 @@ class cq_dsub():
         self.translate = (ttdx, ttdy, ttdz)
 
 
-    def make_3D_model(self, modelID, gender):
+    # def make_3D_model(self, modelID, gender):
 
-        destination_dir = self.get_dest_3D_dir(modelID)
-        params = self.all_params[modelID]
+    #     destination_dir = self.get_dest_3D_dir(modelID)
+    #     params = self.all_params[modelID]
 
-        self.gender = gender
-        self.set_colors(params)
-        self.set_translate(params)
-        self.set_rotation(params)
-        case_top = self.make_top_DSUB(params)
-        show(case_top)
-        case = self.make_case_DSUB(params)
-        show(case)
+    #     # params['gender'] = gender
+    #     self.set_colors(params)
+    #     self.set_translate(params)
+    #     self.set_rotation(params)
+    #     case_top = self.make_top_DSUB(params)
+    #     show(case_top)
+    #     case = self.make_case_DSUB(params)
+    #     show(case)
 
-        pins = self.make_pin(params)
-        show(pins)
+    #     pins = self.make_pin(params)
+    #     show(pins)
 
-        npth_pins = self.make_npth_pins(params)
+    #     npth_pins = self.make_npth_pins(params)
         
-        if npth_pins == None:
+    #     if npth_pins == None:
 
-            doc = FreeCAD.ActiveDocument
-            objs=GetListOfObjects(FreeCAD, doc)
+    #         doc = FreeCAD.ActiveDocument
+    #         objs=GetListOfObjects(FreeCAD, doc)
 
-            body_top_color_key = self.body_top_color_key
-            body_color_key = self.body_color_key
-            pin_color_key = self.pin_color_key
+    #         body_top_color_key = self.body_top_color_key
+    #         body_color_key = self.body_color_key
+    #         pin_color_key = self.pin_color_key
 
-            body_top_color = shaderColors.named_colors[body_top_color_key].getDiffuseFloat()
-            body_color = shaderColors.named_colors[body_color_key].getDiffuseFloat()
-            pin_color = shaderColors.named_colors[pin_color_key].getDiffuseFloat()
+    #         body_top_color = shaderColors.named_colors[body_top_color_key].getDiffuseFloat()
+    #         body_color = shaderColors.named_colors[body_color_key].getDiffuseFloat()
+    #         pin_color = shaderColors.named_colors[pin_color_key].getDiffuseFloat()
 
-            Color_Objects(Gui,objs[0],body_top_color)
-            Color_Objects(Gui,objs[1],body_color)
-            Color_Objects(Gui,objs[2],pin_color)
+    #         Color_Objects(Gui,objs[0],body_top_color)
+    #         Color_Objects(Gui,objs[1],body_color)
+    #         Color_Objects(Gui,objs[2],pin_color)
 
-            col_body_top=Gui.ActiveDocument.getObject(objs[0].Name).DiffuseColor[0]
-            col_body=Gui.ActiveDocument.getObject(objs[1].Name).DiffuseColor[0]
-            col_pin=Gui.ActiveDocument.getObject(objs[2].Name).DiffuseColor[0]
+    #         col_body_top=Gui.ActiveDocument.getObject(objs[0].Name).DiffuseColor[0]
+    #         col_body=Gui.ActiveDocument.getObject(objs[1].Name).DiffuseColor[0]
+    #         col_pin=Gui.ActiveDocument.getObject(objs[2].Name).DiffuseColor[0]
             
-            material_substitutions={
-                col_body_top[:-1]:body_top_color_key,
-                col_body[:-1]:body_color_key,
-                col_pin[:-1]:pin_color_key,
-            }
-        else:
-            show(npth_pins)
+    #         material_substitutions={
+    #             col_body_top[:-1]:body_top_color_key,
+    #             col_body[:-1]:body_color_key,
+    #             col_pin[:-1]:pin_color_key,
+    #         }
+    #     else:
+    #         show(npth_pins)
 
-            doc = FreeCAD.ActiveDocument
-            objs=GetListOfObjects(FreeCAD, doc)
+    #         doc = FreeCAD.ActiveDocument
+    #         objs=GetListOfObjects(FreeCAD, doc)
 
-            body_top_color_key = self.body_top_color_key
-            body_color_key = self.body_color_key
-            pin_color_key = self.pin_color_key
-            npth_pin_color_key = self.npth_pin_color_key
+    #         body_top_color_key = self.body_top_color_key
+    #         body_color_key = self.body_color_key
+    #         pin_color_key = self.pin_color_key
+    #         npth_pin_color_key = self.npth_pin_color_key
 
-            body_top_color = shaderColors.named_colors[body_top_color_key].getDiffuseFloat()
-            body_color = shaderColors.named_colors[body_color_key].getDiffuseFloat()
-            pin_color = shaderColors.named_colors[pin_color_key].getDiffuseFloat()
-            npth_pin_color = shaderColors.named_colors[npth_pin_color_key].getDiffuseFloat()
+    #         body_top_color = shaderColors.named_colors[body_top_color_key].getDiffuseFloat()
+    #         body_color = shaderColors.named_colors[body_color_key].getDiffuseFloat()
+    #         pin_color = shaderColors.named_colors[pin_color_key].getDiffuseFloat()
+    #         npth_pin_color = shaderColors.named_colors[npth_pin_color_key].getDiffuseFloat()
 
-            Color_Objects(Gui,objs[0],body_top_color)
-            Color_Objects(Gui,objs[1],body_color)
-            Color_Objects(Gui,objs[2],pin_color)
-            Color_Objects(Gui,objs[3],npth_pin_color)
+    #         Color_Objects(Gui,objs[0],body_top_color)
+    #         Color_Objects(Gui,objs[1],body_color)
+    #         Color_Objects(Gui,objs[2],pin_color)
+    #         Color_Objects(Gui,objs[3],npth_pin_color)
 
-            col_body_top=Gui.ActiveDocument.getObject(objs[0].Name).DiffuseColor[0]
-            col_body=Gui.ActiveDocument.getObject(objs[1].Name).DiffuseColor[0]
-            col_pin=Gui.ActiveDocument.getObject(objs[2].Name).DiffuseColor[0]
-            col_npth_pin=Gui.ActiveDocument.getObject(objs[3].Name).DiffuseColor[0]
+    #         col_body_top=Gui.ActiveDocument.getObject(objs[0].Name).DiffuseColor[0]
+    #         col_body=Gui.ActiveDocument.getObject(objs[1].Name).DiffuseColor[0]
+    #         col_pin=Gui.ActiveDocument.getObject(objs[2].Name).DiffuseColor[0]
+    #         col_npth_pin=Gui.ActiveDocument.getObject(objs[3].Name).DiffuseColor[0]
             
-            material_substitutions={
-                col_body_top[:-1]:body_top_color_key,
-                col_body[:-1]:body_color_key,
-                col_pin[:-1]:pin_color_key,
-                col_npth_pin[:-1]:npth_pin_color_key
-            }
+    #         material_substitutions={
+    #             col_body_top[:-1]:body_top_color_key,
+    #             col_body[:-1]:body_color_key,
+    #             col_pin[:-1]:pin_color_key,
+    #             col_npth_pin[:-1]:npth_pin_color_key
+    #         }
         
-        expVRML.say(material_substitutions)
-        while len(objs) > 1:
-                FuseObjs_wColors(FreeCAD, FreeCADGui, doc.Name, objs[0].Name, objs[1].Name)
-                del objs
-                objs = GetListOfObjects(FreeCAD, doc)
+    #     expVRML.say(material_substitutions)
+    #     while len(objs) > 1:
+    #             FuseObjs_wColors(FreeCAD, FreeCADGui, doc.Name, objs[0].Name, objs[1].Name)
+    #             del objs
+    #             objs = GetListOfObjects(FreeCAD, doc)
 
-        return material_substitutions
+    #     return material_substitutions
 
         
     def get_dsub_size(self, params):
     
-        pin = params.pin                # Pin
-        serie = params.serie            # Serie
+        pin = params['pin']                # Pin
+        serie = params['serie']            # Serie
     
         t = pin[0]
         pn = pin[1]
         
         if (serie == 2 or serie == 3) and pn == 9:
                     #     A      B      C       D     E    F   G
-            if self.gender == 'female':
+            if params['gender'] == 'female':
                 return(16.30, 25.00, 30.80, 19.20, 7.9, 12.50, 3.2)
             else:
                 return(16.92, 25.00, 30.80, 19.20, 7.9, 12.50, 3.2)
@@ -351,7 +358,7 @@ class cq_dsub():
         #
         if (serie == 2) and pn == 15:
                     #     A      B      C       D     E    F   G
-            if self.gender == 'female':
+            if params['gender'] == 'female':
                 return(24.60, 33.30, 39.20, 27.70, 7.9, 12.50, 3.2)
             else:
                 return(25.50, 33.30, 39.20, 27.70, 7.9, 12.50, 3.2)
@@ -359,7 +366,7 @@ class cq_dsub():
         #
         if (serie == 3) and pn == 15:
                     #     A      B      C     D     E    F      G    H
-            if self.gender == 'female':
+            if params['gender'] == 'female':
                 return(16.30, 25.00, 30.80, 15.80, 8.3, 12.50, 3.3)
             else:
                 return(16.92, 25.00, 30.80, 15.80, 8.3, 12.50, 3.3)
@@ -367,7 +374,7 @@ class cq_dsub():
         #
         if (serie == 2) and pn == 25:
                     #     A      B      C       D     E    F   G
-            if self.gender == 'female':
+            if params['gender'] == 'female':
                 return(38.30, 47.10, 53.10, 41.10, 7.9, 12.50, 3.2)
             else:
                 return(38.96, 47.10, 53.10, 41.10, 7.9, 12.50, 3.2)
@@ -375,7 +382,7 @@ class cq_dsub():
         #
         if (serie == 3) and pn == 26:
                     #     A      B      C       D     E    F   G
-            if self.gender == 'female':
+            if params['gender'] == 'female':
                 return(24.60, 33.30, 39.20, 24.10, 8.3, 12.50, 3.2)
             else:
                 return(25.25, 33.30, 39.20, 24.10, 8.3, 12.50, 3.2)
@@ -383,7 +390,7 @@ class cq_dsub():
         #
         if (serie == 2) and pn == 37:
                     #     A      B      C       D     E    F   G
-            if self.gender == 'female':
+            if params['gender'] == 'female':
                 return(54.80, 63.50, 69.40, 57.30, 8.3, 12.50, 3.2)
             else:
                 return(55.42, 63.50, 69.40, 57.30, 8.3, 12.50, 3.2)
@@ -391,21 +398,24 @@ class cq_dsub():
         #
         if (serie == 3) and pn == 44:
                     #     A      B      C       D     E    F   G
-            if self.gender == 'female':
+            if params['gender'] == 'female':
                 return(38.30, 47.10, 53.10, 37.90, 8.3, 12.50, 3.2)
             else:
                 return(38.96, 47.10, 53.10, 37.90, 8.3, 12.50, 3.2)
             
         if (serie == 3) and pn == 62:
                     #     A      B      C       D     E    F   G
-            if self.gender == 'female':
+            if params['gender'] == 'female':
                 return(54.80, 63.50, 69.50, 54.30, 8.3, 12.50, 3.2)
             else:
                 return(55.42, 63.50, 69.40, 54.30, 8.3, 12.50, 3.2)
 
-        FreeCAD.Console.PrintMessage('\r\n')
-        FreeCAD.Console.PrintMessage('ERROR: Model ID ' + str(modelID) + ' does not exist, exiting')
-        FreeCAD.Console.PrintMessage('\r\n')
+        print('\r\n')
+        print('ERROR: Model ID ' + str(params['model_name']) + ' does not exist, exiting')
+        print('\r\n')
+        # FreeCAD.Console.PrintMessage('\r\n')
+        # FreeCAD.Console.PrintMessage('ERROR: Model ID ' + str(modelID) + ' does not exist, exiting')
+        # FreeCAD.Console.PrintMessage('\r\n')
         sys.exit()
 
         return None
@@ -413,9 +423,9 @@ class cq_dsub():
 
     def make_npth_pins(self, params):
 
-        pin = params.pin                # Pin
-        serie = params.serie            # Serie
-        npthserie = params.npthserie    # npth serie
+        pin = params['pin']                # Pin
+        serie = params['serie']            # Serie
+        npthserie = params['npthserie']    # npth serie
 
         ns = npthserie[0]
 
@@ -433,41 +443,41 @@ class cq_dsub():
             np = int(int(pn / 4))
 
             FW = npthserie[2]
-            case = cq.Workplane("XY").workplane(offset=0.0).moveTo(0.0, 0.0).rect(C, F).extrude(0.0 - FW)
+            case = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=0.0).moveTo(0.0, 0.0).rect(C, F).extrude(0.0 - FW)
             case = case.faces(">Y").edges("<X").fillet(1.0)
             case = case.faces(">Y").edges(">X").fillet(1.0)
             #
             # Cut the sides
-            case1 = cq.Workplane("XY").workplane(offset=0.0 - 2.0).moveTo(((C / 2.0) - 2.0), 2.5).rect(7.0, F).extrude(0.0 - FW)
+            case1 = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=0.0 - 2.0).moveTo(((C / 2.0) - 2.0), 2.5).rect(7.0, F).extrude(0.0 - FW)
             case = case.cut(case1)
-            case1 = cq.Workplane("XY").workplane(offset=0.0 - 2.0).moveTo( 0.0 - ((C / 2.0) - 2.0), 2.5).rect(7.0, F).extrude(0.0 - FW)
+            case1 = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=0.0 - 2.0).moveTo( 0.0 - ((C / 2.0) - 2.0), 2.5).rect(7.0, F).extrude(0.0 - FW)
             case = case.cut(case1)
             #
             # Cut the holes on front
-            case1 = cq.Workplane("XY").workplane(offset=0.5).moveTo((B / 2.0), 0.0).circle((G / 2.0) + 0.1, False).extrude(0.0 - (FW + 1.0))
+            case1 = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=0.5).moveTo((B / 2.0), 0.0).circle((G / 2.0) + 0.1, False).extrude(0.0 - (FW + 1.0))
             case = case.cut(case1)
-            case1 = cq.Workplane("XY").workplane(offset=0.5).moveTo(0.0 - (B / 2.0), 0.0).circle((G / 2.0) + 0.1, False).extrude(0.0 - (FW + 1.0))
+            case1 = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=0.5).moveTo(0.0 - (B / 2.0), 0.0).circle((G / 2.0) + 0.1, False).extrude(0.0 - (FW + 1.0))
             case = case.cut(case1)
             #
             # Cut the holes for the pins
             #
             # Distance from back end to center of the hole
             ttx = npthserie[3] + (npthserie[2] -  npthserie[1])
-            case1 = cq.Workplane("XZ").workplane(offset=(F / 2.0) + 0.5).moveTo((B / 2.0), (0.0 - FW) + ttx).circle((G / 2.0) , False).extrude(0.0 - (F + 1.0))
+            case1 = cq.Workplane("XZ").workplane(centerOption="CenterOfMass", offset=(F / 2.0) + 0.5).moveTo((B / 2.0), (0.0 - FW) + ttx).circle((G / 2.0) , False).extrude(0.0 - (F + 1.0))
             case = case.cut(case1)
             if npthserie[0] > 7.5:
-                case1 = cq.Workplane("XZ").workplane(offset=(F / 2.0) + 0.5).moveTo((B / 2.0), (0.0 - FW) + ttx + G / 2.0).circle(G / 2.0, False).extrude(0.0 - (F + 1.0))
+                case1 = cq.Workplane("XZ").workplane(centerOption="CenterOfMass", offset=(F / 2.0) + 0.5).moveTo((B / 2.0), (0.0 - FW) + ttx + G / 2.0).circle(G / 2.0, False).extrude(0.0 - (F + 1.0))
                 case = case.cut(case1)
-            case1 = cq.Workplane("XZ").workplane(offset=(F / 2.0) + 0.5).moveTo((B / 2.0), (0.0 - FW) + ttx + G / 4.0).rect(G, G / 2.0).extrude(0.0 - (F + 1.0))
+            case1 = cq.Workplane("XZ").workplane(centerOption="CenterOfMass", offset=(F / 2.0) + 0.5).moveTo((B / 2.0), (0.0 - FW) + ttx + G / 4.0).rect(G, G / 2.0).extrude(0.0 - (F + 1.0))
             case = case.cut(case1)
             #
             #
             # Cut the blocks form sides
-            case1 = cq.Workplane("XZ").workplane(offset=(F / 2.0) + 0.5).moveTo(0.0 - (B / 2.0), (0.0 - FW) + ttx).circle(G / 2.0, False).extrude(0.0 - (F + 1.0))
+            case1 = cq.Workplane("XZ").workplane(centerOption="CenterOfMass", offset=(F / 2.0) + 0.5).moveTo(0.0 - (B / 2.0), (0.0 - FW) + ttx).circle(G / 2.0, False).extrude(0.0 - (F + 1.0))
             case = case.cut(case1)
-            case1 = cq.Workplane("XZ").workplane(offset=(F / 2.0) + 0.5).moveTo(0.0 - (B / 2.0), (0.0 - FW) + ttx + G / 2.0).circle(G / 2.0, False).extrude(0.0 - (F + 1.0))
+            case1 = cq.Workplane("XZ").workplane(centerOption="CenterOfMass", offset=(F / 2.0) + 0.5).moveTo(0.0 - (B / 2.0), (0.0 - FW) + ttx + G / 2.0).circle(G / 2.0, False).extrude(0.0 - (F + 1.0))
             case = case.cut(case1)
-            case1 = cq.Workplane("XZ").workplane(offset=(F / 2.0) + 0.5).moveTo(0.0 - (B / 2.0), (0.0 - FW) + ttx + G / 4.0).rect(G, G / 2.0).extrude(0.0 - (F + 1.0))
+            case1 = cq.Workplane("XZ").workplane(centerOption="CenterOfMass", offset=(F / 2.0) + 0.5).moveTo(0.0 - (B / 2.0), (0.0 - FW) + ttx + G / 4.0).rect(G, G / 2.0).extrude(0.0 - (F + 1.0))
             case = case.cut(case1)
             #
             #
@@ -487,9 +497,9 @@ class cq_dsub():
 
     def make_center_body(self, params, ttdz, ctd):
 
-        pin = params.pin                # Pin
-        serie = params.serie            # Serie
-        npthserie = params.npthserie    # npth serie
+        pin = params['pin']                # Pin
+        serie = params['serie']            # Serie
+        npthserie = params['npthserie']    # npth serie
 
 #        pin = ['round', 9, 2.77, 2.84, 0.64, 3.9],       # Type of pins
 
@@ -512,7 +522,7 @@ class cq_dsub():
         pts.append((ldx - (pindx / 2.0), 0.0 - ldy))
         pts.append(((pindx / 2.0), 0.0 - ldy))
 
-        case = cq.Workplane("XY").workplane(offset=0.0).polyline(pts).close().extrude(ttdz)
+        case = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=0.0).polyline(pts, includeCurrent=True).close().extrude(ttdz)
 
         case = case.faces(">Y").edges(">X").fillet(1.0)
         case = case.faces(">Y").edges("<X").fillet(1.0)
@@ -525,9 +535,9 @@ class cq_dsub():
 
     def make_top_DSUB(self, params):
 
-        pin = params.pin                # Pin
-        serie = params.serie            # Serie
-        npthserie = params.npthserie    # npth serie
+        pin = params['pin']                # Pin
+        serie = params['serie']            # Serie
+        npthserie = params['npthserie']    # npth serie
 
         t = pin[0]
         pn = pin[1]
@@ -539,7 +549,7 @@ class cq_dsub():
         A, B, C, D, E, F, G = self.get_dsub_size(params)
 
         ttdz = 6.0
-        if self.gender == 'male':
+        if params['gender'] == 'male':
             ttdz = 2.0
 
         case = self.make_center_body(params, ttdz, 0.2)
@@ -551,7 +561,7 @@ class cq_dsub():
         #
         # Add holes if female
         #
-        if self.gender == 'female':
+        if params['gender'] == 'female':
 
             if serie == 2:
                 #
@@ -567,11 +577,11 @@ class cq_dsub():
                 x =  (((np / 2.0) * pindx) - (pindx / 2.0))
                 y = (E /2.0) - pindy
                 tddx = pindx
-                if self.gender == 'female':
+                if params['gender'] == 'female':
                     tddx = 0.0 - pindx
                 #
                 for i in range(0, np):
-                    case1 = cq.Workplane("XY").workplane(offset=2.0).moveTo(x, y).circle(pind / 1.5, False).extrude(12.0)
+                    case1 = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=2.0).moveTo(x, y).circle(pind / 1.5, False).extrude(12.0)
                     case = case.cut(case1)
                     x = x + tddx
                 #
@@ -582,7 +592,7 @@ class cq_dsub():
                 y = (E /2.0) - (2.0 * pindy)
                 #
                 for i in range(0, np):
-                    case1 = cq.Workplane("XY").workplane(offset=2.0).moveTo(x, y).circle(pind / 1.5, False).extrude(12.0)
+                    case1 = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=2.0).moveTo(x, y).circle(pind / 1.5, False).extrude(12.0)
                     case = case.cut(case1)
                     x = x + tddx
             elif serie == 3:
@@ -599,11 +609,11 @@ class cq_dsub():
                 x =  (((np / 2.0) * pindx)) - (0.75 * pindx)
                 y = pindy
                 tddx = pindx
-                if self.gender == 'female':
+                if params['gender'] == 'female':
                     tddx = 0.0 - pindx
                 #
                 for i in range(0, np):
-                    case1 = cq.Workplane("XY").workplane(offset=8.0).moveTo(x, y).circle(pind / 1.5, False).extrude(12.0)
+                    case1 = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=8.0).moveTo(x, y).circle(pind / 1.5, False).extrude(12.0)
                     case = case.cut(case1)
                     x = x + tddx
                 #
@@ -612,7 +622,7 @@ class cq_dsub():
                 x = (((np / 2.0) * pindx)) - (0.25 * pindx)
                 y = 0.0
                 for i in range(0, np):
-                    case1 = cq.Workplane("XY").workplane(offset=8.0).moveTo(x, y).circle(pind / 1.5, False).extrude(12.0)
+                    case1 = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=8.0).moveTo(x, y).circle(pind / 1.5, False).extrude(12.0)
                     case = case.cut(case1)
                     x = x + tddx
                 #
@@ -622,14 +632,14 @@ class cq_dsub():
                 np = int(pn) - (2 * np)
                 y = 0.0 - pindy
                 for i in range(0, np):
-                    case1 = cq.Workplane("XY").workplane(offset=8.0).moveTo(x, y).circle(pind / 1.5, False).extrude(12.0)
+                    case1 = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=8.0).moveTo(x, y).circle(pind / 1.5, False).extrude(12.0)
                     case = case.cut(case1)
                     x = x + tddx
         
         #
         # Add plate at bottom
         # 
-        case1 = cq.Workplane("XY").workplane(offset=0.0).moveTo(0.0, 0.0).rect(D - 3.0, E - 1.0).extrude(0.5)
+        case1 = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=0.0).moveTo(0.0, 0.0).rect(D - 3.0, E - 1.0).extrude(0.5)
         case = case.union(case1)
 
         case = case.faces(">Z").chamfer(0.1)
@@ -644,9 +654,9 @@ class cq_dsub():
 
     def make_case_DSUB(self, params):
 
-        pin = params.pin                # Pin
-        serie = params.serie            # Serie
-        npthserie = params.npthserie    # npth serie
+        pin = params['pin']                # Pin
+        serie = params['serie']            # Serie
+        npthserie = params['npthserie']    # npth serie
 
         t = pin[0]
         pn = pin[1]
@@ -665,10 +675,10 @@ class cq_dsub():
         ptl = 0.4
         case = case.translate((0.0, 0.0, ptl))
         #
-        case1 = cq.Workplane("XY").workplane(offset=0.0).moveTo(0.0, 0.0).rect(C, F).extrude(ptl)
-        case2 = cq.Workplane("XY").workplane(offset=ptl + 0.1).moveTo((B / 2.0), 0.0).circle(G / 2.0, False).extrude(0.0 - (ptl + 0.2))
+        case1 = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=0.0).moveTo(0.0, 0.0).rect(C, F).extrude(ptl)
+        case2 = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=ptl + 0.1).moveTo((B / 2.0), 0.0).circle(G / 2.0, False).extrude(0.0 - (ptl + 0.2))
         case1 = case1.cut(case2)
-        case2 = cq.Workplane("XY").workplane(offset=ptl + 0.1).moveTo(0.0 - (B / 2.0), 0.0).circle(G / 2.0, False).extrude(0.0 - (ptl + 0.2))
+        case2 = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=ptl + 0.1).moveTo(0.0 - (B / 2.0), 0.0).circle(G / 2.0, False).extrude(0.0 - (ptl + 0.2))
         case1 = case1.cut(case2)
         case1 = case1.faces("<Y").edges("<X").fillet(1.0)
         case1 = case1.faces("<Y").edges(">X").fillet(1.0)
@@ -679,7 +689,7 @@ class cq_dsub():
         case = case.union(case1)
         case = case.faces(">Z").edges("<X").chamfer(0.05)
 
-#        if self.gender == 'female':
+#        if params['gender'] == 'female':
 #            case = case.faces(">Z[2]").edges("not(<X or >X or <Y or >Y)").fillet(0.6)
 #        else:
         try:
@@ -695,13 +705,13 @@ class cq_dsub():
         # Add the metal inside the holes on each sides
         #
         if npthserie[0] == 2:
-            case1 = cq.Workplane("XY").workplane(offset=0.1).moveTo(0.0 - (B / 2.0), 0.0).circle(G / 2.0 + 0.4, False).extrude(0.0 - 2.20)
-            case2 = cq.Workplane("XY").workplane(offset=0.1).moveTo(0.0 - (B / 2.0), 0.0).circle(G / 2.0, False).extrude(0.0 - 2.25)
+            case1 = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=0.1).moveTo(0.0 - (B / 2.0), 0.0).circle(G / 2.0 + 0.4, False).extrude(0.0 - 2.20)
+            case2 = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=0.1).moveTo(0.0 - (B / 2.0), 0.0).circle(G / 2.0, False).extrude(0.0 - 2.25)
             case1 = case1.cut(case2)
             case = case.union(case1)
             #
-            case1 = cq.Workplane("XY").workplane(offset=0.1).moveTo((B / 2.0), 0.0).circle(G / 2.0 + 0.4, False).extrude(0.0 - 2.20)
-            case2 = cq.Workplane("XY").workplane(offset=0.1).moveTo((B / 2.0), 0.0).circle(G / 2.0, False).extrude(0.0 - 2.25)
+            case1 = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=0.1).moveTo((B / 2.0), 0.0).circle(G / 2.0 + 0.4, False).extrude(0.0 - 2.20)
+            case2 = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=0.1).moveTo((B / 2.0), 0.0).circle(G / 2.0, False).extrude(0.0 - 2.25)
             case1 = case1.cut(case2)
             case = case.union(case1)
 
@@ -711,7 +721,7 @@ class cq_dsub():
         ptl = 4.0
         case = case.translate((0.0, 0.0, ptl))
         #
-        case1 = cq.Workplane("XY").workplane(offset=0.0).moveTo(0.0, 0.0).rect(D, E + 2.0).extrude(ptl)
+        case1 = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=0.0).moveTo(0.0, 0.0).rect(D, E + 2.0).extrude(ptl)
         case1 = case1.faces("<Y").edges("<X").fillet(1.0)
         case1 = case1.faces("<Y").edges(">X").fillet(1.0)
         case1 = case1.faces(">Y").edges("<X").fillet(1.0)
@@ -733,9 +743,9 @@ class cq_dsub():
 
     def make_pin_help(self, params, x, y, tddx, np, LD22):
     
-        pin = params.pin                # Pin
-        serie = params.serie            # Serie
-        npthserie = params.npthserie    # npth serie
+        pin = params['pin']                # Pin
+        serie = params['serie']            # Serie
+        npthserie = params['npthserie']    # npth serie
 
         #
         # Make two rows of pins with equal number of pins on each row
@@ -754,7 +764,7 @@ class cq_dsub():
         #
         for i in range(0, np):
             if t == 'round' or (t == 'round1' and ns == 2):
-                case1 = cq.Workplane("XY").workplane(offset=0.4).moveTo(x, y).circle(pind / 2.0, False).extrude(0.0 - (pinl + 0.4))
+                case1 = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=0.4).moveTo(x, y).circle(pind / 2.0, False).extrude(0.0 - (pinl + 0.4))
                 case1 = case1.faces("<Z").fillet(pind / 4.0)
             elif t == 'round1':
                 r2 = (pind / 2.0) * 4.0
@@ -781,17 +791,17 @@ class cq_dsub():
             else:
                 case = case.union(case1)
 
-            if (t == 'round' or t == 'round1') and self.gender == 'male':
+            if (t == 'round' or t == 'round1') and params['gender'] == 'male':
                 #
                 # Add the pigs inside the connector if it is a male
                 #
                 if serie == 2:
                     if t == 'round1':
-                        case1 = cq.Workplane("XY").workplane(offset=4.4).moveTo(x, y - (pindy / 2.0)).circle(pind / 2.0, False).extrude(pinl + 2.0)
+                        case1 = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=4.4).moveTo(x, y - (pindy / 2.0)).circle(pind / 2.0, False).extrude(pinl + 2.0)
                     else:
-                        case1 = cq.Workplane("XY").workplane(offset=4.4).moveTo(x, y).circle(pind / 2.0, False).extrude(pinl + 2.0)
+                        case1 = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=4.4).moveTo(x, y).circle(pind / 2.0, False).extrude(pinl + 2.0)
                 else:
-                    case1 = cq.Workplane("XY").workplane(offset=4.4).moveTo(x, y).circle(pind / 2.0, False).extrude(pinl + 2.0)
+                    case1 = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=4.4).moveTo(x, y).circle(pind / 2.0, False).extrude(pinl + 2.0)
                 
                 case1 = case1.faces("<Y").fillet(pind / 4.0)
                 
@@ -812,9 +822,9 @@ class cq_dsub():
 
     def make_pin_type1(self, params):
 
-        pin = params.pin                # Pin
-        serie = params.serie            # Serie
-        npthserie = params.npthserie    # npth serie
+        pin = params['pin']                # Pin
+        serie = params['serie']            # Serie
+        npthserie = params['npthserie']    # npth serie
 
         #
         # Make two rows of pins with equal number of pins on each row
@@ -836,7 +846,7 @@ class cq_dsub():
         x = 0.0
         y = 0.0
         tddx = pindx
-        if self.gender == 'female':
+        if params['gender'] == 'female':
             tddx = 0.0 - pindx
         case = self.make_pin_help(params, x, y, tddx, np, (F / 2.0) + (pindy / 2.0))
         #
@@ -845,7 +855,7 @@ class cq_dsub():
         # Make the bottom row
         #
         x = 0.0 + (pindx / 2.0)
-        if self.gender == 'female':
+        if params['gender'] == 'female':
             x = 0.0 - (pindx / 2.0)
         y = 0.0 - pindy
         #
@@ -859,9 +869,9 @@ class cq_dsub():
 
     def make_pin_type2(self, params):
 
-        pin = params.pin                # Pin
-        serie = params.serie            # Serie
-        npthserie = params.npthserie    # npth serie
+        pin = params['pin']                # Pin
+        serie = params['serie']            # Serie
+        npthserie = params['npthserie']    # npth serie
 
         #
         # Make two rows of pins with equal number of pins on each row
@@ -883,7 +893,7 @@ class cq_dsub():
         tddx = pindx
         x = 0.0
         y = 0.0
-        if self.gender == 'female':
+        if params['gender'] == 'female':
             tddx = 0.0 - pindx
         #
         case = self.make_pin_help(params, x, y, tddx, np, (F / 2.0) + pindy)
@@ -891,7 +901,7 @@ class cq_dsub():
         # Make center row
         #
         x = 0.0 - (pindx / 2.0)
-        if self.gender == 'female':
+        if params['gender'] == 'female':
             x = 0.0 + (pindx / 2.0)
         y = 0.0 - pindy
         case1 = self.make_pin_help(params, x, y, tddx, np, (F / 2.0))
@@ -901,7 +911,7 @@ class cq_dsub():
         #
         np = int(pn) - (2 * np)
         x = 0.0
-        if self.gender == 'female':
+        if params['gender'] == 'female':
             tddx = 0.0 - pindx
         y = 0.0 - (2.0 * pindy)
         case1 = self.make_pin_help(params, x, y, tddx, np, (F / 2.0) - pindy)
@@ -914,9 +924,9 @@ class cq_dsub():
 
     def make_pin(self, params):
 
-        pin = params.pin                # Pin
-        serie = params.serie            # Serie
-        npthserie = params.npthserie    # npth serie
+        pin = params['pin']                # Pin
+        serie = params['serie']            # Serie
+        npthserie = params['npthserie']    # npth serie
 
 #        pin = ['round', 9, 2.77, 2.84, 0.8, 3.9],       # Type of pins
 #        pin = ['round1', 9, 2.77, 2.84, 0.64, 3.9, 4.5, 9.40],      # Type of pins
@@ -937,7 +947,7 @@ class cq_dsub():
         elif serie == 3:
             case = self.make_pin_type2(params)
         else:
-            case = cq.Workplane("XY").workplane(offset=0.0).moveTo(0.0, 0.0).circle(0.001, False).extrude(0.001)
+            case = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=0.0).moveTo(0.0, 0.0).circle(0.001, False).extrude(0.001)
 
         if ns == 2:
             #
@@ -948,34 +958,34 @@ class cq_dsub():
             #
             # Make metal contact through PCB
             tx = (B / 2.0)
-            case1 = cq.Workplane("XY").workplane(offset=2.5).moveTo(tx, y).rect(2.0, 0.2).extrude(0.0 - (pinl + 4.0))
+            case1 = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=2.5).moveTo(tx, y).rect(2.0, 0.2).extrude(0.0 - (pinl + 4.0))
             case1 = case1.faces("<Z").edges("<X").chamfer(0.8, 0.2)
             case1 = case1.faces("<Z").edges(">X").chamfer(0.2, 0.8)
-            case2 = cq.Workplane("XY").workplane(offset=2.3).moveTo(tx, y).rect(0.8, 0.2).extrude(0.0 - (pinl + 4.0))
+            case2 = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=2.3).moveTo(tx, y).rect(0.8, 0.2).extrude(0.0 - (pinl + 4.0))
             case1 = case1.cut(case2)
             #
             # Add the metal upp to the hole
-            case2 = cq.Workplane("XY").workplane(offset=2.5).moveTo(tx - 1.0, y + 0.1).rect(2.0, 0.0 - tyr, centered=False).extrude(0.2)
+            case2 = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=2.5).moveTo(tx - 1.0, y + 0.1).rect(2.0, 0.0 - tyr, centered=False).extrude(0.2)
             case2 = case2.faces(">Z").edges(">Y").fillet(0.1)
             case1 = case1.union(case2)
-            case2 = cq.Workplane("XY").workplane(offset=2.5).moveTo(tx - 1.0, y + 0.1 - tyr).rect(2.0, 0.2, centered=False).extrude(2.1)
+            case2 = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=2.5).moveTo(tx - 1.0, y + 0.1 - tyr).rect(2.0, 0.2, centered=False).extrude(2.1)
             case1 = case1.union(case2)
             case1 = case1.translate((dx, 0.0, 0.0))
             case = case.union(case1)
             #
             # Make metal contact through PCB
             tx = 0.0 - (B / 2.0)
-            case1 = cq.Workplane("XY").workplane(offset=2.5).moveTo(tx, y).rect(2.0, 0.2).extrude(0.0 - (pinl + 4.0))
+            case1 = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=2.5).moveTo(tx, y).rect(2.0, 0.2).extrude(0.0 - (pinl + 4.0))
             case1 = case1.faces("<Z").edges("<X").chamfer(0.8, 0.2)
             case1 = case1.faces("<Z").edges(">X").chamfer(0.2, 0.8)
-            case2 = cq.Workplane("XY").workplane(offset=2.5).moveTo(tx, y).rect(0.8, 0.2).extrude(0.0 - (pinl + 4.0))
+            case2 = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=2.5).moveTo(tx, y).rect(0.8, 0.2).extrude(0.0 - (pinl + 4.0))
             case1 = case1.cut(case2)
             #
             # Add the metal upp to the hole
-            case2 = cq.Workplane("XY").workplane(offset=2.5).moveTo(tx - 1.0, y + 0.1).rect(2.0, 0.0 - tyr, centered=False).extrude(0.2)
+            case2 = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=2.5).moveTo(tx - 1.0, y + 0.1).rect(2.0, 0.0 - tyr, centered=False).extrude(0.2)
             case2 = case2.faces(">Z").edges(">Y").fillet(0.1)
             case1 = case1.union(case2)
-            case2 = cq.Workplane("XY").workplane(offset=2.5).moveTo(tx - 1.0, y + 0.1 - tyr).rect(2.0, 0.2, centered=False).extrude(2.1)
+            case2 = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=2.5).moveTo(tx - 1.0, y + 0.1 - tyr).rect(2.0, 0.2, centered=False).extrude(2.1)
             case1 = case1.union(case2)
             case1 = case1.translate((dx, 0.0, 0.0))
             case = case.union(case1)
@@ -987,9 +997,9 @@ class cq_dsub():
     ##enabling optional/default values to None
     def namedtuple_with_defaults(typename, field_names, default_values=()):
 
-        T = collections.namedtuple(typename, field_names)
+        T = namedtuple(typename, field_names)
         T.__new__.__defaults__ = (None,) * len(T._fields)
-        if isinstance(default_values, collections.Mapping):
+        if isinstance(default_values, Mapping):
             prototype = T(**default_values)
         else:
             prototype = T(*default_values)

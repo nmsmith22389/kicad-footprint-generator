@@ -38,62 +38,64 @@
 # last copied from cq_base_model.py
 #
 
-import collections
-from collections import namedtuple
+# import collections
+# from collections import namedtuple
 
-from math import cos, sin, tan, radians, degrees, asin, sqrt
+import cadquery as cq
 
-import FreeCAD, Draft, FreeCADGui
-import ImportGui
-import FreeCADGui as Gui
+from math import cos, sin, radians, degrees, asin, sqrt
 
-import shaderColors
-import exportPartToVRML as expVRML
+# import FreeCAD, Draft, FreeCADGui
+# import ImportGui
+# import FreeCADGui as Gui
+
+# import shaderColors
+# import exportPartToVRML as expVRML
 
 ## base parametes & model
-import collections
-from collections import namedtuple
+# import collections
+# from collections import namedtuple
 
 # Import cad_tools
-import cq_cad_tools
+# import cq_cad_tools
 # Reload tools
-reload(cq_cad_tools)
+# reload(cq_cad_tools)
 # Explicitly load all needed functions
-from cq_cad_tools import FuseObjs_wColors, GetListOfObjects, restore_Main_Tools, \
- exportSTEP, close_CQ_Example, exportVRML, saveFCdoc, z_RotateObject, Color_Objects, \
- CutObjs_wColors, checkRequirements
+# from cq_cad_tools import FuseObjs_wColors, GetListOfObjects, restore_Main_Tools, \
+#  exportSTEP, close_CQ_Example, exportVRML, saveFCdoc, z_RotateObject, Color_Objects, \
+#  CutObjs_wColors, checkRequirements
 
 # Sphinx workaround #1
-try:
-    QtGui
-except NameError:
-    QtGui = None
+# try:
+#     QtGui
+# except NameError:
+#     QtGui = None
 #
 
-try:
-    # Gui.SendMsgToActiveView("Run")
-#    from Gui.Command import *
-    Gui.activateWorkbench("CadQueryWorkbench")
-    import cadquery
-    cq = cadquery
-    from Helpers import show
-    # CadQuery Gui
-except: # catch *all* exceptions
-    msg = "missing CadQuery 0.3.0 or later Module!\r\n\r\n"
-    msg += "https://github.com/jmwright/cadquery-freecad-module/wiki\n"
-    if QtGui is not None:
-        reply = QtGui.QMessageBox.information(None,"Info ...",msg)
+# try:
+#     # Gui.SendMsgToActiveView("Run")
+# #    from Gui.Command import *
+#     Gui.activateWorkbench("CadQueryWorkbench")
+#     import cadquery
+#     cq = cadquery
+#     from Helpers import show
+#     # CadQuery Gui
+# except: # catch *all* exceptions
+#     msg = "missing CadQuery 0.3.0 or later Module!\r\n\r\n"
+#     msg += "https://github.com/jmwright/cadquery-freecad-module/wiki\n"
+#     if QtGui is not None:
+#         reply = QtGui.QMessageBox.information(None,"Info ...",msg)
     # maui end
 
 #checking requirements
 
-try:
-    close_CQ_Example(FreeCAD, Gui)
-except: # catch *all* exceptions
-    print "CQ 030 doesn't open example file"
+# try:
+#     close_CQ_Example(FreeCAD, Gui)
+# except: # catch *all* exceptions
+#     print "CQ 030 doesn't open example file"
 
-from Helpers import show
-import Part as FreeCADPart
+# from Helpers import show
+# import Part as FreeCADPart
 
 class Polyline:
     r"""A class for creating a polyline wire (including arcs) using **relative** moves (turtle graphics style)
@@ -404,7 +406,7 @@ class cq_parameters_help():
         if pin_height is None:
             pin_height = self.pin_length + self.body_board_distance
 
-        return Polyline(cq.Workplane("XZ").workplane(offset=-self.pin_thickness / 2.0))\
+        return Polyline(cq.Workplane("XZ").workplane(centerOption="CenterOfMass", offset=-self.pin_thickness / 2.0))\
                           .addPoints([
                                 (self.pin_width / 2.0, 0.0),
                                 (0.0, -(pin_height - self.pin_width)),
@@ -439,7 +441,7 @@ class cq_parameters_help():
         r_lower_o = r_lower_i + self.pin_thickness # pin lower corner, outer radius
 
         if style == 'SMD': # make a horizontal pin
-            pin = Polyline(cq.Workplane("XY").workplane(offset=-r_lower_o), origin=(0.0, r_lower_o))\
+            pin = Polyline(cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=-r_lower_o), origin=(0.0, r_lower_o))\
                              .addMoveTo(-self.pin_width / 2.0, 0.0)\
                              .addPoint(d, self.pin_length - d)\
                              .addThreePointArc((self.pin_width / 2.0 - d, d), (self.pin_width - d * 2.0, 0.0))\
@@ -451,7 +453,7 @@ class cq_parameters_help():
                       .translate((0, r_lower_o, - self.pin_thickness))
 
         # make the arc joining the pin segments
-        arc = Polyline(cq.Workplane("YZ").workplane(offset=-self.pin_width / 2.0))\
+        arc = Polyline(cq.Workplane("YZ").workplane(centerOption="CenterOfMass", offset=-self.pin_width / 2.0))\
                          .addArc(r_lower_o, -90, 1)\
                          .addPoint(0, self.pin_thickness)\
                          .addArc(-r_lower_i, -90).make().extrude(self.pin_width)
@@ -460,7 +462,7 @@ class cq_parameters_help():
 
         if(round(top_length, 6) != 0.0):
             pin = pin.union(cq.Workplane("XZ")\
-                     .workplane(offset=-self.pin_thickness / 2)\
+                     .workplane(centerOption="CenterOfMass", offset=-self.pin_thickness / 2)\
                      .moveTo(self.pin_width / 2.0, r_lower_o-(top_length + r_lower_o))\
                      .line(0, top_length)\
                      .line(-self.pin_width, 0)\
@@ -566,25 +568,25 @@ class cq_parameters_others():
         
     def _make_bent_pin(self, pind, pinsl, ex, ey):
 
-        case = cq.Workplane("XY").workplane(offset=(0.0)).moveTo(0.0, 0.0).circle(pind, False).extrude(pinsl)
+        case = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=(0.0)).moveTo(0.0, 0.0).circle(pind, False).extrude(pinsl)
         case = case.faces("<Z").fillet(pind / 2.2)
 
         ey1 = ey - pinsl
         h = sqrt((ey1 * ey1) + (ex * ex))
         ang = degrees(asin(ex / h))
 
-        case3 = cq.Workplane("XY").workplane(offset=(0.0)).moveTo(0.0, 0.0).circle(pind, False).extrude(h)
+        case3 = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=(0.0)).moveTo(0.0, 0.0).circle(pind, False).extrude(h)
         case3 = case3.faces(">Z").fillet(pind / 2.2)
         case3 = case3.rotate((0,0,0), (0,1,0), ang)
         case3 = case3.translate((0.0, 0.0, pinsl))
 
-        case4 = cq.Workplane("XY").workplane(offset=(0.0 - pind)).moveTo(0.0, 0.0).circle(pind, False).extrude(h + pind)
+        case4 = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=(0.0 - pind)).moveTo(0.0, 0.0).circle(pind, False).extrude(h + pind)
         case4 = case4.faces(">Z").fillet(pind / 2.2)
         case4 = case4.rotate((0,0,0), (0,1,0), ang)
         case4 = case4.translate((0.0, 0.0, pinsl))
 
-        case8 = cq.Workplane("XY").workplane(offset=(0.0)).moveTo(0.0, 0.0).circle(pind, False).extrude(pinsl + pind)
-        case7 = cq.Workplane("XY").workplane(offset=(0.0)).moveTo(0.0, 0.0).circle(pind  + pind + pind, False).extrude(pinsl + pind)
+        case8 = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=(0.0)).moveTo(0.0, 0.0).circle(pind, False).extrude(pinsl + pind)
+        case7 = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=(0.0)).moveTo(0.0, 0.0).circle(pind  + pind + pind, False).extrude(pinsl + pind)
         case7 = case7.cut(case8)
         case4 = case4.cut(case7)
 
@@ -634,8 +636,10 @@ class cq_parameters_others():
                         .addPoint(0.0 - T, 0.0)\
                         .make()\
                         .extrude(H)
-                        
-        p2 = p0.rotate((0,L,H / 2.0), (1,0,0), 180.0)
+
+        p2 = p0.rotateAboutCenter((0, 0, 1), 180)
+        p2 = p2.rotateAboutCenter((0, 1, 0), 180)
+        p2 = p2.translate((0, H / 2.0 - T * 2.0 + 0.09, 0))
         p0 = p0.union(p2)
         #
         return p0

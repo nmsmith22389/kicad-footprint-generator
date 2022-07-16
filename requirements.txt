@@ -1,0 +1,2 @@
+PyYAML
+# cadquery  # uncomment once a production release of CadQuery 2.x is on PyPI

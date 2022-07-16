@@ -54,23 +54,23 @@ ___ver___ = "0.3 18/06/2020"
 
 
 import cadquery as cq
-from Helpers import show
-from collections import namedtuple
-import FreeCAD
-from conn_4ucon_17809_params import *
+# from Helpers import show
+# from collections import namedtuple
+# import FreeCAD
+from .conn_4ucon_17809_params import dimensions
 
-from ribbon import Ribbon
+from _tools.ribbon import Ribbon
 
 
-def generate_straight_pin(params, pin_1_side):
-    foot_height = seriesParams.foot_height
-    pin_width=seriesParams.pin_width
-    pin_depth=seriesParams.pin_depth
-    pin_height=seriesParams.pin_height
-    pin_inside_distance=seriesParams.pin_inside_distance
-    pin_thickness = seriesParams.pin_thickness
-    chamfer_long = seriesParams.pin_chamfer_long
-    chamfer_short = seriesParams.pin_chamfer_short
+def generate_straight_pin(params, globals, pin_1_side):
+    foot_height = globals['foot_height']
+    pin_width=globals['pin_width']
+    pin_depth=globals['pin_depth']
+    pin_height=globals['pin_height']
+    pin_inside_distance=globals['pin_inside_distance']
+    pin_thickness = globals['pin_thickness']
+    chamfer_long = globals['pin_chamfer_long']
+    chamfer_short = globals['pin_chamfer_short']
     sign = 1 if pin_1_side else -1
     pin=cq.Workplane("YZ").workplane(offset=-pin_width/2.0)\
         .moveTo(0, foot_height)\
@@ -86,30 +86,30 @@ def generate_straight_pin(params, pin_1_side):
     return pin
 
 
-def generate_2_pin_group(params, pin_1_side):
-    pin_pitch=params.pin_pitch
-    pin_y_pitch=params.pin_y_pitch
-    num_pins=params.num_pins
-    pin_a = generate_straight_pin(params, pin_1_side).translate((0, -pin_y_pitch/2, 0))
+def generate_2_pin_group(params, globals, pin_1_side):
+    pin_pitch=params['pin_pitch']
+    pin_y_pitch=params['pin_y_pitch']
+    num_pins=params['num_pins']
+    pin_a = generate_straight_pin(params, globals, pin_1_side).translate((0, -pin_y_pitch/2, 0))
     pin_b = pin_a.translate((0, -2 * pin_y_pitch, 0))
     pin_group = pin_a.union(pin_b)
     return pin_group
 
 
-def generate_pins(params):
-    pin_pitch=params.pin_pitch
-    num_pins=params.num_pins
-    pins = generate_2_pin_group(params, pin_1_side=True)
+def generate_pins(params, globals):
+    pin_pitch=params['pin_pitch']
+    num_pins=params['num_pins']
+    pins = generate_2_pin_group(params, globals, pin_1_side=True)
     for i in range(1, num_pins // 2):
-        pins = pins.union(generate_2_pin_group(params, i % 2 == 0).translate((i*pin_pitch,0,0)))
+        pins = pins.union(generate_2_pin_group(params, globals, i % 2 == 0).translate((i*pin_pitch,0,0)))
     return pins
 
 
-def generate_2_contact_group(params):
-    pin_y_pitch=params.pin_y_pitch
-    foot_height = seriesParams.foot_height
-    pin_thickness = seriesParams.pin_thickness
-    pin_width=seriesParams.pin_width
+def generate_2_contact_group(params, globals):
+    pin_y_pitch=params['pin_y_pitch']
+    foot_height = globals['foot_height']
+    pin_thickness = globals['pin_thickness']
+    pin_width=globals['pin_width']
     y_offset = -(2*pin_y_pitch)
     c_list = [
         ('start', {'position': (pin_y_pitch, foot_height), 'direction': 90.0, 'width':pin_thickness}),
@@ -128,57 +128,57 @@ def generate_2_contact_group(params):
     return contact1
 
 
-def generate_contacts(params):
-    num_pins=params.num_pins
-    pin_pitch=params.pin_pitch
-    pair = generate_2_contact_group(params)
+def generate_contacts(params, globals):
+    num_pins=params['num_pins']
+    pin_pitch=params['pin_pitch']
+    pair = generate_2_contact_group(params, globals)
     contacts = pair
     for i in range(0, num_pins // 2):
         contacts = contacts.union(pair.translate((i*pin_pitch,0,0)))
     return contacts
 
 
-def generate_body(params, calc_dim):
-    pin_inside_distance = seriesParams.pin_inside_distance
-    pin_width = seriesParams.pin_width
-    num_pins = params.num_pins
-    pin_pitch = params.pin_pitch
-    pin_y_pitch=params.pin_y_pitch
+def generate_body(params, globals, calc_dim):
+    pin_inside_distance = globals['pin_inside_distance']
+    pin_width = globals['pin_width']
+    num_pins = params['num_pins']
+    pin_pitch = params['pin_pitch']
+    pin_y_pitch=params['pin_y_pitch']
 
     body_length = calc_dim.length
-    body_width = seriesParams.body_width
-    body_height = seriesParams.body_height
-    body_fillet_radius = seriesParams.body_fillet_radius
+    body_width = globals['body_width']
+    body_height = globals['body_height']
+    body_fillet_radius = globals['body_fillet_radius']
 
-    marker_x_inside = seriesParams.marker_x_inside
-    marker_y_inside = seriesParams.marker_y_inside
-    marker_size = seriesParams.marker_size
-    marker_depth = seriesParams.marker_depth
+    marker_x_inside = globals['marker_x_inside']
+    marker_y_inside = globals['marker_y_inside']
+    marker_size = globals['marker_size']
+    marker_depth = globals['marker_depth']
 
-    foot_height = seriesParams.foot_height
-    foot_width = seriesParams.foot_width
-    foot_length = seriesParams.foot_length
-    foot_inside_distance = seriesParams.foot_inside_distance
+    foot_height = globals['foot_height']
+    foot_width = globals['foot_width']
+    foot_length = globals['foot_length']
+    foot_inside_distance = globals['foot_inside_distance']
 
     slot_length = calc_dim.slot_length
-    slot_outside_pin = seriesParams.slot_outside_pin
-    slot_width = seriesParams.slot_width
-    slot_depth = seriesParams.slot_depth
-    slot_chamfer = seriesParams.slot_chamfer
+    slot_outside_pin = globals['slot_outside_pin']
+    slot_width = globals['slot_width']
+    slot_depth = globals['slot_depth']
+    slot_chamfer = globals['slot_chamfer']
 
-    hole_width = seriesParams.hole_width
-    hole_length = seriesParams.hole_length
-    hole_offset = seriesParams.hole_offset
-    hole_depth = seriesParams.hole_depth
+    hole_width = globals['hole_width']
+    hole_length = globals['hole_length']
+    hole_offset = globals['hole_offset']
+    hole_depth = globals['hole_depth']
 
-    top_void_depth = seriesParams.top_void_depth
-    top_void_width = seriesParams.top_void_width
+    top_void_depth = globals['top_void_depth']
+    top_void_width = globals['top_void_width']
     bottom_void_width = calc_dim.bottom_void_width
 
-    recess_depth = seriesParams.recess_depth
-    recess_large_width = seriesParams.recess_large_width
-    recess_small_width = seriesParams.recess_small_width
-    recess_height = seriesParams.recess_height
+    recess_depth = globals['recess_depth']
+    recess_large_width = globals['recess_large_width']
+    recess_small_width = globals['recess_small_width']
+    recess_height = globals['recess_height']
 
     x_offset = (((num_pins // 2) - 1)*pin_pitch)/2.0
     y_offset = -(1.5*pin_y_pitch)
@@ -249,25 +249,26 @@ def generate_body(params, calc_dim):
     return body
 
 
-def generate_part(part_key):
-    params = all_params[part_key]
-    calc_dim = dimensions(params)
-    pins = generate_pins(params)
-    body = generate_body(params, calc_dim)
-    contacts = generate_contacts(params)
+def generate_part(params, globals):
+    # params = all_params[part_key]
+    calc_dim = dimensions(params, globals)
+    pins = generate_pins(params, globals)
+    body = generate_body(params, globals, calc_dim)
+    contacts = generate_contacts(params, globals)
+
     return (pins, body, contacts)
 
 
 # opened from within freecad
-if "module" in __name__:
-    part_to_build = 'ucon_17809_02x10_1.27mm'
+# if "module" in __name__:
+#     part_to_build = 'ucon_17809_02x10_1.27mm'
 
-    FreeCAD.Console.PrintMessage("Started from CadQuery: building " +
-                                 part_to_build + "\n")
-    (pins, body, contacts) = generate_part(part_to_build)
+#     FreeCAD.Console.PrintMessage("Started from CadQuery: building " +
+#                                  part_to_build + "\n")
+#     (pins, body, contacts) = generate_part(part_to_build)
 
-    show(pins)
-    show(body)
-    show(contacts)
+#     show(pins)
+#     show(body)
+#     show(contacts)
 
 

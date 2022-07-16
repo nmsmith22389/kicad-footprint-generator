@@ -46,11 +46,13 @@
 #****************************************************************************
 
 
-import cq_support  # modules parameters
-from cq_support import *
+# import cq_support  # modules parameters
+from .cq_support import *
 
-import math
+# import math
 
+from collections import namedtuple
+from collections.abc import Mapping
 
 class cq_SIP_3():
 
@@ -58,171 +60,171 @@ class cq_SIP_3():
         x = 0
 
 
-    def get_dest_3D_dir(self, modelName):
-        return self.all_params[modelName].dest_dir_prefix
+    # def get_dest_3D_dir(self, modelName):
+    #     return self.all_params[modelName].dest_dir_prefix
 
 
-    def get_modelfilename(self, modelName):
-        return self.all_params[modelName].modelName
+    # def get_modelfilename(self, modelName):
+    #     return self.all_params[modelName].modelName
 
 
-    def model_exist(self, modelName):
-        for n in self.all_params:
-            if n == modelName:
-                return True
+    # def model_exist(self, modelName):
+    #     for n in self.all_params:
+    #         if n == modelName:
+    #             return True
 
-        return False
-
-
-    def get_list_all(self):
-        list = []
-        for n in self.all_params:
-            list.append(n)
-
-        return list
+    #     return False
 
 
-    def make_3D_model(self, modelName):
+    # def get_list_all(self):
+    #     list = []
+    #     for n in self.all_params:
+    #         list.append(n)
+
+    #     return list
+
+
+#     def make_3D_model(self, modelName):
         
-        params = self.all_params[modelName]
+#         params = self.all_params[modelName]
 
-#        case_top = self.make_top_dummy(params)
-#        show(case_top)
+# #        case_top = self.make_top_dummy(params)
+# #        show(case_top)
         
-        if modelName == 'SIP4_Sharp_Angled':
-            case = self.make_case_SIP4_Sharp_Angled(params)
-            show(case)
-            pins = self.make_pins_SIP4_Sharp_Angled(params)
-            show(pins)
+#         if modelName == 'SIP4_Sharp_Angled':
+#             case = self.make_case_SIP4_Sharp_Angled(params)
+#             show(case)
+#             pins = self.make_pins_SIP4_Sharp_Angled(params)
+#             show(pins)
 
-        elif modelName == 'SIP4_Sharp_Straight':
-            case = self.make_case_SIP4_Sharp_Straight(params)
-            show(case)
-            pins = self.make_pins_SIP4_Sharp_Straight(params)
-            show(pins)
+#         elif modelName == 'SIP4_Sharp_Straight':
+#             case = self.make_case_SIP4_Sharp_Straight(params)
+#             show(case)
+#             pins = self.make_pins_SIP4_Sharp_Straight(params)
+#             show(pins)
 
-        elif modelName == 'SIP-3_P1.30mm':
-            case = self.make_case_SIP_3_P1_30mm(params)
-            show(case)
-            pins = self.make_pins_SIP_3_P1_30mm(params)
-            show(pins)
+#         elif modelName == 'SIP-3_P1.30mm':
+#             case = self.make_case_SIP_3_P1_30mm(params)
+#             show(case)
+#             pins = self.make_pins_SIP_3_P1_30mm(params)
+#             show(pins)
 
-        elif modelName == 'SIP-3_P2.90mm':
-            case = self.make_case_SIP_3_P2_90mm(params)
-            show(case)
-            pins = self.make_pins_SIP_3_P2_90mm(params)
-            show(pins)
+#         elif modelName == 'SIP-3_P2.90mm':
+#             case = self.make_case_SIP_3_P2_90mm(params)
+#             show(case)
+#             pins = self.make_pins_SIP_3_P2_90mm(params)
+#             show(pins)
 
-        elif modelName == 'SIP-8':
-            case = self.make_case_SIP_8(params)
-            show(case)
-            pins = self.make_pins_SIP_8(params)
-            show(pins)
+#         elif modelName == 'SIP-8':
+#             case = self.make_case_SIP_8(params)
+#             show(case)
+#             pins = self.make_pins_SIP_8(params)
+#             show(pins)
 
-        elif modelName == 'SIP-9':
-            case = self.make_case_SIP_9(params)
-            show(case)
-            pins = self.make_pins_SIP_9(params)
-            show(pins)
+#         elif modelName == 'SIP-9':
+#             case = self.make_case_SIP_9(params)
+#             show(case)
+#             pins = self.make_pins_SIP_9(params)
+#             show(pins)
 
-        elif modelName == 'SLA704XM':
-            case = self.make_case_SLA704XM(params)
-            show(case)
-            pins = self.make_pins_SLA704XM(params)
-            show(pins)
+#         elif modelName == 'SLA704XM':
+#             case = self.make_case_SLA704XM(params)
+#             show(case)
+#             pins = self.make_pins_SLA704XM(params)
+#             show(pins)
 
-        elif modelName == 'STK672-040-E':
-            case = self.make_case_STK672_040_E(params)
-            show(case)
-            pins = self.make_pins_STK672_040_E(params)
-            show(pins)
+#         elif modelName == 'STK672-040-E':
+#             case = self.make_case_STK672_040_E(params)
+#             show(case)
+#             pins = self.make_pins_STK672_040_E(params)
+#             show(pins)
 
-        elif modelName == 'STK672-080-E':
-            case = self.make_case_STK672_080_E(params)
-            show(case)
-            pins = self.make_pins_STK672_080_E(params)
-            show(pins)
+#         elif modelName == 'STK672-080-E':
+#             case = self.make_case_STK672_080_E(params)
+#             show(case)
+#             pins = self.make_pins_STK672_080_E(params)
+#             show(pins)
 
             
             
-#        npth_pins = self.make_npth_pins_dummy(params)
-#        show(npth_pins)
+# #        npth_pins = self.make_npth_pins_dummy(params)
+# #        show(npth_pins)
      
-        doc = FreeCAD.ActiveDocument
-        objs=GetListOfObjects(FreeCAD, doc)
+#         doc = FreeCAD.ActiveDocument
+#         objs=GetListOfObjects(FreeCAD, doc)
      
-#        body_top_color_key = params.body_top_color_key
-        body_color_key = params.body_color_key
-        pin_color_key = params.pin_color_key
-#        npth_pin_color_key = params.npth_pin_color_key
+# #        body_top_color_key = params['body_top_color_key
+#         body_color_key = params['body_color_key
+#         pin_color_key = params['pin_color_key
+# #        npth_pin_color_key = params['npth_pin_color_key
 
-#        body_top_color = shaderColors.named_colors[body_top_color_key].getDiffuseFloat()
-        body_color = shaderColors.named_colors[body_color_key].getDiffuseFloat()
-        pin_color = shaderColors.named_colors[pin_color_key].getDiffuseFloat()
-#        npth_pin_color = shaderColors.named_colors[npth_pin_color_key].getDiffuseFloat()
+# #        body_top_color = shaderColors.named_colors[body_top_color_key].getDiffuseFloat()
+#         body_color = shaderColors.named_colors[body_color_key].getDiffuseFloat()
+#         pin_color = shaderColors.named_colors[pin_color_key].getDiffuseFloat()
+# #        npth_pin_color = shaderColors.named_colors[npth_pin_color_key].getDiffuseFloat()
 
-#        Color_Objects(Gui,objs[0],body_top_color)
-        Color_Objects(Gui,objs[0],body_color)
-        Color_Objects(Gui,objs[1],pin_color)
-#        Color_Objects(Gui,objs[3],npth_pin_color)
+# #        Color_Objects(Gui,objs[0],body_top_color)
+#         Color_Objects(Gui,objs[0],body_color)
+#         Color_Objects(Gui,objs[1],pin_color)
+# #        Color_Objects(Gui,objs[3],npth_pin_color)
 
-#        col_body_top=Gui.ActiveDocument.getObject(objs[0].Name).DiffuseColor[0]
-        col_body=Gui.ActiveDocument.getObject(objs[0].Name).DiffuseColor[0]
-        col_pin=Gui.ActiveDocument.getObject(objs[1].Name).DiffuseColor[0]
-#        col_npth_pin=Gui.ActiveDocument.getObject(objs[3].Name).DiffuseColor[0]
+# #        col_body_top=Gui.ActiveDocument.getObject(objs[0].Name).DiffuseColor[0]
+#         col_body=Gui.ActiveDocument.getObject(objs[0].Name).DiffuseColor[0]
+#         col_pin=Gui.ActiveDocument.getObject(objs[1].Name).DiffuseColor[0]
+# #        col_npth_pin=Gui.ActiveDocument.getObject(objs[3].Name).DiffuseColor[0]
         
-        material_substitutions={
-#            col_body_top[:-1]:body_top_color_key,
-            col_body[:-1]:body_color_key,
-            col_pin[:-1]:pin_color_key,
- #           col_npth_pin[:-1]:npth_pin_color_key
-        }
+#         material_substitutions={
+# #            col_body_top[:-1]:body_top_color_key,
+#             col_body[:-1]:body_color_key,
+#             col_pin[:-1]:pin_color_key,
+#  #           col_npth_pin[:-1]:npth_pin_color_key
+#         }
         
-        expVRML.say(material_substitutions)
-        while len(objs) > 1:
-                FuseObjs_wColors(FreeCAD, FreeCADGui, doc.Name, objs[0].Name, objs[1].Name)
-                del objs
-                objs = GetListOfObjects(FreeCAD, doc)
+#         expVRML.say(material_substitutions)
+#         while len(objs) > 1:
+#                 FuseObjs_wColors(FreeCAD, FreeCADGui, doc.Name, objs[0].Name, objs[1].Name)
+#                 del objs
+#                 objs = GetListOfObjects(FreeCAD, doc)
 
-        return material_substitutions
+#         return material_substitutions
 
 
     def make_npth_pins_dummy(self, params):
 
-        A1 = params.A1                      # Body PCB seperation
-        rotation = params.rotation          # Rotation if required
+        A1 = params['A1']  # Body PCB seperation
+        rotation = params['rotation']  # Rotation if required
 
         #
         # Create dummy
         #
-        pin = cq.Workplane("XY").workplane(offset=A1 + 1.0).moveTo(0.0, 0.0).circle(0.005, False).extrude(0.001)
+        pin = cq.Workplane("XY")#.workplane(offset=A1 + 1.0).moveTo(0.0, 0.0).circle(0.005, False).extrude(0.001)
         
-        if (rotation != 0):
-            pin = pin.rotate((0,0,0), (0,0,1), rotation)
+        # if (rotation != 0):
+        #     pin = pin.rotate((0,0,0), (0,0,1), rotation)
 
-        return (pin)
+        return pin
 
 
     def make_top_dummy(self, params):
 
-        A1 = params.A1                      # Body PCB seperation
-        rotation = params.rotation          # Rotation if required
+        A1 = params['A1']  # Body PCB seperation
+        rotation = params['rotation']  # Rotation if required
 
         #
         # Create dummy
         #
-        case = cq.Workplane("XY").workplane(offset=A1 + 1.0).moveTo(0.0, 0.0).circle(0.005, False).extrude(0.001)
+        case = cq.Workplane("XY")#.workplane(offset=A1 + 1.0).moveTo(0.0, 0.0).circle(0.005, False).extrude(0.001)
         
-        if (rotation != 0):
-            case = case.rotate((0,0,0), (0,0,1), rotation)
+        # if (rotation != 0):
+        #     case = case.rotate((0,0,0), (0,0,1), rotation)
 
-        return (case)
+        return case
 
 
     def make_case_SIP4_Sharp_Angled(self, params):
 
-        A1 = params.A1                      # Body PCB seperation
-        rotation = params.rotation          # Rotation if required
+        A1 = params['A1']  # Body PCB seperation
+        rotation = params['rotation']  # Rotation if required
 
         L = 24.6
         W = 18.5
@@ -273,8 +275,8 @@ class cq_SIP_3():
 
     def make_pins_SIP4_Sharp_Angled(self, params):
 
-        A1 = params.A1                      # Body PCB seperation
-        rotation = params.rotation          # Rotation if required
+        A1 = params['A1']  # Body PCB seperation
+        rotation = params['rotation']  # Rotation if required
 
         cqsup = cq_support()
         L = 0.6
@@ -295,7 +297,7 @@ class cq_SIP_3():
         pin1 = cq.Workplane("XY").workplane(offset=0.0).moveTo(0.0, 2.25).rect(W, 4.5 + L).extrude(L)
         pin2 = pin2.union(pin1)
         pin2 = pin2.faces(">Z").edges("<Y").fillet(L)
-        pin2 = pin2.translate((0.0 + 05.08, 0.0, A1 + 1.7))
+        pin2 = pin2.translate((0.0 + 5.08, 0.0, A1 + 1.7))
         pin = pin.union(pin2)
         #
         pin2 = cq.Workplane("XY").workplane(offset=0.0).moveTo(0.0, 0.0).rect(W, L).extrude(0.0 - (H - 4.5))
@@ -321,8 +323,8 @@ class cq_SIP_3():
 
     def make_case_SIP4_Sharp_Straight(self, params):
 
-        A1 = params.A1                      # Body PCB seperation
-        rotation = params.rotation          # Rotation if required
+        A1 = params['A1']  # Body PCB seperation
+        rotation = params['rotation']  # Rotation if required
 
         L = 24.6
         W = 18.5
@@ -375,8 +377,8 @@ class cq_SIP_3():
 
     def make_pins_SIP4_Sharp_Straight(self, params):
 
-        A1 = params.A1                      # Body PCB seperation
-        rotation = params.rotation          # Rotation if required
+        A1 = params['A1']  # Body PCB seperation
+        rotation = params['rotation']  # Rotation if required
 
         cqsup = cq_support()
         L = 0.6
@@ -404,8 +406,8 @@ class cq_SIP_3():
 
     def make_case_SIP_3_P1_30mm(self, params):
 
-        A1 = params.A1                      # Body PCB seperation
-        rotation = params.rotation          # Rotation if required
+        A1 = params['A1']  # Body PCB seperation
+        rotation = params['rotation']  # Rotation if required
 
         L = 1.60
         W = 4.30
@@ -428,8 +430,8 @@ class cq_SIP_3():
 
     def make_pins_SIP_3_P1_30mm(self, params):
 
-        A1 = params.A1                      # Body PCB seperation
-        rotation = params.rotation          # Rotation if required
+        A1 = params['A1']  # Body PCB seperation
+        rotation = params['rotation']  # Rotation if required
 
         cqsup = cq_support()
         L = 0.41
@@ -455,8 +457,8 @@ class cq_SIP_3():
 
     def make_case_SIP_3_P2_90mm(self, params):
 
-        A1 = params.A1                      # Body PCB seperation
-        rotation = params.rotation          # Rotation if required
+        A1 = params['A1']  # Body PCB seperation
+        rotation = params['rotation']  # Rotation if required
 
         L = 1.60
         W = 4.30
@@ -479,8 +481,8 @@ class cq_SIP_3():
 
     def make_pins_SIP_3_P2_90mm(self, params):
 
-        A1 = params.A1                      # Body PCB seperation
-        rotation = params.rotation          # Rotation if required
+        A1 = params['A1']  # Body PCB seperation
+        rotation = params['rotation']  # Rotation if required
 
         cqsup = cq_support()
         pin_l = 0.41
@@ -514,8 +516,8 @@ class cq_SIP_3():
 
     def make_case_SIP_8(self, params):
 
-        A1 = params.A1                      # Body PCB seperation
-        rotation = params.rotation          # Rotation if required
+        A1 = params['A1']  # Body PCB seperation
+        rotation = params['rotation']  # Rotation if required
 
         L = 3.0
         W = 19.0
@@ -548,8 +550,8 @@ class cq_SIP_3():
 
     def make_case_SIP_9(self, params):
 
-        A1 = params.A1                      # Body PCB seperation
-        rotation = params.rotation          # Rotation if required
+        A1 = params['A1']  # Body PCB seperation
+        rotation = params['rotation']  # Rotation if required
 
         L = 3.0
         W = 21.54
@@ -582,8 +584,8 @@ class cq_SIP_3():
 
     def make_pins_SIP_8(self, params):
 
-        A1 = params.A1                      # Body PCB seperation
-        rotation = params.rotation          # Rotation if required
+        A1 = params['A1']  # Body PCB seperation
+        rotation = params['rotation']  # Rotation if required
 
         cqsup = cq_support()
         L = 0.2
@@ -630,8 +632,8 @@ class cq_SIP_3():
 
     def make_pins_SIP_9(self, params):
 
-        A1 = params.A1                      # Body PCB seperation
-        rotation = params.rotation          # Rotation if required
+        A1 = params['A1']  # Body PCB seperation
+        rotation = params['rotation']  # Rotation if required
 
         cqsup = cq_support()
         L = 0.2
@@ -678,14 +680,14 @@ class cq_SIP_3():
 
     def make_case_SLA704XM(self, params):
 
-        A1 = params.A1                      # Body PCB seperation
-        rotation = params.rotation          # Rotation if required
+        A1 = params['A1']  # Body PCB seperation
+        rotation = params['rotation']  # Rotation if required
 
         L = 4.8
         W = 31.0
         H = 16.0
         #
-        D1W = 03.3
+        D1W = 3.3
         D1H = 13.0
         #
         D2W = 27.4
@@ -739,8 +741,8 @@ class cq_SIP_3():
 
     def make_pins_SLA704XM(self, params):
 
-        A1 = params.A1                      # Body PCB seperation
-        rotation = params.rotation          # Rotation if required
+        A1 = params['A1']  # Body PCB seperation
+        rotation = params['rotation']  # Rotation if required
 
         cqsup = cq_support()
         L = 0.55
@@ -782,8 +784,8 @@ class cq_SIP_3():
 
     def make_case_STK672_040_E(self, params):
 
-        A1 = params.A1                      # Body PCB seperation
-        rotation = params.rotation          # Rotation if required
+        A1 = params['A1']  # Body PCB seperation
+        rotation = params['rotation']  # Rotation if required
 
         L = 9.0
         W = 53.0
@@ -812,8 +814,8 @@ class cq_SIP_3():
 
     def make_pins_STK672_040_E(self, params):
 
-        A1 = params.A1                      # Body PCB seperation
-        rotation = params.rotation          # Rotation if required
+        A1 = params['A1']  # Body PCB seperation
+        rotation = params['rotation']  # Rotation if required
 
         cqsup = cq_support()
         L = 0.4
@@ -846,8 +848,8 @@ class cq_SIP_3():
 
     def make_case_STK672_080_E(self, params):
 
-        A1 = params.A1                      # Body PCB seperation
-        rotation = params.rotation          # Rotation if required
+        A1 = params['A1']  # Body PCB seperation
+        rotation = params['rotation']  # Rotation if required
 
         L = 8.5
         W = 46.6
@@ -908,8 +910,8 @@ class cq_SIP_3():
 
     def make_pins_STK672_080_E(self, params):
 
-        A1 = params.A1                      # Body PCB seperation
-        rotation = params.rotation          # Rotation if required
+        A1 = params['A1']  # Body PCB seperation
+        rotation = params['rotation']  # Rotation if required
 
         cqsup = cq_support()
         L = 0.4
@@ -941,174 +943,174 @@ class cq_SIP_3():
 
 
         ##enabling optional/default values to None
-    def namedtuple_with_defaults(typename, field_names, default_values=()):
+    # def namedtuple_with_defaults(typename, field_names, default_values=()):
 
-        T = collections.namedtuple(typename, field_names)
-        T.__new__.__defaults__ = (None,) * len(T._fields)
-        if isinstance(default_values, collections.Mapping):
-            prototype = T(**default_values)
-        else:
-            prototype = T(*default_values)
-        T.__new__.__defaults__ = tuple(prototype)
-        return T
+    #     T = namedtuple(typename, field_names)
+    #     T.__new__.__defaults__ = (None,) * len(T._fields)
+    #     if isinstance(default_values, Mapping):
+    #         prototype = T(**default_values)
+    #     else:
+    #         prototype = T(*default_values)
+    #     T.__new__.__defaults__ = tuple(prototype)
+    #     return T
         
-    Params = namedtuple_with_defaults("Params", [
-        'modelName',            # modelName
-        'A1',                   # Body PCB seperation
-        'body_top_color_key',   # Top color
-        'body_color_key',       # Body colour
-        'pin_color_key',        # Pin color
-        'npth_pin_color_key',   # NPTH Pin color
-        'rotation',	            # Rotation if required
-        'dest_dir_prefix'       # Destination directory
-    ])
+    # Params = namedtuple_with_defaults("Params", [
+    #     'modelName',            # modelName
+    #     'A1',                   # Body PCB seperation
+    #     'body_top_color_key',   # Top color
+    #     'body_color_key',       # Body colour
+    #     'pin_color_key',        # Pin color
+    #     'npth_pin_color_key',   # NPTH Pin color
+    #     'rotation',	            # Rotation if required
+    #     'dest_dir_prefix'       # Destination directory
+    # ])
 
 
 
-    all_params = {
+    # all_params = {
 
-        'SIP4_Sharp_Angled': Params(
-            #
-            # 
-            # A number of parameters have been fixed or guessed, such as A2
-            # 
-            modelName = 'SIP4_Sharp-SSR_P7.62mm_Angled',         # modelName
-            A1 = 0.1,                                   # Body PCB seperation
+    #     'SIP4_Sharp_Angled': Params(
+    #         #
+    #         # 
+    #         # A number of parameters have been fixed or guessed, such as A2
+    #         # 
+    #         modelName = 'SIP4_Sharp-SSR_P7.62mm_Angled',         # modelName
+    #         A1 = 0.1,                                   # Body PCB seperation
 
-            body_top_color_key = 'metal grey pins',     # Top color
-            body_color_key = 'black body',              # Body color
-            pin_color_key = 'metal grey pins',          # Pin color
-            npth_pin_color_key = 'grey body',           # NPTH Pin color
-            rotation = 0,                               # Rotation if required
-            dest_dir_prefix = 'Package_SIP.3dshapes',   # destination directory
-            ),
+    #         body_top_color_key = 'metal grey pins',     # Top color
+    #         body_color_key = 'black body',              # Body color
+    #         pin_color_key = 'metal grey pins',          # Pin color
+    #         npth_pin_color_key = 'grey body',           # NPTH Pin color
+    #         rotation = 0,                               # Rotation if required
+    #         dest_dir_prefix = 'Package_SIP.3dshapes',   # destination directory
+    #         ),
 
-        'SIP4_Sharp_Straight': Params(
-            #
-            # 
-            # A number of parameters have been fixed or guessed, such as A2
-            # 
-            modelName = 'SIP4_Sharp-SSR_P7.62mm_Straight',         # modelName
-            A1 = 7.0,                                   # Body PCB seperation
+    #     'SIP4_Sharp_Straight': Params(
+    #         #
+    #         # 
+    #         # A number of parameters have been fixed or guessed, such as A2
+    #         # 
+    #         modelName = 'SIP4_Sharp-SSR_P7.62mm_Straight',         # modelName
+    #         A1 = 7.0,                                   # Body PCB seperation
 
-            body_top_color_key = 'metal grey pins',     # Top color
-            body_color_key = 'black body',              # Body color
-            pin_color_key = 'metal grey pins',          # Pin color
-            npth_pin_color_key = 'grey body',           # NPTH Pin color
-            rotation = 0,                               # Rotation if required
-            dest_dir_prefix = 'Package_SIP.3dshapes',   # destination directory
-            ),
+    #         body_top_color_key = 'metal grey pins',     # Top color
+    #         body_color_key = 'black body',              # Body color
+    #         pin_color_key = 'metal grey pins',          # Pin color
+    #         npth_pin_color_key = 'grey body',           # NPTH Pin color
+    #         rotation = 0,                               # Rotation if required
+    #         dest_dir_prefix = 'Package_SIP.3dshapes',   # destination directory
+    #         ),
 
-        'SIP-3_P1.30mm': Params(
-            #
-            # https://www.diodes.com/assets/Package-Files/SIP-3-Bulk-Pack.pdf
-            # A number of parameters have been fixed or guessed, such as A2
-            # 
-            modelName = 'SIP-3_4.30x1.60mm_P1.30mm',    # modelName
-            A1 = 13.4,                                  # Body PCB seperation
+    #     'SIP-3_P1.30mm': Params(
+    #         #
+    #         # https://www.diodes.com/assets/Package-Files/SIP-3-Bulk-Pack.pdf
+    #         # A number of parameters have been fixed or guessed, such as A2
+    #         # 
+    #         modelName = 'SIP-3_4.30x1.60mm_P1.30mm',    # modelName
+    #         A1 = 13.4,                                  # Body PCB seperation
 
-            body_top_color_key = 'metal grey pins',     # Top color
-            body_color_key = 'black body',              # Body color
-            pin_color_key = 'metal grey pins',          # Pin color
-            npth_pin_color_key = 'grey body',           # NPTH Pin color
-            rotation = 0,                               # Rotation if required
-            dest_dir_prefix = 'Package_SIP.3dshapes',   # destination directory
-            ),
+    #         body_top_color_key = 'metal grey pins',     # Top color
+    #         body_color_key = 'black body',              # Body color
+    #         pin_color_key = 'metal grey pins',          # Pin color
+    #         npth_pin_color_key = 'grey body',           # NPTH Pin color
+    #         rotation = 0,                               # Rotation if required
+    #         dest_dir_prefix = 'Package_SIP.3dshapes',   # destination directory
+    #         ),
 
-        'SIP-3_P2.90mm': Params(
-            #
-            # https://www.diodes.com/assets/Package-Files/SIP-3-Ammo-Pack.pdf
-            # A number of parameters have been fixed or guessed, such as A2
-            # 
-            modelName = 'SIP-3_4.30x1.60mm_P2.90mm',    # modelName
-            A1 = 13.3,                                  # Body PCB seperation
+    #     'SIP-3_P2.90mm': Params(
+    #         #
+    #         # https://www.diodes.com/assets/Package-Files/SIP-3-Ammo-Pack.pdf
+    #         # A number of parameters have been fixed or guessed, such as A2
+    #         # 
+    #         modelName = 'SIP-3_4.30x1.60mm_P2.90mm',    # modelName
+    #         A1 = 13.3,                                  # Body PCB seperation
 
-            body_top_color_key = 'metal grey pins',     # Top color
-            body_color_key = 'black body',              # Body color
-            pin_color_key = 'metal grey pins',          # Pin color
-            npth_pin_color_key = 'grey body',           # NPTH Pin color
-            rotation = 0,                               # Rotation if required
-            dest_dir_prefix = 'Package_SIP.3dshapes',   # destination directory
-            ),
+    #         body_top_color_key = 'metal grey pins',     # Top color
+    #         body_color_key = 'black body',              # Body color
+    #         pin_color_key = 'metal grey pins',          # Pin color
+    #         npth_pin_color_key = 'grey body',           # NPTH Pin color
+    #         rotation = 0,                               # Rotation if required
+    #         dest_dir_prefix = 'Package_SIP.3dshapes',   # destination directory
+    #         ),
 
-        'SIP-8': Params(
-            #
-            # http://www.njr.com/semicon/PDF/package/SIP8_E.pdf
-            # A number of parameters have been fixed or guessed, such as A2
-            # 
-            modelName = 'SIP-8_19x3mm_P2.54mm',         # modelName
-            A1 = 1.3,                                   # Body PCB seperation
+    #     'SIP-8': Params(
+    #         #
+    #         # http://www.njr.com/semicon/PDF/package/SIP8_E.pdf
+    #         # A number of parameters have been fixed or guessed, such as A2
+    #         # 
+    #         modelName = 'SIP-8_19x3mm_P2.54mm',         # modelName
+    #         A1 = 1.3,                                   # Body PCB seperation
 
-            body_top_color_key = 'metal grey pins',     # Top color
-            body_color_key = 'black body',              # Body color
-            pin_color_key = 'metal grey pins',          # Pin color
-            npth_pin_color_key = 'grey body',           # NPTH Pin color
-            rotation = 0,                               # Rotation if required
-            dest_dir_prefix = 'Package_SIP.3dshapes',   # destination directory
-            ),
+    #         body_top_color_key = 'metal grey pins',     # Top color
+    #         body_color_key = 'black body',              # Body color
+    #         pin_color_key = 'metal grey pins',          # Pin color
+    #         npth_pin_color_key = 'grey body',           # NPTH Pin color
+    #         rotation = 0,                               # Rotation if required
+    #         dest_dir_prefix = 'Package_SIP.3dshapes',   # destination directory
+    #         ),
 
-        'SIP-9': Params(
-            #
-            # http://www.njr.com/semicon/PDF/package/SIP8_E.pdf
-            # A number of parameters have been fixed or guessed, such as A2
-            # 
-            modelName = 'SIP-9_21.54x3mm_P2.54mm',      # modelName
-            A1 = 1.3,                                   # Body PCB seperation
+    #     'SIP-9': Params(
+    #         #
+    #         # http://www.njr.com/semicon/PDF/package/SIP8_E.pdf
+    #         # A number of parameters have been fixed or guessed, such as A2
+    #         # 
+    #         modelName = 'SIP-9_21.54x3mm_P2.54mm',      # modelName
+    #         A1 = 1.3,                                   # Body PCB seperation
 
-            body_top_color_key = 'metal grey pins',     # Top color
-            body_color_key = 'black body',              # Body color
-            pin_color_key = 'metal grey pins',          # Pin color
-            npth_pin_color_key = 'grey body',           # NPTH Pin color
-            rotation = 0,                               # Rotation if required
-            dest_dir_prefix = 'Package_SIP.3dshapes',   # destination directory
-            ),
+    #         body_top_color_key = 'metal grey pins',     # Top color
+    #         body_color_key = 'black body',              # Body color
+    #         pin_color_key = 'metal grey pins',          # Pin color
+    #         npth_pin_color_key = 'grey body',           # NPTH Pin color
+    #         rotation = 0,                               # Rotation if required
+    #         dest_dir_prefix = 'Package_SIP.3dshapes',   # destination directory
+    #         ),
 
-        'SLA704XM': Params(
-            #
-            # http://www.sumzi.com/upload/files/2007/07/2007073114282034189.PDF
-            # A number of parameters have been fixed or guessed, such as A2
-            # 
-            modelName = 'SLA704XM',                     # modelName
-            A1 = 6.7,                                   # Body PCB seperation
+    #     'SLA704XM': Params(
+    #         #
+    #         # http://www.sumzi.com/upload/files/2007/07/2007073114282034189.PDF
+    #         # A number of parameters have been fixed or guessed, such as A2
+    #         # 
+    #         modelName = 'SLA704XM',                     # modelName
+    #         A1 = 6.7,                                   # Body PCB seperation
 
-            body_top_color_key = 'metal grey pins',     # Top color
-            body_color_key = 'black body',              # Body color
-            pin_color_key = 'metal grey pins',          # Pin color
-            npth_pin_color_key = 'grey body',           # NPTH Pin color
-            rotation = 0,                               # Rotation if required
-            dest_dir_prefix = 'Package_SIP.3dshapes',   # destination directory
-            ),
+    #         body_top_color_key = 'metal grey pins',     # Top color
+    #         body_color_key = 'black body',              # Body color
+    #         pin_color_key = 'metal grey pins',          # Pin color
+    #         npth_pin_color_key = 'grey body',           # NPTH Pin color
+    #         rotation = 0,                               # Rotation if required
+    #         dest_dir_prefix = 'Package_SIP.3dshapes',   # destination directory
+    #         ),
 
-        'STK672-040-E': Params(
-            #
-            # https://www.onsemi.com/pub/Collateral/EN5227-D.PDF
-            # A number of parameters have been fixed or guessed, such as A2
-            # 
-            modelName = 'STK672-040-E',                 # modelName
-            A1 = 1.0,                                   # Body PCB seperation
+    #     'STK672-040-E': Params(
+    #         #
+    #         # https://www.onsemi.com/pub/Collateral/EN5227-D.PDF
+    #         # A number of parameters have been fixed or guessed, such as A2
+    #         # 
+    #         modelName = 'STK672-040-E',                 # modelName
+    #         A1 = 1.0,                                   # Body PCB seperation
 
-            body_top_color_key = 'metal grey pins',     # Top color
-            body_color_key = 'black body',              # Body color
-            pin_color_key = 'metal grey pins',          # Pin color
-            npth_pin_color_key = 'grey body',           # NPTH Pin color
-            rotation = 0,                               # Rotation if required
-            dest_dir_prefix = 'Package_SIP.3dshapes',   # destination directory
-            ),
+    #         body_top_color_key = 'metal grey pins',     # Top color
+    #         body_color_key = 'black body',              # Body color
+    #         pin_color_key = 'metal grey pins',          # Pin color
+    #         npth_pin_color_key = 'grey body',           # NPTH Pin color
+    #         rotation = 0,                               # Rotation if required
+    #         dest_dir_prefix = 'Package_SIP.3dshapes',   # destination directory
+    #         ),
 
-        'STK672-080-E': Params(
-            #
-            # https://www.onsemi.com/pub/Collateral/EN5227-D.PDF
-            # A number of parameters have been fixed or guessed, such as A2
-            # 
-            modelName = 'STK672-080-E',                 # modelName
-            A1 = 1.0,                                   # Body PCB seperation
+    #     'STK672-080-E': Params(
+    #         #
+    #         # https://www.onsemi.com/pub/Collateral/EN5227-D.PDF
+    #         # A number of parameters have been fixed or guessed, such as A2
+    #         # 
+    #         modelName = 'STK672-080-E',                 # modelName
+    #         A1 = 1.0,                                   # Body PCB seperation
 
-            body_top_color_key = 'metal grey pins',     # Top color
-            body_color_key = 'black body',              # Body color
-            pin_color_key = 'metal grey pins',          # Pin color
-            npth_pin_color_key = 'grey body',           # NPTH Pin color
-            rotation = 0,                               # Rotation if required
-            dest_dir_prefix = 'Package_SIP.3dshapes',   # destination directory
-            ),
-    }
+    #         body_top_color_key = 'metal grey pins',     # Top color
+    #         body_color_key = 'black body',              # Body color
+    #         pin_color_key = 'metal grey pins',          # Pin color
+    #         npth_pin_color_key = 'grey body',           # NPTH Pin color
+    #         rotation = 0,                               # Rotation if required
+    #         dest_dir_prefix = 'Package_SIP.3dshapes',   # destination directory
+    #         ),
+    # }
         

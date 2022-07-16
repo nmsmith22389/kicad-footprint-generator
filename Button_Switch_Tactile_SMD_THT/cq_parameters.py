@@ -20,26 +20,26 @@ def reload_lib(lib):
 import collections
 from collections import namedtuple
 
-import FreeCAD, Draft, FreeCADGui
-import ImportGui
-import FreeCADGui as Gui
+#import FreeCAD, Draft, FreeCADGui
+#import ImportGui
+#import FreeCADGui as Gui
 
-import shaderColors
-import exportPartToVRML as expVRML
+#import shaderColors
+#import exportPartToVRML as expVRML
 
 ## base parametes & model
 import collections
 from collections import namedtuple
 
 # Import cad_tools
-import cq_cad_tools
+#import cq_cad_tools
 # Reload tools
-from cq_cad_tools import reload_lib
-reload_lib(cq_cad_tools)
+#from cq_cad_tools import reload_lib
+#reload_lib(cq_cad_tools)
 # Explicitly load all needed functions
-from cq_cad_tools import FuseObjs_wColors, GetListOfObjects, restore_Main_Tools, \
- exportSTEP, close_CQ_Example, exportVRML, saveFCdoc, z_RotateObject, Color_Objects, \
- CutObjs_wColors, checkRequirements
+#from cq_cad_tools import FuseObjs_wColors, GetListOfObjects, restore_Main_Tools, \
+# exportSTEP, close_CQ_Example, exportVRML, saveFCdoc, z_RotateObject, Color_Objects, \
+# CutObjs_wColors, checkRequirements
 
 # Sphinx workaround #1
 try:
@@ -64,7 +64,7 @@ except: # catch *all* exceptions
     # maui end
 
 #checking requirements
-checkRequirements(cq)
+#checkRequirements(cq)
 
 
 class ShapeOfTerminal:
@@ -151,45 +151,45 @@ class partParamsTactSwitches ():
     def __init__(self, params):
 
         # get all entries of the params list as dictionary
-        args = params._asdict()
+        args = params#._asdict()
         self.type = params.type if 'type' in args and params.type != None else "SMD"
 
         # Defining all dimensions needed to build the model.
         # If a dimension is part of the given params list, this value must be used
 
         # Dimensions of plastic body
-        self.body_height = params.body_height if 'body_height' in args and  params.body_height  != None else 3.75
-        self.body_length = params.body_length if 'body_length' in args and  params.body_length  != None else 6.6  # side of part where the pins are
-        self.body_width = params.body_width if 'body_width' in args and  params.body_width  != None else 6.0
-        self.body_height_with_button = params.body_height_with_button if 'body_height_with_button' in args and  params.body_height_with_button  != None else 5.0
+        self.body_height = params['body_height'] if 'body_height' in args and  params['body_height']  != None else 3.75
+        self.body_length = params['body_length'] if 'body_length' in args and  params['body_length']  != None else 6.6  # side of part where the pins are
+        self.body_width = params['body_width'] if 'body_width' in args and  params['body_width']  != None else 6.0
+        self.body_height_with_button = params['body_height_with_button'] if 'body_height_with_button' in args and  params['body_height_with_button']  != None else 5.0
         # if no distance of body to board is given with params it is set to None and will be set depending on shape of terminals 
-        self.body_board_distance = params.body_board_distance if 'body_board_distance' in args and  params.body_board_distance  != None else None
+        self.body_board_distance = params['body_board_distance'] if 'body_board_distance' in args and  params['body_board_distance']  != None else None
         # if case has alignment pegs 'has_pegs' must be true
-        self.has_pegs = params.has_pegs if 'has_pegs' in args and  params.has_pegs  != None else False
-        self.pegs_pitch = params.pegs_pitch if 'pegs_pitch' in args and  params.pegs_pitch  != None else 9.0
-        self.pegs_radius = params.pegs_radius if 'pegs_radius' in args and  params.pegs_radius  != None else 1.0
-        self.pegs_heigth = params.pegs_heigth if 'pegs_heigth' in args and  params.pegs_heigth  != None else 1.5
+        self.has_pegs = params['has_pegs'] if 'has_pegs' in args and  params['has_pegs']  != None else False
+        self.pegs_pitch = params['pegs_pitch'] if 'pegs_pitch' in args and  params['pegs_pitch']  != None else 9.0
+        self.pegs_radius = params['pegs_radius'] if 'pegs_radius' in args and  params['pegs_radius']  != None else 1.0
+        self.pegs_heigth = params['pegs_heigth'] if 'pegs_heigth' in args and  params['pegs_heigth']  != None else 1.5
         
         # Dimesion of button
-        self.button_dia = params.button_dia if 'button_dia' in args and  params.button_dia  != None else 3.5
-        self.button_ring = params.button_ring if 'button_ring' in args and  params.button_ring  != None else ButtonRing.NONE
-        self.button_ring_radius = params.button_ring_radius if 'button_ring_radius' in args and  params.button_ring_radius  != None else 2.35
-        self.button_ring_heigth = params.button_ring_heigth if 'button_ring_heigth' in args and  params.button_ring_heigth  != None else 1.6
-        self.button_ring_length = params.button_ring_length if 'button_ring_length' in args and  params.button_ring_length  != None else 3.7
-        self.button_ring_width = params.button_ring_width if 'button_ring_width' in args and  params.button_ring_width  != None else 3.7
+        self.button_dia = params['button_dia'] if 'button_dia' in args and  params['button_dia']  != None else 3.5
+        self.button_ring = params['button_ring'] if 'button_ring' in args and  params['button_ring']  != None else ButtonRing.NONE
+        self.button_ring_radius = params['button_ring_radius'] if 'button_ring_radius' in args and  params['button_ring_radius']  != None else 2.35
+        self.button_ring_heigth = params['button_ring_heigth'] if 'button_ring_heigth' in args and  params['button_ring_heigth']  != None else 1.6
+        self.button_ring_length = params['button_ring_length'] if 'button_ring_length' in args and  params['button_ring_length']  != None else 3.7
+        self.button_ring_width = params['button_ring_width'] if 'button_ring_width' in args and  params['button_ring_width']  != None else 3.7
 
         # dimension of pins
-        self.num_pins = params.num_pins if 'num_pins' in args and  params.num_pins  != None else 4
-        self.pin_pitch = params.pin_pitch if 'pin_pitch' in args and  params.pin_pitch  != None else 2.54
-        self.pin_width = params.pin_width if 'pin_width' in args and  params.pin_width  != None else 0.6
-        self.pin_thickness = params.pin_thickness if 'pin_thickness' in args and  params.pin_thickness  != None else 0.2
-        self.distance_pinTip_rows = params.distance_pinTip_rows if 'distance_pinTip_rows' in args and  params.distance_pinTip_rows  != None else 10.0  # distance from tip of pin from row one to row two
-        self.num_pin_rows = params.num_pin_rows if 'num_pin_rows' in args and  params.num_pin_rows  != None else 2
-        self.top_length = params.top_length if 'top_length' in args and  params.top_length  != None else 0.2         # only used for J-hook and angled THT pin
-        self.pin_length_below_body = params.pin_length_below_body if 'pin_length_below_body' in args and  params.pin_length_below_body  != None else 3.5         # only used for THT pin
+        self.num_pins = params['num_pins'] if 'num_pins' in args and  params['num_pins']  != None else 4
+        self.pin_pitch = params['pin_pitch'] if 'pin_pitch' in args and  params['pin_pitch']  != None else 2.54
+        self.pin_width = params['pin_width'] if 'pin_width' in args and  params['pin_width']  != None else 0.6
+        self.pin_thickness = params['pin_thickness'] if 'pin_thickness' in args and  params['pin_thickness']  != None else 0.2
+        self.distance_pinTip_rows = params['distance_pinTip_rows'] if 'distance_pinTip_rows' in args and  params['distance_pinTip_rows']  != None else 10.0  # distance from tip of pin from row one to row two
+        self.num_pin_rows = params['num_pin_rows'] if 'num_pin_rows' in args and  params['num_pin_rows']  != None else 2
+        self.top_length = params['top_length'] if 'top_length' in args and  params['top_length']  != None else 0.2         # only used for J-hook and angled THT pin
+        self.pin_length_below_body = params['pin_length_below_body'] if 'pin_length_below_body' in args and  params['pin_length_below_body']  != None else 3.5         # only used for THT pin
 
         # Model variants
-        self.terminal_shape = params.terminal_shape if 'terminal_shape' in args and  params.terminal_shape  != None else ShapeOfTerminal.GW
+        self.terminal_shape = params['terminal_shape'] if 'terminal_shape' in args and  params['terminal_shape']  != None else ShapeOfTerminal.GW
         
         
         # Default dimensions. These dimensions Will normally be defined in the serie specific derived class
@@ -200,7 +200,7 @@ class partParamsTactSwitches ():
         self.pin_pocket_edge_width =  1.3
 
         # Dimension of metallic cover plate
-        self.cover_thickness = params.cover_thickness if 'cover_thickness' in args and  params.cover_thickness  != None else 0.3
+        self.cover_thickness = params['cover_thickness'] if 'cover_thickness' in args and  params['cover_thickness']  != None else 0.3
         self.cover_side_height =  2.1
         self.cover_plate_with_side_sheets = False  # must be true if cover of switch has side clips
         # for side sheets with center pocket:
@@ -241,7 +241,8 @@ class partParamsTactSwitches ():
         # Call of function defining dimensions depending on the shape of terminals
         paramFunction = self._TerminalShapeSwitcher.get(self.terminal_shape, None)
         if paramFunction == None:     # not a valid terminal_shape
-            FreeCAD.Console.PrintMessage(str(self.terminal_shape) + ' not a valid member of ' + str(ShapeOfTerminal))
+            #FreeCAD.Console.PrintMessage(str(self.terminal_shape) + ' not a valid member of ' + str(ShapeOfTerminal))
+            print(str(self.terminal_shape) + ' not a valid member of ' + str(ShapeOfTerminal))
             self.make_me = False
         else:  # Call the funktion
             paramFunction (self)
@@ -303,6 +304,4 @@ class partParamsTactSwitches ():
         ShapeOfTerminal.THC: paramsForTh,
         ShapeOfTerminal.THL: paramsForTh,
         }
-
-
 

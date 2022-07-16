@@ -61,61 +61,70 @@ class LICENCE_Info():
     LIST_license = ["",]
     ############################################################################
 
-import sys
+# import sys
 
 # DIRTY HACK TO ALLOW CENTRALICED HELPER SCRIPTS. (freecad cadquery does copy the file to /tmp and we can therefore not use relative paths for importing)
 
-if "module" in __name__ :
-    for path in sys.path:
-        if 'jst/cq_models' in path:
-            p1 = path.replace('jst/cq_models','_tools')
-    if not p1 in sys.path:
-        sys.path.append(p1)
-else:
-    sys.path.append('../_tools')
+# if "module" in __name__ :
+#     for path in sys.path:
+#         if 'jst/cq_models' in path:
+#             p1 = path.replace('jst/cq_models','_tools')
+#     if not p1 in sys.path:
+#         sys.path.append(p1)
+# else:
+#     sys.path.append('../_tools')
 
-from cq_helpers import *
+# from cq_helpers import *
 
+from _tools.cq_helpers import *
 
 import cadquery as cq
-from Helpers import show
-from collections import namedtuple
-import FreeCAD
-from conn_jst_ph_params import *
+# from Helpers import show
+# from collections import namedtuple
+# import FreeCAD
+# from conn_jst_ph_params import *
 
 def generate_pins(params):
-    if params.angled:
+    if params['angled']:
         return generate_angled_pins(params)
     return generate_straight_pins(params)
 
 def generate_straight_pins(params):
-    num_pins = params.num_pins
+    num_pins = params['num_pins']
+    pin_width = params['pin_width']
+    pin_depth = params['pin_depth']
+    pin_lock_d = params['pin_lock_d']
+    pin_lock_h1 = params['pin_lock_h1']
+    pin_lock_h2 = params['pin_lock_h2']
+    pin_inner_length = params['pin_inner_length']
+    pin_fillet = params['pin_fillet']
+    pin_pitch = params['pin_pitch']
 
     pl = [
         (pin_width/2, -pin_depth),
         (pin_width/2-pin_lock_d, pin_lock_h1-pin_depth),
         (pin_width/2, pin_lock_h2-pin_depth),
-        (pin_width/2, pin_inner_lenght),
-        (-pin_width/2, pin_inner_lenght),
+        (pin_width/2, pin_inner_length),
+        (-pin_width/2, pin_inner_length),
         (-pin_width/2, pin_lock_h2-pin_depth),
         (-pin_width/2-pin_lock_d, pin_lock_h1-pin_depth)
         ]
 
-    locked_pin = cq.Workplane("YZ").workplane(-pin_width/2)\
+    locked_pin = cq.Workplane("YZ").workplane(-pin_width/2, centerOption="CenterOfMass")\
         .move(-pin_width/2, -pin_depth)\
-        .polyline(pl).close().extrude(pin_width)
+        .polyline(pl, includeCurrent=True).close().extrude(pin_width)
     locked_pin = locked_pin.faces("|Z").edges().chamfer(pin_fillet)
 
     pins = locked_pin.union(locked_pin.translate(((num_pins-1)*pin_pitch,0,0)))
 
     pli = [
         (pin_width/2, -pin_depth),
-        (pin_width/2, pin_inner_lenght),
-        (-pin_width/2, pin_inner_lenght),
+        (pin_width/2, pin_inner_length),
+        (-pin_width/2, pin_inner_length),
         ]
-    normal_pin = cq.Workplane("YZ").workplane(-pin_width/2)\
+    normal_pin = cq.Workplane("YZ").workplane(-pin_width/2, centerOption="CenterOfMass")\
         .move(-pin_width/2, -pin_depth)\
-        .polyline(pli).close().extrude(pin_width)
+        .polyline(pli, includeCurrent=True).close().extrude(pin_width)
     normal_pin = normal_pin.faces("|Z").edges().chamfer(pin_fillet)
 
     for i in range(1,num_pins-1):
@@ -123,10 +132,19 @@ def generate_straight_pins(params):
     return pins
 
 def generate_angled_pins(params):
-    num_pins = params.num_pins
-    pin_angle_length = params.pin_angle_length
-    zdistance = params.zdistance
-    body_width = params.body_width
+    num_pins = params['num_pins']
+    pin_angle_length = params['pin_angle_length']
+    zdistance = params['zdistance']
+    body_width = params['body_width']
+    body_corner_y = params['body_corner_y']
+    pin_width = params['pin_width']
+    pin_depth = params['pin_depth']
+    pin_lock_d = params['pin_lock_d']
+    pin_lock_h1 = params['pin_lock_h1']
+    pin_lock_h2 = params['pin_lock_h2']
+    pin_fillet = params['pin_fillet']
+    pin_bend_radius = params['pin_bend_radius']
+    pin_pitch = params['pin_pitch']
 
     pin_z_distance = body_width + body_corner_y + zdistance
 
@@ -142,9 +160,9 @@ def generate_angled_pins(params):
         (-pin_width/2+pin_lock_d, pin_lock_h1-pin_depth)
         ]
 
-    locked_pin = cq.Workplane("YZ").workplane(-pin_width/2)\
+    locked_pin = cq.Workplane("YZ").workplane(-pin_width/2, centerOption="CenterOfMass")\
         .move(-pin_width/2, -pin_depth)\
-        .polyline(pl).close().extrude(pin_width)
+        .polyline(pl, includeCurrent=True).close().extrude(pin_width)
     locked_pin = locked_pin.faces("<Z").edges().chamfer(pin_fillet)
     locked_pin = locked_pin.faces(">Y").edges().chamfer(pin_fillet)
     BS = cq.selectors.BoxSelector
@@ -163,9 +181,9 @@ def generate_angled_pins(params):
         (pin_angle_length-0.5, pin_z_distance+pin_width/2),
         (-pin_width/2, pin_z_distance+pin_width/2),
         ]
-    normal_pin = cq.Workplane("YZ").workplane(-pin_width/2)\
+    normal_pin = cq.Workplane("YZ").workplane(-pin_width/2, centerOption="CenterOfMass")\
         .move(-pin_width/2, -pin_depth)\
-        .polyline(pli).close().extrude(pin_width)
+        .polyline(pli, includeCurrent=True).close().extrude(pin_width)
     normal_pin = normal_pin.faces("<Z").edges().chamfer(pin_fillet)
     normal_pin = normal_pin.faces(">Y").edges().chamfer(pin_fillet)
     normal_pin = normal_pin.edges(BS(p1, p2)).fillet(pin_bend_radius)
@@ -178,20 +196,26 @@ def generate_angled_pins(params):
     return pins
 
 def generate_angled_body(params):
-    body_width = params.body_width
-    body_height = params.body_height
-    body_length = params.body_length
-    zdistance = params.zdistance
-    d = params.pin_angle_distance
+    body_width = params['body_width']
+    body_height = params['body_height']
+    body_length = params['body_length']
+    zdistance = params['zdistance']
+    d = params['pin_angle_distance']
+    body_corner_x = params['body_corner_x']
+    body_corner_y = params['body_corner_y']
+    body_front_cutout_from_side = params['body_front_cutout_from_side']
+    body_front_cutout_from_top = params['body_front_cutout_from_top']
+    body_front_cutout_width = params['body_front_cutout_width']
+    body_front_width = params['body_front_width']
 
-    body_fin_lenght = 1.6
+    body_fin_length = 1.6
     body_fin_width = 1
     body_fin_height = 3.8
     body_fin_back_height = 2.9
 
     body = generate_straight_body(params)
 
-    cutout2 = cq.Workplane("XZ").workplane(offset=-body_corner_y)\
+    cutout2 = cq.Workplane("XZ").workplane(offset=-body_corner_y, centerOption="CenterOfMass")\
         .moveTo(body_corner_x+body_front_cutout_from_side,
                 body_height-body_front_cutout_from_top)\
         .vLineTo(0)\
@@ -200,7 +224,7 @@ def generate_angled_body(params):
         .close().extrude(-body_front_width,False)
     body = body.cut(cutout2)
 
-    cutout3 = cq.Workplane("XZ").workplane(offset=-body_corner_y)\
+    cutout3 = cq.Workplane("XZ").workplane(offset=-body_corner_y, centerOption="CenterOfMass")\
         .moveTo(body_corner_x+body_length-body_front_cutout_from_side,
               body_height-body_front_cutout_from_top)\
         .vLineTo(0)\
@@ -209,29 +233,41 @@ def generate_angled_body(params):
         .close().extrude(-body_front_width,False)
     body = body.cut(cutout3)
 
-    body = body.rotate((0,body_width+body_corner_y,0),(1,0,0),-90)
-    body = body.translate((0,-(body_width+body_corner_y)+d,zdistance))
+    body = body.rotate((0,0,0),(1,0,0),-90)
+    body = body.translate((0,-(body_width+body_corner_y)-d,zdistance))
 
-    fin = cq.Workplane("YZ").workplane(offset=body_corner_x)\
+    fin = cq.Workplane("YZ").workplane(offset=body_corner_x, centerOption="CenterOfMass")\
         .moveTo(d,zdistance).vLine(body_fin_height)\
-        .line(-body_fin_lenght,-body_fin_height+body_fin_back_height)\
-        .vLineTo(0).hLine(body_fin_lenght+body_height)\
+        .line(-body_fin_length,-body_fin_height+body_fin_back_height)\
+        .vLineTo(0).hLine(body_fin_length+body_height)\
         .vLine(zdistance).close().extrude(body_fin_width)
     body=body.union(fin)
-    body=body.union(fin.translate((body_length-body_fin_width,0,0)))
+    # body=body.union(fin.translate((body_length-body_fin_width,0,0)))
 
     return body.union(fin)
 
 def generate_body(params):
-    if not params.angled:
+    if not params['angled']:
         return generate_straight_body(params)
     return generate_angled_body(params)
 
 def generate_straight_body(params):
-    num_pins = params.num_pins
-    body_width = params.body_width
-    body_height = params.body_height
-    body_length = params.body_length
+    num_pins = params['num_pins']
+    body_width = params['body_width']
+    body_height = params['body_height']
+    body_length = params['body_length']
+    body_front_width = params['body_front_width']
+    body_back_width = params['body_back_width']
+    body_corner_x = params['body_corner_x']
+    body_corner_y = params['body_corner_y']
+    body_side_width = params['body_side_width']
+    body_front_main_cutout_to_side = params['body_front_main_cutout_to_side']
+    body_front_main_cutout_depth = params['body_front_main_cutout_depth']
+    body_front_cutout_from_side = params['body_front_cutout_from_side']
+    body_front_cutout_from_top = params['body_front_cutout_from_top']
+    body_front_cutout_height = params['body_front_cutout_height']
+    body_front_cutout_width = params['body_front_cutout_width']
+    pin_pitch = params['pin_pitch']
     body_plug_depth = 4.2
 
     body_side_cutout_depth = 2
@@ -240,11 +276,11 @@ def generate_straight_body(params):
 
     body_off_center_y = (body_front_width-body_back_width)/2
 
-    body = cq.Workplane("XY").workplane()\
+    body = cq.Workplane("XY").workplane(centerOption="CenterOfMass")\
         .move(body_corner_x, body_corner_y)\
         .rect(body_length, body_width, centered=False)\
         .extrude(body_height)
-    body = body.faces(">Z").workplane().move(0,body_off_center_y)\
+    body = body.faces(">Z").workplane(centerOption="CenterOfMass").move(0,body_off_center_y)\
         .rect(body_length-2*body_side_width, body_width-body_front_width-body_back_width)\
         .cutBlind(-body_plug_depth)
 
@@ -254,14 +290,14 @@ def generate_straight_body(params):
     #pcsam = get_third_arc_point(pcs2, pcs3)
     pcsam = v_add(pcs2, (-body_side_cutout_width/2, -body_side_cutout_width/2))
 
-    body = body.faces("<X").workplane()\
+    body = body.faces("<X").workplane(centerOption="CenterOfMass")\
         .moveTo(pcs1[0], pcs1[1])\
         .lineTo(pcs2[0], pcs2[1])\
         .threePointArc(pcsam, pcs3)\
         .line(0, body_side_cutout_depth-body_side_cutout_width/2).close()\
         .cutThruAll()
 
-    cutout1 = body.faces("<Y").workplane()\
+    cutout1 = body.faces("<Y").workplane(centerOption="CenterOfMass")\
         .move(-body_length/2+body_front_main_cutout_to_side,body_height/2)\
         .vLine(-body_front_main_cutout_depth)\
         .hLineTo(body_length/2-body_front_main_cutout_to_side)\
@@ -269,7 +305,7 @@ def generate_straight_body(params):
         .close().extrude(-1,False)
     body = body.cut(cutout1)
 
-    cutout2 = cq.Workplane("XZ").workplane(offset=-body_corner_y)\
+    cutout2 = cq.Workplane("XZ").workplane(offset=-body_corner_y, centerOption="CenterOfMass")\
         .moveTo(body_corner_x+body_front_cutout_from_side,
                 body_height-body_front_cutout_from_top)\
         .vLine(-body_front_cutout_height)\
@@ -278,7 +314,7 @@ def generate_straight_body(params):
         .close().extrude(-1,False)
     body = body.cut(cutout2)
 
-    cutout3 = cq.Workplane("XZ").workplane(offset=-body_corner_y)\
+    cutout3 = cq.Workplane("XZ").workplane(offset=-body_corner_y, centerOption="CenterOfMass")\
         .moveTo(body_corner_x+body_length-body_front_cutout_from_side,
               body_height-body_front_cutout_from_top)\
         .vLine(-body_front_cutout_height)\
@@ -291,7 +327,7 @@ def generate_straight_body(params):
     bottom_cutout_depth = 0.2
     bottom_cutout_platou_len = 1
     bottom_cutout_platou_depth = 0.1
-    bottom_cutout = cq.Workplane("YZ").workplane(offset=-bottom_cutout_width/2)\
+    bottom_cutout = cq.Workplane("YZ").workplane(offset=-bottom_cutout_width/2, centerOption="CenterOfMass")\
         .moveTo(body_corner_y, 0).vLine(bottom_cutout_depth)\
         .lineTo(-bottom_cutout_platou_len/2.0,
               bottom_cutout_platou_depth)\
@@ -307,7 +343,7 @@ def generate_straight_body(params):
     body_back_prodrucion_depth = 0.3
 
     body_back_prodrucion = cq.Workplane("XY")\
-        .workplane(offset=body_height-body_plug_depth)\
+        .workplane(offset=body_height-body_plug_depth, centerOption="CenterOfMass")\
         .moveTo(pin_pitch/2.0,
                 body_corner_y + body_width -
                 body_back_width - body_back_prodrucion_depth/2.0)\
@@ -319,33 +355,36 @@ def generate_straight_body(params):
     body_pin1_prodrucion_depth = 0.05
     body_pin1_prodrucion_width = 0.5
     body_pin1_prodrucion = cq.Workplane("XY")\
-        .workplane(offset = body_height-body_front_cutout_from_top)\
+        .workplane(offset = body_height-body_front_cutout_from_top, centerOption="CenterOfMass")\
         .moveTo(body_corner_x + body_length -
                 body_front_cutout_width - body_pin1_prodrucion_width/2.0,
                 body_corner_y - body_pin1_prodrucion_depth/2.0)\
                 .rect(body_pin1_prodrucion_width, body_pin1_prodrucion_depth)\
                 .extrude(body_front_cutout_from_top)
     body = body.union(body_pin1_prodrucion)
+    body = body.translate((0,-body_width / 3.0 - body_side_width,0))
 
     return body
     #return bottom_cutout
 
-def generate_part(params):
-    pins = generate_pins(params)
-    body = generate_body(params)
-    body_lenght=params.body_length
-    #made an error, need to rotate it by 180 degree
-    center_x=body_corner_x+body_lenght/2
-    pins = pins.rotate((center_x,0,0),(0,0,1),180)
-    body = body.rotate((center_x,0,0),(0,0,1),180)
-    return (body, pins)
+# def generate_part(params):
+#     pins = generate_pins(params)
+#     body = generate_body(params)
+#     body_length=params['body_length']
+#     body_corner_x = params['body_corner_x']
+
+#     #made an error, need to rotate it by 180 degree
+#     center_x=body_corner_x+body_length/2
+#     pins = pins.rotate((center_x,0,0),(0,0,1),180)
+#     body = body.rotate((center_x,0,0),(0,0,1),180)
+#     return (body, pins)
 
 
 #opend from within freecad
-if "module" in __name__ :
-    #params=series_params.variant_params['top_entry']['param_generator'](3)
-    params=series_params.variant_params['side_entry']['param_generator'](3)
+# if "module" in __name__ :
+#     #params=series_params.variant_params['top_entry']['param_generator'](3)
+#     params=series_params.variant_params['side_entry']['param_generator'](3)
 
-    (body, pins) = generate_part(params)
-    show(pins)
-    show(body)
+#     (body, pins) = generate_part(params)
+#     show(pins)
+#     show(body)

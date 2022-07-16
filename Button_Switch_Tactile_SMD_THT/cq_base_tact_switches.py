@@ -47,31 +47,31 @@
 import operator
 
 import cadquery as cq
-from Helpers import show
+#from Helpers import show
 
-import FreeCAD, Draft, FreeCADGui
-import ImportGui
-import FreeCADGui as Gui
+#import FreeCAD, Draft, FreeCADGui
+#import ImportGui
+#import FreeCADGui as Gui
 
-import shaderColors
-import exportPartToVRML as expVRML
+#import shaderColors
+#import exportPartToVRML as expVRML
 
 # Import cad_tools
-import cq_cad_tools
+#import cq_cad_tools
 # Reload tools
-from cq_cad_tools import reload_lib
-reload_lib(cq_cad_tools)
+#from cq_cad_tools import reload_lib
+#reload_lib(cq_cad_tools)
 # Explicitly load all needed functions
-from cq_cad_tools import FuseObjs_wColors, GetListOfObjects, z_RotateObject, Color_Objects, restore_Main_Tools, exportSTEP, saveFCdoc
+#from cq_cad_tools import FuseObjs_wColors, GetListOfObjects, z_RotateObject, Color_Objects, restore_Main_Tools, exportSTEP, saveFCdoc
 
-import cq_parameters  # modules parameters
-from cq_parameters import ShapeOfTerminal, ButtonType, partParamsTactSwitches, ButtonRing
+#import cq_parameters  # modules parameters
+from .cq_parameters import ShapeOfTerminal, ButtonType, partParamsTactSwitches, ButtonRing
 
-import collections
 from collections import namedtuple
+from collections.abc import Mapping
 
 
-from  cq_base_model import PartBase, Polyline  # modules parameters
+from  .cq_base_model import PartBase, Polyline  # modules parameters
 
 class TactSwitchSeries:
     r"""A class for holding Omron tactile switch series
@@ -142,23 +142,23 @@ class cqMakerTactSwitch (PartBase, partParamsTactSwitches):
     def __init__(self, parameter):
         PartBase.__init__(self, parameter)
         partParamsTactSwitches.__init__(self, parameter)
-        
+
         # get all entries of the params list as dictionary
-        args = parameter._asdict()
-            
-        self.serie = parameter.serie                                                                                                # The component serie
-        self.destination_dir = parameter.destination_dir if parameter.destination_dir != None else  'Button_Switch_SMD.3dshapes' 
-        self.button_type = parameter.button_type if parameter.button_type != None else ButtonType.FLAT                              # Type of button from class ButtonType
-        self.with_gnd_pin = parameter.with_gnd_pin if parameter.with_gnd_pin != None else False                                     # boolean: True if Ground Terminal is present
-        self.cover_color_key = parameter.cover_color_key if parameter.cover_color_key != None else 'metal grey pins' 	            # Cover color
-        self.body_color_key = parameter.body_color_key if parameter.body_color_key != None else 'black body'	                    # Body colour
-        self.button_color_key = parameter.button_color_key if parameter.button_color_key != None else 'black body'                  # botton color
-        self.pin_color_key = parameter.pin_color_key if parameter.pin_color_key != None else 'metal grey pins'	                    # Pin color
-        self.gnd_pin_tip_to_center = parameter.gnd_pin_tip_to_center if parameter.gnd_pin_tip_to_center != None else 4.0            # pos of GND pin rel. to center of body, measured to tip of pin
-        self.no_gnd_pins = parameter.no_gnd_pins if parameter.no_gnd_pins != None else 1                                            # number of groung pins (1 or 2); default: 1                   
-        self.offset_gnd_pin = parameter.offset_gnd_pin if parameter.offset_gnd_pin != None else 0.0                                 # offset of ground pin to middle of housing; default: 0.0                            
-        self.gnd_pin_width = parameter.gnd_pin_width if parameter.gnd_pin_width != None else self.pin_width                                 # offset of ground pin to middle of housing; default: 0.0                            
-        
+        args = parameter #._asdict()
+
+        self.serie = parameter['serie']                                                                                                   # The component serie
+        self.destination_dir = parameter['destination_dir'] if parameter['destination_dir'] != None else  'Button_Switch_SMD.3dshapes' 
+        self.button_type = parameter['button_type'] if parameter['button_type'] != None else ButtonType.FLAT                              # Type of button from class ButtonType
+        self.with_gnd_pin = parameter['with_gnd_pin'] if parameter['with_gnd_pin'] != None else False                                     # boolean: True if Ground Terminal is present
+        self.cover_color_key = parameter['cover_color_key'] if parameter['cover_color_key'] != None else 'metal grey pins' 	          # Cover color
+        self.body_color_key = parameter['body_color_key'] if parameter['body_color_key'] != None else 'black body'	                  # Body colour
+        self.button_color_key = parameter['button_color_key'] if parameter['button_color_key'] != None else 'black body'                  # botton color
+        self.pin_color_key = parameter['pins_color_key'] if parameter['pins_color_key'] != None else 'metal grey pins'	                  # Pin color
+        self.gnd_pin_tip_to_center = parameter['gnd_pin_tip_to_center'] if parameter['gnd_pin_tip_to_center'] != None else 4.0            # pos of GND pin rel. to center of body, measured to tip of pin
+        self.no_gnd_pins = parameter['no_gnd_pins'] if parameter['no_gnd_pins'] != None else 1                                            # number of groung pins (1 or 2); default: 1
+        self.offset_gnd_pin = parameter['offset_gnd_pin'] if parameter['offset_gnd_pin'] != None else 0.0                                 # offset of ground pin to middle of housing; default: 0.0
+        self.gnd_pin_width = parameter['gnd_pin_width'] if parameter['gnd_pin_width'] != None else self.pin_width                         # offset of ground pin to middle of housing; default: 0.0
+
         # Default parameter
         self.cover_plate_with_pin_side_sheets = False
         self.pin_gw_angle = 80.0        
@@ -176,12 +176,12 @@ class cqMakerTactSwitch (PartBase, partParamsTactSwitches):
         # Call of function defining dimensions depending on the serie of terminals
         paramFunction = self._serieSwitcher.get(self.serie, None)
         if paramFunction == None:     # not a valid terminal_shape
-            FreeCAD.Console.PrintMessage(str(self.serie) + ' not a valid member of ' + str(TactSwitchSeries))
+            print(str(self.serie) + ' not a valid member of ' + str(TactSwitchSeries))
             self.make_me = False
         else:  # Call the funktion
             paramFunction (self)
-        
-        
+
+
     def _paramsForB3F (self):
         r"""set the reqired dimensions for tactile switch serie Omron B3F
 
@@ -1119,9 +1119,9 @@ class partsTactSwitches ():
     ##enabling optional/default values to None
     def namedtuple_with_defaults(typename, field_names, default_values=()):
 
-        T = collections.namedtuple(typename, field_names)
+        T = namedtuple(typename, field_names)
         T.__new__.__defaults__ = (None,) * len(T._fields)
-        if isinstance(default_values, collections.Mapping):
+        if isinstance(default_values, Mapping):
             prototype = T(**default_values)
         else:
             prototype = T(*default_values)
@@ -1153,11 +1153,11 @@ class partsTactSwitches ():
         'button_ring_width',        # width of octacon button ring, default 3.7
         'button_ring_length',       # length of octagon button ring, default 3.7 
         'with_gnd_pin',             # boolean: True if Ground Terminal is present, default False 
-        'gnd_pin_tip_to_center',    # outer Pin tip (pin center for THT) of GND pin to center of body, default 4.0 
+        'gnd_pin_tip_to_center',    # outer Pin tip (pin center for THT) of GND pin to center of body, default 4.0
         'no_gnd_pins',              # number of groung pins (1 or 2); default: 1
         'offset_gnd_pin',           # offset of ground pin to middle of housing; default: 0.0
         'gnd_pin_width',            # width of ground pin; default: pin_width
-        'serie',			        # The component serie, must be defined, no default value 
+        'serie',			        # The component serie, must be defined, no default value
         'cover_color_key',	        # Cover color, default 'metal grey pins'
         'body_color_key',	        # Body colour, default 'black body'
         'button_color_key',         # botton color, default 'black body'
@@ -1838,4 +1838,3 @@ class partsTactSwitches ():
     }
 
 
-                

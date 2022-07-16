@@ -46,9 +46,13 @@
 #****************************************************************************
 
 
-import cq_parameters  # modules parameters
-from cq_parameters import *
+# import cq_parameters  # modules parameters
+# from cq_parameters import *
 
+import cadquery as cq
+
+from collections import namedtuple
+from collections.abc import Mapping
 
 class cq_parameters_StarMicronics_HMB_06_HMB_12():
 
@@ -56,74 +60,74 @@ class cq_parameters_StarMicronics_HMB_06_HMB_12():
         x = 0
 
         
-    def get_dest_3D_dir(self):
-        return 'Buzzer_Beeper.3dshapes'
+    # def get_dest_3D_dir(self):
+    #     return 'Buzzer_Beeper.3dshapes'
 
-    def model_exist(self, modelName):
-        for n in self.all_params:
-            if n == modelName:
-                return True
+    # def model_exist(self, modelName):
+    #     for n in self.all_params:
+    #         if n == modelName:
+    #             return True
                 
-        return False
+    #     return False
         
         
-    def get_list_all(self):
-        list = []
-        for n in self.all_params:
-            list.append(n)
+    # def get_list_all(self):
+    #     list = []
+    #     for n in self.all_params:
+    #         list.append(n)
         
-        return list
+    #     return list
 
         
-    def make_3D_model(self, modelName):
+    # def make_3D_model(self, modelName):
 
         
-        destination_dir = self.get_dest_3D_dir()
+    #     destination_dir = self.get_dest_3D_dir()
         
-        case = self.make_case(self.all_params[modelName])
-        pins = self.make_pins(self.all_params[modelName])
-        show(case)
-        show(pins)
+    #     case = self.make_case(self.all_params[modelName])
+    #     pins = self.make_pins(self.all_params[modelName])
+    #     show(case)
+    #     show(pins)
      
-        doc = FreeCAD.ActiveDocument
-        objs=GetListOfObjects(FreeCAD, doc)
+    #     doc = FreeCAD.ActiveDocument
+    #     objs=GetListOfObjects(FreeCAD, doc)
      
-        body_color_key = self.all_params[modelName].body_color_key
-        pin_color_key = self.all_params[modelName].pin_color_key
+    #     body_color_key = self.all_params[modelName].body_color_key
+    #     pin_color_key = self.all_params[modelName].pin_color_key
 
-        body_color = shaderColors.named_colors[body_color_key].getDiffuseFloat()
-        pin_color = shaderColors.named_colors[pin_color_key].getDiffuseFloat()
+    #     body_color = shaderColors.named_colors[body_color_key].getDiffuseFloat()
+    #     pin_color = shaderColors.named_colors[pin_color_key].getDiffuseFloat()
 
-        Color_Objects(Gui,objs[0],body_color)
-        Color_Objects(Gui,objs[1],pin_color)
+    #     Color_Objects(Gui,objs[0],body_color)
+    #     Color_Objects(Gui,objs[1],pin_color)
 
-        col_body=Gui.ActiveDocument.getObject(objs[0].Name).DiffuseColor[0]
-        col_pin=Gui.ActiveDocument.getObject(objs[1].Name).DiffuseColor[0]
+    #     col_body=Gui.ActiveDocument.getObject(objs[0].Name).DiffuseColor[0]
+    #     col_pin=Gui.ActiveDocument.getObject(objs[1].Name).DiffuseColor[0]
         
-        material_substitutions={
-            col_body[:-1]:body_color_key,
-            col_pin[:-1]:pin_color_key,
-        }
+    #     material_substitutions={
+    #         col_body[:-1]:body_color_key,
+    #         col_pin[:-1]:pin_color_key,
+    #     }
         
-        expVRML.say(material_substitutions)
-        while len(objs) > 1:
-                FuseObjs_wColors(FreeCAD, FreeCADGui, doc.Name, objs[0].Name, objs[1].Name)
-                del objs
-                objs = GetListOfObjects(FreeCAD, doc)
+    #     expVRML.say(material_substitutions)
+    #     while len(objs) > 1:
+    #             FuseObjs_wColors(FreeCAD, FreeCADGui, doc.Name, objs[0].Name, objs[1].Name)
+    #             del objs
+    #             objs = GetListOfObjects(FreeCAD, doc)
 
-        return material_substitutions
+    #     return material_substitutions
 
 
     def make_case(self, params):
 
-        D = params.D                # package length
-        E = params.E                # body overall width
-        H = params.H                # body overall height
-        A1 = params.A1              # package height
-        pin = params.pin            # Pins
-        npthhole = params.npthhole  # NPTH hole diameter
-        rotation = params.rotation  # Rotation if required
-        center = params.center      # Body center
+        D = params['D']                # package length
+        E = params['E']                # body overall width
+        H = params['H']                # body overall height
+        A1 = params['A1']              # package height
+        pin = params['pin']            # Pins
+        npthhole = params['npthhole']  # NPTH hole diameter
+        rotation = params['rotation']  # Rotation if required
+        center = params['center']      # Body center
         
         #
         #
@@ -172,14 +176,14 @@ class cq_parameters_StarMicronics_HMB_06_HMB_12():
         
     def make_pins(self, params):
 
-        D = params.D                # package length
-        H = params.H                # body overall height
-        A1 = params.A1              # Body seperation height
-        b = params.b                # pin diameter or pad size
-        ph = params.ph              # pin length
-        rotation = params.rotation  # rotation if required
-        pin = params.pin            # pin/pad cordinates
-        center = params.center      # Body center
+        D = params['D']                # package length
+        H = params['H']                # body overall height
+        A1 = params['A1']              # Body seperation height
+        b = params['b']                # pin diameter or pad size
+        ph = params['ph']              # pin length
+        rotation = params['rotation']  # rotation if required
+        pin = params['pin']            # pin/pad cordinates
+        center = params['center']      # Body center
         
         p = pin[0]
         pins = cq.Workplane("XY").workplane(offset=A1 + 1.0).moveTo(p[0], -p[1]).circle(b / 2.0, False).extrude(0 - (ph + A1 + 1.0))
@@ -200,9 +204,9 @@ class cq_parameters_StarMicronics_HMB_06_HMB_12():
     ##enabling optional/default values to None
     def namedtuple_with_defaults(typename, field_names, default_values=()):
 
-        T = collections.namedtuple(typename, field_names)
+        T = namedtuple(typename, field_names)
         T.__new__.__defaults__ = (None,) * len(T._fields)
-        if isinstance(default_values, collections.Mapping):
+        if isinstance(default_values, Mapping):
             prototype = T(**default_values)
         else:
             prototype = T(*default_values)
@@ -228,29 +232,29 @@ class cq_parameters_StarMicronics_HMB_06_HMB_12():
 
 
 
-    all_params = {
+    # all_params = {
 
-        'MagneticBuzzer_StarMicronics_HMB-06_HMB-12': Params(
-            #
-            # Valve
-            # This model have been auto generated based on the foot print file
-            # A number of parameters have been fixed or guessed, such as A2
-            # 
-            # The foot print that uses this 3D model is MagneticBuzzer_StarMicronics_HMB-06_HMB-12.kicad_mod
-            # 
-            modelName = 'MagneticBuzzer_StarMicronics_HMB-06_HMB-12',   # modelName
-            D = 16.00,                  # Body width/diameter
-            H = 14.00,                  # Body height
-            A1 = 0.03,                  # Body-board separation
-            b = 0.70,                   # Pin diameter
-            center = (3.81, 0.00),      # Body center
-            npthhole = 3.2,             # NPTH hole diameter
-            ph = 6.0,                   # Pin length
-            pin = [(0.0, 0.0), (7.61, 0.00)],   # Pins
-            body_color_key = 'black body',      # Body color
-            pin_color_key = 'metal grey pins',  # Pin color
-            rotation = 0,                       # Rotation if required
-            dest_dir_prefix = '../Buzzer_Beeper.3dshapes',      # destination directory
-            ),
-    }
+    #     'MagneticBuzzer_StarMicronics_HMB-06_HMB-12': Params(
+    #         #
+    #         # Valve
+    #         # This model have been auto generated based on the foot print file
+    #         # A number of parameters have been fixed or guessed, such as A2
+    #         # 
+    #         # The foot print that uses this 3D model is MagneticBuzzer_StarMicronics_HMB-06_HMB-12.kicad_mod
+    #         # 
+    #         modelName = 'MagneticBuzzer_StarMicronics_HMB-06_HMB-12',   # modelName
+    #         D = 16.00,                  # Body width/diameter
+    #         H = 14.00,                  # Body height
+    #         A1 = 0.03,                  # Body-board separation
+    #         b = 0.70,                   # Pin diameter
+    #         center = (3.81, 0.00),      # Body center
+    #         npthhole = 3.2,             # NPTH hole diameter
+    #         ph = 6.0,                   # Pin length
+    #         pin = [(0.0, 0.0), (7.61, 0.00)],   # Pins
+    #         body_color_key = 'black body',      # Body color
+    #         pin_color_key = 'metal grey pins',  # Pin color
+    #         rotation = 0,                       # Rotation if required
+    #         dest_dir_prefix = '../Buzzer_Beeper.3dshapes',      # destination directory
+    #         ),
+    # }
         

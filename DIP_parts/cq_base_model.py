@@ -38,7 +38,7 @@
 #
 
 import cadquery as cq
-import FreeCAD
+# import FreeCAD
 
 from math import sin, tan, radians
 
@@ -359,22 +359,22 @@ class PartBase (object):
         self.rotation = 0
         self.make_me = True
 
-        args = params._asdict()
+        # args = params._asdict()
 
-        self.type = params.type if 'type' in args else "SMD"
+        self.type = params['type'] if 'type' in params else "SMD"
 
-        self.pin_width = params.pin_width if 'pin_width' in args else 0.4
-        self.pin_thickness = params.pin_thickness if 'pin_thickness' in args else 0.2
-        self.pin_length = params.pin_length if 'pin_length' in args else 3.2
-        self.pin_pitch = params.pin_pitch if 'pin_pitch' in args else 2.54
-        self.num_pins = params.num_pins if 'num_pins' in args else 2
-        self.num_pin_rows = params.num_pin_rows if 'num_pin_rows' in args else 2
-        self.pin_rows_distance = params.pin_rows_distance if 'pin_rows_distance' in args else self.pin_pitch
+        self.pin_width = params['pin_width'] if 'pin_width' in params else 0.4
+        self.pin_thickness = params['pin_thickness'] if 'pin_thickness' in params else 0.2
+        self.pin_length = params['pin_length'] if 'pin_length' in params else 3.2
+        self.pin_pitch = params['pin_pitch'] if 'pin_pitch' in params else 2.54
+        self.num_pins = params['num_pins'] if 'num_pins' in params else 2
+        self.num_pin_rows = params['num_pin_rows'] if 'num_pin_rows' in params else 2
+        self.pin_rows_distance = params['pin_rows_distance'] if 'pin_rows_distance' in params else self.pin_pitch
 
-        self.body_width = params.body_width if 'body_width' in args else 5.08
-        self.body_length = params.body_length if 'body_length' in args else 5.08
-        self.body_height = params.body_height if 'body_height' in args else 5.08
-        self.body_board_distance = params.body_board_distance if 'body_board_distance' in args else 0.0
+        self.body_width = params['body_width'] if 'body_width' in params else 5.08
+        self.body_length = params['body_length'] if 'body_length' in params else 5.08
+        self.body_height = params['body_height'] if 'body_height' in params else 5.08
+        self.body_board_distance = params['body_board_distance'] if 'body_board_distance' in params else 0.0
 
 
         # self.type = kwargs.get('type', "SMD")
@@ -398,7 +398,7 @@ class PartBase (object):
         self.color_keys = ["black body", "metal grey pins"]
 
     def say (self, msg):
-        FreeCAD.Console.PrintMessage("##: " + str(msg) + '\n')
+        print("##: " + str(msg) + '\n')
 
     def _union_all(self, objects):
         o = objects[0]
@@ -415,7 +415,7 @@ class PartBase (object):
             pitch = self.pin_pitch
 
         objs = [obj]
-        for i in range(2, pins + 1):
+        for i in range(2, int(pins) + 1):
             objs.append(obj.translate((-pitch * (i - 1), 0, 0)))
 
         return self._union_all(objs)
@@ -457,10 +457,10 @@ class PartBase (object):
 
         return cq.Workplane(cq.Plane.XY())\
                  .rect(D_b, E1_b)\
-                 .workplane(offset=A2_b).rect(self.body_length, self.body_width)\
-                 .workplane(offset=pin_area_height).rect(self.body_length, self.body_width)\
+                 .workplane(centerOption="CenterOfMass", offset=A2_b).rect(self.body_length, self.body_width)\
+                 .workplane(centerOption="CenterOfMass", offset=pin_area_height).rect(self.body_length, self.body_width)\
                  .rect(D_t1, E1_t1)\
-                 .workplane(offset=A2_t).rect(D_t2, E1_t2).loft(ruled=True)
+                 .workplane(centerOption="CenterOfMass", offset=A2_t).rect(D_t2, E1_t2).loft(ruled=True)
 
     def _make_straight_pin(self, pin_height=None, style='Rectangular'):
         """ create straight pin
@@ -480,7 +480,7 @@ class PartBase (object):
         if pin_height is None:
             pin_height = self.pin_length + self.body_board_distance
 
-        return Polyline(cq.Workplane("XZ").workplane(offset=-self.pin_thickness / 2.0))\
+        return Polyline(cq.Workplane("XZ").workplane(centerOption="CenterOfMass", offset=-self.pin_thickness / 2.0))\
                           .addPoints([
                                 (self.pin_width / 2.0, 0.0),
                                 (0.0, -(pin_height - self.pin_width)),
@@ -515,7 +515,7 @@ class PartBase (object):
         r_lower_o = r_lower_i + self.pin_thickness # pin lower corner, outer radius
 
         if style == 'SMD': # make a horizontal pin
-            pin = Polyline(cq.Workplane("XY").workplane(offset=-r_lower_o), origin=(0.0, r_lower_o))\
+            pin = Polyline(cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=-r_lower_o), origin=(0.0, r_lower_o))\
                              .addMoveTo(-self.pin_width / 2.0, 0.0)\
                              .addPoint(d, self.pin_length - d)\
                              .addThreePointArc((self.pin_width / 2.0 - d, d), (self.pin_width - d * 2.0, 0.0))\
@@ -527,7 +527,7 @@ class PartBase (object):
                       .translate((0, r_lower_o, - self.pin_thickness))
 
         # make the arc joining the pin segments
-        arc = Polyline(cq.Workplane("YZ").workplane(offset=-self.pin_width / 2.0))\
+        arc = Polyline(cq.Workplane("YZ").workplane(centerOption="CenterOfMass", offset=-self.pin_width / 2.0))\
                          .addArc(r_lower_o, -90, 1)\
                          .addPoint(0, self.pin_thickness)\
                          .addArc(-r_lower_i, -90).make().extrude(self.pin_width)
@@ -536,7 +536,7 @@ class PartBase (object):
 
         if(round(top_length, 6) != 0.0):
             pin = pin.union(cq.Workplane("XZ")\
-                     .workplane(offset=-self.pin_thickness / 2)\
+                     .workplane(centerOption="CenterOfMass", offset=-self.pin_thickness / 2)\
                      .moveTo(self.pin_width / 2.0, r_lower_o-(top_length + r_lower_o))\
                      .line(0, top_length)\
                      .line(-self.pin_width, 0)\
@@ -544,7 +544,7 @@ class PartBase (object):
                      .close().extrude(self.pin_thickness))
         elif (round(top_extension, 6) != 0.0):
             pin = pin.union(cq.Workplane("XZ")\
-                     .workplane(offset=-self.pin_thickness / 2)\
+                     .workplane(centerOption="CenterOfMass", offset=-self.pin_thickness / 2)\
                      .moveTo(self.pin_width / 2.0, 0.0)\
                      .line(0.0, top_extension)\
                      .line(-self.pin_width, 0.0)\

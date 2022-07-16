@@ -12,7 +12,7 @@
 
 
 import cadquery as cq
-from Helpers import show
+# from Helpers import show
 import numpy as np
 
 

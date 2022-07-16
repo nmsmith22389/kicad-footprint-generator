@@ -10,59 +10,61 @@
 
 ## file of parametric definitions
 
-import collections
-from collections import namedtuple
+# import collections
+# from collections import namedtuple
 
 import math
 
-import FreeCAD, Draft, FreeCADGui
-import ImportGui
-import FreeCADGui as Gui
+import cadquery as cq
 
-import shaderColors
-import exportPartToVRML as expVRML
+# import FreeCAD, Draft, FreeCADGui
+# import ImportGui
+# import FreeCADGui as Gui
+
+# import shaderColors
+# import exportPartToVRML as expVRML
 
 ## base parametes & model
-import collections
-from collections import namedtuple
+# import collections
+# from collections import namedtuple
 
 # Import cad_tools
-import cq_cad_tools
-# Reload tools
-reload(cq_cad_tools)
-# Explicitly load all needed functions
-from cq_cad_tools import FuseObjs_wColors, GetListOfObjects, restore_Main_Tools, \
- exportSTEP, close_CQ_Example, exportVRML, saveFCdoc, z_RotateObject, Color_Objects, \
- CutObjs_wColors, checkRequirements
+# import cq_cad_tools
+# # Reload tools
+# reload(cq_cad_tools)
+# # Explicitly load all needed functions
+# from cq_cad_tools import FuseObjs_wColors, GetListOfObjects, restore_Main_Tools, \
+#  exportSTEP, close_CQ_Example, exportVRML, saveFCdoc, z_RotateObject, Color_Objects, \
+#  CutObjs_wColors, checkRequirements
 
 # Sphinx workaround #1
-try:
-    QtGui
-except NameError:
-    QtGui = None
+# try:
+#     QtGui
+# except NameError:
+#     QtGui = None
 #
 
-try:
-    # Gui.SendMsgToActiveView("Run")
-#    from Gui.Command import *
-    Gui.activateWorkbench("CadQueryWorkbench")
-    import cadquery
-    cq = cadquery
-    from Helpers import show
-    # CadQuery Gui
-except: # catch *all* exceptions
-    msg = "missing CadQuery 0.3.0 or later Module!\r\n\r\n"
-    msg += "https://github.com/jmwright/cadquery-freecad-module/wiki\n"
-    if QtGui is not None:
-        reply = QtGui.QMessageBox.information(None,"Info ...",msg)
+# try:
+#     # Gui.SendMsgToActiveView("Run")
+# #    from Gui.Command import *
+#     Gui.activateWorkbench("CadQueryWorkbench")
+#     import cadquery
+#     cq = cadquery
+#     from Helpers import show
+#     # CadQuery Gui
+# except: # catch *all* exceptions
+#     msg = "missing CadQuery 0.3.0 or later Module!\r\n\r\n"
+#     msg += "https://github.com/jmwright/cadquery-freecad-module/wiki\n"
+#     if QtGui is not None:
+#         reply = QtGui.QMessageBox.information(None,"Info ...",msg)
     # maui end
 
 #checking requirements
 
-try:
-    close_CQ_Example(FreeCAD, Gui)
-except: # catch *all* exceptions
-    print "CQ 030 doesn't open example file"
+# try:
+#     close_CQ_Example(FreeCAD, Gui)
+# except: # catch *all* exceptions
+#     print "CQ 030 doesn't open example file"
 
 
 class cq_parameters_help():
@@ -76,13 +78,13 @@ class cq_parameters_help():
         if pin_type[0] == 'round':
             x1 = (h * math.sin(alpha)) + origo_x
             y1 = (h * math.cos(alpha)) - origo_y
-            pins = cq.Workplane("XY").workplane(offset=A1 + 0.1).moveTo(x1, y1).circle(pin_type[1] / 2.0, False).extrude(0 - (0.1 + pin_type[2]))
+            pins = cq.Workplane("XY").workplane(offset=A1 + 0.1, centerOption="CenterOfMass").moveTo(x1, y1).circle(pin_type[1] / 2.0, False).extrude(0 - (0.1 + pin_type[2]))
             pins = pins.faces("<Z").fillet(pin_type[1] / 5.0)
             alpha = alpha + alpha_delta
             for i in range(1, pin_number):
                 x1 = (h * math.sin(alpha)) + origo_x
                 y1 = (h * math.cos(alpha)) - origo_y
-                pint = cq.Workplane("XY").workplane(offset=A1 + 0.1).moveTo(x1, y1).circle(pin_type[1] / 2.0, False).extrude(0 - (0.1 + pin_type[2]))
+                pint = cq.Workplane("XY").workplane(offset=A1 + 0.1, centerOption="CenterOfMass").moveTo(x1, y1).circle(pin_type[1] / 2.0, False).extrude(0 - (0.1 + pin_type[2]))
                 pint = pint.faces("<Z").fillet(pin_type[1] / 5.0)
                 pins = pins.union(pint)
                 alpha = alpha + alpha_delta
@@ -107,10 +109,10 @@ class cq_parameters_help():
             
 
             pts = [(x1, y1), (x2, y2), (x3, y3), (x4, y4), (0 - x4, y4), (0 - x3, y3), (0 - x2, y2), (0 - x1, y1), (x1, y1)]
-            pins = cq.Workplane("XZ").workplane(offset=0 - (pin_type[2] / 2.0)).polyline(pts).close().extrude(pin_type[2])
-            pins = pins.faces("<Z").edges("<X").fillet(pin_type[6] / 2.3)
-            pins = pins.faces("<Z").edges(">X").fillet(pin_type[6] / 2.3)
-            pint = cq.Workplane("XY").workplane(offset=A1).moveTo(0, 0 - (2.0 - (pin_type[2] / 2.0))).rect(pin_type[4], 4.0).extrude(pin_type[2])
+            pins = cq.Workplane("XZ").workplane(offset=0 - (pin_type[2] / 2.0), centerOption="CenterOfMass").polyline(pts, includeCurrent=True).close().extrude(pin_type[2])
+            # pins = pins.faces("<Z").edges("<X").fillet(pin_type[6] / 2.3)
+            # pins = pins.faces("<Z").edges(">X").fillet(pin_type[6] / 2.3)
+            pint = cq.Workplane("XY").workplane(offset=A1, centerOption="CenterOfMass").moveTo(0, 0 - (2.0 - (pin_type[2] / 2.0))).rect(pin_type[4], 4.0).extrude(pin_type[2])
             pint = pint.faces(">Y").edges(">Z").fillet(pin_type[2] / 1.5)
             pins = pins.union(pint)
             pins = pins.rotate((0,0,0), (0,0,1), 360 - (alpha * (180.0 / math.pi)))
@@ -121,10 +123,10 @@ class cq_parameters_help():
                 xx = (h * math.sin(alpha)) + origo_x
                 yy = (h * math.cos(alpha)) - origo_y
 
-                pine = cq.Workplane("XZ").workplane(offset=0 - (pin_type[2] / 2.0)).polyline(pts).close().extrude(pin_type[2])
-                pine = pine.faces("<Z").edges("<X").fillet(pin_type[6] / 2.3)
-                pine = pine.faces("<Z").edges(">X").fillet(pin_type[6] / 2.3)
-                pinr = cq.Workplane("XY").workplane(offset=A1).moveTo(0, 0 - (2.0 - (pin_type[2] / 2.0))).rect(pin_type[4], 4.0).extrude(pin_type[2])
+                pine = cq.Workplane("XZ").workplane(offset=0 - (pin_type[2] / 2.0), centerOption="CenterOfMass").polyline(pts, includeCurrent=True).close().extrude(pin_type[2])
+                # pine = pine.faces("<Z").edges("<X").fillet(pin_type[6] / 2.3)
+                # pine = pine.faces("<Z").edges(">X").fillet(pin_type[6] / 2.3)
+                pinr = cq.Workplane("XY").workplane(offset=A1, centerOption="CenterOfMass").moveTo(0, 0 - (2.0 - (pin_type[2] / 2.0))).rect(pin_type[4], 4.0).extrude(pin_type[2])
                 pinr = pinr.faces(">Y").edges(">Z").fillet(pin_type[2] / 1.5)
                 pine = pine.union(pint)
                 pine = pine.rotate((0,0,0), (0,0,1), 360 - (alpha * (180.0 / math.pi)))
@@ -135,7 +137,7 @@ class cq_parameters_help():
                 
         if center_pin != None:
             if center_pin[0] == 'metal':
-                pint = cq.Workplane("XY").workplane(offset=A1 + 0.1).moveTo(origo_x, 0 - origo_y).circle(center_pin[1] / 2.0, False).extrude(0 - (0.1 + center_pin[2]))
+                pint = cq.Workplane("XY").workplane(offset=A1 + 0.1, centerOption="CenterOfMass").moveTo(origo_x, 0 - origo_y).circle(center_pin[1] / 2.0, False).extrude(0 - (0.1 + center_pin[2]))
                 pint = pint.faces("<Z").fillet(pin_type[1] / 5.0)
                 pins  = pins.union(pint)
         
@@ -158,7 +160,7 @@ class cq_parameters_help():
         s_h = sadle_shield[1]
         #
         th = 0.1
-        case = cq.Workplane("XY").workplane(offset=A1 + sadle_z).moveTo(0, 0).circle(s_d / 2.0, False).extrude(s_h)
+        case = cq.Workplane("XY").workplane(offset=A1 + sadle_z, centerOption="CenterOfMass").moveTo(0, 0).circle(s_d / 2.0, False).extrude(s_h)
         case = case.faces(">Z").shell(0.1)
     #    case1 = case1.faces(">Z").fillet(th / 2.1)
         case = case.translate((origo_x, 0.0 - origo_y, 0.0))
@@ -182,17 +184,17 @@ class cq_parameters_help():
         sadle_h = 0.2
         #
         # 
-        case2 = cq.Workplane("XY").workplane(offset=A1 + sadle_z).moveTo(0, 0).circle(sadle_r1, False).extrude(sadle_h)
+        case2 = cq.Workplane("XY").workplane(offset=A1 + sadle_z, centerOption="CenterOfMass").moveTo(0, 0).circle(sadle_r1, False).extrude(sadle_h)
         #
-        case21 = cq.Workplane("XY").workplane(offset=A1 + sadle_z).moveTo(sadle_x, 0).circle(sadle_r2, False).extrude(sadle_h)
+        case21 = cq.Workplane("XY").workplane(offset=A1 + sadle_z, centerOption="CenterOfMass").moveTo(sadle_x, 0).circle(sadle_r2, False).extrude(sadle_h)
         case2 = case2.union(case21)
         #
-        case21 = cq.Workplane("XY").workplane(offset=A1 + sadle_z).moveTo(0 - sadle_x, 0).circle(sadle_r2, False).extrude(sadle_h)
+        case21 = cq.Workplane("XY").workplane(offset=A1 + sadle_z, centerOption="CenterOfMass").moveTo(0 - sadle_x, 0).circle(sadle_r2, False).extrude(sadle_h)
         case2 = case2.union(case21)
         #
         # https://en.wikipedia.org/wiki/Tangent_lines_to_circles
         #
-        x1 = sadle_x;
+        x1 = sadle_x
         y1 = 0.0
         r = sadle_r2
         x2 = 0.0
@@ -210,12 +212,12 @@ class cq_parameters_help():
         #
         tdx = ((x1 + (x1 - x3) - (0 - x4)) / 2.0)
         ttx = tdx + (0 - x4)
-        case21 = cq.Workplane("XY").workplane(offset=A1 + sadle_z).moveTo(ttx, 0).rect(2.0 * tdx, 2.2 * y4).extrude(sadle_h)
+        case21 = cq.Workplane("XY").workplane(offset=A1 + sadle_z, centerOption="CenterOfMass").moveTo(ttx, 0).rect(2.0 * tdx, 2.2 * y4).extrude(sadle_h)
         case2 = case2.union(case21)
         #
         tdx = ((x1 + (x1 - x3) - (0 - x4)) / 2.0)
         ttx = 0 - (tdx + (0 - x4))
-        case21 = cq.Workplane("XY").workplane(offset=A1 + sadle_z).moveTo(ttx, 0).rect(2.0 * tdx, 2.2 * y4).extrude(sadle_h)
+        case21 = cq.Workplane("XY").workplane(offset=A1 + sadle_z, centerOption="CenterOfMass").moveTo(ttx, 0).rect(2.0 * tdx, 2.2 * y4).extrude(sadle_h)
         case2 = case2.union(case21)
         #
         #
@@ -223,7 +225,7 @@ class cq_parameters_help():
         hht = math.sqrt(((x4 - x3)**2) + ((y4 - y3)**2))
         k1 = math.fabs(x4 - x3)
         al = math.asin(k1 / hht)
-        case21 = cq.Workplane("XY").workplane(offset=A1 + sadle_z - 0.2).moveTo(0, 0).rect(2.0 * tdx, 2.2 * y4).extrude(sadle_h)
+        case21 = cq.Workplane("XY").workplane(offset=A1 + sadle_z - 0.2, centerOption="CenterOfMass").moveTo(0, 0).rect(2.0 * tdx, 2.2 * y4).extrude(sadle_h)
     #        case2 = case2.union(case21)
         #
         #
@@ -231,28 +233,28 @@ class cq_parameters_help():
         x5 = x1 + (x1 - x3)
         ddt = 1.0
         #
-        case21 = cq.Workplane("XY").workplane(offset=A1 + sadle_z).moveTo(0, 0).rect(sadle_r1, 2.0 * sadle_r1, centered=False).extrude(sadle_h)
+        case21 = cq.Workplane("XY").workplane(offset=A1 + sadle_z, centerOption="CenterOfMass").moveTo(0, 0).rect(sadle_r1, 2.0 * sadle_r1, centered=False).extrude(sadle_h)
         case21 = case21.rotate((0,0,0), (0,0,1), 90.0 - math.degrees(beta))
         ddtx = ddt * math.cos(90.0 - math.degrees(beta))
         ddty = ddt * math.sin(90.0 - math.degrees(beta))
         case21 = case21.translate((x5, y3, 0.0))
         case2 = case2.cut(case21)
         #
-        case21 = cq.Workplane("XY").workplane(offset=A1 + sadle_z).moveTo(0, 0).rect(2.0 * sadle_r1, sadle_r1, centered=False).extrude(sadle_h)
+        case21 = cq.Workplane("XY").workplane(offset=A1 + sadle_z, centerOption="CenterOfMass").moveTo(0, 0).rect(2.0 * sadle_r1, sadle_r1, centered=False).extrude(sadle_h)
         case21 = case21.rotate((0,0,0), (0,0,1), math.degrees(beta))
         ddtx = ddt * math.cos(math.degrees(beta))
         ddty = ddt * math.sin(math.degrees(beta))
         case21 = case21.translate((0.0 - x5, y3, 0.0))
         case2 = case2.cut(case21)
         #
-        case21 = cq.Workplane("XY").workplane(offset=A1 + sadle_z).moveTo(0.0 - sadle_r1 - 4.0, 0).rect(2.0 * sadle_r1, (0.0 - sadle_r1), centered=False).extrude(sadle_h)
+        case21 = cq.Workplane("XY").workplane(offset=A1 + sadle_z, centerOption="CenterOfMass").moveTo(0.0 - sadle_r1 - 4.0, 0).rect(2.0 * sadle_r1, (0.0 - sadle_r1), centered=False).extrude(sadle_h)
         case21 = case21.rotate((0,0,0), (0,0,1), math.degrees(beta))
         ddtx = ddt * math.cos(math.degrees(beta))
         ddty = ddt * math.sin(math.degrees(beta))
         case21 = case21.translate((x5, 0.0 - y3, 0.0))
         case2 = case2.cut(case21)
         #
-        case21 = cq.Workplane("XY").workplane(offset=A1 + sadle_z).moveTo(0, 0).rect(0.0 - sadle_r1 - 4.0, 2.0 * (0.0 - sadle_r1), centered=False).extrude(sadle_h)
+        case21 = cq.Workplane("XY").workplane(offset=A1 + sadle_z, centerOption="CenterOfMass").moveTo(0, 0).rect(0.0 - sadle_r1 - 4.0, 2.0 * (0.0 - sadle_r1), centered=False).extrude(sadle_h)
         case21 = case21.rotate((0,0,0), (0,0,1), 90.0 - math.degrees(beta))
         ddtx = ddt * math.cos(90.0 - math.degrees(beta))
         ddty = ddt * math.sin(90.0 - math.degrees(beta))
@@ -263,7 +265,7 @@ class cq_parameters_help():
             sh_x = n[0]
             sh_d = n[1]
             
-            case21 = cq.Workplane("XY").workplane(offset=A1 + sadle_z - 0.1).moveTo(sh_x, 0).circle(sh_d / 2.0, False).extrude(sadle_h + 0.2)
+            case21 = cq.Workplane("XY").workplane(offset=A1 + sadle_z - 0.1, centerOption="CenterOfMass").moveTo(sh_x, 0).circle(sh_d / 2.0, False).extrude(sadle_h + 0.2)
             case2 = case2.cut(case21)
         
         case2 = case2.faces(">Z").fillet(sadle_h / 2.1)
@@ -272,7 +274,7 @@ class cq_parameters_help():
         case2 = case2.rotate((0,0,0), (0,0,1), sadle_a)
         case2 = case2.translate((origo_x, 0.0 - origo_y, 0.0))
         
-        case9 = cq.Workplane("XY").workplane(offset=A1 + sadle_z).moveTo(origo_x, 0.0 - origo_y).circle((D / 2.0) + 0.1, False).extrude(sadle_h)
+        case9 = cq.Workplane("XY").workplane(offset=A1 + sadle_z, centerOption="CenterOfMass").moveTo(origo_x, 0.0 - origo_y).circle((D / 2.0) + 0.1, False).extrude(sadle_h)
         case2 = case2.cut(case9)
         
         if (rotation > 0.01):
@@ -286,16 +288,16 @@ class cq_parameters_help():
         
         if pin_spigot != None:
             if pin_spigot[0] == 'round' or pin_spigot[0] == 'tap' :
-                pint = cq.Workplane("XY").workplane(offset=A1 - 0.1).moveTo(origo_x, 0 - origo_y).circle(2.0, False).extrude(H + 0.2)
+                pint = cq.Workplane("XY").workplane(offset=A1 - 0.1, centerOption="CenterOfMass").moveTo(origo_x, 0 - origo_y).circle(2.0, False).extrude(H + 0.2)
                 case1 = case1.cut(pint)
                 if len(pin_spigot) > 2:
-                    pint = cq.Workplane("XY").workplane(offset=A1 + ((3 * H) / 4)).moveTo(origo_x, 0 - origo_y).circle(pin_spigot[2] / 2.0, False).extrude(H)
+                    pint = cq.Workplane("XY").workplane(offset=A1 + ((3 * H) / 4), centerOption="CenterOfMass").moveTo(origo_x, 0 - origo_y).circle(pin_spigot[2] / 2.0, False).extrude(H)
                     case1 = case1.cut(pint)
             #
             if pin_spigot[0] == 'tap' and len(pin_spigot) > 3:
                 x = origo_x - (pin_spigot[3] / 2.0)
                 d = pin_spigot[2] / 2.0 + pin_spigot[3]
-                pint = cq.Workplane("XY").workplane(offset=A1 + ((3 * H) / 4)).moveTo(0 ,0).rect(0 - d, pin_spigot[3], centered=False).extrude(H)
+                pint = cq.Workplane("XY").workplane(offset=A1 + ((3 * H) / 4), centerOption="CenterOfMass").moveTo(0 ,0).rect(0 - d, pin_spigot[3], centered=False).extrude(H)
                 pint = pint.rotate((0,0,0), (0,0,1), math.degrees((5.0 * alpha_delta) / 2.0))
                 pint = pint.translate((x, 0 - origo_y, 0.0))
                 case1 = case1.cut(pint)
@@ -305,13 +307,13 @@ class cq_parameters_help():
             alpha = alpha_delta
             x1 = (h * math.sin(alpha)) + origo_x
             y1 = (h * math.cos(alpha)) - origo_y
-            pint = cq.Workplane("XY").workplane(offset=A1 + (H / 2.0)).moveTo(x1, y1).circle(pin_top_diameter[1] / 2.0, False).extrude(H)
+            pint = cq.Workplane("XY").workplane(offset=A1 + (H / 2.0), centerOption="CenterOfMass").moveTo(x1, y1).circle(pin_top_diameter[1] / 2.0, False).extrude(H)
             case1 = case1.cut(pint)
             alpha = alpha + alpha_delta
             for i in range(1, pin_number):
                 x1 = (h * math.sin(alpha)) + origo_x
                 y1 = (h * math.cos(alpha)) - origo_y
-                pint = cq.Workplane("XY").workplane(offset=A1 + (H / 2.0)).moveTo(x1, y1).circle(pin_top_diameter[1] / 2.0, False).extrude(H)
+                pint = cq.Workplane("XY").workplane(offset=A1 + (H / 2.0), centerOption="CenterOfMass").moveTo(x1, y1).circle(pin_top_diameter[1] / 2.0, False).extrude(H)
                 case1 = case1.cut(pint)
                 alpha = alpha + alpha_delta
 
@@ -323,7 +325,7 @@ class cq_parameters_help():
     def make_body_with_ring_with_cut(self, origo_x, origo_y, A1, D, pin_number, pin_type, pin_spigot, pin_top_diameter, H, alpha_delta, rotation):
             
         ffs = D / 70.0
-        case = cq.Workplane("XY").workplane(offset=A1).moveTo(origo_x, 0 - origo_y).circle(D / 2.0, False).extrude(H)
+        case = cq.Workplane("XY").workplane(offset=A1, centerOption="CenterOfMass").moveTo(origo_x, 0 - origo_y).circle(D / 2.0, False).extrude(H)
         #
         # Make ring on the middle of the body
         #
@@ -331,13 +333,13 @@ class cq_parameters_help():
         #
         TT = D - DDq
         F1 = (H - 2.0) / 2.0
-        case1 = cq.Workplane("XY").workplane(offset=A1 - 0.1).moveTo(origo_x, 0 - origo_y).circle(TT / 2.0 + 6.0, False).extrude(F1 + 0.1)
-        case2 = cq.Workplane("XY").workplane(offset=A1 - 0.1).moveTo(origo_x, 0 - origo_y).circle(TT / 2.0, False).extrude(F1 + 0.1)
+        case1 = cq.Workplane("XY").workplane(offset=A1 - 0.1, centerOption="CenterOfMass").moveTo(origo_x, 0 - origo_y).circle(TT / 2.0 + 6.0, False).extrude(F1 + 0.1)
+        case2 = cq.Workplane("XY").workplane(offset=A1 - 0.1, centerOption="CenterOfMass").moveTo(origo_x, 0 - origo_y).circle(TT / 2.0, False).extrude(F1 + 0.1)
         case1 = case1.cut(case2)
         case = case.cut(case1)
         #
-        case1 = cq.Workplane("XY").workplane(offset=A1 + F1 + 2.0).moveTo(origo_x, 0 - origo_y).circle(TT / 2.0 + 6.0, False).extrude(H)
-        case2 = cq.Workplane("XY").workplane(offset=A1 + F1 + 2.0).moveTo(origo_x, 0 - origo_y).circle(TT / 2.0, False).extrude(H)
+        case1 = cq.Workplane("XY").workplane(offset=A1 + F1 + 2.0, centerOption="CenterOfMass").moveTo(origo_x, 0 - origo_y).circle(TT / 2.0 + 6.0, False).extrude(H)
+        case2 = cq.Workplane("XY").workplane(offset=A1 + F1 + 2.0, centerOption="CenterOfMass").moveTo(origo_x, 0 - origo_y).circle(TT / 2.0, False).extrude(H)
         case1 = case1.cut(case2)
         case = case.cut(case1)
         
@@ -354,7 +356,7 @@ class cq_parameters_help():
         ttx = origo_x + tdx
         tty = origo_y + tdy
 
-        case1 = cq.Workplane("XY").workplane(offset=A1 - 0.1).moveTo(0,0).rect(D, ti).extrude(H + 0.2)
+        case1 = cq.Workplane("XY").workplane(offset=A1 - 0.1, centerOption="CenterOfMass").moveTo(0,0).rect(D, ti).extrude(H + 0.2)
         case1 = case1.rotate((0,0,0), (0,0,1), 360 - tv)
         case1 = case1.translate((ttx, 0 - tty, 0))
         case = case.cut(case1)
@@ -369,7 +371,7 @@ class cq_parameters_help():
         ttx = origo_x + tdx
         tty = origo_y + tdy
 
-        case1 = cq.Workplane("XY").workplane(offset=A1 - 0.1).moveTo(0,0).rect(D, ti).extrude(H + 0.2)
+        case1 = cq.Workplane("XY").workplane(offset=A1 - 0.1, centerOption="CenterOfMass").moveTo(0,0).rect(D, ti).extrude(H + 0.2)
         case1 = case1.rotate((0,0,0), (0,0,1), 360 - tv)
         case1 = case1.translate((ttx, 0 - tty, 0))
         case = case.cut(case1)
@@ -393,7 +395,7 @@ class cq_parameters_help():
     def make_body_with_ring_cricle(self, origo_x, origo_y, A1, D, pin_number, pin_type, pin_spigot, pin_top_diameter, H, alpha_delta, rotation):
             
         
-        case = cq.Workplane("XY").workplane(offset=A1).moveTo(origo_x, 0 - origo_y).circle(D / 2.0, False).extrude(H)
+        case = cq.Workplane("XY").workplane(offset=A1, centerOption="CenterOfMass").moveTo(origo_x, 0 - origo_y).circle(D / 2.0, False).extrude(H)
         #
         # Make ring on the middle of the body
         #
@@ -401,13 +403,13 @@ class cq_parameters_help():
         #
         TT = D - DDq
         F1 = (H - 2.0) / 2.0
-        case1 = cq.Workplane("XY").workplane(offset=A1 - 0.1).moveTo(origo_x, 0 - origo_y).circle(TT / 2.0 + 6.0, False).extrude(F1 + 0.1)
-        case2 = cq.Workplane("XY").workplane(offset=A1 - 0.1).moveTo(origo_x, 0 - origo_y).circle(TT / 2.0, False).extrude(F1 + 0.1)
+        case1 = cq.Workplane("XY").workplane(offset=A1 - 0.1, centerOption="CenterOfMass").moveTo(origo_x, 0 - origo_y).circle(TT / 2.0 + 6.0, False).extrude(F1 + 0.1)
+        case2 = cq.Workplane("XY").workplane(offset=A1 - 0.1, centerOption="CenterOfMass").moveTo(origo_x, 0 - origo_y).circle(TT / 2.0, False).extrude(F1 + 0.1)
         case1 = case1.cut(case2)
         case = case.cut(case1)
         #
-        case1 = cq.Workplane("XY").workplane(offset=A1 + F1 + 2.0).moveTo(origo_x, 0 - origo_y).circle(TT / 2.0 + 6.0, False).extrude(H)
-        case2 = cq.Workplane("XY").workplane(offset=A1 + F1 + 2.0).moveTo(origo_x, 0 - origo_y).circle(TT / 2.0, False).extrude(H)
+        case1 = cq.Workplane("XY").workplane(offset=A1 + F1 + 2.0, centerOption="CenterOfMass").moveTo(origo_x, 0 - origo_y).circle(TT / 2.0 + 6.0, False).extrude(H)
+        case2 = cq.Workplane("XY").workplane(offset=A1 + F1 + 2.0, centerOption="CenterOfMass").moveTo(origo_x, 0 - origo_y).circle(TT / 2.0, False).extrude(H)
         case1 = case1.cut(case2)
         case = case.cut(case1)
         
@@ -415,10 +417,10 @@ class cq_parameters_help():
         # Cut circles around the ring
         #
         tx = (D / 2.0) + (2.0 * DDq)
-        case1 = cq.Workplane("XY").workplane(offset=A1 - 0.1).moveTo(origo_x + tx, 0 - origo_y).circle(2.5 * DDq, False).extrude(H + 0.2)
+        case1 = cq.Workplane("XY").workplane(offset=A1 - 0.1, centerOption="CenterOfMass").moveTo(origo_x + tx, 0 - origo_y).circle(2.5 * DDq, False).extrude(H + 0.2)
         case = case.cut(case1)
         #
-        case1 = cq.Workplane("XY").workplane(offset=A1 - 0.1).moveTo(origo_x - tx, 0 - origo_y).circle(2.5 * DDq, False).extrude(H + 0.2)
+        case1 = cq.Workplane("XY").workplane(offset=A1 - 0.1, centerOption="CenterOfMass").moveTo(origo_x - tx, 0 - origo_y).circle(2.5 * DDq, False).extrude(H + 0.2)
         case = case.cut(case1)
         
         caseS = self.make_spigot(case, origo_x, origo_y, A1, pin_number, pin_spigot, pin_top_diameter, H, alpha_delta, rotation)
@@ -439,7 +441,7 @@ class cq_parameters_help():
 
     def make_body_round(self, origo_x, origo_y, A1, D, pin_number, pin_type, pin_spigot, pin_top_diameter, H, alpha_delta, rotation):
         
-        case = cq.Workplane("XY").workplane(offset=A1).moveTo(origo_x, 0 - origo_y).circle(D / 2.0, False).extrude(H)
+        case = cq.Workplane("XY").workplane(offset=A1, centerOption="CenterOfMass").moveTo(origo_x, 0 - origo_y).circle(D / 2.0, False).extrude(H)
         
         caseS = self.make_spigot(case, origo_x, origo_y, A1, pin_number, pin_spigot, pin_top_diameter, H, alpha_delta, rotation)
         #

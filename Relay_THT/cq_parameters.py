@@ -9,8 +9,8 @@
 
 ## file of parametric definitions
 
-import collections
 from collections import namedtuple
+from collections.abc import Mapping
 
 destination_dir="/Relay_THT.3dshapes"
 # destination_dir="./"
@@ -21,9 +21,9 @@ footprints_dir="Relay_THT.pretty"
 ##enabling optional/default values to None
 def namedtuple_with_defaults(typename, field_names, default_values=()):
 
-    T = collections.namedtuple(typename, field_names)
+    T = namedtuple(typename, field_names)
     T.__new__.__defaults__ = (None,) * len(T._fields)
-    if isinstance(default_values, collections.Mapping):
+    if isinstance(default_values, Mapping):
         prototype = T(**default_values)
     else:
         prototype = T(*default_values)

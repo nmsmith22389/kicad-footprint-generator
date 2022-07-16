@@ -66,7 +66,7 @@ class PinStyle:
 #
 # The following classes must be subclassed
 #
-class PartParametersBase:
+class PartParametersBase():
     """
 
     .. document private functions

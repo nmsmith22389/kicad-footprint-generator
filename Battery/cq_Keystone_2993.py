@@ -1,21 +1,23 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import battery_common
-from battery_common import *
+import cadquery as cq
+
+# import battery_common
+from .battery_common import *
 
 
 def make_case_Keystone_2993(params):
 
-    A1 = params.A1              # Body PCB seperation
-    L  = params.L               # Package length
-    L1 = params.L1              # Package length 1
-    L2 = params.L2              # Package length 2
-    W  = params.W               # Package width
-    W1 = params.W1              # Package width 1
-    MT = params.MT              # Metal thickness
-    npthpins = params.npthpins  # npth holes
-    rotation = params.rotation  # Rotation if required
+    # A1 = params.A1              # Body PCB seperation
+    # L  = params.L               # Package length
+    # L1 = params.L1              # Package length 1
+    L2 = params['L2']              # Package length 2
+    W  = params['W']               # Package width
+    # W1 = params.W1               # Package width 1
+    MT = params['MT']              # Metal thickness
+    npthpins = params['npthpins']  # npth holes
+    rotation = params['rotation']  # Rotation if required
 
     #
     # Create body
@@ -42,15 +44,15 @@ def make_case_Keystone_2993(params):
 
 def make_pins_Keystone_2993(params):
 
-    A1 = params.A1              # Body PCB seperation
-    L  = params.L               # Package length
-    L1 = params.L1              # Package length 1
-    L2 = params.L2              # Package length 2
-    W  = params.W               # Package width
-    W1 = params.W1              # Package width 1
-    MT = params.MT              # Metal thickness
-    npthpins = params.npthpins  # npth holes
-    rotation = params.rotation  # Rotation if required
+    A1 = params['A1']              # Body PCB seperation
+    L  = params['L']               # Package length
+    L1 = params['L1']              # Package length 1
+    # L2 = params.L2               # Package length 2
+    W  = params['W']               # Package width
+    # W1 = params.W1               # Package width 1
+    MT = params['MT']              # Metal thickness
+    npthpins = params['npthpins']  # npth holes
+    rotation = params['rotation']  # Rotation if required
 
     #
     pts = []
@@ -61,15 +63,15 @@ def make_pins_Keystone_2993(params):
     pts.append((0.0 - 14.11, 2.11 - MT))
     pts.append((0.0 - 10.80, 2.68 - MT))
     pts.append((0.0 - 3.23, 0.0))
-    pin = cq.Workplane("XZ").workplane(offset=0.0).polyline(pts).close().extrude(L)
+    pin = cq.Workplane("XZ").workplane(offset=0.0).polyline(pts, includeCurrent=True).close().extrude(L)
 
     case1 = cq.Workplane("XY").workplane(offset=0.0).moveTo(0.0 - 8.67, 0.0 - (L / 2.0)).rect(10.88, 4.06).extrude(3.0)
     pin = pin.cut(case1)
 
-    pin.faces(">X").edges("<Y").fillet(L1 / 3.0)
-    pin.faces(">X").edges(">Y").fillet(L1 / 3.0)
-    pin.faces(">Z").edges(">X").fillet(L1 / 5.0)
-    pin.faces("<X").edges("#Y").fillet(L1 / 5.0)
+    pin = pin.faces(">X").edges("<Y").fillet(L1 / 3.0)
+    pin = pin.faces(">X").edges(">Y").fillet(L1 / 3.0)
+    pin = pin.faces(">Z").edges(">X").fillet(L1 / 5.0)
+    pin = pin.faces("<X").edges("#Y").fillet(L1 / 5.0)
      
     pin = pin.translate((W / 2.0, (L / 2.0), A1))
 

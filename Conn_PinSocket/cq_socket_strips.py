@@ -34,14 +34,14 @@
 # 2017-11-25
 
 import cadquery as cq
-from Helpers import show
+# from Helpers import show
 
 ## base parametes & model
-import cq_base_model
-reload(cq_base_model)
-from cq_base_model import PartBase
-from cq_base_parameters import PinStyle, CaseType
-from parameters import *
+# from cq_base_model import *
+# reload(cq_base_model)
+from .cq_base_model import PartBase
+from .cq_base_parameters import PinStyle, CaseType
+from .parameters import *
 
 ## model generator
 
@@ -61,24 +61,25 @@ class socket_strip (PartBase):
 
     def __init__(self, params):
         PartBase.__init__(self, params)
-        self.make_me = params.type == CaseType.THT and params.pin_style == PinStyle.STRAIGHT
+        self.make_me = params['type'] == CaseType.THT and params['pin_style'] == PinStyle.STRAIGHT
         self.licAuthor = "Terje Io"
         self.licEmail = "https://github.com/terjeio"
         self.destination_dir = "Conn_PinSocket_{0:03.2f}mm.3dshapes".format(self.pin_pitch)
         self.footprints_dir = "Conn_PinSocket_{0:03.2f}mm.pretty".format(self.pin_pitch)
-        self.rotation = 90
-        self.pin_style = params.pin_style
+        self.rotation = params['rotation']
+        self.pin_style = params['pin_style']
 
-        self.pin_width        = params.pin_width
-        self.pin_thickness    = params.pin_thickness
-        self.pin_length       = params.pin_length + self.pin_thickness
-        self.pinsocket_offset = params.pins_offset
-        self.body_height      = params.body_height
-        self.body_overlength  = params.body_overlength
-        self.body_width       = params.body_width
-        self.body_offset      = params.body_offset
-        self.pin_row_distance = (params.num_pin_rows - 1) * self.pin_pitch
+        self.pin_width        = params['pin_width']
+        self.pin_thickness    = params['pin_thickness']
+        self.pin_length       = params['pin_length'] + self.pin_thickness
+        self.pinsocket_offset = params['pins_offset']
+        self.body_height      = params['body_height']
+        self.body_overlength  = params['body_overlength']
+        self.body_width       = params['body_width']
+        self.body_offset      = params['body_offset']
+        self.pin_row_distance = (params['num_pin_rows'] - 1) * self.pin_pitch
         self.pin_socket_size  = self.pin_width
+        self.num_pins         = params['num_pins']
 
         self.body_length = self.num_pins * self.pin_pitch / self.num_pin_rows
         self.body_board_distance = self.pin_thickness
@@ -106,7 +107,7 @@ class socket_strip (PartBase):
                    .faces("<Z").rect(self.pin_socket_size, self.pin_socket_size).extrude(-self.body_height + rsz)\
                    .faces("<Z").rect(self.pin_socket_size, self.pin_thickness).extrude(-rsz + self.body_board_distance)
          
-        pockets = self._mirror(pocket, self.num_pins / self.num_pin_rows)
+        pockets = self._mirror(pocket, int(self.num_pins / self.num_pin_rows))
 
         if self.num_pin_rows == 2:
             # create opposite pinrow
@@ -146,13 +147,13 @@ class socket_strip (PartBase):
  
         length = self.body_length + self.body_overlength
         width  = self.body_width
- 
+
         body = cq.Workplane(cq.Plane.XY())\
                  .rect(length, width).extrude(self.body_height)\
                  .faces(">Y").cut(self._make_pinpockets())
 
         if self.body_board_distance > 0.0:
-            body = body .faces("<Z").rect(length, width - width / 3.0).cutBlind(self.body_board_distance)
+            body = body.faces("<Z").rect(length, width - width / 3.0).cutBlind(self.body_board_distance)
 
         return body
 
@@ -160,7 +161,7 @@ class socket_strip (PartBase):
 
         pins = self._mirror(self._make_straight_pin()\
                                 .union(self._make_pinsocket())\
-                                .translate(self.first_pin_pos + (self.body_board_distance,)), self.num_pins / self.num_pin_rows)
+                                .translate(self.first_pin_pos + (self.body_board_distance,)), int(self.num_pins / self.num_pin_rows))
 
         if self.num_pin_rows == 2:
             # create opposite pinrow
@@ -185,9 +186,9 @@ class angled_socket_strip (socket_strip):
 
     def __init__(self, params):
         socket_strip.__init__(self, params)
-        self.make_me = params.type == CaseType.THT and params.pin_style == PinStyle.ANGLED # and not params.pin_pitch == 1.27
-        self.rotation = 90
-        self.pin_offset = params.pins_offset
+        self.make_me = params['type'] == CaseType.THT and params['pin_style'] == PinStyle.ANGLED # and not params.pin_pitch == 1.27
+        self.rotation = params['rotation']
+        self.pin_offset = params['pins_offset']
         
         tmp = self.body_height
         self.body_height = self.body_width
@@ -246,11 +247,18 @@ class smd_socket_strip (socket_strip):
     def __init__(self, params):
         socket_strip.__init__(self, params)
         self.odd_pins = self.num_pins % 2.0 != 0.0
-        self.make_me = params.type == CaseType.SMD and self.num_pins >=2 and (self.num_pin_rows == 1 or not self.odd_pins)
+        self.make_me = params['type'] == CaseType.SMD and self.num_pins >=2 and (self.num_pin_rows == 1 or not self.odd_pins)
 #        self.make_me = self.make_me and (self.pin_pitch != 1.27 or self.num_pin_rows > 1) 
         self.rotation = 90
         self.pin_length = (self.pin_length - self.pin_row_distance) / 2.0 - self.pin_thickness - self.pin_thickness / 4.0
-        self.pin1start_right = params.pin1start_right
+
+        # Flips the pin row 180 degrees depending on odd vs even number of pins
+        if self.num_pins % 2 == 0 and params['pin1start_right']:
+            self.pin1start_right = True
+        else:
+            self.pin1start_right = False
+
+        # self.pin1start_right = params['pin1start_right']
         self.offsets    = (0, 0, self.pin_thickness * 1.5)
 
     def makeModelName(self, genericName):

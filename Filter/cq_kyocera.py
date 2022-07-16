@@ -46,12 +46,16 @@
 # http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf
 #
 
-import cq_common  # modules parameters
-from cq_common import *
+# import cq_common  # modules parameters
+# from cq_common import *
 
-import sys
-import math
+# import sys
+# import math
 
+import cadquery as cq
+
+# from collections import namedtuple
+# from collections.abc import Mapping
 
 class cq_kyocera():
 
@@ -61,54 +65,59 @@ class cq_kyocera():
         self.pin_color_key       = 'metal grey pins'    # Pin color
         self.npth_pin_color_key  = 'brown body'         # NPTH Pin color
 
-    def set_colors(self, modelID):
+        self.rotatex = 0.0          # Rotation around x-axis if required
+        self.rotatey = 0.0          # Rotation around x-axis if required
+        self.rotatez = 0.0          # Rotation around y-axis if required
+        self.translate = (0, 0, 0)
+
+    # def set_colors(self, modelID):
     
-        params = self.all_params[modelID]
+    #     params = self.all_params[modelID]
     
-        if params.body_top_color_key != None:
-            self.body_top_color_key = params.body_top_color_key
+    #     if params.body_top_color_key != None:
+    #         self.body_top_color_key = params.body_top_color_key
+    #     #
+    #     if params.body_color_key != None:
+    #         self.body_color_key = params.body_color_key
+    #     #
+    #     if params.pin_color_key != None:
+    #         self.pin_color_key = params.pin_color_key
+    #     #
+    #     if params.npth_pin_color_key != None:
+    #         self.npth_pin_color_key = params.npth_pin_color_key
         #
-        if params.body_color_key != None:
-            self.body_color_key = params.body_color_key
-        #
-        if params.pin_color_key != None:
-            self.pin_color_key = params.pin_color_key
-        #
-        if params.npth_pin_color_key != None:
-            self.npth_pin_color_key = params.npth_pin_color_key
-        #
 
 
-    def get_model_name(self, modelID):
-        for n in self.all_params:
-            if n == modelID:
-                return self.all_params[modelID].modelName
-        return 'xxUNKNOWNxxx'
+    # def get_model_name(self, modelID):
+    #     for n in self.all_params:
+    #         if n == modelID:
+    #             return self.all_params[modelID].modelName
+    #     return 'xxUNKNOWNxxx'
 
 
-    def get_dest_3D_dir(self, modelID):
-        for n in self.all_params:
-            if n == modelID:
-                if self.all_params[modelID].dest_dir_prefix != None:
-                    return self.all_params[modelID].dest_dir_prefix
+    # def get_dest_3D_dir(self, modelID):
+    #     for n in self.all_params:
+    #         if n == modelID:
+    #             if self.all_params[modelID].dest_dir_prefix != None:
+    #                 return self.all_params[modelID].dest_dir_prefix
 
-        return 'Filter.3dshapes'
+    #     return 'Filter.3dshapes'
 
 
-    def model_exist(self, modelID):
-        for n in self.all_params:
-            if n == modelID:
-                return True
+    # def model_exist(self, modelID):
+    #     for n in self.all_params:
+    #         if n == modelID:
+    #             return True
                 
-        return False
+    #     return False
 
 
-    def get_list_all(self):
-        list = []
-        for n in self.all_params:
-            list.append(n)
+    # def get_list_all(self):
+    #     list = []
+    #     for n in self.all_params:
+    #         list.append(n)
         
-        return list
+    #     return list
 
 
     def set_rotation(self, params):
@@ -118,7 +127,7 @@ class cq_kyocera():
         self.rotatez = 0.0          # Rotation around y-axis if required
 
 
-    def set_translate(self, modelID):
+    def set_translate(self, params):
 
         ttdx = 0.0
         ttdy = 0.0
@@ -127,85 +136,85 @@ class cq_kyocera():
         self.translate = (ttdx, ttdy, ttdz)
 
 
-    def make_3D_model(self, modelID):
+    # def make_3D_model(self, modelID):
 
-        destination_dir = self.get_dest_3D_dir(modelID)
-        params = self.all_params[modelID]
+    #     destination_dir = self.get_dest_3D_dir(modelID)
+    #     params = self.all_params[modelID]
 
-        FreeCAD.Console.PrintMessage('\r\n')
-        FreeCAD.Console.PrintMessage('make_3D_model 1 \r\n')
-        self.set_colors(modelID)
-        self.set_translate(modelID)
-        self.set_rotation(modelID)
-        FreeCAD.Console.PrintMessage('make_3D_model 2 \r\n')
-        case_top = self.make_top(modelID)
-        show(case_top)
-        FreeCAD.Console.PrintMessage('make_3D_model 3 \r\n')
-        case = self.make_body(modelID)
-        show(case)
+    #     FreeCAD.Console.PrintMessage('\r\n')
+    #     FreeCAD.Console.PrintMessage('make_3D_model 1 \r\n')
+    #     self.set_colors(modelID)
+    #     self.set_translate(modelID)
+    #     self.set_rotation(modelID)
+    #     FreeCAD.Console.PrintMessage('make_3D_model 2 \r\n')
+    #     case_top = self.make_top(modelID)
+    #     show(case_top)
+    #     FreeCAD.Console.PrintMessage('make_3D_model 3 \r\n')
+    #     case = self.make_body(modelID)
+    #     show(case)
 
-        FreeCAD.Console.PrintMessage('make_3D_model 4 \r\n')
-        pins = self.make_pin(modelID)
-        show(pins)
+    #     FreeCAD.Console.PrintMessage('make_3D_model 4 \r\n')
+    #     pins = self.make_pin(modelID)
+    #     show(pins)
 
-        FreeCAD.Console.PrintMessage('make_3D_model 5 \r\n')
-        npth_pins = self.make_npth_pin(modelID)
-        show(npth_pins)
+    #     FreeCAD.Console.PrintMessage('make_3D_model 5 \r\n')
+    #     npth_pins = self.make_npth_pin(modelID)
+    #     show(npth_pins)
 
-        FreeCAD.Console.PrintMessage('make_3D_model 6 \r\n')
-        doc = FreeCAD.ActiveDocument
-        objs=GetListOfObjects(FreeCAD, doc)
+    #     FreeCAD.Console.PrintMessage('make_3D_model 6 \r\n')
+    #     doc = FreeCAD.ActiveDocument
+    #     objs=GetListOfObjects(FreeCAD, doc)
 
-        body_top_color_key = self.body_top_color_key
-        body_color_key = self.body_color_key
-        pin_color_key = self.pin_color_key
-        npth_pin_color_key = self.npth_pin_color_key
+    #     body_top_color_key = self.body_top_color_key
+    #     body_color_key = self.body_color_key
+    #     pin_color_key = self.pin_color_key
+    #     npth_pin_color_key = self.npth_pin_color_key
 
-        body_top_color = shaderColors.named_colors[body_top_color_key].getDiffuseFloat()
-        body_color = shaderColors.named_colors[body_color_key].getDiffuseFloat()
-        pin_color = shaderColors.named_colors[pin_color_key].getDiffuseFloat()
-        npth_pin_color = shaderColors.named_colors[npth_pin_color_key].getDiffuseFloat()
+    #     body_top_color = shaderColors.named_colors[body_top_color_key].getDiffuseFloat()
+    #     body_color = shaderColors.named_colors[body_color_key].getDiffuseFloat()
+    #     pin_color = shaderColors.named_colors[pin_color_key].getDiffuseFloat()
+    #     npth_pin_color = shaderColors.named_colors[npth_pin_color_key].getDiffuseFloat()
 
-        Color_Objects(Gui,objs[0],body_top_color)
-        Color_Objects(Gui,objs[1],body_color)
-        Color_Objects(Gui,objs[2],pin_color)
-        Color_Objects(Gui,objs[3],npth_pin_color)
+    #     Color_Objects(Gui,objs[0],body_top_color)
+    #     Color_Objects(Gui,objs[1],body_color)
+    #     Color_Objects(Gui,objs[2],pin_color)
+    #     Color_Objects(Gui,objs[3],npth_pin_color)
 
-        col_body_top=Gui.ActiveDocument.getObject(objs[0].Name).DiffuseColor[0]
-        col_body=Gui.ActiveDocument.getObject(objs[1].Name).DiffuseColor[0]
-        col_pin=Gui.ActiveDocument.getObject(objs[2].Name).DiffuseColor[0]
-        col_npth_pin=Gui.ActiveDocument.getObject(objs[3].Name).DiffuseColor[0]
+    #     col_body_top=Gui.ActiveDocument.getObject(objs[0].Name).DiffuseColor[0]
+    #     col_body=Gui.ActiveDocument.getObject(objs[1].Name).DiffuseColor[0]
+    #     col_pin=Gui.ActiveDocument.getObject(objs[2].Name).DiffuseColor[0]
+    #     col_npth_pin=Gui.ActiveDocument.getObject(objs[3].Name).DiffuseColor[0]
         
-        material_substitutions={
-            col_body_top[:-1]:body_top_color_key,
-            col_body[:-1]:body_color_key,
-            col_pin[:-1]:pin_color_key,
-            col_npth_pin[:-1]:npth_pin_color_key
-        }
+    #     material_substitutions={
+    #         col_body_top[:-1]:body_top_color_key,
+    #         col_body[:-1]:body_color_key,
+    #         col_pin[:-1]:pin_color_key,
+    #         col_npth_pin[:-1]:npth_pin_color_key
+    #     }
         
-        expVRML.say(material_substitutions)
-        while len(objs) > 1:
-                FuseObjs_wColors(FreeCAD, FreeCADGui, doc.Name, objs[0].Name, objs[1].Name)
-                del objs
-                objs = GetListOfObjects(FreeCAD, doc)
+    #     expVRML.say(material_substitutions)
+    #     while len(objs) > 1:
+    #             FuseObjs_wColors(FreeCAD, FreeCADGui, doc.Name, objs[0].Name, objs[1].Name)
+    #             del objs
+    #             objs = GetListOfObjects(FreeCAD, doc)
 
-        return material_substitutions
+    #     return material_substitutions
 
 
-    def make_top(self, modelID):
+    def make_top(self, params):
 
-        params = self.all_params[modelID]
-        W = params.W                # Width
-        L = params.L                # Length
-        H = params.H                # Height
-        H1 = params.H1              # Height 1
-        serie = params.serie        # Serie
+        # params = self.all_params[modelID]
+        W = params['W']                # Width
+        L = params['L']                # Length
+        H = params['H']                # Height
+        H1 = params['H1']              # Height 1
+        serie = params['serie']        # Serie
 
 
         #
         # Pin 1 marker 
         #
-        case = cq.Workplane("XY").workplane(offset=H - 0.1).moveTo(0.0 - (W / 2.0) + (W / 5.0) , 0.0 - (L / 2.0) + (L / 5.0)).circle(0.05, False).extrude(0.1)
+        case = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=H - 0.1).moveTo(0.0 - (W / 2.0) + (W / 5.0) , 0.0 - (L / 2.0) + (L / 5.0)).circle(0.05, False).extrude(0.1)
         
         if self.rotatex > 0.0:
             case = case.rotate((0,0,0), (1,0,0), self.rotatex)
@@ -220,28 +229,28 @@ class cq_kyocera():
 
 
 
-    def make_body(self, modelID):
+    def make_body(self, params):
 
-        FreeCAD.Console.PrintMessage('make_body 1 \r\n')
-        params = self.all_params[modelID]
-        W = params.W                # Width
-        L = params.L                # Length
-        H = params.H                # Height
-        H1 = params.H1              # Height 1
-        serie = params.serie        # Serie
+        print('make_body 1 \r\n')
+        # params = self.all_params[modelID]
+        W = params['W']                # Width
+        L = params['L']                # Length
+        H = params['H']                # Height
+        H1 = params['H1']              # Height 1
+        serie = params['serie']        # Serie
 
 
         #
         # Make body
         #
-        case = cq.Workplane("XY").workplane(offset=H1).moveTo(0.0, 0.0).rect(W, L).extrude(H - H1)
+        case = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=H1).moveTo(0.0, 0.0).rect(W, L).extrude(H - H1)
         case = case.faces("<X").edges("<Y").fillet(0.03)
         case = case.faces("<X").edges(">Y").fillet(0.03)
         case = case.faces(">X").edges("<Y").fillet(0.03)
         case = case.faces(">X").edges(">Y").fillet(0.03)
         case = case.faces(">Z").fillet(0.03)
                 
-        case1 = cq.Workplane("XY").workplane(offset=H - 0.1).moveTo(0.0 - (W / 2.0) + (W / 5.0) , 0.0 - (L / 2.0) + (L / 5.0)).circle(0.05, False).extrude(0.2)
+        case1 = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=H - 0.1).moveTo(0.0 - (W / 2.0) + (W / 5.0) , 0.0 - (L / 2.0) + (L / 5.0)).circle(0.05, False).extrude(0.2)
         case = case.cut(case1)
         
         if self.rotatex > 0.0:
@@ -256,31 +265,31 @@ class cq_kyocera():
         return (case)
 
 
-    def make_pin(self, modelID):
+    def make_pin(self, params):
 
-        params = self.all_params[modelID]
-        W = params.W                # Width
-        L = params.L                # Length
-        H = params.H                # Height
-        H1 = params.H1              # Height 1
-        serie = params.serie        # Serie
+        # params = self.all_params[modelID]
+        W = params['W']                # Width
+        L = params['L']                # Length
+        H = params['H']                # Height
+        H1 = params['H1']              # Height 1
+        serie = params['serie']        # Serie
 
 
         if serie == 'SF14':
-            case = cq.Workplane("XY").workplane(offset=-0.005).moveTo(-0.5, 0.0).rect(0.25, 0.325).extrude(0.1)
-            case1 = cq.Workplane("XY").workplane(offset=-0.005).moveTo(0.0, 0.0 - 0.2875).rect(0.25, 0.325).extrude(0.1)
+            case = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=-0.005).moveTo(-0.5, 0.0).rect(0.25, 0.325).extrude(0.1)
+            case1 = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=-0.005).moveTo(0.0, 0.0 - 0.2875).rect(0.25, 0.325).extrude(0.1)
             case = case.union(case1)
-            case1 = cq.Workplane("XY").workplane(offset=-0.005).moveTo(0.5, 0.0 - 0.2875).rect(0.25, 0.325).extrude(0.1)
+            case1 = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=-0.005).moveTo(0.5, 0.0 - 0.2875).rect(0.25, 0.325).extrude(0.1)
             case = case.union(case1)
-            case1 = cq.Workplane("XY").workplane(offset=-0.005).moveTo(0.5, 0.2875).rect(0.25, 0.325).extrude(0.1)
+            case1 = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=-0.005).moveTo(0.5, 0.2875).rect(0.25, 0.325).extrude(0.1)
             case = case.union(case1)
-            case1 = cq.Workplane("XY").workplane(offset=-0.005).moveTo(0.0, 0.2875).rect(0.25, 0.325).extrude(0.1)
+            case1 = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=-0.005).moveTo(0.0, 0.2875).rect(0.25, 0.325).extrude(0.1)
             case = case.union(case1)
         else:
             #
             # Make dummy
             #
-            case = cq.Workplane("XY").workplane(offset=0.1).moveTo(0.0, 0.0).circle(0.01, 0.01).extrude(0.01)
+            case = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=0.1).moveTo(0.0, 0.0).circle(0.01, 0.01).extrude(0.01)
         
         if self.rotatex > 0.0:
             case = case.rotate((0,0,0), (1,0,0), self.rotatex)
@@ -294,20 +303,20 @@ class cq_kyocera():
         return (case)
 
 
-    def make_npth_pin(self, modelID):
+    def make_npth_pin(self, params):
 
-        params = self.all_params[modelID]
-        W = params.W                # Width
-        L = params.L                # Length
-        H = params.H                # Height
-        H1 = params.H1              # Height 1
-        serie = params.serie        # Serie
+        # params = self.all_params[modelID]
+        W = params['W']                # Width
+        L = params['L']                # Length
+        H = params['H']                # Height
+        H1 = params['H1']              # Height 1
+        serie = params['serie']        # Serie
 
 
         #
         # Make dummy
         #
-        case = cq.Workplane("XY").workplane(offset=0.0).moveTo(0.0, 0.0).rect(W, L).extrude(H1)
+        case = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=0.0).moveTo(0.0, 0.0).rect(W, L).extrude(H1+0.45)
         case = case.faces("<X").edges("<Y").fillet(0.03)
         case = case.faces("<X").edges(">Y").fillet(0.03)
         case = case.faces(">X").edges("<Y").fillet(0.03)
@@ -326,53 +335,53 @@ class cq_kyocera():
 
         
     ##enabling optional/default values to None
-    def namedtuple_with_defaults(typename, field_names, default_values=()):
+    # def namedtuple_with_defaults(typename, field_names, default_values=()):
 
-        T = collections.namedtuple(typename, field_names)
-        T.__new__.__defaults__ = (None,) * len(T._fields)
-        if isinstance(default_values, collections.Mapping):
-            prototype = T(**default_values)
-        else:
-            prototype = T(*default_values)
-        T.__new__.__defaults__ = tuple(prototype)
-        return T
+    #     T = namedtuple(typename, field_names)
+    #     T.__new__.__defaults__ = (None,) * len(T._fields)
+    #     if isinstance(default_values, Mapping):
+    #         prototype = T(**default_values)
+    #     else:
+    #         prototype = T(*default_values)
+    #     T.__new__.__defaults__ = tuple(prototype)
+    #     return T
         
-    Params = namedtuple_with_defaults("Params", [
-        'modelName',		    # modelName
-        'W',		            # Width
-        'L',		            # Length
-        'H',		            # Overall height
-        'H1',		            # Height 1
-        'serie',		        # Serie
-        'npth_pin_color_key',   # NPTH Pin color
-        'body_top_color_key',	# Top color
-        'body_color_key',	    # Body colour
-        'pin_color_key',	    # Pin color
-        'dest_dir_prefix'	    # Destination directory
-    ])
+    # Params = namedtuple_with_defaults("Params", [
+    #     'modelName',		    # modelName
+    #     'W',		            # Width
+    #     'L',		            # Length
+    #     'H',		            # Overall height
+    #     'H1',		            # Height 1
+    #     'serie',		        # Serie
+    #     'npth_pin_color_key',   # NPTH Pin color
+    #     'body_top_color_key',	# Top color
+    #     'body_color_key',	    # Body colour
+    #     'pin_color_key',	    # Pin color
+    #     'dest_dir_prefix'	    # Destination directory
+    # ])
 
 
-    all_params = {
+    # all_params = {
 
-        #
-        # https://global.kyocera.com/prdct/electro/product/pdf/sf14_tdlte.pdf
-        # 
-        'Filter_1411-5_1.4x1.1mm': Params(
-            modelName = 'Filter_1411-5_1.4x1.1mm',    # Model name
-            W = 1.40,               # Width
-            L = 1.10,               # Length
-            H = 0.7,                # Overall height
-            H1 = 0.20,              # Height 1
-            serie = 'SF14',         # Serie
-            ),
+    #     #
+    #     # https://global.kyocera.com/prdct/electro/product/pdf/sf14_tdlte.pdf
+    #     # 
+    #     'Filter_1411-5_1.4x1.1mm': Params(
+    #         modelName = 'Filter_1411-5_1.4x1.1mm',    # Model name
+    #         W = 1.40,               # Width
+    #         L = 1.10,               # Length
+    #         H = 0.7,                # Overall height
+    #         H1 = 0.20,              # Height 1
+    #         serie = 'SF14',         # Serie
+    #         ),
 
-        'SF14-1575F5UUC1': Params(
-            modelName = 'Filter_1411-5_1.4x1.1mm',    # Model name
-            W = 1.40,               # Width
-            L = 1.10,               # Length
-            H = 0.7,                # Overall height
-            H1 = 0.20,              # Height 1
-            serie = 'SF14',         # Serie
-            ),
+    #     'SF14-1575F5UUC1': Params(
+    #         modelName = 'Filter_1411-5_1.4x1.1mm',    # Model name
+    #         W = 1.40,               # Width
+    #         L = 1.10,               # Length
+    #         H = 0.7,                # Overall height
+    #         H1 = 0.20,              # Height 1
+    #         serie = 'SF14',         # Serie
+    #         ),
 
-    }
+    # }

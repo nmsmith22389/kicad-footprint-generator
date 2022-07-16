@@ -57,20 +57,20 @@ from math import sqrt
 from itertools import chain
 
 #global parameter
-body_off_center_z = 0.15
-pin_width = 0.2
-pin_depth = 3.4
-pin_inner_lenght = 6.5
-pin_lock_h1 = 1.9
-pin_lock_h2 = 2.5
-pin_lock_d = 0.3
-pin_fillet = 0.2
-pin_bend_radius = 0.05
-pin_pitch = 1.25
-body_corner_x = -2.45
-body_corner_y = -2.35
-lock_hole_width = (0, 0, 2.05, 3.0, 4.45, 4.45, 6.65, 6.65, 6.65, 6.65, 8.6, 8.6, 8.6, 8.6, 8.6, 8.6)
-lock_tab_width = (0, 0, 0.95, 1.25, 2.45, 2.50, 4.45, 4.45, 4.45, 4.45, 6.1, 6.1, 6.1, 6.1, 6.1, 6.1)
+# body_off_center_z = 0.15
+# pin_width = 0.2
+# pin_depth = 3.4
+# pin_inner_lenght = 6.5
+# pin_lock_h1 = 1.9
+# pin_lock_h2 = 2.5
+# pin_lock_d = 0.3
+# pin_fillet = 0.2
+# pin_bend_radius = 0.05
+# pin_pitch = 1.25
+# body_corner_x = -2.45
+# body_corner_y = -2.35
+# lock_hole_width = (0, 0, 2.05, 3.0, 4.45, 4.45, 6.65, 6.65, 6.65, 6.65, 8.6, 8.6, 8.6, 8.6, 8.6, 8.6)
+# lock_tab_width = (0, 0, 0.95, 1.25, 2.45, 2.50, 4.45, 4.45, 4.45, 4.45, 6.1, 6.1, 6.1, 6.1, 6.1, 6.1)
 
 
 Params = namedtuple("Params",[

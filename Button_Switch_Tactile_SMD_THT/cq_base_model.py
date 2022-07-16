@@ -42,7 +42,7 @@
 #
 
 import cadquery as cq
-import FreeCAD
+#import FreeCAD
 
 from math import sin, cos, tan, radians, atan2
 
@@ -390,23 +390,24 @@ class PartBase (object):
         self.rotation = 0
         self.make_me = True
 
-        args = params._asdict()
+        #args = params._asdict()
+        args = params
         self.type = params.type if 'type' in args and params.type != None else "SMD"
 
-        self.pin_width = params.pin_width if 'pin_width' in args and  params.pin_width != None else 0.4
-        self.pin_thickness = params.pin_thickness if 'pin_thickness' in args and  params.pin_thickness != None else 0.2
-        self.pin_length = params.pin_length if 'pin_length' in args and  params.pin_length != None else 3.2
-        self.pin_pitch = params.pin_pitch if 'pin_pitch' in args and  params.pin_pitch != None else 2.54
-        self.num_pins = params.num_pins if 'num_pins' in args and  params.num_pins != None else 2
-        self.num_pin_rows = params.num_pin_rows if 'num_pin_rows' in args and  params.num_pin_rows != None else 2
-        self.pin_rows_distance = params.pin_rows_distance if 'pin_rows_distance' in args and  params.pin_rows_distance != None else self.pin_pitch
-        self.tht_pin_clamp_extension = params.tht_pin_clamp_extension if 'tht_pin_clamp_extension' in args and  params.tht_pin_clamp_extension != None else 0.45
-        self.tht_pin_lower_clamp_angel = params.tht_pin_lower_clamp_angel if 'tht_pin_lower_clamp_angel' in args and  params.tht_pin_lower_clamp_angel != None else 50.0
+        self.pin_width = params['pin_width'] if 'pin_width' in args and  params['pin_width'] != None else 0.4
+        self.pin_thickness = params['pin_thickness'] if 'pin_thickness' in args and  params['pin_thickness'] != None else 0.2
+        self.pin_length = params['pin_length'] if 'pin_length' in args and  params['pin_length'] != None else 3.2
+        self.pin_pitch = params['pin_pitch'] if 'pin_pitch' in args and  params['pin_pitch'] != None else 2.54
+        self.num_pins = params['num_pins'] if 'num_pins' in args and  params['num_pins'] != None else 2
+        self.num_pin_rows = params['num_pin_rows'] if 'num_pin_rows' in args and  params['num_pin_rows'] != None else 2
+        self.pin_rows_distance = params['pin_rows_distance'] if 'pin_rows_distance' in args and  params['pin_rows_distance'] != None else self.pin_pitch
+        self.tht_pin_clamp_extension = params['tht_pin_clamp_extension'] if 'tht_pin_clamp_extension' in args and  params['tht_pin_clamp_extension'] != None else 0.45
+        self.tht_pin_lower_clamp_angel = params['tht_pin_lower_clamp_angel'] if 'tht_pin_lower_clamp_angel' in args and  params['tht_pin_lower_clamp_angel'] != None else 50.0
 
 
-        self.body_width = params.body_width if 'body_width' in args and  params.body_width != None else 6.0
-        self.body_length = params.body_length if 'body_length' in args and  params.body_length != None else 6.0
-        self.body_height = params.body_height if 'body_height' in args and  params.body_height != None else 3.5
+        self.body_width = params['body_width'] if 'body_width' in args and  params['body_width'] != None else 6.0
+        self.body_length = params['body_length'] if 'body_length' in args and  params['body_length'] != None else 6.0
+        self.body_height = params['body_height'] if 'body_height' in args and  params['body_height'] != None else 3.5
         self.first_pin_pos = (0.0, 0.0) if self.num_pins is None else (self.pin_pitch * (self.num_pins / 2.0 / self.num_pin_rows - 0.5), self.pin_rows_distance / 2.0)
         self.offsets = (0.0, 0.0, 0.0)
 

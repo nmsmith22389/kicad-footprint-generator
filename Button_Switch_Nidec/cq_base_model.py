@@ -38,7 +38,7 @@
 #
 
 import cadquery as cq
-import FreeCAD
+# import FreeCAD
 
 from math import sin, tan, radians
 
@@ -457,12 +457,12 @@ class PartBase (object):
 
         return cq.Workplane(cq.Plane.XY())\
                  .rect(D_b, E1_b)\
-                 .workplane(offset=A2_b).rect(self.body_length, self.body_width)\
-                 .workplane(offset=pin_area_height).rect(self.body_length, self.body_width)\
+                 .workplane(offset=A2_b, centerOption="CenterOfMass").rect(self.body_length, self.body_width)\
+                 .workplane(offset=pin_area_height, centerOption="CenterOfMass").rect(self.body_length, self.body_width)\
                  .rect(D_t1, E1_t1)\
-                 .workplane(offset=A2_t).rect(D_t2, E1_t2).loft(ruled=True)
+                 .workplane(offset=A2_t, centerOption="CenterOfMass").rect(D_t2, E1_t2).loft(ruled=True)
 
-    def _make_straight_pin(self, pin_height=None, style='Rectangular'):
+    def _make_straight_pin(self, params, pin_height=None, style='Rectangular'):
         """ create straight pin
 
         The pin will placed at coordinate 0, 0 and with the base at Z = 0
@@ -478,17 +478,17 @@ class PartBase (object):
 
         """
         if pin_height is None:
-            pin_height = self.pin_length + self.body_board_distance
+            pin_height = params['pin_length'] + params['body_board_distance']
 
-        return Polyline(cq.Workplane("XZ").workplane(offset=-self.pin_thickness / 2.0))\
+        return Polyline(cq.Workplane("XZ").workplane(offset=-params['pin_thickness'] / 2.0, centerOption="CenterOfMass"))\
                           .addPoints([
-                                (self.pin_width / 2.0, 0.0),
-                                (0.0, -(pin_height - self.pin_width)),
-                                (-self.pin_width / 4.0, -self.pin_width),
-                                (-self.pin_width / 4.0, 0.0),
-                            ]).addMirror().make().extrude(self.pin_thickness)
+                                (params['pin_width'] / 2.0, 0.0),
+                                (0.0, -(pin_height - params['pin_width'])),
+                                (-params['pin_width'] / 4.0, -params['pin_width']),
+                                (-params['pin_width'] / 4.0, 0.0),
+                            ]).addMirror().make().extrude(params['pin_thickness'])
 
-    def _make_angled_pin(self, pin_height=None, top_length=0.0, top_extension=0.0, style='SMD'):
+    def _make_angled_pin(self, params, pin_height=None, top_length=0.0, top_extension=0.0, style='SMD'):
         """ create gull wing pin
 
         The pin will placed at coordinate 0, 0 and with the base at Z = 0
@@ -508,48 +508,48 @@ class PartBase (object):
 
         """
         if pin_height is None:
-            pin_height = self.pin_length
+            pin_height = params['pin_length']
 
-        d = self.pin_width / 10.0
-        r_lower_i = self.pin_thickness / 2.0
-        r_lower_o = r_lower_i + self.pin_thickness # pin lower corner, outer radius
+        d = params['pin_width'] / 10.0
+        r_lower_i = params['pin_thickness'] / 2.0
+        r_lower_o = r_lower_i + params['pin_thickness'] # pin lower corner, outer radius
 
         if style == 'SMD': # make a horizontal pin
-            pin = Polyline(cq.Workplane("XY").workplane(offset=-r_lower_o), origin=(0.0, r_lower_o))\
-                             .addMoveTo(-self.pin_width / 2.0, 0.0)\
-                             .addPoint(d, self.pin_length - d)\
-                             .addThreePointArc((self.pin_width / 2.0 - d, d), (self.pin_width - d * 2.0, 0.0))\
-                             .addPoint(d, -self.pin_length + d).make().extrude(self.pin_thickness)
+            pin = Polyline(cq.Workplane("XY").workplane(offset=-r_lower_o, centerOption="CenterOfMass"), origin=(0.0, r_lower_o))\
+                             .addMoveTo(-params['pin_width'] / 2.0, 0.0)\
+                             .addPoint(d, params['pin_length'] - d)\
+                             .addThreePointArc((params['pin_width'] / 2.0 - d, d), (params['pin_width'] - d * 2.0, 0.0))\
+                             .addPoint(d, -params['pin_length'] + d).make().extrude(params['pin_thickness'])
 
         else: # make a vertical pin
-            pin = self._make_straight_pin(pin_height)\
+            pin = self._make_straight_pin(params, pin_height)\
                       .rotate((0,0,0), (1,0,0), 90)\
-                      .translate((0, r_lower_o, - self.pin_thickness))
+                      .translate((0, r_lower_o, - params['pin_thickness']))
 
         # make the arc joining the pin segments
-        arc = Polyline(cq.Workplane("YZ").workplane(offset=-self.pin_width / 2.0))\
+        arc = Polyline(cq.Workplane("YZ").workplane(offset=-params['pin_width'] / 2.0, centerOption="CenterOfMass"))\
                          .addArc(r_lower_o, -90, 1)\
-                         .addPoint(0, self.pin_thickness)\
-                         .addArc(-r_lower_i, -90).make().extrude(self.pin_width)
+                         .addPoint(0, params['pin_thickness'])\
+                         .addArc(-r_lower_i, -90).make().extrude(params['pin_width'])
 
-        pin = pin.union(arc).translate((0, -self.pin_thickness / 2, -top_length))
+        pin = pin.union(arc).translate((0, -params['pin_thickness'] / 2, -top_length))
 
         if(round(top_length, 6) != 0.0):
             pin = pin.union(cq.Workplane("XZ")\
-                     .workplane(offset=-self.pin_thickness / 2)\
-                     .moveTo(self.pin_width / 2.0, r_lower_o-(top_length + r_lower_o))\
+                     .workplane(offset=-params['pin_thickness'] / 2, centerOption="CenterOfMass")\
+                     .moveTo(params['pin_width'] / 2.0, r_lower_o-(top_length + r_lower_o))\
                      .line(0, top_length)\
-                     .line(-self.pin_width, 0)\
+                     .line(-params['pin_width'], 0)\
                      .line(0, -top_length)\
-                     .close().extrude(self.pin_thickness))
+                     .close().extrude(params['pin_thickness']))
         elif (round(top_extension, 6) != 0.0):
             pin = pin.union(cq.Workplane("XZ")\
-                     .workplane(offset=-self.pin_thickness / 2)\
-                     .moveTo(self.pin_width / 2.0, 0.0)\
+                     .workplane(offset=-params['pin_thickness'] / 2, centerOption="CenterOfMass")\
+                     .moveTo(params['pin_width'] / 2.0, 0.0)\
                      .line(0.0, top_extension)\
-                     .line(-self.pin_width, 0.0)\
+                     .line(-params['pin_width'], 0.0)\
                      .line(0.0, -top_extension)\
-                     .close().extrude(self.pin_thickness))
+                     .close().extrude(params['pin_thickness']))
         
         
         return pin
@@ -598,7 +598,7 @@ class PartBase (object):
                           .addArc(-r_upper_o, -90, 1)\
                           .addPoint(-top_length, 0).make().extrude(self.pin_width).translate((-self.pin_width / 2.0, 0, 0))
 
-    def _make_Jhook_pin(self, pin_height, bottom_length, top_length = 0.05, r_upper_i=None, r_lower_i=None):
+    def _make_Jhook_pin(self, params, r_upper_i=None, r_lower_i=None):
         """ create J-hook pin
 
         The pin will placed at coordinate 0, 0 and with the base at Z = 0
@@ -619,27 +619,27 @@ class PartBase (object):
         # bottom_length - pin bottom flat part length (excluding corner arc)
 
         if r_lower_i is None:
-            r_lower_i = self.pin_thickness / 2.0 if r_upper_i is None else r_upper_i
+            r_lower_i = params['pin_thickness'] / 2.0 if r_upper_i is None else r_upper_i
 
         if r_upper_i is None:
-            r_upper_i = self.pin_thickness / 2.0
+            r_upper_i = params['pin_thickness'] / 2.0
 
-        r_upper_o = r_upper_i + self.pin_thickness # pin upper corner, outer radius
-        r_lower_o = r_lower_i + self.pin_thickness # pin lower corner, outer radius
-        bottom_length = bottom_length - r_lower_i
-        
+        r_upper_o = r_upper_i + params['pin_thickness'] # pin upper corner, outer radius
+        r_lower_o = r_lower_i + params['pin_thickness'] # pin lower corner, outer radius
+        bottom_length = params['pin_bottom_length'] - r_lower_i
+        top_length = 0.05
 
-        return Polyline(cq.Workplane("YZ"), (-(top_length + r_upper_i), pin_height))\
+        return Polyline(cq.Workplane("YZ"), (-(top_length + r_upper_i), params['pin_height']))\
                           .addPoint(top_length, 0)\
                           .addArc(r_upper_i, -90)\
-                          .addPoint(0, -(pin_height - r_upper_i - r_lower_i - self.pin_thickness))\
+                          .addPoint(0, -(params['pin_height'] - r_upper_i - r_lower_i - params['pin_thickness']))\
                           .addArc(-r_lower_i, 90)\
                           .addPoint(-bottom_length, 0)\
-                          .addPoint(0, -self.pin_thickness)\
+                          .addPoint(0, -params['pin_thickness'])\
                           .addPoint(bottom_length, 0)\
                           .addArc(r_lower_o, 90, 1)\
-                          .addPoint(0, pin_height - r_upper_i - r_lower_i - self.pin_thickness)\
+                          .addPoint(0, params['pin_height'] - r_upper_i - r_lower_i - params['pin_thickness'])\
                           .addArc(-r_upper_o, -90, 1)\
-                          .addPoint(-top_length, 0).make().extrude(self.pin_width).translate((-self.pin_width / 2.0, 0, 0))
+                          .addPoint(-top_length, 0).make().extrude(params['pin_width']).translate((-params['pin_width'] / 2.0, 0, 0))
 
 ### EOF ###

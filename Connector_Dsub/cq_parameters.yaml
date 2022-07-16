@@ -1,0 +1,948 @@
+9_Horizontal_P2.77x2.54mm_EdgePinOffset9.40mm:
+  model_name: 'DSUB-9_{}_Horizontal_P2.77x2.54mm_EdgePinOffset9.40mm' # Model name
+  pin: ['round1', 9, 2.77, 2.54, 0.64, 3.9]                 # Type of pins
+  serie: 2                                                  # Shape
+  npthserie: [3, 11.94]                                     # npth shape
+  genders: ['male', 'female']                                # Gender(s)
+  body_top_color_key : 'white body'                         # Top color
+  body_color_key     : 'metal grey pins'                    # Body color
+  pin_color_key      : 'metal grey pins'                    # Pin color
+  npth_pin_color_key : 'black body'                         # NPTH Pin color
+  destination_dir: 'Connector_Dsub.3dshapes'                # destination directory
+  translate: null
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+9_Horizontal_P2.77x2.84mm_EdgePinOffset4.94mm_Housed_MountingHolesOffset7.48mm:
+  pin: ['round1', 9, 2.77, 2.84, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 2
+  npthserie: [2, 7.78, 10.48, 0.3]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-9_{}_Horizontal_P2.77x2.84mm_EdgePinOffset4.94mm_Housed_MountingHolesOffset7.48mm
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+9_Horizontal_P2.77x2.84mm_EdgePinOffset7.70mm_Housed_MountingHolesOffset9.12mm:
+  pin: ['round1', 9, 2.77, 2.84, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 2
+  npthserie: [2, 10.54, 12.34, 1.42]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-9_{}_Horizontal_P2.77x2.84mm_EdgePinOffset7.70mm_Housed_MountingHolesOffset9.12mm
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+9_Horizontal_P2.77x2.84mm_EdgePinOffset9.40mm:
+  pin: ['round1', 9, 2.77, 2.54, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 2
+  npthserie: [3, 12.24]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-9_{}_Horizontal_P2.77x2.84mm_EdgePinOffset9.40mm
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+9_Horizontal_P2.77x2.84mm_EdgePinOffset9.90mm_Housed_MountingHolesOffset11.32mm:
+  pin: ['round1', 9, 2.77, 2.84, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 2
+  npthserie: [2, 12.74, 14.54, 1.42]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-9_{}_Horizontal_P2.77x2.84mm_EdgePinOffset9.90mm_Housed_MountingHolesOffset11.32mm
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+9_Horizontal_P2.77x2.84mm_EdgePinOffset14.56mm_Housed_MountingHolesOffset8.20mm:
+  pin: ['round1', 9, 2.77, 2.84, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 2
+  npthserie: [2, 17.4, 19.2, 9.2]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-9_{}_Horizontal_P2.77x2.84mm_EdgePinOffset14.56mm_Housed_MountingHolesOffset8.20mm
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+9_Horizontal_P2.77x2.84mm_EdgePinOffset14.56mm_Housed_MountingHolesOffset15.98mm:
+  pin: ['round1', 9, 2.77, 2.84, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 2
+  npthserie: [2, 17.4, 19.2, 1.42]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-9_{}_Horizontal_P2.77x2.84mm_EdgePinOffset14.56mm_Housed_MountingHolesOffset15.98mm
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+9_Vertical_P2.77x2.84mm:
+  pin: ['round', 9, 2.77, 2.84, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 2
+  npthserie: [1]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-9_{}_Vertical_P2.77x2.84mm
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+9_Vertical_P2.77x2.84mm_MountingHoles:
+  pin: ['round', 9, 2.77, 2.84, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 2
+  npthserie: [1]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-9_{}_Vertical_P2.77x2.84mm_MountingHoles
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+15_Horizontal_P2.29x1.98mm_EdgePinOffset3.03mm_Housed_MountingHolesOffset4.94mm:
+  pin: ['round1', 15, 2.29, 1.98, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 3
+  npthserie: [2, 6.99, 8.6, 1.98]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-15-HD_{}_Horizontal_P2.29x1.98mm_EdgePinOffset3.03mm_Housed_MountingHolesOffset4.94mm
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+15_Horizontal_P2.29x1.98mm_EdgePinOffset8.35mm_Housed_MountingHolesOffset10.89mm:
+  pin: ['round1', 15, 2.29, 1.98, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 3
+  npthserie: [2, 12.31, 13.89, 1.98]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-15-HD_{}_Horizontal_P2.29x1.98mm_EdgePinOffset8.35mm_Housed_MountingHolesOffset10.89mm
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+15_Horizontal_P2.29x1.98mm_EdgePinOffset9.40mm:
+  pin: ['round1', 15, 2.29, 1.98, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 3
+  npthserie: [3, 13.36]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-15-HD_{}_Horizontal_P2.29x1.98mm_EdgePinOffset9.40mm
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+15_Horizontal_P2.29x2.54mm_EdgePinOffset9.40mm:
+  pin: ['round1', 15, 2.29, 2.54, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 3
+  npthserie: [3, 14.48]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-15-HD_{}_Horizontal_P2.29x2.54mm_EdgePinOffset9.40mm
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+15_Horizontal_P2.77x2.54mm_EdgePinOffset9.40mm:
+  pin: ['round1', 15, 2.77, 2.54, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 2
+  npthserie: [3, 11.94]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-15_{}_Horizontal_P2.77x2.54mm_EdgePinOffset9.40mm
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+15_Horizontal_P2.77x2.84mm_EdgePinOffset4.94mm_Housed_MountingHolesOffset7.48mm:
+  pin: ['round1', 15, 2.77, 2.84, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 2
+  npthserie: [2, 7.78, 10.48, 0.3]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-15_{}_Horizontal_P2.77x2.84mm_EdgePinOffset4.94mm_Housed_MountingHolesOffset7.48mm
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+15_Horizontal_P2.77x2.84mm_EdgePinOffset14.56mm_Housed_MountingHolesOffset15.98mm:
+  pin: ['round1', 15, 2.77, 2.84, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 2
+  npthserie: [2, 17.4, 19.2, 1.42]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-15_{}_Horizontal_P2.77x2.84mm_EdgePinOffset14.56mm_Housed_MountingHolesOffset15.98mm
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+15_Horizontal_P2.77x2.84mm_EdgePinOffset14.56mm_Housed_MountingHolesOffset8.20mm:
+  pin: ['round1', 15, 2.77, 2.84, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 2
+  npthserie: [2, 17.4, 19.2, 9.2]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-15_{}_Horizontal_P2.77x2.84mm_EdgePinOffset14.56mm_Housed_MountingHolesOffset8.20mm
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+15_Horizontal_P2.77x2.84mm_EdgePinOffset9.90mm_Housed_MountingHolesOffset11.32mm:
+  pin: ['round1', 15, 2.77, 2.84, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 2
+  npthserie: [2, 12.74, 14.54, 1.42]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-15_{}_Horizontal_P2.77x2.84mm_EdgePinOffset9.90mm_Housed_MountingHolesOffset11.32mm
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+15_Vertical_P2.77x2.84mm:
+  pin: ['round', 15, 2.77, 2.84, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 2
+  npthserie: [1]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-15_{}_Vertical_P2.77x2.84mm
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+15_Vertical_P2.77x2.84mm_MountingHoles:
+  pin: ['round', 15, 2.77, 2.84, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 2
+  npthserie: [1]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-15_{}_Vertical_P2.77x2.84mm_MountingHoles
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+15_Vertical_P2.29x1.98mm_MountingHoles:
+  pin: ['round', 15, 2.29, 1.98, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 3
+  npthserie: [1]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-15-HD_{}_Vertical_P2.29x1.98mm_MountingHoles
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+15_Horizontal_P2.77x2.84mm_EdgePinOffset9.40mm:
+  pin: ['round1', 15, 2.77, 2.84, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 2
+  npthserie: [3, 12.24]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-15_{}_Horizontal_P2.77x2.84mm_EdgePinOffset9.40mm
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+15_Horizontal_P2.77x2.84mm_EdgePinOffset7.70mm_Housed_MountingHolesOffset9.12mm:
+  pin: ['round1', 15, 2.77, 2.84, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 2
+  npthserie: [2, 10.54, 12.34, 1.42]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-15_{}_Horizontal_P2.77x2.84mm_EdgePinOffset7.70mm_Housed_MountingHolesOffset9.12mm
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+25_Horizontal_P2.77x2.54mm_EdgePinOffset9.40mm:
+  pin: ['round1', 25, 2.77, 2.54, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 2
+  npthserie: [3, 11.94]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-25_{}_Horizontal_P2.77x2.54mm_EdgePinOffset9.40mm
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+25_Horizontal_P2.77x2.84mm_EdgePinOffset4.94mm_Housed_MountingHolesOffset7.48mm:
+  pin: ['round1', 25, 2.77, 2.84, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 2
+  npthserie: [2, 7.78, 10.48, 0.0]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-25_{}_Horizontal_P2.77x2.84mm_EdgePinOffset4.94mm_Housed_MountingHolesOffset7.48mm
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+25_Horizontal_P2.77x2.84mm_EdgePinOffset7.70mm_Housed_MountingHolesOffset9.12mm:
+  pin: ['round1', 25, 2.77, 2.84, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 2
+  npthserie: [2, 10.54, 12.34, 1.42]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-25_{}_Horizontal_P2.77x2.84mm_EdgePinOffset7.70mm_Housed_MountingHolesOffset9.12mm
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+25_Horizontal_P2.77x2.84mm_EdgePinOffset9.40mm:
+  pin: ['round1', 25, 2.77, 2.84, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 2
+  npthserie: [3, 12.24]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-25_{}_Horizontal_P2.77x2.84mm_EdgePinOffset9.40mm
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+25_Horizontal_P2.77x2.84mm_EdgePinOffset9.90mm_Housed_MountingHolesOffset11.32mm:
+  pin: ['round1', 25, 2.77, 2.84, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 2
+  npthserie: [2, 12.74, 14.54, 1.42]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-25_{}_Horizontal_P2.77x2.84mm_EdgePinOffset9.90mm_Housed_MountingHolesOffset11.32mm
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+25_Horizontal_P2.77x2.84mm_EdgePinOffset14.56mm_Housed_MountingHolesOffset8.20mm:
+  pin: ['round1', 25, 2.77, 2.84, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 2
+  npthserie: [2, 17.4, 19.2, 9.2]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-25_{}_Horizontal_P2.77x2.84mm_EdgePinOffset14.56mm_Housed_MountingHolesOffset8.20mm
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+25_Horizontal_P2.77x2.84mm_EdgePinOffset14.56mm_Housed_MountingHolesOffset15.98mm:
+  pin: ['round1', 25, 2.77, 2.84, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 2
+  npthserie: [2, 17.4, 19.2, 1.42]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-25_{}_Horizontal_P2.77x2.84mm_EdgePinOffset14.56mm_Housed_MountingHolesOffset15.98mm
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+25_Vertical_P2.77x2.84mm:
+  pin: ['round', 25, 2.77, 2.84, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 2
+  npthserie: [1]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-25_{}_Vertical_P2.77x2.84mm
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+25_Vertical_P2.77x2.84mm_MountingHoles:
+  pin: ['round', 25, 2.77, 2.84, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 2
+  npthserie: [1]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-25_{}_Vertical_P2.77x2.84mm_MountingHoles
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+26_Horizontal_P2.29x1.98mm_EdgePinOffset3.03mm_Housed_MountingHolesOffset4.94mm:
+  pin: ['round1', 26, 2.29, 1.98, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 3
+  npthserie: [2, 6.99, 8.6, 1.98]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-26-HD_{}_Horizontal_P2.29x1.98mm_EdgePinOffset3.03mm_Housed_MountingHolesOffset4.94mm
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+26_Horizontal_P2.29x1.98mm_EdgePinOffset8.35mm_Housed_MountingHolesOffset10.89mm:
+  pin: ['round1', 26, 2.29, 1.98, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 3
+  npthserie: [2, 12.31, 13.89, 1.98]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-26-HD_{}_Horizontal_P2.29x1.98mm_EdgePinOffset8.35mm_Housed_MountingHolesOffset10.89mm
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+26_Horizontal_P2.29x1.98mm_EdgePinOffset9.40mm:
+  pin: ['round1', 26, 2.29, 1.98, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 3
+  npthserie: [3, 13.36]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-26-HD_{}_Horizontal_P2.29x1.98mm_EdgePinOffset9.40mm
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+26_Horizontal_P2.29x2.54mm_EdgePinOffset9.40mm:
+  pin: ['round1', 26, 2.29, 2.54, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 3
+  npthserie: [3, 14.48]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-26-HD_{}_Horizontal_P2.29x2.54mm_EdgePinOffset9.40mm
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+26_Vertical_P2.29x1.98mm_MountingHoles:
+  pin: ['round', 26, 2.29, 1.98, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 3
+  npthserie: [1]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-26-HD_{}_Vertical_P2.29x1.98mm_MountingHoles
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+37_Horizontal_P2.77x2.54mm_EdgePinOffset9.40mm:
+  pin: ['round1', 37, 2.77, 2.54, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 2
+  npthserie: [3, 11.04]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-37_{}_Horizontal_P2.77x2.54mm_EdgePinOffset9.40mm
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+37_Horizontal_P2.77x2.84mm_EdgePinOffset4.94mm_Housed_MountingHolesOffset7.48mm:
+  pin: ['round1', 37, 2.77, 2.84, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 2
+  npthserie: [2, 11.04, 13.74, 1.42]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-37_{}_Horizontal_P2.77x2.84mm_EdgePinOffset4.94mm_Housed_MountingHolesOffset7.48mm
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+37_Horizontal_P2.77x2.84mm_EdgePinOffset7.70mm_Housed_MountingHolesOffset9.12mm:
+  pin: ['round1', 37, 2.77, 2.84, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 2
+  npthserie: [2, 10.54, 12.34, 1.42]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-37_{}_Horizontal_P2.77x2.84mm_EdgePinOffset7.70mm_Housed_MountingHolesOffset9.12mm
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+37_Horizontal_P2.77x2.84mm_EdgePinOffset9.40mm:
+  pin: ['round1', 37, 2.77, 2.84, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 2
+  npthserie: [3, 12.35]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-37_{}_Horizontal_P2.77x2.84mm_EdgePinOffset9.40mm
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+37_Horizontal_P2.77x2.84mm_EdgePinOffset9.90mm_Housed_MountingHolesOffset11.32mm:
+  pin: ['round1', 37, 2.77, 2.84, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 2
+  npthserie: [2, 12.74, 14.54, 1.42]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-37_{}_Horizontal_P2.77x2.84mm_EdgePinOffset9.90mm_Housed_MountingHolesOffset11.32mm
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+37_Horizontal_P2.77x2.84mm_EdgePinOffset14.56mm_Housed_MountingHolesOffset8.20mm:
+  pin: ['round1', 37, 2.77, 2.84, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 2
+  npthserie: [2, 17.4, 19.2, 9.2]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-37_{}_Horizontal_P2.77x2.84mm_EdgePinOffset14.56mm_Housed_MountingHolesOffset8.20mm
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+37_Horizontal_P2.77x2.84mm_EdgePinOffset14.56mm_Housed_MountingHolesOffset15.98mm:
+  pin: ['round1', 37, 2.77, 2.84, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 2
+  npthserie: [2, 17.4, 19.2, 1.42]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-37_{}_Horizontal_P2.77x2.84mm_EdgePinOffset14.56mm_Housed_MountingHolesOffset15.98mm
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+37_Vertical_P2.77x2.84mm:
+  pin: ['round', 37, 2.77, 2.84, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 2
+  npthserie: [1]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-37_{}_Vertical_P2.77x2.84mm
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+37_Vertical_P2.77x2.84mm_MountingHoles:
+  pin: ['round', 37, 2.77, 2.84, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 2
+  npthserie: [1]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-37_{}_Vertical_P2.77x2.84mm_MountingHoles
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+44_Horizontal_P2.29x1.98mm_EdgePinOffset3.03mm_Housed_MountingHolesOffset4.94mm:
+  pin: ['round1', 44, 2.29, 1.98, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 3
+  npthserie: [2, 6.99, 8.6, 1.98]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-44-HD_{}_Horizontal_P2.29x1.98mm_EdgePinOffset3.03mm_Housed_MountingHolesOffset4.94mm
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+44_Horizontal_P2.29x1.98mm_EdgePinOffset8.35mm_Housed_MountingHolesOffset10.89mm:
+  pin: ['round1', 44, 2.29, 1.98, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 3
+  npthserie: [2, 12.31, 13.89, 1.98]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-44-HD_{}_Horizontal_P2.29x1.98mm_EdgePinOffset8.35mm_Housed_MountingHolesOffset10.89mm
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+44_Horizontal_P2.29x1.98mm_EdgePinOffset9.40mm:
+  pin: ['round1', 44, 2.29, 1.98, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 3
+  npthserie: [3, 13.36]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-44-HD_{}_Horizontal_P2.29x1.98mm_EdgePinOffset9.40mm
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+44_Horizontal_P2.29x2.54mm_EdgePinOffset9.40mm:
+  pin: ['round1', 44, 2.29, 2.54, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 3
+  npthserie: [3, 14.48]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-44-HD_{}_Horizontal_P2.29x2.54mm_EdgePinOffset9.40mm
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+44_Vertical_P2.29x1.98mm_MountingHoles:
+  pin: ['round', 44, 2.29, 1.98, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 3
+  npthserie: [1]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-44-HD_{}_Vertical_P2.29x1.98mm_MountingHoles
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+62_Horizontal_P2.41x1.98mm_EdgePinOffset3.03mm_Housed_MountingHolesOffset4.94mm:
+  pin: ['round1', 62, 2.41, 1.98, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 3
+  npthserie: [2, 6.99, 8.6, 1.98]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-62-HD_{}_Horizontal_P2.41x1.98mm_EdgePinOffset3.03mm_Housed_MountingHolesOffset4.94mm
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+62_Horizontal_P2.41x1.98mm_EdgePinOffset8.35mm_Housed_MountingHolesOffset10.89mm:
+  pin: ['round1', 62, 2.41, 1.98, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 3
+  npthserie: [2, 12.31, 13.89, 1.98]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-62-HD_{}_Horizontal_P2.41x1.98mm_EdgePinOffset8.35mm_Housed_MountingHolesOffset10.89mm
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+62_Horizontal_P2.41x1.98mm_EdgePinOffset9.40mm:
+  pin: ['round1', 62, 2.41, 1.98, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 3
+  npthserie: [3, 13.36]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-62-HD_{}_Horizontal_P2.41x1.98mm_EdgePinOffset9.40mm
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+62_Horizontal_P2.41x2.54mm_EdgePinOffset9.40mm:
+  pin: ['round1', 62, 2.41, 2.54, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 3
+  npthserie: [3, 14.48]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-62-HD_{}_Horizontal_P2.41x2.54mm_EdgePinOffset9.40mm
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+
+62_Vertical_P2.41x1.98mm_MountingHoles:
+  pin: ['round', 62, 2.41, 1.98, 0.64, 3.9]
+  genders: ['male', 'female']
+  serie: 3
+  npthserie: [1]
+  npth_pin_color_key: 'black body'
+  body_top_color_key: 'white body'
+  body_color_key: 'metal grey pins'
+  pin_color_key: 'metal grey pins'
+  rotatex: null
+  rotatey: null
+  rotatez: null
+  translate: null
+  destination_dir: Connector_Dsub.3dshapes
+  model_name: DSUB-62-HD_{}_Vertical_P2.41x1.98mm_MountingHoles
+  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'

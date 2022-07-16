@@ -63,15 +63,15 @@ class LICENCE_Info():
 
 
 import cadquery as cq
-from Helpers import show
+# from Helpers import show
 from collections import namedtuple
-import FreeCAD
+# import FreeCAD
 
 # maui import cadquery as cq
 # maui from Helpers import show
 from math import tan, radians, sqrt
 
-from c_axial_tht_param import *
+from .c_axial_tht_param import *
 
 class series_params():
     fp_name_format = "axial_fp_name"
@@ -105,20 +105,21 @@ def getName(params, configuration):
 all_params = kicad_naming_params_c_axial_th_cap
 
 def generate_part(params):
-    L = params.L    # body length
-    D = params.D    # body width
-    d = params.d     # lead diameter
-    F = params.F     # lead separation (center to center)
-    ll = params.ll   # lead length
-    bs = params.bs   # board separation
-    rot = params.rotation
+    L = params['L']             # body length
+    D = params['D']             # body width
+    d = params['d']             # lead diameter
+    F = params['F']             # lead separation (center to center)
+    ll = params['ll']           # lead length
+    bs = params['bs']           # board separation
+    rot = params['rotation']
 
     # draw the leads
     lead1 = cq.Workplane("XY").workplane(offset=-ll).center(-F/2,0).circle(d/2).extrude(ll+D/2-d+bs)
-    lead1 = lead1.union(cq.Workplane("XY").workplane(offset=D/2-d+bs).center(-F/2,0).circle(d/2).center(-F/2+d/2,0).revolve(90,(-F/2+d/2+d,d)))
-    lead1 = lead1.rotate((-F/2,0,0), (0,0,1), -90)
-    lead2 = lead1.rotate((-F/2,0,0), (0,0,1), 180).translate((F,0,0))
-    Hlead = cq.Workplane("YZ").workplane(offset=-F/2+d).center(0,D/2+bs).circle(d/2).extrude(F-d*2)
+    lead_round = lead1.faces(">Z").workplane(centerOption="CenterOfMass").circle(d/2).revolve(90,(F/2+d/2+d, d)).rotateAboutCenter((0,0,1), -90)
+    lead1 = lead1.union(lead_round)
+    # lead1 = lead1.rotate((-F/2,0,0), (0,0,1), -90)
+    lead2 = lead1.rotateAboutCenter((0,0,1), 180).translate((F,0,0))
+    Hlead = cq.Workplane("YZ").workplane(offset=-F/2+d - 0.05).center(0,D/2+bs).circle(d/2).extrude(F-d*2 + 0.1)
     leads = lead1.union(lead2).union(Hlead)
 
     #draw the body

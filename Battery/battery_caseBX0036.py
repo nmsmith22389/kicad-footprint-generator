@@ -1,26 +1,25 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import battery_common
-from battery_common import *
-    
-    
+import cadquery as cq
+from .battery_common import *
+
 def make_case_BX0036(params):
 
-    manufacture = params.manufacture    # Model name
-    serie = params.serie                # Model name
-    cellsize = params.cellsize    # Battery type
-    cellcnt = params.cellcnt      # Number of battery
-    L = params.L                        # Package width
-    W = params.W                        # Package width
-    H = params.H                        # Package height
-    A1 = params.A1                      # package board seperation
-    pins = params.pins                  # Pins tht/smd, x pos, y pos, 'round/rect', diameter/x size, y size, length
-    npthpins = params.npthpins          # npth holes
-    socket = params.socket              # 'type', centre diameter, length, height
-    topear = params.topear              # Top ear
-    rotation = params.rotation          # Rotation if required
-    modelname = params.modelname        # Model name
+    # manufacture = params.manufacture    # Model name
+    # serie = params.serie                # Model name
+    cellsize = params["cellsize"]         # Battery type
+    #cellcnt = params.cellcnt      # Number of battery
+    L = params["L"]                        # Package width
+    W = params["W"]                        # Package width
+    H = params["H"]                        # Package height
+    A1 = params["A1"]                      # package board seperation
+    pins = params["pins"]                  # Pins tht/smd, x pos, y pos, 'round/rect', diameter/x size, y size, length
+    npthpins = params["npthpins"]          # npth holes
+    socket = params["socket"]              # 'type', centre diameter, length, height
+    # topear = params.topear              # Top ear
+    rotation = params["rotation"]          # Rotation if required
+    #modelname = params.modelname        # Model name
 
     A11 = get_body_offset(params)
     #

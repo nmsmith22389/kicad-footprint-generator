@@ -33,14 +33,14 @@
 #****************************************************************************
 
 import cadquery as cq
-from Helpers import show
+# from Helpers import show
 
 from math import sqrt
 
 ## base parametes & model
 
-from cq_base_model import PartBase
-from cq_base_parameters import CaseType
+from .cq_base_model import PartBase
+from .cq_base_parameters import CaseType
 
 ## model generator
 
@@ -69,6 +69,7 @@ class dip_socket_turned_pin (PartBase):
         self.pin_socket_radius = self.pin_socket_diameter / 2.0
         self.pin_radius = 0.508 / 2.0
 
+        self.pins_row_distance = params['pin_rows_distance']
         self.body_width = self.pin_rows_distance + 2.54
         self.body_height = 2.667
         self.body_length = self.num_pins * 1.27
@@ -106,7 +107,7 @@ class dip_socket_turned_pin (PartBase):
                 .circle(self.pin_socket_radius).extrude(-self.body_board_distance)\
                 .faces("<Z").edges().chamfer(0.3)
 
-        return pin.faces(">Z").workplane()\
+        return pin.faces(">Z").workplane(centerOption="CenterOfMass")\
                               .circle(self.pin_socket_radius + 0.1).extrude(self.body_height + 0.04).faces(">Z")\
                               .cskHole(self.pin_radius * 2.0, self.pin_socket_diameter, 82, depth=self.body_height)
 
@@ -223,8 +224,8 @@ class dip_socket_turned_pin (PartBase):
         # create other side of the pins
         return pins.union(pins.rotate((0,0,0), (0,0,1), 180))
 
-    def make(self):
-        show(self.make_body())
-        show(self.make_pins())
+    # def make(self):
+    #     show(self.make_body())
+    #     show(self.make_pins())
 
 ## EOF ##

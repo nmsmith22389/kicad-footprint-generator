@@ -18,18 +18,18 @@ import hashlib, pyparsing
 import datetime
 from datetime import datetime
 
-import FreeCAD
-import Import
-import FreeCADGui
-import ImportGui
-import Draft
+# import FreeCAD
+# import Import
+# import FreeCADGui
+# import ImportGui
+# import Draft
 
 # additionally needed for new VRML export script
-import FreeCADGui,Part,Mesh
-import PySide
-from PySide import QtGui, QtCore
-from collections import namedtuple
-from os.path import expanduser
+# import FreeCADGui,Part,Mesh
+# import PySide
+# from PySide import QtGui, QtCore
+# from collections import namedtuple
+# from os.path import expanduser
 
 # additionally needed for POVray export script
 try:
@@ -42,11 +42,11 @@ from subprocess import call
 
 #FNME_hashfile = "_StepFileHashes.txt" # stored in STEP folder above
 
-STR_int_licAuthor = "your name"
-STR_int_licEmail = "your email"
-STR_int_licOrgSys = ""
-STR_int_licPreProc = ""
-STR_int_licOrg = "FreeCAD"
+STR_int_licAuthor = "KiCAD"
+STR_int_licEmail = "kicad"
+STR_int_licOrgSys = "KiCAD"
+STR_int_licPreProc = "OCCT"
+STR_int_licOrg = "KiCAD"
 
 LIST_int_license = ["Copyright (C) "+datetime.now().strftime("%Y")+", " + STR_int_licAuthor,
                 "",
@@ -79,7 +79,7 @@ LIST_int_license = ["Copyright (C) "+datetime.now().strftime("%Y")+", " + STR_in
 
 
 def say(*arg):
-    FreeCAD.Console.PrintMessage(" ".join(map(str,arg)) + "\n")
+    print(" ".join(map(str,arg)) + "\n")
 
 def FNCT_modify_step(PMBL_stepfile,
                      DICT_positions,
@@ -165,8 +165,8 @@ def addLicenseToStep(FLDR_toStepFiles, FNME_stepfile, LIST_license, STR_licAutho
             try:
                 HDLR_stepfile = open(filepath, 'r') # open
             except Exception as exception:
-                FreeCAD.Console.PrintError("Add License: Can't open step file for read access\n")
-                FreeCAD.Console.PrintError("{:s}\n".format(exception))
+                print("Add License: Can't open step file for read access\n")
+                print("{:s}\n".format(exception))
                 return
 
             HDLR_stepfile.seek(0)
@@ -206,8 +206,8 @@ def addLicenseToStep(FLDR_toStepFiles, FNME_stepfile, LIST_license, STR_licAutho
             try:
                 HDLR_stepfile_w = open(filepath, 'w') # open
             except Exception as exception:
-                FreeCAD.Console.PrintError("Add License: Can't open step file for write access\n")
-                FreeCAD.Console.PrintError("{:s}\n".format(exception))
+                print("Add License: Can't open step file for write access\n")
+                print("{:s}\n".format(exception))
                 return
 
             # overwrite with new preamble
@@ -219,7 +219,7 @@ def addLicenseToStep(FLDR_toStepFiles, FNME_stepfile, LIST_license, STR_licAutho
             HDLR_stepfile_w.close()
             say ("License addition successful")
         else:
-            FreeCAD.Console.PrintWarning("Add License: File has wrong file extension: {:s}".format(FNME_stepfile))
+            print("Add License: File has wrong file extension: {:s}".format(FNME_stepfile))
     else:
-        FreeCAD.Console.PrintWarning("Add License: Path does not exist: {:s}".format(filepath))
+        print("Add License: Path does not exist: {:s}".format(filepath))
 ###

@@ -1,201 +1,144 @@
-# Molex 5569
-# Mini-Fit Jr. Header, Dual Row, Right Angle,
-# with Snap-in Plastic Peg PCB Lock
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+#
+# This is derived from a cadquery script for generating PDIP models in X3D format
+#
+# from https://bitbucket.org/hyOzd/freecad-macros
+# author hyOzd
+#
+#
+## Requirements
+## CadQuery 2.1 commit e00ac83f98354b9d55e6c57b9bb471cdf73d0e96 or newer
+## https://github.com/CadQuery/cadquery
+#
+## To run the script just do: ./generator.py --output_dir [output_directory]
+## e.g. ./generator.py --output_dir /tmp
+#
+#* These are cadquery tools to export                                       *
+#* generated models in STEP & VRML format.                                  *
+#*                                                                          *
+#* cadquery script for generating QFP/SOIC/SSOP/TSSOP models in STEP AP214  *
+#* Copyright (c) 2015                                                       *
+#*     Maurice https://launchpad.net/~easyw                                 *
+#* Copyright (c) 2022                                                       *
+#*     Update 2022                                                          *
+#*     jmwright (https://github.com/jmwright)                               *
+#*     Work sponsored by KiCAD Services Corporation                         *
+#*          (https://www.kipro-pcb.com/)                                    *
+#*                                                                          *
+#* All trademarks within this guide belong to their legitimate owners.      *
+#*                                                                          *
+#*   This program is free software; you can redistribute it and/or modify   *
+#*   it under the terms of the GNU General Public License (GPL)             *
+#*   as published by the Free Software Foundation; either version 2 of      *
+#*   the License, or (at your option) any later version.                    *
+#*   for detail see the LICENCE text file.                                  *
+#*                                                                          *
+#*   This program is distributed in the hope that it will be useful,        *
+#*   but WITHOUT ANY WARRANTY; without even the implied warranty of         *
+#*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          *
+#*   GNU Library General Public License for more details.                   *
+#*                                                                          *
+#*   You should have received a copy of the GNU Library General Public      *
+#*   License along with this program; if not, write to the Free Software    *
+#*   Foundation, Inc.,                                                      *
+#*   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA           *
+#*                                                                          *
+#****************************************************************************
 
-import FreeCAD as App
-import FreeCADGui as Gui
+__title__ = "make Molex 5569 Mini-Fit Jr. Header, Dual Row, Right Angle, with Snap-in Plastic Peg PCB Lock 3D models exported to STEP and VRML"
+__author__ = "scripts: tim.tashpulatov; models: see cq_model files; update: jmwright"
+__Comment__ = '''This generator loads cadquery model scripts and generates step/wrl files for the official kicad library.'''
 
-import sys, os
-from sys import argv
-sys.path.append("../_tools")
+___ver___ = "2.0.0"
 
-scriptdir = os.path.dirname (os.path.realpath(__file__))
-sys.path.append(scriptdir)
+import os
 
 import cadquery as cq
-from Helpers import show
+from _tools import shaderColors, parameters, cq_color_correct
+from _tools import cq_globals
 
-# import cq_parameters
-from cq_parameters import all_params_molex_5569
+from .molex_5569 import MakePart
 
+def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
+    """
+    Main entry point into this generator.
+    """
+    models = []
 
-# Body TODO move to cq_parameters
-body_height = 9.6
-body_width = 12.8
-body_length = (5.4, 9.6, 13.8, 18.0, 22.2, 26.4, 30.6, 34.8, 39.0)
-body_thickness = 0.2     # .faces("<X").shell(body_thickness)
-peg_to_front = 6.6
-peg_to_back = body_width - peg_to_front
-standoff = 0.4
+    all_params = parameters.load_parameters("Molex_5569")
 
-# Lock
-# 4.20 for 2-pin connector, 3.40 for 6+ pins
+    if all_params == None:
+        print("ERROR: Model parameters must be provided.")
+        return
 
-# Peg
-peg_dia = 3.00
-peg_height = 2.9
-peg_to_pin = 7.30
+    # Handle the case where no model has been passed
+    if model_to_build is None:
+        print("No variant name is given! building: {0}".format(model_to_build))
 
-# Cavity
-cavity_width = 3.8
-cavity_pattern = (0, 1, 1, 0)
-cavity_index = 0
+        model_to_build = all_params.keys()[0]
 
-# Pin
-dia = 1.07        # pin diameter
-pitch = 4.2
-step = 5.5    # distance between rows
-ch = 0.3
-pin_length = body_width/2 + 7.30 + 3        # FIXME
-pin_height = body_height + standoff + 3.6    # FIXME
+    # Handle being able to generate all models or just one
+    if model_to_build == "all":
+        models = all_params
+    else:
+        models = { model_to_build: all_params[model_to_build] }
+    # Step through the selected models
+    for model in models:
+        if output_dir_prefix == None:
+            print("ERROR: An output directory must be provided.")
+            return
+        else:
+            # Construct the final output directory
+            output_dir = os.path.join(output_dir_prefix, all_params[model]['destination_dir'])
 
-bx = -dia/2 - body_width/2  # TODO
+        # Safety check to make sure the selected model is valid
+        if not model in all_params.keys():
+            print("Parameters for %s doesn't exist in 'all_params', skipping." % model)
+            continue
 
+        # Load the appropriate colors
+        body_color = shaderColors.named_colors[all_params[model]["body_color_key"]].getDiffuseFloat()
+        pin_color = shaderColors.named_colors[all_params[model]["pin_color_key"]].getDiffuseFloat()
 
-def NextCavity():
-    global cavity_index
-    cavity_index = cavity_index + 1
-    if cavity_index > 3:
-        cavity_index = 0
-    return cavity_index
+        # Make the parts of the model
+        (body, pins) = MakePart(all_params[model])
 
+        body = body.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation']).translate(all_params[model]["translation"])
+        pins = pins.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation']).translate(all_params[model]["translation"])
 
-def MakeBody(n):
-    by = dia/2 + (n-1)*pitch/2
-    bz = -pitch + (body_height/2 + pitch/2)
-    body = cq.Workplane("XY").box(body_width, body_length[n-1], body_height) \
-        .translate((bx, by, bz))
+        # Used to wrap all the parts into an assembly
+        component = cq.Assembly()
 
-    # Lock
-    ls = 3.40
-    lock_h = 1.4
-    ly = -dia/2 + body_height/2 - ls/2
-    ly = by
-    lz = body_height - pitch/2
+        # Add the parts to the assembly
+        component.add(body, color=cq_color_correct.Color(body_color[0], body_color[1], body_color[2]))
+        component.add(pins, color=cq_color_correct.Color(pin_color[0], pin_color[1], pin_color[2]))
 
-    body = body.union(cq.Workplane("XZ")
-                        .lineTo(ls, 0).lineTo(ls, lock_h).close().extrude(ls)
-                        .translate((-body_width - dia/2,
-                                    ly + ls/2,
-                                    lz)
-                                   )
-                      )
+        # Create the output directory if it does not exist
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
 
-    # Add peg
-    # body = body.union(cq.Workplane("XY").makeCylinder(peg_dia/2, peg_height))
-    px = -peg_to_pin + dia/2
-    py = by
-    pz = -body_height/2
+        # Assemble the filename
+        pin_count = all_params[model]['N']
+        file_name = all_params[model]['fp_name_format_string'].format(
+            pincount = "0" + str(pin_count) if pin_count < 10 else str(pin_count),
+            halfpadpincount = "0" + str(int(pin_count / 2)) if (pin_count / 2) < 10 else str(int(pin_count / 2)),
+            num_rows = "2",
+            pitch = str(all_params[model]['pitch'])
+        )
 
-    if n > 2:
-        py = dia/2
+        # Export the assembly to STEP
+        component.save(os.path.join(output_dir, file_name + ".step"), cq.exporters.ExportTypes.STEP, write_pcurves=False)
 
-    peg = cq.Workplane("XY").circle(peg_dia/2).extrude(peg_height). \
-        faces("<Z").chamfer(1).translate((px, py, pz))
+        # Export the assembly to VRML
+        if enable_vrml:
+            cq.exporters.assembly.exportVRML(component, os.path.join(output_dir, file_name + ".wrl"), tolerance=cq_globals.VRML_DEVIATION, angularTolerance=cq_globals.VRML_ANGULAR_DEVIATION)
 
-    # Add second peg if circuit number is greater than 4 (2 pairs)
-    if n > 2:
-        py = dia/2 + (n-1)*pitch
-        peg = peg.union(cq.Workplane("XY").circle(peg_dia/2).
-                        extrude(peg_height).faces("<Z").chamfer(1).
-                        translate((px, py, pz)))
-
-    body = body.union(peg)
-
-    global cavity_index
-    cavity_index = 0
-    # Pin cavities
-    for i in range(1, n+1):
-        offset = dia/2 + pitch*(i-1)
-        cavity = cq.Workplane("XY").box(body_width,
-                                        cavity_width, cavity_width)
-        if cavity_pattern[cavity_index] < 1:
-            cavity = cavity.edges("|X").edges("<Z").chamfer(cavity_width/4)
-
-        cavity = cavity.translate((bx-1, offset, dia/2 + pitch))
-
-        body = body.cut(cavity)
-
-        # Bottom row
-        cavity = cq.Workplane("XY").box(body_width,
-                                        cavity_width, cavity_width)
-        if cavity_pattern[cavity_index] > 0:
-            cavity = cavity.edges("|X").edges("<Z").chamfer(cavity_width/4)
-
-        cavity = cavity.translate((bx-1, offset, dia/2))
-
-        body = body.cut(cavity)
-
-        NextCavity()
-
-    # Side rib
-    body = body.union(cq.Workplane("ZY").circle(0.4).extrude(body_width)
-                        .translate((bx + body_width/2,
-                                    by - (body_length[n-1])/2,
-                                    bz - body_height/2 + 2.5))
-                      )
-
-    return body
-
-
-def MakePin(k):
-
-    h = -pin_height + pitch*k
-    l = -pin_length + step*k
-
-    # Begin pin
-    pin = cq.Workplane("XY").rect(dia, dia, False) \
-            .extrude(h) \
-            .faces("<Z").chamfer(ch)
-
-    # Bending
-    pin = pin.union(cq.Workplane("XY").rect(dia, dia, False).revolve(90))
-
-    # End pin
-    pin = pin.union(cq.Workplane("YZ").rect(dia, dia, False)
-                    .extrude(l)
-                    .faces("<X").chamfer(ch))
-    return pin
-
-
-def MakePinPair():
-    pin = MakePin(1)
-    # Make a copy of pin for second row
-    pair = pin.union(MakePin(0).translate((step, 0, pitch)))
-    return pair
-
-
-def MakePinPairs(n):
-    result = MakePinPair()
-
-    for i in range(1, n):
-        result = result.union(MakePinPair().translate((0, i*pitch, 0)))
-    return result
-
-
-def MakePart(params):
-    pins = MakePinPairs(params.N/2)
-    body = MakeBody(params.N/2)
-    return pins, body
-
-variants = all_params_molex_5569.keys()
-
-for variant in variants:
-    ModelName = all_params_molex_5569[variant].modelName
-    CheckedModelName = ModelName.replace('.', '') \
-        .replace('-', '_').replace('(', '').replace(')', '')
-    Newdoc = App.newDocument(CheckedModelName)
-    App.setActiveDocument(CheckedModelName)
-    Gui.ActiveDocument = Gui.getDocument(CheckedModelName)
-    pins, body = MakePart(all_params_molex_5569[variant])
-
-    show(pins)
-    show(body)
-
-# pairs = 3
-
-# result = MakePinPairs(pairs)
-# show(result)
-
-# body = MakeBody(pairs)
-# show(body)
+        # Update the license
+        from _tools import add_license
+        add_license.addLicenseToStep(output_dir, file_name + ".step",
+                                        add_license.LIST_int_license,
+                                        add_license.STR_int_licAuthor,
+                                        add_license.STR_int_licEmail,
+                                        add_license.STR_int_licOrgSys,
+                                        add_license.STR_int_licPreProc)

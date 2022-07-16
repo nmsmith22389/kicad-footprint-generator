@@ -46,9 +46,13 @@
 #****************************************************************************
 
 
-import cq_parameters  # modules parameters
-from cq_parameters import *
+# import cq_parameters  # modules parameters
+# from cq_parameters import *
 
+import cadquery as cq
+
+from collections import namedtuple
+from collections.abc import Mapping
 
 class cq_parameters_CUI_CST_931RP_A():
 
@@ -116,13 +120,13 @@ class cq_parameters_CUI_CST_931RP_A():
 
     def make_case(self, params):
 
-        D = params.D                # package length
-        E = params.E                # body overall width
-        H = params.H                # body overall height
-        A1 = params.A1              # package height
-        pin = params.pin            # Pins
-        rotation = params.rotation  # Rotation if required
-        center = params.center      # Body center
+        D = params['D']                # package length
+        E = params['E']                # body overall width
+        H = params['H']                # body overall height
+        A1 = params['A1']              # package height
+        pin = params['pin']            # Pins
+        rotation = params['rotation']  # Rotation if required
+        center = params['center']      # Body center
 
         #
         #
@@ -167,15 +171,15 @@ class cq_parameters_CUI_CST_931RP_A():
         
     def make_pins(self, params):
 
-        D = params.D                # package length
-        E = params.E                # body overall width
-        H = params.H                # body overall height
-        A1 = params.A1              # package height
-        ph = params.ph              # pin length
-        pin = params.pin            # Pins
-        rotation = params.rotation  # Rotation if required
-        center = params.center      # Body center
-        b = params.b                # Pin diameter
+        D = params['D']                # package length
+        E = params['E']                # body overall width
+        H = params['H']                # body overall height
+        A1 = params['A1']              # package height
+        ph = params['ph']              # pin length
+        pin = params['pin']            # Pins
+        rotation = params['rotation']  # Rotation if required
+        center = params['center']      # Body center
+        b = params['b']                # Pin diameter
         
         b1 = b * 0.9
         p = pin[0]
@@ -197,9 +201,9 @@ class cq_parameters_CUI_CST_931RP_A():
     ##enabling optional/default values to None
     def namedtuple_with_defaults(typename, field_names, default_values=()):
 
-        T = collections.namedtuple(typename, field_names)
+        T = namedtuple(typename, field_names)
         T.__new__.__defaults__ = (None,) * len(T._fields)
-        if isinstance(default_values, collections.Mapping):
+        if isinstance(default_values, Mapping):
             prototype = T(**default_values)
         else:
             prototype = T(*default_values)
@@ -224,29 +228,29 @@ class cq_parameters_CUI_CST_931RP_A():
         'dest_dir_prefix'	    # Destination directory
     ])
 
-    all_params = {
+    # all_params = {
 
-        'MagneticBuzzer_CUI_CST-931RP-A': Params(
-            #
-            # Valve
-            # This model have been auto generated based on the foot print file
-            # A number of parameters have been fixed or guessed, such as A2
-            # 
-            # The foot print that uses this 3D model is MagneticBuzzer_CUI_CST-931RP-A.kicad_mod
-            # 
-            modelName = 'MagneticBuzzer_CUI_CST-931RP-A',   # modelName
-            D = 09.00,                  # Body width/diameter
-            H = 04.50,                  # Body height
-            A1 = 0.03,                  # Body-board separation
-            b = 0.60,                   # Pin diameter
-            ph = 4.50,                  # Pin diameter
-            center = (0.00, 2.00),      # Body center
-            pin = [(0.0, 0.0), (00.00, 4.00)],          # Pins
-            body_color_key = 'black body',        # Body color
-            pin_color_key = 'metal grey pins',  # Pin color
-            rotation = 0,                       # Rotation if required
-            dest_dir_prefix = '../Buzzer_Beeper.3dshapes',      # destination directory
-            ),
+    #     'MagneticBuzzer_CUI_CST-931RP-A': Params(
+    #         #
+    #         # Valve
+    #         # This model have been auto generated based on the foot print file
+    #         # A number of parameters have been fixed or guessed, such as A2
+    #         # 
+    #         # The foot print that uses this 3D model is MagneticBuzzer_CUI_CST-931RP-A.kicad_mod
+    #         # 
+    #         modelName = 'MagneticBuzzer_CUI_CST-931RP-A',   # modelName
+    #         D = 09.00,                  # Body width/diameter
+    #         H = 04.50,                  # Body height
+    #         A1 = 0.03,                  # Body-board separation
+    #         b = 0.60,                   # Pin diameter
+    #         ph = 4.50,                  # Pin diameter
+    #         center = (0.00, 2.00),      # Body center
+    #         pin = [(0.0, 0.0), (00.00, 4.00)],          # Pins
+    #         body_color_key = 'black body',        # Body color
+    #         pin_color_key = 'metal grey pins',  # Pin color
+    #         rotation = 0,                       # Rotation if required
+    #         dest_dir_prefix = '../Buzzer_Beeper.3dshapes',      # destination directory
+    #         ),
 
-    }
+    # }
         

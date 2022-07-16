@@ -50,33 +50,33 @@
 import operator
 
 import cadquery as cq
-from Helpers import show
+# from Helpers import show
 
-import FreeCAD, Draft, FreeCADGui
-import ImportGui
-import FreeCADGui as Gui
+# import FreeCAD, Draft, FreeCADGui
+# import ImportGui
+# import FreeCADGui as Gui
 
-import shaderColors
-import exportPartToVRML as expVRML
+# import shaderColors
+# import exportPartToVRML as expVRML
 
 # Import cad_tools
-import cq_cad_tools
+# import cq_cad_tools
 # Reload tools
-from cq_cad_tools import reload_lib
-reload_lib(cq_cad_tools)
+# from cq_cad_tools import reload_lib
+# reload_lib(cq_cad_tools)
 # Explicitly load all needed functions
-from cq_cad_tools import FuseObjs_wColors, GetListOfObjects, z_RotateObject, Color_Objects, restore_Main_Tools, exportSTEP, saveFCdoc
+# from cq_cad_tools import FuseObjs_wColors, GetListOfObjects, z_RotateObject, Color_Objects, restore_Main_Tools, exportSTEP, saveFCdoc
 
-import cq_parameters  # modules parameters
-from cq_parameters import ShapeOfTerminal, ButtonType, partParamsTactSwitches
+# import cq_parameters  # modules parameters
+from .cq_parameters import ShapeOfTerminal, ButtonType, partParamsTactSwitches
 
 import collections
 from collections import namedtuple
 
 
-from  cq_base_model import PartBase, Polyline  # modules parameters
+from  .cq_base_model import PartBase, Polyline  # modules parameters
 
-from cq_base_tact_switches import cqMakerTactSwitch, TactSwitchSeries, partsTactSwitches
+from .cq_base_tact_switches import cqMakerTactSwitch, TactSwitchSeries, partsTactSwitches
 
 
 
@@ -114,8 +114,8 @@ class cqMakerCuK_Kmr2xTactSwitch (cqMakerTactSwitch):
     def __init__(self, parameter):
         cqMakerTactSwitch.__init__(self, parameter)
         
-        self.button_oval_width = parameter.button_oval_width if parameter.button_oval_width != None else 2.11                            
-        self.button_oval_length = parameter.button_oval_length if parameter.button_oval_length != None else 1.61                             
+        self.button_oval_width = parameter['button_oval_width'] if parameter['button_oval_width'] != None else 2.11
+        self.button_oval_length = parameter['button_oval_length'] if parameter['button_oval_length'] != None else 1.61
         #self. = parameter. if parameter. != None else                              
 
     def _paramsForKMR2 (self):

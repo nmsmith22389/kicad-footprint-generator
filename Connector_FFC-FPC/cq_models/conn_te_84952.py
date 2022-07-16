@@ -52,9 +52,9 @@ class LICENCE_Info():
 
 
 import cadquery as cq
-from Helpers import show
+#from Helpers import show
 from collections import namedtuple
-import FreeCAD
+#import FreeCAD
 
 class series_params():
     series = "84952"
@@ -147,7 +147,7 @@ def generate_body(num_pins, body_length):
             (body_length/2, series_params.body_y_offset),
             (body_length/2, series_params.body_y_offset + series_params.body_latch_border),
             (0, series_params.body_y_offset + series_params.body_latch_border)
-        ]) \
+        ], includeCurrent=True) \
         .mirrorY().extrude(series_params.body_height)
 
     ffc_pins = [
@@ -195,7 +195,7 @@ def generate_latch(body_length):
             (body_length/2 + series_params.latch_ear_width, series_params.body_y_offset + series_params.body_latch_border + (series_params.latch_closed - series_params.body_latch_border)/2),
             (body_length/2 + series_params.latch_ear_width, series_params.body_y_offset + series_params.latch_closed),
             (0, series_params.body_y_offset + series_params.latch_closed)
-        ]) \
+        ], includeCurrent=True) \
         .mirrorY()
 
     return latch_outline.extrude(series_params.body_height) \

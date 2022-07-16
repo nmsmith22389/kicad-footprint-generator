@@ -49,35 +49,36 @@ from __future__ import division
 import sys, os
 import yaml
 import datetime
-sys.path.append("../_tools")
-import add_license
+import cadquery as cq
+# sys.path.append("../_tools")
+# import add_license
 
-if FreeCAD.GuiUp:
-    from PySide import QtCore, QtGui
+# if FreeCAD.GuiUp:
+#     from PySide import QtCore, QtGui
 
-try:
-    Gui.activateWorkbench("CadQueryWorkbench")
-    import cadquery as cq
-    from Helpers import show
-except Exception as e:
-    if QtGui is not None:
-        reply = QtGui.QMessageBox.information(None, "Info ...", "Missing CadQuery 0.3.0 or later Module!\r\n\r\nhttps://github.com/jmwright/cadquery-freecad-module/wiki\n")
+# try:
+#     Gui.activateWorkbench("CadQueryWorkbench")
+#     import cadquery as cq
+#     from Helpers import show
+# except Exception as e:
+#     if QtGui is not None:
+#         reply = QtGui.QMessageBox.information(None, "Info ...", "Missing CadQuery 0.3.0 or later Module!\r\n\r\nhttps://github.com/jmwright/cadquery-freecad-module/wiki\n")
 
-import importlib
-from cqToolsExceptions import *
-import cq_cad_tools
-importlib.reload(cq_cad_tools)
-from cq_cad_tools import multiFuseObjs_wColors, GetListOfObjects, restore_Main_Tools, exportSTEP, close_CQ_Example, saveFCdoc, z_RotateObject, runGeometryCheck
+# import importlib
+# from cqToolsExceptions import *
+# import cq_cad_tools
+# importlib.reload(cq_cad_tools)
+# from cq_cad_tools import multiFuseObjs_wColors, GetListOfObjects, restore_Main_Tools, exportSTEP, close_CQ_Example, saveFCdoc, z_RotateObject, runGeometryCheck
 
-try:
-    close_CQ_Example(App, Gui)
-except:
-    FreeCAD.Console.PrintMessage("Can't close example")
+# try:
+#     close_CQ_Example(App, Gui)
+# except:
+#     FreeCAD.Console.PrintMessage("Can't close example")
     
-import ImportGui
+# import ImportGui
 
-import exportPartToVRML as expVRML
-import shaderColors
+# import exportPartToVRML as expVRML
+# import shaderColors
 
 # License information
 class LICENCE_Info():
@@ -176,11 +177,11 @@ def generate_pins(params, part_params):
     # Create a pin
     pin = cq.Workplane("XY", (0, 0, 0)).circle(params['pads']['drill']/2).extrude(-0.5)
     if params['series_prefix'] == 'SPT 1.5/' or params['series_prefix'] == 'SPT 2.5/':
-        pin = pin.faces("<Z").workplane().center(0, 0)\
+        pin = pin.faces("<Z").workplane(centerOption="CenterOfMass").center(0, 0)\
             .moveTo(0.4, 0.1).lineTo(0.1, 0.4).lineTo(-0.1, 0.4).lineTo(-0.4, 0.1).lineTo(-0.4, -0.1).lineTo(-0.1, -0.4).lineTo(0.1, -0.4).lineTo(0.4, -0.1).close()\
             .extrude(2.1)
     if params['series_prefix'] == 'SPT 5/':
-        pin = pin.faces("<Z").workplane().center(0, 0)\
+        pin = pin.faces("<Z").workplane(centerOption="CenterOfMass").center(0, 0)\
             .rect(1.7, 0.8)\
             .extrude(4.1)
 

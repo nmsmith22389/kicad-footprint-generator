@@ -17,7 +17,9 @@ general:
     width: 0.64
   base_w: 7.5
   base_h: 14
-  output_directory: '/Connector_Stocko.3dshapes'
+  body_color_key: 'grey body'
+  pins_color_key: 'metal silver'
+  destination_dir: 'Connector_Stocko.3dshapes'
   source: 'https://www.stocko-contact.com/downloads/steckverbindersystem-raster-2,5-mm.pdf#page=15'
 
 Stocko_MKS_1651:

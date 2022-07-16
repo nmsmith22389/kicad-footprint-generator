@@ -65,15 +65,15 @@ class LICENCE_Info():
 
 
 import cadquery as cq
-from Helpers import show
+# from Helpers import show
 from collections import namedtuple
-import FreeCAD
+# import FreeCAD
 
 # maui import cadquery as cq
 # maui from Helpers import show
-from math import tan, radians, sqrt
+from math import tan, radians, sqrt, sin
 
-from cp_axial_tht_param import *
+# from cp_axial_tht_param import *
 
 class series_params():
     fp_name_format = "axial_fp_name"
@@ -113,17 +113,16 @@ def getName(params, configuration):
             prefix=prefix, orientation=orientation)
 
 #all_params = all_params_radial_th_cap
-all_params = kicad_naming_params_axial_th_cap
+# all_params = kicad_naming_params_axial_th_cap
 
 def generate_part(params):
-
-    L = params.L    # overall height
-    D = params.D    # body diameter
-    d = params.d     # lead diameter
-    F = params.F     # lead separation (center to center)
-    ll = params.ll   # lead length
-    bs = params.bs   # board separation
-    rot = params.rotation
+    L = params["L"]         # overall height
+    D = params["D"]         # body diameter
+    d = params["d"]         # lead diameter
+    F = params["F"]         # lead separation (center to center)
+    ll = params["ll"]       # lead length
+    bs = params["bs"]       # board separation
+    rot = params["rotation"]
 
     bt = 1.        # flat part before belt
     if D > 4:
@@ -147,7 +146,7 @@ def generate_part(params):
     ciba = 45.  # angle of the cathode identification bar
 
     # TODO: calculate marker sizes according to the body size
-    mmb_h = D*0.4       # lenght of the (-) marker on the cathode bar
+    mmb_h = D*0.4       # length of the (-) marker on the cathode bar
     mmb_w = mmb_h/4      # rough width of the marker
 
     ef_s2 = ef/sqrt(2)
@@ -208,12 +207,12 @@ def generate_part(params):
         #raise
         pass
 
-    #b_r = D/2.-bd # inner radius of the belt
-    bar = bar.edges(BS((b_r/sqrt(2), 0, bs+bt-0.01),(b_r, -b_r/sqrt(2), bs+bt+bh+0.01))).\
-          fillet(bf)
+    # b_r = D/2.-bd # inner radius of the belt
+    # bar = bar.edges(BS((b_r/sqrt(2), 0, bs+bt-0.01),(b_r, -b_r/sqrt(2), bs+bt+bh+0.01))).\
+    #       fillet(bf)
 
-    body = body.rotate((0,0,0), (0,0,1), 180-ciba/2)
-    bar = bar.rotate((0,0,0), (0,0,1), 180+ciba/2)
+    body = body.rotate((0,0,0), (0,0,1), 180+ciba/2)
+    bar = bar.rotate((0,0,0), (0,0,1), 180-ciba/2)
 
 
     # draw the metal at the bottom
@@ -244,13 +243,34 @@ def generate_part(params):
     mmb = mmb.cut(mmb.cut(bar).translate((-0.005,0,0)))
     bar = bar.cut(mmb)
 
-    # draw the leads
-    lead1 = cq.Workplane("XY").workplane(offset=-ll).center(-F/2,0).circle(d/2).extrude(ll+D/2-d+bs)
-    lead1 = lead1.union(cq.Workplane("XY").workplane(offset=D/2-d+bs).center(-F/2,0).circle(d/2).center(-F/2+d/2,0).revolve(90,(-F/2+d/2+d,d)))
-    lead1 = lead1.rotate((-F/2,0,0), (0,0,1), -90)
-    lead2 = lead1.rotate((-F/2,0,0), (0,0,1), 180).translate((F,0,0))
-    Hlead = cq.Workplane("YZ").workplane(offset=-F/2+d).center(0,D/2+bs).circle(d/2).extrude(F-d*2)
-    leads = lead1.union(lead2).union(Hlead)
+    # draw the leads (old method)
+    # lead1 = cq.Workplane("XY").workplane(offset=-ll, centerOption="CenterOfMass").center(-F/2,0).circle(d/2).extrude(ll+D/2-d+bs)
+    # bend = cq.Workplane("XY").workplane(offset=D/2+d/3+bs, centerOption="CenterOfMass").center(-F/2,0).circle(d/2).revolve(89.9,(-F/2+d/2+d,d)).rotateAboutCenter((0, 1, 0), 180)
+    # lead1 = lead1.union(bend)
+
+    # Draw the leads
+    zbelow = 3.0
+    h = D + zbelow
+    r = d * 1.5 # radius of pin bends
+    arco = (1-sqrt(2)/2)*r # helper factor to create midpoints of profile radii
+
+    # create the path and sweep the leads
+    path = (
+        cq.Workplane("XZ")
+        .lineTo(0,h-r-zbelow)
+        .threePointArc((arco,h-arco-zbelow),(r,h-zbelow))
+        .lineTo(params['F']-r,h-zbelow)
+        .threePointArc((params['F']-arco,h-arco-zbelow),(params['F'],h-r-zbelow))
+        .lineTo(params['F'],0)
+        )
+    lead1 = cq.Workplane("XY").circle(d/2).sweep(path).translate((-params['F'] / 2.0,0,-D / 2.0))
+    leads = lead1
+
+    # Old method
+    # lead1 = lead1.rotate((-F/2,0,0), (-F/2, 0, 1), -90)
+    # lead2 = lead1.rotate((-F/2,0,0), (-F/2,0,1), 180).translate((F,0,0))
+    # Hlead = cq.Workplane("YZ").workplane(offset=-F/2+d, centerOption="CenterOfMass").center(0,D/2+bs).circle(d/2).extrude(F-d*2)
+    # leads = lead1.union(Hlead).union(lead2)
 
     angle = 90
     #convert vertical model to horizontal

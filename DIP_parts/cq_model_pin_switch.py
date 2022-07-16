@@ -32,12 +32,12 @@
 #****************************************************************************
 
 import cadquery as cq
-from Helpers import show
+# from Helpers import show
 
 ## base parametes & model
 
-from cq_base_model import PartBase
-from cq_base_parameters import CaseType
+from .cq_base_model import PartBase
+from .cq_base_parameters import CaseType
 
 ## model generator
 
@@ -84,15 +84,15 @@ class dip_switch (PartBase):
 
     def makeModelName(self, genericName):
         if self.num_pins == 6 or self.num_pins == 16:
-            return 'SW_DIP_SPSTx' + '{:02d}'.format(self.num_pins / 2) + '_Slide_9.78x' + '{:.1f}'.format(self.body_length) + 'mm_W7.62mm_P' + '{:.2f}'.format(self.pin_pitch) + 'mm'
+            return 'SW_DIP_SPSTx' + '{:02d}'.format(int(self.num_pins / 2)) + '_Slide_9.78x' + '{:.1f}'.format(self.body_length) + 'mm_W7.62mm_P' + '{:.2f}'.format(self.pin_pitch) + 'mm'
         else:
-            return 'SW_DIP_SPSTx' + '{:02d}'.format(self.num_pins / 2) + '_Slide_9.78x' + '{:.2f}'.format(self.body_length) + 'mm_W7.62mm_P' + '{:.2f}'.format(self.pin_pitch) + 'mm'
+            return 'SW_DIP_SPSTx' + '{:02d}'.format(int(self.num_pins / 2)) + '_Slide_9.78x' + '{:.2f}'.format(self.body_length) + 'mm_W7.62mm_P' + '{:.2f}'.format(self.pin_pitch) + 'mm'
 
     def _make_switchpockets(self):
 
         # create first pocket
         pocket = cq.Workplane("XY", origin=(self.first_pin_pos[0], 0.0, 0.0))\
-                   .workplane(offset=self.body_height - 1.0)\
+                   .workplane(centerOption="CenterOfMass", offset=self.body_height - 1.0)\
                    .rect(self.button_width, self.button_base).extrude(1.0)
 
         # union and return all pockets
@@ -163,13 +163,13 @@ class dip_switch (PartBase):
                  .line(w3, 0.0)\
                  .line(0.0, w3)\
                  .line(w3, 0.0)\
-                 .close().extrude(h)
+                 .close().extrude(h + 0.01)
 
-    def make(self):
-        show(self.make_body())
-        show(self.make_pins())
-        show(self.make_buttons())
-        show(self.make_pinmark(self.button_width + 0.2))
+    # def make(self):
+    #     show(self.make_body())
+    #     show(self.make_pins())
+    #     show(self.make_buttons())
+    #     show(self.make_pinmark(self.button_width + 0.2))
 
 class dip_switch_low_profile (dip_switch):
 
@@ -228,8 +228,8 @@ class dip_switch_low_profile (dip_switch):
 
     def makeModelName(self, genericName):
         if self.num_pins == 2 or self.num_pins == 12 or self.num_pins == 22:
-            return 'SW_DIP_SPSTx' + '{:02d}'.format(self.num_pins / 2) + '_Slide_6.7x' + '{:.1f}'.format(self.body_length) + 'mm_W7.62mm_P' + '{:.2f}'.format(self.pin_pitch) + 'mm_LowProfile'
+            return 'SW_DIP_SPSTx' + '{:02d}'.format(int(self.num_pins / 2)) + '_Slide_6.7x' + '{:.1f}'.format(self.body_length) + 'mm_W7.62mm_P' + '{:.2f}'.format(self.pin_pitch) + 'mm_LowProfile'
         else:
-            return 'SW_DIP_SPSTx' + '{:02d}'.format(self.num_pins / 2) + '_Slide_6.7x' + '{:.2f}'.format(self.body_length) + 'mm_W7.62mm_P' + '{:.2f}'.format(self.pin_pitch) + 'mm_LowProfile'
+            return 'SW_DIP_SPSTx' + '{:02d}'.format(int(self.num_pins / 2)) + '_Slide_6.7x' + '{:.2f}'.format(self.body_length) + 'mm_W7.62mm_P' + '{:.2f}'.format(self.pin_pitch) + 'mm_LowProfile'
 
 ### EOF ###

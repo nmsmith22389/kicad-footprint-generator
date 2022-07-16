@@ -46,14 +46,19 @@
 #****************************************************************************
 
 
-import cq_parameters  # modules parameters
-from cq_parameters import *
+# import cq_parameters  # modules parameters
+# from cq_parameters import *
 
-import math
-from math import tan, cos, sin, radians, sqrt, atan
+# import math
+# from math import tan, cos, sin, radians, sqrt, atan
 
-import cq_base_model  # modules parameters
-from cq_base_model import *
+# import cq_base_model  # modules parameters
+# from .cq_base_model import *
+
+import cadquery as cq
+
+from collections import namedtuple
+from collections.abc import Mapping
 
 class cq_parameters_Resonator_peterman_smd():
 
@@ -61,98 +66,98 @@ class cq_parameters_Resonator_peterman_smd():
         x = 0
 
 
-    def get_dest_3D_dir(self, modelName):
-        for n in self.all_params:
-            if n == modelName:
-                return self.all_params[modelName].dest_dir_prefix
+    # def get_dest_3D_dir(self, modelName):
+    #     for n in self.all_params:
+    #         if n == modelName:
+    #             return self.all_params[modelName].dest_dir_prefix
 
 
-    def get_dest_file_name(self, modelName):
-        for n in self.all_params:
-            if n == modelName:
-                return self.all_params[modelName].filename
+    # def get_dest_file_name(self, modelName):
+    #     for n in self.all_params:
+    #         if n == modelName:
+    #             return self.all_params[modelName].filename
 
 
-    def model_exist(self, modelName):
-        for n in self.all_params:
-            if n == modelName:
-                return True
+    # def model_exist(self, modelName):
+    #     for n in self.all_params:
+    #         if n == modelName:
+    #             return True
                 
-        return False
+    #     return False
         
         
-    def get_list_all(self):
-        list = []
-        for n in self.all_params:
-            list.append(n)
+    # def get_list_all(self):
+    #     list = []
+    #     for n in self.all_params:
+    #         list.append(n)
         
-        return list
+    #     return list
 
         
-    def make_3D_model(self, modelName):
+    # def make_3D_model(self, modelName):
         
-        top = self.make_top(self.all_params[modelName])
-        case = self.make_case(self.all_params[modelName])
-        bottom = self.make_bottom(case, self.all_params[modelName])
-        pins = self.make_pins(self.all_params[modelName])
-        show(top)
-        show(case)
-        show(bottom)
-        show(pins)
+    #     top = self.make_top(self.all_params[modelName])
+    #     case = self.make_case(self.all_params[modelName])
+    #     bottom = self.make_bottom(case, self.all_params[modelName])
+    #     pins = self.make_pins(self.all_params[modelName])
+    #     show(top)
+    #     show(case)
+    #     show(bottom)
+    #     show(pins)
      
-        doc = FreeCAD.ActiveDocument
-        objs=GetListOfObjects(FreeCAD, doc)
+    #     doc = FreeCAD.ActiveDocument
+    #     objs=GetListOfObjects(FreeCAD, doc)
      
-        body_top_color_key = self.all_params[modelName].body_top_color_key
-        body_color_key = self.all_params[modelName].body_color_key
-        bottom_color_key = self.all_params[modelName].bottom_color_key
-        pin_color_key = self.all_params[modelName].pin_color_key
+    #     body_top_color_key = self.all_params[modelName].body_top_color_key
+    #     body_color_key = self.all_params[modelName].body_color_key
+    #     bottom_color_key = self.all_params[modelName].bottom_color_key
+    #     pin_color_key = self.all_params[modelName].pin_color_key
 
-        body_top_color = shaderColors.named_colors[body_top_color_key].getDiffuseFloat()
-        body_color = shaderColors.named_colors[body_color_key].getDiffuseFloat()
-        bottom_color = shaderColors.named_colors[bottom_color_key].getDiffuseFloat()
-        pin_color = shaderColors.named_colors[pin_color_key].getDiffuseFloat()
+    #     body_top_color = shaderColors.named_colors[body_top_color_key].getDiffuseFloat()
+    #     body_color = shaderColors.named_colors[body_color_key].getDiffuseFloat()
+    #     bottom_color = shaderColors.named_colors[bottom_color_key].getDiffuseFloat()
+    #     pin_color = shaderColors.named_colors[pin_color_key].getDiffuseFloat()
 
-        Color_Objects(Gui,objs[0],body_top_color)
-        Color_Objects(Gui,objs[1],body_color)
-        Color_Objects(Gui,objs[2],bottom_color)
-        Color_Objects(Gui,objs[3],pin_color)
+    #     Color_Objects(Gui,objs[0],body_top_color)
+    #     Color_Objects(Gui,objs[1],body_color)
+    #     Color_Objects(Gui,objs[2],bottom_color)
+    #     Color_Objects(Gui,objs[3],pin_color)
 
-        col_body_top = Gui.ActiveDocument.getObject(objs[0].Name).DiffuseColor[0]
-        col_body = Gui.ActiveDocument.getObject(objs[1].Name).DiffuseColor[0]
-        col_bottom = Gui.ActiveDocument.getObject(objs[2].Name).DiffuseColor[0]
-        col_pin = Gui.ActiveDocument.getObject(objs[3].Name).DiffuseColor[0]
+    #     col_body_top = Gui.ActiveDocument.getObject(objs[0].Name).DiffuseColor[0]
+    #     col_body = Gui.ActiveDocument.getObject(objs[1].Name).DiffuseColor[0]
+    #     col_bottom = Gui.ActiveDocument.getObject(objs[2].Name).DiffuseColor[0]
+    #     col_pin = Gui.ActiveDocument.getObject(objs[3].Name).DiffuseColor[0]
         
-        material_substitutions={
-            col_body_top[:-1]:body_top_color_key,
-            col_body[:-1]:body_color_key,
-            col_bottom[:-1]:bottom_color_key,
-            col_pin[:-1]:pin_color_key,
-        }
+    #     material_substitutions={
+    #         col_body_top[:-1]:body_top_color_key,
+    #         col_body[:-1]:body_color_key,
+    #         col_bottom[:-1]:bottom_color_key,
+    #         col_pin[:-1]:pin_color_key,
+    #     }
         
-        expVRML.say(material_substitutions)
-        while len(objs) > 1:
-                FuseObjs_wColors(FreeCAD, FreeCADGui, doc.Name, objs[0].Name, objs[1].Name)
-                del objs
-                objs = GetListOfObjects(FreeCAD, doc)
+    #     expVRML.say(material_substitutions)
+    #     while len(objs) > 1:
+    #             FuseObjs_wColors(FreeCAD, FreeCADGui, doc.Name, objs[0].Name, objs[1].Name)
+    #             del objs
+    #             objs = GetListOfObjects(FreeCAD, doc)
 
-        return material_substitutions
+    #     return material_substitutions
     
     def make_top(self, params):
 
-        type = params.type                  # Model type
-        L = params.L                        # Model length
-        W = params.W                        # Model length
-        H = params.H                        # Model heigth
-        A1 = params.A1                      # Bottom distance to PCB
-        pc = params.p_cnt                   # Number of pins
-        psx = params.p_split_x              # Distance between pins, along length
-        psy = params.p_split_y              # Distance between pins, along width
-        pl = params.p_length                # pin length
-        pw = params.p_width                 # pin width
-        rotation = params.rotation          # Rotation if required
+        type = params['type']                  # Model type
+        L = params['L']                        # Model length
+        W = params['W']                        # Model length
+        H = params['H']                        # Model heigth
+        A1 = params['A1']                      # Bottom distance to PCB
+        pc = params['p_cnt']                   # Number of pins
+        psx = params['p_split_x']              # Distance between pins, along length
+        psy = params['p_split_y']              # Distance between pins, along width
+        pl = params['p_length']                # pin length
+        pw = params['p_width']                 # pin width
+        rotation = params['rotation']          # Rotation if required
         
-        FreeCAD.Console.PrintMessage('make_top ...\r\n')
+        print('make_top ...\r\n')
 
         tw = W * 0.80
         td = W - tw
@@ -160,7 +165,7 @@ class cq_parameters_Resonator_peterman_smd():
         #
         # 
         #
-        top = cq.Workplane("XY").workplane(offset = 0.2).moveTo(0.0, 0.0).rect(tl, tw).extrude(A1 + (H - 0.2))
+        top = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset = 0.2).moveTo(0.0, 0.0).rect(tl, tw).extrude(A1 + (H - 0.2))
         top = top.faces("<X").edges("<Y").fillet(W / 18.0)
         top = top.faces("<X").edges(">Y").fillet(W / 18.0)
         top = top.faces(">X").edges("<Y").fillet(W / 18.0)
@@ -176,19 +181,19 @@ class cq_parameters_Resonator_peterman_smd():
 
     def make_case(self, params):
 
-        type = params.type                  # Model type
-        L = params.L                        # Model length
-        W = params.W                        # Model length
-        H = params.H                        # Model heigth
-        A1 = params.A1                      # Bottom distance to PCB
-        pc = params.p_cnt                   # Number of pins
-        psx = params.p_split_x              # Distance between pins, along length
-        psy = params.p_split_y              # Distance between pins, along width
-        pl = params.p_length                # pin length
-        pw = params.p_width                 # pin width
-        rotation = params.rotation          # Rotation if required
+        type = params['type']                  # Model type
+        L = params['L']                        # Model length
+        W = params['W']                        # Model length
+        H = params['H']                        # Model heigth
+        A1 = params['A1']                      # Bottom distance to PCB
+        pc = params['p_cnt']                   # Number of pins
+        psx = params['p_split_x']              # Distance between pins, along length
+        psy = params['p_split_y']              # Distance between pins, along width
+        pl = params['p_length']                # pin length
+        pw = params['p_width']                 # pin width
+        rotation = params['rotation']          # Rotation if required
         
-        FreeCAD.Console.PrintMessage('make_top ...\r\n')
+        print('make_top ...\r\n')
 
         bh = H * 0.5
         bc0 = H * 0.505
@@ -200,7 +205,7 @@ class cq_parameters_Resonator_peterman_smd():
         tw = W * 0.99
         td = W - tw
         tl = L - td
-        case = cq.Workplane("XY").workplane(offset = 0.0).moveTo(0.0, 0.0).rect(tl, tw).extrude(bh * 0.7)
+        case = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset = 0.0).moveTo(0.0, 0.0).rect(tl, tw).extrude(bh * 0.7)
 
         #
         # First step
@@ -208,7 +213,7 @@ class cq_parameters_Resonator_peterman_smd():
         tw = W * 0.93
         td = W - tw
         tl = L - td
-        case0 = cq.Workplane("XY").workplane(offset = 0.0).moveTo(0.0, 0.0).rect(tl, tw).extrude(bc0)
+        case0 = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset = 0.0).moveTo(0.0, 0.0).rect(tl, tw).extrude(bc0)
         case0 = case0.faces("<X").edges("<Y").fillet(W / 12.0)
         case0 = case0.faces("<X").edges(">Y").fillet(W / 12.0)
         case0 = case0.faces(">X").edges("<Y").fillet(W / 12.0)
@@ -220,7 +225,7 @@ class cq_parameters_Resonator_peterman_smd():
         tw = W * 0.90
         td = W - tw
         tl = L - td
-        case1 = cq.Workplane("XY").workplane(offset = 0.0).moveTo(0.0, 0.0).rect(tl, tw).extrude(bc1)
+        case1 = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset = 0.0).moveTo(0.0, 0.0).rect(tl, tw).extrude(bc1)
         case1 = case1.faces("<X").edges("<Y").fillet(W / 12.0)
         case1 = case1.faces("<X").edges(">Y").fillet(W / 12.0)
         case1 = case1.faces(">X").edges("<Y").fillet(W / 12.0)
@@ -232,7 +237,7 @@ class cq_parameters_Resonator_peterman_smd():
         tw = W * 0.85
         td = W - tw
         tl = L - td
-        case2 = cq.Workplane("XY").workplane(offset = 0.0).moveTo(0.0, 0.0).rect(tl, tw).extrude(bc2)
+        case2 = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset = 0.0).moveTo(0.0, 0.0).rect(tl, tw).extrude(bc2)
         case2 = case2.faces("<X").edges("<Y").fillet(W / 12.0)
         case2 = case2.faces("<X").edges(">Y").fillet(W / 12.0)
         case2 = case2.faces(">X").edges("<Y").fillet(W / 12.0)
@@ -256,40 +261,40 @@ class cq_parameters_Resonator_peterman_smd():
 
     def make_bottom(self, body, params):
 
-        type = params.type                  # Model type
-        L = params.L                        # Model length
-        W = params.W                        # Model length
-        H = params.H                        # Model heigth
-        A1 = params.A1                      # Bottom distance to PCB
-        pc = params.p_cnt                   # Number of pins
-        psx = params.p_split_x              # Distance between pins, along length
-        psy = params.p_split_y              # Distance between pins, along width
-        pl = params.p_length                # pin length
-        pw = params.p_width                 # pin width
-        rotation = params.rotation          # Rotation if required
+        type = params['type']                  # Model type
+        L = params['L']                        # Model length
+        W = params['W']                        # Model length
+        H = params['H']                        # Model heigth
+        A1 = params['A1']                      # Bottom distance to PCB
+        pc = params['p_cnt']                   # Number of pins
+        psx = params['p_split_x']              # Distance between pins, along length
+        psy = params['p_split_y']              # Distance between pins, along width
+        pl = params['p_length']                # pin length
+        pw = params['p_width']                 # pin width
+        rotation = params['rotation']          # Rotation if required
         
-        FreeCAD.Console.PrintMessage('make_bottom ...\r\n')
+        print('make_bottom ...\r\n')
 
         bh = H * 0.5
         #
         # Make slightly smaller than bottom so it is visible in the corners 
         #
-        bottom = cq.Workplane("XY").workplane(offset = 0.0).moveTo(0.0, 0.0).rect(L, W).extrude(bh)
+        bottom = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset = 0.0).moveTo(0.0, 0.0).rect(L, W).extrude(bh)
         bottom = bottom.cut(body)
 
-        cc = cq.Workplane("XY").workplane(offset=0.0 - 0.1).moveTo(0.0 - (L / 2.0), 0.0 - (W / 2.0)).circle(W / 30.0, False).extrude(bh + 0.2)
+        cc = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=0.0 - 0.1).moveTo(0.0 - (L / 2.0), 0.0 - (W / 2.0)).circle(W / 30.0, False).extrude(bh + 0.2)
         bottom = bottom.cut(cc)
         body.cut(cc)
 
-        cc = cq.Workplane("XY").workplane(offset=0.0 - 0.1).moveTo(0.0 - (L / 2.0), (W / 2.0)).circle(W / 30.0, False).extrude(bh + 0.2)
+        cc = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=0.0 - 0.1).moveTo(0.0 - (L / 2.0), (W / 2.0)).circle(W / 30.0, False).extrude(bh + 0.2)
         bottom = bottom.cut(cc)
         body.cut(cc)
 
-        cc = cq.Workplane("XY").workplane(offset=0.0 - 0.1).moveTo((L / 2.0), 0.0 - (W / 2.0)).circle(W / 30.0, False).extrude(bh + 0.2)
+        cc = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=0.0 - 0.1).moveTo((L / 2.0), 0.0 - (W / 2.0)).circle(W / 30.0, False).extrude(bh + 0.2)
         bottom = bottom.cut(cc)
         body.cut(cc)
 
-        cc = cq.Workplane("XY").workplane(offset=0.0 - 0.1).moveTo((L / 2.0), (W / 2.0)).circle(W / 30.0, False).extrude(bh + 0.2)
+        cc = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=0.0 - 0.1).moveTo((L / 2.0), (W / 2.0)).circle(W / 30.0, False).extrude(bh + 0.2)
         bottom = bottom.cut(cc)
         body.cut(cc)
         
@@ -305,39 +310,39 @@ class cq_parameters_Resonator_peterman_smd():
         
         
     
-    def make_pins(self, params):
+    def make_pins(self, body, params):
 
-        type = params.type                  # Model type
-        L = params.L                        # Model length
-        W = params.W                        # Model length
-        H = params.H                        # Model heigth
-        A1 = params.A1                      # Bottom distance to PCB
-        pc = params.p_cnt                   # Number of pins
-        psx = params.p_split_x              # Distance between pins, along length
-        psy = params.p_split_y              # Distance between pins, along width
-        pl = params.p_length                # pin length
-        pw = params.p_width                 # pin width
-        rotation = params.rotation          # Rotation if required
+        type = params['type']                  # Model type
+        L = params['L']                        # Model length
+        W = params['W']                        # Model length
+        H = params['H']                        # Model heigth
+        A1 = params['A1']                      # Bottom distance to PCB
+        pc = params['p_cnt']                   # Number of pins
+        psx = params['p_split_x']              # Distance between pins, along length
+        psy = params['p_split_y']              # Distance between pins, along width
+        pl = params['p_length']                # pin length
+        pw = params['p_width']                 # pin width
+        rotation = params['rotation']          # Rotation if required
         
-        FreeCAD.Console.PrintMessage('make_pins ...\r\n')
+        print('make_pins ...\r\n')
 
         pins = None
         if (pc == 2):
-            pins = cq.Workplane("XY").workplane(offset = 0.0).moveTo((psx / 2.0), 0.0).rect(pl, pw).extrude(0.3)
+            pins = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset = 0.0).moveTo((psx / 2.0), 0.0).rect(pl, pw).extrude(0.3)
 
-            pin = cq.Workplane("XY").workplane(offset = 0.0).moveTo(0.0 - (psx / 2.0), 0.0).rect(pl, pw).extrude(0.3)
+            pin = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset = 0.0).moveTo(0.0 - (psx / 2.0), 0.0).rect(pl, pw).extrude(0.3)
             pins = pins.union(pin)
 
         if (pc == 4):
-            pins = cq.Workplane("XY").workplane(offset = 0.0).moveTo((psx / 2.0), psy / 2.0).rect(pl, pw).extrude(0.3)
+            pins = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset = 0.0).moveTo((psx / 2.0), psy / 2.0).rect(pl, pw).extrude(0.3)
 
-            pin = cq.Workplane("XY").workplane(offset = 0.0).moveTo(0.0 - (psx / 2.0), psy / 2.0).rect(pl, pw).extrude(0.3)
+            pin = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset = 0.0).moveTo(0.0 - (psx / 2.0), psy / 2.0).rect(pl, pw).extrude(0.3)
             pins = pins.union(pin)
 
-            pin = cq.Workplane("XY").workplane(offset = 0.0).moveTo((psx / 2.0), 0.0 - (psy / 2.0)).rect(pl, pw).extrude(0.3)
+            pin = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset = 0.0).moveTo((psx / 2.0), 0.0 - (psy / 2.0)).rect(pl, pw).extrude(0.3)
             pins = pins.union(pin)
 
-            pin = cq.Workplane("XY").workplane(offset = 0.0).moveTo(0.0 - (psx / 2.0), 0.0 - (psy / 2.0)).rect(pl, pw).extrude(0.3)
+            pin = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset = 0.0).moveTo(0.0 - (psx / 2.0), 0.0 - (psy / 2.0)).rect(pl, pw).extrude(0.3)
             pins = pins.union(pin)
 
         pins = pins.translate((0.0, 0.0, A1))
@@ -351,9 +356,9 @@ class cq_parameters_Resonator_peterman_smd():
     ##enabling optional/default values to None
     def namedtuple_with_defaults(typename, field_names, default_values=()):
 
-        T = collections.namedtuple(typename, field_names)
+        T = namedtuple(typename, field_names)
         T.__new__.__defaults__ = (None,) * len(T._fields)
-        if isinstance(default_values, collections.Mapping):
+        if isinstance(default_values, Mapping):
             prototype = T(**default_values)
         else:
             prototype = T(*default_values)
@@ -382,81 +387,78 @@ class cq_parameters_Resonator_peterman_smd():
         'dest_dir_prefix'	    # Destination directory
     ])
 
-    all_params = {
+    # all_params = {
 
-        'SMD_0603-2Pin': Params(
-            #
-            # https://www.petermann-technik.com/fileadmin/documents/datasheets/Quarz-Crystals/SMD-QUARTZ-CRYSTAL-SMD0603-2.pdf
-            # 
-            type = 1,               # Model type
-            filename = 'Crystal_SMD_0603-2Pin_6.0x3.5mm',   # File name
-            L = 6.0,                # Model length
-            W = 3.5,                # Model width
-            H = 1.1,                # Model heigth
-            A1 = 0.0,               # Bottom-board separation
+    #     'SMD_0603-2Pin': Params(
+    #         #
+    #         # https://www.petermann-technik.com/fileadmin/documents/datasheets/Quarz-Crystals/SMD-QUARTZ-CRYSTAL-SMD0603-2.pdf
+    #         # 
+    #         type = 1,               # Model type
+    #         filename = 'Crystal_SMD_0603-2Pin_6.0x3.5mm',   # File name
+    #         L = 6.0,                # Model length
+    #         W = 3.5,                # Model width
+    #         H = 1.1,                # Model heigth
+    #         A1 = 0.0,               # Bottom-board separation
             
-            p_cnt = 2,              # Number of pins
-            p_split_x = 4.5,        # Distance between pins, along length
-            p_length = 1.5,         # Pin length
-            p_width = 2.0,          # Pin width
+    #         p_cnt = 2,              # Number of pins
+    #         p_split_x = 4.5,        # Distance between pins, along length
+    #         p_length = 1.5,         # Pin length
+    #         p_width = 2.0,          # Pin width
 
-            body_top_color_key = 'metal aluminum',  # Top color
-            body_color_key = 'gold pins',           # Body color
-            bottom_color_key = 'black body',        # Bottom color
-            pin_color_key = 'metal grey pins',      # Pin color
-            rotation = 0,                           # Rotation if required
-            dest_dir_prefix = 'Crystal.3dshapes',   # destination directory
-            ),
+    #         body_top_color_key = 'metal aluminum',  # Top color
+    #         body_color_key = 'gold pins',           # Body color
+    #         bottom_color_key = 'black body',        # Bottom color
+    #         pin_color_key = 'metal grey pins',      # Pin color
+    #         rotation = 0,                           # Rotation if required
+    #         dest_dir_prefix = 'Crystal.3dshapes',   # destination directory
+    #         ),
 
-        'SMD_0603-4Pin': Params(
-            #
-            # https://www.petermann-technik.com/fileadmin/documents/datasheets/Quarz-Crystals/SMD-QUARTZ-CRYSTAL-SMD0603-2.pdf
-            # 
-            type = 1,               # Model type
-            filename = 'Crystal_SMD_0603-4Pin_6.0x3.5mm',   # File name
-            L = 6.0,                # Model length
-            W = 3.5,                # Model width
-            H = 1.0,                # Model heigth
-            A1 = 0.0,               # Bottom-board separation
+    #     'SMD_0603-4Pin': Params(
+    #         #
+    #         # https://www.petermann-technik.com/fileadmin/documents/datasheets/Quarz-Crystals/SMD-QUARTZ-CRYSTAL-SMD0603-2.pdf
+    #         # 
+    #         type = 1,               # Model type
+    #         filename = 'Crystal_SMD_0603-4Pin_6.0x3.5mm',   # File name
+    #         L = 6.0,                # Model length
+    #         W = 3.5,                # Model width
+    #         H = 1.0,                # Model heigth
+    #         A1 = 0.0,               # Bottom-board separation
             
-            p_cnt = 4,              # Number of pins
-            p_split_x = 4.4,        # Distance between pins, along length
-            p_split_y = 2.4,        # Distance between pins, along width
-            p_length = 1.4,         # Pin length
-            p_width = 0.9,          # Pin width
+    #         p_cnt = 4,              # Number of pins
+    #         p_split_x = 4.4,        # Distance between pins, along length
+    #         p_split_y = 2.4,        # Distance between pins, along width
+    #         p_length = 1.4,         # Pin length
+    #         p_width = 0.9,          # Pin width
 
-            body_top_color_key = 'metal aluminum',  # Top color
-            body_color_key = 'gold pins',           # Body color
-            bottom_color_key = 'black body',        # Bottom color
-            pin_color_key = 'metal grey pins',      # Pin color
-            rotation = 0,                           # Rotation if required
-            dest_dir_prefix = 'Crystal.3dshapes',   # destination directory
-            ),
+    #         body_top_color_key = 'metal aluminum',  # Top color
+    #         body_color_key = 'gold pins',           # Body color
+    #         bottom_color_key = 'black body',        # Bottom color
+    #         pin_color_key = 'metal grey pins',      # Pin color
+    #         rotation = 0,                           # Rotation if required
+    #         dest_dir_prefix = 'Crystal.3dshapes',   # destination directory
+    #         ),
 
-        'Crystal_SMD_2012-2Pin_2.0x1.2mm': Params(
-            #
-            # https://www.sii.co.jp/en/quartz/files/2013/03/SC-20S_Leaflet_e20151217.pdf
-            #
-            type = 1,               # Model type
-            filename = 'Crystal_SMD_2012-2Pin_2.0x1.2mm',   # File name
-            L = 2.05,                # Model length
-            W = 1.2,                # Model width
-            H = 0.6,                # Model heigth
-            A1 = 0.0,               # Bottom-board separation
+    #     'Crystal_SMD_2012-2Pin_2.0x1.2mm': Params(
+    #         #
+    #         # https://www.sii.co.jp/en/quartz/files/2013/03/SC-20S_Leaflet_e20151217.pdf
+    #         #
+    #         type = 1,               # Model type
+    #         filename = 'Crystal_SMD_2012-2Pin_2.0x1.2mm',   # File name
+    #         L = 2.05,                # Model length
+    #         W = 1.2,                # Model width
+    #         H = 0.6,                # Model heigth
+    #         A1 = 0.0,               # Bottom-board separation
 
-            p_cnt = 2,              # Number of pins
-            p_split_x = 1.5,        # Distance between pins, along length
-            p_length = 0.425,         # Pin length
-            p_width = 1.0,          # Pin width
+    #         p_cnt = 2,              # Number of pins
+    #         p_split_x = 1.5,        # Distance between pins, along length
+    #         p_length = 0.425,         # Pin length
+    #         p_width = 1.0,          # Pin width
 
-            body_top_color_key = 'metal aluminum',  # Top color
-            body_color_key = 'gold pins',           # Body color
-            bottom_color_key = 'black body',        # Bottom color
-            pin_color_key = 'metal grey pins',      # Pin color
-            rotation = 0,                           # Rotation if required
-            dest_dir_prefix = 'Crystal.3dshapes',   # destination directory
-            ),
-
-
-    }
-        
+    #         body_top_color_key = 'metal aluminum',  # Top color
+    #         body_color_key = 'gold pins',           # Body color
+    #         bottom_color_key = 'black body',        # Bottom color
+    #         pin_color_key = 'metal grey pins',      # Pin color
+    #         rotation = 0,                           # Rotation if required
+    #         dest_dir_prefix = 'Crystal.3dshapes',   # destination directory
+    #         ),
+    # } 

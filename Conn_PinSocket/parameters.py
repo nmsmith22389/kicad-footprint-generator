@@ -34,7 +34,7 @@
 import os
 import yaml
 from collections import namedtuple
-from cq_base_parameters import PartParametersBase, PinStyle, CaseType
+from .cq_base_parameters import PartParametersBase, PinStyle, CaseType
 
 class params (PartParametersBase):
 

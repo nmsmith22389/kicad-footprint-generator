@@ -46,9 +46,13 @@
 #****************************************************************************
 
 
-import cq_parameters  # modules parameters
-from cq_parameters import *
+# import cq_parameters  # modules parameters
+# from cq_parameters import *
 
+import cadquery as cq
+
+from collections import namedtuple
+from collections.abc import Mapping
 
 class cq_parameters_EMB84Q_RO_SMT_0825_S_4_R():
 
@@ -116,14 +120,14 @@ class cq_parameters_EMB84Q_RO_SMT_0825_S_4_R():
 
     def make_case(self, params):
 
-        D = params.D                    # package length
-        E = params.E                    # body overall width
-        H = params.H                    # body overall height
-        A1 = params.A1                  # package height
-        pin = params.pin                # Pins
-        soundhole = params.soundhole    # sound hole
-        rotation = params.rotation      # Rotation if required
-        center = params.center          # Body center
+        D = params['D']                    # package length
+        E = params['E']                    # body overall width
+        H = params['H']                    # body overall height
+        A1 = params['A1']                  # package height
+        pin = params['pin']                # Pins
+        soundhole = params['soundhole']    # sound hole
+        rotation = params['rotation']      # Rotation if required
+        center = params['center']          # Body center
  
         dd = 2.5 / 2.0
 
@@ -155,13 +159,13 @@ class cq_parameters_EMB84Q_RO_SMT_0825_S_4_R():
         
     def make_pins(self, params):
 
-        D = params.D                # package length
-        E = params.E                # body overall width
-        H = params.H                # body overall height
-        A1 = params.A1              # package height
-        pin = params.pin            # Pins
-        rotation = params.rotation  # Rotation if required
-        center = params.center      # Body center
+        D = params['D']                # package length
+        E = params['E']                # body overall width
+        H = params['H']                # body overall height
+        A1 = params['A1']              # package height
+        pin = params['pin']            # Pins
+        rotation = params['rotation']  # Rotation if required
+        center = params['center']      # Body center
         
         pins = cq.Workplane("XY").workplane(offset=A1 - 0.05).center(0, 0).rect(1.6, 1.06).extrude(1.06)
         pins = pins.rotateAboutCenter((0,0,1), -45)
@@ -219,9 +223,9 @@ class cq_parameters_EMB84Q_RO_SMT_0825_S_4_R():
     ##enabling optional/default values to None
     def namedtuple_with_defaults(typename, field_names, default_values=()):
 
-        T = collections.namedtuple(typename, field_names)
+        T = namedtuple(typename, field_names)
         T.__new__.__defaults__ = (None,) * len(T._fields)
-        if isinstance(default_values, collections.Mapping):
+        if isinstance(default_values, Mapping):
             prototype = T(**default_values)
         else:
             prototype = T(*default_values)
@@ -245,51 +249,51 @@ class cq_parameters_EMB84Q_RO_SMT_0825_S_4_R():
         'dest_dir_prefix'	    # Destination directory
     ])
 
-    all_params = {
+    # all_params = {
 
-        'MagneticBuzzer_Kobitone_254-EMB84Q-RO': Params(
-            #
-            # 
-            # This model have been auto generated based on the foot print file
-            # A number of parameters have been fixed or guessed, such as A2
-            # 
-            # The foot print that uses this 3D model is MagneticBuzzer_Kobitone_254-EMB84Q-RO.kicad_mod
-            # 
-            modelName = 'MagneticBuzzer_Kobitone_254-EMB84Q-RO',   # modelName
-            D = 08.50,                  # Body width/diameter
-            E = 08.50,                  # Body length
-            H = 03.00,                  # Body height
-            A1 = 0.03,                  # Body-board separation
-            soundhole = (2.5, 1.0),     # Sound hole
-            center = (0.00, 0.00),      # Body center
-            pin = [(-3.7, -3.7), (-3.7, 3.7), (-3.7, 3.7), (3.7, 3.7)],          # Pins
-            body_color_key = 'black body',        # Body color
-            pin_color_key = 'metal grey pins',  # Pin color
-            rotation = 0,                       # Rotation if required
-            dest_dir_prefix = '../Buzzer_Beeper.3dshapes',      # destination directory
-            ),
+    #     'MagneticBuzzer_Kobitone_254-EMB84Q-RO': Params(
+    #         #
+    #         # 
+    #         # This model have been auto generated based on the foot print file
+    #         # A number of parameters have been fixed or guessed, such as A2
+    #         # 
+    #         # The foot print that uses this 3D model is MagneticBuzzer_Kobitone_254-EMB84Q-RO.kicad_mod
+    #         # 
+    #         modelName = 'MagneticBuzzer_Kobitone_254-EMB84Q-RO',   # modelName
+    #         D = 08.50,                  # Body width/diameter
+    #         E = 08.50,                  # Body length
+    #         H = 03.00,                  # Body height
+    #         A1 = 0.03,                  # Body-board separation
+    #         soundhole = (2.5, 1.0),     # Sound hole
+    #         center = (0.00, 0.00),      # Body center
+    #         pin = [(-3.7, -3.7), (-3.7, 3.7), (-3.7, 3.7), (3.7, 3.7)],          # Pins
+    #         body_color_key = 'black body',        # Body color
+    #         pin_color_key = 'metal grey pins',  # Pin color
+    #         rotation = 0,                       # Rotation if required
+    #         dest_dir_prefix = '../Buzzer_Beeper.3dshapes',      # destination directory
+    #         ),
 
-        'PUIAudio_SMT_0825_S_4_R': Params(
-            #
-            # http://www.puiaudio.com/product-detail.aspx?partnumber=SMT-0825-S-4-R
-            # This model have been auto generated based on the foot print file
-            # A number of parameters have been fixed or guessed, such as A2
-            # 
-            # The foot print that uses this 3D model is PUIAudio_SMT_0825_S_4_R.kicad_mod
-            # 
-            modelName = 'PUIAudio_SMT_0825_S_4_R',   # modelName
-            D = 08.50,                  # Body width/diameter
-            E = 08.50,                  # Body length
-            H = 03.00,                  # Body height
-            A1 = 0.03,                  # Body-board separation
-            soundhole = (3.0, 0.7),     # Sound hole
-            center = (0.00, 0.00),      # Body center
-            pin = [(-3.7, -3.7), (-3.7, 3.7), (-3.7, 3.7), (3.7, 3.7)],          # Pins
-            body_color_key = 'black body',        # Body color
-            pin_color_key = 'metal grey pins',  # Pin color
-            rotation = 0,                       # Rotation if required
-            dest_dir_prefix = '../Buzzer_Beeper.3dshapes',      # destination directory
-            ),
+    #     'PUIAudio_SMT_0825_S_4_R': Params(
+    #         #
+    #         # http://www.puiaudio.com/product-detail.aspx?partnumber=SMT-0825-S-4-R
+    #         # This model have been auto generated based on the foot print file
+    #         # A number of parameters have been fixed or guessed, such as A2
+    #         # 
+    #         # The foot print that uses this 3D model is PUIAudio_SMT_0825_S_4_R.kicad_mod
+    #         # 
+    #         modelName = 'PUIAudio_SMT_0825_S_4_R',   # modelName
+    #         D = 08.50,                  # Body width/diameter
+    #         E = 08.50,                  # Body length
+    #         H = 03.00,                  # Body height
+    #         A1 = 0.03,                  # Body-board separation
+    #         soundhole = (3.0, 0.7),     # Sound hole
+    #         center = (0.00, 0.00),      # Body center
+    #         pin = [(-3.7, -3.7), (-3.7, 3.7), (-3.7, 3.7), (3.7, 3.7)],          # Pins
+    #         body_color_key = 'black body',        # Body color
+    #         pin_color_key = 'metal grey pins',  # Pin color
+    #         rotation = 0,                       # Rotation if required
+    #         dest_dir_prefix = '../Buzzer_Beeper.3dshapes',      # destination directory
+    #         ),
 
-    }
+    # }
         
