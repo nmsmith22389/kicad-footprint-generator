@@ -13,8 +13,9 @@ before_script:
 run:
   script:
     - ./generator.py --output_dir /tmp/3dmodels
-    - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    - cat ./audit_log.txt
+    - find 3dmodels
+    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
+    # - cat ./audit_log.txt
   when: manual
   timeout: 6 hours
   tags:
