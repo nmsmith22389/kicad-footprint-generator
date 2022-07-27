@@ -12,16 +12,13 @@ before_script:
 
 run:
   script:
-    - ./generator.py --output_dir /tmp/3dmodels
-    - find / -iname 3dmodels > location.txt
-    - cat location.txt
+    - ./generator.py --output_dir ./3dmodels
     # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
     # - cat ./audit_log.txt
   artifacts:
     paths:
-      - /tmp/3dmodels
+      - 3dmodels
       # - audit_log.txt
-      - location.txt
   when: manual
   timeout: 6 hours
   tags:
