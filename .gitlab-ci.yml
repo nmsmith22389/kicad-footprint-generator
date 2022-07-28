@@ -10,14 +10,30 @@ before_script:
   - pip install -r requirements.txt
   - pip install git+https://github.com/CadQuery/cadquery.git  # Comment out once there is a production release of CadQuery 2.x on PyPI
 
-run:
+ucon_17809:
   script:
-    - ./generator.py --output_dir ./3dmodels
+    - ./generator.py --output_dir ./3dmodels --library 4UCON_17809 --enable-vrml True
+    - mv ./3dmodels ./4UCON_17809
     # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
     # - cat ./audit_log.txt
   artifacts:
     paths:
-      - 3dmodels
+      - 4UCON_17809
+      # - audit_log.txt
+  when: manual
+  timeout: 6 hours
+  tags:
+    - kicad-ubuntu20.04
+
+Altech:
+  script:
+    - ./generator.py --output_dir ./3dmodels --library Altech --enable-vrml True
+    - mv ./3dmodels ./Altech
+    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
+    # - cat ./audit_log.txt
+  artifacts:
+    paths:
+      - Altech
       # - audit_log.txt
   when: manual
   timeout: 6 hours
