@@ -11,7 +11,7 @@ G_D100_L100:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 F_D80_L100:
@@ -27,7 +27,7 @@ F_D80_L100:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 E_D80_L62:
@@ -43,7 +43,7 @@ E_D80_L62:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 D8_D63_L77:
@@ -59,7 +59,7 @@ D8_D63_L77:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 D_D63_L54:
@@ -75,7 +75,7 @@ D_D63_L54:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 C_D50_L54:
@@ -91,7 +91,7 @@ C_D50_L54:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 B_D40_L54:
@@ -107,7 +107,7 @@ B_D40_L54:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 C_Elec_3x5.4:
@@ -123,7 +123,7 @@ C_Elec_3x5.4:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 C_Elec_4x5.4:
@@ -139,7 +139,7 @@ C_Elec_4x5.4:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 C_Elec_4x5.8:
@@ -155,7 +155,7 @@ C_Elec_4x5.8:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 C_Elec_5x5.4:
@@ -171,7 +171,7 @@ C_Elec_5x5.4:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 C_Elec_5x5.8:
@@ -187,7 +187,7 @@ C_Elec_5x5.8:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 C_Elec_6.3x5.4:
@@ -203,7 +203,7 @@ C_Elec_6.3x5.4:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 C_Elec_6.3x5.8:
@@ -219,7 +219,7 @@ C_Elec_6.3x5.8:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 C_Elec_6.3x7.7:
@@ -235,7 +235,7 @@ C_Elec_6.3x7.7:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 C_Elec_8x5.4:
@@ -251,7 +251,7 @@ C_Elec_8x5.4:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 C_Elec_8x6.2:
@@ -267,7 +267,7 @@ C_Elec_8x6.2:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 C_Elec_8x10.2:
@@ -283,7 +283,7 @@ C_Elec_8x10.2:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 C_Elec_10x10.2:
@@ -299,7 +299,7 @@ C_Elec_10x10.2:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 CP_Elec_3x5.3:
@@ -315,7 +315,7 @@ CP_Elec_3x5.3:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 CP_Elec_3x5.4:
@@ -331,7 +331,7 @@ CP_Elec_3x5.4:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 CP_Elec_4x3:
@@ -347,7 +347,7 @@ CP_Elec_4x3:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 CP_Elec_4x3.9:
@@ -363,7 +363,7 @@ CP_Elec_4x3.9:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 CP_Elec_4x4.5:
@@ -379,7 +379,7 @@ CP_Elec_4x4.5:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 CP_Elec_4x5.3:
@@ -395,7 +395,7 @@ CP_Elec_4x5.3:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 CP_Elec_4x5.4:
@@ -411,7 +411,7 @@ CP_Elec_4x5.4:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 CP_Elec_4x5.7:
@@ -427,7 +427,7 @@ CP_Elec_4x5.7:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 CP_Elec_4x5.8:
@@ -443,7 +443,7 @@ CP_Elec_4x5.8:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 CP_Elec_5x3:
@@ -459,7 +459,7 @@ CP_Elec_5x3:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 CP_Elec_5x3.9:
@@ -475,7 +475,7 @@ CP_Elec_5x3.9:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 CP_Elec_5x4.4:
@@ -491,7 +491,7 @@ CP_Elec_5x4.4:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 CP_Elec_5x4.5:
@@ -507,7 +507,7 @@ CP_Elec_5x4.5:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 CP_Elec_5x5.3:
@@ -523,7 +523,7 @@ CP_Elec_5x5.3:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 CP_Elec_5x5.4:
@@ -539,7 +539,7 @@ CP_Elec_5x5.4:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 CP_Elec_5x5.7:
@@ -555,7 +555,7 @@ CP_Elec_5x5.7:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 CP_Elec_5x5.8:
@@ -571,7 +571,7 @@ CP_Elec_5x5.8:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 CP_Elec_5x5.9:
@@ -587,7 +587,7 @@ CP_Elec_5x5.9:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 CP_Elec_6.3x3:
@@ -603,7 +603,7 @@ CP_Elec_6.3x3:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 CP_Elec_6.3x3.9:
@@ -619,7 +619,7 @@ CP_Elec_6.3x3.9:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 CP_Elec_6.3x4.5:
@@ -635,7 +635,7 @@ CP_Elec_6.3x4.5:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 CP_Elec_6.3x4.9:
@@ -651,7 +651,7 @@ CP_Elec_6.3x4.9:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 CP_Elec_6.3x5.2:
@@ -667,7 +667,7 @@ CP_Elec_6.3x5.2:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 CP_Elec_6.3x5.3:
@@ -683,7 +683,7 @@ CP_Elec_6.3x5.3:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 CP_Elec_6.3x5.4:
@@ -699,7 +699,7 @@ CP_Elec_6.3x5.4:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 CP_Elec_6.3x5.4_Nichicon:
@@ -715,7 +715,7 @@ CP_Elec_6.3x5.4_Nichicon:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 CP_Elec_6.3x5.7:
@@ -731,7 +731,7 @@ CP_Elec_6.3x5.7:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 CP_Elec_6.3x5.8:
@@ -747,7 +747,7 @@ CP_Elec_6.3x5.8:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 CP_Elec_6.3x5.9:
@@ -763,7 +763,7 @@ CP_Elec_6.3x5.9:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 CP_Elec_6.3x7.7:
@@ -779,7 +779,7 @@ CP_Elec_6.3x7.7:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 CP_Elec_6.3x9.9:
@@ -795,7 +795,7 @@ CP_Elec_6.3x9.9:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 CP_Elec_8x5.4:
@@ -811,7 +811,7 @@ CP_Elec_8x5.4:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 CP_Elec_8x6.2:
@@ -827,7 +827,7 @@ CP_Elec_8x6.2:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 CP_Elec_8x6.5:
@@ -843,7 +843,7 @@ CP_Elec_8x6.5:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 CP_Elec_8x6.7:
@@ -859,7 +859,7 @@ CP_Elec_8x6.7:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 CP_Elec_8x6.9:
@@ -875,7 +875,7 @@ CP_Elec_8x6.9:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 CP_Elec_8x10:
@@ -891,7 +891,7 @@ CP_Elec_8x10:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 CP_Elec_8x10.5:
@@ -907,7 +907,7 @@ CP_Elec_8x10.5:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 CP_Elec_8x11.9:
@@ -923,7 +923,7 @@ CP_Elec_8x11.9:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 CP_Elec_10x7.7:
@@ -939,7 +939,7 @@ CP_Elec_10x7.7:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 CP_Elec_10x7.9:
@@ -955,7 +955,7 @@ CP_Elec_10x7.9:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 CP_Elec_10x10:
@@ -971,7 +971,7 @@ CP_Elec_10x10:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 CP_Elec_10x10.5:
@@ -987,7 +987,7 @@ CP_Elec_10x10.5:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 CP_Elec_10x12.5:
@@ -1003,7 +1003,7 @@ CP_Elec_10x12.5:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 CP_Elec_10x12.6:
@@ -1019,7 +1019,7 @@ CP_Elec_10x12.6:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 CP_Elec_10x14.3:
@@ -1035,7 +1035,7 @@ CP_Elec_10x14.3:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 CP_Elec_16x17.5:
@@ -1051,7 +1051,7 @@ CP_Elec_16x17.5:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 CP_Elec_16x22:
@@ -1067,7 +1067,7 @@ CP_Elec_16x22:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 CP_Elec_18x17.5:
@@ -1083,7 +1083,7 @@ CP_Elec_18x17.5:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'
 
 CP_Elec_18x22:
@@ -1099,5 +1099,5 @@ CP_Elec_18x22:
   base_color_key: 'black body'
   mark_color_key: 'black body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Capacitors_Radial_SMD'
+  destination_dir: 'Capacitor_SMD.3dshapes'
   source: 'http://industrial.panasonic.com/lecs/www-data/pdf/ABA0000/ABA0000PE369.pdf'

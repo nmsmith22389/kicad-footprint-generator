@@ -18,7 +18,7 @@ Series_502250:
   pin_color_key: 'metal grey pins'
   body_color_key: 'white body'
   latch_color_key: 'black body'
-  destination_dir: 'Connector_FFC-FPC'
+  destination_dir: 'Connector_FFC-FPC.3dshapes'
   source: 'http://www.molex.com/pdm_docs/sd/5022501791_sd.pdf'
 
 KK_396_5273:
@@ -46,7 +46,7 @@ KK_396_5273:
   body_color_key: 'white body'
   pin_color_key: 'metal grey pins'
   latch_color_key: 'black body'
-  destination_dir: 'Connector_Molex'
+  destination_dir: 'Connector_Molex.3dshapes'
   source: 'https://www.molex.com/pdm_docs/sd/009652028_sd.pdf'
 
 KK_254_6410:
@@ -77,7 +77,7 @@ KK_254_6410:
   body_color_key: 'white body'
   pin_color_key: 'metal grey pins'
   latch_color_key: 'black body'
-  destination_dir: 'Connector_Molex'
+  destination_dir: 'Connector_Molex.3dshapes'
   source: 'http://www.molex.com/pdm_docs/sd/022272021_sd.pdf'
 
 KK_396_41791:
@@ -127,7 +127,7 @@ KK_396_41791:
   body_color_key: 'white body'
   pin_color_key: 'metal grey pins'
   latch_color_key: 'black body'
-  destination_dir: 'Connector_Molex'
+  destination_dir: 'Connector_Molex.3dshapes'
   source: 'https://www.molex.com/pdm_docs/sd/009652028_sd.pdf'
 
 KK_396_41792:
@@ -179,7 +179,7 @@ KK_396_41792:
   body_color_key: 'white body'
   pin_color_key: 'metal grey pins'
   latch_color_key: 'black body'
-  destination_dir: 'Connector_Molex'
+  destination_dir: 'Connector_Molex.3dshapes'
   source: 'https://www.molex.com/pdm_docs/sd/026605050_sd.pdf'
 
 PicoBlade_53261:
@@ -255,7 +255,7 @@ PicoBlade_53261:
   body_color_key: 'white body'
   pin_color_key: 'metal grey pins'
   latch_color_key: 'black body'
-  destination_dir: 'Connector_Molex'
+  destination_dir: 'Connector_Molex.3dshapes'
   source: 'http://www.molex.com/pdm_docs/sd/532610271_sd.pdf'
 
 PicoBlade_53398:
@@ -327,7 +327,7 @@ PicoBlade_53398:
   body_color_key: 'white body'
   pin_color_key: 'metal grey pins'
   latch_color_key: 'black body'
-  destination_dir: 'Connector_Molex'
+  destination_dir: 'Connector_Molex.3dshapes'
   source: 'http://www.molex.com/pdm_docs/sd/533980271_sd.pdf'
 
 Picoflex_90325:
@@ -354,7 +354,7 @@ Picoflex_90325:
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   latch_color_key: 'black body'
-  destination_dir: 'Connector_Molex'
+  destination_dir: 'Connector_Molex.3dshapes'
   source: 'http://www.molex.com/pdm_docs/sd/903250004_sd.pdf'
 
 Picoflex_90814:
@@ -380,7 +380,7 @@ Picoflex_90814:
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   latch_color_key: 'black body'
-  destination_dir: 'Connector_Molex'
+  destination_dir: 'Connector_Molex.3dshapes'
   source: 'http://www.molex.com/pdm_docs/sd/908140004_sd.pdf'
 
 SlimStack_54722:
@@ -428,7 +428,7 @@ SlimStack_54722:
   body_color_key: 'white body'
   pin_color_key: 'metal grey pins'
   latch_color_key: 'black body'
-  destination_dir: 'Connector_Molex'
+  destination_dir: 'Connector_Molex.3dshapes'
   source: 'http://www.molex.com/pdm_docs/sd/547220804_sd.pdf'
 
 SlimStack_55560:
@@ -465,5 +465,5 @@ SlimStack_55560:
   body_color_key: 'dark grey body'
   pin_color_key: 'gold pins'
   latch_color_key: "gold pins"  # contacts_color_key
-  destination_dir: 'Connector_Molex'
+  destination_dir: 'Connector_Molex.3dshapes'
   source: 'http://www.molex.com/pdm_docs/sd/555600207_sd.pdf'

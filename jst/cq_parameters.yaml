@@ -34,7 +34,7 @@ JST_EH_V:
   translation: [0, 0, 0]
   body_color_key: 'white body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Connector_JST'
+  destination_dir: 'Connector_JST.3dshapes'
   source: 'http://www.jst-mfg.com/product/pdf/eng/eEH.pdf'
 
 JST_EH_H:
@@ -73,7 +73,7 @@ JST_EH_H:
   translation: [0, 0, 0]
   body_color_key: 'white body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Connector_JST'
+  destination_dir: 'Connector_JST.3dshapes'
   source: 'http://www.jst-mfg.com/product/pdf/eng/eEH.pdf'
 
 JST_GH_V:
@@ -108,7 +108,7 @@ JST_GH_V:
   translation: [0, 0, 0]
   body_color_key: 'white body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Connector_JST'
+  destination_dir: 'Connector_JST.3dshapes'
   source: 'http://www.jst-mfg.com/product/pdf/eng/eGH.pdf'
 
 JST_GH_H:
@@ -143,7 +143,7 @@ JST_GH_H:
   translation: [0, 0, 0]
   body_color_key: 'white body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Connector_JST'
+  destination_dir: 'Connector_JST.3dshapes'
   source: 'http://www.jst-mfg.com/product/pdf/eng/eGH.pdf'
 
 JST_PH_V:
@@ -185,7 +185,7 @@ JST_PH_V:
   translation: [0, 0, 0]
   body_color_key: 'white body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Connector_JST'
+  destination_dir: 'Connector_JST.3dshapes'
   source: 'http://www.jst-mfg.com/product/pdf/eng/ePH.pdf'
 
 JST_PH_H:
@@ -227,7 +227,7 @@ JST_PH_H:
   translation: [0, 0, 0]
   body_color_key: 'white body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Connector_JST'
+  destination_dir: 'Connector_JST.3dshapes'
   source: 'http://www.jst-mfg.com/product/pdf/eng/ePH.pdf'
 
 JST_XH_V:
@@ -260,7 +260,7 @@ JST_XH_V:
   translation: [0, -1.0, 0]
   body_color_key: "white body"
   pin_color_key: "metal grey pins"
-  destination_dir: 'Connector_JST'
+  destination_dir: 'Connector_JST.3dshapes'
   source: 'http://www.jst-mfg.com/product/pdf/eng/eXH.pdf'
 
 JST_XH_H:
@@ -293,7 +293,7 @@ JST_XH_H:
   translation: [0, 0, 0]
   body_color_key: "white body"
   pin_color_key: "metal grey pins"
-  destination_dir: 'Connector_JST'
+  destination_dir: 'Connector_JST.3dshapes'
   source: 'http://www.jst-mfg.com/product/pdf/eng/eXH.pdf'
 
 JST_XH_VS:
@@ -326,5 +326,5 @@ JST_XH_VS:
   translation: [0, 0, 0]
   body_color_key: 'white body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Connector_JST'
+  destination_dir: 'Connector_JST.3dshapes'
   source: 'http://www.jst-mfg.com/product/pdf/eng/eXH.pdf'

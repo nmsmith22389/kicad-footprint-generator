@@ -11,7 +11,7 @@ Johanson_2450AT18x100:
   body_color_key: 'white body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
-  destination_dir: 'RF_Antenna'
+  destination_dir: 'RF_Antenna.3dshapes'
   source: 'https://www.johansontechnology.com/datasheets/2450AT18A100/2450AT18A100.pdf'
 
 Johanson_2450AT43F0100:
@@ -27,6 +27,6 @@ Johanson_2450AT43F0100:
   body_color_key: 'white body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
-  destination_dir: 'RF_Antenna'
+  destination_dir: 'RF_Antenna.3dshapes'
   source: 'https://www.johansontechnology.com/datasheets/2450AT43F0100/2450AT43F0100.pdf'
   

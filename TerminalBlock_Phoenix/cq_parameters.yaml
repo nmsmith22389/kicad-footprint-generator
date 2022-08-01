@@ -5,7 +5,7 @@ TerminalBlock_Phoenix_PT-1,5-2-5.0-H_1x02_P5.00mm_Horizontal:
   lib: 'TerminalBlock_Phoenix'
   body_color_key: 'green body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'TerminalBlock_Phoenix'
+  destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_PT-1,5-3-5.0-H_1x03_P5.00mm_Horizontal:
   source: 'https://media.digikey.com/pdf/Data%20Sheets/Phoenix%20Contact%20PDFs/1935161.pdf'
@@ -14,7 +14,7 @@ TerminalBlock_Phoenix_PT-1,5-3-5.0-H_1x03_P5.00mm_Horizontal:
   lib: 'TerminalBlock_Phoenix'
   body_color_key: 'green body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'TerminalBlock_Phoenix'
+  destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_PT-1,5-4-5.0-H_1x04_P5.00mm_Horizontal:
   source: 'https://media.digikey.com/pdf/Data%20Sheets/Phoenix%20Contact%20PDFs/1935161.pdf'
@@ -23,7 +23,7 @@ TerminalBlock_Phoenix_PT-1,5-4-5.0-H_1x04_P5.00mm_Horizontal:
   lib: 'TerminalBlock_Phoenix'
   body_color_key: 'green body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'TerminalBlock_Phoenix'
+  destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_PT-1,5-5-5.0-H_1x05_P5.00mm_Horizontal:
   source: 'https://media.digikey.com/pdf/Data%20Sheets/Phoenix%20Contact%20PDFs/1935161.pdf'
@@ -32,7 +32,7 @@ TerminalBlock_Phoenix_PT-1,5-5-5.0-H_1x05_P5.00mm_Horizontal:
   lib: 'TerminalBlock_Phoenix'
   body_color_key: 'green body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'TerminalBlock_Phoenix'
+  destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_PT-1,5-6-5.0-H_1x06_P5.00mm_Horizontal:
   source: 'https://media.digikey.com/pdf/Data%20Sheets/Phoenix%20Contact%20PDFs/1935161.pdf'
@@ -41,7 +41,7 @@ TerminalBlock_Phoenix_PT-1,5-6-5.0-H_1x06_P5.00mm_Horizontal:
   lib: 'TerminalBlock_Phoenix'
   body_color_key: 'green body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'TerminalBlock_Phoenix'
+  destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_PT-1,5-7-5.0-H_1x07_P5.00mm_Horizontal:
   source: 'https://media.digikey.com/pdf/Data%20Sheets/Phoenix%20Contact%20PDFs/1935161.pdf'
@@ -50,7 +50,7 @@ TerminalBlock_Phoenix_PT-1,5-7-5.0-H_1x07_P5.00mm_Horizontal:
   lib: 'TerminalBlock_Phoenix'
   body_color_key: 'green body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'TerminalBlock_Phoenix'
+  destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_PT-1,5-8-5.0-H_1x08_P5.00mm_Horizontal:
   source: 'https://media.digikey.com/pdf/Data%20Sheets/Phoenix%20Contact%20PDFs/1935161.pdf'
@@ -59,7 +59,7 @@ TerminalBlock_Phoenix_PT-1,5-8-5.0-H_1x08_P5.00mm_Horizontal:
   lib: 'TerminalBlock_Phoenix'
   body_color_key: 'green body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'TerminalBlock_Phoenix'
+  destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_PT-1,5-9-5.0-H_1x09_P5.00mm_Horizontal:
   source: 'https://media.digikey.com/pdf/Data%20Sheets/Phoenix%20Contact%20PDFs/1935161.pdf'
@@ -68,7 +68,7 @@ TerminalBlock_Phoenix_PT-1,5-9-5.0-H_1x09_P5.00mm_Horizontal:
   lib: 'TerminalBlock_Phoenix'
   body_color_key: 'green body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'TerminalBlock_Phoenix'
+  destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_PT-1,5-10-5.0-H_1x10_P5.00mm_Horizontal:
   source: 'https://media.digikey.com/pdf/Data%20Sheets/Phoenix%20Contact%20PDFs/1935161.pdf'
@@ -77,7 +77,7 @@ TerminalBlock_Phoenix_PT-1,5-10-5.0-H_1x10_P5.00mm_Horizontal:
   lib: 'TerminalBlock_Phoenix'
   body_color_key: 'green body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'TerminalBlock_Phoenix'
+  destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_PT-1,5-11-5.0-H_1x11_P5.00mm_Horizontal:
   source: 'https://media.digikey.com/pdf/Data%20Sheets/Phoenix%20Contact%20PDFs/1935161.pdf'
@@ -86,7 +86,7 @@ TerminalBlock_Phoenix_PT-1,5-11-5.0-H_1x11_P5.00mm_Horizontal:
   lib: 'TerminalBlock_Phoenix'
   body_color_key: 'green body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'TerminalBlock_Phoenix'
+  destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_PT-1,5-12-5.0-H_1x12_P5.00mm_Horizontal:
   source: 'https://media.digikey.com/pdf/Data%20Sheets/Phoenix%20Contact%20PDFs/1935161.pdf'
@@ -95,7 +95,7 @@ TerminalBlock_Phoenix_PT-1,5-12-5.0-H_1x12_P5.00mm_Horizontal:
   lib: 'TerminalBlock_Phoenix'
   body_color_key: 'green body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'TerminalBlock_Phoenix'
+  destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_PT-1,5-13-5.0-H_1x13_P5.00mm_Horizontal:
   source: 'https://media.digikey.com/pdf/Data%20Sheets/Phoenix%20Contact%20PDFs/1935161.pdf'
@@ -104,7 +104,7 @@ TerminalBlock_Phoenix_PT-1,5-13-5.0-H_1x13_P5.00mm_Horizontal:
   lib: 'TerminalBlock_Phoenix'
   body_color_key: 'green body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'TerminalBlock_Phoenix'
+  destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_PT-1,5-14-5.0-H_1x14_P5.00mm_Horizontal:
   source: 'https://media.digikey.com/pdf/Data%20Sheets/Phoenix%20Contact%20PDFs/1935161.pdf'
@@ -113,7 +113,7 @@ TerminalBlock_Phoenix_PT-1,5-14-5.0-H_1x14_P5.00mm_Horizontal:
   lib: 'TerminalBlock_Phoenix'
   body_color_key: 'green body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'TerminalBlock_Phoenix'
+  destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_PT-1,5-15-5.0-H_1x15_P5.00mm_Horizontal:
   source: 'https://media.digikey.com/pdf/Data%20Sheets/Phoenix%20Contact%20PDFs/1935161.pdf'
@@ -122,7 +122,7 @@ TerminalBlock_Phoenix_PT-1,5-15-5.0-H_1x15_P5.00mm_Horizontal:
   lib: 'TerminalBlock_Phoenix'
   body_color_key: 'green body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'TerminalBlock_Phoenix'
+  destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_PT-1,5-16-5.0-H_1x16_P5.00mm_Horizontal:
   source: 'https://media.digikey.com/pdf/Data%20Sheets/Phoenix%20Contact%20PDFs/1935161.pdf'
@@ -131,7 +131,7 @@ TerminalBlock_Phoenix_PT-1,5-16-5.0-H_1x16_P5.00mm_Horizontal:
   lib: 'TerminalBlock_Phoenix'
   body_color_key: 'green body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'TerminalBlock_Phoenix'
+  destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_PT-1,5-2-3.5-H_1x02_P3.50mm_Horizontal:
   source: 'https://www.phoenixcontact.com/online/portal/us?uri=pxc-oc-itemdetail:pid=1984617'
@@ -140,7 +140,7 @@ TerminalBlock_Phoenix_PT-1,5-2-3.5-H_1x02_P3.50mm_Horizontal:
   lib: 'TerminalBlock_Phoenix'
   body_color_key: 'green body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'TerminalBlock_Phoenix'
+  destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_PT-1,5-3-3.5-H_1x03_P3.50mm_Horizontal:
   source: 'https://www.phoenixcontact.com/online/portal/us?uri=pxc-oc-itemdetail:pid=1984617'
@@ -149,7 +149,7 @@ TerminalBlock_Phoenix_PT-1,5-3-3.5-H_1x03_P3.50mm_Horizontal:
   lib: 'TerminalBlock_Phoenix'
   body_color_key: 'green body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'TerminalBlock_Phoenix'
+  destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_PT-1,5-4-3.5-H_1x04_P3.50mm_Horizontal:
   source: 'https://www.phoenixcontact.com/online/portal/us?uri=pxc-oc-itemdetail:pid=1984617'
@@ -158,7 +158,7 @@ TerminalBlock_Phoenix_PT-1,5-4-3.5-H_1x04_P3.50mm_Horizontal:
   lib: 'TerminalBlock_Phoenix'
   body_color_key: 'green body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'TerminalBlock_Phoenix'
+  destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_PT-1,5-5-3.5-H_1x05_P3.50mm_Horizontal:
   source: 'https://www.phoenixcontact.com/online/portal/us?uri=pxc-oc-itemdetail:pid=1984617'
@@ -167,7 +167,7 @@ TerminalBlock_Phoenix_PT-1,5-5-3.5-H_1x05_P3.50mm_Horizontal:
   lib: 'TerminalBlock_Phoenix'
   body_color_key: 'green body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'TerminalBlock_Phoenix'
+  destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_PT-1,5-6-3.5-H_1x06_P3.50mm_Horizontal:
   source: 'https://www.phoenixcontact.com/online/portal/us?uri=pxc-oc-itemdetail:pid=1984617'
@@ -176,7 +176,7 @@ TerminalBlock_Phoenix_PT-1,5-6-3.5-H_1x06_P3.50mm_Horizontal:
   lib: 'TerminalBlock_Phoenix'
   body_color_key: 'green body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'TerminalBlock_Phoenix'
+  destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_PT-1,5-7-3.5-H_1x07_P3.50mm_Horizontal:
   source: 'https://www.phoenixcontact.com/online/portal/us?uri=pxc-oc-itemdetail:pid=1984617'
@@ -185,7 +185,7 @@ TerminalBlock_Phoenix_PT-1,5-7-3.5-H_1x07_P3.50mm_Horizontal:
   lib: 'TerminalBlock_Phoenix'
   body_color_key: 'green body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'TerminalBlock_Phoenix'
+  destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_PT-1,5-8-3.5-H_1x08_P3.50mm_Horizontal:
   source: 'https://www.phoenixcontact.com/online/portal/us?uri=pxc-oc-itemdetail:pid=1984617'
@@ -194,7 +194,7 @@ TerminalBlock_Phoenix_PT-1,5-8-3.5-H_1x08_P3.50mm_Horizontal:
   lib: 'TerminalBlock_Phoenix'
   body_color_key: 'green body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'TerminalBlock_Phoenix'
+  destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_PT-1,5-9-3.5-H_1x09_P3.50mm_Horizontal:
   source: 'https://www.phoenixcontact.com/online/portal/us?uri=pxc-oc-itemdetail:pid=1984617'
@@ -203,7 +203,7 @@ TerminalBlock_Phoenix_PT-1,5-9-3.5-H_1x09_P3.50mm_Horizontal:
   lib: 'TerminalBlock_Phoenix'
   body_color_key: 'green body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'TerminalBlock_Phoenix'
+  destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_PT-1,5-10-3.5-H_1x10_P3.50mm_Horizontal:
   source: 'https://www.phoenixcontact.com/online/portal/us?uri=pxc-oc-itemdetail:pid=1984617'
@@ -212,7 +212,7 @@ TerminalBlock_Phoenix_PT-1,5-10-3.5-H_1x10_P3.50mm_Horizontal:
   lib: 'TerminalBlock_Phoenix'
   body_color_key: 'green body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'TerminalBlock_Phoenix'
+  destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_PT-1,5-11-3.5-H_1x11_P3.50mm_Horizontal:
   source: 'https://www.phoenixcontact.com/online/portal/us?uri=pxc-oc-itemdetail:pid=1984617'
@@ -221,7 +221,7 @@ TerminalBlock_Phoenix_PT-1,5-11-3.5-H_1x11_P3.50mm_Horizontal:
   lib: 'TerminalBlock_Phoenix'
   body_color_key: 'green body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'TerminalBlock_Phoenix'
+  destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_PT-1,5-12-3.5-H_1x12_P3.50mm_Horizontal:
   source: 'https://www.phoenixcontact.com/online/portal/us?uri=pxc-oc-itemdetail:pid=1984617'
@@ -230,7 +230,7 @@ TerminalBlock_Phoenix_PT-1,5-12-3.5-H_1x12_P3.50mm_Horizontal:
   lib: 'TerminalBlock_Phoenix'
   body_color_key: 'green body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'TerminalBlock_Phoenix'
+  destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_PT-1,5-13-3.5-H_1x13_P3.50mm_Horizontal:
   source: 'https://www.phoenixcontact.com/online/portal/us?uri=pxc-oc-itemdetail:pid=1984617'
@@ -239,7 +239,7 @@ TerminalBlock_Phoenix_PT-1,5-13-3.5-H_1x13_P3.50mm_Horizontal:
   lib: 'TerminalBlock_Phoenix'
   body_color_key: 'green body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'TerminalBlock_Phoenix'
+  destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_PT-1,5-14-3.5-H_1x14_P3.50mm_Horizontal:
   source: 'https://www.phoenixcontact.com/online/portal/us?uri=pxc-oc-itemdetail:pid=1984617'
@@ -248,7 +248,7 @@ TerminalBlock_Phoenix_PT-1,5-14-3.5-H_1x14_P3.50mm_Horizontal:
   lib: 'TerminalBlock_Phoenix'
   body_color_key: 'green body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'TerminalBlock_Phoenix'
+  destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_PT-1,5-15-3.5-H_1x15_P3.50mm_Horizontal:
   source: 'https://www.phoenixcontact.com/online/portal/us?uri=pxc-oc-itemdetail:pid=1984617'
@@ -257,7 +257,7 @@ TerminalBlock_Phoenix_PT-1,5-15-3.5-H_1x15_P3.50mm_Horizontal:
   lib: 'TerminalBlock_Phoenix'
   body_color_key: 'green body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'TerminalBlock_Phoenix'
+  destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_PT-1,5-16-3.5-H_1x16_P3.50mm_Horizontal:
   source: 'https://www.phoenixcontact.com/online/portal/us?uri=pxc-oc-itemdetail:pid=1984617'
@@ -266,7 +266,7 @@ TerminalBlock_Phoenix_PT-1,5-16-3.5-H_1x16_P3.50mm_Horizontal:
   lib: 'TerminalBlock_Phoenix'
   body_color_key: 'green body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'TerminalBlock_Phoenix'
+  destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1715721'
@@ -275,7 +275,7 @@ TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MKDS-1,5-3-5.08_1x03_P5.08mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1715721'
@@ -284,7 +284,7 @@ TerminalBlock_Phoenix_MKDS-1,5-3-5.08_1x03_P5.08mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MKDS-1,5-4-5.08_1x04_P5.08mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1715721'
@@ -293,7 +293,7 @@ TerminalBlock_Phoenix_MKDS-1,5-4-5.08_1x04_P5.08mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MKDS-1,5-5-5.08_1x05_P5.08mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1715721'
@@ -302,7 +302,7 @@ TerminalBlock_Phoenix_MKDS-1,5-5-5.08_1x05_P5.08mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MKDS-1,5-6-5.08_1x06_P5.08mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1715721'
@@ -311,7 +311,7 @@ TerminalBlock_Phoenix_MKDS-1,5-6-5.08_1x06_P5.08mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MKDS-1,5-7-5.08_1x07_P5.08mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1715721'
@@ -320,7 +320,7 @@ TerminalBlock_Phoenix_MKDS-1,5-7-5.08_1x07_P5.08mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MKDS-1,5-8-5.08_1x08_P5.08mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1715721'
@@ -329,7 +329,7 @@ TerminalBlock_Phoenix_MKDS-1,5-8-5.08_1x08_P5.08mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MKDS-1,5-9-5.08_1x09_P5.08mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1715721'
@@ -338,7 +338,7 @@ TerminalBlock_Phoenix_MKDS-1,5-9-5.08_1x09_P5.08mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MKDS-1,5-10-5.08_1x10_P5.08mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1715721'
@@ -347,7 +347,7 @@ TerminalBlock_Phoenix_MKDS-1,5-10-5.08_1x10_P5.08mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MKDS-1,5-11-5.08_1x11_P5.08mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1715721'
@@ -356,7 +356,7 @@ TerminalBlock_Phoenix_MKDS-1,5-11-5.08_1x11_P5.08mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MKDS-1,5-12-5.08_1x12_P5.08mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1715721'
@@ -365,7 +365,7 @@ TerminalBlock_Phoenix_MKDS-1,5-12-5.08_1x12_P5.08mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MKDS-1,5-13-5.08_1x13_P5.08mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1715721'
@@ -374,7 +374,7 @@ TerminalBlock_Phoenix_MKDS-1,5-13-5.08_1x13_P5.08mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MKDS-1,5-14-5.08_1x14_P5.08mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1715721'
@@ -383,7 +383,7 @@ TerminalBlock_Phoenix_MKDS-1,5-14-5.08_1x14_P5.08mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MKDS-1,5-15-5.08_1x15_P5.08mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1715721'
@@ -392,7 +392,7 @@ TerminalBlock_Phoenix_MKDS-1,5-15-5.08_1x15_P5.08mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MKDS-1,5-16-5.08_1x16_P5.08mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1715721'
@@ -401,7 +401,7 @@ TerminalBlock_Phoenix_MKDS-1,5-16-5.08_1x16_P5.08mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
     
 TerminalBlock_Phoenix_MKDS-1,5-2_1x02_P5.00mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1715022'
@@ -410,7 +410,7 @@ TerminalBlock_Phoenix_MKDS-1,5-2_1x02_P5.00mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MKDS-1,5-3_1x03_P5.00mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1715022'
@@ -419,7 +419,7 @@ TerminalBlock_Phoenix_MKDS-1,5-3_1x03_P5.00mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MKDS-1,5-4_1x04_P5.00mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1715022'
@@ -428,7 +428,7 @@ TerminalBlock_Phoenix_MKDS-1,5-4_1x04_P5.00mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MKDS-1,5-5_1x05_P5.00mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1715022'
@@ -437,7 +437,7 @@ TerminalBlock_Phoenix_MKDS-1,5-5_1x05_P5.00mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MKDS-1,5-6_1x06_P5.00mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1715022'
@@ -446,7 +446,7 @@ TerminalBlock_Phoenix_MKDS-1,5-6_1x06_P5.00mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MKDS-1,5-7_1x07_P5.00mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1715022'
@@ -455,7 +455,7 @@ TerminalBlock_Phoenix_MKDS-1,5-7_1x07_P5.00mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MKDS-1,5-8_1x08_P5.00mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1715022'
@@ -464,7 +464,7 @@ TerminalBlock_Phoenix_MKDS-1,5-8_1x08_P5.00mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MKDS-1,5-9_1x09_P5.00mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1715022'
@@ -473,7 +473,7 @@ TerminalBlock_Phoenix_MKDS-1,5-9_1x09_P5.00mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MKDS-1,5-10_1x10_P5.00mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1715022'
@@ -482,7 +482,7 @@ TerminalBlock_Phoenix_MKDS-1,5-10_1x10_P5.00mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MKDS-1,5-11_1x11_P5.00mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1715022'
@@ -491,7 +491,7 @@ TerminalBlock_Phoenix_MKDS-1,5-11_1x11_P5.00mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MKDS-1,5-12_1x12_P5.00mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1715022'
@@ -500,7 +500,7 @@ TerminalBlock_Phoenix_MKDS-1,5-12_1x12_P5.00mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MKDS-1,5-13_1x13_P5.00mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1715022'
@@ -509,7 +509,7 @@ TerminalBlock_Phoenix_MKDS-1,5-13_1x13_P5.00mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MKDS-1,5-14_1x14_P5.00mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1715022'
@@ -518,7 +518,7 @@ TerminalBlock_Phoenix_MKDS-1,5-14_1x14_P5.00mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MKDS-1,5-15_1x15_P5.00mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1715022'
@@ -527,7 +527,7 @@ TerminalBlock_Phoenix_MKDS-1,5-15_1x15_P5.00mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MKDS-1,5-16_1x16_P5.00mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1715022'
@@ -536,7 +536,7 @@ TerminalBlock_Phoenix_MKDS-1,5-16_1x16_P5.00mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MKDS-3-2-5.08_1x02_P5.08mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1711725'
@@ -545,7 +545,7 @@ TerminalBlock_Phoenix_MKDS-3-2-5.08_1x02_P5.08mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MKDS-3-3-5.08_1x03_P5.08mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1711725'
@@ -554,7 +554,7 @@ TerminalBlock_Phoenix_MKDS-3-3-5.08_1x03_P5.08mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MKDS-3-4-5.08_1x04_P5.08mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1711725'
@@ -563,7 +563,7 @@ TerminalBlock_Phoenix_MKDS-3-4-5.08_1x04_P5.08mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MKDS-3-5-5.08_1x05_P5.08mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1711725'
@@ -572,7 +572,7 @@ TerminalBlock_Phoenix_MKDS-3-5-5.08_1x05_P5.08mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MKDS-3-6-5.08_1x06_P5.08mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1711725'
@@ -581,7 +581,7 @@ TerminalBlock_Phoenix_MKDS-3-6-5.08_1x06_P5.08mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MKDS-3-7-5.08_1x07_P5.08mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1711725'
@@ -590,7 +590,7 @@ TerminalBlock_Phoenix_MKDS-3-7-5.08_1x07_P5.08mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MKDS-3-8-5.08_1x08_P5.08mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1711725'
@@ -599,7 +599,7 @@ TerminalBlock_Phoenix_MKDS-3-8-5.08_1x08_P5.08mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MKDS-3-9-5.08_1x09_P5.08mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1711725'
@@ -608,7 +608,7 @@ TerminalBlock_Phoenix_MKDS-3-9-5.08_1x09_P5.08mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MKDS-3-10-5.08_1x10_P5.08mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1711725'
@@ -617,7 +617,7 @@ TerminalBlock_Phoenix_MKDS-3-10-5.08_1x10_P5.08mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MKDS-3-11-5.08_1x11_P5.08mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1711725'
@@ -626,7 +626,7 @@ TerminalBlock_Phoenix_MKDS-3-11-5.08_1x11_P5.08mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MKDS-3-12-5.08_1x12_P5.08mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1711725'
@@ -635,7 +635,7 @@ TerminalBlock_Phoenix_MKDS-3-12-5.08_1x12_P5.08mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MKDS-3-13-5.08_1x13_P5.08mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1711725'
@@ -644,7 +644,7 @@ TerminalBlock_Phoenix_MKDS-3-13-5.08_1x13_P5.08mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MKDS-3-14-5.08_1x14_P5.08mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1711725'
@@ -653,7 +653,7 @@ TerminalBlock_Phoenix_MKDS-3-14-5.08_1x14_P5.08mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MKDS-3-15-5.08_1x15_P5.08mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1711725'
@@ -662,7 +662,7 @@ TerminalBlock_Phoenix_MKDS-3-15-5.08_1x15_P5.08mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MKDS-3-16-5.08_1x16_P5.08mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1711725'
@@ -671,7 +671,7 @@ TerminalBlock_Phoenix_MKDS-3-16-5.08_1x16_P5.08mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MPT-0,5-2-2.54_1x02_P2.54mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1725656'
@@ -680,7 +680,7 @@ TerminalBlock_Phoenix_MPT-0,5-2-2.54_1x02_P2.54mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MPT-0,5-3-2.54_1x03_P2.54mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1725656'
@@ -689,7 +689,7 @@ TerminalBlock_Phoenix_MPT-0,5-3-2.54_1x03_P2.54mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MPT-0,5-4-2.54_1x04_P2.54mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1725656'
@@ -698,7 +698,7 @@ TerminalBlock_Phoenix_MPT-0,5-4-2.54_1x04_P2.54mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MPT-0,5-5-2.54_1x05_P2.54mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1725656'
@@ -707,7 +707,7 @@ TerminalBlock_Phoenix_MPT-0,5-5-2.54_1x05_P2.54mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MPT-0,5-6-2.54_1x06_P2.54mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1725656'
@@ -716,7 +716,7 @@ TerminalBlock_Phoenix_MPT-0,5-6-2.54_1x06_P2.54mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MPT-0,5-7-2.54_1x07_P2.54mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1725656'
@@ -725,7 +725,7 @@ TerminalBlock_Phoenix_MPT-0,5-7-2.54_1x07_P2.54mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MPT-0,5-8-2.54_1x08_P2.54mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1725656'
@@ -734,7 +734,7 @@ TerminalBlock_Phoenix_MPT-0,5-8-2.54_1x08_P2.54mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MPT-0,5-9-2.54_1x09_P2.54mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1725656'
@@ -743,7 +743,7 @@ TerminalBlock_Phoenix_MPT-0,5-9-2.54_1x09_P2.54mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MPT-0,5-10-2.54_1x10_P2.54mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1725656'
@@ -752,7 +752,7 @@ TerminalBlock_Phoenix_MPT-0,5-10-2.54_1x10_P2.54mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MPT-0,5-11-2.54_1x11_P2.54mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1725656'
@@ -761,7 +761,7 @@ TerminalBlock_Phoenix_MPT-0,5-11-2.54_1x11_P2.54mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
 
 TerminalBlock_Phoenix_MPT-0,5-12-2.54_1x12_P2.54mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1725656'
@@ -770,5 +770,5 @@ TerminalBlock_Phoenix_MPT-0,5-12-2.54_1x12_P2.54mm_Horizontal:
     lib: 'TerminalBlock_Phoenix'
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
-    destination_dir: 'TerminalBlock_Phoenix'
+    destination_dir: 'TerminalBlock_Phoenix.3dshapes'
         

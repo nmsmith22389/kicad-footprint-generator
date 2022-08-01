@@ -17,7 +17,7 @@ SW_DIP_x1_W5.08mm_Slide_Copal_CHS-A:
   body_color_key: blue body  # Body colour
   pig_color_key: white body  # Pig colour
   pin_color_key: metal grey pins  # Pin colour
-  destination_dir: 'Switch_SMD_packages'
+  destination_dir: 'Switch_SMD_packages.3dshapes'
   source: 'N/A'
 
 SW_DIP_x1_W7.62mm_Slide_Copal_CHS-B:
@@ -39,7 +39,7 @@ SW_DIP_x1_W7.62mm_Slide_Copal_CHS-B:
   body_color_key: blue body
   pig_color_key: white body
   pin_color_key: metal grey pins
-  destination_dir: 'Switch_SMD_packages'
+  destination_dir: 'Switch_SMD_packages.3dshapes'
   source: 'N/A'
 
 SW_DIP_x1_W8.61mm_Slide_LowProfile:
@@ -61,7 +61,7 @@ SW_DIP_x1_W8.61mm_Slide_LowProfile:
   body_color_key: blue body
   pig_color_key: white body
   pin_color_key: metal grey pins
-  destination_dir: 'Switch_SMD_packages'
+  destination_dir: 'Switch_SMD_packages.3dshapes'
   source: 'N/A'
 
 SW_SPST_EVQPE1:
@@ -83,7 +83,7 @@ SW_SPST_EVQPE1:
   body_color_key: blue body
   pig_color_key: white body
   pin_color_key: metal grey pins
-  destination_dir: 'Switch_SMD_packages'
+  destination_dir: 'Switch_SMD_packages.3dshapes'
   source: 'N/A'
 
 SW_SPST_REED_CT05-XXXX-G1:
@@ -105,7 +105,7 @@ SW_SPST_REED_CT05-XXXX-G1:
   body_color_key: blue body
   pig_color_key: white body
   pin_color_key: metal grey pins
-  destination_dir: 'Switch_SMD_packages'
+  destination_dir: 'Switch_SMD_packages.3dshapes'
   source: 'N/A'
 
 SW_SPST_REED_CT05-XXXX-J1:
@@ -127,7 +127,7 @@ SW_SPST_REED_CT05-XXXX-J1:
   body_color_key: blue body
   pig_color_key: white body
   pin_color_key: metal grey pins
-  destination_dir: 'Switch_SMD_packages'
+  destination_dir: 'Switch_SMD_packages.3dshapes'
   source: 'N/A'
 
 SW_SPST_REED_CT10-XXXX-G1:
@@ -149,7 +149,7 @@ SW_SPST_REED_CT10-XXXX-G1:
   body_color_key: blue body
   pig_color_key: white body
   pin_color_key: metal grey pins
-  destination_dir: 'Switch_SMD_packages'
+  destination_dir: 'Switch_SMD_packages.3dshapes'
   source: 'N/A'
 
 SW_SPST_REED_CT10-XXXX-G2:
@@ -171,7 +171,7 @@ SW_SPST_REED_CT10-XXXX-G2:
   body_color_key: blue body
   pig_color_key: white body
   pin_color_key: metal grey pins
-  destination_dir: 'Switch_SMD_packages'
+  destination_dir: 'Switch_SMD_packages.3dshapes'
   source: 'N/A'
 
 SW_SPST_REED_CT10-XXXX-G4:
@@ -193,7 +193,7 @@ SW_SPST_REED_CT10-XXXX-G4:
   body_color_key: blue body
   pig_color_key: white body
   pin_color_key: metal grey pins
-  destination_dir: 'Switch_SMD_packages'
+  destination_dir: 'Switch_SMD_packages.3dshapes'
   source: 'N/A'
 
 SW_DIP_x2_W5.08mm_Slide_Copal_CHS-A:
@@ -215,7 +215,7 @@ SW_DIP_x2_W5.08mm_Slide_Copal_CHS-A:
   body_color_key: blue body
   pig_color_key: white body
   pin_color_key: metal grey pins
-  destination_dir: 'Switch_SMD_packages'
+  destination_dir: 'Switch_SMD_packages.3dshapes'
   source: 'N/A'
 
 SW_DIP_x2_W6.15mm_Slide_Omron_A6H:
@@ -237,7 +237,7 @@ SW_DIP_x2_W6.15mm_Slide_Omron_A6H:
   body_color_key: blue body
   pig_color_key: white body
   pin_color_key: metal grey pins
-  destination_dir: 'Switch_SMD_packages'
+  destination_dir: 'Switch_SMD_packages.3dshapes'
   source: 'N/A'
 
 SW_DIP_x2_W7.62mm_Slide_Copal_CHS-B:
@@ -259,7 +259,7 @@ SW_DIP_x2_W7.62mm_Slide_Copal_CHS-B:
   body_color_key: blue body
   pig_color_key: white body
   pin_color_key: metal grey pins
-  destination_dir: 'Switch_SMD_packages'
+  destination_dir: 'Switch_SMD_packages.3dshapes'
   source: 'N/A'
 
 SW_DIP_x2_W8.61mm_Slide_LowProfile:
@@ -281,7 +281,7 @@ SW_DIP_x2_W8.61mm_Slide_LowProfile:
   body_color_key: blue body
   pig_color_key: white body
   pin_color_key: metal grey pins
-  destination_dir: 'Switch_SMD_packages'
+  destination_dir: 'Switch_SMD_packages.3dshapes'
   source: 'N/A'
 
 SW_DIP_x3_W8.61mm_Slide_LowProfile:
@@ -303,7 +303,7 @@ SW_DIP_x3_W8.61mm_Slide_LowProfile:
   body_color_key: blue body
   pig_color_key: white body
   pin_color_key: metal grey pins
-  destination_dir: 'Switch_SMD_packages'
+  destination_dir: 'Switch_SMD_packages.3dshapes'
   source: 'N/A'
 
 SW_DIP_x4_W5.08mm_Slide_Copal_CHS-A:
@@ -325,7 +325,7 @@ SW_DIP_x4_W5.08mm_Slide_Copal_CHS-A:
   body_color_key: blue body
   pig_color_key: white body
   pin_color_key: metal grey pins
-  destination_dir: 'Switch_SMD_packages'
+  destination_dir: 'Switch_SMD_packages.3dshapes'
   source: 'N/A'
 
 SW_DIP_x4_W6.15mm_Slide_Omron_A6H:
@@ -347,7 +347,7 @@ SW_DIP_x4_W6.15mm_Slide_Omron_A6H:
   body_color_key: blue body
   pig_color_key: white body
   pin_color_key: metal grey pins
-  destination_dir: 'Switch_SMD_packages'
+  destination_dir: 'Switch_SMD_packages.3dshapes'
   source: 'N/A'
 
 SW_DIP_x4_W7.62mm_Slide_Copal_CHS-B:
@@ -369,7 +369,7 @@ SW_DIP_x4_W7.62mm_Slide_Copal_CHS-B:
   body_color_key: blue body
   pig_color_key: white body
   pin_color_key: metal grey pins
-  destination_dir: 'Switch_SMD_packages'
+  destination_dir: 'Switch_SMD_packages.3dshapes'
   source: 'N/A'
 
 SW_DIP_x4_W8.61mm_Slide_LowProfile:
@@ -391,7 +391,7 @@ SW_DIP_x4_W8.61mm_Slide_LowProfile:
   body_color_key: blue body
   pig_color_key: white body
   pin_color_key: metal grey pins
-  destination_dir: 'Switch_SMD_packages'
+  destination_dir: 'Switch_SMD_packages.3dshapes'
   source: 'N/A'
 
 SW_DIP_x5_W8.61mm_Slide_LowProfile:
@@ -413,7 +413,7 @@ SW_DIP_x5_W8.61mm_Slide_LowProfile:
   body_color_key: blue body
   pig_color_key: white body
   pin_color_key: metal grey pins
-  destination_dir: 'Switch_SMD_packages'
+  destination_dir: 'Switch_SMD_packages.3dshapes'
   source: 'N/A'
 
 SW_DIP_x6_W5.08mm_Slide_Copal_CHS-A:
@@ -435,7 +435,7 @@ SW_DIP_x6_W5.08mm_Slide_Copal_CHS-A:
   body_color_key: blue body
   pig_color_key: white body
   pin_color_key: metal grey pins
-  destination_dir: 'Switch_SMD_packages'
+  destination_dir: 'Switch_SMD_packages.3dshapes'
   source: 'N/A'
 
 SW_DIP_x6_W6.15mm_Slide_Omron_A6H:
@@ -457,7 +457,7 @@ SW_DIP_x6_W6.15mm_Slide_Omron_A6H:
   body_color_key: blue body
   pig_color_key: white body
   pin_color_key: metal grey pins
-  destination_dir: 'Switch_SMD_packages'
+  destination_dir: 'Switch_SMD_packages.3dshapes'
   source: 'N/A'
 
 SW_DIP_x6_W7.62mm_Slide_Copal_CHS-B:
@@ -479,7 +479,7 @@ SW_DIP_x6_W7.62mm_Slide_Copal_CHS-B:
   body_color_key: blue body
   pig_color_key: white body
   pin_color_key: metal grey pins
-  destination_dir: 'Switch_SMD_packages'
+  destination_dir: 'Switch_SMD_packages.3dshapes'
   source: 'N/A'
 
 SW_DIP_x6_W8.61mm_Slide_LowProfile:
@@ -501,7 +501,7 @@ SW_DIP_x6_W8.61mm_Slide_LowProfile:
   body_color_key: blue body
   pig_color_key: white body
   pin_color_key: metal grey pins
-  destination_dir: 'Switch_SMD_packages'
+  destination_dir: 'Switch_SMD_packages.3dshapes'
   source: 'N/A'
 
 SW_DIP_x7_W8.61mm_Slide_LowProfile:
@@ -523,7 +523,7 @@ SW_DIP_x7_W8.61mm_Slide_LowProfile:
   body_color_key: blue body
   pig_color_key: white body
   pin_color_key: metal grey pins
-  destination_dir: 'Switch_SMD_packages'
+  destination_dir: 'Switch_SMD_packages.3dshapes'
   source: 'N/A'
 
 SW_DIP_x8_W5.08mm_Slide_Copal_CHS-A:
@@ -545,7 +545,7 @@ SW_DIP_x8_W5.08mm_Slide_Copal_CHS-A:
   body_color_key: blue body
   pig_color_key: white body
   pin_color_key: metal grey pins
-  destination_dir: 'Switch_SMD_packages'
+  destination_dir: 'Switch_SMD_packages.3dshapes'
   source: 'N/A'
 
 SW_DIP_x8_W6.15mm_Slide_Omron_A6H:
@@ -567,7 +567,7 @@ SW_DIP_x8_W6.15mm_Slide_Omron_A6H:
   body_color_key: blue body
   pig_color_key: white body
   pin_color_key: metal grey pins
-  destination_dir: 'Switch_SMD_packages'
+  destination_dir: 'Switch_SMD_packages.3dshapes'
   source: 'N/A'
 
 SW_DIP_x8_W7.62mm_Slide_Copal_CHS-B:
@@ -589,7 +589,7 @@ SW_DIP_x8_W7.62mm_Slide_Copal_CHS-B:
   body_color_key: blue body
   pig_color_key: white body
   pin_color_key: metal grey pins
-  destination_dir: 'Switch_SMD_packages'
+  destination_dir: 'Switch_SMD_packages.3dshapes'
   source: 'N/A'
 
 SW_DIP_x8_W8.61mm_Slide_LowProfile:
@@ -611,7 +611,7 @@ SW_DIP_x8_W8.61mm_Slide_LowProfile:
   body_color_key: blue body
   pig_color_key: white body
   pin_color_key: metal grey pins
-  destination_dir: 'Switch_SMD_packages'
+  destination_dir: 'Switch_SMD_packages.3dshapes'
   source: 'N/A'
 
 SW_DIP_x9_W8.61mm_Slide_LowProfile:
@@ -633,7 +633,7 @@ SW_DIP_x9_W8.61mm_Slide_LowProfile:
   body_color_key: blue body
   pig_color_key: white body
   pin_color_key: metal grey pins
-  destination_dir: 'Switch_SMD_packages'
+  destination_dir: 'Switch_SMD_packages.3dshapes'
   source: 'N/A'
 
 SW_DIP_x10_W5.08mm_Slide_Copal_CHS-A:
@@ -655,7 +655,7 @@ SW_DIP_x10_W5.08mm_Slide_Copal_CHS-A:
   body_color_key: blue body
   pig_color_key: white body
   pin_color_key: metal grey pins
-  destination_dir: 'Switch_SMD_packages'
+  destination_dir: 'Switch_SMD_packages.3dshapes'
   source: 'N/A'
 
 SW_DIP_x10_W6.15mm_Slide_Omron_A6H:
@@ -677,7 +677,7 @@ SW_DIP_x10_W6.15mm_Slide_Omron_A6H:
   body_color_key: blue body
   pig_color_key: white body
   pin_color_key: metal grey pins
-  destination_dir: 'Switch_SMD_packages'
+  destination_dir: 'Switch_SMD_packages.3dshapes'
   source: 'N/A'
 
 SW_DIP_x10_W7.62mm_Slide_Copal_CHS-B:
@@ -699,7 +699,7 @@ SW_DIP_x10_W7.62mm_Slide_Copal_CHS-B:
   body_color_key: blue body
   pig_color_key: white body
   pin_color_key: metal grey pins
-  destination_dir: 'Switch_SMD_packages'
+  destination_dir: 'Switch_SMD_packages.3dshapes'
   source: 'N/A'
 
 SW_DIP_x10_W8.61mm_Slide_LowProfile:
@@ -721,7 +721,7 @@ SW_DIP_x10_W8.61mm_Slide_LowProfile:
   body_color_key: blue body
   pig_color_key: white body
   pin_color_key: metal grey pins
-  destination_dir: 'Switch_SMD_packages'
+  destination_dir: 'Switch_SMD_packages.3dshapes'
   source: 'N/A'
 
 SW_DIP_x11_W8.61mm_Slide_LowProfile:
@@ -743,7 +743,7 @@ SW_DIP_x11_W8.61mm_Slide_LowProfile:
   body_color_key: blue body
   pig_color_key: white body
   pin_color_key: metal grey pins
-  destination_dir: 'Switch_SMD_packages'
+  destination_dir: 'Switch_SMD_packages.3dshapes'
   source: 'N/A'
 
 SW_DIP_x12_W8.61mm_Slide_LowProfile:
@@ -765,5 +765,5 @@ SW_DIP_x12_W8.61mm_Slide_LowProfile:
   body_color_key: blue body
   pig_color_key: white body
   pin_color_key: metal grey pins
-  destination_dir: 'Switch_SMD_packages'
+  destination_dir: 'Switch_SMD_packages.3dshapes'
   source: 'N/A'

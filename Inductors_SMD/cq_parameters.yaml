@@ -9,7 +9,7 @@ L_Wuerth_MAPI-1610:
   rotation: 0
   body_color_key: 'grey body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Inductors_SMD.3dshapes'
+  destination_dir: 'Inductor_SMD.3dshapes'
   source: 'http://katalog.we-online.de/en/pbs/WE-MAPI#vs_t1:2_ct:1'
 
 L_Wuerth_MAPI-2010:
@@ -23,7 +23,7 @@ L_Wuerth_MAPI-2010:
   rotation: 0
   body_color_key: 'grey body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Inductors_SMD.3dshapes'
+  destination_dir: 'Inductor_SMD.3dshapes'
   source: 'http://katalog.we-online.de/en/pbs/WE-MAPI#vs_t1:2_ct:2'
 
 L_Wuerth_MAPI-2506:
@@ -37,7 +37,7 @@ L_Wuerth_MAPI-2506:
   rotation: 0
   body_color_key: 'grey body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Inductors_SMD.3dshapes'
+  destination_dir: 'Inductor_SMD.3dshapes'
   source: 'http://katalog.we-online.de/en/pbs/WE-MAPI#vs_t1:2_ct:3'
 
 L_Wuerth_MAPI-2508:
@@ -51,7 +51,7 @@ L_Wuerth_MAPI-2508:
   rotation: 0
   body_color_key: 'grey body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Inductors_SMD.3dshapes'
+  destination_dir: 'Inductor_SMD.3dshapes'
   source: 'http://katalog.we-online.de/en/pbs/WE-MAPI#vs_t1:2_ct:4'
 
 L_Wuerth_MAPI-2510:
@@ -65,7 +65,7 @@ L_Wuerth_MAPI-2510:
   rotation: 0
   body_color_key: 'grey body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Inductors_SMD.3dshapes'
+  destination_dir: 'Inductor_SMD.3dshapes'
   source: 'http://katalog.we-online.de/en/pbs/WE-MAPI#vs_t1:2_ct:5'
 
 L_Wuerth_MAPI-2512:
@@ -79,7 +79,7 @@ L_Wuerth_MAPI-2512:
   rotation: 0
   body_color_key: 'grey body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Inductors_SMD.3dshapes'
+  destination_dir: 'Inductor_SMD.3dshapes'
   source: 'http://katalog.we-online.de/en/pbs/WE-MAPI#vs_t1:2_ct:6'
 
 L_Wuerth_MAPI-3010:
@@ -93,7 +93,7 @@ L_Wuerth_MAPI-3010:
   rotation: 0
   body_color_key: 'grey body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Inductors_SMD.3dshapes'
+  destination_dir: 'Inductor_SMD.3dshapes'
   source: 'http://katalog.we-online.de/en/pbs/WE-MAPI#vs_t1:2_ct:7'
 
 L_Wuerth_MAPI-3012:
@@ -107,7 +107,7 @@ L_Wuerth_MAPI-3012:
   rotation: 0
   body_color_key: 'grey body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Inductors_SMD.3dshapes'
+  destination_dir: 'Inductor_SMD.3dshapes'
   source: 'http://katalog.we-online.de/en/pbs/WE-MAPI#vs_t1:2_ct:8'
 
 L_Wuerth_MAPI-3015:
@@ -121,7 +121,7 @@ L_Wuerth_MAPI-3015:
   rotation: 0
   body_color_key: 'grey body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Inductors_SMD.3dshapes'
+  destination_dir: 'Inductor_SMD.3dshapes'
   source: 'http://katalog.we-online.de/en/pbs/WE-MAPI#vs_t1:2_ct:9'
 
 L_Wuerth_MAPI-3020:
@@ -135,7 +135,7 @@ L_Wuerth_MAPI-3020:
   rotation: 0
   body_color_key: 'grey body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Inductors_SMD.3dshapes'
+  destination_dir: 'Inductor_SMD.3dshapes'
   source: 'http://katalog.we-online.de/en/pbs/WE-MAPI#vs_t1:2_ct:10'
 
 L_Wuerth_MAPI-4020:
@@ -149,7 +149,7 @@ L_Wuerth_MAPI-4020:
   rotation: 0
   body_color_key: 'grey body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Inductors_SMD.3dshapes'
+  destination_dir: 'Inductor_SMD.3dshapes'
   source: 'http://katalog.we-online.de/en/pbs/WE-MAPI#vs_t1:2_ct:11'
 
 L_Wuerth_MAPI-4030:
@@ -163,7 +163,7 @@ L_Wuerth_MAPI-4030:
   rotation: 0
   body_color_key: 'grey body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Inductors_SMD.3dshapes'
+  destination_dir: 'Inductor_SMD.3dshapes'
   source: 'http://katalog.we-online.de/en/pbs/WE-MAPI#vs_t1:2_ct:12'
 
 L_Vishay_IHSM-3825:
@@ -177,7 +177,7 @@ L_Vishay_IHSM-3825:
   rotation: 0
   body_color_key: 'grey body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Inductors_SMD.3dshapes'
+  destination_dir: 'Inductor_SMD.3dshapes'
   source: 'http://www.mouser.com/ds/2/427/ihsm5832-239823.pdf'
 
 L_Vishay_IHSM-4825:
@@ -191,7 +191,7 @@ L_Vishay_IHSM-4825:
   rotation: 0
   body_color_key: 'grey body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Inductors_SMD.3dshapes'
+  destination_dir: 'Inductor_SMD.3dshapes'
   source: 'https://www.vishay.com/docs/34019/ihsm4825.pdf'
 
 L_Vishay_IHSM-5832:
@@ -205,7 +205,7 @@ L_Vishay_IHSM-5832:
   rotation: 0
   body_color_key: 'grey body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Inductors_SMD.3dshapes'
+  destination_dir: 'Inductor_SMD.3dshapes'
   source: 'https://www.vishay.com/docs/34020/ihsm5832.pdf'
 
 L_Vishay_IHSM-7832:
@@ -219,5 +219,5 @@ L_Vishay_IHSM-7832:
   rotation: 0
   body_color_key: 'grey body'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Inductors_SMD.3dshapes'
+  destination_dir: 'Inductor_SMD.3dshapes'
   source: 'https://www.vishay.com/docs/34021/ihsm7832.pdf'

@@ -12,7 +12,7 @@ D_SMA:
   body_color_key: 'black body' # body color
   mark_color_key: 'light brown label' # mark color
   pin_color_key: 'metal grey pins' # pin color
-  destination_dir: 'Crystal.3dshapes' #destination directory
+  destination_dir: 'Diodes_SMD.3dshapes' #destination directory
   source: 'https://www.microcrystal.com/fileadmin/Media/Products/32kHz/Datasheet/CC1V-T1A.pdf'
 
 D_SMB:
@@ -29,7 +29,7 @@ D_SMB:
   body_color_key: 'black body'
   mark_color_key: 'light brown label'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Crystal.3dshapes'
+  destination_dir: 'Diodes_SMD.3dshapes'
   source: 'https://www.microcrystal.com/fileadmin/Media/Products/32kHz/Datasheet/CC1V-T1A.pdf'
 
 D_SMC:
@@ -46,5 +46,5 @@ D_SMC:
   body_color_key: 'black body'
   mark_color_key: 'light brown label'
   pin_color_key: 'metal grey pins'
-  destination_dir: 'Crystal.3dshapes'
+  destination_dir: 'Diodes_SMD.3dshapes'
   source: 'https://www.microcrystal.com/fileadmin/Media/Products/32kHz/Datasheet/CC1V-T1A.pdf'

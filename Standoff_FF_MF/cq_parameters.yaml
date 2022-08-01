@@ -6,7 +6,7 @@ FF_9.0mm_D5.0:
   stud_H: 0.0
   model_name: FF_9.0mm_D5.0
   rotation: -90
-  destination_dir: Spacers
+  destination_dir: Spacers.3dshapes
   body_color_key: 'metal grey pins'
   source: 'http://katalog.we-online.de/em/datasheet/6130xx11121.pdf'
 
@@ -18,7 +18,7 @@ Standoff_Height_13.0mm_HEX:
   stud_H: 0.0
   model_name: Standoff_Height_13.0mm_HEX
   rotation: -90
-  destination_dir: Spacers
+  destination_dir: Spacers.3dshapes
   body_color_key: 'metal grey pins'
   source: 'http://katalog.we-online.de/em/datasheet/6130xx11121.pdf'
 
@@ -30,7 +30,7 @@ Standoff_Height_20.0mm_HEX:
   stud_H: 0.0
   model_name: Standoff_Height_20.0mm_HEX
   rotation: -90
-  destination_dir: Spacers
+  destination_dir: Spacers.3dshapes
   body_color_key: 'metal grey pins'
   source: 'http://katalog.we-online.de/em/datasheet/6130xx11121.pdf'
 
@@ -42,7 +42,7 @@ M3x9_FF_D5.5:
   stud_H: 0.0
   model_name: M3x9_FF_D5.5
   rotation: -90
-  destination_dir: Spacers
+  destination_dir: Spacers.3dshapes
   body_color_key: 'metal grey pins'
   source: 'http://katalog.we-online.de/em/datasheet/6130xx11121.pdf'
 
@@ -54,7 +54,7 @@ M3x10_FF_D5.5:
   stud_H: 0.0
   model_name: M3x10_FF_D5.5
   rotation: -90
-  destination_dir: Spacers
+  destination_dir: Spacers.3dshapes
   body_color_key: 'metal grey pins'
   source: 'http://katalog.we-online.de/em/datasheet/6130xx11121.pdf'
 
@@ -66,7 +66,7 @@ M3x12_FF_D5.5:
   stud_H: 0.0
   model_name: M3x12_FF_D5.5
   rotation: -90
-  destination_dir: Spacers
+  destination_dir: Spacers.3dshapes
   body_color_key: 'metal grey pins'
   source: 'http://katalog.we-online.de/em/datasheet/6130xx11121.pdf'
 
@@ -78,7 +78,7 @@ M3x14_FF_D5.5:
   stud_H: 0.0
   model_name: M3x14_FF_D5.5
   rotation: -90
-  destination_dir: Spacers
+  destination_dir: Spacers.3dshapes
   body_color_key: 'metal grey pins'
   source: 'http://katalog.we-online.de/em/datasheet/6130xx11121.pdf'
 
@@ -90,7 +90,7 @@ M3x14_MF_D5.5:
   stud_H: 6.0
   model_name: M3x14_MF_D5.5
   rotation: -90
-  destination_dir: Spacers
+  destination_dir: Spacers.3dshapes
   body_color_key: 'metal grey pins'
   source: 'http://katalog.we-online.de/em/datasheet/6130xx11121.pdf'
 
@@ -102,7 +102,7 @@ M3x15_FF_D5.5:
   stud_H: 0.0
   model_name: M3x15_FF_D5.5
   rotation: -90
-  destination_dir: Spacers
+  destination_dir: Spacers.3dshapes
   body_color_key: 'metal grey pins'
   source: 'http://katalog.we-online.de/em/datasheet/6130xx11121.pdf'
 
@@ -114,7 +114,7 @@ M3x15_MF_D5.5:
   stud_H: 6.0
   model_name: M3x15_MF_D5.5
   rotation: -90
-  destination_dir: Spacers
+  destination_dir: Spacers.3dshapes
   body_color_key: 'metal grey pins'
   source: 'http://katalog.we-online.de/em/datasheet/6130xx11121.pdf'
 
@@ -126,7 +126,7 @@ M3x19_FF_D5.5:
   stud_H: 0.0
   model_name: M3x19_FF_D5.5
   rotation: -90
-  destination_dir: Spacers
+  destination_dir: Spacers.3dshapes
   body_color_key: 'metal grey pins'
   source: 'http://katalog.we-online.de/em/datasheet/6130xx11121.pdf'
 
@@ -138,6 +138,6 @@ M3x29_FF_D5.5:
   stud_H: 0.0
   model_name: M3x29_FF_D5.5
   rotation: -90
-  destination_dir: Spacers
+  destination_dir: Spacers.3dshapes
   body_color_key: 'metal grey pins'
   source: 'http://katalog.we-online.de/em/datasheet/6130xx11121.pdf'

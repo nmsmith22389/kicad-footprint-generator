@@ -61,7 +61,7 @@ MC_01x02_G_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x03_G_3.5mm:
@@ -82,7 +82,7 @@ MC_01x03_G_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x04_G_3.5mm:
@@ -103,7 +103,7 @@ MC_01x04_G_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x05_G_3.5mm:
@@ -124,7 +124,7 @@ MC_01x05_G_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x06_G_3.5mm:
@@ -145,7 +145,7 @@ MC_01x06_G_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x07_G_3.5mm:
@@ -166,7 +166,7 @@ MC_01x07_G_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x08_G_3.5mm:
@@ -187,7 +187,7 @@ MC_01x08_G_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x09_G_3.5mm:
@@ -208,7 +208,7 @@ MC_01x09_G_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x10_G_3.5mm:
@@ -229,7 +229,7 @@ MC_01x10_G_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x11_G_3.5mm:
@@ -250,7 +250,7 @@ MC_01x11_G_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x12_G_3.5mm:
@@ -271,7 +271,7 @@ MC_01x12_G_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x13_G_3.5mm:
@@ -292,7 +292,7 @@ MC_01x13_G_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x14_G_3.5mm:
@@ -313,7 +313,7 @@ MC_01x14_G_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x15_G_3.5mm:
@@ -334,7 +334,7 @@ MC_01x15_G_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x16_G_3.5mm:
@@ -355,7 +355,7 @@ MC_01x16_G_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x02_GF_3.5mm:
@@ -376,7 +376,7 @@ MC_01x02_GF_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x03_GF_3.5mm:
@@ -397,7 +397,7 @@ MC_01x03_GF_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x04_GF_3.5mm:
@@ -418,7 +418,7 @@ MC_01x04_GF_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x05_GF_3.5mm:
@@ -439,7 +439,7 @@ MC_01x05_GF_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x06_GF_3.5mm:
@@ -460,7 +460,7 @@ MC_01x06_GF_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x07_GF_3.5mm:
@@ -481,7 +481,7 @@ MC_01x07_GF_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x08_GF_3.5mm:
@@ -502,7 +502,7 @@ MC_01x08_GF_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x09_GF_3.5mm:
@@ -523,7 +523,7 @@ MC_01x09_GF_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x10_GF_3.5mm:
@@ -544,7 +544,7 @@ MC_01x10_GF_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x11_GF_3.5mm:
@@ -565,7 +565,7 @@ MC_01x11_GF_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x12_GF_3.5mm:
@@ -586,7 +586,7 @@ MC_01x12_GF_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x13_GF_3.5mm:
@@ -607,7 +607,7 @@ MC_01x13_GF_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x14_GF_3.5mm:
@@ -628,7 +628,7 @@ MC_01x14_GF_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x15_GF_3.5mm:
@@ -649,7 +649,7 @@ MC_01x15_GF_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x16_GF_3.5mm:
@@ -670,7 +670,7 @@ MC_01x16_GF_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x02_GF_3.5mm_MH:
@@ -691,7 +691,7 @@ MC_01x02_GF_3.5mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x03_GF_3.5mm_MH:
@@ -712,7 +712,7 @@ MC_01x03_GF_3.5mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x04_GF_3.5mm_MH:
@@ -733,7 +733,7 @@ MC_01x04_GF_3.5mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x05_GF_3.5mm_MH:
@@ -754,7 +754,7 @@ MC_01x05_GF_3.5mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x06_GF_3.5mm_MH:
@@ -775,7 +775,7 @@ MC_01x06_GF_3.5mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x07_GF_3.5mm_MH:
@@ -796,7 +796,7 @@ MC_01x07_GF_3.5mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x08_GF_3.5mm_MH:
@@ -817,7 +817,7 @@ MC_01x08_GF_3.5mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x09_GF_3.5mm_MH:
@@ -838,7 +838,7 @@ MC_01x09_GF_3.5mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x10_GF_3.5mm_MH:
@@ -859,7 +859,7 @@ MC_01x10_GF_3.5mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x11_GF_3.5mm_MH:
@@ -880,7 +880,7 @@ MC_01x11_GF_3.5mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x12_GF_3.5mm_MH:
@@ -901,7 +901,7 @@ MC_01x12_GF_3.5mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x13_GF_3.5mm_MH:
@@ -922,7 +922,7 @@ MC_01x13_GF_3.5mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x14_GF_3.5mm_MH:
@@ -943,7 +943,7 @@ MC_01x14_GF_3.5mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x15_GF_3.5mm_MH:
@@ -964,7 +964,7 @@ MC_01x15_GF_3.5mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x16_GF_3.5mm_MH:
@@ -985,7 +985,7 @@ MC_01x16_GF_3.5mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x02_G_3.5mm:
@@ -1006,7 +1006,7 @@ MCV_01x02_G_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x03_G_3.5mm:
@@ -1027,7 +1027,7 @@ MCV_01x03_G_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x04_G_3.5mm:
@@ -1048,7 +1048,7 @@ MCV_01x04_G_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x05_G_3.5mm:
@@ -1069,7 +1069,7 @@ MCV_01x05_G_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x06_G_3.5mm:
@@ -1090,7 +1090,7 @@ MCV_01x06_G_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x07_G_3.5mm:
@@ -1111,7 +1111,7 @@ MCV_01x07_G_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x08_G_3.5mm:
@@ -1132,7 +1132,7 @@ MCV_01x08_G_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x09_G_3.5mm:
@@ -1153,7 +1153,7 @@ MCV_01x09_G_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x10_G_3.5mm:
@@ -1174,7 +1174,7 @@ MCV_01x10_G_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x11_G_3.5mm:
@@ -1195,7 +1195,7 @@ MCV_01x11_G_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x12_G_3.5mm:
@@ -1216,7 +1216,7 @@ MCV_01x12_G_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x13_G_3.5mm:
@@ -1237,7 +1237,7 @@ MCV_01x13_G_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x14_G_3.5mm:
@@ -1258,7 +1258,7 @@ MCV_01x14_G_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x15_G_3.5mm:
@@ -1279,7 +1279,7 @@ MCV_01x15_G_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x16_G_3.5mm:
@@ -1300,7 +1300,7 @@ MCV_01x16_G_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x02_GF_3.5mm:
@@ -1321,7 +1321,7 @@ MCV_01x02_GF_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x03_GF_3.5mm:
@@ -1342,7 +1342,7 @@ MCV_01x03_GF_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x04_GF_3.5mm:
@@ -1363,7 +1363,7 @@ MCV_01x04_GF_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x05_GF_3.5mm:
@@ -1384,7 +1384,7 @@ MCV_01x05_GF_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x06_GF_3.5mm:
@@ -1405,7 +1405,7 @@ MCV_01x06_GF_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x07_GF_3.5mm:
@@ -1426,7 +1426,7 @@ MCV_01x07_GF_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x08_GF_3.5mm:
@@ -1447,7 +1447,7 @@ MCV_01x08_GF_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x09_GF_3.5mm:
@@ -1468,7 +1468,7 @@ MCV_01x09_GF_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x10_GF_3.5mm:
@@ -1489,7 +1489,7 @@ MCV_01x10_GF_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x11_GF_3.5mm:
@@ -1510,7 +1510,7 @@ MCV_01x11_GF_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x12_GF_3.5mm:
@@ -1531,7 +1531,7 @@ MCV_01x12_GF_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x13_GF_3.5mm:
@@ -1552,7 +1552,7 @@ MCV_01x13_GF_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x14_GF_3.5mm:
@@ -1573,7 +1573,7 @@ MCV_01x14_GF_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x15_GF_3.5mm:
@@ -1594,7 +1594,7 @@ MCV_01x15_GF_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x16_GF_3.5mm:
@@ -1615,7 +1615,7 @@ MCV_01x16_GF_3.5mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x02_GF_3.5mm_MH:
@@ -1636,7 +1636,7 @@ MCV_01x02_GF_3.5mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x03_GF_3.5mm_MH:
@@ -1657,7 +1657,7 @@ MCV_01x03_GF_3.5mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x04_GF_3.5mm_MH:
@@ -1678,7 +1678,7 @@ MCV_01x04_GF_3.5mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x05_GF_3.5mm_MH:
@@ -1699,7 +1699,7 @@ MCV_01x05_GF_3.5mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x06_GF_3.5mm_MH:
@@ -1720,7 +1720,7 @@ MCV_01x06_GF_3.5mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x07_GF_3.5mm_MH:
@@ -1741,7 +1741,7 @@ MCV_01x07_GF_3.5mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x08_GF_3.5mm_MH:
@@ -1762,7 +1762,7 @@ MCV_01x08_GF_3.5mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x09_GF_3.5mm_MH:
@@ -1783,7 +1783,7 @@ MCV_01x09_GF_3.5mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x10_GF_3.5mm_MH:
@@ -1804,7 +1804,7 @@ MCV_01x10_GF_3.5mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x11_GF_3.5mm_MH:
@@ -1825,7 +1825,7 @@ MCV_01x11_GF_3.5mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x12_GF_3.5mm_MH:
@@ -1846,7 +1846,7 @@ MCV_01x12_GF_3.5mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x13_GF_3.5mm_MH:
@@ -1867,7 +1867,7 @@ MCV_01x13_GF_3.5mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x14_GF_3.5mm_MH:
@@ -1888,7 +1888,7 @@ MCV_01x14_GF_3.5mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x15_GF_3.5mm_MH:
@@ -1909,7 +1909,7 @@ MCV_01x15_GF_3.5mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x16_GF_3.5mm_MH:
@@ -1930,7 +1930,7 @@ MCV_01x16_GF_3.5mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x02_G_3.81mm:
@@ -1951,7 +1951,7 @@ MC_01x02_G_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x03_G_3.81mm:
@@ -1972,7 +1972,7 @@ MC_01x03_G_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x04_G_3.81mm:
@@ -1993,7 +1993,7 @@ MC_01x04_G_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x05_G_3.81mm:
@@ -2014,7 +2014,7 @@ MC_01x05_G_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x06_G_3.81mm:
@@ -2035,7 +2035,7 @@ MC_01x06_G_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x07_G_3.81mm:
@@ -2056,7 +2056,7 @@ MC_01x07_G_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x08_G_3.81mm:
@@ -2077,7 +2077,7 @@ MC_01x08_G_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x09_G_3.81mm:
@@ -2098,7 +2098,7 @@ MC_01x09_G_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x10_G_3.81mm:
@@ -2119,7 +2119,7 @@ MC_01x10_G_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x11_G_3.81mm:
@@ -2140,7 +2140,7 @@ MC_01x11_G_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x12_G_3.81mm:
@@ -2161,7 +2161,7 @@ MC_01x12_G_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x13_G_3.81mm:
@@ -2182,7 +2182,7 @@ MC_01x13_G_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x14_G_3.81mm:
@@ -2203,7 +2203,7 @@ MC_01x14_G_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x15_G_3.81mm:
@@ -2224,7 +2224,7 @@ MC_01x15_G_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x16_G_3.81mm:
@@ -2245,7 +2245,7 @@ MC_01x16_G_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x02_GF_3.81mm:
@@ -2266,7 +2266,7 @@ MC_01x02_GF_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x03_GF_3.81mm:
@@ -2287,7 +2287,7 @@ MC_01x03_GF_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x04_GF_3.81mm:
@@ -2308,7 +2308,7 @@ MC_01x04_GF_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x05_GF_3.81mm:
@@ -2329,7 +2329,7 @@ MC_01x05_GF_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x06_GF_3.81mm:
@@ -2350,7 +2350,7 @@ MC_01x06_GF_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x07_GF_3.81mm:
@@ -2371,7 +2371,7 @@ MC_01x07_GF_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x08_GF_3.81mm:
@@ -2392,7 +2392,7 @@ MC_01x08_GF_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x09_GF_3.81mm:
@@ -2413,7 +2413,7 @@ MC_01x09_GF_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x10_GF_3.81mm:
@@ -2434,7 +2434,7 @@ MC_01x10_GF_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x11_GF_3.81mm:
@@ -2455,7 +2455,7 @@ MC_01x11_GF_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x12_GF_3.81mm:
@@ -2476,7 +2476,7 @@ MC_01x12_GF_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x13_GF_3.81mm:
@@ -2497,7 +2497,7 @@ MC_01x13_GF_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x14_GF_3.81mm:
@@ -2518,7 +2518,7 @@ MC_01x14_GF_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x15_GF_3.81mm:
@@ -2539,7 +2539,7 @@ MC_01x15_GF_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x16_GF_3.81mm:
@@ -2560,7 +2560,7 @@ MC_01x16_GF_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x02_GF_3.81mm_MH:
@@ -2581,7 +2581,7 @@ MC_01x02_GF_3.81mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x03_GF_3.81mm_MH:
@@ -2602,7 +2602,7 @@ MC_01x03_GF_3.81mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x04_GF_3.81mm_MH:
@@ -2623,7 +2623,7 @@ MC_01x04_GF_3.81mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x05_GF_3.81mm_MH:
@@ -2644,7 +2644,7 @@ MC_01x05_GF_3.81mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x06_GF_3.81mm_MH:
@@ -2665,7 +2665,7 @@ MC_01x06_GF_3.81mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x07_GF_3.81mm_MH:
@@ -2686,7 +2686,7 @@ MC_01x07_GF_3.81mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x08_GF_3.81mm_MH:
@@ -2707,7 +2707,7 @@ MC_01x08_GF_3.81mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x09_GF_3.81mm_MH:
@@ -2728,7 +2728,7 @@ MC_01x09_GF_3.81mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x10_GF_3.81mm_MH:
@@ -2749,7 +2749,7 @@ MC_01x10_GF_3.81mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x11_GF_3.81mm_MH:
@@ -2770,7 +2770,7 @@ MC_01x11_GF_3.81mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x12_GF_3.81mm_MH:
@@ -2791,7 +2791,7 @@ MC_01x12_GF_3.81mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x13_GF_3.81mm_MH:
@@ -2812,7 +2812,7 @@ MC_01x13_GF_3.81mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x14_GF_3.81mm_MH:
@@ -2833,7 +2833,7 @@ MC_01x14_GF_3.81mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x15_GF_3.81mm_MH:
@@ -2854,7 +2854,7 @@ MC_01x15_GF_3.81mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x16_GF_3.81mm_MH:
@@ -2875,7 +2875,7 @@ MC_01x16_GF_3.81mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x02_G_3.81mm:
@@ -2896,7 +2896,7 @@ MCV_01x02_G_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x03_G_3.81mm:
@@ -2917,7 +2917,7 @@ MCV_01x03_G_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x04_G_3.81mm:
@@ -2938,7 +2938,7 @@ MCV_01x04_G_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x05_G_3.81mm:
@@ -2959,7 +2959,7 @@ MCV_01x05_G_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x06_G_3.81mm:
@@ -2980,7 +2980,7 @@ MCV_01x06_G_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x07_G_3.81mm:
@@ -3001,7 +3001,7 @@ MCV_01x07_G_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x08_G_3.81mm:
@@ -3022,7 +3022,7 @@ MCV_01x08_G_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x09_G_3.81mm:
@@ -3043,7 +3043,7 @@ MCV_01x09_G_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x10_G_3.81mm:
@@ -3064,7 +3064,7 @@ MCV_01x10_G_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x11_G_3.81mm:
@@ -3085,7 +3085,7 @@ MCV_01x11_G_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x12_G_3.81mm:
@@ -3106,7 +3106,7 @@ MCV_01x12_G_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x13_G_3.81mm:
@@ -3127,7 +3127,7 @@ MCV_01x13_G_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x14_G_3.81mm:
@@ -3148,7 +3148,7 @@ MCV_01x14_G_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x15_G_3.81mm:
@@ -3169,7 +3169,7 @@ MCV_01x15_G_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x16_G_3.81mm:
@@ -3190,7 +3190,7 @@ MCV_01x16_G_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x02_GF_3.81mm:
@@ -3211,7 +3211,7 @@ MCV_01x02_GF_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x03_GF_3.81mm:
@@ -3232,7 +3232,7 @@ MCV_01x03_GF_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x04_GF_3.81mm:
@@ -3253,7 +3253,7 @@ MCV_01x04_GF_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x05_GF_3.81mm:
@@ -3274,7 +3274,7 @@ MCV_01x05_GF_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x06_GF_3.81mm:
@@ -3295,7 +3295,7 @@ MCV_01x06_GF_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x07_GF_3.81mm:
@@ -3316,7 +3316,7 @@ MCV_01x07_GF_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x08_GF_3.81mm:
@@ -3337,7 +3337,7 @@ MCV_01x08_GF_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x09_GF_3.81mm:
@@ -3358,7 +3358,7 @@ MCV_01x09_GF_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x10_GF_3.81mm:
@@ -3379,7 +3379,7 @@ MCV_01x10_GF_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x11_GF_3.81mm:
@@ -3400,7 +3400,7 @@ MCV_01x11_GF_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x12_GF_3.81mm:
@@ -3421,7 +3421,7 @@ MCV_01x12_GF_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x13_GF_3.81mm:
@@ -3442,7 +3442,7 @@ MCV_01x13_GF_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x14_GF_3.81mm:
@@ -3463,7 +3463,7 @@ MCV_01x14_GF_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x15_GF_3.81mm:
@@ -3484,7 +3484,7 @@ MCV_01x15_GF_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x16_GF_3.81mm:
@@ -3505,7 +3505,7 @@ MCV_01x16_GF_3.81mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x02_GF_3.81mm_MH:
@@ -3526,7 +3526,7 @@ MCV_01x02_GF_3.81mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x03_GF_3.81mm_MH:
@@ -3547,7 +3547,7 @@ MCV_01x03_GF_3.81mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x04_GF_3.81mm_MH:
@@ -3568,7 +3568,7 @@ MCV_01x04_GF_3.81mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x05_GF_3.81mm_MH:
@@ -3589,7 +3589,7 @@ MCV_01x05_GF_3.81mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x06_GF_3.81mm_MH:
@@ -3610,7 +3610,7 @@ MCV_01x06_GF_3.81mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x07_GF_3.81mm_MH:
@@ -3631,7 +3631,7 @@ MCV_01x07_GF_3.81mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x08_GF_3.81mm_MH:
@@ -3652,7 +3652,7 @@ MCV_01x08_GF_3.81mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x09_GF_3.81mm_MH:
@@ -3673,7 +3673,7 @@ MCV_01x09_GF_3.81mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x10_GF_3.81mm_MH:
@@ -3694,7 +3694,7 @@ MCV_01x10_GF_3.81mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x11_GF_3.81mm_MH:
@@ -3715,7 +3715,7 @@ MCV_01x11_GF_3.81mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x12_GF_3.81mm_MH:
@@ -3736,7 +3736,7 @@ MCV_01x12_GF_3.81mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x13_GF_3.81mm_MH:
@@ -3757,7 +3757,7 @@ MCV_01x13_GF_3.81mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x14_GF_3.81mm_MH:
@@ -3778,7 +3778,7 @@ MCV_01x14_GF_3.81mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x15_GF_3.81mm_MH:
@@ -3799,7 +3799,7 @@ MCV_01x15_GF_3.81mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MCV_01x16_GF_3.81mm_MH:
@@ -3820,7 +3820,7 @@ MCV_01x16_GF_3.81mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC'
+  destination_dir: 'Connector_Phoenix_MC.3dshapes'
   source: 'N/A'
 
 MC_01x02_G_5.08mm:
@@ -3841,7 +3841,7 @@ MC_01x02_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MC_01x03_G_5.08mm:
@@ -3862,7 +3862,7 @@ MC_01x03_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MC_01x04_G_5.08mm:
@@ -3883,7 +3883,7 @@ MC_01x04_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MC_01x05_G_5.08mm:
@@ -3904,7 +3904,7 @@ MC_01x05_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MC_01x06_G_5.08mm:
@@ -3925,7 +3925,7 @@ MC_01x06_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MC_01x07_G_5.08mm:
@@ -3946,7 +3946,7 @@ MC_01x07_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MC_01x08_G_5.08mm:
@@ -3967,7 +3967,7 @@ MC_01x08_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MC_01x09_G_5.08mm:
@@ -3988,7 +3988,7 @@ MC_01x09_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MC_01x10_G_5.08mm:
@@ -4009,7 +4009,7 @@ MC_01x10_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MC_01x11_G_5.08mm:
@@ -4030,7 +4030,7 @@ MC_01x11_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MC_01x12_G_5.08mm:
@@ -4051,7 +4051,7 @@ MC_01x12_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MC_01x02_GF_5.08mm:
@@ -4072,7 +4072,7 @@ MC_01x02_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MC_01x03_GF_5.08mm:
@@ -4093,7 +4093,7 @@ MC_01x03_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MC_01x04_GF_5.08mm:
@@ -4114,7 +4114,7 @@ MC_01x04_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MC_01x05_GF_5.08mm:
@@ -4135,7 +4135,7 @@ MC_01x05_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MC_01x06_GF_5.08mm:
@@ -4156,7 +4156,7 @@ MC_01x06_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MC_01x07_GF_5.08mm:
@@ -4177,7 +4177,7 @@ MC_01x07_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MC_01x08_GF_5.08mm:
@@ -4198,7 +4198,7 @@ MC_01x08_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MC_01x09_GF_5.08mm:
@@ -4219,7 +4219,7 @@ MC_01x09_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MC_01x10_GF_5.08mm:
@@ -4240,7 +4240,7 @@ MC_01x10_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MC_01x11_GF_5.08mm:
@@ -4261,7 +4261,7 @@ MC_01x11_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MC_01x12_GF_5.08mm:
@@ -4282,7 +4282,7 @@ MC_01x12_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MC_01x02_GF_5.08mm_MH:
@@ -4303,7 +4303,7 @@ MC_01x02_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MC_01x03_GF_5.08mm_MH:
@@ -4324,7 +4324,7 @@ MC_01x03_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MC_01x04_GF_5.08mm_MH:
@@ -4345,7 +4345,7 @@ MC_01x04_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MC_01x05_GF_5.08mm_MH:
@@ -4366,7 +4366,7 @@ MC_01x05_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MC_01x06_GF_5.08mm_MH:
@@ -4387,7 +4387,7 @@ MC_01x06_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MC_01x07_GF_5.08mm_MH:
@@ -4408,7 +4408,7 @@ MC_01x07_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MC_01x08_GF_5.08mm_MH:
@@ -4429,7 +4429,7 @@ MC_01x08_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MC_01x09_GF_5.08mm_MH:
@@ -4450,7 +4450,7 @@ MC_01x09_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MC_01x10_GF_5.08mm_MH:
@@ -4471,7 +4471,7 @@ MC_01x10_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MC_01x11_GF_5.08mm_MH:
@@ -4492,7 +4492,7 @@ MC_01x11_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MC_01x12_GF_5.08mm_MH:
@@ -4513,7 +4513,7 @@ MC_01x12_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MCV_01x02_G_5.08mm:
@@ -4534,7 +4534,7 @@ MCV_01x02_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MCV_01x03_G_5.08mm:
@@ -4555,7 +4555,7 @@ MCV_01x03_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MCV_01x04_G_5.08mm:
@@ -4576,7 +4576,7 @@ MCV_01x04_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MCV_01x05_G_5.08mm:
@@ -4597,7 +4597,7 @@ MCV_01x05_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MCV_01x06_G_5.08mm:
@@ -4618,7 +4618,7 @@ MCV_01x06_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MCV_01x07_G_5.08mm:
@@ -4639,7 +4639,7 @@ MCV_01x07_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MCV_01x08_G_5.08mm:
@@ -4660,7 +4660,7 @@ MCV_01x08_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MCV_01x09_G_5.08mm:
@@ -4681,7 +4681,7 @@ MCV_01x09_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MCV_01x10_G_5.08mm:
@@ -4702,7 +4702,7 @@ MCV_01x10_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MCV_01x11_G_5.08mm:
@@ -4723,7 +4723,7 @@ MCV_01x11_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MCV_01x12_G_5.08mm:
@@ -4744,7 +4744,7 @@ MCV_01x12_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MCV_01x02_GF_5.08mm:
@@ -4765,7 +4765,7 @@ MCV_01x02_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MCV_01x03_GF_5.08mm:
@@ -4786,7 +4786,7 @@ MCV_01x03_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MCV_01x04_GF_5.08mm:
@@ -4807,7 +4807,7 @@ MCV_01x04_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MCV_01x05_GF_5.08mm:
@@ -4828,7 +4828,7 @@ MCV_01x05_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MCV_01x06_GF_5.08mm:
@@ -4849,7 +4849,7 @@ MCV_01x06_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MCV_01x07_GF_5.08mm:
@@ -4870,7 +4870,7 @@ MCV_01x07_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MCV_01x08_GF_5.08mm:
@@ -4891,7 +4891,7 @@ MCV_01x08_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MCV_01x09_GF_5.08mm:
@@ -4912,7 +4912,7 @@ MCV_01x09_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MCV_01x10_GF_5.08mm:
@@ -4933,7 +4933,7 @@ MCV_01x10_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MCV_01x11_GF_5.08mm:
@@ -4954,7 +4954,7 @@ MCV_01x11_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MCV_01x12_GF_5.08mm:
@@ -4975,7 +4975,7 @@ MCV_01x12_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MCV_01x02_GF_5.08mm_MH:
@@ -4996,7 +4996,7 @@ MCV_01x02_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MCV_01x03_GF_5.08mm_MH:
@@ -5017,7 +5017,7 @@ MCV_01x03_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MCV_01x04_GF_5.08mm_MH:
@@ -5038,7 +5038,7 @@ MCV_01x04_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MCV_01x05_GF_5.08mm_MH:
@@ -5059,7 +5059,7 @@ MCV_01x05_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MCV_01x06_GF_5.08mm_MH:
@@ -5080,7 +5080,7 @@ MCV_01x06_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MCV_01x07_GF_5.08mm_MH:
@@ -5101,7 +5101,7 @@ MCV_01x07_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MCV_01x08_GF_5.08mm_MH:
@@ -5122,7 +5122,7 @@ MCV_01x08_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MCV_01x09_GF_5.08mm_MH:
@@ -5143,7 +5143,7 @@ MCV_01x09_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MCV_01x10_GF_5.08mm_MH:
@@ -5164,7 +5164,7 @@ MCV_01x10_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MCV_01x11_GF_5.08mm_MH:
@@ -5185,7 +5185,7 @@ MCV_01x11_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MCV_01x12_GF_5.08mm_MH:
@@ -5206,7 +5206,7 @@ MCV_01x12_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_MC_HighVoltage'
+  destination_dir: 'Connector_Phoenix_MC_HighVoltage.3dshapes'
   source: 'N/A'
 
 MSTBA_01x02_G_5.00mm:
@@ -5224,7 +5224,7 @@ MSTBA_01x02_G_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 
@@ -5243,7 +5243,7 @@ MSTBA_01x03_G_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBA_01x04_G_5.00mm:
@@ -5261,7 +5261,7 @@ MSTBA_01x04_G_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBA_01x05_G_5.00mm:
@@ -5279,7 +5279,7 @@ MSTBA_01x05_G_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBA_01x06_G_5.00mm:
@@ -5297,7 +5297,7 @@ MSTBA_01x06_G_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBA_01x07_G_5.00mm:
@@ -5315,7 +5315,7 @@ MSTBA_01x07_G_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBA_01x08_G_5.00mm:
@@ -5333,7 +5333,7 @@ MSTBA_01x08_G_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBA_01x09_G_5.00mm:
@@ -5351,7 +5351,7 @@ MSTBA_01x09_G_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBA_01x10_G_5.00mm:
@@ -5369,7 +5369,7 @@ MSTBA_01x10_G_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBA_01x11_G_5.00mm:
@@ -5387,7 +5387,7 @@ MSTBA_01x11_G_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBA_01x12_G_5.00mm:
@@ -5405,7 +5405,7 @@ MSTBA_01x12_G_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBA_01x13_G_5.00mm:
@@ -5423,7 +5423,7 @@ MSTBA_01x13_G_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBA_01x14_G_5.00mm:
@@ -5441,7 +5441,7 @@ MSTBA_01x14_G_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBA_01x15_G_5.00mm:
@@ -5459,7 +5459,7 @@ MSTBA_01x15_G_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBA_01x16_G_5.00mm:
@@ -5477,7 +5477,7 @@ MSTBA_01x16_G_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x02_GF_5.00mm:
@@ -5495,7 +5495,7 @@ MSTB_01x02_GF_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x03_GF_5.00mm:
@@ -5513,7 +5513,7 @@ MSTB_01x03_GF_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x04_GF_5.00mm:
@@ -5531,7 +5531,7 @@ MSTB_01x04_GF_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x05_GF_5.00mm:
@@ -5549,7 +5549,7 @@ MSTB_01x05_GF_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x06_GF_5.00mm:
@@ -5567,7 +5567,7 @@ MSTB_01x06_GF_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x07_GF_5.00mm:
@@ -5585,7 +5585,7 @@ MSTB_01x07_GF_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x08_GF_5.00mm:
@@ -5603,7 +5603,7 @@ MSTB_01x08_GF_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x09_GF_5.00mm:
@@ -5621,7 +5621,7 @@ MSTB_01x09_GF_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x10_GF_5.00mm:
@@ -5639,7 +5639,7 @@ MSTB_01x10_GF_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x11_GF_5.00mm:
@@ -5657,7 +5657,7 @@ MSTB_01x11_GF_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x12_GF_5.00mm:
@@ -5675,7 +5675,7 @@ MSTB_01x12_GF_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x13_GF_5.00mm:
@@ -5693,7 +5693,7 @@ MSTB_01x13_GF_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x14_GF_5.00mm:
@@ -5711,7 +5711,7 @@ MSTB_01x14_GF_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x15_GF_5.00mm:
@@ -5729,7 +5729,7 @@ MSTB_01x15_GF_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x16_GF_5.00mm:
@@ -5747,7 +5747,7 @@ MSTB_01x16_GF_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x02_GF_5.00mm_MH:
@@ -5765,7 +5765,7 @@ MSTB_01x02_GF_5.00mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x03_GF_5.00mm_MH:
@@ -5783,7 +5783,7 @@ MSTB_01x03_GF_5.00mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x04_GF_5.00mm_MH:
@@ -5801,7 +5801,7 @@ MSTB_01x04_GF_5.00mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x05_GF_5.00mm_MH:
@@ -5819,7 +5819,7 @@ MSTB_01x05_GF_5.00mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x06_GF_5.00mm_MH:
@@ -5837,7 +5837,7 @@ MSTB_01x06_GF_5.00mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x07_GF_5.00mm_MH:
@@ -5855,7 +5855,7 @@ MSTB_01x07_GF_5.00mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x08_GF_5.00mm_MH:
@@ -5873,7 +5873,7 @@ MSTB_01x08_GF_5.00mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x09_GF_5.00mm_MH:
@@ -5891,7 +5891,7 @@ MSTB_01x09_GF_5.00mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x10_GF_5.00mm_MH:
@@ -5909,7 +5909,7 @@ MSTB_01x10_GF_5.00mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x11_GF_5.00mm_MH:
@@ -5927,7 +5927,7 @@ MSTB_01x11_GF_5.00mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x12_GF_5.00mm_MH:
@@ -5945,7 +5945,7 @@ MSTB_01x12_GF_5.00mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x13_GF_5.00mm_MH:
@@ -5963,7 +5963,7 @@ MSTB_01x13_GF_5.00mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x14_GF_5.00mm_MH:
@@ -5981,7 +5981,7 @@ MSTB_01x14_GF_5.00mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x15_GF_5.00mm_MH:
@@ -5999,7 +5999,7 @@ MSTB_01x15_GF_5.00mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x16_GF_5.00mm_MH:
@@ -6017,7 +6017,7 @@ MSTB_01x16_GF_5.00mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBVA_01x02_G_5.00mm:
@@ -6035,7 +6035,7 @@ MSTBVA_01x02_G_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBVA_01x03_G_5.00mm:
@@ -6053,7 +6053,7 @@ MSTBVA_01x03_G_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBVA_01x04_G_5.00mm:
@@ -6071,7 +6071,7 @@ MSTBVA_01x04_G_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBVA_01x05_G_5.00mm:
@@ -6089,7 +6089,7 @@ MSTBVA_01x05_G_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBVA_01x06_G_5.00mm:
@@ -6107,7 +6107,7 @@ MSTBVA_01x06_G_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBVA_01x07_G_5.00mm:
@@ -6125,7 +6125,7 @@ MSTBVA_01x07_G_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBVA_01x08_G_5.00mm:
@@ -6143,7 +6143,7 @@ MSTBVA_01x08_G_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBVA_01x09_G_5.00mm:
@@ -6161,7 +6161,7 @@ MSTBVA_01x09_G_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBVA_01x10_G_5.00mm:
@@ -6179,7 +6179,7 @@ MSTBVA_01x10_G_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBVA_01x11_G_5.00mm:
@@ -6197,7 +6197,7 @@ MSTBVA_01x11_G_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBVA_01x12_G_5.00mm:
@@ -6215,7 +6215,7 @@ MSTBVA_01x12_G_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBVA_01x13_G_5.00mm:
@@ -6233,7 +6233,7 @@ MSTBVA_01x13_G_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBVA_01x14_G_5.00mm:
@@ -6251,7 +6251,7 @@ MSTBVA_01x14_G_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBVA_01x15_G_5.00mm:
@@ -6269,7 +6269,7 @@ MSTBVA_01x15_G_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBVA_01x16_G_5.00mm:
@@ -6287,7 +6287,7 @@ MSTBVA_01x16_G_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x02_GF_5.00mm:
@@ -6305,7 +6305,7 @@ MSTBV_01x02_GF_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x03_GF_5.00mm:
@@ -6323,7 +6323,7 @@ MSTBV_01x03_GF_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x04_GF_5.00mm:
@@ -6341,7 +6341,7 @@ MSTBV_01x04_GF_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x05_GF_5.00mm:
@@ -6359,7 +6359,7 @@ MSTBV_01x05_GF_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x06_GF_5.00mm:
@@ -6377,7 +6377,7 @@ MSTBV_01x06_GF_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x07_GF_5.00mm:
@@ -6395,7 +6395,7 @@ MSTBV_01x07_GF_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x08_GF_5.00mm:
@@ -6413,7 +6413,7 @@ MSTBV_01x08_GF_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x09_GF_5.00mm:
@@ -6431,7 +6431,7 @@ MSTBV_01x09_GF_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x10_GF_5.00mm:
@@ -6449,7 +6449,7 @@ MSTBV_01x10_GF_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x11_GF_5.00mm:
@@ -6467,7 +6467,7 @@ MSTBV_01x11_GF_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x12_GF_5.00mm:
@@ -6485,7 +6485,7 @@ MSTBV_01x12_GF_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x13_GF_5.00mm:
@@ -6503,7 +6503,7 @@ MSTBV_01x13_GF_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x14_GF_5.00mm:
@@ -6521,7 +6521,7 @@ MSTBV_01x14_GF_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x15_GF_5.00mm:
@@ -6539,7 +6539,7 @@ MSTBV_01x15_GF_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x16_GF_5.00mm:
@@ -6557,7 +6557,7 @@ MSTBV_01x16_GF_5.00mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x02_GF_5.00mm_MH:
@@ -6575,7 +6575,7 @@ MSTBV_01x02_GF_5.00mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x03_GF_5.00mm_MH:
@@ -6593,7 +6593,7 @@ MSTBV_01x03_GF_5.00mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x04_GF_5.00mm_MH:
@@ -6611,7 +6611,7 @@ MSTBV_01x04_GF_5.00mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x05_GF_5.00mm_MH:
@@ -6629,7 +6629,7 @@ MSTBV_01x05_GF_5.00mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x06_GF_5.00mm_MH:
@@ -6647,7 +6647,7 @@ MSTBV_01x06_GF_5.00mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x07_GF_5.00mm_MH:
@@ -6665,7 +6665,7 @@ MSTBV_01x07_GF_5.00mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x08_GF_5.00mm_MH:
@@ -6683,7 +6683,7 @@ MSTBV_01x08_GF_5.00mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x09_GF_5.00mm_MH:
@@ -6701,7 +6701,7 @@ MSTBV_01x09_GF_5.00mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x10_GF_5.00mm_MH:
@@ -6719,7 +6719,7 @@ MSTBV_01x10_GF_5.00mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x11_GF_5.00mm_MH:
@@ -6737,7 +6737,7 @@ MSTBV_01x11_GF_5.00mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x12_GF_5.00mm_MH:
@@ -6755,7 +6755,7 @@ MSTBV_01x12_GF_5.00mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x13_GF_5.00mm_MH:
@@ -6773,7 +6773,7 @@ MSTBV_01x13_GF_5.00mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x14_GF_5.00mm_MH:
@@ -6791,7 +6791,7 @@ MSTBV_01x14_GF_5.00mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x15_GF_5.00mm_MH:
@@ -6809,7 +6809,7 @@ MSTBV_01x15_GF_5.00mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x16_GF_5.00mm_MH:
@@ -6827,7 +6827,7 @@ MSTBV_01x16_GF_5.00mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBA_01x02_G_5.08mm:
@@ -6845,7 +6845,7 @@ MSTBA_01x02_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBA_01x03_G_5.08mm:
@@ -6863,7 +6863,7 @@ MSTBA_01x03_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBA_01x04_G_5.08mm:
@@ -6881,7 +6881,7 @@ MSTBA_01x04_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBA_01x05_G_5.08mm:
@@ -6899,7 +6899,7 @@ MSTBA_01x05_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBA_01x06_G_5.08mm:
@@ -6917,7 +6917,7 @@ MSTBA_01x06_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBA_01x07_G_5.08mm:
@@ -6935,7 +6935,7 @@ MSTBA_01x07_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBA_01x08_G_5.08mm:
@@ -6953,7 +6953,7 @@ MSTBA_01x08_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBA_01x09_G_5.08mm:
@@ -6971,7 +6971,7 @@ MSTBA_01x09_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBA_01x10_G_5.08mm:
@@ -6989,7 +6989,7 @@ MSTBA_01x10_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBA_01x11_G_5.08mm:
@@ -7007,7 +7007,7 @@ MSTBA_01x11_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBA_01x12_G_5.08mm:
@@ -7025,7 +7025,7 @@ MSTBA_01x12_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBA_01x13_G_5.08mm:
@@ -7043,7 +7043,7 @@ MSTBA_01x13_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBA_01x14_G_5.08mm:
@@ -7061,7 +7061,7 @@ MSTBA_01x14_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBA_01x15_G_5.08mm:
@@ -7079,7 +7079,7 @@ MSTBA_01x15_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBA_01x16_G_5.08mm:
@@ -7097,7 +7097,7 @@ MSTBA_01x16_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x02_GF_5.08mm:
@@ -7115,7 +7115,7 @@ MSTB_01x02_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x03_GF_5.08mm:
@@ -7133,7 +7133,7 @@ MSTB_01x03_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x04_GF_5.08mm:
@@ -7151,7 +7151,7 @@ MSTB_01x04_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x05_GF_5.08mm:
@@ -7169,7 +7169,7 @@ MSTB_01x05_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x06_GF_5.08mm:
@@ -7187,7 +7187,7 @@ MSTB_01x06_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x07_GF_5.08mm:
@@ -7205,7 +7205,7 @@ MSTB_01x07_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x08_GF_5.08mm:
@@ -7223,7 +7223,7 @@ MSTB_01x08_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x09_GF_5.08mm:
@@ -7241,7 +7241,7 @@ MSTB_01x09_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x10_GF_5.08mm:
@@ -7259,7 +7259,7 @@ MSTB_01x10_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x11_GF_5.08mm:
@@ -7277,7 +7277,7 @@ MSTB_01x11_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x12_GF_5.08mm:
@@ -7295,7 +7295,7 @@ MSTB_01x12_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x13_GF_5.08mm:
@@ -7313,7 +7313,7 @@ MSTB_01x13_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x14_GF_5.08mm:
@@ -7331,7 +7331,7 @@ MSTB_01x14_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x15_GF_5.08mm:
@@ -7349,7 +7349,7 @@ MSTB_01x15_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x16_GF_5.08mm:
@@ -7367,7 +7367,7 @@ MSTB_01x16_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x02_GF_5.08mm_MH:
@@ -7385,7 +7385,7 @@ MSTB_01x02_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x03_GF_5.08mm_MH:
@@ -7403,7 +7403,7 @@ MSTB_01x03_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x04_GF_5.08mm_MH:
@@ -7421,7 +7421,7 @@ MSTB_01x04_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x05_GF_5.08mm_MH:
@@ -7439,7 +7439,7 @@ MSTB_01x05_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x06_GF_5.08mm_MH:
@@ -7457,7 +7457,7 @@ MSTB_01x06_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x07_GF_5.08mm_MH:
@@ -7475,7 +7475,7 @@ MSTB_01x07_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x08_GF_5.08mm_MH:
@@ -7493,7 +7493,7 @@ MSTB_01x08_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x09_GF_5.08mm_MH:
@@ -7511,7 +7511,7 @@ MSTB_01x09_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x10_GF_5.08mm_MH:
@@ -7529,7 +7529,7 @@ MSTB_01x10_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x11_GF_5.08mm_MH:
@@ -7547,7 +7547,7 @@ MSTB_01x11_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x12_GF_5.08mm_MH:
@@ -7565,7 +7565,7 @@ MSTB_01x12_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x13_GF_5.08mm_MH:
@@ -7583,7 +7583,7 @@ MSTB_01x13_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x14_GF_5.08mm_MH:
@@ -7601,7 +7601,7 @@ MSTB_01x14_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x15_GF_5.08mm_MH:
@@ -7619,7 +7619,7 @@ MSTB_01x15_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTB_01x16_GF_5.08mm_MH:
@@ -7637,7 +7637,7 @@ MSTB_01x16_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBVA_01x02_G_5.08mm:
@@ -7655,7 +7655,7 @@ MSTBVA_01x02_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBVA_01x03_G_5.08mm:
@@ -7673,7 +7673,7 @@ MSTBVA_01x03_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBVA_01x04_G_5.08mm:
@@ -7691,7 +7691,7 @@ MSTBVA_01x04_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBVA_01x05_G_5.08mm:
@@ -7709,7 +7709,7 @@ MSTBVA_01x05_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBVA_01x06_G_5.08mm:
@@ -7727,7 +7727,7 @@ MSTBVA_01x06_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBVA_01x07_G_5.08mm:
@@ -7745,7 +7745,7 @@ MSTBVA_01x07_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBVA_01x08_G_5.08mm:
@@ -7763,7 +7763,7 @@ MSTBVA_01x08_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBVA_01x09_G_5.08mm:
@@ -7781,7 +7781,7 @@ MSTBVA_01x09_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBVA_01x10_G_5.08mm:
@@ -7799,7 +7799,7 @@ MSTBVA_01x10_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBVA_01x11_G_5.08mm:
@@ -7817,7 +7817,7 @@ MSTBVA_01x11_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBVA_01x12_G_5.08mm:
@@ -7835,7 +7835,7 @@ MSTBVA_01x12_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBVA_01x13_G_5.08mm:
@@ -7853,7 +7853,7 @@ MSTBVA_01x13_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBVA_01x14_G_5.08mm:
@@ -7871,7 +7871,7 @@ MSTBVA_01x14_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBVA_01x15_G_5.08mm:
@@ -7889,7 +7889,7 @@ MSTBVA_01x15_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBVA_01x16_G_5.08mm:
@@ -7907,7 +7907,7 @@ MSTBVA_01x16_G_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x02_GF_5.08mm:
@@ -7925,7 +7925,7 @@ MSTBV_01x02_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x03_GF_5.08mm:
@@ -7943,7 +7943,7 @@ MSTBV_01x03_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x04_GF_5.08mm:
@@ -7961,7 +7961,7 @@ MSTBV_01x04_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x05_GF_5.08mm:
@@ -7979,7 +7979,7 @@ MSTBV_01x05_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x06_GF_5.08mm:
@@ -7997,7 +7997,7 @@ MSTBV_01x06_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x07_GF_5.08mm:
@@ -8015,7 +8015,7 @@ MSTBV_01x07_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x08_GF_5.08mm:
@@ -8033,7 +8033,7 @@ MSTBV_01x08_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x09_GF_5.08mm:
@@ -8051,7 +8051,7 @@ MSTBV_01x09_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x10_GF_5.08mm:
@@ -8069,7 +8069,7 @@ MSTBV_01x10_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x11_GF_5.08mm:
@@ -8087,7 +8087,7 @@ MSTBV_01x11_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x12_GF_5.08mm:
@@ -8105,7 +8105,7 @@ MSTBV_01x12_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x13_GF_5.08mm:
@@ -8123,7 +8123,7 @@ MSTBV_01x13_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x14_GF_5.08mm:
@@ -8141,7 +8141,7 @@ MSTBV_01x14_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x15_GF_5.08mm:
@@ -8159,7 +8159,7 @@ MSTBV_01x15_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x16_GF_5.08mm:
@@ -8177,7 +8177,7 @@ MSTBV_01x16_GF_5.08mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x02_GF_5.08mm_MH:
@@ -8195,7 +8195,7 @@ MSTBV_01x02_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x03_GF_5.08mm_MH:
@@ -8213,7 +8213,7 @@ MSTBV_01x03_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x04_GF_5.08mm_MH:
@@ -8231,7 +8231,7 @@ MSTBV_01x04_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x05_GF_5.08mm_MH:
@@ -8249,7 +8249,7 @@ MSTBV_01x05_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x06_GF_5.08mm_MH:
@@ -8267,7 +8267,7 @@ MSTBV_01x06_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x07_GF_5.08mm_MH:
@@ -8285,7 +8285,7 @@ MSTBV_01x07_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x08_GF_5.08mm_MH:
@@ -8303,7 +8303,7 @@ MSTBV_01x08_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x09_GF_5.08mm_MH:
@@ -8321,7 +8321,7 @@ MSTBV_01x09_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x10_GF_5.08mm_MH:
@@ -8339,7 +8339,7 @@ MSTBV_01x10_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x11_GF_5.08mm_MH:
@@ -8357,7 +8357,7 @@ MSTBV_01x11_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x12_GF_5.08mm_MH:
@@ -8375,7 +8375,7 @@ MSTBV_01x12_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x13_GF_5.08mm_MH:
@@ -8393,7 +8393,7 @@ MSTBV_01x13_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x14_GF_5.08mm_MH:
@@ -8411,7 +8411,7 @@ MSTBV_01x14_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x15_GF_5.08mm_MH:
@@ -8429,7 +8429,7 @@ MSTBV_01x15_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 MSTBV_01x16_GF_5.08mm_MH:
@@ -8447,7 +8447,7 @@ MSTBV_01x16_GF_5.08mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBA_01x02_G_7.50mm:
@@ -8465,7 +8465,7 @@ GMSTBA_01x02_G_7.50mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBA_01x03_G_7.50mm:
@@ -8483,7 +8483,7 @@ GMSTBA_01x03_G_7.50mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBA_01x04_G_7.50mm:
@@ -8501,7 +8501,7 @@ GMSTBA_01x04_G_7.50mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBA_01x05_G_7.50mm:
@@ -8519,7 +8519,7 @@ GMSTBA_01x05_G_7.50mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBA_01x06_G_7.50mm:
@@ -8537,7 +8537,7 @@ GMSTBA_01x06_G_7.50mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBA_01x07_G_7.50mm:
@@ -8555,7 +8555,7 @@ GMSTBA_01x07_G_7.50mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBA_01x08_G_7.50mm:
@@ -8573,7 +8573,7 @@ GMSTBA_01x08_G_7.50mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBA_01x09_G_7.50mm:
@@ -8591,7 +8591,7 @@ GMSTBA_01x09_G_7.50mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBA_01x10_G_7.50mm:
@@ -8609,7 +8609,7 @@ GMSTBA_01x10_G_7.50mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBA_01x11_G_7.50mm:
@@ -8627,7 +8627,7 @@ GMSTBA_01x11_G_7.50mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBA_01x12_G_7.50mm:
@@ -8645,7 +8645,7 @@ GMSTBA_01x12_G_7.50mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBVA_01x02_G_7.50mm:
@@ -8663,7 +8663,7 @@ GMSTBVA_01x02_G_7.50mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBVA_01x03_G_7.50mm:
@@ -8681,7 +8681,7 @@ GMSTBVA_01x03_G_7.50mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBVA_01x04_G_7.50mm:
@@ -8699,7 +8699,7 @@ GMSTBVA_01x04_G_7.50mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBVA_01x05_G_7.50mm:
@@ -8717,7 +8717,7 @@ GMSTBVA_01x05_G_7.50mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBVA_01x06_G_7.50mm:
@@ -8735,7 +8735,7 @@ GMSTBVA_01x06_G_7.50mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBVA_01x07_G_7.50mm:
@@ -8753,7 +8753,7 @@ GMSTBVA_01x07_G_7.50mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBVA_01x08_G_7.50mm:
@@ -8771,7 +8771,7 @@ GMSTBVA_01x08_G_7.50mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBVA_01x09_G_7.50mm:
@@ -8789,7 +8789,7 @@ GMSTBVA_01x09_G_7.50mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBVA_01x10_G_7.50mm:
@@ -8807,7 +8807,7 @@ GMSTBVA_01x10_G_7.50mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBVA_01x11_G_7.50mm:
@@ -8825,7 +8825,7 @@ GMSTBVA_01x11_G_7.50mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBVA_01x12_G_7.50mm:
@@ -8843,7 +8843,7 @@ GMSTBVA_01x12_G_7.50mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBA_01x02_G_7.62mm:
@@ -8861,7 +8861,7 @@ GMSTBA_01x02_G_7.62mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBA_01x03_G_7.62mm:
@@ -8879,7 +8879,7 @@ GMSTBA_01x03_G_7.62mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBA_01x04_G_7.62mm:
@@ -8897,7 +8897,7 @@ GMSTBA_01x04_G_7.62mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBA_01x05_G_7.62mm:
@@ -8915,7 +8915,7 @@ GMSTBA_01x05_G_7.62mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBA_01x06_G_7.62mm:
@@ -8933,7 +8933,7 @@ GMSTBA_01x06_G_7.62mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBA_01x07_G_7.62mm:
@@ -8951,7 +8951,7 @@ GMSTBA_01x07_G_7.62mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBA_01x08_G_7.62mm:
@@ -8969,7 +8969,7 @@ GMSTBA_01x08_G_7.62mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBA_01x09_G_7.62mm:
@@ -8987,7 +8987,7 @@ GMSTBA_01x09_G_7.62mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBA_01x10_G_7.62mm:
@@ -9005,7 +9005,7 @@ GMSTBA_01x10_G_7.62mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBA_01x11_G_7.62mm:
@@ -9023,7 +9023,7 @@ GMSTBA_01x11_G_7.62mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBA_01x12_G_7.62mm:
@@ -9041,7 +9041,7 @@ GMSTBA_01x12_G_7.62mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTB_01x02_GF_7.62mm:
@@ -9059,7 +9059,7 @@ GMSTB_01x02_GF_7.62mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTB_01x03_GF_7.62mm:
@@ -9077,7 +9077,7 @@ GMSTB_01x03_GF_7.62mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTB_01x04_GF_7.62mm:
@@ -9095,7 +9095,7 @@ GMSTB_01x04_GF_7.62mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTB_01x05_GF_7.62mm:
@@ -9113,7 +9113,7 @@ GMSTB_01x05_GF_7.62mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTB_01x06_GF_7.62mm:
@@ -9131,7 +9131,7 @@ GMSTB_01x06_GF_7.62mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTB_01x07_GF_7.62mm:
@@ -9149,7 +9149,7 @@ GMSTB_01x07_GF_7.62mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTB_01x08_GF_7.62mm:
@@ -9167,7 +9167,7 @@ GMSTB_01x08_GF_7.62mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTB_01x09_GF_7.62mm:
@@ -9185,7 +9185,7 @@ GMSTB_01x09_GF_7.62mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTB_01x10_GF_7.62mm:
@@ -9203,7 +9203,7 @@ GMSTB_01x10_GF_7.62mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTB_01x11_GF_7.62mm:
@@ -9221,7 +9221,7 @@ GMSTB_01x11_GF_7.62mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTB_01x12_GF_7.62mm:
@@ -9239,7 +9239,7 @@ GMSTB_01x12_GF_7.62mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTB_01x02_GF_7.62mm_MH:
@@ -9257,7 +9257,7 @@ GMSTB_01x02_GF_7.62mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTB_01x03_GF_7.62mm_MH:
@@ -9275,7 +9275,7 @@ GMSTB_01x03_GF_7.62mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTB_01x04_GF_7.62mm_MH:
@@ -9293,7 +9293,7 @@ GMSTB_01x04_GF_7.62mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTB_01x05_GF_7.62mm_MH:
@@ -9311,7 +9311,7 @@ GMSTB_01x05_GF_7.62mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTB_01x06_GF_7.62mm_MH:
@@ -9329,7 +9329,7 @@ GMSTB_01x06_GF_7.62mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTB_01x07_GF_7.62mm_MH:
@@ -9347,7 +9347,7 @@ GMSTB_01x07_GF_7.62mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTB_01x08_GF_7.62mm_MH:
@@ -9365,7 +9365,7 @@ GMSTB_01x08_GF_7.62mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTB_01x09_GF_7.62mm_MH:
@@ -9383,7 +9383,7 @@ GMSTB_01x09_GF_7.62mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTB_01x10_GF_7.62mm_MH:
@@ -9401,7 +9401,7 @@ GMSTB_01x10_GF_7.62mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTB_01x11_GF_7.62mm_MH:
@@ -9419,7 +9419,7 @@ GMSTB_01x11_GF_7.62mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTB_01x12_GF_7.62mm_MH:
@@ -9437,7 +9437,7 @@ GMSTB_01x12_GF_7.62mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBVA_01x02_G_7.62mm:
@@ -9455,7 +9455,7 @@ GMSTBVA_01x02_G_7.62mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBVA_01x03_G_7.62mm:
@@ -9473,7 +9473,7 @@ GMSTBVA_01x03_G_7.62mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBVA_01x04_G_7.62mm:
@@ -9491,7 +9491,7 @@ GMSTBVA_01x04_G_7.62mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBVA_01x05_G_7.62mm:
@@ -9509,7 +9509,7 @@ GMSTBVA_01x05_G_7.62mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBVA_01x06_G_7.62mm:
@@ -9527,7 +9527,7 @@ GMSTBVA_01x06_G_7.62mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBVA_01x07_G_7.62mm:
@@ -9545,7 +9545,7 @@ GMSTBVA_01x07_G_7.62mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBVA_01x08_G_7.62mm:
@@ -9563,7 +9563,7 @@ GMSTBVA_01x08_G_7.62mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBVA_01x09_G_7.62mm:
@@ -9581,7 +9581,7 @@ GMSTBVA_01x09_G_7.62mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBVA_01x10_G_7.62mm:
@@ -9599,7 +9599,7 @@ GMSTBVA_01x10_G_7.62mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBVA_01x11_G_7.62mm:
@@ -9617,7 +9617,7 @@ GMSTBVA_01x11_G_7.62mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBVA_01x12_G_7.62mm:
@@ -9635,7 +9635,7 @@ GMSTBVA_01x12_G_7.62mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBV_01x02_GF_7.62mm:
@@ -9653,7 +9653,7 @@ GMSTBV_01x02_GF_7.62mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBV_01x03_GF_7.62mm:
@@ -9671,7 +9671,7 @@ GMSTBV_01x03_GF_7.62mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBV_01x04_GF_7.62mm:
@@ -9689,7 +9689,7 @@ GMSTBV_01x04_GF_7.62mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBV_01x05_GF_7.62mm:
@@ -9707,7 +9707,7 @@ GMSTBV_01x05_GF_7.62mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBV_01x06_GF_7.62mm:
@@ -9725,7 +9725,7 @@ GMSTBV_01x06_GF_7.62mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBV_01x07_GF_7.62mm:
@@ -9743,7 +9743,7 @@ GMSTBV_01x07_GF_7.62mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBV_01x08_GF_7.62mm:
@@ -9761,7 +9761,7 @@ GMSTBV_01x08_GF_7.62mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBV_01x09_GF_7.62mm:
@@ -9779,7 +9779,7 @@ GMSTBV_01x09_GF_7.62mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBV_01x10_GF_7.62mm:
@@ -9797,7 +9797,7 @@ GMSTBV_01x10_GF_7.62mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBV_01x11_GF_7.62mm:
@@ -9815,7 +9815,7 @@ GMSTBV_01x11_GF_7.62mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBV_01x12_GF_7.62mm:
@@ -9833,7 +9833,7 @@ GMSTBV_01x12_GF_7.62mm:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBV_01x02_GF_7.62mm_MH:
@@ -9851,7 +9851,7 @@ GMSTBV_01x02_GF_7.62mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBV_01x03_GF_7.62mm_MH:
@@ -9869,7 +9869,7 @@ GMSTBV_01x03_GF_7.62mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBV_01x04_GF_7.62mm_MH:
@@ -9887,7 +9887,7 @@ GMSTBV_01x04_GF_7.62mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBV_01x05_GF_7.62mm_MH:
@@ -9905,7 +9905,7 @@ GMSTBV_01x05_GF_7.62mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBV_01x06_GF_7.62mm_MH:
@@ -9923,7 +9923,7 @@ GMSTBV_01x06_GF_7.62mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBV_01x07_GF_7.62mm_MH:
@@ -9941,7 +9941,7 @@ GMSTBV_01x07_GF_7.62mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBV_01x08_GF_7.62mm_MH:
@@ -9959,7 +9959,7 @@ GMSTBV_01x08_GF_7.62mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBV_01x09_GF_7.62mm_MH:
@@ -9977,7 +9977,7 @@ GMSTBV_01x09_GF_7.62mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBV_01x10_GF_7.62mm_MH:
@@ -9995,7 +9995,7 @@ GMSTBV_01x10_GF_7.62mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBV_01x11_GF_7.62mm_MH:
@@ -10013,7 +10013,7 @@ GMSTBV_01x11_GF_7.62mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
 
 GMSTBV_01x12_GF_7.62mm_MH:
@@ -10031,5 +10031,5 @@ GMSTBV_01x12_GF_7.62mm_MH:
   pin_color_key: 'metal grey pins'
   insert_color_key: 'gold pins'
   screw_color_key: 'metal grey pins'
-  destination_dir: 'Connector_Phoenix_GMSTB'
+  destination_dir: 'Connector_Phoenix_GMSTB.3dshapes'
   source: 'N/A'
