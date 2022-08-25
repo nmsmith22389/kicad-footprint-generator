@@ -32,6 +32,8 @@ class Text(Node):
           position of text
         * *rotation* (``float``) --
           rotation of text (default: 0)
+        * *justification* (``str``) --
+          justification of text (default: Center)
         * *mirror* (``bool``) --
           mirror text (default: False)
         * *layer* (``str``) --
@@ -56,6 +58,11 @@ class Text(Node):
     TYPE_USER = 'user'
     _TYPES = [TYPE_REFERENCE, TYPE_VALUE, TYPE_USER]
 
+    JUSTIFICATION_LEFT = 'left'
+    JUSTIFICATION_CENTER = 'center'
+    JUSTIFICATION_RIGHT = 'right'
+    _JUSTIFICATIONS = [JUSTIFICATION_LEFT, JUSTIFICATION_CENTER, JUSTIFICATION_RIGHT, None]
+
     def __init__(self, **kwargs):
         Node.__init__(self)
         self._initType(**kwargs)
@@ -63,6 +70,7 @@ class Text(Node):
         self.text = kwargs['text']
         self.at = Vector2D(kwargs['at'])
         self.rotation = kwargs.get('rotation', 0)
+        self._initJustification(**kwargs)
         self.mirror = kwargs.get('mirror', False)
 
         self.layer = kwargs.get('layer', 'F.SilkS')
@@ -75,6 +83,11 @@ class Text(Node):
         self.type = kwargs['type']
         if self.type not in Text._TYPES:
             raise ValueError('Illegal type selected for text field.')
+
+    def _initJustification(self, **kwargs):
+        self.justification = kwargs.get('justification', None)
+        if self.justification not in Text._JUSTIFICATIONS:
+            raise ValueError('Illegal justification selected for text field.')
 
     def rotate(self, angle, origin=(0, 0), use_degrees=True):
         r""" Rotate text around given origin
