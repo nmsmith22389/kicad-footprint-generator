@@ -1,5 +1,5 @@
 LED_01005_0402Metric:
-  model_name: 'D_01005_0402Metric'
+  model_name: 'LED_01005_0402Metric'
   package_type: 'chip_lga'
   length: 0.4
   width: 0.2
@@ -19,14 +19,14 @@ LED_01005_0402Metric:
   source: 'could not find any'
 
 LED_0201_0603Metric:
-  model_name: 'D_0201_0603Metric'
+  model_name: 'LED_0201_0603Metric'
   package_type: 'chip_lga'
   length: 0.65
   width: 0.35
   height: 0.2
   pin_band: 0.17
   pin_thickness: 'auto'
-  base_height: 0.09 
+  base_height: 0.09
   pin_distance_edge: 0.05
   edge_fillet: 'auto'
   rotation: 0
@@ -39,7 +39,7 @@ LED_0201_0603Metric:
   source: 'https://www.mouser.com/ds/2/216/APG0603SURC-TT-953263.pdf'
 
 LED_0402_1005Metric:
-  model_name: 'D_0402_1005Metric'
+  model_name: 'LED_0402_1005Metric'
   package_type: 'chip_convex'
   length: 1.0
   width: 0.5
@@ -58,7 +58,7 @@ LED_0402_1005Metric:
   source: 'http://www.produktinfo.conrad.com/datenblaetter/1000000-1099999/001050370-da-01-en-SMD_CHIPLED_GE_0402_KPHHS_1005SYCK.pdf'
 
 LED_0603_1608Metric_Castellated:
-  model_name: 'D_0603_1608Metric_Castellated'
+  model_name: 'LED_0603_1608Metric_Castellated'
   package_type: 'chip_concave'
   length: 1.6
   width: 0.8
@@ -77,7 +77,7 @@ LED_0603_1608Metric_Castellated:
   source: ''
 
 LED_0603_1608Metric:
-  model_name: 'D_0603_1608Metric'
+  model_name: 'LED_0603_1608Metric'
   package_type: 'chip_convex'
   length: 1.6
   width: 0.8
@@ -96,7 +96,7 @@ LED_0603_1608Metric:
   source: ''
 
 LED_0805_2012Metric_Castellated:
-  model_name: 'D_0805_2012Metric_Castellated'
+  model_name: 'LED_0805_2012Metric_Castellated'
   package_type: 'chip_concave'
   length: 2.0
   width: 1.25
@@ -115,7 +115,7 @@ LED_0805_2012Metric_Castellated:
   source: 'http://www.kingbrightusa.com/images/catalog/SPEC/AP2012CGCK.pdf'
 
 LED_0805_2012Metric:
-  model_name: 'D_0805_2012Metric'
+  model_name: 'LED_0805_2012Metric'
   package_type: 'chip_convex'
   length: 2.0
   width: 1.25
@@ -153,7 +153,7 @@ LED_1206_3216Metric_Castellated:
   source: 'http://www.kingbrightusa.com/images/catalog/SPEC/AP3216CGCK.pdf'
 
 LED_1206_3216Metric:
-  model_name: 'D_1206_3216Metric'
+  model_name: 'LED_1206_3216Metric'
   package_type: 'chip_convex'
   length: 3.2
   width: 1.6
@@ -172,7 +172,7 @@ LED_1206_3216Metric:
   source: 'http://www.kingbrightusa.com/images/catalog/SPEC/AP3216CGCK.pdf'
 
 LED_1206_3216Metric_ReverseMount:
-  model_name: 'D_1206_3216Metric_ReverseMount'
+  model_name: 'LED_1206_3216Metric_ReverseMount'
   package_type: 'chip_reverse_mount'
   length: 0
   width: 0
@@ -191,7 +191,7 @@ LED_1206_3216Metric_ReverseMount:
   source: ''
 
 LED_1210_3225Metric_Castellated:
-  model_name: 'D_1210_3225Metric_Castellated'
+  model_name: 'LED_1210_3225Metric_Castellated'
   package_type: 'chip_concave'
   length: 3.2
   width: 2.5
@@ -210,7 +210,7 @@ LED_1210_3225Metric_Castellated:
   source: 'http://www.kingbrightusa.com/images/catalog/SPEC/AP3216CGCK.pdf'
 
 LED_1210_3225Metric:
-  model_name: 'D_1210_3225Metric'
+  model_name: 'LED_1210_3225Metric'
   package_type: 'chip_convex'
   length: 3.2
   width: 2.5
@@ -229,7 +229,7 @@ LED_1210_3225Metric:
   source: 'http://www.kingbrightusa.com/images/catalog/SPEC/AP3216CGCK.pdf'
 
 LED_1806_4516Metric_Castellated:
-  model_name: 'D_1806_4516Metric_Castellated'
+  model_name: 'LED_1806_4516Metric_Castellated'
   package_type: 'chip_concave'
   length: 4.5
   width: 1.6
@@ -248,7 +248,7 @@ LED_1806_4516Metric_Castellated:
   source: 'could not find it'
 
 LED_1806_4516Metric:
-  model_name: 'D_1806_4516Metric'
+  model_name: 'LED_1806_4516Metric'
   package_type: 'chip_convex'
   length: 4.5
   width: 1.6
@@ -267,7 +267,7 @@ LED_1806_4516Metric:
   source: 'could not find it'
 
 LED_1812_4532Metric_Castellated:
-  model_name: 'D_1812_4532Metric_Castellated'
+  model_name: 'LED_1812_4532Metric_Castellated'
   package_type: 'chip_concave'
   length: 4.5
   width: 3.2
@@ -286,7 +286,7 @@ LED_1812_4532Metric_Castellated:
   source: 'could not find it'
 
 LED_1812_4532Metric:
-  model_name: 'D_1812_4532Metric'
+  model_name: 'LED_1812_4532Metric'
   package_type: 'chip_convex'
   length: 4.5
   width: 3.2
@@ -305,7 +305,7 @@ LED_1812_4532Metric:
   source: 'could not find it'
 
 LED_1W_3W_R8:
-  model_name: 'D_1W_3W_R8'
+  model_name: 'LED_1W_3W_R8'
   package_type: 'lala'
   length: 0
   width: 0
@@ -324,7 +324,7 @@ LED_1W_3W_R8:
   source: ''
 
 LED_2010_5025Metric_Castellated:
-  model_name: 'D_2010_5025Metric_Castellated'
+  model_name: 'LED_2010_5025Metric_Castellated'
   package_type: 'chip_concave'
   length: 5.0
   width: 2.5
@@ -343,7 +343,7 @@ LED_2010_5025Metric_Castellated:
   source: 'could not find it'
 
 LED_2010_5025Metric:
-  model_name: 'D_2010_5025Metric'
+  model_name: 'LED_2010_5025Metric'
   package_type: 'chip_convex'
   length: 5.0
   width: 2.5
@@ -362,7 +362,7 @@ LED_2010_5025Metric:
   source: 'could not find it'
 
 LED_2512_6332Metric_Castellated:
-  model_name: 'D_2512_6332Metric_Castellated'
+  model_name: 'LED_2512_6332Metric_Castellated'
   package_type: 'chip_concave'
   length: 6.3
   width: 3.2
@@ -381,7 +381,7 @@ LED_2512_6332Metric_Castellated:
   source: 'could not find it'
 
 LED_2512_6332Metric:
-  model_name: 'D_2512_6332Metric'
+  model_name: 'LED_2512_6332Metric'
   package_type: 'chip_convex'
   length: 6.3
   width: 3.2
@@ -400,7 +400,7 @@ LED_2512_6332Metric:
   source: 'could not find it'
 
 LED_2816_7142Metric_Castellated:
-  model_name: 'D_2512_6332Metric'
+  model_name: 'LED_2512_6332Metric'
   package_type: 'chip_concave'
   length: 7.1
   width: 4.1
@@ -419,7 +419,7 @@ LED_2816_7142Metric_Castellated:
   source: 'could not find it'
 
 LED_2816_7142Metric:
-  model_name: 'D_2816_7142Metric'
+  model_name: 'LED_2816_7142Metric'
   package_type: 'chip_convex'
   length: 7.1
   width: 4.1
@@ -438,7 +438,7 @@ LED_2816_7142Metric:
   source: 'could not find it'
 
 LED_Avago_PLCC4_3.2x2.8mm_CW:
-  model_name: 'D_Avago_PLCC4_3.2x2.8mm_CW'
+  model_name: 'LED_Avago_PLCC4_3.2x2.8mm_CW'
   package_type: 'lala'
   length: 0
   width: 0
@@ -457,7 +457,7 @@ LED_Avago_PLCC4_3.2x2.8mm_CW:
   source: ''
 
 LED_Cree-PLCC4_2x2mm_CW:
-  model_name: 'D_Cree-PLCC4_2x2mm_CW'
+  model_name: 'LED_Cree-PLCC4_2x2mm_CW'
   package_type: 'lala'
   length: 0
   width: 0
@@ -476,7 +476,7 @@ LED_Cree-PLCC4_2x2mm_CW:
   source: ''
 
 LED_Cree-PLCC4_3.2x2.8mm_CCW:
-  model_name: 'D_Cree-PLCC4_3.2x2.8mm_CCW'
+  model_name: 'LED_Cree-PLCC4_3.2x2.8mm_CCW'
   package_type: 'lala'
   length: 0
   width: 0
@@ -495,7 +495,7 @@ LED_Cree-PLCC4_3.2x2.8mm_CCW:
   source: ''
 
 LED_Cree-PLCC4_5x5mm_CW:
-  model_name: 'D_Cree-PLCC4_5x5mm_CW'
+  model_name: 'LED_Cree-PLCC4_5x5mm_CW'
   package_type: 'lala'
   length: 0
   width: 0
@@ -514,7 +514,7 @@ LED_Cree-PLCC4_5x5mm_CW:
   source: ''
 
 LED_Cree-XB:
-  model_name: 'D_Cree-XB'
+  model_name: 'LED_Cree-XB'
   package_type: 'lala'
   length: 0
   width: 0
@@ -533,7 +533,7 @@ LED_Cree-XB:
   source: ''
 
 LED_Cree-XH:
-  model_name: 'D_Cree-XH'
+  model_name: 'LED_Cree-XH'
   package_type: 'lala'
   length: 0
   width: 0
@@ -552,7 +552,7 @@ LED_Cree-XH:
   source: ''
 
 LED_Cree-XHP35:
-  model_name: 'D_Cree-XHP35'
+  model_name: 'LED_Cree-XHP35'
   package_type: 'lala'
   length: 0
   width: 0
@@ -571,7 +571,7 @@ LED_Cree-XHP35:
   source: ''
 
 LED_Cree-XHP50_12V:
-  model_name: 'D_Cree-XHP50_12V'
+  model_name: 'LED_Cree-XHP50_12V'
   package_type: 'lala'
   length: 0
   width: 0
@@ -590,7 +590,7 @@ LED_Cree-XHP50_12V:
   source: ''
 
 LED_Cree-XHP50_6V:
-  model_name: 'D_Cree-XHP50_6V'
+  model_name: 'LED_Cree-XHP50_6V'
   package_type: 'lala'
   length: 0
   width: 0
@@ -609,7 +609,7 @@ LED_Cree-XHP50_6V:
   source: ''
 
 LED_Cree-XHP70_12V:
-  model_name: 'D_Cree-XHP70_12V'
+  model_name: 'LED_Cree-XHP70_12V'
   package_type: 'lala'
   length: 0
   width: 0
@@ -628,7 +628,7 @@ LED_Cree-XHP70_12V:
   source: ''
 
 LED_Cree-XHP70_6V:
-  model_name: 'D_Cree-XHP70_6V'
+  model_name: 'LED_Cree-XHP70_6V'
   package_type: 'lala'
   length: 0
   width: 0
@@ -647,7 +647,7 @@ LED_Cree-XHP70_6V:
   source: ''
 
 LED_Cree-XP-G:
-  model_name: 'D_Cree-XP-G'
+  model_name: 'LED_Cree-XP-G'
   package_type: 'lala'
   length: 0
   width: 0
@@ -666,7 +666,7 @@ LED_Cree-XP-G:
   source: ''
 
 LED_Cree-XP:
-  model_name: 'D_Cree-XP'
+  model_name: 'LED_Cree-XP'
   package_type: 'lala'
   length: 0
   width: 0
@@ -685,7 +685,7 @@ LED_Cree-XP:
   source: ''
 
 LED_Cree-XQ:
-  model_name: 'D_Cree-XQ'
+  model_name: 'LED_Cree-XQ'
   package_type: 'lala'
   length: 0
   width: 0
@@ -723,7 +723,7 @@ LED-L1T2_LUMILEDS:
   source: ''
 
 LED_miniPLCC_2315_Handsoldering:
-  model_name: 'D_miniPLCC_2315_Handsoldering'
+  model_name: 'LED_miniPLCC_2315_Handsoldering'
   package_type: 'lala'
   length: 0
   width: 0
@@ -742,7 +742,7 @@ LED_miniPLCC_2315_Handsoldering:
   source: ''
 
 LED_miniPLCC_2315:
-  model_name: 'D_miniPLCC_2315'
+  model_name: 'LED_miniPLCC_2315'
   package_type: 'lala'
   length: 0
   width: 0
@@ -761,7 +761,7 @@ LED_miniPLCC_2315:
   source: ''
 
 LED_Normandled_WS2813-06_5.0x5.0mm_Pitch1.6mm:
-  model_name: 'D_Normandled_WS2813-06_5.0x5.0mm_Pitch1.6mm'
+  model_name: 'LED_Normandled_WS2813-06_5.0x5.0mm_Pitch1.6mm'
   package_type: 'lala'
   length: 0
   width: 0
@@ -780,7 +780,7 @@ LED_Normandled_WS2813-06_5.0x5.0mm_Pitch1.6mm:
   source: ''
 
 LED_PLCC_2835:
-  model_name: 'D_PLCC_2835'
+  model_name: 'LED_PLCC_2835'
   package_type: 'lala'
   length: 0
   width: 0
@@ -799,7 +799,7 @@ LED_PLCC_2835:
   source: ''
 
 LED_PLCC-2:
-  model_name: 'D_PLCC-2'
+  model_name: 'LED_PLCC-2'
   package_type: 'lala'
   length: 0
   width: 0
@@ -818,7 +818,7 @@ LED_PLCC-2:
   source: ''
 
 LED_RGB_1210:
-  model_name: 'D_RGB_1210'
+  model_name: 'LED_RGB_1210'
   package_type: 'chip_concave_4'
   length: 3.2
   width: 2.7
@@ -826,7 +826,7 @@ LED_RGB_1210:
   base_height: 0.5
   top_length: 2.0
   top_width: 2.7
-  top_height: 0.6 
+  top_height: 0.6
   pin_thickness: 0.01
   pincnt: [[-1.25, -0.75, 1.1, 0.7, 0.52], [1.25, -0.75, 1.1, 0.7, 0.52], [-1.25, 0.75, 1.1, 0.7, 0.52], [1.25, 0.75, 1.1, 0.7, 0.52]]
   edge_fillet: 'auto'
@@ -841,7 +841,7 @@ LED_RGB_1210:
   source: 'https://www.broadcom.com/docs/AV02-0610EN'
 
 LED_RGB_5050-6:
-  model_name: 'D_RGB_5050-6'
+  model_name: 'LED_RGB_5050-6'
   package_type: 'plcc_a'
   length: 5.0
   width: 5.0
@@ -861,7 +861,7 @@ LED_RGB_5050-6:
   source: 'https://static.sparkfun.com/datasheets/Components/LED/5060BRG4.pdf'
 
 LED_RGB_Getian_GT-P6PRGB4303:
-  model_name: 'D_RGB_Getian_GT-P6PRGB4303'
+  model_name: 'LED_RGB_Getian_GT-P6PRGB4303'
   package_type: 'lala'
   length: 0
   width: 0
@@ -880,7 +880,7 @@ LED_RGB_Getian_GT-P6PRGB4303:
   source: ''
 
 LED_RGB_PLCC-6:
-  model_name: 'D_RGB_PLCC-6'
+  model_name: 'LED_RGB_PLCC-6'
   package_type: 'lala'
   length: 0
   width: 0
@@ -899,7 +899,7 @@ LED_RGB_PLCC-6:
   source: ''
 
 LED_WS2812B_PLCC4_5.0x5.0mm_P3.2mm:
-  model_name: 'D_WS2812B_PLCC4_5.0x5.0mm_P3.2mm'
+  model_name: 'LED_WS2812B_PLCC4_5.0x5.0mm_P3.2mm'
   package_type: 'plcc_a'
   length: 5.0
   width: 5.0
@@ -919,7 +919,7 @@ LED_WS2812B_PLCC4_5.0x5.0mm_P3.2mm:
   source: 'https://cdn-shop.adafruit.com/datasheets/WS2812B.pdf'
 
 LED_WS2812_PLCC6_5.0x5.0mm_P1.6mm:
-  model_name: 'D_WS2812_PLCC6_5.0x5.0mm_P1.6mm'
+  model_name: 'LED_WS2812_PLCC6_5.0x5.0mm_P1.6mm'
   package_type: 'plcc_a'
   length: 5.0
   width: 5.0
@@ -939,7 +939,7 @@ LED_WS2812_PLCC6_5.0x5.0mm_P1.6mm:
   source: 'https://cdn-shop.adafruit.com/datasheets/WS2812.pdf'
 
 LED_SK6812_PLCC4_5.0x5.0mm_P3.2mm:
-  model_name: 'D_SK6812_PLCC4_5.0x5.0mm_P3.2mm'
+  model_name: 'LED_SK6812_PLCC4_5.0x5.0mm_P3.2mm'
   package_type: 'plcc_a'
   length: 5.0
   width: 5.0
@@ -959,7 +959,7 @@ LED_SK6812_PLCC4_5.0x5.0mm_P3.2mm:
   source: 'https://cdn-shop.adafruit.com/product-files/1138/SK6812+LED+datasheet+.pdf'
 
 LED_Inolux_IN-PI554FCH_PLCC4_5.0x5.0mm_P3.2mm:
-  model_name: 'D_Inolux_IN-PI554FCH_PLCC4_5.0x5.0mm_P3.2mm'
+  model_name: 'LED_Inolux_IN-PI554FCH_PLCC4_5.0x5.0mm_P3.2mm'
   package_type: 'plcc_a'
   length: 5.0
   width: 5.0
