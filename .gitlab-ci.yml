@@ -16,13 +16,13 @@ before_script:
 ucon_17809:
   script:
     - ./generator.py --output_dir ./3dmodels --library 4UCON_17809 --enable-vrml True
-    - find / -iname 3dmodels > models_location.txt
+    # - sudo find / -iname 3dmodels > models_location.txt
     # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
     # - cat ./audit_log.txt
   artifacts:
     paths:
       - 3dmodels/Connectors_4UCON.3dshapes
-      - models_location.txt
+      # - models_location.txt
       # - audit_log.txt
   when: manual
   timeout: 6 hours
