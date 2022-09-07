@@ -19,7 +19,7 @@ Requirements to run these scripts:
 
 ## Usage
 
-**Note**: CadQuery 2.x (a version after the 2.1 release) must be installed for this process to work.
+**Note**: CadQuery 2.2.0b1 or higher must be installed for this process to work. 
 
 Here is a usage summary for the generator.py script:
 ```
