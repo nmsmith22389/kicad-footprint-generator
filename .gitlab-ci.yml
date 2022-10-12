@@ -4,11 +4,12 @@ before_script:
   - apt-get update -q -y
   - apt-get install -y build-essential libgl1-mesa-glx kicad
   - python --version
+  - python -m pip install --upgrade pip
   - pip install virtualenv
   - virtualenv venv
   - source venv/bin/activate
   - pip install -r requirements.txt
-  - pip install git+https://github.com/CadQuery/cadquery.git  # Comment out once there is a production release of CadQuery 2.x on PyPI
+  - pip install --pre cadquery==2.2.*  # Use `pip install cadquery==2.2.*` instead once there is a production release of CadQuery 2.2 on PyPI
 
 #
 # 4UCON_17809 Directory
