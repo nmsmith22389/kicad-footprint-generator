@@ -197,6 +197,27 @@ def __createFootprintVariant(config, fpParams, fpId):
     # Pads
     balls = layoutX * layoutY
     
+    pasteShape = padShape
+    if "paste_shape" in fpParams:
+        if fpParams["paste_shape"] == "roundrect":
+            pasteShape = Pad.SHAPE_ROUNDRECT
+        if fpParams["paste_shape"] == "rect":
+            pasteShape = Pad.SHAPE_RECT
+    
+    pasteSize = fpParams["pad_size"]
+    if "paste_size" in fpParams:
+        pasteSize = fpParams["paste_size"]
+    
+    pasteRadiusRatio = 0.2
+    if "paste_radius_ratio" in fpParams:
+        pasteRadiusRatio = fpParams["paste_radius_ratio"]
+    
+    if pasteShape != padShape:
+        padLayers=Pad.LAYERS_CONNECT_FRONT
+    else:
+        padLayers=Pad.LAYERS_SMT
+                         
+    
     if rowSkips == []:
         for _ in range(layoutY):
             rowSkips.append([])
@@ -216,8 +237,15 @@ def __createFootprintVariant(config, fpParams, fpId):
                          shape=padShape,
                          at=[xPadLeft + (col-1) * pitchX, yPadTop + rowNum * pitchY],
                          size=fpParams["pad_size"],
-                         layers=Pad.LAYERS_SMT, 
+                         layers=padLayers,
                          radius_ratio=config['round_rect_radius_ratio']))
+            if(pasteShape != padShape):
+                f.append(Pad(number="{}{}".format(row, col), type=Pad.TYPE_SMT,
+                         shape=pasteShape,
+                         at=[xPadLeft + (col-1) * pitchX, yPadTop + rowNum * pitchY],
+                         size=[pasteSize, pasteSize],
+                         layers=['F.Paste'],
+                         radius_ratio=pasteRadiusRatio))
 
     # If this looks like a CSP footprint, use the CSP 3dshapes library
     packageType = 'CSP' if 'BGA' not in fpId and 'CSP' in fpId else 'BGA'
