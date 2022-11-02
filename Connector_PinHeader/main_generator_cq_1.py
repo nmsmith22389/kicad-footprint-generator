@@ -189,17 +189,50 @@ def make_Horizontal_THT_base(n, pitch, rows, base_width, base_height, base_x_off
     base = base.close().extrude(-base_height)
     return base
 
-def make_Vertical_SMD_base(n, pitch, base_width, base_height, base_chamfer, base_z_offset = 0):
+def make_Vertical_SMD_base(n, pitch, base_width, base_height, base_chamfer, base_z_offset = 0, base_extra_length=0, base_wall_height=0, base_wall_internal_width=0, base_wall_internal_extra_length=0, notch_position='', notch_x_size=0, notch_y_size=0, notch_height=0):
     if base_chamfer == 0:
-        base = cq.Workplane("XY").workplane(offset=base_z_offset).moveTo(-base_width/2.0,n/2.*pitch).vLine(n*-pitch).hLine(base_width).vLine(n*pitch)
+        base = cq.Workplane("XY").workplane(offset=base_z_offset).moveTo(-base_width/2.0,n/2.*pitch+base_extra_length/2.0).vLine(n*-pitch-base_extra_length).hLine(base_width).vLine(n*pitch+base_extra_length)
     else:
-        base = cq.Workplane("XY").workplane(offset=base_z_offset).moveTo(-base_width/2.0+base_chamfer,n/2.*pitch)
+        base = cq.Workplane("XY").workplane(offset=base_z_offset).moveTo(-base_width/2.0+base_chamfer,n/2.*pitch+base_extra_length/2.0)
+        if base_extra_length != 0:
+            base = base.line(-base_chamfer,-base_chamfer)
+            base = base.vLine(-base_extra_length/2.0+base_chamfer*2.0)
+            base = base.line(base_chamfer,-base_chamfer)
         for x in range(0, n):
             base = base.line(-base_chamfer,-base_chamfer).vLine(-pitch+base_chamfer*2.).line(base_chamfer,-base_chamfer)
+        if base_extra_length != 0:
+            base = base.line(-base_chamfer,-base_chamfer)
+            base = base.vLine(-base_extra_length/2.0+base_chamfer*2.0)
+            base = base.line(base_chamfer,-base_chamfer)
         base = base.hLine(base_width-base_chamfer*2.)
+        if base_extra_length != 0:
+            base = base.line(base_chamfer,base_chamfer)
+            base = base.vLine(base_extra_length/2.0-base_chamfer*2.0)
+            base = base.line(-base_chamfer,base_chamfer)
         for x in range(0, n):
             base = base.line(base_chamfer,base_chamfer).vLine(pitch-base_chamfer*2.).line(-base_chamfer,base_chamfer)
+        if base_extra_length != 0:
+            base = base.line(base_chamfer,base_chamfer)
+            base = base.vLine(base_extra_length/2.0-base_chamfer*2.0)
+            base = base.line(-base_chamfer,base_chamfer)
     base = base.close().extrude(base_height)
+
+    if base_wall_height != 0:
+        wall = cq.Workplane("XY").workplane(offset=base_z_offset).rect(base_width,n*pitch+base_extra_length).extrude(base_wall_height)
+        wall = wall.cut(cq.Workplane("XY").rect(base_wall_internal_width,(n-1)*pitch+base_wall_internal_extra_length).extrude(base_wall_height+base_z_offset))
+        base = base.union(wall)
+
+    if notch_height != 0:
+        if notch_position == 'left':
+            cutout = cq.Workplane("XY").workplane(offset=base_z_offset+base_wall_height-notch_height).rect(notch_x_size*2.0,notch_y_size).extrude(base_wall_height).translate((-base_width/2.0,0,0))
+        elif notch_position == 'right':
+            cutout = cq.Workplane("XY").workplane(offset=base_wall_height-notch_height).rect(notch_x_size*2.0,notch_y_size).extrude(base_wall_height).translate((base_width/2.0,0,0))
+        elif notch_position == 'top':
+            cutout = cq.Workplane("XY").workplane(offset=base_wall_height-notch_height).rect(notch_x_size,notch_y_size*2).extrude(base_wall_height).translate((0,(n*pitch+base_extra_length)/2,0))
+        elif notch_position == 'bottom':
+            cutout = cq.Workplane("XY").workplane(offset=base_wall_height-notch_height).rect(notch_x_size,notch_y_size*2).extrude(base_wall_height).translate((0,-(n*pitch+base_extra_length)/2,0))
+        base = base.cut(cutout)
+
     return base
 
 def make_Vertical_THT_pins(n, pitch, rows, pin_length_above_base, pin_length_below_board, base_height, pin_width, pin_end_chamfer):
@@ -316,6 +349,14 @@ def MakeHeader(n, model, all_params):
     base_width = all_params[model]['base_width']
     base_height = all_params[model]['base_height']
     base_chamfer = all_params[model]['base_chamfer']
+    base_extra_length = all_params[model]['base_extra_length'] if 'base_extra_length' in all_params[model] else 0
+    base_wall_height = all_params[model]['base_wall_height'] if 'base_wall_height' in all_params[model] else 0
+    base_wall_internal_width = all_params[model]['base_wall_internal_width'] if 'base_wall_internal_width' in all_params[model] else 0
+    base_wall_internal_extra_length = all_params[model]['base_wall_internal_extra_length'] if 'base_wall_internal_extra_length' in all_params[model] else 0
+    notch_x_size = all_params[model]['notch_x_size'] if 'notch_x_size' in all_params[model] else 0
+    notch_y_size = all_params[model]['notch_y_size'] if 'notch_y_size' in all_params[model] else 0
+    notch_height = all_params[model]['notch_height'] if 'notch_height' in all_params[model] else 0
+    notch_position = all_params[model]['notch_position'] if 'notch_position' in all_params[model] else ''
     pin_width = all_params[model]['pin_width']
     pin_length_above_base = all_params[model]['pin_length_above_base']
 
@@ -345,7 +386,7 @@ def MakeHeader(n, model, all_params):
         else:
             pin_1_start = None
         pins = make_Vertical_SMD_pins(n, pitch, rows, pin_length_above_base, pin_length_horizontal, base_height, base_width, pin_width, pin_end_chamfer, base_z_offset, pin_1_start)
-        base = make_Vertical_SMD_base(n, pitch, base_width, base_height, base_chamfer, base_z_offset)
+        base = make_Vertical_SMD_base(n, pitch, base_width, base_height, base_chamfer, base_z_offset, base_extra_length, base_wall_height, base_wall_internal_width, base_wall_internal_extra_length, notch_position, notch_x_size, notch_y_size, notch_height)
     else:
         print ("Header type: ")
         print (header_type)
