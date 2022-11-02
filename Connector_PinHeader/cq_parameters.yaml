@@ -588,3 +588,30 @@ PinHeader_2xyy_P1.00mm_Vertical_SMD:
   body_color_key: "black body"
   destination_dir: 'Connector_PinHeader_1.00mm.3dshapes'
   source: 'http://katalog.we-online.de/em/datasheet/6130xx21121.pdf'
+
+IDC-Header_2xyy_P2.54mm_Vertical_SMD:
+  type: 'Vertical_SMD'
+  pitch: 2.54
+  rows: 2
+  pins: 3,4,5,6,7,8,10,12,13,20,25,30
+  base_width: 8.95
+  base_height: 3.0
+  base_wall_height: 9.0
+  base_extra_length: 7.62
+  base_wall_internal_width: 6.35
+  base_wall_internal_extra_length: 7.88
+  base_z_offset: 0.64
+  base_chamfer: 0
+  notch_position: 'left'
+  notch_height: 6.4
+  notch_x_size: 2.15
+  notch_y_size: 4.4
+  pin_width: 0.64
+  pin_length_above_base: 5.7
+  pin_length_horizontal: 4.85
+  pin_end_chamfer: 'auto'
+  rotation: 0
+  pin_color_key: "gold pins"
+  body_color_key: "black body"
+  destination_dir: 'Connector_IDC.3dshapes'
+  source: 'https://www.tme.eu/Document/4baa0e952ce73e37bc68cf730b541507/T821M114A1S100CEU-B.pdf'
