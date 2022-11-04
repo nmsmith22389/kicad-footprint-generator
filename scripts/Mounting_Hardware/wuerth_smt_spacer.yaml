@@ -446,7 +446,7 @@ M2:
       datasheet: https://katalog.we-online.de/em/datasheet/9774080243.pdf
       h: 8
 
-M2.5:
+M2.5_1:
   series_prefix: WA-SMSI
   footprint:
     ring:
@@ -538,7 +538,7 @@ M2.5:
     9774095151:
       datasheet: https://www.we-online.com/catalog/datasheet/9774095151.pdf
       h: 9.5
-    9774010151:
+    9774100151:
       datasheet: https://www.we-online.com/catalog/datasheet/9774100151.pdf
       h: 10
 
