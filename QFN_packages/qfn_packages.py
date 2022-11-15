@@ -14,6 +14,8 @@ def make_qfn(params):
     fp_z  = params['fp_z']
 #    K  = params['K']
     L  = params['L']
+    Lx = params['Lx'] if 'Lx' in params else None
+    Ly = params['Ly'] if 'Ly' in params else None
     D  = params['D']
     E   = params['E']
     A1  = params['A1']
@@ -36,6 +38,17 @@ def make_qfn(params):
     if isclose(A1, 0.0):
         print("A1 can NOT be zero (or this script will fail). Setting A1 to 0.02")
         A1 = 0.02
+
+    if L is not None:
+        Lx = L
+        Ly = L
+    else:
+        if npx > 0 and Lx is None:
+            print("Pin length along x axis is not set (neither 'Lx' nor 'L'). Setting pin length to pin width.")
+            Lx = c
+        if npy > 0 and Ly is None:
+            print("Pin length along y axis is not set (neither 'Ly' nor 'L'). Setting pin length to pin width.")
+            Ly = c
 
     epad_rotation = 0.0
     epad_offset_x = 0.0
@@ -123,31 +136,34 @@ def make_qfn(params):
     if (color_pin_mark==False) and (place_pinMark==True):
         case = case.cut(pinmark)
     #stop
-    if ps == 'square': #square pins
-        bpin = cq.Workplane("XY"). \
-            moveTo(b, 0). \
-            lineTo(b, L). \
-            lineTo(0, L). \
-            lineTo(0, 0). \
-            close().extrude(c).translate((-b/2,-E/2,0)). \
-            rotate((0,0,0), (0,0,1), -180) #((b/2,E/2,A1/2), (0,0,1), 180)
-            #close().extrude(c).translate((b/2,E/2,A1/2))
-    elif ps == 'rounded':
-        bpin = cq.Workplane("XY"). \
-            moveTo(b, 0). \
-            lineTo(b, L-b/2). \
-            threePointArc((b/2,L),(0, L-b/2)). \
-            lineTo(0, 0). \
-            close().extrude(c).translate((-b/2,-E/2,0)). \
-            rotate((0,0,0), (0,0,1), -180)            
-            #close().extrude(c).translate((b/2,E/2,A1/2))
-    elif ps == 'concave':
-        pincut = cq.Workplane("XY").box(b, L, A2+A1*2).translate((0,E/2-L/2,A2/2+A1))
-        bpin = cq.Workplane("XY").box(b, L, A2+A1*2).translate((0,E/2-L/2,A2/2+A1)).edges("|X").fillet(A1)
-        bpin = bpin.faces(">Z").edges(">Y").workplane(centerOption="CenterOfMass").circle(b*0.3).cutThruAll()
-    elif ps == 'cshaped':
-        bpin = cq.Workplane("XY").box(b, L, A2+A1*2).translate((0,E/2-L/2,A2/2+A1)).edges("|X").fillet(A1)
-    
+    bpin_shape = dict()
+    for axis, length in zip(['x','y'], [Lx, Ly]):
+        if ps == 'square': #square pins
+            bpin = cq.Workplane("XY"). \
+                moveTo(b, 0). \
+                lineTo(b, length). \
+                lineTo(0, length). \
+                lineTo(0, 0). \
+                close().extrude(c).translate((-b/2,-E/2,0)). \
+                rotate((0,0,0), (0,0,1), -180) #((b/2,E/2,A1/2), (0,0,1), 180)
+                #close().extrude(c).translate((b/2,E/2,A1/2))
+        elif ps == 'rounded':
+            bpin = cq.Workplane("XY"). \
+                moveTo(b, 0). \
+                lineTo(b, length-b/2). \
+                threePointArc((b/2,length),(0, length-b/2)). \
+                lineTo(0, 0). \
+                close().extrude(c).translate((-b/2,-E/2,0)). \
+                rotate((0,0,0), (0,0,1), -180)            
+                #close().extrude(c).translate((b/2,E/2,A1/2))
+        elif ps == 'concave':
+            pincut = cq.Workplane("XY").box(b, length, A2+A1*2).translate((0,E/2-length/2,A2/2+A1))
+            bpin = cq.Workplane("XY").box(b, length, A2+A1*2).translate((0,E/2-length/2,A2/2+A1)).edges("|X").fillet(A1)
+            bpin = bpin.faces(">Z").edges(">Y").workplane(centerOption="CenterOfMass").circle(b*0.3).cutThruAll()
+        elif ps == 'cshaped':
+            bpin = cq.Workplane("XY").box(b, length, A2+A1*2).translate((0,E/2-L/2,A2/2+A1)).edges("|X").fillet(A1)
+        bpin_shape[axis] = bpin
+
     pins = []
     pincounter = 1
     if ps == 'custom':
@@ -166,7 +182,7 @@ def make_qfn(params):
         first_pos_x = (npx-1)*e/2
         for i in range(npx):
             if pincounter not in excluded_pins:
-                pin = bpin.translate((first_pos_x-i*e, -m, 0)). \
+                pin = bpin_shape['x'].translate((first_pos_x-i*e, -m, 0)). \
                 rotate((0,0,0), (0,0,1), 180)
                 pins.append(pin)
                 if ps == 'concave':
@@ -179,7 +195,7 @@ def make_qfn(params):
         first_pos_y = (npy-1)*e/2
         for i in range(npy):
             if pincounter not in excluded_pins:
-                pin = bpin.translate((first_pos_y-i*e, (D-E)/2-m, 0)).\
+                pin = bpin_shape['y'].translate((first_pos_y-i*e, (D-E)/2-m, 0)).\
                 rotate((0,0,0), (0,0,1), 270)
                 pins.append(pin)
                 if ps == 'concave':
@@ -190,7 +206,7 @@ def make_qfn(params):
 
         for i in range(npx):
             if pincounter not in excluded_pins:
-                pin = bpin.translate((first_pos_x-i*e, -m, 0))
+                pin = bpin_shape['x'].translate((first_pos_x-i*e, -m, 0))
                 pins.append(pin)
                 if ps == 'concave':
                     pinsubtract = pincut.translate((first_pos_x-i*e, -m, 0))
@@ -199,7 +215,7 @@ def make_qfn(params):
         
         for i in range(npy):
             if pincounter not in excluded_pins:
-                pin = bpin.translate((first_pos_y-i*e, (D-E)/2-m, 0)).\
+                pin = bpin_shape['y'].translate((first_pos_y-i*e, (D-E)/2-m, 0)).\
                 rotate((0,0,0), (0,0,1), 90)
                 pins.append(pin)
                 if ps == 'concave':

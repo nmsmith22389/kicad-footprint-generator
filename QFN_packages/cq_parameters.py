@@ -20,6 +20,8 @@ Params = namedtuple("Params", [
     'c',    # pin thickness, body center part height
 #    'K',    # Fillet radius for pin edges
     'L',    # pin top flat part length (including fillet radius)
+    'Lx',  # pin top flat part length (including fillet radius) for pins along x axis (width)
+    'Ly',  # pin top flat part length (including fillet radius) for pins along y axis (length)
     'fp_s',  # True for circular pinmark, False for square pinmark (useful for diodes)
     'fp_r', # first pin indicator radius, set to 0.0 to remove first pin indicator
     'fp_d', # first pin indicator distance from edge
