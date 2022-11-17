@@ -517,3 +517,50 @@ Infineon_LFBGA-292_17x17mm_Layout20x20_P0.8mm_Ball0.5mm_Pad0.35:
     [],
     []
   ]
+Texas_DSBGA-12_1.36x1.86mm_Layout3x4_P0.5mm:
+  description: "Texas Instruments, DSBGA, area grid, YZT"
+  size_source: "http://www.ti.com/lit/ds/symlink/txb0104.pdf, http://www.ti.com/lit/an/snva009ag/snva009ag.pdf"
+  body_size_x: 1.36
+  body_size_y: 1.86
+  overall_height: 0.625
+  pitch: 0.5
+  pad_diameter: 0.225
+  paste_shape: 'roundrect'
+  paste_size: 0.25
+  paste_radius_ratio: 0.2
+  layout_x: 3
+  layout_y: 4
+Texas_DSBGA-10_1.36x1.86mm_Layout3x4_P0.5mm:
+  description: "Texas Instruments, DSBGA, area grid, YZP, YZP0010"
+  size_source: "http://www.ti.com/lit/ds/symlink/ts3a24159.pdf"
+  body_size_x: 1.36
+  body_size_y: 1.86
+  overall_height: 0.5
+  pitch: 0.5
+  pad_diameter: 0.225
+  mask_margin: 0.05
+  paste_shape: 'roundrect'
+  paste_size: 0.25
+  paste_radius_ratio: 0.2
+  layout_x: 3
+  layout_y: 4
+  row_skips: [
+    [],
+    [2],
+    [2],
+    []
+  ]
+Texas_DSBGA-16_2.39x2.39mm_Layout4x4_P0.5mm:
+  description: "Texas Instruments, DSBGA, area grid, YZF, YZF0016"
+  size_source: "https://www.ti.com/lit/ds/symlink/dac80508.pdf"
+  body_size_x: 2.39
+  body_size_y: 2.39
+  overall_height: 0.625
+  pitch: 0.5
+  pad_diameter: 0.245
+  mask_margin: 0.05
+  paste_shape: 'roundrect'
+  paste_size: 0.25
+  paste_radius_ratio: 0.2
+  layout_x: 4
+  layout_y: 4
