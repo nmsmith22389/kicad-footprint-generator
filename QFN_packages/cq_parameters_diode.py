@@ -46,15 +46,15 @@ kicad_naming_params_diode = {
         excluded_pins = None, #no pin excluded
         modelName = 'D_0603', #modelName 
         rotation = 0, # rotation if required
-        fp_dx = None
+        fp_dx = None,
         fp_dy = None,
-        epad_offsetX = None
+        epad_offsetX = None,
         epad_offsetY = None,
         epad_n = None,
         epad_pitch = None,
-        body_color_key = 'black body'
-        pin_shapes = None
-        dest_dir_prefix = '../Diodes_SMD.3dshapes/'
+        body_color_key = 'black body',
+        pin_shapes = None,
+        dest_dir_prefix = '../Diodes_SMD.3dshapes/',
         ),
         'D_0805': Params( # from http://datasheets.avx.com/schottky.pdf
         c = 0.8,        # pin thickness, not used for concave pins
@@ -80,15 +80,15 @@ kicad_naming_params_diode = {
         excluded_pins = None, #no pin excluded
         modelName = 'D_0805', #modelName 
         rotation = 0, # rotation if required
-        fp_dx = None
+        fp_dx = None,
         fp_dy = None,
-        epad_offsetX = None
+        epad_offsetX = None,
         epad_offsetY = None,
         epad_n = None,
         epad_pitch = None,
-        body_color_key = 'black body'
-        pin_shapes = None
-        dest_dir_prefix = '../Diodes_SMD.3dshapes/'
+        body_color_key = 'black body',
+        pin_shapes = None,
+        dest_dir_prefix = '../Diodes_SMD.3dshapes/',
         ),
         'D_1206': Params( # from http://datasheets.avx.com/schottky.pdf
         c = 0.8,        # pin thickness, not used for concave pins
@@ -114,15 +114,15 @@ kicad_naming_params_diode = {
         excluded_pins = None, #no pin excluded
         modelName = 'D_1206', #modelName 
         rotation = 0, # rotation if required
-        fp_dx = None
+        fp_dx = None,
         fp_dy = None,
-        epad_offsetX = None
+        epad_offsetX = None,
         epad_offsetY = None,
         epad_n = None,
         epad_pitch = None,
-        body_color_key = 'black body'
-        pin_shapes = None
-        dest_dir_prefix = '../Diodes_SMD.3dshapes/'
+        body_color_key = 'black body',
+        pin_shapes = None,
+        dest_dir_prefix = '../Diodes_SMD.3dshapes/',
         ),
         'D_2010': Params( # from http://datasheets.avx.com/schottky.pdf
         c = 0.8,        # pin thickness, not used for concave pins
@@ -148,15 +148,15 @@ kicad_naming_params_diode = {
         excluded_pins = None, #no pin excluded
         modelName = 'D_2010', #modelName 
         rotation = 0, # rotation if required
-        fp_dx = None
+        fp_dx = None,
         fp_dy = None,
-        epad_offsetX = None
+        epad_offsetX = None,
         epad_offsetY = None,
         epad_n = None,
         epad_pitch = None,
-        body_color_key = 'black body'
-        pin_shapes = None
-        dest_dir_prefix = '../Diodes_SMD.3dshapes/'
+        body_color_key = 'black body',
+        pin_shapes = None,
+        dest_dir_prefix = '../Diodes_SMD.3dshapes/',
         ),
         'D_2114': Params( # from http://datasheets.avx.com/schottky.pdf
         c = 0.8,        # pin thickness, not used for concave pins
@@ -182,15 +182,15 @@ kicad_naming_params_diode = {
         excluded_pins = None, #no pin excluded
         modelName = 'D_2114', #modelName 
         rotation = 0, # rotation if required
-        fp_dx = None
+        fp_dx = None,
         fp_dy = None,
-        epad_offsetX = None
+        epad_offsetX = None,
         epad_offsetY = None,
         epad_n = None,
         epad_pitch = None,
-        body_color_key = 'black body'
-        pin_shapes = None
-        dest_dir_prefix = '../Diodes_SMD.3dshapes/'
+        body_color_key = 'black body',
+        pin_shapes = None,
+        dest_dir_prefix = '../Diodes_SMD.3dshapes/',
         ),
         'D_3220': Params( # from http://datasheets.avx.com/schottky.pdf
         c = 0.8,        # pin thickness, not used for concave pins
@@ -216,15 +216,15 @@ kicad_naming_params_diode = {
         excluded_pins = None, #no pin excluded
         modelName = 'D_3220', #modelName 
         rotation = 0, # rotation if required
-        fp_dx = None
+        fp_dx = None,
         fp_dy = None,
-        epad_offsetX = None
+        epad_offsetX = None,
         epad_offsetY = None,
         epad_n = None,
         epad_pitch = None,
-        body_color_key = 'black body'
-        pin_shapes = None
-        dest_dir_prefix = '../Diodes_SMD.3dshapes/'
+        body_color_key = 'black body',
+        pin_shapes = None,
+        dest_dir_prefix = '../Diodes_SMD.3dshapes/',
         ),
         'D_SOD-110': Params( # from http://www.nxp.com/documents/outline_drawing/SOD110.pdf
         c = 0.8,        # pin thickness, not used for concave pins
@@ -250,14 +250,14 @@ kicad_naming_params_diode = {
         excluded_pins = None, #no pin excluded
         modelName = 'D_SOD-110', #modelName 
         rotation = 0, # rotation if required
-        fp_dx = None
+        fp_dx = None,
         fp_dy = None,
-        epad_offsetX = None
+        epad_offsetX = None,
         epad_offsetY = None,
         epad_n = None,
         epad_pitch = None,
-        body_color_key = 'black body'
-        pin_shapes = None
-        dest_dir_prefix = '../Diodes_SMD.3dshapes/'
+        body_color_key = 'black body',
+        pin_shapes = None,
+        dest_dir_prefix = '../Diodes_SMD.3dshapes/',
         ),
 }
