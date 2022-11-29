@@ -1,0 +1,201 @@
+################################################################################
+# LSHM family
+Samtec_LSHM-105-xx.x-x-DV-A-N_Vertical: &LSHM-105
+  meta: &LSHM_meta
+    description: >-
+      Samtec {pn:s} {pitch:1.2f}mm Razor Beam High-Speed Hermaphroditic
+      Terminal/Socket Strip ({ds:s}); generated with kicad-footprint-generator
+    tags: 'connector Samtec RazorBeam LSHM self-mating terminal socket vertical'
+    datasheet: >-
+     http://suddendocs.samtec.com/prints/lshm-1xx-xx.x-xxx-dv-a-x-x-xx-mkt.pdf,
+     http://suddendocs.samtec.com/prints/lshm-1xx-xx.x-x-dv-a-x-x-tr-footprint.pdf
+  pads: &LSHM_pads {pitch: 0.5, y: 1.85, width: 0.3, height: 1.5}
+  layout: {width: 7.2, height: 4.98}
+  pins: 10
+  holes:
+    - {drill: 1.45, space: 4.5, y: -0.85}
+
+Samtec_LSHM-105-xx.x-x-DV-A-S_Vertical:
+  <<: *LSHM-105
+  add-tags: 'shield'
+  add-width: 0.45
+  add-height: 0.45
+  add-holes:
+    - {drill: 1.0, pad: 2.0, space: 7.45, y: 1.15}
+
+Samtec_LSHM-110-xx.x-x-DV-A-N_Vertical: &LSHM-110
+  meta: *LSHM_meta
+  pads: *LSHM_pads
+  layout: {width: 9.7, height: 4.98}
+  pins: 20
+  holes:
+    - {drill: 1.45, space: 7.0, y: -0.85}
+
+Samtec_LSHM-110-xx.x-x-DV-A-S_Vertical:
+  <<: *LSHM-110
+  add-tags: 'shield'
+  add-width: 0.45
+  add-height: 0.45
+  add-holes:
+    - {drill: 1.0, pad: 2.0, space: 9.95, y: 1.15}
+
+Samtec_LSHM-120-xx.x-x-DV-A-N_Vertical: &LSHM-120
+  meta: *LSHM_meta
+  pads: *LSHM_pads
+  layout: {width: 14.7, height: 4.98}
+  pins: 40
+  holes:
+    - {drill: 1.45, space: 12.0, y: -0.85}
+
+Samtec_LSHM-120-xx.x-x-DV-A-S_Vertical:
+  <<: *LSHM-120
+  add-tags: 'shield'
+  add-width: 0.45
+  add-height: 0.45
+  add-holes:
+    - {drill: 1.0, pad: 2.0, space: 14.95, y: 1.15}
+
+Samtec_LSHM-130-xx.x-x-DV-A-N_Vertical: &LSHM-130
+  meta: *LSHM_meta
+  pads: *LSHM_pads
+  layout: {width: 19.7, height: 4.98}
+  pins: 60
+  holes:
+    - {drill: 1.45, space: 17.0, y: -0.85}
+
+Samtec_LSHM-130-xx.x-x-DV-A-S_Vertical:
+  <<: *LSHM-130
+  add-tags: 'shield'
+  add-width: 0.45
+  add-height: 0.45
+  add-holes:
+    - {drill: 1.0, pad: 2.0, space: 19.95, y: 1.15}
+
+Samtec_LSHM-140-xx.x-x-DV-A-N_Vertical: &LSHM-140
+  meta: *LSHM_meta
+  pads: *LSHM_pads
+  layout: {width: 24.7, height: 4.98}
+  pins: 80
+  holes:
+    - {drill: 1.45, space: 22.0, y: -0.85}
+
+Samtec_LSHM-140-xx.x-x-DV-A-S_Vertical:
+  <<: *LSHM-140
+  add-tags: 'shield'
+  add-width: 0.45
+  add-height: 0.45
+  add-holes:
+    - {drill: 1.0, pad: 2.0, space: 24.95, y: 1.15}
+
+Samtec_LSHM-150-xx.x-x-DV-A-N_Vertical: &LSHM-150
+  meta: *LSHM_meta
+  pads: *LSHM_pads
+  layout: {width: 29.7, height: 4.98}
+  pins: 100
+  holes:
+    - {drill: 1.45, space: 27.0, y: -0.85}
+
+Samtec_LSHM-150-xx.x-x-DV-A-S_Vertical:
+  <<: *LSHM-150
+  add-tags: 'shield'
+  add-width: 0.45
+  add-height: 0.45
+  add-holes:
+    - {drill: 1.0, pad: 2.0, space: 29.95, y: 1.15}
+
+################################################################################
+# LSS family
+#Samtec_LSS-105-xx-x-DV-A_Vertical:
+#  meta: &LSS_meta
+#    description: 'Samtec {pn:s} {pitch:1.3f}mm Razor Beam High-Speed Hermaphroditic Terminal/Socket Strip; {ds:s}'
+#    tags: 'connector Samtec RazorBeam LSS self-mating terminal socket vertical'
+#    datasheet: >-
+#     [drawing](http://suddendocs.samtec.com/prints/lss-1xx-xx-xx-dv-xx-xx-mkt.pdf),
+#     [footprint](http://suddendocs.samtec.com/prints/lss-1xx-xx-xx-dv-xx-xx-footprint.pdf)
+#  pads: &LSS_pads {pitch: 0.635, y: 1.8, width: 0.4, height: 1.6}
+#  layout: {width: , height: 4.0}
+#  pins: 10
+#  holes:
+#    - {drill: 0.89, space: 4.675, y: -1.1}
+#
+#Samtec_LSS-110-xx-x-DV-A_Vertical:
+#  meta: *LSS_meta
+#  pads: *LSS_pads
+#  layout: {width: , height: 4.0}
+#  pins: 20
+#  holes:
+#    - {drill: 0.89, space: , y: 1.1}
+#
+#Samtec_LSS-120-xx-x-DV-A_Vertical:
+#  meta: *LSS_meta
+#  pads: *LSS_pads
+#  layout: {width: }
+#  pins: 40
+#  holes:
+#    - {drill: 0.89, space: , y: 1.1}
+#
+#Samtec_LSS-130-xx-x-DV-A_Vertical:
+#  meta: *LSS_meta
+#  pads: *LSS_pads
+#  layout: {width: }
+#  pins: 60
+#  holes:
+#    - {drill: 0.89, space: , y: 1.1}
+#
+#Samtec_LSS-140-xx-x-DV-A_Vertical:
+#  meta: *LSS_meta
+#  pads: *LSS_pads
+#  layout: {width: }
+#  pins: 80
+#  holes:
+#    - {drill: 0.89, space: , y: 1.1}
+#
+#Samtec_LSS-150-xx-x-DV-A_Vertical:
+#  meta: *LSS_meta
+#  pads: *LSS_pads
+#  layout: {width: }
+#  pins: 100
+#  holes:
+#    - {drill: 0.89, space: , y: 1.1}
+
+################################################################################
+# LSEM family
+Samtec_LSEM-120-xx.x-x-DV-A-N_Vertical:
+  meta: &LSEM_meta
+    description: >-
+      Samtec {pn:s} {pitch:1.2f}mm Razor Beam High-Speed Hermaphroditic
+      Terminal/Socket Strip ({ds:s}); generated with kicad-footprint-generator
+    tags: 'connector Samtec RazorBeam LSEM self-mating terminal socket vertical'
+    datasheet: >-
+     http://suddendocs.samtec.com/prints/lsem-1xx-xx.x-x-dv-a-x-xx-tr-mkt.pdf,
+     http://suddendocs.samtec.com/prints/lsem-1xx-xx.x-x-dv-a-x-xx-tr%20footprint.pdf
+  pads: &LSEM_pads {pitch: 0.8, y: 1.85, width: 0.38, height: 1.65}
+  layout: {width: 20.4, height: 4.98}
+  pins: 40
+  holes:
+    - {drill: 1.5, space: 17.7, y: -0.85}
+
+Samtec_LSEM-130-xx.x-x-DV-A-N_Vertical:
+  meta: *LSEM_meta
+  pads: *LSEM_pads
+  layout: {width: 28.4, height: 4.98}
+  pins: 60
+  holes:
+    - {drill: 1.5, space: 25.7, y: -0.85}
+
+Samtec_LSEM-140-xx.x-x-DV-A-N_Vertical:
+  meta: *LSEM_meta
+  pads: *LSEM_pads
+  layout: {width: 36.4, height: 4.98}
+  pins: 80
+  holes:
+    - {drill: 1.5, space: 33.7, y: -0.85}
+
+Samtec_LSEM-150-xx.x-x-DV-A-N_Vertical:
+  meta: *LSEM_meta
+  pads: *LSEM_pads
+  layout: {width: 44.4, height: 4.98}
+  pins: 100
+  holes:
+    - {drill: 1.5, space: 41.7, y: -0.85}
+

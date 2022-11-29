@@ -1,0 +1,401 @@
+{
+    "Samtec_BTH-030-xx-x-D_2x30_P0.5mm_Vertical": {
+        "library": "Connector_Samtec_BasicBladeAndBeam",
+        "meta": {
+            "description": "Samtec {pn:s} {pitch:1.2f}mm Basic Blade & Beam {type:s}; {pins:d} pins; generated with kicad-footprint-generator",
+            "datasheet": "http://suddendocs.samtec.com/catalog_english/bth.pdf",
+            "tags": "connector Samtec BTH mezzanine terminal vertical"
+        },
+        "layout": {"type": "Terminal", "width": 20.0, "height": 5.97},
+        "banks": {"n": 1, "diff": 0, "space": 0, "width": 16.888, "height": 3.94},
+        "pads": {
+            "signal": {"n": 60, "pitch": 0.5, "width": 0.305, "height": 1.45, "y": 3.086}
+        }
+    },
+    "Samtec_BTH-030-xx-x-D-A_2x30_P0.5mm_Vertical": {
+        "inherit": "Samtec_BTH-030-xx-x-D_2x30_P0.5mm_Vertical",
+        "add-tags": "alignment-pins",
+        "holes": [{"drill": 1.0, "space": 18.475, "y": -2.032}]
+    },
+    "Samtec_BTH-050-xx-x-D_2x50_P0.5mm_Vertical": {
+        "inherit": "Samtec_BTH-030-xx-x-D_2x30_P0.5mm_Vertical",
+        "layout": {"width": 30.0},
+        "banks": {"width": 26.888},
+        "pads": {"signal": {"n": 100}}
+    },
+    "Samtec_BTH-050-xx-x-D-A_2x50_P0.5mm_Vertical": {
+        "inherit": "Samtec_BTH-050-xx-x-D_2x50_P0.5mm_Vertical",
+        "add-tags": "alignment-pins",
+        "holes": [{"drill": 1.0, "space": 28.475, "y": -2.032}]
+    },
+    "Samtec_BTH-060-xx-x-D_2x60_P0.5mm_Vertical": {
+        "inherit": "Samtec_BTH-030-xx-x-D_2x30_P0.5mm_Vertical",
+        "layout": {"width": 35.0},
+        "banks": {"width": 31.888},
+        "pads": {"signal": {"n": 120}}
+    },
+    "Samtec_BTH-060-xx-x-D-A_2x60_P0.5mm_Vertical": {
+        "inherit": "Samtec_BTH-060-xx-x-D_2x60_P0.5mm_Vertical",
+        "add-tags": "alignment-pins",
+        "holes": [{"drill": 1.0, "space": 33.475, "y": -2.032}]
+    },
+    "Samtec_BTH-090-xx-x-D_2x90_P0.5mm_Vertical": {
+        "inherit": "Samtec_BTH-030-xx-x-D_2x30_P0.5mm_Vertical",
+        "layout": {"width": 50.0},
+        "banks": {"width": 46.888},
+        "pads": {"signal": {"n": 180}}
+    },
+    "Samtec_BTH-090-xx-x-D-A_2x90_P0.5mm_Vertical": {
+        "inherit": "Samtec_BTH-090-xx-x-D_2x90_P0.5mm_Vertical",
+        "add-tags": "alignment-pins",
+        "holes": [{"drill": 1.0, "space": 48.475, "y": -2.032}]
+    },
+    "Samtec_BTH-120-xx-x-D_2x120_P0.5mm_Vertical": {
+        "inherit": "Samtec_BTH-030-xx-x-D_2x30_P0.5mm_Vertical",
+        "layout": {"width": 65.0},
+        "banks": {"width": 61.888},
+        "pads": {"signal": {"n": 240}}
+    },
+    "Samtec_BTH-120-xx-x-D-A_2x120_P0.5mm_Vertical": {
+        "inherit": "Samtec_BTH-120-xx-x-D_2x120_P0.5mm_Vertical",
+        "add-tags": "alignment-pins",
+        "holes": [{"drill": 1.0, "space": 63.475, "y": -2.032}]
+    },
+    "Samtec_BTH-150-xx-x-D_2x150_P0.5mm_Vertical": {
+        "inherit": "Samtec_BTH-030-xx-x-D_2x30_P0.5mm_Vertical",
+        "layout": {"width": 80.0},
+        "banks": {"width": 76.888},
+        "pads": {"signal": {"n": 300}}
+    },
+    "Samtec_BTH-150-xx-x-D-A_2x150_P0.5mm_Vertical": {
+        "inherit": "Samtec_BTH-150-xx-x-D_2x150_P0.5mm_Vertical",
+        "add-tags": "alignment-pins",
+        "holes": [{"drill": 1.0, "space": 78.475, "y": -2.032}]
+    },
+
+    "Samtec_BSH-030-xx-x-D_2x30_P0.5mm_Vertical": {
+        "library": "Connector_Samtec_BasicBladeAndBeam",
+        "meta": {
+            "description": "Samtec {pn:s} {pitch:1.2f}mm Basic Blade & Beam {type:s}; {pins:d} pins; generated with kicad-footprint-generator",
+            "datasheet": "http://suddendocs.samtec.com/catalog_english/bsh.pdf",
+            "tags": "connector Samtec BSH mezzanine socket vertical"
+        },
+        "layout": {"type": "Socket", "width": 21.27, "height": 7.24},
+        "banks": {"n": 1, "diff": 0, "space": 0, "width": 16.6, "height": 3.81},
+        "pads": {
+            "signal": {"n": 60, "pitch": 0.5, "width": 0.279, "height": 2.273, "y": 2.865}
+        }
+    },
+    "Samtec_BSH-030-xx-x-D-A_2x30_P0.5mm_Vertical": {
+        "inherit": "Samtec_BSH-030-xx-x-D_2x30_P0.5mm_Vertical",
+        "add-tags": "alignment-pins",
+        "holes": [{"drill": 1.0, "space": 20.126, "y": 2.67}]
+    },
+    "Samtec_BSH-050-xx-x-D_2x50_P0.5mm_Vertical": {
+        "inherit": "Samtec_BSH-030-xx-x-D_2x30_P0.5mm_Vertical",
+        "layout": {"width": 31.27},
+        "banks": {"width": 26.6},
+        "pads": {"signal": {"n": 100}}
+    },
+    "Samtec_BSH-050-xx-x-D-A_2x50_P0.5mm_Vertical": {
+        "inherit": "Samtec_BSH-050-xx-x-D_2x50_P0.5mm_Vertical",
+        "add-tags": "alignment-pins",
+        "holes": [{"drill": 1.0, "space": 30.126, "y": 2.67}]
+    },
+    "Samtec_BSH-060-xx-x-D_2x60_P0.5mm_Vertical": {
+        "inherit": "Samtec_BSH-030-xx-x-D_2x30_P0.5mm_Vertical",
+        "layout": {"width": 36.27},
+        "banks": {"width": 31.6},
+        "pads": {"signal": {"n": 120}}
+    },
+    "Samtec_BSH-060-xx-x-D-A_2x60_P0.5mm_Vertical": {
+        "inherit": "Samtec_BSH-060-xx-x-D_2x60_P0.5mm_Vertical",
+        "add-tags": "alignment-pins",
+        "holes": [{"drill": 1.0, "space": 35.126, "y": 2.67}]
+    },
+    "Samtec_BSH-090-xx-x-D_2x90_P0.5mm_Vertical": {
+        "inherit": "Samtec_BSH-030-xx-x-D_2x30_P0.5mm_Vertical",
+        "layout": {"width": 51.27},
+        "banks": {"width": 46.6},
+        "pads": {"signal": {"n": 180}}
+    },
+    "Samtec_BSH-090-xx-x-D-A_2x90_P0.5mm_Vertical": {
+        "inherit": "Samtec_BSH-090-xx-x-D_2x90_P0.5mm_Vertical",
+        "add-tags": "alignment-pins",
+        "holes": [{"drill": 1.0, "space": 50.126, "y": 2.67}]
+    },
+    "Samtec_BSH-120-xx-x-D_2x120_P0.5mm_Vertical": {
+        "inherit": "Samtec_BSH-030-xx-x-D_2x30_P0.5mm_Vertical",
+        "layout": {"width": 66.27},
+        "banks": {"width": 61.6},
+        "pads": {"signal": {"n": 240}}
+    },
+    "Samtec_BSH-120-xx-x-D-A_2x120_P0.5mm_Vertical": {
+        "inherit": "Samtec_BSH-120-xx-x-D_2x120_P0.5mm_Vertical",
+        "add-tags": "alignment-pins",
+        "holes": [{"drill": 1.0, "space": 65.126, "y": 2.67}]
+    },
+    "Samtec_BSH-150-xx-x-D_2x150_P0.5mm_Vertical": {
+        "inherit": "Samtec_BSH-030-xx-x-D_2x30_P0.5mm_Vertical",
+        "layout": {"width": 81.27},
+        "banks": {"width": 76.6},
+        "pads": {"signal": {"n": 300}}
+    },
+    "Samtec_BSH-150-xx-x-D-A_2x150_P0.5mm_Vertical": {
+        "inherit": "Samtec_BSH-150-xx-x-D_2x150_P0.5mm_Vertical",
+        "add-tags": "alignment-pins",
+        "holes": [{"drill": 1.0, "space": 80.126, "y": 2.67}]
+    },
+
+    "Samtec_BTS-025-xx-x-D_2x25_P0.635mm_Vertical": {
+        "library": "Connector_Samtec_BasicBladeAndBeam",
+        "meta": {
+            "description": "Samtec {pn:s} {pitch:1.3f}mm Basic Blade & Beam {type:s}; {pins:d} pins; generated with kicad-footprint-generator",
+            "datasheet": "http://suddendocs.samtec.com/catalog_english/bts.pdf",
+            "tags": "connector Samtec BTS mezzanine terminal vertical"
+        },
+        "layout": {"type": "Terminal", "width": 20.0, "height": 5.97},
+        "banks": {"n": 1, "diff": 0, "space": 0, "width": 16.895, "height": 3.94},
+        "pads": {
+            "signal": {"n": 50, "pitch": 0.635, "width": 0.432, "height": 1.45, "y": 3.086}
+        }
+    },
+    "Samtec_BTS-025-xx-x-D-A_2x25_P0.635mm_Vertical": {
+        "inherit": "Samtec_BTS-025-xx-x-D_2x25_P0.635mm_Vertical",
+        "add-tags": "alignment-pins",
+        "holes": [{"drill": 1.0, "space": 18.48, "y": -2.032}]
+    },
+    "Samtec_BTS-050-xx-x-D_2x50_P0.635mm_Vertical": {
+        "inherit": "Samtec_BTS-025-xx-x-D_2x25_P0.635mm_Vertical",
+        "layout": {"width": 35.88},
+        "banks": {"width": 32.77},
+        "pads": {"signal": {"n": 100}}
+    },
+    "Samtec_BTS-050-xx-x-D-A_2x50_P0.635mm_Vertical": {
+        "inherit": "Samtec_BTS-050-xx-x-D_2x50_P0.635mm_Vertical",
+        "add-tags": "alignment-pins",
+        "holes": [{"drill": 1.0, "space": 34.35, "y": -2.032}]
+    },
+    "Samtec_BTS-075-xx-x-D_2x75_P0.635mm_Vertical": {
+        "inherit": "Samtec_BTS-025-xx-x-D_2x25_P0.635mm_Vertical",
+        "layout": {"width": 51.76},
+        "banks": {"width": 48.65},
+        "pads": {"signal": {"n": 150}}
+    },
+    "Samtec_BTS-075-xx-x-D-A_2x75_P0.635mm_Vertical": {
+        "inherit": "Samtec_BTS-075-xx-x-D_2x75_P0.635mm_Vertical",
+        "add-tags": "alignment-pins",
+        "holes": [{"drill": 1.0, "space": 50.23, "y": -2.032}]
+    },
+    "Samtec_BTS-100-xx-x-D_2x100_P0.635mm_Vertical": {
+        "inherit": "Samtec_BTS-025-xx-x-D_2x25_P0.635mm_Vertical",
+        "layout": {"width": 67.63},
+        "banks": {"width": 64.52},
+        "pads": {"signal": {"n": 200}}
+    },
+    "Samtec_BTS-100-xx-x-D-A_2x100_P0.635mm_Vertical": {
+        "inherit": "Samtec_BTS-100-xx-x-D_2x100_P0.635mm_Vertical",
+        "add-tags": "alignment-pins",
+        "holes": [{"drill": 1.0, "space": 66.10, "y": -2.032}]
+    },
+
+    "Samtec_BSS-025-xx-x-D_2x25_P0.635mm_Vertical": {
+        "library": "Connector_Samtec_BasicBladeAndBeam",
+        "meta": {
+            "description": "Samtec {pn:s} {pitch:1.3f}mm Basic Blade & Beam {type:s}; {pins:d} pins; generated with kicad-footprint-generator",
+            "datasheet": "http://suddendocs.samtec.com/catalog_english/bss.pdf",
+            "tags": "connector Samtec BSS mezzanine socket vertical"
+        },
+        "layout": {"type": "Socket", "width": 21.27, "height": 7.24},
+        "banks": {"n": 1, "diff": 0, "space": 0, "width": 16.64, "height": 3.81},
+        "pads": {
+            "signal": {"n": 50, "pitch": 0.635, "width": 0.406, "height": 2.273, "y": 2.865}
+        }
+    },
+    "Samtec_BSS-025-xx-x-D-A_2x25_P0.635mm_Vertical": {
+        "inherit": "Samtec_BSS-025-xx-x-D_2x25_P0.635mm_Vertical",
+        "add-tags": "alignment-pins",
+        "holes": [{"drill": 1.0, "space": 20.00, "y": 2.67}]
+    },
+    "Samtec_BSS-050-xx-x-D_2x50_P0.635mm_Vertical": {
+        "inherit": "Samtec_BSS-025-xx-x-D_2x25_P0.635mm_Vertical",
+        "layout": {"width": 37.15},
+        "banks": {"width": 32.52},
+        "pads": {"signal": {"n": 100}}
+    },
+    "Samtec_BSS-050-xx-x-D-A_2x50_P0.635mm_Vertical": {
+        "inherit": "Samtec_BSS-050-xx-x-D_2x50_P0.635mm_Vertical",
+        "add-tags": "alignment-pins",
+        "holes": [{"drill": 1.0, "space": 35.88, "y": 2.67}]
+    },
+    "Samtec_BSS-075-xx-x-D_2x75_P0.635mm_Vertical": {
+        "inherit": "Samtec_BSS-025-xx-x-D_2x25_P0.635mm_Vertical",
+        "layout": {"width": 53.02},
+        "banks": {"width": 48.39},
+        "pads": {"signal": {"n": 150}}
+    },
+    "Samtec_BSS-075-xx-x-D-A_2x75_P0.635mm_Vertical": {
+        "inherit": "Samtec_BSS-075-xx-x-D_2x75_P0.635mm_Vertical",
+        "add-tags": "alignment-pins",
+        "holes": [{"drill": 1.0, "space": 51.75, "y": 2.67}]
+    },
+    "Samtec_BSS-100-xx-x-D_2x100_P0.635mm_Vertical": {
+        "inherit": "Samtec_BSS-025-xx-x-D_2x25_P0.635mm_Vertical",
+        "layout": {"width": 68.90},
+        "banks": {"width": 64.27},
+        "pads": {"signal": {"n": 200}}
+    },
+    "Samtec_BSS-100-xx-x-D-A_2x100_P0.635mm_Vertical": {
+        "inherit": "Samtec_BSS-100-xx-x-D_2x100_P0.635mm_Vertical",
+        "add-tags": "alignment-pins",
+        "holes": [{"drill": 1.0, "space": 67.63, "y": 2.67}]
+    },
+    
+    "Samtec_BTE-020-xx-x-D_2x20_P0.8mm_Vertical": {
+        "library": "Connector_Samtec_BasicBladeAndBeam",
+        "meta": {
+            "description": "Samtec {pn:s} {pitch:1.2f}mm Basic Blade & Beam {type:s}; {pins:d} pins; generated with kicad-footprint-generator",
+            "datasheet": "http://suddendocs.samtec.com/catalog_english/bte.pdf",
+            "tags": "connector Samtec BTE mezzanine terminal vertical"
+        },
+        "layout": {"type": "Terminal", "width": 20.0, "height": 5.97},
+        "banks": {"n": 1, "diff": 0, "space": 0, "width": 16.88, "height": 3.94},
+        "pads": {
+            "signal": {"n": 40, "pitch": 0.8, "width": 0.305, "height": 1.45, "y": 3.086}
+        }
+    },
+    "Samtec_BTE-020-xx-x-D-A_2x20_P0.8mm_Vertical": {
+        "inherit": "Samtec_BTE-020-xx-x-D_2x20_P0.8mm_Vertical",
+        "add-tags": "alignment-pins",
+        "holes": [{"drill": 1.0, "space": 18.48, "y": -2.032}]
+    },
+    "Samtec_BTE-040-xx-x-D_2x40_P0.8mm_Vertical": {
+        "inherit": "Samtec_BTE-020-xx-x-D_2x20_P0.8mm_Vertical",
+        "layout": {"width": 36.0},
+        "banks": {"width": 32.88},
+        "pads": {"signal": {"n": 80}}
+    },
+    "Samtec_BTE-040-xx-x-D-A_2x40_P0.8mm_Vertical": {
+        "inherit": "Samtec_BTE-040-xx-x-D_2x40_P0.8mm_Vertical",
+        "add-tags": "alignment-pins",
+        "holes": [{"drill": 1.0, "space": 34.48, "y": -2.032}]
+    },
+    "Samtec_BTE-060-xx-x-D_2x60_P0.8mm_Vertical": {
+        "inherit": "Samtec_BTE-020-xx-x-D_2x20_P0.8mm_Vertical",
+        "layout": {"width": 52.0},
+        "banks": {"width": 48.88},
+        "pads": {"signal": {"n": 120}}
+    },
+    "Samtec_BTE-060-xx-x-D-A_2x60_P0.8mm_Vertical": {
+        "inherit": "Samtec_BTE-060-xx-x-D_2x60_P0.8mm_Vertical",
+        "add-tags": "alignment-pins",
+        "holes": [{"drill": 1.0, "space": 50.48, "y": -2.032}]
+    },
+    "Samtec_BTE-080-xx-x-D_2x80_P0.8mm_Vertical": {
+        "inherit": "Samtec_BTE-020-xx-x-D_2x20_P0.8mm_Vertical",
+        "layout": {"width": 68.0},
+        "banks": {"width": 64.88},
+        "pads": {"signal": {"n": 160}}
+    },
+    "Samtec_BTE-080-xx-x-D-A_2x80_P0.8mm_Vertical": {
+        "inherit": "Samtec_BTE-080-xx-x-D_2x80_P0.8mm_Vertical",
+        "add-tags": "alignment-pins",
+        "holes": [{"drill": 1.0, "space": 66.48, "y": -2.032}]
+    },
+    "Samtec_BTE-100-xx-x-D_2x100_P0.8mm_Vertical": {
+        "inherit": "Samtec_BTE-020-xx-x-D_2x20_P0.8mm_Vertical",
+        "layout": {"width": 84.0},
+        "banks": {"width": 80.88},
+        "pads": {"signal": {"n": 200}}
+    },
+    "Samtec_BTE-100-xx-x-D-A_2x100_P0.8mm_Vertical": {
+        "inherit": "Samtec_BTE-100-xx-x-D_2x100_P0.8mm_Vertical",
+        "add-tags": "alignment-pins",
+        "holes": [{"drill": 1.0, "space": 82.48, "y": -2.032}]
+    },
+    "Samtec_BTE-120-xx-x-D_2x120_P0.8mm_Vertical": {
+        "inherit": "Samtec_BTE-020-xx-x-D_2x20_P0.8mm_Vertical",
+        "layout": {"width": 100.0},
+        "banks": {"width": 96.88},
+        "pads": {"signal": {"n": 240}}
+    },
+    "Samtec_BTE-120-xx-x-D-A_2x120_P0.8mm_Vertical": {
+        "inherit": "Samtec_BTE-120-xx-x-D_2x120_P0.8mm_Vertical",
+        "add-tags": "alignment-pins",
+        "holes": [{"drill": 1.0, "space": 98.48, "y": -2.032}]
+    },
+    
+    "Samtec_BSE-020-xx-x-D_2x20_P0.8mm_Vertical": {
+        "library": "Connector_Samtec_BasicBladeAndBeam",
+        "meta": {
+            "description": "Samtec {pn:s} {pitch:1.2f}mm Basic Blade & Beam {type:s}; {pins:d} pins; generated with kicad-footprint-generator",
+            "datasheet": "http://suddendocs.samtec.com/catalog_english/bse.pdf",
+            "tags": "connector Samtec BSE mezzanine socket vertical"
+        },
+        "layout": {"type": "Socket", "width": 21.27, "height": 7.24},
+        "banks": {"n": 1, "diff": 0, "space": 0, "width": 16.64, "height": 3.81},
+        "pads": {
+            "signal": {"n": 40, "pitch": 0.8, "width": 0.41, "height": 2.27, "y": 2.865}
+        }
+    },
+    "Samtec_BSE-020-xx-x-D-A_2x20_P0.8mm_Vertical": {
+        "inherit": "Samtec_BSE-020-xx-x-D_2x20_P0.8mm_Vertical",
+        "add-tags": "alignment-pins",
+        "holes": [{"drill": 1.0, "space": 20.13, "y": 2.67}]
+    },
+    "Samtec_BSE-040-xx-x-D_2x40_P0.8mm_Vertical": {
+        "inherit": "Samtec_BSE-020-xx-x-D_2x20_P0.8mm_Vertical",
+        "layout": {"width": 37.27},
+        "banks": {"width": 32.64},
+        "pads": {"signal": {"n": 80}}
+    },
+    "Samtec_BSE-040-xx-x-D-A_2x40_P0.8mm_Vertical": {
+        "inherit": "Samtec_BSE-040-xx-x-D_2x40_P0.8mm_Vertical",
+        "add-tags": "alignment-pins",
+        "holes": [{"drill": 1.0, "space": 36.13, "y": 2.67}]
+    },
+    "Samtec_BSE-060-xx-x-D_2x60_P0.8mm_Vertical": {
+        "inherit": "Samtec_BSE-020-xx-x-D_2x20_P0.8mm_Vertical",
+        "layout": {"width": 53.27},
+        "banks": {"width": 48.64},
+        "pads": {"signal": {"n": 120}}
+    },
+    "Samtec_BSE-060-xx-x-D-A_2x60_P0.8mm_Vertical": {
+        "inherit": "Samtec_BSE-060-xx-x-D_2x60_P0.8mm_Vertical",
+        "add-tags": "alignment-pins",
+        "holes": [{"drill": 1.0, "space": 52.13, "y": 2.67}]
+    },
+    "Samtec_BSE-080-xx-x-D_2x80_P0.8mm_Vertical": {
+        "inherit": "Samtec_BSE-020-xx-x-D_2x20_P0.8mm_Vertical",
+        "layout": {"width": 69.27},
+        "banks": {"width": 64.64},
+        "pads": {"signal": {"n": 160}}
+    },
+    "Samtec_BSE-080-xx-x-D-A_2x80_P0.8mm_Vertical": {
+        "inherit": "Samtec_BSE-080-xx-x-D_2x80_P0.8mm_Vertical",
+        "add-tags": "alignment-pins",
+        "holes": [{"drill": 1.0, "space": 68.13, "y": 2.67}]
+    },
+    "Samtec_BSE-100-xx-x-D_2x100_P0.8mm_Vertical": {
+        "inherit": "Samtec_BSE-020-xx-x-D_2x20_P0.8mm_Vertical",
+        "layout": {"width": 85.27},
+        "banks": {"width": 80.64},
+        "pads": {"signal": {"n": 200}}
+    },
+    "Samtec_BSE-100-xx-x-D-A_2x100_P0.8mm_Vertical": {
+        "inherit": "Samtec_BSE-100-xx-x-D_2x100_P0.8mm_Vertical",
+        "add-tags": "alignment-pins",
+        "holes": [{"drill": 1.0, "space": 84.13, "y": 2.67}]
+    },
+    "Samtec_BSE-120-xx-x-D_2x120_P0.8mm_Vertical": {
+        "inherit": "Samtec_BSE-020-xx-x-D_2x20_P0.8mm_Vertical",
+        "layout": {"width": 101.27},
+        "banks": {"width": 96.64},
+        "pads": {"signal": {"n": 240}}
+    },
+    "Samtec_BSE-120-xx-x-D-A_2x120_P0.8mm_Vertical": {
+        "inherit": "Samtec_BSE-120-xx-x-D_2x120_P0.8mm_Vertical",
+        "add-tags": "alignment-pins",
+        "holes": [{"drill": 1.0, "space": 100.13, "y": 2.67}]
+    }
+}

@@ -10,18 +10,19 @@ def dictMerge(a, b):
     of clobbering the contents of one dictionary with another, it recursively
     combines dictionaries. The result is a dictionary containing the combined
     contents of the arguments. If both dictionaries contain a key with the same
-    name (at the same level), the value in `b` takes precedence.
+    name (at the same level), the value in `b` takes precedence. Keys prefixed
+    with a "+" are added to the corresponding key in the base dictionary.
     
     Parameters
     ----------
     a : dict
-        Base dictionary used as the merge destination
+        Base dictionary
     b : dict
         Dictionary containing values to merge into `a`
     
     Returns
     -------
-    Merged dictionaries (`a` with contents updated from `b`)
+    Merged dictionaries (copy of `a` with contents updated from `b`)
     
     Examples
     --------
@@ -30,12 +31,15 @@ def dictMerge(a, b):
     >>> dictMerge(a, b)
     {'a': 1, 'b': 2, 'c': {'a': 1, 'b': 3}, 'd': 4}
     """
-    for (k, v) in b.items():
-        if isinstance(v, collections.abc.Mapping):
-            a[k] = dictMerge(a.get(k, {}), v)
+    c = copy.deepcopy(a)
+    for k in b:
+        if isinstance(b[k], collections.abc.Mapping):
+            c[k] = dictMerge(c.get(k, {}), b[k])
+        elif k.startswith("+"):
+            c[k[1:]] += b[k]
         else:
-            a[k] = v
-    return a
+            c[k] = copy.copy(b[k])
+    return c
 
 def dictInherit(d):
     """Recursively merges dictionaries within a hierarchy using 'inherit' entries
@@ -63,57 +67,19 @@ def dictInherit(d):
         If two dictionaries attempt to inherit each other
     KeyError
         If a dictionary tries to inherit from a key that is not in `d`
-    
-    Notes
-    -----
-    Typical JSON/YAML file structure that can be processed by this function:
-    {
-      "1": {
-        "a": 1,
-        "b": {"c": 2, "d": 3, ...}
-      },
-      "2": {
-        "inherit": "1",
-        "b": {"c": 3}
-      },
-      ...
-      "n": {
-        "inherit": "2",
-        "d": 4
-      }
-    }
-    
-    The result will look something like this:
-    {
-      "1": {
-        "a": 1,
-        "b": {"c": 2, "d": 3, ...}
-      },
-      "2": {
-        "a": 1,
-        "b": {"c": 3, "d": 3, ...}
-      },
-      ...
-      "n": {
-        "a": 1,
-        "b": {"c": 3, "d": 3, ...},
-        "d": 4
-      }
-    }
     """
     
-    def dictInherit(d, child, parent):
+    def _dictInherit(d, child, parent):
         if 'inherit' not in parent:
             del child['inherit']
-            p = copy.deepcopy(parent)
-            return dictMerge(p, child)
+            return dictMerge(parent, child)
         elif d[parent['inherit']] is child:
             raise RecursionError
         else:
-            return dictInherit(d, parent, d[parent['inherit']])
+            return _dictInherit(d, parent, d[parent['inherit']])
 
     for (k, v) in d.items():
         if isinstance(v, collections.abc.Mapping) and 'inherit' in v:
-            d[k] = dictInherit(d, v, d[v['inherit']])
+            d[k] = _dictInherit(d, v, d[v['inherit']])
         else:
             continue

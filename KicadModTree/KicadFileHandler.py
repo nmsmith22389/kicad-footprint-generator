@@ -204,8 +204,8 @@ class KicadFileHandler(FileHandler):
         return sexpr
 
     def _serialize_LinePoints(self, node):
-        start_pos = node.getRealPosition(node.start_pos)
-        end_pos = node.getRealPosition(node.end_pos)
+        start_pos = node.getRealPosition(node.start_pos, 0)[0]
+        end_pos = node.getRealPosition(node.end_pos, 0)[0]
         return [
                 ['start', start_pos.x, start_pos.y],
                 ['end', end_pos.x, end_pos.y]

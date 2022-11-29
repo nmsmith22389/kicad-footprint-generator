@@ -1,0 +1,491 @@
+{
+    "Samtec_QTH-030-xx-x-D_P0.5mm_Vertical": {
+        "library": "Connector_Samtec_QStrip",
+        "meta": {
+            "description": "Samtec {pn:s} {pitch:1.2f}mm Q Strip High-Speed Ground Plane {type:s} Strip, {banks:d} bank(s), {pins:d} pins/bank",
+            "datasheet": "http://suddendocs.samtec.com/catalog_english/qth.pdf",
+            "tags": "connector Samtec QStrip QTH mezzanine terminal vertical single-ended"
+        },
+        "layout": {"type": "Terminal", "width": 20.0, "height": 5.97},
+        "banks":  {"n": 1, "diff": 0, "width": 16.88, "height": 3.9, "space": 20.0},
+        "pads": {
+            "signal": {"n": 60, "pitch": 0.5, "width": 0.305, "height": 1.45, "y": 3.086},
+            "planes": [
+                {"width": 2.54, "height": 0.635, "x": -8.445, "y": 0},
+                {"width": 2.54, "height": 0.635, "x":  8.445, "y": 0},
+                {"width": 4.70, "height": 0.635, "x": -3.175, "y": 0},
+                {"width": 4.70, "height": 0.635, "x":  3.175, "y": 0}
+            ]
+        }
+    },
+    "Samtec_QTH-030-xx-x-D-A_P0.5mm_Vertical": {
+        "inherit": "Samtec_QTH-030-xx-x-D_P0.5mm_Vertical",
+        "meta": {"+tags": " alignment-pins"},
+        "holes": [{"drill": 1.0, "space": 18.48, "y": -2.032}]
+    },
+    "Samtec_QTH-060-xx-x-D_P0.5mm_Vertical": {
+        "inherit": "Samtec_QTH-030-xx-x-D_P0.5mm_Vertical",
+        "layout": {"width": 40.0},
+        "banks": {"n": 2}
+    },
+    "Samtec_QTH-060-xx-x-D-A_P0.5mm_Vertical": {
+        "inherit": "Samtec_QTH-060-xx-x-D_P0.5mm_Vertical",
+        "meta": {"+tags": " alignment-pins"},
+        "holes": [{"drill": 1.0, "space": 38.48, "y": -2.032}]
+    },
+    "Samtec_QTH-090-xx-x-D_P0.5mm_Vertical": {
+        "inherit": "Samtec_QTH-030-xx-x-D_P0.5mm_Vertical",
+        "layout": {"width": 60.0},
+        "banks": {"n": 3}
+    },
+    "Samtec_QTH-090-xx-x-D-A_P0.5mm_Vertical": {
+        "inherit": "Samtec_QTH-090-xx-x-D_P0.5mm_Vertical",
+        "meta": {"+tags": " alignment-pins"},
+        "holes": [{"drill": 1.0, "space": 58.48, "y": -2.032}]
+    },
+    "Samtec_QTH-020-xx-x-D-DP_P0.5mm_Vertical": {
+        "inherit": "Samtec_QTH-030-xx-x-D_P0.5mm_Vertical",
+        "meta": {
+            "description": "Samtec {pn:s} {pitch:1.2f}mm Q Pairs High-Speed Ground Plane {type:s} Strip, Differential Pair, {banks:d} bank(s), {pins:d} pairs/bank",
+            "tags": "connector Samtec QPairs QTH mezzanine terminal vertical differential"
+        },
+        "banks": {"diff": 1}
+    },
+    "Samtec_QTH-020-xx-x-D-DP-A_P0.5mm_Vertical": {
+        "inherit": "Samtec_QTH-020-xx-x-D-DP_P0.5mm_Vertical",
+        "meta": {"+tags": " alignment-pins"},
+        "holes": [{"drill": 1.0, "space": 18.48, "y": -2.032}]
+    },
+    "Samtec_QTH-040-xx-x-D-DP_P0.5mm_Vertical": {
+        "inherit": "Samtec_QTH-020-xx-x-D-DP_P0.5mm_Vertical",
+        "layout": {"width": 40.0},
+        "banks": {"n": 2, "diff": 2}
+    },
+    "Samtec_QTH-040-xx-x-D-DP-A_P0.5mm_Vertical": {
+        "inherit": "Samtec_QTH-040-xx-x-D-DP_P0.5mm_Vertical",
+        "meta": {"+tags": " alignment-pins"},
+        "holes": [{"drill": 1.0, "space": 38.48, "y": -2.032}]
+    },
+    "Samtec_QTH-060-xx-x-D-DP_P0.5mm_Vertical": {
+        "inherit": "Samtec_QTH-020-xx-x-D-DP_P0.5mm_Vertical",
+        "layout": {"width": 60.0},
+        "banks": {"n": 3, "diff": 3}
+    },
+    "Samtec_QTH-060-xx-x-D-DP-A_P0.5mm_Vertical": {
+        "inherit": "Samtec_QTH-060-xx-x-D-DP_P0.5mm_Vertical",
+        "meta": {"+tags": " alignment-pins"},
+        "holes": [{"drill": 1.0, "space": 58.48, "y": -2.032}]
+    },
+    "Samtec_HSMC_ASP-122952-01_P0.5mm_Vertical": {
+        "inherit": "Samtec_QTH-090-xx-x-D-A_P0.5mm_Vertical",
+        "library": "Connector_Samtec",
+        "meta": {
+            "pn": "ASP-122952-01",
+            "description": "Samtec {pn:s} HSMC Card {type:s}, modified QTH-090-01-L-D-A, Bank 1 differential",
+            "datasheet": "http://suddendocs.samtec.com/prints/asp-122952-01-mkt.pdf",
+            "+tags": " QPairs HSMC card differential application-specific"
+        },
+        "banks": {"diff": 1}
+    },
+
+    "Samtec_QSH-030-xx-x-D_P0.5mm_Vertical": {
+        "library": "Connector_Samtec_QStrip",
+        "meta": {
+            "description": "Samtec {pn:s} {pitch:1.2f}mm Q Strip High-Speed Ground Plane {type:s} Strip, {banks:d} bank(s), {pins:d} pins/bank",
+            "datasheet": "http://suddendocs.samtec.com/catalog_english/qsh.pdf",
+            "tags": "connector Samtec QStrip QSH mezzanine socket vertical single-ended"
+        },
+        "layout": {"type": "Socket", "width": 21.27, "height": 7.24},
+        "banks": {"n": 1, "diff": 0, "space": 20.0, "width": 16.64, "height": 3.81},
+        "pads": {
+            "signal": {"n": 60, "pitch": 0.5, "width": 0.279, "height": 2.27, "y": 2.865},
+            "planes": [
+                {"width": 2.54, "height": 0.430, "x": -8.065, "y": 0},
+                {"width": 2.54, "height": 0.430, "x":  8.065, "y": 0},
+                {"width": 4.70, "height": 0.430, "x": -3.175, "y": 0},
+                {"width": 4.70, "height": 0.430, "x":  3.175, "y": 0}
+            ]
+        }
+    },
+    "Samtec_QSH-030-xx-x-D-A_P0.5mm_Vertical": {
+        "inherit": "Samtec_QSH-030-xx-x-D_P0.5mm_Vertical",
+        "meta": {"+tags": " alignment-pins"},
+        "holes": [{"drill": 1.0, "space": 20.13, "y": 2.67}]
+    },
+    "Samtec_QSH-060-xx-x-D_P0.5mm_Vertical": {
+        "inherit": "Samtec_QSH-030-xx-x-D_P0.5mm_Vertical",
+        "layout": {"width": 41.27},
+        "banks": {"n": 2}
+    },
+    "Samtec_QSH-060-xx-x-D-A_P0.5mm_Vertical": {
+        "inherit": "Samtec_QSH-060-xx-x-D_P0.5mm_Vertical",
+        "meta": {"+tags": " alignment-pins"},
+        "holes": [{"drill": 1.0, "space": 40.13, "y": 2.67}]
+    },
+    "Samtec_QSH-090-xx-x-D_P0.5mm_Vertical": {
+        "inherit": "Samtec_QSH-030-xx-x-D_P0.5mm_Vertical",
+        "layout": {"width": 61.27},
+        "banks": {"n": 3}
+    },
+    "Samtec_QSH-090-xx-x-D-A_P0.5mm_Vertical": {
+        "inherit": "Samtec_QSH-090-xx-x-D_P0.5mm_Vertical",
+        "meta": {"+tags": " alignment-pins"},
+        "holes": [{"drill": 1.0, "space": 60.13, "y": 2.67}]
+    },
+    "Samtec_QSH-020-xx-x-D-DP_P0.5mm_Vertical": {
+        "inherit": "Samtec_QSH-030-xx-x-D_P0.5mm_Vertical",
+        "meta": {
+            "description": "Samtec {pn:s} {pitch:1.2f}mm Q Pairs High-Speed Ground Plane {type:s} Strip, Differential Pair, {banks:d} bank(s), {pins:d} pairs/bank",
+            "tags": "connector Samtec QPairs QSH mezzanine socket vertical differential"
+        },
+        "banks": {"diff": 1}
+    },
+    "Samtec_QSH-020-xx-x-D-DP-A_P0.5mm_Vertical": {
+        "inherit": "Samtec_QSH-020-xx-x-D-DP_P0.5mm_Vertical",
+        "meta": {"+tags": " alignment-pins"},
+        "holes": [{"drill": 1.0, "space": 20.13, "y": 2.67}]
+    },
+    "Samtec_QSH-040-xx-x-D-DP_P0.5mm_Vertical": {
+        "inherit": "Samtec_QSH-020-xx-x-D-DP_P0.5mm_Vertical",
+        "layout": {"width": 41.27},
+        "banks": {"n": 2, "diff": 2}
+    },
+    "Samtec_QSH-040-xx-x-D-DP-A_P0.5mm_Vertical": {
+        "inherit": "Samtec_QSH-040-xx-x-D-DP_P0.5mm_Vertical",
+        "meta": {"+tags": " alignment-pins"},
+        "holes": [{"drill": 1.0, "space": 40.13, "y": 2.67}]
+    },
+    "Samtec_QSH-060-xx-x-D-DP_P0.5mm_Vertical": {
+        "inherit": "Samtec_QSH-020-xx-x-D-DP_P0.5mm_Vertical",
+        "layout": {"width": 61.27},
+        "banks": {"n": 3, "diff": 3}
+    },
+    "Samtec_QSH-060-xx-x-D-DP-A_P0.5mm_Vertical": {
+        "inherit": "Samtec_QSH-060-xx-x-D-DP_P0.5mm_Vertical",
+        "meta": {"+tags": " alignment-pins"},
+        "holes": [{"drill": 1.0, "space": 60.13, "y": 2.67}]
+    },
+    "Samtec_HSMC_ASP-122953-01_P0.5mm_Vertical": {
+        "inherit": "Samtec_QSH-090-xx-x-D-A_P0.5mm_Vertical",
+        "library": "Connector_Samtec",
+        "meta": {
+            "pn": "ASP-122953-01",
+            "description": "Samtec {pn:s} HSMC Host {type:s}, modified QSH-090-01-L-D-A, Bank 1 differential",
+            "datasheet": "http://suddendocs.samtec.com/prints/asp-122953-01-mkt.pdf",
+            "+tags": " QPairs HSMC host differential application-specific"
+        },
+        "banks": {"diff": 1}
+    },
+    
+    "Samtec_QTS-025-xx-x-D_P0.635mm_Vertical": {
+        "library": "Connector_Samtec_QStrip",
+        "meta": {
+            "description": "Samtec {pn:s} {pitch:1.3f}mm Q Strip High-Speed Ground Plane {type:s} Strip, {banks:d} bank(s), {pins:d} pins/bank",
+            "datasheet": "http://suddendocs.samtec.com/catalog_english/qts.pdf",
+            "tags": "connector Samtec QStrip QTS mezzanine terminal vertical"
+        },
+        "layout": {"type": "Terminal", "width": 20.0, "height": 5.97},
+        "banks": {"n": 1, "diff": 0, "space": 20.0, "width": 16.88, "height": 3.94},
+        "pads": {
+            "signal": {"n": 50, "pitch": 0.635, "width": 0.406, "height": 1.45, "y": 3.086},
+            "planes": [
+                {"width": 2.54, "height": 0.635, "x": -8.445, "y": 0},
+                {"width": 2.54, "height": 0.635, "x":  8.445, "y": 0},
+                {"width": 4.70, "height": 0.635, "x": -3.175, "y": 0},
+                {"width": 4.70, "height": 0.635, "x":  3.175, "y": 0}
+            ]
+        }
+    },
+    "Samtec_QTS-025-xx-x-D-A_P0.635mm_Vertical": {
+        "inherit": "Samtec_QTS-025-xx-x-D_P0.635mm_Vertical",
+        "meta": {"+tags": " alignment-pins"},
+        "holes": [{"drill": 1.0, "space": 18.48, "y": -2.032}]
+    },
+    "Samtec_QTS-050-xx-x-D_P0.635mm_Vertical": {
+        "inherit": "Samtec_QTS-025-xx-x-D_P0.635mm_Vertical",
+        "layout": {"width": 40.0},
+        "banks": {"n": 2}
+    },
+    "Samtec_QTS-050-xx-x-D-A_P0.635mm_Vertical": {
+        "inherit": "Samtec_QTS-050-xx-x-D_P0.635mm_Vertical",
+        "meta": {"+tags": " alignment-pins"},
+        "holes": [{"drill": 1.0, "space": 38.48, "y": -2.032}]
+    },
+    "Samtec_QTS-075-xx-x-D_P0.635mm_Vertical": {
+        "inherit": "Samtec_QTS-025-xx-x-D_P0.635mm_Vertical",
+        "layout": {"width": 60.0},
+        "banks": {"n": 3}
+    },
+    "Samtec_QTS-075-xx-x-D-A_P0.635mm_Vertical": {
+        "inherit": "Samtec_QTS-075-xx-x-D_P0.635mm_Vertical",
+        "meta": {"+tags": " alignment-pins"},
+        "holes": [{"drill": 1.0, "space": 58.48, "y": -2.032}]
+    },
+    "Samtec_QTS-016-xx-x-D-DP_P0.635mm_Vertical": {
+        "inherit": "Samtec_QTS-025-xx-x-D_P0.635mm_Vertical",
+        "meta": {
+            "description": "Samtec {pn:s} {pitch:1.3f}mm Q Pairs High-Speed Ground Plane {type:s} Strip, Differential Pair, {banks:d} bank(s), {pins:d} pairs/bank",
+            "tags": "connector Samtec QPairs QTS mezzanine terminal vertical differential"
+        },
+        "banks": {"diff": 1}
+    },
+    "Samtec_QTS-016-xx-x-D-DP-A_P0.635mm_Vertical": {
+        "inherit": "Samtec_QTS-016-xx-x-D-DP_P0.635mm_Vertical",
+        "meta": {"+tags": " alignment-pins"},
+        "holes": [{"drill": 1.0, "space": 18.48, "y": -2.032}]
+    },
+    "Samtec_QTS-032-xx-x-D-DP_P0.635mm_Vertical": {
+        "inherit": "Samtec_QTS-016-xx-x-D-DP_P0.635mm_Vertical",
+        "layout": {"width": 40.0},
+        "banks": {"n": 2, "diff": 2}
+    },
+    "Samtec_QTS-032-xx-x-D-DP-A_P0.635mm_Vertical": {
+        "inherit": "Samtec_QTS-032-xx-x-D-DP_P0.635mm_Vertical",
+        "meta": {"+tags": " alignment-pins"},
+        "holes": [{"drill": 1.0, "space": 38.48, "y": -2.032}]
+    },
+    "Samtec_QTS-048-xx-x-D-DP_P0.635mm_Vertical": {
+        "inherit": "Samtec_QTS-016-xx-x-D-DP_P0.635mm_Vertical",
+        "layout": {"width": 60.0},
+        "banks": {"n": 3, "diff": 3}
+    },
+    "Samtec_QTS-048-xx-x-D-DP-A_P0.635mm_Vertical": {
+        "inherit": "Samtec_QTS-048-xx-x-D-DP_P0.635mm_Vertical",
+        "meta": {"+tags": " alignment-pins"},
+        "holes": [{"drill": 1.0, "space": 58.48, "y": -2.032}]
+    },
+
+    "Samtec_QSS-025-xx-x-D_P0.635mm_Vertical": {
+        "library": "Connector_Samtec_QStrip",
+        "meta": {
+            "description": "Samtec {pn:s} {pitch:1.3f}mm Q Strip High-Speed Ground Plane {type:s} Strip, {banks:d} bank(s), {pins:d} pins/bank",
+            "datasheet": "http://suddendocs.samtec.com/catalog_english/qss.pdf",
+            "tags": "connector Samtec QStrip QSS mezzanine socket vertical single-ended"
+        },
+        "layout": {"type": "Socket", "width": 21.27, "height": 7.24},
+        "banks": {"n": 1, "diff": 0, "space": 20.0, "width": 16.64, "height": 3.66},
+        "pads": {
+            "signal": {"n": 50, "pitch": 0.635, "width": 0.406, "height": 2.273, "y": 2.865},
+            "planes": [
+                {"width": 2.80, "height": 0.432, "x": -8.065, "y": 0},
+                {"width": 2.80, "height": 0.432, "x":  8.065, "y": 0},
+                {"width": 4.70, "height": 0.432, "x": -3.175, "y": 0},
+                {"width": 4.70, "height": 0.432, "x":  3.175, "y": 0}
+            ]
+        }
+    },
+    "Samtec_QSS-025-xx-x-D-A_P0.635mm_Vertical": {
+        "inherit": "Samtec_QSS-025-xx-x-D_P0.635mm_Vertical",
+        "meta": {"+tags": " alignment-pins"},
+        "holes": [{"drill": 1.0, "space": 20.0, "y": 2.67}]
+    },
+    "Samtec_QSS-050-xx-x-D_P0.635mm_Vertical": {
+        "inherit": "Samtec_QSS-025-xx-x-D_P0.635mm_Vertical",
+        "layout": {"width": 41.27},
+        "banks": {"n": 2}
+    },
+    "Samtec_QSS-050-xx-x-D-A_P0.635mm_Vertical": {
+        "inherit": "Samtec_QSS-050-xx-x-D_P0.635mm_Vertical",
+        "meta": {"+tags": " alignment-pins"},
+        "holes": [{"drill": 1.0, "space": 40.0, "y": 2.67}]
+    },
+    "Samtec_QSS-075-xx-x-D_P0.635mm_Vertical": {
+        "inherit": "Samtec_QSS-025-xx-x-D_P0.635mm_Vertical",
+        "layout": {"width": 61.27},
+        "banks": {"n": 3}
+    },
+    "Samtec_QSS-075-xx-x-D-A_P0.635mm_Vertical": {
+        "inherit": "Samtec_QSS-075-xx-x-D_P0.635mm_Vertical",
+        "meta": {"+tags": " alignment-pins"},
+        "holes": [{"drill": 1.0, "space": 60.0, "y": 2.67}]
+    },
+    "Samtec_QSS-016-xx-x-D-DP_P0.635mm_Vertical": {
+        "inherit": "Samtec_QSS-025-xx-x-D_P0.635mm_Vertical",
+        "meta": {
+            "description": "Samtec {pn:s} {pitch:1.3f}mm Q Pairs High-Speed Ground Plane {type:s} Strip, Differential Pair, {banks:d} bank(s), {pins:d} pairs/bank",
+            "tags": "connector Samtec QPairs QSS mezzanine socket vertical differential"
+        },
+        "banks": {"diff": 1}
+    },
+    "Samtec_QSS-016-xx-x-D-DP-A_P0.635mm_Vertical": {
+        "inherit": "Samtec_QSS-016-xx-x-D-DP_P0.635mm_Vertical",
+        "meta": {"+tags": " alignment-pins"},
+        "holes": [{"drill": 1.0, "space": 20.0, "y": 2.67}]
+    },
+    "Samtec_QSS-032-xx-x-D-DP_P0.635mm_Vertical": {
+        "inherit": "Samtec_QSS-016-xx-x-D-DP_P0.635mm_Vertical",
+        "layout": {"width": 41.27},
+        "banks": {"n": 2, "diff": 2}
+    },
+    "Samtec_QSS-032-xx-x-D-DP-A_P0.635mm_Vertical": {
+        "inherit": "Samtec_QSS-032-xx-x-D-DP_P0.635mm_Vertical",
+        "meta": {"+tags": " alignment-pins"},
+        "holes": [{"drill": 1.0, "space": 40.0, "y": 2.67}]
+    },
+    "Samtec_QSS-048-xx-x-D-DP_P0.635mm_Vertical": {
+        "inherit": "Samtec_QSS-016-xx-x-D-DP_P0.635mm_Vertical",
+        "layout": {"width": 61.27},
+        "banks": {"n": 3, "diff": 3}
+    },
+    "Samtec_QSS-048-xx-x-D-DP-A_P0.635mm_Vertical": {
+        "inherit": "Samtec_QSS-048-xx-x-D-DP_P0.635mm_Vertical",
+        "meta": {"+tags": " alignment-pins"},
+        "holes": [{"drill": 1.0, "space": 60.0, "y": 2.67}]
+    },
+
+    "Samtec_QTE-020-xx-x-D_P0.8mm_Vertical": {
+        "library": "Connector_Samtec_QStrip",
+        "meta": {
+            "description": "Samtec {pn:s} {pitch:1.2f}mm Q Strip High-Speed Ground Plane {type:s} Strip, {banks:d} bank(s), {pins:d} pins/bank",
+            "datasheet": "http://suddendocs.samtec.com/catalog_english/qte.pdf",
+            "tags": "connector Samtec QStrip QTE mezzanine terminal vertical"
+        },
+        "layout": {"type": "Terminal", "width": 20.0, "height": 5.97},
+        "banks":  {"n": 1, "diff": 0, "width": 16.88, "height": 3.94, "space": 20.0},
+        "pads": {
+            "signal": {"n": 40, "pitch": 0.8, "width": 0.46, "height": 1.45, "y": 3.086},
+            "planes": [
+                {"width": 2.54, "height": 0.635, "x": -8.445, "y": 0},
+                {"width": 2.54, "height": 0.635, "x":  8.445, "y": 0},
+                {"width": 4.70, "height": 0.635, "x": -3.175, "y": 0},
+                {"width": 4.70, "height": 0.635, "x":  3.175, "y": 0}
+            ]
+        }
+    },
+    "Samtec_QTE-020-xx-x-D-A_P0.8mm_Vertical": {
+        "inherit": "Samtec_QTE-020-xx-x-D_P0.8mm_Vertical",
+        "meta": {"+tags": " alignment-pins"},
+        "holes": [{"drill": 1.0, "space": 18.48, "y": -2.032}]
+    },
+    "Samtec_QTE-040-xx-x-D_P0.8mm_Vertical": {
+        "inherit": "Samtec_QTE-020-xx-x-D_P0.8mm_Vertical",
+        "layout": {"width": 40.0},
+        "banks": {"n": 2}
+    },
+    "Samtec_QTE-040-xx-x-D-A_P0.8mm_Vertical": {
+        "inherit": "Samtec_QTE-040-xx-x-D_P0.8mm_Vertical",
+        "meta": {"+tags": " alignment-pins"},
+        "holes": [{"drill": 1.0, "space": 38.48, "y": -2.032}]
+    },
+    "Samtec_QTE-060-xx-x-D_P0.8mm_Vertical": {
+        "inherit": "Samtec_QTE-020-xx-x-D_P0.8mm_Vertical",
+        "layout": {"width": 40.0},
+        "banks": {"n": 2}
+    },
+    "Samtec_QTE-060-xx-x-D-A_P0.8mm_Vertical": {
+        "inherit": "Samtec_QTE-060-xx-x-D_P0.8mm_Vertical",
+        "meta": {"+tags": " alignment-pins"},
+        "holes": [{"drill": 1.0, "space": 38.48, "y": -2.032}]
+    },
+    "Samtec_QTE-014-xx-x-D-DP_P0.8mm_Vertical": {
+        "inherit": "Samtec_QTE-020-xx-x-D_P0.8mm_Vertical",
+        "meta": {
+            "description": "Samtec {pn:s} {pitch:1.2f}mm Q Pairs High-Speed Ground Plane {type:s} Strip, Differential Pair, {banks:d} bank(s), {pins:d} pairs/bank",
+            "tags": "connector Samtec QPairs QTE mezzanine terminal vertical differential"
+        },
+        "banks": {"diff": 1}
+    },
+    "Samtec_QTE-014-xx-x-D-DP-A_P0.8mm_Vertical": {
+        "inherit": "Samtec_QTE-014-xx-x-D-DP_P0.8mm_Vertical",
+        "meta": {"+tags": " alignment-pins"},
+        "holes": [{"drill": 1.0, "space": 18.48, "y": -2.032}]
+    },
+    "Samtec_QTE-028-xx-x-D-DP_P0.8mm_Vertical": {
+        "inherit": "Samtec_QTE-014-xx-x-D-DP_P0.8mm_Vertical",
+        "layout": {"width": 40.0},
+        "banks": {"n": 2, "diff": 2}
+    },
+    "Samtec_QTE-028-xx-x-D-DP-A_P0.8mm_Vertical": {
+        "inherit": "Samtec_QTE-028-xx-x-D-DP_P0.8mm_Vertical",
+        "meta": {"+tags": " alignment-pins"},
+        "holes": [{"drill": 1.0, "space": 38.48, "y": -2.032}]
+    },
+    "Samtec_QTE-042-xx-x-D-DP_P0.8mm_Vertical": {
+        "inherit": "Samtec_QTE-014-xx-x-D-DP_P0.8mm_Vertical",
+        "layout": {"width": 60.0},
+        "banks": {"n": 3, "diff": 3}
+    },
+    "Samtec_QTE-042-xx-x-D-DP-A_P0.8mm_Vertical": {
+        "inherit": "Samtec_QTE-042-xx-x-D-DP_P0.8mm_Vertical",
+        "meta": {"+tags": " alignment-pins"},
+        "holes": [{"drill": 1.0, "space": 58.48, "y": -2.032}]
+    },
+
+    "Samtec_QSE-020-xx-x-D_P0.8mm_Vertical": {
+        "library": "Connector_Samtec_QStrip",
+        "meta": {
+            "description": "Samtec {pn:s} {pitch:1.2f}mm Q Strip High-Speed Ground Plane {type:s} Strip, {banks:d} bank(s), {pins:d} pins/bank",
+            "datasheet": "http://suddendocs.samtec.com/catalog_english/qse.pdf",
+            "tags": "connector Samtec QStrip QSE mezzanine socket vertical single-ended"
+        },
+        "layout": {"type": "Socket", "width": 21.27, "height": 7.24},
+        "banks": {"n": 1, "diff": 0, "space": 20.0, "width": 16.64, "height": 3.81},
+        "pads": {
+            "signal": {"n": 40, "pitch": 0.8, "width": 0.41, "height": 2.27, "y": 2.865},
+            "planes": [
+                {"width": 2.54, "height": 0.430, "x": -8.065, "y": 0},
+                {"width": 2.54, "height": 0.430, "x":  8.065, "y": 0},
+                {"width": 4.70, "height": 0.430, "x": -3.175, "y": 0},
+                {"width": 4.70, "height": 0.430, "x":  3.175, "y": 0}
+            ]
+        }
+    },
+    "Samtec_QSE-020-xx-x-D-A_P0.8mm_Vertical": {
+        "inherit": "Samtec_QSE-020-xx-x-D_P0.8mm_Vertical",
+        "meta": {"+tags": " alignment-pins"},
+        "holes": [{"drill": 1.0, "space": 20.13, "y": 2.67}]
+    },
+    "Samtec_QSE-040-xx-x-D_P0.8mm_Vertical": {
+        "inherit": "Samtec_QSE-020-xx-x-D_P0.8mm_Vertical",
+        "layout": {"width": 41.27},
+        "banks": {"n": 2}
+    },
+    "Samtec_QSE-040-xx-x-D-A_P0.8mm_Vertical": {
+        "inherit": "Samtec_QSE-040-xx-x-D_P0.8mm_Vertical",
+        "meta": {"+tags": " alignment-pins"},
+        "holes": [{"drill": 1.0, "space": 40.13, "y": 2.67}]
+    },
+    "Samtec_QSE-060-xx-x-D_P0.8mm_Vertical": {
+        "inherit": "Samtec_QSE-020-xx-x-D_P0.8mm_Vertical",
+        "layout": {"width": 61.27},
+        "banks": {"n": 3}
+    },
+    "Samtec_QSE-060-xx-x-D-A_P0.8mm_Vertical": {
+        "inherit": "Samtec_QSE-060-xx-x-D_P0.8mm_Vertical",
+        "meta": {"+tags": " alignment-pins"},
+        "holes": [{"drill": 1.0, "space": 60.13, "y": 2.67}]
+    },
+    "Samtec_QSE-014-xx-x-D-DP_P0.8mm_Vertical": {
+        "inherit": "Samtec_QSE-020-xx-x-D_P0.8mm_Vertical",
+        "meta": {
+            "description": "Samtec {pn:s} {pitch:1.2f}mm Q Pairs High-Speed Ground Plane {type:s} Strip, Differential Pair, {banks:d} bank(s), {pins:d} pairs/bank",
+            "tags": "connector Samtec QPairs QSE mezzanine socket vertical differential"
+        },
+        "banks": {"diff": 1}
+    },
+    "Samtec_QSE-014-xx-x-D-DP-A_P0.8mm_Vertical": {
+        "inherit": "Samtec_QSE-014-xx-x-D-DP_P0.8mm_Vertical",
+        "meta": {"+tags": " alignment-pins"},
+        "holes": [{"drill": 1.0, "space": 20.13, "y": 2.67}]
+    },
+    "Samtec_QSE-028-xx-x-D-DP_P0.8mm_Vertical": {
+        "inherit": "Samtec_QSE-014-xx-x-D-DP_P0.8mm_Vertical",
+        "layout": {"width": 41.27},
+        "banks": {"n": 2, "diff": 2}
+    },
+    "Samtec_QSE-028-xx-x-D-DP-A_P0.8mm_Vertical": {
+        "inherit": "Samtec_QSE-028-xx-x-D-DP_P0.8mm_Vertical",
+        "meta": {"+tags": " alignment-pins"},
+        "holes": [{"drill": 1.0, "space": 40.13, "y": 2.67}]
+    },
+    "Samtec_QSE-042-xx-x-D-DP_P0.8mm_Vertical": {
+        "inherit": "Samtec_QSE-014-xx-x-D-DP_P0.8mm_Vertical",
+        "layout": {"width": 61.27},
+        "banks": {"n": 3, "diff": 3}
+    },
+    "Samtec_QSE-042-xx-x-D-DP-A_P0.8mm_Vertical": {
+        "inherit": "Samtec_QSE-042-xx-x-D-DP_P0.8mm_Vertical",
+        "meta": {"+tags": " alignment-pins"},
+        "holes": [{"drill": 1.0, "space": 60.13, "y": 2.67}]
+    }
+}

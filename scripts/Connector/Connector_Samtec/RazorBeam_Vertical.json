@@ -1,0 +1,151 @@
+{
+    "Samtec_LSHM-105-xx.x-x-DV-A-N_2x05_P0.5mm_Vertical": {
+        "library": "Connector_Samtec_RazorBeam",
+        "meta": {
+            "description": "Samtec {pn:s} {pitch:1.2f}mm Razor Beam High-Speed Hermaphroditic Terminal/Socket Strip",
+            "datasheet": "http://suddendocs.samtec.com/catalog_english/lshm_dv.pdf",
+            "tags": "connector Samtec RazorBeam LSHM self-mating terminal socket vertical"
+        },
+        "layout": {"width": 7.20, "height": 4.98},
+        "pads": {"n": 10, "pitch": 0.5, "y": 1.85, "width": 0.3, "height": 1.5},
+        "holes": [{"drill": 1.45, "space": 4.5, "y": -0.85}]
+    },
+    "Samtec_LSHM-105-xx.x-x-DV-A-S_2x05-1SH_P0.5mm_Vertical": {
+        "inherit": "Samtec_LSHM-105-xx.x-x-DV-A-N_2x05_P0.5mm_Vertical",
+        "meta": {"+tags": " shield"},
+        "layout": {"+width": 1.1},
+        "+holes": [{"drill": 1.0, "pad": 1.5, "space": 7.45, "y": 1.15, "name": "SH"}]
+    },
+    "Samtec_LSHM-110-xx.x-x-DV-A-N_2x10_P0.5mm_Vertical": {
+        "inherit": "Samtec_LSHM-105-xx.x-x-DV-A-N_2x05_P0.5mm_Vertical",
+        "layout": {"width": 9.70},
+        "pads": {"n": 20},
+        "holes": [{"drill": 1.45, "space": 7.0, "y": -0.85}]
+    },
+    "Samtec_LSHM-110-xx.x-x-DV-A-S_2x10-1SH_P0.5mm_Vertical": {
+        "inherit": "Samtec_LSHM-110-xx.x-x-DV-A-N_2x10_P0.5mm_Vertical",
+        "meta": {"+tags": " shield"},
+        "layout": {"+width": 1.1},
+        "+holes": [{"drill": 1.0, "pad": 1.5, "space": 9.95, "y": 1.15, "name": "SH"}]
+    },
+    "Samtec_LSHM-120-xx.x-x-DV-A-N_2x20_P0.5mm_Vertical": {
+        "inherit": "Samtec_LSHM-105-xx.x-x-DV-A-N_2x05_P0.5mm_Vertical",
+        "layout": {"width": 14.70},
+        "pads": {"n": 40},
+        "holes": [{"drill": 1.45, "space": 12.0, "y": -0.85}]
+    },
+    "Samtec_LSHM-120-xx.x-x-DV-A-S_2x20-1SH_P0.5mm_Vertical": {
+        "inherit": "Samtec_LSHM-120-xx.x-x-DV-A-N_2x20_P0.5mm_Vertical",
+        "meta": {"+tags": " shield"},
+        "layout": {"+width": 1.1},
+        "+holes": [{"drill": 1.0, "pad": 1.5, "space": 14.95, "y": 1.15, "name": "SH"}]
+    },
+    "Samtec_LSHM-130-xx.x-x-DV-A-N_2x30_P0.5mm_Vertical": {
+        "inherit": "Samtec_LSHM-105-xx.x-x-DV-A-N_2x05_P0.5mm_Vertical",
+        "layout": {"width": 19.70},
+        "pads": {"n": 60},
+        "holes": [{"drill": 1.45, "space": 17.0, "y": -0.85}]
+    },
+    "Samtec_LSHM-130-xx.x-x-DV-A-S_2x30-1SH_P0.5mm_Vertical": {
+        "inherit": "Samtec_LSHM-130-xx.x-x-DV-A-N_2x30_P0.5mm_Vertical",
+        "meta": {"+tags": " shield"},
+        "layout": {"+width": 1.1},
+        "+holes": [{"drill": 1.0, "pad": 1.5, "space": 19.95, "y": 1.15, "name": "SH"}]
+    },
+    "Samtec_LSHM-140-xx.x-x-DV-A-N_2x40_P0.5mm_Vertical": {
+        "inherit": "Samtec_LSHM-105-xx.x-x-DV-A-N_2x05_P0.5mm_Vertical",
+        "layout": {"width": 24.70},
+        "pads": {"n": 80},
+        "holes": [{"drill": 1.45, "space": 22.0, "y": -0.85}]
+    },
+    "Samtec_LSHM-140-xx.x-x-DV-A-S_2x40-1SH_P0.5mm_Vertical": {
+        "inherit": "Samtec_LSHM-140-xx.x-x-DV-A-N_2x40_P0.5mm_Vertical",
+        "meta": {"+tags": " shield"},
+        "layout": {"+width": 1.1},
+        "+holes": [{"drill": 1.0, "pad": 1.5, "space": 24.95, "y": 1.15, "name": "SH"}]
+    },
+    "Samtec_LSHM-150-xx.x-x-DV-A-N_2x50_P0.5mm_Vertical": {
+        "inherit": "Samtec_LSHM-105-xx.x-x-DV-A-N_2x05_P0.5mm_Vertical",
+        "layout": {"width": 29.70},
+        "pads": {"n": 100},
+        "holes": [{"drill": 1.45, "space": 27.0, "y": -0.85}]
+    },
+    "Samtec_LSHM-150-xx.x-x-DV-A-S_2x50-1SH_P0.5mm_Vertical": {
+        "inherit": "Samtec_LSHM-150-xx.x-x-DV-A-N_2x50_P0.5mm_Vertical",
+        "meta": {"+tags": " shield"},
+        "layout": {"+width": 1.1},
+        "+holes": [{"drill": 1.0, "pad": 1.5, "space": 29.95, "y": 1.15, "name": "SH"}]
+    },
+
+    "Samtec_LSS-105-xx-x-DV-A_2x05_P0.635mm_Vertical": {
+        "library": "Connector_Samtec_RazorBeam",
+        "meta": {
+            "description": "Samtec {pn:s} {pitch:1.3f}mm Razor Beam High-Speed Hermaphroditic Terminal/Socket Strip, ",
+            "datasheet": "http://suddendocs.samtec.com/catalog_english/lss.pdf",
+            "tags": "connector Samtec RazorBeam LSS self-mating terminal socket vertical"
+        },
+        "layout": {"width": 7.925, "height": 4.14, "y": 0.07},
+        "pads": {"n": 10, "pitch": 0.635, "y": 1.8, "width": 0.4, "height": 1.6},
+        "holes": [{"drill": 0.89, "space": 4.675, "y": 1.1}]
+    },
+    "Samtec_LSS-110-xx-x-DV-A_2x10_P0.635mm_Vertical": {
+        "inherit": "Samtec_LSS-105-xx-x-DV-A_2x05_P0.635mm_Vertical",
+        "layout": {"width": 11.10},
+        "pads": {"n": 20},
+        "holes": [{"drill": 0.89, "space": 7.85, "y": 1.1}]
+    },
+    "Samtec_LSS-120-xx-x-DV-A_2x20_P0.635mm_Vertical": {
+        "inherit": "Samtec_LSS-105-xx-x-DV-A_2x05_P0.635mm_Vertical",
+        "layout": {"width": 17.45},
+        "pads": {"n": 40},
+        "holes": [{"drill": 0.89, "space": 14.20, "y": 1.1}]
+    },
+    "Samtec_LSS-130-xx-x-DV-A_2x30_P0.635mm_Vertical": {
+        "inherit": "Samtec_LSS-105-xx-x-DV-A_2x05_P0.635mm_Vertical",
+        "layout": {"width": 23.8},
+        "pads": {"n": 60},
+        "holes": [{"drill": 0.89, "space": 20.55, "y": 1.1}]
+    },
+    "Samtec_LSS-140-xx-x-DV-A_2x40_P0.635mm_Vertical": {
+        "inherit": "Samtec_LSS-105-xx-x-DV-A_2x05_P0.635mm_Vertical",
+        "layout": {"width": 30.15},
+        "pads": {"n": 80},
+        "holes": [{"drill": 0.89, "space": 26.90, "y": 1.1}]
+    },
+    "Samtec_LSS-150-xx-x-DV-A_2x50_P0.635mm_Vertical": {
+        "inherit": "Samtec_LSS-105-xx-x-DV-A_2x05_P0.635mm_Vertical",
+        "layout": {"width": 36.5},
+        "pads": {"n": 100},
+        "holes": [{"drill": 0.89, "space": 33.25, "y": 1.1}]
+    },
+
+    "Samtec_LSEM-120-xx.x-x-DV-A-N_2x20_P0.8mm_Vertical": {
+        "library": "Connector_Samtec_RazorBeam",
+        "meta": {
+            "description": "Samtec {pn:s} {pitch:1.2f}mm Razor Beam High-Speed Hermaphroditic Terminal/Socket Strip",
+            "datasheet": "http://suddendocs.samtec.com/catalog_english/lsem.pdf",
+            "tags": "connector Samtec RazorBeam LSEM self-mating terminal socket vertical"
+        },
+        "layout": {"width": 20.4, "height": 4.98},
+        "pads": {"n": 40, "pitch": 0.8, "y": 1.85, "width": 0.38, "height": 1.5},
+        "holes": [{"drill": 1.5, "space": 17.7, "y": -0.95}]
+    },
+    "Samtec_LSEM-130-xx.x-x-DV-A-N_2x30_P0.8mm_Vertical": {
+        "inherit": "Samtec_LSEM-120-xx.x-x-DV-A-N_2x20_P0.8mm_Vertical",
+        "layout": {"width": 28.4},
+        "pads": {"n": 60},
+        "holes": [{"drill": 1.5, "space": 25.7, "y": -1.1}]
+    },
+    "Samtec_LSEM-140-xx.x-x-DV-A-N_2x40_P0.8mm_Vertical": {
+        "inherit": "Samtec_LSEM-120-xx.x-x-DV-A-N_2x20_P0.8mm_Vertical",
+        "layout": {"width": 36.4},
+        "pads": {"n": 80},
+        "holes": [{"drill": 1.5, "space": 33.7, "y": -1.1}]
+    },
+    "Samtec_LSEM-150-xx.x-x-DV-A-N_2x50_P0.8mm_Vertical": {
+        "inherit": "Samtec_LSEM-120-xx.x-x-DV-A-N_2x20_P0.8mm_Vertical",
+        "layout": {"width": 44.4},
+        "pads": {"n": 100},
+        "holes": [{"drill": 1.5, "space": 41.7, "y": -1.1}]
+    }
+}
