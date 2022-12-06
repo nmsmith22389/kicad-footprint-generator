@@ -4580,6 +4580,42 @@ QFN-76-1EP_9x9mm_P0.4mm_EP3.8x3.8mm:
   mark_color_key: 'light brown label'
   source: 'https://www.marvell.com/documents/bqcwxsoiqfjkcjdjhkvc/'
 
+QFN-76-1EP_9x9mm_P0.4mm_EP5.81x6.31mm:
+  c: 0.2                                            # c: pin thickness, not used for concave pins
+  L: 0.4                                            # L: pin top flat part length (including fillet radius)
+  fp_s: True                                        # fp_s: True for circular pinmark, False for square pinmark (useful for diodes)
+  fp_r: 0.5                                         # fp_r: first pin indicator radius
+  fp_d: 0.2                                         # fp_d: first pin indicator distance from edge
+  fp_dx: null                                       # fp_dx: first pin indicator distance from X edge
+  fp_dy: null                                       # fp_dy: first pin indicator distance from Y edge
+  fp_z: 0.01                                        # fp_z: first pin indicator depth
+  ef: 0.0                                           # ef: fillet of edges  Note: bigger bytes model with fillet
+  cce: 0.35                                         # cce: chamfer of the epad 1st pin corner
+  D: 9.0                                            # D: body overall length
+  E: 9.0                                            # E: body overall width
+  A1: 0.02                                          # A1: body-board separation  maui to check
+  A2: 0.85                                          # A2: body height
+  b: 0.2                                            # b: pin width
+  e: 0.4                                            # e: pin (center-to-center) distance
+  m: 0.0                                            # m: margin between pins and body
+  ps: rounded                                       # ps: rounded pads
+  npx: 19                                           # npx: number of pins along X axis (width)
+  npy: 19                                           # npy: number of pins along y axis (length)
+  epad: [5.81, 6.31]                                # epad: exposed pad, null, radius as float for circular or the dimensions as tuple: (width, length) for square
+  epad_offsetX: null                                # epad_offsetX: offset X for exposed pad
+  epad_offsetY: null                                # epad_offsetY: offset Y for exposed pad
+  epad_n: null                                      # epad_n: number of exposed pads, specified as tuple (along X axis, along Y axis) in case a matrix of them is needed.
+  epad_pitch: null                                  # epad_pitch: epad center to epad center, specified as tuple (along X axis, along Y axis)
+  excluded_pins: null                               # excluded_pins: no pin excluded
+  model_name: QFN-76-1EP_9x9mm_P0.4mm_EP5.81x6.31mm # model_name: model name
+  rotation: -90                                     # rotation: rotation if required
+  destination_dir: Package_DFN_QFN.3dshapes
+  body_color_key: 'black body'                      # body_color_key: 'black body'
+  pin_color_key: 'metal grey pins'                  # pin_color_key: 'metal grey pins'
+  mark_color_key: 'light brown label'               # mark_color_key: 'light brown label'
+  pin_shapes: null                                  # pin_shapes: coords for pin shapes as [(x,y)]
+  source: 'https://www.marvell.com/documents/bqcwxsoiqfjkcjdjhkvc/' # source: 'link to datasheet'
+
 UQFN-10_1.4x1.8mm_Pitch0.4mm:
   c: 0.2
   L: 0.4
