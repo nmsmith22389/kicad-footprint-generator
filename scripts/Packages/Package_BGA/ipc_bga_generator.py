@@ -225,7 +225,7 @@ def __createFootprintVariant(config, fpParams, fpId):
     f.append(Model(filename="{}Package_{}.3dshapes/{}.wrl".format(
                   config['3d_model_prefix'], packageType, fpId)))
 
-    f.setDescription("{0}, {1}x{2}mm, {3} Ball, {4}x{5} Layout, {6}mm Pitch, {7}".format(fpParams["description"], pkgY, pkgX, balls, layoutX, layoutY, pitchString, fpParams["size_source"]))
+    f.setDescription("{0}, {1}x{2}mm, {3} Ball, {4}x{5} Layout, {6}mm Pitch ({7}), generated with kicad-footprint-generator ipc_bga_generator.py".format(fpParams["description"], pkgY, pkgX, balls, layoutX, layoutY, pitchString, fpParams["size_source"]))
     f.setTags("{} {} {}{}".format(packageType, balls, pitchString, additionalTag))
 
     outputDir = 'Package_{lib_name:s}.pretty/'.format(lib_name=packageType)
