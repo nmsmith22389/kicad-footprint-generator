@@ -476,7 +476,7 @@ def makeTerminalBlockVertical(footprint_name, pins, rm, package_height, leftbott
 #     <---------> opening[0]
 #
 #
-def makeTerminalBlock45Degree(footprint_name, pins, rm, package_height, leftbottom_offset, ddrill, pad, opening, opening_xoffset, opening_yoffset, opening_elliptic=False, bevel_height=[], vsegment_lines_offset=[], secondHoleDiameter=0, secondHoleOffset=[0,0], thirdHoleDiameter=0, thirdHoleOffset=[0,0], fourthHoleDiameter=0, fourthHoleOffset=[0,0], fifthHoleDiameter=0, fifthHoleOffset=[0,0],secondDrillDiameter=0,secondDrillOffset=[0,0],secondDrillPad=[0,0],nibbleSize=[],nibblePos=[], fabref_offset=[0,0],secondEllipseSize=[0,0],secondEllipseOffset=[0,0],
+def makeTerminalBlock45Degree(footprint_name, pins, rm, package_height, leftbottom_offset, ddrill, pad, opening, opening_xoffset, opening_yoffset, opening_elliptic=False, even_pin_offset=0, bevel_height=[], vsegment_lines_offset=[], secondHoleDiameter=0, secondHoleOffset=[0,0], thirdHoleDiameter=0, thirdHoleOffset=[0,0], fourthHoleDiameter=0, fourthHoleOffset=[0,0], fifthHoleDiameter=0, fifthHoleOffset=[0,0],secondDrillDiameter=0,secondDrillOffset=[0,0],secondDrillPad=[0,0],nibbleSize=[],nibblePos=[], fabref_offset=[0,0],secondEllipseSize=[0,0],secondEllipseOffset=[0,0],
                         stackable=False,
                         tags_additional=[], lib_name="${{KICAD6_3DMODEL_DIR}}/Connectors_Terminal_Blocks", classname="Connectors_Terminal_Blocks", classname_description="terminal block", webpage="", script_generated_note=""):
 
@@ -578,6 +578,10 @@ def makeTerminalBlock45Degree(footprint_name, pins, rm, package_height, leftbott
         pextra=0
         if secondDrillPad[0]>0:
             pextra=p
+        if p % 2 == 0:
+            y1 = even_pin_offset
+        else:
+            y1 = 0
         if p == 1:
             kicad_modg.append(Pad(number=p, type=pad_type, shape=pad_shape1, at=[x1, y1], size=pad, drill=ddrill, layers=pad_layers))
             keepouts=keepouts+addKeepoutRect(x1, y1, pad[0]+8*slk_offset, pad[1]+8*slk_offset)
@@ -605,8 +609,6 @@ def makeTerminalBlock45Degree(footprint_name, pins, rm, package_height, leftbott
                 keepouts=keepouts+addKeepoutRect(x1+secondDrillOffset[0], y1+secondDrillOffset[1], max(secondDrillPad[0],secondDrillDiameter)+8*slk_offset, max(secondDrillPad[1],secondDrillDiameter)+8*slk_offset)
 
         x1=x1+rm
-
-
 
     # create Body
     if len(bevel_height)>0:

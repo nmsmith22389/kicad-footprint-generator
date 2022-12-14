@@ -181,39 +181,39 @@ def addCircleWithKeepout(kicad_mod, x, y, radius, layer, width, keepouts=[], rou
 
 # draw an arc
 def addArcByAngles(kicad_mod, x, y, radius, angle_start, angle_end, layer, width, roun=0.001):
-    startx = x + radius * math.sin(angle_start/180*3.1415)
-    starty = y + radius * math.cos(angle_start/180*3.1415)
-    kicad_mod.append( Arc(center=[roundG(x, roun), roundG(y, roun)], start=[roundG(startx, roun), roundG(starty, roun)], angle=-(angle_end-angle_start), layer=layer, width=width))
+    #print('addArcByAngles', f'x={x:.3f}, y={y:.3f}, radius={radius:.3f}, angle_start={angle_start:.3f}, angle_end={angle_end:.3f}')
+    startx = x + radius * math.cos(math.radians(angle_start))
+    starty = y + radius * math.sin(math.radians(angle_start))
+    kicad_mod.append( Arc(center=[roundG(x, roun), roundG(y, roun)], start=[roundG(startx, roun), roundG(starty, roun)], angle=angle_end-angle_start, layer=layer, width=width))
 
 # draw an arc minding the keepouts
 def addArcByAnglesWithKeepout(kicad_mod, x, y, radius, angle_start, angle_end, layer, width, keepouts=[], roun=0.001):
-    startx = x + radius * math.sin(angle_start/180*3.1415)
-    starty = y + radius * math.cos(angle_start/180*3.1415)
-    addArcWithKeepout(kicad_mod, x, y, startx, starty, -(angle_end-angle_start), layer, width, keepouts, roun)
+    #print('addArcByAnglesWithKeepout', f'x={x:.3f} y={y:.3f}, radius={radius:.3f}, angle_start={angle_start:.3f}, angle_end={angle_end:.3f}')
+    startx = x + radius * math.cos(math.radians(angle_start))
+    starty = y + radius * math.sin(math.radians(angle_start))
+    addArcWithKeepout(kicad_mod, x, y, startx, starty, angle_end-angle_start, layer, width, keepouts, roun)
 
 # draw an arc minding the keepouts
 def addArcWithKeepout(kicad_mod, x, y, startx, starty, angle, layer, width, keepouts=[], roun=0.001):
-    dalpha = angle/180*3.1415 / (360)
-    radius=math.sqrt(sqr(x-startx)+sqr(y-starty));
-    a = math.asin((startx-x)/radius)
-    if starty<0:
-        a=a+3.1415/2
-    astart=a;
-    aend=astart+angle/180*3.1415
-    start=astart
-    #print(radius, astart/3.1415*180, aend/3.1415*180)
-    istartx=x + radius * math.sin(a)
-    istarty=y + radius * math.cos(a)
-    hasToDraw=False
-    noneUsed=True
+    #print('addArcWithKeepout', f'x={x:.3f} y={y:.3f} startx={startx:.3f} starty={starty:.3f} angle={angle:.3f}')
+    dalpha = math.radians(angle) / 360
+    radius = math.sqrt(pow(x-startx, 2) + pow(y-starty, 2))
+    a = math.atan2(starty-y, startx-x)
+    astart = a
+    aend = astart + math.radians(angle)
+    start = astart
+    istartx = startx
+    istarty = starty
+    hasToDraw = False
+    noneUsed = True
     while a < aend:
-        x1 = x + radius * math.sin(a)
-        y1 = y + radius * math.cos(a)
+        x1 = x + radius * math.cos(a)
+        y1 = y + radius * math.sin(a)
 
-        if containedInAnyKeepout(x1,y1, keepouts):
-            if hasToDraw and math.fabs(a-start)>0:
+        if containedInAnyKeepout(x1, y1, keepouts):
+            if hasToDraw and (a - start)>0:
                 #print('DRAW ',x1,y1)
-                kicad_mod.append( Arc(center=[roundG(x, roun), roundG(y, roun)], start=[roundG(istartx, roun), roundG(istarty, roun)], angle=-1*(a - start)/3.1415*180, layer=layer, width=width))
+                kicad_mod.append( Arc(center=[roundG(x, roun), roundG(y, roun)], start=[roundG(istartx, roun), roundG(istarty, roun)], angle=-math.degrees(start-a), layer=layer, width=width))
             hasToDraw = False
             istartx=x1; istarty=y1; start=a
             noneUsed = False
@@ -224,30 +224,33 @@ def addArcWithKeepout(kicad_mod, x, y, startx, starty, angle, layer, width, keep
     if noneUsed:
         kicad_mod.append(
             Arc(center=[roundG(x, roun), roundG(y, roun)], start=[roundG(startx, roun), roundG(starty, roun)], angle=angle, layer=layer, width=width))
-    elif hasToDraw and math.fabs(a - start) > 0:
-        kicad_mod.append( Arc(center=[roundG(x, roun), roundG(y, roun)], start=[roundG(istartx, roun), roundG(istarty, roun)], angle=-1*(a - start)/3.1415*180, layer=layer, width=width))
+    elif hasToDraw and (a - start) > 0:
+        kicad_mod.append( Arc(center=[roundG(x, roun), roundG(y, roun)], start=[roundG(istartx, roun), roundG(istarty, roun)], angle=-math.degrees(start-a), layer=layer, width=width))
 
 # draw an ellipse with one axis along x-axis and one axis along y-axis and given width/height
 def addEllipse(kicad_mod, x, y, w, h, layer, width, roun=0.001):
+    #print('addEllipse', f'x={x:.3f} y={y:.3f} w={w:.3f} h={h:.3f}')
     factor=h/w
     alpha=math.atan(h/w)*2
     radius=w/2/math.sin(alpha)
-    addArcByAngles(kicad_mod=kicad_mod, x=x, y=y+radius*math.cos(alpha), radius=radius, angle_start=180-alpha/3.1415*180, angle_end=180+alpha/3.1415*180, layer=layer, width=width, roun=roun);
-    addArcByAngles(kicad_mod=kicad_mod, x=x, y=y-radius*math.cos(alpha), radius=radius, angle_start=alpha/3.1415*180, angle_end=-alpha/3.1415*180, layer=layer, width=width, roun=roun);
+    addArcByAngles(kicad_mod=kicad_mod, x=x, y=y+radius*math.cos(alpha), radius=radius, angle_start=270-math.degrees(alpha), angle_end=270+math.degrees(alpha), layer=layer, width=width, roun=roun);
+    addArcByAngles(kicad_mod=kicad_mod, x=x, y=y-radius*math.cos(alpha), radius=radius, angle_start=90-math.degrees(alpha), angle_end=90+math.degrees(alpha), layer=layer, width=width, roun=roun);
 
 # draw an ellipse with one axis along x-axis and one axis along y-axis and given width/height
 def addEllipseWithKeepout(kicad_mod, x, y, w, h, layer, width, keepouts=[], roun=0.001):
+    #print('addEllipseWithKeepout', f'x={x:.3f} y={y:.3f} w={w:.3f} h={h:.3f}')
     factor=h/w
     alpha=math.atan(h/w)*2
     radius=w/2/math.sin(alpha)
-    addArcByAnglesWithKeepout(kicad_mod=kicad_mod, x=x, y=y+radius*math.cos(alpha), radius=radius, angle_start=180-alpha/3.1415*180, angle_end=180+alpha/3.1415*180, keepouts=keepouts, layer=layer, width=width, roun=roun);
-    addArcByAnglesWithKeepout(kicad_mod=kicad_mod, x=x, y=y-radius*math.cos(alpha), radius=radius, angle_start=alpha/3.1415*180, angle_end=-alpha/3.1415*180, keepouts=keepouts, layer=layer, width=width, roun=roun);
+    addArcByAnglesWithKeepout(kicad_mod=kicad_mod, x=x, y=y+radius*math.cos(alpha), radius=radius, angle_start=270-math.degrees(alpha), angle_end=270+math.degrees(alpha), keepouts=keepouts, layer=layer, width=width, roun=roun);
+    addArcByAnglesWithKeepout(kicad_mod=kicad_mod, x=x, y=y-radius*math.cos(alpha), radius=radius, angle_start=90-math.degrees(alpha), angle_end=90+math.degrees(alpha), keepouts=keepouts, layer=layer, width=width, roun=roun);
 
 # split a circle so it does not interfere with keepout areas defined as [[x0,x1,y0,y1], ...]
 def addDCircleWithKeepout(kicad_mod, x, y, radius, layer, width, keepouts=[], roun=0.001):
-    dalpha = 2 * 3.1415 / (2 * 3.1415 * radius / (6 * width))
+    #print('addDCircleWithKeepout', f'x={x:.3f}, y={y:.3f}, radius={radius:.3f}')
+    dalpha = 2 * math.pi / (2 * math.pi * radius / (6 * width))
     a = 0
-    while a < 2 * 3.1415:
+    while a < 2 * math.pi:
         x1 = x + radius * math.sin(a)
         y1 = y + radius * math.cos(a)
         x2 = x + radius * math.sin(a + dalpha / 2)
