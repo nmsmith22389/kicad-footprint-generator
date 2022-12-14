@@ -59,6 +59,7 @@ import os
 import cadquery as cq
 from _tools import shaderColors, parameters, cq_color_correct
 from _tools import cq_globals
+from exportVRML.export_part_to_VRML import export_VRML
 
 from .cq_models.conn_molex_502250 import generate_part as generate_part_502250
 from .cq_models.conn_molex_kk_5273 import generate_part as generate_part_kk_5273
@@ -176,7 +177,15 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
 
             # Export the assembly to VRML
             if enable_vrml:
-                cq.exporters.assembly.exportVRML(component, os.path.join(output_dir, file_name + ".wrl"), tolerance=cq_globals.VRML_DEVIATION, angularTolerance=cq_globals.VRML_ANGULAR_DEVIATION)
+                # Add parts that are always included
+                parts = [body, pins]
+                colors = [all_params[model]["body_color_key"], all_params[model]["pin_color_key"]]
+                # Add optional insert/latch part
+                if latch != None and not isinstance(latch.val(), cq.Vector):
+                    parts.append(latch)
+                    colors.append(all_params[model]["latch_color_key"])
+                # Export the parts to VRML
+                export_VRML(os.path.join(output_dir, file_name + ".wrl"), parts, colors)
 
             # Update the license
             from _tools import add_license

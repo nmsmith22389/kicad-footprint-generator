@@ -134,7 +134,7 @@ def make_case_top(params):
     show_top = params['show_top']        # If top should be visible or not
     pintype = params['pintype']        # pin type , like SMD or THT
 
-    print('make_case_top\r\n')
+    # print('make_case_top\r\n')
 
     mvX = 0
     mvY = 0
@@ -238,7 +238,7 @@ def make_pins_tht_n(params):
     rotation = params['rotation']        # rotation if required
     pin = params['pin']                # pin/pad cordinates
 
-    print('make_pins_tht_n\r\n')
+    # print('make_pins_tht_n\r\n')
 
     p = pin[0]
     pins=cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=A1 + 2.0).moveTo(p[0], -p[1]).circle(pinpadsize / 2.0, False).extrude(0 - (pinpadh + 2.0))
@@ -274,7 +274,7 @@ def make_pins_smd(params):
     rotation = params['rotation']        # rotation if required
     pin = params['pin']                # pin/pad cordinates
 
-    print('make_pins_smd\r\n')
+    # print('make_pins_smd\r\n')
 
     #
     # Dummy

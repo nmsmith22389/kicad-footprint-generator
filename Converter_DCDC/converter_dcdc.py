@@ -172,7 +172,7 @@ def make_pins(params):
             pl = float(p[3])
             pw = float(p[4])
             ph = float(p[5])
-            print('make_pins 1.1\r\n')
+            # print('make_pins 1.1\r\n')
 
             pint=cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=A1 + pinss).moveTo(px, -py).rect(pl, pw).extrude(0 - (ph + pinss))
 
@@ -199,7 +199,7 @@ def make_pins(params):
             if px < 0 and (py > (0 - (W / 2.0)) and py < ((W / 2.0))):
                 # Left side
                 if px < (0 - (L / 2.0)):
-                    print('make_pins smd 1\r\n')
+                    # print('make_pins smd 1\r\n')
                     # Normal pad
                     myX1 = px / 2.0
                     myY1 = -py
@@ -208,7 +208,7 @@ def make_pins(params):
                     pint=cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=0).moveTo(myX1, myY1).rect(xD, yD).extrude(ph)
                 else:
                     # pad cordinate is inside the body
-                    print('make_pins smd 2\r\n')
+                    # print('make_pins smd 2\r\n')
                     myZ1 = pd / 2.0
                     myY1 = -py
                     xD = pd
@@ -218,14 +218,14 @@ def make_pins(params):
             elif px >= 0 and (py > (0 - (W / 2.0)) and py < ((W / 2.0))):
                 # Right side
                 if px > (L / 2.0):
-                    print('make_pins smd 3\r\n')
+                    # print('make_pins smd 3\r\n')
                     # Normal pad
                     myX1 = px / 2.0
                     xD = -px
                     yD = pd
                     pint=cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=0).moveTo(myX1, myY1).rect(xD, yD).extrude(ph)
                 else:
-                    print('make_pins smd 4\r\n')
+                    # print('make_pins smd 4\r\n')
                     # pad cordinate is inside the body
                     myZ1 = pd / 2.0
                     myY1 = -py
@@ -235,14 +235,14 @@ def make_pins(params):
             elif py < 0:
                 # top pad
                 if p[1] < (W / 2.0):
-                    print('make_pins smd 5\r\n')
+                    # print('make_pins smd 5\r\n')
                     myX1 = px - (pd / 2.0)
                     myY1 = 0 - (py / 2.0)
                     yD = 0 - py
                     xD = pd
                     pint=cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=0).moveTo(myX1, myY1).rect(xD, yD).extrude(ph)
                 else:
-                    print('make_pins smd 6\r\n')
+                    # print('make_pins smd 6\r\n')
                     # pad cordinate is inside the body
                     myZ1 = pd / 2.0
                     yD = pd
@@ -252,14 +252,14 @@ def make_pins(params):
             else:
                 # bottom pad
                 if py > (W / 2.0):
-                    print('make_pins smd 7\r\n')
+                    # print('make_pins smd 7\r\n')
                     myX1 = px - (pd / 2.0)
                     myY1 = 0 - (py / 2.0)
                     yD = 0 - py
                     xD = pd
                     pint=cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=0).moveTo(myX1, myY1).rect(xD, yD).extrude(ph)
                 else:
-                    print('make_pins smd 8\r\n')
+                    # print('make_pins smd 8\r\n')
                     # pad cordinate is inside the body
                     myX1 =  px - (pd / 2.0)
                     myZ1 = pd / 2.0

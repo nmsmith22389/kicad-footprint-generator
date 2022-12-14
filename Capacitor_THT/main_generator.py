@@ -62,6 +62,7 @@ from math import tan, radians
 import cadquery as cq
 from _tools import shaderColors, parameters, cq_color_correct
 from _tools import cq_globals
+from exportVRML.export_part_to_VRML import export_VRML
 
 from .cq_models import c_axial_tht
 from .cq_models import c_disc_tht
@@ -125,6 +126,10 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             print("ERROR: No match found for the model_class")
             continue
 
+        # Used to collect the parts and their colors for VRML export
+        parts = []
+        colors = []
+
         # Used to wrap all the parts into an assembly
         component = cq.Assembly()
 
@@ -148,6 +153,18 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             component.add(mmb, color=cq_color_correct.Color(mark_vg_color[0], mark_vg_color[1], mark_vg_color[2]))
             component.add(bar, color=cq_color_correct.Color(mark_bg_color[0], mark_bg_color[1], mark_bg_color[2]))
             component.add(top, color=cq_color_correct.Color(endcaps_color[0], endcaps_color[1], endcaps_color[2]))
+
+            # Collect the VRML information
+            parts.append(body)
+            parts.append(leads)
+            parts.append(mmb)
+            parts.append(bar)
+            parts.append(top)
+            colors.append(all_params[model]["body_color_key"])
+            colors.append(all_params[model]["pins_color_key"])
+            colors.append(all_params[model]["mark_vg_color_key"])
+            colors.append(all_params[model]["mark_bg_color_key"])
+            colors.append(all_params[model]["endcaps_color_key"])
         else:
             body, leads = cqm.generate_part(all_params[model])
 
@@ -158,6 +175,12 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             component.add(body, color=cq_color_correct.Color(body_color[0], body_color[1], body_color[2]))
             component.add(leads, color=cq_color_correct.Color(pins_color[0], pins_color[1], pins_color[2]))
 
+            # Collect the VRML information
+            parts.append(body)
+            parts.append(leads)
+            colors.append(all_params[model]["body_color_key"])
+            colors.append(all_params[model]["pins_color_key"])
+
         # Create the output directory if it does not exist
         if not os.path.exists(output_dir):
             os.makedirs(output_dir)
@@ -167,7 +190,7 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
 
         # Export the assembly to VRML
         if enable_vrml:
-            cq.exporters.assembly.exportVRML(component, os.path.join(output_dir, model + ".wrl"), tolerance=cq_globals.VRML_DEVIATION, angularTolerance=cq_globals.VRML_ANGULAR_DEVIATION)
+            export_VRML(os.path.join(output_dir, model + ".wrl"), parts, colors)
 
         # Update the license
         from _tools import add_license

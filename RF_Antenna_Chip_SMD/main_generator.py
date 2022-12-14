@@ -59,6 +59,7 @@ import os
 import cadquery as cq
 from _tools import shaderColors, parameters, cq_color_correct
 from _tools import cq_globals
+from exportVRML.export_part_to_VRML import export_VRML
 
 from .rf_antenna_chip_smd import make_chip
 
@@ -130,7 +131,7 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
 
         # Export the assembly to VRML
         if enable_vrml:
-            cq.exporters.assembly.exportVRML(component, os.path.join(output_dir, file_name + ".wrl"), tolerance=cq_globals.VRML_DEVIATION, angularTolerance=cq_globals.VRML_ANGULAR_DEVIATION)
+            export_VRML(os.path.join(output_dir, file_name + ".wrl"), [body, pins, pinmark], [all_params[model]["body_color_key"], all_params[model]["pin_color_key"], all_params[model]["mark_color_key"]])
 
         # Update the license
         from _tools import add_license

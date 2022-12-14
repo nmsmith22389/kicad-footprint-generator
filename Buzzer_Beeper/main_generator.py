@@ -61,6 +61,7 @@ import os
 import cadquery as cq
 from _tools import shaderColors, parameters, cq_color_correct
 from _tools import cq_globals
+from exportVRML.export_part_to_VRML import export_VRML
 
 from .cq_parameters_tht_generic_round import cq_parameters_tht_generic_round
 from .cq_parameters_murata_PKMCS0909E4000 import cq_parameters_murata_PKMCS0909E4000
@@ -111,6 +112,10 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             print("Parameters for %s doesn't exist in 'all_params', skipping." % model)
             continue
 
+        # Collections of the components and their matching colors to export to VRML
+        parts = []
+        colors = []
+
         # Wrap the component parts in an assembly so that we can attach colors
         component = cq.Assembly()
 
@@ -134,6 +139,16 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             component.add(case, color=cq_color_correct.Color(body_color[0], body_color[1], body_color[2]))
             component.add(pins, color=cq_color_correct.Color(pins_color[0], pins_color[1], pins_color[2]))
             component.add(npth_pins, color=cq_color_correct.Color(npth_pin_color[0], npth_pin_color[1], npth_pin_color[2]))
+
+            # Save information for VRML export
+            parts.append(case_top)
+            parts.append(case)
+            parts.append(pins)
+            parts.append(npth_pins)
+            colors.append(all_params[model]["case_top_color_key"])
+            colors.append(all_params[model]["body_color_key"])
+            colors.append(all_params[model]["pins_color_key"])
+            colors.append(all_params[model]["npth_pin_color_key"])
         elif all_params[model]["model_class"] == "cq_parameters_murata_PKMCS0909E4000":
             cqm = cq_parameters_murata_PKMCS0909E4000()
 
@@ -148,6 +163,12 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             # Build the assembly
             component.add(case_top, color=cq_color_correct.Color(case_top_color[0], case_top_color[1], case_top_color[2]))
             component.add(pins, color=cq_color_correct.Color(pins_color[0], pins_color[1], pins_color[2]))
+
+            # Save information for VRML export
+            parts.append(case_top)
+            parts.append(pins)
+            colors.append(all_params[model]["case_top_color_key"])
+            colors.append(all_params[model]["pins_color_key"])
         elif all_params[model]["model_class"] == "cq_parameters_CUI_CST_931RP_A":
             cqm = cq_parameters_CUI_CST_931RP_A()
 
@@ -162,6 +183,12 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             # Build the assembly
             component.add(case_top, color=cq_color_correct.Color(case_top_color[0], case_top_color[1], case_top_color[2]))
             component.add(pins, color=cq_color_correct.Color(pins_color[0], pins_color[1], pins_color[2]))
+
+            # Save information for VRML export
+            parts.append(case_top)
+            parts.append(pins)
+            colors.append(all_params[model]["case_top_color_key"])
+            colors.append(all_params[model]["pins_color_key"])
         elif all_params[model]["model_class"] == "cq_parameters_kingstate_KCG0601":
             cqm = cq_parameters_kingstate_KCG0601()
 
@@ -177,6 +204,14 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             component.add(case_top, color=cq_color_correct.Color(case_top_color[0], case_top_color[1], case_top_color[2]))
             component.add(case, color=cq_color_correct.Color(body_color[0], body_color[1], body_color[2]))
             component.add(pins, color=cq_color_correct.Color(pins_color[0], pins_color[1], pins_color[2]))
+
+            # Save information for VRML export
+            parts.append(case_top)
+            parts.append(case)
+            parts.append(pins)
+            colors.append(all_params[model]["case_top_color_key"])
+            colors.append(all_params[model]["body_color_key"])
+            colors.append(all_params[model]["pins_color_key"])
         elif all_params[model]["model_class"] == "cq_parameters_EMB84Q_RO_SMT_0825_S_4_R":
             cqm = cq_parameters_EMB84Q_RO_SMT_0825_S_4_R()
 
@@ -191,6 +226,12 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             # Build the assembly
             component.add(case_top, color=cq_color_correct.Color(case_top_color[0], case_top_color[1], case_top_color[2]))
             component.add(pins, color=cq_color_correct.Color(pins_color[0], pins_color[1], pins_color[2]))
+
+            # Save information for VRML export
+            parts.append(case_top)
+            parts.append(pins)
+            colors.append(all_params[model]["case_top_color_key"])
+            colors.append(all_params[model]["pins_color_key"])
         elif all_params[model]["model_class"] == "cq_parameters_ProjectsUnlimited_AI_4228_TWT_R":
             cqm = cq_parameters_ProjectsUnlimited_AI_4228_TWT_R()
 
@@ -206,6 +247,14 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             component.add(case_top, color=cq_color_correct.Color(case_top_color[0], case_top_color[1], case_top_color[2]))
             component.add(case, color=cq_color_correct.Color(body_color[0], body_color[1], body_color[2]))
             component.add(pins, color=cq_color_correct.Color(pins_color[0], pins_color[1], pins_color[2]))
+
+            # Save information for VRML export
+            parts.append(case_top)
+            parts.append(case)
+            parts.append(pins)
+            colors.append(all_params[model]["case_top_color_key"])
+            colors.append(all_params[model]["body_color_key"])
+            colors.append(all_params[model]["pins_color_key"])
         elif all_params[model]["model_class"] == "cq_parameters_ProSignal_ABI_XXX_RC":
             cqm = cq_parameters_ProSignal_ABI_XXX_RC()
 
@@ -220,6 +269,12 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             # Build the assembly
             component.add(case_top, color=cq_color_correct.Color(case_top_color[0], case_top_color[1], case_top_color[2]))
             component.add(pins, color=cq_color_correct.Color(pins_color[0], pins_color[1], pins_color[2]))
+
+            # Save information for VRML export
+            parts.append(case_top)
+            parts.append(pins)
+            colors.append(all_params[model]["case_top_color_key"])
+            colors.append(all_params[model]["pins_color_key"])
         elif all_params[model]["model_class"] == "cq_parameters_StarMicronics_HMB_06_HMB_12":
             cqm = cq_parameters_StarMicronics_HMB_06_HMB_12()
 
@@ -234,6 +289,12 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             # Build the assembly
             component.add(case_top, color=cq_color_correct.Color(case_top_color[0], case_top_color[1], case_top_color[2]))
             component.add(pins, color=cq_color_correct.Color(pins_color[0], pins_color[1], pins_color[2]))
+
+            # Save information for VRML export
+            parts.append(case_top)
+            parts.append(pins)
+            colors.append(all_params[model]["case_top_color_key"])
+            colors.append(all_params[model]["pins_color_key"])
         elif all_params[model]["model_class"] == "cq_parameters_TDK_PS1240P02BT":
             cqm = cq_parameters_TDK_PS1240P02BT()
 
@@ -249,6 +310,14 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             component.add(case_top, color=cq_color_correct.Color(case_top_color[0], case_top_color[1], case_top_color[2]))
             component.add(case, color=cq_color_correct.Color(body_color[0], body_color[1], body_color[2]))
             component.add(pins, color=cq_color_correct.Color(pins_color[0], pins_color[1], pins_color[2]))
+
+            # Save information for VRML export
+            parts.append(case_top)
+            parts.append(case)
+            parts.append(pins)
+            colors.append(all_params[model]["case_top_color_key"])
+            colors.append(all_params[model]["body_color_key"])
+            colors.append(all_params[model]["pins_color_key"])
         # cq_parameters_PUI_AI_1440_TWT_24V_2_R
         elif all_params[model]["model_class"] == "cq_parameters_PUI_AI_1440_TWT_24V_2_R":
             cqm = cq_parameters_PUI_AI_1440_TWT_24V_2_R()
@@ -265,6 +334,14 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             component.add(case_top, color=cq_color_correct.Color(case_top_color[0], case_top_color[1], case_top_color[2]))
             component.add(case, color=cq_color_correct.Color(body_color[0], body_color[1], body_color[2]))
             component.add(pins, color=cq_color_correct.Color(pins_color[0], pins_color[1], pins_color[2]))
+
+            # Save information for VRML export
+            parts.append(case_top)
+            parts.append(case)
+            parts.append(pins)
+            colors.append(all_params[model]["case_top_color_key"])
+            colors.append(all_params[model]["body_color_key"])
+            colors.append(all_params[model]["pins_color_key"])
         else:
             print("ERROR: No match found for the model_class")
             continue
@@ -278,7 +355,7 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
 
         # Export the assembly to VRML
         if enable_vrml:
-            cq.exporters.assembly.exportVRML(component, os.path.join(output_dir, model + ".wrl"), tolerance=cq_globals.VRML_DEVIATION, angularTolerance=cq_globals.VRML_ANGULAR_DEVIATION)
+            export_VRML(os.path.join(output_dir, model + ".wrl"), parts, colors)
 
         # Update the license
         from _tools import add_license

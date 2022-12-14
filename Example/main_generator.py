@@ -4,6 +4,7 @@ import cadquery as cq
 from _tools import shaderColors, parameters, cq_color_correct
 from _tools import cq_globals
 from .model_module import generate_part
+from exportVRML.export_part_to_VRML import export_VRML
 
 __title__ = "main generator for [your model name here] model generators"
 __author__ = "scripts: [author name(s)]; models: see cq_model files;"
@@ -79,7 +80,7 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
 
         # Export the assembly to VRML
         if enable_vrml:
-            cq.exporters.assembly.exportVRML(component, os.path.join(output_dir, model + ".wrl"), tolerance=cq_globals.VRML_DEVIATION, angularTolerance=cq_globals.VRML_ANGULAR_DEVIATION)
+            export_VRML(os.path.join(output_dir, model + ".wrl"), [body, leads], [all_params[model]["body_color_key"], all_params[model]["pins_color_key"]])
 
         # Update the license
         from _tools import add_license

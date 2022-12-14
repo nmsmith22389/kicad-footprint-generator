@@ -59,6 +59,7 @@ import os
 import cadquery as cq
 from _tools import shaderColors, parameters, cq_color_correct
 from _tools import cq_globals
+from exportVRML.export_part_to_VRML import export_VRML
 
 from .cq_models.conn_phoenix_mkds import make_case_MKDS_1_5_10_5_08, make_pins_MKDS_1_5_10_5_08
 from .cq_models.conn_phoenix_mc import generate_part as generate_part_mc
@@ -108,6 +109,9 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
         # Convert the number of pins to an array of one if there is only one pin
         num_pins_list = [all_params[model]['num_pins']] if type(all_params[model]['num_pins']).__name__ == "int" else all_params[model]['num_pins']
         for num_pins in num_pins_list:
+            insert = None
+            mount_screw = None
+
             # Used to wrap all the parts into an assembly
             component = cq.Assembly()
 
@@ -201,14 +205,26 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             # Export the assembly to STEP
             component.save(os.path.join(output_dir, file_name + ".step"), cq.exporters.ExportTypes.STEP, write_pcurves=False)
 
-            # Export the assembly to VRML
-            if enable_vrml:
-                cq.exporters.assembly.exportVRML(component, os.path.join(output_dir, file_name + ".wrl"), tolerance=cq_globals.VRML_DEVIATION, angularTolerance=cq_globals.VRML_ANGULAR_DEVIATION)
-
-            # Update the license
+            # Set the custom license info
             from _tools import add_license
             add_license.STR_licAuthor = "Rene Poeschl"
             add_license.STR_licEmail = "poeschlr@gmail.com"
+
+            # Export the assembly to VRML
+            if enable_vrml:
+                parts = [body, pins]
+                colors = [all_params[model]["body_color_key"], all_params[model]["pin_color_key"]]
+                # Optional parts
+                if insert != None:
+                    parts.append(insert)
+                    colors.append(all_params[model]["insert_color_key"])
+                if mount_screw != None:
+                    parts.append(mount_screw)
+                    colors.append(all_params[model]["screw_color_key"])
+                # Do the export
+                export_VRML(os.path.join(output_dir, file_name + ".wrl"), parts, colors)
+
+            # Update the license
             add_license.addLicenseToStep(output_dir, file_name + ".step",
                                             add_license.LIST_int_license,
                                             add_license.STR_int_licAuthor,

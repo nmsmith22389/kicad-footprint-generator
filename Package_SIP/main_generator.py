@@ -59,6 +59,7 @@ import os
 import cadquery as cq
 from _tools import shaderColors, parameters, cq_color_correct
 from _tools import cq_globals
+from exportVRML.export_part_to_VRML import export_VRML
 
 from .cq_eSIP import cq_eSIP
 from .cq_Sanyo_STK4xx import cq_Sanyo_STK4xx
@@ -216,7 +217,18 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
 
         # Export the assembly to VRML
         if enable_vrml:
-            cq.exporters.assembly.exportVRML(component, os.path.join(output_dir, file_name + ".wrl"), tolerance=cq_globals.VRML_DEVIATION, angularTolerance=cq_globals.VRML_ANGULAR_DEVIATION)
+            parts = [body, pins]
+            colors = [all_params[model]["body_color_key"], all_params[model]["pin_color_key"]]
+            # Make sure we do not have a dummy top
+            if not isinstance(body_top.val(), cq.Vector):
+                parts.append(body_top)
+                colors.append(all_params[model]["body_top_color_key"])
+            # Make sure we do not have dummy nth pins
+            if not isinstance(npth_pins.val(), cq.Vector):
+                parts.append(npth_pins)
+                colors.append(all_params[model]["npth_pin_color_key"])
+            # Dp the export
+            export_VRML(os.path.join(output_dir, file_name + ".wrl"), parts, colors)
 
         # Update the license
         from _tools import add_license

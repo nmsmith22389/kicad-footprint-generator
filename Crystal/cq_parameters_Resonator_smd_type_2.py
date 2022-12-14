@@ -157,7 +157,7 @@ class cq_parameters_Resonator_smd_type_2():
         pw = params['p_width']                 # pin width
         rotation = params['rotation']          # Rotation if required
         
-        print('make_top ...\r\n')
+        # print('make_top ...\r\n')
 
         of = 0.0
         if (type == 1):
@@ -208,7 +208,7 @@ class cq_parameters_Resonator_smd_type_2():
         pw = params['p_width']                 # pin width
         rotation = params['rotation']          # Rotation if required
         
-        print('make_case ...\r\n')
+        # print('make_case ...\r\n')
 
         of = 0.02
         if (type == 1):
@@ -244,7 +244,7 @@ class cq_parameters_Resonator_smd_type_2():
         pw = params['p_width']                 # pin width
         rotation = params['rotation']          # Rotation if required
         
-        print('make_bottom ...\r\n')
+        # print('make_bottom ...\r\n')
 
         of = 0.0
         if (type == 1):
@@ -296,7 +296,7 @@ class cq_parameters_Resonator_smd_type_2():
         pw = params['p_width']                 # pin width
         rotation = params['rotation']          # Rotation if required
         
-        print('make_pins ...\r\n')
+        # print('make_pins ...\r\n')
 
         pins = None
         pil = pl

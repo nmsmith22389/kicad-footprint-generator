@@ -116,14 +116,23 @@ def generate_part(params):
     bend_offset_y = (sin(radians(60.0))*d)/sin(radians(90.0))
     bend_offset_z = (sin(radians(30.0))*d)/sin(radians(90.0))
 
-    # draw the leads
-    lead1 = cq.Workplane("XY").workplane(offset=-ll).center(-F/2,0).circle(d/2).extrude(ll+L/4-d+bs)
-    bend = cq.Workplane("XY").workplane(offset=L/4-d+bs, centerOption="CenterOfMass").center(-F/2,0).circle(d/2).revolve(30,(-F/2+d/2+d,d)).rotateAboutCenter((0, 1, 0), 180).translate((0,0,bend_offset_z)).transformed((-30,0,0),(0,d-bend_offset_y,bend_offset_z)).circle(d/2).extrude(L/2)
+    # Draw the leads
+    zbelow = 3.0
+    h = W + zbelow
+    r = d * 1.5 # radius of pin bends
+    arco = (1-sqrt(2)/2)*r # helper factor to create midpoints of profile radii
 
-    lead1 = lead1.union(bend)
-    lead1 = lead1.rotate((-F/2,0,0), (-F/2, 0, 1), -90)
-    lead2 = lead1.rotate((-F/2,0,0), (-F/2,0,1), 180).translate((F,0,0))
-    leads = lead1.union(lead2)
+    # create the path and sweep the leads
+    path = (
+        cq.Workplane("XZ")
+        .lineTo(0,h-r-zbelow)
+        .threePointArc((arco,h-arco-zbelow),(r,h-zbelow))
+        .lineTo(params['F']-r,h-zbelow)
+        .threePointArc((params['F']-arco,h-arco-zbelow),(params['F'],h-r-zbelow))
+        .lineTo(params['F'],0)
+        )
+    lead1 = cq.Workplane("XY").circle(d/2).sweep(path).translate((-params['F'] / 2.0,0,-W / 2.0))
+    leads = lead1
 
     h = W/2
     c = L

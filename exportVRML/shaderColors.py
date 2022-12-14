@@ -226,12 +226,58 @@ named_colors = {
         transparency= 0.10,
         shininess= 0.125
     ),
-     "led white":shaderColor(
+    "led white":shaderColor(
         name="LED-WHITE",
         ambientIntensity=0.494,
         diffuseColor=(0.895, 0.891, 0.813),
         specularColor=(0.047, 0.055, 0.109),
         transparency=0.10,
         shininess=0.125
+        ),
+    "metal aluminum":shaderColor(
+        name="MET-ALUMINUM",
+        ambientIntensity=0.256000,
+        diffuseColor=(0.372322, 0.371574, 0.373173),
+        specularColor=(0.556122, 0.554201, 0.556122),
+        transparency=0.0,
+        shininess=0.127551
+        ),
+    "dark green body":shaderColor(
+        name="PLASTIC-GREEN-27",
+        ambientIntensity= 0.248407,
+        diffuseColor= (0.135944, 0.190588, 0.122239),
+        specularColor= (0.209184, 0.113842, 0.111328),
+        shininess= 0.086735
+        ),
+    "metal silver":shaderColor(
+        name="MET-SILVER",
+        ambientIntensity=0.022727,
+        diffuseColor=(0.50754, 0.50754, 0.50754),
+        specularColor=(0.508273, 0.508273, 0.508273),
+        transparency=0.0,
+        shininess=0.4
+        ),
+    "red body":shaderColor(
+        name="RED-BODY",
+        ambientIntensity= 0.683,
+        diffuseColor= (0.700, 0.100, 0.050),
+        specularColor= (0.300, 0.400, 0.150),
+        shininess= 0.25
+        ),
+    "glass_grey":shaderColor(
+        name="GLASS-GREY",
+        ambientIntensity=2.018212,
+        diffuseColor=(0.400769, 0.441922, 0.459091),
+        specularColor=(0.573887, 0.649271, 0.810811),
+        transparency=0.37,
+        shininess=0.127273
+        ),
+    "metal copper":shaderColor(
+        name="MET-COPPER",
+        ambientIntensity=0.022727,
+        diffuseColor=(0.7038, 0.27048, 0.0828),
+        specularColor=(0.780612, 0.37, 0.000000),
+        transparency=0.0,
+        shininess=0.2
         )
 }

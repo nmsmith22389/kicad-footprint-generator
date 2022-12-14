@@ -157,7 +157,7 @@ class cq_parameters_Resonator_peterman_smd():
         pw = params['p_width']                 # pin width
         rotation = params['rotation']          # Rotation if required
         
-        print('make_top ...\r\n')
+        # print('make_top ...\r\n')
 
         tw = W * 0.80
         td = W - tw
@@ -193,7 +193,7 @@ class cq_parameters_Resonator_peterman_smd():
         pw = params['p_width']                 # pin width
         rotation = params['rotation']          # Rotation if required
         
-        print('make_top ...\r\n')
+        # print('make_top ...\r\n')
 
         bh = H * 0.5
         bc0 = H * 0.505
@@ -273,7 +273,7 @@ class cq_parameters_Resonator_peterman_smd():
         pw = params['p_width']                 # pin width
         rotation = params['rotation']          # Rotation if required
         
-        print('make_bottom ...\r\n')
+        # print('make_bottom ...\r\n')
 
         bh = H * 0.5
         #
@@ -324,7 +324,7 @@ class cq_parameters_Resonator_peterman_smd():
         pw = params['p_width']                 # pin width
         rotation = params['rotation']          # Rotation if required
         
-        print('make_pins ...\r\n')
+        # print('make_pins ...\r\n')
 
         pins = None
         if (pc == 2):

@@ -149,7 +149,7 @@ class cq_parameters_Resonator_AT310():
 
         rotation = params['rotation']          # Rotation if required
 
-        print('make_top ...\r\n')
+        # print('make_top ...\r\n')
 
         tt = 0.1
         tr = 0.15
@@ -192,7 +192,7 @@ class cq_parameters_Resonator_AT310():
 
         rotation = params['rotation']          # Rotation if required
 
-        print('make_case ...\r\n')
+        # print('make_case ...\r\n')
 
         tt = 0.1
         case = cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=0.0).moveTo(0.0, 0.0).circle(W / 2.2, False).extrude(3.0 * tt)
@@ -227,7 +227,7 @@ class cq_parameters_Resonator_AT310():
 
         rotation = params['rotation']          # Rotation if required
 
-        print('make_pins ...\r\n')
+        # print('make_pins ...\r\n')
 
         pins = None
         if (type == 1):

@@ -113,14 +113,23 @@ def generate_part(params):
     bs = params['bs']           # board separation
     rot = params['rotation']
 
-    # draw the leads
-    lead1 = cq.Workplane("XY").workplane(offset=-ll).center(-F/2,0).circle(d/2).extrude(ll+D/2-d+bs)
-    lead_round = lead1.faces(">Z").workplane(centerOption="CenterOfMass").circle(d/2).revolve(90,(F/2+d/2+d, d)).rotateAboutCenter((0,0,1), -90)
-    lead1 = lead1.union(lead_round)
-    # lead1 = lead1.rotate((-F/2,0,0), (0,0,1), -90)
-    lead2 = lead1.rotateAboutCenter((0,0,1), 180).translate((F,0,0))
-    Hlead = cq.Workplane("YZ").workplane(offset=-F/2+d - 0.05).center(0,D/2+bs).circle(d/2).extrude(F-d*2 + 0.1)
-    leads = lead1.union(lead2).union(Hlead)
+    # Draw the leads
+    zbelow = 3.0
+    h = D + zbelow
+    r = d * 1.5 # radius of pin bends
+    arco = (1-sqrt(2)/2)*r # helper factor to create midpoints of profile radii
+
+    # create the path and sweep the leads
+    path = (
+        cq.Workplane("XZ")
+        .lineTo(0,h-r-zbelow)
+        .threePointArc((arco,h-arco-zbelow),(r,h-zbelow))
+        .lineTo(params['F']-r,h-zbelow)
+        .threePointArc((params['F']-arco,h-arco-zbelow),(params['F'],h-r-zbelow))
+        .lineTo(params['F'],0)
+        )
+    lead1 = cq.Workplane("XY").circle(d/2).sweep(path).translate((-params['F'] / 2.0,0,-D / 2.0))
+    leads = lead1
 
     #draw the body
     body = cq.Workplane("YZ").workplane(offset=-L/2).center(0,D/2+bs).circle(D/2).extrude(L)
