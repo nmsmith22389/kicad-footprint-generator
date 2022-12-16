@@ -5557,7 +5557,7 @@ Texas_S-PVSON-N8:
   mark_color_key: light brown label
   source: 'http://www.ti.com/lit/ds/symlink/opa2333.pdf'
 
-Texas_R_PUQFN-N12:
+Texas_R-PUQFN-N12:
   c: 0.2
   L: 0.4
   fp_s: True
@@ -5584,9 +5584,9 @@ Texas_R_PUQFN-N12:
   epad_n: null
   epad_pitch: null
   excluded_pins: null
-  model_name: Texas_R_PUQFN-N12
+  model_name: Texas_R-PUQFN-N12
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   body_color_key: black body
   pin_shapes: null
   pin_color_key: metal grey pins
