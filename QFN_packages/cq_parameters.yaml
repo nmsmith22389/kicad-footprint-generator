@@ -9481,6 +9481,43 @@ WDFN-8_2x2mm_P0.5mm:
   mark_color_key: light brown label
   source: 'http://www.onsemi.com/pub/Collateral/NCP4308-D.PDF'
 
+W-PDFN-8-1EP_6x5mm_P1.27mm_EP3x3mm:
+  c: 0.2  # pin thickness, not used for concave pins
+  #K: 0.2  # Fillet radius for pin edges
+  L: 0.6  # pin top flat part length (including fillet radius)
+  fp_s: True  # True for circular pinmark, False for square pinmark (useful for diodes)
+  fp_r: 0.5  # first pin indicator radius
+  fp_d: 0.25  # first pin indicator distance from edge
+  fp_dx: null  # first pin indicator distance from X edge
+  fp_dy: null  # first pin indicator distance from Y edge
+  fp_z: 0.01  # first pin indicator depth
+  ef: 0.0  # fillet of edges  Note: bigger bytes model with fillet
+  cce: 0.5  # chamfer of the epad 1st pin corner
+  D: 5.0  # body overall length
+  E: 6.0  # body overall width
+  A1: 0.05  # body-board separation  maui to check
+  A2: 0.75  # body height
+  b: 0.4  # pin width
+  e: 1.27 # pin (center-to-center) distance
+  m: 0.0  # margin between pins and body
+  ps: rounded  # rounded pads
+  npx: 4  # number of pins along X axis (width)
+  npy: 0  # number of pins along y axis (length)
+  epad: [3, 3]  # exposed pad, null, radius as float for circular or the dimensions as tuple: (width, length) for square
+  epad_offsetX: null  # offset X for exposed pad
+  epad_offsetY: null  # offset Y for exposed pad
+  epad_n: null  # number of exposed pads, specified as tuple (along X axis, along Y axis) in case a matrix of them is needed.
+  epad_pitch: null  # epad center to epad center, specified as tuple (along X axis, along Y axis)
+  excluded_pins: null  # no pin excluded
+  model_name: 'W-PDFN-8-1EP_6x5mm_P1.27mm_EP3x3mm' # model name
+  rotation: -90  #rotation if required
+  destination_dir: 'Package_DFN_QFN.3dshapes'
+  body_color_key: 'black body'
+  pin_color_key: 'metal grey pins'
+  mark_color_key: 'light brown label'
+  pin_shapes: null  # coords for pin shapes as [(x,y)]
+  source: 'https://media-www.micron.com/-/media/client/global/documents/products/data-sheet/nor-flash/serial-nor/mt25q/die-rev-a/mt25q_qljs_u_256_aba_0.pdf#page=22'
+
 WQFN-14-1EP_2.5x2.5mm_P0.5mm_EP1.45x1.45mm:
   c: 0.2
   L: 0.25
