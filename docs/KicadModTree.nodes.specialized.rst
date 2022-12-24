@@ -1,7 +1,7 @@
 KicadModTree.nodes.specialized package
 ======================================
 
-To simpilfy the creation on footprints, we have special classes which are build onto the base nodes. special nodes are
+To simplify the creation on footprints, we have special classes which are build onto the base nodes. special nodes are
 converted to base nodes when creating the footprint, and allows us to create much more complex shapes with as little
 boilerplate code as possible.
 

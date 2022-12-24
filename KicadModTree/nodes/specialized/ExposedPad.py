@@ -79,11 +79,11 @@ class ExposedPad(Node):
         * *via_drill* (``float``) --
           via drill diameter (default: 0.3)
         * *via_tented* (VIA_TENTED, VIA_TENTED_TOP_ONLY, VIA_TENTED_BOTTOM_ONLY, VIA_NOT_TENTED) --
-          Determines which side of the thermal vias is covered in soldermask.
-          On the top only vias outside the defined mask area can be covered in soldermask.
+          Determines which side of the thermal vias is covered in solder mask.
+          On the top only vias outside the defined mask area can be covered in solder mask.
           default: VIA_TENTED
         * *min_annular_ring* (``float``) --
-          Anullar ring for thermal vias. (default: 0.15)
+          Annular ring for thermal vias. (default: 0.15)
         * *bottom_pad_Layers* (``[layer string]``) --
           Select layers for the bottom pad (default: [B.Cu]) --
           Ignored if no thermal vias are added.
@@ -93,7 +93,7 @@ class ExposedPad(Node):
           Ignored if no bottom pad given.
         * *paste_avoid_via* (``bool``) --
           Paste automatically generated to avoid vias (default: false)
-        * *via_paste_clarance* (``float``)
+        * *via_paste_clearance* (``float``)
           Clearance between paste and via drills (default: 0.05)
           Only used if paste_avoid_via is set.
 
@@ -211,7 +211,7 @@ class ExposedPad(Node):
             ])
 
     def __viasInMaskCount(self, idx):
-        r""" Determine the number of vias within the soldermask area
+        r""" Determine the number of vias within the solder mask area
 
         :param idx: (``int``) --
            determines if the x or y direction is used.

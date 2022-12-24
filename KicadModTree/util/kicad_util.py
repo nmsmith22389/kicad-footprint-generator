@@ -187,7 +187,7 @@ class SexprSerializer(object):
 
     def __str__(self):
         '''
-        :return: A string which respresents the sexpr
+        :return: A string which represents the sexpr
         '''
         return self.sexpr_to_string(self.sexpr)
 
