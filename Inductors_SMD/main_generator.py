@@ -54,13 +54,13 @@ __Comment__ = '''This generator loads cadquery model scripts and generates step/
 ___ver___ = "2.0.0"
 
 import os
-
+import yaml
 import cadquery as cq
+import csv
+import glob
 from _tools import shaderColors, parameters, cq_color_correct
 from _tools import cq_globals
 from exportVRML.export_part_to_VRML import export_VRML
-
-from .inductors_smd import make_inductor
 
 def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
     """
@@ -68,72 +68,128 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
     """
     models = []
 
-    all_params = parameters.load_parameters("Inductors_SMD")
 
-    if all_params == None:
-        print("ERROR: Model parameters must be provided.")
+    if output_dir_prefix == None:
+        print("ERROR: An output directory must be provided.")
         return
+    
+    # model_to_build can be 'all', or a specific YAML file
+    # find yaml files here, need to figure out the path to do so
 
-    # Handle the case where no model has been passed
-    if model_to_build is None:
-        print("No variant name is given! building: {0}".format(model_to_build))
+    inductorPath = os.path.dirname(os.path.realpath(__file__))
+    allYamlFiles = glob.glob(f'{inductorPath}/*.yaml')
 
-        model_to_build = all_params.keys()[0]
+    if not allYamlFiles:
+        print('No YAML files found to process.')
+        return
+    
+    fileList = None
 
-    # Handle being able to generate all models or just one
-    if model_to_build == "all":
-        models = all_params
-    else:
-        models = { model_to_build: all_params[model_to_build] }
-    # Step through the selected models
-    for model in models:
-        if output_dir_prefix == None:
-            print("ERROR: An output directory must be provided.")
-            return
-        else:
-            # Construct the final output directory
-            output_dir = os.path.join(output_dir_prefix, all_params[model]['destination_dir'])
+    if model_to_build != "all":
+        for yamlFile in allYamlFiles:
+            basefilename = os.path.splitext(os.path.basename(yamlFile))[0]
+            if basefilename == model_to_build:
+                fileList = [yamlFile]   # The file list will be just 1 item, our specific 
+                break
 
-        # Safety check to make sure the selected model is valid
-        if not model in all_params.keys():
-            print("Parameters for %s doesn't exist in 'all_params', skipping." % model)
-            continue
+    # 2 possibilities now - fileList is a single file that we found, or fileList is empty (didn't find file, or building all)
+    
+    # Trying to build a specific file and it was not found
+    if model_to_build != "all" and fileList is None:
+        print(f'Could not find YAML for model {model_to_build}')
+        return
+    elif model_to_build == "all":
+        fileList = allYamlFiles
 
-        # Load the appropriate colors
-        body_color = shaderColors.named_colors[all_params[model]["body_color_key"]].getDiffuseFloat()
-        pin_color = shaderColors.named_colors[all_params[model]["pin_color_key"]].getDiffuseFloat()
+    print(f'Files to process : {fileList}')
 
-        # Make the parts of the model
-        (body, pins) = make_inductor(all_params[model])
-        body = body.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
-        pins = pins.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
+    for yamlFile in fileList:
+        with open(yamlFile, 'r') as stream:
+            print(f'Processing file {yamlFile}')
+            data_loaded = yaml.safe_load(stream)
+            for yamlBlocks in range(0, len(data_loaded)): # For each series block in the yaml file, we process the CSV
+                seriesName = data_loaded[yamlBlocks]['series']
+                seriesManufacturer = data_loaded[yamlBlocks]['manufacturer']
+                seriesDatasheet = data_loaded[yamlBlocks]['datasheet']
+                seriesCsv = data_loaded[yamlBlocks]['csv']
+                seriesSpacing = data_loaded[yamlBlocks].get('spacing', 'edge')   # default to edge
+                seriesTags = data_loaded[yamlBlocks]['tags']      # space delimited list of the tags
+                seriesTagsString = ' '.join(seriesTags)
 
-        # Used to wrap all the parts into an assembly
-        component = cq.Assembly()
+                try:
+                    seriesBodyColor = data_loaded[yamlBlocks]['3d'].get('bodyColor', 'black body')
+                    seriesPinColor = data_loaded[yamlBlocks]['3d'].get('pinColor', 'metal grey pins')
+                    seriesPadThickness = data_loaded[yamlBlocks]['3d'].get('padThickness', 0.05)
+                    seriesType = data_loaded[yamlBlocks]['3d'].get('type', 1)
+                except:
+                    # 3D section was not defined, set to default.
+                    seriesBodyColor = 'black body'
+                    seriesPinColor = 'metal grey pins'
+                    seriesPadThickness = 0.05
+                    seriesType = 1
+                
+                yamlFolder = os.path.split(yamlFile)[0]
 
-        # Add the parts to the assembly
-        component.add(body, color=cq_color_correct.Color(body_color[0], body_color[1], body_color[2]))
-        component.add(pins, color=cq_color_correct.Color(pin_color[0], pin_color[1], pin_color[2]))
+                # Construct the final output directory
+                output_dir = os.path.join(output_dir_prefix, f'{seriesManufacturer}_{seriesName}')
 
-        # Create the output directory if it does not exist
-        if not os.path.exists(output_dir):
-            os.makedirs(output_dir)
+                with open(os.path.join(yamlFolder, seriesCsv), encoding='utf-8-sig') as csvfile:
+                    print(f'Processing child {seriesCsv}')
+                    reader = csv.DictReader(csvfile)
 
-        # Assemble the filename
-        file_name = all_params[model]['model_name']
+                    for row in reader:
+                        partName = row['PartNumber']
+                        # Physical dimensions
+                        widthX = float(row['widthX'])
+                        lengthY = float(row['lengthY'])
+                        height = float(row['height'])
+                        padX  = float(row['padX'])
+                        padY = float(row['padY'])
+                        
+                        rotation = 0
 
-        # Export the assembly to STEP
-        component.save(os.path.join(output_dir, file_name + ".step"), cq.exporters.ExportTypes.STEP, write_pcurves=False)
+                        case = cq.Workplane("XY").box(widthX, lengthY, height, (True, True, False))
+                        case = case.edges("|Z").fillet(min(lengthY,widthX)/20)
+                        case = case.edges(">Z").fillet(min(lengthY,widthX)/20)
 
-        # Export the assembly to VRML
-        if enable_vrml:
-            export_VRML(os.path.join(output_dir, file_name + ".wrl"), [body, pins], [all_params[model]["body_color_key"], all_params[model]["pin_color_key"]])
+                        if seriesType == 1:
+                            pin1 = cq.Workplane("XY").box(padX, padY, seriesPadThickness, (True, True, False)).translate((-(widthX-padX)/2, 0, 0))
+                            pin2 = cq.Workplane("XY").box(padX, padY, seriesPadThickness, (True, True, False)).translate(((widthX-padX)/2, 0, 0))
+                        else:
+                            # Type 2 has visible side "wings". High is approximate since it's rarely specificed, and it shouldn't be more then 3mm probably so we use a min() function.
+                            pin1 = cq.Workplane("XY").box(padX + 0.01, padY, min(3, height * 0.3), (True, True, False)).translate((-(widthX-padX)/2, 0, 0))
+                            pin2 = cq.Workplane("XY").box(padX + 0.01, padY, min(3, height * 0.3), (True, True, False)).translate(((widthX-padX)/2, 0, 0))
+    
+                        pins = pin1.union(pin2)
 
-        # Update the license
-        from _tools import add_license
-        add_license.addLicenseToStep(output_dir, file_name + ".step",
-                                        add_license.LIST_int_license,
-                                        add_license.STR_int_licAuthor,
-                                        add_license.STR_int_licEmail,
-                                        add_license.STR_int_licOrgSys,
-                                        add_license.STR_int_licPreProc)
+                        case = case.cut(pins)
+                        
+                        case = case.rotate((0, 0, 0), (0, 0, 1), rotation)
+                        pins = pins.rotate((0, 0, 0), (0, 0, 1), rotation)
+
+                        # Used to wrap all the parts into an assembly
+                        component = cq.Assembly()
+
+                        # Add the parts to the assembly
+                        stepBodyColor = shaderColors.named_colors[seriesBodyColor].getDiffuseFloat()
+                        stepPinColor = shaderColors.named_colors[seriesPinColor].getDiffuseFloat()
+
+                        component.add(case, color=cq_color_correct.Color(stepBodyColor[0], stepBodyColor[1], stepBodyColor[2]))
+                        component.add(pins, color=cq_color_correct.Color(stepPinColor[0], stepPinColor[1], stepPinColor[2]))
+
+                        # Create the output directory if it does not exist
+                        if not os.path.exists(output_dir):
+                            os.makedirs(output_dir)
+
+                        # Assemble the filename
+                        file_name = f'L_{seriesManufacturer}_{partName}'
+
+                        # Export the assembly to STEP
+                        component.save(os.path.join(output_dir, file_name + ".step"), cq.exporters.ExportTypes.STEP, write_pcurves=False)
+
+                        # Export the assembly to VRML
+                        # Dec 2022- do not use CadQuery VRML export, it scales/uses inches.
+                        export_VRML(os.path.join(output_dir, file_name + ".wrl"), [case, pins], [seriesBodyColor, seriesPinColor])
+
+
+
