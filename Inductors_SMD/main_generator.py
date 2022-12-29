@@ -116,22 +116,25 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
                 seriesTags = data_loaded[yamlBlocks]['tags']      # space delimited list of the tags
                 seriesTagsString = ' '.join(seriesTags)
 
+                # If the 3d section is defined, then this block will pick up some values
                 try:
                     seriesBodyColor = data_loaded[yamlBlocks]['3d'].get('bodyColor', 'black body')
                     seriesPinColor = data_loaded[yamlBlocks]['3d'].get('pinColor', 'metal grey pins')
                     seriesPadThickness = data_loaded[yamlBlocks]['3d'].get('padThickness', 0.05)
                     seriesType = data_loaded[yamlBlocks]['3d'].get('type', 1)
+                    seriesCornerRadius = data_loaded[yamlBlocks]['3d'].get('cornerRadius', 2)
                 except:
                     # 3D section was not defined, set to default.
                     seriesBodyColor = 'black body'
                     seriesPinColor = 'metal grey pins'
                     seriesPadThickness = 0.05
                     seriesType = 1
+                    seriesCornerRadius = 2
                 
                 yamlFolder = os.path.split(yamlFile)[0]
 
                 # Construct the final output directory
-                output_dir = os.path.join(output_dir_prefix, f'{seriesManufacturer}_{seriesName}')
+                output_dir = os.path.expanduser(output_dir_prefix)
 
                 with open(os.path.join(yamlFolder, seriesCsv), encoding='utf-8-sig') as csvfile:
                     print(f'Processing child {seriesCsv}')
@@ -143,22 +146,36 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
                         widthX = float(row['widthX'])
                         lengthY = float(row['lengthY'])
                         height = float(row['height'])
-                        padX  = float(row['padX'])
-                        padY = float(row['padY'])
+                        
+                        try:
+                            padX  = float(row['padX'])
+                            padY = float(row['padY'])
+                        except:
+                            print(f'No physical pad dimensions (padX/padY) found - using PCB landing dimensions (landingX/landingY) as a substitute.')
+                            padX = float(row['landingX']) - 0.05
+                            padY = float(row['landingY']) - 0.05
                         
                         rotation = 0
 
                         case = cq.Workplane("XY").box(widthX, lengthY, height, (True, True, False))
-                        case = case.edges("|Z").fillet(min(lengthY,widthX)/20)
+                        
+                        if seriesType != 3:
+                            case = case.edges("|Z").fillet(min(lengthY,widthX)/20)
+                        else:   # Type 3 is heavy fillet
+                            case = case.edges("|Z").fillet(seriesCornerRadius)    
+                        
                         case = case.edges(">Z").fillet(min(lengthY,widthX)/20)
+                        
+                        
+                        
 
-                        if seriesType == 1:
-                            pin1 = cq.Workplane("XY").box(padX, padY, seriesPadThickness, (True, True, False)).translate((-(widthX-padX)/2, 0, 0))
-                            pin2 = cq.Workplane("XY").box(padX, padY, seriesPadThickness, (True, True, False)).translate(((widthX-padX)/2, 0, 0))
-                        else:
+                        if seriesType == 2:
                             # Type 2 has visible side "wings". High is approximate since it's rarely specificed, and it shouldn't be more then 3mm probably so we use a min() function.
                             pin1 = cq.Workplane("XY").box(padX + 0.01, padY, min(3, height * 0.3), (True, True, False)).translate((-(widthX-padX)/2, 0, 0))
                             pin2 = cq.Workplane("XY").box(padX + 0.01, padY, min(3, height * 0.3), (True, True, False)).translate(((widthX-padX)/2, 0, 0))
+                        else:   # Default to no visible wings
+                            pin1 = cq.Workplane("XY").box(padX, padY, seriesPadThickness, (True, True, False)).translate((-(widthX-padX)/2, 0, 0))
+                            pin2 = cq.Workplane("XY").box(padX, padY, seriesPadThickness, (True, True, False)).translate(((widthX-padX)/2, 0, 0))
     
                         pins = pin1.union(pin2)
 
