@@ -1021,6 +1021,37 @@ BGA-1295_36x36_37.5x37.5mm_Pitch1.0mm:
   pins_color_key: "metal grey pins"
   marking_color_key: "light brown label"
 
+Analog_BGA-49_6.25x6.25mm_Layout7x7_P0.8mm_Ball0.5mm_Pad0.4mm:
+  # from https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/ltc-legacy-bga/05081600_0_bga49.pdf
+  fp_r: 0.75
+  fp_d: 0.25
+  fp_z: 0.01
+  ef: 0.0
+  cff: null
+  cf: null
+  D: 6.25
+  E: 6.25
+  D1: null
+  E1: null
+  A1: 0.4
+  A2: null
+  A: 2.1
+  b: 0.5
+  e: 0.8
+  ex: null
+  sp: 0.0
+  npx: 7
+  npy: 7
+  excluded_pins: null
+  molded: null
+  old_modelName: "Analog_BGA-49_7x7_6.25x6.25mm_Pitch0.8mm"
+  modelName: "Analog_BGA-49_6.25x6.25mm_Layout7x7_P0.8mm_Ball0.5mm_Pad0.4mm"
+  rotation: -90
+  body_bot_color_key: "dark green body"
+  body_color_key: "black body"
+  pins_color_key: "metal grey pins"
+  marking_color_key: "light brown label"
+
 Texas_DSBGA-8_0.9x1.9mm_Layout2x4_P0.5mm:
   # from http://www.ti.com/lit/ds/symlink/txb0102.pdf
   fp_r: 0.3
