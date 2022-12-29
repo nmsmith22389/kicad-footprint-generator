@@ -4434,6 +4434,43 @@ QFN-56-1EP_7x7mm_Pitch0.4mm:
   mark_color_key: 'light brown label'
   source: 'http://www.onsemi.com/pub/Collateral/485BT-01.pdf'
 
+QFN-56-1EP_7x7mm_P0.4mm_EP4x4mm:
+  c: 0.203
+  L: 0.4
+  fp_s: True
+  fp_r: 0.5
+  fp_d: 0.2
+  fp_dx: null
+  fp_dy: null
+  fp_z: 0.01
+  ef: 0.0
+  cce: 0.3
+  D: 7.0
+  E: 7.0
+  A1: 0.025
+  A2: 0.85
+  b: 0.2
+  e: 0.4
+  m: 0.0
+  ps: rounded
+  npx: 14
+  npy: 14
+  epad: [4, 4]
+  epad_offsetX: null
+  epad_offsetY: null
+  epad_n: null
+  epad_pitch: null
+  excluded_pins: null
+  model_name: QFN-56-1EP_7x7mm_P0.4mm_EP4x4mm
+  rotation: -90
+  destination_dir: Housings_DFN_QFN.3dshapes
+  body_color_key: null
+  pin_shapes: null
+  body_color_key: 'black body'
+  pin_color_key: 'metal grey pins'
+  mark_color_key: 'light brown label'
+  source: 'https://www.espressif.com/sites/default/files/documentation/esp32-s2_datasheet_en.pdf#page=41'
+
 QFN-56-1EP_8x8mm_P0.5mm_EP4.5x5.2mm:
   c: 0.2
   L: 0.4
