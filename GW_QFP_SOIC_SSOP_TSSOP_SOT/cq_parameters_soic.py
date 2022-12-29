@@ -256,6 +256,35 @@ part_params = {
         modelName = 'SOIC-16_3.9x9.9mm_P1.27mm', #modelName
         rotation = -90,   # rotation if required
         ),
+    'SOIC-16_4.55x10.3mm_P1.27mm': Params( # from https://toshiba.semicon-storage.com/info/docget.jsp?did=12858&prodName=TLP291-4
+        the = 9.0,      # body angle in degrees
+        tb_s = 0.15,    # top part of body is that much smaller
+        c = 0.15,        # pin thickness, body center part height
+        R1 = 0.1,       # pin upper corner, inner radius
+        R2 = 0.1,       # pin lower corner, inner radius
+        S = 0.25,       # pin top flat part length (excluding corner arc)
+#        L = 0.79,       # pin bottom flat part length (including corner arc)
+        fp_s = True,     # True for circular pinmark, False for square pinmark (useful for diodes)
+        fp_r = 0.6,     # first pin indicator radius
+        fp_d = 0.2,     # first pin indicator distance from edge
+        fp_z = 0.1,     # first pin indicator depth
+        ef = 0.0, # 0.05,      # fillet of edges  Note: bigger bytes model with fillet
+        cc1 = 0.25, #0.45 chamfer of the 1st pin corner
+        D1 = 10.3,       # body length
+        E1 = 4.55,       # body width
+        E = 7.0,        # body overall width
+        A1 = 0.1,       # body-board separation
+        A2 = 2.1,      # body height
+        b = 0.4,       # pin width
+        e = 1.27,
+        npx = 8,        # number of pins along X axis (width)
+        npy = 0,        # number of pins along y axis (length)
+        epad = None,    # e Pad
+        excluded_pins = None, #no pin excluded
+        old_modelName = 'SOIC-16_4.55x10.3mm_P1.27mm', #modelName
+        modelName = 'SOIC-16_4.55x10.3mm_P1.27mm', #modelName
+        rotation = -90,   # rotation if required
+        ),
     'SOIC-16W_7.5x10.3mm_Pitch1.27mm': Params( # from http://www.ti.com/lit/ml/msoi003g/msoi003g.pdf
         the = 9.0,      # body angle in degrees
         tb_s = 0.15,    # top part of body is that much smaller
