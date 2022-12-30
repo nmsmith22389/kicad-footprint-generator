@@ -128,7 +128,7 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
 
         # Export the assembly to VRML
         if enable_vrml:
-            export_VRML(os.path.join(output_dir, model + ".wrl"), [body, pins], [all_params[model]["body_color_key"], all_params[model]["pin_color_key"]])
+            export_VRML(os.path.join(output_dir, file_name + ".wrl"), [body, pins], [all_params[model]["body_color_key"], all_params[model]["pin_color_key"]])
 
         # Update the license
         from _tools import add_license
