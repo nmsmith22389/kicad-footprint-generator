@@ -40,6 +40,37 @@ DFN-6-1EP_1.2x1.2mm_P0.4mm_EP0.3x0.94mm:
   #include_suffix_in_3dpath: 'False'
   #include_pad_size: 'fp_name_only' # 'both' | 'none' (default)
 
+DFN-6-1EP_2x1.6mm_P0.5mm_EP1.15x1.3mm:
+  device_type: 'DFN'
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'https://www.onsemi.com/pdf/datasheet/ncp349-d.pdf#page=12'
+  # ipc_class: 'qfn'
+  # ipc_density: 'least' #overwrite global value for this device.
+  body_size_x: 2 +/-0.1
+  body_size_y: 1.6 +/-0.1
+  lead_width:
+    minimum: 0.2
+    maximum: 0.4
+  lead_len:
+    minimum: 0.15
+    maximum: 0.35
+
+  EP_size_x:
+    minimum: 0.95
+    maximum: 1.15
+  EP_size_x_overwrite: 1.15
+  EP_size_y:
+    minimum: 1.1
+    maximum: 1.3
+  EP_size_y_overwrite: 1.3
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [1, 2]
+
+  pitch: 0.5
+  num_pins_x: 0
+  num_pins_y: 3
+
 DFN-6-1EP_2x1.8mm_P0.5mm_EP1.2x1.6mm:
   device_type: 'DFN'
   #manufacturer: 'man'
@@ -654,7 +685,7 @@ DFN-8-1EP_4x4mm_P0.8mm_EP2.3x3.24mm:
     nominal: 0.30
     maximum: 0.38
   lead_len:
-    minumum: 0.4
+    minimum: 0.4
     nominal: 0.5
     maximum: 0.6
 
@@ -720,6 +751,63 @@ DFN-10-1EP_3x3mm_P0.5mm_EP1.7x2.5mm:
   EP_size_y_overwrite: 2.5
 
   EP_num_paste_pads: [2, 2]
+
+  pitch: 0.5
+  num_pins_x: 0
+  num_pins_y: 5
+
+DFN-10-1EP_2.6x2.6mm_P0.5mm_EP1.3x2.2mm:
+  device_type: 'DFN'
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'https://www.nxp.com/docs/en/data-sheet/PCF85063A.pdf#page=48'
+  # ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  body_size_x:
+    minimum: 2.5
+    nominal: 2.6
+    maximum: 2.7
+  body_size_y:
+    minimum: 2.5
+    nominal: 2.6
+    maximum: 2.7
+  overall_height:
+    maximum: 0.5
+
+  lead_width:
+    minimum: 0.20
+    nominal: 0.25
+    maximum: 0.30
+  lead_len:
+    minimum: 0.30
+    nominal: 0.35
+    maximum: 0.40
+
+  EP_size_x:
+    minimum: 1.2
+    nominal: 1.25
+    maximum: 1.3
+  EP_size_x_overwrite: 1.3
+  EP_size_y:
+    minimum: 2.1
+    nominal: 2.15
+    maximum: 2.2
+  EP_size_y_overwrite: 2.2
+
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [2, 3]
+    drill: 0.2
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    EP_num_paste_pads: [2, 2]
+    #paste_between_vias: 1
+    #paste_rings_outside: 1
+    #EP_paste_coverage: 0.7
+    #grid: [1, 1]
+    # bottom_pad_size:
+    paste_avoid_via: False
 
   pitch: 0.5
   num_pins_x: 0
@@ -969,6 +1057,37 @@ WDFN-8-1EP_4x3mm_P0.65mm_EP2.4x1.8mm:
   #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
   #include_suffix_in_3dpath: 'False'
 
+DFN-12-1EP_3x3mm_P0.5mm_EP1.6x2.5mm:
+  device_type: 'DFN'
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'https://ww1.microchip.com/downloads/aemDocuments/documents/APID/ProductDocuments/DataSheets/MIC2207-2MHz-3A-PWM-Buck-Regulator-DS20006470A.pdf#page=22'
+  # ipc_class: 'qfn' # 'qfn_pull_back'
+  # ipc_density: 'least' #overwrite global value for this device.
+  body_size_x: 3 +/-0.05
+  body_size_y: 3 +/-0.05
+  overall_height: 0.85 +/-0.05
+
+  lead_width: 0.23 +/-0.05
+  lead_len: 0.4 +/-0.5
+
+  EP_size_x: 1.7
+  EP_size_x_overwrite: 1.6
+  EP_size_y: 2.4
+  EP_size_y_overwrite: 2.5
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 2]
+  thermal_vias:
+    count: [2, 3]
+    drill: 0.3
+    paste_via_clearance: 0.1
+    EP_num_paste_pads: [2, 2]
+    paste_avoid_via: False
+
+  pitch: 0.5
+  num_pins_x: 0
+  num_pins_y: 6
+
 WDFN-12-1EP_3x3mm_P0.45mm_EP1.7x2.5mm:
   device_type: 'WDFN'
   #manufacturer: 'man'
@@ -1173,6 +1292,26 @@ TDFN-10-1EP_2x3mm_P0.5mm_EP2.0x0.8mm:
   num_pins_x: 0
   num_pins_y: 5
 
+TDFN-8_1.4x1.6mm_P0.4mm:
+  device_type: 'TDFN'
+  size_source: 'https://www.silabs.com/documents/public/data-sheets/si7210-datasheet.pdf'
+  body_size_x: 1.4 +/-0.1
+  body_size_y: 1.6 +/-0.1
+  overall_height: 0.75
+  lead_width: 0.2 +/-0.05
+  lead_len: 0.35 +/-0.05
+
+  pitch: 0.40
+
+  num_pins_x: 0
+  num_pins_y: 4
+  #chamfer_edge_pins: 0.25
+  #pin_count_grid:
+  #pad_length_addition: 0.5
+  suffix: ''
+  #include_suffix_in_3dpath: 'False'
+  #include_pad_size: 'fp_name_only' # 'both' | 'none' (default)
+
 TDFN-8_2x2mm_P0.5mm:
   device_type: 'TDFN'
   size_source: 'https://datasheets.maximintegrated.com/en/ds/MAX17640.pdf'
@@ -1183,6 +1322,7 @@ TDFN-8_2x2mm_P0.5mm:
   lead_len: 0.3 +/-0.1
 
   pitch: 0.50
+
   num_pins_x: 0
   num_pins_y: 4
   #chamfer_edge_pins: 0.25
@@ -1191,7 +1331,6 @@ TDFN-8_2x2mm_P0.5mm:
   suffix: ''
   #include_suffix_in_3dpath: 'False'
   #include_pad_size: 'fp_name_only' # 'both' | 'none' (default)
-
 
 TDFN-8-1EP_2x2mm_P0.5mm_EP0.8x1.30mm:
   device_type: 'TDFN'

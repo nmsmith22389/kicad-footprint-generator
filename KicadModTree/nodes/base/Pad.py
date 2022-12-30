@@ -211,7 +211,7 @@ class Pad(Node):
     LAYERS_THT = ['*.Cu', '*.Mask']
     LAYERS_NPTH = ['*.Cu', '*.Mask']
     LAYERS_CONNECT_FRONT = ['F.Cu', 'F.Mask']
-    LAYERS_CONNECT_BACK = ['B.Cu', 'F.Mask']
+    LAYERS_CONNECT_BACK = ['B.Cu', 'B.Mask']
 
     ANCHOR_CIRCLE = 'circle'
     ANCHOR_RECT = 'rect'
@@ -328,7 +328,7 @@ class Pad(Node):
         self.layers = kwargs.get('layers')
 
     def _initRadiusRatio(self, **kwargs):
-        if('round_radius_handler' in kwargs):
+        if 'round_radius_handler' in kwargs:
             self.round_radius_handler = kwargs['round_radius_handler']
         else:
             self.round_radius_handler = RoundRadiusHandler(**kwargs)
@@ -399,7 +399,7 @@ class Pad(Node):
         return render_text
 
     def addPrimitive(self, p):
-        r""" add a primitve to a custom pad
+        r""" add a primitive to a custom pad
 
         :param p: the primitive to add
         """

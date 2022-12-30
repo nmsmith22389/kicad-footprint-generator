@@ -46,7 +46,7 @@ class koaLine:
             self.IsVertical = True
 
         #
-        # Get the line lenght
+        # Get the line length
         #
         x1 = min(self.sx, self.ex)
         x2 = max(self.sx, self.ex)
@@ -73,7 +73,7 @@ class StandardBox(Node):
         * *datasheet* (``str``) --
           The url to the data sheet
         * *at* (``Point``) --
-          Where is upper left corner, in cartesian cordinate system (minus y below x axis)
+          Where is upper left corner, in cartesian coordinate system (minus y below x axis)
         * *size* (``Point``) --
           The width and height of the rectangle
         * *tags* (``str``) --
@@ -182,7 +182,7 @@ class StandardBox(Node):
                 self.REF_P_w = dd
                 self.REF_P_h = self.REF_P_w
 
-        new_node = Text(type='user', text='%R', at=[self.at.x + (self.size.x / 2.0),
+        new_node = Text(type='user', text='${REFERENCE}', at=[self.at.x + (self.size.x / 2.0),
                         self.at.y + (self.size.y / 2.0)], layer='F.Fab', size=[self.REF_P_w, self.REF_P_h])
         new_node._parent = self
         self.virtual_childs.append(new_node)
@@ -923,7 +923,7 @@ class StandardBox(Node):
                         n_min_y = n.at.y - (n.size.y / 2.0)
                         n_max_x = n_min_x + n.size.x
                         n_max_y = n_min_y + n.size.y
-                        dd = max(0.26, n.solder_mask_margin)
+                        dd = max(0.25, n.solder_mask_margin)
 
                         if (n_min_x <= x1_t) and (n_max_x >= x1_t) and n_max_y >= y1_t and n_min_y <= y2_t:
                             #

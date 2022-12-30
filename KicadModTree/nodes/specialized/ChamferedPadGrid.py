@@ -237,7 +237,7 @@ class ChamferedPadGrid(Node):
             self.chamfer_size = toVectorUseCopyIfNumber(
                 kwargs.get('chamfer_size'), low_limit=0, must_be_larger=False)
 
-        if('round_radius_handler' in kwargs):
+        if 'round_radius_handler' in kwargs:
             self.round_radius_handler = kwargs['round_radius_handler']
         else:
             # default radius ration 0 for backwards compatibility
@@ -254,7 +254,7 @@ class ChamferedPadGrid(Node):
         r""" set the chamfer such that the pad avoids a cricle located at near corner.
 
         :param center: (``Vector2D``) --
-           The center of the circle ot avoid
+           The center of the circle to avoid
         :param diameter: (``float``, ``Vector2D``) --
            The diameter of the circle. If Vector2D given only x direction is used.
         :param clearance: (``float``) --

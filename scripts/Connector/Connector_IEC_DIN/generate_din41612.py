@@ -26,7 +26,7 @@ from drawing_tools import *
 #
 # This library choose to use the prefix "Conn_DIN41612_", because Din 41612 is
 # more common term.
-# METHOD and further are ommited, because the footprint is suited for
+# METHOD and further are omitted, because the footprint is suited for
 # soldering and press fit.
 #
 # It includes half and third sized connectors, that are not part of IEC 60603
@@ -169,7 +169,7 @@ def BFemale(size, pin_cb, more_description):
 		layer='F.Fab'))
 	# Very small Reference Designator to fit between the pins.
 	kicad_mod.append(Text(
-		type='user', text='%R',
+		type='user', text='${REFERENCE}',
 		at=[mid_x, mid_y],
 		size=[0.6, 0.6], thickness=0.07,
 		layer='F.Fab'))
@@ -334,7 +334,7 @@ def BMale(size, pin_cb, more_description):
 		at=[mid_x, npth_y + jack_to_npth - 1.3],
 		layer='F.Fab'))
 	kicad_mod.append(Text(
-		type='user', text='%R',
+		type='user', text='${REFERENCE}',
 		at=[mid_x, npth_y],
 		size=[1, 1], thickness=0.15,
 		layer='F.Fab'))

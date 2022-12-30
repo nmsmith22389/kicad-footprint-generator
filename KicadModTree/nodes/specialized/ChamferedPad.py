@@ -264,7 +264,7 @@ class ChamferedPad(Node):
             self.chamfer_size = toVectorUseCopyIfNumber(
                 kwargs.get('chamfer_size'), low_limit=0, must_be_larger=False)
 
-        if('round_radius_handler' in kwargs):
+        if 'round_radius_handler' in kwargs:
             self.round_radius_handler = kwargs['round_radius_handler']
         else:
             # default radius ration 0 for backwards compatibility
@@ -295,7 +295,7 @@ class ChamferedPad(Node):
 
             polygon_width = 0
             if self.round_radius_handler.roundingRequested():
-                if self.chamfer_size[0] != self.chamfer_size[1]:
+                if abs(self.chamfer_size[0] - self.chamfer_size[1]) > 1e-7:     # consider rounding errors
                     raise NotImplementedError(
                             'Rounded chamfered pads are only supported for 45 degree chamfers.'
                             ' Chamfer {}'.format(self.chamfer_size)
@@ -346,7 +346,7 @@ class ChamferedPad(Node):
         r""" set the chamfer such that the pad avoids a cricle located at near corner.
 
         :param center: (``Vector2D``) --
-           The center of the circle ot avoid
+           The center of the circle to avoid
         :param diameter: (``float``, ``Vector2D``) --
            The diameter of the circle. If Vector2D given only x direction is used.
         :param clearance: (``float``) --
@@ -354,7 +354,7 @@ class ChamferedPad(Node):
         """
 
         relative_center = Vector2D(center) - self.at
-        # pad and circle are symetric so we do not care which corner the
+        # pad and circle are symmetric so we do not care which corner the
         # reference circle is located at.
         #  -> move it to bottom right to get only positive relative coordinates.
         relative_center = Vector2D([abs(v) for v in relative_center])
@@ -362,7 +362,7 @@ class ChamferedPad(Node):
 
         # Where should the chamfer be if the center of the reference circle
         # would be in line with the pad edges
-        # (meaning exactly at the bottome right corner)
+        # (meaning exactly at the bottom right corner)
         reference_point = relative_center - sqrt(2)*(clearance+d/2)
         self.chamfer_size = self.size/2 - reference_point
 

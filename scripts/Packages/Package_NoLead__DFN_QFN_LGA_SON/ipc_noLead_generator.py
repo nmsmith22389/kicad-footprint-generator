@@ -63,7 +63,7 @@ class NoLead():
         # Gmin = Smax − 2JH − √(CS^2 + F^2 + P^2)
         # Xmax = Wmin + 2JS + √(CW^2 + F^2 + P^2)
 
-        # Some manufacturers do not list the terminal spacing (S) in their datasheet but list the terminal lenght (T)
+        # Some manufacturers do not list the terminal spacing (S) in their datasheet but list the terminal length (T)
         # Then one can calculate
         # Stol(RMS) = √(Ltol^2 + 2*^2)
         # Smin = Lmin - 2*Tmax
@@ -195,7 +195,7 @@ class NoLead():
             dimensions['body_to_inside_lead_edge'] = TolerancedSize.fromYaml(
                 device_size_data, base_name='body_to_inside_lead_edge', unit=unit)
         elif dimensions['lead_len_H'] is None:
-            raise KeyError('{}: Either lead lenght or inside lead to edge dimension must be given.'.format(fp_id))
+            raise KeyError('{}: Either lead length or inside lead to edge dimension must be given.'.format(fp_id))
 
         return dimensions
 
@@ -522,7 +522,7 @@ class NoLead():
         # ######################### Text Fields ###############################
 
         addTextFields(kicad_mod=kicad_mod, configuration=configuration, body_edges=body_edge,
-                      courtyard={'top': cy1, 'bottom': -cy1}, fp_name=fp_name, text_y_inside_position='center')
+                      courtyard={'top': cy1, 'bottom': -cy1}, fp_name=fp_name, text_y_inside_position='center', allow_rotation=True)
 
         ##################### Output and 3d model ############################
 

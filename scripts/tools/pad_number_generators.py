@@ -19,27 +19,40 @@ To use a generator add the following to the device config:
     generator: 'ccw_dual'
     axis: 'x'
 
+To achieve a non-standard pin numbering of 2, 3, ..., N, 1 (instead of 1, 2, ... N) use:
+
+  pad_numbers:
+    generator: 'increment'
+    offset: 1
 """
 
 
-def increment(pincount, init=1, **kwargs):
-    i = init
-    j = init # pad number for deleted pins
+def increment(pincount, init=1, offset=0, **kwargs):
+    """Standard increment iterator.
 
-    if kwargs.get("deleted_pins"):
-        skip_pins = kwargs["deleted_pins"]
+    Args:
+        pincount: Total number of pins
+        init: Initial starting count (default: 1)
+        offset: add an offset to the pin numbers to achieve a non-standard pin numbering
+            Examples:
+                offset=1 results in [2, 3, ..., pincount, 1] instead of [1, 2, ..., pincount]
+                offset=-1 results in [pincount, 1, 2, ..., pincount - 1]
+        **kwargs: Other keyword arguments
 
-    while i <= pincount:
-        if kwargs.get("deleted_pins"):
-            if i in skip_pins:
-                yield None
-            else:
-                yield j
-                j += 1
-            i += 1 # i acts like pin location for deleted pins
+    Returns:
+        Iterator
+    """
+    pad_num = init # pad number
+
+    deleted_pins = kwargs.get("deleted_pins", [])
+    num_deleted_pins = len(deleted_pins)
+
+    for i in range(init, pincount + 1):
+        if i in deleted_pins:
+            yield None
         else:
-            yield i
-            i += 1
+            yield 1 + (pad_num - 1 + offset) % (pincount - num_deleted_pins)
+            pad_num += 1
 
 
 def _get_pin_cw(pincount, loc):
@@ -162,13 +175,14 @@ def get_generator(device_params):
     if not pad_nums:
         return generators["increment"](pincount, **device_params)
 
-    init = pad_nums.get("init", 1)
+    if ("init" not in pad_nums):
+        pad_nums["init"] = 1
 
-    gen = generators.get(pad_nums.get("generator"))
+    pad_generator = pad_nums.get("generator", "increment")
+    gen = generators.get(pad_generator)
     if not gen:
         gens = ", ".join(generators.keys())
-        pad_generator = pad_nums.get("generator")
         raise KeyError("{}: Use one of [{}]".format(pad_generator, gens))
 
-    iterator = gen(pincount, init, **pad_nums)
+    iterator = gen(pincount, deleted_pins=device_params.get("deleted_pins", []), **pad_nums)
     return iterator
