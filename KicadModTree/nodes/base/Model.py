@@ -28,6 +28,8 @@ class Model(Node):
           name of the 3d-model file
         * *at* (``Vector3D``) --
           position of the model (default: [0, 0, 0])
+        * *offset* (``Vector3D``) --
+          offset position of the model (default: [0, 0, 0]), if at and offset is both present, at will superseed offset
         * *scale* (``Vector3D``) --
           scale of the model (default: [1, 1, 1])
         * *rotate* (``Vector3D``) --
@@ -44,16 +46,30 @@ class Model(Node):
         Node.__init__(self)
         self.filename = kwargs['filename']
         self.at = Vector3D(kwargs.get('at', [0, 0, 0]))
+        self.offset = Vector3D(kwargs.get('offset', [0, 0, 0]))
         self.scale = Vector3D(kwargs.get('scale', [1, 1, 1]))
         self.rotate = Vector3D(kwargs.get('rotate', [0, 0, 0]))
+
+        self.useAt = False
+        if kwargs.get('at'):
+            self.useAt = True
+
+    def _useAt(self):
+        return self.useAt
 
     def _getRenderTreeText(self):
         render_text = Node._getRenderTreeText(self)
 
-        render_string = ['filename: {filename}'.format(filename=self.filename),
-                         'at: {at}'.format(at=self.at.render('(xyz {x} {y} {z})')),
-                         'scale: {scale}'.format(scale=self.scale.render('(xyz {x} {y} {z})')),
-                         'rotate: {rotate}'.format(rotate=self.rotate.render('(xyz {x} {y} {z})'))]
+        if self.useAt:
+            render_string = ['filename: {filename}'.format(filename=self.filename),
+                             'at: {at}'.format(at=self.at.render('(xyz {x} {y} {z})')),
+                             'scale: {scale}'.format(scale=self.scale.render('(xyz {x} {y} {z})')),
+                             'rotate: {rotate}'.format(rotate=self.rotate.render('(xyz {x} {y} {z})'))]
+        else:
+            render_string = ['filename: {filename}'.format(filename=self.filename),
+                             'offset: {offset}'.format(offset=self.offset.render('(xyz {x} {y} {z})')),
+                             'scale: {scale}'.format(scale=self.scale.render('(xyz {x} {y} {z})')),
+                             'rotate: {rotate}'.format(rotate=self.rotate.render('(xyz {x} {y} {z})'))]
 
         render_text += " [{}]".format(", ".join(render_string))
 

@@ -1,0 +1,269 @@
+Valve_Noval-B9A:
+  pkg_description: "Noval B9A"
+  pkg_datasheet: "https://en.wikipedia.org/wiki/Tube_socket"
+  pkg_D: 11.89                  # Body width/diameter
+  pkg_sadle: []                 # Sadle
+  pkg_sadle_hole: []            # Sadle holes
+  pkg_sadle_shield: []          # Sadle shield
+  pkg_sadle_pcb_hole: []        # Sadle holes in the PCB
+  pkg_npth_pin: []              # NPTH hole [(x, y, length)]
+  pkg_center_pin: []            # Center pin ('type', diameter, length)
+  pkg_pin_type: ['round', 1.016, 3.0]  # Pin type, diameter, length
+  pkg_pin_number: 9             # Number of pins
+  pkg_pin_arc: 36.0             # Arch between pins
+  pkg_pin_diameter: 11.89       # Diameter of the circle where pins are located
+  pkg_socket_offset: [0.00, 0.00, 0.00]                 # Socket 3D model placement 
+  pkg_valve_offset: [0.00, 0.00, 11.00]                 # Valve 3D model placement 
+  pkg_socket: ''                                        # 3D model of socket
+  pkg_tube: 'Valve_Tube_Noval-B9A'                      # 3D model of tube
+
+Valve_Noval-B9A_Belton-VT9-PT_Socket:
+  pkg_description: "Valve Noval-B9A Belton-VT9-PT Socket"
+  pkg_datasheet: "http://www.belton.co.kr/inc/downfile.php?seq=58&file=pdf"
+  pkg_D: 22.80                  # Body width/diameter
+  pkg_sadle: []                 # Sadle
+  pkg_sadle_hole: []            # Sadle holes
+  pkg_sadle_shield: []          # Sadle shield
+  pkg_sadle_pcb_hole: [('pad', 14.25, 1.3), ('npth', -14.25, 3.3)]  # Sadle holes in the PCB
+  pkg_npth_pin: []              # NPTH hole [(x, y, length)]
+  pkg_center_pin: []            # Center pin ('type', diameter, length)
+  pkg_pin_type: ['round', 1.8, 3.0]  # Pin type, diameter, length
+  pkg_pin_number: 9             # Number of pins
+  pkg_pin_arc: 36.0             # Arch between pins
+  pkg_pin_diameter: 21.00       # Diameter of the circle where pins are located
+  pkg_socket_offset: [0.00, 0.00, 0.00]                         # Socket 3D model placement 
+  pkg_valve_offset: [3.09, -4.25, 12.00]                        # Valve 3D model placement 
+  pkg_socket: 'Valve_Noval-B9A_Belton-VT9-PT_Socket'            # 3D model of socket
+  pkg_tube: 'Valve_Tube_Noval-B9A'                              # 3D model of tube
+
+Valve_Noval-B9A_Belton-VT9-PT-C_Socket:
+  pkg_description: "Valve Noval-B9A Belton-VT9-PT-C Socket"
+  pkg_datasheet: "http://www.belton.co.kr/inc/downfile.php?seq=58&file=pdf"
+  pkg_D: 23.80                  # Body width/diameter
+  pkg_sadle: [6.6, 35.5, 26.5, 14.25, 8.0, -72.0]  # Sadle
+  pkg_sadle_hole: [[-14.25, 3.3]]               # Sadle holes
+  pkg_sadle_shield: [23.8, 17.6]                # Sadle shield
+  pkg_sadle_pcb_hole: [['pad', 14.25, 1.3], ['npth', -14.25, 3.3]]  # Sadle holes in the PCB
+  pkg_npth_pin: []              # NPTH pin [(x, y, diameter)]
+  pkg_center_pin: []            # Center pin ('type', diameter, length)
+  pkg_pin_type: ['round', 1.8, 5.0]   # Pin type, diameter, length
+  pkg_pin_number: 9             # Number of pins
+  pkg_pin_arc: 36.0             # Arch between pins
+  pkg_pin_diameter: 21.00       # Diameter of the circle where pins are located
+  pkg_socket_offset: [0.00, 0.00, 0.00]                     # Socket 3D model placement 
+  pkg_valve_offset: [3.09, -4.25, 14.50]                    # Valve 3D model placement 
+  pkg_socket: 'Valve_Noval-B9A_Belton-VT9-PT-C_Socket'      # 3D model of socket
+  pkg_tube: 'Valve_Tube_Noval-B9A'                          # 3D model of tube
+
+Valve_Noval-B9A_Dongxin-GZC9-A_Socket:
+  pkg_description: "Noval B9A Dongxin-GZC9-A socket"
+  pkg_datasheet: "http://www.etubesocket.com/sdp/218870/4/pd-831172/1790289-416013/GZC9-A_GZC9-A-G_9-pin_ceramic_socket.html"
+  pkg_D: 17.80                  # Body width/diameter
+  pkg_sadle: []                 # Sadle
+  pkg_sadle_hole: []            # Sadle holes
+  pkg_sadle_shield: []          # Sadle shield
+  pkg_sadle_pcb_hole: []        # Sadle holes in the PCB
+  pkg_npth_pin: []              # NPTH hole [(x, y, length)]
+  pkg_center_pin: []            # Center pin ('type', diameter, length)
+  pkg_pin_type: ['round', 1.2, 3.0]  # Pin type, diameter, length
+  pkg_pin_number: 9             # Number of pins
+  pkg_pin_arc: 36.0             # Arch between pins
+  pkg_pin_diameter: 17.80       # Diameter of the circle where pins are located
+  pkg_socket_offset: [0.00, 0.00, 0.00]                 # Socket 3D model placement 
+  pkg_valve_offset: [2.62, -3.6, 12.20]                 # Valve 3D model placement 
+  pkg_socket: 'Valve_Noval-B9A_Dongxin-GZC9-A_Socket'   # 3D model of socket
+  pkg_tube: 'Valve_Tube_Noval-B9A'                      # 3D model of tube
+
+Valve_Noval-B9A_Dongxin-GZC9-B_Socket:
+  pkg_description: "Noval B9A Dongxin-GZC9-B socket"
+  pkg_datasheet: "http://www.etubesocket.com/sdp/218870/4/pd-831172/1790283-416013/GZC9-B_GZC9-B-G_9-pin_ceramic_socket.html"
+  pkg_D: 22.20                  # Body width/diameter
+  pkg_sadle: []                 # Sadle
+  pkg_sadle_hole: []            # Sadle holes
+  pkg_sadle_shield: []          # Sadle shield
+  pkg_sadle_pcb_hole: []        # Sadle holes in the PCB
+  pkg_npth_pin: []              # NPTH hole [(x, y, length)]
+  pkg_center_pin: []            # Center pin ('type', diameter, length)
+  pkg_pin_type: ['round', 1.2, 3.0]  # Pin type, diameter, length
+  pkg_pin_number: 9             # Number of pins
+  pkg_pin_arc: 36.0             # Arch between pins
+  pkg_pin_diameter: 20.00       # Diameter of the circle where pins are located
+  pkg_socket_offset: [0.00, 0.00, 0.00]                 # Socket 3D model placement 
+  pkg_valve_offset: [2.94, -4.05, 18.00]                 # Valve 3D model placement 
+  pkg_socket: 'Valve_Noval-B9A_Dongxin-GZC9-B_Socket'   # 3D model of socket
+  pkg_tube: 'Valve_Tube_Noval-B9A'                      # 3D model of tube
+
+Valve_Noval-B9A_Dongxin-GZS9-Y_Socket:
+  pkg_description: "Noval B9A Dongxin-GZS9-Y socket"
+  pkg_datasheet: "http://www.etubesocket.com/sdp/218870/4/pd-831172/1790186-416013/GZS9-Y_GZS9-Y-G_9-pin_plastic_socket.html"
+  pkg_D: 18.00                  # Body width/diameter
+  pkg_sadle: []                 # Sadle
+  pkg_sadle_hole: []            # Sadle holes
+  pkg_sadle_shield: []          # Sadle shield
+  pkg_sadle_pcb_hole: []        # Sadle holes in the PCB
+  pkg_npth_pin: []              # NPTH hole [(x, y, length)]
+  pkg_center_pin: []            # Center pin ('type', diameter, length)
+  pkg_pin_type: ['round', 1.2, 3.0]  # Pin type, diameter, length
+  pkg_pin_number: 9             # Number of pins
+  pkg_pin_arc: 36.0             # Arch between pins
+  pkg_pin_diameter: 18.00       # Diameter of the circle where pins are located
+  pkg_socket_offset: [0.00, 0.00, 0.00]                 # Socket 3D model placement 
+  pkg_valve_offset: [2.65, -3.64, 15.50]                 # Valve 3D model placement 
+  pkg_socket: 'Valve_Noval-B9A_Dongxin-GZS9-Y_Socket'   # 3D model of socket
+  pkg_tube: 'Valve_Tube_Noval-B9A'                      # 3D model of tube
+
+Valve_Magnoval-B9D_Dongxin-GZC9-Y-2_Socket:
+  pkg_description: "Noval B9D Dongxin-GZC9-Y-2 socket"
+  pkg_datasheet: "http://www.etubesocket.com/sdp/218870/4/pd-831172/1790236-416013/GZC9-Y-2_GZC9-Y-2-G_9-pin_ceramic_socket.html"
+  pkg_D: 30.00                  # Body width/diameter
+  pkg_sadle: []                 # Sadle
+  pkg_sadle_hole: []            # Sadle holes
+  pkg_sadle_shield: []          # Sadle shield
+  pkg_sadle_pcb_hole: []        # Sadle holes in the PCB
+  pkg_npth_pin: []              # NPTH hole [(x, y, length)]
+  pkg_center_pin: []            # Center pin ('type', diameter, length)
+  pkg_pin_type: ['round', 1.2, 3.0]  # Pin type, diameter, length
+  pkg_pin_number: 9             # Number of pins
+  pkg_pin_arc: 36.0             # Arch between pins
+  pkg_pin_diameter: 26.50       # Diameter of the circle where pins are located
+  pkg_socket_offset: [0.00, 0.00, 0.00]                     # Socket 3D model placement 
+  pkg_valve_offset: [2.89, -3.50, 15.50]                     # Valve 3D model placement 
+  pkg_socket: 'Valve_Magnoval-B9D_Dongxin-GZC9-Y-2_Socket'  # 3D model of socket
+  pkg_tube: 'Valve_Tube_Magnoval-B9D'                       # 3D model of tube
+
+Valve_Miniature-B7G:
+  pkg_description: "Miniature B7G"
+  pkg_datasheet: "https://en.wikipedia.org/wiki/Tube_socket"
+  pkg_D: 09.53                  # Body width/diameter
+  pkg_sadle: []                 # Sadle
+  pkg_sadle_hole: []            # Sadle holes
+  pkg_sadle_shield: []          # Sadle shield
+  pkg_sadle_pcb_hole: []        # Sadle holes in the PCB
+  pkg_npth_pin: []              # NPTH hole [(x, y, length)]
+  pkg_center_pin: []            # Center pin ('type', diameter, length)
+  pkg_pin_type: ['round', 1.016, 3.0]  # Pin type, diameter, length
+  pkg_pin_number: 7             # Number of pins
+  pkg_pin_arc: 45.0             # Arch between pins
+  pkg_pin_diameter: 09.53       # Diameter of the circle where pins are located
+  pkg_socket_offset: [0.00, 0.00, 0.00]         # Socket 3D model placement 
+  pkg_valve_offset: [0.00, 0.00,  0.00]         # Valve 3D model placement 
+  pkg_socket: ''                                # 3D model of socket
+  pkg_tube: ''                                  # 3D model of tube
+  
+Valve_Miniature-B7G_Dongxin-GZC7-Y-B_Socket:
+  pkg_description: "Miniature B7G Dongxin GZC7-Y-B socket"
+  pkg_datasheet: "http://www.etubesocket.com/sdp/218870/4/pd-831172/2057808-416011/GZC7-Y-B_7-pin_ceramic_socket.html"
+  pkg_D: 17.80                  # Body width/diameter
+  pkg_sadle: []                 # Sadle
+  pkg_sadle_hole: []            # Sadle holes
+  pkg_sadle_shield: []          # Sadle shield
+  pkg_sadle_pcb_hole: []        # Sadle holes in the PCB
+  pkg_npth_pin: []              # NPTH hole [(x, y, length)]
+  pkg_center_pin: []            # Center pin ('type', diameter, length)
+  pkg_pin_type: ['round', 1.2, 3.0]  # Pin type, diameter, length
+  pkg_pin_number: 7             # Number of pins
+  pkg_pin_arc: 45.0             # Arch between pins
+  pkg_pin_diameter: 17.80       # Diameter of the circle where pins are located
+  pkg_socket_offset: [0.00, 0.00, 0.00]                     # Socket 3D model placement 
+  pkg_valve_offset: [3.15, -3.15, 12.30]                     # Valve 3D model placement 
+  pkg_socket: 'Valve_Miniature-B7G_Dongxin-GZC7-Y-B_Socket' # 3D model of socket
+  pkg_tube: 'Valve_Tube_Miniature-B7G'                      # 3D model of tube
+
+#
+# There is no "clean Octal-K8A foot print, becosue of its center pin with spigot
+#
+
+Valve_Octal-K8A_Belton-VT8-PT_Socket:
+  pkg_description: "Valve Octal-K8A Belton-VT8-PT Socket"
+  pkg_datasheet: "http://www.belton.co.kr/inc/downfile.php?seq=49&file=pdf"
+  pkg_D: 30.00                  # Body width/diameter
+  pkg_sadle: [6.6, 50.0, 34.0, 20.00, 10.0, -67.5]  # Sadle z position, width, length, diameter large circel, x poistion small circle, diameter small circle, angle
+  pkg_sadle_hole: [[20.0, 3.5], [-20.0, 3.5]]               # Sadle holes
+  pkg_sadle_shield: []                # Sadle shield
+  pkg_sadle_pcb_hole: [['npth', 20.00, 3.5], ['npth', -20.00, 3.5]]        # Sadle holes in the PCB
+  pkg_npth_pin: []              # NPTH pin [(x, y, diameter)]
+  pkg_center_pin: []            # Center pin ('type', diameter, length)
+  pkg_pin_type: ['round', 1.6, 20.5]   # Pin type, diameter, length
+  pkg_pin_number: 8             # Number of pins
+  pkg_pin_arc: 45.0             # Arch between pins
+  pkg_pin_diameter: 17.20       # Diameter of the circle where pins are located
+  pkg_socket_offset: [0.00, 0.00, 14.50]                    # Socket 3D model placement 
+  pkg_valve_offset: [0.00, 0.00, 32.00]                     # Valve 3D model placement 
+  pkg_socket: 'Valve_Octal-K8A_Belton-VT8-PT_Socket'        # 3D model of socket
+  pkg_tube: 'Valve_Tube_Octal-K8A'                          # 3D model of tube
+
+Valve_Octal-K8A_Belton-VT8-PTS-B_Socket:
+  pkg_description: "Valve Octal-K8A Belton-VT8-PTS-B Socket"
+  pkg_datasheet: "http://www.belton.co.kr/inc/downfile.php?seq=49&file=pdf"
+  pkg_D: 30.00                  # Body width/diameter
+  pkg_sadle: [6.6, 50.0, 34.0, 19.00, 8.0, -67.5]  # Sadle z position, width, length, diameter large circel, x poistion small circle, diameter small circle, angle
+  pkg_sadle_hole: [[19.00, 2.9], [-19.00, 2.9]]               # Sadle holes
+  pkg_sadle_shield: []                # Sadle shield
+  pkg_sadle_pcb_hole: [['npth', 19.00, 2.9], ['npth', -19.00, 2.9]]        # Sadle holes in the PCB
+  pkg_npth_pin: []              # NPTH pin [(x, y, diameter)]
+  pkg_center_pin: []            # Center pin ('type', diameter, length)
+  pkg_pin_type: ['round', 1.6, 9.5]   # Pin type, diameter, length
+  pkg_pin_number: 8             # Number of pins
+  pkg_pin_arc: 45.0             # Arch between pins
+  pkg_pin_diameter: 17.20       # Diameter of the circle where pins are located
+  pkg_socket_offset: [0.00, 0.00, 0.00]                     # Socket 3D model placement 
+  pkg_valve_offset: [0.00, 0.00, 18.00]                     # Valve 3D model placement 
+  pkg_socket: 'Valve_Octal-K8A_Belton-VT8-PTS-B_Socket'     # 3D model of socket
+  pkg_tube: 'Valve_Tube_Octal-K8A'                          # 3D model of tube
+
+Valve_Octal-K8A_Dongxin-GZC8-Y_Socket:
+  pkg_description: "Octal K8A Dongxin-GZC8-Y socket"
+  pkg_datasheet: "http://www.etubesocket.com/sdp/218870/4/pd-831172/1784598-416012/GZC8-Y_GZC8-Y-G_8-pin_ceramic_socket.html"
+  pkg_D: 30.00                  # Body width/diameter
+  pkg_sadle: []                 # Sadle
+  pkg_sadle_hole: []            # Sadle holes
+  pkg_sadle_shield: []          # Sadle shield
+  pkg_sadle_pcb_hole: []        # Sadle holes in the PCB
+  pkg_npth_pin: []              # NPTH pin [(x, y, length)]
+  pkg_center_pin: []            # Center pin ('type', diameter, length)
+  pkg_pin_type: ['round', 1.70, 3.0]   # Pin type, diameter, length
+  pkg_pin_number: 8             # Number of pins
+  pkg_pin_arc: 45.0             # Arch between pins
+  pkg_pin_diameter: 26.00       # Diameter of the circle where pins are located
+  pkg_socket_offset: [0.00, 0.00, 0.00]                 # Socket 3D model placement 
+  pkg_valve_offset: [3.04, -3.04, 18.00]                 # Valve 3D model placement 
+  pkg_socket: 'Valve_Octal-K8A_Dongxin-GZC8-Y_Socket'   # 3D model of socket
+  pkg_tube: 'Valve_Tube_Octal-K8A'                      # 3D model of tube
+
+Valve_Octal-K8A_Dongxin-GZC8-Y-2_Socket:
+  pkg_description: "Octal K8A Dongxin-GZC8-Y-2 socket"
+  pkg_datasheet: "http://www.etubesocket.com/sdp/218870/4/pd-831172/1784584-416012/GZC8-Y-2_GZC8-Y-2-G_8-pin_ceramic_socket.html"
+  pkg_D: 30.00                          # Body width/diameter
+  pkg_sadle: []                         # Sadle
+  pkg_sadle_hole: []                    # Sadle holes
+  pkg_sadle_shield: []                  # Sadle shield
+  pkg_sadle_pcb_hole: []                # Sadle holes in the PCB
+  pkg_npth_pin: []                      # NPTH pin [(x, y, length)]
+  pkg_center_pin: []                    # Center pin ('type', diameter, length)
+  pkg_pin_type: ['round', 1.70, 3.0]    # Pin type, diameter, length
+  pkg_pin_number: 8                     # Number of pins
+  pkg_pin_arc: 45.0                     # Arch between pins
+  pkg_pin_diameter: 26.50               # Diameter of the circle where pins are located
+  pkg_socket_offset: [0.00, 0.00, 0.00]                     # Socket 3D model placement 
+  pkg_valve_offset: [3.04, -3.04, 17.7]                     # Valve 3D model placement 
+  pkg_socket: 'Valve_Octal-K8A_Dongxin-GZC8-Y-2_Socket'     # 3D model of socket
+  pkg_tube: 'Valve_Tube_Octal-K8A'                          # 3D model of tube
+
+Valve_Octal-K8A_Dongxin-GZC8-Y-5_Socket:
+  pkg_description: "Octal K8A Dongxin-GZC8-Y-5 socket"
+  pkg_datasheet: "http://www.etubesocket.com/sdp/218870/4/pd-831172/1784484-416012/GZC8-Y-5_GZC8-Y-5-G_8-pin_ceramic_socket.html"
+  pkg_D: 30.50                  # Body width/diameter
+  pkg_sadle: [8.5, 47.0, 30.5, 19.00, 12.0, -67.5]  # Sadle z position, width, length, diameter large circel, x poistion small circle, diameter small circle, angle
+  pkg_sadle_hole: [[19.00, 3.0], [-19.00, 3.0]]               # Sadle holes
+  pkg_sadle_shield: []                # Sadle shield
+  pkg_sadle_pcb_hole: [['npth', 19.00, 3.0], ['npth', -19.00, 3.0]]        # Sadle holes in the PCB
+  pkg_npth_pin: []              # NPTH pin [(x, y, length)]
+  pkg_center_pin: []            # Center pin ('type', diameter, length)
+  pkg_pin_type: ['round', 1.40, 3.0]   # Pin type, diameter, length
+  pkg_pin_number: 8             # Number of pins
+  pkg_pin_arc: 45.0             # Arch between pins
+  pkg_pin_diameter: 17.50       # Diameter of the circle where pins are located
+  pkg_socket_offset: [0.00, 0.00, 0.00]                 # Socket 3D model placement 
+  pkg_valve_offset: [2.50, -2.50, 18.50]                 # Valve 3D model placement 
+  pkg_socket: 'Valve_Octal-K8A_Dongxin-GZC8-Y-5_Socket' # 3D model of socket
+  pkg_tube: 'Valve_Tube_Octal-K8A'                      # 3D model of tube

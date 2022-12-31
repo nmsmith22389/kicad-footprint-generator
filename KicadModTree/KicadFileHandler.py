@@ -253,15 +253,26 @@ class KicadFileHandler(FileHandler):
         return sexpr
 
     def _serialize_Model(self, node):
-        sexpr = ['model', node.filename,
-                 SexprSerializer.NEW_LINE,
-                 ['at', ['xyz', node.at.x, node.at.y, node.at.z]],
-                 SexprSerializer.NEW_LINE,
-                 ['scale', ['xyz', node.scale.x, node.scale.y, node.scale.z]],
-                 SexprSerializer.NEW_LINE,
-                 ['rotate', ['xyz', node.rotate.x, node.rotate.y, node.rotate.z]],
-                 SexprSerializer.NEW_LINE
-                ]  # NOQA
+        if node._useAt():
+            sexpr = ['model', node.filename,
+                     SexprSerializer.NEW_LINE,
+                     ['at', ['xyz', node.at.x, node.at.y, node.at.z]],
+                     SexprSerializer.NEW_LINE,
+                     ['scale', ['xyz', node.scale.x, node.scale.y, node.scale.z]],
+                     SexprSerializer.NEW_LINE,
+                     ['rotate', ['xyz', node.rotate.x, node.rotate.y, node.rotate.z]],
+                     SexprSerializer.NEW_LINE
+                    ]  # NOQA
+        else:
+            sexpr = ['model', node.filename,
+                     SexprSerializer.NEW_LINE,
+                     ['offset', ['xyz', node.offset.x, node.offset.y, node.offset.z]],
+                     SexprSerializer.NEW_LINE,
+                     ['scale', ['xyz', node.scale.x, node.scale.y, node.scale.z]],
+                     SexprSerializer.NEW_LINE,
+                     ['rotate', ['xyz', node.rotate.x, node.rotate.y, node.rotate.z]],
+                     SexprSerializer.NEW_LINE
+                    ]  # NOQA
 
         return sexpr
 
