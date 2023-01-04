@@ -5777,7 +5777,7 @@ USON-10_2.5x1.0mm_Pitch0.5mm:
   mark_color_key: light brown label
   source: 'http://www.ti.com/lit/ds/symlink/tpd4e02b04.pdf'
 
-USON-14_3.5x1.35mm_Pitch0.5mm:
+Texas_R-PUSON-N14:
   c: 0.1
   L: 0.3
   fp_s: True
@@ -5804,14 +5804,14 @@ USON-14_3.5x1.35mm_Pitch0.5mm:
   epad_n: null
   epad_pitch: null
   excluded_pins: null
-  model_name: USON-14_3.5x1.35mm_Pitch0.5mm
+  model_name: Texas_R-PUSON-N14
   rotation: -90
   destination_dir: Housings_SON.3dshapes
   body_color_key: black body
   pin_shapes: null
   pin_color_key: metal grey pins
   mark_color_key: light brown label
-  source: 'https://www.ti.com/lit/ds/symlink/tpd1e05u06.pdf'
+  source: 'https://www.ti.com/lit/ml/mpdf004a/mpdf004a.pdf'
 
 Texas_DQK:
   c: 0.2
