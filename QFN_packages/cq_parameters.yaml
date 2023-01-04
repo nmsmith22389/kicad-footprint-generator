@@ -1511,6 +1511,42 @@ DFN-6-1EP_2x2mm_Pitch0.65mm:
   mark_color_key: 'light brown label'
   source: 'http://www.nxp.com/documents/outline_drawing/SOT1118D.pdf'
 
+LFCSP-6-1EP_2x2mm_P0.65mm_EP1x1.6mm:
+  c: 0.2  # pin thickness, not used for concave pins
+  L: 0.35  # pin top flat part length (including fillet radius)
+  fp_s: True  # True for circular pinmark, False for square pinmark (useful for diodes)
+  fp_r: 0.4  # first pin indicator radius
+  fp_d: 0.08  # first pin indicator distance from edge
+  fp_dx: null  # first pin indicator distance from X edge
+  fp_dy: null  # first pin indicator distance from Y edge
+  fp_z: 0.01  # first pin indicator depth
+  ef: 0.0  # fillet of edges  Note: bigger bytes model with fillet
+  cce: 0.2  # chamfer of the epad 1st pin corner
+  D: 2.0  # body overall length
+  E: 2.0  # body overall width
+  A1: 0.02  # body-board separation  maui to check
+  A2: 0.53  # body height
+  b: 0.3  # pin width
+  e: 0.65  # pin (center-to-center) distance
+  m: 0.0  # margin between pins and body 
+  ps: rounded # rounded or square
+  npx: 3  # number of pins along X axis (width)
+  npy: 0  # number of pins along y axis (length)
+  epad: [ 1.6, 1.0]  # exposed pad, null, radius as float for circular or the dimensions as tuple: (width, length) for square
+  epad_offsetX: null  # offset X for exposed pad
+  epad_offsetY: null  # offset Y for exposed pad
+  epad_n: null  # number of exposed pads, specified as tuple (along X axis, along Y axis) in case a matrix of them is needed.
+  epad_pitch: null  # epad center to epad center, specified as tuple (along X axis, along Y axis)
+  excluded_pins: null  # no pin excluded
+  model_name: 'LFCSP-6-1EP_2x2mm_P0.65mm_EP1x1.6mm' # model name
+  rotation: -90  #rotation if required
+  destination_dir: Package_CSP.3dshapes
+  pin_shapes: null  # coords for pin shapes as [(x,y)]
+  body_color_key: 'black body'
+  pin_color_key: 'metal grey pins'
+  mark_color_key: 'light brown label'
+  source: 'https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/lfcspcp/cp_6_3.pdf'
+
 TDFN-6-1EP_2.5x2.5mm_P0.65mm_EP1.3x2mm:
   c: 0.2
   L: 0.3
