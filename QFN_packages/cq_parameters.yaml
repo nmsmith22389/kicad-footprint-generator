@@ -11071,3 +11071,39 @@ LFCSP-16-1EP_4x4mm_P0.65mm_EP2.6x2.6mm:
   mark_color_key: 'light brown label'
   pin_shapes: null  # coords for pin shapes as [(x,y)]
   source: 'https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/lfcspcp/cp_16_17.pdf'
+
+VLGA-4_2x2.5mm_P1.65mm:
+  c: 0.2
+  L: 0.65
+  fp_s: 1
+  fp_r: 0.2
+  fp_d: 0.3
+  fp_dx: null
+  fp_dy: null
+  fp_z: 0.02
+  ef: 0.0
+  cce: 0.25
+  D: 2.5
+  E: 2
+  A1: 0.02
+  A2: 0.82
+  b: 0.65
+  e: 1.65
+  m: 0.05
+  ps: square
+  npx: 2
+  npy: 0
+  epad: null
+  epad_offsetX: null
+  epad_offsetY: null
+  epad_n: null
+  epad_pitch: null
+  excluded_pins: null
+  model_name: VLGA-4_2x2.5mm_P1.65mm
+  rotation: -90
+  destination_dir: Package_LGA.3dshapes
+  body_color_key: black body
+  pin_shapes: null
+  pin_color_key: metal grey pins
+  mark_color_key: light brown label
+  source: 'https://ww1.microchip.com/downloads/en/DeviceDoc/DSC60XX-Ultra-Small-Ultra-Low-Power-MEMS-Oscillator-DS20005625C.pdf#page=15'
