@@ -615,3 +615,51 @@ IDC-Header_2xyy_P2.54mm_Vertical_SMD:
   body_color_key: "black body"
   destination_dir: 'Connector_IDC.3dshapes'
   source: 'https://www.tme.eu/Document/4baa0e952ce73e37bc68cf730b541507/T821M114A1S100CEU-B.pdf'
+
+Samtec_HPM-yy-01-x-S_Straight_1xyy_Pitch5.08mm:
+    # Samtec HPM series:
+    #   datasheet: https://suddendocs.samtec.com/catalog_english/hpm.pdf
+    #   recommended footprint: https://suddendocs.samtec.com/prints/hpm-xx-xx-xx-x-xx-x-footprint.pdf
+    #   detailed drawing: https://suddendocs.samtec.com/prints/hpm-xx-xx-xx-x-xx-x-mkt.pdf
+  type: 'Vertical_THT'
+  pitch: 5.08
+  rows: 1
+  pins:
+    from: 1
+    to: 20
+  base_width: 6.35
+  base_height: 2.54
+  base_chamfer: 0
+  pin_width: 1.14
+  pin_length_above_base: 11.94
+  pin_length_below_board: 4.57
+  pin_end_chamfer: 'auto'
+  rotation: 0
+  pin_color_key: "gold pins"
+  body_color_key: "black body"
+  destination_dir: 'Connector_Samtec_HPM_THT.3dshapes'
+  source: 'https://suddendocs.samtec.com/catalog_english/hpm.pdf'
+
+Samtec_HPM-yy-05-x-S_Straight_1xyy_Pitch5.08mm:
+    # Samtec HPM series:
+    #   datasheet: https://suddendocs.samtec.com/catalog_english/hpm.pdf
+    #   recommended footprint: https://suddendocs.samtec.com/prints/hpm-xx-xx-xx-x-xx-x-footprint.pdf
+    #   detailed drawing: https://suddendocs.samtec.com/prints/hpm-xx-xx-xx-x-xx-x-mkt.pdf
+  type: 'Vertical_THT'
+  pitch: 5.08
+  rows: 1
+  pins:
+    from: 1
+    to: 20
+  base_width: 6.35
+  base_height: 2.54
+  base_chamfer: 0
+  pin_width: 1.14
+  pin_length_above_base: 3.81
+  pin_length_below_board: 4.57
+  pin_end_chamfer: 'auto'
+  rotation: 0
+  pin_color_key: "gold pins"
+  body_color_key: "black body"
+  destination_dir: 'Connector_Samtec_HPM_THT.3dshapes'
+  source: 'https://suddendocs.samtec.com/catalog_english/hpm.pdf'
