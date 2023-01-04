@@ -1,5 +1,3 @@
-# VSCode Regex to cleanup the copy/paste
-# ±[\d\. ]*
 - series: SWPA
   manufacturer: Sunlord
   datasheet: "https://www.sunlordinc.com/UploadFiles/PDF_Cat/20120704094224784.pdf"
@@ -28,7 +26,7 @@
   datasheet: "https://www.sunlordinc.com/Download.aspx?file=L1VwbG9hZEZpbGVzL1BERl9DYXQvMjAyMTA2MTAxMTMyMzc4MTEucGRm&lan=en"
   csv: sunlord_swrb.csv
   3d:
-    type: 3
+    type: 1
     bodyColor: black body
     pinColor: metal grey pins
     padThickness: 0.05

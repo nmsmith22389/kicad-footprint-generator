@@ -108,13 +108,8 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             print(f'Processing file {yamlFile}')
             data_loaded = yaml.safe_load(stream)
             for yamlBlocks in range(0, len(data_loaded)): # For each series block in the yaml file, we process the CSV
-                seriesName = data_loaded[yamlBlocks]['series']
                 seriesManufacturer = data_loaded[yamlBlocks]['manufacturer']
-                seriesDatasheet = data_loaded[yamlBlocks]['datasheet']
                 seriesCsv = data_loaded[yamlBlocks]['csv']
-                seriesSpacing = data_loaded[yamlBlocks].get('spacing', 'edge')   # default to edge
-                seriesTags = data_loaded[yamlBlocks]['tags']      # space delimited list of the tags
-                seriesTagsString = ' '.join(seriesTags)
 
                 # If the 3d section is defined, then this block will pick up some values
                 try:
@@ -122,14 +117,16 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
                     seriesPinColor = data_loaded[yamlBlocks]['3d'].get('pinColor', 'metal grey pins')
                     seriesPadThickness = data_loaded[yamlBlocks]['3d'].get('padThickness', 0.05)
                     seriesType = data_loaded[yamlBlocks]['3d'].get('type', 1)
-                    seriesCornerRadius = data_loaded[yamlBlocks]['3d'].get('cornerRadius', 2)
+                    seriesCornerRadius = data_loaded[yamlBlocks]['3d'].get('cornerRadius', 0)
+                    seriesPadSpacing = data_loaded[yamlBlocks]['3d'].get('padSpacing', 'none')
                 except:
                     # 3D section was not defined, set to default.
                     seriesBodyColor = 'black body'
                     seriesPinColor = 'metal grey pins'
                     seriesPadThickness = 0.05
                     seriesType = 1
-                    seriesCornerRadius = 2
+                    seriesCornerRadius = 0
+                    seriesPadSpacing = 'none'
                 
                 yamlFolder = os.path.split(yamlFile)[0]
 
@@ -147,38 +144,66 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
                         lengthY = float(row['lengthY'])
                         height = float(row['height'])
                         
+                        if seriesPadSpacing != 'none':
+                            try:
+                                padSpacing = float(row['padSpacing'])
+                            except:
+                                print('\n\npadSpacing must be defined in CSV when seriesPadSpacing is not "none". Terminating.\n\n')
+                                exit(1)
+
                         try:
                             padX  = float(row['padX'])
                             padY = float(row['padY'])
+                            
                         except:
                             print(f'No physical pad dimensions (padX/padY) found - using PCB landing dimensions (landingX/landingY) as a substitute.')
-                            padX = float(row['landingX']) - 0.05
-                            padY = float(row['landingY']) - 0.05
-                        
+                            padX = round(float(row['landingX']) - 0.05, 2)  # Round to 2 decimal places since sometimes we get a lot more
+                            padY = round(float(row['landingY']) - 0.05, 2)
+
+                        # Handy debug section to help copy/paste into CQ-editor to play with design
+                        if False:
+                            print(f'widthX = {widthX}')
+                            print(f'lengthY = {lengthY}')
+                            print(f'height = {height}')
+                            print(f'padX = {padX}')
+                            print(f'padY = {padY}')
+                            #print(f'padSpacing = {padSpacing}')
+                            print(f'seriesType = {seriesType}')
+                            print(f'seriesPadSpacing = "{seriesPadSpacing}"')
+                            print(f'seriesPadThickness = {seriesPadThickness}')
+                            
+
                         rotation = 0
 
                         case = cq.Workplane("XY").box(widthX, lengthY, height, (True, True, False))
                         
-                        if seriesType != 3:
+                        if seriesCornerRadius == 0:
                             case = case.edges("|Z").fillet(min(lengthY,widthX)/20)
-                        else:   # Type 3 is heavy fillet
+                        else:
                             case = case.edges("|Z").fillet(seriesCornerRadius)    
                         
                         case = case.edges(">Z").fillet(min(lengthY,widthX)/20)
-                        
-                        
-                        
 
-                        if seriesType == 2:
-                            # Type 2 has visible side "wings". High is approximate since it's rarely specificed, and it shouldn't be more then 3mm probably so we use a min() function.
-                            pin1 = cq.Workplane("XY").box(padX + 0.01, padY, min(3, height * 0.3), (True, True, False)).translate((-(widthX-padX)/2, 0, 0))
-                            pin2 = cq.Workplane("XY").box(padX + 0.01, padY, min(3, height * 0.3), (True, True, False)).translate(((widthX-padX)/2, 0, 0))
-                        else:   # Default to no visible wings
-                            pin1 = cq.Workplane("XY").box(padX, padY, seriesPadThickness, (True, True, False)).translate((-(widthX-padX)/2, 0, 0))
-                            pin2 = cq.Workplane("XY").box(padX, padY, seriesPadThickness, (True, True, False)).translate(((widthX-padX)/2, 0, 0))
-    
+                        if seriesType == 2:     # Exposed "wings"
+                            seriesPadThickness = min(3, height * 0.3)
+
+                        pin1 = cq.Workplane("XY").box(padX, padY, seriesPadThickness, (True, True, False))
+                        pin2 = cq.Workplane("XY").box(padX, padY, seriesPadThickness, (True, True, False))
+
+                        if seriesPadSpacing == 'none':   # Move pads to the edge
+                            translateAmount = widthX/2 - padX/2
+                        elif seriesPadSpacing == 'edge':
+                            translateAmount = padX/2 + padSpacing/2
+                        elif seriesPadSpacing == 'center':
+                            translateAmount = padSpacing/2
+
+                        if seriesType == 2:     # Exposed "wings", bump it out so it is visible
+                            translateAmount += 0.01
+
+                        pin1 = pin1.translate((-translateAmount, 0, 0))
+                        pin2 = pin2.translate((translateAmount, 0, 0))
+
                         pins = pin1.union(pin2)
-
                         case = case.cut(pins)
                         
                         case = case.rotate((0, 0, 0), (0, 0, 1), rotation)
