@@ -189,8 +189,7 @@ def make_qfn(params):
                     pinsubtract = pincut.translate((first_pos_x-i*e, -m, 0)). \
                     rotate((0,0,0), (0,0,1), 180)
                     case = case.cut(pinsubtract)
-
-        pincounter += 1
+            pincounter += 1
     
         first_pos_y = (npy-1)*e/2
         for i in range(npy):
