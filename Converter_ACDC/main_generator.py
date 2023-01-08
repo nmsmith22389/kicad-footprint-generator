@@ -62,7 +62,7 @@ from _tools import shaderColors, parameters, cq_color_correct
 from _tools import cq_globals
 from exportVRML.export_part_to_VRML import export_VRML
 
-from .connector_acdc import *
+from .converter_acdc import *
 
 
 def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
