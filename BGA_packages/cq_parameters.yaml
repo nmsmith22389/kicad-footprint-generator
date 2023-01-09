@@ -1052,6 +1052,37 @@ Analog_BGA-49_6.25x6.25mm_Layout7x7_P0.8mm_Ball0.5mm_Pad0.4mm:
   pins_color_key: "metal grey pins"
   marking_color_key: "light brown label"
 
+NXP_VFBGA-42_2.6x3mm_Layout6x7_P0.4mm_Ball0.25mm_Pad0.24mm:
+  # from https://www.nxp.com/docs/en/package-information/SOT1963-1.pdf
+  fp_r: 0.5   # first pin indicator radius
+  fp_d: 0.2   # first pin indicator distance from edge
+  fp_z: 0.01  # first pin indicator depth
+  ef: 0.0     # fillet of edges  Note: bigger bytes model with fillet
+  cff: null
+  cf: null
+  D: 3.0      # body overall length
+  E: 2.6      # body overall width
+  D1: null
+  E1: null
+  A1: 0.2     # body-board separation
+  A2: null
+  A: 1.0      # body  overall height
+  b: 0.25     # ball pin width diameter with a small extra to obtain a union of balls and case
+  e: 0.4      # pin (center-to-center) distance
+  ex: null    # pin (center-to-center) distance
+  sp: 0.08    # seating plane (pcb penetration)
+  npx: 7      # number of pins along X axis (width)
+  npy: 6      # number of pins along y axis (length)
+  excluded_pins: null
+  molded: null
+  old_modelName: "NXP_VFBGA-42_6x7_2.6x3mm_Pitch0.4mm"
+  modelName: "NXP_VFBGA-42_2.6x3mm_Layout6x7_P0.4mm_Ball0.25mm_Pad0.24mm"
+  rotation: -90
+  body_bot_color_key: "dark green body"
+  body_color_key: "black body"
+  pins_color_key: "metal grey pins"
+  marking_color_key: "light brown label"
+
 Texas_DSBGA-8_0.9x1.9mm_Layout2x4_P0.5mm:
   # from http://www.ti.com/lit/ds/symlink/txb0102.pdf
   fp_r: 0.3
