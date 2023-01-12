@@ -2693,6 +2693,43 @@ DFN-20-1EP_5x6mm_Pitch0.5mm:
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
   source: 'http://www.onsemi.com/pub/Collateral/505AB.PDF'
+  
+AO_DFN-8-1EP_5.55x5.2mm_P1.27mm_EP4.12x4.6mm:
+  c: 0.2
+  L: 0.65
+  fp_s: True
+  fp_r: 0.5
+  fp_d: 0.1
+  fp_dx: null
+  fp_dy: null
+  fp_z: 0.01
+  ef: 0.0
+  cce: 0.2
+  D: 5.2
+  E: 5.55
+  A1: 0.025
+  A2: 0.925
+  b: 0.4
+  e: 1.27
+  m: 0.0
+  ps: square
+  npx: 4
+  npy: 0
+  epad: [4.35, 3.625]
+  epad_offsetX: null
+  epad_offsetY: 0.6775
+  epad_n: null
+  epad_pitch: null
+  excluded_pins: null
+  model_name: AO_DFN-8-1EP_5.55x5.2mm_P1.27mm_EP4.12x4.6mm
+  rotation: -90
+  destination_dir: Package_DFN_QFN.3dshapes
+  body_color_key: null
+  pin_shapes: null
+  body_color_key: 'black body'
+  pin_color_key: 'metal grey pins'
+  mark_color_key: 'light brown label'
+  source: 'http://www.aosmd.com/res/packaging_information/DFN5x6_8L_EP1_P.pdf'
 
 WQFN-20-1EP_4.5x2.5mm_Pitch0.5mm_EP2.9x1.0mm:
   c: 0.2
