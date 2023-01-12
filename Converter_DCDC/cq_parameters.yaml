@@ -372,8 +372,8 @@ Converter_DCDC_Murata_NMAxxxxSC_THT:
   destination_dir: Converter_DCDC.3dshapes
   model_name: Converter_DCDC_Murata_NMAxxxxSC_THT
 
-Converter_DCDC_Murata_NXE2SxxxxMC_SMD:
-  modelName: Converter_DCDC_Murata_NXE2SxxxxMC_SMD
+Converter_DCDC_Murata_NXExSxxxxMC_SMD:
+  modelName: Converter_DCDC_Murata_NXExSxxxxMC_SMD
   roundbelly: 1
   L: 10.41
   W: 12.7
@@ -382,6 +382,7 @@ Converter_DCDC_Murata_NXE2SxxxxMC_SMD:
   pinpadsize: None
   pinpadh: None
   pintype: smd
+  translation: [0, 1.27, 0]
   rotation: 0.0
   pin1corner: [0.0, 0.0]
   pin: [['smd', -4.7, -3.81, 0.61, 0.2], ['smd', -4.7, -1.27, 0.61, 0.2], ['smd', -4.7, 3.81, 0.61, 0.2], ['smd', 4.7, 3.81, 0.61, 0.2], ['smd', 4.7, -3.81, 0.61, 0.2]]
@@ -392,7 +393,7 @@ Converter_DCDC_Murata_NXE2SxxxxMC_SMD:
   body_top_color_key: black body
   pin_color_key: metal grey pins
   destination_dir: Converter_DCDC.3dshapes
-  model_name: Converter_DCDC_Murata_NXE2SxxxxMC_SMD
+  model_name: Converter_DCDC_Murata_NXExSxxxxMC_SMD
 
 Converter_DCDC_RECOM_R-78B-2.0_THT:
   modelName: Converter_DCDC_RECOM_R-78B-2.0_THT
