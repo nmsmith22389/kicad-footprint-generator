@@ -7002,6 +7002,40 @@ Micrel_MLF-8-1EP_2x2mm_P0.5mm_EP0.8x1.3mm_ThermalVias:
   mark_color_key: light brown label
   source: 'N/A'
 
+Micrel_MLF-8-1EP_2x2mm_P0.5mm_EP0.6x1.2mm:
+  c: 0.203
+  L: 0.35
+  fp_s: 1
+  fp_r: 0.2
+  fp_d: 0.3
+  fp_z: 0.02
+  ef: 0.0
+  cce: 0.25
+  D: 2.0
+  E: 2.0
+  A1: 0.03
+  A2: 0.82
+  b: 0.25
+  e: 0.5
+  m: 0
+  ps: 'rounded'
+  npx: 4
+  npy: 0
+  epad: [1.2, 0.6]
+  epad_offsetX: null
+  epad_offsetY: null
+  epad_n: null
+  epad_pitch: null
+  excluded_pins: null
+  model_name: Micrel_MLF-8-1EP_2x2mm_P0.5mm_EP0.6x1.2mm
+  rotation: -90
+  destination_dir: Package_DFN_QFN.3dshapes
+  body_color_key: black body
+  pin_shapes: null
+  pin_color_key: metal grey pins
+  mark_color_key: light brown label
+  source: 'http://ww1.microchip.com/downloads/en/DeviceDoc/mic23050.pdf'
+
 Microchip_DRQFN-44-1EP_5x5mm_P0.7mm_EP2.65x2.65mm:
   c: 0.2
   L: 0.25
