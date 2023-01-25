@@ -18,11 +18,12 @@ class Dimensions(object):
         # PIN NUMBERING
         self.number_pins = variant['pins']
         self.centre_pin = 1 + self.number_pins // 2
-        self.tab_pin_number= self.centre_pin if (tab_linked or cut_pin) else variant['pins'] + 1
+        tab_linked = variant.get('tab_linked', False)
+        self.tab_pin_number= variant.get('tab_pin_number', self.centre_pin if (tab_linked or cut_pin) else variant['pins'] + 1)
 
         # NAME
-        self.name = self.footprint_name(base['series'], (variant['pins'] - 1) if cut_pin else variant['pins'],
-                                        not cut_pin, self.tab_pin_number)
+        self.name = variant.get('custom_name', self.footprint_name(base['series'], (variant['pins'] - 1) if cut_pin else variant['pins'],
+                                                                   not cut_pin, self.tab_pin_number))
         # 3D
         self.device_x_mm = base['device']['x_mm']
         self.body_x_mm = base['device']['body']['x_mm']
@@ -628,6 +629,51 @@ class SOT89(DPAK):
     #             model = self._build_model(base, variant, cut_pin=True, verbose=verbose)
     #             yield model
 
+class Infineon_PG_TO_220_7Lead_TabPin8(DPAK):
+    # def __init__(self, config_file):
+    #     self.SERIES = 'TO-263'
+    #     self.config = self._load_config(config_file)
+
+
+    def _get_dimensions(self, base, variant, cut_pin=False, tab_linked=False):
+
+        dim = Dimensions(base, variant, cut_pin, tab_linked)
+        dim.pin_fat_cut_mm = 3.1  # Used to produce wide part of pins
+        dim.pin_profile = [
+            ('start', {'position': (-dim.pin_offset_x_mm, dim.pin_z_mm / 2.0),
+                       'direction': 0.0, 'width': dim.pin_z_mm}),
+            ('line', {'length': 1.2}),
+            ('arc', {'radius': dim.pin_radius_mm, 'angle': 70.0}),
+            ('line', {'length': 2}),
+            ('arc', {'radius': dim.pin_radius_mm, 'angle': -70}),
+            ('line', {'length': 2.1})
+        ]
+        dim.tab_cutout_y_mm = dim.tab_y_mm * 0.70
+        dim.tab_cutout_radius_mm = 0.08
+        return dim
+
+class Rohm_HRP7(DPAK):
+    # def __init__(self, config_file):
+    #     self.SERIES = 'TO-263'
+    #     self.config = self._load_config(config_file)
+
+
+    def _get_dimensions(self, base, variant, cut_pin=False, tab_linked=False):
+
+        dim = Dimensions(base, variant, cut_pin, tab_linked)
+        dim.pin_radius_mm = 0.3
+        dim.pin_fat_cut_mm = 0  # Used to produce wide part of pins
+        dim.pin_fat_x_mm = 0  # Length of wide part on pins                    
+        dim.pin_profile = [
+            ('start', {'position': (-dim.pin_offset_x_mm, dim.pin_z_mm / 2.0),
+                       'direction': 0.0, 'width': dim.pin_z_mm}),
+            ('line', {'length': 0.83 - dim.pin_radius_mm - dim.pin_z_mm / 2.0}),
+            ('arc', {'radius': dim.pin_radius_mm, 'angle': 90.0}),
+            ('line', {'length': 0.27}),
+            ('arc', {'radius': dim.pin_radius_mm, 'angle': -90.0}),
+            ('line', {'length': 0.69})
+        ]
+        return dim
 
 # class Factory(object):
 

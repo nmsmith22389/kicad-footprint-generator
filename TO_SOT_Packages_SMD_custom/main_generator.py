@@ -66,7 +66,7 @@ from _tools import shaderColors, parameters, cq_color_correct
 from _tools import cq_globals
 from exportVRML.export_part_to_VRML import export_VRML
 
-from .DPAK_factory import TO252, TO263, TO268, ATPAK, HSOF8, SOT669, SOT89
+from .DPAK_factory import TO252, TO263, TO268, ATPAK, HSOF8, SOT669, SOT89, Infineon_PG_TO_220_7Lead_TabPin8, Rohm_HRP7
 
 def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
     """
@@ -125,6 +125,10 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             cqm = SOT669()
         elif model == "SOT89":
             cqm = SOT89()
+        elif model == "Infineon_PG_TO_220_7Lead_TabPin8":
+            cqm = Infineon_PG_TO_220_7Lead_TabPin8()
+        elif model == "Rohm_HRP7":
+            cqm = Rohm_HRP7()
         else:
             print("Model not recognized: {}".format(model))
 
