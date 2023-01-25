@@ -107,7 +107,7 @@ class DPAK(object):
 
     def _build_body(self, dim):
 
-        body = cq.Workplane("XY").workplane(offset=dim.nudge_mm, centerOption="CenterOfMass").moveTo(dim.body_centre_x_mm, 0)\
+        body = cq.Workplane("XY").workplane(offset=dim.nudge_mm, centerOption="CenterOfMass").moveTo(0, 0)\
             .rect(dim.body_x_mm, dim.body_y_mm).extrude(dim.body_z_mm)
 
         body = body\
@@ -135,6 +135,7 @@ class DPAK(object):
             .line(dim.tab_project_x_mm - dim.tab_small_mm, 0)\
             .line(dim.tab_small_mm, -dim.tab_large_mm)\
             .close().extrude(dim.tab_z_mm)
+        tab = tab.translate((-dim.body_centre_x_mm, 0, 0))
         return tab
 
 
@@ -172,6 +173,8 @@ class DPAK(object):
                 .moveTo(dim.body_centre_x_mm -(dim.body_x_mm / 2.0) - dim.pin_cut_x_mm - 5.0, 0)\
                 .rect(2*5.0, dim.pin_fat_y_mm).extrude(dim.body_z_mm)
             pins = pins.cut(cutter)
+
+        pins = pins.translate((-dim.body_centre_x_mm, 0, 0))
 
         return pins
 
@@ -265,6 +268,8 @@ class TO252(DPAK):
             .extrude(dim.tab_z_mm+1)
         cutter = c1.union(c2).union(c3)
         tab = tab.cut(cutter)
+        tab = tab.translate((-dim.body_centre_x_mm, 0, 0))
+
         return tab
 
 
@@ -316,7 +321,7 @@ class TO268(DPAK):
 
     def _build_body(self, dim):
 
-        body = cq.Workplane("XY").workplane(offset=dim.nudge_mm, centerOption="CenterOfMass").moveTo(dim.body_centre_x_mm, 0)\
+        body = cq.Workplane("XY").workplane(offset=dim.nudge_mm, centerOption="CenterOfMass").moveTo(0, 0)\
             .rect(dim.body_x_mm, dim.body_y_mm).extrude(dim.body_z_mm)\
             .faces(">X").edges("|Z").chamfer(dim.body_corner_mm)
 
@@ -351,6 +356,7 @@ class TO268(DPAK):
             .line(dim.tab_project_x_mm, 0)\
             .line(dim.body_corner_mm, -dim.body_corner_mm)\
             .close().extrude(dim.tab_z_mm)
+        tab = tab.translate((-dim.body_centre_x_mm, 0, 0))
         return tab
 
 
@@ -402,7 +408,7 @@ class HSOF8(DPAK):
 
     def _build_body(self, dim):
 
-        body = cq.Workplane("XY").workplane(offset=dim.nudge_mm, centerOption="CenterOfMass").moveTo(dim.body_centre_x_mm, 0)\
+        body = cq.Workplane("XY").workplane(offset=dim.nudge_mm, centerOption="CenterOfMass").moveTo(0, 0)\
             .rect(dim.body_x_mm, dim.body_y_mm).extrude(dim.body_z_mm)
 
         # TODO replace hard-coded numbers
@@ -446,6 +452,7 @@ class HSOF8(DPAK):
                 .rect(2*5.0, dim.pin_fat_y_mm).extrude(dim.body_z_mm)
             pins = pins.cut(cutter)
 
+        pins = pins.translate((-dim.body_centre_x_mm, 0, 0))
         return pins
 
 
@@ -472,6 +479,7 @@ class HSOF8(DPAK):
             .extrude(dim.tab_z_mm)
         cutter = c1.union(c2)
         tab = tab.cut(cutter)
+        tab = tab.translate((-dim.body_centre_x_mm, 0, 0))
         return tab
 
 
@@ -544,6 +552,7 @@ class SOT669(DPAK):
             .faces(">X").edges("|Z").fillet(dim.tab_cutout_radius_mm / 2.0)\
             .faces("<X").edges("|Z").fillet(dim.tab_cutout_radius_mm / 2.0)
         tab = tab.cut(cutter)
+        tab = tab.translate((-dim.body_centre_x_mm, 0, 0))
         return tab
 
 
@@ -584,7 +593,7 @@ class SOT89(DPAK):
 
     def _build_body(self, dim):
 
-        body = cq.Workplane("XY").workplane(offset=dim.nudge_mm, centerOption="CenterOfMass").moveTo(dim.body_centre_x_mm, 0)\
+        body = cq.Workplane("XY").workplane(offset=dim.nudge_mm, centerOption="CenterOfMass").moveTo(0, 0)\
             .rect(dim.body_x_mm, dim.body_y_mm).extrude(dim.body_z_mm)
         body = body.faces(">Z").edges(">Z").chamfer(dim.chamfer_2, dim.chamfer_1)
         body = body.faces(">Z").workplane(centerOption="CenterOfMass").center(dim.marker_offset_x_mm, dim.marker_offset_y_mm).hole(dim.marker_x_mm, depth=dim.marker_z_mm)
@@ -604,6 +613,7 @@ class SOT89(DPAK):
                 .moveTo(dim.body_centre_x_mm -(dim.body_x_mm / 2.0) - dim.pin_cut_x_mm - 5.0, 0)\
                 .rect(2*5.0, dim.pin_fat_y_mm).extrude(dim.body_z_mm)
             pins = pins.cut(cutter)
+        pins = pins.translate((-dim.body_centre_x_mm, 0, 0))
         return pins
 
 
