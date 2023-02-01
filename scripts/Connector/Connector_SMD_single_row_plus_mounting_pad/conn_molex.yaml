@@ -37,7 +37,7 @@ device_definition:
         mpn_format_string: '78171-00{pincount:02d}'
         orientation: 'V'
         datasheet: 'http://www.molex.com/pdm_docs/sd/781710002_sd.pdf'
-        pinrange: ['list', [2,3,4,5]]
+        pinrange: ['list', [2,3,4,5,6]]
         text_inside_pos: 'center'
         pitch: 1.2
         pad1_position: 'top-left' # 'top-left' | 'bottom-left' -> pin 2 always to the right of pin 1
