@@ -1052,6 +1052,36 @@ Analog_BGA-49_6.25x6.25mm_Layout7x7_P0.8mm_Ball0.5mm_Pad0.4mm:
   pins_color_key: "metal grey pins"
   marking_color_key: "light brown label"
 
+Analog_BGA-209_9.5x16mm_Layout11x19_P0.8mm_Ball0.5mm_Pad0.4mm:
+  # from https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/ltc-legacy-bga/05081561_bga209.pdf
+  fp_r: 0.75
+  fp_d: 0.25
+  fp_z: 0.01
+  ef: 0.0
+  cff: null
+  cf: null
+  D: 16.0
+  E: 9.5
+  D1: null
+  E1: null
+  A1: 0.4
+  A2: null
+  A: 4.72
+  b: 0.5
+  e: 0.8
+  ex: null
+  sp: 0.0
+  npx: 19
+  npy: 11
+  excluded_pins: null
+  molded: null
+  modelName: "Analog_BGA-209_9.5x16mm_Layout11x19_P0.8mm_Ball0.5mm_Pad0.4mm"
+  rotation: -90
+  body_bot_color_key: "dark green body"
+  body_color_key: "black body"
+  pins_color_key: "metal grey pins"
+  marking_color_key: "light brown label"
+
 NXP_VFBGA-42_2.6x3mm_Layout6x7_P0.4mm_Ball0.25mm_Pad0.24mm:
   # from https://www.nxp.com/docs/en/package-information/SOT1963-1.pdf
   fp_r: 0.5   # first pin indicator radius
