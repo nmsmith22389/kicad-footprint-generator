@@ -9306,6 +9306,42 @@ TQFN-16-1EP_3x3mm_P0.5mm_EP1.6x1.6mm:
   mark_color_key: light brown label
   source: 'https://www.ti.com/lit/ds/symlink/tpa6132a2.pdf'
 
+TQFN-20-1EP_4x4mm_P0.5mm_EP2.7x2.7mm:
+  c: 0.2
+  L: 0.4
+  fp_s: True
+  fp_r: 0.4
+  fp_d: 0.5
+  fp_dx: null
+  fp_dy: null
+  fp_z: 0.05
+  ef: 0.0
+  cce: 0.35
+  D: 4.0
+  E: 4.0
+  A1: 0.02
+  A2: 0.73
+  b: 0.25
+  e: 0.5
+  m: 0.0
+  ps: rounded
+  npx: 5
+  npy: 5
+  epad: [2.7, 2.7]
+  epad_offsetX: null
+  epad_offsetY: null
+  epad_n: null
+  epad_pitch: null
+  excluded_pins: null
+  model_name: TQFN-20-1EP_4x4mm_P0.5mm_EP2.7x2.7mm
+  rotation: -90
+  destination_dir: Package_DFN_QFN.3dshapes
+  body_color_key: black body
+  pin_shapes: null
+  pin_color_key: metal grey pins
+  mark_color_key: light brown label
+  source: 'https://pdfserv.maximintegrated.com/package_dwgs/21-0139.PDF (T2044-5C)'
+
 TQFN-20-1EP_5x5mm_P0.65mm_EP3.1x3.1mm:
   c: 0.2
   L: 0.55
