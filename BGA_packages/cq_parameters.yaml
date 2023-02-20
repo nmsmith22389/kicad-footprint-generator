@@ -680,6 +680,37 @@ BGA-256_17.0x17.0mm_Layout16x16_P1.0mm_Ball0.5mm_Pad0.4mm_NSMD:
   pins_color_key: "metal grey pins"
   marking_color_key: "light brown label"
 
+Texas_BGA-289_15.0x15.0mm_Layout17x17_P0.8mm_Ball0.5mm_Pad0.4mm:
+  # from https://www.ti.com/lit/ml/mpbg777/mpbg777.pdf
+  fp_r: 0.3       # first pin indicator radius
+  fp_d: 0.04      # first pin indicator distance from edge
+  fp_z: 0.01      # first pin indicator depth
+  ef: 0.0         # 0.05,      # fillet of edges  Note: bigger bytes model with fillet
+  cf: null
+  cff: null
+  D: 15.0         # body overall length
+  D1: null
+  E: 15.0         # body overall width
+  E1: null
+  A1: 0.4         # body-board separation
+  A2: null
+  A: 1.4          # body  overall height
+  b: 0.50         # ball pin width diameter with a small extra to obtain a union of balls and case
+  e: 0.8          # pin (center-to-center) distance
+  ex: 0.8         # pin (center-to-center) distance
+  sp: 0.12        # seating plane (pcb penetration)
+  npx: 17         # number of pins along X axis (width)
+  npy: 17         # number of pins along y axis (length)
+  molded: null
+  excluded_pins: null
+  modelName: "Texas_BGA-289-15.0x15.0mm_Layout17x17_P0.8mm_Ball0.5mm_Pad0.4mm"
+  rotation: -90 # rotation if required
+  body_bot_color_key: "dark green body"
+  body_color_key: "black body"
+  pins_color_key: "metal grey pins"
+  marking_color_key: "light brown label"
+
+
 BGA-324_15.0x15.0mm_Layout18x18_P0.8mm_Ball0.5mm_Pad0.4mm_NSMD:
   # from https://www.altera.com/content/dam/altera-www/global/en_US/pdfs/literature/packaging/04r00474-02.pdf
   fp_r: 0.8
