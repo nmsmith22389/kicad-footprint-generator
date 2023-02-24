@@ -386,6 +386,38 @@ AEC:
   mark_color_key: 'light brown label'
   destination_dir: 'Package_QFP.3dshapes'
 
+Diode_Bridge_OnSemi_SDIP-4L:
+  the: 0.0
+  tb_s: 0.15
+  c: 0.275
+  R1: 0.1
+  R2: 0.1
+  S: 0.361
+  fp_s: True
+  fp_r: 0.6
+  fp_d: 0.05
+  fp_z: 0.05
+  ef: 0.0
+  cc1: 0.25
+  D1: 8.28
+  E1: 6.35
+  E: 9.85
+  A1: 0.1
+  A2: 2.4
+  b: 1.045
+  e: 5.1
+  npx: 2
+  npy: 0
+  epad: null
+  excluded_pins: null
+  model_name: Diode_Bridge_OnSemi_SDIP-4L
+  rotation: -90
+  type: 'diode'
+  body_color_key: 'black body'
+  pin_color_key: 'metal grey pins'
+  mark_color_key: 'light brown label'
+  destination_dir: 'Diode_SMD.3dshapes'
+
 MCP100:
   the: 12.0
   tb_s: 0.15
