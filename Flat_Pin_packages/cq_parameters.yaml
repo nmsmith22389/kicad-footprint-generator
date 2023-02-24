@@ -298,6 +298,36 @@ HVSOF6:
   pin_color_key: 'metal grey pins'
   source: 'http://rohmfs.rohm.com/en/products/databook/datasheet/ic/audio_video/video_amplifier/bh76106hfv-e.pdf'
 
+Nexperia_CFP3_SOD-123W:
+  the: 4.0
+  c: 0.16
+  fp_s: False
+  fp_r: 0.4
+  fp_d: 0.1
+  fp_z: 0.01
+  ef: 0.0
+  L: null
+  D1: 2.6
+  E1: 1.7
+  E: 2.6
+  A1: 0.02
+  A2: 1.0
+  b: 0.9
+  e: 3.05
+  npx: 0
+  npy: 1
+  epad: null
+  excluded_pins: null
+  model_name: Nexperia_CFP3_SOD-123W
+  color_pin_mark: true
+  place_pinMark: true
+  rotation: 0
+  destination_dir: Diode_SMD.3dshapes
+  body_color_key: 'black body'
+  mark_color_key: 'light brown label'
+  pin_color_key: 'metal grey pins'
+  source: 'https://assets.nexperia.com/documents/outline-drawing/SOD123W.pdf'
+
 SOT-543:
   the: 4.0
   c: 0.12
