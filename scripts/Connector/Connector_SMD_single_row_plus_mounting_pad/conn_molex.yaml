@@ -1,6 +1,33 @@
 group_definitions:
     manufacturer: 'Molex'
 
+PicoEZ_defaults: &picoez_defaults
+    series: 'Pico-EZmate'
+    orientation: 'V'
+    text_inside_pos: 'center'
+    pitch: 1.2
+    pad1_position: _position 'top-left' # 'top-left' | 'bottom-left' -> pin 2 always to the right of pin 1
+    mounting_pad_size: [0.7, 0.8]
+    # x position mounting inner mounting pad edge relative to nearest pad center
+    center_pad_to_mounting_pad_edge: 0.8
+    # y dimensions for pad given relative to mounting pad edge
+    rel_pad_y_outside_edge: 4.6
+    rel_pad_y_inside_edge: 3.75
+    pad_size_x: 0.6
+    # y position for body edge relative to mounting pad edge (positive -> body extends outside bounding box)
+    rel_body_edge_y: 0.22
+    body_size_y: 4.5
+    # body_fin_protrusion: 1.6
+    # body_fin_width: 0.8
+    # x body edge relative to nearest pin
+    rel_body_edge_x: 1.5
+    edge_modifier_mount_pad_side:
+        depth: 0.5 # > 0: cutout, < 0: protrusion
+        # width_start: 1.6
+        start_from_body_side: 1.35
+        # width_end: 0.8
+        end_from_body_side: 1.65
+
 device_definition:
     Panelmate_side_entry:
         series: 'Panelmate'
@@ -33,62 +60,16 @@ device_definition:
             end_from_body_side: 2.3
 
     PicoEZ_000x_top_entry:
-        series: &series 'Pico-EZmate'
         mpn_format_string: '78171-00{pincount:02d}'
-        orientation: &orientation 'V'
         datasheet: 'http://www.molex.com/pdm_docs/sd/781710002_sd.pdf'
         pinrange: ['list', [2,3,4,5]]
-        text_inside_pos: &text_inside_pos 'center'
-        pitch: &pitch 1.2
-        pad1_position: &pad1_position 'top-left' # 'top-left' | 'bottom-left' -> pin 2 always to the right of pin 1
-        mounting_pad_size: &mounting_pad_size [0.7, 0.8]
-        # x position mounting inner mounting pad edge relative to nearest pad center
-        center_pad_to_mounting_pad_edge: &center_pad_to_mounting_pad_edge 0.8
-        # y dimensions for pad given relative to mounting pad edge
-        rel_pad_y_outside_edge: &rel_pad_y_outside_edge 4.6
-        rel_pad_y_inside_edge: &rel_pad_y_inside_edge 3.75
-        pad_size_x: &pad_size_x 0.6
-        # y position for body edge relative to mounting pad edge (positive -> body extends outside bounding box)
-        rel_body_edge_y: &rel_body_edge_y 0.22
-        body_size_y: &body_size_y 4.5
-        # body_fin_protrusion: &body_fin_protrusion 1.6
-        # body_fin_width: &body_fin_width 0.8
-        # x body edge relative to nearest pin
-        rel_body_edge_x: &rel_body_edge_x 1.5
-        edge_modifier_mount_pad_side:
-            depth: &depth 0.5 # > 0: cutout, < 0: protrusion
-            # width_start: &width_start 1.6
-            start_from_body_side: &start_from_body_side 1.35
-            # width_end: &width_end 0.8
-            end_from_body_side: &end_from_body_side 1.65
+        <<: *picoez_defaults
 
     PicoEZ_500x_top_entry:
-        series: *series
         mpn_format_string: '78171-50{pincount:02d}'
-        orientation: *orientation
         datasheet: 'http://www.molex.com/pdm_docs/sd/781715006_sd.pdf'
         pinrange: ['list', [6,7]]
-        text_inside_pos: *text_inside_pos
-        pitch: *pitch
-        pad1_position: *pad1_position
-        mounting_pad_size: *mounting_pad_size
-        # x position mounting inner mounting pad edge relative to nearest pad center
-        center_pad_to_mounting_pad_edge: *center_pad_to_mounting_pad_edge
-        # y dimensions for pad given relative to mounting pad edge
-        rel_pad_y_outside_edge: *rel_pad_y_outside_edge
-        rel_pad_y_inside_edge: *rel_pad_y_inside_edge
-        pad_size_x: *pad_size_x
-        # y position for body edge relative to mounting pad edge (positive -> body extends outside bounding box)
-        rel_body_edge_y: *rel_body_edge_y
-        body_size_y: *body_size_y
-        # body_fin_protrusion: *body_fin_protrusio
-        # body_fin_width: *body_fin_widt
-        # x body edge relative to nearest pin
-        rel_body_edge_x: *rel_body_edge_x
-        edge_modifier_mount_pad_side:
-            depth: *depth
-            start_from_body_side: *start_from_body_side
-            end_from_body_side: *end_from_body_side
+        <<: *picoez_defaults
 
     PicoEZSlim_top_entry:
         series: 'Pico-EZmate_Slim'
