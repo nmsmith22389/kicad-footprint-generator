@@ -140,10 +140,14 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
         component = cq.Assembly()
 
         # Add the parts to the assembly
-        component.add(body_top, color=cq_color_correct.Color(body_top_color[0], body_top_color[1], body_top_color[2]))
-        component.add(body, color=cq_color_correct.Color(body_color[0], body_color[1], body_color[2]))
-        component.add(pins, color=cq_color_correct.Color(pins_color[0], pins_color[1], pins_color[2]))
-        component.add(npth_pins, color=cq_color_correct.Color(npth_pin_color[0], npth_pin_color[1], npth_pin_color[2]))
+        if(body_top):
+            component.add(body_top, color=cq_color_correct.Color(body_top_color[0], body_top_color[1], body_top_color[2]))
+        if(body):
+            component.add(body, color=cq_color_correct.Color(body_color[0], body_color[1], body_color[2]))
+        if(pins):
+            component.add(pins, color=cq_color_correct.Color(pins_color[0], pins_color[1], pins_color[2]))
+        if(npth_pins):
+            component.add(npth_pins, color=cq_color_correct.Color(npth_pin_color[0], npth_pin_color[1], npth_pin_color[2]))
 
         # Create the output directory if it does not exist
         if not os.path.exists(output_dir):
@@ -156,8 +160,24 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
         component.save(os.path.join(output_dir, file_name + ".step"), cq.exporters.ExportTypes.STEP, write_pcurves=False)
 
         # Export the assembly to VRML
+        list_items=[]
+        list_colors=[]
+        if(body_top):
+            list_items.append(body_top)
+            list_colors.append(all_params[model]["body_top_color_key"])
+        if(body):
+            list_items.append(body)
+            list_colors.append(all_params[model]["body_color_key"])
+        if(pins):
+            list_items.append(pins)
+            list_colors.append(all_params[model]["pin_color_key"])
+        if(npth_pins):
+            list_items.append(pins)
+            list_colors.append(all_params[model]["npth_pin_color_key"])
+        
+        
         if enable_vrml:
-            export_VRML(os.path.join(output_dir, file_name + ".wrl"), [body_top, body, pins, npth_pins], [all_params[model]["body_top_color_key"], all_params[model]["body_color_key"], all_params[model]["pin_color_key"], all_params[model]["npth_pin_color_key"]])
+            export_VRML(os.path.join(output_dir, file_name + ".wrl"), list_items, list_colors)
 
         # Update the license
         from _tools import add_license

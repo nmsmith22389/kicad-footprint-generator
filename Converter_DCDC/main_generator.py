@@ -115,7 +115,10 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
         # Used to wrap all the parts into an assembly
         component = cq.Assembly()
 
-        # Translation and rotation of the parts, if needed
+        if('translation' not in all_params[model].keys()):
+            all_params[model]['translation']=(0.0, 0.0, 0.0);
+
+        # rotation of the parts, if needed
         case = case.translate(all_params[model]['translation']).rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
         case_top = case_top.translate(all_params[model]['translation']).rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
         pins = pins.translate(all_params[model]['translation']).rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])

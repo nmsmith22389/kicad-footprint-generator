@@ -22,16 +22,32 @@ def generate_connector(dims):
         .faces("<Y").shell(-dims["body"]["wall_thickness"])\
         .translate(dims["body"]["offset"])
 
-    body_back = body.faces("<Y[-2]").workplane()\
+    body_back = body.faces(">Y").workplane(offset=-(dims["body"]["depth"] - dims["body"]["cavity_depth"] - dims["body"]["wall_thickness"]))\
         .box(
             dims["body"]["width"],
             dims["body"]["height"],
             dims["body"]["depth"] - dims["body"]["cavity_depth"] - dims["body"]["wall_thickness"],
-            centered=(True, True, False),
+            centered=(True, False, False),
             combine=False)\
         .edges("|Y").fillet(dims["body"]["radius"])
 
     body = body.union(body_back)
+    
+    tounge = body.faces(">Y[-2]")\
+        .box(
+            dims["tounge"]["width"],
+            dims["tounge"]["height"],
+            dims["tounge"]["depth"],
+            centered=(True, True, False),
+            combine=False)\
+        .edges("|Z and <Y").chamfer(dims["tounge"]["tip_chamfer"])
+
+    pegs = body.faces("<Z").workplane().pushPoints(dims["pegs"]["centers"])\
+        .circle(dims["pegs"]["diameter"]/2)\
+        .extrude(dims["pegs"]["length"], combine=False)\
+        .edges("<Z").chamfer(dims["pegs"]["tip_chamfer"])
+
+    
     shield_pins_front = body.faces("<Z")\
         .workplane(offset=- dims["body"]["height"]/2)\
         .pushPoints(dims["shield"]["centers_front"])\
@@ -63,20 +79,7 @@ def generate_connector(dims):
     del shield_pins_front
     del body_back
 
-    tounge = body.faces(">Y[-3]")\
-        .box(
-            dims["tounge"]["width"],
-            dims["tounge"]["height"],
-            dims["tounge"]["depth"],
-            centered=(True, True, False),
-            combine=False)\
-        .edges("|Z and <Y").chamfer(dims["tounge"]["tip_chamfer"])
-
-    pegs = body.faces("<Z[-3]").workplane().pushPoints(dims["pegs"]["centers"])\
-        .circle(dims["pegs"]["diameter"]/2)\
-        .extrude(dims["pegs"]["length"], combine=False)\
-        .edges("<Z").chamfer(dims["pegs"]["tip_chamfer"])
-
+    
     pins = cq.Workplane("XZ")\
         .workplane(offset=-dims["body"]["depth"]/2 - dims["body"]["offset"][1] - dims["pins"]["length"])\
         .pushPoints(dims["pins"]["centers"])\

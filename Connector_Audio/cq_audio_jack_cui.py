@@ -156,16 +156,7 @@ class cq_audio_jack_cui():
 
     def make_npth_pins_dummy(self, params):
 
-        A1 = params['A1']                      # package height
-        rotation = params['rotation']          # Rotation if required
-
-        # Dummy
-        case = cq.Workplane("XY").workplane(offset=A1 + 0.2).moveTo(0.0, 0.0).circle(0.01, False).extrude(0.01)
-        
-        if (rotation != 0):
-            case = case.rotate((0,0,0), (0,0,1), rotation)
-
-        return (case)
+        return None
 
 
     def make_top_Jack_3_5mm_CUI(self, params):
@@ -268,7 +259,7 @@ class cq_audio_jack_cui():
             l = n[4]
             ld = n[5]
 #            pin = [['rect', 0.0, 0.0, 1.5, 0.5, 3.3], ['rect', 2.0, 2.4, 1.5, 0.5, 3.3], ['rect', 2.0, 7.9, 1.5, 0.5, 3.3]],
-            case1 = cq.Workplane("XY").workplane(offset=0.0).moveTo(0.0, 0.0).rect(w, l).extrude(0.0 - (ld))
+            case1 = cq.Workplane("XY").workplane(offset=2.0).moveTo(0.0, 0.0).rect(w, l).extrude(-2.0 - (ld))
             if w > l:
                 case1 = case1.faces("<Z").edges("<X").fillet(w / 2.2)
                 case1 = case1.faces("<Z").edges(">X").fillet(w / 2.2)

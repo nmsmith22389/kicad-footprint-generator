@@ -22,8 +22,8 @@ USB_C_Receptacle_Palconn_UTC16-G:
     length: 0.76
     tip_chamfer: 0.1
     centers: [
-      [2.89, -2.63],
-      [-2.89, -2.63]
+      [2.89, -1.45],
+      [-2.89, -1.45]
     ]
   pins:
     width: 0.2
@@ -40,10 +40,10 @@ USB_C_Receptacle_Palconn_UTC16-G:
     length: 1
     width: [0.8, 1.1]  # (front, back)
     centers_front: [
-      [-4.32, 1.06],
-      [4.32, 1.06]
+      [-4.32, 2.26],
+      [4.32, 2.26]
     ]
     centers_back: [
-      [4.32, -3.11],
-      [-4.32, -3.11]
+      [4.32, -1.91],
+      [-4.32, -1.91]
     ]

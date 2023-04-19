@@ -144,6 +144,7 @@ def make_pins(params):
     rotation = params['rotation']      # rotation if required
     pin = params['pin']                # pin/pad cordinates
     rim = params['rim']                # Rim underneath
+    pintype = str(params['pintype'])
 
     pins = None
 
@@ -154,11 +155,13 @@ def make_pins(params):
             rdy = rim[1]
             rdh = rim[2]
             pinss = rdh + 0.1
+    if(pintype=='tht_n'):
+        pinss = 2.0;
     #
     # Dummy
     #
-    pins=cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=0).moveTo(0, 0).rect(0.1, 0.1).extrude(0.1)
-    pint=cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=0).moveTo(0, 0).rect(0.1, 0.1).extrude(0.1)
+    pins=None#cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=0).moveTo(0, 0).rect(0.1, 0.1).extrude(0.1)
+    #pint=cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=0).moveTo(0, 0).rect(0.1, 0.1).extrude(0.1)
     #
 
     for i in range(0, len(pin)):
@@ -188,7 +191,13 @@ def make_pins(params):
 
             pint=cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=A1 + pinss).moveTo(px, -py).circle(pd / 2.0, False).extrude(0 - (ph + pinss))
             pint = pint.faces("<Z").fillet(pd / 5.0)
-
+            if(pintype=='tht_n'):
+                pint = pint.faces(">Z").fillet(pd / 15.0)
+                pind= cq.Workplane("XZ").workplane(centerOption="CenterOfMass", offset= 0 -py + (pd / 2.0)).moveTo(px, A1 + pinss).circle(pd / 2.0, False).extrude( 0 - (W / 2.0))
+                pind = pind.faces("<Y").fillet(pd / 2.0)
+                pint=pint.union(pind);
+            
+            
         elif pt == 'smd':
             pd = p[3]
             ph = p[4]
@@ -267,17 +276,9 @@ def make_pins(params):
                     xD = pd
                     pint=cq.Workplane("ZX").workplane(centerOption="CenterOfMass", offset=0 -((W / 2.0) + (ph / 2.0))).moveTo(myZ1, myX1).rect(xD, yD).extrude(ph)
 
-        elif pt == 'tht_n':
-            pd = p[3]
-            pl = p[4]
 
-            pint= cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=A1 + 2.0).moveTo(px, -py).circle(pd / 2.0, False).extrude(0 - (pl + 2.0))
-            pint = pint.faces("<Z").fillet(pd / 5.0)
-            pind= cq.Workplane("XZ").workplane(centerOption="CenterOfMass", offset= 0 -py + (pd / 2.0)).moveTo(px, A1 + 2.0).circle(pd / 2.0, False).extrude( 0 - (W / 2.0))
-            pind = pind.faces("<Y").fillet(pd / 2.0)
-            pint = pint.union(pind)
 
-        if i == 0:
+        if pins is None:
             pins = pint
         else:
             pins = pins.union(pint)

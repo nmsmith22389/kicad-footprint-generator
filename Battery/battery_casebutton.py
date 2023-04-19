@@ -352,6 +352,6 @@ def make_case_Button4(params):
     #
     
     # Dummy
-    case = cq.Workplane("XY").workplane(offset=A1 + A11).moveTo(0.0, 0.0).rect(0.01, 0.01).extrude(0.01)
+    case = None #cq.Workplane("XY").workplane(offset=A1 + A11).moveTo(0.0, 0.0).rect(0.01, 0.01).extrude(0.01)
 
     return case

@@ -117,7 +117,8 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
         # Add the parts to the assembly
         component.add(body, color=cq_color_correct.Color(body_color[0], body_color[1], body_color[2]))
         component.add(base, color=cq_color_correct.Color(base_color[0], base_color[1], base_color[2]))
-        component.add(mark, color=cq_color_correct.Color(mark_color[0], mark_color[1], mark_color[2]))
+        if(all_params[model]['PM']):
+            component.add(mark, color=cq_color_correct.Color(mark_color[0], mark_color[1], mark_color[2]))
         component.add(pins, color=cq_color_correct.Color(pins_color[0], pins_color[1], pins_color[2]))
 
         # Create the output directory if it does not exist
@@ -132,7 +133,10 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
 
         # Export the assembly to VRML
         if enable_vrml:
-            export_VRML(os.path.join(output_dir, file_name + ".wrl"), [body, base, mark, pins], [all_params[model]["body_color_key"], all_params[model]["base_color_key"], all_params[model]["mark_color_key"], all_params[model]["pin_color_key"]])
+            if(all_params[model]['PM']):
+                export_VRML(os.path.join(output_dir, file_name + ".wrl"), [body, base, mark, pins], [all_params[model]["body_color_key"], all_params[model]["base_color_key"], all_params[model]["mark_color_key"], all_params[model]["pin_color_key"]])
+            else:
+                export_VRML(os.path.join(output_dir, file_name + ".wrl"), [body, base, pins], [all_params[model]["body_color_key"], all_params[model]["base_color_key"], all_params[model]["pin_color_key"]])
 
         # Update the license
         from _tools import add_license

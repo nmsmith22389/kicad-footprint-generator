@@ -66,6 +66,7 @@ def make_pins(params):
                 hddy = dL_3 * math.sin(math.radians(45.0))
                 hddx = dL_3 * math.cos(math.radians(45.0))
                 pts = []
+                pts.append((0.0, 0.0))
                 pts.append((0.0, 0.0 - dL_3))
                 pts.append((0.0 - hddx, 0.0 - dL_3 - hddy))
                 pts.append((0.0, 0.0 - dL_3 - (2.0 * hddy)))
@@ -117,37 +118,51 @@ def make_pins(params):
             pine = cq.Workplane("YZ").workplane(offset=xx - 2.0).moveTo(yy, A1 + A11 + H + th - (tw / 1.5)).circle(tw / 4.0, False).extrude(4.0)
             pint = pint.cut(pine)
             pp = pp.union(pint)
-    
+
     if BC != None:
         if BC[0] == 'BC1':
             pint, pint1 = make_battery_contact_BC1(params)
-            pp = pp.union(pint)
-            pp = pp.union(pint1)
+            if(pint):
+                pp = pp.union(pint)
+            if(pint1):
+                pp = pp.union(pint1)
         elif BC[0] == 'BC2':
             pint, pint1 = make_battery_contact_BC2(params)
-            pp = pp.union(pint)
-            pp = pp.union(pint1)
+            if(pint):
+                pp = pp.union(pint)
+            if(pint1):
+                pp = pp.union(pint1)
         elif BC[0] == 'BC3':
             pint, pint1 = make_battery_contact_BC3(params)
-            pp = pp.union(pint)
-            pp = pp.union(pint1)
+            if(pint):
+                pp = pp.union(pint)
+            if(pint1):
+                pp = pp.union(pint1)
         elif BC[0] == 'BC4':
             pint, pint1 = make_battery_contact_BC4(params)
-            pp = pp.union(pint)
-            pp = pp.union(pint1)
+            if(pint):
+                pp = pp.union(pint)
+            if(pint1):
+                pp = pp.union(pint1)
         elif BC[0] == 'BC5':
             pint, pint1 = make_battery_contact_BC5(params)
-            pp = pp.union(pint)
-            pp = pp.union(pint1)
+            if(pint):
+                pp = pp.union(pint)
+            if(pint1):
+                pp = pp.union(pint1)
         elif BC[0] == 'BC6':
             pint, pint1 = make_battery_contact_BC6(params)
-            pp = pp.union(pint)
-            pp = pp.union(pint1)
+            if(pint):
+                pp = pp.union(pint)
+            if(pint1):
+                pp = pp.union(pint1)
         elif BC[0] == 'BC7':
             pint, pint1 = make_battery_contact_BC7(params)
-            pp = pp.union(pint)
-            pp = pp.union(pint1)
-                
+            if(pint):
+                pp = pp.union(pint)
+            if(pint1):
+                pp = pp.union(pint1)
+
     if (rotation > 0.01):
         pp = pp.rotate((0,0,0), (0,0,1), rotation)
 

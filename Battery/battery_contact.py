@@ -256,8 +256,8 @@ def make_battery_contact_BC4(params):
     #
     # Dummy
     #
-    pint = cq.Workplane("ZY").workplane(offset=A1 + A11 + 0.02).moveTo(0.0, 0.0).circle(0.01, False).extrude(0.01)
-    pint1 = cq.Workplane("ZY").workplane(offset=A1 + A11 + 0.02).moveTo(0.0, 0.0).circle(0.01, False).extrude(0.01)
+    pint = None #cq.Workplane("ZY").workplane(offset=A1 + A11 + 0.02).moveTo(0.0, 0.0).circle(0.01, False).extrude(0.01)
+    pint1 = None #cq.Workplane("ZY").workplane(offset=A1 + A11 + 0.02).moveTo(0.0, 0.0).circle(0.01, False).extrude(0.01)
     
     x3 = x1
     for i in range(0, cellcnt):
@@ -266,14 +266,19 @@ def make_battery_contact_BC4(params):
         plw = bcd / 2.0
         x1 = x3
         pinf = cq.Workplane("XY").workplane(offset=A1 + A11).moveTo(x1, y1).rect(0.1, plw).extrude((3.0 * H) / 4.0)
+        if(pint1 is None):
+            pint1 = pinf
         pint1 = pint1.union(pinf)
         while sd > gt:
-            pinf = cq.Workplane("ZY").workplane(offset=x1).moveTo(z1, y1).circle(sd, False).extrude(tx)
             if x1 > 0.0:
-                pine = cq.Workplane("ZY").workplane(offset=x1 - 0.2).moveTo(z1, y1).circle(sd - gt, False).extrude(tx + 0.2)
+                pinf = cq.Workplane("ZY").workplane(offset=x1 - 0.01).moveTo(z1, y1).circle(sd, False).extrude(tx * 2.05)
+                pine = cq.Workplane("ZY").workplane(offset=x1 - 0.2).moveTo(z1, y1).circle(sd - gt - 0.1, False).extrude(tx + 0.2)
             else:
-                pine = cq.Workplane("ZY").workplane(offset=x1 + 0.2).moveTo(z1, y1).circle(sd - gt, False).extrude(tx - 0.2)
+                pinf = cq.Workplane("ZY").workplane(offset=x1 + 0.01).moveTo(z1, y1).circle(sd, False).extrude(tx * 2.05)
+                pine = cq.Workplane("ZY").workplane(offset=x1 + 0.2).moveTo(z1, y1).circle(sd - gt - 0.1, False).extrude(tx - 0.2)
             pinf = pinf.cut(pine)
+            if(pint is None):
+                pint=pinf
             pint = pint.union(pinf)
             x1 = x1 - (tx * 2.0)
             sd = sd - gt
@@ -287,8 +292,10 @@ def make_battery_contact_BC4(params):
     if BM != None:
         x1 = BM[0]
         y1 = 0.0 - BM[1]
-        pint = pint.translate((x1, y1, 0.0))
-        pint1 = pint1.translate((x1, y1, 0.0))
+        if pint:
+            pint = pint.translate((x1, y1, 0.0))
+        if pint1:
+            pint1 = pint1.translate((x1, y1, 0.0))
 
     return pint, pint1
 
@@ -617,13 +624,13 @@ def make_battery_contact_BC7(params):
     if hd1 > (W / 2.0):
         hd1 = W * 0.4
     hy1 = 0.0
-    pine = cq.Workplane("XY").workplane(offset=A1 + A11 + (H - 0.4)).moveTo(hx1, hy1).rect(ddx, hd1, centered=False).extrude(H)
+    pine = cq.Workplane("XY").workplane(offset=A1 + A11 + (H - 0.4)).moveTo(hx1, hy1).rect(ddx - 0.1, hd1 - 0.1, centered=False).extrude(H)
     pint = pint.cut(pine)
     #
     hx2 = 0.0 - tx3 - (ddx / 2.0)
     hy2 = ty3
     hy2 = 0.0
-    pine = cq.Workplane("XY").workplane(offset=A1 + A11 + (H - 0.4)).moveTo(hx2, hy2).rect(ddx, hd1, centered=False).extrude(H)
+    pine = cq.Workplane("XY").workplane(offset=A1 + A11 + (H - 0.4)).moveTo(hx2, hy2).rect(ddx - 0.1, hd1 - 0.1, centered=False).extrude(H)
     pint = pint.cut(pine)
 
     hx3 = hx1

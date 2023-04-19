@@ -100,7 +100,7 @@ def MakePin(series_params, k):
             .faces("<Z").chamfer(series_params['ch'])
 
     # Bending
-    pin = pin.union(cq.Workplane("XY").rect(series_params['dia'], series_params['dia'], False).revolve(90))
+    pin = pin.union(cq.Workplane("ZY").rect(series_params['dia'], series_params['dia'], False).revolve(90))
 
     # End pin
     pin = pin.union(cq.Workplane("YZ").rect(series_params['dia'], series_params['dia'], False)
