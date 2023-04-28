@@ -51,3 +51,34 @@ VSON-10_3x3mm_P0.5mm_EP1.2x2mm:
   #pad_length_addition: 0.5
   #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
   #include_suffix_in_3dpath: 'False'
+
+VSON-8_1.5x2.0mm_P0.5mm:
+  device_type: 'VSON'
+  library: Package_SON
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'http://www.ti.com/lit/ds/symlink/tps62840.pdf#page=37'
+  ipc_class: 'qfn_pull_back' #'qfn' | 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  body_size_x:
+    minimum: 1.4
+    maximum: 1.6
+  body_size_y:
+    minimum: 1.9
+    maximum: 2.1
+  lead_width:
+    minimum: 0.20
+    maximum: 0.30
+  lead_len:
+    minimum: 0.30
+    maximum: 0.50
+
+  pitch: 0.50
+  num_pins_x: 0
+  num_pins_y: 4
+  #chamfer_edge_pins: 0.25
+  #pin_count_grid:
+  #pad_length_addition: 0.5
+  #suffix: '_PullBack'
+  #include_suffix_in_3dpath: 'False'
+  #include_pad_size: 'fp_name_only' # 'both' | 'none' (default)
