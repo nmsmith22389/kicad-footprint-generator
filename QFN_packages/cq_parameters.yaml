@@ -10675,6 +10675,42 @@ Texas_RGY_R-PVQFN-N24_EP2.05x3.1mm:
   mark_color_key: light brown label
   source: 'https://www.ti.com/lit/ds/symlink/bq24133.pdf#page=40, generated with kicad-footprint-generator ipc_dfn_qfn_generator.py'
 
+Texas_RGY_R-PVQFN-N20_EP2.05x3.05mm:
+  c: 0.2
+  L: 0.4
+  fp_s: 1
+  fp_r: 0.4
+  fp_d: 0.5
+  fp_dx: null
+  fp_dy: null
+  fp_z: 0.02
+  ef: 0.0
+  cce: 0.25
+  D: 4.5
+  E: 3.5
+  A1: 0.025
+  A2: 0.875
+  b: 0.24
+  e: 0.5
+  m: 0.0
+  ps: square
+  npx: 8
+  npy: 4
+  epad: [3.05, 2.05]
+  epad_offsetX: null
+  epad_offsetY: null
+  epad_n: null
+  epad_pitch: null
+  excluded_pins: [10, 11, 22, 23]
+  model_name: Texas_RGY_R-PVQFN-N20_EP2.05x3.05mm
+  rotation: -90
+  destination_dir: Package_DFN_QFN.3dshapes
+  body_color_key: black body
+  pin_shapes: null
+  pin_color_key: metal grey pins
+  mark_color_key: light brown label
+  source: 'https://www.ti.com/lit/ds/symlink/txb0108.pdf#page=33, generated with kicad-footprint-generator ipc_dfn_qfn_generator.py'
+
 Texas_S-PVQFN-N16_EP2.7x2.7mm:
   c: 0.1
   L: 0.2
