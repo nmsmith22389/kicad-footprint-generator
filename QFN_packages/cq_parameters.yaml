@@ -16,7 +16,7 @@ D_0603:
   A2: 0.6  # body height
   b: 0.7  # pin width
   e: 0.0  # pin (center-to-center) distance
-  m: 0.0  # margin between pins and body 
+  m: 0.0  # margin between pins and body
   ps: concave  # rounded pads
   npx: 0  # number of pins along X axis (width)
   npy: 1  # number of pins along y axis (length)
@@ -1455,7 +1455,7 @@ Analog_LFCSP-UQ-10_1.3x1.6mm_P0.4mm:
   A2: 0.53  # body height
   b: 0.2  # pin width
   e: 0.4  # pin (center-to-center) distance
-  m: 0.0  # margin between pins and body 
+  m: 0.0  # margin between pins and body
   ps: rounded  # rounded pads
   npx: 2  # number of pins along X axis (width)
   npy: 3  # number of pins along y axis (length)
@@ -1528,7 +1528,7 @@ LFCSP-6-1EP_2x2mm_P0.65mm_EP1x1.6mm:
   A2: 0.53  # body height
   b: 0.3  # pin width
   e: 0.65  # pin (center-to-center) distance
-  m: 0.0  # margin between pins and body 
+  m: 0.0  # margin between pins and body
   ps: rounded # rounded or square
   npx: 3  # number of pins along X axis (width)
   npy: 0  # number of pins along y axis (length)
@@ -2693,7 +2693,7 @@ DFN-20-1EP_5x6mm_Pitch0.5mm:
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
   source: 'http://www.onsemi.com/pub/Collateral/505AB.PDF'
-  
+
 AO_DFN-8-1EP_5.55x5.2mm_P1.27mm_EP4.12x4.6mm:
   c: 0.2
   L: 0.65
@@ -6932,7 +6932,7 @@ Infineon_MLPQ-40-32-1EP_7x7mm_P0.5mm:
   mark_color_key: light brown label
   source: 'https://www.infineon.com/dgdl/Infineon-AN1170-AN-v05_00-EN.pdf?fileId=5546d462533600a40153559ac3e51134'
 
-Infineon_MLPQ-48-1EP_7x7mm_P0.5mm_Pad5.15x5.15mm:
+Infineon_MLPQ-48-1EP_7x7mm_P0.5mm_EP5.15x5.15mm:
   c: 0.2
   L: 0.25
   fp_s: True
@@ -6959,7 +6959,7 @@ Infineon_MLPQ-48-1EP_7x7mm_P0.5mm_Pad5.15x5.15mm:
   epad_n: null
   epad_pitch: null
   excluded_pins: null
-  model_name: Infineon_MLPQ-48-1EP_7x7mm_P0.5mm_Pad5.15x5.15mm
+  model_name: Infineon_MLPQ-48-1EP_7x7mm_P0.5mm_EP5.15x5.15mm
   rotation: -90
   destination_dir: Package_DFN_QFN.3dshapes
   body_color_key: black body
@@ -6967,6 +6967,42 @@ Infineon_MLPQ-48-1EP_7x7mm_P0.5mm_Pad5.15x5.15mm:
   pin_color_key: metal grey pins
   mark_color_key: light brown label
   source: 'https://www.infineon.com/dgdl/irs2052mpbf.pdf?fileId=5546d462533600a401535675d3b32788'
+
+Infineon_MLPQ-48-1EP_7x7mm_P0.5mm_EP5.55x5.55mm:
+  c: 0.1
+  L: 0.2
+  fp_s: 1
+  fp_r: 0.4
+  fp_d: 0.5
+  fp_dx: null
+  fp_dy: null
+  fp_z: 0.02
+  ef: 0.0
+  cce: 0.25
+  D: 7.0
+  E: 7.0
+  A1: 0.03
+  A2: 0.75
+  b: 0.2
+  e: 0.5
+  m: 0.0
+  ps: square
+  npx: 12
+  npy: 12
+  epad: null
+  epad_offsetX: null
+  epad_offsetY: null
+  epad_n: null
+  epad_pitch: null
+  excluded_pins: null
+  model_name: Infineon_MLPQ-48-1EP_7x7mm_P0.5mm_EP5.55x5.55mm
+  rotation: -90
+  destination_dir: Package_DFN_QFN.3dshapes
+  body_color_key: black body
+  pin_shapes: null
+  pin_color_key: metal grey pins
+  mark_color_key: light brown label
+  source: 'https://www.infineon.com/dgdl/irs2093mpbf.pdf?fileId=5546d462533600a401535675fb892793'
 
 Linear_UGK52_QFN-46-52:
   c: 0.2
@@ -9162,7 +9198,7 @@ ST_UFQFPN-20_3x3mm_P0.5mm:
   mark_color_key: light brown label
   source: 'http://www.st.com/resource/en/datasheet/stm8s003f3.pdf'
 
-ST_UQFN-6L_1.5x1.7mm_Pitch0.5mm:
+ST_UQFN-6L_1.5x1.7mm_P0.5mm:
   c: 0.2
   L: 0.25
   fp_s: True
@@ -9189,7 +9225,7 @@ ST_UQFN-6L_1.5x1.7mm_Pitch0.5mm:
   epad_n: null
   epad_pitch: null
   excluded_pins: null
-  model_name: ST_UQFN-6L_1.5x1.7mm_Pitch0.5mm
+  model_name: ST_UQFN-6L_1.5x1.7mm_P0.5mm
   rotation: -90
   destination_dir: Package_DFN_QFN.3dshapes
   body_color_key: black body
@@ -10494,42 +10530,6 @@ Infineon_MLPQ-16-14-1EP_4x4mm_P0.5mm:
   pin_color_key: metal grey pins
   mark_color_key: light brown label
   source: 'https://www.infineon.com/dgdl/Infineon-AN1170-AN-v05_00-EN.pdf?fileId=5546d462533600a40153559ac3e51134'
-
-Infineon_MLPQ-48-1EP_7x7mm_P0.5mm_Pad5.55x5.55mm:
-  c: 0.1
-  L: 0.2
-  fp_s: 1
-  fp_r: 0.4
-  fp_d: 0.5
-  fp_dx: null
-  fp_dy: null
-  fp_z: 0.02
-  ef: 0.0
-  cce: 0.25
-  D: 7.0
-  E: 7.0
-  A1: 0.03
-  A2: 0.75
-  b: 0.2
-  e: 0.5
-  m: 0.0
-  ps: square
-  npx: 12
-  npy: 12
-  epad: null
-  epad_offsetX: null
-  epad_offsetY: null
-  epad_n: null
-  epad_pitch: null
-  excluded_pins: null
-  model_name: Infineon_MLPQ-48-1EP_7x7mm_P0.5mm_Pad5.55x5.55mm
-  rotation: -90
-  destination_dir: Package_DFN_QFN.3dshapes
-  body_color_key: black body
-  pin_shapes: null
-  pin_color_key: metal grey pins
-  mark_color_key: light brown label
-  source: 'https://www.infineon.com/dgdl/irs2093mpbf.pdf?fileId=5546d462533600a401535675fb892793'
 
 Texas_R-PWQFN-N28_EP2.1x3.1mm:
   c: 0.1
