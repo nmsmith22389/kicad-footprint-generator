@@ -9449,6 +9449,42 @@ TQFN-24-1EP_4x4mm_P0.5mm_EP2.8x2.8mm_PullBack:
   pin_color_key: metal grey pins
   mark_color_key: light brown label
   source: 'https://ams.com/documents/20143/36005/AS1115_DS000206_1-00.pdf/3d3e6d35-b184-1329-adf9-2d769eb2404f, generated with kicad-footprint-generator ipc_dfn_qfn_generator.py'
+  
+TQFN-40-1EP_5x5mm_P0.4mm_EP3.5x3.5mm:
+  c: 0.2
+  L: 0.4
+  fp_s: True
+  fp_r: 0.4
+  fp_d: 0.5
+  fp_dx: null
+  fp_dy: null
+  fp_z: 0.05
+  ef: 0.0
+  cce: 0.35
+  D: 5.0
+  E: 5.0
+  A1: 0.02
+  A2: 0.73
+  b: 0.2
+  e: 0.40
+  m: 0.0
+  ps: rounded
+  npx: 10
+  npy: 10
+  epad: [3.5, 3.5]
+  epad_offsetX: null
+  epad_offsetY: null
+  epad_n: null
+  epad_pitch: null
+  excluded_pins: null
+  model_name: TQFN-40-1EP_5x5mm_P0.4mm_EP3.5x3.5mm
+  rotation: -90
+  destination_dir: Package_DFN_QFN.3dshapes
+  body_color_key: black body
+  pin_shapes: null
+  pin_color_key: metal grey pins
+  mark_color_key: light brown label
+  source: 'https://pdfserv.maximintegrated.com/package_dwgs/21-0140.PDF (T4055-1)'  
 
 UQFN-10_1.3x1.8mm_P0.4mm:
   c: 0.2
