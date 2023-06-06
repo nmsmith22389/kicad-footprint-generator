@@ -62,8 +62,7 @@ ___ver___ = "2.0.0"
 import os
 
 import cadquery as cq
-from _tools import shaderColors, parameters, cq_color_correct
-from _tools import cq_globals
+from _tools import shaderColors, parameters, cq_color_correct, cq_globals, export_tools
 from exportVRML.export_part_to_VRML import export_VRML
 
 from .DPAK_factory import TO252, TO263, TO268, ATPAK, HSOF8, SOT669, SOT89, Infineon_PG_TO_220_7Lead_TabPin8, Rohm_HRP7
@@ -155,7 +154,11 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             # file_name = all_params[model]['model_name']
 
             # Export the assembly to STEP
-            component.save(os.path.join(output_dir, file_name + ".step"), cq.exporters.ExportTypes.STEP, write_pcurves=False)
+            component.name = file_name
+            component.save(os.path.join(output_dir, file_name + ".step"), cq.exporters.ExportTypes.STEP, mode=cq.exporters.assembly.ExportModes.FUSED, write_pcurves=False)
+
+            # Check for a proper union
+            export_tools.check_step_export_union(component, output_dir, file_name)
 
             # Export the assembly to VRML
             if enable_vrml:

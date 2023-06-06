@@ -12,7 +12,7 @@ before_script:
   - virtualenv venv
   - source venv/bin/activate
   - pip install -r requirements.txt
-  - pip install --pre cadquery==2.2.*  # Use `pip install cadquery==2.2.*` instead once there is a production release of CadQuery 2.2 on PyPI
+  - pip install pip install git+https://github.com/CadQuery/cadquery.git@33bf83e5bb8efb6c63cd9835bfc8c0f5b11cbae3
 
 #
 # 4UCON_17809 Directory

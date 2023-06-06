@@ -10,3 +10,4 @@
     padSpacing: edge  # edge-to-edge for physical
   tags:
     - xal
+  destination_dir: 'Inductor_SMD.3dshapes'

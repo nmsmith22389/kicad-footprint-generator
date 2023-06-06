@@ -59,8 +59,7 @@ import os
 from math import tan, radians
 
 import cadquery as cq
-from _tools import shaderColors, parameters, cq_color_correct
-from _tools import cq_globals
+from _tools import shaderColors, parameters, cq_color_correct, cq_globals, export_tools
 from exportVRML.export_part_to_VRML import export_VRML
 
 from . import cq_sprague_goodman
@@ -122,7 +121,7 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             continue
 
         # Used to wrap all the parts into an assembly
-        component = cq.Assembly()
+        component = cq.Assembly(name=model)
 
         # The CP Axial capacitors are a special case
         if all_params[model]["model_class"] == "murata":
@@ -206,7 +205,10 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             os.makedirs(output_dir)
 
         # Export the assembly to STEP
-        component.save(os.path.join(output_dir, model + ".step"), cq.exporters.ExportTypes.STEP, write_pcurves=False)
+        component.save(os.path.join(output_dir, model + ".step"), cq.exporters.ExportTypes.STEP, mode=cq.exporters.assembly.ExportModes.FUSED, write_pcurves=False)
+
+        # Check for a proper union
+        export_tools.check_step_export_union(component, output_dir, model)
 
         # Export the assembly to VRML
         if enable_vrml:

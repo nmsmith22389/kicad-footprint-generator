@@ -138,11 +138,17 @@ def generate_part(params):
     c = L
     #calculate point
     R = (h/2) + ((c*c)/(8*h))
-    print(R)
+    # print(R)
     point2 = (sqrt((R * R) - (L/4 * L/4))) - (R-h)
 
     #draw the body0
-    body = cq.Workplane("XY").workplane(offset=L/2+bs, centerOption="CenterOfMass").moveTo(0, W/2).threePointArc((-L/4, point2),(-L/2, 0),forConstruction=False).threePointArc((-L/4, -point2),(0, -W/2),forConstruction=False).close().revolve()
+    body = (cq.Workplane("XY").workplane(offset=L/2+bs, centerOption="CenterOfMass")
+                              .moveTo(0, W/2).threePointArc((-L/4, point2),(-L/2, 0),forConstruction=False)
+                              .threePointArc((-L/4, -point2),(0, -W/2),forConstruction=False)
+                              .close()
+                              .revolve()
+                              .edges("%CIRCLE")
+                              .fillet(0.1))
     #leads = leads.cut(body)
     #show(leads)
 

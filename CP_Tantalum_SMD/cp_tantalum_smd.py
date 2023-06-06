@@ -95,8 +95,8 @@ def make_tantalum(params):
 
     body=body.union(body_base)
     #sleep
-    pinmark = cq.Workplane(cq.Plane.XY()).workplane(centerOption="CenterOfMass", offset=H-T*0.01).rect(W-dtop-dtop, pml). \
-                workplane(centerOption="CenterOfMass", offset=T*0.02).rect(W-dtop-dtop, pml). \
+    pinmark = cq.Workplane(cq.Plane.XY()).workplane(centerOption="CenterOfMass", offset=H+T*0.01).rect(W-dtop-dtop, pml). \
+                workplane(centerOption="CenterOfMass", offset=T*0.01).rect(W-dtop-dtop, pml). \
                 loft(ruled=True)
 
     #translate the object

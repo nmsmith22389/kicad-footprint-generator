@@ -58,8 +58,7 @@ import os
 from math import tan, radians
 
 import cadquery as cq
-from _tools import shaderColors, parameters, cq_color_correct
-from _tools import cq_globals
+from _tools import shaderColors, parameters, cq_color_correct, cq_globals, export_tools
 from exportVRML.export_part_to_VRML import export_VRML
 
 from .cp_radial_smd import *
@@ -117,8 +116,7 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
         # Add the parts to the assembly
         component.add(body, color=cq_color_correct.Color(body_color[0], body_color[1], body_color[2]))
         component.add(base, color=cq_color_correct.Color(base_color[0], base_color[1], base_color[2]))
-        if(all_params[model]['PM']):
-            component.add(mark, color=cq_color_correct.Color(mark_color[0], mark_color[1], mark_color[2]))
+        component.add(mark, color=cq_color_correct.Color(mark_color[0], mark_color[1], mark_color[2]))
         component.add(pins, color=cq_color_correct.Color(pins_color[0], pins_color[1], pins_color[2]))
 
         # Create the output directory if it does not exist
@@ -126,17 +124,18 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             os.makedirs(output_dir)
 
         # Assemble the filename
-        file_name = model.replace('.', '').replace('-', '_').replace('(', '').replace(')', '')
+        file_name = model.replace('-', '_').replace('(', '').replace(')', '')  # Leaving the period out was breaking file names
 
         # Export the assembly to STEP
-        component.save(os.path.join(output_dir, file_name + ".step"), cq.exporters.ExportTypes.STEP, write_pcurves=False)
+        component.name = file_name
+        component.save(os.path.join(output_dir, file_name + ".step"), cq.exporters.ExportTypes.STEP, mode=cq.exporters.assembly.ExportModes.FUSED, write_pcurves=False)
+
+        # Check for a proper union
+        export_tools.check_step_export_union(component, output_dir, file_name)
 
         # Export the assembly to VRML
         if enable_vrml:
-            if(all_params[model]['PM']):
-                export_VRML(os.path.join(output_dir, file_name + ".wrl"), [body, base, mark, pins], [all_params[model]["body_color_key"], all_params[model]["base_color_key"], all_params[model]["mark_color_key"], all_params[model]["pin_color_key"]])
-            else:
-                export_VRML(os.path.join(output_dir, file_name + ".wrl"), [body, base, pins], [all_params[model]["body_color_key"], all_params[model]["base_color_key"], all_params[model]["pin_color_key"]])
+            export_VRML(os.path.join(output_dir, file_name + ".wrl"), [body, base, mark, pins], [all_params[model]["body_color_key"], all_params[model]["base_color_key"], all_params[model]["mark_color_key"], all_params[model]["pin_color_key"]])
 
         # Update the license
         from _tools import add_license

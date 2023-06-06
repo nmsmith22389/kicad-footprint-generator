@@ -254,7 +254,7 @@ class cq_parameters_tube_generic():
             for i in range(1, pin_number):
                 x1 = (h * math.sin(alpha)) + origo_x
                 y1 = (h * math.cos(alpha)) - origo_y
-                pint = cq.Workplane("XY").workplane(offset=A1 + 1.1, centerOption="CenterOfMass").moveTo(x1, y1).circle(pin_type[1] / 2.0, False).extrude(A1 - (0.1 + pin_type[2]))
+                pint = cq.Workplane("XY").workplane(offset=A1 + 0.1, centerOption="CenterOfMass").moveTo(x1, y1).circle(pin_type[1] / 2.0, False).extrude(A1 - (0.1 + pin_type[2]))
                 pint = pint.faces("<Z").fillet(pin_type[1] / 5.0)
                 pins = pins.union(pint)
                 alpha = alpha + alpha_delta

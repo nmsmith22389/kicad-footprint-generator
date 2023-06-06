@@ -62,8 +62,7 @@ ___ver___ = "1.3.4 18/06/2020"
 import os
 import math
 import cadquery as cq
-from _tools import shaderColors, parameters, cq_color_correct
-from _tools import cq_globals
+from _tools import shaderColors, parameters, cq_color_correct, cq_globals, export_tools
 from exportVRML.export_part_to_VRML import export_VRML
 
 body_color_key  = 'black body'         # Body color
@@ -144,7 +143,7 @@ def make_pins_AK300(model, params, pinnumber):
     W = params[model]['W']          # package width
     H = params[model]['H']          # package height
     WD = params[model]['WD']        # > Y distance form pin center to package edge
-    A1 = params[model]['A1']        # Body seperation height
+    A1 = params[model]['A1']        # Body separation height
     PE = params[model]['PE']        # Distance from edge to pin
     PS = params[model]['PS']        # Pin distance
     PD = params[model]['PD']        # Pin diameter
@@ -187,25 +186,23 @@ def make_pins_AK300(model, params, pinnumber):
         
         plu = cq.Workplane("ZX").workplane(offset=0.0 - (WD - SL)).moveTo(0.0 - (bb / 2.0), 0.0).circle(SW / 2.5, False).extrude(SL)
         pl = pl.union(plu, clean=False, glue=True)
-        pl = pl.rotate((0,0,0), (1,0,0), 45.0)
-        pl = pl.translate((px, 0.0 - (WD / 2.0) + 0.1, A1 + ((H - WD) / 2.0) + WD - 0.3))
-        #
-        pins = pins.union(pl, glue=True)
 
-        # Add Screw head
+        # Add the screw head
         bba = (W - WD) / math.cos(math.radians(45.0)) 
         bba = bba * 0.85
-        po = cq.Workplane("XY").workplane(offset=A1).moveTo(0, 0).circle(SL / 2.0, False).extrude(bba)
-        po = po.faces(">Z").fillet(SL / 8.0)
-        pr = cq.Workplane("XY").workplane(offset=A1 + bba - (SL / 8.0)).moveTo(0.0, 0.0).rect(SL / 4.0, 10.0).extrude(SL / 4.0)
-        po = po.cut(pr, clean=False)
-        po = po.rotate((0,0,0), (1,0,0), 0 - 45.0)
-        po = po.translate((px, 0.0, H / 2.0))
-        pins = pins.union(po, glue=True)
+        pl = pl.faces(">Y").workplane(centerOption="CenterOfBoundBox").center(0, A1 - SL / 2.0).circle(SL / 2.0).extrude(SL + (SL / 4.0))
+        pl = pl.faces(">Y").workplane(centerOption="CenterOfBoundBox", invert=True).rect(SL / 4.0, 10.0).cutBlind(SL / 8.0)
+        pl = pl.faces(">Y").edges("%CIRCLE").fillet(SL / 8.0)
+
+        # Rotate and move the pin into the correct position
+        pl = pl.rotate((0,0,0), (1,0,0), 45.0)
+        pl = pl.translate((px, 0.0 - (WD / 2.0) + 0.1, A1 + ((H - WD) / 2.0) + WD - 0.3))
+
+        pins = pins.union(pl, glue=True)
         
         px = px + PS
         
-    
+    # Add any rotation requested via the settings
     if (rotation > 0.01):
         pins = pins.rotate((0,0,0), (0,0,1), rotation)
 
@@ -255,7 +252,7 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
         pins = make_pins_AK300(model, all_params, all_params[model]["pin_number"])
 
         # Wrap the component parts in an assembly so that we can attach colors
-        component = cq.Assembly()
+        component = cq.Assembly(name=model)
         component.add(body, color=cq_color_correct.Color(body_color[0], body_color[1], body_color[2]))
         component.add(pins, color=cq_color_correct.Color(pins_color[0], pins_color[1], pins_color[2]))
 
@@ -264,7 +261,10 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             os.makedirs(output_dir)
 
         # Export the assembly to STEP
-        component.save(os.path.join(output_dir, model + ".step"), cq.exporters.ExportTypes.STEP, write_pcurves=False)
+        component.save(os.path.join(output_dir, model + ".step"), cq.exporters.ExportTypes.STEP, mode=cq.exporters.assembly.ExportModes.FUSED, write_pcurves=False)
+
+        # Check for a proper union
+        export_tools.check_step_export_union(component, output_dir, model)
 
         # Export the assembly to VRML
         if enable_vrml:

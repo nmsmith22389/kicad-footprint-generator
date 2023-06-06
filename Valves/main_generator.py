@@ -57,8 +57,7 @@ ___ver___ = "2.0.0"
 import os
 
 import cadquery as cq
-from _tools import shaderColors, parameters, cq_color_correct
-from _tools import cq_globals
+from _tools import shaderColors, parameters, cq_color_correct, cq_globals, export_tools
 from exportVRML.export_part_to_VRML import export_VRML
 
 from .cq_belton_socket import cq_belton_socket
@@ -127,22 +126,18 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
         # Make the parts of the model
         (body_top, body, pins, npth_pins) = cqm.make_3D_model(all_params[model])
         body = body.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
-        if(body_top):
-            body_top = body_top.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
+        body_top = body_top.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
         pins = pins.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
-        if(npth_pins):
-            npth_pins = npth_pins.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
+        npth_pins = npth_pins.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
 
         # Used to wrap all the parts into an assembly
         component = cq.Assembly()
 
         # Add the parts to the assembly
         component.add(body, color=cq_color_correct.Color(body_color[0], body_color[1], body_color[2]))
-        if(body_top):
-            component.add(body_top, color=cq_color_correct.Color(body_top_color[0], body_top_color[1], body_top_color[2]))
+        component.add(body_top, color=cq_color_correct.Color(body_top_color[0], body_top_color[1], body_top_color[2]))
         component.add(pins, color=cq_color_correct.Color(pin_color[0], pin_color[1], pin_color[2]))
-        if(npth_pins):
-            component.add(npth_pins, color=cq_color_correct.Color(npth_pin_color[0], npth_pin_color[1], npth_pin_color[2]))
+        component.add(npth_pins, color=cq_color_correct.Color(npth_pin_color[0], npth_pin_color[1], npth_pin_color[2]))
 
         # Create the output directory if it does not exist
         if not os.path.exists(output_dir):
@@ -152,19 +147,15 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
         file_name = all_params[model]['model_name']
 
         # Export the assembly to STEP
-        component.save(os.path.join(output_dir, file_name + ".step"), cq.exporters.ExportTypes.STEP, write_pcurves=False)
+        component.name = file_name
+        component.save(os.path.join(output_dir, file_name + ".step"), cq.exporters.ExportTypes.STEP, mode=cq.exporters.assembly.ExportModes.FUSED, write_pcurves=False)
+
+        # Check for a proper union
+        export_tools.check_step_export_union(component, output_dir, file_name)
 
         # Export the assembly to VRML
         if enable_vrml:
-            vrml_parts=[body, pins]
-            vrml_colors=[all_params[model]["body_color_key"], all_params[model]["pin_color_key"]]
-            if(body_top):
-                vrml_parts.append(body_top)
-                vrml_colors.append(all_params[model]["body_top_color_key"])
-            if(npth_pins):
-                vrml_parts.append(npth_pins)
-                vrml_colors.append(all_params[model]["npth_pin_color_key"])
-            export_VRML(os.path.join(output_dir, file_name + ".wrl"), vrml_parts, vrml_colors)
+            export_VRML(os.path.join(output_dir, file_name + ".wrl"), [body, body_top, pins, npth_pins], [all_params[model]["body_top_color_key"], all_params[model]["body_color_key"], all_params[model]["pin_color_key"], all_params[model]["npth_pin_color_key"]])
 
         # Update the license
         from _tools import add_license

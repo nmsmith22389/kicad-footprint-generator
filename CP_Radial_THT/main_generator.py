@@ -31,7 +31,7 @@
 #* All trademarks within this guide belong to their legitimate owners.      *
 #*                                                                          *
 #*   This program is free software; you can redistribute it and/or modify   *
-#*   it under the terms of the GNU General Public License (GPL)             *
+#*   it under the terms of the GNU General Public Licgit@gitlab.com:kicad/libraries/kicad-packages3D-generator.gitense (GPL)             *
 #*   as published by the Free Software Foundation; either version 2 of      *
 #*   the License, or (at your option) any later version.                    *
 #*   for detail see the LICENCE text file.                                  *
@@ -58,8 +58,7 @@ import os
 from math import tan, radians
 
 import cadquery as cq
-from _tools import shaderColors, parameters, cq_color_correct
-from _tools import cq_globals
+from _tools import shaderColors, parameters, cq_color_correct, cq_globals, export_tools
 from exportVRML.export_part_to_VRML import export_VRML
 
 from .cp_radial_tht import make_radial_th
@@ -135,7 +134,11 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
         file_name = all_params[model]['modelName']
 
         # Export the assembly to STEP
-        component.save(os.path.join(output_dir, file_name + ".step"), cq.exporters.ExportTypes.STEP, write_pcurves=False)
+        component.name = file_name
+        component.save(os.path.join(output_dir, file_name + ".step"), cq.exporters.ExportTypes.STEP, mode=cq.exporters.assembly.ExportModes.FUSED, write_pcurves=False)
+
+        # Check for a proper union
+        export_tools.check_step_export_union(component, output_dir, file_name)
 
         # Export the assembly to VRML
         if enable_vrml:

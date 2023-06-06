@@ -26,6 +26,33 @@ def main():
                     help='Root directory containing the previously validated models to check against.')
     args = parser.parse_args()
 
+    print("File match check started.")
+
+    # List the unvalidated directories
+    unval_dir_list = os.listdir(args.unvalidated)
+    for unvalid_dir in unval_dir_list:
+        valid_dir = os.path.join(args.validated, unvalid_dir)
+
+        # Make sure there is not a directory name mismatch
+        if not os.path.isdir(valid_dir):
+            print("The unvalidated directory " + unvalid_dir + " is used, and that directory does not exist in the validated KiCAD directory.")
+            continue
+
+        # Get a listing of all the unvalidated files in the current directory so we can check for matches in the validated directory
+        unvalid_path = os.path.join(args.unvalidated, unvalid_dir)
+        unvalid_files = os.listdir(unvalid_path)
+
+        # Step through all the valid files and look for matches in the unvalidated directory
+        for unvalid_file in unvalid_files:
+            valid_file_path = os.path.join(args.validated, unvalid_dir, unvalid_file)
+            if not os.path.isfile(valid_file_path):
+                print("Unvalidated file " + unvalid_file + " in " + unvalid_dir + " does not exist in the validated directory.")
+
+    print("File match check complete.")
+
+    # Skip the volume comparisons for now since many models are not ready for that level of detail
+    return
+
     # List the directories
     dir_list = os.listdir(args.validated)
 

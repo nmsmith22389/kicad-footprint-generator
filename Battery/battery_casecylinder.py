@@ -176,7 +176,7 @@ def make_case_Cylinder1(params):
                     if n[3] == 'round':
                         dd = n[4]
                         dl = n[5]
-                        pint = cq.Workplane("XY").workplane(offset=A1 - 0.1).moveTo(xx, 0.0 - yy).circle(dd / 2.0, False).extrude(0.0 - (dl + 0.1))
+                        pint = cq.Workplane("XY").workplane(offset=A1).moveTo(xx, 0.0 - yy).circle(dd / 2.0, False).extrude(0.0 - (dl + 0.1))
                         pint = pint.faces("<Z").fillet(dd / 2.2)
                         case = case.union(pint)
                     elif n[3] == 'rect':

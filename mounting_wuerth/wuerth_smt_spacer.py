@@ -102,8 +102,8 @@ def generate(series_params, part): # **kwargs):
     od = series_params['mechanical']['od']
     od1 = series_params['mechanical']['od1']
     h1 = series_params['mechanical']['h1'] if 'h1' in series_params['mechanical'] else series_params['parts'][part]['h1']
-    td = series_params['mechanical']['td']
-    dd = series_params['mechanical']['dd']
+    td = series_params['parts'][part]['thread_depth'] if 'thread_depth' in series_params['parts'][part] else series_params['mechanical']['td']
+    dd = series_params['parts'][part]['drill_depth'] if 'drill_depth' in series_params['parts'][part] else series_params['mechanical']['dd']
     id1 = series_params['mechanical']['id1']
     t1 = series_params['mechanical']['t1']
     h = series_params['parts'][part]['h'] if 'h' in series_params['parts'][part] else series_params['mechanical']['h']
@@ -160,17 +160,17 @@ def generate(series_params, part): # **kwargs):
             body = body.faces(">Z").workplane(-t1, centerOption="CenterOfMass").circle(idf/2).cutBlind(-td+t1)
             body = body.faces(">Z").workplane(-t1, centerOption="CenterOfMass").circle(idf/2-0.01).cutBlind(-dd+t1)
 
-            # if ch > 0:
-            #     body = body.edges(cq.selectors.BoxSelector(
-            #                 [-idf/2-0.1,
-            #                  -idf/2-0.1,
-            #                  h-0.1
-            #                  ],
-            #                  [idf/2+0.1,
-            #                  idf/2+0.1,
-            #                  h+0.1
-            #                  ], boundingbox=True))\
-            #              .chamfer(ch)
+            if ch > 0:
+                body = body.edges(cq.selectors.BoxSelector(
+                            [-idf/2-0.1,
+                             -idf/2-0.1,
+                             h-0.1
+                             ],
+                             [idf/2+0.1,
+                             idf/2+0.1,
+                             h+0.1
+                             ], boundingbox=True))\
+                         .chamfer(ch)
         else:
             if ext_thread is None:
                 body = body.faces(">Z").workplane(-t1, centerOption="CenterOfMass").circle(idf/2).cutBlind(-(h+h1-t1))

@@ -152,7 +152,38 @@ class cq_dongxin_socket():
     
     def make_case_top_dummy(self, params):
 
-        return (None)
+        D = params['D']                        # package length
+        H = params['socket_H']                 # body overall height
+        A1 = params['A1']                      # package height
+        npth_pin = params['npth_pin']          # NPTH hole [(x, y, length)]
+        center_pin = params['center_pin']      # center pin ['type', diameter length)]
+        pin_type = params['pin_type']          # Pin type, length
+        pin_number = params['pin_number']      # Number of pins
+        pin_arc = params['pin_arc']            # Arch between pins
+        pin_diameter = params['pin_diameter']  # Diameter of the cricle where pins are located
+        rotation = params['rotation']          # Rotation if required
+
+        if len(pin_type) > 2:
+            A1 = A1 + pin_type[3]
+        #
+        # Calculate center
+        # pin 1 always in origo
+        #
+        alpha_delta = 0 - ((pin_arc * math.pi) / 180.0)
+        h = pin_diameter / 2.0
+        origo_dx = (h * math.sin(alpha_delta))
+        origo_dy = (h * math.cos(alpha_delta))
+
+        origo_x = 0 - origo_dx
+        origo_y = origo_dy
+
+        # Dummy
+        case = cq.Workplane("XY").workplane(offset=A1 + 1.0, centerOption="CenterOfMass").moveTo(origo_x, 0 - origo_y).circle(0.05, False).extrude(0.1)
+        
+        if (rotation > 0.01):
+            case = case.rotate((0,0,0), (0,0,1), rotation)
+
+        return (case)
     
         
     def make_case_top_GZC8_Y_5(self, params):
@@ -306,7 +337,40 @@ class cq_dongxin_socket():
 
 
     def make_npth_pins(self, params):
-        return (None)
+
+
+        D = params['D']                        # package length
+        H = params['socket_H']                 # body overall height
+        A1 = params['A1']                      # package height
+        b = params['A1']                       # Pin width
+        npth_pin = params['npth_pin']          # NPTH hole [(x, y, length)]
+        center_pin = params['center_pin']      # center pin ['type', diameter length)]
+        pin_type = params['pin_type']          # Pin type, length
+        pin_number = params['pin_number']      # Number of pins
+        pin_arc = params['pin_arc']            # Arch between pins
+        pin_diameter = params['pin_diameter']  # Diameter of the cricle where pins are located
+        rotation = params['rotation']          # Rotation if required
+
+        A1 = A1 + pin_type[3]
+        #
+        # Calculate center
+        # pin 1 always in origo
+        #
+        alpha_delta = 0 - ((pin_arc * math.pi) / 180.0)
+        h = pin_diameter / 2.0
+        origo_dx = (h * math.sin(alpha_delta))
+        origo_dy = (h * math.cos(alpha_delta))
+
+        origo_x = 0 - origo_dx
+        origo_y = origo_dy
+
+        # Dummy
+        case = cq.Workplane("XY").workplane(offset=A1 + 1.0, centerOption="CenterOfMass").moveTo(origo_x, 0 - origo_y).circle(0.05, False).extrude(0.1)
+        
+        if (rotation > 0.01):
+            case = case.rotate((0,0,0), (0,0,1), rotation)
+
+        return (case.clean())
 
 
     ##enabling optional/default values to None

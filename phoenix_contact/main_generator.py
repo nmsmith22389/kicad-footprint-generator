@@ -57,13 +57,14 @@ ___ver___ = "2.0.0"
 import os
 
 import cadquery as cq
-from _tools import shaderColors, parameters, cq_color_correct
-from _tools import cq_globals
+from _tools import shaderColors, parameters, cq_color_correct, cq_globals, export_tools
 from exportVRML.export_part_to_VRML import export_VRML
 
 from .cq_models.conn_phoenix_mkds import make_case_MKDS_1_5_10_5_08, make_pins_MKDS_1_5_10_5_08
 from .cq_models.conn_phoenix_mc import generate_part as generate_part_mc
+from .cq_models.conn_phoenix_mc import seriesParams as series_params_mc
 from .cq_models.conn_phoenix_mstb import generate_part as generate_part_mstb
+from .cq_models.conn_phoenix_mstb import seriesParams as series_params_mstb
 
 def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
     """
@@ -134,10 +135,15 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
 
                 body = body.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation']).translate((0, -3.0, 3.0))
                 pins = pins.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
+                if not all_params[model]['angled']:
+                    pins = pins.translate((0, 0, 3.0))
                 if insert != None:
-                    insert = insert.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
+                    insert = insert.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation']).translate((0, -3.0, 3.0))
                 if mount_screw != None:
-                    mount_screw = mount_screw.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
+                    if all_params[model]['angled']:
+                        mount_screw = mount_screw.rotate((0, 0, 0), (1, 0, 0), -90).translate((0, -series_params_mc.mount_screw_head_height - series_params_mc.body_height / 2.0, series_params_mc.thread_insert_r))
+                    else:
+                        mount_screw = mount_screw.rotate((1, 0, 0), (0, 0, 0), 180).translate((0, series_params_mc.mount_screw_head_height - series_params_mc.body_height / 2.0, series_params_mc.body_height + series_params_mc.mount_screw_head_height))
 
                 # Add the parts to the assembly
                 component.add(body, color=cq_color_correct.Color(body_color[0], body_color[1], body_color[2]))
@@ -159,13 +165,16 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
                 # print(pins)
                 # Rotate and translate parts so they end up in the correct location/orientation
                 body = body.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
-                if model.startswith("MSTB"):
+                if (model.startswith("MSTB") or model.startswith("GMSTB")) and all_params[model]['angled']:
                     body = body.translate((0, -3.0, 3.0))
                 pins = pins.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
-                if insert != None:
-                    insert = insert.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
+                if insert != None and all_params[model]['angled']:
+                    insert = insert.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation']).translate((0, -3.0, 3.0))
                 if mount_screw != None:
-                    mount_screw = mount_screw.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
+                    if all_params[model]['angled']:
+                        mount_screw = mount_screw.rotate((1, 0, 0), (0, 0, 0), 90).translate((0, -series_params_mstb.mount_screw_head_height - series_params_mstb.body_height / 2.0, series_params_mstb.thread_r / 2.0))
+                    else:
+                        mount_screw = mount_screw.rotate((1, 0, 0), (0, 0, 0), 180).translate((0, 0, series_params_mstb.body_height - series_params_mstb.mount_screw_head_height))
                 # if plug != None:
                 #     plug = plug.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
                 # if plug_screws != None:
@@ -203,7 +212,11 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             )
 
             # Export the assembly to STEP
-            component.save(os.path.join(output_dir, file_name + ".step"), cq.exporters.ExportTypes.STEP, write_pcurves=False)
+            component.name = file_name
+            component.save(os.path.join(output_dir, file_name + ".step"), cq.exporters.ExportTypes.STEP, mode=cq.exporters.assembly.ExportModes.FUSED, write_pcurves=False)
+
+            # Check for a proper union
+            export_tools.check_step_export_union(component, output_dir, file_name)
 
             # Set the custom license info
             from _tools import add_license

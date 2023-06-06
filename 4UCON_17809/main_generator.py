@@ -57,8 +57,7 @@ ___ver___ = "2.0.0"
 import os
 
 import cadquery as cq
-from _tools import shaderColors, parameters, cq_color_correct
-from _tools import cq_globals
+from _tools import shaderColors, parameters, cq_color_correct, cq_globals, export_tools
 from _tools.parameters import load_aux_parameters
 from exportVRML.export_part_to_VRML import export_VRML
 
@@ -115,8 +114,11 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
         # pins = pins.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
         # contacts = contacts.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
 
+        # Assemble the filename
+        file_name = all_params[model]['file_name']
+
         # Used to wrap all the parts into an assembly
-        component = cq.Assembly()
+        component = cq.Assembly(name=file_name)
 
         # Add the parts to the assembly
         component.add(body, color=cq_color_correct.Color(body_color[0], body_color[1], body_color[2]))
@@ -127,11 +129,11 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
         if not os.path.exists(output_dir):
             os.makedirs(output_dir)
 
-        # Assemble the filename
-        file_name = all_params[model]['file_name']
-
         # Export the assembly to STEP
-        component.save(os.path.join(output_dir, file_name + ".step"), cq.exporters.ExportTypes.STEP, write_pcurves=False)
+        component.save(os.path.join(output_dir, file_name + ".step"), cq.exporters.ExportTypes.STEP, mode=cq.exporters.assembly.ExportModes.FUSED, write_pcurves=False)
+
+        # Check for a proper union
+        export_tools.check_step_export_union(component, output_dir, file_name)
 
         # Update license author info
         from _tools import add_license

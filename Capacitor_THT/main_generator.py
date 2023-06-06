@@ -60,8 +60,7 @@ import os
 from math import tan, radians
 
 import cadquery as cq
-from _tools import shaderColors, parameters, cq_color_correct
-from _tools import cq_globals
+from _tools import shaderColors, parameters, cq_color_correct, cq_globals, export_tools
 from exportVRML.export_part_to_VRML import export_VRML
 
 from .cq_models import c_axial_tht
@@ -131,7 +130,7 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
         colors = []
 
         # Used to wrap all the parts into an assembly
-        component = cq.Assembly()
+        component = cq.Assembly(name=model)
 
         # The CP Axial capacitors are a special case
         if all_params[model]["model_class"] == "cp_axial_tht":
@@ -172,8 +171,8 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             leads = leads.translate((all_params[model]['body_setback_distance'], 0.0, 0.0)).rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
 
             # Wrap the component parts in an assembly so that we can attach colors
-            component.add(body, color=cq_color_correct.Color(body_color[0], body_color[1], body_color[2]))
-            component.add(leads, color=cq_color_correct.Color(pins_color[0], pins_color[1], pins_color[2]))
+            component.add(body, name="body", color=cq_color_correct.Color(body_color[0], body_color[1], body_color[2]))
+            component.add(leads, name="leads", color=cq_color_correct.Color(pins_color[0], pins_color[1], pins_color[2]))
 
             # Collect the VRML information
             parts.append(body)
@@ -186,7 +185,10 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             os.makedirs(output_dir)
 
         # Export the assembly to STEP
-        component.save(os.path.join(output_dir, model + ".step"), write_pcurves=False)
+        component.save(os.path.join(output_dir, model + ".step"), cq.exporters.ExportTypes.STEP, mode=cq.exporters.assembly.ExportModes.FUSED, write_pcurves=False)
+
+        # Check for a proper union
+        export_tools.check_step_export_union(component, output_dir, model)
 
         # Export the assembly to VRML
         if enable_vrml:

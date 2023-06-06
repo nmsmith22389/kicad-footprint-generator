@@ -283,7 +283,7 @@ class cq_bulgin():
         case = self.make_body_Bulgin_FX0456(params, modelID)
 
         case = case.rotate((0,0,0), (0,1,0), 90.0)
-        case = case.translate((-2.3, 0.0 , W - 1.2))
+        case = case.translate((-2.3, 0.0 , W - 1.1))
         
         if self.rotatex > 0.0:
             case = case.rotate((0,0,0), (1,0,0), self.rotatex)

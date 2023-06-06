@@ -132,10 +132,11 @@ def generate_straight_pin(params):
     pin_inside_distance=seriesParams.pin_inside_distance
     chamfer_long = seriesParams.pin_chamfer_long
     chamfer_short = seriesParams.pin_chamfer_short
+    plug_cutout_depth = seriesParams.plug_cutout_depth
 
 
     pin=cq.Workplane("YZ").workplane(offset=-pin_width/2.0, centerOption="CenterOfMass")\
-        .moveTo(-pin_width/2.0, -pin_depth)\
+        .moveTo(-plug_cutout_depth / 2.0, -pin_depth)\
         .rect(pin_width, pin_depth+body_height-pin_inside_distance, False)\
         .extrude(pin_width)
     pin = pin.faces(">Z").edges(">X").chamfer(chamfer_short,chamfer_long)

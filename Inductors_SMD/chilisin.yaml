@@ -11,4 +11,5 @@
   tags:
     - bmrx
     # mchi was the old series name
-    - mchi 
+    - mchi
+  destination_dir: 'Inductor_SMD.3dshapes'

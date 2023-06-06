@@ -60,8 +60,7 @@ import os
 from math import tan, radians
 
 import cadquery as cq
-from _tools import shaderColors, parameters, cq_color_correct
-from _tools import cq_globals
+from _tools import shaderColors, parameters, cq_color_correct, cq_globals, export_tools
 from exportVRML.export_part_to_VRML import export_VRML
 
 from .cq_socket_strips import socket_strip, angled_socket_strip, smd_socket_strip
@@ -130,7 +129,7 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
                 print("No match found for model_class.")
 
             # Used to wrap all the parts into an assembly
-            component = cq.Assembly()
+            component = cq.Assembly(name=model)
 
             # Make the translation correct
             translation = (0.0, 0.0)
@@ -175,7 +174,11 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             file_name = all_params[model]['model_name'].format(all_params[model]['num_pin_rows'], pin_num_str)
 
             # Export the assembly to STEP
-            component.save(os.path.join(output_dir, file_name + ".step"), cq.exporters.ExportTypes.STEP, write_pcurves=False)
+            component.name = file_name
+            component.save(os.path.join(output_dir, file_name + ".step"), cq.exporters.ExportTypes.STEP, mode=cq.exporters.assembly.ExportModes.FUSED, write_pcurves=False)
+
+            # Check for a proper union
+            export_tools.check_step_export_union(component, output_dir, file_name)
 
             # Export the assembly to VRML
             if enable_vrml:

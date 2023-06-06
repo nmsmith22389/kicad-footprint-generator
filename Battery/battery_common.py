@@ -108,7 +108,7 @@ def get_battery_size(params):
         return 14.50, 50.50
 
     if cellsize == 'AAA':
-        return 10.50, 44.50
+        return 10.51, 44.50
 
     if cellsize == 'AAAA':
         return 8.30, 42.50

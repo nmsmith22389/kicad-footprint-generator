@@ -274,7 +274,7 @@ PicoBlade_53398:
   rel_pad_y_inside_edge: 3.6
   # amount to shift y position of center for pick-and-place (positive -> shift whole footprint up)
   center_shift_y: -0.55
-  y_origin_from_mountpad: 3.4  # -rel_pad_y_outside_edge/2 + mounting_pad_size_y/2 + center_shift_y
+  y_origin_from_mountpad: 1.5
   mount_pin_length: 1.7
   mount_pin_width: 2.2
   mount_pin_thickness: 0.25
@@ -311,7 +311,7 @@ PicoBlade_53398:
   body_pin_cutout_depth: 0.5  # Measured
   body_pin_cutout_len: 0.9  # Measured
   body_front_plastic_protrusion: 0.2  # estimated
-  body_center_y: 5.45  # -pin_tip_y+pin_protrusion+body_width/2
+  body_center_y: -0.75
   body_support_width: 0.5
   body_cutout_depth: 3.0
   body_front_cutout_depth: 1.0  # Measured (+/-0.1 at least)

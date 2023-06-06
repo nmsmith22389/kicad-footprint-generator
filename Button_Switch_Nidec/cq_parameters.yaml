@@ -11,7 +11,7 @@
   pin_width: 0.6
   body_board_distance: 0.05  # self.pin_thickness  - self.bottom_pocket_depth
   distance_pinTip_rows: 7.5  # distance from arc of pin from row one to row two
-  first_pin_pos: [2.54, 4.8]  # (self.pin_pitch * (self.num_pins / 2.0 / self.num_pin_rows - 0.5), self.distance_pinTip_rows/2.0 - self.pin_thickness)
+  first_pin_pos: [2.54, 3.65]  # (self.pin_pitch * (self.num_pins / 2.0 / self.num_pin_rows - 0.5), self.distance_pinTip_rows/2.0 - self.pin_thickness)
   rotation: 90.0
   offsets: [0.0, 0.0, 0.0]
   body_length: 7.3

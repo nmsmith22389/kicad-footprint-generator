@@ -61,8 +61,7 @@ ___ver___ = "2.0.0"
 
 import os
 import cadquery as cq
-from _tools import shaderColors, parameters, cq_color_correct
-from _tools import cq_globals
+from _tools import shaderColors, parameters, cq_color_correct, cq_globals, export_tools
 from exportVRML.export_part_to_VRML import export_VRML
 
 # import .battery_common
@@ -160,7 +159,7 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
         pins_color = shaderColors.named_colors[all_params[model]["pins_color_key"]].getDiffuseFloat()
 
         # Wrap the component parts in an assembly so that we can attach colors
-        component = cq.Assembly()
+        component = cq.Assembly(name=model)
         if(case):
             component.add(case, color=cq_color_correct.Color(body_color[0], body_color[1], body_color[2]))
         if(pins):
@@ -171,14 +170,14 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             os.makedirs(output_dir)
 
         # Export the assembly to STEP
-        component.save(os.path.join(output_dir, model + ".step"), cq.exporters.ExportTypes.STEP, write_pcurves=False)
+        component.save(os.path.join(output_dir, model + ".step"), cq.exporters.ExportTypes.STEP, mode=cq.exporters.assembly.ExportModes.FUSED, write_pcurves=False)
+
+        # Check for a proper union
+        export_tools.check_step_export_union(component, output_dir, model)
 
         # Export the assembly to VRML
         if enable_vrml:
-            if case is not None:
-                export_VRML(os.path.join(output_dir, model + ".wrl"), [case, pins], [all_params[model]["body_color_key"], all_params[model]["pins_color_key"]])
-            else:
-                export_VRML(os.path.join(output_dir, model + ".wrl"), [pins], [all_params[model]["pins_color_key"]])
+            export_VRML(os.path.join(output_dir, model + ".wrl"), [case, pins], [all_params[model]["body_color_key"], all_params[model]["pins_color_key"]])
 
         # Update the license
         from _tools import add_license

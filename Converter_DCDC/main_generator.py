@@ -58,8 +58,7 @@ import os
 from math import tan, radians
 
 import cadquery as cq
-from _tools import shaderColors, parameters, cq_color_correct
-from _tools import cq_globals
+from _tools import shaderColors, parameters, cq_color_correct, cq_globals, export_tools
 from exportVRML.export_part_to_VRML import export_VRML
 
 from .converter_dcdc import *
@@ -115,13 +114,11 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
         # Used to wrap all the parts into an assembly
         component = cq.Assembly()
 
-        if('translation' not in all_params[model].keys()):
-            all_params[model]['translation']=(0.0, 0.0, 0.0);
-
-        # rotation of the parts, if needed
-        case = case.translate(all_params[model]['translation']).rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
-        case_top = case_top.translate(all_params[model]['translation']).rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
-        pins = pins.translate(all_params[model]['translation']).rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
+        # Translation and rotation of the parts, if needed
+        translation = all_params[model]['translation'] if 'translation' in all_params[model] else (0, 0, 0)
+        case = case.translate(translation).rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
+        case_top = case_top.translate(translation).rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
+        pins = pins.translate(translation).rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
 
         # Add the parts to the assembly
         component.add(case, color=cq_color_correct.Color(body_color[0], body_color[1], body_color[2]))
@@ -136,7 +133,11 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
         file_name = all_params[model]['model_name']
 
         # Export the assembly to STEP
-        component.save(os.path.join(output_dir, file_name + ".step"), cq.exporters.ExportTypes.STEP, write_pcurves=False)
+        component.name = file_name
+        component.save(os.path.join(output_dir, file_name + ".step"), cq.exporters.ExportTypes.STEP, mode=cq.exporters.assembly.ExportModes.FUSED, write_pcurves=False)
+
+        # Check for a proper union
+        export_tools.check_step_export_union(component, output_dir, file_name)
 
         # Export the assembly to VRML
         if enable_vrml:

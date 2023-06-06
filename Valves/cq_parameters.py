@@ -274,7 +274,7 @@ class cq_parameters_help():
         case2 = case2.rotate((0,0,0), (0,0,1), sadle_a)
         case2 = case2.translate((origo_x, 0.0 - origo_y, 0.0))
         
-        case9 = cq.Workplane("XY").workplane(offset=A1 + sadle_z, centerOption="CenterOfMass").moveTo(origo_x, 0.0 - origo_y).circle((D / 2.0) - 0.3, False).extrude(sadle_h)
+        case9 = cq.Workplane("XY").workplane(offset=A1 + sadle_z, centerOption="CenterOfMass").moveTo(origo_x, 0.0 - origo_y).circle((D / 2.0) + 0.1, False).extrude(sadle_h)
         case2 = case2.cut(case9)
         
         if (rotation > 0.01):

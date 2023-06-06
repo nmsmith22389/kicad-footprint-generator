@@ -24,6 +24,7 @@ def main():
 
     # Get a list of the package directories so that we can work through them
     dir_list = [ dir_name for dir_name in os.listdir(".") if os.path.isdir(dir_name) and dir_name not in filter_dirs ]
+    dir_list.sort()
 
     # Handle the switch for whether or not to export VRML
     enable_vrml = True

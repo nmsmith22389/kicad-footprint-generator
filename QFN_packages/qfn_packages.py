@@ -162,7 +162,9 @@ def make_qfn(params):
             bpin = bpin.faces(">Z").edges(">Y").workplane(centerOption="CenterOfMass").circle(b*0.3).cutThruAll()
         elif ps == 'cshaped':
             bpin = cq.Workplane("XY").box(b, length, A2+A1*2).translate((0,E/2-L/2,A2/2+A1)).edges("|X").fillet(A1)
-        bpin_shape[axis] = bpin
+
+        if ps != 'custom':
+            bpin_shape[axis] = bpin
 
     pins = []
     pincounter = 1

@@ -58,8 +58,7 @@ import os
 from math import tan, radians
 
 import cadquery as cq
-from _tools import shaderColors, parameters, cq_color_correct
-from _tools import cq_globals
+from _tools import shaderColors, parameters, cq_color_correct, cq_globals, export_tools
 from exportVRML.export_part_to_VRML import export_VRML
 
 from .pinheader import make_Vertical_THT_base, make_Vertical_THT_pins, make_Horizontal_THT_base, make_Horizontal_THT_pins, make_Vertical_SMD_pins, make_Vertical_SMD_base
@@ -117,8 +116,13 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
         pin_end_chamfer = all_params[model]['pin_end_chamfer']
         rotation = all_params[model]['rotation']
 
-        pin_num_start = all_params[model]['pins']['from']
-        pin_num_end = all_params[model]['pins']['to']
+        # Collect the array of pin numbers so that we can handle the one config that has a custom set in a string
+        if isinstance(all_params[model]['pins'], str):
+            pin_set = [int(x) for x in all_params[model]['pins'].split(',')]
+        else:
+            pin_num_start = all_params[model]['pins']['from']
+            pin_num_end = all_params[model]['pins']['to']
+            pin_set = range(pin_num_start, pin_num_end + 1)
 
         if base_chamfer == 'auto':
             base_chamfer = pitch/10.0
@@ -126,7 +130,7 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
         if pin_end_chamfer == 'auto':
             pin_end_chamfer = pin_width/4.0
 
-        for num_pins in range(pin_num_start, pin_num_end + 1):
+        for num_pins in pin_set:
             if header_type == 'Vertical_THT':
                 pin_length_below_board = all_params[model]['pin_length_below_board']
                 base = make_Vertical_THT_base(num_pins, pitch, rows, base_width, base_height, base_chamfer)
@@ -168,7 +172,11 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             file_name = model.replace("yy", num_pins_str)
 
             # Export the assembly to STEP
-            component.save(os.path.join(output_dir, file_name + ".step"), cq.exporters.ExportTypes.STEP, write_pcurves=False)
+            component.name = file_name
+            component.save(os.path.join(output_dir, file_name + ".step"), cq.exporters.ExportTypes.STEP, mode=cq.exporters.assembly.ExportModes.FUSED, write_pcurves=False)
+
+            # Check for a proper union
+            export_tools.check_step_export_union(component, output_dir, file_name)
 
             # Export the assembly to VRML
             if enable_vrml:

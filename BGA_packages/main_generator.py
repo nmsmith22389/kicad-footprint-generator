@@ -62,8 +62,7 @@ import os
 from math import tan, radians
 
 import cadquery as cq
-from _tools import shaderColors, parameters, cq_color_correct
-from _tools import cq_globals
+from _tools import shaderColors, parameters, cq_color_correct, cq_globals, export_tools
 from exportVRML.export_part_to_VRML import export_VRML
 
 dest_dir_prefix = "Package_BGA.3dshapes"
@@ -315,7 +314,7 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
         case_bot, case, pins, pinmark = make_case(all_params[model])
 
         # Wrap the component parts in an assembly so that we can attach colors
-        component = cq.Assembly()
+        component = cq.Assembly(name=model)
         if case_bot != None:
             component.add(case_bot, color=cq_color_correct.Color(body_bot_color[0], body_bot_color[1], body_bot_color[2]))
         component.add(case, color=cq_color_correct.Color(body_color[0], body_color[1], body_color[2]))
@@ -327,7 +326,10 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             os.makedirs(output_dir)
 
         # Export the assembly to STEP
-        component.save(os.path.join(output_dir, model + ".step"), cq.exporters.ExportTypes.STEP, write_pcurves=False)
+        component.save(os.path.join(output_dir, model + ".step"), cq.exporters.ExportTypes.STEP, mode=cq.exporters.assembly.ExportModes.FUSED, write_pcurves=False)
+
+        # Check for a proper union
+        export_tools.check_step_export_union(component, output_dir, model)
 
         # Export the assembly to VRML
         if enable_vrml:
