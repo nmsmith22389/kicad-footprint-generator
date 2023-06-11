@@ -5406,6 +5406,39 @@ TSSOP-38_6.1x12.5mm_P0.65mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.ti.com/lit/ds/symlink/msp430g2744.pdf'
 
+SO-14_3.9x8.65mm_P1.27mm:
+  the: 9.0
+  tb_s: 0.375
+  c: 0.25
+  R1: 0.1
+  R2: 0.1
+  S : 0.015
+  fp_s: True
+  fp_r: 0.6
+  fp_d: 0.05
+  fp_z: 0.05
+  ef: 0.0
+  cc1: 0
+  D1: 8.65
+  E1: 3.90
+  E: 6.0
+  A1: 0.175
+  A2: 1.375
+  b: 0.42
+  e: 1.27
+  npx: 7
+  npy: 0
+  epad: null
+  excluded_pins: null
+  old_model_name: SO-14_3.9x8.65mm_P1.27mm
+  model_name: SO-14_3.9x8.65mm_P1.27mm
+  rotation: -90
+  body_color_key: 'black body'
+  pin_color_key: 'metal grey pins'
+  mark_color_key: 'light brown label'
+  destination_dir: 'Package_SO.3dshapes'
+  source: 'https://www.st.com/resource/en/datasheet/l6491.pdf'
+
 SOT23_6:
   the: 8.0
   tb_s: 0.05
