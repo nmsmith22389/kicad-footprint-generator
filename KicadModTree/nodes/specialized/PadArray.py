@@ -274,7 +274,7 @@ class PadArray(Node):
         elif isinstance(self.increment, GeneratorType):
             pad_numbers = [next(self.increment) for i in range(self.pincount)]
         else:
-            raise TypeError("Wrong type for increment. It must be either a int, callable or generator.")
+            raise TypeError("Wrong type for increment. It must be either an int, callable or generator.")
 
         end_pad_params = copy(kwargs)
         if kwargs.get('end_pads_size_reduction'):
