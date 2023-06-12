@@ -16,6 +16,8 @@
 # (C) 2017 by @SchrodingersGat
 # (C) 2017 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 
+from collections.abc import Iterable
+
 from types import GeneratorType
 from KicadModTree.nodes.base.Pad import *
 from KicadModTree.nodes.specialized.ChamferedPad import *
@@ -78,9 +80,9 @@ class PadArray(Node):
           shape for marking pad 1 for through hole components. (default: ``Pad.SHAPE_ROUNDRECT``)
         * *tht_pad1_id* (``int, string``) --
           pad number used for "pin 1" (default: 1)
-        * *hidden_pins* (``int, Vector1D``) --
+        * *hidden_pins* (``int, Iterable[int]``) --
           pin number(s) to be skipped; a footprint with hidden pins has missing pads and matching pin numbers
-        * *deleted_pins* (``int, Vector1D``) --
+        * *deleted_pins* (``Vector2D, Iterable[Vector2D]``) --
           pin locations(s) to be skipped; a footprint with deleted pins has pads missing but no missing pin numbers"
 
 
@@ -89,6 +91,12 @@ class PadArray(Node):
     >>> from KicadModTree import *
     >>> PadArray(pincount=10, spacing=[1,-1], center=[0,0], initial=5, increment=2,
     ...          type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT, size=[1,2], layers=Pad.LAYERS_SMT)
+    >>> PadArray(start=(0, 0), pincount=4, x_spacing=2.54, center=[0,0], initial=8, increment=-1,
+    ...          type=Pad.TYPE_THT, shape=Pad.SHAPE_CIRCLE, drill=1.12, size=[2,2], layers=Pad.LAYERS_THT,
+    ...          hidden_pins=[7]))
+    >>> PadArray(start=(0, 0), pincount=4, x_spacing=2.54, center=[0,0], initial=1, increment=1,
+    ...          type=Pad.TYPE_THT, shape=Pad.SHAPE_CIRCLE, drill=1.12, size=[2,2], layers=Pad.LAYERS_THT,
+    ...          deleted_pins=[(2.54, 0), (3 * 2.54, 0)]))
     """
 
     def __init__(self, **kwargs):
@@ -121,6 +129,17 @@ class PadArray(Node):
                 raise TypeError('exclude pin list must be specified like "exclude_pin_list=[0,1]"')
             elif any([type(i) not in [int] for i in self.exclude_pin_list]):
                 raise ValueError('exclude pin list must be integer value')
+
+        deleted_pins = kwargs.get('deleted_pins')
+        if deleted_pins:
+            if isinstance(deleted_pins, Vector2D):
+                self.deleted_pin_pos_lst = [Vector2D(deleted_pins)]
+            elif isinstance(deleted_pins, Iterable):
+                self.deleted_pin_pos_lst = [Vector2D(p) for p in deleted_pins]
+            else:
+                raise TypeError("Wrong type for deleted_pins. It must be either an Vector2D or Iterable[Vector2D].")
+        else:
+            self.deleted_pin_pos_lst = []
 
     # Where to start the array
     def _initStartingPosition(self, **kwargs):
@@ -221,7 +240,7 @@ class PadArray(Node):
         elif type(self.increment) == GeneratorType:
             pad_numbers = [next(self.increment) for i in range(self.pincount)]
         else:
-            raise TypeError("Wrong type for increment. It must be either a int, callable or generator.")
+            raise TypeError("Wrong type for increment. It must be either an int, callable or generator.")
 
         end_pad_params = copy(kwargs)
         if kwargs.get('end_pads_size_reduction'):
@@ -242,6 +261,8 @@ class PadArray(Node):
         else:
             delta_pos = Vector2D(0, 0)
 
+        j = 0  # number of found deleted pins
+
         for i, number in enumerate(pad_numbers):
             includePad = True
 
@@ -250,7 +271,7 @@ class PadArray(Node):
                 includePad = False
 
             # hidden pins are filtered out by pad number (index of pad_numbers list)
-            if not kwargs.get('deleted_pins'):
+            if kwargs.get('hidden_pins'):
                 if type(self.initialPin) == 'int':
                     includePad = (self.initialPin + i) not in self.exclude_pin_list
                 else:
@@ -258,9 +279,18 @@ class PadArray(Node):
 
             if includePad:
                 current_pad_pos = Vector2D(
-                    x_start + i * x_spacing,
-                    y_start + i * y_spacing
+                    x_start + (i + j) * x_spacing,
+                    y_start + (i + j) * y_spacing
                     )
+
+                while current_pad_pos in self.deleted_pin_pos_lst:
+                    j += 1
+
+                    current_pad_pos = Vector2D(
+                        x_start + (i + j) * x_spacing,
+                        y_start + (i + j) * y_spacing
+                        )
+
                 current_pad_params = copy(kwargs)
                 if i == 0 or i == len(pad_numbers)-1:
                     current_pad_pos += delta_pos
