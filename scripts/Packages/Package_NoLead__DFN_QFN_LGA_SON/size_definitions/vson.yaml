@@ -82,3 +82,42 @@ VSON-8_1.5x2.0mm_P0.5mm:
   #suffix: '_PullBack'
   #include_suffix_in_3dpath: 'False'
   #include_pad_size: 'fp_name_only' # 'both' | 'none' (default)
+
+VSON-8-1EP_3x3mm_P0.65mm_EP1.65x2.4mm:
+  device_type: 'VSON'
+  library: Package_SON
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'https://www.ti.com/lit/ds/symlink/tlv767-q1.pdf#page=31'
+  ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  body_size_x:
+    minimum: 2.9
+    maximum: 3.1
+  body_size_y:
+    minimum: 2.9
+    maximum: 3.1
+  lead_width:
+    minimum: 0.26
+    maximum: 0.36
+  lead_len:
+    minimum: 0.3
+    maximum: 0.5
+
+  overall_height: 1
+  pitch: 0.65
+  num_pins_x: 0
+  num_pins_y: 4
+
+  EP_size_x:
+    minimum: 1.55
+    maximum: 1.75
+  EP_size_y:
+    minimum: 2.3
+    maximum: 2.5
+
+  thermal_vias:
+    count:
+      x: 2
+      y: 3
+    drill: 0.2
