@@ -283,7 +283,7 @@ class PadArray(Node):
                     y_start + (i + j) * y_spacing
                     )
 
-                while current_pad_pos in self.deleted_pin_pos_lst:
+                while any(current_pad_pos.distance_to(candidate) < 1e-6 for candidate in self.deleted_pin_pos_lst):
                     j += 1
 
                     current_pad_pos = Vector2D(
