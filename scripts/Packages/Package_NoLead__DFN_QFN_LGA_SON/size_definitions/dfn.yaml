@@ -8,12 +8,12 @@ TDFN-6-1EP_1.2x1.2mm_P0.4mm_EP0.3x0.94mm:
   #body_size_x_min: 2.85
   body_size_x:
     nominal: 1.2
-    tolerance: 0
+    tolerance: 0.05
   #body_size_x_max: 3.15
   #body_size_y_min: 2.85
   body_size_y:
     nominal: 1.2
-    tolerance: 0
+    tolerance: 0.05
   #body_size_y_max: 3.15
   lead_to_edge:
     nominal: 0.05
