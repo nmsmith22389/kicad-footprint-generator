@@ -1,3 +1,31 @@
+LGA-8_8x6mm_P1.27mm:
+  device_type: 'LGA'
+  size_source: 'https://datasheet.lcsc.com/lcsc/2005251034_XTX-XTSD01GLGEAG_C558837.pdf#page=6'
+  library: 'Package_LGA'
+  body_size_x:
+    minimum: 7.95
+    nominal: 8.00
+    maximum: 8.05
+  body_size_y:
+    minimum: 5.95
+    nominal: 6.00
+    maximum: 6.05
+  overall_height:
+    minimum: 0.85
+    nominal: 0.90
+    maximum: 0.95
+  lead_width:
+    minimum: 0.55
+    nominal: 0.60
+    maximum: 0.65
+  lead_len:
+    minimum: 0.75
+    nominal: 0.80
+    maximum: 0.85
+  pitch: 1.27
+  num_pins_x: 0
+  num_pins_y: 4
+
 LGA-16_3x3mm_P0.5mm_LayoutBorder3x5y:
   device_type: 'LGA'
   library: Package_LGA
