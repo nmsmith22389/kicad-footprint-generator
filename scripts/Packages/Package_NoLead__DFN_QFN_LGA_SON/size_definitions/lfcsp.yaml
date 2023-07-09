@@ -283,6 +283,39 @@ LFCSP-WD-10-1EP_3x3mm_P0.5mm_EP1.64x2.38mm:
   #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
   #include_suffix_in_3dpath: 'False'
 
+LFCSP-16_3x3mm_P0.5mm:
+  device_type: 'LFCSP'
+  library: Package_CSP
+  # manufacturer: 'Analog'
+  # part_number: 'CP_16_32'
+  size_source: 'https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/lfcspcp/cp-16/CP_16_32.pdf'
+
+  body_size_x:
+    minimum: 2.9
+    nominal: 3
+    maximum: 3.1
+  body_size_y:
+    minimum: 2.9
+    nominal: 3
+    maximum: 3.1
+  body_height:
+    minimum: 0.7
+    nominal: 0.75
+    maximum: 0.8
+
+  lead_width:
+    minimum: 0.20
+    nominal: 0.25
+    maximum: 0.30
+  lead_len:
+    minimum: 0.3
+    nominal: 0.4
+    maximum: 0.5
+
+  pitch: 0.5
+  num_pins_x: 4
+  num_pins_y: 4
+
 LFCSP-16-1EP_3x3mm_P0.5mm_EP1.3x1.3mm:
   device_type: 'LFCSP'
   library: Package_CSP
