@@ -4,8 +4,10 @@ defaults:
 
 SS4-xx-3.00:
   inherit: 'defaults'
-  description: 'Micro Blade & Beam Ultra Fine Pitch Socket, 0.40 mm pitch, 02x{num_pos:02d} ways, 3.00 lead style'
-  fp_name: 'Samtec_SS4-{num_pos:02d}-3.00-x-D-K-xR'
+  doc_parameters:
+    lead_style: '3.00'
+  description: 'Micro Blade & Beam Ultra Fine Pitch Socket, 0.40 mm pitch, 02x{num_pos:02d} ways, {lead_style} lead style'
+  fp_name: 'Samtec_SS4-{num_pos:02d}-{lead_style}-x-D-K-xR'
   fp_suffix: '_Socket'     # optional: defaults to ''
   source: 'https://suddendocs.samtec.com/prints/ss4-xx-x.xx-x-d-x-xx-tr-footprint.pdf'
   tags: 'conn samtec board-to-board socket high-speed'
@@ -34,6 +36,6 @@ SS4-xx-3.00:
 
 SS4-xx-3.50:
   inherit: 'SS4-xx-3.00'
-  description: 'Micro Blade & Beam Ultra Fine Pitch Socket, 0.40 mm pitch, 02x{num_pos:02d} ways, 3.50 lead style'
-  fp_name: 'Samtec_SS4-{num_pos:02d}-3.50-x-D-K-xR'
+  doc_parameters:
+    lead_style: '3.50'
 
