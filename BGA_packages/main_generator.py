@@ -219,7 +219,7 @@ def make_case(params):
         case = case.translate((0,0,A2-0.01))
         #show(case)
         #stop
-        pinmark=cq.Workplane("XZ", (-D/2+fp_d+fp_r, -E/2+fp_d+fp_r, fp_z)).rect(fp_r/2, -2*fp_z, False).revolve().translate((0,0,A))#+fp_z))
+        pinmark=cq.Workplane("XZ", (-D/2+fp_d+fp_r, -E/2+fp_d+fp_r, fp_z)).rect(fp_r/2, -2*fp_z, False).revolve().translate((0,0,A-fp_z))
         pinmark=pinmark.translate(((D-D1_t)/2+fp_d+cff,(E-E1_t)/2+fp_d+cff,-sp))
         #stop
         #if (color_pin_mark==False) and (place_pinMark==True):
@@ -245,8 +245,8 @@ def make_case(params):
         #sphere_r = (fp_r*fp_r/2 + fp_z*fp_z) / (2*fp_z)
         #sphere_z = A + sphere_r * 2 - fp_z - sphere_r
 
-        pinmark=cq.Workplane("XZ", (-D/2+fp_d+fp_r, -E/2+fp_d+fp_r, fp_z)).rect(fp_r/2, -2*fp_z, False).revolve().translate((0,0,A2+A1-sp))#+fp_z))
-        #pinmark=pinmark.translate((0,0,A1-sp))
+        pinmark=cq.Workplane("XZ", (-D/2+fp_d+fp_r, -E/2+fp_d+fp_r, fp_z)).rect(fp_r/2, -2*fp_z, False).revolve().translate((0,0,A2+A1-sp-fp_z))
+        # pinmark=pinmark.translate((0,0,A1-sp))
         #stop
         # if (color_pin_mark==False) and (place_pinMark==True):
         if place_pinMark==True:
