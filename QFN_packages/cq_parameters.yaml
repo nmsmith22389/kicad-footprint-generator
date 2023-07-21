@@ -8802,6 +8802,42 @@ QFN-56-1EP_8x8mm_P0.5mm_EP5.6x5.6mm:
   mark_color_key: light brown label
   source: 'http://www.ti.com/lit/ds/symlink/tlc5957.pdf#page=23 (page 23f, generated with kicad-footprint-generator ipc_dfn_qfn_generator.py'
 
+QFN-64-1EP_9x9mm_P0.5mm_EP4.1x4.1mm:
+  c: 0.2
+  L: 0.40
+  fp_s: True
+  fp_r: 0.4
+  fp_d: 0.5
+  fp_dx: null
+  fp_dy: null
+  fp_z: 0.1
+  ef: 0.0
+  cce: 0.2
+  D: 9.0
+  E: 9.0
+  A1: 0.02
+  A2: 0.83
+  b: 0.25
+  e: 0.5
+  m: 0.0
+  ps: square
+  npx: 16
+  npy: 16
+  epad: [4.1, 4.1]
+  epad_offsetX: null
+  epad_offsetY: null
+  epad_n: null
+  epad_pitch: null
+  excluded_pins: null
+  model_name: QFN-64-1EP_9x9mm_P0.5mm_EP4.1x4.1mm
+  rotation: -90
+  destination_dir: Package_DFN_QFN.3dshapes
+  body_color_key: black body
+  pin_shapes: null
+  pin_color_key: metal grey pins
+  mark_color_key: light brown label
+  source: 'https://www.silabs.com/documents/public/data-sheets/cp2108-datasheet.pdf'
+
 QFN-64-1EP_9x9mm_P0.5mm_EP4.7x4.7mm:
   c: 0.2
   L: 0.25
