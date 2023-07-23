@@ -135,8 +135,8 @@ SOP-8_3.9x4.9mm_P1.27mm:
     minimum: 4.77
     maximum: 5.03
   overall_height:
-    minimum: 1.45 # not specified, min.A1(0.10) + min.A2(1.35) gives this value 
-    maximum: 1.75 
+    minimum: 1.45 # not specified, min.A1(0.10) + min.A2(1.35) gives this value
+    maximum: 1.75
   overall_size_x:
     minimum: 5.80
     maximum: 6.20
@@ -251,7 +251,7 @@ SOP-18_7.0x12.5mm_P1.27mm:
   pitch: 1.27
   num_pins_x: 0
   num_pins_y: 9
-  
+
 STC_SOP-16_3.9x9.9mm_P1.27mm:
   size_source: 'https://www.stcmicro.com/datasheet/STC15F2K60S2-en.pdf#page=156'
   manufacturer: 'STC'
@@ -306,6 +306,31 @@ SOP-16_3.9x9.9mm_P1.27mm:
     maximum: 0.51
 
   pitch: 1.27 # e
+  num_pins_x: 0
+  num_pins_y: 8
+
+SOP-16_4.4x10.4mm_P1.27mm:
+  size_source: 'https://www.vishay.com/docs/83513/tcmd1000.pdf'
+  body_size_x:
+    nominal: 4.40
+    tolerance: 0.20
+  body_size_y:
+    nominal: 10.4
+  overall_height:
+    nominal: 2.1
+  overall_size_x:
+    minimum: 6.6
+    nominal: 7
+    maximum: 7.3
+  lead_len:
+    minimum: 0.30
+    nominal: 0.70
+    maximum: 1.00
+  lead_width:
+    nominal: 0.45
+    tolerance: 0.10
+
+  pitch: 1.27
   num_pins_x: 0
   num_pins_y: 8
 
