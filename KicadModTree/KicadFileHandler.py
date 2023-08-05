@@ -21,6 +21,7 @@ from KicadModTree.nodes.base.Circle import Circle
 from KicadModTree.nodes.base.Line import Line
 from KicadModTree.nodes.base.Polygon import Polygon
 from KicadModTree.nodes.Footprint import Footprint, FootprintType
+from KicadModTree.nodes.base.Zone import PadConnection, ZoneFill
 
 
 DEFAULT_LAYER_WIDTH = {'F.SilkS': 0.12,
@@ -156,7 +157,7 @@ class KicadFileHandler(FileHandler):
 
         for key, value in sorted(grouped_nodes.items()):
             # check if key is a base node, except Model
-            if key not in {'Arc', 'Circle', 'Line', 'Pad', 'Polygon', 'Text'}:
+            if key not in {'Arc', 'Circle', 'Line', 'Pad', 'Polygon', 'Text', 'Zone'}:
                 continue
 
             # render base nodes
@@ -232,9 +233,9 @@ class KicadFileHandler(FileHandler):
         end_pos = node.getRealPosition(node.center_pos + (node.radius, 0))
 
         return [
-                ['center', center_pos.x, center_pos.y],
-                ['end', end_pos.x, end_pos.y]
-               ]
+            ['center', center_pos.x, center_pos.y],
+            ['end', end_pos.x, end_pos.y]
+        ]
 
     def _serialize_Circle(self, node):
         sexpr = ['fp_circle']
@@ -247,21 +248,30 @@ class KicadFileHandler(FileHandler):
 
         return sexpr
 
+    def _serialise_Layers(self, node):
+        layers = node.layers
+
+        # Maybe one day this be simplified in the s-expr format
+        if len(layers) == 1:
+            return ['layer', layers[0]]
+
+        return ['layers'] + layers
+
     def _serialize_LinePoints(self, node):
         start_pos = node.getRealPosition(node.start_pos)
         end_pos = node.getRealPosition(node.end_pos)
         return [
-                ['start', start_pos.x, start_pos.y],
-                ['end', end_pos.x, end_pos.y]
-               ]
+            ['start', start_pos.x, start_pos.y],
+            ['end', end_pos.x, end_pos.y]
+        ]
 
     def _serialize_Line(self, node):
         sexpr = ['fp_line']
         sexpr += self._serialize_LinePoints(node)
         sexpr += [
-                SexprSerializer.NEW_LINE,
-                ['stroke'] + self._serialize_Stroke(node),
-                ['layer', node.layer],
+            SexprSerializer.NEW_LINE,
+            ['stroke'] + self._serialize_Stroke(node),
+            ['layer', node.layer],
         ]
 
         return sexpr
@@ -281,10 +291,10 @@ class KicadFileHandler(FileHandler):
         sexpr.append(SexprSerializer.NEW_LINE)
 
         effects = [
-                'effects',
-                ['font',
-                    ['size', node.size.x, node.size.y],
-                    ['thickness', node.thickness]]]
+            'effects',
+            ['font',
+             ['size', node.size.x, node.size.y],
+             ['thickness', node.thickness]]]
 
         justify = []
         if node.mirror:
@@ -404,13 +414,14 @@ class KicadFileHandler(FileHandler):
 
         return sexpr
 
-    def _serialize_PolygonPoints(self, node, newline_after_pts=False):
+    def _serialize_PolygonPoints(self, node, newline_after_pts=False,
+                                 newline_after_n_points=4):
         node_points = ['pts']
         if newline_after_pts:
             node_points.append(SexprSerializer.NEW_LINE)
         points_appended = 0
         for n in node.nodes:
-            if points_appended >= 4:
+            if points_appended >= newline_after_n_points:
                 points_appended = 0
                 node_points.append(SexprSerializer.NEW_LINE)
             points_appended += 1
@@ -430,5 +441,137 @@ class KicadFileHandler(FileHandler):
                  ['fill', 'solid'],
                  ['layer', node.layer],
                 ]  # NOQA
+
+        return sexpr
+
+    def _serialize_Zone(self, node):
+
+        def _serialise_Keepout(keepouts):
+
+            supported_keepouts = ['tracks', 'vias', 'copperpour', 'pads', 'footprints']
+
+            sexpr = ['keepout']
+            for keepout in supported_keepouts:
+                sexpr.append([keepout, 'not_allowed' if keepouts[keepout] else 'allowed'])
+
+            return sexpr
+
+        def _serialize_Hatch(node):
+            return ['hatch', node.style, node.pitch]
+
+        def _serialize_ConnectPads(node):
+            sexpr = ['connect_pads']
+            type = node.type
+            if type is not PadConnection.THERMAL_RELIEF:
+                sexpr.append(type)
+
+            sexpr.append(['clearance', node.clearance])
+            return sexpr
+
+        def _serialise_ZoneFill(node):
+            sexpr = ['fill']
+
+            # no fill, all other tokens are unnecessary
+            if node is None:
+                return sexpr
+
+            # we do have a fill
+            sexpr.append('yes')
+
+            def append_if_not_none(property, keyword):
+                if property is not None:
+                    sexpr += [
+                        SexprSerializer.NEW_LINE,
+                        [keyword, property]
+                    ]
+
+            # soild is encoded as no mode
+            if node.mode != ZoneFill.FILL_SOLID:
+                sexpr += [
+                    SexprSerializer.NEW_LINE,
+                    ['mode', node.mode],
+                ]
+
+            # Thermal gap and bridge with aren't optional
+            sexpr += [
+                SexprSerializer.NEW_LINE,
+                ['thermal_gap', node.thermal_gap],
+                SexprSerializer.NEW_LINE,
+                ['thermal_bridge_width', node.thermal_bridge_width],
+            ]
+
+            if node.smoothing is not None:
+                sexpr += [
+                    SexprSerializer.NEW_LINE,
+                    ['smoothing', node.smoothing, ['radius', node.smoothing_radius]],
+                ]
+
+            if node.island_removal_mode is not None:
+                # Look up the encoding
+                island_removal_mode = {
+                    ZoneFill.ISLAND_REMOVAL_REMOVE: 0,
+                    ZoneFill.ISLAND_REMOVAL_FILL: 1,
+                    ZoneFill.ISLAND_REMOVAL_MINIMUM_AREA: 2,
+                }[node.island_removal_mode]
+                append_if_not_none(island_removal_mode, 'island_removal_mode')
+
+                # only valid in mode 2
+                if node.island_removal_mode == 'minimum_area':
+                    append_if_not_none(node.island_area_min, 'island_area_min')
+
+            append_if_not_none(node.hatch_thickness, 'hatch_thickness')
+            append_if_not_none(node.hatch_gap, 'hatch_gap')
+            append_if_not_none(node.hatch_orientation, 'hatch_orientation')
+            append_if_not_none(node.hatch_smoothing_level, 'hatch_smoothing_level')
+            append_if_not_none(node.hatch_smoothing_value, 'hatch_smoothing_value')
+            append_if_not_none(node.hatch_border_algorithm, 'hatch_border_algorithm')
+            append_if_not_none(node.hatch_hole_area, 'hatch_hole_area')
+            return sexpr
+
+        sexpr = [
+            'zone',
+            SexprSerializer.NEW_LINE,
+            ['net', node.net],
+            SexprSerializer.NEW_LINE,
+            ['net_name', node.net_name],
+            SexprSerializer.NEW_LINE,
+            self._serialise_Layers(node),
+            SexprSerializer.NEW_LINE,
+            ['name', node.name],
+            SexprSerializer.NEW_LINE,
+            _serialize_Hatch(node.hatch)
+        ]
+
+        # Optional node
+        if node.priority is not None:
+            sexpr += [
+                SexprSerializer.NEW_LINE,
+                ['priority', node.priority],
+            ]
+
+        sexpr += [
+            SexprSerializer.NEW_LINE,
+            _serialize_ConnectPads(node.connect_pads),
+            SexprSerializer.NEW_LINE,
+            # technically optional, but we can just always put it in
+            ['filled_areas_thickness', 'yes' if node.filled_areas_thickness else 'no'],
+            SexprSerializer.NEW_LINE,
+            ['min_thickness', node.min_thickness],
+            SexprSerializer.NEW_LINE,
+        ]
+
+        # Optional node
+        if node.keepouts:
+            sexpr += [
+                _serialise_Keepout(node.keepouts),
+                SexprSerializer.NEW_LINE,
+            ]
+
+        sexpr += [
+            _serialise_ZoneFill(node.fill),
+            SexprSerializer.NEW_LINE,
+            ['polygon', self._serialize_PolygonPoints(
+                node, newline_after_pts=True, newline_after_n_points=1)]
+        ]
 
         return sexpr

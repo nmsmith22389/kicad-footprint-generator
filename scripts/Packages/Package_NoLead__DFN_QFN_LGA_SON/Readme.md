@@ -91,7 +91,7 @@ pad_numbers:
 ~~~
 ![non-standard numbering example](./documentation/non-std-numbering.png)
 
-**TODO:** describe the currently available pin numbering options in more detail  
+**TODO:** describe the currently available pin numbering options in more detail
 
 ### Exposed pad Handling:
 ![exposed pad example](../documentation/ep_handling.svg)
