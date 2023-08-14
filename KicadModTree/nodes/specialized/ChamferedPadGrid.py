@@ -223,7 +223,10 @@ class ChamferedPadGrid(Node):
         if 'grid' not in kwargs:
             raise KeyError('grid not declared (like "grid=[1, 2]")')
 
-        self.grid = toVectorUseCopyIfNumber(kwargs['grid'], low_limit=self.size)
+        # It's OK to be the same size - this happens for example on 100% coverage
+        # solder-paste grids
+        self.grid = toVectorUseCopyIfNumber(kwargs['grid'], low_limit=self.size,
+                                            must_be_larger=False)
 
     def _initPadSettings(self, **kwargs):
         if 'chamfer_selection' not in kwargs:

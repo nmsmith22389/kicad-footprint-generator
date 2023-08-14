@@ -117,7 +117,7 @@ class Gullwing():
         if overrides['pad_to_pad_min_y'] > 0:
             Gmin_y = overrides['pad_to_pad_min_y']
             Zmax_y = overrides['pad_to_pad_max_y']
-        
+
         if overrides['pad_size_y'] > 0:
             Xmax = overrides['pad_size_y']
 
@@ -192,6 +192,8 @@ class Gullwing():
         else:
             lib_name = self.configuration['lib_name_format_string'].format(category=header['library_Suffix'])
 
+        device_type = device_params.get('device_type', header['device_type'])
+
         size_x = dimensions['body_size_x'].nominal
         size_y = dimensions['body_size_y'].nominal
 
@@ -257,7 +259,7 @@ class Gullwing():
         if 'pad_to_pad_min_y_overwrite' in device_params:
             overrides['pad_to_pad_min_y'] = device_params['pad_to_pad_min_y_overwrite']
             overrides['pad_to_pad_max_y'] = device_params['pad_to_pad_max_y_overwrite']
-        
+
         overrides['EP_x'] = EP_size['x']
         overrides['EP_y'] = EP_size['y']
 
@@ -276,7 +278,7 @@ class Gullwing():
         fp_name = name_format.format(
             man=device_params.get('manufacturer', ''),
             mpn=device_params.get('part_number', ''),
-            pkg=header['device_type'],
+            pkg=device_type,
             pincount=pincount_text,
             size_y=size_y,
             size_x=size_x,
@@ -293,7 +295,7 @@ class Gullwing():
         fp_name_2 = name_format.format(
             man=device_params.get('manufacturer', ''),
             mpn=device_params.get('part_number', ''),
-            pkg=header['device_type'],
+            pkg=device_type,
             pincount=pincount_text,
             size_y=size_y,
             size_x=size_x,
@@ -321,7 +323,7 @@ class Gullwing():
             "{manufacturer} {mpn} {package}, {pincount} Pin ({datasheet}), generated with kicad-footprint-generator {scriptname}"
             .format(
                 manufacturer=device_params.get('manufacturer', ''),
-                package=header['device_type'],
+                package=device_type,
                 mpn=device_params.get('part_number', ''),
                 pincount=pincount,
                 datasheet=device_params['size_source'],
@@ -331,7 +333,7 @@ class Gullwing():
         kicad_mod.setTags(self.configuration['keyword_fp_string']
                           .format(
             man=device_params.get('manufacturer', ''),
-            package=header['device_type'],
+            package=device_type,
             category=header['override_lib_name'] if 'override_lib_name' in header else header['library_Suffix']
         ).lstrip())
         kicad_mod.setAttribute('smd')

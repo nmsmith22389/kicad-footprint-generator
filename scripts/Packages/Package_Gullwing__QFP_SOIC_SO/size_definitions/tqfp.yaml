@@ -2,6 +2,37 @@ FileHeader:
   library_Suffix: 'QFP'
   device_type: 'TQFP'
 
+Texas_PHP0048E_HTQFP-48_7x7mm_P0.5mm:
+  device_type: 'HTQFP'
+  manufacturer: "Texas"
+  part_number: "PHP0048E"
+  size_source: 'https://www.ti.com/lit/ds/symlink/tusb4020bi.pdf#page=42'
+  body_size_x: 6.8 .. 7.2
+  body_size_y: 6.8 .. 7.2
+  overall_size_x: 8.8 .. 9.2
+  overall_size_y: 8.8 .. 9.2
+  lead_width: 0.17 .. 0.27
+  lead_len: 0.45 .. 0.75
+  pitch: 0.5
+  num_pins_x: 12
+  num_pins_y: 12
+
+  EP_size_x: 3.15 .. 3.62
+  EP_size_y: 3.15 .. 3.62
+  EP_size_x_overwrite: 6.5
+  EP_size_y_overwrite: 6.5
+  EP_mask_x: 3.62
+  EP_mask_y: 3.62
+  EP_num_paste_pads: 1
+  EP_paste_coverage: 1
+
+  thermal_vias:
+    count: [6, 6]
+    drill: 0.2
+    EP_num_paste_pads: 1
+    EP_paste_coverage: 1
+    paste_avoid_via: False
+
 TQFP-48_7x7mm_P0.5mm:
   size_source: 'http://ww1.microchip.com/downloads/en/DeviceDoc/48L_TQFP_7x7x1_0mm_PT_C04-00300d.pdf'
   body_size_x: 7.00 # basic
