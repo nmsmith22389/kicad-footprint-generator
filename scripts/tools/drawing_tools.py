@@ -19,12 +19,18 @@ def script3d_writevariable(file, line, varname, value):
     file.write("# {0}\nApp.ActiveDocument.Spreadsheet.set('A{1}', 'var {0} = '); App.ActiveDocument.Spreadsheet.set('B{1}', '{2}'); App.ActiveDocument.Spreadsheet.setAlias('B{1}', '{0}')\n".format(varname, line, value))
 
 
+def roundGUp(x: float, g: float) -> float:
+    return math.ceil(x / g) * g
+
+
+def roundGDown(x: float, g: float) -> float:
+    return math.floor(x / g) * g
+
+
 # round for grid g
-def roundG(x, g):
-    if (x > 0):
-        return math.ceil(x / g) * g
-    else:
-        return math.floor(x / g) * g
+def roundG(x: float, g: float) -> float:
+    return roundGUp(x, g) if x > 0 else roundGDown(x, g)
+
 
 # round for grid g
 def sqr(x):
@@ -35,6 +41,21 @@ def sqr(x):
 def roundCrt(x):
     return roundG(x, grid_crt)
 
+
+def courtyardFromBoundingBox(bbox: dict, off: float, grid: str):
+    """
+    Get a courtyard of the given box, with some offset, rounded to the grid
+
+    :param bbox: bounding box of the body
+    :param off: clearance
+    :param grid: grid size to round to
+    """
+    return {
+        'left': roundGDown(bbox['left'] - off, grid),
+        'right': roundGUp(bbox['right'] + off, grid),
+        'top': roundGDown(bbox['top'] - off, grid),
+        'bottom': roundGUp(bbox['bottom'] + off, grid)
+    }
 
 # float-variant of range()
 def frange(x, y, jump):

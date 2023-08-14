@@ -16,6 +16,7 @@ sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))  # load parent p
 from footprint_text_fields import addTextFields
 from ipc_pad_size_calculators import *
 from quad_dual_pad_border import add_dual_or_quad_pad_border
+from drawing_tools import courtyardFromBoundingBox
 
 sys.path.append(os.path.join(sys.path[0], "..", "utils"))
 from ep_handling_utils import getEpRoundRadiusParams
@@ -32,10 +33,6 @@ DEFAULT_MIN_ANNULAR_RING = 0.15
 SILK_MIN_LEN = 0.1
 
 DEBUG_LEVEL = 0
-
-
-def roundToBase(value, base):
-    return round(value / base) * base
 
 
 class NoLead():
@@ -505,16 +502,16 @@ class NoLead():
         off = ipc_data_set['courtyard']
         grid = configuration['courtyard_grid']
 
-        cy1 = roundToBase(bounding_box['top'] - off, grid)
+        cy_box = courtyardFromBoundingBox(bounding_box, off, grid)
 
         kicad_mod.append(RectLine(
             start={
-                'x': roundToBase(bounding_box['left'] - off, grid),
-                'y': cy1
+                'x': cy_box['left'],
+                'y': cy_box['top']
             },
             end={
-                'x': roundToBase(bounding_box['right'] + off, grid),
-                'y': roundToBase(bounding_box['bottom'] + off, grid)
+                'x': cy_box['right'],
+                'y': cy_box['bottom']
             },
             width=configuration['courtyard_line_width'],
             layer='F.CrtYd'))
@@ -522,7 +519,8 @@ class NoLead():
         # ######################### Text Fields ###############################
 
         addTextFields(kicad_mod=kicad_mod, configuration=configuration, body_edges=body_edge,
-                      courtyard={'top': cy1, 'bottom': -cy1}, fp_name=fp_name, text_y_inside_position='center', allow_rotation=True)
+                      courtyard={'top': cy_box['top'], 'bottom': cy_box['bottom']},
+                      fp_name=fp_name, text_y_inside_position='center', allow_rotation=True)
 
         ##################### Output and 3d model ############################
 
