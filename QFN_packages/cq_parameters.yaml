@@ -5058,6 +5058,42 @@ UQFN-40-1EP_5x5mm_Pitch0.4mm:
   mark_color_key: light brown label
   source: 'http://ww1.microchip.com/downloads/en/DeviceDoc/41364E.pdf'
 
+Texas_S-PWQFN-N24_EP2.7x2.7mm:
+  c: 0.2
+  L: 0.4
+  fp_s: True
+  fp_r: 0.5
+  fp_d: 0.2
+  fp_dx: null
+  fp_dy: null
+  fp_z: 0.01
+  ef: 0.0
+  cce: 0.2
+  D: 4.0
+  E: 4.0
+  A1: 0.08
+  A2: 0.67
+  b: 0.24
+  e: 0.5
+  m: 0.0
+  ps: rounded
+  npx: 6
+  npy: 6
+  epad: [2.7, 2.7]
+  epad_offsetX: null
+  epad_offsetY: null
+  epad_n: null
+  epad_pitch: null
+  excluded_pins: null
+  model_name: Texas_S-PWQFN-N24_EP2.7x2.7mm
+  rotation: -90
+  destination_dir: Package_DFN_QFN.3dshapes
+  body_color_key: black body
+  pin_shapes: null
+  pin_color_key: metal grey pins
+  mark_color_key: light brown label
+  source: 'https://www.ti.com/lit/ds/symlink/bq25895.pdf'
+
 UQFN-48-1EP_6x6mm_Pitch0.4mm:
   c: 0.2
   L: 0.4
