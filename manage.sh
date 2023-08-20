@@ -23,7 +23,7 @@ update_dev_packages() {
 pep8_check() {
     echo ''
     echo '[!] Running pep8 check'
-    pep8 --max-line-length=120 "$KICADMODTREE_DIR/"
+    pycodestyle --max-line-length=120 "$KICADMODTREE_DIR/"
 }
 
 flake8_check() {
