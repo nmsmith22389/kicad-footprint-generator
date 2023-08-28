@@ -291,7 +291,7 @@ body_shape:
 onto the `F.Fab` layer. It will, however not be considered when calculating the silk screen.  
 
 
-### `courtyard_margin:` [_float_ | _dict_]
+### `courtyard_offset:` [_float_ | _dict_]
 Can be used to override the courtyard margin. If a single float is specified, the margin is the same on all 4 sides,
 alternatively it can be a dictionary containing values for `left`, `right`, `top` and `bottom` margins or `x` and `y`
 for horizontal and vertical margins, respectively. 
