@@ -15,7 +15,7 @@ PicoEZ_defaults: &picoez_defaults
     rel_pad_y_inside_edge: 3.75
     pad_size_x: 0.6
     # y position for body edge relative to mounting pad edge (positive -> body extends outside bounding box)
-    rel_body_edge_y: 0.22
+    rel_body_edge_y: 0.16
     body_size_y: 4.5
     # body_fin_protrusion: 1.6
     # body_fin_width: 0.8
