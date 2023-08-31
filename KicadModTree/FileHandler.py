@@ -53,10 +53,6 @@ class FileHandler(object):
         with io.open(filename, "w", newline='\n') as f:
             output = self.serialize(**kwargs)
 
-            # convert to unicode if running python2
-            if sys.version_info[0] == 2 and type(output) != unicode:
-                output = unicode(output, "utf-8")
-
             if not output.endswith("\n"):
                 output += "\n"
 

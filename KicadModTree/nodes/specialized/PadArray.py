@@ -212,13 +212,13 @@ class PadArray(Node):
         # this can be used for creating an array with all the same pad number
         if self.increment == 0:
             pad_numbers = [self.initialPin] * self.pincount
-        elif type(self.increment) == int:
+        elif isinstance(self.increment, int):
             pad_numbers = range(self.initialPin, self.initialPin + (self.pincount * self.increment), self.increment)
         elif callable(self.increment):
             pad_numbers = [self.initialPin]
             for idx in range(1, self.pincount):
                 pad_numbers.append(self.increment(pad_numbers[-1]))
-        elif type(self.increment) == GeneratorType:
+        elif isinstance(self.increment, GeneratorType):
             pad_numbers = [next(self.increment) for i in range(self.pincount)]
         else:
             raise TypeError("Wrong type for increment. It must be either a int, callable or generator.")
@@ -246,12 +246,12 @@ class PadArray(Node):
             includePad = True
 
             # deleted pins are filtered by pad/pin position (they are 'None' in pad_numbers list)
-            if type(number) not in [int, str]:
+            if not isinstance(number, (int, str)):
                 includePad = False
 
             # hidden pins are filtered out by pad number (index of pad_numbers list)
             if not kwargs.get('deleted_pins'):
-                if type(self.initialPin) == 'int':
+                if isinstance(self.initialPin, int):
                     includePad = (self.initialPin + i) not in self.exclude_pin_list
                 else:
                     includePad = number is not None and number not in self.exclude_pin_list
