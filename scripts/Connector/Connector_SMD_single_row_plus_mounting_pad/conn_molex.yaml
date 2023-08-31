@@ -21,6 +21,9 @@ PicoEZ_defaults: &picoez_defaults
     # body_fin_width: 0.8
     # x body edge relative to nearest pin
     rel_body_edge_x: 1.5
+    center_shift_y: 0.21
+    pin1_marker_length_override: 0.6
+    no_mp_side_silk: 'True'
     edge_modifier_mount_pad_side:
         depth: 0.5 # > 0: cutout, < 0: protrusion
         # width_start: 1.6

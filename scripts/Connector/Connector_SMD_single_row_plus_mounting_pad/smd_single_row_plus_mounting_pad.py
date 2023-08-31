@@ -151,15 +151,27 @@ def generate_one_footprint(idx, pincount, series_definition, configuration, grou
         else:
             silk_x_offset = configuration['silk_fab_offset']
 
+        # if the pin-side modifier does not reach the X edge of pin 1, draw the outline normally
         if modified_pinside_x_inner + silk_x_offset > pad_1_x_outside_edge - pad_edge_silk_center_offset:
-            poly_silk_edge_left = [
-                {'x': body_edge['left'] - configuration['silk_fab_offset'], 'y': silk_y_mp_pin_side},
-                {'x': body_edge['left'] - configuration['silk_fab_offset'], 'y': side_line_y_pin_side + silk_y_offset_pin_side},
-                {'x': pad_1_x_outside_edge - pad_edge_silk_center_offset, 'y': side_line_y_pin_side + silk_y_offset_pin_side},
-                {'x': pad_1_x_outside_edge - pad_edge_silk_center_offset, 'y': pin_edge_outside}
-            ]
-            if abs(pin_edge_outside) - abs(side_line_y_pin_side + silk_y_offset_pin_side) < configuration['silk_line_length_min']:
-                needs_additional_silk_pin1_marker = True
+            if 'pin1_marker_length_override' in series_definition:
+                calc_edge_outside = side_line_y_pin_side + silk_y_offset_pin_side - series_definition['pin1_marker_length_override']
+                poly_silk_edge_left = [
+                    {'x': body_edge['left'] - configuration['silk_fab_offset'], 'y': silk_y_mp_pin_side},
+                    {'x': body_edge['left'] - configuration['silk_fab_offset'], 'y': side_line_y_pin_side + silk_y_offset_pin_side},
+                    {'x': pad_1_x_outside_edge - pad_edge_silk_center_offset, 'y': side_line_y_pin_side + silk_y_offset_pin_side},
+                    {'x': pad_1_x_outside_edge - pad_edge_silk_center_offset, 'y': calc_edge_outside}
+                ]
+                if abs(calc_edge_outside) - abs(side_line_y_pin_side + silk_y_offset_pin_side) < configuration['silk_line_length_min']:
+                    needs_additional_silk_pin1_marker = True
+            else:
+                poly_silk_edge_left = [
+                    {'x': body_edge['left'] - configuration['silk_fab_offset'], 'y': silk_y_mp_pin_side},
+                    {'x': body_edge['left'] - configuration['silk_fab_offset'], 'y': side_line_y_pin_side + silk_y_offset_pin_side},
+                    {'x': pad_1_x_outside_edge - pad_edge_silk_center_offset, 'y': side_line_y_pin_side + silk_y_offset_pin_side},
+                    {'x': pad_1_x_outside_edge - pad_edge_silk_center_offset, 'y': pin_edge_outside}
+                ]
+                if abs(pin_edge_outside) - abs(side_line_y_pin_side + silk_y_offset_pin_side) < configuration['silk_line_length_min']:
+                    needs_additional_silk_pin1_marker = True
 
             poly_silk_edge_right = [
                 {'x': body_edge['right'] + configuration['silk_fab_offset'], 'y': silk_y_mp_pin_side},
@@ -168,16 +180,29 @@ def generate_one_footprint(idx, pincount, series_definition, configuration, grou
             ]
 
         else:
-            poly_silk_edge_left = [
-                {'x': body_edge['left'] - configuration['silk_fab_offset'], 'y': silk_y_mp_pin_side},
-                {'x': body_edge['left'] - configuration['silk_fab_offset'], 'y': side_line_y_pin_side + silk_y_offset_pin_side},
-                {'x': modified_pinside_x_inner + silk_x_offset, 'y': side_line_y_pin_side + silk_y_offset_pin_side},
-                {'x': modified_pinside_x_inner + silk_x_offset, 'y': body_edge_pin + silk_y_offset_pin_side},
-                {'x': pad_1_x_outside_edge - pad_edge_silk_center_offset, 'y': body_edge_pin + silk_y_offset_pin_side},
-                {'x': pad_1_x_outside_edge - pad_edge_silk_center_offset, 'y': pin_edge_outside}
-            ]
-            if abs(pin_edge_outside) - abs(body_edge_pin + silk_y_offset_pin_side) < configuration['silk_line_length_min']:
-                needs_additional_silk_pin1_marker = True
+            if 'pin1_marker_length_override' in series_definition:
+                calc_edge_outside = body_edge_pin + silk_y_offset_pin_side - series_definition['pin1_marker_length_override']
+                poly_silk_edge_left = [
+                    {'x': body_edge['left'] - configuration['silk_fab_offset'], 'y': silk_y_mp_pin_side},
+                    {'x': body_edge['left'] - configuration['silk_fab_offset'], 'y': side_line_y_pin_side + silk_y_offset_pin_side},
+                    {'x': modified_pinside_x_inner + silk_x_offset, 'y': side_line_y_pin_side + silk_y_offset_pin_side},
+                    {'x': modified_pinside_x_inner + silk_x_offset, 'y': body_edge_pin + silk_y_offset_pin_side},
+                    {'x': pad_1_x_outside_edge - pad_edge_silk_center_offset, 'y': body_edge_pin + silk_y_offset_pin_side},
+                    {'x': pad_1_x_outside_edge - pad_edge_silk_center_offset, 'y': calc_edge_outside}
+                ]
+                if abs(calc_edge_outside) - abs(body_edge_pin + silk_y_offset_pin_side) < configuration['silk_line_length_min']:
+                    needs_additional_silk_pin1_marker = True
+            else:
+                poly_silk_edge_left = [
+                    {'x': body_edge['left'] - configuration['silk_fab_offset'], 'y': silk_y_mp_pin_side},
+                    {'x': body_edge['left'] - configuration['silk_fab_offset'], 'y': side_line_y_pin_side + silk_y_offset_pin_side},
+                    {'x': modified_pinside_x_inner + silk_x_offset, 'y': side_line_y_pin_side + silk_y_offset_pin_side},
+                    {'x': modified_pinside_x_inner + silk_x_offset, 'y': body_edge_pin + silk_y_offset_pin_side},
+                    {'x': pad_1_x_outside_edge - pad_edge_silk_center_offset, 'y': body_edge_pin + silk_y_offset_pin_side},
+                    {'x': pad_1_x_outside_edge - pad_edge_silk_center_offset, 'y': pin_edge_outside}
+                ]
+                if abs(pin_edge_outside) - abs(body_edge_pin + silk_y_offset_pin_side) < configuration['silk_line_length_min']:
+                    needs_additional_silk_pin1_marker = True
 
             poly_silk_edge_right = [
                 {'x': body_edge['right'] + configuration['silk_fab_offset'], 'y': silk_y_mp_pin_side},
@@ -191,14 +216,25 @@ def generate_one_footprint(idx, pincount, series_definition, configuration, grou
             {'x': body_edge['left'], 'y': body_edge_pin},
             {'x': body_edge['right'], 'y': body_edge_pin}
         ]
-        poly_silk_edge_left = [
-            {'x': body_edge['left'] - configuration['silk_fab_offset'], 'y': silk_y_mp_pin_side},
-            {'x': body_edge['left'] - configuration['silk_fab_offset'], 'y': side_line_y_pin_side + silk_y_offset_pin_side},
-            {'x': pad_1_x_outside_edge - pad_edge_silk_center_offset, 'y': body_edge_pin + silk_y_offset_pin_side},
-            {'x': pad_1_x_outside_edge - pad_edge_silk_center_offset, 'y': pin_edge_outside}
-        ]
-        if abs(pin_edge_outside) - abs(body_edge_pin + silk_y_offset_pin_side) < configuration['silk_line_length_min']:
-            needs_additional_silk_pin1_marker = True
+        if 'pin1_marker_length_override' in series_definition:
+            calc_edge_outside = body_edge_pin + silk_y_offset_pin_side - series_definition['pin1_marker_length_override']
+            poly_silk_edge_left = [
+                {'x': body_edge['left'] - configuration['silk_fab_offset'], 'y': silk_y_mp_pin_side},
+                {'x': body_edge['left'] - configuration['silk_fab_offset'], 'y': side_line_y_pin_side + silk_y_offset_pin_side},
+                {'x': pad_1_x_outside_edge - pad_edge_silk_center_offset, 'y': body_edge_pin + silk_y_offset_pin_side},
+                {'x': pad_1_x_outside_edge - pad_edge_silk_center_offset, 'y': calc_edge_outside}
+            ]
+            if abs(calc_edge_outside) - abs(body_edge_pin + silk_y_offset_pin_side) < configuration['silk_line_length_min']:
+                needs_additional_silk_pin1_marker = True
+        else:
+            poly_silk_edge_left = [
+                {'x': body_edge['left'] - configuration['silk_fab_offset'], 'y': silk_y_mp_pin_side},
+                {'x': body_edge['left'] - configuration['silk_fab_offset'], 'y': side_line_y_pin_side + silk_y_offset_pin_side},
+                {'x': pad_1_x_outside_edge - pad_edge_silk_center_offset, 'y': body_edge_pin + silk_y_offset_pin_side},
+                {'x': pad_1_x_outside_edge - pad_edge_silk_center_offset, 'y': pin_edge_outside}
+            ]
+            if abs(pin_edge_outside) - abs(body_edge_pin + silk_y_offset_pin_side) < configuration['silk_line_length_min']:
+                needs_additional_silk_pin1_marker = True
 
         poly_silk_edge_right = [
             {'x': body_edge['right'] + configuration['silk_fab_offset'], 'y': silk_y_mp_pin_side},
@@ -286,7 +322,8 @@ def generate_one_footprint(idx, pincount, series_definition, configuration, grou
         poly_silk_mp_side.append({'x': body_edge['right'] + configuration['silk_fab_offset'], 'y': silk_y_mp_outside})
 
     if series_definition.get('no_automatic_silk_autline','False') != 'True':
-        kicad_mod.append(PolygoneLine(polygone=poly_silk_mp_side, layer='F.SilkS', width=configuration['silk_line_width']))
+        if series_definition.get('no_mp_side_silk','False') != 'True':
+            kicad_mod.append(PolygoneLine(polygone=poly_silk_mp_side, layer='F.SilkS', width=configuration['silk_line_width']))
 
     kicad_mod.append(PolygoneLine(polygone=poly_fab_mp_side, layer='F.Fab', width=configuration['fab_line_width']))
 
