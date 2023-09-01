@@ -75,32 +75,32 @@ class NoLead():
         pull_back = device_dimensions.get('lead_to_edge', pull_back_0)
 
         if 'lead_center_pos_x' in device_dimensions or 'lead_center_pos_y' in device_dimensions:
-            Gmin_x, Zmax_x, Xmax = ipc_pad_center_plus_size(ipc_data, ipc_round_base, manf_tol,
+            Gmin_x, Zmax_x, Xmax_x = ipc_pad_center_plus_size(ipc_data, ipc_round_base, manf_tol,
                                                             center_position=device_dimensions.get(
                                                                 'lead_center_pos_x', TolerancedSize(nominal=0)),
                                                             lead_length=device_dimensions.get('lead_len_H'),
-                                                            lead_width=device_dimensions['lead_width'])
+                                                            lead_width=device_dimensions['lead_width_H'])
 
-            Gmin_y, Zmax_y, Xmax_y_ignored = ipc_pad_center_plus_size(ipc_data, ipc_round_base, manf_tol,
+            Gmin_y, Zmax_y, Xmax_y = ipc_pad_center_plus_size(ipc_data, ipc_round_base, manf_tol,
                                                                       center_position=device_dimensions.get(
                                                                           'lead_center_pos_y', TolerancedSize(nominal=0)),
-                                                                      lead_length=device_dimensions.get('lead_len_H'),
-                                                                      lead_width=device_dimensions['lead_width'])
+                                                                      lead_length=device_dimensions.get('lead_len_V'),
+                                                                      lead_width=device_dimensions['lead_width_V'])
         else:
-            Gmin_x, Zmax_x, Xmax = ipc_body_edge_inside_pull_back(
+            Gmin_x, Zmax_x, Xmax_x = ipc_body_edge_inside_pull_back(
                 ipc_data, ipc_round_base, manf_tol,
                 body_size=device_dimensions['body_size_x'],
-                lead_width=device_dimensions['lead_width'],
+                lead_width=device_dimensions['lead_width_H'],
                 lead_len=device_dimensions.get('lead_len_H'),
                 body_to_inside_lead_edge=device_dimensions.get('body_to_inside_lead_edge'),
                 heel_reduction=device_dimensions.get('heel_reduction', 0),
                 pull_back=pull_back
             )
 
-            Gmin_y, Zmax_y, Xmax_y_ignored = ipc_body_edge_inside_pull_back(
+            Gmin_y, Zmax_y, Xmax_y = ipc_body_edge_inside_pull_back(
                 ipc_data, ipc_round_base, manf_tol,
                 body_size=device_dimensions['body_size_y'],
-                lead_width=device_dimensions['lead_width'],
+                lead_width=device_dimensions['lead_width_V'],
                 lead_len=device_dimensions.get('lead_len_V'),
                 body_to_inside_lead_edge=device_dimensions.get('body_to_inside_lead_edge'),
                 heel_reduction=device_dimensions.get('heel_reduction', 0),
@@ -126,10 +126,10 @@ class NoLead():
             print('Heel reduced by {:.4f} to reach minimum EP to pad clearances'.format(heel_reduction_max))
 
         Pad = {}
-        Pad['left'] = {'center': [-(Zmax_x + Gmin_x) / 4, 0], 'size': [(Zmax_x - Gmin_x) / 2, Xmax]}
-        Pad['right'] = {'center': [(Zmax_x + Gmin_x) / 4, 0], 'size': [(Zmax_x - Gmin_x) / 2, Xmax]}
-        Pad['top'] = {'center': [0, -(Zmax_y + Gmin_y) / 4], 'size': [Xmax, (Zmax_y - Gmin_y) / 2]}
-        Pad['bottom'] = {'center': [0, (Zmax_y + Gmin_y) / 4], 'size': [Xmax, (Zmax_y - Gmin_y) / 2]}
+        Pad['left'] = {'center': [-(Zmax_x + Gmin_x) / 4, 0], 'size': [(Zmax_x - Gmin_x) / 2, Xmax_x]}
+        Pad['right'] = {'center': [(Zmax_x + Gmin_x) / 4, 0], 'size': [(Zmax_x - Gmin_x) / 2, Xmax_x]}
+        Pad['top'] = {'center': [0, -(Zmax_y + Gmin_y) / 4], 'size': [Xmax_y, (Zmax_y - Gmin_y) / 2]}
+        Pad['bottom'] = {'center': [0, (Zmax_y + Gmin_y) / 4], 'size': [Xmax_y, (Zmax_y - Gmin_y) / 2]}
 
         return Pad
 
@@ -138,10 +138,16 @@ class NoLead():
         unit = device_size_data.get('unit')
         dimensions = {
             'body_size_x': TolerancedSize.fromYaml(device_size_data, base_name='body_size_x', unit=unit),
-            'body_size_y': TolerancedSize.fromYaml(device_size_data, base_name='body_size_y', unit=unit),
-            'lead_width': TolerancedSize.fromYaml(device_size_data, base_name='lead_width', unit=unit),
-            'pitch': TolerancedSize.fromYaml(device_size_data, base_name='pitch', unit=unit).nominal
+            'body_size_y': TolerancedSize.fromYaml(device_size_data, base_name='body_size_y', unit=unit)
         }
+
+        if 'pitch_x' in device_size_data and 'pitch_y' in device_size_data:
+            dimensions['pitch_x'] = TolerancedSize.fromYaml(device_size_data, base_name='pitch_x', unit=unit).nominal
+            dimensions['pitch_y'] = TolerancedSize.fromYaml(device_size_data, base_name='pitch_y', unit=unit).nominal
+        else:
+            dimensions['pitch_x'] = TolerancedSize.fromYaml(device_size_data, base_name='pitch', unit=unit).nominal
+            dimensions['pitch_y'] = dimensions['pitch_x']
+
         dimensions['has_EP'] = False
         if 'EP_size_x_min' in device_size_data and 'EP_size_x_max' in device_size_data or 'EP_size_x' in device_size_data:
             dimensions['EP_size_x'] = TolerancedSize.fromYaml(device_size_data, base_name='EP_size_x', unit=unit)
@@ -178,9 +184,19 @@ class NoLead():
             dimensions['lead_center_pos_y'] = TolerancedSize.fromYaml(
                 device_size_data, base_name='lead_center_to_center_y', unit=unit) / 2
 
+        if 'lead_width_H' in device_size_data and 'lead_width_V' in device_size_data:
+            # Different lead widths on H and V sides
+            dimensions['lead_width_H'] = TolerancedSize.fromYaml(device_size_data, base_name='lead_width_H', unit=unit)
+            dimensions['lead_width_V'] = TolerancedSize.fromYaml(device_size_data, base_name='lead_width_V', unit=unit)
+        else:
+            # Same on all sizes (i.e. normal)
+            dimensions['lead_width_H'] = TolerancedSize.fromYaml(device_size_data, base_name='lead_width', unit=unit)
+            dimensions['lead_width_V'] = dimensions['lead_width_H']
+
         dimensions['lead_len_H'] = None
         dimensions['lead_len_V'] = None
         if 'lead_len_H' in device_size_data and 'lead_len_V' in device_size_data:
+            # Different lead lengths on H and V sides
             dimensions['lead_len_H'] = TolerancedSize.fromYaml(device_size_data, base_name='lead_len_H', unit=unit)
             dimensions['lead_len_V'] = TolerancedSize.fromYaml(device_size_data, base_name='lead_len_V', unit=unit)
         elif 'lead_len' in device_size_data or (
@@ -275,7 +291,7 @@ class NoLead():
             pincount=pincount,
             size_y=size_y,
             size_x=size_x,
-            pitch=device_dimensions['pitch'],
+            pitch=device_dimensions['pitch_x'],
             layout=layout,
             ep_size_x=EP_size['x'],
             ep_size_y=EP_size['y'],
@@ -291,7 +307,7 @@ class NoLead():
             pincount=pincount,
             size_y=size_y,
             size_x=size_x,
-            pitch=device_dimensions['pitch'],
+            pitch=device_dimensions['pitch_x'],
             layout=layout,
             ep_size_x=EP_size['x'],
             ep_size_y=EP_size['y'],
@@ -443,10 +459,10 @@ class NoLead():
                 width=configuration['silk_line_width'],
                 layer="F.SilkS", x_mirror=0))
         else:
-            sx1 = -(device_dimensions['pitch'] * (device_params['num_pins_x'] - 1) / 2.0 +
+            sx1 = -(device_dimensions['pitch_x'] * (device_params['num_pins_x'] - 1) / 2.0 +
                     pad_width / 2.0 + silk_pad_offset)
 
-            sy1 = -(device_dimensions['pitch'] * (device_params['num_pins_y'] - 1) / 2.0 +
+            sy1 = -(device_dimensions['pitch_y'] * (device_params['num_pins_y'] - 1) / 2.0 +
                     pad_width / 2.0 + silk_pad_offset)
 
             poly_silk = [
