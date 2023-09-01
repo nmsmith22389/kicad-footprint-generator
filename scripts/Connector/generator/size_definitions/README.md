@@ -7,7 +7,7 @@ python3 ./connector_generator.py path_to/config_file_name.yaml
 ~~~
 
 ## YAML File Structure
-The YAML configuration file supports inheritance. Using `inherit` allows to create 
+The YAML configuration file supports inheritance. Using `inherit` allows to create
 versions of a part by just overwriting specific parameters. See the example below:
 
 ~~~yaml
@@ -80,14 +80,14 @@ Should contain the link to the source specification; will be appended to the des
 Space separated tags.
 
 ### `clean_silk:` _bool_ (default: `True`)
-Defines if the contours on the silk screen should be cleaned up by removing overlaps with the mask layer. 
+Defines if the contours on the silk screen should be cleaned up by removing overlaps with the mask layer.
 This can be disabled as it may be somewhat expensive in terms of computing time.
 
-This feature does currently only support cutting out lines, arcs and circles. 
+This feature does currently only support cutting out lines, arcs and circles.
 
 ### `doc_parameters:` _dict_
 The fields `fp_name`, `description`, and `tags` may contain python format clauses. The fields
-may reference any field of the specification as well as any field of the `doc_parammeters` 
+may reference any field of the specification as well as any field of the `doc_parammeters`
 dictionary.
 
 Example:
@@ -115,7 +115,7 @@ The description looks something like:
 pad_pitch: 1.0      # pad pitch in mm
 row_pitch: 3.0      # row pitch in mm
 positions: [5, 8, 10] # defined for 2x5, 2x8 and 2x10 pins
-gap: 
+gap:
   8: # gap is only defined for 8 positions, other positions are missing
     position: 5
     size: 1
@@ -138,7 +138,7 @@ If non-zero, then the connector is generated using two rows with the specified p
 
 Default (value is null or 0.0) is to generate only one row.
 
-### `positions:` _list of integers_ 
+### `positions:` _list of integers_
 The list of positions to be generated.
 
 **Note:** if positions is set to `null` or not contained in a target specification,  then the target acts just as a parameter basis for inheritance.
@@ -155,21 +155,21 @@ The gap itself can be specified by either
     12: # specify as a dict
       position: 7 # gap after position 7
       size: 3     # of 3 pins (default if omitted is a gap of 1 pin)
-~~~ 
+~~~
 
 ### `pads:` _dict_
 
 - `size:` [_float_ | _list_ | _dict_] (mandatory) defines the size of the pads. Size can be specified as
-  a float to specify a rectangular or circular pad, or as a list of two floats `[x, y]` or as a dictionary 
+  a float to specify a rectangular or circular pad, or as a list of two floats `[x, y]` or as a dictionary
   (containing `x` and `y`).
 - `drill:` _float_ (default: null) defines the drill diameter of the pads; if the value is zero,
   then the pad is a SMT pad without drill, otherwise it is THT pad.
-- `shape:` [`'circ'`|`'rect'`|`'roundrect'`|`'oval''`] defines the pad shape. Default is `'roundrect'` for SMD 
-  pads without drill and `'circ'` for PTH/NPTH pads with drill.  
+- `shape:` [`'circ'`|`'rect'`|`'roundrect'`|`'oval''`] defines the pad shape. Default is `'roundrect'` for SMD
+  pads without drill and `'circ'` for PTH/NPTH pads with drill.
 - `rratio:` _float_ (default: 0.25) defines the radius ratio for roundrect pads.
 - `rmax:` _float_ (default: 0.25) defines the maximum radius for roundrect pads.
-- `paste:` [`True`|`False`] (default `True` for SMD pads, `False` for PTH). Defines if the 
-  pad should contain the front paste layer. 
+- `paste:` [`True`|`False`] (default `True` for SMD pads, `False` for PTH). Defines if the
+  pad should contain the front paste layer.
 
 **Example:**
 ~~~yaml
@@ -210,10 +210,10 @@ This parameter can be used to specify offsets between pads and body in case this
 ### `first_pin:` _dict_
 Specification how to indicate the pin 1 location on the SilkScreen. A dictionary with the following fields:
 - `position:` [`'top'`|`'bottom'`] (default: `'top'`) specifies whether the pin 1 location is on the top-left or bottom-left edge of the housing (default: `'top'`)
-- `body_chamfer:` _float_ defines the size of the chamfer of the package on the pin 1 edge (default: 0.0)  
+- `body_chamfer:` _float_ defines the size of the chamfer of the package on the pin 1 edge (default: 0.0)
 - `marker:` _dict_
   - `shape:` [`'circle'`|`'triangle'`] (default: `null`) specifies the shape of the pin 1 marker on silk. Default is to print no marker.
-  - `size:` _float_ (default: `pad_size.x`) defines the size of the marker 
+  - `size:` _float_ (default: `pad_size.x`) defines the size of the marker
   - `offset:` [_float_ | _list_ | _dict_] (default: `marker.size`) defines the offset of the pin 1 marker:
     - if a single float is specified, the silk marker is set on axis with pin 1 with an offset to the body (or pad) in `y` as specified by the scalar.
     - if a dict conatining `x` and `y` is specified, then the marker is offset in `y` as above and additionally moved by the `x` offset.
@@ -221,8 +221,8 @@ Specification how to indicate the pin 1 location on the SilkScreen. A dictionary
   - `fab`: [`True`|`False`] (default: `True`) specifies if a pin1 indicator should be drawn on fab or not.
 
 ### `mount_pads:` _dict_
-Optional mount pads can be specified as dictionary entries. The names of the entries have no meaning 
-and are just labels which allow to inherit mount pads and be able to modify their properties and/or 
+Optional mount pads can be specified as dictionary entries. The names of the entries have no meaning
+and are just labels which allow to inherit mount pads and be able to modify their properties and/or
 add additional MPs.
 
 Each mount pad description contains the entries as defined for [Pads above](#pads) and additionally:
@@ -230,10 +230,10 @@ Each mount pad description contains the entries as defined for [Pads above](#pad
   as `body_size`, meaning that `x_offset` can be used to define the position relative to the related
   edge pad position. In case `y` is a list, several pads on the same `x` but different `y` location are
   created.
-- `copper:` [`True`|`False`] (default `True` if `size` is non-zero otherwise `False`) specifies if the pad 
-  should contain the required copper layers. This may be used to specify special paste masks for mounting pads.  
+- `copper:` [`True`|`False`] (default `True` if `size` is non-zero otherwise `False`) specifies if the pad
+  should contain the required copper layers. This may be used to specify special paste masks for mounting pads.
 - `name:` _string_ (default: `null`) defines the signal name of the mount pad; several mount pads can contain the
-  same signal name; the number of the different (non-null) signal names defines the count of the related mount pad 
+  same signal name; the number of the different (non-null) signal names defines the count of the related mount pad
   pins of the connector symbol.
 - `ends:` [`'left'`|`'right'`|`'both'`] (default: `'both`) specifies if the mount pad(s) should be placed on the
   left, right, or on both ends.
@@ -253,7 +253,7 @@ paste_l: # left weld tab paste
     y: [-1.54, 1.14] # y-position for the two paste masks
   size: [2.45, 2.28] # rectangular paste mask opening
   shape: 'rect'      # this would also be the default for SMD MPs
-  paste: True        # use paste layer 
+  paste: True        # use paste layer
   copper: False      # skip copper layers
   ends: 'left'       # only on left end
 ~~~
@@ -268,7 +268,7 @@ Consider, the following example:
 
 The basic idea behind is, that the straight lines on the four sides of the (eventually chamfered)
 outline (dashed outline with white edges `(t,l)`, `(t,r)`, `(b,l)`, and `(b,r)`) can be modified
-by specifying the intermediate nodes of a polyline describing the shape (black nodes and solid 
+by specifying the intermediate nodes of a polyline describing the shape (black nodes and solid
 polylines).
 
 The node coordinates can be specified as arithmetic expressions including the (regular) body shape
@@ -287,11 +287,11 @@ body_shape:
     polyline: [[pl - 0.7, b + 0.35], [0.5 * pr, b + 0.35], [0.5 * pr + 0.35, b]]
 ~~~
 
-**Note:** any polyline which has a name other than `'top'`, `'bottom'`, `'left'`, or `'right'` will be drawn additionally 
-onto the `F.Fab` layer. It will, however not be considered when calculating the silk screen.  
+**Note:** any polyline which has a name other than `'top'`, `'bottom'`, `'left'`, or `'right'` will be drawn additionally
+onto the `F.Fab` layer. It will, however not be considered when calculating the silk screen.
 
 
 ### `courtyard_offset:` [_float_ | _dict_]
 Can be used to override the courtyard margin. If a single float is specified, the margin is the same on all 4 sides,
 alternatively it can be a dictionary containing values for `left`, `right`, `top` and `bottom` margins or `x` and `y`
-for horizontal and vertical margins, respectively. 
+for horizontal and vertical margins, respectively.
