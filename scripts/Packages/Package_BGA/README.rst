@@ -126,6 +126,11 @@ In addition to the above, package definitions can use the following, optional pa
 ``pad_shape``
     This value sets the pad shape and can be one of ``circle``, ``rect`` or ``roundrect``. Defaults to ``circle``.
 
+``paste_shape``
+    This value sets the solder paste stencil opening shape. Like ``pad_shape``, it can be one of ``circle``, ``rect`` or
+    ``roundrect``. It defaults to whatever ``pad_shape`` is set to. Note that unlike pcbnew's GUI footprint editor, a
+    ``paste_margin`` set in this footprint definition *will* be taken into account here.
+
 Staggered pad layouts
 ~~~~~~~~~~~~~~~~~~~~~
 

@@ -252,11 +252,13 @@ def makePadGrid(f, lParams, config, fpParams={}, xCenter=0.0, yCenter=0.0):
                 if is_even == skip_even:
                     padSkips.add(f'{row}{col+1}')
 
-    padShape = {
-            'circle': Pad.SHAPE_CIRCLE,
-            'rect': Pad.SHAPE_RECT,
-            'roundrect': Pad.SHAPE_ROUNDRECT,
-            }[lParams.get('pad_shape', fpParams.get('pad_shape', 'circle'))]
+    padShape = lParams.get('pad_shape', fpParams.get('pad_shape', 'circle'))
+    pasteShape = lParams.get('paste_shape', fpParams.get('paste_shape'))
+
+    if pasteShape and pasteShape != padShape:
+        layers = ['F.Cu', 'F.Mask']
+    else:
+        layers = ['F.Cu', 'F.Mask', 'F.Paste']
 
     xOffset = lParams.get('offset_x', 0.0)
     yOffset = lParams.get('offset_y', 0.0)
@@ -270,8 +272,52 @@ def makePadGrid(f, lParams, config, fpParams={}, xCenter=0.0, yCenter=0.0):
                          shape=padShape,
                          at=[xPadLeft + (col-1) * pitchX, yPadTop + rowNum * pitchY],
                          size=lParams.get('pad_size') or fpParams['pad_size'],
-                         layers=Pad.LAYERS_SMT, 
+                         layers=layers, 
                          radius_ratio=config['round_rect_radius_ratio']))
+
+            if pasteShape and pasteShape != padShape:
+                # Footgun warning: When pcbnew renders a paste-only pad like this, it actually ignores all paste margin
+                # settings both of the pad and of the footprint, and creates a stencil opening of exactly the size of
+                # the pad. Thus, we have to pre-compute paste margin here. Note that KiCad implements paste margin with
+                # an actual geometric offset, i.e. yielding a rounded rect for square pads. Thus, we have to implement
+                # similar offsetting logic here to stay consistent.
+
+                pasteMargin = lParams.get('paste_margin', fpParams.get('paste_margin', 0))
+                size = list(lParams.get('pad_size') or fpParams['pad_size'])
+                corner_ratio = config['round_rect_radius_ratio']
+
+                if pasteShape == 'circle':
+                    size[0] += 2*pasteMargin
+                    size[1] += 2*pasteMargin
+
+                elif pasteShape == 'rect':
+                    if pasteMargin <= 0:
+                        size[0] += 2*pasteMargin
+                        size[1] += 2*pasteMargin
+
+                    else:
+                        corner_ratio = pasteMargin / min(size)
+                        size[0] += 2*pasteMargin
+                        size[1] += 2*pasteMargin
+                        pasteShape = 'roundrect'
+
+                elif pasteShape == 'roundrect':
+                    corner_radius = min(size) * corner_ratio
+                    size[0] += 2*pasteMargin
+                    size[1] += 2*pasteMargin
+                    corner_radius += pasteMargin
+
+                    if corner_radius < 0:
+                        pasteShape = 'rect'
+                    else:
+                        corner_ratio = corner_radius / min(size)
+
+                f.append(Pad(number="{}{}".format(row, col), type=Pad.TYPE_SMT,
+                             shape=pasteShape,
+                             at=[xPadLeft + (col-1) * pitchX, yPadTop + rowNum * pitchY],
+                             size=size,
+                             layers=['F.Paste'],
+                             radius_ratio=corner_ratio))
 
     return layoutX * layoutY - len(padSkips)
 
