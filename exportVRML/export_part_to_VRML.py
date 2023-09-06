@@ -19,7 +19,7 @@ def shape_to_mesh(shape, color, transparency, scale=None):
     Mesh = namedtuple('Mesh', ['points', 'faces', 'color', 'transp'])
 
     # The smaller the better the quality, 1 coarse; 0.03 good compromise
-    mesh_deviation=1.0
+    mesh_deviation=0.7
 
     # Do the shape tessellation
     mesh_data = shape.tessellate(mesh_deviation)
@@ -81,9 +81,9 @@ def write_VRML_file(objects, filepath, used_color_keys, licence_info=None):
     `Mesh` structure is defined at root.
     """
     used_colors = None
-    
+
     creaseAngle = crease_angle_default
-    
+
     if used_color_keys is not None:
         used_colors = { x: shaderColors.named_colors[x] for x in used_color_keys }
 
