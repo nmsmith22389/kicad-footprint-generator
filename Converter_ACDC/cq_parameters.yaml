@@ -166,6 +166,27 @@ Converter_ACDC_TRACO_TPP-15-1xx-D_THT:
   destination_dir: 'Converter_ACDC.3dshapes'
   model_name: 'Converter_ACDC_TRACO_TPP-15-1xx-D_THT'
 
+Converter_ACDC_MeanWell_IRM-60-xx_THT:
+  roundbelly: 1
+  L: 87
+  W: 52
+  H: 29.5
+  rim: null
+  pinpadsize: 1.0
+  pinpadh: 3.5
+  pintype: 'tht'
+  rotation: 0
+  pin1corner: [-5.3, -5]
+  pin: [[0.0, 0.0], [0.0, 6.75], [76.0, 35.75, 2.0], [76.0, 41.25, 2.0]]
+  A1: 0.1
+  corner: 'none'
+  show_top: 0
+  body_color_key: 'black body'
+  body_top_color_key: 'black body'
+  pin_color_key: 'metal grey pins'
+  destination_dir: 'Converter_ACDC.3dshapes'
+  model_name: 'Converter_ACDC_MeanWell_IRM-60-xx_THT'
+
 Converter_ACDC_Vigortronix_VTX-214-010-xxx_THT:
   roundbelly: 1
   L: 36.0

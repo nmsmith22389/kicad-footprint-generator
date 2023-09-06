@@ -69,7 +69,7 @@ def make_case(params):
     pin = params['pin']                # pin/pad cordinates
     roundbelly = params['roundbelly']    # If belly of caseing should be round (or flat)
     pintype = params['pintype']        # pin type , like SMD or THT
-    
+
     ff = W / 20.0
 
     if ff > 0.25:
@@ -79,8 +79,8 @@ def make_case(params):
     mvY = 0
     # Dummy
     case=cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=A1).moveTo(0, 0).rect(1, 1, False).extrude(H)
-    
-    
+
+
     if (pintype == CASE_SMD_TYPE):
         mvX = 0 - (L / 2.0)
         mvY = 0 - (W / 2.0)
@@ -90,7 +90,7 @@ def make_case(params):
         mvX = p[0] + pin1corner[0]
         mvY = p[1] - pin1corner[1]
         case=cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=A1).moveTo(mvX, mvY).rect(L, -W, False).extrude(H)
-    
+
     if rim != None:
         if len(rim) == 3:
             rdx = rim[0]
@@ -140,18 +140,18 @@ def make_case_top(params):
     mvY = 0
     # Dummy
     casetop=cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=A1 + H).moveTo(0, 0).rect(1, 1, False).extrude(0.8)
-    
+
 
     ff = W / 20.0
     if ff > 1.0:
         ff = 1.0
-    
+
     Ldt = ff
     Wdt = ff
-    
+
     L1 = L - (2.0 * Ldt)
     W1 = W - (2.0 * Wdt)
-    
+
     if show_top == 1:
         tty = A1 + H - 0.1
 
@@ -180,7 +180,7 @@ def make_case_top(params):
             mvX = (p[0] + pin1corner[0]) + (L / 2.0)
             mvY = (p[1] - pin1corner[1]) - (W / 2.0)
             casetop=cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=A1 + (H / 4.0)).moveTo(mvX, mvY).rect(0.1, 0.1, False).extrude(0.1)
-            
+
 
     if (rotation != 0):
         casetop = casetop.rotate((0,0,0), (0,0,1), rotation)
@@ -199,7 +199,7 @@ def make_pins_tht(params):
     pinpadh = params['pinpadh']        # pin length, pad height
     pintype = params['pintype']        # Casing type
     rotation = params['rotation']        # rotation if required
-    pin = params['pin']                # pin/pad cordinates
+    pin = params['pin']                # pin/pad cordinates and an optional different size definition per pin as the third in place
 
     pinss = 0.1
     if rim != None:
@@ -210,15 +210,25 @@ def make_pins_tht(params):
             pinss = rdh + 0.1
 
     p = pin[0]
-    pins=cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=A1 + pinss).moveTo(p[0], -p[1]).circle(pinpadsize / 2.0, False).extrude(0 - (pinpadh + pinss))
-    pins = pins.faces("<Z").fillet(pinpadsize / 5.0)
+    temp_size = pinpadsize
+
+    if len(p) >= 3:
+        temp_size = p[2]
+
+    pins=cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=A1 + pinss).moveTo(p[0], -p[1]).circle(temp_size / 2.0, False).extrude(0 - (pinpadh + pinss))
+    pins = pins.faces("<Z").fillet(temp_size / 5.0)
 
     for i in range(1, len(pin)):
         p = pin[i]
-        pint=cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=A1 + pinss).moveTo(p[0], -p[1]).circle(pinpadsize / 2.0, False).extrude(0 - (pinpadh + pinss))
-        pint = pint.faces("<Z").fillet(pinpadsize / 5.0)
+        temp_size = pinpadsize
+
+        if len(p) >= 3:
+            temp_size = p[2]
+
+        pint=cq.Workplane("XY").workplane(centerOption="CenterOfMass", offset=A1 + pinss).moveTo(p[0], -p[1]).circle(temp_size / 2.0, False).extrude(0 - (pinpadh + pinss))
+        pint = pint.faces("<Z").fillet(temp_size / 5.0)
         pins = pins.union(pint)
- 
+
 
     if (rotation != 0):
         pins = pins.rotate((0,0,0), (0,0,1), rotation)
@@ -254,7 +264,7 @@ def make_pins_tht_n(params):
         pins = pins.union(pint)
         pint=cq.Workplane("XZ").workplane(centerOption="CenterOfMass", offset= 0 -p[1]).moveTo(p[0], 2.0).circle(pinpadsize / 2.0, False).extrude( 0 - (W / 2.0))
         pins = pins.union(pint)
- 
+
 
     if (rotation != 0):
         pins = pins.rotate((0,0,0), (0,0,1), rotation)
@@ -304,7 +314,7 @@ def make_pins_smd(params):
                 xD = pinpadsize
                 yD = pinpadsize
                 pint=cq.Workplane("ZY").workplane(centerOption="CenterOfMass", offset=(L / 2.0) - (pinpadh / 2.0)).moveTo(myZ1, myY1).rect(xD, yD).extrude(pinpadh)
-            
+
         #
         elif p[0] >= 0 and (p[1] > (0 - (W / 2.0)) and p[1] < ((W / 2.0))):
             # Right side
