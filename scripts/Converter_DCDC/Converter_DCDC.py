@@ -19,7 +19,7 @@ def qfn(args):
 
     footprint_name = args["name"]
     description = args["description"]
-    datasheet = args["description"]
+    datasheet = args["datasheet"]
     fptag = args["tags"]
     SmdTht = args["smd_tht"]
     at = args["at"]
