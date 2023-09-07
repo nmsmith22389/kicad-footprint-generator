@@ -1,0 +1,8 @@
+Converter_DCDC_TRACO_TEA1-xxxx_THT:
+  description: "DCDC-Converter, TRACO, TEA1-xxxx, 1W, Rev. August 31. 2023"
+  datasheet: "https://www.tracopower.com/products/tea1.pdf"
+  tags: "DCDC-Converter TRACO TEA1 THT SIP-4 1W"
+  extratexts: []
+  at: [-2.03, 0.9]
+  size: [11.68, 6]
+  pins: [["thtr", "1", 0, 0, 1.4, 1.4, 0.8], ["tht", "2", 2.54, 0, 1.4, 1.4, 0.8], ["tht", "3", 5.08, 0, 1.4, 1.4, 0.8], ["tht", "4", 7.62, 0, 1.4, 1.4, 0.8]]
