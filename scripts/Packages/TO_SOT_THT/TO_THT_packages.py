@@ -109,7 +109,7 @@ class pack_round:
             self.mark_len = 1.17  # max length of marking
             self.pin_circle_diameter = 3.7  # pin circle diameter -0.5 from linked ds
             self.pad = [1.2,1.2]  # width/height of pads -0.1 from ds value
-            self.drill = 0.8  # diameter of pad drills
+            self.drill = 0.7  # diameter of pad drills
 
             self.name = self.name + "-{0}".format(pins-self.deleted_sum)  # name of package
 
