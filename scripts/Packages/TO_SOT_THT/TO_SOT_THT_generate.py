@@ -1163,7 +1163,7 @@ def makeTORound(lib_name, pck, has3d=False, x_3d=[0, 0, 0], s_3d=[1,1,1], lptext
 
         else:
             kicad_modt.append(
-                Pad(number=numberr, type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, at=pads[p], size=padsize, drill=pck.drill,
+                Pad(number=numberr, type=Pad.TYPE_THT, shape=Pad.SHAPE_CIRCLE, at=pads[p], size=padsize, drill=pck.drill,
                     layers=['*.Cu', '*.Mask']))
 
 
