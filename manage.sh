@@ -35,7 +35,7 @@ flake8_check() {
 unit_tests() {
     echo ''
     echo '[!] Running unit tests'
-    python3 "$KICADMODTREE_DIR/tests/test.py"
+    python3 -m pytest
 }
 
 py_test_coverage() {
