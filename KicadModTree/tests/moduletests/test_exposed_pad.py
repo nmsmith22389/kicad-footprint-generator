@@ -18,7 +18,8 @@ import unittest
 
 from KicadModTree import *
 
-RESULT_SIMPLE_EP_FP = """(module simple_exposed (layer F.Cu) (tedit 0)
+RESULT_SIMPLE_EP_FP = """(footprint simple_exposed (version 20221018) (generator kicad-footprint-generator)
+  (layer F.Cu)
   (descr "A example footprint")
   (tags example)
   (fp_text reference REF** (at 0 0) (layer F.SilkS)
@@ -44,7 +45,8 @@ RESULT_SIMPLE_EP_FP = """(module simple_exposed (layer F.Cu) (tedit 0)
   (pad "" smd rect (at 0.525 1.7) (size 0.85 0.56) (layers F.Paste))
 )"""
 
-RESULT_SIMPLE_EP_NO_ROUNDING_FP = """(module simple_exposed (layer F.Cu) (tedit 0)
+RESULT_SIMPLE_EP_NO_ROUNDING_FP = """(footprint simple_exposed (version 20221018) (generator kicad-footprint-generator)
+  (layer F.Cu)
   (descr "A example footprint")
   (tags example)
   (fp_text reference REF** (at 0 0) (layer F.SilkS)
@@ -70,7 +72,8 @@ RESULT_SIMPLE_EP_NO_ROUNDING_FP = """(module simple_exposed (layer F.Cu) (tedit 
   (pad "" smd rect (at 0.525 1.7) (size 0.846537 0.564358) (layers F.Paste))
 )"""
 
-RESULT_MINIMAL_EP_SPECIFICATION = """(module simple_exposed (layer F.Cu) (tedit 0)
+RESULT_MINIMAL_EP_SPECIFICATION = """(footprint simple_exposed (version 20221018) (generator kicad-footprint-generator)
+  (layer F.Cu)
   (descr "A example footprint")
   (tags example)
   (fp_text reference REF** (at 0 0) (layer F.SilkS)
@@ -96,7 +99,8 @@ RESULT_MINIMAL_EP_SPECIFICATION = """(module simple_exposed (layer F.Cu) (tedit 
   (pad "" smd rect (at 0.525 0.75) (size 0.85 1.21) (layers F.Paste))
 )"""
 
-RESULT_EP_PASTE_GEN_INNER = """(module exposed_paste_autogen (layer F.Cu) (tedit 0)
+RESULT_EP_PASTE_GEN_INNER = """(footprint exposed_paste_autogen (version 20221018) (generator kicad-footprint-generator)
+  (layer F.Cu)
   (descr "A example footprint")
   (tags example)
   (fp_text reference REF** (at 0 0) (layer F.SilkS)
@@ -146,7 +150,8 @@ RESULT_EP_PASTE_GEN_INNER = """(module exposed_paste_autogen (layer F.Cu) (tedit
     ))
 )"""
 
-RESULT_EP_PASTE_GEN_INNER2 = """(module exposed_paste_autogen (layer F.Cu) (tedit 0)
+RESULT_EP_PASTE_GEN_INNER2 = """(footprint exposed_paste_autogen (version 20221018) (generator kicad-footprint-generator)
+  (layer F.Cu)
   (descr "A example footprint")
   (tags example)
   (fp_text reference REF** (at 0 0) (layer F.SilkS)
@@ -425,9 +430,10 @@ RESULT_EP_PASTE_GEN_INNER2 = """(module exposed_paste_autogen (layer F.Cu) (tedi
          (xy -0.294628 -0.294628) (xy 0.294628 -0.294628) (xy 0.294628 0.155863) (xy 0.155863 0.294628)
          (xy -0.294628 0.294628)) (width 0))
     ))
-)"""
+)"""  # NOQA
 
-RESULT_EP_PASTE_GEN_INNER_AND_OUTHER = """(module exposed_paste_autogen (layer F.Cu) (tedit 0)
+RESULT_EP_PASTE_GEN_INNER_AND_OUTHER = """(footprint exposed_paste_autogen (version 20221018) (generator kicad-footprint-generator)
+  (layer F.Cu)
   (descr "A example footprint")
   (tags example)
   (fp_text reference REF** (at 0 0) (layer F.SilkS)
@@ -727,9 +733,10 @@ RESULT_EP_PASTE_GEN_INNER_AND_OUTHER = """(module exposed_paste_autogen (layer F
   (pad "" smd rect (at 10.75 8.5) (size 1.25499 0.83666) (layers F.Paste))
   (pad "" smd rect (at 12.25 7.5) (size 1.25499 0.83666) (layers F.Paste))
   (pad "" smd rect (at 12.25 8.5) (size 1.25499 0.83666) (layers F.Paste))
-)"""
+)"""  # NOQA
 
-RESULT_EP_PASTE_GEN_INNER_ONLY_Y_AND_OUTHER = """(module exposed_paste_autogen (layer F.Cu) (tedit 0)
+RESULT_EP_PASTE_GEN_INNER_ONLY_Y_AND_OUTHER = """(footprint exposed_paste_autogen (version 20221018) (generator kicad-footprint-generator)
+  (layer F.Cu)
   (descr "A example footprint")
   (tags example)
   (fp_text reference REF** (at 0 0) (layer F.SilkS)
@@ -839,9 +846,10 @@ RESULT_EP_PASTE_GEN_INNER_ONLY_Y_AND_OUTHER = """(module exposed_paste_autogen (
          (xy -0.302335 0.201556)) (width 0))
     ))
   (pad "" smd rect (at 1.125 2.25) (size 0.604669 0.403113) (layers F.Paste))
-)"""
+)"""  # NOQA
 
-RESULT_EP_PASTE_GEN_INNER_ONLY_X_AND_OUTHER = """(module exposed_paste_autogen (layer F.Cu) (tedit 0)
+RESULT_EP_PASTE_GEN_INNER_ONLY_X_AND_OUTHER = """(footprint exposed_paste_autogen (version 20221018) (generator kicad-footprint-generator)
+  (layer F.Cu)
   (descr "A example footprint")
   (tags example)
   (fp_text reference REF** (at 0 0) (layer F.SilkS)
@@ -951,9 +959,10 @@ RESULT_EP_PASTE_GEN_INNER_ONLY_X_AND_OUTHER = """(module exposed_paste_autogen (
          (xy -0.403113 0.302335)) (width 0))
     ))
   (pad "" smd rect (at 1.5 1.125) (size 0.806226 0.604669) (layers F.Paste))
-)"""
+)"""  # NOQA
 
-RESULT_EP_PASTE_GEN_ONLY_OUTHER = """(module exposed_paste_autogen (layer F.Cu) (tedit 0)
+RESULT_EP_PASTE_GEN_ONLY_OUTHER = """(footprint exposed_paste_autogen (version 20221018) (generator kicad-footprint-generator)
+  (layer F.Cu)
   (descr "A example footprint")
   (tags example)
   (fp_text reference REF** (at 0 0) (layer F.SilkS)
@@ -993,9 +1002,10 @@ RESULT_EP_PASTE_GEN_ONLY_OUTHER = """(module exposed_paste_autogen (layer F.Cu) 
          (xy -0.403113 -0.314044) (xy -0.314044 -0.403113) (xy 0.403113 -0.403113) (xy 0.403113 0.403113)
          (xy -0.403113 0.403113)) (width 0))
     ))
-)"""
+)"""  # NOQA
 
-RESULT_EP_BOTTOM_PAD = """(module exposed_paste_autogen (layer F.Cu) (tedit 0)
+RESULT_EP_BOTTOM_PAD = """(footprint exposed_paste_autogen (version 20221018) (generator kicad-footprint-generator)
+  (layer F.Cu)
   (descr "A example footprint")
   (tags example)
   (fp_text reference REF** (at 0 0) (layer F.SilkS)
@@ -1011,9 +1021,10 @@ RESULT_EP_BOTTOM_PAD = """(module exposed_paste_autogen (layer F.Cu) (tedit 0)
   (pad 3 thru_hole circle (at 2 -2) (size 0.6 0.6) (drill 0.3) (layers *.Cu))
   (pad 3 smd rect (at 2 -2) (size 3 3) (layers B.Cu B.Mask))
   (pad "" smd rect (at 2 -2) (size 1.61 1.61) (layers F.Paste))
-)"""
+)"""  # NOQA
 
-RESULT_EP_4x4 = """(module exposed_paste_autogen (layer F.Cu) (tedit 0)
+RESULT_EP_4x4 = """(footprint exposed_paste_autogen (version 20221018) (generator kicad-footprint-generator)
+  (layer F.Cu)
   (descr "A example footprint")
   (tags example)
   (fp_text reference REF** (at 0 0) (layer F.SilkS)
@@ -1145,9 +1156,10 @@ RESULT_EP_4x4 = """(module exposed_paste_autogen (layer F.Cu) (tedit 0)
          (xy -0.300156 -0.192001) (xy -0.192001 -0.300156) (xy 0.300156 -0.300156) (xy 0.300156 0.300156)
          (xy -0.300156 0.300156)) (width 0))
     ))
-)"""
+)"""  # NOQA
 
-RESULT_EP_AUTOGEN_EDGECASE_1 = """(module exposed_paste_autogen (layer F.Cu) (tedit 0)
+RESULT_EP_AUTOGEN_EDGECASE_1 = """(footprint exposed_paste_autogen (version 20221018) (generator kicad-footprint-generator)
+  (layer F.Cu)
   (descr "A example footprint")
   (tags example)
   (fp_text reference REF** (at 0 0) (layer F.SilkS)
@@ -1199,9 +1211,10 @@ RESULT_EP_AUTOGEN_EDGECASE_1 = """(module exposed_paste_autogen (layer F.Cu) (te
   (pad 3 smd rect (at 0 3) (size 3 0.6) (layers B.Cu))
   (pad "" smd rect (at 0 2.5) (size 1.61 0.81) (layers F.Paste))
   (pad "" smd rect (at 0 3.5) (size 1.61 0.81) (layers F.Paste))
-)"""
+)"""  # NOQA
 
-RESULT_EP_VIA_TENTING = """(module exposed_paste_autogen (layer F.Cu) (tedit 0)
+RESULT_EP_VIA_TENTING = """(footprint exposed_paste_autogen (version 20221018) (generator kicad-footprint-generator)
+  (layer F.Cu)
   (descr "A example footprint")
   (tags example)
   (fp_text reference REF** (at 0 0) (layer F.SilkS)
@@ -1238,7 +1251,7 @@ RESULT_EP_VIA_TENTING = """(module exposed_paste_autogen (layer F.Cu) (tedit 0)
   (pad 3 smd rect (at 2 2) (size 3 0.6) (layers B.Cu))
   (pad "" smd rect (at 2 1.5) (size 1.61 0.81) (layers F.Paste))
   (pad "" smd rect (at 2 2.5) (size 1.61 0.81) (layers F.Paste))
-)"""
+)"""  # NOQA
 
 
 class ExposedPadTests(unittest.TestCase):

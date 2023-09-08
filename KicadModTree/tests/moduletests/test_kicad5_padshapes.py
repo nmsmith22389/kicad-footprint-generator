@@ -20,7 +20,8 @@ import unittest
 
 from KicadModTree import *
 
-RESULT_ROUNDRECT_FP = """(module round_rect_test (layer F.Cu) (tedit 0)
+RESULT_ROUNDRECT_FP = """(footprint round_rect_test (version 20221018) (generator kicad-footprint-generator)
+  (layer F.Cu)
   (descr "A example footprint")
   (tags example)
   (fp_text reference REF** (at 0 0) (layer F.SilkS)
@@ -34,7 +35,8 @@ RESULT_ROUNDRECT_FP = """(module round_rect_test (layer F.Cu) (tedit 0)
   (pad 1 smd rect (at 0 0) (size 1 1) (layers F.Cu F.Mask F.Paste))
 )"""
 
-RESULT_ROUNDRECT_FP2 = """(module round_rect_test (layer F.Cu) (tedit 0)
+RESULT_ROUNDRECT_FP2 = """(footprint round_rect_test (version 20221018) (generator kicad-footprint-generator)
+  (layer F.Cu)
   (descr "A example footprint")
   (tags example)
   (fp_text reference REF** (at 0 0) (layer F.SilkS)
@@ -48,7 +50,8 @@ RESULT_ROUNDRECT_FP2 = """(module round_rect_test (layer F.Cu) (tedit 0)
   (pad 1 smd roundrect (at 0 0) (size 2 4) (layers F.Cu F.Mask F.Paste) (roundrect_rratio 0.125))
 )"""
 
-RESULT_SIMPLE_POLYGON_PAD = """(module round_rect_test (layer F.Cu) (tedit 0)
+RESULT_SIMPLE_POLYGON_PAD = """(footprint round_rect_test (version 20221018) (generator kicad-footprint-generator)
+  (layer F.Cu)
   (descr "A example footprint")
   (tags example)
   (fp_text reference REF** (at 0 0) (layer F.SilkS)
@@ -65,7 +68,8 @@ RESULT_SIMPLE_POLYGON_PAD = """(module round_rect_test (layer F.Cu) (tedit 0)
     ))
 )"""
 
-RESULT_SIMPLE_OTHER_CUSTOM_PAD = """(module round_rect_test (layer F.Cu) (tedit 0)
+RESULT_SIMPLE_OTHER_CUSTOM_PAD = """(footprint round_rect_test (version 20221018) (generator kicad-footprint-generator)
+  (layer F.Cu)
   (descr "A example footprint")
   (tags example)
   (fp_text reference REF** (at 0 0) (layer F.SilkS)
@@ -77,7 +81,7 @@ RESULT_SIMPLE_OTHER_CUSTOM_PAD = """(module round_rect_test (layer F.Cu) (tedit 
   (pad 1 smd custom (at 0 0) (size 1 1) (layers F.Cu F.Mask F.Paste)
     (options (clearance outline) (anchor circle))
     (primitives
-      (gr_arc (start -1 0) (end -1 -0.5) (angle -180) (width 0.15))
+      (gr_arc (start -1 -0.5) (mid -1.5 0) (end -1 0.5) (width 0.15))
       (gr_line (start -1 -0.5) (end 1.25 -0.5) (width 0.15))
       (gr_line (start 1.25 -0.5) (end 1.25 0.5) (width 0.15))
       (gr_line (start 1.25 0.5) (end -1 0.5) (width 0.15))
@@ -85,7 +89,7 @@ RESULT_SIMPLE_OTHER_CUSTOM_PAD = """(module round_rect_test (layer F.Cu) (tedit 
   (pad 2 smd custom (at 0 3) (size 1 1) (layers F.Cu F.Mask F.Paste)
     (options (clearance outline) (anchor circle))
     (primitives
-      (gr_arc (start -1 0) (end -1 -0.5) (angle -180) (width 0.15))
+      (gr_arc (start -1 -0.5) (mid -1.5 0) (end -1 0.5) (width 0.15))
       (gr_line (start -1 -0.5) (end 1.25 -0.5) (width 0.15))
       (gr_line (start 1.25 -0.5) (end 1.25 0.5) (width 0.15))
       (gr_line (start 1.25 0.5) (end -1 0.5) (width 0.15))
@@ -97,7 +101,8 @@ RESULT_SIMPLE_OTHER_CUSTOM_PAD = """(module round_rect_test (layer F.Cu) (tedit 
     ))
 )"""
 
-RESULT_CUT_POLYGON = """(module round_rect_test (layer F.Cu) (tedit 0)
+RESULT_CUT_POLYGON = """(footprint round_rect_test (version 20221018) (generator kicad-footprint-generator)
+  (layer F.Cu)
   (descr "A example footprint")
   (tags example)
   (fp_text reference REF** (at 0 0) (layer F.SilkS)
@@ -116,7 +121,8 @@ RESULT_CUT_POLYGON = """(module round_rect_test (layer F.Cu) (tedit 0)
     ))
 )"""
 
-RESULT_CHAMFERED_PAD = """(module chamfered_pad (layer F.Cu) (tedit 0)
+RESULT_CHAMFERED_PAD = """(footprint chamfered_pad (version 20221018) (generator kicad-footprint-generator)
+  (layer F.Cu)
   (descr "A example footprint")
   (tags example)
   (fp_text reference REF** (at 0 0) (layer F.SilkS)
@@ -141,7 +147,8 @@ RESULT_CHAMFERED_PAD = """(module chamfered_pad (layer F.Cu) (tedit 0)
     ))
 )"""
 
-RESULT_CHAMFERED_PAD_AVOID_CIRCLE = """(module test_avoid_circle (layer F.Cu) (tedit 0)
+RESULT_CHAMFERED_PAD_AVOID_CIRCLE = """(footprint test_avoid_circle (version 20221018) (generator kicad-footprint-generator)
+  (layer F.Cu)
   (descr "A example footprint")
   (tags example)
   (fp_text reference REF** (at 0 0) (layer F.SilkS)
@@ -150,7 +157,8 @@ RESULT_CHAMFERED_PAD_AVOID_CIRCLE = """(module test_avoid_circle (layer F.Cu) (t
   (fp_text value test_avoid_circle (at 0 0) (layer F.Fab)
     (effects (font (size 1 1) (thickness 0.15)))
   )
-  (fp_circle (center 3 3.5) (end 3.3 3.5) (layer F.SilkS) (width 0.01))
+  (fp_circle (center 3 3.5) (end 3.3 3.5)
+    (stroke (width 0.01) (type solid)) (layer F.SilkS))
   (pad 1 smd custom (at 2 2.5) (size 1.445 1.445) (layers F.Cu F.Mask F.Paste)
     (options (clearance outline) (anchor circle))
     (primitives
@@ -158,9 +166,10 @@ RESULT_CHAMFERED_PAD_AVOID_CIRCLE = """(module test_avoid_circle (layer F.Cu) (t
          (xy -0.875 -0.693665) (xy -0.443665 -1.125) (xy 0.443665 -1.125) (xy 0.875 -0.693665)
          (xy 0.875 0.693665) (xy 0.443665 1.125) (xy -0.443665 1.125) (xy -0.875 0.693665)) (width 0))
     ))
-)"""
+)"""  # NOQA
 
-RESULT_CHAMFERED_PAD_GRID = """(module test_chamfered_grid (layer F.Cu) (tedit 0)
+RESULT_CHAMFERED_PAD_GRID = """(footprint test_chamfered_grid (version 20221018) (generator kicad-footprint-generator)
+  (layer F.Cu)
   (descr "A example footprint")
   (tags example)
   (fp_text reference REF** (at 0 0) (layer F.SilkS)
@@ -241,9 +250,10 @@ RESULT_CHAMFERED_PAD_GRID = """(module test_chamfered_grid (layer F.Cu) (tedit 0
          (xy -0.5 -1) (xy 0.25 -1) (xy 0.5 -0.75) (xy 0.5 0.75)
          (xy 0.25 1) (xy -0.5 1)) (width 0))
     ))
-)"""
+)"""  # NOQA
 
-RESULT_CHAMFERED_PAD_GRID_AVOID_CIRCLE = """(module test_chamfered_grid (layer F.Cu) (tedit 0)
+RESULT_CHAMFERED_PAD_GRID_AVOID_CIRCLE = """(footprint test_chamfered_grid (version 20221018) (generator kicad-footprint-generator)
+  (layer F.Cu)
   (descr "A example footprint")
   (tags example)
   (fp_text reference REF** (at 0 0) (layer F.SilkS)
@@ -252,7 +262,8 @@ RESULT_CHAMFERED_PAD_GRID_AVOID_CIRCLE = """(module test_chamfered_grid (layer F
   (fp_text value test_chamfered_grid (at 0 0) (layer F.Fab)
     (effects (font (size 1 1) (thickness 0.15)))
   )
-  (fp_circle (center 2 2.5) (end 2.2 2.5) (layer F.SilkS) (width 0.01))
+  (fp_circle (center 2 2.5) (end 2.2 2.5)
+    (stroke (width 0.01) (type solid)) (layer F.SilkS))
   (pad 1 smd custom (at -1.4 -2.1) (size 0.795 0.795) (layers F.Cu F.Mask F.Paste)
     (options (clearance outline) (anchor circle))
     (primitives
@@ -289,9 +300,10 @@ RESULT_CHAMFERED_PAD_GRID_AVOID_CIRCLE = """(module test_chamfered_grid (layer F
          (xy -0.5 -0.5) (xy 0.5 -0.5) (xy 0.5 0.210086) (xy 0.210086 0.5)
          (xy -0.5 0.5)) (width 0))
     ))
-)"""
+)"""  # NOQA
 
-RESULT_CHAMFERED_ROUNDED_PAD = """(module chamfered_pad (layer F.Cu) (tedit 0)
+RESULT_CHAMFERED_ROUNDED_PAD = """(footprint chamfered_pad (version 20221018) (generator kicad-footprint-generator)
+  (layer F.Cu)
   (descr "A example footprint")
   (tags example)
   (fp_text reference REF** (at 0 0) (layer F.SilkS)

@@ -88,7 +88,8 @@ def generate_one_footprint(pol, n, configuration):
     else:
         description = description + '(not polarized)'
 
-    kicad_mod.setAttribute('virtual')
+    kicad_mod.setAttribute('exclude_from_pos_files')
+    kicad_mod.setAttribute('exclude_from_bom')
 
     #set the FP description
     kicad_mod.setDescription(description)

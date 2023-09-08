@@ -70,10 +70,12 @@ class KicadFileHandler(FileHandler):
         >>> print(file_handler.serialize())
         """
 
-        sexpr = ['module', self.kicad_mod.name,
+        sexpr = ['footprint', self.kicad_mod.name,
+                 ['version', '20221018'],
+                 ['generator', 'kicad-footprint-generator'],
+                 SexprSerializer.NEW_LINE,
                  ['layer', 'F.Cu'],
-                 ['tedit', formatTimestamp(kwargs.get('timestamp'))],
-                 SexprSerializer.NEW_LINE
+                 SexprSerializer.NEW_LINE,
                 ]  # NOQA
 
         if self.kicad_mod.description:
@@ -163,23 +165,33 @@ class KicadFileHandler(FileHandler):
             exception_string = "{name} (node) not found, cannot serialized the node of type {type}"
             raise NotImplementedError(exception_string.format(name=method_name, type=method_type))
 
-    def _serialize_ArcPoints(self, node):
-        # in KiCAD, some file attributes of Arc are named not in the way of their real meaning
-        center_pos = node.getRealPosition(node.center_pos)
-        end_pos = node.getRealPosition(node.start_pos)
+    def _serialize_Stroke(self, node):
+        width = _get_layer_width(node.layer, node.width)
 
         return [
-                ['start', center_pos.x, center_pos.y],
+            ['width', width],
+            ['type', 'solid'],
+        ]
+
+    def _serialize_ArcPoints(self, node):
+        # in KiCAD, some file attributes of Arc are named not in the way of their real meaning
+        start_pos = node.getRealPosition(node.getStartPoint())
+        end_pos = node.getRealPosition(node.getEndPoint())
+        mid_pos = node.getRealPosition(node.getMidPoint())
+
+        return [
+                ['start', start_pos.x, start_pos.y],
+                ['mid', mid_pos.x, mid_pos.y],
                 ['end', end_pos.x, end_pos.y],
-                ['angle', node.angle]
                ]
 
     def _serialize_Arc(self, node):
         sexpr = ['fp_arc']
         sexpr += self._serialize_ArcPoints(node)
         sexpr += [
+                  SexprSerializer.NEW_LINE,
+                  ['stroke'] + self._serialize_Stroke(node),
                   ['layer', node.layer],
-                  ['width', _get_layer_width(node.layer, node.width)]
                  ]  # NOQA
 
         return sexpr
@@ -197,8 +209,9 @@ class KicadFileHandler(FileHandler):
         sexpr = ['fp_circle']
         sexpr += self._serialize_CirclePoints(node)
         sexpr += [
+                  SexprSerializer.NEW_LINE,
+                  ['stroke'] + self._serialize_Stroke(node),
                   ['layer', node.layer],
-                  ['width', _get_layer_width(node.layer, node.width)]
                  ]  # NOQA
 
         return sexpr
@@ -212,15 +225,13 @@ class KicadFileHandler(FileHandler):
                ]
 
     def _serialize_Line(self, node):
-        start_pos = node.getRealPosition(node.start_pos)
-        end_pos = node.getRealPosition(node.end_pos)
-
         sexpr = ['fp_line']
         sexpr += self._serialize_LinePoints(node)
         sexpr += [
+                SexprSerializer.NEW_LINE,
+                ['stroke'] + self._serialize_Stroke(node),
                 ['layer', node.layer],
-                 ['width', _get_layer_width(node.layer, node.width)]
-                ]  # NOQA
+        ]
 
         return sexpr
 
@@ -260,7 +271,7 @@ class KicadFileHandler(FileHandler):
     def _serialize_Model(self, node):
         sexpr = ['model', node.filename,
                  SexprSerializer.NEW_LINE,
-                 ['at', ['xyz', node.at.x, node.at.y, node.at.z]],
+                 ['offset', ['xyz', node.at.x, node.at.y, node.at.z]],
                  SexprSerializer.NEW_LINE,
                  ['scale', ['xyz', node.scale.x, node.scale.y, node.scale.z]],
                  SexprSerializer.NEW_LINE,
@@ -383,8 +394,10 @@ class KicadFileHandler(FileHandler):
 
         sexpr = ['fp_poly',
                  node_points,
+                 SexprSerializer.NEW_LINE,
+                 ['stroke'] + self._serialize_Stroke(node),
+                 ['fill', 'solid'],
                  ['layer', node.layer],
-                 ['width', _get_layer_width(node.layer, node.width)]
                 ]  # NOQA
 
         return sexpr

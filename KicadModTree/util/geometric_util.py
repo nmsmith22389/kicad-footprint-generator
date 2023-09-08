@@ -462,21 +462,24 @@ class geometricArc():
         self.start_pos += distance_vector
         return self
 
-    def getRadius(self):
-        r, a = (self.start_pos - self.center_pos).to_polar()
+    def getRadius(self) -> float:
+        r, _ = (self.start_pos - self.center_pos).to_polar()
         return r
 
-    def getStartPoint(self):
+    def getStartPoint(self) -> Vector2D:
         return Vector2D(self.start_pos)
 
-    def getMidPoint(self):
+    def getMidPoint(self) -> Vector2D:
         return Vector2D(self.start_pos).rotate(self.angle/2, origin=self.center_pos)
 
-    def getEndPoint(self):
+    def getEndPoint(self) -> Vector2D:
         return Vector2D(self.start_pos).rotate(self.angle, origin=self.center_pos)
 
-    def setRadius(self, radius):
-        rad_s, ang_s = self.start_pos.to_polar(origin=self.center_pos)
+    def getCenter(self) -> Vector2D:
+        return self.center_pos
+
+    def setRadius(self, radius: float):
+        _, ang_s = self.start_pos.to_polar(origin=self.center_pos)
         self.start_pos = Vector2D.from_polar(radius=radius, angle=ang_s, origin=self.center_pos)
         return self
 

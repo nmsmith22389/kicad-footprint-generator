@@ -47,7 +47,10 @@ for padNum in padNums:
     f = Footprint(footprint_name)
     f.setDescription(datasheet)
     f.setTags("Connector PCBEdge molex EDGELOCK")
-    f.setAttribute("virtual")
+
+    f.setAttribute('exclude_from_pos_files')
+    f.setAttribute('exclude_from_bom')
+
     f.append(Model(filename="${KICAD7_3DMODEL_DIR}/Connector_PCBEdge.3dshapes/" + footprint_name + ".wrl",
                    at=[0.0, 0.0, 0.0],
                    scale=[1.0, 1.0, 1.0],

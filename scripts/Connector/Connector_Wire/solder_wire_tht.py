@@ -103,7 +103,8 @@ def make_fp(wire_def, fp_type, pincount, configuration):
 
     kicad_mod.setTags(tag_gen(wire_def, fp_type['tag'], pincount, pitch))
 
-    kicad_mod.setAttribute('virtual')
+    kicad_mod.setAttribute('exclude_from_pos_files')
+    kicad_mod.setAttribute('exclude_from_bom')
 
     prototype = Translation(0, 0)
     kicad_mod.append(PadArray(
