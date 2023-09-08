@@ -35,6 +35,8 @@ class pack_round:
         self.mark_width=0 # width of marking
         self.mark_len=0 # length of marking
         self.pins = 0  # number of pins
+        self.deleted_pins = [] # number of deleted pins
+        self.deleted_sum = 0
         self.pin_circle_diameter = 0  # pin circle diameterdistance
         self.pin1_angle=0 # starting angle of first pin
         self.pin_dangle=90 # angle between two pins (in degrees)
@@ -50,12 +52,14 @@ class pack_round:
         self.more_packnames=[] # additional package names, e.g. "I2PAK" for TO-262
         self.webpage="";
 
-    def __init__(self, name, pins=3, modifier="", largepads=False):
+    def __init__(self, name, pins=3, modifier="", largepads=False, deleted_pins=[], deleted_sum=0):
         self.diameter_inner = 0  # diameter of top can
         self.diameter_outer = 0  # diameter of bottom can
         self.mark_width = 0  # width of marking
         self.mark_len = 0  # length of marking
         self.pins = pins  # number of pins
+        self.deleted_pins = deleted_pins # number of deleted pins
+        self.deleted_sum = deleted_sum
         self.pin_circle_diameter = 0  # pin circle diameterdistance
         self.pin1_angle = 180  # starting angle of first pin
         self.mark_angle = -45  # angular position of marking
@@ -88,6 +92,27 @@ class pack_round:
             self.pad = [1.2,1.2]  # width/height of pads
             self.drill = 0.7  # diameter of pad drills
             self.name = self.name + "-{0}".format(pins)  # name of package
+            if len(modifier)>0:
+                self.name = self.name +"_"+modifier
+                self.tags.append(modifier)
+            if largepads:
+                self.pad = [1.5, 1.5]  # width/height of pads
+
+            if (modifier=="Window") or (modifier=="Lens"):
+                self.window_diameter = 4  # diameter of an on-top glass window
+
+        if (name == "TO-71"):
+            self.webpage="https://www.interfet.com/jfet-datasheets/jfet-to-71-interfet.pdf"
+            self.diameter_inner = 4.7  # diameter of top can
+            self.diameter_outer = 5.5753  # diameter of bottom can
+            self.mark_width = 1.04  # width of marking
+            self.mark_len = 1.17  # max length of marking
+            self.pin_circle_diameter = 4.2  # pin circle diameter as ds suggests
+            self.pad = [1.4,1.4]  # width/height of pads
+            self.drill = 0.8  # diameter of pad drills
+
+            self.name = self.name + "-{0}".format(pins-self.deleted_sum)  # name of package
+
             if len(modifier)>0:
                 self.name = self.name +"_"+modifier
                 self.tags.append(modifier)
