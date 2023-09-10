@@ -253,8 +253,14 @@ def makeDIPSwitch(pins, rm, pinrow_distance, package_width, overlen_top, overlen
     t_crt = min(t_slk - crt_offset, (pins / 2 - 1) * rm / 2 - h_crt / 2)
     
     if (mode == 'Piano'):
-        l_crt = l_crt - switch_width
-        w_crt = w_crt + switch_width
+        if package_width>(pinrow_distance + pad[0]):
+            l_crt = l_crt - switch_width
+            w_crt = w_crt + switch_width
+        else:
+            overhang = package_width / 2 + switch_width - (pinrow_distance + pad[0]) / 2
+            if overhang>0:
+                l_crt = l_crt - overhang
+                w_crt = w_crt + overhang
     
     smdtext=''
     smddescription=''
@@ -385,9 +391,9 @@ def makeDIPSwitch(pins, rm, pinrow_distance, package_width, overlen_top, overlen
         x = pinrow_distance / 2
         y = sw * rm
         if (mode == 'Piano'):
-            kicad_modg.append(
-                RectLine(start=[l_fab, y - switch_height / 2], end=[l_fab - switch_width, y + switch_height / 2],
-                         layer='F.Fab', width=lw_fab))
+            kicad_modg.append(Line(start=[l_fab, y - switch_height / 2], end=[l_fab - switch_width, y - switch_height / 2], layer='F.Fab', width=lw_fab))
+            kicad_modg.append(Line(start=[l_fab - switch_width, y - switch_height / 2], end=[l_fab - switch_width, y + switch_height / 2], layer='F.Fab', width=lw_fab))
+            kicad_modg.append(Line(start=[l_fab - switch_width, y + switch_height / 2], end=[l_fab, y + switch_height / 2], layer='F.Fab', width=lw_fab))
         else:
             kicad_modg.append(RectLine(start=[x - switch_width / 2, y - switch_height / 2],
                                        end=[x + switch_width / 2, y + switch_height / 2], layer='F.Fab', width=lw_fab))

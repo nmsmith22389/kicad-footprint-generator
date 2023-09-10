@@ -213,5 +213,29 @@ if __name__ == '__main__':
         makeDIPSwitch(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_smd, switch_width,
                       switch_height, 'Slide', True, ["JPin"], "Button_Switch_SMD", [0, 0, 0], [1, 1, 1],
                       [0, 0, 0], "", True, webpage="http://www.kingtek.net.cn/pic/201601201446313350.pdf", device_name="KingTek_DSHP{0:02}TJ".format(int(p/2)),switchtype=switchtype)
+
+    # Copal CHP A,B piano DIP-switches (https://www.nidec-copal-electronics.com/e/catalog/switch/chp.pdf):
+    pins = [4,8,16]
+    rm = 1.27
+    pinrow_distance = 5.08
+    pinrow_distanceB = 7.62
+    package_width = 5.9
+    switch_width = 0.75
+    switch_height = 0.8
+    overlen_top = 1.65
+    overlen_bottom = overlen_top
+    ddrill = 0
+    pad_smd = [1.6, 0.76]
+    pad_smdB = [1.27, 0.76]
     
+    os.chdir(cwd)
+    os.chdir("SMD")
+    for p in pins:
+        makeDIPSwitch(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_smd, switch_width,
+                      switch_height, 'Piano', True, ["JPin"], "Button_Switch_SMD", [0, 0, 0], [1, 1, 1],
+                      [0, 0, 0], "", True, webpage="https://www.nidec-copal-electronics.com/e/catalog/switch/chp.pdf", device_name="Copal_CHP-{0:02}xA".format(int(p/2)),switchtype=switchtype)
+        makeDIPSwitch(p, rm, pinrow_distanceB, package_width, overlen_top, overlen_bottom, ddrill, pad_smdB, switch_width,
+                      switch_height, 'Piano', True, [], "Button_Switch_SMD", [0, 0, 0], [1, 1, 1],
+                      [0, 0, 0], "", True, webpage="https://www.nidec-copal-electronics.com/e/catalog/switch/chp.pdf", device_name="Copal_CHP-{0:02}xB".format(int(p/2)),switchtype=switchtype)
+
     os.chdir(cwd)
