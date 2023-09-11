@@ -219,6 +219,7 @@ Specification how to indicate the pin 1 location on the SilkScreen. A dictionary
     - if a dict conatining `x` and `y` is specified, then the marker is offset in `y` as above and additionally moved by the `x` offset.
     - a list of two floats is a shorthand for specifying `x` and `y` as above.
   - `fab`: [`True`|`False`] (default: `True`) specifies if a pin1 indicator should be drawn on fab or not.
+- `pad:` _dict_ specifies pad 1 properties, like shape and drill size. It has the same format as `pads` section above.
 
 ### `mount_pads:` _dict_
 Optional mount pads can be specified as dictionary entries. The names of the entries have no meaning

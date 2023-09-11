@@ -198,6 +198,7 @@ class FPconfiguration():
     gap_pos: int = 0
     gap_size: int = 0
     pad_properties: PadProperties = None
+    pad1_properties: PadProperties = None
     is_smt_footprint: bool = True
     skipped_positions: list = None
     num_mount_pads: int = 0
@@ -265,6 +266,12 @@ class FPconfiguration():
         self.pin1_pos = first_pin_spec.get("position", "top")
         if (self.pin1_pos not in ["top", "bottom"]):
             raise ValueError("'first_pin.position' must be one of 'top', 'bottom'")
+        pad1_spec = first_pin_spec.get("pad")
+        if pad1_spec:
+            self.pad1_properties = PadProperties(pad1_spec)
+        else:
+            self.pad1_properties = PadProperties(pad_spec)
+
         ## body chamfer at pin1 corner
         self.pin1_body_chamfer = first_pin_spec.get("body_chamfer", 0.0)
         # on some locations scale_y will do the magic to be on the correct side relative to the pin 1 side
@@ -387,7 +394,13 @@ def generate_one_footprint(positions: int, spec, configuration: dict):
         col_num = 0
         for col in range(positions + fp_config.gap_size):
             if (col not in fp_config.skipped_positions):
-                kicad_mod.append(Pad(number=fp_config.num_rows * col_num + row + 1,
+                pad_number = fp_config.num_rows * col_num + row + 1
+                if pad_number == 1:
+                    kicad_mod.append(Pad(number=pad_number,
+                                     at=[start_pos_x + col * fp_config.pad_pitch, pos_y],
+                                     **fp_config.pad1_properties.as_args()))
+                else:
+                    kicad_mod.append(Pad(number=pad_number,
                                      at=[start_pos_x + col * fp_config.pad_pitch, pos_y],
                                      **fp_config.pad_properties.as_args()))
                 col_num += 1

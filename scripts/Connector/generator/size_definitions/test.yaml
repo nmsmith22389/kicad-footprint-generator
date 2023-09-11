@@ -48,6 +48,10 @@ THT_Test:
     body_chamfer: 0.5
     marker:
       shape: 'triangle'
+    pad:
+      shape: 'rect'
+      size: [1.7, 2.9]
+      drill: 1.0
   mount_pads:
     SMDl:
       size: 1.0
@@ -131,6 +135,10 @@ Polygon_Test1:
       shape: 'circle'
       offset: -2.5
       size: 4.5
+    pad:
+      shape: 'rect'
+      size: [0.85, 2.5]
+      rratio: 0.5
 
 Polygon_Test:
   inherit: 'defaults'
