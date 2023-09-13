@@ -121,6 +121,7 @@ def makeVERT(lib_name, pck, has3d=False, x_3d=[0, 0, 0], s_3d=[1,1,1], lptext="_
     kicad_mod = Footprint(footprint_name)
     kicad_mod.setDescription(description)
     kicad_mod.setTags(tags)
+    kicad_mod.setAttribute('through_hole')
 
     kicad_modt = Translation(0, yshift)
     kicad_mod.append(kicad_modt)
@@ -342,6 +343,7 @@ def makeHOR(lib_name, pck, has3d=False, x_3d=[0, 0, 0], s_3d=[1,1,1], lptext="_L
     kicad_mod = Footprint(footprint_name)
     kicad_mod.setDescription(description)
     kicad_mod.setTags(tags)
+    kicad_mod.setAttribute('through_hole')
 
     kicad_modt = Translation(0, yshift)
     kicad_mod.append(kicad_modt)
@@ -518,6 +520,7 @@ def makeVERTLS(lib_name, pck, has3d=False, x_3d=[0, 0, 0], s_3d=[1,1,1], lptext=
     kicad_mod = Footprint(footprint_name)
     kicad_mod.setDescription(description)
     kicad_mod.setTags(tags)
+    kicad_mod.setAttribute('through_hole')
 
     kicad_modt = Translation(-pinwid, 0)
     kicad_mod.append(kicad_modt)
@@ -707,6 +710,7 @@ def makeHORLS(lib_name, pck, has3d=False, x_3d=[0, 0, 0], s_3d=[1,1,1], lptext="
     kicad_mod = Footprint(footprint_name)
     kicad_mod.setDescription(description)
     kicad_mod.setTags(tags)
+    kicad_mod.setAttribute('through_hole')
 
     kicad_modt=Translation(0,0)#-(pck.pins - 1) * pck.rm,0)
     kicad_mod.append(kicad_modt)
@@ -905,6 +909,7 @@ def makeHORREV(lib_name, pck, has3d=False, x_3d=[0, 0, 0], s_3d=[1 ,1,1], lptext
     kicad_mod = Footprint(footprint_name)
     kicad_mod.setDescription(description)
     kicad_mod.setTags(tags)
+    kicad_mod.setAttribute('through_hole')
 
     # set general values
     kicad_mod.append(Text(type='reference', text='REF**', at=[txt_x, txt_t], layer='F.SilkS'))
@@ -1079,6 +1084,7 @@ def makeTORound(lib_name, pck, has3d=False, x_3d=[0, 0, 0], s_3d=[1,1,1], lptext
     kicad_mod = Footprint(footprint_name)
     kicad_mod.setDescription(description)
     kicad_mod.setTags(tags)
+    kicad_mod.setAttribute('through_hole')
 
     kicad_modt = Translation(xshift, yshift)
     kicad_mod.append(kicad_modt)
