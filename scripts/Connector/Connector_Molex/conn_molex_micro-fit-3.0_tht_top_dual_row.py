@@ -108,9 +108,9 @@ def generate_one_footprint(pins_per_row, variant, configuration):
     tab_l = 1.4
 
     body_edge={
-        'left':  (B-A)/2,
-        'right': (A+B)/2,
-        'top': -2.47+0.5
+        'left':  (B-A)/2 - 0.25,
+        'right': (A+B)/2 + 0.25,
+        'top': -2.47 + 0.5
         }
     body_edge['bottom'] = body_edge['top'] + (7.37-0.5)
 
