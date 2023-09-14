@@ -199,6 +199,19 @@ SOP-8_6.62x9.15mm_P2.54mm:
   num_pins_x: 0
   num_pins_y: 4
 
+SOP-8_6.605x9.655mm_P2.54mm:
+  size_source: 'https://www.onsemi.com/pdf/datasheet/hcpl2631m-d.pdf'
+  body_size_x: 6.35 .. 6.86
+  body_size_y: 9.40 .. 9.91
+  overall_height: 4.19 .. 5.08
+  overall_size_x: 8.8 .. 10.30
+  lead_width: 1.14 .. 1.78
+  lead_len: 0.40 .. 1.15
+
+  pitch: 2.54
+  num_pins_x: 0
+  num_pins_y: 4
+
 SOP-16_4.4.55x10.3mm_P1.27mm:
   size_source: 'https://toshiba.semicon-storage.com/info/docget.jsp?did=12855&prodName=TLP290-4'
   body_size_x:
