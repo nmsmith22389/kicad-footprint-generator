@@ -1,0 +1,34 @@
+Wago_733-36x:
+  library: 'Wago'
+  pad_pitch: 2.5
+  row_pitch: null # only one row
+  first_pin:
+    position: 'top'     # top (default) or bottom
+    offset: 
+    marker:
+      shape: 'triangle' 
+      offset: 0.2
+      fab: True
+      size: 1.1547 # 1mm side arrow
+    pad:
+      shape: 'rect'
+      drill: 1.35
+      size: [2.1, 2.1]
+  clean_silk: True
+  description: 'Shrouded connector, 2.54 mm Pitch, Single Row, {options}'
+  tags: 'conn  wire'
+  pads:
+    drill: 1.35
+    size: [2.1, 2.1]
+  source: ''
+  options: 'closed sides, horizontal (right angle)'
+  fp_suffix: '_Horizontal'
+  offset:
+    body: [0, 3.65]
+  body_size:
+    x_offset: 2.5
+    y: 8.9
+  fp_name: 'Wago_733-36{num_pos:01d}'
+  positions: [2, 3, 4, 5, 6, 7, 8, 9]
+
+
