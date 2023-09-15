@@ -22,7 +22,7 @@ TE_281698:
     size: [1.7, 1.7]
   source: 'https://www.te.com/commerce/DocumentDelivery/DDEController?Action=showdoc&DocId=Customer+Drawing%7F281698%7FG1%7Ftif%7FEnglish%7FENG_CD_281698_G1.tif%7F281698-5'
   options: 'open sides, horizontal (right angle)'
-  fp_suffix: '_Terminal_Horizontal'
+  fp_suffix: '_Horizontal'
   offset:
     body: [0, -7.1]
   body_size:
@@ -31,11 +31,11 @@ TE_281698:
 
 TE_281698-x:
   inherit: 'TE_281698'
-  fp_name: 'TE_281698-{num_pos_units:01d}_1x{num_pos:02d}_P{pad_pitch}_Horizontal'
+  fp_name: 'TE_281698-{num_pos_units:01d}'
   positions: [2, 3, 4, 5, 6, 7, 8]
 
 TE_1-281698-x:
   inherit: 'TE_281698'
-  fp_name: 'TE_{num_pos_tens:01d}-281698-{num_pos_units:01d}_1x{num_pos:02d}_P{pad_pitch}_Horizontal'
+  fp_name: 'TE_{num_pos_tens:01d}-281698-{num_pos_units:01d}'
   positions: [10, 12, 15, 17, 18]
 
