@@ -20,7 +20,7 @@ Wago_733-36x:
   pads:
     drill: 1.35
     size: [2.1, 2.1]
-  source: ''
+  source: 'https://www.wago.com/global/pluggable-connectors/tht-male-header/p/733-362'
   options: 'closed sides, horizontal (right angle)'
   fp_suffix: '_Horizontal'
   offset:
