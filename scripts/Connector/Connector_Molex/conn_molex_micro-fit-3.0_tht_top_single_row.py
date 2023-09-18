@@ -47,6 +47,16 @@ variant_params = {
             "43650-{n:02}17"
             ]
         },
+    'solder_mounting_with_clip':{
+        'mount_pins': 'solder', # remove this
+        'datasheet': 'http://www.molex.com/pdm_docs/sd/436500218_sd.pdf',
+        'C_minus_B': 4.3,
+        'part_code': "43650-{n:02}18",
+        'alternative_codes': [
+            "43650-{n:02}19",
+            "43650-{n:02}20"
+            ]
+        }
 }
 
 pins_per_row_range = range(2,13)
@@ -78,10 +88,16 @@ def generate_one_footprint(pins_per_row, variant, configuration):
 
     # handle arguments
     orientation_str = configuration['orientation_options'][orientation]
-    footprint_name = configuration['fp_name_format_string'].format(man=manufacturer,
-        series=series,
-        mpn=mpn, num_rows=number_of_rows, pins_per_row=pins_per_row, mounting_pad = "",
-        pitch=pitch, orientation=orientation_str)
+    if(variant_params[variant]['part_code'] != "43650-{n:02}18"):
+        footprint_name = configuration['fp_name_format_string'].format(man=manufacturer,
+            series=series,
+            mpn=mpn, num_rows=number_of_rows, pins_per_row=pins_per_row, mounting_pad = "",
+            pitch=pitch, orientation=orientation_str)
+    else:
+        footprint_name = configuration['fp_name_format_string'].format(man=manufacturer,
+            series=series,
+            mpn=mpn, num_rows=number_of_rows, pins_per_row=pins_per_row, mounting_pad = "-1MP",
+            pitch=pitch, orientation=orientation_str)
 
     kicad_mod = Footprint(footprint_name)
     kicad_mod.setDescription("Molex {:s}, {:s} (compatible alternatives: {:s}), {:d} Pins per row ({:s}), generated with kicad-footprint-generator".format(series_long, mpn, ', '.join(alt_mpn), pins_per_row, variant_params[variant]['datasheet']))
@@ -120,12 +136,28 @@ def generate_one_footprint(pins_per_row, variant, configuration):
     #
     # Pegs
     #
-    kicad_mod.append(Pad(at=[peg1_x, peg_y], number="",
-        type=Pad.TYPE_NPTH, shape=Pad.SHAPE_CIRCLE, size=peg_drill,
-        drill=peg_drill, layers=Pad.LAYERS_NPTH))
-    kicad_mod.append(Pad(at=[peg2_x, peg_y], number="",
-        type=Pad.TYPE_NPTH, shape=Pad.SHAPE_CIRCLE, size=peg_drill,
-        drill=peg_drill, layers=Pad.LAYERS_NPTH))
+    if(variant_params[variant]['part_code'] != "43650-{n:02}18"):
+        kicad_mod.append(Pad(at=[peg1_x, peg_y], number="",
+            type=Pad.TYPE_NPTH, shape=Pad.SHAPE_CIRCLE, size=peg_drill,
+            drill=peg_drill, layers=Pad.LAYERS_NPTH))
+        kicad_mod.append(Pad(at=[peg2_x, peg_y], number="",
+            type=Pad.TYPE_NPTH, shape=Pad.SHAPE_CIRCLE, size=peg_drill,
+            drill=peg_drill, layers=Pad.LAYERS_NPTH))
+    else:
+        clip_drill = 2.41
+        clip_size = clip_drill + 2*min_annular_ring
+
+        clip1_x = round((B-C)/2, 2)
+        clip2_x = round((B+C)/2, 2)
+        clip_y = 0
+        #print("PPR: " + str(pins_per_row) + " | Y: " + str(clip_y) + " X1: " + str(clip1_x) + " X2: " + str(clip2_x) + " | C: " + str(C))
+
+        kicad_mod.append(Pad(at=[clip1_x, clip_y], number="MP",
+            type=Pad.TYPE_THT, shape=Pad.SHAPE_CIRCLE, size=clip_size,
+            drill=clip_drill, layers=Pad.LAYERS_NPTH))
+        kicad_mod.append(Pad(at=[clip2_x, clip_y], number="MP",
+            type=Pad.TYPE_THT, shape=Pad.SHAPE_CIRCLE, size=clip_size,
+            drill=clip_drill, layers=Pad.LAYERS_NPTH))
 
     #
     # Add pads
