@@ -44,7 +44,17 @@ variant_params = {
         'part_code': "43045-{n:02}12",
         'alternative_codes': [
             "43045-{n:02}13",
-            "43045-{n:02}24"
+            "43045-{n:02}14"
+            ]
+        },
+    'solder_mounting_with_clip':{
+        'mount_pins': 'solder', # remove this
+        'datasheet': 'http://www.molex.com/pdm_docs/sd/430450224_sd.pdf',
+        'C_minus_B': 6,
+        'part_code': "43045-{n:02}24",
+        'alternative_codes': [
+            "43045-{n:02}25",
+            "43045-{n:02}26"
             ]
         },
 }
@@ -144,6 +154,27 @@ def generate_one_footprint(pins_per_row, variant, configuration):
             pincount=pins_per_row, increment=1,  x_spacing=pitch, size=pad_size,
             type=Pad.TYPE_THT, shape=pad_shape, layers=Pad.LAYERS_THT, drill=drill,
             **optional_pad_params))
+
+    ############################# Clip ##################################
+    #
+    # Side retention clip
+    #
+    if(variant_params[variant]['part_code'] == "43045-{n:02}24"):
+        clip_drill = 2.41
+        clip_size = clip_drill + 2*min_annular_ring
+        D = 4.30 + (pins_per_row-1) * pitch
+        #print("PPR: " + str(pins_per_row) + " | d: " + str(D))
+        clip1_x = round((B-D)/2, 2)
+        clip2_x = round((B+D)/2, 2)
+        clip_y = pad_row_1_y + pitch/2
+        #print("PPR: " + str(pins_per_row) + " | Y: " + str(clip_y) + " X1: " + str(clip1_x) + " X2: " + str(clip2_x))
+
+        kicad_mod.append(Pad(at=[clip1_x, clip_y], number="",
+            type=Pad.TYPE_THT, shape=Pad.SHAPE_CIRCLE, size=clip_size,
+            drill=clip_drill, layers=Pad.LAYERS_NPTH))
+        kicad_mod.append(Pad(at=[clip2_x, clip_y], number="",
+            type=Pad.TYPE_THT, shape=Pad.SHAPE_CIRCLE, size=clip_size,
+            drill=clip_drill, layers=Pad.LAYERS_NPTH))
 
     ######################## Fabrication Layer ###########################
     main_body_poly= [
