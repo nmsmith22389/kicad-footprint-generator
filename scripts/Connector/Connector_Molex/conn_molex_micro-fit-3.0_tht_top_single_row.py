@@ -241,26 +241,46 @@ def generate_one_footprint(pins_per_row, variant, configuration):
     ymp_bottom = peg_y + peg_drill/2 + silk_pad_off
     off = configuration['silk_fab_offset']
 
-    poly_s_b = [
-        {'x': body_edge['left'] - off, 'y': ymp_bottom},
-        {'x': body_edge['left'] - off, 'y': body_edge['bottom'] + off},
-        {'x': body_edge['right'] + off, 'y': body_edge['bottom'] + off},
-        {'x': body_edge['right'] + off, 'y': ymp_bottom},
-    ]
+    if(variant_params[variant]['part_code'] != "43650-{n:02}18"):
+        poly_s_b = [
+            {'x': body_edge['left'] - off, 'y': ymp_bottom},
+            {'x': body_edge['left'] - off, 'y': body_edge['bottom'] + off},
+            {'x': body_edge['right'] + off, 'y': body_edge['bottom'] + off},
+            {'x': body_edge['right'] + off, 'y': ymp_bottom}
+        ]
+        kicad_mod.append(PolygoneLine(polygone=poly_s_b,
+            width=configuration['silk_line_width'], layer="F.SilkS"))
 
-    kicad_mod.append(PolygoneLine(polygone=poly_s_b,
-        width=configuration['silk_line_width'], layer="F.SilkS"))
+        poly_s_t = [
+            {'x': body_edge['left'] + chamfer['x'] + off, 'y': y_top_min - off},
+            {'x': body_edge['left'] + chamfer['x'] + off, 'y': body_edge['top'] - off},
+            {'x': body_edge['right'] - chamfer['x'] - off, 'y': body_edge['top'] - off},
+            {'x': body_edge['right'] - chamfer['x'] - off, 'y': y_top_min - off}
+        ]
+        kicad_mod.append(PolygoneLine(polygone=poly_s_t,
+            width=configuration['silk_line_width'], layer="F.SilkS"))
+    else:
+        poly_s_b = [
+            {'x': body_edge['left'] - off, 'y': clip_size/2 - 0.3},
+            {'x': body_edge['left'] - off, 'y': body_edge['bottom'] + off},
+            {'x': body_edge['right'] + off, 'y': body_edge['bottom'] + off},
+            {'x': body_edge['right'] + off, 'y': clip_size/2 - 0.3}
+        ]
+        kicad_mod.append(PolygoneLine(polygone=poly_s_b,
+            width=configuration['silk_line_width'], layer="F.SilkS"))
 
-    poly_s_t = [
-        {'x': xmp_top1 + off, 'y': y_top_min - off},
-        {'x': body_edge['left'] + chamfer['x'] + off, 'y': y_top_min - off},
-        {'x': body_edge['left'] + chamfer['x'] + off, 'y': body_edge['top'] - off},
-        {'x': body_edge['right'] - chamfer['x'] - off, 'y': body_edge['top'] - off},
-        {'x': body_edge['right'] - chamfer['x'] - off, 'y': y_top_min - off},
-        {'x': xmp_top2 - off, 'y': y_top_min - off},
-    ]
-    kicad_mod.append(PolygoneLine(polygone=poly_s_t,
-        width=configuration['silk_line_width'], layer="F.SilkS"))
+        poly_s_t = [
+            {'x': body_edge['left'] - off, 'y': -clip_size/2 + 0.3},
+            {'x': body_edge['left'] - off, 'y': y_top_min - off},
+            {'x': body_edge['left'] + chamfer['x'] + off, 'y': y_top_min - off},
+            {'x': body_edge['left'] + chamfer['x'] + off, 'y': body_edge['top'] - off},
+            {'x': body_edge['right'] - chamfer['x'] - off, 'y': body_edge['top'] - off},
+            {'x': body_edge['right'] - chamfer['x'] - off, 'y': y_top_min - off},
+            {'x': body_edge['right'] + off, 'y': y_top_min - off},
+            {'x': body_edge['right'] + off, 'y': -clip_size/2 + 0.3}
+        ]
+        kicad_mod.append(PolygoneLine(polygone=poly_s_t,
+            width=configuration['silk_line_width'], layer="F.SilkS"))
 
     ############################ CrtYd ##################################
     CrtYd_offset = configuration['courtyard_offset']['connector']
