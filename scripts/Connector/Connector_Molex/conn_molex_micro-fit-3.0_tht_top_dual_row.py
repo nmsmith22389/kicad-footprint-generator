@@ -38,7 +38,6 @@ number_of_rows = 2
 
 variant_params = {
     'solder_mounting':{
-        'mount_pins': 'solder', # remove this
         'datasheet': 'http://www.molex.com/pdm_docs/sd/430450212_sd.pdf',
         'C_minus_B': 6,
         'part_code': "43045-{n:02}12",
@@ -48,7 +47,6 @@ variant_params = {
             ]
         },
     'solder_mounting_with_clip':{
-        'mount_pins': 'solder', # remove this
         'datasheet': 'http://www.molex.com/pdm_docs/sd/430450224_sd.pdf',
         'C_minus_B': 6,
         'part_code': "43045-{n:02}24",
@@ -100,8 +98,6 @@ def generate_one_footprint(pins_per_row, variant, configuration):
         orientation=orientation_str, man=manufacturer,
         entry=configuration['entry_direction'][orientation]))
 
-    #kicad_mod.setAttribute('smd')
-
     ########################## Dimensions ##############################
     B = (pins_per_row-1)*pitch
     A = B + 6.65
@@ -141,7 +137,6 @@ def generate_one_footprint(pins_per_row, variant, configuration):
     #
     # Add pads
     #
-
     optional_pad_params = {}
     if configuration['kicad4_compatible']:
         optional_pad_params['tht_pad1_shape'] = Pad.SHAPE_RECT
@@ -155,7 +150,6 @@ def generate_one_footprint(pins_per_row, variant, configuration):
             type=Pad.TYPE_THT, shape=pad_shape, layers=Pad.LAYERS_THT, drill=drill,
             **optional_pad_params))
 
-    ############################# Clip ##################################
     #
     # Side retention clip
     #
@@ -163,11 +157,9 @@ def generate_one_footprint(pins_per_row, variant, configuration):
         clip_drill = 2.41
         clip_size = clip_drill + 2*min_annular_ring
         D = 4.30 + (pins_per_row-1) * pitch
-        #print("PPR: " + str(pins_per_row) + " | d: " + str(D))
         clip1_x = round((B-D)/2, 2)
         clip2_x = round((B+D)/2, 2)
         clip_y = pad_row_1_y + pitch/2
-        #print("PPR: " + str(pins_per_row) + " | Y: " + str(clip_y) + " X1: " + str(clip1_x) + " X2: " + str(clip2_x))
 
         kicad_mod.append(Pad(at=[clip1_x, clip_y], number="",
             type=Pad.TYPE_THT, shape=Pad.SHAPE_CIRCLE, size=clip_size,
@@ -214,7 +206,6 @@ def generate_one_footprint(pins_per_row, variant, configuration):
         },
         width=configuration['fab_line_width'], layer="F.Fab"
         ))
-
 
     tab_poly = [
         {'x': B/2-tab_l/2, 'y': body_edge['bottom']},
@@ -317,7 +308,6 @@ def generate_one_footprint(pins_per_row, variant, configuration):
         layer='F.CrtYd', width=configuration['courtyard_line_width']))
 
     ######################### Text Fields ###############################
-
     addTextFields(kicad_mod=kicad_mod, configuration=configuration, body_edges=body_edge,
         courtyard={'top':cy_top, 'bottom':cy_bottom}, fp_name=footprint_name, text_y_inside_position='bottom')
 
