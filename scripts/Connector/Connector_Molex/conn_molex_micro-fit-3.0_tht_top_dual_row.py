@@ -87,10 +87,17 @@ def generate_one_footprint(pins_per_row, variant, configuration):
 
     # handle arguments
     orientation_str = configuration['orientation_options'][orientation]
-    footprint_name = configuration['fp_name_format_string'].format(man=manufacturer,
-        series=series,
-        mpn=mpn, num_rows=number_of_rows, pins_per_row=pins_per_row, mounting_pad = "",
-        pitch=pitch, orientation=orientation_str)
+
+    if(variant_params[variant]['part_code'] != "43045-{n:02}24"):
+        footprint_name = configuration['fp_name_format_string'].format(man=manufacturer,
+            series=series,
+            mpn=mpn, num_rows=number_of_rows, pins_per_row=pins_per_row, mounting_pad = "",
+            pitch=pitch, orientation=orientation_str)
+    else:
+        footprint_name = configuration['fp_name_format_string'].format(man=manufacturer,
+            series=series,
+            mpn=mpn, num_rows=number_of_rows, pins_per_row=pins_per_row, mounting_pad = "-1MP",
+            pitch=pitch, orientation=orientation_str)
 
     kicad_mod = Footprint(footprint_name)
     kicad_mod.setDescription("Molex {:s}, {:s} (compatible alternatives: {:s}), {:d} Pins per row ({:s}), generated with kicad-footprint-generator".format(series_long, mpn, ', '.join(alt_mpn), pins_per_row, variant_params[variant]['datasheet']))
@@ -161,10 +168,10 @@ def generate_one_footprint(pins_per_row, variant, configuration):
         clip2_x = round((B+D)/2, 2)
         clip_y = pad_row_1_y + pitch/2
 
-        kicad_mod.append(Pad(at=[clip1_x, clip_y], number="",
+        kicad_mod.append(Pad(at=[clip1_x, clip_y], number="MP",
             type=Pad.TYPE_THT, shape=Pad.SHAPE_CIRCLE, size=clip_size,
             drill=clip_drill, layers=Pad.LAYERS_NPTH))
-        kicad_mod.append(Pad(at=[clip2_x, clip_y], number="",
+        kicad_mod.append(Pad(at=[clip2_x, clip_y], number="MP",
             type=Pad.TYPE_THT, shape=Pad.SHAPE_CIRCLE, size=clip_size,
             drill=clip_drill, layers=Pad.LAYERS_NPTH))
 
