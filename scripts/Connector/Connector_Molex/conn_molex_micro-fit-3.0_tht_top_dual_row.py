@@ -239,31 +239,62 @@ def generate_one_footprint(pins_per_row, variant, configuration):
 
     silk_pad_off = configuration['silk_pad_clearance'] + configuration['silk_line_width']/2
 
-    ymp_top = peg_y - peg_drill/2 - silk_pad_off
-    ymp_bottom = peg_y + peg_drill/2 + silk_pad_off
+    peg_top = peg_y - peg_drill/2 - silk_pad_off
+    peg_bottom = peg_y + peg_drill/2 + silk_pad_off
     off = configuration['silk_fab_offset']
 
     poly_s_b = [
-        {'x': body_edge['left'] - off, 'y': ymp_bottom},
+        {'x': body_edge['left'] - off, 'y': peg_bottom},
         {'x': body_edge['left'] - off, 'y': body_edge['bottom'] + off},
         {'x': body_edge['right'] + off, 'y': body_edge['bottom'] + off},
-        {'x': body_edge['right'] + off, 'y': ymp_bottom},
+        {'x': body_edge['right'] + off, 'y': peg_bottom}
     ]
     kicad_mod.append(PolygoneLine(polygone=poly_s_b,
         width=configuration['silk_line_width'], layer="F.SilkS"))
 
-    poly_s_t = [
-        {'x': body_edge['left'] - off, 'y': ymp_top},
-        {'x': body_edge['left'] - off, 'y': y_top_min - off},
-        {'x': body_edge['left'] + chamfer['x'] + off, 'y': y_top_min - off},
-        {'x': body_edge['left'] + chamfer['x'] + off, 'y': body_edge['top'] - off},
-        {'x': body_edge['right'] - chamfer['x'] - off, 'y': body_edge['top'] - off},
-        {'x': body_edge['right'] - chamfer['x'] - off, 'y': y_top_min - off},
-        {'x': body_edge['right'] + off, 'y': y_top_min - off},
-        {'x': body_edge['right'] + off, 'y': ymp_top},
-    ]
-    kicad_mod.append(PolygoneLine(polygone=poly_s_t,
-        width=configuration['silk_line_width'], layer="F.SilkS"))
+    if(variant_params[variant]['part_code'] != "43045-{n:02}24"):
+        poly_s_t = [
+            {'x': body_edge['left'] - off, 'y': peg_top},
+            {'x': body_edge['left'] - off, 'y': y_top_min - off},
+            {'x': body_edge['left'] + chamfer['x'] + off, 'y': y_top_min - off},
+            {'x': body_edge['left'] + chamfer['x'] + off, 'y': body_edge['top'] - off},
+            {'x': body_edge['right'] - chamfer['x'] - off, 'y': body_edge['top'] - off},
+            {'x': body_edge['right'] - chamfer['x'] - off, 'y': y_top_min - off},
+            {'x': body_edge['right'] + off, 'y': y_top_min - off},
+            {'x': body_edge['right'] + off, 'y': peg_top}
+        ]
+        kicad_mod.append(PolygoneLine(polygone=poly_s_t,
+            width=configuration['silk_line_width'], layer="F.SilkS"))
+    else:
+        clip_top = clip_y - clip_size/4 - silk_pad_off
+        clip_bottom = clip_y + clip_size/4 + silk_pad_off
+
+        poly_s_t = [
+            {'x': body_edge['left'] - off, 'y': clip_top},
+            {'x': body_edge['left'] - off, 'y': y_top_min - off},
+            {'x': body_edge['left'] + chamfer['x'] + off, 'y': y_top_min - off},
+            {'x': body_edge['left'] + chamfer['x'] + off, 'y': body_edge['top'] - off},
+            {'x': body_edge['right'] - chamfer['x'] - off, 'y': body_edge['top'] - off},
+            {'x': body_edge['right'] - chamfer['x'] - off, 'y': y_top_min - off},
+            {'x': body_edge['right'] + off, 'y': y_top_min - off},
+            {'x': body_edge['right'] + off, 'y': clip_top}
+        ]
+        kicad_mod.append(PolygoneLine(polygone=poly_s_t,
+            width=configuration['silk_line_width'], layer="F.SilkS"))
+        
+        poly_s_l = [
+            {'x': body_edge['left'] - off, 'y': clip_bottom},
+            {'x': body_edge['left'] - off, 'y': peg_top}
+        ]
+        kicad_mod.append(PolygoneLine(polygone=poly_s_l,
+            width=configuration['silk_line_width'], layer="F.SilkS"))
+
+        poly_s_r = [
+            {'x': body_edge['right'] + off, 'y': clip_bottom},
+            {'x': body_edge['right'] + off, 'y': peg_top}
+        ]
+        kicad_mod.append(PolygoneLine(polygone=poly_s_r,
+            width=configuration['silk_line_width'], layer="F.SilkS"))
 
     ############################ CrtYd ##################################
     CrtYd_offset = configuration['courtyard_offset']['connector']
