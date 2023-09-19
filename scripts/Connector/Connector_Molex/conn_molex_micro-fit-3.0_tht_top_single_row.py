@@ -134,7 +134,7 @@ def generate_one_footprint(pins_per_row, variant, configuration):
 
     ############################# Pads ##################################
     #
-    # Pegs
+    # Pegs / clip
     #
     if(variant_params[variant]['part_code'] != "43650-{n:02}18"):
         kicad_mod.append(Pad(at=[peg1_x, peg_y], number="",
@@ -144,13 +144,13 @@ def generate_one_footprint(pins_per_row, variant, configuration):
             type=Pad.TYPE_NPTH, shape=Pad.SHAPE_CIRCLE, size=peg_drill,
             drill=peg_drill, layers=Pad.LAYERS_NPTH))
     else:
+        # Add clip for 43650-xx18
         clip_drill = 2.41
-        clip_size = clip_drill + 2*min_annular_ring
+        clip_size = clip_drill + 2*0.075 #Annular ring width changed to be half of minimum, identical snap-eda footprint
 
         clip1_x = round((B-C)/2, 2)
         clip2_x = round((B+C)/2, 2)
         clip_y = 0
-        #print("PPR: " + str(pins_per_row) + " | Y: " + str(clip_y) + " X1: " + str(clip1_x) + " X2: " + str(clip2_x) + " | C: " + str(C))
 
         kicad_mod.append(Pad(at=[clip1_x, clip_y], number="MP",
             type=Pad.TYPE_THT, shape=Pad.SHAPE_CIRCLE, size=clip_size,
