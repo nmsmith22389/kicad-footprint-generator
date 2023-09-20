@@ -160,7 +160,7 @@ if __name__ == "__main__":
     config = yaml.safe_load(Path(args.global_config).read_bytes())
     config.update(yaml.safe_load(Path(args.series_config).read_bytes()))
 
-    for npins in range(4, 20, 2):
+    for npins in range(4, 20+1, 2):
         wr_wst_perm.generate_fp(npins, config, 'Connector_Wuerth')
         wr_wst_dbg.generate_fp(npins, config, 'Connector_Wuerth')
 
