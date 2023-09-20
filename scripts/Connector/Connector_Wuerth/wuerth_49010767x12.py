@@ -37,11 +37,11 @@ class WR_WST:
     pitch: float = 2.54
 
     def generate_fp(self, npins, config, lib_name):
-        x0, y0 = -(npins-1)*self.pitch/4, self.pitch/2
-        w = 8.86 + (npins-1) * self.pitch/2
-        h = 5.6
+        x0, y0 = -self.pitch/2, -(npins-1)*self.pitch/4
+        w = 5.6
+        h = 8.86 + (npins-1) * self.pitch/2
 
-        xn, yn = x0 + (npins-1)*pitch/2, y0 - (npins%2)*pitch
+        xn, yn = x0 - (npins%2)*pitch, y0 + (npins-1)*pitch/2
 
         mpn = f'49010767{npins:02d}12'
         series = f'WR-WST_{self.tolerance_type}'
@@ -71,31 +71,38 @@ class WR_WST:
         fp.append(RectLine(start=[-w/2, -h/2], end=[w/2, h/2], layer='F.Fab', width=config['fab_line_width']))
         # Pin 1 marker
         fp.append(PolygoneLine(layer='F.Fab', width=config['fab_line_width'], polygone=[
-            {'x': x0-tr_h/2, 'y': h/2},
-            {'x': x0,        'y': h/2 - tr_h},
-            {'x': x0+tr_h/2, 'y': h/2}]))
+            {'x': -w/2,          'y': y0-tr_h/2},
+            {'x': -w/2 + tr_h,   'y': y0},
+            {'x': -w/2,          'y': y0+tr_h/2}]))
 
         ## Silkscreen layer
+        c_off = config['courtyard_offset']['connector']
+        lw = config['silk_line_width']
         # Outline
-        fp.append(RectLine(start=[-w/2, -h/2], end=[w/2, h/2], layer='F.SilkS', width=config['silk_line_width']))
+        fp.append(RectLine(start=[-w/2, -h/2], end=[w/2, h/2], layer='F.SilkS', width=lw))
         # Pin 1 marker
-        fp.append(PolygoneLine(layer='F.SilkS', width=config['silk_line_width'], polygone=[
-            {'x': x0-self.d_loc_l-tr_h/2, 'y': h/2},
-            {'x': x0-self.d_loc_l,        'y': h/2 - tr_h},
-            {'x': x0-self.d_loc_l+tr_h/2, 'y': h/2}]))
-        fp.append(PolygoneLine(layer='F.SilkS', width=config['silk_line_width'], polygone=[
-            {'x': x0-self.d_loc_l-tr_h/2, 'y': -h/2},
-            {'x': x0-self.d_loc_l-tr_h/2, 'y': -h/2 + sq_h},
-            {'x': x0-self.d_loc_l+tr_h/2, 'y': -h/2 + sq_h},
-            {'x': x0-self.d_loc_l+tr_h/2, 'y': -h/2}]))
-        fp.append(PolygoneLine(layer='F.SilkS', width=config['silk_line_width'], polygone=[
-            {'x': xn+self.d_loc_s-tr_h/2, 'y': h/2},
-            {'x': xn+self.d_loc_s-tr_h/2, 'y': h/2 - sq_h},
-            {'x': xn+self.d_loc_s+tr_h/2, 'y': h/2 - sq_h},
-            {'x': xn+self.d_loc_s+tr_h/2, 'y': h/2}]))
+        cx, cy = -w/2 - c_off + lw/2, -h/2 - c_off + lw/2
+        fp.append(PolygoneLine(layer='F.SilkS', width=lw, polygone=[
+            {'x': cx, 'y': cy+tr_h},
+            {'x': cx, 'y': cy},
+            {'x': cx+tr_h, 'y': cy}]))
+        # Housing indents
+        fp.append(PolygoneLine(layer='F.SilkS', width=lw, polygone=[
+            {'y': y0-self.d_loc_l-tr_h/2, 'x': -w/2},
+            {'y': y0-self.d_loc_l,        'x': -w/2 + tr_h},
+            {'y': y0-self.d_loc_l+tr_h/2, 'x': -w/2}]))
+        fp.append(PolygoneLine(layer='F.SilkS', width=lw, polygone=[
+            {'y': y0-self.d_loc_l-tr_h/2, 'x': w/2},
+            {'y': y0-self.d_loc_l-tr_h/2, 'x': w/2 - sq_h},
+            {'y': y0-self.d_loc_l+tr_h/2, 'x': w/2 - sq_h},
+            {'y': y0-self.d_loc_l+tr_h/2, 'x': w/2}]))
+        fp.append(PolygoneLine(layer='F.SilkS', width=lw, polygone=[
+            {'y': yn+self.d_loc_s-tr_h/2, 'x': -w/2},
+            {'y': yn+self.d_loc_s-tr_h/2, 'x': -w/2 + sq_h},
+            {'y': yn+self.d_loc_s+tr_h/2, 'x': -w/2 + sq_h},
+            {'y': yn+self.d_loc_s+tr_h/2, 'x': -w/2}]))
         
         ## Courtyard
-        c_off = config['courtyard_offset']['connector']
         fp.append(RectLine(
             start=[-w/2 - c_off, -h/2 - c_off], end=[w/2 + c_off, h/2 + c_off],
             layer='F.CrtYd', width=config['courtyard_line_width']))
@@ -103,17 +110,17 @@ class WR_WST:
         ## Pins
         for i in range(npins):
             fp.append(Pad(number=f'{i+1}', type=Pad.TYPE_THT, shape=Pad.SHAPE_CIRCLE, layers=Pad.LAYERS_THT,
-                                 at=[x0 + i*pitch/2, y0 - (i%2)*pitch],
+                                 at=[x0 + (i%2)*pitch, y0 + i*pitch/2],
                                  size=self.d_pin + 2*self.annular_ring,
                                  drill=self.d_pin))
 
         ## Locator holes
         fp.append(Pad(type=Pad.TYPE_NPTH, shape=Pad.SHAPE_CIRCLE, layers=Pad.LAYERS_NPTH,
-                             at=[x0-self.offx_loc_l, -pitch/2],
+                             at=[pitch/2, y0-self.offx_loc_l],
                              size=self.d_loc_l, drill=self.d_loc_l))
 
         fp.append(Pad(type=Pad.TYPE_NPTH, shape=Pad.SHAPE_CIRCLE, layers=Pad.LAYERS_NPTH,
-                             at=[xn+self.offx_loc_s-self.pitch/2, pitch/2 - pitch*(npins%2)],
+                             at=[-pitch/2 + pitch*(npins%2), yn+self.offx_loc_s-self.pitch/2],
                              size=self.d_loc_s, drill=self.d_loc_s))
 
         ## Text fields
