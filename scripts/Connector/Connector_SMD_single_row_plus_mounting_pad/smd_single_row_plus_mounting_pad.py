@@ -319,10 +319,37 @@ def generate_one_footprint(idx, pincount, series_definition, configuration, grou
 
     cy1 = roundToBase(bounding_box_y1 - configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
     cy2 = roundToBase(bounding_box_y2 + configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
+    
+    #check if pads are within body
+    pins_outside_fab = False
+    if pins_toward_bottom:
+        if (pad_pos_y + (pad_size[1]/2)) >  side_line_y_pin_side:
+            pins_outside_fab = True
+    else:
+        if (pad_pos_y - (pad_size[1]/2)) <  side_line_y_pin_side:
+            pins_outside_fab = True
 
-    kicad_mod.append(RectLine(
-        start=[cx1, cy1], end=[cx2, cy2],
-        layer='F.CrtYd', width=configuration['courtyard_line_width']))
+    if pin_edge_outside == False:
+        kicad_mod.append(RectLine(start=[cx1, cy1], end=[cx2, cy2], layer='F.CrtYd', width=configuration['courtyard_line_width']))
+    else:
+        print(footprint_name)
+        print (modified_pinside_x_inner)
+        print( pad_1_x_outside_edge)
+        if 'edge_modifier_pin_side' in series_definition and series_definition['edge_modifier_pin_side']['length'] < 0:
+            pin_x_bounding_box = modified_pinside_x_inner
+        else:
+            pin_x_bounding_box = pad_1_x_outside_edge
+        cpx1 = roundToBase(pin_x_bounding_box - configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
+        cpx2 = -cpx1
+        
+        if pins_toward_bottom:
+            cby1 = roundToBase(side_line_y_pin_side + configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
+            kicad_mod.append(PolygoneLine(polygone=[[cx1, cy1], [cx2, cy1], [cx2, cby1], [cpx2, cby1], [cpx2, cy2], [cpx1, cy2],
+            [cpx1, cby1], [cx1, cby1], [cx1, cy1],], layer='F.CrtYd', width=configuration['courtyard_line_width']))
+        else:
+            cby1 = roundToBase(side_line_y_pin_side - configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
+            kicad_mod.append(PolygoneLine(polygone=[[cx1, cy2], [cx2, cy2], [cx2, cby1], [cpx2, cby1], [cpx2, cy1], [cpx1, cy1],
+            [cpx1, cby1], [cx1, cby1], [cx1, cy2],], layer='F.CrtYd', width=configuration['courtyard_line_width']))
 
     ######################### Pin 1 marker ##############################
 
