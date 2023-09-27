@@ -227,6 +227,62 @@ MSOP-8-1EP_3x3mm_P0.65mm_EP1.95x2.15mm:
     # bottom_pad_size:
     paste_avoid_via: False
 
+MSOP-8-1EP_3x3mm_P0.65mm_EP1.50x1.80mm:
+  size_source: 'https://www.diodes.com/assets/Package-Files/MSOP-8EP.pdf'
+  force_small_pitch_ipc_definition: True
+  body_size_x:
+    minimum: 2.9
+    nominal: 3
+    maximum: 3.1
+  body_size_y:
+    minimum: 2.9
+    nominal: 3
+    maximum: 3.1
+  overall_height:
+    nominal: 1.1
+
+  overall_size_x:
+    minimum: 4.7
+    nominal: 4.9
+    maximum: 5.1
+  lead_width:
+    minimum: 0.22
+    nominal : 0.3
+    maximum: 0.38 
+  lead_len:
+    minimum: 0.4
+    nominal : 0.6
+    maximum: 0.8
+
+  pitch: 0.65
+  num_pins_x: 0
+  num_pins_y: 4
+
+  EP_size_x:
+    minimum: 1.3
+    nominal: 1.5
+    maximum: 1.7
+
+  EP_size_y:
+    minimum: 1.6
+    nominal: 1.8
+    maximum: 2.0
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [2, 2]
+    drill: 0.2
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    EP_num_paste_pads: [2, 2]
+    # paste_between_vias: 1
+    # paste_rings_outside: 1
+    EP_paste_coverage: 0.7
+    grid: [1.1, 1.3]
+    # bottom_pad_size:
+    paste_avoid_via: False
+
+
 #####################################################################################################
 
 MSOP-10-1EP_3x3mm_P0.5mm_EP1.68x1.88mm:
