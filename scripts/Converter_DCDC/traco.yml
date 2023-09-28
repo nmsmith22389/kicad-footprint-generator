@@ -15,3 +15,12 @@ Converter_DCDC_TRACO_TEA1E-xxxx_THT:
   at: [-5.1, 2.4]
   size: [6, 19.5]
   pins: [["thtr", "1", 0, 0, 1.5, 1.5, 1], ["tht", "2", 0, -2.54, 1.5, 1.5, 1], ["tht", "4", 0, -7.62, 1.5, 1.5, 1], ["tht", "6", 0, -12.7, 1.5, 1.5, 1]]
+  
+Converter_DCDC_TRACO_TEA1HI-xxxx_THT:
+  description: "DCDC-Converter, TRACO, TEA1HI-xxxx, 1W, Rev. September 21. 2023"
+  datasheet: "https://www.tracopower.com/products/tea1hi.pdf"
+  tags: "DCDC-Converter TRACO TEA1HI THT SIP-7 1W"
+  extratexts: []
+  at: [-5.1, 2.4]
+  size: [6, 19.5]
+  pins: [["thtr", "1", 0, 0, 1.5, 1.5, 1], ["tht", "2", 0, -2.54, 1.5, 1.5, 1], ["tht", "5", 0, -10.16, 1.5, 1.5, 1], ["tht", "7", 0, -15.24, 1.5, 1.5, 1]]
