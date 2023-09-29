@@ -1,0 +1,47 @@
+SEAF-30-05.0-L-08-1-A-K-TR:
+  family: "SEAF"
+  no_pins_of_row: 30
+  lead_style: "05.0"
+  plating_option: "L"
+  no_of_rows: 8
+  solder_type: 1
+  design: "A"
+  option: "NONE"
+  pick_and_place_pad: "K"
+  tape_and_reel: "TR"
+  
+SEAF-40-05.0-L-10-1-A-K-TR:
+  family: "SEAF"
+  no_pins_of_row: 40
+  lead_style: "05.0"
+  plating_option: "L"
+  no_of_rows: 10
+  solder_type: 1
+  design: "A"
+  option: "NONE"
+  pick_and_place_pad: "K"
+  tape_and_reel: "TR"
+
+SEAF-50-05.0-L-08-1-A-K-TR:
+  family: "SEAF"
+  no_pins_of_row: 50
+  lead_style: "05.0"
+  plating_option: "L"
+  no_of_rows: 8
+  solder_type: 1
+  design: "A"
+  option: "NONE"
+  pick_and_place_pad: "K"
+  tape_and_reel: "TR"
+  
+SEAF-50-05.0-L-05-1-A-LP-K-TR:
+  family: "SEAF"
+  no_pins_of_row: 50
+  lead_style: "05.0"
+  plating_option: "L"
+  no_of_rows: 5
+  solder_type: 1
+  design: "A"
+  option: "LP"
+  pick_and_place_pad: "K"
+  tape_and_reel: "TR"

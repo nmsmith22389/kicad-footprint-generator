@@ -1,0 +1,1 @@
+https://kicad-footprint-generator.readthedocs.io/en/latest/index.html

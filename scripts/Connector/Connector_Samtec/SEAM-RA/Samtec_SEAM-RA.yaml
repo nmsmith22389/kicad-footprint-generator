@@ -1,0 +1,35 @@
+SEAM-30-01-L-08-1-RA-GP-TR:
+  family: "SEAM"
+  no_pins_of_row: 30
+  lead_style: 01.0
+  plating_option: "L"
+  no_of_rows: 8
+  solder_type: 1
+  design: "RA"
+  option: "GP"
+  pick_and_place_pad: "NONE"
+  tape_and_reel: "TR"
+  
+SEAM-40-01-L-10-1-RA-GP-TR:
+  family: "SEAM"
+  no_pins_of_row: 40
+  lead_style: 01.0
+  plating_option: "L"
+  no_of_rows: 10
+  solder_type: 1
+  design: "RA"
+  option: "GP"
+  pick_and_place_pad: "NONE"
+  tape_and_reel: "TR"
+  
+SEAM-50-01-L-08-1-RA-GP-TR:
+  family: "SEAM"
+  no_pins_of_row: 50
+  lead_style: 01.0
+  plating_option: "L"
+  no_of_rows: 8
+  solder_type: 1
+  design: "RA"
+  option: "GP"
+  pick_and_place_pad: "NONE"
+  tape_and_reel: "TR"

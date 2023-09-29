@@ -1,0 +1,10 @@
+Download Python 3.8
+
+Install for all users in C:\Python38 and register it in CMD-Line
+
+Open CMD line
+
+C:\python -m pip install --upgrade pip
+
+C:\pip install pyyaml
+
