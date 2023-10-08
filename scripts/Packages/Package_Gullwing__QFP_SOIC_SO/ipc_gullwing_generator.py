@@ -11,6 +11,8 @@ sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))  # load parent path
 from KicadModTree import *  # NOQA
 from KicadModTree.nodes.base.Pad import Pad  # NOQA
 sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))  # load parent path of tools
+
+import dict_tools
 from footprint_text_fields import addTextFields
 from ipc_pad_size_calculators import *
 from quad_dual_pad_border import add_dual_or_quad_pad_border
@@ -698,6 +700,9 @@ if __name__ == "__main__":
                 cmd_file = yaml.safe_load(command_stream)
             except yaml.YAMLError as exc:
                 print(exc)
+
+        dict_tools.dictInherit(cmd_file)
+
         header = cmd_file.pop('FileHeader')
 
         for pkg in cmd_file:
