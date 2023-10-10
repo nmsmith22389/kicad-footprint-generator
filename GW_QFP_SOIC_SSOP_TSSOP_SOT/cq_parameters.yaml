@@ -1218,6 +1218,39 @@ LQFP-216_24x24mm_Pitch0.4mm:
   destination_dir: 'Package_QFP.3dshapes'
   source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
 
+Infineon_PG-DSO-20-U03_7.5x12.8mm:
+  the: 8.0
+  tb_s: 0.15
+  c: 0.25
+  R1: 0.2
+  R2: 0.2
+  S: 0.5
+  L: 0.81
+  fp_s: True
+  fp_r: 0.7
+  fp_d: 0.2
+  fp_z: 0.1
+  ef: 0.05
+  cc1: 0.25
+  D1: 12.8
+  E1: 7.5
+  E: 10.3
+  A1: 0.15
+  A2: 2.5
+  b: 0.33
+  e: 0.65
+  npx: 18
+  npy: 0
+  epad: null
+  excluded_pins: [3,4,16,17,18,19,20,21,27,28,29,30,31,32,33,34]
+  model_name: Infineon_PG-DSO-20-U03_7.5x12.8mm
+  rotation: -90
+  body_color_key: 'black body'
+  pin_color_key: 'metal grey pins'
+  mark_color_key: 'light brown label'
+  destination_dir: 'Package_SO.3dshapes'
+  source: 'https://www.infineon.com/dgdl/Infineon-2ED1323S12P_2ED1324S12P-DataSheet-v01_01-EN.pdf?fileId=8ac78c8c869190210186e92f0f506d0c'
+
 PQFP-80_14x20mm_Pitch0.8mm:
   the: 8.0
   tb_s: 0.15
