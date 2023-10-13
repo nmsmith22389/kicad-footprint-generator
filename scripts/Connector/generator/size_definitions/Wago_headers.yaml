@@ -31,4 +31,15 @@ Wago_733-36x:
   fp_name: 'Wago_733-36{num_pos:01d}'
   positions: [2, 3, 4, 5, 6, 7, 8, 9]
 
+Wago_733-370:
+  inherit: 'Wago_733-36x'
+  fp_name: 'Wago_733-370'
+  source: 'https://www.wago.com/global/pluggable-connectors/tht-male-header/p/733-370'
+  positions: [10]
+
+Wago_733-372:
+  inherit: 'Wago_733-36x'
+  fp_name: 'Wago_733-372'
+  source: 'https://www.wago.com/global/pluggable-connectors/tht-male-header/p/733-372'
+  positions: [12]
 
