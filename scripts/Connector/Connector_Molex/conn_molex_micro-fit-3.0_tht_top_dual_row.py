@@ -38,13 +38,21 @@ number_of_rows = 2
 
 variant_params = {
     'solder_mounting':{
-        'mount_pins': 'solder', # remove this
         'datasheet': 'http://www.molex.com/pdm_docs/sd/430450212_sd.pdf',
         'C_minus_B': 6,
         'part_code': "43045-{n:02}12",
         'alternative_codes': [
             "43045-{n:02}13",
-            "43045-{n:02}24"
+            "43045-{n:02}14"
+            ]
+        },
+    'solder_mounting_with_clip':{
+        'datasheet': 'http://www.molex.com/pdm_docs/sd/430450224_sd.pdf',
+        'C_minus_B': 6,
+        'part_code': "43045-{n:02}24",
+        'alternative_codes': [
+            "43045-{n:02}25",
+            "43045-{n:02}26"
             ]
         },
 }
@@ -79,18 +87,23 @@ def generate_one_footprint(pins_per_row, variant, configuration):
 
     # handle arguments
     orientation_str = configuration['orientation_options'][orientation]
-    footprint_name = configuration['fp_name_format_string'].format(man=manufacturer,
-        series=series,
-        mpn=mpn, num_rows=number_of_rows, pins_per_row=pins_per_row, mounting_pad = "",
-        pitch=pitch, orientation=orientation_str)
+
+    if(variant_params[variant]['part_code'] != "43045-{n:02}24"):
+        footprint_name = configuration['fp_name_format_string'].format(man=manufacturer,
+            series=series,
+            mpn=mpn, num_rows=number_of_rows, pins_per_row=pins_per_row, mounting_pad = "",
+            pitch=pitch, orientation=orientation_str)
+    else:
+        footprint_name = configuration['fp_name_format_string'].format(man=manufacturer,
+            series=series,
+            mpn=mpn, num_rows=number_of_rows, pins_per_row=pins_per_row, mounting_pad = "-1MP",
+            pitch=pitch, orientation=orientation_str)
 
     kicad_mod = Footprint(footprint_name)
     kicad_mod.setDescription("Molex {:s}, {:s} (compatible alternatives: {:s}), {:d} Pins per row ({:s}), generated with kicad-footprint-generator".format(series_long, mpn, ', '.join(alt_mpn), pins_per_row, variant_params[variant]['datasheet']))
     kicad_mod.setTags(configuration['keyword_fp_string'].format(series=series,
         orientation=orientation_str, man=manufacturer,
         entry=configuration['entry_direction'][orientation]))
-
-    #kicad_mod.setAttribute('smd')
 
     ########################## Dimensions ##############################
     B = (pins_per_row-1)*pitch
@@ -131,7 +144,6 @@ def generate_one_footprint(pins_per_row, variant, configuration):
     #
     # Add pads
     #
-
     optional_pad_params = {}
     if configuration['kicad4_compatible']:
         optional_pad_params['tht_pad1_shape'] = Pad.SHAPE_RECT
@@ -144,6 +156,24 @@ def generate_one_footprint(pins_per_row, variant, configuration):
             pincount=pins_per_row, increment=1,  x_spacing=pitch, size=pad_size,
             type=Pad.TYPE_THT, shape=pad_shape, layers=Pad.LAYERS_THT, drill=drill,
             **optional_pad_params))
+
+    #
+    # Side retention clip
+    #
+    if(variant_params[variant]['part_code'] == "43045-{n:02}24"):
+        clip_drill = 2.41
+        clip_size = clip_drill + 2*min_annular_ring
+        D = 4.30 + (pins_per_row-1) * pitch
+        clip1_x = round((B-D)/2, 2)
+        clip2_x = round((B+D)/2, 2)
+        clip_y = pad_row_1_y + pitch/2
+
+        kicad_mod.append(Pad(at=[clip1_x, clip_y], number="MP",
+            type=Pad.TYPE_THT, shape=Pad.SHAPE_CIRCLE, size=clip_size,
+            drill=clip_drill, layers=Pad.LAYERS_NPTH))
+        kicad_mod.append(Pad(at=[clip2_x, clip_y], number="MP",
+            type=Pad.TYPE_THT, shape=Pad.SHAPE_CIRCLE, size=clip_size,
+            drill=clip_drill, layers=Pad.LAYERS_NPTH))
 
     ######################## Fabrication Layer ###########################
     main_body_poly= [
@@ -184,7 +214,6 @@ def generate_one_footprint(pins_per_row, variant, configuration):
         width=configuration['fab_line_width'], layer="F.Fab"
         ))
 
-
     tab_poly = [
         {'x': B/2-tab_l/2, 'y': body_edge['bottom']},
         {'x': B/2-tab_l/2, 'y': body_edge['bottom'] + tab_w},
@@ -208,31 +237,62 @@ def generate_one_footprint(pins_per_row, variant, configuration):
 
     silk_pad_off = configuration['silk_pad_clearance'] + configuration['silk_line_width']/2
 
-    ymp_top = peg_y - peg_drill/2 - silk_pad_off
-    ymp_bottom = peg_y + peg_drill/2 + silk_pad_off
+    peg_top = peg_y - peg_drill/2 - silk_pad_off
+    peg_bottom = peg_y + peg_drill/2 + silk_pad_off
     off = configuration['silk_fab_offset']
 
     poly_s_b = [
-        {'x': body_edge['left'] - off, 'y': ymp_bottom},
+        {'x': body_edge['left'] - off, 'y': peg_bottom},
         {'x': body_edge['left'] - off, 'y': body_edge['bottom'] + off},
         {'x': body_edge['right'] + off, 'y': body_edge['bottom'] + off},
-        {'x': body_edge['right'] + off, 'y': ymp_bottom},
+        {'x': body_edge['right'] + off, 'y': peg_bottom}
     ]
     kicad_mod.append(PolygoneLine(polygone=poly_s_b,
         width=configuration['silk_line_width'], layer="F.SilkS"))
 
-    poly_s_t = [
-        {'x': body_edge['left'] - off, 'y': ymp_top},
-        {'x': body_edge['left'] - off, 'y': y_top_min - off},
-        {'x': body_edge['left'] + chamfer['x'] + off, 'y': y_top_min - off},
-        {'x': body_edge['left'] + chamfer['x'] + off, 'y': body_edge['top'] - off},
-        {'x': body_edge['right'] - chamfer['x'] - off, 'y': body_edge['top'] - off},
-        {'x': body_edge['right'] - chamfer['x'] - off, 'y': y_top_min - off},
-        {'x': body_edge['right'] + off, 'y': y_top_min - off},
-        {'x': body_edge['right'] + off, 'y': ymp_top},
-    ]
-    kicad_mod.append(PolygoneLine(polygone=poly_s_t,
-        width=configuration['silk_line_width'], layer="F.SilkS"))
+    if(variant_params[variant]['part_code'] != "43045-{n:02}24"):
+        poly_s_t = [
+            {'x': body_edge['left'] - off, 'y': peg_top},
+            {'x': body_edge['left'] - off, 'y': y_top_min - off},
+            {'x': body_edge['left'] + chamfer['x'] + off, 'y': y_top_min - off},
+            {'x': body_edge['left'] + chamfer['x'] + off, 'y': body_edge['top'] - off},
+            {'x': body_edge['right'] - chamfer['x'] - off, 'y': body_edge['top'] - off},
+            {'x': body_edge['right'] - chamfer['x'] - off, 'y': y_top_min - off},
+            {'x': body_edge['right'] + off, 'y': y_top_min - off},
+            {'x': body_edge['right'] + off, 'y': peg_top}
+        ]
+        kicad_mod.append(PolygoneLine(polygone=poly_s_t,
+            width=configuration['silk_line_width'], layer="F.SilkS"))
+    else:
+        clip_top = clip_y - clip_size/4 - silk_pad_off
+        clip_bottom = clip_y + clip_size/4 + silk_pad_off
+
+        poly_s_t = [
+            {'x': body_edge['left'] - off, 'y': clip_top},
+            {'x': body_edge['left'] - off, 'y': y_top_min - off},
+            {'x': body_edge['left'] + chamfer['x'] + off, 'y': y_top_min - off},
+            {'x': body_edge['left'] + chamfer['x'] + off, 'y': body_edge['top'] - off},
+            {'x': body_edge['right'] - chamfer['x'] - off, 'y': body_edge['top'] - off},
+            {'x': body_edge['right'] - chamfer['x'] - off, 'y': y_top_min - off},
+            {'x': body_edge['right'] + off, 'y': y_top_min - off},
+            {'x': body_edge['right'] + off, 'y': clip_top}
+        ]
+        kicad_mod.append(PolygoneLine(polygone=poly_s_t,
+            width=configuration['silk_line_width'], layer="F.SilkS"))
+        
+        poly_s_l = [
+            {'x': body_edge['left'] - off, 'y': clip_bottom},
+            {'x': body_edge['left'] - off, 'y': peg_top}
+        ]
+        kicad_mod.append(PolygoneLine(polygone=poly_s_l,
+            width=configuration['silk_line_width'], layer="F.SilkS"))
+
+        poly_s_r = [
+            {'x': body_edge['right'] + off, 'y': clip_bottom},
+            {'x': body_edge['right'] + off, 'y': peg_top}
+        ]
+        kicad_mod.append(PolygoneLine(polygone=poly_s_r,
+            width=configuration['silk_line_width'], layer="F.SilkS"))
 
     ############################ CrtYd ##################################
     CrtYd_offset = configuration['courtyard_offset']['connector']
@@ -255,7 +315,6 @@ def generate_one_footprint(pins_per_row, variant, configuration):
         layer='F.CrtYd', width=configuration['courtyard_line_width']))
 
     ######################### Text Fields ###############################
-
     addTextFields(kicad_mod=kicad_mod, configuration=configuration, body_edges=body_edge,
         courtyard={'top':cy_top, 'bottom':cy_bottom}, fp_name=footprint_name, text_y_inside_position='bottom')
 
