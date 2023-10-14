@@ -13,6 +13,11 @@
 #
 # (C) 2016 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 
+import sys
+import os
+
+sys.path.append(os.path.join(sys.path[0],"..","tools")) # load kicad_mod path
+
 
 #
 # This module Create a standard box in various layers including a pin 1 marker tap or chamfer
@@ -24,6 +29,7 @@ from KicadModTree.nodes.Node import Node
 from KicadModTree.nodes.base.Line import Line
 from KicadModTree.nodes.base.Text import Text
 
+from drawing_tools import *
 
 class koaLine:
 
@@ -371,9 +377,9 @@ class StandardBox(Node):
         #
         #
         for n in ffabline:
-            new_node = Line(start=Point2D(round(n.sx, 2), round(n.sy, 2)), end=Point2D(round(n.ex, 2), round(n.ey, 2)), layer=n.layer, width=n.width)
+            new_node = Line(start=Point2D(n.sx, n.sy), end=Point2D(n.ex, n.ey), layer=n.layer, width=n.width)
             if n.width < 0.0:
-                new_node = Line(start=Point2D(round(n.sx, 2), round(n.sy, 2)), end=Point2D(round(n.ex, 2), round(n.ey, 2)), layer=n.layer)
+                new_node = Line(start=Point2D(n.sx, n.sy), end=Point2D(n.ex, n.ey), layer=n.layer)
             new_node._parent = self
             self.virtual_childs.append(new_node)
 
@@ -384,11 +390,11 @@ class StandardBox(Node):
         x1 = self.at.x - 0.5
         y1 = self.at.y - 0.5
         #
-        new_node = Line(start=Point2D(round(x1, 2), round(y1 + self.p1m, 2)), end=Point2D(round(x1, 2), round(y1, 2)), layer='F.SilkS', width=self.FSilkSWidth)
+        new_node = Line(start=Point2D(x1, y1 + self.p1m), end=Point2D(x1, y1), layer='F.SilkS', width=self.FSilkSWidth)
         new_node._parent = self
         self.virtual_childs.append(new_node)
         #
-        new_node = Line(start=Point2D(round(x1, 2), round(y1, 2)), end=Point2D(round(x1 + self.p1m, 2), round(y1, 2)), layer='F.SilkS', width=self.FSilkSWidth)
+        new_node = Line(start=Point2D(x1, y1), end=Point2D(x1 + self.p1m, y1), layer='F.SilkS', width=self.FSilkSWidth)
         new_node._parent = self
         self.virtual_childs.append(new_node)
 
@@ -657,9 +663,9 @@ class StandardBox(Node):
         #
         #
         for n in self.fsilksline:
-            new_node = Line(start=Point2D(round(n.sx, 2), round(n.sy, 2)), end=Point2D(round(n.ex, 2), round(n.ey, 2)), layer=n.layer, width=n.width)
+            new_node = Line(start=Point2D(n.sx, n.sy), end=Point2D(n.ex, n.ey), layer=n.layer, width=n.width)
             if n.width < 0.0:
-                new_node = Line(start=Point2D(round(n.sx, 2), round(n.sy, 2)), end=Point2D(round(n.ex, 2), round(n.ey, 2)), layer=n.layer)
+                new_node = Line(start=Point2D(n.sx, n.sy), end=Point2D(n.ex, n.ey), layer=n.layer)
             new_node._parent = self
             self.virtual_childs.append(new_node)
 
@@ -965,9 +971,9 @@ class StandardBox(Node):
         #
         #
         for n in self.fcrtydline:
-            new_node = Line(start=Point2D(round(n.sx, 2), round(n.sy, 2)), end=Point2D(round(n.ex, 2), round(n.ey, 2)), layer=n.layer, width=n.width)
+            new_node = Line(start=Point2D(roundG(n.sx, 0.01), roundG(n.sy, 0.01)), end=Point2D(roundG(n.ex, 0.01), roundG(n.ey, 0.01)), layer=n.layer, width=n.width)
             if n.width < 0.0:
-                new_node = Line(start=Point2D(round(n.sx, 2), round(n.sy, 2)), end=Point2D(round(n.ex, 2), round(n.ey, 2)), layer=n.layer)
+                new_node = Line(start=Point2D(roundG(n.sx, 0.01), roundG(n.sy, 0.01)), end=Point2D(roundG(n.ex, 0.01), roundG(n.ey, 0.01)), layer=n.layer)
             new_node._parent = self
             self.virtual_childs.append(new_node)
 
