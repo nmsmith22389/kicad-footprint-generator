@@ -24,3 +24,21 @@ Converter_DCDC_TRACO_TEA1HI-xxxx_THT:
   at: [-5.1, 2.4]
   size: [6, 19.5]
   pins: [["thtr", "1", 0, 0, 1.5, 1.5, 1], ["tht", "2", 0, -2.54, 1.5, 1.5, 1], ["tht", "5", 0, -10.16, 1.5, 1.5, 1], ["tht", "7", 0, -15.24, 1.5, 1.5, 1]]
+
+Converter_DCDC_TRACO_TBA1E-xxxx_Single_THT:
+  description: "DCDC-Converter, TRACO, TBA1-xxxxE, Single, 1W, Rev. October 9. 2023"
+  datasheet: "https://www.tracopower.com/products/tba1e.pdf"
+  tags: "DCDC-Converter TRACO TBA1E THT SIP-7 1W"
+  extratexts: []
+  at: [-4.65, 2.4]
+  size: [6, 19.5]
+  pins: [["thtr", "1", 0, 0, 1.5, 1.5, 1], ["tht", "2", 0, -2.54, 1.5, 1.5, 1], ["tht", "4", 0, -7.62, 1.5, 1.5, 1], ["tht", "6", 0, -12.7, 1.5, 1.5, 1]]
+
+Converter_DCDC_TRACO_TBA1E-xxxx_Dual_THT:
+  description: "DCDC-Converter, TRACO, TBA1-xxxxE, Dual, 1W, Rev. October 9. 2023"
+  datasheet: "https://www.tracopower.com/products/tba1e.pdf"
+  tags: "DCDC-Converter TRACO TBA1E THT SIP-7 1W"
+  extratexts: []
+  at: [-4.65, 2.4]
+  size: [6, 19.5]
+  pins: [["thtr", "1", 0, 0, 1.5, 1.5, 1], ["tht", "2", 0, -2.54, 1.5, 1.5, 1], ["tht", "4", 0, -7.62, 1.5, 1.5, 1], ["tht", "5", 0, -10.16, 1.5, 1.5, 1], ["tht", "6", 0, -12.7, 1.5, 1.5, 1]]
