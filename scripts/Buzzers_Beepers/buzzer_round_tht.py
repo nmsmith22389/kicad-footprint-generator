@@ -15,7 +15,7 @@ def buzzer_round_tht(args):
     buzzer_radius = args['diameter'] / 2.
 
     # init kicad footprint
-    kicad_mod = Footprint(args['name'])
+    kicad_mod = Footprint(args['name'], FootprintType.THT)
     kicad_mod.setDescription(args['datasheet'])
     kicad_mod.setTags("buzzer round tht")
 

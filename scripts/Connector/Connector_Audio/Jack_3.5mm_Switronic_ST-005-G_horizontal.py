@@ -26,7 +26,7 @@ mountingHoleSpacing = 5.0
 backPadOffset = 11.0
 backPadSpacing = 4.5
 
-f = Footprint(footprint_name)
+f = Footprint(footprint_name, FootprintType.THT)
 f.setDescription(datasheet)
 f.setTags("Connector Audio Switronic ST-005-G")
 f.append(Model(filename="${KICAD7_3DMODEL_DIR}/Connector_Audio.3dshapes/" + footprint_name + ".wrl",

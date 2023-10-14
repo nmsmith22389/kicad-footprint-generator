@@ -56,13 +56,11 @@ def generate_one_footprint(pincount, configuration):
         mpn=mpn, num_rows=number_of_rows, pins_per_row=pincount//2, mounting_pad = "",
         pitch=pitch, orientation=orientation_str)
 
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, FootprintType.SMD)
     kicad_mod.setDescription("Molex {:s}, {:s}, {:d} Pins ({:s}), generated with kicad-footprint-generator".format(series_long, mpn, pincount, datasheet))
     kicad_mod.setTags(configuration['keyword_fp_string'].format(series=series,
         orientation=orientation_str, man=manufacturer,
         entry=configuration['entry_direction'][orientation]))
-
-    kicad_mod.setAttribute('smd')
 
     # calculate working values
     pad_x_spacing = pitch
@@ -87,8 +85,6 @@ def generate_one_footprint(pincount, configuration):
     courtyard_clearance = configuration['courtyard_offset']['connector']
     courtyard_x = roundToBase(h_body_length + courtyard_clearance, courtyard_precision)
     courtyard_y = roundToBase((pad_y_spacing + pad_height) / 2.0 + courtyard_clearance, courtyard_precision)
-
-
 
     # create pads
     kicad_mod.append(PadArray(pincount=pincount//2, x_spacing=pad_x_spacing, y_spacing=0,\

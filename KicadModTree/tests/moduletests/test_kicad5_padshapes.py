@@ -24,6 +24,7 @@ RESULT_ROUNDRECT_FP = """(footprint round_rect_test (version 20221018) (generato
   (layer F.Cu)
   (descr "A example footprint")
   (tags example)
+  (attr smd)
   (fp_text reference REF** (at 0 0) (layer F.SilkS)
     (effects (font (size 1 1) (thickness 0.15)))
   )
@@ -39,6 +40,7 @@ RESULT_ROUNDRECT_FP2 = """(footprint round_rect_test (version 20221018) (generat
   (layer F.Cu)
   (descr "A example footprint")
   (tags example)
+  (attr smd)
   (fp_text reference REF** (at 0 0) (layer F.SilkS)
     (effects (font (size 1 1) (thickness 0.15)))
   )
@@ -54,6 +56,7 @@ RESULT_SIMPLE_POLYGON_PAD = """(footprint round_rect_test (version 20221018) (ge
   (layer F.Cu)
   (descr "A example footprint")
   (tags example)
+  (attr smd)
   (fp_text reference REF** (at 0 0) (layer F.SilkS)
     (effects (font (size 1 1) (thickness 0.15)))
   )
@@ -72,6 +75,7 @@ RESULT_SIMPLE_OTHER_CUSTOM_PAD = """(footprint round_rect_test (version 20221018
   (layer F.Cu)
   (descr "A example footprint")
   (tags example)
+  (attr smd)
   (fp_text reference REF** (at 0 0) (layer F.SilkS)
     (effects (font (size 1 1) (thickness 0.15)))
   )
@@ -105,6 +109,7 @@ RESULT_CUT_POLYGON = """(footprint round_rect_test (version 20221018) (generator
   (layer F.Cu)
   (descr "A example footprint")
   (tags example)
+  (attr smd)
   (fp_text reference REF** (at 0 0) (layer F.SilkS)
     (effects (font (size 1 1) (thickness 0.15)))
   )
@@ -125,6 +130,7 @@ RESULT_CHAMFERED_PAD = """(footprint chamfered_pad (version 20221018) (generator
   (layer F.Cu)
   (descr "A example footprint")
   (tags example)
+  (attr smd)
   (fp_text reference REF** (at 0 0) (layer F.SilkS)
     (effects (font (size 1 1) (thickness 0.15)))
   )
@@ -151,6 +157,7 @@ RESULT_CHAMFERED_PAD_AVOID_CIRCLE = """(footprint test_avoid_circle (version 202
   (layer F.Cu)
   (descr "A example footprint")
   (tags example)
+  (attr smd)
   (fp_text reference REF** (at 0 0) (layer F.SilkS)
     (effects (font (size 1 1) (thickness 0.15)))
   )
@@ -172,6 +179,7 @@ RESULT_CHAMFERED_PAD_GRID = """(footprint test_chamfered_grid (version 20221018)
   (layer F.Cu)
   (descr "A example footprint")
   (tags example)
+  (attr smd)
   (fp_text reference REF** (at 0 0) (layer F.SilkS)
     (effects (font (size 1 1) (thickness 0.15)))
   )
@@ -256,6 +264,7 @@ RESULT_CHAMFERED_PAD_GRID_AVOID_CIRCLE = """(footprint test_chamfered_grid (vers
   (layer F.Cu)
   (descr "A example footprint")
   (tags example)
+  (attr smd)
   (fp_text reference REF** (at 0 0) (layer F.SilkS)
     (effects (font (size 1 1) (thickness 0.15)))
   )
@@ -306,6 +315,7 @@ RESULT_CHAMFERED_ROUNDED_PAD = """(footprint chamfered_pad (version 20221018) (g
   (layer F.Cu)
   (descr "A example footprint")
   (tags example)
+  (attr smd)
   (fp_text reference REF** (at 0 0) (layer F.SilkS)
     (effects (font (size 1 1) (thickness 0.15)))
   )
@@ -354,7 +364,7 @@ RESULT_CHAMFERED_ROUNDED_PAD = """(footprint chamfered_pad (version 20221018) (g
 class Kicad5PadsTests(unittest.TestCase):
 
     def testRoundRectPad(self):
-        kicad_mod = Footprint("round_rect_test")
+        kicad_mod = Footprint("round_rect_test", FootprintType.SMD)
 
         kicad_mod.setDescription("A example footprint")
         kicad_mod.setTags("example")
@@ -380,7 +390,7 @@ class Kicad5PadsTests(unittest.TestCase):
         self.assertEqual(result, RESULT_ROUNDRECT_FP)
 
     def testRoundRectPad2(self):
-        kicad_mod = Footprint("round_rect_test")
+        kicad_mod = Footprint("round_rect_test", FootprintType.SMD)
 
         kicad_mod.setDescription("A example footprint")
         kicad_mod.setTags("example")
@@ -406,7 +416,7 @@ class Kicad5PadsTests(unittest.TestCase):
         self.assertEqual(result, RESULT_ROUNDRECT_FP2)
 
     def testPolygonPad(self):
-        kicad_mod = Footprint("round_rect_test")
+        kicad_mod = Footprint("round_rect_test", FootprintType.SMD)
 
         kicad_mod.setDescription("A example footprint")
         kicad_mod.setTags("example")
@@ -425,7 +435,7 @@ class Kicad5PadsTests(unittest.TestCase):
         self.assertEqual(result, RESULT_SIMPLE_POLYGON_PAD)
 
     def testCustomPadOtherPrimitives(self):
-        kicad_mod = Footprint("round_rect_test")
+        kicad_mod = Footprint("round_rect_test", FootprintType.SMD)
 
         kicad_mod.setDescription("A example footprint")
         kicad_mod.setTags("example")
@@ -467,7 +477,7 @@ class Kicad5PadsTests(unittest.TestCase):
         self.assertEqual(result, RESULT_SIMPLE_OTHER_CUSTOM_PAD)
 
     def testCutPolygon(self):
-        kicad_mod = Footprint("round_rect_test")
+        kicad_mod = Footprint("round_rect_test", FootprintType.SMD)
 
         kicad_mod.setDescription("A example footprint")
         kicad_mod.setTags("example")
@@ -490,7 +500,7 @@ class Kicad5PadsTests(unittest.TestCase):
         self.assertEqual(result, RESULT_CUT_POLYGON)
 
     def testChamferedPad(self):
-        kicad_mod = Footprint("chamfered_pad")
+        kicad_mod = Footprint("chamfered_pad", FootprintType.SMD)
 
         kicad_mod.setDescription("A example footprint")
         kicad_mod.setTags("example")
@@ -516,7 +526,7 @@ class Kicad5PadsTests(unittest.TestCase):
         self.assertEqual(result, RESULT_CHAMFERED_PAD)
 
     def testChamferedPadAvoidCircle(self):
-        kicad_mod = Footprint("test_avoid_circle")
+        kicad_mod = Footprint("test_avoid_circle", FootprintType.SMD)
 
         kicad_mod.setDescription("A example footprint")
         kicad_mod.setTags("example")
@@ -543,7 +553,7 @@ class Kicad5PadsTests(unittest.TestCase):
         self.assertEqual(result, RESULT_CHAMFERED_PAD_AVOID_CIRCLE)
 
     def testChamferedPadGrid(self):
-        kicad_mod = Footprint("test_chamfered_grid")
+        kicad_mod = Footprint("test_chamfered_grid", FootprintType.SMD)
 
         kicad_mod.setDescription("A example footprint")
         kicad_mod.setTags("example")
@@ -565,7 +575,7 @@ class Kicad5PadsTests(unittest.TestCase):
         self.assertEqual(result, RESULT_CHAMFERED_PAD_GRID)
 
     def testChamferedPadGridCornerOnly(self):
-        kicad_mod = Footprint("test_chamfered_grid")
+        kicad_mod = Footprint("test_chamfered_grid", FootprintType.SMD)
 
         kicad_mod.setDescription("A example footprint")
         kicad_mod.setTags("example")
@@ -596,7 +606,7 @@ class Kicad5PadsTests(unittest.TestCase):
         self.assertEqual(result, RESULT_CHAMFERED_PAD_GRID_AVOID_CIRCLE)
 
     def testChamferedRoundedPad(self):
-        kicad_mod = Footprint("chamfered_pad")
+        kicad_mod = Footprint("chamfered_pad", FootprintType.SMD)
 
         kicad_mod.setDescription("A example footprint")
         kicad_mod.setTags("example")

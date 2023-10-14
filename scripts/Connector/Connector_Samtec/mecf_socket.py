@@ -115,7 +115,7 @@ def generate_one_footprint(weld, pol, pcb_thickness, n, configuration):
     fp_name = fp_name + '_Socket'
     fp_name = fp_name + '_Horizontal'
 
-    kicad_mod = Footprint(fp_name)
+    kicad_mod = Footprint(fp_name, FootprintType.SMD)
 
     description = "Highspeed card edge connector for "
     if pcb_thickness == '01':
@@ -132,7 +132,7 @@ def generate_one_footprint(weld, pol, pcb_thickness, n, configuration):
 
     #set the FP description
     kicad_mod.setDescription(description)
-    kicad_mod.setAttribute('smd')
+    kicad_mod.footprintType = FootprintType.SMD
 
     tags = "conn samtec card-edge high-speed"
 

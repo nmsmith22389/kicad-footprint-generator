@@ -5,6 +5,7 @@ from KicadModTree.util import geometric_util as geo
 
 RESULT_kx90DEG = """(footprint test (version 20221018) (generator kicad-footprint-generator)
   (layer F.Cu)
+  (attr smd)
   (fp_arc (start 1 0) (mid 0.707107 -0.707107) (end 0 -1)
     (stroke (width 0.12) (type solid)) (layer F.SilkS))
   (fp_arc (start 0 -1.2) (mid -0.848528 -0.848528) (end -1.2 0)
@@ -73,6 +74,7 @@ RESULT_kx90DEG = """(footprint test (version 20221018) (generator kicad-footprin
 
 RESULT_kx90DEG_45deg = """(footprint test (version 20221018) (generator kicad-footprint-generator)
   (layer F.Cu)
+  (attr smd)
   (fp_arc (start -4.292893 5.707107) (mid -4 5) (end -4.292893 4.292893)
     (stroke (width 0.12) (type solid)) (layer F.SilkS))
   (fp_arc (start -4.151472 4.151472) (mid -5 3.8) (end -5.848528 4.151472)
@@ -141,6 +143,7 @@ RESULT_kx90DEG_45deg = """(footprint test (version 20221018) (generator kicad-fo
 
 RESULT_kx3Point = """(footprint test (version 20221018) (generator kicad-footprint-generator)
   (layer F.Cu)
+  (attr smd)
   (fp_arc (start 0.707107 -0.707107) (mid 0 -1) (end -0.707107 -0.707107)
     (stroke (width 0.12) (type solid)) (layer F.SilkS))
   (fp_arc (start -1 0) (mid -0.707107 0.707107) (end 0 1)
@@ -316,7 +319,7 @@ class ArcTests(unittest.TestCase):
         while the geometry is tested above, the actual validity of the
         values in the output is not rigourously checked.
         """
-        kicad_mod = Footprint("test")
+        kicad_mod = Footprint("test", FootprintType.SMD)
 
         center = Vector2D(0, 0)
         kicad_mod.append(
@@ -408,7 +411,7 @@ class ArcTests(unittest.TestCase):
         # file_handler.writeFile('test_arc4.kicad_mod')
 
     def testArcsKx90degOffsetRotated(self):
-        kicad_mod = Footprint("test")
+        kicad_mod = Footprint("test", FootprintType.SMD)
 
         center = Vector2D(-5, 5)
         kicad_mod.append(
@@ -628,7 +631,7 @@ class ArcTests(unittest.TestCase):
         # file_handler.writeFile('test_arc5.kicad_mod')
 
     def testArcsKx3Point(self):
-        kicad_mod = Footprint("test")
+        kicad_mod = Footprint("test", FootprintType.SMD)
 
         root2div2 = (2 ** 0.5) / 2
 

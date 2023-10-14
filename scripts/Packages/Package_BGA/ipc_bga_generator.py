@@ -20,7 +20,7 @@ from string import ascii_uppercase
 
 def generateFootprint(config, fpParams, fpId):
     createFp = False
-    
+
     # use IPC-derived pad size if possible, then fall back to user-defined pads
     if "ball_type" in fpParams and "ball_diameter" in fpParams:
         try:
@@ -33,7 +33,7 @@ def generateFootprint(config, fpParams, fpId):
                 print("{}mm is an invalid ball diameter. See ipc_7351b_bga_land_patterns.yaml for valid values. No footprint generated.".format(e))
         except KeyError:
             print("{} is an invalid ball type. See ipc_7351b_bga_land_patterns.yaml for valid values. No footprint generated.".format(e))
-        
+
         if "pad_diameter" in fpParams:
             print("Pad size is being derived using IPC rules even though pad diameter is defined.")
     elif "ball_type" in fpParams and not "ball_diameter" in fpParams:
@@ -84,9 +84,8 @@ def __createFootprintVariant(config, fpParams, fpId):
         additionalTag = " " + fpParams["additional_tags"]
     else:
         additionalTag = ""
-    
-    f = Footprint(fpId)
-    f.setAttribute("smd")
+
+    f = Footprint(fpId, FootprintType.SMD)
     if "mask_margin" in fpParams:
         f.setMaskMargin(fpParams["mask_margin"])
     if "paste_margin" in fpParams:
@@ -105,10 +104,10 @@ def __createFootprintVariant(config, fpParams, fpId):
     t2 = 0.15 * s2[0]
 
     chamfer = min(config['fab_bevel_size_absolute'], min(pkgX, pkgY) * config['fab_bevel_size_relative'])
-    
+
     silkOffset = config['silk_fab_offset']
     crtYdOffset = config['courtyard_offset']['bga']
-    
+
     def crtYdRound(x):
         # Round away from zero for proper courtyard calculation
         neg = x < 0
@@ -193,7 +192,7 @@ def __createFootprintVariant(config, fpParams, fpId):
 
     for layout in fpParams.get('secondary_layouts', []):
         balls += makePadGrid(f, layout, config, fpParams, xCenter=xCenter, yCenter=yCenter)
-    
+
     # If this looks like a CSP footprint, use the CSP 3dshapes library
     packageType = 'CSP' if 'BGA' not in fpId and 'CSP' in fpId else 'BGA'
 
@@ -212,7 +211,7 @@ def __createFootprintVariant(config, fpParams, fpId):
 
     outputDir = Path(f'Package_{packageType}.pretty')
     outputDir.mkdir(exist_ok=True)
-    
+
     file_handler = KicadFileHandler(f)
     file_handler.writeFile(str(outputDir / f'{fpId}.kicad_mod'))
 
@@ -272,7 +271,7 @@ def makePadGrid(f, lParams, config, fpParams={}, xCenter=0.0, yCenter=0.0):
                          shape=padShape,
                          at=[xPadLeft + (col-1) * pitchX, yPadTop + rowNum * pitchY],
                          size=lParams.get('pad_size') or fpParams['pad_size'],
-                         layers=layers, 
+                         layers=layers,
                          radius_ratio=config['round_rect_radius_ratio']))
 
             if pasteShape and pasteShape != padShape:
@@ -335,10 +334,10 @@ if __name__ == '__main__':
     parser.add_argument('--ipc_doc', type=str, nargs='?', help='IPC definition document', default='ipc_7351b_bga_land_patterns.yaml')
     parser.add_argument('-v', '--verbose', action='count', help='set debug level')
     args = parser.parse_args()
-    
+
     if args.verbose:
         DEBUG_LEVEL = args.verbose
-    
+
     with open(args.global_config, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
@@ -350,7 +349,7 @@ if __name__ == '__main__':
             # configuration.update(yaml.safe_load(config_stream))
         # except yaml.YAMLError as exc:
             # print(exc)
-    
+
     with open(args.ipc_doc, 'r') as config_stream:
         try:
             configuration.update(yaml.safe_load(config_stream))

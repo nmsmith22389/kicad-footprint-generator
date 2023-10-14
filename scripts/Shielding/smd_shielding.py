@@ -30,12 +30,11 @@ def calculate_pad_spacer(pad_spacer, mirror_spacer):
 
 
 def create_smd_shielding(name, **kwargs):
-    kicad_mod = Footprint(name)
+    kicad_mod = Footprint(name, FootprintType.SMD)
 
     # init kicad footprint
     kicad_mod.setDescription(kwargs['description'])
     kicad_mod.setTags('Shielding Cabinet')
-    kicad_mod.setAttribute('smd')
     kicad_mod.append(Model(filename="${KICAD7_3DMODEL_DIR}/RF_Shielding.3dshapes/" + name + ".wrl"))
 
     # do some pre calculations

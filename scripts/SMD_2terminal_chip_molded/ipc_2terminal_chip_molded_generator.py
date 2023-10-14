@@ -184,7 +184,7 @@ class TwoTerminalSMD():
         # print(fp_name)
         # print(pad_details)
 
-        kicad_mod = Footprint(fp_name)
+        kicad_mod = Footprint(fp_name, FootprintType.SMD)
 
         # init kicad footprint
         if 'custom_name' in device_size_data:
@@ -194,7 +194,6 @@ class TwoTerminalSMD():
                                                                               code_metric=code_metric, code_letter=code_letter,
                                                                               size_info=device_size_data.get('size_info')))
         kicad_mod.setTags(footprint_group_data['keywords'])
-        kicad_mod.setAttribute('smd')
 
         pad_shape_details = {}
         pad_shape_details['shape'] = Pad.SHAPE_ROUNDRECT

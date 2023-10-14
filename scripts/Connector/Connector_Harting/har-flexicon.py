@@ -24,7 +24,7 @@ for series in data:
         )
 
         # Init Kicad footprint properties
-        kicad_mod = Footprint(footprint_name)
+        kicad_mod = Footprint(footprint_name, FootprintType.SMD)
         kicad_mod.setDescription(
             "Harting har-flexicon series connector, "
             + series["name_prefix"]
@@ -38,7 +38,6 @@ for series in data:
             "connector Harting har-flexicon "
             + ("vertical" if series["vert"] == "True" else "horizontal")
         )
-        kicad_mod.setAttribute("smd")
         kicad_mod.append(
             Model(
                 filename="${KICAD7_3DMODEL_DIR}/Connector_Harting.3dshapes/"

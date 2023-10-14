@@ -17,6 +17,7 @@
 from KicadModTree.Vector import *
 from KicadModTree.nodes.Node import Node
 
+from enum import Enum
 
 '''
 This is my new approach, using a render tree for footprint generation.
@@ -36,17 +37,34 @@ render_order = ['descr', 'tags', 'attr', 'solder_mask_margin',
 # TODO: sort Text by type
 
 
+class FootprintType(Enum):
+    UNSPECIFIED = 0
+    SMD = 1
+    THT = 2
+
+
 class Footprint(Node):
     '''
     Root Node to generate KicadMod
     '''
-    def __init__(self, name):
+
+    def __init__(self, name: str, footprintType: FootprintType):
+        """
+        :param name: Name of the footprint
+        :param footprintType: Type of the footprint (None is the deprecated default)
+        """
         Node.__init__(self)
 
         self.name = name
         self.description = None
         self.tags = None
-        self.attribute = None
+
+        # These are attrs in the s-exp, but we can be type-safe here
+        # and convert to strings in the file output layer
+        self._footprintType = footprintType
+        self.excludeFromBOM = False
+        self.excludeFromPositionFiles = False
+
         self.maskMargin = None
         self.pasteMargin = None
         self.pasteMarginRatio = None
@@ -60,8 +78,15 @@ class Footprint(Node):
     def setTags(self, tags):
         self.tags = tags
 
-    def setAttribute(self, value):
-        self.attribute = value
+    @property
+    def footprintType(self) -> FootprintType:
+        return self._footprintType
+
+    @footprintType.setter
+    def footprintType(self, footprintType: FootprintType) -> None:
+        if not isinstance(footprintType, FootprintType):
+            raise TypeError("footprintType must be a FootprintType, not {}".format(type(footprintType)))
+        self._footprintType = footprintType
 
     def setMaskMargin(self, value):
         self.maskMargin = value

@@ -82,21 +82,19 @@ def gen_footprint(pinnum, manpart, configuration):
     footprint_name = footprint_name.replace('__','_')
 
     print(footprint_name)
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, FootprintType.SMD)
     kicad_mod.setDescription("{manufacturer} {series}, {mpn}{alt_mpn}, {pins_per_row} Pins per row ({datasheet}), generated with kicad-footprint-generator".format(
         manufacturer = manufacturer,
         series = series_long,
-        mpn = manpart, 
-        alt_mpn = '', 
+        mpn = manpart,
+        alt_mpn = '',
         pins_per_row = pinnum,
         datasheet = datasheet))
-        
+
     kicad_mod.setTags(configuration['keyword_fp_string'].format(series=series,
         orientation=orientation_str, man=manufacturer,
         entry='horizontal'))
 
-    kicad_mod.setAttribute('smd')
-    
     # Pads
     kicad_mod.append(PadArray(start=[-6.775+padsize[0]/2, -(pitch*(pinnum-1))/2], initial=1,
         pincount=pinnum, increment=1,  y_spacing=pitch, size=padsize,
@@ -136,8 +134,8 @@ def gen_footprint(pinnum, manpart, configuration):
     ]
     kicad_mod.append(PolygoneLine(polygone=s_pin1,
             width=configuration['silk_line_width'], layer="F.SilkS"))
-    
-    
+
+
     # CrtYd
     cy_offset = configuration['courtyard_offset']['connector']
     cy_grid = configuration['courtyard_grid']
@@ -177,7 +175,7 @@ def gen_footprint(pinnum, manpart, configuration):
     model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}.wrl'.format(
         model3d_path_prefix=model3d_path_prefix, lib_name=lib_name, fp_name=footprint_name)
     kicad_mod.append(Model(filename=model_name))
-    
+
     # Output
     output_dir = '{lib_name:s}.pretty/'.format(lib_name=lib_name)
     if not os.path.isdir(output_dir): #returns false if path does not yet exist!! (Does not check path validity)

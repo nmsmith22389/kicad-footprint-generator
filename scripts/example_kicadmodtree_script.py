@@ -27,7 +27,7 @@ if __name__ == '__main__':
     footprint_name = "example_footprint"
 
     # init kicad footprint
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, FootprintType.SMD)
     kicad_mod.setDescription("A example footprint")
     kicad_mod.setTags("example")
 
@@ -44,7 +44,7 @@ if __name__ == '__main__':
     # create pads
     kicad_mod.append(Pad(number=7, type=Pad.TYPE_THT, shape=Pad.SHAPE_RECT, at=[0,0], size=[2,2], drill=1.2, layers=['*.Cu', '*.Mask', 'F.SilkS']))
     kicad_mod.append(Pad(number=22, type=Pad.TYPE_THT, shape=Pad.SHAPE_CIRCLE, at=[3,0], size=[2,2], drill=1.2, layers=['*.Cu', '*.Mask', 'F.SilkS']))
-    
+
     kicad_mod.append(Pad(number=12, type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT, at=[3,0], size=[2,2], drill=1.2, layers=['*.Cu', '*.Mask', 'F.SilkS']))
 
     # add model
@@ -52,9 +52,9 @@ if __name__ == '__main__':
                           ,at=[0,0,0]
                           ,scale=[1,1,1]
                           ,rotate=[0,0,0]))
-    
+
     kicad_mod.append(PadArray(pincount=10,spacing=[1,-1],center=[0,0], initial=5, increment=2, type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT, size=[1,2], layers=["*.Cu"]))
-                          
+
     # output kicad model
     #print(kicad_mod)
 
@@ -66,5 +66,4 @@ if __name__ == '__main__':
     file_handler = KicadFileHandler(kicad_mod)
     file_handler.writeFile('example_footprint.kicad_mod')
 
-    
-    
+

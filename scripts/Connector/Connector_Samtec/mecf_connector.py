@@ -79,7 +79,7 @@ def generate_one_footprint(pol, n, configuration):
         fp_name += '_Polarized'
     fp_name += '_Edge'
 
-    kicad_mod = Footprint(fp_name)
+    kicad_mod = Footprint(fp_name, FootprintType.UNSPECIFIED)
 
     description = "Highspeed card edge connector for PCB's with " + n + " contacts "
 
@@ -88,8 +88,8 @@ def generate_one_footprint(pol, n, configuration):
     else:
         description = description + '(not polarized)'
 
-    kicad_mod.setAttribute('exclude_from_pos_files')
-    kicad_mod.setAttribute('exclude_from_bom')
+    kicad_mod.excludeFromBOM = True
+    kicad_mod.excludeFromPositionFiles = True
 
     #set the FP description
     kicad_mod.setDescription(description)

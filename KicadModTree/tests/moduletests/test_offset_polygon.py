@@ -4,7 +4,8 @@ from KicadModTree.tests.utility import *
 
 
 def gen_footprint(offsets: list):
-    kicad_mod = Footprint("test")
+    kicad_mod = Footprint("test", FootprintType.SMD)
+
     # add a shape on Silk and Fab
     poly = PolygoneLine(
         nodes=[

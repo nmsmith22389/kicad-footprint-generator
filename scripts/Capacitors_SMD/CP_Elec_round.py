@@ -14,7 +14,7 @@ from KicadModTree.nodes.base.Pad import Pad  # NOQA
 
 
 def create_footprint(name, configuration, **kwargs):
-    kicad_mod = Footprint(name)
+    kicad_mod = Footprint(name, FootprintType.SMD)
 
     # init kicad footprint
     datasheet = ""
@@ -22,7 +22,6 @@ def create_footprint(name, configuration, **kwargs):
         datasheet = kwargs['datasheet']
     kicad_mod.setDescription("SMD capacitor, aluminum electrolytic, " + kwargs['extra_description'] + " " + datasheet)
     kicad_mod.setTags('Capacitor Electrolytic')
-    kicad_mod.setAttribute('smd')
 
     body_width = kwargs['body_width']['nominal']
     body_length = kwargs['body_length']['nominal']

@@ -55,7 +55,7 @@ def generate_one_footprint(pins, configuration):
         mpn=mpn, num_rows=number_of_rows, pins_per_row=pins, mounting_pad = "",
         pitch=pitch, orientation=orientation_str)
 
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, Footprint.THT)
     kicad_mod.setDescription("JST {:s} series connector, {:s} ({:s}), generated with kicad-footprint-generator".format(series, mpn, datasheet))
     kicad_mod.setTags(configuration['keyword_fp_string'].format(series=series,
         orientation=orientation_str, man=manufacturer,
@@ -75,7 +75,7 @@ def generate_one_footprint(pins, configuration):
     #wall thickness
     t_short = 0.75 #short side (fixed at 5mm)
     t_long = 0.4 #long side (A/B dimension)
-    
+
     #draw simple outline on F.Fab layer
     kicad_mod.append(RectLine(start=[x1,y1],end=[x2,y2],layer='F.Fab',width=configuration['fab_line_width']))
 
@@ -92,7 +92,7 @@ def generate_one_footprint(pins, configuration):
 
     #draw silk polarity lines
     kicad_mod.append(RectLine(start=[x1+t_short,y1+t_long],end=[x2-t_short,y2-t_long],layer='F.SilkS',width=configuration['silk_line_width']))
-    
+
     #offset off
     off = configuration['silk_fab_offset']
 

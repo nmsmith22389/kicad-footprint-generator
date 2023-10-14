@@ -42,7 +42,7 @@ class Dimensions(object):
         self.device_offset_x_mm = device['body']['x_mm'] / 2.0  # x coordinate of RHS of device
         self.body_x_mm = device['body']['x_mm']
         self.body_offset_y_mm = device['body']['y_mm'] / 2.0  # y coordinate of bottom of body
-        
+
         # COURTYARD
         self.biggest_x_mm = footprint['x_mm']
         self.biggest_y_mm = device['body']['y_mm']
@@ -92,7 +92,6 @@ class CapacitorTrimmer(object):
     def _add_properties(self, m, variant):
         m.setDescription('{bd:s}, {vd:s}'.format(bd=self.config['base']['description'], vd=variant['datasheet']))
         m.setTags('{bk:s} {vk:s}'.format(bk=self.config['base']['keywords'], vk=variant['keywords']))
-        m.setAttribute('smd')
         return m
 
 
@@ -123,10 +122,10 @@ class CapacitorTrimmer(object):
         top_y = -dim.body_offset_y_mm
         bottom_y = -top_y
         if 'left' in variant['device']['chamfer']['sides']:
-            chamfers = [{'corner': 'topleft', 'size': variant['device']['chamfer']['size_mm']}, 
+            chamfers = [{'corner': 'topleft', 'size': variant['device']['chamfer']['size_mm']},
                         {'corner': 'bottomleft', 'size': variant['device']['chamfer']['size_mm']}]
         elif 'right' in variant['device']['chamfer']['sides']:
-            chamfers = [{'corner': 'topright', 'size': variant['device']['chamfer']['size_mm']}, 
+            chamfers = [{'corner': 'topright', 'size': variant['device']['chamfer']['size_mm']},
                         {'corner': 'bottomright', 'size': variant['device']['chamfer']['size_mm']}]
         else:
             chamfers = []
@@ -180,7 +179,7 @@ class CapacitorTrimmer(object):
         dim = Dimensions(base, variant, cut_pin, tab_linked)
 
         # initialise footprint
-        kicad_mod = Footprint(dim.name)
+        kicad_mod = Footprint(dim.name, FootprintType.SMD)
         kicad_mod = self._add_properties(kicad_mod, variant)
         kicad_mod = self._add_labels(kicad_mod, variant, dim)
 

@@ -14,7 +14,7 @@ sys.path.append(os.path.join(sys.path[0], "..", "tools"))  # load parent path of
 from ipc_pad_size_calculators import *
 
 def create_footprint(name, configuration, **kwargs):
-    kicad_mod = Footprint(name)
+    kicad_mod = Footprint(name, FootprintType.SMD)
 
     # init kicad footprint
     datasheet = ", " + kwargs['datasheet'] if 'datasheet' in kwargs else ""
@@ -33,7 +33,7 @@ def create_footprint(name, configuration, **kwargs):
         'body_height': TolerancedSize.fromYaml(kwargs, base_name='body_height'),
         'body_diameter': TolerancedSize.fromYaml(kwargs, base_name='body_diameter')
     }
-    
+
     # for ease of use, capture nominal body and pad sizes
     body_size = {
         'length': device_dimensions['body_length'].nominal,
@@ -45,7 +45,6 @@ def create_footprint(name, configuration, **kwargs):
     description += ", " + str(body_size['diameter']) + "x" + str(body_size['height']) + "mm"
     kicad_mod.setDescription(description + datasheet)
     kicad_mod.setTags(tags)
-    kicad_mod.setAttribute('smd')
 
     # set general values
     text_offset_y = body_size['width'] / 2.0 + configuration['courtyard_offset']['default'] + 0.8
@@ -68,7 +67,7 @@ def create_footprint(name, configuration, **kwargs):
     # create pads
     # all pads have these properties
     pad_params = {'type': Pad.TYPE_SMT, 'layers': Pad.LAYERS_SMT, 'shape': Pad.SHAPE_RECT}
-    
+
     # prefer IPC-7351C compliant rounded rectangle pads
     if not configuration['force_rectangle_pads']:
         pad_params['shape'] = Pad.SHAPE_ROUNDRECT
@@ -83,12 +82,12 @@ def create_footprint(name, configuration, **kwargs):
         ipc_density = configuration['ipc_density']
         ipc_data = ipc_defintions['ipc_spec_capae_crystal'][ipc_density + ipc_density_suffix]
         ipc_round_base = ipc_defintions['ipc_spec_capae_crystal']['round_base']
-        
+
         manf_tol = {
             'F': configuration.get('manufacturing_tolerance', 0.1),
             'P': configuration.get('placement_tolerance', 0.05)
         }
-        
+
         # # fully tolerance lead dimensions; leads are dimensioned like SOIC so use gullwing calculator
         device_dimensions['lead_width'] = TolerancedSize.fromYaml(kwargs, base_name='lead_width')
         device_dimensions['lead_spacing'] = TolerancedSize.fromYaml(kwargs, base_name='lead_spacing')
@@ -98,11 +97,11 @@ def create_footprint(name, configuration, **kwargs):
             device_dimensions.get('lead_length').maximum * 2,
             minimum = device_dimensions['lead_spacing'].minimum +
             device_dimensions.get('lead_length').minimum * 2)
-        
+
         Gmin, Zmax, Xmax = ipc_gull_wing(ipc_data, ipc_round_base, manf_tol,
                 device_dimensions['lead_width'], device_dimensions['lead_outside'],
                 lead_len=device_dimensions.get('lead_length'))
-        
+
         pad_params['size'] = [(Zmax - Gmin) / 2.0, Xmax]
 
         x_pad_spacing = (Zmax + Gmin) / 4.0
@@ -114,7 +113,7 @@ def create_footprint(name, configuration, **kwargs):
 
     kicad_mod.append(Pad(number=1, at=[-x_pad_spacing, 0], **pad_params))
     kicad_mod.append(Pad(number=2, at=[x_pad_spacing, 0], **pad_params))
-    
+
     # create fabrication layer
     fab_x = body_size['length'] / 2.0
     fab_y = body_size['width'] / 2.0
@@ -144,9 +143,9 @@ def create_footprint(name, configuration, **kwargs):
         fab_pol_pos_x = math.sqrt(fab_pol_distance*fab_pol_distance-fab_pol_pos_y*fab_pol_pos_y)
         fab_pol_pos_x = -fab_pol_pos_x
         fab_pol_pos_y = -fab_pol_pos_y
-        kicad_mod.append(Line(start=[fab_pol_pos_x-fab_pol_wing, fab_pol_pos_y], end=[fab_pol_pos_x+fab_pol_wing, fab_pol_pos_y], 
+        kicad_mod.append(Line(start=[fab_pol_pos_x-fab_pol_wing, fab_pol_pos_y], end=[fab_pol_pos_x+fab_pol_wing, fab_pol_pos_y],
             layer='F.Fab', width=configuration['fab_line_width']))
-        kicad_mod.append(Line(start=[fab_pol_pos_x, fab_pol_pos_y-fab_pol_wing], end=[fab_pol_pos_x, fab_pol_pos_y+fab_pol_wing], 
+        kicad_mod.append(Line(start=[fab_pol_pos_x, fab_pol_pos_y-fab_pol_wing], end=[fab_pol_pos_x, fab_pol_pos_y+fab_pol_wing],
             layer='F.Fab', width=configuration['fab_line_width']))
 
 
@@ -185,9 +184,9 @@ def create_footprint(name, configuration, **kwargs):
         silk_pol_pos_x = silk_x + silk_pol_wing + configuration['silk_line_width']*2
         silk_pol_pos_x = -silk_pol_pos_x
         silk_pol_pos_y = -silk_pol_pos_y
-        kicad_mod.append(Line(start=[silk_pol_pos_x-silk_pol_wing, silk_pol_pos_y], end=[silk_pol_pos_x+silk_pol_wing, silk_pol_pos_y], 
+        kicad_mod.append(Line(start=[silk_pol_pos_x-silk_pol_wing, silk_pol_pos_y], end=[silk_pol_pos_x+silk_pol_wing, silk_pol_pos_y],
             layer='F.SilkS', width=configuration['silk_line_width']))
-        kicad_mod.append(Line(start=[silk_pol_pos_x, silk_pol_pos_y-silk_pol_wing], end=[silk_pol_pos_x, silk_pol_pos_y+silk_pol_wing], 
+        kicad_mod.append(Line(start=[silk_pol_pos_x, silk_pol_pos_y-silk_pol_wing], end=[silk_pol_pos_x, silk_pol_pos_y+silk_pol_wing],
             layer='F.SilkS', width=configuration['silk_line_width']))
 
     # create courtyard
@@ -257,7 +256,7 @@ if __name__ == "__main__":
     parser.add_argument('--force_rectangle_pads', action='store_true', help='Force the generation of rectangle pads instead of rounded rectangle (KiCad 4.x compatibility.)')
     #parser.add_argument('-v', '--verbose', help='show more information when creating footprint', action='store_true')
     # TODO: allow writing into sub file
-    
+
     args = parser.parse_args()
     with open(args.global_config, 'r') as config_stream:
         try:
@@ -270,7 +269,7 @@ if __name__ == "__main__":
             configuration.update(yaml.safe_load(config_stream))
         except yaml.YAMLError as exc:
             print(exc)
-    
+
     ipc_doc = args.ipc_definition
     with open(ipc_doc, 'r') as ipc_stream:
         try:
@@ -280,7 +279,7 @@ if __name__ == "__main__":
 
     configuration['ipc_density'] = args.ipc_density
     configuration['force_rectangle_pads'] = args.force_rectangle_pads
-    
+
     for filepath in args.files:
         with open(filepath, 'r') as stream:
             try:

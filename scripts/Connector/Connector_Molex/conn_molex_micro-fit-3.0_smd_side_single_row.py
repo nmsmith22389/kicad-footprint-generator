@@ -90,7 +90,7 @@ def generate_one_footprint(pins, variant, configuration):
     )
     footprint_name += variant_params[variant]["suffix"]
 
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, FootprintType.SMD)
     kicad_mod.setDescription(
         "Molex {:s}, {:s} (compatible alternatives: {:s}), {:d} Pins per row ({:s}), generated with kicad-footprint-generator".format(
             series_long, mpn, ", ".join(alt_mpn), pins, datasheet
@@ -104,8 +104,6 @@ def generate_one_footprint(pins, variant, configuration):
             entry=configuration["entry_direction"][orientation],
         )
     )
-
-    kicad_mod.setAttribute("smd")
 
     # Calculate dimensions
     B = (pins - 1) * pitch

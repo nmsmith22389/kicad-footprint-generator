@@ -78,8 +78,6 @@ class StandardBox(Node):
           The width and height of the rectangle
         * *tags* (``str``) --
           A foot prints tag attribute
-        * *SmdTht* (``str``) --
-          A foot prints tht/smd attribute
         * *extratexts* (``list(x, y, 'text', layer, sizex, sizey)``) --
           A list of extra txts to be placed on the footprint
         * *pins* (``list(type, number, x, y, sizex, sizey, drill)``) --
@@ -92,7 +90,7 @@ class StandardBox(Node):
     #
     # pycodestyle complain over long lines so the complete on is placed in a comment instead
     #
-    # StandardBox(footprint=f, description=description, datasheet=datasheet, at=at, size=size, tags=fptag, SmdTht=SmdTht,
+    # StandardBox(footprint=f, description=description, datasheet=datasheet, at=at, size=size, tags=fptag,
     # extratexts=extratexts, pins=pins, file3Dname = "${KICAD7_3DMODEL_DIR}/" + dir3D + "/" + footprint_name + ".wrl")))
     #
     >>> from KicadModTree import *
@@ -113,7 +111,6 @@ class StandardBox(Node):
         #
         self._initDesriptionNode(**kwargs)
         self._initTagNode(**kwargs)
-        self._initAttributeNode(**kwargs)
         self._initFile3DNameNode(**kwargs)
         self._initExtraTextNode(**kwargs)
 
@@ -211,12 +208,6 @@ class StandardBox(Node):
             raise KeyError('tags not declared (like "tags: "Bulgin Battery Holder, BX0033, Battery Type 1xPP3")')
         self.tags = str(kwargs.get('tags'))
         self.footprint.setTags(self.tags)
-
-    def _initAttributeNode(self, **kwargs):
-        if kwargs.get('SmdTht'):
-            self.SmdTht = str(kwargs.get('SmdTht'))
-            if self.SmdTht == "smd":
-                self.footprint.setAttribute("smd")
 
     def _initFile3DNameNode(self, **kwargs):
         if 'file3Dname' not in kwargs:
@@ -316,8 +307,8 @@ class StandardBox(Node):
                 new_node = Arc(center=Point2D(x0, y7), start=Point2D(x7, y7), layer='F.Fab', width=self.FFabWidth, angle=90.0)
                 new_node._parent = self
                 self.virtual_childs.append(new_node)
-                
-                
+
+
             if nn[0] == 'URP':
                 x1 = (x + w) - nn[1]
                 y2 = y + nn[2]
@@ -335,7 +326,7 @@ class StandardBox(Node):
                 new_node = Arc(center=Point2D(x1, y2), start=Point2D(x1, y1), layer='F.Fab', width=self.FFabWidth, angle=90.0)
                 new_node._parent = self
                 self.virtual_childs.append(new_node)
-                
+
             if nn[0] == 'LRP':
                 x4 = (x + w) - nn[1]
                 y3 = (y + h) - nn[1]
@@ -353,7 +344,7 @@ class StandardBox(Node):
                 new_node = Arc(center=Point2D(x4, y3), start=Point2D(x3, y3), layer='F.Fab', width=self.FFabWidth, angle=90.0)
                 new_node._parent = self
                 self.virtual_childs.append(new_node)
-                
+
             if nn[0] == 'LLR':
                 x5 = x + nn[1]
                 y6 = (y + h) - nn[1]
@@ -465,7 +456,7 @@ class StandardBox(Node):
                             x4_t = x2_t
                             x2_t = x2_t - (nn[1])
                             y4_t = y1_t - (nn[2])
-                    
+
                 #
                 EndLine = True
                 foundPad = False
@@ -512,7 +503,7 @@ class StandardBox(Node):
                                     new_node = Arc(center=Point2D(x1_t, urcdy0), start=Point2D(urcdx1, urcdy0), layer='F.SilkS', width=self.FSilkSWidth, angle=90.0)
                                     new_node._parent = self
                                     self.virtual_childs.append(new_node)
-                                    
+
                                 if nn[0] == 'ULP':
                                     new_node = Line(start=Point2D(x1_t, y3_t), end=Point2D(x1_t, y1_t), layer='F.SilkS', width=self.FSilkSWidth)
                                     new_node._parent = self
@@ -529,7 +520,7 @@ class StandardBox(Node):
                                     new_node = Line(start=Point2D(x2_t, y4_t), end=Point2D(x4_t, y4_t), layer='F.SilkS', width=self.FSilkSWidth)
                                     new_node._parent = self
                                     self.virtual_childs.append(new_node)
-                            
+
                         if y1 > 0.0 and UseCorner:
                             # Bottom line
                             for nn in self.corners:
@@ -538,7 +529,7 @@ class StandardBox(Node):
                                     new_node = Arc(center=Point2D(x1_t, urcdy0), start=Point2D(x1_t, y1_t), layer='F.SilkS', width=self.FSilkSWidth, angle=90.0)
                                     new_node._parent = self
                                     self.virtual_childs.append(new_node)
-                                    
+
                                 if nn[0] == 'LLP':
                                     new_node = Line(start=Point2D(x1_t, y3_t), end=Point2D(x1_t, y1_t), layer='F.SilkS', width=self.FSilkSWidth)
                                     new_node._parent = self
@@ -561,21 +552,21 @@ class StandardBox(Node):
 
                     if x1_t >= x2:
                         EndLine = False
-                    
+
                     UseCorner = False
-                    
+
                 if not foundPad and y1 < 0:
-                    # 
+                    #
                     for nn in self.corners:
                         if nn[0] == 'URR':
                             urcdy1 = y1_t + (nn[1] + 0.12)
                             new_node = Arc(center=Point2D(x2_t, urcdy1), start=Point2D(x2_t, y2_t), layer='F.SilkS', width=self.FSilkSWidth, angle=90.0)
                             new_node._parent = self
                             self.virtual_childs.append(new_node)
-                    
-                    
+
+
                 if not foundPad and y1 > 0:
-                    # 
+                    #
                     for nn in self.corners:
                         if nn[0] == 'LRR':
                             urcdx1 = x2_t + (nn[1] + 0.12)
@@ -583,7 +574,7 @@ class StandardBox(Node):
                             new_node = Arc(center=Point2D(x2_t, urcdy1), start=Point2D(urcdx1, urcdy1), layer='F.SilkS', width=self.FSilkSWidth, angle=90.0)
                             new_node._parent = self
                             self.virtual_childs.append(new_node)
-                        
+
             if (x1 < 0.0 and y1 < 0.0 and y2 > 0.0) or (x1 > 0.0 and y1 < 0.0 and y2 > 0.0):
                 #
                 # Left and right line
@@ -595,7 +586,7 @@ class StandardBox(Node):
                     # Left line
                     x1_t = min(x1 - 0.12, x2 - 0.12)
                     x2_t = max(x1 - 0.12, x2 - 0.12)
-                    
+
                     for nn in self.corners:
                         if nn[0] == 'ULR':
                             y1_t = y1_t + (nn[1] + 0.12)
@@ -605,12 +596,12 @@ class StandardBox(Node):
                             y1_t = y1_t + (nn[2])
                         if nn[0] == 'LLP':
                             y2_t = y2_t - (nn[2])
-                    
+
                 else:
                     # Right line
                     x1_t = min(x1 + 0.12, x2 + 0.12)
                     x2_t = max(x1 + 0.12, x2 + 0.12)
-                    
+
                     #
                     for nn in self.corners:
                         if nn[0] == 'URR':
@@ -621,7 +612,7 @@ class StandardBox(Node):
                             y1_t = y1_t + (nn[2])
                         if nn[0] == 'LRP':
                             y2_t = y2_t - (nn[2])
-                    
+
                 #
                 EndLine = True
                 while EndLine:
@@ -716,7 +707,7 @@ class StandardBox(Node):
                             x4_t = x2_t
                             x2_t = x2_t - (nn[1])
                             y4_t = y1_t + (nn[2])
-                    
+
                 else:
                     # Bottom line
                     y1_t = y1 + 0.25
@@ -800,7 +791,7 @@ class StandardBox(Node):
                                     new_node = Arc(center=Point2D(x1_t, urcdy0), start=Point2D(urcdx1, urcdy0), layer='F.CrtYd', width=self.FCrtYdWidth, angle=90.0)
                                     new_node._parent = self
                                     self.virtual_childs.append(new_node)
-                                    
+
                                 if nn[0] == 'ULP':
                                     new_node = Line(start=Point2D(x1_t, y3_t), end=Point2D(x1_t, y1_t), layer='F.CrtYd', width=self.FCrtYdWidth)
                                     new_node._parent = self
@@ -817,7 +808,7 @@ class StandardBox(Node):
                                     new_node = Line(start=Point2D(x2_t, y4_t), end=Point2D(x4_t, y4_t), layer='F.CrtYd', width=self.FCrtYdWidth)
                                     new_node._parent = self
                                     self.virtual_childs.append(new_node)
-                            
+
                         if y1 > 0.0 and UseCorner:
                             # Bottom line
                             for nn in self.corners:
@@ -826,7 +817,7 @@ class StandardBox(Node):
                                     new_node = Arc(center=Point2D(x1_t, urcdy0), start=Point2D(x1_t, y1_t), layer='F.CrtYd', width=self.FCrtYdWidth, angle=90.0)
                                     new_node._parent = self
                                     self.virtual_childs.append(new_node)
-                                    
+
                                 if nn[0] == 'LLP':
                                     new_node = Line(start=Point2D(x1_t, y3_t), end=Point2D(x1_t, y1_t), layer='F.CrtYd', width=self.FCrtYdWidth)
                                     new_node._parent = self
@@ -851,19 +842,19 @@ class StandardBox(Node):
 
                     if x1_t >= x2:
                         EndLine = False
-                    
+
                 if not foundPad and y1 < 0:
-                    # 
+                    #
                     for nn in self.corners:
                         if nn[0] == 'URR':
                             urcdy1 = y1_t + (nn[1] + 0.25)
                             new_node = Arc(center=Point2D(x2_t, urcdy1), start=Point2D(x2_t, y2_t), layer='F.CrtYd', width=self.FCrtYdWidth, angle=90.0)
                             new_node._parent = self
                             self.virtual_childs.append(new_node)
-                    
-                    
+
+
                 if not foundPad and y1 > 0:
-                    # 
+                    #
                     for nn in self.corners:
                         if nn[0] == 'LRR':
                             urcdx1 = x2_t + (nn[1] + 0.25)
@@ -1033,7 +1024,7 @@ class StandardBox(Node):
                     self.footprint.append(new_pad)
                     self.pad.append(new_pad)
             elif n[0] == 'smd':
-                    new_pad = Pad(number=c, type=Pad.TYPE_SMT, shape=Pad.SHAPE_ROUNDRECT, radius_ratio=0.25, 
+                    new_pad = Pad(number=c, type=Pad.TYPE_SMT, shape=Pad.SHAPE_ROUNDRECT, radius_ratio=0.25,
                                   at=[x, 0.0 - y], size=[sx, sy], drill=dh, layers=Pad.LAYERS_SMT)
                     self.footprint.append(new_pad)
                     self.pad.append(new_pad)

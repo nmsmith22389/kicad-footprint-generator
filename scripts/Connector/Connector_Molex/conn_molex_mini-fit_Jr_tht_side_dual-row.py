@@ -98,7 +98,7 @@ def generate_one_footprint(pins_per_row, variant, configuration):
         mpn=old_mpn, num_rows=number_of_rows, pins_per_row=pins_per_row, mounting_pad = "",
         pitch=pitch, orientation=orientation_str)
 
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, Footprint.THT)
     descr_format_str = "Molex {:s}, old mpn/engineering number: {:s}, example for new mpn: {:s}, {:d} Pins per row, Mounting: {:s} ({:s}), generated with kicad-footprint-generator"
     kicad_mod.setDescription(descr_format_str.format(
         series_long, old_mpn, mpn, pins_per_row,

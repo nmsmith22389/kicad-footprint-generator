@@ -109,11 +109,9 @@ def generate_one_footprint(partnumber, pincount, configuration):
         side = "top"
 
     # initialise footprint
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, FootprintType.SMD)
     kicad_mod.setDescription('TE FPC connector, {pc:02g} {side}-side contacts, 1.0mm pitch, 1.0mm height, SMT, {ds}'.format(pc=pincount, side=side, ds=datasheet))
     kicad_mod.setTags('te fpc {:s}'.format(partnumber))
-    kicad_mod.setAttribute('smd')
-
 
     # create pads
     kicad_mod.append(PadArray(pincount=pincount, x_spacing=pitch, center=[0,pad_y],

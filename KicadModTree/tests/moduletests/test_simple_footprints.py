@@ -20,6 +20,7 @@ from KicadModTree import *
 
 RESULT_MINIMUM = """(footprint test (version 20221018) (generator kicad-footprint-generator)
   (layer F.Cu)
+  (attr smd)
 )"""
 
 RESULT_BASIC_TAGS = """(footprint test (version 20221018) (generator kicad-footprint-generator)
@@ -33,6 +34,7 @@ RESULT_SIMPLE_FOOTPRINT = """(footprint test (version 20221018) (generator kicad
   (layer F.Cu)
   (descr "A example footprint")
   (tags example)
+  (attr smd)
   (fp_text reference REF** (at 0 -3) (layer F.SilkS)
     (effects (font (size 1 1) (thickness 0.15)))
   )
@@ -66,6 +68,7 @@ RESULT_SIMPLE_FOOTPRINT = """(footprint test (version 20221018) (generator kicad
 
 RESULT_BASIC_NODES = """(footprint test (version 20221018) (generator kicad-footprint-generator)
   (layer F.Cu)
+  (attr smd)
   (fp_text reference REF** (at 0 -3) (layer F.SilkS)
     (effects (font (size 1 1) (thickness 0.15)))
   )
@@ -90,23 +93,22 @@ RESULT_BASIC_NODES = """(footprint test (version 20221018) (generator kicad-foot
 class SimpleFootprintTests(unittest.TestCase):
 
     def testMinimum(self):
-        kicad_mod = Footprint("test")
+        kicad_mod = Footprint("test", FootprintType.SMD)
 
         file_handler = KicadFileHandler(kicad_mod)
         self.assertEqual(file_handler.serialize(timestamp=0), RESULT_MINIMUM)
 
     def testBasicTags(self):
-        kicad_mod = Footprint("test")
+        kicad_mod = Footprint("test", FootprintType.SMD)
 
         kicad_mod.setDescription("A example footprint")
         kicad_mod.setTags("example")
-        kicad_mod.setAttribute("smd")
 
         file_handler = KicadFileHandler(kicad_mod)
         self.assertEqual(file_handler.serialize(timestamp=0), RESULT_BASIC_TAGS)
 
     def testSampleFootprint(self):
-        kicad_mod = Footprint("test")
+        kicad_mod = Footprint("test", FootprintType.SMD)
 
         kicad_mod.setDescription("A example footprint")
         kicad_mod.setTags("example")
@@ -126,7 +128,7 @@ class SimpleFootprintTests(unittest.TestCase):
         self.assertEqual(file_handler.serialize(timestamp=0), RESULT_SIMPLE_FOOTPRINT)
 
     def testBasicNodes(self):
-        kicad_mod = Footprint("test")
+        kicad_mod = Footprint("test", FootprintType.SMD)
 
         kicad_mod.append(Text(type='reference', text='REF**', at=[0, -3], layer='F.SilkS'))
         kicad_mod.append(Text(type='value', text="footprint name", at=[0, 3], layer='F.Fab'))

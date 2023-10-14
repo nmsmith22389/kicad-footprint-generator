@@ -316,7 +316,7 @@ class Gullwing():
         # print(fp_name)
         # print(pad_details)
 
-        kicad_mod = Footprint(fp_name)
+        kicad_mod = Footprint(fp_name, FootprintType.SMD)
 
         # init kicad footprint
         kicad_mod.setDescription(
@@ -336,7 +336,6 @@ class Gullwing():
             package=device_type,
             category=header['override_lib_name'] if 'override_lib_name' in header else header['library_Suffix']
         ).lstrip())
-        kicad_mod.setAttribute('smd')
 
         if 'custom_pad_layout' in device_params:
             pad_radius = add_custom_pad_layout(kicad_mod, configuration, pad_details, device_params)

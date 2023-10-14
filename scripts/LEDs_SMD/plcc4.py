@@ -24,10 +24,9 @@ def plcc4(args):
 
     desc = str(pkgWidth) + "mm x " + str(pkgHeight) + "mm PLCC4 LED, "
 
-    f = Footprint(footprint_name)
+    f = Footprint(footprint_name, FootprintType.SMD)
     f.setDescription(desc + args["datasheet"])
     f.setTags("LED Cree PLCC-4")
-    f.setAttribute("smd")
     f.append(Model(filename="${KICAD7_3DMODEL_DIR}/LEDs.3dshapes/" + footprint_name + ".wrl",
                    at=[0.0, 0.0, 0.0],
                    scale=[1.0, 1.0, 1.0],

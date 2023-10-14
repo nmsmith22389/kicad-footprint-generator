@@ -12,12 +12,11 @@ from KicadModTree.nodes.base.Pad import Pad  # NOQA
 def create_shielding(name, outer_size, size,
                      attachment_width, attachment_length, attachment_positions, outer_attachment_length):
 
-    kicad_mod = Footprint(name)
+    kicad_mod = Footprint(name, FootprintType.SMD)
 
     # init kicad footprint
     kicad_mod.setDescription('WE-SHC Shielding Cabinet SMD {size}x{size}mm'.format(size=size))
     kicad_mod.setTags('Shielding Cabinet')
-    kicad_mod.setAttribute('smd')
 
     # set general values
     kicad_mod.append(Text(type='reference', text='REF**', at=[0, -outer_size / 2. - 1], layer='F.SilkS'))

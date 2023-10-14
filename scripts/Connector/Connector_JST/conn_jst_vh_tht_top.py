@@ -49,10 +49,10 @@ def generate_one_footprint(pins, series_params, configuration):
     #calculate dimensions
     A = (pins - 1) * pitch
     B = A + 3.9
-    
+
     post_omitted = True if len(series_params) == 4 else False
     pins_used = pins - len(series_params[3]) if post_omitted else pins
-    
+
     # if removed pins are a fixed pattern (every 2 pins, every 3 pins, etc.),
     # then we can determine an effective pitch
     # if all pins are loaded or removed pins are disorderly use the default pitch
@@ -70,7 +70,7 @@ def generate_one_footprint(pins, series_params, configuration):
         mpn=mpn, num_rows=number_of_rows, pins_per_row=pins_used, mounting_pad = "",
         pitch=pitch_effective, orientation=orientation_str)
 
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, Footprint.THT)
     kicad_mod.setDescription("JST {:s} series connector, {:s} ({:s}), generated with kicad-footprint-generator".format(series_params[2], mpn, datasheet))
     kicad_mod.setTags(configuration['keyword_fp_string'].format(series=series,
         orientation=orientation_str, man=manufacturer,

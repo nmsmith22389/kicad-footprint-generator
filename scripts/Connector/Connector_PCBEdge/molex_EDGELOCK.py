@@ -44,12 +44,12 @@ for padNum in padNums:
     housingWidth = datasheetB + datasheetBtoHousingLeft + datasheetBtoHousingRight
     edgeToHousingTop = edgeToHoleBottom + holeHeight
 
-    f = Footprint(footprint_name)
+    f = Footprint(footprint_name, Footprint.UNSPECIFIED)
     f.setDescription(datasheet)
     f.setTags("Connector PCBEdge molex EDGELOCK")
 
-    f.setAttribute('exclude_from_pos_files')
-    f.setAttribute('exclude_from_bom')
+    f.excludeFromBOM = True
+    f.excludeFromPositionFiles = True
 
     f.append(Model(filename="${KICAD7_3DMODEL_DIR}/Connector_PCBEdge.3dshapes/" + footprint_name + ".wrl",
                    at=[0.0, 0.0, 0.0],

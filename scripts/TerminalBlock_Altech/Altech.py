@@ -3,16 +3,13 @@
 import sys
 import os
 import math
-
-sys.path.append(os.path.join(sys.path[0], "..", ".."))  # load parent path of KicadModTree
 import argparse
 import yaml
+
+sys.path.append(os.path.join(sys.path[0], "..", ".."))  # load parent path of KicadModTree
+
 from KicadModTree import *
-
-sys.path.append(os.path.join(sys.path[0], "..", "tools"))  # load parent path of tools
-
-sys.path.append(os.path.join(sys.path[0], "..", "general"))  # load parent path of tools
-from StandardBox import *
+from general.StandardBox import *
 
 def qfn(args):
 
@@ -24,7 +21,7 @@ def qfn(args):
     tags = args["tags"]
     manufacture = args["manufacture"]
     serie = args["serie"]
-    
+
     W = args["W"]
     H = args["H"]
     WD = args["WD"]
@@ -41,24 +38,24 @@ def qfn(args):
     rotation = args["rotation"]
     dest_dir_3D_prefix = args["dest_dir_3D_prefix"]
 
-    
+
     for pinnumber in pinnumbers:
         footprint_name = ''
         footprint_name = footprint_name + manufacture + '_' + serie
         footprint_name = footprint_name + '_1x' + '{:02d}'.format(pinnumber)
         footprint_name = footprint_name + '_P' + '{:.2f}'.format(PS) + "mm"
         footprint_name = footprint_name + '_45-Degree'
-    
-        f = Footprint(footprint_name)
 
-        
+        f = Footprint(footprint_name, Footprint.THT)
+
+
         file3Dname = "${KICAD7_3DMODEL_DIR}/" + dest_dir_3D_prefix + "/" + footprint_name + ".wrl"
         words = footprint_name.split("_")
         if words[-1].lower().startswith('handsolder'):
             words[-1] = ''
             ff = '_'.join(words)
             file3Dname = "${KICAD7_3DMODEL_DIR}/" + dest_dir_3D_prefix + "/" + ff + ".wrl"
-            
+
         lw = ((2.0 * PE) + ((pinnumber - 1) * PS))
         at = [0.0 - PE, W - WD]
         size = [lw, W]
@@ -69,7 +66,9 @@ def qfn(args):
         for ii in range(1, pinnumber + 1):
             pins.append(["tht", str(ii), dx, 0.0, PD, PD, DD])
             dx = dx + PS
-        f.append(StandardBox(footprint=f, description=description, datasheet=datasheet, at=at, size=size, tags=tags, SmdTht=SmdTht, extratexts=extratexts, pins=pins, file3Dname=file3Dname ))
+        f.append(StandardBox(footprint=f, description=description, datasheet=datasheet, at=at,
+                             size=size, tags=tags, extratexts=extratexts, pins=pins,
+                             file3Dname=file3Dname))
         #
         #
         file_handler = KicadFileHandler(f)

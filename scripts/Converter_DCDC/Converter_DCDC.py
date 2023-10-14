@@ -28,7 +28,9 @@ def qfn(args):
     extratexts = args["extratexts"]
 
     dir3D = 'Converter_DCDC.3dshapes'
-    f = Footprint(footprint_name)
+
+    footprint_type = FootprintType.SMD if SmdTht == "smd" else FootprintType.THT
+    f = Footprint(footprint_name, footprint_type)
 
     file3Dname = "${KICAD7_3DMODEL_DIR}/" + dir3D + "/" + footprint_name + ".wrl"
     words = footprint_name.split("_")
@@ -36,7 +38,9 @@ def qfn(args):
         words[-1] = ''
         ff = '_'.join(words)
         file3Dname = "${KICAD7_3DMODEL_DIR}/" + dir3D + "/" + ff + ".wrl"
-    f.append(StandardBox(footprint=f, description=description, datasheet=datasheet, at=at, size=size, tags=fptag, SmdTht=SmdTht, extratexts=extratexts, pins=pins, file3Dname=file3Dname ))
+    f.append(StandardBox(footprint=f, description=description, datasheet=datasheet,
+                         at=at, size=size, tags=fptag, extratexts=extratexts, pins=pins,
+                         file3Dname=file3Dname))
     #
     #
     #

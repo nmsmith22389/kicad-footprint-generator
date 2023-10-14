@@ -16,6 +16,8 @@
 import sys
 import io
 
+from KicadModTree.nodes import Footprint
+
 
 class FileHandler(object):
     r"""some basic methods to write footprints, and which is the base class of footprint writer implementations
@@ -27,12 +29,13 @@ class FileHandler(object):
     :Example:
 
     >>> from KicadModTree import *
-    >>> kicad_mod = Footprint("example_footprint")
+    >>> kicad_mod = Footprint("example_footprint", Footprint.THT)
     >>> file_handler = KicadFileHandler(kicad_mod)  # KicadFileHandler is a implementation of FileHandler
     >>> file_handler.writeFile('example_footprint.kicad_mod')
     """
+    kicad_mod: Footprint
 
-    def __init__(self, kicad_mod):
+    def __init__(self, kicad_mod: Footprint):
         self.kicad_mod = kicad_mod
 
     def writeFile(self, filename, **kwargs):
@@ -45,7 +48,7 @@ class FileHandler(object):
         :Example:
 
         >>> from KicadModTree import *
-        >>> kicad_mod = Footprint("example_footprint")
+        >>> kicad_mod = Footprint("example_footprint", Footprint.THT)
         >>> file_handler = KicadFileHandler(kicad_mod)  # KicadFileHandler is a implementation of FileHandler
         >>> file_handler.writeFile('example_footprint.kicad_mod')
         """
@@ -66,7 +69,7 @@ class FileHandler(object):
         :Example:
 
         >>> from KicadModTree import *
-        >>> kicad_mod = Footprint("example_footprint")
+        >>> kicad_mod = Footprint("example_footprint", Footprint.THT)
         >>> file_handler = KicadFileHandler(kicad_mod)  # KicadFileHandler is a implementation of FileHandler
         >>> print(file_handler.serialize())
         """

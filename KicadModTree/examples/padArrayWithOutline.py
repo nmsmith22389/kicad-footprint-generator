@@ -25,7 +25,7 @@ if __name__ == '__main__':
     footprint_name = "pad_array_footprint"
 
     # Init kicad footprint
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, FootprintType.SMD)
     kicad_mod.setDescription("An example footprint")
     kicad_mod.setTags("example")
 

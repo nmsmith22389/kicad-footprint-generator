@@ -111,7 +111,7 @@ def BFemale(size, pin_cb, more_description):
 		num_rows=2, pins_per_row=pin_count//2, orientation=ORIENTATION['V'])
 
 	# init kicad footprint
-	kicad_mod = Footprint(footprint_name)
+	kicad_mod = Footprint(footprint_name, FootprintType.THT)
 	size_descs = ["B", "B/2", "B/3"]
 	kicad_mod.setDescription("DIN 41612 connector, type " + size_descs[size] + ", vertical, " + str(cols) + " pins wide, 2 rows" + more_description)
 	kicad_mod.setTags("DIN 41512 IEC 60603 " + size_descs[size])
@@ -250,7 +250,7 @@ def BMale(size, pin_cb, more_description):
 		num_rows=2, pins_per_row=pin_count//2, orientation=ORIENTATION['H'])
 
 	# init kicad footprint
-	kicad_mod = Footprint(footprint_name)
+	kicad_mod = Footprint(footprint_name, FootprintType.THT)
 	size_descs = ["B", "B/2", "B/3"]
 	kicad_mod.setDescription("DIN 41612 connector, type " + size_descs[size] + ", horizontal, " + str(cols) + " pins wide, 2 rows" + more_description)
 	kicad_mod.setTags("DIN 41512 IEC 60603 " + size_descs[size])

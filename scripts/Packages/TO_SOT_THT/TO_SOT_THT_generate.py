@@ -115,7 +115,7 @@ def makeVERT(lib_name, pck, has3d=False, x_3d=[0, 0, 0], s_3d=[1,1,1], lptext="_
         description = description + ", see " + pck.webpage
 
     # init kicad footprint
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, Footprint.THT)
     kicad_mod.setDescription(description)
     kicad_mod.setTags(tags)
 
@@ -333,7 +333,7 @@ def makeHOR(lib_name, pck, has3d=False, x_3d=[0, 0, 0], s_3d=[1,1,1], lptext="_L
         description = description + ", see " + pck.webpage
 
     # init kicad footprint
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, Footprint.THT)
     kicad_mod.setDescription(description)
     kicad_mod.setTags(tags)
 
@@ -506,7 +506,7 @@ def makeVERTLS(lib_name, pck, has3d=False, x_3d=[0, 0, 0], s_3d=[1,1,1], lptext=
         description = description + ", see " + pck.webpage
 
     # init kicad footprint
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, Footprint.THT)
     kicad_mod.setDescription(description)
     kicad_mod.setTags(tags)
 
@@ -692,7 +692,7 @@ def makeHORLS(lib_name, pck, has3d=False, x_3d=[0, 0, 0], s_3d=[1,1,1], lptext="
         description = description + ", see " + pck.webpage
 
     # init kicad footprint
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, Footprint.THT)
     kicad_mod.setDescription(description)
     kicad_mod.setTags(tags)
 
@@ -887,7 +887,7 @@ def makeHORREV(lib_name, pck, has3d=False, x_3d=[0, 0, 0], s_3d=[1 ,1,1], lptext
         description = description + ", see " + pck.webpage
 
     # init kicad footprint
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, Footprint.THT)
     kicad_mod.setDescription(description)
     kicad_mod.setTags(tags)
 
@@ -1038,7 +1038,7 @@ def makeTORound(lib_name, pck, has3d=False, x_3d=[0, 0, 0], s_3d=[1,1,1], lptext
         description = description + ", see " + pck.webpage
 
     # init kicad footprint
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, Footprint.THT)
     kicad_mod.setDescription(description)
     kicad_mod.setTags(tags)
 

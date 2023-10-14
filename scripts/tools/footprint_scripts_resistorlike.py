@@ -193,7 +193,7 @@ def makeResistorAxialHorizontal(seriesname, rm, rmdisp, w, d, ddrill, R_POW, typ
 
 
     # init kicad footprint
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, FootprintType.THT)
     kicad_mod.setDescription(description)
     kicad_mod.setTags(tags)
 
@@ -424,7 +424,7 @@ def makeResistorAxialVertical(seriesname,rm, rmdisp, l, d, ddrill, R_POW, type="
 
 
     # init kicad footprint
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, Footprint.THT)
     kicad_mod.setDescription(description)
     kicad_mod.setTags(tags)
 
@@ -791,7 +791,7 @@ def makeResistorRadial(seriesname, rm, w, h, ddrill, R_POW, innerw=0,innerh=0,rm
             footprint_name = classname+"{3}_L{1:0.1f}mm_W{2:0.1f}mm_H{4:0.1f}mm{0}".format(fnpins, w, h, snfp, height3d) #rect (box) caps
         else:
             footprint_name = classname+"{3}_L{1:0.1f}mm_W{2:0.1f}mm{0}".format(fnpins, w, h, snfp)
-    
+
     if classname[0].upper() == "C":
         description = classnamefancy+"{2}, Radial, pin pitch={0}, {1}".format(pind, dimdesc, sn)
         tags = classnamefancy+"{2} Radial pin pitch {0} {1}".format(pind, dimdesct, snt)
@@ -875,7 +875,7 @@ def makeResistorRadial(seriesname, rm, w, h, ddrill, R_POW, innerw=0,innerh=0,rm
             '''
 
     # init kicad footprint
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, Footprint.THT)
     kicad_mod.setDescription(description)
     kicad_mod.setTags(tags)
 

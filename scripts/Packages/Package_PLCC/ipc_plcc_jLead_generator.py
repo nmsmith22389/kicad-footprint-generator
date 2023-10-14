@@ -220,9 +220,9 @@ class QFP():
         #print(fp_name)
         #print(pad_details)
 
-        kicad_mod = Footprint(fp_name)
+        # init kicad footprint
+        kicad_mod = Footprint(fp_name, FootprintType.SMD)
 
-                # init kicad footprint
         kicad_mod.setDescription(
             "{manufacturer} {mpn} {package}, {pincount} Pin ({datasheet}), generated with kicad-footprint-generator {scriptname}"\
             .format(
@@ -240,7 +240,6 @@ class QFP():
                 package=device_params['device_type'],
                 category=category
             ).lstrip())
-        kicad_mod.setAttribute('smd')
 
         pad_shape_details = {}
         pad_shape_details['shape'] = Pad.SHAPE_ROUNDRECT

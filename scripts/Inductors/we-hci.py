@@ -26,7 +26,7 @@ output_dir = os.getcwd()
 #if specified as an argument, extract the target directory for output footprints
 if len(sys.argv) > 1:
     out_dir = sys.argv[1]
-    
+
     if os.path.isabs(out_dir) and os.path.isdir(out_dir):
         output_dir = out_dir
     else:
@@ -36,7 +36,7 @@ if len(sys.argv) > 1:
 
 if output_dir and not output_dir.endswith(os.sep):
     output_dir += os.sep
-        
+
 #import KicadModTree files
 sys.path.append("..\\..")
 from KicadModTree import *
@@ -51,64 +51,62 @@ tags = "inductor wurth hci smd"
 
 for inductor in inductors:
     name,l,w,x,g,y = inductor
-    
+
     fp_name = prefix + part.format(pn=str(name))
-    
-    fp = Footprint(fp_name)
-    
+
+    fp = Footprint(fp_name, FootprintType.SMD)
+
     description = desc.format(pn = part.format(pn=str(name))) + ", " + dims.format(l=l,w=w)
-    
+
     fp.setTags(tags)
-    fp.setAttribute("smd")
     fp.setDescription(description)
-    
+
     # set general values
     fp.append(Text(type='reference', text='REF**', at=[0,-w/2 - 1], layer='F.SilkS'))
     fp.append(Text(type='value', text=fp_name, at=[0,w/2 + 1.5], layer='F.Fab'))
 
     #add inductor outline
     fp.append(RectLine(start=[-l/2,-w/2],end=[l/2,w/2],layer='F.Fab',width=0.15))
-    
+
     #calculate pad center
     #pad-width pw
     pw = x
     c = g/2 + pw/2
-    
+
     layers = ["F.Cu","F.Paste","F.Mask"]
-    
+
     #add pads
     fp.append(Pad(number=1,at=[-c,0],layers=layers,shape=Pad.SHAPE_RECT,type=Pad.TYPE_SMT,size=[pw,y]))
     fp.append(Pad(number=2,at=[c,0],layers=layers,shape=Pad.SHAPE_RECT,type=Pad.TYPE_SMT,size=[pw,y]))
-    
+
     #add inductor courtyard
     cx = c + pw/2
     cy = w / 2
-    
+
     fp.append(RectLine(start=[-cx,-cy],end=[cx,cy],offset=0.3,width=0.05,grid=0.05,layer="F.CrtYd"))
-    
+
     offset = 0.1
     ly = y/2 + 4 * offset
-    
+
     x1 = l / 2 + offset
     y1 = w / 2 + offset
-    
+
     top = [
     {'x': -x1, 'y': ly},
     {'x': -x1, 'y': y1},
     {'x':  x1, 'y': y1},
     {'x':  x1, 'y': ly},
     ]
-    
-    
+
+
     fp.append(PolygoneLine(polygone=top))
     fp.append(PolygoneLine(polygone=top,y_mirror=0))
-    
+
     #Add a model
     fp.append(Model(filename="Inductors.3dshapes/" + fp_name + ".wrl"))
-    
+
     #filename
     filename = output_dir + fp_name + ".kicad_mod"
-    
+
     file_handler = KicadFileHandler(fp)
     file_handler.writeFile(filename)
-    

@@ -352,8 +352,9 @@ def generate_one_footprint(positions: int, spec, configuration: dict):
     print("  - %s" % fp_name)
 
     ## create the footprint
-    kicad_mod = Footprint(fp_name)
-    kicad_mod.setAttribute('smd' if fp_config.is_smt_footprint else 'through_hole')
+    footprint_type = FootprintType.SMD if fp_config.is_smt_footprint else FootprintType.THT
+
+    kicad_mod = Footprint(fp_name, footprint_type)
 
     ## set the FP description
     description = spec.get("description", "").format(num_pos=positions, **spec, **spec.get("doc_parameters", {}))

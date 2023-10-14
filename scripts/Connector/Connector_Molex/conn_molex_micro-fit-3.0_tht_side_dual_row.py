@@ -65,7 +65,7 @@ def generate_one_footprint(pins, configuration, variant):
         mpn=mpn, num_rows=number_of_rows, pins_per_row=pins_per_row, mounting_pad = '-1MP' if variant == 'clip' else "",
         pitch=pitch, orientation=orientation_str)
 
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, Footprint.THT)
     kicad_mod.setDescription("Molex {:s}, {:s} (alternative finishes: {:s}), {:d} Pins per row ({:s}), generated with kicad-footprint-generator".format(series_long, mpn, alt_mpn, pins_per_row, datasheet.format(s=variants[variant])))
     kicad_mod.setTags(configuration['keyword_fp_string'].format(series=series,
         orientation=orientation_str, man=manufacturer,
@@ -92,7 +92,7 @@ def generate_one_footprint(pins, configuration, variant):
         'top': -12.24+3+0.64/2
         }
     body_edge['bottom'] = body_edge['top'] + 9.91
-    
+
     bevel = 1
 
     ############################# Pads ##################################
@@ -126,7 +126,7 @@ def generate_one_footprint(pins, configuration, variant):
         kicad_mod.append(Pad(at=[pad1_x + clip_x_offset + clip_C, pad_row_1_y - peg_clip_y_offset], number="MP",
             type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, size=clip_pad,
             drill=clip_drill, layers=Pad.LAYERS_THT))
-    
+
     #
     # Add pads
     #

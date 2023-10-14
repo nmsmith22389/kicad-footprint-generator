@@ -84,7 +84,7 @@ def makeTerminalBlockStd(footprint_name, pins, rm, package_height, leftbottom_of
     print(footprint_name)
 
     # init kicad footprint
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, Footprint.THT)
     kicad_mod.setDescription(description)
     kicad_mod.setTags(tags)
 
@@ -305,7 +305,7 @@ def makeTerminalBlockVertical(footprint_name, pins, rm, package_height, leftbott
     print(footprint_name)
 
     # init kicad footprint
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, Footprint.THT)
     kicad_mod.setDescription(description)
     kicad_mod.setTags(tags)
 
@@ -528,7 +528,7 @@ def makeTerminalBlock45Degree(footprint_name, pins, rm, package_height, leftbott
     print(footprint_name)
 
     # init kicad footprint
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, Footprint.THT)
     kicad_mod.setDescription(description)
     kicad_mod.setTags(tags)
 
@@ -760,7 +760,7 @@ def makeScrewTerminalSingleStd(footprint_name, block_size, block_offset, pins, d
     print(footprint_name)
 
     # init kicad footprint
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, Footprint.THT)
     kicad_mod.setDescription(description)
     kicad_mod.setTags(tags)
 

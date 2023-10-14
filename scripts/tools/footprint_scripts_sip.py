@@ -18,12 +18,12 @@ from footprint_global_properties import *
 def makeSIPVertical(pins, rm, ddrill, pad, package_size, left_offset, top_offset, footprint_name, description, tags, lib_name, missing_pins=[]):
     padx=pad[0]
     pady=pad[1]
-    
+
     w_fab=package_size[0]
     h_fab=package_size[1]
     l_fab=-left_offset
     t_fab=-top_offset
-    
+
     h_slk = h_fab + 2 * slk_offset
     w_slk = w_fab + 2 * slk_offset
     l_slk = l_fab - slk_offset
@@ -38,15 +38,15 @@ def makeSIPVertical(pins, rm, ddrill, pad, package_size, left_offset, top_offset
     if (pady/2>t_fab+h_fab):
         t_crt = t_fab  - crt_offset
         h_crt=h_fab+(pady/2-math.fabs(t_fab))+2*crt_offset
-    
-    
+
+
     print(footprint_name)
-    
+
     # init kicad footprint
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, Footprint.THT)
     kicad_mod.setDescription(description)
     kicad_mod.setTags(tags)
-   
+
     # create pads
     keepout=[]
     if not 1 in missing_pins:
@@ -65,7 +65,7 @@ def makeSIPVertical(pins, rm, ddrill, pad, package_size, left_offset, top_offset
     kicad_mod.append(Text(type='reference', text='REF**', at=[(pins-1) / 2 * rm, min(-pady/2,t_slk) - txt_offset], layer='F.SilkS'))
     kicad_mod.append(Text(type='user', text='${REFERENCE}', at=[(pins-1) / 2 * rm, t_fab +h_fab/2], layer='F.Fab'))
     kicad_mod.append(Text(type='value', text=footprint_name, at=[(pins-1) / 2 * rm, t_fab+h_fab + txt_offset], layer='F.Fab'))
-    
+
     # create FAB-layer
     pin1TL=True
     pin1size=min(1, h_fab/2)
@@ -75,52 +75,52 @@ def makeSIPVertical(pins, rm, ddrill, pad, package_size, left_offset, top_offset
     else:
         bevelRectTL(kicad_mod, x=[l_fab, t_fab], size=[w_fab, h_fab], bevel_size=pin1size, layer='F.Fab', width=lw_fab)
         pin1TL=True
-    
+
     # create SILKSCREEN-layer
     addRectWithKeepout(kicad_mod, l_slk, t_slk, w_slk, h_slk, keepouts=keepout, layer='F.SilkS', width=lw_slk)
     if pin1TL:
         addPolyLineWithKeepout(kicad_mod, [
-                                            [l_slk-2*lw_slk, t_slk+pin1size], 
-                                            [l_slk-2*lw_slk, t_slk-2*lw_slk], 
-                                            [l_slk+pin1size, t_slk-2*lw_slk], 
+                                            [l_slk-2*lw_slk, t_slk+pin1size],
+                                            [l_slk-2*lw_slk, t_slk-2*lw_slk],
+                                            [l_slk+pin1size, t_slk-2*lw_slk],
                                             ], keepouts=keepout, layer='F.SilkS', width=lw_slk)
     else:
         addPolyLineWithKeepout(kicad_mod, [
-                                            [l_slk-2*lw_slk, t_slk+h_slk-pin1size], 
-                                            [l_slk-2*lw_slk, t_slk+h_slk+2*lw_slk], 
-                                            [l_slk+pin1size, t_slk+h_slk+2*lw_slk], 
+                                            [l_slk-2*lw_slk, t_slk+h_slk-pin1size],
+                                            [l_slk-2*lw_slk, t_slk+h_slk+2*lw_slk],
+                                            [l_slk+pin1size, t_slk+h_slk+2*lw_slk],
                                             ], keepouts=keepout, layer='F.SilkS', width=lw_slk)
-    
+
     # create courtyard
     kicad_mod.append(
         RectLine(start=[roundCrt(l_crt), roundCrt(t_crt)], end=[roundCrt(l_crt + w_crt), roundCrt(t_crt + h_crt)],
                  layer='F.CrtYd', width=lw_crt))
-     
+
     # add model
     kicad_mod.append(Model(filename="${KICAD7_3DMODEL_DIR}/"+lib_name + ".3dshapes/" + footprint_name + ".wrl",
                            at=[0, 0, 0], scale=[1,1,1], rotate=[0, 0, 0]))
-    
+
     # write file
     file_handler = KicadFileHandler(kicad_mod)
     file_handler.writeFile(footprint_name + '.kicad_mod')
 
-    
+
 
 
 def makeSIPHorizontal(pins, rm, ddrill, pad, package_size, left_offset, pin_bottom_offset, footprint_name, description, tags, lib_name, missing_pins=[]):
     padx=pad[0]
     pady=pad[1]
-    
+
     w_fab=package_size[0]
     h_fab=package_size[2]
     l_fab=-left_offset
     t_fab=-pin_bottom_offset-h_fab
-    
+
     h_slk = h_fab + 2 * slk_offset
     w_slk = w_fab + 2 * slk_offset
     l_slk = l_fab - slk_offset
     t_slk = t_fab-slk_offset
-    
+
     w_crt = w_fab + 2 * crt_offset
     h_crt = h_fab+pin_bottom_offset+pad[1]/2 + 2 * crt_offset
     l_crt = min(l_fab, -padx / 2) - crt_offset
@@ -129,14 +129,14 @@ def makeSIPHorizontal(pins, rm, ddrill, pad, package_size, left_offset, pin_bott
     # Pin 1 maker
     l_pin1 = l_slk + left_offset - padx / 2 - 2 * lw_slk
     h_pin1 = pin_bottom_offset + pady / 2 - lw_slk
-    
+
     print(footprint_name)
-    
+
     # init kicad footprint
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, Footprint.THT)
     kicad_mod.setDescription(description)
     kicad_mod.setTags(tags)
-   
+
     # create pads
     keepout=[]
     if not 1 in missing_pins:
@@ -159,11 +159,11 @@ def makeSIPHorizontal(pins, rm, ddrill, pad, package_size, left_offset, pin_bott
     kicad_mod.append(Text(type='reference', text='REF**', at=[(pins-1) / 2 * rm, min(-pady/2,t_slk) - txt_offset], layer='F.SilkS'))
     kicad_mod.append(Text(type='user', text='${REFERENCE}', at=[(pins-1) / 2 * rm, t_fab +h_fab/2], layer='F.Fab'))
     kicad_mod.append(Text(type='value', text=footprint_name, at=[(pins-1) / 2 * rm, pady/2 + txt_offset], layer='F.Fab'))
-    
+
     # create FAB-layer
     pin1size=min(1, h_fab/2)
     bevelRectBL(kicad_mod, x=[l_fab, t_fab], size=[w_fab, h_fab], bevel_size=pin1size, layer='F.Fab', width=lw_fab)
-    
+
     # create SILKSCREEN-layer
     addRectWithKeepout(kicad_mod, l_slk, t_slk, w_slk, h_slk, keepouts=keepout, layer='F.SilkS', width=lw_slk)
     addPolyLineWithKeepout(kicad_mod, [
@@ -175,11 +175,11 @@ def makeSIPHorizontal(pins, rm, ddrill, pad, package_size, left_offset, pin_bott
     kicad_mod.append(
         RectLine(start=[roundCrt(l_crt), roundCrt(t_crt)], end=[roundCrt(l_crt + w_crt), roundCrt(t_crt + h_crt)],
                  layer='F.CrtYd', width=lw_crt))
-     
+
     # add model
     kicad_mod.append(Model(filename="${KICAD7_3DMODEL_DIR}/"+lib_name + ".3dshapes/" + footprint_name + ".wrl",
                            at=[0, 0, 0], scale=[1,1,1], rotate=[0, 0, 0]))
-    
+
     # write file
     file_handler = KicadFileHandler(kicad_mod)
     file_handler.writeFile(footprint_name + '.kicad_mod')
@@ -192,7 +192,7 @@ def makeResistorSIP(pins, footprint_name, description):
     ddrill = 0.8
     padx = 1.6
     pady = 1.6
-    
+
     w = (pins - 1) * rm + 2 * leftw
     left = -leftw
     top = -h / 2
@@ -205,48 +205,48 @@ def makeResistorSIP(pins, footprint_name, description):
     h_crt = max(h_slk, pady) + 2 * crt_offset
     l_crt = min(l_slk, -padx / 2) - crt_offset
     t_crt = min(t_slk, -pady / 2) - crt_offset
-    
+
     lib_name = "Resistors_ThroughHole"
-    
+
     print(footprint_name)
-    
+
     # init kicad footprint
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, Footprint.THT)
     kicad_mod.setDescription(description)
     kicad_mod.setTags("R")
-    
+
     # set general values
     kicad_mod.append(Text(type='reference', text='REF**', at=[pins / 2 * rm, t_slk - txt_offset], layer='F.SilkS'))
     kicad_mod.append(Text(type='value', text=footprint_name, at=[pins / 2 * rm, h_slk / 2 + txt_offset], layer='F.Fab'))
-    
+
     # create FAB-layer
     kicad_mod.append(RectLine(start=[left, top], end=[left + w, top + h], layer='F.Fab', width=lw_fab))
     kicad_mod.append(Line(start=[0.5 * rm, top], end=[0.5 * rm, top + h], layer='F.Fab', width=lw_fab))
-    
+
     # create SILKSCREEN-layer
     kicad_mod.append(RectLine(start=[l_slk, t_slk], end=[l_slk + w_slk, t_slk + h_slk], layer='F.SilkS'))
     kicad_mod.append(Line(start=[0.5 * rm, t_slk], end=[0.5 * rm, t_slk + h_slk], layer='F.SilkS'))
-    
+
     # create courtyard
     kicad_mod.append(
         RectLine(start=[roundCrt(l_crt), roundCrt(t_crt)], end=[roundCrt(l_crt + w_crt), roundCrt(t_crt + h_crt)],
                  layer='F.CrtYd', width=lw_crt))
-    
+
     # create pads
     kicad_mod.append(Pad(number=1, type=Pad.TYPE_THT, shape=Pad.SHAPE_RECT, at=[0, 0], size=[padx, pady], drill=ddrill,
                          layers=['*.Cu', '*.Mask']))
     for x in range(2, pins + 1):
         kicad_mod.append(Pad(number=x, type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, at=[(x - 1) * rm, 0], size=[padx, pady],
                              drill=ddrill, layers=['*.Cu', '*.Mask']))
-    
+
     # add model
     kicad_mod.append(Model(filename="${KICAD7_3DMODEL_DIR}/"+lib_name + ".3dshapes/" + footprint_name + ".wrl",
                            at=[0, 0, 0], scale=[1 / 2.54, 1 / 2.54, 1 / 2.54], rotate=[0, 0, 0]))
-    
+
     # print render tree
     # print(kicad_mod.getRenderTree())
     # print(kicad_mod.getCompleteRenderTree())
-    
+
     # write file
     file_handler = KicadFileHandler(kicad_mod)
     file_handler.writeFile(footprint_name + '.kicad_mod')

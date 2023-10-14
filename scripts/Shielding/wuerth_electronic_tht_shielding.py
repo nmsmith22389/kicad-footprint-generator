@@ -14,7 +14,7 @@ def create_shielding(name, outer_size, size,
 
     attachment_positions = sorted(attachment_positions)
 
-    kicad_mod = Footprint(name)
+    kicad_mod = Footprint(name, FootprintType.THT)
 
     # init kicad footprint
     kicad_mod.setDescription('WE-SHC Shielding Cabinet THT {size}x{size}mm'.format(size=size))

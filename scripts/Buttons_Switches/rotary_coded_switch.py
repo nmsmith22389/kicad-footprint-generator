@@ -22,14 +22,17 @@ def rotary_coded_switch(args):
     pkg_width = args["pkg_width"]
     pkg_height = args["pkg_height"]
 
-    f = Footprint(footprint_name)
-    f.setDescription("4-bit rotary coded switch, " + style + ", " + datasheet)
-    f.setTags("rotary switch bcd")
     if thru_hole:
         tech = "THT"
+        footprint_type = FootprintType.THT
     else:
         tech = "SMD"
-        f.setAttribute("smd")
+        footprint_type = FootprintType.SMD
+
+    f = Footprint(footprint_name, footprint_type)
+    f.setDescription("4-bit rotary coded switch, " + style + ", " + datasheet)
+    f.setTags("rotary switch bcd")
+
     f.append(Model(filename="${KICAD7_3DMODEL_DIR}/Buttons_Switches_" + tech + ".3dshapes/" + footprint_name + ".wrl", at=[0, 0, 0], scale=[1, 1, 1], rotate=[0.0, 0.0, 0.0]))
 
     wCrtYd = 0.05

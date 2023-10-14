@@ -56,7 +56,7 @@ def generate_one_footprint(model, params, configuration):
     silk_bottom_right=v_offset(body_bottom_right, configuration['silk_fab_offset'])
 
     center_x = (params.num_pins-1)/2.0*params.pin_pitch
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, Footprint.THT)
 
     mpn = configuration['mpn_format_string_description'].format(subseries=subseries, style = connector_style,
         rating=series[1], num_pins=params.num_pins, pitch=pitch_mpn)

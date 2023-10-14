@@ -85,7 +85,7 @@ def generate_one_footprint(pincount, configuration):
 
     footprint_name = footprint_name.replace("__", '_')
 
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, Footprint.THT)
     descr_format_str = "Molex {:s}, {:s} , {:d} Pins ({:s}), generated with kicad-footprint-generator"
     kicad_mod.setDescription(descr_format_str.format(series_long, mpn, pincount, datasheet))
     kicad_mod.setTags(configuration['keyword_fp_string'].format(series=series,

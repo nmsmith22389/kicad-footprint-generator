@@ -32,7 +32,7 @@ import os
 
 sys.path.append(os.path.dirname(os.path.realpath(__file__)) + "/../..")
 
-from KicadModTree import Footprint, Translation, Pad, Model, KicadFileHandler
+from KicadModTree import Footprint, FootprintType, Translation, Pad, Model, KicadFileHandler
 from canvas import Layer, PadLayer, Keepout, OutDir
 from cq_base_parameters import PinStyle, CaseType
 
@@ -87,7 +87,7 @@ class pinSocketVerticalTHT (object):
         print(footprint_name, "in", lib_name)
 
         # init kicad footprint
-        kicad_mod = Footprint(footprint_name)
+        kicad_mod = Footprint(footprint_name, Footprint.THT)
         kicad_mod.setDescription(description)
         kicad_mod.setTags(tags)
 
@@ -258,7 +258,7 @@ class pinSocketHorizontalTHT (object):
         print(footprint_name, "in", lib_name)
 
         # init kicad footprint
-        kicad_mod = Footprint(footprint_name)
+        kicad_mod = Footprint(footprint_name, Footprint.THT)
         kicad_mod.setDescription(description)
         kicad_mod.setTags(tags)
 
@@ -420,10 +420,9 @@ class pinSocketVerticalSMD (object):
         print(footprint_name, "in", lib_name)
 
         # init kicad footprint
-        kicad_mod = Footprint(footprint_name)
+        kicad_mod = Footprint(footprint_name, FootprintType.SMD)
         kicad_mod.setDescription(description)
         kicad_mod.setTags(tags)
-        kicad_mod.setAttribute('smd')
 
         # anchor for SMD-symbols is in the center
         kicad_modg = Translation(0.0, 0.0)

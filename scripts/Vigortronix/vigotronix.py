@@ -33,7 +33,7 @@ output_dir = os.getcwd()
 #if specified as an argument, extract the target directory for output footprints
 if len(sys.argv) > 1:
     out_dir = sys.argv[1]
-    
+
     if os.path.isabs(out_dir) and os.path.isdir(out_dir):
         output_dir = out_dir
     else:
@@ -43,7 +43,7 @@ if len(sys.argv) > 1:
 
 if output_dir and not output_dir.endswith(os.sep):
     output_dir += os.sep
-        
+
 #import KicadModTree files
 sys.path.append("..\\..")
 from KicadModTree import *
@@ -61,9 +61,9 @@ for converter in converters:
         TargetDir = "Converters_DCDC_ACDC.3dshapes"
         Datasheet = "http://www.vigortronix.com/10WattACDCPCBPowerModule.aspx"
         PadSize = 2.0 * PDiam
-    
+
         fp_name = prefix + "_" + Serie
-        fp = Footprint(fp_name)
+        fp = Footprint(fp_name, FootprintType.THT)
         description = desc + ", " + Datasheet
 
         x1 = 0
@@ -164,16 +164,15 @@ for converter in converters:
     cx = (L / 2.0) + (0 - ((L - (pin2x - pin1x)) / 2.0) - myLayerD)
     cy = (pin3y - pin1y) / 2.0
     fp.append(Text(type='user', text='${REFERENCE}', at=[round(cx, 2), round(cy, 2)], layer='F.Fab'))
-    
+
     #
     # Add 3D model
     #
     fp.append(Model(filename="${KICAD7_3DMODEL_DIR}/" + TargetDir + "/" + fp_name + ".wrl", at=[0, 0, 0], scale=[1, 1, 1], rotate=[0, 0, 0]))
-    
+
 
     #filename
     filename = output_dir + fp_name + ".kicad_mod"
-    
+
     file_handler = KicadFileHandler(fp)
     file_handler.writeFile(filename)
-    

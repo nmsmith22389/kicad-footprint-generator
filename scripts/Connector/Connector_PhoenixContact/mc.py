@@ -45,7 +45,7 @@ def generate_one_footprint(motel, params, configuration):
     silk_top_left=v_offset(body_top_left, configuration['silk_fab_offset'])
     silk_bottom_right=v_offset(body_bottom_right, configuration['silk_fab_offset'])
     center_x = (params.num_pins-1)/2.0*params.pin_pitch
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, Footprint.THT)
 
     body_edge={
         'left': body_top_left[0],

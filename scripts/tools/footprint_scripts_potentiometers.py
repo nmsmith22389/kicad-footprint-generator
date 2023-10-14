@@ -34,7 +34,7 @@ def makePotentiometerHorizontal(class_name="", wbody=0, hbody=0, dscrew=0, style
                               height3d=10, screwzpos=5, mh_ddrill=1.5, mh_count=0, mh_rmx=0, mh_rmy=15, mh_xoffset=0, mh_yoffset=0):
     """
     create potentiometer footprints, horizontally mounted
-    
+
     style="normal":
             ^   ^      +-----------+
      pinyoffset |      |           |
@@ -48,16 +48,16 @@ def makePotentiometerHorizontal(class_name="", wbody=0, hbody=0, dscrew=0, style
                             <rmx>  <------->wscrew
                        <---wbody--->
                                  <->pinxoffset
-    
-    
+
+
     style="trimmer" (only valid for 3-pin!!!):
         O1           ^
                      rmy
                 O2   v
-    
+
         O3
          <-rmx-->
-    
+
     Parameters:
         class_name: manufacturer and MPN like "Bourns 3214W" (str)
         wbody: body length (float)
@@ -91,7 +91,7 @@ def makePotentiometerHorizontal(class_name="", wbody=0, hbody=0, dscrew=0, style
         mh_rmy: row spacing of mounting holes [default = 15] (float)
         mh_xoffset: distance from face of body to first column of mounting holes [default = 0] (float)
         mh_yoffset: distance from top of body to first row of mounting holes [default = 0] (float)
-    
+
     Returns:
         None
     """
@@ -100,13 +100,13 @@ def makePotentiometerHorizontal(class_name="", wbody=0, hbody=0, dscrew=0, style
     txt_offset = 1
     slk_offset = 0.12
     grid_crt = 0.01
-    
+
     pad1style = Pad.SHAPE_CIRCLE
-    
+
     cols = pins / 3
     overpadwidth = rmx * (cols - 1) + padx
     overpadheight = rmy * 2 + pady
-    
+
     # generate list of pads depending on pin count
     padpos = []
     offset = [0, 0]
@@ -142,27 +142,27 @@ def makePotentiometerHorizontal(class_name="", wbody=0, hbody=0, dscrew=0, style
         padpos.append(['', mh_xoffset - mh_rmx, -mh_yoffset + mh_rmy, mh_ddrill, 2 * mh_ddrill, 2 * mh_ddrill])
         padpos.append(['', mh_xoffset - mh_rmx, -mh_yoffset, mh_ddrill, 2 * mh_ddrill, 2 * mh_ddrill])
         padpos.append(['', mh_xoffset, -mh_yoffset + mh_rmy, mh_ddrill, 2 * mh_ddrill, 2 * mh_ddrill])
-    
+
     lbody_fab = -(wbody - pinxoffset) # left side of body
     tbody_fab = -pinyoffset # top of body
     wbody_fab = wbody # body length
     hbody_fab = hbody # body height
-    
+
     wscrew_fab = wscrew # collar length
     hscrew_fab = dscrew # collar height
     lscrew_fab = lbody_fab + wbody_fab # left side of collar
     tscrew_fab = tbody_fab + (hbody_fab - hscrew_fab) / 2.0 # top of collar
-    
+
     wshaft_fab = wshaft # shaft length
     hshaft_fab = dshaft # shaft diameter
     lshaft_fab = lscrew_fab + wscrew_fab # left side of shaft
     tshaft_fab = tbody_fab + (hbody_fab - hshaft_fab) / 2.0 # top of shaft
-    
+
     lbody_slk = lbody_fab - math.copysign(slk_offset, wbody_fab)
     tbody_slk = tbody_fab - slk_offset
     wbody_slk = wbody_fab + math.copysign(2 * slk_offset, wbody_fab)
     hbody_slk = hbody_fab + 2 * slk_offset
-    
+
     lscrew_slk = lbody_slk + wbody_slk
     tscrew_slk = tscrew_fab - slk_offset
     wscrew_slk = wscrew_fab
@@ -184,43 +184,43 @@ def makePotentiometerHorizontal(class_name="", wbody=0, hbody=0, dscrew=0, style
         minx = min(minx, p[1] - p[4] / 2)
         maxy = max(maxy, p[2] + p[5] / 2)
         miny = min(miny, p[2] - p[5] / 2)
-    
+
     minx = min(minx, lbody_fab, lbody_fab + wbody_fab + wscrew_fab + wshaft_fab)
     miny = min(miny, tbody_fab, tscrew_fab, tshaft_fab)
     maxx = max(maxx, lbody_fab + wbody_fab + wscrew_fab + wshaft_fab, lbody_fab)
     maxy = max(maxy, tbody_fab + hbody_fab, tscrew_fab + hscrew_fab, tshaft_fab + hshaft_fab)
-    
+
     h_crt = (maxy - miny) + 2 * crt_offset
     w_crt = (maxx - minx) + 2 * crt_offset
     l_crt = minx - crt_offset
     t_crt = miny - crt_offset
-    
+
     pow_rat = ""
     if R_POW > 0:
         pow_rat = "{0}W".format(R_POW)
         if (1 / R_POW == int(1 / R_POW)):
             pow_rat = pow_rat + " = 1/{0}W".format(int(1 / R_POW))
-    
+
     tgs = specialtags
     print tgs
     print class_name
     tgs.append(class_name)
     if len(pow_rat) > 0:
         tgs.append(pow_rat)
-    
+
     description = "Potentiometer, horizontal"
     tags = "Potentiometer horizontal"
     for t in tgs:
         description = description + ", " + t
         tags = tags + " " + t
     description = description + ", " + add_description
-    
+
     footprint_name = ""
     for n in name_additions: footprint_name = footprint_name + "_" + n
     footprint_name = lib_name + "_" + "_".join(class_name.split()) + "_Horizontal"
-        
+
     print(footprint_name)
-    
+
     if script3d != "":
         with open(script3d, "a") as myfile:
             myfile.write("\n\n # {0}\n".format(footprint_name))
@@ -276,24 +276,24 @@ def makePotentiometerHorizontal(class_name="", wbody=0, hbody=0, dscrew=0, style
             myfile.write("\nFreeCADGui.export(__objs__,os.path.split(doc.FileName)[0]+os.sep+\"{0}.wrl\")\n".format(footprint_name))
             myfile.write("doc.saveCopy(os.path.split(doc.FileName)[0]+os.sep+\"{0}.FCStd\")\n".format(footprint_name))
             myfile.write("print(\"created {0}\")\n".format(footprint_name))
-    
+
     # init kicad footprint
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, Footprint.THT)
     kicad_mod.setDescription(description)
     kicad_mod.setTags(tags)
-    
+
     kicad_modg = Translation(offset[0], offset[1])
     kicad_mod.append(kicad_modg)
-    
+
     # set general values
     kicad_modg.append(Text(type='reference', text='REF**', at=[0, t_crt - txt_offset], layer='F.SilkS'))
     kicad_modg.append(Text(type='value', text=footprint_name, at=[0, t_crt + h_crt + txt_offset], layer='F.Fab'))
-    
+
     # create FAB-layer
     # horizontal pot: place refdes on F.Fab in center of body and shrink size if body is small
     text_size = min(1, abs(round(wbody_fab / 4.5, 2)))
     kicad_modg.append(Text(type='user', text='${REFERENCE}', at=[lbody_fab+wbody_fab/2.0, tbody_fab+hbody_fab/2.0], size=[text_size, text_size], layer='F.Fab'))
-    
+
     kicad_modg.append(RectLine(start=[lbody_fab, tbody_fab], end=[lbody_fab + wbody_fab, tbody_fab + hbody_fab], layer='F.Fab',width=lw_fab))
     if wscrew_fab * hscrew_fab != 0:
         kicad_modg.append(
@@ -301,23 +301,23 @@ def makePotentiometerHorizontal(class_name="", wbody=0, hbody=0, dscrew=0, style
     if wshaft_fab * hshaft_fab != 0:
         kicad_modg.append(
             RectLine(start=[lshaft_fab, tshaft_fab], end=[lshaft_fab + wshaft_fab, tshaft_fab + hshaft_fab],layer='F.Fab', width=lw_fab))
-    
+
     # build keepout for silkscreen
     keepouts = []
     for p in padpos:
         keepouts = keepouts + addKeepoutRound(p[1], p[2], p[4] + 2 * lw_slk + 2 * slk_offset, p[5] + 2 * lw_slk + 2 * slk_offset)
-    
+
     # create SILKSCREEN-layer
     addRectWithKeepout(kicad_modg, lbody_slk, tbody_slk, wbody_slk, hbody_slk, 'F.SilkS', lw_slk, keepouts, 0.001)
     if wscrew>0 and wscrew_slk * hscrew_slk != 0:
         addRectWithKeepout(kicad_modg, lscrew_slk, tscrew_slk, wscrew_slk, hscrew_slk, 'F.SilkS', lw_slk, keepouts,0.001)
     if wshaft>0 and wshaft_slk * hshaft_slk != 0:
         addRectWithKeepout(kicad_modg, lshaft_slk, tshaft_slk, wshaft_slk, hshaft_slk, 'F.SilkS', lw_slk, keepouts,0.001)
-    
+
     # create courtyard
     kicad_mod.append(RectLine(start=[roundG(l_crt + offset[0], grid_crt), roundG(t_crt + offset[1], grid_crt)],
                               end=[roundG(l_crt + w_crt + offset[0], grid_crt), roundG(t_crt + h_crt + offset[1], grid_crt)],layer='F.CrtYd', width=lw_crt))
-    
+
     # create pads
     for p in padpos:
         ps = Pad.SHAPE_CIRCLE
@@ -325,15 +325,15 @@ def makePotentiometerHorizontal(class_name="", wbody=0, hbody=0, dscrew=0, style
             ps = pad1style
         kicad_modg.append(Pad(number=p[0], type=Pad.TYPE_THT, shape=ps, at=[p[1], p[2]], size=[p[4], p[5]], drill=p[3],
                               layers=['*.Cu', '*.Mask']))
-    
+
     # add model
     if (has3d != 0):
         kicad_modg.append(Model(filename="${KICAD7_3DMODEL_DIR}/" + lib_name + "_THT.3dshapes/" + footprint_name + ".wrl", at=x_3d, scale=s_3d, rotate=r_3d))
-    
+
     # print render tree
     # print(kicad_mod.getRenderTree())
     # print(kicad_mod.getCompleteRenderTree())
-    
+
     # write file
     file_handler = KicadFileHandler(kicad_mod)
     file_handler.writeFile(footprint_name + '.kicad_mod')
@@ -349,7 +349,7 @@ def makePotentiometerVertical(class_name, wbody, hbody, screwstyle="none", style
                                 mh_xoffset=0, mh_yoffset=0, mh_smd=False, mh_padsize=[], mh_nopads=False):
     """
     create potentiometer footprints, vertically mounted
-    
+
     style=normal
                         <-->pinxoffset
             ^   ^          +---------------+ ^
@@ -363,16 +363,16 @@ def makePotentiometerVertical(class_name, wbody, hbody, screwstyle="none", style
                 v          +---------------+
                            <------->coffsetx
                            <-----wbody----->
-    
-    
-    style=trimmer (only valid for 3-pin!!!)    
+
+
+    style=trimmer (only valid for 3-pin!!!)
         O1           ^
                      rmy
                 O2   v
-    
+
         O3
          <-rmx-->
-    
+
     Parameters:
         class_name: manufacturer and MPN like "Bourns 3214W" (str)
         wbody: body length (float)
@@ -416,7 +416,7 @@ def makePotentiometerVertical(class_name, wbody, hbody, screwstyle="none", style
         mh_smd: allows using SMD mounting holes [default = False] (bool)
         mh_padsize: X and Y dimensions of SMD mounting holes in [X, Y] format [default = []] (list of floats)
         mh_nopads: allows selecting the presence of mounting holes [default = False] (bool)
-    
+
     Returns:
         None
     """
@@ -425,17 +425,17 @@ def makePotentiometerVertical(class_name, wbody, hbody, screwstyle="none", style
     if SMD_pads and len(SMD_padsize) >= 2:
         padx = SMD_padsize[0]
         pady = SMD_padsize[1]
-    
+
     txt_offset = 1
     slk_offset = 0.12
     grid_crt = 0.01
-    
+
     pad1style = Pad.SHAPE_CIRCLE
-    
+
     cols = pins / 3
     overpadwidth = rmx * (cols - 1) + padx
     overpadheight = rmy * 2 + pady
-    
+
     padpos = []
     offset = [0, 0]
     padtype = Pad.TYPE_THT
@@ -482,7 +482,7 @@ def makePotentiometerVertical(class_name, wbody, hbody, screwstyle="none", style
         padpos.append([7, -2 * rmx, 2 * rmy, ddrill, padx, pady, padtype, padstyle])
         if SMD_pads:
             offset[0] = -rmx
-    
+
     mhpadsizex = 2 * mh_ddrill
     mhpadsizey = mhpadsizex
     if mh_nopads:
@@ -491,7 +491,7 @@ def makePotentiometerVertical(class_name, wbody, hbody, screwstyle="none", style
     if mh_smd and len(mh_padsize) >= 2:
         mhpadsizex = mh_padsize[0]
         mhpadsizey = mh_padsize[1]
-    
+
     if mh_count == 1:
         padpos.append(['', mh_xoffset, -mh_yoffset, mh_ddrill, mhpadsizex, mhpadsizey, mhtype, mhstyle])
     if mh_count == 2:
@@ -502,7 +502,7 @@ def makePotentiometerVertical(class_name, wbody, hbody, screwstyle="none", style
         padpos.append(['', mh_xoffset - mh_rmx, -mh_yoffset + mh_rmy, mh_ddrill, mhpadsizex, mhpadsizey, mhtype, mhstyle])
         padpos.append(['', mh_xoffset - mh_rmx, -mh_yoffset, mh_ddrill, mhpadsizex, mhpadsizey, mhtype, mhstyle])
         padpos.append(['', mh_xoffset, -mh_yoffset + mh_rmy, mh_ddrill, mhpadsizex, mhpadsizey, mhtype, mhstyle])
-    
+
     lbody_fab = pinxoffset # why does the X offset of the pin set the body's left side location?!?!?!
     tbody_fab = -pinyoffset
     wbody_fab = wbody
@@ -510,10 +510,10 @@ def makePotentiometerVertical(class_name, wbody, hbody, screwstyle="none", style
     cdbody_fab = d_body
     clbody_fab = lbody_fab + c_offsetx
     ctbody_fab = tbody_fab + c_offsety
-    
+
     if c_ddrill > 0 and shaft_hole == True:
         padpos.append(['', clbody_fab, ctbody_fab, c_ddrill, c_ddrill, c_ddrill, mhtype, mhstyle])
-    
+
     lbody_slk = lbody_fab - slk_offset
     tbody_slk = tbody_fab - slk_offset
     wbody_slk = wbody_fab + 2 * slk_offset
@@ -521,7 +521,7 @@ def makePotentiometerVertical(class_name, wbody, hbody, screwstyle="none", style
     cdbody_slk = cdbody_fab + 2 * slk_offset
     clbody_slk = clbody_fab
     ctbody_slk = ctbody_fab
-    
+
     minx = miny = 1e99
     maxx = maxy = -1e99
     for p in padpos:
@@ -529,28 +529,28 @@ def makePotentiometerVertical(class_name, wbody, hbody, screwstyle="none", style
         minx = min(minx, p[1] - p[4] / 2)
         maxy = max(maxy, p[2] + p[5] / 2)
         miny = min(miny, p[2] - p[5] / 2)
-    
+
     minx = min(minx, lbody_fab, clbody_fab - cdbody_fab / 2)
     miny = min(miny, tbody_fab, ctbody_fab - cdbody_fab / 2)
     maxx = max(maxx, lbody_fab + wbody_fab, clbody_fab + cdbody_fab / 2)
     maxy = max(maxy, tbody_fab + hbody_fab, ctbody_fab + cdbody_fab / 2)
-    
+
     h_crt = (maxy - miny) + 2 * crt_offset
     w_crt = (maxx - minx) + 2 * crt_offset
     l_crt = minx - crt_offset
     t_crt = miny - crt_offset
-    
+
     pow_rat = ""
     if R_POW > 0:
         pow_rat = "{0}W".format(R_POW)
         if (1 / R_POW == int(1 / R_POW)):
             pow_rat = pow_rat + " = 1/{0}W".format(int(1 / R_POW))
-    
+
     tgs = specialtags
     tgs.append(class_name)
     if len(pow_rat) > 0:
         tgs.append(pow_rat)
-    
+
     description = "Potentiometer, vertical"
     tags = "Potentiometer vertical"
     if shaft_hole:
@@ -560,13 +560,13 @@ def makePotentiometerVertical(class_name, wbody, hbody, screwstyle="none", style
         description = description + ", " + t
         tags = tags + " " + t
     description = description + ", " + add_description
-    
+
     for n in name_additions: footprint_name = footprint_name + "_" + n
     footprint_name = lib_name + "_" + "_".join(class_name.split()) + "_Vertical"
     if shaft_hole: footprint_name = footprint_name + "_Hole"
-        
+
     print(footprint_name)
-    
+
     if script3d != "":
         with open(script3d, "a") as myfile:
             myfile.write("\n\n # {0}\n".format(footprint_name))
@@ -575,7 +575,7 @@ def makePotentiometerVertical(class_name, wbody, hbody, screwstyle="none", style
             myfile.write("import os.path\n\n")
 
             myfile.write("App.ActiveDocument.clearAll()\n")
-            
+
             line = 0
             line += 1; script3d_writevariable(myfile, line, 'lbody_fab', min(lbody_fab+wbody_fab,lbody_fab)+offset[0])
             line += 1; script3d_writevariable(myfile, line, 'tbody_fab', min(tbody_fab+hbody_fab,tbody_fab)+offset[1])
@@ -618,21 +618,21 @@ def makePotentiometerVertical(class_name, wbody, hbody, screwstyle="none", style
             myfile.write("\nFreeCADGui.export(__objs__,os.path.split(doc.FileName)[0]+os.sep+\"{0}.wrl\")\n".format(footprint_name))
             myfile.write("doc.saveCopy(os.path.split(doc.FileName)[0]+os.sep+\"{0}.FCStd\")\n".format(footprint_name))
             myfile.write("print(\"created {0}\")\n".format(footprint_name))
-    
+
+    footprint_type = FootprintType.SMD if SMD_pads else FootprintType.THT
+
     # init kicad footprint
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, footprint_type)
     kicad_mod.setDescription(description)
     kicad_mod.setTags(tags)
-    if SMD_pads:
-        kicad_mod.setAttribute('smd')
-    
+
     kicad_modg = Translation(offset[0], offset[1])
     kicad_mod.append(kicad_modg)
-    
+
     # set general values
     kicad_modg.append(Text(type='reference', text='REF**', at=[l_crt + w_crt / 2, t_crt - txt_offset], layer='F.SilkS'))
     kicad_modg.append(Text(type='value', text=footprint_name, at=[l_crt + w_crt / 2, t_crt + h_crt + txt_offset], layer='F.Fab'))
-    
+
     # create FAB-layer
     drawbody = wbody > 0
     if cdbody_fab > 0:
@@ -646,13 +646,13 @@ def makePotentiometerVertical(class_name, wbody, hbody, screwstyle="none", style
                 kicad_modg.append(Arc(center=[clbody_fab, ctbody_fab], start=[clbody_fab-dx, ctbody_fab-dy], angle=alpha,layer='F.Fab', width=lw_fab))
             else:
                 kicad_modg.append(Circle(center=[clbody_fab, ctbody_fab], radius=cdbody_fab / 2.0, layer='F.Fab', width=lw_fab))
-                
+
                 # vertical trimmer with circular body: place refdes on F.Fab inside
                 # calculate text size (also used for offset distance inside outer circle)
                 text_size = min(1, round((cdbody_fab - dscrew) / 4.0, 2))
                 kicad_modg.append(Text(type='user', text='${REFERENCE}', at=[clbody_fab - cdbody_fab / 2.0 + text_size * 1.2, ctbody_fab],
                                  size=[text_size, text_size], layer='F.Fab', rotation = 90))
-                
+
                 if drawbody:
                     kicad_modg.append(RectLine(start=[lbody_fab, tbody_fab], end=[lbody_fab + wbody_fab, tbody_fab + hbody_fab],
                                  layer='F.Fab', width=lw_fab))
@@ -660,15 +660,15 @@ def makePotentiometerVertical(class_name, wbody, hbody, screwstyle="none", style
             cdradius = cdbody_fab / 2.0
             kicad_modg.append(Circle(center=[clbody_fab, ctbody_fab], radius=cdradius, layer='F.Fab', width=lw_fab))
             dy = hbody_fab / 2.0
-            
+
             #kicad_modg.append(Text(type='user', text='REF**', at=[clbody_fab, ctbody_fab], size=[min(1.0, cdradius), min(1.0, cdradius)], layer='F.Fab'))
-            
+
             if drawbody and dy <= cdbody_fab / 2.0:
                 dx = math.sqrt(cdbody_fab * cdbody_fab / 4 - dy * dy)
-                
+
                 # vertical pot with circular body: place refdes on F.Fab inside left edge of body
                 kicad_modg.append(Text(type='user', text='${REFERENCE}', at=[lbody_fab + 1, ctbody_fab], layer='F.Fab', rotation = 90))
-                
+
                 kicad_modg.append(PolygoneLine(polygone=[[clbody_fab - dx, ctbody_fab - dy],[lbody_fab, ctbody_fab - dy],
                              [lbody_fab, ctbody_fab + dy],[clbody_fab - dx, ctbody_fab + dy]], layer='F.Fab', width=lw_fab))
             elif drawbody:
@@ -677,20 +677,20 @@ def makePotentiometerVertical(class_name, wbody, hbody, screwstyle="none", style
     elif drawbody:
         # vertical pot with square body: place refdes on F.Fab inside left edge of body
         kicad_modg.append(Text(type='user', text='${REFERENCE}', at=[lbody_fab + 1, ctbody_fab], layer='F.Fab', rotation = 90))
-        
+
         kicad_modg.append(RectLine(start=[lbody_fab, tbody_fab], end=[lbody_fab + wbody_fab, tbody_fab + hbody_fab],
                                    layer='F.Fab', width=lw_fab))
-    
+
     if dscrew > 0:
         #kicad_modg.append(Circle(center=[clbody_fab, ctbody_fab], radius=dscrew / 2.0, layer='F.Fab', width=lw_fab))
         if screwstyle == "slit":
             addSlitScrew(kicad_modg, clbody_fab, ctbody_fab, dscrew / 2.0, 'F.Fab', lw_fab)
         elif screwstyle == "cross":
             addCrossScrew(kicad_modg, clbody_fab, ctbody_fab, dscrew / 2.0, 'F.Fab', lw_fab)
-    
+
     if dshaft > 0 and shaft_hole == False:
         kicad_modg.append(Circle(center=[clbody_fab, ctbody_fab], radius=dshaft / 2.0, layer='F.Fab', width=lw_fab))
-    
+
     # build keepout for silkscreen
     keepouts = []
     for p in padpos:
@@ -699,7 +699,7 @@ def makePotentiometerVertical(class_name, wbody, hbody, screwstyle="none", style
         else:
             keepouts = keepouts + addKeepoutRect(p[1], p[2], p[4] + 2 * lw_slk + 2 * slk_offset, p[5] + 2 * lw_slk + 2 * slk_offset)
     # debug_draw_keepouts(kicad_modg,keepouts)
-    
+
     # create SILKSCREEN-layer
     drawbody = wbody > 0
     if cdbody_fab > 0:
@@ -711,10 +711,10 @@ def makePotentiometerVertical(class_name, wbody, hbody, screwstyle="none", style
             addVLineWithKeepout(kicad_modg, lbody_slk, ctbody_slk - dy, ctbody_slk + dy, 'F.SilkS', lw_slk,keepouts)
             addHLineWithKeepout(kicad_modg, clbody_slk - dx, lbody_slk, ctbody_slk + dy, 'F.SilkS', lw_slk,keepouts)
             drawbody = False
-    
+
     if drawbody:
         addRectWithKeepout(kicad_modg, lbody_slk, tbody_slk, wbody_slk, hbody_slk, 'F.SilkS', lw_slk, keepouts,0.001)
-        
+
     # create courtyard
     kicad_mod.append(RectLine(start=[roundG(l_crt + offset[0], grid_crt), roundG(t_crt + offset[1], grid_crt)],
                               end=[roundG(l_crt + w_crt + offset[0], grid_crt), roundG(t_crt + h_crt + offset[1], grid_crt)],
@@ -725,18 +725,18 @@ def makePotentiometerVertical(class_name, wbody, hbody, screwstyle="none", style
             kicad_modg.append(Pad(number=p[0], type=p[6], shape=p[7], at=[p[1], p[2]], size=[p[4], p[5]], drill=p[3], layers=['F.Cu', 'F.Paste', 'F.Mask']))
         else:
             kicad_modg.append(Pad(number=p[0], type=p[6], shape=p[7], at=[p[1], p[2]], size=[p[4], p[5]], drill=p[3], layers=['*.Cu', '*.Mask']))
-    
+
     # add model
     if (has3d != 0):
         if SMD_pads:
             kicad_modg.append(Model(filename="${KICAD7_3DMODEL_DIR}/" + lib_name + "_SMD.3dshapes/" + footprint_name + ".wrl", at=x_3d, scale=s_3d, rotate=r_3d))
         else:
             kicad_modg.append(Model(filename="${KICAD7_3DMODEL_DIR}/" + lib_name + "_THT.3dshapes/" + footprint_name + ".wrl", at=x_3d, scale=s_3d, rotate=r_3d))
-    
+
     # print render tree
     # print(kicad_mod.getRenderTree())
     # print(kicad_mod.getCompleteRenderTree())
-    
+
     # write file
     file_handler = KicadFileHandler(kicad_mod)
     file_handler.writeFile(footprint_name + '.kicad_mod')
@@ -760,7 +760,7 @@ def makeSpindleTrimmer(class_name, wbody, hbody, pinxoffset, pinyoffset, rmx2, r
                                    +---------------------------------------------------------------+         v
                                    <----------------------------wbody------------------------------>
                                    <------pinxoffset------------------------------------>
-    
+
     Parameters:
         class_name: manufacturer and MPN like "Bourns 3214W" (str)
         wbody: body length (float)
@@ -791,7 +791,7 @@ def makeSpindleTrimmer(class_name, wbody, hbody, pinxoffset, pinyoffset, rmx2, r
         name_additions: extra text for footprint name that will be underscore-delimited [default = []] (list of strs)
         script3d: script to kick off 3D model generation in FreeCad [default = ""] (str)
         height3d: height of 3D model [default = 10] (float)
-            
+
     Returns:
         None
     """
@@ -800,11 +800,11 @@ def makeSpindleTrimmer(class_name, wbody, hbody, pinxoffset, pinyoffset, rmx2, r
     if SMD_pads and len(SMD_padsize) >= 2:
         padx = SMD_padsize[0]
         pady = SMD_padsize[1]
-    
+
     txt_offset = 1
     slk_offset = 0.12
     grid_crt = 0.01
-    
+
     padpos = []
     padtype = Pad.TYPE_THT
     padstyle = Pad.SHAPE_CIRCLE
@@ -824,7 +824,7 @@ def makeSpindleTrimmer(class_name, wbody, hbody, pinxoffset, pinyoffset, rmx2, r
     if SMD_pads:
         offset = [-(max(padpos[0][1],padpos[1][1],padpos[2][1])+min(padpos[0][1],padpos[1][1],padpos[2][1]))/2, -(max(padpos[0][2],padpos[1][2],padpos[2][2])+min(padpos[0][2],padpos[1][2],padpos[2][2]))/2]
         #offset = [-(pinxoffset+pinxoffset+rmx2+pinxoffset+rmx3)/3.0, -(pinyoffset+pinyoffset+rmy2+pinyoffset+rmy3)/3.0]
-    
+
     lbody_fab = 0
     tbody_fab = 0
     wbody_fab = wbody
@@ -834,7 +834,7 @@ def makeSpindleTrimmer(class_name, wbody, hbody, pinxoffset, pinyoffset, rmx2, r
     tbody_slk = tbody_fab - slk_offset
     wbody_slk = wbody_fab + 2 * slk_offset
     hbody_slk = hbody_fab + 2 * slk_offset
-    
+
     if style == "screwtop" and shaft_hole == True:
         padpos.append(['', screwxoffset, screwyoffset, ddrill, ddrill, ddrill, Pad.TYPE_NPTH, Pad.SHAPE_CIRCLE])
 
@@ -866,7 +866,7 @@ def makeSpindleTrimmer(class_name, wbody, hbody, pinxoffset, pinyoffset, rmx2, r
         minx = min(minx, p[1] - p[4] / 2)
         maxy = max(maxy, p[2] + p[5] / 2)
         miny = min(miny, p[2] - p[5] / 2)
-    
+
     minx = min(minx, lbody_fab)
     miny = min(miny, tbody_fab)
     maxx = max(maxx, lbody_fab + wbody_fab)
@@ -881,18 +881,18 @@ def makeSpindleTrimmer(class_name, wbody, hbody, pinxoffset, pinyoffset, rmx2, r
     w_crt = (maxx - minx) + 2 * crt_offset
     l_crt = minx - crt_offset
     t_crt = miny - crt_offset
-    
+
     pow_rat = ""
     if R_POW > 0:
         pow_rat = "{0}W".format(R_POW)
         if (1 / R_POW == int(1 / R_POW)):
             pow_rat = pow_rat + " = 1/{0}W".format(int(1 / R_POW))
-    
+
     tgs = specialtags
     tgs.append(class_name)
     if len(pow_rat) > 0:
         tgs.append(pow_rat)
-    
+
     description = "Potentiometer, " + orientation
     tags = "Potentiometer " + orientation
     if shaft_hole:
@@ -902,13 +902,13 @@ def makeSpindleTrimmer(class_name, wbody, hbody, pinxoffset, pinyoffset, rmx2, r
         description = description + ", " + t
         tags = tags + " " + t
     description = description + ", " + add_description
-    
+
     for n in name_additions: footprint_name = footprint_name + "_" + n
     footprint_name = lib_name + "_" + "_".join(class_name.split()) + "_" + orientation.capitalize()
     if shaft_hole: footprint_name = footprint_name + "_Hole"
-        
+
     print(footprint_name)
-    
+
     if script3d != "":
         with open(script3d, "a") as myfile:
 
@@ -952,28 +952,28 @@ def makeSpindleTrimmer(class_name, wbody, hbody, pinxoffset, pinyoffset, rmx2, r
             myfile.write("\nFreeCADGui.export(__objs__,os.path.split(doc.FileName)[0]+os.sep+\"{0}.wrl\")\n".format(footprint_name))
             myfile.write("doc.saveCopy(os.path.split(doc.FileName)[0]+os.sep+\"{0}.FCStd\")\n".format(footprint_name))
             myfile.write("print(\"created {0}\")\n".format(footprint_name))
-    
+
+    footprint_type = FootprintType.SMD if SMD_pads else FootprintType.THT
+
     # init kicad footprint
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, footprint_type)
     kicad_mod.setDescription(description)
     kicad_mod.setTags(tags)
-    if SMD_pads:
-        kicad_mod.setAttribute('smd')
-    
+
     kicad_modg = Translation(offset[0], offset[1])
     kicad_mod.append(kicad_modg)
-    
+
     # set general values
     kicad_modg.append(Text(type='reference', text='REF**', at=[l_crt + w_crt / 2.0, t_crt - txt_offset], layer='F.SilkS'))
     kicad_modg.append(Text(type='value', text=footprint_name, at=[l_crt + w_crt / 2.0, t_crt + h_crt + txt_offset], layer='F.Fab'))
-    
+
     # create FAB-layer
     kicad_modg.append(RectLine(start=[lbody_fab, tbody_fab], end=[lbody_fab + wbody_fab, tbody_fab + hbody_fab], layer='F.Fab', width=lw_fab))
     if style == "screwleft":
         if wscrew > 0:
             kicad_modg.append(RectLine(start=[lscrew_fab, tscrew_fab], end=[lscrew_fab + wscrew_fab, tscrew_fab + hscrew_fab], layer='F.Fab',width=lw_fab))
             kicad_modg.append(Line(start=[lscrew_fab, tscrew_fab+hscrew_fab/2.0], end=[lscrew_fab + wscrew_fab/2.0, tscrew_fab + hscrew_fab/2.0], layer='F.Fab', width=lw_fab))
-        
+
         # trimmer pot with rectangular body: place refdes on F.Fab centered in body
         text_size = round(min(1, lbody_fab + wbody_fab, tbody_fab + hbody_fab), 2)
         kicad_modg.append(Text(type='user', text='${REFERENCE}', at=[lbody_fab+wbody_fab/2.0, tbody_fab+hbody_fab/2.0], size=[text_size, text_size], layer='F.Fab'))
@@ -994,15 +994,15 @@ def makeSpindleTrimmer(class_name, wbody, hbody, pinxoffset, pinyoffset, rmx2, r
                 text_x = lbody_fab + lscrew_fab / 2.0
                 text_size = round(min(1, lscrew_fab / 6.0), 2)
 
-        # trimmer pot top-mount with rectangular body: place refdes on F.Fab at location found above        
+        # trimmer pot top-mount with rectangular body: place refdes on F.Fab at location found above
         kicad_modg.append(Text(type='user', text='${REFERENCE}', at=[text_x, text_y], size=[text_size, text_size], layer='F.Fab'))
-        
+
         if shaft_hole == False:
             if screwstyle=="slit":
                 addSlitScrew(kicad_modg, lscrew_fab, tscrew_fab, wscrew_fab / 2.0, 'F.Fab', lw_fab)
             else:
                 addCrossScrew(kicad_modg, lscrew_fab, tscrew_fab, wscrew_fab / 2.0, 'F.Fab', lw_fab)
-        
+
     # build keepout for silkscreen
     keepouts = []
     for p in padpos:
@@ -1011,7 +1011,7 @@ def makeSpindleTrimmer(class_name, wbody, hbody, pinxoffset, pinyoffset, rmx2, r
         else:
             keepouts = keepouts + addKeepoutRect(p[1], p[2], p[4] + 2 * lw_slk + 2 * slk_offset, p[5] + 2 * lw_slk + 2 * slk_offset)
     # debug_draw_keepouts(kicad_modg,keepouts)
-    
+
     # create SILKSCREEN-layer
     addRectWithKeepout(kicad_modg, lbody_slk, tbody_slk, wbody_slk, hbody_slk, 'F.SilkS', lw_slk, keepouts)
     if style == "screwleft" and wscrew > 0:
@@ -1026,7 +1026,7 @@ def makeSpindleTrimmer(class_name, wbody, hbody, pinxoffset, pinyoffset, rmx2, r
     # create courtyard
     kicad_mod.append(RectLine(start=[roundG(l_crt + offset[0], grid_crt), roundG(t_crt + offset[1], grid_crt)],
                              end=[roundG(l_crt + w_crt + offset[0], grid_crt), roundG(t_crt + h_crt + offset[1], grid_crt)], layer='F.CrtYd', width=lw_crt))
-    
+
     # create pads
     for p in padpos:
         if p[6] == Pad.TYPE_SMT:
@@ -1035,18 +1035,18 @@ def makeSpindleTrimmer(class_name, wbody, hbody, pinxoffset, pinyoffset, rmx2, r
         else:
             kicad_modg.append(Pad(number=p[0], type=p[6], shape=p[7], at=[p[1], p[2]], size=[p[4], p[5]], drill=p[3],
                                   layers=['*.Cu', '*.Mask']))
-    
+
     # add model
     if (has3d != 0):
         if SMD_pads:
             kicad_modg.append(Model(filename="${KICAD7_3DMODEL_DIR}/" + lib_name + "_SMD.3dshapes/" + footprint_name + ".wrl", at=x_3d, scale=s_3d, rotate=r_3d))
         else:
             kicad_modg.append(Model(filename="${KICAD7_3DMODEL_DIR}/" + lib_name + "_THT.3dshapes/" + footprint_name + ".wrl", at=x_3d, scale=s_3d, rotate=r_3d))
-    
+
     # print render tree
     # print(kicad_mod.getRenderTree())
     # print(kicad_mod.getCompleteRenderTree())
-    
+
     # write file
     file_handler = KicadFileHandler(kicad_mod)
     file_handler.writeFile(footprint_name + '.kicad_mod')
@@ -1055,7 +1055,7 @@ if __name__ == '__main__':
 
     # handle arguments
     parser = argparse.ArgumentParser()
-    
+
     # general parameters (used for 'horizontal' types)
     parser.add_argument('type', help='type of potentiometer (horizontal, vertical, spindle)', nargs='?', choices=['horizontal', 'vertical', 'spindle'])
     parser.add_argument('--class_name', help='class_name: manufacturer and MPN like "Bourns 3214W" (str)', nargs='?', required=True)
@@ -1090,7 +1090,7 @@ if __name__ == '__main__':
     parser.add_argument('--mh_rmy', help='mh_rmy: row spacing of mounting holes [default = 15] (float)', type=float, nargs='?', default=0)
     parser.add_argument('--mh_xoffset', help='mh_xoffset: distance from face of body to first column of mounting holes [default = 0] (float)', type=float, nargs='?', default=0)
     parser.add_argument('--mh_yoffset', help='mh_yoffset: distance from top of body to first row of mounting holes [default = 0] (float)', type=float, nargs='?', default=0)
-    
+
     # additional parameters for 'vertical' types
     parser.add_argument('--screwstyle', help='screwstyle: screw style from "none", "slit", or "cross" [default = "slit"] (str)', nargs='?')
     parser.add_argument('--d_body', help='d_body: diameter of body for circular pot [default = 0] (float)', type=float, nargs='?')
@@ -1104,7 +1104,7 @@ if __name__ == '__main__':
     parser.add_argument('--mh_smd', help='mh_smd: allows using SMD mounting holes [default = False] (bool)', type=bool, nargs='?', default=False)
     parser.add_argument('--mh_padsize', help='mh_padsize: X and Y dimensions of SMD mounting holes in [X, Y] format [default = []] (list of floats)', type=float, nargs=2)
     parser.add_argument('--mh_nopads', help='mh_nopads: allows selecting the presence of mounting holes [default = False] (bool)', type=bool, nargs='?', default=False)
-    
+
     # additional parameters for 'spindle' types (may not use all parameters above)
     parser.add_argument('--rmx2', help='rmx2: distance from pin 1 left to pin 2 (float)', type=float, nargs='?')
     parser.add_argument('--rmy2', help='rmy2: distance from pin 1 up to pin 2 (float)', type=float, nargs='?')
@@ -1112,53 +1112,53 @@ if __name__ == '__main__':
     parser.add_argument('--rmy3', help='rmy3: distance from pin 1 up to pin 3 (float)', type=float, nargs='?')
     parser.add_argument('--screwxoffset', help='screwxoffset: distance from left side of body to screw for top screw types [default = 0] (float)', type=float, nargs='?', default=0)
     parser.add_argument('--screwyoffset', help='screwyoffset: distance from top of body to center of screw [default = 0] (float)', type=float, nargs='?', default=0)
-    
+
     parser.add_argument('-v', '--verbose', help='show extra information while generating the footprint', action='store_true')
     args = parser.parse_args()
     print('\n')
     print(args)
-    
+
     # some special handling of arguments, especially list types
     '''if not args.x_3d:
         x_3d = [0, 0, 0]
     else:
         x_3d = args.x_3d
-    
+
     if not args.s_3d:
         s_3d = [1, 1, 1]
     else:
         s_3d = args.s_3d
-    
+
     if not args.r_3d:
         r_3d = [0, 0, 0]
     else:
         r_3d = args.r_3d
-    
+
     if not args.specialtags:
         specialtags = []
     else:
         specialtags = args.specialtags
-    
+
     if not args.name_additions:
         name_additions = []
     else:
         name_additions = args.name_additions'''
-        
+
     # for troubleshooting, below are shell commands to generate a footprint in various ways:
     # full: all arguments are given with non-default values
     # miss1: one required argument checked by argparse is missing
     # miss2: one required argument not checked by argparse is missing
     # minimal: only required arguments are given
-    
+
     #python footprint_scripts_potentiometers.py "horizontal" --class_name "Hfull" --wbody 9.3 --hbody 16.9 --wscrew 6 --dscrew 7 --wshaft 44 --dshaft 4 --style "normal" --pinxoffset 6.3 --pinyoffset 3.45 --pins 3 --rmx 5 --rmy 5 --ddrill 1.3 --R_POW 1 --x_3d 0.7 0.8 0.9 --s_3d 0.4 0.5 0.6 --r_3d 0.1 0.2 0.3 --has3d 1 --specialtags "tag1" "tag2" --add_description "http://www.omeg.co.uk/pc6bubrc.htm" --lib_name "Potentiometer" --name_additions "addition1 addition2" --script3d "pots_ver.py" --height3d 21 --screwzpos 12.5 --mh_ddrill 1.1 --mh_count 2 --mh_rmx 1 --mh_rmy 0.5 --mh_xoffset 0.2 --mh_yoffset 11
     #python footprint_scripts_potentiometers.py "horizontal" --class_name "Hmiss1" --hbody 16.9 --wscrew 6 --dscrew 7 --wshaft 44 --dshaft 4 --style "normal" --pinxoffset 6.3 --pinyoffset 3.45 --pins 3 --rmx 5 --rmy 5 --ddrill 1.3 --R_POW 1 --x_3d 0.7 0.8 0.9 --s_3d 0.4 0.5 0.6 --r_3d 0.1 0.2 0.3 --has3d 1 --specialtags "tag1" "tag2" --add_description "http://www.omeg.co.uk/pc6bubrc.htm" --lib_name "Potentiometer" --name_additions "addition1 addition2" --script3d "pots_ver.py" --height3d 21 --screwzpos 12.5 --mh_ddrill 1.1 --mh_count 2 --mh_rmx 1 --mh_rmy 0.5 --mh_xoffset 0.2 --mh_yoffset 11
     #python footprint_scripts_potentiometers.py "horizontal" --class_name "Hmiss2" --wbody 9.3 --hbody 16.9 --wscrew 6 --dscrew 7 --wshaft 44 --dshaft 4 --style "normal" --pinxoffset 6.3 --pinyoffset 3.45 --pins 3 --rmy 5 --ddrill 1.3 --R_POW 1 --x_3d 0.7 0.8 0.9 --s_3d 0.4 0.5 0.6 --r_3d 0.1 0.2 0.3 --has3d 1 --specialtags "tag1" "tag2" --add_description "http://www.omeg.co.uk/pc6bubrc.htm" --lib_name "Potentiometer" --name_additions "addition1 addition2" --script3d "pots_ver.py" --height3d 21 --screwzpos 12.5 --mh_ddrill 1.1 --mh_count 2 --mh_rmx 1 --mh_rmy 0.5 --mh_xoffset 0.2 --mh_yoffset 11
     #python footprint_scripts_potentiometers.py "horizontal" --class_name "Hmin" --wbody 9.3 --hbody 16.9 --wscrew 6 --dscrew 7 --wshaft 44 --dshaft 4 --style "normal" --rmx 5 --rmy 5 --ddrill 1.3
-    
+
     #python footprint_scripts_potentiometers.py "vertical" --class_name "Vfull" --wbody 8 --hbody 16 --d_body 0 --dshaft 6 --dscrew 10 --c_ddrill 10.5 --c_offsetx 10 --c_offsety 8 --pinxoffset 0.5 --pinyoffset 3 --pins 3 --rmx 7.5 --rmy 5 --ddrill 1.3 --specialtags [] --add_description "http://www.piher-nacesa.com/pdf/20-PC16v03.pdf" --lib_name "Potentiometer" --name_additions "addition" --script3d "pots_hor_below.py" --height3d 20.5
     #python footprint_scripts_potentiometers.py "vertical" --class_name "Vmiss" --hbody 16 --d_body 0 --dshaft 6 --dscrew 10 --c_ddrill 10.5 --c_offsetx 10 --c_offsety 8 --pinxoffset 0.5 --pinyoffset 3 --pins 3 --rmx 7.5 --rmy 5 --ddrill 1.3 --specialtags [] --add_description "http://www.piher-nacesa.com/pdf/20-PC16v03.pdf" --lib_name "Potentiometer" --name_additions "" --script3d "pots_hor_below.py" --height3d 20.5
     #python footprint_scripts_potentiometers.py "vertical"--class_name "Vmin" --wbody 8 --hbody 16 --d_body 0 --dshaft 6 --dscrew 10 --c_ddrill 10.5 --c_offsetx 10 --c_offsety 8 --pinxoffset 0.5 --pinyoffset 3 --pins 3 --rmx 7.5 --rmy 5 --ddrill 1.3
-    
+
     #python footprint_scripts_potentiometers.py "spindle" --class_name "Sfull" --ddrill 1 --wbody 19.3 --hbody 4.06 --pinxoffset 16 --pinyoffset 3.3 --rmx2 -7.62 --rmy2 -2.54 --rmx3 -12.7 --rmy3 0 --dscrew 3 --wscrew 1.52 --screwxoffset 0 --screwyoffset 2.03 --style=style --screwstyle "slit" --SMD_pads True --SMD_padsize 2.5 2.5 --add_description "https://www.bourns.com/pdfs/3005.pdf" --lib_name "Potentiometer" --script3d "trimmer_screwleft.py" --height3d 7.87
 
     # ensure all required attributes for pot type are given and, if so, pass arguments to function
@@ -1172,7 +1172,7 @@ if __name__ == '__main__':
                 style = "normal"
             else:
                 style = args.style'''
-            
+
             makePotentiometerHorizontal(class_name=args.class_name, wbody=args.wbody, hbody=args.hbody, wscrew=args.wscrew, dscrew=args.dscrew,
                             wshaft=args.wshaft, dshaft=args.dshaft, style=args.style, pinxoffset=args.pinxoffset, pinyoffset=args.pinyoffset,
                             pins=args.pins, rmx=args.rmx, rmy=args.rmy, ddrill=args.ddrill, R_POW=args.R_POW, x_3d=args.x_3d, s_3d=args.s_3d, r_3d=args.r_3d, has3d=args.has3d,

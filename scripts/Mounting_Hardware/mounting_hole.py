@@ -19,7 +19,7 @@ def round_to(n, precision):
 
 
 def create_footprint(name, **kwargs):
-    kicad_mod = Footprint(name)
+    kicad_mod = Footprint(name, FootprintType.THT)
 
     # init kicad footprint
     kicad_mod.setDescription(kwargs['description'])

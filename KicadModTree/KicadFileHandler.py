@@ -20,6 +20,7 @@ from KicadModTree.nodes.base.Arc import Arc
 from KicadModTree.nodes.base.Circle import Circle
 from KicadModTree.nodes.base.Line import Line
 from KicadModTree.nodes.base.Polygon import Polygon
+from KicadModTree.nodes.Footprint import Footprint, FootprintType
 
 
 DEFAULT_LAYER_WIDTH = {'F.SilkS': 0.12,
@@ -51,12 +52,12 @@ class KicadFileHandler(FileHandler):
     :Example:
 
     >>> from KicadModTree import *
-    >>> kicad_mod = Footprint("example_footprint")
+    >>> kicad_mod = Footprint("example_footprint", Footprint.THT)
     >>> file_handler = KicadFileHandler(kicad_mod)
     >>> file_handler.writeFile('example_footprint.kicad_mod')
     """
 
-    def __init__(self, kicad_mod):
+    def __init__(self, kicad_mod: Footprint):
         FileHandler.__init__(self, kicad_mod)
 
     def serialize(self, **kwargs):
@@ -65,7 +66,7 @@ class KicadFileHandler(FileHandler):
         :Example:
 
         >>> from KicadModTree import *
-        >>> kicad_mod = Footprint("example_footprint")
+        >>> kicad_mod = Footprint("example_footprint", Footprint.THT)
         >>> file_handler = KicadFileHandler(kicad_mod)
         >>> print(file_handler.serialize())
         """
@@ -86,8 +87,23 @@ class KicadFileHandler(FileHandler):
             sexpr.append(['tags', self.kicad_mod.tags])
             sexpr.append(SexprSerializer.NEW_LINE)
 
-        if self.kicad_mod.attribute:
-            sexpr.append(['attr', self.kicad_mod.attribute])
+        attributes = []
+
+        footprint_type_str = self._typeToAttributeString(self.kicad_mod.footprintType)
+
+        # If not unspecified, add the attribute
+        if (footprint_type_str is not None):
+            attributes.append(footprint_type_str)
+
+        if self.kicad_mod.excludeFromBOM:
+            attributes.append('exclude_from_bom')
+
+        if self.kicad_mod.excludeFromPositionFiles:
+            attributes.append('exclude_from_pos_files')
+
+        # There might be no attributes
+        if len(attributes) > 0:
+            sexpr.append(['attr'] + attributes)
             sexpr.append(SexprSerializer.NEW_LINE)
 
         if self.kicad_mod.maskMargin:
@@ -152,6 +168,17 @@ class KicadFileHandler(FileHandler):
                 sexpr.append(SexprSerializer.NEW_LINE)
 
         return sexpr
+
+    def _typeToAttributeString(self, footprintType: FootprintType):
+        """
+        Convert the footprint type to the corresponding attribute string
+        in the .kicad_mod format s-expr attr node
+        """
+        return {
+            FootprintType.UNSPECIFIED: None,
+            FootprintType.SMD: 'smd',
+            FootprintType.THT: 'through_hole',
+        }[footprintType]
 
     def _callSerialize(self, node):
         '''

@@ -17,7 +17,7 @@
 from .Node import Node, MultipleParentsError, RecursionDetectedError
 
 # root node
-from .Footprint import Footprint
+from .Footprint import Footprint, FootprintType
 
 from .base import *
 from .specialized import *

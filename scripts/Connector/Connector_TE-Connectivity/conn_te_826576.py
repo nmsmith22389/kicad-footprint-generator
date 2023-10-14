@@ -74,7 +74,7 @@ def generate_one_footprint(pins, configuration):
         pitch=pitch, orientation=orientation_str)
 
     print(footprint_name)
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, Footprint.THT)
     kicad_mod.setDescription("{:s}, {:s}, {:d} Pins ({:s}), generated with kicad-footprint-generator".format(manufacturer,
         mpn, pins, datasheet))
     kicad_mod.setTags(configuration['keyword_fp_string'].format(series=series,
@@ -149,7 +149,7 @@ def generate_one_footprint(pins, configuration):
     pin_mark_width = 1
     pin_mark_height = 1
     pin_mask_offset = 0.5
-    
+
     pin = [
         {'x': -pin_mark_width/2,'y': body_edge['bottom']},
         {'x': 0,'y': body_edge['bottom'] - pin_mark_height},

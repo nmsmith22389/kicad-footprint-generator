@@ -4,6 +4,7 @@ from KicadModTree import *
 
 RESULT_rotText = """(footprint test_rotate (version 20221018) (generator kicad-footprint-generator)
   (layer F.Cu)
+  (attr smd)
   (fp_text user -1 (at 2 0) (layer F.SilkS)
     (effects (font (size 1 1) (thickness 0.15)))
   )
@@ -32,6 +33,7 @@ RESULT_rotText = """(footprint test_rotate (version 20221018) (generator kicad-f
 
 RESULT_rotLine = """(footprint test_rotate (version 20221018) (generator kicad-footprint-generator)
   (layer F.Cu)
+  (attr smd)
   (fp_line (start 6 0) (end 7 1)
     (stroke (width 0.12) (type solid)) (layer F.SilkS))
   (fp_line (start 5.931852 0.517638) (end 6.638958 1.742383)
@@ -84,6 +86,7 @@ RESULT_rotLine = """(footprint test_rotate (version 20221018) (generator kicad-f
 
 RESULT_rotArc = """(footprint test_rotate (version 20221018) (generator kicad-footprint-generator)
   (layer F.Cu)
+  (attr smd)
   (fp_arc (start 5.741181 0.034074) (mid 6.5 0.133975) (end 6.965926 0.741181)
     (stroke (width 0.12) (type solid)) (layer F.SilkS))
   (fp_arc (start 5.673033 0.483564) (mid 6.380139 0.776457) (end 6.673033 1.483564)
@@ -136,6 +139,7 @@ RESULT_rotArc = """(footprint test_rotate (version 20221018) (generator kicad-fo
 
 RESULT_rotCircle = """(footprint test_rotate (version 20221018) (generator kicad-footprint-generator)
   (layer F.Cu)
+  (attr smd)
   (fp_circle (center 6 -1) (end 7 -1)
     (stroke (width 0.12) (type solid)) (layer F.SilkS))
   (fp_circle (center 5.673033 -0.516436) (end 6.673033 -0.516436)
@@ -188,6 +192,7 @@ RESULT_rotCircle = """(footprint test_rotate (version 20221018) (generator kicad
 
 RESULT_rotPoly = """(footprint test_rotate (version 20221018) (generator kicad-footprint-generator)
   (layer F.Cu)
+  (attr smd)
   (fp_poly (pts (xy -1 0) (xy -1.2 0.5) (xy 0 0) (xy -1.2 -0.5))
     (stroke (width 0.12) (type solid)) (fill solid) (layer F.SilkS))
   (fp_poly (pts (xy -0.575833 -3.334679) (xy -1.108846 -3.257884) (xy -0.075833 -2.468653) (xy -0.24282 -3.757884))
@@ -204,6 +209,7 @@ RESULT_rotPoly = """(footprint test_rotate (version 20221018) (generator kicad-f
 
 RESULT_rotPad = """(footprint test_rotate (version 20221018) (generator kicad-footprint-generator)
   (layer F.Cu)
+  (attr smd)
   (pad 1 smd custom (at 0 0) (size 0.2 0.2) (layers F.Cu F.Mask F.Paste)
     (options (clearance outline) (anchor circle))
     (primitives
@@ -240,7 +246,7 @@ RESULT_rotPad = """(footprint test_rotate (version 20221018) (generator kicad-fo
 class RotationTests(unittest.TestCase):
 
     def testTextRotation(self):
-        kicad_mod = Footprint("test_rotate")
+        kicad_mod = Footprint("test_rotate", FootprintType.SMD)
 
         center = Vector2D(0, 0)
         at = center+Vector2D(2, 0)
@@ -254,7 +260,7 @@ class RotationTests(unittest.TestCase):
         self.assertEqual(file_handler.serialize(timestamp=0), RESULT_rotText)
 
     def testLineRotation(self):
-        kicad_mod = Footprint("test_rotate")
+        kicad_mod = Footprint("test_rotate", FootprintType.SMD)
 
         center = Vector2D(4, 0)
         start = center + Vector2D(2, 0)
@@ -269,7 +275,7 @@ class RotationTests(unittest.TestCase):
         self.assertEqual(file_handler.serialize(timestamp=0), RESULT_rotLine)
 
     def testArcRotation(self):
-        kicad_mod = Footprint("test_rotate")
+        kicad_mod = Footprint("test_rotate", FootprintType.SMD)
 
         rot_center = Vector2D(4, 0)
         mid = rot_center + Vector2D(2, 0)
@@ -287,7 +293,7 @@ class RotationTests(unittest.TestCase):
         self.assertEqual(file_handler.serialize(timestamp=0), RESULT_rotArc)
 
     def testCircleRotation(self):
-        kicad_mod = Footprint("test_rotate")
+        kicad_mod = Footprint("test_rotate", FootprintType.SMD)
 
         rot_center = Vector2D(4, -2)
         center = rot_center + Vector2D(2, 1)
@@ -302,7 +308,7 @@ class RotationTests(unittest.TestCase):
         self.assertEqual(file_handler.serialize(timestamp=0), RESULT_rotCircle)
 
     def testPolygonRotation(self):
-        kicad_mod = Footprint("test_rotate")
+        kicad_mod = Footprint("test_rotate", FootprintType.SMD)
 
         rot_center = Vector2D(2.1, -1.3)
 
@@ -317,7 +323,7 @@ class RotationTests(unittest.TestCase):
         self.assertEqual(file_handler.serialize(timestamp=0), RESULT_rotPoly)
 
     def testPadRotation(self):
-        kicad_mod = Footprint("test_rotate")
+        kicad_mod = Footprint("test_rotate", FootprintType.SMD)
 
         rot_center = Vector2D(0.35, 0)
         nodes = [(-1, 0), (-1.2, 0.5), (0, 0), (-1.2, -0.5)]

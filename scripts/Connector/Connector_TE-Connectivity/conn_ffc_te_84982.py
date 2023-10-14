@@ -47,7 +47,7 @@ pad_width = 0.6             # [mm]
 pad_pitch = 1.0             # [mm]
 center_to_housing = 1.6     # [mm]
 housing_length = 3.0        # [mm]
-housing_width_4pin = 6.0    # [mm] 
+housing_width_4pin = 6.0    # [mm]
 pins_width_4pin = 3.0       # [mm]
 pin1_marker_l = 0.566       # [mm]
 
@@ -60,10 +60,9 @@ def generate_one_footprint(pincount, configuration):
     print('Building {:s}'.format(footprint_name))
 
     # initialise footprint
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, FootprintType.SMD)
     kicad_mod.setDescription('TE FPC connector, {pc:02g} top-side contacts, 1.0mm pitch, SMT, {ds}'.format(pc=pincount, ds=datasheet))
     kicad_mod.setTags('TE FPC {:s} Vertical Top'.format(partnumber))
-    kicad_mod.setAttribute('smd')
 
     row_offset_odd = (d_between_rows + pad_height_odd) / 2
     row_offset_even = (d_between_rows + pad_height_even) / 2
@@ -118,7 +117,7 @@ def generate_one_footprint(pincount, configuration):
 
     # create silkscreen outline
     silk_offset = configuration['silk_fab_offset']
-    housing_x_offset += silk_offset 
+    housing_x_offset += silk_offset
     housing_y_offset += silk_offset
 
     kicad_mod.append(PolygoneLine(
@@ -140,15 +139,15 @@ def generate_one_footprint(pincount, configuration):
         layer='F.SilkS', width=configuration['silk_line_width']))
 
     # create courtyard
-    housing_x_offset -= silk_offset 
+    housing_x_offset -= silk_offset
 
     courtyard_precision = configuration['courtyard_grid']
     courtyard_clearance = configuration['courtyard_offset']['connector']
-    
+
     courtyard_x = roundToBase(housing_x_offset + courtyard_clearance, courtyard_precision)
     courtyard_y_south = roundToBase(row_offset_odd + pad_height_odd / 2.0 + courtyard_clearance, courtyard_precision)
     courtyard_y_north = roundToBase(row_offset_even + pad_height_even / 2.0 + courtyard_clearance, courtyard_precision)
-    
+
     kicad_mod.append(RectLine(start=[-courtyard_x, courtyard_y_south], end=[courtyard_x, -courtyard_y_north],
         layer='F.CrtYd', width=configuration['courtyard_line_width']))
 

@@ -6,7 +6,8 @@ import inspect
 
 
 def gen_footprint():
-    kicad_mod = Footprint("test")
+    kicad_mod = Footprint("test", FootprintType.SMD)
+
     # add a shape on Silk and Fab
     for layer, width in [("F.SilkS", 0.12), ("F.Fab", 0.1)]:
         kicad_mod.append(Line(start=[-5, -2], end=[4.5, -2], layer=layer, width=width))

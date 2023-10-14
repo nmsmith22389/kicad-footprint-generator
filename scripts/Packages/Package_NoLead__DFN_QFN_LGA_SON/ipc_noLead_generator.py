@@ -330,7 +330,7 @@ class NoLead():
         # print(fp_name)
         # print(pad_details)
 
-        kicad_mod = Footprint(fp_name)
+        kicad_mod = Footprint(fp_name, FootprintType.SMD)
 
         # init kicad footprint
         kicad_mod.setDescription(
@@ -350,7 +350,6 @@ class NoLead():
             package=device_params['device_type'],
             category=category
         ).lstrip())
-        kicad_mod.setAttribute('smd')
 
         pad_radius = add_dual_or_quad_pad_border(kicad_mod, self.configuration, pad_details, device_params)
 

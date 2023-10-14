@@ -86,7 +86,7 @@ for pincount in pins:
 
     print(footprint_name)
 
-    fp = Footprint(footprint_name)
+    fp = Footprint(footprint_name, FootprintType.THT)
 
     #description
     fp.setDescription(desc.format(manu=manu, series=series, p=pitch, code=part))

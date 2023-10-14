@@ -99,11 +99,9 @@ def generate_one_footprint(partnumber, pincount, configuration):
     side = "top"
 
     # initialise footprint
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, FootprintType.SMD)
     kicad_mod.setDescription('TE FPC connector, {pc:02g} {side}-side contacts, 0.5mm pitch, SMT, {ds}'.format(pc=pincount, side=side, ds=datasheet))
     kicad_mod.setTags('te fpc {:s}'.format(partnumber))
-    kicad_mod.setAttribute('smd')
-
 
     # create pads
     kicad_mod.append(PadArray(pincount=pincount, x_spacing=pitch, center=[0,pad_y],
@@ -182,7 +180,7 @@ def generate_one_footprint(partnumber, pincount, configuration):
     addTextFields(kicad_mod=kicad_mod, configuration=configuration, body_edges=body_edge,
         courtyard={'top':courtyard_y1, 'bottom':courtyard_y2}, fp_name=footprint_name, text_y_inside_position=[0, tab_y])
 
-    kicad_mod.append(Text(type='value', text='PCB Edge', 
+    kicad_mod.append(Text(type='value', text='PCB Edge',
         at=[0,actuator_y1-(ear_height-pcb_edge_gap)/2.0], size=[0.5,0.5], layer='Dwgs.User', thickness=0.08, rotation=0))
 
     ##################### Output and 3d model ############################

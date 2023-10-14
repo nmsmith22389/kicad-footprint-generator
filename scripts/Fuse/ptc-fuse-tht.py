@@ -21,7 +21,7 @@ def ptc_fuse_tht(args):
     pitch = args["pitch"]
     offset = args["offset"]
 
-    f = Footprint(footprint_name)
+    f = Footprint(footprint_name, Footprint.THT)
     f.setDescription("PTC Resettable Fuse, Ihold = " + ihold +
                      ", Itrip=" + itrip + ", " + datasheet)
     f.setTags("ptc resettable fuse polyfuse THT")

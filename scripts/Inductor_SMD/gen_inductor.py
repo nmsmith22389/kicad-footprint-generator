@@ -80,7 +80,7 @@ with open(batchInputFile, 'r') as stream:
                 landingX, landingSpacing = derive_landing_x(row)
                 partNumber = row['PartNumber']
 
-                # If the CSV has unique data sheets, then use that. Otherwise, if the column 
+                # If the CSV has unique data sheets, then use that. Otherwise, if the column
                 # is missing, then use the series datasheet for all
                 try:
                     partDatasheet = str(row['datasheet'])
@@ -108,17 +108,17 @@ with open(batchInputFile, 'r') as stream:
                 # End of silkscreen vars
 
                 # init kicad footprint
-                kicad_mod = Footprint(footprint_name)
+                kicad_mod = Footprint(footprint_name, FootprintType.SMD)
                 kicad_mod.setDescription(f"Inductor, {seriesManufacturer}, {partNumber}, {widthX}x{lengthY}x{height}mm, {partDatasheet}")
                 kicad_mod.setTags(f"Inductor {seriesTagsString}")
-                kicad_mod.setAttribute("smd")
+
                 # set general values
                 kicad_mod.append(Text(type='reference', text='REF**', at=[0, 0-lengthY/2-1], layer='F.SilkS'))
-                
+
                 kicad_mod.append(Text(type='value', text=footprint_name, at=[0, lengthY/2+1], layer='F.Fab'))
                 scaling = landingX/3
                 clampscale = clamp(scaling, 0.5, 1)
-                
+
                 # Check if our part is so small that REF will overlap the pads. Rotate it to fit.
                 if landingX + landingSpacing < 2:
                     y=lengthY/2+2
@@ -132,7 +132,7 @@ with open(batchInputFile, 'r') as stream:
                 # Create silkscreen
                 kicad_mod.append(Line(start=[leftX, upperY], end=[rightX, upperY], layer='F.SilkS'))        # Full upper line
                 kicad_mod.append(Line(start=[leftX, lowerY], end=[rightX, lowerY], layer='F.SilkS'))        # Full lower line
-                
+
                 # If the part is too small and we can't make vertical tick's, don't create 0 length lines.
                 if (vertLen > 0):
                     kicad_mod.append(Line(start=[leftX, upperY], end=[leftX, upperY + vertLen], layer='F.SilkS'))       # Tick down left
@@ -145,7 +145,7 @@ with open(batchInputFile, 'r') as stream:
 
                 # create COURTYARD
                 # Base it off the copper or physical, whichever is biggest. Need to check both X and Y.
-                
+
                 # Extreme right edge
                 rightCopperMax= landingSpacing/2 + landingX
                 rightPhysicalMax = widthX / 2

@@ -62,10 +62,9 @@ def generate_one_footprint(idx, pincount, series_definition, configuration, grou
         pitch=series_definition['pitch'], orientation=orientation)
     footprint_name = footprint_name.replace('__', '_')
 
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, FootprintType.SMD)
     kicad_mod.setDescription("{:s} {:s} series connector, {:s} ({:s}), generated with kicad-footprint-generator".format(group_definition['manufacturer'],
         series_definition['series'], mpn, series_definition['datasheet']))
-    kicad_mod.setAttribute('smd')
     kicad_mod.setTags(configuration['keyword_fp_string'].format(series=series_definition['series'],
         orientation=orientation, man=group_definition['manufacturer'],
         entry=configuration['entry_direction'][series_definition['orientation']]))

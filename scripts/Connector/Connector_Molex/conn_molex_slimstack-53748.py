@@ -62,13 +62,11 @@ def generate_one_footprint(pincount, configuration):
         mpn=mpn, num_rows=number_of_rows, pins_per_row=pincount//2, mounting_pad = "",
         pitch=pitch, orientation=orientation_str)
 
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, FootprintType.SMD)
     kicad_mod.setDescription("Molex {:s}, {:s}, {:d} Pins ({:s}), generated with kicad-footprint-generator".format(series_long, mpn, pincount, datasheet))
     kicad_mod.setTags(configuration['keyword_fp_string'].format(series=series,
         orientation=orientation_str, man=manufacturer,
         entry=configuration['entry_direction'][orientation]))
-
-    kicad_mod.setAttribute('smd')
 
     # calculate working values
     pad_x_spacing = 2.2 + 1.2
@@ -130,7 +128,7 @@ def generate_one_footprint(pincount, configuration):
     kicad_mod.append(Line(start=[-h_body_width+marker_x, -pad_y_span/2], end=[-h_body_width, -pad_y_span/2-marker_x/2], layer='F.Fab', width=fab_width))
 
 
-    
+
 
     # create silkscreen outline and pin 1 marker
     top_outline = [[h_body_width+nudge, -outline_y], [h_body_width+nudge, -h_body_length+nudge+tab_height], \
@@ -144,7 +142,7 @@ def generate_one_footprint(pincount, configuration):
                     [-h_body_width - tab_width + tab_cut_x - silk_tab_cut_offset_x,+h_body_length+nudge], [-h_body_width-nudge-tab_width, h_body_length - tab_cut_y + silk_tab_cut_offset_y],\
                     [-h_body_width-nudge-tab_width, h_body_length-nudge-tab_height], [-h_body_width - nudge, h_body_length-nudge-tab_height], \
                     [-h_body_width-nudge, outline_y]]
-    
+
     kicad_mod.append(PolygoneLine(polygone=top_outline, layer='F.SilkS', width=silk_width))
     kicad_mod.append(PolygoneLine(polygone=bottom_outline, layer='F.SilkS', width=silk_width))
 

@@ -82,7 +82,7 @@ def generate_one_footprint(pins_per_row, variant, configuration):
         mpn = mpn, num_rows = number_of_rows, pins_per_row = pins_per_row, mounting_pad = "",
         pitch = pitch, orientation = orientation_str)
 
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, Footprint.THT)
     kicad_mod.setDescription("Molex {:s}, {:s} (compatible alternatives: {:s}), {:d} Pins per row ({:s}), generated with kicad-footprint-generator".format(series_long, mpn, ', '.join(alt_mpn), pins_per_row, variant_params[variant]['datasheet']))
     kicad_mod.setTags(configuration['keyword_fp_string'].format(series=series,
         orientation = orientation_str, man = manufacturer,
@@ -168,7 +168,7 @@ def generate_one_footprint(pins_per_row, variant, configuration):
             { 'x': P / 2 + tab_l / 2,'y': y2 },
         ], layer = 'F.Fab', width = configuration['fab_line_width']))
 
-    #draw the outline of the connector on the silkscreen 
+    #draw the outline of the connector on the silkscreen
     kicad_mod.append(PolygoneLine(polygone = [
             { 'x': body_edge['left'] - off, 'y': body_edge['top'] - off },
             { 'x': body_edge['left'] - off, 'y': body_edge['top'] + 2.31 + off },

@@ -88,7 +88,7 @@ def generate_one_footprint(pins, variant, configuration):
         mpn=mpn, num_rows=number_of_rows, pins_per_row=pins, mounting_pad = "",
         pitch=pitch, orientation=orientation_str)
 
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, Footprint.THT)
     kicad_mod.setDescription("Molex {:s}, {:s}{:s}, {:d} Pins ({:s}), generated with kicad-footprint-generator".format(series_long,
         mpn, ", with PCB locator" if boss else '',
         pins, variant_params[variant]['datasheet']))
@@ -134,9 +134,9 @@ def generate_one_footprint(pins, variant, configuration):
         }
     bounding_box = body_edge.copy()
     bounding_box['bottom']=yt
-    
+
     silk_pad_off = configuration['silk_pad_clearance'] + configuration['silk_line_width']/2
-    
+
     out = [
     {'x': B/2, 'y': yt},
     {'x': xt+(yt-y2), 'y': yt},

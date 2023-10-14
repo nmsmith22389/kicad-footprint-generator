@@ -72,7 +72,7 @@ def generate_one_footprint(pins, configuration, keying):
         pitch_x=pitch, pitch_y=row_pitch, orientation=orientation_str)
 
     print('Building footprint: {}'.format(footprint_name))
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, Footprint.THT)
     kicad_mod.setDescription("JST {:s} series connector, {:s} ({:s}), generated with kicad-footprint-generator".format(series, mpn, datasheet))
     kicad_mod.setTags(configuration['keyword_fp_string'].format(series=series,
         orientation=orientation_str, man=manufacturer,
@@ -109,7 +109,7 @@ def generate_one_footprint(pins, configuration, keying):
         kicad_mod.append(PadArray(
             initial=row_idx*pins_per_row+1, start=[0, position_y],
             x_spacing=pitch, pincount=pins_per_row, increment=1,
-            size=pad_size, drill=drill, type=Pad.TYPE_THT, 
+            size=pad_size, drill=drill, type=Pad.TYPE_THT,
             shape=pad_shape, layers=Pad.LAYERS_THT, **optional_pad_params))
 
     #draw the component outline

@@ -11,10 +11,9 @@ from KicadModTree.nodes.base.Pad import Pad  # NOQA
 
 def smd_chip(args):
     # init kicad footprint
-    kicad_mod = Footprint(args['name'])
+    kicad_mod = Footprint(args['name'], FootprintType.SMD)
     kicad_mod.setDescription(args['description'])
     kicad_mod.setTags(args['tags'])
-    kicad_mod.setAttribute('smd')
 
     # set general values
     text_x = 0.

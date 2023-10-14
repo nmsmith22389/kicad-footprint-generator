@@ -165,7 +165,9 @@ def generate_one_footprint(pins_per_row, variant, configuration):
         orientation=orientation_str)
     footprint_name = footprint_name.replace('__','_')
 
-    kicad_mod = Footprint(footprint_name)
+    fp_type = FootprintType.SMD if is_smd else FootprintType.THT
+
+    kicad_mod = Footprint(footprint_name, fp_type)
     kicad_mod.setDescription("{manufacturer} {series}, {mpn}{alt_mpn}, {pins_per_row} Pins per row ({datasheet}), generated with kicad-footprint-generator".format(
         manufacturer = manufacturer,
         series = series_long,
@@ -177,9 +179,6 @@ def generate_one_footprint(pins_per_row, variant, configuration):
     kicad_mod.setTags(configuration['keyword_fp_string'].format(series=series,
         orientation=orientation_str, man=manufacturer,
         entry=configuration['entry_direction'][orientation]))
-
-    if is_smd:
-        kicad_mod.setAttribute('smd')
 
     ########################## Dimensions ##############################
 
@@ -409,7 +408,7 @@ def generate_one_footprint(pins_per_row, variant, configuration):
 
     model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}.wrl'.format(
         model3d_path_prefix=model3d_path_prefix, lib_name=lib_name, fp_name=footprint_name)
-    # 3D models with option BE (Bottom Entry) are equivalent to the ones without BE option. 
+    # 3D models with option BE (Bottom Entry) are equivalent to the ones without BE option.
     # To save disk space the link to the 3D model of footprints with BE option will be set to the 3D model without BE option.
     kicad_mod.append(Model(filename=model_name.replace ("DV-BE", "DV")))
 

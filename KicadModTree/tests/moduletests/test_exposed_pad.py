@@ -22,6 +22,7 @@ RESULT_SIMPLE_EP_FP = """(footprint simple_exposed (version 20221018) (generator
   (layer F.Cu)
   (descr "A example footprint")
   (tags example)
+  (attr smd)
   (fp_text reference REF** (at 0 0) (layer F.SilkS)
     (effects (font (size 1 1) (thickness 0.15)))
   )
@@ -49,6 +50,7 @@ RESULT_SIMPLE_EP_NO_ROUNDING_FP = """(footprint simple_exposed (version 20221018
   (layer F.Cu)
   (descr "A example footprint")
   (tags example)
+  (attr smd)
   (fp_text reference REF** (at 0 0) (layer F.SilkS)
     (effects (font (size 1 1) (thickness 0.15)))
   )
@@ -76,6 +78,7 @@ RESULT_MINIMAL_EP_SPECIFICATION = """(footprint simple_exposed (version 20221018
   (layer F.Cu)
   (descr "A example footprint")
   (tags example)
+  (attr smd)
   (fp_text reference REF** (at 0 0) (layer F.SilkS)
     (effects (font (size 1 1) (thickness 0.15)))
   )
@@ -103,6 +106,7 @@ RESULT_EP_PASTE_GEN_INNER = """(footprint exposed_paste_autogen (version 2022101
   (layer F.Cu)
   (descr "A example footprint")
   (tags example)
+  (attr smd)
   (fp_text reference REF** (at 0 0) (layer F.SilkS)
     (effects (font (size 1 1) (thickness 0.15)))
   )
@@ -154,6 +158,7 @@ RESULT_EP_PASTE_GEN_INNER2 = """(footprint exposed_paste_autogen (version 202210
   (layer F.Cu)
   (descr "A example footprint")
   (tags example)
+  (attr smd)
   (fp_text reference REF** (at 0 0) (layer F.SilkS)
     (effects (font (size 1 1) (thickness 0.15)))
   )
@@ -436,6 +441,7 @@ RESULT_EP_PASTE_GEN_INNER_AND_OUTHER = """(footprint exposed_paste_autogen (vers
   (layer F.Cu)
   (descr "A example footprint")
   (tags example)
+  (attr smd)
   (fp_text reference REF** (at 0 0) (layer F.SilkS)
     (effects (font (size 1 1) (thickness 0.15)))
   )
@@ -739,6 +745,7 @@ RESULT_EP_PASTE_GEN_INNER_ONLY_Y_AND_OUTHER = """(footprint exposed_paste_autoge
   (layer F.Cu)
   (descr "A example footprint")
   (tags example)
+  (attr smd)
   (fp_text reference REF** (at 0 0) (layer F.SilkS)
     (effects (font (size 1 1) (thickness 0.15)))
   )
@@ -852,6 +859,7 @@ RESULT_EP_PASTE_GEN_INNER_ONLY_X_AND_OUTHER = """(footprint exposed_paste_autoge
   (layer F.Cu)
   (descr "A example footprint")
   (tags example)
+  (attr smd)
   (fp_text reference REF** (at 0 0) (layer F.SilkS)
     (effects (font (size 1 1) (thickness 0.15)))
   )
@@ -965,6 +973,7 @@ RESULT_EP_PASTE_GEN_ONLY_OUTHER = """(footprint exposed_paste_autogen (version 2
   (layer F.Cu)
   (descr "A example footprint")
   (tags example)
+  (attr smd)
   (fp_text reference REF** (at 0 0) (layer F.SilkS)
     (effects (font (size 1 1) (thickness 0.15)))
   )
@@ -1008,6 +1017,7 @@ RESULT_EP_BOTTOM_PAD = """(footprint exposed_paste_autogen (version 20221018) (g
   (layer F.Cu)
   (descr "A example footprint")
   (tags example)
+  (attr smd)
   (fp_text reference REF** (at 0 0) (layer F.SilkS)
     (effects (font (size 1 1) (thickness 0.15)))
   )
@@ -1027,6 +1037,7 @@ RESULT_EP_4x4 = """(footprint exposed_paste_autogen (version 20221018) (generato
   (layer F.Cu)
   (descr "A example footprint")
   (tags example)
+  (attr smd)
   (fp_text reference REF** (at 0 0) (layer F.SilkS)
     (effects (font (size 1 1) (thickness 0.15)))
   )
@@ -1162,6 +1173,7 @@ RESULT_EP_AUTOGEN_EDGECASE_1 = """(footprint exposed_paste_autogen (version 2022
   (layer F.Cu)
   (descr "A example footprint")
   (tags example)
+  (attr smd)
   (fp_text reference REF** (at 0 0) (layer F.SilkS)
     (effects (font (size 1 1) (thickness 0.15)))
   )
@@ -1217,6 +1229,7 @@ RESULT_EP_VIA_TENTING = """(footprint exposed_paste_autogen (version 20221018) (
   (layer F.Cu)
   (descr "A example footprint")
   (tags example)
+  (attr smd)
   (fp_text reference REF** (at 0 0) (layer F.SilkS)
     (effects (font (size 1 1) (thickness 0.15)))
   )
@@ -1257,7 +1270,7 @@ RESULT_EP_VIA_TENTING = """(footprint exposed_paste_autogen (version 20221018) (
 class ExposedPadTests(unittest.TestCase):
 
     def testSimpleExposedPad(self):
-        kicad_mod = Footprint("simple_exposed")
+        kicad_mod = Footprint("simple_exposed", FootprintType.SMD)
 
         kicad_mod.setDescription("A example footprint")
         kicad_mod.setTags("example")
@@ -1276,7 +1289,7 @@ class ExposedPadTests(unittest.TestCase):
         self.assertEqual(result, RESULT_SIMPLE_EP_FP)
 
     def testSimpleExposedPadNoRounding(self):
-        kicad_mod = Footprint("simple_exposed")
+        kicad_mod = Footprint("simple_exposed", FootprintType.SMD)
 
         kicad_mod.setDescription("A example footprint")
         kicad_mod.setTags("example")
@@ -1296,7 +1309,7 @@ class ExposedPadTests(unittest.TestCase):
         self.assertEqual(result, RESULT_SIMPLE_EP_NO_ROUNDING_FP)
 
     def testSimpleExposedMinimal(self):
-        kicad_mod = Footprint("simple_exposed")
+        kicad_mod = Footprint("simple_exposed", FootprintType.SMD)
 
         kicad_mod.setDescription("A example footprint")
         kicad_mod.setTags("example")
@@ -1314,7 +1327,7 @@ class ExposedPadTests(unittest.TestCase):
         self.assertEqual(result, RESULT_MINIMAL_EP_SPECIFICATION)
 
     def testExposedPasteAutogenInner(self):
-        kicad_mod = Footprint("exposed_paste_autogen")
+        kicad_mod = Footprint("exposed_paste_autogen", FootprintType.SMD)
 
         kicad_mod.setDescription("A example footprint")
         kicad_mod.setTags("example")
@@ -1333,7 +1346,7 @@ class ExposedPadTests(unittest.TestCase):
         self.assertEqual(result, RESULT_EP_PASTE_GEN_INNER)
 
     def testExposedPasteAutogenInner2(self):
-        kicad_mod = Footprint("exposed_paste_autogen")
+        kicad_mod = Footprint("exposed_paste_autogen", FootprintType.SMD)
 
         kicad_mod.setDescription("A example footprint")
         kicad_mod.setTags("example")
@@ -1352,7 +1365,7 @@ class ExposedPadTests(unittest.TestCase):
         self.assertEqual(result, RESULT_EP_PASTE_GEN_INNER2)
 
     def testExposedPasteAutogenInnerAndOuther(self):
-        kicad_mod = Footprint("exposed_paste_autogen")
+        kicad_mod = Footprint("exposed_paste_autogen", FootprintType.SMD)
 
         kicad_mod.setDescription("A example footprint")
         kicad_mod.setTags("example")
@@ -1373,7 +1386,7 @@ class ExposedPadTests(unittest.TestCase):
         self.assertEqual(result, RESULT_EP_PASTE_GEN_INNER_AND_OUTHER)
 
     def testExposedPasteAutogenInnerYonlyAndOuther(self):
-        kicad_mod = Footprint("exposed_paste_autogen")
+        kicad_mod = Footprint("exposed_paste_autogen", FootprintType.SMD)
 
         kicad_mod.setDescription("A example footprint")
         kicad_mod.setTags("example")
@@ -1392,7 +1405,7 @@ class ExposedPadTests(unittest.TestCase):
         self.assertEqual(result, RESULT_EP_PASTE_GEN_INNER_ONLY_Y_AND_OUTHER)
 
     def testExposedPasteAutogenInnerXonlyAndOuther(self):
-        kicad_mod = Footprint("exposed_paste_autogen")
+        kicad_mod = Footprint("exposed_paste_autogen", FootprintType.SMD)
 
         kicad_mod.setDescription("A example footprint")
         kicad_mod.setTags("example")
@@ -1411,7 +1424,7 @@ class ExposedPadTests(unittest.TestCase):
         self.assertEqual(result, RESULT_EP_PASTE_GEN_INNER_ONLY_X_AND_OUTHER)
 
     def testExposedPasteAutogenOnlyOuther(self):
-        kicad_mod = Footprint("exposed_paste_autogen")
+        kicad_mod = Footprint("exposed_paste_autogen", FootprintType.SMD)
 
         kicad_mod.setDescription("A example footprint")
         kicad_mod.setTags("example")
@@ -1430,7 +1443,7 @@ class ExposedPadTests(unittest.TestCase):
         self.assertEqual(result, RESULT_EP_PASTE_GEN_ONLY_OUTHER)
 
     def testExposedPasteBottomPadTests(self):
-        kicad_mod = Footprint("exposed_paste_autogen")
+        kicad_mod = Footprint("exposed_paste_autogen", FootprintType.SMD)
 
         kicad_mod.setDescription("A example footprint")
         kicad_mod.setTags("example")
@@ -1455,7 +1468,7 @@ class ExposedPadTests(unittest.TestCase):
         self.assertEqual(result, RESULT_EP_BOTTOM_PAD)
 
     def testExposed4x4paste(self):
-        kicad_mod = Footprint("exposed_paste_autogen")
+        kicad_mod = Footprint("exposed_paste_autogen", FootprintType.SMD)
 
         kicad_mod.setDescription("A example footprint")
         kicad_mod.setTags("example")
@@ -1484,7 +1497,7 @@ class ExposedPadTests(unittest.TestCase):
         self.assertEqual(result, RESULT_EP_4x4)
 
     def testExposedPadEdgeCase1(self):
-        kicad_mod = Footprint("exposed_paste_autogen")
+        kicad_mod = Footprint("exposed_paste_autogen", FootprintType.SMD)
 
         kicad_mod.setDescription("A example footprint")
         kicad_mod.setTags("example")
@@ -1516,7 +1529,7 @@ class ExposedPadTests(unittest.TestCase):
         self.assertEqual(result, RESULT_EP_AUTOGEN_EDGECASE_1)
 
     def testExposedPasteViaTented(self):
-        kicad_mod = Footprint("exposed_paste_autogen")
+        kicad_mod = Footprint("exposed_paste_autogen", FootprintType.SMD)
 
         kicad_mod.setDescription("A example footprint")
         kicad_mod.setTags("example")

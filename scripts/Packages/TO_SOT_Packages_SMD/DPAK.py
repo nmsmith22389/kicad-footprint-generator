@@ -121,7 +121,6 @@ class DPAK(object):
     def add_properties(self, m, variant):
         m.setDescription('{bd:s}, {vd:s}'.format(bd=self.config['base']['description'], vd=variant['datasheet']))
         m.setTags('{bk:s} {vk:s}'.format(bk=self.config['base']['keywords'], vk=variant['keywords']))
-        m.setAttribute('smd')
         return m
 
 
@@ -270,7 +269,7 @@ class DPAK(object):
         dim = Dimensions(base, variant, cut_pin, tab_linked)
 
         # initialise footprint
-        kicad_mod = Footprint(dim.name)
+        kicad_mod = Footprint(dim.name, FootprintType.SMD)
         kicad_mod = self.add_properties(kicad_mod, variant)
         kicad_mod = self.add_labels(kicad_mod, variant, dim)
 
