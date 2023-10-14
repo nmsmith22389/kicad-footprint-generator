@@ -30,8 +30,9 @@ sys.path.append(os.path.join(sys.path[0], "..", "..", "tools")) # load kicad_mod
 from KicadModTree import *  # NOQA
 from footprint_text_fields import addTextFields     # NOQA
 from dict_tools import dictMerge, dictInherit       # NOQA
+from declarative_def_tools import utils, rule_area_properties, shape_properties
 
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass, asdict, field
 
 DEFAULT_SMT_PAD_SHAPE = 'roundrect'
 DEFAULT_THT_PAD_SHAPE = 'circ'
@@ -67,12 +68,6 @@ def _get_dim(name: str, spec: dict, dim: str, base: float=0.0, mult: float=1):
             return [base + mult * v for v in value]
     else:
         raise LookupError("one of '%s', '%s_offset' has to be specified for '%s'" % (dim, dim, name))
-
-
-def _as_list(value):
-    if (isinstance(value, str) or not isinstance(value, Iterable)):
-        return [value]
-    return [v for v in value]
 
 
 def _round_to(val, base, direction: str=None):
@@ -183,8 +178,6 @@ class PadProperties():
     def _get_pad_rotation(cls, pad_spec):
         return pad_spec.get("rotation", 0)
 
-
-
 @dataclass
 class FPconfiguration():
     library_name: str
@@ -203,6 +196,7 @@ class FPconfiguration():
     skipped_positions: list = None
     num_mount_pads: int = 0
     body_edges: dict = None
+    rule_areas: list = None
     silk_fab_offset : float = 0.0
     silk_line_width : float = 0.0
     pin1_pos: str = 'top'
@@ -257,6 +251,20 @@ class FPconfiguration():
             "bottom": 0.5 * body_size.y + body_center_offset.y,
         }
 
+        ## Get rule areas
+        rule_area_specs = spec.get("rule_areas", None)
+        if rule_area_specs is not None:
+
+            # process inheritance of the rule area definitions
+            dictInherit(rule_area_specs)
+
+            rule_areas = []
+            for _, rule_area_spec in rule_area_specs.items():
+                rule_area = rule_area_properties.RuleAreaProperties(rule_area_spec)
+                rule_areas.append(rule_area)
+
+            self.rule_areas = rule_areas
+
         ## get silk-fab-offset (may be overriden in the YAML)
         self.silk_fab_offset = spec.get('silk_fab_offset', configuration['silk_fab_offset'])
         self.silk_line_width = configuration['silk_line_width']
@@ -293,6 +301,14 @@ class FPconfiguration():
                                         self.body_edges[self.pin1_pos]) + pin1_offset * Vector2D(1, self.scale_y)
         self.draw_pin1_marker_on_fab = first_pin_spec.get("marker", { }).get("fab", True)
 
+def create_footprint_dim_symbols(fp_config: FPconfiguration):
+    # set up dictionary of symbols l, r, t, b, pl, pr, pt, pb
+    dictionary = {k[0]: v for k, v in fp_config.body_edges.items()}
+    dictionary["pl"] = -0.5 * fp_config.pad_pos_range.x + fp_config.pad_center_offset.x
+    dictionary["pr"] = 0.5 * fp_config.pad_pos_range.x + fp_config.pad_center_offset.x
+    dictionary["pt"] = -0.5 * fp_config.pad_pos_range.y + fp_config.pad_center_offset.y
+    dictionary["pb"] = 0.5 * fp_config.pad_pos_range.y + fp_config.pad_center_offset.y
+    return dictionary
 
 def parse_body_shape(spec, *, side: str, fp_config: FPconfiguration):
     shape_spec = spec.get(side, {})
@@ -304,11 +320,7 @@ def parse_body_shape(spec, *, side: str, fp_config: FPconfiguration):
         else:
             sign.y = -1
     # set up dictionary of symbols l, r, t, b, pl, pr, pt, pb
-    dictionary = {k[0]: v for k, v in fp_config.body_edges.items()}
-    dictionary["pl"] = -0.5 * fp_config.pad_pos_range.x + fp_config.pad_center_offset.x
-    dictionary["pr"] = 0.5 * fp_config.pad_pos_range.x + fp_config.pad_center_offset.x
-    dictionary["pt"] = -0.5 * fp_config.pad_pos_range.y + fp_config.pad_center_offset.y
-    dictionary["pb"] = 0.5 * fp_config.pad_pos_range.y + fp_config.pad_center_offset.y
+    dictionary = create_footprint_dim_symbols(fp_config)
     nodes = []
     if shape_spec:
         for shape in shape_spec.keys():
@@ -333,6 +345,51 @@ def parse_body_shape(spec, *, side: str, fp_config: FPconfiguration):
         if (side == "bottom" and nodes[0].x < nodes[-1].x):
             reverse = True
     return [_ for _ in reversed(nodes)] if reverse else nodes
+
+def create_rule_area(rule_area: rule_area_properties.RuleAreaProperties, fp_config: FPconfiguration):
+    """
+    Create a rule area from the given rule area properties.
+    """
+
+    dictionary = create_footprint_dim_symbols(fp_config)
+
+    def evaluate_expression(expression):
+        return eval(expression, dictionary)
+
+    rule_areas = []
+
+    # create the shapes
+    for shape in rule_area.shapes:
+
+        # First construct the rule area polygon from the shape definition
+        if shape.type == shape_properties.RECT:
+            corner1 = Vector2D(evaluate_expression(shape.x1_expr), evaluate_expression(shape.y1_expr))
+            corner2 = Vector2D(evaluate_expression(shape.x2_expr), evaluate_expression(shape.y2_expr))
+
+            rule_area_polygon = [corner1, Vector2D(corner2.x, corner1.y), corner2, Vector2D(corner1.x, corner2.y)]
+
+            layers = rule_area.layers
+
+            # Map spec keepout rules to the KicadModTree format
+            keepouts = Keepouts(
+                tracks=rule_area.keepouts.tracks,
+                vias=rule_area.keepouts.vias,
+                pads=rule_area.keepouts.pads,
+                copperpour=rule_area.keepouts.copperpour,
+                footprints=rule_area.keepouts.footprints,
+            )
+
+            zone = Zone(polygon_pts=rule_area_polygon,
+                        layers=layers,
+                        hatch=Hatch(Hatch.EDGE, 0.5),
+                        net=0,
+                        net_name="",
+                        name=rule_area.name,
+                        keepouts=keepouts,
+            )
+            rule_areas.append(zone)
+
+    return rule_areas
 
 def generate_one_footprint(positions: int, spec, configuration: dict):
 
@@ -406,6 +463,16 @@ def generate_one_footprint(positions: int, spec, configuration: dict):
                                      **fp_config.pad_properties.as_args()))
                 col_num += 1
         pos_y *= -1 # switch to opposite row
+
+    ## Create rule areas (keepouts)
+    if fp_config.rule_areas is not None:
+        for rule_area in fp_config.rule_areas:
+            zones = create_rule_area(rule_area, fp_config=fp_config)
+
+            # Each rule area definition can define multiple rule areas
+            for rule_area_zone in zones:
+                print(rule_area_zone)
+                kicad_mod.append(rule_area_zone)
 
     ## calculate the bounding box of the whole footprint (excluding silk)
     bbox = kicad_mod.calculateBoundingBox()
@@ -554,9 +621,9 @@ def build_body_shape(body_spec: dict, *, fp_config: FPconfiguration):
 
 def add_mount_pad(kicad_mod, *, pad_pos_range, pad_spec, pad_center_offset, default_paste):
     center_to_center = _get_dim("center", spec=pad_spec, dim="x", base=pad_pos_range.x, mult=2)
-    pad_pos_y = _as_list(_get_dim("center", spec=pad_spec, dim="y"))
+    pad_pos_y = utils.as_list(_get_dim("center", spec=pad_spec, dim="y"))
     pad_props = PadProperties(pad_spec, default_paste)
-    pad_nums = _as_list(pad_spec.get('name', [""]))
+    pad_nums = utils.as_list(pad_spec.get('name', [""]))
     if isinstance(pad_nums, (str, int)):
         pad_nums = [pad_nums]
     if len(pad_nums) == 1:
@@ -603,6 +670,6 @@ if __name__ == "__main__":
         if variant == "defaults" or "fp_name" not in spec or not fnmatch(variant, args.filter):
             continue
         print("- %s:" % variant)
-        for positions in _as_list(spec["positions"]):
+        for positions in utils.as_list(spec["positions"]):
             generate_one_footprint(positions, spec=spec, configuration=configuration)
         print("")

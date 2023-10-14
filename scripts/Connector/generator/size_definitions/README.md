@@ -296,3 +296,30 @@ onto the `F.Fab` layer. It will, however not be considered when calculating the 
 Can be used to override the courtyard margin. If a single float is specified, the margin is the same on all 4 sides,
 alternatively it can be a dictionary containing values for `left`, `right`, `top` and `bottom` margins or `x` and `y`
 for horizontal and vertical margins, respectively.
+
+### `rule_areas:` [ _dict_ ]
+
+Can be used to specify rule areas for the footprint. The dictionary contains an entry for each area.
+The following fields are supported:
+
+- `name`: the name of the rule area in the footprint
+- `layers`: a string containing the layers of the rule area, or a list of layers
+- `shapes`: a list of shapes. Each shape is a dict with a single key, which is the shape type. The value is a list of
+  coordinates. The same expressions as in `body_shape` can be used. The following shapes are supported:
+  - `rect`: a rectangle defined by two corners
+- `keepouts`: a dict of keepout rules. One or more of `tracks`, `vias`, `copperpour`, `pads`, `footprints`.
+  Each one can be `deny` or `allow` (default: `allow`).
+
+~~~yaml
+rule_areas:
+  key: # key is unique for each rule area
+    name: 'No vias' # visible name of the rule area
+    layers: 'F.Cu'  # layers of the rule area
+    shapes:
+      - 'rect': [
+        [0, 0], # corner 1
+        [1, 1]  # corner 2
+      ]
+    keepouts:
+      vias: deny
+~~~
