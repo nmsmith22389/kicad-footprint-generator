@@ -248,7 +248,7 @@ Texas_DSBGA-8_0.705x1.468mm_Layout2x4_P0.4mm:
   layout_y: 4
   mask_margin: 0.05
 Texas_MicroStar_Junior_BGA-113_7.0x7.0mm_Layout12x12_P0.5mm:
-  description: "Texas Instruments, BGA Microstar Junior"
+  description: "Texas Instruments, BGA Microstar Junior, NSMD"
   size_source: "http://www.ti.com/lit/ml/mpbg674/mpbg674.pdf, http://www.ti.com/lit/wp/ssyz015b/ssyz015b.pdf"
   body_size_x: 7
   body_size_y: 7
