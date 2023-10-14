@@ -85,7 +85,7 @@ RESULT_SIMPLE_OTHER_CUSTOM_PAD = """(footprint round_rect_test (version 20221018
   (pad 1 smd custom (at 0 0) (size 1 1) (layers F.Cu F.Mask F.Paste)
     (options (clearance outline) (anchor circle))
     (primitives
-      (gr_arc (start -1 -0.5) (mid -1.5 0) (end -1 0.5) (width 0.15))
+      (gr_arc (start -1 0.5) (mid -1.5 0) (end -1 -0.5) (width 0.15))
       (gr_line (start -1 -0.5) (end 1.25 -0.5) (width 0.15))
       (gr_line (start 1.25 -0.5) (end 1.25 0.5) (width 0.15))
       (gr_line (start 1.25 0.5) (end -1 0.5) (width 0.15))
@@ -93,7 +93,7 @@ RESULT_SIMPLE_OTHER_CUSTOM_PAD = """(footprint round_rect_test (version 20221018
   (pad 2 smd custom (at 0 3) (size 1 1) (layers F.Cu F.Mask F.Paste)
     (options (clearance outline) (anchor circle))
     (primitives
-      (gr_arc (start -1 -0.5) (mid -1.5 0) (end -1 0.5) (width 0.15))
+      (gr_arc (start -1 0.5) (mid -1.5 0) (end -1 -0.5) (width 0.15))
       (gr_line (start -1 -0.5) (end 1.25 -0.5) (width 0.15))
       (gr_line (start 1.25 -0.5) (end 1.25 0.5) (width 0.15))
       (gr_line (start 1.25 0.5) (end -1 0.5) (width 0.15))

@@ -204,16 +204,17 @@ class KicadFileHandler(FileHandler):
         ]
 
     def _serialize_ArcPoints(self, node):
-        # in KiCAD, some file attributes of Arc are named not in the way of their real meaning
         start_pos = node.getRealPosition(node.getStartPoint())
         end_pos = node.getRealPosition(node.getEndPoint())
         mid_pos = node.getRealPosition(node.getMidPoint())
-
+        # swap start and end for negative angles to overcome a bug in KiCAD v6 and some v7 versions
+        if (node.angle < 0):
+            start_pos, end_pos = end_pos, start_pos
         return [
-                ['start', start_pos.x, start_pos.y],
-                ['mid', mid_pos.x, mid_pos.y],
-                ['end', end_pos.x, end_pos.y],
-               ]
+            ['start', start_pos.x, start_pos.y],
+            ['mid', mid_pos.x, mid_pos.y],
+            ['end', end_pos.x, end_pos.y],
+        ]
 
     def _serialize_Arc(self, node):
         sexpr = ['fp_arc']
