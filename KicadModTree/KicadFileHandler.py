@@ -101,6 +101,9 @@ class KicadFileHandler(FileHandler):
         if self.kicad_mod.excludeFromPositionFiles:
             attributes.append('exclude_from_pos_files')
 
+        if self.kicad_mod.allow_soldermask_bridges:
+            attributes.append('allow_soldermask_bridges')
+
         # There might be no attributes
         if len(attributes) > 0:
             sexpr.append(['attr'] + attributes)

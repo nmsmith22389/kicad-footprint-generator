@@ -64,6 +64,7 @@ class Footprint(Node):
         self._footprintType = footprintType
         self.excludeFromBOM = False
         self.excludeFromPositionFiles = False
+        self.allow_soldermask_bridges = False
 
         self.maskMargin = None
         self.pasteMargin = None
