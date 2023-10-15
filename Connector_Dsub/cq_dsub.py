@@ -365,7 +365,7 @@ class cq_dsub():
         #
         #
         if (serie == 3) and pn == 15:
-                    #     A      B      C     D     E    F      G    H
+                    #     A      B      C     D     E    F      G
             if params['gender'] == 'female':
                 return(16.30, 25.00, 30.80, 15.80, 8.3, 12.50, 3.3)
             else:
