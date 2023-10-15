@@ -12,10 +12,12 @@ MFSOP-5-6_4.4x3.6mm_P1.27mm:
     nominal: 7.0
   overall_height:
     nominal: 2.6 # 2.5 + 0.1
-  lead_width:
-    nominal: 0.4
-  lead_len:
-    nominal: 0.5
+  lead_width: # Inferred from JEDEC MS-012
+    minimum: 0.31
+    maximum: 0.51
+  lead_len: # Inferred from JEDEC MS-012
+    nominal: 0.835
+    tolerance: 0.435
   pitch: 1.27
   num_pins_x: 0
   num_pins_y: 3
