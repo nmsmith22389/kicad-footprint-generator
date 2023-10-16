@@ -26,7 +26,7 @@ RESULT_MINIMUM = """(footprint test (version 20221018) (generator kicad-footprin
 RESULT_BASIC_TAGS = """(footprint test (version 20221018) (generator kicad-footprint-generator)
   (layer F.Cu)
   (descr "A example footprint")
-  (tags example)
+  (tags "example example2 example3 example4")
   (attr smd)
 )"""
 
@@ -102,7 +102,9 @@ class SimpleFootprintTests(unittest.TestCase):
         kicad_mod = Footprint("test", FootprintType.SMD)
 
         kicad_mod.setDescription("A example footprint")
-        kicad_mod.setTags("example")
+        kicad_mod.tags = "example"
+        kicad_mod.tags += ["example2", "example3"]
+        kicad_mod.tags.append("example4")
 
         file_handler = KicadFileHandler(kicad_mod)
         self.assertEqual(file_handler.serialize(timestamp=0), RESULT_BASIC_TAGS)
@@ -111,7 +113,7 @@ class SimpleFootprintTests(unittest.TestCase):
         kicad_mod = Footprint("test", FootprintType.SMD)
 
         kicad_mod.setDescription("A example footprint")
-        kicad_mod.setTags("example")
+        kicad_mod.tags = "example"
 
         kicad_mod.append(Text(type='reference', text='REF**', at=[0, -3], layer='F.SilkS'))
         kicad_mod.append(Text(type='value', text="test", at=[1.5, 3], layer='F.Fab'))

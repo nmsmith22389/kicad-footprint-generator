@@ -19,6 +19,7 @@ from KicadModTree.nodes.Node import Node
 
 from enum import Enum
 
+
 '''
 This is my new approach, using a render tree for footprint generation.
 
@@ -57,7 +58,7 @@ class Footprint(Node):
 
         self.name = name
         self.description = None
-        self.tags = None
+        self._tags = []
 
         # These are attrs in the s-exp, but we can be type-safe here
         # and convert to strings in the file output layer
@@ -76,7 +77,21 @@ class Footprint(Node):
     def setDescription(self, description):
         self.description = description
 
-    def setTags(self, tags):
+    @property
+    def tags(self) -> list:
+        return self._tags
+
+    @tags.setter
+    def tags(self, tags) -> None:
+        if isinstance(tags, list):
+            self._tags = tags
+        else:
+            self._tags = [tags]
+
+    def setTags(self, tags) -> None:
+        """
+        Legacy setter
+        """
         self.tags = tags
 
     @property

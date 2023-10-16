@@ -84,7 +84,7 @@ class KicadFileHandler(FileHandler):
             sexpr.append(SexprSerializer.NEW_LINE)
 
         if self.kicad_mod.tags:
-            sexpr.append(['tags', self.kicad_mod.tags])
+            sexpr.append(["tags", " ".join(self.kicad_mod.tags)])
             sexpr.append(SexprSerializer.NEW_LINE)
 
         attributes = []
