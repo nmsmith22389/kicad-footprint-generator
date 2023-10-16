@@ -32,3 +32,32 @@ Texas_R-PUSON-N14:
   #suffix: '_PullBack'
   #include_suffix_in_3dpath: 'False'
   #include_pad_size: 'fp_name_only' # 'both' | 'none' (default)
+
+Texas_R-PUSON-N8_USON-8-1EP_1.6x2.1mm_P0.5mm_EP0.4x1.7mm:
+  device_type: 'USON'
+  library: Package_SON
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'https://www.ti.com/lit/gpn/tpd3f303#page=15'
+  ipc_class: 'qfn' #'qfn' | 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+
+  custom_name_format: 'Texas_R-PUSON-N8_USON-8-1EP_1.6x2.1mm_P0.5mm_EP0.4x1.7mm'
+
+  body_size_x: 1.5 .. 1.7
+  body_size_y: 2.0 .. 2.2
+
+  lead_width: 0.2 .. 0.3
+  lead_len: 0.28 .. 0.38
+
+  pitch: 0.5
+  num_pins_x: 0
+  num_pins_y: 4
+  #chamfer_edge_pins: 0.25
+  #pin_count_grid:
+  #pad_length_addition: 0.5
+  #suffix: '_PullBack'
+  #include_suffix_in_3dpath: 'False'
+  #include_pad_size: 'fp_name_only' # 'both' | 'none' (default)
+  EP_size_x: 0.4 +/-0.1
+  EP_size_y: 1.7 +/-0.1
