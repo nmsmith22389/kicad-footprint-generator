@@ -25,6 +25,22 @@ Converter_DCDC_TRACO_TEA1HI-xxxx_THT:
   size: [6, 19.5]
   pins: [["thtr", "1", 0, 0, 1.5, 1.5, 1], ["tht", "2", 0, -2.54, 1.5, 1.5, 1], ["tht", "5", 0, -10.16, 1.5, 1.5, 1], ["tht", "7", 0, -15.24, 1.5, 1.5, 1]]
 
+Converter_DCDC_TRACO_TBA2-xxxx_Single_THT:
+  description: "DCDC-Converter, TRACO, TBA2-xxxx, Single, 2W, Rev. October 12. 2023"
+  datasheet: "https://www.tracopower.com/products/tba2.pdf"
+  tags: "DCDC-Converter TRACO TBA2 THT SIP-7 2W"
+  extratexts: []
+  at: [-6.1, 2.4]
+  size: [7.6, 19.55]
+  pins: [["thtr", "1", 0, 0, 1.5, 1.5, 1], ["tht", "2", 0, -2.54, 1.5, 1.5, 1], ["tht", "4", 0, -7.62, 1.5, 1.5, 1], ["tht", "6", 0, -12.7, 1.5, 1.5, 1]]
+
+Converter_DCDC_TRACO_TBA2-xxxx_Dual_THT:
+  description: "DCDC-Converter, TRACO, TBA2-xxxx, Dual, 2W, Rev. October 12. 2023"
+  datasheet: "https://www.tracopower.com/products/tba2.pdf"
+  tags: "DCDC-Converter TRACO TBA2 THT SIP-7 2W"
+  extratexts: []
+  at: [-6.1, 2.4]
+  size: [7.6, 19.55]
 Converter_DCDC_TRACO_TBA1E-xxxx_Single_THT:
   description: "DCDC-Converter, TRACO, TBA1-xxxxE, Single, 1W, Rev. October 9. 2023"
   datasheet: "https://www.tracopower.com/products/tba1e.pdf"
