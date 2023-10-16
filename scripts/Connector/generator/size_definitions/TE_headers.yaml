@@ -1,5 +1,5 @@
 TE_281698:
-  library: 'TE-Connectiviy'
+  library: 'TE-Connectivity'
   pad_pitch: 2.54
   row_pitch: null # only one row
   first_pin:
