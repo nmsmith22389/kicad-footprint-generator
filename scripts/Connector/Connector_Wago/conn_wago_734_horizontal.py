@@ -128,8 +128,8 @@ def generate_one_footprint(pincount, configuration):
     # create silkscreen
     x1 = start_pos_x -pad_size[0]/2 - pad_silk_off
     xn = end_pos_x + pad_size[0]/2 + pad_silk_off
-    kicad_mod.append(PolygoneLine(
-        polygone=[
+    kicad_mod.append(PolygonLine(
+        polygon=[
             {'x': x1, 'y': body_edge['top']-nudge},
             {'x': body_edge['left']-nudge, 'y': body_edge['top']-nudge},
             {'x': body_edge['left']-nudge, 'y': body_edge['bottom']+nudge},
@@ -150,8 +150,8 @@ def generate_one_footprint(pincount, configuration):
     p1s_off = configuration['silk_fab_offset'] + 0.3
     p1s_L = 2
     # pin 1 markers
-    kicad_mod.append(PolygoneLine(
-        polygone=[
+    kicad_mod.append(PolygonLine(
+        polygon=[
             {'x': body_edge['left'] - p1s_off, 'y': body_edge['top'] + p1s_L},
             {'x': body_edge['left'] - p1s_off, 'y': body_edge['top'] - p1s_off},
             {'x': x1, 'y': body_edge['top'] - p1s_off}
@@ -164,7 +164,7 @@ def generate_one_footprint(pincount, configuration):
         {'y': body_edge['top'] + sl/sqrt(2), 'x': 0},
         {'y': body_edge['top'], 'x': sl/2}
     ]
-    kicad_mod.append(PolygoneLine(polygone=poly_pin1_marker, layer='F.Fab', width=fab_w))
+    kicad_mod.append(PolygonLine(polygon=poly_pin1_marker, layer='F.Fab', width=fab_w))
 
     ########################### CrtYd #################################
     cx1 = roundToBase(body_edge['left']-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])

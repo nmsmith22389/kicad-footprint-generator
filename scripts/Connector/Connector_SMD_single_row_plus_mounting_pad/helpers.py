@@ -34,15 +34,15 @@ def parseAdditionalDrawing(footprint, drawing_definition, configuration, series_
         else:
             print('rectangle without size size definition found. Ignored')
             return
-    elif 'polygone' in drawing_definition:
+    elif 'polygon' in drawing_definition:
         # ToDo: implement
-        polygone = []
-        for point in drawing_definition['polygone']:
-            polygone.append({'x':ref[0]+point[0], 'y':ref[1]+point[1]})
+        polygon = []
+        for point in drawing_definition['polygon']:
+            polygon.append({'x':ref[0]+point[0], 'y':ref[1]+point[1]})
     else:
         # not implemented.
         return
-    #print(polygone)
+    #print(polygon)
 
     layer=drawing_definition.get('layer', 'F.Fab')
     if 'thickness' in drawing_definition:
@@ -83,13 +83,13 @@ def parseAdditionalDrawing(footprint, drawing_definition, configuration, series_
             translation = Translation(first[0]+i*spacing[0], first[1]+i*spacing[1])
             if 'rectangle' in drawing_definition:
                 translation.append(RectLine(start=start, end=end, layer=layer, width=thickness))
-            elif 'polygone' in drawing_definition:
-                translation.append(PolygoneLine(polygone=polygone, layer=layer, width=thickness))
+            elif 'polygon' in drawing_definition:
+                translation.append(PolygonLine(polygon=polygon, layer=layer, width=thickness))
             footprint.append(translation)
 
     else:
         if 'rectangle' in drawing_definition:
             footprint.append(RectLine(start=start, end=end, layer=layer, width=thickness))
-        elif 'polygone' in drawing_definition:
-            #print(polygone)
-            footprint.append(PolygoneLine(polygone=polygone, layer=layer, width=thickness))
+        elif 'polygon' in drawing_definition:
+            #print(polygon)
+            footprint.append(PolygonLine(polygon=polygon, layer=layer, width=thickness))

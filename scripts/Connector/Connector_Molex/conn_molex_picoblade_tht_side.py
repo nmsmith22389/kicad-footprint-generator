@@ -134,8 +134,8 @@ def generate_one_footprint(pins, configuration):
     {'x': x1 + T + o - 0.5,'y': y1 - o},
     ]
 
-    kicad_mod.append(PolygoneLine(polygone=pin1,
-        layer='F.SilkS', width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(polygon=pin1,
+                                 layer='F.SilkS', width=configuration['silk_line_width']))
 
     sl=1
     pin = [
@@ -143,8 +143,8 @@ def generate_one_footprint(pins, configuration):
         {'y': body_edge['top'] + sl/sqrt(2), 'x': 0},
         {'y': body_edge['top'], 'x': sl/2}
     ]
-    kicad_mod.append(PolygoneLine(polygone=pin,
-        width=configuration['fab_line_width'], layer='F.Fab'))
+    kicad_mod.append(PolygonLine(polygon=pin,
+                                 width=configuration['fab_line_width'], layer='F.Fab'))
 
     #component outline (configurable offset)
     def outline(off = 0, grid = 0):
@@ -170,22 +170,22 @@ def generate_one_footprint(pins, configuration):
     #courtyard
     CrtYd_off = configuration['courtyard_offset']['connector']
     grid = configuration['courtyard_grid']
-    kicad_mod.append(PolygoneLine(polygone=outline(off=CrtYd_off, grid=grid),
-        layer='F.CrtYd', width=configuration['courtyard_line_width']))
-    kicad_mod.append(PolygoneLine(polygone=outline(off=CrtYd_off, grid=grid),
-        layer='F.CrtYd', width=configuration['courtyard_line_width'], x_mirror=B/2))
+    kicad_mod.append(PolygonLine(polygon=outline(off=CrtYd_off, grid=grid),
+                                 layer='F.CrtYd', width=configuration['courtyard_line_width']))
+    kicad_mod.append(PolygonLine(polygon=outline(off=CrtYd_off, grid=grid),
+                                 layer='F.CrtYd', width=configuration['courtyard_line_width'], x_mirror=B/2))
 
     #outline F.Fab
-    kicad_mod.append(PolygoneLine(polygone=outline(),
-        layer='F.Fab', width=configuration['fab_line_width']))
-    kicad_mod.append(PolygoneLine(polygone=outline(),
-        layer='F.Fab', width=configuration['fab_line_width'], x_mirror=B/2))
+    kicad_mod.append(PolygonLine(polygon=outline(),
+                                 layer='F.Fab', width=configuration['fab_line_width']))
+    kicad_mod.append(PolygonLine(polygon=outline(),
+                                 layer='F.Fab', width=configuration['fab_line_width'], x_mirror=B/2))
 
     #outline F.SilkS
-    kicad_mod.append(PolygoneLine(polygone=outline(off=off),
-        layer='F.SilkS', width=configuration['silk_line_width']))
-    kicad_mod.append(PolygoneLine(polygone=outline(off=off), x_mirror=B/2,
-        layer='F.SilkS', width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(polygon=outline(off=off),
+                                 layer='F.SilkS', width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(polygon=outline(off=off), x_mirror=B / 2,
+                                 layer='F.SilkS', width=configuration['silk_line_width']))
 
     ######################### Text Fields ###############################
     addTextFields(kicad_mod=kicad_mod, configuration=configuration, body_edges=body_edge,

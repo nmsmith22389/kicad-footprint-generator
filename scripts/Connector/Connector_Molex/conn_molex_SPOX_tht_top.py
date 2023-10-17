@@ -127,12 +127,12 @@ def generate_one_footprint(pins_per_row, configuration):
             return [{'x':roundToBase(p['x'], grid), 'y':roundToBase(p['y'], grid)} for p in poly]
 
     # outline on Fab
-    kicad_mod.append(PolygoneLine(polygone=generateOutline(),
-        layer='F.Fab', width=configuration['fab_line_width']))
+    kicad_mod.append(PolygonLine(polygon=generateOutline(),
+                                 layer='F.Fab', width=configuration['fab_line_width']))
 
     # outline on SilkScreen
-    kicad_mod.append(PolygoneLine(polygone=generateOutline(off=off),
-        layer='F.SilkS', width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(polygon=generateOutline(off=off),
+                                 layer='F.SilkS', width=configuration['silk_line_width']))
 
     #pin-1 mark
     sl=2
@@ -142,8 +142,8 @@ def generate_one_footprint(pins_per_row, configuration):
         {'y': body_edge['bottom'] + o, 'x': body_edge['left'] - o},
         {'y': body_edge['bottom'] + o, 'x': body_edge['left'] + sl}
     ]
-    kicad_mod.append(PolygoneLine(polygone=pin,
-        layer='F.SilkS', width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(polygon=pin,
+                                 layer='F.SilkS', width=configuration['silk_line_width']))
 
     sl=1
     pin = [
@@ -151,15 +151,15 @@ def generate_one_footprint(pins_per_row, configuration):
         {'y': body_edge['bottom'] - sl/sqrt(2), 'x': 0},
         {'y': body_edge['bottom'], 'x': sl/2}
     ]
-    kicad_mod.append(PolygoneLine(polygone=pin,
-        width=configuration['fab_line_width'], layer='F.Fab'))
+    kicad_mod.append(PolygonLine(polygon=pin,
+                                 width=configuration['fab_line_width'], layer='F.Fab'))
 
     ########################### CrtYd #################################
     poly_crtyd = generateOutline(configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
     cy1 = poly_crtyd[0]['y']
     cy2 = poly_crtyd[1]['y']
-    kicad_mod.append(PolygoneLine(
-        polygone=poly_crtyd,
+    kicad_mod.append(PolygonLine(
+        polygon=poly_crtyd,
         layer='F.CrtYd', width=configuration['courtyard_line_width']))
 
     ######################### Text Fields ###############################

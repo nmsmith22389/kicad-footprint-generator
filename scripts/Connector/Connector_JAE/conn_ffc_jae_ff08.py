@@ -99,8 +99,8 @@ def make_module(pin_count, configuration):
         end=[body_edge['right'], body_edge['bottom']],
         layer="F.Fab", width=configuration['fab_line_width']
     ))
-    kicad_mod.append(PolygoneLine(
-        polygone=[
+    kicad_mod.append(PolygonLine(
+        polygon=[
             {'x': body_edge['right'], 'y': -bar_width/2},
             {'x': bar_down_edge, 'y': -bar_width/2 + bar_chamfer_y},
             {'x': bar_down_edge, 'y': bar_width/2 - bar_chamfer_y},
@@ -118,12 +118,12 @@ def make_module(pin_count, configuration):
         {'x': bar_down_edge + off, 'y': bar_width/2 - bar_chamfer_y + off},
         {'x': bar_down_edge + off, 'y': 0}
     ]
-    kicad_mod.append(PolygoneLine(
-        polygone=silk_outline,
+    kicad_mod.append(PolygonLine(
+        polygon=silk_outline,
         layer="F.SilkS", width=configuration['silk_line_width']
     ))
-    kicad_mod.append(PolygoneLine(
-        polygone=silk_outline, y_mirror=0,
+    kicad_mod.append(PolygonLine(
+        polygon=silk_outline, y_mirror=0,
         layer="F.SilkS", width=configuration['silk_line_width']
     ))
 
@@ -149,8 +149,8 @@ def make_module(pin_count, configuration):
         {'x': p1s_x -  ps1_m/sqrt(2), 'y': pin1_y+ps1_m/2},
         {'x': p1s_x -  ps1_m/sqrt(2), 'y': pin1_y-ps1_m/2}
     ]
-    kicad_mod.append(PolygoneLine(polygone=pin,
-        layer="F.SilkS", width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(polygon=pin,
+                                 layer="F.SilkS", width=configuration['silk_line_width']))
 
     sl=0.6
     pin = [
@@ -158,8 +158,8 @@ def make_module(pin_count, configuration):
         {'x': body_edge['left'] + sl/sqrt(2), 'y': pin1_y},
         {'x': body_edge['left'], 'y': pin1_y+sl/2}
     ]
-    kicad_mod.append(PolygoneLine(polygone=pin,
-        width=configuration['fab_line_width'], layer='F.Fab'))
+    kicad_mod.append(PolygonLine(polygon=pin,
+                                 width=configuration['fab_line_width'], layer='F.Fab'))
 
     ########################### CrtYd #################################
     cx1 = roundToBase(bounding_box['left']-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])

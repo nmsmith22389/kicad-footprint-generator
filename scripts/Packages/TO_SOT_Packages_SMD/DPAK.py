@@ -142,7 +142,7 @@ class DPAK(object):
             tab_outline = [[left_x, top_y], [right_x, top_y], [right_x, bottom_y], [left_x, bottom_y]]
             if draw_hidden_part:     # close polygon
                 tab_outline += tab_outline[:1]
-            m.append(PolygoneLine(polygone=tab_outline, layer='F.Fab', width=dim.fab_line_width_mm))
+            m.append(PolygonLine(polygon=tab_outline, layer='F.Fab', width=dim.fab_line_width_mm))
 
         return m
 
@@ -155,7 +155,7 @@ class DPAK(object):
         bottom_y = -top_y
         body_outline = [[right_x, top_y], [right_x, bottom_y], [left_x, bottom_y],\
                         [left_x, top_y + dim.corner_mm], [left_x + dim.corner_mm, top_y], [right_x, top_y]]
-        m.append(PolygoneLine(polygone=body_outline, layer='F.Fab', width=dim.fab_line_width_mm))
+        m.append(PolygonLine(polygon=body_outline, layer='F.Fab', width=dim.fab_line_width_mm))
         return m
 
 
@@ -172,7 +172,7 @@ class DPAK(object):
                 bottom_y = dim.pad_1_centre_y_mm + ((pin - 1) * variant['pitch_mm']) + (variant['pin']['y_mm'] / 2.0)
                 pin_outline = [[right_x + (pin_1_extend if pin == 1 else 0), top_y],
                                [left_x , top_y], [left_x, bottom_y], [right_x, bottom_y]]
-                m.append(PolygoneLine(polygone=pin_outline, layer='F.Fab', width=dim.fab_line_width_mm))
+                m.append(PolygonLine(polygon=pin_outline, layer='F.Fab', width=dim.fab_line_width_mm))
         return m
 
 
@@ -200,13 +200,13 @@ class DPAK(object):
         top_y = -dim.body_offset_y_mm - dim.silk_line_nudge_mm
         bottom_y = dim.pad_1_centre_y_mm - variant['pad']['y_mm'] / 2.0 - other_magic_number * dim.silk_line_nudge_mm
         top_marker = [[right_x, top_y], [middle_x, top_y], [middle_x, bottom_y], [left_x, bottom_y]]
-        m.append(PolygoneLine(polygone=top_marker, layer='F.SilkS', width=dim.silk_line_width_mm))
+        m.append(PolygonLine(polygon=top_marker, layer='F.SilkS', width=dim.silk_line_width_mm))
         top_y = -top_y
         bottom_y = -bottom_y
         left_x = dim.device_offset_x_mm - dim.tab_project_x_mm - dim.body_x_mm - magic_number - \
                  dim.footprint_origin_x_mm
         bottom_marker = [[right_x, top_y], [middle_x, top_y], [middle_x, bottom_y], [left_x, bottom_y]]
-        m.append(PolygoneLine(polygone=bottom_marker, layer='F.SilkS', width=dim.silk_line_width_mm))
+        m.append(PolygonLine(polygon=bottom_marker, layer='F.SilkS', width=dim.silk_line_width_mm))
         return m
 
 

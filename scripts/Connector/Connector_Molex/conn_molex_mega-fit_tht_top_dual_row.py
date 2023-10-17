@@ -237,7 +237,7 @@ def generate_one_footprint(pins_per_row, variant, configuration):
 
     #draw the outline of the shape
     p1m_sl = 1
-    kicad_mod.append(PolygoneLine(polygone=[
+    kicad_mod.append(PolygonLine(polygon=[
             {'x': body_edge['left'] + p1m_sl, 'y': body_edge['top']},
             {'x': body_edge['left'], 'y': body_edge['top'] +p1m_sl},
             {'x': body_edge['left'], 'y': body_edge['bottom']},
@@ -248,7 +248,7 @@ def generate_one_footprint(pins_per_row, variant, configuration):
         layer='F.Fab', width=configuration['fab_line_width']))
 
     #draw the outline of the tab
-    kicad_mod.append(PolygoneLine(polygone=[
+    kicad_mod.append(PolygonLine(polygon=[
         {'x': P/2 - tab_l/2,'y': y2},
         {'x': P/2 - tab_l/2,'y': y2 + tab_w},
         {'x': P/2 + tab_l/2,'y': y2 + tab_w},
@@ -267,21 +267,21 @@ def generate_one_footprint(pins_per_row, variant, configuration):
     {'x': P/2, 'y': y2 + off + tab_w},
     ]
 
-    kicad_mod.append(PolygoneLine(polygone=outline,
-        layer='F.SilkS', width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(polygon=outline,
+                                 layer='F.SilkS', width=configuration['silk_line_width']))
     if variant_params[variant]['mount_pins']:
-        kicad_mod.append(PolygoneLine(polygone=outline, x_mirror=P/2,
-            layer='F.SilkS', width=configuration['silk_line_width']))
+        kicad_mod.append(PolygonLine(polygon=outline, x_mirror=P / 2,
+                                     layer='F.SilkS', width=configuration['silk_line_width']))
     else:
         outline1 = outline[:2]
         outline1.append({'x': outline[2]['x'], 'y': boss_y - boss_drill/2 - silk_pad_off})
-        kicad_mod.append(PolygoneLine(polygone=outline1, x_mirror=P/2,
-            layer='F.SilkS', width=configuration['silk_line_width']))
+        kicad_mod.append(PolygonLine(polygon=outline1, x_mirror=P / 2,
+                                     layer='F.SilkS', width=configuration['silk_line_width']))
 
         outline2 = outline[2:]
         outline2[0]['x'] = P - boss_x + boss_drill/2 + silk_pad_off # outline contains the mirrored version
-        kicad_mod.append(PolygoneLine(polygone=outline2, x_mirror=P/2,
-            layer='F.SilkS', width=configuration['silk_line_width']))
+        kicad_mod.append(PolygonLine(polygon=outline2, x_mirror=P / 2,
+                                     layer='F.SilkS', width=configuration['silk_line_width']))
 
 
     #draw square around each pin
@@ -302,7 +302,7 @@ def generate_one_footprint(pins_per_row, variant, configuration):
         {'x': body_edge['left'] + p1m_sl,'y': body_edge['top'] - p1m_off},
     ]
 
-    kicad_mod.append(PolygoneLine(polygone=pin, layer='F.SilkS', width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(polygon=pin, layer='F.SilkS', width=configuration['silk_line_width']))
 
     ########################### CrtYd #################################
     cx1 = roundToBase(bounding_box['left']-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
@@ -328,8 +328,8 @@ def generate_one_footprint(pins_per_row, variant, configuration):
             {'x': cx4, 'y': cy1},
             {'x': cx3, 'y': cy1}
         ]
-        kicad_mod.append(PolygoneLine(polygone=poly_crtyd,
-            layer='F.CrtYd', width=configuration['courtyard_line_width']))
+        kicad_mod.append(PolygonLine(polygon=poly_crtyd,
+                                     layer='F.CrtYd', width=configuration['courtyard_line_width']))
     else:
         kicad_mod.append(RectLine(
             start=[cx1, cy1], end=[cx2, cy2],

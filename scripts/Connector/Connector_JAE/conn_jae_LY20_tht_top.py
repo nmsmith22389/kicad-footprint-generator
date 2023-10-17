@@ -148,10 +148,10 @@ def make_module(pins_per_row, configuration):
     if C == 0:
         del poly_left_t[-1]
 
-    kicad_mod.append(PolygoneLine(polygone=poly_left_t,
-        layer="F.SilkS", width=configuration['silk_line_width']))
-    kicad_mod.append(PolygoneLine(polygone=poly_left_t, y_mirror=A/2,
-        layer="F.SilkS", width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(polygon=poly_left_t,
+                                 layer="F.SilkS", width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(polygon=poly_left_t, y_mirror=A / 2,
+                                 layer="F.SilkS", width=configuration['silk_line_width']))
 
     poly_right_t = [
         {'x': pitch_row+CW/2, 'y': body_edge['top'] - off},
@@ -174,25 +174,25 @@ def make_module(pins_per_row, configuration):
             layer="F.SilkS", width=configuration['silk_line_width']
         ))
 
-    kicad_mod.append(PolygoneLine(polygone=poly_right_t,
-        layer="F.SilkS", width=configuration['silk_line_width']))
-    kicad_mod.append(PolygoneLine(polygone=poly_right_t, y_mirror=A/2,
-        layer="F.SilkS", width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(polygon=poly_right_t,
+                                 layer="F.SilkS", width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(polygon=poly_right_t, y_mirror=A / 2,
+                                 layer="F.SilkS", width=configuration['silk_line_width']))
 
     ########################### Pin 1 #################################
 
     p1s_sl = 2
     p1s_off = off + 0.3
-    kicad_mod.append(PolygoneLine(
-        polygone=[
+    kicad_mod.append(PolygonLine(
+        polygon=[
             {'x': body_edge['left'] + p1s_sl, 'y': body_edge['top'] - p1s_off},
             {'x': body_edge['left'] - p1s_off, 'y': body_edge['top'] - p1s_off},
             {'x': body_edge['left'] - p1s_off, 'y': body_edge['top'] + p1s_sl}
         ], layer="F.SilkS", width=configuration['silk_line_width']))
 
     p1f_sl = 1
-    kicad_mod.append(PolygoneLine(
-        polygone=[
+    kicad_mod.append(PolygonLine(
+        polygon=[
             {'x': body_edge['left'], 'y': p1f_sl/2},
             {'x': body_edge['left'] + p1f_sl/sqrt(2), 'y': 0},
             {'x': body_edge['left'], 'y': -p1f_sl/2}

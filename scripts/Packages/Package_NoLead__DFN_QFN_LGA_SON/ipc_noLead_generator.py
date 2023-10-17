@@ -474,16 +474,16 @@ class NoLead():
             if sy1 - SILK_MIN_LEN < body_edge['top'] - silk_offset:
                 poly_silk = poly_silk[:-1]
             if len(poly_silk) > 1:
-                kicad_mod.append(PolygoneLine(
-                    polygone=poly_silk,
+                kicad_mod.append(PolygonLine(
+                    polygon=poly_silk,
                     width=configuration['silk_line_width'],
                     layer="F.SilkS", x_mirror=0))
-                kicad_mod.append(PolygoneLine(
-                    polygone=poly_silk,
+                kicad_mod.append(PolygonLine(
+                    polygon=poly_silk,
                     width=configuration['silk_line_width'],
                     layer="F.SilkS", y_mirror=0))
-                kicad_mod.append(PolygoneLine(
-                    polygone=poly_silk,
+                kicad_mod.append(PolygonLine(
+                    polygon=poly_silk,
                     width=configuration['silk_line_width'],
                     layer="F.SilkS", x_mirror=0, y_mirror=0))
                 if len(poly_silk) > 2:
@@ -507,8 +507,8 @@ class NoLead():
             {'x': body_edge['left'] + fab_bevel_size, 'y': body_edge['top']},
         ]
 
-        kicad_mod.append(PolygoneLine(
-            polygone=poly_fab,
+        kicad_mod.append(PolygonLine(
+            polygon=poly_fab,
             width=configuration['fab_line_width'],
             layer="F.Fab"))
 

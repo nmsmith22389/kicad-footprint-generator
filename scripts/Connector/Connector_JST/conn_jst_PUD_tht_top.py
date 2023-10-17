@@ -110,8 +110,8 @@ def generate_one_footprint(pins, configuration):
     {'x': A/2,'y': y2 - t},
     ]
 
-    kicad_mod.append(PolygoneLine(polygone=side,width=configuration['silk_line_width'],layer='F.SilkS')) #,  layer='F.Fab'))
-    kicad_mod.append(PolygoneLine(polygone=side,x_mirror=A/2,width=configuration['silk_line_width'],layer='F.SilkS'))# ,layer='F.Fab'))
+    kicad_mod.append(PolygonLine(polygon=side, width=configuration['silk_line_width'], layer='F.SilkS')) #,  layer='F.Fab'))
+    kicad_mod.append(PolygonLine(polygon=side, x_mirror=A / 2, width=configuration['silk_line_width'], layer='F.SilkS'))# ,layer='F.Fab'))
 
 
     x1 -= off
@@ -133,14 +133,14 @@ def generate_one_footprint(pins, configuration):
     {'x': px,'y': 0}
     ]
 
-    kicad_mod.append(PolygoneLine(polygone=marker,width=configuration['silk_line_width'],layer='F.SilkS'))
+    kicad_mod.append(PolygonLine(polygon=marker, width=configuration['silk_line_width'], layer='F.SilkS'))
     sl = 1
     marker =[
         {'x': body_edge['left'], 'y': sl/2},
         {'x': body_edge['left']+sl/sqrt(2) , 'y': 0},
         {'x': body_edge['left'] , 'y': -sl/2}
     ]
-    kicad_mod.append(PolygoneLine(polygone=marker,layer='F.Fab',width=configuration['fab_line_width']))
+    kicad_mod.append(PolygonLine(polygon=marker, layer='F.Fab', width=configuration['fab_line_width']))
 
     #generate the pads (row 1)
 

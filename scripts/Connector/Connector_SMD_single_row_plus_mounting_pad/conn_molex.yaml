@@ -134,7 +134,7 @@ device_definition:
                 layer: 'F.Fab'
                 # thickness: 0.1 #optional parameter. If not given: take fab_line_width and silk_line_width from config file. Needed if layer not silk or fab!
                 reference_point: ['left', 'bottom'] # [x,y]: x = 'left' | 'center' | 'right' | value; y = 'top' | 'center' | 'bottom' | value; named values are relative to body
-                polygone:
+                polygon:
                     - [0, 0]
                     - [-1.5, 0]
                     - [-1.7, -0.2]
@@ -146,7 +146,7 @@ device_definition:
                 layer: 'F.Fab'
                 # thickness: 0.1 #optional parameter. If not given: take fab_line_width and silk_line_width from config file. Needed if layer not silk or fab!
                 reference_point: ['right', 'bottom'] # [x,y]: x = 'left' | 'center' | 'right' | value; y = 'top' | 'center' | 'bottom' | value; named values are relative to body
-                polygone:
+                polygon:
                     - [0, 0]
                     - [1.5, 0]
                     - [1.7, -0.2]
@@ -185,7 +185,7 @@ device_definition:
                 layer: 'F.Fab'
                 # thickness: 0.1 #optional parameter. If not given: take fab_line_width and silk_line_width from config file. Needed if layer not silk or fab!
                 reference_point: ['left', 'top'] # [x,y]: x = 'left' | 'center' | 'right' | value; y = 'top' | 'center' | 'bottom' | value; named values are relative to body
-                polygone:
+                polygon:
                     - [0, 1]
                     - [-1.5, 1]
                     - [-1.7, 1.2]
@@ -197,7 +197,7 @@ device_definition:
                 layer: 'F.Fab'
                 # thickness: 0.1 #optional parameter. If not given: take fab_line_width and silk_line_width from config file. Needed if layer not silk or fab!
                 reference_point: ['right', 'top'] # [x,y]: x = 'left' | 'center' | 'right' | value; y = 'top' | 'center' | 'bottom' | value; named values are relative to body
-                polygone:
+                polygon:
                     - [0, 1]
                     - [1.5, 1]
                     - [1.7, 1.2]

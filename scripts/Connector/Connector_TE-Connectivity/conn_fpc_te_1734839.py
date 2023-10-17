@@ -117,8 +117,8 @@ def generate_one_footprint(partnumber, pincount, configuration):
         size=[tab_width, tab_height], layers=Pad.LAYERS_SMT))
 
     # create fab outline
-    kicad_mod.append(PolygoneLine(
-        polygone=[
+    kicad_mod.append(PolygonLine(
+        polygon=[
             [-half_body_width, body_y1],
             [half_body_width, body_y1],
             [half_body_width, actuator_y1-ear_height],
@@ -131,31 +131,31 @@ def generate_one_footprint(partnumber, pincount, configuration):
         layer='F.Fab', width=configuration['fab_line_width']))
 
     # create fab pin 1 marker
-    kicad_mod.append(PolygoneLine(
-        polygone=[
+    kicad_mod.append(PolygonLine(
+        polygon=[
             [-pad1_x-0.4, body_y1],
             [-pad1_x, body_y1+0.8],
             [-pad1_x+0.4, body_y1]],
         layer='F.Fab', width=configuration['fab_line_width']))
 
     # create silkscreen outline
-    kicad_mod.append(PolygoneLine(
-        polygone=[
+    kicad_mod.append(PolygonLine(
+        polygon=[
             [-half_actuator_width, actuator_y1-nudge-ear_height],
             [-half_actuator_width-nudge, actuator_y1-nudge-ear_height],
             [-half_actuator_width-nudge, actuator_y1-ear_height+pcb_edge_gap-nudge]],
         layer='F.SilkS', width=configuration['silk_line_width']))
 
-    kicad_mod.append(PolygoneLine(
-        polygone=[
+    kicad_mod.append(PolygonLine(
+        polygon=[
             [half_actuator_width, actuator_y1-nudge-ear_height],
             [half_actuator_width+nudge, actuator_y1-nudge-ear_height],
             [half_actuator_width+nudge, actuator_y1-ear_height+pcb_edge_gap-nudge]],
         layer='F.SilkS', width=configuration['silk_line_width']))
 
     # create silkscreen pin 1 marker
-    kicad_mod.append(PolygoneLine(
-        polygone=[
+    kicad_mod.append(PolygonLine(
+        polygon=[
             [-pad1_x-0.2, body_y1+0.1],
             [-pad1_x, body_y1+0.5],
             [-pad1_x+0.2, body_y1+0.1],
@@ -163,8 +163,8 @@ def generate_one_footprint(partnumber, pincount, configuration):
         layer='F.SilkS', width=configuration['silk_line_width']))
 
     # create PCB edge
-    kicad_mod.append(PolygoneLine(
-        polygone=[
+    kicad_mod.append(PolygonLine(
+        polygon=[
             [half_actuator_width-nudge, actuator_y1-ear_height+pcb_edge_gap],
             [-half_actuator_width+nudge, actuator_y1-ear_height+pcb_edge_gap]],
         layer='Dwgs.User', width=configuration['fab_line_width']))

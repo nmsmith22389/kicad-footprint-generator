@@ -97,11 +97,11 @@ def generate_one_footprint(pins, series_params, configuration):
     #draw rectangle on F.Fab for latch
     x3 = -0.75
     x4 = pitch * (pins - 1) + 0.75
-    kicad_mod.append(PolygoneLine(polygone=[{'x':x3,'y':y1},{'x':x3,'y':y3},{'x':x4,'y':y3},{'x':x4,'y':y1}], layer='F.Fab', width=configuration['fab_line_width']))
+    kicad_mod.append(PolygonLine(polygon=[{ 'x':x3, 'y':y1 }, { 'x':x3, 'y':y3 }, { 'x':x4, 'y':y3 }, { 'x':x4, 'y':y1 }], layer='F.Fab', width=configuration['fab_line_width']))
 
     #draw pin1 mark on F.Fab
-    kicad_mod.append(PolygoneLine(polygone=[{'x':x1,'y':-1},{'x':(x1+1),'y':0}], layer='F.Fab', width=configuration['fab_line_width']))
-    kicad_mod.append(PolygoneLine(polygone=[{'x':x1,'y':1},{'x':(x1+1),'y':0}], layer='F.Fab', width=configuration['fab_line_width']))
+    kicad_mod.append(PolygonLine(polygon=[{ 'x':x1, 'y':-1 }, { 'x':(x1 + 1), 'y':0 }], layer='F.Fab', width=configuration['fab_line_width']))
+    kicad_mod.append(PolygonLine(polygon=[{ 'x':x1, 'y':1 }, { 'x':(x1 + 1), 'y':0 }], layer='F.Fab', width=configuration['fab_line_width']))
 
     ########################### CrtYd #################################
     cx1 = roundToBase(x1-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
@@ -124,7 +124,7 @@ def generate_one_footprint(pins, series_params, configuration):
     y3 -= off
     x4 += off
 
-    kicad_mod.append(PolygoneLine(polygone=[
+    kicad_mod.append(PolygonLine(polygon=[
             {'x':x1,'y':y2},
             {'x':x1,'y':y1},
             {'x':x3,'y':y1},
@@ -141,7 +141,7 @@ def generate_one_footprint(pins, series_params, configuration):
     m = 0.3
 
     marker = [{'x': px,'y': 0},{'x': px-2*m,'y': m},{'x': px-2*m,'y': -m},{'x': px,'y': 0}]
-    kicad_mod.append(PolygoneLine(polygone=marker, layer='F.SilkS', width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(polygon=marker, layer='F.SilkS', width=configuration['silk_line_width']))
 
 
     pad_size = [pitch - pad_to_pad_clearance, drill + 2*pad_copper_y_solder_length]

@@ -66,7 +66,7 @@ class koaLine:
 
 
 class StandardBox(Node):
-    r"""Add a Polygone Line to the render tree
+    r"""Add a Polygon Line to the render tree
 
     :param \**kwargs:
         See below

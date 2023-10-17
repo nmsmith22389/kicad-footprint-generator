@@ -94,10 +94,10 @@ def plcc4(args):
     f.append(Circle(center=[xCenter, yCenter], radius=r,
                     layer="F.Fab", width=wFab))
 
-    f.append(PolygoneLine(polygone=[[xSilkLeft, yPadTop],
-                                    [xSilkLeft, ySilkTop],
-                                    [xSilkRight, ySilkTop]],
-                          layer="F.SilkS", width=wSilkS))
+    f.append(PolygonLine(polygon=[[xSilkLeft, yPadTop],
+                                   [xSilkLeft, ySilkTop],
+                                   [xSilkRight, ySilkTop]],
+                         layer="F.SilkS", width=wSilkS))
     f.append(Line(start=[xSilkLeft, ySilkBottom],
                   end=[xSilkRight, ySilkBottom],
                   layer="F.SilkS", width=wSilkS))

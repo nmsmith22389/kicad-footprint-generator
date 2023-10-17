@@ -163,7 +163,7 @@ def generate_one_footprint(pins, configuration):
         points.append([roundToBase(x1, grid), roundToBase(y1, grid)])
         #
         if (i == 1): # SilkS
-            kicad_mod.append(PolygoneLine(polygone=points, layer=Layer, width=LineWidth))
+            kicad_mod.append(PolygonLine(polygon=points, layer=Layer, width=LineWidth))
             #
             # Need to do something ugly here, becosue we will do points = []
             # We need to reflect these points already here
@@ -171,7 +171,7 @@ def generate_one_footprint(pins, configuration):
             points2 = []
             for pp in points:
                 points2.append([-pp[0], pp[1]])
-            kicad_mod.append(PolygoneLine(polygone=points2, layer=Layer, width=LineWidth))
+            kicad_mod.append(PolygonLine(polygon=points2, layer=Layer, width=LineWidth))
             #
             #
             points = []
@@ -244,9 +244,9 @@ def generate_one_footprint(pins, configuration):
 
         #
         #
-        kicad_mod.append(PolygoneLine(polygone=points, layer=Layer, width=LineWidth))
+        kicad_mod.append(PolygonLine(polygon=points, layer=Layer, width=LineWidth))
         #
-        kicad_mod.append(PolygoneLine(polygone=points2, layer=Layer, width=LineWidth))
+        kicad_mod.append(PolygonLine(polygon=points2, layer=Layer, width=LineWidth))
 
     ######################### Text Fields ###############################
     cy1 = roundToBase(body_edge['top']-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])

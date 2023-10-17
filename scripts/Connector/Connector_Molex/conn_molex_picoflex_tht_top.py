@@ -121,11 +121,11 @@ def generate_one_footprint(pins, configuration):
     y1 = StartFY
     x2 = x1 + 5
     y2 = y1
-    kicad_mod.append(PolygoneLine(
-        polygone=[[x1, y1], [x2, y2]],
+    kicad_mod.append(PolygonLine(
+        polygon=[[x1, y1], [x2, y2]],
         layer='F.Fab', width=configuration['fab_line_width']))
-    kicad_mod.append(PolygoneLine(
-        polygone=[[x1, y1 - 0.13], [x2 + 0.13, y2 - 0.13]],
+    kicad_mod.append(PolygonLine(
+        polygon=[[x1, y1 - 0.13], [x2 + 0.13, y2 - 0.13]],
         layer='F.SilkS', width=configuration['silk_line_width']))
     body_edge['top'] = y1
     bounding_box['top'] = y1
@@ -137,11 +137,11 @@ def generate_one_footprint(pins, configuration):
     y1 = y2
     x2 = x2
     y2 = ((pins - 1) * pitch) + 2.755
-    kicad_mod.append(PolygoneLine(
-        polygone=[[x1, y1], [x2, y2]],
+    kicad_mod.append(PolygonLine(
+        polygon=[[x1, y1], [x2, y2]],
         layer='F.Fab', width=configuration['fab_line_width']))
-    kicad_mod.append(PolygoneLine(
-        polygone=[[x1 + 0.13, y1 - 0.13], [x2 + 0.13, y2 + 0.13]],
+    kicad_mod.append(PolygonLine(
+        polygon=[[x1 + 0.13, y1 - 0.13], [x2 + 0.13, y2 + 0.13]],
         layer='F.SilkS', width=configuration['silk_line_width']))
     body_edge['right'] = x1
     bounding_box['right'] = x1
@@ -153,11 +153,11 @@ def generate_one_footprint(pins, configuration):
     y1 = y2
     x2 = StartFX
     y2 = y2
-    kicad_mod.append(PolygoneLine(
-        polygone=[[x1, y1], [x2, y2]],
+    kicad_mod.append(PolygonLine(
+        polygon=[[x1, y1], [x2, y2]],
         layer='F.Fab', width=configuration['fab_line_width']))
-    kicad_mod.append(PolygoneLine(
-        polygone=[[x1 + 0.13, y1 + 0.13], [x2, y2 + 0.13]],
+    kicad_mod.append(PolygonLine(
+        polygon=[[x1 + 0.13, y1 + 0.13], [x2, y2 + 0.13]],
         layer='F.SilkS', width=configuration['silk_line_width']))
     body_edge['bottom'] = y1
     bounding_box['bottom'] = y1
@@ -187,17 +187,17 @@ def generate_one_footprint(pins, configuration):
     y2 = GuideHoleY2 - (GuideHoleY1 - StartFY)
     x3 = 2
     y3 = -0.5
-    kicad_mod.append(PolygoneLine(polygone=[[x1,y1], [x2, -0.5]],
-        layer='F.Fab', width=configuration['fab_line_width']))
-    kicad_mod.append(PolygoneLine(polygone=[[x2, -0.5], [x2 + 0.5, 0]],
-        layer='F.Fab', width=configuration['fab_line_width']))
-    kicad_mod.append(PolygoneLine(polygone=[[x2 + 0.5, 0], [x2, 0.5]],
-        layer='F.Fab', width=configuration['fab_line_width']))
-    kicad_mod.append(PolygoneLine(polygone=[[x2, 0.5], [x2, y2]],
-        layer='F.Fab', width=configuration['fab_line_width']))
+    kicad_mod.append(PolygonLine(polygon=[[x1, y1], [x2, -0.5]],
+                                 layer='F.Fab', width=configuration['fab_line_width']))
+    kicad_mod.append(PolygonLine(polygon=[[x2, -0.5], [x2 + 0.5, 0]],
+                                 layer='F.Fab', width=configuration['fab_line_width']))
+    kicad_mod.append(PolygonLine(polygon=[[x2 + 0.5, 0], [x2, 0.5]],
+                                 layer='F.Fab', width=configuration['fab_line_width']))
+    kicad_mod.append(PolygonLine(polygon=[[x2, 0.5], [x2, y2]],
+                                 layer='F.Fab', width=configuration['fab_line_width']))
 
-    kicad_mod.append(PolygoneLine(
-        polygone=[[x1 - 0.13, y1 + 0.13], [x2 - 0.13, y2 - 0.13]],
+    kicad_mod.append(PolygonLine(
+        polygon=[[x1 - 0.13, y1 + 0.13], [x2 - 0.13, y2 - 0.13]],
         layer='F.SilkS', width=configuration['silk_line_width']))
     body_edge['left'] = x1
 
@@ -231,8 +231,8 @@ def generate_one_footprint(pins, configuration):
     {'x': x,'y': 0},
     ]
 
-    kicad_mod.append(PolygoneLine(polygone=pin,
-        width=configuration['silk_line_width'], layer='F.SilkS'))
+    kicad_mod.append(PolygonLine(polygon=pin,
+                                 width=configuration['silk_line_width'], layer='F.SilkS'))
 
     ########################### CrtYd #################################
     cx1 = roundToBase(bounding_box['left']-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])

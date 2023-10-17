@@ -185,9 +185,9 @@ def generate_one_footprint(fpid, rows, datasheet, configuration):
         {'x':silk_x_min-pin1_marker_offset, 'y':silk_y_min-pin1_marker_offset},
         {'x':silk_x_min-pin1_marker_offset, 'y':silk_y_min-pin1_marker_offset+pin1_marker_linelen}
     ]
-    kicad_mod.append(PolygoneLine(polygone=poly_pin1_marker, layer='F.SilkS', width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(polygon=poly_pin1_marker, layer='F.SilkS', width=configuration['silk_line_width']))
     if fab_pin1_marker_type == 1:
-        kicad_mod.append(PolygoneLine(polygone=poly_pin1_marker, layer='F.Fab', width=configuration['fab_line_width']))
+        kicad_mod.append(PolygonLine(polygon=poly_pin1_marker, layer='F.Fab', width=configuration['fab_line_width']))
 
     if fab_pin1_marker_type == 2:
         poly_pin1_marker_type2 = [
@@ -195,7 +195,7 @@ def generate_one_footprint(fpid, rows, datasheet, configuration):
             {'x':0, 'y':y_min+1},
             {'x':1, 'y':y_min}
         ]
-        kicad_mod.append(PolygoneLine(polygone=poly_pin1_marker_type2, layer='F.Fab', width=configuration['fab_line_width']))
+        kicad_mod.append(PolygonLine(polygon=poly_pin1_marker_type2, layer='F.Fab', width=configuration['fab_line_width']))
 
     ########################## Fab Outline ###############################
     kicad_mod.append(RectLine(start=[x_min,y_min], end=[x_max,y_max],

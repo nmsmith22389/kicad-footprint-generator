@@ -108,22 +108,22 @@ def generate_one_footprint(pincount, configuration):
     T = 0.5
 
     #add top line
-    kicad_mod.append(PolygoneLine(polygone=[{'x': x1,'y': 0},
-                               {'x': x1 + T,'y': 0},
-                               {'x': x1 + T,'y': y1 + T},
-                               {'x': x2 - T,'y': y1 + T},
-                               {'x': x2 - T,'y': 0},
-                               {'x': x2,'y':0}], layer='F.SilkS', width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(polygon=[{ 'x': x1, 'y': 0 },
+                                           {'x': x1 + T,'y': 0},
+                                           {'x': x1 + T,'y': y1 + T},
+                                           {'x': x2 - T,'y': y1 + T},
+                                           {'x': x2 - T,'y': 0},
+                                           {'x': x2,'y':0}], layer='F.SilkS', width=configuration['silk_line_width']))
 
     #add bottom line (left)
-    kicad_mod.append(PolygoneLine(polygone=[{'x':x1,'y':y2-3*T},
-                               {'x':x1+2*T,'y':y2-3*T},
-                               {'x':x1+2*T,'y':y2}], layer='F.SilkS', width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(polygon=[{ 'x':x1, 'y': y2 - 3 * T },
+                                           {'x':x1+2*T,'y':y2-3*T},
+                                           {'x':x1+2*T,'y':y2}], layer='F.SilkS', width=configuration['silk_line_width']))
 
     #add bottom line (right)
-    kicad_mod.append(PolygoneLine(polygone=[{'x':x2,'y':y2-3*T},
-                               {'x':x2-2*T,'y':y2-3*T},
-                               {'x':x2-2*T,'y':y2}], layer='F.SilkS', width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(polygon=[{ 'x':x2, 'y': y2 - 3 * T },
+                                           {'x':x2-2*T,'y':y2-3*T},
+                                           {'x':x2-2*T,'y':y2}], layer='F.SilkS', width=configuration['silk_line_width']))
 
     #add pin-1 marker
     D = 0.3
@@ -134,8 +134,8 @@ def generate_one_footprint(pincount, configuration):
         {'x': x1-D+L,'y': y2+D},
     ]
 
-    kicad_mod.append(PolygoneLine(polygone=pin))
-    kicad_mod.append(PolygoneLine(polygone=pin, layer='F.Fab', width=configuration['fab_line_width']))
+    kicad_mod.append(PolygonLine(polygon=pin))
+    kicad_mod.append(PolygonLine(polygon=pin, layer='F.Fab', width=configuration['fab_line_width']))
 
     ######################### Text Fields ###############################
     addTextFields(kicad_mod=kicad_mod, configuration=configuration, body_edges=body_edge,

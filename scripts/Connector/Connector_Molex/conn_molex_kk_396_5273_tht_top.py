@@ -112,7 +112,7 @@ def generate_one_footprint(pincount, configuration):
 
 
     # create fab outline
-    kicad_mod.append(PolygoneLine(polygone=[
+    kicad_mod.append(PolygonLine(polygon=[
         [body_edge['left'], body_edge['top']],\
         [body_edge['right'], body_edge['top']],\
         [body_edge['right'], body_edge['bottom']],\
@@ -124,7 +124,7 @@ def generate_one_footprint(pincount, configuration):
     notche_l = pitch - pin_w - silk_w
     notche_p = -0.4
     offset_ramp_y = 1
-    kicad_mod.append(PolygoneLine(polygone=[
+    kicad_mod.append(PolygonLine(polygon=[
         [body_edge['left'] - nudge, body_edge['bottom'] + nudge - offset_ramp_y],\
         [body_edge['left'] - nudge, body_edge['top'] - nudge],\
         [body_edge['left'] - nudge + notche_x, body_edge['top'] - nudge],\
@@ -148,7 +148,7 @@ def generate_one_footprint(pincount, configuration):
         {'x': body_edge['left'] + sl/sqrt(2), 'y': 0},
         {'x': body_edge['left'], 'y': sl/2}
     ]
-    kicad_mod.append(PolygoneLine(polygone=poly_pin1_marker, layer='F.Fab', width=fab_w))
+    kicad_mod.append(PolygonLine(polygon=poly_pin1_marker, layer='F.Fab', width=fab_w))
 
 
     ########################### CrtYd #################################

@@ -89,7 +89,7 @@ class Polygon(Node):
         if len(node_strings) <= 6:
             render_text += ", ".join(node_strings)
         else:
-            # display only a few nodes of the beginning and the end of the polygone line
+            # display only a few nodes of the beginning and the end of the polygon line
             render_text += ", ".join(node_strings[:3])
             render_text += ",... , "
             render_text += ", ".join(node_strings[-3:])

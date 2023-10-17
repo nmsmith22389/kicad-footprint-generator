@@ -277,7 +277,7 @@ class TwoTerminalSMD():
                     {'x': outline_size[0] / 2, 'y':outline_size[1] / 2},
                     {'x': outline_size[0] / 2, 'y':-outline_size[1] / 2}
                 ]
-                kicad_mod.append(PolygoneLine(polygone=poly_fab, layer='F.Fab', width=fab_line_width))
+                kicad_mod.append(PolygonLine(polygon=poly_fab, layer='F.Fab', width=fab_line_width))
 
                 poly_silk = [
                     {'x': outline_size[0] / 2, 'y':-silk_y_bottom},
@@ -285,7 +285,7 @@ class TwoTerminalSMD():
                     {'x': silk_x_left, 'y': silk_y_bottom},
                     {'x': outline_size[0] / 2, 'y':silk_y_bottom}
                 ]
-                kicad_mod.append(PolygoneLine(polygone=poly_silk, layer='F.SilkS', width=silk_line_width))
+                kicad_mod.append(PolygonLine(polygon=poly_silk, layer='F.SilkS', width=silk_line_width))
         else:
             kicad_mod.append(RectLine(start=[-outline_size[0] / 2, outline_size[1] / 2],
                                       end=[outline_size[0] / 2, -outline_size[1] / 2],

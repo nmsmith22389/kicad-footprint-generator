@@ -127,8 +127,8 @@ def generate_one_footprint(partnumber, pincount, configuration):
         size=[tab_width, tab_height], layers=Pad.LAYERS_SMT))
 
     # create fab outline and pin 1 marker
-    kicad_mod.append(PolygoneLine(
-        polygone=[
+    kicad_mod.append(PolygonLine(
+        polygon=[
             [-half_body_width, body_y1],
             [half_body_width, body_y1],
             [half_body_width, actuator_y1-ear_height],
@@ -140,16 +140,16 @@ def generate_one_footprint(partnumber, pincount, configuration):
             [-half_body_width, body_y1]],
         layer='F.Fab', width=configuration['fab_line_width']))
 
-    kicad_mod.append(PolygoneLine(
-        polygone=[
+    kicad_mod.append(PolygonLine(
+        polygon=[
             [-pad1_x-0.5, body_y1],
             [-pad1_x, body_y1+1],
             [-pad1_x+0.5, body_y1]],
         layer='F.Fab', width=configuration['fab_line_width']))
 
     # create open actuator outline
-    kicad_mod.append(PolygoneLine(
-        polygone=[
+    kicad_mod.append(PolygonLine(
+        polygon=[
             [half_body_width, actuator_y1],
             [half_body_width, actuator_y2-ear_height],
             [half_actuator_width, actuator_y2-ear_height],
@@ -161,8 +161,8 @@ def generate_one_footprint(partnumber, pincount, configuration):
         layer='F.Fab', width=configuration['fab_line_width']))
 
     # create silkscreen outline and pin 1 marker
-    kicad_mod.append(PolygoneLine(
-        polygone=[
+    kicad_mod.append(PolygonLine(
+        polygon=[
             [half_body_width+nudge, tab_y+tab_height/2.0+silk_clearance],
             [half_body_width+nudge, actuator_y1-ear_height-nudge],
             [half_actuator_width+nudge, actuator_y1-ear_height-nudge],
@@ -173,8 +173,8 @@ def generate_one_footprint(partnumber, pincount, configuration):
             [-half_body_width-nudge, tab_y+tab_height/2.0+silk_clearance]],
         layer='F.SilkS', width=configuration['silk_line_width']))
 
-    kicad_mod.append(PolygoneLine(
-        polygone=[
+    kicad_mod.append(PolygonLine(
+        polygon=[
             [-tab_x+tab_width/2.0+silk_clearance, body_y1-nudge],
             [-pad1_x-pad_width/2.0-silk_clearance, body_y1-nudge],
             [-pad1_x-pad_width/2.0-silk_clearance, body_y1-nudge-marker_y]],

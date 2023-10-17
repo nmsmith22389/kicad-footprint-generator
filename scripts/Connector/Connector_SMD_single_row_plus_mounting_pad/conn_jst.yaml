@@ -210,7 +210,7 @@ device_definition:
                     size: [0.5, 0.5] # centered around reference_point
                     # start: [-0.25, -0.25] #relative to reference_point
                     # end: [0.25, 0.25] #relative to reference_point
-                # polygone:
+                # polygon:
                 #     - [-0.25,-0.25]
                 #     - [-0.25,0.25]
                 #     - [0.25,0.25]
@@ -277,7 +277,7 @@ device_definition:
                     size: [0.5, 0.5] # centered around reference_point
                     # start: [-0.25, -0.25] #relative to reference_point
                     # end: [0.25, 0.25] #relative to reference_point
-                # polygone:
+                # polygon:
                 #     - [-0.25,-0.25]
                 #     - [-0.25,0.25]
                 #     - [0.25,0.25]
@@ -317,28 +317,28 @@ device_definition:
                 layer: 'F.SilkS'
                 # thickness: 0.1 #optional parameter. If not given: take fab_line_width and silk_line_width from config file. Needed if layer not silk or fab!
                 reference_point: ['center', 'top'] # [x,y]: x = 'left' | 'center' | 'right' | value; y = 'top' | 'center' | 'bottom' | value; named values are relative to body
-                polygone:
+                polygon:
                     - [-1.315, -0.11]
                     - [1.315, -0.11]
             -
                 layer: 'F.SilkS'
                 # thickness: 0.1 #optional parameter. If not given: take fab_line_width and silk_line_width from config file. Needed if layer not silk or fab!
                 reference_point: ['center', 'bottom'] # [x,y]: x = 'left' | 'center' | 'right' | value; y = 'top' | 'center' | 'bottom' | value; named values are relative to body
-                polygone:
+                polygon:
                     - [-1.515, 0.11]
                     - [1.515, 0.11]
             -
                 layer: 'F.SilkS'
                 # thickness: 0.1 #optional parameter. If not given: take fab_line_width and silk_line_width from config file. Needed if layer not silk or fab!
                 reference_point: ['left', 0] # [x,y]: x = 'left' | 'center' | 'right' | value; y = 'top' | 'center' | 'bottom' | value; named values are relative to body
-                polygone:
+                polygon:
                     - [-0.11, -1.165]
                     - [-0.11, 1.215]
             -
                 layer: 'F.SilkS'
                 # thickness: 0.1 #optional parameter. If not given: take fab_line_width and silk_line_width from config file. Needed if layer not silk or fab!
                 reference_point: ['right', 0] # [x,y]: x = 'left' | 'center' | 'right' | value; y = 'top' | 'center' | 'bottom' | value; named values are relative to body
-                polygone:
+                polygon:
                     - [0.11, -1.165]
                     - [0.11, 1.215]
 
@@ -422,7 +422,7 @@ device_definition:
                     size: [0.3, 0.6] # centered around reference_point
                     # start: [-0.25, -0.25] #relative to reference_point
                     # end: [0.25, 0.25] #relative to reference_point
-                # polygone:
+                # polygon:
                 #     - [-0.25,-0.25]
                 #     - [-0.25,0.25]
                 #     - [0.25,0.25]

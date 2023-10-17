@@ -140,10 +140,10 @@ def generate_one_footprint(pins, configuration):
     {'x': A/2,'y': y1 + T},
     ]
 
-    kicad_mod.append(PolygoneLine(polygone=inline,
-        layer='F.SilkS', width=configuration['silk_line_width']))
-    kicad_mod.append(PolygoneLine(polygone=inline, x_mirror=A/2,
-        layer='F.SilkS', width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(polygon=inline,
+                                 layer='F.SilkS', width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(polygon=inline, x_mirror=A / 2,
+                                 layer='F.SilkS', width=configuration['silk_line_width']))
 
     #pin-1 mark
 
@@ -159,8 +159,8 @@ def generate_one_footprint(pins, configuration):
         {'y': body_edge['bottom'] - sl/sqrt(2), 'x': 0},
         {'y': body_edge['bottom'], 'x': sl/2}
     ]
-    kicad_mod.append(PolygoneLine(polygone=pin,
-        width=configuration['fab_line_width'], layer='F.Fab'))
+    kicad_mod.append(PolygonLine(polygon=pin,
+                                 width=configuration['fab_line_width'], layer='F.Fab'))
 
     ########################### CrtYd #################################
     cx1 = roundToBase(bounding_box['left']-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])

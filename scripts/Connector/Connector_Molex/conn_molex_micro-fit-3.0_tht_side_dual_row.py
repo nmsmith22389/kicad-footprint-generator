@@ -155,18 +155,18 @@ def generate_one_footprint(pins, configuration, variant):
         keepout_text = 'CU KEEPOUT'
         keepout_text_width = keepout_width / len(keepout_text)
         keepout_text_thickness = keepout_text_width * 0.15
-        kicad_mod.append(PolygoneLine(polygone=[[keepout_center_x[0] - keepout_width/2, keepout_center_y - keepout_height/2],
-            [keepout_center_x[0] - keepout_width/2, keepout_center_y + keepout_height/2],
-            [keepout_center_x[0] + keepout_width/2, keepout_center_y + keepout_height/2],
-            [keepout_center_x[0] + keepout_width/2, keepout_center_y - keepout_height/2],
-            [keepout_center_x[0] - keepout_width/2, keepout_center_y - keepout_height/2]],
-            layer='Dwgs.User', width=0.1))
-        kicad_mod.append(PolygoneLine(polygone=[[keepout_center_x[1] - keepout_width/2, keepout_center_y - keepout_height/2],
-            [keepout_center_x[1] - keepout_width/2, keepout_center_y + keepout_height/2],
-            [keepout_center_x[1] + keepout_width/2, keepout_center_y + keepout_height/2],
-            [keepout_center_x[1] + keepout_width/2, keepout_center_y - keepout_height/2],
-            [keepout_center_x[1] - keepout_width/2, keepout_center_y - keepout_height/2]],
-            layer='Dwgs.User', width=0.1))
+        kicad_mod.append(PolygonLine(polygon=[[keepout_center_x[0] - keepout_width / 2, keepout_center_y - keepout_height / 2],
+                                               [keepout_center_x[0] - keepout_width/2, keepout_center_y + keepout_height/2],
+                                               [keepout_center_x[0] + keepout_width/2, keepout_center_y + keepout_height/2],
+                                               [keepout_center_x[0] + keepout_width/2, keepout_center_y - keepout_height/2],
+                                               [keepout_center_x[0] - keepout_width/2, keepout_center_y - keepout_height/2]],
+                                     layer='Dwgs.User', width=0.1))
+        kicad_mod.append(PolygonLine(polygon=[[keepout_center_x[1] - keepout_width / 2, keepout_center_y - keepout_height / 2],
+                                               [keepout_center_x[1] - keepout_width/2, keepout_center_y + keepout_height/2],
+                                               [keepout_center_x[1] + keepout_width/2, keepout_center_y + keepout_height/2],
+                                               [keepout_center_x[1] + keepout_width/2, keepout_center_y - keepout_height/2],
+                                               [keepout_center_x[1] - keepout_width/2, keepout_center_y - keepout_height/2]],
+                                     layer='Dwgs.User', width=0.1))
         kicad_mod.append(Text(type='user', text='CU KEEPOUT', at=[keepout_center_x[0], keepout_center_y],
             layer='Cmts.User', size=[keepout_text_width, keepout_text_width], thickness=keepout_text_thickness))
         kicad_mod.append(Text(type='user', text='CU KEEPOUT', at=[keepout_center_x[1], keepout_center_y],
@@ -183,16 +183,16 @@ def generate_one_footprint(pins, configuration, variant):
         {'x': body_edge['right'], 'y': body_edge['bottom']},
         {'x': body_edge['left'], 'y': body_edge['bottom']}
     ]
-    kicad_mod.append(PolygoneLine(polygone=main_body_poly,
-        width=configuration['fab_line_width'], layer="F.Fab"))
+    kicad_mod.append(PolygonLine(polygon=main_body_poly,
+                                 width=configuration['fab_line_width'], layer="F.Fab"))
 
     main_arrow_poly= [
         {'x': -.75, 'y': body_edge['bottom']},
         {'x': 0, 'y': 0},
         {'x': 0.75, 'y': body_edge['bottom']}
     ]
-    kicad_mod.append(PolygoneLine(polygone=main_arrow_poly,
-        width=configuration['fab_line_width'], layer="F.Fab"))
+    kicad_mod.append(PolygonLine(polygon=main_arrow_poly,
+                                 width=configuration['fab_line_width'], layer="F.Fab"))
 
     ######################## SilkS Layer ###########################
     if variant == 'non-clip':
@@ -205,8 +205,8 @@ def generate_one_footprint(pins, configuration, variant):
             {'x': body_edge['right'] + configuration['silk_fab_offset'], 'y': body_edge['bottom'] + configuration['silk_fab_offset']},
             {'x': body_edge['left'] - configuration['silk_fab_offset'], 'y': body_edge['bottom'] + configuration['silk_fab_offset']},
         ]
-        kicad_mod.append(PolygoneLine(polygone=poly_s_t,
-            width=configuration['silk_line_width'], layer="F.SilkS"))
+        kicad_mod.append(PolygonLine(polygon=poly_s_t,
+                                     width=configuration['silk_line_width'], layer="F.SilkS"))
     if variant == 'clip':
         # top side (away from pins)
         poly_s_t= [
@@ -218,8 +218,8 @@ def generate_one_footprint(pins, configuration, variant):
             {'x': body_edge['right'] + configuration['silk_fab_offset'], 'y':  pad_row_1_y - peg_clip_y_offset - clip_pad[1]/2 + configuration['silk_fab_offset']},
             #{'x': body_edge['left'] - configuration['silk_fab_offset'], 'y': body_edge['bottom'] + configuration['silk_fab_offset']},
         ]
-        kicad_mod.append(PolygoneLine(polygone=poly_s_t,
-            width=configuration['silk_line_width'], layer="F.SilkS"))
+        kicad_mod.append(PolygonLine(polygon=poly_s_t,
+                                     width=configuration['silk_line_width'], layer="F.SilkS"))
         # bottom side (closest to pins)
         poly_s_t= [
             {'x': body_edge['left'] - configuration['silk_fab_offset'], 'y': pad_row_1_y - peg_clip_y_offset + clip_pad[1]/2 - configuration['silk_fab_offset']},
@@ -231,8 +231,8 @@ def generate_one_footprint(pins, configuration, variant):
             {'x': body_edge['right'] + configuration['silk_fab_offset'], 'y': pad_row_1_y - peg_clip_y_offset + clip_pad[1]/2 - configuration['silk_fab_offset']}
             #{'x': body_edge['left'] - configuration['silk_fab_offset'], 'y': body_edge['bottom'] + configuration['silk_fab_offset']},
         ]
-        kicad_mod.append(PolygoneLine(polygone=poly_s_t,
-            width=configuration['silk_line_width'], layer="F.SilkS"))
+        kicad_mod.append(PolygonLine(polygon=poly_s_t,
+                                     width=configuration['silk_line_width'], layer="F.SilkS"))
 
     ######################## CrtYd Layer ###########################
     CrtYd_offset = configuration['courtyard_offset']['connector']
@@ -252,8 +252,8 @@ def generate_one_footprint(pins, configuration, variant):
         {'x': roundToBase(CrtYd_left - CrtYd_offset, CrtYd_grid), 'y': roundToBase(body_edge['bottom'] + CrtYd_offset, CrtYd_grid)}
     ]
 
-    kicad_mod.append(PolygoneLine(polygone=poly_yd,
-        layer='F.CrtYd', width=configuration['courtyard_line_width']))
+    kicad_mod.append(PolygonLine(polygon=poly_yd,
+                                 layer='F.CrtYd', width=configuration['courtyard_line_width']))
 
     ######################### Text Fields ###############################
     cy1 = roundToBase(body_edge['top'] - configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])

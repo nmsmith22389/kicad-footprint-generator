@@ -112,7 +112,7 @@ def generate_one_footprint(pincount, configuration):
     offset_ramp_y = 1.005
 
     # create fab outline
-    kicad_mod.append(PolygoneLine(polygone=[
+    kicad_mod.append(PolygonLine(polygon=[
         [body_edge['left'], body_edge['top']],\
         [body_edge['right'], body_edge['top']],\
         [body_edge['right'], body_edge['bottom'] - offset_ramp_y],\
@@ -124,7 +124,7 @@ def generate_one_footprint(pincount, configuration):
         [body_edge['left'], body_edge['top']]], layer='F.Fab', width=fab_w))
 
     # create silkscreen
-    kicad_mod.append(PolygoneLine(polygone=[
+    kicad_mod.append(PolygonLine(polygon=[
         [body_edge['left'] - nudge, body_edge['top'] - nudge],\
         [body_edge['right'] + nudge, body_edge['top'] - nudge],\
         [body_edge['right'] + nudge, body_edge['bottom'] + nudge - offset_ramp_y],\
@@ -146,7 +146,7 @@ def generate_one_footprint(pincount, configuration):
         {'x': body_edge['left'] + sl/sqrt(2), 'y': 0},
         {'x': body_edge['left'], 'y': sl/2}
     ]
-    kicad_mod.append(PolygoneLine(polygone=poly_pin1_marker, layer='F.Fab', width=fab_w))
+    kicad_mod.append(PolygonLine(polygon=poly_pin1_marker, layer='F.Fab', width=fab_w))
 
     yr1=body_edge['bottom']+nudge
     yr2 = yr1 - 1.0
@@ -179,11 +179,11 @@ def generate_one_footprint(pincount, configuration):
         ramp_end_x = start_pos_x + (ramp[1] - 1) * pitch
         if ramp[1] != pincount:
             ramp_end_x += 1.5
-        kicad_mod.append(PolygoneLine(polygone=[
+        kicad_mod.append(PolygonLine(polygon=[
             [ramp_start_x, yr1], [ramp_start_x, yr2],\
             [ramp_end_x, yr2], [ramp_end_x, yr1]],\
             layer='F.SilkS', width=silk_w))
-        kicad_mod.append(PolygoneLine(polygone=[
+        kicad_mod.append(PolygonLine(polygon=[
             [ramp_start_x, yr2], [ramp_start_x, yr3],\
             [ramp_end_x, yr3], [ramp_end_x, yr2]],\
             layer='F.SilkS', width=silk_w))
@@ -194,8 +194,8 @@ def generate_one_footprint(pincount, configuration):
         end_x = middle_x + 1.6/2
         y1 = body_edge['top'] - nudge
         y2 = y1 + 0.6
-        kicad_mod.append(PolygoneLine(polygone=[[start_x, y1], [start_x, y2],\
-            [end_x, y2], [end_x, y1]], layer='F.SilkS', width=silk_w))
+        kicad_mod.append(PolygonLine(polygon=[[start_x, y1], [start_x, y2], \
+                                               [end_x, y2], [end_x, y1]], layer='F.SilkS', width=silk_w))
 
     ########################### CrtYd #################################
     cx1 = roundToBase(body_edge['left']-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])

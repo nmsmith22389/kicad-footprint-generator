@@ -219,8 +219,8 @@ def generate_one_footprint(pins_per_row, variant, configuration):
         {"x": body_edge["left"] + chamfer["x"], "y": body_edge["top"]},
     ]
     kicad_mod.append(
-        PolygoneLine(
-            polygone=main_body_poly,
+        PolygonLine(
+            polygon=main_body_poly,
             width=configuration["fab_line_width"],
             layer="F.Fab",
         )
@@ -251,8 +251,8 @@ def generate_one_footprint(pins_per_row, variant, configuration):
         {"x": tab_l / 2, "y": body_edge["bottom"]},
     ]
     kicad_mod.append(
-        PolygoneLine(
-            polygone=tab_poly, width=configuration["fab_line_width"], layer="F.Fab"
+        PolygonLine(
+            polygon=tab_poly, width=configuration["fab_line_width"], layer="F.Fab"
         )
     )
 
@@ -263,8 +263,8 @@ def generate_one_footprint(pins_per_row, variant, configuration):
         {"x": pad1_x + p1m_sl / 2, "y": body_edge["bottom"]},
     ]
     kicad_mod.append(
-        PolygoneLine(
-            polygone=tab_poly, width=configuration["fab_line_width"], layer="F.Fab"
+        PolygonLine(
+            polygon=tab_poly, width=configuration["fab_line_width"], layer="F.Fab"
         )
     )
 
@@ -288,8 +288,8 @@ def generate_one_footprint(pins_per_row, variant, configuration):
         {"x": xp1_left, "y": bounding_box["bottom"]},
     ]
     kicad_mod.append(
-        PolygoneLine(
-            polygone=poly_s_bl, width=configuration["silk_line_width"], layer="F.SilkS"
+        PolygonLine(
+            polygon=poly_s_bl, width=configuration["silk_line_width"], layer="F.SilkS"
         )
     )
 
@@ -299,8 +299,8 @@ def generate_one_footprint(pins_per_row, variant, configuration):
         {"x": xpn_right, "y": body_edge["bottom"] + off},
     ]
     kicad_mod.append(
-        PolygoneLine(
-            polygone=poly_s_br, width=configuration["silk_line_width"], layer="F.SilkS"
+        PolygonLine(
+            polygon=poly_s_br, width=configuration["silk_line_width"], layer="F.SilkS"
         )
     )
 
@@ -312,8 +312,8 @@ def generate_one_footprint(pins_per_row, variant, configuration):
         {"x": xp1_left, "y": body_edge["top"] - off},
     ]
     kicad_mod.append(
-        PolygoneLine(
-            polygone=poly_s_tl, width=configuration["silk_line_width"], layer="F.SilkS"
+        PolygonLine(
+            polygon=poly_s_tl, width=configuration["silk_line_width"], layer="F.SilkS"
         )
     )
 
@@ -325,8 +325,8 @@ def generate_one_footprint(pins_per_row, variant, configuration):
         {"x": xpn_right, "y": body_edge["top"] - off},
     ]
     kicad_mod.append(
-        PolygoneLine(
-            polygone=poly_s_br, width=configuration["silk_line_width"], layer="F.SilkS"
+        PolygonLine(
+            polygon=poly_s_br, width=configuration["silk_line_width"], layer="F.SilkS"
         )
     )
 
@@ -375,16 +375,16 @@ def generate_one_footprint(pins_per_row, variant, configuration):
     CrtYd_poly.extend(CrtYd_poly_b)
 
     kicad_mod.append(
-        PolygoneLine(
-            polygone=CrtYd_poly,
+        PolygonLine(
+            polygon=CrtYd_poly,
             layer="F.CrtYd",
             width=configuration["courtyard_line_width"],
         )
     )
 
     kicad_mod.append(
-        PolygoneLine(
-            polygone=CrtYd_poly,
+        PolygonLine(
+            polygon=CrtYd_poly,
             layer="F.CrtYd",
             width=configuration["courtyard_line_width"],
             x_mirror=0.00000001 if pad1_x + B / 2 == 0 else pad1_x + B / 2,

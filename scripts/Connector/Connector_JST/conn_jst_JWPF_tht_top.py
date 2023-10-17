@@ -160,7 +160,7 @@ def generate_one_footprint(pincount, configuration):
                 {'x': x2 + O - R, 'y': y2 + O},
             ]
 
-            kicad_mod.append(PolygoneLine(polygone=poly, layer=layer, width=width))
+            kicad_mod.append(PolygonLine(polygon=poly, layer=layer, width=width))
         else:
             # top line
             kicad_mod.append(Line(start=[tt+x1-O+R, y1-O], end=[x2+O-R, y1-O], layer=layer, width=width))
@@ -177,7 +177,7 @@ def generate_one_footprint(pincount, configuration):
                 {'x': tt+x1-O, 'y': y2+O-R}
             ]
 
-            kicad_mod.append(PolygoneLine(polygone=poly, width=width, layer=layer))
+            kicad_mod.append(PolygonLine(polygon=poly, width=width, layer=layer))
 
             # top left
             kicad_mod.append(Arc(center=[tt+x1-O+R, y1-O+R], start=[tt+x1-O, y1-O+R], angle=90.0, layer=layer, width=width))
@@ -207,7 +207,7 @@ def generate_one_footprint(pincount, configuration):
         {'x': x1 - Q + L, 'y': y1 - Q},
     ]
 
-    kicad_mod.append(PolygoneLine(polygone=p1, layer='F.SilkS', width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(polygon=p1, layer='F.SilkS', width=configuration['silk_line_width']))
 
     # Add pin-1 marker on F.Fab
     D = -0.5 - pad_size[1] / 2
@@ -219,7 +219,7 @@ def generate_one_footprint(pincount, configuration):
         {'x': -M/2, 'y': D - M},
     ]
 
-    kicad_mod.append(PolygoneLine(polygone=p1, layer='F.Fab', width=configuration['fab_line_width']))
+    kicad_mod.append(PolygonLine(polygon=p1, layer='F.Fab', width=configuration['fab_line_width']))
 
     ######################### Text Fields ###############################
     addTextFields(kicad_mod=kicad_mod, configuration=configuration, body_edges=body_edge,

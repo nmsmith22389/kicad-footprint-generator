@@ -172,12 +172,12 @@ def addRectAngledTop(kicad_mod, x1, x2, angled_delta, layer, width, roun=0.001):
     yma = min(x1[1], x2[1])
     ya = yma + angled_delta[1]
     kicad_mod.append(
-        PolygoneLine(polygone=[[roundG(xmi, roun),roundG(ymi, roun)], [roundG(xmi, roun),roundG(ya, roun)],
-                               [roundG(xl, roun), roundG(yma, roun)],
-                               [roundG(xa, roun), roundG(yma, roun)],
-                               [roundG(xma, roun),roundG(ya, roun)],
-                               [roundG(xma, roun),roundG(ymi, roun)],
-                               [roundG(xmi, roun),roundG(ymi, roun)]], layer=layer, width=width))
+        PolygonLine(polygon=[[roundG(xmi, roun), roundG(ymi, roun)], [roundG(xmi, roun), roundG(ya, roun)],
+                              [roundG(xl, roun), roundG(yma, roun)],
+                              [roundG(xa, roun), roundG(yma, roun)],
+                              [roundG(xma, roun),roundG(ya, roun)],
+                              [roundG(xma, roun),roundG(ymi, roun)],
+                              [roundG(xmi, roun),roundG(ymi, roun)]], layer=layer, width=width))
 
 
 
@@ -192,11 +192,11 @@ def addRectAngledTopNoBottom(kicad_mod, x1, x2, angled_delta, layer, width, roun
     yma = min(x1[1], x2[1])
     ya = yma + angled_delta[1]
     kicad_mod.append(
-        PolygoneLine(polygone=[[roundG(xmi, roun),roundG(ymi, roun)], [roundG(xmi, roun),roundG(ya, roun)],
-                               [roundG(xl, roun), roundG(yma, roun)],
-                               [roundG(xa, roun), roundG(yma, roun)],
-                               [roundG(xma, roun),roundG(ya, roun)],
-                               [roundG(xma, roun),roundG(ymi, roun)]], layer=layer, width=width))
+        PolygonLine(polygon=[[roundG(xmi, roun), roundG(ymi, roun)], [roundG(xmi, roun), roundG(ya, roun)],
+                              [roundG(xl, roun), roundG(yma, roun)],
+                              [roundG(xa, roun), roundG(yma, roun)],
+                              [roundG(xma, roun),roundG(ya, roun)],
+                              [roundG(xma, roun),roundG(ymi, roun)]], layer=layer, width=width))
 
 
 # add a rectangle that has two angled corners at the bottom
@@ -209,12 +209,12 @@ def addRectAngledBottom(kicad_mod, x1, x2, angled_delta, layer, width, roun=0.00
     yma = max(x1[1], x2[1])
     ya = yma - angled_delta[1]
     kicad_mod.append(
-        PolygoneLine(polygone=[[roundG(xmi, roun),roundG(ymi, roun)], [roundG(xmi, roun),roundG(ya, roun)],
-                               [roundG(xl, roun), roundG(yma, roun)],
-                               [roundG(xa, roun), roundG(yma, roun)],
-                               [roundG(xma, roun),roundG(ya, roun)],
-                               [roundG(xma, roun),roundG(ymi, roun)],
-                               [roundG(xmi, roun),roundG(ymi, roun)]], layer=layer, width=width))
+        PolygonLine(polygon=[[roundG(xmi, roun), roundG(ymi, roun)], [roundG(xmi, roun), roundG(ya, roun)],
+                              [roundG(xl, roun), roundG(yma, roun)],
+                              [roundG(xa, roun), roundG(yma, roun)],
+                              [roundG(xma, roun),roundG(ya, roun)],
+                              [roundG(xma, roun),roundG(ymi, roun)],
+                              [roundG(xmi, roun),roundG(ymi, roun)]], layer=layer, width=width))
 
 # add a circle which is filled with 45° lines
 def addCircleLF(kicad_mod, center, radius, layer, width, linedist=0.3, roun=0.001):

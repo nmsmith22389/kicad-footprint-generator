@@ -15,10 +15,10 @@
 
 from KicadModTree.Vector import *
 from KicadModTree.nodes.Node import Node
-from .PolygoneLine import PolygoneLine
+from .PolygonLine import PolygonLine
 
 
-class RectLine(PolygoneLine):
+class RectLine(PolygonLine):
     r"""Add a Rect to the render tree
 
     :param \**kwargs:
@@ -75,13 +75,13 @@ class RectLine(PolygoneLine):
             self.end_pos.x = x2 + offset[0]
             self.end_pos.y = y2 + offset[1]
 
-        polygone_line = [Vector2D(self.start_pos.x, self.start_pos.y),
-                         Vector2D(self.start_pos.x, self.end_pos.y),
-                         Vector2D(self.end_pos.x, self.end_pos.y),
-                         Vector2D(self.end_pos.x, self.start_pos.y),
-                         Vector2D(self.start_pos.x, self.start_pos.y)]
+        polygon_line = [Vector2D(self.start_pos.x, self.start_pos.y),
+                        Vector2D(self.start_pos.x, self.end_pos.y),
+                        Vector2D(self.end_pos.x, self.end_pos.y),
+                        Vector2D(self.end_pos.x, self.start_pos.y),
+                        Vector2D(self.start_pos.x, self.start_pos.y)]
 
-        PolygoneLine.__init__(self, nodes=polygone_line, layer=kwargs['layer'], width=kwargs.get('width'))
+        PolygonLine.__init__(self, nodes=polygon_line, layer=kwargs['layer'], width=kwargs.get('width'))
 
     def _getRenderTreeText(self):
         render_text = Node._getRenderTreeText(self)

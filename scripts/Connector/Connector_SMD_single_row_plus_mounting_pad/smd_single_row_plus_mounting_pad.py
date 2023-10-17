@@ -204,10 +204,10 @@ def generate_one_footprint(idx, pincount, series_definition, configuration, grou
             {'x': body_edge['right'] + configuration['silk_fab_offset'], 'y': side_line_y_pin_side + silk_y_offset_pin_side},
             {'x': -pad_1_x_outside_edge + pad_edge_silk_center_offset, 'y': body_edge_pin + silk_y_offset_pin_side}
         ]
-    kicad_mod.append(PolygoneLine(polygone=poly_fab_pin_side, layer='F.Fab', width=configuration['fab_line_width']))
+    kicad_mod.append(PolygonLine(polygon=poly_fab_pin_side, layer='F.Fab', width=configuration['fab_line_width']))
     if series_definition.get('no_automatic_silk_autline','False') != 'True':
-        kicad_mod.append(PolygoneLine(polygone=poly_silk_edge_left, layer='F.SilkS', width=configuration['silk_line_width']))
-        kicad_mod.append(PolygoneLine(polygone=poly_silk_edge_right, layer='F.SilkS', width=configuration['silk_line_width']))
+        kicad_mod.append(PolygonLine(polygon=poly_silk_edge_left, layer='F.SilkS', width=configuration['silk_line_width']))
+        kicad_mod.append(PolygonLine(polygon=poly_silk_edge_right, layer='F.SilkS', width=configuration['silk_line_width']))
 
     # Mount pad side
     bounding_box_y_mount_pad_side = mount_pad_y_pos + (-mounting_pad_size[1]/2 if pins_toward_bottom else mounting_pad_size[1]/2)
@@ -285,9 +285,9 @@ def generate_one_footprint(idx, pincount, series_definition, configuration, grou
         poly_silk_mp_side.append({'x': body_edge['right'] + configuration['silk_fab_offset'], 'y': silk_y_mp_outside})
 
     if series_definition.get('no_automatic_silk_autline','False') != 'True':
-        kicad_mod.append(PolygoneLine(polygone=poly_silk_mp_side, layer='F.SilkS', width=configuration['silk_line_width']))
+        kicad_mod.append(PolygonLine(polygon=poly_silk_mp_side, layer='F.SilkS', width=configuration['silk_line_width']))
 
-    kicad_mod.append(PolygoneLine(polygone=poly_fab_mp_side, layer='F.Fab', width=configuration['fab_line_width']))
+    kicad_mod.append(PolygonLine(polygon=poly_fab_mp_side, layer='F.Fab', width=configuration['fab_line_width']))
 
     kicad_mod.append(Line(start=[body_edge['left'], side_line_y_pin_side], end=[body_edge['left'], body_edge_mount_pad],
                             layer='F.Fab', width=configuration['fab_line_width']))
@@ -351,12 +351,12 @@ def generate_one_footprint(idx, pincount, series_definition, configuration, grou
         ]
 
     if modified_pinside_x_inner < -dimension_A/2 - configuration['fab_pin1_marker_length']/2:
-        kicad_mod.append(PolygoneLine(polygone=poly_pin1_marker, layer='F.Fab', width=configuration['fab_line_width']))
+        kicad_mod.append(PolygonLine(polygon=poly_pin1_marker, layer='F.Fab', width=configuration['fab_line_width']))
     else:
-        kicad_mod.append(PolygoneLine(polygone=poly_pin1_marker_small, layer='F.Fab', width=configuration['fab_line_width']))
+        kicad_mod.append(PolygonLine(polygon=poly_pin1_marker_small, layer='F.Fab', width=configuration['fab_line_width']))
 
     if needs_additional_silk_pin1_marker:
-        kicad_mod.append(PolygoneLine(polygone=poly_pin1_marker_small, layer='F.SilkS', width=configuration['silk_line_width']))
+        kicad_mod.append(PolygonLine(polygon=poly_pin1_marker_small, layer='F.SilkS', width=configuration['silk_line_width']))
 
 
     ######################### Text Fields ###############################

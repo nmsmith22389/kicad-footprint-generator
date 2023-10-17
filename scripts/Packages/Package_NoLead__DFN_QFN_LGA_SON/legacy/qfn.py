@@ -126,13 +126,13 @@ def qfn(args):
                   layer="F.Fab", size=s1, thickness=t1))
 
     # Fab
-    f.append(PolygoneLine(polygone=[[xRightFab, yBottomFab],
-                                    [xLeftFab, yBottomFab],
-                                    [xLeftFab, yChamferFab],
-                                    [xChamferFab, yTopFab],
-                                    [xRightFab, yTopFab],
-                                    [xRightFab, yBottomFab]],
-                          layer="F.Fab", width=wFab))
+    f.append(PolygonLine(polygon=[[xRightFab, yBottomFab],
+                                   [xLeftFab, yBottomFab],
+                                   [xLeftFab, yChamferFab],
+                                   [xChamferFab, yTopFab],
+                                   [xRightFab, yTopFab],
+                                   [xRightFab, yBottomFab]],
+                         layer="F.Fab", width=wFab))
 
     # Courtyard
     f.append(RectLine(start=[xLeftCrtYd, yTopCrtYd],
@@ -140,18 +140,18 @@ def qfn(args):
                       layer="F.CrtYd", width=wCrtYd))
 
     # Silk
-    f.append(PolygoneLine(polygone=[[xRight2Silk, yTopSilk],
-                                    [xRightSilk, yTopSilk],
-                                    [xRightSilk, yTop2Silk]],
-                          layer="F.SilkS", width=wSilkS))
-    f.append(PolygoneLine(polygone=[[xLeft2Silk, yBottomSilk],
-                                    [xLeftSilk, yBottomSilk],
-                                    [xLeftSilk, yBottom2Silk]],
-                          layer="F.SilkS", width=wSilkS))
-    f.append(PolygoneLine(polygone=[[xRight2Silk, yBottomSilk],
-                                    [xRightSilk, yBottomSilk],
-                                    [xRightSilk, yBottom2Silk]],
-                          layer="F.SilkS", width=wSilkS))
+    f.append(PolygonLine(polygon=[[xRight2Silk, yTopSilk],
+                                   [xRightSilk, yTopSilk],
+                                   [xRightSilk, yTop2Silk]],
+                         layer="F.SilkS", width=wSilkS))
+    f.append(PolygonLine(polygon=[[xLeft2Silk, yBottomSilk],
+                                   [xLeftSilk, yBottomSilk],
+                                   [xLeftSilk, yBottom2Silk]],
+                         layer="F.SilkS", width=wSilkS))
+    f.append(PolygonLine(polygon=[[xRight2Silk, yBottomSilk],
+                                   [xRightSilk, yBottomSilk],
+                                   [xRightSilk, yBottom2Silk]],
+                         layer="F.SilkS", width=wSilkS))
     f.append(Line(start=[xLeftSilk, yTopSilk],
                   end=[xLeft2Silk, yTopSilk],
                   layer="F.SilkS", width=wSilkS))

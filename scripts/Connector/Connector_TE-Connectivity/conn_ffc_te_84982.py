@@ -97,8 +97,8 @@ def generate_one_footprint(pincount, configuration):
         'bottom': housing_y_offset
     }
 
-    kicad_mod.append(PolygoneLine(
-        polygone=[
+    kicad_mod.append(PolygonLine(
+        polygon=[
             [-housing_x_offset, housing_y_offset],
             [housing_x_offset, housing_y_offset],
             [housing_x_offset, -housing_y_offset],
@@ -108,8 +108,8 @@ def generate_one_footprint(pincount, configuration):
         layer='F.Fab', width=configuration['fab_line_width']))
 
     # create fab pin 1 marker
-    kicad_mod.append(PolygoneLine(
-        polygone=[
+    kicad_mod.append(PolygonLine(
+        polygon=[
             [pin_edge_offset - 0.4, housing_y_offset],
             [pin_edge_offset, housing_y_offset - 0.8],
             [pin_edge_offset + 0.4, housing_y_offset]],
@@ -120,8 +120,8 @@ def generate_one_footprint(pincount, configuration):
     housing_x_offset += silk_offset
     housing_y_offset += silk_offset
 
-    kicad_mod.append(PolygoneLine(
-        polygone=[
+    kicad_mod.append(PolygonLine(
+        polygon=[
             [pin_edge_offset + pad_pitch - pad_width / 2 - 0.2, -housing_y_offset],
             [-housing_x_offset + pin1_marker_l + silk_offset, -housing_y_offset],
             [-housing_x_offset, -housing_y_offset + pin1_marker_l + silk_offset],
@@ -130,8 +130,8 @@ def generate_one_footprint(pincount, configuration):
             [pin_edge_offset - pad_width / 2 - 0.2, housing_y_offset + pad_height_odd / 2]],
         layer='F.SilkS', width=configuration['silk_line_width']))
 
-    kicad_mod.append(PolygoneLine(
-        polygone=[
+    kicad_mod.append(PolygonLine(
+        polygon=[
             [pin_edge_offset + ((bottom_pincount - 1) * 2) * pad_pitch + pad_width / 2 + 0.2, housing_y_offset],
             [housing_x_offset, housing_y_offset],
             [housing_x_offset, -housing_y_offset],

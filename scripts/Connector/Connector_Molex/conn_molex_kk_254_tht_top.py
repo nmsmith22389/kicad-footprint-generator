@@ -126,21 +126,21 @@ def generate_one_footprint(pincount, configuration):
         {'x': body_edge['left'] + sl/sqrt(2), 'y': 0},
         {'x': body_edge['left'], 'y': sl/2}
     ]
-    kicad_mod.append(PolygoneLine(polygone=poly_pin1_marker, layer='F.Fab', width=fab_w))
+    kicad_mod.append(PolygonLine(polygon=poly_pin1_marker, layer='F.Fab', width=fab_w))
 
     yr1=body_edge['bottom']+nudge
     yr2 = yr1 - 1
     yr3 = yr2 - 0.53
     if pincount <= 6:
         # one ramp
-        kicad_mod.append(PolygoneLine(polygone=[[start_pos_x, yr1], [start_pos_x, yr2],\
-            [end_pos_x, yr2], [end_pos_x, yr1]], layer='F.SilkS', width=silk_w))
-        kicad_mod.append(PolygoneLine(polygone=[[start_pos_x, yr2], [start_pos_x+0.25, yr3],\
-            [end_pos_x-0.25, yr3], [end_pos_x, yr2] ],layer='F.SilkS', width=silk_w))
-        kicad_mod.append(PolygoneLine(polygone=[[start_pos_x+0.25, yr1],\
-            [start_pos_x+0.25, yr2]], layer='F.SilkS', width=silk_w))
-        kicad_mod.append(PolygoneLine(polygone=[[end_pos_x-0.25, yr1],\
-            [end_pos_x-0.25, yr2]], layer='F.SilkS', width=silk_w))
+        kicad_mod.append(PolygonLine(polygon=[[start_pos_x, yr1], [start_pos_x, yr2], \
+                                               [end_pos_x, yr2], [end_pos_x, yr1]], layer='F.SilkS', width=silk_w))
+        kicad_mod.append(PolygonLine(polygon=[[start_pos_x, yr2], [start_pos_x + 0.25, yr3], \
+                                               [end_pos_x-0.25, yr3], [end_pos_x, yr2]], layer='F.SilkS', width=silk_w))
+        kicad_mod.append(PolygonLine(polygon=[[start_pos_x + 0.25, yr1], \
+                                               [start_pos_x+0.25, yr2]], layer='F.SilkS', width=silk_w))
+        kicad_mod.append(PolygonLine(polygon=[[end_pos_x - 0.25, yr1], \
+                                               [end_pos_x-0.25, yr2]], layer='F.SilkS', width=silk_w))
 
     else:
         # two ramps
@@ -161,13 +161,13 @@ def generate_one_footprint(pincount, configuration):
             {'x': start_pos_x+0.25, 'y': yr2}
         ]
 
-        kicad_mod.append(PolygoneLine(polygone=poly1, layer='F.SilkS', width=silk_w))
-        kicad_mod.append(PolygoneLine(polygone=poly2, layer='F.SilkS', width=silk_w))
-        kicad_mod.append(PolygoneLine(polygone=poly3, layer='F.SilkS', width=silk_w))
+        kicad_mod.append(PolygonLine(polygon=poly1, layer='F.SilkS', width=silk_w))
+        kicad_mod.append(PolygonLine(polygon=poly2, layer='F.SilkS', width=silk_w))
+        kicad_mod.append(PolygonLine(polygon=poly3, layer='F.SilkS', width=silk_w))
 
-        kicad_mod.append(PolygoneLine(polygone=poly1, x_mirror=centre_x, layer='F.SilkS', width=silk_w))
-        kicad_mod.append(PolygoneLine(polygone=poly2, x_mirror=centre_x, layer='F.SilkS', width=silk_w))
-        kicad_mod.append(PolygoneLine(polygone=poly3, x_mirror=centre_x, layer='F.SilkS', width=silk_w))
+        kicad_mod.append(PolygonLine(polygon=poly1, x_mirror=centre_x, layer='F.SilkS', width=silk_w))
+        kicad_mod.append(PolygonLine(polygon=poly2, x_mirror=centre_x, layer='F.SilkS', width=silk_w))
+        kicad_mod.append(PolygonLine(polygon=poly3, x_mirror=centre_x, layer='F.SilkS', width=silk_w))
 
     for i in range(0, pincount):
         middle_x = start_pos_x + i * pitch
@@ -175,8 +175,8 @@ def generate_one_footprint(pincount, configuration):
         end_x = middle_x + 1.6/2
         y1 = body_edge['top'] - nudge
         y2 = y1 + 0.6
-        kicad_mod.append(PolygoneLine(polygone=[[start_x, y1], [start_x, y2],\
-            [end_x, y2], [end_x, y1]], layer='F.SilkS', width=silk_w))
+        kicad_mod.append(PolygonLine(polygon=[[start_x, y1], [start_x, y2], \
+                                               [end_x, y2], [end_x, y1]], layer='F.SilkS', width=silk_w))
 
     ########################### CrtYd #################################
     cx1 = roundToBase(body_edge['left']-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])

@@ -371,19 +371,19 @@ def addCrossScrew(kicad_mod, x, y, radius, layer, width, roun=0.001):
     kicad_mod.append(kkt)
     dd = radius * 0.1 / 2
     dw = 0.8 * radius
-    kkt.append(PolygoneLine(polygone=[[roundG(-dw, roun), roundG(-dd, roun)],
-                                      [roundG(-dd, roun), roundG(-dd, roun)],
-                                      [roundG(-dd, roun), roundG(-dw, roun)],
-                                      [roundG(+dd, roun), roundG(-dw, roun)],
-                                      [roundG(+dd, roun), roundG(-dd, roun)],
-                                      [roundG(+dw, roun), roundG(-dd, roun)],
-                                      [roundG(+dw, roun), roundG(+dd, roun)],
-                                      [roundG(+dd, roun), roundG(+dd, roun)],
-                                      [roundG(+dd, roun), roundG(+dw, roun)],
-                                      [roundG(-dd, roun), roundG(+dw, roun)],
-                                      [roundG(-dd, roun), roundG(+dd, roun)],
-                                      [roundG(-dw, roun), roundG(+dd, roun)],
-                                      [roundG(-dw, roun), roundG(-dd, roun)]], layer=layer, width=width))
+    kkt.append(PolygonLine(polygon=[[roundG(-dw, roun), roundG(-dd, roun)],
+                                     [roundG(-dd, roun), roundG(-dd, roun)],
+                                     [roundG(-dd, roun), roundG(-dw, roun)],
+                                     [roundG(+dd, roun), roundG(-dw, roun)],
+                                     [roundG(+dd, roun), roundG(-dd, roun)],
+                                     [roundG(+dw, roun), roundG(-dd, roun)],
+                                     [roundG(+dw, roun), roundG(+dd, roun)],
+                                     [roundG(+dd, roun), roundG(+dd, roun)],
+                                     [roundG(+dd, roun), roundG(+dw, roun)],
+                                     [roundG(-dd, roun), roundG(+dw, roun)],
+                                     [roundG(-dd, roun), roundG(+dd, roun)],
+                                     [roundG(-dw, roun), roundG(+dd, roun)],
+                                     [roundG(-dw, roun), roundG(-dd, roun)]], layer=layer, width=width))
 
 
 # draw a circle with a cross-screw under 45 deg
@@ -394,7 +394,7 @@ def addCrossScrewWithKeepouts(kicad_mod, x, y, radius, layer, width, keepouts=[]
     kicad_mod.append(kkt)
     dd = radius * 0.1 / 2
     dw = 0.8 * radius
-    polygone = [[roundG(-dw, roun), roundG(-dd, roun)],
+    polygon = [[roundG(-dw, roun), roundG(-dd, roun)],
                 [roundG(-dd, roun), roundG(-dd, roun)],
                 [roundG(-dd, roun), roundG(-dw, roun)],
                 [roundG(+dd, roun), roundG(-dw, roun)],
@@ -407,7 +407,7 @@ def addCrossScrewWithKeepouts(kicad_mod, x, y, radius, layer, width, keepouts=[]
                 [roundG(-dd, roun), roundG(+dd, roun)],
                 [roundG(-dw, roun), roundG(+dd, roun)],
                 [roundG(-dw, roun), roundG(-dd, roun)]];
-    addPolyLineWithKeepout(kicad_mod, polygone, layer, width, keepouts)
+    addPolyLineWithKeepout(kicad_mod, polygon, layer, width, keepouts)
 
 
 # split a vertical line so it does not interfere with keepout areas defined as [[x0,x1,y0,y1], ...]
@@ -489,15 +489,15 @@ def allBevelRect(model, x, size, layer, width, bevel_size=0.2):
     if bevel_size <= 0:
         model.append(RectLine(start=x, end=[x[0] + size[0], x[1] + size[1]], layer=layer, width=width))
     else:
-        model.append(PolygoneLine(polygone=[[x[0] + bevel_size, x[1]],
-                                            [x[0] + size[0] - bevel_size, x[1]],
-                                            [x[0] + size[0], x[1] + bevel_size],
-                                            [x[0] + size[0], x[1] + size[1] - bevel_size],
-                                            [x[0] + size[0] - bevel_size, x[1] + size[1]],
-                                            [x[0] + bevel_size, x[1] + size[1]],
-                                            [x[0], x[1] + size[1] - bevel_size],
-                                            [x[0], x[1] + bevel_size],
-                                            [x[0] + bevel_size, x[1]]], layer=layer, width=width))
+        model.append(PolygonLine(polygon=[[x[0] + bevel_size, x[1]],
+                                           [x[0] + size[0] - bevel_size, x[1]],
+                                           [x[0] + size[0], x[1] + bevel_size],
+                                           [x[0] + size[0], x[1] + size[1] - bevel_size],
+                                           [x[0] + size[0] - bevel_size, x[1] + size[1]],
+                                           [x[0] + bevel_size, x[1] + size[1]],
+                                           [x[0], x[1] + size[1] - bevel_size],
+                                           [x[0], x[1] + bevel_size],
+                                           [x[0] + bevel_size, x[1]]], layer=layer, width=width))
 
 # draw a trapezoid with a given angle of the vertical lines
 #
@@ -513,25 +513,25 @@ def allTrapezoid(model, x, size, angle, layer, width):
     if angle == 0:
         model.append(RectLine(start=x, end=[x[0] + size[0], x[1] + size[1]], layer=layer, width=width))
     elif angle<0:
-        model.append(PolygoneLine(polygone=[[x[0] + dx, x[1]],
-                                            [x[0] + size[0] - dx, x[1]],
-                                            [x[0] + size[0], x[1] + size[1]],
-                                            [x[0], x[1] + size[1] ],
-                                            [x[0] + dx, x[1]]], layer=layer, width=width))
+        model.append(PolygonLine(polygon=[[x[0] + dx, x[1]],
+                                           [x[0] + size[0] - dx, x[1]],
+                                           [x[0] + size[0], x[1] + size[1]],
+                                           [x[0], x[1] + size[1] ],
+                                           [x[0] + dx, x[1]]], layer=layer, width=width))
     elif angle>0:
-        model.append(PolygoneLine(polygone=[[x[0], x[1]],
-                                            [x[0] + size[0], x[1]],
-                                            [x[0] + size[0]-dx, x[1] + size[1]],
-                                            [x[0] + dx, x[1] + size[1] ],
-                                            [x[0] , x[1]]], layer=layer, width=width))
+        model.append(PolygonLine(polygon=[[x[0], x[1]],
+                                           [x[0] + size[0], x[1]],
+                                           [x[0] + size[0]-dx, x[1] + size[1]],
+                                           [x[0] + dx, x[1] + size[1] ],
+                                           [x[0] , x[1]]], layer=layer, width=width))
 
 # draw a downward equal-sided triangle
 def allEqualSidedDownTriangle(model, xcenter, side_length, layer, width):
     h=sqrt(3)/6*side_length
-    model.append(PolygoneLine(polygone=[[xcenter[0]-side_length/2, xcenter[1]-h],
-                                        [xcenter[0]+side_length/2, xcenter[1]-h],
-                                        [xcenter[0], xcenter[1]+2*h],
-                                        [xcenter[0]-side_length/2, xcenter[1]-h],
+    model.append(PolygonLine(polygon=[[xcenter[0] - side_length / 2, xcenter[1] - h],
+                                       [xcenter[0]+side_length/2, xcenter[1]-h],
+                                       [xcenter[0], xcenter[1]+2*h],
+                                       [xcenter[0]-side_length/2, xcenter[1]-h],
                                        ], layer=layer, width=width))
 
 # draw a trapezoid with a given angle of the vertical lines and rounded corners
@@ -635,8 +635,8 @@ def fillCircle(model, center, radius, layer, width):
 #
 #
 def bevelRectTL(model, x, size, layer, width, bevel_size=1):
-    model.append(PolygoneLine(
-        polygone=[[x[0] + bevel_size, x[1]], [x[0] + size[0], x[1]], [x[0] + size[0], x[1] + size[1]],
+    model.append(PolygonLine(
+        polygon=[[x[0] + bevel_size, x[1]], [x[0] + size[0], x[1]], [x[0] + size[0], x[1] + size[1]],
                   [x[0], x[1] + size[1]], [x[0], x[1] + bevel_size], [x[0] + bevel_size, x[1]]], layer=layer,
         width=width))
 
@@ -652,9 +652,9 @@ def bevelRectTL(model, x, size, layer, width, bevel_size=1):
 #
 #
 def bevelRectBL(model, x, size, layer, width, bevel_size=1):
-    model.append(PolygoneLine(polygone=[[x[0], x[1]], [x[0] + size[0], x[1]], [x[0] + size[0], x[1] + size[1]],
-                                        [x[0] + bevel_size, x[1] + size[1]], [x[0], x[1] + size[1] - bevel_size],
-                                        [x[0], x[1]]], layer=layer, width=width))
+    model.append(PolygonLine(polygon=[[x[0], x[1]], [x[0] + size[0], x[1]], [x[0] + size[0], x[1] + size[1]],
+                                       [x[0] + bevel_size, x[1] + size[1]], [x[0], x[1] + size[1] - bevel_size],
+                                       [x[0], x[1]]], layer=layer, width=width))
 
 # draws a DIP-package with half-circle at the top
 #
@@ -667,8 +667,8 @@ def bevelRectBL(model, x, size, layer, width, bevel_size=1):
 # |          |
 # +----------+
 def DIPRectT(model, x, size, layer, width, marker_size=2):
-    model.append(PolygoneLine(
-        polygone=[[x[0] + size[0] / 2 - marker_size / 2, x[1]], [x[0], x[1]], [x[0], x[1] + size[1]],
+    model.append(PolygonLine(
+        polygon=[[x[0] + size[0] / 2 - marker_size / 2, x[1]], [x[0], x[1]], [x[0], x[1] + size[1]],
                   [x[0] + size[0], x[1] + size[1]], [x[0] + size[0], x[1]],
                   [x[0] + size[0] / 2 + marker_size / 2, x[1]]], layer=layer, width=width))
     model.append(Arc(center=[x[0] + size[0] / 2, x[1]], start=[x[0] + size[0] / 2 - marker_size / 2, x[1]], angle=-180,
@@ -683,12 +683,12 @@ def DIPRectT(model, x, size, layer, width, marker_size=2):
 # |-/             |
 # +---------------+
 def DIPRectL(model, x, size, layer, width, marker_size=2):
-    model.append(PolygoneLine(polygone=[[x[0], x[1] + size[1] / 2 - marker_size / 2],
-                                        [x[0], x[1]],
-                                        [x[0] + size[0], x[1]],
-                                        [x[0] + size[0], x[1] + size[1]],
-                                        [x[0], x[1] + size[1]],
-                                        [x[0], x[1] + size[1] / 2 + marker_size / 2]], layer=layer, width=width))
+    model.append(PolygonLine(polygon=[[x[0], x[1] + size[1] / 2 - marker_size / 2],
+                                       [x[0], x[1]],
+                                       [x[0] + size[0], x[1]],
+                                       [x[0] + size[0], x[1] + size[1]],
+                                       [x[0], x[1] + size[1]],
+                                       [x[0], x[1] + size[1] / 2 + marker_size / 2]], layer=layer, width=width))
     model.append(Arc(center=[x[0], x[1] + size[1] / 2], start=[x[0], x[1] + size[1] / 2 - marker_size / 2], angle=180,
                      layer=layer, width=width))
 

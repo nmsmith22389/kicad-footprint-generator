@@ -90,12 +90,12 @@ for inductor in inductors:
         {'x': -l/2-0.1,'y': -w/2-0.1},
         {'x': 0,'y': -w/2-0.1},
     ]
-
-    fp.append(PolygoneLine(polygone=poly))
-    fp.append(PolygoneLine(polygone=poly, x_mirror=0))
-    fp.append(PolygoneLine(polygone=poly, y_mirror=0))
-    fp.append(PolygoneLine(polygone=poly, x_mirror=0))
-
+    
+    fp.append(PolygonLine(polygon=poly))
+    fp.append(PolygonLine(polygon=poly, x_mirror=0))
+    fp.append(PolygonLine(polygon=poly, y_mirror=0))
+    fp.append(PolygonLine(polygon=poly, x_mirror=0))
+    
     #Add a model
     fp.append(Model(filename="Inductors.3dshapes/" + fp_name + ".wrl"))
 

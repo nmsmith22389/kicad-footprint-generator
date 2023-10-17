@@ -7,7 +7,7 @@ def gen_footprint(offsets: list):
     kicad_mod = Footprint("test", FootprintType.SMD)
 
     # add a shape on Silk and Fab
-    poly = PolygoneLine(
+    poly = PolygonLine(
         nodes=[
             # left contour
             (-3, 2), (-5, -2),

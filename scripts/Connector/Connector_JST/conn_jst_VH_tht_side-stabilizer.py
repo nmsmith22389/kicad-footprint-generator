@@ -118,8 +118,8 @@ def generate_one_footprint(pins, configuration):
 
     #draw shroud outline on F.Fab layer
     kicad_mod.append(RectLine(start=[x3,y3],end=[x4,y5], layer='F.Fab', width=configuration['fab_line_width']))
-    kicad_mod.append(PolygoneLine(polygone=[{'x':x4-0.2,'y':y3},{'x':x4-0.2,'y':y1},{'x':x2,'y':y1},{'x':x2,'y':y4},{'x':x4,'y':y4}], layer='F.Fab', width=configuration['fab_line_width']))
-    kicad_mod.append(PolygoneLine(polygone=[{'x':x3,'y':y4},{'x':x1,'y':y4},{'x':x1,'y':y1},{'x':x3+0.2,'y':y1},{'x':x3+0.2,'y':y3}], layer='F.Fab', width=configuration['fab_line_width']))
+    kicad_mod.append(PolygonLine(polygon=[{ 'x': x4 - 0.2, 'y':y3 }, { 'x': x4 - 0.2, 'y':y1 }, { 'x':x2, 'y':y1 }, { 'x':x2, 'y':y4 }, { 'x':x4, 'y':y4 }], layer='F.Fab', width=configuration['fab_line_width']))
+    kicad_mod.append(PolygonLine(polygon=[{ 'x':x3, 'y':y4 }, { 'x':x1, 'y':y4 }, { 'x':x1, 'y':y1 }, { 'x': x3 + 0.2, 'y':y1 }, { 'x': x3 + 0.2, 'y':y3 }], layer='F.Fab', width=configuration['fab_line_width']))
 
     ########################### CrtYd #################################
     cx1 = roundToBase(x1-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
@@ -134,12 +134,12 @@ def generate_one_footprint(pins, configuration):
 
     #draw pin outlines and plastic between pins on F.Fab (pin width is 1.4mm, so 0.7mm is half the pin width)
     for pin in range(pins):
-        kicad_mod.append(PolygoneLine(polygone=[{'x':pin * pitch - 0.7,'y':y5},{'x':pin * pitch - 0.7,'y':y6},{'x':pin * pitch + 0.7,'y':y6},{'x':pin * pitch + 0.7,'y':y5}], layer='F.Fab', width=configuration['fab_line_width']))
+        kicad_mod.append(PolygonLine(polygon=[{ 'x': pin * pitch - 0.7, 'y':y5 }, { 'x': pin * pitch - 0.7, 'y':y6 }, { 'x': pin * pitch + 0.7, 'y':y6 }, { 'x': pin * pitch + 0.7, 'y':y5 }], layer='F.Fab', width=configuration['fab_line_width']))
         if pin < (pins - 1):
-            kicad_mod.append(PolygoneLine(polygone=[{'x':pin * pitch + 1.38,'y':y3},{'x':pin * pitch + 1.38,'y':y2},{'x':pin * pitch + 2.58,'y':y2},{'x':pin * pitch + 2.58,'y':y3}], layer='F.Fab', width=configuration['fab_line_width']))
+            kicad_mod.append(PolygonLine(polygon=[{ 'x': pin * pitch + 1.38, 'y':y3 }, { 'x': pin * pitch + 1.38, 'y':y2 }, { 'x': pin * pitch + 2.58, 'y':y2 }, { 'x': pin * pitch + 2.58, 'y':y3 }], layer='F.Fab', width=configuration['fab_line_width']))
 
     #draw pin1 mark on F.Fab
-    kicad_mod.append(PolygoneLine(polygone=[{'x':-0.8,'y':y3},{'x':0,'y':y3+0.8},{'x':0.8,'y':y3}], layer='F.Fab', width=configuration['fab_line_width']))
+    kicad_mod.append(PolygonLine(polygon=[{ 'x':-0.8, 'y':y3 }, { 'x':0, 'y': y3 + 0.8 }, { 'x':0.8, 'y':y3 }], layer='F.Fab', width=configuration['fab_line_width']))
 
     #draw silk outlines
     off = configuration['silk_fab_offset']
@@ -159,43 +159,43 @@ def generate_one_footprint(pins, configuration):
 
     #silk around shroud; silk around stabilizers; silk long shroud between pin and shroud for first and last pins
     #note that half of pin width is 0.7mm, so adding 0.12mm silk offset gives 0.82mm about pin center; 0.44 is double silk offset in caeses where 'off' is in the wrong direction
-    kicad_mod.append(PolygoneLine(polygone=[{'x':x3,'y':y4},{'x':x3,'y':y5},{'x':-0.82,'y':y5}], layer='F.SilkS', width=configuration['silk_line_width']))
-    kicad_mod.append(PolygoneLine(polygone=[{'x':x4-0.44,'y':-1.6},{'x':x4-0.44,'y':y1},{'x':x2,'y':y1},{'x':x2,'y':y4},{'x':x4,'y':y4}], layer='F.SilkS', width=configuration['silk_line_width']))
-    kicad_mod.append(PolygoneLine(polygone=[{'x':x4-0.44,'y':y3},{'x':x4-0.44,'y':1.6}], layer='F.SilkS', width=configuration['silk_line_width']))
-    kicad_mod.append(PolygoneLine(polygone=[{'x':x3,'y':y4},{'x':x1,'y':y4},{'x':x1,'y':y1},{'x':x3+0.44,'y':y1},{'x':x3+0.44,'y':-p1s_y}], layer='F.SilkS', width=configuration['silk_line_width']))
-    kicad_mod.append(PolygoneLine(polygone=[{'x':x3+0.44,'y':1.7},{'x':x3+0.44,'y':y3}], layer='F.SilkS', width=configuration['silk_line_width']))
-    kicad_mod.append(PolygoneLine(polygone=[{'x':(pins - 1) * pitch + 0.82,'y':y5},{'x':x4,'y':y5},{'x':x4,'y':y4}], layer='F.SilkS', width=configuration['silk_line_width']))
-    kicad_mod.append(PolygoneLine(polygone=[{'x':-0.58,'y':y3},{'x':1.26,'y':y3}], layer='F.SilkS', width=configuration['silk_line_width']))
-    kicad_mod.append(PolygoneLine(polygone=[{'x':pin * pitch - 1.26,'y':y3},{'x':pin * pitch + 0.58,'y':y3}], layer='F.SilkS', width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(polygon=[{ 'x':x3, 'y':y4 }, { 'x':x3, 'y':y5 }, { 'x':-0.82, 'y':y5 }], layer='F.SilkS', width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(polygon=[{ 'x': x4 - 0.44, 'y':-1.6 }, { 'x': x4 - 0.44, 'y':y1 }, { 'x':x2, 'y':y1 }, { 'x':x2, 'y':y4 }, { 'x':x4, 'y':y4 }], layer='F.SilkS', width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(polygon=[{ 'x': x4 - 0.44, 'y':y3 }, { 'x': x4 - 0.44, 'y':1.6 }], layer='F.SilkS', width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(polygon=[{ 'x':x3, 'y':y4 }, { 'x':x1, 'y':y4 }, { 'x':x1, 'y':y1 }, { 'x': x3 + 0.44, 'y':y1 }, { 'x': x3 + 0.44, 'y':-p1s_y }], layer='F.SilkS', width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(polygon=[{ 'x': x3 + 0.44, 'y':1.7 }, { 'x': x3 + 0.44, 'y':y3 }], layer='F.SilkS', width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(polygon=[{ 'x': (pins - 1) * pitch + 0.82, 'y':y5 }, { 'x':x4, 'y':y5 }, { 'x':x4, 'y':y4 }], layer='F.SilkS', width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(polygon=[{ 'x':-0.58, 'y':y3 }, { 'x':1.26, 'y':y3 }], layer='F.SilkS', width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(polygon=[{ 'x': pin * pitch - 1.26, 'y':y3 }, { 'x': pin * pitch + 0.58, 'y':y3 }], layer='F.SilkS', width=configuration['silk_line_width']))
 
     #per-pin silk
     #pin silk
     for pin in range(pins):
-        kicad_mod.append(PolygoneLine(polygone=[{'x':pin * pitch - 0.82,'y':y5},{'x':pin * pitch - 0.82,'y':y6},{'x':pin * pitch + 0.82,'y':y6},{'x':pin * pitch + 0.82,'y':y5}], layer='F.SilkS', width=configuration['silk_line_width']))
+        kicad_mod.append(PolygonLine(polygon=[{ 'x': pin * pitch - 0.82, 'y':y5 }, { 'x': pin * pitch - 0.82, 'y':y6 }, { 'x': pin * pitch + 0.82, 'y':y6 }, { 'x': pin * pitch + 0.82, 'y':y5 }], layer='F.SilkS', width=configuration['silk_line_width']))
         #silk around plastic between pins 1 and 2 (since pin 1 is rectangular, it seends to be handled a bit differently to meet ~0.2mm pin-silk clearance)
         if pin == 0:
-            kicad_mod.append(PolygoneLine(polygone=[{'x':pin * pitch + 1.26,'y':y3},{'x':pin * pitch + 1.26,'y':1.7}], layer='F.SilkS', width=configuration['silk_line_width']))
-            kicad_mod.append(PolygoneLine(polygone=[
+            kicad_mod.append(PolygonLine(polygon=[{ 'x': pin * pitch + 1.26, 'y':y3 }, { 'x': pin * pitch + 1.26, 'y':1.7 }], layer='F.SilkS', width=configuration['silk_line_width']))
+            kicad_mod.append(PolygonLine(polygon=[
                     {'x':pin * pitch + pad_size[0]/2 + silk_pad_clearance,'y':y2},
                     {'x':(pin+1) * pitch - pad_size[0]/2 - silk_pad_clearance,'y':y2}],
                 layer='F.SilkS', width=configuration['silk_line_width']))
-            kicad_mod.append(PolygoneLine(polygone=[{'x':pin * pitch + 2.7,'y':1},{'x':pin * pitch + 2.7,'y':y3}], layer='F.SilkS', width=configuration['silk_line_width']))
+            kicad_mod.append(PolygonLine(polygon=[{ 'x': pin * pitch + 2.7, 'y':1 }, { 'x': pin * pitch + 2.7, 'y':y3 }], layer='F.SilkS', width=configuration['silk_line_width']))
         #silk around plastic between other pins; silk along shroud between pin and shroud for other pins
         if (pin > 0) and (pin < (pins - 1)):
-            kicad_mod.append(PolygoneLine(polygone=[{'x':pin * pitch + 1.26,'y':y3},{'x':pin * pitch + 1.26,'y':1}], layer='F.SilkS', width=configuration['silk_line_width']))
-            kicad_mod.append(PolygoneLine(polygone=[
+            kicad_mod.append(PolygonLine(polygon=[{ 'x': pin * pitch + 1.26, 'y':y3 }, { 'x': pin * pitch + 1.26, 'y':1 }], layer='F.SilkS', width=configuration['silk_line_width']))
+            kicad_mod.append(PolygonLine(polygon=[
                     {'x':pin * pitch + pad_size[0]/2 + silk_pad_clearance,'y':y2},
                     {'x':(pin+1) * pitch - pad_size[0]/2 - silk_pad_clearance,'y':y2}],
                 layer='F.SilkS', width=configuration['silk_line_width']))
-            kicad_mod.append(PolygoneLine(polygone=[{'x':pin * pitch + 2.7,'y':1},{'x':pin * pitch + 2.7,'y':y3}], layer='F.SilkS', width=configuration['silk_line_width']))
-            kicad_mod.append(PolygoneLine(polygone=[{'x':pin * pitch - 1.26,'y':y3},{'x':pin * pitch + 1.26,'y':y3}], layer='F.SilkS', width=configuration['silk_line_width']))
+            kicad_mod.append(PolygonLine(polygon=[{ 'x': pin * pitch + 2.7, 'y':1 }, { 'x': pin * pitch + 2.7, 'y':y3 }], layer='F.SilkS', width=configuration['silk_line_width']))
+            kicad_mod.append(PolygonLine(polygon=[{ 'x': pin * pitch - 1.26, 'y':y3 }, { 'x': pin * pitch + 1.26, 'y':y3 }], layer='F.SilkS', width=configuration['silk_line_width']))
         #silk between pins at locking end of shroud
         if (pin > 0) and (pin < pins):
-            kicad_mod.append(PolygoneLine(polygone=[{'x':pin * pitch - 3.14,'y':y5},{'x':pin * pitch - 0.82,'y':y5}],layer='F.SilkS'))
+            kicad_mod.append(PolygonLine(polygon=[{ 'x': pin * pitch - 3.14, 'y':y5 }, { 'x': pin * pitch - 0.82, 'y':y5 }], layer='F.SilkS'))
 
     #add pin1 marker on F.FilkS (magic numbers intended to hit ~0.3mm copper-silk clearance)
 
-    kicad_mod.append(PolygoneLine(polygone=[{'x':0,'y':-p1s_y},{'x':-p1s_x,'y':-p1s_y},{'x':-p1s_x,'y':0}], layer='F.SilkS', width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(polygon=[{ 'x':0, 'y':-p1s_y }, { 'x':-p1s_x, 'y':-p1s_y }, { 'x':-p1s_x, 'y':0 }], layer='F.SilkS', width=configuration['silk_line_width']))
 
     ######################### Text Fields ###############################
     addTextFields(kicad_mod=kicad_mod, configuration=configuration, body_edges=body_edge,

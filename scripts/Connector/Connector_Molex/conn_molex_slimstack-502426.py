@@ -138,8 +138,8 @@ def generate_one_footprint(partnumber, configuration):
                     [-half_body_length+outline_x, -half_body_width-nudge]]
     right_outline = [[half_body_length-outline_x, half_body_width+nudge], [half_body_length+nudge, half_body_width+nudge], [half_body_length+nudge, -half_body_width-nudge],\
                      [half_body_length-outline_x, -half_body_width-nudge], [half_body_length-outline_x, -half_body_width-marker_y]]
-    kicad_mod.append(PolygoneLine(polygone=left_outline, layer='F.SilkS', width=silk_width))
-    kicad_mod.append(PolygoneLine(polygone=right_outline, layer='F.SilkS', width=silk_width))
+    kicad_mod.append(PolygonLine(polygon=left_outline, layer='F.SilkS', width=silk_width))
+    kicad_mod.append(PolygonLine(polygon=right_outline, layer='F.SilkS', width=silk_width))
 
     # create courtyard
     kicad_mod.append(RectLine(start=[-courtyard_x, -courtyard_y], end=[courtyard_x, courtyard_y], layer='F.CrtYd', width=courtyard_width))

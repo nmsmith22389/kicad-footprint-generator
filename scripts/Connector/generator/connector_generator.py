@@ -433,9 +433,9 @@ def generate_one_footprint(positions: int, spec, configuration: dict):
     body_shape_nodes = build_body_shape(body_spec, fp_config=fp_config)
 
     ## draw body outline on F.Fab
-    fab_outline = PolygoneLine(nodes=body_shape_nodes,
-                               layer="F.Fab",
-                               width=configuration['fab_line_width'])
+    fab_outline = PolygonLine(nodes=body_shape_nodes,
+                              layer="F.Fab",
+                              width=configuration['fab_line_width'])
     kicad_mod.append(fab_outline)
 
     ## draw additional shapes onto F.Fab
@@ -443,7 +443,7 @@ def generate_one_footprint(positions: int, spec, configuration: dict):
         if (name in ["left", "right", "top", "bottom"]):
             continue
         poly_nodes = parse_body_shape(spec.get("body_shape", {}), side=name, fp_config=fp_config)
-        kicad_mod.append(PolygoneLine(nodes=poly_nodes, layer="F.Fab", width=configuration["fab_line_width"]))
+        kicad_mod.append(PolygonLine(nodes=poly_nodes, layer="F.Fab", width=configuration["fab_line_width"]))
 
     ## create Pads
     start_pos_x = -0.5 * fp_config.pad_pos_range.x + fp_config.pad_center_offset.x
@@ -572,7 +572,7 @@ def make_pin1_marker(*, pos, radius, shape, flip_marker, width, offset):
                 cos(2 * n * pi / 3) * (1 if flip_marker else -1)
             )
             pnts.append(pos - offset_vec + radius * vertex)
-        pin1_silk = PolygoneLine(nodes=pnts + pnts[:1], layer='F.SilkS', width=width)
+        pin1_silk = PolygonLine(nodes=pnts + pnts[:1], layer='F.SilkS', width=width)
     elif (shape):
         raise ValueError("invalid pin 1 marker shape '%s'" % shape)
     else:

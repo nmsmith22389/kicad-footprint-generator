@@ -80,13 +80,13 @@ f.append(RectLine(start=[xLeftCrtYd, yTopCrtYd],
                   end=[xRightCrtYd, yBottomCrtYd],
                   layer="F.CrtYd", width=wCrtYd))
 
-f.append(PolygoneLine(polygone=[[xFabLeft, yChamfer],
-                                [xChamfer, yFabTop],
-                                [xFabRight, yFabTop],
-                                [xFabRight, yFabBottom],
-                                [xFabLeft, yFabBottom],
-                                [xFabLeft, yChamfer]],
-                      layer="F.Fab", width=wFab))
+f.append(PolygonLine(polygon=[[xFabLeft, yChamfer],
+                               [xChamfer, yFabTop],
+                               [xFabRight, yFabTop],
+                               [xFabRight, yFabBottom],
+                               [xFabLeft, yFabBottom],
+                               [xFabLeft, yChamfer]],
+                     layer="F.Fab", width=wFab))
 
 f.append(Line(start=[xSilkTopLeft, ySilkTop],
               end=[xSilkRight, ySilkTop],

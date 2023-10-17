@@ -37,6 +37,6 @@ def add_bump(m, anchor_pos, bump_length, bump_width, direction, layer, width, of
                          {'x': start_x + delta_x, 'y': start_y - delta_y / 2.0},
                          {'x': start_x + delta_x, 'y': start_y + delta_y / 2.0},
                          {'x': start_x, 'y': start_y + delta_y / 2.0} ]
-    m.append(PolygoneLine(polygone=polygon_line, layer=layer, width=width))
+    m.append(PolygonLine(polygon=polygon_line, layer=layer, width=width))
 
     return m

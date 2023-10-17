@@ -97,11 +97,11 @@ for inductor in inductors:
     {'x':  x1, 'y': y1},
     {'x':  x1, 'y': ly},
     ]
-
-
-    fp.append(PolygoneLine(polygone=top))
-    fp.append(PolygoneLine(polygone=top,y_mirror=0))
-
+    
+    
+    fp.append(PolygonLine(polygon=top))
+    fp.append(PolygonLine(polygon=top, y_mirror=0))
+    
     #Add a model
     fp.append(Model(filename="Inductors.3dshapes/" + fp_name + ".wrl"))
 

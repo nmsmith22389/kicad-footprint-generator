@@ -134,10 +134,10 @@ def generate_one_footprint(motel, params, configuration):
                     {'x':silk_top_left[0], 'y':silk_top_left[1]+flange_cutout},
                     {'x':silk_top_left[0], 'y':silk_bottom_right[1]}
                 ]
-            kicad_mod.append(PolygoneLine(polygone=outline_poly, layer='F.SilkS', width=configuration['silk_line_width']))
+            kicad_mod.append(PolygonLine(polygon=outline_poly, layer='F.SilkS', width=configuration['silk_line_width']))
             if configuration['with_fab_layer']:
                 outline_poly=offset_polyline(outline_poly,-configuration['silk_fab_offset'],(center_x,0))
-                kicad_mod.append(PolygoneLine(polygone=outline_poly, layer="F.Fab", width=configuration['fab_line_width']))
+                kicad_mod.append(PolygonLine(polygon=outline_poly, layer="F.Fab", width=configuration['fab_line_width']))
 
         if params.flanged:
             kicad_mod.append(Circle(center=calc_dim.mount_hole_left, radius=1.9, layer='F.SilkS', width=configuration['silk_line_width']))
@@ -169,10 +169,10 @@ def generate_one_footprint(motel, params, configuration):
                 {'x':seriesParams.plug_cut_len/2.0, 'y':calc_dim.plug_front},
                 {'x':seriesParams.plug_arc_len/2.0, 'y':calc_dim.plug_front}
             ]
-            plug_outline_translation.append(PolygoneLine(polygone=plug_outline_poly, layer='F.SilkS', width=configuration['silk_line_width']))
+            plug_outline_translation.append(PolygonLine(polygon=plug_outline_poly, layer='F.SilkS', width=configuration['silk_line_width']))
             plug_outline_translation.append(Arc(start=[-seriesParams.plug_arc_len/2.0,calc_dim.plug_front], center=[0,calc_dim.plug_front+1.7], angle=47.6, layer='F.SilkS', width=configuration['silk_line_width']))
             if configuration['inner_details_on_fab']:
-                plug_outline_translation.append(PolygoneLine(polygone=plug_outline_poly,  layer="F.Fab", width=configuration['fab_line_width']))
+                plug_outline_translation.append(PolygonLine(polygon=plug_outline_poly, layer="F.Fab", width=configuration['fab_line_width']))
                 plug_outline_translation.append(Arc(start=[-seriesParams.plug_arc_len/2.0,calc_dim.plug_front], center=[0,calc_dim.plug_front+1.7], angle=47.6,  layer="F.Fab", width=configuration['fab_line_width']))
             kicad_mod.append(plug_outline_translation)
     if params.mount_hole:
@@ -204,15 +204,15 @@ def generate_one_footprint(motel, params, configuration):
         pin1_marker_poly = create_pin1_marker_corner(crtyd_top_left[1],
             body_top_left[0] - configuration['courtyard_offset']['connector'] +
             (seriesParams.flange_length if params.flanged else 0), [2,1.25])
-        kicad_mod.append(PolygoneLine(polygone=pin1_marker_poly, layer='F.SilkS', width=configuration['silk_line_width']))
+        kicad_mod.append(PolygonLine(polygon=pin1_marker_poly, layer='F.SilkS', width=configuration['silk_line_width']))
         if configuration['with_fab_layer']:
-            kicad_mod.append(PolygoneLine(polygone=pin1_marker_poly, layer='F.Fab', width=configuration['fab_line_width']))
+            kicad_mod.append(PolygonLine(polygon=pin1_marker_poly, layer='F.Fab', width=configuration['fab_line_width']))
     else:
-        kicad_mod.append(PolygoneLine(polygone=create_pin1_marker_triangle(-params.pin_Sy/2-0.2),
-            layer='F.SilkS', width=configuration['silk_line_width']))
+        kicad_mod.append(PolygonLine(polygon=create_pin1_marker_triangle(-params.pin_Sy / 2 - 0.2),
+                                     layer='F.SilkS', width=configuration['silk_line_width']))
         if configuration['with_fab_layer']:
-            kicad_mod.append(PolygoneLine(
-                polygone=create_pin1_marker_triangle(bottom_y = 0,
+            kicad_mod.append(PolygonLine(
+                polygon=create_pin1_marker_triangle(bottom_y = 0,
                     dimensions = [params.pin_Sx - 0.2, -body_top_left[1]], with_top_line = False),
                 layer='F.Fab', width=configuration['fab_line_width']))
 

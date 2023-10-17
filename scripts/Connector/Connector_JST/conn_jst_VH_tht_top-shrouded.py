@@ -91,23 +91,23 @@ def generate_one_footprint(pins, configuration):
     body_edge={'left':x1, 'right':x2, 'top':y1, 'bottom':y2}
 
     #draw outline on F.Fab layer
-    kicad_mod.append(PolygoneLine(polygone=[{'x':x1,'y':y2},
-                                            {'x':x1,'y':y1},
-                                            {'x':x3,'y':y1},
-                                            {'x':x3,'y':y3},
-                                            {'x':x4,'y':y3},
-                                            {'x':x4,'y':y1},
-                                            {'x':x2,'y':y1},
-                                            {'x':x2,'y':y2},
-                                            {'x':x1,'y':y2}],
-                                        layer='F.Fab',width=configuration['fab_line_width']))
+    kicad_mod.append(PolygonLine(polygon=[{ 'x':x1, 'y':y2 },
+                                           {'x':x1,'y':y1},
+                                           {'x':x3,'y':y1},
+                                           {'x':x3,'y':y3},
+                                           {'x':x4,'y':y3},
+                                           {'x':x4,'y':y1},
+                                           {'x':x2,'y':y1},
+                                           {'x':x2,'y':y2},
+                                           {'x':x1,'y':y2}],
+                                 layer='F.Fab', width=configuration['fab_line_width']))
 
     #draw rectangle on F.Fab for shroud walls
     kicad_mod.append(RectLine(start=[x5,y4],end=[x6,y5],layer='F.Fab',width=configuration['fab_line_width']))
 
 	#draw pin1 mark on F.Fab
-    kicad_mod.append(PolygoneLine(polygone=[{'x':x1,'y':-1},{'x':(x1+1),'y':0}],layer='F.Fab',width=configuration['fab_line_width']))
-    kicad_mod.append(PolygoneLine(polygone=[{'x':x1,'y':1},{'x':(x1+1),'y':0}],layer='F.Fab',width=configuration['fab_line_width']))
+    kicad_mod.append(PolygonLine(polygon=[{ 'x':x1, 'y':-1 }, { 'x':(x1 + 1), 'y':0 }], layer='F.Fab', width=configuration['fab_line_width']))
+    kicad_mod.append(PolygonLine(polygon=[{ 'x':x1, 'y':1 }, { 'x':(x1 + 1), 'y':0 }], layer='F.Fab', width=configuration['fab_line_width']))
 
     ########################### CrtYd #################################
     cx1 = roundToBase(x1-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
@@ -130,16 +130,16 @@ def generate_one_footprint(pins, configuration):
     y3 -= off
     x4 -= off
 
-    kicad_mod.append(PolygoneLine(polygone=[{'x':x1,'y':y2},
-                                            {'x':x1,'y':y1},
-                                            {'x':x3,'y':y1},
-                                            {'x':x3,'y':y3},
-                                            {'x':x4,'y':y3},
-                                            {'x':x4,'y':y1},
-                                            {'x':x2,'y':y1},
-                                            {'x':x2,'y':y2},
-                                            {'x':x1,'y':y2}],
-                                        layer='F.SilkS', width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(polygon=[{ 'x':x1, 'y':y2 },
+                                           {'x':x1,'y':y1},
+                                           {'x':x3,'y':y1},
+                                           {'x':x3,'y':y3},
+                                           {'x':x4,'y':y3},
+                                           {'x':x4,'y':y1},
+                                           {'x':x2,'y':y1},
+                                           {'x':x2,'y':y2},
+                                           {'x':x1,'y':y2}],
+                                 layer='F.SilkS', width=configuration['silk_line_width']))
 
     #add pin1 mark on silk
     px = x1 - 0.2
@@ -147,7 +147,7 @@ def generate_one_footprint(pins, configuration):
 
     marker = [{'x': px,'y': 0},{'x': px-2*m,'y': m},{'x': px-2*m,'y': -m},{'x': px,'y': 0}]
 
-    kicad_mod.append(PolygoneLine(polygone=marker,layer="F.SilkS", width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(polygon=marker, layer="F.SilkS", width=configuration['silk_line_width']))
 
     #generate tht pads (1.65mm drill with 2.35x3mm oval pads)
     pad_size = [pitch - pad_to_pad_clearance, drill + 2*pad_copper_y_solder_length]

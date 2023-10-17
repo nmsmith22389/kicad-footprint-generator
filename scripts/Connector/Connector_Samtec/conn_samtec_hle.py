@@ -303,8 +303,8 @@ def generate_one_footprint(pins_per_row, variant, configuration):
         {'x': body_edge['left'], 'y': body_edge['bottom']},
         {'x': body_edge['left'], 'y': body_edge['top']},
     ]
-    kicad_mod.append(PolygoneLine(polygone=poly_f,
-        width=configuration['fab_line_width'], layer="F.Fab"))
+    kicad_mod.append(PolygonLine(polygon=poly_f,
+                                 width=configuration['fab_line_width'], layer="F.Fab"))
 
     # Pin 1 marking
     p1m_sl = 1
@@ -313,8 +313,8 @@ def generate_one_footprint(pins_per_row, variant, configuration):
         {'x': pad1_x, 'y': body_edge['top'] + p1m_sl/sqrt(2)},
         {'x': pad1_x + p1m_sl/2, 'y': body_edge['top']}
     ]
-    kicad_mod.append(PolygoneLine(polygone=p1m_poly,
-        width=configuration['fab_line_width'], layer="F.Fab"))
+    kicad_mod.append(PolygonLine(polygon=p1m_poly,
+                                 width=configuration['fab_line_width'], layer="F.Fab"))
 
     ############################ SilkS ##################################
 
@@ -333,8 +333,8 @@ def generate_one_footprint(pins_per_row, variant, configuration):
             {'x': body_edge['left'] - s_offset, 'y': body_edge['bottom'] + s_offset},
             {'x': s_xp1_left, 'y': body_edge['bottom'] + s_offset},
         ]
-        kicad_mod.append(PolygoneLine(polygone=poly_s_l,
-            width=configuration['silk_line_width'], layer="F.SilkS"))
+        kicad_mod.append(PolygonLine(polygon=poly_s_l,
+                                     width=configuration['silk_line_width'], layer="F.SilkS"))
 
         poly_s_r = [
             {'x': s_xpn_right, 'y': body_edge['top'] - s_offset},
@@ -342,8 +342,8 @@ def generate_one_footprint(pins_per_row, variant, configuration):
             {'x': body_edge['right'] + s_offset, 'y': body_edge['bottom'] + s_offset},
             {'x': s_xpn_right, 'y': body_edge['bottom'] + s_offset},
         ]
-        kicad_mod.append(PolygoneLine(polygone=poly_s_r,
-            width=configuration['silk_line_width'], layer="F.SilkS"))
+        kicad_mod.append(PolygonLine(polygon=poly_s_r,
+                                     width=configuration['silk_line_width'], layer="F.SilkS"))
 
         for i in range(0, pins_per_row-1):
             s_xpi_left = pad1_x + i * pitch + pad_size[0]/2 + s_pad_offset
@@ -353,15 +353,15 @@ def generate_one_footprint(pins_per_row, variant, configuration):
                 {'x': s_xpi_left, 'y': body_edge['top'] - s_offset},
                 {'x': s_xpi_right, 'y': body_edge['top'] - s_offset},
             ]
-            kicad_mod.append(PolygoneLine(polygone=poly_s_t,
-                width=configuration['silk_line_width'], layer="F.SilkS"))
+            kicad_mod.append(PolygonLine(polygon=poly_s_t,
+                                         width=configuration['silk_line_width'], layer="F.SilkS"))
 
             poly_s_b = [
                 {'x': s_xpi_left, 'y': body_edge['bottom'] + s_offset},
                 {'x': s_xpi_right, 'y': body_edge['bottom'] + s_offset},
             ]
-            kicad_mod.append(PolygoneLine(polygone=poly_s_b,
-                width=configuration['silk_line_width'], layer="F.SilkS"))
+            kicad_mod.append(PolygonLine(polygon=poly_s_b,
+                                         width=configuration['silk_line_width'], layer="F.SilkS"))
 
     else:
         poly_s = [
@@ -371,8 +371,8 @@ def generate_one_footprint(pins_per_row, variant, configuration):
             {'x': body_edge['left'] - s_offset, 'y': body_edge['bottom'] + s_offset},
             {'x': body_edge['left'] - s_offset, 'y': body_edge['top'] - s_offset},
         ]
-        kicad_mod.append(PolygoneLine(polygone=poly_s,
-            width=configuration['silk_line_width'], layer="F.SilkS"))
+        kicad_mod.append(PolygonLine(polygon=poly_s,
+                                     width=configuration['silk_line_width'], layer="F.SilkS"))
 
     # ############################ CrtYd ##################################
 
@@ -391,8 +391,8 @@ def generate_one_footprint(pins_per_row, variant, configuration):
         {'x': cy_left, 'y': cy_bottom},
         {'x': cy_left, 'y': cy_top},
     ]
-    kicad_mod.append(PolygoneLine(polygone=poly_cy,
-        layer='F.CrtYd', width=configuration['courtyard_line_width']))
+    kicad_mod.append(PolygonLine(polygon=poly_cy,
+                                 layer='F.CrtYd', width=configuration['courtyard_line_width']))
 
     ######################### Text Fields ###############################
 

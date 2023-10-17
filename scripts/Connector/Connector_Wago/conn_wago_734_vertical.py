@@ -154,13 +154,13 @@ def generate_one_footprint(pincount, configuration):
         {'x': x1, 'y':y1}
     ]
 
-    kicad_mod.append(PolygoneLine(polygone=poly_inside, layer='F.SilkS', width=silk_w))
+    kicad_mod.append(PolygonLine(polygon=poly_inside, layer='F.SilkS', width=silk_w))
 
     p1s_off = configuration['silk_fab_offset'] + 0.3
     p1s_L = 2
     # pin 1 markers
-    kicad_mod.append(PolygoneLine(
-        polygone=[
+    kicad_mod.append(PolygonLine(
+        polygon=[
             {'x': body_edge['left'] - p1s_off, 'y': body_edge['top'] + p1s_L},
             {'x': body_edge['left'] - p1s_off, 'y': body_edge['top'] - p1s_off},
             {'x': body_edge['left'] + p1s_L, 'y': body_edge['top'] - p1s_off}
@@ -173,7 +173,7 @@ def generate_one_footprint(pincount, configuration):
         {'y': body_edge['top'] + sl/sqrt(2), 'x': 0},
         {'y': body_edge['top'], 'x': sl/2}
     ]
-    kicad_mod.append(PolygoneLine(polygone=poly_pin1_marker, layer='F.Fab', width=fab_w))
+    kicad_mod.append(PolygonLine(polygon=poly_pin1_marker, layer='F.Fab', width=fab_w))
 
     ########################### CrtYd #################################
     cx1 = roundToBase(body_edge['left']-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])

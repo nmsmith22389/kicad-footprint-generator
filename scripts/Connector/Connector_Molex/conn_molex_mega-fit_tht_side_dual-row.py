@@ -163,8 +163,8 @@ def generate_one_footprint(pins_per_row, configuration):
     {'x': -size/2 - silk_pad_off,'y': y2+off},
     ]
 
-    kicad_mod.append(PolygoneLine(polygone=outline, layer='F.SilkS', width=configuration['silk_line_width']))
-    kicad_mod.append(PolygoneLine(polygone=outline,x_mirror=P/2 if P != 0 else 0.00000001, layer='F.SilkS', width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(polygon=outline, layer='F.SilkS', width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(polygon=outline, x_mirror=P / 2 if P != 0 else 0.00000001, layer='F.SilkS', width=configuration['silk_line_width']))
 
     #draw lines between each pin
     for i in range(pins_per_row-1):
@@ -195,7 +195,7 @@ def generate_one_footprint(pins_per_row, configuration):
     {'x': x,'y': 0},
     ]
 
-    kicad_mod.append(PolygoneLine(polygone=pin, layer='F.SilkS', width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(polygon=pin, layer='F.SilkS', width=configuration['silk_line_width']))
 
     sl = 2
     pin = [
@@ -203,7 +203,7 @@ def generate_one_footprint(pins_per_row, configuration):
         {'x': 0, 'y': body_edge['bottom']-sl/sqrt(2)},
         {'x': sl/2, 'y': body_edge['bottom']},
     ]
-    kicad_mod.append(PolygoneLine(polygone=pin, width=configuration['fab_line_width'], layer='F.Fab'))
+    kicad_mod.append(PolygonLine(polygon=pin, width=configuration['fab_line_width'], layer='F.Fab'))
 
     ########################### CrtYd #################################
     cx1 = roundToBase(body_edge['left']-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])

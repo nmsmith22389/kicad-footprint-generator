@@ -641,8 +641,8 @@ def makePotentiometerVertical(class_name, wbody, hbody, screwstyle="none", style
             if drawbody and dy <= cdbody_fab / 2:
                 dx = math.sqrt(cdbody_fab * cdbody_fab / 4 - dy * dy)
                 alpha = 360 - 2 * math.atan(dy / dy) / 3.1415 * 180
-                kicad_modg.append(PolygoneLine(polygone=[[clbody_fab - dx, ctbody_fab - dy],[lbody_fab, ctbody_fab - dy],
-                                 [lbody_fab, ctbody_fab + dy],[clbody_fab - dx, ctbody_fab + dy]], layer='F.Fab', width=lw_fab))
+                kicad_modg.append(PolygonLine(polygon=[[clbody_fab - dx, ctbody_fab - dy], [lbody_fab, ctbody_fab - dy],
+                                                        [lbody_fab, ctbody_fab + dy], [clbody_fab - dx, ctbody_fab + dy]], layer='F.Fab', width=lw_fab))
                 kicad_modg.append(Arc(center=[clbody_fab, ctbody_fab], start=[clbody_fab-dx, ctbody_fab-dy], angle=alpha,layer='F.Fab', width=lw_fab))
             else:
                 kicad_modg.append(Circle(center=[clbody_fab, ctbody_fab], radius=cdbody_fab / 2.0, layer='F.Fab', width=lw_fab))
@@ -668,9 +668,9 @@ def makePotentiometerVertical(class_name, wbody, hbody, screwstyle="none", style
 
                 # vertical pot with circular body: place refdes on F.Fab inside left edge of body
                 kicad_modg.append(Text(type='user', text='${REFERENCE}', at=[lbody_fab + 1, ctbody_fab], layer='F.Fab', rotation = 90))
-
-                kicad_modg.append(PolygoneLine(polygone=[[clbody_fab - dx, ctbody_fab - dy],[lbody_fab, ctbody_fab - dy],
-                             [lbody_fab, ctbody_fab + dy],[clbody_fab - dx, ctbody_fab + dy]], layer='F.Fab', width=lw_fab))
+                
+                kicad_modg.append(PolygonLine(polygon=[[clbody_fab - dx, ctbody_fab - dy], [lbody_fab, ctbody_fab - dy],
+                                                        [lbody_fab, ctbody_fab + dy], [clbody_fab - dx, ctbody_fab + dy]], layer='F.Fab', width=lw_fab))
             elif drawbody:
                 kicad_modg.append(RectLine(start=[lbody_fab, tbody_fab], end=[lbody_fab + wbody_fab, tbody_fab + hbody_fab],
                              layer='F.Fab', width=lw_fab))

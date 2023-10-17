@@ -178,66 +178,66 @@ def makeSMDCrystal(footprint_name, addSizeFootprintName, pins, pad_sep_x, pad_se
             kicad_modg.append(Line(start=[min(l_slk, -overpads_x_slk / 2), -pad[1] / 2],
                                    end=[min(l_slk, -overpads_x_slk / 2), pad[1] / 2], layer='F.SilkS', width=lw_slk))
         else:
-            kicad_modg.append(PolygoneLine(polygone=[[l_slk + w_slk, t_slk],
-                                                     [-overpads_x_slk / 2, t_slk],
-                                                     [-overpads_x_slk / 2, t_slk + h_slk],
-                                                     [l_slk + w_slk, t_slk + h_slk], ], layer='F.SilkS', width=lw_slk))
+            kicad_modg.append(PolygonLine(polygon=[[l_slk + w_slk, t_slk],
+                                                    [-overpads_x_slk / 2, t_slk],
+                                                    [-overpads_x_slk / 2, t_slk + h_slk],
+                                                    [l_slk + w_slk, t_slk + h_slk], ], layer='F.SilkS', width=lw_slk))
     elif pins == 3:
         if (pack_height < overpad_height and pack_width > overpad_width):
-            kicad_modg.append(PolygoneLine(polygone=[[overpads_x_slk / 2, t_slk],
-                                                     [l_slk + w_slk, t_slk],
-                                                     [l_slk + w_slk, t_slk + h_slk],
-                                                     [overpads_x_slk / 2, t_slk + h_slk]], layer='F.SilkS',
-                                           width=lw_slk))
+            kicad_modg.append(PolygonLine(polygon=[[overpads_x_slk / 2, t_slk],
+                                                    [l_slk + w_slk, t_slk],
+                                                    [l_slk + w_slk, t_slk + h_slk],
+                                                    [overpads_x_slk / 2, t_slk + h_slk]], layer='F.SilkS',
+                                          width=lw_slk))
             kicad_modg.append(Line(start=[l_slk - 2 * lw_slk, t_slk],
                                    end=[l_slk - 2 * lw_slk, t_slk + h_slk], layer='F.SilkS', width=lw_slk))
-
-            kicad_modg.append(PolygoneLine(polygone=[[-overpads_x_slk / 2, mark_b_slk],
-                                                     [-overpads_x_slk / 2, t_slk + h_slk],
-                                                     [l_slk, t_slk + h_slk],
-                                                     [l_slk, t_slk],
-                                                     [-overpads_x_slk / 2, t_slk]], layer='F.SilkS',
-                                           width=lw_slk))
-
+            
+            kicad_modg.append(PolygonLine(polygon=[[-overpads_x_slk / 2, mark_b_slk],
+                                                    [-overpads_x_slk / 2, t_slk + h_slk],
+                                                    [l_slk, t_slk + h_slk],
+                                                    [l_slk, t_slk],
+                                                    [-overpads_x_slk / 2, t_slk]], layer='F.SilkS',
+                                          width=lw_slk))
+        
         else:
-            kicad_modg.append(PolygoneLine(polygone=[[-overpads_x_slk / 2, -overpads_y_slk / 2],
-                                                     [-overpads_x_slk / 2, overpads_y_slk / 2],
-                                                     [overpads_x_slk / 2, overpads_y_slk / 2]], layer='F.SilkS',
-                                           width=lw_slk))
+            kicad_modg.append(PolygonLine(polygon=[[-overpads_x_slk / 2, -overpads_y_slk / 2],
+                                                    [-overpads_x_slk / 2, overpads_y_slk / 2],
+                                                    [overpads_x_slk / 2, overpads_y_slk / 2]], layer='F.SilkS',
+                                          width=lw_slk))
     elif pins >= 4:
         if (betweenpads_y_slk < 5 * lw_slk or betweenpads_x_slk < 5 * lw_slk) and (pack_height < overpad_height and pack_width < overpad_width):
-            kicad_modg.append(PolygoneLine(polygone=[[-overpads_x_slk / 2, -overpads_y_slk / 2],
-                                                     [-overpads_x_slk / 2, overpads_y_slk / 2],
-                                                     [overpads_x_slk / 2, overpads_y_slk / 2]], layer='F.SilkS',
-                                           width=lw_slk))
+            kicad_modg.append(PolygonLine(polygon=[[-overpads_x_slk / 2, -overpads_y_slk / 2],
+                                                    [-overpads_x_slk / 2, overpads_y_slk / 2],
+                                                    [overpads_x_slk / 2, overpads_y_slk / 2]], layer='F.SilkS',
+                                          width=lw_slk))
         else:
             if (pack_height < overpad_height and pack_width < overpad_width):
-
-                kicad_modg.append(PolygoneLine(polygone=[[mark_l_slk, betweenpads_y_slk / 2],
-                                                         [l_slk, betweenpads_y_slk / 2],
-                                                         [l_slk, -betweenpads_y_slk / 2]], layer='F.SilkS',
-                                               width=lw_slk))
-                kicad_modg.append(PolygoneLine(polygone=[[l_slk + w_slk, -betweenpads_y_slk / 2],
-                                                         [l_slk + w_slk, betweenpads_y_slk / 2]], layer='F.SilkS',
-                                               width=lw_slk))
+                
+                kicad_modg.append(PolygonLine(polygon=[[mark_l_slk, betweenpads_y_slk / 2],
+                                                        [l_slk, betweenpads_y_slk / 2],
+                                                        [l_slk, -betweenpads_y_slk / 2]], layer='F.SilkS',
+                                              width=lw_slk))
+                kicad_modg.append(PolygonLine(polygon=[[l_slk + w_slk, -betweenpads_y_slk / 2],
+                                                        [l_slk + w_slk, betweenpads_y_slk / 2]], layer='F.SilkS',
+                                              width=lw_slk))
                 if pins == 4:
-                    kicad_modg.append(PolygoneLine(polygone=[[-betweenpads_x_slk / 2, t_slk],
-                                                         [betweenpads_x_slk / 2, t_slk]], layer='F.SilkS',
-                                               width=lw_slk))
-                    kicad_modg.append(PolygoneLine(polygone=[[betweenpads_x_slk / 2, t_slk + h_slk],
-                                                         [-betweenpads_x_slk / 2, t_slk + h_slk],
-                                                         [-betweenpads_x_slk / 2, mark_b_slk]], layer='F.SilkS',
-                                               width=lw_slk))
+                    kicad_modg.append(PolygonLine(polygon=[[-betweenpads_x_slk / 2, t_slk],
+                                                            [betweenpads_x_slk / 2, t_slk]], layer='F.SilkS',
+                                                  width=lw_slk))
+                    kicad_modg.append(PolygonLine(polygon=[[betweenpads_x_slk / 2, t_slk + h_slk],
+                                                            [-betweenpads_x_slk / 2, t_slk + h_slk],
+                                                            [-betweenpads_x_slk / 2, mark_b_slk]], layer='F.SilkS',
+                                                  width=lw_slk))
             elif (pack_height < overpad_height and pack_width > overpad_width):
-                kicad_modg.append(PolygoneLine(polygone=[[overpads_x_slk / 2, t_slk],
-                                                         [l_slk + w_slk, t_slk],
-                                                         [l_slk + w_slk, t_slk + h_slk],
-                                                         [overpads_x_slk / 2, t_slk + h_slk]], layer='F.SilkS',
-                                               width=lw_slk))
+                kicad_modg.append(PolygonLine(polygon=[[overpads_x_slk / 2, t_slk],
+                                                        [l_slk + w_slk, t_slk],
+                                                        [l_slk + w_slk, t_slk + h_slk],
+                                                        [overpads_x_slk / 2, t_slk + h_slk]], layer='F.SilkS',
+                                              width=lw_slk))
                 if pins == 4:
-                    kicad_modg.append(PolygoneLine(polygone=[[-betweenpads_x_slk / 2, t_slk],
-                                                         [betweenpads_x_slk / 2, t_slk]], layer='F.SilkS',
-                                               width=lw_slk))
+                    kicad_modg.append(PolygonLine(polygon=[[-betweenpads_x_slk / 2, t_slk],
+                                                            [betweenpads_x_slk / 2, t_slk]], layer='F.SilkS',
+                                                  width=lw_slk))
                 if style == 'dip':
                     DIPRectL_LeftOnly(kicad_modg, [l_slk, t_slk], [(w_slk - overpads_x_slk) / 2, h_slk], 'F.SilkS',
                                       lw_slk, dip_size_slk)
@@ -246,39 +246,39 @@ def makeSMDCrystal(footprint_name, addSizeFootprintName, pins, pad_sep_x, pad_se
                              layer='F.SilkS',
                              width=lw_slk))
                 else:
-                    kicad_modg.append(PolygoneLine(polygone=[[-overpads_x_slk / 2, mark_b_slk],
-                                                             [-overpads_x_slk / 2, t_slk + h_slk],
-                                                             [l_slk, t_slk + h_slk],
-                                                             [l_slk, t_slk],
-                                                             [-overpads_x_slk / 2, t_slk]], layer='F.SilkS',
-                                                   width=lw_slk))
+                    kicad_modg.append(PolygonLine(polygon=[[-overpads_x_slk / 2, mark_b_slk],
+                                                            [-overpads_x_slk / 2, t_slk + h_slk],
+                                                            [l_slk, t_slk + h_slk],
+                                                            [l_slk, t_slk],
+                                                            [-overpads_x_slk / 2, t_slk]], layer='F.SilkS',
+                                                  width=lw_slk))
                     if pins==4:
-                        kicad_modg.append(PolygoneLine(polygone=[[betweenpads_x_slk / 2, t_slk + h_slk],
-                                                             [-betweenpads_x_slk / 2, t_slk + h_slk],
-                                                             [-betweenpads_x_slk / 2, mark_b_slk]], layer='F.SilkS',
-                                                   width=lw_slk))
-
+                        kicad_modg.append(PolygonLine(polygon=[[betweenpads_x_slk / 2, t_slk + h_slk],
+                                                                [-betweenpads_x_slk / 2, t_slk + h_slk],
+                                                                [-betweenpads_x_slk / 2, mark_b_slk]], layer='F.SilkS',
+                                                      width=lw_slk))
+            
             elif (pack_height > overpad_height and pack_width < overpad_width):
-                kicad_modg.append(PolygoneLine(polygone=[[l_slk, -overpads_y_slk / 2],
-                                                         [l_slk, t_slk],
-                                                         [l_slk + w_slk, t_slk],
-                                                         [l_slk + w_slk, -overpads_y_slk / 2]], layer='F.SilkS',
-                                               width=lw_slk))
-                kicad_modg.append(PolygoneLine(polygone=[[mark_l_slk, overpads_y_slk / 2],
-                                                         [l_slk, overpads_y_slk / 2],
-                                                         [l_slk, t_slk + h_slk],
-                                                         [l_slk + w_slk, t_slk + h_slk],
-                                                         [l_slk + w_slk, overpads_y_slk / 2]], layer='F.SilkS',
-                                               width=lw_slk))
+                kicad_modg.append(PolygonLine(polygon=[[l_slk, -overpads_y_slk / 2],
+                                                        [l_slk, t_slk],
+                                                        [l_slk + w_slk, t_slk],
+                                                        [l_slk + w_slk, -overpads_y_slk / 2]], layer='F.SilkS',
+                                              width=lw_slk))
+                kicad_modg.append(PolygonLine(polygon=[[mark_l_slk, overpads_y_slk / 2],
+                                                        [l_slk, overpads_y_slk / 2],
+                                                        [l_slk, t_slk + h_slk],
+                                                        [l_slk + w_slk, t_slk + h_slk],
+                                                        [l_slk + w_slk, overpads_y_slk / 2]], layer='F.SilkS',
+                                              width=lw_slk))
                 if pins == 4:
-                    kicad_modg.append(PolygoneLine(polygone=[[mark_l_slk, betweenpads_y_slk / 2],
-                                                             [l_slk, betweenpads_y_slk / 2],
-                                                             [l_slk, -betweenpads_y_slk / 2]], layer='F.SilkS',
-                                                   width=lw_slk))
-                    kicad_modg.append(PolygoneLine(polygone=[[l_slk + w_slk, -betweenpads_y_slk / 2],
-                                                             [l_slk + w_slk, betweenpads_y_slk / 2]], layer='F.SilkS',
-                                                   width=lw_slk))
-
+                    kicad_modg.append(PolygonLine(polygon=[[mark_l_slk, betweenpads_y_slk / 2],
+                                                            [l_slk, betweenpads_y_slk / 2],
+                                                            [l_slk, -betweenpads_y_slk / 2]], layer='F.SilkS',
+                                                  width=lw_slk))
+                    kicad_modg.append(PolygonLine(polygon=[[l_slk + w_slk, -betweenpads_y_slk / 2],
+                                                            [l_slk + w_slk, betweenpads_y_slk / 2]], layer='F.SilkS',
+                                                  width=lw_slk))
+    
     # create courtyard
     kicad_mod.append(RectLine(start=[roundCrt(l_crt + offset[0]), roundCrt(t_crt + offset[1])],
                               end=[roundCrt(l_crt + offset[0] + w_crt), roundCrt(t_crt + offset[1] + h_crt)],
@@ -513,12 +513,12 @@ def makeCrystal(footprint_name, rm, pad_size, ddrill, pack_width, pack_height, p
     # create FAB-layer
     kicad_modg.append(RectLine(start=[l_fab, t_fab],
                                    end=[l_fab + w_fab, t_fab + h_fab], layer='F.Fab', width=lw_fab))
-    kicad_modg.append(PolygoneLine(polygone=[[l_fab + w_fab / 2 - pack_rm / 2, t_fab],
-                                             [0, t_fab/2],
-                                             [0, 0]], layer='F.Fab', width=lw_fab))
-    kicad_modg.append(PolygoneLine(polygone=[[l_fab + w_fab / 2 + pack_rm / 2, t_fab],
-                                             [rm, t_fab/2],
-                                             [rm, 0]], layer='F.Fab', width=lw_fab))
+    kicad_modg.append(PolygonLine(polygon=[[l_fab + w_fab / 2 - pack_rm / 2, t_fab],
+                                            [0, t_fab/2],
+                                            [0, 0]], layer='F.Fab', width=lw_fab))
+    kicad_modg.append(PolygonLine(polygon=[[l_fab + w_fab / 2 + pack_rm / 2, t_fab],
+                                            [rm, t_fab/2],
+                                            [rm, 0]], layer='F.Fab', width=lw_fab))
     if package_pad and package_pad_add_holes:
         kicad_modg.append(
             Line(start=[pad3pos[0] - pad3dril_xoffset, pad3pos[1]], end=[pad3pos[0] + pad3dril_xoffset, pad3pos[1]],
@@ -528,23 +528,23 @@ def makeCrystal(footprint_name, rm, pad_size, ddrill, pack_width, pack_height, p
                                    width=lw_fab))
     # create SILKSCREEN-layer
     if package_pad and package_pad_add_holes:
-        kicad_modg.append(PolygoneLine(polygone=[[l_slk, pad3pos[1] - package_pad_drill_size[1] / 2 - slk_offset],
-                                                 [l_slk, t_slk],
-                                                 [l_slk + w_slk, t_slk],
-                                                 [l_slk + w_slk,
+        kicad_modg.append(PolygonLine(polygon=[[l_slk, pad3pos[1] - package_pad_drill_size[1] / 2 - slk_offset],
+                                                [l_slk, t_slk],
+                                                [l_slk + w_slk, t_slk],
+                                                [l_slk + w_slk,
                                                   pad3pos[1] - package_pad_drill_size[1] / 2 - slk_offset]],
-                                       layer='F.SilkS', width=lw_slk))
+                                      layer='F.SilkS', width=lw_slk))
     else:
         if slk_u_line:
-            kicad_modg.append(PolygoneLine(polygone=[[l_slk, t_slk + h_slk],
-                                                     [l_slk, t_slk],
-                                                     [l_slk + w_slk, t_slk],
-                                                     [l_slk + w_slk, t_slk + h_slk]], layer='F.SilkS', width=lw_slk))
+            kicad_modg.append(PolygonLine(polygon=[[l_slk, t_slk + h_slk],
+                                                    [l_slk, t_slk],
+                                                    [l_slk + w_slk, t_slk],
+                                                    [l_slk + w_slk, t_slk + h_slk]], layer='F.SilkS', width=lw_slk))
         else:
             kicad_modg.append(
                 RectLine(start=[l_slk, t_slk], end=[l_slk + w_slk, t_slk + h_slk], layer='F.SilkS', width=lw_slk))
-    kicad_modg.append(PolygoneLine(polygone=[[l_slk + w_slk / 2 - pack_rm / 2, t_slk], [0, max(t_slk/2,pad[1] / 2 + slk_offset)], [0, pad[1] / 2 + slk_offset]], layer='F.SilkS',width=lw_slk))
-    kicad_modg.append(PolygoneLine(polygone=[[l_slk + w_slk / 2 + pack_rm / 2, t_slk], [rm, max(t_slk/2,pad[1] / 2 + slk_offset)], [rm, pad[1] / 2 + slk_offset]], layer='F.SilkS',width=lw_slk))
+    kicad_modg.append(PolygonLine(polygon=[[l_slk + w_slk / 2 - pack_rm / 2, t_slk], [0, max(t_slk / 2, pad[1] / 2 + slk_offset)], [0, pad[1] / 2 + slk_offset]], layer='F.SilkS', width=lw_slk))
+    kicad_modg.append(PolygonLine(polygon=[[l_slk + w_slk / 2 + pack_rm / 2, t_slk], [rm, max(t_slk / 2, pad[1] / 2 + slk_offset)], [rm, pad[1] / 2 + slk_offset]], layer='F.SilkS', width=lw_slk))
     if style == "hc49":
         kicad_modg.append(
             RectLine(start=[l_slk - bev, t_slk], end=[l_slk + w_slk + bev, t_slk - lw_slk], layer='F.SilkS',

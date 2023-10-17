@@ -19,24 +19,24 @@ from KicadModTree.nodes.Node import Node
 from KicadModTree.nodes.base.Line import Line
 
 
-class PolygoneLine(Node):
-    r"""Add a Polygone Line to the render tree
+class PolygonLine(Node):
+    r"""Add a Polygon Line to the render tree
 
     :param \**kwargs:
         See below
 
     :Keyword Arguments:
-        * *polygone* (``list(Point)``) --
-          edges of the polygone
+        * *polygon* (``list(Point)``) --
+          edges of the polygon
         * *layer* (``str``) --
-          layer on which the polygone is drawn (default: 'F.SilkS')
+          layer on which the polygon is drawn (default: 'F.SilkS')
         * *width* (``float``) --
           width of the line (default: None, which means auto detection)
 
     :Example:
 
     >>> from KicadModTree import *
-    >>> PolygoneLine(polygone=[[0, 0], [0, 1], [1, 1], [0, 0]], layer='F.SilkS')
+    >>> PolygonLine(polygon=[[0, 0], [0, 1], [1, 1], [0, 0]], layer='F.SilkS')
     """
 
     def __init__(self, **kwargs):
@@ -52,10 +52,10 @@ class PolygoneLine(Node):
     def _initPolyPoint(self, **kwargs):
         self.nodes = PolygonPoints(**kwargs)
 
-    def _createChildNodes(self, polygone_line):
+    def _createChildNodes(self, polygon_line):
         nodes = []
 
-        for line_start, line_end in zip(polygone_line, polygone_line[1:]):
+        for line_start, line_end in zip(polygon_line, polygon_line[1:]):
             new_node = Line(start=line_start, end=line_end, layer=self.layer, width=self.width)
             new_node._parent = self
             nodes.append(new_node)
@@ -81,7 +81,7 @@ class PolygoneLine(Node):
         if len(node_strings) <= 6:
             render_text += " ,".join(node_strings)
         else:
-            # display only a few nodes of the beginning and the end of the polygone line
+            # display only a few nodes of the beginning and the end of the polygon line
             render_text += " ,".join(node_strings[:3])
             render_text += " ,... ,"
             render_text += " ,".join(node_strings[-3:])
@@ -162,4 +162,4 @@ class PolygoneLine(Node):
         if (offset):
             from KicadModTree.util.silkmask_util import calculateOffsetPolygonNodes
             points = calculateOffsetPolygonNodes(points, offset=offset, split_angle=max(0, min(150, split_angle)))
-        return PolygoneLine(nodes=points, layer=layer, width=width)
+        return PolygonLine(nodes=points, layer=layer, width=width)

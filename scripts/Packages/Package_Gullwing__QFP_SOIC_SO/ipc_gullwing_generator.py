@@ -507,23 +507,23 @@ class Gullwing():
             poly_bottom_right.append(silk_point_right_inside)
 
         if len(poly_bottom_right) > 1 and silk_corner_bottom_right is not None:
-            kicad_mod.append(PolygoneLine(
-                polygone=poly_bottom_right,
+            kicad_mod.append(PolygonLine(
+                polygon=poly_bottom_right,
                 width=configuration['silk_line_width'],
                 layer="F.SilkS"))
-            kicad_mod.append(PolygoneLine(
-                polygone=poly_bottom_right,
+            kicad_mod.append(PolygonLine(
+                polygon=poly_bottom_right,
                 width=configuration['silk_line_width'],
                 layer="F.SilkS", x_mirror=0))
-            kicad_mod.append(PolygoneLine(
-                polygone=poly_bottom_right,
+            kicad_mod.append(PolygonLine(
+                polygon=poly_bottom_right,
                 width=configuration['silk_line_width'],
                 layer="F.SilkS", y_mirror=0))
 
             if device_params['num_pins_y'] > 0:
                 if len(poly_bottom_right) > 2:
-                    kicad_mod.append(PolygoneLine(
-                        polygone=poly_bottom_right,
+                    kicad_mod.append(PolygonLine(
+                        polygon=poly_bottom_right,
                         width=configuration['silk_line_width'],
                         layer="F.SilkS", y_mirror=0, x_mirror=0))
                     kicad_mod.append(Line(
@@ -540,8 +540,8 @@ class Gullwing():
             else:
                 if len(poly_bottom_right) > 2:
                     poly_bottom_right[0]['x'] = bottom_pads_silk_right
-                    kicad_mod.append(PolygoneLine(
-                        polygone=poly_bottom_right,
+                    kicad_mod.append(PolygonLine(
+                        polygon=poly_bottom_right,
                         width=configuration['silk_line_width'],
                         layer="F.SilkS", y_mirror=0, x_mirror=0))
                     kicad_mod.append(Line(
@@ -570,8 +570,8 @@ class Gullwing():
             {'x': body_edge['left'] + fab_bevel_size, 'y': body_edge['top']},
         ]
 
-        kicad_mod.append(PolygoneLine(
-            polygone=poly_fab,
+        kicad_mod.append(PolygonLine(
+            polygon=poly_fab,
             width=configuration['fab_line_width'],
             layer="F.Fab"))
 
@@ -617,17 +617,17 @@ class Gullwing():
                 {'x': cx3, 'y': cy3},
                 {'x': cx3, 'y': 0}
             ]
-            kicad_mod.append(PolygoneLine(polygone=crty_poly_tl,
-                                          layer='F.CrtYd', width=configuration['courtyard_line_width']))
-            kicad_mod.append(PolygoneLine(polygone=crty_poly_tl,
-                                          layer='F.CrtYd', width=configuration['courtyard_line_width'],
-                                          x_mirror=0))
-            kicad_mod.append(PolygoneLine(polygone=crty_poly_tl,
-                                          layer='F.CrtYd', width=configuration['courtyard_line_width'],
-                                          y_mirror=0))
-            kicad_mod.append(PolygoneLine(polygone=crty_poly_tl,
-                                          layer='F.CrtYd', width=configuration['courtyard_line_width'],
-                                          x_mirror=0, y_mirror=0))
+            kicad_mod.append(PolygonLine(polygon=crty_poly_tl,
+                                         layer='F.CrtYd', width=configuration['courtyard_line_width']))
+            kicad_mod.append(PolygonLine(polygon=crty_poly_tl,
+                                         layer='F.CrtYd', width=configuration['courtyard_line_width'],
+                                         x_mirror=0))
+            kicad_mod.append(PolygonLine(polygon=crty_poly_tl,
+                                         layer='F.CrtYd', width=configuration['courtyard_line_width'],
+                                         y_mirror=0))
+            kicad_mod.append(PolygonLine(polygon=crty_poly_tl,
+                                         layer='F.CrtYd', width=configuration['courtyard_line_width'],
+                                         x_mirror=0, y_mirror=0))
 
         # ######################### Text Fields ###############################
 

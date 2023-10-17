@@ -207,8 +207,8 @@ def generate_one_footprint(pins, params, configuration):
         {'x': P/2 + TL/2, 'y': body_edge['top'] - TW},
         {'x': P/2 + TL/2, 'y': body_edge['top']}
     ]
-    kicad_mod.append(PolygoneLine(polygone=tab,
-        layer='F.Fab', width=configuration['fab_line_width']))
+    kicad_mod.append(PolygonLine(polygon=tab,
+                                 layer='F.Fab', width=configuration['fab_line_width']))
 
 
     kicad_mod.append(RectLine(
@@ -223,8 +223,8 @@ def generate_one_footprint(pins, params, configuration):
         {'x': P/2 + TL/2 + off, 'y': body_edge['top'] - TW - off},
         {'x': P/2 + TL/2 + off, 'y': body_edge['top'] - off}
     ]
-    kicad_mod.append(PolygoneLine(polygone=tab,
-        layer='F.SilkS', width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(polygon=tab,
+                                 layer='F.SilkS', width=configuration['silk_line_width']))
 
 
     ############################ Pin 1 ################################
@@ -235,8 +235,8 @@ def generate_one_footprint(pins, params, configuration):
         {'x': 0, 'y': body_edge['top'] + pin1_sl/sqrt(2)},
         {'x': pin1_sl/2, 'y': body_edge['top']}
     ]
-    kicad_mod.append(PolygoneLine(polygone=pin1,
-        layer='F.Fab', width=configuration['fab_line_width']))
+    kicad_mod.append(PolygonLine(polygon=pin1,
+                                 layer='F.Fab', width=configuration['fab_line_width']))
 
     pin1_sl = 0.8
     yp1 = body_edge['top'] - off - 0.3
@@ -247,7 +247,7 @@ def generate_one_footprint(pins, params, configuration):
     {'x': 0,'y': yp1},
     ]
 
-    kicad_mod.append(PolygoneLine(polygone=pin1, layer='F.SilkS', width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(polygon=pin1, layer='F.SilkS', width=configuration['silk_line_width']))
 
     ########################### CrtYd #################################
     cx1 = roundToBase(bounding_box['left']-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])

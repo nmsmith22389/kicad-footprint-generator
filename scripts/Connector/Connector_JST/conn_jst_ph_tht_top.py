@@ -77,7 +77,7 @@ def generate_one_footprint(pincount, configuration):
         {'x':-0.6, 'y':silk_y_min-0.2},
         {'x':-0.6, 'y':silk_y_min}
     ]
-    kicad_mod.append(PolygoneLine(polygone=poly_silk_p1_protrusion, layer='F.SilkS', width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(polygon=poly_silk_p1_protrusion, layer='F.SilkS', width=configuration['silk_line_width']))
     kicad_mod.append(Line(start=[-0.3, silk_y_min-0.1], end=[-0.6, silk_y_min-0.1], layer='F.SilkS', width=configuration['silk_line_width']))
 
     if configuration['allow_silk_below_part'] == 'tht' or configuration['allow_silk_below_part'] == 'both':
@@ -91,7 +91,7 @@ def generate_one_footprint(pincount, configuration):
             {'x':x_max-2.45, 'y':-1.2},
             {'x':x_max-2.45, 'y':silk_y_min}
         ]
-        kicad_mod.append(PolygoneLine(polygone=poly_silk_inner_outline, layer='F.SilkS', width=configuration['silk_line_width']))
+        kicad_mod.append(PolygonLine(polygon=poly_silk_inner_outline, layer='F.SilkS', width=configuration['silk_line_width']))
 
         kicad_mod.append(Line(start=[silk_x_min, -0.5], end=[silk_inner_left, -0.5], layer='F.SilkS', width=configuration['silk_line_width']))
         kicad_mod.append(Line(start=[silk_x_min, 0.8], end=[silk_inner_left, 0.8], layer='F.SilkS', width=configuration['silk_line_width']))
@@ -109,7 +109,7 @@ def generate_one_footprint(pincount, configuration):
                 {'x':end_x, 'y':1.8},
                 {'x':end_x, 'y':2.3}
             ]
-            kicad_mod.append(PolygoneLine(polygone=poly_silk_inner_protrusion, layer='F.SilkS', width=configuration['silk_line_width']))
+            kicad_mod.append(PolygonLine(polygon=poly_silk_inner_protrusion, layer='F.SilkS', width=configuration['silk_line_width']))
             kicad_mod.append(Line(start=[middle_x, 2.3], end=[middle_x, 1.8], layer='F.SilkS', width=configuration['silk_line_width']))
 
     ########################### Pin 1 marker ################################
@@ -118,9 +118,9 @@ def generate_one_footprint(pincount, configuration):
         {'x':silk_x_min-pin1_marker_offset, 'y':silk_y_min-pin1_marker_offset},
         {'x':silk_x_min-pin1_marker_offset, 'y':silk_y_min-pin1_marker_offset+pin1_marker_linelen}
     ]
-    kicad_mod.append(PolygoneLine(polygone=poly_pin1_marker, layer='F.SilkS', width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(polygon=poly_pin1_marker, layer='F.SilkS', width=configuration['silk_line_width']))
     if fab_pin1_marker_type == 1:
-        kicad_mod.append(PolygoneLine(polygone=poly_pin1_marker, layer='F.Fab', width=configuration['fab_line_width']))
+        kicad_mod.append(PolygonLine(polygon=poly_pin1_marker, layer='F.Fab', width=configuration['fab_line_width']))
 
     if fab_pin1_marker_type == 2:
         poly_pin1_marker_type2 = [
@@ -128,7 +128,7 @@ def generate_one_footprint(pincount, configuration):
             {'x':0, 'y':y_min+1},
             {'x':1, 'y':y_min}
         ]
-        kicad_mod.append(PolygoneLine(polygone=poly_pin1_marker_type2, layer='F.Fab', width=configuration['fab_line_width']))
+        kicad_mod.append(PolygonLine(polygon=poly_pin1_marker_type2, layer='F.Fab', width=configuration['fab_line_width']))
 
     ########################## Fab Outline ###############################
     kicad_mod.append(RectLine(start=[x_min,y_min], end=[x_max,y_max],

@@ -115,14 +115,14 @@ def slide_pot(args):
     f.append(Text(type="user", text='${REFERENCE}', at=[xCenter, yFabRef], layer="F.Fab", size=s, thickness=t))
 
     # Fab
-    f.append(PolygoneLine(polygone=[[xLeftFab + 1, yTopFab],
-                                    [xRightFab, yTopFab],
-                                    [xRightFab, yBottomFab],
-                                    [xLeftFab, yBottomFab],
-                                    [xLeftFab, yTopFab + 1],
-                                    [xLeftFab + 1, yTopFab]],
-                          layer="F.Fab",
-                          width=wFab))
+    f.append(PolygonLine(polygon=[[xLeftFab + 1, yTopFab],
+                                   [xRightFab, yTopFab],
+                                   [xRightFab, yBottomFab],
+                                   [xLeftFab, yBottomFab],
+                                   [xLeftFab, yTopFab + 1],
+                                   [xLeftFab + 1, yTopFab]],
+                         layer="F.Fab",
+                         width=wFab))
     for dir in [-1, 1]:
         xScrew = xCenter + dir * (dimB / 2)
         f.append(Circle(center=[xScrew, yCenter], radius=1.0,
@@ -136,11 +136,11 @@ def slide_pot(args):
     # Silk pin 1 indicator
     xp1 = -(pPin[0] / 2 + silk_ko)
     yp1 = 0.0
-    f.append(PolygoneLine(polygone=[[xp1, yp1],
-                                    [xp1 - 0.5, yp1 - 0.5],
-                                    [xp1 - 0.5, yp1 + 0.5],
-                                    [xp1, yp1]],
-                          layer="F.SilkS", width=wSilkS))
+    f.append(PolygonLine(polygon=[[xp1, yp1],
+                                   [xp1 - 0.5, yp1 - 0.5],
+                                   [xp1 - 0.5, yp1 + 0.5],
+                                   [xp1, yp1]],
+                         layer="F.SilkS", width=wSilkS))
 
     # Silk travel indicator
     f.append(Line(start=[xLeftTravel, yCenter],
@@ -152,10 +152,10 @@ def slide_pot(args):
         f.append(Line(start=[xTravel, yCenter - 1.5],
                       end=[xTravel, yCenter + 1.5],
                       layer="F.SilkS", width=wSilkS))
-        f.append(PolygoneLine(polygone=[[xArrow, yCenter - 0.75],
-                                        [xTravel, yCenter],
-                                        [xArrow, yCenter + 0.75]],
-                              layer="F.SilkS", width=wSilkS))
+        f.append(PolygonLine(polygon=[[xArrow, yCenter - 0.75],
+                                       [xTravel, yCenter],
+                                       [xArrow, yCenter + 0.75]],
+                             layer="F.SilkS", width=wSilkS))
 
     # CrtYd
     f.append(RectLine(start=[xLeftCrtYd, yTopCrtYd],

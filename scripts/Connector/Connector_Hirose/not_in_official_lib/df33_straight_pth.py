@@ -66,7 +66,7 @@ for pincount in range(2,16):
 
     m = 0.3
 
-    kicad_mod.addPolygoneLine([{'x':xm,'y':ym},
+    kicad_mod.addPolygonLine([{'x':xm,'y':ym},
                                {'x':xm - m,'y':ym - 2 * m},
                                {'x':xm + m,'y':ym - 2 * m},
                                {'x':xm,'y':ym}])
@@ -76,7 +76,7 @@ for pincount in range(2,16):
     S = 0.5
 
     #bottom line
-    kicad_mod.addPolygoneLine([{'x':x1,'y':0},
+    kicad_mod.addPolygonLine([{'x':x1,'y':0},
                                {'x':x1+S,'y':0},
                                {'x':x1+S,'y':y2-S},
                                {'x':x2-S,'y':y2-S},
@@ -88,20 +88,20 @@ for pincount in range(2,16):
     #gap g
     g = 0.75
 
-    kicad_mod.addPolygoneLine([{'x':x1,'y':-g},
+    kicad_mod.addPolygonLine([{'x':x1,'y':-g},
                                {'x':x1+S,'y':-g},
                                {'x':x1+S,'y':y1+S*1.5},
                                {'x':x1+2*S,'y':y1+S*1.5},
                                {'x':x1+2*S,'y':y1}])
 
-    kicad_mod.addPolygoneLine([{'x':x2,'y':-g},
+    kicad_mod.addPolygonLine([{'x':x2,'y':-g},
                                {'x':x2-S,'y':-g},
                                {'x':x2-S,'y':y1+S*1.5},
                                {'x':x2-2*S,'y':y1+S*1.5},
                                {'x':x2-2*S,'y':y1}])
 
     #middle line
-    kicad_mod.addPolygoneLine([{'x':x1+2*S,'y':y1+1.5*S},
+    kicad_mod.addPolygonLine([{'x':x1+2*S,'y':y1+1.5*S},
                                {'x':0.2*pitch,'y':y1+1.5*S},
                                {'x':0.2*pitch,'y':y1+0.5*S},
                                {'x':0.8*pitch,'y':y1+0.5*S},
@@ -129,7 +129,7 @@ for pincount in range(2,16):
 
         px = p * pitch
 
-        kicad_mod.addPolygoneLine([{'x': px,'y': py},
+        kicad_mod.addPolygonLine([{'x': px,'y': py},
                                    {'x': px-w,'y': py},
                                    {'x': px-w,'y': py-l+0.25*w},
                                    {'x': px,'y': py-l},

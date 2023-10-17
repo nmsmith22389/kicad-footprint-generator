@@ -77,11 +77,11 @@ def generate_one_footprint(pins, configuration):
     kicad_mod.append(RectLine(start={'x':x1,'y':y1}, end={'x':x2,'y':y2}, layer='F.Fab', width=configuration['fab_line_width']))
 
     #draw horizontal line for latch
-    kicad_mod.append(PolygoneLine(polygone=[{'x':x1,'y':(y1+1.7)},{'x':x2,'y':(y1+1.7)}],layer='F.Fab',width=0.1))
+    kicad_mod.append(PolygonLine(polygon=[{ 'x':x1, 'y':(y1 + 1.7) }, { 'x':x2, 'y':(y1 + 1.7) }], layer='F.Fab', width=0.1))
 
 	#draw pin1 mark on F.Fab
-    kicad_mod.append(PolygoneLine(polygone=[{'x':x1,'y':-1},{'x':(x1+1),'y':0}],layer='F.Fab',width=0.1))
-    kicad_mod.append(PolygoneLine(polygone=[{'x':x1,'y':1},{'x':(x1+1),'y':0}],layer='F.Fab',width=0.1))
+    kicad_mod.append(PolygonLine(polygon=[{ 'x':x1, 'y':-1 }, { 'x':(x1 + 1), 'y':0 }], layer='F.Fab', width=0.1))
+    kicad_mod.append(PolygonLine(polygon=[{ 'x':x1, 'y':1 }, { 'x':(x1 + 1), 'y':0 }], layer='F.Fab', width=0.1))
 
     ########################### CrtYd #################################
     cx1 = roundToBase(x1-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
@@ -108,7 +108,7 @@ def generate_one_footprint(pins, configuration):
 
     marker = [{'x': px,'y': 0},{'x': px-2*m,'y': m},{'x': px-2*m,'y': -m},{'x': px,'y': 0}]
 
-    kicad_mod.append(PolygoneLine(polygone=marker, layer='F.SilkS', width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(polygon=marker, layer='F.SilkS', width=configuration['silk_line_width']))
 
     #generate tht pads (1.65mm drill with 2.35x3mm oval pads)
     pad_size = [pitch - pad_to_pad_clearance, drill + 2*pad_copper_y_solder_length]

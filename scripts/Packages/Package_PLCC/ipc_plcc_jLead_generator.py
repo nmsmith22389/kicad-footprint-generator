@@ -327,16 +327,16 @@ class QFP():
             {'x': body_edge['left']-silk_offset, 'y': body_edge['top']-silk_offset},
             {'x': body_edge['left']-silk_offset, 'y': sy1}
         ]
-        kicad_mod.append(PolygoneLine(
-            polygone=poly_silk,
+        kicad_mod.append(PolygonLine(
+            polygon=poly_silk,
             width=configuration['silk_line_width'],
             layer="F.SilkS", x_mirror=0))
-        kicad_mod.append(PolygoneLine(
-            polygone=poly_silk,
+        kicad_mod.append(PolygonLine(
+            polygon=poly_silk,
             width=configuration['silk_line_width'],
             layer="F.SilkS", y_mirror=0))
-        kicad_mod.append(PolygoneLine(
-            polygone=poly_silk,
+        kicad_mod.append(PolygonLine(
+            polygon=poly_silk,
             width=configuration['silk_line_width'],
             layer="F.SilkS", x_mirror=0, y_mirror=0))
 
@@ -347,8 +347,8 @@ class QFP():
             {'x': body_edge['left']-silk_offset, 'y': body_edge['top']+device_params['body_chamfer']-silk_off_45},
             {'x': body_edge['left']-silk_offset, 'y': sy1}
         ]
-        kicad_mod.append(PolygoneLine(
-            polygone=poly_silk_tl,
+        kicad_mod.append(PolygonLine(
+            polygon=poly_silk_tl,
             width=configuration['silk_line_width'],
             layer="F.SilkS"))
 
@@ -368,8 +368,8 @@ class QFP():
             {'x': p1_x, 'y': body_edge['top']+fab_bevel_y}
         ]
 
-        kicad_mod.append(PolygoneLine(
-            polygone=poly_fab,
+        kicad_mod.append(PolygonLine(
+            polygon=poly_fab,
             width=configuration['fab_line_width'],
             layer="F.Fab"))
 
@@ -406,15 +406,15 @@ class QFP():
             {'x':cx3, 'y':0}
         ]
 
-        kicad_mod.append(PolygoneLine(polygone=crty_poly_tl,
-            layer='F.CrtYd', width=configuration['courtyard_line_width'],
-            x_mirror=0))
-        kicad_mod.append(PolygoneLine(polygone=crty_poly_tl,
-            layer='F.CrtYd', width=configuration['courtyard_line_width'],
-            y_mirror=0))
-        kicad_mod.append(PolygoneLine(polygone=crty_poly_tl,
-            layer='F.CrtYd', width=configuration['courtyard_line_width'],
-            x_mirror=0, y_mirror=0))
+        kicad_mod.append(PolygonLine(polygon=crty_poly_tl,
+                                     layer='F.CrtYd', width=configuration['courtyard_line_width'],
+                                     x_mirror=0))
+        kicad_mod.append(PolygonLine(polygon=crty_poly_tl,
+                                     layer='F.CrtYd', width=configuration['courtyard_line_width'],
+                                     y_mirror=0))
+        kicad_mod.append(PolygonLine(polygon=crty_poly_tl,
+                                     layer='F.CrtYd', width=configuration['courtyard_line_width'],
+                                     x_mirror=0, y_mirror=0))
 
         crty_poly_tl_ch = [
             {'x':0, 'y':cy1},
@@ -426,8 +426,8 @@ class QFP():
             {'x':cx3, 'y':cy3},
             {'x':cx3, 'y':0}
         ]
-        kicad_mod.append(PolygoneLine(polygone=crty_poly_tl_ch,
-            layer='F.CrtYd', width=configuration['courtyard_line_width']))
+        kicad_mod.append(PolygonLine(polygon=crty_poly_tl_ch,
+                                     layer='F.CrtYd', width=configuration['courtyard_line_width']))
 
         # ######################### Text Fields ###############################
 

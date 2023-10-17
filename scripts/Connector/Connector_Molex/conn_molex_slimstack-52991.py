@@ -124,12 +124,12 @@ def generate_one_footprint(pincount, configuration):
                      [h_body_length+nudge-tab_width, -h_body_width-nudge-tab_height], [h_body_length+nudge-tab_width, -h_body_width-nudge]]
     bottom_right_tab = [[h_body_length+nudge, h_body_width+nudge], [h_body_length+nudge, h_body_width+nudge+tab_height],\
                        [h_body_length+nudge-tab_width, h_body_width+nudge+tab_height], [h_body_length+nudge-tab_width, h_body_width+nudge]]
-    kicad_mod.append(PolygoneLine(polygone=left_outline, layer='F.SilkS', width=silk_width))
-    kicad_mod.append(PolygoneLine(polygone=right_outline, layer='F.SilkS', width=silk_width))
-    kicad_mod.append(PolygoneLine(polygone=top_left_tab, layer='F.SilkS', width=silk_width))
-    kicad_mod.append(PolygoneLine(polygone=bottom_left_tab, layer='F.SilkS', width=silk_width))
-    kicad_mod.append(PolygoneLine(polygone=top_right_tab, layer='F.SilkS', width=silk_width))
-    kicad_mod.append(PolygoneLine(polygone=bottom_right_tab, layer='F.SilkS', width=silk_width))
+    kicad_mod.append(PolygonLine(polygon=left_outline, layer='F.SilkS', width=silk_width))
+    kicad_mod.append(PolygonLine(polygon=right_outline, layer='F.SilkS', width=silk_width))
+    kicad_mod.append(PolygonLine(polygon=top_left_tab, layer='F.SilkS', width=silk_width))
+    kicad_mod.append(PolygonLine(polygon=bottom_left_tab, layer='F.SilkS', width=silk_width))
+    kicad_mod.append(PolygonLine(polygon=top_right_tab, layer='F.SilkS', width=silk_width))
+    kicad_mod.append(PolygonLine(polygon=bottom_right_tab, layer='F.SilkS', width=silk_width))
 
     # create courtyard
     kicad_mod.append(RectLine(start=[-courtyard_x, -courtyard_y], end=[courtyard_x, courtyard_y], layer='F.CrtYd', width=courtyard_width))

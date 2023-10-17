@@ -85,22 +85,22 @@ def rotary_coded_switch(args):
                   layer="F.Fab", size=s, thickness=t))
 
     # Fab
-    f.append(PolygoneLine(polygone=[[xLeft + chamfer, yTop],
-                                    [xRight, yTop],
-                                    [xRight, yBottom],
-                                    [xLeft, yBottom],
-                                    [xLeft, yTop + chamfer],
-                                    [xLeft + chamfer, yTop]],
-                          layer="F.Fab",
-                          width=wFab))
+    f.append(PolygonLine(polygon=[[xLeft + chamfer, yTop],
+                                   [xRight, yTop],
+                                   [xRight, yBottom],
+                                   [xLeft, yBottom],
+                                   [xLeft, yTop + chamfer],
+                                   [xLeft + chamfer, yTop]],
+                         layer="F.Fab",
+                         width=wFab))
 
     def tb_silkscreen(yOuter, yInner):
-        f.append(PolygoneLine(polygone=[[xLeft - wSilkS, yInner],
-                                        [xLeft - wSilkS, yOuter],
-                                        [xRight + wSilkS, yOuter],
-                                        [xRight + wSilkS, yInner]],
-                              layer="F.SilkS",
-                              width=wSilkS))
+        f.append(PolygonLine(polygon=[[xLeft - wSilkS, yInner],
+                                       [xLeft - wSilkS, yOuter],
+                                       [xRight + wSilkS, yOuter],
+                                       [xRight + wSilkS, yInner]],
+                             layer="F.SilkS",
+                             width=wSilkS))
 
     space = pad_height / 2 + silk_clearance
 
@@ -127,11 +127,11 @@ def rotary_coded_switch(args):
     lr_silkscreen(xRight + wSilkS, gray)
 
     margin = crtYd + wSilkS
-    f.append(PolygoneLine(polygone=[[boundLeft - margin, yTop + chamfer],
-                                    [boundLeft - margin, yTop - margin],
-                                    [boundLeft + chamfer, yTop - margin]],
-                          layer="F.SilkS",
-                          width=wSilkS))
+    f.append(PolygonLine(polygon=[[boundLeft - margin, yTop + chamfer],
+                                   [boundLeft - margin, yTop - margin],
+                                   [boundLeft + chamfer, yTop - margin]],
+                         layer="F.SilkS",
+                         width=wSilkS))
 
     if thru_hole:
         f.append(Circle(center=[xCenter, yCenter],
@@ -142,11 +142,11 @@ def rotary_coded_switch(args):
                       end=[xCenter, yCenter + r * 0.75],
                       layer="F.SilkS",
                       width=wSilkS))
-        f.append(PolygoneLine(polygone=[[xCenter - r * 0.5, yCenter - r * 0.25],
-                                        [xCenter, yCenter - r * 0.75],
-                                        [xCenter + r * 0.5, yCenter - r * 0.25]],
-                              layer="F.SilkS",
-                              width=wSilkS))
+        f.append(PolygonLine(polygon=[[xCenter - r * 0.5, yCenter - r * 0.25],
+                                       [xCenter, yCenter - r * 0.75],
+                                       [xCenter + r * 0.5, yCenter - r * 0.25]],
+                             layer="F.SilkS",
+                             width=wSilkS))
 
     # Courtyard
     f.append(RectLine(start=[boundLeft - crtYd, yTop - crtYd],

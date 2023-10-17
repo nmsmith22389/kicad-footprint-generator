@@ -26,7 +26,7 @@ class PolygonPoints(object):
     :Keyword Arguments:
         * *nodes* (``list(Point)``) --
           2D points describing the "polygon"
-        * *polygone* (``list(Point)``) --
+        * *polygon* (``list(Point)``) --
           alternative naming for the nodes parameter for backwards compatibility.
         * *x_mirror* (``[int, float](mirror offset)``) --
           mirror x direction around offset "point"
@@ -48,17 +48,17 @@ class PolygonPoints(object):
         if 'nodes' in kwargs:
             for n in kwargs['nodes']:
                 self.nodes.append(Vector2D(n))
-            if 'polygone' in kwargs:
-                raise KeyError('Use of "nodes" and "polygone" parameter at the same time is not supported.')
-        elif 'polygone' in kwargs:
+            if 'polygon' in kwargs:
+                raise KeyError('Use of "nodes" and "polygon" parameter at the same time is not supported.')
+        elif 'polygon' in kwargs:
             warnings.warn(
-                "polygone argument is deprecated, use nodes instead",
+                "polygon argument is deprecated, use nodes instead",
                 DeprecationWarning
             )
-            for n in kwargs['polygone']:
+            for n in kwargs['polygon']:
                 self.nodes.append(Vector2D(n))
         else:
-            raise KeyError('Either "nodes" or "polygone" parameter is required for creating a PolyPoint instance.')
+            raise KeyError('Either "nodes" or "polygon" parameter is required for creating a PolyPoint instance.')
 
         for point in self.nodes:
             if self.mirror[0] is not None:

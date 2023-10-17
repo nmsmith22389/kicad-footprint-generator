@@ -36,7 +36,7 @@ kicad_mod.addRectLine({'x':start_pos_x-3.87-1.2, 'y':3.2}, {'x':end_pos_x+3.87+1
 
 # slot(s)
 if pincount < 60:
-    kicad_mod.addPolygoneLine([{'x':((start_pos_x+end_pos_x)/2)-4.45/2, 'y':3.2}
+    kicad_mod.addPolygonLine([{'x':((start_pos_x+end_pos_x)/2)-4.45/2, 'y':3.2}
                               ,{'x':((start_pos_x+end_pos_x)/2)-4.45/2, 'y':1.9}
                               ,{'x':start_pos_x-3.87, 'y':1.9}
                               ,{'x':start_pos_x-3.87, 'y':-pad_spacing-1.9}
@@ -45,7 +45,7 @@ if pincount < 60:
                               ,{'x':((start_pos_x+end_pos_x)/2)+4.45/2, 'y':1.9}
                               ,{'x':((start_pos_x+end_pos_x)/2)+4.45/2, 'y':3.2}], 'F.SilkS', 0.15)
 else:
-    kicad_mod.addPolygoneLine([{'x':((start_pos_x+end_pos_x)/2)-4.45/2-7.3-4.1, 'y':3.2}
+    kicad_mod.addPolygonLine([{'x':((start_pos_x+end_pos_x)/2)-4.45/2-7.3-4.1, 'y':3.2}
                               ,{'x':((start_pos_x+end_pos_x)/2)-4.45/2-7.3-4.1, 'y':1.9}
                               ,{'x':start_pos_x-3.87, 'y':1.9}
                               ,{'x':start_pos_x-3.87, 'y':-pad_spacing-1.9}
@@ -54,37 +54,37 @@ else:
                               ,{'x':((start_pos_x+end_pos_x)/2)+4.45/2+7.3+4.1, 'y':1.9}
                               ,{'x':((start_pos_x+end_pos_x)/2)+4.45/2+7.3+4.1, 'y':3.2}], 'F.SilkS', 0.15)
 
-    kicad_mod.addPolygoneLine([{'x':((start_pos_x+end_pos_x)/2)-4.45/2-7.3, 'y':3.2}
+    kicad_mod.addPolygonLine([{'x':((start_pos_x+end_pos_x)/2)-4.45/2-7.3, 'y':3.2}
                               ,{'x':((start_pos_x+end_pos_x)/2)-4.45/2-7.3, 'y':1.9}
                               ,{'x':((start_pos_x+end_pos_x)/2)-4.45/2, 'y':1.9}
                               ,{'x':((start_pos_x+end_pos_x)/2)-4.45/2, 'y':3.2}], 'F.SilkS', 0.15)
     
-    kicad_mod.addPolygoneLine([{'x':((start_pos_x+end_pos_x)/2)+4.45/2+7.3, 'y':3.2}
+    kicad_mod.addPolygonLine([{'x':((start_pos_x+end_pos_x)/2)+4.45/2+7.3, 'y':3.2}
                               ,{'x':((start_pos_x+end_pos_x)/2)+4.45/2+7.3, 'y':1.9}
                               ,{'x':((start_pos_x+end_pos_x)/2)+4.45/2, 'y':1.9}
                               ,{'x':((start_pos_x+end_pos_x)/2)+4.45/2, 'y':3.2}], 'F.SilkS', 0.15)
 
 # lines above the footprint
-kicad_mod.addPolygoneLine([{'x':end_pos_x/2-0.25, 'y':-pad_spacing-3.2}
+kicad_mod.addPolygonLine([{'x':end_pos_x/2-0.25, 'y':-pad_spacing-3.2}
                           ,{'x':end_pos_x/2-0.25, 'y':-pad_spacing-3.2-0.2}
                           ,{'x':end_pos_x/2+0.25, 'y':-pad_spacing-3.2-0.2}
                           ,{'x':end_pos_x/2+0.25, 'y':-pad_spacing-3.2}], 'F.SilkS', 0.15)
 kicad_mod.addLine({'x':end_pos_x/2-0.25, 'y':-pad_spacing-3.2-0.1}, {'x':end_pos_x/2+0.25, 'y':-pad_spacing-3.2-0.1}, 'F.SilkS', 0.15)
 
-kicad_mod.addPolygoneLine([{'x':end_pos_x+2.4-0.25, 'y':-pad_spacing-3.2}
+kicad_mod.addPolygonLine([{'x':end_pos_x+2.4-0.25, 'y':-pad_spacing-3.2}
                           ,{'x':end_pos_x+2.4-0.25, 'y':-pad_spacing-3.2-0.2}
                           ,{'x':end_pos_x+2.4+0.25, 'y':-pad_spacing-3.2-0.2}
                           ,{'x':end_pos_x+2.4+0.25, 'y':-pad_spacing-3.2}], 'F.SilkS', 0.15)
 kicad_mod.addLine({'x':end_pos_x+2.4-0.25, 'y':-pad_spacing-3.2-0.1}, {'x':end_pos_x+2.4+0.25, 'y':-pad_spacing-3.2-0.1}, 'F.SilkS', 0.15)
 
-kicad_mod.addPolygoneLine([{'x':start_pos_x-2.4-0.25, 'y':-pad_spacing-3.2}
+kicad_mod.addPolygonLine([{'x':start_pos_x-2.4-0.25, 'y':-pad_spacing-3.2}
                           ,{'x':start_pos_x-2.4-0.25, 'y':-pad_spacing-3.2-0.2}
                           ,{'x':start_pos_x-2.4+0.25, 'y':-pad_spacing-3.2-0.2}
                           ,{'x':start_pos_x-2.4+0.25, 'y':-pad_spacing-3.2}], 'F.SilkS', 0.15)
 kicad_mod.addLine({'x':start_pos_x-2.4-0.25, 'y':-pad_spacing-3.2-0.1}, {'x':start_pos_x-2.4+0.25, 'y':-pad_spacing-3.2-0.1}, 'F.SilkS', 0.15)
 
 # triangle which is pointing at 1
-kicad_mod.addPolygoneLine([{'x':start_pos_x-2.2, 'y':0.6}
+kicad_mod.addPolygonLine([{'x':start_pos_x-2.2, 'y':0.6}
                           ,{'x':start_pos_x-2.2, 'y':-0.6}
                           ,{'x':start_pos_x-1.6, 'y':0}
                           ,{'x':start_pos_x-2.2, 'y':0.6}], 'F.SilkS', 0.15)

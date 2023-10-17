@@ -209,8 +209,8 @@ def makeResistorAxialHorizontal(seriesname, rm, rmdisp, w, d, ddrill, R_POW, typ
     if deco=="elco" or deco=="cp" or deco=="tantal":
         kicad_mod.append(Line(start=[l_fab, t_fab], end=[l_fab, t_fab+d], layer='F.Fab', width=lw_fab))
         kicad_mod.append(Line(start=[l_fab+w, t_fab], end=[l_fab+w, t_fab+d], layer='F.Fab', width=lw_fab))
-        kicad_mod.append(PolygoneLine(polygone=[[l_fab, t_fab], [polsign_slk[0], t_fab], [polsign_slk[0]+polsign_slk[2]/2, t_fab+polsign_slk[3]/2], [polsign_slk[0]+polsign_slk[2], t_fab],[l_fab+w, t_fab]], layer='F.Fab', width=lw_fab))
-        kicad_mod.append(PolygoneLine(polygone=[[l_fab, t_fab+d], [polsign_slk[0], t_fab+h_fab], [polsign_slk[0]+polsign_slk[2]/2, t_fab+h_fab-polsign_slk[3]/2], [polsign_slk[0]+polsign_slk[2], t_fab+h_fab],[l_fab+w, t_fab+d]], layer='F.Fab', width=lw_fab))
+        kicad_mod.append(PolygonLine(polygon=[[l_fab, t_fab], [polsign_slk[0], t_fab], [polsign_slk[0] + polsign_slk[2] / 2, t_fab + polsign_slk[3] / 2], [polsign_slk[0] + polsign_slk[2], t_fab], [l_fab + w, t_fab]], layer='F.Fab', width=lw_fab))
+        kicad_mod.append(PolygonLine(polygon=[[l_fab, t_fab + d], [polsign_slk[0], t_fab + h_fab], [polsign_slk[0] + polsign_slk[2] / 2, t_fab + h_fab - polsign_slk[3] / 2], [polsign_slk[0] + polsign_slk[2], t_fab + h_fab], [l_fab + w, t_fab + d]], layer='F.Fab', width=lw_fab))
     else:
         kicad_mod.append(RectLine(start=[l_fab, t_fab], end=[l_fab+w, t_fab+d], layer='F.Fab', width=lw_fab))
     if type != "bridge":
@@ -234,13 +234,13 @@ def makeResistorAxialHorizontal(seriesname, rm, rmdisp, w, d, ddrill, R_POW, typ
     if deco=="elco" or deco=="cp" or deco=="tantal":
         kicad_mod.append(Line(start=[l_slk, t_slk], end=[l_slk, t_slk+h_slk], layer='F.SilkS', width=lw_slk))
         kicad_mod.append(Line(start=[l_slk+w_slk, t_slk], end=[l_slk+w_slk, t_slk+h_slk], layer='F.SilkS', width=lw_slk))
-        kicad_mod.append(PolygoneLine(polygone=[[l_slk, t_slk], [polsign_slk[0], t_slk], [polsign_slk[0]+polsign_slk[2]/2, t_slk+polsign_slk[3]/2], [polsign_slk[0]+polsign_slk[2], t_slk],[l_slk+w_slk, t_slk]], layer='F.SilkS', width=lw_slk))
-        kicad_mod.append(PolygoneLine(polygone=[[l_slk, t_slk+h_slk], [polsign_slk[0], t_slk+h_slk], [polsign_slk[0]+polsign_slk[2]/2, t_slk+h_slk-polsign_slk[3]/2], [polsign_slk[0]+polsign_slk[2], t_slk+h_slk],[l_slk+w_slk, t_slk+h_slk]], layer='F.SilkS', width=lw_slk))
+        kicad_mod.append(PolygonLine(polygon=[[l_slk, t_slk], [polsign_slk[0], t_slk], [polsign_slk[0] + polsign_slk[2] / 2, t_slk + polsign_slk[3] / 2], [polsign_slk[0] + polsign_slk[2], t_slk], [l_slk + w_slk, t_slk]], layer='F.SilkS', width=lw_slk))
+        kicad_mod.append(PolygonLine(polygon=[[l_slk, t_slk + h_slk], [polsign_slk[0], t_slk + h_slk], [polsign_slk[0] + polsign_slk[2] / 2, t_slk + h_slk - polsign_slk[3] / 2], [polsign_slk[0] + polsign_slk[2], t_slk + h_slk], [l_slk + w_slk, t_slk + h_slk]], layer='F.SilkS', width=lw_slk))
     else:
         if l_slk<padx/2+lw_slk+slk_offset:
             if t_slk<-(pady/2+lw_slk+slk_offset):
-                kicad_mod.append(PolygoneLine(polygone=[[l_slk, -pady/2-lw_slk-slk_offset], [l_slk, t_slk], [l_slk + w_slk, t_slk], [l_slk + w_slk, -pady/2-lw_slk-slk_offset]], layer='F.SilkS', width=lw_slk))
-                kicad_mod.append(PolygoneLine(polygone=[[l_slk, pady/2+lw_slk+slk_offset], [l_slk, t_slk + h_slk], [l_slk + w_slk, t_slk + h_slk], [l_slk + w_slk, pady/2+lw_slk+slk_offset]], layer='F.SilkS', width=lw_slk))
+                kicad_mod.append(PolygonLine(polygon=[[l_slk, -pady / 2 - lw_slk - slk_offset], [l_slk, t_slk], [l_slk + w_slk, t_slk], [l_slk + w_slk, -pady / 2 - lw_slk - slk_offset]], layer='F.SilkS', width=lw_slk))
+                kicad_mod.append(PolygonLine(polygon=[[l_slk, pady / 2 + lw_slk + slk_offset], [l_slk, t_slk + h_slk], [l_slk + w_slk, t_slk + h_slk], [l_slk + w_slk, pady / 2 + lw_slk + slk_offset]], layer='F.SilkS', width=lw_slk))
             else:
                 kicad_mod.append(Line(start=[l_slk, t_slk], end=[l_slk + w_slk, t_slk], layer='F.SilkS', width=lw_slk))
                 kicad_mod.append(Line(start=[l_slk, t_slk + h_slk], end=[l_slk + w_slk, t_slk + h_slk], layer='F.SilkS', width=lw_slk))
@@ -504,14 +504,14 @@ def makeResistorAxialVertical(seriesname,rm, rmdisp, l, d, ddrill, R_POW, type="
             else:
                 kicad_mod.append(Arc(center=[0, 0], start=[xx, -yy], angle=-alpha, layer='F.SilkS', width=lw_slk))
         else:
-            kicad_mod.append(PolygoneLine(polygone=[[d_slk/2, -yy],
-                                                    [d_slk / 2, -d2_slk / 2],
-                                                    [-d_slk / 2, -d2_slk / 2],
-                                                    [d_slk / 2, -d2_slk / 2],
-                                                    [d_slk / 2, +yy]], layer='F.SilkS', width=lw_slk))
+            kicad_mod.append(PolygonLine(polygon=[[d_slk / 2, -yy],
+                                                   [d_slk / 2, -d2_slk / 2],
+                                                   [-d_slk / 2, -d2_slk / 2],
+                                                   [d_slk / 2, -d2_slk / 2],
+                                                   [d_slk / 2, +yy]], layer='F.SilkS', width=lw_slk))
 #    if deco=="diode" or deco=="diode_KUP":
 #        kicad_mod.append(Line(start=[d_x-d_size/3, d_y-0.5*d_size], end=[d_x-d_size/3, d_y+0.5*d_size], layer='F.SilkS', width=lw_slk))
-#        kicad_mod.append(PolygoneLine(polygone=[[d_x-d_size/3, d_y],
+#        kicad_mod.append(PolygonLine(polygon=[[d_x-d_size/3, d_y],
 #                                                [d_x+d_size/3, d_y-0.5*d_size],
 #                                                [d_x+d_size/3, d_y+0.5*d_size],
 #                                                [d_x-d_size/3, d_y]], layer='F.SilkS', width=lw_slk))

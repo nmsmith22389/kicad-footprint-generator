@@ -131,14 +131,14 @@ def generate_one_footprint(pins, configuration):
     {'x': px,'y': 0}
     ]
 
-    kicad_mod.append(PolygoneLine(polygone=marker,width=configuration['silk_line_width'],layer='F.SilkS'))
+    kicad_mod.append(PolygonLine(polygon=marker, width=configuration['silk_line_width'], layer='F.SilkS'))
     sl = 0.5
     marker =[
         {'x': body_edge['left'], 'y': sl},
         {'x': body_edge['left'] + (2*sl)/sqrt(2) , 'y': 0},
         {'x': body_edge['left'] , 'y': -sl}
     ]
-    kicad_mod.append(PolygoneLine(polygone=marker,layer='F.Fab',width=configuration['fab_line_width']))
+    kicad_mod.append(PolygonLine(polygon=marker, layer='F.Fab', width=configuration['fab_line_width']))
 
     #generate the pads (row 1)
 

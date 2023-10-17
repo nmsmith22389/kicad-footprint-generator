@@ -122,11 +122,11 @@ def generate_one_footprint(pins, configuration):
         {'x': body_edge['left'] + hatch_reduced_width/2, 'y':  body_edge['bottom']},
         {'x': 0, 'y':  body_edge['bottom']}
     ]
-    kicad_mod.append(PolygoneLine(
-        polygone=poly_outline,
+    kicad_mod.append(PolygonLine(
+        polygon=poly_outline,
         layer='F.Fab', width=configuration['fab_line_width']))
-    kicad_mod.append(PolygoneLine(
-        polygone=poly_outline, x_mirror = 0.0000000001,
+    kicad_mod.append(PolygonLine(
+        polygon=poly_outline, x_mirror = 0.0000000001,
         layer='F.Fab', width=configuration['fab_line_width']))
 
     #line offset
@@ -142,24 +142,24 @@ def generate_one_footprint(pins, configuration):
     silk_pad_x_left = -A/2 - pad_size[0]/2 - pad_silk_off
     silk_mp_top = mpad_y - mp_size[1]/2 - pad_silk_off
     silk_mp_bottom = mpad_y + mp_size[1]/2 + pad_silk_off
-    kicad_mod.append(PolygoneLine(
-        polygone=[
+    kicad_mod.append(PolygonLine(
+        polygon=[
             {'x': silk_pad_x_left,'y':y1},
             {'x': x1,'y':y1},
             {'x': x1,'y':silk_mp_top}
         ],
         layer='F.SilkS', width=configuration['silk_line_width']))
 
-    kicad_mod.append(PolygoneLine(
-        polygone=[
+    kicad_mod.append(PolygonLine(
+        polygon=[
             {'x': -silk_pad_x_left,'y':y1},
             {'x': x2,'y':y1},
             {'x': x2,'y':silk_mp_top}
         ],
         layer='F.SilkS', width=configuration['silk_line_width']))
 
-    kicad_mod.append(PolygoneLine(
-        polygone=[
+    kicad_mod.append(PolygonLine(
+        polygon=[
             {'x': x1,'y':silk_mp_bottom},
             {'x': x1,'y':y2},
             {'x': x2,'y':y2},
@@ -180,8 +180,8 @@ def generate_one_footprint(pins, configuration):
         {'y': body_edge['top'] + sl/sqrt(2), 'x': -A/2},
         {'y': body_edge['top'], 'x': -A/2+sl/2}
     ]
-    kicad_mod.append(PolygoneLine(polygone=pin,
-        width=configuration['fab_line_width'], layer='F.Fab'))
+    kicad_mod.append(PolygonLine(polygon=pin,
+                                 width=configuration['fab_line_width'], layer='F.Fab'))
 
 
     ########################### KEEPOUT #################################

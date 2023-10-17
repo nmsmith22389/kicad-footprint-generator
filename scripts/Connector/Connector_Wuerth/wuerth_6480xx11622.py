@@ -70,14 +70,14 @@ def generate_one_footprint(pincount, configuration):
     kicad_mod.append(RectLine(start=[x_min,y_min], end=[x_max,y_max],
         layer='F.Fab', width=configuration['fab_line_width']))
     if fab_pin1_marker_type == 1:
-        kicad_mod.append(PolygoneLine(polygone=poly_pin1_marker, layer='F.Fab', width=configuration['fab_line_width']))
+        kicad_mod.append(PolygonLine(polygon=poly_pin1_marker, layer='F.Fab', width=configuration['fab_line_width']))
     if fab_pin1_marker_type == 2:
         poly_pin1_marker_type2 = [
             {'x':-1, 'y':y_min},
             {'x':0, 'y':y_min+1},
             {'x':1, 'y':y_min}
         ]
-        kicad_mod.append(PolygoneLine(polygone=poly_pin1_marker_type2, layer='F.Fab', width=configuration['fab_line_width']))
+        kicad_mod.append(PolygonLine(polygon=poly_pin1_marker_type2, layer='F.Fab', width=configuration['fab_line_width']))
 
     # create Silkscreen
     kicad_mod.append(RectLine(start=[silk_x_min,silk_y_min], end=[silk_x_max,silk_y_max],
@@ -94,34 +94,34 @@ def generate_one_footprint(pincount, configuration):
             {'x':silk_x_max-wall_thikness, 'y':-0.35},
             {'x':silk_x_max, 'y':-0.35}
         ]
-        kicad_mod.append(PolygoneLine(polygone=poly_silk_inner_outline, layer='F.SilkS', width=configuration['silk_line_width']))
+        kicad_mod.append(PolygonLine(polygon=poly_silk_inner_outline, layer='F.SilkS', width=configuration['silk_line_width']))
         poly_silk_inner_outline = [
             {'x':silk_x_min+wall_thikness, 'y':-0.35},
             {'x':silk_x_min+wall_thikness, 'y':0.35},
             {'x':silk_x_min, 'y':0.35}
         ]
-        kicad_mod.append(PolygoneLine(polygone=poly_silk_inner_outline, layer='F.SilkS', width=configuration['silk_line_width']))
+        kicad_mod.append(PolygonLine(polygon=poly_silk_inner_outline, layer='F.SilkS', width=configuration['silk_line_width']))
         poly_silk_inner_outline = [
             {'x':silk_x_max-wall_thikness, 'y':-0.35},
             {'x':silk_x_max-wall_thikness, 'y':0.35},
             {'x':silk_x_max, 'y':0.35}
         ]
-        kicad_mod.append(PolygoneLine(polygone=poly_silk_inner_outline, layer='F.SilkS', width=configuration['silk_line_width']))
+        kicad_mod.append(PolygonLine(polygon=poly_silk_inner_outline, layer='F.SilkS', width=configuration['silk_line_width']))
         poly_silk_inner_outline = [
             {'x':silk_x_min+wall_thikness, 'y':0.35},
             {'x':silk_x_min+wall_thikness, 'y':silk_y_max-wall_thikness},
             {'x':silk_x_max-wall_thikness, 'y':silk_y_max-wall_thikness},
             {'x':silk_x_max-wall_thikness, 'y':0.35},
         ]
-        kicad_mod.append(PolygoneLine(polygone=poly_silk_inner_outline, layer='F.SilkS', width=configuration['silk_line_width']))
+        kicad_mod.append(PolygonLine(polygon=poly_silk_inner_outline, layer='F.SilkS', width=configuration['silk_line_width']))
     poly_pin1_marker = [
         {'x':silk_x_min-pin1_marker_offset+pin1_marker_linelen, 'y':silk_y_min-pin1_marker_offset},
         {'x':silk_x_min-pin1_marker_offset, 'y':silk_y_min-pin1_marker_offset},
         {'x':silk_x_min-pin1_marker_offset, 'y':silk_y_min-pin1_marker_offset+pin1_marker_linelen}
     ]
-    kicad_mod.append(PolygoneLine(polygone=poly_pin1_marker, layer='F.SilkS', width=configuration['silk_line_width']))
-
-
+    kicad_mod.append(PolygonLine(polygon=poly_pin1_marker, layer='F.SilkS', width=configuration['silk_line_width']))
+    
+    
     ############################# CrtYd ##################################
     part_x_min = x_min
     part_x_max = x_max

@@ -166,13 +166,13 @@ def __createFootprintVariant(config, fpParams, fpId):
                   layer="F.Fab", size=s2, thickness=t2, rotation=fFabRefRot))
 
     # Fab
-    f.append(PolygoneLine(polygone=[[xRightFab, yBottomFab],
-                                    [xLeftFab, yBottomFab],
-                                    [xLeftFab, yChamferFab],
-                                    [xChamferFab, yTopFab],
-                                    [xRightFab, yTopFab],
-                                    [xRightFab, yBottomFab]],
-                          layer="F.Fab", width=wFab))
+    f.append(PolygonLine(polygon=[[xRightFab, yBottomFab],
+                                   [xLeftFab, yBottomFab],
+                                   [xLeftFab, yChamferFab],
+                                   [xChamferFab, yTopFab],
+                                   [xRightFab, yTopFab],
+                                   [xRightFab, yBottomFab]],
+                         layer="F.Fab", width=wFab))
 
     # Courtyard
     f.append(RectLine(start=[xLeftCrtYd, yTopCrtYd],
@@ -180,12 +180,12 @@ def __createFootprintVariant(config, fpParams, fpId):
                       layer="F.CrtYd", width=wCrtYd))
 
     # Silk
-    f.append(PolygoneLine(polygone=[[xChamferSilk, yTopSilk],
-                                    [xRightSilk, yTopSilk],
-                                    [xRightSilk, yBottomSilk],
-                                    [xLeftSilk, yBottomSilk],
-                                    [xLeftSilk, yChamferSilk]],
-                          layer="F.SilkS", width=wSilkS))
+    f.append(PolygonLine(polygon=[[xChamferSilk, yTopSilk],
+                                   [xRightSilk, yTopSilk],
+                                   [xRightSilk, yBottomSilk],
+                                   [xLeftSilk, yBottomSilk],
+                                   [xLeftSilk, yChamferSilk]],
+                         layer="F.SilkS", width=wSilkS))
 
     # Pads
     balls = makePadGrid(f, fpParams, config, xCenter=xCenter, yCenter=yCenter)

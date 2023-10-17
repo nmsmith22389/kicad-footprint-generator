@@ -198,12 +198,12 @@ def makePinHeadStraight(rows, cols, rm, coldist, package_width, overlen_top, ove
             RectLine(start=[l_slk, 0.5 * rm], end=[l_slk + w_slk, t_slk + h_slk], layer='F.SilkS', width=lw_slk))
     else:
         if isSocket and cols>1:
-            kicad_modg.append(PolygoneLine(
-                polygone=[[l_slk+w_slk, 0.5 * rm], [l_slk+w_slk, t_slk + h_slk], [l_slk , t_slk + h_slk], [l_slk , t_slk],
+            kicad_modg.append(PolygonLine(
+                polygon=[[l_slk+w_slk, 0.5 * rm], [l_slk+w_slk, t_slk + h_slk], [l_slk , t_slk + h_slk], [l_slk , t_slk],
                           [l_slk+w_slk/2, t_slk], [l_slk+w_slk/2, 0.5 * rm], [l_slk+w_slk, 0.5 * rm]], layer='F.SilkS', width=lw_slk))
         else:
-            kicad_modg.append(PolygoneLine(
-                polygone=[[l_slk, 0.5 * rm], [l_slk, t_slk + h_slk], [l_slk + w_slk, t_slk + h_slk], [l_slk + w_slk, t_slk],
+            kicad_modg.append(PolygonLine(
+                polygon=[[l_slk, 0.5 * rm], [l_slk, t_slk + h_slk], [l_slk + w_slk, t_slk + h_slk], [l_slk + w_slk, t_slk],
                           [0.5 * rm, t_slk], [0.5 * rm, 0.5 * rm], [l_slk, 0.5 * rm]], layer='F.SilkS', width=lw_slk))
     '''
     #pin 1 marker
@@ -217,9 +217,9 @@ def makePinHeadStraight(rows, cols, rm, coldist, package_width, overlen_top, ove
     else:
         pin1_y = t_slk
     if isSocket and cols>1:
-        kicad_modg.append(PolygoneLine(polygone=[[pin1_x+w_slk, 0], [pin1_x+w_slk, pin1_y], [pin1_x+w_slk-rm/2, pin1_y]], layer='F.SilkS', width=lw_slk))
+        kicad_modg.append(PolygonLine(polygon=[[pin1_x + w_slk, 0], [pin1_x + w_slk, pin1_y], [pin1_x + w_slk - rm / 2, pin1_y]], layer='F.SilkS', width=lw_slk))
     else:
-        kicad_modg.append(PolygoneLine(polygone=[[pin1_x, 0], [pin1_x, pin1_y], [0, pin1_y]], layer='F.SilkS', width=lw_slk))
+        kicad_modg.append(PolygonLine(polygon=[[pin1_x, 0], [pin1_x, pin1_y], [0, pin1_y]], layer='F.SilkS', width=lw_slk))
 
     # create courtyard
     kicad_mod.append(RectLine(start=[roundCrt(l_crt + offset[0]), roundCrt(t_crt + offset[1])],
@@ -418,41 +418,41 @@ def makeIdcHeader(rows, cols, rm, coldist, body_width, overlen_top, overlen_bott
                 {'x':l_fab + 13.21 + lyr_offset, 'y':t_fab + 8.07 + lyr_offset}, {'x':l_fab + 13.21 + lyr_offset, 'y':t_fab + h_fab - 8.07 - lyr_offset},
                 {'x':l_fab + 16.77 + lyr_offset, 'y':t_fab + h_fab - 7.44 - lyr_offset}, {'x':l_fab + 16.77 + lyr_offset, 'y':t_fab + h_fab - 3.47 + lyr_offset},
                 {'x':l_fab + 7.11 + lyr_offset, 'y':t_fab + h_fab + lyr_offset}, {'x':body_offset - lyr_offset, 'y':t_fab + h_fab + lyr_offset}]
-            kicad_mod.append(PolygoneLine(polygone=body_polygon, layer=layer, width=line_width))
+            kicad_mod.append(PolygonLine(polygon=body_polygon, layer=layer, width=line_width))
             # now draw the left side vertical line, which may be broken on the silk layer around mounting holes
             if layer == 'F.SilkS' and mh_present and mh_pad[0]/2 - mh_offset > -body_offset + slk_offset * 1.5:
                 body_polygon = [{'x':body_offset - lyr_offset, 'y':t_fab - lyr_offset}, {'x':body_offset - lyr_offset, 'y':mh_y[0] - mh_pad[0]/2}]
-                kicad_mod.append(PolygoneLine(polygone=body_polygon, layer=layer, width=line_width))
+                kicad_mod.append(PolygonLine(polygon=body_polygon, layer=layer, width=line_width))
                 body_polygon = [{'x':body_offset - lyr_offset, 'y':mh_y[0] + mh_pad[0]/2}, {'x':body_offset - lyr_offset, 'y':mh_y[1] - mh_pad[0]/2}]
-                kicad_mod.append(PolygoneLine(polygone=body_polygon, layer=layer, width=line_width))
+                kicad_mod.append(PolygonLine(polygon=body_polygon, layer=layer, width=line_width))
                 body_polygon = [{'x':body_offset - lyr_offset, 'y':mh_y[1] + mh_pad[0]/2}, {'x':body_offset - lyr_offset, 'y':t_fab + h_fab + lyr_offset}]
-                kicad_mod.append(PolygoneLine(polygone=body_polygon, layer=layer, width=line_width))
+                kicad_mod.append(PolygonLine(polygon=body_polygon, layer=layer, width=line_width))
             else:
                 body_polygon = [{'x':body_offset - lyr_offset, 'y':t_fab + h_fab + lyr_offset}, {'x':body_offset - lyr_offset, 'y':t_fab - lyr_offset}]
-                kicad_mod.append(PolygoneLine(polygone=body_polygon, layer=layer, width=line_width))
+                kicad_mod.append(PolygonLine(polygon=body_polygon, layer=layer, width=line_width))
         else:
             # body outline silk lines need to clear the mounting hole on vertical headers
             if mh_present and layer == 'F.SilkS':
                 body_polygon = [{'x':mh_offset + mh_pad[0]/2 - lyr_offset, 'y':t_fab - lyr_offset}, {'x':l_fab + w_fab + lyr_offset, 'y':t_fab - lyr_offset},
                     {'x':l_fab + w_fab + lyr_offset, 'y':t_fab + h_fab + lyr_offset}, {'x':mh_offset + mh_pad[0]/2 - lyr_offset, 'y':t_fab + h_fab + lyr_offset}]
-                kicad_mod.append(PolygoneLine(polygone=body_polygon, layer=layer, width=line_width))
+                kicad_mod.append(PolygonLine(polygon=body_polygon, layer=layer, width=line_width))
                 body_polygon = [{'x':mh_offset - mh_pad[0]/2 + lyr_offset, 'y':t_fab - lyr_offset}, {'x':l_fab - lyr_offset, 'y':t_fab - lyr_offset},
                     {'x':l_fab - lyr_offset, 'y':t_fab + h_fab + lyr_offset}, {'x':mh_offset - mh_pad[0]/2 + lyr_offset, 'y':t_fab + h_fab + lyr_offset}]
-                kicad_mod.append(PolygoneLine(polygone=body_polygon, layer=layer, width=line_width))
+                kicad_mod.append(PolygonLine(polygon=body_polygon, layer=layer, width=line_width))
             else:
                 if layer == 'F.SilkS' and ddrill == 0:
                     # Break silkscreen for SMD pads
                     body_polygon = [{'x':l_fab - lyr_offset, 'y':-((rows-1)*rm/2)-pad[1]/2-0.5}, {'x':l_fab - lyr_offset, 'y':t_fab - lyr_offset},
                         {'x':l_fab + w_fab + lyr_offset, 'y':t_fab - lyr_offset}, {'x':l_fab +w_fab + lyr_offset, 'y':-((rows-1)*rm/2)-pad[1]/2-0.5}]
-                    kicad_mod.append(PolygoneLine(polygone=body_polygon, layer=layer, width=line_width))
+                    kicad_mod.append(PolygonLine(polygon=body_polygon, layer=layer, width=line_width))
                     body_polygon = [{'x':l_fab - lyr_offset, 'y':((rows-1)*rm/2)+pad[1]/2+0.5}, {'x':l_fab - lyr_offset, 'y':t_fab + h_fab + lyr_offset},
                         {'x':l_fab + w_fab + lyr_offset, 'y':t_fab +h_fab + lyr_offset}, {'x':l_fab +w_fab + lyr_offset, 'y':((rows-1)*rm/2)+pad[1]/2+0.5}]
-                    kicad_mod.append(PolygoneLine(polygone=body_polygon, layer=layer, width=line_width))
+                    kicad_mod.append(PolygonLine(polygon=body_polygon, layer=layer, width=line_width))
                 else:
                     body_polygon = [{'x':l_fab + chamfer - lyr_offset, 'y':t_fab - lyr_offset}, {'x':l_fab + w_fab + lyr_offset, 'y':t_fab - lyr_offset},
                         {'x':l_fab + w_fab + lyr_offset, 'y':t_fab + h_fab + lyr_offset}, {'x':l_fab - lyr_offset, 'y':t_fab + h_fab + lyr_offset},
                         {'x':l_fab - lyr_offset, 'y':t_fab + chamfer - lyr_offset}]
-                    kicad_mod.append(PolygoneLine(polygone=body_polygon, layer=layer, width=line_width))
+                    kicad_mod.append(PolygonLine(polygon=body_polygon, layer=layer, width=line_width))
         if chamfer > 0 and not (orientation == 'Horizontal' and latching):
             kicad_modg.append(Line(start=[l_fab, t_fab + chamfer], end=[l_fab + chamfer, t_fab], layer=layer, width=line_width))
 
@@ -466,15 +466,15 @@ def makeIdcHeader(rows, cols, rm, coldist, body_width, overlen_top, overlen_bott
                     {'x':l_fab - lyr_offset, 'y':center_fab[1] + notch_width/2}]
                 if layer == "F.Fab":
                     # Only append mating connector outline in F.Fab for SMD footprints (silkscreen would be on top of pads)
-                    kicad_mod.append(PolygoneLine(polygone=mating_conn_polygon, layer=layer, width=line_width))
+                    kicad_mod.append(PolygonLine(polygon=mating_conn_polygon, layer=layer, width=line_width))
             else:
                 mating_conn_polygon = [{'x':l_fab - lyr_offset, 'y':center_fab[1] - notch_width/2}, {'x':l_fab + wall_thickness, 'y':center_fab[1] - notch_width/2},
                     {'x':l_fab + wall_thickness, 'y':-mating_overlen}, {'x':l_fab + w_fab - wall_thickness, 'y':-mating_overlen},
                     {'x':l_fab + w_fab - wall_thickness, 'y':(rows - 1) * rm + mating_overlen}, {'x':l_fab + wall_thickness, 'y':(rows - 1) * rm + mating_overlen},
                     {'x':l_fab + wall_thickness, 'y':center_fab[1] + notch_width/2}, {'x':l_fab + wall_thickness, 'y':center_fab[1] + notch_width/2},
                     {'x':l_fab - lyr_offset, 'y':center_fab[1] + notch_width/2}]
-                kicad_mod.append(PolygoneLine(polygone=mating_conn_polygon, layer=layer, width=line_width))
-
+                kicad_mod.append(PolygonLine(polygon=mating_conn_polygon, layer=layer, width=line_width))
+        
         # horizontal mating connector 'notch' lines
         if orientation == 'Horizontal' and not latching:
             kicad_modg.append(Line(start=[body_offset - lyr_offset, center_fab[1] - notch_width / 2], end=[l_fab + w_fab + lyr_offset, center_fab[1] - notch_width / 2], layer=layer, width=line_width))
@@ -487,29 +487,29 @@ def makeIdcHeader(rows, cols, rm, coldist, body_width, overlen_top, overlen_bott
                 # top latch
                 latch_top_polygon = [{'x':center_fab[0] - latch_width/2 - lyr_offset, 'y':mh_y[0] - mh_pad[1]/2 + lyr_offset}, {'x':center_fab[0] - latch_width/2 - lyr_offset, 'y':t_fab - latch_len - lyr_offset},
                     {'x':center_fab[0] + latch_width/2 + lyr_offset, 'y':t_fab - latch_len - lyr_offset}, {'x':center_fab[0] + latch_width/2 + lyr_offset, 'y':mh_y[0] - mh_pad[1]/2 + lyr_offset}]
-                kicad_mod.append(PolygoneLine(polygone=latch_top_polygon, layer=layer, width=line_width))
+                kicad_mod.append(PolygonLine(polygon=latch_top_polygon, layer=layer, width=line_width))
                 # bottom latch
                 latch_bottom_polygon = [{'x':center_fab[0] - latch_width/2 - lyr_offset, 'y':mh_y[1] + mh_pad[1]/2 - lyr_offset}, {'x':center_fab[0] - latch_width/2 - lyr_offset, 'y':t_fab + h_fab + latch_len + lyr_offset},
                     {'x':center_fab[0] + latch_width/2 + lyr_offset, 'y':t_fab + h_fab + latch_len + lyr_offset}, {'x':center_fab[0] + latch_width/2 + lyr_offset, 'y':mh_y[1] + mh_pad[1]/2 - lyr_offset}]
-                kicad_mod.append(PolygoneLine(polygone=latch_bottom_polygon, layer=layer, width=line_width))
+                kicad_mod.append(PolygonLine(polygon=latch_bottom_polygon, layer=layer, width=line_width))
             else:
                 # top latch
                 latch_top_polygon = [{'x':center_fab[0] - latch_width/2 - lyr_offset, 'y':t_fab - lyr_offset}, {'x':center_fab[0] - latch_width/2 - lyr_offset, 'y':t_fab - latch_len - lyr_offset},
                     {'x':center_fab[0] + latch_width/2 + lyr_offset, 'y':t_fab - latch_len - lyr_offset}, {'x':center_fab[0] + latch_width/2 + lyr_offset, 'y':t_fab - lyr_offset}]
-                kicad_mod.append(PolygoneLine(polygone=latch_top_polygon, layer=layer, width=line_width))
+                kicad_mod.append(PolygonLine(polygon=latch_top_polygon, layer=layer, width=line_width))
                 # bottom latch
                 latch_bottom_polygon = [{'x':center_fab[0] - latch_width/2 - lyr_offset, 'y':t_fab + h_fab + lyr_offset}, {'x':center_fab[0] - latch_width/2 - lyr_offset, 'y':t_fab + h_fab + latch_len + lyr_offset},
                     {'x':center_fab[0] + latch_width/2 + lyr_offset, 'y':t_fab + h_fab + latch_len + lyr_offset}, {'x':center_fab[0] + latch_width/2 + lyr_offset, 'y':t_fab + h_fab + lyr_offset}]
-                kicad_mod.append(PolygoneLine(polygone=latch_bottom_polygon, layer=layer, width=line_width))
-
+                kicad_mod.append(PolygonLine(polygon=latch_bottom_polygon, layer=layer, width=line_width))
+    
     # horizontal pin outlines (only applies if the body is right of the leftmost pin row)
     #if orientation == 'Horizontal' and not latching:
     if body_offset > 0:
         for row in range(rows):
             horiz_pin_polygon = [{'x':body_offset, 'y':rm * row - pin_size / 2}, {'x':-pin_size / 2, 'y':rm * row - pin_size / 2},
                 {'x':-pin_size / 2, 'y':rm * row + pin_size / 2}, {'x':body_offset, 'y':rm * row + pin_size / 2}]
-            kicad_modg.append(PolygoneLine(polygone=horiz_pin_polygon, layer='F.Fab', width=lw_fab))
-
+            kicad_modg.append(PolygonLine(polygon=horiz_pin_polygon, layer='F.Fab', width=lw_fab))
+    
     # silk pin 1 mark (triangle to the left of pin 1)
     slk_mark_height = 1
     slk_mark_width = 1
@@ -519,8 +519,8 @@ def makeIdcHeader(rows, cols, rm, coldist, body_width, overlen_top, overlen_bott
         slk_mark_tip = min(l_fab, -pad[0] / 2) - 0.5 # offset 0.5mm from pin 1 or the body
         slk_polygon = [{'x':slk_mark_tip, 'y':0}, {'x':slk_mark_tip - slk_mark_width, 'y':-slk_mark_height / 2},
             {'x':slk_mark_tip - slk_mark_width, 'y':slk_mark_height / 2}, {'x':slk_mark_tip, 'y':0}]
-    kicad_mod.append(PolygoneLine(polygone=slk_polygon, layer='F.SilkS', width=lw_slk))
-
+    kicad_mod.append(PolygonLine(polygon=slk_polygon, layer='F.SilkS', width=lw_slk))
+    
     # create courtyard
     if ddrill == 0 and orientation == 'Vertical' and not latching:
       #         l_crt =  -pad[0] / 2 - coldist/2- crt_offset
@@ -537,7 +537,7 @@ def makeIdcHeader(rows, cols, rm, coldist, body_width, overlen_top, overlen_bott
             {'x': roundCrt(-l_fab + crt_offset), 'y': roundCrt(-((rows-1)*rm/2)-pad[1]/2 - crt_offset)},
             {'x': roundCrt(-l_fab + crt_offset), 'y':roundCrt(t_crt)},
             {'x': roundCrt(l_fab - crt_offset), 'y':roundCrt(t_crt)}]
-        kicad_mod.append(PolygoneLine(polygone=crt_polygon, layer='F.CrtYd', width=lw_crt))
+        kicad_mod.append(PolygonLine(polygon=crt_polygon, layer='F.CrtYd', width=lw_crt))
     else:
         kicad_mod.append(RectLine(start=[roundCrt(l_crt), roundCrt(t_crt)], end=[roundCrt(l_crt + w_crt),
                     roundCrt(t_crt + h_crt)], layer='F.CrtYd', width=lw_crt))
@@ -738,14 +738,14 @@ def makePinHeadAngled(rows, cols, rm, coldist, pack_width, pack_offset, pin_leng
             lower_body_x = l_slkb
         if body_lines_y != False:
             if cols == 1:
-                kicad_modg.append(PolygoneLine(polygone=[[upper_body_x, t_slkb], [l_slkp, t_slkb], [l_slkp, t_slkb+rm*rows+slk_offset*2],
-                    [lower_body_x, t_slkb+rm*rows+slk_offset*2],[lower_body_x, t_slkb+rm*rows-rm/2+slk_offset+body_lines_y]], layer='F.SilkS', width=lw_slk))
+                kicad_modg.append(PolygonLine(polygon=[[upper_body_x, t_slkb], [l_slkp, t_slkb], [l_slkp, t_slkb + rm * rows + slk_offset * 2],
+                                                        [lower_body_x, t_slkb+rm*rows+slk_offset*2], [lower_body_x, t_slkb+rm*rows-rm/2+slk_offset+body_lines_y]], layer='F.SilkS', width=lw_slk))
             else:
-                kicad_modg.append(PolygoneLine(polygone=[[upper_body_x, -body_lines_y],[upper_body_x, t_slkb], [l_slkp, t_slkb], [l_slkp, t_slkb+rm*rows+slk_offset*2],
-                    [lower_body_x, t_slkb+rm*rows+slk_offset*2],[lower_body_x, t_slkb+rm*rows-rm/2+slk_offset+body_lines_y]], layer='F.SilkS', width=lw_slk))
+                kicad_modg.append(PolygonLine(polygon=[[upper_body_x, -body_lines_y], [upper_body_x, t_slkb], [l_slkp, t_slkb], [l_slkp, t_slkb + rm * rows + slk_offset * 2],
+                                                        [lower_body_x, t_slkb+rm*rows+slk_offset*2], [lower_body_x, t_slkb+rm*rows-rm/2+slk_offset+body_lines_y]], layer='F.SilkS', width=lw_slk))
         else:
-            kicad_modg.append(PolygoneLine(polygone=[[upper_body_x, t_slkb], [l_slkp, t_slkb], [l_slkp, t_slkb+rm*rows+slk_offset*2],
-                [lower_body_x, t_slkb+rm*rows+slk_offset*2]], layer='F.SilkS', width=lw_slk))
+            kicad_modg.append(PolygonLine(polygon=[[upper_body_x, t_slkb], [l_slkp, t_slkb], [l_slkp, t_slkb + rm * rows + slk_offset * 2],
+                                                    [lower_body_x, t_slkb+rm*rows+slk_offset*2]], layer='F.SilkS', width=lw_slk))
 
     for r in range(0, rows):
         if r != 0:
@@ -765,8 +765,8 @@ def makePinHeadAngled(rows, cols, rm, coldist, pack_width, pack_offset, pin_leng
 
 
         # pin
-        kicad_modg.append(PolygoneLine(polygone=[[l_slkp, r*rm-pin_width/2-slk_offset], [l_slkp + pin_length, r*rm-pin_width/2-slk_offset],
-            [l_slkp + pin_length, r*rm+pin_width/2+slk_offset],[l_slkp, r*rm+pin_width/2+slk_offset]], layer='F.SilkS', width=lw_slk))
+        kicad_modg.append(PolygonLine(polygon=[[l_slkp, r * rm - pin_width / 2 - slk_offset], [l_slkp + pin_length, r * rm - pin_width / 2 - slk_offset],
+                                                [l_slkp + pin_length, r*rm+pin_width/2+slk_offset], [l_slkp, r*rm+pin_width/2+slk_offset]], layer='F.SilkS', width=lw_slk))
         # color the first pin
         if r == 0:
             y = -(pin_width/2)
@@ -816,8 +816,8 @@ def makePinHeadAngled(rows, cols, rm, coldist, pack_width, pack_offset, pin_leng
         pin1_y = pin1_min
     else:
         pin1_y = t_slk
-    kicad_modg.append(PolygoneLine(polygone=[[pin1_x, 0], [pin1_x, pin1_y], [0, pin1_y]], layer='F.SilkS', width=lw_slk))
-
+    kicad_modg.append(PolygonLine(polygon=[[pin1_x, 0], [pin1_x, pin1_y], [0, pin1_y]], layer='F.SilkS', width=lw_slk))
+    
     # create courtyard
     kicad_mod.append(RectLine(start=[roundCrt(l_crt + offset[0]), roundCrt(t_crt + offset[1])],
                               end=[roundCrt(l_crt + offset[0] + w_crt), roundCrt(t_crt + offset[1] + h_crt)],
@@ -995,9 +995,9 @@ def makeSocketStripAngled(rows, cols, rm, coldist, pack_width, pack_offset, pin_
                 y = y + lw_slk
         y1 = y1 + rm
         yp = yp + rm
-
-    kicad_modg.append(PolygoneLine(polygone=[[0, -rm/2], [rm/2, -rm/2], [rm/2, 0]], layer='F.SilkS', width=lw_slk))
-
+    
+    kicad_modg.append(PolygonLine(polygon=[[0, -rm / 2], [rm / 2, -rm / 2], [rm / 2, 0]], layer='F.SilkS', width=lw_slk))
+    
     # create courtyard
     kicad_mod.append(RectLine(start=[roundCrt(l_crt + offset[0]), roundCrt(t_crt + offset[1])],
                               end=[roundCrt(l_crt + offset[0] + w_crt), roundCrt(t_crt + offset[1] + h_crt)],

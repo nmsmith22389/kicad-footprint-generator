@@ -183,10 +183,10 @@ def generate_one_footprint(pins_per_row, variant, configuration):
         {'x': B/2,'y': y1-off},
         ]
 
-        kicad_mod.append(PolygoneLine(polygone=poly,
-            layer='F.SilkS', width=configuration['silk_line_width']))
-        kicad_mod.append(PolygoneLine(polygone=poly, x_mirror=B/2,
-            layer='F.SilkS', width=configuration['silk_line_width']))
+        kicad_mod.append(PolygonLine(polygon=poly,
+                                     layer='F.SilkS', width=configuration['silk_line_width']))
+        kicad_mod.append(PolygonLine(polygon=poly, x_mirror=B / 2,
+                                     layer='F.SilkS', width=configuration['silk_line_width']))
 
     #draw the 'screw' version
     #http://www.molex.com/pdm_docs/sd/039291027_sd.pdf
@@ -205,10 +205,10 @@ def generate_one_footprint(pins_per_row, variant, configuration):
         {'x': x1,'y': y2}
         ]
 
-        kicad_mod.append(PolygoneLine(polygone=poly,
-            layer='F.Fab', width=configuration['fab_line_width']))
-        kicad_mod.append(PolygoneLine(polygone=poly, x_mirror=B/2,
-            layer='F.Fab', width=configuration['fab_line_width']))
+        kicad_mod.append(PolygonLine(polygon=poly,
+                                     layer='F.Fab', width=configuration['fab_line_width']))
+        kicad_mod.append(PolygonLine(polygon=poly, x_mirror=B / 2,
+                                     layer='F.Fab', width=configuration['fab_line_width']))
 
         poly = [
         {'x': B/2,'y': y1-off},
@@ -219,9 +219,9 @@ def generate_one_footprint(pins_per_row, variant, configuration):
         {'x': -2,'y': y2+off},
         ]
 
-        kicad_mod.append(PolygoneLine(polygone=poly))
-        kicad_mod.append(PolygoneLine(polygone=poly, x_mirror=B/2,
-            layer='F.SilkS', width=configuration['silk_line_width']))
+        kicad_mod.append(PolygonLine(polygon=poly))
+        kicad_mod.append(PolygonLine(polygon=poly, x_mirror=B / 2,
+                                     layer='F.SilkS', width=configuration['silk_line_width']))
 
 
 
@@ -259,8 +259,8 @@ def generate_one_footprint(pins_per_row, variant, configuration):
     {'x': x,'y': 0},
     ]
 
-    kicad_mod.append(PolygoneLine(polygone=arrow,
-        layer='F.SilkS', width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(polygon=arrow,
+                                 layer='F.SilkS', width=configuration['silk_line_width']))
 
 
     sl = 2
@@ -269,8 +269,8 @@ def generate_one_footprint(pins_per_row, variant, configuration):
         {'x': 0, 'y': body_edge['bottom']-sl/sqrt(2)},
         {'x': sl/2, 'y': body_edge['bottom']},
     ]
-    kicad_mod.append(PolygoneLine(polygone=pin,
-        width=configuration['fab_line_width'], layer='F.Fab'))
+    kicad_mod.append(PolygonLine(polygon=pin,
+                                 width=configuration['fab_line_width'], layer='F.Fab'))
 
     ########################### CrtYd #################################
     CrtYd_offset = configuration['courtyard_offset']['connector']
@@ -303,11 +303,11 @@ def generate_one_footprint(pins_per_row, variant, configuration):
                 {'x': cxp_left, 'y': cy2},
                 {'x': B/2, 'y': cy2},
             ]
-        kicad_mod.append(PolygoneLine(
-            polygone=poly_crtyd,
+        kicad_mod.append(PolygonLine(
+            polygon=poly_crtyd,
             layer='F.CrtYd', width=configuration['courtyard_line_width']))
-        kicad_mod.append(PolygoneLine(
-            polygone=poly_crtyd, x_mirror=B/2 if B/2 != 0 else 0.000000001,
+        kicad_mod.append(PolygonLine(
+            polygon=poly_crtyd, x_mirror=B/2 if B/2 != 0 else 0.000000001,
             layer='F.CrtYd', width=configuration['courtyard_line_width']))
 
     ######################### Text Fields ###############################

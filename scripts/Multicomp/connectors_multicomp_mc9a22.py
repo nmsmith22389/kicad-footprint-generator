@@ -38,14 +38,14 @@ kicad_mod.addRectLine({'x':start_pos_x-3.87-1.2, 'y':-pad_spacing-1.8}, {'x':end
 
 # slot(s)
 def draw_pin_silk(slot_pin_x):
-    kicad_mod.addPolygoneLine([{'x':slot_pin_x-0.4, 'y':-pad_spacing-1.8-8.9+6.6}
+    kicad_mod.addPolygonLine([{'x':slot_pin_x-0.4, 'y':-pad_spacing-1.8-8.9+6.6}
                               ,{'x':slot_pin_x-0.4, 'y':-pad_spacing-1.8-8.5}
                               ,{'x':slot_pin_x-0.2, 'y':-pad_spacing-1.8-8.7}
                               ,{'x':slot_pin_x+0.2, 'y':-pad_spacing-1.8-8.7}
                               ,{'x':slot_pin_x+0.4, 'y':-pad_spacing-1.8-8.5}
                               ,{'x':slot_pin_x+0.4, 'y':-pad_spacing-1.8-8.9+6.6}], 'F.SilkS', 0.15)
                               
-kicad_mod.addPolygoneLine([{'x':((start_pos_x+end_pos_x)/2)-4.45/2, 'y':-pad_spacing-1.8-8.9}
+kicad_mod.addPolygonLine([{'x':((start_pos_x+end_pos_x)/2)-4.45/2, 'y':-pad_spacing-1.8-8.9}
                           ,{'x':((start_pos_x+end_pos_x)/2)-4.45/2, 'y':-pad_spacing-1.8-8.9+6.6}
                           ,{'x':((start_pos_x+end_pos_x)/2)+4.45/2, 'y':-pad_spacing-1.8-8.9+6.6}
                           ,{'x':((start_pos_x+end_pos_x)/2)+4.45/2, 'y':-pad_spacing-1.8-8.9}], 'F.SilkS', 0.15)
@@ -70,18 +70,18 @@ else:
     
 
 if pincount >= 60:
-    kicad_mod.addPolygoneLine([{'x':((start_pos_x+end_pos_x)/2)-4.45/2-7.3, 'y':-pad_spacing-1.8-8.9}
+    kicad_mod.addPolygonLine([{'x':((start_pos_x+end_pos_x)/2)-4.45/2-7.3, 'y':-pad_spacing-1.8-8.9}
                               ,{'x':((start_pos_x+end_pos_x)/2)-4.45/2-7.3, 'y':-pad_spacing-1.8-8.9+6.6}
                               ,{'x':((start_pos_x+end_pos_x)/2)-4.45/2-7.3-4.1, 'y':-pad_spacing-1.8-8.9+6.6}
                               ,{'x':((start_pos_x+end_pos_x)/2)-4.45/2-7.3-4.1, 'y':-pad_spacing-1.8-8.9}], 'F.SilkS', 0.15)
   
-    kicad_mod.addPolygoneLine([{'x':((start_pos_x+end_pos_x)/2)+4.45/2+7.3, 'y':-pad_spacing-1.8-8.9}
+    kicad_mod.addPolygonLine([{'x':((start_pos_x+end_pos_x)/2)+4.45/2+7.3, 'y':-pad_spacing-1.8-8.9}
                               ,{'x':((start_pos_x+end_pos_x)/2)+4.45/2+7.3, 'y':-pad_spacing-1.8-8.9+6.6}
                               ,{'x':((start_pos_x+end_pos_x)/2)+4.45/2+7.3+4.1, 'y':-pad_spacing-1.8-8.9+6.6}
                               ,{'x':((start_pos_x+end_pos_x)/2)+4.45/2+7.3+4.1, 'y':-pad_spacing-1.8-8.9}], 'F.SilkS', 0.15)
 
 # triangle which is pointing at 1
-kicad_mod.addPolygoneLine([{'x':start_pos_x-1, 'y':-12.5}
+kicad_mod.addPolygonLine([{'x':start_pos_x-1, 'y':-12.5}
                           ,{'x':start_pos_x+1, 'y':-12.5}
                           ,{'x':start_pos_x, 'y':-11}
                           ,{'x':start_pos_x-1, 'y':-12.5}], 'F.SilkS', 0.15)

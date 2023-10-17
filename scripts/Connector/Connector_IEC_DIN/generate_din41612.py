@@ -156,11 +156,11 @@ def BFemale(size, pin_cb, more_description):
 		[mid_x - outer_width/2 - 0.2,  0.0],
 	]
 
-	kicad_mod.append(PolygoneLine(
-		polygone=jack_notch_left + jack_notch_right + [jack_notch_left[0]],
+	kicad_mod.append(PolygonLine(
+		polygon=jack_notch_left + jack_notch_right + [jack_notch_left[0]],
 		layer='F.Fab'))
-	kicad_mod.append(PolygoneLine(
-		polygone=pin_a1_arrow,
+	kicad_mod.append(PolygonLine(
+		polygon=pin_a1_arrow,
 		width=0.12,
 		layer='F.Fab'))
 	kicad_mod.append(Text(
@@ -182,16 +182,16 @@ def BFemale(size, pin_cb, more_description):
 		end=[mid_x + outer_width/2 + 0.1, mid_y + outer_length/2 + 0.1],
 		width=0.15,
 		layer='F.SilkS'))
-	kicad_mod.append(PolygoneLine(
-		polygone=jack_notch_left,
+	kicad_mod.append(PolygonLine(
+		polygon=jack_notch_left,
 		width=0.15,
 		layer='F.SilkS'))
-	kicad_mod.append(PolygoneLine(
-		polygone=jack_notch_right,
+	kicad_mod.append(PolygonLine(
+		polygon=jack_notch_right,
 		width=0.15,
 		layer='F.SilkS'))
-	kicad_mod.append(PolygoneLine(
-		polygone=pin_a1_arrow,
+	kicad_mod.append(PolygonLine(
+		polygon=pin_a1_arrow,
 		width=0.12,
 		layer='F.SilkS'))
 	kicad_mod.append(Text(
@@ -308,16 +308,16 @@ def BMale(size, pin_cb, more_description):
 		[-pin_pad/2 - 0.5 - 0.6, 0.3],
 		[-pin_pad/2 - 0.5 - 0.0, 0.0]
 	]
-	kicad_mod.append(PolygoneLine(
-		polygone=silkscreen_left,
+	kicad_mod.append(PolygonLine(
+		polygon=silkscreen_left,
 		width=0.15,
 		layer='F.SilkS'))
-	kicad_mod.append(PolygoneLine(
-		polygone=silkscreen_right,
+	kicad_mod.append(PolygonLine(
+		polygon=silkscreen_right,
 		width=0.15,
 		layer='F.SilkS'))
-	kicad_mod.append(PolygoneLine(
-		polygone=pin_a1_arrow,
+	kicad_mod.append(PolygonLine(
+		polygon=pin_a1_arrow,
 		width=0.12,
 		layer='F.SilkS'))
 	kicad_mod.append(Text(
@@ -326,8 +326,8 @@ def BMale(size, pin_cb, more_description):
 		layer='F.SilkS'))
 
 	# ------ Fabrication layer ------
-	kicad_mod.append(PolygoneLine(
-		polygone = package_outline + [package_outline[0]],
+	kicad_mod.append(PolygonLine(
+		polygon = package_outline + [package_outline[0]],
 		layer = 'F.Fab'))
 	kicad_mod.append(Text(
 		type='value', text=footprint_name,
@@ -356,8 +356,8 @@ def BMale(size, pin_cb, more_description):
 		[(cols - 1) * col_step + pin_pad/2 + 0.5, package_outline[ 1][1] + 0.5],
 		[(cols - 1) * col_step + pin_pad/2 + 0.5, row_step + pin_pad/2 + 0.5],
 	]
-	kicad_mod.append(PolygoneLine(
-		polygone = courtyard + [courtyard[0]],
+	kicad_mod.append(PolygonLine(
+		polygon = courtyard + [courtyard[0]],
 		layer = 'F.CrtYd'))
 
 	# ------ Board edge ------
@@ -371,8 +371,8 @@ def BMale(size, pin_cb, more_description):
 		end = [mid_x, -board_edge_to_a - 0.1],
 		width = 0.1,
 		layer = 'Cmts.User'))
-	kicad_mod.append(PolygoneLine(
-		polygone = [
+	kicad_mod.append(PolygonLine(
+		polygon = [
 			[mid_x - 0.2, -board_edge_to_a - 0.6],
 			[mid_x, -board_edge_to_a - 0.1],
 			[mid_x + 0.2, -board_edge_to_a - 0.6],

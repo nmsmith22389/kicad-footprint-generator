@@ -228,8 +228,8 @@ def generate_one_footprint(pins_per_row, variant_param, configuration):
         {'x': body_edge['left']-off,'y': body_edge['bottom']+off},
         {'x': body_edge['left']-off,'y': bottom_silk_pad},
     ]
-    kicad_mod.append(PolygoneLine(polygone=silk_poly,
-        layer='F.SilkS', width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(polygon=silk_poly,
+                                 layer='F.SilkS', width=configuration['silk_line_width']))
 
     for i in range(pins_per_row-1):
         yt = i*pitch + (dy if number_of_rows == 2 or i > 1 else dy_rect)
@@ -246,10 +246,10 @@ def generate_one_footprint(pins_per_row, variant_param, configuration):
         {'x': -pad_size[0]/2 - O,'y': 0},
     ]
 
-    kicad_mod.append(PolygoneLine(polygone=pin,
-        layer="F.SilkS", width=configuration['silk_line_width']))
-    kicad_mod.append(PolygoneLine(polygone=pin,
-        width=configuration['fab_line_width'], layer='F.Fab'))
+    kicad_mod.append(PolygonLine(polygon=pin,
+                                 layer="F.SilkS", width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(polygon=pin,
+                                 width=configuration['fab_line_width'], layer='F.Fab'))
 
     ########################### CrtYd #################################
     CrtYd_offset = configuration['courtyard_offset']['connector']

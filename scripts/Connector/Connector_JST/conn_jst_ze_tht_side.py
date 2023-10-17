@@ -99,8 +99,8 @@ def generate_one_footprint(pincount, configuration):
             {'x': x2, 'y': y1},
             {'x': pos_last_odd_pad + (pad_size[0]/2 + silk_pad_offset), 'y': y1},
         ]
-        kicad_mod.append(PolygoneLine(polygone=poly_silk,
-            width=configuration['silk_line_width'], layer="F.SilkS"))
+        kicad_mod.append(PolygonLine(polygon=poly_silk,
+                                     width=configuration['silk_line_width'], layer="F.SilkS"))
         for i in range(num_odd_pins-1):
             kicad_mod.append(Line(start=[i * 2*pitch + (pad_size[0]/2 + silk_pad_offset), y1],
                 end=[(i+1) * 2*pitch - (pad_size[0]/2 + silk_pad_offset), y1],
@@ -148,7 +148,7 @@ def generate_one_footprint(pincount, configuration):
     xa = xMid - A/2 + out
     xb = xMid + A/2 - out
     y3 = y2 - 1
-    kicad_mod.append(PolygoneLine(polygone=[
+    kicad_mod.append(PolygonLine(polygon=[
         {'x':xa,'y':y2},
         {'x':xa,'y':y3},
         {'x':xb,'y':y3},
@@ -164,8 +164,8 @@ def generate_one_footprint(pincount, configuration):
         {'x': x1-D + L,'y':  y1-D},
     ]
 
-    kicad_mod.append(PolygoneLine(polygone=pin_1, width=configuration['silk_line_width'], layer="F.SilkS"))
-    kicad_mod.append(PolygoneLine(polygone=pin_1, layer='F.Fab', width=configuration['fab_line_width']))
+    kicad_mod.append(PolygonLine(polygon=pin_1, width=configuration['silk_line_width'], layer="F.SilkS"))
+    kicad_mod.append(PolygonLine(polygon=pin_1, layer='F.Fab', width=configuration['fab_line_width']))
 
     ######################### Text Fields ###############################
     addTextFields(kicad_mod=kicad_mod, configuration=configuration, body_edges=body_edge,
