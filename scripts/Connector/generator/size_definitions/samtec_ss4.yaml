@@ -33,6 +33,17 @@ SS4-xx-3.00:
       shape: 'triangle' # shape of pin 1 marker on Silk and Fab (circle or triangle)
       size: 0.5       # size of the pin 1 marker (default: pad_size.y)
       offset: -0.7    # offset from the body edge (default: 0 corresponds to silk line width)
+  rule_areas:
+    top:
+      name: "Via keepout"
+      layers: F.Cu
+      shapes:
+        - rect: [
+            [pl - 0.23/2, pt + 0.93/2],
+            [pr + 0.23/2, pb - 0.93/2]
+          ]
+      keepouts:
+        vias: deny
 
 SS4-xx-3.50:
   inherit: 'SS4-xx-3.00'
