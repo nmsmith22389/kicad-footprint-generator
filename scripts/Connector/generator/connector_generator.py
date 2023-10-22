@@ -471,7 +471,6 @@ def generate_one_footprint(positions: int, spec, configuration: dict):
 
             # Each rule area definition can define multiple rule areas
             for rule_area_zone in zones:
-                print(rule_area_zone)
                 kicad_mod.append(rule_area_zone)
 
     ## calculate the bounding box of the whole footprint (excluding silk)

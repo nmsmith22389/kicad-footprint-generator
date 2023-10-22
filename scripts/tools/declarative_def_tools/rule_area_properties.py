@@ -56,8 +56,6 @@ class RuleAreaProperties():
         self.keepouts = KeepoutProperties(rule_area_spec.get('keepouts', {}))
         self.shapes = self._get_rule_area_shapes(rule_area_spec)
 
-        print(self.keepouts)
-
     def _get_rule_area_name(self, rule_area_spec):
         """
         Get the name of the keepout area.
