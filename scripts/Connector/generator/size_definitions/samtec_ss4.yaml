@@ -44,6 +44,8 @@ SS4-xx-3.00:
           ]
       keepouts:
         vias: deny
+        tracks: deny
+        copperpour: deny
 
 SS4-xx-3.50:
   inherit: 'SS4-xx-3.00'
