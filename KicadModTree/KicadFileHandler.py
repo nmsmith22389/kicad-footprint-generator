@@ -21,7 +21,7 @@ from KicadModTree.nodes.base.Circle import Circle
 from KicadModTree.nodes.base.Line import Line
 from KicadModTree.nodes.base.Polygon import Polygon
 from KicadModTree.nodes.Footprint import Footprint, FootprintType
-from KicadModTree.nodes.base.Zone import PadConnection, ZoneFill
+from KicadModTree.nodes.base.Zone import PadConnection, ZoneFill, Keepouts
 
 
 DEFAULT_LAYER_WIDTH = {'F.SilkS': 0.12,
@@ -448,11 +448,16 @@ class KicadFileHandler(FileHandler):
 
         def _serialise_Keepout(keepouts):
 
-            supported_keepouts = ['tracks', 'vias', 'copperpour', 'pads', 'footprints']
-
             sexpr = ['keepout']
-            for keepout in supported_keepouts:
-                sexpr.append([keepout, 'not_allowed' if keepouts[keepout] else 'allowed'])
+
+            def add_keepout(keepout_property, sexp_keyword: str) -> None:
+                sexpr.append([sexp_keyword, 'allowed' if (keepout_property == Keepouts.ALLOW) else 'not_allowed'])
+
+            add_keepout(keepouts.tracks, 'tracks')
+            add_keepout(keepouts.vias, 'vias')
+            add_keepout(keepouts.copperpour, 'copperpour')
+            add_keepout(keepouts.pads, 'pads')
+            add_keepout(keepouts.footprints, 'footprints')
 
             return sexpr
 
@@ -478,18 +483,19 @@ class KicadFileHandler(FileHandler):
             # we do have a fill
             sexpr.append('yes')
 
-            def append_if_not_none(property, keyword):
-                if property is not None:
-                    sexpr += [
-                        SexprSerializer.NEW_LINE,
-                        [keyword, property]
-                    ]
+            def node_if_not_none(property, keyword: str) -> list:
+                if property is None:
+                    return []
+                return [
+                    SexprSerializer.NEW_LINE,
+                    [keyword, property]
+                ]
 
             # soild is encoded as no mode
-            if node.mode != ZoneFill.FILL_SOLID:
+            if node.fill != ZoneFill.FILL_SOLID:
                 sexpr += [
                     SexprSerializer.NEW_LINE,
-                    ['mode', node.mode],
+                    ['mode', node.fill],
                 ]
 
             # Thermal gap and bridge with aren't optional
@@ -513,19 +519,19 @@ class KicadFileHandler(FileHandler):
                     ZoneFill.ISLAND_REMOVAL_FILL: 1,
                     ZoneFill.ISLAND_REMOVAL_MINIMUM_AREA: 2,
                 }[node.island_removal_mode]
-                append_if_not_none(island_removal_mode, 'island_removal_mode')
+                sexpr += node_if_not_none(island_removal_mode, 'island_removal_mode')
 
                 # only valid in mode 2
                 if node.island_removal_mode == 'minimum_area':
-                    append_if_not_none(node.island_area_min, 'island_area_min')
+                    sexpr += node_if_not_none(node.island_area_min, 'island_area_min')
 
-            append_if_not_none(node.hatch_thickness, 'hatch_thickness')
-            append_if_not_none(node.hatch_gap, 'hatch_gap')
-            append_if_not_none(node.hatch_orientation, 'hatch_orientation')
-            append_if_not_none(node.hatch_smoothing_level, 'hatch_smoothing_level')
-            append_if_not_none(node.hatch_smoothing_value, 'hatch_smoothing_value')
-            append_if_not_none(node.hatch_border_algorithm, 'hatch_border_algorithm')
-            append_if_not_none(node.hatch_hole_area, 'hatch_hole_area')
+            sexpr += node_if_not_none(node.hatch_thickness, 'hatch_thickness')
+            sexpr += node_if_not_none(node.hatch_gap, 'hatch_gap')
+            sexpr += node_if_not_none(node.hatch_orientation, 'hatch_orientation')
+            sexpr += node_if_not_none(node.hatch_smoothing_level, 'hatch_smoothing_level')
+            sexpr += node_if_not_none(node.hatch_smoothing_value, 'hatch_smoothing_value')
+            sexpr += node_if_not_none(node.hatch_border_algorithm, 'hatch_border_algorithm')
+            sexpr += node_if_not_none(node.hatch_min_hole_area, 'hatch_min_hole_area')
             return sexpr
 
         sexpr = [
@@ -561,7 +567,7 @@ class KicadFileHandler(FileHandler):
         ]
 
         # Optional node
-        if node.keepouts:
+        if node.keepouts is not None:
             sexpr += [
                 _serialise_Keepout(node.keepouts),
                 SexprSerializer.NEW_LINE,

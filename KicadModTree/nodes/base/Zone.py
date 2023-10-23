@@ -13,6 +13,8 @@
 #
 # (C) 2023 by John Beard, <john.j.beard@gmail.com>
 
+import typing
+
 from KicadModTree.Vector import *
 from KicadModTree.nodes.Node import Node
 from KicadModTree.nodes.base.Polygon import Polygon
@@ -21,7 +23,7 @@ import KicadModTree.PolygonPoints as PPts
 
 class PadConnection(Node):
     clearance: float = 0
-    type: str = None
+    type: typing.Optional[str] = None
 
     THRU_HOLE_ONLY = "thru_hole_only"
     FULL = "full"
@@ -146,7 +148,7 @@ class ZoneFill(Node):
         if self.smoothing not in valid_smoothing:
             raise ValueError("Invalid smoothing: %s" % self.smoothing)
 
-        self.smoothing_radius = kwargs.get("smoothing_radius", None)
+        self.smoothing_radius = kwargs.get("smoothing_radius", 0)
 
         self.island_removal_mode = kwargs.get("island_removal_mode", None)
 
@@ -255,12 +257,15 @@ class Zone(Node):
         self,
         polygon_pts: list,
         hatch: Hatch,
-        keepouts: Keepouts = None,
+        keepouts: typing.Optional[Keepouts] = None,
         fill=None,
         connect_pads=PadConnection(),
         **kwargs,
     ):
         Node.__init__(self)
+
+        if hatch is None:
+            raise ValueError("Zone must have a Hatch set to be well-formed")
 
         self.layers = kwargs.get("layers", [])
         self.nodes = PPts.PolygonPoints(nodes=polygon_pts)
