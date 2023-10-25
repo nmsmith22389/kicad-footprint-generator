@@ -32,7 +32,7 @@ SS4-xx-3.00:
     marker:
       shape: 'triangle' # shape of pin 1 marker on Silk and Fab (circle or triangle)
       size: 0.5       # size of the pin 1 marker (default: pad_size.y)
-      offset: -0.7    # offset from the body edge (default: 0 corresponds to silk line width)
+      offset: 0.55    # offset from the body edge (default: 0 corresponds to silk line width)
   rule_areas:
     top:
       name: "Via keepout"
