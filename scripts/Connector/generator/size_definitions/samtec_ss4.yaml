@@ -51,4 +51,5 @@ SS4-xx-3.50:
   inherit: 'SS4-xx-3.00'
   doc_parameters:
     lead_style: '3.50'
+  rule_areas:
 
