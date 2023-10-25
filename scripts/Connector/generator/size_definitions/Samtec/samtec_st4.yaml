@@ -1,0 +1,74 @@
+defaults:
+  library: 'Samtec_Sx4'
+  clean_silk: True
+  description: 'Micro Blade & Beam Ultra Fine Pitch Header, 0.40 mm pitch, 02x{num_pos:02d} ways, {lead_style} lead style'
+  fp_name: 'Samtec_ST4-{num_pos:02d}-{lead_style}-x-D-x-xx'
+  fp_suffix: '_Header'     # optional: defaults to ''
+  source: 'https://suddendocs.samtec.com/prints/st4-xx-x.xx-x-d-x-xx-tr-footprint.pdf'
+  tags: 'conn samtec board-to-board header high-speed'
+  positions: [10, 15, 20, 30, 40, 50]
+  pad_pitch: 0.4
+  pads:
+    size:
+      x: 0.20
+      y: 1.20
+  row_pitch: 3.42
+  body_size:
+    x_offset: 0.325 # (A - B) / 2
+    y: 3.70
+  body_shape:
+    right:
+      polyline: [
+        [r, 1.36 / 2],
+        [r + 0.585, 1.36 / 2], # 1.36 - right tongue width
+        [r + 0.585, -1.36 / 2], # 0.585 = (C - A) / 2
+        [r, -1.36 / 2],
+      ]
+    left:
+      polyline: [
+        [l - 0.585 - 0.18, t], # 0.585 = (C - A) / 2
+        [l - 0.585 - 0.18, t + 0.63], # 0.63 measured from STEP
+        [l, t + 0.63],
+        [l, -0.94 / 2], # 0.94 - left tongue width
+        [l - 0.585, -0.94 / 2],
+        [l - 0.585, 0.94 / 2],
+        [l, 0.94 / 2],
+        [l, b - 0.63],
+        [l-0.585 - 0.18, b - 0.63],
+        [l-0.585 - 0.18, b],
+      ]
+  first_pin:
+    body_chamfer: 0
+    position: 'top'     # top (default) or bottom
+    marker:
+      shape: 'triangle' # shape of pin 1 marker on Silk and Fab (circle or triangle)
+      size: 0.5       # size of the pin 1 marker (default: pad_size.y)
+      offset: 0.36    # offset from the body edge (default: 0 corresponds to silk line width)
+
+ST4-xx-1.00:
+  inherit: 'defaults'
+  doc_parameters:
+    lead_style: '1.00'
+  rule_areas:
+    top:
+      name: "Via keepout"
+      layers: F.Cu
+      shapes:
+        - rect: [
+            [pl - 0.20 / 2, pt + 1.20 / 2],
+            [pr + 0.20 / 2, pb - 1.20 / 2]
+          ]
+      keepouts:
+        vias: deny
+        tracks: deny
+        copperpour: deny
+
+ST4-xx-1.50:
+  inherit: 'defaults'
+  doc_parameters:
+    lead_style: '1.50'
+
+ST4-xx-2.50:
+  inherit: 'defaults'
+  doc_parameters:
+    lead_style: '2.50'
