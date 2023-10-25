@@ -494,15 +494,10 @@ def generate_one_footprint(positions: int, spec, configuration: dict):
         kicad_mod.append(pin1_silk)
 
     if (fp_config.draw_pin1_marker_on_fab):
-        ## pin 1 on Fab is a triangle
-        pin1_x = -0.5 * fp_config.pad_pos_range.x + fp_config.pad_center_offset.x
-        dy =  0.8 * fp_config.scale_y * fp_config.pad_size.x
-        for lr in [-1, 1]:
-            kicad_mod.append(Line(start=Vector2D(pin1_x, fp_config.body_edges[fp_config.pin1_pos] - dy),
-                                  end=Vector2D(pin1_x + 0.5 * lr * fp_config.pad_size.x, fp_config.body_edges[fp_config.pin1_pos]),
-                                  layer='F.Fab', width=configuration['fab_line_width']))
+        pin1_fab = make_pin1_fab_marker(fp_config, configuration)
+        kicad_mod.append(pin1_fab)
 
-    ## calculate CourtYard
+    # calculate CourtYard
     cy_offset = spec.get("courtyard_offset", configuration["courtyard_offset"]["connector"])
     courtyard = calculate_courtyard(bbox, offsets= cy_offset, configuration=configuration)
     # append CourtYard rectangle
@@ -577,6 +572,30 @@ def make_pin1_marker(*, pos, radius, shape, flip_marker, width, offset):
     else:
         pin1_silk = None
     return pin1_silk
+
+
+def make_pin1_fab_marker(fp_config: FPconfiguration, configuration: dict) -> list:
+    # pin 1 on Fab is a triangle
+
+    # location of the tip in x
+    tip_x = -0.5 * fp_config.pad_pos_range.x + fp_config.pad_center_offset.x
+
+    # width and height of the triangle
+    dx = min(fp_config.pad_pitch, configuration['fab_pin1_marker_length'])
+    dy = 0.8 * fp_config.scale_y * dx
+
+    base_y = fp_config.body_edges[fp_config.pin1_pos]
+
+    pnts = [
+        Vector2D(tip_x - 0.5 * dx, base_y),
+        Vector2D(tip_x, base_y - dy),
+        Vector2D(tip_x + 0.5 * dx, base_y),
+    ]
+
+    width = configuration['fab_line_width']
+
+    pin1_fab = PolygonLine(nodes=pnts + pnts[:1], layer='F.Fab', width=width)
+    return pin1_fab
 
 
 def build_body_shape(body_spec: dict, *, fp_config: FPconfiguration):
