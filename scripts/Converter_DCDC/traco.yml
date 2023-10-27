@@ -78,3 +78,12 @@ Converter_DCDC_TRACO_TBA1E-xxxx_Dual_THT:
   at: [-4.65, 2.4]
   size: [6, 19.5]
   pins: [["thtr", "1", 0, 0, 1.5, 1.5, 1], ["tht", "2", 0, -2.54, 1.5, 1.5, 1], ["tht", "4", 0, -7.62, 1.5, 1.5, 1], ["tht", "5", 0, -10.16, 1.5, 1.5, 1], ["tht", "6", 0, -12.7, 1.5, 1.5, 1]]
+
+Converter_DCDC_TRACO_TDU1-xxxx_THT:
+  description: "DCDC-Converter, TRACO, TDU1-xxxx, 1W, Rev. October 24. 2023"
+  datasheet: "https://www.tracopower.com/products/tdu1.pdf"
+  tags: "DCDC-Converter TRACO TDU1 THT DIP-8 1W"
+  extratexts: []
+  at: [-1.28, 2.48]
+  size: [10.2, 12.7]
+  pins: [["thtr", "1", 0, 0, 1.5, 1.5, 1], ["tht", "4", 0, -7.62, 1.5, 1.5, 1], ["tht", "5", 7.62, -7.62, 1.5, 1.5, 1], ["tht", "7", 7.62, -2.54, 1.5, 1.5, 1]]
