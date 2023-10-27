@@ -350,9 +350,9 @@ if __name__ == "__main__":
     parser.add_argument('--global_config', type=str, nargs='?', help='the config file defining how the footprint will look like. (KLC)',
                         default='../tools/global_config_files/config_KLCv3.0.yaml')
     parser.add_argument('--series_config', type=str, nargs='?',
-                        help='the config file defining series parameters.', default='config_KLCv3.0.yaml')
+                        help='the config file defining series parameters.', default='package_config_KLCv3.0.yaml')
     parser.add_argument('--ipc_definition', type=str, nargs='?', help='the ipc definition file',
-                        default='ipc7351B_smd_two_terminal_chip.yaml')
+                        default='ipc7351B_2terminal.yaml')
     parser.add_argument('--force_rectangle_pads', action='store_true',
                         help='Force the generation of rectangle pads instead of rounded rectangle (KiCad 4.x compatibility.)')
     args = parser.parse_args()

@@ -84,7 +84,7 @@ C_1825:
 
 C_2220:
     code_imperial: "2220"
-    code_metric: "5650"
+    code_metric: "5750"
     body_length:
         nominal: 5.7
         tolerance: 0.5
