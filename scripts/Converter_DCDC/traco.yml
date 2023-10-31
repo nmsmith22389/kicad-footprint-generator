@@ -43,6 +43,15 @@ Converter_DCDC_TRACO_TEA1HI-xxxx_THT:
   size: [6, 19.5]
   pins: [["thtr", "1", 0, 0, 1.5, 1.5, 1], ["tht", "2", 0, -2.54, 1.5, 1.5, 1], ["tht", "5", 0, -10.16, 1.5, 1.5, 1], ["tht", "7", 0, -15.24, 1.5, 1.5, 1]]
 
+Converter_DCDC_TRACO_TSR1-xxxxE_THT:
+  description: "DCDC-Converter, TRACO, TSR1-xxxxE, 1A, Rev. October 31. 2023"
+  datasheet: "https://www.tracopower.com/products/tsr1e.pdf"
+  tags: "DCDC-Converter SWITCHING-REGULATOR STEP-DOWN TRACO TSR1E 2.54MM THT SIP-3 1A"
+  extratexts: []
+  at: [-2.05, 3.26]
+  size: [7.5, 11.6]
+  pins: [["thtr", "1", 0, 0, 1.5, 1.5, 1], ["tht", "2", 0, -2.54, 1.5, 1.5, 1], ["tht", "3", 0, -5.08, 1.5, 1.5, 1]]
+  
 Converter_DCDC_TRACO_TBA2-xxxx_Single_THT:
   description: "DCDC-Converter, TRACO, TBA2-xxxx, Single, 2W, Rev. October 18. 2023"
   datasheet: "https://www.tracopower.com/products/tba2.pdf"
