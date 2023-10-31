@@ -249,7 +249,7 @@ D_SOD-110:
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
   pin_shapes: null
-  source: 'http://www.nxp.com/documents/outline_drawing/SOD110.pdf'
+  source: 'https://www.nxp.com/docs/en/package-information/SOD110.pdf'
 
 AMS_LGA-10-1EP_2.7x4mm_P0.6mm:
   c: 0.2
@@ -285,7 +285,7 @@ AMS_LGA-10-1EP_2.7x4mm_P0.6mm:
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
-  source: 'http://ams.com/documents/20143/36005/CCS811_DS000459_6-00.pdf/c7091525-c7e5-37ac-eedb-b6c6828b0dcf'
+  source: 'https://web.archive.org/web/20181207160723if_/http://ams.com:80/documents/20143/36005/CCS811_DS000459_6-00.pdf/c7091525-c7e5-37ac-eedb-b6c6828b0dcf'
 
 LGA-12_2x2mm_P0.5mm:
   c: 0.2
@@ -357,7 +357,7 @@ LGA-16_3x3mm_P0.5mm:
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
-  source: 'http://www.st.com/st-web-ui/static/active/en/resource/technical/document/datasheet/CD00250937.pdf'
+  source: 'https://www.mouser.com/datasheet/2/389/cd00250937-1797158.pdf'
 
 LGA-16_3x3mm_P0.5mm_LayoutBorder3x5y:
   c: 0.2
@@ -393,7 +393,7 @@ LGA-16_3x3mm_P0.5mm_LayoutBorder3x5y:
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
-  source: 'http://www.st.com/st-web-ui/static/active/en/resource/technical/document/datasheet/CD00250937.pdf'
+  source: 'https://www.mouser.com/datasheet/2/389/cd00250937-1797158.pdf'
 
 LGA-16_4x4mm_P0.65mm_LayoutBorder4x4y:
   c: 0.2
@@ -573,7 +573,7 @@ LGA1633:
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
-  source: 'http://www.st.com/st-web-ui/static/active/en/resource/technical/document/datasheet/CD00250937.pdf'
+  source: 'https://www.mouser.com/datasheet/2/389/cd00250937-1797158.pdf'
 
 DFN622:
   c: 0.2
@@ -753,7 +753,7 @@ DHVQFN14:
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
-  source: 'http://www.nxp.com/documents/outline_drawing/SOT762-1.pdf'
+  source: 'https://www.nxp.com/docs/en/package-information/SOT762-1.pdf'
 
 SOT891:
   c: 0.2
@@ -825,7 +825,7 @@ DFN865:
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
-  source: 'https://www.everspin.com/file/217/download'
+  source: 'https://web.archive.org/web/20160814193727if_/http://www.everspin.com/file/217/download'
 
 DFN1023:
   c: 0.2
@@ -1257,7 +1257,7 @@ DFN-4-1EP_1x1mm_P0.65mm_EP0.5x0.5mm:
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
-  source: 'http://ww1.microchip.com/downloads/en/DeviceDoc/MIC550x-300mA-Single-Output-LDO-in-Small-Packages-DS20006006A.pdf'
+  source: 'https://web.archive.org/web/20190616232205/https://ww1.microchip.com/downloads/en/DeviceDoc/MIC550x-300mA-Single-Output-LDO-in-Small-Packages-DS20006006A.pdf'
 
 DFN-6-1EP_1.2x1.2mm_P0.4mm_EP0.3x0.94mm:
   c: 0.025
@@ -1512,7 +1512,7 @@ DFN-6-1EP_2x2mm_Pitch0.65mm:
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
-  source: 'http://www.nxp.com/documents/outline_drawing/SOT1118D.pdf'
+  source: 'https://www.nxp.com/docs/en/package-information/SOT1118D.pdf'
 
 LFCSP-6-1EP_2x2mm_P0.65mm_EP1x1.6mm:
   c: 0.2  # pin thickness, not used for concave pins
@@ -2340,7 +2340,7 @@ DFN-14-1EP_4x4mm_Pitch0.5mm:
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
-  source: 'http://cds.linear.com/docs/en/packaging/05081963_0_DFN14%2812%29.pdf'
+  source: 'https://web.archive.org/web/20180227072736if_/http://cds.linear.com:80/docs/en/packaging/05081963_0_DFN14%2812%29.pdf'
 
 DFN-16-1EP_3x4mm_Pitch0.45mm:
   c: 0.2
@@ -3204,7 +3204,7 @@ QFN-24_4x4mm_Pitch0.5mm:
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
-  source: 'http://cds.linear.com/docs/en/packaging/%28UF24%29%20QFN%2005-08-1697%20Rev%20B.pdf'
+  source: 'https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/ltc-legacy-qfn/%28UF24%29%20QFN%2005-08-1697%20Rev%20B.pdf'
 
 QFN-24-1EP_3x3mm_Pitch0.4mm:
   c: 0.2
@@ -3312,7 +3312,7 @@ QFN-24-1EP_4x4mm_Pitch0.5mm:
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
-  source: 'http://cds.linear.com/docs/en/packaging/%28UF24%29%20QFN%2005-08-1697%20Rev%20B.pdf'
+  source: 'https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/ltc-legacy-qfn/%28UF24%29%20QFN%2005-08-1697%20Rev%20B.pdf'
 
 QFN-24-1EP_4x5mm_Pitch0.5mm:
   c: 0.2
@@ -3384,7 +3384,7 @@ QFN-24-1EP_5x5mm_Pitch0.65mm:
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
-  source: 'http://cds.linear.com/docs/en/packaging/%28UH24%29%20QFN%2005-08-1747%20Rev%20A.pdf'
+  source: 'https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/ltc-legacy-qfn/%28UH24%29%20QFN%2005-08-1747%20Rev%20A.pdf'
 
 QFN-28-1EP_3x6mm_Pitch0.5mm:
   c: 0.2
@@ -3636,7 +3636,7 @@ QFN-28-1EP_6x6mm_P0.65mm_EP4.8x4.8mm:
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
-  source: 'https://www.semtech.com/uploads/documents/DS_SX1276-7-8-9_W_APP_V6.pdf'
+  source: 'https://semtech.file.force.com/sfc/dist/version/download/?oid=00DE0000000JelG&ids=0682R000006TQEPQA4&d=%2Fa%2F2R0000001Rbr%2F6EfVZUorrpoKFfvaF_Fkpgp5kzjiNyiAbqcpqh9qSjE&operationContext=DELIVERY&asPdf=true&viewId=05H3n000000sDmVEAU&dpt='
 
 QFN-32-1EP_4x4mm_Pitch0.4mm:
   c: 0.2
@@ -3816,7 +3816,7 @@ QFN-36-1EP_5x6mm_Pitch0.5mm:
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
-  source: 'http://cds.linear.com/docs/en/packaging/%28UHE36%29%20QFN%2005-08-1876%20Rev%20%C3%98.pdf'
+  source: 'https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/ltc-legacy-qfn/05-08-1876.pdf'
 
 QFN-36-1EP_6x6mm_Pitch0.5mm:
   c: 0.2
@@ -4788,7 +4788,7 @@ UQFN-28-1EP_4x4mm_Pitch0.4mm:
   pin_shapes: null
   pin_color_key: metal grey pins
   mark_color_key: light brown label
-  source: 'http://cds.linear.com/docs/en/packaging/%28PF28%29%20UTQFN%2005-08-1759%20Rev%20%C3%98.pdf'
+  source: 'https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/ltc-legacy-utqfn/%28pf28%29%20utqfn%2005-08-1759%20rev.pdf'
 
 UQFN-40-1EP_5x5mm_Pitch0.4mm:
   c: 0.2
@@ -5004,7 +5004,7 @@ SOT-886:
   pin_shapes: null
   pin_color_key: metal grey pins
   mark_color_key: light brown label
-  source: 'http://www.nxp.com/documents/outline_drawing/SOT886.pdf'
+  source: 'https://www.nxp.com/docs/en/package-information/SOT886.pdf'
 
 SOT-383F:
   c: 0.1
@@ -5040,7 +5040,7 @@ SOT-383F:
   pin_shapes: null
   pin_color_key: metal grey pins
   mark_color_key: light brown label
-  source: 'http://www.comchiptech.com/cms/UserFiles/CPDVR085V0UA-HF-RevA.pdf'
+  source: 'https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/408/CPDVR085V0UA-HF.pdf'
 
 SOT-1334-1:
   c: 0.1
@@ -5076,7 +5076,7 @@ SOT-1334-1:
   pin_shapes: null
   pin_color_key: metal grey pins
   mark_color_key: light brown label
-  source: 'http://www.nxp.com/documents/outline_drawing/SOT1334-1.pdf'
+  source: 'https://www.nxp.com/docs/en/package-information/SOT1334-1.pdf'
 
 SOT-1333-1:
   c: 0.1
@@ -5112,7 +5112,7 @@ SOT-1333-1:
   pin_shapes: null
   pin_color_key: metal grey pins
   mark_color_key: light brown label
-  source: 'http://www.nxp.com/documents/outline_drawing/SOT1333-1.pdf'
+  source: 'https://www.nxp.com/docs/en/package-information/SOT1333-1.pdf'
 
 NXP_XSON-16:
   c: 0.1
@@ -5148,7 +5148,7 @@ NXP_XSON-16:
   pin_shapes: null
   pin_color_key: metal grey pins
   mark_color_key: light brown label
-  source: 'http://www.nxp.com/documents/outline_drawing/SOT1341-1.pdf'
+  source: 'https://www.nxp.com/docs/en/package-information/SOT1341-1.pdf'
 
 Nexperia_HUSON-8_USON-8-1EP_1.35x1.7mm_P0.4mm_EP0.4x1.2mm:
   c: 0.127
@@ -6195,7 +6195,7 @@ DFN-10-1EP_4x4mm_P0.65mm_EP2.65x3.05mm:
   pin_shapes: null
   pin_color_key: metal grey pins
   mark_color_key: light brown label
-  source: 'https://www.ichaus.de/upload/pdf/Package%20dimensions%20DFN_QFN_b2es.pdf'
+  source: 'https://web.archive.org/web/20210622114938if_/https://www.ichaus.de/upload/pdf/Package%20dimensions%20DFN_QFN_b2es.pdf'
 
 Infineon_PG-TSNP-6-10_0.7x1.1mm_0.7x1.1mm_P0.4mm:
   c: 0.02
@@ -6301,7 +6301,7 @@ OnSemi_SIP-38-6EP-9x7mm_P0.65mm_EP0.95x0.95mm:
   pin_shapes: null
   pin_color_key: metal grey pins
   mark_color_key: light brown label
-  source: 'https://www.onsemi.com/pub/Collateral/AX-SIP-SFEU-D.PDF#page=19'
+  source: 'https://web.archive.org/web/20210125183534if_/https://www.onsemi.com/pub/Collateral/AX-SIP-SFEU-D.PDF#page=19'
 
 Vishay_PowerPAK_1212-8_Single:
   c: 0.2
@@ -6625,7 +6625,7 @@ WDFN-8-1EP_4x3mm_P0.65mm_EP2.4x1.8mm:
   pin_shapes: null
   pin_color_key: metal grey pins
   mark_color_key: light brown label
-  source: 'https://www.onsemi.com/pub/Collateral/LC709203F-D.PDF'
+  source: 'https://web.archive.org/web/20201024093626if_/https://www.onsemi.com/pub/Collateral/LC709203F-D.PDF'
 
 W-PDFN-8-1EP_6x5mm_P1.27mm_EP3x3mm:
   c: 0.2  # pin thickness, not used for concave pins
@@ -6770,7 +6770,7 @@ Bosch_LGA-14_3x2.5mm_P0.5mm:
   pin_shapes: null
   pin_color_key: metal grey pins
   mark_color_key: light brown label
-  source: 'https://ae-bst.resource.bosch.com/media/_tech/media/datasheets/BST-BMI160-DS000-07.pdf'
+  source: 'https://web.archive.org/web/20181011150227if_/https://ae-bst.resource.bosch.com/media/_tech/media/datasheets/BST-BMI160-DS000-07.pdf'
 
 Bosch_LGA-8_2.5x2.5mm_P0.65mm_ClockwisePinNumbering:
   c: 0.1
@@ -6878,7 +6878,7 @@ Bosch_LGA-8_3x3mm_P0.8mm_ClockwisePinNumbering:
   pin_shapes: null
   pin_color_key: metal grey pins
   mark_color_key: light brown label
-  source: 'https://ae-bst.resource.bosch.com/media/_tech/media/datasheets/BST-BME680-DS001-00.pdf#page=44, generated with kicad-footprint-generator ipc_lga_layoutBorder_generator.py'
+  source: 'https://web.archive.org/web/20180829083223if_/http://ae-bst.resource.bosch.com/media/_tech/media/datasheets/BST-BME680-DS001-00.pdf#page=44, generated with kicad-footprint-generator ipc_lga_layoutBorder_generator.py'
 
 LGA-14_2x2mm_P0.35mm_LayoutBorder3x4y:
   c: 0.1
@@ -6914,7 +6914,7 @@ LGA-14_2x2mm_P0.35mm_LayoutBorder3x4y:
   pin_shapes: null
   pin_color_key: metal grey pins
   mark_color_key: light brown label
-  source: 'http://www.st.com/resource/en/datasheet/lis2dh.pdf, generated with kicad-footprint-generator ipc_lga_layoutBorder_generator.py'
+  source: 'https://web.archive.org/web/20220705040609if_/https://www.st.com/resource/en/datasheet/lis2dh.pdf, generated with kicad-footprint-generator ipc_lga_layoutBorder_generator.py'
 
 LGA-14_3x2.5mm_P0.5mm_LayoutBorder3x4y:
   c: 0.1
@@ -6950,7 +6950,7 @@ LGA-14_3x2.5mm_P0.5mm_LayoutBorder3x4y:
   pin_shapes: null
   pin_color_key: metal grey pins
   mark_color_key: light brown label
-  source: 'http://www.st.com/resource/en/datasheet/lsm6ds3.pdf, generated with kicad-footprint-generator ipc_lga_layoutBorder_generator.py'
+  source: 'https://web.archive.org/web/20210813004000if_/https://www.st.com/resource/en/datasheet/lsm6ds3.pdf, generated with kicad-footprint-generator ipc_lga_layoutBorder_generator.py'
 
 LGA-14_3x5mm_P0.8mm_LayoutBorder1x6y:
   c: 0.1
