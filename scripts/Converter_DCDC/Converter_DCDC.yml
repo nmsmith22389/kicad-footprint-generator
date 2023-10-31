@@ -1,4 +1,5 @@
 Converter_DCDC_Murata_NCS1SxxxxSC_THT:
+  library_name: 'Converter_DCDC'
   description: "Murata NCS1SxxxxSC https://power.murata.com/data/power/ncl/kdc_ncs1.pdf"
   datasheet: "https://power.murata.com/data/power/ncl/kdc_ncs1.pdf"
   tags: "Murata NCS1SxxxxSC"

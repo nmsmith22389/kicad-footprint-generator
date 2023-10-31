@@ -17,6 +17,7 @@ def qfn(args):
 
     extraffablines = []
 
+    library_name = args["library_name"]
     footprint_name = args["name"]
     description = args["description"]
     datasheet = args["datasheet"]
@@ -27,7 +28,7 @@ def qfn(args):
     pins = args["pins"]
     extratexts = args["extratexts"]
 
-    dir3D = 'Converter_DCDC.3dshapes'
+    dir3D = library_name+'.3dshapes'
 
     footprint_type = FootprintType.SMD if SmdTht == "smd" else FootprintType.THT
     f = Footprint(footprint_name, footprint_type)
@@ -51,6 +52,7 @@ def qfn(args):
 if __name__ == '__main__':
 	parser = ModArgparser(qfn)
 	# the root node of .yml files is parsed as name
+	parser.add_parameter("library_name", type=str, required=True)
 	parser.add_parameter("name", type=str, required=True)
 	parser.add_parameter("description", type=str, required=True)
 	parser.add_parameter("datasheet", type=str, required=True)
