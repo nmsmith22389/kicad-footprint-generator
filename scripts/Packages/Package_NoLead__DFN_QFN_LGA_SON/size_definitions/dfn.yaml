@@ -849,6 +849,59 @@ DFN-10-1EP_2.6x2.6mm_P0.5mm_EP1.3x2.2mm:
   num_pins_x: 0
   num_pins_y: 5
 
+DFN-10-1EP_3x3mm_P0.5mm_EP1.58x2.35mm:
+  device_type: 'DFN'
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'https://ww1.microchip.com/downloads/aemDocuments/documents/OTH/ProductDocuments/DataSheets/22005b.pdf#page=24'
+  # ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  body_size_x:
+    nominal: 3.0
+    tolerance: 0
+  body_size_y:
+    nominal: 3.0
+    tolerance: 0
+  overall_height:
+    nominal: 0.90
+    tolerance: 0.10
+
+  lead_width:
+    minimum: 0.18
+    nominal: 0.25
+    maximum: 0.3
+  lead_len:
+    nominal: 0.40
+    tolerance: 0.10
+
+  EP_size_x:
+    minimum: 1.4
+    nominal: 1.58
+    maximum: 1.75
+  EP_size_y:
+    minimum: 2.20
+    nominal: 2.35
+    maximum: 2.48
+
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [2, 3]
+    drill: 0.2
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    EP_num_paste_pads: [1, 2]
+    #paste_between_vias: 1
+    #paste_rings_outside: 1
+    #EP_paste_coverage: 0.7
+    #grid: [1, 1]
+    # bottom_pad_size:
+    paste_avoid_via: False
+
+  pitch: 0.5
+  num_pins_x: 0
+  num_pins_y: 5
+
 DFN-10-1EP_3x3mm_P0.5mm_EP1.65x2.38mm:
   device_type: 'DFN'
   #manufacturer: 'man'
