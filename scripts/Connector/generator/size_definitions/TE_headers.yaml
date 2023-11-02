@@ -31,11 +31,11 @@ TE_281698:
 
 TE_281698-x:
   inherit: 'TE_281698'
-  fp_name: 'TE_281698-{num_pos_units:01d}'
+  fp_name: "TE_281698-{str(int(num_pos % 10))}"
   positions: [2, 3, 4, 5, 6, 7, 8]
 
 TE_1-281698-x:
   inherit: 'TE_281698'
-  fp_name: 'TE_{num_pos_tens:01d}-281698-{num_pos_units:01d}'
+  fp_name: "TE_{str(int(num_pos // 10))}-281698-{str(int(num_pos % 10))}"
   positions: [10, 12, 15, 17, 18]
 
