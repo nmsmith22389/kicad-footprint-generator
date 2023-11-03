@@ -28,7 +28,18 @@ FH12-xxS-0.5SVA:
       size:
         x: 0.8
         y: 1.8
+      paste: False
+      name: 'MP'
+      ends: 'both'
+    pad_l_paste: # left weld tab pads
+      center:
+        x_offset: 1   # offset from edge-pad center
+        y: [-1.35, 1.35]   # 2 pads on the same x-location
+      size:
+        x: 0.65
+        y: 1.8
       paste: True
+      copper: False
       name: 'MP'
       ends: 'both'
   row_pitch: 3.0
