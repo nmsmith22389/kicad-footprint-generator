@@ -54,3 +54,7 @@ docs/_build/
 # kicad specific files
 *.kicad_mod
 *.pretty/
+
+# include reference footprints
+!**/reference_footprints/*.pretty
+!**/reference_footprints/*.kicad_mod
