@@ -88,6 +88,8 @@ class StandardBox(Node):
           A list of extra txts to be placed on the footprint
         * *pins* (``list(type, number, x, y, sizex, sizey, drill)``) --
           List of tht/smd/npth holes
+        * *courtyard_clearance* (``float``) --
+          Clearance between nominal body and courtyard outline
         * *file3Dname* (``str``) --
           The path to the 3D model name
 
@@ -123,6 +125,7 @@ class StandardBox(Node):
         self.extraffablines = kwargs.get('extraffablines')
         self.typeOfBox = str(kwargs.get('typeOfBox'))
         self.pins = kwargs.get('pins')
+        self.courtyard_clearance = kwargs.get('courtyard_clearance', 0.25)
 
         #
         # Create foot print parts
@@ -677,6 +680,8 @@ class StandardBox(Node):
         # Check all holes and pads, if a pad or hole is on the crtyrd line
         # then jump over the pad/hole
         #
+        clearance = self.courtyard_clearance
+
         for n in self.boxffabline:
             x1 = min(n.sx, n.ex)
             y1 = min(n.sy, n.ey)
@@ -688,23 +693,23 @@ class StandardBox(Node):
                 #
                 # Top and bottom line
                 #
-                x1_t = x1 - 0.25
-                x2_t = x2 + 0.25
+                x1_t = x1 - clearance
+                x2_t = x2 + clearance
                 x3_t = x1_t
                 x4_t = x2_t
                 #
                 if y1 < 0.0:
                     # Top line
-                    y1_t = y1 - 0.25
-                    y2_t = y2 - 0.25
+                    y1_t = y1 - clearance
+                    y2_t = y2 - clearance
                     y3_t = y1_t
                     y4_t = y2_t
                     #
                     for nn in self.corners:
                         if nn[0] == 'URR':
-                            x2_t = x2_t - (nn[1] + 0.25)
+                            x2_t = x2_t - (nn[1] + clearance)
                         if nn[0] == 'ULR':
-                            x1_t = x1_t + (nn[1] + 0.25)
+                            x1_t = x1_t + (nn[1] + clearance)
                         if nn[0] == 'ULP':
                             x3_t = x1_t
                             x1_t = x1_t + (nn[1])
@@ -716,16 +721,16 @@ class StandardBox(Node):
 
                 else:
                     # Bottom line
-                    y1_t = y1 + 0.25
-                    y2_t = y2 + 0.25
+                    y1_t = y1 + clearance
+                    y2_t = y2 + clearance
                     y3_t = y1_t
                     y4_t = y2_t
                     #
                     for nn in self.corners:
                         if nn[0] == 'LRR':
-                            x2_t = x2_t - (nn[1] + 0.25)
+                            x2_t = x2_t - (nn[1] + clearance)
                         if nn[0] == 'LLR':
-                            x1_t = x1_t + (nn[1] + 0.25)
+                            x1_t = x1_t + (nn[1] + clearance)
                         if nn[0] == 'LLP':
                             x3_t = x1_t
                             x1_t = x1_t + (nn[1])
@@ -749,7 +754,7 @@ class StandardBox(Node):
                         n_min_y = n.at.y - (n.size.y / 2.0)
                         n_max_x = n_min_x + n.size.x
                         n_max_y = n_min_y + n.size.y
-                        dd = max(0.25, n.solder_mask_margin)
+                        dd = max(clearance, n.solder_mask_margin)
 
                         if (n_min_y - dd) <= y1_t and (n_max_y + dd) > y1_t and n_max_x > x1_t and n_min_x < x2_t:
                             #
@@ -792,8 +797,8 @@ class StandardBox(Node):
                             # Top line
                             for nn in self.corners:
                                 if nn[0] == 'ULR':
-                                    urcdy0 = y1_t + (nn[1] + 0.25)
-                                    urcdx1 = x1_t - (nn[1] + 0.25)
+                                    urcdy0 = y1_t + (nn[1] + clearance)
+                                    urcdx1 = x1_t - (nn[1] + clearance)
                                     new_node = Arc(center=Point2D(x1_t, urcdy0), start=Point2D(urcdx1, urcdy0), layer='F.CrtYd', width=self.FCrtYdWidth, angle=90.0)
                                     new_node._parent = self
                                     self.virtual_childs.append(new_node)
@@ -819,7 +824,7 @@ class StandardBox(Node):
                             # Bottom line
                             for nn in self.corners:
                                 if nn[0] == 'LLR':
-                                    urcdy0 = y1_t - (nn[1] + 0.25)
+                                    urcdy0 = y1_t - (nn[1] + clearance)
                                     new_node = Arc(center=Point2D(x1_t, urcdy0), start=Point2D(x1_t, y1_t), layer='F.CrtYd', width=self.FCrtYdWidth, angle=90.0)
                                     new_node._parent = self
                                     self.virtual_childs.append(new_node)
@@ -853,7 +858,7 @@ class StandardBox(Node):
                     #
                     for nn in self.corners:
                         if nn[0] == 'URR':
-                            urcdy1 = y1_t + (nn[1] + 0.25)
+                            urcdy1 = y1_t + (nn[1] + clearance)
                             new_node = Arc(center=Point2D(x2_t, urcdy1), start=Point2D(x2_t, y2_t), layer='F.CrtYd', width=self.FCrtYdWidth, angle=90.0)
                             new_node._parent = self
                             self.virtual_childs.append(new_node)
@@ -863,8 +868,8 @@ class StandardBox(Node):
                     #
                     for nn in self.corners:
                         if nn[0] == 'LRR':
-                            urcdx1 = x2_t + (nn[1] + 0.25)
-                            urcdy1 = y2_t - (nn[1] + 0.25)
+                            urcdx1 = x2_t + (nn[1] + clearance)
+                            urcdy1 = y2_t - (nn[1] + clearance)
                             new_node = Arc(center=Point2D(x2_t, urcdy1), start=Point2D(urcdx1, urcdy1), layer='F.CrtYd', width=self.FCrtYdWidth, angle=90.0)
                             new_node._parent = self
                             self.virtual_childs.append(new_node)
@@ -873,19 +878,19 @@ class StandardBox(Node):
                 #
                 # Left and right line
                 #
-                y1_t = y1 - 0.25
-                y2_t = y2 + 0.25
+                y1_t = y1 - clearance
+                y2_t = y2 + clearance
                 #
                 if x1 < 0.0:
                     # Left line
-                    x1_t = x1 - 0.25
-                    x2_t = x1 - 0.25
+                    x1_t = x1 - clearance
+                    x2_t = x1 - clearance
                     #
                     for nn in self.corners:
                         if nn[0] == 'ULR':
-                            y1_t = y1_t + (nn[1] + 0.25)
+                            y1_t = y1_t + (nn[1] + clearance)
                         if nn[0] == 'LLR':
-                            y2_t = y2_t - (nn[1] + 0.25)
+                            y2_t = y2_t - (nn[1] + clearance)
                         if nn[0] == 'ULP':
                             y1_t = y1_t + (nn[2])
                         if nn[0] == 'LLP':
@@ -894,14 +899,14 @@ class StandardBox(Node):
                 else:
 
                     # Right line
-                    x1_t = x1 + 0.25
-                    x2_t = x2 + 0.25
+                    x1_t = x1 + clearance
+                    x2_t = x2 + clearance
                     #
                     for nn in self.corners:
                         if nn[0] == 'URR':
-                            y1_t = y1_t + (nn[1] + 0.25)
+                            y1_t = y1_t + (nn[1] + clearance)
                         if nn[0] == 'LRR':
-                            y2_t = y2_t - (nn[1] + 0.25)
+                            y2_t = y2_t - (nn[1] + clearance)
                         if nn[0] == 'URP':
                             y1_t = y1_t + (nn[2])
                         if nn[0] == 'LRP':
@@ -920,7 +925,7 @@ class StandardBox(Node):
                         n_min_y = n.at.y - (n.size.y / 2.0)
                         n_max_x = n_min_x + n.size.x
                         n_max_y = n_min_y + n.size.y
-                        dd = max(0.25, n.solder_mask_margin)
+                        dd = max(clearance, n.solder_mask_margin)
 
                         if (n_min_x <= x1_t) and (n_max_x >= x1_t) and n_max_y >= y1_t and n_min_y <= y2_t:
                             #
