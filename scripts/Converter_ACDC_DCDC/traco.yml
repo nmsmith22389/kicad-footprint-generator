@@ -13,9 +13,9 @@ Converter_DCDC_TRACO_TEA1-xxxx_THT:
     ["tht", "4", 0, -7.62, 1.5, 1.5, 1]
   ]
 
-Converter_DCDC_TRACO_TEA1E-xxxx_THT:
+Converter_DCDC_TRACO_TEA1-xxxxE_THT:
   library_name: 'Converter_DCDC'
-  description: "DCDC-Converter, TRACO, TEA1E-xxxx, 1W, Rev. September 7. 2023"
+  description: "DCDC-Converter, TRACO, TEA1-xxxxE, 1W, Rev. October 31. 2023"
   datasheet: "https://www.tracopower.com/products/tea1e.pdf"
   tags: "DCDC-Converter TRACO TEA1E THT SIP-7 1W"
   extratexts: []
@@ -58,9 +58,9 @@ Converter_DCDC_TRACO_TME_24xxS_Single_THT:
     ["tht", "4", 0, -7.62, 1.6, 1.6, 1]
   ]
 
-Converter_DCDC_TRACO_TEA1HI-xxxx_THT:
+Converter_DCDC_TRACO_TEA1-xxxxHI_THT:
   library_name: 'Converter_DCDC'
-  description: "DCDC-Converter, TRACO, TEA1HI-xxxx, 1W, Rev. September 21. 2023"
+  description: "DCDC-Converter, TRACO, TEA1-xxxxHI, 1W, Rev. October 31. 2023"
   datasheet: "https://www.tracopower.com/products/tea1hi.pdf"
   tags: "DCDC-Converter TRACO TEA1HI THT SIP-7 1W"
   extratexts: []
@@ -117,9 +117,9 @@ Converter_DCDC_TRACO_TBA2-xxxx_Dual_THT:
     ["tht", "6", 0, -12.7, 1.5, 1.5, 1]
   ]
 
-Converter_DCDC_TRACO_TBA1E-xxxx_Single_THT:
+Converter_DCDC_TRACO_TBA1-xxxxE_Single_THT:
   library_name: 'Converter_DCDC'
-  description: "DCDC-Converter, TRACO, TBA1-xxxxE, Single, 1W, Rev. October 9. 2023"
+  description: "DCDC-Converter, TRACO, TBA1-xxxxE, Single, 1W, Rev. October 31. 2023"
   datasheet: "https://www.tracopower.com/products/tba1e.pdf"
   tags: "DCDC-Converter TRACO TBA1E THT SIP-7 1W"
   extratexts: []
@@ -132,9 +132,9 @@ Converter_DCDC_TRACO_TBA1E-xxxx_Single_THT:
     ["tht", "6", 0, -12.7, 1.5, 1.5, 1]
   ]
 
-Converter_DCDC_TRACO_TBA1E-xxxx_Dual_THT:
+Converter_DCDC_TRACO_TBA1-xxxxE_Dual_THT:
   library_name: 'Converter_DCDC'
-  description: "DCDC-Converter, TRACO, TBA1-xxxxE, Dual, 1W, Rev. October 9. 2023"
+  description: "DCDC-Converter, TRACO, TBA1-xxxxE, Dual, 1W, Rev. October 31. 2023"
   datasheet: "https://www.tracopower.com/products/tba1e.pdf"
   tags: "DCDC-Converter TRACO TBA1E THT SIP-7 1W"
   extratexts: []
