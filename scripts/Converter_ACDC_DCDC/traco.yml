@@ -6,7 +6,12 @@ Converter_DCDC_TRACO_TEA1-xxxx_THT:
   extratexts: []
   at: [-0.9, 2.03]
   size: [6, 11.68]
-  pins: [["thtr", "1", 0, 0, 1.5, 1.5, 1], ["tht", "2", 0, -2.54, 1.5, 1.5, 1], ["tht", "3", 0, -5.08, 1.5, 1.5, 1], ["tht", "4", 0, -7.62, 1.5, 1.5, 1]]
+  pins: [
+    ["thtr", "1", 0, 0, 1.5, 1.5, 1],
+    ["tht", "2", 0, -2.54, 1.5, 1.5, 1],
+    ["tht", "3", 0, -5.08, 1.5, 1.5, 1],
+    ["tht", "4", 0, -7.62, 1.5, 1.5, 1]
+  ]
 
 Converter_DCDC_TRACO_TEA1E-xxxx_THT:
   library_name: 'Converter_DCDC'
@@ -16,7 +21,12 @@ Converter_DCDC_TRACO_TEA1E-xxxx_THT:
   extratexts: []
   at: [-5.1, 2.4]
   size: [6, 19.5]
-  pins: [["thtr", "1", 0, 0, 1.5, 1.5, 1], ["tht", "2", 0, -2.54, 1.5, 1.5, 1], ["tht", "4", 0, -7.62, 1.5, 1.5, 1], ["tht", "6", 0, -12.7, 1.5, 1.5, 1]]
+  pins: [
+    ["thtr", "1", 0, 0, 1.5, 1.5, 1],
+    ["tht", "2", 0, -2.54, 1.5, 1.5, 1],
+    ["tht", "4", 0, -7.62, 1.5, 1.5, 1],
+    ["tht", "6", 0, -12.7, 1.5, 1.5, 1]
+  ]
 
 Converter_DCDC_TRACO_TME_03xxS_05xxS_12xxS_Single_THT:
   library_name: 'Converter_DCDC'
@@ -26,7 +36,12 @@ Converter_DCDC_TRACO_TME_03xxS_05xxS_12xxS_Single_THT:
   extratexts: []
   at: [-1.675, 1.9]
   size: [6.1, 11.5]
-  pins: [["thtr", "1", 0, 0, 1.6, 1.6, 1], ["tht", "2", 0, -2.54, 1.6, 1.6, 1], ["tht", "3", 0, -5.08, 1.6, 1.6, 1], ["tht", "4", 0, -7.62, 1.6, 1.6, 1]]
+  pins: [
+    ["thtr", "1", 0, 0, 1.6, 1.6, 1],
+    ["tht", "2", 0, -2.54, 1.6, 1.6, 1],
+    ["tht", "3", 0, -5.08, 1.6, 1.6, 1],
+    ["tht", "4", 0, -7.62, 1.6, 1.6, 1]
+  ]
 
 Converter_DCDC_TRACO_TME_24xxS_Single_THT:
   library_name: 'Converter_DCDC'
@@ -36,8 +51,13 @@ Converter_DCDC_TRACO_TME_24xxS_Single_THT:
   extratexts: []
   at: [-1.675, 1.9]
   size: [7.1, 11.5]
-  pins: [["thtr", "1", 0, 0, 1.6, 1.6, 1], ["tht", "2", 0, -2.54, 1.6, 1.6, 1], ["tht", "3", 0, -5.08, 1.6, 1.6, 1], ["tht", "4", 0, -7.62, 1.6, 1.6, 1]]
-  
+  pins: [
+    ["thtr", "1", 0, 0, 1.6, 1.6, 1],
+    ["tht", "2", 0, -2.54, 1.6, 1.6, 1],
+    ["tht", "3", 0, -5.08, 1.6, 1.6, 1],
+    ["tht", "4", 0, -7.62, 1.6, 1.6, 1]
+  ]
+
 Converter_DCDC_TRACO_TEA1HI-xxxx_THT:
   library_name: 'Converter_DCDC'
   description: "DCDC-Converter, TRACO, TEA1HI-xxxx, 1W, Rev. September 21. 2023"
@@ -46,7 +66,12 @@ Converter_DCDC_TRACO_TEA1HI-xxxx_THT:
   extratexts: []
   at: [-5.1, 2.4]
   size: [6, 19.5]
-  pins: [["thtr", "1", 0, 0, 1.5, 1.5, 1], ["tht", "2", 0, -2.54, 1.5, 1.5, 1], ["tht", "5", 0, -10.16, 1.5, 1.5, 1], ["tht", "7", 0, -15.24, 1.5, 1.5, 1]]
+  pins: [
+    ["thtr", "1", 0, 0, 1.5, 1.5, 1],
+    ["tht", "2", 0, -2.54, 1.5, 1.5, 1],
+    ["tht", "5", 0, -10.16, 1.5, 1.5, 1],
+    ["tht", "7", 0, -15.24, 1.5, 1.5, 1]
+  ]
 
 Converter_DCDC_TRACO_TSR1-xxxxE_THT:
   description: "DCDC-Converter, TRACO, TSR1-xxxxE, 1A, Rev. October 31. 2023"
@@ -55,8 +80,12 @@ Converter_DCDC_TRACO_TSR1-xxxxE_THT:
   extratexts: []
   at: [-2.05, 3.26]
   size: [7.5, 11.6]
-  pins: [["thtr", "1", 0, 0, 1.5, 1.5, 1], ["tht", "2", 0, -2.54, 1.5, 1.5, 1], ["tht", "3", 0, -5.08, 1.5, 1.5, 1]]
-  
+  pins: [
+    ["thtr", "1", 0, 0, 1.5, 1.5, 1],
+    ["tht", "2", 0, -2.54, 1.5, 1.5, 1],
+    ["tht", "3", 0, -5.08, 1.5, 1.5, 1]
+  ]
+
 Converter_DCDC_TRACO_TBA2-xxxx_Single_THT:
   library_name: 'Converter_DCDC'
   description: "DCDC-Converter, TRACO, TBA2-xxxx, Single, 2W, Rev. October 18. 2023"
@@ -65,7 +94,12 @@ Converter_DCDC_TRACO_TBA2-xxxx_Single_THT:
   extratexts: []
   at: [-6.25, 2.4]
   size: [7.6, 19.55]
-  pins: [["thtr", "1", 0, 0, 1.5, 1.5, 1], ["tht", "2", 0, -2.54, 1.5, 1.5, 1], ["tht", "4", 0, -7.62, 1.5, 1.5, 1], ["tht", "6", 0, -12.7, 1.5, 1.5, 1]]
+  pins: [
+    ["thtr", "1", 0, 0, 1.5, 1.5, 1],
+    ["tht", "2", 0, -2.54, 1.5, 1.5, 1],
+    ["tht", "4", 0, -7.62, 1.5, 1.5, 1],
+    ["tht", "6", 0, -12.7, 1.5, 1.5, 1]
+  ]
 
 Converter_DCDC_TRACO_TBA2-xxxx_Dual_THT:
   library_name: 'Converter_DCDC'
@@ -75,7 +109,13 @@ Converter_DCDC_TRACO_TBA2-xxxx_Dual_THT:
   extratexts: []
   at: [-6.25, 2.4]
   size: [7.6, 19.55]
-  pins: [["thtr", "1", 0, 0, 1.5, 1.5, 1], ["tht", "2", 0, -2.54, 1.5, 1.5, 1], ["tht", "4", 0, -7.62, 1.5, 1.5, 1], ["tht", "5", 0, -10.16, 1.5, 1.5, 1], ["tht", "6", 0, -12.7, 1.5, 1.5, 1]]
+  pins: [
+    ["thtr", "1", 0, 0, 1.5, 1.5, 1],
+    ["tht", "2", 0, -2.54, 1.5, 1.5, 1],
+    ["tht", "4", 0, -7.62, 1.5, 1.5, 1],
+    ["tht", "5", 0, -10.16, 1.5, 1.5, 1],
+    ["tht", "6", 0, -12.7, 1.5, 1.5, 1]
+  ]
 
 Converter_DCDC_TRACO_TBA1E-xxxx_Single_THT:
   library_name: 'Converter_DCDC'
@@ -85,7 +125,12 @@ Converter_DCDC_TRACO_TBA1E-xxxx_Single_THT:
   extratexts: []
   at: [-4.65, 2.4]
   size: [6, 19.5]
-  pins: [["thtr", "1", 0, 0, 1.5, 1.5, 1], ["tht", "2", 0, -2.54, 1.5, 1.5, 1], ["tht", "4", 0, -7.62, 1.5, 1.5, 1], ["tht", "6", 0, -12.7, 1.5, 1.5, 1]]
+  pins: [
+    ["thtr", "1", 0, 0, 1.5, 1.5, 1],
+    ["tht", "2", 0, -2.54, 1.5, 1.5, 1],
+    ["tht", "4", 0, -7.62, 1.5, 1.5, 1],
+    ["tht", "6", 0, -12.7, 1.5, 1.5, 1]
+  ]
 
 Converter_DCDC_TRACO_TBA1E-xxxx_Dual_THT:
   library_name: 'Converter_DCDC'
@@ -95,7 +140,13 @@ Converter_DCDC_TRACO_TBA1E-xxxx_Dual_THT:
   extratexts: []
   at: [-4.65, 2.4]
   size: [6, 19.5]
-  pins: [["thtr", "1", 0, 0, 1.5, 1.5, 1], ["tht", "2", 0, -2.54, 1.5, 1.5, 1], ["tht", "4", 0, -7.62, 1.5, 1.5, 1], ["tht", "5", 0, -10.16, 1.5, 1.5, 1], ["tht", "6", 0, -12.7, 1.5, 1.5, 1]]
+  pins: [
+    ["thtr", "1", 0, 0, 1.5, 1.5, 1],
+    ["tht", "2", 0, -2.54, 1.5, 1.5, 1],
+    ["tht", "4", 0, -7.62, 1.5, 1.5, 1],
+    ["tht", "5", 0, -10.16, 1.5, 1.5, 1],
+    ["tht", "6", 0, -12.7, 1.5, 1.5, 1]
+  ]
 
 Converter_DCDC_TRACO_TDU1-xxxx_THT:
   library_name: 'Converter_DCDC'
@@ -105,5 +156,9 @@ Converter_DCDC_TRACO_TDU1-xxxx_THT:
   extratexts: []
   at: [-1.28, 2.48]
   size: [10.2, 12.7]
-  pins: [["thtr", "1", 0, 0, 1.5, 1.5, 1], ["tht", "4", 0, -7.62, 1.5, 1.5, 1], ["tht", "5", 7.62, -7.62, 1.5, 1.5, 1], ["tht", "7", 7.62, -2.54, 1.5, 1.5, 1]]
-
+  pins: [
+    ["thtr", "1", 0, 0, 1.5, 1.5, 1],
+    ["tht", "4", 0, -7.62, 1.5, 1.5, 1],
+    ["tht", "5", 7.62, -7.62, 1.5, 1.5, 1],
+    ["tht", "7", 7.62, -2.54, 1.5, 1.5, 1]
+  ]
