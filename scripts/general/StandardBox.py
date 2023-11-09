@@ -34,10 +34,10 @@ from drawing_tools import *
 class koaLine:
 
     def __init__(self, sx, sy, ex, ey, layer, width):
-        self.sx = sx
-        self.sy = sy
-        self.ex = ex
-        self.ey = ey
+        self.sx = round(sx, 6)
+        self.sy = round(sy, 6)
+        self.ex = round(ex, 6)
+        self.ey = round(ey, 6)
         self.k = 0.0
         self.m = 0.0
         self.l = 0.0
@@ -46,8 +46,8 @@ class koaLine:
         self.width = width
 
         if ex != sx:
-            self.k = (ey - sy) / (ex - sx)
-            self.m = sy - (self.k * sx)
+            self.k = round((ey - sy) / (ex - sx), 6)
+            self.m = round(sy - (self.k * sx), 6)
         else:
             self.IsVertical = True
 
@@ -59,10 +59,10 @@ class koaLine:
         y1 = min(self.sy, self.ey)
         y2 = max(self.sy, self.ey)
 
-        x1 = x2 - x1
-        y1 = y2 - y1
+        x1 = round(x2 - x1, 6)
+        y1 = round(y2 - y1, 6)
 
-        self.l = sqrt((x1 * x1) + (y1 * y1))
+        self.l = round(sqrt((x1 * x1) + (y1 * y1)),6)
 
 
 class StandardBox(Node):
