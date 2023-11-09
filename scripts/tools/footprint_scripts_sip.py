@@ -43,7 +43,7 @@ def makeSIPVertical(pins, rm, ddrill, pad, package_size, left_offset, top_offset
     print(footprint_name)
 
     # init kicad footprint
-    kicad_mod = Footprint(footprint_name, Footprint.THT)
+    kicad_mod = Footprint(footprint_name, FootprintType.THT)
     kicad_mod.setDescription(description)
     kicad_mod.setTags(tags)
 
@@ -133,7 +133,7 @@ def makeSIPHorizontal(pins, rm, ddrill, pad, package_size, left_offset, pin_bott
     print(footprint_name)
 
     # init kicad footprint
-    kicad_mod = Footprint(footprint_name, Footprint.THT)
+    kicad_mod = Footprint(footprint_name, FootprintType.THT)
     kicad_mod.setDescription(description)
     kicad_mod.setTags(tags)
 
@@ -211,7 +211,7 @@ def makeResistorSIP(pins, footprint_name, description):
     print(footprint_name)
 
     # init kicad footprint
-    kicad_mod = Footprint(footprint_name, Footprint.THT)
+    kicad_mod = Footprint(footprint_name, FootprintType.THT)
     kicad_mod.setDescription(description)
     kicad_mod.setTags("R")
 

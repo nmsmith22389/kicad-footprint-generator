@@ -70,7 +70,7 @@ for inductor in inductors:
     cy = round(B / 2, 2)
 
     fp_name = prefix + part.format(serie=str(Serie), pn=str(PN)) + "-" + dims2.format(l=L,w=W)
-    fp = Footprint(fp_name, Footprint.THT)
+    fp = Footprint(fp_name, FootprintType.THT)
     description = desc.format(pn = part.format(serie=str(Serie), pn=str(PN))) + ", " + dims.format(l=L,w=W) + " " + Datasheet
 
 #    fp.append(Line(start=[cx - (L / 2), cy - (W / 2)], end=[cx + (L / 2), cy - (W / 2)],layer='F.Fab', width=0.01))

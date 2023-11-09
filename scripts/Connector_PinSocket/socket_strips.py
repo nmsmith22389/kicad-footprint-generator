@@ -87,7 +87,7 @@ class pinSocketVerticalTHT (object):
         print(footprint_name, "in", lib_name)
 
         # init kicad footprint
-        kicad_mod = Footprint(footprint_name, Footprint.THT)
+        kicad_mod = Footprint(footprint_name, FootprintType.THT)
         kicad_mod.setDescription(description)
         kicad_mod.setTags(tags)
 
@@ -258,7 +258,7 @@ class pinSocketHorizontalTHT (object):
         print(footprint_name, "in", lib_name)
 
         # init kicad footprint
-        kicad_mod = Footprint(footprint_name, Footprint.THT)
+        kicad_mod = Footprint(footprint_name, FootprintType.THT)
         kicad_mod.setDescription(description)
         kicad_mod.setTags(tags)
 

@@ -77,7 +77,7 @@ def generate_one_footprint(pincount, configuration):
     print(footprint_name)
 
     # Initialize footprint
-    kicad_mod = Footprint(footprint_name, Footprint.THT)
+    kicad_mod = Footprint(footprint_name, FootprintType.THT)
     descr_str = f'{man_lib} {series} female-on-board top-entry thru-hole {pincount} pin connector, {drawing_url}'
     keywords = []
     keywords.append(configuration['keyword_fp_string'].format(

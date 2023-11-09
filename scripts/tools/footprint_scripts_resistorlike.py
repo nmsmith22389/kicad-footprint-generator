@@ -424,7 +424,7 @@ def makeResistorAxialVertical(seriesname,rm, rmdisp, l, d, ddrill, R_POW, type="
 
 
     # init kicad footprint
-    kicad_mod = Footprint(footprint_name, Footprint.THT)
+    kicad_mod = Footprint(footprint_name, FootprintType.THT)
     kicad_mod.setDescription(description)
     kicad_mod.setTags(tags)
 
@@ -875,7 +875,7 @@ def makeResistorRadial(seriesname, rm, w, h, ddrill, R_POW, innerw=0,innerh=0,rm
             '''
 
     # init kicad footprint
-    kicad_mod = Footprint(footprint_name, Footprint.THT)
+    kicad_mod = Footprint(footprint_name, FootprintType.THT)
     kicad_mod.setDescription(description)
     kicad_mod.setTags(tags)
 

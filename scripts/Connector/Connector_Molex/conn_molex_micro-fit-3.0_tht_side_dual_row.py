@@ -65,7 +65,7 @@ def generate_one_footprint(pins, configuration, variant):
         mpn=mpn, num_rows=number_of_rows, pins_per_row=pins_per_row, mounting_pad = '-1MP' if variant == 'clip' else "",
         pitch=pitch, orientation=orientation_str)
 
-    kicad_mod = Footprint(footprint_name, Footprint.THT)
+    kicad_mod = Footprint(footprint_name, FootprintType.THT)
     kicad_mod.setDescription("Molex {:s}, {:s} (alternative finishes: {:s}), {:d} Pins per row ({:s}), generated with kicad-footprint-generator".format(series_long, mpn, alt_mpn, pins_per_row, datasheet.format(s=variants[variant])))
     kicad_mod.setTags(configuration['keyword_fp_string'].format(series=series,
         orientation=orientation_str, man=manufacturer,

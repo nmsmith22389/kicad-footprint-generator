@@ -171,7 +171,7 @@ def generate_one_footprint(fpid, rows, datasheet, configuration):
     elif fpid.startswith("ITQ_"):
         ser="SF_ITQ"
 
-    kicad_mod = Footprint(footprint_name, Footprint.THT)
+    kicad_mod = Footprint(footprint_name, FootprintType.THT)
     kicad_mod.setDescription("XP_POWER {:s} {:s}, {:s}, ({:s}), generated with kicad-footprint-generator".format(ser,fpid, rows, datasheet))
     kicad_mod.setTags("XP_POWER {:s} {:s} {:s} DCDC-Converter".format(ser,fpid,rows))
 

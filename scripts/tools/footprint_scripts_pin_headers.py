@@ -391,7 +391,7 @@ def makeIdcHeader(rows, cols, rm, coldist, body_width, overlen_top, overlen_bott
     kicad_mod.setTags(tags)
 
     # instantiate footprint (SMD origin at center, THT at pin 1)
-    kicad_modg = Footprint(footprint_name, Footprint.THT)
+    kicad_modg = Footprint(footprint_name, FootprintType.THT)
     kicad_mod.append(kicad_modg)
 
     # set general values
@@ -474,7 +474,7 @@ def makeIdcHeader(rows, cols, rm, coldist, body_width, overlen_top, overlen_bott
                     {'x':l_fab + wall_thickness, 'y':center_fab[1] + notch_width/2}, {'x':l_fab + wall_thickness, 'y':center_fab[1] + notch_width/2},
                     {'x':l_fab - lyr_offset, 'y':center_fab[1] + notch_width/2}]
                 kicad_mod.append(PolygonLine(polygon=mating_conn_polygon, layer=layer, width=line_width))
-        
+
         # horizontal mating connector 'notch' lines
         if orientation == 'Horizontal' and not latching:
             kicad_modg.append(Line(start=[body_offset - lyr_offset, center_fab[1] - notch_width / 2], end=[l_fab + w_fab + lyr_offset, center_fab[1] - notch_width / 2], layer=layer, width=line_width))
@@ -501,7 +501,7 @@ def makeIdcHeader(rows, cols, rm, coldist, body_width, overlen_top, overlen_bott
                 latch_bottom_polygon = [{'x':center_fab[0] - latch_width/2 - lyr_offset, 'y':t_fab + h_fab + lyr_offset}, {'x':center_fab[0] - latch_width/2 - lyr_offset, 'y':t_fab + h_fab + latch_len + lyr_offset},
                     {'x':center_fab[0] + latch_width/2 + lyr_offset, 'y':t_fab + h_fab + latch_len + lyr_offset}, {'x':center_fab[0] + latch_width/2 + lyr_offset, 'y':t_fab + h_fab + lyr_offset}]
                 kicad_mod.append(PolygonLine(polygon=latch_bottom_polygon, layer=layer, width=line_width))
-    
+
     # horizontal pin outlines (only applies if the body is right of the leftmost pin row)
     #if orientation == 'Horizontal' and not latching:
     if body_offset > 0:
@@ -509,7 +509,7 @@ def makeIdcHeader(rows, cols, rm, coldist, body_width, overlen_top, overlen_bott
             horiz_pin_polygon = [{'x':body_offset, 'y':rm * row - pin_size / 2}, {'x':-pin_size / 2, 'y':rm * row - pin_size / 2},
                 {'x':-pin_size / 2, 'y':rm * row + pin_size / 2}, {'x':body_offset, 'y':rm * row + pin_size / 2}]
             kicad_modg.append(PolygonLine(polygon=horiz_pin_polygon, layer='F.Fab', width=lw_fab))
-    
+
     # silk pin 1 mark (triangle to the left of pin 1)
     slk_mark_height = 1
     slk_mark_width = 1
@@ -520,7 +520,7 @@ def makeIdcHeader(rows, cols, rm, coldist, body_width, overlen_top, overlen_bott
         slk_polygon = [{'x':slk_mark_tip, 'y':0}, {'x':slk_mark_tip - slk_mark_width, 'y':-slk_mark_height / 2},
             {'x':slk_mark_tip - slk_mark_width, 'y':slk_mark_height / 2}, {'x':slk_mark_tip, 'y':0}]
     kicad_mod.append(PolygonLine(polygon=slk_polygon, layer='F.SilkS', width=lw_slk))
-    
+
     # create courtyard
     if ddrill == 0 and orientation == 'Vertical' and not latching:
       #         l_crt =  -pad[0] / 2 - coldist/2- crt_offset
@@ -662,7 +662,7 @@ def makePinHeadAngled(rows, cols, rm, coldist, pack_width, pack_offset, pin_leng
     print(footprint_name)
 
     # init kicad footprint
-    kicad_mod = Footprint(footprint_name, Footprint.THT)
+    kicad_mod = Footprint(footprint_name, FootprintType.THT)
     kicad_mod.setDescription(description)
     kicad_mod.setTags(tags)
 
@@ -817,7 +817,7 @@ def makePinHeadAngled(rows, cols, rm, coldist, pack_width, pack_offset, pin_leng
     else:
         pin1_y = t_slk
     kicad_modg.append(PolygonLine(polygon=[[pin1_x, 0], [pin1_x, pin1_y], [0, pin1_y]], layer='F.SilkS', width=lw_slk))
-    
+
     # create courtyard
     kicad_mod.append(RectLine(start=[roundCrt(l_crt + offset[0]), roundCrt(t_crt + offset[1])],
                               end=[roundCrt(l_crt + offset[0] + w_crt), roundCrt(t_crt + offset[1] + h_crt)],
@@ -934,7 +934,7 @@ def makeSocketStripAngled(rows, cols, rm, coldist, pack_width, pack_offset, pin_
     print(footprint_name)
 
     # init kicad footprint
-    kicad_mod = Footprint(footprint_name, Footprint.THT)
+    kicad_mod = Footprint(footprint_name, FootprintType.THT)
     kicad_mod.setDescription(description)
     kicad_mod.setTags(tags)
 
@@ -995,9 +995,9 @@ def makeSocketStripAngled(rows, cols, rm, coldist, pack_width, pack_offset, pin_
                 y = y + lw_slk
         y1 = y1 + rm
         yp = yp + rm
-    
+
     kicad_modg.append(PolygonLine(polygon=[[0, -rm / 2], [rm / 2, -rm / 2], [rm / 2, 0]], layer='F.SilkS', width=lw_slk))
-    
+
     # create courtyard
     kicad_mod.append(RectLine(start=[roundCrt(l_crt + offset[0]), roundCrt(t_crt + offset[1])],
                               end=[roundCrt(l_crt + offset[0] + w_crt), roundCrt(t_crt + offset[1] + h_crt)],

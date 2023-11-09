@@ -29,7 +29,7 @@ class FileHandler(object):
     :Example:
 
     >>> from KicadModTree import *
-    >>> kicad_mod = Footprint("example_footprint", Footprint.THT)
+    >>> kicad_mod = Footprint("example_footprint", FootprintType.THT)
     >>> file_handler = KicadFileHandler(kicad_mod)  # KicadFileHandler is a implementation of FileHandler
     >>> file_handler.writeFile('example_footprint.kicad_mod')
     """
@@ -48,7 +48,7 @@ class FileHandler(object):
         :Example:
 
         >>> from KicadModTree import *
-        >>> kicad_mod = Footprint("example_footprint", Footprint.THT)
+        >>> kicad_mod = Footprint("example_footprint", FootprintType.THT)
         >>> file_handler = KicadFileHandler(kicad_mod)  # KicadFileHandler is a implementation of FileHandler
         >>> file_handler.writeFile('example_footprint.kicad_mod')
         """
@@ -69,7 +69,7 @@ class FileHandler(object):
         :Example:
 
         >>> from KicadModTree import *
-        >>> kicad_mod = Footprint("example_footprint", Footprint.THT)
+        >>> kicad_mod = Footprint("example_footprint", FootprintType.THT)
         >>> file_handler = KicadFileHandler(kicad_mod)  # KicadFileHandler is a implementation of FileHandler
         >>> print(file_handler.serialize())
         """

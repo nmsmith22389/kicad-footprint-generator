@@ -177,7 +177,7 @@ def makeLEDRadial(rm, w, h, ddrill, win=0, rin=0, pins=2, type="round", x_3d=[0,
             myfile.write("print(\"created {0}\")\n".format(footprint_name))
 
     # init kicad footprint
-    kicad_mod = Footprint(footprint_name, Footprint.THT)
+    kicad_mod = Footprint(footprint_name, FootprintType.THT)
     kicad_mod.setDescription(description)
     kicad_mod.setTags(tags)
 
@@ -469,7 +469,7 @@ def makeLEDHorizontal(pins=2,rm=2.544,dled=5,dledout=5.8,offsetled=2.54,wled=8.6
             myfile.write("print(\"created {0}\")\n".format(footprint_name))
 
     # init kicad footprint
-    kicad_mod = Footprint(footprint_name, Footprint.THT)
+    kicad_mod = Footprint(footprint_name, FootprintType.THT)
     kicad_mod.setDescription(description)
     kicad_mod.setTags(tags)
 

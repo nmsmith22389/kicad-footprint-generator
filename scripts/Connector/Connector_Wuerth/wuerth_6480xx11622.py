@@ -60,7 +60,7 @@ def generate_one_footprint(pincount, configuration):
         mpn=mpn, num_rows=number_of_rows, pins_per_row=pincount, mounting_pad = "",
         pitch=pitch, orientation=orientation_str)
 
-    kicad_mod = Footprint(footprint_name, Footprint.THT)
+    kicad_mod = Footprint(footprint_name, FootprintType.THT)
     kicad_mod.setDescription("{:s} {:s} series connector, {:s} ({:s}), generated with kicad-footprint-generator".format(manufacturer, series, mpn, datasheet))
     kicad_mod.setTags(configuration['keyword_fp_string'].format(series=series,
         orientation=orientation_str, man=manufacturer,
@@ -120,8 +120,8 @@ def generate_one_footprint(pincount, configuration):
         {'x':silk_x_min-pin1_marker_offset, 'y':silk_y_min-pin1_marker_offset+pin1_marker_linelen}
     ]
     kicad_mod.append(PolygonLine(polygon=poly_pin1_marker, layer='F.SilkS', width=configuration['silk_line_width']))
-    
-    
+
+
     ############################# CrtYd ##################################
     part_x_min = x_min
     part_x_max = x_max

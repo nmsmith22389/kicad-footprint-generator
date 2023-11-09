@@ -278,7 +278,7 @@ def makePotentiometerHorizontal(class_name="", wbody=0, hbody=0, dscrew=0, style
             myfile.write("print(\"created {0}\")\n".format(footprint_name))
 
     # init kicad footprint
-    kicad_mod = Footprint(footprint_name, Footprint.THT)
+    kicad_mod = Footprint(footprint_name, FootprintType.THT)
     kicad_mod.setDescription(description)
     kicad_mod.setTags(tags)
 
@@ -668,7 +668,7 @@ def makePotentiometerVertical(class_name, wbody, hbody, screwstyle="none", style
 
                 # vertical pot with circular body: place refdes on F.Fab inside left edge of body
                 kicad_modg.append(Text(type='user', text='${REFERENCE}', at=[lbody_fab + 1, ctbody_fab], layer='F.Fab', rotation = 90))
-                
+
                 kicad_modg.append(PolygonLine(polygon=[[clbody_fab - dx, ctbody_fab - dy], [lbody_fab, ctbody_fab - dy],
                                                         [lbody_fab, ctbody_fab + dy], [clbody_fab - dx, ctbody_fab + dy]], layer='F.Fab', width=lw_fab))
             elif drawbody:

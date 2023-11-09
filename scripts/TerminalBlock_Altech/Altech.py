@@ -46,7 +46,7 @@ def qfn(args):
         footprint_name = footprint_name + '_P' + '{:.2f}'.format(PS) + "mm"
         footprint_name = footprint_name + '_45-Degree'
 
-        f = Footprint(footprint_name, Footprint.THT)
+        f = Footprint(footprint_name, FootprintType.THT)
 
 
         file3Dname = "${KICAD7_3DMODEL_DIR}/" + dest_dir_3D_prefix + "/" + footprint_name + ".wrl"
