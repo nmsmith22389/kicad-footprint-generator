@@ -163,3 +163,65 @@ Converter_DCDC_TRACO_TDU1-xxxx_THT:
     ["tht", "5", 7.62, -7.62, 1.5, 1.5, 1],
     ["tht", "7", 7.62, -2.54, 1.5, 1.5, 1]
   ]
+
+Converter_DCDC_TRACO_TMA-05xxS_12xxS_Single_THT:
+  library_name: 'Converter_DCDC'
+  description: "DCDC-Converter, TRACO, TMA-05xxS, TMA-12xxS, Single, 1W, Rev. November 10. 2023"
+  datasheet: "https://www.tracopower.com/products/tma.pdf"
+  tags: "DCDC-Converter TRACO TMA THT SIP-7 1W"
+  extratexts: []
+  at: [-4.925, 2.1]
+  size: [6.1, 19.5]
+  pins: [
+    ["thtr", "1", 0, 0, 1.5, 1.5, 1],
+    ["tht", "2", 0, -2.54, 1.5, 1.5, 1],
+    ["tht", "4", 0, -7.62, 1.5, 1.5, 1],
+    ["tht", "6", 0, -12.7, 1.5, 1.5, 1]
+  ]
+
+Converter_DCDC_TRACO_TMA-05xxD_12xxD_Dual_THT:
+  library_name: 'Converter_DCDC'
+  description: "DCDC-Converter, TRACO, TMA-05xxD, TMA-12xxD, Dual, 1W, Rev. November 10. 2023"
+  datasheet: "https://www.tracopower.com/products/tma.pdf"
+  tags: "DCDC-Converter TRACO TMA THT SIP-7 1W"
+  extratexts: []
+  at: [-4.925, 2.1]
+  size: [6.1, 19.5]
+  pins: [
+    ["thtr", "1", 0, 0, 1.5, 1.5, 1],
+    ["tht", "2", 0, -2.54, 1.5, 1.5, 1],
+    ["tht", "4", 0, -7.62, 1.5, 1.5, 1],
+    ["tht", "5", 0, -10.16, 1.5, 1.5, 1],
+    ["tht", "6", 0, -12.7, 1.5, 1.5, 1]
+  ]
+
+Converter_DCDC_TRACO_TMA-15xxS_24xxS_Single_THT:
+  library_name: 'Converter_DCDC'
+  description: "DCDC-Converter, TRACO, TMA-15xxS, TMA-24xxS, Single, 1W, Rev. November 10. 2023"
+  datasheet: "https://www.tracopower.com/products/tma.pdf"
+  tags: "DCDC-Converter TRACO TMA THT SIP-7 1W"
+  extratexts: []
+  at: [-5.925, 2.1]
+  size: [7.1, 19.5]
+  pins: [
+    ["thtr", "1", 0, 0, 1.5, 1.5, 1],
+    ["tht", "2", 0, -2.54, 1.5, 1.5, 1],
+    ["tht", "4", 0, -7.62, 1.5, 1.5, 1],
+    ["tht", "6", 0, -12.7, 1.5, 1.5, 1]
+  ]
+
+Converter_DCDC_TRACO_TMA-15xxD_24xxD_Dual_THT:
+  library_name: 'Converter_DCDC'
+  description: "DCDC-Converter, TRACO, TMA-15xxD, TMA-25xxD, Dual, 1W, Rev. November 10. 2023"
+  datasheet: "https://www.tracopower.com/products/tma.pdf"
+  tags: "DCDC-Converter TRACO TMA THT SIP-7 1W"
+  extratexts: []
+  at: [-5.925, 2.1]
+  size: [7.1, 19.5]
+  pins: [
+    ["thtr", "1", 0, 0, 1.5, 1.5, 1],
+    ["tht", "2", 0, -2.54, 1.5, 1.5, 1],
+    ["tht", "4", 0, -7.62, 1.5, 1.5, 1],
+    ["tht", "5", 0, -10.16, 1.5, 1.5, 1],
+    ["tht", "6", 0, -12.7, 1.5, 1.5, 1]
+  ]
