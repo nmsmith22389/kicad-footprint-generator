@@ -74,6 +74,7 @@ Converter_DCDC_TRACO_TEA1-xxxxHI_THT:
   ]
 
 Converter_DCDC_TRACO_TSR1-xxxxE_THT:
+  library_name: 'Converter_DCDC'
   description: "DCDC-Converter, TRACO, TSR1-xxxxE, 1A, Rev. October 31. 2023"
   datasheet: "https://www.tracopower.com/products/tsr1e.pdf"
   tags: "DCDC-Converter SWITCHING-REGULATOR STEP-DOWN TRACO TSR1E 2.54MM THT SIP-3 1A"
