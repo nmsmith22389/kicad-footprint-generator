@@ -225,3 +225,33 @@ Converter_DCDC_TRACO_TMA-15xxD_24xxD_Dual_THT:
     ["tht", "5", 0, -10.16, 1.5, 1.5, 1],
     ["tht", "6", 0, -12.7, 1.5, 1.5, 1]
   ]
+
+Converter_DCDC_TRACO_TMU3-05xx_12xx_THT:
+  library_name: 'Converter_DCDC'
+  description: "DCDC-Converter, TRACO, TMU3-05xx, TMU3-12xx, 3W, Rev. November 10. 2023"
+  datasheet: "https://www.tracopower.com/products/tmu3.pdf"
+  tags: "DCDC-Converter TRACO TMU3 THT SIP-4 3W"
+  extratexts: []
+  at: [-2.475, 1.9]
+  size: [8.6, 11.5]
+  pins: [
+    ["thtr", "1", 0, 0, 1.6, 1.6, 1.1],
+    ["tht", "2", 0, -2.54, 1.6, 1.6, 1.1],
+    ["tht", "3", 0, -5.08, 1.6, 1.6, 1.1],
+    ["tht", "4", 0, -7.62, 1.6, 1.6, 1.1]
+  ]
+
+Converter_DCDC_TRACO_TMU3-24xx_THT:
+  library_name: 'Converter_DCDC'
+  description: "DCDC-Converter, TRACO, TMU3-24xx, 3W, Rev. November 10. 2023"
+  datasheet: "https://www.tracopower.com/products/tmu3.pdf"
+  tags: "DCDC-Converter TRACO TMU3 THT SIP-4 3W"
+  extratexts: []
+  at: [-2.475, 1.9]
+  size: [9.6, 11.5]
+  pins: [
+    ["thtr", "1", 0, 0, 1.6, 1.6, 1.1],
+    ["tht", "2", 0, -2.54, 1.6, 1.6, 1.1],
+    ["tht", "3", 0, -5.08, 1.6, 1.6, 1.1],
+    ["tht", "4", 0, -7.62, 1.6, 1.6, 1.1]
+  ]
