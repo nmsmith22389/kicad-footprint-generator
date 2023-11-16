@@ -255,3 +255,18 @@ Converter_DCDC_TRACO_TMU3-24xx_THT:
     ["tht", "3", 0, -5.08, 1.6, 1.6, 1.1],
     ["tht", "4", 0, -7.62, 1.6, 1.6, 1.1]
   ]
+
+Converter_DCDC_TRACO_TRI1-xxxx_THT:
+  library_name: 'Converter_DCDC'
+  description: "DCDC-Converter, TRACO, TRI1-xxxx, 1W, Rev. November 13. 2023"
+  datasheet: "https://www.tracopower.com/products/tri1.pdf"
+  tags: "DCDC-Converter TRACO TRI1 THT SIP-7 1W"
+  extratexts: []
+  at: [-5.625, 3.5]
+  size: [7.5, 22]
+  pins: [
+    ["thtr", "1", 0, 0, 1.5, 1.5, 1],
+    ["tht", "2", 0, -2.54, 1.5, 1.5, 1],
+    ["tht", "6", 0, -12.7, 1.5, 1.5, 1],
+    ["tht", "7", 0, -15.24, 1.5, 1.5, 1]
+  ]
