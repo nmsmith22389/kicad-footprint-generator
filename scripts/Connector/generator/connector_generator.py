@@ -558,6 +558,10 @@ def make_pin1_marker(*, pos, radius, shape, flip_marker, width, offset):
     offset_vec = Vector2D(0, offset * (1 if flip_marker else -1))
     if (shape == "circle"):
         pin1_silk = Circle(center=pos - offset_vec, radius=radius, layer='F.SilkS', width=width)
+    elif (shape == 'line'):
+        line_midlength = Vector2D(radius, 0)
+        pnts = [pos-offset_vec-line_midlength, pos-offset_vec+line_midlength]
+        pin1_silk = PolygonLine(nodes=pnts, layer='F.SilkS', width=width)
     elif (shape == "triangle"):
         pnts = []
         for n in range(3):
