@@ -855,3 +855,26 @@ Texas_BGA-289_15.0x15.0mm_Layout17x17_P0.8mm_Ball0.5mm_Pad0.4mm:
   pad_diameter: 0.4
   layout_x: 17
   layout_y: 17
+
+Alliance_TFBGA-54_8x8mm_Layout9x9_P0.8mm:
+  description: "Alliance TFBGA 54 pins"
+  size_source: "https://www.alliancememory.com/wp-content/uploads/pdf/dram/Alliance_Memory_64M-AS4C4M16SA-CI_v5.0_October_2018.pdf#page=54"
+  body_size_x: 8
+  body_size_y: 8
+  overall_height: 1.2
+  pitch: 0.8
+  ball_diameter: 0.45
+  ball_type: 'collapsible'
+  layout_x: 9
+  layout_y: 9
+  row_skips: [
+    [4,5,6],
+    [4,5,6],
+    [4,5,6],
+    [4,5,6],
+    [4,5,6],
+    [4,5,6],
+    [4,5,6],
+    [4,5,6],
+    [4,5,6],
+  ]
