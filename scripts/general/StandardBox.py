@@ -16,7 +16,7 @@
 import sys
 import os
 
-sys.path.append(os.path.join(sys.path[0],"..","tools")) # load kicad_mod path
+sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)),"..","tools")) # load kicad_mod path
 
 
 #
@@ -1056,42 +1056,32 @@ class StandardBox(Node):
             sx = n[4]
             sy = n[5]
             dh = n[6]
+            new_pad = False
             if n[0] == 'tht':
                 if c == '1':
                     new_pad = Pad(number=c, type=Pad.TYPE_THT, shape=Pad.SHAPE_RECT,
                                   at=[x, 0.0 - y], size=[sx, sy], drill=dh, layers=Pad.LAYERS_THT)
-                    self.footprint.append(new_pad)
-                    self.pad.append(new_pad)
                 else:
                     new_pad = Pad(number=c, type=Pad.TYPE_THT, shape=Pad.SHAPE_CIRCLE,
                                   at=[x, 0.0 - y], size=[sx, sy], drill=dh, layers=Pad.LAYERS_THT)
-                    self.footprint.append(new_pad)
-                    self.pad.append(new_pad)
             if n[0] == 'thtr':
                 if c == '1':
                     new_pad = Pad(number=c, type=Pad.TYPE_THT, shape=Pad.SHAPE_RECT,
                                   at=[x, 0.0 - y], size=[sx, sy], drill=dh, layers=Pad.LAYERS_THT)
-                    self.footprint.append(new_pad)
-                    self.pad.append(new_pad)
                 else:
                     new_pad = Pad(number=c, type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL,
                                   at=[x, 0.0 - y], size=[sx, sy], drill=dh, layers=Pad.LAYERS_THT)
-                    self.footprint.append(new_pad)
-                    self.pad.append(new_pad)
             elif n[0] == 'smd':
                     new_pad = Pad(number=c, type=Pad.TYPE_SMT, shape=Pad.SHAPE_ROUNDRECT, radius_ratio=0.25,
                                   at=[x, 0.0 - y], size=[sx, sy], drill=dh, layers=Pad.LAYERS_SMT)
-                    self.footprint.append(new_pad)
-                    self.pad.append(new_pad)
             elif n[0] == 'npth':
                     if sy == 0:
                         new_pad = Pad(type=Pad.TYPE_NPTH, shape=Pad.SHAPE_CIRCLE,
                                       at=[x, 0.0 - y], size=[sx, sx], drill=dh, layers=Pad.LAYERS_NPTH)
-                        self.footprint.append(new_pad)
-                        self.pad.append(new_pad)
                     else:
                         new_pad = Pad(type=Pad.TYPE_NPTH, shape=Pad.SHAPE_RECT,
                                       at=[x, 0.0 - y], size=[sx, sy], drill=dh, layers=Pad.LAYERS_NPTH)
-                        self.footprint.append(new_pad)
-                        self.pad.append(new_pad)
+            if new_pad != False:
+                    self.footprint.append(new_pad)
+                    self.pad.append(new_pad)
             #
