@@ -79,17 +79,19 @@ class StandardBox(Node):
         * *datasheet* (``str``) --
           The url to the data sheet
         * *at* (``Point``) --
-          Where is upper left corner, in cartesian coordinate system (minus y below x axis)
+          Where is upper left corner, in Cartesian coordinate system (minus y below x axis)
         * *size* (``Point``) --
           The width and height of the rectangle
         * *tags* (``str``) --
-          A foot prints tag attribute
+          A footprints tag attribute
         * *extratexts* (``list(x, y, 'text', layer, sizex, sizey)``) --
           A list of extra txts to be placed on the footprint
         * *pins* (``list(type, number, x, y, sizex, sizey, drill)``) --
-          List of tht/smd/npth holes
-        * *courtyard_clearance* (``float``) --
-          Clearance between nominal body and courtyard outline
+          List of THT/SMD/NPTH holes
+        * *courtyard_clearance* (``Vector2D``) --
+          Clearance between nominal body rectangle and courtyard outline in each axis (default (0.25, 0.25))
+        * *fab_to_silk_clearance* (``Vector2D``) --
+          Clearance between the edge of the fab line and edge of the silk line in each axis (default: (0, 0))
         * *file3Dname* (``str``) --
           The path to the 3D model name
 
@@ -105,32 +107,37 @@ class StandardBox(Node):
     >>> StandardBox(footprint=f, description=description, ....)
     """
 
+    courtyard_clearance: Vector2D
+    fab_silk_clearance: Vector2D
+
     def __init__(self, **kwargs):
         Node.__init__(self)
 
-        #
+        default_ipc_courtyard_mm = 0.25
+
+        self.courtyard_clearance = kwargs.get('courtyard_clearance', Vector2D(
+            default_ipc_courtyard_mm, default_ipc_courtyard_mm))
+
+        # By default fab just touches the fab outline
+        self.fab_silk_clearance = kwargs.get('fab_to_silk_clearance', Vector2D(0, 0))
+
+        self.extraffablines = kwargs.get('extraffablines')
+        self.typeOfBox = str(kwargs.get('typeOfBox'))
+        self.pins = kwargs.get('pins')
+
         self.virtual_childs = []
-        #
+
         self._initPosition(**kwargs)
         self._initSize(**kwargs)
         self._initFootPrint(**kwargs)
-        #
-        #
-        #
+
         self._initDesriptionNode(**kwargs)
         self._initTagNode(**kwargs)
         self._initFile3DNameNode(**kwargs)
         self._initExtraTextNode(**kwargs)
 
-        self.extraffablines = kwargs.get('extraffablines')
-        self.typeOfBox = str(kwargs.get('typeOfBox'))
-        self.pins = kwargs.get('pins')
-        self.courtyard_clearance = kwargs.get('courtyard_clearance', 0.25)
-
         #
         # Create foot print parts
-        #
-        #
         self._createPinsNode()
         self._createFFabLine()
         self._createPin1MarkerLine()
@@ -162,6 +169,20 @@ class StandardBox(Node):
                 self.corners = size_original[2:]
             self.size = Point2D(size_original[0], size_original[1])
 
+    def _createFSilkRefDesText(self):
+
+        silk_ref_des_size = [1, 1]
+        corner_pos = self._getPin1ChevronCorner()
+
+        # No specific reason for this exact value, seems about right
+        ref_des_x_inset = 2.5
+        # place the silk avoiding the pin 1 marker
+        silk_ref_des_pos = corner_pos + Point2D(ref_des_x_inset, -silk_ref_des_size[1] / 2 - 2 * self.FSilkSWidth)
+
+        new_node = Text(type='reference', text='REF**', at=silk_ref_des_pos, size=silk_ref_des_size, layer='F.SilkS')
+        new_node._parent = self
+        return new_node
+
     def _initFootPrint(self, **kwargs):
         if 'footprint' not in kwargs:
             raise KeyError('footprint node is missing')
@@ -177,7 +198,10 @@ class StandardBox(Node):
         self.p1m = 3.0
         self.REF_P_w = 1.0
         self.REF_P_h = 1.0
-        #
+
+        # Leave one line width between the lines
+        self.pin1_mark_outset = Vector2D(self.FSilkSWidth, self.FSilkSWidth)
+
         if self.size.x < 8.0 or self.size.y < 8.0:
             dd = self.size.y / 3.0
             if self.size.x < self.size.y:
@@ -188,19 +212,22 @@ class StandardBox(Node):
                 self.REF_P_w = dd
                 self.REF_P_h = self.REF_P_w
 
-        new_node = Text(type='user', text='${REFERENCE}', at=[self.at.x + (self.size.x / 2.0),
-                        self.at.y + (self.size.y / 2.0)], layer='F.Fab', size=[self.REF_P_w, self.REF_P_h])
+        fab_ref_des_pos = self.at + (self.size / 2)
+        new_node = Text(type='user', text='${REFERENCE}', at=fab_ref_des_pos, layer='F.Fab', size=[self.REF_P_w, self.REF_P_h])
         new_node._parent = self
         self.virtual_childs.append(new_node)
-        #
-        #
-        new_node = Text(type='reference', text='REF**', at=[self.at.x + 2.5, self.at.y - 1.2], layer='F.SilkS')
-        new_node._parent = self
-        self.virtual_childs.append(new_node)
-        #
-        #
-        new_node = Text(type="value", text=self.footprint_name,
-                        at=[self.at.x + (self.size.x / 2.0), self.at.y + self.size.y + 1.0], layer="F.Fab")
+
+        self.virtual_childs.append(self._createFSilkRefDesText())
+
+        # Get the fab value outside both the courtyard and silk
+        fab_value_y_offset = max(self.courtyard_clearance.y, self.fab_silk_clearance.y)
+
+        fab_value_pos = Vector2D(
+            self.at.x + (self.size.x / 2.0),
+            self.at.y + self.size.y + fab_value_y_offset + 1.0
+        )
+
+        new_node = Text(type="value", text=self.footprint_name, at=fab_value_pos, layer="F.Fab")
         new_node._parent = self
         self.virtual_childs.append(new_node)
 
@@ -386,29 +413,44 @@ class StandardBox(Node):
             new_node._parent = self
             self.virtual_childs.append(new_node)
 
+    def _getPin1ChevronCorner(self) -> Vector2D:
+        main_silk_outset = self._getMainFSilkOutsetFromFabLineCentre()
+
+        # The pin 1 is outset again from the main silk line to the left and up
+        outset = self.pin1_mark_outset + main_silk_outset + self.FSilkSWidth
+        return self.at - outset
+
+    def _getMainFSilkOutsetFromFabLineCentre(self) -> Vector2D:
+        # At the closest, don't overlap the fab line
+        return Vector2D(
+            max(self.fab_silk_clearance.x, self.FFabWidth / 2),
+            max(self.fab_silk_clearance.y, self.FFabWidth / 2)
+        ) + Vector2D(self.FSilkSWidth / 2, self.FSilkSWidth / 2)
+
     def _createPin1MarkerLine(self):
         #
         # Add pin 1 marker line
         #
-        x1 = self.at.x - 0.5
-        y1 = self.at.y - 0.5
-        #
-        new_node = Line(start=Point2D(x1, y1 + self.p1m), end=Point2D(x1, y1), layer='F.SilkS', width=self.FSilkSWidth)
+
+        corner_pos = self._getPin1ChevronCorner()
+
+        new_node = Line(start=corner_pos + Vector2D(0, self.p1m), end=corner_pos, layer='F.SilkS',
+                        width=self.FSilkSWidth)
         new_node._parent = self
         self.virtual_childs.append(new_node)
-        #
-        new_node = Line(start=Point2D(x1, y1), end=Point2D(x1 + self.p1m, y1), layer='F.SilkS', width=self.FSilkSWidth)
+
+        new_node = Line(start=corner_pos, end=corner_pos + Vector2D(self.p1m, 0), layer='F.SilkS',
+                        width=self.FSilkSWidth)
         new_node._parent = self
         self.virtual_childs.append(new_node)
 
     def _createFSilkSLine(self):
         self.fsilksline = []
-        #
-        #
-        #
+
+        fab_silk_outset = self._getMainFSilkOutsetFromFabLineCentre()
+
         # Check all holes and pads, if a pad or hole is on the silk line
         # then jump over the pad/hole
-        #
         for n in self.boxffabline:
             x1 = min(n.sx, n.ex)
             y1 = min(n.sy, n.ey)
@@ -420,23 +462,23 @@ class StandardBox(Node):
                 #
                 # Top and bottom line
                 #
-                x1_t = x1 - 0.12
-                x2_t = x2 + 0.12
+                x1_t = x1 - fab_silk_outset.x
+                x2_t = x2 + fab_silk_outset.x
                 x3_t = x1_t
                 x4_t = x2_t
                 #
                 if y1 < 0.0:
                     # Top line
-                    y1_t = y1 - 0.12
-                    y2_t = y2 - 0.12
+                    y1_t = y1 - fab_silk_outset.y
+                    y2_t = y2 - fab_silk_outset.y
                     y3_t = y1_t
                     y4_t = y2_t
                     #
                     for nn in self.corners:
                         if nn[0] == 'URR':
-                            x2_t = x2_t - (nn[1] + 0.12)
+                            x2_t = x2_t - (nn[1] + fab_silk_outset.x)
                         if nn[0] == 'ULR':
-                            x1_t = x1_t + (nn[1] + 0.12)
+                            x1_t = x1_t + (nn[1] + fab_silk_outset.x)
                         if nn[0] == 'ULP':
                             x3_t = x1_t
                             x1_t = x1_t + (nn[1])
@@ -447,16 +489,16 @@ class StandardBox(Node):
                             y4_t = y1_t + (nn[2])
                 else:
                     # Bottom line
-                    y1_t = y1 + 0.12
-                    y2_t = y2 + 0.12
+                    y1_t = y1 + fab_silk_outset.y
+                    y2_t = y2 + fab_silk_outset.y
                     y3_t = y1_t
                     y4_t = y2_t
                     #
                     for nn in self.corners:
                         if nn[0] == 'LRR':
-                            x2_t = x2_t - (nn[1] + 0.12)
+                            x2_t = x2_t - (nn[1] + fab_silk_outset.x)
                         if nn[0] == 'LLR':
-                            x1_t = x1_t + (nn[1] + 0.12)
+                            x1_t = x1_t + (nn[1] + fab_silk_outset.x)
                         if nn[0] == 'LLP':
                             x3_t = x1_t
                             x1_t = x1_t + (nn[1])
@@ -507,8 +549,8 @@ class StandardBox(Node):
                             # Top line
                             for nn in self.corners:
                                 if nn[0] == 'ULR':
-                                    urcdy0 = y1_t + (nn[1] + 0.12)
-                                    urcdx1 = x1_t - (nn[1] + 0.12)
+                                    urcdy0 = y1_t + (nn[1] + fab_silk_outset.y)
+                                    urcdx1 = x1_t - (nn[1] + fab_silk_outset.x)
                                     new_node = Arc(center=Point2D(x1_t, urcdy0), start=Point2D(urcdx1, urcdy0), layer='F.SilkS', width=self.FSilkSWidth, angle=90.0)
                                     new_node._parent = self
                                     self.virtual_childs.append(new_node)
@@ -534,7 +576,7 @@ class StandardBox(Node):
                             # Bottom line
                             for nn in self.corners:
                                 if nn[0] == 'LLR':
-                                    urcdy0 = y1_t - (nn[1] + 0.12)
+                                    urcdy0 = y1_t - (nn[1] + fab_silk_outset.y)
                                     new_node = Arc(center=Point2D(x1_t, urcdy0), start=Point2D(x1_t, y1_t), layer='F.SilkS', width=self.FSilkSWidth, angle=90.0)
                                     new_node._parent = self
                                     self.virtual_childs.append(new_node)
@@ -568,7 +610,7 @@ class StandardBox(Node):
                     #
                     for nn in self.corners:
                         if nn[0] == 'URR':
-                            urcdy1 = y1_t + (nn[1] + 0.12)
+                            urcdy1 = y1_t + (nn[1] + fab_silk_outset.y)
                             new_node = Arc(center=Point2D(x2_t, urcdy1), start=Point2D(x2_t, y2_t), layer='F.SilkS', width=self.FSilkSWidth, angle=90.0)
                             new_node._parent = self
                             self.virtual_childs.append(new_node)
@@ -578,8 +620,8 @@ class StandardBox(Node):
                     #
                     for nn in self.corners:
                         if nn[0] == 'LRR':
-                            urcdx1 = x2_t + (nn[1] + 0.12)
-                            urcdy1 = y2_t - (nn[1] + 0.12)
+                            urcdx1 = x2_t + (nn[1] + fab_silk_outset.x)
+                            urcdy1 = y2_t - (nn[1] + fab_silk_outset.y)
                             new_node = Arc(center=Point2D(x2_t, urcdy1), start=Point2D(urcdx1, urcdy1), layer='F.SilkS', width=self.FSilkSWidth, angle=90.0)
                             new_node._parent = self
                             self.virtual_childs.append(new_node)
@@ -588,19 +630,19 @@ class StandardBox(Node):
                 #
                 # Left and right line
                 #
-                y1_t = y1 - 0.12
-                y2_t = y2 + 0.12
+                y1_t = y1 - fab_silk_outset.y
+                y2_t = y2 + fab_silk_outset.y
                 #
                 if x1 < 0.0:
                     # Left line
-                    x1_t = min(x1 - 0.12, x2 - 0.12)
-                    x2_t = max(x1 - 0.12, x2 - 0.12)
+                    x1_t = min(x1 - fab_silk_outset.x, x2 - fab_silk_outset.x)
+                    x2_t = max(x1 - fab_silk_outset.x, x2 - fab_silk_outset.x)
 
                     for nn in self.corners:
                         if nn[0] == 'ULR':
-                            y1_t = y1_t + (nn[1] + 0.12)
+                            y1_t = y1_t + (nn[1] + fab_silk_outset.y)
                         if nn[0] == 'LLR':
-                            y2_t = y2_t - (nn[1] + 0.12)
+                            y2_t = y2_t - (nn[1] + fab_silk_outset.y)
                         if nn[0] == 'ULP':
                             y1_t = y1_t + (nn[2])
                         if nn[0] == 'LLP':
@@ -608,15 +650,15 @@ class StandardBox(Node):
 
                 else:
                     # Right line
-                    x1_t = min(x1 + 0.12, x2 + 0.12)
-                    x2_t = max(x1 + 0.12, x2 + 0.12)
+                    x1_t = min(x1 + fab_silk_outset.x, x2 + fab_silk_outset.x)
+                    x2_t = max(x1 + fab_silk_outset.x, x2 + fab_silk_outset.x)
 
                     #
                     for nn in self.corners:
                         if nn[0] == 'URR':
-                            y1_t = y1_t + (nn[1] + 0.12)
+                            y1_t = y1_t + (nn[1] + fab_silk_outset.y)
                         if nn[0] == 'LRR':
-                            y2_t = y2_t - (nn[1] + 0.12)
+                            y2_t = y2_t - (nn[1] + fab_silk_outset.y)
                         if nn[0] == 'URP':
                             y1_t = y1_t + (nn[2])
                         if nn[0] == 'LRP':
@@ -693,23 +735,23 @@ class StandardBox(Node):
                 #
                 # Top and bottom line
                 #
-                x1_t = x1 - clearance
-                x2_t = x2 + clearance
+                x1_t = x1 - clearance.x
+                x2_t = x2 + clearance.x
                 x3_t = x1_t
                 x4_t = x2_t
                 #
                 if y1 < 0.0:
                     # Top line
-                    y1_t = y1 - clearance
-                    y2_t = y2 - clearance
+                    y1_t = y1 - clearance.y
+                    y2_t = y2 - clearance.y
                     y3_t = y1_t
                     y4_t = y2_t
                     #
                     for nn in self.corners:
                         if nn[0] == 'URR':
-                            x2_t = x2_t - (nn[1] + clearance)
+                            x2_t = x2_t - (nn[1] + clearance.x)
                         if nn[0] == 'ULR':
-                            x1_t = x1_t + (nn[1] + clearance)
+                            x1_t = x1_t + (nn[1] + clearance.x)
                         if nn[0] == 'ULP':
                             x3_t = x1_t
                             x1_t = x1_t + (nn[1])
@@ -721,16 +763,16 @@ class StandardBox(Node):
 
                 else:
                     # Bottom line
-                    y1_t = y1 + clearance
-                    y2_t = y2 + clearance
+                    y1_t = y1 + clearance.y
+                    y2_t = y2 + clearance.y
                     y3_t = y1_t
                     y4_t = y2_t
                     #
                     for nn in self.corners:
                         if nn[0] == 'LRR':
-                            x2_t = x2_t - (nn[1] + clearance)
+                            x2_t = x2_t - (nn[1] + clearance.x)
                         if nn[0] == 'LLR':
-                            x1_t = x1_t + (nn[1] + clearance)
+                            x1_t = x1_t + (nn[1] + clearance.x)
                         if nn[0] == 'LLP':
                             x3_t = x1_t
                             x1_t = x1_t + (nn[1])
@@ -754,9 +796,10 @@ class StandardBox(Node):
                         n_min_y = n.at.y - (n.size.y / 2.0)
                         n_max_x = n_min_x + n.size.x
                         n_max_y = n_min_y + n.size.y
-                        dd = max(clearance, n.solder_mask_margin)
+                        dd_x = max(clearance.x, n.solder_mask_margin)
+                        dd_y = max(clearance.y, n.solder_mask_margin)
 
-                        if (n_min_y - dd) <= y1_t and (n_max_y + dd) > y1_t and n_max_x > x1_t and n_min_x < x2_t:
+                        if (n_min_y - dd_y) <= y1_t and (n_max_y + dd_y) > y1_t and n_max_x > x1_t and n_min_x < x2_t:
                             #
                             # This pad is in CrtYd line's path
                             #
@@ -770,22 +813,22 @@ class StandardBox(Node):
                         #
                         # Found at least one pad that is in CrtYd's line
                         #
-                        if (px1 - dd) > x1_t:
+                        if (px1 - dd_x) > x1_t:
                             #
                             # It does not cover the start point
                             #
-                            self.fcrtydline.append(koaLine(x1_t, y1_t, px1 - dd, y2_t, 'F.CrtYd', self.FCrtYdWidth))
+                            self.fcrtydline.append(koaLine(x1_t, y1_t, px1 - dd_x, y2_t, 'F.CrtYd', self.FCrtYdWidth))
                             if y1 < 0.0:
                                 # Top line
-                                self.fcrtydline.append(koaLine(px1 - dd, y2_t, px1 - dd, py1 - dd, 'F.CrtYd', self.FCrtYdWidth))
-                                self.fcrtydline.append(koaLine(px1 - dd, py1 - dd, px2 + dd, py1 - dd, 'F.CrtYd', self.FCrtYdWidth))
-                                self.fcrtydline.append(koaLine(px2 + dd, py1 - dd, px2 + dd, y2_t, 'F.CrtYd', self.FCrtYdWidth))
+                                self.fcrtydline.append(koaLine(px1 - dd_x, y2_t, px1 - dd_x, py1 - dd_y, 'F.CrtYd', self.FCrtYdWidth))
+                                self.fcrtydline.append(koaLine(px1 - dd_x, py1 - dd_y, px2 + dd_x, py1 - dd_y, 'F.CrtYd', self.FCrtYdWidth))
+                                self.fcrtydline.append(koaLine(px2 + dd_x, py1 - dd_y, px2 + dd_x, y2_t, 'F.CrtYd', self.FCrtYdWidth))
                             else:
                                 # Bottom line
-                                self.fcrtydline.append(koaLine(px1 - dd, y2_t, px1 - dd, py2 + dd, 'F.CrtYd', self.FCrtYdWidth))
-                                self.fcrtydline.append(koaLine(px1 - dd, py2 + dd, px2 + dd, py2 + dd, 'F.CrtYd', self.FCrtYdWidth))
-                                self.fcrtydline.append(koaLine(px2 + dd, py2 + dd, px2 + dd, y2_t, 'F.CrtYd', self.FCrtYdWidth))
-                        x1_t = px2 + dd
+                                self.fcrtydline.append(koaLine(px1 - dd_x, y2_t, px1 - dd_x, py2 + dd_y, 'F.CrtYd', self.FCrtYdWidth))
+                                self.fcrtydline.append(koaLine(px1 - dd_x, py2 + dd_y, px2 + dd_x, py2 + dd_y, 'F.CrtYd', self.FCrtYdWidth))
+                                self.fcrtydline.append(koaLine(px2 + dd_x, py2 + dd_y, px2 + dd_x, y2_t, 'F.CrtYd', self.FCrtYdWidth))
+                        x1_t = px2 + dd_x
                     else:
                         #
                         # No pads was in the way
@@ -797,8 +840,8 @@ class StandardBox(Node):
                             # Top line
                             for nn in self.corners:
                                 if nn[0] == 'ULR':
-                                    urcdy0 = y1_t + (nn[1] + clearance)
-                                    urcdx1 = x1_t - (nn[1] + clearance)
+                                    urcdy0 = y1_t + (nn[1] + clearance.y)
+                                    urcdx1 = x1_t - (nn[1] + clearance.y)
                                     new_node = Arc(center=Point2D(x1_t, urcdy0), start=Point2D(urcdx1, urcdy0), layer='F.CrtYd', width=self.FCrtYdWidth, angle=90.0)
                                     new_node._parent = self
                                     self.virtual_childs.append(new_node)
@@ -824,7 +867,7 @@ class StandardBox(Node):
                             # Bottom line
                             for nn in self.corners:
                                 if nn[0] == 'LLR':
-                                    urcdy0 = y1_t - (nn[1] + clearance)
+                                    urcdy0 = y1_t - (nn[1] + clearance.y)
                                     new_node = Arc(center=Point2D(x1_t, urcdy0), start=Point2D(x1_t, y1_t), layer='F.CrtYd', width=self.FCrtYdWidth, angle=90.0)
                                     new_node._parent = self
                                     self.virtual_childs.append(new_node)
@@ -858,7 +901,7 @@ class StandardBox(Node):
                     #
                     for nn in self.corners:
                         if nn[0] == 'URR':
-                            urcdy1 = y1_t + (nn[1] + clearance)
+                            urcdy1 = y1_t + (nn[1] + clearance.y)
                             new_node = Arc(center=Point2D(x2_t, urcdy1), start=Point2D(x2_t, y2_t), layer='F.CrtYd', width=self.FCrtYdWidth, angle=90.0)
                             new_node._parent = self
                             self.virtual_childs.append(new_node)
@@ -868,8 +911,8 @@ class StandardBox(Node):
                     #
                     for nn in self.corners:
                         if nn[0] == 'LRR':
-                            urcdx1 = x2_t + (nn[1] + clearance)
-                            urcdy1 = y2_t - (nn[1] + clearance)
+                            urcdx1 = x2_t + (nn[1] + clearance.x)
+                            urcdy1 = y2_t - (nn[1] + clearance.y)
                             new_node = Arc(center=Point2D(x2_t, urcdy1), start=Point2D(urcdx1, urcdy1), layer='F.CrtYd', width=self.FCrtYdWidth, angle=90.0)
                             new_node._parent = self
                             self.virtual_childs.append(new_node)
@@ -878,19 +921,19 @@ class StandardBox(Node):
                 #
                 # Left and right line
                 #
-                y1_t = y1 - clearance
-                y2_t = y2 + clearance
+                y1_t = y1 - clearance.y
+                y2_t = y2 + clearance.y
                 #
                 if x1 < 0.0:
                     # Left line
-                    x1_t = x1 - clearance
-                    x2_t = x1 - clearance
+                    x1_t = x1 - clearance.x
+                    x2_t = x1 - clearance.x
                     #
                     for nn in self.corners:
                         if nn[0] == 'ULR':
-                            y1_t = y1_t + (nn[1] + clearance)
+                            y1_t = y1_t + (nn[1] + clearance.y)
                         if nn[0] == 'LLR':
-                            y2_t = y2_t - (nn[1] + clearance)
+                            y2_t = y2_t - (nn[1] + clearance.y)
                         if nn[0] == 'ULP':
                             y1_t = y1_t + (nn[2])
                         if nn[0] == 'LLP':
@@ -899,14 +942,14 @@ class StandardBox(Node):
                 else:
 
                     # Right line
-                    x1_t = x1 + clearance
-                    x2_t = x2 + clearance
+                    x1_t = x1 + clearance.x
+                    x2_t = x2 + clearance.x
                     #
                     for nn in self.corners:
                         if nn[0] == 'URR':
-                            y1_t = y1_t + (nn[1] + clearance)
+                            y1_t = y1_t + (nn[1] + clearance.y)
                         if nn[0] == 'LRR':
-                            y2_t = y2_t - (nn[1] + clearance)
+                            y2_t = y2_t - (nn[1] + clearance.y)
                         if nn[0] == 'URP':
                             y1_t = y1_t + (nn[2])
                         if nn[0] == 'LRP':
@@ -925,7 +968,8 @@ class StandardBox(Node):
                         n_min_y = n.at.y - (n.size.y / 2.0)
                         n_max_x = n_min_x + n.size.x
                         n_max_y = n_min_y + n.size.y
-                        dd = max(clearance, n.solder_mask_margin)
+                        dd_x = max(clearance.x, n.solder_mask_margin)
+                        dd_y = max(clearance.y, n.solder_mask_margin)
 
                         if (n_min_x <= x1_t) and (n_max_x >= x1_t) and n_max_y >= y1_t and n_min_y <= y2_t:
                             #
@@ -941,29 +985,29 @@ class StandardBox(Node):
                         #
                         # Found at least one pad that is in CrtYd's line
                         #
-                        if (py1 - dd) > y1_t:
+                        if (py1 - dd_y) > y1_t:
                             #
                             # It does not cover the start point
                             #
-                            self.fcrtydline.append(koaLine(x1_t, y1_t, x2_t, py1 - dd, 'F.CrtYd', self.FCrtYdWidth))
+                            self.fcrtydline.append(koaLine(x1_t, y1_t, x2_t, py1 - dd_y, 'F.CrtYd', self.FCrtYdWidth))
                             if x1 < 0.0:
                                 # Left line
-                                self.fcrtydline.append(koaLine(x2_t, py1 - dd, px1 - dd, py1 - dd,
+                                self.fcrtydline.append(koaLine(x2_t, py1 - dd_y, px1 - dd_x, py1 - dd_y,
                                                                'F.CrtYd', self.FCrtYdWidth))
-                                self.fcrtydline.append(koaLine(px1 - dd, py1 - dd, px1 - dd, py2 + dd,
+                                self.fcrtydline.append(koaLine(px1 - dd_x, py1 - dd_y, px1 - dd_x, py2 + dd_y,
                                                                'F.CrtYd', self.FCrtYdWidth))
-                                self.fcrtydline.append(koaLine(px1 - dd, py2 + dd, x2_t, py2 + dd,
+                                self.fcrtydline.append(koaLine(px1 - dd_x, py2 + dd_y, x2_t, py2 + dd_y,
                                                                'F.CrtYd', self.FCrtYdWidth))
                             else:
                                 # Right line
-                                self.fcrtydline.append(koaLine(x2_t, py1 - dd, px2 + dd, py1 - dd,
+                                self.fcrtydline.append(koaLine(x2_t, py1 - dd_y, px2 + dd_x, py1 - dd_y,
                                                                'F.CrtYd', self.FCrtYdWidth))
-                                self.fcrtydline.append(koaLine(px2 + dd, py1 - dd, px2 + dd, py2 + dd,
+                                self.fcrtydline.append(koaLine(px2 + dd_x, py1 - dd_y, px2 + dd_x, py2 + dd_y,
                                                                'F.CrtYd', self.FCrtYdWidth))
-                                self.fcrtydline.append(koaLine(px2 + dd, py2 + dd, x2_t, py2 + dd,
+                                self.fcrtydline.append(koaLine(px2 + dd_x, py2 + dd_y, x2_t, py2 + dd_y,
                                                                'F.CrtYd', self.FCrtYdWidth))
 
-                        y1_t = py2 + dd
+                        y1_t = py2 + dd_y
                     else:
                         #
                         # No pads was in the way
