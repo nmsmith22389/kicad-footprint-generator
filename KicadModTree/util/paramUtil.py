@@ -209,17 +209,3 @@ def getOptionalNumberTypeParam(
     return val
 
 
-def round_to(value, base):
-    r""" Round a value to a given base value
-
-    :param value:
-        The value to round
-
-    :param base:
-        The base value. The resulting value will be rounded to a multiple of it
-
-    :return:
-        The rounded value
-    """
-
-    return round(value/base) * base
