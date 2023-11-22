@@ -26,7 +26,7 @@ sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))  # load parent p
 from math import sqrt
 import argparse
 import yaml
-from helpers import *
+from drawing_tools import roundG
 from KicadModTree import *
 
 from footprint_text_fields import addTextFields
