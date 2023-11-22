@@ -30,6 +30,17 @@ Wago_733-36x:
     y: 8.9
   fp_name: 'Wago_733-36{num_pos:01d}'
   positions: [2, 3, 4, 5, 6, 7, 8, 9]
+  rule_areas:
+    pluggable_connector: # key is unique for each rule area
+      name: 'Pluggable connector' # visible name of the rule area
+      layers: 'F.Cu'  # layers of the rule area
+      shapes:
+        - 'rect': [
+                   [pl-3.25, pb+8.6],
+                   [pr+2.35, pb+8.6+18.05]
+                  ]
+      keepouts:
+        footprints: deny
 
 Wago_733-370:
   inherit: 'Wago_733-36x'
