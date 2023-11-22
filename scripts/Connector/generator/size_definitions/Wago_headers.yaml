@@ -1,4 +1,5 @@
 Wago_733-36x:
+  # This series need centering at top pin 1
   library: 'Wago'
   pad_pitch: 2.5
   row_pitch: null # only one row
@@ -56,6 +57,7 @@ Wago_733-372:
 
 
 Wago_722-83x:
+  # This series need centering at top pin 1
   library: 'Wago'
   pad_pitch: 7.5
   row_pitch: null # only one row
@@ -71,13 +73,13 @@ Wago_722-83x:
     pad:
       shape: 'rect'
       drill: 1.4
-      size: [1.9, 1.9]
+      size: [2.5, 2.5]
   clean_silk: True
   description: 'Socket terminal block, {pad_pitch}mm Pitch, Single Row, {options}'
   tags: 'conn  wire'
   pads:
     drill: 1.4
-    size: [1.9, 1.9]
+    size: [2.5, 2.5]
   source: 'https://www.wago.com/global/pluggable-connectors/tht-male-header/p/722-833'
   options: 'horizontal (right angle)'
   fp_suffix: '_Horizontal'
@@ -130,6 +132,7 @@ Wago_722-842:
 
 Wago_734-53x:
   # This connector needs another pad row at 3.65mm Y distance, with the same numbering
+  # This series need centering at top pin 1
   library: 'Wago'
   pad_pitch: 3.5
   row_pitch: null # only one row
@@ -183,4 +186,5 @@ Wago_734-53x:
                   ]
       keepouts:
         footprints: deny
+
 
