@@ -21,13 +21,14 @@ import os
 
 # export PYTHONPATH="${PYTHONPATH}<path to kicad-footprint-generator directory>"
 sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))  # load parent path of KicadModTree
+sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))  # load parent path of tools
+
 from math import sqrt
 import argparse
 import yaml
-from helpers import *
+from drawing_tools import roundG
 from KicadModTree import *
 
-sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))  # load parent path of tools
 from footprint_text_fields import addTextFields
 
 series = 'HLE'
@@ -379,10 +380,10 @@ def generate_one_footprint(pins_per_row, variant, configuration):
     cy_offset = configuration['courtyard_offset']['connector']
     cy_grid = configuration['courtyard_grid']
 
-    cy_top = roundToBase(bounding_box['top'] - cy_offset, cy_grid)
-    cy_bottom = roundToBase(bounding_box['bottom'] + cy_offset, cy_grid)
-    cy_left = roundToBase(bounding_box['left'] - cy_offset, cy_grid)
-    cy_right = roundToBase(bounding_box['right'] + cy_offset, cy_grid)
+    cy_top = roundG(bounding_box['top'] - cy_offset, cy_grid)
+    cy_bottom = roundG(bounding_box['bottom'] + cy_offset, cy_grid)
+    cy_left = roundG(bounding_box['left'] - cy_offset, cy_grid)
+    cy_right = roundG(bounding_box['right'] + cy_offset, cy_grid)
 
     poly_cy = [
         {'x': cy_left, 'y': cy_top},
