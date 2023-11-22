@@ -29,6 +29,8 @@ def roundGDown(x: float, g: float) -> float:
 
 # round for grid g
 def roundG(x: float, g: float) -> float:
+    if g == 0:
+      return x
     return round(roundGUp(x, g),6) if x > 0 else round(roundGDown(x, g),6)
 
 
