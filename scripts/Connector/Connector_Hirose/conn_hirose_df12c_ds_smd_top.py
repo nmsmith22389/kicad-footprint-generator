@@ -24,7 +24,7 @@ sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))  # load parent path
 from math import sqrt
 import argparse
 import yaml
-from helpers import *
+from drawing_tools import roundG
 from KicadModTree import *
 
 sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))  # load parent path of tools
@@ -175,19 +175,19 @@ def generate_one_footprint(idx, pins, configuration):
     CrtYd_grid = configuration['courtyard_grid']
 
     poly_yd = [
-        {'x': roundToBase(body_edge_out['left'] - CrtYd_offset, CrtYd_grid), 'y': roundToBase(-2.6 - CrtYd_offset, CrtYd_grid)},
-        {'x': roundToBase(body_edge_out['left'] - CrtYd_offset, CrtYd_grid), 'y': roundToBase(2.6 + CrtYd_offset, CrtYd_grid)},
-        {'x': roundToBase(body_edge_out['right'] + CrtYd_offset, CrtYd_grid), 'y': roundToBase(2.6 + CrtYd_offset, CrtYd_grid)},
-        {'x': roundToBase(body_edge_out['right'] + CrtYd_offset, CrtYd_grid), 'y': roundToBase(-2.6 - CrtYd_offset, CrtYd_grid)},
-        {'x': roundToBase(body_edge_out['left'] - CrtYd_offset, CrtYd_grid), 'y': roundToBase(-2.6 - CrtYd_offset, CrtYd_grid)}
+        {'x': roundG(body_edge_out['left'] - CrtYd_offset, CrtYd_grid), 'y': roundG(-2.6 - CrtYd_offset, CrtYd_grid)},
+        {'x': roundG(body_edge_out['left'] - CrtYd_offset, CrtYd_grid), 'y': roundG(2.6 + CrtYd_offset, CrtYd_grid)},
+        {'x': roundG(body_edge_out['right'] + CrtYd_offset, CrtYd_grid), 'y': roundG(2.6 + CrtYd_offset, CrtYd_grid)},
+        {'x': roundG(body_edge_out['right'] + CrtYd_offset, CrtYd_grid), 'y': roundG(-2.6 - CrtYd_offset, CrtYd_grid)},
+        {'x': roundG(body_edge_out['left'] - CrtYd_offset, CrtYd_grid), 'y': roundG(-2.6 - CrtYd_offset, CrtYd_grid)}
     ]
 
     kicad_mod.append(PolygonLine(polygon=poly_yd,
                                  layer='F.CrtYd', width=configuration['courtyard_line_width']))
 
     ######################### Text Fields ###############################
-    cy1 = roundToBase(body_edge_out['top'] -1 - configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
-    cy2 = roundToBase(body_edge_out['bottom'] + 1 + configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
+    cy1 = roundG(body_edge_out['top'] -1 - configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
+    cy2 = roundG(body_edge_out['bottom'] + 1 + configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
 
     addTextFields(kicad_mod=kicad_mod, configuration=configuration, body_edges=body_edge_out,
         courtyard={'top':cy1, 'bottom':cy2}, fp_name=footprint_name, text_y_inside_position='top')
