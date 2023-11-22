@@ -1,9 +1,6 @@
 
 from KicadModTree import *
 
-def roundToBase(value, base):
-    return round(value/base) * base
-
 def parseAdditionalDrawing(footprint, drawing_definition, configuration, series_definition, body_edges, pincount):
     ref = drawing_definition.get('reference_point', ['center','center']).copy()
 
