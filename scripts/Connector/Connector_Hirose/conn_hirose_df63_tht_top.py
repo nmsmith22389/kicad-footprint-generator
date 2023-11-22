@@ -253,8 +253,8 @@ if __name__ == "__main__":
 
     for pins_per_row in pins_per_row_range:
         for form_type in types:
-            if form_type is 'R' and pins_per_row is 6:
+            if form_type == 'R' and pins_per_row == 6:
                 continue
-            if form_type is 'M' and pins_per_row in [5,6]:
+            if form_type == 'M' and pins_per_row in [5,6]:
                 form_type = ''
             generate_one_footprint(pins_per_row, form_type, configuration)
