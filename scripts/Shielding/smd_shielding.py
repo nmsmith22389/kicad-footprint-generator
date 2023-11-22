@@ -6,15 +6,11 @@ import argparse
 import yaml
 
 sys.path.append(os.path.join(sys.path[0], "..", ".."))  # load parent path of KicadModTree
+sys.path.append(os.path.join(sys.path[0], "..", "tools"))
 
 from KicadModTree import *  # NOQA
 from KicadModTree.nodes.base.Pad import Pad  # NOQA
-
-
-# https://stackoverflow.com/questions/4265546/python-round-to-nearest-05
-def round_to(n, precision):
-    correction = 0.5 if n >= 0 else -0.5
-    return int(n/precision+correction) * precision
+from drawing_tools import roundG
 
 
 def calculate_pad_spacer(pad_spacer, mirror_spacer):
@@ -63,10 +59,10 @@ def create_smd_shielding(name, **kwargs):
     kicad_mod.append(Text(type='user', text='${REFERENCE}', at=[0, 0], layer='F.Fab'))
 
     # create courtyard
-    x_courtjard_min = round_to(x_pad_min - kwargs['courtjard'], 0.05)
-    x_courtjard_max = round_to(x_pad_max + kwargs['courtjard'], 0.05)
-    y_courtjard_min = round_to(y_pad_min - kwargs['courtjard'], 0.05)
-    y_courtjard_max = round_to(y_pad_max + kwargs['courtjard'], 0.05)
+    x_courtjard_min = roundG(x_pad_min - kwargs['courtjard'], 0.05)
+    x_courtjard_max = roundG(x_pad_max + kwargs['courtjard'], 0.05)
+    y_courtjard_min = roundG(y_pad_min - kwargs['courtjard'], 0.05)
+    y_courtjard_max = roundG(y_pad_max + kwargs['courtjard'], 0.05)
 
     kicad_mod.append(RectLine(start=[x_courtjard_min, y_courtjard_min],
                               end=[x_courtjard_max, y_courtjard_max],
@@ -74,10 +70,10 @@ def create_smd_shielding(name, **kwargs):
 
     # create inner courtyard
     pad_width = kwargs['pads_width']
-    x_courtjard_min = round_to(x_pad_min + pad_width + kwargs['courtjard'], 0.05)
-    x_courtjard_max = round_to(x_pad_max - pad_width - kwargs['courtjard'], 0.05)
-    y_courtjard_min = round_to(y_pad_min + pad_width + kwargs['courtjard'], 0.05)
-    y_courtjard_max = round_to(y_pad_max - pad_width - kwargs['courtjard'], 0.05)
+    x_courtjard_min = roundG(x_pad_min + pad_width + kwargs['courtjard'], 0.05)
+    x_courtjard_max = roundG(x_pad_max - pad_width - kwargs['courtjard'], 0.05)
+    y_courtjard_min = roundG(y_pad_min + pad_width + kwargs['courtjard'], 0.05)
+    y_courtjard_max = roundG(y_pad_max - pad_width - kwargs['courtjard'], 0.05)
     kicad_mod.append(RectLine(start=[x_courtjard_min, y_courtjard_min],
                               end=[x_courtjard_max, y_courtjard_max],
                               layer='F.CrtYd'))
