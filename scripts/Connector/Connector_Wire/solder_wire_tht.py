@@ -8,9 +8,11 @@ from copy import deepcopy
 
 # load parent path of KicadModTree
 sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))
+sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))
+
 from KicadModTree import *  # NOQA
 from KicadModTree.util.geometric_util import geometricLine, geometricCircle
-from KicadModTree.util.paramUtil import round_to
+from drawing_tools import roundG
 
  # load parent path of tools
 sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))
@@ -87,11 +89,10 @@ def make_fp(wire_def, fp_type, pincount, configuration):
 
     pad_drill = max(wire_def['diameter'] + configuration['min_pad_drill_inc'],
                     wire_def['diameter'] * configuration['pad_drill_factor'])
-    pad_drill = round_to(pad_drill, 0.05)
+    pad_drill = roundG(pad_drill, 0.05)
     pad_size = max(pad_drill + 1, wire_def['outer_diameter'])
 
     npth_drill = wire_def['outer_diameter'] + configuration['relief_drill_inc']
-    npth_drill = round_to(npth_drill, 0.05)
     npth_offset = bend_radius(wire_def)*2
 
     pitch = max(2*wire_def['outer_diameter'], pad_size+2, npth_drill+2)
