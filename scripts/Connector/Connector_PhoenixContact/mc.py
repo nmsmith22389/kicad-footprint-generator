@@ -11,10 +11,11 @@ import yaml
 #sys.path.append(os.path.join(sys.path[0],"..","..")) # load KicadModTree path
 #add KicadModTree to searchpath using export PYTHONPATH="${PYTHONPATH}<absolute path>/kicad-footprint-generator/"
 sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))
+sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))  # load parent path of tools
 from KicadModTree import *
 
-sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))  # load parent path of tools
 from footprint_text_fields import addTextFields
+from drawing_tools import roundG
 
 from mc_params import seriesParams, dimensions, generate_description, all_params
 
@@ -188,7 +189,7 @@ def generate_one_footprint(motel, params, configuration):
     else:
         crtyd_top_left=v_offset(body_top_left, configuration['courtyard_offset']['connector'])
     crtyd_bottom_right=v_offset(body_bottom_right, configuration['courtyard_offset']['connector'])
-    kicad_mod.append(RectLine(start=round_crty_point(crtyd_top_left, configuration['courtyard_grid']), end=round_crty_point(crtyd_bottom_right, configuration['courtyard_grid']), layer='F.CrtYd', width=configuration['courtyard_line_width']))
+    kicad_mod.append(RectLine(start=roundG(crtyd_top_left, configuration['courtyard_grid']), end=roundG(crtyd_bottom_right, configuration['courtyard_grid']), layer='F.CrtYd', width=configuration['courtyard_line_width']))
 
     if params.mount_hole and configuration['courtyard_for_mountscrews']:
         kicad_mod.append(Circle(center=calc_dim.mount_hole_right, radius=seriesParams.mount_screw_head_r+configuration['courtyard_offset']['connector'], layer='B.CrtYd', width=configuration['courtyard_line_width']))
