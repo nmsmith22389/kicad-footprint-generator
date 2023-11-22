@@ -1,10 +1,14 @@
 #!/usr/bin/env python
 
 import sys
+import os
+
 sys.path.append("../../kicad_mod") # load kicad_mod path
+sys.path.append(os.path.join(sys.path[0], "..", "tools"))
 
 import argparse
 from kicad_mod import KicadMod, createNumberedPadsTHT
+from drawing_tools import roundG
 
 parser = argparse.ArgumentParser()
 parser.add_argument('pincount', help='number of pins of the jst connector', type=int, nargs=1)
@@ -89,12 +93,7 @@ kicad_mod.addPolygonLine([{'x':start_pos_x-2.2, 'y':0.6}
                           ,{'x':start_pos_x-1.6, 'y':0}
                           ,{'x':start_pos_x-2.2, 'y':0.6}], 'F.SilkS', 0.15)
 
-# create Courtyard
-def round_to(n, precision):
-    correction = 0.5 if n >= 0 else -0.5
-    return int( n/precision+correction ) * precision
-
-kicad_mod.addRectLine({'x':round_to(start_pos_x-3.87-1.2-0.5,0.05), 'y':3.2+0.5}, {'x':round_to(end_pos_x+3.87+1.2+0.5,0.05), 'y':round_to(-pad_spacing-3.2-0.5,0.05)}, 'F.CrtYd', 0.05)
+kicad_mod.addRectLine({'x':roundG(start_pos_x-3.87-1.2-0.5,0.05), 'y':3.2+0.5}, {'x':roundG(end_pos_x+3.87+1.2+0.5,0.05), 'y':roundG(-pad_spacing-3.2-0.5,0.05)}, 'F.CrtYd', 0.05)
 
 # create pads
 pad_diameter = 1
