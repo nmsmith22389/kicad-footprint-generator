@@ -220,11 +220,11 @@ def generate_one_footprint(pins, configuration):
     CrtYd_grid = configuration['courtyard_grid']
 
     poly_yd = [
-        {'x': roundG(body_edge['left'] - CrtYd_offset, CrtYd_grid), 'y': roundToBase(body_edge['bottom'] + CrtYd_offset, CrtYd_grid)},
-        {'x': roundG(body_edge['left'] - CrtYd_offset, CrtYd_grid), 'y': roundToBase(body_edge['top'] - CrtYd_offset, CrtYd_grid)},
-        {'x': roundG(body_edge['right'] + CrtYd_offset, CrtYd_grid), 'y': roundToBase(body_edge['top'] - CrtYd_offset, CrtYd_grid)},
-        {'x': roundG(body_edge['right'] + CrtYd_offset, CrtYd_grid), 'y': roundToBase(body_edge['bottom'] + CrtYd_offset, CrtYd_grid)},
-        {'x': roundG(body_edge['left'] - CrtYd_offset, CrtYd_grid), 'y': roundToBase(body_edge['bottom'] + CrtYd_offset, CrtYd_grid)}
+        {'x': roundG(body_edge['left'] - CrtYd_offset, CrtYd_grid), 'y': roundG(body_edge['bottom'] + CrtYd_offset, CrtYd_grid)},
+        {'x': roundG(body_edge['left'] - CrtYd_offset, CrtYd_grid), 'y': roundG(body_edge['top'] - CrtYd_offset, CrtYd_grid)},
+        {'x': roundG(body_edge['right'] + CrtYd_offset, CrtYd_grid), 'y': roundG(body_edge['top'] - CrtYd_offset, CrtYd_grid)},
+        {'x': roundG(body_edge['right'] + CrtYd_offset, CrtYd_grid), 'y': roundG(body_edge['bottom'] + CrtYd_offset, CrtYd_grid)},
+        {'x': roundG(body_edge['left'] - CrtYd_offset, CrtYd_grid), 'y': roundG(body_edge['bottom'] + CrtYd_offset, CrtYd_grid)}
     ]
 
     kicad_mod.append(PolygonLine(polygon=poly_yd,

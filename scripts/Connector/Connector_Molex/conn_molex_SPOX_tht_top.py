@@ -125,7 +125,7 @@ def generate_one_footprint(pins_per_row, configuration):
         if grid == 0:
             return poly
         else:
-            return [{'x':roundG(p['x'], grid), 'y':roundToBase(p['y'], grid)} for p in poly]
+            return [{'x':roundG(p['x'], grid), 'y':roundG(p['y'], grid)} for p in poly]
 
     # outline on Fab
     kicad_mod.append(PolygonLine(polygon=generateOutline(),

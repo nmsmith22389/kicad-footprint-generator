@@ -149,19 +149,19 @@ def generate_one_footprint(pins, configuration):
         x1 = 0
         y1 = body_edge['top'] - LineDX
 
-        points.append([roundG(x1, grid), roundToBase(y1, grid)])
+        points.append([roundG(x1, grid), roundG(y1, grid)])
         #
         x1 = (A / 2) - 1 + LineDX
         y1 = y1
-        points.append([roundG(x1, grid), roundToBase(y1, grid)])
+        points.append([roundG(x1, grid), roundG(y1, grid)])
         #
         x1 = (A / 2) + LineDX
         y1 = y1 + 2
-        points.append([roundG(x1, grid), roundToBase(y1, grid)])
+        points.append([roundG(x1, grid), roundG(y1, grid)])
         #
         x1 = x1
         y1 = mount_pad_y - ((mount_pad_size[1] / 2) + LineDX + LindeDelta)
-        points.append([roundG(x1, grid), roundToBase(y1, grid)])
+        points.append([roundG(x1, grid), roundG(y1, grid)])
         #
         if (i == 1): # SilkS
             kicad_mod.append(PolygonLine(polygon=points, layer=Layer, width=LineWidth))
@@ -178,32 +178,32 @@ def generate_one_footprint(pins, configuration):
             points = []
             x1 = x1
             y1 =mount_pad_y + ((mount_pad_size[1] / 2) + LineDX + LindeDelta)
-            points.append([roundG(x1, grid), roundToBase(y1, grid)])
+            points.append([roundG(x1, grid), roundG(y1, grid)])
         elif (i == 2): # CrtYd
             x1 = mount_pad_x + (mount_pad_size[0] / 2) +  LineDX
             y1 = y1
-            points.append([roundG(x1, grid), roundToBase(y1, grid)])
+            points.append([roundG(x1, grid), roundG(y1, grid)])
             #
             x1 = x1
             y1 =mount_pad_y + ((mount_pad_size[1] / 2) + LineDX)
-            points.append([roundG(x1, grid), roundToBase(y1, grid)])
+            points.append([roundG(x1, grid), roundG(y1, grid)])
             #
             x1 = (A / 2) + LineDX
             y1 = y1
-            points.append([roundG(x1, grid), roundToBase(y1, grid)])
+            points.append([roundG(x1, grid), roundG(y1, grid)])
         #
         x1 = x1
         y1 = body_edge['bottom'] + LineDX
-        points.append([roundG(x1, grid), roundToBase(y1, grid)])
+        points.append([roundG(x1, grid), roundG(y1, grid)])
         #
         x1 = (B / 2) + (pad_size[0] / 2) + LineDX  + LindeDelta
         y1 = y1
-        points.append([roundG(x1, grid), roundToBase(y1, grid)])
+        points.append([roundG(x1, grid), roundG(y1, grid)])
         #
         if (i == 0):
             x1 = 0
             y1 = y1
-            points.append([roundG(x1, grid), roundToBase(y1, grid)])
+            points.append([roundG(x1, grid), roundG(y1, grid)])
 
         if (i == 1):
             ttx1 = x1
@@ -214,12 +214,12 @@ def generate_one_footprint(pins, configuration):
             y1 = ((pitch_y / 2) + (pad_size[1] / 2) + LineDX)
             ttx1 = x1
             tty1 = y1
-            points.append([roundG(x1, grid), roundToBase(y1, grid)])
+            points.append([roundG(x1, grid), roundG(y1, grid)])
             #
             #
             x1 = 0
             y1 = y1
-            points.append([roundG(x1, grid), roundToBase(y1, grid)])
+            points.append([roundG(x1, grid), roundG(y1, grid)])
         #
         # Reflect right part around the X-axis
         #
@@ -241,7 +241,7 @@ def generate_one_footprint(pins, configuration):
             points2.append(p4)
             points2.append(ps)
         elif (i == 1): # silk
-            points2.append([roundG(0 - ttx1, grid), roundToBase(tty1, grid)])
+            points2.append([roundG(0 - ttx1, grid), roundG(tty1, grid)])
 
         #
         #

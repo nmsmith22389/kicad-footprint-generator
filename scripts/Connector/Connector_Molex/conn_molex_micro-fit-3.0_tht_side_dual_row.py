@@ -242,15 +242,15 @@ def generate_one_footprint(pins, configuration, variant):
     CrtYd_right = pad1_x + clip_x_offset + clip_C + clip_pad[0]/2 if variant == 'clip' else body_edge['right']
 
     poly_yd = [
-        {'x': roundG(CrtYd_left - CrtYd_offset, CrtYd_grid), 'y': roundToBase(body_edge['bottom'] + CrtYd_offset, CrtYd_grid)},
-        {'x': roundG(CrtYd_left - CrtYd_offset, CrtYd_grid), 'y': roundToBase(body_edge['top'] - CrtYd_offset, CrtYd_grid)},
-        {'x': roundG(CrtYd_right + CrtYd_offset, CrtYd_grid), 'y': roundToBase(body_edge['top'] - CrtYd_offset, CrtYd_grid)},
-        {'x': roundG(CrtYd_right + CrtYd_offset, CrtYd_grid), 'y': roundToBase(body_edge['bottom'] + CrtYd_offset, CrtYd_grid)},
-        {'x': roundG(B + pad_to_pad_clearance/2 + CrtYd_offset, CrtYd_grid), 'y': roundToBase(body_edge['bottom'] + CrtYd_offset, CrtYd_grid)},
-        {'x': roundG(B + pad_to_pad_clearance/2 + CrtYd_offset, CrtYd_grid), 'y': roundToBase(pitch + pad_to_pad_clearance/2 + CrtYd_offset, CrtYd_grid)},
-        {'x': roundG(- pad_to_pad_clearance/2 - CrtYd_offset, CrtYd_grid), 'y': roundToBase(pitch + pad_to_pad_clearance/2 + CrtYd_offset, CrtYd_grid)},
-        {'x': roundG(- pad_to_pad_clearance/2 - CrtYd_offset, CrtYd_grid), 'y': roundToBase(body_edge['bottom'] + CrtYd_offset, CrtYd_grid)},
-        {'x': roundG(CrtYd_left - CrtYd_offset, CrtYd_grid), 'y': roundToBase(body_edge['bottom'] + CrtYd_offset, CrtYd_grid)}
+        {'x': roundG(CrtYd_left - CrtYd_offset, CrtYd_grid), 'y': roundG(body_edge['bottom'] + CrtYd_offset, CrtYd_grid)},
+        {'x': roundG(CrtYd_left - CrtYd_offset, CrtYd_grid), 'y': roundG(body_edge['top'] - CrtYd_offset, CrtYd_grid)},
+        {'x': roundG(CrtYd_right + CrtYd_offset, CrtYd_grid), 'y': roundG(body_edge['top'] - CrtYd_offset, CrtYd_grid)},
+        {'x': roundG(CrtYd_right + CrtYd_offset, CrtYd_grid), 'y': roundG(body_edge['bottom'] + CrtYd_offset, CrtYd_grid)},
+        {'x': roundG(B + pad_to_pad_clearance/2 + CrtYd_offset, CrtYd_grid), 'y': roundG(body_edge['bottom'] + CrtYd_offset, CrtYd_grid)},
+        {'x': roundG(B + pad_to_pad_clearance/2 + CrtYd_offset, CrtYd_grid), 'y': roundG(pitch + pad_to_pad_clearance/2 + CrtYd_offset, CrtYd_grid)},
+        {'x': roundG(- pad_to_pad_clearance/2 - CrtYd_offset, CrtYd_grid), 'y': roundG(pitch + pad_to_pad_clearance/2 + CrtYd_offset, CrtYd_grid)},
+        {'x': roundG(- pad_to_pad_clearance/2 - CrtYd_offset, CrtYd_grid), 'y': roundG(body_edge['bottom'] + CrtYd_offset, CrtYd_grid)},
+        {'x': roundG(CrtYd_left - CrtYd_offset, CrtYd_grid), 'y': roundG(body_edge['bottom'] + CrtYd_offset, CrtYd_grid)}
     ]
 
     kicad_mod.append(PolygonLine(polygon=poly_yd,

@@ -31,7 +31,7 @@ sys.path.append(
 from math import sqrt
 import argparse
 import yaml
-from drawing_tools import roundGroundG
+from drawing_tools import roundG
 from KicadModTree import *
 
 from footprint_text_fields import addTextFields

@@ -31,7 +31,7 @@ sys.path.append(
 from math import sqrt
 import argparse
 import yaml
-from drawing_tools import roundGroundG
+from drawing_tools import roundG
 from KicadModTree import *
 
 from footprint_text_fields import addTextFields
@@ -195,19 +195,19 @@ def generate_one_footprint(pins, variant, configuration):
         x1 = 0
         y1 = body_edge["top"] - LineDX
 
-        points.append([roundG(x1, grid), roundToBase(y1, grid)])
+        points.append([roundG(x1, grid), roundG(y1, grid)])
         #
         x1 = (A / 2) - 1 + LineDX
         y1 = y1
-        points.append([roundG(x1, grid), roundToBase(y1, grid)])
+        points.append([roundG(x1, grid), roundG(y1, grid)])
         #
         x1 = (A / 2) + LineDX
         y1 = y1 + 2
-        points.append([roundG(x1, grid), roundToBase(y1, grid)])
+        points.append([roundG(x1, grid), roundG(y1, grid)])
         #
         x1 = x1
         y1 = mount_pad_y - ((mount_hole_pad_diameter / 2) + LineDX + LineDelta)
-        points.append([roundG(x1, grid), roundToBase(y1, grid)])
+        points.append([roundG(x1, grid), roundG(y1, grid)])
         #
         if Layer == "F.SilkS":  # SilkS
             kicad_mod.append(
@@ -228,20 +228,20 @@ def generate_one_footprint(pins, variant, configuration):
             points = []
             x1 = x1
             y1 = mount_pad_y + ((mount_hole_diameter / 2) + LineDX + LineDelta)
-            points.append([roundG(x1, grid), roundToBase(y1, grid)])
+            points.append([roundG(x1, grid), roundG(y1, grid)])
         #
         x1 = x1
         y1 = body_edge["bottom"] + LineDX
-        points.append([roundG(x1, grid), roundToBase(y1, grid)])
+        points.append([roundG(x1, grid), roundG(y1, grid)])
         #
         x1 = (B / 2) + (pad_size[0] / 2) + LineDX + LineDelta
         y1 = y1
-        points.append([roundG(x1, grid), roundToBase(y1, grid)])
+        points.append([roundG(x1, grid), roundG(y1, grid)])
         #
         if Layer == "F.Fab":
             x1 = 0
             y1 = y1
-            points.append([roundG(x1, grid), roundToBase(y1, grid)])
+            points.append([roundG(x1, grid), roundG(y1, grid)])
 
         if Layer == "F.SilkS":
             ttx1 = x1
@@ -252,12 +252,12 @@ def generate_one_footprint(pins, variant, configuration):
             y1 = pad_row_1_y + (pad_size[1] / 2) + LineDX
             ttx1 = x1
             tty1 = y1
-            points.append([roundG(x1, grid), roundToBase(y1, grid)])
+            points.append([roundG(x1, grid), roundG(y1, grid)])
             #
             #
             x1 = 0
             y1 = y1
-            points.append([roundG(x1, grid), roundToBase(y1, grid)])
+            points.append([roundG(x1, grid), roundG(y1, grid)])
         #
         # Reflect right part around the X-axis
         #
@@ -279,7 +279,7 @@ def generate_one_footprint(pins, variant, configuration):
             points2.append(p4)
             points2.append(ps)
         elif Layer == "F.SilkS":  # silk
-            points2.append([roundG(0 - ttx1, grid), roundToBase(tty1, grid)])
+            points2.append([roundG(0 - ttx1, grid), roundG(tty1, grid)])
 
         #
         #
