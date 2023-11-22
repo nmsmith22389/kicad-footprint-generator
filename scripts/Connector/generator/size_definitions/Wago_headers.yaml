@@ -118,6 +118,7 @@ Wago_722-842:
 
 
 Wago_734-53x:
+  # This connector needs another pad row at 3.65mm Y distance, with the same numbering
   library: 'Wago'
   pad_pitch: 3.5
   row_pitch: null # only one row
@@ -160,4 +161,15 @@ Wago_734-53x:
   fp_name: 'Wago_734-53{num_pos:01d}'
 #  positions: [2, 3, 4, 5, 6, 7, 8, 9]
   positions: [2, 6]
+  rule_areas:
+    pluggable_connector: # key is unique for each rule area
+      name: 'Pluggable connector' # visible name of the rule area
+      layers: 'F.Cu'  # layers of the rule area
+      shapes:
+        - 'rect': [
+                   [pl-3.55, pb+9.9+0.1],
+                   [pr+3.8, pb+9.9+23.3]
+                  ]
+      keepouts:
+        footprints: deny
 
