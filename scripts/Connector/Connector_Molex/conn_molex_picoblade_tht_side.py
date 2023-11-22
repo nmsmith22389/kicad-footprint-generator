@@ -152,18 +152,18 @@ def generate_one_footprint(pins, configuration):
 
 
         out = [
-        {'x': roundToBase(B/2, grid),
-         'y': roundToBase(-P - off, grid)},
-        {'x': roundToBase(x1 + T + off, grid),
-         'y': roundToBase(-P  - off, grid)},
-        {'x': roundToBase(x1 + T + off, grid),
-         'y': roundToBase(y1 - off, grid)},
-        {'x': roundToBase(x1 - off, grid),
-         'y': roundToBase(y1 - off, grid)},
-        {'x': roundToBase(x1 - off, grid),
-         'y': roundToBase(y2 + off, grid)},
-        {'x': roundToBase(B/2, grid),
-         'y': roundToBase(y2 + off, grid)},
+        {'x': roundG(B/2, grid),
+         'y': roundG(-P - off, grid)},
+        {'x': roundG(x1 + T + off, grid),
+         'y': roundG(-P  - off, grid)},
+        {'x': roundG(x1 + T + off, grid),
+         'y': roundG(y1 - off, grid)},
+        {'x': roundG(x1 - off, grid),
+         'y': roundG(y1 - off, grid)},
+        {'x': roundG(x1 - off, grid),
+         'y': roundG(y2 + off, grid)},
+        {'x': roundG(B/2, grid),
+         'y': roundG(y2 + off, grid)},
         ]
 
         return out

@@ -196,18 +196,18 @@ def generate_one_footprint(pins, params, configuration):
 
     def outline(off = 0, grid = 0):
         out = [
-        {'y': roundToBase(B/2, grid),
-        'x': roundToBase(x2+off, grid)},
-        {'y': roundToBase(y1-off, grid),
-        'x': roundToBase(x2+off, grid)},
-        {'y': roundToBase(y1-off, grid),
-        'x': roundToBase(x1-off, grid)},
-        {'y': roundToBase(B/2-TL/2-off, grid),
-        'x': roundToBase(x1-off, grid)},
-        {'y': roundToBase(B/2-TL/2-off, grid),
-        'x': roundToBase(x1-TW-off, grid)},
-        {'y': roundToBase(B/2, grid),
-        'x': roundToBase(x1-TW-off, grid)}
+        {'y': roundG(B/2, grid),
+        'x': roundG(x2+off, grid)},
+        {'y': roundG(y1-off, grid),
+        'x': roundG(x2+off, grid)},
+        {'y': roundG(y1-off, grid),
+        'x': roundG(x1-off, grid)},
+        {'y': roundG(B/2-TL/2-off, grid),
+        'x': roundG(x1-off, grid)},
+        {'y': roundG(B/2-TL/2-off, grid),
+        'x': roundG(x1-TW-off, grid)},
+        {'y': roundG(B/2, grid),
+        'x': roundG(x1-TW-off, grid)}
         ]
 
         return out

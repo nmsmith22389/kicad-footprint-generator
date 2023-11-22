@@ -306,17 +306,17 @@ def generate_one_footprint(pins_per_row, variant, configuration):
     kicad_mod.append(PolygonLine(polygon=pin, layer='F.SilkS', width=configuration['silk_line_width']))
 
     ########################### CrtYd #################################
-    cx1 = roundToBase(bounding_box['left']-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
-    cy1 = roundToBase(bounding_box['top']-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
+    cx1 = roundG(bounding_box['left']-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
+    cy1 = roundG(bounding_box['top']-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
 
-    cx2 = roundToBase(bounding_box['right']+configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
-    cy2 = roundToBase(bounding_box['bottom'] + configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
+    cx2 = roundG(bounding_box['right']+configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
+    cy2 = roundG(bounding_box['bottom'] + configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
 
     if variant_params[variant]['mount_pins']:
-        cx3 = roundToBase(body_edge['left']-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
-        cx4 = roundToBase(body_edge['right']+configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
+        cx3 = roundG(body_edge['left']-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
+        cx4 = roundG(body_edge['right']+configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
         mount_pin_radius = (B/2 - C/2)
-        cy3=roundToBase(mounting_pin_y - mount_pin_radius - configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
+        cy3=roundG(mounting_pin_y - mount_pin_radius - configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
 
         poly_crtyd = [
             {'x': cx3, 'y': cy1},

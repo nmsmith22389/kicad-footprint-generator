@@ -309,18 +309,18 @@ def generate_one_footprint(pins_per_row, variant, configuration):
     CrtYd_offset = configuration['courtyard_offset']['connector']
     CrtYd_grid = configuration['courtyard_grid']
 
-    cx1 = roundToBase(bounding_box['left'] - CrtYd_offset, CrtYd_grid)
-    cy1 = roundToBase(bounding_box['top'] - CrtYd_offset, CrtYd_grid)
+    cx1 = roundG(bounding_box['left'] - CrtYd_offset, CrtYd_grid)
+    cy1 = roundG(bounding_box['top'] - CrtYd_offset, CrtYd_grid)
 
-    cx2 = roundToBase(bounding_box['right'] + CrtYd_offset, CrtYd_grid)
-    cy2 = roundToBase(bounding_box['bottom'] + CrtYd_offset, CrtYd_grid)
+    cx2 = roundG(bounding_box['right'] + CrtYd_offset, CrtYd_grid)
+    cy2 = roundG(bounding_box['bottom'] + CrtYd_offset, CrtYd_grid)
 
 
     if peg:
-        cx3 = roundToBase(body_edge['left']-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
-        cx4 = roundToBase(body_edge['right']+configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
+        cx3 = roundG(body_edge['left']-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
+        cx4 = roundG(body_edge['right']+configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
         mount_pin_radius = loc/2
-        cy3=roundToBase(mounting_pin_y - mount_pin_radius - configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
+        cy3=roundG(mounting_pin_y - mount_pin_radius - configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
 
         poly_crtyd = [
             {'x': cx3, 'y': cy1},

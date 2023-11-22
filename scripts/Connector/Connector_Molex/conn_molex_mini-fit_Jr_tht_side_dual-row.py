@@ -277,22 +277,22 @@ def generate_one_footprint(pins_per_row, variant, configuration):
     CrtYd_offset = configuration['courtyard_offset']['connector']
     CrtYd_grid = configuration['courtyard_grid']
 
-    cx1 = roundToBase(bounding_box['left'] - CrtYd_offset, CrtYd_grid)
-    cy1 = roundToBase(bounding_box['top'] - CrtYd_offset, CrtYd_grid)
+    cx1 = roundG(bounding_box['left'] - CrtYd_offset, CrtYd_grid)
+    cy1 = roundG(bounding_box['top'] - CrtYd_offset, CrtYd_grid)
 
-    cx2 = roundToBase(bounding_box['right'] + CrtYd_offset, CrtYd_grid)
-    cy2 = roundToBase(bounding_box['bottom'] + CrtYd_offset, CrtYd_grid)
+    cx2 = roundG(bounding_box['right'] + CrtYd_offset, CrtYd_grid)
+    cy2 = roundG(bounding_box['bottom'] + CrtYd_offset, CrtYd_grid)
 
     if peg:
         kicad_mod.append(RectLine(
             start=[cx1, cy1], end=[cx2, cy2],
             layer='F.CrtYd', width=configuration['courtyard_line_width']))
     else:
-        cxb_left = roundToBase(body_edge['left'] - CrtYd_offset, CrtYd_grid)
-        cxp_left = roundToBase(-pad_size[0]/2 - CrtYd_offset, CrtYd_grid)
+        cxb_left = roundG(body_edge['left'] - CrtYd_offset, CrtYd_grid)
+        cxp_left = roundG(-pad_size[0]/2 - CrtYd_offset, CrtYd_grid)
 
-        cyb_bottom = roundToBase(body_edge['bottom'] + CrtYd_offset, CrtYd_grid)
-        cyb_mount_top = roundToBase(body_edge['bottom'] -6.2 - CrtYd_offset, CrtYd_grid)
+        cyb_bottom = roundG(body_edge['bottom'] + CrtYd_offset, CrtYd_grid)
+        cyb_mount_top = roundG(body_edge['bottom'] -6.2 - CrtYd_offset, CrtYd_grid)
 
         poly_crtyd = [
                 {'x': B/2, 'y': cy1},

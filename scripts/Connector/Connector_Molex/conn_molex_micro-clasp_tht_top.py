@@ -243,11 +243,11 @@ def generate_one_footprint(pins, variant, configuration):
                                  layer="F.Fab", width=configuration['fab_line_width']))
 
     ########################### CrtYd #################################
-    cx1 = roundToBase(bounding_box['left']-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
-    cy1 = roundToBase(bounding_box['top']-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
+    cx1 = roundG(bounding_box['left']-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
+    cy1 = roundG(bounding_box['top']-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
 
-    cx2 = roundToBase(bounding_box['right']+configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
-    cy2 = roundToBase(bounding_box['bottom'] + configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
+    cx2 = roundG(bounding_box['right']+configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
+    cy2 = roundG(bounding_box['bottom'] + configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
 
     kicad_mod.append(RectLine(
         start=[cx1, cy1], end=[cx2, cy2],

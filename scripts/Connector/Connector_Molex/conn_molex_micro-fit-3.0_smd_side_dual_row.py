@@ -149,19 +149,19 @@ def generate_one_footprint(pins, configuration):
         x1 = 0
         y1 = body_edge['top'] - LineDX
 
-        points.append([roundToBase(x1, grid), roundToBase(y1, grid)])
+        points.append([roundG(x1, grid), roundToBase(y1, grid)])
         #
         x1 = (A / 2) - 1 + LineDX
         y1 = y1
-        points.append([roundToBase(x1, grid), roundToBase(y1, grid)])
+        points.append([roundG(x1, grid), roundToBase(y1, grid)])
         #
         x1 = (A / 2) + LineDX
         y1 = y1 + 2
-        points.append([roundToBase(x1, grid), roundToBase(y1, grid)])
+        points.append([roundG(x1, grid), roundToBase(y1, grid)])
         #
         x1 = x1
         y1 = mount_pad_y - ((mount_pad_size[1] / 2) + LineDX + LindeDelta)
-        points.append([roundToBase(x1, grid), roundToBase(y1, grid)])
+        points.append([roundG(x1, grid), roundToBase(y1, grid)])
         #
         if (i == 1): # SilkS
             kicad_mod.append(PolygonLine(polygon=points, layer=Layer, width=LineWidth))
@@ -178,32 +178,32 @@ def generate_one_footprint(pins, configuration):
             points = []
             x1 = x1
             y1 =mount_pad_y + ((mount_pad_size[1] / 2) + LineDX + LindeDelta)
-            points.append([roundToBase(x1, grid), roundToBase(y1, grid)])
+            points.append([roundG(x1, grid), roundToBase(y1, grid)])
         elif (i == 2): # CrtYd
             x1 = mount_pad_x + (mount_pad_size[0] / 2) +  LineDX
             y1 = y1
-            points.append([roundToBase(x1, grid), roundToBase(y1, grid)])
+            points.append([roundG(x1, grid), roundToBase(y1, grid)])
             #
             x1 = x1
             y1 =mount_pad_y + ((mount_pad_size[1] / 2) + LineDX)
-            points.append([roundToBase(x1, grid), roundToBase(y1, grid)])
+            points.append([roundG(x1, grid), roundToBase(y1, grid)])
             #
             x1 = (A / 2) + LineDX
             y1 = y1
-            points.append([roundToBase(x1, grid), roundToBase(y1, grid)])
+            points.append([roundG(x1, grid), roundToBase(y1, grid)])
         #
         x1 = x1
         y1 = body_edge['bottom'] + LineDX
-        points.append([roundToBase(x1, grid), roundToBase(y1, grid)])
+        points.append([roundG(x1, grid), roundToBase(y1, grid)])
         #
         x1 = (B / 2) + (pad_size[0] / 2) + LineDX  + LindeDelta
         y1 = y1
-        points.append([roundToBase(x1, grid), roundToBase(y1, grid)])
+        points.append([roundG(x1, grid), roundToBase(y1, grid)])
         #
         if (i == 0):
             x1 = 0
             y1 = y1
-            points.append([roundToBase(x1, grid), roundToBase(y1, grid)])
+            points.append([roundG(x1, grid), roundToBase(y1, grid)])
 
         if (i == 1):
             ttx1 = x1
@@ -214,12 +214,12 @@ def generate_one_footprint(pins, configuration):
             y1 = ((pitch_y / 2) + (pad_size[1] / 2) + LineDX)
             ttx1 = x1
             tty1 = y1
-            points.append([roundToBase(x1, grid), roundToBase(y1, grid)])
+            points.append([roundG(x1, grid), roundToBase(y1, grid)])
             #
             #
             x1 = 0
             y1 = y1
-            points.append([roundToBase(x1, grid), roundToBase(y1, grid)])
+            points.append([roundG(x1, grid), roundToBase(y1, grid)])
         #
         # Reflect right part around the X-axis
         #
@@ -241,7 +241,7 @@ def generate_one_footprint(pins, configuration):
             points2.append(p4)
             points2.append(ps)
         elif (i == 1): # silk
-            points2.append([roundToBase(0 - ttx1, grid), roundToBase(tty1, grid)])
+            points2.append([roundG(0 - ttx1, grid), roundToBase(tty1, grid)])
 
         #
         #
@@ -250,9 +250,9 @@ def generate_one_footprint(pins, configuration):
         kicad_mod.append(PolygonLine(polygon=points2, layer=Layer, width=LineWidth))
 
     ######################### Text Fields ###############################
-    cy1 = roundToBase(body_edge['top']-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
+    cy1 = roundG(body_edge['top']-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
 
-    cy2 = roundToBase(pad_row_2_y + pad_size[1]/2 + configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
+    cy2 = roundG(pad_row_2_y + pad_size[1]/2 + configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
 
     addTextFields(kicad_mod=kicad_mod, configuration=configuration, body_edges=body_edge,
         courtyard={'top':cy1, 'bottom':cy2}, fp_name=footprint_name, text_y_inside_position='top')

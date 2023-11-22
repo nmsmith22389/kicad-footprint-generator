@@ -83,8 +83,8 @@ def generate_one_footprint(pincount, configuration):
     courtyard_width = configuration['courtyard_line_width']
     courtyard_precision = configuration['courtyard_grid']
     courtyard_clearance = configuration['courtyard_offset']['connector']
-    courtyard_x = roundToBase(h_body_length + courtyard_clearance, courtyard_precision)
-    courtyard_y = roundToBase((pad_y_spacing + pad_height) / 2.0 + courtyard_clearance, courtyard_precision)
+    courtyard_x = roundG(h_body_length + courtyard_clearance, courtyard_precision)
+    courtyard_y = roundG((pad_y_spacing + pad_height) / 2.0 + courtyard_clearance, courtyard_precision)
 
     # create pads
     kicad_mod.append(PadArray(pincount=pincount//2, x_spacing=pad_x_spacing, y_spacing=0,\
