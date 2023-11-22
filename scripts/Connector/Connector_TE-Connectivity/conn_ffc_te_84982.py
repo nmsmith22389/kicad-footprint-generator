@@ -24,11 +24,11 @@ import os
 from math import sqrt, ceil, floor
 
 sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))  # load parent path of KicadModTree
+sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))  # load parent path of tools
 
 from KicadModTree import *
-from helpers import *
+from drawing_tools import roundG
 
-sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))  # load parent path of tools
 from footprint_text_fields import addTextFields
 
 lib_by_conn_category = True
@@ -144,9 +144,9 @@ def generate_one_footprint(pincount, configuration):
     courtyard_precision = configuration['courtyard_grid']
     courtyard_clearance = configuration['courtyard_offset']['connector']
 
-    courtyard_x = roundToBase(housing_x_offset + courtyard_clearance, courtyard_precision)
-    courtyard_y_south = roundToBase(row_offset_odd + pad_height_odd / 2.0 + courtyard_clearance, courtyard_precision)
-    courtyard_y_north = roundToBase(row_offset_even + pad_height_even / 2.0 + courtyard_clearance, courtyard_precision)
+    courtyard_x = roundG(housing_x_offset + courtyard_clearance, courtyard_precision)
+    courtyard_y_south = roundG(row_offset_odd + pad_height_odd / 2.0 + courtyard_clearance, courtyard_precision)
+    courtyard_y_north = roundG(row_offset_even + pad_height_even / 2.0 + courtyard_clearance, courtyard_precision)
 
     kicad_mod.append(RectLine(start=[-courtyard_x, courtyard_y_south], end=[courtyard_x, -courtyard_y_north],
         layer='F.CrtYd', width=configuration['courtyard_line_width']))
