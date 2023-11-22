@@ -187,4 +187,87 @@ Wago_734-53x:
       keepouts:
         footprints: deny
 
+Wago_734-46x:
+  # This connector needs another pad row at 3.65mm Y distance, with the same numbering
+  # This series need centering at top pin 1
+  library: 'Wago'
+  pad_pitch: 3.5
+  row_pitch: null # only one row
+  first_pin:
+    position: 'top'     # top (default) or bottom
+    body_chamfer: 0.0
+    offset: 
+    marker:
+      shape: 'line' 
+      offset: -0.557
+      fab: True
+      size: 1.1547 # 1mm side arrow
+    pad:
+      shape: 'rect'
+      drill: 1.6
+      size: [2.5, 2.5]
+  clean_silk: True
+  description: 'Socket terminal block, {pad_pitch}mm Pitch, Single Row, {options}'
+  tags: 'conn  wire'
+  pads:
+    drill: 1.6
+    size: [2.5, 2.5]
+  source: 'https://www.wago.com/es/conectores/conector-hembra-tht/p/734-462'
+  options: 'vertical (straight)'
+  fp_suffix: '_Vertical'
+  offset:
+    body: [0.8, 1.4]
+  body_size:
+    x_offset: 2.5
+    y: 10.5
+  fp_name: 'Wago_734-46{num_pos:01d}'
+  positions: [2, 3, 4, 5, 6, 7, 8, 9]
+
+Wago_734-470:
+  inherit: 'Wago_734-46x'
+  fp_name: 'Wago_734-470'
+  source: 'https://www.wago.com/global/pluggable-connectors/tht-male-header/p/734-470'
+  positions: [10]
+
+Wago_734-472:
+  inherit: 'Wago_734-46x'
+  fp_name: 'Wago_734-472'
+  source: 'https://www.wago.com/global/pluggable-connectors/tht-male-header/p/734-472'
+  positions: [12]
+
+Wago_734-473:
+  inherit: 'Wago_734-46x'
+  fp_name: 'Wago_734-473'
+  source: 'https://www.wago.com/global/pluggable-connectors/tht-male-header/p/734-473'
+  positions: [13]
+
+Wago_734-474:
+  inherit: 'Wago_734-46x'
+  fp_name: '734-474'
+  source: 'https://www.wago.com/global/pluggable-connectors/tht-male-header/p/734-474'
+  positions: [14]
+
+Wago_734-476:
+  inherit: 'Wago_734-46x'
+  fp_name: '734-476'
+  source: 'https://www.wago.com/global/pluggable-connectors/tht-male-header/p/734-476'
+  positions: [16]
+
+Wago_734-478:
+  inherit: 'Wago_734-46x'
+  fp_name: '734-478'
+  source: 'https://www.wago.com/global/pluggable-connectors/tht-male-header/p/734-478'
+  positions: [18]
+
+Wago_734-480:
+  inherit: 'Wago_734-46x'
+  fp_name: '734-480'
+  source: 'https://www.wago.com/global/pluggable-connectors/tht-male-header/p/734-480'
+  positions: [20]
+
+Wago_734-484:
+  inherit: 'Wago_734-46x'
+  fp_name: '734-484'
+  source: 'https://www.wago.com/global/pluggable-connectors/tht-male-header/p/734-484'
+  positions: [24]
 
