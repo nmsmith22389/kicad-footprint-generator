@@ -36,7 +36,7 @@ Wago_733-36x:
       layers: 'F.Cu'  # layers of the rule area
       shapes:
         - 'rect': [
-                   [pl-3.25, pb+8.6],
+                   [pl-3.25, pb+8.6+0.05],
                    [pr+2.35, pb+8.6+18.05]
                   ]
       keepouts:
