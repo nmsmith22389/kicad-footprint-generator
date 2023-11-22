@@ -5,7 +5,9 @@ import yaml
 import pprint
 
 sys.path.append(os.path.join(sys.path[0], "../.."))  # enable package import from parent directory
+sys.path.append(os.path.join(sys.path[0], "..", "tools"))  # enable package import from parent directory
 
+from drawing_tools import roundG
 from KicadModTree import *  # NOQA
 from bump import *
 from corners import *
@@ -48,9 +50,9 @@ class Dimensions(object):
         self.biggest_y_mm = device['body']['y_mm']
         if 'top' in device['projection']['sides'] or 'bottom' in device['projection']['sides']:
              self.biggest_y_mm += 2.0 * device['projection']['offset_mm']
-        self.courtyard_offset_x_mm = self._round_to(self.courtyard_clearance_mm + self.biggest_x_mm / 2.0,
+        self.courtyard_offset_x_mm = self._roundG(self.courtyard_clearance_mm + self.biggest_x_mm / 2.0,
                                                    self.courtyard_precision_mm)
-        self.courtyard_offset_y_mm = self._round_to(self.courtyard_clearance_mm + self.biggest_y_mm / 2.0,
+        self.courtyard_offset_y_mm = self._roundG(self.courtyard_clearance_mm + self.biggest_y_mm / 2.0,
                                                    self.courtyard_precision_mm)
         # SILKSCREEN
         self.label_centre_x_mm = 0
@@ -58,7 +60,7 @@ class Dimensions(object):
         self.silk_offset_mm = (0.2, 0.2)  #  amount to shift silkscreen in X and Y directions to avoid overlapping fab lines
 
 
-    def _round_to(self, n, precision):
+    def _roundG(self, n, precision):
         correction = 0.5 if n >= 0 else -0.5
         return int(n / precision + correction) * precision
 
