@@ -64,8 +64,8 @@ Wago_722-83x:
     body_chamfer: 0.0
     offset: 
     marker:
-      shape: 'triangle' 
-      offset: 0.2
+      shape: 'line'
+      offset: -0.557
       fab: True
       size: 1.1547 # 1mm side arrow
     pad:
