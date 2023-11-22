@@ -6,8 +6,8 @@ Wago_733-36x:
     position: 'top'     # top (default) or bottom
     offset: 
     marker:
-      shape: 'triangle' 
-      offset: 0.2
+      shape: 'line'
+      offset: -0.317
       fab: True
       size: 1.1547 # 1mm side arrow
     pad:
