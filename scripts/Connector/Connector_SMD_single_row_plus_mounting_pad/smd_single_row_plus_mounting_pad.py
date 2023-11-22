@@ -7,13 +7,15 @@ import os
 
 # export PYTHONPATH="${PYTHONPATH}<path to kicad-footprint-generator directory>"
 sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))  # load parent path of KicadModTree
+sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))  # load parent path of tools
+
 import argparse
 import yaml
 from helpers import *
 from KicadModTree import *
 from math import sqrt
+from drawing_tools import roundG
 
-sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))  # load parent path of tools
 from footprint_text_fields import addTextFields
 
 def generate_one_footprint(idx, pincount, series_definition, configuration, group_definition):
@@ -313,11 +315,11 @@ def generate_one_footprint(idx, pincount, series_definition, configuration, grou
         bounding_box_y2 = bounding_box_y_mount_pad_side
 
 
-    cx1 = roundToBase(bounding_box_x1 - configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
-    cx2 = roundToBase(bounding_box_x2 + configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
+    cx1 = roundG(bounding_box_x1 - configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
+    cx2 = roundG(bounding_box_x2 + configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
 
-    cy1 = roundToBase(bounding_box_y1 - configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
-    cy2 = roundToBase(bounding_box_y2 + configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
+    cy1 = roundG(bounding_box_y1 - configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
+    cy2 = roundG(bounding_box_y2 + configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
 
     kicad_mod.append(RectLine(
         start=[cx1, cy1], end=[cx2, cy2],
