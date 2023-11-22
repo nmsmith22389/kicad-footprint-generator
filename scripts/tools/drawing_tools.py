@@ -31,6 +31,11 @@ def roundGDown(x: float, g: float) -> float:
 def roundG(x: float, g: float) -> float:
     if g == 0:
       return x
+    if isinstance(x, list):
+      return_list = []
+      for value in x:
+        return_list.append(roundG(value, g))
+      return return_list
     return round(roundGUp(x, g),6) if x > 0 else round(roundGDown(x, g),6)
 
 
