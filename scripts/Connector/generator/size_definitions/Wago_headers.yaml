@@ -1,3 +1,50 @@
+Wago_733-33x:
+  # This series need centering at top pin 1
+  # It needs support to add polarity drawings in the connector.
+  library: 'Wago'
+  pad_pitch: 2.5
+  row_pitch: null # only one row
+  first_pin:
+    position: 'top'     # top (default) or bottom
+    offset:
+    marker:
+      shape: 'line'
+      offset: -0.517
+      fab: True
+      size: 1.1547 # 1mm side arrow
+    pad:
+      shape: 'rect'
+      drill: 1.35
+      size: [2.1, 2.1]
+  clean_silk: True
+  description: 'Shrouded connector, {pad_pitch}mm Pitch, Single Row, {options}'
+  tags: 'conn  wire'
+  pads:
+    drill: 1.35
+    size: [2.1, 2.1]
+  source: 'https://www.wago.com/global/pluggable-connectors/tht-male-header/p/733-332'
+  options: 'closed sides, vertical (straight)'
+  fp_suffix: '_Vertical'
+  offset:
+    body: [0, 0]
+  body_size:
+    x_offset: 2.5
+    y: 7.8
+  fp_name: 'Wago_733-33{num_pos:01d}'
+  positions: [2, 3, 4, 5, 6, 7, 8, 9]
+
+Wago_733-340:
+  inherit: 'Wago_733-33x'
+  fp_name: 'Wago_733-340'
+  source: 'https://www.wago.com/global/pluggable-connectors/tht-male-header/p/733-340'
+  positions: [10]
+
+Wago_733-342:
+  inherit: 'Wago_733-33x'
+  fp_name: 'Wago_733-342'
+  source: 'https://www.wago.com/global/pluggable-connectors/tht-male-header/p/733-342'
+  positions: [10]
+
 Wago_733-36x:
   # This series need centering at top pin 1
   library: 'Wago'
@@ -16,7 +63,7 @@ Wago_733-36x:
       drill: 1.35
       size: [2.1, 2.1]
   clean_silk: True
-  description: 'Shrouded connector, 2.54 mm Pitch, Single Row, {options}'
+  description: 'Shrouded connector, {pad_pitch}mm Pitch, Single Row, {options}'
   tags: 'conn  wire'
   pads:
     drill: 1.35
