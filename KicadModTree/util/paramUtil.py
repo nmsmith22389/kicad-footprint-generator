@@ -207,5 +207,3 @@ def getOptionalNumberTypeParam(
                     '{} with value {} violates the high limit of {}'
                     .format(param_name, val, high_limit))
     return val
-
-
