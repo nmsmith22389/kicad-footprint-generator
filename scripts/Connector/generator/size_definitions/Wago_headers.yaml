@@ -220,8 +220,7 @@ Wago_734-53x:
     bottom:
       polyline: [[pl-1.7, -1.6+14.7], [pr+3.3-1.5, -1.6+14.7]]
   fp_name: 'Wago_734-53{num_pos:01d}'
-#  positions: [2, 3, 4, 5, 6, 7, 8, 9]
-  positions: [2, 6]
+  positions: [2, 3, 4, 5, 6, 7, 8, 9]
   rule_areas:
     pluggable_connector: # key is unique for each rule area
       name: 'Pluggable connector' # visible name of the rule area
@@ -233,6 +232,54 @@ Wago_734-53x:
                   ]
       keepouts:
         footprints: deny
+
+Wago_734-540:
+  inherit: 'Wago_734-53x'
+  fp_name: 'Wago_734-540'
+  source: 'https://www.wago.com/global/pluggable-connectors/tht-male-header/p/734-540'
+  positions: [10]
+
+Wago_734-541:
+  inherit: 'Wago_734-53x'
+  fp_name: 'Wago_734-541'
+  source: 'https://www.wago.com/global/pluggable-connectors/tht-male-header/p/734-541'
+  positions: [11]
+
+Wago_734-542:
+  inherit: 'Wago_734-53x'
+  fp_name: 'Wago_734-542'
+  source: 'https://www.wago.com/global/pluggable-connectors/tht-male-header/p/734-542'
+  positions: [12]
+
+Wago_734-544:
+  inherit: 'Wago_734-53x'
+  fp_name: 'Wago_734-544'
+  source: 'https://www.wago.com/global/pluggable-connectors/tht-male-header/p/734-544'
+  positions: [14]
+
+Wago_734-546:
+  inherit: 'Wago_734-53x'
+  fp_name: 'Wago_734-546'
+  source: 'https://www.wago.com/global/pluggable-connectors/tht-male-header/p/734-546'
+  positions: [16]
+
+Wago_734-548:
+  inherit: 'Wago_734-53x'
+  fp_name: 'Wago_734-548'
+  source: 'https://www.wago.com/global/pluggable-connectors/tht-male-header/p/734-548'
+  positions: [18]
+
+Wago_734-550:
+  inherit: 'Wago_734-53x'
+  fp_name: 'Wago_734-550'
+  source: 'https://www.wago.com/global/pluggable-connectors/tht-male-header/p/734-550'
+  positions: [20]
+
+Wago_734-554:
+  inherit: 'Wago_734-53x'
+  fp_name: 'Wago_734-554'
+  source: 'https://www.wago.com/global/pluggable-connectors/tht-male-header/p/734-554'
+  positions: [24]
 
 Wago_734-46x:
   # This connector needs another pad row at 3.65mm Y distance, with the same numbering
