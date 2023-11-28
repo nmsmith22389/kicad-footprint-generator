@@ -634,7 +634,12 @@ def makeResistorRadial(seriesname, rm, w, h, ddrill, R_POW, innerw=0,innerh=0,rm
     padpos=[]
     offset=[0,0]
     if type=="simple" or type=="disc" or type=="round" or type=="concentric":
-        if pins == 4 and rm2 > 0:
+        if pins == 3:
+            padpos.append([1,- rm, 0, ddrill,padx,pady])
+            padpos.append([2, 0, 0, ddrill, padx, pady])
+            padpos.append([3, rm, 0, ddrill, padx, pady])
+            pad1style = Pad.SHAPE_RECT
+        elif pins == 4 and rm2 > 0:
             padpos.append([1, -rm2 / 2, -rm / 2, ddrill, padx, pady])
             padpos.append([4, rm2 / 2, -rm / 2, ddrill, padx, pady])
             padpos.append([3, rm2 / 2, rm / 2, ddrill, padx, pady])
