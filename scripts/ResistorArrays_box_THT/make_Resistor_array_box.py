@@ -11,18 +11,22 @@ sys.path.append(os.path.join(sys.path[0],"..","..","kicad_mod")) # load kicad_mo
 sys.path.append(os.path.join(sys.path[0],"..","..")) # load kicad_mod path
 sys.path.append(os.path.join(sys.path[0],"..","tools")) # load kicad_mod path
 
-from KicadModTree import *  # NOQA
-from drawing_tools import *
 from footprint_scripts_sip import *
 
 
 if __name__ == '__main__':
-    for R in range(3, 14):
-        pins=R+1
-        makeResistorSIP(pins, "R_Array_SIP%d" % (pins), "{0}-pin Resistor SIP pack".format(pins, R))
-    #for R in range(3,6):
-    #    pins=2*R
-    #    makeResistorSIP(pins, "Resistor_ArrayParallel_SIP%d" % (R), "{0}-pin Resistor SIP pack, {1} parallel resistors".format(pins, R))
-    #for R in range(3,6):
-    #    pins=R+2
-    #    makeResistorSIP(pins, "Resistor_ArrayDivider_SIP%d" % (R), "{0}-pin Resistor SIP pack, {1} voltage dividers = {2} resistors".format(pins, R, 2*R))
+    # Vishay 300144 resistor array
+    pins = 3
+    rm = 2.54
+    w = 7.49
+    h = 2.54
+    makeResistorArray(
+        pins=pins,
+        rm=rm,
+        w=w,
+        h=h,
+        ddrill=0.8,
+        footprint_name=f"R_Array_Box{pins}_L{w:.1f}mm_W{h:.1f}mm_P{rm}mm_Vishay_3001444",
+        description="https://www.vishayfoilresistors.com/docs/63045/300144x.pdf",
+        additional_tags=["Vishay", "300144"]
+    )

@@ -185,20 +185,28 @@ def makeSIPHorizontal(pins, rm, ddrill, pad, package_size, left_offset, pin_bott
     file_handler.writeFile(footprint_name + '.kicad_mod')
 
 
-def makeResistorSIP(pins, footprint_name, description):
-    rm = 2.54
-    h = 2.5
-    leftw = 1.29
-    ddrill = 0.8
-    padx = 1.6
-    pady = 1.6
+def makeResistorSIP(pins: int, footprint_name: str, description: str):
+    rm = 2.54; leftw = 1.29
+    makeResistorArray(
+        pins=pins,
+        rm=rm,
+        w=(pins - 1) * rm + 2 * leftw,
+        h=2.5,
+        ddrill=0.8,
+        footprint_name=footprint_name,
+        description=description
+    )
 
-    w = (pins - 1) * rm + 2 * leftw
-    left = -leftw
+
+def makeResistorArray(pins: int, rm: float, w: float , h: float, ddrill: float, footprint_name: str, description: str, additional_tags: tuple[str] | None = None):
+    padx = 2 * ddrill
+    pady = padx
+
+    left = ((pins - 1) * rm - w) / 2
     top = -h / 2
     h_slk = max(h, pady) + 2 * slk_offset
     w_slk = w + 2 * slk_offset
-    l_slk = -leftw - slk_offset
+    l_slk = left - slk_offset
     r_slk = l_slk + w_slk
     t_slk = -h_slk / 2
     w_crt = w_slk + 2 * crt_offset
@@ -206,14 +214,17 @@ def makeResistorSIP(pins, footprint_name, description):
     l_crt = min(l_slk, -padx / 2) - crt_offset
     t_crt = min(t_slk, -pady / 2) - crt_offset
 
-    lib_name = "Resistors_ThroughHole"
+    lib_name = "${KICAD7_3DMODEL_DIR}/Resistor_THT"
 
     print(footprint_name)
 
     # init kicad footprint
     kicad_mod = Footprint(footprint_name, FootprintType.THT)
     kicad_mod.setDescription(description)
-    kicad_mod.setTags("R")
+    tags = ["resistor", "array"]
+    if additional_tags is not None:
+        tags.extend(additional_tags)
+    kicad_mod.setTags(" ".join(tags))
 
     # set general values
     kicad_mod.append(Text(type='reference', text='REF**', at=[pins / 2 * rm, t_slk - txt_offset], layer='F.SilkS'))
@@ -224,7 +235,7 @@ def makeResistorSIP(pins, footprint_name, description):
     kicad_mod.append(Line(start=[0.5 * rm, top], end=[0.5 * rm, top + h], layer='F.Fab', width=lw_fab))
 
     # create SILKSCREEN-layer
-    kicad_mod.append(RectLine(start=[l_slk, t_slk], end=[l_slk + w_slk, t_slk + h_slk], layer='F.SilkS'))
+    kicad_mod.append(RectLine(start=[l_slk, t_slk], end=[r_slk, t_slk + h_slk], layer='F.SilkS'))
     kicad_mod.append(Line(start=[0.5 * rm, t_slk], end=[0.5 * rm, t_slk + h_slk], layer='F.SilkS'))
 
     # create courtyard
@@ -239,9 +250,9 @@ def makeResistorSIP(pins, footprint_name, description):
         kicad_mod.append(Pad(number=x, type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, at=[(x - 1) * rm, 0], size=[padx, pady],
                              drill=ddrill, layers=['*.Cu', '*.Mask']))
 
-    # add model
-    kicad_mod.append(Model(filename="${KICAD7_3DMODEL_DIR}/"+lib_name + ".3dshapes/" + footprint_name + ".wrl",
-                           at=[0, 0, 0], scale=[1 / 2.54, 1 / 2.54, 1 / 2.54], rotate=[0, 0, 0]))
+    # add 3d model
+    kicad_mod.append(Model(filename=lib_name + ".3dshapes/" + footprint_name + ".wrl",
+                           at=[0, 0, 0], scale=[1, 1, 1], rotate=[0, 0, 0]))
 
     # print render tree
     # print(kicad_mod.getRenderTree())
