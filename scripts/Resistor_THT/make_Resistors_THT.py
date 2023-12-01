@@ -98,7 +98,7 @@ if __name__ == '__main__':
     for rm in [7.62]:
         makeResistorAxialVertical(seriesname=seriesname, rm=rm, rmdisp=rm, l=w, d=d, ddrill=ddrill, R_POW=R_POW, type=type, d2=d2, x_3d=[0, 0, 0], s_3d=[1,1,1], has3d=1, specialfpname="", largepadsx=0, largepadsy=0, add_description=add_description, name_additions=name_additions, specialtags=[],script3d=script3dv, lib_name=lib_name)
 
-		
+
 
 
     # POWER Resistors (rectangular)
@@ -179,7 +179,7 @@ if __name__ == '__main__':
     makeResistorAxialHorizontal(seriesname=seriesname, rm=rm, rmdisp=rm, w=w, d=d, ddrill=ddrill, R_POW=R_POW, type=type,d2=d2,  x_3d=[0,0,0], s_3d=[1,1,1], has3d=1, specialfpname="", add_description=add_description, name_additions=name_additions, specialtags=[], lib_name=lib_name)
     rm = 20.3; w=rm+1; R_POW=5
     makeResistorAxialHorizontal(seriesname=seriesname, rm=rm, rmdisp=rm, w=w, d=d, ddrill=ddrill, R_POW=R_POW, type=type,d2=d2,  x_3d=[0,0,0], s_3d=[1,1,1], has3d=1, specialfpname="", add_description=add_description, name_additions=name_additions, specialtags=[], lib_name=lib_name)
-    
+
     # radial resistors, 45deg wires
     script3dv = "res_radial_power_ver.py"
     with open(script3dv, "w") as myfile:
@@ -193,7 +193,7 @@ if __name__ == '__main__':
 
     # radial resistors, simple box
     rm2=0; w2=0
-    type = "simple"; seriesname = "Box"; add_description = "https://foilresistors.com/docs/63001/63001.pdf"; name_additions=[]
+    type = "simple"; seriesname = "Box"; add_description = "https://foilresistors.com/docs/63001/63001.pdf"; name_additions=["Vishay", "S102"]
     w = 7.62; h = 2.67; ddrill = 0.8; rm=3.81; rm2=0; R_POW=1; special_tags=["S102K", "S102C"]
     makeResistorRadial(seriesname=seriesname, rm=rm, w=w, h=h, ddrill=ddrill, R_POW=R_POW, rm2=rm2, vlines=False, w2=w2, type=type, x_3d=[0, 0, 0], s_3d=[1,1,1], has3d=1, specialfpname="", name_additions=name_additions, specialtags=special_tags, add_description=add_description,script3d=script3dv,height3d=8.28, lib_name=lib_name)
 
@@ -208,12 +208,6 @@ if __name__ == '__main__':
     makeResistorRadial(seriesname=seriesname, rm=rm, w=w, h=h, ddrill=ddrill, R_POW=R_POW, rm2=rm2, vlines=False, w2=w2, type=type, x_3d=[0, 0, 0], s_3d=[1,1,1], has3d=1, specialfpname="", name_additions=name_additions, specialtags=[], add_description=add_description,script3d=script3dv,height3d=18, lib_name=lib_name)
     w = 26.0; h = 5.0; ddrill = 1.4; rm=20; rm2=0; R_POW=10
     makeResistorRadial(seriesname=seriesname, rm=rm, w=w, h=h, ddrill=ddrill, R_POW=R_POW, rm2=rm2, vlines=False, w2=w2, type=type, x_3d=[0, 0, 0], s_3d=[1,1,1], has3d=1, specialfpname="", name_additions=name_additions, specialtags=[], add_description=add_description,script3d=script3dv,height3d=18, lib_name=lib_name)
-
-    # radial resistors, simple box array
-    rm2 = 0; w2 = 0
-    type = "simple"; seriesname = "Array_Box3"; add_description = "https://www.vishayfoilresistors.com/docs/63045/300144x.pdf"; name_additions = []
-    w = 7.49; h = 2.54; ddrill = 0.8; rm = 2.54; rm2 = 0; R_POW = 1; special_tags = ["300144", ]
-    makeResistorRadial(seriesname=seriesname, rm=rm, w=w, h=h, ddrill=ddrill, R_POW=R_POW, rm2=rm2, pins=3, vlines=False, w2=w2, type=type, x_3d=[0, 0, 0], s_3d=[1, 1, 1], has3d=1, specialfpname="", name_additions=name_additions, specialtags=special_tags, add_description=add_description, script3d=script3dv, height3d=8.13, lib_name=lib_name)
 
     # radial resistors, simple
     rm2=0; w2=0
