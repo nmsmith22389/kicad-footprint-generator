@@ -26,7 +26,7 @@ if __name__ == '__main__':
         w=w,
         h=h,
         ddrill=0.8,
-        footprint_name=f"R_Array_Box{pins}_L{w:.1f}mm_W{h:.1f}mm_P{rm}mm_Vishay_3001444",
+        footprint_name=f"R_Array_Box{pins}_L{w:.1f}mm_W{h:.1f}mm_P{rm}mm_Vishay_300144",
         description="https://www.vishayfoilresistors.com/docs/63045/300144x.pdf",
         additional_tags=["Vishay", "300144"]
     )
