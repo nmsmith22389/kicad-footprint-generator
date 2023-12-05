@@ -3007,7 +3007,7 @@ SOIC-14_3.9x8.7mm_Pitch1.27mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.ti.com/lit/ml/mpds177g/mpds177g.pdf'
 
-SOIC-14W_7.5x9.0mm_P1.27mm:
+SOIC-14W_7.5x9mm_P1.27mm:
   the: 9.0
   tb_s: 0.15
   c: 0.28
@@ -3031,7 +3031,7 @@ SOIC-14W_7.5x9.0mm_P1.27mm:
   npy: 0
   epad: null
   excluded_pins: null
-  model_name: SOIC-14W_7.5x9.0mm_P1.27mm
+  model_name: SOIC-14W_7.5x9mm_P1.27mm
   rotation: -90
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
