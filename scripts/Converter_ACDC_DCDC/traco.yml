@@ -270,3 +270,34 @@ Converter_DCDC_TRACO_TRI1-xxxx_THT:
     ["tht", "6", 0, -12.7, 1.5, 1.5, 1],
     ["tht", "7", 0, -15.24, 1.5, 1.5, 1]
   ]
+
+Converter_DCDC_TRACO_THB10-xxxx_Single_THT:
+  library_name: 'Converter_DCDC'
+  description: "DCDC-Converter, TRACO, THB10-xxxx, Single, 10W, Rev. December 07. 2023"
+  datasheet: "https://www.tracopower.com/products/thb10.pdf"
+  tags: "DCDC-Converter TRACO THB10 THT 2\"x1\" 10W"
+  extratexts: []
+  at: [-5.08, 2.54]
+  size: [25.4, 50.8]
+  pins: [
+    ["thtr", "1", 0, 0, 2.3, 2.3, 1.3],
+    ["tht", "2", 5.08, 0, 2.3, 2.3, 1.3],
+    ["tht", "3", -2.54, -45.72, 2.3, 2.3, 1.3],
+    ["tht", "5", 17.78, -45.72, 2.3, 2.3, 1.3]
+  ]
+
+Converter_DCDC_TRACO_THB10-xxxx_Dual_THT:
+  library_name: 'Converter_DCDC'
+  description: "DCDC-Converter, TRACO, THB10-xxxx, Dual, 10W, Rev. December 07. 2023"
+  datasheet: "https://www.tracopower.com/products/thb10.pdf"
+  tags: "DCDC-Converter TRACO THB10 THT 2\"x1\" 10W"
+  extratexts: []
+  at: [-5.08, 2.54]
+  size: [25.4, 50.8]
+  pins: [
+    ["thtr", "1", 0, 0, 2.3, 2.3, 1.3],
+    ["tht", "2", 5.08, 0, 2.3, 2.3, 1.3],
+    ["tht", "3", -2.54, -45.72, 2.3, 2.3, 1.3],
+    ["tht", "4", 7.62, -45.72, 2.3, 2.3, 1.3],
+    ["tht", "5", 17.78, -45.72, 2.3, 2.3, 1.3]
+  ]
