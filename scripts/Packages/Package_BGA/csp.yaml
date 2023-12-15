@@ -745,3 +745,12 @@ WLCSP-4-X1-WLB0909-4_0.89x0.89mm_P0.5mm:
   pad_diameter: 0.235 # even though ball_diameter is 0.235 analog recommends a landing pad of 0.235
   layout_x: 2
   layout_y: 2
+DiodesInc_GEA20_WLCSP-20_1.70x2.10mm_Layout4x5_P0.4mm:
+  description: "Diodes Incorporated WLCSP-20, GEA20"
+  size_source: "https://www.diodes.com/assets/Package-Files/GEA20.pdf"
+  body_size_x: 1.70
+  body_size_y: 2.10
+  pitch: 0.4
+  pad_diameter: 0.230
+  layout_x: 4
+  layout_y: 5
