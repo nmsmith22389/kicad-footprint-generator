@@ -271,6 +271,24 @@ Converter_DCDC_TRACO_TRI1-xxxx_THT:
     ["tht", "7", 0, -15.24, 1.5, 1.5, 1]
   ]
 
+Converter_DCDC_TRACO_TMR4-xxxxWI_THT:
+  library_name: 'Converter_DCDC'
+  description: "DCDC-Converter, TRACO, TMR4-xxxxWI, 4W, Rev. December 06. 2023"
+  datasheet: "https://www.tracopower.com/products/tmr4wi.pdf"
+  tags: "DCDC-Converter TRACO TMR4WI THT SIP-8 4W"
+  extratexts: []
+  at: [-2, 2.575]
+  size: [21.8, 9.3]
+  pins: [
+    ["thtr", "1", 0, 0, 1.5, 1.5, 1],
+    ["tht", "2", 2.54, 0, 1.5, 1.5, 1],
+    ["tht", "3", 5.08, 0, 1.5, 1.5, 1],
+    ["tht", "5", 10.16, 0, 1.5, 1.5, 1],
+    ["tht", "6", 12.7, 0, 1.5, 1.5, 1],
+    ["tht", "7", 15.24, 0, 1.5, 1.5, 1],
+    ["tht", "8", 17.78, 0, 1.5, 1.5, 1]
+  ]
+
 Converter_DCDC_TRACO_THB10-xxxx_Single_THT:
   library_name: 'Converter_DCDC'
   description: "DCDC-Converter, TRACO, THB10-xxxx, Single, 10W, Rev. December 07. 2023"
