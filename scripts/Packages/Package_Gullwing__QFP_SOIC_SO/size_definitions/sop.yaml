@@ -397,3 +397,33 @@ SOP-24_7.5x15.4mm_P1.27mm:
   pitch: 1.27
   num_pins_x: 0
   num_pins_y: 12
+
+SOP-44_12.6x28.5mm_P1.27mm:
+  size_source: 'https://www.mxic.com.tw/Lists/Datasheet/Attachments/8177/MX23C6410,%205V,%2064Mb,%20v3.1.pdf#page=5'
+  body_size_x:
+    minimum: 12.47
+    nominal: 12.6
+    maximum: 12.73
+  body_size_y:
+    minimum: 28.37
+    nominal: 28.5
+    maximum: 28.63
+  overall_height:
+    maximum: 3
+
+  overall_size_x:
+    minimum: 15.83
+    nominal: 16.03
+    maximum: 16.23
+  lead_width:
+    minimum: 0.36
+    nominal: 0.41
+    maximum: 0.51
+  lead_len:
+    minimum: 0.56
+    nominal: 0.76
+    maximum: 0.96
+
+  pitch: 1.27
+  num_pins_x: 0
+  num_pins_y: 22
