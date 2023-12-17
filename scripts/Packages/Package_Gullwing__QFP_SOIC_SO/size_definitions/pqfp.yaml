@@ -83,6 +83,35 @@ PQFP-160_28x28mm_P0.65mm:
   num_pins_x: 40
   num_pins_y: 40
 
+PQFP-168_28x28mm_P0.65mm:
+  size_source: 'https://www.renesas.cn/cn/zh/document/psc/package-drawing-qfp-168pin-prqp0168jb'
+  force_small_pitch_ipc_definition: True
+  body_size_x:
+    nominal: 28
+  body_size_y:
+    nominal: 28
+  overall_size_x:
+    minimum: 31
+    nominal: 31.2
+    maximum: 31.4
+  overall_size_y:
+    minimum: 31
+    nominal: 31.2
+    maximum: 31.4
+  overall_height:
+    maximum: 3.56
+  lead_width:
+    minimum: 0.24
+    nominal: 0.32
+    maximum: 0.4
+  lead_len:
+    minimum: 0.6
+    nominal: 0.8
+    maximum: 1
+  pitch: 0.65
+  num_pins_x: 42
+  num_pins_y: 42
+
 PQFP_208:
   size_source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
   body_size_x:
