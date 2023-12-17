@@ -14,6 +14,34 @@ PQFP-32_5x5mm_P0.5mm:
   num_pins_x: 8
   num_pins_y: 8
 
+PQFP-64_14x14mm_P0.5mm:
+  size_source: 'https://www.renesas.com/us/en/document/psc/package-drawing-qfp-64pin-prqp0064gb'
+  body_size_x:
+    nominal: 14
+  body_size_y:
+    nominal: 14
+  overall_size_x:
+    minimum: 16.9
+    nominal: 17.2
+    maximum: 17.5
+  overall_size_y:
+    minimum: 16.9
+    nominal: 17.2
+    maximum: 17.5
+  overall_height:
+    maximum: 3.05
+  lead_width:
+    minimum: 0.29
+    nominal: 0.37
+    maximum: 0.45
+  lead_len:
+    minimum: 0.5
+    nominal: 0.8
+    maximum: 1.1
+  pitch: 0.8
+  num_pins_x: 16
+  num_pins_y: 16
+
 PQFP-100_14x20mm_P0.65mm:
   size_source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
   force_small_pitch_ipc_definition: True
