@@ -265,6 +265,32 @@ SOP-18_7.0x12.5mm_P1.27mm:
   num_pins_x: 0
   num_pins_y: 9
 
+SOP-18_7.495x11.515mm_P1.27mm:
+  # mpn: 'P-SOP18-0812-1.27-001'
+  size_source: 'https://toshiba.semicon-storage.com/info/docget.jsp?did=30523'
+  body_size_x:
+    minimum: 7.37
+    maximum: 7.62
+  body_size_y:
+    minimum: 11.35
+    maximum: 11.68
+  overall_height:
+    maximum: 2.85
+
+  overall_size_x:
+    minimum: 10.01
+    maximum: 10.64
+  lead_width:
+    minimum: 0.36
+    maximum: 0.51
+  lead_len:
+    nominal: 0.85
+    tolerance: 0.15
+
+  pitch: 1.27
+  num_pins_x: 0
+  num_pins_y: 9
+
 STC_SOP-16_3.9x9.9mm_P1.27mm:
   size_source: 'https://www.stcmicro.com/datasheet/STC15F2K60S2-en.pdf#page=156'
   manufacturer: 'STC'
