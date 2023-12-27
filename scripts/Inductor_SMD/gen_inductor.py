@@ -28,9 +28,9 @@ else:
 
 silkscreenOffset = 0.2
 fabOffset = 0.0
-courtyardOffset = 0.25      # 0.25 per KLC
-silkLineThickness = 0.12    # Default silkscreen line is 0.12mm thick. Do not change.
-
+courtyardOffset = 0.25              # 0.25 per KLC
+silkLineThickness = 0.12            # Default silkscreen line is 0.12mm thick. Do not change.
+tinyPartOffset = silkscreenOffset   # Arbitrary compensation for tiny part silkscreen logic below
 
 def derive_landing_x(data: dict[str, str]) -> (float, float):
     """
@@ -98,24 +98,13 @@ with open(batchInputFile, 'r') as stream:
                 footprint_name = f'L_{seriesManufacturer}_{partNumber}'
                 print(f'Processing {footprint_name}')
 
-                # Silkscreen corners
-                vertLen = (lengthY/2 - landingY/2) + silkscreenOffset - 0.2
-                horzLen = (widthX/2 - landingX/2) + silkscreenOffset - 0.2
-                leftX = 0-widthX/2-silkscreenOffset - silkLineThickness/2
-                rightX = widthX/2+silkscreenOffset + silkLineThickness/2
-                upperY = 0-lengthY/2-silkscreenOffset - silkLineThickness/2
-                lowerY = lengthY/2+silkscreenOffset + silkLineThickness/2
-                # End of silkscreen vars
-
                 # init kicad footprint
                 kicad_mod = Footprint(footprint_name, FootprintType.SMD)
                 kicad_mod.setDescription(f"Inductor, {seriesManufacturer}, {partNumber}, {widthX}x{lengthY}x{height}mm, {partDatasheet}")
                 kicad_mod.setTags(f"Inductor {seriesTagsString}")
 
                 # set general values
-                kicad_mod.append(Text(type='reference', text='REF**', at=[0, 0-lengthY/2-1], layer='F.SilkS'))
 
-                kicad_mod.append(Text(type='value', text=footprint_name, at=[0, lengthY/2+1], layer='F.Fab'))
                 scaling = landingX/3
                 clampscale = clamp(scaling, 0.5, 1)
 
@@ -128,6 +117,48 @@ with open(batchInputFile, 'r') as stream:
                     rot = 0
                 kicad_mod.append(Text(type='user', text='${REFERENCE}', at=[0, 0], layer='F.Fab', rotation=rot, size=[clampscale, clampscale], thickness=clampscale*0.15))
 
+                # Fab layer
+                kicad_mod.append(RectLine(start=[0-widthX/2-fabOffset, 0-lengthY/2-fabOffset], end=[widthX/2+fabOffset, lengthY/2+fabOffset], layer='F.Fab'))
+
+                # create COURTYARD
+                # Base it off the copper or physical, whichever is biggest. Need to check both X and Y.
+
+                # Extreme right edge
+                rightCopperMax= landingSpacing/2 + landingX
+                rightPhysicalMax = widthX / 2
+                if rightCopperMax > rightPhysicalMax:
+                    widest = landingSpacing + (landingX * 2)    # Copper is bigger
+                else:
+                    widest = widthX
+
+                # Extreme top edge
+                # Used for determining the courtyard
+                # Also used for very tiny parts. Typically we see
+                # that the solder pads are quite large for manufacturability, but the part itself is small, so
+                # the silkscreen will overlap.
+                bottomCopperMax= landingY / 2
+                bottomPhysicalMax = lengthY / 2
+                if bottomCopperMax > bottomPhysicalMax:    
+                    tallest = landingY  # Copper is bigger
+                else:
+                    tallest = lengthY
+
+                # Need to round so we stick to 0.01mm precision
+                kicad_mod.append(RectLine(start=[round(0-widest/2-courtyardOffset, 2), round(0-tallest/2-courtyardOffset, 2)], end=[round(widest/2+courtyardOffset, 2), round(tallest/2+courtyardOffset, 2)], layer='F.CrtYd'))
+
+                # Silkscreen REF
+                kicad_mod.append(Text(type='reference', text='REF**', at=[0, 0-tallest/2-1], layer='F.SilkS'))
+                # Fab Value
+                kicad_mod.append(Text(type='value', text=footprint_name, at=[0, tallest/2+1], layer='F.Fab'))
+
+                # Silkscreen corners
+                vertLen = (tallest/2 - landingY/2) + silkscreenOffset - 0.2
+                horzLen = (widthX/2 - landingX/2) + silkscreenOffset - 0.2
+                leftX = 0-widthX/2-silkscreenOffset - silkLineThickness/2
+                rightX = widthX/2+silkscreenOffset + silkLineThickness/2
+                upperY = 0-tallest/2-silkscreenOffset - silkLineThickness/2
+                lowerY = tallest/2+silkscreenOffset + silkLineThickness/2
+                # End of silkscreen vars
 
                 # Create silkscreen
                 kicad_mod.append(Line(start=[leftX, upperY], end=[rightX, upperY], layer='F.SilkS'))        # Full upper line
@@ -140,32 +171,7 @@ with open(batchInputFile, 'r') as stream:
                     kicad_mod.append(Line(start=[leftX, lowerY], end=[leftX, lowerY - vertLen], layer='F.SilkS'))       # Tick up left
                     kicad_mod.append(Line(start=[rightX, lowerY], end=[rightX, lowerY - vertLen], layer='F.SilkS'))     # Tick up right
 
-                # Fab layer
-                kicad_mod.append(RectLine(start=[0-widthX/2-fabOffset, 0-lengthY/2-fabOffset], end=[widthX/2+fabOffset, lengthY/2+fabOffset], layer='F.Fab'))
-
-                # create COURTYARD
-                # Base it off the copper or physical, whichever is biggest. Need to check both X and Y.
-
-                # Extreme right edge
-                rightCopperMax= landingSpacing/2 + landingX
-                rightPhysicalMax = widthX / 2
-                if rightCopperMax > rightPhysicalMax:    # Copper is bigger
-                    widest = landingSpacing + (landingX * 2)
-                else:
-                    widest = widthX
-
-                # Extreme top edge
-                bottomCopperMax= landingY / 2
-                bottomPhysicalMax = lengthY / 2
-                if bottomCopperMax > bottomPhysicalMax:    # Copper is bigger
-                    tallest = landingY
-                else:
-                    tallest = lengthY
-
-                # Need to round so we stick to 0.01mm precision
-                kicad_mod.append(RectLine(start=[round(0-widest/2-courtyardOffset, 2), round(0-tallest/2-courtyardOffset, 2)], end=[round(widest/2+courtyardOffset, 2), round(tallest/2+courtyardOffset, 2)], layer='F.CrtYd'))
-
-                # create pads
+                # Copper Pads
                 kicad_mod.append(Pad(number=1, type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT,
                                     at=[0-landingSpacing/2-landingX/2, 0], size=[landingX, landingY], layers=Pad.LAYERS_SMT))
                 kicad_mod.append(Pad(number=2, type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT,
