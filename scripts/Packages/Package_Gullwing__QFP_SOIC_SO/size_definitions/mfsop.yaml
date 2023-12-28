@@ -1,0 +1,29 @@
+FileHeader:
+  library_Suffix: 'SO'
+  device_type: 'MFSOP'
+
+MFSOP-5-6_4.4x3.6mm_P1.27mm:
+  size_source: "https://toshiba.semicon-storage.com/eu/semiconductor/design-development/package/detail.5pin%20MFSOP6.html"
+  body_size_x:
+    nominal: 4.4
+  body_size_y:
+    nominal: 3.6
+  overall_size_x:
+    nominal: 7.0
+  overall_height:
+    nominal: 2.6 # 2.5 + 0.1
+  lead_width: # Inferred from JEDEC MS-012
+    minimum: 0.31
+    maximum: 0.51
+  lead_len: # Inferred from JEDEC MS-012
+    nominal: 0.835
+    tolerance: 0.435
+  pitch: 1.27
+  num_pins_x: 0
+  num_pins_y: 3
+  deleted_pins: [2]
+
+MFSOP-4-6_4.4x3.6mm_P1.27mm:
+  inherit: MFSOP-5-6_4.4x3.6mm_P1.27mm
+  size_source: "https://toshiba.semicon-storage.com/eu/semiconductor/design-development/package/detail.4pin%20MFSOP6.html"
+  deleted_pins: [2, 5]
