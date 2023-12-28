@@ -19,6 +19,8 @@ from drawing_tools import nearestSilkPointOnOrthogonalLine
 sys.path.append(os.path.join(sys.path[0], "..", "utils"))
 from ep_handling_utils import getEpRoundRadiusParams
 
+from scripts.tools.dict_tools import dictInherit
+
 ipc_density = 'nominal'
 ipc_doc_file = '../ipc_definitions.yaml'
 
@@ -698,6 +700,9 @@ if __name__ == "__main__":
                 cmd_file = yaml.safe_load(command_stream)
             except yaml.YAMLError as exc:
                 print(exc)
+
+        dictInherit(cmd_file)
+
         header = cmd_file.pop('FileHeader')
 
         for pkg in cmd_file:

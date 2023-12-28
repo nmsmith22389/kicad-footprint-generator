@@ -184,3 +184,20 @@ parameter_name_min: 1.1
 parameter_name: 1.2
 parameter_name_max: 1.3
 ```
+
+## Inheritance
+
+The YAML configuration file supports inheritance. Using `inherit` allows to create
+versions of a part by just overwriting specific parameters. See the example below:
+
+```yaml
+Part-A:
+  param1: 1
+  param2: 2
+
+Part-B:
+  inherit: Part-A
+  param2: 3
+```
+
+In this case, `Part-B` will have the same parameters as `Part-A` except for `param2`.
