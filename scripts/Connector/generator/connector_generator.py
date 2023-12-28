@@ -14,6 +14,7 @@
 
 import sys
 import os
+import warnings
 
 import argparse
 import yaml
@@ -33,6 +34,8 @@ from dict_tools import dictMerge, dictInherit       # NOQA
 from declarative_def_tools import utils, rule_area_properties, shape_properties
 
 from dataclasses import dataclass, asdict, field
+
+from drawing_tools import point_is_on_segment
 
 DEFAULT_SMT_PAD_SHAPE = 'roundrect'
 DEFAULT_THT_PAD_SHAPE = 'circ'
@@ -601,6 +604,45 @@ def make_pin1_fab_marker(fp_config: FPconfiguration, configuration: dict) -> lis
     pin1_fab = PolygonLine(nodes=pnts + pnts[:1], layer='F.Fab', width=width)
     return pin1_fab
 
+def clean_body_shape(body_shape_nodes):
+    # Check if there are 3 points in the same line, and remove the center point
+    max_index = len(body_shape_nodes)-3
+    i = -1
+    while i <= max_index and i+2 <=max_index:
+        node_a = body_shape_nodes[i]
+        node_b = body_shape_nodes[i+1]
+        node_c = body_shape_nodes[i+2]
+        node_changed = False
+        # Check first if some points are the same, otherwise, point_is_on_segment wouldn't work properly.
+        if node_a == node_b:
+                del body_shape_nodes[i]
+                i = i-1 # Reevaluate from the index before to remove duplicates
+                node_changed = True
+        elif node_b == node_c:
+                del body_shape_nodes[i+1]
+                i = i-1 # Reevaluate from the index before to remove duplicates
+                node_changed = True
+        elif node_a == node_c:
+                warnings.warn("Found piece of shape with zero thickness: "+str(body_shape_nodes[i])+", "+str(body_shape_nodes[i+1])+", "+str(body_shape_nodes[i+2])+".")
+                del body_shape_nodes[i+1]
+                i = i-1 # Reevaluate from the index before to remove duplicates
+                node_changed = True
+        elif point_is_on_segment(node_b, node_c, node_a):
+                # If A between B and C
+                del body_shape_nodes[i]
+                node_changed = True
+        elif point_is_on_segment(node_a, node_c, node_b):
+                # If B between A and C
+                del body_shape_nodes[i+1]
+                node_changed = True
+        elif point_is_on_segment(node_a, node_b, node_c):
+                # If C between A and B
+                del body_shape_nodes[i+2]
+                node_changed = True
+        if node_changed:
+                i = i-1
+                max_index = max_index-1
+        i = i+1
 
 def build_body_shape(body_spec: dict, *, fp_config: FPconfiguration):
     body_shapes = { }
@@ -636,6 +678,9 @@ def build_body_shape(body_spec: dict, *, fp_config: FPconfiguration):
         body_shape_nodes.append(Vector2D(left, bot))
     # left shape (eventually empty)
     body_shape_nodes += body_shapes["left"]
+
+    clean_body_shape(body_shape_nodes)
+
     # close shape
     body_shape_nodes.append(body_shape_nodes[0])
     return body_shape_nodes

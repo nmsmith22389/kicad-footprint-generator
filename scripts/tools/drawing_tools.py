@@ -855,3 +855,66 @@ def nearestSilkPointOnOrthogonalLine(pad_size, pad_position, pad_radius, fixed_p
         return moving_point
 
     return ep_new
+
+#
+# Check if c point intersects the line segment from a to b points
+#
+# Parameters:
+#    a: point coordinates as Vector2D
+#    b: point coordinates as Vector2D
+#    c: point coordinates as Vector2D
+#
+# Return iff point c intersects the line segment from a to b.
+#
+# Code adapted from post from Darius Bacon (code posted at 2008) at:
+# https://stackoverflow.com/questions/328107/how-can-you-determine-a-point-is-between-two-other-points-on-a-line-segment
+#
+# StackOverflow licensing is CC BY-SA 2.5. Check at: https://stackoverflow.com/help/licensing
+#
+def point_is_on_segment(a, b, c):
+    "Return true iff point c intersects the line segment from a to b."
+    # (or the degenerate case that all 3 points are coincident)
+    return (collinear_points(a, b, c)
+            and (point_within(a.x, c.x, b.x) if a.x != b.x else
+                 point_within(a.y, c.y, b.y)))
+
+#
+# Check if a,b,c points all lie on the same line.
+#
+# Parameters:
+#    a: point coordinates as Vector2D
+#    b: point coordinates as Vector2D
+#    c: point coordinates as Vector2D
+#
+# Return true iff a, b, and c all lie on the same line.
+#
+# Code adapted from post from Darius Bacon (code posted at 2008) at:
+# https://stackoverflow.com/questions/328107/how-can-you-determine-a-point-is-between-two-other-points-on-a-line-segment
+#
+# StackOverflow licensing is CC BY-SA 2.5. Check at: https://stackoverflow.com/help/licensing
+#
+def collinear_points(a, b, c):
+    "Return true iff a, b, and c all lie on the same line."
+    if  ( abs(((b.x - a.x) * (c.y - a.y)) - ((c.x - a.x) * (b.y - a.y)) )) <= 0.000001:
+        return True
+    else:
+        return False
+
+#
+# Check if q point is between p and r points
+#
+# Parameters:
+#    p: scalar coordinate
+#    q: scalar coordinate
+#    r: scalar coordinate
+#
+# Return true iff q is between p and r (inclusive).
+#
+# Code adapted from post from Darius Bacon (code posted at 2008) at:
+# https://stackoverflow.com/questions/328107/how-can-you-determine-a-point-is-between-two-other-points-on-a-line-segment
+#
+# StackOverflow licensing is CC BY-SA 2.5. Check at: https://stackoverflow.com/help/licensing
+#
+def point_within(p, q, r):
+    "Return true iff q is between p and r (inclusive)."
+    return p <= q <= r or r <= q <= p
