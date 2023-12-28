@@ -21,7 +21,7 @@ def formatFloat(val):
     '''
     return well formatted float
     '''
-    result = ('%f' % val).rstrip('0').rstrip('.')
+    result = ('%f' % round(val, 6)).rstrip('0').rstrip('.')
     if result == '-0':
         result = '0'
     return result
