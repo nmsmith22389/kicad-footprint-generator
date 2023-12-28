@@ -2,25 +2,25 @@ FileHeader:
   library_Suffix: 'SO'
   device_type: 'SC-74'
 
-SC-74-6_1.50mmx2.90mm_P0.95mm:
-  size_source: 'https://www.nxp.com/docs/en/package-information/SOT457.pdf'
+SC-74-6_1.55mmx2.90mm_P0.95mm:
+  size_source: 'https://www.jeita.or.jp/japanese/standard/book/ED-7500B/#target/page_no=39'
   body_size_x:
     minimum: 1.3
-    maximum: 1.7
+    maximum: 1.8
   body_size_y:
     minimum: 2.7
     maximum: 3.1
   overall_size_x:
-    minimum: 2.5
-    maximum: 3.0
+    minimum: 2.2
+    maximum: 3.2
   overall_height:
     minimum: 0.9
-    maximum: 1.1
+    maximum: 1.45
   lead_width:
-    minimum: 0.25
-    maximum: 0.40
+    minimum: 0.20
+    maximum: 0.50
   lead_len:
-    minimum: 0.2
+    minimum: 0.1
     maximum: 0.6
   pitch: 0.95
   num_pins_x: 0
