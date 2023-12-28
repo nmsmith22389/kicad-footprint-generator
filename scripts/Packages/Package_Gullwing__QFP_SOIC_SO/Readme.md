@@ -73,7 +73,9 @@ _Note: Contributions intended for the official library shall not include the man
 - Pad count (`num_pins_x`, `num_pins_y`) {int}
   - `num_pins_x`=0 is used for generating SOIC-like packages.
   - `num_pins_y`=0 is used to generate SOIC-like package footprints but with inverted pin numbering. (Mirrored numbering scheme. Some manufactures use this style in their datasheets. Make sure you are not looking at the bottom view before using this. Not supported for QFP and similar.)
-- Exclude pads by pad number (`exclude_pin_list`) {[`pad number`]}
+- Exclude pads:
+  - (`deleted_pins`) {[`pad number`]}. The pads at the the given positions will be deleted. The pin numbers will remain consecutive: for example if pin 2 is hidden, the numbers will be 1, 2, 3, etc. The package will be named, e.g. `SOIC-16-12`.
+  - (`hidden_pins`) {[`pad number`]}. The pads at the the given positions will be hidden. The pin numbers will skip the hidden pins: for example if pin 2 is hidden, the numbers will be 1, 3, 4, etc. The package will be named, e.g. `SOIC-12-16`.
 - Pin count (`pin_count`) {int} overrides the number of pins in the footprint name. This is useful for packages with skipped pins like SC-74A, which is named as a 5-pin package, not a 6-pin package minus one pin.
 
 ### Exposed pad handling:
