@@ -2,6 +2,9 @@ FileHeader:
   library_Suffix: 'SO'
   device_type: 'SC-74'
 
+# This is a JEITA standard package.
+# Some manufacturers use the name SOT-457, or SOT-23-6 for variants of this
+# package, usually with stricter tolerances than the JEITA standard.
 SC-74-6_1.55mmx2.90mm_P0.95mm:
   size_source: 'https://www.jeita.or.jp/japanese/standard/book/ED-7500B/#target/page_no=39'
   body_size_x:
@@ -25,6 +28,17 @@ SC-74-6_1.55mmx2.90mm_P0.95mm:
   pitch: 0.95
   num_pins_x: 0
   num_pins_y: 3
+
+# SC-74A is a JEITA standard package.
+# Some manufacturers use the name SOT-25 or SOT-23-5 for variants of this
+# package, usually with stricter tolerances than the JEITA standard.
+SC-74A-5_1.55mmx2.90mm_P0.95mm:
+  # it is simply an SC-74 variant with 5 pins
+  inherit: SC-74-6_1.55mmx2.90mm_P0.95mm
+  device_type: 'SC-74A'
+  size_source: 'https://www.jeita.or.jp/japanese/standard/book/ED-7500B/#target/page_no=41'
+  deleted_pins: [5]
+  pin_count: 5
 
 ROHM_SOT-457_ClockwisePinNumbering:
   size_source: 'https://fscdn.rohm.com/en/products/databook/datasheet/discrete/transistor/digital/imh3at110-e.pdf'
