@@ -17,8 +17,10 @@ Analog_28L-TQFN-EP-T2844_1:
     minimum: 0.7
     maximum: 0.8
 
-  # Override size of pads, according to manufacturer's recommendation
-  # For reference, see land pattern PDF (90-0035)
+  # NOTE: These values are correct (from the outline datasheet:
+  # https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/tqfn-cu/21-0139.pdf
+  # however, the resulting computed IPC pad width is 0.85mm
+  # This is close enough to the datasheet's recommended 0.8mm
   lead_width:
     minimum: 0.15
     maximum: 0.25
