@@ -74,6 +74,7 @@ _Note: Contributions intended for the official library shall not include the man
   - `num_pins_x`=0 is used for generating SOIC-like packages.
   - `num_pins_y`=0 is used to generate SOIC-like package footprints but with inverted pin numbering. (Mirrored numbering scheme. Some manufactures use this style in their datasheets. Make sure you are not looking at the bottom view before using this. Not supported for QFP and similar.)
 - Exclude pads by pad number (`exclude_pin_list`) {[`pad number`]}
+- Pin count (`pin_count`) {int} overrides the number of pins in the footprint name. This is useful for packages with skipped pins like SC-74A, which is named as a 5-pin package, not a 6-pin package minus one pin.
 
 ### Exposed pad handling:
 ![exposed pad example](../documentation/ep_handling.svg)
@@ -94,7 +95,7 @@ _Note: Contributions intended for the official library shall not include the man
     - The maximum parameter is the toe-to-toe size between opposite rows of pads
   - `pad_to_pad_min_y_overwrite` and `pad_to_pad_max_y_overwrite` are provided for top and bottom rows
   - N.B. using this or other overwrite parameters may yield invalid footprints if not checked after generation
-  
+
 ### Rounding of exposed pad features
 IPC excludes exposed pads from the requirement for rounding its corners. By default the exposed pad does therefore not use rounded corners. Some datasheets do however suggest the use of rounded corners either specified to a specific value or they appear to be equal to the normal pads.
 

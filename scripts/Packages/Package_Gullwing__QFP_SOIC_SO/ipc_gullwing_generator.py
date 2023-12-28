@@ -201,7 +201,12 @@ class Gullwing():
 
         pincount_full = device_params['num_pins_x'] * 2 + device_params['num_pins_y'] * 2
 
-        if 'hidden_pins' in device_params:
+        if 'pin_count' in device_params:
+            # If the pin count is explicitly given, we use that and don't adjust for hidden/deleted pins
+            pincount_full = device_params['pin_count']
+            pincount_text = '{}'.format(pincount_full)
+            pincount = pincount_full
+        elif 'hidden_pins' in device_params:
             pincount_text = '{}-{}'.format(pincount_full - len(device_params['hidden_pins']), pincount_full)
             pincount = pincount_full - len(device_params['hidden_pins'])
         elif 'deleted_pins' in device_params:
