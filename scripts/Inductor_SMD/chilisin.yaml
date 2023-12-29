@@ -11,3 +11,15 @@
     - bmrx
     # mchi was the old series namecode
     - mchi 
+
+- series: BMRx
+  manufacturer: Chilisin
+  datasheet: "https://www.chilisin.com/upload/media/product/power/file/BWVS_Series.pdf"
+  csv: chilisin_bwvs.csv
+  3d:
+    type: 2
+    bodyColor: black body
+    pinColor: metal grey pins
+    padThickness: 0.05
+  tags:
+    - bwvs
