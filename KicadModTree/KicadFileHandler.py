@@ -412,6 +412,9 @@ class KicadFileHandler(FileHandler):
             if node.solder_paste_margin != 0:
                 sexpr.append(['solder_paste_margin', node.solder_paste_margin])
 
+        if node.clearance != 0:
+            sexpr.append(['clearance', node.clearance])
+
         return sexpr
 
     def _serialize_PolygonPoints(self, node, newline_after_pts=False,
