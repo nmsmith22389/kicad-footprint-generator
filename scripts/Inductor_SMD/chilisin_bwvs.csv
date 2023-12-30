@@ -1,4 +1,4 @@
-PartNumber,lengthY,widthX,height,padY,padX,landingY,landingX,landingSpacingX
+PartNumber,widthX,lengthY,height,padY,padX,landingY,landingX,landingSpacingX
 BWVS00322515, 3.2, 2.5, 1.5, 1.0, 2.5, 2.6, 1.2, 2.2
 BWVS00404012, 4.0, 4.0, 1.2, 1.5, 4.0, 4.2, 1.5, 2.7
 BWVS00404018, 4.0, 4.0, 2.6, 1.4, 4.0, 3.7, 1.2, 2.8
