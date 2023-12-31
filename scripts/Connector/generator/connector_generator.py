@@ -62,6 +62,8 @@ def _get_dim(name: str, spec: dict, dim: str, base: float=0.0, mult: float=1):
         return base
     dim_spec = spec[name]
     if (dim in dim_spec):
+        if ("%s_offset" % dim in dim_spec):
+            warnings.warn(f"both, {dim} and {dim}_offset are specified; {dim}_offset is overridden by {dim}")
         return dim_spec[dim]
     elif (base != 0.0 and "%s_offset" % dim in dim_spec):
         value = dim_spec["%s_offset" % dim]

@@ -199,6 +199,7 @@ body_size:
   x_offset: 4.65 # x-size is given by a symmetric offset from the edge-pad's center x coordinate
   y: 7.6         # y-size is 7.6mm
 ~~~
+**Note:** If both, `x` and `x_offset` (or `y` and `y_offset`) are specified, then the offset specification is ignored.    
 
 ### `offset:` _dict_
 By default body as well as pads (excluding mount pads) are centered at the same point, which is the footprint origin.
