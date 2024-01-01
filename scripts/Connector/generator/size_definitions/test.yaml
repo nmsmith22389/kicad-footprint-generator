@@ -2,11 +2,19 @@ defaults:
   library: 'Test'
   clean_silk: True
   #silk_pad_clearance: 0 #0.075
+  doc_parameters:
+    seventeen: 17
+    num_pos_div_100 : eval ( num_pos_div_10 // 10)
+    num_pos_div_10: eval(num_pos // 10) # comment after eval statement is ignored
+    num_pos_mod_10: " eval(num_pos % 10) "
+    num_pos_mod_17: eval(num_pos % seventeen)
+    two: eval(sqrt(4))
+    formatted_string: eval("a=%f" % two)
 
 MarkerTest:
   inherit: 'defaults'
   description: 'Marker test'
-  fp_name: 'marker-{num_pos:02d}'
+  fp_name: 'marker-{num_pos:02d}-{num_pos_mod_10:03d}'
   fp_suffix: ''     # optional: defaults to ''
   source: '~'
   tags: 'test'

@@ -15,12 +15,14 @@
 import sys
 import os
 import warnings
+import re
 
 import argparse
 import yaml
 from math import pi, floor, ceil
 from fnmatch import fnmatch
 from typing import Iterable
+import asteval
 
 # ensure that the kicad-footprint-generator directory is available
 #sys.path.append(os.environ.get('KIFOOTPRINTGENERATOR'))  # enable package import from parent directory
@@ -85,6 +87,53 @@ def _round_to(val, base, direction: str=None):
     else:
         return round(val / base) * base
 
+def asteval_dict(dictionary: dict, base: dict = {}):
+    eval_errors = dict()
+    dict_copy = dictionary.copy()
+    all_symbols = base.copy()
+    all_symbols.update(dict_copy)
+    symtable = asteval.make_symbol_table()
+    for k, v in all_symbols.items():
+        if (k in symtable):
+            warnings.warn(f"Symbol '{k}' already exists in asteval symtable and is overwritten by '{v}'")
+        symtable[k] = v
+    aeval = asteval.Interpreter(symtable=symtable,
+                                readonly_symbols=base.keys(),
+                                builtins_readonly=True,
+                                nested_symtable=True,
+                                minimal=True,
+                                with_ifexp=True,
+                                with_listcomp=True,
+                                with_dictcomp=True,
+                                with_setcomp=True,
+                                )
+    eval_re = re.compile("^\s*eval\s*\(\s*(.+)\s*\)\s*(#.*)?$")
+    changed = True
+    while (changed):
+        changed = False
+        for key, value in dict_copy.items():
+            if (isinstance(value, str)):
+                if (match := eval_re.match(value)):
+                    expr = match.group(1)
+                    try:
+                        result = aeval.eval(expr, raise_errors=True, show_errors=False)
+                        if (key in eval_errors):
+                            del eval_errors[key]
+                        if (result is None):
+                            raise ValueError(f"evaluation of attribute '{key}': eval({expr}) evaluates to 'None'")
+                        elif (result != value):
+                            dict_copy[key] = result
+                            aeval.symtable[key] = result
+                            changed = True
+                            break
+                    except Exception as e:
+                        eval_errors[key] = (expr, e)
+                        continue
+    if (len(eval_errors) != 0):
+        for key, (expr, excp) in eval_errors.items():
+            warnings.warn(f"{excp.__class__.__name__} in definition of attribute '{key}': eval({expr})")
+        raise ValueError(f"failed to evaluate {len(eval_errors)} expression(s) in dictionary")
+    return dict_copy
 
 @dataclass
 class PadProperties():
@@ -306,14 +355,19 @@ class FPconfiguration():
                                         self.body_edges[self.pin1_pos]) + pin1_offset * Vector2D(1, self.scale_y)
         self.draw_pin1_marker_on_fab = first_pin_spec.get("marker", { }).get("fab", True)
 
-def create_footprint_dim_symbols(fp_config: FPconfiguration):
+def create_footprint_dim_symbol_evaluator(fp_config: FPconfiguration):
     # set up dictionary of symbols l, r, t, b, pl, pr, pt, pb
     dictionary = {k[0]: v for k, v in fp_config.body_edges.items()}
     dictionary["pl"] = -0.5 * fp_config.pad_pos_range.x + fp_config.pad_center_offset.x
     dictionary["pr"] = 0.5 * fp_config.pad_pos_range.x + fp_config.pad_center_offset.x
     dictionary["pt"] = -0.5 * fp_config.pad_pos_range.y + fp_config.pad_center_offset.y
     dictionary["pb"] = 0.5 * fp_config.pad_pos_range.y + fp_config.pad_center_offset.y
-    return dictionary
+    aeval = asteval.Interpreter(minimal=True, readonly_symbols=dictionary.keys())
+    aeval.symtable.update(dictionary)
+    return aeval
+
+def evaluate_expression(expr, evaluator: asteval.Interpreter):
+    return evaluator.eval(expr) if isinstance(expr, str) else expr
 
 def parse_body_shape(spec, *, side: str, fp_config: FPconfiguration):
     shape_spec = spec.get(side, {})
@@ -325,14 +379,15 @@ def parse_body_shape(spec, *, side: str, fp_config: FPconfiguration):
         else:
             sign.y = -1
     # set up dictionary of symbols l, r, t, b, pl, pr, pt, pb
-    dictionary = create_footprint_dim_symbols(fp_config)
+    aeval = create_footprint_dim_symbol_evaluator(fp_config)
+
     nodes = []
     if shape_spec:
         for shape in shape_spec.keys():
             if shape == "polyline":
                 for node in shape_spec[shape]:
                     try:
-                        xy = Vector2D(*[eval(coord, dictionary) if isinstance(coord, str) else coord for coord in node])
+                        xy = Vector2D(*[evaluate_expression(coord, aeval) for coord in node])
                         nodes.append(sign * xy)
                     except Exception as e:
                         raise ValueError("failed to parse polyline node '%s'" % node)
@@ -355,11 +410,7 @@ def create_rule_area(rule_area: rule_area_properties.RuleAreaProperties, fp_conf
     """
     Create a rule area from the given rule area properties.
     """
-
-    dictionary = create_footprint_dim_symbols(fp_config)
-
-    def evaluate_expression(expression):
-        return eval(expression, dictionary)
+    aeval = create_footprint_dim_symbol_evaluator(fp_config)
 
     rule_areas = []
 
@@ -368,8 +419,8 @@ def create_rule_area(rule_area: rule_area_properties.RuleAreaProperties, fp_conf
 
         # First construct the rule area polygon from the shape definition
         if shape.type == shape_properties.RECT:
-            corner1 = Vector2D(evaluate_expression(shape.x1_expr), evaluate_expression(shape.y1_expr))
-            corner2 = Vector2D(evaluate_expression(shape.x2_expr), evaluate_expression(shape.y2_expr))
+            corner1 = Vector2D(evaluate_expression(shape.x1_expr, aeval), evaluate_expression(shape.y1_expr, aeval))
+            corner2 = Vector2D(evaluate_expression(shape.x2_expr, aeval), evaluate_expression(shape.y2_expr, aeval))
 
             rule_area_polygon = [corner1, Vector2D(corner2.x, corner1.y), corner2, Vector2D(corner1.x, corner2.y)]
 
@@ -400,15 +451,26 @@ def generate_one_footprint(positions: int, spec, configuration: dict):
 
     fp_config = FPconfiguration(spec, positions=positions, configuration=configuration)
 
+    vars_dict = dict(num_pos=positions, **spec)
+    for f in ["description", "tags", "fp_name", ]:
+        if (f not in vars_dict):
+            raise ValueError(f"missing mandatory field '{f}' in footprint specification")
+
+    # Expand spec dict by parameters
+    if ("doc_parameters" in spec):
+        params = spec.get("doc_parameters")
+        params = asteval_dict(params, vars_dict)
+        vars_dict.update(params)
+
     ## assemble footprint name
-    fp_name = spec["fp_name"].format(num_pos=positions, **spec, **spec.get("doc_parameters", {}))
+    fp_name = vars_dict["fp_name"].format(**vars_dict)
     fp_name += "_%dx%02d"  % (fp_config.num_rows, fp_config.num_pos)
     if fp_config.num_mount_pads:
         fp_name += "-%dMP" % fp_config.num_mount_pads
     fp_name += "_P%smm" %  fp_config.pad_pitch
     if (fp_config.gap_pos and fp_config.gap_size):
         fp_name += "_Pol%02d" % fp_config.gap_pos
-    fp_name += spec.get("fp_suffix", "")
+    fp_name += spec.get("fp_suffix", "").format(**vars_dict)
 
     ## information about what is generated
     print("  - %s" % fp_name)
@@ -419,13 +481,13 @@ def generate_one_footprint(positions: int, spec, configuration: dict):
     kicad_mod = Footprint(fp_name, footprint_type)
 
     ## set the FP description
-    description = spec.get("description", "").format(num_pos=positions, **spec, **spec.get("doc_parameters", {}))
+    description = vars_dict["description"].format(**vars_dict)
     if (src := spec.get("source", None)):
         description += " (source: " + src + ")"
     kicad_mod.setDescription(description)
 
     ## set the FP tags
-    tags = spec.get("tags", "conn").format(num_pos=positions, **spec, **spec.get("doc_parameters", {}))
+    tags = vars_dict["tags"].format(**vars_dict)
     kicad_mod.setTags(tags)
 
     ## create extra pads/drills
@@ -452,6 +514,7 @@ def generate_one_footprint(positions: int, spec, configuration: dict):
 
     ## create Pads
     start_pos_x = -0.5 * fp_config.pad_pos_range.x + fp_config.pad_center_offset.x
+
     for row in range(fp_config.num_rows):
         pos_y = (0.5 if row == 0 else -0.5) * fp_config.pad_pos_range.y * fp_config.scale_y + fp_config.pad_center_offset.y
         col_num = 0
@@ -460,12 +523,12 @@ def generate_one_footprint(positions: int, spec, configuration: dict):
                 pad_number = fp_config.num_rows * col_num + row + 1
                 if pad_number == 1:
                     kicad_mod.append(Pad(number=pad_number,
-                                     at=[start_pos_x + col * fp_config.pad_pitch, pos_y],
-                                     **fp_config.pad1_properties.as_args()))
+                                         at=[start_pos_x + col * fp_config.pad_pitch, pos_y],
+                                         **fp_config.pad1_properties.as_args()))
                 else:
                     kicad_mod.append(Pad(number=pad_number,
-                                     at=[start_pos_x + col * fp_config.pad_pitch, pos_y],
-                                     **fp_config.pad_properties.as_args()))
+                                         at=[start_pos_x + col * fp_config.pad_pitch, pos_y],
+                                         **fp_config.pad_properties.as_args()))
                 col_num += 1
         pos_y *= -1 # switch to opposite row
 

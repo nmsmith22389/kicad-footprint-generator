@@ -56,12 +56,17 @@ Inherits all specs from _target_.
 Specifies the name of the target library; a name `'XXX'`, will expand to `Connector_XXX.pretty`.
 
 ### `fp_name:` _string_
-Specifies the resulting footprint name. Can contain python format clauses.
-
+Specifies the resulting footprint name. This string is handled as a python format string which can contain the usual python
+format clauses (see https://docs.python.org/3/library/stdtypes.html#str.format), e.g.,
+~~~yaml
+fp_name: 'TE_{num_pos:02d}-281698'
+~~~
 The final footprint name will be given by:
 ~~~python
 fp_name + "_<rows>x<columns>[-<nmp>MP]_P<pad_pitch>mm[_Pol<pos>]" + fp_suffix
 ~~~
+
+If there is the requirement to specify additional variables, this can be done using the `doc_parameters` tag (see below).
 
 ### `fp_suffix:` _string_
 Optional suffix to be appended to the footprint name after the pin/pitch specification.
@@ -71,13 +76,14 @@ Defines the footprint description. Python format clauses can be included, like, 
 ~~~yaml
 description: '{pad_pitch:.2f} mm mPOWER Ultra Micro Power Terminal with {num_pos:d}, Vertical'
 ~~~
-Any field of the specification may be substituted.
+Any field of the specification may be substituted; as for `fp_name` and `tags` Python format string syntax is supported 
+(as for `fp_name` above).
 
 ### `source:` _string_
 Should contain the link to the source specification; will be appended to the description.
 
 ### `tags:` _string_
-Space separated tags.
+Space separated tags. Supports Python format string syntax (see also `fp_name` above).
 
 ### `clean_silk:` _bool_ (default: `True`)
 Defines if the contours on the silk screen should be cleaned up by removing overlaps with the mask layer.
@@ -103,6 +109,25 @@ HSEC8-1XX-01-DV:
 ~~~
 This feature is expecially useful if you want to inherit the fp_name or description for several families
 without redefining the complete fp_name, description, or keywords.
+
+#### Dynamic `doc_parameters`
+The doc_parameters dictionary can contain tags with special values which are evaluated at runtime to create additional
+dependent variables. As an example, a new field `num_pos_div_10` may be defined by:
+~~~yaml
+...
+  doc_parameters:
+    num_pos_div_10: eval(num_pos // 10)
+...
+~~~
+For this the syntax `eval(`_expression_`)` as shown above is used. The expressions are evaluated in an asteval 
+environment (see https://newville.github.io/asteval/index.html).
+
+It is allowed to use newly defined tags as arguments to new tag definitions, i.e., one could extend the example above by
+~~~yaml
+...
+    num_pos_div_100: eval(num_pos_div_10 // 10)
+...
+~~~
 
 ## Geometry Parameters
 
