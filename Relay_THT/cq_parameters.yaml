@@ -140,9 +140,15 @@ Relay_SPDT_Finder_36.11:
   pinpadsize: 0.9
   pinpadh: 3.5
   pintype: tht
-  rotation: 0
-  pin1corner: [-1.4, -7.6]
-  pin: [[0.0, 0.0, 'rect', 0.3, 1.2], [2.0, 6.0, 'rect', 0.5, 0.5], [2.0, -6.0, 'rect', 0.5, 0.5], [14.2, 6.0, 'rect', 0.9, 0.5], [14.2, -6.0, 'rect', 0.9, 0.5]]
+  rotation: -90
+  pin1corner: [-3.4, -13.6]
+  pin: [
+    [0.0, 0.0, 'rect', 0.5, 0.5],
+    [-2.0, -6.0, 'rect', 0.3, 1.2],
+    [0.0, -12.0, 'rect', 0.5, 0.5],
+    [12.2, 0.0, 'rect', 0.9, 0.5],
+    [12.2, -12.0, 'rect', 0.9, 0.5]
+  ]
   A1: 0.02
   corner: none
   show_top: 0
