@@ -20,7 +20,6 @@ def make_case(params):
     H = params['H']                    # package height
     A1 = params['A1']                  # Body separation height
     rim = params['rim']                # Rim underneath
-    rotation = params['rotation']      # rotation if required
     pin1corner = params['pin1corner']  # Left upp corner relationsship to pin 1
     pin = params['pin']                # pin/pad coordinates
     roundbelly = params['roundbelly']  # If belly of caseing should be round (or flat)
@@ -71,9 +70,6 @@ def make_case(params):
         # Belly is rounded
         case = case.faces(">Y").edges("<Z").fillet(ff / 2.0)
 
-    if (rotation != 0):
-        case = case.rotate((0,0,0), (0,0,1), rotation)
-
     return (case)
 
 
@@ -83,7 +79,6 @@ def make_case_top(params):
     W = params['W']                    # package width
     H = params['H']                    # package height
     A1 = params['A1']                  # Body separation height
-    rotation = params['rotation']      # rotation if required
     pin1corner = params['pin1corner']  # Left upp corner relationsship to pin 1
     pin = params['pin']                # pin/pad cordinates
     show_top = params['show_top']      # If top should be visible or not
@@ -134,10 +129,6 @@ def make_case_top(params):
             mvY = (p[1] - pin1corner[1]) - (W / 2.0)
             casetop=cq.Workplane("XY").workplane(offset=A1 + (H / 4.0), centerOption="CenterOfMass").moveTo(mvX, mvY).rect(0.1, 0.1, False).extrude(0.1)
 
-
-    if (rotation != 0):
-        casetop = casetop.rotate((0,0,0), (0,0,1), rotation)
-
     return (casetop)
 
 
@@ -151,7 +142,6 @@ def make_pins_tht(params):
     pinpadsize = params['pinpadsize']  # pin diameter or pad size
     pinpadh = params['pinpadh']        # pin length, pad height
     pintype = params['pintype']        # Casing type
-    rotation = params['rotation']      # rotation if required
     pin = params['pin']                # pin/pad cordinates
 
     pinss = 0.1
@@ -203,10 +193,6 @@ def make_pins_tht(params):
 #        pint = pint.faces("<Z").fillet(pinpadsize / 5.0)
         pins = pins.union(pint)
 
-
-    if (rotation != 0):
-        pins = pins.rotate((0,0,0), (0,0,1), rotation)
-
     return (pins)
 
 
@@ -219,7 +205,6 @@ def make_pins_tht_n(params):
     pinpadsize = params['pinpadsize']  # pin diameter or pad size
     pinpadh = params['pinpadh']        # pin length, pad height
     pintype = params['pintype']        # Casing type
-    rotation = params['rotation']      # rotation if required
     pin = params['pin']                # pin/pad cordinates
 
     p = pin[0]
@@ -238,10 +223,6 @@ def make_pins_tht_n(params):
         pint = pint.union(pind)
         pins = pins.union(pint)
 
-
-    if (rotation != 0):
-        pins = pins.rotate((0,0,0), (0,0,1), rotation)
-
     return (pins)
 
 
@@ -254,7 +235,6 @@ def make_pins_smd(params):
     pinpadsize = params['pinpadsize']  # pin diameter or pad size
     pinpadh = params['pinpadh']        # pin length, pad height
     pintype = params['pintype']        # Casing type
-    rotation = params['rotation']      # rotation if required
     pin = params['pin']                # pin/pad cordinates
 
     #
@@ -337,8 +317,5 @@ def make_pins_smd(params):
             pins = pint
         else:
             pins = pins.union(pint)
-
-    if (rotation != 0):
-        pins = pins.rotate((0,0,0), (0,0,1), rotation)
 
     return (pins)

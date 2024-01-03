@@ -118,9 +118,10 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             pins = make_pins_smd(all_params[model])
 
         # Make sure the parts are in the correct orientation
-        body = body.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
-        body_top = body_top.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
-        pins = pins.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
+        rotation = all_params[model].get('rotation', 0)
+        body = body.rotate((0, 0, 0), (0, 0, 1), rotation)
+        body_top = body_top.rotate((0, 0, 0), (0, 0, 1), rotation)
+        pins = pins.rotate((0, 0, 0), (0, 0, 1), rotation)
 
         # Used to wrap all the parts into an assembly
         component = cq.Assembly()
