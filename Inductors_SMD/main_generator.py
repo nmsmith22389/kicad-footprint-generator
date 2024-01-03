@@ -142,7 +142,9 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
                         widthX = float(row['widthX'])
                         lengthY = float(row['lengthY'])
                         height = float(row['height'])
-                        
+                        landingX = float(row['landingX'])
+                        landingY = float(row['landingY'])
+
                         if seriesPadSpacing != 'none':
                             try:
                                 padSpacing = float(row['padSpacing'])
@@ -152,12 +154,18 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
 
                         try:
                             padX  = float(row['padX'])
-                            padY = float(row['padY'])
-                            
                         except:
-                            print(f'No physical pad dimensions (padX/padY) found - using PCB landing dimensions (landingX/landingY) as a substitute.')
-                            padX = round(float(row['landingX']) - 0.05, 2)  # Round to 2 decimal places since sometimes we get a lot more
-                            padY = round(float(row['landingY']) - 0.05, 2)
+                            print(f'No physical pad dimensions (widthX) found - using PCB landing dimensions (widthX) as a substitute.')
+                            padX = round(float(min(landingX, widthX)) - 0.05, 2)  # Round to 2 decimal places since sometimes we get a lot more
+
+
+                            
+                        try:
+                            padY = float(row['padY'])
+                        except:
+                            print(f'No physical pad dimensions (padY) found - using PCB landing dimensions (lengthY) as a substitute.')
+                            padY = round(float(min(landingY, lengthY)) - 0.05, 2)
+
 
                         # Handy debug section to help copy/paste into CQ-editor to play with design
                         if False:
@@ -166,10 +174,13 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
                             print(f'height = {height}')
                             print(f'padX = {padX}')
                             print(f'padY = {padY}')
+                            print(f'landingX = {landingX}')
+                            print(f'landingY = {landingY}')
                             #print(f'padSpacing = {padSpacing}')
                             print(f'seriesType = {seriesType}')
                             print(f'seriesPadSpacing = "{seriesPadSpacing}"')
                             print(f'seriesPadThickness = {seriesPadThickness}')
+                            print(f'seriesCornerRadius = {seriesCornerRadius}')
                             
 
                         rotation = 0

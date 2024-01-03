@@ -1,0 +1,12 @@
+- series: CKCS
+  manufacturer: Cenker
+  datasheet: "https://www.ckcoil.com/file/upload/spae532/2023-07/11/202307110955366446.pdf"
+  csv: ck_cs.csv
+  3d:
+    type: 2
+    bodyColor: black body
+    pinColor: metal grey pins
+    padThickness: 0.05
+  tags:
+    - ckcs
+  destination_dir: 'Inductor_SMD.3dshapes'
