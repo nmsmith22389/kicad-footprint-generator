@@ -268,6 +268,7 @@ def makePadGrid(f, lParams, config, fpParams={}, xCenter=0.0, yCenter=0.0):
         rowSet = {col for col in range(1, layoutX+1) if f'{row}{col}' not in padSkips}
         for col in rowSet:
             f.append(Pad(number="{}{}".format(row, col), type=Pad.TYPE_SMT,
+                         fab_property=Pad.FabProperty.BGA,
                          shape=padShape,
                          at=[xPadLeft + (col-1) * pitchX, yPadTop + rowNum * pitchY],
                          size=lParams.get('pad_size') or fpParams['pad_size'],
