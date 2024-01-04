@@ -15,6 +15,9 @@
 # (C) 2018 by Rene Poeschl, github @poeschlr
 import warnings
 
+import enum
+from typing import Union
+
 from KicadModTree.util.paramUtil import *
 from KicadModTree.Vector import *
 from KicadModTree.nodes.Node import Node
@@ -146,6 +149,9 @@ class Pad(Node):
           shape of the pad
         * *layers* (``Pad.LAYERS_SMT``, ``Pad.LAYERS_THT``, ``Pad.LAYERS_NPTH``) --
           layers on which are used for the pad
+        * *fab_property* (``Pad.PROPERTY_BGA``, ``Pad.PROPERTY_FIDUCIAL_GLOBAL``,
+          ``Pad.PROPERTY_FIDUCIAL_LOCAL``, ``Pad.PROPERTY_TESTPOINT``, ``Pad.PROPERTY_HEATSINK``,
+          ``Pad.PROPERTY_CASTELLATED``) -- the pad fabrication property
 
         * *at* (``Vector2D``) --
           center position of the pad
@@ -222,12 +228,29 @@ class Pad(Node):
     SHAPE_IN_ZONE_OUTLINE = 'outline'
     _SHAPE_IN_ZONE = [SHAPE_IN_ZONE_CONVEX, SHAPE_IN_ZONE_OUTLINE]
 
+    class FabProperty(enum.Enum):
+        """
+        Type-safe pad fabrication property
+        """
+
+        # Note that these constants do not necessarily correspond to the
+        # strings used in the KiCad file format.
+        BGA = 'bga'
+        FIDUCIAL_GLOBAL = 'fiducial_global'
+        FIDUCIAL_LOCAL = 'fiducial_local'
+        TESTPOINT = 'testpoint'
+        HEATSINK = 'heatsink'
+        CASTELLATED = 'castellated'
+
+    _fab_property: Union[FabProperty, None]
+
     def __init__(self, **kwargs):
         Node.__init__(self)
         self.radius_ratio = 0
 
         self._initNumber(**kwargs)
         self._initType(**kwargs)
+        self._initFabProperty(**kwargs)
         self._initShape(**kwargs)
         self._initPosition(**kwargs)
         self._initSize(**kwargs)
@@ -281,6 +304,14 @@ class Pad(Node):
         self.type = kwargs.get('type')
         if self.type not in Pad._TYPES:
             raise ValueError('{type} is an invalid type for pads'.format(type=self.type))
+
+    def _initFabProperty(self, **kwargs):
+        prop = kwargs.get('fab_property', None)
+
+        if prop is not None:
+            self._fab_property = Pad.FabProperty(prop)
+        else:
+            self._fab_property = None
 
     def _initShape(self, **kwargs):
         if not kwargs.get('shape'):
@@ -424,3 +455,12 @@ class Pad(Node):
                     r_max = r
             return r_max
         return self.round_radius_handler.getRoundRadius(min(self.size))
+
+    @property
+    def fab_property(self) -> Union[FabProperty, None]:
+        """
+        The fabrication property of the pad.
+
+        :return: one of the Pad.PROPERTY_* constants, or None
+        """
+        return self._fab_property

@@ -1,7 +1,8 @@
 from KicadModTree.nodes import Footprint, FootprintType
 from KicadModTree.nodes.base.Zone import Zone, Keepouts, PadConnection, Hatch, ZoneFill
 from KicadModTree.Vector import Vector2D
-from KicadModTree.KicadFileHandler import KicadFileHandler
+
+from node_test_utils import assert_serialises_as
 
 import pytest
 
@@ -86,20 +87,6 @@ DEFAULT_TEST_POLYGON = [
 DEFAULT_HATCH = Hatch(Hatch.EDGE, 0.5)
 
 
-def _test_serialisation(kicad_mod, expected, dump=False):
-    file_handler = KicadFileHandler(kicad_mod)
-
-    rendered = file_handler.serialize(timestamp=0)
-
-    # can be used to get an update version
-    # but make sure the new one is right!
-    if dump:
-        print(rendered)
-
-    expected = expected.strip()
-    assert rendered == expected
-
-
 def test_basic():
     ko = Keepouts(
         tracks=Keepouts.ALLOW,
@@ -133,7 +120,7 @@ def test_basic():
     kicad_mod = Footprint("zonetest", FootprintType.UNSPECIFIED)
     kicad_mod.append(z)
 
-    _test_serialisation(kicad_mod, RESULT_Basic)
+    assert_serialises_as(kicad_mod, RESULT_Basic)
 
 
 def test_fill():
@@ -159,7 +146,7 @@ def test_fill():
     kicad_mod = Footprint("filltest", FootprintType.UNSPECIFIED)
     kicad_mod.append(z)
 
-    _test_serialisation(kicad_mod, RESULT_WithFill)
+    assert_serialises_as(kicad_mod, RESULT_WithFill)
 
 
 def test_island_removal_area_min():
@@ -195,4 +182,4 @@ def test_island_removal_area_min():
     kicad_mod = Footprint("island_min", FootprintType.UNSPECIFIED)
     kicad_mod.append(z)
 
-    _test_serialisation(kicad_mod, RESULT_IslandMin)
+    assert_serialises_as(kicad_mod, RESULT_IslandMin)

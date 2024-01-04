@@ -364,6 +364,17 @@ class KicadFileHandler(FileHandler):
 
         return sexpr_primitives
 
+    def _serialize_PadFabProperty(self, node):
+        mapping = {
+            Pad.FabProperty.BGA: 'pad_prop_bga',
+            Pad.FabProperty.FIDUCIAL_GLOBAL: 'pad_prop_pad_prop_heatsink',
+            Pad.FabProperty.FIDUCIAL_LOCAL: 'pad_prop_fiducial_loc',
+            Pad.FabProperty.HEATSINK: 'pad_prop_heatsink',
+            Pad.FabProperty.TESTPOINT: 'pad_prop_testpoint',
+            Pad.FabProperty.CASTELLATED: 'pad_prop_castellated',
+        }
+        return mapping[node.fab_property]
+
     def _serialize_Pad(self, node):
         sexpr = ['pad', node.number, node.type, node.shape]
 
@@ -387,6 +398,11 @@ class KicadFileHandler(FileHandler):
                 drill_config.append(['offset', node.offset.x,  node.offset.y])
 
             sexpr.append(drill_config)
+
+        # As of format 20231231, 'property' contains only the fab value.
+        if node.fab_property is not None:
+            property_value = self._serialize_PadFabProperty(node)
+            sexpr.append(['property', property_value])
 
         sexpr.append(['layers'] + node.layers)
         if node.shape == Pad.SHAPE_ROUNDRECT:
