@@ -20,9 +20,10 @@
 from __future__ import division
 
 from KicadModTree.util.paramUtil import *
-from KicadModTree.nodes.base.Pad import *
-from KicadModTree.nodes.specialized.ChamferedPadGrid import *
-from KicadModTree.nodes.specialized.PadArray import *
+from KicadModTree import Vector2D
+from KicadModTree.nodes.base.Pad import Pad, RoundRadiusHandler
+from KicadModTree.nodes.specialized.ChamferedPadGrid import ChamferedPadGrid, ChamferSelPadGrid
+from KicadModTree.nodes.specialized.PadArray import PadArray
 from KicadModTree.nodes.Node import Node
 from math import sqrt, floor
 from copy import copy
@@ -516,7 +517,9 @@ class ExposedPad(Node):
 
         pads.append(Pad(
             number=self.number, at=self.at, size=self.size,
-            shape=Pad.SHAPE_ROUNDRECT, type=Pad.TYPE_SMT, layers=layers_main,
+            shape=Pad.SHAPE_ROUNDRECT, type=Pad.TYPE_SMT,
+            fab_property=Pad.FabProperty.HEATSINK,
+            layers=layers_main,
             round_radius_handler=self.round_radius_handler
         ))
 
@@ -537,6 +540,7 @@ class ExposedPad(Node):
                          increment=0, pincount=self.via_layout[0],
                          x_spacing=self.via_grid[0], size=self.via_size,
                          type=Pad.TYPE_THT, shape=Pad.SHAPE_CIRCLE,
+                         fab_property=Pad.FabProperty.HEATSINK,
                          drill=self.via_drill, layers=via_layers
                          ))
             cy += self.via_grid[1]
@@ -545,6 +549,7 @@ class ExposedPad(Node):
             pads.append(Pad(
                 number=self.number, at=self.at, size=self.bottom_size,
                 shape=Pad.SHAPE_ROUNDRECT, type=Pad.TYPE_SMT,
+                fab_property=Pad.FabProperty.HEATSINK,
                 layers=self.bottom_pad_Layers,
                 round_radius_handler=self.round_radius_handler
             ))
