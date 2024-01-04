@@ -11,12 +11,13 @@ import itertools
 # load parent path of KicadModTree
 sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))
 
-from KicadModTree import *  # NOQA
-from KicadModTree.nodes.base.Pad import Pad  # NOQA
+from KicadModTree import KicadFileHandler
+from KicadModTree.nodes import Pad, Footprint, FootprintType, Model, Text, RectLine, PolygonLine
+
 sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))  # load parent path of tools
 
-from KicadModTree import *
 from string import ascii_uppercase
+
 
 def generateFootprint(config, fpParams, fpId):
     createFp = False
@@ -68,7 +69,7 @@ def compute_stagger(lParams):
     pitchY = lParams.get('pitch_y', pitch)
 
     if not (pitchX and pitchY):
-        raise KeyError('{}: Either pitch or both pitch_x and pitch_y must be given.'.format(fpId))
+        raise KeyError('Either pitch or both pitch_x and pitch_y must be given.')
 
     return pitchX, pitchY, None
 
@@ -95,10 +96,10 @@ def __createFootprintVariant(config, fpParams, fpId):
 
     s1 = [1.0, 1.0]
     if pkgX < 4.3 and pkgY > pkgX:
-      s2 = [min(1.0, round(pkgY / 4.3, 2))] * 2 # Y size is greater, so rotate F.Fab reference
-      fFabRefRot = -90
+        s2 = [min(1.0, round(pkgY / 4.3, 2))] * 2 # Y size is greater, so rotate F.Fab reference
+        fFabRefRot = -90
     else:
-      s2 = [min(1.0, round(pkgX / 4.3, 2))] * 2
+        s2 = [min(1.0, round(pkgX / 4.3, 2))] * 2
 
     t1 = 0.15 * s1[0]
     t2 = 0.15 * s2[0]
@@ -144,9 +145,9 @@ def __createFootprintVariant(config, fpParams, fpId):
 
     # silkOffset should comply with pad clearance as well
     xSilkOffset = max(silkOffset,
-                     xLeftFab + config['silk_pad_clearance'] + wSilkS / 2.0 -(xPadLeft - fpParams["pad_size"][0] / 2.0 ))
+                      xLeftFab + config['silk_pad_clearance'] + wSilkS / 2.0 -(xPadLeft - fpParams["pad_size"][0] / 2.0 ))
     ySilkOffset = max(silkOffset,
-                     yTopFab + config['silk_pad_clearance'] + wSilkS / 2.0 -(yPadTop - fpParams["pad_size"][1] / 2.0 ))
+                      yTopFab + config['silk_pad_clearance'] + wSilkS / 2.0 -(yPadTop - fpParams["pad_size"][1] / 2.0 ))
 
     silkChamfer = min(config['fab_bevel_size_absolute'], min(pkgX+2*(xSilkOffset-silkOffset), pkgY+2*(ySilkOffset-silkOffset)) * config['fab_bevel_size_relative'])
 
@@ -167,11 +168,11 @@ def __createFootprintVariant(config, fpParams, fpId):
 
     # Fab
     f.append(PolygonLine(polygon=[[xRightFab, yBottomFab],
-                                   [xLeftFab, yBottomFab],
-                                   [xLeftFab, yChamferFab],
-                                   [xChamferFab, yTopFab],
-                                   [xRightFab, yTopFab],
-                                   [xRightFab, yBottomFab]],
+                                  [xLeftFab, yBottomFab],
+                                  [xLeftFab, yChamferFab],
+                                  [xChamferFab, yTopFab],
+                                  [xRightFab, yTopFab],
+                                  [xRightFab, yBottomFab]],
                          layer="F.Fab", width=wFab))
 
     # Courtyard
@@ -181,10 +182,10 @@ def __createFootprintVariant(config, fpParams, fpId):
 
     # Silk
     f.append(PolygonLine(polygon=[[xChamferSilk, yTopSilk],
-                                   [xRightSilk, yTopSilk],
-                                   [xRightSilk, yBottomSilk],
-                                   [xLeftSilk, yBottomSilk],
-                                   [xLeftSilk, yChamferSilk]],
+                                  [xRightSilk, yTopSilk],
+                                  [xRightSilk, yBottomSilk],
+                                  [xLeftSilk, yBottomSilk],
+                                  [xLeftSilk, yChamferSilk]],
                          layer="F.SilkS", width=wSilkS))
 
     # Pads
@@ -214,6 +215,7 @@ def __createFootprintVariant(config, fpParams, fpId):
 
     file_handler = KicadFileHandler(f)
     file_handler.writeFile(str(outputDir / f'{fpId}.kicad_mod'))
+
 
 def makePadGrid(f, lParams, config, fpParams={}, xCenter=0.0, yCenter=0.0):
     layoutX = lParams["layout_x"]
@@ -321,18 +323,24 @@ def makePadGrid(f, lParams, config, fpParams={}, xCenter=0.0, yCenter=0.0):
 
     return layoutX * layoutY - len(padSkips)
 
+
 def rowNameGenerator(seq):
     for n in itertools.count(1):
         for s in itertools.product(seq, repeat=n):
             yield ''.join(s)
 
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='use config .yaml files to create footprints.')
     parser.add_argument('files', metavar='file', type=str, nargs='+',
                         help='list of files holding information about what devices should be created.')
-    parser.add_argument('--global_config', type=str, nargs='?', help='the config file defining how the footprint will look like. (KLC)', default='../../tools/global_config_files/config_KLCv3.0.yaml')
-    # parser.add_argument('--series_config', type=str, nargs='?', help='the config file defining series parameters.', default='../package_config_KLCv3.yaml')
-    parser.add_argument('--ipc_doc', type=str, nargs='?', help='IPC definition document', default='ipc_7351b_bga_land_patterns.yaml')
+    parser.add_argument('--global_config', type=str, nargs='?',
+                        help='the config file defining how the footprint will look like. (KLC)',
+                        default='../../tools/global_config_files/config_KLCv3.0.yaml')
+    # parser.add_argument('--series_config', type=str, nargs='?',
+    #                     help='the config file defining series parameters.', default='../package_config_KLCv3.yaml')
+    parser.add_argument('--ipc_doc', type=str, nargs='?', help='IPC definition document',
+                        default='ipc_7351b_bga_land_patterns.yaml')
     parser.add_argument('-v', '--verbose', action='count', help='set debug level')
     args = parser.parse_args()
 
