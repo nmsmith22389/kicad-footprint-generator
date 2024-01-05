@@ -520,7 +520,8 @@ class ExposedPad(Node):
             shape=Pad.SHAPE_ROUNDRECT, type=Pad.TYPE_SMT,
             fab_property=Pad.FabProperty.HEATSINK,
             layers=layers_main,
-            round_radius_handler=self.round_radius_handler
+            round_radius_handler=self.round_radius_handler,
+            zone_connection=Pad.ZoneConnection.SOLID,
         ))
 
         return pads
@@ -551,7 +552,8 @@ class ExposedPad(Node):
                 shape=Pad.SHAPE_ROUNDRECT, type=Pad.TYPE_SMT,
                 fab_property=Pad.FabProperty.HEATSINK,
                 layers=self.bottom_pad_Layers,
-                round_radius_handler=self.round_radius_handler
+                round_radius_handler=self.round_radius_handler,
+                zone_connection=Pad.ZoneConnection.SOLID,
             ))
 
         return pads
