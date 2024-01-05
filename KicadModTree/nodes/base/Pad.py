@@ -188,6 +188,9 @@ class Pad(Node):
         * *solder_mask_margin* (``float``) --
           solder mask margin of the pad (default: 0)
 
+        * *zone_connection* (``Pad.ZoneConnection``) --
+          zone connection of the pad (default: Pad.ZoneConnection.INHERIT_FROM_FOOTPRINT)
+
         * *x_mirror* (``[int, float](mirror offset)``) --
           mirror x direction around offset "point"
         * *y_mirror* (``[int, float](mirror offset)``) --
@@ -242,7 +245,20 @@ class Pad(Node):
         HEATSINK = 'heatsink'
         CASTELLATED = 'castellated'
 
+    class ZoneConnection(enum.Enum):
+        """
+        Type-safe pad zone connection.
+        """
+
+        # Note that these constants do not necessarily correspond to the
+        # values used in the KiCad file format, thay can be anything
+        INHERIT_FROM_FOOTPRINT = 0
+        NONE = 1
+        THERMAL_RELIEF = 2
+        SOLID = 3
+
     _fab_property: Union[FabProperty, None]
+    _zone_connection: ZoneConnection
 
     def __init__(self, **kwargs):
         Node.__init__(self)
@@ -259,6 +275,7 @@ class Pad(Node):
         self._initSolderPasteMargin(**kwargs)
         self._initSolderPasteMarginRatio(**kwargs)
         self._initSolderMaskMargin(**kwargs)
+        self._initZoneConnection(**kwargs)
         self._initLayers(**kwargs)
         self._initMirror(**kwargs)
 
@@ -353,6 +370,9 @@ class Pad(Node):
 
     def _initSolderMaskMargin(self, **kwargs):
         self.solder_mask_margin = kwargs.get('solder_mask_margin', 0)
+
+    def _initZoneConnection(self, **kwargs):
+        self._zone_connection = kwargs.get('zone_connection', Pad.ZoneConnection.INHERIT_FROM_FOOTPRINT)
 
     def _initLayers(self, **kwargs):
         if not kwargs.get('layers'):
@@ -464,3 +484,12 @@ class Pad(Node):
         :return: one of the Pad.PROPERTY_* constants, or None
         """
         return self._fab_property
+
+    @property
+    def zone_connection(self) -> ZoneConnection:
+        """
+        The zone connection of the pad.
+
+        :return: one of the Pad.ZoneConnection constants
+        """
+        return self._zone_connection

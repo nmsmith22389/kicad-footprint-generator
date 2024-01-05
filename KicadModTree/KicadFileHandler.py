@@ -14,7 +14,7 @@
 # (C) 2016-2018 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 
 from KicadModTree.FileHandler import FileHandler
-from KicadModTree.util.kicad_util import *
+from KicadModTree.util.kicad_util import SexprSerializer
 from KicadModTree.nodes.base.Pad import Pad  # TODO: why .KicadModTree is not enough?
 from KicadModTree.nodes.base.Arc import Arc
 from KicadModTree.nodes.base.Circle import Circle
@@ -375,6 +375,18 @@ class KicadFileHandler(FileHandler):
         }
         return mapping[node.fab_property]
 
+    def _serialize_PadZoneConnection(self, node):
+        # Inherited zone connection is implicit in the s-exp by a missing zone_connection node
+        if node.zone_connection == Pad.ZoneConnection.INHERIT_FROM_FOOTPRINT:
+            return None
+
+        mapping = {
+            Pad.ZoneConnection.NONE: 0,
+            Pad.ZoneConnection.THERMAL_RELIEF: 1,
+            Pad.ZoneConnection.SOLID: 2,
+        }
+        return mapping[node.zone_connection]
+
     def _serialize_Pad(self, node):
         sexpr = ['pad', node.number, node.type, node.shape]
 
@@ -427,6 +439,11 @@ class KicadFileHandler(FileHandler):
                 sexpr.append(['solder_paste_margin_ratio', node.solder_paste_margin_ratio])
             if node.solder_paste_margin != 0:
                 sexpr.append(['solder_paste_margin', node.solder_paste_margin])
+
+        zone_connection_value = self._serialize_PadZoneConnection(node)
+        if zone_connection_value is not None:
+            sexpr.append(SexprSerializer.NEW_LINE)
+            sexpr.append(['zone_connect', zone_connection_value])
 
         return sexpr
 
