@@ -4,14 +4,14 @@ defaults:
 FH12-xxS-0.5SVA:
   inherit: 'defaults'
 #  fp_name: 'Hirose_FH12-{str(int(num_pos*2))}S-0.5SVA-1MP_P1mm'
-  fp_name: 'Hirose_FH12-{str(int(num_pos*2))}S-0.5SVA'
+  fp_name: 'Hirose_FH12-{fp_name_pins_per_row}S-0.5SVA'
   fp_name_pitch: 0.5
   fp_name_rows: 1
-  fp_name_pins_per_row: '{str(int(num_pos*2))}'
   fp_suffix: '_Vertical'     # optional: defaults to ''
   description: 'Hirose FH12, FFC/FPC connector, '
   doc_parameters:
     details: ""
+    fp_name_pins_per_row: eval(int(num_pos*2))
   source: 'https://www.hirose.com/en/product/document?clcode=CL0586-0757-7-98&productname=FH12-12S-0.5SVA(98)&series=FH12&documenttype=2DDrawing&lang=en&documentid=0001240634'
   tags: 'connector Hirose FH12 vertical'
   positions: [3, 5, 6, 6.5, 7.5, 8, 8.5, 9, 10, 11, 12, 13, 15, 16, 16.5, 17, 17.5, 18, 20, 22.5, 24.5, 25, 30]
