@@ -156,4 +156,4 @@ Relay_SPDT_Finder_36.11:
   body_top_color_key: white body
   pin_color_key: metal grey pins
   destination_dir: Relay_THT.3dshapes
-  source: 'https://gfinder.findernet.com/public/attachments/36/EN/S36EN.pdf'
+  source: 'https://cdn.findernet.com/app/uploads/S36EN.pdf'
