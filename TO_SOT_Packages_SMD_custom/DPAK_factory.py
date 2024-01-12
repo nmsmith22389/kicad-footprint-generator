@@ -57,7 +57,7 @@ class Dimensions(object):
         # TODO improve calculation? override in specific classes?
         self.pin_radius_mm = 0.5
         self.pin_fat_y_mm = self.pin_y_mm + 0.24
-        self.pin_fat_x_mm = 0.75  # Length of wide part on pins                    
+        self.pin_fat_x_mm = 0.75  # Length of wide part on pins
         self.pin_fat_cut_mm = 4.6  # Used to produce wide part of pins
 
         self.marker_x_mm = base['device']['marker']['x_mm']
@@ -189,7 +189,7 @@ class DPAK(object):
     #                          }
     #             }
     #     return model
- 
+
 
     def _build_model(self, base, variant, cut_pin=False, tab_linked=False, verbose=False):
 
@@ -241,7 +241,7 @@ class TO252(DPAK):
         return dim
 
 
-    def _build_tab(self, dim):  
+    def _build_tab(self, dim):
 
         tab = cq.Workplane("XY")\
             .moveTo(dim.device_x_mm / 2.0, 0)\
@@ -285,7 +285,7 @@ class TO263(DPAK):
 
         dim = Dimensions(base, variant, cut_pin, tab_linked)
         dim.pin_fat_cut_mm = 6.0  # Used to produce wide part of pins
-        dim.pin_fat_x_mm = 1.0  # Length of wide part on pins                    
+        dim.pin_fat_x_mm = 1.0  # Length of wide part on pins
         dim.pin_profile = [
             ('start', {'position': (-dim.pin_offset_x_mm, dim.pin_z_mm / 2.0),
                        'direction': 0.0, 'width': dim.pin_z_mm}),
@@ -553,7 +553,7 @@ class HSOF8(DPAK):
         return pins
 
 
-    def _build_tab(self, dim):  
+    def _build_tab(self, dim):
 
         tab = cq.Workplane("XY")\
             .moveTo(dim.device_x_mm / 2.0, 0)\
@@ -623,7 +623,7 @@ class SOT669(DPAK):
         return dim
 
 
-    def _build_tab(self, dim):  
+    def _build_tab(self, dim):
 
         tab = cq.Workplane("XY")\
             .moveTo(dim.device_x_mm / 2.0, 0)\
@@ -759,7 +759,7 @@ class Rohm_HRP7(DPAK):
         dim = Dimensions(base, variant, cut_pin, tab_linked)
         dim.pin_radius_mm = 0.3
         dim.pin_fat_cut_mm = 0  # Used to produce wide part of pins
-        dim.pin_fat_x_mm = 0  # Length of wide part on pins                    
+        dim.pin_fat_x_mm = 0  # Length of wide part on pins
         dim.pin_profile = [
             ('start', {'position': (-dim.pin_offset_x_mm, dim.pin_z_mm / 2.0),
                        'direction': 0.0, 'width': dim.pin_z_mm}),
@@ -820,4 +820,3 @@ class Rohm_HRP7(DPAK):
 #     for key in model.keys():
 #         if key is not '__name':
 #             show(model[key]['part'])
-

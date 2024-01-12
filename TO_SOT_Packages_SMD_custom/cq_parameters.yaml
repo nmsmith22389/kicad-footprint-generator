@@ -2,7 +2,7 @@
 TO-252:
     destination_dir: 'TO_SOT_Packages_SMD.3dshapes'
     base:
-        series: TO-252                                                   
+        series: TO-252
         description: 'TO-252/DPAK SMD package'
         keywords: 'DPAK TO-252'
         footprint:
@@ -13,24 +13,24 @@ TO-252:
             split_paste: 'on'
             paste_gutter_mm: 0.3
         device:
-            x_mm: 9.9                                                    
+            x_mm: 9.9
             body:
-                x_mm: 6.22                                               
+                x_mm: 6.22
                 y_mm: 6.5
-                z_mm: 2.3                                                
-                waist_z_mm: 0.9                                          
-                marker_offset_x_mm: -1.5                                 
-                marker_offset_y_mm: 0.0                                 
-                colour: 'black body'                                     
+                z_mm: 2.3
+                waist_z_mm: 0.9
+                marker_offset_x_mm: -1.5
+                marker_offset_y_mm: 0.0
+                colour: 'black body'
             tab:
-                x_mm: 5.24                                               
+                x_mm: 5.24
                 y_mm: 5.4
-                z_mm: 0.5                                                
+                z_mm: 0.5
                 project_x_mm: 1.0
-                colour: 'metal grey pins'                                
+                colour: 'metal grey pins'
             marker:
-                x_mm: 1.0                                                
-                z_mm: 0.1                                                
+                x_mm: 1.0
+                z_mm: 0.1
             pins:
                 colour: 'metal grey pins'
     variants:
@@ -72,7 +72,7 @@ TO-252:
             pin:
                 x_mm: 2.7
                 y_mm: 0.75
-                z_mm: 0.5                                                  
+                z_mm: 0.5
                 cut_x_mm: 0.8
             centre_pin: ['uncut']
             keywords: 'DPAK-3 TO-252-3 SOT-428'
@@ -107,7 +107,7 @@ TO-252:
             keywords: 'DPAK-4 TO-252-4'
             datasheet: https://www.infineon.com/cms/en/product/packages/PG-TO252/PG-TO252-5-11/
         pins_5:
-            pins: 5                                                        
+            pins: 5
             pitch_mm: 1.14
             pad:
                 x_mm: 2.2
@@ -115,7 +115,7 @@ TO-252:
             pin:
                 x_mm: 2.7
                 y_mm: 0.6
-                z_mm: 0.5                                                  
+                z_mm: 0.5
                 cut_x_mm: 0.8
             centre_pin: ['uncut']
             keywords: 'DPAK-5 TO-252-5'
@@ -140,7 +140,7 @@ TO-252:
 TO-263:
     destination_dir: 'TO_SOT_Packages_SMD.3dshapes'
     base:
-        series: TO-263                                                   
+        series: TO-263
         description: 'TO-263/D2PAK/DDPAK SMD package'
         keywords: 'D2PAK DDPAK TO-263'
         footprint:
@@ -155,20 +155,20 @@ TO-263:
             body:
                 x_mm: 9.25
                 y_mm: 10.0
-                z_mm: 4.4                                                 
-                waist_z_mm: 2.4                                           
-                marker_offset_x_mm: 0.0                                  
-                marker_offset_y_mm: 0.0                                 
-                colour: 'black body'                                     
+                z_mm: 4.4
+                waist_z_mm: 2.4
+                marker_offset_x_mm: 0.0
+                marker_offset_y_mm: 0.0
+                colour: 'black body'
             tab:
-                x_mm: 7.55                                                
+                x_mm: 7.55
                 y_mm: 10.0
-                z_mm: 1.27                                                
+                z_mm: 1.27
                 project_x_mm: 1.0
-                colour: 'metal grey pins'                                
+                colour: 'metal grey pins'
             marker:
-                x_mm: 2.5                                                 
-                z_mm: 0.1                                                 
+                x_mm: 2.5
+                z_mm: 0.1
             pins:
                 colour: 'metal grey pins'
     variants:
@@ -202,7 +202,7 @@ TO-263:
             keywords: 'D2PAK DDPAK TO-263 D2PAK-3 TO-263-3 SOT-404'
             datasheet: TO-263/D2PAK/DDPAK SMD package, http://www.infineon.com/cms/en/product/packages/PG-TO263/PG-TO263-3-1/
         pins_3_tab2:
-            pins: 3                                                        
+            pins: 3
             pitch_mm: 2.54
             pad:
                 x_mm: 4.6
@@ -210,7 +210,7 @@ TO-263:
             pin:
                 x_mm: 4.7
                 y_mm: 1.0
-                z_mm: 0.5                                                   
+                z_mm: 0.5
                 cut_x_mm: 1.1
             centre_pin: ['uncut']
             tab_pin_number: 2
@@ -231,7 +231,7 @@ TO-263:
             keywords: 'D2PAK-3 TO-263-3 SOT-404'
             datasheet: http://www.infineon.com/cms/en/product/packages/PG-TO263/PG-TO263-3-1/
         pins_4_tab3:
-            pins: 5                                                        
+            pins: 5
             pitch_mm: 1.7
             pad:
                 x_mm: 4.6
@@ -239,7 +239,7 @@ TO-263:
             pin:
                 x_mm: 4.7
                 y_mm: 0.8
-                z_mm: 0.5                                                   
+                z_mm: 0.5
                 cut_x_mm: 1.1
             centre_pin: ['cut']
             keywords: 'D2PAK-5 TO-263-5 SOT-426'
@@ -282,7 +282,7 @@ TO-263:
             pin:
                 x_mm: 4.7
                 y_mm: 0.6
-                z_mm: 0.5                                                   
+                z_mm: 0.5
                 cut_x_mm: 1.1
             centre_pin: ['cut']
             keywords: 'D2PAK DDPAK TO-263 D2PAK-7 TO-263-7 SOT-427'
@@ -350,7 +350,7 @@ TO-263:
 TO-268:
     destination_dir: 'TO_SOT_Packages_SMD.3dshapes'
     base:
-        series: TO-268                                                   
+        series: TO-268
         description: 'TO-268/D3PAK SMD package'
         keywords: 'D3PAK TO-268'
         footprint:
@@ -365,25 +365,25 @@ TO-268:
             body:
                 x_mm: 14.0
                 y_mm: 15.9
-                z_mm: 5.0                                                 
-                waist_z_mm: 2.8                                           
-                marker_offset_x_mm: -4.5                                  
-                marker_offset_y_mm: 0.0                                 
-                colour: 'black body'                                     
+                z_mm: 5.0
+                waist_z_mm: 2.8
+                marker_offset_x_mm: -4.5
+                marker_offset_y_mm: 0.0
+                colour: 'black body'
             tab:
-                x_mm: 12.5                                                
+                x_mm: 12.5
                 y_mm: 15.9
-                z_mm: 1.5                                                 
+                z_mm: 1.5
                 project_x_mm: 1.0
-                colour: 'metal grey pins'                                
+                colour: 'metal grey pins'
             marker:
-                x_mm: 1.6                                   
-                z_mm: 0.1                                                 
+                x_mm: 1.6
+                z_mm: 0.1
             pins:
                 colour: 'metal grey pins'
     variants:
         pins_3:
-            pins: 3                                                        
+            pins: 3
             pitch_mm: 5.45
             pad:
                 x_mm: 5.0
@@ -391,7 +391,7 @@ TO-268:
             pin:
                 x_mm: 3.9
                 y_mm: 1.3
-                z_mm: 0.5                                                  
+                z_mm: 0.5
                 cut_x_mm: 1.3
             centre_pin: ['cut']
             keywords: 'D3PAK-3 TO-268-3'
@@ -401,7 +401,7 @@ TO-268:
 ATPAK:
     destination_dir: 'TO_SOT_Packages_SMD.3dshapes'
     base:
-        series: ATPAK                                                   
+        series: ATPAK
         description: 'ATPAK SMD package'
         keywords: 'ATPAK'
         footprint:
@@ -416,25 +416,25 @@ ATPAK:
             body:
                 x_mm: 7.3
                 y_mm: 6.5
-                z_mm: 1.5                                                 
-                waist_z_mm: 0.4                                           
-                marker_offset_x_mm: 2.0                                  
-                marker_offset_y_mm: 0.0                                 
-                colour: 'black body'                                     
+                z_mm: 1.5
+                waist_z_mm: 0.4
+                marker_offset_x_mm: 2.0
+                marker_offset_y_mm: 0.0
+                colour: 'black body'
             tab:
-                x_mm: 6.05                                             
+                x_mm: 6.05
                 y_mm: 6.5
-                z_mm: 0.4                                                
+                z_mm: 0.4
                 project_x_mm: 0.5
-                colour: 'metal grey pins'                                
+                colour: 'metal grey pins'
             marker:
-                x_mm: 1.0                                                 
-                z_mm: 0.1                                                 
+                x_mm: 1.0
+                z_mm: 0.1
             pins:
                 colour: 'metal grey pins'
     variants:
         pins_3:
-            pins: 3                                                        
+            pins: 3
             pitch_mm: 2.3
             pad:
                 x_mm: 1.6
@@ -442,7 +442,7 @@ ATPAK:
             pin:
                 x_mm: 1.7
                 y_mm: 0.6
-                z_mm: 0.4                                                   
+                z_mm: 0.4
                 cut_x_mm: 0.5
             centre_pin: ['cut']
             keywords: ''
@@ -452,7 +452,7 @@ ATPAK:
 HSOF8 :
     destination_dir: 'TO_SOT_Packages_SMD.3dshapes'
     base:
-        series: HSOF-8                                               
+        series: HSOF-8
         description: 'Infineon PG-HSOF-8 SMD package'
         keywords: 'Infineon'
         footprint:
@@ -467,25 +467,25 @@ HSOF8 :
             body:
                 x_mm: 10.375
                 y_mm: 9.9
-                z_mm: 2.3                                                 
-                waist_z_mm: 0.5                                           
-                marker_offset_x_mm: 0.0                                  
-                marker_offset_y_mm: 0.0                                 
-                colour: 'black body'                                     
+                z_mm: 2.3
+                waist_z_mm: 0.5
+                marker_offset_x_mm: 0.0
+                marker_offset_y_mm: 0.0
+                colour: 'black body'
             tab:
-                x_mm: 7.15                             
+                x_mm: 7.15
                 y_mm: 9.8
-                z_mm: 0.5                                               
+                z_mm: 0.5
                 project_x_mm: 0.7
-                colour: 'metal grey pins'                                
+                colour: 'metal grey pins'
             marker:
-                x_mm: 3.0                                 
-                z_mm: 0.1                                                 
+                x_mm: 3.0
+                z_mm: 0.1
             pins:
                 colour: 'metal grey pins'
     variants:
         pins_8:
-            pins: 8                                                
+            pins: 8
             pitch_mm: 1.2
             pad:
                 x_mm: 2.8
@@ -493,7 +493,7 @@ HSOF8 :
             pin:
                 x_mm: 0.6
                 y_mm: 0.8
-                z_mm: 0.5                                                   
+                z_mm: 0.5
                 cut_x_mm: 0.0
             centre_pin: ['uncut']
             keywords: ''
@@ -518,25 +518,25 @@ LFPAK56:
             body:
                 x_mm: 4.0
                 y_mm: 4.9
-                z_mm: 1.0                                                 
-                waist_z_mm: 0.5                                           
-                marker_offset_x_mm: 0.0                                  
-                marker_offset_y_mm: 1.9                                 
-                colour: 'black body'                                     
+                z_mm: 1.0
+                waist_z_mm: 0.5
+                marker_offset_x_mm: 0.0
+                marker_offset_y_mm: 1.9
+                colour: 'black body'
             tab:
-                x_mm: 4.0                           
+                x_mm: 4.0
                 y_mm: 4.0
-                z_mm: 0.27                                               
+                z_mm: 0.27
                 project_x_mm: 1.05
-                colour: 'metal grey pins'                                
+                colour: 'metal grey pins'
             marker:
-                x_mm: 0.5                       
-                z_mm: 0.1                                                 
+                x_mm: 0.5
+                z_mm: 0.1
             pins:
                 colour: 'metal grey pins'
     variants:
         pins_4:
-            pins: 4                                                
+            pins: 4
             pitch_mm: 1.27
             pad:
                 x_mm: 1.15
@@ -544,7 +544,7 @@ LFPAK56:
             pin:
                 x_mm: 1.05
                 y_mm: 0.425
-                z_mm: 0.22                                                   
+                z_mm: 0.22
                 cut_x_mm: 0.0
             centre_pin: ['uncut']
             custom_name: 'LFPAK56'
@@ -635,25 +635,25 @@ SOT89:
             body:
                 x_mm: 2.5
                 y_mm: 4.5
-                z_mm: 1.5                                             
-                waist_z_mm: 0.4                                           
-                marker_offset_x_mm: 0.0                                  
-                marker_offset_y_mm: 0.0                                 
-                colour: 'black body'                                     
+                z_mm: 1.5
+                waist_z_mm: 0.4
+                marker_offset_x_mm: 0.0
+                marker_offset_y_mm: 0.0
+                colour: 'black body'
             tab:
-                x_mm: 2.5                           
+                x_mm: 2.5
                 y_mm: 1.6
-                z_mm: 0.4                                               
+                z_mm: 0.4
                 project_x_mm: 0.5
-                colour: 'metal grey pins'                                
+                colour: 'metal grey pins'
             marker:
-                x_mm: 0.7                             
-                z_mm: 0.1                                                 
+                x_mm: 0.7
+                z_mm: 0.1
             pins:
                 colour: 'metal grey pins'
     variants:
         pins_3:
-            pins: 3                                              
+            pins: 3
             pitch_mm: 1.5
             pad:
                 x_mm: 1.5
@@ -661,7 +661,7 @@ SOT89:
             pin:
                 x_mm: 1.0
                 y_mm: 0.4
-                z_mm: 0.4                                                   
+                z_mm: 0.4
                 cut_x_mm: 0.0
             centre_pin: ['uncut']
             keywords: ''
