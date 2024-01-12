@@ -361,6 +361,102 @@ class TO268(DPAK):
         return tab
 
 
+class SOT1235(DPAK):
+    # def __init__(self, config_file):
+    #     self.SERIES = 'SOT1235'
+    #     self.config = self._load_config(config_file)
+
+    def _get_dimensions(self, base, variant, cut_pin=False, tab_linked=False):
+
+        dim = Dimensions(base, variant, cut_pin, tab_linked)
+        dim.chamfer_1 = 0.1  # horizontal part of top side chamfers
+        dim.chamfer_3 = 0.01  # horizontal part of bottom front chamfer
+        # The pins are created using the Ribbon() class. This means that all
+        # dimensions are given as a centerline which will then be
+        # extended into both perpendicular directions using the width parameter
+        # (z_mm) to form a 2D shape in x- and z-direction to be extruded in
+        # y-direction into a 3D shape.
+        dim.pin_radius_mm = 0.2 + dim.pin_z_mm / 2.0
+        dim.pin_profile = [
+            ('start', {'position': (-dim.pin_offset_x_mm, dim.pin_z_mm / 2.0),
+                       'direction': 0.0, 'width': dim.pin_z_mm}),
+            ('line', {'length': 0.33}),
+            ('arc', {'radius': dim.pin_radius_mm, 'angle': 86.0}),
+            ('line', {'length': 0.27}),
+            ('arc', {'radius': dim.pin_radius_mm, 'angle': -86.0}),
+            ('line', {'length': 0.5})
+        ]
+        dim.tab_large_mm = base['device']['tab']['large_mm']
+        dim.tab_small_mm = base['device']['tab']['small_mm']
+
+        dim.tab_cutout_radius_mm = 0.24
+        dim.tab_cutout_x_mm = variant['tab']['cut_x_mm']
+        dim.tab_cutout_y_mm = variant['tab']['cut_y_mm']
+        dim.tab_cutout_offset_x_mm = variant['tab']['cut_offset_x_mm']
+        dim.tab_cutout_offset_y_mm = variant['tab']['cut_offset_y_mm']
+
+        dim.tab_protrusion_x_mm = variant['tab']['protrusion_x_mm']
+        dim.tab_protrusion_y_mm = variant['tab']['protrusion_y_mm']
+        dim.tab_protrusion_offset_x_mm = variant['tab']['protrusion_offset_x_mm']
+
+        dim.nudge_mm = 0.01
+        return dim
+
+    def _build_pins(self, dim: Dimensions, cut_pin: bool):
+
+        pin = cq.Workplane("XZ")\
+            .workplane(offset=-(dim.pin_y_mm/2.0 + (dim.number_pins - 1) * dim.pin_pitch_mm/2.0), centerOption="CenterOfMass")
+        pin = Ribbon(pin, dim.pin_profile).drawRibbon().extrude(dim.pin_y_mm)
+        pins = pin
+        for i in range(0, dim.number_pins):
+            pins = pins.union(pin.translate((0, -i * dim.pin_pitch_mm, 0)))
+
+        pins = pins.translate((-dim.body_centre_x_mm, 0, 0))
+
+        return pins
+
+    def _build_tab(self, dim: Dimensions):
+
+        tab = (
+            cq.Workplane("XY")
+            .moveTo(dim.device_x_mm / 2.0 - dim.tab_protrusion_x_mm, 0)
+            .line(0, dim.tab_protrusion_offset_x_mm)
+            .line(dim.tab_protrusion_x_mm, 0)
+            .line(0, dim.tab_protrusion_y_mm)
+            .line(-dim.tab_protrusion_x_mm, 0)
+            .line(0, ((dim.tab_y_mm + dim.tab_large_mm)/2.0) - dim.tab_protrusion_offset_x_mm - dim.tab_protrusion_y_mm)
+            .line(-dim.tab_small_mm, 0)
+            .line(0, -dim.tab_large_mm/2.0)
+            .line(-(dim.tab_x_mm - dim.tab_small_mm), 0)
+            .line(0, -(dim.tab_y_mm + dim.tab_large_mm)/2.0)
+            .mirrorX()
+            .extrude(dim.tab_z_mm)
+        )
+
+        cutter = (
+            cq.Workplane("XY")
+            .moveTo(dim.device_x_mm / 2.0 - dim.tab_protrusion_x_mm - dim.tab_cutout_offset_x_mm - dim.tab_cutout_x_mm, dim.tab_cutout_offset_y_mm)
+            .rect(dim.tab_cutout_x_mm, dim.tab_cutout_y_mm, centered=False)
+            .extrude(dim.tab_z_mm+5)
+            .edges("|Z").fillet(dim.tab_cutout_radius_mm)
+        )
+        tab = tab.cut(cutter).cut(cutter.mirror(mirrorPlane="ZX"))
+        tab = tab.translate((-dim.body_centre_x_mm, 0, 0))
+        return tab
+
+    def _build_body(self, dim: Dimensions):
+        body = super()._build_body(dim)
+
+        fills = (
+            cq.Workplane("XY").workplane(offset=dim.nudge_mm, centerOption="CenterOfMass")
+            .moveTo(dim.device_x_mm / 2.0 - dim.tab_protrusion_x_mm - dim.tab_cutout_offset_x_mm - dim.tab_cutout_x_mm, dim.tab_cutout_offset_y_mm)
+            .rect(dim.tab_cutout_x_mm, dim.tab_cutout_y_mm, centered=False)
+            .extrude(dim.tab_z_mm - dim.nudge_mm)
+            .edges("|Z").fillet(dim.tab_cutout_radius_mm)
+        )
+        body = body.union(fills).union(fills.mirror(mirrorPlane="ZX"))
+        return body
+
 class ATPAK(DPAK):
     # def __init__(self, config_file):
     #     self.SERIES = 'ATPAK'

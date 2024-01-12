@@ -65,7 +65,8 @@ import cadquery as cq
 from _tools import shaderColors, parameters, cq_color_correct, cq_globals, export_tools
 from exportVRML.export_part_to_VRML import export_VRML
 
-from .DPAK_factory import TO252, TO263, TO268, ATPAK, HSOF8, SOT669, SOT89, Infineon_PG_TO_220_7Lead_TabPin8, Rohm_HRP7
+from .DPAK_factory import TO252, TO263, TO268, ATPAK, HSOF8, SOT1235, SOT669, SOT89, \
+    Infineon_PG_TO_220_7Lead_TabPin8, Rohm_HRP7
 
 def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
     """
@@ -117,6 +118,7 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             "ATPAK": ATPAK,
             "HSOF8": HSOF8,
             "LFPAK56": SOT669,
+            "LFPAK88": SOT1235,
             "SOT89": SOT89,
             "Infineon_PG_TO_220_7Lead_TabPin8": Infineon_PG_TO_220_7Lead_TabPin8,
             "Rohm_HRP7": Rohm_HRP7,
