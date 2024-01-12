@@ -166,8 +166,10 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
 
             # Update the license
             from _tools import add_license
-            add_license.STR_int_licAuthor = "Ray Benitez"
-            add_license.STR_int_licEmail = "hackscribble@outlook.com"
+            author = all_params[model]["base"].get("author", "Ray Benitez")
+            author_email = all_params[model]["base"].get("author_email", "hackscribble@outlook.com")
+            add_license.STR_int_licAuthor = author
+            add_license.STR_int_licEmail = author_email
             add_license.addLicenseToStep(output_dir, file_name + ".step",
                                             add_license.LIST_int_license,
                                             add_license.STR_int_licAuthor,
