@@ -158,13 +158,29 @@ first_pin:
 ### `pad_pitch:` _float_
 The pad-to-pad center distance in x-dimension in millimeters.
 
+### `fp_name_pitch:` _float_
+This overrides the pitch dimension only for the footprint name. If non specified, or if set to 0, `pad_pitch` will be used.
+
 ### `row_pitch:` _float_ (default: null)
 If non-zero, then the connector is generated using two rows with the specified pad-to-pad center distance in y-dimension.
 
 Default (value is null or 0.0) is to generate only one row.
 
+### `row_x_offset:` _float_ (default: null)
+If non-zero, then the connector has staggered pins (pins in one row are not aligned with those in the opposite row). 
+This parameter is the offset X distance between one row and the opposite.
+It is only applied to the upper row (the row opposite to pin number 1).
+
+Default (value is null or 0.0) is to generate usual connectors, where pins of one row are aligned with those in the opposite row.
+
+### `fp_name_rows:` _int_
+This overrides the number of rows only for the footprint name. If non specified, or if set to 0, `row_pitch` will be used (1 row if 0, 2 rows otherwise).
+
 ### `positions:` _list of integers_
-The list of positions to be generated.
+The list of positions per row to be generated.
+
+### `fp_name_pins_per_row:` _int_
+This overrides the number of positions only for the footprint name. If non specified, or if set to 0, `positions` will be used.
 
 **Note:** if positions is set to `null` or not contained in a target specification,  then the target acts just as a parameter basis for inheritance.
 

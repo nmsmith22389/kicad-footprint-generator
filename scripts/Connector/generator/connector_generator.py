@@ -241,6 +241,7 @@ class FPconfiguration():
     pad_pos_range: Vector2D
     pad_center_offset: Vector2D
     row_pitch: float = 0.0
+    row_x_offset: float = 0.0
     num_rows: int = 1
     gap_pos: int = 0
     gap_size: int = 0
@@ -270,6 +271,9 @@ class FPconfiguration():
         if (self.row_pitch is None):
             self.row_pitch = 0.0
         self.num_rows = 2 if self.row_pitch else 1
+
+        ## row_x_offset defines if it has staggered pins or not
+        self.row_x_offset = spec.get("row_x_offset", 0.0)
 
         ## collection information about an eventual gap in the pin layout
         gap = spec.get("gap", {}).get(positions, [0, 0])
@@ -351,7 +355,7 @@ class FPconfiguration():
             pin1_offset = Vector2D(*pin1_offset)
         pin1_offset.y += self.pin1_marker_size
 
-        self.pin1_marker_pos = Vector2D(-0.5 * self.pad_pos_range.x + self.pad_center_offset.x,
+        self.pin1_marker_pos = Vector2D(-0.5 * (self.pad_pos_range.x + self.row_x_offset) + self.pad_center_offset.x,
                                         self.body_edges[self.pin1_pos]) + pin1_offset * Vector2D(1, self.scale_y)
         self.draw_pin1_marker_on_fab = first_pin_spec.get("marker", { }).get("fab", True)
 
@@ -464,10 +468,16 @@ def generate_one_footprint(positions: int, spec, configuration: dict):
 
     ## assemble footprint name
     fp_name = vars_dict["fp_name"].format(**vars_dict)
-    fp_name += "_%dx%02d"  % (fp_config.num_rows, fp_config.num_pos)
+    if (rows := vars_dict.get('fp_name_rows', 0)) == 0:
+        rows = fp_config.num_rows
+    if (pins_per_row := vars_dict.get('fp_name_pins_per_row', 0)) == 0:
+        pins_per_row = fp_config.num_pos
+    fp_name += "_%dx%02d"  % (rows, pins_per_row)
     if fp_config.num_mount_pads:
         fp_name += "-%dMP" % fp_config.num_mount_pads
-    fp_name += "_P%smm" %  fp_config.pad_pitch
+    if (pitch := vars_dict.get('fp_name_pitch', 0)) == 0:
+        pitch = fp_config.pad_pitch
+    fp_name += "_P%smm" %  pitch
     if (fp_config.gap_pos and fp_config.gap_size):
         fp_name += "_Pol%02d" % fp_config.gap_pos
     fp_name += spec.get("fp_suffix", "").format(**vars_dict)
@@ -493,7 +503,8 @@ def generate_one_footprint(positions: int, spec, configuration: dict):
     ## create extra pads/drills
     for mp_name, pad_spec in spec.get("mount_pads", {}).items():
         add_mount_pad(kicad_mod, pad_pos_range=fp_config.pad_pos_range, pad_spec=pad_spec,
-                      pad_center_offset=fp_config.pad_center_offset, default_paste=fp_config.pad_properties.paste)
+                      pad_center_offset=fp_config.pad_center_offset, default_paste=fp_config.pad_properties.paste,
+                      row_x_offset=fp_config.row_x_offset)
 
     ## collect information from body_shape spec
     body_spec = spec.get("body_shape", {})
@@ -513,21 +524,23 @@ def generate_one_footprint(positions: int, spec, configuration: dict):
         kicad_mod.append(PolygonLine(nodes=poly_nodes, layer="F.Fab", width=configuration["fab_line_width"]))
 
     ## create Pads
-    start_pos_x = -0.5 * fp_config.pad_pos_range.x + fp_config.pad_center_offset.x
-
+    start_pos_x = -0.5 * (fp_config.pad_pos_range.x + fp_config.row_x_offset) + fp_config.pad_center_offset.x
     for row in range(fp_config.num_rows):
         pos_y = (0.5 if row == 0 else -0.5) * fp_config.pad_pos_range.y * fp_config.scale_y + fp_config.pad_center_offset.y
+        row_x_offset = 0 if (row % 2)== 0 else fp_config.row_x_offset
         col_num = 0
-        for col in range(positions + fp_config.gap_size):
+        for col in range(ceil(positions) + fp_config.gap_size):
             if (col not in fp_config.skipped_positions):
                 pad_number = fp_config.num_rows * col_num + row + 1
+                if pad_number > fp_config.num_rows * positions:
+                  continue
                 if pad_number == 1:
                     kicad_mod.append(Pad(number=pad_number,
-                                         at=[start_pos_x + col * fp_config.pad_pitch, pos_y],
+                                         at=[start_pos_x + row_x_offset + col * fp_config.pad_pitch, pos_y],
                                          **fp_config.pad1_properties.as_args()))
                 else:
                     kicad_mod.append(Pad(number=pad_number,
-                                         at=[start_pos_x + col * fp_config.pad_pitch, pos_y],
+                                         at=[start_pos_x + row_x_offset + col * fp_config.pad_pitch, pos_y],
                                          **fp_config.pad_properties.as_args()))
                 col_num += 1
         pos_y *= -1 # switch to opposite row
@@ -650,7 +663,7 @@ def make_pin1_fab_marker(fp_config: FPconfiguration, configuration: dict) -> lis
     # pin 1 on Fab is a triangle
 
     # location of the tip in x
-    tip_x = -0.5 * fp_config.pad_pos_range.x + fp_config.pad_center_offset.x
+    tip_x = -0.5 * (fp_config.pad_pos_range.x + fp_config.row_x_offset) + fp_config.pad_center_offset.x
 
     # width and height of the triangle
     dx = min(fp_config.pad_pitch, configuration['fab_pin1_marker_length'])
@@ -751,8 +764,8 @@ def build_body_shape(body_spec: dict, *, fp_config: FPconfiguration):
     return body_shape_nodes
 
 
-def add_mount_pad(kicad_mod, *, pad_pos_range, pad_spec, pad_center_offset, default_paste):
-    center_to_center = _get_dim("center", spec=pad_spec, dim="x", base=pad_pos_range.x, mult=2)
+def add_mount_pad(kicad_mod, *, pad_pos_range, pad_spec, pad_center_offset, default_paste, row_x_offset):
+    center_to_center = _get_dim("center", spec=pad_spec, dim="x", base=pad_pos_range.x, mult=2) + row_x_offset
     pad_pos_y = utils.as_list(_get_dim("center", spec=pad_spec, dim="y"))
     pad_props = PadProperties(pad_spec, default_paste)
     pad_nums = utils.as_list(pad_spec.get('name', [""]))
