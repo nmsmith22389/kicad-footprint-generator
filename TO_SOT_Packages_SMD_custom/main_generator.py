@@ -110,26 +110,23 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
         pin_color = shaderColors.named_colors[all_params[model]["base"]["device"]["pins"]["colour"]].getDiffuseFloat()
 
         # Check the model name to see which class to load
-        if model == "TO-252":
-            cqm = TO252()
-        elif model == "TO-263":
-            cqm = TO263()
-        elif model == "TO-268":
-            cqm = TO268()
-        elif model == "ATPAK":
-            cqm = ATPAK()
-        elif model == "HSOF8":
-            cqm = HSOF8()
-        elif model == "LFPAK56":
-            cqm = SOT669()
-        elif model == "SOT89":
-            cqm = SOT89()
-        elif model == "Infineon_PG_TO_220_7Lead_TabPin8":
-            cqm = Infineon_PG_TO_220_7Lead_TabPin8()
-        elif model == "Rohm_HRP7":
-            cqm = Rohm_HRP7()
-        else:
-            print("Model not recognized: {}".format(model))
+        available_models = {
+            "TO-252": TO252,
+            "TO-263": TO263,
+            "TO-268": TO268,
+            "ATPAK": ATPAK,
+            "HSOF8": HSOF8,
+            "LFPAK56": SOT669,
+            "SOT89": SOT89,
+            "Infineon_PG_TO_220_7Lead_TabPin8": Infineon_PG_TO_220_7Lead_TabPin8,
+            "Rohm_HRP7": Rohm_HRP7,
+        }
+        try:
+            cqm = available_models[model]()
+        except KeyError:
+            raise ValueError(
+                f"Model not recognized '{model}'. Please choose from the available models: {list(sorted(available_models.keys()))}."
+            ) from None
 
         # Build all the variants
         for variant in all_params[model]["variants"]:
