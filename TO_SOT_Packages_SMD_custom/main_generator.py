@@ -126,9 +126,10 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
         try:
             cqm = available_models[model]()
         except KeyError:
-            raise ValueError(
+            print(
                 f"Model not recognized '{model}'. Please choose from the available models: {list(sorted(available_models.keys()))}."
-            ) from None
+            )
+            continue
 
         # Build all the variants
         for variant in all_params[model]["variants"]:
