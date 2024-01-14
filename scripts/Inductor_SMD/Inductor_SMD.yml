@@ -52,6 +52,16 @@ L_Bourns_SRP5030T:
   smd_tht: "smd"
   pins: [["smd", "1", -2.25, 0, 2.0, 1.8, 0.0], ["smd", "2", 2.25, 0, 2.0, 1.8, 0.0]]
 
+L_Bourns_SRP1050WA:
+  library_name: "Inductor_SMD"
+  description: "Inductor, Bourns, SRP1050WA, 10.1mmx10mm"
+  datasheet: "https://www.bourns.com/docs/product-datasheets/SRP1050WA.pdf"
+  tags: "Inductor Bourns_SRP1050WA"
+  at: [-5.05, 5]
+  size: [10.1, 10.0]
+  smd_tht: "smd"
+  pins: [["smd", "1", -4.45, 0, 3.4, 5, 0.0], ["smd", "2", 4.45, 0, 3.4, 5, 0.0]]
+
 L_TDK_SLF6025:
   library_name: "Inductor_SMD"
   description: "Inductor, TDK, SLF6025, 6.0mmx6.0mm"
