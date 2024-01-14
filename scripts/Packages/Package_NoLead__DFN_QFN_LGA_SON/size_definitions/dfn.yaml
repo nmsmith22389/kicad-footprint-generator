@@ -989,6 +989,51 @@ DFN-10-1EP_3x3mm_P0.5mm_EP1.65x2.38mm:
   num_pins_x: 0
   num_pins_y: 5
 
+DFN-12-1EP_3x3mm_P0.45mm_EP1.65x2.38mm:
+  device_type: 'DFN'
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/ltc-legacy-dfn/DFN_12_05-08-1725.pdf'
+  # ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  body_size_x:
+    nominal: 3.0
+    tolerance: 0.1
+  body_size_y:
+    nominal: 3.0
+    tolerance: 0.1
+  overall_height:
+    nominal: 0.75
+    tolerance: 0.05
+  lead_width:
+    nominal: 0.23
+    tolerance: 0.05
+  lead_len:
+    nominal: 0.4
+    tolerance: 0.1
+  EP_size_x:
+    nominal: 1.65
+    tolerance: 0.1
+  EP_size_y:
+    nominal: 2.38
+    tolerance: 0.1
+  EP_num_paste_pads: [2, 2]
+  thermal_vias:
+    count: [2, 3]
+    drill: 0.2
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    EP_num_paste_pads: [2, 2]
+    #paste_between_vias: 1
+    #paste_rings_outside: 1
+    #EP_paste_coverage: 0.7
+    #grid: [1, 1]
+    # bottom_pad_size:
+    paste_avoid_via: False
+  pitch: 0.45
+  num_pins_x: 0
+  num_pins_y: 6
+
 Balun_Johanson_0900FM15K0039:
   device_type: 'DFN'
   manufacturer: 'Johanson'
