@@ -557,7 +557,7 @@ LFPAK88:
     base:
         series: SOT-1235
         description: 'LFPAK88 PowerPAK 8 x 8L BWL Single SOT-1235'
-        keywords: 'LFPAK88 PowerPAK 8 x 8L BWL Single SOT-1235'
+        keywords: 'PowerPAK 8x8L Nexperia Vishay'
         author: 'Patrick Baus'
         author_email: 'patrick.baus@physik.tu-darmstadt.de'
         footprint:
@@ -613,7 +613,7 @@ LFPAK88:
                 cut_y_mm: 2.5
             centre_pin: ['uncut']
             custom_name: 'LFPAK88'
-            keywords: 'LFPAK88 PowerPAK 8 x 8L BWL Single SOT-1235'
+            keywords: 'PowerPAK 8x8L Nexperia Vishay'
             datasheet: https://assets.nexperia.com/documents/package-information/SOT1235.pdf
 
 # SOT-89-3 SMD package
