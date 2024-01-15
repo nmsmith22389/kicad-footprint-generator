@@ -33,9 +33,14 @@ Valve_Noval-B9A_Belton-VT9-PT-C_Socket:
   A1: 0.03
   flange: null
   sadle: [6.6, 35.5, 26.5, 14.25, 8.0, 72.0]
-  sadle_hole: [[-14.25, 3.3]]
+  sadle_hole: [
+    [-14.25, 3.3]
+  ]
   sadle_shield: [23.8, 17.6]
-  sadle_pcb_hole: [['pad', 14.25, 1.3], ['npth', -14.25, 3.3]]
+  sadle_pcb_hole: [
+    ['pad', 14.25, 1.3],
+    ['npth', -14.25, 3.3]
+  ]
   pin_top_diameter: [11.9, 1.016]
   pin_spigot: ['round', 3.5, 6.0]
   npth_pin: null
@@ -61,9 +66,15 @@ Valve_Octal-K8A_Belton-VT8-PT_Socket:
   A1: 0.03
   flange: null
   sadle: [13.5, 50.0, 32.0, 20.0, 10.0, 72.0]
-  sadle_hole: [[-20.0, 3.5], [20.0, 3.5]]
+  sadle_hole: [
+    [-20.0, 3.5],
+    [20.0, 3.5]
+  ]
   sadle_shield: null
-  sadle_pcb_hole: [['npth', -20.0, 3.5], ['npth', 20.0, 3.5]]
+  sadle_pcb_hole: [
+    ['npth', -20.0, 3.5],
+    ['npth', 20.0, 3.5]
+  ]
   pin_top_diameter: [17.5, 2.36]
   pin_spigot: ['tap', 3.5, 6.0, 2.0]
   npth_pin: null
@@ -89,9 +100,15 @@ Valve_Octal-K8A_Belton-VT8-PTS-B_Socket:
   A1: 0.03
   flange: null
   sadle: [13.5, 50.0, 32.0, 19.0, 11.0, 72.0]
-  sadle_hole: [[-19.0, 2.9], [19.0, 2.9]]
+  sadle_hole: [
+    [-19.0, 2.9],
+    [19.0, 2.9]
+  ]
   sadle_shield: null
-  sadle_pcb_hole: [['npth', -19.0, 2.9], ['npth', -19.0, 2.9]]
+  sadle_pcb_hole: [
+    ['npth', -19.0, 2.9],
+    ['npth', -19.0, 2.9]
+  ]
   pin_top_diameter: [17.5, 2.36]
   pin_spigot: ['tap', 3.5, 6.0, 2.0]
   npth_pin: null
@@ -313,9 +330,15 @@ Valve_Octal-K8A_Dongxin-GZC8-Y-5_Socket:
   A1: 0.03
   flange: null
   sadle: [8.5, 47.0, 31.0, 19.0, 15.0, 72.0]
-  sadle_hole: [[-19.0, 3.0], [19.0, 3.0]]
+  sadle_hole: [
+    [-19.0, 3.0],
+    [19.0, 3.0]
+  ]
   sadle_shield: null
-  sadle_pcb_hole: [['npth', -19.0, 3.0], ['npth', -19.0, 3.0]]
+  sadle_pcb_hole: [
+    ['npth', -19.0, 3.0],
+    ['npth', -19.0, 3.0]
+  ]
   pin_top_diameter: [17.5, 2.36]
   pin_spigot: ['tap', 3.5, 6.0, 2.0]
   npth_pin: null
@@ -344,7 +367,10 @@ Valve_Glimm:
   center: [2.54, 0.0]  # Body center
   npthhole: null  # NPTH holes
   ph: 4.0  # Pin length
-  pin: [[0.0, 0.0], [5.08, 0.0]]  # Pins
+  pin: [
+    [0.0, 0.0],
+    [5.08, 0.0]
+  ]
   body_top_color_key: red body  # Top color
   body_color_key: glass_grey  # Body colour
   pin_color_key: metal grey pins  # Pin color
