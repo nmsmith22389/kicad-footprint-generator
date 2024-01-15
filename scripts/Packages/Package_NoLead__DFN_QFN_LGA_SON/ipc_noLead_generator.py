@@ -11,13 +11,16 @@ from typing import List
 
 sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))  # load parent path of KicadModTree
 
-from KicadModTree import Vector2D, Footprint, FootprintType, ExposedPad, Line,\
+from KicadModTree import Vector2D, Footprint, FootprintType, ExposedPad, Line, \
     PolygonLine, RectLine, Model, Pad, KicadFileHandler
 from KicadModTree.nodes.specialized.PadArray import PadArray, get_pad_radius_from_arrays
+
 from scripts.tools.footprint_text_fields import addTextFields
-from scripts.tools.drawing_tools import courtyardFromBoundingBox
-from scripts.tools.ipc_pad_size_calculators import TolerancedSize, ipc_body_edge_inside_pull_back
+from scripts.tools.ipc_pad_size_calculators import TolerancedSize, \
+        ipc_body_edge_inside_pull_back, ipc_pad_center_plus_size
 from scripts.tools.quad_dual_pad_border import create_dual_or_quad_pad_border
+from scripts.tools.drawing_tools import courtyardFromBoundingBox, roundGDown, \
+        TriangleArrowPointingSouthEast, CornerBracketWithArrowPointingSouth
 from scripts.tools.geometry.bounding_box import BoundingBox
 
 sys.path.append(os.path.join(sys.path[0], "..", "utils"))
@@ -35,6 +38,92 @@ DEFAULT_MIN_ANNULAR_RING = 0.15
 SILK_MIN_LEN = 0.1
 
 DEBUG_LEVEL = 0
+
+
+def find_top_left_pad(pad_arrays: List[PadArray]) -> Pad:
+    """
+    From a list of pad arrays, find the top-left pad.
+    """
+
+    def point_is_left_and_then_above(point: Vector2D, other_point: Vector2D) -> bool:
+
+        # left-most wins if not the same
+        if point.x == other_point.x:
+            return point.y < other_point.y
+
+        # in the same col, top wins
+        return point.x < other_point.x
+
+    tl_pad = None
+    for pad_array in pad_arrays:
+        for pad in pad_array:
+            if tl_pad is None or point_is_left_and_then_above(pad.at, tl_pad.at):
+                tl_pad = pad
+
+    if tl_pad is None:
+        raise ValueError("No pad found in pad array")
+
+    return tl_pad
+
+
+def get_pad_top_left_corner_midpoint(pad: Pad) -> Vector2D:
+    """Get the midpoint of the top left corner of the pad
+
+    When the pad has no radius, this _is_ the corner.
+    """
+
+    tl_corner = None
+
+    if pad.shape == Pad.SHAPE_RECT:
+        tl_corner = pad.at - (pad.size / 2)
+    elif pad.shape == Pad.SHAPE_ROUNDRECT:
+        tl_corner = pad.at - (pad.size / 2)
+
+        # Move into the corner slightly down and right to account for the radius
+        # being on the inside of the bounding box, not the corner.
+        inset = (1 - (sqrt(2) / 2)) * pad.roundRadius
+        tl_corner += [inset, inset]
+    else:
+        raise ValueError("Unsupported pad shape: {}".format(pad.shape))
+
+    assert (tl_corner is not None)
+
+    return tl_corner
+
+
+def get_pad_bounding_box(pad: Pad) -> BoundingBox:
+
+    if pad.shape in [Pad.SHAPE_RECT, Pad.SHAPE_ROUNDRECT, Pad.SHAPE_CIRCLE, Pad.SHAPE_OVAL]:
+
+        # This code doesn't handle this yet
+        if (pad.rotation % 180) > 1e-6:
+            raise ValueError("Rotation of pad is not a multiple of 180 degrees")
+
+        return BoundingBox(
+            min_pt=pad.at - (pad.size / 2),
+            max_pt=pad.at + (pad.size / 2)
+        )
+    else:
+        raise ValueError("Unsupported pad shape: {}".format(pad.shape))
+
+
+def get_bounding_box_of_pad_arrays(pad_arrays: List[PadArray]) -> BoundingBox:
+    """Get the bounding box of a list of pad arrays"""
+
+    bb = None
+    for pad_array in pad_arrays:
+        for pad in pad_array:
+            pad_bb = get_pad_bounding_box(pad)
+
+            if bb is None:
+                bb = pad_bb
+            else:
+                bb.include_bbox(pad_bb)
+
+    if bb is None:
+        raise ValueError("No pad found in pad array")
+
+    return bb
 
 
 class NoLead():
@@ -432,44 +521,118 @@ class NoLead():
 
         # ############################ SilkS ##################################
 
-        silk_pad_offset = configuration['silk_pad_clearance'] + configuration['silk_line_width'] / 2
+        silk_line_width_mm = configuration['silk_line_width']
+        silk_pad_offset = configuration['silk_pad_clearance'] + silk_line_width_mm / 2
         silk_offset = configuration['silk_fab_offset']
-        if device_params['num_pins_x'] == 0:
-            kicad_mod.append(Line(
-                start={'x': 0,
-                       'y': body_edge['top'] - silk_offset},
-                end={'x': body_edge['right'],
-                     'y': body_edge['top'] - silk_offset},
-                width=configuration['silk_line_width'],
-                layer="F.SilkS"))
-            kicad_mod.append(Line(
-                start={'x': body_edge['left'],
-                       'y': body_edge['bottom'] + silk_offset},
-                end={'x': body_edge['right'],
-                     'y': body_edge['bottom'] + silk_offset},
-                width=configuration['silk_line_width'],
-                layer="F.SilkS", y_mirror=0))
-        elif device_params['num_pins_y'] == 0:
-            kicad_mod.append(Line(
-                start={'y': 0,
-                       'x': body_edge['left'] - silk_offset},
-                end={'y': body_edge['bottom'],
-                     'x': body_edge['left'] - silk_offset},
-                width=configuration['silk_line_width'],
-                layer="F.SilkS"))
-            kicad_mod.append(Line(
-                start={'y': body_edge['top'],
-                       'x': body_edge['right'] + silk_offset},
-                end={'y': body_edge['bottom'],
-                     'x': body_edge['right'] + silk_offset},
-                width=configuration['silk_line_width'],
-                layer="F.SilkS", x_mirror=0))
+
+        def create_silk_line(start, end):
+            return Line(start=start, end=end, width=silk_line_width_mm, layer="F.SilkS")
+
+        min_arrow_size = silk_line_width_mm * 3
+
+        #  default to half the smaller pitch, but not less than min_arrow_size
+        arrow_size = max(min(device_dimensions['pitch_x'], device_dimensions['pitch_y']) / 2,
+                         min_arrow_size)
+
+        if device_params['num_pins_x'] == 0 or device_params['num_pins_y'] == 0:
+
+            # DFN-style - 45-degree arrow in corner
+
+            #     For num_pins_x == 0, the lines are horizontal:
+
+            #      +
+            #     /|
+            #    +-+  -------------  <- silk
+            #        +------------+  <- body
+            #       ====        ==== <- pad
+            #        |            |
+            #       ====        ====
+            #        +------------+
+            #        -------------- <- silk
+
+            #     For num_pins_y == 0, the lines are vertical
+
+            vertical_lines = device_params['num_pins_y'] == 0
+
+            pads_bbox = get_bounding_box_of_pad_arrays(pad_arrays)
+            top_left_pad = find_top_left_pad(pad_arrays)
+
+            # Top corner of the top-left pad (inset to be exactly on rounded corners)
+            top_left_pad_top_left_corner = get_pad_top_left_corner_midpoint(top_left_pad)
+            arrow_apex = top_left_pad_top_left_corner - (silk_pad_offset * (sqrt(2) / 2))
+
+            # round off away from the pad edge
+            arrow_apex.x = roundGDown(arrow_apex.x, 0.01)
+            arrow_apex.y = roundGDown(arrow_apex.y, 0.01)
+
+            TriangleArrowPointingSouthEast(kicad_mod, arrow_apex, arrow_size, "F.SilkS", silk_line_width_mm)
+
+            if vertical_lines:
+                # stay outside the body _and_ the pad clearance
+                silk_left_x = min(pads_bbox.left - silk_pad_offset, body_edge['left'] - silk_offset)
+                silk_right_x = max(pads_bbox.right + silk_pad_offset, body_edge['right'] + silk_offset)
+
+                # avoid crashing the top line left edge into the arrow
+                silk_top_y = max(body_edge['top'], arrow_apex.y + 2 * silk_line_width_mm)
+
+                left_line = create_silk_line(
+                    start=Vector2D(silk_left_x, silk_top_y),
+                    end=Vector2D(silk_left_x, body_edge['bottom']))
+
+                right_line = create_silk_line(
+                    start=Vector2D(silk_right_x, silk_top_y),
+                    end=Vector2D(silk_right_x, body_edge['bottom']))
+
+                kicad_mod.append(left_line)
+                kicad_mod.append(right_line)
+
+            else:
+
+                # stay outside the body _and_ the pad clearance
+                silk_top_y = min(pads_bbox.top - silk_pad_offset, body_edge['top'] - silk_offset)
+                silk_bottom_y = max(pads_bbox.bottom + silk_pad_offset, body_edge['bottom'] + silk_offset)
+
+                # avoid crashing the top line left edge into the arrow
+                silk_left_x = max(body_edge['left'], arrow_apex.x + 2 * silk_line_width_mm)
+
+                top_line = create_silk_line(
+                    start=Vector2D(silk_left_x, silk_top_y),
+                    end=Vector2D(body_edge['right'], silk_top_y))
+
+                bottom_line = create_silk_line(
+                    start=Vector2D(body_edge['left'], silk_bottom_y),
+                    end=Vector2D(body_edge['right'], silk_bottom_y))
+
+                kicad_mod.append(top_line)
+                kicad_mod.append(bottom_line)
         else:
+            # this is a QFN
+
+            #          -- silk
+            #  +---+  /
+            #   \ /   v    x   x
+            #    + ------ n  n-1
+            #    |        x   x
+            #    |
+            #   x1x
+            #
+            #   x2x  <- pad
+
+            # where the lines have to end to avoid crashing into the pad
             sx1 = -(device_dimensions['pitch_x'] * (device_params['num_pins_x'] - 1) / 2.0 +
                     pad_details['top']['size'][0] / 2.0 + silk_pad_offset)
 
             sy1 = -(device_dimensions['pitch_y'] * (device_params['num_pins_y'] - 1) / 2.0 +
                     pad_details['left']['size'][1] / 2.0 + silk_pad_offset)
+
+            # arrow always in top-left of body
+            arrow_apex = Vector2D(
+                body_edge['left'] - silk_offset,
+                body_edge['top'] - silk_offset
+            )
+
+            CornerBracketWithArrowPointingSouth(kicad_mod, arrow_apex, arrow_size, sx1, sy1,
+                                                "F.SilkS", silk_line_width_mm, SILK_MIN_LEN)
 
             poly_silk = [
                 {'x': sx1, 'y': body_edge['top'] - silk_offset},
@@ -498,12 +661,6 @@ class NoLead():
                     polygon=poly_silk,
                     width=configuration['silk_line_width'],
                     layer="F.SilkS", x_mirror=0, y_mirror=0))
-                if len(poly_silk) > 2:
-                    kicad_mod.append(Line(
-                        start={'x': sx1, 'y': body_edge['top'] - silk_offset},
-                        end={'x': body_edge['left'] - silk_offset, 'y': body_edge['top'] - silk_offset},
-                        width=configuration['silk_line_width'],
-                        layer="F.SilkS"))
 
         # # ######################## Fabrication Layer ###########################
 

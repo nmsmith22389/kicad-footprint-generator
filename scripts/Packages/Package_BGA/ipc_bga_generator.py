@@ -11,10 +11,9 @@ import itertools
 # load parent path of KicadModTree
 sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))
 
-from KicadModTree import KicadFileHandler
+from KicadModTree import KicadFileHandler, Vector2D
 from KicadModTree.nodes import Pad, Footprint, FootprintType, Model, Text, RectLine, PolygonLine
-
-sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))  # load parent path of tools
+from scripts.tools.drawing_tools import TriangleArrowPointingSouthEast
 
 from string import ascii_uppercase
 
@@ -181,6 +180,13 @@ def __createFootprintVariant(config, fpParams, fpId):
                       layer="F.CrtYd", width=wCrtYd))
 
     # Silk
+
+    arrow_apex = Vector2D(xLeftSilk, yTopSilk)
+    min_arrow_size = wSilkS * 3
+    arrow_size = max(min_arrow_size, crtYdOffset / 2)
+
+    TriangleArrowPointingSouthEast(f, arrow_apex, arrow_size, "F.SilkS", wSilkS)
+
     f.append(PolygonLine(polygon=[[xChamferSilk, yTopSilk],
                                   [xRightSilk, yTopSilk],
                                   [xRightSilk, yBottomSilk],

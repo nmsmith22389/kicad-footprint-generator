@@ -12,6 +12,8 @@ sys.path.append(os.path.join(sys.path[0], "..", "..", "kicad_mod"))  # load kica
 sys.path.append(os.path.join(sys.path[0], "..", ".."))  # load kicad_mod path
 
 from KicadModTree import *  # NOQA
+from KicadModTree import Vector2D
+from KicadModTree import Footprint, PolygonLine, Polygon, Line, Arc
 from .footprint_global_properties import *
 from scripts.tools.geometry.bounding_box import BoundingBox
 
@@ -761,6 +763,151 @@ def THTQuartzIncomplete(model, x, size, angle, layer, width):
         model.append(Arc(center=cr, start=xtr, angle=angle, layer=layer, width=width))
         model.append(Arc(center=cl, start=xbl, angle=angle, layer=layer, width=width))
         model.append(Arc(center=cr, start=xbr, angle=-angle, layer=layer, width=width))
+
+
+def TriangleArrowPointingSouthEast(model: Footprint, apex_position: Vector2D, size: float,
+                                   layer: str, line_width_mm: float):
+    """Make and append a 45-degree south-east-pointing triangle
+
+    Size is between nodes, overall size will include 1*line_width overall
+
+        + ---
+       /|  |<-size
+      +-+ ---
+
+    :param size: size of the triangle
+    """
+
+    arrow_pts = [
+        apex_position,
+        apex_position + [-size, 0],
+        apex_position + [0, -size],
+        apex_position
+    ]
+
+    poly = Polygon(nodes=arrow_pts, layer=layer, width=line_width_mm)
+    model.append(poly)
+
+
+def TriangleArrowPointingSouth(model: Footprint, apex_position: Vector2D, size: float,
+                               layer: str, line_width_mm: float):
+    r"""Make and append a south-pointing triangle
+
+    Size is between nodes, overall size will include 1*line_width overall
+
+    +-----+
+     \   /
+      \ /
+       +
+
+    :param size: size of the triangle
+    """
+
+    arrow_pts = [
+        apex_position,
+        apex_position + [-size / 2, -size * 0.70],
+        apex_position + [size / 2, -size * 0.70],
+        apex_position
+    ]
+
+    poly = Polygon(nodes=arrow_pts, layer=layer, width=line_width_mm)
+    model.append(poly)
+
+
+def CornerBracketWithArrowPointingSouthEast(model: Footprint, apex: Vector2D, size_mm: float,
+                                            bracket_max_x: float,
+                                            bracket_max_y: float,
+                                            layer: str,
+                                            line_width_mm: float,
+                                            silk_min_len: float):
+    """Create an south-east triangular arrow and 90-degree bracket lines
+
+      +
+     /|
+    +-+  ---
+            | bracket_max_x
+      |
+      | __bracket_max_y
+
+    """
+    # minimum clearance between nodes of the lines
+    silk_silk_node_clearance = 2 * line_width_mm
+
+    TriangleArrowPointingSouthEast(model, apex, size_mm, layer, line_width_mm)
+
+    pin_1_silk_line_len_x = bracket_max_x - (apex.x + silk_silk_node_clearance)
+    pin_1_silk_line_len_y = bracket_max_y - (apex.y + silk_silk_node_clearance)
+
+    # There's a gap to avoid merging with the arrow
+    # make sure there's enough line left to draw the lines
+
+    if pin_1_silk_line_len_x > silk_min_len:
+        tl_horz_line = Line(
+            start=Vector2D(apex.x + 2 * line_width_mm, apex.y),
+            end=Vector2D(bracket_max_x, apex.y),
+            width=line_width_mm)
+        model.append(tl_horz_line)
+
+    if pin_1_silk_line_len_y > silk_min_len:
+        tl_vert_line = Line(
+            start=Vector2D(apex.x, apex.y + 2 * line_width_mm),
+            end=Vector2D(apex.x, bracket_max_y),
+            width=line_width_mm)
+        model.append(tl_vert_line)
+
+
+def CornerBracketWithArrowPointingSouth(model: Footprint, apex: Vector2D,
+                                        size_mm: float,
+                                        bracket_max_x: float,
+                                        bracket_max_y: float,
+                                        layer: str,
+                                        line_width_mm: float,
+                                        silk_min_len: float):
+    r"""Create an south-east triangular arrow and 90-degree bracket lines
+
+    Move the whole triangle left if it will hit the pad on the right.
+
+    +---+
+     \ /
+      +  ---
+            | bracket_max_x
+      |
+      | __bracket_max_y
+
+    """
+
+    # minimum clearance between nodes of the lines
+    silk_silk_node_clearance = 2 * line_width_mm
+
+    # shove arrow left away from the pad on the right
+    apex.x = min(apex.x, bracket_max_x - size_mm / 2)
+
+    # Round the apex away from the body corner
+    apex.x = roundGDown(apex.x, 0.01)
+    apex.y = roundGDown(apex.y, 0.01)
+
+    TriangleArrowPointingSouth(model, apex, size_mm, layer, line_width_mm)
+
+    # a little extra clearance on the side of the arrow
+    pin_1_silk_line_len_x = bracket_max_x - (apex.x + silk_silk_node_clearance + line_width_mm / 2)
+    pin_1_silk_line_len_y = bracket_max_y - (apex.y + silk_silk_node_clearance)
+
+    # There's a gap to avoid merging with the arrow
+    # make sure there's enough line left to draw the lines
+
+    if pin_1_silk_line_len_x > silk_min_len:
+        tl_horz_line = Line(
+            start=Vector2D(bracket_max_x, apex.y),
+            end=Vector2D(bracket_max_x - pin_1_silk_line_len_x, apex.y),
+            width=line_width_mm)
+        model.append(tl_horz_line)
+
+    if pin_1_silk_line_len_y > silk_min_len:
+        tl_vert_line = Line(
+            start=Vector2D(apex.x, bracket_max_y),
+            end=Vector2D(apex.x, bracket_max_y - pin_1_silk_line_len_y),
+            width=line_width_mm)
+        model.append(tl_vert_line)
 
 #
 # This is an alternative to using silk keepout areas for simple cases.
