@@ -4,9 +4,7 @@ import sys
 import os
 import argparse
 import yaml
-import math
 from math import sqrt
-import warnings
 from typing import List
 
 sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))  # load parent path of KicadModTree
@@ -167,16 +165,16 @@ class NoLead():
 
         if 'lead_center_pos_x' in device_dimensions or 'lead_center_pos_y' in device_dimensions:
             Gmin_x, Zmax_x, Xmax_x = ipc_pad_center_plus_size(ipc_data, ipc_round_base, manf_tol,
-                                                            center_position=device_dimensions.get(
+                                                              center_position=device_dimensions.get(
                                                                 'lead_center_pos_x', TolerancedSize(nominal=0)),
-                                                            lead_length=device_dimensions.get('lead_len_H'),
-                                                            lead_width=device_dimensions['lead_width_H'])
+                                                              lead_length=device_dimensions.get('lead_len_H'),
+                                                              lead_width=device_dimensions['lead_width_H'])
 
             Gmin_y, Zmax_y, Xmax_y = ipc_pad_center_plus_size(ipc_data, ipc_round_base, manf_tol,
-                                                                      center_position=device_dimensions.get(
-                                                                          'lead_center_pos_y', TolerancedSize(nominal=0)),
-                                                                      lead_length=device_dimensions.get('lead_len_V'),
-                                                                      lead_width=device_dimensions['lead_width_V'])
+                                                              center_position=device_dimensions.get(
+                                                                'lead_center_pos_y', TolerancedSize(nominal=0)),
+                                                              lead_length=device_dimensions.get('lead_len_V'),
+                                                              lead_width=device_dimensions['lead_width_V'])
         else:
             Gmin_x, Zmax_x, Xmax_x = ipc_body_edge_inside_pull_back(
                 ipc_data, ipc_round_base, manf_tol,
@@ -204,7 +202,7 @@ class NoLead():
 
         if Gmin_x - 2 * min_ep_to_pad_clearance < EP_size['x']:
             heel_reduction_max = ((EP_size['x'] + 2 * min_ep_to_pad_clearance - Gmin_x) / 2)
-            #print('{}, {}, {}'.format(Gmin_x, EP_size['x'], min_ep_to_pad_clearance))
+            # print('{}, {}, {}'.format(Gmin_x, EP_size['x'], min_ep_to_pad_clearance))
             Gmin_x = EP_size['x'] + 2 * min_ep_to_pad_clearance
         if Gmin_y - 2 * min_ep_to_pad_clearance < EP_size['y']:
             heel_reduction = ((EP_size['y'] + 2 * min_ep_to_pad_clearance - Gmin_y) / 2)
@@ -240,7 +238,8 @@ class NoLead():
             dimensions['pitch_y'] = dimensions['pitch_x']
 
         dimensions['has_EP'] = False
-        if 'EP_size_x_min' in device_size_data and 'EP_size_x_max' in device_size_data or 'EP_size_x' in device_size_data:
+        if ('EP_size_x_min' in device_size_data and 'EP_size_x_max' in device_size_data
+                or 'EP_size_x' in device_size_data):
             dimensions['EP_size_x'] = TolerancedSize.fromYaml(device_size_data, base_name='EP_size_x', unit=unit)
             dimensions['EP_size_y'] = TolerancedSize.fromYaml(device_size_data, base_name='EP_size_y', unit=unit)
             dimensions['has_EP'] = True
@@ -254,7 +253,8 @@ class NoLead():
 
         if 'heel_reduction' in device_size_data:
             print(
-                "\033[1;35mThe use of manual heel reduction is deprecated. It is automatically calculated from the minimum EP to pad clearance (ipc config file)\033[0m"
+                "\033[1;35mThe use of manual heel reduction is deprecated. " +
+                "It is automatically calculated from the minimum EP to pad clearance (ipc config file)\033[0m"
             )
             dimensions['heel_reduction'] = device_size_data.get('heel_reduction', 0)
 
@@ -313,8 +313,6 @@ class NoLead():
         self.__createFootprintVariant(device_params, device_dimensions, False)
 
     def __createFootprintVariant(self, device_params, device_dimensions, with_thermal_vias):
-        fab_line_width = self.configuration.get('fab_line_width', 0.1)
-        silk_line_width = self.configuration.get('silk_line_width', 0.12)
 
         lib_name = device_params.get('library', default_library)
 
@@ -425,7 +423,8 @@ class NoLead():
 
         # init kicad footprint
         kicad_mod.setDescription(
-            "{manufacturer} {mpn} {package}, {pincount} Pin ({datasheet}), generated with kicad-footprint-generator {scriptname}"
+            "{manufacturer} {mpn} {package}, {pincount} Pin ({datasheet}), "
+            "generated with kicad-footprint-generator {scriptname}"
             .format(
                 manufacturer=device_params.get('manufacturer', ''),
                 package=device_params['device_type'],
@@ -706,7 +705,7 @@ class NoLead():
                       courtyard={'top': cy_box['top'], 'bottom': cy_box['bottom']},
                       fp_name=fp_name, text_y_inside_position='center', allow_rotation=True)
 
-        ##################### Output and 3d model ############################
+        # #################### Output and 3d model ############################
 
         kicad_mod.append(Model(filename=model_name))
 
@@ -723,7 +722,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='use confing .yaml files to create footprints.')
     parser.add_argument('files', metavar='file', type=str, nargs='+',
                         help='list of files holding information about what devices should be created.')
-    parser.add_argument('--global_config', type=str, nargs='?', help='the config file defining how the footprint will look like. (KLC)',
+    parser.add_argument('--global_config', type=str, nargs='?',
+                        help='the config file defining how the footprint will look like. (KLC)',
                         default='../../tools/global_config_files/config_KLCv3.0.yaml')
     parser.add_argument('--series_config', type=str, nargs='?',
                         help='the config file defining series parameters.', default='../package_config_KLCv3.yaml')
