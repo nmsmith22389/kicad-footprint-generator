@@ -2,3 +2,4 @@ pyyaml
 future
 pycodestyle
 pytest
+typing_extensions

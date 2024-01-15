@@ -13,7 +13,9 @@ pep8:
     - python --version
     - pip install -r requirements.txt
   script:
-    - pycodestyle --max-line-length=120 "KicadModTree/"
+    - pycodestyle --max-line-length=120
+      "KicadModTree/"
+      "scripts/tools/geometry"
 
 pytest:
   stage: Test
