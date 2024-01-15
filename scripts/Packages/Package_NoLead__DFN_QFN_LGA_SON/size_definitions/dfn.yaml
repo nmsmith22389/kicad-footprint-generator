@@ -687,7 +687,7 @@ DFN-8-1EP_3x3mm_P0.5mm_EP1.65x2.38mm:
   lead_len:
     nominal: 0.4
     tolerance: 0.1
-  
+
   pitch: 0.5
   num_pins_x: 0
   num_pins_y: 4
@@ -1054,7 +1054,7 @@ Balun_Johanson_0900FM15K0039:
     tolerance: 0.1
   lead_len:
     minimum: 0.05
-    nominal: 0.2 
+    nominal: 0.2
     maximum: 0.225 # should be 0.3mm by specs, but 0.8mm between pads is required.
   pitch: 0.50
   num_pins_x: 1
@@ -1286,6 +1286,27 @@ DFN-12-1EP_3x3mm_P0.5mm_EP1.6x2.5mm:
     paste_via_clearance: 0.1
     EP_num_paste_pads: [2, 2]
     paste_avoid_via: False
+
+  pitch: 0.5
+  num_pins_x: 0
+  num_pins_y: 6
+
+ST_UFDFPN-12-1EP_3x3mm_P0.5mm_EP1.4x2.55mm:
+  device_type: 'UFDFPN'
+  manufacturer: 'ST'
+  # part_number: 'mpn'
+  size_source: 'https://www.st.com/resource/en/datasheet/st25dv04k.pdf#page=152'
+  # ipc_class: 'qfn' # 'qfn_pull_back'
+  # ipc_density: 'least' #overwrite global value for this device.
+  body_size_x: 2.95 .. 3.0 .. 3.1
+  body_size_y: 2.95 .. 3.0 .. 3.1
+  overall_height: 0.45 .. 0.55 .. 0.6
+
+  lead_width: 0.2 .. 0.25 .. 0.3
+  lead_len: 0.25 .. 0.3 .. 0.35
+
+  EP_size_x: 1.35 .. 1.40 .. 1.45
+  EP_size_y: 2.5 .. 2.55 .. 2.6
 
   pitch: 0.5
   num_pins_x: 0
@@ -1610,15 +1631,15 @@ TDFN-8-1EP_3x2mm_P0.5mm_EP1.4x1.4mm:
   size_source: 'http://ww1.microchip.com/downloads/en/devicedoc/20005514a.pdf#page=35'
   body_size_x: 3.00
   body_size_y: 2.00
-  overall_height: 
+  overall_height:
     minimum: 0.70
     nominal: 0.75
     maximum: 0.80
-  lead_width: 
+  lead_width:
     minimum: 0.20
     nominal: 0.25
     maximum: 0.30
-  lead_len: 
+  lead_len:
     minimum: 0.25
     nominal: 0.30
     maximum: 0.45
