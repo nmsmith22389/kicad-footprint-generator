@@ -16,6 +16,8 @@
 # (C) 2017 by @SchrodingersGat
 # (C) 2017 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 
+from typing import List
+
 from types import GeneratorType
 from KicadModTree.nodes.base.Pad import *
 from KicadModTree.nodes.specialized.ChamferedPad import *
@@ -296,3 +298,13 @@ class PadArray(Node):
 
     def getVirtualChilds(self):
         return self.virtual_childs
+
+
+def get_pad_radius_from_arrays(pad_arrays: List[PadArray]) -> float:
+    pad_radius = 0.0
+    for pa in pad_arrays:
+        if (pad_radius == 0.0):
+            pads = pa.getVirtualChilds()
+            if (len(pads)):
+                pad_radius = pads[0].getRoundRadius()
+    return pad_radius

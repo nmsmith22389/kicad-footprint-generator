@@ -7,16 +7,18 @@ import yaml
 import math
 from math import sqrt
 import warnings
+from typing import List
 
 sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))  # load parent path of KicadModTree
 
-from scripts.tools.geometry.bounding_box import BoundingBox
-from KicadModTree import *  # NOQA
-from KicadModTree.nodes.base.Pad import Pad  # NOQA
+from KicadModTree import Vector2D, Footprint, FootprintType, ExposedPad, Line,\
+    PolygonLine, RectLine, Model, Pad, KicadFileHandler
+from KicadModTree.nodes.specialized.PadArray import PadArray, get_pad_radius_from_arrays
 from scripts.tools.footprint_text_fields import addTextFields
-from scripts.tools.ipc_pad_size_calculators import *
-from scripts.tools.quad_dual_pad_border import add_dual_or_quad_pad_border
 from scripts.tools.drawing_tools import courtyardFromBoundingBox
+from scripts.tools.ipc_pad_size_calculators import TolerancedSize, ipc_body_edge_inside_pull_back
+from scripts.tools.quad_dual_pad_border import create_dual_or_quad_pad_border
+from scripts.tools.geometry.bounding_box import BoundingBox
 
 sys.path.append(os.path.join(sys.path[0], "..", "utils"))
 from ep_handling_utils import getEpRoundRadiusParams
@@ -351,7 +353,11 @@ class NoLead():
             category=category
         ).lstrip())
 
-        pad_radius = add_dual_or_quad_pad_border(kicad_mod, self.configuration, pad_details, device_params)
+        pad_arrays = create_dual_or_quad_pad_border(self.configuration, pad_details, device_params)
+        pad_radius = get_pad_radius_from_arrays(pad_arrays)
+
+        for pad_array in pad_arrays:
+            kicad_mod.append(pad_array)
 
         if device_dimensions['has_EP']:
             pad_shape_details = getEpRoundRadiusParams(device_params, self.configuration, pad_radius)

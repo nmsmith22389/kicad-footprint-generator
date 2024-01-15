@@ -1,10 +1,12 @@
 from __future__ import division
+from typing import List
 
-from KicadModTree import *  # NOQA
+from KicadModTree import copy, CornerSelection, Pad, PadArray
+
 from .pad_number_generators import get_generator
 
 
-def add_dual_or_quad_pad_border(kicad_mod, configuration, pad_details, device_params):
+def create_dual_or_quad_pad_border(configuration, pad_details, device_params) -> List[PadArray]:
     pad_shape_details = {}
     pad_shape_details['shape'] = Pad.SHAPE_ROUNDRECT
     pad_shape_details['radius_ratio'] = configuration.get('round_rect_radius_ratio', 0)
@@ -17,18 +19,18 @@ def add_dual_or_quad_pad_border(kicad_mod, configuration, pad_details, device_pa
         pad_shape_details['deleted_pins'] = device_params['deleted_pins']
 
     if device_params['num_pins_x'] == 0:
-        radius = add_dual_pad_border_y(kicad_mod, pad_details, device_params, pad_shape_details)
+        pad_arrays = add_dual_pad_border_y(pad_details, device_params, pad_shape_details)
     elif device_params['num_pins_y'] == 0:
-        radius = add_dual_pad_border_x(kicad_mod, pad_details, device_params, pad_shape_details)
+        pad_arrays = add_dual_pad_border_x(pad_details, device_params, pad_shape_details)
     else:
-        radius = add_quad_pad_border(
-            kicad_mod, pad_details, device_params, pad_shape_details,
+        pad_arrays = add_quad_pad_border(
+            pad_details, device_params, pad_shape_details,
             configuration.get('kicad4_compatible', False))
 
-    return radius
+    return pad_arrays
 
 
-def add_dual_pad_border_y(kicad_mod, pad_details, device_params, pad_shape_details):
+def add_dual_pad_border_y(pad_details, device_params, pad_shape_details) -> List[PadArray]:
     init = 1
     increment = get_generator(device_params)
 
@@ -54,13 +56,9 @@ def add_dual_pad_border_y(kicad_mod, pad_details, device_params, pad_shape_detai
         increment=increment,
         **pad_details['right'], **pad_shape_details,
     ))
-    for pa in pad_arrays:
-        kicad_mod.append(pa)
-    return __get_pad_radius__(pad_arrays)
 
-    pads = pa.getVirtualChilds()
-    pad = pads[0]
-    return pad.getRoundRadius()
+    return pad_arrays
+
 
 def get_pitches(device_params):
     """
@@ -77,7 +75,7 @@ def get_pitches(device_params):
     return pitch_x, pitch_y
 
 
-def add_dual_pad_border_x(kicad_mod, pad_details, device_params, pad_shape_details):
+def add_dual_pad_border_x(pad_details, device_params, pad_shape_details) -> List[PadArray]:
     #for devices with clockwise numbering
     init = 1
     increment = get_generator(device_params)
@@ -104,13 +102,11 @@ def add_dual_pad_border_x(kicad_mod, pad_details, device_params, pad_shape_detai
         increment=increment,
         **pad_details['bottom'], **pad_shape_details,
     ))
-    for pa in pad_arrays:
-        kicad_mod.append(pa)
-    return __get_pad_radius__(pad_arrays)
+
+    return pad_arrays
 
 
-def add_quad_pad_border(kicad_mod, pad_details, device_params, pad_shape_details, kicad4_compatible):
-
+def add_quad_pad_border(pad_details, device_params, pad_shape_details, kicad4_compatible) -> List[PadArray]:
     chamfer_size = device_params.get('chamfer_edge_pins', 0)
 
     pad_size_red = device_params.get('edge_heel_reduction', 0)
@@ -196,15 +192,5 @@ def add_quad_pad_border(kicad_mod, pad_details, device_params, pad_shape_details
         increment=increment,
         **pad_details['top'], **pad_shape_details,
     ))
-    for pa in pad_arrays:
-        kicad_mod.append(pa)
-    return __get_pad_radius__(pad_arrays)
 
-def __get_pad_radius__(pad_arrays):
-    pad_radius = 0.0
-    for pa in pad_arrays:
-        if (pad_radius == 0.0):
-            pads = pa.getVirtualChilds()
-            if (len(pads)):
-                pad_radius = pads[0].getRoundRadius()
-    return pad_radius
+    return pad_arrays

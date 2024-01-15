@@ -9,11 +9,12 @@ import math
 sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))  # load parent path of KicadModTree
 
 from KicadModTree import *  # NOQA
-from KicadModTree.nodes.base.Pad import Pad  # NOQA
+from KicadModTree.nodes.base.Pad import Pad
+from KicadModTree.nodes.specialized.PadArray import PadArray, get_pad_radius_from_arrays
 sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))  # load parent path of tools
 from footprint_text_fields import addTextFields
 from ipc_pad_size_calculators import *
-from quad_dual_pad_border import add_dual_or_quad_pad_border
+from quad_dual_pad_border import create_dual_or_quad_pad_border
 from drawing_tools import nearestSilkPointOnOrthogonalLine
 
 sys.path.append(os.path.join(sys.path[0], "..", "utils"))
@@ -345,9 +346,14 @@ class Gullwing():
         ).lstrip())
 
         if 'custom_pad_layout' in device_params:
-            pad_radius = add_custom_pad_layout(kicad_mod, configuration, pad_details, device_params)
+            pad_arrays = create_custom_pad_layout(configuration, pad_details, device_params)
         else:
-            pad_radius = add_dual_or_quad_pad_border(kicad_mod, configuration, pad_details, device_params)
+            pad_arrays = create_dual_or_quad_pad_border(configuration, pad_details, device_params)
+
+        for pad_array in pad_arrays:
+            kicad_mod.append(pad_array)
+
+        pad_radius = get_pad_radius_from_arrays(pad_arrays)
 
         EP_round_radius = 0
         if dimensions['has_EP']:

@@ -19,7 +19,7 @@ import enum
 from typing import Union
 
 from KicadModTree.util.paramUtil import *
-from KicadModTree.Vector import *
+from KicadModTree.Vector import Vector2D
 from KicadModTree.nodes.Node import Node
 from KicadModTree.util.kicad_util import lispString
 from KicadModTree.nodes.base.Arc import Arc
@@ -257,6 +257,8 @@ class Pad(Node):
         THERMAL_RELIEF = 2
         SOLID = 3
 
+    at: Vector2D
+    size: Vector2D
     _fab_property: Union[FabProperty, None]
     _zone_connection: ZoneConnection
 
@@ -493,3 +495,7 @@ class Pad(Node):
         :return: one of the Pad.ZoneConnection constants
         """
         return self._zone_connection
+
+    @property
+    def roundRadius(self):
+        return self.getRoundRadius()
