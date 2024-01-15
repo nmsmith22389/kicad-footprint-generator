@@ -5,21 +5,21 @@ KiCad 3D Model Generator Scripts
 
 This repository contains a number of scripts to generate STEP AP214 3D models and VRML 3D models for use with the KiCad EDA system.
 
-The parametric scripts are derived from CadQuery scripts for generating QFP, DIP and pinHeaders models in X3D format.  
+The parametric scripts are derived from CadQuery scripts for generating QFP, DIP and pinHeaders models in X3D format.
 Original author: **hyOzd** [author site](https://bitbucket.org/hyOzd/freecad-macros/)
 
 These were greatly extended by **easyw** in the repository <https://github.com/easyw/kicad-3d-models-in-freecad>
 
 CadQuery 2.x update authors: [jmwright](https://github.com/jmwright) with work sponsored by [KiCAD Services Corporation](https://www.kipro-pcb.com/).
 
-Requirements to run these scripts:  
-[CadQuery 2](https://github.com/CadQuery/cadquery)  
-[Python 3](https://www.python.org/)  
+Requirements to run these scripts:
+[CadQuery 2](https://github.com/CadQuery/cadquery)
+[Python 3](https://www.python.org/)
 [OpenCascade 7](https://dev.opencascade.org/doc/overview/html/index.html)
 
 ## Usage
 
-**Note**: CadQuery 2.2.0b1 or higher must be installed for this process to work. 
+**Note**: CadQuery 2.3.1 must be installed for this process to work.
 
 Here is a usage summary for the generator.py script:
 ```
@@ -100,11 +100,11 @@ You can test your generator without running all others by specifying your librar
 Credits
 =======
 
-Original author **hyOzd**  
-Original author site: <https://bitbucket.org/hyOzd/freecad-macros/>  
-FreeCAD & cadquery tools:  
-libraries to export generated models in STEP & VRML format  
-- cad tools functions  
+Original author **hyOzd**
+Original author site: <https://bitbucket.org/hyOzd/freecad-macros/>
+FreeCAD & cadquery tools:
+libraries to export generated models in STEP & VRML format
+- cad tools functions
 Copyright (c) 2015 **Maurice** <https://launchpad.net/~easyw>
 
 CadQuery 2.x update: [jmwright](https://github.com/jmwright) with work sponsored by [KiCAD Services Corporation](https://www.kipro-pcb.com/).
@@ -113,10 +113,10 @@ Copyright
 =========
 
 This document *README* and all the materials and files at the repository
-are  
+are
 * Copyright © 2015 by Maurice
 * Copyright © 2020 by the KiCad EDA project
-* Copyright © 2022 by the KiCad EDA project 
+* Copyright © 2022 by the KiCad EDA project
 
 License
 =======
