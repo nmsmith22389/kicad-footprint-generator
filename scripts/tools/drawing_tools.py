@@ -12,7 +12,8 @@ sys.path.append(os.path.join(sys.path[0], "..", "..", "kicad_mod"))  # load kica
 sys.path.append(os.path.join(sys.path[0], "..", ".."))  # load kicad_mod path
 
 from KicadModTree import *  # NOQA
-from footprint_global_properties import *
+from .footprint_global_properties import *
+from scripts.tools.geometry.bounding_box import BoundingBox
 
 # tool function for generating 3D-scripts
 def script3d_writevariable(file, line, varname, value):
@@ -42,7 +43,7 @@ def roundCrt(x):
     return roundG(x, grid_crt)
 
 
-def courtyardFromBoundingBox(bbox: dict, off: float, grid: str):
+def courtyardFromBoundingBox(bbox: BoundingBox, off: float, grid: float) -> dict:
     """
     Get a courtyard of the given box, with some offset, rounded to the grid
 
@@ -51,10 +52,10 @@ def courtyardFromBoundingBox(bbox: dict, off: float, grid: str):
     :param grid: grid size to round to
     """
     return {
-        'left': roundGDown(bbox['left'] - off, grid),
-        'right': roundGUp(bbox['right'] + off, grid),
-        'top': roundGDown(bbox['top'] - off, grid),
-        'bottom': roundGUp(bbox['bottom'] + off, grid)
+        'left': roundGDown(bbox.left - off, grid),
+        'right': roundGUp(bbox.right + off, grid),
+        'top': roundGDown(bbox.top - off, grid),
+        'bottom': roundGUp(bbox.bottom + off, grid)
     }
 
 # float-variant of range()

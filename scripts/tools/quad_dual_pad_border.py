@@ -1,9 +1,8 @@
 from __future__ import division
 
-import sys, os
-sys.path.append(os.path.join(sys.path[0],"..","..")) # load kicad_mod path
 from KicadModTree import *  # NOQA
-from pad_number_generators import get_generator
+from .pad_number_generators import get_generator
+
 
 def add_dual_or_quad_pad_border(kicad_mod, configuration, pad_details, device_params):
     pad_shape_details = {}

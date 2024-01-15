@@ -10,13 +10,13 @@ import warnings
 
 sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))  # load parent path of KicadModTree
 
+from scripts.tools.geometry.bounding_box import BoundingBox
 from KicadModTree import *  # NOQA
 from KicadModTree.nodes.base.Pad import Pad  # NOQA
-sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))  # load parent path of tools
-from footprint_text_fields import addTextFields
-from ipc_pad_size_calculators import *
-from quad_dual_pad_border import add_dual_or_quad_pad_border
-from drawing_tools import courtyardFromBoundingBox
+from scripts.tools.footprint_text_fields import addTextFields
+from scripts.tools.ipc_pad_size_calculators import *
+from scripts.tools.quad_dual_pad_border import add_dual_or_quad_pad_border
+from scripts.tools.drawing_tools import courtyardFromBoundingBox
 
 sys.path.append(os.path.join(sys.path[0], "..", "utils"))
 from ep_handling_utils import getEpRoundRadiusParams
@@ -243,19 +243,19 @@ class NoLead():
         if device_dimensions['has_EP']:
             name_format = self.configuration['fp_name_EP_format_string_no_trailing_zero']
             if 'EP_size_x_overwrite' in device_params:
-                EP_size = {
-                    'x': device_params['EP_size_x_overwrite'],
-                    'y': device_params['EP_size_y_overwrite']
-                }
+                EP_size = Vector2D(
+                    device_params['EP_size_x_overwrite'],
+                    device_params['EP_size_y_overwrite']
+                )
             else:
-                EP_size = {
-                    'x': device_dimensions['EP_size_x'].nominal,
-                    'y': device_dimensions['EP_size_y'].nominal
-                }
-            EP_center = {
-                'x': device_dimensions['EP_center_x'].nominal,
-                'y': device_dimensions['EP_center_y'].nominal
-            }
+                EP_size = Vector2D(
+                    device_dimensions['EP_size_x'].nominal,
+                    device_dimensions['EP_size_y'].nominal
+                )
+            EP_center = Vector2D(
+                device_dimensions['EP_center_x'].nominal,
+                device_dimensions['EP_center_y'].nominal
+            )
         else:
             name_format = self.configuration['fp_name_format_string_no_trailing_zero']
             if device_params.get('use_name_format', 'QFN') == 'LGA':
@@ -264,7 +264,7 @@ class NoLead():
                     layout = self.configuration['lga_layout_border'].format(
                         nx=device_params['num_pins_x'], ny=device_params['num_pins_y'])
 
-            EP_size = {'x': 0, 'y': 0}
+            EP_size = Vector2D(0, 0)
 
         if 'custom_name_format' in device_params:
             name_format = device_params['custom_name_format']
@@ -293,8 +293,8 @@ class NoLead():
             size_x=size_x,
             pitch=device_dimensions['pitch_x'],
             layout=layout,
-            ep_size_x=EP_size['x'],
-            ep_size_y=EP_size['y'],
+            ep_size_x=EP_size.x,
+            ep_size_y=EP_size.y,
             suffix=pad_suffix,
             suffix2=suffix,
             vias=self.configuration.get('thermal_via_suffix', '_ThermalVias') if with_thermal_vias else ''
@@ -309,8 +309,8 @@ class NoLead():
             size_x=size_x,
             pitch=device_dimensions['pitch_x'],
             layout=layout,
-            ep_size_x=EP_size['x'],
-            ep_size_y=EP_size['y'],
+            ep_size_x=EP_size.x,
+            ep_size_y=EP_size.y,
             suffix=pad_suffix_3d,
             suffix2=suffix_3d,
             vias=''
@@ -395,33 +395,34 @@ class NoLead():
             'bottom': size_y / 2
         }
 
-        bounding_box = body_edge.copy()
+        bounding_box = BoundingBox(
+            min_pt=Vector2D(body_edge['left'], body_edge['top']),
+            max_pt=Vector2D(body_edge['right'], body_edge['bottom'])
+        )
 
-        if device_params['num_pins_x'] == 0 and EP_size['y'] > size_y:
-            bounding_box['top'] = -EP_size['y'] / 2
-            bounding_box['bottom'] = EP_size['y'] / 2
-
-        if device_params['num_pins_y'] == 0 and EP_size['x'] > size_x:
-            bounding_box['left'] = -EP_size['x'] / 2
-            bounding_box['right'] = EP_size['x'] / 2
+        if device_dimensions['has_EP']:
+            bounding_box.include_point(EP_center - EP_size / 2)
+            bounding_box.include_point(EP_center + EP_size / 2)
 
         if device_params['num_pins_y'] > 0:
-            bounding_box['left'] = pad_details['left']['center'][0] - pad_details['left']['size'][0] / 2
-
-            bounding_box['right'] = pad_details['right']['center'][0] + pad_details['right']['size'][0] / 2
+            bounding_box.include_point(
+                Vector2D(pad_details['left']['center'][0] - pad_details['left']['size'][0] / 2,
+                         0)
+            )
+            bounding_box.include_point(
+                Vector2D(pad_details['right']['center'][0] + pad_details['right']['size'][0] / 2,
+                         0)
+            )
 
         if device_params['num_pins_x'] > 0:
-            bounding_box['top'] = pad_details['top']['center'][1] - pad_details['top']['size'][1] / 2
-
-            bounding_box['bottom'] = pad_details['bottom']['center'][1] + pad_details['bottom']['size'][1] / 2
-
-        pad_width = pad_details['top']['size'][0]
-
-        for key in body_edge:
-            if bounding_box[key] < 0:
-                bounding_box[key] = min(bounding_box[key], body_edge[key])
-            else:
-                bounding_box[key] = max(bounding_box[key], body_edge[key])
+            bounding_box.include_point(
+                Vector2D(0,
+                         pad_details['top']['center'][1] - pad_details['top']['size'][1] / 2)
+            )
+            bounding_box.include_point(
+                Vector2D(0,
+                         pad_details['bottom']['center'][1] + pad_details['bottom']['size'][1] / 2)
+            )
 
         # ############################ SilkS ##################################
 
@@ -459,29 +460,34 @@ class NoLead():
                 layer="F.SilkS", x_mirror=0))
         else:
             sx1 = -(device_dimensions['pitch_x'] * (device_params['num_pins_x'] - 1) / 2.0 +
-                    pad_width / 2.0 + silk_pad_offset)
+                    pad_details['top']['size'][0] / 2.0 + silk_pad_offset)
 
             sy1 = -(device_dimensions['pitch_y'] * (device_params['num_pins_y'] - 1) / 2.0 +
-                    pad_width / 2.0 + silk_pad_offset)
+                    pad_details['left']['size'][1] / 2.0 + silk_pad_offset)
 
             poly_silk = [
                 {'x': sx1, 'y': body_edge['top'] - silk_offset},
                 {'x': body_edge['left'] - silk_offset, 'y': body_edge['top'] - silk_offset},
                 {'x': body_edge['left'] - silk_offset, 'y': sy1}
             ]
+
             if sx1 - SILK_MIN_LEN < body_edge['left'] - silk_offset:
                 poly_silk = poly_silk[1:]
             if sy1 - SILK_MIN_LEN < body_edge['top'] - silk_offset:
                 poly_silk = poly_silk[:-1]
+
             if len(poly_silk) > 1:
+                # top right
                 kicad_mod.append(PolygonLine(
                     polygon=poly_silk,
                     width=configuration['silk_line_width'],
                     layer="F.SilkS", x_mirror=0))
+                # bottom left
                 kicad_mod.append(PolygonLine(
                     polygon=poly_silk,
                     width=configuration['silk_line_width'],
                     layer="F.SilkS", y_mirror=0))
+                # bottom right
                 kicad_mod.append(PolygonLine(
                     polygon=poly_silk,
                     width=configuration['silk_line_width'],
