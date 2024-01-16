@@ -1,343 +1,15 @@
-Texas_RUM0016A:
-  device_type: 'QFN'
-  #manufacturer: 'man'
-  #part_number: 'mpn'
-  size_source: 'http://www.ti.com/lit/ds/symlink/lmh0074.pdf#page=13'
-  ipc_class: 'qfn' # 'qfn_pull_back'
-  #ipc_density: 'least' #overwrite global value for this device.
-  custom_name_format: 'Texas_RUM00{pincount}A_EP{ep_size_x:g}x{ep_size_y:g}mm{vias:s}'
-  body_size_x:
-    nominal: 4
-    tolerance: 0.1
-  body_size_y:
-    nominal: 4
-    tolerance: 0.1
-  overall_height:
-    maximum: 0.8
-
-  lead_width:
-    nominal: 0.3
-    tolerance: 0.05
-  lead_len:
-    nominal: 0.4
-    tolerance: 0.1
-
-  EP_size_x:
-    nominal: 2.6
-    tolerance: 0.1
-  EP_size_y:
-    nominal: 2.6
-    tolerance: 0.1
-  # EP_paste_coverage: 0.65
-  EP_num_paste_pads: [2, 2]
-
-  thermal_vias:
-    count: [3, 3]
-    drill: 0.2
-    # min_annular_ring: 0.15
-    paste_via_clearance: 0.1
-    # EP_num_paste_pads: [2, 2]
-    EP_paste_coverage: 0.7
-    # grid:
-    # bottom_pad_size:
-    paste_avoid_via: False
-
-  pitch: 0.65
-  num_pins_x: 4
-  num_pins_y: 4
-  #chamfer_edge_pins: 0.25
-  #pin_count_grid:
-  #pad_length_addition: 0.5
-  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
-  #include_suffix_in_3dpath: 'False'
-
-Texas_S-PVQFN-N16_EP:
-  device_type: 'QFN'
-  #manufacturer: 'man'
-  #part_number: 'mpn'
-  size_source: 'http://www.ti.com/lit/ds/symlink/msp430g2001.pdf#page=43'
-  ipc_class: 'qfn' # 'qfn_pull_back'
-  #ipc_density: 'least' #overwrite global value for this device.
-  custom_name_format: 'Texas_S-PVQFN-N{pincount}_EP{ep_size_x:g}x{ep_size_y:g}mm{vias:s}'
-  body_size_x:
-    minimum: 3.9
-    maximum: 4.1
-  body_size_y:
-    minimum: 3.9
-    maximum: 4.1
-  overall_height:
-    minimum: 0.8
-    maximum: 1.0
-
-  lead_width:
-    minimum: 0.23
-    maximum: 0.38
-  lead_len:
-    minimum: 0.3
-    maximum: 0.5
-
-  EP_size_x:
-    nominal: 2.7
-    tolerance: 0.1
-  EP_size_y:
-    nominal: 2.7
-    tolerance: 0.1
-  # EP_paste_coverage: 0.65
-  EP_num_paste_pads: [3, 3]
-
-  thermal_vias:
-    count: [3, 3]
-    drill: 0.2
-    # min_annular_ring: 0.15
-    paste_via_clearance: 0.1
-    # EP_num_paste_pads: [2, 2]
-    EP_paste_coverage: 0.5
-    # grid:
-    # bottom_pad_size:
-    # paste_avoid_via: True
-
-  pitch: 0.65
-  num_pins_x: 4
-  num_pins_y: 4
-  #chamfer_edge_pins: 0.25
-  #pin_count_grid:
-  #pad_length_addition: 0.5
-  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
-  #include_suffix_in_3dpath: 'False'
-
-Texas_S-PWQFN-N16_EP:
-  device_type: 'QFN'
-  #manufacturer: 'man'
-  #part_number: 'mpn'
-  size_source: 'http://www.ti.com/lit/ds/symlink/drv8801.pdf#page=31 MO-220 variation VGGC'
-  ipc_class: 'qfn' # 'qfn_pull_back'
-  #ipc_density: 'least' #overwrite global value for this device.
-  custom_name_format: 'Texas_S-PWQFN-N{pincount}_EP{ep_size_x:g}x{ep_size_y:g}mm{vias:s}'
-  body_size_x:
-    minimum: 3.85
-    maximum: 4.15
-  body_size_y:
-    minimum: 3.85
-    maximum: 4.15
-  overall_height:
-    minimum: 0.7
-    maximum: 0.8
-
-  lead_width:
-    minimum: 0.23
-    maximum: 0.38
-  lead_len:
-    minimum: 0.45
-    maximum: 0.65
-
-  EP_size_x:
-    nominal: 2.1
-    tolerance: 0.1
-  EP_size_y:
-    nominal: 2.1
-    tolerance: 0.1
-  # EP_paste_coverage: 0.65
-  EP_num_paste_pads: [2, 2]
-
-  thermal_vias:
-    count: [3, 3]
-    drill: 0.2
-    # min_annular_ring: 0.15
-    paste_via_clearance: 0.1
-    # EP_num_paste_pads: [2, 2]
-    EP_paste_coverage: 0.7
-    # grid:
-    # bottom_pad_size:
-    paste_avoid_via: False
-
-  pitch: 0.65
-  num_pins_x: 4
-  num_pins_y: 4
-  #chamfer_edge_pins: 0.25
-  #pin_count_grid:
-  #pad_length_addition: 0.5
-  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
-  #include_suffix_in_3dpath: 'False'
-
-Texas_S-PWQFN-N16_EP0.8x1.2:
-  device_type: 'WQFN'
+Texas_VQFN-16_RGV0016A:
+  device_type: 'VQFN'
   manufacturer: 'Texas'
-  part_number: 'RTE'
-  size_source: 'https://www.ti.com/lit/ds/symlink/tps43060.pdf#page=40'
-  ipc_class: 'qfn' # 'qfn_pull_back'
-  #ipc_density: 'least' #overwrite global value for this device.
-  custom_name_format: 'Texas_S-PWQFN-N{pincount}_EP{ep_size_x:g}x{ep_size_y:g}mm{vias:s}'
-  body_size_x:
-    minimum: 2.85
-    maximum: 3.15
-  body_size_y:
-    minimum: 2.85
-    maximum: 3.15
-  overall_height:
-    minimum: 0.7
-    maximum: 0.8
-
-  lead_width:
-    minimum: 0.18
-    maximum: 0.3
-  lead_len:
-    minimum: 0.3
-    maximum: 0.5
-
-  EP_size_x:
-    nominal: 1.2
-    tolerance: 0.1
-  EP_size_y:
-    nominal: 0.8
-    tolerance: 0.1
-  # EP_paste_coverage: 0.65
-  EP_num_paste_pads: [2, 2]
-  #heel_reduction: 0.05 #for relatively large EP pads (increase clearance)
-
-  thermal_vias:
-    count: [1, 1]
-    drill: 0.3
-    # min_annular_ring: 0.15
-    paste_via_clearance: 0.1
-    EP_num_paste_pads: [2, 2]
-    #paste_between_vias: 1
-    #paste_rings_outside: 1
-    EP_paste_coverage: 0.70
-    #grid: [1, 1]
-    # bottom_pad_size:
-    paste_avoid_via: false
-
-  pitch: 0.5
-  num_pins_x: 4
-  num_pins_y: 4
-  #chamfer_edge_pins: 0.25
-  #pin_count_grid:
-  #pad_length_addition: 0.5
-  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
-  #include_suffix_in_3dpath: 'False'
-
-Texas_S-PVQFN-N20_EP2.4x2.4:
-  device_type: 'QFN'
-  #manufacturer: 'man'
-  #part_number: 'mpn'
-  size_source: 'http://www.ti.com/lit/ds/symlink/cc1101.pdf#page=101'
-  ipc_class: 'qfn' # 'qfn_pull_back'
-  #ipc_density: 'least' #overwrite global value for this device.
-  custom_name_format: 'Texas_S-PVQFN-N{pincount}_EP{ep_size_x:g}x{ep_size_y:g}mm{vias:s}'
+  part_number: 'RGV0016A'
+  size_source: 'http://www.ti.com/lit/ds/symlink/ina3221.pdf#page=44'
+  ipc_class: 'qfn'
   body_size_x:
     minimum: 3.85
     maximum: 4.15
   body_size_y:
     minimum: 3.85
     maximum: 4.15
-  overall_height:
-    minimum: 0.8
-    maximum: 1.0
-
-  lead_width:
-    minimum: 0.18
-    maximum: 0.30
-  lead_len:
-    minimum: 0.45
-    maximum: 0.65
-
-  EP_size_x:
-    nominal: 2.4
-    tolerance: 0.1
-  EP_size_y:
-    nominal: 2.4
-    tolerance: 0.1
-  # EP_paste_coverage: 0.65
-  EP_num_paste_pads: [2, 2]
-
-  thermal_vias:
-    count: [3, 3]
-    drill: 0.2
-    # min_annular_ring: 0.15
-    paste_via_clearance: 0.1
-    # EP_num_paste_pads: [2, 2]
-    EP_paste_coverage: 0.5
-    # grid:
-    # bottom_pad_size:
-    # paste_avoid_via: True
-
-  pitch: 0.5
-  num_pins_x: 5
-  num_pins_y: 5
-  #chamfer_edge_pins: 0.25
-  #pin_count_grid:
-  #pad_length_addition: 0.5
-  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
-  #include_suffix_in_3dpath: 'False'
-
-Texas_S-PVQFN-N20_EP2.7x2.7:
-  device_type: 'QFN'
-  #manufacturer: 'man'
-  #part_number: 'mpn'
-  size_source: 'http://www.ti.com/lit/ds/symlink/drv8662.pdf#page=23'
-  ipc_class: 'qfn' # 'qfn_pull_back'
-  #ipc_density: 'least' #overwrite global value for this device.
-  custom_name_format: 'Texas_S-PVQFN-N{pincount}_EP{ep_size_x:g}x{ep_size_y:g}mm{vias:s}'
-  body_size_x:
-    minimum: 3.85
-    maximum: 4.15
-  body_size_y:
-    minimum: 3.85
-    maximum: 4.15
-  overall_height:
-    minimum: 0.8
-    maximum: 1.0
-
-  lead_width:
-    minimum: 0.18
-    maximum: 0.30
-  lead_len:
-    minimum: 0.3
-    maximum: 0.5
-
-  EP_size_x:
-    nominal: 2.7
-    tolerance: 0.1
-  EP_size_y:
-    nominal: 2.7
-    tolerance: 0.1
-  # EP_paste_coverage: 0.65
-  EP_num_paste_pads: [2, 2]
-
-  thermal_vias:
-    count: [3, 3]
-    drill: 0.2
-    # min_annular_ring: 0.15
-    paste_via_clearance: 0.1
-    # EP_num_paste_pads: [2, 2]
-    EP_paste_coverage: 0.7
-    # grid:
-    # bottom_pad_size:
-    paste_avoid_via: False
-
-  pitch: 0.5
-  num_pins_x: 5
-  num_pins_y: 5
-  #chamfer_edge_pins: 0.25
-  #pin_count_grid:
-  #pad_length_addition: 0.5
-  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
-  #include_suffix_in_3dpath: 'False'
-
-Texas_S-PVQFN-N20_EP3.15x3.15:
-  device_type: 'QFN'
-  #manufacturer: 'man'
-  #part_number: 'mpn'
-  size_source: 'www.ti.com/lit/ds/symlink/tps7a7200.pdf#page=36'
-  ipc_class: 'qfn' # 'qfn_pull_back'
-  #ipc_density: 'least' #overwrite global value for this device.
-  custom_name_format: 'Texas_S-PVQFN-N{pincount}_EP{ep_size_x:g}x{ep_size_y:g}mm{vias:s}'
-  body_size_x:
-    minimum: 4.85
-    maximum: 5.15
-  body_size_y:
-    minimum: 4.85
-    maximum: 5.15
   overall_height:
     minimum: 0.8
     maximum: 1.0
@@ -350,765 +22,31 @@ Texas_S-PVQFN-N20_EP3.15x3.15:
     maximum: 0.65
 
   EP_size_x:
-    nominal: 3.15
-    tolerance: 0.1
-  EP_size_y:
-    nominal: 3.15
-    tolerance: 0.1
-  # EP_paste_coverage: 0.65
-  EP_num_paste_pads: [2, 2]
-
-  thermal_vias:
-    count: [3, 3]
-    drill: 0.2
-    # min_annular_ring: 0.15
-    paste_via_clearance: 0.1
-    paste_between_vias: 1
-    paste_rings_outside: 1
-    # EP_num_paste_pads: [2, 2]
-    # EP_paste_coverage: 0.7
-    grid: [1, 1]
-    # bottom_pad_size:
-    # paste_avoid_via: False
-
-  pitch: 0.65
-  num_pins_x: 5
-  num_pins_y: 5
-  #chamfer_edge_pins: 0.25
-  #pin_count_grid:
-  #pad_length_addition: 0.5
-  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
-  #include_suffix_in_3dpath: 'False'
-
-Texas_S-PWQFN-N24_EP:
-  device_type: 'QFN'
-  #manufacturer: 'man'
-  #part_number: 'mpn'
-  size_source: 'http://www.ti.com/lit/ds/symlink/bq25601.pdf#page=54'
-  ipc_class: 'qfn' # 'qfn_pull_back'
-  #ipc_density: 'least' #overwrite global value for this device.
-  custom_name_format: 'Texas_S-PWQFN-N{pincount}_EP{ep_size_x:g}x{ep_size_y:g}mm{vias:s}'
-  body_size_x:
-    minimum: 3.85
-    maximum: 4.15
-  body_size_y:
-    minimum: 3.85
-    maximum: 4.15
-  overall_height:
-    minimum: 0.7
-    maximum: 0.8
-
-  lead_width:
-    minimum: 0.18
-    maximum: 0.3
-  lead_len:
-    minimum: 0.3
-    maximum: 0.5
-
-  EP_size_x:
-    nominal: 2.7
-    tolerance: 0.1
-  EP_size_y:
-    nominal: 2.7
-    tolerance: 0.1
-  # EP_paste_coverage: 0.65
-  EP_num_paste_pads: [2, 2]
-
-  thermal_vias:
-    count: [3, 3]
-    drill: 0.2
-    # min_annular_ring: 0.15
-    paste_via_clearance: 0.1
-    # EP_num_paste_pads: [2, 2]
-    EP_paste_coverage: 0.7
-    # grid:
-    # bottom_pad_size:
-    paste_avoid_via: False
-
-  pitch: 0.5
-  num_pins_x: 6
-  num_pins_y: 6
-  #chamfer_edge_pins: 0.25
-  #pin_count_grid:
-  #pad_length_addition: 0.5
-  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
-  #include_suffix_in_3dpath: 'False'
-
-Texas_S-PVQFN-N24_EP:
-  device_type: 'QFN'
-  #manufacturer: 'man'
-  #part_number: 'mpn'
-  size_source: 'http://www.ti.com/lit/ds/symlink/msp430fr5720.pdf#page=108'
-  ipc_class: 'qfn' # 'qfn_pull_back'
-  #ipc_density: 'least' #overwrite global value for this device.
-  custom_name_format: 'Texas_S-PVQFN-N{pincount}_EP{ep_size_x:g}x{ep_size_y:g}mm{vias:s}'
-  body_size_x:
-    minimum: 3.9
-    maximum: 4.1
-  body_size_y:
-    minimum: 3.9
-    maximum: 4.1
-  overall_height:
-    maximum: 1
-
-  lead_width:
-    minimum: 0.18
-    maximum: 0.3
-  lead_len:
-    minimum: 0.3
-    maximum: 0.5
-
-  EP_size_x:
     nominal: 2.1
     tolerance: 0.1
   EP_size_y:
     nominal: 2.1
     tolerance: 0.1
-  # EP_paste_coverage: 0.65
-  EP_num_paste_pads: [2, 2]
-
-  pitch: 0.5
-  num_pins_x: 6
-  num_pins_y: 6
-  #chamfer_edge_pins: 0.25
-  #pin_count_grid:
-  #pad_length_addition: 0.5
-  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
-  #include_suffix_in_3dpath: 'False'
-  thermal_vias:
-    count: [3, 3]
-    drill: 0.2
-    # min_annular_ring: 0.15
-    paste_via_clearance: 0.05
-    EP_paste_coverage: 0.7
-    # paste_between_vias: 1
-    # paste_rings_outside: 1
-    # EP_num_paste_pads: [2, 2]
-    # EP_paste_coverage: 0.5
-    # grid:
-    # bottom_pad_size:
-    paste_avoid_via: False
-
-Texas_R-PWQFN-N28_EP:
-  device_type: 'QFN'
-  #manufacturer: 'man'
-  #part_number: 'mpn'
-  size_source: 'http://www.ti.com/lit/ds/symlink/tps51363.pdf#page=29'
-  ipc_class: 'qfn' # 'qfn_pull_back'
-  #ipc_density: 'least' #overwrite global value for this device.
-  custom_name_format: 'Texas_R-PWQFN-N{pincount}_EP{ep_size_x:g}x{ep_size_y:g}mm{vias:s}'
-  body_size_x:
-    minimum: 3.4
-    maximum: 3.6
-  body_size_y:
-    minimum: 4.4
-    maximum: 4.6
-  overall_height:
-    minimum: 0.8
-    maximum: 1.0
-
-  lead_width:
-    minimum: 0.15
-    maximum: 0.25
-  lead_len:
-    minimum: 0.3
-    maximum: 0.5
-
-  EP_size_x:
-    nominal: 2.1
-    tolerance: 0.1
-  EP_size_y:
-    nominal: 3.1
-    tolerance: 0.1
-  # EP_paste_coverage: 0.65
-  EP_num_paste_pads: [2, 2]
-
-  pitch: 0.4
-  num_pins_x: 5
-  num_pins_y: 9
-  #chamfer_edge_pins: 0.25
-  #pin_count_grid:
-  #pad_length_addition: 0.5
-  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
-  #include_suffix_in_3dpath: 'False'
-  thermal_vias:
-    count: [3, 3]
-    drill: 0.2
-    # min_annular_ring: 0.15
-    paste_via_clearance: 0.05
-    EP_paste_coverage: 0.7
-    # paste_between_vias: 1
-    # paste_rings_outside: 1
-    # EP_num_paste_pads: [2, 2]
-    # EP_paste_coverage: 0.5
-    # grid:
-    # bottom_pad_size:
-    paste_avoid_via: False
-
-Texas_S-PWQFN-N32_EP:
-  device_type: 'QFN'
-  #manufacturer: 'man'
-  #part_number: 'mpn'
-  size_source: 'https://www.ti.com/lit/ds/symlink/bq25703a.pdf#page=90'
-  ipc_class: 'qfn' # 'qfn_pull_back'
-  #ipc_density: 'least' #overwrite global value for this device.
-  custom_name_format: 'Texas_S-PWQFN-N{pincount}_EP{ep_size_x:g}x{ep_size_y:g}mm{vias:s}'
-  body_size_x:
-    minimum: 3.85
-    maximum: 4.15
-  body_size_y:
-    minimum: 3.85
-    maximum: 4.15
-  overall_height:
-    minimum: 0.7
-    maximum: 0.8
-
-  lead_width:
-    minimum: 0.15
-    maximum: 0.25
-  lead_len:
-    minimum: 0.25
-    maximum: 0.45
-
-  EP_size_x:
-    nominal: 2.8
-    tolerance: 0.1
-  EP_size_y:
-    nominal: 2.8
-    tolerance: 0.1
-  # EP_paste_coverage: 0.65
-  EP_num_paste_pads: [2, 2]
-
-  pitch: 0.4
-  num_pins_x: 8
-  num_pins_y: 8
-  #chamfer_edge_pins: 0.25
-  #pin_count_grid:
-  #pad_length_addition: 0.5
-  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
-  #include_suffix_in_3dpath: 'False'
-  thermal_vias:
-    count: [3, 3]
-    drill: 0.3
-    # min_annular_ring: 0.15
-    paste_via_clearance: 0.05
-    EP_paste_coverage: 0.7
-    # paste_between_vias: 1
-    # paste_rings_outside: 1
-    # EP_num_paste_pads: [2, 2]
-    # EP_paste_coverage: 0.5
-    # grid:
-    # bottom_pad_size:
-    paste_avoid_via: False
-
-Texas_S-PVQFN-N32_EP:
-  device_type: 'QFN'
-  #manufacturer: 'man'
-  #part_number: 'mpn'
-  size_source: 'http://www.ti.com/lit/ds/symlink/msp430f1122.pdf#page=54'
-  ipc_class: 'qfn' # 'qfn_pull_back'
-  #ipc_density: 'least' #overwrite global value for this device.
-  custom_name_format: 'Texas_S-PVQFN-N{pincount}_EP{ep_size_x:g}x{ep_size_y:g}mm{vias:s}'
-  body_size_x:
-    minimum: 4.9
-    maximum: 5.1
-  body_size_y:
-    minimum: 4.9
-    maximum: 5.1
-  overall_height:
-    maximum: 1.0
-
-  lead_width:
-    minimum: 0.2
-    maximum: 0.3
-  lead_len:
-    minimum: 0.3
-    maximum: 0.5
-
-  EP_size_x:
-    nominal: 3.45
-    tolerance: 0.1
-  EP_size_y:
-    nominal: 3.45
-    tolerance: 0.1
-  # EP_paste_coverage: 0.65
-  EP_num_paste_pads: [3, 3]
-
-  thermal_vias:
-    count: [3, 3]
-    drill: 0.2
-    # min_annular_ring: 0.15
-    paste_via_clearance: 0.1
-    #EP_num_paste_pads: [4, 4]
-    paste_between_vias: 1
-    paste_rings_outside: 1
-    EP_paste_coverage: 0.65
-    grid: [1, 1]
-    # bottom_pad_size:
-    # paste_avoid_via: True
-
-  pitch: 0.5
-  num_pins_x: 8
-  num_pins_y: 8
-  #chamfer_edge_pins: 0.25
-  #pin_count_grid:
-  #pad_length_addition: 0.5
-  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
-  #include_suffix_in_3dpath: 'False'
-
-Texas_S-PVQFN-N36_EP:
-  device_type: 'QFN'
-  #manufacturer: 'man'
-  #part_number: 'mpn'
-  size_source: 'http://www.ti.com/lit/ds/slvsba5d/slvsba5d.pdf#page=35'
-  ipc_class: 'qfn' # 'qfn_pull_back'
-  #ipc_density: 'least' #overwrite global value for this device.
-  custom_name_format: 'Texas_S-PVQFN-N{pincount}_EP{ep_size_x:g}x{ep_size_y:g}mm{vias:s}'
-  body_size_x:
-    minimum: 5.9
-    maximum: 6.1
-  body_size_y:
-    minimum: 5.9
-    maximum: 6.1
-  overall_height:
-    minimum: 0.8
-    maximum: 1.0
-
-  lead_width:
-    minimum: 0.18
-    maximum: 0.3
-  lead_len:
-    minimum: 0.45
-    maximum: 0.65
-
-  EP_size_x:
-    nominal: 4.4
-    tolerance: 0.1
-  EP_size_y:
-    nominal: 4.4
-    tolerance: 0.1
-  # EP_paste_coverage: 0.65
-  EP_num_paste_pads: [3, 3]
-
-  thermal_vias:
-    count: [4, 4]
-    drill: 0.2
-    # min_annular_ring: 0.15
-    paste_via_clearance: 0.1
-    #EP_num_paste_pads: [4, 4]
-    paste_between_vias: 1
-    paste_rings_outside: 1
-    EP_paste_coverage: 0.65
-    grid: [1.05, 1.05]
-    # bottom_pad_size:
-    # paste_avoid_via: True
-
-  pitch: 0.5
-  num_pins_x: 9
-  num_pins_y: 9
-  #chamfer_edge_pins: 0.25
-  #pin_count_grid:
-  #pad_length_addition: 0.5
-  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
-  #include_suffix_in_3dpath: 'False'
-
-Texas_S-PVQFN-N40_EP2.9x2.9mm:
-  device_type: 'QFN'
-  #manufacturer: 'man'
-  #part_number: 'mpn'
-  size_source: 'http://www.ti.com/lit/ds/symlink/msp430fr5731.pdf#page=111 JEDEC MO-220 variation VJJD-2'
-  ipc_class: 'qfn' # 'qfn_pull_back'
-  #ipc_density: 'least' #overwrite global value for this device.
-  custom_name_format: 'Texas_S-PVQFN-N{pincount}_EP{ep_size_x:g}x{ep_size_y:g}mm{vias:s}'
-  body_size_x:
-    minimum: 5.85
-    maximum: 6.15
-  body_size_y:
-    minimum: 5.85
-    maximum: 6.15
-  overall_height:
-    minimum: 0.8
-    maximum: 1.0
-
-  lead_width:
-    nominal: 0.23
-    tolerance: [-0.05, 0.07]
-  lead_len:
-    minimum: 0.3
-    maximum: 0.5
-
-  EP_size_x:
-    nominal: 2.9
-    tolerance: 0.1
-  EP_size_y:
-    nominal: 2.9
-    tolerance: 0.1
-  # EP_paste_coverage: 0.65
   EP_num_paste_pads: [2, 2]
 
   thermal_vias:
     count: [3, 3]
     drill: 0.2
-    # min_annular_ring: 0.15
     paste_via_clearance: 0.1
-    #EP_num_paste_pads: [4, 4]
-    #paste_between_vias: 1
-    #paste_rings_outside: 1
-    EP_paste_coverage: 0.7
-    #grid: [1.05, 1.05]
-    # bottom_pad_size:
-    paste_avoid_via: False
-
-  pitch: 0.5
-  num_pins_x: 10
-  num_pins_y: 10
-  #chamfer_edge_pins: 0.25
-  #pin_count_grid:
-  #pad_length_addition: 0.5
-  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
-  #include_suffix_in_3dpath: 'False'
-
-Texas_S-PVQFN-N40_EP3.52x2.62mm:
-  device_type: 'QFN'
-  #manufacturer: 'man'
-  #part_number: 'mpn'
-  size_source: 'http://www.ti.com/lit/ds/symlink/drv8308.pdf#page=56 JEDEC MO-220 variation VJJD-2'
-  ipc_class: 'qfn' # 'qfn_pull_back'
-  #ipc_density: 'least' #overwrite global value for this device.
-  custom_name_format: 'Texas_S-PVQFN-N{pincount}_EP{ep_size_x:g}x{ep_size_y:g}mm{vias:s}'
-  body_size_x:
-    minimum: 5.85
-    maximum: 6.15
-  body_size_y:
-    minimum: 5.85
-    maximum: 6.15
-  overall_height:
-    minimum: 0.8
-    maximum: 1.0
-
-  lead_width:
-    nominal: 0.23
-    tolerance: [-0.05, 0.07]
-  lead_len:
-    minimum: 0.3
-    maximum: 0.5
-
-  EP_size_x:
-    nominal: 3.52
-    tolerance: 0.1
-  EP_size_y:
-    nominal: 2.62
-    tolerance: 0.1
-  # EP_paste_coverage: 0.65
-  EP_num_paste_pads: [3, 2]
-
-  thermal_vias:
-    count: [4, 3]
-    drill: 0.2
-    # min_annular_ring: 0.15
-    paste_via_clearance: 0.1
-    #EP_num_paste_pads: [4, 4]
-    #paste_between_vias: 1
-    #paste_rings_outside: 1
-    EP_paste_coverage: 0.7
-    #grid: [1.05, 1.05]
-    # bottom_pad_size:
-    paste_avoid_via: False
-
-  pitch: 0.5
-  num_pins_x: 10
-  num_pins_y: 10
-  #chamfer_edge_pins: 0.25
-  #pin_count_grid:
-  #pad_length_addition: 0.5
-  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
-  #include_suffix_in_3dpath: 'False'
-
-Texas_S-PVQFN-N40_EP4.15x4.15mm:
-  device_type: 'QFN'
-  #manufacturer: 'man'
-  #part_number: 'mpn'
-  size_source: 'http://www.ti.com/lit/ds/symlink/msp430g2755.pdf#page=70 JEDEC MO-220 variation VJJD-2'
-  ipc_class: 'qfn' # 'qfn_pull_back'
-  #ipc_density: 'least' #overwrite global value for this device.
-  custom_name_format: 'Texas_S-PVQFN-N{pincount}_EP{ep_size_x:g}x{ep_size_y:g}mm{vias:s}'
-  body_size_x:
-    minimum: 5.85
-    maximum: 6.15
-  body_size_y:
-    minimum: 5.85
-    maximum: 6.15
-  overall_height:
-    minimum: 0.8
-    maximum: 1.0
-
-  lead_width:
-    nominal: 0.23
-    tolerance: [-0.05, 0.07]
-  lead_len:
-    minimum: 0.3
-    maximum: 0.5
-
-  EP_size_x:
-    nominal: 4.15
-    tolerance: 0.1
-  EP_size_y:
-    nominal: 4.15
-    tolerance: 0.1
-  # EP_paste_coverage: 0.65
-  EP_num_paste_pads: [3, 3]
-
-  thermal_vias:
-    count: [4, 4]
-    drill: 0.2
-    # min_annular_ring: 0.15
-    paste_via_clearance: 0.1
-    #EP_num_paste_pads: [4, 4]
-    paste_between_vias: 1
-    paste_rings_outside: 1
-    #EP_paste_coverage: 0.7
-    grid: [1.0, 1.0]
-    # bottom_pad_size:
-    # paste_avoid_via: False
-
-  pitch: 0.5
-  num_pins_x: 10
-  num_pins_y: 10
-  #chamfer_edge_pins: 0.25
-  #pin_count_grid:
-  #pad_length_addition: 0.5
-  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
-  #include_suffix_in_3dpath: 'False'
-
-Texas_S-PVQFN-N40_EP4.6x4.6mm:
-  device_type: 'QFN'
-  #manufacturer: 'man'
-  #part_number: 'mpn'
-  size_source: 'http://www.ti.com/lit/ds/symlink/dac7750.pdf#page=54'
-  ipc_class: 'qfn' # 'qfn_pull_back'
-  #ipc_density: 'least' #overwrite global value for this device.
-  custom_name_format: 'Texas_S-PVQFN-N{pincount}_EP{ep_size_x:g}x{ep_size_y:g}mm{vias:s}'
-  body_size_x:
-    minimum: 5.85
-    maximum: 6.15
-  body_size_y:
-    minimum: 5.85
-    maximum: 6.15
-  overall_height:
-    minimum: 0.8
-    maximum: 1.0
-
-  lead_width:
-    nominal: 0.23
-    tolerance: [-0.05, 0.07]
-  lead_len:
-    minimum: 0.3
-    maximum: 0.5
-
-  EP_size_x:
-    nominal: 4.6
-    tolerance: 0.1
-  EP_size_y:
-    nominal: 4.6
-    tolerance: 0.1
-  # EP_paste_coverage: 0.65
-  EP_num_paste_pads: [3, 3]
-
-  thermal_vias:
-    count: [4, 4]
-    drill: 0.2
-    # min_annular_ring: 0.15
-    paste_via_clearance: 0.1
-    #EP_num_paste_pads: [4, 4]
-    paste_between_vias: 1
-    paste_rings_outside: 1
-    #EP_paste_coverage: 0.7
-    grid: [1.15, 1.15]
-    # bottom_pad_size:
-    # paste_avoid_via: False
-
-  pitch: 0.5
-  num_pins_x: 10
-  num_pins_y: 10
-  #chamfer_edge_pins: 0.25
-  #pin_count_grid:
-  #pad_length_addition: 0.5
-  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
-  #include_suffix_in_3dpath: 'False'
-
-Texas_S-PVQFN-N48_EP: #RGZ0048A
-  device_type: 'QFN'
-  #manufacturer: 'man'
-  #part_number: 'mpn'
-  size_source: 'http://www.ti.com/lit/ds/symlink/msp430f5232.pdf#page=111'
-  ipc_class: 'qfn' # 'qfn_pull_back'
-  #ipc_density: 'least' #overwrite global value for this device.
-  custom_name_format: 'Texas_S-PVQFN-N{pincount}_EP{ep_size_x:g}x{ep_size_y:g}mm{vias:s}'
-  body_size_x:
-    minimum: 6.9
-    maximum: 7.1
-  body_size_y:
-    minimum: 6.9
-    maximum: 7.1
-  overall_height:
-    maximum: 1.0
-
-  lead_width:
-    minimum: 0.18
-    maximum: 0.3
-  lead_len:
-    minimum: 0.3
-    maximum: 0.5
-
-  EP_size_x:
-    nominal: 5.15
-    tolerance: 0.1
-  EP_size_y:
-    nominal: 5.15
-    tolerance: 0.1
-  # EP_paste_coverage: 0.65
-  EP_num_paste_pads: [4, 4]
-
-  thermal_vias:
-    count: [5, 5]
-    drill: 0.2
-    # min_annular_ring: 0.15
-    paste_via_clearance: 0.1
-    # EP_num_paste_pads: [4, 4]
-    paste_between_vias: 1
-    paste_rings_outside: 1
-    EP_paste_coverage: 0.65
-    grid: [1, 1]
-    # bottom_pad_size:
-    # paste_avoid_via: True
-
-  pitch: 0.5
-  num_pins_x: 12
-  num_pins_y: 12
-  #chamfer_edge_pins: 0.25
-  #pin_count_grid:
-  #pad_length_addition: 0.5
-  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
-  #include_suffix_in_3dpath: 'False'
-
-Texas_S-PVQFN-N64_EP: #RGC0064B
-  device_type: 'QFN'
-  #manufacturer: 'man'
-  #part_number: 'mpn'
-  size_source: 'http://www.ti.com/lit/ds/symlink/msp430f5217.pdf#page=120'
-  ipc_class: 'qfn' # 'qfn_pull_back'
-  #ipc_density: 'least' #overwrite global value for this device.
-  custom_name_format: 'Texas_S-PVQFN-N{pincount}_EP{ep_size_x:g}x{ep_size_y:g}mm{vias:s}'
-  body_size_x:
-    minimum: 8.9
-    maximum: 9.1
-  body_size_y:
-    minimum: 8.9
-    maximum: 9.1
-  overall_height:
-    minimum: 0.8
-    maximum: 1.0
-
-  lead_width:
-    minimum: 0.18
-    maximum: 0.3
-  lead_len:
-    minimum: 0.3
-    maximum: 0.5
-
-  EP_size_x:
-    nominal: 4.25
-    tolerance: 0.1
-  EP_size_y:
-    nominal: 4.25
-    tolerance: 0.1
-  # EP_paste_coverage: 0.65
-  EP_num_paste_pads: [2, 2]
-
-  thermal_vias:
-    count: [5, 5]
-    drill: 0.2
-    # min_annular_ring: 0.15
-    paste_via_clearance: 0.1
-    # EP_num_paste_pads: [2, 2]
-    paste_between_vias: 1
-    paste_rings_outside: 1
-    EP_paste_coverage: 0.65
-    grid: [0.8, 0.8]
-    # bottom_pad_size:
-    # paste_avoid_via: False
-
-  pitch: 0.5
-  num_pins_x: 16
-  num_pins_y: 16
-  #chamfer_edge_pins: 0.25
-  #pin_count_grid:
-  #pad_length_addition: 0.5
-  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
-  #include_suffix_in_3dpath: 'False'
-
-Texas_VQFN_RGE0024H:
-  device_type: 'QFN'
-  manufacturer: 'Texas'
-  #part_number: 'mpn'
-  size_source: 'http://www.ti.com/lit/ds/symlink/tlc5971.pdf#page=39'
-  ipc_class: 'qfn' # 'qfn_pull_back'
-  #ipc_density: 'least' #overwrite global value for this device.
-  custom_name_format: 'Texas_RGE00{pincount}H_EP{ep_size_x:g}x{ep_size_y:g}mm{vias:s}'
-  body_size_x:
-    minimum: 3.9
-    maximum: 4.1
-  body_size_y:
-    minimum: 3.9
-    maximum: 4.1
-  overall_height:
-    maximum: 1.0
-
-  lead_width:
-    minimum: 0.18
-    maximum: 0.3
-  lead_len:
-    minimum: 0.28
-    maximum: 0.48
-
-  EP_size_x:
-    nominal: 2.7
-    tolerance: 0.1
-  EP_size_y:
-    nominal: 2.7
-    tolerance: 0.1
-  EP_paste_coverage: 0.65
-  EP_num_paste_pads: [2, 2]
-
-  pitch: 0.5
-  num_pins_x: 6
-  num_pins_y: 6
-  #chamfer_edge_pins: 0.25
-  #pin_count_grid:
-  #pad_length_addition: 0.5
-  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
-  #include_suffix_in_3dpath: 'False'
-  thermal_vias:
-    count: [3, 3]
-    drill: 0.2
-    # min_annular_ring: 0.15
-    paste_via_clearance: 0.05
-    # paste_between_vias: 1
-    # paste_rings_outside: 1
     EP_paste_coverage: 0.75
-    EP_num_paste_pads: [2, 2]
-    # grid:
-    # bottom_pad_size:
     paste_avoid_via: False
 
-Texas_VQFN_RGE0024C:
-  device_type: 'QFN'
+  pitch: 0.65
+  num_pins_x: 4
+  num_pins_y: 4
+
+
+Texas_VQFN-16_RSA:
+  device_type: 'VQFN'
   manufacturer: 'Texas'
-  #part_number: 'mpn'
-  size_source: 'http://www.ti.com/lit/ds/symlink/pca9548a.pdf#page=37'
-  ipc_class: 'qfn' # 'qfn_pull_back'
-  #ipc_density: 'least' #overwrite global value for this device.
-  custom_name_format: 'Texas_RGE00{pincount}C_EP{ep_size_x:g}x{ep_size_y:g}mm{vias:s}'
+  part_number: 'RSA'
+  size_source: 'http://www.ti.com/lit/ds/symlink/msp430g2001.pdf#page=44'
+  ipc_class: 'qfn'
   body_size_x:
     minimum: 3.9
     maximum: 4.1
@@ -1116,45 +54,121 @@ Texas_VQFN_RGE0024C:
     minimum: 3.9
     maximum: 4.1
   overall_height:
-    maximum: 1
+    minimum: 0.8
+    maximum: 1.0
+
   lead_width:
-    minimum: 0.18
-    maximum: 0.3
+    minimum: 0.23
+    maximum: 0.38
   lead_len:
     minimum: 0.3
     maximum: 0.5
 
   EP_size_x:
-    nominal: 2.1
+    nominal: 2.7
     tolerance: 0.1
   EP_size_y:
-    nominal: 2.1
+    nominal: 2.7
     tolerance: 0.1
-  EP_paste_coverage: 0.65
-  EP_num_paste_pads: [2, 2]
+  EP_num_paste_pads: [3, 3]
 
-  pitch: 0.5
-  num_pins_x: 6
-  num_pins_y: 6
-  #chamfer_edge_pins: 0.25
-  #pin_count_grid:
-  #pad_length_addition: 0.5
-  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
-  #include_suffix_in_3dpath: 'False'
   thermal_vias:
     count: [3, 3]
     drill: 0.2
-    # min_annular_ring: 0.15
-    paste_via_clearance: 0.05
-    # paste_between_vias: 1
-    # paste_rings_outside: 1
-    EP_paste_coverage: 0.65
-    EP_num_paste_pads: [2, 2]
-    # grid:
-    # bottom_pad_size:
+    paste_via_clearance: 0.1
+    EP_paste_coverage: 0.5
+
+  pitch: 0.65
+  num_pins_x: 4
+  num_pins_y: 4
+
+
+Texas_VQFN-20_RGP0020D:
+  device_type: 'VQFN'
+  manufacturer: 'Texas'
+  part_number: 'RGP0020D'
+  size_source: 'http://www.ti.com/lit/ds/symlink/drv8662.pdf#page=25'
+  ipc_class: 'qfn'
+  body_size_x:
+    minimum: 3.9
+    maximum: 4.1
+  body_size_y:
+    minimum: 3.9
+    maximum: 4.1
+  overall_height:
+    maximum: 1.0
+
+  lead_width:
+    minimum: 0.18
+    maximum: 0.30
+  lead_len:
+    minimum: 0.3
+    maximum: 0.5
+
+  EP_size_x:
+    nominal: 2.7
+    tolerance: 0.1
+  EP_size_y:
+    nominal: 2.7
+    tolerance: 0.1
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [3, 3]
+    drill: 0.2
+    paste_via_clearance: 0.1
+    EP_paste_coverage: 0.7
     paste_avoid_via: False
 
-Texas_VQFN_RJE0020A:
+  pitch: 0.5
+  num_pins_x: 5
+  num_pins_y: 5
+
+
+Texas_VQFN_RGW0020A:
+  device_type: 'VQFN'
+  manufacturer: 'Texas'
+  part_number: 'RGW0020A'
+  size_source: 'https://www.ti.com/lit/ds/symlink/tps7a47.pdf#page=29'
+  ipc_class: 'qfn'
+  body_size_x:
+    minimum: 4.9
+    maximum: 5.1
+  body_size_y:
+    minimum: 4.9
+    maximum: 5.1
+  overall_height:
+    maximum: 1.0
+
+  lead_width:
+    minimum: 0.26
+    maximum: 0.36
+  lead_len:
+    minimum: 0.45
+    maximum: 0.65
+
+  EP_size_x:
+    nominal: 3.15
+    tolerance: 0.1
+  EP_size_y:
+    nominal: 3.15
+    tolerance: 0.1
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [3, 3]
+    drill: 0.2
+    paste_via_clearance: 0.1
+    paste_between_vias: 1
+    paste_rings_outside: 1
+    grid: [1, 1]
+
+  pitch: 0.65
+  num_pins_x: 5
+  num_pins_y: 5
+
+
+Texas_VQFN-20_RJE0020A:
   device_type: 'VQFN'
   manufacturer: 'Texas'
   part_number: 'RJE0020A'
@@ -1194,14 +208,13 @@ Texas_VQFN_RJE0020A:
     paste_via_clearance: 0.05
     paste_avoid_via: False
 
-Texas_RGV_S-PVQFN-N16_EP2.1x2.1mm:
-  device_type: 'QFN'
-  #manufacturer: 'man'
-  #part_number: 'mpn'
-  size_source: 'http://www.ti.com/lit/ds/symlink/ina3221.pdf#page=44'
-  ipc_class: 'qfn' # 'qfn_pull_back'
-  #ipc_density: 'least' #overwrite global value for this device.
-  custom_name_format: 'Texas_RGV_S-PVQFN-N{pincount}_EP{ep_size_x:g}x{ep_size_y:g}mm{vias:s}'
+
+Texas_VQFN-20_RGP0020H:
+  device_type: 'VQFN'
+  manufacturer: 'Texas'
+  part_number: 'RGP0020H'
+  size_source: 'http://www.ti.com/lit/ds/symlink/cc1101.pdf#page=101'
+  ipc_class: 'qfn'
   body_size_x:
     minimum: 3.85
     maximum: 4.15
@@ -1211,6 +224,594 @@ Texas_RGV_S-PVQFN-N16_EP2.1x2.1mm:
   overall_height:
     minimum: 0.8
     maximum: 1.0
+
+  lead_width:
+    minimum: 0.18
+    maximum: 0.30
+  lead_len:
+    minimum: 0.45
+    maximum: 0.65
+
+  EP_size_x:
+    nominal: 2.4
+    tolerance: 0.1
+  EP_size_y:
+    nominal: 2.4
+    tolerance: 0.1
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [3, 3]
+    drill: 0.2
+    paste_via_clearance: 0.1
+    EP_paste_coverage: 0.5
+
+  pitch: 0.5
+  num_pins_x: 5
+  num_pins_y: 5
+
+
+Texas_VQFN-24_RGE0024C:
+  device_type: 'VQFN'
+  manufacturer: 'Texas'
+  part_number: 'RGE0024C'
+  size_source: 'http://www.ti.com/lit/ds/symlink/pca9548a.pdf#page=37'
+  ipc_class: 'qfn'
+  body_size_x:
+    minimum: 3.9
+    maximum: 4.1
+  body_size_y:
+    minimum: 3.9
+    maximum: 4.1
+  overall_height:
+    maximum: 1
+  lead_width:
+    minimum: 0.18
+    maximum: 0.3
+  lead_len:
+    minimum: 0.3
+    maximum: 0.5
+
+  EP_size_x:
+    nominal: 2.1
+    tolerance: 0.1
+  EP_size_y:
+    nominal: 2.1
+    tolerance: 0.1
+  EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 2]
+
+  pitch: 0.5
+  num_pins_x: 6
+  num_pins_y: 6
+  thermal_vias:
+    count: [3, 3]
+    drill: 0.2
+    paste_via_clearance: 0.05
+    EP_paste_coverage: 0.65
+    EP_num_paste_pads: [2, 2]
+    paste_avoid_via: False
+
+
+Texas_VQFN-24_RGE0024H:
+  device_type: 'VQFN'
+  manufacturer: 'Texas'
+  part_number: 'RGE0024H'
+  size_source: 'http://www.ti.com/lit/ds/symlink/tlc5971.pdf#page=40'
+  ipc_class: 'qfn'
+  body_size_x:
+    minimum: 3.9
+    maximum: 4.1
+  body_size_y:
+    minimum: 3.9
+    maximum: 4.1
+  overall_height:
+    maximum: 1.0
+
+  lead_width:
+    minimum: 0.18
+    maximum: 0.3
+  lead_len:
+    minimum: 0.28
+    maximum: 0.48
+
+  EP_size_x:
+    nominal: 2.7
+    tolerance: 0.1
+  EP_size_y:
+    nominal: 2.7
+    tolerance: 0.1
+  EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 2]
+
+  pitch: 0.5
+  num_pins_x: 6
+  num_pins_y: 6
+  thermal_vias:
+    count: [3, 3]
+    drill: 0.2
+    paste_via_clearance: 0.05
+    EP_paste_coverage: 0.75
+    EP_num_paste_pads: [2, 2]
+    paste_avoid_via: False
+
+
+Texas_VQFN-28_RVE0028A:
+  device_type: 'VQFN'
+  manufacturer: 'Texas'
+  part_number: 'RVE0028A'
+  size_source: 'http://www.ti.com/lit/ds/symlink/tps51363.pdf#page=29'
+  ipc_class: 'qfn'
+  body_size_x:
+    minimum: 3.4
+    maximum: 3.6
+  body_size_y:
+    minimum: 4.4
+    maximum: 4.6
+  overall_height:
+    minimum: 0.8
+    maximum: 1.0
+
+  lead_width:
+    minimum: 0.15
+    maximum: 0.25
+  lead_len:
+    minimum: 0.3
+    maximum: 0.5
+
+  EP_size_x:
+    nominal: 2.1
+    tolerance: 0.1
+  EP_size_y:
+    nominal: 3.1
+    tolerance: 0.1
+  EP_num_paste_pads: [2, 2]
+
+  pitch: 0.4
+  num_pins_x: 5
+  num_pins_y: 9
+
+  thermal_vias:
+    count: [3, 3]
+    drill: 0.2
+    paste_via_clearance: 0.05
+    EP_paste_coverage: 0.7
+    paste_avoid_via: False
+
+
+Texas_VQFN-32_RHB0032E:
+  device_type: 'VQFN'
+  manufacturer: 'Texas'
+  part_number: 'RHB0032E'
+  size_source: 'http://www.ti.com/lit/ds/symlink/msp430f1122.pdf#page=54'
+  ipc_class: 'qfn'
+  body_size_x:
+    minimum: 4.9
+    maximum: 5.1
+  body_size_y:
+    minimum: 4.9
+    maximum: 5.1
+  overall_height:
+    maximum: 1.0
+
+  lead_width:
+    minimum: 0.2
+    maximum: 0.3
+  lead_len:
+    minimum: 0.3
+    maximum: 0.5
+
+  EP_size_x:
+    nominal: 3.45
+    tolerance: 0.1
+  EP_size_y:
+    nominal: 3.45
+    tolerance: 0.1
+  EP_num_paste_pads: [3, 3]
+
+  thermal_vias:
+    count: [3, 3]
+    drill: 0.2
+    paste_via_clearance: 0.1
+    paste_between_vias: 1
+    paste_rings_outside: 1
+    EP_paste_coverage: 0.65
+    grid: [1, 1]
+
+  pitch: 0.5
+  num_pins_x: 8
+  num_pins_y: 8
+
+Texas_VQFN-36_RHH0036C:
+  device_type: 'VQFN'
+  manufacturer: 'Texas'
+  part_number: 'RHH0036C'
+  size_source: 'http://www.ti.com/lit/ds/slvsba5d/slvsba5d.pdf#page=37'
+  ipc_class: 'qfn'
+  body_size_x:
+    minimum: 5.9
+    maximum: 6.1
+  body_size_y:
+    minimum: 5.9
+    maximum: 6.1
+  overall_height:
+    minimum: 0.8
+    maximum: 1.0
+
+  lead_width:
+    minimum: 0.18
+    maximum: 0.3
+  lead_len:
+    minimum: 0.45
+    maximum: 0.65
+
+  EP_size_x:
+    nominal: 4.4
+    tolerance: 0.1
+  EP_size_y:
+    nominal: 4.4
+    tolerance: 0.1
+  EP_num_paste_pads: [3, 3]
+
+  thermal_vias:
+    count: [4, 4]
+    drill: 0.2
+    paste_via_clearance: 0.1
+    paste_between_vias: 1
+    paste_rings_outside: 1
+    EP_paste_coverage: 0.65
+    grid: [1.05, 1.05]
+
+  pitch: 0.5
+  num_pins_x: 9
+  num_pins_y: 9
+
+
+Texas_VQFN-40_RHA:
+  device_type: 'VQFN'
+  manufacturer: 'Texas'
+  part_number: 'RHA'
+  size_source: 'http://www.ti.com/lit/ds/symlink/dac7750.pdf#page=49'
+  ipc_class: 'qfn'
+  body_size_x:
+    minimum: 5.85
+    maximum: 6.15
+  body_size_y:
+    minimum: 5.85
+    maximum: 6.15
+  overall_height:
+    minimum: 0.8
+    maximum: 1.0
+
+  lead_width:
+    nominal: 0.23
+    tolerance: [-0.05, 0.07]
+  lead_len:
+    minimum: 0.3
+    maximum: 0.5
+
+  EP_size_x:
+    nominal: 4.6
+    tolerance: 0.1
+  EP_size_y:
+    nominal: 4.6
+    tolerance: 0.1
+  EP_num_paste_pads: [3, 3]
+
+  thermal_vias:
+    count: [4, 4]
+    drill: 0.2
+    paste_via_clearance: 0.1
+    paste_between_vias: 1
+    paste_rings_outside: 1
+    grid: [1.15, 1.15]
+
+  pitch: 0.5
+  num_pins_x: 10
+  num_pins_y: 10
+
+
+Texas_VQFN-40_RHA0040B:
+  device_type: 'VQFN'
+  manufacturer: 'Texas'
+  part_number: 'RHA0040B'
+  size_source: 'http://www.ti.com/lit/ds/symlink/msp430g2755.pdf#page=72 JEDEC MO-220 variation VJJD-2'
+  ipc_class: 'qfn'
+  body_size_x:
+    minimum: 5.9
+    maximum: 6.1
+  body_size_y:
+    minimum: 5.9
+    maximum: 6.1
+  overall_height:
+    maximum: 1.0
+
+  lead_width:
+    minimum: 0.17
+    maximum: 0.27
+  lead_len:
+    minimum: 0.3
+    maximum: 0.5
+
+  EP_size_x:
+    nominal: 4.15
+    tolerance: 0.1
+  EP_size_y:
+    nominal: 4.15
+    tolerance: 0.1
+  EP_num_paste_pads: [3, 3]
+
+  thermal_vias:
+    count: [4, 4]
+    drill: 0.2
+    paste_via_clearance: 0.1
+    paste_between_vias: 1
+    paste_rings_outside: 1
+    grid: [1.0, 1.0]
+
+  pitch: 0.5
+  num_pins_x: 10
+  num_pins_y: 10
+
+
+Texas_VQFN-40_RHA0040D:
+  device_type: 'VQFN'
+  manufacturer: 'Texas'
+  part_number: 'RHA0040D'
+  size_source: 'http://www.ti.com/lit/ds/symlink/msp430fr5731.pdf#page=111 JEDEC MO-220 variation VJJD-2'
+  ipc_class: 'qfn'
+  body_size_x:
+    minimum: 5.9
+    maximum: 6.1
+  body_size_y:
+    minimum: 5.9
+    maximum: 6.1
+  overall_height:
+    maximum: 1.0
+
+  lead_width:
+    minimum: 0.20
+    maximum: 0.30
+  lead_len:
+    minimum: 0.3
+    maximum: 0.5
+
+  EP_size_x:
+    nominal: 2.9
+    tolerance: 0.1
+  EP_size_y:
+    nominal: 2.9
+    tolerance: 0.1
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [3, 3]
+    drill: 0.2
+    paste_via_clearance: 0.1
+    EP_paste_coverage: 0.7
+    paste_avoid_via: False
+
+  pitch: 0.5
+  num_pins_x: 10
+  num_pins_y: 10
+
+Texas_VQFN-40_RHA0040E:
+  device_type: 'VQFN'
+  manufacturer: 'Texas'
+  part_number: 'RHA0040E'
+  size_source: 'http://www.ti.com/lit/ds/symlink/drv8308.pdf#page=57 JEDEC MO-220 variation VJJD-2'
+  ipc_class: 'qfn'
+  body_size_x:
+    minimum: 5.85
+    maximum: 6.15
+  body_size_y:
+    minimum: 5.85
+    maximum: 6.15
+  overall_height:
+    minimum: 0.8
+    maximum: 1.0
+
+  lead_width:
+    minimum: 0.18
+    maximum: 0.30
+  lead_len:
+    minimum: 0.3
+    maximum: 0.5
+
+  EP_size_x:
+    nominal: 3.52
+    tolerance: 0.1
+  EP_size_y:
+    nominal: 2.62
+    tolerance: 0.1
+  EP_num_paste_pads: [3, 2]
+
+  thermal_vias:
+    count: [4, 3]
+    drill: 0.2
+    paste_via_clearance: 0.1
+    EP_paste_coverage: 0.7
+    paste_avoid_via: False
+
+  pitch: 0.5
+  num_pins_x: 10
+  num_pins_y: 10
+
+
+Texas_VQFN-48_RGZ0048A:
+  device_type: 'VQFN'
+  manufacturer: 'Texas'
+  part_number: 'RGZ0048A'
+  size_source: 'http://www.ti.com/lit/ds/symlink/msp430f5232.pdf#page=113'
+  ipc_class: 'qfn'
+  body_size_x:
+    minimum: 6.9
+    maximum: 7.1
+  body_size_y:
+    minimum: 6.9
+    maximum: 7.1
+  overall_height:
+    maximum: 1.0
+
+  lead_width:
+    minimum: 0.18
+    maximum: 0.3
+  lead_len:
+    minimum: 0.3
+    maximum: 0.5
+
+  EP_size_x:
+    nominal: 5.15
+    tolerance: 0.1
+  EP_size_y:
+    nominal: 5.15
+    tolerance: 0.1
+  EP_num_paste_pads: [4, 4]
+
+  thermal_vias:
+    count: [5, 5]
+    drill: 0.2
+    paste_via_clearance: 0.1
+    paste_between_vias: 1
+    paste_rings_outside: 1
+    EP_paste_coverage: 0.65
+    grid: [1, 1]
+
+  pitch: 0.5
+  num_pins_x: 12
+  num_pins_y: 12
+
+
+Texas_VQFN-64_RGC0064B:
+  device_type: 'VQFN'
+  manufacturer: 'Texas'
+  part_number: 'RGC0064B'
+  size_source: 'http://www.ti.com/lit/ds/symlink/msp430f5217.pdf#page=122'
+  ipc_class: 'qfn'
+  body_size_x:
+    minimum: 8.9
+    maximum: 9.1
+  body_size_y:
+    minimum: 8.9
+    maximum: 9.1
+  overall_height:
+    minimum: 0.8
+    maximum: 1.0
+
+  lead_width:
+    minimum: 0.18
+    maximum: 0.3
+  lead_len:
+    minimum: 0.3
+    maximum: 0.5
+
+  EP_size_x:
+    nominal: 4.25
+    tolerance: 0.1
+  EP_size_y:
+    nominal: 4.25
+    tolerance: 0.1
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [5, 5]
+    drill: 0.2
+    paste_via_clearance: 0.1
+    paste_between_vias: 1
+    paste_rings_outside: 1
+    EP_paste_coverage: 0.65
+    grid: [0.8, 0.8]
+
+  pitch: 0.5
+  num_pins_x: 16
+  num_pins_y: 16
+
+
+Texas_WQFN-10_RUN0010A:
+  device_type: 'WQFN'
+  manufacturer: 'Texas'
+  part_number: 'RUN0010A'
+  size_source: 'https://www.ti.com/lit/ds/symlink/tmp461.pdf#page=35'
+  ipc_class: 'qfn'
+  body_size_x:
+    minimum: 1.9
+    maximum: 2.1
+  body_size_y:
+    minimum: 1.9
+    maximum: 2.1
+  overall_height:
+    minimum: 0.7
+    maximum: 0.8
+  lead_width:
+    minimum: 0.2
+    maximum: 0.3
+  lead_len:
+    minimum: 0.4
+    maximum: 0.6
+  pitch: 0.5
+  num_pins_x: 1
+  num_pins_y: 4
+
+
+Texas_WQFN-16_RTE:
+  device_type: 'WQFN'
+  manufacturer: 'Texas'
+  part_number: 'RTE'
+  size_source: 'https://www.ti.com/lit/ds/symlink/tps43060.pdf#page=40'
+  ipc_class: 'qfn'
+  body_size_x:
+    minimum: 2.85
+    maximum: 3.15
+  body_size_y:
+    minimum: 2.85
+    maximum: 3.15
+  overall_height:
+    minimum: 0.7
+    maximum: 0.8
+
+  lead_width:
+    minimum: 0.18
+    maximum: 0.3
+  lead_len:
+    minimum: 0.3
+    maximum: 0.5
+
+  EP_size_x:
+    nominal: 1.2
+    tolerance: 0.1
+  EP_size_y:
+    nominal: 0.8
+    tolerance: 0.1
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [1, 1]
+    drill: 0.3
+    paste_via_clearance: 0.1
+    EP_num_paste_pads: [2, 2]
+    EP_paste_coverage: 0.70
+    paste_avoid_via: false
+
+  pitch: 0.5
+  num_pins_x: 4
+  num_pins_y: 4
+
+
+Texas_WQFN-16_RTY:
+  device_type: 'WQFN'
+  manufacturer: 'Texas'
+  part_number: 'RTY'
+  size_source: 'http://www.ti.com/lit/ds/symlink/drv8801.pdf#page=36 MO-220 variation VGGC'
+  ipc_class: 'qfn'
+  body_size_x:
+    minimum: 3.85
+    maximum: 4.15
+  body_size_y:
+    minimum: 3.85
+    maximum: 4.15
+  overall_height:
+    minimum: 0.7
+    maximum: 0.8
 
   lead_width:
     minimum: 0.23
@@ -1225,51 +826,144 @@ Texas_RGV_S-PVQFN-N16_EP2.1x2.1mm:
   EP_size_y:
     nominal: 2.1
     tolerance: 0.1
-  # EP_paste_coverage: 0.65
   EP_num_paste_pads: [2, 2]
 
   thermal_vias:
     count: [3, 3]
     drill: 0.2
-    # min_annular_ring: 0.15
     paste_via_clearance: 0.1
-    # EP_num_paste_pads: [2, 2]
-    EP_paste_coverage: 0.75
-    # grid:
-    # bottom_pad_size:
+    EP_paste_coverage: 0.7
     paste_avoid_via: False
 
   pitch: 0.65
   num_pins_x: 4
   num_pins_y: 4
-  #chamfer_edge_pins: 0.25
-  #pin_count_grid:
-  #pad_length_addition: 0.5
-  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
-  #include_suffix_in_3dpath: 'False'
 
-Texas_WQFN-10-2x2mm_P0.5mm_RUN0010A:
+
+Texas_WQFN-24_RTW:
   device_type: 'WQFN'
   manufacturer: 'Texas'
-  #part_number: 'mpn'
-  size_source: 'https://www.ti.com/lit/ds/symlink/tmp461.pdf#page=35 (RUN0010A)'
-  ipc_class: 'qfn' # 'qfn_pull_back'
-  #ipc_density: 'least' #overwrite global value for this device.
+  part_number: 'RTW'
+  size_source: 'http://www.ti.com/lit/ds/symlink/bq25601.pdf#page=54'
+  ipc_class: 'qfn'
   body_size_x:
-    nominal: 2
-    tolerance: 0.1
+    minimum: 3.85
+    maximum: 4.15
   body_size_y:
-    nominal: 2
-    tolerance: 0.1
+    minimum: 3.85
+    maximum: 4.15
   overall_height:
     minimum: 0.7
     maximum: 0.8
+
   lead_width:
-    nominal: 0.25
-    tolerance: 0.05
+    minimum: 0.18
+    maximum: 0.3
   lead_len:
-    nominal: 0.5
+    minimum: 0.3
+    maximum: 0.5
+
+  EP_size_x:
+    nominal: 2.7
     tolerance: 0.1
+  EP_size_y:
+    nominal: 2.7
+    tolerance: 0.1
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [3, 3]
+    drill: 0.2
+    paste_via_clearance: 0.1
+    EP_paste_coverage: 0.7
+    paste_avoid_via: False
+
   pitch: 0.5
-  num_pins_x: 1
+  num_pins_x: 6
+  num_pins_y: 6
+
+
+Texas_WQFN-16_RUM0016A:
+  device_type: 'WQFN'
+  manufacturer: 'Texas'
+  part_number: 'RUM0016A'
+  size_source: 'http://www.ti.com/lit/ds/symlink/lmh0074.pdf#page=13'
+  ipc_class: 'qfn'
+  body_size_x:
+    minimum: 3.9
+    maximum: 4.1
+  body_size_y:
+    minimum: 3.9
+    maximum: 4.1
+  overall_height:
+    minimum: 0.7
+    maximum: 0.8
+
+  lead_width:
+    minimum: 0.25
+    maximum: 0.35
+  lead_len:
+    minimum: 0.3
+    maximum: 0.5
+
+  EP_size_x:
+    nominal: 2.6
+    tolerance: 0.1
+  EP_size_y:
+    nominal: 2.6
+    tolerance: 0.1
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [3, 3]
+    drill: 0.2
+    paste_via_clearance: 0.1
+    EP_paste_coverage: 0.7
+    paste_avoid_via: False
+
+  pitch: 0.65
+  num_pins_x: 4
   num_pins_y: 4
+
+
+Texas_WQFN-32_RSN:
+  device_type: 'WQFN'
+  manufacturer: 'Texas'
+  part_number: 'RSN'
+  size_source: 'https://www.ti.com/lit/ds/symlink/bq25703a.pdf#page=90'
+  ipc_class: 'qfn'
+  body_size_x:
+    minimum: 3.85
+    maximum: 4.15
+  body_size_y:
+    minimum: 3.85
+    maximum: 4.15
+  overall_height:
+    minimum: 0.7
+    maximum: 0.8
+
+  lead_width:
+    minimum: 0.15
+    maximum: 0.25
+  lead_len:
+    minimum: 0.25
+    maximum: 0.45
+
+  EP_size_x:
+    nominal: 2.8
+    tolerance: 0.1
+  EP_size_y:
+    nominal: 2.8
+    tolerance: 0.1
+  EP_num_paste_pads: [2, 2]
+
+  pitch: 0.4
+  num_pins_x: 8
+  num_pins_y: 8
+
+  thermal_vias:
+    count: [3, 3]
+    drill: 0.3
+    paste_via_clearance: 0.05
+    EP_paste_coverage: 0.7
+    paste_avoid_via: False
