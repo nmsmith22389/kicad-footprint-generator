@@ -20,6 +20,7 @@ LFBGA-100_10x10mm_Layout10x10_P0.8mm:
   paste_margin: 0.000001
   layout_x: 10
   layout_y: 10
+
 LFBGA-144_10x10mm_Layout12x12_P0.8mm:
   description: "LFBGA-144"
   size_source: "http://www.st.com/resource/en/datasheet/stm32f103ze.pdf#page=114"
@@ -31,6 +32,19 @@ LFBGA-144_10x10mm_Layout12x12_P0.8mm:
   paste_margin: 0.000001
   layout_x: 12
   layout_y: 12
+
+LFBGA-289_14x14mm_Layout17x17_P0.8mm:
+  description: "LFBGA-289"
+  size_source: "https://www.st.com/resource/en/datasheet/stm32mp131c.pdf"
+  body_size_x: 14.0
+  body_size_y: 14.0
+  pitch: 0.8
+  pad_diameter: 0.320
+  mask_margin: 0.050
+  paste_margin: 0.000001
+  layout_x: 17
+  layout_y: 17
+
 LFBGA-400_16x16mm_Layout20x20_P0.8mm:
   description: "LFBGA-400, NSMD"
   size_source: "https://www.efinixinc.com/docs/titanium-packaging-ug-v5.2.pdf"
@@ -43,6 +57,7 @@ LFBGA-400_16x16mm_Layout20x20_P0.8mm:
   mask_margin: 0.075
   layout_x: 20
   layout_y: 20
+
 LFBGA-484_18x18mm_Layout22x22_P0.8mm:
   description: "LFBGA-484, NSMD"
   size_source: "https://www.efinixinc.com/docs/titanium-packaging-ug-v5.2.pdf"
@@ -56,6 +71,7 @@ LFBGA-484_18x18mm_Layout22x22_P0.8mm:
   mask_margin: 0.075
   layout_x: 22
   layout_y: 22
+
 ST_LFBGA-354_16x16mm_Layout19x19_P0.8mm:
   description: "ST LFBGA-354"
   size_source: "https://www.st.com/resource/en/datasheet/stm32mp151a.pdf"
@@ -351,6 +367,7 @@ TFBGA-216_13x13mm_Layout15x15_P0.8mm:
   layout_x: 15
   layout_y: 15
   row_skips: [[], [], [], [], [], [], [[7, 10]], [[7, 10]], [[7, 10]], [], [], [], [], [], []]
+
 TFBGA-225_10x10mm_Layout15x15_P0.65mm:
   description: "TFBGA-225, NSMD"
   size_source: "https://www.efinixinc.com/docs/titanium-packaging-ug-v5.2.pdf"
@@ -363,6 +380,19 @@ TFBGA-225_10x10mm_Layout15x15_P0.65mm:
   mask_margin: 0.075
   layout_x: 15
   layout_y: 15
+
+TFBGA-289_9x9mm_Layout17x17_P0.5mm:
+  description: "TFBGA-289"
+  size_source: "https://www.st.com/resource/en/datasheet/stm32mp131c.pdf"
+  body_size_x: 9.0
+  body_size_y: 9.0
+  pitch: 0.5
+  pad_diameter: 0.230
+  mask_margin: 0.050
+  paste_margin: 0.000001
+  layout_x: 17
+  layout_y: 17
+
 TFBGA-361_13x13mm_Layout19x19_P0.65mm:
   description: "TFBGA-361, NSMD"
   size_source: "https://www.efinixinc.com/docs/titanium-packaging-ug-v5.2.pdf"
@@ -375,6 +405,19 @@ TFBGA-361_13x13mm_Layout19x19_P0.65mm:
   mask_margin: 0.075
   layout_x: 19
   layout_y: 19
+
+ST_TFBGA-169_7x7mm_Layout13x13_P0.5mm:
+  description: "ST TFBGA-169"
+  size_source: "https://www.st.com/resource/en/datasheet/stm32u595aj.pdf"
+  body_size_x: 7.0
+  body_size_y: 7.0
+  pitch: 0.5
+  pad_diameter: 0.300
+  mask_margin: 0.038
+  paste_margin: 0.000001
+  layout_x: 13
+  layout_y: 13
+
 ST_TFBGA-225_13x13mm_Layout15x15_P0.8mm:
   description: "ST TFBGA-225"
   size_source: "https://www.st.com/resource/en/datasheet/stm32h7b3ri.pdf"
@@ -410,6 +453,37 @@ ST_TFBGA-257_10x10mm_Layout19x19_P0.5mmP0.65mm:
       layout_x: 9
       layout_y: 9
       row_names: [1A, 1B, 1C, 1D, 1E, 1F, 1G, 1H, 1J]
+
+ST_TFBGA-320_11x11mm_Layout21x21_P0.5mm:
+  description: "ST TFBGA-320"
+  size_source: "https://www.st.com/resource/en/datasheet/stm32mp131c.pdf"
+  body_size_x: 11.0
+  body_size_y: 11.0
+  pitch: 0.5
+  pad_diameter: 0.230
+  mask_margin: 0.050
+  paste_margin: 0.000001
+  layout_x: 21
+  layout_y: 21
+  pad_skips: [
+    a5,a8,a11,a14,a17,
+    d4,d5,d7,d9,d10,d12,d13,d15,d17,d18,
+    e1,e4,e18,e21,
+    f6,f7,f8,f9,f10,f11,f12,f13,f14,f15,f16,
+    g4,g6,g16,g18,
+    h1,h6,h8,h9,h10,h11,h12,h13,h14,h16,h21,
+    j4,j6,j8,j14,j16,j18,
+    k4,k6,k8,k14,k16,k18,
+    l1,l6,l8,l11,l14,l16,l21,
+    m4,m6,m8,m14,m16,m18,
+    n4,n6,n8,n14,n16,n18,
+    p1,p6,p8,p9,p10,p11,p12,p13,p14,p16,p21,
+    r4,r6,r16,r18,
+    t6,t7,t8,t9,t10,t11,t12,t13,t14,t15,t16,
+    u1,u4,u18,u21,
+    v4,v5,v7,v9,v10,v12,v13,v15,v17,v18,
+    aa5,aa8,aa11,aa14,aa17
+  ]
 
 ST_TFBGA-361_12x12mm_Layout23x23_P0.5mmP0.65mm:
   description: "ST TFBGA-361"
