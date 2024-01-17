@@ -813,6 +813,30 @@ def TriangleArrowPointingSouth(model: Footprint, apex_position: Vector2D, size: 
     poly = Polygon(nodes=arrow_pts, layer=layer, width=line_width_mm)
     model.append(poly)
 
+def TriangleArrowPointingEast(model: Footprint, apex_position: Vector2D, size: float,
+                               layer: str, line_width_mm: float):
+    r"""Make and append a east-pointing triangle
+
+    Size is between nodes, overall size will include 1*line_width overall
+
+    +\
+    | \
+    |  +
+    | /
+    +/
+
+    :param size: size of the triangle
+    """
+
+    arrow_pts = [
+        apex_position,
+        apex_position + [-size * 0.7, -size * 0.50],
+        apex_position + [-size * 0.7, size * 0.50],
+        apex_position
+    ]
+
+    poly = Polygon(nodes=arrow_pts, layer=layer, width=line_width_mm)
+    model.append(poly)
 
 def CornerBracketWithArrowPointingSouthEast(model: Footprint, apex: Vector2D, size_mm: float,
                                             bracket_max_x: float,

@@ -5,6 +5,7 @@ import os
 import argparse
 import yaml
 import math
+from typing import List
 
 sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))  # load parent path of KicadModTree
 
@@ -15,7 +16,7 @@ sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))  # load parent p
 from footprint_text_fields import addTextFields
 from ipc_pad_size_calculators import *
 from scripts.tools.quad_dual_pad_border import create_dual_or_quad_pad_border
-from scripts.tools.drawing_tools import nearestSilkPointOnOrthogonalLine
+from scripts.tools.drawing_tools import nearestSilkPointOnOrthogonalLine, TriangleArrowPointingSouth, roundGDown, TriangleArrowPointingEast
 
 sys.path.append(os.path.join(sys.path[0], "..", "utils"))
 from ep_handling_utils import getEpRoundRadiusParams
@@ -33,6 +34,30 @@ DEFAULT_MIN_ANNULAR_RING = 0.15
 def roundToBase(value, base):
     return round(value / base) * base
 
+def find_top_left_pad(pad_arrays: List[PadArray]) -> Pad:
+    """
+    From a list of pad arrays, find the top-left pad.
+    """
+
+    def point_is_left_and_then_above(point: Vector2D, other_point: Vector2D) -> bool:
+
+        # left-most wins if not the same
+        if point.x == other_point.x:
+            return point.y < other_point.y
+
+        # in the same col, top wins
+        return point.x < other_point.x
+
+    tl_pad = None
+    for pad_array in pad_arrays:
+        for pad in pad_array:
+            if tl_pad is None or point_is_left_and_then_above(pad.at, tl_pad.at):
+                tl_pad = pad
+
+    if tl_pad is None:
+        raise ValueError("No pad found in pad array")
+
+    return tl_pad
 
 class Gullwing():
     def __init__(self, configuration):
@@ -353,6 +378,7 @@ class Gullwing():
         for pad_array in pad_arrays:
             kicad_mod.append(pad_array)
 
+        tl_pad = find_top_left_pad(pad_arrays)
         pad_radius = get_pad_radius_from_arrays(pad_arrays)
 
         EP_round_radius = 0
@@ -519,6 +545,12 @@ class Gullwing():
         if silk_point_right_inside is not None:
             poly_bottom_right.append(silk_point_right_inside)
 
+
+        #  default to half the pitch, but not less than min_arrow_size
+        min_arrow_size = configuration['silk_line_width']* 3
+        arrow_size = max(device_params['pitch']/2, min_arrow_size)
+
+        # poly_bottom_right is used 4 times in all mirror configurations
         if len(poly_bottom_right) > 1 and silk_corner_bottom_right is not None:
             kicad_mod.append(PolygonLine(
                 polygon=poly_bottom_right,
@@ -532,42 +564,31 @@ class Gullwing():
                 polygon=poly_bottom_right,
                 width=configuration['silk_line_width'],
                 layer="F.SilkS", y_mirror=0))
+            kicad_mod.append(PolygonLine(
+                polygon=poly_bottom_right,
+                width=configuration['silk_line_width'],
+                layer="F.SilkS", y_mirror=0, x_mirror=0))
 
+            # we need a different arrow depending on the device orientation
             if device_params['num_pins_y'] > 0:
                 if len(poly_bottom_right) > 2:
-                    kicad_mod.append(PolygonLine(
-                        polygon=poly_bottom_right,
-                        width=configuration['silk_line_width'],
-                        layer="F.SilkS", y_mirror=0, x_mirror=0))
-                    kicad_mod.append(Line(
-                        start={'x': -silk_right, 'y': -right_pads_silk_bottom},
-                        end={'x': bounding_box['left'], 'y': -right_pads_silk_bottom},
-                        width=configuration['silk_line_width'],
-                        layer="F.SilkS"))
-                elif silk_corner_bottom_right['y'] >= right_pads_silk_bottom and silk_point_bottom_inside is not None:
-                    kicad_mod.append(Line(
-                        start=-silk_point_bottom_inside,
-                        end={'x': bounding_box['left'], 'y': -silk_point_bottom_inside['y']},
-                        width=configuration['silk_line_width'],
-                        layer="F.SilkS"))
+                    # put a down arrow top of pin1
+                    # this is always true for QFNs
+                    arrow_apex = Vector2D(tl_pad.at.x, tl_pad.at.y - tl_pad.size.y / 2 - silk_pad_offset)
+                    TriangleArrowPointingSouth(kicad_mod, arrow_apex, arrow_size, "F.SilkS", configuration['silk_line_width'])
+                else:
+                    # put a East arrow left of pin1
+                    arrow_apex = Vector2D(tl_pad.at.x - tl_pad.size.x / 2 - silk_pad_offset, tl_pad.at.y)
+                    TriangleArrowPointingEast(kicad_mod, arrow_apex, arrow_size, "F.SilkS", configuration['silk_line_width'])
+
             else:
                 if len(poly_bottom_right) > 2:
-                    poly_bottom_right[0]['x'] = bottom_pads_silk_right
-                    kicad_mod.append(PolygonLine(
-                        polygon=poly_bottom_right,
-                        width=configuration['silk_line_width'],
-                        layer="F.SilkS", y_mirror=0, x_mirror=0))
-                    kicad_mod.append(Line(
-                        start={'x': -bottom_pads_silk_right, 'y': -silk_corner_bottom_right['y']},
-                        end={'x': -bottom_pads_silk_right, 'y': bounding_box['top']},
-                        width=configuration['silk_line_width'],
-                        layer="F.SilkS"))
-                elif silk_corner_bottom_right['x'] >= bottom_pads_silk_right and silk_point_right_inside is not None:
-                    kicad_mod.append(Line(
-                        start=-silk_point_right_inside,
-                        end={'x': -silk_point_right_inside['x'], 'y': bounding_box['top']},
-                        width=configuration['silk_line_width'],
-                        layer="F.SilkS"))
+                    arrow_apex = Vector2D(tl_pad.at.x - tl_pad.size.x / 2 - silk_pad_offset, tl_pad.at.y)
+                    TriangleArrowPointingEast(kicad_mod, arrow_apex, arrow_size, "F.SilkS", configuration['silk_line_width'])
+                else:
+                    # put a down arrow top of pin1
+                    arrow_apex = Vector2D(tl_pad.at.x, tl_pad.at.y - tl_pad.size.y / 2 - silk_pad_offset)
+                    TriangleArrowPointingSouth(kicad_mod, arrow_apex, arrow_size, "F.SilkS", configuration['silk_line_width'])
 
         # # ######################## Fabrication Layer ###########################
 
