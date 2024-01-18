@@ -952,3 +952,16 @@ Alliance_TFBGA-54_8x8mm_Layout9x9_P0.8mm:
     [4,5,6],
     [4,5,6],
   ]
+
+Analog_BGA-77_9.0x15.0mm_Layout7x11_P1.27mm_Ball0.63mm:
+  description: "Analog Devices BGA-77, 0.63mm pad"
+  size_source: "https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/ltc-legacy-bga/05081964_B_bga77.pdf"
+  additional_tags: "LTC Dwg 05-08-1964 Rev. B"
+  body_size_x: 9
+  body_size_y: 15
+  overall_height: 2.42
+  pitch: 1.27
+  pad_diameter: 0.63
+  layout_x: 7
+  layout_y: 11
+
