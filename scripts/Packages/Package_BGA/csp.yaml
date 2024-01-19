@@ -702,6 +702,19 @@ ST_WLCSP-208_5.38x5.47mm_P0.35mm_Stagger:
   paste_margin: 0.0125
   layout_x: 26
   layout_y: 16
+ST_WLCSP-208_5.8x5.6mm_P0.35_Stagger:
+  description: "ST WLCSP-208, ST die ID 476"
+  size_source: "https://www.st.com/resource/en/datasheet/stm32u5f9bj.pdf"
+  body_size_x: 5.8
+  body_size_y: 5.6
+  pitch: 0.35
+  staggered: x
+  first_ball: A2
+  pad_diameter: 0.200
+  mask_margin: 0.0375
+  paste_margin: 0.015
+  layout_x: 26
+  layout_y: 16
 ST_WLCSP-100_4.437x4.456mm_Layout10x10_P0.4mm:
   description: "ST WLCSP-100, ST die ID 471"
   size_source: "https://www.st.com/resource/en/datasheet/stm32l4p5ve.pdf"
