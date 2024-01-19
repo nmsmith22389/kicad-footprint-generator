@@ -79,6 +79,32 @@ Relay_SPST_SANYOU_SRD_Series_Form_B:
   destination_dir: Relay_THT.3dshapes
   source: 'http://www.sanyourelay.ca/public/products/pdf/SRD.pdf'
 
+Relay_SPST_Omron_G5NB:
+  model_name: Relay_SPST_Omron_G5NB
+  roundbelly: 0
+  L: 20.5
+  W: 7.2
+  H: 15.3
+  rim: [1.0, 0.52, 0.3]
+  pinpadsize: 1.1
+  pinpadh: 3.7
+  pintype: tht
+  rotation: 0
+  pin1corner: [-1.1, -1.25]
+  pin:
+    - [0.0, 0.0, rect, 0.4, 0.4]
+    - [0.0, 4.7, rect, 0.4, 0.4]
+    - [11.5, 4.7, rect, 0.27, 0.8]
+    - [18.5, 4.7, rect, 0.33, 0.8]
+  A1: 0.0
+  corner: none
+  show_top: 0
+  body_color_key: white body
+  body_top_color_key: white body
+  pin_color_key: metal grey pins
+  destination_dir: Relay_THT.3dshapes
+  source: "https://omronfs.omron.com/en_US/ecb/products/pdf/en-g5nb_el.pdf"
+
 Relay_SPDT_SANYOU_SRD_Series_Form_C:
   model_name: Relay_SPDT_SANYOU_SRD_Series_Form_C
   roundbelly: 0
