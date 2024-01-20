@@ -5382,6 +5382,114 @@ NXP_XSON-16:
   mark_color_key: light brown label
   source: 'http://www.nxp.com/documents/outline_drawing/SOT1341-1.pdf'
 
+Nexperia_HUSON-8_USON-8-1EP_1.35x1.7mm_P0.4mm_EP0.4x1.2mm:
+  c: 0.127
+  L: 0.25
+  fp_s: True
+  fp_r: 0.25
+  fp_d: 0.1
+  fp_dx: null
+  fp_dy: null
+  fp_z: 0.01
+  ef: 0.0
+  cce: 0.25
+  D: 1.7
+  E: 1.35
+  A1: 0.025
+  A2: 0.525
+  b: 0.2
+  e: 0.4
+  m: 0.0
+  ps: square
+  npx: 4
+  npy: 0
+  epad: [1.2, 0.4]
+  epad_offsetX: null
+  epad_offsetY: null
+  epad_n: null
+  epad_pitch: null
+  excluded_pins: null
+  model_name: Nexperia_HUSON-8_USON-8-1EP_1.35x1.7mm_P0.4mm_EP0.4x1.2mm
+  rotation: -90
+  destination_dir: Package_SON.3dshapes
+  body_color_key: black body
+  pin_shapes: null
+  pin_color_key: metal grey pins
+  mark_color_key: light brown label
+  source: 'https://assets.nexperia.com/documents/package-information/SOT1166-1.pdf'
+
+Nexperia_HUSON-12_USON-12-1EP_1.35x2.5mm_P0.4mm_EP0.4x2mm:
+  c: 0.127
+  L: 0.25
+  fp_s: True
+  fp_r: 0.25
+  fp_d: 0.1
+  fp_dx: null
+  fp_dy: null
+  fp_z: 0.01
+  ef: 0.0
+  cce: 0.25
+  D: 2.5
+  E: 1.35
+  A1: 0.025
+  A2: 0.525
+  b: 0.2
+  e: 0.4
+  m: 0.0
+  ps: square
+  npx: 6
+  npy: 0
+  epad: [2.0, 0.4]
+  epad_offsetX: null
+  epad_offsetY: null
+  epad_n: null
+  epad_pitch: null
+  excluded_pins: null
+  model_name: Nexperia_HUSON-12_USON-12-1EP_1.35x2.5mm_P0.4mm_EP0.4x2mm
+  rotation: -90
+  destination_dir: Package_SON.3dshapes
+  body_color_key: black body
+  pin_shapes: null
+  pin_color_key: metal grey pins
+  mark_color_key: light brown label
+  source: 'https://assets.nexperia.com/documents/data-sheet/IP4251_52_53_54-TTL.pdf'
+
+Nexperia_HUSON-16_USON-16-1EP_1.35x3.3mm_P0.4mm_EP0.4x2.8mm:
+  c: 0.127
+  L: 0.25
+  fp_s: True
+  fp_r: 0.25
+  fp_d: 0.1
+  fp_dx: null
+  fp_dy: null
+  fp_z: 0.01
+  ef: 0.0
+  cce: 0.25
+  D: 3.3
+  E: 1.35
+  A1: 0.025
+  A2: 0.525
+  b: 0.2
+  e: 0.4
+  m: 0.0
+  ps: square
+  npx: 8
+  npy: 0
+  epad: [2.8, 0.4]
+  epad_offsetX: null
+  epad_offsetY: null
+  epad_n: null
+  epad_pitch: null
+  excluded_pins: null
+  model_name: Nexperia_HUSON-16_USON-16-1EP_1.35x3.3mm_P0.4mm_EP0.4x2.8mm
+  rotation: -90
+  destination_dir: Package_SON.3dshapes
+  body_color_key: black body
+  pin_shapes: null
+  pin_color_key: metal grey pins
+  mark_color_key: light brown label
+  source: 'https://assets.nexperia.com/documents/data-sheet/IP4251_52_53_54-TTL.pdf'
+
 WSON-6-1EP_2x2mm_P0.65mm_EP1x1.6mm:
   c: 0.2
   L: 0.25
