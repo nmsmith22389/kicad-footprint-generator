@@ -240,6 +240,26 @@ SMD_0603-4Pin:
   rotation: 0
   destination_dir: 'Crystal.3dshapes'
 
+SMD_2520-4Pin:
+  type: 1
+  file_name: Crystal_SMD_2520-4Pin_2.5x2.0mm
+  L: 2.5
+  W: 2.0
+  H: 0.8
+  A1: 0.0
+  p_cnt: 4
+  p_split_x: 1.6
+  p_split_y: 1.2
+  p_length: 0.7
+  p_width: 0.6
+  body_top_color_key: metal aluminum
+  body_color_key: gold pins
+  bottom_color_key: black body
+  pin_color_key: metal grey pins
+  rotation: 0
+  destination_dir: 'Crystal.3dshapes'
+  source: 'https://support.epson.biz/td/api/doc_check.php?dl=brief_SG-210STF&lang=en'
+
 SMD_2012-2Pin_2.0x1.2mm:
   type: 1
   file_name: Crystal_SMD_2012-2Pin_2.0x1.2mm
