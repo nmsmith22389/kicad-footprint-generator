@@ -1,29 +1,29 @@
-Relay_1P1T_NO_10x24x18.8mm_Panasonic_ADW11xxxxW_THT:
-  model_name: Relay_1P1T_NO_10x24x18.8mm_Panasonic_ADW11xxxxW_THT
+Relay_SPST_Panasonic_ADW11:
+  model_name: Relay_SPST_Panasonic_ADW11
   roundbelly: 0
-  L: -10
-  W: 24
+  L: 24
+  W: 10
   H: 18.8
   rim: null
   pinpadsize: 1.0
   pinpadh: 3.5
   pintype: tht
   rotation: 0
-  pin1corner: [8.75, -1.5]
+  pin1corner: [-1.5, -1.25]
   pin: [
     [0.0, 0.0, 'round', 0.4],
-    [7.5, 0.0, 'round', 0.4],
-    [0.0, 21, 'rect', 0.8, 0.2],
-    [7.5, 17.5, 'rect', 0.8, 0.2],
+    [0.0, 7.5, 'round', 0.4],
+    [17.5, 0.0, 'rect', 0.8, 0.2],
+    [21.0, 7.5, 'rect', 0.8, 0.2],
   ]
   A1: 0.1
   corner: none
   show_top: 0
-  body_color_key: black body
-  body_top_color_key: black body
+  body_color_key: white body
+  body_top_color_key: white body
   pin_color_key: metal grey pins
   destination_dir: Relay_THT.3dshapes
-  source: 'https://www.panasonic-electric-works.com/pew/es/downloads/ds_dw_hl_en.pdf'
+  source: 'https://api.pim.na.industrial.panasonic.com/file_stream/main/fileversion/270'
 
 Relay_SPST_SANYOU_SRD_Series_Form_A:
   model_name: Relay_SPST_SANYOU_SRD_Series_Form_A
