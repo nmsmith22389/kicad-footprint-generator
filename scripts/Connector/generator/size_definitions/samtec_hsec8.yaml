@@ -13,7 +13,7 @@ HSEC8-1XX-01-DV:
     thickness: 1.57
   source: 'https://suddendocs.samtec.com/prints/hsec8-1xxx-xx-xx-dv-x-xx-footprint.pdf'
   tags: 'conn samtec card-edge socket high-speed'
-  positions: [9, 10, 13, 20, 25, 30, 37, 40, 49, 50, 60, 70, 80, 90, 100]
+  positions: [10, 13, 20, 25, 30, 37, 40, 49, 50, 60, 70, 80, 90, 100]
   gap:
     9: [4, 4]
     13: [6, 4]
@@ -54,6 +54,7 @@ HSEC8-1XX-01-DV-A:
   doc_parameters:
     fp_options: "-A"
     details: ", alignment pins"
+  positions: [10, 13, 20, 25, 30, 37, 40, 49, 50, 60, 70, 80, 90, 100]
   mount_pads:
     align_l: # NPTH alignment pin left:
       center:
@@ -80,6 +81,7 @@ HSEC8-1XX-01-DV-A-WT:
   doc_parameters:
     fp_options: "-A-WT"
     details: ", alignment pins, weld tabs"
+  positions: [9, 10, 13, 20, 25, 30, 37, 40, 49, 50, 60, 70, 80, 90, 100]
   body_size:
     x_offset: 5.0
   mount_pads:
@@ -97,6 +99,7 @@ HSEC8-1XX-01-DV-A-WT:
 HSEC8-1XX-01-DV-A-BL:
   inherit: 'HSEC8-1XX-01-DV-A-WT'
   fp_suffix: '_Socket_WeldTabs_BoardLocks'     # optional: defaults to ''
+  positions: [9, 10, 13, 20, 25, 30, 37, 40, 49, 50, 60, 70, 80, 90, 100]
   doc_parameters:
     fp_options: "-A-BL"
     details: ", alignment pins, weld tabs, board locks"
