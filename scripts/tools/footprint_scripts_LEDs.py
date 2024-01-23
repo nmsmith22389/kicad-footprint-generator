@@ -141,8 +141,9 @@ def makeLEDRadial(rm, w, h, ddrill, win=0, rin=0, pins=2, type="round", x_3d=[0,
         addedtags.append(pincount_tag)
 
     for t in addedtags:
-        description = description + ", " + t
-        tags = tags + " " + t
+        if len(t):
+            description = description + ", " + t
+            tags = tags + " " + t
     if (specialfpname != ""):
         footprint_name = specialfpname;
 
@@ -433,8 +434,9 @@ def makeLEDHorizontal(pins=2,rm=2.544,dled=5,dledout=5.8,offsetled=2.54,wled=8.6
         addedtags.append(pincount_tag)
 
     for t in addedtags:
-        description = description + ", " + t
-        tags = tags + " " + t
+        if len(t):
+            description = description + ", " + t
+            tags = tags + " " + t
     if (specialfpname != ""):
         footprint_name = specialfpname;
 
