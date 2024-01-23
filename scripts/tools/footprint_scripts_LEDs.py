@@ -17,7 +17,7 @@ from footprint_global_properties import *
 
 # LED footprints
 #   style options:
-#     1. type="box"
+#     1. led_type="box"
 #           +----------------+ ^
 #           |                | |
 #           |  OO        OO  | h
@@ -25,7 +25,7 @@ from footprint_global_properties import *
 #           +----------------+ v
 #               <---rm--->
 #           <-------w-------->
-#     2. type="round"
+#     2. led_type="round"
 #              /----------\   ^
 #             |            \  |
 #             |  OO    OO   | h
@@ -33,7 +33,7 @@ from footprint_global_properties import *
 #              \__________/   v
 #                 <-rm->
 #           <-------w-------->
-#     3. type="roundedbox"
+#     3. led_type="roundedbox"
 #           +--------------\   ^
 #           |               \  |
 #           |  OO        OO  | h
@@ -41,7 +41,7 @@ from footprint_global_properties import *
 #           +--------------/   v
 #               <---rm--->
 #           <-------w-------->
-#     4. type="oval"
+#     4. led_type="oval"
 #           +----------------+ ^
 #           |                | |
 #           |  OO        OO  | h
@@ -49,7 +49,7 @@ from footprint_global_properties import *
 #           +----------------+ v
 #               <---rm--->
 #           <-------w-------->
-#     2. type="round_simple"
+#     2. led_type="round_simple"
 #              /----------\   ^
 #             /            \  |
 #            |   OO    OO   | h
@@ -58,7 +58,7 @@ from footprint_global_properties import *
 #                 <-rm->
 #           <-------w-------->
 # in the center a second circle is drawn if rin>0
-def makeLEDRadial(rm, w, h, ddrill, win=0, rin=0, pins=2, type="round", x_3d=[0, 0, 0],
+def makeLEDRadial(rm, w, h, ddrill, win=0, rin=0, pins=2, led_type="round", x_3d=[0, 0, 0],
                   s_3d=[1, 1, 1], has3d=1, specialfpname="", specialtags=None, add_description="",
                   classname="LED", lib_name="LED_THT", name_additions=None, script3d="", height3d=8, height3d_bottom=1):
     if specialtags is None:
@@ -105,16 +105,16 @@ def makeLEDRadial(rm, w, h, ddrill, win=0, rin=0, pins=2, type="round", x_3d=[0,
 
     size_filename = ""
     size_tags = []
-    if type == "round" or type == "round_simple":
+    if led_type == "round" or led_type == "round_simple":
         size_filename = "_D{0:0.1f}mm".format(rin)
         size_tags.append("diameter {0:0.1f}mm".format(rin))
     else:
-        if type == "oval":
+        if led_type == "oval":
             size_tags.append("Oval")
-        if type == "box":
+        if led_type == "box":
             size_tags.append("Rectangular")
         wsize = w
-        if type == "box" and win > 0:
+        if led_type == "box" and win > 0:
             wsize = win
         size_filename = size_filename + "_W{0:0.1f}mm_H{1:0.1f}mm".format(wsize, h)
         size_tags.append("size {0:0.1f}x{1:0.1f}mm^2".format(wsize, h))
@@ -126,7 +126,7 @@ def makeLEDRadial(rm, w, h, ddrill, win=0, rin=0, pins=2, type="round", x_3d=[0,
     pincount_tag = "{0:d} pins".format(pins)
     if pins > 2:
         pincount_filename = "-{0:d}".format(pins)
-        if type == "box":
+        if led_type == "box":
             pincount_filename = pincount_filename + "pins"
 
     footprint_name = classname + size_filename + pincount_filename
@@ -193,17 +193,17 @@ def makeLEDRadial(rm, w, h, ddrill, win=0, rin=0, pins=2, type="round", x_3d=[0,
     kicad_modg.append(Property(name=Property.VALUE, text=footprint_name, at=[0, t_slk + h_slk + txtoffset], layer='F.Fab'))
 
     # create FAB-layer
-    if type == "round":
+    if led_type == "round":
         kicad_modg.append(Circle(center=[0, 0], radius=d2_fab / 2, layer='F.Fab', width=lw_fab))
         xmark = d2_fab / 2
         ymark = math.sqrt(d_fab * d_fab / 4 - xmark * xmark)
         alpha = 360 - 2 * math.atan(ymark / xmark) / 3.1415 * 180
         kicad_modg.append(Arc(center=[0, 0], start=[-xmark, -ymark], angle=alpha, layer='F.Fab', width=lw_fab))
         kicad_modg.append(Line(start=[-xmark, -ymark], end=[-xmark, ymark], angle=alpha, layer='F.Fab', width=lw_fab))
-    if type == "round_simple":
+    if led_type == "round_simple":
         kicad_modg.append(Circle(center=[0, 0], radius=d2_fab / 2, layer='F.Fab', width=lw_fab))
         kicad_modg.append(Circle(center=[0, 0], radius=d_fab / 2, layer='F.Fab', width=lw_fab))
-    elif type == "box":
+    elif led_type == "box":
         kicad_modg.append(
             RectLine(start=[l_fab, t_fab], end=[l_fab + w_fab, t_fab + h_fab], layer='F.Fab', width=lw_fab))
         if d2_fab > 0:
@@ -211,7 +211,7 @@ def makeLEDRadial(rm, w, h, ddrill, win=0, rin=0, pins=2, type="round", x_3d=[0,
         if win > 0:
             kicad_modg.append(
                 RectLine(start=[-win / 2, t_fab], end=[win / 2, t_fab + h_fab], layer='F.Fab', width=lw_fab))
-    elif type == "oval":
+    elif led_type == "oval":
         r = w / 2
         ystart = 0
         xstart = math.sqrt(r * r - ystart * ystart)
@@ -231,14 +231,14 @@ def makeLEDRadial(rm, w, h, ddrill, win=0, rin=0, pins=2, type="round", x_3d=[0,
                                                   p[5] + 2 * lw_slk + 2 * slk_offset)
 
     # create SILKSCREEN-layer
-    if type == "box":
+    if led_type == "box":
         addRectWithKeepout(kicad_modg, l_slk, t_slk, w_slk, h_slk, 'F.SilkS', lw_slk, keepouts)
         if pins == 3:
             addVLineWithKeepout(kicad_modg, -offset[0] + rm / 2, t_slk, t_slk + h_slk, 'F.SilkS', lw_slk, keepouts)
         else:
             addVLineWithKeepout(kicad_modg, l_slk + lw_slk, t_slk, t_slk + h_slk, 'F.SilkS', lw_slk, keepouts)
             addVLineWithKeepout(kicad_modg, l_slk + 2 * lw_slk, t_slk, t_slk + h_slk, 'F.SilkS', lw_slk, keepouts)
-    elif type == "round":
+    elif led_type == "round":
         xmark = d2_fab / 2 + slk_offset
         ymark = math.sqrt(d_slk * d_slk / 4 - xmark * xmark)
         ypad = pady / 2 + slk_offset + lw_slk
@@ -264,7 +264,7 @@ def makeLEDRadial(rm, w, h, ddrill, win=0, rin=0, pins=2, type="round", x_3d=[0,
         else:
             kicad_modg.append(Arc(center=[0, 0], start=[-xpad, -ypad], angle=alpha, layer='F.SilkS', width=lw_slk))
             kicad_modg.append(Arc(center=[0, 0], start=[-xpad, ypad], angle=-alpha, layer='F.SilkS', width=lw_slk))
-    elif type == "round_simple":
+    elif led_type == "round_simple":
         rs = [d2_fab, d_slk]
         xpads = []
         ypads = []
@@ -294,7 +294,7 @@ def makeLEDRadial(rm, w, h, ddrill, win=0, rin=0, pins=2, type="round", x_3d=[0,
                 Line(start=[-xpads[0], ypads[0]], end=[-xpads[1], ypads[0]], layer='F.SilkS', width=lw_slk))
             kicad_modg.append(
                 Line(start=[-xpads[0], -ypads[0]], end=[-xpads[1], -ypads[0]], layer='F.SilkS', width=lw_slk))
-    elif type == "oval":
+    elif led_type == "oval":
         r = w_slk / 2
         ystart = 0
         xstart = math.sqrt(r * r - ystart * ystart)
@@ -342,7 +342,7 @@ def makeLEDRadial(rm, w, h, ddrill, win=0, rin=0, pins=2, type="round", x_3d=[0,
 
 # LED footprints for horizontally mounted LEDs
 #   style options:
-#     1. type="simple"
+#     1. led_type="simple"
 #                    +------\    ^
 #     ^       OO     |       \   |
 #     rm             |        |  dled
@@ -351,8 +351,8 @@ def makeLEDRadial(rm, w, h, ddrill, win=0, rin=0, pins=2, type="round", x_3d=[0,
 #             <------>offsetled
 #                    <--wled->
 #
-#  type="round"/"rect"
-def makeLEDHorizontal(pins=2,rm=2.544,dled=5,dledout=5.8,offsetled=2.54,wled=8.6, ddrill=0.8, wledback=1, type="round", x_3d=[0, 0, 0],
+#  led_type="round"/"rect"
+def makeLEDHorizontal(pins=2,rm=2.544,dled=5,dledout=5.8,offsetled=2.54,wled=8.6, ddrill=0.8, wledback=1, led_type="round", x_3d=[0, 0, 0],
                   s_3d=[1, 1, 1], has3d=1, specialfpname="", specialtags=None, add_description="",
                   classname="LED", lib_name="LEDs", name_additions=None, script3d="", height3d=5, ledypos=0):
     if specialtags is None:
@@ -396,7 +396,7 @@ def makeLEDHorizontal(pins=2,rm=2.544,dled=5,dledout=5.8,offsetled=2.54,wled=8.6
 
     size_filename = ""
     size_tags = []
-    if type == "round":
+    if led_type == "round":
         size_filename = "_D{0:0.1f}mm".format(dled)
         size_tags.append("diameter {0:0.1f}mm".format(dled))
     else:
@@ -488,14 +488,14 @@ def makeLEDHorizontal(pins=2,rm=2.544,dled=5,dledout=5.8,offsetled=2.54,wled=8.6
     kicad_modg.append(Property(name=Property.VALUE, text=footprint_name, at=[0, t_slk + h_slk + txtoffset], layer='F.Fab'))
 
     # create FAB-layer
-    if type == "round":
+    if led_type == "round":
 
         kicad_modg.append(Arc(center=[0,offsetled+wled-dled/2], start=[-dled/2,offsetled+wled-dled/2], angle=-180 , layer='F.Fab', width=lw_fab))
         kicad_modg.append(Line(start=[ -dled/2,offsetled], end=[-dled / 2,offsetled+wled-dled/2], layer='F.Fab', width=lw_fab))
         kicad_modg.append(Line(start=[dled / 2, offsetled], end=[dled / 2, offsetled + wled - dled / 2], layer='F.Fab', width=lw_fab))
         kicad_modg.append(Line(start=[ -dled/2,offsetled], end=[dled / 2,offsetled], layer='F.Fab',width=lw_fab))
         kicad_modg.append(RectLine(start=[ dledout/2,offsetled], end=[dled / 2,offsetled+wledback], layer='F.Fab',width=lw_fab))
-    elif type == "box":
+    elif led_type == "box":
         if wledback<=0:
             kicad_modg.append(
                 RectLine(start=[-dledout / 2, offsetled], end=[dledout / 2, offsetled + wled], layer='F.Fab',width=lw_fab))
@@ -520,13 +520,13 @@ def makeLEDHorizontal(pins=2,rm=2.544,dled=5,dledout=5.8,offsetled=2.54,wled=8.6
                                                   p[5] + 2 * lw_slk + 2 * slk_offset)
 
     # create SILKSCREEN-layer
-    if type == "round":
+    if led_type == "round":
         kicad_modg.append(Arc(center=[0, offsetled + wled - dled/2], start=[-dled / 2-slk_offset, offsetled + wled - dled/2], angle=-180,layer='F.SilkS', width=lw_slk))
         kicad_modg.append(Line(start=[-dled / 2-slk_offset, offsetled-slk_offset], end=[-dled / 2-slk_offset, offsetled + wled - dled / 2],  layer='F.SilkS',width=lw_slk))
         kicad_modg.append(Line(start=[dled / 2+slk_offset, offsetled-slk_offset], end=[dled / 2+slk_offset, offsetled + wled - dled / 2],  layer='F.SilkS',width=lw_slk))
         kicad_modg.append(Line(start=[-dled / 2-slk_offset, offsetled-slk_offset], end=[dled / 2+slk_offset, offsetled-slk_offset],  layer='F.SilkS', width=lw_slk))
         kicad_modg.append(RectLine(start=[dledout / 2+slk_offset, offsetled-slk_offset], end=[dled / 2+slk_offset, offsetled + wledback+slk_offset],  layer='F.SilkS',width=lw_slk))
-    elif type == "box":
+    elif led_type == "box":
         if wledback<=0:
             kicad_modg.append(RectLine(start=[-dledout / 2-slk_offset, offsetled-slk_offset], end=[dledout / 2+slk_offset, offsetled + wled+slk_offset], layer='F.SilkS',width=lw_slk))
             kicad_modg.append(Line(start=[-dledout / 2 - slk_offset+lw_slk, offsetled - slk_offset],end=[-dledout / 2+lw_slk -slk_offset, offsetled + wled + slk_offset], layer='F.SilkS',width=lw_slk))
