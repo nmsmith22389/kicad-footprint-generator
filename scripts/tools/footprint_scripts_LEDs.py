@@ -59,10 +59,10 @@ from footprint_global_properties import *
 #           <-------w-------->
 # in the center a second circle is drawn if rin>0
 def makeLEDRadial(rm, w, h, ddrill, win=0, rin=0, pins=2, led_type="round", x_3d=[0, 0, 0],
-                  s_3d=[1, 1, 1], has3d=1, specialfpname="", specialtags=None, add_description="",
+                  s_3d=[1, 1, 1], has3d=1, specialfpname="", special_info=None, add_description="",
                   classname="LED", lib_name="LED_THT", name_additions=None, script3d="", height3d=8, height3d_bottom=1):
-    if specialtags is None:
-        specialtags = []
+    if special_info is None:
+        special_info = []
     if name_additions is None:
         name_additions = []
 
@@ -103,24 +103,25 @@ def makeLEDRadial(rm, w, h, ddrill, win=0, rin=0, pins=2, led_type="round", x_3d
     sn = ""
     snt = ""
 
+    # TODO: strip out suffixes from class name? we don't want LED_sideemitter_rectangular in description, just LED
     size_filename = ""
-    size_tags = []
+    size_info = []
     if led_type == "round" or led_type == "round_simple":
         size_filename = "_D{0:0.1f}mm".format(rin)
-        size_tags.append("diameter {0:0.1f}mm".format(rin))
+        size_info.append("diameter {0:0.1f}mm".format(rin))
     else:
         if led_type == "oval":
-            size_tags.append("Oval")
+            size_info.append("Oval")
         if led_type == "box":
-            size_tags.append("Rectangular")
+            size_info.append("Rectangular")
         wsize = w
         if led_type == "box" and win > 0:
             wsize = win
         size_filename = size_filename + "_W{0:0.1f}mm_H{1:0.1f}mm".format(wsize, h)
-        size_tags.append("size {0:0.1f}x{1:0.1f}mm^2".format(wsize, h))
+        size_info.append("size {0:0.1f}x{1:0.1f}mm^2".format(wsize, h))
         if rin > 0:
             size_filename = "_D{0:0.1f}mm".format(rin) + size_filename
-            size_tags.append("diameter {0:0.1f}mm".format(rin))
+            size_info.append("diameter {0:0.1f}mm".format(rin))
 
     pincount_filename = ""
     pincount_tag = "{0:d} pins".format(pins)
@@ -134,14 +135,13 @@ def makeLEDRadial(rm, w, h, ddrill, win=0, rin=0, pins=2, led_type="round", x_3d
     description = [classname]
     tags = [classname]
 
-    addedtags = list(specialtags) + size_tags
+    added_info = list(special_info) + size_info
     if len(pincount_tag) > 0:
-        addedtags.append(pincount_tag)
+        added_info.append(pincount_tag)
 
-    for t in addedtags:
+    for t in added_info:
         if len(t):
             description.append(t)
-            tags.append(t)
     if (specialfpname != ""):
         footprint_name = specialfpname;
 
@@ -353,10 +353,10 @@ def makeLEDRadial(rm, w, h, ddrill, win=0, rin=0, pins=2, led_type="round", x_3d
 #
 #  led_type="round"/"rect"
 def makeLEDHorizontal(pins=2,rm=2.544,dled=5,dledout=5.8,offsetled=2.54,wled=8.6, ddrill=0.8, wledback=1, led_type="round", x_3d=[0, 0, 0],
-                  s_3d=[1, 1, 1], has3d=1, specialfpname="", specialtags=None, add_description="",
+                  s_3d=[1, 1, 1], has3d=1, specialfpname="", special_info=None, add_description="",
                   classname="LED", lib_name="LED_THT", name_additions=None, script3d="", height3d=5, ledypos=0):
-    if specialtags is None:
-        specialtags = []
+    if special_info is None:
+        special_info = []
     if name_additions is None:
         name_additions = []
 
@@ -395,23 +395,23 @@ def makeLEDHorizontal(pins=2,rm=2.544,dled=5,dledout=5.8,offsetled=2.54,wled=8.6
     snt = ""
 
     size_filename = ""
-    size_tags = []
+    size_info = []
     if led_type == "round":
         size_filename = "_D{0:0.1f}mm".format(dled)
-        size_tags.append("diameter {0:0.1f}mm".format(dled))
+        size_info.append("diameter {0:0.1f}mm".format(dled))
     else:
         if dled!=dledout:
             size_filename = size_filename + "_D{0:0.1f}mm".format(dled)
-            size_tags.append("diameter {0:0.1f}mm".format(dled))
+            size_info.append("diameter {0:0.1f}mm".format(dled))
         else:
-            size_tags.append("Rectangular")
+            size_info.append("Rectangular")
         size_filename = size_filename + "_W{0:0.1f}mm_H{1:0.1f}mm".format(dled, height3d)
-        size_tags.append("size {0:0.1f}x{1:0.1f}mm^2".format(dled, height3d))
+        size_info.append("size {0:0.1f}x{1:0.1f}mm^2".format(dled, height3d))
 
     fnypos=""
     if ledypos>0:
         fnypos = "_Z{0:0.1f}mm".format(ledypos)
-        size_tags.append("z-position of LED center {0:0.1f}mm".format(ledypos))
+        size_info.append("z-position of LED center {0:0.1f}mm".format(ledypos))
     else:
         ledypos=math.ceil(dled/2+0.5)
 
@@ -425,14 +425,13 @@ def makeLEDHorizontal(pins=2,rm=2.544,dled=5,dledout=5.8,offsetled=2.54,wled=8.6
     description = [classname]
     tags = [classname]
 
-    addedtags = list(specialtags) + size_tags
+    added_info = list(special_info) + size_info
     if len(pincount_tag) > 0:
-        addedtags.append(pincount_tag)
+        added_info.append(pincount_tag)
 
-    for t in addedtags:
+    for t in added_info:
         if len(t):
             description.append(t)
-            tags.append(t)
     if (specialfpname != ""):
         footprint_name = specialfpname;
 
