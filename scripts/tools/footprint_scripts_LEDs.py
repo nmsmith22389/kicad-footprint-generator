@@ -59,8 +59,8 @@ from footprint_global_properties import *
 #           <-------w-------->
 # in the center a second circle is drawn if rin>0
 def makeLEDRadial(rm, w, h, ddrill, win=0, rin=0, pins=2, type="round", x_3d=[0, 0, 0],
-                  s_3d=[1 / 2.54, 1 / 2.54, 1 / 2.54], has3d=1, specialfpname="", specialtags=None, add_description="",
-                  classname="LED", lib_name="LEDs", name_additions=None, script3d="", height3d=8, height3d_bottom=1):
+                  s_3d=[1, 1, 1], has3d=1, specialfpname="", specialtags=None, add_description="",
+                  classname="LED", lib_name="LED_THT", name_additions=None, script3d="", height3d=8, height3d_bottom=1):
     if specialtags is None:
         specialtags = []
     if name_additions is None:
@@ -331,7 +331,7 @@ def makeLEDRadial(rm, w, h, ddrill, win=0, rin=0, pins=2, type="round", x_3d=[0,
     # add model
     if (has3d != 0):
         kicad_modg.append(
-            Model(filename=lib_name + ".3dshapes/" + footprint_name + ".wrl", at=x_3d, scale=s_3d, rotate=[0, 0, 0]))
+            Model(filename="${KICAD8_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl", at=x_3d, scale=s_3d, rotate=[0, 0, 0]))
 
     # print render tree
     # print(kicad_mod.getRenderTree())
@@ -355,7 +355,7 @@ def makeLEDRadial(rm, w, h, ddrill, win=0, rin=0, pins=2, type="round", x_3d=[0,
 #
 #  type="round"/"rect"
 def makeLEDHorizontal(pins=2,rm=2.544,dled=5,dledout=5.8,offsetled=2.54,wled=8.6, ddrill=0.8, wledback=1, type="round", x_3d=[0, 0, 0],
-                  s_3d=[1 / 2.54, 1 / 2.54, 1 / 2.54], has3d=1, specialfpname="", specialtags=None, add_description="",
+                  s_3d=[1, 1, 1], has3d=1, specialfpname="", specialtags=None, add_description="",
                   classname="LED", lib_name="LEDs", name_additions=None, script3d="", height3d=5, ledypos=0):
     if specialtags is None:
         specialtags = []
@@ -573,7 +573,7 @@ def makeLEDHorizontal(pins=2,rm=2.544,dled=5,dledout=5.8,offsetled=2.54,wled=8.6
     # add model
     if (has3d != 0):
         kicad_modg.append(
-            Model(filename=lib_name + ".3dshapes/" + footprint_name + ".wrl", at=x_3d, scale=s_3d, rotate=[0, 0, 0]))
+            Model(filename="${KICAD8_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl", at=x_3d, scale=s_3d, rotate=[0, 0, 0]))
 
     # print render tree
     # print(kicad_mod.getRenderTree())
