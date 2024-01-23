@@ -88,7 +88,7 @@ if __name__ == '__main__':
     type="box"; pins=2; rm=2.54; rin=0; w=4.5; h=1.6;  height3d=5.7; height3d_bottom=0; name_additions=None; specialtags=["Rectangular","SideEmitter"]; add_description="http://cdn-reichelt.de/documents/datenblatt/A500/LED15MMGE_LED15MMGN%23KIN.pdf"
     makeLEDRadial(pins=pins, rm=rm, w=w, h=h, ddrill=ddrill, rin=rin, type=type, x_3d=[0, 0, 0], s_3d=[1, 1, 1], has3d=1, specialfpname="", specialtags=specialtags, add_description=add_description, classname=clname+"_SideEmitter_Rectangular", lib_name=lbname,name_additions=name_additions, script3d=script3d_rv, height3d=height3d, height3d_bottom=height3d_bottom)
     type="round"; pins=2; rm=2.54; dled=3; dledout=3.8; offset=2.54;wled=5.3; height3d=3; name_additions=None; specialtags=None; add_description=""
-    
+
     offsets=[1.27,3.81,6.35]
     for ledypos in [2,6,10]:
         for offset in offsets:

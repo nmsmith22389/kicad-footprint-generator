@@ -104,23 +104,23 @@ def makeLEDRadial(rm, w, h, ddrill, win=0, rin=0, pins=2, type="round", x_3d=[0,
     snt = ""
 
     size_filename = ""
-    size_tag = ""
+    size_tags = []
     if type == "round" or type == "round_simple":
         size_filename = "_D{0:0.1f}mm".format(rin)
-        size_tag = "diameter {0:0.1f}mm".format(rin)
+        size_tags.append("diameter {0:0.1f}mm".format(rin))
     else:
         if type == "oval":
-            size_tag = " Oval"
+            size_tags.append("Oval")
         if type == "box":
-            size_tag = " Rectangular"
+            size_tags.append("Rectangular")
         wsize = w
         if type == "box" and win > 0:
             wsize = win
         size_filename = size_filename + "_W{0:0.1f}mm_H{1:0.1f}mm".format(wsize, h)
-        size_tag = size_tag + " size {0:0.1f}x{1:0.1f}mm^2".format(wsize, h)
+        size_tags.append("size {0:0.1f}x{1:0.1f}mm^2".format(wsize, h))
         if rin > 0:
             size_filename = "_D{0:0.1f}mm".format(rin) + size_filename
-            size_tag = size_tag + " diameter {0:0.1f}mm".format(rin)
+            size_tags.append("diameter {0:0.1f}mm".format(rin))
 
     pincount_filename = ""
     pincount_tag = "{0:d} pins".format(pins)
@@ -131,24 +131,22 @@ def makeLEDRadial(rm, w, h, ddrill, win=0, rin=0, pins=2, type="round", x_3d=[0,
 
     footprint_name = classname + size_filename + pincount_filename
 
-    description = classname
-    tags = classname
+    description = [classname]
+    tags = [classname]
 
-    addedtags = list(specialtags)
-    if len(size_tag) > 0:
-        addedtags.append(size_tag)
+    addedtags = list(specialtags) + size_tags
     if len(pincount_tag) > 0:
         addedtags.append(pincount_tag)
 
     for t in addedtags:
         if len(t):
-            description = description + ", " + t
-            tags = tags + " " + t
+            description.append(t)
+            tags.append(t)
     if (specialfpname != ""):
         footprint_name = specialfpname;
 
     if len(add_description) > 0:
-        description = description + ", " + add_description
+        description.append(add_description)
 
     for n in name_additions:
         if len(n) > 0:
@@ -184,8 +182,8 @@ def makeLEDRadial(rm, w, h, ddrill, win=0, rin=0, pins=2, type="round", x_3d=[0,
 
     # init kicad footprint
     kicad_mod = Footprint(footprint_name, FootprintType.THT)
-    kicad_mod.setDescription(description)
-    kicad_mod.setTags(tags)
+    kicad_mod.setDescription(", ".join(description))
+    kicad_mod.setTags(" ".join(tags))
 
     kicad_modg = Translation(offset[0], offset[1])
     kicad_mod.append(kicad_modg)
@@ -397,23 +395,23 @@ def makeLEDHorizontal(pins=2,rm=2.544,dled=5,dledout=5.8,offsetled=2.54,wled=8.6
     snt = ""
 
     size_filename = ""
-    size_tag = ""
+    size_tags = []
     if type == "round":
         size_filename = "_D{0:0.1f}mm".format(dled)
-        size_tag = "diameter {0:0.1f}mm".format(dled)
+        size_tags.append("diameter {0:0.1f}mm".format(dled))
     else:
         if dled!=dledout:
             size_filename = size_filename + "_D{0:0.1f}mm".format(dled)
-            size_tag = size_tag + " diameter {0:0.1f}mm".format(dled)
+            size_tags.append("diameter {0:0.1f}mm".format(dled))
         else:
-            size_tag = " Rectangular"
+            size_tags.append("Rectangular")
         size_filename = size_filename + "_W{0:0.1f}mm_H{1:0.1f}mm".format(dled, height3d)
-        size_tag = size_tag + " size {0:0.1f}x{1:0.1f}mm^2".format(dled, height3d)
+        size_tags.append("size {0:0.1f}x{1:0.1f}mm^2".format(dled, height3d))
 
     fnypos=""
     if ledypos>0:
         fnypos = "_Z{0:0.1f}mm".format(ledypos)
-        size_tag = size_tag + " z-position of LED center {0:0.1f}mm".format(ledypos)
+        size_tags.append("z-position of LED center {0:0.1f}mm".format(ledypos))
     else:
         ledypos=math.ceil(dled/2+0.5)
 
@@ -424,24 +422,22 @@ def makeLEDHorizontal(pins=2,rm=2.544,dled=5,dledout=5.8,offsetled=2.54,wled=8.6
 
     footprint_name = classname + size_filename + pincount_filename
 
-    description = classname
-    tags = classname
+    description = [classname]
+    tags = [classname]
 
-    addedtags = list(specialtags)
-    if len(size_tag) > 0:
-        addedtags.append(size_tag)
+    addedtags = list(specialtags) + size_tags
     if len(pincount_tag) > 0:
         addedtags.append(pincount_tag)
 
     for t in addedtags:
         if len(t):
-            description = description + ", " + t
-            tags = tags + " " + t
+            description.append(t)
+            tags.append(t)
     if (specialfpname != ""):
         footprint_name = specialfpname;
 
     if len(add_description) > 0:
-        description = description + ", " + add_description
+        description.append(add_description)
 
     for n in name_additions:
         if len(n) > 0:
@@ -481,8 +477,8 @@ def makeLEDHorizontal(pins=2,rm=2.544,dled=5,dledout=5.8,offsetled=2.54,wled=8.6
 
     # init kicad footprint
     kicad_mod = Footprint(footprint_name, FootprintType.THT)
-    kicad_mod.setDescription(description)
-    kicad_mod.setTags(tags)
+    kicad_mod.setDescription(", ".join(description))
+    kicad_mod.setTags(" ".join(tags))
 
     kicad_modg = Translation(offset[0], offset[1])
     kicad_mod.append(kicad_modg)
@@ -582,8 +578,4 @@ def makeLEDHorizontal(pins=2,rm=2.544,dled=5,dledout=5.8,offsetled=2.54,wled=8.6
     # write file
     file_handler = KicadFileHandler(kicad_mod)
     file_handler.writeFile(footprint_name + '.kicad_mod')
-
-
-
-
 
