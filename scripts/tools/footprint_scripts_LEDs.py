@@ -103,42 +103,42 @@ def makeLEDRadial(rm, w, h, ddrill, win=0, rin=0, pins=2, type="round", x_3d=[0,
     sn = ""
     snt = ""
 
-    fnsize = ""
-    sizetag = ""
+    size_filename = ""
+    size_tag = ""
     if type == "round" or type == "round_simple":
-        fnsize = "_D{0:0.1f}mm".format(rin)
-        sizetag = "diameter {0:0.1f}mm".format(rin)
+        size_filename = "_D{0:0.1f}mm".format(rin)
+        size_tag = "diameter {0:0.1f}mm".format(rin)
     else:
         if type == "oval":
-            sizetag = " Oval"
+            size_tag = " Oval"
         if type == "box":
-            sizetag = " Rectangular"
+            size_tag = " Rectangular"
         wsize = w
         if type == "box" and win > 0:
             wsize = win
-        fnsize = fnsize + "_W{0:0.1f}mm_H{1:0.1f}mm".format(wsize, h)
-        sizetag = sizetag + " size {0:0.1f}x{1:0.1f}mm^2".format(wsize, h)
+        size_filename = size_filename + "_W{0:0.1f}mm_H{1:0.1f}mm".format(wsize, h)
+        size_tag = size_tag + " size {0:0.1f}x{1:0.1f}mm^2".format(wsize, h)
         if rin > 0:
-            fnsize = "_D{0:0.1f}mm".format(rin) + fnsize
-            sizetag = sizetag + " diameter {0:0.1f}mm".format(rin)
+            size_filename = "_D{0:0.1f}mm".format(rin) + size_filename
+            size_tag = size_tag + " diameter {0:0.1f}mm".format(rin)
 
-    fnpincnt = ""
-    pincnttag = "{0:d} pins".format(pins)
+    pincount_filename = ""
+    pincount_tag = "{0:d} pins".format(pins)
     if pins > 2:
-        fnpincnt = "-{0:d}".format(pins)
+        pincount_filename = "-{0:d}".format(pins)
         if type == "box":
-            fnpincnt = fnpincnt + "pins"
+            pincount_filename = pincount_filename + "pins"
 
-    footprint_name = classname + fnsize + fnpincnt
+    footprint_name = classname + size_filename + pincount_filename
 
     description = classname
     tags = classname
 
     addedtags = list(specialtags)
-    if len(sizetag) > 0:
-        addedtags.append(sizetag)
-    if len(pincnttag) > 0:
-        addedtags.append(pincnttag)
+    if len(size_tag) > 0:
+        addedtags.append(size_tag)
+    if len(pincount_tag) > 0:
+        addedtags.append(pincount_tag)
 
     for t in addedtags:
         description = description + ", " + t
@@ -395,42 +395,42 @@ def makeLEDHorizontal(pins=2,rm=2.544,dled=5,dledout=5.8,offsetled=2.54,wled=8.6
     sn = ""
     snt = ""
 
-    fnsize = ""
-    sizetag = ""
+    size_filename = ""
+    size_tag = ""
     if type == "round":
-        fnsize = "_D{0:0.1f}mm".format(dled)
-        sizetag = "diameter {0:0.1f}mm".format(dled)
+        size_filename = "_D{0:0.1f}mm".format(dled)
+        size_tag = "diameter {0:0.1f}mm".format(dled)
     else:
         if dled!=dledout:
-            fnsize = fnsize + "_D{0:0.1f}mm".format(dled)
-            sizetag = sizetag + " diameter {0:0.1f}mm".format(dled)
+            size_filename = size_filename + "_D{0:0.1f}mm".format(dled)
+            size_tag = size_tag + " diameter {0:0.1f}mm".format(dled)
         else:
-            sizetag = " Rectangular"
-        fnsize = fnsize + "_W{0:0.1f}mm_H{1:0.1f}mm".format(dled, height3d)
-        sizetag = sizetag + " size {0:0.1f}x{1:0.1f}mm^2".format(dled, height3d)
+            size_tag = " Rectangular"
+        size_filename = size_filename + "_W{0:0.1f}mm_H{1:0.1f}mm".format(dled, height3d)
+        size_tag = size_tag + " size {0:0.1f}x{1:0.1f}mm^2".format(dled, height3d)
 
     fnypos=""
     if ledypos>0:
         fnypos = "_Z{0:0.1f}mm".format(ledypos)
-        sizetag = sizetag+ " z-position of LED center {0:0.1f}mm".format(ledypos)
+        size_tag = size_tag + " z-position of LED center {0:0.1f}mm".format(ledypos)
     else:
         ledypos=math.ceil(dled/2+0.5)
 
-    fnpincnt = ""
-    pincnttag = "{0:d} pins".format(pins)
+    pincount_filename = ""
+    pincount_tag = "{0:d} pins".format(pins)
     if pins > 2:
-        fnpincnt = "-{0:d}pins".format(pins)
+        pincount_filename = "-{0:d}pins".format(pins)
 
-    footprint_name = classname + fnsize + fnpincnt
+    footprint_name = classname + size_filename + pincount_filename
 
     description = classname
     tags = classname
 
     addedtags = list(specialtags)
-    if len(sizetag) > 0:
-        addedtags.append(sizetag)
-    if len(pincnttag) > 0:
-        addedtags.append(pincnttag)
+    if len(size_tag) > 0:
+        addedtags.append(size_tag)
+    if len(pincount_tag) > 0:
+        addedtags.append(pincount_tag)
 
     for t in addedtags:
         description = description + ", " + t
