@@ -59,8 +59,13 @@ from footprint_global_properties import *
 #           <-------w-------->
 # in the center a second circle is drawn if rin>0
 def makeLEDRadial(rm, w, h, ddrill, win=0, rin=0, pins=2, type="round", x_3d=[0, 0, 0],
-                  s_3d=[1 / 2.54, 1 / 2.54, 1 / 2.54], has3d=1, specialfpname="", specialtags=[], add_description="",
-                  classname="LED", lib_name="LEDs", name_additions=[], script3d="", height3d=8, height3d_bottom=1):
+                  s_3d=[1 / 2.54, 1 / 2.54, 1 / 2.54], has3d=1, specialfpname="", specialtags=None, add_description="",
+                  classname="LED", lib_name="LEDs", name_additions=None, script3d="", height3d=8, height3d_bottom=1):
+    if specialtags is None:
+        specialtags = []
+    if name_additions is None:
+        name_additions = []
+
     padx = 2 * ddrill
     pady = padx
     if padx + min_pad_distance > rm:
@@ -350,8 +355,13 @@ def makeLEDRadial(rm, w, h, ddrill, win=0, rin=0, pins=2, type="round", x_3d=[0,
 #
 #  type="round"/"rect"
 def makeLEDHorizontal(pins=2,rm=2.544,dled=5,dledout=5.8,offsetled=2.54,wled=8.6, ddrill=0.8, wledback=1, type="round", x_3d=[0, 0, 0],
-                  s_3d=[1 / 2.54, 1 / 2.54, 1 / 2.54], has3d=1, specialfpname="", specialtags=[], add_description="",
-                  classname="LED", lib_name="LEDs", name_additions=[], script3d="", height3d=5, ledypos=0):
+                  s_3d=[1 / 2.54, 1 / 2.54, 1 / 2.54], has3d=1, specialfpname="", specialtags=None, add_description="",
+                  classname="LED", lib_name="LEDs", name_additions=None, script3d="", height3d=5, ledypos=0):
+    if specialtags is None:
+        specialtags = []
+    if name_additions is None:
+        name_additions = []
+
     padx = 2 * ddrill
     pady = padx
     if padx + min_pad_distance > rm:
