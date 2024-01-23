@@ -354,7 +354,7 @@ def makeLEDRadial(rm, w, h, ddrill, win=0, rin=0, pins=2, led_type="round", x_3d
 #  led_type="round"/"rect"
 def makeLEDHorizontal(pins=2,rm=2.544,dled=5,dledout=5.8,offsetled=2.54,wled=8.6, ddrill=0.8, wledback=1, led_type="round", x_3d=[0, 0, 0],
                   s_3d=[1, 1, 1], has3d=1, specialfpname="", specialtags=None, add_description="",
-                  classname="LED", lib_name="LEDs", name_additions=None, script3d="", height3d=5, ledypos=0):
+                  classname="LED", lib_name="LED_THT", name_additions=None, script3d="", height3d=5, ledypos=0):
     if specialtags is None:
         specialtags = []
     if name_additions is None:
