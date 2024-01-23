@@ -789,24 +789,27 @@ def TriangleArrowPointingSouthEast(model: Footprint, apex_position: Vector2D, si
     model.append(poly)
 
 
-def TriangleArrowPointingSouth(model: Footprint, apex_position: Vector2D, size: float,
+def TriangleArrowPointingSouth(model: Footprint, apex_position: Vector2D,
+                               size: float, length: float,
                                layer: str, line_width_mm: float):
     r"""Make and append a south-pointing triangle
 
-    Size is between nodes, overall size will include 1*line_width overall
+    Size is the overall size of the triangle, including line_width overall
 
-    +-----+
-     \   /
-      \ /
-       +
+      size
+    |-----|
+    +-----+  ---
+     \   /    |
+      \ /     |length
+       +     ---
 
     :param size: size of the triangle
     """
 
     arrow_pts = [
         apex_position,
-        apex_position + [-size / 2, -size * 0.70],
-        apex_position + [size / 2, -size * 0.70],
+        apex_position + [-size / 2, -length],
+        apex_position + [size / 2, -length],
         apex_position
     ]
 
@@ -814,7 +817,7 @@ def TriangleArrowPointingSouth(model: Footprint, apex_position: Vector2D, size: 
     model.append(poly)
 
 def TriangleArrowPointingEast(model: Footprint, apex_position: Vector2D, size: float,
-                               layer: str, line_width_mm: float):
+                               length: float, layer: str, line_width_mm: float):
     r"""Make and append a east-pointing triangle
 
     Size is between nodes, overall size will include 1*line_width overall
@@ -830,15 +833,17 @@ def TriangleArrowPointingEast(model: Footprint, apex_position: Vector2D, size: f
 
     arrow_pts = [
         apex_position,
-        apex_position + [-size * 0.7, -size * 0.50],
-        apex_position + [-size * 0.7, size * 0.50],
+        apex_position + [-length, -size * 0.50],
+        apex_position + [-length, size * 0.50],
         apex_position
     ]
 
     poly = Polygon(nodes=arrow_pts, layer=layer, width=line_width_mm)
     model.append(poly)
 
-def CornerBracketWithArrowPointingSouthEast(model: Footprint, apex: Vector2D, size_mm: float,
+def CornerBracketWithArrowPointingSouthEast(model: Footprint, apex: Vector2D,
+                                            arrow_size: float,
+                                            arrow_length: float,
                                             bracket_max_x: float,
                                             bracket_max_y: float,
                                             layer: str,
@@ -857,7 +862,8 @@ def CornerBracketWithArrowPointingSouthEast(model: Footprint, apex: Vector2D, si
     # minimum clearance between nodes of the lines
     silk_silk_node_clearance = 2 * line_width_mm
 
-    TriangleArrowPointingSouthEast(model, apex, size_mm, layer, line_width_mm)
+    TriangleArrowPointingSouthEast(model, apex, arrow_size, arrow_length,
+                                   layer, line_width_mm)
 
     pin_1_silk_line_len_x = bracket_max_x - (apex.x + silk_silk_node_clearance)
     pin_1_silk_line_len_y = bracket_max_y - (apex.y + silk_silk_node_clearance)
@@ -881,7 +887,8 @@ def CornerBracketWithArrowPointingSouthEast(model: Footprint, apex: Vector2D, si
 
 
 def CornerBracketWithArrowPointingSouth(model: Footprint, apex: Vector2D,
-                                        size_mm: float,
+                                        arrow_size: float,
+                                        arrow_length: float,
                                         bracket_max_x: float,
                                         bracket_max_y: float,
                                         layer: str,
@@ -904,13 +911,14 @@ def CornerBracketWithArrowPointingSouth(model: Footprint, apex: Vector2D,
     silk_silk_node_clearance = 2 * line_width_mm
 
     # shove arrow left away from the pad on the right
-    apex.x = min(apex.x, bracket_max_x - size_mm / 2)
+    apex.x = min(apex.x, bracket_max_x - arrow_size / 2)
 
     # Round the apex away from the body corner
     apex.x = roundGDown(apex.x, 0.01)
     apex.y = roundGDown(apex.y, 0.01)
 
-    TriangleArrowPointingSouth(model, apex, size_mm, layer, line_width_mm)
+    TriangleArrowPointingSouth(model, apex, arrow_size, arrow_length,
+                               layer, line_width_mm)
 
     # a little extra clearance on the side of the arrow
     pin_1_silk_line_len_x = bracket_max_x - (apex.x + silk_silk_node_clearance + line_width_mm / 2)

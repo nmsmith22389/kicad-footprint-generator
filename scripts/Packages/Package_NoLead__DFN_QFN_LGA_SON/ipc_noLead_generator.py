@@ -532,6 +532,7 @@ class NoLead():
         #  default to half the smaller pitch, but not less than min_arrow_size
         arrow_size = max(min(device_dimensions['pitch_x'], device_dimensions['pitch_y']) / 2,
                          min_arrow_size)
+        arrow_length = arrow_size * 0.70
 
         if device_params['num_pins_x'] == 0 or device_params['num_pins_y'] == 0:
 
@@ -564,7 +565,8 @@ class NoLead():
             arrow_apex.x = roundGDown(arrow_apex.x, 0.01)
             arrow_apex.y = roundGDown(arrow_apex.y, 0.01)
 
-            TriangleArrowPointingSouthEast(kicad_mod, arrow_apex, arrow_size, "F.SilkS", silk_line_width_mm)
+            TriangleArrowPointingSouthEast(kicad_mod, arrow_apex, arrow_size,
+                                           "F.SilkS", silk_line_width_mm)
 
             if vertical_lines:
                 # stay outside the body _and_ the pad clearance
@@ -630,7 +632,9 @@ class NoLead():
                 body_edge['top'] - silk_offset
             )
 
-            CornerBracketWithArrowPointingSouth(kicad_mod, arrow_apex, arrow_size, sx1, sy1,
+            CornerBracketWithArrowPointingSouth(kicad_mod, arrow_apex,
+                                                arrow_size, arrow_length,
+                                                sx1, sy1,
                                                 "F.SilkS", silk_line_width_mm, SILK_MIN_LEN)
 
             poly_silk = [

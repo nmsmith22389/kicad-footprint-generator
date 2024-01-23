@@ -15,6 +15,7 @@ from KicadModTree.nodes.specialized.PadArray import PadArray, get_pad_radius_fro
 sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))  # load parent path of tools
 from footprint_text_fields import addTextFields
 from ipc_pad_size_calculators import *
+from scripts.tools.geometry.bounding_box import BoundingBox
 from scripts.tools.quad_dual_pad_border import create_dual_or_quad_pad_border
 from scripts.tools.drawing_tools import nearestSilkPointOnOrthogonalLine, TriangleArrowPointingSouth, roundGDown, TriangleArrowPointingEast
 
@@ -447,6 +448,67 @@ class Gullwing():
 
         pad_width = pad_details['top']['size'][0]
 
+        # # ############################ CrtYd ##################################
+
+        courtyard_offset = ipc_data_set['courtyard']
+        courtyard_grid = configuration['courtyard_grid']
+
+        def make_courtyard_bbox():
+            cy_t = roundToBase(bounding_box['top'] - courtyard_offset, courtyard_grid)
+            cy_l = roundToBase(bounding_box['left'] - courtyard_offset, courtyard_grid)
+            cy_r = roundToBase(bounding_box['right'] + courtyard_offset, courtyard_grid)
+            cy_b = roundToBase(bounding_box['bottom'] + courtyard_offset, courtyard_grid)
+
+            return BoundingBox(
+                min_pt=Vector2D(cy_l, cy_t),
+                max_pt=Vector2D(cy_r, cy_b)
+            )
+
+        courtyard_bbox = make_courtyard_bbox()
+
+        if device_params['num_pins_y'] == 0 or device_params['num_pins_x'] == 0:
+            # Dual pin-row devices - simple rectangle at the bounding box
+
+            kicad_mod.append(RectLine(
+                start=courtyard_bbox.min,
+                end=courtyard_bbox.max,
+                width=configuration['courtyard_line_width'],
+                layer='F.CrtYd'))
+        else:
+            # QFP
+            cy1 = courtyard_bbox.top
+            cy2 = roundToBase(body_edge['top'] - courtyard_offset, courtyard_grid)
+            cy3 = -roundToBase(
+                device_params['pitch'] * (device_params['num_pins_y'] - 1) / 2.0 +
+                pad_width / 2.0 + courtyard_offset, courtyard_grid)
+
+            cx1 = -roundToBase(
+                device_params['pitch'] * (device_params['num_pins_x'] - 1) / 2.0 +
+                pad_width / 2.0 + courtyard_offset, courtyard_grid)
+            cx2 = roundToBase(body_edge['left'] - courtyard_offset, courtyard_grid)
+            cx3 = courtyard_bbox.left
+
+            crty_poly_tl = [
+                {'x': 0, 'y': cy1},
+                {'x': cx1, 'y': cy1},
+                {'x': cx1, 'y': cy2},
+                {'x': cx2, 'y': cy2},
+                {'x': cx2, 'y': cy3},
+                {'x': cx3, 'y': cy3},
+                {'x': cx3, 'y': 0}
+            ]
+            kicad_mod.append(PolygonLine(polygon=crty_poly_tl,
+                                         layer='F.CrtYd', width=configuration['courtyard_line_width']))
+            kicad_mod.append(PolygonLine(polygon=crty_poly_tl,
+                                         layer='F.CrtYd', width=configuration['courtyard_line_width'],
+                                         x_mirror=0))
+            kicad_mod.append(PolygonLine(polygon=crty_poly_tl,
+                                         layer='F.CrtYd', width=configuration['courtyard_line_width'],
+                                         y_mirror=0))
+            kicad_mod.append(PolygonLine(polygon=crty_poly_tl,
+                                         layer='F.CrtYd', width=configuration['courtyard_line_width'],
+                                         x_mirror=0, y_mirror=0))
+
         # ############################ SilkS ##################################
         silk_pad_offset = configuration['silk_pad_clearance'] + configuration['silk_line_width'] / 2
         silk_offset = configuration['silk_fab_offset']
@@ -547,48 +609,76 @@ class Gullwing():
 
 
         #  default to half the pitch, but not less than min_arrow_size
-        min_arrow_size = configuration['silk_line_width']* 3
-        arrow_size = max(device_params['pitch']/2, min_arrow_size)
+        min_arrow_size = configuration['silk_line_width'] * 3
+        arrow_size = max(device_params['pitch'] / 2, min_arrow_size)
+        arrow_length = arrow_size * 0.70
+
+        silk_line_width = configuration['silk_line_width']
 
         # poly_bottom_right is used 4 times in all mirror configurations
         if len(poly_bottom_right) > 1 and silk_corner_bottom_right is not None:
             kicad_mod.append(PolygonLine(
                 polygon=poly_bottom_right,
-                width=configuration['silk_line_width'],
+                width=silk_line_width,
                 layer="F.SilkS"))
             kicad_mod.append(PolygonLine(
                 polygon=poly_bottom_right,
-                width=configuration['silk_line_width'],
+                width=silk_line_width,
                 layer="F.SilkS", x_mirror=0))
             kicad_mod.append(PolygonLine(
                 polygon=poly_bottom_right,
-                width=configuration['silk_line_width'],
+                width=silk_line_width,
                 layer="F.SilkS", y_mirror=0))
             kicad_mod.append(PolygonLine(
                 polygon=poly_bottom_right,
-                width=configuration['silk_line_width'],
+                width=silk_line_width,
                 layer="F.SilkS", y_mirror=0, x_mirror=0))
+
+            tl_pad_with_clearance_top = tl_pad.at.y - tl_pad.size.y / 2 - silk_pad_offset
+            tl_pad_with_clearance_left = tl_pad.at.x - tl_pad.size.x / 2 - silk_pad_offset
+
+            # Allow a top-down arrow if there is enough space between the top pad and the courtyard
+            # (it is allowed to overlap the courtyard by the courtyard offset, as a neigbouring part
+            # with touching courtyards will nearly always have the same offset for itself, giving
+            # our arrow a place. And the arrow is directional, so it's clear which part it belongs
+            # to.)
+            arrow_permitted_spill_over_top_courtyard = courtyard_offset
+            minimum_space_to_fit_arrow = arrow_length + silk_line_width - arrow_permitted_spill_over_top_courtyard
 
             # we need a different arrow depending on the device orientation
             if device_params['num_pins_y'] > 0:
-                if len(poly_bottom_right) > 2:
+                # Pins on the left and right side
+
+                pad_to_courtyard_corner_gap = tl_pad_with_clearance_top - courtyard_bbox.top
+                is_qfn = device_params['num_pins_x'] > 0 and device_params['num_pins_y'] > 0
+
+                if is_qfn or (pad_to_courtyard_corner_gap >= minimum_space_to_fit_arrow):
+                    # We can fit an arrow in the courtyard, or it's a QFN
+
                     # put a down arrow top of pin1
-                    # this is always true for QFNs
-                    arrow_apex = Vector2D(tl_pad.at.x, tl_pad.at.y - tl_pad.size.y / 2 - silk_pad_offset)
-                    TriangleArrowPointingSouth(kicad_mod, arrow_apex, arrow_size, "F.SilkS", configuration['silk_line_width'])
+                    arrow_apex = Vector2D(tl_pad.at.x, tl_pad_with_clearance_top)
+                    TriangleArrowPointingSouth(kicad_mod, arrow_apex, arrow_size, arrow_length,
+                                               "F.SilkS", silk_line_width)
                 else:
                     # put a East arrow left of pin1
-                    arrow_apex = Vector2D(tl_pad.at.x - tl_pad.size.x / 2 - silk_pad_offset, tl_pad.at.y)
-                    TriangleArrowPointingEast(kicad_mod, arrow_apex, arrow_size, "F.SilkS", configuration['silk_line_width'])
+                    arrow_apex = Vector2D(tl_pad_with_clearance_left, tl_pad.at.y)
+                    TriangleArrowPointingEast(kicad_mod, arrow_apex, arrow_size, arrow_length,
+                                              "F.SilkS", silk_line_width)
 
             else:
-                if len(poly_bottom_right) > 2:
-                    arrow_apex = Vector2D(tl_pad.at.x - tl_pad.size.x / 2 - silk_pad_offset, tl_pad.at.y)
-                    TriangleArrowPointingEast(kicad_mod, arrow_apex, arrow_size, "F.SilkS", configuration['silk_line_width'])
+                # Pins on the top and bottom side
+
+                pad_to_courtyard_corner_gap = tl_pad_with_clearance_left - courtyard_bbox.left
+
+                if pad_to_courtyard_corner_gap >= minimum_space_to_fit_arrow:
+                    arrow_apex = Vector2D(tl_pad_with_clearance_left, tl_pad.at.y)
+                    TriangleArrowPointingEast(kicad_mod, arrow_apex, arrow_size, arrow_length,
+                                              "F.SilkS", silk_line_width)
                 else:
                     # put a down arrow top of pin1
-                    arrow_apex = Vector2D(tl_pad.at.x, tl_pad.at.y - tl_pad.size.y / 2 - silk_pad_offset)
-                    TriangleArrowPointingSouth(kicad_mod, arrow_apex, arrow_size, "F.SilkS", configuration['silk_line_width'])
+                    arrow_apex = Vector2D(tl_pad.at.x, tl_pad_with_clearance_top)
+                    TriangleArrowPointingSouth(kicad_mod, arrow_apex, arrow_size, arrow_length,
+                                               "F.SilkS", silk_line_width)
 
         # # ######################## Fabrication Layer ###########################
 
@@ -609,64 +699,11 @@ class Gullwing():
             width=configuration['fab_line_width'],
             layer="F.Fab"))
 
-        # # ############################ CrtYd ##################################
-
-        off = ipc_data_set['courtyard']
-        grid = configuration['courtyard_grid']
-
-        if device_params['num_pins_y'] == 0 or device_params['num_pins_x'] == 0:
-            cy1 = roundToBase(bounding_box['top'] - off, grid)
-
-            kicad_mod.append(RectLine(
-                start={
-                    'x': roundToBase(bounding_box['left'] - off, grid),
-                    'y': cy1
-                },
-                end={
-                    'x': roundToBase(bounding_box['right'] + off, grid),
-                    'y': roundToBase(bounding_box['bottom'] + off, grid)
-                },
-                width=configuration['courtyard_line_width'],
-                layer='F.CrtYd'))
-
-        else:
-            cy1 = roundToBase(bounding_box['top'] - off, grid)
-            cy2 = roundToBase(body_edge['top'] - off, grid)
-            cy3 = -roundToBase(
-                device_params['pitch'] * (device_params['num_pins_y'] - 1) / 2.0 +
-                pad_width / 2.0 + off, grid)
-
-            cx1 = -roundToBase(
-                device_params['pitch'] * (device_params['num_pins_x'] - 1) / 2.0 +
-                pad_width / 2.0 + off, grid)
-            cx2 = roundToBase(body_edge['left'] - off, grid)
-            cx3 = roundToBase(bounding_box['left'] - off, grid)
-
-            crty_poly_tl = [
-                {'x': 0, 'y': cy1},
-                {'x': cx1, 'y': cy1},
-                {'x': cx1, 'y': cy2},
-                {'x': cx2, 'y': cy2},
-                {'x': cx2, 'y': cy3},
-                {'x': cx3, 'y': cy3},
-                {'x': cx3, 'y': 0}
-            ]
-            kicad_mod.append(PolygonLine(polygon=crty_poly_tl,
-                                         layer='F.CrtYd', width=configuration['courtyard_line_width']))
-            kicad_mod.append(PolygonLine(polygon=crty_poly_tl,
-                                         layer='F.CrtYd', width=configuration['courtyard_line_width'],
-                                         x_mirror=0))
-            kicad_mod.append(PolygonLine(polygon=crty_poly_tl,
-                                         layer='F.CrtYd', width=configuration['courtyard_line_width'],
-                                         y_mirror=0))
-            kicad_mod.append(PolygonLine(polygon=crty_poly_tl,
-                                         layer='F.CrtYd', width=configuration['courtyard_line_width'],
-                                         x_mirror=0, y_mirror=0))
-
         # ######################### Text Fields ###############################
 
         addTextFields(kicad_mod=kicad_mod, configuration=configuration, body_edges=body_edge,
-                      courtyard={'top': cy1, 'bottom': -cy1}, fp_name=fp_name, text_y_inside_position='center')
+                      courtyard={'top': courtyard_bbox.top, 'bottom': courtyard_bbox.bottom},
+                      fp_name=fp_name, text_y_inside_position='center')
 
         ##################### Output and 3d model ############################
 
