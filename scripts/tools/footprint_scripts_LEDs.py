@@ -134,7 +134,7 @@ def makeLEDRadial(rm, w, h, ddrill, win=0, rin=0, pins=2, type="round", x_3d=[0,
     description = classname
     tags = classname
 
-    addedtags = specialtags
+    addedtags = list(specialtags)
     if len(sizetag) > 0:
         addedtags.append(sizetag)
     if len(pincnttag) > 0:
@@ -427,7 +427,7 @@ def makeLEDHorizontal(pins=2,rm=2.544,dled=5,dledout=5.8,offsetled=2.54,wled=8.6
     description = classname
     tags = classname
 
-    addedtags = specialtags
+    addedtags = list(specialtags)
     if len(sizetag) > 0:
         addedtags.append(sizetag)
     if len(pincnttag) > 0:
