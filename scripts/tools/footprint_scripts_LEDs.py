@@ -307,7 +307,6 @@ def makeLEDRadial(rm, w, h, ddrill, win=0, rin=0, pins=2, type="round", x_3d=[0,
             Arc(center=[0, ycenter], start=[-xstart, -ystart], angle=-alpha, layer='F.SilkS', width=lw_slk))
         xmark = -xstart + 2 * lw_slk
         ymark = ycenter + math.sqrt(r * r - xmark * xmark)
-        print(ymark, ycenter, ymark + ycenter)
         addVLineWithKeepout(kicad_modg, xmark, -ymark, ymark, 'F.SilkS', lw_slk, keepouts)
 
     # create courtyard
