@@ -127,10 +127,20 @@ def make_qfn(params):
         #translate the object  
         pinmark=pinmark.translate((-D/2+fp_r/2+fp_dx,0,0)) #.rotate((0,0,0), (0,1,0), 0)
     else:
-        sphere_r = (fp_r*fp_r/2 + fp_z*fp_z) / (2*fp_z)
-        sphere_z = A + sphere_r * 2 - fp_z - sphere_r
-    
-        pinmark=cq.Workplane("XZ", (-D/2+fp_dx+fp_r, -E/2+fp_dy+fp_r, fp_z)).rect(fp_r/2, -2*fp_z, False).revolve().translate((0,0,A))#+fp_z))
+        # create a circular pin mark
+        # First, create a pocket in the case for the pin mark with twice the height of the pin mark
+        pinmark_cutout = (
+            cq.Workplane("XZ", (-D/2+fp_dx+fp_r, -E/2+fp_dy+fp_r, 0))
+            .rect(fp_r/2, -2*fp_z, False).revolve()
+            .translate((0, 0, A))
+        )
+        case = case.cut(pinmark_cutout)
+        # Now create the pin mark at the bottom of the pocket at (A-fp_z) to make it look like a 2D printed surface
+        pinmark = (
+            cq.Workplane("XZ", (-D/2+fp_dx+fp_r, -E/2+fp_dy+fp_r, 0))
+            .rect(fp_r/2, -fp_z, False).revolve()
+            .translate((0, 0, A-fp_z))
+        )
 
     #stop
     if (color_pin_mark==False) and (place_pinMark==True):
