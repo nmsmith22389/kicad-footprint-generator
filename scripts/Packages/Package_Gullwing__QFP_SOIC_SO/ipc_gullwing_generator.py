@@ -607,6 +607,8 @@ class Gullwing():
         if silk_point_right_inside is not None:
             poly_bottom_right.append(silk_point_right_inside)
 
+        is_qfp = device_params['num_pins_x'] > 0 and device_params['num_pins_y'] > 0
+
 
         #  default to half the pitch, but not less than min_arrow_size
         min_arrow_size = configuration['silk_line_width'] * 3
@@ -614,6 +616,10 @@ class Gullwing():
         arrow_length = arrow_size * 0.70
 
         silk_line_width = configuration['silk_line_width']
+        # QFPs have more space in the corners - make the arrow bigger
+        if is_qfp:
+            arrow_size *= 1.3
+
 
         # poly_bottom_right is used 4 times in all mirror configurations
         if len(poly_bottom_right) > 1 and silk_corner_bottom_right is not None:
@@ -650,9 +656,8 @@ class Gullwing():
                 # Pins on the left and right side
 
                 pad_to_courtyard_corner_gap = tl_pad_with_clearance_top - courtyard_bbox.top
-                is_qfn = device_params['num_pins_x'] > 0 and device_params['num_pins_y'] > 0
 
-                if is_qfn or (pad_to_courtyard_corner_gap >= minimum_space_to_fit_arrow):
+                if is_qfp or (pad_to_courtyard_corner_gap >= minimum_space_to_fit_arrow):
                     # We can fit an arrow in the courtyard, or it's a QFN
 
                     # put a down arrow top of pin1
