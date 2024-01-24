@@ -510,7 +510,9 @@ class Gullwing():
                                          x_mirror=0, y_mirror=0))
 
         # ############################ SilkS ##################################
-        silk_pad_offset = configuration['silk_pad_clearance'] + configuration['silk_line_width'] / 2
+        silk_pad_clearance = configuration['silk_pad_clearance']
+        silk_line_width = configuration['silk_line_width']
+        silk_pad_offset = silk_pad_clearance + (silk_line_width / 2)
         silk_offset = configuration['silk_fab_offset']
 
         right_pads_silk_bottom = (device_params['num_pins_y'] - 1) * device_params['pitch'] / 2\
@@ -610,7 +612,6 @@ class Gullwing():
         is_qfp = device_params['num_pins_x'] > 0 and device_params['num_pins_y'] > 0
 
         min_pad_dimension = min(tl_pad.size.x, tl_pad.size.y)
-        silk_line_width = configuration['silk_line_width']
 
         #  default to half the pitch, but not less than min_arrow_size
         min_arrow_size = silk_line_width * 3
@@ -642,8 +643,9 @@ class Gullwing():
                 width=silk_line_width,
                 layer="F.SilkS", y_mirror=0, x_mirror=0))
 
-            tl_pad_with_clearance_top = tl_pad.at.y - tl_pad.size.y / 2 - silk_pad_offset
-            tl_pad_with_clearance_left = tl_pad.at.x - tl_pad.size.x / 2 - silk_pad_offset
+            # The edges of the pad clearance area
+            tl_pad_with_clearance_top = tl_pad.at.y - tl_pad.size.y / 2 - silk_pad_clearance
+            tl_pad_with_clearance_left = tl_pad.at.x - tl_pad.size.x / 2 - silk_pad_clearance
 
             # Allow a top-down arrow if there is enough space between the top pad and the courtyard
             # (it is allowed to overlap the courtyard by the courtyard offset, as a neigbouring part
@@ -663,12 +665,14 @@ class Gullwing():
                     # We can fit an arrow in the courtyard, or it's a QFN
 
                     # put a down arrow top of pin1
-                    arrow_apex = Vector2D(tl_pad.at.x, tl_pad_with_clearance_top)
+                    arrow_apex = Vector2D(tl_pad.at.x,
+                                          tl_pad_with_clearance_top - silk_line_width / 2)
                     TriangleArrowPointingSouth(kicad_mod, arrow_apex, arrow_size, arrow_length,
                                                "F.SilkS", silk_line_width)
                 else:
                     # put a East arrow left of pin1
-                    arrow_apex = Vector2D(tl_pad_with_clearance_left, tl_pad.at.y)
+                    arrow_apex = Vector2D(tl_pad_with_clearance_left - silk_line_width / 2,
+                                          tl_pad.at.y)
                     TriangleArrowPointingEast(kicad_mod, arrow_apex, arrow_size, arrow_length,
                                               "F.SilkS", silk_line_width)
 
@@ -678,12 +682,14 @@ class Gullwing():
                 pad_to_courtyard_corner_gap = tl_pad_with_clearance_left - courtyard_bbox.left
 
                 if pad_to_courtyard_corner_gap >= minimum_space_to_fit_arrow:
-                    arrow_apex = Vector2D(tl_pad_with_clearance_left, tl_pad.at.y)
+                    arrow_apex = Vector2D(tl_pad_with_clearance_left - silk_line_width / 2,
+                                          tl_pad.at.y)
                     TriangleArrowPointingEast(kicad_mod, arrow_apex, arrow_size, arrow_length,
                                               "F.SilkS", silk_line_width)
                 else:
                     # put a down arrow top of pin1
-                    arrow_apex = Vector2D(tl_pad.at.x, tl_pad_with_clearance_top)
+                    arrow_apex = Vector2D(tl_pad.at.x,
+                                          tl_pad_with_clearance_top - silk_line_width / 2)
                     TriangleArrowPointingSouth(kicad_mod, arrow_apex, arrow_size, arrow_length,
                                                "F.SilkS", silk_line_width)
 
