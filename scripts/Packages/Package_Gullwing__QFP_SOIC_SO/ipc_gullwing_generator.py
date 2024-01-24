@@ -609,17 +609,19 @@ class Gullwing():
 
         is_qfp = device_params['num_pins_x'] > 0 and device_params['num_pins_y'] > 0
 
+        min_pad_dimension = min(tl_pad.size.x, tl_pad.size.y)
+        silk_line_width = configuration['silk_line_width']
 
         #  default to half the pitch, but not less than min_arrow_size
-        min_arrow_size = configuration['silk_line_width'] * 3
-        arrow_size = max(device_params['pitch'] / 2, min_arrow_size)
-        arrow_length = arrow_size * 0.70
+        min_arrow_size = silk_line_width * 3
+        arrow_size = max(min_pad_dimension - silk_line_width, min_arrow_size)
 
-        silk_line_width = configuration['silk_line_width']
         # QFPs have more space in the corners - make the arrow bigger
         if is_qfp:
             arrow_size *= 1.3
 
+        arrow_aspect_ratio = 0.7
+        arrow_length = arrow_size * arrow_aspect_ratio
 
         # poly_bottom_right is used 4 times in all mirror configurations
         if len(poly_bottom_right) > 1 and silk_corner_bottom_right is not None:
