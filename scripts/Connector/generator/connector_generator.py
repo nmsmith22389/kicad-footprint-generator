@@ -44,6 +44,9 @@ DEFAULT_THT_PAD_SHAPE = 'circ'
 DEFAULT_ROUNDRECT_RRATIO = 0.25
 DEFAULT_ROUNDRECT_RMAX = 0.25
 
+KICAD_3DMODEL_DIR = "${KICAD7_3DMODEL_DIR}"
+
+
 def _get_dims(name: str, spec: dict, base: Vector2D = None, mult: float=1):
     vals = spec.get(name, {})
     if (base is None):
@@ -599,7 +602,7 @@ def generate_one_footprint(positions: int, spec, configuration: dict):
     lib_name = configuration['lib_name_specific_function_format_string'].format(category=fp_config.library_name)
 
     ## 3D model
-    kicad_mod.append(Model(filename="${KICAD7_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + fp_name + ".wrl", at=[0, 0, 0], scale=[1, 1, 1], rotate=[0, 0, 0]))
+    kicad_mod.append(Model(filename=f"{KICAD_3DMODEL_DIR}/{lib_name}.3dshapes/{fp_name}.wrl", at=[0, 0, 0], scale=[1, 1, 1], rotate=[0, 0, 0]))
 
     output_dir = '{lib_name:s}.pretty/'.format(lib_name=lib_name)
     if not os.path.isdir(output_dir): #returns false if path does not yet exist!! (Does not check path validity)
