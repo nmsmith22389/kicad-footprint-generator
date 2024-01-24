@@ -615,7 +615,9 @@ class Gullwing():
 
         #  default to half the pitch, but not less than min_arrow_size
         min_arrow_size = silk_line_width * 3
-        arrow_size = max(min_pad_dimension - silk_line_width, min_arrow_size)
+        max_arrow_size = 1.0 - silk_line_width
+        arrow_size = min(max_arrow_size,
+                         max(min_pad_dimension - silk_line_width, min_arrow_size))
 
         # QFPs have more space in the corners - make the arrow bigger
         if is_qfp:
