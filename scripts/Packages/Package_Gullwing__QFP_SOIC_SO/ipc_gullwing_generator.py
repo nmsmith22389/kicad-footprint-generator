@@ -664,8 +664,11 @@ class Gullwing():
                 if is_qfp or (pad_to_courtyard_corner_gap >= minimum_space_to_fit_arrow):
                     # We can fit an arrow in the courtyard, or it's a QFN
 
+                    tl_pad_left = tl_pad.at.x - tl_pad.size.x / 2
+                    pad_left_body_left_midpoint = (tl_pad_left + body_edge['left']) / 2
+
                     # put a down arrow top of pin1
-                    arrow_apex = Vector2D(tl_pad.at.x,
+                    arrow_apex = Vector2D(pad_left_body_left_midpoint,
                                           tl_pad_with_clearance_top - silk_line_width / 2)
                     TriangleArrowPointingSouth(kicad_mod, arrow_apex, arrow_size, arrow_length,
                                                "F.SilkS", silk_line_width)
@@ -682,8 +685,12 @@ class Gullwing():
                 pad_to_courtyard_corner_gap = tl_pad_with_clearance_left - courtyard_bbox.left
 
                 if pad_to_courtyard_corner_gap >= minimum_space_to_fit_arrow:
+
+                    tl_pad_top = tl_pad.at.y - tl_pad.size.y / 2
+                    pad_top_body_top_midpoint = (tl_pad_top + body_edge['top']) / 2
+
                     arrow_apex = Vector2D(tl_pad_with_clearance_left - silk_line_width / 2,
-                                          tl_pad.at.y)
+                                          pad_top_body_top_midpoint)
                     TriangleArrowPointingEast(kicad_mod, arrow_apex, arrow_size, arrow_length,
                                               "F.SilkS", silk_line_width)
                 else:
