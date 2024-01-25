@@ -8416,6 +8416,39 @@ SOP-4_3.8x4.1mm_Pitch2.54mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.ixysic.com/home/pdfs.nsf/www/CPC1017N.pdf/$file/CPC1017N.pdf'
 
+SOP-8_6.605x9.655mm_P2.54mm:
+  the: 8.0
+  tb_s: 0.1
+  c: 0.3
+  R1: 0.15
+  R2: 0.15
+  S: 0.25
+  L: 1.15
+  fp_s: True
+  fp_r: 1
+  fp_d: 0.2
+  fp_z: 0.05
+  ef: 0
+  cc1: 0.25
+  D1: 9.655
+  E1: 6.605
+  E: 9.55
+  A1: 0.51
+  A2: 3.81
+  b: 1.46
+  e: 2.54
+  npx: 4
+  npy: 0
+  epad: null
+  excluded_pins: null
+  model_name: SOP-8_6.605x9.655mm_P2.54mm
+  rotation: -90
+  body_color_key: 'black body'
+  pin_color_key: 'metal grey pins'
+  mark_color_key: 'light brown label'
+  destination_dir: 'Package_SO.3dshapes'
+  source: 'https://www.onsemi.com/pdf/datasheet/hcpl2631m-d.pdf'
+
 HTSSOP-56-1EP_6.1x14mm_Pitch0.5mm:
   the: 12.0
   tb_s: 0.1
