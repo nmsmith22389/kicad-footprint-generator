@@ -362,6 +362,10 @@ class FPconfiguration():
                                         self.body_edges[self.pin1_pos]) + pin1_offset * Vector2D(1, self.scale_y)
         self.draw_pin1_marker_on_fab = first_pin_spec.get("marker", { }).get("fab", True)
 
+        ## exclude_from_bom and exclude_from_pos
+        self.exclude_from_bom = spec.get("exclude_from_bom", False)
+        self.exclude_from_pos = spec.get("exclude_from_pos", False)
+        
 def create_footprint_dim_symbol_evaluator(fp_config: FPconfiguration):
     # set up dictionary of symbols l, r, t, b, pl, pr, pt, pb
     dictionary = {k[0]: v for k, v in fp_config.body_edges.items()}
@@ -492,6 +496,9 @@ def generate_one_footprint(positions: int, spec, configuration: dict):
     footprint_type = FootprintType.SMD if fp_config.is_smt_footprint else FootprintType.THT
 
     kicad_mod = Footprint(fp_name, footprint_type)
+
+    kicad_mod.excludeFromBOM = fp_config.exclude_from_bom
+    kicad_mod.excludeFromPositionFiles = fp_config.exclude_from_pos
 
     ## set the FP description
     description = vars_dict["description"].format(**vars_dict)

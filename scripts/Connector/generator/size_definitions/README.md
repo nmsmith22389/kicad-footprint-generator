@@ -365,3 +365,11 @@ rule_areas:
     keepouts:
       vias: deny
 ~~~
+
+## Other Properties
+
+### `exclude_from_bom:` _bool_ (default: False)
+Sets the "exclude from bill of materials" flag for the generated connector footprint
+
+### `exclude_from_pos:` _bool_ (default: False)
+Sets the "exclude from position files" flag for the generated connector footprint
