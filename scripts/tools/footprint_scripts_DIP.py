@@ -32,7 +32,8 @@ from drawing_tools import *  # NOQA
 def makeDIP(pins, rm, pinrow_distance_in, package_width, overlen_top, overlen_bottom, ddrill, pad, smd_pads=False,
             socket_width=0, socket_height=0, socket_pinrow_distance_offset=0, tags_additional=[],
             lib_name="Package_DIP", offset3d=[0, 0, 0], scale3d=[1, 1, 1], rotate3d=[0, 0, 0], DIPName='DIP', DIPDescription='though-hole mounted DIP', DIPTags='THT DIP DIL PDIP',
-            prefix_name = "", skip_pin = [], skip_count = False, right_cnt_start = -1):
+            prefix_name = "", skip_pin = [], skip_count = False, right_cnt_start = -1,
+            datasheet=None):
 
     pinrow_distance = pinrow_distance_in + socket_pinrow_distance_offset
     h_fab = (pins / 2 - 1) * rm + overlen_top + overlen_bottom
@@ -72,18 +73,33 @@ def makeDIP(pins, rm, pinrow_distance_in, package_width, overlen_top, overlen_bo
     l_crt = pinrow_distance / 2 - w_crt / 2
     t_crt = (pins / 2 - 1) * rm / 2 - h_crt / 2
 
-    footprint_name = DIPName+"-{0}_W{1}mm".format(pins, round(pinrow_distance, 2))
-    if len(prefix_name) > 0:
-        footprint_name = DIPName+'-'+prefix_name+"-{0}_W{1}mm".format(pins, round(pinrow_distance, 2))
-    description = "{0}-lead {3} package, row spacing {1} mm ({2} mils)".format(pins, round(pinrow_distance, 2),
-                                                                               int(pinrow_distance / 2.54 * 100),
-																			   DIPDescription)
+    # E.g. DIP-40 or CERDIP-8
+    package_summary_name = DIPName
+
+    # used for deleted/skipped pins
+    if prefix_name:
+        package_summary_name += '-' + prefix_name
+
+    package_summary_name += f'-{pins}'
+
+    pinrow_distance_mm_2dp = round(pinrow_distance, 2)
+    pinrow_distance_mil = int(pinrow_distance / 2.54 * 100)
+
+    footprint_name = package_summary_name + f"_W{pinrow_distance_mm_2dp}mm"
+
+    description = "{0}-lead {3} package, row spacing {1}mm ({2} mils)".format(pins, pinrow_distance_mm_2dp,
+                                                                              pinrow_distance_mil,
+                                                                              DIPDescription)
+
     tags = DIPTags+" {0}mm {1}mm {2}mil".format(rm, pinrow_distance, int(pinrow_distance / 2.54 * 100))
     if (len(tags_additional) > 0):
         for t in tags_additional:
             footprint_name = footprint_name + "_" + t
             description = description + ", " + t
             tags = tags + " " + t
+
+    if datasheet is not None:
+        description += ", " + datasheet
 
     print(footprint_name)
 
@@ -103,13 +119,23 @@ def makeDIP(pins, rm, pinrow_distance_in, package_width, overlen_top, overlen_bo
     else:
         kicad_modg = kicad_mod
 
+    body_centre = Vector2D(pinrow_distance / 2, t_fab + (h_fab / 2))
+    fab_refdes_rotation = 0 if (w_fab > h_fab) else 90
+
     # set general values
     kicad_modg.append(
-        Text(type='reference', text='REF**', at=[pinrow_distance / 2, t_slk - txt_offset], layer='F.SilkS'))
+        Text(type='reference', text='REF**',
+             at=[body_centre.x, t_slk - txt_offset],
+             layer='F.SilkS'))
     kicad_modg.append(
-        Text(type='user', text='${REFERENCE}', at=[pinrow_distance/2, t_fab + h_fab / 2], layer='F.Fab'))
+        Text(type='user', text='${REFERENCE}',
+             at=body_centre,
+             rotation=fab_refdes_rotation,
+             layer='F.Fab'))
     kicad_modg.append(
-        Text(type='value', text=footprint_name, at=[pinrow_distance / 2, t_slk + h_slk + txt_offset], layer='F.Fab'))
+        Text(type='value', text=footprint_name,
+             at=[body_centre.x, t_slk + h_slk + txt_offset],
+             layer='F.Fab'))
 
     # create FAB-layer
     bevelRectTL(kicad_modg, [l_fab, t_fab], [w_fab, h_fab], 'F.Fab', lw_fab)
