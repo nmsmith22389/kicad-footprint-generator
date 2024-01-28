@@ -17,7 +17,9 @@ from scripts.tools.footprint_text_fields import addTextFields
 from scripts.tools.ipc_pad_size_calculators import TolerancedSize, ipc_gull_wing
 from scripts.tools.geometry.bounding_box import BoundingBox
 from scripts.tools.quad_dual_pad_border import create_dual_or_quad_pad_border
-from scripts.tools.drawing_tools import nearestSilkPointOnOrthogonalLine, TriangleArrowPointingSouth, roundGDown, TriangleArrowPointingEast
+from scripts.tools import drawing_tools
+from scripts.tools.drawing_tools import nearestSilkPointOnOrthogonalLine
+
 from scripts.tools.dict_tools import dictInherit
 from scripts.tools.declarative_def_tools import tags_properties
 
@@ -656,20 +658,24 @@ class GullwingGenerator:
 
         is_qfp = device_params['num_pins_x'] > 0 and device_params['num_pins_y'] > 0
 
-        min_pad_dimension = min(tl_pad.size.x, tl_pad.size.y)
+        body_size_min = min(
+            dimensions['body_size_x'].nominal,
+            dimensions['body_size_y'].nominal
+        )
 
-        #  default to half the pitch, but not less than min_arrow_size
-        min_arrow_size = silk_line_width * 3
-        max_arrow_size = 1.0 - silk_line_width
-        arrow_size = min(max_arrow_size,
-                         max(min_pad_dimension - silk_line_width, min_arrow_size))
-
-        # QFPs have more space in the corners - make the arrow bigger
         if is_qfp:
-            arrow_size *= 1.3
+            # Even the smallest QFPs have a large enough corner area
+            # to fit a large arrow
+            arrow_size_enum = drawing_tools.SilkArrowSize.LARGE
+        else:
+            # give large parts a larger arrow
+            if body_size_min < 6.0:
+                arrow_size_enum = drawing_tools.SilkArrowSize.MEDIUM
+            else:
+                arrow_size_enum = drawing_tools.SilkArrowSize.LARGE
 
-        arrow_aspect_ratio = 0.7
-        arrow_length = arrow_size * arrow_aspect_ratio
+        arrow_size, arrow_length = drawing_tools.getStandardSilkArrowSize(
+            arrow_size_enum, silk_line_width)
 
         # poly_bottom_right is used 4 times in all mirror configurations
         if len(poly_bottom_right) > 1 and silk_corner_bottom_right is not None:
@@ -723,14 +729,16 @@ class GullwingGenerator:
                     # put a down arrow top of pin1
                     arrow_apex = Vector2D(pad_left_body_left_midpoint,
                                           tl_pad_with_clearance_top - silk_line_width / 2)
-                    TriangleArrowPointingSouth(kicad_mod, arrow_apex, arrow_size, arrow_length,
-                                               "F.SilkS", silk_line_width)
+                    drawing_tools.TriangleArrowPointingSouth(
+                            kicad_mod, arrow_apex, arrow_size, arrow_length,
+                            "F.SilkS", silk_line_width)
                 else:
                     # put a East arrow left of pin1
                     arrow_apex = Vector2D(tl_pad_with_clearance_left - silk_line_width / 2,
                                           tl_pad.at.y)
-                    TriangleArrowPointingEast(kicad_mod, arrow_apex, arrow_size, arrow_length,
-                                              "F.SilkS", silk_line_width)
+                    drawing_tools.TriangleArrowPointingEast(
+                            kicad_mod, arrow_apex, arrow_size, arrow_length,
+                            "F.SilkS", silk_line_width)
 
             else:
                 # Pins on the top and bottom side
@@ -747,14 +755,16 @@ class GullwingGenerator:
 
                     arrow_apex = Vector2D(tl_pad_with_clearance_left - silk_line_width / 2,
                                           pad_top_body_top_midpoint)
-                    TriangleArrowPointingEast(kicad_mod, arrow_apex, arrow_size, arrow_length,
-                                              "F.SilkS", silk_line_width)
+                    drawing_tools.TriangleArrowPointingEast(
+                            kicad_mod, arrow_apex, arrow_size, arrow_length,
+                            "F.SilkS", silk_line_width)
                 else:
                     # put a down arrow top of pin1
                     arrow_apex = Vector2D(tl_pad.at.x,
                                           tl_pad_with_clearance_top - silk_line_width / 2)
-                    TriangleArrowPointingSouth(kicad_mod, arrow_apex, arrow_size, arrow_length,
-                                               "F.SilkS", silk_line_width)
+                    drawing_tools.TriangleArrowPointingSouth(
+                            kicad_mod, arrow_apex, arrow_size, arrow_length,
+                            "F.SilkS", silk_line_width)
 
         # # ######################## Fabrication Layer ###########################
 

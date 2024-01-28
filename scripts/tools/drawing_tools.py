@@ -3,7 +3,7 @@
 import sys
 import os
 import math
-import time
+import enum
 
 # ensure that the kicad-footprint-generator directory is available
 # sys.path.append(os.environ.get('KIFOOTPRINTGENERATOR'))  # enable package import from parent directory
@@ -816,8 +816,9 @@ def TriangleArrowPointingSouth(model: Footprint, apex_position: Vector2D,
     poly = Polygon(nodes=arrow_pts, layer=layer, width=line_width_mm)
     model.append(poly)
 
+
 def TriangleArrowPointingEast(model: Footprint, apex_position: Vector2D, size: float,
-                               length: float, layer: str, line_width_mm: float):
+                              length: float, layer: str, line_width_mm: float):
     r"""Make and append a east-pointing triangle
 
     Size is between nodes, overall size will include 1*line_width overall
@@ -840,6 +841,7 @@ def TriangleArrowPointingEast(model: Footprint, apex_position: Vector2D, size: f
 
     poly = Polygon(nodes=arrow_pts, layer=layer, width=line_width_mm)
     model.append(poly)
+
 
 def CornerBracketWithArrowPointingSouthEast(model: Footprint, apex: Vector2D,
                                             arrow_size: float,
@@ -940,6 +942,39 @@ def CornerBracketWithArrowPointingSouth(model: Footprint, apex: Vector2D,
             end=Vector2D(apex.x, bracket_max_y - pin_1_silk_line_len_y),
             width=line_width_mm)
         model.append(tl_vert_line)
+
+
+class SilkArrowSize(enum.Enum):
+    SMALL = 1
+    MEDIUM = 2
+    LARGE = 3
+    HUGE = 4
+
+
+def getStandardSilkArrowSize(size: SilkArrowSize,
+                             silk_line_width: float) -> float:
+    """
+    Get the normal size of the arrow for a given enum value.
+
+    This gives the "node-node" size.
+    """
+    overall_size = {
+        SilkArrowSize.SMALL: 0.4,
+        SilkArrowSize.MEDIUM: 0.6,
+        SilkArrowSize.LARGE: 0.8,
+        SilkArrowSize.HUGE: 1.0,  # IPC maximum
+    }[size]
+
+    # slighty squashed relative to equalateral triangle
+    # reduces intrusion of arrows into other footprints' spaces
+    standard_arrow_aspect_ratio = 0.7
+
+    # allows for 0.01mm grid-snap on each side of the apex
+    width = roundGDown(overall_size - silk_line_width, 0.02)
+    length = roundGDown(width * standard_arrow_aspect_ratio, 0.01)
+
+    return width, length
+
 
 #
 # This is an alternative to using silk keepout areas for simple cases.

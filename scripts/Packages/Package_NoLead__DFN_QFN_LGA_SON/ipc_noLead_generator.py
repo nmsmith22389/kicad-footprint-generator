@@ -17,8 +17,8 @@ from scripts.tools.footprint_text_fields import addTextFields
 from scripts.tools.ipc_pad_size_calculators import TolerancedSize, \
         ipc_body_edge_inside_pull_back, ipc_pad_center_plus_size
 from scripts.tools.quad_dual_pad_border import create_dual_or_quad_pad_border
-from scripts.tools.drawing_tools import courtyardFromBoundingBox, roundGDown, \
-        TriangleArrowPointingSouthEast, CornerBracketWithArrowPointingSouth
+from scripts.tools import drawing_tools
+from scripts.tools.drawing_tools import courtyardFromBoundingBox, roundGDown
 from scripts.tools.geometry.bounding_box import BoundingBox
 
 sys.path.append(os.path.join(sys.path[0], "..", "utils"))
@@ -318,7 +318,9 @@ class NoLead():
 
         pincount = device_params['num_pins_x'] * 2 + device_params['num_pins_y'] * 2
 
-        default_ipc_config = 'qfn_pull_back' if 'lead_to_edge' in device_params else 'qfn'
+        is_pull_back = 'lead_to_edge' in device_params
+
+        default_ipc_config = 'qfn_pull_back' if is_pull_back else 'qfn'
         if device_params.get('ipc_class', default_ipc_config) == 'qfn_pull_back':
             ipc_reference = 'ipc_spec_flat_no_lead_pull_back'
         else:
@@ -527,14 +529,33 @@ class NoLead():
         def create_silk_line(start, end):
             return Line(start=start, end=end, width=silk_line_width_mm, layer="F.SilkS")
 
-        min_arrow_size = silk_line_width_mm * 3
+        body_size_min = min(
+            device_dimensions['body_size_x'].nominal,
+            device_dimensions['body_size_y'].nominal
+        )
 
-        #  default to half the smaller pitch, but not less than min_arrow_size
-        arrow_size = max(min(device_dimensions['pitch_x'], device_dimensions['pitch_y']) / 2,
-                         min_arrow_size)
-        arrow_length = arrow_size * 0.70
+        is_dfn = device_params['num_pins_x'] == 0 or device_params['num_pins_y'] == 0
 
-        if device_params['num_pins_x'] == 0 or device_params['num_pins_y'] == 0:
+        if is_pull_back:
+            # pull-back parts have very small/no corner areas
+            arrow_size_enum = drawing_tools.SilkArrowSize.SMALL
+        elif is_dfn:
+            if body_size_min <= 2.0:
+                # for really small packages, use a smaller silk arrow
+                arrow_size_enum = drawing_tools.SilkArrowSize.SMALL
+            else:
+                # Everything else gets medium
+                arrow_size_enum = drawing_tools.SilkArrowSize.MEDIUM
+        else:
+            # QFNs with normal pads virtually always have space for medium
+            # in the corners
+            arrow_size_enum = drawing_tools.SilkArrowSize.MEDIUM
+
+        arrow_size, arrow_length = drawing_tools.getStandardSilkArrowSize(
+            arrow_size_enum, silk_line_width_mm
+        )
+
+        if is_dfn:
 
             # DFN-style - 45-degree arrow in corner
 
@@ -565,8 +586,9 @@ class NoLead():
             arrow_apex.x = roundGDown(arrow_apex.x, 0.01)
             arrow_apex.y = roundGDown(arrow_apex.y, 0.01)
 
-            TriangleArrowPointingSouthEast(kicad_mod, arrow_apex, arrow_size,
-                                           "F.SilkS", silk_line_width_mm)
+            drawing_tools.TriangleArrowPointingSouthEast(
+                    kicad_mod, arrow_apex, arrow_size,
+                    "F.SilkS", silk_line_width_mm)
 
             if vertical_lines:
                 # stay outside the body _and_ the pad clearance
@@ -632,10 +654,9 @@ class NoLead():
                 body_edge['top'] - silk_offset
             )
 
-            CornerBracketWithArrowPointingSouth(kicad_mod, arrow_apex,
-                                                arrow_size, arrow_length,
-                                                sx1, sy1,
-                                                "F.SilkS", silk_line_width_mm, SILK_MIN_LEN)
+            drawing_tools.CornerBracketWithArrowPointingSouth(
+                kicad_mod, arrow_apex, arrow_size, arrow_length,
+                sx1, sy1, "F.SilkS", silk_line_width_mm, SILK_MIN_LEN)
 
             poly_silk = [
                 {'x': sx1, 'y': body_edge['top'] - silk_offset},
