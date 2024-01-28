@@ -325,7 +325,7 @@ ST_HLGA-10_2.5x2.5mm_P0.6mm:
   #pad_length_addition: 0.5
   #suffix: '_ClockwisePinNumbering'
   #include_suffix_in_3dpath: 'False'
-  
+
 ST_HLGA-10_2x2mm_P0.5mm:
   device_type: 'HLGA'
   library: Package_LGA
@@ -429,17 +429,17 @@ VLGA-4_2.5x2.0mm:
     nominal: 2.5
     tolerance: 0
   overall_height:
-    nominal: 0.84
     minimum: 0.79
+    nominal: 0.84
     maximum: 0.89
   lead_width:
-    nominal: 0.65
     minimum: 0.60
-    minimum: 0.70
+    nominal: 0.65
+    maximum: 0.70
   lead_len:
-    nominal: 0.65
     minimum: 0.60
-    minimum: 0.70
+    nominal: 0.65
+    maximum: 0.70
   lead_center_to_center_x:
     nominal: 1.25
   pitch: 1.65
