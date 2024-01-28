@@ -1432,6 +1432,7 @@ Maxim_TDFN-6-1EP_3x3mm_P0.95mm_EP1.5x2.3mm:
   device_type: 'TDFN'
   manufacturer: 'Maxim'
   #part_number: 'MAX4461'
+  # Package/footprint variant: T633-2
   size_source: 'https://www.analog.com/media/en/technical-documentation/data-sheets/MAX4460-MAX4462.pdf#page=19, https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/tdfn-ep/21-0137.pdf'
   ipc_class: 'qfn'
   body_size_x: 2.9 .. 3.1
