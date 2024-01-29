@@ -57,26 +57,25 @@ ___ver___ = "2.0.0"
 import os
 
 import cadquery as cq
-from _tools import shaderColors, parameters, cq_color_correct, cq_globals, export_tools
+from _tools import shaderColors, parameters, cq_color_correct, export_tools
 from exportVRML.export_part_to_VRML import export_VRML
 
 from .qfn_packages import make_qfn
+
 
 def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
     """
     Main entry point into this generator.
     """
-    models = []
-
     all_params = parameters.load_parameters("QFN_packages")
 
-    if all_params == None:
+    if all_params is None:
         print("ERROR: Model parameters must be provided.")
         return
 
     # Handle the case where no model has been passed
     if model_to_build is None:
-        print("No variant name is given! building: {0}".format(model_to_build))
+        print(f"No variant name is given! building: {model_to_build}")
 
         model_to_build = all_params.keys()[0]
 
@@ -84,24 +83,23 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
     if model_to_build == "all":
         models = all_params
     else:
-        models = { model_to_build: all_params[model_to_build] }
+        models = {model_to_build: all_params[model_to_build]}
     # Step through the selected models
     for model in models:
-        if output_dir_prefix == None:
+        if output_dir_prefix is None:
             print("ERROR: An output directory must be provided.")
             return
-        else:
-            # Make sure there is a destination directory
-            if all_params[model]['destination_dir'] == None:
-                print("Package {} has no destination directory, skipping.".format(model))
-                continue
+        # Make sure there is a destination directory
+        if all_params[model]['destination_dir'] is None:
+            print(f"Package {model} has no destination directory, skipping.")
+            continue
 
-            # Construct the final output directory
-            output_dir = os.path.join(output_dir_prefix, all_params[model]['destination_dir'])
+        # Construct the final output directory
+        output_dir = os.path.join(output_dir_prefix, all_params[model]['destination_dir'])
 
         # Safety check to make sure the selected model is valid
-        if not model in all_params.keys():
-            print("Parameters for %s doesn't exist in 'all_params', skipping." % model)
+        if model not in all_params.keys():
+            print(f"Parameters for {model} doesn't exist in 'all_params', skipping.")
             continue
 
         # Load the appropriate colors
@@ -132,20 +130,30 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
 
         # Export the assembly to STEP
         component.name = file_name
-        component.save(os.path.join(output_dir, file_name + ".step"), cq.exporters.ExportTypes.STEP, mode=cq.exporters.assembly.ExportModes.FUSED, write_pcurves=False)
+        component.save(
+            os.path.join(output_dir, file_name + ".step"),
+            cq.exporters.ExportTypes.STEP,
+            mode=cq.exporters.assembly.ExportModes.FUSED, write_pcurves=False
+        )
 
         # Check for a proper union
         export_tools.check_step_export_union(component, output_dir, file_name)
 
         # Export the assembly to VRML
         if enable_vrml:
-            export_VRML(os.path.join(output_dir, file_name + ".wrl"), [body, pins, pinmark], [all_params[model]["body_color_key"], all_params[model]["pin_color_key"], all_params[model]["mark_color_key"]])
+            export_VRML(
+                os.path.join(output_dir, file_name + ".wrl"),
+                [body, pins, pinmark],
+                [all_params[model]["body_color_key"], all_params[model]["pin_color_key"], all_params[model]["mark_color_key"]]
+            )
 
         # Update the license
         from _tools import add_license
-        add_license.addLicenseToStep(output_dir, file_name + ".step",
-                                        add_license.LIST_int_license,
-                                        add_license.STR_int_licAuthor,
-                                        add_license.STR_int_licEmail,
-                                        add_license.STR_int_licOrgSys,
-                                        add_license.STR_int_licPreProc)
+        add_license.addLicenseToStep(
+            output_dir, file_name + ".step",
+            add_license.LIST_int_license,
+            add_license.STR_int_licAuthor,
+            add_license.STR_int_licEmail,
+            add_license.STR_int_licOrgSys,
+            add_license.STR_int_licPreProc
+        )
