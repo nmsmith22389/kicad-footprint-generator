@@ -1457,7 +1457,7 @@ Maxim_TDFN-10-1EP_3x3mm_P0.95mm_EP1.5x2.3mm:
   body_size_x: 2.9 .. 3.1
   body_size_y: 2.9 .. 3.1
   overall_height: 0.7 .. 0.8
-  lead_width: 0.25 +/- 0.05
+  lead_width: 0.3 +/- 0.05
   lead_len: 0.2 .. 0.4
   EP_size_x: 1.5 +/- 0.1
   EP_size_y: 2.3 +/- 0.1
