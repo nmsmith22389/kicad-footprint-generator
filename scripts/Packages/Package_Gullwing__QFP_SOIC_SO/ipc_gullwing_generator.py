@@ -373,10 +373,7 @@ class Gullwing():
             category=header['override_lib_name'] if 'override_lib_name' in header else header['library_Suffix']
         ).lstrip())
 
-        if 'custom_pad_layout' in device_params:
-            pad_arrays = create_custom_pad_layout(configuration, pad_details, device_params)
-        else:
-            pad_arrays = create_dual_or_quad_pad_border(configuration, pad_details, device_params)
+        pad_arrays = create_dual_or_quad_pad_border(configuration, pad_details, device_params)
 
         for pad_array in pad_arrays:
             kicad_mod.append(pad_array)
