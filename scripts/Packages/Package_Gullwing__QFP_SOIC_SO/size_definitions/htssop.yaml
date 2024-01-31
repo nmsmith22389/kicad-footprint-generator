@@ -30,7 +30,6 @@ HTSSOP-16-1EP_4.4x5mm_P0.65mm_EP3x3mm:
   num_pins_x: 0
   num_pins_y: 8
 
-
   EP_size_x:
     nominal: 3
   EP_size_y:
@@ -59,7 +58,6 @@ HTSSOP-16-1EP_4.4x5mm_P0.65mm_EP3.4x5mm_Mask2.46x2.31mm_ThermalVias:
   num_pins_x: 0
   num_pins_y: 8
 
-
   EP_size_x:
     nominal: 3.4
   EP_size_y:
@@ -85,8 +83,11 @@ HTSSOP-16-1EP_4.4x5mm_P0.65mm_EP3.4x5mm_Mask2.46x2.31mm_ThermalVias:
     # bottom_pad_size:
     paste_avoid_via: False
 
+
 HTSSOP-20-1EP_4.4x6.5mm_P0.65mm_EP3.4x6.5mm_Mask2.4x3.7mm:
   size_source: 'http://www.ti.com/lit/ds/symlink/bq24006.pdf'
+  compatible_mpns:
+    - TI:PWP/R-PDSO-G20
   body_size_x:
     minimum: 4.3
     maximum: 4.5
@@ -106,7 +107,6 @@ HTSSOP-20-1EP_4.4x6.5mm_P0.65mm_EP3.4x6.5mm_Mask2.4x3.7mm:
   num_pins_x: 0
   num_pins_y: 10
 
-
   EP_size_x:
     nominal: 3.4
   EP_size_y:
@@ -115,8 +115,11 @@ HTSSOP-20-1EP_4.4x6.5mm_P0.65mm_EP3.4x6.5mm_Mask2.4x3.7mm:
   EP_mask_y: 3.7
   EP_num_paste_pads: [1, 2]
 
+
 HTSSOP-20-1EP_4.4x6.5mm_P0.65mm_EP2.85x4mm:
-  size_source: 'https://pdfserv.maximintegrated.com/package_dwgs/21-0108.PDF U20E-1'
+  size_source: 'https://pdfserv.maximintegrated.com/package_dwgs/21-0108.PDF'
+  compatible_mpns:
+    - Maxim:U20E-1
   body_size_x:
     minimum: 4.3
     maximum: 4.5
@@ -138,7 +141,6 @@ HTSSOP-20-1EP_4.4x6.5mm_P0.65mm_EP2.85x4mm:
   num_pins_x: 0
   num_pins_y: 10
 
-
   EP_size_x:
     minimum: 2.6
     maximum: 3.1
@@ -147,8 +149,11 @@ HTSSOP-20-1EP_4.4x6.5mm_P0.65mm_EP2.85x4mm:
     maximum: 4.2
   EP_num_paste_pads: [1, 2]
 
+
 HTSSOP-20-1EP_4.4x6.5mm_P0.65mm_EP2.74x3.86mm:
   size_source: 'https://www.analog.com/media/en/technical-documentation/data-sheets/4011fb.pdf#page=24'
+  compatible_mpns:
+    - Analog:FE-CB
   body_size_x:
     minimum: 4.3
     maximum: 4.5
@@ -174,6 +179,7 @@ HTSSOP-20-1EP_4.4x6.5mm_P0.65mm_EP2.74x3.86mm:
   EP_size_y:
     nominal: 3.86
   EP_num_paste_pads: [1, 2]
+
 
 HTSSOP-24-1EP_4.4x7.8mm_P0.65mm_EP3.2x5mm:
   size_source: 'https://www.st.com/resource/en/datasheet/stp16cp05.pdf#page=25'
@@ -202,7 +208,6 @@ HTSSOP-24-1EP_4.4x7.8mm_P0.65mm_EP3.2x5mm:
   num_pins_x: 0
   num_pins_y: 12
 
-
   EP_size_x:
     minimum: 3
     nominal: 3.2
@@ -213,9 +218,11 @@ HTSSOP-24-1EP_4.4x7.8mm_P0.65mm_EP3.2x5mm:
     maximum: 5.2
   EP_num_paste_pads: [2, 3]
 
+
 Texas_PWP0024P:
   size_source: 'https://www.ti.com/lit/ds/symlink/tlc5949.pdf#page=49'
-  custom_name_format: 'HTSSOP-{pincount}-1EP_{size_x:g}x{size_y:g}mm_P{pitch}mm_EP{ep_size_x:g}x{ep_size_y:g}mm_Mask{mask_size_x:g}x{mask_size_y:g}mm{vias:s}'
+  compatible_mpns:
+    - TI:PWP0024P
   body_size_x:
     minimum: 4.3
     maximum: 4.5
@@ -248,8 +255,11 @@ Texas_PWP0024P:
     paste_avoid_via: false
     EP_num_paste_pads: [1, 1]
 
+
 HTSSOP-24-1EP_4.4x7.8mm_P0.65mm_EP3.4x7.8mm_Mask2.4x4.68mm_ThermalVias:
   size_source: 'http://www.ti.com/lit/ds/symlink/tps703.pdf'
+  compatible_mpns:
+    - TI:PWP/R-PDSO-G24
   body_size_x:
     minimum: 4.3
     maximum: 4.5
@@ -268,7 +278,6 @@ HTSSOP-24-1EP_4.4x7.8mm_P0.65mm_EP3.4x7.8mm_Mask2.4x4.68mm_ThermalVias:
   pitch: 0.65
   num_pins_x: 0
   num_pins_y: 12
-
 
   EP_size_x: 3.4
   EP_size_y: 7.8
@@ -293,6 +302,7 @@ HTSSOP-24-1EP_4.4x7.8mm_P0.65mm_EP3.4x7.8mm_Mask2.4x4.68mm_ThermalVias:
     # bottom_pad_size:
     paste_avoid_via: False
 
+
 HTSSOP-28-1EP_4.4x9.7mm_P0.65mm_EP2.85x5.4mm:
   size_source: 'https://pdfserv.maximintegrated.com/package_dwgs/21-0108.PDF'
   body_size_x: 4.3 .. 4.5
@@ -312,6 +322,7 @@ HTSSOP-28-1EP_4.4x9.7mm_P0.65mm_EP2.85x5.4mm:
     drill: 0.3
     paste_avoid_via: false
     EP_num_paste_pads: [1, 3]
+
 
 HTSSOP-28-1EP_4.4x9.7mm_P0.65mm_EP2.75x6.20mm:
   size_source: 'https://www.trinamic.com/fileadmin/assets/Support/AppNotes/AN005x-IC_Package_PCB_Footprint_Guidelines_HTSSOP28_rev1.00.pdf'
@@ -334,9 +345,12 @@ HTSSOP-28-1EP_4.4x9.7mm_P0.65mm_EP2.75x6.20mm:
     paste_avoid_via: false
     EP_num_paste_pads: [1, 3]
 
+
 HTSSOP-44_6.1x14.0mm_P0.5mm_TopEP4.14x7.01mm:
   size_source: 'http://www.ti.com/lit/ds/symlink/tpa3251.pdf#page=38'
   custom_name_format: 'HTSSOP-{pincount}_{size_x:g}x{size_y:g}mm_P{pitch}mm_TopEP4.14x7.01mm'
+  compatible_mpns:
+    - TI:DDV0044D
   body_size_x:
     minimum: 6.0
     maximum: 6.2
@@ -359,11 +373,12 @@ HTSSOP-44_6.1x14.0mm_P0.5mm_TopEP4.14x7.01mm:
     #x: 4.14
     #y: 7.01
 
-Texas_PWP_R-PDSO-G14:
+
+Texas_PWP0014A:
 # HTSSOP-14-1EP_4.4x5.0mm_P0.65mm_EP3.4x5.0mm_Mask3.0x3.1mm:
   size_source: 'http://www.ti.com/lit/ds/symlink/lm5161.pdf#page=34'
-  #                    HTSSOP-14-        1EP_4.4x5.0                        mm_P0.65   mm_EP3.4x5.0                    mm_Mask3.0x3.1mm:
-  custom_name_format: 'HTSSOP-{pincount}-1EP_{size_x:g}x{size_y:g}mm_P{pitch}mm_EP{ep_size_x:g}x{ep_size_y:g}mm_Mask{mask_size_x:g}x{mask_size_y:g}mm{vias:s}'
+  compatible_mpns:
+    - TI:PWP0014A
   body_size_x:
     minimum: 4.3
     nominal: 4.4
@@ -385,7 +400,6 @@ Texas_PWP_R-PDSO-G14:
   pitch: 0.65
   num_pins_x: 0
   num_pins_y: 7
-
 
   EP_size_x: 3.4
   EP_size_y: 5.0
@@ -410,11 +424,12 @@ Texas_PWP_R-PDSO-G14:
     # bottom_pad_size:
     paste_avoid_via: False
 
-Texas_PWP_R-PDSO-G20:
+
+Texas_PWP0020U:
 # HTSSOP-20-1EP_4.4x6.5mm_P0.65mm_EP3.4x6.5mm_Mask2.75x3.43mm:
   size_source: 'http://www.ti.com/lit/ds/symlink/tlc5971.pdf#page=37&zoom=160,-90,3'
-  #                    HTSSOP-20-        1EP_4.4x6.5                        mm_P0.65   mm_EP3.4x6.5                    mm_Mask2.75x3.43mm:
-  custom_name_format: 'HTSSOP-{pincount}-1EP_{size_x:g}x{size_y:g}mm_P{pitch}mm_EP{ep_size_x:g}x{ep_size_y:g}mm_Mask{mask_size_x:g}x{mask_size_y:g}mm{vias:s}'
+  compatible_mpns:
+    - TI:PWP0020U
   body_size_x:
     minimum: 4.3
     maximum: 4.5
@@ -433,7 +448,6 @@ Texas_PWP_R-PDSO-G20:
   pitch: 0.65
   num_pins_x: 0
   num_pins_y: 10
-
 
   EP_size_x: 3.4
   EP_size_y: 6.5
@@ -458,11 +472,12 @@ Texas_PWP_R-PDSO-G20:
     # bottom_pad_size:
     paste_avoid_via: False
 
+
 Texas_PWP0020T:
 # HTSSOP-20-1EP_4.4x6.5mm_P0.65mm_EP3.4x6.5mm_Mask2.96x2.96mm:
   size_source: 'https://www.ti.com/lit/ds/symlink/tps2663.pdf#page=49'
-  #                    HTSSOP-20-        1EP_4.4x6.5                        mm_P0.65   mm_EP3.4x6.5                    mm_Mask2.96x2.96mm:
-  custom_name_format: 'HTSSOP-{pincount}-1EP_{size_x:g}x{size_y:g}mm_P{pitch}mm_EP{ep_size_x:g}x{ep_size_y:g}mm_Mask{mask_size_x:g}x{mask_size_y:g}mm{vias:s}'
+  compatible_mpns:
+    - TI:PWP0020T
   body_size_x:
     minimum: 4.3
     maximum: 4.5
@@ -481,7 +496,7 @@ Texas_PWP0020T:
   pitch: 0.65
   num_pins_x: 0
   num_pins_y: 10
-  
+
   EP_size_x: 2.16 .. 2.96
   EP_size_x_overwrite: 3.4
   EP_size_y: 2.21 .. 2.96
@@ -507,11 +522,12 @@ Texas_PWP0020T:
     # bottom_pad_size:
     paste_avoid_via: False
 
+
 Texas_DAP_R-PDSO-G38:
   # HTSSOP-38-1EP_6.1x12.5mm_P0.65mm_EP5.2x12.5mm_Mask3.39x6.35mm
-  size_source: 'http://www.ti.com/lit/ds/symlink/tlc5951.pdf#page=47&zoom=140,-67,15'
-  #                    HTSSOP-38-        1EP_6.1x12.5             mm_P0.65   mm_EP5.2x12.5                   mm_Mask3.39x6.35mm
-  custom_name_format: 'HTSSOP-{pincount}-1EP_{size_x:g}x{size_y:g}mm_P{pitch}mm_EP{ep_size_x:g}x{ep_size_y:g}mm_Mask{mask_size_x:g}x{mask_size_y:g}mm{vias:s}'
+  size_source: 'http://www.ti.com/lit/ds/symlink/tlc5951.pdf#page=46'
+  compatible_mpns:
+    - TI:DAP/R-PDSO-G38
   body_size_x:
     minimum: 6.0
     maximum: 6.2
@@ -530,7 +546,6 @@ Texas_DAP_R-PDSO-G38:
   pitch: 0.65
   num_pins_x: 0
   num_pins_y: 19
-
 
   EP_size_x: 5.2
   EP_size_y: 12.5
