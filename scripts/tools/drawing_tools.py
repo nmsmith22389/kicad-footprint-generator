@@ -14,7 +14,7 @@ sys.path.append(os.path.join(sys.path[0], "..", ".."))  # load kicad_mod path
 from KicadModTree import *  # NOQA
 from KicadModTree import Vector2D
 from KicadModTree import Footprint, PolygonLine, Polygon, Line, Arc
-from .footprint_global_properties import *
+from scripts.tools.footprint_global_properties import *
 from scripts.tools.geometry.bounding_box import BoundingBox
 
 # tool function for generating 3D-scripts
