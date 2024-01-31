@@ -2,6 +2,7 @@ from scripts.tools.declarative_def_tools import rule_area_properties as RAP
 
 import yaml
 
+
 def test_basic():
 
     spec = """

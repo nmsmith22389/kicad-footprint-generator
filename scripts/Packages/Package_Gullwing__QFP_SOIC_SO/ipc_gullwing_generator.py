@@ -4,7 +4,7 @@ import sys
 import os
 import argparse
 import yaml
-from typing import List
+from typing import List, Optional
 
 sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))  # load parent path of KicadModTree
 
@@ -18,10 +18,11 @@ from scripts.tools.ipc_pad_size_calculators import TolerancedSize, ipc_gull_wing
 from scripts.tools.geometry.bounding_box import BoundingBox
 from scripts.tools.quad_dual_pad_border import create_dual_or_quad_pad_border
 from scripts.tools.drawing_tools import nearestSilkPointOnOrthogonalLine, TriangleArrowPointingSouth, roundGDown, TriangleArrowPointingEast
+from scripts.tools.dict_tools import dictInherit
+from scripts.tools.declarative_def_tools import tags_properties
 
 from scripts.Packages.utils.ep_handling_utils import getEpRoundRadiusParams
 
-from scripts.tools.dict_tools import dictInherit
 
 ipc_density = 'nominal'
 ipc_doc_file = '../ipc_definitions.yaml'
@@ -61,7 +62,43 @@ def find_top_left_pad(pad_arrays: List[PadArray]) -> Pad:
     return tl_pad
 
 
-class Gullwing():
+class GullwingConfiguration:
+    """
+    A type that represents the configuration of a gullwing footprint
+    (probably from a YAML config block).
+
+    Over time, add more type-safe accessors to this class, and replace
+    use of the raw dictionary.
+    """
+
+    _spec_dictionary: dict
+    compatible_mpns: Optional[tags_properties.TagsProperties]
+    additional_tags: Optional[tags_properties.TagsProperties]
+
+    def __init__(self, spec: dict):
+        self._spec_dictionary = spec
+
+        self.compatible_mpns = tags_properties.TagsProperties(
+                spec.get('compatible_mpns', [])
+        )
+
+        # Generic addtional tags
+        self.additional_tags = tags_properties.TagsProperties(
+            spec.get(tags_properties.ADDITIONAL_TAGS_KEY, [])
+        )
+
+    @property
+    def spec_dictionary(self) -> dict:
+        """
+        Get the raw spec dictionary.
+
+        This is only temporary, and can be piecewise replaced by
+        type-safe declarative definitions, but that requires deep changes
+        """
+        return self._spec_dictionary
+
+
+class GullwingGenerator:
     def __init__(self, configuration):
         self.configuration = configuration
         with open(ipc_doc_file, 'r') as ipc_stream:
@@ -160,7 +197,10 @@ class Gullwing():
         return Pad
 
     @staticmethod
-    def deviceDimensions(device_size_data):
+    def deviceDimensions(gullwing_config: GullwingConfiguration):
+        # Pull out the old-style raw data
+        device_size_data = gullwing_config.spec_dictionary
+
         dimensions = {
             'body_size_x': TolerancedSize.fromYaml(device_size_data, base_name='body_size_x'),
             'body_size_y': TolerancedSize.fromYaml(device_size_data, base_name='body_size_y'),
@@ -196,7 +236,9 @@ class Gullwing():
         return dimensions
 
     def generateFootprint(self, device_params, header):
-        dimensions = Gullwing.deviceDimensions(device_params)
+        gullwing_config = GullwingConfiguration(device_params)
+
+        dimensions = GullwingGenerator.deviceDimensions(gullwing_config)
 
         if 'deleted_pins' in device_params:
             if type(device_params['deleted_pins']) is int:
@@ -207,16 +249,18 @@ class Gullwing():
                 device_params['hidden_pins'] = [device_params['hidden_pins']]
 
         if 'deleted_pins' in device_params and 'hidden_pins' in device_params:
-            print("A footprint may not have deleted pins and hidden pins.")
-        else:
-            if dimensions['has_EP'] and 'thermal_vias' in device_params:
-                self.__createFootprintVariant(device_params, header, dimensions, True)
+            raise ValueError("A footprint may not have deleted pins and hidden pins.")
 
-            self.__createFootprintVariant(device_params, header, dimensions, False)
+        if dimensions['has_EP'] and 'thermal_vias' in device_params:
+            self.__createFootprintVariant(gullwing_config, header, dimensions, True)
 
-    def __createFootprintVariant(self, device_params, header, dimensions, with_thermal_vias):
+        self.__createFootprintVariant(gullwing_config, header, dimensions, False)
+
+    def __createFootprintVariant(self, gullwing_config, header, dimensions, with_thermal_vias):
         fab_line_width = self.configuration.get('fab_line_width', 0.1)
         silk_line_width = self.configuration.get('silk_line_width', 0.12)
+
+        device_params = gullwing_config.spec_dictionary
 
         if 'override_lib_name' in header:
             lib_name = header['override_lib_name']
@@ -366,12 +410,14 @@ class Gullwing():
                 scriptname=os.path.basename(__file__).replace("  ", " ")
             ).lstrip())
 
-        kicad_mod.setTags(self.configuration['keyword_fp_string']
-                          .format(
+        kicad_mod.tags = self.configuration['keyword_fp_string'].format(
             man=device_params.get('manufacturer', ''),
             package=device_type,
             category=header['override_lib_name'] if 'override_lib_name' in header else header['library_Suffix']
-        ).lstrip())
+        ).lstrip().split()
+
+        kicad_mod.tags += gullwing_config.compatible_mpns.tags
+        kicad_mod.tags += gullwing_config.additional_tags.tags
 
         pad_arrays = create_dual_or_quad_pad_border(configuration, pad_details, device_params)
 
@@ -796,7 +842,7 @@ if __name__ == "__main__":
     configuration['kicad4_compatible'] = args.kicad4_compatible
 
     for filepath in args.files:
-        gw = Gullwing(configuration)
+        gw = GullwingGenerator(configuration)
 
         with open(filepath, 'r') as command_stream:
             try:

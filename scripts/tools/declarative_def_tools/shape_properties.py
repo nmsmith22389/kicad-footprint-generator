@@ -2,6 +2,7 @@ from dataclasses import dataclass
 
 RECT = 'rect'
 
+
 @dataclass
 class RectProperties():
 
@@ -31,6 +32,7 @@ class RectProperties():
 
         self.x2_expr = rect[1][0]
         self.y2_expr = rect[1][1]
+
 
 def construct_shape(shape_spec: dict):
 
