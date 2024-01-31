@@ -27,7 +27,7 @@ defaults:
     cx: 0.0
     num_pins: $(2 * num_pos)
   source: $("https://www.molex.com/content/dam/molex/molex-dot-com/products/automated/en-us/salesdrawingpdf/878/87832/87832%02d06_sd.pdf?inline" % num_pins)
-  mount_pegs:
+  mount_pegs: # the mounting pegs are defined here on top-level and will be re-used in the mount_pads definition below
     center:
       x_offset: $(-pad_pitch / 2)   # offset from edge-pad center
       y: 0
@@ -55,7 +55,7 @@ defaults:
   positions: $([n for n in range(3, 7)])
   option: ", Mounting Pegs"
   mount_pads:
-    pegs: $(mount_pegs)
+    pegs: $(mount_pegs) # use definition from 'default' section above
 
 8783206xx_Pol:
   inherit: '8783204xx'
@@ -75,4 +75,4 @@ defaults:
   fp_suffix: '_Header_Vertical_Polarized_MountingPegs'
   option: ", Center Polarization, Mounting Pegs"
   mount_pads:
-    pegs: $(mount_pegs)
+    pegs: $(mount_pegs) # use definition from 'default' section above
