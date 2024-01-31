@@ -11747,3 +11747,41 @@ VLGA-4_2x2.5mm_P1.65mm:
   pin_color_key: metal grey pins
   mark_color_key: light brown label
   source: 'https://ww1.microchip.com/downloads/en/DeviceDoc/DSC60XX-Ultra-Small-Ultra-Low-Power-MEMS-Oscillator-DS20005625C.pdf#page=15'
+
+Qorvo_TQFN66-48-1EP_6x6mm_P0.4mm_EP4.2x4.2mm:
+  c: 0.2
+  L: 0.4
+  fp_s: True
+  fp_r: 0.5
+  fp_d: 0.2
+  fp_dx: null
+  fp_dy: null
+  fp_z: 0.01
+  ef: 0.0
+  cce: 0.3
+  D: 6.0
+  E: 6.0
+  A1: 0.025
+  A2: 0.75
+  b: 0.2
+  e: 0.4
+  m: 0.0
+  ps: rounded
+  npx: 12
+  npy: 12
+  epad: [4.2, 4.2]
+  epad_offsetX: null
+  epad_offsetY: null
+  epad_n: null
+  epad_pitch: null
+  excluded_pins: null
+  model_name: Qorvo_TQFN66-48-1EP_6x6mm_P0.4mm_EP4.2x4.2mm
+  rotation: -90
+  destination_dir: Package_DFN_QFN.3dshapes
+  body_color_key: null
+  pin_shapes: null
+  body_color_key: 'black body'
+  pin_color_key: 'metal grey pins'
+  mark_color_key: 'light brown label'
+  source: 'https://www.qorvo.com/products/d/da006847'
+
