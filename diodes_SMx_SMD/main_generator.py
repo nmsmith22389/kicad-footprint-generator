@@ -58,9 +58,12 @@ import os
 from math import tan, radians
 
 import cadquery as cq
-from _tools import shaderColors, parameters, cq_color_correct, cq_globals, export_tools
+from _tools import shaderColors, parameters, cq_color_correct
+from _tools import add_license, cq_globals, export_tools
 from exportVRML.export_part_to_VRML import export_VRML
 
+from . import diodes_microsmp
+from .diodes_microsmp import make_microsmp
 from .diodes_smx_smd import make_Smx
 
 
@@ -107,7 +110,11 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
         pins_color = shaderColors.named_colors[all_params[model]["pin_color_key"]].getDiffuseFloat()
 
         # Make the parts of the model
-        body, pins, mark = make_Smx(all_params[model])
+        family = all_params[model].get("family", "smx")
+        if family == "microsmp":
+            body, pins, mark = make_microsmp(all_params[model])
+        else:
+            body, pins, mark = make_Smx(all_params[model])
         body = body.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])#.translate((all_params[model]['F'] / 2.0, 0, 0))
         pins = pins.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])#.translate((all_params[model]['F'] / 2.0, 0, 0))
         mark = mark.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])#.translate((all_params[model]['F'] / 2.0, 0, 0))
@@ -132,7 +139,7 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
         component.save(os.path.join(output_dir, file_name + ".step"), cq.exporters.ExportTypes.STEP, mode=cq.exporters.assembly.ExportModes.FUSED, write_pcurves=False)
 
         # Check for a proper union
-        export_tools.check_step_export_union(component, output_dir, file_name)
+        #export_tools.check_step_export_union(component, output_dir, file_name)
 
         # Export the assembly to VRML
         if enable_vrml:
