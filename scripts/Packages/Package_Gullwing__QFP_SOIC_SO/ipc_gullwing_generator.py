@@ -4,23 +4,22 @@ import sys
 import os
 import argparse
 import yaml
-import math
 from typing import List
 
 sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))  # load parent path of KicadModTree
 
 from KicadModTree import *  # NOQA
-from KicadModTree.nodes.base.Pad import Pad
+from KicadModTree import Vector2D, Footprint, FootprintType, ExposedPad, \
+    RectLine, PolygonLine, Model, KicadFileHandler, Pad
 from KicadModTree.nodes.specialized.PadArray import PadArray, get_pad_radius_from_arrays
-sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))  # load parent path of tools
-from footprint_text_fields import addTextFields
-from ipc_pad_size_calculators import *
+
+from scripts.tools.footprint_text_fields import addTextFields
+from scripts.tools.ipc_pad_size_calculators import TolerancedSize, ipc_gull_wing
 from scripts.tools.geometry.bounding_box import BoundingBox
 from scripts.tools.quad_dual_pad_border import create_dual_or_quad_pad_border
 from scripts.tools.drawing_tools import nearestSilkPointOnOrthogonalLine, TriangleArrowPointingSouth, roundGDown, TriangleArrowPointingEast
 
-sys.path.append(os.path.join(sys.path[0], "..", "utils"))
-from ep_handling_utils import getEpRoundRadiusParams
+from scripts.Packages.utils.ep_handling_utils import getEpRoundRadiusParams
 
 from scripts.tools.dict_tools import dictInherit
 
@@ -34,6 +33,7 @@ DEFAULT_MIN_ANNULAR_RING = 0.15
 
 def roundToBase(value, base):
     return round(value / base) * base
+
 
 def find_top_left_pad(pad_arrays: List[PadArray]) -> Pad:
     """
@@ -59,6 +59,7 @@ def find_top_left_pad(pad_arrays: List[PadArray]) -> Pad:
         raise ValueError("No pad found in pad array")
 
     return tl_pad
+
 
 class Gullwing():
     def __init__(self, configuration):
@@ -131,7 +132,7 @@ class Gullwing():
 
         if Gmin_x - 2 * min_ep_to_pad_clearance < overrides['EP_x']:
             heel_reduction_max = ((overrides['EP_x'] + 2 * min_ep_to_pad_clearance - Gmin_x) / 2)
-            #print('{}, {}, {}'.format(Gmin_x, overrides['EP_x'], min_ep_to_pad_clearance))
+            # print('{}, {}, {}'.format(Gmin_x, overrides['EP_x'], min_ep_to_pad_clearance))
             Gmin_x = overrides['EP_x'] + 2 * min_ep_to_pad_clearance
         if Gmin_y - 2 * min_ep_to_pad_clearance < overrides['EP_y']:
             heel_reduction = ((overrides['EP_y'] + 2 * min_ep_to_pad_clearance - Gmin_y) / 2)
@@ -167,7 +168,8 @@ class Gullwing():
             'lead_len': TolerancedSize.fromYaml(device_size_data, base_name='lead_len')
         }
         dimensions['has_EP'] = False
-        if 'EP_size_x_min' in device_size_data and 'EP_size_x_max' in device_size_data or 'EP_size_x' in device_size_data:
+        if ('EP_size_x_min' in device_size_data
+                and 'EP_size_x_max' in device_size_data or 'EP_size_x' in device_size_data):
             dimensions['EP_size_x'] = TolerancedSize.fromYaml(device_size_data, base_name='EP_size_x')
             dimensions['EP_size_y'] = TolerancedSize.fromYaml(device_size_data, base_name='EP_size_y')
             dimensions['has_EP'] = True
@@ -274,13 +276,13 @@ class Gullwing():
                 EP_mask_size = {'x': dimensions['EP_mask_x'].nominal, 'y': dimensions['EP_mask_y'].nominal}
 
         overrides = {
-            'EP_x' : 0,
-            'EP_y' : 0,
-            'pad_to_pad_min_x' : 0,
-            'pad_to_pad_max_x' : 0,
-            'pad_to_pad_min_y' : 0,
-            'pad_to_pad_max_y' : 0,
-            'pad_size_y' : 0
+            'EP_x': 0,
+            'EP_y': 0,
+            'pad_to_pad_min_x': 0,
+            'pad_to_pad_max_x': 0,
+            'pad_to_pad_min_y': 0,
+            'pad_to_pad_max_y': 0,
+            'pad_size_y': 0
         }
 
         if 'pad_size_y_overwrite' in device_params:
@@ -727,7 +729,7 @@ class Gullwing():
 
         kicad_mod.append(PolygonLine(
             polygon=poly_fab,
-            width=configuration['fab_line_width'],
+            width=fab_line_width,
             layer="F.Fab"))
 
         # ######################### Text Fields ###############################
@@ -736,7 +738,7 @@ class Gullwing():
                       courtyard={'top': courtyard_bbox.top, 'bottom': courtyard_bbox.bottom},
                       fp_name=fp_name, text_y_inside_position='center')
 
-        ##################### Output and 3d model ############################
+        # #################### Output and 3d model ############################
 
         kicad_mod.append(Model(filename=model_name))
 
@@ -751,10 +753,12 @@ class Gullwing():
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description='use confing .yaml files to create footprints. See readme.md for details about the parameter file format.')
+        description='use confing .yaml files to create footprints. See readme.md for details about the parameter '
+                    'file format.')
     parser.add_argument('files', metavar='file', type=str, nargs='+',
                         help='list of files holding information about what devices should be created.')
-    parser.add_argument('--global_config', type=str, nargs='?', help='the config file defining how the footprint will look like. (KLC)',
+    parser.add_argument('--global_config', type=str, nargs='?', help='the config file defining how the '
+                        'footprint will look. (KLC)',
                         default='../../tools/global_config_files/config_KLCv3.0.yaml')
     parser.add_argument('--series_config', type=str, nargs='?',
                         help='the config file defining series parameters.', default='../package_config_KLCv3.yaml')
