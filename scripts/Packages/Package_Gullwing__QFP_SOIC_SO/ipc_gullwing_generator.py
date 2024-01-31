@@ -742,10 +742,12 @@ class Gullwing():
 
         kicad_mod.append(Model(filename=model_name))
 
-        output_dir = '{lib_name:s}.pretty/'.format(lib_name=lib_name)
-        if not os.path.isdir(output_dir):  # returns false if path does not yet exist!! (Does not check path validity)
-            os.makedirs(output_dir)
-        filename = '{outdir:s}{fp_name:s}.kicad_mod'.format(outdir=output_dir, fp_name=fp_name)
+        self.__writeFile(kicad_mod, lib_name, fp_name)
+
+    def __writeFile(self, kicad_mod, lib_name: str, fp_name: str):
+        output_dir = f'{lib_name:s}.pretty/'
+        os.makedirs(output_dir, exist_ok=True)
+        filename = f'{output_dir}{fp_name}.kicad_mod'
 
         file_handler = KicadFileHandler(kicad_mod)
         file_handler.writeFile(filename)
