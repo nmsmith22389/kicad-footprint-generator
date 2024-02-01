@@ -1,0 +1,15 @@
+- series: WE-MAPI 
+  manufacturer: Wurth
+  datasheet: "https://www.we-online.com/en/components/products/WE-MAPI?kicad"
+  csv: Wurth_mapi.csv
+  spacing: center # data sheet is center-to-center spacing
+  3d:
+    type: 2
+    bodyColor: dark grey body
+    pinColor: metal grey pins
+    padThickness: 0.05
+  tags:
+    - Würth
+     -SMT
+     -MAPI
+  destination_dir: 'Inductor_SMD.3dshapes'
