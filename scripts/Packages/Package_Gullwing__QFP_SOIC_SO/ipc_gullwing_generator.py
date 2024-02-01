@@ -668,8 +668,8 @@ class GullwingGenerator:
             # to fit a large arrow
             arrow_size_enum = drawing_tools.SilkArrowSize.LARGE
         else:
-            # give large parts a larger arrow
-            if body_size_min < 6.0:
+            # give large, non-fine-pitch parts a larger arrow
+            if body_size_min < 6.0 or pitch < 1.0:
                 arrow_size_enum = drawing_tools.SilkArrowSize.MEDIUM
             else:
                 arrow_size_enum = drawing_tools.SilkArrowSize.LARGE
