@@ -14,14 +14,53 @@ sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))
 from KicadModTree import KicadFileHandler, Vector2D
 from KicadModTree.nodes import Pad, Footprint, FootprintType, Model, Text, RectLine, PolygonLine
 from scripts.tools.drawing_tools import TriangleArrowPointingSouthEast
+from scripts.tools.declarative_def_tools import tags_properties
 
 from string import ascii_uppercase
+
+
+class BGAConfiguration:
+    """
+    A type that represents the configuration of a BGA footprint
+    (probably from a YAML config block).
+
+    Over time, add more type-safe accessors to this class, and replace
+    use of the raw dictionary.
+    """
+
+    _spec_dictionary: dict
+    compatible_mpns: tags_properties.TagsProperties
+    additional_tags: tags_properties.TagsProperties
+
+    def __init__(self, spec: dict):
+        self._spec_dictionary = spec
+
+        self.compatible_mpns = tags_properties.TagsProperties(
+                spec.get('compatible_mpns', [])
+        )
+
+        # Generic addtional tags
+        self.additional_tags = tags_properties.TagsProperties(
+            spec.get(tags_properties.ADDITIONAL_TAGS_KEY, [])
+        )
+
+    @property
+    def spec_dictionary(self) -> dict:
+        """
+        Get the raw spec dictionary.
+
+        This is only temporary, and can be piecewise replaced by
+        type-safe declarative definitions, but that requires deep changes
+        """
+        return self._spec_dictionary
 
 
 class BGAGenerator:
 
     def generateFootprint(self, config, fpParams, fpId):
         createFp = False
+
+        device_config = BGAConfiguration(fpParams)
 
         # use IPC-derived pad size if possible, then fall back to user-defined pads
         if "ball_type" in fpParams and "ball_diameter" in fpParams:
@@ -54,7 +93,7 @@ class BGAGenerator:
                   "No footprint generated.")
 
         if createFp:
-            self._createFootprintVariant(config, fpParams, fpId)
+            self._createFootprintVariant(config, device_config, fpId)
 
     def compute_stagger(self, lParams):
         staggered = lParams.get('staggered')
@@ -77,17 +116,15 @@ class BGAGenerator:
 
         return pitchX, pitchY, None
 
-    def _createFootprintVariant(self, config, fpParams, fpId):
+    def _createFootprintVariant(self, config, device_config: BGAConfiguration, fpId):
+        # Pull out the old-style parameter dictionary
+        fpParams = device_config.spec_dictionary
+
         pkgX = fpParams["body_size_x"]
         pkgY = fpParams["body_size_y"]
         layoutX = fpParams["layout_x"]
         layoutY = fpParams["layout_y"]
         fFabRefRot = 0
-
-        if "additional_tags" in fpParams:
-            additionalTag = " " + fpParams["additional_tags"]
-        else:
-            additionalTag = ""
 
         f = Footprint(fpId, FootprintType.SMD)
         if "mask_margin" in fpParams:
@@ -230,7 +267,9 @@ class BGAGenerator:
             sdesc = ''
 
         f.setDescription(f'{fpParams["description"]}, {pkgX}x{pkgY}mm, {balls} Ball, {sdesc}{layoutX}x{layoutY} Layout, {pdesc}mm Pitch, {fpParams["size_source"]}')  # NOQA
-        f.setTags(f'{packageType} {balls} {pdesc}{additionalTag}')
+
+        f.tags = [packageType, str(balls), pdesc]
+        f.tags += device_config.additional_tags.tags
 
         outputDir = Path(f'Package_{packageType}.pretty')
         outputDir.mkdir(exist_ok=True)

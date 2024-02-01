@@ -46,7 +46,7 @@ The following parameters are mandatory, and must be in every package definition:
     Contains a brief, human-readable description of the package.
 
 ``size_source``
-    Contains a link to a datasheet or mechanical drawing that defines the package's dimensions. 
+    Contains a link to a datasheet or mechanical drawing that defines the package's dimensions.
 
 ``body_size_{x,y}``
     Defines the outside dimensions of the package. This is the dimensions of the actual package. Silkscreen and other
@@ -76,7 +76,11 @@ Optional parameters
 In addition to the above, package definitions can use the following, optional parameters.
 
 ``additional_tags``
-    Contains a string with a list of Kicad footprint tags that are added to the generated footprint.
+    An array of Kicad footprint tags that are added to the generated footprint.
+
+``compatible_mpns``
+    An array of vendor package codes that are compatible with this footprint. This is useful
+    when a generically-named package matches specific vendor packages named in datasheets.
 
 ``mask_margin``
     Solder mask margin to be stored in the footprint. Defaults to whatever the user sets in the board options.
