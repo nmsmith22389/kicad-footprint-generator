@@ -87,7 +87,7 @@ HTSSOP-16-1EP_4.4x5mm_P0.65mm_EP3.4x5mm_Mask2.46x2.31mm_ThermalVias:
 HTSSOP-20-1EP_4.4x6.5mm_P0.65mm_EP3.4x6.5mm_Mask2.4x3.7mm:
   size_source: 'http://www.ti.com/lit/ds/symlink/bq24006.pdf'
   compatible_mpns:
-    - TI:PWP/R-PDSO-G20
+    - TI-PWP/R-PDSO-G20
   body_size_x:
     minimum: 4.3
     maximum: 4.5
@@ -119,7 +119,7 @@ HTSSOP-20-1EP_4.4x6.5mm_P0.65mm_EP3.4x6.5mm_Mask2.4x3.7mm:
 HTSSOP-20-1EP_4.4x6.5mm_P0.65mm_EP2.85x4mm:
   size_source: 'https://pdfserv.maximintegrated.com/package_dwgs/21-0108.PDF'
   compatible_mpns:
-    - Maxim:U20E-1
+    - Maxim-U20E-1
   body_size_x:
     minimum: 4.3
     maximum: 4.5
@@ -153,7 +153,7 @@ HTSSOP-20-1EP_4.4x6.5mm_P0.65mm_EP2.85x4mm:
 HTSSOP-20-1EP_4.4x6.5mm_P0.65mm_EP2.74x3.86mm:
   size_source: 'https://www.analog.com/media/en/technical-documentation/data-sheets/4011fb.pdf#page=24'
   compatible_mpns:
-    - Analog:FE-CB
+    - Analog-FE-CB
   body_size_x:
     minimum: 4.3
     maximum: 4.5
@@ -222,7 +222,7 @@ HTSSOP-24-1EP_4.4x7.8mm_P0.65mm_EP3.2x5mm:
 Texas_PWP0024P:
   size_source: 'https://www.ti.com/lit/ds/symlink/tlc5949.pdf#page=49'
   compatible_mpns:
-    - TI:PWP0024P
+    - TI-PWP0024P
   body_size_x:
     minimum: 4.3
     maximum: 4.5
@@ -259,7 +259,7 @@ Texas_PWP0024P:
 HTSSOP-24-1EP_4.4x7.8mm_P0.65mm_EP3.4x7.8mm_Mask2.4x4.68mm_ThermalVias:
   size_source: 'http://www.ti.com/lit/ds/symlink/tps703.pdf'
   compatible_mpns:
-    - TI:PWP/R-PDSO-G24
+    - TI-PWP/R-PDSO-G24
   body_size_x:
     minimum: 4.3
     maximum: 4.5
@@ -350,7 +350,7 @@ HTSSOP-44_6.1x14.0mm_P0.5mm_TopEP4.14x7.01mm:
   size_source: 'http://www.ti.com/lit/ds/symlink/tpa3251.pdf#page=38'
   custom_name_format: 'HTSSOP-{pincount}_{size_x:g}x{size_y:g}mm_P{pitch}mm_TopEP4.14x7.01mm'
   compatible_mpns:
-    - TI:DDV0044D
+    - TI-DDV0044D
   body_size_x:
     minimum: 6.0
     maximum: 6.2
@@ -378,7 +378,7 @@ Texas_PWP0014A:
 # HTSSOP-14-1EP_4.4x5.0mm_P0.65mm_EP3.4x5.0mm_Mask3.0x3.1mm:
   size_source: 'http://www.ti.com/lit/ds/symlink/lm5161.pdf#page=34'
   compatible_mpns:
-    - TI:PWP0014A
+    - TI-PWP0014A
   body_size_x:
     minimum: 4.3
     nominal: 4.4
@@ -429,7 +429,7 @@ Texas_PWP0020U:
 # HTSSOP-20-1EP_4.4x6.5mm_P0.65mm_EP3.4x6.5mm_Mask2.75x3.43mm:
   size_source: 'http://www.ti.com/lit/ds/symlink/tlc5971.pdf#page=37&zoom=160,-90,3'
   compatible_mpns:
-    - TI:PWP0020U
+    - TI-PWP0020U
   body_size_x:
     minimum: 4.3
     maximum: 4.5
@@ -477,7 +477,7 @@ Texas_PWP0020T:
 # HTSSOP-20-1EP_4.4x6.5mm_P0.65mm_EP3.4x6.5mm_Mask2.96x2.96mm:
   size_source: 'https://www.ti.com/lit/ds/symlink/tps2663.pdf#page=49'
   compatible_mpns:
-    - TI:PWP0020T
+    - TI-PWP0020T
   body_size_x:
     minimum: 4.3
     maximum: 4.5
@@ -527,7 +527,7 @@ Texas_DAP_R-PDSO-G38:
   # HTSSOP-38-1EP_6.1x12.5mm_P0.65mm_EP5.2x12.5mm_Mask3.39x6.35mm
   size_source: 'http://www.ti.com/lit/ds/symlink/tlc5951.pdf#page=46'
   compatible_mpns:
-    - TI:DAP/R-PDSO-G38
+    - TI-DAP/R-PDSO-G38
   body_size_x:
     minimum: 6.0
     maximum: 6.2
