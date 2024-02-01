@@ -12,6 +12,7 @@ from scripts.tools.footprint_text_fields import addTextFields
 from KicadModTree import Footprint, FootprintType, \
     PolygonLine, Model, KicadFileHandler, Pad
 from KicadModTree.nodes.specialized.PadArray import PadArray
+from scripts.tools.declarative_def_tools import tags_properties
 
 ipc_density = 'nominal'
 ipc_doc_file = '../ipc_definitions.yaml'
@@ -26,6 +27,42 @@ def params_inch_to_metric(device_params):
     for key in device_params:
         if type(device_params[key]) in [int, float] and 'num_' not in key:
             device_params[key] = device_params[key]*25.4
+
+
+class PLCCConfiguration:
+    """
+    A type that represents the configuration of a PLCC footprint
+    (probably from a YAML config block).
+
+    Over time, add more type-safe accessors to this class, and replace
+    use of the raw dictionary.
+    """
+
+    _spec_dictionary: dict
+    compatible_mpns: tags_properties.TagsProperties
+    additional_tags: tags_properties.TagsProperties
+
+    def __init__(self, spec: dict):
+        self._spec_dictionary = spec
+
+        self.compatible_mpns = tags_properties.TagsProperties(
+                spec.get('compatible_mpns', [])
+        )
+
+        # Generic addtional tags
+        self.additional_tags = tags_properties.TagsProperties(
+            spec.get(tags_properties.ADDITIONAL_TAGS_KEY, [])
+        )
+
+    @property
+    def spec_dictionary(self) -> dict:
+        """
+        Get the raw spec dictionary.
+
+        This is only temporary, and can be piecewise replaced by
+        type-safe declarative definitions, but that requires deep changes
+        """
+        return self._spec_dictionary
 
 
 class PLCCGenerator():
@@ -156,7 +193,10 @@ class PLCCGenerator():
 
         return Pad
 
-    def generateFootprint(self, device_params):
+    def generateFootprint(self, device_config: PLCCConfiguration):
+        # Pull out the old-style raw data
+        device_params = device_config.spec_dictionary
+
         fab_line_width = self.configuration.get('fab_line_width', 0.1)
         silk_line_width = self.configuration.get('silk_line_width', 0.12)
 
@@ -492,4 +532,6 @@ if __name__ == "__main__":
         for pkg in cmd_file:
             if cmd_file[pkg].get('units', 'mm') == 'inches':
                 params_inch_to_metric(cmd_file[pkg])
-            generator.generateFootprint(cmd_file[pkg])
+
+            device_config = PLCCConfiguration(cmd_file[pkg])
+            generator.generateFootprint(device_config)
