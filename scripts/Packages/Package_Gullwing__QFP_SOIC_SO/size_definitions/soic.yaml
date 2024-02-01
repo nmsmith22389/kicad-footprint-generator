@@ -487,6 +487,35 @@ SOIC-8_7.5x5.85mm_P1.27mm:
   num_pins_x: 0
   num_pins_y: 4
 
+SOIC-10_3.9x4.9mm_P1.00mm:
+  custom_name_format: SOIC-{pincount}_{size_x:.2g}x{size_y:.2g}mm_P{pitch:.3g}mm
+  size_source: 'https://www.onsemi.com/pub/Collateral/751BQ.PDF'
+  additional_tags:
+  - "SOIC-10 NB"
+  body_size_x:
+    minimum: 3.8
+    maximum: 4.0
+  body_size_y:
+    minimum: 4.8
+    maximum: 5.0
+  overall_height:
+    minimum: 1.35
+    maximum: 2.00
+
+  overall_size_x:
+    minimum: 5.8
+    maximum: 6.2
+  lead_len:
+    minimum: 0.4
+    maximum: 0.8
+  lead_width:
+    minimum: 0.31
+    maximum: 0.51
+
+  pitch: 1.00
+  num_pins_x: 0
+  num_pins_y: 5
+
 SOIC-14_3.9x8.7mm_P1.27mm:
   #round to two significant digits to comply with old name
   custom_name_format: SOIC-{pincount}_{size_x:.2g}x{size_y:.2g}mm_P{pitch:g}mm
