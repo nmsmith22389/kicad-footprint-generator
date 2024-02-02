@@ -738,6 +738,36 @@ DFN-8-1EP_3x3mm_P0.65mm_EP1.7x2.05mm:
   #include_suffix_in_3dpath: 'False'
   #include_pad_size: 'fp_name_only' # 'both' | 'none' (default)
 
+AO_DFN-8-1EP_3x3mm_P0.65mm_EP1.25x2.7mm:
+  device_type: 'DFN'
+  manufacturer: 'AO'
+  part_number: 'AOZ666xDI'
+  size_source: 'https://aosmd.com/res/data_sheets/AOZ6663DI-01.pdf#page=15'
+  # Size of the package body (not the footprint), according to datasheet
+  body_size_x:
+    nominal: 3
+    tolerance: 0.1
+  body_size_y:
+    nominal: 3
+    tolerance: 0.1
+  # Lead width of the package (not the footprint), according to datasheet
+  lead_width: 0.3 -0.06 +0.05
+  lead_len: 0.4 +/-0.1
+
+  # Size of the package's exposed pad (not the footprint's EP)
+  EP_size_x: 1.15
+  EP_size_y: 2.35
+  # Override the size of the footprint's EP (according to datasheet recommendations)
+  EP_size_x_overwrite: 1.25
+  EP_size_y_overwrite: 2.7
+
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 2]
+
+  pitch: 0.65
+  num_pins_x: 0 # DFN only has pins on two sides
+  num_pins_y: 4
+
 DFN-8-1EP_4x4mm_P0.8mm_EP2.3x3.24mm:
   device_type: 'DFN'
   #manufacturer: 'man'
