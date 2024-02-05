@@ -1,9 +1,9 @@
 defaults:
   library: 'Hirose'
 
-DF57H-x-1.2V:
+DF57H-xP-1.2V:
   inherit: 'defaults'
-  fp_name: 'Hirose_DF57H-{num_pos:d}-{pad_pitch:.1f}V'
+  fp_name: 'Hirose_DF57H-{num_pos:d}P-{pad_pitch:.1f}V'
   fp_suffix: '_Socket'     # optional: defaults to ''
   description: "Low Profile Swing-Lock Wire-to-Board Connector for Power"
   source: 'https://www.hirose.com/en/product/document?clcode=&productname=&series=DF57&documenttype=Catalog&lang=en&documentid=en_DF57_CAT'
@@ -44,7 +44,7 @@ DF57H-x-1.2V:
       size: 0.5       # size of the pin 1 marker (default: pad_size.y)
       offset: 0.1    # offset from the body edge (default: 0 corresponds to silk line width)
 
-DF57H-2-2.4V:
-  inherit: 'DF57H-x-1.2V'
+DF57H-2P-2.4V:
+  inherit: 'DF57H-xP-1.2V'
   positions: 2
   pad_pitch: 2.4
