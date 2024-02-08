@@ -374,6 +374,42 @@ HTSSOP-44_6.1x14.0mm_P0.5mm_TopEP4.14x7.01mm:
     #y: 7.01
 
 
+HTSSOP-44-1EP_6.1x14.0mm_P0.635mm_EP4.31x8.26mm_Mask4.31x8.26mm_ThermalVias:
+  size_source: 'http://www.ti.com/lit/pdf/pptd165'
+  compatible_mpns:
+    - TI-DDW0044B
+  body_size_x:
+    minimum: 6.0
+    maximum: 6.2
+  body_size_y:
+    minimum: 13.9
+    maximum: 14.1
+  overall_size_y:
+    minimum: 7.9
+    maximum: 8.3
+  lead_width:
+    minimum: 0.17
+    maximum: 0.27
+  lead_len:
+    minimum: 0.5
+    maximum: 0.75
+  pitch: 0.635
+  num_pins_y: 22
+  num_pins_x: 0
+  EP_size_x: 5.2
+  EP_size_y: 14
+  EP_mask_x: 4.31
+  EP_mask_y: 8.26
+  EP_num_paste_pads: [3, 5]
+  thermal_vias:
+    count: [5, 13]
+    drill: 0.2
+    paste_via_clearance: 0.1
+    EP_num_paste_pads: [2, 3]
+    EP_paste_coverage: 0.65
+    paste_avoid_via: False
+
+
 Texas_PWP0014A:
 # HTSSOP-14-1EP_4.4x5.0mm_P0.65mm_EP3.4x5.0mm_Mask3.0x3.1mm:
   size_source: 'http://www.ti.com/lit/ds/symlink/lm5161.pdf#page=34'
