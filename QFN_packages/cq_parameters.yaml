@@ -251,6 +251,42 @@ D_SOD-110:
   pin_shapes: null
   source: 'https://www.nxp.com/docs/en/package-information/SOD110.pdf'
 
+D_SOD-882:
+  c: 0.03
+  L: 0.25
+  fp_s: False
+  fp_r: 0.3
+  fp_d: 0.1
+  fp_dx: null
+  fp_dy: null
+  fp_z: 0.01
+  ef: 0.0
+  cce: 0.0
+  D: 1.0
+  E: 0.6
+  A1: 0.03
+  A2: 0.45
+  b: 0.5
+  e: 0.65
+  m: 0.05
+  ps: square
+  npx: 0
+  npy: 1
+  epad: null
+  epad_offsetX: null
+  epad_offsetY: null
+  epad_n: null
+  epad_pitch: null
+  excluded_pins: null
+  model_name: D_SOD-882
+  rotation: 0
+  destination_dir: Diodes_SMD.3dshapes
+  body_color_key: 'black body'
+  pin_color_key: 'metal grey pins'
+  mark_color_key: 'light brown label'
+  pin_shapes: null
+  source: 'https://assets.nexperia.com/documents/package-information/SOD882.pdf'
+
 D_SOD-882D:
   c: 0.12  # pin thickness is nominally 0.4 mm; this is just approximate height that is folded over
   L: 0.3  # not used
