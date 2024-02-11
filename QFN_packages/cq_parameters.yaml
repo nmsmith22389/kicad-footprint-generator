@@ -251,6 +251,43 @@ D_SOD-110:
   pin_shapes: null
   source: 'https://www.nxp.com/docs/en/package-information/SOD110.pdf'
 
+D_SOD-882D:
+  c: 0.12  # pin thickness is nominally 0.4 mm; this is just approximate height that is folded over
+  L: 0.3  # not used
+  fp_s: False
+  fp_r: 0.3
+  fp_d: 0.1
+  fp_dx: null
+  fp_dy: null
+  fp_z: 0.01
+  ef: 0.0
+  cce: 0.2 # ??
+  D: 1.0
+  E: 0.6
+  A1: 0.04
+  A2: 0.36
+  b: 0.5  # not used
+  e: 0.0  # not used
+  m: 0.0  # not used
+  ps: custom
+  npx: 0
+  npy: 1
+  epad: null
+  epad_offsetX: null
+  epad_offsetY: null
+  epad_n: null
+  epad_pitch: null
+  excluded_pins: null
+  model_name: D_SOD-882D
+  rotation: 0
+  destination_dir: Diodes_SMD.3dshapes
+  body_color_key: 'black body'
+  pin_color_key: 'metal grey pins'
+  mark_color_key: 'light brown label'
+  pin_shapes: [[[ 0.2, -0.25], [ 0.45, -0.25], [ 0.45, -0.125], [ 0.5, -0.125], [ 0.5, 0.125], [ 0.45, 0.125], [ 0.45, 0.25], [ 0.2, 0.25]],
+               [[-0.2, -0.25], [-0.45, -0.25], [-0.45, -0.125], [-0.5, -0.125], [-0.5, 0.125], [-0.45, 0.125], [-0.45, 0.25], [-0.2, 0.25]]]
+  source: 'https://www.nxp.com/docs/en/package-information/SOD882D.pdf'
+
 AMS_LGA-10-1EP_2.7x4mm_P0.6mm:
   c: 0.2
   L: 0.3
