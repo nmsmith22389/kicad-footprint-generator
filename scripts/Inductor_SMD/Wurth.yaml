@@ -12,4 +12,4 @@
     - Würth
      -SMT
      -MAPI
-  destination_dir: 'Inductor_SMD.3dshapes'
+  destination_dir: 'Inductor_SMD_Wurth.pretty'
