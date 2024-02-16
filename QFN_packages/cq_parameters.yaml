@@ -5257,6 +5257,42 @@ NXP_XSON-16:
   mark_color_key: light brown label
   source: 'https://www.nxp.com/docs/en/package-information/SOT1341-1.pdf'
 
+USON-6_1x1.45mm_P0.5mm:
+  c: 0.13
+  L: 0.36
+  fp_s: True
+  fp_r: 0.2
+  fp_d: 0.1
+  fp_dx: null
+  fp_dy: null
+  fp_z: 0.01
+  ef: 0.0
+  cce: 0.01
+  D: 1.45
+  E: 1.0
+  A1: 0.02
+  A2: 0.6
+  b: 0.2
+  e: 0.5
+  m: 0.0
+  ps: rounded
+  npx: 3
+  npy: 0
+  epad: null
+  epad_offsetX: null
+  epad_offsetY: null
+  epad_n: null
+  epad_pitch: null
+  excluded_pins: null
+  model_name: USON-6_1x1.45mm_P0.5mm
+  rotation: -90
+  destination_dir: Housings_SON.3dshapes
+  body_color_key: black body
+  pin_shapes: null
+  pin_color_key: metal grey pins
+  mark_color_key: light brown label
+  source: 'https://www.ti.com/lit/gpn/tpd4s012'
+
 Nexperia_HUSON-8_USON-8-1EP_1.35x1.7mm_P0.4mm_EP0.4x1.2mm:
   c: 0.127
   L: 0.25
