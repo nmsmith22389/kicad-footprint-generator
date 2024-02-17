@@ -1,5 +1,5 @@
 FileHeader:
-  library_Suffix: 'SO'
+  library_Suffix: 'TO_SOT_SMD'
   device_type: 'SC-74'
 
 # This is a JEITA standard package.
