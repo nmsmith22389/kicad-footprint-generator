@@ -5696,6 +5696,39 @@ SC-70-8:
   destination_dir: 'TO_SOT_Packages_SMD.3dshapes'
   source: 'http://cds.linear.com/docs/en/packaging/SOT_8_05-08-1639.pdf'
 
+SC-74:
+  the: 8.0
+  tb_s: 0.05
+  c: 0.175
+  R1: 0.12
+  R2: 0.15
+  S: 0
+  L: 0.35
+  fp_s: True
+  fp_r: 0.2
+  fp_d: 0.1
+  fp_z: 0.03
+  ef: 0.0
+  cc1: 0.0 #0.12
+  D1: 2.9
+  E1: 1.55
+  E: 2.7
+  A1: 0.075
+  A2: 1.1
+  b: 0.35
+  e: 0.95
+  npx: 3
+  npy: 0
+  epad: null
+  excluded_pins: null
+  model_name: SC-74
+  rotation: -90
+  body_color_key: 'black body'
+  pin_color_key: 'metal grey pins'
+  mark_color_key: 'light brown label'
+  destination_dir: 'Package_TO_SOT_SMD.3dshapes'
+  source: 'https://home.jeita.or.jp/tsc/std-pdf/ED-7500A.pdf' # EIAJ ED-7500A, pp 152
+
 SC-74A-5:
   the: 8.0
   tb_s: 0.05
