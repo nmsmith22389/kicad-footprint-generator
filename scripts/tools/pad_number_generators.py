@@ -24,15 +24,17 @@ To achieve a non-standard pin numbering of 2, 3, ..., N, 1 (instead of 1, 2, ...
   pad_numbers:
     generator: 'increment'
     offset: 1
+    increment: 1
 """
 
 
-def increment(pincount, init=1, offset=0, **kwargs):
+def increment(pincount, init=1, offset=0, increment=1, **kwargs):
     """Standard increment iterator.
 
     Args:
         pincount: Total number of pins
         init: Initial starting count (default: 1)
+        increment: (default: 1) amount to increment pin-numbers on each step. Can be negative for CCW numbering
         offset: add an offset to the pin numbers to achieve a non-standard pin numbering
             Examples:
                 offset=1 results in [2, 3, ..., pincount, 1] instead of [1, 2, ..., pincount]
@@ -52,7 +54,7 @@ def increment(pincount, init=1, offset=0, **kwargs):
             yield None
         else:
             yield 1 + (pad_num - 1 + offset) % (pincount - num_deleted_pins)
-            pad_num += 1
+            pad_num += increment
 
 
 def _get_pin_cw(pincount, loc):

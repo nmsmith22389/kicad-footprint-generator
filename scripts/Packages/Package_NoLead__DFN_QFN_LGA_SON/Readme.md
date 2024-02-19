@@ -91,6 +91,12 @@ pad_numbers:
 ~~~
 ![non-standard numbering example](./documentation/non-std-numbering.png)
 
+The following excerpt creates a non-standard numbering where the pin numbers are incrementing counter clock wise
+~~~ yaml
+pad_numbers:
+  generator: 'increment'
+  increment: -1
+~~~
 **TODO:** describe the currently available pin numbering options in more detail
 
 ### Exposed pad Handling:
