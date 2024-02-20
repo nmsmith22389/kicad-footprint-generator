@@ -5721,7 +5721,7 @@ SC-74:
   npy: 0
   epad: null
   excluded_pins: null
-  model_name: SC-74
+  model_name: SC-74-6_1.55x2.9mm_P0.95mm
   rotation: -90
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -5729,7 +5729,7 @@ SC-74:
   destination_dir: 'Package_TO_SOT_SMD.3dshapes'
   source: 'https://home.jeita.or.jp/tsc/std-pdf/ED-7500A.pdf' # EIAJ ED-7500A, pp 152
 
-SC-74A-5:
+SC-74A:
   the: 8.0
   tb_s: 0.05
   c: 0.175
@@ -5754,7 +5754,7 @@ SC-74A-5:
   npy: 0
   epad: null
   excluded_pins: [5,]
-  model_name: SC-74A-5 
+  model_name: SC-74A-5_1.55x2.9mm_P0.95mm
   rotation: -90
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
