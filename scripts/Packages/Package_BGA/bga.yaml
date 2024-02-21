@@ -48,7 +48,9 @@ LFBGA-289_14x14mm_Layout17x17_P0.8mm:
 LFBGA-400_16x16mm_Layout20x20_P0.8mm:
   description: "LFBGA-400, NSMD"
   size_source: "https://www.efinixinc.com/docs/titanium-packaging-ug-v5.2.pdf"
-  additional_tags: "400-ball FBGA"
+  additional_tags:
+    - "400-ball"
+    - "FBGA"
   body_size_x: 16.0
   body_size_y: 16.0
   pitch: 0.8
@@ -61,7 +63,9 @@ LFBGA-400_16x16mm_Layout20x20_P0.8mm:
 LFBGA-484_18x18mm_Layout22x22_P0.8mm:
   description: "LFBGA-484, NSMD"
   size_source: "https://www.efinixinc.com/docs/titanium-packaging-ug-v5.2.pdf"
-  additional_tags: "484-ball LFBGA"
+  additional_tags:
+    - "484-ball"
+    - "LFBGA"
   body_size_x: 18.0
   body_size_y: 18.0
   overall_height: 1.268
@@ -266,7 +270,8 @@ Texas_DSBGA-6_0.95x1.488mm_Layout2x3_P0.4mm:
 Texas_DSBGA-5_0.8875x1.3875mm_Layout2x3_P0.5mm:
   description: "Texas Instruments, DSBGA, area grid, NSMD, YZP0005 pad definition"
   size_source: "https://www.ti.com/lit/ds/symlink/sn74lvc1g17.pdf#page=42, https://www.ti.com/lit/ml/mxbg018l/mxbg018l.pdf"
-  additional_tags: "YZP"
+  additional_tags:
+    - "YZP"
   body_size_x: 0.8875
   body_size_y: 1.3875
   overall_height: 0.5
@@ -312,7 +317,9 @@ Texas_MicroStar_Junior_BGA-113_7.0x7.0mm_Layout12x12_P0.5mm:
 TFBGA-49_3x3mm_Layout7x7_P0.4mm:
   description: "TFBGA-49, NSMD"
   size_source: "https://www.efinixinc.com/docs/trion-packaging-ug-v4.9.pdf"
-  additional_tags: "49-ball FBGA"
+  additional_tags:
+    - "49-ball"
+    - "FBGA"
   body_size_x: 3.0
   body_size_y: 3.0
   overall_height: 0.85
@@ -336,7 +343,9 @@ TFBGA-64_5x5mm_Layout8x8_P0.5mm:
 TFBGA-81_5x5mm_Layout8x8_P0.5mm:
   description: "TFBGA-81, NSMD"
   size_source: "https://www.efinixinc.com/docs/trion-packaging-ug-v4.9.pdf"
-  additional_tags: "81-ball FBGA"
+  additional_tags:
+    - "81-ball"
+    - "FBGA"
   body_size_x: 5.0
   body_size_y: 5.0
   overall_height: 0.83
@@ -360,7 +369,9 @@ TFBGA-100_8x8mm_Layout10x10_P0.8mm:
 TFBGA-100_5.5x5.5mm_Layout10x10_P0.5mm:
   description: "TFBGA-100, NSMD"
   size_source: "https://www.efinixinc.com/docs/titanium-packaging-ug-v5.2.pdf"
-  additional_tags: "100-ball FBGA"
+  additional_tags:
+    - "100-ball"
+    - "FBGA"
   body_size_x: 5.5
   body_size_y: 5.5
   pitch: 0.5
@@ -383,7 +394,9 @@ TFBGA-121_10x10mm_Layout11x11_P0.8mm:
 TFBGA-169_9x9mm_Layout13x13_P0.65mm:
   description: "TFBGA-169, NSMD"
   size_source: "https://www.efinixinc.com/docs/trion-packaging-ug-v4.9.pdf"
-  additional_tags: "169-ball FBGA"
+  additional_tags:
+    - "169-ball"
+    - "FBGA"
   body_size_x: 9.0
   body_size_y: 9.0
   overall_height: 1.0
@@ -421,7 +434,9 @@ TFBGA-216_13x13mm_Layout15x15_P0.8mm:
 TFBGA-225_10x10mm_Layout15x15_P0.65mm:
   description: "TFBGA-225, NSMD"
   size_source: "https://www.efinixinc.com/docs/titanium-packaging-ug-v5.2.pdf"
-  additional_tags: "225-ball FBGA"
+  additional_tags:
+    - "225-ball"
+    - "FBGA"
   body_size_x: 10.0
   body_size_y: 10.0
   pitch: 0.65
@@ -444,7 +459,9 @@ TFBGA-289_9x9mm_Layout17x17_P0.5mm:
 TFBGA-256_13x13mm_Layout16x16_P0.8mm:
   description: "TFBGA-256, NSMD"
   size_source: "https://www.efinixinc.com/docs/trion-packaging-ug-v4.9.pdf"
-  additional_tags: "256-ball FBGA"
+  additional_tags:
+    - "256-ball"
+    - "FBGA"
   body_size_x: 13.0
   body_size_y: 13.0
   overall_height: 1.04
@@ -457,7 +474,9 @@ TFBGA-256_13x13mm_Layout16x16_P0.8mm:
 TFBGA-324_12x12mm_Layout18x18_P0.8mm:
   description: "TFBGA-324, NSMD"
   size_source: "https://www.efinixinc.com/docs/trion-packaging-ug-v4.9.pdf"
-  additional_tags: "324-ball FBGA"
+  additional_tags:
+    - "324-ball"
+    - "FBGA"
   body_size_x: 12.0
   body_size_y: 12.0
   overall_height: 0.97
@@ -470,7 +489,9 @@ TFBGA-324_12x12mm_Layout18x18_P0.8mm:
 TFBGA-361_13x13mm_Layout19x19_P0.65mm:
   description: "TFBGA-361, NSMD"
   size_source: "https://www.efinixinc.com/docs/titanium-packaging-ug-v5.2.pdf"
-  additional_tags: "361-ball FBGA"
+  additional_tags:
+    - "361-ball"
+    - "FBGA"
   body_size_x: 13.0
   body_size_y: 13.0
   pitch: 0.65
@@ -494,7 +515,9 @@ ST_TFBGA-169_7x7mm_Layout13x13_P0.5mm:
 TFBGA-576_16x16mm_Layout24x24_P0.65mm:
   description: "TFBGA-576, NSMD"
   size_source: "https://www.efinixinc.com/docs/trion-packaging-ug-v4.9.pdf"
-  additional_tags: "576-ball FBGA"
+  additional_tags:
+    - "576-ball"
+    - "FBGA"
   body_size_x: 16.0
   body_size_y: 16.0
   overall_height: 1.2
@@ -980,7 +1003,8 @@ Infineon_LFBGA-292_17x17mm_Layout20x20_P0.8mm_Ball0.5mm_Pad0.35:
 BGA-324_15.0x15.0mm_Layout18x18_P0.8mm_Ball0.45mm_Pad0.4mm_NSMD:
   description: "BGA-324"
   size_source: "https://colognechip.com/docs/ds1001-gatemate1-datasheet-2022-05.pdf#page=92"
-  additional_tags: "GateMate FPGA"
+  additional_tags:
+    - "GateMate FPGA"
   body_size_x: 15
   body_size_y: 15
   overall_height: 1.19
@@ -993,7 +1017,9 @@ BGA-324_15.0x15.0mm_Layout18x18_P0.8mm_Ball0.45mm_Pad0.4mm_NSMD:
 BGA-529_19x19mm_Layout23x23_P0.8mm:
   description: "BGA-529, NSMD"
   size_source: "https://www.efinixinc.com/docs/titanium-packaging-ug-v5.2.pdf"
-  additional_tags: "529-ball FBGA"
+  additional_tags:
+    - "529-ball"
+    - "FBGA"
   body_size_x: 19.0
   body_size_y: 19.0
   overall_height: 2.75
@@ -1007,7 +1033,9 @@ BGA-529_19x19mm_Layout23x23_P0.8mm:
 Texas_BGA-289_15.0x15.0mm_Layout17x17_P0.8mm_Ball0.5mm_Pad0.4mm:
   description: "Texas Instruments BGA-289, 0.4mm pad"
   size_source: "https://www.ti.com/lit/ml/mpbg777/mpbg777.pdf"
-  additional_tags: "ZAV S-PBGA-N289"
+  additional_tags:
+    - "ZAV"
+    - "S-PBGA-N289"
   body_size_x: 15
   body_size_y: 15
   overall_height: 1.40
@@ -1042,7 +1070,8 @@ Alliance_TFBGA-54_8x8mm_Layout9x9_P0.8mm:
 Analog_BGA-77_9.0x15.0mm_Layout7x11_P1.27mm_Ball0.63mm:
   description: "Analog Devices BGA-77, 0.63mm pad"
   size_source: "https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/ltc-legacy-bga/05081964_B_bga77.pdf"
-  additional_tags: "LTC Dwg 05-08-1964 Rev. B"
+  additional_tags:
+    - "LTC Dwg 05-08-1964 Rev. B"
   body_size_x: 9
   body_size_y: 15
   overall_height: 2.42
