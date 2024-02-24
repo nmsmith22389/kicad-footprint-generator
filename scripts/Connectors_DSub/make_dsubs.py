@@ -43,7 +43,7 @@ if __name__ == '__main__':
     nut_diameter=5
     nut_length=5
     tags_additional=[]
-    lib_name="${KICAD7_3DMODEL_DIR}/Connectors_DSub"
+    lib_name="${KICAD8_3DMODEL_DIR}/Connectors_DSub"
     classname="DSUB"
     classname_description="D-Sub connector"
     webpage="https://disti-assets.s3.amazonaws.com/tonar/files/datasheets/16730.pdf"

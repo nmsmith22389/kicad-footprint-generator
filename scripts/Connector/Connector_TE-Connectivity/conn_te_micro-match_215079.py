@@ -207,7 +207,7 @@ def generate_one_footprint(pincount, configuration):
         courtyard={'top': cy1, 'bottom': cy2}, fp_name=footprint_name)
 
     # Output
-    model3d_path_prefix = configuration.get('3d_model_prefix','${KICAD7_3DMODEL_DIR}/')
+    model3d_path_prefix = configuration.get('3d_model_prefix','${KICAD8_3DMODEL_DIR}/')
     lib_name = configuration['lib_name_format_string'].format(man=man_lib)
     model_name = f'{model3d_path_prefix}{lib_name}.3dshapes/{footprint_name}.wrl'
     kicad_mod.append(Model(filename=model_name))

@@ -355,7 +355,7 @@ class GullwingGenerator:
         suffix = device_params.get('suffix', '').format(pad_x=pad_details['left']['size'][0],
                                                         pad_y=pad_details['left']['size'][1])
         suffix_3d = suffix if device_params.get('include_suffix_in_3dpath', 'True') == 'True' else ""
-        model3d_path_prefix = self.configuration.get('3d_model_prefix', '${KICAD7_3DMODEL_DIR}')
+        model3d_path_prefix = self.configuration.get('3d_model_prefix', '${KICAD8_3DMODEL_DIR}')
 
         fp_name = name_format.format(
             man=device_params.get('manufacturer', ''),

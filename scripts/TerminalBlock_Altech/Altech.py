@@ -49,12 +49,12 @@ def qfn(args):
         f = Footprint(footprint_name, FootprintType.THT)
 
 
-        file3Dname = "${KICAD7_3DMODEL_DIR}/" + dest_dir_3D_prefix + "/" + footprint_name + ".wrl"
+        file3Dname = "${KICAD8_3DMODEL_DIR}/" + dest_dir_3D_prefix + "/" + footprint_name + ".wrl"
         words = footprint_name.split("_")
         if words[-1].lower().startswith('handsolder'):
             words[-1] = ''
             ff = '_'.join(words)
-            file3Dname = "${KICAD7_3DMODEL_DIR}/" + dest_dir_3D_prefix + "/" + ff + ".wrl"
+            file3Dname = "${KICAD8_3DMODEL_DIR}/" + dest_dir_3D_prefix + "/" + ff + ".wrl"
 
         lw = ((2.0 * PE) + ((pinnumber - 1) * PS))
         at = [0.0 - PE, W - WD]

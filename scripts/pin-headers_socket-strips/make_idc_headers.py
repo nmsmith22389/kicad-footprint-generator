@@ -59,7 +59,7 @@ if __name__ == '__main__':
                                     latch_len, latch_width,
                                     mh_ddrill, mh_pad, mh_overlen, mh_offset, mh_number,
                                     tags_additional, extra_description, "Connector_IDC", "IDC-Header", "IDC header",
-                                    [0, 0, 0], [1, 1, 1], [0, 0, 0], "${KICAD7_3DMODEL_DIR}")
+                                    [0, 0, 0], [1, 1, 1], [0, 0, 0], "${KICAD8_3DMODEL_DIR}")
     
     # the above datasheets cover both horizontal and vertical
     # latches are assumed to hang off the PCB so they aren't included here
@@ -83,7 +83,7 @@ if __name__ == '__main__':
                                 latch_len, latch_width,
                                 mh_ddrill, mh_pad, mh_overlen, mh_offset, mh_number,
                                 tags_additional, extra_description, "Connector_IDC", "IDC-Header", "IDC header",
-                                [0, 0, 0], [1, 1, 1], [0, 0, 0], "${KICAD7_3DMODEL_DIR}")
+                                [0, 0, 0], [1, 1, 1], [0, 0, 0], "${KICAD8_3DMODEL_DIR}")
 
     
     # from http://multimedia.3m.com/mws/media/330367O/3m-four-wall-header-2500-series-ts-0770.pdf
@@ -109,7 +109,7 @@ if __name__ == '__main__':
                             0, 0,
                             0, [0,0], 0, 0, 0,
                             tags_additional, extra_description, "Connector_IDC", "IDC-Header", "IDC box header",
-                            [0, 0, 0], [1, 1, 1], [0, 0, 0], "${KICAD7_3DMODEL_DIR}")
+                            [0, 0, 0], [1, 1, 1], [0, 0, 0], "${KICAD8_3DMODEL_DIR}")
 
     # from http://multimedia.3m.com/mws/media/22504O/3mtm-100-in-loprof-hdr-100x-100strt-ra-4-wall-ts0818.pdf
     # and  https://b2b.harting.com/files/download/PRD/PDF_TS/09185XXX323_100154466DRW007A.pdf
@@ -130,7 +130,7 @@ if __name__ == '__main__':
                             0, 0,
                             0, [0,0], 0, 0, 0,
                             tags_additional, extra_description, "Connector_IDC", "IDC-Header", "IDC box header",
-                            [0, 0, 0], [1, 1, 1], [0, 0, 0], "${KICAD7_3DMODEL_DIR}")
+                            [0, 0, 0], [1, 1, 1], [0, 0, 0], "${KICAD8_3DMODEL_DIR}")
 
     # from https://www.tme.eu/Document/4baa0e952ce73e37bc68cf730b541507/T821M114A1S100CEU-B.pdf
     
@@ -165,5 +165,5 @@ if __name__ == '__main__':
                             0, 0,
                             0, [0,0], 0, 0, 0,
                             tags_additional, extra_description, "Connector_IDC", "IDC-Header", "IDC box header",
-                            [0, 0, 0], [1, 1, 1], [0, 0, 0], "${KICAD7_3DMODEL_DIR}")
+                            [0, 0, 0], [1, 1, 1], [0, 0, 0], "${KICAD8_3DMODEL_DIR}")
 

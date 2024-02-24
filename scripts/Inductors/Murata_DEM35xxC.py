@@ -20,7 +20,7 @@ padHeight = 1.4
 f = Footprint(footprint_name, FootprintType.SMD)
 f.setDescription(datasheet)
 f.setTags("Inductor SMD DEM35xxC")
-f.append(Model(filename="${KICAD7_3DMODEL_DIR}/Inductor_SMD.3dshapes/" + footprint_name + ".wrl",
+f.append(Model(filename="${KICAD8_3DMODEL_DIR}/Inductor_SMD.3dshapes/" + footprint_name + ".wrl",
                at=[0.0, 0.0, 0.0],
                scale=[1.0, 1.0, 1.0],
                rotate=[0.0, 0.0, 0.0]))

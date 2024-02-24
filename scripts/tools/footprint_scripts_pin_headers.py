@@ -20,7 +20,7 @@ slk_offset = 0.11
 
 def makePinHeadStraight(rows, cols, rm, coldist, package_width, overlen_top, overlen_bottom, ddrill, pad,
                         tags_additional=[], lib_name="Pin_Headers", classname="Pin_Header", classname_description="pin header", offset3d=[0, 0, 0], scale3d=[1, 1, 1],
-                        rotate3d=[0, 0, 0], model3d_path_prefix="${KICAD7_3DMODEL_DIR}", isSocket=False):
+                        rotate3d=[0, 0, 0], model3d_path_prefix="${KICAD8_3DMODEL_DIR}", isSocket=False):
     h_fab = (rows - 1) * rm + overlen_top + overlen_bottom
     w_fab = package_width
     l_fab = (coldist * (cols - 1) - w_fab) / 2
@@ -283,7 +283,7 @@ def makeIdcHeader(rows, cols, rm, coldist, body_width, overlen_top, overlen_bott
                         latch_len=0, latch_width=0,
                         mh_ddrill=0, mh_pad=[0,0], mh_overlen=0, mh_offset=0, mh_number='MP',
                         tags_additional=[], extra_description=False, lib_name="Connector_IDC", classname="IDC-Header", classname_description="IDC box header", offset3d=[0, 0, 0], scale3d=[1, 1, 1],
-                        rotate3d=[0, 0, 0], model3d_path_prefix="${KICAD7_3DMODEL_DIR}"):
+                        rotate3d=[0, 0, 0], model3d_path_prefix="${KICAD8_3DMODEL_DIR}"):
     # If ddrill is zero, then create a SMD footprint:
     #     SMT pads are created.
     #     rm is row pitch
@@ -601,7 +601,7 @@ def makeIdcHeader(rows, cols, rm, coldist, body_width, overlen_top, overlen_bott
 def makePinHeadAngled(rows, cols, rm, coldist, pack_width, pack_offset, pin_length, pin_width, ddrill, pad,
                       tags_additional=[], lib_name="Pin_Headers", classname="Pin_Header",
                       classname_description="pin header", offset3d=[0, 0, 0], scale3d=[1, 1, 1],
-                      rotate3d=[0, 0, 0], model3d_path_prefix="${KICAD7_3DMODEL_DIR}"):
+                      rotate3d=[0, 0, 0], model3d_path_prefix="${KICAD8_3DMODEL_DIR}"):
     h_fabb = (rows - 1) * rm + rm / 2 + rm / 2
     w_fabb = pack_width
     l_fabb = coldist * (cols - 1) + pack_offset
@@ -883,7 +883,7 @@ def makePinHeadAngled(rows, cols, rm, coldist, pack_width, pack_offset, pin_leng
 def makeSocketStripAngled(rows, cols, rm, coldist, pack_width, pack_offset, pin_width, ddrill, pad,
                       tags_additional=[], lib_name="$Socket_Strips", classname="Socket_Strip",
                       classname_description="socket strip", offset3d=[0, 0, 0], scale3d=[1, 1, 1],
-                      rotate3d=[0, 0, 0], model3d_path_prefix="${KICAD7_3DMODEL_DIR}"):
+                      rotate3d=[0, 0, 0], model3d_path_prefix="${KICAD8_3DMODEL_DIR}"):
     h_fabb = (rows - 1) * rm + rm / 2 + rm / 2
     w_fabb = -pack_width
     l_fabb = -1*(coldist * (cols - 1) + pack_offset)
@@ -1051,7 +1051,7 @@ def makeSocketStripAngled(rows, cols, rm, coldist, pack_width, pack_offset, pin_
 
 def makePinHeadStraightSMD(rows, cols, rm, coldist, rmx_pad_offset,rmx_pin_length, pin_width, package_width, overlen_top, overlen_bottom, pad,
                         start_left=True, tags_additional=[], lib_name="$Pin_Headers", classname="Pin_Header", classname_description="pin header", offset3d=[0, 0, 0], scale3d=[1, 1, 1],
-                        rotate3d=[0, 0, 0], model3d_path_prefix="${KICAD7_3DMODEL_DIR}", isSocket=False):
+                        rotate3d=[0, 0, 0], model3d_path_prefix="${KICAD8_3DMODEL_DIR}", isSocket=False):
     ddrill=0.5
     h_fab = (rows - 1) * rm + overlen_top + overlen_bottom
     w_fab = package_width

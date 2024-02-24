@@ -33,7 +33,7 @@ def rotary_coded_switch(args):
     f.setDescription("4-bit rotary coded switch, " + style + ", " + datasheet)
     f.setTags("rotary switch bcd")
 
-    f.append(Model(filename="${KICAD7_3DMODEL_DIR}/Buttons_Switches_" + tech + ".3dshapes/" + footprint_name + ".wrl", at=[0, 0, 0], scale=[1, 1, 1], rotate=[0.0, 0.0, 0.0]))
+    f.append(Model(filename="${KICAD8_3DMODEL_DIR}/Buttons_Switches_" + tech + ".3dshapes/" + footprint_name + ".wrl", at=[0, 0, 0], scale=[1, 1, 1], rotate=[0.0, 0.0, 0.0]))
 
     wCrtYd = 0.05
     wFab = 0.1

@@ -21,7 +21,7 @@ padCornerHeight = 0.8
 f = Footprint(footprint_name, FootprintType.SMD)
 f.setDescription(datasheet)
 f.setTags("LED ROHM SMLVN6")
-f.append(Model(filename="${KICAD7_3DMODEL_DIR}/LED_SMD.3dshapes/" + footprint_name + ".wrl",
+f.append(Model(filename="${KICAD8_3DMODEL_DIR}/LED_SMD.3dshapes/" + footprint_name + ".wrl",
                at=[0.0, 0.0, 0.0],
                scale=[1.0, 1.0, 1.0],
                rotate=[0.0, 0.0, 0.0]))

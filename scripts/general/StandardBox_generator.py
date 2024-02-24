@@ -42,14 +42,14 @@ def converter(args):
     footprint_type = FootprintType.SMD if SmdTht == "smd" else FootprintType.THT
     f = Footprint(footprint_name, footprint_type)
 
-    file3Dname = "${KICAD7_3DMODEL_DIR}/" + dir3D + "/" + footprint_name + ".wrl"
+    file3Dname = "${KICAD8_3DMODEL_DIR}/" + dir3D + "/" + footprint_name + ".wrl"
 
     words = footprint_name.split("_")
 
     if words[-1].lower().startswith('handsolder'):
         words[-1] = ''
         ff = '_'.join(words)
-        file3Dname = "${KICAD7_3DMODEL_DIR}/" + dir3D + "/" + ff + ".wrl"
+        file3Dname = "${KICAD8_3DMODEL_DIR}/" + dir3D + "/" + ff + ".wrl"
 
     f.append(StandardBox(footprint=f, description=description, datasheet=datasheet,
                          at=at, size=size, tags=fptag, extratexts=extratexts, pins=pins,

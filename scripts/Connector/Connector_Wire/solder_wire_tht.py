@@ -281,7 +281,7 @@ def make_fp(wire_def, fp_type, pincount, configuration):
         prototype.offset_x = i*pitch
         kicad_mod.append(deepcopy(prototype))
 
-    model3d_path_prefix = configuration.get('3d_model_prefix','${KICAD7_3DMODEL_DIR}/')
+    model3d_path_prefix = configuration.get('3d_model_prefix','${KICAD8_3DMODEL_DIR}/')
 
     lib_name = 'Connector_Wire'
     model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}.wrl'.format(

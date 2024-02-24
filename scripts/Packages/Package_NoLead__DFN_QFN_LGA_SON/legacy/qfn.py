@@ -48,7 +48,7 @@ def qfn(args):
     f = Footprint(footprint_name, FootprintType.SMD)
     f.setDescription(desc)
     f.setTags("QFN " + str(pitch))
-    f.append(Model(filename="${KICAD7_3DMODEL_DIR}/Package_DFN_QFN.3dshapes/" + model + ".wrl",
+    f.append(Model(filename="${KICAD8_3DMODEL_DIR}/Package_DFN_QFN.3dshapes/" + model + ".wrl",
                    at=[0.0, 0.0, 0.0],
                    scale=[1.0, 1.0, 1.0],
                    rotate=[0.0, 0.0, 0.0]))

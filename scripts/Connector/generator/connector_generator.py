@@ -44,7 +44,7 @@ DEFAULT_THT_PAD_SHAPE = 'circ'
 DEFAULT_ROUNDRECT_RRATIO = 0.25
 DEFAULT_ROUNDRECT_RMAX = 0.25
 
-KICAD_3DMODEL_DIR = "${KICAD7_3DMODEL_DIR}"
+KICAD_3DMODEL_DIR = "${KICAD8_3DMODEL_DIR}"
 
 
 def _get_dims(name: str, spec: dict, base: Vector2D = None, mult: float=1):

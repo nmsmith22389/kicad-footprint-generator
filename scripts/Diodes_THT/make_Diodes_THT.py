@@ -42,7 +42,7 @@ if __name__ == '__main__':
     d2=0
     R_POW = 0
     clname="D"
-    lbname="${KICAD7_3DMODEL_DIR}/Diode_THT"
+    lbname="${KICAD8_3DMODEL_DIR}/Diode_THT"
     deco="diode"
     deco_kup="diode_KUP"
 
