@@ -526,7 +526,7 @@ diodes_SMx_SMD:
     # - cat ./audit_log.txt
   artifacts:
     paths:
-      - 3dmodels/Diodes_SMD.3dshapes
+      - 3dmodels/Diode_SMD.3dshapes
       # - audit_log.txt
   when: manual
   timeout: 6 hours
@@ -611,7 +611,7 @@ Flat_Pin_packages:
     # - cat ./audit_log.txt
   artifacts:
     paths:
-      - 3dmodels/Diodes_SMD.3dshapes
+      - 3dmodels/Diode_SMD.3dshapes
       - 3dmodels/TO_SOT_Packages_SMD.3dshapes
       # - audit_log.txt
   when: manual
@@ -840,7 +840,7 @@ QFN_packages:
     # - cat ./audit_log.txt
   artifacts:
     paths:
-      - 3dmodels/Diodes_SMD.3dshapes
+      - 3dmodels/Diode_SMD.3dshapes
       - 3dmodels/Housings_LGA.3dshapes
       - 3dmodels/RF_Antenna.3dshapes
       - 3dmodels/Housings_DFN_QFN.3dshapes

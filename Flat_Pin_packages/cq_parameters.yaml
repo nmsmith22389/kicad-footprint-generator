@@ -22,7 +22,7 @@ D_SOD-323F:
   color_pin_mark: true
   place_pinMark: true
   rotation: 0  # rotation if required
-  destination_dir: Diodes_SMD.3dshapes
+  destination_dir: Diode_SMD.3dshapes
   body_color_key: 'black body'
   mark_color_key: 'light brown label'
   pin_color_key: 'metal grey pins'
@@ -52,7 +52,7 @@ D_PowerDI-123:
   color_pin_mark: true
   place_pinMark: true
   rotation: 0
-  destination_dir: Diodes_SMD.3dshapes
+  destination_dir: Diode_SMD.3dshapes
   body_color_key: 'black body'
   mark_color_key: 'light brown label'
   pin_color_key: 'metal grey pins'
@@ -82,7 +82,7 @@ D_SC-80:
   color_pin_mark: true
   place_pinMark: true
   rotation: 0
-  destination_dir: Diodes_SMD.3dshapes
+  destination_dir: Diode_SMD.3dshapes
   body_color_key: 'black body'
   mark_color_key: 'light brown label'
   pin_color_key: 'metal grey pins'
@@ -112,7 +112,7 @@ D_SOD-123F:
   color_pin_mark: true
   place_pinMark: true
   rotation: 0
-  destination_dir: Diodes_SMD.3dshapes
+  destination_dir: Diode_SMD.3dshapes
   body_color_key: 'black body'
   mark_color_key: 'light brown label'
   pin_color_key: 'metal grey pins'
@@ -142,7 +142,7 @@ D_SOD-523:
   color_pin_mark: true
   place_pinMark: true
   rotation: 0
-  destination_dir: Diodes_SMD.3dshapes
+  destination_dir: Diode_SMD.3dshapes
   body_color_key: 'black body'
   mark_color_key: 'light brown label'
   pin_color_key: 'metal grey pins'
@@ -172,7 +172,7 @@ D_SOD-923:
   color_pin_mark: true
   place_pinMark: true
   rotation: 0
-  destination_dir: Diodes_SMD.3dshapes
+  destination_dir: Diode_SMD.3dshapes
   body_color_key: 'black body'
   mark_color_key: 'light brown label'
   pin_color_key: 'metal grey pins'
@@ -202,7 +202,7 @@ D_TUMD2:
   color_pin_mark: true
   place_pinMark: true
   rotation: 0
-  destination_dir: Diodes_SMD.3dshapes
+  destination_dir: Diode_SMD.3dshapes
   body_color_key: 'black body'
   mark_color_key: 'light brown label'
   pin_color_key: 'metal grey pins'

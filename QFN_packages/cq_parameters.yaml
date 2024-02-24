@@ -28,7 +28,7 @@ D_0603:
   excluded_pins: null  # no pin excluded
   model_name: 'D_0603_1608Metric' # model name
   rotation: 0  #rotation if required
-  destination_dir: Diodes_SMD.3dshapes
+  destination_dir: Diode_SMD.3dshapes
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
@@ -64,7 +64,7 @@ D_0805:
   excluded_pins: null
   model_name: D_0805_2012Metric
   rotation: 0
-  destination_dir: Diodes_SMD.3dshapes
+  destination_dir: Diode_SMD.3dshapes
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
@@ -100,7 +100,7 @@ D_1206:
   excluded_pins: null
   model_name: D_1206_3216Metric
   rotation: 0
-  destination_dir: Diodes_SMD.3dshapes
+  destination_dir: Diode_SMD.3dshapes
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
@@ -136,7 +136,7 @@ D_2010:
   excluded_pins: null
   model_name: D_2010_5025Metric
   rotation: 0
-  destination_dir: Diodes_SMD.3dshapes
+  destination_dir: Diode_SMD.3dshapes
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
@@ -172,7 +172,7 @@ D_2114:
   excluded_pins: null
   model_name: D_2114_3652Metric
   rotation: 0
-  destination_dir: Diodes_SMD.3dshapes
+  destination_dir: Diode_SMD.3dshapes
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
@@ -208,7 +208,7 @@ D_3220:
   excluded_pins: null
   model_name: D_3220_8050Metric
   rotation: 0
-  destination_dir: Diodes_SMD.3dshapes
+  destination_dir: Diode_SMD.3dshapes
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
@@ -244,7 +244,7 @@ D_SOD-110:
   excluded_pins: null
   model_name: D_SOD-110
   rotation: 0
-  destination_dir: Diodes_SMD.3dshapes
+  destination_dir: Diode_SMD.3dshapes
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
@@ -280,7 +280,7 @@ D_SOD-882:
   excluded_pins: null
   model_name: D_SOD-882
   rotation: 0
-  destination_dir: Diodes_SMD.3dshapes
+  destination_dir: Diode_SMD.3dshapes
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
@@ -316,7 +316,7 @@ D_SOD-882D:
   excluded_pins: null
   model_name: D_SOD-882D
   rotation: 0
-  destination_dir: Diodes_SMD.3dshapes
+  destination_dir: Diode_SMD.3dshapes
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
