@@ -10,4 +10,5 @@
   tags:
     - bmrx
     # mchi was the old series namecode
-    - mchi 
+    - mchi
+  library_name: Inductor_SMD

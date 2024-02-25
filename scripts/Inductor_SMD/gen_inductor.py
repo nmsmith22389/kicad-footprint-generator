@@ -1,187 +1,245 @@
+#!/usr/bin/env python3
+
 #####
 # Usage : python gen_inductor.py <inputfile.yaml> <outputPath>
 
-#!/usr/bin/env python3
 
 import sys
 import os
 import yaml
 from pathlib import Path
-import csv
+import argparse
+import logging
+
+# load parent path of KicadModTree
+sys.path.append(os.path.join(sys.path[0], "..", ".."))
+from KicadModTree import Footprint, FootprintType, Text, \
+    Line, Pad, RectLine
+from scripts.tools.drawing_tools import roundGUp, roundGDown
+from scripts.tools.footprint_generator import FootprintGenerator
+from scripts.tools.global_config_files.global_config import GlobalConfig
+
+from smd_inductor_properties import InductorSeriesProperties, SmdInductorProperties
+
 
 def clamp(n, minn, maxn):
     return max(min(maxn, n), minn)
 
-# load parent path of KicadModTree
-sys.path.append(os.path.join(sys.path[0], "..", ".."))
-sys.path.append(os.path.join(sys.path[0], ".."))
-from KicadModTree import *
-
-
-if len(sys.argv) != 3:
-    print(f'Usage : python gen_inductor.py <inputfile.yaml> <outputPath>')
-    exit(0)
-else:
-    outputPath = Path(sys.argv[2])
-    print(f'output folder is {outputPath}')
-    batchInputFile = Path(sys.argv[1])
 
 silkscreenOffset = 0.2
 fabOffset = 0.0
-courtyardOffset = 0.25              # 0.25 per KLC
-silkLineThickness = 0.12            # Default silkscreen line is 0.12mm thick. Do not change.
 tinyPartOffset = silkscreenOffset   # Arbitrary compensation for tiny part silkscreen logic below
 
-def derive_landing_x(data: dict[str, str]) -> (float, float):
-    """
-    Handle the various methods of providing sufficient dimensions to
-    derive the land X dimension, and the inside edge to edge distance
-    that this script works with internally.
-    :param data: a csvreader row
-    :return: a tuple of the form (landingX, landingSpacing)
-    """
-    xin = data.get("landingX", None)
-    spc_c = data.get("landingSpacingX", None)
-    spc_ix = data.get("landingInsideX", None)
-    spc_ox = data.get("landingOutsideX", None)
 
-    if xin and spc_ix:
-        return float(xin), float(spc_ix)
-    if xin and spc_c:
-        xin = float(xin)
-        spc_ix = float(spc_c) - xin
-        return xin, spc_ix
-    if spc_ix and spc_ox:
-        spc_ix = float(spc_ix)
-        xin = (float(spc_ox) - spc_ix) / 2
-        return xin, spc_ix
-    raise RuntimeError("Unhandled combination of landingX dimensions, saw: " + ', '.join(data.keys()))
+class InductorGenerator(FootprintGenerator):
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def generate_all_series(self, input_data: dict, csv_dir: Path):
+
+        # For each series block in the yaml file, process it
+        for series_block in input_data:
+
+            series_data = InductorSeriesProperties(series_block, csv_dir)
+
+            for part_data in series_data.parts:
+                self.generate_footprint(series_data, part_data)
+
+    def generate_footprint(self, series_data: InductorSeriesProperties,
+                           part_data: SmdInductorProperties):
+
+        # All these variable are guaranteed by SmdInductorProperties
+        widthX = part_data.width_x
+        lengthY = part_data.length_y
+        height = part_data.height
+        landingY = part_data.landing_dims.size_crosswise
+        landingX = part_data.landing_dims.size_inline
+        landingSpacing = part_data.landing_dims.spacing_inside
+        part_number = part_data.part_number
+
+        # If the CSV has unique data sheets, then use that. Otherwise, if the column
+        # is missing, then use the series datasheet for all
+        if part_data.datasheet is not None:
+            partDatasheet = part_data.datasheet
+        elif series_data.datasheet is not None:
+            partDatasheet = series_data.datasheet
+        else:
+            # If datasheet was not defined in YAML nor CSV, terminate
+            raise RuntimeError(f"No datasheet defined for {part_number} - terminating.")
+
+        footprint_name = f'L_{series_data.manufacturer}_{part_number}'
+        logging.info(f'Processing {footprint_name}')
+
+        # init kicad footprint
+        kicad_mod = Footprint(footprint_name, FootprintType.SMD)
+        kicad_mod.setDescription(
+            f"Inductor, {series_data.manufacturer}, {part_number}, {widthX}x{lengthY}x{height}mm, {partDatasheet}")
+        kicad_mod.tags = ["Inductor"] + series_data.tags
+
+        # set general values
+
+        scaling = landingX / 3
+        clampscale = clamp(scaling, 0.5, 1)
+
+        # Check if our part is so small that REF will overlap the pads. Rotate it to fit.
+        if landingX + landingSpacing < 2:
+            rot = 90
+        else:
+            rot = 0
+        kicad_mod.append(Text(
+            type='user', text='${REFERENCE}', at=[0, 0],
+            layer='F.Fab', rotation=rot,
+            size=[clampscale, clampscale],
+            thickness=clampscale*0.15
+        ))
+
+        # Fab layer
+        kicad_mod.append(RectLine(
+            start=[0 - widthX / 2 - fabOffset, -lengthY / 2 - fabOffset],
+            end=[widthX / 2 + fabOffset, lengthY / 2 + fabOffset],
+            layer='F.Fab',
+            width=self.global_config.fab_line_width))
+
+        # create COURTYARD
+        # Base it off the copper or physical, whichever is biggest. Need to check both X and Y.
+
+        # Extreme right edge
+        rightCopperMax = landingSpacing/2 + landingX
+        rightPhysicalMax = widthX / 2
+        if rightCopperMax > rightPhysicalMax:
+            widest = landingSpacing + (landingX * 2)    # Copper is bigger
+        else:
+            widest = widthX
+
+        # Extreme top edge
+        # Used for determining the courtyard
+        # Also used for very tiny parts. Typically we see
+        # that the solder pads are quite large for manufacturability, but the part itself is small, so
+        # the silkscreen will overlap.
+        bottomCopperMax = landingY / 2
+        bottomPhysicalMax = lengthY / 2
+        if bottomCopperMax > bottomPhysicalMax:
+            tallest = landingY  # Copper is bigger
+        else:
+            tallest = lengthY
+
+        cy_offset = self.global_config.get_courtyard_offset(GlobalConfig.CourtyardType.DEFAULT)
+        cy_grid = self.global_config.courtyard_grid
+
+        kicad_mod.append(RectLine(
+            start=[
+                roundGDown(-widest / 2 - cy_offset, cy_grid),
+                roundGDown(-tallest / 2 - cy_offset, cy_grid)
+            ],
+            end=[
+                roundGUp(widest/2 + cy_offset, cy_grid),
+                roundGUp(tallest/2 + cy_offset, cy_grid)
+            ],
+            layer='F.CrtYd',
+            width=self.global_config.courtyard_line_width
+        ))
+
+        # Silkscreen REF
+        kicad_mod.append(Text(type='reference', text='REF**', at=[0, 0-tallest/2-1], layer='F.SilkS'))
+        # Fab Value
+        kicad_mod.append(Text(type='value', text=footprint_name, at=[0, tallest/2+1], layer='F.Fab'))
+
+        silk_width = self.global_config.silk_line_width
+
+        # Silkscreen corners
+        vertLen = (tallest / 2 - landingY / 2) + silkscreenOffset - 0.2
+        leftX = -widthX / 2 - silkscreenOffset - silk_width / 2
+        rightX = widthX / 2 + silkscreenOffset + silk_width / 2
+        upperY = -tallest / 2 - silkscreenOffset - silk_width / 2
+        lowerY = tallest / 2 + silkscreenOffset + silk_width / 2
+        # End of silkscreen vars
+
+        # Create silkscreen
+
+        # Full upper line
+        kicad_mod.append(Line(
+            start=[leftX, upperY],
+            end=[rightX, upperY],
+            layer='F.SilkS',
+            width=silk_width
+        ))
+        # Full lower line
+        kicad_mod.append(Line(
+            start=[leftX, lowerY],
+            end=[rightX, lowerY],
+            layer='F.SilkS',
+            width=silk_width
+        ))
+
+        # If the part is too small and we can't make vertical tick's, don't create 0 length lines.
+        if (vertLen > 0):
+            # Tick down left
+            kicad_mod.append(Line(
+                start=[leftX, upperY],
+                end=[leftX, upperY + vertLen],
+                layer='F.SilkS', width=silk_width
+            ))
+            # Tick down right
+            kicad_mod.append(Line(
+                start=[rightX, upperY],
+                end=[rightX, upperY + vertLen],
+                layer='F.SilkS', width=silk_width))
+            # Tick up left
+            kicad_mod.append(Line(
+                start=[leftX, lowerY],
+                end=[leftX, lowerY - vertLen],
+                layer='F.SilkS', width=silk_width))
+            # Tick up right
+            kicad_mod.append(Line(
+                start=[rightX, lowerY],
+                end=[rightX, lowerY - vertLen],
+                layer='F.SilkS', width=silk_width))
+
+        # Copper Pads
+        kicad_mod.append(Pad(number=1, type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT,
+                             at=[0-landingSpacing/2-landingX/2, 0],
+                             size=[landingX, landingY], layers=Pad.LAYERS_SMT))
+        kicad_mod.append(Pad(number=2, type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT,
+                             at=[landingSpacing/2+landingX/2, 0],
+                             size=[landingX, landingY], layers=Pad.LAYERS_SMT))
+
+        # No variants, so we can just use the footprint name
+        self.add_standard_3d_model_to_footprint(kicad_mod, series_data.library_name,
+                                                kicad_mod.name)
+
+        self.write_footprint(kicad_mod, series_data.library_name)
 
 
-with open(batchInputFile, 'r') as stream:
-    data_loaded = yaml.safe_load(stream)
+if __name__ == "__main__":
 
-    for yamlBlocks in range(0, len(data_loaded)): # For each series block in the yaml file, we process the CSV
-        seriesName = data_loaded[yamlBlocks]['series']
-        seriesManufacturer = data_loaded[yamlBlocks]['manufacturer']
-        seriesDatasheet = data_loaded[yamlBlocks].get('datasheet', '')      # allow empty datasheet in case of unique per-part datasheets
-        seriesCsv = data_loaded[yamlBlocks]['csv']
-        seriesTags = data_loaded[yamlBlocks]['tags']                        # space delimited list of the tags
-        seriesTagsString = ' '.join(seriesTags)
+    parser = argparse.ArgumentParser(description='Use .yaml files to create SMD inductor footprints.')
 
-        with open(seriesCsv, encoding='utf-8-sig') as csvfile:
-            reader = csv.DictReader(csvfile)
+    parser.add_argument('files', metavar='file', type=Path, nargs='+',
+                        help='list of files holding information about what devices should be created.')
+    # global_config is for backwards compatibility
+    parser.add_argument('--global-config', '--global_config', type=Path, nargs='?',
+                        help='the config file defining how the footprint will look like. (KLC)',
+                        default='../tools/global_config_files/config_KLCv3.0.yaml')
+    parser.add_argument('-v', '--verbose', action='count', default=0,
+                        help='increase output verbosity')
 
-            for row in reader:
-                widthX = float(row['widthX'])
-                lengthY = float(row['lengthY'])
-                height = float(row['height'])
-                landingY = float(row['landingY'])
-                landingX, landingSpacing = derive_landing_x(row)
-                partNumber = row['PartNumber']
+    FootprintGenerator.add_standard_arguments(parser)
 
-                # If the CSV has unique data sheets, then use that. Otherwise, if the column
-                # is missing, then use the series datasheet for all
-                try:
-                    partDatasheet = str(row['datasheet'])
-                except:
-                    partDatasheet = seriesDatasheet
-                finally:
-                    # If datasheet was not defined in YAML nor CSV, terminate
-                    if partDatasheet == '':
-                        print(f"No datasheet defined for {partNumber} - terminating.")
-                        exit(1)
+    args = parser.parse_args()
 
+    if args.verbose == 1:
+        logging.basicConfig(level=logging.INFO)
+    elif args.verbose > 1:
+        logging.basicConfig(level=logging.DEBUG)
 
+    global_config = GlobalConfig.load_from_file(args.global_config)
 
+    generator = InductorGenerator(output_dir=args.output_dir,
+                                  global_config=global_config)
 
-                footprint_name = f'L_{seriesManufacturer}_{partNumber}'
-                print(f'Processing {footprint_name}')
-
-                # init kicad footprint
-                kicad_mod = Footprint(footprint_name, FootprintType.SMD)
-                kicad_mod.setDescription(f"Inductor, {seriesManufacturer}, {partNumber}, {widthX}x{lengthY}x{height}mm, {partDatasheet}")
-                kicad_mod.setTags(f"Inductor {seriesTagsString}")
-
-                # set general values
-
-                scaling = landingX/3
-                clampscale = clamp(scaling, 0.5, 1)
-
-                # Check if our part is so small that REF will overlap the pads. Rotate it to fit.
-                if landingX + landingSpacing < 2:
-                    y=lengthY/2+2
-                    rot = 90
-                else:
-                    y=0
-                    rot = 0
-                kicad_mod.append(Text(type='user', text='${REFERENCE}', at=[0, 0], layer='F.Fab', rotation=rot, size=[clampscale, clampscale], thickness=clampscale*0.15))
-
-                # Fab layer
-                kicad_mod.append(RectLine(start=[0-widthX/2-fabOffset, 0-lengthY/2-fabOffset], end=[widthX/2+fabOffset, lengthY/2+fabOffset], layer='F.Fab'))
-
-                # create COURTYARD
-                # Base it off the copper or physical, whichever is biggest. Need to check both X and Y.
-
-                # Extreme right edge
-                rightCopperMax= landingSpacing/2 + landingX
-                rightPhysicalMax = widthX / 2
-                if rightCopperMax > rightPhysicalMax:
-                    widest = landingSpacing + (landingX * 2)    # Copper is bigger
-                else:
-                    widest = widthX
-
-                # Extreme top edge
-                # Used for determining the courtyard
-                # Also used for very tiny parts. Typically we see
-                # that the solder pads are quite large for manufacturability, but the part itself is small, so
-                # the silkscreen will overlap.
-                bottomCopperMax= landingY / 2
-                bottomPhysicalMax = lengthY / 2
-                if bottomCopperMax > bottomPhysicalMax:    
-                    tallest = landingY  # Copper is bigger
-                else:
-                    tallest = lengthY
-
-                # Need to round so we stick to 0.01mm precision
-                kicad_mod.append(RectLine(start=[round(0-widest/2-courtyardOffset, 2), round(0-tallest/2-courtyardOffset, 2)], end=[round(widest/2+courtyardOffset, 2), round(tallest/2+courtyardOffset, 2)], layer='F.CrtYd'))
-
-                # Silkscreen REF
-                kicad_mod.append(Text(type='reference', text='REF**', at=[0, 0-tallest/2-1], layer='F.SilkS'))
-                # Fab Value
-                kicad_mod.append(Text(type='value', text=footprint_name, at=[0, tallest/2+1], layer='F.Fab'))
-
-                # Silkscreen corners
-                vertLen = (tallest/2 - landingY/2) + silkscreenOffset - 0.2
-                horzLen = (widthX/2 - landingX/2) + silkscreenOffset - 0.2
-                leftX = 0-widthX/2-silkscreenOffset - silkLineThickness/2
-                rightX = widthX/2+silkscreenOffset + silkLineThickness/2
-                upperY = 0-tallest/2-silkscreenOffset - silkLineThickness/2
-                lowerY = tallest/2+silkscreenOffset + silkLineThickness/2
-                # End of silkscreen vars
-
-                # Create silkscreen
-                kicad_mod.append(Line(start=[leftX, upperY], end=[rightX, upperY], layer='F.SilkS'))        # Full upper line
-                kicad_mod.append(Line(start=[leftX, lowerY], end=[rightX, lowerY], layer='F.SilkS'))        # Full lower line
-
-                # If the part is too small and we can't make vertical tick's, don't create 0 length lines.
-                if (vertLen > 0):
-                    kicad_mod.append(Line(start=[leftX, upperY], end=[leftX, upperY + vertLen], layer='F.SilkS'))       # Tick down left
-                    kicad_mod.append(Line(start=[rightX, upperY], end=[rightX, upperY + vertLen], layer='F.SilkS'))     # Tick down right
-                    kicad_mod.append(Line(start=[leftX, lowerY], end=[leftX, lowerY - vertLen], layer='F.SilkS'))       # Tick up left
-                    kicad_mod.append(Line(start=[rightX, lowerY], end=[rightX, lowerY - vertLen], layer='F.SilkS'))     # Tick up right
-
-                # Copper Pads
-                kicad_mod.append(Pad(number=1, type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT,
-                                    at=[0-landingSpacing/2-landingX/2, 0], size=[landingX, landingY], layers=Pad.LAYERS_SMT))
-                kicad_mod.append(Pad(number=2, type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT,
-                                    at=[landingSpacing/2+landingX/2, 0], size=[landingX, landingY], layers=Pad.LAYERS_SMT))
-
-                # add model
-                kicad_mod.append(Model(filename="${KICAD8_3DMODEL_DIR}/" + f"Inductor_SMD.3dshapes/{footprint_name}.wrl",
-                                    at=[0, 0, 0], scale=[1, 1, 1], rotate=[0, 0, 0]))
-
-                # output kicad model
-                file_handler = KicadFileHandler(kicad_mod)
-                file_handler.writeFile(f'{outputPath}/{footprint_name}.kicad_mod')
-
+    for data_file in args.files:
+        with open(data_file, 'r') as stream:
+            data_loaded = yaml.safe_load(stream)
+            csv_dir = data_file.parent
+            generator.generate_all_series(data_loaded, csv_dir)

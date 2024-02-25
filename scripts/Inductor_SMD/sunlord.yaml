@@ -11,6 +11,7 @@
     padThickness: 0.05
   tags:
     - swpa
+  library_name: Inductor_SMD
 
 - series: MWSA-S
   manufacturer: Sunlord
@@ -22,6 +23,7 @@
     pinColor: metal grey pins
   tags:
     - mwsa
+  library_name: Inductor_SMD
 
 - series: SWRB-S
   manufacturer: Sunlord
@@ -35,3 +37,4 @@
     cornerRadius: 2
   tags:
     - swrb
+  library_name: Inductor_SMD

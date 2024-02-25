@@ -1,8 +1,7 @@
-- series: WE-MAPI 
+- series: WE-MAPI
   manufacturer: Wurth
   datasheet: "https://www.we-online.com/en/components/products/WE-MAPI?kicad"
   csv: Wurth_mapi.csv
-  spacing: center # data sheet is center-to-center spacing
   3d:
     type: 2
     bodyColor: dark grey body
@@ -12,4 +11,4 @@
     - Würth
      -SMT
      -MAPI
-  destination_dir: 'Inductor_SMD_Wurth.pretty'
+  library_name: Inductor_SMD_Wurth

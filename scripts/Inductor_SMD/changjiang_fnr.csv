@@ -1,4 +1,4 @@
-PartNumber,widthX,lengthY,height,padY,padX,padSpacing,landingInsideX,landingX,landingY
+PartNumber,widthX,lengthY,height,padY,padX,padInsideX,landingInsideX,landingX,landingY
 FNR252010S,2.5,2,1,2,0.8,0.8,0.8,0.85,2
 FNR252012S,2.5,2,1.2,2,0.8,0.8,0.8,0.85,2
 FNR3010S,3,3,1,2.5,0.75,1.5,1.5,0.8,2.7

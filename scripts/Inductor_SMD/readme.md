@@ -28,23 +28,25 @@ a single source.
 - `manufacturer`: Name of the series
 - `datasheet`: Optional. URL of the datasheet. If you do not specify it here, then **make sure to specify it** in the CSV.
 - `csv`: Filename of metadata, see below for structure.  Should be a path relative to the YAML file.
+- `parts`: List of parts in the series, with the same keys as the CSV files
 - `3d`: Optional.  This section is unused in _this_ repository, but is used by the 3d generators, so you should try and fill it in.
-    - `type`: Optional. 
+    - `type`: Optional.
         * 1 - Rectangle body, rectangle pads on the bottom surface. For stronger rounded corners, set `cornerRadius` below.
         * 2 - Rectangle body, rectangle pads on the bottom surface, with visible wings on the sides
-        
+
     - `bodyColor`: Optional. Default to `black body`.
     - `pinColor`: Optional. Default to `metal grey pins`
     - `padThickness`: Optional. Default to `0.05` mm.
     - `cornerRadius`: Optional. Default to 5% of the smallest side.
-    - `padSpacing`: Optional. Defaults to `none`, which means pads are at the physical edge of the component. Use `edge` for edge-to-edge spacing 
+    - `padSpacing`: Optional. Defaults to `none`, which means pads are at the physical edge of the component. Use `edge` for edge-to-edge spacing
     for physical pads, or `center` if datasheet uses center-to-center dimensions.
 - `tags`: Optional. The word `inductor` as a tag is included already in the script. You should add the series name.
 
 
-## CSV input files
-The CSV metadata files for each series can have the data columns in any order,
-to allow as much flexibility in copying directly from the datasheet.
+## CSV input files / parts list entries
+The CSV metadata files (or entries in the `parts` list) for each series can
+have the data columns in any order, to allow as much flexibility in
+copying directly from the datasheet.
 
 ### Required Fields
 * `PartNumber` - Part number that will be generated. This could be the unique part number,
@@ -53,13 +55,16 @@ or you can perform grouping if there are multiple parts sharing the same footpri
 * `widthX` - physical dimensions of the inductor.
 * `height` - physical dimensions of the inductor.
 
-
-
 ### Pad dimensions
-`padX` and `padY` - the dimensions of the actual pad on the component
-`padSpacing` - the spacing between the actual pads
 
-These are used to make 3d models.
+* `padX` and `padY` - the dimensions of the actual pad on the component
+* `padInsideX` - the X distance between the inside edges of the two pads
+* `padOutsideX` - the X distance between the outside edges of the two pads
+* `padSpacingX` - the X distance between the centers of the two pads
+
+These are used to make 3D models.
+
+If these are not given some attempt will be made to calculate them from the landing dimensions.
 
 ### Land spacing dimensions
 These are (at least) three common ways of describing these in datasheets,
@@ -93,14 +98,23 @@ For this style, you should provide:
 * `landingY` - here, dimension A
 * `landingSpacingX` - here, dimension B
 
-#### Style "outside edge"
+#### Style "outside edge with separation"
 ![footprint extract for this style](sample-spacing-outside-edge.png "outside edge style")
 
 For this style, you should provide:
 
 * `landingY` - here, dimension C
-* `landingInsideX` - here, dimension A 
+* `landingInsideX` - here, dimension A
 * `landingOutsideX` - here, dimension B
+
+#### Style "outside edge with size"
+![footprint extract for this style](sample-spacing-outside-with-size.png "outside edge with size style")
+
+For this style, you should provide:
+
+* `landingY` - here, 3.6
+* `landingX` - here, 1.5
+* `landingOutsideX` - here, 4.55
 
 ### Optional fields
 
