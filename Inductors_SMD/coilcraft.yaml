@@ -1,13 +1,11 @@
 - series: XAL
   manufacturer: Coilcraft
   csv: coilcraft_xal.csv
-  landingSpacing: center # center-to-center for copper
   3d:
     type: 1
     bodyColor: black body
     pinColor: metal grey pins
     padThickness: 0.05
-    padSpacing: edge  # edge-to-edge for physical
   tags:
     - xal
-  destination_dir: 'Inductor_SMD.3dshapes'
+  library_name: Inductor_SMD

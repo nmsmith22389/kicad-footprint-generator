@@ -1,4 +1,4 @@
-PartNumber,lengthY,widthX,height,padX,padY,padSpacing,landingX,landingY,landingSpacing,datasheetUrl
+PartNumber,lengthY,widthX,height,padX,padY,padInsideX,landingX,landingY,landingSpacingX,datasheet
 XAL4020-XXX,4.3,4.3,2.1,0.82,3.25,1.57,0.98,3.4,2.37,"https://www.coilcraft.com/getmedia/6adcb47d-8b55-416c-976e-1e22e0d2848c/xal4000.pdf"
 XAL4030-XXX,4.3,4.3,3.1,0.82,3.25,1.57,0.98,3.4,2.37,"https://www.coilcraft.com/getmedia/6adcb47d-8b55-416c-976e-1e22e0d2848c/xal4000.pdf"
 XAL4040-XXX,4.3,4.3,4.1,0.82,3.25,1.57,0.98,3.4,2.37,"https://www.coilcraft.com/getmedia/6adcb47d-8b55-416c-976e-1e22e0d2848c/xal4000.pdf"

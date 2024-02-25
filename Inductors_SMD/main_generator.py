@@ -56,22 +56,46 @@ ___ver___ = "2.0.0"
 import os
 import yaml
 import cadquery as cq
-import csv
 import glob
-from _tools import shaderColors, parameters, cq_color_correct, cq_globals, export_tools
+from pathlib import Path
+from _tools import shaderColors, cq_color_correct, export_tools
 from exportVRML.export_part_to_VRML import export_VRML
+
+from .smd_inductor_properties import InductorSeriesProperties, \
+    SmdInductorProperties
+
+
+class Inductor3DProperties:
+    """
+    Class that represents the result of declarative (e.g. YAML) definitions of
+    SMD inductor 3D properties
+    """
+
+    body_color: str
+    pin_color: str
+    pad_thickness: float
+    body_type: int
+    corner_radius: float
+
+    def __init__(self, data: dict):
+        # TODO: probably defaults indicate the input data is missing something
+        # - would likely be better to fill it in that magic up defaults
+        self.body_color = data.get('bodyColor', 'black body')
+        self.pad_color = data.get('pinColor', 'metal grey pins')
+        self.pad_thickness = data.get('padThickness', 0.05)
+        self.body_type = data.get('type', 1)
+        self.corner_radius = data.get('cornerRadius', 0)
+
 
 def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
     """
     Main entry point into this generator.
     """
-    models = []
 
-
-    if output_dir_prefix == None:
+    if output_dir_prefix is None:
         print("ERROR: An output directory must be provided.")
         return
-    
+
     # model_to_build can be 'all', or a specific YAML file
     # find yaml files here, need to figure out the path to do so
 
@@ -81,18 +105,19 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
     if not allYamlFiles:
         print('No YAML files found to process.')
         return
-    
+
     fileList = None
 
     if model_to_build != "all":
         for yamlFile in allYamlFiles:
             basefilename = os.path.splitext(os.path.basename(yamlFile))[0]
             if basefilename == model_to_build:
-                fileList = [yamlFile]   # The file list will be just 1 item, our specific 
+                fileList = [yamlFile]   # The file list will be just 1 item, our specific
                 break
 
-    # 2 possibilities now - fileList is a single file that we found, or fileList is empty (didn't find file, or building all)
-    
+    # 2 possibilities now - fileList is a single file that we found,
+    # or fileList is empty (didn't find file, or building all)
+
     # Trying to build a specific file and it was not found
     if model_to_build != "all" and fileList is None:
         print(f'Could not find YAML for model {model_to_build}')
@@ -100,152 +125,138 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
     elif model_to_build == "all":
         fileList = allYamlFiles
 
+    generator = SmdInductorGenerator(Path(output_dir_prefix))
+
     print(f'Files to process : {fileList}')
 
     for yamlFile in fileList:
         with open(yamlFile, 'r') as stream:
             print(f'Processing file {yamlFile}')
             data_loaded = yaml.safe_load(stream)
-            for yamlBlocks in range(0, len(data_loaded)): # For each series block in the yaml file, we process the CSV
-                seriesManufacturer = data_loaded[yamlBlocks]['manufacturer']
-                seriesCsv = data_loaded[yamlBlocks]['csv']
 
-                # If the 3d section is defined, then this block will pick up some values
-                try:
-                    seriesBodyColor = data_loaded[yamlBlocks]['3d'].get('bodyColor', 'black body')
-                    seriesPinColor = data_loaded[yamlBlocks]['3d'].get('pinColor', 'metal grey pins')
-                    seriesPadThickness = data_loaded[yamlBlocks]['3d'].get('padThickness', 0.05)
-                    seriesType = data_loaded[yamlBlocks]['3d'].get('type', 1)
-                    seriesCornerRadius = data_loaded[yamlBlocks]['3d'].get('cornerRadius', 0)
-                    seriesPadSpacing = data_loaded[yamlBlocks]['3d'].get('padSpacing', 'none')
-                except:
-                    # 3D section was not defined, set to default.
-                    seriesBodyColor = 'black body'
-                    seriesPinColor = 'metal grey pins'
-                    seriesPadThickness = 0.05
-                    seriesType = 1
-                    seriesCornerRadius = 0
-                    seriesPadSpacing = 'none'
-                
-                yamlFolder = os.path.split(yamlFile)[0]
+            csv_dir = Path(yamlFile).parent
 
-                # Construct the final output directory
-                output_dir = os.path.join(output_dir_prefix, data_loaded[yamlBlocks]['destination_dir'])
-
-                with open(os.path.join(yamlFolder, seriesCsv), encoding='utf-8-sig') as csvfile:
-                    print(f'Processing child {seriesCsv}')
-                    reader = csv.DictReader(csvfile)
-
-                    for row in reader:
-                        partName = row['PartNumber']
-                        # Physical dimensions
-                        widthX = float(row['widthX'])
-                        lengthY = float(row['lengthY'])
-                        height = float(row['height'])
-                        landingX = float(row['landingX'])
-                        landingY = float(row['landingY'])
-
-                        if seriesPadSpacing != 'none':
-                            try:
-                                padSpacing = float(row['padSpacing'])
-                            except:
-                                print('\n\npadSpacing must be defined in CSV when seriesPadSpacing is not "none". Terminating.\n\n')
-                                exit(1)
-
-                        try:
-                            padX  = float(row['padX'])
-                        except:
-                            print(f'No physical pad dimensions (widthX) found - using PCB landing dimensions (widthX) as a substitute.')
-                            padX = round(float(min(landingX, widthX)) - 0.05, 2)  # Round to 2 decimal places since sometimes we get a lot more
+            # For each series block in the yaml file, we process the CSV
+            for series_block in data_loaded:
+                generator.generate_series(series_block, csv_dir)
 
 
-                            
-                        try:
-                            padY = float(row['padY'])
-                        except:
-                            print(f'No physical pad dimensions (padY) found - using PCB landing dimensions (lengthY) as a substitute.')
-                            padY = round(float(min(landingY, lengthY)) - 0.05, 2)
+class SmdInductorGenerator:
 
+    output_prefix: Path
 
-                        # Handy debug section to help copy/paste into CQ-editor to play with design
-                        if False:
-                            print(f'widthX = {widthX}')
-                            print(f'lengthY = {lengthY}')
-                            print(f'height = {height}')
-                            print(f'padX = {padX}')
-                            print(f'padY = {padY}')
-                            print(f'landingX = {landingX}')
-                            print(f'landingY = {landingY}')
-                            #print(f'padSpacing = {padSpacing}')
-                            print(f'seriesType = {seriesType}')
-                            print(f'seriesPadSpacing = "{seriesPadSpacing}"')
-                            print(f'seriesPadThickness = {seriesPadThickness}')
-                            print(f'seriesCornerRadius = {seriesCornerRadius}')
-                            
+    def __init__(self, output_prefix: Path):
+        self.output_prefix = output_prefix
 
-                        rotation = 0
+    def generate_series(self, series_block: dict, csv_dir: Path):
+        series_data = InductorSeriesProperties(series_block, csv_dir)
 
-                        case = cq.Workplane("XY").box(widthX, lengthY, height, (True, True, False))
-                        
-                        if seriesCornerRadius == 0:
-                            case = case.edges("|Z").fillet(min(lengthY,widthX)/20)
-                        else:
-                            case = case.edges("|Z").fillet(seriesCornerRadius)    
-                        
-                        case = case.edges(">Z").fillet(min(lengthY,widthX)/20)
+        # Construct an 3D properties object, which will use defaults
+        # if not given
+        series_3d_props = Inductor3DProperties(series_block.get('3d', {}))
 
-                        if seriesType == 2:     # Exposed "wings"
-                            seriesPadThickness = min(3, height * 0.3)
+        for part_data in series_data.parts:
+            self._generate_model(series_data, series_3d_props,
+                                 part_data)
 
-                        pin1 = cq.Workplane("XY").box(padX, padY, seriesPadThickness, (True, True, False))
-                        pin2 = cq.Workplane("XY").box(padX, padY, seriesPadThickness, (True, True, False))
+    def _generate_model(self,
+                        series_data: InductorSeriesProperties,
+                        series_3d_props: Inductor3DProperties,
+                        part_data: SmdInductorProperties):
 
-                        if seriesPadSpacing == 'none':   # Move pads to the edge
-                            translateAmount = widthX/2 - padX/2
-                        elif seriesPadSpacing == 'edge':
-                            translateAmount = padX/2 + padSpacing/2
-                        elif seriesPadSpacing == 'center':
-                            translateAmount = padSpacing/2
+        partName = part_data.part_number
+        # Physical dimensions
+        widthX = part_data.width_x
+        lengthY = part_data.length_y
+        height = part_data.height
+        landing = part_data.landing_dims
+        pad_dims = part_data.device_pad_dims
 
-                        if seriesType == 2:     # Exposed "wings", bump it out so it is visible
-                            translateAmount += 0.01
+        # Handy debug section to help copy/paste into CQ-editor to play with design
+        if False:
+            print(f'widthX = {widthX}')
+            print(f'lengthY = {lengthY}')
+            print(f'height = {height}')
+            print(f'padX = {pad_dims.size_inline}')
+            print(f'padY = {pad_dims.size_crosswise}')
+            print(f'landingX = {landing.size_inline}')
+            print(f'landingY = {landing.size_crosswise}')
+            print(f'seriesType = {series_3d_props.body_type}')
+            print(f'seriesPadThickness = {series_3d_props.pad_thickness}')
+            print(f'seriesCornerRadius = {series_3d_props.corner_radius}')
 
-                        pin1 = pin1.translate((-translateAmount, 0, 0))
-                        pin2 = pin2.translate((translateAmount, 0, 0))
+        rotation = 0
 
-                        pins = pin1.union(pin2)
-                        case = case.cut(pins)
-                        
-                        case = case.rotate((0, 0, 0), (0, 0, 1), rotation)
-                        pins = pins.rotate((0, 0, 0), (0, 0, 1), rotation)
+        case = cq.Workplane("XY").box(widthX, lengthY, height,
+                                      (True, True, False))
 
-                        # Used to wrap all the parts into an assembly
-                        component = cq.Assembly()
+        if series_3d_props.corner_radius == 0:
+            case = case.edges("|Z").fillet(min(lengthY, widthX) / 20)
+        else:
+            case = case.edges("|Z").fillet(series_3d_props.corner_radius)
 
-                        # Add the parts to the assembly
-                        stepBodyColor = shaderColors.named_colors[seriesBodyColor].getDiffuseFloat()
-                        stepPinColor = shaderColors.named_colors[seriesPinColor].getDiffuseFloat()
+        case = case.edges(">Z").fillet(min(lengthY, widthX) / 20)
 
-                        component.add(case, color=cq_color_correct.Color(stepBodyColor[0], stepBodyColor[1], stepBodyColor[2]))
-                        component.add(pins, color=cq_color_correct.Color(stepPinColor[0], stepPinColor[1], stepPinColor[2]))
+        if series_3d_props.body_type == 2:     # Exposed "wings"
+            pad_thickness = min(3, height * 0.3)
+        else:
+            pad_thickness = series_3d_props.pad_thickness
 
-                        # Create the output directory if it does not exist
-                        if not os.path.exists(output_dir):
-                            os.makedirs(output_dir)
+        pin1 = cq.Workplane("XY").box(
+            pad_dims.size_inline, pad_dims.size_crosswise,
+            pad_thickness, (True, True, False))
+        pin2 = cq.Workplane("XY").box(
+            pad_dims.size_inline, pad_dims.size_crosswise,
+            pad_thickness, (True, True, False))
 
-                        # Assemble the filename
-                        file_name = f'L_{seriesManufacturer}_{partName}'
+        translateAmount = pad_dims.spacing_centre / 2
 
-                        # Export the assembly to STEP
-                        component.name = file_name
-                        component.save(os.path.join(output_dir, file_name + ".step"), cq.exporters.ExportTypes.STEP, mode=cq.exporters.assembly.ExportModes.FUSED, write_pcurves=False)
+        if series_3d_props.body_type == 2:
+            # Exposed "wings", bump it out so it is visible
+            translateAmount += 0.01
 
-                        # Check for a proper union
-                        export_tools.check_step_export_union(component, output_dir, file_name)
+        pin1 = pin1.translate((-translateAmount, 0, 0))
+        pin2 = pin2.translate((translateAmount, 0, 0))
 
-                        # Export the assembly to VRML
-                        # Dec 2022- do not use CadQuery VRML export, it scales/uses inches.
-                        export_VRML(os.path.join(output_dir, file_name + ".wrl"), [case, pins], [seriesBodyColor, seriesPinColor])
+        pins = pin1.union(pin2)
+        case = case.cut(pins)
 
+        case = case.rotate((0, 0, 0), (0, 0, 1), rotation)
+        pins = pins.rotate((0, 0, 0), (0, 0, 1), rotation)
 
+        # Used to wrap all the parts into an assembly
+        component = cq.Assembly()
 
+        # Add the parts to the assembly
+        stepBodyColor = shaderColors.named_colors[series_3d_props.body_color].getDiffuseFloat()
+        stepPinColor = shaderColors.named_colors[series_3d_props.pad_color].getDiffuseFloat()
+
+        component.add(case, color=cq_color_correct.Color(
+            stepBodyColor[0], stepBodyColor[1], stepBodyColor[2]))
+        component.add(pins, color=cq_color_correct.Color(
+            stepPinColor[0], stepPinColor[1], stepPinColor[2]))
+
+        # Assemble the filename
+        file_name = f'L_{series_data.manufacturer}_{partName}'
+
+        output_dir = self.output_prefix / (series_data.library_name + ".3dshapes")
+
+        # Create the output directory if it does not exist
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
+
+        # Export the assembly to STEP
+        component.name = file_name
+        component.save(os.path.join(output_dir, file_name + ".step"),
+                       cq.exporters.ExportTypes.STEP,
+                       mode=cq.exporters.assembly.ExportModes.FUSED,
+                       write_pcurves=False)
+
+        # Check for a proper union
+        export_tools.check_step_export_union(component, output_dir, file_name)
+
+        # Export the assembly to VRML
+        # Dec 2022- do not use CadQuery VRML export, it scales/uses inches.
+        export_VRML(os.path.join(output_dir, file_name + ".wrl"),
+                    [case, pins], [series_3d_props.body_color,
+                                   series_3d_props.pad_color])

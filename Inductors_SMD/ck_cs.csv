@@ -1,4 +1,4 @@
-PartNumber,widthX,lengthY,height,padSpacing,padX,landingInsideX,landingX,landingY
+PartNumber,widthX,lengthY,height,padInsideX,padX,landingInsideX,landingX,landingY
 CKCS201610,2.0,1.6,1.05,0.7,0.65,0.3,1.1,2.1
 CKCS252010,2.5,2.0,1.05,0.94,0.83,0.4,1.4,2.5
 CKCS252012,2.5,2.0,1.25,0.94,0.83,0.4,1.4,2.5

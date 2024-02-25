@@ -2,7 +2,6 @@
   manufacturer: Chilisin
   datasheet: "https://www.chilisin.com/upload/media/product/power/file/BMRx_Series.pdf"
   csv: chilisin_bmrx.csv
-  spacing: center # data sheet is center-to-center spacing
   3d:
     type: 2
     bodyColor: black body
@@ -10,6 +9,6 @@
     padThickness: 0.05
   tags:
     - bmrx
-    # mchi was the old series name
+    # mchi was the old series namecode
     - mchi
-  destination_dir: 'Inductor_SMD.3dshapes'
+  library_name: Inductor_SMD
