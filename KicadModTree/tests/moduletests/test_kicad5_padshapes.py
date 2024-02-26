@@ -17,6 +17,7 @@
 from __future__ import division
 
 import unittest
+import pytest
 
 from KicadModTree import *
 
@@ -476,6 +477,7 @@ class Kicad5PadsTests(unittest.TestCase):
         # file_handler.writeFile('test.kicad_mod')
         self.assertEqual(result, RESULT_SIMPLE_OTHER_CUSTOM_PAD)
 
+    @pytest.mark.filterwarnings("ignore:No geometry checks")
     def testCutPolygon(self):
         kicad_mod = Footprint("round_rect_test", FootprintType.SMD)
 
