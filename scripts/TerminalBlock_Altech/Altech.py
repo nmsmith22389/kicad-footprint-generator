@@ -6,7 +6,11 @@ import math
 import argparse
 import yaml
 
-sys.path.append(os.path.join(sys.path[0], "..", ".."))  # load parent path of KicadModTree
+# load parent path of KicadModTree
+sys.path.append(os.path.join(sys.path[0], "..", ".."))
+
+# load scripts
+sys.path.append(os.path.join(sys.path[0], ".."))
 
 from KicadModTree import *
 from general.StandardBox import *
@@ -21,6 +25,7 @@ def qfn(args):
     tags = args["tags"]
     manufacture = args["manufacture"]
     serie = args["serie"]
+    suffix = args["suffix"]
 
     W = args["W"]
     H = args["H"]
@@ -44,7 +49,7 @@ def qfn(args):
         footprint_name = footprint_name + manufacture + '_' + serie
         footprint_name = footprint_name + '_1x' + '{:02d}'.format(pinnumber)
         footprint_name = footprint_name + '_P' + '{:.2f}'.format(PS) + "mm"
-        footprint_name = footprint_name + '_45-Degree'
+        footprint_name = footprint_name + suffix
 
         f = Footprint(footprint_name, FootprintType.THT)
 
@@ -84,6 +89,7 @@ if __name__ == '__main__':
 	parser.add_parameter("tags",        type=str,   required=True)
 	parser.add_parameter("manufacture", type=str,   required=True)
 	parser.add_parameter("serie",       type=str,   required=True)
+	parser.add_parameter("suffix",      type=str,   required=False)
 
 	parser.add_parameter("W",           type=float, required=True)
 	parser.add_parameter("H",           type=float, required=True)
