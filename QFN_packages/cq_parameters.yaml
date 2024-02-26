@@ -2125,6 +2125,43 @@ DFN-8-1EP_3x3mm_Pitch0.65mm:
   mark_color_key: 'light brown label'
   source: 'https://www.onsemi.com/pub/Collateral/506BY.PDF'
 
+DFN-8-1EP_3x3mm_P0.65mm_EP1.5x2.25mm:
+  c: 0.15
+  #K: 0.2
+  L: 0.45
+  fp_s: True
+  fp_r: 0.5
+  fp_d: 0.1
+  fp_dx: null
+  fp_dy: null
+  fp_z: 0.02
+  ef: 0.0
+  cce: 0.2 # it should have been rounded
+  D: 3.0
+  E: 3.0
+  A1: 0.02
+  A2: 0.58
+  b: 0.25
+  e: 0.65
+  m: 0.0
+  ps: square
+  npx: 4
+  npy: 0
+  epad: [2.25, 1.50]
+  epad_offsetX: null
+  epad_offsetY: null
+  epad_n: null
+  epad_pitch: null
+  excluded_pins: null
+  model_name: DFN-8-1EP_3x3mm_P0.65mm_EP1.5x2.25mm
+  rotation: -90
+  destination_dir: Package_DFN_QFN.3dshapes
+  pin_shapes: null
+  body_color_key: 'black body'
+  pin_color_key: 'metal grey pins'
+  mark_color_key: 'light brown label'
+  source: 'https://www.diodes.com/assets/Package-Files/U-DFN3030-8-Type-E.pdf'
+
 DFN-8-1EP_4x4mm_Pitch0.8mm:
   c: 0.2
   L: 0.4

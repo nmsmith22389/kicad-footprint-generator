@@ -3647,6 +3647,39 @@ MSOP-16-1EP_3x4mm_Pitch0.5mm_EP1.65x2.85mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'N/A'
 
+MSOP-8-1EP_3x3mm_P0.65mm_EP1.5x1.8mm:
+  the: 10.0
+  tb_s: 0.05
+  c: 0.15
+  R1: 0.06  # pin upper corner, inner radius; guess based on ratios from the drawing on the datasheet
+  R2: 0.06  # pin lower corner, inner radius; guess based on ratios from the drawing on the datasheet
+  S: 0.29 # 0.35 - R1; pin top flat part length (excluding corner arc)
+  # L: 0.6  # (calculated) pin bottom flat part length (including corner arc)
+  fp_s: True
+  fp_r: 0.6
+  fp_d: 0.06 # we need this value to get the pin 1 marker center 0.750 mm off border; no idea how that gets placed
+  fp_z: 0.05  # ?? first pin indicator depth
+  ef: 0.0  # fillet of edges  Note: bigger bytes model with fillet
+  cc1: 0.0  # ?? chamfer of the 1st pin corner; author wrote 0.25
+  D1: 3.0
+  E1: 3.0
+  E: 4.9   # body overall width  E=E1+2*(S+L+c): there's something fishy about this equation, it doesn't actually hold
+  A1: 0.1
+  A2: 0.86
+  b: 0.3
+  e: 0.65
+  npx: 4
+  npy: 0
+  epad: [1.5, 1.8]
+  excluded_pins: null
+  model_name: MSOP-8-1EP_3x3mm_P0.65mm_EP1.5x1.8mm
+  rotation: -90
+  body_color_key: 'black body'
+  pin_color_key: 'metal grey pins'
+  mark_color_key: 'light brown label'
+  destination_dir: 'Package_SO.3dshapes'
+  source: 'https://www.diodes.com/assets/Package-Files/MSOP-8EP.pdf'
+
 MSOP-8-1EP_3x3mm_P0.65mm_EP2.54x2.8mm:
   the: 9.0
   tb_s: 0.15
