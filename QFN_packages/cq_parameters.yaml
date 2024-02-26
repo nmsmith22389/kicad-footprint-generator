@@ -353,7 +353,7 @@ AMS_LGA-10-1EP_2.7x4mm_P0.6mm:
   excluded_pins: null
   model_name: AMS_LGA-10-1EP_2.7x4mm_P0.6mm
   rotation: -90
-  destination_dir: Housings_LGA.3dshapes
+  destination_dir: Package_LGA.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -389,7 +389,7 @@ LGA-12_2x2mm_P0.5mm:
   excluded_pins: null
   model_name: LGA-12_2x2mm_P0.5mm
   rotation: -90
-  destination_dir: Housings_LGA.3dshapes
+  destination_dir: Package_LGA.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -425,7 +425,7 @@ LGA-16_3x3mm_P0.5mm:
   excluded_pins: null
   model_name: LGA-16_3x3mm_P0.5mm
   rotation: -90
-  destination_dir: Housings_LGA.3dshapes
+  destination_dir: Package_LGA.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -461,7 +461,7 @@ LGA-16_3x3mm_P0.5mm_LayoutBorder3x5y:
   excluded_pins: null
   model_name: LGA-16_3x3mm_P0.5mm_LayoutBorder3x5y
   rotation: -90
-  destination_dir: Housings_LGA.3dshapes
+  destination_dir: Package_LGA.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -497,7 +497,7 @@ LGA-16_4x4mm_P0.65mm_LayoutBorder4x4y:
   excluded_pins: null
   model_name: LGA-16_4x4mm_P0.65mm_LayoutBorder4x4y
   rotation: -90
-  destination_dir: Housings_LGA.3dshapes
+  destination_dir: Package_LGA.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -533,7 +533,7 @@ LGA-24L_3x3.5mm_P0.43mm:
   excluded_pins: null
   model_name: LGA-24L_3x3.5mm_P0.43mm
   rotation: -90
-  destination_dir: Housings_LGA.3dshapes
+  destination_dir: Package_LGA.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -569,7 +569,7 @@ LGA-28_5.2x3.8mm_P0.5mm:
   excluded_pins: null
   model_name: LGA-28_5.2x3.8mm_P0.5mm
   rotation: -90
-  destination_dir: Housings_LGA.3dshapes
+  destination_dir: Package_LGA.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -605,7 +605,7 @@ ST_HLGA-10_2.5x2.5mm_P0.6mm_LayoutBorder3x2y:
   excluded_pins: null
   model_name: ST_HLGA-10_2.5x2.5mm_P0.6mm_LayoutBorder3x2y
   rotation: -90
-  destination_dir: Housings_LGA.3dshapes
+  destination_dir: Package_LGA.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -1323,7 +1323,7 @@ UDFN-10_1.35x2.6mm_Pitch0.5mm:
   excluded_pins: null
   model_name: UDFN-10_1.35x2.6mm_Pitch0.5mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -1359,7 +1359,7 @@ DFN-4-1EP_1x1mm_P0.65mm_EP0.5x0.5mm:
   excluded_pins: null
   model_name: DFN-4-1EP_1x1mm_P0.65mm_EP0.5x0.5mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: [[[-0.4375, -0.5], [-0.21250000000000002, -0.5], [-0.21250000000000002, -0.43], [-0.3925, -0.25], [-0.4375, -0.25]], [[0.4375, -0.5], [0.21250000000000002, -0.5], [0.21250000000000002, -0.43], [0.3925, -0.25], [0.4375, -0.25]], [[0.4375, 0.5], [0.21250000000000002, 0.5], [0.21250000000000002, 0.43], [0.3925, 0.25], [0.4375, 0.25]], [[-0.4375, 0.5], [-0.21250000000000002, 0.5], [-0.21250000000000002, 0.43], [-0.3925, 0.25], [-0.4375, 0.25]]]
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -1395,7 +1395,7 @@ DFN-6-1EP_1.2x1.2mm_P0.4mm_EP0.3x0.94mm:
   excluded_pins: null
   model_name: DFN-6-1EP_1.2x1.2mm_P0.4mm_EP0.3x0.94mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -1539,7 +1539,7 @@ DFN-6-1EP_2x2mm_Pitch0.5mm:
   excluded_pins: null
   model_name: DFN-6-1EP_2x2mm_Pitch0.5mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -1614,7 +1614,7 @@ DFN-6-1EP_2x2mm_Pitch0.65mm:
   excluded_pins: null
   model_name: DFN-6-1EP_2x2mm_Pitch0.65mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -1722,7 +1722,7 @@ DFN-6-1EP_3x3mm_Pitch0.95mm:
   excluded_pins: null
   model_name: DFN-6-1EP_3x3mm_Pitch0.95mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -1758,7 +1758,7 @@ DFN-6-1EP_3x3mm_Pitch1mm:
   excluded_pins: null
   model_name: DFN-6-1EP_3x3mm_Pitch1mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -1794,7 +1794,7 @@ DFN-6-1EP_3x2mm_Pitch0.5mm:
   excluded_pins: null
   model_name: DFN-6-1EP_3x2mm_Pitch0.5mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -1830,7 +1830,7 @@ DFN-8_2x2mm_Pitch0.5mm:
   excluded_pins: null
   model_name: DFN-8_2x2mm_Pitch0.5mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -1866,7 +1866,7 @@ DFN-8-1EP_2x2mm_Pitch0.5mm:
   excluded_pins: null
   model_name: DFN-8-1EP_2x2mm_Pitch0.5mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -1902,7 +1902,7 @@ DFN-8-1EP_2x2mm_P0.5mm_EP0.7x1.3mm:
   excluded_pins: null
   model_name: DFN-8-1EP_2x2mm_P0.5mm_EP0.7x1.3mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -1938,7 +1938,7 @@ DFN-8-1EP_2x2mm_Pitch0.45mm:
   excluded_pins: null
   model_name: DFN-8-1EP_2x2mm_Pitch0.45mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -1974,7 +1974,7 @@ DFN-8-1EP_2x3mm_Pitch0.5mm:
   excluded_pins: null
   model_name: DFN-8-1EP_2x3mm_Pitch0.5mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -2010,7 +2010,7 @@ DFN-8-1EP_3x2mm_Pitch0.5mm:
   excluded_pins: null
   model_name: DFN-8-1EP_3x2mm_Pitch0.5mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -2046,7 +2046,7 @@ DFN-8-1EP_3x2mm_Pitch0.45mm:
   excluded_pins: null
   model_name: DFN-8-1EP_3x2mm_Pitch0.45mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -2082,7 +2082,7 @@ DFN-8-1EP_3x3mm_Pitch0.5mm:
   excluded_pins: null
   model_name: DFN-8-1EP_3x3mm_Pitch0.5mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -2118,7 +2118,7 @@ DFN-8-1EP_3x3mm_Pitch0.65mm:
   excluded_pins: null
   model_name: DFN-8-1EP_3x3mm_Pitch0.65mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -2191,7 +2191,7 @@ DFN-8-1EP_4x4mm_Pitch0.8mm:
   excluded_pins: null
   model_name: DFN-8-1EP_4x4mm_Pitch0.8mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -2227,7 +2227,7 @@ DFN-10-1EP_2x3mm_Pitch0.5mm:
   excluded_pins: null
   model_name: DFN-10-1EP_2x3mm_Pitch0.5mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -2263,7 +2263,7 @@ DFN-10-1EP_3x3mm_Pitch0.5mm:
   excluded_pins: null
   model_name: DFN-10-1EP_3x3mm_Pitch0.5mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -2299,7 +2299,7 @@ DFN-12-1EP_2x3mm_Pitch0.45mm:
   excluded_pins: null
   model_name: DFN-12-1EP_2x3mm_Pitch0.45mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -2335,7 +2335,7 @@ DFN-12-1EP_3x3mm_Pitch0.45mm:
   excluded_pins: null
   model_name: DFN-12-1EP_3x3mm_Pitch0.45mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -2371,7 +2371,7 @@ DFN-12-1EP_3x4mm_Pitch0.5mm:
   excluded_pins: null
   model_name: DFN-12-1EP_3x4mm_Pitch0.5mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -2407,7 +2407,7 @@ DFN-12-1EP_4x4mm_Pitch0.5mm:
   excluded_pins: null
   model_name: DFN-12-1EP_4x4mm_Pitch0.5mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -2443,7 +2443,7 @@ DFN-12-1EP_4x4mm_Pitch0.65mm:
   excluded_pins: null
   model_name: DFN-12-1EP_4x4mm_Pitch0.65mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -2479,7 +2479,7 @@ DFN-14-1EP_4x4mm_Pitch0.5mm:
   excluded_pins: null
   model_name: DFN-14-1EP_4x4mm_Pitch0.5mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -2515,7 +2515,7 @@ DFN-16-1EP_3x4mm_Pitch0.45mm:
   excluded_pins: null
   model_name: DFN-16-1EP_3x4mm_Pitch0.45mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -2551,7 +2551,7 @@ DFN-16-1EP_3x5mm_Pitch0.5mm:
   excluded_pins: null
   model_name: DFN-16-1EP_3x5mm_Pitch0.5mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -2587,7 +2587,7 @@ DFN-16-1EP_4x5mm_Pitch0.5mm:
   excluded_pins: null
   model_name: DFN-16-1EP_4x5mm_Pitch0.5mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -2623,7 +2623,7 @@ DFN-16-1EP_5x5mm_Pitch0.5mm:
   excluded_pins: null
   model_name: DFN-16-1EP_5x5mm_Pitch0.5mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -2659,7 +2659,7 @@ DFN-18-1EP_3x5mm_Pitch0.5mm:
   excluded_pins: null
   model_name: DFN-18-1EP_3x5mm_Pitch0.5mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -2695,7 +2695,7 @@ DFN-18-1EP_4x5mm_Pitch0.5mm:
   excluded_pins: null
   model_name: DFN-18-1EP_4x5mm_Pitch0.5mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -2731,7 +2731,7 @@ DFN-20-1EP_5x6mm_Pitch0.5mm:
   excluded_pins: null
   model_name: DFN-20-1EP_5x6mm_Pitch0.5mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -2803,7 +2803,7 @@ WQFN-20-1EP_4.5x2.5mm_Pitch0.5mm_EP2.9x1.0mm:
   excluded_pins: null
   model_name: WQFN-20-1EP_4.5x2.5mm_Pitch0.5mm_EP2.9x1.0mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -2839,7 +2839,7 @@ DFN-22-1EP_5x6mm_Pitch0.5mm:
   excluded_pins: null
   model_name: DFN-22-1EP_5x6mm_Pitch0.5mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -2875,7 +2875,7 @@ DFN-24-1EP_4x7mm_Pitch0.5mm:
   excluded_pins: null
   model_name: DFN-24-1EP_4x7mm_Pitch0.5mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -2911,7 +2911,7 @@ DFN-32-1EP_4x7mm_Pitch0.4mm:
   excluded_pins: null
   model_name: DFN-32-1EP_4x7mm_Pitch0.4mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -2947,7 +2947,7 @@ DFN-44-1EP_5x8.9mm_Pitch0.4mm:
   excluded_pins: null
   model_name: DFN-44-1EP_5x8.9mm_Pitch0.4mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -2983,7 +2983,7 @@ DFN-S-8-1EP_6x5mm_Pitch1.27mm:
   excluded_pins: null
   model_name: DFN-S-8-1EP_6x5mm_Pitch1.27mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -3019,7 +3019,7 @@ MLF-6-1EP_1.6x1.6mm_P0.5mm_EP0.5x1.26mm:
   excluded_pins: null
   model_name: MLF-6-1EP_1.6x1.6mm_P0.5mm_EP0.5x1.26mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -3055,7 +3055,7 @@ QFN-12-1EP_3x3mm_Pitch0.5mm:
   excluded_pins: null
   model_name: QFN-12-1EP_3x3mm_Pitch0.5mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -3091,7 +3091,7 @@ QFN-16-1EP_3x3mm_Pitch0.5mm:
   excluded_pins: null
   model_name: QFN-16-1EP_3x3mm_Pitch0.5mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -3127,7 +3127,7 @@ QFN-16-1EP_5x5mm_Pitch0.8mm:
   excluded_pins: null
   model_name: QFN-16-1EP_5x5mm_Pitch0.8mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -3163,7 +3163,7 @@ QFN-20-1EP_3x4mm_Pitch0.5mm:
   excluded_pins: null
   model_name: QFN-20-1EP_3x4mm_Pitch0.5mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -3199,7 +3199,7 @@ QFN-20-1EP_4x4mm_Pitch0.5mm:
   excluded_pins: null
   model_name: QFN-20-1EP_4x4mm_Pitch0.5mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -3235,7 +3235,7 @@ QFN-20-1EP_4x5mm_Pitch0.5mm:
   excluded_pins: null
   model_name: QFN-20-1EP_4x5mm_Pitch0.5mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -3271,7 +3271,7 @@ QFN-20-1EP_5x5mm_Pitch0.65mm:
   excluded_pins: null
   model_name: QFN-20-1EP_5x5mm_Pitch0.65mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -3307,7 +3307,7 @@ QFN-24_3x3mm_Pitch0.4mm:
   excluded_pins: null
   model_name: QFN-24_3x3mm_Pitch0.4mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -3343,7 +3343,7 @@ QFN-24_4x4mm_Pitch0.5mm:
   excluded_pins: null
   model_name: QFN-24_4x4mm_Pitch0.5mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -3379,7 +3379,7 @@ QFN-24-1EP_3x3mm_Pitch0.4mm:
   excluded_pins: null
   model_name: QFN-24-1EP_3x3mm_Pitch0.4mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -3415,7 +3415,7 @@ QFN-24-1EP_3x4mm_Pitch0.4mm:
   excluded_pins: null
   model_name: QFN-24-1EP_3x4mm_Pitch0.4mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -3451,7 +3451,7 @@ QFN-24-1EP_4x4mm_Pitch0.5mm:
   excluded_pins: null
   model_name: QFN-24-1EP_4x4mm_Pitch0.5mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -3487,7 +3487,7 @@ QFN-24-1EP_4x5mm_Pitch0.5mm:
   excluded_pins: null
   model_name: QFN-24-1EP_4x5mm_Pitch0.5mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -3523,7 +3523,7 @@ QFN-24-1EP_5x5mm_Pitch0.65mm:
   excluded_pins: null
   model_name: QFN-24-1EP_5x5mm_Pitch0.65mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -3559,7 +3559,7 @@ QFN-28-1EP_3x6mm_Pitch0.5mm:
   excluded_pins: null
   model_name: QFN-28-1EP_3x6mm_Pitch0.5mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -3595,7 +3595,7 @@ QFN-28-1EP_4x4mm_Pitch0.4mm:
   excluded_pins: null
   model_name: QFN-28-1EP_4x4mm_Pitch0.4mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -3631,7 +3631,7 @@ QFN-28-1EP_4x5mm_Pitch0.5mm:
   excluded_pins: null
   model_name: QFN-28-1EP_4x5mm_Pitch0.5mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -3667,7 +3667,7 @@ QFN-28-1EP_5x5mm_Pitch0.5mm:
   excluded_pins: null
   model_name: QFN-28-1EP_5x5mm_Pitch0.5mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -3703,7 +3703,7 @@ QFN-28-1EP_5x6mm_Pitch0.5mm:
   excluded_pins: null
   model_name: QFN-28-1EP_5x6mm_Pitch0.5mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -3739,7 +3739,7 @@ QFN-28-1EP_6x6mm_Pitch0.65mm:
   excluded_pins: null
   model_name: QFN-28-1EP_6x6mm_Pitch0.65mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -3811,7 +3811,7 @@ QFN-32-1EP_4x4mm_Pitch0.4mm:
   excluded_pins: null
   model_name: QFN-32-1EP_4x4mm_Pitch0.4mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -3847,7 +3847,7 @@ QFN-32-1EP_5x5mm_Pitch0.5mm:
   excluded_pins: null
   model_name: QFN-32-1EP_5x5mm_Pitch0.5mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -3883,7 +3883,7 @@ QFN-32-1EP_5x5mm_P0.5mm_EP3.3x3.3mm:
   excluded_pins: null
   model_name: QFN-32-1EP_5x5mm_P0.5mm_EP3.3x3.3mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -3919,7 +3919,7 @@ QFN-32-1EP_7x7mm_Pitch0.65mm:
   excluded_pins: null
   model_name: QFN-32-1EP_7x7mm_Pitch0.65mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -3955,7 +3955,7 @@ QFN-36-1EP_5x6mm_Pitch0.5mm:
   excluded_pins: null
   model_name: QFN-36-1EP_5x6mm_Pitch0.5mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -3991,7 +3991,7 @@ QFN-36-1EP_6x6mm_Pitch0.5mm:
   excluded_pins: null
   model_name: QFN-36-1EP_6x6mm_Pitch0.5mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -4027,7 +4027,7 @@ QFN-38-1EP_4x6mm_Pitch0.4mm:
   excluded_pins: null
   model_name: QFN-38-1EP_4x6mm_Pitch0.4mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -4063,7 +4063,7 @@ QFN-38-1EP_5x7mm_Pitch0.5mm:
   excluded_pins: null
   model_name: QFN-38-1EP_5x7mm_Pitch0.5mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -4099,7 +4099,7 @@ QFN-40-1EP_5x5mm_Pitch0.4mm:
   excluded_pins: null
   model_name: QFN-40-1EP_5x5mm_Pitch0.4mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -4135,7 +4135,7 @@ QFN-40-1EP_6x6mm_Pitch0.5mm:
   excluded_pins: null
   model_name: QFN-40-1EP_6x6mm_Pitch0.5mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -4171,7 +4171,7 @@ QFN-42-1EP_5x6mm_Pitch0.4mm:
   excluded_pins: null
   model_name: QFN-42-1EP_5x6mm_Pitch0.4mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -4207,7 +4207,7 @@ QFN-44-1EP_7x7mm_Pitch0.5mm:
   excluded_pins: null
   model_name: QFN-44-1EP_7x7mm_Pitch0.5mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -4243,7 +4243,7 @@ QFN-44-1EP_8x8mm_Pitch0.65mm:
   excluded_pins: null
   model_name: QFN-44-1EP_8x8mm_Pitch0.65mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -4279,7 +4279,7 @@ QFN-48-1EP_5x5mm_P0.35mm_EP3.70x3.70mm:
   excluded_pins: null
   model_name: QFN-48-1EP_5x5mm_P0.35mm_EP3.70x3.70mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -4315,7 +4315,7 @@ QFN-48-1EP_6x6mm_P0.4mm_EP4.30x4.30mm:
   excluded_pins: null
   model_name: QFN-48-1EP_6x6mm_P0.4mm_EP4.30x4.30mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -4351,7 +4351,7 @@ QFN-48-1EP_7x7mm_Pitch0.5mm:
   excluded_pins: null
   model_name: QFN-48-1EP_7x7mm_Pitch0.5mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -4387,7 +4387,7 @@ QFN-52-1EP_7x8mm_Pitch0.5mm:
   excluded_pins: null
   model_name: QFN-52-1EP_7x8mm_Pitch0.5mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -4423,7 +4423,7 @@ QFN-56-1EP_7x7mm_Pitch0.4mm:
   excluded_pins: null
   model_name: QFN-56-1EP_7x7mm_Pitch0.4mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -4459,7 +4459,7 @@ QFN-56-1EP_7x7mm_P0.4mm_EP4x4mm:
   excluded_pins: null
   model_name: QFN-56-1EP_7x7mm_P0.4mm_EP4x4mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -4495,7 +4495,7 @@ QFN-56-1EP_8x8mm_P0.5mm_EP4.5x5.2mm:
   excluded_pins: null
   model_name: QFN-56-1EP_8x8mm_P0.5mm_EP4.5x5.2mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -4531,7 +4531,7 @@ QFN-64-1EP_8x8mm_P0.4mm_EP6.5x6.5mm:
   excluded_pins: null
   model_name: QFN-64-1EP_8x8mm_P0.4mm_EP6.5x6.5mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -4567,7 +4567,7 @@ QFN-64-1EP_9x9mm_Pitch0.5mm:
   excluded_pins: null
   model_name: QFN-64-1EP_9x9mm_Pitch0.5mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -4603,7 +4603,7 @@ QFN-68-1EP_8x8mm_P0.4mm_EP5.2x5.2mm:
   excluded_pins: null
   model_name: QFN-68-1EP_8x8mm_P0.4mm_EP5.2x5.2mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -4639,7 +4639,7 @@ QFN-76-1EP_9x9mm_P0.4mm_EP3.8x3.8mm:
   excluded_pins: null
   model_name: QFN-76-1EP_9x9mm_P0.4mm_EP3.8x3.8mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -4711,7 +4711,7 @@ UQFN-10_1.4x1.8mm_Pitch0.4mm:
   excluded_pins: null
   model_name: UQFN-10_1.4x1.8mm_Pitch0.4mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -4747,7 +4747,7 @@ UQFN-16-1EP_3x3mm_Pitch0.5mm:
   excluded_pins: null
   model_name: UQFN-16-1EP_3x3mm_Pitch0.5mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -4783,7 +4783,7 @@ UQFN-16-1EP_4x4mm_Pitch0.65mm:
   excluded_pins: null
   model_name: UQFN-16-1EP_4x4mm_Pitch0.65mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -4819,7 +4819,7 @@ UQFN-20-1EP_3x3mm_Pitch0.4mm:
   excluded_pins: null
   model_name: UQFN-20-1EP_3x3mm_Pitch0.4mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -4891,7 +4891,7 @@ UQFN-20-1EP_4x4mm_Pitch0.5mm:
   excluded_pins: null
   model_name: UQFN-20-1EP_4x4mm_Pitch0.5mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   body_color_key: black body
   pin_shapes: null
   pin_color_key: metal grey pins
@@ -4927,7 +4927,7 @@ UQFN-28-1EP_4x4mm_Pitch0.4mm:
   excluded_pins: null
   model_name: UQFN-28-1EP_4x4mm_Pitch0.4mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   body_color_key: black body
   pin_shapes: null
   pin_color_key: metal grey pins
@@ -4963,7 +4963,7 @@ UQFN-40-1EP_5x5mm_Pitch0.4mm:
   excluded_pins: null
   model_name: UQFN-40-1EP_5x5mm_Pitch0.4mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   body_color_key: black body
   pin_shapes: null
   pin_color_key: metal grey pins
@@ -5035,7 +5035,7 @@ UQFN-48-1EP_6x6mm_Pitch0.4mm:
   excluded_pins: null
   model_name: UQFN-48-1EP_6x6mm_Pitch0.4mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   body_color_key: black body
   pin_shapes: null
   pin_color_key: metal grey pins
@@ -5071,7 +5071,7 @@ VDFN-8-1EP_2x2mm_Pitch0.5mm:
   excluded_pins: null
   model_name: VDFN-8-1EP_2x2mm_Pitch0.5mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   body_color_key: black body
   pin_shapes: null
   pin_color_key: metal grey pins
@@ -5107,7 +5107,7 @@ DFN-14-1EP_3x3mm_Pitch0.4mm:
   excluded_pins: null
   model_name: DFN-14-1EP_3x3mm_Pitch0.4mm
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   body_color_key: black body
   pin_shapes: null
   pin_color_key: metal grey pins
@@ -5287,7 +5287,7 @@ NXP_XSON-16:
   excluded_pins: null
   model_name: NXP_XSON-16
   rotation: -90
-  destination_dir: Housings_SON.3dshapes
+  destination_dir: Package_SON.3dshapes
   body_color_key: black body
   pin_shapes: null
   pin_color_key: metal grey pins
@@ -5323,7 +5323,7 @@ USON-6_1x1.45mm_P0.5mm:
   excluded_pins: null
   model_name: USON-6_1x1.45mm_P0.5mm
   rotation: -90
-  destination_dir: Housings_SON.3dshapes
+  destination_dir: Package_SON.3dshapes
   body_color_key: black body
   pin_shapes: null
   pin_color_key: metal grey pins
@@ -5647,7 +5647,7 @@ WSON-16_3.3x1.35_Pitch0.4mm:
   excluded_pins: null
   model_name: WSON-16_3.3x1.35_Pitch0.4mm
   rotation: -90
-  destination_dir: Housings_SON.3dshapes
+  destination_dir: Package_SON.3dshapes
   body_color_key: black body
   pin_shapes: null
   pin_color_key: metal grey pins
@@ -5683,7 +5683,7 @@ VSON-10-1EP_3x3mm_Pitch0.5mm_ThermalPad:
   excluded_pins: null
   model_name: VSON-10-1EP_3x3mm_Pitch0.5mm_ThermalPad
   rotation: -90
-  destination_dir: Housings_SON.3dshapes
+  destination_dir: Package_SON.3dshapes
   body_color_key: black body
   pin_shapes: null
   pin_color_key: metal grey pins
@@ -5720,7 +5720,7 @@ Texas_S-PDSO-N12:
   excluded_pins: [8, 9, 10, 11, 12, 21, 22, 23, 24, 25]
   model_name: Texas_S-PDSO-N12
   rotation: -90
-  destination_dir: Housings_SON.3dshapes
+  destination_dir: Package_SON.3dshapes
   body_color_key: black body
   pin_shapes: null
   pin_color_key: metal grey pins
@@ -5756,7 +5756,7 @@ Texas_S-PVSON-N10:
   excluded_pins: null
   model_name: Texas_S-PVSON-N10
   rotation: -90
-  destination_dir: Housings_SON.3dshapes
+  destination_dir: Package_SON.3dshapes
   body_color_key: black body
   pin_shapes: null
   pin_color_key: metal grey pins
@@ -5792,7 +5792,7 @@ Texas_S-PVSON-N8:
   excluded_pins: null
   model_name: Texas_S-PVSON-N8
   rotation: -90
-  destination_dir: Housings_SON.3dshapes
+  destination_dir: Package_SON.3dshapes
   body_color_key: black body
   pin_shapes: null
   pin_color_key: metal grey pins
@@ -5864,7 +5864,7 @@ Texas_S-PVQFN-N14:
   excluded_pins: [2, 4, 6, 8, 10, 12, 13, 14, 15, 16, 18, 20, 22, 24, 26, 28, 30, 31, 32, 33, 34, 36]
   model_name: Texas_S-PVQFN-N14
   rotation: -90
-  destination_dir: Housings_DFN_QFN.3dshapes
+  destination_dir: Package_DFN_QFN.3dshapes
   body_color_key: black body
   pin_shapes: null
   pin_color_key: metal grey pins
@@ -5938,7 +5938,7 @@ USON-10_2.5x1.0mm_Pitch0.5mm:
   excluded_pins: null
   model_name: USON-10_2.5x1.0mm_Pitch0.5mm
   rotation: -90
-  destination_dir: Housings_SON.3dshapes
+  destination_dir: Package_SON.3dshapes
   body_color_key: black body
   pin_shapes: null
   pin_color_key: metal grey pins
@@ -6010,7 +6010,7 @@ Texas_R-PUSON-N14:
   excluded_pins: null
   model_name: Texas_R-PUSON-N14
   rotation: -90
-  destination_dir: Housings_SON.3dshapes
+  destination_dir: Package_SON.3dshapes
   body_color_key: black body
   pin_shapes: null
   pin_color_key: metal grey pins
@@ -6082,7 +6082,7 @@ USON-20_2x4mm_Pitch0.4mm:
   excluded_pins: null
   model_name: USON-20_2x4mm_Pitch0.4mm
   rotation: -90
-  destination_dir: Housings_SON.3dshapes
+  destination_dir: Package_SON.3dshapes
   body_color_key: black body
   pin_shapes: null
   pin_color_key: metal grey pins
@@ -6118,7 +6118,7 @@ VSON-8_3.3x3.3mm_Pitch0.65mm_NexFET:
   excluded_pins: null
   model_name: VSON-8_3.3x3.3mm_Pitch0.65mm_NexFET
   rotation: -90
-  destination_dir: Housings_SON.3dshapes
+  destination_dir: Package_SON.3dshapes
   body_color_key: black body
   pin_shapes: null
   pin_color_key: metal grey pins
@@ -6154,7 +6154,7 @@ VSON-10-1EP_3x3mm_P0.5mm_EP1.2x2mm:
   excluded_pins: null
   model_name: VSON-10-1EP_3x3mm_P0.5mm_EP1.2x2mm
   rotation: -90
-  destination_dir: Housings_SON.3dshapes
+  destination_dir: Package_SON.3dshapes
   body_color_key: black body
   pin_shapes: null
   pin_color_key: metal grey pins
@@ -6190,7 +6190,7 @@ WSON6_1.5x1.5mm_Pitch0.5mm:
   excluded_pins: null
   model_name: WSON6_1.5x1.5mm_Pitch0.5mm
   rotation: -90
-  destination_dir: Housings_SON.3dshapes
+  destination_dir: Package_SON.3dshapes
   body_color_key: black body
   pin_shapes: null
   pin_color_key: metal grey pins
@@ -6226,7 +6226,7 @@ WSON8_4x4mm_Pitch0.8mm:
   excluded_pins: null
   model_name: WSON8_4x4mm_Pitch0.8mm
   rotation: -90
-  destination_dir: Housings_SON.3dshapes
+  destination_dir: Package_SON.3dshapes
   body_color_key: black body
   pin_shapes: null
   pin_color_key: metal grey pins
@@ -6262,7 +6262,7 @@ X2SON-8_1.4x1mm_Pitch0.35mm:
   excluded_pins: null
   model_name: X2SON-8_1.4x1mm_Pitch0.35mm
   rotation: -90
-  destination_dir: Housings_SON.3dshapes
+  destination_dir: Package_SON.3dshapes
   body_color_key: black body
   pin_shapes: null
   pin_color_key: metal grey pins
@@ -6298,7 +6298,7 @@ WSON-14_1EP_4.0x4.0mm_Pitch0.5mm:
   excluded_pins: null
   model_name: WSON-14_1EP_4.0x4.0mm_Pitch0.5mm
   rotation: -90
-  destination_dir: Housings_SON.3dshapes
+  destination_dir: Package_SON.3dshapes
   body_color_key: black body
   pin_shapes: null
   pin_color_key: metal grey pins

@@ -841,13 +841,10 @@ QFN_packages:
   artifacts:
     paths:
       - 3dmodels/Diode_SMD.3dshapes
-      - 3dmodels/Housings_LGA.3dshapes
       - 3dmodels/RF_Antenna.3dshapes
-      - 3dmodels/Housings_DFN_QFN.3dshapes
       - 3dmodels/RF_Converter.3dshapes
-      - 3dmodels/Package_DFN_QFN.3dshapes
       - 3dmodels/TO_SOT_Packages_SMD.3dshapes
-      - 3dmodels/Housings_SON.3dshapes
+      - 3dmodels/Package_DFN_QFN.3dshapes
       - 3dmodels/Package_SON.3dshapes
       - 3dmodels/Package_SO.3dshapes
       - 3dmodels/Package_LGA.3dshapes
