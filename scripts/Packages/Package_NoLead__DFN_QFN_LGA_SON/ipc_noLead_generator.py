@@ -20,6 +20,7 @@ from scripts.tools.quad_dual_pad_border import create_dual_or_quad_pad_border
 from scripts.tools import drawing_tools
 from scripts.tools.drawing_tools import courtyardFromBoundingBox, roundGDown
 from scripts.tools.geometry.bounding_box import BoundingBox
+from scripts.tools.declarative_def_tools import tags_properties
 
 sys.path.append(os.path.join(sys.path[0], "..", "utils"))
 from ep_handling_utils import getEpRoundRadiusParams
@@ -124,6 +125,35 @@ def get_bounding_box_of_pad_arrays(pad_arrays: List[PadArray]) -> BoundingBox:
     return bb
 
 
+class NoLeadConfiguration:
+    """
+    A type that represents the configuration of a gullwing footprint
+    (probably from a YAML config block).
+
+    Over time, add more type-safe accessors to this class, and replace
+    use of the raw dictionary.
+    """
+    _spec_dictionary: dict
+    compatible_mpns: tags_properties.TagsProperties
+    additional_tags: tags_properties.TagsProperties
+
+    def __init__(self, spec: dict):
+        self._spec_dictionary = spec
+
+        self.compatible_mpns = tags_properties.TagsProperties(
+                spec.get('compatible_mpns', [])
+        )
+
+        # Generic addtional tags
+        self.additional_tags = tags_properties.TagsProperties(
+            spec.get(tags_properties.ADDITIONAL_TAGS_KEY, [])
+        )
+
+    @property
+    def spec_dictionary(self) -> dict:
+        return self._spec_dictionary
+
+
 class NoLead():
     def __init__(self, configuration):
         self.configuration = configuration
@@ -223,7 +253,10 @@ class NoLead():
         return Pad
 
     @staticmethod
-    def deviceDimensions(device_size_data, fp_id):
+    def deviceDimensions(device_config: NoLeadConfiguration, fp_id: str) -> dict:
+        # Pull out the old-style raw data
+        device_size_data = device_config.spec_dictionary
+
         unit = device_size_data.get('unit')
         dimensions = {
             'body_size_x': TolerancedSize.fromYaml(device_size_data, base_name='body_size_x', unit=unit),
@@ -305,14 +338,20 @@ class NoLead():
 
     def generateFootprint(self, device_params, fp_id):
         print('Building footprint for parameter set: {}'.format(fp_id))
-        device_dimensions = NoLead.deviceDimensions(device_params, fp_id)
+
+        nolead_config = NoLeadConfiguration(device_params)
+
+        device_dimensions = NoLead.deviceDimensions(nolead_config, fp_id)
 
         if device_dimensions['has_EP'] and 'thermal_vias' in device_params:
-            self.__createFootprintVariant(device_params, device_dimensions, True)
+            self.__createFootprintVariant(nolead_config, device_dimensions, True)
 
-        self.__createFootprintVariant(device_params, device_dimensions, False)
+        self.__createFootprintVariant(nolead_config, device_dimensions, False)
 
-    def __createFootprintVariant(self, device_params, device_dimensions, with_thermal_vias):
+    def __createFootprintVariant(self, device_config: NoLeadConfiguration,
+                                 device_dimensions, with_thermal_vias):
+        # Pull out the old-style raw data
+        device_params = device_config.spec_dictionary
 
         lib_name = device_params.get('library', default_library)
 
@@ -436,12 +475,14 @@ class NoLead():
                 scriptname=os.path.basename(__file__).replace("  ", " ")
             ).lstrip())
 
-        kicad_mod.setTags(self.configuration['keyword_fp_string']
-                          .format(
+        kicad_mod.tags = self.configuration['keyword_fp_string'].format(
             man=device_params.get('manufacturer', ''),
             package=device_params['device_type'],
             category=category
-        ).lstrip())
+        ).lstrip().split()
+
+        kicad_mod.tags += device_config.compatible_mpns.tags
+        kicad_mod.tags += device_config.additional_tags.tags
 
         pad_arrays = create_dual_or_quad_pad_border(self.configuration, pad_details, device_params)
         pad_radius = get_pad_radius_from_arrays(pad_arrays)

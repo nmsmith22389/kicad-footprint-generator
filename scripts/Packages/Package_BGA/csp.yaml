@@ -5,7 +5,9 @@
 Efinix_WLCSP-64_3.5353x3.3753mm_Layout8x8_P0.4mm:
   description: "Efinix WLCSP, NSMD pad definition Page 60"
   size_source: "https://www.efinixinc.com/docs/titanium-packaging-ug-v5.2.pdf"
-  additional_tags: "64-ball WLCSP"
+  additional_tags:
+     - "64-ball"
+     - "WLCSP"
   body_size_x: 3.5353
   body_size_y: 3.3753
   pitch: 0.4
@@ -17,12 +19,14 @@ Efinix_WLCSP-64_3.5353x3.3753mm_Layout8x8_P0.4mm:
 Efinix_WLCSP-80_4.4567x3.5569mm_Layout10x8_P0.4mm:
   description: "WLCSP-80, NSMD pad definition Page 54"
   size_source: "https://www.efinixinc.com/docs/trion-packaging-ug-v4.9.pdf"
-  additional_tags: "80-ball WLCSP"
+  additional_tags:
+    - "80-ball"
+    - "WLCSP"
   body_size_x: 4.4567
   body_size_y: 3.5569
   overall_height: 0.455
   pitch: 0.4
-  pad_diameter: 0.175 
+  pad_diameter: 0.175
   mask_margin: 0.0375
   layout_x: 10
   layout_y: 8

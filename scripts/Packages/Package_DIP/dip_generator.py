@@ -15,6 +15,7 @@ sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))
 from KicadModTree import Vector2D
 from scripts.tools.dict_tools import dictInherit
 from scripts.tools.footprint_scripts_DIP import makeDIP
+from scripts.tools.declarative_def_tools import tags_properties
 
 
 class DIPConfiguration:
@@ -31,7 +32,7 @@ class DIPConfiguration:
     package_tags: list
     standard: Union[str, None]
     description: str
-    additional_tags: List[str]
+    additional_tags: tags_properties.TagsProperties
     socket_size_outset: Union[Vector2D, None]
 
     def __init__(self, spec):
@@ -50,7 +51,11 @@ class DIPConfiguration:
         self.standard = spec.get('standard', None)
         self.description = spec['description']
         self.datasheet = spec.get('datasheet', None)
-        self.additional_tags = spec.get('additional_tags', [])
+        self.additional_tags = tags_properties.TagsProperties(
+            spec.get(tags_properties.ADDITIONAL_TAGS_KEY, []))
+        self.compatible_mpns = tags_properties.TagsProperties(
+            spec.get('compatible_mpns', [])
+        )
         self.socket_size_outset = self._get_socket_size_outset(spec)
 
         assert self.pins % 2 == 0
@@ -70,7 +75,7 @@ def adjust_config_for_longpads(config: DIPConfiguration, longpad_size_delta: Vec
         longpad_size_delta (Vector2D): how much bigger longpads are than base pads
     """
     config.pad_size += longpad_size_delta
-    config.additional_tags.append('LongPads')
+    config.additional_tags.tags.append('LongPads')
 
 
 def adjust_config_for_socket(config: DIPConfiguration, socket_size_outset: Vector2D) -> None:
@@ -82,7 +87,7 @@ def adjust_config_for_socket(config: DIPConfiguration, socket_size_outset: Vecto
         socket_size_outset (Vector2D): how much bigger the socket is than the base footprint
     """
     config.socket_size_outset = socket_size_outset
-    config.additional_tags.append('Socket')
+    config.additional_tags.tags.append('Socket')
 
 
 class DipGenerator:
@@ -129,7 +134,7 @@ class DipGenerator:
             'socket_height': socket_height,
             'socket_pinrow_distance_offset': 0,
             'datasheet': config.datasheet,
-            'tags_additional': config.additional_tags,
+            'tags_additional': config.additional_tags.tags,
             'DIPName': config.package_type,
             'DIPTags': ' '.join(config.package_tags),
         }
