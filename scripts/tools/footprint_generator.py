@@ -48,4 +48,5 @@ class FootprintGenerator:
         which can then be used to init a FootprintGenerator.
         """
         parser.add_argument('-o', '--output-dir', type=Path,
+                            default='.',
                             help='Sets the directory to which to write the generated footprints')
