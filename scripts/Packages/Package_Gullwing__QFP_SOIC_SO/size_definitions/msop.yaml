@@ -114,7 +114,7 @@ MSOP-8-1EP_3x3mm_P0.65mm_EP1.73x1.85mm:
     # bottom_pad_size:
     paste_avoid_via: False
 
-MSOP-8-1EP_3x3mm_P0.65mm_Mask1.73x2.36mm:
+MSOP-8-1EP_3x3mm_P0.65mm_EP2.5x3mm_Mask1.73x2.36mm:
   size_source: 'http://ww1.microchip.com/downloads/en/DeviceDoc/mic5355_6.pdf#page=15'
   force_small_pitch_ipc_definition: True
   body_size_x:
