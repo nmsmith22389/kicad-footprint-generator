@@ -13,7 +13,7 @@ bodystyles:
         chb: True
         chb_y: 1.03
         chb_z: 8.40
-        chb_ins: 0.00     
+        chb_ins: 0.00
         opening_w: 4.10
         opening_h: 5.70
         opening_z: 0.80
@@ -49,7 +49,7 @@ bodystyles:
         chf_y: 0.62
         chf_z: 3.50
         chf_ins: 0.50
-        chb: false    
+        chb: false
         opening_w: 2.60
         opening_h: 4.40
         opening_z: 0.65
@@ -72,7 +72,7 @@ bodystyles:
         key_w: 0.79
         key_l: 0.57
         key_h: 3.30
-        key_off: 1.90        
+        key_off: 1.90
     phoenix_mkds_15_508:
         pitch: 5.08
         height: 13.80
@@ -188,7 +188,7 @@ bodystyles:
         key_w: 0.714
         key_l: -0.57
         key_h: 12.00
-        key_off: 3.383       
+        key_off: 3.383
     phoenix_mpt_05_254:
         source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1725656'
         pitch: 2.54

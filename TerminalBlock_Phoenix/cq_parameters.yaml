@@ -72,7 +72,7 @@ TerminalBlock_Phoenix_PT-1,5-9-5.0-H_1x09_P5.00mm_Horizontal:
 
 TerminalBlock_Phoenix_PT-1,5-10-5.0-H_1x10_P5.00mm_Horizontal:
   source: 'https://media.digikey.com/pdf/Data%20Sheets/Phoenix%20Contact%20PDFs/1935161.pdf'
-  n: 10    
+  n: 10
   bodystyle: 'phoenix_pt_5'
   lib: 'TerminalBlock_Phoenix'
   body_color_key: 'green body'
@@ -81,7 +81,7 @@ TerminalBlock_Phoenix_PT-1,5-10-5.0-H_1x10_P5.00mm_Horizontal:
 
 TerminalBlock_Phoenix_PT-1,5-11-5.0-H_1x11_P5.00mm_Horizontal:
   source: 'https://media.digikey.com/pdf/Data%20Sheets/Phoenix%20Contact%20PDFs/1935161.pdf'
-  n: 11    
+  n: 11
   bodystyle: 'phoenix_pt_5'
   lib: 'TerminalBlock_Phoenix'
   body_color_key: 'green body'
@@ -90,7 +90,7 @@ TerminalBlock_Phoenix_PT-1,5-11-5.0-H_1x11_P5.00mm_Horizontal:
 
 TerminalBlock_Phoenix_PT-1,5-12-5.0-H_1x12_P5.00mm_Horizontal:
   source: 'https://media.digikey.com/pdf/Data%20Sheets/Phoenix%20Contact%20PDFs/1935161.pdf'
-  n: 12    
+  n: 12
   bodystyle: 'phoenix_pt_5'
   lib: 'TerminalBlock_Phoenix'
   body_color_key: 'green body'
@@ -99,7 +99,7 @@ TerminalBlock_Phoenix_PT-1,5-12-5.0-H_1x12_P5.00mm_Horizontal:
 
 TerminalBlock_Phoenix_PT-1,5-13-5.0-H_1x13_P5.00mm_Horizontal:
   source: 'https://media.digikey.com/pdf/Data%20Sheets/Phoenix%20Contact%20PDFs/1935161.pdf'
-  n: 13   
+  n: 13
   bodystyle: 'phoenix_pt_5'
   lib: 'TerminalBlock_Phoenix'
   body_color_key: 'green body'
@@ -108,7 +108,7 @@ TerminalBlock_Phoenix_PT-1,5-13-5.0-H_1x13_P5.00mm_Horizontal:
 
 TerminalBlock_Phoenix_PT-1,5-14-5.0-H_1x14_P5.00mm_Horizontal:
   source: 'https://media.digikey.com/pdf/Data%20Sheets/Phoenix%20Contact%20PDFs/1935161.pdf'
-  n: 14    
+  n: 14
   bodystyle: 'phoenix_pt_5'
   lib: 'TerminalBlock_Phoenix'
   body_color_key: 'green body'
@@ -117,7 +117,7 @@ TerminalBlock_Phoenix_PT-1,5-14-5.0-H_1x14_P5.00mm_Horizontal:
 
 TerminalBlock_Phoenix_PT-1,5-15-5.0-H_1x15_P5.00mm_Horizontal:
   source: 'https://media.digikey.com/pdf/Data%20Sheets/Phoenix%20Contact%20PDFs/1935161.pdf'
-  n: 15    
+  n: 15
   bodystyle: 'phoenix_pt_5'
   lib: 'TerminalBlock_Phoenix'
   body_color_key: 'green body'
@@ -126,7 +126,7 @@ TerminalBlock_Phoenix_PT-1,5-15-5.0-H_1x15_P5.00mm_Horizontal:
 
 TerminalBlock_Phoenix_PT-1,5-16-5.0-H_1x16_P5.00mm_Horizontal:
   source: 'https://media.digikey.com/pdf/Data%20Sheets/Phoenix%20Contact%20PDFs/1935161.pdf'
-  n: 16    
+  n: 16
   bodystyle: 'phoenix_pt_5'
   lib: 'TerminalBlock_Phoenix'
   body_color_key: 'green body'
@@ -402,7 +402,7 @@ TerminalBlock_Phoenix_MKDS-1,5-16-5.08_1x16_P5.08mm_Horizontal:
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
     destination_dir: 'TerminalBlock_Phoenix.3dshapes'
-    
+
 TerminalBlock_Phoenix_MKDS-1,5-2_1x02_P5.00mm_Horizontal:
     source: 'https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=1715022'
     n: 2
@@ -771,4 +771,3 @@ TerminalBlock_Phoenix_MPT-0,5-12-2.54_1x12_P2.54mm_Horizontal:
     body_color_key: 'green body'
     pin_color_key: 'metal grey pins'
     destination_dir: 'TerminalBlock_Phoenix.3dshapes'
-        

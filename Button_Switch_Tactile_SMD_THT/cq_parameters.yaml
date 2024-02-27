@@ -10,8 +10,8 @@ SW_SPST_B3S-1000:
   body_board_distance: 0.0
   body_setback_distance: 0.0
   rotation: 90
-  body_width: 6.0             
-  body_length: 6.6               
+  body_width: 6.0
+  body_length: 6.6
   body_height: 3.4
   pin_pitch: 4.5
   distance_pinTip_rows: 9.0
@@ -21,9 +21,9 @@ SW_SPST_B3S-1000:
   button_dia: 3.3
   body_height_with_button: 4.3
   button_type: 'FLAT'
-  cover_color_key: 'metal grey pins'        
-  body_color_key: 'black body'        
-  button_color_key: 'orange body'        
+  cover_color_key: 'metal grey pins'
+  body_color_key: 'black body'
+  button_color_key: 'orange body'
   pins_color_key: 'gold pins'
   destination_dir : 'Button_Switch_SMD.3dshapes'
 
@@ -37,8 +37,8 @@ SW_SPST_B3S-1100:
   body_board_distance: 0.0
   body_setback_distance: 0.9
   rotation: 90
-  body_width: 6.0             
-  body_length: 6.6               
+  body_width: 6.0
+  body_length: 6.6
   body_height: 3.4
   pin_pitch: 4.5
   distance_pinTip_rows: 9.0
@@ -50,10 +50,10 @@ SW_SPST_B3S-1100:
   button_type: 'FLAT'
   with_gnd_pin: True
   gnd_pin_tip_to_center: 4.2
-  cover_color_key: 'metal grey pins'        
-  body_color_key: 'black body'        
-  button_color_key: 'black body'        
-  pins_color_key: 'gold pins'  
+  cover_color_key: 'metal grey pins'
+  body_color_key: 'black body'
+  button_color_key: 'black body'
+  pins_color_key: 'gold pins'
   destination_dir: 'Button_Switch_SMD.3dshapes'
 
 SW_SPST_B3SL-1002P:
@@ -68,8 +68,8 @@ SW_SPST_B3SL-1002P:
   body_board_distance: 0.0
   body_setback_distance: 0.0
   rotation: 90
-  body_width: 6.2             
-  body_length: 6.5               
+  body_width: 6.2
+  body_length: 6.5
   body_height: 2.5
   pin_pitch: 4.0
   distance_pinTip_rows: 7.0
@@ -79,10 +79,10 @@ SW_SPST_B3SL-1002P:
   button_dia: 2.5
   body_height_with_button: 3.4
   button_type: 'FLAT'
-  cover_color_key: 'metal grey pins'        
-  body_color_key: 'black body'        
-  button_color_key: 'green body'        
-  pins_color_key: 'metal silver'  
+  cover_color_key: 'metal grey pins'
+  body_color_key: 'black body'
+  button_color_key: 'green body'
+  pins_color_key: 'metal silver'
   destination_dir : 'Button_Switch_SMD.3dshapes'
 
 SW_SPST_B3SL-1022P:
@@ -97,8 +97,8 @@ SW_SPST_B3SL-1022P:
   body_board_distance: 0.0
   body_setback_distance: 0.0
   rotation: 90
-  body_width: 6.2             
-  body_length: 6.5               
+  body_width: 6.2
+  body_length: 6.5
   body_height: 2.5
   pin_pitch: 4.0
   distance_pinTip_rows: 7.0
@@ -108,9 +108,9 @@ SW_SPST_B3SL-1022P:
   button_dia: 2.5
   body_height_with_button: 5.1
   button_type: 'FLAT'
-  cover_color_key: 'metal grey pins'        
-  body_color_key: 'black body'        
-  button_color_key: 'grey body'        
+  cover_color_key: 'metal grey pins'
+  body_color_key: 'black body'
+  button_color_key: 'grey body'
   pins_color_key: 'metal silver'
   destination_dir : 'Button_Switch_SMD.3dshapes'
 
@@ -123,8 +123,8 @@ SW_SPST_B3U-1100P-B:
   body_board_distance: 0.0
   body_setback_distance: 0.8
   rotation: 90
-  body_width: 3.0             
-  body_length: 2.5               
+  body_width: 3.0
+  body_length: 2.5
   body_height: 1.2
   pin_pitch: 0.0
   distance_pinTip_rows: 4.0
@@ -141,9 +141,9 @@ SW_SPST_B3U-1100P-B:
   with_gnd_pin: True
   gnd_pin_tip_to_center: 1.9
   gnd_pin_width: 0.5
-  cover_color_key: 'metal grey pins'        
-  body_color_key: 'black body'        
-  button_color_key: 'black body'        
+  cover_color_key: 'metal grey pins'
+  body_color_key: 'black body'
+  button_color_key: 'black body'
   pins_color_key: 'metal silver'
   destination_dir: 'Button_Switch_SMD.3dshapes'
 
@@ -156,8 +156,8 @@ SW_SPST_B3U-1100P:
   body_board_distance: 0.0
   body_setback_distance: 0.8
   rotation: 90
-  body_width: 3.0             
-  body_length: 2.5               
+  body_width: 3.0
+  body_length: 2.5
   body_height: 1.2
   pin_pitch: 0.0
   distance_pinTip_rows: 4.0
@@ -170,10 +170,10 @@ SW_SPST_B3U-1100P:
   with_gnd_pin: True
   gnd_pin_tip_to_center: 1.9
   gnd_pin_width: 0.5
-  cover_color_key: 'metal grey pins'        
-  body_color_key: 'black body'        
-  button_color_key: 'black body'        
-  pins_color_key: 'metal silver'  
+  cover_color_key: 'metal grey pins'
+  body_color_key: 'black body'
+  button_color_key: 'black body'
+  pins_color_key: 'metal silver'
   destination_dir: 'Button_Switch_SMD.3dshapes'
 
 SW_SPST_Omron_B3FS-100xP:
@@ -188,8 +188,8 @@ SW_SPST_Omron_B3FS-100xP:
   rotation: 90
   body_board_distance: 0.0
   body_setback_distance: 0.0
-  body_width: 6.0             
-  body_length: 6.3               
+  body_width: 6.0
+  body_length: 6.3
   body_height: 2.6
   pin_pitch: 4.5
   distance_pinTip_rows: 8.0
@@ -199,9 +199,9 @@ SW_SPST_Omron_B3FS-100xP:
   button_dia: 3.0
   body_height_with_button: 3.1
   button_type: 'FLAT'
-  cover_color_key: 'metal grey pins'        
-  body_color_key: 'black body'        
-  button_color_key: 'blue body'        
+  cover_color_key: 'metal grey pins'
+  body_color_key: 'black body'
+  button_color_key: 'blue body'
   pins_color_key: 'metal silver'
   destination_dir : 'Button_Switch_SMD.3dshapes'
 
@@ -217,8 +217,8 @@ SW_SPST_Omron_B3FS-101xP:
   rotation: 90
   body_board_distance: 0.0
   body_setback_distance: 0.0
-  body_width: 6.0             
-  body_length: 6.3               
+  body_width: 6.0
+  body_length: 6.3
   body_height: 2.6
   pin_pitch: 4.5
   distance_pinTip_rows: 8.0
@@ -228,10 +228,10 @@ SW_SPST_Omron_B3FS-101xP:
   button_dia: 3.0
   body_height_with_button: 4.3
   button_type: 'FLAT'
-  cover_color_key: 'metal grey pins'        
-  body_color_key: 'black body'        
-  button_color_key: 'blue body'        
-  pins_color_key: 'metal silver'  
+  cover_color_key: 'metal grey pins'
+  body_color_key: 'black body'
+  button_color_key: 'blue body'
+  pins_color_key: 'metal silver'
   destination_dir : 'Button_Switch_SMD.3dshapes'
 
 SW_SPST_Omron_B3FS-105xP:
@@ -246,8 +246,8 @@ SW_SPST_Omron_B3FS-105xP:
   rotation: 90
   body_board_distance: 0.0
   body_setback_distance: 0.0
-  body_width: 6.0             
-  body_length: 6.3               
+  body_width: 6.0
+  body_length: 6.3
   body_height: 2.6
   pin_pitch: 4.5
   distance_pinTip_rows: 8.0
@@ -257,10 +257,10 @@ SW_SPST_Omron_B3FS-105xP:
   button_dia: 3.0
   body_height_with_button: 7.3
   button_type: 'PROJ'
-  cover_color_key: 'metal grey pins'        
-  body_color_key: 'black body'        
-  button_color_key: 'yellow body'        
-  pins_color_key: 'metal silver'  
+  cover_color_key: 'metal grey pins'
+  body_color_key: 'black body'
+  button_color_key: 'yellow body'
+  pins_color_key: 'metal silver'
   destination_dir : 'Button_Switch_SMD.3dshapes'
 
 SW_TH_Tactile_Omron_B3F-10xx:
@@ -287,10 +287,10 @@ SW_TH_Tactile_Omron_B3F-10xx:
   button_dia: 3.5
   body_height_with_button: 4.3
   button_type: 'FLAT'
-  cover_color_key: 'metal grey pins'        
-  body_color_key: 'black body'        
-  button_color_key: 'yellow body'        
-  pins_color_key: 'metal silver'  
+  cover_color_key: 'metal grey pins'
+  body_color_key: 'black body'
+  button_color_key: 'yellow body'
+  pins_color_key: 'metal silver'
   destination_dir: 'Button_Switch_THT.3dshapes'
 
 SW_TH_Tactile_Omron_B3F-11xx:
@@ -317,9 +317,9 @@ SW_TH_Tactile_Omron_B3F-11xx:
   button_type: 'FLAT'
   with_gnd_pin: True
   gnd_pin_tip_to_center: 4.1
-  cover_color_key: 'metal grey pins'        
-  body_color_key: 'black body'        
-  button_color_key: 'yellow body'        
+  cover_color_key: 'metal grey pins'
+  body_color_key: 'black body'
+  button_color_key: 'yellow body'
   pins_color_key: 'metal silver'
   destination_dir: 'Button_Switch_THT.3dshapes'
 
@@ -350,9 +350,9 @@ SW_push_1P1T_NO_CK_KSC6xxJxxx:
   button_ring: 'ROUND'
   button_ring_radius: 2.35
   button_ring_heigth: 1.6
-  cover_color_key: 'metal grey pins'        
-  body_color_key: 'black body'        
-  button_color_key: 'black body'        
+  cover_color_key: 'metal grey pins'
+  body_color_key: 'black body'
+  button_color_key: 'black body'
   pins_color_key: 'metal silver'
   destination_dir: 'Button_Switch_SMD.3dshapes'
 
@@ -660,10 +660,10 @@ SW_PUSH_6mm_H9.5mm:
   button_dia: 3.5
   body_height_with_button: 9.5
   button_type: 'FLAT'
-  cover_color_key: 'metal grey pins'        
-  body_color_key: 'black body'        
-  button_color_key: 'black body'        
-  pins_color_key: 'metal silver'  
+  cover_color_key: 'metal grey pins'
+  body_color_key: 'black body'
+  button_color_key: 'black body'
+  pins_color_key: 'metal silver'
   destination_dir: 'Button_Switch_SMD.3dshapes'
 
 SW_SPST_SKQG_WithStem:

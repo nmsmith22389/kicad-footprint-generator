@@ -5,7 +5,7 @@
   type: SMD
   num_pins: 6
   pin_pitch: 2.54
-  pin_bottom_length: 1.2 
+  pin_bottom_length: 1.2
   pin_height: 0.96
   pin_thickness: 0.2
   pin_width: 0.6
@@ -56,7 +56,7 @@
   type: SMD
   num_pins: 6
   pin_pitch: 2.54
-  pin_bottom_length: 1.2 
+  pin_bottom_length: 1.2
   pin_height: 0.96
   pin_thickness: 0.2
   pin_width: 0.6
@@ -108,7 +108,7 @@
   type: SMD
   num_pins: 6
   pin_pitch: 2.54
-  pin_bottom_length: 0.65 
+  pin_bottom_length: 0.65
   pin_height: 0.96
   pin_thickness: 0.2
   pin_width: 0.6
@@ -160,7 +160,7 @@
   type: THT
   num_pins: 6
   pin_pitch: 2.54
-  pin_bottom_length: 0.65 
+  pin_bottom_length: 0.65
   pin_height: 4.26
   pin_thickness: 0.2
   pin_width: 0.6

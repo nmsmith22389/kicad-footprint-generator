@@ -127,9 +127,9 @@ BatteryHolder_Keystone_500:
   modeltype: 'Button1'                  # Model type
   cellsize: '12mm'                      # Battery type
   cellcnt: 1                            # Number of battery
-  H: null                                 # Package height
-  topear: null                            # Top ear
-  LC: [9.53, 0.0, 15.06, 12.62, 3.81]  # Large circle [x pos, y pos, outer diameter, inner diameter, height]
+  H: null                               # Package height
+  topear: null                          # Top ear
+  LC: [9.53, 0.0, 15.06, 12.62, 3.81]   # Large circle [x pos, y pos, outer diameter, inner diameter, height]
   BC: ['BC2', 2.0, 0.76]                # Battery contact width, height diff to top
   A1: 0.1                               # package board seperation
   A2: 2.54                              # Belly distance to board
@@ -248,7 +248,7 @@ BatteryHolder_Keystone_2479_3xAAA:
   pins: [['tht', 0.00, 0.00, 'round', 0.8, 0.8, 4.00], ['tht', 0.0, 12.70, 'round', 0.8, 0.8, 4.00]]      # Pins tht/smd, x pos, y pos, 'round/rect', diameter/x size, y size, length
   rotation: 0                                   # Rotation if required
   body_color_key: 'black body'                  # Body color
-  pins_color_key: 'metal grey pins'              # Pin color
+  pins_color_key: 'metal grey pins'             # Pin color
 
 BatteryHolder_MPD_BC2AAPC_2xAA:
   modelname: 'BatteryHolder_MPD_BC2AAPC_2xAA'
@@ -282,9 +282,9 @@ BatteryHolder_MPD_BC12AAPC_2xAA:
   L: 107.8                       # Package length
   W: 16.20                       # Package width
   H: 13.70                       # Package height
-  topear: null                  # Top ear
+  topear: null                   # Top ear
   A1: 0.1                        # package board seperation
-  A2: null                      # Belly distance to board
+  A2: null                       # Belly distance to board
   BS: ['round']                  # If the side should be 'round' or 'chamfer'
   BC: ['BC4', 'switchright']     # Battery contact width, length
   BM: [51.00, 0.0]               # Center of body
@@ -370,15 +370,15 @@ BatteryHolder_Keystone_3000_1x12mm:
   L: 13.21                                  # Package length
   W: 12.07                                  # Package width
   H: 3.18                                   # Package height
-  topear: null                               # Top ear
+  topear: null                              # Top ear
   LC: [7.14, 5.14]                          # [back side width, distance back end to pad]
   A1: 0.1                                   # package board seperation
-  A2: null                                   # Belly distance to board
+  A2: null                                  # Belly distance to board
   BC: ['BC6', 0.0]                          # Battery contact type, hole diameter in pad
   pins: [['smd', -8.03, 0.00, 'rect', 2.86, 3.17, 1.19], ['smd', 8.03, 0.00, 'rect', 2.86, 3.17, 1.19]]      # Pins tht/smd, x pos, y pos, 'round/rect', diameter/x size, y size, length
   rotation: 180                             # Rotation if required
   body_color_key: 'black body'              # Body color
-  pins_color_key: 'metal grey pins'          # Pin color
+  pins_color_key: 'metal grey pins'         # Pin color
 
 BatteryHolder_Keystone_3008_1x2450:
   modelname: 'BatteryHolder_Keystone_3008_1x2450'
@@ -410,15 +410,15 @@ BatteryHolder_Keystone_3001_1x12mm:
   L: 13.21                                    # Package length
   W: 12.07                                    # Package width
   H: 2.18                                     # Package height
-  topear: null                              # Top ear
+  topear: null                                # Top ear
   LC: [7.14, 6.73]                            # [back side width, distance back end to pad]
   A1: 0.1                                     # package board seperation
-  A2: null                                  # Belly distance to board
-  BC: ['BC6', -1.39]                          # Battery contact type, 
+  A2: null                                    # Belly distance to board
+  BC: ['BC6', -1.39]                          # Battery contact type,
   pins: [['tht', -6.605, 0.00, 'rectbend', 1.57, 0.20, 3.16, 1.26], ['tht', 6.605, 0.00, 'rectbend', 1.57, 0.20, 3.16, 1.26]]      # Pins tht/smd, x pos, y pos, 'round/rect', diameter/x size, y size, length
   rotation: 180                               # Rotation if required
   body_color_key: 'black body'                # Body color
-  pins_color_key: 'metal grey pins'            # Pin color
+  pins_color_key: 'metal grey pins'           # Pin color
 
 BatteryHolder_Keystone_3009_1x2450:
   modelname: 'BatteryHolder_Keystone_3009_1x2450'

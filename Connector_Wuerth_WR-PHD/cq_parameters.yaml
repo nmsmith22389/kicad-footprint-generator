@@ -60,7 +60,7 @@ standard:
       datasheet: https://katalog.we-online.de/em/datasheet/61303425721.pdf
       rows: 2
       pins: 34
-      
+
 large:
   series_prefix: WR-PHD
   type: Large
@@ -131,7 +131,7 @@ large:
       datasheet: https://katalog.we-online.de/em/datasheet/613034216921.pdf
       rows: 2
       pins: 34
-      
+
 smd:
   series_prefix: WR-PHD
   type: SMD

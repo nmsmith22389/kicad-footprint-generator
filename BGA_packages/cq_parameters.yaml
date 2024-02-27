@@ -1890,7 +1890,7 @@ BGA-153_8.0x8.0mm_Layout15x15_P0.5mm_Ball0.3mm_Pad0.25mm_NSMD:
   # Altera MBGA-153, https://www.altera.com/content/dam/altera-www/global/en_US/pdfs/literature/packaging/04r00471-00.pdf
   # This model have been auto generated based on the foot print file
   # A number of paramters have been fixed or guessed, such as A and A1
-  # 
+  #
   # The foot print that uses this 3D model is BGA-153_8.0x8.0mm_Layout15x15_P0.5mm_Ball0.3mm_Pad0.25mm_NSMD.kicad_mod
   #
   fp_r: 0.4
@@ -1927,7 +1927,7 @@ BGA-36_3.396x3.466mm_Layout6x6_P0.4mm_Ball0.25mm_Pad0.2mm_NSMD:
   # Altera V36, https://www.altera.com/content/dam/altera-www/global/en_US/pdfs/literature/packaging/04r00486-00.pdf
   # This model have been auto generated based on the foot print file
   # A number of paramters have been fixed or guessed, such as A and A1
-  # 
+  #
   # The foot print that uses this 3D model is BGA-36_3.396x3.466mm_Layout6x6_P0.4mm_Ball0.25mm_Pad0.2mm_NSMD.kicad_mod
   #
   fp_r: 0.4
@@ -1964,7 +1964,7 @@ BGA-672_27.0x27.0mm_Layout26x26_P1.0mm_Ball0.6mm_Pad0.5mm_NSMD:
   # Altera BGA-672, https://www.altera.com/content/dam/altera-www/global/en_US/pdfs/literature/packaging/04r00472-00.pdf
   # This model have been auto generated based on the foot print file
   # A number of paramters have been fixed or guessed, such as A and A1
-  # 
+  #
   # The foot print that uses this 3D model is BGA-672_27.0x27.0mm_Layout26x26_P1.0mm_Ball0.6mm_Pad0.5mm_NSMD.kicad_mod
   #
   fp_r: 0.4
@@ -2001,7 +2001,7 @@ BGA-676_27.0x27.0mm_Layout26x26_P1.0mm_Ball0.6mm_Pad0.5mm_NSMD:
   # XILINX BGA-676, https://www.xilinx.com/support/documentation/package_specs/fg676.pdf
   # This model have been auto generated based on the foot print file
   # A number of paramters have been fixed or guessed, such as A and A1
-  # 
+  #
   # The foot print that uses this 3D model is BGA-676_27.0x27.0mm_Layout26x26_P1.0mm_Ball0.6mm_Pad0.5mm_NSMD.kicad_mod
   #
   fp_r: 0.4
@@ -2038,7 +2038,7 @@ Texas_DSBGA-64_3.415x3.535mm_Layout8x8_P0.4mm:
   # Texas Instruments, DSBGA, 3.415x3.535x0.625mm, 64 ball 8x8 area grid, NSMD pad definition (http://www.ti.com/lit/ds/slas718g/slas718g.pdf, http://www.ti.com/lit/an/snva009ag/snva009ag.pdf)
   # This model have been auto generated based on the foot print file
   # A number of paramters have been fixed or guessed, such as A and A1
-  # 
+  #
   # The foot print that uses this 3D model is Texas_DSBGA-64_3.415x3.535mm_Layout8x8_P0.4mm.kicad_mod
   #
   fp_r: 0.4
@@ -2075,7 +2075,7 @@ Texas_DSBGA-6_0.9x1.4mm_Layout2x3_P0.5mm:
   # Texas Instruments, DSBGA, 0.9x1.4mm, 6 bump 2x3 (perimeter) array, NSMD pad definition (http://www.ti.com/lit/ds/symlink/ts5a3159a.pdf)
   # This model have been auto generated based on the foot print file
   # A number of paramters have been fixed or guessed, such as A and A1
-  # 
+  #
   # The foot print that uses this 3D model is Texas_DSBGA-6_0.9x1.4mm_Layout2x3_P0.5mm.kicad_mod
   #
   fp_r: 0.2
@@ -2112,7 +2112,7 @@ Texas_DSBGA-8_1.43x1.41mm_Layout3x3_P0.5mm:
   # Texas Instruments, DSBGA, 1.43x1.41mm, 8 bump 3x3 (perimeter) array, NSMD pad definition (http://www.ti.com/lit/ds/symlink/lmc555.pdf, http://www.ti.com/lit/an/snva009ag/snva009ag.pdf)
   # This model have been auto generated based on the foot print file
   # A number of paramters have been fixed or guessed, such as A and A1
-  # 
+  #
   # The foot print that uses this 3D model is Texas_DSBGA-8_1.43x1.41mm_Layout3x3_P0.5mm.kicad_mod
   #
   fp_r: 0.2
@@ -2149,7 +2149,7 @@ Texas_DSBGA-9_1.4715x1.4715mm_Layout3x3_P0.5mm:
   # Texas Instruments, DSBGA, 1.4715x1.4715mm, 9 bump 3x3 array, NSMD pad definition (http://www.ti.com/lit/ds/symlink/lm4990.pdf, http://www.ti.com/lit/an/snva009ag/snva009ag.pdf)
   # This model have been auto generated based on the foot print file
   # A number of paramters have been fixed or guessed, such as A and A1
-  # 
+  #
   # The foot print that uses this 3D model is Texas_DSBGA-9_1.4715x1.4715mm_Layout3x3_P0.5mm.kicad_mod
   #
   fp_r: 0.2
@@ -2186,7 +2186,7 @@ UCBGA-81_4x4mm_Layout9x9_P0.4mm:
   # UCBGA-81, 9x9 raster, 4x4mm package, pitch 0.4mm; https://www.latticesemi.com/view_document?document_id=213
   # This model have been auto generated based on the foot print file
   # A number of paramters have been fixed or guessed, such as A and A1
-  # 
+  #
   # The foot print that uses this 3D model is UCBGA-81_4x4mm_Layout9x9_P0.4mm.kicad_mod
   #
   fp_r: 0.4
@@ -2223,7 +2223,7 @@ UFBGA-100_7x7mm_Layout12x12_P0.5mm:
   # UFBGA-100, 12x12 raster, 7x7mm package, pitch 0.5mm; see section 7.1 of http://www.st.com/resource/en/datasheet/stm32f103tb.pdf
   # This model have been auto generated based on the foot print file
   # A number of paramters have been fixed or guessed, such as A and A1
-  # 
+  #
   # The foot print that uses this 3D model is UFBGA-100_7x7mm_Layout12x12_P0.5mm.kicad_mod
   #
   fp_r: 0.4
@@ -2260,7 +2260,7 @@ UFBGA-132_7x7mm_Layout12x12_P0.5mm:
   # UFBGA-132, 12x12 raster, 7x7mm package, pitch 0.5mm; see section 7.4 of http://www.st.com/resource/en/datasheet/stm32l152zc.pdf
   # This model have been auto generated based on the foot print file
   # A number of paramters have been fixed or guessed, such as A and A1
-  # 
+  #
   # The foot print that uses this 3D model is UFBGA-132_7x7mm_Layout12x12_P0.5mm.kicad_mod
   #
   fp_r: 0.4
@@ -2297,7 +2297,7 @@ UFBGA-132_7x7mm_P0.5mm:
   # UFBGA 132 Pins, 0.5mm Pitch, 0.3mm Ball, http://www.st.com/resource/en/datasheet/stm32l486qg.pdf
   # This model have been auto generated based on the foot print file
   # A number of paramters have been fixed or guessed, such as A and A1
-  # 
+  #
   # The foot print that uses this 3D model is UFBGA-132_7x7mm_P0.5mm.kicad_mod
   #
   fp_r: 0.4
@@ -2334,7 +2334,7 @@ UFBGA-144_10x10mm_Layout12x12_P0.8mm:
   # UFBGA-144, 12x12 raster, 10x10mm package, pitch 0.8mm; see section 7.5 of http://www.st.com/resource/en/datasheet/stm32f446ze.pdf
   # This model have been auto generated based on the foot print file
   # A number of paramters have been fixed or guessed, such as A and A1
-  # 
+  #
   # The foot print that uses this 3D model is UFBGA-144_10x10mm_Layout12x12_P0.8mm.kicad_mod
   #
   fp_r: 0.4
@@ -2371,7 +2371,7 @@ UFBGA-144_7x7mm_Layout12x12_P0.5mm:
   # UFBGA-144, 12x12 raster, 7x7mm package, pitch 0.5mm; see section 7.4 of http://www.st.com/resource/en/datasheet/stm32f446ze.pdf
   # This model have been auto generated based on the foot print file
   # A number of paramters have been fixed or guessed, such as A and A1
-  # 
+  #
   # The foot print that uses this 3D model is UFBGA-144_7x7mm_Layout12x12_P0.5mm.kicad_mod
   #
   fp_r: 0.4
@@ -2408,7 +2408,7 @@ UFBGA-15_3.0x3.0mm_Layout4x4_P0.65mm:
   # UFBGA-15, 4x4, 3x3mm package, pitch 0.65mm
   # This model have been auto generated based on the foot print file
   # A number of paramters have been fixed or guessed, such as A and A1
-  # 
+  #
   # The foot print that uses this 3D model is UFBGA-15_3.0x3.0mm_Layout4x4_P0.65mm.kicad_mod
   #
   fp_r: 0.4
@@ -2445,7 +2445,7 @@ UFBGA-169_7x7mm_Layout13x13_P0.5mm:
   # UFBGA-169, 13x13 raster, 7x7mm package, pitch 0.5mm; see section 7.6 of http://www.st.com/resource/en/datasheet/stm32f429ng.pdf
   # This model have been auto generated based on the foot print file
   # A number of paramters have been fixed or guessed, such as A and A1
-  # 
+  #
   # The foot print that uses this 3D model is UFBGA-169_7x7mm_Layout13x13_P0.5mm.kicad_mod
   #
   fp_r: 0.4
@@ -2482,7 +2482,7 @@ UFBGA-201_10x10mm_Layout15x15_P0.65mm:
   # UFBGA-201, 15x15 raster, 10x10mm package, pitch 0.65mm; see section 7.6 of http://www.st.com/resource/en/datasheet/stm32f207vg.pdf
   # This model have been auto generated based on the foot print file
   # A number of paramters have been fixed or guessed, such as A and A1
-  # 
+  #
   # The foot print that uses this 3D model is UFBGA-201_10x10mm_Layout15x15_P0.65mm.kicad_mod
   #
   fp_r: 0.4
@@ -2519,7 +2519,7 @@ UFBGA-32_4.0x4.0mm_Layout6x6_P0.5mm:
   # UFBGA-32, 6x6, 4x4mm package, pitch 0.5mm
   # This model have been auto generated based on the foot print file
   # A number of paramters have been fixed or guessed, such as A and A1
-  # 
+  #
   # The foot print that uses this 3D model is UFBGA-32_4.0x4.0mm_Layout6x6_P0.5mm.kicad_mod
   #
   fp_r: 0.4
@@ -2556,7 +2556,7 @@ UFBGA-64_5x5mm_Layout8x8_P0.5mm:
   # UFBGA-64, 8x8 raster, 5x5mm package, pitch 0.5mm; see section 7.1 of http://www.st.com/resource/en/datasheet/stm32f051t8.pdf
   # This model have been auto generated based on the foot print file
   # A number of paramters have been fixed or guessed, such as A and A1
-  # 
+  #
   # The foot print that uses this 3D model is UFBGA-64_5x5mm_Layout8x8_P0.5mm.kicad_mod
   #
   fp_r: 0.4
@@ -2593,7 +2593,7 @@ VFBGA-100_7.0x7.0mm_Layout10x10_P0.65mm:
   # VFBGA-100, 10x10, 7x7mm package, pitch 0.65mm
   # This model have been auto generated based on the foot print file
   # A number of paramters have been fixed or guessed, such as A and A1
-  # 
+  #
   # The foot print that uses this 3D model is VFBGA-100_7.0x7.0mm_Layout10x10_P0.65mm.kicad_mod
   #
   fp_r: 0.4
@@ -2630,7 +2630,7 @@ VFBGA-49_5.0x5.0mm_Layout7x7_P0.65mm:
   # VFBGA-49, 7x7, 5x5mm package, pitch 0.65mm
   # This model have been auto generated based on the foot print file
   # A number of paramters have been fixed or guessed, such as A and A1
-  # 
+  #
   # The foot print that uses this 3D model is VFBGA-49_5.0x5.0mm_Layout7x7_P0.65mm.kicad_mod
   #
   fp_r: 0.4
@@ -2667,7 +2667,7 @@ XFBGA-121_8x8mm_Layout11x11_P0.65mm:
   # XFBGA-121, https://www.nxp.com/docs/en/package-information/SOT1533-1.pdf
   # This model have been auto generated based on the foot print file
   # A number of paramters have been fixed or guessed, such as A and A1
-  # 
+  #
   # The foot print that uses this 3D model is XFBGA-121_8x8mm_Layout11x11_P0.65mm.kicad_mod
   #
   fp_r: 0.4
@@ -2704,7 +2704,7 @@ XFBGA-36_3.5x3.5mm_Layout6x6_P0.5mm:
   # XFBGA-36, https://www.nxp.com/docs/en/package-information/SOT1555-1.pdf
   # This model have been auto generated based on the foot print file
   # A number of paramters have been fixed or guessed, such as A and A1
-  # 
+  #
   # The foot print that uses this 3D model is XFBGA-36_3.5x3.5mm_Layout6x6_P0.5mm.kicad_mod
   #
   fp_r: 0.4
@@ -2741,7 +2741,7 @@ XFBGA-64_5.0x5.0mm_Layout8x8_P0.5mm:
   # XFBGA-64, https://www.nxp.com/docs/en/package-information/SOT1555-1.pdf
   # This model have been auto generated based on the foot print file
   # A number of paramters have been fixed or guessed, such as A and A1
-  # 
+  #
   # The foot print that uses this 3D model is XFBGA-64_5.0x5.0mm_Layout8x8_P0.5mm.kicad_mod
   #
   fp_r: 0.4

@@ -402,7 +402,7 @@ MicroCrystal_CC1V-T1A:
   A1: 0.0  # Bottom-board separation
   p_cnt: 2  # Number of pins
   p_split_x: 6.8  # Distance between pins, along length
-  p_split_y: None  
+  p_split_y: None
   p_length: 1.2  # Pin length
   p_width: 3.5  # Pin width
   body_top_color_key: black body  # Top color
