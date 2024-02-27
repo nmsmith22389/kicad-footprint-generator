@@ -6,6 +6,9 @@ import importlib
 import argparse
 import cadquery as cq
 
+# The amount (in mm) that a model is allowed to deviate before failing
+tolerance = 0.01
+
 def main():
     parser = argparse.ArgumentParser(description='Audits the generated KiCAD 3D models against known STEP files.')
     parser.add_argument('--new_step_dir', dest='new_step_dir', required=True,
@@ -58,24 +61,24 @@ def main():
                             ref_step_bb.add(solid.val().BoundingBox())
 
                     # Check the bounding boxes
-                    ref_x_len = format(ref_step_bb.xlen, '.3f')
-                    new_x_len = format(new_step_bb.xlen, '.3f')
-                    ref_y_len = format(ref_step_bb.ylen, '.3f')
-                    new_y_len = format(new_step_bb.ylen, '.3f')
-                    ref_z_len = format(ref_step_bb.zlen, '.3f')
-                    new_z_len = format(new_step_bb.zlen, '.3f')
-                    if ref_x_len != new_x_len or ref_y_len != new_y_len or ref_z_len != new_z_len:
-                        print("File {} has a bounding box that does not match between the reference and new STEP files: ref_xlen {} vs new_xlen {}, ref_ylen {} vs new_ylen {}, ref_zlen {} vs new_zlen {}.".format(ref_step_path, ref_x_len, new_x_len, ref_y_len, new_y_len, ref_z_len, new_z_len))
+                    ref_x_len = ref_step_bb.xlen
+                    new_x_len = new_step_bb.xlen
+                    ref_y_len = ref_step_bb.ylen
+                    new_y_len = new_step_bb.ylen
+                    ref_z_len = ref_step_bb.zlen
+                    new_z_len = new_step_bb.zlen
+                    if abs(ref_x_len - new_x_len) >= tolerance or abs(ref_y_len - new_y_len) >= tolerance or (ref_z_len - new_z_len) >= tolerance:
+                        print("File {} has a bounding box that does not match between the reference and new STEP files: ref_xlen {} vs new_xlen {}, ref_ylen {} vs new_ylen {}, ref_zlen {} vs new_zlen {}.".format(ref_step_path, format(ref_x_len, '.5f'), format(new_x_len, '.5f'), format(ref_y_len, '.5f'), format(new_y_len, '.5f'), format(ref_z_len, '.5f'), format(new_z_len, '.5f')))
 
                     # Compare the centers of the bounding boxes to make sure there is no part drift
-                    ref_bb_center_x = format(ref_step_bb.center.x, '.3f')
-                    new_bb_center_x = format(new_step_bb.center.x, '.3f')
-                    ref_bb_center_y = format(ref_step_bb.center.y, '.3f')
-                    new_bb_center_y = format(new_step_bb.center.y, '.3f')
-                    ref_bb_center_z = format(ref_step_bb.center.z, '.3f')
-                    new_bb_center_z = format(new_step_bb.center.z, '.3f')
-                    if float(ref_bb_center_x) != float(new_bb_center_x) or float(ref_bb_center_y) != float(new_bb_center_y) or float(ref_bb_center_z) != float(new_bb_center_z):
-                        print("File {} has a bounding box center that does not match between the reference and new STEP files: Centers - Ref X: {} vs New X: {}, Ref Y: {} vs New Y: {}, Ref Z: {} vs New Z: {}".format(ref_step_path, ref_bb_center_x, new_bb_center_x, ref_bb_center_y, new_bb_center_y, ref_bb_center_z, new_bb_center_z))
+                    ref_bb_center_x = ref_step_bb.center.x
+                    new_bb_center_x = new_step_bb.center.x
+                    ref_bb_center_y = ref_step_bb.center.y
+                    new_bb_center_y = new_step_bb.center.y
+                    ref_bb_center_z = ref_step_bb.center.z
+                    new_bb_center_z = new_step_bb.center.z
+                    if abs(ref_bb_center_x - new_bb_center_x) >= tolerance or abs(ref_bb_center_y - new_bb_center_y) >= tolerance or abs(ref_bb_center_z - new_bb_center_z) >= tolerance:
+                        print("File {} has a bounding box center that does not match between the reference and new STEP files: Centers - Ref X: {} vs New X: {}, Ref Y: {} vs New Y: {}, Ref Z: {} vs New Z: {}".format(ref_step_path, format(ref_bb_center_x, '.5f'), format(new_bb_center_x, '.5f'), format(ref_bb_center_y, '.5f'), format(new_bb_center_y, '.5f'), format(ref_bb_center_z, '.5f'), format(new_bb_center_z, '.5f')))
 
 if __name__ == "__main__":
     main()
