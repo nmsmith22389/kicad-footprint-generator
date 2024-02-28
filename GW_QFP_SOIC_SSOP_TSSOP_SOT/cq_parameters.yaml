@@ -3712,6 +3712,38 @@ MSOP-8-1EP_3x3mm_P0.65mm_EP1.73x1.85mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.ti.com/lit/ds/symlink/lm25085.pdf#page=30'
 
+MSOP-8-1EP_3x3mm_P0.65mm_EP1.95x2.15mm:
+  the: 12.0
+  tb_s: 0.05
+  c: 0.18
+  R1: 0.15
+  R2: 0.15
+  S: 0.25
+  fp_s: True
+  fp_r: 0.5
+  fp_d: 0.1
+  fp_z: 0.05
+  ef: 0.0
+  cc1: 0.0
+  D1: 3.0
+  E1: 3.0
+  E: 4.9
+  A1: 0.1
+  A2: 0.86
+  b: 0.33
+  e: 0.65
+  npx: 4
+  npy: 0
+  epad: [2.18, 1.73] # the shape itself is a bit different than epad
+  excluded_pins: null
+  model_name: MSOP-8-1EP_3x3mm_P0.65mm_EP1.95x2.15mm
+  rotation: -90
+  body_color_key: 'black body'
+  pin_color_key: 'metal grey pins'
+  mark_color_key: 'light brown label'
+  destination_dir: 'Package_SO.3dshapes'
+  source: 'https://www.st.com/resource/en/datasheet/pm8834.pdf#page=18'
+
 MSOP-8-1EP_3x3mm_P0.65mm_EP2.54x2.8mm:
   the: 9.0
   tb_s: 0.15
