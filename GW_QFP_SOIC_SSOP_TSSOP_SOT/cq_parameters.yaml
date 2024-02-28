@@ -6819,37 +6819,37 @@ MSOP-8_3x3mm_Pitch0.65mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://cds.linear.com/docs/en/packaging/05081660_G_MS8.pdf'
 
-MSOP-8-1EP_3x3mm_Pitch0.65mm:
+MSOP-8-1EP_3x3mm_P0.65mm_EP1.68x1.88mm:
   the: 12.0
-  tb_s: 0.15
+  tb_s: 0.001 # should be 0
   c: 0.18
   R1: 0.05
   R2: 0.05
   S: 0.25
   fp_s: True
   fp_r: 0.5
-  fp_d: 0.2
+  fp_d: 0.0
   fp_z: 0.1
   ef: 0
-  cc1: 0.25
+  cc1: 0.0
   D1: 3.0
   E1: 3.0
   E: 4.9
   A1: 0.1
-  A2: 0.85
+  A2: 0.86
   b: 0.3
   e: 0.65
   npx: 4
   npy: 0
   epad: [1.88, 1.68]
   excluded_pins: null
-  model_name: MSOP-8-1EP_3x3mm_P0.65mm
+  model_name: MSOP-8-1EP_3x3mm_P0.65mm_EP1.68x1.88mm
   rotation: -90
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
   destination_dir: 'Package_SO.3dshapes'
-  source: 'http://cds.linear.com/docs/en/packaging/05081662_K_MS8E.pdf'
+  source: 'https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/ltc-legacy-msop/05081662_k_ms8e.pdf'
 
 MSOP-10_3x3mm_Pitch0.5mm:
   the: 12.0
