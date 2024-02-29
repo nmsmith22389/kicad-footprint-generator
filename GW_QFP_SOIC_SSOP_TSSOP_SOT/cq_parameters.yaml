@@ -5601,6 +5601,38 @@ SO-14_3.9x8.65mm_P1.27mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'https://www.st.com/resource/en/datasheet/l6491.pdf'
 
+SO-16_3.9x9.9mm_P1.27mm:
+  the: 10.0
+  tb_s: 0.01
+  c: 0.22
+  R1: 0.3
+  R2: 0.3
+  S: 0.05 # L - Lp - R1 = 1.05 - 0.7 - 0.3
+  fp_s: True
+  fp_r: 0.6
+  fp_d: 0.05
+  fp_z: 0.05
+  ef: 0.0
+  cc1: 0
+  D1: 9.9
+  E1: 3.9
+  E: 6.0
+  A1: 0.175
+  A2: 1.35
+  b: 0.425
+  e: 1.27
+  npx: 8
+  npy: 0
+  epad: null
+  excluded_pins: null
+  model_name: SO-16_3.9x9.9mm_P1.27mm
+  rotation: -90
+  body_color_key: 'black body'
+  pin_color_key: 'metal grey pins'
+  mark_color_key: 'light brown label'
+  destination_dir: 'Package_SO.3dshapes'
+  source: 'https://www.nxp.com/docs/en/package-information/SOT109-1.pdf'
+
 SOT23_6:
   the: 8.0
   tb_s: 0.05
