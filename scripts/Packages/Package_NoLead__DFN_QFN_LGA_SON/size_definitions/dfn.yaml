@@ -1431,6 +1431,7 @@ Texas_VSON-HR_1.5x2mm_P0.5mm:
   device_type: 'VSON-HR'
   size_source: 'http://www.ti.com/lit/ds/symlink/tps62823.pdf#page=29'
   manufacturer: 'Texas'
+  library: 'Package_SON'
   ipc_class: 'qfn' # 'qfn_pull_back'
   body_size_x:
     minimum: 1.4
