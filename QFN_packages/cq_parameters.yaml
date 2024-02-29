@@ -1873,7 +1873,7 @@ DFN-8-1EP_2x2mm_Pitch0.5mm:
   mark_color_key: 'light brown label'
   source: 'https://www.onsemi.com/pub/Collateral/506AQ.PDF'
 
-DFN-8-1EP_2x2mm_P0.5mm_EP0.7x1.3mm:
+DFN-8-1EP_2x2mm_P0.5mm_EP0.6x1.2mm:
   c: 0.2
   L: 0.35
   fp_s: True
@@ -1900,14 +1900,14 @@ DFN-8-1EP_2x2mm_P0.5mm_EP0.7x1.3mm:
   epad_n: null
   epad_pitch: null
   excluded_pins: null
-  model_name: DFN-8-1EP_2x2mm_P0.5mm_EP0.7x1.3mm
+  model_name: DFN-8-1EP_2x2mm_P0.5mm_EP0.6x1.2mm
   rotation: -90
   destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
-  source: 'https://www.onsemi.com/pub/Collateral/506AQ.PDF'
+  source: 'https://www.onsemi.com/pub/Collateral/506AQ.PDF' # also https://www.qorvo.com/products/d/da001879
 
 DFN-8-1EP_2x2mm_Pitch0.45mm:
   c: 0.2
