@@ -3712,6 +3712,38 @@ MSOP-8-1EP_3x3mm_P0.65mm_EP1.73x1.85mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.ti.com/lit/ds/symlink/lm25085.pdf#page=30'
 
+MSOP-8-1EP_3x3mm_P0.65mm_EP2.5x3mm_Mask1.73x2.36mm:
+  the: 9.0
+  tb_s: 0.001
+  c: 0.15
+  R1: 0.14
+  R2: 0.14
+  S: 0.28
+  fp_s: True
+  fp_r: 0.5
+  fp_d: 0.1
+  fp_z: 0.05
+  ef: 0.05
+  cc1: 0.0
+  D1: 3.0
+  E1: 3.0
+  E: 4.9
+  A1: 0.08
+  A2: 0.86
+  b: 0.33
+  e: 0.65
+  npx: 4
+  npy: 0
+  epad: [2.36, 1.73]
+  excluded_pins: null
+  model_name: MSOP-8-1EP_3x3mm_P0.65mm_EP2.5x3mm_Mask1.73x2.36mm
+  rotation: -90
+  body_color_key: 'black body'
+  pin_color_key: 'metal grey pins'
+  mark_color_key: 'light brown label'
+  destination_dir: 'Package_SO.3dshapes'
+  source: 'http://ww1.microchip.com/downloads/en/DeviceDoc/mic5355_6.pdf#page=15'
+
 MSOP-8-1EP_3x3mm_P0.65mm_EP1.95x2.15mm:
   the: 12.0
   tb_s: 0.05
