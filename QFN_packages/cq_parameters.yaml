@@ -5835,6 +5835,40 @@ Texas_S-PVSON-N8:
   mark_color_key: light brown label
   source: 'http://www.ti.com/lit/ds/symlink/opa2333.pdf'
 
+Texas_VSON-HR-8_1.5x2mm_P0.5mm:
+  c: 0.1
+  L: 0.4
+  fp_s: True
+  fp_r: 0.2
+  fp_d: 0.2
+  fp_z: 0.02
+  ef: 0.0
+  cce: 0.0
+  D: 2.0
+  E: 1.5
+  A1: 0.025
+  A2: 0.975
+  b: 0.25
+  e: 0.50
+  m: 0.0
+  ps: rounded
+  npx: 4
+  npy: 0
+  epad: null
+  epad_offsetX: null
+  epad_offsetY: null
+  epad_n: null
+  epad_pitch: null
+  excluded_pins: null
+  model_name: Texas_VSON-HR-8_1.5x2mm_P0.5mm
+  rotation: -90
+  destination_dir: Package_SON.3dshapes
+  body_color_key: black body
+  pin_shapes: null
+  pin_color_key: metal grey pins
+  mark_color_key: light brown label
+  source: https://www.ti.com/lit/ds/symlink/tps62823.pdf#page=29
+
 Texas_R-PUQFN-N12:
   c: 0.2
   L: 0.4
