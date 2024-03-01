@@ -65,10 +65,10 @@ def make_gw(params):
     fp_r  = params['fp_r']
     fp_d  = params['fp_d']
     fp_z  = params['fp_z']
-    R1  = params['R1']
+    R1  = params['R1'] if 'R1' in params else None
     R2  = params['R2']
-    S  = params['S']
-# automatically calculated    L  = params['L']
+    S  = params['S'] if 'S' in params else None
+    L = params['L'] if 'L' in params else None
     D1  = params['D1']
     E1  = params['E1']
     E   = params['E']
@@ -83,6 +83,29 @@ def make_gw(params):
         excluded_pins = params['excluded_pins']
     else:
         excluded_pins=() ##no pin excluded
+
+    missingparam = [S, L, R1].count(None)
+    if missingparam == 0:
+        print("Warning: All of S, L, and R1 are provided. The system is overconstrained. Ignoring the value of S.")
+        S = None
+    if missingparam > 1:
+        raise Exception("At least two of S, L, and R1 must be provided")
+
+    if L is None:
+        L = (E - E1) / 2 - (S + R1)
+    if S is None:
+        S = (E - E1) / 2 - (R1 + L)
+    if R1 is None:
+        R1 = (E - E1) / 2 - (S + L)
+
+    if L<0:
+        raise Exception("L cannot be negative")
+    if S<0:
+        raise Exception("S cannot be negative")
+    if R1<0:
+        raise Exception("R1 cannot be negative")
+    if L<(c+R2):
+        raise Exception("L must be greater than c + R1")
 
     A = A1 + A2
     A2_t = (A2-c)/2 # body top part height
@@ -126,12 +149,6 @@ def make_gw(params):
                 else:
                     epad_offset_y = params['epad'][4]
 
-    # calculated dimensions for body
-    # checking pin lenght compared to overall width
-    # d=(E-E1 -2*(S+L)-2*(R1))
-    L=(E-E1-2*(S+R1))/2
-    #FreeCAD.Console.PrintMessage('E='+str(E)+';E1='+str(E1)+';S='+str(S)+';L='+str(L)+'\r\n')
-
     # calculate chamfers
     totpinwidthx = (npx-1)*e+b # total width of all pins on the X side
     totpinwidthy = (npy-1)*e+b # total width of all pins on the Y side
@@ -139,7 +156,7 @@ def make_gw(params):
     if cc1!=0:
         cc1 = abs(min((D1-totpinwidthx)/2., (E1-totpinwidthy)/2.,cc1) - 0.5*tb_s)
         cc1 = min(cc1, max_cc1)
-    # cc = cc1/2.
+
     cc=cc1
 
     def crect(wp, rw, rh, cv1, cv):
