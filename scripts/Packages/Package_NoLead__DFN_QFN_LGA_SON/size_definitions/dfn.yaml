@@ -1721,7 +1721,7 @@ OnSemi_UDFN-16-1EP_3.3x1.35mm_P0.4mm_EP2.8x0.4mm:
   num_pins_x: 0
   num_pins_y: 8
 
-OnSemi_DFN-16-1EP_4x4mm_P0.5mm_EP2.7x3.4mm:
+OnSemi_DFN-14-1EP_4x4mm_P0.5mm_EP2.7x3.4mm:
   device_type: 'DFN'
   manufacturer: 'OnSemi'
   #part_number: 'mpn'
