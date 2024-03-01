@@ -4,8 +4,8 @@ D_SOD-123:
   c: 0.2  # pin thickness, body center part height
   R1: 0.12  # pin upper corner, inner radius
   R2: 0.12  # pin lower corner, inner radius
-  S: 0.0  # pin top flat part length (excluding corner arc)
-  # L: 0.4  # (calculated) pin bottom flat part length (including corner arc)
+  S: 0.0  # pin top flat part length (excluding corner arc) - you can specify either S or L, the other will be calculated
+  #L: 0.4  #  pin bottom flat part length (including corner arc)
   fp_s: False  # True for circular pinmark, False for square pinmark (useful for diodes)
   fp_r: 0.5  # first pin indicator radius
   fp_d: 0.2  # first pin indicator distance from edge
@@ -14,7 +14,7 @@ D_SOD-123:
   cc1: 0.12  # chamfer of the 1st pin corner
   D1: 2.75  # body length
   E1: 1.6  # body width
-  E: 2.65   # body overall width  E=E1+2*(S+L+c)
+  E: 2.65   # body overall width  (E - E1) = 2 * (S + R1 + L)
   A1: 0.1  # body-board separation
   A2: 1.15  # body height
   b: 0.65  # pin width
