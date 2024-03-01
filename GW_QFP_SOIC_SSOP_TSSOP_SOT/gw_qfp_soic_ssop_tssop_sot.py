@@ -107,6 +107,9 @@ def make_gw(params):
     if L<(c+R2):
         raise Exception("L must be greater than c + R1")
 
+    if tb_s == 0:
+        tb_s = 0.001 # if tb_s is is zero, the solver cannot converge as we have an object with zero volume, so enforce a minimum size here
+
     A = A1 + A2
     A2_t = (A2-c)/2 # body top part height
     A2_b = A2_t     # body bottom part height
