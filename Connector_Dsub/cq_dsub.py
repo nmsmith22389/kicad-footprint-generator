@@ -343,67 +343,69 @@ class cq_dsub:
         t = pin[0]
         pn = pin[1]
 
-        if (serie == 2 or serie == 3) and pn == 9:
-            #             A      B      C      D     E     F     G
-            if params["gender"] == "female":
-                return (16.30, 25.00, 30.80, 19.20, 7.9, 12.50, 3.2)
-            else:
-                return (16.92, 25.00, 30.80, 19.20, 8.3, 12.50, 3.2)
-        #
-        #
-        if (serie == 2) and pn == 15:
-            #             A      B      C      D     E     F     G
-            if params["gender"] == "female":
-                return (24.60, 33.30, 39.20, 27.70, 7.9, 12.50, 3.2)
-            else:
-                return (25.25, 33.30, 39.20, 27.70, 8.3, 12.50, 3.2)
-        #
-        #
-        if (serie == 3) and pn == 15:
-            #             A      B      C      D     E     F     G
-            if params["gender"] == "female":
-                return (16.30, 25.00, 30.80, 19.20, 7.9, 12.50, 3.2)
-            else:
-                return (16.92, 25.00, 30.80, 19.20, 8.3, 12.50, 3.2)
-        #
-        #
-        if (serie == 2) and pn == 25:
-            #             A      B      C      D     E     F     G
-            if params["gender"] == "female":
-                return (38.30, 47.10, 53.10, 41.10, 7.9, 12.50, 3.2)
-            else:
-                return (38.96, 47.10, 53.10, 41.10, 8.3, 12.50, 3.2)
-        #
-        #
-        if (serie == 3) and pn == 26:
-            #             A      B      C      D     E     F     G
-            if params["gender"] == "female":
-                return (24.60, 33.30, 39.20, 27.70, 7.9, 12.50, 3.2)
-            else:
-                return (25.25, 33.30, 39.20, 27.70, 8.3, 12.50, 3.2)
-        #
-        #
-        if (serie == 2) and pn == 37:
-            #             A      B      C      D     E     F     G
-            if params["gender"] == "female":
-                return (54.80, 63.50, 69.40, 57.30, 7.9, 12.50, 3.2)
-            else:
-                return (55.42, 63.50, 69.40, 57.30, 8.3, 12.50, 3.2)
-        #
-        #
-        if (serie == 3) and pn == 44:
-            #             A      B      C      D     E     F     G
-            if params["gender"] == "female":
-                return (38.30, 47.10, 53.10, 41.10, 7.9, 12.50, 3.2)
-            else:
-                return (38.96, 47.10, 53.10, 41.10, 8.3, 12.50, 3.2)
+        metal_plate_height = 12.50
+        mounting_hole_diameter = 3.2
 
-        if (serie == 3) and pn == 62:
-            #             A      B      C      D     E     F     G
+        if params["gender"] == "female":
+            connector_height = 7.9
+        else:
+            connector_height = 8.3
+
+        connector_width = None
+
+        # https://web.archive.org/web/20221207101422/http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf#page=16
+        # https://web.archive.org/web/20221207101422/http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf#page=19
+        #
+        #
+        if (serie == 2 and pn == 9) or (serie == 3 and pn == 15):
             if params["gender"] == "female":
-                return (54.80, 63.50, 69.40, 57.30, 7.9, 12.50, 3.2)
+                connector_width = 16.30  # A
             else:
-                return (55.42, 63.50, 69.40, 57.30, 8.3, 12.50, 3.2)
+                connector_width = 16.92
+            mounting_hole_distance = 25.00  # B
+            metal_plate_width = 30.80  # C
+            bottom_width = 19.20  # D (G)
+        #
+        #
+        if (serie == 2 and pn == 15) or (serie == 3 and pn == 26):
+            if params["gender"] == "female":
+                connector_width = 24.60
+            else:
+                connector_width = 25.25
+            mounting_hole_distance = 33.30
+            metal_plate_width = 39.20
+            bottom_width = 27.70
+        #
+        #
+        if (serie == 2 and pn == 25) or (serie == 3 and pn == 44):
+            if params["gender"] == "female":
+                connector_width = 38.30
+            else:
+                connector_width = 38.96
+            mounting_hole_distance = 47.10
+            metal_plate_width = 53.10
+            bottom_width = 41.10
+        #
+        #
+        if (serie == 2 and pn == 37) or (serie == 3 and pn == 62):
+            if params["gender"] == "female":
+                connector_width = 54.80
+            else:
+                connector_width = 55.42
+            mounting_hole_distance = 63.50
+            metal_plate_width = 69.40
+            bottom_width = 57.30
+
+        if connector_width != None:
+            return (
+                connector_width,
+                mounting_hole_distance,
+                metal_plate_width,
+                bottom_width,
+                connector_height,
+                metal_plate_height,
+                mounting_hole_diameter,
+            )
 
         print("\r\n")
         print(
