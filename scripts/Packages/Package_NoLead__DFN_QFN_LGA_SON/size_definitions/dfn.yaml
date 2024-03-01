@@ -368,7 +368,7 @@ DFN-8-1EP_2x2mm_P0.5mm_EP0.6x1.2mm:
   device_type: 'DFN'
   #manufacturer: 'man'
   #part_number: 'mpn'
-  size_source: 'https://www.onsemi.com/pub/Collateral/NUF4401MN-D.PDF#page=6' # also https://www.qorvo.com/products/d/da001879
+  size_source: 'https://www.onsemi.com/pub/Collateral/506AQ.PDF' # also https://www.qorvo.com/products/d/da001879
   # ipc_class: 'qfn' # 'qfn_pull_back'
   #ipc_density: 'least' #overwrite global value for this device.
   body_size_x: 2.0
@@ -393,6 +393,8 @@ DFN-8-1EP_2x2mm_P0.5mm_EP0.6x1.2mm:
   #suffix: '_PullBack'
   #include_suffix_in_3dpath: 'False'
   #include_pad_size: 'fp_name_only' # 'both' | 'none' (default)
+  compatible_mpns:
+    - '506AQ'
 
 DFN-8-1EP_3x2mm_P0.5mm_EP0.56x2.15mm:
   device_type: 'DFN'
