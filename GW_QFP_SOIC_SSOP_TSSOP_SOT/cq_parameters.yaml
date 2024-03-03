@@ -3653,8 +3653,8 @@ MSOP-8-1EP_3x3mm_P0.65mm_EP1.5x1.8mm:
   c: 0.15
   R1: 0.06  # pin upper corner, inner radius; guess based on ratios from the drawing on the datasheet
   R2: 0.06  # pin lower corner, inner radius; guess based on ratios from the drawing on the datasheet
-  S: 0.29 # 0.35 - R1; pin top flat part length (excluding corner arc)
-  # L: 0.6  # (calculated) pin bottom flat part length (including corner arc)
+  S: null  # (calculated) pin top flat part length (excluding corner arc)
+  L: 0.6  # pin bottom flat part length (including corner arc)
   fp_s: True
   fp_r: 0.6
   fp_d: 0.06 # we need this value to get the pin 1 marker center 0.750 mm off border; no idea how that gets placed
@@ -3682,11 +3682,12 @@ MSOP-8-1EP_3x3mm_P0.65mm_EP1.5x1.8mm:
 
 MSOP-8-1EP_3x3mm_P0.65mm_EP1.73x1.85mm:
   the: 9.0
-  tb_s: 0.001 # should be 0
+  tb_s: 0.0
   c: 0.18
   R1: 0.15
   R2: 0.15
-  S: 0.25
+  S: null
+  L: 0.55
   fp_s: True
   fp_r: 0.5
   fp_d: 0.1
@@ -3714,11 +3715,12 @@ MSOP-8-1EP_3x3mm_P0.65mm_EP1.73x1.85mm:
 
 MSOP-8-1EP_3x3mm_P0.65mm_EP2.5x3mm_Mask1.73x2.36mm:
   the: 9.0
-  tb_s: 0.001
+  tb_s: 0.0
   c: 0.15
   R1: 0.14
   R2: 0.14
-  S: 0.28
+  S: null
+  L: 0.53
   fp_s: True
   fp_r: 0.5
   fp_d: 0.1
@@ -3750,7 +3752,8 @@ MSOP-8-1EP_3x3mm_P0.65mm_EP1.95x2.15mm:
   c: 0.18
   R1: 0.15
   R2: 0.15
-  S: 0.25
+  S: null
+  L: 0.55
   fp_s: True
   fp_r: 0.5
   fp_d: 0.1
@@ -5603,11 +5606,12 @@ SO-14_3.9x8.65mm_P1.27mm:
 
 SO-16_3.9x9.9mm_P1.27mm:
   the: 10.0
-  tb_s: 0.01
+  tb_s: 0.0
   c: 0.22
   R1: 0.3
   R2: 0.3
-  S: 0.05 # L - Lp - R1 = 1.05 - 0.7 - 0.3
+  S: null
+  L: 0.7
   fp_s: True
   fp_r: 0.6
   fp_d: 0.05
@@ -6917,11 +6921,12 @@ MSOP-8_3x3mm_Pitch0.65mm:
 
 MSOP-8-1EP_3x3mm_P0.65mm_EP1.68x1.88mm:
   the: 12.0
-  tb_s: 0.001 # should be 0
+  tb_s: 0.0
   c: 0.18
   R1: 0.05
   R2: 0.05
-  S: 0.25
+  S: null
+  L: 0.65 # official value 0.53, but looks weird due to different pin shape
   fp_s: True
   fp_r: 0.5
   fp_d: 0.0
