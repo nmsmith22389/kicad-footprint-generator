@@ -512,7 +512,6 @@ class NoLead():
                     via_paste_clarance=thermals.get('paste_via_clearance', DEFAULT_VIA_PASTE_CLEARANCE),
                     min_annular_ring=thermals.get('min_annular_ring', DEFAULT_MIN_ANNULAR_RING),
                     bottom_pad_min_size=thermals.get('bottom_min_size', 0),
-                    kicad4_compatible=args.kicad4_compatible,
                     **pad_shape_details
                 ))
             else:
@@ -521,7 +520,6 @@ class NoLead():
                     at=EP_center,
                     paste_layout=device_params.get('EP_num_paste_pads', 1),
                     paste_coverage=device_params.get('EP_paste_coverage', DEFAULT_PASTE_COVERAGE),
-                    kicad4_compatible=args.kicad4_compatible,
                     **pad_shape_details
                 ))
 
@@ -798,7 +796,6 @@ if __name__ == "__main__":
                         default='../ipc_definitions.yaml')
     parser.add_argument('--force_rectangle_pads', action='store_true',
                         help='Force the generation of rectangle pads instead of rounded rectangle')
-    parser.add_argument('--kicad4_compatible', action='store_true', help='Create footprints kicad 4 compatible')
     parser.add_argument('-v', '--verbose', action='count', help='set debug level')
     args = parser.parse_args()
 
@@ -824,11 +821,9 @@ if __name__ == "__main__":
         except yaml.YAMLError as exc:
             print(exc)
 
-    if args.force_rectangle_pads or args.kicad4_compatible:
+    if args.force_rectangle_pads:
         configuration['round_rect_max_radius'] = None
         configuration['round_rect_radius_ratio'] = 0
-
-    configuration['kicad4_compatible'] = args.kicad4_compatible
 
     for filepath in args.files:
         no_lead = NoLead(configuration)

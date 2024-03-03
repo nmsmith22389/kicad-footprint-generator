@@ -822,8 +822,7 @@ if __name__ == "__main__":
                         default='../ipc_definitions.yaml')
     parser.add_argument('--force_rectangle_pads', action='store_true',
                         help='Force the generation of rectangle pads instead of rounded rectangle')
-    parser.add_argument('--kicad4_compatible', action='store_true',
-                        help='Create footprints compatible with version 4 (avoids round-rect and custom pads).')
+
     args = parser.parse_args()
 
     if args.density == 'L':
@@ -845,11 +844,9 @@ if __name__ == "__main__":
         except yaml.YAMLError as exc:
             print(exc)
 
-    if args.force_rectangle_pads or args.kicad4_compatible:
+    if args.force_rectangle_pads:
         configuration['round_rect_max_radius'] = None
         configuration['round_rect_radius_ratio'] = 0
-
-    configuration['kicad4_compatible'] = args.kicad4_compatible
 
     for filepath in args.files:
         gw = GullwingGenerator(configuration)

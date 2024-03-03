@@ -59,17 +59,12 @@ class RoundRadiusHandler(object):
         self.maximum_radius = getOptionalNumberTypeParam(kwargs, 'maximum_radius')
         self.round_radius_exact = getOptionalNumberTypeParam(kwargs, 'round_radius_exact')
 
-        self.kicad4_compatible = kwargs.get('kicad4_compatible', False)
-
     def getRadiusRatio(self, shortest_sidelength):
         r"""get the resulting round radius ratio
 
         :param shortest_sidelength: shortest sidelength of a pad
         :return: the resulting round radius ratio to be used for the pad
         """
-        if self.kicad4_compatible:
-            return 0
-
         if self.round_radius_exact is not None:
             if self.round_radius_exact > shortest_sidelength/2:
                 raise ValueError(
@@ -99,9 +94,6 @@ class RoundRadiusHandler(object):
 
         :return: True if rounded corners are required
         """
-        if self.kicad4_compatible:
-            return False
-
         if self.maximum_radius == 0:
             return False
 
@@ -127,9 +119,9 @@ class RoundRadiusHandler(object):
             self.maximum_radius = limit
 
     def __str__(self):
-        return "ratio {}, max {}, exact {}, v4 compatible {}".format(
+        return "ratio {}, max {}, exact {}".format(
                     self.radius_ratio, self.maximum_radius,
-                    self.round_radius_exact, self.kicad4_compatible
+                    self.round_radius_exact
                     )
 
 

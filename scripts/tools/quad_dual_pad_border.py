@@ -24,8 +24,7 @@ def create_dual_or_quad_pad_border(configuration, pad_details, device_params) ->
         pad_arrays = add_dual_pad_border_x(pad_details, device_params, pad_shape_details)
     else:
         pad_arrays = add_quad_pad_border(
-            pad_details, device_params, pad_shape_details,
-            configuration.get('kicad4_compatible', False))
+            pad_details, device_params, pad_shape_details)
 
     return pad_arrays
 
@@ -106,13 +105,10 @@ def add_dual_pad_border_x(pad_details, device_params, pad_shape_details) -> List
     return pad_arrays
 
 
-def add_quad_pad_border(pad_details, device_params, pad_shape_details, kicad4_compatible) -> List[PadArray]:
+def add_quad_pad_border(pad_details, device_params, pad_shape_details) -> List[PadArray]:
     chamfer_size = device_params.get('chamfer_edge_pins', 0)
 
     pad_size_red = device_params.get('edge_heel_reduction', 0)
-    if kicad4_compatible:
-        chamfer_size = 0
-        pad_size_red += device_params.get('chamfer_edge_pins', 0)
 
     pitch_x, pitch_y = get_pitches(device_params)
 

@@ -20,7 +20,6 @@ The script requires python 3.4 or newer. Run it with:
 * --ipc_doc: IPC definition document (default=`../ipc_definitions.yaml`)
 
 * --force_rectangle_pads: Force the generation of rectangle pads instead of rounded rectangle
-* --kicad4_compatible: Create footprints compatible with version 4 (avoids round-rect and custom pads).
 
 ## Size definition format
 
