@@ -118,6 +118,36 @@ D_SOD-123F:
   pin_color_key: 'metal grey pins'
   source: 'http://www.nxp.com/documents/outline_drawing/SOD123F.pdf'
 
+D_SOD-128:
+  the: 4.0
+  c: 0.16
+  fp_s: False
+  fp_r: 0.6
+  fp_d: 0.1
+  fp_z: 0.01
+  ef: 0.0
+  L: null
+  D1: 3.8
+  E1: 2.5
+  E: 3.4 # should be 4.7; due to a bug it had to be set to this value in order to make pins 0.45 mm long
+  A1: 0.0
+  A2: 1.0
+  b: 1.75
+  e: 1.27
+  npx: 0
+  npy: 1
+  epad: null
+  excluded_pins: null
+  model_name: D_SOD-128
+  color_pin_mark: true
+  place_pinMark: true
+  rotation: 0
+  destination_dir: Diode_SMD.3dshapes
+  body_color_key: 'black body'
+  mark_color_key: 'light brown label'
+  pin_color_key: 'metal grey pins'
+  source: 'https://assets.nexperia.com/documents/outline-drawing/SOD128.pdf'
+
 D_SOD-523:
   the: 4.0
   c: 0.14
