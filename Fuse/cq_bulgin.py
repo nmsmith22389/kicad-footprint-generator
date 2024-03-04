@@ -281,10 +281,14 @@ class cq_bulgin():
         pin = params['pin']
         
         case = self.make_body_Bulgin_FX0456(params, modelID)
+        # First undo the translation to make pin 2 of FX0456 at (0,0)
+        # While coordinates of pin 2 of FX0456 are no longer available, they are the same as in FX0457
+        dx = pin[1][1] / 2.0
+        case = case.translate((-dx, 0.0, 0.0))
 
         case = case.rotate((0,0,0), (0,1,0), 90.0)
-        case = case.translate((-2.3, 0.0 , W - 1.1))
-        
+        case = case.translate((-2.3, 0.0 , W / 2))
+
         if self.rotatex > 0.0:
             case = case.rotate((0,0,0), (1,0,0), self.rotatex)
 
