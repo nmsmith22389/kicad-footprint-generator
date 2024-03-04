@@ -94,10 +94,9 @@ def make_tantalum(params):
         body = body.edges(BS((-(W-2.*dtop)/2, (Lb-2.*dtop)/2., H-0.2), ((W+2.*dtop)/2, (Lb+2.*dtop)/2., H+0.2))).chamfer(B)
 
     body=body.union(body_base)
-    #sleep
-    pinmark = cq.Workplane(cq.Plane.XY()).workplane(centerOption="CenterOfMass", offset=H+T*0.01).rect(W-dtop-dtop, pml). \
-                workplane(centerOption="CenterOfMass", offset=T*0.01).rect(W-dtop-dtop, pml). \
-                loft(ruled=True)
+    #add pinmark
+    pinmark = cq.Workplane(cq.Plane.XY()).workplane(centerOption="CenterOfMass", offset=H).rect(W-dtop-dtop, pml). \
+                extrude(0.01)
 
     #translate the object
     pinmark=pinmark.translate((0,Lb/2.-B-pml/2.-dtop/2.-dtop/2.,0)).rotate((0,0,0), (0,1,0), 0)
