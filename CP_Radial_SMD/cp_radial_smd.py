@@ -137,7 +137,6 @@ def make_radial_smd(params):
 
     pins = pins.union(pins.rotate((0,0,0), (0,0,1), 180))
 
-    cim = cq.Workplane("XY", (0,0, 0.0)).circle(0.01).extrude(0.01)
     # draw the cathode identification mark
     if PM:
         cim = cq.Workplane("XY", (-D/2.,0,L-ef)).\
@@ -145,7 +144,12 @@ def make_radial_smd(params):
 
         # do intersection
         cim = cim.cut(cim.translate((0,0,0)).cut(body))
-
         body.cut(cim)
+
+        # offset mark so it does not intersect with part surface on WRL
+        cim=cim.translate((-0.01,0,0.01))
+
+    else:
+        cim = None
 
     return (body, base, cim, pins)

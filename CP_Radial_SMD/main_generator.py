@@ -134,8 +134,24 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
         export_tools.check_step_export_union(component, output_dir, file_name)
 
         # Export the assembly to VRML
+        
+        export_objs=[]
+        export_cols=[]
+        if body is not None:
+            export_objs.append(body)
+            export_cols.append(all_params[model]["body_color_key"])
+        if base is not None:
+            export_objs.append(base)
+            export_cols.append(all_params[model]["base_color_key"])
+        if mark is not None:
+            export_objs.append(mark)
+            export_cols.append(all_params[model]["mark_color_key"])
+        if pins is not None:
+            export_objs.append(pins)
+            export_cols.append(all_params[model]["pin_color_key"])
+        
         if enable_vrml:
-            export_VRML(os.path.join(output_dir, file_name + ".wrl"), [body, base, mark, pins], [all_params[model]["body_color_key"], all_params[model]["base_color_key"], all_params[model]["mark_color_key"], all_params[model]["pin_color_key"]])
+            export_VRML(os.path.join(output_dir, file_name + ".wrl"), export_objs, export_cols)
 
         # Update the license
         from _tools import add_license
