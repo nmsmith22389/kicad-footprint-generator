@@ -439,7 +439,30 @@ DFN-8-1EP_3x2mm_P0.5mm_EP0.56x2.15mm:
   #suffix: '_PullBack'
   #include_suffix_in_3dpath: 'False'
   #include_pad_size: 'fp_name_only' # 'both' | 'none' (default)
-  #
+
+DFN-8-1EP_3x2mm_P0.5mm_EP1.7x1.6mm:
+  device_type: 'DFN'
+  # manufacturer: 'Monolithic Power Systems'
+  # part_number: 'MP8904'
+  size_source: 'https://www.monolithicpower.com/en/documentview/productdocument/index/version/2/document_type/Datasheet/lang/en/sku/MP8904DD/document_id/1244/'
+  # ipc_class: 'qfn'
+  body_size_x: 2.9 .. 3.0 .. 3.1
+  body_size_y: 1.9 .. 2.0 .. 2.1
+  overall_height: 0.80 .. 1.05
+
+  lead_width: 0.18 .. 0.30
+  lead_len: 0.3 .. 0.5
+
+  EP_size_x: 1.65 .. 1.85
+  EP_size_y: 1.50 .. 1.70
+  EP_size_x_overwrite: 1.7
+  EP_size_y_overwrite: 1.6
+  EP_num_paste_pads: [2, 2]
+
+  pitch: 0.5
+  num_pins_x: 0
+  num_pins_y: 4
+
 DFN-8-1EP_2x2mm_P0.5mm_EP0.8x1.2mm:
   device_type: 'DFN'
   #manufacturer: 'man'
