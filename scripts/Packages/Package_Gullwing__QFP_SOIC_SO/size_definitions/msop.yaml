@@ -5,14 +5,15 @@ FileHeader:
 MSOP-8_3x3mm_P0.65mm:
   size_source: 'https://www.jedec.org/system/files/docs/mo-187F.pdf variant AA'
   force_small_pitch_ipc_definition: True
-  body_size_x: 3 +/-0.2
-  body_size_y: 3 +/-0.2
-  overall_size_x: 4.9 +/-0.25
-  lead_width: 0.22 .. 0.38
-  lead_len: 0.4 .. 0.6 .. 0.8
-  pitch: 0.65
+  body_size_x: 3 +/-0.2 # value "E1" in MO-187F variant AA
+  body_size_y: 3 +/-0.2 # value "D" in MO-187F variant AA
+  overall_size_x: 4.9 +/-0.25 # value "E" in MO-187F variant AA
+  lead_width: 0.22 .. 0.38 # value "b" in MO-187F variant AA
+  lead_len: 0.4 .. 0.6 .. 0.8 # value "L" in MO-187F variant AA
+  pitch: 0.65 # value "e" in MO-187F variant AA
   num_pins_x: 0
   num_pins_y: 4
+
 
 MSOP-8-1EP_3x3mm_P0.65mm_EP1.68x1.88mm:
   size_source: 'https://www.analog.com/media/en/technical-documentation/data-sheets/4440fb.pdf#page=13'
@@ -262,6 +263,18 @@ MSOP-8-1EP_3x3mm_P0.65mm_EP1.5x1.8mm:
 
 
 #####################################################################################################
+
+MSOP-10_3x3mm_P0.5mm:
+  size_source: 'https://www.jedec.org/system/files/docs/mo-187F.pdf variant BA'
+  force_small_pitch_ipc_definition: True
+  body_size_x: 3 +/-0.2 # value "E1" in MO-187F variant BA
+  body_size_y: 3 +/-0.2 # value "D" in MO-187F variant BA
+  overall_size_x: 4.9 +/-0.25 # value "E" in MO-187F variant BA
+  lead_width: 0.17.. 0.33 # value "b" in MO-187F variant BA
+  lead_len: 0.4 .. 0.6 .. 0.8 # value "L" in MO-187F variant BA
+  pitch: 0.5 # value "e" in MO-187F variant BA
+  num_pins_x: 0
+  num_pins_y: 5
 
 MSOP-10-1EP_3x3mm_P0.5mm_EP1.68x1.88mm:
   size_source: 'https://www.analog.com/media/en/technical-documentation/data-sheets/3805fg.pdf#page=18'
