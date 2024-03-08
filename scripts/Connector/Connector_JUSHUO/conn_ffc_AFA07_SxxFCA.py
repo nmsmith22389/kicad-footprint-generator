@@ -126,18 +126,46 @@ def generate_one_footprint(pincount, configuration):
     kicad_mod.append(Pad(number=configuration['mounting_pad_number'],
         at=[tab_x, tab_y], type=Pad.TYPE_SMT, shape=Pad.SHAPE_ROUNDRECT,
         size=[mounting_pad_width, mounting_pad_height], layers=Pad.LAYERS_SMT))
+    
+    # Start of the angled side section of the actuator
+    actuator_angle_start_y = actuator_y1-acutator_height - 1.5 # 1.5mm measured from EasyEDA model
+    # Where the rectangular (slightly wider) section of the actuator starts
+    actuator_rectangular_section_start_y = actuator_angle_start_y - 1 # 1mm measured from EasyEDA model
+    actuator_rectangular_section_half_width = half_actuator_width - 0.35 # 0.35: EasyEDA
 
     # create fab outline and pin 1 marker
     kicad_mod.append(PolygonLine(
         polygon=[
+            # Left upper corner
             [-half_body_width, body_y1],
+            # Right upper corner
             [half_body_width, body_y1],
-            [half_body_width, actuator_y1-acutator_height],
+            
+            # Rectangular section of actuator
+            [half_body_width, actuator_rectangular_section_start_y], # Start
+            [actuator_rectangular_section_half_width, actuator_rectangular_section_start_y],
+            [actuator_rectangular_section_half_width, actuator_angle_start_y], # Down
+            
+            # Actuator angled section
             [half_actuator_width, actuator_y1-acutator_height],
+            
+            # Front (cable-facing) section of actuator
             [half_actuator_width, actuator_y1],
+            
+            # Line from lower right to lower left corner
             [-half_actuator_width, actuator_y1],
             [-half_actuator_width, actuator_y1-acutator_height],
-            [-half_body_width, actuator_y1-acutator_height],
+            
+            # Actuator angled section
+            [-half_actuator_width, actuator_y1-acutator_height],
+            
+            # Rectangular section of actuator
+            [-actuator_rectangular_section_half_width, actuator_angle_start_y], # Up
+            [-actuator_rectangular_section_half_width, actuator_rectangular_section_start_y],
+            [-half_body_width, actuator_rectangular_section_start_y], # Start
+
+            # End            
+            [-half_body_width, body_y1],
             [-half_body_width, body_y1]],
         layer='F.Fab', width=configuration['fab_line_width']))
 
@@ -148,7 +176,7 @@ def generate_one_footprint(pincount, configuration):
             [-pad1_x+0.5, body_y1]],
         layer='F.Fab', width=configuration['fab_line_width']))
 
-    # create open actuator outline
+    # create open actuator outline, only on F.Fab
     kicad_mod.append(PolygonLine(
         polygon=[
             [half_body_width, actuator_y1],
@@ -161,17 +189,24 @@ def generate_one_footprint(pincount, configuration):
             [-half_body_width, actuator_y1]],
         layer='F.Fab', width=configuration['fab_line_width']))
 
+    #
     # create silkscreen outline and pin 1 marker
+    #
+    
+    # Silkscreen outline
     kicad_mod.append(PolygonLine(
         polygon=[
-            [half_body_width+nudge, tab_y+mounting_pad_height/2.0+silk_clearance],
-            [half_body_width+nudge, actuator_y1-acutator_height-nudge],
-            [half_actuator_width+nudge, actuator_y1-acutator_height-nudge],
+            [actuator_rectangular_section_half_width+nudge,actuator_rectangular_section_start_y-nudge],
+            [actuator_rectangular_section_half_width+nudge, actuator_angle_start_y],
+            
+            [half_actuator_width+nudge, actuator_y1-acutator_height],
             [half_actuator_width+nudge, actuator_y1+nudge],
             [-half_actuator_width-nudge, actuator_y1+nudge],
-            [-half_actuator_width-nudge, actuator_y1-acutator_height-nudge],
-            [-half_body_width-nudge, actuator_y1-acutator_height-nudge],
-            [-half_body_width-nudge, tab_y+mounting_pad_height/2.0+silk_clearance]],
+            [-half_actuator_width-nudge, actuator_y1-acutator_height],
+            
+            [-actuator_rectangular_section_half_width-nudge, actuator_angle_start_y],
+            [-actuator_rectangular_section_half_width-nudge,actuator_rectangular_section_start_y-nudge],
+        ],
         layer='F.SilkS', width=configuration['silk_line_width']))
 
     kicad_mod.append(PolygonLine(
