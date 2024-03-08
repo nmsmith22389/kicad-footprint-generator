@@ -1981,6 +1981,43 @@ DFN-8-1EP_2x3mm_Pitch0.5mm:
   mark_color_key: 'light brown label'
   source: 'http://cds.linear.com/docs/en/packaging/05081702_C_DDB8.pdf'
 
+DFN-8-1EP_3x2mm_P0.5mm_EP1.7x1.6mm:
+  c: 0.2
+  L: 0.4
+  fp_s: True
+  fp_r: 0.35
+  fp_d: 0.1
+  fp_dx: null
+  fp_dy: null
+  fp_z: 0.01
+  ef: 0.0
+  cce: 0.3
+  D: 2.0
+  E: 3.0
+  A1: 0.025
+  A2: 0.90
+  b: 0.24
+  e: 0.5
+  m: 0.0
+  ps: rounded
+  npx: 4
+  npy: 0
+  epad: [1.6, 1.75]
+  epad_offsetX: null
+  epad_offsetY: null
+  epad_n: null
+  epad_pitch: null
+  excluded_pins: null
+  model_name: DFN-8-1EP_3x2mm_P0.5mm_EP1.7x1.6mm
+  rotation: -90
+  destination_dir: Package_DFN_QFN.pretty
+  body_color_key: null
+  pin_shapes: null
+  body_color_key: 'black body'
+  pin_color_key: 'metal grey pins'
+  mark_color_key: 'light brown label'
+  source: 'https://www.monolithicpower.com/en/documentview/productdocument/index/version/2/document_type/Datasheet/lang/en/sku/MP8904DD/document_id/1244/'
+
 DFN-8-1EP_3x2mm_Pitch0.5mm:
   c: 0.2
   L: 0.4
@@ -8470,4 +8507,3 @@ Qorvo_TQFN66-48-1EP_6x6mm_P0.4mm_EP4.2x4.2mm:
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
   source: 'https://www.qorvo.com/products/d/da006847'
-
