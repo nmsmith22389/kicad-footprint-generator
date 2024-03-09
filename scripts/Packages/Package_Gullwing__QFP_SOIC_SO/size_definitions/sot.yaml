@@ -73,6 +73,7 @@ SOT-23-8:
 
 SOT-563:
   size_source: 'https://www.ti.com/lit/ds/symlink/tps563202.pdf#page=23'
+  ipc_density: 'least'
   custom_name_format: 'SOT-563'
   body_size_x: 1.1 .. 1.3
   body_size_y: 1.5 .. 1.7
