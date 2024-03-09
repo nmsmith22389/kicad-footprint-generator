@@ -3135,6 +3135,42 @@ QFN-16-1EP_3x3mm_Pitch0.5mm:
   mark_color_key: 'light brown label'
   source: 'http://cds.linear.com/docs/en/packaging/QFN_16_05-08-1700.pdf'
 
+QFN-16-1EP_4x4mm_P0.65mm_EP2.15x2.15mm:
+  c: 0.2
+  L: 0.55
+  fp_s: True
+  fp_r: 0.5
+  fp_d: 0.1
+  fp_dx: null
+  fp_dy: null
+  fp_z: 0.01
+  ef: 0.0
+  cce: 0.35
+  D: 4.0
+  E: 4.0
+  A1: 0.025
+  A2: 0.725
+  b: 0.3
+  e: 0.65
+  m: 0.0
+  ps: rounded
+  npx: 4
+  npy: 4
+  epad: [2.15, 2.15]
+  epad_offsetX: null
+  epad_offsetY: null
+  epad_n: null
+  epad_pitch: null
+  excluded_pins: null
+  model_name: QFN-16-1EP_4x4mm_P0.65mm_EP2.15x2.15mm
+  rotation: -90
+  destination_dir: Package_DFN_QFN.3dshapes
+  pin_shapes: null
+  body_color_key: 'black body'
+  pin_color_key: 'metal grey pins'
+  mark_color_key: 'light brown label'
+  source: 'https://www.analog.com/media/en/technical-documentation/data-sheets/4001f.pdf'
+
 QFN-16-1EP_5x5mm_Pitch0.8mm:
   c: 0.2
   L: 0.4
