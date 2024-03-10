@@ -111,7 +111,8 @@ class params (PartParametersBase):
             }
 
         if parameter_file == None:
-            parameter_file = os.path.dirname(os.path.realpath(__file__)) + os.sep + "parameters.yaml"
+            self.loaded = "No parameter file given"
+            return
 
         try:
             devices = yaml.load_all(open(parameter_file))

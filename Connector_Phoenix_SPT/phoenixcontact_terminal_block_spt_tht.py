@@ -270,16 +270,3 @@ def generate_package3d(params, part_params, mpn):
     doc = FreeCAD.ActiveDocument
     FreeCAD.closeDocument(doc.Name)
 
-if __name__ == "__main__":
-
-    # Load yaml file for this library
-    with open('./phoenixcontact_terminal_block_spt_tht.yaml', 'r') as params_stream:
-        try:
-            params = yaml.safe_load(params_stream)
-        except yaml.YAMLError as exc:
-            print(exc)
-
-    # Create each part
-    for series in params:
-        for mpn in params[series]['parts']:
-            generate_package3d(params[series], params[series]['parts'][mpn], mpn)
