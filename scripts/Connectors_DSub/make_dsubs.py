@@ -148,6 +148,10 @@ if __name__ == "__main__":
         for mounting_pcb_distance_v, pin_pcb_distance_v in angled_distances:
             mounting_pcb_distance = mounting_pcb_distance_v - shieldthickness
             pin_pcb_distance = pin_pcb_distance_v - shieldthickness
+
+            # backbox_height is the y-size of the plastic part that encloses the pins.
+            # If we don't know how big the backbox_height should be, so we estimate its size by finding the copper part which is furthest
+            # from the front of the connector. And then adding 1mm as magic value.
             backbox_height = (
                 max(
                     pin_pcb_distance + rmy + pad / 2,
@@ -273,7 +277,7 @@ if __name__ == "__main__":
             connheight = connheight_male if has_pins else connheight_female
             can_height = can_height_male if has_pins else can_height_female
 
-            # regular straight HD
+            # regular straight HD (kicad calls this vertical)
             makeDSubStraight(
                 pins=pins,
                 isMale=has_pins,
@@ -313,7 +317,7 @@ if __name__ == "__main__":
                         )
                         + 1
                     )
-                # regular angled
+                # regular angled (kicad calles this horizontal)
                 makeDSubAngled(
                     pins=pins,
                     isMale=has_pins,
