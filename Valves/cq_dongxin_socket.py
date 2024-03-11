@@ -183,7 +183,7 @@ class cq_dongxin_socket():
         if (rotation > 0.01):
             case = case.rotate((0,0,0), (0,0,1), rotation)
 
-        return (case)
+        return None
     
         
     def make_case_top_GZC8_Y_5(self, params):
@@ -370,7 +370,7 @@ class cq_dongxin_socket():
         if (rotation > 0.01):
             case = case.rotate((0,0,0), (0,0,1), rotation)
 
-        return (case.clean())
+        return None
 
 
     ##enabling optional/default values to None

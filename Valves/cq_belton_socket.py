@@ -442,7 +442,7 @@ class cq_belton_socket():
         if (rotation != 0):
             case = case.rotate((0,0,0), (0,0,1), rotation)
 
-        return (case)
+        return None
 
 
     ##enabling optional/default values to None
