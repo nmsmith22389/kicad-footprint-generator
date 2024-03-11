@@ -126,9 +126,12 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
         # Make the parts of the model
         (body_top, body, pins, npth_pins) = cqm.make_3D_model(all_params[model])
         body = body.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
-        body_top = body_top.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
-        pins = pins.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
-        npth_pins = npth_pins.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
+        if body_top:
+            body_top = body_top.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
+        if pins:
+            pins = pins.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
+        if npth_pins:
+            npth_pins = npth_pins.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
 
         # Used to wrap all the parts into an assembly
         component = cq.Assembly()
@@ -153,9 +156,23 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
         # Check for a proper union
         export_tools.check_step_export_union(component, output_dir, file_name)
 
-        # Export the assembly to VRML
+        export_objs=[]
+        export_cols=[]
+        if body is not None:
+            export_objs.append(body)
+            export_cols.append(all_params[model]["body_color_key"])
+        if body_top is not None:
+            export_objs.append(body_top)
+            export_cols.append(all_params[model]["body_top_color_key"])
+        if pins is not None:
+            export_objs.append(pins)
+            export_cols.append(all_params[model]["pin_color_key"])
+        if npth_pins is not None:
+            export_objs.append(npth_pins)
+            export_cols.append(all_params[model]["npth_pin_color_key"])
+
         if enable_vrml:
-            export_VRML(os.path.join(output_dir, file_name + ".wrl"), [body, body_top, pins, npth_pins], [all_params[model]["body_top_color_key"], all_params[model]["body_color_key"], all_params[model]["pin_color_key"], all_params[model]["npth_pin_color_key"]])
+            export_VRML(os.path.join(output_dir, file_name + ".wrl"), export_objs, export_cols)
 
         # Update the license
         from _tools import add_license
