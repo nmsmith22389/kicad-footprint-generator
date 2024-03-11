@@ -21,16 +21,16 @@ if __name__ == '__main__':
 
     HighDensity=False
     rmx=2.77
-    rmy=2.84
+    rmy=2.74
     rmy_unboxed2=2.54
     pindrill=1.0
     pad=1.6
     mountingdrill=3.2
     mountingpad=4
     side_angle_degree=10
-    conn_cornerradius=1.6
+    conn_cornerradius=2.59
     outline_cornerradius=1
-    can_height_male=6
+    can_height_male=6.12
     can_height_female=6.17
     shieldthickness=0.4
     backcan_height=4.5
@@ -50,10 +50,10 @@ if __name__ == '__main__':
     #                  0,             1,             2,             3,         4,                5,                  6
     #               pins, mounting_dist, outline_sizex, outlinesize_y, connwidth,  connheight_male,  connheight_female
     sizes_table=[
-                [      9,            25,         30.85,         12.50,      16.3,              8.3,              7.9 ],
-                [     15,         33.30,         39.20,         12.50,      24.6,              8.3,              7.9 ],
-                [     25,         47.10,         53.10,         12.50,      38.3,              8.3,              7.9 ],
-                [     37,         63.50,         69.40,         12.50,      54.8,              8.3,              7.9 ],
+                [  9, 25.00, 31.19, 12.93, 16.79, 8.23, 8.02 ],
+                [ 15, 33.30, 39.52, 12.93, 25.12, 8.23, 8.02 ],
+                [ 25, 47.04, 53.42, 12.93, 38.84, 8.23, 8.02 ],
+                [ 37, 63.50, 69.70, 12.93, 55.30, 8.23, 8.02 ],
                 ]
     for data in sizes_table:
         makeDSubStraight(pins=data[0], isMale=True, HighDensity=HighDensity, rmx=rmx, rmy=rmy, pindrill=pindrill, pad=pad, mountingdrill=mountingdrill, mountingpad=mountingpad, mountingdistance=data[1], outline_size=[data[2],data[3]], outline_cornerradius=outline_cornerradius, connwidth=data[4], side_angle_degree=side_angle_degree, connheight=data[5], conn_cornerradius=conn_cornerradius, tags_additional=tags_additional, lib_name=lib_name, classname=classname, classname_description=classname_description, webpage=webpage)
@@ -142,4 +142,3 @@ if __name__ == '__main__':
         makeDSubAngled(pins=data[0], isMale=False, HighDensity=HighDensity, rmx=data[7], rmy=rmy, pindrill=pindrill, pad=pad, pin_pcb_distance=pin_pcb_distance, mountingdrill=0, mountingpad=mountingpad, mountingdistance=data[1], mounting_pcb_distance=pin_pcb_distance, shield_width=data[2], shield_thickness=shieldthickness, backbox_width=0, backbox_height=0, can_width=data[4], can_height=can_height_female, backcan_width=data[4]+2*shieldthickness, backcan_height=backcan_height_unboxed, nut_diameter=0, nut_length=0, tags_additional=tags_additional, lib_name=lib_name, classname=classname, classname_description=classname_description, webpage=webpageunboxed, HighDensityOffsetMidLeft=data[8])
         makeDSubAngled(pins=data[0], isMale=True, HighDensity=HighDensity, rmx=data[7], rmy=rmy_unboxed2, pindrill=pindrill, pad=pad, pin_pcb_distance=pin_pcb_distance, mountingdrill=0, mountingpad=mountingpad, mountingdistance=data[1], mounting_pcb_distance=pin_pcb_distance, shield_width=data[2], shield_thickness=shieldthickness, backbox_width=0, backbox_height=0, can_width=data[4], can_height=can_height_male, backcan_width=data[4]+2*shieldthickness, backcan_height=backcan_height_unboxed, nut_diameter=0, nut_length=0, tags_additional=tags_additional, lib_name=lib_name, classname=classname, classname_description=classname_description, webpage=webpageunboxed, HighDensityOffsetMidLeft=data[8])
         makeDSubAngled(pins=data[0], isMale=False, HighDensity=HighDensity, rmx=data[7], rmy=rmy_unboxed2, pindrill=pindrill, pad=pad, pin_pcb_distance=pin_pcb_distance, mountingdrill=0, mountingpad=mountingpad, mountingdistance=data[1], mounting_pcb_distance=pin_pcb_distance, shield_width=data[2], shield_thickness=shieldthickness, backbox_width=0, backbox_height=0, can_width=data[4], can_height=can_height_female, backcan_width=data[4]+2*shieldthickness, backcan_height=backcan_height_unboxed, nut_diameter=0, nut_length=0, tags_additional=tags_additional, lib_name=lib_name, classname=classname, classname_description=classname_description, webpage=webpageunboxed, HighDensityOffsetMidLeft=data[8])
-            
