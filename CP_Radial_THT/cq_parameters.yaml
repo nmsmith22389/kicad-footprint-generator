@@ -1140,7 +1140,7 @@ CP_Radial_D22.0mm_P10.00mm_3pin_SnapIn:
   ll: 2.0
   la: 0.0
   bs: 0.0
-  pin3: [2.2, -1.7000000000000002, -4.75]
+  pin3: [2.2, -1.7, -4.75]
   pol: True
   xoffset: null
   modelName: CP_Radial_D22.0mm_P10.00mm_3pin_SnapIn
@@ -1182,7 +1182,7 @@ CP_Radial_D24.0mm_P10.00mm_3pin_SnapIn:
   ll: 2.0
   la: 0.0
   bs: 0.0
-  pin3: [2.2, -1.7000000000000002, -4.75]
+  pin3: [2.2, -1.7, -4.75]
   pol: True
   xoffset: null
   modelName: CP_Radial_D24.0mm_P10.00mm_3pin_SnapIn
@@ -1224,7 +1224,7 @@ CP_Radial_D25.0mm_P10.00mm_3pin_SnapIn:
   ll: 2.0
   la: 0.0
   bs: 0.0
-  pin3: [2.2, -1.7000000000000002, -4.75]
+  pin3: [2.2, -1.7, -4.75]
   pol: True
   xoffset: null
   modelName: CP_Radial_D25.0mm_P10.00mm_3pin_SnapIn
@@ -1266,7 +1266,7 @@ CP_Radial_D26.0mm_P10.00mm_3pin_SnapIn:
   ll: 2.0
   la: 0.0
   bs: 0.0
-  pin3: [2.2, -1.7000000000000002, -4.75]
+  pin3: [2.2, -1.7, -4.75]
   pol: True
   xoffset: null
   modelName: CP_Radial_D26.0mm_P10.00mm_3pin_SnapIn
@@ -1308,7 +1308,7 @@ CP_Radial_D30.0mm_P10.00mm_3pin_SnapIn:
   ll: 2.0
   la: 0.0
   bs: 0.0
-  pin3: [2.2, -1.7000000000000002, -4.75]
+  pin3: [2.2, -1.7, -4.75]
   pol: True
   xoffset: null
   modelName: CP_Radial_D30.0mm_P10.00mm_3pin_SnapIn
@@ -1350,7 +1350,7 @@ CP_Radial_D35.0mm_P10.00mm_3pin_SnapIn:
   ll: 2.0
   la: 0.0
   bs: 0.0
-  pin3: [2.2, -1.7000000000000002, -4.75]
+  pin3: [2.2, -1.7, -4.75]
   pol: True
   xoffset: null
   modelName: CP_Radial_D35.0mm_P10.00mm_3pin_SnapIn
@@ -1392,7 +1392,7 @@ CP_Radial_D40.0mm_P10.00mm_3pin_SnapIn:
   ll: 2.0
   la: 0.0
   bs: 0.0
-  pin3: [2.2, -1.7000000000000002, -4.75]
+  pin3: [2.2, -1.7, -4.75]
   pol: True
   xoffset: null
   modelName: CP_Radial_D40.0mm_P10.00mm_3pin_SnapIn

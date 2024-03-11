@@ -178,8 +178,8 @@ named_colors = {
     "red body":shaderColor(
         name="RED-BODY",
         ambientIntensity= 0.683,
-        diffuseColor= (0.700, 0.100, 0.050),
-        specularColor= (0.300, 0.400, 0.150),
+        diffuseColor= (0.70, 0.10, 0.05),
+        specularColor= (0.30, 0.40, 0.15),
         shininess= 0.25
     ),
     "pink body":shaderColor(
@@ -207,7 +207,7 @@ named_colors = {
         name="IC-LABEL-01",
         ambientIntensity= 0.082,
         diffuseColor= (0.691, 0.664, 0.598),
-        specularColor= (0.000, 0.000, 0.000),
+        specularColor= (0.0, 0.0, 0.0),
         shininess= 0.01
     ),
 
@@ -215,7 +215,7 @@ named_colors = {
         name="LED-RED",
         ambientIntensity= 0.789,
         diffuseColor= (0.701, 0.100, 0.050),
-        specularColor= (0.300, 0.400, 0.150),
+        specularColor= (0.30, 0.40, 0.15),
         transparency= 0.10,
         shininess= 0.125
     ),
@@ -223,7 +223,7 @@ named_colors = {
         name="LED-GREEN",
         ambientIntensity= 0.789,
         diffuseColor= (0.401, 0.700, 0.150),
-        specularColor= (0.600, 0.300, 0.100),
+        specularColor= (0.60, 0.30, 0.10),
         transparency= 0.10,
         shininess= 0.05
     ),
@@ -231,7 +231,7 @@ named_colors = {
         name="LED-BLUE",
         ambientIntensity= 0.789,
         diffuseColor= (0.101, 0.250, 0.700),
-        specularColor= (0.500, 0.600, 0.300),
+        specularColor= (0.50, 0.60, 0.30),
         transparency= 0.10,
         shininess= 0.125
     ),
@@ -261,31 +261,31 @@ named_colors = {
         ),
     "glass_blue":shaderColor(
         name="GLASS-BLUE",
-        ambientIntensity=0.250000,
-        diffuseColor=(0.000000, 0.631244, 0.748016),
+        ambientIntensity=0.25,
+        diffuseColor=(0.0, 0.631244, 0.748016),
         specularColor=(0.915152, 0.915152, 0.915152),
         transparency=0.39,
         shininess=0.642424
         ),
      "glass gren":shaderColor(
         name="GLASS-GREEN",
-        ambientIntensity=0.250000,
-        diffuseColor=(0.000000, 0.75, 0.44),
+        ambientIntensity=0.25,
+        diffuseColor=(0.0, 0.75, 0.44),
         specularColor=(0.915152, 0.915152, 0.915152),
         transparency=0.39,
         shininess=0.642424
         ),
      "glass orange":shaderColor(
         name="GLASS-ORANGE",
-        ambientIntensity=0.250000,
-        diffuseColor=(0.75, 0.44, 0.000000),
+        ambientIntensity=0.25,
+        diffuseColor=(0.75, 0.44, 0.0),
         specularColor=(0.915152, 0.915152, 0.915152),
         transparency=0.39,
         shininess=0.642424
         ),
      "metal grey":shaderColor(
         name="MET-01",
-        ambientIntensity=0.249999,
+        ambientIntensity=0.25,
         diffuseColor=(0.298, 0.298, 0.298),
         specularColor=(0.398, 0.398, 0.398),
         transparency=0.0,
@@ -325,7 +325,7 @@ named_colors = {
         ),
      "metal aluminum":shaderColor(
         name="MET-ALUMINUM",
-        ambientIntensity=0.256000,
+        ambientIntensity=0.256,
         diffuseColor=(0.372322, 0.371574, 0.373173),
         specularColor=(0.556122, 0.554201, 0.556122),
         transparency=0.0,
@@ -351,7 +351,7 @@ named_colors = {
         name="MET-COPPER",
         ambientIntensity=0.022727,
         diffuseColor=(0.7038, 0.27048, 0.0828),
-        specularColor=(0.780612, 0.37, 0.000000),
+        specularColor=(0.780612, 0.37, 0.0),
         transparency=0.0,
         shininess=0.2
         ),
