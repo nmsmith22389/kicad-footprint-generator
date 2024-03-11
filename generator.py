@@ -7,10 +7,10 @@ from OCP.Message import Message, Message_Gravity
 from _tools import parameters
 import sys
 
-def get_part_count(dir_name):
+def get_package_names(dir_name):
     try:
         all_params = parameters.load_parameters(dir_name)
-        return len(all_params)
+        return all_params.keys()
     except:
         return None
 
@@ -34,6 +34,11 @@ def main():
     # This is an odd CLI, but it's always been like this
     args.enable_vrml = args.enable_vrml.lower() == "true"
 
+    # Error out if only package has been specified without a library
+    if args.library is None and args.package is not None:
+        print("You need to specify -l/--library along with -p/--package.")
+        sys.exit(1)
+
     # Helps filter out directories that should not be processed
     filter_dirs = ["_screenshots", "_tools", ".git", "Example", "WIP", "exportVRML"]
 
@@ -43,35 +48,52 @@ def main():
     dir_list.sort()
     if not args.verbose:
         Message.DefaultMessenger_s().Printers().First().SetTraceLevel(Message_Gravity.Message_Warning)
-    # If the user requests that a specific library be generated,
-    # only generate that
-    if args.library is not None:
-        library=os.path.normpath(args.library)
+
+    if args.library is None:
+        # If no library is specified, generate all available ones
+        print(f"Found {len(dir_list)} generators to run.")
+        libraries_to_generate = dir_list
+    else:
+        # If the user requests that a specific library be generated,
+        # only generate that
+        library = os.path.normpath(args.library)
         if not library in dir_list:
             print(f"{library} is not a valid library")
             sys.exit(1)
-        partcount = get_part_count(library) or "unknown number of"
-        # Import the current package by name and run the generator
+        libraries_to_generate = [library]
+
+    for index, library in enumerate(libraries_to_generate):
+        known_packages = get_package_names(library)
+        # Import the current library to run the generator
         mod = importlib.import_module(library + ".main_generator")
 
-        # Generate all or a specific package based on the command
-        # line arguments
-        if args.package is None:
-            print(f"Generating only library named {library} with {partcount} entries")
-            mod.make_models("all", args.output_dir, args.enable_vrml)
+        # Some libraries like Inductors_SMD don't list their parts, so they need special handling
+        if known_packages is None:
+            if args.package is None:
+                print(f"Generating library {index+1}/{len(libraries_to_generate)}: {library} with unknown number of entries")
+                mod.make_models("all", args.output_dir, args.enable_vrml)
+            elif args.library is not None:
+                print(f"    => Generating part '{args.package}' from library '{library}'")
+                mod.make_models(args.package, args.output_dir, args.enable_vrml)
         else:
-            print(f"Generating part {args.package} from library named {library}")
-            mod.make_models(args.package, args.output_dir, args.enable_vrml)
-    else:
+            # Generate all or a specific package based on the command line arguments
+            if args.package is None:
+                packages_to_generate = known_packages
+            else:
+                # If the part exists in that library, generate it, otherwise error out
+                if args.package in known_packages:
+                    packages_to_generate = [args.package]
+                else:
+                    print(f"Part '{args.package}' does not exist in library {library}")
+                    sys.exit(1)
 
-        print(f"Found {len(dir_list)} generators to run.")
-        for index,dir_name in enumerate(dir_list):
-            partcount = get_part_count(dir_name) or "unknown number of"
+            if len(packages_to_generate) > 1:
+                print(f"Generating library {index+1}/{len(libraries_to_generate)}: {library}")
 
-            print(f"Generating library {index+1}/{len(dir_list)}: {dir_name} with {partcount} entries")
-            # Import the current package by name and run the generator
-            mod = importlib.import_module(dir_name + ".main_generator")
-            mod.make_models("all", args.output_dir, args.enable_vrml)
+            for package_index, package in enumerate(packages_to_generate):
+                print(f"    => Generating part {package_index+1}/{len(packages_to_generate)}: '{package}' from library '{library}'")
+                mod.make_models(package, args.output_dir, args.enable_vrml)
+
     print("Generation complete.")
 
 
