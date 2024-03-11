@@ -1915,3 +1915,4 @@ DiodesInc_GEA20_WLCSP-20_1.70x2.10mm_Layout4x5_P0.4mm:
   body_color_key: "black body"
   pins_color_key: "metal grey pins"
   marking_color_key: "light brown label"
+  library_name: "Package_CSP"

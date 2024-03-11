@@ -321,15 +321,19 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
         component.add(pins, color=cq_color_correct.Color(pins_color[0], pins_color[1], pins_color[2]))
         component.add(pinmark, color=cq_color_correct.Color(marking_color[0], marking_color[1], marking_color[2]))
 
+        part_output_dir=output_dir
+        if "library_name" in all_params[model] and all_params[model]["library_name"] is not None:
+            part_output_dir = os.path.join(output_dir_prefix, all_params[model]["library_name"]+".3dshapes")
+
         # Create the output directory if it does not exist
-        if not os.path.exists(output_dir):
-            os.makedirs(output_dir)
+        if not os.path.exists(part_output_dir):
+            os.makedirs(part_output_dir)
 
         # Export the assembly to STEP
-        component.save(os.path.join(output_dir, model + ".step"), cq.exporters.ExportTypes.STEP, mode=cq.exporters.assembly.ExportModes.FUSED, write_pcurves=False)
+        component.save(os.path.join(part_output_dir, model + ".step"), cq.exporters.ExportTypes.STEP, mode=cq.exporters.assembly.ExportModes.FUSED, write_pcurves=False)
 
         # Check for a proper union
-        export_tools.check_step_export_union(component, output_dir, model)
+        export_tools.check_step_export_union(component, part_output_dir, model)
 
         # Export the assembly to VRML
         if enable_vrml:
@@ -338,11 +342,11 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             if case_bot != None:
                 parts.append(case_bot)
                 colors.append(all_params[model]["body_bot_color_key"])
-            export_VRML(os.path.join(output_dir, model + ".wrl"), parts, colors)
+            export_VRML(os.path.join(part_output_dir, model + ".wrl"), parts, colors)
 
         # Update the license
         from _tools import add_license
-        add_license.addLicenseToStep(output_dir, model + ".step",
+        add_license.addLicenseToStep(part_output_dir, model + ".step",
                                         add_license.LIST_int_license,
                                         add_license.STR_int_licAuthor,
                                         add_license.STR_int_licEmail,
