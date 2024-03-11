@@ -4,18 +4,18 @@ EIA-1608-08:
   code_metric: 1608-08
   code_letter: AVX-J
   param_nominal:
-    L: 1.6
-    W: 0.85
-    H: 0.75
-    F: 0.85
-    S: 0.05
-    B: 0.0
-    P: 0.0
-    R: 0.0
-    T: 0.1
-    G: 0.5
-    E: 0.8
-    pml: 0.3
+    L: 1.6 # body overall length (including terminals)
+    W: 0.85 # body overall width
+    H: 0.75 # body overall height
+    F: 0.85 # width of each termination
+    S: 0.05 # length of each termination
+    B: 0.0 # beveling, measured as horizontal distance from end of cap
+    P: 0.0 # height off PCB where cutout begins
+    R: 0.0 # width of cutout
+    T: 0.1 # thickness of termination metal
+    G: 0.5 # length of bump underneath body
+    E: 0.8 # width of the bump underneath body
+    pml: 0.3 # pin mark lenght
   param_max: null
   source: http://catalogs.avx.com/TantalumNiobium.pdf
   body_color_key: 'yellow body'
