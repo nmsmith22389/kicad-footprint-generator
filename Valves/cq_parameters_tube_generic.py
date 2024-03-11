@@ -298,8 +298,7 @@ class cq_parameters_tube_generic():
         origo_x = 0 - origo_dx
         origo_y = origo_dy
 
-        
-        pins = cq.Workplane("XY").workplane(offset=A1 + 0.5, centerOption="CenterOfMass").moveTo(origo_x, 0 - origo_y).circle((D / 2.0) - 0.5, False).extrude(A1 + 2.0)
+        pins = cq.Workplane("XY").workplane(offset=A1 - 0.5, centerOption="CenterOfMass").moveTo(origo_x, 0 - origo_y).circle((D / 2.0) - 0.5, False).extrude(A1 + 2.0)
         
         pint = cq.Workplane("XY").workplane(offset=A1 + 0.5, centerOption="CenterOfMass").moveTo((origo_x - (D / 2.0)) + 3.0, 0 - origo_y).circle(0.5, False).extrude((2.0 * H) / 3.0)
         pint = pint.faces(">Z").fillet(0.4)
