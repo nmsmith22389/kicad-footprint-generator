@@ -46,39 +46,17 @@
 #****************************************************************************
 
 
-# import cq_parameters  # modules parameters
 from .cq_parameters import *
 
 import math
 
-# from collections import namedtuple
-# from collections.abc import Mapping
 
 class cq_parameters_tube_generic():
 
     def __init__(self):
         x = 0
 
-        
-    # def get_dest_3D_dir(self):
-    #     return 'Valve.3dshapes'
 
-    # def model_exist(self, modelName):
-    #     for n in self.all_params:
-    #         if n == modelName:
-    #             return True
-                
-    #     return False
-        
-        
-    # def get_list_all(self):
-    #     list = []
-    #     for n in self.all_params:
-    #         list.append(n)
-        
-    #     return list
-
-        
     def make_3D_model(self, params):
         # destination_dir = self.get_dest_3D_dir()
         
@@ -89,48 +67,6 @@ class cq_parameters_tube_generic():
 
         return (case_top, case, pins, npth_pins)
 
-        # show(case_top)
-        # show(case)
-        # show(pins)
-        # show(npth_pins)
-     
-        # doc = FreeCAD.ActiveDocument
-        # objs=GetListOfObjects(FreeCAD, doc)
-     
-        # body_top_color_key = self.all_params[modelName].body_top_color_key
-        # body_color_key = self.all_params[modelName].body_color_key
-        # pin_color_key = self.all_params[modelName].pin_color_key
-        # npth_pin_color_key = self.all_params[modelName].npth_pin_color_key
-
-        # body_top_color = shaderColors.named_colors[body_top_color_key].getDiffuseFloat()
-        # body_color = shaderColors.named_colors[body_color_key].getDiffuseFloat()
-        # pin_color = shaderColors.named_colors[pin_color_key].getDiffuseFloat()
-        # npth_pin_color = shaderColors.named_colors[npth_pin_color_key].getDiffuseFloat()
-
-        # Color_Objects(Gui,objs[0],body_top_color)
-        # Color_Objects(Gui,objs[1],body_color)
-        # Color_Objects(Gui,objs[2],pin_color)
-        # Color_Objects(Gui,objs[3],npth_pin_color)
-
-        # col_body_top=Gui.ActiveDocument.getObject(objs[0].Name).DiffuseColor[0]
-        # col_body=Gui.ActiveDocument.getObject(objs[1].Name).DiffuseColor[0]
-        # col_pin=Gui.ActiveDocument.getObject(objs[2].Name).DiffuseColor[0]
-        # col_npth_pin=Gui.ActiveDocument.getObject(objs[3].Name).DiffuseColor[0]
-        
-        # material_substitutions={
-        #     col_body_top[:-1]:body_top_color_key,
-        #     col_body[:-1]:body_color_key,
-        #     col_pin[:-1]:pin_color_key,
-        #     col_npth_pin[:-1]:npth_pin_color_key
-        # }
-        
-        # expVRML.say(material_substitutions)
-        # while len(objs) > 1:
-        #         FuseObjs_wColors(FreeCAD, FreeCADGui, doc.Name, objs[0].Name, objs[1].Name)
-        #         del objs
-        #         objs = GetListOfObjects(FreeCAD, doc)
-
-        # return material_substitutions
 
     def make_case_top(self, params):
 
@@ -322,7 +258,6 @@ class cq_parameters_tube_generic():
         pins = pins.union(pint)
 
 
-        
         if npth_pin != None:
             if npth_pin[0] == 'metal':
                 pint = cq.Workplane("XY").workplane(offset=A1 + 0.1, centerOption="CenterOfMass").moveTo(origo_x, 0 - origo_y).circle(npth_pin[1] / 2.0, False).extrude(0 - (H + 0.1 + pin_type[2]))
@@ -334,217 +269,3 @@ class cq_parameters_tube_generic():
 
         return (pins)
 
-
-    ##enabling optional/default values to None
-    # def namedtuple_with_defaults(typename, field_names, default_values=()):
-
-    #     T = namedtuple(typename, field_names)
-    #     T.__new__.__defaults__ = (None,) * len(T._fields)
-    #     if isinstance(default_values, Mapping):
-    #         prototype = T(**default_values)
-    #     else:
-    #         prototype = T(*default_values)
-    #     T.__new__.__defaults__ = tuple(prototype)
-    #     return T
-        
-    # Params = namedtuple_with_defaults("Params", [
-    #     'modelName',		    # modelName
-    #     'D',				    # Body width/diameter
-    #     'E',			   	    # Body length
-    #     'H',			   	    # Body height
-    #     'A1',				    # Body PCB seperation
-    #     'pin_spigot',			# Spigot pin
-    #     'npth_pin',             # NPTH holes
-    #     'center_pin',           # Center pin
-    #     'pin_type',             # Pin type
-    #     'pin_number',           # Number of pins
-    #     'pin_arc',		        # Pin arc
-    #     'pin_diameter',		    # Pin diameter
-    #     'body_top_color_key',	# Top color
-    #     'body_color_key',	    # Body colour
-    #     'pin_color_key',	    # Pin color
-    #     'npth_pin_color_key',   # NPTH Pin color
-    #     'rotation',	            # Rotation if required
-    #     'dest_dir_prefix'	    # Destination directory
-    # ])
-
-
-
-    # all_params = {
-
-    #     'Valve_Tube_Magnoval-B9D': Params(
-    #         #
-    #         # https://en.wikipedia.org/wiki/Tube_socket
-    #         # A number of parameters have been fixed or guessed, such as A2
-    #         # 
-    #         modelName = 'Valve_Tube_Magnoval-B9D',   # modelName
-    #         D = 30.00,                  # Body width/diameter
-    #         H = 49.20,                  # Body height
-    #         A1 = 0.03,                  # Body-board separation
-    #         pin_spigot = None,          # Spigot
-    #         npth_pin = None,            # NPTH hole [(x, y, length)]
-    #         center_pin = None,          # Center pin ('type', diameter, length)
-    #         pin_type = ('round', 1.016, 4.0),  # Pin type, diameter, length
-    #         pin_number = 9,             # Number of pins
-    #         pin_arc = 36.0,             # Arch between pins
-    #         pin_diameter = 26.50,       # Diameter of the circle where pins are located
-
-    #         body_top_color_key = 'metal silver',    # Top color
-    #         body_color_key = 'glass_grey',          # Body color
-    #         pin_color_key = 'metal grey pins',      # Pin color
-    #         npth_pin_color_key = 'grey body',       # NPTH Pin color
-    #         rotation = 0,                           # Rotation if required
-    #         dest_dir_prefix = '../Valve.3dshapes',  # destination directory
-    #         ),
-
-    #     'Valve_Tube_Noval-B9A': Params(
-    #         #
-    #         # https://en.wikipedia.org/wiki/Tube_socket
-    #         # A number of parameters have been fixed or guessed, such as A2
-    #         # 
-    #         modelName = 'Valve_Tube_Noval-B9A',   # modelName
-    #         D = 22.50,                  # Body width/diameter
-    #         H = 49.20,                  # Body height
-    #         A1 = 0.03,                  # Body-board separation
-    #         pin_spigot = None,          # Spigot
-    #         npth_pin = None,            # NPTH hole [(x, y, length)]
-    #         center_pin = None,          # Center pin ('type', diameter, length)
-    #         pin_type = ('round', 0.80, 3.0),  # Pin type, diameter, length
-    #         pin_number = 9,             # Number of pins
-    #         pin_arc = 36.0,             # Arch between pins
-    #         pin_diameter = 11.89,       # Diameter of the circle where pins are located
-
-    #         body_top_color_key = 'metal silver',    # Top color
-    #         body_color_key = 'glass_grey',          # Body color
-    #         pin_color_key = 'metal grey pins',      # Pin color
-    #         npth_pin_color_key = 'grey body',       # NPTH Pin color
-    #         rotation = 0,                           # Rotation if required
-    #         dest_dir_prefix = '../Valve.3dshapes',  # destination directory
-    #         ),
-
-    #     'Valve_Tube_Miniature-B7G': Params(
-    #         #
-    #         # https://en.wikipedia.org/wiki/Tube_socket
-    #         # A number of parameters have been fixed or guessed, such as A2
-    #         # 
-    #         modelName = 'Valve_Tube_Miniature-B7G', # modelName
-    #         D = 15.00,                  # Body width/diameter
-    #         H = 49.20,                  # Body height
-    #         A1 = 0.03,                  # Body-board separation
-    #         pin_spigot = None,          # Spigot
-    #         npth_pin = None,            # NPTH hole [(x, y, length)]
-    #         center_pin = None,          # Center pin ('type', diameter, length)
-    #         pin_type = ('round', 1.016, 3.0),  # Pin type, diameter, length
-    #         pin_number = 7,             # Number of pins
-    #         pin_arc = 45.0,             # Arch between pins
-    #         pin_diameter = 09.53,       # Diameter of the circle where pins are located
-
-    #         body_top_color_key = 'metal silver',    # Top color
-    #         body_color_key = 'glass_grey',          # Body color
-    #         pin_color_key = 'metal grey pins',      # Pin color
-    #         npth_pin_color_key = 'grey body',       # NPTH Pin color
-    #         rotation = 0,                           # Rotation if required
-    #         dest_dir_prefix = '../Valve.3dshapes',  # destination directory
-    #         ),
-
-    #     'Valve_Tube_Loctal-B9G': Params(
-    #         #
-    #         # https://en.wikipedia.org/wiki/Tube_socket
-    #         # A number of parameters have been fixed or guessed, such as A2
-    #         # 
-    #         modelName = 'Valve_Tube_Loctal-B9G', # modelName
-    #         D = 27.58,                  # Body width/diameter
-    #         H = 49.20,                  # Body height
-    #         A1 = 0.03,                  # Body-board separation
-    #         pin_spigot = None,          # Spigot
-    #         npth_pin = None,            # NPTH hole [(x, y, length)]
-    #         center_pin = None,          # Center pin ('type', diameter, length)
-    #         pin_type = ('round', 1.016, 3.0),  # Pin type, diameter, length
-    #         pin_number = 9,             # Number of pins
-    #         pin_arc = 40.0,             # Arch between pins
-    #         pin_diameter = 21.00,       # Diameter of the circle where pins are located
-
-    #         body_top_color_key = 'metal silver',    # Top color
-    #         body_color_key = 'glass_grey',          # Body color
-    #         pin_color_key = 'metal grey pins',      # Pin color
-    #         npth_pin_color_key = 'grey body',       # NPTH Pin color
-    #         rotation = 0,                           # Rotation if required
-    #         dest_dir_prefix = '../Valve.3dshapes',  # destination directory
-    #         ),
-
-    #     'Valve_Tube_Loctal-B8G': Params(
-    #         #
-    #         # https://en.wikipedia.org/wiki/Tube_socket
-    #         # A number of parameters have been fixed or guessed, such as A2
-    #         # 
-    #         modelName = 'Valve_Tube_Loctal-B8G', # modelName
-    #         D = 29.00,                  # Body width/diameter
-    #         H = 49.20,                  # Body height
-    #         A1 = 0.03,                  # Body-board separation
-    #         pin_spigot = None,          # Spigot
-    #         npth_pin = None,            # NPTH hole [(x, y, length)]
-    #         center_pin = None,          # Center pin ('type', diameter, length)
-    #         pin_type = ('round', 1.30, 3.0),  # Pin type, diameter, length
-    #         pin_number = 8,             # Number of pins
-    #         pin_arc = 45.0,             # Arch between pins
-    #         pin_diameter = 17.45,       # Diameter of the circle where pins are located
-
-    #         body_top_color_key = 'metal silver',    # Top color
-    #         body_color_key = 'glass_grey',          # Body color
-    #         pin_color_key = 'metal grey pins',      # Pin color
-    #         npth_pin_color_key = 'grey body',       # NPTH Pin color
-    #         rotation = 0,                           # Rotation if required
-    #         dest_dir_prefix = '../Valve.3dshapes',  # destination directory
-    #         ),
-
-    #     'Valve_Tube_Decar-B10G': Params(
-    #         #
-    #         # https://en.wikipedia.org/wiki/Tube_socket
-    #         # A number of parameters have been fixed or guessed, such as A2
-    #         # 
-    #         modelName = 'Valve_Tube_Decar-B10G', # modelName
-    #         D = 17.00,                  # Body width/diameter
-    #         H = 49.20,                  # Body height
-    #         A1 = 0.03,                  # Body-board separation
-    #         pin_spigot = None,          # Spigot
-    #         npth_pin = None,            # NPTH hole [(x, y, length)]
-    #         center_pin = None,          # Center pin ('type', diameter, length)
-    #         pin_type = ('round', 1.016, 3.0),  # Pin type, diameter, length
-    #         pin_number = 9,             # Number of pins
-    #         pin_arc = 36.0,             # Arch between pins
-    #         pin_diameter = 11.89,       # Diameter of the circle where pins are located
-
-    #         body_top_color_key = 'metal silver',    # Top color
-    #         body_color_key = 'glass_grey',          # Body color
-    #         pin_color_key = 'metal grey pins',      # Pin color
-    #         npth_pin_color_key = 'grey body',       # NPTH Pin color
-    #         rotation = 0,                           # Rotation if required
-    #         dest_dir_prefix = '../Valve.3dshapes',  # destination directory
-    #         ),
-
-    #     'Valve_Tube_Octal-K8A': Params(
-    #         #
-    #         # https://en.wikipedia.org/wiki/Tube_socket
-    #         # A number of parameters have been fixed or guessed, such as A2
-    #         # 
-    #         modelName = 'Valve_Tube_Octal-K8A', # modelName
-    #         D = 29.00,                  # Body width/diameter
-    #         H = 49.20,                  # Body height
-    #         A1 = 0.03,                  # Body-board separation
-    #         pin_spigot = None,          # Spigot
-    #         npth_pin = None,            # NPTH hole [(x, y, length)]
-    #         center_pin = None,          # Center pin ('type', diameter, length)
-    #         pin_type = ('round', 2.36, 3.0),  # Pin type, diameter, length
-    #         pin_number = 8,             # Number of pins
-    #         pin_arc = 45.0,             # Arch between pins
-    #         pin_diameter = 17.45,       # Diameter of the circle where pins are located
-            
-    #         body_top_color_key = 'metal silver',    # Top color
-    #         body_color_key = 'glass_grey',          # Body color
-    #         pin_color_key = 'metal grey pins',      # Pin color
-    #         npth_pin_color_key = 'grey body',       # NPTH Pin color
-    #         rotation = 0,                           # Rotation if required
-    #         dest_dir_prefix = '../Valve.3dshapes',  # destination directory
-    #         ),
-    # }
-        
