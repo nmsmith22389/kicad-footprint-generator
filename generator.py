@@ -29,6 +29,8 @@ def main():
                         help='Show OCCT output', action="store_true")
     parser.add_argument('--enable-vrml', default="True",
                         help='Sets whether or not to export the VRML files in addition to the STEP files.')
+    parser.add_argument('--dry-run',
+                        help='Do not run the generators, only print the list of parts and libraries.', action="store_true")
     args = parser.parse_args()
 
     # This is an odd CLI, but it's always been like this
@@ -71,10 +73,12 @@ def main():
         if known_packages is None:
             if args.package is None:
                 print(f"Generating library {index+1}/{len(libraries_to_generate)}: {library} with unknown number of entries")
-                mod.make_models("all", args.output_dir, args.enable_vrml)
+                if not args.dry_run:
+                    mod.make_models("all", args.output_dir, args.enable_vrml)
             elif args.library is not None:
                 print(f"    => Generating part '{args.package}' from library '{library}'")
-                mod.make_models(args.package, args.output_dir, args.enable_vrml)
+                if not args.dry_run:
+                    mod.make_models(args.package, args.output_dir, args.enable_vrml)
         else:
             # Generate all or a specific package based on the command line arguments
             if args.package is None:
@@ -92,7 +96,8 @@ def main():
 
             for package_index, package in enumerate(packages_to_generate):
                 print(f"    => Generating part {package_index+1}/{len(packages_to_generate)}: '{package}' from library '{library}'")
-                mod.make_models(package, args.output_dir, args.enable_vrml)
+                if not args.dry_run:
+                    mod.make_models(package, args.output_dir, args.enable_vrml)
 
     print("Generation complete.")
 
