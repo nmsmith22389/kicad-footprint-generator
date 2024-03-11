@@ -217,7 +217,7 @@ def addLicenseToStep(FLDR_toStepFiles, FNME_stepfile, LIST_license, STR_licAutho
             for line in PMBL_stepfile[(DICT_positions["A"]-1):]:
                 HDLR_stepfile_w.write(line.strip() + "\n")
             HDLR_stepfile_w.close()
-            say ("License addition successful")
+            #say ("License addition successful")
         else:
             print("Add License: File has wrong file extension: {:s}".format(FNME_stepfile))
     else:
