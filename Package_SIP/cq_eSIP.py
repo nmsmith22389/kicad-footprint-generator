@@ -19,56 +19,54 @@
 ## the script will generate STEP and VRML parametric models
 ## to be used with kicad StepUp script
 
-#* These are a FreeCAD & cadquery tools                                     *
-#* to export generated models in STEP & VRML format.                        *
-#*                                                                          *
-#* cadquery script for generating QFP/SOIC/SSOP/TSSOP models in STEP AP214  *
-#*   Copyright (c) 2015                                                     *
-#* Maurice https://launchpad.net/~easyw                                     *
-#* All trademarks within this guide belong to their legitimate owners.      *
-#*                                                                          *
-#*   This program is free software; you can redistribute it and/or modify   *
-#*   it under the terms of the GNU Lesser General Public License (LGPL)     *
-#*   as published by the Free Software Foundation; either version 2 of      *
-#*   the License, or (at your option) any later version.                    *
-#*   for detail see the LICENCE text file.                                  *
-#*                                                                          *
-#*   This program is distributed in the hope that it will be useful,        *
-#*   but WITHOUT ANY WARRANTY; without even the implied warranty of         *
-#*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          *
-#*   GNU Library General Public License for more details.                   *
-#*                                                                          *
-#*   You should have received a copy of the GNU Library General Public      *
-#*   License along with this program; if not, write to the Free Software    *
-#*   Foundation, Inc.,                                                      *
-#*   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA           *
-#*                                                                          *
-#****************************************************************************
+# * These are a FreeCAD & cadquery tools                                     *
+# * to export generated models in STEP & VRML format.                        *
+# *                                                                          *
+# * cadquery script for generating QFP/SOIC/SSOP/TSSOP models in STEP AP214  *
+# *   Copyright (c) 2015                                                     *
+# * Maurice https://launchpad.net/~easyw                                     *
+# * All trademarks within this guide belong to their legitimate owners.      *
+# *                                                                          *
+# *   This program is free software; you can redistribute it and/or modify   *
+# *   it under the terms of the GNU Lesser General Public License (LGPL)     *
+# *   as published by the Free Software Foundation; either version 2 of      *
+# *   the License, or (at your option) any later version.                    *
+# *   for detail see the LICENCE text file.                                  *
+# *                                                                          *
+# *   This program is distributed in the hope that it will be useful,        *
+# *   but WITHOUT ANY WARRANTY; without even the implied warranty of         *
+# *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          *
+# *   GNU Library General Public License for more details.                   *
+# *                                                                          *
+# *   You should have received a copy of the GNU Library General Public      *
+# *   License along with this program; if not, write to the Free Software    *
+# *   Foundation, Inc.,                                                      *
+# *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA           *
+# *                                                                          *
+# ****************************************************************************
 
-
-# import cq_support  # modules parameters
-from .cq_support import *
-
-# import math
 
 from collections import namedtuple
 from collections.abc import Mapping
 
 import cadquery as cq
 
-class cq_eSIP():
+# import cq_support  # modules parameters
+from .cq_support import *
+
+# import math
+
+
+class cq_eSIP:
 
     def __init__(self):
         x = 0
 
-
     # def get_dest_3D_dir(self, modelName):
     #     return self.all_params[modelName].dest_dir_prefix
 
-
     # def get_modelfilename(self, modelName):
     #     return self.all_params[modelName].modelName
-
 
     # def model_exist(self, modelName):
     #     for n in self.all_params:
@@ -77,7 +75,6 @@ class cq_eSIP():
 
     #     return False
 
-
     # def get_list_all(self):
     #     list = []
     #     for n in self.all_params:
@@ -85,9 +82,8 @@ class cq_eSIP():
 
     #     return list
 
-
     # def make_3D_model(self, modelName):
-        
+
     #     params = self.all_params[modelName]
 
     #     if params['modelName == 'PowerIntegrations_eSIP-7C':
@@ -108,10 +104,10 @@ class cq_eSIP():
 
     #     npth_pins = self.make_npth_pins(params)
     #     show(npth_pins)
-     
+
     #     doc = FreeCAD.ActiveDocument
     #     objs=GetListOfObjects(FreeCAD, doc)
-     
+
     #     body_top_color_key = params['body_top_color_key
     #     body_color_key = params['body_color_key
     #     pin_color_key = params['pin_color_key
@@ -131,14 +127,14 @@ class cq_eSIP():
     #     col_body=Gui.ActiveDocument.getObject(objs[1].Name).DiffuseColor[0]
     #     col_pin=Gui.ActiveDocument.getObject(objs[2].Name).DiffuseColor[0]
     #     col_npth_pin=Gui.ActiveDocument.getObject(objs[3].Name).DiffuseColor[0]
-        
+
     #     material_substitutions={
     #         col_body_top[:-1]:body_top_color_key,
     #         col_body[:-1]:body_color_key,
     #         col_pin[:-1]:pin_color_key,
     #         col_npth_pin[:-1]:npth_pin_color_key
     #     }
-        
+
     #     expVRML.say(material_substitutions)
     #     while len(objs) > 1:
     #             FuseObjs_wColors(FreeCAD, FreeCADGui, doc.Name, objs[0].Name, objs[1].Name)
@@ -147,11 +143,10 @@ class cq_eSIP():
 
     #     return material_substitutions
 
-
     def make_top_eSIP_7C(self, params):
 
-        A1 = params['A1']  # Body PCB seperation
-        rotation = params['rotation']  # Rotation if required
+        A1 = params["A1"]  # Body PCB seperation
+        rotation = params["rotation"]  # Rotation if required
 
         smallpad_w = 9.6
         smallpad_l = 0.48
@@ -165,19 +160,26 @@ class cq_eSIP():
         metal_l = 0.1
         metal_h = 5.04
 
-        case = cq.Workplane("XY").workplane(offset=A1 + (large_h - metal_h) / 2.0, centerOption="CenterOfMass").moveTo(0.0, (large_l / 2.0) + smallpad_l ).rect(metal_w, metal_l).extrude(metal_h)
+        case = (
+            cq.Workplane("XY")
+            .workplane(
+                offset=A1 + (large_h - metal_h) / 2.0, centerOption="CenterOfMass"
+            )
+            .moveTo(0.0, (large_l / 2.0) + smallpad_l)
+            .rect(metal_w, metal_l)
+            .extrude(metal_h)
+        )
         case = case.translate((0.0 + ((large_w / 2.0) - 1.27), 0.0, 0.0))
-        
-        if (rotation != 0):
-            case = case.rotate((0,0,0), (0,0,1), rotation)
 
-        return (case)
+        if rotation != 0:
+            case = case.rotate((0, 0, 0), (0, 0, 1), rotation)
 
+        return case
 
     def make_case_eSIP_7C(self, params):
 
-        A1 = params['A1']  # Body PCB seperation
-        rotation = params['rotation']  # Rotation if required
+        A1 = params["A1"]  # Body PCB seperation
+        rotation = params["rotation"]  # Rotation if required
 
         smallpad_w = 9.6
         smallpad_l = 0.48
@@ -186,30 +188,49 @@ class cq_eSIP():
         large_w = 10.16
         large_l = 1.53
         large_h = 8.19
-        
+
         #
         # Create body
         #
-        case = cq.Workplane("XY").workplane(offset=A1, centerOption="CenterOfMass").moveTo(0.0, 0.0).rect(large_w, large_l).extrude(large_h)
+        case = (
+            cq.Workplane("XY")
+            .workplane(offset=A1, centerOption="CenterOfMass")
+            .moveTo(0.0, 0.0)
+            .rect(large_w, large_l)
+            .extrude(large_h)
+        )
         case = case.faces("<Y").fillet(large_l / 6.0)
-        case1 = cq.Workplane("XY").workplane(offset=A1 + (large_h - smallpad_h) / 2.0, centerOption="CenterOfMass").moveTo(0.0, (large_l / 2.0) + (smallpad_l / 2.0)).rect(smallpad_w, smallpad_l).extrude(smallpad_h)
+        case1 = (
+            cq.Workplane("XY")
+            .workplane(
+                offset=A1 + (large_h - smallpad_h) / 2.0, centerOption="CenterOfMass"
+            )
+            .moveTo(0.0, (large_l / 2.0) + (smallpad_l / 2.0))
+            .rect(smallpad_w, smallpad_l)
+            .extrude(smallpad_h)
+        )
         case1 = case1.faces(">Y").chamfer(smallpad_l / 3.0)
         case = case.union(case1)
-        case1 = cq.Workplane("XZ").workplane(offset=(large_l / 2.0) - 0.1, centerOption="CenterOfMass").moveTo(0.0 - ((smallpad_w / 2.0) - 1.0), A1 + 1.0).circle(0.5, False).extrude(2.0)
+        case1 = (
+            cq.Workplane("XZ")
+            .workplane(offset=(large_l / 2.0) - 0.1, centerOption="CenterOfMass")
+            .moveTo(0.0 - ((smallpad_w / 2.0) - 1.0), A1 + 1.0)
+            .circle(0.5, False)
+            .extrude(2.0)
+        )
         case = case.cut(case1)
 
         case = case.translate((0.0 + ((large_w / 2.0) - 1.27), 0.0, 0.0))
-        
-        if (rotation != 0):
-            case = case.rotate((0,0,0), (0,0,1), rotation)
 
-        return (case)
+        if rotation != 0:
+            case = case.rotate((0, 0, 0), (0, 0, 1), rotation)
 
+        return case
 
     def make_pins_eSIP_7C(self, params):
 
-        A1 = params['A1']  # Body PCB seperation
-        rotation = params['rotation']  # Rotation if required
+        A1 = params["A1"]  # Body PCB seperation
+        rotation = params["rotation"]  # Rotation if required
 
         cqsup = cq_support()
         pin_l = 0.345
@@ -219,42 +240,59 @@ class cq_eSIP():
         ang = 10.0
         dxd = 3.0
         upph = 1.0
-        
+
         #
         #
         # Create body
         #
-        pin  = cq.Workplane("XY").workplane(offset=A1, centerOption="CenterOfMass").moveTo(0.0, 0.0).rect(pin_w, pin_l).extrude(0.0 - pin_h)
+        pin = (
+            cq.Workplane("XY")
+            .workplane(offset=A1, centerOption="CenterOfMass")
+            .moveTo(0.0, 0.0)
+            .rect(pin_w, pin_l)
+            .extrude(0.0 - pin_h)
+        )
         pin = pin.faces("<Z").edges("#Y").fillet(pin_l / 2.1)
         #
         pin2 = cqsup.make_bend_pin_stand_1(pin_w, pin_l, pin_h, ang, dxd, upph)
         pin2 = pin2.translate((0.0 + 1.27, 0.0, A1))
-        pin  = pin.union(pin2)
+        pin = pin.union(pin2)
         #
         pin2 = cqsup.make_bend_pin_stand_1(pin_w, pin_l, pin_h, ang, dxd, upph)
         pin2 = pin2.translate((0.0 + 3.81, 0.0, A1))
-        pin  = pin.union(pin2)
+        pin = pin.union(pin2)
         #
         pin2 = cqsup.make_bend_pin_stand_1(pin_w, pin_l, pin_h, ang, dxd, upph)
         pin2 = pin2.translate((0.0 + 7.62, 0.0, A1))
-        pin  = pin.union(pin2)
+        pin = pin.union(pin2)
 
         #
-        pin1 = cq.Workplane("XY").workplane(offset=A1, centerOption="CenterOfMass").moveTo(0.0 + 2.54, 0.0).rect(pin_w, pin_l).extrude(0.0 - pin_h)
+        pin1 = (
+            cq.Workplane("XY")
+            .workplane(offset=A1, centerOption="CenterOfMass")
+            .moveTo(0.0 + 2.54, 0.0)
+            .rect(pin_w, pin_l)
+            .extrude(0.0 - pin_h)
+        )
         pin1 = pin1.faces("<Z").edges("#Y").fillet(pin_l / 2.1)
-        pin  = pin.union(pin1)
+        pin = pin.union(pin1)
         #
-        pin1 = cq.Workplane("XY").workplane(offset=A1, centerOption="CenterOfMass").moveTo(0.0 + 5.12, 0.0).rect(pin_w, pin_l).extrude(0.0 - pin_h)
+        pin1 = (
+            cq.Workplane("XY")
+            .workplane(offset=A1, centerOption="CenterOfMass")
+            .moveTo(0.0 + 5.12, 0.0)
+            .rect(pin_w, pin_l)
+            .extrude(0.0 - pin_h)
+        )
         pin1 = pin1.faces("<Z").edges("#Y").fillet(pin_l / 2.1)
         pin = pin.union(pin1)
 
-        return (pin)
-    
+        return pin
 
     def make_top_eSIP_7F(self, params):
 
-        A1 = params['A1']  # Body PCB seperation
-        rotation = params['rotation']  # Rotation if required
+        A1 = params["A1"]  # Body PCB seperation
+        rotation = params["rotation"]  # Rotation if required
 
         smallpad_w = 7.37
         smallpad_l = 9.6
@@ -268,19 +306,26 @@ class cq_eSIP():
         metal_l = 6.7
         metal_h = 0.1
 
-        case = cq.Workplane("XY").workplane(offset=0.0, centerOption="CenterOfMass").moveTo(0.0, 0.0).rect(metal_w, metal_l).extrude(metal_h)
-        case = case.translate((0.0 - 6.24, 0.0 - 3.81, A1 + large_h + smallpad_h - (metal_h / 2.0)))
-        
-        if (rotation != 0):
-            case = case.rotate((0,0,0), (0,0,1), rotation)
+        case = (
+            cq.Workplane("XY")
+            .workplane(offset=0.0, centerOption="CenterOfMass")
+            .moveTo(0.0, 0.0)
+            .rect(metal_w, metal_l)
+            .extrude(metal_h)
+        )
+        case = case.translate(
+            (0.0 - 6.24, 0.0 - 3.81, A1 + large_h + smallpad_h - (metal_h / 2.0))
+        )
 
-        return (case)
+        if rotation != 0:
+            case = case.rotate((0, 0, 0), (0, 0, 1), rotation)
 
+        return case
 
     def make_case_eSIP_7F(self, params):
 
-        A1 = params['A1']  # Body PCB seperation
-        rotation = params['rotation']  # Rotation if required
+        A1 = params["A1"]  # Body PCB seperation
+        rotation = params["rotation"]  # Rotation if required
 
         smallpad_w = 7.37
         smallpad_l = 9.6
@@ -289,30 +334,47 @@ class cq_eSIP():
         large_w = 8.19
         large_l = 10.16
         large_h = 1.53
-        
+
         #
         # Create body
         #
-        case = cq.Workplane("XY").workplane(offset=0.0, centerOption="CenterOfMass").moveTo(0.0, 0.0).rect(large_w, large_l).extrude(large_h)
+        case = (
+            cq.Workplane("XY")
+            .workplane(offset=0.0, centerOption="CenterOfMass")
+            .moveTo(0.0, 0.0)
+            .rect(large_w, large_l)
+            .extrude(large_h)
+        )
         case = case.faces("<Z").fillet(large_h / 6.0)
-        case1 = cq.Workplane("XY").workplane(offset=large_h, centerOption="CenterOfMass").moveTo(0.0, 0.0).rect(smallpad_w, smallpad_l).extrude(smallpad_h)
+        case1 = (
+            cq.Workplane("XY")
+            .workplane(offset=large_h, centerOption="CenterOfMass")
+            .moveTo(0.0, 0.0)
+            .rect(smallpad_w, smallpad_l)
+            .extrude(smallpad_h)
+        )
         case1 = case1.faces(">Z").chamfer(smallpad_h / 3.0)
         case = case.union(case1)
-        case1 = cq.Workplane("XY").workplane(offset=0.0, centerOption="CenterOfMass").moveTo(0.0 - ((large_w / 2.0) - 1.0), ((large_l / 2.0) - 1.0)).circle(0.5, False).extrude(0.1)
+        case1 = (
+            cq.Workplane("XY")
+            .workplane(offset=0.0, centerOption="CenterOfMass")
+            .moveTo(0.0 - ((large_w / 2.0) - 1.0), ((large_l / 2.0) - 1.0))
+            .circle(0.5, False)
+            .extrude(0.1)
+        )
         case = case.cut(case1)
 
         case = case.translate((0.0 - 6.24, 0.0 - 3.81, A1))
-        
-        if (rotation != 0):
-            case = case.rotate((0,0,0), (0,0,1), rotation)
 
-        return (case)
+        if rotation != 0:
+            case = case.rotate((0, 0, 0), (0, 0, 1), rotation)
 
+        return case
 
     def make_pins_eSIP_7F(self, params):
 
-        A1 = params['A1']  # Body PCB seperation
-        rotation = params['rotation']  # Rotation if required
+        A1 = params["A1"]  # Body PCB seperation
+        rotation = params["rotation"]  # Rotation if required
 
         cqsup = cq_support()
         #
@@ -326,28 +388,64 @@ class cq_eSIP():
         tth = pin_h
         ang = 10.0
         dxd = 3.0
-        
+
         pL1 = 3.18
         pL2 = 2.1 + 0.2
-        
+
         #
         # Create dummy
         #
-        pin = cq.Workplane("XY").workplane(offset=(large_h / 2.0) + pin_w, centerOption="CenterOfMass").moveTo(0.0, 0.0).rect(pin_w, pin_l).extrude(0.0 - (pL1 + pin_w))
-        pin1 = cq.Workplane("XY").workplane(offset=(large_h / 2.0), centerOption="CenterOfMass").moveTo(0.0 - (pL2 / 2.0), 0.0).rect(pL2, pin_l).extrude(pin_w)
+        pin = (
+            cq.Workplane("XY")
+            .workplane(offset=(large_h / 2.0) + pin_w, centerOption="CenterOfMass")
+            .moveTo(0.0, 0.0)
+            .rect(pin_w, pin_l)
+            .extrude(0.0 - (pL1 + pin_w))
+        )
+        pin1 = (
+            cq.Workplane("XY")
+            .workplane(offset=(large_h / 2.0), centerOption="CenterOfMass")
+            .moveTo(0.0 - (pL2 / 2.0), 0.0)
+            .rect(pL2, pin_l)
+            .extrude(pin_w)
+        )
         pin = pin.union(pin1)
         pin = pin.faces(">X").edges(">Z").fillet(pin_w / 2.2)
         pin = pin.translate((0.0, 0.0, A1))
         #
-        pin1 = cq.Workplane("XY").workplane(offset=(large_h / 2.0) + pin_w, centerOption="CenterOfMass").moveTo(0.0, 0.0).rect(pin_w, pin_l).extrude(0.0 - (pL1 + pin_w))
-        pin2 = cq.Workplane("XY").workplane(offset=(large_h / 2.0), centerOption="CenterOfMass").moveTo(0.0 - (pL2 / 2.0), 0.0).rect(pL2, pin_l).extrude(pin_w)
+        pin1 = (
+            cq.Workplane("XY")
+            .workplane(offset=(large_h / 2.0) + pin_w, centerOption="CenterOfMass")
+            .moveTo(0.0, 0.0)
+            .rect(pin_w, pin_l)
+            .extrude(0.0 - (pL1 + pin_w))
+        )
+        pin2 = (
+            cq.Workplane("XY")
+            .workplane(offset=(large_h / 2.0), centerOption="CenterOfMass")
+            .moveTo(0.0 - (pL2 / 2.0), 0.0)
+            .rect(pL2, pin_l)
+            .extrude(pin_w)
+        )
         pin1 = pin1.union(pin2)
         pin1 = pin1.faces(">X").edges(">Z").fillet(pin_w / 2.2)
         pin1 = pin1.translate((0.0, 0.0 - 2.54, A1))
         pin = pin.union(pin1)
         #
-        pin1 = cq.Workplane("XY").workplane(offset=(large_h / 2.0) + pin_w, centerOption="CenterOfMass").moveTo(0.0, 0.0).rect(pin_w, pin_l).extrude(0.0 - (pL1 + pin_w))
-        pin2 = cq.Workplane("XY").workplane(offset=(large_h / 2.0), centerOption="CenterOfMass").moveTo(0.0 - (pL2 / 2.0), 0.0).rect(pL2, pin_l).extrude(pin_w)
+        pin1 = (
+            cq.Workplane("XY")
+            .workplane(offset=(large_h / 2.0) + pin_w, centerOption="CenterOfMass")
+            .moveTo(0.0, 0.0)
+            .rect(pin_w, pin_l)
+            .extrude(0.0 - (pL1 + pin_w))
+        )
+        pin2 = (
+            cq.Workplane("XY")
+            .workplane(offset=(large_h / 2.0), centerOption="CenterOfMass")
+            .moveTo(0.0 - (pL2 / 2.0), 0.0)
+            .rect(pL2, pin_l)
+            .extrude(pin_w)
+        )
         pin1 = pin1.union(pin2)
         pin1 = pin1.faces(">X").edges(">Z").fillet(pin_w / 2.2)
         pin1 = pin1.translate((0.0, 0.0 - 5.08, A1))
@@ -357,49 +455,87 @@ class cq_eSIP():
         #
         pL2 = 2.1 + 2.14 + 0.2
         #
-        pin1 = cq.Workplane("XY").workplane(offset=(large_h / 2.0) + pin_w, centerOption="CenterOfMass").moveTo(0.0, 0.0).rect(pin_w, pin_l).extrude(0.0 - (pL1 + pin_w))
-        pin2 = cq.Workplane("XY").workplane(offset=(large_h / 2.0), centerOption="CenterOfMass").moveTo(0.0 - (pL2 / 2.0), 0.0).rect(pL2, pin_l).extrude(pin_w)
+        pin1 = (
+            cq.Workplane("XY")
+            .workplane(offset=(large_h / 2.0) + pin_w, centerOption="CenterOfMass")
+            .moveTo(0.0, 0.0)
+            .rect(pin_w, pin_l)
+            .extrude(0.0 - (pL1 + pin_w))
+        )
+        pin2 = (
+            cq.Workplane("XY")
+            .workplane(offset=(large_h / 2.0), centerOption="CenterOfMass")
+            .moveTo(0.0 - (pL2 / 2.0), 0.0)
+            .rect(pL2, pin_l)
+            .extrude(pin_w)
+        )
         pin1 = pin1.union(pin2)
         pin1 = pin1.faces(">X").edges(">Z").fillet(pin_w / 2.2)
         pin1 = pin1.translate((2.14, 0.0 - 1.27, A1))
         pin = pin.union(pin1)
         #
-        pin1 = cq.Workplane("XY").workplane(offset=(large_h / 2.0) + pin_w, centerOption="CenterOfMass").moveTo(0.0, 0.0).rect(pin_w, pin_l).extrude(0.0 - (pL1 + pin_w))
-        pin2 = cq.Workplane("XY").workplane(offset=(large_h / 2.0), centerOption="CenterOfMass").moveTo(0.0 - (pL2 / 2.0), 0.0).rect(pL2, pin_l).extrude(pin_w)
+        pin1 = (
+            cq.Workplane("XY")
+            .workplane(offset=(large_h / 2.0) + pin_w, centerOption="CenterOfMass")
+            .moveTo(0.0, 0.0)
+            .rect(pin_w, pin_l)
+            .extrude(0.0 - (pL1 + pin_w))
+        )
+        pin2 = (
+            cq.Workplane("XY")
+            .workplane(offset=(large_h / 2.0), centerOption="CenterOfMass")
+            .moveTo(0.0 - (pL2 / 2.0), 0.0)
+            .rect(pL2, pin_l)
+            .extrude(pin_w)
+        )
         pin1 = pin1.union(pin2)
         pin1 = pin1.faces(">X").edges(">Z").fillet(pin_w / 2.2)
         pin1 = pin1.translate((2.14, 0.0 - 3.81, A1))
         pin = pin.union(pin1)
         #
-        pin1 = cq.Workplane("XY").workplane(offset=(large_h / 2.0) + pin_w, centerOption="CenterOfMass").moveTo(0.0, 0.0).rect(pin_w, pin_l).extrude(0.0 - (pL1 + pin_w))
-        pin2 = cq.Workplane("XY").workplane(offset=(large_h / 2.0), centerOption="CenterOfMass").moveTo(0.0 - (pL2 / 2.0), 0.0).rect(pL2, pin_l).extrude(pin_w)
+        pin1 = (
+            cq.Workplane("XY")
+            .workplane(offset=(large_h / 2.0) + pin_w, centerOption="CenterOfMass")
+            .moveTo(0.0, 0.0)
+            .rect(pin_w, pin_l)
+            .extrude(0.0 - (pL1 + pin_w))
+        )
+        pin2 = (
+            cq.Workplane("XY")
+            .workplane(offset=(large_h / 2.0), centerOption="CenterOfMass")
+            .moveTo(0.0 - (pL2 / 2.0), 0.0)
+            .rect(pL2, pin_l)
+            .extrude(pin_w)
+        )
         pin1 = pin1.union(pin2)
         pin1 = pin1.faces(">X").edges(">Z").fillet(pin_w / 2.2)
         pin1 = pin1.translate((2.14, 0.0 - 7.62, A1))
         pin = pin.union(pin1)
 
-                
-                
-        if (rotation != 0):
-            pin = pin.rotate((0,0,0), (0,0,1), rotation)
+        if rotation != 0:
+            pin = pin.rotate((0, 0, 0), (0, 0, 1), rotation)
 
-        return (pin)
-
+        return pin
 
     def make_npth_pins(self, params):
 
-        A1 = params['A1']  # Body PCB seperation
-        rotation = params['rotation']  # Rotation if required
+        A1 = params["A1"]  # Body PCB seperation
+        rotation = params["rotation"]  # Rotation if required
         #
         # Create dummy
         #
-        pin = cq.Workplane("XY").workplane(offset=A1 + 1.0, centerOption="CenterOfMass").moveTo(0.0, 0.0).circle(0.005, False).extrude(0.001)
-        
-        if (rotation != 0):
-            pin = pin.rotate((0,0,0), (0,0,1), rotation)
+        pin = (
+            cq.Workplane("XY")
+            .workplane(offset=A1 + 1.0, centerOption="CenterOfMass")
+            .moveTo(0.0, 0.0)
+            .circle(0.005, False)
+            .extrude(0.001)
+        )
 
-        return (pin)
+        if rotation != 0:
+            pin = pin.rotate((0, 0, 0), (0, 0, 1), rotation)
 
+        return pin
 
     ##enabling optional/default values to None
     # def namedtuple_with_defaults(typename, field_names, default_values=()):
@@ -412,7 +548,7 @@ class cq_eSIP():
     #         prototype = T(*default_values)
     #     T.__new__.__defaults__ = tuple(prototype)
     #     return T
-        
+
     # Params = namedtuple_with_defaults("Params", [
     #     'modelName',            # modelName
     #     'A1',                   # Body PCB seperation
@@ -424,16 +560,13 @@ class cq_eSIP():
     #     'dest_dir_prefix'       # Destination directory
     # ])
 
-
-
     # all_params = {
-
 
     #     'PowerIntegrations_eSIP-7C': Params(
     #         #
     #         # http://www.belton.co.kr/inc/downfile.php?seq=58&file=pdf
     #         # A number of parameters have been fixed or guessed, such as A2
-    #         # 
+    #         #
     #         modelName = 'PowerIntegrations_eSIP-7C',    # modelName
     #         A1 = 3.2,                                   # Body PCB seperation
 
@@ -449,7 +582,7 @@ class cq_eSIP():
     #         #
     #         # http://www.belton.co.kr/inc/downfile.php?seq=58&file=pdf
     #         # A number of parameters have been fixed or guessed, such as A2
-    #         # 
+    #         #
     #         modelName = 'PowerIntegrations_eSIP-7F',    # modelName
     #         A1 = 0.1,                                   # Body PCB seperation
 
@@ -461,4 +594,3 @@ class cq_eSIP():
     #         dest_dir_prefix = 'Package_SIP.3dshapes',   # destination directory
     #         ),
     # }
-        

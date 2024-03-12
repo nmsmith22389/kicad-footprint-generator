@@ -78,10 +78,10 @@
 #     topear = params.topear              # Top ear
 #     rotation = params.rotation          # Rotation if required
 #     modelname = params.modelname        # Model name
-    
+
 #     return modelname
 
-    
+
 def get_body_offset(params):
 
     A2 = params["A2"]
@@ -89,52 +89,52 @@ def get_body_offset(params):
     BH = 0.0
     if A2 != None:
         BH = A2
-        
+
     return BH
-    
+
 
 def get_battery_size(params):
 
-    cellsize = params["cellsize"]          # Battery type
+    cellsize = params["cellsize"]  # Battery type
 
     #
     # https://en.wikipedia.org/wiki/List_of_battery_sizes
     #
-        
-    if cellsize == 'A':
+
+    if cellsize == "A":
         return 17.00, 50.00
 
-    if cellsize == 'AA':
+    if cellsize == "AA":
         return 14.50, 50.50
 
-    if cellsize == 'AAA':
+    if cellsize == "AAA":
         return 10.51, 44.50
 
-    if cellsize == 'AAAA':
+    if cellsize == "AAAA":
         return 8.30, 42.50
-        
-    if cellsize == 'B':
+
+    if cellsize == "B":
         return 21.5, 60.00
-        
-    if cellsize == 'C':
+
+    if cellsize == "C":
         return 14.50, 50.50
 
-    if cellsize == 'D':
+    if cellsize == "D":
         return 34.20, 61.50
 
-    if cellsize == '18650':
+    if cellsize == "18650":
         return 18.00, 65.00
 
-    if cellsize == 'CR1216':
+    if cellsize == "CR1216":
         return 12.50, 1.6
 
-    if cellsize == 'CR1220':
+    if cellsize == "CR1220":
         return 12.00, 5.0
 
-    if cellsize == 'CR2025':
+    if cellsize == "CR2025":
         return 20.00, 2.5
 
-    if cellsize == 'CR2450':
+    if cellsize == "CR2450":
         return 24.5, 5.0
 
     return 0.0, 0.0

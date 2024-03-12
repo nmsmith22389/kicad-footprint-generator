@@ -18,50 +18,54 @@
 ## the script will generate STEP and VRML parametric models
 ## to be used with kicad StepUp script
 #
-#*                                                                          *
-#* cadquery script for generating QFP/SOIC/SSOP/TSSOP models in STEP AP214  *
-#*   Copyright (c) 2015                                                     *
-#* Maurice https://launchpad.net/~easyw                                     *
-#* Copyright (c) 2021                                                       *
-#*     Update 2021                                                          *
-#*     jmwright (https://github.com/jmwright)                               *
-#*     Work sponsored by KiCAD Services Corporation                         *
-#*          (https://www.kipro-pcb.com/)                                    *
-#*                                                                          *
-#* All trademarks within this guide belong to their legitimate owners.      *
-#*                                                                          *
-#*   This program is free software; you can redistribute it and/or modify   *
-#*   it under the terms of the GNU General Public License (GPL)             *
-#*   as published by the Free Software Foundation; either version 2 of      *
-#*   the License, or (at your option) any later version.                    *
-#*   for detail see the LICENCE text file.                                  *
-#*                                                                          *
-#*   This program is distribuited in the hope that it will be useful,        *
-#*   but WITHOUT ANY WARRANTY; without even the implied warranty of         *
-#*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          *
-#*   GNU Library General Public License for more details.                   *
-#*                                                                          *
-#*   You should have received a copy of the GNU Library General Public      *
-#*   License along with this program; if not, write to the Free Software    *
-#*   Foundation, Inc.,                                                      *
-#*   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA           *
-#*                                                                          *
-#****************************************************************************
+# *                                                                          *
+# * cadquery script for generating QFP/SOIC/SSOP/TSSOP models in STEP AP214  *
+# *   Copyright (c) 2015                                                     *
+# * Maurice https://launchpad.net/~easyw                                     *
+# * Copyright (c) 2021                                                       *
+# *     Update 2021                                                          *
+# *     jmwright (https://github.com/jmwright)                               *
+# *     Work sponsored by KiCAD Services Corporation                         *
+# *          (https://www.kipro-pcb.com/)                                    *
+# *                                                                          *
+# * All trademarks within this guide belong to their legitimate owners.      *
+# *                                                                          *
+# *   This program is free software; you can redistribute it and/or modify   *
+# *   it under the terms of the GNU General Public License (GPL)             *
+# *   as published by the Free Software Foundation; either version 2 of      *
+# *   the License, or (at your option) any later version.                    *
+# *   for detail see the LICENCE text file.                                  *
+# *                                                                          *
+# *   This program is distribuited in the hope that it will be useful,        *
+# *   but WITHOUT ANY WARRANTY; without even the implied warranty of         *
+# *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          *
+# *   GNU Library General Public License for more details.                   *
+# *                                                                          *
+# *   You should have received a copy of the GNU Library General Public      *
+# *   License along with this program; if not, write to the Free Software    *
+# *   Foundation, Inc.,                                                      *
+# *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA           *
+# *                                                                          *
+# ****************************************************************************
 
 __title__ = "main generator for capacitor tht model generators"
-__author__ = "scripts: maurice & Frank/Shack; models: see cq_model files; update: jmwright"
-__Comment__ = '''This generator loads cadquery model scripts and generates step/wrl files for the official kicad library.'''
+__author__ = (
+    "scripts: maurice & Frank/Shack; models: see cq_model files; update: jmwright"
+)
+__Comment__ = """This generator loads cadquery model scripts and generates step/wrl files for the official kicad library."""
 
 ___ver___ = "2.0.0"
 
 import os
-from math import tan, radians
+from math import radians, tan
 
 import cadquery as cq
-from _tools import shaderColors, parameters, cq_color_correct, cq_globals, export_tools
+
+from _tools import cq_color_correct, cq_globals, export_tools, parameters, shaderColors
 from exportVRML.export_part_to_VRML import export_VRML
 
 from . import c_chip_smd
+
 
 def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
     """
@@ -85,7 +89,7 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
     if model_to_build == "all":
         models = all_params
     else:
-        models = { model_to_build: all_params[model_to_build] }
+        models = {model_to_build: all_params[model_to_build]}
 
     # Step through the selected models
     for model in models:
@@ -94,7 +98,9 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             return
         else:
             # Construct the final output directory
-            output_dir = os.path.join(output_dir_prefix, all_params[model]['destination_dir'])
+            output_dir = os.path.join(
+                output_dir_prefix, all_params[model]["destination_dir"]
+            )
 
         # Safety check to make sure the selected model is valid
         if not model in all_params.keys():
@@ -102,8 +108,12 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             continue
 
         # Load the appropriate colors
-        body_color = shaderColors.named_colors[all_params[model]["body_color_key"]].getDiffuseFloat()
-        pins_color = shaderColors.named_colors[all_params[model]["pins_color_key"]].getDiffuseFloat()
+        body_color = shaderColors.named_colors[
+            all_params[model]["body_color_key"]
+        ].getDiffuseFloat()
+        pins_color = shaderColors.named_colors[
+            all_params[model]["pins_color_key"]
+        ].getDiffuseFloat()
 
         # Generate the current model
         if all_params[model]["model_class"] == "c_chip_smd":
@@ -119,31 +129,57 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
         if all_params[model]["model_class"] == "c_chip_smd":
             body, pins = cqm.make_chip(all_params[model])
 
-            body = body.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
-            pins = pins.rotate((0, 0, 0), (0, 0, 1), all_params[model]['rotation'])
+            body = body.rotate((0, 0, 0), (0, 0, 1), all_params[model]["rotation"])
+            pins = pins.rotate((0, 0, 0), (0, 0, 1), all_params[model]["rotation"])
 
-            component.add(body, color=cq_color_correct.Color(body_color[0], body_color[1], body_color[2]))
-            component.add(pins, color=cq_color_correct.Color(pins_color[0], pins_color[1], pins_color[2]))
+            component.add(
+                body,
+                color=cq_color_correct.Color(
+                    body_color[0], body_color[1], body_color[2]
+                ),
+            )
+            component.add(
+                pins,
+                color=cq_color_correct.Color(
+                    pins_color[0], pins_color[1], pins_color[2]
+                ),
+            )
 
         # Create the output directory if it does not exist
         if not os.path.exists(output_dir):
             os.makedirs(output_dir)
 
         # Export the assembly to STEP
-        component.save(os.path.join(output_dir, model + ".step"), cq.exporters.ExportTypes.STEP, mode=cq.exporters.assembly.ExportModes.FUSED, write_pcurves=False)
+        component.save(
+            os.path.join(output_dir, model + ".step"),
+            cq.exporters.ExportTypes.STEP,
+            mode=cq.exporters.assembly.ExportModes.FUSED,
+            write_pcurves=False,
+        )
 
         # Check for a proper union
         export_tools.check_step_export_union(component, output_dir, model)
 
         # Export the assembly to VRML
         if enable_vrml:
-            export_VRML(os.path.join(output_dir, model + ".wrl"), [body, pins], [all_params[model]["body_color_key"], all_params[model]["pins_color_key"]])
+            export_VRML(
+                os.path.join(output_dir, model + ".wrl"),
+                [body, pins],
+                [
+                    all_params[model]["body_color_key"],
+                    all_params[model]["pins_color_key"],
+                ],
+            )
 
         # Update the license
         from _tools import add_license
-        add_license.addLicenseToStep(output_dir, model + ".step",
-                                        add_license.LIST_int_license,
-                                        add_license.STR_int_licAuthor,
-                                        add_license.STR_int_licEmail,
-                                        add_license.STR_int_licOrgSys,
-                                        add_license.STR_int_licPreProc)
+
+        add_license.addLicenseToStep(
+            output_dir,
+            model + ".step",
+            add_license.LIST_int_license,
+            add_license.STR_int_licAuthor,
+            add_license.STR_int_licEmail,
+            add_license.STR_int_licOrgSys,
+            add_license.STR_int_licPreProc,
+        )

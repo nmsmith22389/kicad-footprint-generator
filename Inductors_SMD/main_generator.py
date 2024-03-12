@@ -15,54 +15,55 @@
 ## To run the script just do: ./generator.py --output_dir [output_directory]
 ## e.g. ./generator.py --output_dir /tmp
 #
-#* These are cadquery tools to export                                       *
-#* generated models in STEP & VRML format.                                  *
-#*                                                                          *
-#* cadquery script for generating QFP/SOIC/SSOP/TSSOP models in STEP AP214  *
-#* Copyright (c) 2015                                                       *
-#*     Maurice https://launchpad.net/~easyw                                 *
-#* Copyright (c) 2022                                                       *
-#*     Update 2022                                                          *
-#*     jmwright (https://github.com/jmwright)                               *
-#*     Work sponsored by KiCAD Services Corporation                         *
-#*          (https://www.kipro-pcb.com/)                                    *
-#*                                                                          *
-#* All trademarks within this guide belong to their legitimate owners.      *
-#*                                                                          *
-#*   This program is free software; you can redistribute it and/or modify   *
-#*   it under the terms of the GNU General Public License (GPL)             *
-#*   as published by the Free Software Foundation; either version 2 of      *
-#*   the License, or (at your option) any later version.                    *
-#*   for detail see the LICENCE text file.                                  *
-#*                                                                          *
-#*   This program is distributed in the hope that it will be useful,        *
-#*   but WITHOUT ANY WARRANTY; without even the implied warranty of         *
-#*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          *
-#*   GNU Library General Public License for more details.                   *
-#*                                                                          *
-#*   You should have received a copy of the GNU Library General Public      *
-#*   License along with this program; if not, write to the Free Software    *
-#*   Foundation, Inc.,                                                      *
-#*   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA           *
-#*                                                                          *
-#****************************************************************************
+# * These are cadquery tools to export                                       *
+# * generated models in STEP & VRML format.                                  *
+# *                                                                          *
+# * cadquery script for generating QFP/SOIC/SSOP/TSSOP models in STEP AP214  *
+# * Copyright (c) 2015                                                       *
+# *     Maurice https://launchpad.net/~easyw                                 *
+# * Copyright (c) 2022                                                       *
+# *     Update 2022                                                          *
+# *     jmwright (https://github.com/jmwright)                               *
+# *     Work sponsored by KiCAD Services Corporation                         *
+# *          (https://www.kipro-pcb.com/)                                    *
+# *                                                                          *
+# * All trademarks within this guide belong to their legitimate owners.      *
+# *                                                                          *
+# *   This program is free software; you can redistribute it and/or modify   *
+# *   it under the terms of the GNU General Public License (GPL)             *
+# *   as published by the Free Software Foundation; either version 2 of      *
+# *   the License, or (at your option) any later version.                    *
+# *   for detail see the LICENCE text file.                                  *
+# *                                                                          *
+# *   This program is distributed in the hope that it will be useful,        *
+# *   but WITHOUT ANY WARRANTY; without even the implied warranty of         *
+# *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          *
+# *   GNU Library General Public License for more details.                   *
+# *                                                                          *
+# *   You should have received a copy of the GNU Library General Public      *
+# *   License along with this program; if not, write to the Free Software    *
+# *   Foundation, Inc.,                                                      *
+# *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA           *
+# *                                                                          *
+# ****************************************************************************
 
 __title__ = "make SMD inductors 3D models exported to STEP and VRML"
 __author__ = "scripts: maurice; models: see cq_model files; update: jmwright"
-__Comment__ = '''This generator loads cadquery model scripts and generates step/wrl files for the official kicad library.'''
+__Comment__ = """This generator loads cadquery model scripts and generates step/wrl files for the official kicad library."""
 
 ___ver___ = "2.0.0"
 
-import os
-import yaml
-import cadquery as cq
 import glob
+import os
 from pathlib import Path
-from _tools import shaderColors, cq_color_correct, export_tools
+
+import cadquery as cq
+import yaml
+
+from _tools import cq_color_correct, export_tools, shaderColors
 from exportVRML.export_part_to_VRML import export_VRML
 
-from .smd_inductor_properties import InductorSeriesProperties, \
-    SmdInductorProperties
+from .smd_inductor_properties import InductorSeriesProperties, SmdInductorProperties
 
 
 class Inductor3DProperties:
@@ -80,11 +81,11 @@ class Inductor3DProperties:
     def __init__(self, data: dict):
         # TODO: probably defaults indicate the input data is missing something
         # - would likely be better to fill it in that magic up defaults
-        self.body_color = data.get('bodyColor', 'black body')
-        self.pad_color = data.get('pinColor', 'metal grey pins')
-        self.pad_thickness = data.get('padThickness', 0.05)
-        self.body_type = data.get('type', 1)
-        self.corner_radius = data.get('cornerRadius', 0)
+        self.body_color = data.get("bodyColor", "black body")
+        self.pad_color = data.get("pinColor", "metal grey pins")
+        self.pad_thickness = data.get("padThickness", 0.05)
+        self.body_type = data.get("type", 1)
+        self.corner_radius = data.get("cornerRadius", 0)
 
 
 def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
@@ -100,10 +101,10 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
     # find yaml files here, need to figure out the path to do so
 
     inductorPath = os.path.dirname(os.path.realpath(__file__))
-    allYamlFiles = glob.glob(f'{inductorPath}/*.yaml')
+    allYamlFiles = glob.glob(f"{inductorPath}/*.yaml")
 
     if not allYamlFiles:
-        print('No YAML files found to process.')
+        print("No YAML files found to process.")
         return
 
     fileList = None
@@ -112,7 +113,7 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
         for yamlFile in allYamlFiles:
             basefilename = os.path.splitext(os.path.basename(yamlFile))[0]
             if basefilename == model_to_build:
-                fileList = [yamlFile]   # The file list will be just 1 item, our specific
+                fileList = [yamlFile]  # The file list will be just 1 item, our specific
                 break
 
     # 2 possibilities now - fileList is a single file that we found,
@@ -120,18 +121,18 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
 
     # Trying to build a specific file and it was not found
     if model_to_build != "all" and fileList is None:
-        print(f'Could not find YAML for model {model_to_build}')
+        print(f"Could not find YAML for model {model_to_build}")
         return
     elif model_to_build == "all":
         fileList = allYamlFiles
 
     generator = SmdInductorGenerator(Path(output_dir_prefix))
 
-    print(f'Files to process : {fileList}')
+    print(f"Files to process : {fileList}")
 
     for yamlFile in fileList:
-        with open(yamlFile, 'r') as stream:
-            print(f'Processing file {yamlFile}')
+        with open(yamlFile, "r") as stream:
+            print(f"Processing file {yamlFile}")
             data_loaded = yaml.safe_load(stream)
 
             csv_dir = Path(yamlFile).parent
@@ -153,16 +154,17 @@ class SmdInductorGenerator:
 
         # Construct an 3D properties object, which will use defaults
         # if not given
-        series_3d_props = Inductor3DProperties(series_block.get('3d', {}))
+        series_3d_props = Inductor3DProperties(series_block.get("3d", {}))
 
         for part_data in series_data.parts:
-            self._generate_model(series_data, series_3d_props,
-                                 part_data)
+            self._generate_model(series_data, series_3d_props, part_data)
 
-    def _generate_model(self,
-                        series_data: InductorSeriesProperties,
-                        series_3d_props: Inductor3DProperties,
-                        part_data: SmdInductorProperties):
+    def _generate_model(
+        self,
+        series_data: InductorSeriesProperties,
+        series_3d_props: Inductor3DProperties,
+        part_data: SmdInductorProperties,
+    ):
 
         partName = part_data.part_number
         # Physical dimensions
@@ -174,21 +176,20 @@ class SmdInductorGenerator:
 
         # Handy debug section to help copy/paste into CQ-editor to play with design
         if False:
-            print(f'widthX = {widthX}')
-            print(f'lengthY = {lengthY}')
-            print(f'height = {height}')
-            print(f'padX = {pad_dims.size_inline}')
-            print(f'padY = {pad_dims.size_crosswise}')
-            print(f'landingX = {landing.size_inline}')
-            print(f'landingY = {landing.size_crosswise}')
-            print(f'seriesType = {series_3d_props.body_type}')
-            print(f'seriesPadThickness = {series_3d_props.pad_thickness}')
-            print(f'seriesCornerRadius = {series_3d_props.corner_radius}')
+            print(f"widthX = {widthX}")
+            print(f"lengthY = {lengthY}")
+            print(f"height = {height}")
+            print(f"padX = {pad_dims.size_inline}")
+            print(f"padY = {pad_dims.size_crosswise}")
+            print(f"landingX = {landing.size_inline}")
+            print(f"landingY = {landing.size_crosswise}")
+            print(f"seriesType = {series_3d_props.body_type}")
+            print(f"seriesPadThickness = {series_3d_props.pad_thickness}")
+            print(f"seriesCornerRadius = {series_3d_props.corner_radius}")
 
         rotation = 0
 
-        case = cq.Workplane("XY").box(widthX, lengthY, height,
-                                      (True, True, False))
+        case = cq.Workplane("XY").box(widthX, lengthY, height, (True, True, False))
 
         if series_3d_props.corner_radius == 0:
             case = case.edges("|Z").fillet(min(lengthY, widthX) / 20)
@@ -197,17 +198,23 @@ class SmdInductorGenerator:
 
         case = case.edges(">Z").fillet(min(lengthY, widthX) / 20)
 
-        if series_3d_props.body_type == 2:     # Exposed "wings"
+        if series_3d_props.body_type == 2:  # Exposed "wings"
             pad_thickness = min(3, height * 0.3)
         else:
             pad_thickness = series_3d_props.pad_thickness
 
         pin1 = cq.Workplane("XY").box(
-            pad_dims.size_inline, pad_dims.size_crosswise,
-            pad_thickness, (True, True, False))
+            pad_dims.size_inline,
+            pad_dims.size_crosswise,
+            pad_thickness,
+            (True, True, False),
+        )
         pin2 = cq.Workplane("XY").box(
-            pad_dims.size_inline, pad_dims.size_crosswise,
-            pad_thickness, (True, True, False))
+            pad_dims.size_inline,
+            pad_dims.size_crosswise,
+            pad_thickness,
+            (True, True, False),
+        )
 
         translateAmount = pad_dims.spacing_centre / 2
 
@@ -228,16 +235,28 @@ class SmdInductorGenerator:
         component = cq.Assembly()
 
         # Add the parts to the assembly
-        stepBodyColor = shaderColors.named_colors[series_3d_props.body_color].getDiffuseFloat()
-        stepPinColor = shaderColors.named_colors[series_3d_props.pad_color].getDiffuseFloat()
+        stepBodyColor = shaderColors.named_colors[
+            series_3d_props.body_color
+        ].getDiffuseFloat()
+        stepPinColor = shaderColors.named_colors[
+            series_3d_props.pad_color
+        ].getDiffuseFloat()
 
-        component.add(case, color=cq_color_correct.Color(
-            stepBodyColor[0], stepBodyColor[1], stepBodyColor[2]))
-        component.add(pins, color=cq_color_correct.Color(
-            stepPinColor[0], stepPinColor[1], stepPinColor[2]))
+        component.add(
+            case,
+            color=cq_color_correct.Color(
+                stepBodyColor[0], stepBodyColor[1], stepBodyColor[2]
+            ),
+        )
+        component.add(
+            pins,
+            color=cq_color_correct.Color(
+                stepPinColor[0], stepPinColor[1], stepPinColor[2]
+            ),
+        )
 
         # Assemble the filename
-        file_name = f'L_{series_data.manufacturer}_{partName}'
+        file_name = f"L_{series_data.manufacturer}_{partName}"
 
         output_dir = self.output_prefix / (series_data.library_name + ".3dshapes")
 
@@ -247,16 +266,20 @@ class SmdInductorGenerator:
 
         # Export the assembly to STEP
         component.name = file_name
-        component.save(os.path.join(output_dir, file_name + ".step"),
-                       cq.exporters.ExportTypes.STEP,
-                       mode=cq.exporters.assembly.ExportModes.FUSED,
-                       write_pcurves=False)
+        component.save(
+            os.path.join(output_dir, file_name + ".step"),
+            cq.exporters.ExportTypes.STEP,
+            mode=cq.exporters.assembly.ExportModes.FUSED,
+            write_pcurves=False,
+        )
 
         # Check for a proper union
         export_tools.check_step_export_union(component, output_dir, file_name)
 
         # Export the assembly to VRML
         # Dec 2022- do not use CadQuery VRML export, it scales/uses inches.
-        export_VRML(os.path.join(output_dir, file_name + ".wrl"),
-                    [case, pins], [series_3d_props.body_color,
-                                   series_3d_props.pad_color])
+        export_VRML(
+            os.path.join(output_dir, file_name + ".wrl"),
+            [case, pins],
+            [series_3d_props.body_color, series_3d_props.pad_color],
+        )

@@ -50,18 +50,18 @@ Refactored to be model-independent:
 
 """
 
-__title__ = 'factory export script'
-__author__ = 'hackscribble'
-__Comment__ = 'TBA'
+__title__ = "factory export script"
+__author__ = "hackscribble"
+__Comment__ = "TBA"
 
-___ver___ = '0.2 01/05/2017'
+___ver___ = "0.2 01/05/2017"
 
 
-import sys
 import os
+import sys
 
-full_path=os.path.realpath(__file__)
-script_dir_name =full_path.split(os.sep)[-2]
+full_path = os.path.realpath(__file__)
+script_dir_name = full_path.split(os.sep)[-2]
 parent_path = full_path.split(script_dir_name)[0]
 out_dir = parent_path + "_3Dmodels" + "/" + script_dir_name
 
@@ -69,7 +69,6 @@ sys.path.append("./")
 sys.path.append("../_tools")
 
 import add_license as L
-
 
 ##########################################################################################
 
@@ -87,20 +86,30 @@ L.STR_int_licEmail = "hackscribble@outlook.com"
 
 # Models
 from DPAK_factory import *
-CONFIG = 'DPAK_config.yaml'
+
+CONFIG = "DPAK_config.yaml"
 
 ##########################################################################################
 
 
 from datetime import datetime
-import shaderColors
+
+import Draft
 import exportPartToVRML as expVRML
 import FreeCAD
-import Draft
 import ImportGui
-from cq_cad_tools import FuseObjs_wColors, GetListOfObjects, restore_Main_Tools, \
- exportSTEP, close_CQ_Example, saveFCdoc, z_RotateObject, multiFuseObjs_wColors, \
- checkRequirements
+import shaderColors
+from cq_cad_tools import (
+    FuseObjs_wColors,
+    GetListOfObjects,
+    checkRequirements,
+    close_CQ_Example,
+    exportSTEP,
+    multiFuseObjs_wColors,
+    restore_Main_Tools,
+    saveFCdoc,
+    z_RotateObject,
+)
 
 Gui.activateWorkbench("CadQueryWorkbench")
 
@@ -114,30 +123,31 @@ if FreeCAD.GuiUp:
 
 try:
     from Gui.Command import *
+
     Gui.activateWorkbench("CadQueryWorkbench")
     import cadquery as cq
     from Helpers import show
-except: # catch *all* exceptions
-    msg="missing CadQuery 0.3.0 or later Module!\r\n\r\n"
-    msg+="https://github.com/jmwright/cadquery-freecad-module/wiki\n"
-    reply = QtGui.QMessageBox.information(None,"Info ...",msg)
+except:  # catch *all* exceptions
+    msg = "missing CadQuery 0.3.0 or later Module!\r\n\r\n"
+    msg += "https://github.com/jmwright/cadquery-freecad-module/wiki\n"
+    reply = QtGui.QMessageBox.information(None, "Info ...", msg)
 
 checkRequirements(cq)
 
 try:
     close_CQ_Example(App, Gui)
-except: # catch *all* exceptions
+except:  # catch *all* exceptions
     print("CQ 030 doesn't open example file")
 
 
 def export_model(model):
-    file_name = model['metadata']['name']
-    parts = model['parts']
+    file_name = model["metadata"]["name"]
+    parts = model["parts"]
     parts_list = parts.keys()
 
     # create document
-    safe_name = file_name.replace('-', '_')
-    FreeCAD.Console.PrintMessage('Model: {:s}\r\n'.format(file_name))
+    safe_name = file_name.replace("-", "_")
+    FreeCAD.Console.PrintMessage("Model: {:s}\r\n".format(file_name))
     FreeCAD.newDocument(safe_name)
     App.setActiveDocument(safe_name)
     App.ActiveDocument = App.getDocument(safe_name)
@@ -146,19 +156,19 @@ def export_model(model):
     # colour model
     used_colour_keys = []
     for part in parts_list:
-        colour_key = parts[part]['colour']
+        colour_key = parts[part]["colour"]
         used_colour_keys.append(colour_key)
         colour = shaderColors.named_colors[colour_key].getDiffuseInt()
         colour_attr = colour + (0,)
-        show(parts[part]['name'], colour_attr)
+        show(parts[part]["name"], colour_attr)
 
     # label model and parts
     doc = FreeCAD.ActiveDocument
-    doc.Label=safe_name
-    objects=doc.Objects
+    doc.Label = safe_name
+    objects = doc.Objects
     i = 0
     for part in parts_list:
-        objects[i].Label = '{n:s}__{p:s}'.format(n=safe_name, p=part)
+        objects[i].Label = "{n:s}__{p:s}".format(n=safe_name, p=part)
         i += 1
     restore_Main_Tools()
     doc.recompute()
@@ -170,25 +180,42 @@ def export_model(model):
         os.makedirs(out_dir)
 
     # export VRML
-    export_file_name = '{d:s}{s:s}{n:s}.wrl'.format(d=out_dir, s=os.sep, n=file_name)
+    export_file_name = "{d:s}{s:s}{n:s}.wrl".format(d=out_dir, s=os.sep, n=file_name)
     export_objects = []
     i = 0
     for part in parts_list:
-        export_objects.append(expVRML.exportObject(freecad_object=objects[i],
-                              shape_color=parts[part]['colour'],
-                              face_colors=None))
+        export_objects.append(
+            expVRML.exportObject(
+                freecad_object=objects[i],
+                shape_color=parts[part]["colour"],
+                face_colors=None,
+            )
+        )
         i += 1
     scale = 1 / 2.54
     coloured_meshes = expVRML.getColoredMesh(Gui, export_objects, scale)
 
-    L.LIST_int_license[0] = "Copyright (C) " + datetime.now().strftime("%Y") + ", " + L.STR_int_licAuthor
-    expVRML.writeVRMLFile(coloured_meshes, export_file_name, used_colour_keys, L.LIST_int_license)
+    L.LIST_int_license[0] = (
+        "Copyright (C) " + datetime.now().strftime("%Y") + ", " + L.STR_int_licAuthor
+    )
+    expVRML.writeVRMLFile(
+        coloured_meshes, export_file_name, used_colour_keys, L.LIST_int_license
+    )
 
     # export STEP
-    fusion = multiFuseObjs_wColors(FreeCAD, FreeCADGui, safe_name, objects, keepOriginals=True)
+    fusion = multiFuseObjs_wColors(
+        FreeCAD, FreeCADGui, safe_name, objects, keepOriginals=True
+    )
     exportSTEP(doc, file_name, out_dir, fusion)
-    L.addLicenseToStep('{d:s}/'.format(d=out_dir), '{n:s}.step'.format(n=file_name), L.LIST_int_license,
-                       L.STR_int_licAuthor, L.STR_int_licEmail, L.STR_int_licOrgSys, L.STR_int_licPreProc)
+    L.addLicenseToStep(
+        "{d:s}/".format(d=out_dir),
+        "{n:s}.step".format(n=file_name),
+        L.LIST_int_license,
+        L.STR_int_licAuthor,
+        L.STR_int_licEmail,
+        L.STR_int_licOrgSys,
+        L.STR_int_licPreProc,
+    )
 
     # save FreeCAD models
     saveFCdoc(App, Gui, doc, file_name, out_dir)
@@ -197,12 +224,11 @@ def export_model(model):
 
 if __name__ == "__main__":
 
-    FreeCAD.Console.PrintMessage('\r\nEXPORT STARTED ...\r\n')
+    FreeCAD.Console.PrintMessage("\r\nEXPORT STARTED ...\r\n")
     build_list = Factory(CONFIG).get_build_list()
-    
+
     for series in build_list:
         for model in series.build_series(verbose=True):
             export_model(model)
 
-    FreeCAD.Console.PrintMessage('\r\nEXPORT FINISHED.\r\n')
-
+    FreeCAD.Console.PrintMessage("\r\nEXPORT FINISHED.\r\n")

@@ -19,47 +19,46 @@
 ## the script will generate STEP and VRML parametric models
 ## to be used with kicad StepUp script
 
-#* These are a FreeCAD & cadquery tools                                     *
-#* to export generated models in STEP & VRML format.                        *
-#*                                                                          *
-#* cadquery script for generating QFP/SOIC/SSOP/TSSOP models in STEP AP214  *
-#*   Copyright (c) 2015                                                     *
-#* Maurice https://launchpad.net/~easyw                                     *
-#* All trademarks within this guide belong to their legitimate owners.      *
-#*                                                                          *
-#*   This program is free software; you can redistribute it and/or modify   *
-#*   it under the terms of the GNU Lesser General Public License (LGPL)     *
-#*   as published by the Free Software Foundation; either version 2 of      *
-#*   the License, or (at your option) any later version.                    *
-#*   for detail see the LICENCE text file.                                  *
-#*                                                                          *
-#*   This program is distributed in the hope that it will be useful,        *
-#*   but WITHOUT ANY WARRANTY; without even the implied warranty of         *
-#*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          *
-#*   GNU Library General Public License for more details.                   *
-#*                                                                          *
-#*   You should have received a copy of the GNU Library General Public      *
-#*   License along with this program; if not, write to the Free Software    *
-#*   Foundation, Inc.,                                                      *
-#*   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA           *
-#*                                                                          *
-#****************************************************************************
+# * These are a FreeCAD & cadquery tools                                     *
+# * to export generated models in STEP & VRML format.                        *
+# *                                                                          *
+# * cadquery script for generating QFP/SOIC/SSOP/TSSOP models in STEP AP214  *
+# *   Copyright (c) 2015                                                     *
+# * Maurice https://launchpad.net/~easyw                                     *
+# * All trademarks within this guide belong to their legitimate owners.      *
+# *                                                                          *
+# *   This program is free software; you can redistribute it and/or modify   *
+# *   it under the terms of the GNU Lesser General Public License (LGPL)     *
+# *   as published by the Free Software Foundation; either version 2 of      *
+# *   the License, or (at your option) any later version.                    *
+# *   for detail see the LICENCE text file.                                  *
+# *                                                                          *
+# *   This program is distributed in the hope that it will be useful,        *
+# *   but WITHOUT ANY WARRANTY; without even the implied warranty of         *
+# *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          *
+# *   GNU Library General Public License for more details.                   *
+# *                                                                          *
+# *   You should have received a copy of the GNU Library General Public      *
+# *   License along with this program; if not, write to the Free Software    *
+# *   Foundation, Inc.,                                                      *
+# *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA           *
+# *                                                                          *
+# ****************************************************************************
 
+
+import math
+from collections import namedtuple
+from collections.abc import Mapping
 
 # import cq_parameters  # modules parameters
 from .cq_parameters import *
 
-import math
 
-from collections import namedtuple
-from collections.abc import Mapping
-
-class cq_parameters_socket_generic():
+class cq_parameters_socket_generic:
 
     def __init__(self):
         x = 0
 
-        
     # def get_dest_3D_dir(self):
     #     return 'Valve.3dshapes'
 
@@ -67,21 +66,19 @@ class cq_parameters_socket_generic():
     #     for n in self.all_params:
     #         if n == modelName:
     #             return True
-                
+
     #     return False
-        
-        
+
     # def get_list_all(self):
     #     list = []
     #     for n in self.all_params:
     #         list.append(n)
-        
+
     #     return list
 
-        
     def make_3D_model(self, params):
         # destination_dir = self.get_dest_3D_dir()
-        
+
         case_top = self.make_case_top(params)
         case = self.make_case(params)
         pins = self.make_pins(params)
@@ -93,10 +90,10 @@ class cq_parameters_socket_generic():
         # show(case)
         # show(pins)
         # show(npth_pins)
-     
+
         # doc = FreeCAD.ActiveDocument
         # objs=GetListOfObjects(FreeCAD, doc)
-     
+
         # body_top_color_key = self.all_params[modelName].body_top_color_key
         # body_color_key = self.all_params[modelName].body_color_key
         # pin_color_key = self.all_params[modelName].pin_color_key
@@ -116,14 +113,14 @@ class cq_parameters_socket_generic():
         # col_body=Gui.ActiveDocument.getObject(objs[1].Name).DiffuseColor[0]
         # col_pin=Gui.ActiveDocument.getObject(objs[2].Name).DiffuseColor[0]
         # col_npth_pin=Gui.ActiveDocument.getObject(objs[3].Name).DiffuseColor[0]
-        
+
         # material_substitutions={
         #     col_body_top[:-1]:body_top_color_key,
         #     col_body[:-1]:body_color_key,
         #     col_pin[:-1]:pin_color_key,
         #     col_npth_pin[:-1]:npth_pin_color_key
         # }
-        
+
         # expVRML.say(material_substitutions)
         # while len(objs) > 1:
         #         FuseObjs_wColors(FreeCAD, FreeCADGui, doc.Name, objs[0].Name, objs[1].Name)
@@ -131,19 +128,21 @@ class cq_parameters_socket_generic():
         #         objs = GetListOfObjects(FreeCAD, doc)
 
         # return material_substitutions
-    
+
     def make_case_top(self, params):
 
-        D = params['D']                        # package length
-        H = params['socket_H']                 # body overall height
-        A1 = params['A1']                      # package height
-        npth_pin = params['npth_pin']          # NPTH hole [(x, y, length)]
-        center_pin = params['center_pin']      # center pin ['type', diameter length)]
-        pin_type = params['pin_type']          # Pin type, length
-        pin_number = params['pin_number']      # Number of pins
-        pin_arc = params['pin_arc']            # Arch between pins
-        pin_diameter = params['pin_diameter']  # Diameter of the cricle where pins are located
-        rotation = params['rotation']          # Rotation if required
+        D = params["D"]  # package length
+        H = params["socket_H"]  # body overall height
+        A1 = params["A1"]  # package height
+        npth_pin = params["npth_pin"]  # NPTH hole [(x, y, length)]
+        center_pin = params["center_pin"]  # center pin ['type', diameter length)]
+        pin_type = params["pin_type"]  # Pin type, length
+        pin_number = params["pin_number"]  # Number of pins
+        pin_arc = params["pin_arc"]  # Arch between pins
+        pin_diameter = params[
+            "pin_diameter"
+        ]  # Diameter of the cricle where pins are located
+        rotation = params["rotation"]  # Rotation if required
 
         #
         # Calculate center
@@ -154,27 +153,34 @@ class cq_parameters_socket_generic():
         origo_x = h * math.sin(alpha_delta / 2.0)
         origo_y = h * math.cos(alpha_delta / 2.0)
 
-        case = cq.Workplane("XY").workplane(offset=A1 + 1.0, centerOption="CenterOfMass").moveTo(origo_x, 0 - origo_y).circle(0.05, False).extrude(0.1)
-        
-        if (rotation != 0):
-            case = case.rotate((0,0,0), (0,0,1), rotation)
+        case = (
+            cq.Workplane("XY")
+            .workplane(offset=A1 + 1.0, centerOption="CenterOfMass")
+            .moveTo(origo_x, 0 - origo_y)
+            .circle(0.05, False)
+            .extrude(0.1)
+        )
 
-        return (case)
+        if rotation != 0:
+            case = case.rotate((0, 0, 0), (0, 0, 1), rotation)
 
+        return case
 
     def make_case(self, params):
 
-        D = params['D']                        # package length
-        H = params['socket_H']                 # body overall height
-        A1 = params['A1']                      # package height
-        pin_spigot = params['pin_spigot']      # Spigot
-        npth_pin = params['npth_pin']          # NPTH hole [(x, y, length)]
-        center_pin = params['center_pin']      # center pin ['type', diameter length)]
-        pin_type = params['pin_type']          # Pin type, length
-        pin_number = params['pin_number']      # Number of pins
-        pin_arc = params['pin_arc']            # Arch between pins
-        pin_diameter = params['pin_diameter']  # Diameter of the cricle where pins are located
-        rotation = params['rotation']          # Rotation if required
+        D = params["D"]  # package length
+        H = params["socket_H"]  # body overall height
+        A1 = params["A1"]  # package height
+        pin_spigot = params["pin_spigot"]  # Spigot
+        npth_pin = params["npth_pin"]  # NPTH hole [(x, y, length)]
+        center_pin = params["center_pin"]  # center pin ['type', diameter length)]
+        pin_type = params["pin_type"]  # Pin type, length
+        pin_number = params["pin_number"]  # Number of pins
+        pin_arc = params["pin_arc"]  # Arch between pins
+        pin_diameter = params[
+            "pin_diameter"
+        ]  # Diameter of the cricle where pins are located
+        rotation = params["rotation"]  # Rotation if required
 
         #
         # Calculate center
@@ -182,88 +188,156 @@ class cq_parameters_socket_generic():
         #
         alpha_delta = 0 - ((pin_arc * math.pi) / 180.0)
         h = pin_diameter / 2.0
-        origo_dx = (h * math.sin(alpha_delta))
-        origo_dy = (h * math.cos(alpha_delta))
-        
+        origo_dx = h * math.sin(alpha_delta)
+        origo_dy = h * math.cos(alpha_delta)
+
         origo_x = 0 - origo_dx
         origo_y = origo_dy
-        
-        
+
         ffs = D / 12.0
-        case = cq.Workplane("XY").workplane(offset=A1, centerOption="CenterOfMass").moveTo(origo_x, 0 - origo_y).circle(D / 2.0, False).extrude(H)
+        case = (
+            cq.Workplane("XY")
+            .workplane(offset=A1, centerOption="CenterOfMass")
+            .moveTo(origo_x, 0 - origo_y)
+            .circle(D / 2.0, False)
+            .extrude(H)
+        )
         #
         # Cut an arc in each "corners"
-        # 
-        case1 = cq.Workplane("XY").workplane(offset=A1 - 0.1, centerOption="CenterOfMass").moveTo(origo_x + (D / 2.0) + 2.0, 0 - origo_y).circle(3.0, False).extrude(H + 0.2)
+        #
+        case1 = (
+            cq.Workplane("XY")
+            .workplane(offset=A1 - 0.1, centerOption="CenterOfMass")
+            .moveTo(origo_x + (D / 2.0) + 2.0, 0 - origo_y)
+            .circle(3.0, False)
+            .extrude(H + 0.2)
+        )
         case = case.cut(case1)
         #
-        case1 = cq.Workplane("XY").workplane(offset=A1 - 0.1, centerOption="CenterOfMass").moveTo(origo_x - (D / 2.0) - 2.0, 0 - origo_y).circle(3.0, False).extrude(H + 0.2)
+        case1 = (
+            cq.Workplane("XY")
+            .workplane(offset=A1 - 0.1, centerOption="CenterOfMass")
+            .moveTo(origo_x - (D / 2.0) - 2.0, 0 - origo_y)
+            .circle(3.0, False)
+            .extrude(H + 0.2)
+        )
         case = case.cut(case1)
         #
-        case1 = cq.Workplane("XY").workplane(offset=A1 - 0.1, centerOption="CenterOfMass").moveTo(origo_x, 0 - (origo_y + (D / 2.0) + 2.0)).circle(3.0, False).extrude(H + 0.2)
+        case1 = (
+            cq.Workplane("XY")
+            .workplane(offset=A1 - 0.1, centerOption="CenterOfMass")
+            .moveTo(origo_x, 0 - (origo_y + (D / 2.0) + 2.0))
+            .circle(3.0, False)
+            .extrude(H + 0.2)
+        )
         case = case.cut(case1)
         #
-#        case1 = cq.Workplane("XY").workplane(offset=A1 - 0.1).moveTo(origo_x, 0 - (origo_y - (D / 2.0) - 2.0)).circle(3.0, False).extrude(H + 0.2)
-#        case = case.cut(case1)
+        #        case1 = cq.Workplane("XY").workplane(offset=A1 - 0.1).moveTo(origo_x, 0 - (origo_y - (D / 2.0) - 2.0)).circle(3.0, False).extrude(H + 0.2)
+        #        case = case.cut(case1)
         #
         # make ring on the middle of the body
         #
-        case1 = cq.Workplane("XY").workplane(offset=A1 - 0.1, centerOption="CenterOfMass").moveTo(origo_x, 0 - origo_y).circle(D / 2.0 + 2.0, False).extrude((H / 4.0))
-        case2 = cq.Workplane("XY").workplane(offset=A1 - 1.0, centerOption="CenterOfMass").moveTo(origo_x, 0 - origo_y).circle(D / 2.0 - 1.0, False).extrude(H + 3.0)
+        case1 = (
+            cq.Workplane("XY")
+            .workplane(offset=A1 - 0.1, centerOption="CenterOfMass")
+            .moveTo(origo_x, 0 - origo_y)
+            .circle(D / 2.0 + 2.0, False)
+            .extrude((H / 4.0))
+        )
+        case2 = (
+            cq.Workplane("XY")
+            .workplane(offset=A1 - 1.0, centerOption="CenterOfMass")
+            .moveTo(origo_x, 0 - origo_y)
+            .circle(D / 2.0 - 1.0, False)
+            .extrude(H + 3.0)
+        )
         case1 = case1.cut(case2)
         case = case.cut(case1)
         #
-        case1 = cq.Workplane("XY").workplane(offset=A1 + (4 * (H / 2.0)) / 3, centerOption="CenterOfMass").moveTo(origo_x, 0 - origo_y).circle(D / 2.0 + 2.0, False).extrude((H / 4) + 2.0)
-        case2 = cq.Workplane("XY").workplane(offset=A1 - 1.0, centerOption="CenterOfMass").moveTo(origo_x, 0 - origo_y).circle(D / 2.0 - 1.0, False).extrude(H + 3.0)
+        case1 = (
+            cq.Workplane("XY")
+            .workplane(offset=A1 + (4 * (H / 2.0)) / 3, centerOption="CenterOfMass")
+            .moveTo(origo_x, 0 - origo_y)
+            .circle(D / 2.0 + 2.0, False)
+            .extrude((H / 4) + 2.0)
+        )
+        case2 = (
+            cq.Workplane("XY")
+            .workplane(offset=A1 - 1.0, centerOption="CenterOfMass")
+            .moveTo(origo_x, 0 - origo_y)
+            .circle(D / 2.0 - 1.0, False)
+            .extrude(H + 3.0)
+        )
         case1 = case1.cut(case2)
         case = case.cut(case1)
 
         case = case.faces("<Z").edges("<Y").fillet(ffs / 10.0)
         case = case.faces(">Z").edges("<Y").fillet(ffs / 10.0)
-        
+
         alpha = alpha_delta
         for i in range(0, pin_number):
             x1 = (h * math.sin(alpha)) + origo_x
             y1 = (h * math.cos(alpha)) - origo_y
-#            FreeCAD.Console.PrintMessage('x1: ' + str(round(x1, 2)) + '\r\n')
-#            FreeCAD.Console.PrintMessage('y1: ' + str(round(y1, 2)) + '\r\n')
-            pins = cq.Workplane("XY").workplane(offset=A1 + (H / 2.0), centerOption="CenterOfMass").moveTo(x1, y1).circle(pin_type[1], False).extrude(H + 1.0)
+            #            FreeCAD.Console.PrintMessage('x1: ' + str(round(x1, 2)) + '\r\n')
+            #            FreeCAD.Console.PrintMessage('y1: ' + str(round(y1, 2)) + '\r\n')
+            pins = (
+                cq.Workplane("XY")
+                .workplane(offset=A1 + (H / 2.0), centerOption="CenterOfMass")
+                .moveTo(x1, y1)
+                .circle(pin_type[1], False)
+                .extrude(H + 1.0)
+            )
             case = case.cut(pins)
             alpha = alpha + alpha_delta
 
-                
         if center_pin != None:
-            if center_pin[0] == 'metal':
-                pins = cq.Workplane("XY").workplane(offset=A1 + (H / 2.0), centerOption="CenterOfMass").moveTo(origo_x, origo_y).circle(center_pin[1], False).extrude(H + 1.0)
+            if center_pin[0] == "metal":
+                pins = (
+                    cq.Workplane("XY")
+                    .workplane(offset=A1 + (H / 2.0), centerOption="CenterOfMass")
+                    .moveTo(origo_x, origo_y)
+                    .circle(center_pin[1], False)
+                    .extrude(H + 1.0)
+                )
                 case = case.cut(pins)
-            
+
         if pin_spigot != None:
-            pins = cq.Workplane("XY").workplane(offset=(A1 + H) - 2.0, centerOption="CenterOfMass").moveTo(origo_x, origo_y).circle(pin_spigot / 2.0, False).extrude(3.0)
+            pins = (
+                cq.Workplane("XY")
+                .workplane(offset=(A1 + H) - 2.0, centerOption="CenterOfMass")
+                .moveTo(origo_x, origo_y)
+                .circle(pin_spigot / 2.0, False)
+                .extrude(3.0)
+            )
             case = case.cut(pins)
-            pins = cq.Workplane("XY").workplane(offset=(A1 + H) - 2.0, centerOption="CenterOfMass").moveTo(origo_x - (pin_spigot / 2.0), 0 - origo_y).rect(2.0, 2.0).extrude(3.0)
+            pins = (
+                cq.Workplane("XY")
+                .workplane(offset=(A1 + H) - 2.0, centerOption="CenterOfMass")
+                .moveTo(origo_x - (pin_spigot / 2.0), 0 - origo_y)
+                .rect(2.0, 2.0)
+                .extrude(3.0)
+            )
             case = case.cut(pins)
 
-        if (rotation != 0):
-            case = case.rotate((0,0,0), (0,0,1), rotation)
+        if rotation != 0:
+            case = case.rotate((0, 0, 0), (0, 0, 1), rotation)
 
-            
-            
-        return (case)
+        return case
 
-    
     def make_pins(self, params):
 
-
-        D = params['D']                        # package length
-        H = params['socket_H']                 # body overall height
-        A1 = params['A1']                      # package height
-        npth_pin = params['npth_pin']          # NPTH hole [(x, y, length)]
-        center_pin = params['center_pin']      # center pin ['type', diameter length)]
-        pin_type = params['pin_type']          # Pin type, length
-        pin_number = params['pin_number']      # Number of pins
-        pin_arc = params['pin_arc']            # Arch between pins
-        pin_diameter = params['pin_diameter']  # Diameter of the cricle where pins are located
-        rotation = params['rotation']          # Rotation if required
+        D = params["D"]  # package length
+        H = params["socket_H"]  # body overall height
+        A1 = params["A1"]  # package height
+        npth_pin = params["npth_pin"]  # NPTH hole [(x, y, length)]
+        center_pin = params["center_pin"]  # center pin ['type', diameter length)]
+        pin_type = params["pin_type"]  # Pin type, length
+        pin_number = params["pin_number"]  # Number of pins
+        pin_arc = params["pin_arc"]  # Arch between pins
+        pin_diameter = params[
+            "pin_diameter"
+        ]  # Diameter of the cricle where pins are located
+        rotation = params["rotation"]  # Rotation if required
 
         #
         # Calculate center
@@ -271,55 +345,71 @@ class cq_parameters_socket_generic():
         #
         alpha_delta = 0 - ((pin_arc * math.pi) / 180.0)
         h = pin_diameter / 2.0
-        origo_dx = (h * math.sin(alpha_delta))
-        origo_dy = (h * math.cos(alpha_delta))
+        origo_dx = h * math.sin(alpha_delta)
+        origo_dy = h * math.cos(alpha_delta)
 
         origo_x = 0 - origo_dx
         origo_y = origo_dy
-        
 
         alpha = alpha_delta
-        if pin_type[0] == 'round':
+        if pin_type[0] == "round":
             x1 = (h * math.sin(alpha)) + origo_x
             y1 = (h * math.cos(alpha)) - origo_y
-            pins = cq.Workplane("XY").workplane(offset=A1 + 0.1, centerOption="CenterOfMass").moveTo(x1, y1).circle(pin_type[1] / 2.0, False).extrude(0 - (0.1 + pin_type[2]))
+            pins = (
+                cq.Workplane("XY")
+                .workplane(offset=A1 + 0.1, centerOption="CenterOfMass")
+                .moveTo(x1, y1)
+                .circle(pin_type[1] / 2.0, False)
+                .extrude(0 - (0.1 + pin_type[2]))
+            )
             pins = pins.faces("<Z").fillet(pin_type[1] / 5.0)
             alpha = alpha + alpha_delta
             for i in range(1, pin_number):
                 x1 = (h * math.sin(alpha)) + origo_x
                 y1 = (h * math.cos(alpha)) - origo_y
-                pint = cq.Workplane("XY").workplane(offset=A1 + 0.1, centerOption="CenterOfMass").moveTo(x1, y1).circle(pin_type[1] / 2.0, False).extrude(0 - (0.1 + pin_type[2]))
+                pint = (
+                    cq.Workplane("XY")
+                    .workplane(offset=A1 + 0.1, centerOption="CenterOfMass")
+                    .moveTo(x1, y1)
+                    .circle(pin_type[1] / 2.0, False)
+                    .extrude(0 - (0.1 + pin_type[2]))
+                )
                 pint = pint.faces("<Z").fillet(pin_type[1] / 5.0)
                 pins = pins.union(pint)
                 alpha = alpha + alpha_delta
-                
+
         if center_pin != None:
-            if center_pin[0] == 'metal':
-                pint = cq.Workplane("XY").workplane(offset=A1 + 0.1, centerOption="CenterOfMass").moveTo(origo_x, 0 - origo_y).circle(center_pin[1] / 2.0, False).extrude(0 - (0.1 + center_pin[2]))
+            if center_pin[0] == "metal":
+                pint = (
+                    cq.Workplane("XY")
+                    .workplane(offset=A1 + 0.1, centerOption="CenterOfMass")
+                    .moveTo(origo_x, 0 - origo_y)
+                    .circle(center_pin[1] / 2.0, False)
+                    .extrude(0 - (0.1 + center_pin[2]))
+                )
                 pint = pint.faces("<Z").fillet(pin_type[1] / 5.0)
-                pins  = pins.union(pint)
-                
-        
-        if (rotation != 0):
-            pins = pins.rotate((0,0,0), (0,0,1), rotation)
+                pins = pins.union(pint)
 
-        return (pins)
+        if rotation != 0:
+            pins = pins.rotate((0, 0, 0), (0, 0, 1), rotation)
 
+        return pins
 
     def make_npth_pins(self, params):
 
-
-        D = params['D']                        # package length
-        H = params['socket_H']                 # body overall height
-        A1 = params['A1']                      # package height
-        b = params['A1']                       # Pin width
-        npth_pin = params['npth_pin']          # NPTH hole [(x, y, length)]
-        center_pin = params['center_pin']      # center pin ['type', diameter length)]
-        pin_type = params['pin_type']          # Pin type, length
-        pin_number = params['pin_number']      # Number of pins
-        pin_arc = params['pin_arc']            # Arch between pins
-        pin_diameter = params['pin_diameter']  # Diameter of the cricle where pins are located
-        rotation = params['rotation']          # Rotation if required
+        D = params["D"]  # package length
+        H = params["socket_H"]  # body overall height
+        A1 = params["A1"]  # package height
+        b = params["A1"]  # Pin width
+        npth_pin = params["npth_pin"]  # NPTH hole [(x, y, length)]
+        center_pin = params["center_pin"]  # center pin ['type', diameter length)]
+        pin_type = params["pin_type"]  # Pin type, length
+        pin_number = params["pin_number"]  # Number of pins
+        pin_arc = params["pin_arc"]  # Arch between pins
+        pin_diameter = params[
+            "pin_diameter"
+        ]  # Diameter of the cricle where pins are located
+        rotation = params["rotation"]  # Rotation if required
 
         #
         # Calculate center
@@ -330,13 +420,18 @@ class cq_parameters_socket_generic():
         origo_x = h * math.sin(alpha_delta / 2.0)
         origo_y = h * math.cos(alpha_delta / 2.0)
 
-        case = cq.Workplane("XY").workplane(offset=A1 + 1.0, centerOption="CenterOfMass").moveTo(origo_x, 0 - origo_y).circle(0.05, False).extrude(0.1)
-        
-        if (rotation != 0):
-            case = case.rotate((0,0,0), (0,0,1), rotation)
+        case = (
+            cq.Workplane("XY")
+            .workplane(offset=A1 + 1.0, centerOption="CenterOfMass")
+            .moveTo(origo_x, 0 - origo_y)
+            .circle(0.05, False)
+            .extrude(0.1)
+        )
 
-        return (case)
+        if rotation != 0:
+            case = case.rotate((0, 0, 0), (0, 0, 1), rotation)
 
+        return case
 
     ##enabling optional/default values to None
     # def namedtuple_with_defaults(typename, field_names, default_values=()):
@@ -349,7 +444,7 @@ class cq_parameters_socket_generic():
     #         prototype = T(*default_values)
     #     T.__new__.__defaults__ = tuple(prototype)
     #     return T
-        
+
     # Params = namedtuple_with_defaults("Params", [
     #     'modelName',		    # modelName
     #     'D',				    # Body width/diameter
@@ -371,15 +466,13 @@ class cq_parameters_socket_generic():
     #     'dest_dir_prefix'	    # Destination directory
     # ])
 
-
-
     # all_params = {
 
     #     'Valve_Socket_Magnoval-B9D-D17.45mm_Pin': Params(
     #         #
     #         # https://en.wikipedia.org/wiki/Tube_socket
     #         # A number of parameters have been fixed or guessed, such as A2
-    #         # 
+    #         #
     #         modelName = 'Valve_Socket_Magnoval-B9D-D17.45mm_Pin',   # modelName
     #         D = 30.00,                  # Body width/diameter
     #         socket_H = 12.00,           # Body height
@@ -391,7 +484,7 @@ class cq_parameters_socket_generic():
     #         pin_number = 9,             # Number of pins
     #         pin_arc = 36.0,             # Arch between pins
     #         pin_diameter = 17.45,       # Diameter of the circle where pins are located
-            
+
     #         body_top_color_key = 'metal silver',    # Top color
     #         body_color_key = 'white body',          # Body color
     #         pin_color_key = 'metal grey pins',      # Pin color
@@ -404,7 +497,7 @@ class cq_parameters_socket_generic():
     #         #
     #         # https://en.wikipedia.org/wiki/Tube_socket
     #         # A number of parameters have been fixed or guessed, such as A2
-    #         # 
+    #         #
     #         modelName = 'Valve_Socket_Noval-B9A-D11.89mm_Pin',   # modelName
     #         D = 25.50,                  # Body width/diameter
     #         socket_H = 11.00,           # Body height
@@ -416,7 +509,7 @@ class cq_parameters_socket_generic():
     #         pin_number = 9,             # Number of pins
     #         pin_arc = 36.0,             # Arch between pins
     #         pin_diameter = 11.89,       # Diameter of the circle where pins are located
-            
+
     #         body_top_color_key = 'metal silver',    # Top color
     #         body_color_key = 'white body',          # Body color
     #         pin_color_key = 'metal grey pins',      # Pin color
@@ -429,7 +522,7 @@ class cq_parameters_socket_generic():
     #         #
     #         # https://en.wikipedia.org/wiki/Tube_socket
     #         # A number of parameters have been fixed or guessed, such as A2
-    #         # 
+    #         #
     #         modelName = 'Valve_Socket_Miniature-B7G-D09.53mm_Pin',   # modelName
     #         D = 15.00,                  # Body width/diameter
     #         socket_H = 8.00,            # Body height
@@ -441,7 +534,7 @@ class cq_parameters_socket_generic():
     #         pin_number = 7,             # Number of pins
     #         pin_arc = 45.0,             # Arch between pins
     #         pin_diameter = 09.53,       # Diameter of the circle where pins are located
-            
+
     #         body_top_color_key = 'metal silver',    # Top color
     #         body_color_key = 'white body',          # Body color
     #         pin_color_key = 'metal grey pins',      # Pin color
@@ -454,7 +547,7 @@ class cq_parameters_socket_generic():
     #         #
     #         # https://en.wikipedia.org/wiki/Tube_socket
     #         # A number of parameters have been fixed or guessed, such as A2
-    #         # 
+    #         #
     #         modelName = 'Valve_Socket-Loctal-B9G-D21.00mm_Pin',   # modelName
     #         D = 27.00,                  # Body width/diameter
     #         socket_H = 12.00,           # Body height
@@ -466,7 +559,7 @@ class cq_parameters_socket_generic():
     #         pin_number = 9,             # Number of pins
     #         pin_arc = 40.0,             # Arch between pins
     #         pin_diameter = 21.00,       # Diameter of the circle where pins are located
-            
+
     #         body_top_color_key = 'metal silver',    # Top color
     #         body_color_key = 'white body',          # Body color
     #         pin_color_key = 'metal grey pins',      # Pin color
@@ -479,7 +572,7 @@ class cq_parameters_socket_generic():
     #         #
     #         # https://en.wikipedia.org/wiki/Tube_socket
     #         # A number of parameters have been fixed or guessed, such as A2
-    #         # 
+    #         #
     #         modelName = 'Valve_Socket_Loctal-B8G-D17.45mm-Pin',   # modelName
     #         D = 29.00,                  # Body width/diameter
     #         socket_H = 14.50,           # Body height
@@ -491,7 +584,7 @@ class cq_parameters_socket_generic():
     #         pin_arc = 45.0,             # Arch between pins
     #         pin_diameter = 17.45,       # Diameter of the circle where pins are located
     #         pin_spigot = 6.70,          # Spigot
-            
+
     #         body_top_color_key = 'metal silver',    # Top color
     #         body_color_key = 'white body',          # Body color
     #         pin_color_key = 'metal grey pins',      # Pin color
@@ -504,7 +597,7 @@ class cq_parameters_socket_generic():
     #         #
     #         # https://en.wikipedia.org/wiki/Tube_socket
     #         # A number of parameters have been fixed or guessed, such as A2
-    #         # 
+    #         #
     #         modelName = 'Valve_Socket_Decar-B10G-D11.89mm_Pin',   # modelName
     #         D = 17.00,                  # Body width/diameter
     #         socket_H = 08.00,           # Body height
@@ -516,7 +609,7 @@ class cq_parameters_socket_generic():
     #         pin_number = 9,             # Number of pins
     #         pin_arc = 36.0,             # Arch between pins
     #         pin_diameter = 11.89,       # Diameter of the circle where pins are located
-            
+
     #         body_top_color_key = 'metal silver',    # Top color
     #         body_color_key = 'white body',          # Body color
     #         pin_color_key = 'metal grey pins',      # Pin color
@@ -529,7 +622,7 @@ class cq_parameters_socket_generic():
     #         #
     #         # https://en.wikipedia.org/wiki/Tube_socket
     #         # A number of parameters have been fixed or guessed, such as A2
-    #         # 
+    #         #
     #         modelName = 'Valve_Socket_Octal-K8A-D17.45mm_Pin',   # modelName
     #         D = 29.00,                  # Body width/diameter
     #         socket_H = 14.50,           # Body height
@@ -541,7 +634,7 @@ class cq_parameters_socket_generic():
     #         pin_arc = 45.0,             # Arch between pins
     #         pin_diameter = 17.45,       # Diameter of the circle where pins are located
     #         pin_spigot = 7.80,          # Spigot
-            
+
     #         body_top_color_key = 'metal silver',    # Top color
     #         body_color_key = 'white body',          # Body color
     #         pin_color_key = 'metal grey pins',      # Pin color
@@ -550,4 +643,3 @@ class cq_parameters_socket_generic():
     #         dest_dir_prefix = '../Valve.3dshapes',  # destination directory
     #         ),
     # }
-        

@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 #
-# This is derived from a cadquery script for generating Converter_DCDC 3D 
+# This is derived from a cadquery script for generating Converter_DCDC 3D
 # format
 #
 # from https://bitbucket.org/hyOzd/freecad-macros
@@ -20,75 +20,78 @@
 ## To run the script just do: ./generator.py --output_dir [output_directory]
 ## e.g. ./generator.py --output_dir /tmp
 #
-## These are CadQuery scripts that will generate STEP and VRML parametric 
+## These are CadQuery scripts that will generate STEP and VRML parametric
 ## models.
 #
-#*                                                                          *
-#* CadQuery script for generating QFP/SOIC/SSOP/TSSOP models in STEP AP214  *
-#*   Copyright (c) 2015                                                     *
-#* Maurice https://launchpad.net/~easyw                                     *
-#* Copyright (c) 2021                                                       *
-#*     Update 2021                                                          *
-#*     jmwright (https://github.com/jmwright)                               *
-#*     Work sponsored by KiCAD Services Corporation                         *
-#*          (https://www.kipro-pcb.com/)                                    *
-#*                                                                          *
-#* All trademarks within this guide belong to their legitimate owners.      *
-#*                                                                          *
-#*   This program is free software; you can redistribute it and/or modify   *
-#*   it under the terms of the GNU Lesser General Public License (LGPL)     *
-#*   as published by the Free Software Foundation; either version 2 of      *
-#*   the License, or (at your option) any later version.                    *
-#*   for detail see the LICENCE text file.                                  *
-#*                                                                          *
-#*   This program is distributed in the hope that it will be useful,        *
-#*   but WITHOUT ANY WARRANTY; without even the implied warranty of         *
-#*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          *
-#*   GNU Library General Public License for more details.                   *
-#*                                                                          *
-#*   You should have received a copy of the GNU Library General Public      *
-#*   License along with this program; if not, write to the Free Software    *
-#*   Foundation, Inc.,                                                      *
-#*   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA           *
-#*                                                                          *
-#****************************************************************************
+# *                                                                          *
+# * CadQuery script for generating QFP/SOIC/SSOP/TSSOP models in STEP AP214  *
+# *   Copyright (c) 2015                                                     *
+# * Maurice https://launchpad.net/~easyw                                     *
+# * Copyright (c) 2021                                                       *
+# *     Update 2021                                                          *
+# *     jmwright (https://github.com/jmwright)                               *
+# *     Work sponsored by KiCAD Services Corporation                         *
+# *          (https://www.kipro-pcb.com/)                                    *
+# *                                                                          *
+# * All trademarks within this guide belong to their legitimate owners.      *
+# *                                                                          *
+# *   This program is free software; you can redistribute it and/or modify   *
+# *   it under the terms of the GNU Lesser General Public License (LGPL)     *
+# *   as published by the Free Software Foundation; either version 2 of      *
+# *   the License, or (at your option) any later version.                    *
+# *   for detail see the LICENCE text file.                                  *
+# *                                                                          *
+# *   This program is distributed in the hope that it will be useful,        *
+# *   but WITHOUT ANY WARRANTY; without even the implied warranty of         *
+# *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          *
+# *   GNU Library General Public License for more details.                   *
+# *                                                                          *
+# *   You should have received a copy of the GNU Library General Public      *
+# *   License along with this program; if not, write to the Free Software    *
+# *   Foundation, Inc.,                                                      *
+# *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA           *
+# *                                                                          *
+# ****************************************************************************
 
 __title__ = "make various battery 3D models"
 __author__ = "Stefan, jmwright"
-__Comment__ = 'make battery 3D models exported to STEP and VRML'
+__Comment__ = "make battery 3D models exported to STEP and VRML"
 
 ___ver___ = "2.0.0"
 
 import os
+
 import cadquery as cq
-from _tools import shaderColors, parameters, cq_color_correct, cq_globals, export_tools
+
+from _tools import cq_color_correct, cq_globals, export_tools, parameters, shaderColors
 from exportVRML.export_part_to_VRML import export_VRML
-
-# import .battery_common
-from .battery_common import *
-
-# import .battery_pins
-from .battery_pins import *
-
-# import .battery_contact
-from .battery_contact import *
-
-# import .battery_caseBX0036
-from .battery_caseBX0036 import *
 
 # import .battery_casebutton
 from .battery_casebutton import *
 
+# import .battery_caseBX0036
+from .battery_caseBX0036 import *
+
 # import .battery_casecylinder
 from .battery_casecylinder import *
 
-# import .cq_Seiko_MSXXXX
-from .cq_Seiko_MSXXXX import *
+# import .battery_common
+from .battery_common import *
+
+# import .battery_contact
+from .battery_contact import *
+
+# import .battery_pins
+from .battery_pins import *
 
 # import .cq_Keystone_2993
 from .cq_Keystone_2993 import *
 
+# import .cq_Seiko_MSXXXX
+from .cq_Seiko_MSXXXX import *
+
 dest_dir_prefix = "Battery.3dshapes"
+
 
 def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
     """
@@ -112,7 +115,7 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
     if model_to_build == "all":
         models = all_params
     else:
-        models = { model_to_build: all_params[model_to_build] }
+        models = {model_to_build: all_params[model_to_build]}
 
     if output_dir_prefix == None:
         print("ERROR: An output directory must be provided.")
@@ -129,48 +132,67 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             continue
 
         # Handle each model type
-        if model == 'BatteryHolder_Seiko_MS621F':
+        if model == "BatteryHolder_Seiko_MS621F":
             case = make_case_Seiko_MS621F(all_params[model])
             pins = make_pins_Seiko_MS621F(all_params[model])
-        elif model == 'BatteryHolder_Keystone_2993':
+        elif model == "BatteryHolder_Keystone_2993":
             case = make_case_Keystone_2993(all_params[model])
             pins = make_pins_Keystone_2993(all_params[model])
-        elif all_params[model]["modeltype"] == 'BX0036':
+        elif all_params[model]["modeltype"] == "BX0036":
             case = make_case_BX0036(all_params[model])
             pins = make_pins(all_params[model])
-        elif all_params[model]['modeltype'] == 'Button1':
+        elif all_params[model]["modeltype"] == "Button1":
             case = make_case_Button1(all_params[model])
             pins = make_pins(all_params[model])
-        elif all_params[model]['modeltype'] == 'Button2':
+        elif all_params[model]["modeltype"] == "Button2":
             case = make_case_Button2(all_params[model])
             pins = make_pins(all_params[model])
-        elif all_params[model]['modeltype'] == 'Button3':
+        elif all_params[model]["modeltype"] == "Button3":
             case = make_case_Button3(all_params[model])
             pins = make_pins(all_params[model])
-        elif all_params[model]['modeltype'] == 'Button4':
+        elif all_params[model]["modeltype"] == "Button4":
             case = make_case_Button4(all_params[model])
             pins = make_pins(all_params[model])
-        elif all_params[model]['modeltype'] == 'Cylinder1':
+        elif all_params[model]["modeltype"] == "Cylinder1":
             case = make_case_Cylinder1(all_params[model])
             pins = make_pins(all_params[model])
 
         # Load the appropriate colors
-        body_color = shaderColors.named_colors[all_params[model]["body_color_key"]].getDiffuseFloat()
-        pins_color = shaderColors.named_colors[all_params[model]["pins_color_key"]].getDiffuseFloat()
+        body_color = shaderColors.named_colors[
+            all_params[model]["body_color_key"]
+        ].getDiffuseFloat()
+        pins_color = shaderColors.named_colors[
+            all_params[model]["pins_color_key"]
+        ].getDiffuseFloat()
 
         # Wrap the component parts in an assembly so that we can attach colors
         component = cq.Assembly(name=model)
-        if(case):
-            component.add(case, color=cq_color_correct.Color(body_color[0], body_color[1], body_color[2]))
-        if(pins):
-            component.add(pins, color=cq_color_correct.Color(pins_color[0], pins_color[1], pins_color[2]))
+        if case:
+            component.add(
+                case,
+                color=cq_color_correct.Color(
+                    body_color[0], body_color[1], body_color[2]
+                ),
+            )
+        if pins:
+            component.add(
+                pins,
+                color=cq_color_correct.Color(
+                    pins_color[0], pins_color[1], pins_color[2]
+                ),
+            )
 
         # Create the output directory if it does not exist
         if not os.path.exists(output_dir):
             os.makedirs(output_dir)
 
         # Export the assembly to STEP
-        component.save(os.path.join(output_dir, model + ".step"), cq.exporters.ExportTypes.STEP, mode=cq.exporters.assembly.ExportModes.FUSED, write_pcurves=False)
+        component.save(
+            os.path.join(output_dir, model + ".step"),
+            cq.exporters.ExportTypes.STEP,
+            mode=cq.exporters.assembly.ExportModes.FUSED,
+            write_pcurves=False,
+        )
 
         # Check for a proper union
         export_tools.check_step_export_union(component, output_dir, model)
@@ -178,15 +200,30 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
         # Export the assembly to VRML
         if enable_vrml:
             if case is not None:
-                export_VRML(os.path.join(output_dir, model + ".wrl"), [case, pins], [all_params[model]["body_color_key"], all_params[model]["pins_color_key"]])
+                export_VRML(
+                    os.path.join(output_dir, model + ".wrl"),
+                    [case, pins],
+                    [
+                        all_params[model]["body_color_key"],
+                        all_params[model]["pins_color_key"],
+                    ],
+                )
             else:
-                export_VRML(os.path.join(output_dir, model + ".wrl"), [pins], [all_params[model]["pins_color_key"]])
+                export_VRML(
+                    os.path.join(output_dir, model + ".wrl"),
+                    [pins],
+                    [all_params[model]["pins_color_key"]],
+                )
 
         # Update the license
         from _tools import add_license
-        add_license.addLicenseToStep(output_dir, model + ".step",
-                                        add_license.LIST_int_license,
-                                        add_license.STR_int_licAuthor,
-                                        add_license.STR_int_licEmail,
-                                        add_license.STR_int_licOrgSys,
-                                        add_license.STR_int_licPreProc)
+
+        add_license.addLicenseToStep(
+            output_dir,
+            model + ".step",
+            add_license.LIST_int_license,
+            add_license.STR_int_licAuthor,
+            add_license.STR_int_licEmail,
+            add_license.STR_int_licOrgSys,
+            add_license.STR_int_licPreProc,
+        )

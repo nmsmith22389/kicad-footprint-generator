@@ -2,34 +2,34 @@
 # -*- coding: utf-8 -*-
 #
 
-#****************************************************************************
-#*                                                                          *
-#* base classes for generating part models in STEP AP214                    *
-#*                                                                          *
-#* This is part of FreeCAD & cadquery tools                                 *
-#* to export generated models in STEP & VRML format.                        *
-#*   Copyright (c) 2017                                                     *
-#* Terje Io https://github.com/terjeio                                      *
-#* Maurice https://launchpad.net/~easyw                                     *
-#*                                                                          *
-#* All trademarks within this guide belong to their legitimate owners.      *
-#*                                                                          *
-#*   This program is free software; you can redistribute it and/or modify   *
-#*   it under the terms of the GNU Lesser General Public License (LGPL)     *
-#*   the License, or (at your option) any later version.                    *
-#*   for detail see the LICENCE text file.                                  *
-#*                                                                          *
-#*   This program is distributed in the hope that it will be useful,        *
-#*   but WITHOUT ANY WARRANTY; without even the implied warranty of         *
-#*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          *
-#*   GNU Library General Public License for more details.                   *
-#*                                                                          *
-#*   You should have received a copy of the GNU Library General Public      *
-#*   License along with this program; if not, write to the Free Software    *
-#*   Foundation, Inc.,                                                      *
-#*   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA           *
-#*                                                                          *
-#****************************************************************************
+# ****************************************************************************
+# *                                                                          *
+# * base classes for generating part models in STEP AP214                    *
+# *                                                                          *
+# * This is part of FreeCAD & cadquery tools                                 *
+# * to export generated models in STEP & VRML format.                        *
+# *   Copyright (c) 2017                                                     *
+# * Terje Io https://github.com/terjeio                                      *
+# * Maurice https://launchpad.net/~easyw                                     *
+# *                                                                          *
+# * All trademarks within this guide belong to their legitimate owners.      *
+# *                                                                          *
+# *   This program is free software; you can redistribute it and/or modify   *
+# *   it under the terms of the GNU Lesser General Public License (LGPL)     *
+# *   the License, or (at your option) any later version.                    *
+# *   for detail see the LICENCE text file.                                  *
+# *                                                                          *
+# *   This program is distributed in the hope that it will be useful,        *
+# *   but WITHOUT ANY WARRANTY; without even the implied warranty of         *
+# *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          *
+# *   GNU Library General Public License for more details.                   *
+# *                                                                          *
+# *   You should have received a copy of the GNU Library General Public      *
+# *   License along with this program; if not, write to the Free Software    *
+# *   Foundation, Inc.,                                                      *
+# *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA           *
+# *                                                                          *
+# ****************************************************************************
 
 # 2017-11-30
 
@@ -38,10 +38,10 @@
 # last copied from cq_base_model.py
 #
 
+## base parametes & model
 import collections
 from collections import namedtuple
-
-from math import sin, tan, radians
+from math import radians, sin, tan
 
 # import FreeCAD, Draft, FreeCADGui
 # import ImportGui
@@ -50,9 +50,6 @@ from math import sin, tan, radians
 # import shaderColors
 # import exportPartToVRML as expVRML
 
-## base parametes & model
-import collections
-from collections import namedtuple
 
 # Import cad_tools
 # import cq_cad_tools
@@ -84,14 +81,15 @@ from collections import namedtuple
 #     msg += "https://github.com/jmwright/cadquery-freecad-module/wiki\n"
 #     if QtGui is not None:
 #         reply = QtGui.QMessageBox.information(None,"Info ...",msg)
-    # maui end
+# maui end
 
-#checking requirements
+# checking requirements
 
 # checkRequirements(cq)
 
 # from Helpers import show
 # import Part as FreeCADPart
+
 
 class Polyline:
     r"""A class for creating a polyline wire (including arcs) using **relative** moves (turtle graphics style)
@@ -118,7 +116,6 @@ class Polyline:
         :rtype: Point
         """
         return (self.x, self.y)
-
 
     def addMoveTo(self, x, y):
         r"""add a relative move (offset) from the current coordinate
@@ -327,8 +324,7 @@ class Polyline:
         return self
 
     def mirror(self, axis="X"):
-        r"""mirror the current polyline
-        """
+        r"""mirror the current polyline"""
 
         result = []
         tx = -1.0 if axis == "X" else 1.0
@@ -342,26 +338,27 @@ class Polyline:
         return self
 
     def addMirror(self, axis="X"):
-        r"""add a mirror of the current polyline by reversing its direction
-        """
+        r"""add a mirror of the current polyline by reversing its direction"""
 
         x0 = self.origin[0] if axis == "X" else 0.0
         y0 = self.origin[1] if axis != "X" else 0.0
         tx = -1.0 if axis == "X" else 1.0
         ty = -1.0 if axis != "X" else 1.0
-        start = 2 #if axis == "X" else 0
+        start = 2  # if axis == "X" else 0
         start = 1 if self.commands[0][start] == self.commands[-1][start] else 0
 
         for point in reversed(self.commands[start:-1]):
-            self.commands.append((1, (point[1] - x0) * tx + x0, (point[2] - y0) * ty + y0))
+            self.commands.append(
+                (1, (point[1] - x0) * tx + x0, (point[2] - y0) * ty + y0)
+            )
 
         return self
 
-    def _is_equal (self, point1, point2):
+    def _is_equal(self, point1, point2):
         return point1[0] == point2[0] and point1[1] == point2[1]
 
     def make(self):
-        r""" Closes the polyline and creates a wire in the supplied plane
+        r"""Closes the polyline and creates a wire in the supplied plane
 
         :rtype: ``wire``
         """
@@ -375,17 +372,24 @@ class Polyline:
             elif point[0] == 2:
                 plane = plane.threePointArc((point[3], point[4]), (point[1], point[2]))
 
-        return plane.wire() if self._is_equal(self.origin, (self.commands[-1])[1:3]) else plane.close().wire()
+        return (
+            plane.wire()
+            if self._is_equal(self.origin, (self.commands[-1])[1:3])
+            else plane.close().wire()
+        )
 
-class cq_parameters_help():
+
+class cq_parameters_help:
 
     def __init__(self):
         self.pin_thickness = 0.15
         self.pin_length = 1.0
         self.pin_width = 0.4
 
-    def _make_gullwing_pin(self, pin_height, bottom_length, r_upper_i=None, r_lower_i=None):
-        """ create gull wing pin
+    def _make_gullwing_pin(
+        self, pin_height, bottom_length, r_upper_i=None, r_lower_i=None
+    ):
+        """create gull wing pin
 
         The pin will placed at coordinate 0, 0 and with the base at Z = 0
 
@@ -410,27 +414,33 @@ class cq_parameters_help():
         if r_upper_i is None:
             r_upper_i = self.pin_thickness / 2.0
 
-        r_upper_o = r_upper_i + self.pin_thickness # pin upper corner, outer radius
-        r_lower_o = r_lower_i + self.pin_thickness # pin lower corner, outer radius
+        r_upper_o = r_upper_i + self.pin_thickness  # pin upper corner, outer radius
+        r_lower_o = r_lower_i + self.pin_thickness  # pin lower corner, outer radius
         bottom_length = bottom_length - r_lower_i
         top_length = self.pin_length - bottom_length - r_upper_i - r_lower_o
 
-        return Polyline(cq.Workplane("YZ"), origin=(0, pin_height))\
-                          .addPoint(top_length, 0)\
-                          .addArc(r_upper_i, -90)\
-                          .addPoint(0, -(pin_height - r_upper_i - r_lower_o))\
-                          .addArc(r_lower_o, -90, 1)\
-                          .addPoint(bottom_length, 0)\
-                          .addPoint(0, self.pin_thickness)\
-                          .addPoint(-bottom_length, 0)\
-                          .addArc(-r_lower_i, -90)\
-                          .addPoint(0, pin_height - r_upper_i - r_lower_o)\
-                          .addArc(-r_upper_o, -90, 1)\
-                          .addPoint(-top_length, 0).make().extrude(self.pin_width).translate((-self.pin_width / 2.0, 0, 0))
+        return (
+            Polyline(cq.Workplane("YZ"), origin=(0, pin_height))
+            .addPoint(top_length, 0)
+            .addArc(r_upper_i, -90)
+            .addPoint(0, -(pin_height - r_upper_i - r_lower_o))
+            .addArc(r_lower_o, -90, 1)
+            .addPoint(bottom_length, 0)
+            .addPoint(0, self.pin_thickness)
+            .addPoint(-bottom_length, 0)
+            .addArc(-r_lower_i, -90)
+            .addPoint(0, pin_height - r_upper_i - r_lower_o)
+            .addArc(-r_upper_o, -90, 1)
+            .addPoint(-top_length, 0)
+            .make()
+            .extrude(self.pin_width)
+            .translate((-self.pin_width / 2.0, 0, 0))
+        )
 
-
-    def _make_Jhook_pin(self, pin_height, bottom_length, top_length = 0.05, r_upper_i=None, r_lower_i=None):
-        """ create J-hook pin
+    def _make_Jhook_pin(
+        self, pin_height, bottom_length, top_length=0.05, r_upper_i=None, r_lower_i=None
+    ):
+        """create J-hook pin
 
         The pin will placed at coordinate 0, 0 and with the base at Z = 0
 
@@ -455,20 +465,24 @@ class cq_parameters_help():
         if r_upper_i is None:
             r_upper_i = self.pin_thickness / 2.0
 
-        r_upper_o = r_upper_i + self.pin_thickness # pin upper corner, outer radius
-        r_lower_o = r_lower_i + self.pin_thickness # pin lower corner, outer radius
+        r_upper_o = r_upper_i + self.pin_thickness  # pin upper corner, outer radius
+        r_lower_o = r_lower_i + self.pin_thickness  # pin lower corner, outer radius
         bottom_length = bottom_length - r_lower_i
-        
 
-        return Polyline(cq.Workplane("YZ"), (-(top_length + r_upper_i), pin_height))\
-                          .addPoint(top_length, 0)\
-                          .addArc(r_upper_i, -90)\
-                          .addPoint(0, -(pin_height - r_upper_i - r_lower_i - self.pin_thickness))\
-                          .addArc(-r_lower_i, 90)\
-                          .addPoint(-bottom_length, 0)\
-                          .addPoint(0, -self.pin_thickness)\
-                          .addPoint(bottom_length, 0)\
-                          .addArc(r_lower_o, 90, 1)\
-                          .addPoint(0, pin_height - r_upper_i - r_lower_i - self.pin_thickness)\
-                          .addArc(-r_upper_o, -90, 1)\
-                          .addPoint(-top_length, 0).make().extrude(self.pin_width).translate((-self.pin_width / 2.0, 0, 0))
+        return (
+            Polyline(cq.Workplane("YZ"), (-(top_length + r_upper_i), pin_height))
+            .addPoint(top_length, 0)
+            .addArc(r_upper_i, -90)
+            .addPoint(0, -(pin_height - r_upper_i - r_lower_i - self.pin_thickness))
+            .addArc(-r_lower_i, 90)
+            .addPoint(-bottom_length, 0)
+            .addPoint(0, -self.pin_thickness)
+            .addPoint(bottom_length, 0)
+            .addArc(r_lower_o, 90, 1)
+            .addPoint(0, pin_height - r_upper_i - r_lower_i - self.pin_thickness)
+            .addArc(-r_upper_o, -90, 1)
+            .addPoint(-top_length, 0)
+            .make()
+            .extrude(self.pin_width)
+            .translate((-self.pin_width / 2.0, 0, 0))
+        )

@@ -19,59 +19,70 @@
 ## the script will generate STEP and VRML parametric models
 ## to be used with kicad StepUp script
 
-#* These are a FreeCAD & cadquery tools                                     *
-#* to export generated models in STEP & VRML format.                        *
-#*                                                                          *
-#* cadquery script for generating QFP/SOIC/SSOP/TSSOP models in STEP AP214  *
-#*   Copyright (c) 2015                                                     *
-#* Maurice https://launchpad.net/~easyw                                     *
-#* Copyright (c) 2021                                                       *
-#*     Update 2021                                                          *
-#*     jmwright (https://github.com/jmwright)                               *
-#*     Work sponsored by KiCAD Services Corporation                         *
-#*          (https://www.kipro-pcb.com/)                                    *
-#*                                                                          *
-#* All trademarks within this guide belong to their legitimate owners.      *
-#*                                                                          *
-#*   This program is free software; you can redistribute it and/or modify   *
-#*   it under the terms of the GNU Lesser General Public License (LGPL)     *
-#*   as published by the Free Software Foundation; either version 2 of      *
-#*   the License, or (at your option) any later version.                    *
-#*   for detail see the LICENCE text file.                                  *
-#*                                                                          *
-#*   This program is distributed in the hope that it will be useful,        *
-#*   but WITHOUT ANY WARRANTY; without even the implied warranty of         *
-#*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          *
-#*   GNU Library General Public License for more details.                   *
-#*                                                                          *
-#*   You should have received a copy of the GNU Library General Public      *
-#*   License along with this program; if not, write to the Free Software    *
-#*   Foundation, Inc.,                                                      *
-#*   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA           *
-#*                                                                          *
-#****************************************************************************
+# * These are a FreeCAD & cadquery tools                                     *
+# * to export generated models in STEP & VRML format.                        *
+# *                                                                          *
+# * cadquery script for generating QFP/SOIC/SSOP/TSSOP models in STEP AP214  *
+# *   Copyright (c) 2015                                                     *
+# * Maurice https://launchpad.net/~easyw                                     *
+# * Copyright (c) 2021                                                       *
+# *     Update 2021                                                          *
+# *     jmwright (https://github.com/jmwright)                               *
+# *     Work sponsored by KiCAD Services Corporation                         *
+# *          (https://www.kipro-pcb.com/)                                    *
+# *                                                                          *
+# * All trademarks within this guide belong to their legitimate owners.      *
+# *                                                                          *
+# *   This program is free software; you can redistribute it and/or modify   *
+# *   it under the terms of the GNU Lesser General Public License (LGPL)     *
+# *   as published by the Free Software Foundation; either version 2 of      *
+# *   the License, or (at your option) any later version.                    *
+# *   for detail see the LICENCE text file.                                  *
+# *                                                                          *
+# *   This program is distributed in the hope that it will be useful,        *
+# *   but WITHOUT ANY WARRANTY; without even the implied warranty of         *
+# *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          *
+# *   GNU Library General Public License for more details.                   *
+# *                                                                          *
+# *   You should have received a copy of the GNU Library General Public      *
+# *   License along with this program; if not, write to the Free Software    *
+# *   Foundation, Inc.,                                                      *
+# *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA           *
+# *                                                                          *
+# ****************************************************************************
 
 __title__ = "make Valve 3D models"
 __author__ = "Stefan, based on DIP script"
-__Comment__ = 'make varistor 3D models exported to STEP and VRML for Kicad StepUP script'
+__Comment__ = (
+    "make varistor 3D models exported to STEP and VRML for Kicad StepUP script"
+)
 
 ___ver___ = "2.0.0"
 
 import os
+
 import cadquery as cq
-from _tools import shaderColors, parameters, cq_color_correct, cq_globals, export_tools
+
+from _tools import cq_color_correct, cq_globals, export_tools, parameters, shaderColors
 from exportVRML.export_part_to_VRML import export_VRML
 
-from .cq_parameters_tht_generic_round import cq_parameters_tht_generic_round
-from .cq_parameters_murata_PKMCS0909E4000 import cq_parameters_murata_PKMCS0909E4000
 from .cq_parameters_CUI_CST_931RP_A import cq_parameters_CUI_CST_931RP_A
+from .cq_parameters_EMB84Q_RO_SMT_0825_S_4_R import (
+    cq_parameters_EMB84Q_RO_SMT_0825_S_4_R,
+)
 from .cq_parameters_kingstate_KCG0601 import cq_parameters_kingstate_KCG0601
-from .cq_parameters_EMB84Q_RO_SMT_0825_S_4_R import cq_parameters_EMB84Q_RO_SMT_0825_S_4_R
-from .cq_parameters_ProjectsUnlimited_AI_4228_TWT_R import cq_parameters_ProjectsUnlimited_AI_4228_TWT_R
+from .cq_parameters_murata_PKMCS0909E4000 import cq_parameters_murata_PKMCS0909E4000
+from .cq_parameters_ProjectsUnlimited_AI_4228_TWT_R import (
+    cq_parameters_ProjectsUnlimited_AI_4228_TWT_R,
+)
 from .cq_parameters_ProSignal_ABI_XXX_RC import cq_parameters_ProSignal_ABI_XXX_RC
-from .cq_parameters_StarMicronics_HMB_06_HMB_12 import cq_parameters_StarMicronics_HMB_06_HMB_12
-from .cq_parameters_TDK_PS1240P02BT import cq_parameters_TDK_PS1240P02BT
 from .cq_parameters_PUI_AI_1440_TWT_24V_2_R import cq_parameters_PUI_AI_1440_TWT_24V_2_R
+from .cq_parameters_StarMicronics_HMB_06_HMB_12 import (
+    cq_parameters_StarMicronics_HMB_06_HMB_12,
+)
+from .cq_parameters_TDK_PS1240P02BT import cq_parameters_TDK_PS1240P02BT
+from .cq_parameters_tht_generic_round import cq_parameters_tht_generic_round
+
 
 def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
     """
@@ -95,7 +106,7 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
     if model_to_build == "all":
         models = all_params
     else:
-        models = { model_to_build: all_params[model_to_build] }
+        models = {model_to_build: all_params[model_to_build]}
 
     # Step through the selected models
     for model in models:
@@ -104,7 +115,9 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             return
         else:
             # Construct the final output directory
-            output_dir = os.path.join(output_dir_prefix, all_params[model]['destination_dir'])
+            output_dir = os.path.join(
+                output_dir_prefix, all_params[model]["destination_dir"]
+            )
 
         # Safety check to make sure the selected model is valid
         if not model in all_params.keys():
@@ -123,10 +136,18 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             cqm = cq_parameters_tht_generic_round()
 
             # Load the appropriate colors
-            case_top_color = shaderColors.named_colors[all_params[model]["case_top_color_key"]].getDiffuseFloat()
-            body_color = shaderColors.named_colors[all_params[model]["body_color_key"]].getDiffuseFloat()
-            pins_color = shaderColors.named_colors[all_params[model]["pins_color_key"]].getDiffuseFloat()
-            npth_pin_color = shaderColors.named_colors[all_params[model]["npth_pin_color_key"]].getDiffuseFloat()
+            case_top_color = shaderColors.named_colors[
+                all_params[model]["case_top_color_key"]
+            ].getDiffuseFloat()
+            body_color = shaderColors.named_colors[
+                all_params[model]["body_color_key"]
+            ].getDiffuseFloat()
+            pins_color = shaderColors.named_colors[
+                all_params[model]["pins_color_key"]
+            ].getDiffuseFloat()
+            npth_pin_color = shaderColors.named_colors[
+                all_params[model]["npth_pin_color_key"]
+            ].getDiffuseFloat()
 
             # Generate the models
             case_top = cqm.make_top(all_params[model])
@@ -134,11 +155,31 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             pins = cqm.make_pins(all_params[model])
             npth_pins = cqm.make_npth_pins(all_params[model])
 
-            component.add(case_top, color=cq_color_correct.Color(case_top_color[0], case_top_color[1], case_top_color[2]))
-            component.add(case, color=cq_color_correct.Color(body_color[0], body_color[1], body_color[2]))
-            component.add(pins, color=cq_color_correct.Color(pins_color[0], pins_color[1], pins_color[2]))
+            component.add(
+                case_top,
+                color=cq_color_correct.Color(
+                    case_top_color[0], case_top_color[1], case_top_color[2]
+                ),
+            )
+            component.add(
+                case,
+                color=cq_color_correct.Color(
+                    body_color[0], body_color[1], body_color[2]
+                ),
+            )
+            component.add(
+                pins,
+                color=cq_color_correct.Color(
+                    pins_color[0], pins_color[1], pins_color[2]
+                ),
+            )
             if npth_pins:
-                component.add(npth_pins, color=cq_color_correct.Color(npth_pin_color[0], npth_pin_color[1], npth_pin_color[2]))
+                component.add(
+                    npth_pins,
+                    color=cq_color_correct.Color(
+                        npth_pin_color[0], npth_pin_color[1], npth_pin_color[2]
+                    ),
+                )
 
             # Save information for VRML export
             parts.append(case_top)
@@ -155,16 +196,30 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             cqm = cq_parameters_murata_PKMCS0909E4000()
 
             # Load the appropriate colors
-            case_top_color = shaderColors.named_colors[all_params[model]["case_top_color_key"]].getDiffuseFloat()
-            pins_color = shaderColors.named_colors[all_params[model]["pins_color_key"]].getDiffuseFloat()
+            case_top_color = shaderColors.named_colors[
+                all_params[model]["case_top_color_key"]
+            ].getDiffuseFloat()
+            pins_color = shaderColors.named_colors[
+                all_params[model]["pins_color_key"]
+            ].getDiffuseFloat()
 
             # Generate the models
             case_top = cqm.make_case(all_params[model])
             pins = cqm.make_pins(all_params[model])
 
             # Build the assembly
-            component.add(case_top, color=cq_color_correct.Color(case_top_color[0], case_top_color[1], case_top_color[2]))
-            component.add(pins, color=cq_color_correct.Color(pins_color[0], pins_color[1], pins_color[2]))
+            component.add(
+                case_top,
+                color=cq_color_correct.Color(
+                    case_top_color[0], case_top_color[1], case_top_color[2]
+                ),
+            )
+            component.add(
+                pins,
+                color=cq_color_correct.Color(
+                    pins_color[0], pins_color[1], pins_color[2]
+                ),
+            )
 
             # Save information for VRML export
             parts.append(case_top)
@@ -175,16 +230,30 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             cqm = cq_parameters_CUI_CST_931RP_A()
 
             # Load the appropriate colors
-            case_top_color = shaderColors.named_colors[all_params[model]["case_top_color_key"]].getDiffuseFloat()
-            pins_color = shaderColors.named_colors[all_params[model]["pins_color_key"]].getDiffuseFloat()
+            case_top_color = shaderColors.named_colors[
+                all_params[model]["case_top_color_key"]
+            ].getDiffuseFloat()
+            pins_color = shaderColors.named_colors[
+                all_params[model]["pins_color_key"]
+            ].getDiffuseFloat()
 
             # Generate the models
             case_top = cqm.make_case(all_params[model])
             pins = cqm.make_pins(all_params[model])
 
             # Build the assembly
-            component.add(case_top, color=cq_color_correct.Color(case_top_color[0], case_top_color[1], case_top_color[2]))
-            component.add(pins, color=cq_color_correct.Color(pins_color[0], pins_color[1], pins_color[2]))
+            component.add(
+                case_top,
+                color=cq_color_correct.Color(
+                    case_top_color[0], case_top_color[1], case_top_color[2]
+                ),
+            )
+            component.add(
+                pins,
+                color=cq_color_correct.Color(
+                    pins_color[0], pins_color[1], pins_color[2]
+                ),
+            )
 
             # Save information for VRML export
             parts.append(case_top)
@@ -195,17 +264,38 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             cqm = cq_parameters_kingstate_KCG0601()
 
             # Load the appropriate colors
-            case_top_color = shaderColors.named_colors[all_params[model]["case_top_color_key"]].getDiffuseFloat()
-            body_color = shaderColors.named_colors[all_params[model]["body_color_key"]].getDiffuseFloat()
-            pins_color = shaderColors.named_colors[all_params[model]["pins_color_key"]].getDiffuseFloat()
+            case_top_color = shaderColors.named_colors[
+                all_params[model]["case_top_color_key"]
+            ].getDiffuseFloat()
+            body_color = shaderColors.named_colors[
+                all_params[model]["body_color_key"]
+            ].getDiffuseFloat()
+            pins_color = shaderColors.named_colors[
+                all_params[model]["pins_color_key"]
+            ].getDiffuseFloat()
 
             # Generate the models
             case_top = cqm.make_top(all_params[model])
             case = cqm.make_case(all_params[model])
             pins = cqm.make_pins(all_params[model])
-            component.add(case_top, color=cq_color_correct.Color(case_top_color[0], case_top_color[1], case_top_color[2]))
-            component.add(case, color=cq_color_correct.Color(body_color[0], body_color[1], body_color[2]))
-            component.add(pins, color=cq_color_correct.Color(pins_color[0], pins_color[1], pins_color[2]))
+            component.add(
+                case_top,
+                color=cq_color_correct.Color(
+                    case_top_color[0], case_top_color[1], case_top_color[2]
+                ),
+            )
+            component.add(
+                case,
+                color=cq_color_correct.Color(
+                    body_color[0], body_color[1], body_color[2]
+                ),
+            )
+            component.add(
+                pins,
+                color=cq_color_correct.Color(
+                    pins_color[0], pins_color[1], pins_color[2]
+                ),
+            )
 
             # Save information for VRML export
             parts.append(case_top)
@@ -214,41 +304,81 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             colors.append(all_params[model]["case_top_color_key"])
             colors.append(all_params[model]["body_color_key"])
             colors.append(all_params[model]["pins_color_key"])
-        elif all_params[model]["model_class"] == "cq_parameters_EMB84Q_RO_SMT_0825_S_4_R":
+        elif (
+            all_params[model]["model_class"] == "cq_parameters_EMB84Q_RO_SMT_0825_S_4_R"
+        ):
             cqm = cq_parameters_EMB84Q_RO_SMT_0825_S_4_R()
 
             # Load the appropriate colors
-            case_top_color = shaderColors.named_colors[all_params[model]["case_top_color_key"]].getDiffuseFloat()
-            pins_color = shaderColors.named_colors[all_params[model]["pins_color_key"]].getDiffuseFloat()
+            case_top_color = shaderColors.named_colors[
+                all_params[model]["case_top_color_key"]
+            ].getDiffuseFloat()
+            pins_color = shaderColors.named_colors[
+                all_params[model]["pins_color_key"]
+            ].getDiffuseFloat()
 
             # Generate the models
             case_top = cqm.make_case(all_params[model])
             pins = cqm.make_pins(all_params[model])
 
             # Build the assembly
-            component.add(case_top, color=cq_color_correct.Color(case_top_color[0], case_top_color[1], case_top_color[2]))
-            component.add(pins, color=cq_color_correct.Color(pins_color[0], pins_color[1], pins_color[2]))
+            component.add(
+                case_top,
+                color=cq_color_correct.Color(
+                    case_top_color[0], case_top_color[1], case_top_color[2]
+                ),
+            )
+            component.add(
+                pins,
+                color=cq_color_correct.Color(
+                    pins_color[0], pins_color[1], pins_color[2]
+                ),
+            )
 
             # Save information for VRML export
             parts.append(case_top)
             parts.append(pins)
             colors.append(all_params[model]["case_top_color_key"])
             colors.append(all_params[model]["pins_color_key"])
-        elif all_params[model]["model_class"] == "cq_parameters_ProjectsUnlimited_AI_4228_TWT_R":
+        elif (
+            all_params[model]["model_class"]
+            == "cq_parameters_ProjectsUnlimited_AI_4228_TWT_R"
+        ):
             cqm = cq_parameters_ProjectsUnlimited_AI_4228_TWT_R()
 
             # Load the appropriate colors
-            case_top_color = shaderColors.named_colors[all_params[model]["case_top_color_key"]].getDiffuseFloat()
-            body_color = shaderColors.named_colors[all_params[model]["body_color_key"]].getDiffuseFloat()
-            pins_color = shaderColors.named_colors[all_params[model]["pins_color_key"]].getDiffuseFloat()
+            case_top_color = shaderColors.named_colors[
+                all_params[model]["case_top_color_key"]
+            ].getDiffuseFloat()
+            body_color = shaderColors.named_colors[
+                all_params[model]["body_color_key"]
+            ].getDiffuseFloat()
+            pins_color = shaderColors.named_colors[
+                all_params[model]["pins_color_key"]
+            ].getDiffuseFloat()
 
             # Generate the models
             case_top = cqm.make_top(all_params[model])
             case = cqm.make_case(all_params[model])
             pins = cqm.make_pins(all_params[model])
-            component.add(case_top, color=cq_color_correct.Color(case_top_color[0], case_top_color[1], case_top_color[2]))
-            component.add(case, color=cq_color_correct.Color(body_color[0], body_color[1], body_color[2]))
-            component.add(pins, color=cq_color_correct.Color(pins_color[0], pins_color[1], pins_color[2]))
+            component.add(
+                case_top,
+                color=cq_color_correct.Color(
+                    case_top_color[0], case_top_color[1], case_top_color[2]
+                ),
+            )
+            component.add(
+                case,
+                color=cq_color_correct.Color(
+                    body_color[0], body_color[1], body_color[2]
+                ),
+            )
+            component.add(
+                pins,
+                color=cq_color_correct.Color(
+                    pins_color[0], pins_color[1], pins_color[2]
+                ),
+            )
 
             # Save information for VRML export
             parts.append(case_top)
@@ -261,36 +391,67 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             cqm = cq_parameters_ProSignal_ABI_XXX_RC()
 
             # Load the appropriate colors
-            case_top_color = shaderColors.named_colors[all_params[model]["case_top_color_key"]].getDiffuseFloat()
-            pins_color = shaderColors.named_colors[all_params[model]["pins_color_key"]].getDiffuseFloat()
+            case_top_color = shaderColors.named_colors[
+                all_params[model]["case_top_color_key"]
+            ].getDiffuseFloat()
+            pins_color = shaderColors.named_colors[
+                all_params[model]["pins_color_key"]
+            ].getDiffuseFloat()
 
             # Generate the models
             case_top = cqm.make_case(all_params[model])
             pins = cqm.make_pins(all_params[model])
 
             # Build the assembly
-            component.add(case_top, color=cq_color_correct.Color(case_top_color[0], case_top_color[1], case_top_color[2]))
-            component.add(pins, color=cq_color_correct.Color(pins_color[0], pins_color[1], pins_color[2]))
+            component.add(
+                case_top,
+                color=cq_color_correct.Color(
+                    case_top_color[0], case_top_color[1], case_top_color[2]
+                ),
+            )
+            component.add(
+                pins,
+                color=cq_color_correct.Color(
+                    pins_color[0], pins_color[1], pins_color[2]
+                ),
+            )
 
             # Save information for VRML export
             parts.append(case_top)
             parts.append(pins)
             colors.append(all_params[model]["case_top_color_key"])
             colors.append(all_params[model]["pins_color_key"])
-        elif all_params[model]["model_class"] == "cq_parameters_StarMicronics_HMB_06_HMB_12":
+        elif (
+            all_params[model]["model_class"]
+            == "cq_parameters_StarMicronics_HMB_06_HMB_12"
+        ):
             cqm = cq_parameters_StarMicronics_HMB_06_HMB_12()
 
             # Load the appropriate colors
-            case_top_color = shaderColors.named_colors[all_params[model]["case_top_color_key"]].getDiffuseFloat()
-            pins_color = shaderColors.named_colors[all_params[model]["pins_color_key"]].getDiffuseFloat()
+            case_top_color = shaderColors.named_colors[
+                all_params[model]["case_top_color_key"]
+            ].getDiffuseFloat()
+            pins_color = shaderColors.named_colors[
+                all_params[model]["pins_color_key"]
+            ].getDiffuseFloat()
 
             # Generate the models
             case_top = cqm.make_case(all_params[model])
             pins = cqm.make_pins(all_params[model])
 
             # Build the assembly
-            component.add(case_top, color=cq_color_correct.Color(case_top_color[0], case_top_color[1], case_top_color[2]))
-            component.add(pins, color=cq_color_correct.Color(pins_color[0], pins_color[1], pins_color[2]))
+            component.add(
+                case_top,
+                color=cq_color_correct.Color(
+                    case_top_color[0], case_top_color[1], case_top_color[2]
+                ),
+            )
+            component.add(
+                pins,
+                color=cq_color_correct.Color(
+                    pins_color[0], pins_color[1], pins_color[2]
+                ),
+            )
 
             # Save information for VRML export
             parts.append(case_top)
@@ -301,17 +462,38 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             cqm = cq_parameters_TDK_PS1240P02BT()
 
             # Load the appropriate colors
-            case_top_color = shaderColors.named_colors[all_params[model]["case_top_color_key"]].getDiffuseFloat()
-            body_color = shaderColors.named_colors[all_params[model]["body_color_key"]].getDiffuseFloat()
-            pins_color = shaderColors.named_colors[all_params[model]["pins_color_key"]].getDiffuseFloat()
+            case_top_color = shaderColors.named_colors[
+                all_params[model]["case_top_color_key"]
+            ].getDiffuseFloat()
+            body_color = shaderColors.named_colors[
+                all_params[model]["body_color_key"]
+            ].getDiffuseFloat()
+            pins_color = shaderColors.named_colors[
+                all_params[model]["pins_color_key"]
+            ].getDiffuseFloat()
 
             # Generate the models
             case_top = cqm.make_top(all_params[model])
             case = cqm.make_case(all_params[model])
             pins = cqm.make_pins(all_params[model])
-            component.add(case_top, color=cq_color_correct.Color(case_top_color[0], case_top_color[1], case_top_color[2]))
-            component.add(case, color=cq_color_correct.Color(body_color[0], body_color[1], body_color[2]))
-            component.add(pins, color=cq_color_correct.Color(pins_color[0], pins_color[1], pins_color[2]))
+            component.add(
+                case_top,
+                color=cq_color_correct.Color(
+                    case_top_color[0], case_top_color[1], case_top_color[2]
+                ),
+            )
+            component.add(
+                case,
+                color=cq_color_correct.Color(
+                    body_color[0], body_color[1], body_color[2]
+                ),
+            )
+            component.add(
+                pins,
+                color=cq_color_correct.Color(
+                    pins_color[0], pins_color[1], pins_color[2]
+                ),
+            )
 
             # Save information for VRML export
             parts.append(case_top)
@@ -321,21 +503,44 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             colors.append(all_params[model]["body_color_key"])
             colors.append(all_params[model]["pins_color_key"])
         # cq_parameters_PUI_AI_1440_TWT_24V_2_R
-        elif all_params[model]["model_class"] == "cq_parameters_PUI_AI_1440_TWT_24V_2_R":
+        elif (
+            all_params[model]["model_class"] == "cq_parameters_PUI_AI_1440_TWT_24V_2_R"
+        ):
             cqm = cq_parameters_PUI_AI_1440_TWT_24V_2_R()
 
             # Load the appropriate colors
-            case_top_color = shaderColors.named_colors[all_params[model]["case_top_color_key"]].getDiffuseFloat()
-            body_color = shaderColors.named_colors[all_params[model]["body_color_key"]].getDiffuseFloat()
-            pins_color = shaderColors.named_colors[all_params[model]["pins_color_key"]].getDiffuseFloat()
+            case_top_color = shaderColors.named_colors[
+                all_params[model]["case_top_color_key"]
+            ].getDiffuseFloat()
+            body_color = shaderColors.named_colors[
+                all_params[model]["body_color_key"]
+            ].getDiffuseFloat()
+            pins_color = shaderColors.named_colors[
+                all_params[model]["pins_color_key"]
+            ].getDiffuseFloat()
 
             # Generate the models
             case_top = cqm.make_top(all_params[model])
             case = cqm.make_case(all_params[model])
             pins = cqm.make_pins(all_params[model])
-            component.add(case_top, color=cq_color_correct.Color(case_top_color[0], case_top_color[1], case_top_color[2]))
-            component.add(case, color=cq_color_correct.Color(body_color[0], body_color[1], body_color[2]))
-            component.add(pins, color=cq_color_correct.Color(pins_color[0], pins_color[1], pins_color[2]))
+            component.add(
+                case_top,
+                color=cq_color_correct.Color(
+                    case_top_color[0], case_top_color[1], case_top_color[2]
+                ),
+            )
+            component.add(
+                case,
+                color=cq_color_correct.Color(
+                    body_color[0], body_color[1], body_color[2]
+                ),
+            )
+            component.add(
+                pins,
+                color=cq_color_correct.Color(
+                    pins_color[0], pins_color[1], pins_color[2]
+                ),
+            )
 
             # Save information for VRML export
             parts.append(case_top)
@@ -353,7 +558,12 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             os.makedirs(output_dir)
 
         # Export the assembly to STEP
-        component.save(os.path.join(output_dir, model + ".step"), cq.exporters.ExportTypes.STEP, mode=cq.exporters.assembly.ExportModes.FUSED, write_pcurves=False)
+        component.save(
+            os.path.join(output_dir, model + ".step"),
+            cq.exporters.ExportTypes.STEP,
+            mode=cq.exporters.assembly.ExportModes.FUSED,
+            write_pcurves=False,
+        )
 
         # Check for a proper union
         export_tools.check_step_export_union(component, output_dir, model)
@@ -364,9 +574,13 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
 
         # Update the license
         from _tools import add_license
-        add_license.addLicenseToStep(output_dir, model + ".step",
-                                        add_license.LIST_int_license,
-                                        add_license.STR_int_licAuthor,
-                                        add_license.STR_int_licEmail,
-                                        add_license.STR_int_licOrgSys,
-                                        add_license.STR_int_licPreProc)
+
+        add_license.addLicenseToStep(
+            output_dir,
+            model + ".step",
+            add_license.LIST_int_license,
+            add_license.STR_int_licAuthor,
+            add_license.STR_int_licEmail,
+            add_license.STR_int_licOrgSys,
+            add_license.STR_int_licPreProc,
+        )

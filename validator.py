@@ -1,17 +1,28 @@
 #!/usr/bin/env python3
 
+import argparse
 import os
 from sys import argv
-import argparse
+
 import cadquery as cq
+
 
 def assert_eq(arg1, arg2, msg):
     if arg1 != arg2:
         raise AssertionError(str(arg1) + " and " + str(arg2) + " are not equal. " + msg)
 
+
 def assert_almost_eq(arg1, arg2, tolerance, msg):
     if arg1 > arg2 + tolerance or arg1 < arg2 - tolerance:
-        raise AssertionError(str(arg1) + " and " + str(arg2) + " are not equal within a tolerance of " + str(tolerance) + " " + msg)
+        raise AssertionError(
+            str(arg1)
+            + " and "
+            + str(arg2)
+            + " are not equal within a tolerance of "
+            + str(tolerance)
+            + " "
+            + msg
+        )
 
 
 def main():
@@ -19,11 +30,21 @@ def main():
     tolerance = 1.0
 
     # Handle the command line arguments
-    parser = argparse.ArgumentParser(description='Validates generated KiCAD 3D models against previously validated models.')
-    parser.add_argument('--unvalidated_dir', dest='unvalidated', required=True,
-                    help='Root directory containing the generated models to be validated.')
-    parser.add_argument('--validated_dir', dest='validated', required=True,
-                    help='Root directory containing the previously validated models to check against.')
+    parser = argparse.ArgumentParser(
+        description="Validates generated KiCAD 3D models against previously validated models."
+    )
+    parser.add_argument(
+        "--unvalidated_dir",
+        dest="unvalidated",
+        required=True,
+        help="Root directory containing the generated models to be validated.",
+    )
+    parser.add_argument(
+        "--validated_dir",
+        dest="validated",
+        required=True,
+        help="Root directory containing the previously validated models to check against.",
+    )
     args = parser.parse_args()
 
     print("File match check started.")
@@ -35,7 +56,11 @@ def main():
 
         # Make sure there is not a directory name mismatch
         if not os.path.isdir(valid_dir):
-            print("The unvalidated directory " + unvalid_dir + " is used, and that directory does not exist in the validated KiCAD directory.")
+            print(
+                "The unvalidated directory "
+                + unvalid_dir
+                + " is used, and that directory does not exist in the validated KiCAD directory."
+            )
             continue
 
         # Get a listing of all the unvalidated files in the current directory so we can check for matches in the validated directory
@@ -46,7 +71,13 @@ def main():
         for unvalid_file in unvalid_files:
             valid_file_path = os.path.join(args.validated, unvalid_dir, unvalid_file)
             if not os.path.isfile(valid_file_path):
-                print("Unvalidated file " + unvalid_file + " in " + unvalid_dir + " does not exist in the validated directory.")
+                print(
+                    "Unvalidated file "
+                    + unvalid_file
+                    + " in "
+                    + unvalid_dir
+                    + " does not exist in the validated directory."
+                )
 
     print("File match check complete.")
 
@@ -68,7 +99,9 @@ def main():
             for valid_file in valid_files:
                 # We need the path to both the valid and unvalid files to check them against each other
                 valid_file_path = os.path.join(args.validated, valid_dir, valid_file)
-                unvalid_file_path = os.path.join(args.unvalidated, valid_dir, valid_file)
+                unvalid_file_path = os.path.join(
+                    args.unvalidated, valid_dir, valid_file
+                )
 
                 # See if the file exists in the unvalidated models directory
                 if os.path.isfile(unvalid_file_path):
@@ -80,13 +113,19 @@ def main():
 
                         try:
                             # Check multiple aspects about the step files to make sure they are equivalent
-                            assert_almost_eq(unvalid.combine().val().Volume(), valid.combine().val().Volume(), tolerance, "Unvalidated and validated STEP files should have similar volumes.")
+                            assert_almost_eq(
+                                unvalid.combine().val().Volume(),
+                                valid.combine().val().Volume(),
+                                tolerance,
+                                "Unvalidated and validated STEP files should have similar volumes.",
+                            )
                         except Exception as ex:
                             # Let the user know what is being checked
                             print("Validated file: " + valid_file_path)
                             print("Unvalidated file: " + unvalid_file_path)
                             print(ex)
                             print("")
+
 
 if __name__ == "__main__":
     main()

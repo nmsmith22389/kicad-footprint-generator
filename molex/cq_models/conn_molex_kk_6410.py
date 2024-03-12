@@ -12,58 +12,62 @@
 ## To generate VRML/ STEP files for, use launch-cq-molex
 ## script of the parent directory.
 
-#* This is a cadquery script for the generation of MCAD Models.             *
-#*                                                                          *
-#*   Copyright (c) 2016                                                     *
-#* Rene Poeschl https://github.com/poeschlr                                 *
-#* All trademarks within this guide belong to their legitimate owners.      *
-#*                                                                          *
-#*   This program is free software; you can redistribute it and/or modify   *
-#*   it under the terms of the GNU General Public License (GPL)             *
-#*   as published by the Free Software Foundation; either version 2 of      *
-#*   the License, or (at your option) any later version.                    *
-#*   for detail see the LICENCE text file.                                  *
-#*                                                                          *
-#*   This program is distributed in the hope that it will be useful,        *
-#*   but WITHOUT ANY WARRANTY; without even the implied warranty of         *
-#*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          *
-#*   GNU Library General Public License for more details.                   *
-#*                                                                          *
-#*   You should have received a copy of the GNU Library General Public      *
-#*   License along with this program; if not, write to the Free Software    *
-#*   Foundation, Inc.,                                                      *
-#*   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA           *
-#*                                                                          *
-#* The models generated with this script add the following exception:       *
-#*   As a special exception, if you create a design which uses this symbol, *
-#*   and embed this symbol or unaltered portions of this symbol into the    *
-#*   design, this symbol does not by itself cause the resulting design to   *
-#*   be covered by the GNU General Public License. This exception does not  *
-#*   however invalidate any other reasons why the design itself might be    *
-#*   covered by the GNU General Public License. If you modify this symbol,  *
-#*   you may extend this exception to your version of the symbol, but you   *
-#*   are not obligated to do so. If you do not wish to do so, delete this   *
-#*   exception statement from your version.                                 *
-#****************************************************************************
+# * This is a cadquery script for the generation of MCAD Models.             *
+# *                                                                          *
+# *   Copyright (c) 2016                                                     *
+# * Rene Poeschl https://github.com/poeschlr                                 *
+# * All trademarks within this guide belong to their legitimate owners.      *
+# *                                                                          *
+# *   This program is free software; you can redistribute it and/or modify   *
+# *   it under the terms of the GNU General Public License (GPL)             *
+# *   as published by the Free Software Foundation; either version 2 of      *
+# *   the License, or (at your option) any later version.                    *
+# *   for detail see the LICENCE text file.                                  *
+# *                                                                          *
+# *   This program is distributed in the hope that it will be useful,        *
+# *   but WITHOUT ANY WARRANTY; without even the implied warranty of         *
+# *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          *
+# *   GNU Library General Public License for more details.                   *
+# *                                                                          *
+# *   You should have received a copy of the GNU Library General Public      *
+# *   License along with this program; if not, write to the Free Software    *
+# *   Foundation, Inc.,                                                      *
+# *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA           *
+# *                                                                          *
+# * The models generated with this script add the following exception:       *
+# *   As a special exception, if you create a design which uses this symbol, *
+# *   and embed this symbol or unaltered portions of this symbol into the    *
+# *   design, this symbol does not by itself cause the resulting design to   *
+# *   be covered by the GNU General Public License. This exception does not  *
+# *   however invalidate any other reasons why the design itself might be    *
+# *   covered by the GNU General Public License. If you modify this symbol,  *
+# *   you may extend this exception to your version of the symbol, but you   *
+# *   are not obligated to do so. If you do not wish to do so, delete this   *
+# *   exception statement from your version.                                 *
+# ****************************************************************************
 
 __title__ = "model description for Molex KK 6410 series connectors"
 __author__ = "hackscribble"
-__Comment__ = 'model description for Molex KK 6410 series connectors using cadquery'
+__Comment__ = "model description for Molex KK 6410 series connectors using cadquery"
 
 ___ver___ = "0.3 04/12/2017"
 
-class LICENCE_Info():
+
+class LICENCE_Info:
     ############################################################################
     STR_licAuthor = "Ray Benitez"
     STR_licEmail = "hackscribble@outlook.com"
     STR_licOrgSys = ""
     STR_licPreProc = ""
 
-    LIST_license = ["",]
+    LIST_license = [
+        "",
+    ]
     ############################################################################
 
 
 import cadquery as cq
+
 # from Helpers import show
 # from collections import namedtuple
 # import FreeCAD
@@ -115,43 +119,49 @@ import cadquery as cq
 
 
 def dimensions(series_params, num_pins):
-    length = (num_pins-1) * series_params['pitch'] + 2 * series_params['pin_inside_distance']
-    ramp_height = 11.7 - series_params['body_height']
-    if num_pins > series_params['ramp_split_breakpoint']:
-        ramp_width = series_params['pitch'] * 2
-        ramp_offset = series_params['pitch'] * (num_pins -5) / 2
+    length = (num_pins - 1) * series_params["pitch"] + 2 * series_params[
+        "pin_inside_distance"
+    ]
+    ramp_height = 11.7 - series_params["body_height"]
+    if num_pins > series_params["ramp_split_breakpoint"]:
+        ramp_width = series_params["pitch"] * 2
+        ramp_offset = series_params["pitch"] * (num_pins - 5) / 2
     else:
-        ramp_width = (num_pins - 1) * series_params['pitch'] / 2
+        ramp_width = (num_pins - 1) * series_params["pitch"] / 2
         ramp_offset = 0
     return (length, ramp_height, ramp_width, ramp_offset)
 
+
 def generate_straight_pin(series_params):
-    pin_width=series_params['pin_width']
-    pin_depth=series_params['pin_depth']
-    pin_height=series_params['pin_height']
-    pin_inside_distance=series_params['pin_inside_distance']
-    chamfer_long = series_params['pin_chamfer_long']
-    chamfer_short = series_params['pin_chamfer_short']
+    pin_width = series_params["pin_width"]
+    pin_depth = series_params["pin_depth"]
+    pin_height = series_params["pin_height"]
+    pin_inside_distance = series_params["pin_inside_distance"]
+    chamfer_long = series_params["pin_chamfer_long"]
+    chamfer_short = series_params["pin_chamfer_short"]
 
-    pin=cq.Workplane("YZ").workplane(offset=-pin_width/2.0, centerOption="CenterOfMass")\
-        .moveTo(-pin_width/2.0, -pin_depth)\
-        .rect(pin_width, pin_height, False)\
+    pin = (
+        cq.Workplane("YZ")
+        .workplane(offset=-pin_width / 2.0, centerOption="CenterOfMass")
+        .moveTo(-pin_width / 2.0, -pin_depth)
+        .rect(pin_width, pin_height, False)
         .extrude(pin_width)
+    )
 
-    pin = pin.faces(">Z").edges(">X").chamfer(chamfer_short,chamfer_long)
-    pin = pin.faces(">Z").edges("<X").chamfer(chamfer_short,chamfer_long)
-    pin = pin.faces(">Z").edges(">Y").chamfer(chamfer_long,chamfer_short)
-    pin = pin.faces(">Z").edges("<Y").chamfer(chamfer_short,chamfer_long)
-    pin = pin.faces("<Z").edges(">X").chamfer(chamfer_short,chamfer_long)
-    pin = pin.faces("<Z").edges("<X").chamfer(chamfer_short,chamfer_long)
-    pin = pin.faces("<Z").edges(">Y").chamfer(chamfer_short,chamfer_long)
-    pin = pin.faces("<Z").edges("<Y").chamfer(chamfer_short,chamfer_long)
+    pin = pin.faces(">Z").edges(">X").chamfer(chamfer_short, chamfer_long)
+    pin = pin.faces(">Z").edges("<X").chamfer(chamfer_short, chamfer_long)
+    pin = pin.faces(">Z").edges(">Y").chamfer(chamfer_long, chamfer_short)
+    pin = pin.faces(">Z").edges("<Y").chamfer(chamfer_short, chamfer_long)
+    pin = pin.faces("<Z").edges(">X").chamfer(chamfer_short, chamfer_long)
+    pin = pin.faces("<Z").edges("<X").chamfer(chamfer_short, chamfer_long)
+    pin = pin.faces("<Z").edges(">Y").chamfer(chamfer_short, chamfer_long)
+    pin = pin.faces("<Z").edges("<Y").chamfer(chamfer_short, chamfer_long)
     return pin
 
 
 def generate_pins(series_params, num_pins):
-    pitch=series_params['pitch']
-    pin=generate_straight_pin(series_params)
+    pitch = series_params["pitch"]
+    pin = generate_straight_pin(series_params)
     pins = pin
     for i in range(0, num_pins):
         pins = pins.union(pin.translate((i * pitch, 0, 0)))
@@ -162,44 +172,74 @@ def generate_body(series_params, num_pins):
     # Calculate general dimensions
     (length, ramp_height, ramp_width, ramp_offset) = dimensions(series_params, num_pins)
 
-    pin_inside_distance = series_params['pin_inside_distance']
-    pin_width = series_params['pin_width']
-    pitch = series_params['pitch']
+    pin_inside_distance = series_params["pin_inside_distance"]
+    pin_width = series_params["pin_width"]
+    pitch = series_params["pitch"]
 
     body_len = length
-    body_width = series_params['body_width']
-    body_height = series_params['body_height']
+    body_width = series_params["body_width"]
+    body_height = series_params["body_height"]
 
-    body_channel_depth = series_params['body_channel_depth']
-    body_channel_width = series_params['body_channel_width']
-    body_cutout_length = series_params['body_cutout_length']
-    body_cutout_width = series_params['body_cutout_width']
+    body_channel_depth = series_params["body_channel_depth"]
+    body_channel_width = series_params["body_channel_width"]
+    body_cutout_length = series_params["body_cutout_length"]
+    body_cutout_width = series_params["body_cutout_width"]
 
     # ramp_split_breakpoint = series_params['ramp_split_breakpoint
-    ramp_chamfer_x = series_params['ramp_chamfer_x']
-    ramp_chamfer_y = series_params['ramp_chamfer_y']
+    ramp_chamfer_x = series_params["ramp_chamfer_x"]
+    ramp_chamfer_y = series_params["ramp_chamfer_y"]
     ramp_height = ramp_height
     ramp_width = ramp_width
     ramp_offset = ramp_offset
 
-    body = cq.Workplane("XY").moveTo(((num_pins-1)*pitch)/2.0, 0).rect(body_len, body_width).extrude(body_height)#.edges("|Z").fillet(0.05)
+    body = (
+        cq.Workplane("XY")
+        .moveTo(((num_pins - 1) * pitch) / 2.0, 0)
+        .rect(body_len, body_width)
+        .extrude(body_height)
+    )  # .edges("|Z").fillet(0.05)
 
-    body = body.faces("<Z").workplane(centerOption="CenterOfMass").rarray(pitch, 1, num_pins, 1)\
-        .rect(body_channel_width, body_width).cutBlind(-body_channel_depth)
+    body = (
+        body.faces("<Z")
+        .workplane(centerOption="CenterOfMass")
+        .rarray(pitch, 1, num_pins, 1)
+        .rect(body_channel_width, body_width)
+        .cutBlind(-body_channel_depth)
+    )
 
-    body = body.faces(">Z").workplane(centerOption="CenterOfMass").moveTo(((num_pins-1)*pitch)/2.0, 0).rarray(pitch, 1, num_pins-1, 1)\
-        .rect(body_cutout_width, body_cutout_length).cutThruAll(False)
+    body = (
+        body.faces(">Z")
+        .workplane(centerOption="CenterOfMass")
+        .moveTo(((num_pins - 1) * pitch) / 2.0, 0)
+        .rarray(pitch, 1, num_pins - 1, 1)
+        .rect(body_cutout_width, body_cutout_length)
+        .cutThruAll(False)
+    )
 
-    ramp = cq.Workplane("YZ").workplane(offset=ramp_offset, centerOption="CenterOfMass").moveTo(-body_width/2.0, body_height)\
-        .line(0,ramp_height)\
-        .line(1.0,0)\
-        .line(0,-3.8)\
-        .line(0.5,-0.9)\
-        .line(0,-1.0)\
-        .line(-0.5,-0.5)\
-        .line(0,-1.7)\
-        .threePointArc((-body_width/2.0 + 1 + (0.6 * (1-0.707)), body_height + (1 - 0.707)* 0.6), (-body_width/2.0 + 1 + 0.6, body_height))\
-        .close().extrude(ramp_width).faces(">X").edges(">Z").chamfer(ramp_chamfer_x, ramp_chamfer_y)
+    ramp = (
+        cq.Workplane("YZ")
+        .workplane(offset=ramp_offset, centerOption="CenterOfMass")
+        .moveTo(-body_width / 2.0, body_height)
+        .line(0, ramp_height)
+        .line(1.0, 0)
+        .line(0, -3.8)
+        .line(0.5, -0.9)
+        .line(0, -1.0)
+        .line(-0.5, -0.5)
+        .line(0, -1.7)
+        .threePointArc(
+            (
+                -body_width / 2.0 + 1 + (0.6 * (1 - 0.707)),
+                body_height + (1 - 0.707) * 0.6,
+            ),
+            (-body_width / 2.0 + 1 + 0.6, body_height),
+        )
+        .close()
+        .extrude(ramp_width)
+        .faces(">X")
+        .edges(">Z")
+        .chamfer(ramp_chamfer_x, ramp_chamfer_y)
+    )
 
     ramp_mirror = ramp.mirror("YZ")
 

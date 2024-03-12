@@ -16,36 +16,36 @@
 ## the script will generate STEP and VRML parametric models
 ## to be used with kicad StepUp script
 
-#* These are a FreeCAD & cadquery tools                                     *
-#* to export generated models in STEP & VRML format.                        *
-#*                                                                          *
-#* cadquery script for generating DIP socket models in STEP AP214           *
-#*   Copyright (c) 2017                                                     *
-#* Maurice https://launchpad.net/~easyw                                     *
-#* Terje Io https://github.com/terjeio                                      *
-#* All trademarks within this guide belong to their legitimate owners.      *
-#*                                                                          *
-#*   This program is free software; you can redistribute it and/or modify   *
-#*   it under the terms of the GNU Lesser General Public License (LGPL)     *
-#*   as published by the Free Software Foundation; either version 2 of      *
-#*   the License, or (at your option) any later version.                    *
-#*   for detail see the LICENCE text file.                                  *
-#*                                                                          *
-#*   This program is distributed in the hope that it will be useful,        *
-#*   but WITHOUT ANY WARRANTY; without even the implied warranty of         *
-#*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          *
-#*   GNU Library General Public License for more details.                   *
-#*                                                                          *
-#*   You should have received a copy of the GNU Library General Public      *
-#*   License along with this program; if not, write to the Free Software    *
-#*   Foundation, Inc.,                                                      *
-#*   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA           *
-#*                                                                          *
-#****************************************************************************
+# * These are a FreeCAD & cadquery tools                                     *
+# * to export generated models in STEP & VRML format.                        *
+# *                                                                          *
+# * cadquery script for generating DIP socket models in STEP AP214           *
+# *   Copyright (c) 2017                                                     *
+# * Maurice https://launchpad.net/~easyw                                     *
+# * Terje Io https://github.com/terjeio                                      *
+# * All trademarks within this guide belong to their legitimate owners.      *
+# *                                                                          *
+# *   This program is free software; you can redistribute it and/or modify   *
+# *   it under the terms of the GNU Lesser General Public License (LGPL)     *
+# *   as published by the Free Software Foundation; either version 2 of      *
+# *   the License, or (at your option) any later version.                    *
+# *   for detail see the LICENCE text file.                                  *
+# *                                                                          *
+# *   This program is distributed in the hope that it will be useful,        *
+# *   but WITHOUT ANY WARRANTY; without even the implied warranty of         *
+# *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          *
+# *   GNU Library General Public License for more details.                   *
+# *                                                                          *
+# *   You should have received a copy of the GNU Library General Public      *
+# *   License along with this program; if not, write to the Free Software    *
+# *   Foundation, Inc.,                                                      *
+# *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA           *
+# *                                                                          *
+# ****************************************************************************
 
 __title__ = "make assorted DIP part 3D models"
 __author__ = "maurice, hyOzd, Stefan, Terje"
-__Comment__ = 'make make assorted DIP part 3D models exported to STEP and VRML for Kicad StepUP script'
+__Comment__ = "make make assorted DIP part 3D models exported to STEP and VRML for Kicad StepUP script"
 
 ___ver___ = "1.0.0 30/11/2017"
 
@@ -56,18 +56,22 @@ ___ver___ = "1.0.0 30/11/2017"
 # 2020-09-23: mods by MountyRox
 #
 
-import sys, os
+import fnmatch
+import os
+import re
+import sys
 
 import exportPartToVRML as expVRML
-import shaderColors
-import re, fnmatch
 
 # maui start
-import FreeCAD #, Draft, FreeCADGui
-#import ImportGui
+import FreeCAD  # , Draft, FreeCADGui
+
+# import ImportGui
 import FreeCADGui
+import shaderColors
+
 Gui = FreeCADGui
-#from Gui.Command import *
+# from Gui.Command import *
 
 from cq_base_parameters import CaseType
 
@@ -76,24 +80,33 @@ if FreeCAD.GuiUp:
 
 
 def reload_lib(lib):
-    if (sys.version_info > (3, 0)):
+    if sys.version_info > (3, 0):
         import importlib
+
         importlib.reload(lib)
     else:
-        reload (lib)
-
+        reload(lib)
 
 
 # Import cad_tools
 import cq_cad_tools
+
 # Reload tools
 reload_lib(cq_cad_tools)
-# Explicitly load all needed functions
-from cq_cad_tools import FuseObjs_wColors, GetListOfObjects, restore_Main_Tools, \
- exportSTEP, close_CQ_Example, saveFCdoc, z_RotateObject, Color_Objects, \
- checkRequirements
-
 import add_license
+
+# Explicitly load all needed functions
+from cq_cad_tools import (
+    Color_Objects,
+    FuseObjs_wColors,
+    GetListOfObjects,
+    checkRequirements,
+    close_CQ_Example,
+    exportSTEP,
+    restore_Main_Tools,
+    saveFCdoc,
+    z_RotateObject,
+)
 
 # Sphinx workaround #1
 try:
@@ -104,17 +117,18 @@ except NameError:
 
 try:
     # Gui.SendMsgToActiveView("Run")
-#    from Gui.Command import *
+    #    from Gui.Command import *
     Gui.activateWorkbench("CadQueryWorkbench")
     import cadquery
+
     cq = cadquery
 #    from Helpers import show
-    # CadQuery Gui
-except: # catch *all* exceptions
+# CadQuery Gui
+except:  # catch *all* exceptions
     msg = "missing CadQuery 0.3.0 or later Module!\r\n\r\n"
     msg += "https://github.com/jmwright/cadquery-freecad-module/wiki\n"
     if QtGui is not None:
-        reply = QtGui.QMessageBox.information(None,"Info ...",msg)
+        reply = QtGui.QMessageBox.information(None, "Info ...", msg)
     # maui end
 
 # Sphinx workaround #2
@@ -125,11 +139,11 @@ except NameError:
     cq = None
 #
 
-#checking requirements
+# checking requirements
 
 try:
     close_CQ_Example(FreeCAD, Gui)
-except: # catch *all* exceptions
+except:  # catch *all* exceptions
     print("CQ 030 doesn't open example file")
 
 global All
@@ -137,12 +151,13 @@ All = None
 
 global kicadStepUptools
 
+
 def clear_console():
-    r"""Clears the FreeCAD Report & Python consoles
-    """
+    r"""Clears the FreeCAD Report & Python consoles"""
     mw = Gui.getMainWindow()
     mw.findChild(QtGui.QPlainTextEdit, "Python console").clear()
     mw.findChild(QtGui.QTextEdit, "Report view").clear()
+
 
 class ModelGenerator:
     r"""A class for creating 3D models
@@ -159,7 +174,7 @@ class ModelGenerator:
     """
 
     alt_license = [
-        "*", # this line is replaced with copyright string - do NOT set to empty
+        "*",  # this line is replaced with copyright string - do NOT set to empty
         "---",
         "This work is licensed under the Creative Commons CC-BY-SA 4.0 License with the following exception:",
         "To the extent that the creation of electronic designs that use 'Licensed Material'",
@@ -177,22 +192,24 @@ class ModelGenerator:
         "*DO NOT RELY UPON ANY INFORMATION FOUND HERE WITHOUT INDEPENDENT VERIFICATION.*",
     ]
 
-    def __init__(self, scripts_root, script_dir=None, saveToKicad=True, kicadStepUp=None):
+    def __init__(
+        self, scripts_root, script_dir=None, saveToKicad=True, kicadStepUp=None
+    ):
         self.script_dir = script_dir
         if self.script_dir == "" or self.script_dir is None:
             self.script_dir = None
-        self.models_dir = os.getenv('KISYS3DMOD') if saveToKicad else None
+        self.models_dir = os.getenv("KISYS3DMOD") if saveToKicad else None
         if self.models_dir is None:
             self.models_dir = scripts_root + "_3Dmodels"
         self.models_src_dir = scripts_root + "_3DmodelsFCStd"
-        self.footprints_dir = os.getenv('KISYSMOD')
+        self.footprints_dir = os.getenv("KISYSMOD")
         if self.footprints_dir is not None and not os.path.isdir(self.footprints_dir):
             self.footprints_dir = None
         self.kicadStepUptools = kicadStepUp
         self.license = None
         self.scriptsource = "https://github.com/easyw/kicad-3d-models-in-freecad/tree/master/cadquery/FCAD_script_generator/"
 
-    def getOptions (self, argv):
+    def getOptions(self, argv):
         r"""get options from sys.argv ready to use as the *options* parameter for the :func:`makeModels` method
 
         :param  argv: usually sys.argv
@@ -223,7 +240,9 @@ class ModelGenerator:
         """
         self.scriptsource = "" if url is None else url
 
-    def makeModel(self, models_dir, genericName, model, keepDocument=True, verbose=False):
+    def makeModel(
+        self, models_dir, genericName, model, keepDocument=True, verbose=False
+    ):
         r"""Creates a model by calling an instance of a model generator class and writes out the model files
 
         .. note:: normally this method will be called by :func:`makeModels` but may be used directly
@@ -251,12 +270,17 @@ class ModelGenerator:
 
         modelName = model.makeModelName(genericName)
 
-        FreeCAD.Console.PrintMessage('\r\n' + modelName)
+        FreeCAD.Console.PrintMessage("\r\n" + modelName)
 
         if model.make_me != True:
-            FreeCAD.Console.PrintMessage(' - not made')
+            FreeCAD.Console.PrintMessage(" - not made")
             return
-        CheckedmodelName = modelName.replace('.', '').replace('-', '_').replace('(', '').replace(')', '')
+        CheckedmodelName = (
+            modelName.replace(".", "")
+            .replace("-", "_")
+            .replace("(", "")
+            .replace(")", "")
+        )
         FreeCAD.newDocument(CheckedmodelName)
         FreeCAD.setActiveDocument(CheckedmodelName)
         Gui.ActiveDocument = Gui.getDocument(CheckedmodelName)
@@ -269,8 +293,14 @@ class ModelGenerator:
         material_substitutions = {}
 
         for i in range(0, len(objs)):
-            Color_Objects(Gui, objs[i], shaderColors.named_colors[model.color_keys[i]].getDiffuseFloat())
-            material_substitutions[Gui.ActiveDocument.getObject(objs[i].Name).DiffuseColor[0][:-1]] = model.color_keys[i]
+            Color_Objects(
+                Gui,
+                objs[i],
+                shaderColors.named_colors[model.color_keys[i]].getDiffuseFloat(),
+            )
+            material_substitutions[
+                Gui.ActiveDocument.getObject(objs[i].Name).DiffuseColor[0][:-1]
+            ] = model.color_keys[i]
 
         if verbose:
             expVRML.say(material_substitutions)
@@ -287,13 +317,13 @@ class ModelGenerator:
         objs[0].Label = CheckedmodelName
         restore_Main_Tools()
 
-        #rotate if required
-        if (model.rotation != 0):
+        # rotate if required
+        if model.rotation != 0:
             z_RotateObject(doc, model.rotation)
 
         s = objs[0].Shape
         shape = s.copy()
-        shape.Placement = s.Placement;
+        shape.Placement = s.Placement
         shape.translate(model.offsets)
         objs[0].Placement = shape.Placement
 
@@ -304,7 +334,9 @@ class ModelGenerator:
         # Export STEP model
         exportSTEP(doc, modelName, out_dir)
 
-        license_txt = list(add_license.LIST_int_license if self.license is None else self.license) # make a copy to avoid modifying the original
+        license_txt = list(
+            add_license.LIST_int_license if self.license is None else self.license
+        )  # make a copy to avoid modifying the original
         license_txt.append("")
         license_txt.append("")
         if self.scriptsource != "" and self.script_dir is not None:
@@ -315,19 +347,36 @@ class ModelGenerator:
         if verbose:
             expVRML.say("")
 
-        add_license.addLicenseToStep(out_dir + os.sep, modelName + ".step", license_txt, model.licAuthor, model.licEmail, model.licOrgSys, model.licOrg, model.licPreProc)
+        add_license.addLicenseToStep(
+            out_dir + os.sep,
+            modelName + ".step",
+            license_txt,
+            model.licAuthor,
+            model.licEmail,
+            model.licOrgSys,
+            model.licOrg,
+            model.licPreProc,
+        )
 
         # Scale and export Vrml model
         scale = 1.0 / 2.54
         objs = GetListOfObjects(FreeCAD, doc)
         if verbose:
-            expVRML.say("######################################################################")
+            expVRML.say(
+                "######################################################################"
+            )
             expVRML.say(objs)
-            expVRML.say("######################################################################")
-        export_objects, used_color_keys = expVRML.determineColors(Gui, objs, material_substitutions)
-        export_file_name = out_dir + os.sep + modelName + '.wrl'
+            expVRML.say(
+                "######################################################################"
+            )
+        export_objects, used_color_keys = expVRML.determineColors(
+            Gui, objs, material_substitutions
+        )
+        export_file_name = out_dir + os.sep + modelName + ".wrl"
         colored_meshes = expVRML.getColoredMesh(Gui, export_objects, scale)
-        expVRML.writeVRMLFile(colored_meshes, export_file_name, used_color_keys, license_txt)
+        expVRML.writeVRMLFile(
+            colored_meshes, export_file_name, used_color_keys, license_txt
+        )
 
         # Save the doc in native FC format
         out_dir = self.models_src_dir + os.sep + model.destination_dir
@@ -337,25 +386,39 @@ class ModelGenerator:
         saveFCdoc(FreeCAD, Gui, doc, modelName, out_dir)
 
         # Place on footprint for verification
-        if keepDocument and model.footprints_dir is not None and self.footprints_dir is not None:
+        if (
+            keepDocument
+            and model.footprints_dir is not None
+            and self.footprints_dir is not None
+        ):
 
-            sys.argv = ["fc", "dummy", self.footprints_dir + os.sep + model.footprints_dir + os.sep + modelName, "savememory"]
+            sys.argv = [
+                "fc",
+                "dummy",
+                self.footprints_dir
+                + os.sep
+                + model.footprints_dir
+                + os.sep
+                + modelName,
+                "savememory",
+            ]
 
             if verbose:
-                expVRML.say('Footprint: ' + sys.argv[2])
+                expVRML.say("Footprint: " + sys.argv[2])
 
             if self.kicadStepUptools is None:
                 try:
                     import kicadStepUptools
+
                     expVRML.say("ksu present!")
                     self.kicadStepUptools = True
                     kicadStepUptools.KSUWidget.close()
-                    #kicadStepUptools.KSUWidget.setWindowState(QtCore.Qt.WindowMinimized)
-                    #kicadStepUptools.KSUWidget.destroy()
-                    #for i in QtGui.qApp.topLevelWidgets():
+                    # kicadStepUptools.KSUWidget.setWindowState(QtCore.Qt.WindowMinimized)
+                    # kicadStepUptools.KSUWidget.destroy()
+                    # for i in QtGui.qApp.topLevelWidgets():
                     #    if i.objectName() == "kicadStepUp":
                     #        i.deleteLater()
-                    #kicadStepUptools.KSUWidget.close()
+                    # kicadStepUptools.KSUWidget.close()
                 except:
                     self.kicadStepUptools = False
                     expVRML.say("ksu not present")
@@ -364,19 +427,21 @@ class ModelGenerator:
                 kicadStepUptools.KSUWidget.close()
                 reload_lib(kicadStepUptools)
                 kicadStepUptools.KSUWidget.close()
-                #kicadStepUptools.KSUWidget.setWindowState(QtCore.Qt.WindowMinimized)
-                #kicadStepUptools.KSUWidget.destroy()
+                # kicadStepUptools.KSUWidget.setWindowState(QtCore.Qt.WindowMinimized)
+                # kicadStepUptools.KSUWidget.destroy()
 
-        #display BBox
+        # display BBox
         if keepDocument:
             Gui.activateWorkbench("PartWorkbench")
             Gui.SendMsgToActiveView("ViewFit")
             Gui.activeDocument().activeView().viewAxometric()
         else:
-            doc=FreeCAD.ActiveDocument
+            doc = FreeCAD.ActiveDocument
             FreeCAD.closeDocument(doc.Name)
 
-    def makeModels(self, options, series, family, params, kicadStepUptools=None, verbose=False):
+    def makeModels(
+        self, options, series, family, params, kicadStepUptools=None, verbose=False
+    ):
         r"""Instantiates model creator classes and calls :func:`makeModel` repeatedly to create model files
 
         This is the main entry point to use for creating models
@@ -436,7 +501,7 @@ class ModelGenerator:
         """
 
         clear_console()
-        FreeCAD.Console.PrintMessage('\r\nRunning...\r\n')
+        FreeCAD.Console.PrintMessage("\r\nRunning...\r\n")
 
         if verbose:
             expVRML.say(self.models_dir)
@@ -451,20 +516,32 @@ class ModelGenerator:
             if options[0] == "list":
                 for variant in sorted(models):
                     models_made = models_made + 1
-                    expVRML.say(variant + "  ") # added spaces for pasting into .md file
+                    expVRML.say(
+                        variant + "  "
+                    )  # added spaces for pasting into .md file
             else:
                 buildAllSMD = options[0] == "allsmd"
-                qfilter = '*' if options[0] == "all" or options[0] == "allsmd" else options[0]
+                qfilter = (
+                    "*" if options[0] == "all" or options[0] == "allsmd" else options[0]
+                )
                 qfilter = re.compile(fnmatch.translate(qfilter))
                 for variant in list(models.keys()):
                     genericName = models[variant].variant
                     if qfilter.match(variant):
                         params = models[variant].params
                         model = models[variant].model(params)
-                        if (buildAllSMD == False or params.type == CaseType.SMD) and model.make_me:
+                        if (
+                            buildAllSMD == False or params.type == CaseType.SMD
+                        ) and model.make_me:
                             models_made = models_made + 1
                             # Change MountyRox: see below     vvvvvvvvvvvvvvvvvv
-                            self.makeModel(self.models_dir, models[variant].variant, model, keepDocument=False, verbose=verbose)
+                            self.makeModel(
+                                self.models_dir,
+                                models[variant].variant,
+                                model,
+                                keepDocument=False,
+                                verbose=verbose,
+                            )
         else:
 
             if family == All:
@@ -474,34 +551,59 @@ class ModelGenerator:
                 for variant in list(models.keys()):
                     params = models[variant].params
                     model = models[variant].model(params)
-                    # Change MountyRox: use genericName when calling makeModel instead variant, 
-                    # because variant holds the return value of model.makeModelName(genericName), not the original generic name 
+                    # Change MountyRox: use genericName when calling makeModel instead variant,
+                    # because variant holds the return value of model.makeModelName(genericName), not the original generic name
                     genericName = models[variant].variant
                     if model.make_me:
                         models_made = models_made + 1
-                        self.makeModel(self.models_dir, genericName, model, keepDocument=True, verbose=verbose)
+                        self.makeModel(
+                            self.models_dir,
+                            genericName,
+                            model,
+                            keepDocument=True,
+                            verbose=verbose,
+                        )
                     else:
-                        FreeCAD.Console.PrintMessage('\r\n' + model.makeModelName(genericName) + ' - not made')
+                        FreeCAD.Console.PrintMessage(
+                            "\r\n" + model.makeModelName(genericName) + " - not made"
+                        )
 
             else:
 
-                variant_to_build = "" if len(options)== 0 else options[0]
+                variant_to_build = "" if len(options) == 0 else options[0]
                 if variant_to_build == "":
-                    FreeCAD.Console.PrintMessage('No variant name is given! building default variants')
+                    FreeCAD.Console.PrintMessage(
+                        "No variant name is given! building default variants"
+                    )
                 for i in range(family, family + 1):
-                    variant = series[i].default_model if variant_to_build == "" else variant_to_build
+                    variant = (
+                        series[i].default_model
+                        if variant_to_build == ""
+                        else variant_to_build
+                    )
                     model = params.getModel(series[i], variant)
                     if model != False:
                         models_made = models_made + 1
-                        self.makeModel(self.models_dir, variant, model, keepDocument=True, verbose=verbose)
+                        self.makeModel(
+                            self.models_dir,
+                            variant,
+                            model,
+                            keepDocument=True,
+                            verbose=verbose,
+                        )
                     else:
-                        FreeCAD.Console.PrintMessage('\r\n' + variant + ' - not made')
+                        FreeCAD.Console.PrintMessage("\r\n" + variant + " - not made")
 
         if models_made == 0:
-            FreeCAD.Console.PrintMessage('\r\nDone - no models matched the provided filter!\r\n')
+            FreeCAD.Console.PrintMessage(
+                "\r\nDone - no models matched the provided filter!\r\n"
+            )
         else:
-            FreeCAD.Console.PrintMessage('\r\nDone - models made: ' + str(models_made) + '\r\n')
+            FreeCAD.Console.PrintMessage(
+                "\r\nDone - models made: " + str(models_made) + "\r\n"
+            )
 
-        sys.argv = [] # clear, running kicadStepUptools changes values
+        sys.argv = []  # clear, running kicadStepUptools changes values
+
 
 ### EOF ###

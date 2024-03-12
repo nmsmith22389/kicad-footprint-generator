@@ -18,48 +18,51 @@
 ## the script will generate STEP and VRML parametric models
 ## to be used with kicad StepUp script
 
-#* These are FreeCAD & cadquery tools                                       *
-#* to export generated models in STEP & VRML format.                        *
-#*                                                                          *
-#* cadquery script for generating JST-XH models in STEP AP214               *
-#*   Copyright (c) 2016                                                     *
-#* Rene Poeschl https://github.com/poeschlr                                 *
-#* All trademarks within this guide belong to their legitimate owners.      *
-#*                                                                          *
-#*   This program is free software; you can redistribute it and/or modify   *
-#*   it under the terms of the GNU General Public License (GPL)             *
-#*   as published by the Free Software Foundation; either version 2 of      *
-#*   the License, or (at your option) any later version.                    *
-#*   for detail see the LICENCE text file.                                  *
-#*                                                                          *
-#*   This program is distributed in the hope that it will be useful,        *
-#*   but WITHOUT ANY WARRANTY; without even the implied warranty of         *
-#*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          *
-#*   GNU Library General Public License for more details.                   *
-#*                                                                          *
-#*   You should have received a copy of the GNU Library General Public      *
-#*   License along with this program; if not, write to the Free Software    *
-#*   Foundation, Inc.,                                                      *
-#*   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA           *
-#*                                                                          *
-#****************************************************************************
+# * These are FreeCAD & cadquery tools                                       *
+# * to export generated models in STEP & VRML format.                        *
+# *                                                                          *
+# * cadquery script for generating JST-XH models in STEP AP214               *
+# *   Copyright (c) 2016                                                     *
+# * Rene Poeschl https://github.com/poeschlr                                 *
+# * All trademarks within this guide belong to their legitimate owners.      *
+# *                                                                          *
+# *   This program is free software; you can redistribute it and/or modify   *
+# *   it under the terms of the GNU General Public License (GPL)             *
+# *   as published by the Free Software Foundation; either version 2 of      *
+# *   the License, or (at your option) any later version.                    *
+# *   for detail see the LICENCE text file.                                  *
+# *                                                                          *
+# *   This program is distributed in the hope that it will be useful,        *
+# *   but WITHOUT ANY WARRANTY; without even the implied warranty of         *
+# *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          *
+# *   GNU Library General Public License for more details.                   *
+# *                                                                          *
+# *   You should have received a copy of the GNU Library General Public      *
+# *   License along with this program; if not, write to the Free Software    *
+# *   Foundation, Inc.,                                                      *
+# *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA           *
+# *                                                                          *
+# ****************************************************************************
 
 from __future__ import division
 
 __title__ = "generator for wuerth smt mounting hardware with inner through holes"
 __author__ = "scripts: maurice and hyOzd; models: poeschlr"
-__Comment__ = '''This generates step/wrl files for the official kicad library.'''
+__Comment__ = """This generates step/wrl files for the official kicad library."""
 
 ___ver___ = "1.0 26/05/2019"
 
-class LICENCE_Info():
+
+class LICENCE_Info:
     ############################################################################
     STR_licAuthor = "Rene Poeschl"
     STR_licEmail = "poeschlr@gmail.com"
     STR_licOrgSys = ""
     STR_licPreProc = ""
 
-    LIST_license = ["",]
+    LIST_license = [
+        "",
+    ]
     ############################################################################
 
 
@@ -77,13 +80,7 @@ class LICENCE_Info():
 
 import cadquery as cq
 
-thread_minor_diameter = {
-    'M1.6': 1.22,
-    'M2': 1.57,
-    'M2.5': 2.01,
-    'M3': 2.46,
-    'M4': 3.24
-    }
+thread_minor_diameter = {"M1.6": 1.22, "M2": 1.57, "M2.5": 2.01, "M3": 2.46, "M4": 3.24}
 
 # ext_thread = {
 #       'od': 'M3',
@@ -97,17 +94,34 @@ thread_minor_diameter = {
 
 ext_thread = None
 
-def generate(series_params, part): # **kwargs):
-    id = series_params['mechanical']['id']
-    od = series_params['mechanical']['od']
-    od1 = series_params['mechanical']['od1']
-    h1 = series_params['mechanical']['h1'] if 'h1' in series_params['mechanical'] else series_params['parts'][part]['h1']
-    td = series_params['parts'][part]['thread_depth'] if 'thread_depth' in series_params['parts'][part] else series_params['mechanical']['td']
-    dd = series_params['parts'][part]['drill_depth'] if 'drill_depth' in series_params['parts'][part] else series_params['mechanical']['dd']
-    id1 = series_params['mechanical']['id1']
-    t1 = series_params['mechanical']['t1']
-    h = series_params['parts'][part]['h'] if 'h' in series_params['parts'][part] else series_params['mechanical']['h']
-    ext_thread = series_params['mechanical']['ext_thread']
+
+def generate(series_params, part):  # **kwargs):
+    id = series_params["mechanical"]["id"]
+    od = series_params["mechanical"]["od"]
+    od1 = series_params["mechanical"]["od1"]
+    h1 = (
+        series_params["mechanical"]["h1"]
+        if "h1" in series_params["mechanical"]
+        else series_params["parts"][part]["h1"]
+    )
+    td = (
+        series_params["parts"][part]["thread_depth"]
+        if "thread_depth" in series_params["parts"][part]
+        else series_params["mechanical"]["td"]
+    )
+    dd = (
+        series_params["parts"][part]["drill_depth"]
+        if "drill_depth" in series_params["parts"][part]
+        else series_params["mechanical"]["dd"]
+    )
+    id1 = series_params["mechanical"]["id1"]
+    t1 = series_params["mechanical"]["t1"]
+    h = (
+        series_params["parts"][part]["h"]
+        if "h" in series_params["parts"][part]
+        else series_params["mechanical"]["h"]
+    )
+    ext_thread = series_params["mechanical"]["ext_thread"]
     # id = kwargs.get('id')
     # od = kwargs['od']
     # od1 = kwargs.get('od1')
@@ -119,64 +133,102 @@ def generate(series_params, part): # **kwargs):
     # t1 = kwargs.get('t1', 0)
     # ext_thread = kwargs.get('ext_thread')
 
-    body = cq.Workplane("XY").circle(od/2).extrude(h)
+    body = cq.Workplane("XY").circle(od / 2).extrude(h)
     if od1 is not None:
-        body = body.faces("<Z").workplane(centerOption="CenterOfMass").circle(od1/2).extrude(h1)
+        body = (
+            body.faces("<Z")
+            .workplane(centerOption="CenterOfMass")
+            .circle(od1 / 2)
+            .extrude(h1)
+        )
 
     if ext_thread is not None:
-        od = float(ext_thread['od'][1:])
-        thread = cq.Workplane("XY").workplane(h+ext_thread['undercut']['L'][0], centerOption="CenterOfMass")\
-            .circle(od/2).extrude(ext_thread['L']-ext_thread['undercut']['L'][0])
+        od = float(ext_thread["od"][1:])
+        thread = (
+            cq.Workplane("XY")
+            .workplane(h + ext_thread["undercut"]["L"][0], centerOption="CenterOfMass")
+            .circle(od / 2)
+            .extrude(ext_thread["L"] - ext_thread["undercut"]["L"][0])
+        )
 
         thread = thread.faces("<Z").chamfer(
-                   ext_thread['undercut']['L'][1] - ext_thread['undercut']['L'][0],
-                   (od - ext_thread['undercut']['od'])/2)
+            ext_thread["undercut"]["L"][1] - ext_thread["undercut"]["L"][0],
+            (od - ext_thread["undercut"]["od"]) / 2,
+        )
         thread = thread.faces(">Z").chamfer(
-                    (od - thread_minor_diameter[ext_thread['od']])/2)
-        thread = thread.faces("<Z").workplane(centerOption="CenterOfMass")\
-                    .circle(ext_thread['undercut']['od']/2)\
-                    .extrude(ext_thread['undercut']['L'][0]+0.1)
+            (od - thread_minor_diameter[ext_thread["od"]]) / 2
+        )
+        thread = (
+            thread.faces("<Z")
+            .workplane(centerOption="CenterOfMass")
+            .circle(ext_thread["undercut"]["od"] / 2)
+            .extrude(ext_thread["undercut"]["L"][0] + 0.1)
+        )
 
         body = body.union(thread)
-        body = body.edges(cq.selectors.BoxSelector(
-            [-ext_thread['undercut']['od']/2-0.1,
-             -ext_thread['undercut']['od']/2-0.1,
-             h-0.1
-             ],
-             [ext_thread['undercut']['od']/2+0.1,
-             ext_thread['undercut']['od']/2+0.1,
-             h+0.1
-             ], boundingbox=True)).fillet(ext_thread['undercut']['r'])
+        body = body.edges(
+            cq.selectors.BoxSelector(
+                [
+                    -ext_thread["undercut"]["od"] / 2 - 0.1,
+                    -ext_thread["undercut"]["od"] / 2 - 0.1,
+                    h - 0.1,
+                ],
+                [
+                    ext_thread["undercut"]["od"] / 2 + 0.1,
+                    ext_thread["undercut"]["od"] / 2 + 0.1,
+                    h + 0.1,
+                ],
+                boundingbox=True,
+            )
+        ).fillet(ext_thread["undercut"]["r"])
 
     if id is not None:
         if id in thread_minor_diameter:
             idf = thread_minor_diameter[id]
-            ch = (float(id[1:])-idf)/2
+            ch = (float(id[1:]) - idf) / 2
         else:
             idf = float(id)
             ch = 0
 
         if td is not None:
-            body = body.faces(">Z").workplane(-t1, centerOption="CenterOfMass").circle(idf/2).cutBlind(-td+t1)
-            body = body.faces(">Z").workplane(-t1, centerOption="CenterOfMass").circle(idf/2-0.01).cutBlind(-dd+t1)
+            body = (
+                body.faces(">Z")
+                .workplane(-t1, centerOption="CenterOfMass")
+                .circle(idf / 2)
+                .cutBlind(-td + t1)
+            )
+            body = (
+                body.faces(">Z")
+                .workplane(-t1, centerOption="CenterOfMass")
+                .circle(idf / 2 - 0.01)
+                .cutBlind(-dd + t1)
+            )
 
             if ch > 0:
-                body = body.edges(cq.selectors.BoxSelector(
-                            [-idf/2-0.1,
-                             -idf/2-0.1,
-                             h-0.1
-                             ],
-                             [idf/2+0.1,
-                             idf/2+0.1,
-                             h+0.1
-                             ], boundingbox=True))\
-                         .chamfer(ch)
+                body = body.edges(
+                    cq.selectors.BoxSelector(
+                        [-idf / 2 - 0.1, -idf / 2 - 0.1, h - 0.1],
+                        [idf / 2 + 0.1, idf / 2 + 0.1, h + 0.1],
+                        boundingbox=True,
+                    )
+                ).chamfer(ch)
         else:
             if ext_thread is None:
-                body = body.faces(">Z").workplane(-t1, centerOption="CenterOfMass").circle(idf/2).cutBlind(-(h+h1-t1))
+                body = (
+                    body.faces(">Z")
+                    .workplane(-t1, centerOption="CenterOfMass")
+                    .circle(idf / 2)
+                    .cutBlind(-(h + h1 - t1))
+                )
         if id1 is not None:
-            body = body.faces(">Z").workplane(centerOption="CenterOfMass").circle(id1/2).cutBlind(-(t1))
+            body = (
+                body.faces(">Z")
+                .workplane(centerOption="CenterOfMass")
+                .circle(id1 / 2)
+                .cutBlind(-(t1))
+            )
     return body
+
 
 # opend from within freecad
 # if "module" in __name__:

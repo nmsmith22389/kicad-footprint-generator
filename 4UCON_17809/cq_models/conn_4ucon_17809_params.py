@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from collections import namedtuple
+
 # from conn_4ucon_global_params import generate_footprint_name
 
 
@@ -25,7 +26,7 @@ from collections import namedtuple
 #     )
 
 
-# all_params = {								
+# all_params = {
 #     'ucon_17809_02x02_1.27mm' : generate_params(  4, "17809", 1.27, 2.54),
 #     'ucon_17809_02x03_1.27mm' : generate_params(  6, "17809", 1.27, 2.54),
 #     'ucon_17809_02x04_1.27mm' : generate_params(  8, "17809", 1.27, 2.54),
@@ -122,20 +123,39 @@ from collections import namedtuple
 #     ramp_chamfer_y = 0.7
 
 
-calcDim = namedtuple( 'calcDim', ['length', 'slot_length', 'bottom_void_width', 'ramp_height', 'ramp_width', 'ramp_offset'])
+calcDim = namedtuple(
+    "calcDim",
+    [
+        "length",
+        "slot_length",
+        "bottom_void_width",
+        "ramp_height",
+        "ramp_width",
+        "ramp_offset",
+    ],
+)
 
 
 def dimensions(params, globals):
-    length = ((params['num_pins'] / 2) - 1) * params['pin_pitch'] + 2 * globals['pin_inside_distance']
-    slot_length = ((params['num_pins'] / 2) - 1) * params['pin_pitch'] + 2 * globals['slot_outside_pin']
-    bottom_void_width = 2 * (params['pin_y_pitch'] + globals['pin_thickness']/2.0)
-    ramp_height = 11.7 - globals['body_height']
-    if params['num_pins'] > globals['ramp_split_breakpoint']:
-        ramp_width = params['pin_pitch'] * 2
-        ramp_offset = params['pin_pitch'] * (params['num_pins'] -5) / 2
+    length = ((params["num_pins"] / 2) - 1) * params["pin_pitch"] + 2 * globals[
+        "pin_inside_distance"
+    ]
+    slot_length = ((params["num_pins"] / 2) - 1) * params["pin_pitch"] + 2 * globals[
+        "slot_outside_pin"
+    ]
+    bottom_void_width = 2 * (params["pin_y_pitch"] + globals["pin_thickness"] / 2.0)
+    ramp_height = 11.7 - globals["body_height"]
+    if params["num_pins"] > globals["ramp_split_breakpoint"]:
+        ramp_width = params["pin_pitch"] * 2
+        ramp_offset = params["pin_pitch"] * (params["num_pins"] - 5) / 2
     else:
-        ramp_width = (params['num_pins'] - 1) * params['pin_pitch'] / 2
+        ramp_width = (params["num_pins"] - 1) * params["pin_pitch"] / 2
         ramp_offset = 0
-    return calcDim(length = length, slot_length=slot_length, bottom_void_width = bottom_void_width, ramp_height = ramp_height, ramp_width = ramp_width, ramp_offset = ramp_offset)
-
-
+    return calcDim(
+        length=length,
+        slot_length=slot_length,
+        bottom_void_width=bottom_void_width,
+        ramp_height=ramp_height,
+        ramp_width=ramp_width,
+        ramp_offset=ramp_offset,
+    )

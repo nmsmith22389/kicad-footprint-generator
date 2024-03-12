@@ -9,29 +9,38 @@
 
 ## file of parametric definitions
 
-import collections
-from collections import namedtuple
-
-import FreeCAD, Draft, FreeCADGui
-import ImportGui
-import FreeCADGui as Gui
-
-import shaderColors
-import exportPartToVRML as expVRML
-
 ## base parametes & model
 import collections
 from collections import namedtuple
 
 # Import cad_tools
 import cq_cad_tools
+import Draft
+import exportPartToVRML as expVRML
+import FreeCAD
+import FreeCADGui
+import FreeCADGui as Gui
+import ImportGui
+import shaderColors
+
 # Reload tools
 from cq_cad_tools import reload_lib
+
 reload_lib(cq_cad_tools)
 # Explicitly load all needed functions
-from cq_cad_tools import FuseObjs_wColors, GetListOfObjects, restore_Main_Tools, \
- exportSTEP, close_CQ_Example, exportVRML, saveFCdoc, z_RotateObject, Color_Objects, \
- CutObjs_wColors, checkRequirements
+from cq_cad_tools import (
+    Color_Objects,
+    CutObjs_wColors,
+    FuseObjs_wColors,
+    GetListOfObjects,
+    checkRequirements,
+    close_CQ_Example,
+    exportSTEP,
+    exportVRML,
+    restore_Main_Tools,
+    saveFCdoc,
+    z_RotateObject,
+)
 
 # Sphinx workaround #1
 try:
@@ -42,18 +51,20 @@ except NameError:
 
 try:
     # Gui.SendMsgToActiveView("Run")
-#    from Gui.Command import *
+    #    from Gui.Command import *
     Gui.activateWorkbench("CadQueryWorkbench")
     import cadquery
+
     cq = cadquery
     from Helpers import show
+
     # CadQuery Gui
-except: # catch *all* exceptions
+except:  # catch *all* exceptions
     msg = "missing CadQuery 0.3.0 or later Module!\r\n\r\n"
     msg += "https://github.com/jmwright/cadquery-freecad-module/wiki\n"
     if QtGui is not None:
-        reply = QtGui.QMessageBox.information(None,"Info ...",msg)
+        reply = QtGui.QMessageBox.information(None, "Info ...", msg)
     # maui end
 
-#checking requirements
+# checking requirements
 checkRequirements(cq)

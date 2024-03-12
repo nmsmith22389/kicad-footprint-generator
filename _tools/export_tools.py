@@ -1,8 +1,9 @@
 import os
+
 import cadquery as cq
 
-skip_list = [
-            ]
+skip_list = []
+
 
 def check_step_export_union(component, output_dir, model):
     # Skip models that cannot be unioned properly
@@ -20,7 +21,14 @@ def check_step_export_union(component, output_dir, model):
 
     # Try multiple fuzzy tolerance values to try to fix
     while union.solids().size() != 1:
-        component.save(cur_path, cq.exporters.ExportTypes.STEP, mode=cq.exporters.assembly.ExportModes.FUSED, assembly_name=model, write_pcurves=False, fuzzy_tol=tol)
+        component.save(
+            cur_path,
+            cq.exporters.ExportTypes.STEP,
+            mode=cq.exporters.assembly.ExportModes.FUSED,
+            assembly_name=model,
+            write_pcurves=False,
+            fuzzy_tol=tol,
+        )
 
         # Make the fuse gradually less precise
         tol = tol / 0.5

@@ -1,4 +1,3 @@
-
 # -*- coding: utf8 -*-
 #!/usr/bin/python
 #
@@ -10,10 +9,14 @@
 
 ## file of parametric definitions
 
+import math
+
+## base parametes & model
+# import collections
 # import collections
 from collections import namedtuple
 
-import math
+import cadquery as cq
 
 # import FreeCAD, Draft, FreeCADGui
 # import ImportGui
@@ -22,11 +25,6 @@ import math
 # import shaderColors
 # import exportPartToVRML as expVRML
 
-## base parametes & model
-# import collections
-from collections import namedtuple
-
-import cadquery as cq
 
 # Import cad_tools
 # import cq_cad_tools
@@ -57,9 +55,9 @@ import cadquery as cq
 #     msg += "https://github.com/jmwright/cadquery-freecad-module/wiki\n"
 #     if QtGui is not None:
 #         reply = QtGui.QMessageBox.information(None,"Info ...",msg)
-    # maui end
+# maui end
 
-#checking requirements
+# checking requirements
 
 # try:
 #     close_CQ_Example(FreeCAD, Gui)
@@ -67,62 +65,69 @@ import cadquery as cq
 #     print "CQ 030 doesn't open example file"
 
 
-class cq_support():
+class cq_support:
 
     def __init__(self):
         x = 0
 
     def make_bend_pin_stand_1(self, pin_w, pin_l, pin_h, ang, dxd, upph):
-    
+
         #
         dx = math.cos(math.radians(ang))
         dy = math.sin(math.radians(ang))
         dtl = (dxd * 0.98) / dx
         ttddh = dtl * dy
-        pin2 = cq.Workplane("YZ").workplane(offset=0.0 - (pin_w / 2.0), centerOption="CenterOfMass"). \
-        moveTo(0.0 - (0.0 - (pin_l / 2.0)), 0.0). \
-        lineTo(0.0 - (0.0 - (pin_l / 2.0)), 0.0 - upph). \
-        lineTo(0.0 - (dxd - (pin_l / 2.0)), 0.0 - (upph + ttddh)). \
-        lineTo(0.0 - (dxd - (pin_l / 2.0)), 0.0 - pin_h). \
-        lineTo(0.0 - (dxd + (pin_l / 2.0)), 0.0 - pin_h). \
-        lineTo(0.0 - (dxd + (pin_l / 2.0)), 0.0 - (upph + ttddh) + (pin_l / math.sqrt(2))). \
-        lineTo(0.0 - (0.0 + (pin_l / 2.0)), 0.0 - (upph - (pin_l / math.sqrt(2)))). \
-        lineTo(0.0 - (0.0 + (pin_l / 2.0)), 0.0). \
-        close(). \
-        extrude(pin_w)
+        pin2 = (
+            cq.Workplane("YZ")
+            .workplane(offset=0.0 - (pin_w / 2.0), centerOption="CenterOfMass")
+            .moveTo(0.0 - (0.0 - (pin_l / 2.0)), 0.0)
+            .lineTo(0.0 - (0.0 - (pin_l / 2.0)), 0.0 - upph)
+            .lineTo(0.0 - (dxd - (pin_l / 2.0)), 0.0 - (upph + ttddh))
+            .lineTo(0.0 - (dxd - (pin_l / 2.0)), 0.0 - pin_h)
+            .lineTo(0.0 - (dxd + (pin_l / 2.0)), 0.0 - pin_h)
+            .lineTo(
+                0.0 - (dxd + (pin_l / 2.0)),
+                0.0 - (upph + ttddh) + (pin_l / math.sqrt(2)),
+            )
+            .lineTo(0.0 - (0.0 + (pin_l / 2.0)), 0.0 - (upph - (pin_l / math.sqrt(2))))
+            .lineTo(0.0 - (0.0 + (pin_l / 2.0)), 0.0)
+            .close()
+            .extrude(pin_w)
+        )
         pin2 = pin2.faces("+Y").edges("#Z").fillet(pin_l / 2.1)
         pin2 = pin2.faces("<Y").edges(">Z").fillet(pin_l)
         pin2 = pin2.faces("<Y").edges("<Z").fillet(pin_l / 2.1)
         pin2 = pin2.faces(">Z").edges("<Y").fillet(pin_l / 2.1)
-    
+
         return pin2
 
-
     def make_bend_pin_stand_2(self, pin_w, pin_l, pin_h, ang, dxd):
-    
+
         #
         dx = math.cos(math.degrees(ang))
         dy = math.sin(math.degrees(ang))
         dtl = (dxd * 0.98) / dy
         ttddh = dtl * dx
-        pin2 = cq.Workplane("XZ").workplane(offset=0.0 - (pin_w / 2.0), centerOption="CenterOfMass"). \
-        moveTo(0.0 - (0.0 - (pin_l / 2.0)), 0.0). \
-        lineTo(0.0 - (0.0 - (pin_l / 2.0)), 0.0 - 1.0). \
-        lineTo(0.0 - (dxd - (pin_l / 2.0)), 0.0 - (1.0 + ttddh)). \
-        lineTo(0.0 - (dxd - (pin_l / 2.0)), 0.0 - pin_h). \
-        lineTo(0.0 - (dxd + (pin_l / 2.0)), 0.0 - pin_h). \
-        lineTo(0.0 - (dxd + (pin_l / 2.0)), 0.0 - (1.0 + ttddh) + (pin_l / math.sqrt(2))). \
-        lineTo(0.0 - (0.0 + (pin_l / 2.0)), 0.0 - (1.0 - (pin_l / math.sqrt(2)))). \
-        lineTo(0.0 - (0.0 + (pin_l / 2.0)), 0.0). \
-        close(). \
-        extrude(pin_w)
-#        pin2 = pin2.faces("+Y").edges("#Z").fillet(pin_l / 2.1)
-#        pin2 = pin2.faces("<Y").edges(">Z").fillet(pin_l)
-#        pin2 = pin2.faces("<Y").edges("<Z").fillet(pin_l / 2.1)
-#        pin2 = pin2.faces(">Z").edges("<Y").fillet(pin_l / 2.1)
-    
+        pin2 = (
+            cq.Workplane("XZ")
+            .workplane(offset=0.0 - (pin_w / 2.0), centerOption="CenterOfMass")
+            .moveTo(0.0 - (0.0 - (pin_l / 2.0)), 0.0)
+            .lineTo(0.0 - (0.0 - (pin_l / 2.0)), 0.0 - 1.0)
+            .lineTo(0.0 - (dxd - (pin_l / 2.0)), 0.0 - (1.0 + ttddh))
+            .lineTo(0.0 - (dxd - (pin_l / 2.0)), 0.0 - pin_h)
+            .lineTo(0.0 - (dxd + (pin_l / 2.0)), 0.0 - pin_h)
+            .lineTo(
+                0.0 - (dxd + (pin_l / 2.0)),
+                0.0 - (1.0 + ttddh) + (pin_l / math.sqrt(2)),
+            )
+            .lineTo(0.0 - (0.0 + (pin_l / 2.0)), 0.0 - (1.0 - (pin_l / math.sqrt(2))))
+            .lineTo(0.0 - (0.0 + (pin_l / 2.0)), 0.0)
+            .close()
+            .extrude(pin_w)
+        )
+        #        pin2 = pin2.faces("+Y").edges("#Z").fillet(pin_l / 2.1)
+        #        pin2 = pin2.faces("<Y").edges(">Z").fillet(pin_l)
+        #        pin2 = pin2.faces("<Y").edges("<Z").fillet(pin_l / 2.1)
+        #        pin2 = pin2.faces(">Z").edges("<Y").fillet(pin_l / 2.1)
+
         return pin2
-     
-        
-        
-        

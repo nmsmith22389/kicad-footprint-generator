@@ -11,6 +11,7 @@ find-replace can be done on the codebase to convert "cq_color_correct.Color"
 to simply "cq.Color".
 """
 
+
 class Color(object):
     """
     Wrapper for the OCCT color object Quantity_Color.
@@ -30,10 +31,10 @@ class Color(object):
 
         if len(args) == 3:
             r, g, b = args
-            self.wrapped = Quantity_Color(r, g, b ,Quantity_TOC_sRGB)
+            self.wrapped = Quantity_Color(r, g, b, Quantity_TOC_sRGB)
         elif len(args) == 4:
             r, g, b, a = args
-            self.wrapped = Quantity_Color(r, g, b ,Quantity_TOC_sRGB)
+            self.wrapped = Quantity_Color(r, g, b, Quantity_TOC_sRGB)
         else:
             raise ValueError(f"Unsupported arguments: {args}, {kwargs}")
 

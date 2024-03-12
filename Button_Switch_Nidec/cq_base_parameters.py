@@ -2,34 +2,34 @@
 # -*- coding: utf8 -*-
 #
 
-#****************************************************************************
-#*                                                                          *
-#* base classes for generating part models in STEP AP214                    *
-#*                                                                          *
-#* This is part of FreeCAD & cadquery tools                                 *
-#* to export generated models in STEP & VRML format.                        *
-#*   Copyright (c) 2017                                                     *
-#* Terje Io https://github.com/terjeio                                      *
-#* Maurice https://launchpad.net/~easyw                                     *
-#*                                                                          *
-#* All trademarks within this guide belong to their legitimate owners.      *
-#*                                                                          *
-#*   This program is free software; you can redistribute it and/or modify   *
-#*   it under the terms of the GNU Lesser General Public License (LGPL)     *
-#*   the License, or (at your option) any later version.                    *
-#*   for detail see the LICENCE text file.                                  *
-#*                                                                          *
-#*   This program is distributed in the hope that it will be useful,        *
-#*   but WITHOUT ANY WARRANTY; without even the implied warranty of         *
-#*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          *
-#*   GNU Library General Public License for more details.                   *
-#*                                                                          *
-#*   You should have received a copy of the GNU Library General Public      *
-#*   License along with this program; if not, write to the Free Software    *
-#*   Foundation, Inc.,                                                      *
-#*   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA           *
-#*                                                                          *
-#****************************************************************************
+# ****************************************************************************
+# *                                                                          *
+# * base classes for generating part models in STEP AP214                    *
+# *                                                                          *
+# * This is part of FreeCAD & cadquery tools                                 *
+# * to export generated models in STEP & VRML format.                        *
+# *   Copyright (c) 2017                                                     *
+# * Terje Io https://github.com/terjeio                                      *
+# * Maurice https://launchpad.net/~easyw                                     *
+# *                                                                          *
+# * All trademarks within this guide belong to their legitimate owners.      *
+# *                                                                          *
+# *   This program is free software; you can redistribute it and/or modify   *
+# *   it under the terms of the GNU Lesser General Public License (LGPL)     *
+# *   the License, or (at your option) any later version.                    *
+# *   for detail see the LICENCE text file.                                  *
+# *                                                                          *
+# *   This program is distributed in the hope that it will be useful,        *
+# *   but WITHOUT ANY WARRANTY; without even the implied warranty of         *
+# *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          *
+# *   GNU Library General Public License for more details.                   *
+# *                                                                          *
+# *   You should have received a copy of the GNU Library General Public      *
+# *   License along with this program; if not, write to the Free Software    *
+# *   Foundation, Inc.,                                                      *
+# *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA           *
+# *                                                                          *
+# ****************************************************************************
 
 # 2017-11-25
 
@@ -41,43 +41,52 @@ from collections import namedtuple
 
 ### use enums (Phyton 3+)
 
+
 class CaseType:
     r"""A class for holding constants for part types
 
     .. note:: will be changed to enum when Python version allows it
     """
-    THT = 'THT'
+
+    THT = "THT"
     r"""THT - trough hole part
     """
-    SMD = 'SMD'
+    SMD = "SMD"
     r"""SMD - surface mounted part
     """
+
 
 class PinStyle:
     r"""A class for holding constants for pin styles
 
     .. note:: will be changed to enum when Python version allows it
     """
-    STRAIGHT = 'Straight'
-    ANGLED   = 'Angled'
+
+    STRAIGHT = "Straight"
+    ANGLED = "Angled"
+
 
 ###
+
 
 #
 # The following classes must be subclassed
 #
-class PartParametersBase():
+class PartParametersBase:
     """
 
     .. document private functions
     .. automethod:: _make_params
     """
 
-    Model = namedtuple("Model", [
-        'variant',      # generic model name
-        'params',       # parameters
-        'model'         # model creator class
-    ])
+    Model = namedtuple(
+        "Model",
+        [
+            "variant",  # generic model name
+            "params",  # parameters
+            "model",  # model creator class
+        ],
+    )
     """ Internally used for passing information from the base parameters to the class instance used for creating models
 
     .. py:attribute:: variant
@@ -94,12 +103,7 @@ class PartParametersBase():
 
     """
 
-    Params = namedtuple("Params", [
-        'num_pins',
-        'pin_pitch',
-        'pin_style',
-        'type'
-    ])
+    Params = namedtuple("Params", ["num_pins", "pin_pitch", "pin_style", "type"])
     """ Basic parameters for parts, if further parameters are required this should be subclassed/overridden
 
     .. note:: The existing parameters should be kept with the same name when overridden as the framework requires them
@@ -126,13 +130,12 @@ class PartParametersBase():
         self.base_params = {}
 
     def _make_params(self, pin_pitch, num_pin_rows, pin_style, type):
-        r"""add a list of new points
-        """
+        r"""add a list of new points"""
         return self.Params(
-            num_pins = None,                # to be added programmatically
-            pin_pitch = pin_pitch,          # pin pitch
-            pin_style = pin_style,          # pin style: 'Straight' or 'Angled'
-            type = type                     # part type: 'THT' or 'SMD'
+            num_pins=None,  # to be added programmatically
+            pin_pitch=pin_pitch,  # pin pitch
+            pin_style=pin_style,  # pin style: 'Straight' or 'Angled'
+            type=type,  # part type: 'THT' or 'SMD'
         )
 
     def getAllModels(self, model_classes):
@@ -160,7 +163,9 @@ class PartParametersBase():
                 params = self.base_params[variant]
                 model = model_classes[i](params)
                 if model.make_me:
-                    models[model.makeModelName(variant)] = self.Model(variant, params, model_classes[i])
+                    models[model.makeModelName(variant)] = self.Model(
+                        variant, params, model_classes[i]
+                    )
 
         return models
 
@@ -187,10 +192,12 @@ class PartParametersBase():
         # instantiate generator classes in order to make a dictionary of all default variants
         for i in range(0, len(model_classes)):
             variant = model_classes[i].default_model
-            params =  self.base_params[variant]
+            params = self.base_params[variant]
             model = model_classes[i](params)
             if model.make_me:
-                models[model.makeModelName(variant)] = self. Model(variant, params, model_classes[i])
+                models[model.makeModelName(variant)] = self.Model(
+                    variant, params, model_classes[i]
+                )
 
         return models
 
@@ -221,5 +228,6 @@ class PartParametersBase():
                 model = False
 
         return model
+
 
 ### EOF ###
