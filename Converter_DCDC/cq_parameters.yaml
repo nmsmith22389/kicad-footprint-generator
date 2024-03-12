@@ -763,7 +763,7 @@ Converter_DCDC_TRACO_TMR1-xx1x_THT:
   L: 17.0
   W: 7.62
   H: 11.0
-  rim: [1, 3, 0.5]
+  rim: [1, 0, 0.5]
   pinpadsize: None
   pinpadh: None
   pintype: tht
@@ -790,7 +790,7 @@ Converter_DCDC_TRACO_TMR1-xx2x_THT:
   L: 17.0
   W: 7.62
   H: 11.0
-  rim: [1, 3, 0.5]
+  rim: [1, 0, 0.5]
   pinpadsize: None
   pinpadh: None
   pintype: tht
@@ -818,7 +818,7 @@ Converter_DCDC_TRACO_TMR-xxxx_THT:
   L: 21.8
   W: 9.2
   H: 11.1
-  rim: [0.5, 4.6, 0.5]
+  rim: [0.5, 0, 0.5]
   pinpadsize: None
   pinpadh: None
   pintype: tht
@@ -2392,7 +2392,7 @@ Converter_DCDC_TRACO_TME24xxS_THT:
   L: 11.5
   W: 7.1
   H: 10.2
-  rim: [0.5, 3.54, 0.5]
+  rim: [0.5, 0, 0.5]
   pinpadsize: None
   pinpadh: None
   pintype: tht
@@ -2419,7 +2419,7 @@ Converter_DCDC_TRACO_TMHxxxxS_THT:
   L: 19.5
   W: 7.5
   H: 10.2
-  rim: [0.5, 3.749, 0.5]
+  rim: [0.5, 0, 0.5]
   pinpadsize: None
   pinpadh: None
   pintype: tht
@@ -2446,7 +2446,7 @@ Converter_DCDC_TRACO_TMHxxxxD_THT:
   L: 19.5
   W: 7.5
   H: 10.2
-  rim: [0.5, 3.749, 0.5]
+  rim: [0.5, 0, 0.5]
   pinpadsize: None
   pinpadh: None
   pintype: tht
@@ -2474,7 +2474,7 @@ Converter_DCDC_TRACO_TMR2-xxxxE_THT:
   L: 21.8
   W: 9.3
   H: 11.2
-  rim: [0.5, 4.649, 0.5]
+  rim: [0.5, 0, 0.5]
   pinpadsize: None
   pinpadh: None
   pintype: tht
@@ -2504,7 +2504,7 @@ Converter_DCDC_TRACO_TMR2-xxxxWIN_THT:
   L: 21.8
   W: 9.3
   H: 11.2
-  rim: [0.5, 4.649, 0.5]
+  rim: [0.5, 0, 0.5]
   pinpadsize: None
   pinpadh: None
   pintype: tht
@@ -2534,7 +2534,7 @@ Converter_DCDC_TRACO_TMR3-xxxx_THT:
   L: 21.8
   W: 9.2
   H: 11.1
-  rim: [0.5, 4.6, 0.5]
+  rim: [0.5, 0, 0.5]
   pinpadsize: None
   pinpadh: None
   pintype: tht
@@ -2564,7 +2564,7 @@ Converter_DCDC_TRACO_TMR3-xxxxE_THT:
   L: 21.8
   W: 9.3
   H: 11.2
-  rim: [0.5, 4.649, 0.5]
+  rim: [0.5, 0, 0.5]
   pinpadsize: None
   pinpadh: None
   pintype: tht
@@ -2594,7 +2594,7 @@ Converter_DCDC_TRACO_TMR3-xxxxHI_THT:
   L: 21.8
   W: 9.2
   H: 11.1
-  rim: [0.5, 4.6, 0.5]
+  rim: [0.5, 0, 0.5]
   pinpadsize: None
   pinpadh: None
   pintype: tht
@@ -2623,7 +2623,7 @@ Converter_DCDC_TRACO_TMR3-xxxxWI_THT:
   L: 21.8
   W: 9.2
   H: 11.2
-  rim: [0.5, 4.6, 0.5]
+  rim: [0.5, 0, 0.5]
   pinpadsize: None
   pinpadh: None
   pintype: tht
@@ -2653,7 +2653,7 @@ Converter_DCDC_TRACO_TMR3-xxxxWIE_THT:
   L: 21.8
   W: 9.3
   H: 11.2
-  rim: [0.5, 4.649, 0.5]
+  rim: [0.5, 0, 0.5]
   pinpadsize: None
   pinpadh: None
   pintype: tht
@@ -2683,7 +2683,7 @@ Converter_DCDC_TRACO_TMR6-xxxx_THT:
   L: 21.8
   W: 9.1
   H: 11.2
-  rim: [0.5, 4.55, 0.5]
+  rim: [0.5, 0, 0.5]
   pinpadsize: None
   pinpadh: None
   pintype: tht
@@ -2713,7 +2713,7 @@ Converter_DCDC_TRACO_TMR6-xxxxWI_THT:
   L: 21.8
   W: 9.1
   H: 11.2
-  rim: [0.5, 4.55, 0.5]
+  rim: [0.5, 0, 0.5]
   pinpadsize: None
   pinpadh: None
   pintype: tht
@@ -2743,7 +2743,7 @@ Converter_DCDC_TRACO_TMV-xxxxS_THT:
   L: 19.5
   W: 6.1
   H: 10.2
-  rim: [0.5, 3.049, 0.5]
+  rim: [0.5, 0, 0.5]
   pinpadsize: None
   pinpadh: None
   pintype: tht
@@ -2770,7 +2770,7 @@ Converter_DCDC_TRACO_TMV-xxxxD_THT:
   L: 19.5
   W: 6.1
   H: 10.2
-  rim: [0.5, 3.049, 0.5]
+  rim: [0.5, 0, 0.5]
   pinpadsize: None
   pinpadh: None
   pintype: tht
@@ -2798,7 +2798,7 @@ Converter_DCDC_TRACO_TMV-24xxS_THT:
   L: 19.5
   W: 7.1
   H: 10.2
-  rim: [0.5, 3.549, 0.5]
+  rim: [0.5, 0, 0.5]
   pinpadsize: None
   pinpadh: None
   pintype: tht
@@ -2825,7 +2825,7 @@ Converter_DCDC_TRACO_TMV-24xxD_THT:
   L: 19.5
   W: 7.1
   H: 10.2
-  rim: [0.5, 3.549, 0.5]
+  rim: [0.5, 0, 0.5]
   pinpadsize: None
   pinpadh: None
   pintype: tht
@@ -2853,7 +2853,7 @@ Converter_DCDC_TRACO_TMV2-xxxxSHI_THT:
   L: 19.5
   W: 7.1
   H: 10.2
-  rim: [0.5, 3.549, 0.5]
+  rim: [0.5, 0, 0.5]
   pinpadsize: None
   pinpadh: None
   pintype: tht
@@ -2880,7 +2880,7 @@ Converter_DCDC_TRACO_TMV2-xxxxDHI_THT:
   L: 19.5
   W: 7.1
   H: 10.2
-  rim: [0.5, 3.549, 0.5]
+  rim: [0.5, 0, 0.5]
   pinpadsize: None
   pinpadh: None
   pintype: tht
@@ -2908,7 +2908,7 @@ Converter_DCDC_TRACO_TMV-xxxxEN_THT:
   L: 22.0
   W: 7.5
   H: 12.5
-  rim: [0.5, 3.749, 0.5]
+  rim: [0.5, 0, 0.5]
   pinpadsize: None
   pinpadh: None
   pintype: tht
@@ -2935,7 +2935,7 @@ Converter_DCDC_TRACO_TMV-xxxxDEN_THT:
   L: 22.0
   W: 7.5
   H: 12.5
-  rim: [0.5, 3.749, 0.5]
+  rim: [0.5, 0, 0.5]
   pinpadsize: None
   pinpadh: None
   pintype: tht
@@ -2963,7 +2963,7 @@ Converter_DCDC_TRACO_TRV1-xxxx_THT:
   L: 19.5
   W: 6.1
   H: 10.2
-  rim: [0.5, 3.049, 0.5]
+  rim: [0.5, 0, 0.5]
   pinpadsize: None
   pinpadh: None
   pintype: tht
@@ -2990,7 +2990,7 @@ Converter_DCDC_TRACO_TRV1-24xx_THT:
   L: 19.5
   W: 7.1
   H: 10.2
-  rim: [0.5, 3.549, 0.5]
+  rim: [0.5, 0, 0.5]
   pinpadsize: None
   pinpadh: None
   pintype: tht
@@ -3017,7 +3017,7 @@ Converter_DCDC_TRACO_TRV1-xx1xM_THT:
   L: 19.6
   W: 9.9
   H: 12.5
-  rim: [0.5, 4.949, 0.5]
+  rim: [0.5, 0, 0.5]
   pinpadsize: None
   pinpadh: None
   pintype: tht
@@ -3044,7 +3044,7 @@ Converter_DCDC_TRACO_TRV1-xx2xM_THT:
   L: 19.6
   W: 9.9
   H: 12.5
-  rim: [0.5, 4.949, 0.5]
+  rim: [0.5, 0, 0.5]
   pinpadsize: None
   pinpadh: None
   pintype: tht
@@ -3072,7 +3072,7 @@ Converter_DCDC_TRACO_TEC2-xxxx_THT:
   L: 21.8
   W: 9.1
   H: 11.2
-  rim: [0.5, 4.55, 0.5]
+  rim: [0.5, 0, 0.5]
   pinpadsize: None
   pinpadh: None
   pintype: tht
@@ -3102,7 +3102,7 @@ Converter_DCDC_TRACO_TEC2-xxxxWI_THT:
   L: 21.8
   W: 9.1
   H: 11.2
-  rim: [0.5, 4.55, 0.5]
+  rim: [0.5, 0, 0.5]
   pinpadsize: None
   pinpadh: None
   pintype: tht
@@ -3132,7 +3132,7 @@ Converter_DCDC_TRACO_TEC3-xxxx_THT:
   L: 21.8
   W: 9.1
   H: 11.2
-  rim: [0.5, 4.55, 0.5]
+  rim: [0.5, 0, 0.5]
   pinpadsize: None
   pinpadh: None
   pintype: tht
@@ -3162,7 +3162,7 @@ Converter_DCDC_TRACO_TEC3-xxxxWI_THT:
   L: 21.8
   W: 9.1
   H: 11.2
-  rim: [0.5, 4.55, 0.5]
+  rim: [0.5, 0, 0.5]
   pinpadsize: None
   pinpadh: None
   pintype: tht
@@ -3192,7 +3192,7 @@ Converter_DCDC_TRACO_TRA1-xxxx_THT:
   L: 19.5
   W: 6.1
   H: 10.2
-  rim: [0.5, 3.049, 0.5]
+  rim: [0.5, 0, 0.5]
   pinpadsize: None
   pinpadh: None
   pintype: tht
@@ -3220,7 +3220,7 @@ Converter_DCDC_TRACO_TRA1-24xx_THT:
   L: 19.5
   W: 7.1
   H: 10.2
-  rim: [0.5, 3.549, 0.5]
+  rim: [0.5, 0, 0.5]
   pinpadsize: None
   pinpadh: None
   pintype: tht
@@ -3248,7 +3248,7 @@ Converter_DCDC_TRACO_TRA3-xxxx_THT:
   L: 19.5
   W: 7.6
   H: 10.2
-  rim: [0.5, 3.799, 0.5]
+  rim: [0.5, 0, 0.5]
   pinpadsize: None
   pinpadh: None
   pintype: tht
@@ -3275,7 +3275,7 @@ Converter_DCDC_TRACO_TRN1-xx1x_THT:
   L: 11.9
   W: 7.7
   H: 11.0
-  rim: [0.5, 3.849, 0.5]
+  rim: [0.5, 0, 0.5]
   pinpadsize: None
   pinpadh: None
   pintype: tht
@@ -3302,7 +3302,7 @@ Converter_DCDC_TRACO_TRN1-xx2x_THT:
   L: 11.9
   W: 7.7
   H: 11.0
-  rim: [0.5, 3.849, 0.5]
+  rim: [0.5, 0, 0.5]
   pinpadsize: None
   pinpadh: None
   pintype: tht
@@ -3330,7 +3330,7 @@ Converter_DCDC_TRACO_TRN3-xx1x_THT:
   L: 11.9
   W: 7.7
   H: 11.0
-  rim: [0.5, 3.849, 0.5]
+  rim: [0.5, 0, 0.5]
   pinpadsize: None
   pinpadh: None
   pintype: tht
@@ -3357,7 +3357,7 @@ Converter_DCDC_TRACO_TRN3-xx2x_THT:
   L: 11.9
   W: 7.7
   H: 11.0
-  rim: [0.5, 3.849, 0.5]
+  rim: [0.5, 0, 0.5]
   pinpadsize: None
   pinpadh: None
   pintype: tht
@@ -3385,7 +3385,7 @@ Converter_DCDC_TRACO_TSN1-xxxxx_THT:
   L: 11.7
   W: 7.5
   H: 16.5
-  rim: [0.5, 3.749, 0.5]
+  rim: [0.5, 0, 0.5]
   pinpadsize: None
   pinpadh: None
   pintype: tht
@@ -3411,7 +3411,7 @@ Converter_DCDC_TRACO_TSR05-xxxxx_THT:
   L: 11.5
   W: 7.55
   H: 10.2
-  rim: [0.5, 3.774, 0.5]
+  rim: [0.5, 0, 0.5]
   pinpadsize: None
   pinpadh: None
   pintype: tht
@@ -3437,7 +3437,7 @@ Converter_DCDC_TRACO_TSR06-xxxxxWI_THT:
   L: 12.0
   W: 8.6
   H: 13.4
-  rim: [0.5, 4.3, 0.5]
+  rim: [0.5, 0, 0.5]
   pinpadsize: None
   pinpadh: None
   pintype: tht
@@ -3463,7 +3463,7 @@ Converter_DCDC_TRACO_TSR1-xxxxx_THT:
   L: 11.7
   W: 7.5
   H: 10.1
-  rim: [0.5, 3.749, 0.5]
+  rim: [0.5, 0, 0.5]
   pinpadsize: None
   pinpadh: None
   pintype: tht
@@ -3489,7 +3489,7 @@ Converter_DCDC_TRACO_TSR1-xxxxE_THT:
   L: 11.6
   W: 7.5
   H: 10.1
-  rim: [0.5, 3.749, 0.5]
+  rim: [0.5, 0, 0.5]
   pinpadsize: None
   pinpadh: None
   pintype: tht
@@ -3515,7 +3515,7 @@ Converter_DCDC_TRACO_TSR2-xxxxx_THT:
   L: 14.0
   W: 7.5
   H: 10.1
-  rim: [0.5, 3.749, 0.5]
+  rim: [0.5, 0, 0.5]
   pinpadsize: None
   pinpadh: None
   pintype: tht
@@ -3541,7 +3541,7 @@ Converter_DCDC_TRACO_TSRN1-xxxxxx_THT:
   L: 11.7
   W: 7.5
   H: 10.2
-  rim: [0.5, 3.749, 0.5]
+  rim: [0.5, 0, 0.5]
   pinpadsize: None
   pinpadh: None
   pintype: tht
@@ -3567,7 +3567,7 @@ Converter_DCDC_TRACO_TEA1-0505_THT:
   L: 11.68
   W: 6.0
   H: 9.65
-  rim: [0.5, 2.999, 0.5]
+  rim: [0.5, 0, 0.5]
   pinpadsize: None
   pinpadh: None
   pintype: tht
@@ -3594,7 +3594,7 @@ Converter_DCDC_TRACO_TEA1-0505E_THT:
   L: 19.5
   W: 6.0
   H: 9.5
-  rim: [0.5, 2.999, 0.5]
+  rim: [0.5, 0, 0.5]
   pinpadsize: None
   pinpadh: None
   pintype: tht
@@ -3621,7 +3621,7 @@ Converter_DCDC_TRACO_TEA1-0505HI_THT:
   L: 19.5
   W: 6.0
   H: 9.5
-  rim: [0.5, 2.999, 0.5]
+  rim: [0.5, 0, 0.5]
   pinpadsize: None
   pinpadh: None
   pintype: tht
