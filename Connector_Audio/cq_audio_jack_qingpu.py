@@ -181,16 +181,7 @@ class cq_audio_jack_qingpu():
 
     def make_npth_pins_dummy(self, params):
 
-        A1 = params['A1']                      # package height
-        rotation = params['rotation']          # Rotation if required
-
-        # Dummy
-        case = cq.Workplane("XY").workplane(offset=A1 + 0.2).moveTo(0.0, 0.0).circle(0.01, False).extrude(0.01)
-        
-        if (rotation != 0):
-            case = case.rotate((0,0,0), (0,0,1), rotation)
-
-        return (case)
+        return None
 
 
     def make_top_type(self, params):
@@ -329,9 +320,10 @@ class cq_audio_jack_qingpu():
             #
             # Dummy
             #
-            case1 = cq.Workplane("XY").workplane(offset=A1 + 0.1).moveTo(0.0, 0.0).circle(0.001, False).extrude(0.001)
+            case1 = None
         
-        case = case.union(case1)
+        if case1 is not None:
+            case = case.union(case1)
 
         case = case.translate((BX, BY, A1))
 
