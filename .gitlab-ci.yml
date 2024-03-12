@@ -26,8 +26,6 @@ before_script:
       # - audit_log.txt
   when: manual
   timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
 
 #
 # 4UCON_17809
@@ -136,6 +134,8 @@ Conn_PinSocket:
     library: Conn_PinSocket
   extends:
     - .model
+  tags:
+    - kicad-ubuntu20.04
 
 #
 # Conn_Stocko
