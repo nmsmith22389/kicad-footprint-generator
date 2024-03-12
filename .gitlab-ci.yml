@@ -13,18 +13,15 @@ before_script:
   - source venv/bin/activate
   - pip install -r requirements.txt
 
-#
-# 4UCON_17809 Directory
-#
-ucon_17809:
+.model:
   script:
-    - ./generator.py --output_dir ./3dmodels --library 4UCON_17809 --enable-vrml True
+    - ./generator.py --output_dir ./3dmodels --library $library --enable-vrml True
     # - sudo find / -iname 3dmodels > models_location.txt
     # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
     # - cat ./audit_log.txt
   artifacts:
     paths:
-      - 3dmodels/Connectors_4UCON.3dshapes
+      - 3dmodels
       # - models_location.txt
       # - audit_log.txt
   when: manual
@@ -33,1027 +30,541 @@ ucon_17809:
     - kicad-ubuntu20.04
 
 #
-# Altech directory
+# 4UCON_17809
+#
+ucon_17809:
+  variables:
+    library: 4UCON_17809
+  extends:
+    - .model
+
+#
+# Altech
 #
 Altech:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library Altech --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/TerminalBlock_Altech.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: Altech
+  extends:
+    - .model
 
 #
-# Battery directory
+# Battery
 #
 Battery:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library Battery --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Battery.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: Battery
+  extends:
+    - .model
 
 #
-# BGA_packages directory
+# BGA_packages
 #
 BGA_packages:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library BGA_packages --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Package_BGA.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: BGA_packages
+  extends:
+    - .model
 
 #
 # Box_Headers directory
 #
 Box_Headers:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library Box_Headers --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Connector_IDC.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: Box_Headers
+  extends:
+    - .model
 
 #
-# Button_Switch_Nidec directory
+# Button_Switch_Nidec
 #
 Button_Switch_Nidec:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library Button_Switch_Nidec --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Button_Switch_SMD.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: Button_Switch_Nidec
+  extends:
+    - .model
 
 #
-# Button_Switch_Tactile_SMD_THT directory
+# Button_Switch_Tactile_SMD_THT
 #
 Button_Switch_Tactile_SMD_THT:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library Button_Switch_Tactile_SMD_THT --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Button_Switch_SMD.3dshapes
-      - 3dmodels/Button_Switch_THT.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: Button_Switch_Tactile_SMD_THT
+  extends:
+    - .model
 
 #
-# Buzzer_Beeper directory
+# Buzzer_Beeper
 #
 Buzzer_Beeper:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library Buzzer_Beeper --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Buzzer_Beeper.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: Buzzer_Beeper
+  extends:
+    - .model
 
 #
-# C_Chip_SMD directory
+# C_Chip_SMD
 #
 C_Chip_SMD:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library C_Chip_SMD --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Capacitor_SMD.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: C_Chip_SMD
+  extends:
+    - .model
 
 #
-# C_Trimmer directory
+# C_Trimmer
 #
 C_Trimmer:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library C_Trimmer --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Capacitor_SMD.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: C_Trimmer
+  extends:
+    - .model
 
 #
-# Capacitor_THT directory
+# Capacitor_THT
 #
 Capacitor_THT:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library Capacitor_THT --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Capacitor_THT.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: Capacitor_THT
+  extends:
+    - .model
 
 #
-# Conn_PinSocket directory
+# Conn_PinSocket
 #
 Conn_PinSocket:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library Conn_PinSocket --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Connector_PinSocket_1.00mm.3dshapes
-      - 3dmodels/Connector_PinSocket_1.27mm.3dshapes
-      - 3dmodels/Connector_PinSocket_2.00mm.3dshapes
-      - 3dmodels/Connector_PinSocket_2.54mm.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: Conn_PinSocket
+  extends:
+    - .model
 
 #
-# Conn_Stocko directory
+# Conn_Stocko
 #
 Conn_Stocko:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library Conn_Stocko --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Connector_Stocko.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: Conn_Stocko
+  extends:
+    - .model
 
 #
-# Connector_Audio directory
+# Connector_Audio
 #
 Connector_Audio:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library Connector_Audio --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Connector_Audio.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: Connector_Audio
+  extends:
+    - .model
 
 #
-# Connector_Coaxial directory
+# Connector_Coaxial
 #
 Connector_Coaxial:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library Connector_Coaxial --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Connector_Coaxial.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: Connector_Coaxial
+  extends:
+    - .model
 
 #
-# Connector_Dsub directory
+# Connector_Dsub
 #
 Connector_Dsub:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library Connector_Dsub --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Connector_Dsub.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: Connector_Dsub
+  extends:
+    - .model
 
 #
-# Connector_FFC-FPC directory
+# Connector_FFC-FPC
 #
 Connector_FFC-FPC:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library Connector_FFC-FPC --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Connector_FFC-FPC.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: Connector_FFC-FPC
+  extends:
+    - .model
 
 #
-# Connector_Phoenix_SPT directory
+# Connector_Phoenix_SPT
 #
 Connector_Phoenix_SPT:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library Connector_Phoenix_SPT --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Connector_Phoenix_SPT.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: Connector_Phoenix_SPT
+  extends:
+    - .model
 
 #
-# Connector_PinHeader directory
+# Connector_PinHeader
 #
 Connector_PinHeader:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library Connector_PinHeader --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Connector_PinHeader_2.54mm.3dshapes
-      - 3dmodels/Connector_PinHeader_2.00mm.3dshapes
-      - 3dmodels/Connector_PinHeader_1.27mm.3dshapes
-      - 3dmodels/Connector_PinHeader_1.00mm.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: Connector_PinHeader
+  extends:
+    - .model
 
 #
-# Connector_USB directory
+# Connector_USB
 #
 Connector_USB:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library Connector_USB --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Connector_USB.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: Connector_USB
+  extends:
+    - .model
 
 #
-# Connector_Wago_734 directory
+# Connector_Wago_734
 #
 Connector_Wago_734:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library Connector_Wago_734 --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Connector_Wago_734.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: Connector_Wago_734
+  extends:
+    - .model
 
 #
-# Connector_Wuerth_WR-PHD directory
+# Connector_Wuerth_WR-PHD
 #
 Connector_Wuerth_WR-PHD:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library Connector_Wuerth_WR-PHD --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Connector_Wuerth_WR-PHD_Bottom-Entry.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: Connector_Wuerth_WR-PHD
+  extends:
+    - .model
 
 #
-# Converter_ACDC directory
+# Converter_ACDC
 #
 Converter_ACDC:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library Converter_ACDC --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Converter_ACDC.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: Converter_ACDC
+  extends:
+    - .model
 
 #
-# Converter_DCDC directory
+# Converter_DCDC
 #
 Converter_DCDC:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library Converter_DCDC --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Converter_DCDC.3dshapes
-      - 3dmodels/Converter_ACDC.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: Converter_DCDC
+  extends:
+    - .model
 
 #
-# CP_Radial_SMD directory
+# CP_Radial_SMD
 #
 CP_Radial_SMD:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library CP_Radial_SMD --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Capacitor_SMD.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: CP_Radial_SMD
+  extends:
+    - .model
 
 #
-# CP_Radial_THT directory
+# CP_Radial_THT
 #
 CP_Radial_THT:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library CP_Radial_THT --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Capacitor.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: CP_Radial_THT
+  extends:
+    - .model
 
 #
-# CP_Tantalum_SMD directory
+# CP_Tantalum_SMD
 #
 CP_Tantalum_SMD:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library CP_Tantalum_SMD --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Capacitor_Tantalum_SMD.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: CP_Tantalum_SMD
+  extends:
+    - .model
 
 #
-# CP_Tantalum_THT directory
+# CP_Tantalum_THT
 #
 CP_Tantalum_THT:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library CP_Tantalum_THT --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Capacitor_THT.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: CP_Tantalum_THT
+  extends:
+    - .model
 
 #
-# Crystal directory
+# Crystal
 #
 Crystal:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library Crystal --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Crystal.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: Crystal
+  extends:
+    - .model
 
 #
-# diodes_SMx_SMD directory
+# diodes_SMx_SMD
 #
 diodes_SMx_SMD:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library diodes_SMx_SMD --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Diode_SMD.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: diodes_SMx_SMD
+  extends:
+    - .model
 
 #
-# DIP_packages directory
+# DIP_packages
 #
 DIP_packages:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library DIP_packages --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Package_DIP.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: DIP_packages
+  extends:
+    - .model
 
 #
-# DIP_parts directory
+# DIP_parts
 #
 DIP_parts:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library DIP_parts --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Button_Switch_THT.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: DIP_parts
+  extends:
+    - .model
 
 #
-# Directfet_SMD directory
+# Directfet_SMD
 #
 Directfet_SMD:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library Directfet_SMD --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Package_DirectFET.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: Directfet_SMD
+  extends:
+    - .model
 
 #
-# Filter directory
+# Filter
 #
 Filter:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library Filter --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Filter.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: Filter
+  extends:
+    - .model
 
 #
-# Flat_Pin_packages directory
+# Flat_Pin_packages
 #
 Flat_Pin_packages:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library Flat_Pin_packages --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Diode_SMD.3dshapes
-      - 3dmodels/TO_SOT_Packages_SMD.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: Flat_Pin_packages
+  extends:
+    - .model
 
 #
-# Fuse directory
+# Fuse
 #
 Fuse:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library Fuse --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Fuse.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: Fuse
+  extends:
+    - .model
 
 #
-# GW_QFP_SOIC_SSOP_TSSOP_SOT directory
+# GW_QFP_SOIC_SSOP_TSSOP_SOT
 #
 GW_QFP_SOIC_SSOP_TSSOP_SOT:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library GW_QFP_SOIC_SSOP_TSSOP_SOT --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Diode_SMD.3dshapes
-      - 3dmodels/Package_QFP.3dshapes
-      - 3dmodels/Package_SO.3dshapes
-      - 3dmodels/TO_SOT_Packages_SMD.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: GW_QFP_SOIC_SSOP_TSSOP_SOT
+  extends:
+    - .model
 
 #
-# Inductors_SMD directory
+# Inductors_SMD
 #
 Inductors_SMD:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library Inductors_SMD --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Inductor_SMD.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: Inductors_SMD
+  extends:
+    - .model
 
 #
-# jst directory
+# jst
 #
 jst:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library jst --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Connector_JST.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: jst
+  extends:
+    - .model
 
 #
-# L_Chip_SMD directory
+# L_Chip_SMD
 #
 L_Chip_SMD:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library L_Chip_SMD --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Inductor_SMD.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: L_Chip_SMD
+  extends:
+    - .model
 
 #
-# LED_SMD directory
+# LED_SMD
 #
 LED_SMD:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library LED_SMD --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/LED_SMD.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: LED_SMD
+  extends:
+    - .model
 
 #
-# molex directory
+# molex
 #
 molex:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library molex --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Connector_FFC-FPC.3dshapes
-      - 3dmodels/Connector_Molex.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: molex
+  extends:
+    - .model
 
 #
-# Molex_5569 directory
+# Molex_5569
 #
 Molex_5569:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library Molex_5569 --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Connector_Molex.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: Molex_5569
+  extends:
+    - .model
 
 #
-# mounting_wuerth directory
+# mounting_wuerth
 #
 mounting_wuerth:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library mounting_wuerth --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Connector_Molex.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: mounting_wuerth
+  extends:
+    - .model
 
 #
-# Package_SIP directory
+# Package_SIP
 #
 Package_SIP:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library Package_SIP --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Package_SIP.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: Package_SIP
+  extends:
+    - .model
 
 #
-# phoenix_contact directory
+# phoenix_contact
 #
 phoenix_contact:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library phoenix_contact --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/TerminalBlock_Phoenix.3dshapes
-      - 3dmodels/Connector_Phoenix_MC.3dshapes
-      - 3dmodels/Connector_Phoenix_MC_HighVoltage.3dshapes
-      - 3dmodels/Connector_Phoenix_GMSTB.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: phoenix_contact
+  extends:
+    - .model
 
 #
-# Potentiometer_THT directory
+# Potentiometer_THT
 #
 Potentiometer_THT:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library Potentiometer_THT --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Potentiometer_THT.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: Potentiometer_THT
+  extends:
+    - .model
 
 #
-# QFN_packages directory
+# QFN_packages
 #
 QFN_packages:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library QFN_packages --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Diode_SMD.3dshapes
-      - 3dmodels/RF_Antenna.3dshapes
-      - 3dmodels/RF_Converter.3dshapes
-      - 3dmodels/TO_SOT_Packages_SMD.3dshapes
-      - 3dmodels/Package_DFN_QFN.3dshapes
-      - 3dmodels/Package_SON.3dshapes
-      - 3dmodels/Package_SO.3dshapes
-      - 3dmodels/Package_LGA.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: QFN_packages
+  extends:
+    - .model
 
 #
-# Relay_THT directory
+# Relay_THT
 #
 Relay_THT:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library Relay_THT --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Relay_THT.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: Relay_THT
+  extends:
+    - .model
 
 #
-# Resistor_SMD directory
+# Resistor_SMD
 #
 Resistor_SMD:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library Resistor_SMD --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Resistor_SMD.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: Resistor_SMD
+  extends:
+    - .model
 
 #
-# Resistor_THT directory
+# Resistor_THT
 #
 Resistor_THT:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library Resistor_THT --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Resistors_THT.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: Resistor_THT
+  extends:
+    - .model
 
 #
-# resistors_array_SMD directory
+# resistors_array_SMD
 #
 resistors_array_SMD:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library resistors_array_SMD --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Resistor_array_SMD.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: resistors_array_SMD
+  extends:
+    - .model
 
 #
-# RF_Antenna_Chip_SMD directory
+# RF_Antenna_Chip_SMD
 #
 RF_Antenna_Chip_SMD:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library RF_Antenna_Chip_SMD --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/RF_Antenna.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: RF_Antenna_Chip_SMD
+  extends:
+    - .model
 
 #
-# Standoff_FF_MF directory
+# Standoff_FF_MF
 #
 Standoff_FF_MF:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library Standoff_FF_MF --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Spacers.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: Standoff_FF_MF
+  extends:
+    - .model
 
 #
-# Switch_SMD directory
+# Switch_SMD
 #
 Switch_SMD:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library Switch_SMD --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Switch_SMD_packages.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: Switch_SMD
+  extends:
+    - .model
 
 #
-# TerminalBlock_Phoenix directory
+# TerminalBlock_Phoenix
 #
 TerminalBlock_Phoenix:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library TerminalBlock_Phoenix --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/TerminalBlock_Phoenix.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: TerminalBlock_Phoenix
+  extends:
+    - .model
 
 #
-# TO_SOT_Packages_SMD_custom directory
+# TO_SOT_Packages_SMD_custom
 #
 TO_SOT_Packages_SMD_custom:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library TO_SOT_Packages_SMD_custom --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/TO_SOT_Packages_SMD.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: TO_SOT_Packages_SMD_custom
+  extends:
+    - .model
 
 #
-# Transformer_THT directory
+# Transformer_THT
 #
 Transformer_THT:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library Transformer_THT --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Transformer_THT.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: Transformer_THT
+  extends:
+    - .model
 
 #
-# Valves directory
+# Valves
 #
 Valves:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library Valves --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Valve.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: Valves
+  extends:
+    - .model
 
 #
-# Varistor directory
+# Varistor
 #
 Varistor:
-  script:
-    - ./generator.py --output_dir ./3dmodels --library Varistor --enable-vrml True
-    # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
-    # - cat ./audit_log.txt
-  artifacts:
-    paths:
-      - 3dmodels/Varistor.3dshapes
-      # - audit_log.txt
-  when: manual
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
+  variables:
+    library: Varistor
+  extends:
+    - .model
