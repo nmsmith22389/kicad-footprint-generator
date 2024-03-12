@@ -328,30 +328,4 @@ def make_case_Button3(params):
 
 
 def make_case_Button4(params):
-
-    # manufacture = params.manufacture    # Model name
-    # serie = params.serie                # Model name
-    # cellsize = params.cellsize          # Battery type
-    # cellcnt = params.cellcnt      # Number of battery
-    # L = params.L                        # Package width
-    # W = params.W                        # Package width
-    # H = params.H                        # Package height
-    # LC = params.LC                      # Large circle [x pos, y pos, outer diameter, inner diameter, height]
-    # BC = params.BC                      # Blend height
-    A1 = params['A1']                      # package board seperation
-    # pins = params.pins                  # Pins tht/smd, x pos, y pos, 'round/rect', diameter/x size, y size, length
-    # npthpins = params.npthpins          # npth holes
-    # socket = params.socket              # 'type', centre diameter, length, height
-    # spigot = params.spigot              # Spigot, distance from edge to pin 1, height
-    # topear = params.topear              # Top ear
-    # rotation = params.rotation          # Rotation if required
-    # modelname = params.modelname        # Model name
-
-    A11 = get_body_offset(params)
-    #
-    #
-    
-    # Dummy
-    case = cq.Workplane("XY").workplane(offset=A1 + A11).moveTo(0.0, 0.0).rect(0.01, 0.01).extrude(0.01)
-
-    return case
+    return None
