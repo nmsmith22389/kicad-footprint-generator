@@ -248,7 +248,8 @@ class cq_parameters_tht_generic_round():
                     pint = cq.Workplane("XY").workplane(offset=A1 + 1.0).moveTo(p[0], -p[1]).circle(b / 2.0, False).extrude(0 - (ph + A1 + 1.0))
                     pint = pint.faces("<Z").fillet(b / 5.0)
                     pins = pins.union(pint)
-
+        else:
+            return None
 
         if (rotation != 0):
             pins = pins.rotate((0,0,0), (0,0,1), rotation)

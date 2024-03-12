@@ -137,17 +137,20 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             component.add(case_top, color=cq_color_correct.Color(case_top_color[0], case_top_color[1], case_top_color[2]))
             component.add(case, color=cq_color_correct.Color(body_color[0], body_color[1], body_color[2]))
             component.add(pins, color=cq_color_correct.Color(pins_color[0], pins_color[1], pins_color[2]))
-            component.add(npth_pins, color=cq_color_correct.Color(npth_pin_color[0], npth_pin_color[1], npth_pin_color[2]))
+            if npth_pins:
+                component.add(npth_pins, color=cq_color_correct.Color(npth_pin_color[0], npth_pin_color[1], npth_pin_color[2]))
 
             # Save information for VRML export
             parts.append(case_top)
             parts.append(case)
             parts.append(pins)
-            parts.append(npth_pins)
+            if npth_pins:
+                parts.append(npth_pins)
             colors.append(all_params[model]["case_top_color_key"])
             colors.append(all_params[model]["body_color_key"])
             colors.append(all_params[model]["pins_color_key"])
-            colors.append(all_params[model]["npth_pin_color_key"])
+            if npth_pins:
+                colors.append(all_params[model]["npth_pin_color_key"])
         elif all_params[model]["model_class"] == "cq_parameters_murata_PKMCS0909E4000":
             cqm = cq_parameters_murata_PKMCS0909E4000()
 
