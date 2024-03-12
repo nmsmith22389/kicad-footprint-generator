@@ -226,8 +226,6 @@ class cq_parameters_tht_generic_round():
         pin = params['pin']            # pin/pad cordinates
         center = params['center']      # Body center
 
-        print('make_npth_pins \r\n')
-
         #
         # Make a dummy one
         #

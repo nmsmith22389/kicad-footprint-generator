@@ -231,7 +231,7 @@ class cq_kyocera():
 
     def make_body(self, params):
 
-        print('make_body 1 \r\n')
+        # print('make_body 1 \r\n')
         # params = self.all_params[modelID]
         W = params['W']                # Width
         L = params['L']                # Length

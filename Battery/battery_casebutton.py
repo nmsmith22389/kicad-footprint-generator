@@ -274,8 +274,6 @@ def make_case_Button3(params):
     case1 = cq.Workplane("XY").workplane(offset=A1 + A11 + 1.0).moveTo(x1, y1).circle(id / 2.0, False).extrude(hh + 2.0)
     case = case.cut(case1)
 
-    print('make_case_Button2 2\r\n')
-    
     #
     # Cut the sides
     #

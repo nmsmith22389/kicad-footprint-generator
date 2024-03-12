@@ -403,7 +403,6 @@ class switchNidecSH70x0x(PartBaseExt): # , partParams):
 
         if noPins is None:
             noPins = params['num_pins']
-        print(params['num_pins'])
         if pitch is None:
             pitch = params['pin_pitch']
 

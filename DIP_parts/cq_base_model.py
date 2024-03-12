@@ -436,8 +436,6 @@ class PartBase (object):
 
         """
 
-        self.say('\n###: ' + str(pin_area_height) + " " + str( body_angle_top))
-
         if pin_area_height is None:
             pin_area_height = self.pin_thickness             # top part of body is that much smaller
 
