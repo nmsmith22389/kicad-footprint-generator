@@ -121,7 +121,7 @@ checkRequirements(cq)
 try:
 	close_CQ_Example(App, Gui)
 except: # catch *all* exceptions
-	print "CQ 030 doesn't open example file"
+	print("CQ 030 doesn't open example file")
 
 destination_dir="/Switch_SMD_packages"
 # rotation = 0

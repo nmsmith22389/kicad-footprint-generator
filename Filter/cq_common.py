@@ -90,7 +90,7 @@ except: # catch *all* exceptions
 try:
     close_CQ_Example(FreeCAD, Gui)
 except: # catch *all* exceptions
-    print "CQ 030 doesn't open example file"
+    print("CQ 030 doesn't open example file")
 
 from Helpers import show
 import Part as FreeCADPart
