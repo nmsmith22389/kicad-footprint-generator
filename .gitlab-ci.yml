@@ -1,19 +1,33 @@
 image: python:3.10-slim
 
-before_script:
-  - apt-get update -q -y
-  - apt-get install -y libgl1-mesa-glx git fontconfig
-# We use the line below when running the validator but don't need it
-# or the time required to d/l and setup unless we run the validator
-#  - apt-get install -y build-essential libgl1-mesa-glx kicad
-  - python --version
-  - python -m pip install --upgrade pip
-  - pip install virtualenv
-  - virtualenv venv
-  - source venv/bin/activate
-  - pip install -r requirements.txt
+stages:
+- basic
+- generate
+
+formatting:
+  stage: basic
+  before_script:
+    - python -m pip install --upgrade pip
+    - pip install black isort
+  script:
+    - python -m isort .
+    - black .
 
 .model:
+  stage: generate
+  needs: []
+  before_script:
+    - apt-get update -q -y
+    - apt-get install -y libgl1-mesa-glx git fontconfig
+  # We use the line below when running the validator but don't need it
+  # or the time required to d/l and setup unless we run the validator
+  #  - apt-get install -y build-essential libgl1-mesa-glx kicad
+    - python --version
+    - python -m pip install --upgrade pip
+    - pip install virtualenv
+    - virtualenv venv
+    - source venv/bin/activate
+    - pip install -r requirements.txt
   script:
     - ./generator.py --output_dir ./3dmodels --library $library --enable-vrml True
     # - sudo find / -iname 3dmodels > models_location.txt
