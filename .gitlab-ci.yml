@@ -140,11 +140,11 @@ Capacitor_THT:
     - .model
 
 #
-# Conn_PinSocket
+# Connector_PinSocket
 #
-Conn_PinSocket:
+Connector_PinSocket:
   variables:
-    library: Conn_PinSocket
+    library: Connector_PinSocket
   extends:
     - .model
   timeout: 6 hours
@@ -152,11 +152,11 @@ Conn_PinSocket:
     - kicad-ubuntu20.04
 
 #
-# Conn_Stocko
+# Connector_Stocko
 #
-Conn_Stocko:
+Connector_Stocko:
   variables:
-    library: Conn_Stocko
+    library: Connector_Stocko
   extends:
     - .model
 

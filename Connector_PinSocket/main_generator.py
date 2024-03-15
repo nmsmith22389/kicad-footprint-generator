@@ -73,7 +73,7 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
     """
     models = []
 
-    all_params = parameters.load_parameters("Conn_PinSocket")
+    all_params = parameters.load_parameters("Connector_PinSocket")
 
     if all_params == None:
         print("ERROR: Model parameters must be provided.")
