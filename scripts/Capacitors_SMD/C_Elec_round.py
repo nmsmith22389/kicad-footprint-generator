@@ -250,7 +250,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Parse *.kicad_mod.yml file(s) and create matching footprints')
     parser.add_argument('files', metavar='file', type=str, nargs='+', help='yml-files to parse')
     parser.add_argument('--global_config', type=str, nargs='?', help='the config file defining how the footprint will look like. (KLC)', default='../tools/global_config_files/config_KLCv3.0.yaml')
-    parser.add_argument('--series_config', type=str, nargs='?', help='the config file defining series parameters.', default='../SMD_chip_package_rlc-etc/config_KLCv3.0.yaml')
+    parser.add_argument('--series_config', type=str, nargs='?', help='the config file defining series parameters.', default='../SMD_2terminal_chip_molded/package_config_KLCv3.0.yaml')
     parser.add_argument('--ipc_definition', type=str, nargs='?', help='the IPC definition file', default='ipc7351B_capae_crystal.yaml')
     parser.add_argument('--ipc_density', type=str, nargs='?', help='the IPC desnity', default='nominal')
     parser.add_argument('--force_rectangle_pads', action='store_true', help='Force the generation of rectangle pads instead of rounded rectangle (KiCad 4.x compatibility.)')
