@@ -891,7 +891,7 @@ def makeSocketStripAngled(rows, cols, rm, coldist, pack_width, pack_offset, pin_
     l_fabp = l_fabb + w_fabb
     t_fabp = -pin_width / 2
 
-    h_slkb = cc_fabb + 2 * slk_offset
+    h_slkb = h_fabb + 2 * slk_offset
     w_slkb = w_fabb - 2 * slk_offset
     l_slkb = l_fabb + slk_offset
     t_slkb = t_fabb - slk_offset
