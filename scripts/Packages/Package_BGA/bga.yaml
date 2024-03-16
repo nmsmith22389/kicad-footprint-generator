@@ -1106,8 +1106,8 @@ Analog_BGA-77_9.0x15.0mm_Layout7x11_P1.27mm_Ball0.63mm:
   layout_y: 11
 
 
-Onsemi_ODCSP36_BGA-36_6.13x6.13mm_P1.0mm_Ball0.26mm:
-  description: "Onsemi ODCSP36 (Case 570CP), 0.27mm pad"
+OnSemi_ODCSP36_BGA-36_6.13x6.13mm_P1.0mm_Ball0.26mm:
+  description: "OnSemi ODCSP36 (Case 570CP), 0.27mm pad"
   size_source: "https://www.onsemi.com/pub/Collateral/570CP.PDF"
   additional_tags:
     - "Case 570CP"
