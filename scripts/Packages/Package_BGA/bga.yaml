@@ -1116,6 +1116,7 @@ Onsemi_ODCSP36_BGA-36_6.13x6.13mm_P1.0mm_Ball0.26mm:
   overall_height: 0.46 # 0.37+-0.015 glass + 0.09+-0.015 die
   pitch: 1.0
   pad_diameter: 0.27
+  mask_margin: 0.1
   layout_x: 6
   layout_y: 6
 
