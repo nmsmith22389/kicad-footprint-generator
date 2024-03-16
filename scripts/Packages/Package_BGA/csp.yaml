@@ -934,3 +934,39 @@ DiodesInc_GEA20_WLCSP-20_1.70x2.10mm_Layout4x5_P0.4mm:
   pad_diameter: 0.230
   layout_x: 4
   layout_y: 5
+
+OnSemi_ODCSP36_BGA-36_6.13x6.13mm_P1.0mm_Ball0.26mm:
+  # IMPORTANT: Manual modification required: Add "cross" marker between F6 pad
+  # and F.Fab outline on User.Comments to match package "Orientation" fiducial
+  # See image at 
+  description: "OnSemi ODCSP36 (Case 570CP), 0.27mm pad"
+  size_source: "https://www.onsemi.com/pub/Collateral/570CP.PDF"
+  manual_modification_required: true
+  additional_tags:
+    - "Case 570CP"
+  body_size_x: 6.13
+  body_size_y: 6.13
+  overall_height: 0.46 # 0.37+-0.015 glass + 0.09+-0.015 die
+  pitch: 1.0
+  pad_diameter: 0.27
+  mask_margin: 0.1
+  layout_x: 6
+  layout_y: 6
+
+OnSemi_ODCSP36_BGA-36_6.13x6.13mm_P1.0mm_Ball0.26mm_ManualAssembly:
+  # IMPORTANT: Manual modification required: Add "cross" marker between F6 pad
+  # and F.Fab outline on User.Comments to match package "Orientation" fiducial
+  # See image at 
+  description: "OnSemi ODCSP36 (Case 570CP), 0.27mm pad, manual assembly variant (larger pads)"
+  size_source: "https://www.onsemi.com/pub/Collateral/570CP.PDF"
+  manual_modification_required: true
+  additional_tags:
+    - "Case 570CP"
+  body_size_x: 6.13
+  body_size_y: 6.13
+  overall_height: 0.46 # 0.37+-0.015 glass + 0.09+-0.015 die
+  pitch: 1.0
+  pad_diameter: 0.47
+  mask_margin: 0.0 # Pads are already at MFR recommended mask opening size
+  layout_x: 6
+  layout_y: 6
