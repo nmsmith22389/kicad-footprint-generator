@@ -1105,3 +1105,17 @@ Analog_BGA-77_9.0x15.0mm_Layout7x11_P1.27mm_Ball0.63mm:
   layout_x: 7
   layout_y: 11
 
+
+Onsemi_ODCSP36_BGA-36_6.13x6.13mm_P1.0mm_Ball0.26mm:
+  description: "Onsemi ODCSP36 (Case 570CP), 0.27mm pad"
+  size_source: "https://www.onsemi.com/pub/Collateral/570CP.PDF"
+  additional_tags:
+    - "Case 570CP"
+  body_size_x: 6.13
+  body_size_y: 6.13
+  overall_height: 0.46 # 0.37+-0.015 glass + 0.09+-0.015 die
+  pitch: 1.0
+  pad_diameter: 0.27
+  layout_x: 6
+  layout_y: 6
+
