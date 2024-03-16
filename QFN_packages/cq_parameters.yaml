@@ -6914,6 +6914,78 @@ TQFN-40-1EP_5x5mm_P0.4mm_EP3.5x3.5mm:
   mark_color_key: light brown label
   source: 'https://pdfserv.maximintegrated.com/package_dwgs/21-0140.PDF (T4055-1)'
 
+TQFN-44-1EP_7x7mm_P0.5mm_EP4.7x4.7mm:
+  c: 0.2
+  L: 0.55
+  fp_s: True
+  fp_r: 0.5
+  fp_d: 0.5
+  fp_dx: null
+  fp_dy: null
+  fp_z: 0.05
+  ef: 0.0
+  cce: 0.35
+  D: 7.0
+  E: 7.0
+  A1: 0.02
+  A2: 0.73
+  b: 0.25
+  e: 0.5
+  m: 0.0
+  ps: rounded # optionally rounded
+  npx: 11
+  npy: 11
+  epad: [4.7, 4.7]
+  epad_offsetX: null
+  epad_offsetY: null
+  epad_n: null
+  epad_pitch: null
+  excluded_pins: null
+  model_name: TQFN-44-1EP_7x7mm_P0.5mm_EP4.7x4.7mm
+  rotation: -90
+  destination_dir: Package_DFN_QFN.3dshapes
+  body_color_key: black body
+  pin_shapes: null
+  pin_color_key: metal grey pins
+  mark_color_key: light brown label
+  source: 'https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/tqfn/21-0144.pdf'
+
+TQFN-48-1EP_7x7mm_P0.5mm_EP5.1x5.1mm:
+  c: 0.2
+  L: 0.4
+  fp_s: True
+  fp_r: 0.5
+  fp_d: 0.5
+  fp_dx: null
+  fp_dy: null
+  fp_z: 0.05
+  ef: 0.0
+  cce: 0.35
+  D: 7.0
+  E: 7.0
+  A1: 0.02
+  A2: 0.73
+  b: 0.25
+  e: 0.5
+  m: 0.0
+  ps: rounded # optionally rounded
+  npx: 12
+  npy: 12
+  epad: [5.1, 5.1]
+  epad_offsetX: null
+  epad_offsetY: null
+  epad_n: null
+  epad_pitch: null
+  excluded_pins: null
+  model_name: TQFN-48-1EP_7x7mm_P0.5mm_EP5.1x5.1mm
+  rotation: -90
+  destination_dir: Package_DFN_QFN.3dshapes
+  body_color_key: black body
+  pin_shapes: null
+  pin_color_key: metal grey pins
+  mark_color_key: light brown label
+  source: 'https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/tqfn/21-0144.pdf'
+
 VQFN-48-1EP_7x7mm_P0.5mm_EP4.1x4.1mm:
   c: 0.2
   L: 0.4
