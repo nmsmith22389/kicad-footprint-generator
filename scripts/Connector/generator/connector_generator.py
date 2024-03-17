@@ -585,7 +585,11 @@ def generate_one_footprint(positions: int, spec, configuration: dict):
         kicad_mod.append(pin1_silk)
 
     if (fp_config.draw_pin1_marker_on_fab):
-        pin1_fab = make_pin1_fab_marker(fp_config, configuration)
+        pin1_fab_pnts = make_pin1_fab_marker_points(fp_config, configuration)
+        # close polygon only if the closing line is not contained in the F.Fab outline
+        if (not check_if_points_on_lines(kicad_mod, [pin1_fab_pnts[n] for n in [0, -1]], layer='F.Fab')):
+            pin1_fab_pnts.append(pin1_fab_pnts[0])
+        pin1_fab = PolygonLine(nodes=pin1_fab_pnts, layer='F.Fab', width=configuration['fab_line_width'])
         kicad_mod.append(pin1_fab)
 
     # calculate CourtYard
@@ -669,7 +673,16 @@ def make_pin1_marker(*, pos, radius, shape, flip_marker, width, offset):
     return pin1_silk
 
 
-def make_pin1_fab_marker(fp_config: FPconfiguration, configuration: dict) -> list:
+def check_if_points_on_lines(kicad_mod, points, layer):
+    for node in kicad_mod:
+        if (isinstance(node, PolygonLine) and node.layer == layer):
+            for l in node.lineItems():
+                if all(l.isPointOnSelf(p) for p in points):
+                    return True
+    return False
+
+
+def make_pin1_fab_marker_points(fp_config: FPconfiguration, configuration: dict) -> list:
     # pin 1 on Fab is a triangle
 
     # location of the tip in x
@@ -686,11 +699,7 @@ def make_pin1_fab_marker(fp_config: FPconfiguration, configuration: dict) -> lis
         Vector2D(tip_x, base_y - dy),
         Vector2D(tip_x + 0.5 * dx, base_y),
     ]
-
-    width = configuration['fab_line_width']
-
-    pin1_fab = PolygonLine(nodes=pnts + pnts[:1], layer='F.Fab', width=width)
-    return pin1_fab
+    return pnts
 
 def clean_body_shape(body_shape_nodes):
     # Check if there are 3 points in the same line, and remove the center point
