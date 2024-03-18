@@ -1916,3 +1916,35 @@ DiodesInc_GEA20_WLCSP-20_1.70x2.10mm_Layout4x5_P0.4mm:
   pins_color_key: "metal grey pins"
   marking_color_key: "light brown label"
   library_name: "Package_CSP"
+
+WLCSP-9_1.21x1.22mm_P0.4mm:
+  # from https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/wlcspcb/cb_9_3.pdf
+  fp_r: 0.3       # first pin indicator radius
+  fp_d: 0.04      # first pin indicator distance from edge
+  fp_z: 0.01      # first pin indicator depth
+  ef: 0.0         # fillet of edges  Note: bigger bytes model with fillet
+  cf: null        # chamfer of the others corner
+  cff: null       # chamfer of the 1st pin corner
+  D1: null        # top body overall length
+  D: 1.22         # body overall length
+  E1: null        # body overall lenght
+  E: 1.21         # body overall width
+  A1: 0.2         # body-board separation
+  A2: null        # body height or body bottom height optional, needed for molded
+  A: 0.6          # body overall height
+  b: 0.267        # ball pin width diameter
+  e: 0.4          # pin (center-to-center) distance
+  ex: null        # pin (center-to-center) distance
+  sp: 0.0         # seating plane (pcb penetration)
+  npx: 3          # number of pins along X axis (width)
+  npy: 3          # number of pins along y axis (length)
+  excluded_pins: null # pins to exclude
+  molded: null    # molded = True, omitted -> None
+  old_modelName: "WLCSP-9_1.21x1.22mm_P0.4mm" # old_modelName
+  modelName: "WLCSP-9_1.21x1.22mm_P0.4mm" # modelName
+  rotation: -90   # rotation if required
+  body_bot_color_key: "dark green body"
+  body_color_key: "black body"
+  pins_color_key: "metal grey pins"
+  marking_color_key: "light brown label"
+  library_name: "Package_CSP"
