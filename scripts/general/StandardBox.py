@@ -719,313 +719,73 @@ class StandardBox(Node):
         #
         #
         #
-        # Check all holes and pads, if a pad or hole is on the crtyrd line
-        # then jump over the pad/hole
+        # Expand courtyard to include max of all pad copper plus clearance
         #
         clearance = self.courtyard_clearance
 
-        for n in self.boxffabline:
-            x1 = min(n.sx, n.ex)
-            y1 = min(n.sy, n.ey)
-            x2 = max(n.sx, n.ex)
-            y2 = max(n.sy, n.ey)
-            #
-            #
-            if (x1 < 0.0 and y1 < 0.0 and y2 < 0.0) or (x1 < 0.0 and y1 > 0.0 and y2 > 0.0):
-                #
-                # Top and bottom line
-                #
-                x1_t = x1 - clearance.x
-                x2_t = x2 + clearance.x
-                x3_t = x1_t
-                x4_t = x2_t
-                #
-                if y1 < 0.0:
-                    # Top line
-                    y1_t = y1 - clearance.y
-                    y2_t = y2 - clearance.y
-                    y3_t = y1_t
-                    y4_t = y2_t
-                    #
-                    for nn in self.corners:
-                        if nn[0] == 'URR':
-                            x2_t = x2_t - (nn[1] + clearance.x)
-                        if nn[0] == 'ULR':
-                            x1_t = x1_t + (nn[1] + clearance.x)
-                        if nn[0] == 'ULP':
-                            x3_t = x1_t
-                            x1_t = x1_t + (nn[1])
-                            y3_t = y1_t + (nn[2])
-                        if nn[0] == 'URP':
-                            x4_t = x2_t
-                            x2_t = x2_t - (nn[1])
-                            y4_t = y1_t + (nn[2])
+        cy_min_x = None
+        cy_max_x = None
+        cy_min_y = None
+        cy_max_y = None
 
+        for p in self.pad:
+                p_min_x = p.at.x - (p.size.x / 2.0)
+                p_min_y = p.at.y - (p.size.y / 2.0)
+                p_max_x = p_min_x + p.size.x
+                p_max_y = p_min_y + p.size.y
+                if cy_min_x is None:
+                    cy_min_x = p_min_x
                 else:
-                    # Bottom line
-                    y1_t = y1 + clearance.y
-                    y2_t = y2 + clearance.y
-                    y3_t = y1_t
-                    y4_t = y2_t
-                    #
-                    for nn in self.corners:
-                        if nn[0] == 'LRR':
-                            x2_t = x2_t - (nn[1] + clearance.x)
-                        if nn[0] == 'LLR':
-                            x1_t = x1_t + (nn[1] + clearance.x)
-                        if nn[0] == 'LLP':
-                            x3_t = x1_t
-                            x1_t = x1_t + (nn[1])
-                            y3_t = y1_t - (nn[2])
-                        if nn[0] == 'LRP':
-                            x4_t = x2_t
-                            x2_t = x2_t - (nn[1])
-                            y4_t = y1_t - (nn[2])
-                #
-                EndLine = True
-                UseCorner = True
-                while EndLine:
-                    px1 = 10000000.0
-                    py1 = 10000000.0
-                    px2 = 10000000.0
-                    py2 = 10000000.0
-                    foundPad = False
-
-                    for n in self.pad:
-                        n_min_x = n.at.x - (n.size.x / 2.0)
-                        n_min_y = n.at.y - (n.size.y / 2.0)
-                        n_max_x = n_min_x + n.size.x
-                        n_max_y = n_min_y + n.size.y
-                        dd_x = max(clearance.x, n.solder_mask_margin)
-                        dd_y = max(clearance.y, n.solder_mask_margin)
-
-                        if (n_min_y - dd_y) <= y1_t and (n_max_y + dd_y) > y1_t and n_max_x > x1_t and n_min_x < x2_t:
-                            #
-                            # This pad is in CrtYd line's path
-                            #
-                            if n_min_x < px1:
-                                px1 = n_min_x
-                                py1 = n_min_y
-                                px2 = n_max_x
-                                py2 = n_max_y
-                                foundPad = True
-                    if foundPad:
-                        #
-                        # Found at least one pad that is in CrtYd's line
-                        #
-                        if (px1 - dd_x) > x1_t:
-                            #
-                            # It does not cover the start point
-                            #
-                            self.fcrtydline.append(koaLine(x1_t, y1_t, px1 - dd_x, y2_t, 'F.CrtYd', self.FCrtYdWidth))
-                            if y1 < 0.0:
-                                # Top line
-                                self.fcrtydline.append(koaLine(px1 - dd_x, y2_t, px1 - dd_x, py1 - dd_y, 'F.CrtYd', self.FCrtYdWidth))
-                                self.fcrtydline.append(koaLine(px1 - dd_x, py1 - dd_y, px2 + dd_x, py1 - dd_y, 'F.CrtYd', self.FCrtYdWidth))
-                                self.fcrtydline.append(koaLine(px2 + dd_x, py1 - dd_y, px2 + dd_x, y2_t, 'F.CrtYd', self.FCrtYdWidth))
-                            else:
-                                # Bottom line
-                                self.fcrtydline.append(koaLine(px1 - dd_x, y2_t, px1 - dd_x, py2 + dd_y, 'F.CrtYd', self.FCrtYdWidth))
-                                self.fcrtydline.append(koaLine(px1 - dd_x, py2 + dd_y, px2 + dd_x, py2 + dd_y, 'F.CrtYd', self.FCrtYdWidth))
-                                self.fcrtydline.append(koaLine(px2 + dd_x, py2 + dd_y, px2 + dd_x, y2_t, 'F.CrtYd', self.FCrtYdWidth))
-                        x1_t = px2 + dd_x
-                    else:
-                        #
-                        # No pads was in the way
-                        #
-                        #
-                        # No pads was in the way
-                        #
-                        if y1 < 0.0 and UseCorner:
-                            # Top line
-                            for nn in self.corners:
-                                if nn[0] == 'ULR':
-                                    urcdy0 = y1_t + (nn[1] + clearance.y)
-                                    urcdx1 = x1_t - (nn[1] + clearance.y)
-                                    new_node = Arc(center=Point2D(x1_t, urcdy0), start=Point2D(urcdx1, urcdy0), layer='F.CrtYd', width=self.FCrtYdWidth, angle=90.0)
-                                    new_node._parent = self
-                                    self.virtual_childs.append(new_node)
-
-                                if nn[0] == 'ULP':
-                                    new_node = Line(start=Point2D(x1_t, y3_t), end=Point2D(x1_t, y1_t), layer='F.CrtYd', width=self.FCrtYdWidth)
-                                    new_node._parent = self
-                                    self.virtual_childs.append(new_node)
-                                    new_node = Line(start=Point2D(x1_t, y3_t), end=Point2D(x3_t, y3_t), layer='F.CrtYd', width=self.FCrtYdWidth)
-                                    new_node._parent = self
-                                    self.virtual_childs.append(new_node)
-                                    #
-                                if nn[0] == 'URP':
-                                    urcdy0 = y4_t + (nn[2])
-                                    new_node = Line(start=Point2D(x2_t, y4_t), end=Point2D(x2_t, y2_t), layer='F.CrtYd', width=self.FCrtYdWidth)
-                                    new_node._parent = self
-                                    self.virtual_childs.append(new_node)
-                                    new_node = Line(start=Point2D(x2_t, y4_t), end=Point2D(x4_t, y4_t), layer='F.CrtYd', width=self.FCrtYdWidth)
-                                    new_node._parent = self
-                                    self.virtual_childs.append(new_node)
-
-                        if y1 > 0.0 and UseCorner:
-                            # Bottom line
-                            for nn in self.corners:
-                                if nn[0] == 'LLR':
-                                    urcdy0 = y1_t - (nn[1] + clearance.y)
-                                    new_node = Arc(center=Point2D(x1_t, urcdy0), start=Point2D(x1_t, y1_t), layer='F.CrtYd', width=self.FCrtYdWidth, angle=90.0)
-                                    new_node._parent = self
-                                    self.virtual_childs.append(new_node)
-
-                                if nn[0] == 'LLP':
-                                    new_node = Line(start=Point2D(x1_t, y3_t), end=Point2D(x1_t, y1_t), layer='F.CrtYd', width=self.FCrtYdWidth)
-                                    new_node._parent = self
-                                    self.virtual_childs.append(new_node)
-                                    new_node = Line(start=Point2D(x1_t, y3_t), end=Point2D(x3_t, y3_t), layer='F.CrtYd', width=self.FCrtYdWidth)
-                                    new_node._parent = self
-                                    self.virtual_childs.append(new_node)
-                                    #
-                                if nn[0] == 'LRP':
-                                    urcdy0 = y4_t + (nn[2])
-                                    new_node = Line(start=Point2D(x2_t, y4_t), end=Point2D(x2_t, y2_t), layer='F.CrtYd', width=self.FCrtYdWidth)
-                                    new_node._parent = self
-                                    self.virtual_childs.append(new_node)
-                                    new_node = Line(start=Point2D(x2_t, y4_t), end=Point2D(x4_t, y4_t), layer='F.CrtYd', width=self.FCrtYdWidth)
-                                    new_node._parent = self
-                                    self.virtual_childs.append(new_node)
-                        #
-                        self.fcrtydline.append(koaLine(x1_t, y1_t, x2_t, y2_t, 'F.CrtYd', self.FCrtYdWidth))
-                        EndLine = False
-
-                    UseCorner = False
-
-                    if x1_t >= x2:
-                        EndLine = False
-
-                if not foundPad and y1 < 0:
-                    #
-                    for nn in self.corners:
-                        if nn[0] == 'URR':
-                            urcdy1 = y1_t + (nn[1] + clearance.y)
-                            new_node = Arc(center=Point2D(x2_t, urcdy1), start=Point2D(x2_t, y2_t), layer='F.CrtYd', width=self.FCrtYdWidth, angle=90.0)
-                            new_node._parent = self
-                            self.virtual_childs.append(new_node)
-
-
-                if not foundPad and y1 > 0:
-                    #
-                    for nn in self.corners:
-                        if nn[0] == 'LRR':
-                            urcdx1 = x2_t + (nn[1] + clearance.x)
-                            urcdy1 = y2_t - (nn[1] + clearance.y)
-                            new_node = Arc(center=Point2D(x2_t, urcdy1), start=Point2D(urcdx1, urcdy1), layer='F.CrtYd', width=self.FCrtYdWidth, angle=90.0)
-                            new_node._parent = self
-                            self.virtual_childs.append(new_node)
-
-            if (x1 < 0.0 and y1 < 0.0 and y2 > 0.0) or (x1 > 0.0 and y1 < 0.0 and y2 > 0.0):
-                #
-                # Left and right line
-                #
-                y1_t = y1 - clearance.y
-                y2_t = y2 + clearance.y
-                #
-                if x1 < 0.0:
-                    # Left line
-                    x1_t = x1 - clearance.x
-                    x2_t = x1 - clearance.x
-                    #
-                    for nn in self.corners:
-                        if nn[0] == 'ULR':
-                            y1_t = y1_t + (nn[1] + clearance.y)
-                        if nn[0] == 'LLR':
-                            y2_t = y2_t - (nn[1] + clearance.y)
-                        if nn[0] == 'ULP':
-                            y1_t = y1_t + (nn[2])
-                        if nn[0] == 'LLP':
-                            y2_t = y2_t - (nn[2])
-
+                    cy_min_x = min(cy_min_x, p_min_x)
+                if cy_min_y is None:
+                    cy_min_y = p_min_y
                 else:
-
-                    # Right line
-                    x1_t = x1 + clearance.x
-                    x2_t = x2 + clearance.x
-                    #
-                    for nn in self.corners:
-                        if nn[0] == 'URR':
-                            y1_t = y1_t + (nn[1] + clearance.y)
-                        if nn[0] == 'LRR':
-                            y2_t = y2_t - (nn[1] + clearance.y)
-                        if nn[0] == 'URP':
-                            y1_t = y1_t + (nn[2])
-                        if nn[0] == 'LRP':
-                            y2_t = y2_t - (nn[2])
-                #
-                EndLine = True
-                while EndLine:
-                    px1 = 10000000.0
-                    py1 = 10000000.0
-                    px2 = 10000000.0
-                    py2 = 10000000.0
-                    foundPad = False
-
-                    for n in self.pad:
-                        n_min_x = n.at.x - (n.size.x / 2.0)
-                        n_min_y = n.at.y - (n.size.y / 2.0)
-                        n_max_x = n_min_x + n.size.x
-                        n_max_y = n_min_y + n.size.y
-                        dd_x = max(clearance.x, n.solder_mask_margin)
-                        dd_y = max(clearance.y, n.solder_mask_margin)
-
-                        if (n_min_x <= x1_t) and (n_max_x >= x1_t) and n_max_y >= y1_t and n_min_y <= y2_t:
-                            #
-                            # This pad is in CrtYd line's path
-                            #
-                            if n_min_y < py1:
-                                px1 = n_min_x
-                                py1 = n_min_y
-                                px2 = n_max_x
-                                py2 = n_max_y
-                                foundPad = True
-                    if foundPad:
-                        #
-                        # Found at least one pad that is in CrtYd's line
-                        #
-                        if (py1 - dd_y) > y1_t:
-                            #
-                            # It does not cover the start point
-                            #
-                            self.fcrtydline.append(koaLine(x1_t, y1_t, x2_t, py1 - dd_y, 'F.CrtYd', self.FCrtYdWidth))
-                            if x1 < 0.0:
-                                # Left line
-                                self.fcrtydline.append(koaLine(x2_t, py1 - dd_y, px1 - dd_x, py1 - dd_y,
-                                                               'F.CrtYd', self.FCrtYdWidth))
-                                self.fcrtydline.append(koaLine(px1 - dd_x, py1 - dd_y, px1 - dd_x, py2 + dd_y,
-                                                               'F.CrtYd', self.FCrtYdWidth))
-                                self.fcrtydline.append(koaLine(px1 - dd_x, py2 + dd_y, x2_t, py2 + dd_y,
-                                                               'F.CrtYd', self.FCrtYdWidth))
-                            else:
-                                # Right line
-                                self.fcrtydline.append(koaLine(x2_t, py1 - dd_y, px2 + dd_x, py1 - dd_y,
-                                                               'F.CrtYd', self.FCrtYdWidth))
-                                self.fcrtydline.append(koaLine(px2 + dd_x, py1 - dd_y, px2 + dd_x, py2 + dd_y,
-                                                               'F.CrtYd', self.FCrtYdWidth))
-                                self.fcrtydline.append(koaLine(px2 + dd_x, py2 + dd_y, x2_t, py2 + dd_y,
-                                                               'F.CrtYd', self.FCrtYdWidth))
-
-                        y1_t = py2 + dd_y
-                    else:
-                        #
-                        # No pads was in the way
-                        #
-                        self.fcrtydline.append(koaLine(x1_t, y1_t, x2_t, y2_t, 'F.CrtYd', self.FCrtYdWidth))
-                        EndLine = False
-
-                    if y1_t >= y2:
-                        EndLine = False
-        #
-        #
-        for n in self.fcrtydline:
-            new_node = Line(start=Point2D(roundG(n.sx, 0.01), roundG(n.sy, 0.01)), end=Point2D(roundG(n.ex, 0.01), roundG(n.ey, 0.01)), layer=n.layer, width=n.width)
-            if n.width < 0.0:
-                new_node = Line(start=Point2D(roundG(n.sx, 0.01), roundG(n.sy, 0.01)), end=Point2D(roundG(n.ex, 0.01), roundG(n.ey, 0.01)), layer=n.layer)
-            new_node._parent = self
-            self.virtual_childs.append(new_node)
-
+                    cy_min_y = min(cy_min_y, p_min_y)
+                if cy_max_x is None:
+                    cy_max_x = p_max_x
+                else:
+                    cy_max_x = max(cy_max_x, p_max_x)
+                if cy_max_y is None:
+                    cy_max_y = p_max_y
+                else:
+                    cy_max_y = min(cy_max_y, p_max_y)
+                
+                
+        for f in self.boxffabline:
+            cy_min_x = min(f.sx, f.ex, cy_min_x)
+            cy_min_y = min(f.sy, f.ey, cy_min_y)
+            cy_max_x = max(f.sx, f.ex, cy_max_x)
+            cy_max_y = max(f.sy, f.ey, cy_max_y)
+            
+        cy_min_x -= 0.005 # ensure that rounding of courtyard to nearest 0.01mm grid point below is always away from the part
+        cy_min_x -= clearance.x
+        cy_min_y -= 0.005
+        cy_min_y -= clearance.y
+        cy_max_x += 0.005
+        cy_max_x += clearance.y
+        cy_max_y += 0.005
+        cy_max_y += clearance.x
+        
+        #(min, min) -> (min, max)
+        new_node = Line(start=Point2D(roundG(cy_min_x, 0.01), roundG(cy_min_y, 0.01)), end=Point2D(roundG(cy_min_x, 0.01), roundG(cy_max_y, 0.01)), layer='F.CrtYd', width=self.FCrtYdWidth)
+        new_node._parent = self
+        self.virtual_childs.append(new_node)
+        
+        #(min, max) -> (max, max)
+        new_node = Line(start=Point2D(roundG(cy_min_x, 0.01), roundG(cy_max_y, 0.01)), end=Point2D(roundG(cy_max_x, 0.01), roundG(cy_max_y, 0.01)), layer='F.CrtYd', width=self.FCrtYdWidth)
+        new_node._parent = self
+        self.virtual_childs.append(new_node)
+        
+        #(max, max) -> (max, min)
+        new_node = Line(start=Point2D(roundG(cy_max_x, 0.01), roundG(cy_max_y, 0.01)), end=Point2D(roundG(cy_max_x, 0.01), roundG(cy_min_y, 0.01)), layer='F.CrtYd', width=self.FCrtYdWidth)
+        new_node._parent = self
+        self.virtual_childs.append(new_node)
+        
+        #(max, min) -> (min, min)
+        new_node = Line(start=Point2D(roundG(cy_max_x, 0.01), roundG(cy_min_y, 0.01)), end=Point2D(roundG(cy_min_x, 0.01), roundG(cy_min_y, 0.01)), layer='F.CrtYd', width=self.FCrtYdWidth)
+        new_node._parent = self
+        self.virtual_childs.append(new_node)
+        
     def calculateBoundingBox(self):
         min_x = self.at.x
         min_y = self.at.y
