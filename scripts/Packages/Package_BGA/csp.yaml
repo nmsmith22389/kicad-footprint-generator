@@ -838,6 +838,15 @@ WLCSP-16_2.225x2.17mm_P0.5mm:
   pad_diameter: 0.327
   layout_x: 4
   layout_y: 4
+WLCSP-9_1.21x1.22mm_P0.4mm:
+  description: "WLCSP-9"
+  size_source: "https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/wlcspcb/cb_9_3.pdf"
+  body_size_x: 1.21
+  body_size_y: 1.22
+  pitch: 0.4
+  pad_diameter: 0.2
+  layout_x: 3
+  layout_y: 3
 WLCSP-8_1.551x2.284mm_P0.5mm:
   description: "WLCSP-8"
   size_source: "https://www.adestotech.com/wp-content/uploads/AT25SL321_112.pdf#page=75"
