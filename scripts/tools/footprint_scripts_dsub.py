@@ -106,15 +106,15 @@ def makeDSubStraight(
         tags = tags + " female"
         footprint_name = footprint_name + "_Female"
 
-    description = description + ", pitch {0}x{1}mm".format(rmx, rmy)
-    tags = tags + " pitch {0}x{1}mm".format(rmx, rmy)
+    description = description + ", pitch {:g}x{:g}mm".format(rmx, rmy)
+    tags = tags + " pitch {:g}x{:g}mm".format(rmx, rmy)
     footprint_name = footprint_name + "_Vertical"
     footprint_name = footprint_name + "_P{0:3.2f}x{1:3.2f}mm".format(rmx, rmy)
 
-    description = description + ", distance of mounting holes {0}mm".format(
+    description = description + ", distance of mounting holes {:g}mm".format(
         mountingdistance
     )
-    tags = tags + " mounting holes distance {0}mm".format(mountingdistance)
+    tags = tags + " mounting holes distance {:g}mm".format(mountingdistance)
     # footprint_name=footprint_name+"_MHDist{0:3.2f}mm".format(mountingdistance)
 
     if hasMountingHoles:
@@ -544,15 +544,15 @@ def makeDSubEdge(
         tags = tags + " female"
         footprint_name = footprint_name + "_Female"
 
-    description = description + ", x-pin-pitch {0}mm".format(rmx)
-    tags = tags + " x-pin-pitch {0}mm".format(rmx)
+    description = description + ", x-pin-pitch {:g}mm".format(rmx)
+    tags = tags + " x-pin-pitch {:g}mm".format(rmx)
     footprint_name = footprint_name + "_EdgeMount"
     footprint_name = footprint_name + "_P{0:3.2f}mm".format(rmx)
 
-    description = description + ", distance of mounting holes {0}mm".format(
+    description = description + ", distance of mounting holes {:g}mm".format(
         mountingdistance
     )
-    tags = tags + " mounting holes distance {0}mm".format(mountingdistance)
+    tags = tags + " mounting holes distance {:g}mm".format(mountingdistance)
     # footprint_name=footprint_name+"_MHDist{0:3.2f}mm".format(mountingdistance)
 
     if len(webpage) > 0:
@@ -1041,10 +1041,10 @@ def makeDSubAngled(
         footprint_name = footprint_name + "_Female"
 
     rmy_default = 2.84
-    description = description + ", pitch {0}x{1}mm, pin-PCB-offset {2}mm".format(
+    description = description + ", pitch {:g}x{:g}mm, pin-PCB-offset {:g}mm".format(
         rmx, rmy, pin_pcb_distance
     )
-    tags = tags + " pitch {0}x{1}mm pin-PCB-offset {2}mm".format(
+    tags = tags + " pitch {:g}x{:g}mm pin-PCB-offset {:g}mm".format(
         rmx, rmy, pin_pcb_distance
     )
 
@@ -1057,13 +1057,13 @@ def makeDSubAngled(
     if hasMountingHoles:
         description = (
             description
-            + ", distance of mounting holes {0}mm, distance of mounting holes to PCB edge {1}mm".format(
+            + ", distance of mounting holes {:g}mm, distance of mounting holes to PCB edge {:g}mm".format(
                 mountingdistance, mounting_pcb_distance
             )
         )
         tags = (
             tags
-            + " mounting-holes-distance {0}mm mounting-hole-offset {0}mm".format(
+            + " mounting-holes-distance {:g}mm mounting-hole-offset {:g}mm".format(
                 mountingdistance, mounting_pcb_distance
             )
         )
