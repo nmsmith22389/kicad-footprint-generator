@@ -109,7 +109,7 @@ def makeDSubStraight(
     description = description + ", pitch {0}x{1}mm".format(rmx, rmy)
     tags = tags + " pitch {0}x{1}mm".format(rmx, rmy)
     footprint_name = footprint_name + "_Vertical"
-    footprint_name = footprint_name + "_Pitch{0:3.2f}x{1:3.2f}mm".format(rmx, rmy)
+    footprint_name = footprint_name + "_P{0:3.2f}x{1:3.2f}mm".format(rmx, rmy)
 
     description = description + ", distance of mounting holes {0}mm".format(
         mountingdistance
@@ -547,7 +547,7 @@ def makeDSubEdge(
     description = description + ", x-pin-pitch {0}mm".format(rmx)
     tags = tags + " x-pin-pitch {0}mm".format(rmx)
     footprint_name = footprint_name + "_EdgeMount"
-    footprint_name = footprint_name + "_Pitch{0:3.2f}mm".format(rmx)
+    footprint_name = footprint_name + "_P{0:3.2f}mm".format(rmx)
 
     description = description + ", distance of mounting holes {0}mm".format(
         mountingdistance
@@ -1049,7 +1049,7 @@ def makeDSubAngled(
     )
 
     footprint_name = footprint_name + "_Horizontal"
-    footprint_name = footprint_name + "_Pitch{0:3.2f}x{1:3.2f}mm".format(rmx, rmy)
+    footprint_name = footprint_name + "_P{0:3.2f}x{1:3.2f}mm".format(rmx, rmy)
     footprint_name = footprint_name + "_EdgePinOffset{0:3.2f}mm".format(
         pin_pcb_distance
     )
