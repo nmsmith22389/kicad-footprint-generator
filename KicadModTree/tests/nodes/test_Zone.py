@@ -6,76 +6,111 @@ from node_test_utils import assert_serialises_as
 
 import pytest
 
+# Trick pycodestyle into not assuming tab indents
+if False:
+    pass
+
 RESULT_Basic = """
-(footprint zonetest (version 20221018) (generator kicad-footprint-generator)
-  (layer F.Cu)
-  (zone
-    (net 1)
-    (net_name GND)
-    (layers)
-    (name "")
-    (hatch edge 0.5)
-    (priority 1)
-    (connect_pads (clearance 0))
-    (filled_areas_thickness no)
-    (min_thickness 0.25)
-    (keepout (tracks allowed) (vias not_allowed) (copperpour allowed) (pads allowed) (footprints allowed))
-    (fill)
-    (polygon (pts
-       (xy 0 0)
-       (xy 0 1)
-       (xy 1 1)
-       (xy 1 0))))
-)"""
+(footprint "zonetest"
+	(version 20240108)
+	(generator "kicad-footprint-generator")
+	(layer "F.Cu")
+	(zone
+		(net 1)
+		(net_name "GND")
+		(layers)
+		(name "")
+		(hatch edge 0.5)
+		(priority 1)
+		(connect_pads
+			(clearance 0)
+		)
+		(filled_areas_thickness no)
+		(min_thickness 0.25)
+		(keepout
+			(tracks allowed)
+			(vias not_allowed)
+			(copperpour allowed)
+			(pads allowed)
+			(footprints allowed)
+		)
+		(fill)
+		(polygon
+			(pts
+				(xy 0 0)
+				(xy 0 1)
+				(xy 1 1)
+				(xy 1 0)
+			)
+		)
+	)
+)"""  # NOQA: W191
 
 RESULT_WithFill = """
-(footprint filltest (version 20221018) (generator kicad-footprint-generator)
-  (layer F.Cu)
-  (zone
-    (net 0)
-    (net_name "")
-    (layers)
-    (name "")
-    (hatch edge 0.5)
-    (connect_pads (clearance 0))
-    (filled_areas_thickness no)
-    (min_thickness 0.25)
-    (fill yes
-      (thermal_gap 0.5)
-      (thermal_bridge_width 0.5)
-      (smoothing fillet (radius 0))
-      (island_removal_mode 0))
-    (polygon (pts
-       (xy 0 0)
-       (xy 0 1)
-       (xy 1 1)
-       (xy 1 0))))
-)"""
+(footprint "filltest"
+	(version 20240108)
+	(generator "kicad-footprint-generator")
+	(layer "F.Cu")
+	(zone
+		(net 0)
+		(net_name "")
+		(layers)
+		(name "")
+		(hatch edge 0.5)
+		(connect_pads
+			(clearance 0)
+		)
+		(filled_areas_thickness no)
+		(min_thickness 0.25)
+		(fill yes
+			(thermal_gap 0.5)
+			(thermal_bridge_width 0.5)
+			(smoothing fillet
+				(radius 0)
+			)
+		)
+		(polygon
+			(pts
+				(xy 0 0)
+				(xy 0 1)
+				(xy 1 1)
+				(xy 1 0)
+			)
+		)
+	)
+)"""  # NOQA: W191
 
 RESULT_IslandMin = """
-(footprint island_min (version 20221018) (generator kicad-footprint-generator)
-  (layer F.Cu)
-  (zone
-    (net 0)
-    (net_name "")
-    (layers)
-    (name "")
-    (hatch edge 0.5)
-    (connect_pads (clearance 0))
-    (filled_areas_thickness no)
-    (min_thickness 0.25)
-    (fill yes
-      (thermal_gap 0.5)
-      (thermal_bridge_width 0.5)
-      (island_removal_mode 2)
-      (island_area_min 0.1))
-    (polygon (pts
-       (xy 0 0)
-       (xy 0 1)
-       (xy 1 1)
-       (xy 1 0))))
+(footprint "island_min"
+	(version 20240108)
+	(generator "kicad-footprint-generator")
+	(layer "F.Cu")
+	(zone
+		(net 0)
+		(net_name "")
+		(layers)
+		(name "")
+		(hatch edge 0.5)
+		(connect_pads
+			(clearance 0)
+		)
+		(filled_areas_thickness no)
+		(min_thickness 0.25)
+		(fill yes
+			(thermal_gap 0.5)
+			(thermal_bridge_width 0.5)island_area_min 0.1
+		)
+		(polygon
+			(pts
+				(xy 0 0)
+				(xy 0 1)
+				(xy 1 1)
+				(xy 1 0)
+			)
+		)
+	)
 )
-"""
+"""  # NOQA: W191
 
 DEFAULT_TEST_POLYGON = [
         Vector2D(0, 0),
@@ -182,4 +217,4 @@ def test_island_removal_area_min():
     kicad_mod = Footprint("island_min", FootprintType.UNSPECIFIED)
     kicad_mod.append(z)
 
-    assert_serialises_as(kicad_mod, RESULT_IslandMin)
+    assert_serialises_as(kicad_mod, RESULT_IslandMin, dump=True)

@@ -3,26 +3,49 @@ from KicadModTree import Vector2D
 
 from node_test_utils import assert_serialises_as
 
-RESULT_Basic = """(footprint padtest (version 20221018) (generator kicad-footprint-generator)
-  (layer F.Cu)
-  (attr smd)
-  (pad 42 smd rect (at 0 0) (size 1 1) (layers F.Cu))
-)"""
+# Trick pycodestyle into not assuming tab indents
+if False:
+    pass
+
+RESULT_Basic = """(footprint "padtest"
+	(version 20240108)
+	(generator "kicad-footprint-generator")
+	(layer "F.Cu")
+	(attr smd)
+	(pad "42" smd rect
+		(at 0 0)
+		(size 1 1)
+		(layers "F.Cu")
+	)
+)"""  # NOQA: W191
 
 
-RESULT_Heatsink = """(footprint padtest (version 20221018) (generator kicad-footprint-generator)
-  (layer F.Cu)
-  (attr smd)
-  (pad 42 smd rect (at 0 0) (size 1 1) (property pad_prop_heatsink) (layers F.Cu))
-)"""
+RESULT_Heatsink = """(footprint "padtest"
+	(version 20240108)
+	(generator "kicad-footprint-generator")
+	(layer "F.Cu")
+	(attr smd)
+	(pad "42" smd rect
+		(at 0 0)
+		(size 1 1)
+		(property pad_prop_heatsink)
+		(layers "F.Cu")
+	)
+)"""  # NOQA: W191
 
 
-RESULT_ZoneConnection = """(footprint padtest (version 20221018) (generator kicad-footprint-generator)
-  (layer F.Cu)
-  (attr smd)
-  (pad 42 smd rect (at 0 0) (size 1 1) (layers F.Cu)
-    (zone_connect 2))
-)"""
+RESULT_ZoneConnection = """(footprint "padtest"
+	(version 20240108)
+	(generator "kicad-footprint-generator")
+	(layer "F.Cu")
+	(attr smd)
+	(pad "42" smd rect
+		(at 0 0)
+		(size 1 1)
+		(layers "F.Cu")
+		(zone_connect 2)
+	)
+)"""  # NOQA: W191
 
 
 # Basic pad test arguments
@@ -79,4 +102,4 @@ def test_zone_connection():
 
     kicad_mod = Footprint("padtest", FootprintType.SMD)
     kicad_mod.append(pad)
-    assert_serialises_as(kicad_mod, RESULT_ZoneConnection)
+    assert_serialises_as(kicad_mod, RESULT_ZoneConnection, dump=True)
