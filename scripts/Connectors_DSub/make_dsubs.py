@@ -46,6 +46,11 @@ if __name__ == "__main__":
     classname = "DSUB"
     classname_description = "D-Sub connector"
     webpage = "https://disti-assets.s3.amazonaws.com/tonar/files/datasheets/16730.pdf"
+    # unboxed connectors
+    webpage_unboxed = "http://docs-europe.electrocomponents.com/webdocs/1585/0900766b81585df2.pdf"
+    backcan_height_unboxed = 4.1
+    pin_pcb_distance_unboxed = 9.4
+
     # fmt: off
     #                  0,             1,             2,             3,         4,                5,                  6
     #               pins, mounting_dist, outline_sizex, outlinesize_y, connwidth,  connheight_male,  connheight_female
@@ -54,152 +59,8 @@ if __name__ == "__main__":
                 [     15,         33.30,         39.20,         12.50,      24.6,              8.3,              7.9 ],
                 [     25,         47.10,         53.10,         12.50,      38.3,              8.3,              7.9 ],
                 [     37,         63.50,         69.40,         12.50,      54.8,              8.3,              7.9 ],
-                ]
-    # fmt: on
-    for data in sizes_table:
-        makeDSubStraight(
-            pins=data[0],
-            isMale=True,
-            HighDensity=HighDensity,
-            rmx=rmx,
-            rmy=rmy,
-            pindrill=pindrill,
-            pad=pad,
-            mountingdrill=mountingdrill,
-            mountingpad=mountingpad,
-            mountingdistance=data[1],
-            outline_size=[data[2], data[3]],
-            outline_cornerradius=outline_cornerradius,
-            connwidth=data[4],
-            side_angle_degree=side_angle_degree,
-            connheight=data[5],
-            conn_cornerradius=conn_cornerradius,
-            tags_additional=tags_additional,
-            lib_name=lib_name,
-            classname=classname,
-            classname_description=classname_description,
-            webpage=webpage,
-        )
-        makeDSubStraight(
-            pins=data[0],
-            isMale=False,
-            HighDensity=HighDensity,
-            rmx=rmx,
-            rmy=rmy,
-            pindrill=pindrill,
-            pad=pad,
-            mountingdrill=mountingdrill,
-            mountingpad=mountingpad,
-            mountingdistance=data[1],
-            outline_size=[data[2], data[3]],
-            outline_cornerradius=outline_cornerradius,
-            connwidth=data[4],
-            side_angle_degree=side_angle_degree,
-            connheight=data[6],
-            conn_cornerradius=conn_cornerradius,
-            tags_additional=tags_additional,
-            lib_name=lib_name,
-            classname=classname,
-            classname_description=classname_description,
-            webpage=webpage,
-        )
-        makeDSubStraight(
-            pins=data[0],
-            isMale=True,
-            HighDensity=HighDensity,
-            rmx=rmx,
-            rmy=rmy,
-            pindrill=pindrill,
-            pad=pad,
-            mountingdrill=0,
-            mountingpad=mountingpad,
-            mountingdistance=data[1],
-            outline_size=[data[2], data[3]],
-            outline_cornerradius=outline_cornerradius,
-            connwidth=data[4],
-            side_angle_degree=side_angle_degree,
-            connheight=data[5],
-            conn_cornerradius=conn_cornerradius,
-            tags_additional=tags_additional,
-            lib_name=lib_name,
-            classname=classname,
-            classname_description=classname_description,
-            webpage=webpage,
-        )
-        makeDSubStraight(
-            pins=data[0],
-            isMale=False,
-            HighDensity=HighDensity,
-            rmx=rmx,
-            rmy=rmy,
-            pindrill=pindrill,
-            pad=pad,
-            mountingdrill=0,
-            mountingpad=mountingpad,
-            mountingdistance=data[1],
-            outline_size=[data[2], data[3]],
-            outline_cornerradius=outline_cornerradius,
-            connwidth=data[4],
-            side_angle_degree=side_angle_degree,
-            connheight=data[6],
-            conn_cornerradius=conn_cornerradius,
-            tags_additional=tags_additional,
-            lib_name=lib_name,
-            classname=classname,
-            classname_description=classname_description,
-            webpage=webpage,
-        )
+    ]
 
-        makeDSubEdge(
-            pins=data[0],
-            isMale=True,
-            rmx=rmx,
-            pad=soldercup_padsize,
-            mountingdrill=mountingdrill,
-            mountingdistance=data[1],
-            shield_width=data[2],
-            shieldthickness=shieldthickness,
-            connwidth=data[4],
-            can_height=can_height_male,
-            backcan_width=data[4] + 2 * shieldthickness,
-            backcan_height=backcan_height,
-            smaller_backcan_offset=smaller_backcan_offset,
-            smaller_backcan_height=smaller_backcan_height,
-            soldercup_length=soldercup_length,
-            soldercup_diameter=soldercup_diameter,
-            soldercup_pad_edge_offset=soldercup_pad_edge_offset,
-            tags_additional=tags_additional,
-            lib_name=lib_name,
-            classname=classname,
-            classname_description=classname_description,
-            webpage=webpage,
-        )
-        makeDSubEdge(
-            pins=data[0],
-            isMale=False,
-            rmx=rmx,
-            pad=soldercup_padsize,
-            mountingdrill=mountingdrill,
-            mountingdistance=data[1],
-            shield_width=data[2],
-            shieldthickness=shieldthickness,
-            connwidth=data[4],
-            can_height=can_height_female,
-            backcan_width=data[4] + 2 * shieldthickness,
-            backcan_height=backcan_height,
-            smaller_backcan_offset=smaller_backcan_offset,
-            smaller_backcan_height=smaller_backcan_height,
-            soldercup_length=soldercup_length,
-            soldercup_diameter=soldercup_diameter,
-            soldercup_pad_edge_offset=soldercup_pad_edge_offset,
-            tags_additional=tags_additional,
-            lib_name=lib_name,
-            classname=classname,
-            classname_description=classname_description,
-            webpage=webpage,
-        )
-
-    # fmt: off
     # boxed angled
     #                   mounting_pcb_distance,   pin_pcb_distance
     angled_distances=[
@@ -209,11 +70,83 @@ if __name__ == "__main__":
                         [               16.38,              14.96 ],
                         [                8.60,              14.96 ],
                     ]
+
+    subvariant_straight = [
+        # has_pins, connheight, mountingdrill, can_height
+        [True,      8.3,        mountingdrill, can_height_male],
+        [False,     7.9,        mountingdrill, can_height_female],
+        [True,      8.3,        0,             can_height_male],
+        [False,     7.9,        0,             can_height_female]
+    ]
     # fmt: on
-    for data in sizes_table:
-        for angled_distance in angled_distances:
-            mounting_pcb_distance = angled_distance[0] - shieldthickness
-            pin_pcb_distance = angled_distance[1] - shieldthickness
+
+    #
+    # Make regular density connectors
+    for (
+        pins,
+        mounting_dist,
+        outline_sizex,
+        outline_sizey,
+        connwidth,
+        connheight_male,
+        connheight_female,
+    ) in sizes_table:
+        for has_pins, connheight, mountingdrill_v, can_height_v in subvariant_straight:
+            # Straight, Pins&Socket, with and without mountingholes
+            makeDSubStraight(
+                pins=pins,
+                isMale=has_pins,
+                HighDensity=HighDensity,
+                rmx=rmx,
+                rmy=rmy,
+                pindrill=pindrill,
+                pad=pad,
+                mountingdrill=mountingdrill_v,
+                mountingpad=mountingpad,
+                mountingdistance=mounting_dist,
+                outline_size=[outline_sizex, outline_sizey],
+                outline_cornerradius=outline_cornerradius,
+                connwidth=connwidth,
+                side_angle_degree=side_angle_degree,
+                connheight=connheight,
+                conn_cornerradius=conn_cornerradius,
+                tags_additional=tags_additional,
+                lib_name=lib_name,
+                classname=classname,
+                classname_description=classname_description,
+                webpage=webpage,
+            )
+
+            # Edge-mount variant, Pins&Socket
+            makeDSubEdge(
+                pins=pins,
+                isMale=has_pins,
+                rmx=rmx,
+                pad=soldercup_padsize,
+                mountingdrill=mountingdrill,
+                mountingdistance=mounting_dist,
+                shield_width=outline_sizex,
+                shieldthickness=shieldthickness,
+                connwidth=connwidth,
+                can_height=can_height_v,
+                backcan_width=connwidth + 2 * shieldthickness,
+                backcan_height=backcan_height,
+                smaller_backcan_offset=smaller_backcan_offset,
+                smaller_backcan_height=smaller_backcan_height,
+                soldercup_length=soldercup_length,
+                soldercup_diameter=soldercup_diameter,
+                soldercup_pad_edge_offset=soldercup_pad_edge_offset,
+                tags_additional=tags_additional,
+                lib_name=lib_name,
+                classname=classname,
+                classname_description=classname_description,
+                webpage=webpage,
+            )
+
+        # Horizontal connectors, Pins&Socket, 5 different 'distances'
+        for mounting_pcb_distance_v, pin_pcb_distance_v in angled_distances:
+            mounting_pcb_distance = mounting_pcb_distance_v - shieldthickness
+            pin_pcb_distance = pin_pcb_distance_v - shieldthickness
             backbox_height = (
                 max(
                     pin_pcb_distance + rmy + pad / 2,
@@ -221,455 +154,225 @@ if __name__ == "__main__":
                 )
                 + 1
             )
-            makeDSubAngled(
-                pins=data[0],
-                isMale=True,
-                HighDensity=HighDensity,
-                rmx=rmx,
-                rmy=rmy,
-                pindrill=pindrill,
-                pad=pad,
-                pin_pcb_distance=pin_pcb_distance,
-                mountingdrill=mountingdrill,
-                mountingpad=mountingpad,
-                mountingdistance=data[1],
-                mounting_pcb_distance=mounting_pcb_distance,
-                shield_width=data[2],
-                shield_thickness=shieldthickness,
-                can_width=data[4],
-                can_height=can_height_male,
-                backbox_width=data[2],
-                backbox_height=backbox_height,
-                nut_diameter=nut_diameter,
-                nut_length=nut_length,
-                tags_additional=tags_additional,
-                lib_name=lib_name,
-                classname=classname,
-                classname_description=classname_description,
-                webpage=webpage,
-            )
-            makeDSubAngled(
-                pins=data[0],
-                isMale=False,
-                HighDensity=HighDensity,
-                rmx=rmx,
-                rmy=rmy,
-                pindrill=pindrill,
-                pad=pad,
-                pin_pcb_distance=pin_pcb_distance,
-                mountingdrill=mountingdrill,
-                mountingpad=mountingpad,
-                mountingdistance=data[1],
-                mounting_pcb_distance=mounting_pcb_distance,
-                shield_width=data[2],
-                shield_thickness=shieldthickness,
-                can_width=data[4],
-                can_height=can_height_female,
-                backbox_width=data[2],
-                backbox_height=backbox_height,
-                nut_diameter=nut_diameter,
-                nut_length=nut_length,
-                tags_additional=tags_additional,
-                lib_name=lib_name,
-                classname=classname,
-                classname_description=classname_description,
-                webpage=webpage,
-            )
-            # makeDSubAngled(pins=data[0], isMale=True, HighDensity=HighDensity, rmx=rmx, rmy=rmy, pindrill=pindrill, pad=pad, pin_pcb_distance=pin_pcb_distance, mountingdrill=0, mountingpad=mountingpad, mountingdistance=data[1], mounting_pcb_distance=mounting_pcb_distance, shield_width=data[2], shield_thickness=shieldthickness, can_width=data[4], can_height=can_height_male, backbox_width=data[2], backbox_height=backbox_height, nut_diameter=nut_diameter, nut_length=nut_length, tags_additional=tags_additional, lib_name=lib_name, classname=classname, classname_description=classname_description, webpage=webpage)
-            # makeDSubAngled(pins=data[0], isMale=False, HighDensity=HighDensity, rmx=rmx, rmy=rmy, pindrill=pindrill, pad=pad, pin_pcb_distance=pin_pcb_distance, mountingdrill=0, mountingpad=mountingpad, mountingdistance=data[1], mounting_pcb_distance=mounting_pcb_distance, shield_width=data[2], shield_thickness=shieldthickness, can_width=data[4], can_height=can_height_female, backbox_width=data[2], backbox_height=backbox_height, nut_diameter=nut_diameter, nut_length=nut_length, tags_additional=tags_additional, lib_name=lib_name, classname=classname, classname_description=classname_description, webpage=webpage)
+            # reuse the subvariant_straight to get the mapping of variant and can_height
+            for (
+                has_pins,
+                connheight,
+                mountingdrill_v,
+                can_height_v,
+            ) in subvariant_straight:
+                makeDSubAngled(
+                    pins=pins,
+                    isMale=has_pins,
+                    HighDensity=HighDensity,
+                    rmx=rmx,
+                    rmy=rmy,
+                    pindrill=pindrill,
+                    pad=pad,
+                    pin_pcb_distance=pin_pcb_distance,
+                    mountingdrill=mountingdrill,
+                    mountingpad=mountingpad,
+                    mountingdistance=mounting_dist,
+                    mounting_pcb_distance=mounting_pcb_distance,
+                    shield_width=outline_sizex,
+                    shield_thickness=shieldthickness,
+                    can_width=connwidth,
+                    can_height=can_height_v,
+                    backbox_width=outline_sizex,
+                    backbox_height=backbox_height,
+                    nut_diameter=nut_diameter,
+                    nut_length=nut_length,
+                    tags_additional=tags_additional,
+                    lib_name=lib_name,
+                    classname=classname,
+                    classname_description=classname_description,
+                    webpage=webpage,
+                )
 
+    #
     # unboxed angled
-    webpageunboxed = (
-        "http://docs-europe.electrocomponents.com/webdocs/1585/0900766b81585df2.pdf"
-    )
-    backcan_height_unboxed = 4.1
+    #
     pin_pcb_distance = 9.4
     mounting_pcb_distance = 0
-    for data in sizes_table:
-        makeDSubAngled(
-            pins=data[0],
-            isMale=True,
-            HighDensity=HighDensity,
-            rmx=rmx,
-            rmy=rmy,
-            pindrill=pindrill,
-            pad=pad,
-            pin_pcb_distance=pin_pcb_distance,
-            mountingdrill=0,
-            mountingpad=mountingpad,
-            mountingdistance=data[1],
-            mounting_pcb_distance=pin_pcb_distance,
-            shield_width=data[2],
-            shield_thickness=shieldthickness,
-            backbox_width=0,
-            backbox_height=0,
-            can_width=data[4],
-            can_height=can_height_male,
-            backcan_width=data[4] + 2 * shieldthickness,
-            backcan_height=backcan_height_unboxed,
-            nut_diameter=0,
-            nut_length=0,
-            tags_additional=tags_additional,
-            lib_name=lib_name,
-            classname=classname,
-            classname_description=classname_description,
-            webpage=webpageunboxed,
-        )
-        makeDSubAngled(
-            pins=data[0],
-            isMale=False,
-            HighDensity=HighDensity,
-            rmx=rmx,
-            rmy=rmy,
-            pindrill=pindrill,
-            pad=pad,
-            pin_pcb_distance=pin_pcb_distance,
-            mountingdrill=0,
-            mountingpad=mountingpad,
-            mountingdistance=data[1],
-            mounting_pcb_distance=pin_pcb_distance,
-            shield_width=data[2],
-            shield_thickness=shieldthickness,
-            backbox_width=0,
-            backbox_height=0,
-            can_width=data[4],
-            can_height=can_height_female,
-            backcan_width=data[4] + 2 * shieldthickness,
-            backcan_height=backcan_height_unboxed,
-            nut_diameter=0,
-            nut_length=0,
-            tags_additional=tags_additional,
-            lib_name=lib_name,
-            classname=classname,
-            classname_description=classname_description,
-            webpage=webpageunboxed,
-        )
-        # alternatice y-pin-pitch
-        makeDSubAngled(
-            pins=data[0],
-            isMale=True,
-            HighDensity=HighDensity,
-            rmx=rmx,
-            rmy=rmy_unboxed2,
-            pindrill=pindrill,
-            pad=pad,
-            pin_pcb_distance=pin_pcb_distance,
-            mountingdrill=0,
-            mountingpad=mountingpad,
-            mountingdistance=data[1],
-            mounting_pcb_distance=pin_pcb_distance,
-            shield_width=data[2],
-            shield_thickness=shieldthickness,
-            backbox_width=0,
-            backbox_height=0,
-            can_width=data[4],
-            can_height=can_height_male,
-            backcan_width=data[4] + 2 * shieldthickness,
-            backcan_height=backcan_height_unboxed,
-            nut_diameter=0,
-            nut_length=0,
-            tags_additional=tags_additional,
-            lib_name=lib_name,
-            classname=classname,
-            classname_description=classname_description,
-            webpage=webpageunboxed,
-        )
-        makeDSubAngled(
-            pins=data[0],
-            isMale=False,
-            HighDensity=HighDensity,
-            rmx=rmx,
-            rmy=rmy_unboxed2,
-            pindrill=pindrill,
-            pad=pad,
-            pin_pcb_distance=pin_pcb_distance,
-            mountingdrill=0,
-            mountingpad=mountingpad,
-            mountingdistance=data[1],
-            mounting_pcb_distance=pin_pcb_distance,
-            shield_width=data[2],
-            shield_thickness=shieldthickness,
-            backbox_width=0,
-            backbox_height=0,
-            can_width=data[4],
-            can_height=can_height_female,
-            backcan_width=data[4] + 2 * shieldthickness,
-            backcan_height=backcan_height_unboxed,
-            nut_diameter=0,
-            nut_length=0,
-            tags_additional=tags_additional,
-            lib_name=lib_name,
-            classname=classname,
-            classname_description=classname_description,
-            webpage=webpageunboxed,
-        )
+    for (
+        pins,
+        mounting_dist,
+        outline_sizex,
+        outline_sizey,
+        connwidth,
+        connheight_male,
+        connheight_female,
+    ) in sizes_table:
+        for has_pins, connheight, mountingdrill_v, can_height_v in subvariant_straight:
+            # two y-pin-pitch variants
+            for rmy_v in [rmy, rmy_unboxed2]:
+                makeDSubAngled(
+                    pins=pins,
+                    isMale=has_pins,
+                    HighDensity=HighDensity,
+                    rmx=rmx,
+                    rmy=rmy_v,
+                    pindrill=pindrill,
+                    pad=pad,
+                    pin_pcb_distance=pin_pcb_distance,
+                    mountingdrill=0,
+                    mountingpad=mountingpad,
+                    mountingdistance=mounting_dist,
+                    mounting_pcb_distance=pin_pcb_distance,
+                    shield_width=outline_sizex,
+                    shield_thickness=shieldthickness,
+                    backbox_width=0,
+                    backbox_height=0,
+                    can_width=connwidth,
+                    can_height=can_height_v,
+                    backcan_width=connwidth + 2 * shieldthickness,
+                    backcan_height=backcan_height_unboxed,
+                    nut_diameter=0,
+                    nut_length=0,
+                    tags_additional=tags_additional,
+                    lib_name=lib_name,
+                    classname=classname,
+                    classname_description=classname_description,
+                    webpage=webpage_unboxed,
+                )
 
     # fmt: off
+
+
+    #
+    # build HighDensity connectors
+    #
     HighDensity=True
     rmy=1.98
     #               pins, mounting_dist, outline_sizex, outlinesize_y, connwidth,  connheight_male,  connheight_female, rmx,  HighDensityOffsetMidLeft
-    sizes_table=[
+    hd_sizes_table=[
                 [     15,            25,         30.85,         12.50,      16.3,              8.3,              7.9,    2.29, 7.04 ],
                 [     26,         33.30,         39.20,         12.50,      24.6,              8.3,              7.9,    2.29, 6.88 ],
                 [     44,         47.10,         53.10,         12.50,      38.3,              8.3,              7.9,    2.29, 6.88 ],
                 [     62,         63.50,         69.40,         12.50,      54.8,              8.3,              7.9,    2.41, 7.00 ],
                 ]
-    # fmt: on
-    for data in sizes_table:
-        makeDSubStraight(
-            pins=data[0],
-            isMale=True,
-            HighDensity=HighDensity,
-            rmx=data[7],
-            rmy=rmy,
-            pindrill=pindrill,
-            pad=pad,
-            mountingdrill=mountingdrill,
-            mountingpad=mountingpad,
-            mountingdistance=data[1],
-            outline_size=[data[2], data[3]],
-            outline_cornerradius=outline_cornerradius,
-            connwidth=data[4],
-            side_angle_degree=side_angle_degree,
-            connheight=data[5],
-            conn_cornerradius=conn_cornerradius,
-            tags_additional=tags_additional,
-            lib_name=lib_name,
-            classname=classname,
-            classname_description=classname_description,
-            webpage=webpage,
-            HighDensityOffsetMidLeft=data[8],
-        )
-        makeDSubStraight(
-            pins=data[0],
-            isMale=False,
-            HighDensity=HighDensity,
-            rmx=data[7],
-            rmy=rmy,
-            pindrill=pindrill,
-            pad=pad,
-            mountingdrill=mountingdrill,
-            mountingpad=mountingpad,
-            mountingdistance=data[1],
-            outline_size=[data[2], data[3]],
-            outline_cornerradius=outline_cornerradius,
-            connwidth=data[4],
-            side_angle_degree=side_angle_degree,
-            connheight=data[6],
-            conn_cornerradius=conn_cornerradius,
-            tags_additional=tags_additional,
-            lib_name=lib_name,
-            classname=classname,
-            classname_description=classname_description,
-            webpage=webpage,
-            HighDensityOffsetMidLeft=data[8],
-        )
-        # makeDSubStraight(pins=data[0], isMale=True, HighDensity=HighDensity, rmx=data[7], rmy=rmy, pindrill=pindrill, pad=pad, mountingdrill=0, mountingpad=mountingpad, mountingdistance=data[1], outline_size=[data[2],data[3]], outline_cornerradius=outline_cornerradius, connwidth=data[4], side_angle_degree=side_angle_degree, connheight=data[5], conn_cornerradius=conn_cornerradius, tags_additional=tags_additional, lib_name=lib_name, classname=classname, classname_description=classname_description, webpage=webpage, HighDensityOffsetMidLeft=data[8])
-        # makeDSubStraight(pins=data[0], isMale=False, HighDensity=HighDensity, rmx=data[7], rmy=rmy, pindrill=pindrill, pad=pad, mountingdrill=0, mountingpad=mountingpad, mountingdistance=data[1], outline_size=[data[2],data[3]], outline_cornerradius=outline_cornerradius, connwidth=data[4], side_angle_degree=side_angle_degree, connheight=data[6], conn_cornerradius=conn_cornerradius, tags_additional=tags_additional, lib_name=lib_name, classname=classname, classname_description=classname_description, webpage=webpage, HighDensityOffsetMidLeft=data[8])
-
-    # fmt: off
-    #                   mounting_pcb_distance,   pin_pcb_distance,  backbox_height
+    #                     mounting_pcb_distance,   pin_pcb_distance,  backbox_height
     angled_distances=[
                         [                5.34,               3.43,             8.6 ],
                         [               11.29,               8.75,             0.0 ],
                     ]
     # fmt: on
-    for data in sizes_table:
-        for angled_distance in angled_distances:
-            mounting_pcb_distance = angled_distance[0] - shieldthickness
-            pin_pcb_distance = angled_distance[1] - shieldthickness
-            if angled_distance[2] > 0:
-                backbox_height = angled_distance[2]
-            else:
-                backbox_height = (
-                    max(
-                        pin_pcb_distance + rmy + pad / 2,
-                        mounting_pcb_distance + mountingpad / 2,
-                    )
-                    + 1
-                )
-            makeDSubAngled(
-                pins=data[0],
-                isMale=True,
+    for (
+        pins,
+        mounting_dist,
+        outline_sizex,
+        outlinesize_y,
+        connwidth,
+        connheight_male,
+        connheight_female,
+        rmx,
+        HighDensityOffsetMidLeft,
+    ) in hd_sizes_table:
+        # Build Pins- and Socket variants
+        for has_pins in [True, False]:
+            connheight = connheight_male if has_pins else connheight_female
+            can_height = can_height_male if has_pins else can_height_female
+
+            # regular straight HD
+            makeDSubStraight(
+                pins=pins,
+                isMale=has_pins,
                 HighDensity=HighDensity,
-                rmx=data[7],
+                rmx=rmx,
                 rmy=rmy,
                 pindrill=pindrill,
                 pad=pad,
-                pin_pcb_distance=pin_pcb_distance,
                 mountingdrill=mountingdrill,
                 mountingpad=mountingpad,
-                mountingdistance=data[1],
-                mounting_pcb_distance=mounting_pcb_distance,
-                shield_width=data[2],
-                shield_thickness=shieldthickness,
-                can_width=data[4],
-                can_height=can_height_male,
-                backbox_width=data[2],
-                backbox_height=backbox_height,
-                nut_diameter=nut_diameter,
-                nut_length=nut_length,
+                mountingdistance=mounting_dist,
+                outline_size=[outline_sizex, outlinesize_y],
+                outline_cornerradius=outline_cornerradius,
+                connwidth=connwidth,
+                side_angle_degree=side_angle_degree,
+                connheight=connheight,
+                conn_cornerradius=conn_cornerradius,
                 tags_additional=tags_additional,
                 lib_name=lib_name,
                 classname=classname,
                 classname_description=classname_description,
                 webpage=webpage,
-                HighDensityOffsetMidLeft=data[8],
-            )
-            makeDSubAngled(
-                pins=data[0],
-                isMale=False,
-                HighDensity=HighDensity,
-                rmx=data[7],
-                rmy=rmy,
-                pindrill=pindrill,
-                pad=pad,
-                pin_pcb_distance=pin_pcb_distance,
-                mountingdrill=mountingdrill,
-                mountingpad=mountingpad,
-                mountingdistance=data[1],
-                mounting_pcb_distance=mounting_pcb_distance,
-                shield_width=data[2],
-                shield_thickness=shieldthickness,
-                can_width=data[4],
-                can_height=can_height_male,
-                backbox_width=data[2],
-                backbox_height=backbox_height,
-                nut_diameter=nut_diameter,
-                nut_length=nut_length,
-                tags_additional=tags_additional,
-                lib_name=lib_name,
-                classname=classname,
-                classname_description=classname_description,
-                webpage=webpage,
-                HighDensityOffsetMidLeft=data[8],
+                HighDensityOffsetMidLeft=HighDensityOffsetMidLeft,
             )
 
-    # unboxed angled
-    webpageunboxed = (
-        "http://docs-europe.electrocomponents.com/webdocs/1585/0900766b81585df2.pdf"
-    )
-    backcan_height_unboxed = 4.1
-    pin_pcb_distance = 9.4
-    mounting_pcb_distance = 0
-    for data in sizes_table:
-        makeDSubAngled(
-            pins=data[0],
-            isMale=True,
-            HighDensity=HighDensity,
-            rmx=data[7],
-            rmy=rmy,
-            pindrill=pindrill,
-            pad=pad,
-            pin_pcb_distance=pin_pcb_distance,
-            mountingdrill=0,
-            mountingpad=mountingpad,
-            mountingdistance=data[1],
-            mounting_pcb_distance=pin_pcb_distance,
-            shield_width=data[2],
-            shield_thickness=shieldthickness,
-            backbox_width=0,
-            backbox_height=0,
-            can_width=data[4],
-            can_height=can_height_male,
-            backcan_width=data[4] + 2 * shieldthickness,
-            backcan_height=backcan_height_unboxed,
-            nut_diameter=0,
-            nut_length=0,
-            tags_additional=tags_additional,
-            lib_name=lib_name,
-            classname=classname,
-            classname_description=classname_description,
-            webpage=webpageunboxed,
-            HighDensityOffsetMidLeft=data[8],
-        )
-        makeDSubAngled(
-            pins=data[0],
-            isMale=False,
-            HighDensity=HighDensity,
-            rmx=data[7],
-            rmy=rmy,
-            pindrill=pindrill,
-            pad=pad,
-            pin_pcb_distance=pin_pcb_distance,
-            mountingdrill=0,
-            mountingpad=mountingpad,
-            mountingdistance=data[1],
-            mounting_pcb_distance=pin_pcb_distance,
-            shield_width=data[2],
-            shield_thickness=shieldthickness,
-            backbox_width=0,
-            backbox_height=0,
-            can_width=data[4],
-            can_height=can_height_female,
-            backcan_width=data[4] + 2 * shieldthickness,
-            backcan_height=backcan_height_unboxed,
-            nut_diameter=0,
-            nut_length=0,
-            tags_additional=tags_additional,
-            lib_name=lib_name,
-            classname=classname,
-            classname_description=classname_description,
-            webpage=webpageunboxed,
-            HighDensityOffsetMidLeft=data[8],
-        )
-        makeDSubAngled(
-            pins=data[0],
-            isMale=True,
-            HighDensity=HighDensity,
-            rmx=data[7],
-            rmy=rmy_unboxed2,
-            pindrill=pindrill,
-            pad=pad,
-            pin_pcb_distance=pin_pcb_distance,
-            mountingdrill=0,
-            mountingpad=mountingpad,
-            mountingdistance=data[1],
-            mounting_pcb_distance=pin_pcb_distance,
-            shield_width=data[2],
-            shield_thickness=shieldthickness,
-            backbox_width=0,
-            backbox_height=0,
-            can_width=data[4],
-            can_height=can_height_male,
-            backcan_width=data[4] + 2 * shieldthickness,
-            backcan_height=backcan_height_unboxed,
-            nut_diameter=0,
-            nut_length=0,
-            tags_additional=tags_additional,
-            lib_name=lib_name,
-            classname=classname,
-            classname_description=classname_description,
-            webpage=webpageunboxed,
-            HighDensityOffsetMidLeft=data[8],
-        )
-        makeDSubAngled(
-            pins=data[0],
-            isMale=False,
-            HighDensity=HighDensity,
-            rmx=data[7],
-            rmy=rmy_unboxed2,
-            pindrill=pindrill,
-            pad=pad,
-            pin_pcb_distance=pin_pcb_distance,
-            mountingdrill=0,
-            mountingpad=mountingpad,
-            mountingdistance=data[1],
-            mounting_pcb_distance=pin_pcb_distance,
-            shield_width=data[2],
-            shield_thickness=shieldthickness,
-            backbox_width=0,
-            backbox_height=0,
-            can_width=data[4],
-            can_height=can_height_female,
-            backcan_width=data[4] + 2 * shieldthickness,
-            backcan_height=backcan_height_unboxed,
-            nut_diameter=0,
-            nut_length=0,
-            tags_additional=tags_additional,
-            lib_name=lib_name,
-            classname=classname,
-            classname_description=classname_description,
-            webpage=webpageunboxed,
-            HighDensityOffsetMidLeft=data[8],
-        )
+            # HD angled, with different distances
+            for angled_distance in angled_distances:
+                mounting_pcb_distance = angled_distance[0] - shieldthickness
+                pin_pcb_distance = angled_distance[1] - shieldthickness
+                if angled_distance[2] > 0:
+                    backbox_height = angled_distance[2]
+                else:
+                    backbox_height = (
+                        max(
+                            pin_pcb_distance + rmy + pad / 2,
+                            mounting_pcb_distance + mountingpad / 2,
+                        )
+                        + 1
+                    )
+                # regular angled
+                makeDSubAngled(
+                    pins=pins,
+                    isMale=has_pins,
+                    HighDensity=HighDensity,
+                    rmx=rmx,
+                    rmy=rmy,
+                    pindrill=pindrill,
+                    pad=pad,
+                    pin_pcb_distance=pin_pcb_distance,
+                    mountingdrill=mountingdrill,
+                    mountingpad=mountingpad,
+                    mountingdistance=mounting_dist,
+                    mounting_pcb_distance=mounting_pcb_distance,
+                    shield_width=outline_sizex,
+                    shield_thickness=shieldthickness,
+                    can_width=connwidth,
+                    can_height=can_height_male,  # this might be a bug!
+                    backbox_width=outline_sizex,
+                    backbox_height=backbox_height,
+                    nut_diameter=nut_diameter,
+                    nut_length=nut_length,
+                    tags_additional=tags_additional,
+                    lib_name=lib_name,
+                    classname=classname,
+                    classname_description=classname_description,
+                    webpage=webpage,
+                    HighDensityOffsetMidLeft=HighDensityOffsetMidLeft,
+                )
+
+                # unboxed angled
+                # normal and alternative y-pin-pitch
+                for rmy_v in [rmy, rmy_unboxed2]:
+                    makeDSubAngled(
+                        pins=pins,
+                        isMale=has_pins,
+                        HighDensity=HighDensity,
+                        rmx=rmx,
+                        rmy=rmy_v,
+                        pindrill=pindrill,
+                        pad=pad,
+                        pin_pcb_distance=pin_pcb_distance_unboxed,
+                        mountingdrill=0,
+                        mountingpad=mountingpad,
+                        mountingdistance=mounting_dist,
+                        mounting_pcb_distance=mounting_pcb_distance,
+                        shield_width=outline_sizex,
+                        shield_thickness=shieldthickness,
+                        backbox_width=0,
+                        backbox_height=0,
+                        can_width=connwidth,
+                        can_height=can_height,
+                        backcan_width=connwidth + 2 * shieldthickness,
+                        backcan_height=backcan_height_unboxed,
+                        nut_diameter=0,
+                        nut_length=0,
+                        tags_additional=tags_additional,
+                        lib_name=lib_name,
+                        classname=classname,
+                        classname_description=classname_description,
+                        webpage=webpage_unboxed,
+                        HighDensityOffsetMidLeft=HighDensityOffsetMidLeft,
+                    )
