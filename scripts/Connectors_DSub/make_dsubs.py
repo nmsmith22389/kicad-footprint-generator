@@ -64,7 +64,7 @@ if __name__ == "__main__":
     # boxed angled
     #                   mounting_pcb_distance,   pin_pcb_distance
     angled_distances=[
-                        [                7.88,               5.34 ],
+                        [                5.34,               5.34 ],
                         [                9.52,               8.10 ],
                         [               11.72,              10.30 ],
                         [               16.38,              14.96 ],
