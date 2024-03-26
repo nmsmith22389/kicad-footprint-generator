@@ -21,6 +21,7 @@ if __name__ == "__main__":
     HighDensity = False
     rmx = 2.77
     rmy = 2.84
+    rmy_hd = 1.98
     rmy_unboxed2 = 2.54
     pindrill = 1.0
     pad = 1.6
@@ -243,7 +244,6 @@ if __name__ == "__main__":
     # build HighDensity connectors
     #
     HighDensity=True
-    rmy=1.98
     #               pins, mounting_dist, outline_sizex, outlinesize_y, connwidth,  connheight_male,  connheight_female, rmx,  HighDensityOffsetMidLeft
     hd_sizes_table=[
                 [     15,            25,         30.85,         12.50,      16.3,              8.3,              7.9,    2.29, 7.04 ],
@@ -279,7 +279,7 @@ if __name__ == "__main__":
                 isMale=has_pins,
                 HighDensity=HighDensity,
                 rmx=rmx,
-                rmy=rmy,
+                rmy=rmy_hd,
                 pindrill=pindrill,
                 pad=pad,
                 mountingdrill=mountingdrill,
