@@ -47,7 +47,7 @@ if __name__ == "__main__":
     classname_description = "D-Sub connector"
     webpage = "https://disti-assets.s3.amazonaws.com/tonar/files/datasheets/16730.pdf"
     # unboxed connectors
-    webpage_unboxed = "http://docs-europe.electrocomponents.com/webdocs/1585/0900766b81585df2.pdf"
+    webpage_unboxed = "https://docs.rs-online.com/02d6/0900766b81585df2.pdf"
     backcan_height_unboxed = 4.1
     pin_pcb_distance_unboxed = 9.4
 
