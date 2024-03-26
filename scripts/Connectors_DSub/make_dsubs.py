@@ -255,10 +255,10 @@ if __name__ == "__main__":
                 [     44,         47.10,         53.10,         12.50,      38.3,              8.3,              7.9,    2.29, 6.88 ],
                 [     62,         63.50,         69.40,         12.50,      54.8,              8.3,              7.9,    2.41, 7.00 ],
                 ]
-    #                     mounting_pcb_distance,   pin_pcb_distance,  backbox_height
+    #                   mounting_pcb_distance,  pin_pcb_distance,   rmy,  backbox_height
     angled_distances=[
-                        [                5.34,               3.43,             8.6 ],
-                        [               11.29,               8.75,             0.0 ],
+                        [                5.34,              3.43,  1.90,   8.6 ],
+                        [               11.29,              8.75,  2.54,  15.2 ], # 15.2mm is an estimate (missing from datasheet)
                     ]
     # fmt: on
     for (
@@ -304,19 +304,9 @@ if __name__ == "__main__":
             )
 
             # HD angled, with different distances
-            for angled_distance in angled_distances:
-                mounting_pcb_distance = angled_distance[0] - shieldthickness
-                pin_pcb_distance = angled_distance[1] - shieldthickness
-                if angled_distance[2] > 0:
-                    backbox_height = angled_distance[2]
-                else:
-                    backbox_height = (
-                        max(
-                            pin_pcb_distance + rmy + pad / 2,
-                            mounting_pcb_distance + mountingpad / 2,
-                        )
-                        + 1
-                    )
+            for mounting_pcb_distance, pin_pcb_distance, rmy, backbox_height in angled_distances:
+                mounting_pcb_distance -= shieldthickness
+                pin_pcb_distance -= shieldthickness
                 # regular angled (kicad calles this horizontal)
                 makeDSubAngled(
                     pins=pins,
