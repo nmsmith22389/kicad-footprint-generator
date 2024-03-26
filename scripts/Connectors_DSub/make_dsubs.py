@@ -342,37 +342,3 @@ if __name__ == "__main__":
                     webpage=webpage,
                     HighDensityOffsetMidLeft=HighDensityOffsetMidLeft,
                 )
-
-                # unboxed angled
-                # normal and alternative y-pin-pitch
-                for rmy_v in [rmy, rmy_unboxed2]:
-                    makeDSubAngled(
-                        pins=pins,
-                        isMale=has_pins,
-                        HighDensity=HighDensity,
-                        rmx=rmx,
-                        rmy=rmy_v,
-                        pindrill=pindrill,
-                        pad=pad,
-                        pin_pcb_distance=pin_pcb_distance_unboxed,
-                        mountingdrill=0,
-                        mountingpad=mountingpad,
-                        mountingdistance=mounting_dist,
-                        mounting_pcb_distance=mounting_pcb_distance,
-                        shield_width=outline_sizex,
-                        shield_thickness=shieldthickness,
-                        backbox_width=0,
-                        backbox_height=0,
-                        can_width=connwidth,
-                        can_height=can_height,
-                        backcan_width=connwidth + 2 * shieldthickness,
-                        backcan_height=backcan_height_unboxed,
-                        nut_diameter=0,
-                        nut_length=0,
-                        tags_additional=tags_additional,
-                        lib_name=lib_name,
-                        classname=classname,
-                        classname_description=classname_description,
-                        webpage=webpage_unboxed,
-                        HighDensityOffsetMidLeft=HighDensityOffsetMidLeft,
-                    )
