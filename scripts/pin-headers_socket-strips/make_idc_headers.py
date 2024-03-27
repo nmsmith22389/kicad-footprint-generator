@@ -100,7 +100,7 @@ if __name__ == '__main__':
     body_offset=0
     mating_overlen=3.91
     
-    for rows in [3,4,5,6,7,8,10,12,13,15,17,20,25,30,32]:
+    for rows in [3,4,5,6,7,8,9,10,11,12,13,15,17,20,22,25,30,32]:
         makeIdcHeader(rows, cols, rm, rm, body_width,
                             body_overlen, body_overlen, body_offset,
                             ddrill, pad,
@@ -121,7 +121,7 @@ if __name__ == '__main__':
     orientation='Horizontal'
     body_offset=4.38 # distance from pin 1 row to the closest edge of the plastic body
     
-    for rows in [3,4,5,6,7,8,10,12,13,15,17,20,25,30,32]:
+    for rows in [3,4,5,6,7,8,9,10,11,12,13,15,17,20,22,25,30,32]:
         makeIdcHeader(rows, cols, rm, rm, body_width,
                             body_overlen, body_overlen, body_offset,
                             ddrill, pad,
@@ -156,7 +156,7 @@ if __name__ == '__main__':
     mh_number=''
     extra_description = 'https://www.tme.eu/Document/4baa0e952ce73e37bc68cf730b541507/T821M114A1S100CEU-B.pdf'
 
-    for rows in [3,4,5,6,7,8,10,12,13,20,25,30]:
+    for rows in [3,4,5,6,7,8,9,10,11,12,13,20,22,25,30]:
         makeIdcHeader(rows, cols, rm, 7.60, body_width,
                             body_overlen, body_overlen, body_offset,
                             ddrill, pad,
