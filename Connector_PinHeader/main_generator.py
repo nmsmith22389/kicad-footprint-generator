@@ -125,6 +125,46 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
         base_width = all_params[model]["base_width"]
         base_height = all_params[model]["base_height"]
         base_chamfer = all_params[model]["base_chamfer"]
+        base_extra_length = (
+            all_params[model]["base_extra_length"]
+            if "base_extra_length" in all_params[model]
+            else 0
+        )
+        base_wall_height = (
+            all_params[model]["base_wall_height"]
+            if "base_wall_height" in all_params[model]
+            else 0
+        )
+        base_wall_internal_width = (
+            all_params[model]["base_wall_internal_width"]
+            if "base_wall_internal_width" in all_params[model]
+            else 0
+        )
+        base_wall_internal_extra_length = (
+            all_params[model]["base_wall_internal_extra_length"]
+            if "base_wall_internal_extra_length" in all_params[model]
+            else 0
+        )
+        notch_x_size = (
+            all_params[model]["notch_x_size"]
+            if "notch_x_size" in all_params[model]
+            else 0
+        )
+        notch_y_size = (
+            all_params[model]["notch_y_size"]
+            if "notch_y_size" in all_params[model]
+            else 0
+        )
+        notch_height = (
+            all_params[model]["notch_height"]
+            if "notch_height" in all_params[model]
+            else 0
+        )
+        notch_position = (
+            all_params[model]["notch_position"]
+            if "notch_position" in all_params[model]
+            else ""
+        )
         pin_width = all_params[model]["pin_width"]
         pin_length_above_base = all_params[model]["pin_length_above_base"]
 
@@ -212,7 +252,16 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
                     base_height,
                     base_chamfer,
                     base_z_offset,
+                    base_extra_length,
+                    base_wall_height,
+                    base_wall_internal_width,
+                    base_wall_internal_extra_length,
+                    notch_position,
+                    notch_x_size,
+                    notch_y_size,
+                    notch_height,
                 )
+
             else:
                 print("Model {} is not recognized.".format(model))
                 continue
