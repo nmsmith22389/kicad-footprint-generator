@@ -58,12 +58,42 @@ IDC-Header_2x08_P2.54mm_Vertical:
   is_angled: false
   body_color_key: "black body"
   pins_color_key: "gold pins"
+IDC-Header_2x09_P2.54mm_Horizontal:
+  pins: 9
+  is_angled: true
+  body_color_key: "black body"
+  pins_color_key: "gold pins"
+IDC-Header_2x09_P2.54mm_Vertical:
+  pins: 9
+  is_angled: false
+  body_color_key: "black body"
+  pins_color_key: "gold pins"
 IDC-Header_2x10_P2.54mm_Horizontal:
   pins: 10
   is_angled: true
   body_color_key: "black body"
   pins_color_key: "gold pins"
 IDC-Header_2x10_P2.54mm_Vertical:
+  pins: 10
+  is_angled: false
+  body_color_key: "black body"
+  pins_color_key: "gold pins"
+IDC-Header_2x11_P2.54mm_Horizontal:
+  pins: 11
+  is_angled: true
+  body_color_key: "black body"
+  pins_color_key: "gold pins"
+IDC-Header_2x11_P2.54mm_Vertical:
+  pins: 11
+  is_angled: false
+  body_color_key: "black body"
+  pins_color_key: "gold pins"
+IDC-Header_2x12_P2.54mm_Horizontal:
+  pins: 10
+  is_angled: true
+  body_color_key: "black body"
+  pins_color_key: "gold pins"
+IDC-Header_2x12_P2.54mm_Vertical:
   pins: 10
   is_angled: false
   body_color_key: "black body"
@@ -105,6 +135,16 @@ IDC-Header_2x20_P2.54mm_Horizontal:
   pins_color_key: "gold pins"
 IDC-Header_2x20_P2.54mm_Vertical:
   pins: 20
+  is_angled: false
+  body_color_key: "black body"
+  pins_color_key: "gold pins"
+IDC-Header_2x22_P2.54mm_Horizontal:
+  pins: 22
+  is_angled: true
+  body_color_key: "black body"
+  pins_color_key: "gold pins"
+IDC-Header_2x22_P2.54mm_Vertical:
+  pins: 22
   is_angled: false
   body_color_key: "black body"
   pins_color_key: "gold pins"
