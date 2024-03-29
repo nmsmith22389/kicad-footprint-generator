@@ -2343,41 +2343,41 @@ DFN-12-1EP_2x3mm_Pitch0.45mm:
   mark_color_key: 'light brown label'
   source: 'http://cds.linear.com/docs/en/packaging/DFN_12_05-08-1723.pdf'
 
-DFN-12-1EP_3x3mm_Pitch0.45mm:
+DFN-12-1EP_3x3mm_P0.45mm_EP1.65x2.38mm:
   c: 0.2
   L: 0.4
   fp_s: True
-  fp_r: 0.5
+  fp_r: 0.2
   fp_d: 0.1
   fp_dx: null
   fp_dy: null
   fp_z: 0.01
   ef: 0.0
-  cce: 0.25
+  cce: 0.2
   D: 3.0
   E: 3.0
-  A1: 0.02
-  A2: 0.75
+  A1: 0.025
+  A2: 0.725
   b: 0.23
   e: 0.45
   m: 0.0
   ps: rounded
   npx: 6
   npy: 0
-  epad: [2.25, 1.65]
+  epad: [2.38, 1.65]
   epad_offsetX: null
   epad_offsetY: null
   epad_n: null
   epad_pitch: null
   excluded_pins: null
-  model_name: DFN-12-1EP_3x3mm_Pitch0.45mm
+  model_name: DFN-12-1EP_3x3mm_P0.45mm_EP1.65x2.38mm
   rotation: -90
   destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
-  source: 'http://cds.linear.com/docs/en/packaging/DFN_12_05-08-1725.PDF'
+  source: 'https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/ltc-legacy-dfn/dfn_12_05-08-1725.pdf'
 
 DFN-12-1EP_3x4mm_Pitch0.5mm:
   c: 0.2
