@@ -319,3 +319,35 @@ Converter_DCDC_TRACO_THB10-xxxx_Dual_THT:
     ["tht", "4", 7.62, -45.72, 2.3, 2.3, 1.3],
     ["tht", "5", 17.78, -45.72, 2.3, 2.3, 1.3]
   ]
+
+Converter_DCDC_TRACO_TOS06-05SIL_THT:
+  library_name: 'Converter_DCDC'
+  description: "DCDC-Converter, TRACO, TOS06-05SIL, 6A, Rev. March 20. 2024"
+  datasheet: "https://www.tracopower.com/products/tos06sil.pdf"
+  tags: "DCDC-Converter POL TRACO TOS06SIL 2.54MM THT SIP-9 6A"
+  extratexts: []
+  at: [-4.3, 1.28]
+  size: [5, 22.9]
+  pins: [
+    ["thtr", "1", 0, 0, 2.1, 2.1, 1.3],
+    ["tht", "2", 0, -2.54, 2.1, 2.1, 1.3],
+    ["tht", "3", 0, -5.08, 2.1, 2.1, 1.3],
+    ["tht", "4", 0, -17.78, 2.1, 2.1, 1.3],
+    ["tht", "5", 0, -20.32, 2.1, 2.1, 1.3]
+  ]
+
+Converter_DCDC_TRACO_TOS06-12SIL_THT:
+  library_name: 'Converter_DCDC'
+  description: "DCDC-Converter, TRACO, TOS06-12SIL, 6A, Rev. March 20. 2024"
+  datasheet: "https://www.tracopower.com/products/tos06sil.pdf"
+  tags: "DCDC-Converter POL TRACO TOS06SIL 2.54MM THT SIP-9 6A"
+  extratexts: []
+  at: [-5.3, 1.28]
+  size: [6, 22.9]
+  pins: [
+    ["thtr", "1", 0, 0, 2.1, 2.1, 1.3],
+    ["tht", "2", 0, -2.54, 2.1, 2.1, 1.3],
+    ["tht", "3", 0, -5.08, 2.1, 2.1, 1.3],
+    ["tht", "4", 0, -17.78, 2.1, 2.1, 1.3],
+    ["tht", "5", 0, -20.32, 2.1, 2.1, 1.3]
+  ]
