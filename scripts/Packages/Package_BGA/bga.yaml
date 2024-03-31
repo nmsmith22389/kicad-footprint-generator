@@ -654,6 +654,19 @@ UCBGA-49_3x3mm_Layout7x7_P0.4mm:
   layout_x: 7
   layout_y: 7
 
+ST_UFBGA-59_5x5mm_Layout8x8_P0.5mm:
+  description: "ST UFBGA-59"
+  size_source: "https://www.st.com/resource/en/datasheet/stm32wba55ug.pdf"
+  body_size_x: 5.0
+  body_size_y: 5.0
+  pitch: 0.5
+  pad_diameter: 0.300
+  mask_margin:  0.050
+  paste_margin: 0.000001
+  layout_x: 8
+  layout_y: 8
+  pad_skips: [f4,e6,d3,c4,c5]
+
 ST_UFBGA-73_5x5mm_Layout9x9_P0.5mm:
   description: "ST UFBGA-73"
   size_source: "https://www.st.com/resource/en/datasheet/stm32wl54jc.pdf"
@@ -666,6 +679,18 @@ ST_UFBGA-73_5x5mm_Layout9x9_P0.5mm:
   layout_x: 9
   layout_y: 9
   pad_skips: [j4,j7,g1,f9,d1,c9,a3,a6]
+
+ST_UFBGA-81_5x5mm_Layout9x9_P0.5mm:
+  description: "ST UFBGA-81"
+  size_source: "https://www.st.com/resource/en/datasheet/stm32u073mb.pdf"
+  body_size_x: 5.0
+  body_size_y: 5.0
+  pitch: 0.5
+  pad_diameter: 0.250
+  mask_margin:  0.025
+  paste_margin: 0.053
+  layout_x: 9
+  layout_y: 9
 
 UCBGA-81_4x4mm_Layout9x9_P0.4mm:
   description: "UCBGA-81"

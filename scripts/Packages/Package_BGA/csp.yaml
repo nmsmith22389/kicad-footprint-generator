@@ -141,6 +141,19 @@ ST_WLCSP-25_2.33x2.24mm_Layout5x5_P0.4mm:
   paste_margin: 0.0125
   layout_x: 5
   layout_y: 5
+ST_WLCSP-27_2.34x2.55mm_P0.40mm_Stagger:
+  description: "ST WLCSP-27, ST Die ID 459"
+  size_source: "https://www.st.com/resource/en/datasheet/stm32u031g6.pdf"
+  body_size_x: 2.34
+  body_size_y: 2.55
+  pitch: 0.40
+  staggered: x
+  first_ball: A2
+  pad_diameter: 0.250
+  mask_margin: 0.0375
+  paste_margin: 0.0375
+  layout_x: 9
+  layout_y: 6
 Maxim_WLCSP-35_3.0x2.17mm_Layout7x5_P0.4mm_Ball0.27mm_Pad0.25mm:
   description: "WLCSP-35"
   size_source: "https://pdfserv.maximintegrated.com/package_dwgs/21-100489.PDF"
@@ -195,6 +208,19 @@ ST_WLCSP-36_Die458:
   paste_margin: 0.0125
   layout_x: 6
   layout_y: 6
+ST_WLCSP-42_2.93mmx2.82_P0.40mm_Stagger:
+  description: "ST WLCSP-42, ST Die ID 489"
+  size_source: "https://www.st.com/resource/en/datasheet/stm32u073rc.pdf"
+  body_size_x: 2.93
+  body_size_y: 2.82
+  pitch: 0.40
+  staggered: x
+  first_ball: A2
+  pad_diameter: 0.250
+  mask_margin: 0.0375
+  paste_margin: 0.0375
+  layout_x: 12
+  layout_y: 7
 ST_WLCSP-49_Die423:
   description: "WLCSP-49"
   size_source: "http://www.st.com/resource/en/datasheet/stm32f401vc.pdf#page=115"
@@ -529,6 +555,17 @@ ST_WLCSP-90_4.20x3.95mm_P0.4mm_Stagger:
   paste_margin: 0.0125
   layout_x: 18
   layout_y: 10
+ST_WLCSP-99_4.42x3.77mm_Layout9x11_P0.35mm:
+  description: "ST WLCSP-99, ST die ID 415"
+  size_source: "https://www.st.com/resource/en/datasheet/stm32l476vg.pdf"
+  body_size_x: 4.42
+  body_size_y: 3.77
+  pitch: 0.35
+  pad_diameter: 0.200
+  mask_margin: 0.0375
+  paste_margin: 0.000001
+  layout_x: 11
+  layout_y: 9
 ST_WLCSP-100_Die422:
   description: "WLCSP-100"
   size_source: "http://www.st.com/resource/en/datasheet/stm32f302vc.pdf#page=133"
@@ -586,6 +623,20 @@ ST_WLCSP-100_4.40x4.38mm_Layout10x10_P0.4mm_Offcenter:
   layout_y: 10
   offset_x: -0.08
   offset_y: -0.08
+ST_WLCSP-101_3.86x3.79mm_P0.35mm_Stagger:
+  description: "ST WLCSP-101, ST Die ID 485"
+  size_source: "https://www.st.com/resource/en/datasheet/stm32h7r3v8.pdf"
+  body_size_x: 3.86
+  body_size_y: 3.79
+  pitch: 0.35
+  staggered: y
+  first_ball: A2
+  pad_diameter: 0.210
+  mask_margin: 0.0325
+  paste_margin: 0.0125
+  layout_x: 11
+  layout_y: 19
+  pad_skips: [W2,W4,W6]
 ST_WLCSP-104_Die437:
   description: "WLCSP-104"
   size_source: "http://www.st.com/resource/en/datasheet/stm32l152ze.pdf#page=127"
