@@ -218,6 +218,46 @@ UQFN-20-1EP_3x3mm_P0.4mm_EP1.85x1.85mm:
   #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
   #include_suffix_in_3dpath: 'False'
 
+UQFN-20-1EP_3x3mm_P0.4mm_EP1.7x1.7mm:
+  device_type: 'UQFN'
+  size_source: 'https://www.kinet-ic.com/uploads/web/KTD2058,%20KTD2059,%20KTD2060,%20KTD2061/KTD2061-58-59-60-04e.pdf#page=25'
+  ipc_class: 'qfn'
+  body_size_x:
+    nominal: 3
+  body_size_y:
+    nominal: 3
+  overall_height:
+    minimum: 0.45
+    nominal: 0.52
+    maximum: 0.58
+  lead_width:
+    minimum: 0.13
+    nominal: 0.19
+    maximum: 0.25
+  lead_len:
+    minimum: 0.35
+    nominal: 0.40
+    maximum: 0.45
+  EP_size_x:
+    minimum: 1.65
+    nominal: 1.70
+    maximum: 1.75
+  EP_size_y:
+    minimum: 1.65
+    nominal: 1.70
+    maximum: 1.75
+  EP_num_paste_pads: [2, 2]
+  thermal_vias:
+    count: [2, 2]
+    drill: 0.2
+    paste_via_clearance: 0.1
+    EP_num_paste_pads: [2, 2]
+    EP_paste_coverage: 0.75
+    paste_avoid_via: False
+  pitch: 0.4
+  num_pins_x: 5
+  num_pins_y: 5
+
 UQFN-20-1EP_4x4mm_P0.5mm_EP2.8x2.8mm:
   device_type: 'UQFN'
   #manufacturer: 'man'
