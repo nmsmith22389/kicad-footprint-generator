@@ -56,8 +56,7 @@ class BGAConfiguration:
 
 
 class BGAGenerator:
-
-    def generateFootprint(self, config, fpParams, fpId):
+    def generateFootprint(self, outdir, config, fpParams, fpId):
         createFp = False
 
         device_config = BGAConfiguration(fpParams)
@@ -93,7 +92,7 @@ class BGAGenerator:
                   "No footprint generated.")
 
         if createFp:
-            self._createFootprintVariant(config, device_config, fpId)
+            self._createFootprintVariant(outdir, config, device_config, fpId)
 
     def compute_stagger(self, lParams):
         staggered = lParams.get('staggered')
@@ -116,7 +115,7 @@ class BGAGenerator:
 
         return pitchX, pitchY, None
 
-    def _createFootprintVariant(self, config, device_config: BGAConfiguration, fpId):
+    def _createFootprintVariant(self, outdir, config, device_config: BGAConfiguration, fpId):
         # Pull out the old-style parameter dictionary
         fpParams = device_config.spec_dictionary
 
@@ -271,11 +270,8 @@ class BGAGenerator:
         f.tags = [packageType, str(balls), pdesc]
         f.tags += device_config.additional_tags.tags
 
-        outputDir = Path(f'Package_{packageType}.pretty')
-        outputDir.mkdir(exist_ok=True)
-
         file_handler = KicadFileHandler(f)
-        file_handler.writeFile(str(outputDir / f'{fpId}.kicad_mod'))
+        file_handler.writeFile(str(outdir / f'{fpId}.kicad_mod'))
 
     def makePadGrid(self, f, lParams, config, fpParams={}, xCenter=0.0, yCenter=0.0):
         layoutX = lParams["layout_x"]
@@ -442,6 +438,10 @@ if __name__ == '__main__':
                 cmd_file = yaml.safe_load(command_stream)
             except yaml.YAMLError as exc:
                 print(exc)
+
+        outdir = Path(filepath).with_suffix(f'.pretty')
+        outdir.mkdir(exist_ok=True)
+
         for pkg in cmd_file:
             print("generating part for parameter set {}".format(pkg))
-            generator.generateFootprint(configuration, cmd_file[pkg], pkg)
+            generator.generateFootprint(outdir, configuration, cmd_file[pkg], pkg)
