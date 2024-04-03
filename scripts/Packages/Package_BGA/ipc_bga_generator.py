@@ -252,6 +252,17 @@ class BGAGenerator:
         for layout in fpParams.get('secondary_layouts', []):
             balls += self.makePadGrid(f, layout, config, fpParams, xCenter=xCenter, yCenter=yCenter)
 
+        # Extra text items
+        for extra_text in fpParams.get('extra_text', []):
+            x, y = extra_text.get('x', 0), extra_text.get('y', 0)
+            if 'anchor' in extra_text:
+                anchor = extra_text.pop('anchor')
+                for n in f.getNormalChilds():
+                    if isinstance(n, Pad) and n.number == anchor:
+                        x += n.at.x
+                        y += n.at.y
+            f.append(Text(type='user', at=[x, y], **extra_text))
+
         # If this looks like a CSP footprint, use the CSP 3dshapes library
         packageType = 'CSP' if 'BGA' not in fpId and 'CSP' in fpId else 'BGA'
 
