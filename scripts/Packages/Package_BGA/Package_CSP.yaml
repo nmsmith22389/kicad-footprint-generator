@@ -876,12 +876,8 @@ DiodesInc_GEA20_WLCSP-20_1.70x2.10mm_Layout4x5_P0.4mm:
   layout_y: 5
 
 OnSemi_ODCSP36_BGA-36_6.13x6.13mm_P1.0mm_Ball0.26mm:
-  # IMPORTANT: Manual modification required: Add "cross" marker between F6 pad
-  # and F.Fab outline on User.Comments to match package "Orientation" fiducial
-  # See images at https://gitlab.com/kicad/libraries/kicad-footprint-generator/-/merge_requests/1076
   description: "OnSemi ODCSP36 (Case 570CP), 0.27mm pad"
   size_source: "https://www.onsemi.com/pub/Collateral/570CP.PDF"
-  manual_modification_required: true
   additional_tags:
     - "Case 570CP"
   body_size_x: 6.13
@@ -892,14 +888,16 @@ OnSemi_ODCSP36_BGA-36_6.13x6.13mm_P1.0mm_Ball0.26mm:
   mask_margin: 0.1
   layout_x: 6
   layout_y: 6
+  extra_text:
+    - orientation marker:
+      text: "+"
+      anchor: F6
+      x: 1
+      y: 0.9
 
 OnSemi_ODCSP36_BGA-36_6.13x6.13mm_P1.0mm_Ball0.26mm_ManualAssembly:
-  # IMPORTANT: Manual modification required: Add "cross" marker between F6 pad
-  # and F.Fab outline on User.Comments to match package "Orientation" fiducial
-  # See images at https://gitlab.com/kicad/libraries/kicad-footprint-generator/-/merge_requests/1076
   description: "OnSemi ODCSP36 (Case 570CP), 0.27mm pad, manual assembly variant (larger pads)"
   size_source: "https://www.onsemi.com/pub/Collateral/570CP.PDF"
-  manual_modification_required: true
   additional_tags:
     - "Case 570CP"
   body_size_x: 6.13
@@ -910,3 +908,9 @@ OnSemi_ODCSP36_BGA-36_6.13x6.13mm_P1.0mm_Ball0.26mm_ManualAssembly:
   mask_margin: 0.0 # Pads are already at MFR recommended mask opening size
   layout_x: 6
   layout_y: 6
+  extra_text:
+    - orientation marker:
+      text: "+"
+      anchor: F6
+      x: 1
+      y: 0.9
