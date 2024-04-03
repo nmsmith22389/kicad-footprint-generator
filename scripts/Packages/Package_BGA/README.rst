@@ -135,6 +135,10 @@ In addition to the above, package definitions can use the following, optional pa
     ``roundrect``. It defaults to whatever ``pad_shape`` is set to. Note that unlike pcbnew's GUI footprint editor, a
     ``paste_margin`` set in this footprint definition *will* be taken into account here.
 
+``extra_text``:
+    This value adds extra text on a layer of your choosing. This can be useful for some special cases such as adding an
+    extra location marker to more nonstandard footprints. Below is a longer explanation of this option.
+
 Staggered pad layouts
 ~~~~~~~~~~~~~~~~~~~~~
 
@@ -206,4 +210,50 @@ that list.
 Each layout definition in ``secondary_layouts`` must define at least ``pitch|pitch_{x,y}``, ``layout_{x,y}`` and
 ``row_names``. Skips are supported like in top-level layouts, and ``pad_shape`` and ``pad_size`` can be given to
 override values from the top-level footprint definition.
+
+Extra text
+----------
+
+The ``extra_text`` attribute allows you to place extra text on a layer of your choice. This can be helpful for instance
+to place additional location markers on user layers. Here is an example, and below the example you will find a list of
+options that extra_text supports. Note that ``extra_text`` takes a list of dicts, so make sure you don't forget these
+dashes.
+
+.. code-block:: YAML
+
+     extra_text:
+       - text: "+"
+         anchor: "F6"
+         x: 1
+         y: 0.9
+         layer: "Cmts.User"
+
+``text``
+    The text content to be placed in the footprint.
+
+``anchor``
+    The pad number this text is placed relative to. The text is placed relative to the center of this pad.
+
+``x`` and ``y``
+    The coordinate offset of this text w.r.t the anchor.
+
+**The following optional parameters are forwarded directly to the generated text object**
+
+``rotation``
+    Rotation of text in degrees.
+
+``mirror``
+    Mirror text (``True`` / ``False``).
+
+``layer``
+    Layer on which the text is drawn. Default: ``"F.SilkS"``
+
+``size``
+    Font size, same units as in KiCad. Takes a list of two entries, ``[x, y]``. Default: ``[1, 1]``
+
+``thickness``
+    Line thickness of the text. Default: ``0.15``
+
+``hide``
+    Hide property of the text.
 
