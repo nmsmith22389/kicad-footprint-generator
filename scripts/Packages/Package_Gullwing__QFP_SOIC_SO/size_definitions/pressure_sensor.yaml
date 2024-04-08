@@ -1,0 +1,33 @@
+FileHeader:
+  override_lib_name: 'Sensor_Pressure'
+
+CFSensor_XGZP6859D:
+  # Note: Alternate datasheet source: https://www.lcsc.com/datasheet/lcsc_datasheet_2206301715_Sencoch-Semiconductor-GZP6859D201KPP_C3038050.pdf
+  size_source: 'https://cfsensor.com/wp-content/uploads/2022/11/XGZP6859D-Pressure-Sensor-V2.5.pdf'
+  # Add marker for pressure port
+  manual_modification_required: true
+
+  body_size_x: # from JEDEC
+    nominal: 7.0
+    tolerance: 0.1 # guess
+  body_size_y:
+    nominal: 7.0
+    tolerance: 0.1 # guess
+  overall_height: # Excluding pressure port
+    nominal: 3.6 # 9.6-6.0
+    tolerance: 0.1 # guess
+
+  overall_size_x:
+    nominal: 10.6
+    tolerance: 0.2 # guess
+  
+  lead_len:
+    nominal: 7.1 # (10.6-7)/2
+    tolerance: 0.1 # guess
+  lead_width:
+    nominal: 0.8
+    tolerance: 0.1 # guess
+
+  pitch: 2.54
+  num_pins_x: 0
+  num_pins_y: 3
