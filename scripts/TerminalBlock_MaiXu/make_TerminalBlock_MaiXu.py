@@ -17,9 +17,9 @@ from footprint_scripts_terminal_blocks import *
 class MaiXu_MX126_Generator(object):
     # Generic properties
     # Actually https://www.cnmaixu.com/Sites/maixu/static/upload/file/20240108/1704697250343193.pdf but connection refused
-    fplib_name = "TerminalBlock_MaiXu" # Name of the footprint library
+    fplib_name = "TerminalBlock" # Name of the footprint library
     datasheet = "https://www.lcsc.com/datasheet/lcsc_datasheet_2309150913_MAX-MX126-5-0-03P-GN01-Cu-S-A_C5188435.pdf"
-    script_generated_note = f"script-generated using https://gitlab.com/kicad/libraries/kicad-footprint-generator/-/tree/master/scripts/{fplib_name}";
+    script_generated_note = f"script-generated using https://gitlab.com/kicad/libraries/kicad-footprint-generator/-/tree/master/scripts/TerminalBlock_MaiXu";
 
     available_pincounts = [2, 3]
     rm = 5.0 # Distance beteen any 
