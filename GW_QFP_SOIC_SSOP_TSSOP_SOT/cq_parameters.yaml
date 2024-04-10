@@ -10056,3 +10056,37 @@ TSSOP-68_8x14mm_P0.4mm:
   mark_color_key: 'light brown label'
   destination_dir: 'Package_SO.3dshapes'
   source: 'https://www.jedec.org/document_search?search_api_views_fulltext=MO-153'
+
+SOP-28_8.4x18.16mm_P1.27mm:
+  the: 7.0  # body angle in degrees
+  tb_s: 0.1  # top part of body is that much smaller
+  c: 0.254  # pin thickness, body center part height
+  R1: 0.12  # pin upper corner, inner radius
+  R2: 0.12  # pin lower corner, inner radius
+  S: 0.1  # pin top flat part length (excluding corner arc) - you can specify either S or L, the other will be calculated
+  #L: 1.27  #  pin bottom flat part length (including corner arc)
+  fp_s: True  # True for circular pinmark, False for square pinmark (useful for diodes)
+  fp_r: 0.8  # first pin indicator radius
+  fp_d: 0.6  # first pin indicator distance from edge
+  fp_z: 0.8  # first pin indicator depth
+  ef: 0.0  # fillet of edges  Note: bigger bytes model with fillet
+  cc1: 0.25  # chamfer of the 1st pin corner
+  D1: 18.16  # body length
+  E1: 8.636  # body width
+  E: 11.636   # body overall width  (E - E1) = 2 * (S + R1 + L)
+  A1: 0.05  # body-board separation
+  A2: 2.616  # body height
+  b: 0.406  # pin width
+  e: 1.27  # pin (center-to-center) distance
+  npx: 14  # number of pins along X axis (width)
+  npy: 0  # number of pins along y axis (length)
+  epad: null  # e Pad
+  excluded_pins: null  # no pin excluded
+  model_name: SOP-28_8.4x18.16mm_P1.27mm  # model name
+  rotation: -90  # rotation if required
+  type: 'Package_SO'
+  body_color_key: 'black body'
+  pin_color_key: 'metal grey pins'
+  mark_color_key: 'light brown label'
+  destination_dir: 'Package_SO.3dshapes'
+  source: 'https://www.alliancememory.com/wp-content/uploads/pdf/64K_256Kpackages.pdf#page=2'
