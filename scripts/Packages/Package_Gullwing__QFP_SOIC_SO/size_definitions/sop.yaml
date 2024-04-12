@@ -424,6 +424,33 @@ SOP-24_7.5x15.4mm_P1.27mm:
   num_pins_x: 0
   num_pins_y: 12
 
+SOP-28_8.4x18.16mm_P1.27mm:
+  size_source: 'https://www.issi.com/WW/pdf/62-65C256AL.pdf#page=12'
+  body_size_x:
+    minimum: 8.23
+    nominal: 8.4
+    maximum: 8.9
+  body_size_y:
+    minimum: 17.70
+    maximum: 18.62
+  overall_height:
+    minimum: 2.55
+    maximum: 3.05
+
+  overall_size_x:
+    minimum: 11.50
+    maximum: 12.7
+  lead_width:
+    minimum: 0.35
+    maximum: 0.50
+  lead_len:
+    minimum: 0.4
+    maximum: 1.27
+
+  pitch: 1.27
+  num_pins_x: 0
+  num_pins_y: 14
+
 SOP-44_12.6x28.5mm_P1.27mm:
   size_source: 'https://www.mxic.com.tw/Lists/Datasheet/Attachments/8177/MX23C6410,%205V,%2064Mb,%20v3.1.pdf#page=5'
   body_size_x:
@@ -453,3 +480,4 @@ SOP-44_12.6x28.5mm_P1.27mm:
   pitch: 1.27
   num_pins_x: 0
   num_pins_y: 22
+
