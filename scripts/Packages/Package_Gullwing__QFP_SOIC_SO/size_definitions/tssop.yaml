@@ -889,3 +889,21 @@ TSSOP-4_4.4x5.0mm_P4.0mm:
   num_pins_x: 0
   num_pins_y: 2
 
+##############################################################################
+# TSSOP Variations - 0.5 PITCH
+# BODY WIDTH (E1) = 4.2 NOM
+##############################################################################
+
+Texas_DYY0016A_TSOT-23-16:
+  size_source: 'https://www.ti.com/lit/ds/symlink/tmux1574.pdf'
+  custom_name_format: 'Texas_DYY0016A_TSOT-23-16_4.2x2.0mm_P0.5mm'
+  body_size_x: 1.9 .. 2.1
+  body_size_y: 4.1 .. 4.3
+  overall_size_x: 3.16 .. 3.36
+  body_height: 1.1
+  lead_width: 0.3 .. 0.3
+  lead_len: 0.63 .. 0.63
+  pitch: 0.5
+  num_pins_x: 0
+  num_pins_y: 8
+
