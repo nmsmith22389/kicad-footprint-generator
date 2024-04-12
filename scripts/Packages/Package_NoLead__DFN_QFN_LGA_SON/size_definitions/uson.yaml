@@ -143,3 +143,25 @@ Nexperia_HUSON-16_USON-16-1EP_1.35x3.3mm_P0.4mm_EP0.4x2.8mm:
   EP_size_x: 0.35 .. 0.40 .. 0.45
   EP_size_y: 2.7 .. 2.8 .. 2.9
 
+USON-8-1EP_3x2mm_P0.5mm_EP0.2x1.6mm:
+  device_type: 'USON'
+  library: Package_SON
+  manufacturer: 'Winbond'
+  # part_number: 'USON-8-1EP'
+  size_source: 'https://www.lcsc.com/datasheet/lcsc_datasheet_2205122030_Winbond-Elec-W25Q16JVUXIQ_C2843335.pdf#page=66f'
+  ipc_class: 'qfn' #'qfn' | 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+
+  body_size_x: 2.9 .. 3.0 .. 3.1
+  body_size_y: 1.9 .. 2.0 .. 2.1
+
+  lead_width: 0.20 .. 0.25 .. 0.30
+  lead_len: 0.4 .. 0.45 .. 0.5
+
+  pitch: 0.5
+  num_pins_x: 0
+  num_pins_y: 4
+
+  EP_size_x: 0.15 .. 0.2 .. 0.25
+  EP_size_y: 1.55 .. 1.6 .. 1.65
+
