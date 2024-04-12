@@ -8432,6 +8432,42 @@ LFCSP-16-1EP_3x3mm_P0.5mm_EP1.3x1.3mm:
   pin_shapes: null  # coords for pin shapes as [(x,y)]
   source: 'https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/lfcspcp/cp-16/CP_16_21.pdf'
 
+LFCSP-16-1EP_3x3mm_P0.5mm_EP1.5x1.5mm:
+  c: 0.2
+  L: 0.4
+  fp_s: True
+  fp_r: 0.5
+  fp_d: 0.1
+  fp_dx: null
+  fp_dy: null
+  fp_z: 0.01
+  ef: 0.0
+  cce: 0.2
+  D: 3.0
+  E: 3.0
+  A1: 0.02
+  A2: 0.73
+  b: 0.25
+  e: 0.5
+  m: 0.0
+  ps: rounded
+  npx: 4
+  npy: 4
+  epad: [1.5, 1.5]
+  epad_offsetX: null
+  epad_offsetY: null
+  epad_n: null
+  epad_pitch: null
+  excluded_pins: null
+  model_name: LFCSP-16-1EP_3x3mm_P0.5mm_EP1.5x1.5mm
+  rotation: -90
+  destination_dir: Package_DFN_QFN.3dshapes
+  pin_shapes: null
+  body_color_key: 'black body'
+  pin_color_key: 'metal grey pins'
+  mark_color_key: 'light brown label'
+  source: 'https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/lfcspcp/cp-16/cp_16_27.pdf'
+
 LFCSP-16_3x3mm_P0.5mm:
   c: 0.152  # pin thickness, not used for concave pins
   #K: 0.2  # Fillet radius for pin edges
