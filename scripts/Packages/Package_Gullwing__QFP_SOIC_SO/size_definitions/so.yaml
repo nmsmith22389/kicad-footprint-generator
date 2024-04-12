@@ -185,3 +185,22 @@ Texas_PowerPAD_SO-20-1EP_7.52x12.83mm_P1.27mm:
     grid: [0.66, 0.495]
     paste_avoid_via: False
     EP_num_paste_pads: [2, 2]
+
+SO-5-6_4.55x3.7mm_P1.27mm:
+  size_source: 'https://toshiba.semicon-storage.com/us/semiconductor/design-development/package/detail.5pin%20SO6.html'
+  body_size_x: 4.55 -0.15 + 0.25
+  body_size_y: 3.7 -0.15 + 0.25
+  overall_size_x: 7.0 +/-0.4
+  lead_width: 0.4
+  lead_len:  0.5
+  pitch: 1.27
+  num_pins_x: 0
+  num_pins_y: 3
+  hidden_pins: [2,]
+
+  pad_to_pad_min_x_overwrite: 5.1
+  pad_to_pad_max_x_overwrite: 7.5
+  pad_size_y_overwrite: 0.8
+
+  compatible_mpns: ['TLP2310', ]
+  additional_tags: ['Toshiba', ]
