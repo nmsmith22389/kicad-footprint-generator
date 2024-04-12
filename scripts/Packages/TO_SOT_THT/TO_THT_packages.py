@@ -571,11 +571,13 @@ class pack:
                 self.largepads = True
 
         elif (name == "TO-126"):
-            self.webpage="https://www.diodes.com/assets/Package-Files/TO126.pdf"
-            self.plastic = [8, 11, 3.25]  # width,height,depth of plastic package, starting at bottom-left
+            # This FP is very different with respect to the pins
+            # The three-pin version is the standard for  transistors and has a pitch of 2.28 mm, while the two-pin version
+            # is produced by Caddock as resistors. It has a pitch of 5.08 mm.
+            self.webpage="https://www.diodes.com/assets/Package-Files/TO126.pdf" if pins==3 else 'https://www.caddock.com/online_catalog/mrktg_lit/MP9000_Series.pdf'
+            self.plastic = [8, 11, 3.25 if pins==3 else 2.79]  # width,height,depth of plastic package, starting at bottom-left
             self.metal = [0, 0, 0]  # width,height,thickness of metal plate, starting at metal_offset from bottom-left
             self.pins = 3  # number of pins
-            self.rm = 2.54  # pin distance
             self.pad = [1.8, 1.8]  # width/height of pads
             self.drill = 1  # diameter of pad drills
             self.name = name  # name of package
@@ -586,7 +588,7 @@ class pack:
             self.pin_minlength = 4  # min. elongation of pins before 90° bend
             self.pinw = [0.75, 0.5];  # width,height of pins
             self.tags = []  # description/keywords
-            self.pin_offset_z = 2
+            self.pin_offset_z = 2 if pins==3 else 1.79
             if largepads:
                 self.tags.append("large pads")
                 self.pad = [2.0, 2.3]
