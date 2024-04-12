@@ -2,7 +2,7 @@ DIP-8_W7.62mm:
   D: 9.27  # package length
   E1: 6.35  # package width
   E: 7.87  # package shoulder-to-shoulder width
-  A1: 0.38  # package board seperation
+  A1: 0.38  # package board separation
   A2: 3.3  # package height
   b1: 1.52  # pin width
   b: 0.46  # pin tip width
@@ -674,6 +674,25 @@ SMDIP-8_W9.53mm_Clearance8mm:
   e: 2.54
   npins: 8
   model_name: SMDIP-8_W9.53mm_Clearance8mm
+  rotation: 90
+  type: smd
+  corner: fillet
+  excludepins: [0]
+  body_color_key: 'black body'
+  pin_color_key: 'metal grey pins'
+  destination_dir: 'Package_DIP.3dshapes'
+
+IXYS_SMD-8_6.3x9.7mm_P2.54mm:
+  D: 9.652
+  E1: 6.35
+  E: 8.9
+  A1: 1.145
+  A2: 3.3
+  b1: 0.46  # Not used in smd model
+  b: 0.2285
+  e: 2.54
+  npins: 8
+  model_name: IXYS_SMD-8_6.3x9.7mm_P2.54mm
   rotation: 90
   type: smd
   corner: fillet

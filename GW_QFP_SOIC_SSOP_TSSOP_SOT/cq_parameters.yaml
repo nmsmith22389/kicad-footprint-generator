@@ -10122,3 +10122,35 @@ SOP-28_8.4x18.16mm_P1.27mm:
   mark_color_key: 'light brown label'
   destination_dir: 'Package_SO.3dshapes'
   source: 'https://www.alliancememory.com/wp-content/uploads/pdf/64K_256Kpackages.pdf#page=2'
+
+IXYS_Flatpak-8_6.3x9.7mm_P2.54mm:
+  the: 6.0
+  tb_s: 0.0
+  c: 0.203
+  R1: 0.1
+  R2: 0.1
+  S: 0.635
+  fp_s: 1
+  fp_r: 0.4
+  fp_d: 0.5
+  fp_z: 0.05
+  ef: 0.0
+  cc1: 0.0
+  D1: 9.652
+  E1: 6.35
+  E: 9.398
+  A1: 0.051
+  A2: 2.159
+  b: 0.457
+  e: 2.54
+  npx: 4
+  npy: 0
+  epad: null
+  excluded_pins: null
+  model_name: IXYS_Flatpak-8_6.3x9.7mm_P2.54mm
+  rotation: -90
+  body_color_key: 'black body'
+  pin_color_key: 'metal grey pins'
+  mark_color_key: 'light brown label'
+  destination_dir: 'Package_DIP.3dshapes'
+  source: 'https://www.littelfuse.com/media?resourcetype=datasheets&itemid=996c6e8f-cc1b-44f6-811e-251c6e004c56&filename=littelfuse-integrated-circuits-loc112-datasheet'
