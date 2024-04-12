@@ -2847,6 +2847,38 @@ SO-6L_10x3.84mm_Pitch1.27mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'https://toshiba.semicon-storage.com/info/docget.jsp?did=53548&prodName=TLP2770'
 
+SO-5-6_4.55x3.7mm_P1.27mm:
+  the: 9.0
+  tb_s: 0.0
+  c: 0.15
+  R1: 0.1
+  R2: 0.1
+  S: 0.2
+  fp_s: True
+  fp_r: 0.6
+  fp_d: 0.05
+  fp_z: 0.05
+  ef: 0.0
+  cc1: 0.25
+  D1: 3.7
+  E1: 4.55
+  E: 7.0
+  A1: 0.1
+  A2: 2.1
+  b: 0.4
+  e: 1.27
+  npx: 3
+  npy: 0
+  epad: null
+  excluded_pins: [2,]
+  model_name: SO-5-6_4.55x3.7mm_P1.27mm
+  rotation: -90
+  body_color_key: 'black body'
+  pin_color_key: 'metal grey pins'
+  mark_color_key: 'light brown label'
+  destination_dir: 'Package_SO.3dshapes'
+  source: 'https://toshiba.semicon-storage.com/us/semiconductor/design-development/package/detail.5pin%20SO6.html'
+
 SO-20_12.8x7.5mm_Pitch1.27mm:
   the: 9.0
   tb_s: 0.15
