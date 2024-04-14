@@ -8461,7 +8461,7 @@ LFCSP-16-1EP_3x3mm_P0.5mm_EP1.5x1.5mm:
   excluded_pins: null
   model_name: LFCSP-16-1EP_3x3mm_P0.5mm_EP1.5x1.5mm
   rotation: -90
-  destination_dir: Package_DFN_QFN.3dshapes
+  destination_dir: Package_CSP.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
