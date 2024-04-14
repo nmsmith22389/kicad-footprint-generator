@@ -849,6 +849,44 @@ DFN-8-1EP_4x4mm_P0.8mm_EP2.3x3.24mm:
   #include_suffix_in_3dpath: 'False'
   #include_pad_size: 'fp_name_only' # 'both' | 'none' (default)
 
+
+DFN-8-1EP_1.5x1.5mm_P0.4mm_EP0.7x1.2mm:
+  device_type: 'DFN'
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'https://www.kinet-ic.com/uploads/KTD2026-7-04h.pdf'
+  # ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  body_size_x:
+    nominal: 1.5
+    tolerance: 0.05
+  body_size_y:
+    nominal: 1.5
+    tolerance: 0.05
+  lead_width:
+    nominal: 0.2
+    tolerance: 0.05
+  lead_len:
+    nominal: 0.175
+    tolerance: 0.05
+  overall_height: 0.45 .. 0.5 .. 0.55
+
+  EP_size_x: 0.65 .. 0.7 .. 0.75
+  EP_size_y: 1.15 .. 1.2 .. 1.25
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 2]
+  # heel_reduction: 0.025 #for relatively large EP pads (increase clearance)
+
+  pitch: 0.4
+  num_pins_x: 0
+  num_pins_y: 4
+  #chamfer_edge_pins: 0.25
+  #pin_count_grid:
+  #pad_length_addition: 0.5
+  #suffix: '_PullBack'
+  #include_suffix_in_3dpath: 'False'
+  #include_pad_size: 'fp_name_only' # 'both' | 'none' (default)
+
 DFN-10-1EP_3x3mm_P0.5mm_EP1.7x2.5mm:
   device_type: 'DFN'
   #manufacturer: 'man'
