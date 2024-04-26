@@ -947,6 +947,47 @@ DFN-8-1EP_1.5x1.5mm_P0.4mm_EP0.7x1.2mm:
   #include_suffix_in_3dpath: 'False'
   #include_pad_size: 'fp_name_only' # 'both' | 'none' (default)
 
+
+DFN-8-1EP_2x2mm_P0.45mm_EP0.64x1.38mm:
+  device_type: 'DFN'
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/ltc-legacy-dfn/dfn_8_05-08-1719.pdf'
+  # ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  body_size_x:
+    nominal: 2
+    tolerance: 0.10
+  body_size_y:
+    nominal: 2
+    tolerance: 0.1
+  lead_width:
+    nominal: 0.23
+    tolerance: 0.05
+  lead_len:
+    nominal: 0.40
+    tolerance: 0.10
+  overall_height:
+    nominal: 0.75
+    tolerance: 0.05
+
+  EP_size_x: 0.64 +/- 0.10
+  EP_size_y: 1.37 +/- 0.10
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 2]
+  # heel_reduction: 0.025 #for relatively large EP pads (increase clearance)
+
+  pitch: 0.4
+  num_pins_x: 0
+  num_pins_y: 4
+  #chamfer_edge_pins: 0.25
+  #pin_count_grid:
+  #pad_length_addition: 0.5
+  #suffix: '_PullBack'
+  #include_suffix_in_3dpath: 'False'
+  #include_pad_size: 'fp_name_only' # 'both' | 'none' (default)
+
+
 DFN-10-1EP_3x3mm_P0.5mm_EP1.7x2.5mm:
   device_type: 'DFN'
   #manufacturer: 'man'
