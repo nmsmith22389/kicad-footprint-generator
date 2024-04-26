@@ -87,7 +87,8 @@ THT-1x2.54mm_Vertical:
   num_pin_rows: 1
   pin_pitch: 2.54
   body_width: 2.54
-  body_height: 7.0
+  # Height from https://www.we-online.com/components/products/datasheet/61300411821.pdf
+  body_height: 8.5
   body_overlength: 0.0
   body_offset: 0.0
   pins_min: 1
@@ -168,7 +169,8 @@ THT-2x2.54mm_Vertical:
   num_pin_rows: 2
   pin_pitch: 2.54
   body_width: 5.08
-  body_height: 7.0
+  # Height from https://www.we-online.com/components/products/datasheet/61300421821.pdf
+  body_height: 8.5
   body_overlength: 0.0
   body_offset: 0.0
   pins_min: 1
