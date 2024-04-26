@@ -977,7 +977,7 @@ DFN-8-1EP_2x2mm_P0.45mm_EP0.64x1.38mm:
   EP_num_paste_pads: [2, 2]
   # heel_reduction: 0.025 #for relatively large EP pads (increase clearance)
 
-  pitch: 0.4
+  pitch: 0.45
   num_pins_x: 0
   num_pins_y: 4
   #chamfer_edge_pins: 0.25
