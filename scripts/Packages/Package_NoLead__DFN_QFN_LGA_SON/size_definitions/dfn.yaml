@@ -705,6 +705,35 @@ DFN-8-1EP_3x3mm_P0.5mm_EP1.65x2.38mm:
     EP_num_paste_pads: [2, 2]
     paste_avoid_via: False
 
+
+DFN-8-1EP_3x3mm_P0.5mm_EP1.7x2.4mm:
+  device_type: 'DFN'
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'https://stcmicro.com/datasheet/STC8G-en.pdf#page=81'
+  # ipc_class: 'qfn' # 'qfn_pull_back'
+  body_size_x: 2.89..3.0..3.11
+  body_size_y:  2.89..3.0..3.11
+  lead_width: 0.175..0.2..0.225
+  lead_len: 0.381..0.40..0.419
+
+  pitch: 0.5
+  num_pins_x: 0
+  num_pins_y: 4
+
+  EP_size_x: 1.65..1.70..1.75
+  EP_size_y: 2.35..2.40..2.45
+
+  # thermal_vias:
+  #   count: [2, 3]
+  #   drill: 0.2
+  #   paste_via_clearance: 0.1
+  #   EP_num_paste_pads: [2, 2]
+  #   paste_avoid_via: False
+
+  compatible_mpns:
+    - 'STC8G1K08A-36I-DFN8'
+
 DFN-8-1EP_3x3mm_P0.65mm_EP1.7x2.05mm:
   device_type: 'DFN'
   #manufacturer: 'man'
