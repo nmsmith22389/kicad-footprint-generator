@@ -517,7 +517,7 @@ device_definition:
         orientation: 'H'
         datasheet: 'http://www.jst-mfg.com/product/pdf/eng/eXH.pdf'
         pinrange: ['list', [3,4,6]] # For whatever reason these are the only ones offered
-        text_inside_pos: 1.5
+        text_inside_pos: 1.5 # ?
         pitch: 2.5
         pad1_position: 'top-left' # 'top-left' | 'bottom-left' -> pin 2 always to the right of pin 1
         mounting_pad_size: [1.8, 3.9]
