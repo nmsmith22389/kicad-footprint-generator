@@ -68,7 +68,7 @@ UQFN-10_1.4x1.8mm_P0.4mm:
   #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
   #include_suffix_in_3dpath: 'False'
 
-  # TODO: Pin 1 has lead_len = 0.3 .. 0.5
+  # TODO: Pin 1 has lead_len = 0.4 .. 0.6
 
   compatible_mps:
     - 'ONSemi-UQFN10-488AT-01' # e.g. NL3S22S
