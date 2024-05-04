@@ -71,7 +71,6 @@ UQFN-10_1.4x1.8mm_P0.4mm:
 
   compatible_mps:
     - 'ONSemi-UQFN10-488AT-01' # e.g. NL3S22S
-    - 'Texas-RSW0010A' # e.g. TS3A5223
 
 UQFN-10_1.6x2.1mm_P0.5mm:
   device_type: 'UQFN'
