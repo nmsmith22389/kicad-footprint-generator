@@ -13,7 +13,9 @@ from KicadModTree import Vector2D, Footprint, FootprintType, ExposedPad, \
     RectLine, PolygonLine, Model, KicadFileHandler, Pad
 from KicadModTree.nodes.specialized.PadArray import PadArray, get_pad_radius_from_arrays
 
+from scripts.tools.footprint_generator import FootprintGenerator
 from scripts.tools.footprint_text_fields import addTextFields
+from scripts.tools.global_config_files.global_config import GlobalConfig
 from scripts.tools.ipc_pad_size_calculators import TolerancedSize, ipc_gull_wing
 from scripts.tools.geometry.bounding_box import BoundingBox
 from scripts.tools.quad_dual_pad_border import create_dual_or_quad_pad_border
@@ -100,8 +102,11 @@ class GullwingConfiguration:
         return self._spec_dictionary
 
 
-class GullwingGenerator:
-    def __init__(self, configuration):
+class GullwingGenerator(FootprintGenerator):
+    def __init__(self, configuration, **kwargs):
+
+        super().__init__(**kwargs)
+
         self.configuration = configuration
         with open(ipc_doc_file, 'r') as ipc_stream:
             try:
@@ -259,8 +264,7 @@ class GullwingGenerator:
         self.__createFootprintVariant(gullwing_config, header, dimensions, False)
 
     def __createFootprintVariant(self, gullwing_config, header, dimensions, with_thermal_vias):
-        fab_line_width = self.configuration.get('fab_line_width', 0.1)
-        silk_line_width = self.configuration.get('silk_line_width', 0.12)
+        fab_line_width = self.global_config.fab_line_width
 
         device_params = gullwing_config.spec_dictionary
 
@@ -355,7 +359,6 @@ class GullwingGenerator:
         suffix = device_params.get('suffix', '').format(pad_x=pad_details['left']['size'][0],
                                                         pad_y=pad_details['left']['size'][1])
         suffix_3d = suffix if device_params.get('include_suffix_in_3dpath', 'True') == 'True' else ""
-        model3d_path_prefix = self.configuration.get('3d_model_prefix', '${KICAD8_3DMODEL_DIR}')
 
         fp_name = name_format.format(
             man=device_params.get('manufacturer', ''),
@@ -391,12 +394,7 @@ class GullwingGenerator:
             vias=''
         ).replace('__', '_').lstrip('_')
 
-        model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}.wrl'\
-            .format(
-                model3d_path_prefix=model3d_path_prefix, lib_name=lib_name,
-                fp_name=fp_name_2)
-        # print(fp_name)
-        # print(pad_details)
+        model_name = fp_name_2
 
         kicad_mod = Footprint(fp_name, FootprintType.SMD)
 
@@ -498,7 +496,8 @@ class GullwingGenerator:
         # # ############################ CrtYd ##################################
 
         courtyard_offset = ipc_data_set['courtyard']
-        courtyard_grid = configuration['courtyard_grid']
+        courtyard_grid = self.global_config.courtyard_grid
+        courtyard_line_width = self.global_config.courtyard_line_width
 
         def make_courtyard_bbox():
             cy_t = roundToBase(bounding_box['top'] - courtyard_offset, courtyard_grid)
@@ -519,7 +518,7 @@ class GullwingGenerator:
             kicad_mod.append(RectLine(
                 start=courtyard_bbox.min,
                 end=courtyard_bbox.max,
-                width=configuration['courtyard_line_width'],
+                width=courtyard_line_width,
                 layer='F.CrtYd'))
         else:
             # QFP
@@ -545,22 +544,22 @@ class GullwingGenerator:
                 {'x': cx3, 'y': 0}
             ]
             kicad_mod.append(PolygonLine(polygon=crty_poly_tl,
-                                         layer='F.CrtYd', width=configuration['courtyard_line_width']))
+                                         layer='F.CrtYd', width=courtyard_line_width))
             kicad_mod.append(PolygonLine(polygon=crty_poly_tl,
-                                         layer='F.CrtYd', width=configuration['courtyard_line_width'],
+                                         layer='F.CrtYd', width=courtyard_line_width,
                                          x_mirror=0))
             kicad_mod.append(PolygonLine(polygon=crty_poly_tl,
-                                         layer='F.CrtYd', width=configuration['courtyard_line_width'],
+                                         layer='F.CrtYd', width=courtyard_line_width,
                                          y_mirror=0))
             kicad_mod.append(PolygonLine(polygon=crty_poly_tl,
-                                         layer='F.CrtYd', width=configuration['courtyard_line_width'],
+                                         layer='F.CrtYd', width=courtyard_line_width,
                                          x_mirror=0, y_mirror=0))
 
         # ############################ SilkS ##################################
-        silk_pad_clearance = configuration['silk_pad_clearance']
-        silk_line_width = configuration['silk_line_width']
+        silk_pad_clearance = self.global_config.silk_pad_clearance
+        silk_line_width = self.global_config.silk_line_width
         silk_pad_offset = silk_pad_clearance + (silk_line_width / 2)
-        silk_offset = configuration['silk_fab_offset']
+        silk_offset = self.global_config.silk_fab_offset
 
         right_pads_silk_bottom = (device_params['num_pins_y'] - 1) * device_params['pitch'] / 2\
             + pad_details['right']['size'][1] / 2 + silk_pad_offset
@@ -579,7 +578,7 @@ class GullwingGenerator:
         silk_right = max(silk_right, bottom_pads_silk_right)
         silk_right = min(body_edge['right'] + silk_pad_offset, silk_right)
 
-        min_length = configuration.get('silk_line_length_min', 0)
+        min_length = self.global_config.silk_line_length_min
         silk_corner_bottom_right = Vector2D(silk_right, silk_bottom)
 
         silk_point_bottom_inside = nearestSilkPointOnOrthogonalLine(
@@ -768,8 +767,7 @@ class GullwingGenerator:
 
         # # ######################## Fabrication Layer ###########################
 
-        fab_bevel_size = min(configuration['fab_bevel_size_absolute'],
-                             configuration['fab_bevel_size_relative'] * min(size_x, size_y))
+        fab_bevel_size = self.global_config.get_fab_bevel_size(min(size_x, size_y))
 
         poly_fab = [
             {'x': body_edge['left'] + fab_bevel_size, 'y': body_edge['top']},
@@ -793,18 +791,9 @@ class GullwingGenerator:
 
         # #################### Output and 3d model ############################
 
-        kicad_mod.append(Model(filename=model_name))
+        self.add_standard_3d_model_to_footprint(kicad_mod, lib_name, model_name)
 
-        self.__writeFile(kicad_mod, lib_name, fp_name)
-
-    def __writeFile(self, kicad_mod, lib_name: str, fp_name: str):
-        output_dir = f'{lib_name:s}.pretty/'
-        os.makedirs(output_dir, exist_ok=True)
-        filename = f'{output_dir}{fp_name}.kicad_mod'
-
-        file_handler = KicadFileHandler(kicad_mod)
-        file_handler.writeFile(filename)
-
+        self.write_footprint(kicad_mod, lib_name)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
@@ -823,6 +812,8 @@ if __name__ == "__main__":
     parser.add_argument('--force_rectangle_pads', action='store_true',
                         help='Force the generation of rectangle pads instead of rounded rectangle')
 
+    FootprintGenerator.add_standard_arguments(parser)
+
     args = parser.parse_args()
 
     if args.density == 'L':
@@ -832,6 +823,9 @@ if __name__ == "__main__":
 
     ipc_doc_file = args.ipc_doc
 
+    global_config = GlobalConfig.load_from_file(args.global_config)
+
+    # still need this for now (for the references)
     with open(args.global_config, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
@@ -849,7 +843,8 @@ if __name__ == "__main__":
         configuration['round_rect_radius_ratio'] = 0
 
     for filepath in args.files:
-        gw = GullwingGenerator(configuration)
+        gw = GullwingGenerator(configuration, output_dir=args.output_dir,
+                               global_config=global_config)
 
         with open(filepath, 'r') as command_stream:
             try:
