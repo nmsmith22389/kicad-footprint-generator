@@ -2,6 +2,7 @@
   manufacturer: Changjiang
   # yes, that is the complete series datasheet.
   datasheet: "https://datasheet.lcsc.com/lcsc/1806131217_cjiang-Changjiang-Microelectronics-Tech-FNR5040S3R3NT_C167960.pdf"
+  # Fields have same order as in the datasheet(partno,A,B,C,D,E,atyp,btyp,ctyp)
   csv: changjiang_fnr.csv
   3d:
     # best effort, it's wirewound, not really the classic block style
@@ -12,3 +13,21 @@
     - power
     - shielded
   library_name: Inductor_SMD
+
+- series: FXL1365
+  library_name: Inductor_SMD
+  manufacturer: Changjiang
+  datasheet: "https://www.lcsc.com/datasheet/lcsc_datasheet_2303201000_cjiang--Changjiang-Microelectronics-Tech-FXL1365-330-M_C5359277.pdf"
+  # CSV fields: (partno,A-0.55,B,C,D,E,A,atyp,[(b-a)/2],ctyp])
+  # (0.55 is a guess on the nominal body size, with the) actual body being 0.275mm smaller than the body plus contacts)
+  csv: changjiang_fxl1365.csv
+  3d:
+    type: 2
+    bodyColor: black body
+    pinColor: metal grey pins
+    padThickness: 0.05
+  tags:
+    - power
+    - shielded
+    - cjiang
+    - fxl
