@@ -57,7 +57,7 @@ UQFN-10_1.4x1.8mm_P0.4mm:
     minimum: 0.3
     maximum: 0.5
 
-  heel_reduction: 0.05 #fnecessary to reach 0.2mm clearance between vertical and horizontal pads
+  heel_reduction: 0.05 # necessary to reach 0.15mm clearance between vertical and horizontal pads
 
   pitch: 0.4
   num_pins_x: 3
