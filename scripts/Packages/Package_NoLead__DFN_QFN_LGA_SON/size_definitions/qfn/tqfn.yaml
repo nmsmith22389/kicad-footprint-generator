@@ -92,6 +92,10 @@ TQFN-16-1EP_3x3mm_P0.5mm_EP1.6x1.6mm:
   num_pins_x: 4
   num_pins_y: 4
 
+  compatible_mpns:
+    - 'Pericom-TQFN-16-ZH' # e.g. PI6C5946002
+    - 'Analog-CP-16-22' # e.g. ADL5303ACP
+
 TQFN-16-1EP_5x5mm_P0.8mm_EP2.29x2.29mm:
   device_type: 'TQFN'
   #manufacturer: 'man'
