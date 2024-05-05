@@ -2,6 +2,8 @@
 
 from pathlib import Path
 import os
+import yaml
+import argparse
 
 from KicadModTree import Footprint, KicadFileHandler, Model
 from scripts.tools.global_config_files.global_config import GlobalConfig
@@ -50,3 +52,27 @@ class FootprintGenerator:
         parser.add_argument('-o', '--output-dir', type=Path,
                             default='.',
                             help='Sets the directory to which to write the generated footprints')
+
+
+    @classmethod
+    def run_on_files(self, generator, args: argparse.Namespace, **kwargs):
+        # Load global config
+        global_config = GlobalConfig.load_from_file(args.global_config)
+        
+        # If no files are given, find all YAML files in the current
+        # directory recursively
+        if not args.files:
+            args.files = list(Path('.').rglob('*.yaml'))
+        
+        for filepath in args.files:
+            no_lead = generator(output_dir=args.output_dir,
+                                global_config=global_config,
+                                **kwargs)
+
+            with open(filepath, 'r', encoding="utf-8") as command_stream:
+                try:
+                    cmd_file = yaml.safe_load(command_stream)
+                except yaml.YAMLError as exc:
+                    print(exc)
+            for pkg in cmd_file:
+                no_lead.generateFootprint(cmd_file[pkg], pkg)
