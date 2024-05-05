@@ -4,6 +4,7 @@ import sys
 import os
 import argparse
 import yaml
+from collections import defaultdict
 from math import sqrt
 from typing import List
 
@@ -20,7 +21,7 @@ from scripts.tools.quad_dual_pad_border import create_dual_or_quad_pad_border
 from scripts.tools import drawing_tools
 from scripts.tools.drawing_tools import courtyardFromBoundingBox, roundGDown
 from scripts.tools.geometry.bounding_box import BoundingBox
-from scripts.tools.declarative_def_tools import tags_properties
+from scripts.tools.declarative_def_tools import tags_properties, pad_overrides
 
 sys.path.append(os.path.join(sys.path[0], "..", "utils"))
 from ep_handling_utils import getEpRoundRadiusParams
@@ -136,6 +137,7 @@ class NoLeadConfiguration:
     _spec_dictionary: dict
     compatible_mpns: tags_properties.TagsProperties
     additional_tags: tags_properties.TagsProperties
+    pad_overrides: pad_overrides.PadOverrides
 
     def __init__(self, spec: dict):
         self._spec_dictionary = spec
@@ -147,6 +149,10 @@ class NoLeadConfiguration:
         # Generic addtional tags
         self.additional_tags = tags_properties.TagsProperties(
             spec.get(tags_properties.ADDITIONAL_TAGS_KEY, [])
+        )
+        
+        self.pad_overrides = pad_overrides.PadOverrides(
+            spec.get(pad_overrides.PAD_OVERRIDES_KEY, [])
         )
 
     @property
@@ -483,8 +489,9 @@ class NoLead():
 
         kicad_mod.tags += device_config.compatible_mpns.tags
         kicad_mod.tags += device_config.additional_tags.tags
-
-        pad_arrays = create_dual_or_quad_pad_border(self.configuration, pad_details, device_params)
+        
+        pad_arrays = create_dual_or_quad_pad_border(self.configuration, pad_details, device_params,
+                                                    pad_overrides=device_config.pad_overrides)
         pad_radius = get_pad_radius_from_arrays(pad_arrays)
 
         for pad_array in pad_arrays:

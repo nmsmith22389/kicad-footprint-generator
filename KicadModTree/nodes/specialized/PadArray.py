@@ -19,11 +19,14 @@
 from typing import List
 
 from types import GeneratorType
+from collections import namedtuple
 from KicadModTree.nodes.base.Pad import *
 from KicadModTree.nodes.specialized.ChamferedPad import *
 from KicadModTree.nodes.Node import Node
 
 from KicadModTree.util.paramUtil import *
+
+ApplyOverrideResult = namedtuple('ApplyOverrideResult', ['number', 'position', 'parameters'])
 
 
 class PadArray(Node):
@@ -201,6 +204,78 @@ class PadArray(Node):
         if all([i == 0 for i in self.spacing]):
             raise ValueError('pad spacing ({sp}) must be non-zero'.format(sp=self.spacing))
 
+    def _applyOverrides(self,
+                        pad_number: int,
+                        pad_position,
+                        pad_parameters,
+                        pad_overrides) -> ApplyOverrideResult:
+        """
+        Apply pad overrides to the current pad position and parameters.
+        """
+        # No overrides? Just return input
+        if pad_overrides is None:
+            return ApplyOverrideResult(pad_number, pad_position, pad_parameters)
+
+        # Check if pad number is in dictionary
+        this_pad_override = pad_overrides.overrides.get(pad_number)
+
+        # No overrides for this pad? Just return input
+        if this_pad_override is None:
+            return ApplyOverrideResult(pad_number, pad_position, pad_parameters)
+
+        #
+        # Copy input variables
+        # (to avoid changing the outer state)
+        #
+        pad_position = list(pad_position)  # copy
+        pad_parameters = dict(pad_parameters)
+        # Not all parameters are deep copyable,
+        # so we only copy what might change
+        if isinstance(pad_parameters["size"], list):
+            pad_parameters["size"] = \
+                list(pad_parameters["size"])
+
+        # Apply relative move:
+        # {'pad_override': {1: {"move": [0.1, 0.0]}}}
+        if this_pad_override.move:
+            if this_pad_override.move[0] is not None:
+                pad_position[0] += this_pad_override.move[0]
+            if this_pad_override.move[1] is not None:
+                pad_position[1] += this_pad_override.move[1]
+
+        # Apply "absolute" position transformation ("set position")
+        # {'pad_override': {1: {"at": [0.1, 0.0]}}}
+        # Any of the coordinates can be set to None to ignore that coordinate.
+        if this_pad_override.at:
+            if this_pad_override.at[0] is not None:
+                pad_position[0] = this_pad_override.at[0]
+            if this_pad_override.at[1] is not None:
+                pad_position[1] = this_pad_override.at[1]
+
+        # Apply "size_increase" relative size change
+        # {'pad_override': {1: {"size_increase": [0.1, -0.5]}}}
+        if this_pad_override.size_increase:
+            if this_pad_override.size_increase[0] is not None:
+                pad_parameters['size'][0] += this_pad_override.size_increase[0]
+            if this_pad_override.size_increase[1] is not None:
+                pad_parameters['size'][1] += this_pad_override.size_increase[1]
+
+        # Apply "size" absolute override
+        # {'pad_override': {1: {"size": [1.5, 0.7]}}}
+        # Any of the coordinates can be set to None to ignore that coordinate.
+        if this_pad_override.size:
+            if this_pad_override.size[0] is not None:
+                pad_parameters['size'][0] = this_pad_override.size[0]
+            if this_pad_override.size[1] is not None:
+                pad_parameters['size'][1] = this_pad_override.size[1]
+
+        # Apply "number" override
+        # {'pad_override': {1: {"override_numbers": "B6"}}}
+        # Pleeease use this only as a way of last resort :-)
+        pad_number = this_pad_override.override_number or pad_number
+
+        return ApplyOverrideResult(pad_number, pad_position, pad_parameters)
+
     def _createPads(self, **kwargs):
 
         pads = []
@@ -275,24 +350,35 @@ class PadArray(Node):
                         current_pad_params['maximum_radius'] = 0.25
                 else:
                     current_pad_params['shape'] = padShape
+
+                pad_params_with_override = self._applyOverrides(
+                    number, current_pad_pos, current_pad_params,
+                    kwargs.get("pad_overrides")
+                )
+
                 if kwargs.get('chamfer_size'):
                     if i == 0 and 'chamfer_corner_selection_first' in kwargs:
                         pads.append(
                             ChamferedPad(
-                                number=number, at=current_pad_pos,
+                                number=pad_params_with_override.number,
+                                at=pad_params_with_override.position,
                                 corner_selection=kwargs.get('chamfer_corner_selection_first'),
-                                **current_pad_params
+                                **pad_params_with_override.parameters
                                 ))
                         continue
                     if i == len(pad_numbers)-1 and 'chamfer_corner_selection_last' in kwargs:
                         pads.append(
                             ChamferedPad(
-                                number=number, at=current_pad_pos,
+                                number=pad_params_with_override.number,
+                                at=pad_params_with_override.position,
                                 corner_selection=kwargs.get('chamfer_corner_selection_last'),
-                                **current_pad_params
+                                **pad_params_with_override.params
                                 ))
                         continue
-                pads.append(Pad(number=number, at=current_pad_pos, **current_pad_params))
+
+                pads.append(Pad(number=pad_params_with_override.number,
+                                at=pad_params_with_override.position,
+                                **pad_params_with_override.parameters))
 
         return pads
 
