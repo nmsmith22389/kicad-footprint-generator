@@ -14,6 +14,8 @@ from KicadModTree import Vector2D, Footprint, FootprintType, ExposedPad, Line, \
     PolygonLine, RectLine, Model, Pad, KicadFileHandler
 from KicadModTree.nodes.specialized.PadArray import PadArray, get_pad_radius_from_arrays
 
+from scripts.tools.footprint_generator import FootprintGenerator
+from scripts.tools.global_config_files.global_config import GlobalConfig
 from scripts.tools.footprint_text_fields import addTextFields
 from scripts.tools.ipc_pad_size_calculators import TolerancedSize, \
         ipc_body_edge_inside_pull_back, ipc_pad_center_plus_size
@@ -160,8 +162,10 @@ class NoLeadConfiguration:
         return self._spec_dictionary
 
 
-class NoLead():
-    def __init__(self, configuration):
+class NoLeadGenerator(FootprintGenerator):
+    def __init__(self, configuration, **kwargs):
+        super().__init__(**kwargs)
+
         self.configuration = configuration
         with open(ipc_doc_file, 'r') as ipc_stream:
             try:
@@ -347,7 +351,7 @@ class NoLead():
 
         nolead_config = NoLeadConfiguration(device_params)
 
-        device_dimensions = NoLead.deviceDimensions(nolead_config, fp_id)
+        device_dimensions = NoLeadGenerator.deviceDimensions(nolead_config, fp_id)
 
         if device_dimensions['has_EP'] and 'thermal_vias' in device_params:
             self.__createFootprintVariant(nolead_config, device_dimensions, True)
@@ -459,10 +463,11 @@ class NoLead():
             fp_name = prefix + fp_name
             fp_name_2 = prefix + fp_name_2
 
-        model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}.wrl'\
-            .format(
-                model3d_path_prefix=model3d_path_prefix, lib_name=lib_name,
-                fp_name=fp_name_2)
+        #model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}.wrl'\
+        #    .format(
+        #        model3d_path_prefix=model3d_path_prefix, lib_name=lib_name,
+        #        fp_name=fp_name_2)
+        model_name = fp_name_2
         # print(fp_name)
         # print(pad_details)
 
@@ -568,9 +573,9 @@ class NoLead():
 
         # ############################ SilkS ##################################
 
-        silk_line_width_mm = configuration['silk_line_width']
-        silk_pad_offset = configuration['silk_pad_clearance'] + silk_line_width_mm / 2
-        silk_offset = configuration['silk_fab_offset']
+        silk_line_width_mm = self.global_config.silk_line_width
+        silk_pad_offset = self.global_config.silk_pad_clearance + silk_line_width_mm / 2
+        silk_offset = self.global_config.silk_fab_offset
 
         def create_silk_line(start, end):
             return Line(start=start, end=end, width=silk_line_width_mm, layer="F.SilkS")
@@ -748,7 +753,7 @@ class NoLead():
 
         kicad_mod.append(PolygonLine(
             polygon=poly_fab,
-            width=configuration['fab_line_width'],
+            width=self.global_config.fab_line_width,
             layer="F.Fab"))
 
         # # ############################ CrtYd ##################################
@@ -777,17 +782,8 @@ class NoLead():
                       fp_name=fp_name, text_y_inside_position='center', allow_rotation=True)
 
         # #################### Output and 3d model ############################
-
-        kicad_mod.append(Model(filename=model_name))
-
-        output_dir = '{lib_name:s}.pretty/'.format(lib_name=lib_name)
-        if not os.path.isdir(output_dir):  # returns false if path does not yet exist!! (Does not check path validity)
-            os.makedirs(output_dir)
-        filename = '{outdir:s}{fp_name:s}.kicad_mod'.format(outdir=output_dir, fp_name=fp_name)
-
-        file_handler = KicadFileHandler(kicad_mod)
-        file_handler.writeFile(filename)
-
+        self.add_standard_3d_model_to_footprint(kicad_mod, lib_name, model_name)
+        self.write_footprint(kicad_mod, lib_name)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='use confing .yaml files to create footprints.')
@@ -804,6 +800,9 @@ if __name__ == "__main__":
     parser.add_argument('--force_rectangle_pads', action='store_true',
                         help='Force the generation of rectangle pads instead of rounded rectangle')
     parser.add_argument('-v', '--verbose', action='count', help='set debug level')
+    
+    FootprintGenerator.add_standard_arguments(parser)
+
     args = parser.parse_args()
 
     if args.density == 'L':
@@ -815,6 +814,8 @@ if __name__ == "__main__":
         DEBUG_LEVEL = args.verbose
 
     ipc_doc_file = args.ipc_doc
+    
+    global_config = GlobalConfig.load_from_file(args.global_config)
 
     with open(args.global_config, 'r') as config_stream:
         try:
@@ -833,7 +834,9 @@ if __name__ == "__main__":
         configuration['round_rect_radius_ratio'] = 0
 
     for filepath in args.files:
-        no_lead = NoLead(configuration)
+        no_lead = NoLeadGenerator(configuration,
+                                  output_dir=args.output_dir,
+                                  global_config=global_config)
 
         with open(filepath, 'r') as command_stream:
             try:
