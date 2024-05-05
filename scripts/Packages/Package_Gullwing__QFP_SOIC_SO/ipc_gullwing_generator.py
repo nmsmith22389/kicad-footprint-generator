@@ -22,7 +22,6 @@ from scripts.tools.quad_dual_pad_border import create_dual_or_quad_pad_border
 from scripts.tools import drawing_tools
 from scripts.tools.drawing_tools import nearestSilkPointOnOrthogonalLine
 
-from scripts.tools.dict_tools import dictInherit
 from scripts.tools.declarative_def_tools import tags_properties
 
 from scripts.Packages.utils.ep_handling_utils import getEpRoundRadiusParams
@@ -242,7 +241,7 @@ class GullwingGenerator(FootprintGenerator):
 
         return dimensions
 
-    def generateFootprint(self, device_params, header):
+    def generateFootprint(self, device_params: dict, pkg_id: str, header_info: dict):
         gullwing_config = GullwingConfiguration(device_params)
 
         dimensions = GullwingGenerator.deviceDimensions(gullwing_config)
@@ -259,9 +258,9 @@ class GullwingGenerator(FootprintGenerator):
             raise ValueError("A footprint may not have deleted pins and hidden pins.")
 
         if dimensions['has_EP'] and 'thermal_vias' in device_params:
-            self.__createFootprintVariant(gullwing_config, header, dimensions, True)
+            self.__createFootprintVariant(gullwing_config, header_info, dimensions, True)
 
-        self.__createFootprintVariant(gullwing_config, header, dimensions, False)
+        self.__createFootprintVariant(gullwing_config, header_info, dimensions, False)
 
     def __createFootprintVariant(self, gullwing_config, header, dimensions, with_thermal_vias):
         fab_line_width = self.global_config.fab_line_width
@@ -799,8 +798,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description='use confing .yaml files to create footprints. See readme.md for details about the parameter '
                     'file format.')
-    parser.add_argument('files', metavar='file', type=str, nargs='+',
-                        help='list of files holding information about what devices should be created.')
     parser.add_argument('--global_config', type=str, nargs='?', help='the config file defining how the '
                         'footprint will look. (KLC)',
                         default='../../tools/global_config_files/config_KLCv3.0.yaml')
@@ -812,9 +809,7 @@ if __name__ == "__main__":
     parser.add_argument('--force_rectangle_pads', action='store_true',
                         help='Force the generation of rectangle pads instead of rounded rectangle')
 
-    FootprintGenerator.add_standard_arguments(parser)
-
-    args = parser.parse_args()
+    args = FootprintGenerator.add_standard_arguments(parser, file_autofind=True)
 
     if args.density == 'L':
         ipc_density = 'least'
@@ -842,20 +837,9 @@ if __name__ == "__main__":
         configuration['round_rect_max_radius'] = None
         configuration['round_rect_radius_ratio'] = 0
 
-    for filepath in args.files:
-        gw = GullwingGenerator(configuration, output_dir=args.output_dir,
-                               global_config=global_config)
-
-        with open(filepath, 'r') as command_stream:
-            try:
-                cmd_file = yaml.safe_load(command_stream)
-            except yaml.YAMLError as exc:
-                print(exc)
-
-        dictInherit(cmd_file)
-
-        header = cmd_file.pop('FileHeader')
-
-        for pkg in cmd_file:
-            print("generating part for parameter set {}".format(pkg))
-            gw.generateFootprint(cmd_file[pkg], header)
+    FootprintGenerator.run_on_files(
+        GullwingGenerator,
+        args,
+        file_autofind_dir='size_definitions',
+        configuration=configuration,
+    )

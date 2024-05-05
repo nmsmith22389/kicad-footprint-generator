@@ -3,8 +3,8 @@
 import sys
 import os
 import argparse
+import logging
 import yaml
-from collections import defaultdict
 from math import sqrt
 from typing import List
 
@@ -38,8 +38,6 @@ DEFAULT_VIA_PASTE_CLEARANCE = 0.15
 DEFAULT_MIN_ANNULAR_RING = 0.15
 
 SILK_MIN_LEN = 0.1
-
-DEBUG_LEVEL = 0
 
 
 def find_top_left_pad(pad_arrays: List[PadArray]) -> Pad:
@@ -152,7 +150,7 @@ class NoLeadConfiguration:
         self.additional_tags = tags_properties.TagsProperties(
             spec.get(tags_properties.ADDITIONAL_TAGS_KEY, [])
         )
-        
+
         self.pad_overrides = pad_overrides.PadOverrides(
             spec.get(pad_overrides.PAD_OVERRIDES_KEY, [])
         )
@@ -251,8 +249,8 @@ class NoLeadGenerator(FootprintGenerator):
             Gmin_y = EP_size['y'] + 2 * min_ep_to_pad_clearance
 
         heel_reduction_max += device_dimensions.get('heel_reduction', 0)  # include legacy stuff
-        if heel_reduction_max > 0 and DEBUG_LEVEL >= 1:
-            print('Heel reduced by {:.4f} to reach minimum EP to pad clearances'.format(heel_reduction_max))
+        if heel_reduction_max > 0:
+            logging.info(f'Heel reduced by {heel_reduction_max:.4f} to reach minimum EP to pad clearances')
 
         Pad = {}
         Pad['left'] = {'center': [-(Zmax_x + Gmin_x) / 4, 0], 'size': [(Zmax_x - Gmin_x) / 2, Xmax_x]}
@@ -346,12 +344,10 @@ class NoLeadGenerator(FootprintGenerator):
 
         return dimensions
 
-    def generateFootprint(self, device_params, fp_id):
-        print('Building footprint for parameter set: {}'.format(fp_id))
-
+    def generateFootprint(self, device_params: dict, pkg_id: str, header_info: dict = None):
         nolead_config = NoLeadConfiguration(device_params)
 
-        device_dimensions = NoLeadGenerator.deviceDimensions(nolead_config, fp_id)
+        device_dimensions = NoLeadGenerator.deviceDimensions(nolead_config, pkg_id)
 
         if device_dimensions['has_EP'] and 'thermal_vias' in device_params:
             self.__createFootprintVariant(nolead_config, device_dimensions, True)
@@ -494,7 +490,7 @@ class NoLeadGenerator(FootprintGenerator):
 
         kicad_mod.tags += device_config.compatible_mpns.tags
         kicad_mod.tags += device_config.additional_tags.tags
-        
+
         pad_arrays = create_dual_or_quad_pad_border(self.configuration, pad_details, device_params,
                                                     pad_overrides=device_config.pad_overrides)
         pad_radius = get_pad_radius_from_arrays(pad_arrays)
@@ -787,7 +783,7 @@ class NoLeadGenerator(FootprintGenerator):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='use confing .yaml files to create footprints.')
-    parser.add_argument('files', metavar='file', type=str, nargs='+',
+    parser.add_argument('files', metavar='file', type=str, nargs='*',
                         help='list of files holding information about what devices should be created.')
     parser.add_argument('--global_config', type=str, nargs='?',
                         help='the config file defining how the footprint will look like. (KLC)',
@@ -799,22 +795,16 @@ if __name__ == "__main__":
                         default='../ipc_definitions.yaml')
     parser.add_argument('--force_rectangle_pads', action='store_true',
                         help='Force the generation of rectangle pads instead of rounded rectangle')
-    parser.add_argument('-v', '--verbose', action='count', help='set debug level')
-    
-    FootprintGenerator.add_standard_arguments(parser)
 
-    args = parser.parse_args()
+    args = FootprintGenerator.add_standard_arguments(parser)
 
     if args.density == 'L':
         ipc_density = 'least'
     elif args.density == 'M':
         ipc_density = 'most'
 
-    if args.verbose:
-        DEBUG_LEVEL = args.verbose
-
     ipc_doc_file = args.ipc_doc
-    
+
     global_config = GlobalConfig.load_from_file(args.global_config)
 
     with open(args.global_config, 'r') as config_stream:
@@ -833,15 +823,9 @@ if __name__ == "__main__":
         configuration['round_rect_max_radius'] = None
         configuration['round_rect_radius_ratio'] = 0
 
-    for filepath in args.files:
-        no_lead = NoLeadGenerator(configuration,
-                                  output_dir=args.output_dir,
-                                  global_config=global_config)
-
-        with open(filepath, 'r') as command_stream:
-            try:
-                cmd_file = yaml.safe_load(command_stream)
-            except yaml.YAMLError as exc:
-                print(exc)
-        for pkg in cmd_file:
-            no_lead.generateFootprint(cmd_file[pkg], pkg)
+    FootprintGenerator.run_on_files(
+        NoLeadGenerator,
+        args,
+        file_autofind_dir='size_definitions',
+        configuration=configuration,
+    )

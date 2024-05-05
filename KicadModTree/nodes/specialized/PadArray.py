@@ -372,7 +372,7 @@ class PadArray(Node):
                                 number=pad_params_with_override.number,
                                 at=pad_params_with_override.position,
                                 corner_selection=kwargs.get('chamfer_corner_selection_last'),
-                                **pad_params_with_override.params
+                                **pad_params_with_override.parameters
                                 ))
                         continue
 

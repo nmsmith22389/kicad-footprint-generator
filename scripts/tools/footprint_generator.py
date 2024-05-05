@@ -4,9 +4,11 @@ from pathlib import Path
 import os
 import yaml
 import argparse
+import logging
 
 from KicadModTree import Footprint, KicadFileHandler, Model
 from scripts.tools.global_config_files.global_config import GlobalConfig
+from scripts.tools.dict_tools import dictInherit
 
 
 class FootprintGenerator:
@@ -44,7 +46,7 @@ class FootprintGenerator:
         ))
 
     @classmethod
-    def add_standard_arguments(self, parser):
+    def add_standard_arguments(self, parser, file_autofind: bool=False) -> argparse.Namespace:
         """
         Helper function to add "standard" argument to a command line parser,
         which can then be used to init a FootprintGenerator.
@@ -53,26 +55,57 @@ class FootprintGenerator:
                             default='.',
                             help='Sets the directory to which to write the generated footprints')
 
+        if file_autofind:
+            parser.add_argument('files', metavar='file', type=str, nargs='*',
+                                help='list of files holding information about what devices should be created.' +
+                                     ' If none are given, all .yaml files in the current directory are used (recursively).')
+
+        parser.add_argument('-v', '--verbose', action='count', default=0,
+                            help='Set debug level, use -vv for more debug.')
+
+        args = parser.parse_args()
+
+        if args.verbose == 1:
+            logging.basicConfig(level=logging.INFO)
+        elif args.verbose > 1:
+            logging.basicConfig(level=logging.DEBUG)
+
+        return args
 
     @classmethod
-    def run_on_files(self, generator, args: argparse.Namespace, **kwargs):
+    def run_on_files(self, generator, args: argparse.Namespace,
+                     file_autofind_dir: str='.', **kwargs):
+
         # Load global config
         global_config = GlobalConfig.load_from_file(args.global_config)
-        
+
         # If no files are given, find all YAML files in the current
         # directory recursively
         if not args.files:
-            args.files = list(Path('.').rglob('*.yaml'))
-        
+            logging.info(f"No files given, searching for .yaml files in {file_autofind_dir}")
+            args.files = list(Path(file_autofind_dir).rglob('*.yaml'))
+
         for filepath in args.files:
-            no_lead = generator(output_dir=args.output_dir,
-                                global_config=global_config,
-                                **kwargs)
+            generator_instance = generator(output_dir=args.output_dir,
+                                           global_config=global_config,
+                                           **kwargs)
 
             with open(filepath, 'r', encoding="utf-8") as command_stream:
                 try:
                     cmd_file = yaml.safe_load(command_stream)
                 except yaml.YAMLError as exc:
                     print(exc)
+
+            dictInherit(cmd_file)
+
+            # The def file header, if there is one
+            try:
+                header = cmd_file.pop('FileHeader')
+            except KeyError:
+                header = None
+
             for pkg in cmd_file:
-                no_lead.generateFootprint(cmd_file[pkg], pkg)
+                logging.info("Generating part for parameter set {}".format(pkg))
+                generator_instance.generateFootprint(cmd_file[pkg],
+                                                     pkg_id=pkg,
+                                                     header_info=header)
