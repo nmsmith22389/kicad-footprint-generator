@@ -571,3 +571,64 @@ device_definition:
                     spacing: ['pitch', 0] # x,y= 'pitch' | value
                     reference_is: 'center' # 'center' | 'first' | 'last'
                     count: 'pincount' # 'pincount' | value
+
+    ZH_SM4_side_entry:
+        series: 'ZH'
+        mpn_format_string: 'S{pincount}B-ZR-SM4A-TF'
+        orientation: 'H'
+        datasheet: 'http://www.jst-mfg.com/product/pdf/eng/eZH.pdf'
+        pinrange: ['range', [2, 14]]
+        text_inside_pos: 0
+        pitch: 1.5
+        pad1_position: 'top-left' # 'top-left' | 'bottom-left' -> pin 2 always to the right of pin 1
+        mounting_pad_size: [1.1, 1.9]
+        # x position mounting inner mounting pad edge relative to nearest pad center
+        center_pad_to_mounting_pad_edge: 1.4
+        # y dimensions for pad given relative to mounting pad edge
+        rel_pad_y_outside_edge: 6
+        rel_pad_y_inside_edge: 3.3
+        pad_size_x: 0.7
+        # y position for body edge relative to mounting pad edge (positive -> body extends outside bounding box)
+        rel_body_edge_y: 1
+        body_size_y: 6
+        # body_fin_protrusion: 1.6
+        # body_fin_width: 0.8
+        # x body edge relative to nearest pin
+        rel_body_edge_x: 2.25
+
+    ZH_SM4_top_entry:
+        series: 'ZH'
+        mpn_format_string: 'B{pincount}B-ZR-SM4-TF'
+        orientation: 'V'
+        datasheet: 'http://www.jst-mfg.com/product/pdf/eng/eZH.pdf'
+        pinrange: ['range', [2, 14]]
+        text_inside_pos: -1.5
+        pitch: 1.5
+        pad1_position: 'bottom-left' # 'top-left' | 'bottom-left' -> pin 2 always to the right of pin 1
+        mounting_pad_size: [1.5, 2.3]
+        # x position mounting inner mounting pad edge relative to nearest pad center
+        center_pad_to_mounting_pad_edge: 1.3
+        # y dimensions for pad given relative to mounting pad edge
+        rel_pad_y_outside_edge: 5.1
+        rel_pad_y_inside_edge: 1.4
+        pad_size_x: 0.7
+        # y position for body edge relative to mounting pad edge (positive -> body extends outside bounding box)
+        rel_body_edge_y: 0.6
+        body_size_y: 3.7
+        # body_fin_protrusion: 1.6
+        # body_fin_width: 0.8
+        # x body edge relative to nearest pin
+        rel_body_edge_x: 2.25
+        additional_drawing:
+            -
+                layer: 'F.Fab'
+                # thickness: 0.1 #optional parameter. If not given: take fab_line_width and silk_line_width from config file. Needed if layer not silk or fab!
+                reference_point: ['center', -0.25] # [x,y]: x = 'left' | 'center' | 'right' | value; y = 'top' | 'center' | 'bottom' | value; named values are relative to body
+                rectangle:
+                    size: [0.5, 0.5] # centered around reference_point
+                    # start: [-0.25, -0.25] #relative to reference_point
+                    # end: [0.25, 0.25] #relative to reference_point
+                repeat:
+                    spacing: ['pitch', 0] # x,y= 'pitch' | value
+                    reference_is: 'center' # 'center' | 'first' | 'last'
+                    count: 'pincount' # 'pincount' | value
