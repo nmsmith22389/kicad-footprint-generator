@@ -6,7 +6,7 @@ HSEC8-1XX-01-DV:
   fp_name: 'Samtec_HSEC8-1{num_pos:02d}-{fp_thickness_code}-X-DV{fp_options}'
   fp_suffix: '_Socket'     # optional: defaults to ''
   description: '0.8 mm Highspeed card edge card connector socket for {thickness}mm PCBs, vertical{details}'
-  doc_parameters:
+  parameters:
     fp_options: ""
     fp_thickness_code: '01'
     details: ""
@@ -51,7 +51,7 @@ HSEC8-1XX-01-DV:
 HSEC8-1XX-01-DV-A:
   inherit: 'HSEC8-1XX-01-DV'
   fp_suffix: '_Socket_AlignmentPins'     # optional: defaults to ''
-  doc_parameters:
+  parameters:
     fp_options: "-A"
     details: ", alignment pins"
   positions: [10, 13, 20, 25, 30, 37, 40, 49, 50, 60, 70, 80, 90, 100]
@@ -78,7 +78,7 @@ HSEC8-1XX-01-DV-A:
 HSEC8-1XX-01-DV-A-WT:
   inherit: 'HSEC8-1XX-01-DV-A'
   fp_suffix: '_Socket_WeldTabs'     # optional: defaults to ''
-  doc_parameters:
+  parameters:
     fp_options: "-A-WT"
     details: ", alignment pins, weld tabs"
   positions: [9, 10, 13, 20, 25, 30, 37, 40, 49, 50, 60, 70, 80, 90, 100]
@@ -100,7 +100,7 @@ HSEC8-1XX-01-DV-A-BL:
   inherit: 'HSEC8-1XX-01-DV-A-WT'
   fp_suffix: '_Socket_WeldTabs_BoardLocks'     # optional: defaults to ''
   positions: [9, 10, 13, 20, 25, 30, 37, 40, 49, 50, 60, 70, 80, 90, 100]
-  doc_parameters:
+  parameters:
     fp_options: "-A-BL"
     details: ", alignment pins, weld tabs, board locks"
   body_size:
@@ -109,7 +109,7 @@ HSEC8-1XX-01-DV-A-BL:
 
 HSEC8-1XX-03-DV:
   inherit: 'HSEC8-1XX-01-DV'
-  doc_parameters:
+  parameters:
     fp_thickness_code: '03'
     thickness: 2.36
   positions: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
@@ -119,7 +119,7 @@ HSEC8-1XX-03-DV:
 
 HSEC8-1XX-03-DV-A:
   inherit: 'HSEC8-1XX-01-DV-A'
-  doc_parameters:
+  parameters:
     fp_thickness_code: '03'
     thickness: 2.36
   positions: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
@@ -129,7 +129,7 @@ HSEC8-1XX-03-DV-A:
 
 HSEC8-1XX-03-DV-A-WT:
   inherit: 'HSEC8-1XX-01-DV-A-WT'
-  doc_parameters:
+  parameters:
     fp_thickness_code: '03'
     thickness: 2.36
   positions: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]

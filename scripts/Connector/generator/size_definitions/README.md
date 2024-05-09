@@ -45,7 +45,9 @@ UMPT-XX-V-W:
 
 * it is allowed to inherit specs which themselves contain inherited values.
 * the special target `default` is never interpreted as a connector specification.
-* any target which does not contain `fp_name` (either directly or inherited) can be define some common attributes.
+* any target which does not contain `fp_name` (either directly or inherited) can define some common attributes, purely for inheritance.
+* the special target `parameters` can be used to define additional variables for re-use in format strings and formulas (see target [parameters](#parameters-_dict_) below)  
+* any target which expects numbers (integer or floating point), may contain arithmetic expressions (see sections [Arithmetic Expressions](#arithmetic-expressions) below) 
 
 ## General Parameters
 
@@ -91,9 +93,9 @@ This can be disabled as it may be somewhat expensive in terms of computing time.
 
 This feature does currently only support cutting out lines, arcs and circles.
 
-### `doc_parameters:` _dict_
+### `parameters:` _dict_
 The fields `fp_name`, `description`, and `tags` may contain python format clauses. The fields
-may reference any field of the specification as well as any field of the `doc_parammeters`
+may reference any field of the specification as well as any field of the `parameters`
 dictionary.
 
 Example:
@@ -101,7 +103,7 @@ Example:
 HSEC8-1XX-01-DV:
   fp_name: 'Samtec_HSEC8-1{num_pos:02d}-{fp_thickness_code}-X-DV{fp_options}'
   description: '0.8 mm Highspeed card edge card connector socket for {thickness}mm PCBs, vertical{details}'
-  doc_parameters:
+  parameters:
     fp_options: ""
     fp_thickness_code: '01'
     details: ""
@@ -110,24 +112,6 @@ HSEC8-1XX-01-DV:
 This feature is expecially useful if you want to inherit the fp_name or description for several families
 without redefining the complete fp_name, description, or keywords.
 
-#### Dynamic `doc_parameters`
-The doc_parameters dictionary can contain tags with special values which are evaluated at runtime to create additional
-dependent variables. As an example, a new field `num_pos_div_10` may be defined by:
-~~~yaml
-...
-  doc_parameters:
-    num_pos_div_10: eval(num_pos // 10)
-...
-~~~
-For this the syntax `eval(`_expression_`)` as shown above is used. The expressions are evaluated in an asteval 
-environment (see https://newville.github.io/asteval/index.html).
-
-It is allowed to use newly defined tags as arguments to new tag definitions, i.e., one could extend the example above by
-~~~yaml
-...
-    num_pos_div_100: eval(num_pos_div_10 // 10)
-...
-~~~
 
 ## Geometry Parameters
 
@@ -243,7 +227,7 @@ body_size:
 **Note:** If both, `x` and `x_offset` (or `y` and `y_offset`) are specified, then the offset specification is ignored.    
 
 ### `offset:` _dict_
-By default body as well as pads (excluding mount pads) are centered at the same point, which is the footprint origin.
+By default, body as well as pads (excluding mount pads) are centered at the same point, which is the footprint origin.
 This parameter can be used to specify offsets between pads and body in case this is required.
 - `body`: [_list_ | _dict_] defines the offset of the body center (the rectangle specified by `body_size`) relative to the footprint origin.
 - `pads`: [_list_ | _dict_] defines the offset of the pad frame center, i.e., the center of all regular connector pads excluding the mount pads,
@@ -318,21 +302,29 @@ The node coordinates can be specified as arithmetic expressions including the (r
 dimensions `l` for left, `r` for right, `t` for top, and `b` for bottom as well as the corner pad
 center coordinates `pl` for pad-left, `pr`for pad-right, `pt` for pad-top, and `pb`for pad-bottom.
 
+Also all entries of the `parameters` dictionary, `num_pos`, and `idx`, are valid symbol names in 
+coordinate expressions. 
+
+The expressions follow the same rules as described in section [Arithmetic Expressions](#arithmetic-expressions)
+below.
+
 The definition of the shape in the figure above would look something like:
 ~~~yaml
+parameters:
+  off: 0.7 # defines the offset, used in body_shape calculations below
+
 body_shape:
   right: # right contour only depends on the body size
-    polyline: [[r + 0.7, t], [r + 0.7, t + 0.7], [r, t + 0.7]]
+    polyline: [[r + off, t], [r + off, t + off], [r, t + off]]
   left: 'mirror'  # mirror can be used to mirror left <-> right or top <-> bottom shapes
-  top:  # contour depends on both, the body size as well as the edge pad centers
-    polyline: [[pl - 0.7, t], [pl - 0.35, t + 0.35], [pr + 0.35, t + 0.35], [pr + 0.7, t]]
+  top:  # contour depends on both, the body size and the edge pad centers
+    polyline: [[pl - off, t], [pl - 0.5 * off, t + 0.5 * off], [pr + 0.5 * off, t + 0.5 * off], [pr + off, t]]
   bottom:
-    polyline: [[pl - 0.7, b + 0.35], [0.5 * pr, b + 0.35], [0.5 * pr + 0.35, b]]
+    polyline: [[pl - off, b + 0.5 * off], [0.5 * pr, b + 0.5 * off], [0.5 * (pr + off), b]]
 ~~~
 
 **Note:** any polyline which has a name other than `'top'`, `'bottom'`, `'left'`, or `'right'` will be drawn additionally
 onto the `F.Fab` layer. It will, however not be considered when calculating the silk screen.
-
 
 ### `courtyard_offset:` [_float_ | _dict_]
 Can be used to override the courtyard margin. If a single float is specified, the margin is the same on all 4 sides,
@@ -373,3 +365,70 @@ Sets the "exclude from bill of materials" flag for the generated connector footp
 
 ### `exclude_from_pos:` _bool_ (default: False)
 Sets the "exclude from position files" flag for the generated connector footprint
+
+
+# Dynamic Evaluation of YAML Spec
+
+A special feature of the connector generator is, that the specification in the YAML file supports evaluation of
+arithmetic expressions, mathematical functions, and definition of variables. Any symbol defined in the `parameters`
+dict may be referenced directly. All other symbols from the spec may be referenced in dot-notation
+
+Any field which expects a number, may contain an arithmetic expression. This expression is evaluated using a
+limited AST evaluator.
+
+The expressions (in Python syntax) may contain:
+* arithmetic expressions using standard mathematical operators (addition `+`, subtraction `-`, multiplication `*`, division `/`, power `**`, integer division `//`, modulo operator `%`) and any combination of parentheses `()`)
+* standard mathematical python functions like trigonometric functions (e.g., sin, cos, tan), rounding (e.g., ceil, floor, round), abs, exp, etc.
+* if-expressions (e.g., `1 if (num_pos < 10) else 0`)
+* any field of the `parameters` dictionary (see [above](#parameters-_dict_)) as variable
+* any expression referencing a top-level field in the specification which results in a number (e.g., `pad_pitch` or `pad_size.x`)
+* the variable `num_pos` specifying the current number of positions
+* the variable `idx` specifying the index of the currently generated footprint in the series (i.e., `num_pos == positions[idx]`)
+
+## Example:
+This example may not be sensible, but it is intended to demonstrate the possibilities.
+~~~yaml
+...
+parameters:
+  mount_pad_offset: 3.7
+  mount_pad_angle: 30
+  mount_pad_radians : $(radians(mount_pad_angle))
+...
+pad_pitch: $(sqrt(2))
+pad_size:
+  x: 1.0
+  y: 1.5
+body_size:
+  x_offset: $(5.0 if (num_pos < 3) else 4.0)
+  y: $(pad_size.y + 1.0 + mount_pad_offset * sin(radians(mount_pad_angle)))
+mount_pads:
+  pad_tr:
+    center:
+      x_offset: $(mount_pad_offset * cos(radians(mount_pad_angle)))
+      y: $(mount_pad_offset * sin(radians(mount_pad_angle)))
+    size: $(0.25 * mount_pad_offset)
+    rotation: $(mount_pad_angle)
+...
+~~~
+
+**Note** for details what is allowed as arithmetic expression see [ASTEVAL: Minimal Python AST Evaluator](https://newville.github.io/asteval/index.html).
+The `asteval.Interpreter` is instantiated as a `minimal` interpreter `with_ifexp`, `with_listcomp`, `with_dictcomp`, and `with_setcomp`.
+
+# Dynamic YAML Evaluation
+The `parameters` dictionary can contain tags with special values which are evaluated at runtime to create additional
+dependent variables. As an example, a new field `num_pos_div_10` may be defined by:
+~~~yaml
+...
+  parameters:
+    num_pos_div_10: $(num_pos // 10)
+...
+~~~
+For this the syntax `$(`_expression_`)` as shown above is used. The expressions are evaluated in an asteval 
+environment (see https://newville.github.io/asteval/index.html and section [Arithmetic Expressions](#arithmetic-expressions) below).
+
+It is allowed to use newly defined tags as arguments to new tag definitions, i.e., one could extend the example above by
+~~~yaml
+...
+    num_pos_div_100: $(num_pos_div_10 // 10)
+...
+~~~

@@ -38,7 +38,7 @@ class Vector2D(object):
         # parse constructor
         if coordinates is None:
             coordinates = {}
-        elif type(coordinates) in [int, float]:
+        elif isinstance(coordinates, (float, int)):
             if y is not None:
                 coordinates = [coordinates, y]
             else:
