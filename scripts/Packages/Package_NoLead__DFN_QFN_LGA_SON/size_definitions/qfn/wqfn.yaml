@@ -1,3 +1,35 @@
+WQFN-12_1.8x1.8mm_P0.4mm:
+  device_type: 'WQFN'
+  manufacturer: 'Texas'
+  part_number: 'RMG0012A'
+  size_source: 'https://www.ti.com/lit/ds/symlink/tmux131.pdf#page=18'
+  ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  # custom_name_format:
+  body_size_x:
+    nominal: 1.8
+    tolerance: 0.1
+  body_size_y:
+    nominal: 1.8
+    tolerance: 0.1
+  overall_height:
+    nominal: 0.75
+    tolerance: 0.05
+
+  lead_width:
+    nominal: 0.2
+    tolerance: 0.05
+  lead_len_H:
+    nominal: 0.7
+    tolerance: 0.05
+  lead_len_V:
+    nominal: 0.4
+    tolerance: 0.1
+
+  pitch: 0.4
+  num_pins_x: 4
+  num_pins_y: 2
+
 WQFN-14-1EP_2.5x2.5mm_P0.5mm_EP1.45x1.45mm:
   device_type: 'WQFN'
   #manufacturer: 'man'
