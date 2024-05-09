@@ -4739,6 +4739,38 @@ SSOP-10_3.9x4.9mm_P1.00mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.st.com/resource/en/datasheet/viper01.pdf'
 
+SSOP-10-1EP_3.9x4.9mm_P1.0mm_EP2.1x3.3mm:
+  the: 9.0
+  tb_s: 0.15
+  c: 0.1
+  R1: 0.1
+  R2: 0.1
+  S: 0.1
+  fp_s: 1
+  fp_r: 0.2
+  fp_d: 0.3
+  fp_z: 0.05
+  ef: 0.0
+  cc1: 0.25
+  D1: 4.9
+  E1: 3.9
+  E: 6.0
+  A1: 0.1
+  A2: 1.5
+  b: 0.4
+  e: 1.0
+  npx: 5
+  npy: 0
+  epad: [3.3, 2.1]
+  excluded_pins: null
+  model_name: SSOP-10-1EP_3.9x4.9mm_P1.0mm_EP2.1x3.3mm
+  rotation: -90
+  body_color_key: 'black body'
+  pin_color_key: 'metal grey pins'
+  mark_color_key: 'light brown label'
+  destination_dir: 'Package_SO.3dshapes'
+  source: 'http://download.py32.org/%E6%95%B0%E6%8D%AE%E6%89%8B%E5%86%8C/zh-CN/PY32F002A%20%E7%B3%BB%E5%88%97%E6%95%B0%E6%8D%AE%E6%89%8B%E5%86%8C_Rev1.0.pdf#page=44'
+
 SSOP-20_3.9x8.7mm_P0.635mm:
   the: 9.0
   tb_s: 0.15
