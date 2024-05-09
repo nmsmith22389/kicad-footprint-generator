@@ -127,3 +127,30 @@ SSOP-48_5.3x12.8mm_P0.5mm:
   pitch: 0.50
   num_pins_x: 0
   num_pins_y: 24
+
+SSOP-10-1EP_3.9x4.9mm_P1.0mm_EP2.1x3.3mm:
+  size_source: 'http://download.py32.org/%E6%95%B0%E6%8D%AE%E6%89%8B%E5%86%8C/zh-CN/PY32F002A%20%E7%B3%BB%E5%88%97%E6%95%B0%E6%8D%AE%E6%89%8B%E5%86%8C_Rev1.0.pdf#page=44'
+  compatible_mpns: 
+    - 'ESSOP-10'
+  body_size_x: 3.80 .. 3.90 .. 4.00
+  body_size_y: 4.70 .. 4.90 .. 5.10
+  overall_size_x: 5.75 .. 6.00 .. 6.25
+  lead_width: 0.30 .. 0.40 .. 0.50
+  lead_len:
+    minimum: 0.45
+    maximum: 0.85
+  pitch: 1.00
+  num_pins_x: 0
+  num_pins_y: 5
+
+  EP_size_x: 2.0 .. 2.1 .. 2.2
+  EP_size_y: 3.2 .. 3.3 .. 3.4
+  EP_num_paste_pads: 1
+
+  thermal_vias:
+    count: [1, 2]
+    drill: 0.51
+    paste_via_clearance: 0.1
+    EP_num_paste_pads: 1
+    grid: [2.54, 1.27]
+    paste_avoid_via: False
