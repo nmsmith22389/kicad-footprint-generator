@@ -1,12 +1,12 @@
-from typing import List, Dict, Optional
+from typing import Dict, Optional, Tuple
 from dataclasses import dataclass
 
 # Common key for generic additional tags
 PAD_OVERRIDES_KEY = 'pad_overrides'
 
 # None is used to indicate that the (sub-)value should be ignored.
-XYCoordinates = tuple[Optional[float], Optional[float]]
-SizeXY = tuple[Optional[float], Optional[float]]
+XYCoordinates = Tuple[Optional[float], Optional[float]]
+SizeXY = Tuple[Optional[float], Optional[float]]
 
 @dataclass
 class SinglePadOverride:
@@ -15,24 +15,24 @@ class SinglePadOverride:
     """
     # Move this pad by given X/Y coordinates
     move: Optional[XYCoordinates]
-    
+
     # Position the pad at given X/Y coordinates.
     # This overrides any move command.
     at: Optional[XYCoordinates]
-    
+
     # Increase (or decrease) the pad size
     size_increase: Optional[SizeXY]
-    
+
     # Set the pad size (absolute).
     # This overrides any size_increase command.
     size: Optional[SizeXY]
-    
+
     # Override the lead width
     lead_width: Optional[str]  # TODO Which type?
-    
+
     # Override the lead length
     lead_len: Optional[str]  # TODO Which type?
-    
+
     # Override the pad number
     override_number: Optional[str]
 
