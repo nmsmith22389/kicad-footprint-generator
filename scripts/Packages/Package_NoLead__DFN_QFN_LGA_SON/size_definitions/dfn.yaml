@@ -1,3 +1,32 @@
+DFN-4_5x7mm_P5.08mm:
+  compatible_mpns:
+    - Microchip-DFN75-4LD-PL-1
+  device_type: DFN
+  size_source: https://ww1.microchip.com/downloads/aemDocuments/documents/TCG/ProductDocuments/DataSheets/DSC1001-3-4-1.8V-3.3V-Low-Power-Precision-CMOS-Oscillators-DS20005529.pdf#page=14
+  body_size_x: 5 +/- 0.10
+  body_size_y: 7 +/- 0.10
+  lead_width: 1.4 +/- 0.05
+  lead_len: 1.2 +/- 0.10
+  pitch: 5.08
+  num_pins_x: 0
+  num_pins_y: 2
+
+  rule_areas:
+    central_area:
+      name: 'Keepout'
+      layers: 'F.Cu'
+      keepouts:
+        vias: deny
+        tracks: deny
+        copperpour: deny
+      shapes:
+        - type: rect
+          center: [0, 0]
+          size: [
+            $(3.5 + 0.1 + 0.2),
+            $(2.2 + 0.1 + 0.2)
+          ]
+
 DFN-6-1EP_1.2x1.2mm_P0.4mm_EP0.3x0.94mm:
   device_type: 'DFN'
   #manufacturer: 'man'
@@ -142,7 +171,7 @@ DFN-6-1EP_2x2mm_P0.5mm_EP0.6x1.37mm:
   #suffix: '_PullBack'
   #include_suffix_in_3dpath: 'False'
   #include_pad_size: 'fp_name_only' # 'both' | 'none' (default)
-  
+
 DFN-6-1EP_2x2mm_P0.5mm_EP0.7x1.6mm:
   device_type: 'DFN'
   #manufacturer: 'man'
