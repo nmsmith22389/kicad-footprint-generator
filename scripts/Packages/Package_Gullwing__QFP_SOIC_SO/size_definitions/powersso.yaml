@@ -1,0 +1,29 @@
+FileHeader:
+  library_Suffix: 'SO'
+  device_type: 'PowerSSO'
+
+PowerSSO-16-1EP_3.9x4.9mm_P0.5mm_EP2.5x3.61mm:
+  size_source: 'https://www.st.com/resource/en/datasheet/vnd7020aj.pdf'
+  body_size_x: 3.9
+  body_size_y: 4.9
+  overall_size_x: 6.0
+  lead_width: 0.20 .. 0.30
+  lead_len: 0.40 .. 0.60 .. 0.85
+  pitch: 0.5
+  num_pins_x: 0
+  num_pins_y: 8
+  EP_size_x:
+     minimum: 2.20
+     nominal: 2.50
+  EP_size_y:
+     minimum: 3.31
+     nominal: 3.61
+
+  overall_height:
+    maximum: 1.70
+  thermal_vias:
+    count: [2, 4]
+    drill: 0.3
+    grid: [1.2, 1.2]
+    paste_avoid_via: False
+    EP_num_paste_pads: [1, 1]
