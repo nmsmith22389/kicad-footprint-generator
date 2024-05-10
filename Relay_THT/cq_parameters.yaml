@@ -219,3 +219,34 @@ Relay_SPDT_Finder_36.11:
   pin_color_key: metal grey pins
   destination_dir: Relay_THT.3dshapes
   source: 'https://cdn.findernet.com/app/uploads/S36EN.pdf'
+
+Relay_DPDT_Kemet_UA2-NE_NU_NJ:
+  model_name: Relay_DPDT_Kemet_UA2-NE_NU_NJ
+  roundbelly: 0
+  L: 5.7
+  W: 10.6
+  H: 8.0
+  rim: [0.5, 0.5, 0.5]
+  pinpadsize: 0.5
+  pinpadh: 3.4
+  pintype: tht
+  rotation: 0
+  pin1corner: [ -1.25, -1.5 ]
+  pin: [
+    [ 0.0, 0.0, 'rect', 0.2, 0.4 ],
+    [ 3.2, 0.0, 'rect', 0.2, 0.4 ],
+    [ 0.0, 3.2, 'rect', 0.2, 0.4 ],
+    [ 0.0, 5.4, 'rect', 0.2, 0.4 ],
+    [ 0.0, 7.6, 'rect', 0.2, 0.4 ],
+    [ 3.2, 3.2, 'rect', 0.2, 0.4 ],
+    [ 3.2, 5.4, 'rect', 0.2, 0.4 ],
+    [ 3.2, 7.6, 'rect', 0.2, 0.4 ],
+  ]
+  A1: 0.02
+  corner: none
+  show_top: 0
+  body_color_key: white body
+  body_top_color_key: grey body
+  pin_color_key: metal grey pins
+  destination_dir: Relay_THT.3dshapes
+  source: 'https://content.kemet.com/datasheets/KEM_R7004_UA2_UB2.pdf'
