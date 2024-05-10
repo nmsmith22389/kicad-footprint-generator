@@ -618,6 +618,39 @@ SOIC-16_4.55x10.3mm_P1.27mm:
   num_pins_x: 0
   num_pins_y: 8
 
+SOIC-16W_5.3x10.2mm_P1.27mm:
+  custom_name_format: SOIC-{pincount}W_{size_x:g}x{size_y:g}mm_P{pitch:g}mm
+  # NOTE: Part: AM26LV32INS: https://www.ti.com/lit/ds/symlink/am26lv32.pdf
+  # (same drawing as size_source)
+  size_source: 'http://www.ti.com/lit/ml/msop002a/msop002a.pdf'
+  body_size_x: # from JEDEC (agrees with linked datasheet)
+    minimum: 5.0
+    maximum: 5.6
+  body_size_y:
+    minimum: 9.9
+    maximum: 10.5
+  overall_height: # Datasheet only specifies maximum
+    nominal: 2.0
+    maximum: 2.0
+  overall_size_x:
+    minimum: 7.4
+    maximum: 8.2
+  lead_len: 
+    minimum: 1.05 # From overall_size_x[min] - body_size_x[nominal]
+    maximum: 1.45 # From overall_size_x[max] - body_size_x[nominal]
+  lead_width:
+    minimum: 0.35
+    maximum: 0.51
+
+  pitch: 1.27
+  num_pins_x: 0
+  num_pins_y: 8
+
+  compatible_mpns:
+    - TI-NS
+    - TI-NS0016A
+
+
 SOIC-16W_7.5x10.3mm_P1.27mm:
   custom_name_format: SOIC-{pincount}W_{size_x:g}x{size_y:g}mm_P{pitch:g}mm
   size_source: 'JEDEC MS-013AA, https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/soic_wide-rw/rw_16.pdf'
