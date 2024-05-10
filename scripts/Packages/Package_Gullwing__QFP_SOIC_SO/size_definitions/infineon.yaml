@@ -37,6 +37,34 @@ Infineon_PG-DSO-8-27:
     # bottom_pad_size:
     paste_avoid_via: False
 
+Infineon_PG-DSO-8-59:
+  size_source: 'https://www.infineon.com/dgdl/Infineon-1EDCxxI12AH-DS-v02_00-EN.pdf'
+  manufacturer: Infineon
+  custom_name_format: '{man}_PG-DSO-{pincount}-59_{size_x:g}x{size_y:g}mm'
+
+  body_size_x:
+    minimum: 7.4
+    maximum: 7.6
+  body_size_y:
+    minimum: 6.2
+    maximum: 6.4
+  overall_height:
+    maximum: 2.65
+
+  overall_size_x:
+    minimum: 10.0
+    maximum: 10.6
+  lead_width:
+    minimum: 0.3
+    maximum: 0.5
+  lead_len:
+    minimum: 0.5
+    maximum: 0.9
+
+  pitch: 1.27
+  num_pins_x: 0
+  num_pins_y: 4
+
 Infineon_PG-DSO-20-U03:
   size_source: 'https://www.infineon.com/dgdl/Infineon-2ED1323S12P_2ED1324S12P-DataSheet-v01_01-EN.pdf?fileId=8ac78c8c869190210186e92f0f506d0c'
   manufacturer: Infineon
