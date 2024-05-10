@@ -273,7 +273,7 @@ class FPconfiguration():
             "bottom": 0.5 * body_size.y + body_center_offset.y,
         })
 
-        # assemble the dimensions 
+        # assemble the dimensions
         self.parameters.update({k[0]: v for k, v in self.body_edges.items()})
         self.parameters.pl = -0.5 * self.pad_pos_range.x + self.pad_center_offset.x
         self.parameters.pr = 0.5 * self.pad_pos_range.x + self.pad_center_offset.x
@@ -283,18 +283,7 @@ class FPconfiguration():
         self.expr_eval = ASTexprEvaluator(symbols=self.parameters)
 
         ## Get rule areas
-        rule_area_specs = self.spec.get("rule_areas", None)
-        if rule_area_specs is not None:
-
-            # process inheritance of the rule area definitions
-            dictInherit(rule_area_specs)
-
-            rule_areas = []
-            for _, rule_area_spec in rule_area_specs.items():
-                rule_area = rule_area_properties.RuleAreaProperties(rule_area_spec)
-                rule_areas.append(rule_area)
-
-            self.rule_areas = rule_areas
+        self.rule_areas = rule_area_properties.RuleAreaProperties.from_standard_yaml(self.spec)
 
         ## get silk-fab-offset (may be overriden in the YAML)
         self.silk_fab_offset = self.spec.get('silk_fab_offset', configuration['silk_fab_offset'])
@@ -332,7 +321,7 @@ class FPconfiguration():
         ## exclude_from_bom and exclude_from_pos
         self.exclude_from_bom = self.spec.get("exclude_from_bom", False)
         self.exclude_from_pos = self.spec.get("exclude_from_pos", False)
-        
+
     def eval_coordinate(self, coord):
         return self.asteval.parse_float(coord, symbols=self.parameters)
 
@@ -373,46 +362,6 @@ def parse_body_shape(spec, *, side: str, eval_expr: Callable):
     return [_ for _ in reversed(nodes)] if reverse else nodes
 
 
-def create_rule_area(rule_area: rule_area_properties.RuleAreaProperties, eval_expr: Callable):
-    """
-    Create a rule area from the given rule area properties.
-    """
-    rule_areas = []
-
-    # create the shapes
-    for shape in rule_area.shapes:
-
-        # First construct the rule area polygon from the shape definition
-        if shape.type == shape_properties.RECT:
-            corner1 = Vector2D(eval_expr(shape.x1_expr), eval_expr(shape.y1_expr))
-            corner2 = Vector2D(eval_expr(shape.x2_expr), eval_expr(shape.y2_expr))
-
-            rule_area_polygon = [corner1, Vector2D(corner2.x, corner1.y), corner2, Vector2D(corner1.x, corner2.y)]
-
-            layers = rule_area.layers
-
-            # Map spec keepout rules to the KicadModTree format
-            keepouts = Keepouts(
-                tracks=rule_area.keepouts.tracks,
-                vias=rule_area.keepouts.vias,
-                pads=rule_area.keepouts.pads,
-                copperpour=rule_area.keepouts.copperpour,
-                footprints=rule_area.keepouts.footprints,
-            )
-
-            zone = Zone(polygon_pts=rule_area_polygon,
-                        layers=layers,
-                        hatch=Hatch(Hatch.EDGE, 0.5),
-                        net=0,
-                        net_name="",
-                        name=rule_area.name,
-                        keepouts=keepouts,
-            )
-            rule_areas.append(zone)
-
-    return rule_areas
-
-
 def generate_one_footprint(positions: int, *, spec, configuration: dict, idx=0):
     # deprecate doc_parameters
     if ("doc_parameters" in spec):
@@ -426,7 +375,7 @@ def generate_one_footprint(positions: int, *, spec, configuration: dict, idx=0):
             raise ValueError(f"missing mandatory field '{f}' in footprint specification")
 
     fp_config = FPconfiguration(spec, positions=positions, idx=idx, configuration=configuration)
-    
+
     # for format strings both, all fields of the spec and all fields of spec.parameters are accessible
     format_dict = DotDict(**fp_config.spec, **fp_config.parameters)
 
@@ -514,13 +463,10 @@ def generate_one_footprint(positions: int, *, spec, configuration: dict, idx=0):
         pos_y *= -1 # switch to opposite row
 
     ## Create rule areas (keepouts)
-    if fp_config.rule_areas is not None:
-        for rule_area in fp_config.rule_areas:
-            zones = create_rule_area(rule_area, eval_expr=fp_config.expr_eval)
-
-            # Each rule area definition can define multiple rule areas
-            for rule_area_zone in zones:
-                kicad_mod.append(rule_area_zone)
+    rule_area_zones = rule_area_properties.create_rule_area_zones(fp_config.rule_areas,
+                                                                  expr_evaluator=fp_config.expr_eval)
+    for rule_area_zone in rule_area_zones:
+        kicad_mod.append(rule_area_zone)
 
     ## calculate the bounding box of the whole footprint (excluding silk)
     bbox = kicad_mod.calculateBoundingBox()

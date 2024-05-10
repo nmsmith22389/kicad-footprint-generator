@@ -1,6 +1,11 @@
 from dataclasses import dataclass
+from typing import List, Union, Callable
+# remove after Python 3.11 is required
+from typing_extensions import Self
 
-from . import utils, shape_properties
+from KicadModTree import Vector2D, Zone, Hatch, Keepouts
+from . import utils, shape_properties, ast_evaluator
+from scripts.tools import dict_tools
 
 @dataclass
 class KeepoutProperties():
@@ -92,3 +97,61 @@ class RuleAreaProperties():
             shapes.append(shape)
 
         return shapes
+
+    def from_standard_yaml(parent_spec: dict, key: str="rule_areas") -> List[Self]:
+
+        rule_areas = []
+        rule_area_specs = parent_spec.get(key, None)
+        if rule_area_specs is not None:
+
+            # process inheritance of the rule area definitions
+            dict_tools.dictInherit(rule_area_specs)
+
+            for _, rule_area_spec in rule_area_specs.items():
+                rule_area = RuleAreaProperties(rule_area_spec)
+                rule_areas.append(rule_area)
+
+        return rule_areas
+
+
+def create_rule_area_zones(rule_areas: Union[RuleAreaProperties, List[RuleAreaProperties]],
+                           expr_evaluator: Callable) -> List[Zone]:
+    """
+    Create the zones from the given rule area properties, after evaulating any expressions
+    in the rule area shapes.
+    """
+
+    if not isinstance(rule_areas, list):
+        rule_areas = [rule_areas]
+
+    zones = []
+
+    for rule_area in rule_areas:
+        # create the shapes
+        for shape in rule_area.shapes:
+
+            # First construct the rule area polygon from the shape definition
+            if shape.type == shape_properties.RECT:
+                rect = shape.evaluate_expressions(expr_evaluator)
+                layers = rule_area.layers
+
+                # Map spec keepout rules to the KicadModTree format
+                keepouts = Keepouts(
+                    tracks=rule_area.keepouts.tracks,
+                    vias=rule_area.keepouts.vias,
+                    pads=rule_area.keepouts.pads,
+                    copperpour=rule_area.keepouts.copperpour,
+                    footprints=rule_area.keepouts.footprints,
+                )
+
+                zone = Zone(polygon_pts=rect.get_polygon_points(),
+                            layers=layers,
+                            hatch=Hatch(Hatch.EDGE, 0.5),
+                            net=0,
+                            net_name="",
+                            name=rule_area.name,
+                            keepouts=keepouts,
+                )
+                zones.append(zone)
+
+    return zones

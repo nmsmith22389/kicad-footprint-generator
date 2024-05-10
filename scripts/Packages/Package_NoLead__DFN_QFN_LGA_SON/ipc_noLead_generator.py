@@ -23,7 +23,8 @@ from scripts.tools.quad_dual_pad_border import create_dual_or_quad_pad_border
 from scripts.tools import drawing_tools
 from scripts.tools.drawing_tools import courtyardFromBoundingBox, roundGDown
 from scripts.tools.geometry.bounding_box import BoundingBox
-from scripts.tools.declarative_def_tools import tags_properties, pad_overrides
+from scripts.tools.declarative_def_tools import tags_properties, pad_overrides, \
+        rule_area_properties, ast_evaluator
 
 sys.path.append(os.path.join(sys.path[0], "..", "utils"))
 from ep_handling_utils import getEpRoundRadiusParams
@@ -138,6 +139,7 @@ class NoLeadConfiguration:
     compatible_mpns: tags_properties.TagsProperties
     additional_tags: tags_properties.TagsProperties
     pad_overrides: pad_overrides.PadOverrides
+    rule_areas: List[rule_area_properties.RuleAreaProperties] = []
 
     def __init__(self, spec: dict):
         self._spec_dictionary = spec
@@ -154,6 +156,8 @@ class NoLeadConfiguration:
         self.pad_overrides = pad_overrides.PadOverrides(
             spec.get(pad_overrides.PAD_OVERRIDES_KEY, [])
         )
+
+        self.rule_areas = rule_area_properties.RuleAreaProperties.from_standard_yaml(spec)
 
     @property
     def spec_dictionary(self) -> dict:
@@ -415,10 +419,10 @@ class NoLeadGenerator(FootprintGenerator):
         suffix = device_params.get('suffix', '')
         suffix_3d = suffix if device_params.get('include_suffix_in_3dpath', 'True') == 'True' else ""
 
-        model3d_path_prefix = self.configuration.get('3d_model_prefix', '${KICAD8_3DMODEL_DIR}')
-
         size_x = device_dimensions['body_size_x'].nominal
         size_y = device_dimensions['body_size_y'].nominal
+
+        fp_ast_evaluator = ast_evaluator.ASTevaluator()
 
         fp_name = name_format.format(
             man=device_params.get('manufacturer', ''),
@@ -770,6 +774,13 @@ class NoLeadGenerator(FootprintGenerator):
             },
             width=configuration['courtyard_line_width'],
             layer='F.CrtYd'))
+
+        # ######################### Rule Areas ################################
+
+        zones = rule_area_properties.create_rule_area_zones(device_config.rule_areas,
+                                                            fp_ast_evaluator)
+        for zone in zones:
+            kicad_mod.append(zone)
 
         # ######################### Text Fields ###############################
 

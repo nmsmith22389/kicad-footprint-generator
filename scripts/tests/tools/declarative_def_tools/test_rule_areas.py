@@ -12,7 +12,8 @@ keepouts:
     vias: allow
     tracks: deny
 shapes:
-    - rect: [[a,b], [c,1]]
+    - type: rect
+      corners: [[a,b], [c,1]]
 """
     spec_yaml = yaml.safe_load(spec)
 
@@ -29,10 +30,10 @@ shapes:
 
     rect = kp.shapes[0]
 
-    assert rect.x1_expr == 'a'
-    assert rect.y1_expr == 'b'
-    assert rect.x2_expr == 'c'
-    assert rect.y2_expr == 1
+    assert rect.exprs.x1_expr == 'a'
+    assert rect.exprs.y1_expr == 'b'
+    assert rect.exprs.x2_expr == 'c'
+    assert rect.exprs.y2_expr == 1
 
 
 def test_multilayer():
@@ -43,7 +44,8 @@ layers: [F.Cu, B.Cu]
 keepouts:
     tracks: deny
 shapes:
-    - rect: [[a,b], [c,1]]
+    - type: rect
+      corners: [[a,b], [c,1]]
 """
     spec_yaml = yaml.safe_load(spec)
 

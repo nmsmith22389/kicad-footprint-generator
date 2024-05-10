@@ -46,8 +46,8 @@ UMPT-XX-V-W:
 * it is allowed to inherit specs which themselves contain inherited values.
 * the special target `default` is never interpreted as a connector specification.
 * any target which does not contain `fp_name` (either directly or inherited) can define some common attributes, purely for inheritance.
-* the special target `parameters` can be used to define additional variables for re-use in format strings and formulas (see target [parameters](#parameters-_dict_) below)  
-* any target which expects numbers (integer or floating point), may contain arithmetic expressions (see sections [Arithmetic Expressions](#arithmetic-expressions) below) 
+* the special target `parameters` can be used to define additional variables for re-use in format strings and formulas (see target [parameters](#parameters-_dict_) below)
+* any target which expects numbers (integer or floating point), may contain arithmetic expressions (see sections [Arithmetic Expressions](#arithmetic-expressions) below)
 
 ## General Parameters
 
@@ -78,7 +78,7 @@ Defines the footprint description. Python format clauses can be included, like, 
 ~~~yaml
 description: '{pad_pitch:.2f} mm mPOWER Ultra Micro Power Terminal with {num_pos:d}, Vertical'
 ~~~
-Any field of the specification may be substituted; as for `fp_name` and `tags` Python format string syntax is supported 
+Any field of the specification may be substituted; as for `fp_name` and `tags` Python format string syntax is supported
 (as for `fp_name` above).
 
 ### `source:` _string_
@@ -151,7 +151,7 @@ If non-zero, then the connector is generated using two rows with the specified p
 Default (value is null or 0.0) is to generate only one row.
 
 ### `row_x_offset:` _float_ (default: null)
-If non-zero, then the connector has staggered pins (pins in one row are not aligned with those in the opposite row). 
+If non-zero, then the connector has staggered pins (pins in one row are not aligned with those in the opposite row).
 This parameter is the offset X distance between one row and the opposite.
 It is only applied to the upper row (the row opposite to pin number 1).
 
@@ -224,7 +224,7 @@ body_size:
   x_offset: 4.65 # x-size is given by a symmetric offset from the edge-pad's center x coordinate
   y: 7.6         # y-size is 7.6mm
 ~~~
-**Note:** If both, `x` and `x_offset` (or `y` and `y_offset`) are specified, then the offset specification is ignored.    
+**Note:** If both, `x` and `x_offset` (or `y` and `y_offset`) are specified, then the offset specification is ignored.
 
 ### `offset:` _dict_
 By default, body as well as pads (excluding mount pads) are centered at the same point, which is the footprint origin.
@@ -302,8 +302,8 @@ The node coordinates can be specified as arithmetic expressions including the (r
 dimensions `l` for left, `r` for right, `t` for top, and `b` for bottom as well as the corner pad
 center coordinates `pl` for pad-left, `pr`for pad-right, `pt` for pad-top, and `pb`for pad-bottom.
 
-Also all entries of the `parameters` dictionary, `num_pos`, and `idx`, are valid symbol names in 
-coordinate expressions. 
+Also all entries of the `parameters` dictionary, `num_pos`, and `idx`, are valid symbol names in
+coordinate expressions.
 
 The expressions follow the same rules as described in section [Arithmetic Expressions](#arithmetic-expressions)
 below.
@@ -333,30 +333,7 @@ for horizontal and vertical margins, respectively.
 
 ### `rule_areas:` [ _dict_ ]
 
-Can be used to specify rule areas for the footprint. The dictionary contains an entry for each area.
-The following fields are supported:
-
-- `name`: the name of the rule area in the footprint
-- `layers`: a string containing the layers of the rule area, or a list of layers
-- `shapes`: a list of shapes. Each shape is a dict with a single key, which is the shape type. The value is a list of
-  coordinates. The same expressions as in `body_shape` can be used. The following shapes are supported:
-  - `rect`: a rectangle defined by two corners
-- `keepouts`: a dict of keepout rules. One or more of `tracks`, `vias`, `copperpour`, `pads`, `footprints`.
-  Each one can be `deny` or `allow` (default: `allow`).
-
-~~~yaml
-rule_areas:
-  key: # key is unique for each rule area
-    name: 'No vias' # visible name of the rule area
-    layers: 'F.Cu'  # layers of the rule area
-    shapes:
-      - 'rect': [
-        [0, 0], # corner 1
-        [1, 1]  # corner 2
-      ]
-    keepouts:
-      vias: deny
-~~~
+See [Rule Areas](<../../../README.md#rule-areas>)
 
 ## Other Properties
 
@@ -423,7 +400,7 @@ dependent variables. As an example, a new field `num_pos_div_10` may be defined 
     num_pos_div_10: $(num_pos // 10)
 ...
 ~~~
-For this the syntax `$(`_expression_`)` as shown above is used. The expressions are evaluated in an asteval 
+For this the syntax `$(`_expression_`)` as shown above is used. The expressions are evaluated in an asteval
 environment (see https://newville.github.io/asteval/index.html and section [Arithmetic Expressions](#arithmetic-expressions) below).
 
 It is allowed to use newly defined tags as arguments to new tag definitions, i.e., one could extend the example above by

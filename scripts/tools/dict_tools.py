@@ -3,7 +3,7 @@
 import collections.abc
 import copy
 
-def dictMerge(a, b):
+def dictMerge(a: dict, b: dict) -> dict:
     """Recursively merges the contents of two dict objects
     
     This function is similar to the built-in dict.update() method, but instead 
@@ -37,7 +37,7 @@ def dictMerge(a, b):
             a[k] = v
     return a
 
-def dictInherit(d):
+def dictInherit(d: dict) -> None:
     """Recursively merges dictionaries within a hierarchy using 'inherit' entries
     
     The top-level dictionary (`d`) can be thought of as a type of "namespace"
