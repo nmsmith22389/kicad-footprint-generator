@@ -8,6 +8,7 @@ import math
 
 sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))  # load parent path of KicadModTree
 
+from scripts.tools.footprint_generator import FootprintGenerator
 from scripts.tools.footprint_text_fields import addTextFields
 from KicadModTree import Footprint, FootprintType, \
     PolygonLine, Model, KicadFileHandler, Pad
@@ -65,8 +66,10 @@ class PLCCConfiguration:
         return self._spec_dictionary
 
 
-class PLCCGenerator():
-    def __init__(self, configuration):
+class PLCCGenerator(FootprintGenerator):
+    def __init__(self, configuration, **kwargs):
+        super().__init__(**kwargs)
+
         self.configuration = configuration
         with open(ipc_doc_file, 'r') as ipc_stream:
             try:
@@ -193,7 +196,11 @@ class PLCCGenerator():
 
         return Pad
 
-    def generateFootprint(self, device_config: PLCCConfiguration):
+    def generateFootprint(self, device_params: dict, pkg_id: str, header_info: dict = None):
+        if device_params.get('units', 'mm') == 'inches':
+            params_inch_to_metric(device_params)
+
+        device_config = PLCCConfiguration(device_params)
         # Pull out the old-style raw data
         device_params = device_config.spec_dictionary
 
@@ -250,10 +257,7 @@ class PLCCGenerator():
             suffix=suffix_3d
         ).replace('__', '_').lstrip('_')
 
-        model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}.wrl'\
-            .format(
-                model3d_path_prefix=model3d_path_prefix, lib_name=lib_name,
-                fp_name=fp_name_2)
+        model_name = fp_name_2
         # print(fp_name)
         # print(pad_details)
 
@@ -470,21 +474,12 @@ class PLCCGenerator():
                       courtyard={'top': cy1, 'bottom': -cy1}, fp_name=fp_name, text_y_inside_position='center')
 
         # #################### Output and 3d model ############################
-
-        kicad_mod.append(Model(filename=model_name))
-
-        output_dir = '{lib_name:s}.pretty/'.format(lib_name=lib_name)
-        if not os.path.isdir(output_dir):  # returns false if path does not yet exist!! (Does not check path validity)
-            os.makedirs(output_dir)
-        filename = '{outdir:s}{fp_name:s}.kicad_mod'.format(outdir=output_dir, fp_name=fp_name)
-
-        file_handler = KicadFileHandler(kicad_mod)
-        file_handler.writeFile(filename)
-
+        self.add_standard_3d_model_to_footprint(kicad_mod, lib_name, model_name)
+        self.write_footprint(kicad_mod, lib_name)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='use confing .yaml files to create footprints.')
-    parser.add_argument('files', metavar='file', type=str, nargs='+',
+    parser.add_argument('files', metavar='file', type=str, nargs='*',
                         help='list of files holding information about what devices should be created.')
     parser.add_argument('--global_config', type=str, nargs='?',
                         help='the config file defining how the footprint will look like. (KLC)',
@@ -496,7 +491,8 @@ if __name__ == "__main__":
                         default='../ipc_definitions.yaml')
     parser.add_argument('--force_rectangle_pads', action='store_true',
                         help='Force the generation of rectangle pads instead of rounded rectangle')
-    args = parser.parse_args()
+    
+    args = FootprintGenerator.add_standard_arguments(parser)
 
     if args.density == 'L':
         ipc_density = 'least'
@@ -521,17 +517,9 @@ if __name__ == "__main__":
         configuration['round_rect_max_radius'] = None
         configuration['round_rect_radius_ratio'] = 0
 
-    for filepath in args.files:
-        generator = PLCCGenerator(configuration)
-
-        with open(filepath, 'r') as command_stream:
-            try:
-                cmd_file = yaml.safe_load(command_stream)
-            except yaml.YAMLError as exc:
-                print(exc)
-        for pkg in cmd_file:
-            if cmd_file[pkg].get('units', 'mm') == 'inches':
-                params_inch_to_metric(cmd_file[pkg])
-
-            device_config = PLCCConfiguration(cmd_file[pkg])
-            generator.generateFootprint(device_config)
+    FootprintGenerator.run_on_files(
+        PLCCGenerator,
+        args,
+        file_autofind_dir='size_definitions',
+        configuration=configuration,
+    )

@@ -37,6 +37,8 @@ class FootprintGenerator:
         """
         Add the "usual" 3D model (with the global config path) to the given footprint
         """
+        assert ".wrl" not in model_name, f"model_name should not contain the .wrl extension: {model_name}"
+        assert "/" not in model_name, f"model_name should be only the model name, not a path: {model_name}"
 
         prefix = self.global_config.model_3d_prefix.rstrip("/")
         lib3d_dir = f"{library_name}.3dshapes"
