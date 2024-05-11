@@ -33,7 +33,7 @@ def makeDIP(pins, rm, pinrow_distance_in, package_width, overlen_top, overlen_bo
             socket_width=0, socket_height=0, socket_pinrow_distance_offset=0, tags_additional=[],
             lib_name="Package_DIP", offset3d=[0, 0, 0], scale3d=[1, 1, 1], rotate3d=[0, 0, 0], DIPName='DIP', DIPDescription='though-hole mounted DIP', DIPTags='THT DIP DIL PDIP',
             prefix_name = "", skip_pin = [], skip_count = False, right_cnt_start = -1,
-            datasheet=None):
+            datasheet=None, outdir="."):
 
     pinrow_distance = pinrow_distance_in + socket_pinrow_distance_offset
     h_fab = (pins / 2 - 1) * rm + overlen_top + overlen_bottom
@@ -229,7 +229,7 @@ def makeDIP(pins, rm, pinrow_distance_in, package_width, overlen_top, overlen_bo
 
     # write file
     file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile(footprint_name + '.kicad_mod')
+    file_handler.writeFile(os.path.join(outdir, footprint_name + '.kicad_mod'))
 
 
 #    overlen_top                           overlen_bottom
@@ -253,7 +253,8 @@ def makeDIP(pins, rm, pinrow_distance_in, package_width, overlen_top, overlen_bo
 def makeDIPSwitch(pins, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad, switch_width,
                   switch_height, mode='Piano', smd_pads=False, tags_additional=[],
                   lib_name="Button_Switch_THT", offset3d=[0, 0, 0], scale3d=[1, 1, 1], rotate3d=[0, 0, 90],
-                  specialFPName="", SOICStyleSilk=False, cornerPads=[], cornerPadOffsetX=0, cornerPadOffsetY=0, webpage="", device_name="", switchtype="SPST"):
+                  specialFPName="", SOICStyleSilk=False, cornerPads=[], cornerPadOffsetX=0, cornerPadOffsetY=0, webpage="", device_name="", switchtype="SPST",
+                  outdir="."):
     switches = int(pins / 2)
 
     h_fab = (pins / 2 - 1) * rm + overlen_top + overlen_bottom
@@ -471,4 +472,4 @@ def makeDIPSwitch(pins, rm, pinrow_distance, package_width, overlen_top, overlen
 
     # write file
     file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile(footprint_name + '.kicad_mod')
+    file_handler.writeFile(os.path.join(outdir, footprint_name + '.kicad_mod'))

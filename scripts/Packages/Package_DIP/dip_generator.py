@@ -1,21 +1,24 @@
 #!/usr/bin/env python
 
-import sys
-import os
-from copy import deepcopy
 import argparse
-import yaml
 import logging
-from typing import Union, List
+import os
+import sys
+from copy import deepcopy
+from typing import List, Union
+
+import yaml
 
 # ensure that the kicad-footprint-generator directory is available
 sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))
 sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))
 
 from KicadModTree import Vector2D
-from scripts.tools.dict_tools import dictInherit
-from scripts.tools.footprint_scripts_DIP import makeDIP
 from scripts.tools.declarative_def_tools import tags_properties
+from scripts.tools.dict_tools import dictInherit
+from scripts.tools.footprint_generator import FootprintGenerator
+from scripts.tools.footprint_scripts_DIP import makeDIP
+from scripts.tools.global_config_files.global_config import GlobalConfig
 
 
 class DIPConfiguration:
@@ -89,10 +92,9 @@ def adjust_config_for_socket(config: DIPConfiguration, socket_size_outset: Vecto
     config.socket_size_outset = socket_size_outset
     config.additional_tags.tags.append('Socket')
 
-
-class DipGenerator:
-
-    def __init__(self):
+class DIPGenerator(FootprintGenerator):
+    def __init__(self, configuration, **kwargs):
+        super().__init__(**kwargs)
 
         # "standard" value for larger pads -> 1.6mm to 2.4mm
         # Eventually would be good to make this a parameter of a 'policy'
@@ -145,12 +147,16 @@ class DipGenerator:
             desc.append(config.standard)
 
         args['DIPDescription'] = ', '.join(desc)
+        
+        # Compute output directory
+        outdir = self.output_path / 'Package_DIP.pretty'
+        os.makedirs(outdir, exist_ok=True)
 
-        makeDIP(**args)
+        makeDIP(**args, outdir=outdir)
 
-    def make_all_variants_from_spec(self, spec: dict):
+    def make_all_variants_from_device_params(self, device_params: dict):
 
-        dip_config = DIPConfiguration(spec)
+        dip_config = DIPConfiguration(device_params)
 
         def longpad_mutator(config: DIPConfiguration):
             adjust_config_for_longpads(config, self.longpad_size_delta)
@@ -175,38 +181,29 @@ class DipGenerator:
                 mutator(variant_config)
 
             self.make_from_config(variant_config)
+            
+    def generateFootprint(self, device_params: dict, pkg_id: str, header_info: dict = None):
+        # Ignore defaults and base packages
+        if pkg_id.startswith('base') or pkg_id.startswith('defaults'):
+            return
 
+        self.make_all_variants_from_device_params(device_params)
 
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description='Use .yaml files to create DIP footprints.')
-    parser.add_argument('files', metavar='file', type=str, nargs='+',
+    parser.add_argument('files', metavar='file', type=str, nargs='*',
                         help='list of files holding information about what devices should be created.')
-    parser.add_argument('-v', '--verbose', action='count', default=0,
-                        help='increase output verbosity')
+    parser.add_argument('--global_config', type=str, nargs='?',
+                        help='the config file defining how the footprint will look like. (KLC)',
+                        default='../../tools/global_config_files/config_KLCv3.0.yaml')
+    args = FootprintGenerator.add_standard_arguments(parser)
+    
+    global_config = GlobalConfig.load_from_file(args.global_config)
 
-    args = parser.parse_args()
-
-    if args.verbose == 1:
-        logging.basicConfig(level=logging.INFO)
-    elif args.verbose > 1:
-        logging.basicConfig(level=logging.DEBUG)
-
-    dip_generator = DipGenerator()
-
-    for filepath in args.files:
-        with open(filepath, 'r') as command_stream:
-            try:
-                cmd_file = yaml.safe_load(command_stream)
-            except yaml.YAMLError as exc:
-                print(exc)
-
-        dictInherit(cmd_file)
-
-        for pkg_key, spec in cmd_file.items():
-
-            if pkg_key.startswith('base') or pkg_key.startswith('defaults'):
-                continue
-
-            logging.info("Generating part for parameter set {}".format(pkg_key))
-            dip_generator.make_all_variants_from_spec(spec)
+    FootprintGenerator.run_on_files(
+        DIPGenerator,
+        args,
+        file_autofind_dir='size_definitions',
+        configuration=global_config,
+    )
