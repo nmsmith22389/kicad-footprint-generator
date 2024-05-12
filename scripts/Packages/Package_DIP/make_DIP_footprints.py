@@ -27,8 +27,11 @@ if __name__ == '__main__':
     output_dir_dip = args.output_dir / 'Package_DIP.pretty'
     output_dir_switches_tht = args.output_dir / 'Button_Switch_THT.pretty'
     output_dir_switches_smd = args.output_dir / 'Button_Switch_SMD.pretty'
-    
-    args.output_dir.mkdir(parents=True, exist_ok=True)
+
+    # Create directories    
+    output_dir_dip.mkdir(parents=True, exist_ok=True)
+    output_dir_switches_tht.mkdir(parents=True, exist_ok=True)
+    output_dir_switches_smd.mkdir(parents=True, exist_ok=True)
     
     # common settings
     overlen_top=1.27
