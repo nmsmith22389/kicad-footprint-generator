@@ -23,6 +23,27 @@ VSSOP-10_3x3mm_P0.5mm:
   num_pins_y: 5
   num_pins_x: 0
 
+
+VSSOP-8_2.3x2mm_P0.5:
+  size_source: 'https://www.jedec.org/standards-documents/docs/mo-187-f'
+  compatible_mpns:
+    - JEDEC-MO-187-CA
+    # https://www.ti.com/lit/ml/mpds050e/mpds050e.pdf
+    - TI-DCU0008A
+  # Tolerance aaa = 0.2 applies to each side separately
+  body_size_x: 2.3 +/- 0.2
+  body_size_y: 2.0 +/- 0.2
+  # Tolerance bbb = 0.25 applies to each side separately
+  overall_size_x: 3.1 +/- 0.25
+  # TI DCU min is 0.17 .. 0.25
+  lead_width: 0.17 .. 0.33
+  # TI DCU is 0.2 .. 0.35
+  lead_len: 0.15 .. 0.28 .. 0.40
+  pitch: 0.5
+  num_pins_y: 4
+  num_pins_x: 0
+
+
 VSSOP-8_3x3mm_P0.65:
   size_source: 'https://www.jedec.org/standards-documents/docs/mo-187-f'
   compatible_mpns:
