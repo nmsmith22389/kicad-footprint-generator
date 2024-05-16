@@ -24,3 +24,25 @@ SSO-8-N7_9.78x6.4mm_P2.54mm:
   num_pins_x: 0
   hidden_pins: [7]
 
+SSO-7_6.4x9.7mm_P2.54mm:
+  size_source: 'https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2312161855_BC-BC2213A_C596512.pdf'
+  body_size_y:
+    nominal: 9.7
+    tolerance: 0.2
+  body_size_x:
+    nominal: 6.4
+    tolerance: 0.3
+  overall_size_x:
+    nominal: 10
+    tolerance: 0.3
+  lead_width:
+    nominal: 1.2 
+    tolerance: 0.1
+  lead_len:
+    nominal: 1.3
+    tolerance: 0.4 
+  pitch: 2.54
+  num_pins_y: 4
+  num_pins_x: 0
+  deleted_pins: [7]
+
