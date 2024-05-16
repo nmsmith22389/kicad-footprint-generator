@@ -22,8 +22,62 @@ VSSOP-10_3x3mm_P0.5mm:
   pitch: 0.5
   num_pins_y: 5
   num_pins_x: 0
+  
+Texas_DGN0008B: # DGN0008B variant
+  manufacturer: 'Texas'
+  part_number: 'DGN0008B'
+  size_source: 'https://www.ti.com/lit/ds/symlink/tps7a4101.pdf'
+  body_size_x:
+    minimum: 2.90
+    maximum: 3.10
+  body_size_y:
+    minimum: 2.90
+    maximum: 3.10
+  overall_size_x:
+    minimum: 4.85 # Datasheet value is 4.75 and 5.05 but this generate a 4.3 pin separation
+    maximum: 5.15 # by adding 0.1 in both pin separation is correct.
+  overall_height:
+    maximum: 1.1
+  lead_width:
+    minimum: 0.25
+    maximum: 0.38
+  lead_len:
+    minimum: 0.4
+    maximum: 0.7
+  pitch: 0.65
+  num_pins_y: 4
+  num_pins_x: 0
 
-VSSOP-8_3x3mm_P0.65mm_D: # DGN0008D variant
+  EP_size_x:
+    minimum: 1.646
+    maximum: 1.846
+  EP_size_y:
+    minimum: 1.95
+    maximum: 2.15
+  EP_size_x_overwrite: 2.00
+  EP_size_y_overwrite: 3.00
+  EP_mask_x: 1.88
+  EP_mask_y: 1.98
+
+  # EP_paste_coverage: 0.65
+  # EP_num_paste_pads: [1, 2]
+
+  thermal_vias:
+    count: [2, 3]
+    drill: 0.2
+    grid: [1.10, 1.22]
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    EP_num_paste_pads: [2, 2]
+    paste_between_vias: 1
+    paste_rings_outside: 1
+    EP_paste_coverage: 0.75
+    # bottom_pad_size:
+    paste_avoid_via: True
+
+Texas_DGN0008D: # DGN0008D variant
+  manufacturer: 'Texas'
+  part_number: 'DGN0008D'
   size_source: 'https://www.ti.com/lit/ds/symlink/tpa711.pdf'
   body_size_x:
     minimum: 2.90
@@ -73,7 +127,9 @@ VSSOP-8_3x3mm_P0.65mm_D: # DGN0008D variant
     # bottom_pad_size:
     paste_avoid_via: True
 
-VSSOP-8_3x3mm_P0.65mm_G: # DGN0008G variant
+Texas_DGN0008G: # DGN0008G variant
+  manufacturer: 'Texas'
+  part_number: 'DGN0008G'
   size_source: 'https://www.ti.com/lit/ds/symlink/tpa711.pdf'
   body_size_x:
     minimum: 2.90
