@@ -12,7 +12,7 @@ VSSOP-10_3x3mm_P0.5mm:
     maximum: 3.10
   overall_size_y:
     minimum: 4.85 #Datasheet value is 4.75 and 5.05 but this generate a 4.3 pin separation
-    maximum: 5.15 #by adding 0.1 in both pin separation is correct. 
+    maximum: 5.15 #by adding 0.1 in both pin separation is correct.
   lead_width:
     minimum: 0.17
     maximum: 0.27
@@ -22,7 +22,26 @@ VSSOP-10_3x3mm_P0.5mm:
   pitch: 0.5
   num_pins_y: 5
   num_pins_x: 0
-  
+
+VSSOP-8_3x3mm_P0.65:
+  size_source: 'https://www.jedec.org/standards-documents/docs/mo-187-f'
+  compatible_mpns:
+    - JEDEC-MO-187-AA
+    # https://www.ti.com/lit/ds/symlink/opa2340.pdf
+    - TI-DGK0008A
+  # Tolerance aaa = 0.2 applies to each side separately
+  body_size_x: 3.0 +/- 0.2
+  body_size_y: 3.0 +/- 0.2
+  # Tolerance bbb = 0.25 applies to each side separately
+  overall_size_x: 4.9 +/- 0.25
+  # TI DGK min is 0.25
+  lead_width: 0.22 .. 0.38
+  # TI DGK max is 0.7
+  lead_len: 0.4 .. 0.6 .. 0.8
+  pitch: 0.65
+  num_pins_y: 4
+  num_pins_x: 0
+
 Texas_DGN0008B: # DGN0008B variant
   manufacturer: 'Texas'
   part_number: 'DGN0008B'
@@ -178,4 +197,3 @@ Texas_DGN0008G: # DGN0008G variant
     EP_paste_coverage: 0.75
     # bottom_pad_size:
     paste_avoid_via: True
-
