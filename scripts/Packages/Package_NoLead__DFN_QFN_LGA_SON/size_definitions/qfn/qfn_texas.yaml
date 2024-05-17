@@ -83,6 +83,51 @@ Texas_VQFN-16_RSA:
   num_pins_y: 4
 
 
+Texas_VQFN-16_RVA:
+  device_type: 'VQFN'
+  manufacturer: 'Texas'
+  part_number: 'RVA'
+  size_source: 'https://www.ti.com/lit/pdf/MPQF232'
+  ipc_class: 'qfn'
+  body_size_x:
+    minimum: 3.40
+    maximum: 3.60
+  body_size_y:
+    minimum: 3.40
+    maximum: 3.60
+  overall_height:
+    minimum: 0.8
+    maximum: 1.0
+
+  lead_width:
+    minimum: 0.18
+    maximum: 0.30
+  lead_len:
+    minimum: 0.30
+    maximum: 0.50
+
+  EP_size_x:
+    nominal: 2.14
+    tolerance: 0.1
+  EP_size_y:
+    nominal: 2.14
+    tolerance: 0.1
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    # Manufacturer recommendations for thermal vias
+    # See size_source above
+    count: [2, 2]
+    drill: 0.3
+    grid: [1.0, 1.0]
+    paste_avoid_via: false
+    EP_paste_coverage: 0.63
+
+  pitch: 0.50
+  num_pins_x: 4
+  num_pins_y: 4
+
+
 Texas_VQFN-20_RGP0020D:
   device_type: 'VQFN'
   manufacturer: 'Texas'
