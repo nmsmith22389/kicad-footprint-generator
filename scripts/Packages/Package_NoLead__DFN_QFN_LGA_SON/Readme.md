@@ -138,12 +138,13 @@ A package with exposed pad can generate a version with thermal vias. This will b
   - Auto-generated if not given (outermost pad will touch pad edge).
 - Paste coverage overwrite [optional] (`EP_paste_coverage`) {float (0..1)}
   - Thermal via version might need higher paste coverage compared to non-via version to compensate solder lost due to wicking.
-- Paste generator can be set up to avoid placing paste on top of vias (`paste_avoid_via`) {bool}
+- Paste generator can be set up to avoid placing paste on top of vias (`paste_avoid_via`) {bool}, default: true`
   - Clearance between via hole and paste (`paste_via_clearance`) {float}
   - Can lead to math exceptions. Possible fixes:
      - Reduce paste coverage (make sure you still have enough paste)
      - Play with the via grid and number of paste pads (having an outer ring of paste pads often helps. This is only possible if there is space on the outside)
      - If no fix is satisfactory then select avoid vias as false and increase paste coverage to combat solder loss.
+   - In case you *really* want to have vias in paste pads e.g. due to manufacturer recommendations, set `paste_avoid_via: false`.
 - Number paste pads
   - Quantity of paste pads (`EP_num_paste_pads`) {[int (x), int (y)]}
   - Alternative available if `paste_avoid_via` is true
