@@ -114,7 +114,7 @@ class InductorGenerator(FootprintGenerator):
 
         # Extreme top edge
         # Used for determining the courtyard
-        # Also used for very tiny parts. Typically we see
+        # Also used for very tiny parts. Typically, we see
         # that the solder pads are quite large for manufacturability, but the part itself is small, so
         # the silkscreen will overlap.
         bottomCopperMax = landingY / 2
@@ -172,7 +172,7 @@ class InductorGenerator(FootprintGenerator):
             width=silk_width
         ))
 
-        # If the part is too small and we can't make vertical tick's, don't create 0 length lines.
+        # If the part is too small, and we can't make vertical tick's, don't create 0 length lines.
         if (vertLen > 0):
             # Tick down left
             kicad_mod.append(Line(
@@ -221,8 +221,6 @@ if __name__ == "__main__":
     parser.add_argument('--global-config', '--global_config', type=Path, nargs='?',
                         help='the config file defining how the footprint will look like. (KLC)',
                         default='../tools/global_config_files/config_KLCv3.0.yaml')
-    parser.add_argument('-v', '--verbose', action='count', default=0,
-                        help='increase output verbosity')
 
     FootprintGenerator.add_standard_arguments(parser)
 
