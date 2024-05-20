@@ -461,11 +461,11 @@ DFN-8-1EP_2x2mm_P0.5mm_EP0.6x1.2mm:
   compatible_mpns:
     - '506AQ'
 
-DFN-8-1EP_3x2mm_P0.5mm_EP0.56x2.15mm:
+DFN-8-1EP_2x3mm_P0.5mm_EP0.61x2.2mm:
   device_type: 'DFN'
   #manufacturer: 'man'
   #part_number: 'mpn'
-  size_source: 'https://www.analog.com/media/en/technical-documentation/data-sheets/2451fg.pdf#page=17'
+  size_source: 'https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/ltc-legacy-dfn/05081702_c_ddb8.pdf'
   # ipc_class: 'qfn' # 'qfn_pull_back'
   #ipc_density: 'least' #overwrite global value for this device.
   body_size_x:
@@ -487,11 +487,11 @@ DFN-8-1EP_3x2mm_P0.5mm_EP0.56x2.15mm:
   EP_size_x:
     nominal: 0.56
     tolerance: 0.05
-# EP_size_x_overwrite: 0.56
+  EP_size_x_overwrite: 0.61
   EP_size_y:
     nominal: 2.15
     tolerance: 0.05
-# EP_size_y_overwrite: 2.15
+  EP_size_y_overwrite: 2.20
 # EP_paste_coverage: 0.65
   EP_num_paste_pads: [1, 2]
 
@@ -640,7 +640,7 @@ DFN-8-1EP_2x2mm_P0.5mm_EP0.9x1.5mm:
   #include_suffix_in_3dpath: 'False'
   #include_pad_size: 'fp_name_only' # 'both' | 'none' (default)
 
-DFN-8-1EP_2x3mm_P0.5mm_EP1.7x1.4mm:
+DFN-8-1EP_3x2mm_P0.5mm_EP1.7x1.4mm:
   device_type: 'DFN'
   #manufacturer: 'man'
   #part_number: 'mpn'
