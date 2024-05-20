@@ -71,7 +71,7 @@ for inductor in inductors:
     #add the component outline
     fp.append(RectLine(start=[-l/2,-w/2],end=[l/2,w/2],layer='F.Fab',width=0.15))
 
-    layers = ["F.Cu","F.Paste","F.Mask"]
+    layers = Pad.LAYERS_SMT
 
     #add pads
     fp.append(Pad(number=1,at=[-c,0],layers=layers,shape=Pad.SHAPE_RECT,type=Pad.TYPE_SMT,size=[pw,y]))

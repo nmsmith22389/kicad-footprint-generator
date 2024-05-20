@@ -13,6 +13,7 @@
 #
 # (C) 2016-2018 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 
+import re
 from typing import Optional
 
 from KicadModTree.FileHandler import FileHandler
@@ -43,6 +44,46 @@ def _get_layer_width(layer, width=None):
         return width
     else:
         return DEFAULT_LAYER_WIDTH.get(layer, DEFAULT_WIDTH)
+
+
+def layer_key_func(layer: str) -> int:
+    """
+    Get the KiCad sorting key for a layer name
+    """
+
+    layer_map = {
+        "F.Cu": 0,
+        "B.Cu": 31,
+        "B.Adhes": 32,
+        "F.Adhes": 33,
+        "B.Paste": 34,
+        "F.Paste": 35,
+        "B.Silk": 36,
+        "F.Silk": 37,
+        "B.Mask": 38,
+        "F.MasK": 39,
+        "Dwgs.User": 40,
+        "Cmts.User": 41,
+        "Eco1.User": 42,
+        "Eco2.User": 43,
+        "Edge.Cuts": 44,
+        "Margin": 45,
+        "B.CrtYd": 46,
+        "F.CrtYd": 47,
+        "B.Fab": 48,
+        "F.Fab": 49,
+    }
+
+    try:
+        return layer_map[layer]
+    except KeyError:
+        # inner layers
+        if m := re.match(r'^In(\d+)\.$', layer):
+            return int(m.group(1))
+        # user layers
+        if m := re.match(r'^User\.(\d)$', layer):
+            return 49 + int(m.group(1))
+    return 0
 
 
 class KicadFileHandler(FileHandler):
@@ -267,12 +308,7 @@ class KicadFileHandler(FileHandler):
         return sexpr
 
     def _serialise_Layers(self, node):
-        layers = node.layers
-
-        # Maybe one day this be simplified in the s-expr format
-        if len(layers) == 1:
-            return [SexprSerializer.Symbol('layer'), layers[0]]
-
+        layers = sorted(node.layers, key=layer_key_func)
         return [SexprSerializer.Symbol('layers')] + layers
 
     def _serialize_LinePoints(self, node):

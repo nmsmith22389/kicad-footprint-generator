@@ -134,16 +134,16 @@ f.append(Line(start=[xSilkRight, ySilkBackPadTop],
 
 f.append(Pad(number="T", type=Pad.TYPE_THT, shape=Pad.SHAPE_CIRCLE,
              at=[xFrontPad, yFrontPadTop], size=padSize,
-             drill=padDrill, layers=['*.Cu', '*.Mask']))
+             drill=padDrill, layers=Pad.LAYERS_THT))
 f.append(Pad(number="T", type=Pad.TYPE_THT, shape=Pad.SHAPE_CIRCLE,
              at=[xFrontPad, yFrontPadBottom], size=padSize,
-             drill=padDrill, layers=['*.Cu', '*.Mask']))
+             drill=padDrill, layers=Pad.LAYERS_THT))
 f.append(Pad(number="R", type=Pad.TYPE_THT, shape=Pad.SHAPE_RECT,
              at=[xBackPad, yBackPadTop], size=padSize,
-             drill=padDrill, layers=['*.Cu', '*.Mask']))
+             drill=padDrill, layers=Pad.LAYERS_THT))
 f.append(Pad(number="S", type=Pad.TYPE_THT, shape=Pad.SHAPE_CIRCLE,
              at=[xBackPad, yBackPadBottom], size=padSize,
-             drill=padDrill, layers=['*.Cu', '*.Mask']))
+             drill=padDrill, layers=Pad.LAYERS_THT))
 f.append(Pad(type=Pad.TYPE_NPTH, shape=Pad.SHAPE_CIRCLE,
              at=[xMountingHole, yMountingHoleBottom], size=mountingHoleSize,
              drill=mountingHoleSize, layers=Pad.LAYERS_NPTH))

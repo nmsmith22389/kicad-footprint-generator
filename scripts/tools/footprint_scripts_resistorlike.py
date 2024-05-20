@@ -270,13 +270,13 @@ def makeResistorAxialHorizontal(seriesname, rm, rmdisp, w, d, ddrill, R_POW, typ
 
     # create pads
     if hasShuntPins:
-        kicad_mod.append(Pad(number=1, type=Pad.TYPE_THT, shape=pad1style, at=[0, 0], size=[padx, pady], drill=ddrill,layers=['*.Cu', '*.Mask']))
-        kicad_mod.append(Pad(number=2, type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, at=[(rm-shuntPinsRM)/2, 0], size=[padx, pady], drill=ddrill,layers=['*.Cu', '*.Mask']))
-        kicad_mod.append(Pad(number=3, type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, at=[(rm-shuntPinsRM)/2+shuntPinsRM, 0], size=[padx, pady], drill=ddrill,layers=['*.Cu', '*.Mask']))
-        kicad_mod.append(Pad(number=4, type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, at=[rm, 0], size=[padx, pady], drill=ddrill,layers=['*.Cu', '*.Mask']))
+        kicad_mod.append(Pad(number=1, type=Pad.TYPE_THT, shape=pad1style, at=[0, 0], size=[padx, pady], drill=ddrill,layers=Pad.LAYERS_THT))
+        kicad_mod.append(Pad(number=2, type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, at=[(rm-shuntPinsRM)/2, 0], size=[padx, pady], drill=ddrill,layers=Pad.LAYERS_THT))
+        kicad_mod.append(Pad(number=3, type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, at=[(rm-shuntPinsRM)/2+shuntPinsRM, 0], size=[padx, pady], drill=ddrill,layers=Pad.LAYERS_THT))
+        kicad_mod.append(Pad(number=4, type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, at=[rm, 0], size=[padx, pady], drill=ddrill,layers=Pad.LAYERS_THT))
     else:
-        kicad_mod.append(Pad(number=1, type=Pad.TYPE_THT, shape=pad1style, at=[0, 0], size=[padx, pady], drill=ddrill, layers=['*.Cu', '*.Mask']))
-        kicad_mod.append(Pad(number=2, type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, at=[rm, 0], size=[padx, pady], drill=ddrill, layers=['*.Cu', '*.Mask']))
+        kicad_mod.append(Pad(number=1, type=Pad.TYPE_THT, shape=pad1style, at=[0, 0], size=[padx, pady], drill=ddrill, layers=Pad.LAYERS_THT))
+        kicad_mod.append(Pad(number=2, type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, at=[rm, 0], size=[padx, pady], drill=ddrill, layers=Pad.LAYERS_THT))
 
     # add model
     if (has3d!=0):
@@ -524,9 +524,9 @@ def makeResistorAxialVertical(seriesname,rm, rmdisp, l, d, ddrill, R_POW, type="
 
     # create pads
     kicad_mod.append(Pad(number=1, type=Pad.TYPE_THT, shape=pad1style, at=[0, 0], size=[padx, pady], drill=ddrill,
-                         layers=['*.Cu', '*.Mask']))
+                         layers=Pad.LAYERS_THT))
     kicad_mod.append(Pad(number=2, type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, at=[rm, 0], size=[padx, pady], drill=ddrill,
-                         layers=['*.Cu', '*.Mask']))
+                         layers=Pad.LAYERS_THT))
 
     # add model
     if (has3d != 0):
@@ -1018,7 +1018,7 @@ def makeResistorRadial(seriesname, rm, w, h, ddrill, R_POW, innerw=0,innerh=0,rm
         ps=Pad.SHAPE_CIRCLE
         if p[0]==1:
             ps=pad1style
-        kicad_modg.append(Pad(number=p[0], type=Pad.TYPE_THT, shape=ps, at=[p[1], p[2]], size=[p[4],p[5]], drill=p[3], layers=['*.Cu', '*.Mask']))
+        kicad_modg.append(Pad(number=p[0], type=Pad.TYPE_THT, shape=ps, at=[p[1], p[2]], size=[p[4],p[5]], drill=p[3], layers=Pad.LAYERS_THT))
 
 
 

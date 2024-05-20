@@ -74,7 +74,7 @@ for inductor in inductors:
     pw = x
     c = g/2 + pw/2
 
-    layers = ["F.Cu","F.Paste","F.Mask"]
+    layers = Pad.LAYERS_SMT
 
     #add pads
     fp.append(Pad(number=1,at=[-c,0],layers=layers,shape=Pad.SHAPE_RECT,type=Pad.TYPE_SMT,size=[pw,y]))

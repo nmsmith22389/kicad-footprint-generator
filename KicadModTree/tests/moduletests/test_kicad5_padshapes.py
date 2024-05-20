@@ -33,19 +33,19 @@ RESULT_ROUNDRECT_FP = """(footprint "roundrect_pad"
 	(pad "3" smd roundrect
 		(at 5 0 45)
 		(size 1 1)
-		(layers "F.Cu" "F.Mask" "F.Paste")
+		(layers "F.Cu" "F.Paste" "F.Mask")
 		(roundrect_rratio 0.1)
 	)
 	(pad "2" smd roundrect
 		(at -5 0)
 		(size 1 1)
-		(layers "F.Cu" "F.Mask" "F.Paste")
+		(layers "F.Cu" "F.Paste" "F.Mask")
 		(roundrect_rratio 0.5)
 	)
 	(pad "1" smd rect
 		(at 0 0)
 		(size 1 1)
-		(layers "F.Cu" "F.Mask" "F.Paste")
+		(layers "F.Cu" "F.Paste" "F.Mask")
 	)
 )"""  # NOQA: W191
 
@@ -57,19 +57,19 @@ RESULT_ROUNDRECT_FP2 = """(footprint "roundrect_pad2"
 	(pad "3" smd roundrect
 		(at 5 0 45)
 		(size 1 1)
-		(layers "F.Cu" "F.Mask" "F.Paste")
+		(layers "F.Cu" "F.Paste" "F.Mask")
 		(roundrect_rratio 0.25)
 	)
 	(pad "2" smd roundrect
 		(at -5 0)
 		(size 1 2)
-		(layers "F.Cu" "F.Mask" "F.Paste")
+		(layers "F.Cu" "F.Paste" "F.Mask")
 		(roundrect_rratio 0.25)
 	)
 	(pad "1" smd roundrect
 		(at 0 0)
 		(size 2 4)
-		(layers "F.Cu" "F.Mask" "F.Paste")
+		(layers "F.Cu" "F.Paste" "F.Mask")
 		(roundrect_rratio 0.125)
 	)
 )"""  # NOQA: W191
@@ -82,7 +82,7 @@ RESULT_SIMPLE_POLYGON_PAD = """(footprint "polygon_pad"
 	(pad "1" smd custom
 		(at 0 0)
 		(size 1 1)
-		(layers "F.Cu" "F.Mask" "F.Paste")
+		(layers "F.Cu" "F.Paste" "F.Mask")
 		(options
 			(clearance outline)
 			(anchor circle)
@@ -109,7 +109,7 @@ RESULT_SIMPLE_OTHER_CUSTOM_PAD = """(footprint "custom_pad_other"
 	(pad "1" smd custom
 		(at 0 0)
 		(size 1 1)
-		(layers "F.Cu" "F.Mask" "F.Paste")
+		(layers "F.Cu" "F.Paste" "F.Mask")
 		(options
 			(clearance outline)
 			(anchor circle)
@@ -141,7 +141,7 @@ RESULT_SIMPLE_OTHER_CUSTOM_PAD = """(footprint "custom_pad_other"
 	(pad "2" smd custom
 		(at 0 3)
 		(size 1 1)
-		(layers "F.Cu" "F.Mask" "F.Paste")
+		(layers "F.Cu" "F.Paste" "F.Mask")
 		(options
 			(clearance outline)
 			(anchor circle)
@@ -173,7 +173,7 @@ RESULT_SIMPLE_OTHER_CUSTOM_PAD = """(footprint "custom_pad_other"
 	(pad "3" smd custom
 		(at 0 -3)
 		(size 1 1)
-		(layers "F.Cu" "F.Mask" "F.Paste")
+		(layers "F.Cu" "F.Paste" "F.Mask")
 		(options
 			(clearance outline)
 			(anchor circle)
@@ -196,7 +196,7 @@ RESULT_CUT_POLYGON = """(footprint "cut_polygon"
 	(pad "1" smd custom
 		(at 0 0)
 		(size 0.5 0.5)
-		(layers "F.Cu" "F.Mask" "F.Paste")
+		(layers "F.Cu" "F.Paste" "F.Mask")
 		(options
 			(clearance outline)
 			(anchor circle)
@@ -229,7 +229,7 @@ RESULT_CHAMFERED_PAD = """(footprint "chamfered_pad"
 	(pad "1" smd custom
 		(at 0 0)
 		(size 0.764298 0.764298)
-		(layers "F.Cu" "F.Mask" "F.Paste")
+		(layers "F.Cu" "F.Paste" "F.Mask")
 		(options
 			(clearance outline)
 			(anchor circle)
@@ -253,7 +253,7 @@ RESULT_CHAMFERED_PAD = """(footprint "chamfered_pad"
 	(pad "1" smd custom
 		(at 2 2)
 		(size 1.357538 1.357538)
-		(layers "F.Cu" "F.Mask" "F.Paste")
+		(layers "F.Cu" "F.Paste" "F.Mask")
 		(options
 			(clearance outline)
 			(anchor circle)
@@ -293,7 +293,7 @@ RESULT_CHAMFERED_PAD_AVOID_CIRCLE = """(footprint "avoid_circle"
 	(pad "1" smd custom
 		(at 2 2.5)
 		(size 1.445 1.445)
-		(layers "F.Cu" "F.Mask" "F.Paste")
+		(layers "F.Cu" "F.Paste" "F.Mask")
 		(options
 			(clearance outline)
 			(anchor circle)
@@ -324,7 +324,7 @@ RESULT_CHAMFERED_PAD_GRID = """(footprint "chamfered_grid"
 	(pad "1" smd custom
 		(at 0 -1.25)
 		(size 0.823223 0.823223)
-		(layers "F.Cu" "F.Mask" "F.Paste")
+		(layers "F.Cu" "F.Paste" "F.Mask")
 		(options
 			(clearance outline)
 			(anchor circle)
@@ -346,7 +346,7 @@ RESULT_CHAMFERED_PAD_GRID = """(footprint "chamfered_grid"
 	(pad "1" smd custom
 		(at 0 1.25)
 		(size 0.823223 0.823223)
-		(layers "F.Cu" "F.Mask" "F.Paste")
+		(layers "F.Cu" "F.Paste" "F.Mask")
 		(options
 			(clearance outline)
 			(anchor circle)
@@ -368,7 +368,7 @@ RESULT_CHAMFERED_PAD_GRID = """(footprint "chamfered_grid"
 	(pad "1" smd custom
 		(at 0 3.75)
 		(size 0.823223 0.823223)
-		(layers "F.Cu" "F.Mask" "F.Paste")
+		(layers "F.Cu" "F.Paste" "F.Mask")
 		(options
 			(clearance outline)
 			(anchor circle)
@@ -390,7 +390,7 @@ RESULT_CHAMFERED_PAD_GRID = """(footprint "chamfered_grid"
 	(pad "1" smd custom
 		(at 0 6.25)
 		(size 0.823223 0.823223)
-		(layers "F.Cu" "F.Mask" "F.Paste")
+		(layers "F.Cu" "F.Paste" "F.Mask")
 		(options
 			(clearance outline)
 			(anchor circle)
@@ -412,7 +412,7 @@ RESULT_CHAMFERED_PAD_GRID = """(footprint "chamfered_grid"
 	(pad "1" smd custom
 		(at 1.5 -1.25)
 		(size 0.823223 0.823223)
-		(layers "F.Cu" "F.Mask" "F.Paste")
+		(layers "F.Cu" "F.Paste" "F.Mask")
 		(options
 			(clearance outline)
 			(anchor circle)
@@ -434,17 +434,17 @@ RESULT_CHAMFERED_PAD_GRID = """(footprint "chamfered_grid"
 	(pad "1" smd rect
 		(at 1.5 1.25)
 		(size 1 2)
-		(layers "F.Cu" "F.Mask" "F.Paste")
+		(layers "F.Cu" "F.Paste" "F.Mask")
 	)
 	(pad "1" smd rect
 		(at 1.5 3.75)
 		(size 1 2)
-		(layers "F.Cu" "F.Mask" "F.Paste")
+		(layers "F.Cu" "F.Paste" "F.Mask")
 	)
 	(pad "1" smd custom
 		(at 1.5 6.25)
 		(size 0.823223 0.823223)
-		(layers "F.Cu" "F.Mask" "F.Paste")
+		(layers "F.Cu" "F.Paste" "F.Mask")
 		(options
 			(clearance outline)
 			(anchor circle)
@@ -466,7 +466,7 @@ RESULT_CHAMFERED_PAD_GRID = """(footprint "chamfered_grid"
 	(pad "1" smd custom
 		(at 3 -1.25)
 		(size 0.823223 0.823223)
-		(layers "F.Cu" "F.Mask" "F.Paste")
+		(layers "F.Cu" "F.Paste" "F.Mask")
 		(options
 			(clearance outline)
 			(anchor circle)
@@ -488,7 +488,7 @@ RESULT_CHAMFERED_PAD_GRID = """(footprint "chamfered_grid"
 	(pad "1" smd custom
 		(at 3 1.25)
 		(size 0.823223 0.823223)
-		(layers "F.Cu" "F.Mask" "F.Paste")
+		(layers "F.Cu" "F.Paste" "F.Mask")
 		(options
 			(clearance outline)
 			(anchor circle)
@@ -510,7 +510,7 @@ RESULT_CHAMFERED_PAD_GRID = """(footprint "chamfered_grid"
 	(pad "1" smd custom
 		(at 3 3.75)
 		(size 0.823223 0.823223)
-		(layers "F.Cu" "F.Mask" "F.Paste")
+		(layers "F.Cu" "F.Paste" "F.Mask")
 		(options
 			(clearance outline)
 			(anchor circle)
@@ -532,7 +532,7 @@ RESULT_CHAMFERED_PAD_GRID = """(footprint "chamfered_grid"
 	(pad "1" smd custom
 		(at 3 6.25)
 		(size 0.823223 0.823223)
-		(layers "F.Cu" "F.Mask" "F.Paste")
+		(layers "F.Cu" "F.Paste" "F.Mask")
 		(options
 			(clearance outline)
 			(anchor circle)
@@ -570,7 +570,7 @@ RESULT_CHAMFERED_PAD_GRID_AVOID_CIRCLE = """(footprint "chamfered_grid_corner_on
 	(pad "1" smd custom
 		(at -1.4 -2.1)
 		(size 0.795 0.795)
-		(layers "F.Cu" "F.Mask" "F.Paste")
+		(layers "F.Cu" "F.Paste" "F.Mask")
 		(options
 			(clearance outline)
 			(anchor circle)
@@ -591,17 +591,17 @@ RESULT_CHAMFERED_PAD_GRID_AVOID_CIRCLE = """(footprint "chamfered_grid_corner_on
 	(pad "1" smd rect
 		(at -1.4 -0.7)
 		(size 1 1)
-		(layers "F.Cu" "F.Mask" "F.Paste")
+		(layers "F.Cu" "F.Paste" "F.Mask")
 	)
 	(pad "1" smd rect
 		(at -1.4 0.7)
 		(size 1 1)
-		(layers "F.Cu" "F.Mask" "F.Paste")
+		(layers "F.Cu" "F.Paste" "F.Mask")
 	)
 	(pad "1" smd custom
 		(at -1.4 2.1)
 		(size 0.795 0.795)
-		(layers "F.Cu" "F.Mask" "F.Paste")
+		(layers "F.Cu" "F.Paste" "F.Mask")
 		(options
 			(clearance outline)
 			(anchor circle)
@@ -622,27 +622,27 @@ RESULT_CHAMFERED_PAD_GRID_AVOID_CIRCLE = """(footprint "chamfered_grid_corner_on
 	(pad "1" smd rect
 		(at 0 -2.1)
 		(size 1 1)
-		(layers "F.Cu" "F.Mask" "F.Paste")
+		(layers "F.Cu" "F.Paste" "F.Mask")
 	)
 	(pad "1" smd rect
 		(at 0 -0.7)
 		(size 1 1)
-		(layers "F.Cu" "F.Mask" "F.Paste")
+		(layers "F.Cu" "F.Paste" "F.Mask")
 	)
 	(pad "1" smd rect
 		(at 0 0.7)
 		(size 1 1)
-		(layers "F.Cu" "F.Mask" "F.Paste")
+		(layers "F.Cu" "F.Paste" "F.Mask")
 	)
 	(pad "1" smd rect
 		(at 0 2.1)
 		(size 1 1)
-		(layers "F.Cu" "F.Mask" "F.Paste")
+		(layers "F.Cu" "F.Paste" "F.Mask")
 	)
 	(pad "1" smd custom
 		(at 1.4 -2.1)
 		(size 0.795 0.795)
-		(layers "F.Cu" "F.Mask" "F.Paste")
+		(layers "F.Cu" "F.Paste" "F.Mask")
 		(options
 			(clearance outline)
 			(anchor circle)
@@ -663,17 +663,17 @@ RESULT_CHAMFERED_PAD_GRID_AVOID_CIRCLE = """(footprint "chamfered_grid_corner_on
 	(pad "1" smd rect
 		(at 1.4 -0.7)
 		(size 1 1)
-		(layers "F.Cu" "F.Mask" "F.Paste")
+		(layers "F.Cu" "F.Paste" "F.Mask")
 	)
 	(pad "1" smd rect
 		(at 1.4 0.7)
 		(size 1 1)
-		(layers "F.Cu" "F.Mask" "F.Paste")
+		(layers "F.Cu" "F.Paste" "F.Mask")
 	)
 	(pad "1" smd custom
 		(at 1.4 2.1)
 		(size 0.795 0.795)
-		(layers "F.Cu" "F.Mask" "F.Paste")
+		(layers "F.Cu" "F.Paste" "F.Mask")
 		(options
 			(clearance outline)
 			(anchor circle)
@@ -701,7 +701,7 @@ RESULT_CHAMFERED_ROUNDED_PAD = """(footprint "chamfered_round_pad"
 	(pad "1" smd custom
 		(at 0 0)
 		(size 3.646447 3.646447)
-		(layers "F.Cu" "F.Mask" "F.Paste")
+		(layers "F.Cu" "F.Paste" "F.Mask")
 		(options
 			(clearance outline)
 			(anchor circle)
@@ -731,7 +731,7 @@ RESULT_CHAMFERED_ROUNDED_PAD = """(footprint "chamfered_round_pad"
 	(pad "1" smd custom
 		(at 0 5)
 		(size 2.292893 2.292893)
-		(layers "F.Cu" "F.Mask" "F.Paste")
+		(layers "F.Cu" "F.Paste" "F.Mask")
 		(options
 			(clearance outline)
 			(anchor circle)
@@ -779,7 +779,7 @@ RESULT_CHAMFERED_ROUNDED_PAD = """(footprint "chamfered_round_pad"
 	(pad "1" smd custom
 		(at 5 0)
 		(size 2.292893 2.292893)
-		(layers "F.Cu" "F.Mask" "F.Paste")
+		(layers "F.Cu" "F.Paste" "F.Mask")
 		(options
 			(clearance outline)
 			(anchor circle)

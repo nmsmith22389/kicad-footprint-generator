@@ -41,7 +41,7 @@ def create_shielding(name, outer_size, size,
                       'shape': Pad.SHAPE_CIRCLE,
                       'size': [attachment_diameter, attachment_diameter],
                       'drill': attachment_drill,
-                      'layers': ['*.Cu', '*.Mask']}
+                      'layers': Pad.LAYERS_THT}
 
     # create pads
     for position in attachment_positions:

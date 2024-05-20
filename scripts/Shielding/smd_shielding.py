@@ -91,7 +91,8 @@ def create_smd_shielding(name, **kwargs):
     general_kwargs = {'number': 1,
                       'type': Pad.TYPE_SMT,
                       'shape': Pad.SHAPE_RECT,
-                      'layers': ['F.Cu', 'F.Mask', 'F.Paste']}
+                      'layers': Pad.LAYERS_SMT,
+    }
 
     # create edge pads
     kicad_mod.append(Pad(at=[x_pad_min_center, y_pad_min_center],

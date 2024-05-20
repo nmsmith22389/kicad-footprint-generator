@@ -200,11 +200,11 @@ def makeVERT(lib_name, pck, has3d=False, x_3d=[0, 0, 0], s_3d=[1,1,1], lptext="_
         if p==0:
             kicad_modt.append(
                 Pad(number=p+1, type=Pad.TYPE_THT, shape=Pad.SHAPE_RECT, at=pads[p], size=padsize, drill=pck.drill,
-                    layers=['*.Cu', '*.Mask']))
+                    layers=Pad.LAYERS_THT))
         else:
             kicad_modt.append(
                 Pad(number=p+1, type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, at=pads[p], size=padsize, drill=pck.drill,
-                    layers=['*.Cu', '*.Mask']))
+                    layers=Pad.LAYERS_THT))
 
 
     # add model
@@ -415,22 +415,22 @@ def makeHOR(lib_name, pck, has3d=False, x_3d=[0, 0, 0], s_3d=[1,1,1], lptext="_L
     if pck.mounting_hole_drill > 0:
         kicad_modt.append(Pad(type=Pad.TYPE_NPTH, shape=Pad.SHAPE_OVAL, at=[l_mounth, t_mounth],
                              size=[pck.mounting_hole_drill, pck.mounting_hole_drill], drill=pck.mounting_hole_drill,
-                             layers=['*.Cu', '*.Mask']))
+                             layers=Pad.LAYERS_THT))
 
     if len(pck.additional_pin_pad_size) > 0:
         kicad_modt.append(Pad(number=pck.pins + 1, type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT, at=[addpadx, addpady],
-                             size=pck.additional_pin_pad_size, drill=0, layers=['F.Cu', 'F.Mask', 'F.Paste']))
+                             size=pck.additional_pin_pad_size, drill=0, layers=Pad.LAYERS_SMT))
 
     # create pads
     for p in range(0,len(pads)):
         if p==0:
             kicad_modt.append(
                 Pad(number=p+1, type=Pad.TYPE_THT, shape=Pad.SHAPE_RECT, at=pads[p], size=padsize, drill=pck.drill,
-                    layers=['*.Cu', '*.Mask']))
+                    layers=Pad.LAYERS_THT))
         else:
             kicad_modt.append(
                 Pad(number=p+1, type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, at=pads[p], size=padsize, drill=pck.drill,
-                    layers=['*.Cu', '*.Mask']))
+                    layers=Pad.LAYERS_THT))
 
 
     # add model
@@ -596,11 +596,11 @@ def makeVERTLS(lib_name, pck, has3d=False, x_3d=[0, 0, 0], s_3d=[1,1,1], lptext=
         if (p == 1):
             kicad_modt.append(
                 Pad(number=p, type=Pad.TYPE_THT, shape=Pad.SHAPE_RECT, at=[x, 0], size=pck.pad, drill=pck.drill,
-                    layers=['*.Cu', '*.Mask']))
+                    layers=Pad.LAYERS_THT))
         else:
             kicad_modt.append(
                 Pad(number=p, type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, at=[x, 0], size=pck.pad, drill=pck.drill,
-                    layers=['*.Cu', '*.Mask']))
+                    layers=Pad.LAYERS_THT))
         if len(pck.rm_list)>0 and p<=len(pck.rm_list):
             x = x - pck.rm_list[p-1]
         else:
@@ -791,11 +791,11 @@ def makeHORLS(lib_name, pck, has3d=False, x_3d=[0, 0, 0], s_3d=[1,1,1], lptext="
     if pck.mounting_hole_drill > 0:
         kicad_modt.append(Pad(type=Pad.TYPE_NPTH, shape=Pad.SHAPE_OVAL, at=[l_mounth, t_mounth],
                              size=[pck.mounting_hole_drill, pck.mounting_hole_drill], drill=pck.mounting_hole_drill,
-                             layers=['*.Cu', '*.Mask']))
+                             layers=Pad.LAYERS_THT))
 
     if len(pck.additional_pin_pad_size) > 0:
         kicad_modt.append(Pad(number=pck.pins + 1, type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT, at=[addpadx, addpady],
-                             size=pck.additional_pin_pad_size, drill=0, layers=['B.Cu', 'F.Mask', 'B.Paste']))
+                             size=pck.additional_pin_pad_size, drill=0, layers=['B.Cu', 'B.Paste', 'F.Mask']))
 
     # create pads
     x = 0
@@ -803,11 +803,11 @@ def makeHORLS(lib_name, pck, has3d=False, x_3d=[0, 0, 0], s_3d=[1,1,1], lptext="
         if (p == 1):
             kicad_modt.append(
                 Pad(number=p, type=Pad.TYPE_THT, shape=Pad.SHAPE_RECT, at=[x, 0], size=pck.pad, drill=pck.drill,
-                    layers=['*.Cu', '*.Mask']))
+                    layers=Pad.LAYERS_THT))
         else:
             kicad_modt.append(
                 Pad(number=p, type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, at=[x, 0], size=pck.pad, drill=pck.drill,
-                    layers=['*.Cu', '*.Mask']))
+                    layers=Pad.LAYERS_THT))
         if len(pck.rm_list)>0 and p<=len(pck.rm_list):
             x = x + pck.rm_list[p-1]
         else:
@@ -959,15 +959,15 @@ def makeHORREV(lib_name, pck, has3d=False, x_3d=[0, 0, 0], s_3d=[1 ,1,1], lptext
     if pck.mounting_hole_drill > 0:
         kicad_mod.append(Pad(type=Pad.TYPE_NPTH, shape=Pad.SHAPE_OVAL, at=[l_mounth, t_mounth],
                          size=[pck.mounting_hole_drill, pck.mounting_hole_drill], drill=pck.mounting_hole_drill,
-                         layers=['*.Cu', '*.Mask']))
+                         layers=Pad.LAYERS_THT))
 
     # create pads
     x = 0
     for p in range(1, pck.pins + 1):
         if (p==1):
-            kicad_mod.append(Pad(number=p, type=Pad.TYPE_THT, shape=Pad.SHAPE_RECT, at=[x, 0], size=pck.pad, drill=pck.drill, layers=['*.Cu', '*.Mask']))
+            kicad_mod.append(Pad(number=p, type=Pad.TYPE_THT, shape=Pad.SHAPE_RECT, at=[x, 0], size=pck.pad, drill=pck.drill, layers=Pad.LAYERS_THT))
         else:
-            kicad_mod.append(Pad(number=p, type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, at=[x, 0], size=pck.pad, drill=pck.drill,layers=['*.Cu', '*.Mask']))
+            kicad_mod.append(Pad(number=p, type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, at=[x, 0], size=pck.pad, drill=pck.drill,layers=Pad.LAYERS_THT))
         if len(pck.rm_list)>0 and p<=len(pck.rm_list):
             x = x + pck.rm_list[p-1]
         else:
@@ -1111,11 +1111,11 @@ def makeTORound(lib_name, pck, has3d=False, x_3d=[0, 0, 0], s_3d=[1,1,1], lptext
         if p == 0:
             kicad_modt.append(
                 Pad(number=p + 1, type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, at=pads[p], size=[roundG(padsize[0]*1.3,0.1),padsize[1]], drill=pck.drill,
-                    layers=['*.Cu', '*.Mask']))
+                    layers=Pad.LAYERS_THT))
         else:
             kicad_modt.append(
                 Pad(number=p + 1, type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, at=pads[p], size=padsize, drill=pck.drill,
-                    layers=['*.Cu', '*.Mask']))
+                    layers=Pad.LAYERS_THT))
 
     # add model
     if (has3d):

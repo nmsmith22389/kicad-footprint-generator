@@ -31,9 +31,9 @@ def generate_footprint(params, part_params, mpn, configuration):
 
     # Pads
     kicad_mod.append(PadArray(initial=1, start=[0, 0], x_spacing=params['pitch']['x']*params['pads']['increment'], pincount=(part_params['pins']+params['pads']['increment']-1)//params['pads']['increment'], increment=params['pads']['increment'],
-        size=[params['pads']['size']['x'], params['pads']['size']['y']], drill=params['pads']['drill'], type=Pad.TYPE_THT, tht_pad1_shape=Pad.SHAPE_ROUNDRECT, shape=Pad.SHAPE_OVAL, layers=['*.Cu', '*.Mask']))
+        size=[params['pads']['size']['x'], params['pads']['size']['y']], drill=params['pads']['drill'], type=Pad.TYPE_THT, tht_pad1_shape=Pad.SHAPE_ROUNDRECT, shape=Pad.SHAPE_OVAL, layers=Pad.LAYERS_THT))
     kicad_mod.append(PadArray(initial=params['pads']['increment'], start=[(params['pads']['increment']-1)*params['pitch']['x'], params['pitch']['y']], x_spacing=params['pitch']['x']*params['pads']['increment'], pincount=part_params['pins']//params['pads']['increment'], increment=params['pads']['increment'],
-        size=[params['pads']['size']['x'], params['pads']['size']['y']], drill=params['pads']['drill'], type=Pad.TYPE_THT, tht_pad1_shape=Pad.SHAPE_ROUNDRECT, shape=Pad.SHAPE_OVAL, layers=['*.Cu', '*.Mask']))
+        size=[params['pads']['size']['x'], params['pads']['size']['y']], drill=params['pads']['drill'], type=Pad.TYPE_THT, tht_pad1_shape=Pad.SHAPE_ROUNDRECT, shape=Pad.SHAPE_OVAL, layers=Pad.LAYERS_THT))
 
     # Add fab layer
     body_top_left = [params['fab']['left'], params['fab']['top']]

@@ -196,7 +196,8 @@ def create_footprint(name, configuration, **kwargs):
     # all pads have this kwargs, so we only write them once
     pad_kwargs = {'type': Pad.TYPE_SMT,
                   'shape': Pad.SHAPE_RECT,
-                  'layers': ['F.Cu', 'F.Mask', 'F.Paste']}
+                  'layers': Pad.LAYERS_SMT
+    }
 
     # create pads
     x_pad_spacing = kwargs['pad_spacing'] / 2. + kwargs['pad_length'] / 2.

@@ -321,7 +321,7 @@ def makeLEDRadial(rm, w, h, ddrill, win=0, rin=0, pins=2, type="round", x_3d=[0,
         if p[0] == 1:
             ps = pad1style
         kicad_modg.append(Pad(number=p[0], type=Pad.TYPE_THT, shape=ps, at=[p[1], p[2]], size=[p[4], p[5]], drill=p[3],
-                              layers=['*.Cu', '*.Mask']))
+                              layers=Pad.LAYERS_THT))
 
     # add model
     if (has3d != 0):
@@ -557,7 +557,7 @@ def makeLEDHorizontal(pins=2,rm=2.544,dled=5,dledout=5.8,offsetled=2.54,wled=8.6
         if p[0] == 1:
             ps = pad1style
         kicad_modg.append(Pad(number=p[0], type=Pad.TYPE_THT, shape=ps, at=[p[1], p[2]], size=[p[4], p[5]], drill=p[3],
-                              layers=['*.Cu', '*.Mask']))
+                              layers=Pad.LAYERS_THT))
 
     # add model
     if (has3d != 0):

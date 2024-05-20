@@ -175,12 +175,12 @@ def makeDIP(pins, rm, pinrow_distance_in, package_width, overlen_top, overlen_bo
         pad_type = Pad.TYPE_SMT
         pad_shape1 = Pad.SHAPE_RECT
         pad_shapeother = Pad.SHAPE_RECT
-        pad_layers = ['F.Cu', 'F.Mask', 'F.Paste']
+        pad_layers = Pad.LAYERS_SMT
     else:
         pad_type = Pad.TYPE_THT
         pad_shape1 = Pad.SHAPE_RECT
         pad_shapeother = Pad.SHAPE_OVAL
-        pad_layers = ['*.Cu', '*.Mask']
+        pad_layers = Pad.LAYERS_THT
 
     for p in range(1, int(pins / 2 + 1)):
 
@@ -364,12 +364,12 @@ def makeDIPSwitch(pins, rm, pinrow_distance, package_width, overlen_top, overlen
         pad_type = Pad.TYPE_SMT
         pad_shape1 = Pad.SHAPE_RECT
         pad_shapeother = Pad.SHAPE_RECT
-        pad_layers = ['F.Cu', 'F.Mask', 'F.Paste']
+        pad_layers = Pad.LAYERS_SMT
     else:
         pad_type = Pad.TYPE_THT
         pad_shape1 = Pad.SHAPE_RECT
         pad_shapeother = Pad.SHAPE_OVAL
-        pad_layers = ['*.Cu', '*.Mask']
+        pad_layers = Pad.LAYERS_THT
 
     keepout_addsize=4*max(slk_offset, lw_slk)
     for p in range(1, int(pins / 2 + 1)):

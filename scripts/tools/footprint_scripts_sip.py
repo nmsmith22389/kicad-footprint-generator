@@ -51,12 +51,12 @@ def makeSIPVertical(pins, rm, ddrill, pad, package_size, left_offset, top_offset
     keepout=[]
     if not 1 in missing_pins:
         kicad_mod.append(Pad(number=1, type=Pad.TYPE_THT, shape=Pad.SHAPE_RECT, at=[0, 0], size=pad, drill=ddrill,
-                             layers=['*.Cu', '*.Mask']))
+                             layers=Pad.LAYERS_THT))
         keepout=keepout+addKeepoutRect(0,0,pad[0]+2*min_pad_distance+2*lw_slk, pad[1]+2*min_pad_distance+2*lw_slk)
     for x in range(2, pins + 1):
         if not x in missing_pins:
             kicad_mod.append(Pad(number=x, type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, at=[(x - 1) * rm, 0], size=pad,
-                                 drill=ddrill, layers=['*.Cu', '*.Mask']))
+                                 drill=ddrill, layers=Pad.LAYERS_THT))
             if (padx/pady)<1.05 and (padx/pady)>.95:
                 keepout=keepout+addKeepoutRect((x - 1) * rm,0,pad[0]+2*min_pad_distance+2*lw_slk, pad[1]+2*min_pad_distance+2*lw_slk)
             else:
@@ -141,14 +141,14 @@ def makeSIPHorizontal(pins, rm, ddrill, pad, package_size, left_offset, pin_bott
     keepout=[]
     if not 1 in missing_pins:
         kicad_mod.append(Pad(number=1, type=Pad.TYPE_THT, shape=Pad.SHAPE_RECT, at=[0, 0], size=pad, drill=ddrill,
-                             layers=['*.Cu', '*.Mask']))
+                             layers=Pad.LAYERS_THT))
         keepout=keepout+addKeepoutRect(0,0,pad[0]+2*min_pad_distance+2*lw_slk, pad[1]+2*min_pad_distance+2*lw_slk)
         kicad_mod.append(Line(start=[-lw_fab/2, 0], end=[-lw_fab/2,-pin_bottom_offset], layer='F.Fab', width=lw_fab))
         kicad_mod.append(Line(start=[lw_fab/2, 0], end=[lw_fab/2,-pin_bottom_offset], layer='F.Fab', width=lw_fab))
     for x in range(2, pins + 1):
         if not x in missing_pins:
             kicad_mod.append(Pad(number=x, type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, at=[(x - 1) * rm, 0], size=pad,
-                                 drill=ddrill, layers=['*.Cu', '*.Mask']))
+                                 drill=ddrill, layers=Pad.LAYERS_THT))
             kicad_mod.append(Line(start=[(x - 1) * rm-lw_fab/2, 0], end=[(x - 1) * rm-lw_fab/2,-pin_bottom_offset], layer='F.Fab', width=lw_fab))
             kicad_mod.append(Line(start=[(x - 1) * rm+lw_fab/2, 0], end=[(x - 1) * rm+lw_fab/2,-pin_bottom_offset], layer='F.Fab', width=lw_fab))
             if (padx/pady)<1.05 and (padx/pady)>.95:
@@ -234,10 +234,10 @@ def makeResistorSIP(pins, footprint_name, description):
 
     # create pads
     kicad_mod.append(Pad(number=1, type=Pad.TYPE_THT, shape=Pad.SHAPE_RECT, at=[0, 0], size=[padx, pady], drill=ddrill,
-                         layers=['*.Cu', '*.Mask']))
+                         layers=Pad.LAYERS_THT))
     for x in range(2, pins + 1):
         kicad_mod.append(Pad(number=x, type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, at=[(x - 1) * rm, 0], size=[padx, pady],
-                             drill=ddrill, layers=['*.Cu', '*.Mask']))
+                             drill=ddrill, layers=Pad.LAYERS_THT))
 
     # add model
     kicad_mod.append(Model(filename="${KICAD8_3DMODEL_DIR}/"+lib_name + ".3dshapes/" + footprint_name + ".wrl",

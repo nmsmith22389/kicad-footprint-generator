@@ -885,7 +885,7 @@ RESULT_rotPad = """(footprint "test_rotate_pad"
 	(pad "1" smd custom
 		(at 0 0)
 		(size 0.2 0.2)
-		(layers "F.Cu" "F.Mask" "F.Paste")
+		(layers "F.Cu" "F.Paste" "F.Mask")
 		(options
 			(clearance outline)
 			(anchor circle)
@@ -905,7 +905,7 @@ RESULT_rotPad = """(footprint "test_rotate_pad"
 	(pad "2" smd custom
 		(at 0.175 -0.303109 -60)
 		(size 0.2 0.2)
-		(layers "F.Cu" "F.Mask" "F.Paste")
+		(layers "F.Cu" "F.Paste" "F.Mask")
 		(options
 			(clearance outline)
 			(anchor circle)
@@ -925,7 +925,7 @@ RESULT_rotPad = """(footprint "test_rotate_pad"
 	(pad "3" smd custom
 		(at 0.525 -0.303109 -120)
 		(size 0.2 0.2)
-		(layers "F.Cu" "F.Mask" "F.Paste")
+		(layers "F.Cu" "F.Paste" "F.Mask")
 		(options
 			(clearance outline)
 			(anchor circle)
@@ -945,7 +945,7 @@ RESULT_rotPad = """(footprint "test_rotate_pad"
 	(pad "4" smd custom
 		(at 0.7 0 -180)
 		(size 0.2 0.2)
-		(layers "F.Cu" "F.Mask" "F.Paste")
+		(layers "F.Cu" "F.Paste" "F.Mask")
 		(options
 			(clearance outline)
 			(anchor circle)
@@ -965,7 +965,7 @@ RESULT_rotPad = """(footprint "test_rotate_pad"
 	(pad "5" smd custom
 		(at 0.525 0.303109 -240)
 		(size 0.2 0.2)
-		(layers "F.Cu" "F.Mask" "F.Paste")
+		(layers "F.Cu" "F.Paste" "F.Mask")
 		(options
 			(clearance outline)
 			(anchor circle)

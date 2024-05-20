@@ -116,8 +116,8 @@ def generate_one_footprint(partnumber, configuration):
         initial=2, increment=2, type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT, size=[pad_width, pad_height],layers=Pad.LAYERS_SMT))
 
     # create "fitting nail" (npth mounting) holes
-    #kicad_mod.append(Pad(at=[-nail_x, 0], type=Pad.TYPE_NPTH, shape=Pad.SHAPE_RECT, size=[0.35, 0.44], drill=[0.35, 0.44], layers=['*.Cu', '*.Mask']))
-    #kicad_mod.append(Pad(at=[nail_x, 0], type=Pad.TYPE_NPTH, shape=Pad.SHAPE_RECT, size=[0.35, 0.44], drill=[0.35, 0.44], layers=['*.Cu', '*.Mask']))
+    #kicad_mod.append(Pad(at=[-nail_x, 0], type=Pad.TYPE_NPTH, shape=Pad.SHAPE_RECT, size=[0.35, 0.44], drill=[0.35, 0.44], layers=Pad.LAYERS_THT))
+    #kicad_mod.append(Pad(at=[nail_x, 0], type=Pad.TYPE_NPTH, shape=Pad.SHAPE_RECT, size=[0.35, 0.44], drill=[0.35, 0.44], layers=Pad.LAYERS_THT))
     kicad_mod.append(RectLine(start=[-nail_x - nail_width / 2.0, -nail_y - nail_height / 2.0], end=[-nail_x + nail_width / 2.0, -nail_y + nail_height / 2.0], layer='Edge.Cuts', width=fab_width))
     kicad_mod.append(RectLine(start=[-nail_x - nail_width / 2.0, nail_y - nail_height / 2.0], end=[-nail_x + nail_width / 2.0, nail_y + nail_height / 2.0], layer='Edge.Cuts', width=fab_width))
     kicad_mod.append(RectLine(start=[nail_x - nail_width / 2.0, -nail_y - nail_height / 2.0], end=[nail_x + nail_width / 2.0, -nail_y + nail_height / 2.0], layer='Edge.Cuts', width=fab_width))

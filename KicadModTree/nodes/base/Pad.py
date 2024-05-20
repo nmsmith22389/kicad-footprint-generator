@@ -209,7 +209,7 @@ class Pad(Node):
     SHAPE_CUSTOM = 'custom'
     _SHAPES = [SHAPE_CIRCLE, SHAPE_OVAL, SHAPE_RECT, SHAPE_ROUNDRECT, SHAPE_TRAPEZE, SHAPE_CUSTOM]
 
-    LAYERS_SMT = ['F.Cu', 'F.Mask', 'F.Paste']
+    LAYERS_SMT = ['F.Cu', 'F.Paste', 'F.Mask']
     LAYERS_THT = ['*.Cu', '*.Mask']
     LAYERS_NPTH = ['*.Cu', '*.Mask']
     LAYERS_CONNECT_FRONT = ['F.Cu', 'F.Mask']

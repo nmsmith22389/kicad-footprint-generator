@@ -319,7 +319,7 @@ class BGAGenerator:
         if pasteShape and pasteShape != padShape:
             layers = ['F.Cu', 'F.Mask']
         else:
-            layers = ['F.Cu', 'F.Mask', 'F.Paste']
+            layers = Pad.LAYERS_SMT
 
         xOffset = lParams.get('offset_x', 0.0)
         yOffset = lParams.get('offset_y', 0.0)
