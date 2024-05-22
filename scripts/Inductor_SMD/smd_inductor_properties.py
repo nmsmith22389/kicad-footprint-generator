@@ -17,7 +17,7 @@ class TwoPadDimensions:
     """
 
     Defines two pads spaced like this (doesn't have to be in the x-direction,
-    or even parallel to any axis))
+    or even parallel to any axis)
 
                 spacing outside
     |<------------------------------------->|

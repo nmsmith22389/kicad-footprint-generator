@@ -9,7 +9,7 @@ create custom KiCAD footprint. A big bunch of footprints of the KiCad library wa
 
 [![Documentation Status](https://readthedocs.org/projects/kicad-footprint-generator/badge/?version=latest)](https://kicad-footprint-generator.readthedocs.io/en/latest/?badge=latest)
 
-**Supports:** Python 3.6+
+**Supports:** Python 3.7+
 
 ## About
 

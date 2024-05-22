@@ -4,6 +4,7 @@ import sys
 import os
 import math
 import enum
+from typing import Tuple
 
 # ensure that the kicad-footprint-generator directory is available
 # sys.path.append(os.environ.get('KIFOOTPRINTGENERATOR'))  # enable package import from parent directory
@@ -806,6 +807,15 @@ def TriangleArrowPointingSouth(model: Footprint, apex_position: Vector2D,
     :param size: size of the triangle
     """
 
+    model.append(
+        draw_triangle_pointing_south(apex_position, size, length, layer, line_width_mm)
+    )
+
+
+def draw_triangle_pointing_south(apex_position: Vector2D, size: float, length: float, layer: str, line_width_mm: float):
+    """
+    Draw an equilateral triangle pointing south-east.
+    """
     arrow_pts = [
         apex_position,
         apex_position + [-size / 2, -length],
@@ -813,13 +823,12 @@ def TriangleArrowPointingSouth(model: Footprint, apex_position: Vector2D,
         apex_position
     ]
 
-    poly = Polygon(nodes=arrow_pts, layer=layer, width=line_width_mm)
-    model.append(poly)
+    return Polygon(nodes=arrow_pts, layer=layer, width=line_width_mm)
 
 
 def TriangleArrowPointingEast(model: Footprint, apex_position: Vector2D, size: float,
                               length: float, layer: str, line_width_mm: float):
-    r"""Make and append a east-pointing triangle
+    r"""Make and append an east-pointing triangle
 
     Size is between nodes, overall size will include 1*line_width overall
 
@@ -945,32 +954,28 @@ def CornerBracketWithArrowPointingSouth(model: Footprint, apex: Vector2D,
 
 
 class SilkArrowSize(enum.Enum):
-    SMALL = 1
-    MEDIUM = 2
-    LARGE = 3
-    HUGE = 4
+    """
+    Silkscreen arrow edge length in mm.
+    """
+    SMALL = 0.4
+    MEDIUM = 0.6
+    LARGE = 0.8
+    HUGE = 1.0  # IPC maximum
 
 
 def getStandardSilkArrowSize(size: SilkArrowSize,
-                             silk_line_width: float) -> float:
+                             silk_line_width: float) -> Tuple[float, float]:
     """
     Get the normal size of the arrow for a given enum value.
 
     This gives the "node-node" size.
     """
-    overall_size = {
-        SilkArrowSize.SMALL: 0.4,
-        SilkArrowSize.MEDIUM: 0.6,
-        SilkArrowSize.LARGE: 0.8,
-        SilkArrowSize.HUGE: 1.0,  # IPC maximum
-    }[size]
-
-    # slighty squashed relative to equalateral triangle
+    # slight squashed relative to equilateral triangle
     # reduces intrusion of arrows into other footprints' spaces
     standard_arrow_aspect_ratio = 0.7
 
     # allows for 0.01mm grid-snap on each side of the apex
-    width = roundGDown(overall_size - silk_line_width, 0.02)
+    width = roundGDown(size.value - silk_line_width, 0.02)
     length = roundGDown(width * standard_arrow_aspect_ratio, 0.01)
 
     return width, length
