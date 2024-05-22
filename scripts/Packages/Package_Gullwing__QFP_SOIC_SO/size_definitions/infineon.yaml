@@ -2,6 +2,32 @@ FileHeader:
   library_Suffix: 'SO'
   device_type: 'PG-DSO'
 
+Infineon_PG-DSO-8-24:
+  # NOTE: This is a SOIC-8 variant without EP
+  manufacturer: Infineon
+  mpn: 'PG-DSO-8-24'
+  size_source: 'https://www.infineon.com/dgdl/Infineon-BSP752R-DS-v01_02-EN.pdf?fileId=db3a304316f112290116f233cbd271e9#page=17'
+  body_size_x:
+    nominal: 4
+    tolerance: +0/-0.2
+  body_size_y:
+    nominal: 5
+    tolerance: +0/-0.2
+  overall_size_x:
+    nominal: 6.0
+    tolerance: 0.2
+
+  lead_width:
+    nominal: 0.41
+    tolerance: -0.06/+0.1
+  lead_len:
+    nominal: 0.64
+    tolerance: 0.25
+  pitch: 1.27
+
+  num_pins_x: 0
+  num_pins_y: 4
+
 Infineon_PG-DSO-8-27:
   size_source: 'https://www.infineon.com/cms/en/product/packages/PG-DSO/PG-DSO-8-27'
   manufacturer: Infineon
