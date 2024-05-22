@@ -31,11 +31,11 @@ class FootprintGenerator:
         # output kicad model
         file_handler = KicadFileHandler(kicad_mod)
         file_handler.writeFile(output_library_path / f'{kicad_mod.name}.kicad_mod')
-
-    def add_standard_3d_model_to_footprint(self, kicad_mod: Footprint, library_name: str,
-                                           model_name: str):
+        
+    def get_standard_3d_model_path(self, library_name: str, model_name: str) -> str:
         """
-        Add the "usual" 3D model (with the global config path) to the given footprint
+        Get the path of the the "usual" 3D model (with the global config path)
+        for the given footprint
         """
         assert ".wrl" not in model_name, f"model_name should not contain the .wrl extension: {model_name}"
         assert "/" not in model_name, f"model_name should be only the model name, not a path: {model_name}"
@@ -43,8 +43,15 @@ class FootprintGenerator:
         prefix = self.global_config.model_3d_prefix.rstrip("/")
         lib3d_dir = f"{library_name}.3dshapes"
 
+        return f"{prefix}/{lib3d_dir}/{model_name}.wrl"
+
+    def add_standard_3d_model_to_footprint(self, kicad_mod: Footprint, library_name: str,
+                                           model_name: str):
+        """
+        Add the "usual" 3D model (with the global config path) to the given footprint
+        """
         kicad_mod.append(Model(
-            filename=f"{prefix}/{lib3d_dir}/{model_name}.wrl",
+            filename=self.get_standard_3d_model_path(library_name, model_name),
         ))
 
     @classmethod

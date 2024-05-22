@@ -1,0 +1,1898 @@
+Crystal_SMD_0603-2pin_6.0x3.5mm:
+  addSizeFootprintName: true
+  adhesiveSize: 0.8
+  description: SMD Crystal SERIES SMD0603/2 http://www.petermann-technik.de/fileadmin/petermann/pdf/SMD0603-2.pdf
+  footprint_name: Crystal_SMD_0603
+  func: makeSMDCrystal
+  hasAdhesive: true
+  lib_name: Crystal
+  pack_bevel: 0.1
+  pack_height: 3.5
+  pack_width: 6
+  pad:
+  - 1.9
+  - 2.5
+  pad_sep_x: 4.4
+  pad_sep_y: 0
+  pins: 2
+  style: rect
+  tags: SMD SMT crystal
+Crystal_SMD_0603-2pin_6.0x3.5mm_HandSoldering:
+  addSizeFootprintName: true
+  adhesiveSize: 0.8
+  description: SMD Crystal SERIES SMD0603/2 http://www.petermann-technik.de/fileadmin/petermann/pdf/SMD0603-2.pdf,
+    hand-soldering
+  footprint_name: Crystal_SMD_0603
+  func: makeSMDCrystal
+  hasAdhesive: true
+  lib_name: Crystal
+  name_addition: _HandSoldering
+  pack_bevel: 0.1
+  pack_height: 3.5
+  pack_width: 6
+  pad:
+  - 3.3249999999999997
+  - 2.5
+  pad_sep_x: 5.825
+  pad_sep_y: 0.0
+  pins: 2
+  style: rect
+  tags: SMD SMT crystal hand-soldering
+Crystal_SMD_0603-4pin_6.0x3.5mm:
+  addSizeFootprintName: true
+  adhesiveSize: 0.8
+  description: SMD Crystal SERIES SMD0603/4 http://www.petermann-technik.de/fileadmin/petermann/pdf/SMD0603-4.pdf
+  footprint_name: Crystal_SMD_0603
+  func: makeSMDCrystal
+  hasAdhesive: true
+  lib_name: Crystal
+  pack_bevel: 0.1
+  pack_height: 3.5
+  pack_width: 6
+  pad:
+  - 1.8
+  - 1.4
+  pad_sep_x: 4.4
+  pad_sep_y: 2.4
+  pins: 4
+  style: rect
+  tags: SMD SMT crystal
+Crystal_SMD_0603-4pin_6.0x3.5mm_HandSoldering:
+  addSizeFootprintName: true
+  adhesiveSize: 0.8
+  description: SMD Crystal SERIES SMD0603/4 http://www.petermann-technik.de/fileadmin/petermann/pdf/SMD0603-4.pdf,
+    hand-soldering
+  footprint_name: Crystal_SMD_0603
+  func: makeSMDCrystal
+  hasAdhesive: true
+  lib_name: Crystal
+  name_addition: _HandSoldering
+  pack_bevel: 0.1
+  pack_height: 3.5
+  pack_width: 6
+  pad:
+  - 2.7
+  - 2.0999999999999996
+  pad_sep_x: 5.300000000000001
+  pad_sep_y: 3.0999999999999996
+  pins: 4
+  style: rect
+  tags: SMD SMT crystal hand-soldering
+Crystal_SMD_2012-2pin_2.0x1.2mm:
+  addSizeFootprintName: true
+  adhesiveSize: 0.4
+  description: SMD Crystal 2012/2 http://txccrystal.com/images/pdf/9ht11.pdf
+  footprint_name: Crystal_SMD_2012
+  func: makeSMDCrystal
+  hasAdhesive: true
+  lib_name: Crystal
+  pack_bevel: 0
+  pack_height: 1.2
+  pack_width: 2
+  pad:
+  - 0.6
+  - 1.1
+  pad_sep_x: 1.4
+  pad_sep_y: 0
+  pins: 2
+  style: rect
+  tags: SMD SMT crystal
+Crystal_SMD_2012-2pin_2.0x1.2mm_HandSoldering:
+  addSizeFootprintName: true
+  adhesiveSize: 0.4
+  description: SMD Crystal 2012/2 http://txccrystal.com/images/pdf/9ht11.pdf, hand-soldering
+  footprint_name: Crystal_SMD_2012
+  func: makeSMDCrystal
+  hasAdhesive: true
+  lib_name: Crystal
+  name_addition: _HandSoldering
+  pack_bevel: 0
+  pack_height: 1.2
+  pack_width: 2
+  pad:
+  - 1.05
+  - 1.1
+  pad_sep_x: 1.8499999999999999
+  pad_sep_y: 0.0
+  pins: 2
+  style: rect
+  tags: SMD SMT crystal hand-soldering
+Crystal_SMD_2016-4pin_2.0x1.6mm:
+  addSizeFootprintName: true
+  adhesiveSize: 0.8
+  description: SMD Crystal SERIES SMD2016/4 http://www.q-crystal.com/upload/5/2015552223166229.pdf
+  footprint_name: Crystal_SMD_2016
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  pack_bevel: 0.1
+  pack_height: 1.6
+  pack_width: 2
+  pad:
+  - 0.9
+  - 0.8
+  pad_sep_x: 1.4
+  pad_sep_y: 1.1
+  pins: 4
+  tags: SMD SMT crystal
+Crystal_SMD_2520-4pin_2.5x2.0mm:
+  addSizeFootprintName: true
+  adhesiveSize: 0.8
+  description: SMD Crystal SERIES SMD2520/4 http://www.newxtal.com/UploadFiles/Images/2012-11-12-09-29-09-776.pdf
+  footprint_name: Crystal_SMD_2520
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  pack_bevel: 0.1
+  pack_height: 2
+  pack_width: 2.5
+  pad:
+  - 1.15
+  - 1
+  pad_sep_x: 1.75
+  pad_sep_y: 1.4
+  pins: 4
+  tags: SMD SMT crystal
+Crystal_SMD_3225-4pin_3.2x2.5mm:
+  addSizeFootprintName: true
+  adhesiveSize: 0.4
+  description: SMD Crystal SERIES SMD3225/4 http://www.txccrystal.com/images/pdf/7m-accuracy.pdf
+  footprint_name: Crystal_SMD_3225
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  pack_bevel: 0
+  pack_height: 2.5
+  pack_width: 3.2
+  pad:
+  - 1.4
+  - 1.2
+  pad_sep_x: 2.2
+  pad_sep_y: 1.7
+  pins: 4
+  style: rect
+  tags: SMD SMT crystal
+Crystal_SMD_3225-4pin_3.2x2.5mm_HandSoldering:
+  addSizeFootprintName: true
+  adhesiveSize: 0.4
+  description: SMD Crystal SERIES SMD3225/4 http://www.txccrystal.com/images/pdf/7m-accuracy.pdf,
+    hand-soldering
+  footprint_name: Crystal_SMD_3225
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  name_addition: _HandSoldering
+  pack_bevel: 0
+  pack_height: 2.5
+  pack_width: 3.2
+  pad:
+  - 2.0999999999999996
+  - 1.7999999999999998
+  pad_sep_x: 2.9000000000000004
+  pad_sep_y: 2.3
+  pins: 4
+  style: rect
+  tags: SMD SMT crystal hand-soldering
+Crystal_SMD_5032-2pin_5.0x3.2mm:
+  addSizeFootprintName: true
+  adhesiveSize: 0.8
+  description: SMD Crystal SERIES SMD2520/2 http://www.icbase.com/File/PDF/HKC/HKC00061008.pdf
+  footprint_name: Crystal_SMD_5032
+  func: makeSMDCrystal
+  hasAdhesive: true
+  lib_name: Crystal
+  pack_bevel: 0.2
+  pack_height: 3.2
+  pack_width: 5
+  pad:
+  - 2
+  - 2.4
+  pad_sep_x: 3.7
+  pad_sep_y: 0
+  pins: 2
+  scale3d:
+  - 0.39370078740157477
+  - 0.39370078740157477
+  - 0.39370078740157477
+  style: rect
+  tags: SMD SMT crystal
+Crystal_SMD_5032-2pin_5.0x3.2mm_HandSoldering:
+  addSizeFootprintName: true
+  adhesiveSize: 0.8
+  description: SMD Crystal SERIES SMD2520/2 http://www.icbase.com/File/PDF/HKC/HKC00061008.pdf,
+    hand-soldering
+  footprint_name: Crystal_SMD_5032
+  func: makeSMDCrystal
+  hasAdhesive: true
+  lib_name: Crystal
+  name_addition: _HandSoldering
+  pack_bevel: 0.2
+  pack_height: 3.2
+  pack_width: 5
+  pad:
+  - 3.5
+  - 2.4
+  pad_sep_x: 5.2
+  pad_sep_y: 0.0
+  pins: 2
+  scale3d:
+  - 0.39370078740157477
+  - 0.39370078740157477
+  - 0.39370078740157477
+  style: rect
+  tags: SMD SMT crystal hand-soldering
+Crystal_SMD_5032-4pin_5.0x3.2mm:
+  addSizeFootprintName: true
+  adhesiveSize: 0.8
+  description: SMD Crystal SERIES SMD2520/4 http://www.icbase.com/File/PDF/HKC/HKC00061008.pdf
+  footprint_name: Crystal_SMD_5032
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  pack_bevel: 0.2
+  pack_height: 3.2
+  pack_width: 5
+  pad:
+  - 1.6
+  - 1.3
+  pad_sep_x: 3.3
+  pad_sep_y: 2.0
+  pins: 4
+  scale3d:
+  - 0.39370078740157477
+  - 0.39370078740157477
+  - 0.39370078740157477
+  tags: SMD SMT crystal
+Crystal_SMD_7050-2pin_7.0x5.0mm:
+  addSizeFootprintName: true
+  adhesiveSize: 0.8
+  description: SMD Crystal SERIES SMD7050/4 https://www.foxonline.com/pdfs/FQ7050.pdf
+  footprint_name: Crystal_SMD_7050
+  func: makeSMDCrystal
+  hasAdhesive: true
+  lib_name: Crystal
+  pack_bevel: 0.2
+  pack_height: 5
+  pack_width: 7
+  pad:
+  - 2.8
+  - 3
+  pad_sep_x: 5.2
+  pad_sep_y: 0
+  pins: 2
+  style: rect
+  tags: SMD SMT crystal
+Crystal_SMD_7050-2pin_7.0x5.0mm_HandSoldering:
+  addSizeFootprintName: true
+  adhesiveSize: 0.8
+  description: SMD Crystal SERIES SMD7050/4 https://www.foxonline.com/pdfs/FQ7050.pdf,
+    hand-soldering
+  footprint_name: Crystal_SMD_7050
+  func: makeSMDCrystal
+  hasAdhesive: true
+  lib_name: Crystal
+  name_addition: _HandSoldering
+  pack_bevel: 0.2
+  pack_height: 5
+  pack_width: 7
+  pad:
+  - 4.8999999999999995
+  - 3
+  pad_sep_x: 7.3
+  pad_sep_y: 0
+  pins: 2
+  style: rect
+  tags: SMD SMT crystal hand-soldering
+Crystal_SMD_7050-4pin_7.0x5.0mm:
+  addSizeFootprintName: true
+  adhesiveSize: 0.8
+  description: SMD Crystal SERIES SMD7050/4 https://www.foxonline.com/pdfs/FQ7050.pdf
+  footprint_name: Crystal_SMD_7050
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  pack_bevel: 0.2
+  pack_height: 5
+  pack_width: 7
+  pad:
+  - 2.1
+  - 1.7
+  pad_sep_x: 5.9
+  pad_sep_y: 2.7
+  pins: 4
+  tags: SMD SMT crystal
+Crystal_SMD_Abracon_ABM3-2pin_5.0x3.2mm:
+  addSizeFootprintName: true
+  adhesiveSize: 1
+  description: Abracon Miniature Ceramic Smd Crystal ABM3 http://www.abracon.com/Resonators/abm3.pdf
+  footprint_name: Crystal_SMD_Abracon_ABM3
+  func: makeSMDCrystal
+  hasAdhesive: true
+  lib_name: Crystal
+  pack_bevel: 0.2
+  pack_height: 3.2
+  pack_width: 5
+  pad:
+  - 1.9
+  - 2.4
+  pad_sep_x: 4.1
+  pad_sep_y: 0
+  pins: 2
+  style: rect
+  tags: SMD SMT crystal
+Crystal_SMD_Abracon_ABM3-2pin_5.0x3.2mm_HandSoldering:
+  addSizeFootprintName: true
+  adhesiveSize: 1
+  description: Abracon Miniature Ceramic Smd Crystal ABM3 http://www.abracon.com/Resonators/abm3.pdf,
+    hand-soldering
+  footprint_name: Crystal_SMD_Abracon_ABM3
+  func: makeSMDCrystal
+  hasAdhesive: true
+  lib_name: Crystal
+  name_addition: _HandSoldering
+  pack_bevel: 0.2
+  pack_height: 3.2
+  pack_width: 5
+  pad:
+  - 3.3249999999999997
+  - 2.4
+  pad_sep_x: 5.5249999999999995
+  pad_sep_y: 0.0
+  pins: 2
+  style: rect
+  tags: SMD SMT crystal hand-soldering
+Crystal_SMD_Abracon_ABM3B-4pin_5.0x3.2mm:
+  addSizeFootprintName: true
+  adhesiveSize: 1
+  description: Abracon Miniature Ceramic Smd Crystal ABM3B http://www.abracon.com/Resonators/abm3b.pdf
+  footprint_name: Crystal_SMD_Abracon_ABM3B
+  func: makeSMDCrystal
+  hasAdhesive: true
+  lib_name: Crystal
+  pack_bevel: 0.2
+  pack_height: 3.2
+  pack_width: 5
+  pad:
+  - 1.8
+  - 1.2
+  pad_sep_x: 4
+  pad_sep_y: 2.4
+  pins: 4
+  tags: SMD SMT crystal
+Crystal_SMD_Abracon_ABM3C-4pin_5.0x3.2mm:
+  addSizeFootprintName: true
+  adhesiveSize: 1
+  description: Abracon Miniature Ceramic Smd Crystal ABM3C http://www.abracon.com/Resonators/abm3c.pdf
+  footprint_name: Crystal_SMD_Abracon_ABM3C
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  pack_bevel: 0.2
+  pack_height: 3.2
+  pack_width: 5
+  pad:
+  - 1.6
+  - 1.3
+  pad_sep_x: 3.8
+  pad_sep_y: 2.3
+  pins: 4
+  tags: SMD SMT crystal
+Crystal_SMD_Abracon_ABM8G-4pin_3.2x2.5mm:
+  addSizeFootprintName: true
+  adhesiveSize: 1
+  description: Abracon Miniature Ceramic Smd Crystal ABM8G http://www.abracon.com/Resonators/ABM8G.pdf
+  footprint_name: Crystal_SMD_Abracon_ABM8G
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  pack_bevel: 0.2
+  pack_height: 2.5
+  pack_width: 3.2
+  pad:
+  - 1.4
+  - 1.2
+  pad_sep_x: 2.2
+  pad_sep_y: 1.7
+  pins: 4
+  tags: SMD SMT crystal
+Crystal_SMD_EuroQuartz_EQ161-2pin_3.2x1.5mm:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Crystal EuroQuartz EQ161 series http://cdn-reichelt.de/documents/datenblatt/B400/PG32768C.pdf
+  footprint_name: Crystal_SMD_EuroQuartz_EQ161
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  pack_bevel: 0.1
+  pack_height: 1.5
+  pack_width: 3.2
+  pad:
+  - 1
+  - 1.8
+  pad_sep_x: 2.5
+  pad_sep_y: 0
+  pins: 2
+  style: rect
+  tags: SMD SMT crystal
+Crystal_SMD_EuroQuartz_EQ161-2pin_3.2x1.5mm_HandSoldering:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Crystal EuroQuartz EQ161 series http://cdn-reichelt.de/documents/datenblatt/B400/PG32768C.pdf,
+    hand-soldering
+  footprint_name: Crystal_SMD_EuroQuartz_EQ161
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  name_addition: _HandSoldering
+  pack_bevel: 0.1
+  pack_height: 1.5
+  pack_width: 3.2
+  pad:
+  - 1.75
+  - 1.8
+  pad_sep_x: 3.25
+  pad_sep_y: 0.0
+  pins: 2
+  style: rect
+  tags: SMD SMT crystal hand-soldering
+Crystal_SMD_EuroQuartz_MJ-4pin_5.0x3.2mm:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Crystal EuroQuartz MJ series http://cdn-reichelt.de/documents/datenblatt/B400/MJ.pdf
+  footprint_name: Crystal_SMD_EuroQuartz_MJ
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  pack_bevel: 0.1
+  pack_height: 3.2
+  pack_width: 5
+  pad:
+  - 1.9
+  - 1.1
+  pad_sep_x: 3.7
+  pad_sep_y: 2.3
+  pins: 4
+  style: rect
+  tags: SMD SMT crystal
+Crystal_SMD_EuroQuartz_MJ-4pin_5.0x3.2mm_HandSoldering:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Crystal EuroQuartz MJ series http://cdn-reichelt.de/documents/datenblatt/B400/MJ.pdf,
+    hand-soldering
+  footprint_name: Crystal_SMD_EuroQuartz_MJ
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  name_addition: _HandSoldering
+  pack_bevel: 0.1
+  pack_height: 3.2
+  pack_width: 5
+  pad:
+  - 2.8499999999999996
+  - 1.6500000000000001
+  pad_sep_x: 4.65
+  pad_sep_y: 2.8499999999999996
+  pins: 4
+  style: rect
+  tags: SMD SMT crystal hand-soldering
+Crystal_SMD_EuroQuartz_MQ-4pin_7.0x5.0mm:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Crystal EuroQuartz MQ series http://cdn-reichelt.de/documents/datenblatt/B400/MQ.pdf
+  footprint_name: Crystal_SMD_EuroQuartz_MQ
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  pack_bevel: 0.1
+  pack_height: 5
+  pack_width: 7
+  pad:
+  - 2.2
+  - 1.4
+  pad_sep_x: 6.3
+  pad_sep_y: 2.5
+  pins: 4
+  style: rect
+  tags: SMD SMT crystal
+Crystal_SMD_EuroQuartz_MQ-4pin_7.0x5.0mm_HandSoldering:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Crystal EuroQuartz MQ series http://cdn-reichelt.de/documents/datenblatt/B400/MQ.pdf,
+    hand-soldering
+  footprint_name: Crystal_SMD_EuroQuartz_MQ
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  name_addition: _HandSoldering
+  pack_bevel: 0.1
+  pack_height: 5
+  pack_width: 7
+  pad:
+  - 3.3000000000000003
+  - 1.54
+  pad_sep_x: 7.4
+  pad_sep_y: 2.64
+  pins: 4
+  style: rect
+  tags: SMD SMT crystal hand-soldering
+Crystal_SMD_EuroQuartz_MQ2-2pin_7.0x5.0mm:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Crystal EuroQuartz MQ2 series http://cdn-reichelt.de/documents/datenblatt/B400/MQ.pdf
+  footprint_name: Crystal_SMD_EuroQuartz_MQ2
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  pack_bevel: 0.1
+  pack_height: 5
+  pack_width: 7
+  pad:
+  - 2.2
+  - 2.4
+  pad_sep_x: 6.3
+  pad_sep_y: 0
+  pins: 2
+  style: rect
+  tags: SMD SMT crystal
+Crystal_SMD_EuroQuartz_MQ2-2pin_7.0x5.0mm_HandSoldering:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Crystal EuroQuartz MQ2 series http://cdn-reichelt.de/documents/datenblatt/B400/MQ.pdf,
+    hand-soldering
+  footprint_name: Crystal_SMD_EuroQuartz_MQ2
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  name_addition: _HandSoldering
+  pack_bevel: 0.1
+  pack_height: 5
+  pack_width: 7
+  pad:
+  - 3.8500000000000005
+  - 2.4
+  pad_sep_x: 7.95
+  pad_sep_y: 0.0
+  pins: 2
+  style: rect
+  tags: SMD SMT crystal hand-soldering
+Crystal_SMD_EuroQuartz_MT-4pin_3.2x2.5mm:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Crystal EuroQuartz MT series http://cdn-reichelt.de/documents/datenblatt/B400/MT.pdf
+  footprint_name: Crystal_SMD_EuroQuartz_MT
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  pack_bevel: 0.1
+  pack_height: 2.5
+  pack_width: 3.2
+  pad:
+  - 1.3
+  - 1
+  pad_sep_x: 2.2
+  pad_sep_y: 1.8
+  pins: 4
+  style: rect
+  tags: SMD SMT crystal
+Crystal_SMD_EuroQuartz_MT-4pin_3.2x2.5mm_HandSoldering:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Crystal EuroQuartz MT series http://cdn-reichelt.de/documents/datenblatt/B400/MT.pdf,
+    hand-soldering
+  footprint_name: Crystal_SMD_EuroQuartz_MT
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  name_addition: _HandSoldering
+  pack_bevel: 0.1
+  pack_height: 2.5
+  pack_width: 3.2
+  pad:
+  - 1.9500000000000002
+  - 1.5
+  pad_sep_x: 2.85
+  pad_sep_y: 2.3
+  pins: 4
+  style: rect
+  tags: SMD SMT crystal hand-soldering
+Crystal_SMD_EuroQuartz_X22-4pin_2.5x2.0mm:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Crystal EuroQuartz X22 series http://cdn-reichelt.de/documents/datenblatt/B400/DS_X22.pdf
+  footprint_name: Crystal_SMD_EuroQuartz_X22
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  pack_bevel: 0.1
+  pack_height: 2
+  pack_width: 2.5
+  pad:
+  - 1.2
+  - 1
+  pad_sep_x: 1.6
+  pad_sep_y: 1.2
+  pins: 4
+  style: rect
+  tags: SMD SMT crystal
+Crystal_SMD_EuroQuartz_X22-4pin_2.5x2.0mm_HandSoldering:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Crystal EuroQuartz X22 series http://cdn-reichelt.de/documents/datenblatt/B400/DS_X22.pdf,
+    hand-soldering
+  footprint_name: Crystal_SMD_EuroQuartz_X22
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  name_addition: _HandSoldering
+  pack_bevel: 0.1
+  pack_height: 2
+  pack_width: 2.5
+  pad:
+  - 1.7999999999999998
+  - 1.5
+  pad_sep_x: 2.2
+  pad_sep_y: 1.7
+  pins: 4
+  style: rect
+  tags: SMD SMT crystal hand-soldering
+Crystal_SMD_FOX_FE-2pin_7.5x5.0mm:
+  addSizeFootprintName: true
+  adhesiveSize: 0.8
+  description: crystal Ceramic Resin Sealed SMD http://www.foxonline.com/pdfs/fe.pdf
+  footprint_name: Crystal_SMD_FOX_FE
+  func: makeSMDCrystal
+  hasAdhesive: true
+  lib_name: Crystal
+  pack_bevel: 0
+  pack_height: 5
+  pack_width: 7.5
+  pad:
+  - 2.2
+  - 2.4
+  pad_sep_x: 6.3
+  pad_sep_y: 0
+  pins: 2
+  style: rect
+  tags: SMD SMT crystal
+Crystal_SMD_FOX_FE-2pin_7.5x5.0mm_HandSoldering:
+  addSizeFootprintName: true
+  adhesiveSize: 0.8
+  description: crystal Ceramic Resin Sealed SMD http://www.foxonline.com/pdfs/fe.pdf,
+    hand-soldering
+  footprint_name: Crystal_SMD_FOX_FE
+  func: makeSMDCrystal
+  hasAdhesive: true
+  lib_name: Crystal
+  name_addition: _HandSoldering
+  pack_bevel: 0
+  pack_height: 5
+  pack_width: 7.5
+  pad:
+  - 3.8500000000000005
+  - 2.4
+  pad_sep_x: 7.95
+  pad_sep_y: 0.0
+  pins: 2
+  style: rect
+  tags: SMD SMT crystal hand-soldering
+Crystal_SMD_FOX_FQ7050-2pin_7.0x5.0mm:
+  addSizeFootprintName: true
+  adhesiveSize: 0.8
+  description: FOX SMD Crystal SERIES SMD7050/4 https://www.foxonline.com/pdfs/FQ7050.pdf
+  footprint_name: Crystal_SMD_FOX_FQ7050
+  func: makeSMDCrystal
+  hasAdhesive: true
+  lib_name: Crystal
+  pack_bevel: 0.2
+  pack_height: 5
+  pack_width: 7
+  pad:
+  - 2.8
+  - 3
+  pad_sep_x: 5.2
+  pad_sep_y: 0
+  pins: 2
+  style: rect
+  tags: SMD SMT crystal
+Crystal_SMD_FOX_FQ7050-2pin_7.0x5.0mm_HandSoldering:
+  addSizeFootprintName: true
+  adhesiveSize: 0.8
+  description: FOX SMD Crystal SERIES SMD7050/4 https://www.foxonline.com/pdfs/FQ7050.pdf,
+    hand-soldering
+  footprint_name: Crystal_SMD_FOX_FQ7050
+  func: makeSMDCrystal
+  hasAdhesive: true
+  lib_name: Crystal
+  name_addition: _HandSoldering
+  pack_bevel: 0.2
+  pack_height: 5
+  pack_width: 7
+  pad:
+  - 4.8999999999999995
+  - 3
+  pad_sep_x: 7.3
+  pad_sep_y: 0
+  pins: 2
+  style: rect
+  tags: SMD SMT crystal hand-soldering
+Crystal_SMD_FOX_FQ7050-4pin_7.0x5.0mm:
+  addSizeFootprintName: true
+  adhesiveSize: 0.8
+  description: FOX SMD Crystal SERIES SMD7050/4 https://www.foxonline.com/pdfs/FQ7050.pdf
+  footprint_name: Crystal_SMD_FOX_FQ7050
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  pack_bevel: 0.2
+  pack_height: 5
+  pack_width: 7
+  pad:
+  - 2.1
+  - 1.7
+  pad_sep_x: 5.9
+  pad_sep_y: 2.7
+  pins: 4
+  tags: SMD SMT crystal
+Crystal_SMD_FrontierElectronics_FM206:
+  ddrill: 1
+  description: SMD Watch Crystal FrontierElectronics FM206 6.0mm length 1.9mm diameter
+    http://www.chinafronter.com/wp-content/uploads/2013/12/FM206.pdf
+  footprint_name: Crystal_SMD_FrontierElectronics_FM206
+  func: makeCrystal
+  lib_name: Crystal
+  pack_height: 1.9
+  pack_offset: 1.6
+  pack_rm: 1
+  pack_width: 6.0
+  package_pad: true
+  package_pad_add_holes: false
+  package_pad_ddrill: 0.8
+  package_pad_drill_size:
+  - 1.2
+  - 1.2
+  package_pad_offset: 5.3
+  package_pad_size:
+  - 2.5
+  - 3
+  pad_size:
+  - 1.6
+  - 1
+  pad_style: smd
+  rm: 2.54
+  style: flat
+  tags:
+  - FM206
+Crystal_SMD_G8-2pin_3.2x1.5mm:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Crystal G8
+  footprint_name: Crystal_SMD_G8
+  func: makeSMDCrystal
+  hasAdhesive: true
+  lib_name: Crystal
+  pack_bevel: 0
+  pack_height: 1.5
+  pack_width: 3.2
+  pad:
+  - 1
+  - 1.8
+  pad_sep_x: 2.5
+  pad_sep_y: 0
+  pins: 2
+  style: rect
+  tags: SMD SMT crystal
+Crystal_SMD_G8-2pin_3.2x1.5mm_HandSoldering:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Crystal G8, hand-soldering
+  footprint_name: Crystal_SMD_G8
+  func: makeSMDCrystal
+  hasAdhesive: true
+  lib_name: Crystal
+  name_addition: _HandSoldering
+  pack_bevel: 0
+  pack_height: 1.5
+  pack_width: 3.2
+  pad:
+  - 1.75
+  - 1.8
+  pad_sep_x: 3.25
+  pad_sep_y: 0.0
+  pins: 2
+  style: rect
+  tags: SMD SMT crystal hand-soldering
+Crystal_SMD_HC49-SD:
+  addSizeFootprintName: false
+  adhesiveSize: 0.5
+  description: SMD Crystal HC-49-SD http://cdn-reichelt.de/documents/datenblatt/B400/xxx-HC49-SMD.pdf
+  footprint_name: Crystal_SMD_HC49-SD
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  pack_bevel: 0
+  pack_height: 4.7
+  pack_width: 11.4
+  pad:
+  - 4.5
+  - 2
+  pad_sep_x: 8.5
+  pad_sep_y: 0
+  pins: 2
+  style: hc49
+  tags: SMD SMT crystal
+Crystal_SMD_HC49-SD_HandSoldering:
+  addSizeFootprintName: false
+  adhesiveSize: 0.5
+  description: SMD Crystal HC-49-SD http://cdn-reichelt.de/documents/datenblatt/B400/xxx-HC49-SMD.pdf,
+    hand-soldering
+  footprint_name: Crystal_SMD_HC49-SD
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  name_addition: _HandSoldering
+  pack_bevel: 0
+  pack_height: 4.7
+  pack_width: 11.4
+  pad:
+  - 7.875
+  - 2
+  pad_sep_x: 11.875
+  pad_sep_y: 0
+  pins: 2
+  style: hc49
+  tags: SMD SMT crystal hand-soldering
+Crystal_SMD_MicroCrystal_CC1V-T1A-2pin_8.0x3.7mm:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Crystal MicroCrystal CC1V-T1A series http://www.microcrystal.com/images/_Product-Documentation/01_TF_ceramic_Packages/01_Datasheet/CC1V-T1A.pdf
+  footprint_name: Crystal_SMD_MicroCrystal_CC1V-T1A
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  pack_bevel: 0
+  pack_height: 3.7
+  pack_width: 8
+  pad:
+  - 2.3
+  - 4.2
+  pad_sep_x: 6.3
+  pad_sep_y: 0
+  pins: 2
+  style: rect
+  tags: SMD SMT crystal
+Crystal_SMD_MicroCrystal_CC1V-T1A-2pin_8.0x3.7mm_HandSoldering:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Crystal MicroCrystal CC1V-T1A series http://www.microcrystal.com/images/_Product-Documentation/01_TF_ceramic_Packages/01_Datasheet/CC1V-T1A.pdf,
+    hand-soldering
+  footprint_name: Crystal_SMD_MicroCrystal_CC1V-T1A
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  name_addition: _HandSoldering
+  pack_bevel: 0
+  pack_height: 3.7
+  pack_width: 8
+  pad:
+  - 4.0249999999999995
+  - 4.2
+  pad_sep_x: 8.025
+  pad_sep_y: 0.0
+  pins: 2
+  style: rect
+  tags: SMD SMT crystal hand-soldering
+Crystal_SMD_MicroCrystal_CC4V-T1A-2pin_5.0x1.9mm:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Crystal MicroCrystal CC4V-T1A series http://cdn-reichelt.de/documents/datenblatt/B400/CC4V-T1A.pdf
+  footprint_name: Crystal_SMD_MicroCrystal_CC4V-T1A
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  pack_bevel: 0
+  pack_height: 1.9
+  pack_width: 5
+  pad:
+  - 1.3
+  - 2.2
+  pad_sep_x: 4.2
+  pad_sep_y: 0
+  pins: 2
+  style: rect
+  tags: SMD SMT crystal
+Crystal_SMD_MicroCrystal_CC4V-T1A-2pin_5.0x1.9mm_HandSoldering:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Crystal MicroCrystal CC4V-T1A series http://cdn-reichelt.de/documents/datenblatt/B400/CC4V-T1A.pdf,
+    hand-soldering
+  footprint_name: Crystal_SMD_MicroCrystal_CC4V-T1A
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  name_addition: _HandSoldering
+  pack_bevel: 0
+  pack_height: 1.9
+  pack_width: 5
+  pad:
+  - 2.275
+  - 2.2
+  pad_sep_x: 5.175000000000001
+  pad_sep_y: 0.0
+  pins: 2
+  style: rect
+  tags: SMD SMT crystal hand-soldering
+Crystal_SMD_MicroCrystal_CC5V-T1A-2pin_4.1x1.5mm:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Crystal MicroCrystal CC5V-T1A series http://cdn-reichelt.de/documents/datenblatt/B400/CC5V-T1A.pdf
+  footprint_name: Crystal_SMD_MicroCrystal_CC5V-T1A
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  pack_bevel: 0
+  pack_height: 1.5
+  pack_width: 4.1
+  pad:
+  - 1.1
+  - 1.9
+  pad_sep_x: 3.4
+  pad_sep_y: 0
+  pins: 2
+  style: rect
+  tags: SMD SMT crystal
+Crystal_SMD_MicroCrystal_CC5V-T1A-2pin_4.1x1.5mm_HandSoldering:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Crystal MicroCrystal CC5V-T1A series http://cdn-reichelt.de/documents/datenblatt/B400/CC5V-T1A.pdf,
+    hand-soldering
+  footprint_name: Crystal_SMD_MicroCrystal_CC5V-T1A
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  name_addition: _HandSoldering
+  pack_bevel: 0
+  pack_height: 1.5
+  pack_width: 4.1
+  pad:
+  - 1.9250000000000003
+  - 1.9
+  pad_sep_x: 4.225
+  pad_sep_y: 0.0
+  pins: 2
+  style: rect
+  tags: SMD SMT crystal hand-soldering
+Crystal_SMD_MicroCrystal_CC7V-T1A-2pin_3.2x1.5mm:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Crystal MicroCrystal CC7V-T1A/CM7V-T1A series http://www.microcrystal.com/images/_Product-Documentation/01_TF_ceramic_Packages/01_Datasheet/CC1V-T1A.pdf
+  footprint_name: Crystal_SMD_MicroCrystal_CC7V-T1A
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  pack_bevel: 0
+  pack_height: 1.5
+  pack_width: 3.2
+  pad:
+  - 1
+  - 1.8
+  pad_sep_x: 2.5
+  pad_sep_y: 0
+  pins: 2
+  style: rect
+  tags: SMD SMT crystal
+Crystal_SMD_MicroCrystal_CC7V-T1A-2pin_3.2x1.5mm_HandSoldering:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Crystal MicroCrystal CC7V-T1A/CM7V-T1A series http://www.microcrystal.com/images/_Product-Documentation/01_TF_ceramic_Packages/01_Datasheet/CC1V-T1A.pdf,
+    hand-soldering
+  footprint_name: Crystal_SMD_MicroCrystal_CC7V-T1A
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  name_addition: _HandSoldering
+  pack_bevel: 0
+  pack_height: 1.5
+  pack_width: 3.2
+  pad:
+  - 1.75
+  - 1.8
+  pad_sep_x: 3.25
+  pad_sep_y: 0.0
+  pins: 2
+  style: rect
+  tags: SMD SMT crystal hand-soldering
+Crystal_SMD_MicroCrystal_CC8V-T1A-2pin_2.0x1.2mm:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Crystal MicroCrystal CC8V-T1A/CM8V-T1A series http://www.microcrystal.com/images/_Product-Documentation/01_TF_ceramic_Packages/01_Datasheet/CC8V-T1A.pdf
+  footprint_name: Crystal_SMD_MicroCrystal_CC8V-T1A
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  pack_bevel: 0
+  pack_height: 1.2
+  pack_width: 2
+  pad:
+  - 0.8
+  - 1.5
+  pad_sep_x: 1.5
+  pad_sep_y: 0
+  pins: 2
+  style: rect
+  tags: SMD SMT crystal
+Crystal_SMD_MicroCrystal_CC8V-T1A-2pin_2.0x1.2mm_HandSoldering:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Crystal MicroCrystal CC8V-T1A/CM8V-T1A series http://www.microcrystal.com/images/_Product-Documentation/01_TF_ceramic_Packages/01_Datasheet/CC8V-T1A.pdf,
+    hand-soldering
+  footprint_name: Crystal_SMD_MicroCrystal_CC8V-T1A
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  name_addition: _HandSoldering
+  pack_bevel: 0
+  pack_height: 1.2
+  pack_width: 2
+  pad:
+  - 1.4000000000000001
+  - 1.5
+  pad_sep_x: 2.1
+  pad_sep_y: 0.0
+  pins: 2
+  style: rect
+  tags: SMD SMT crystal hand-soldering
+Crystal_SMD_MicroCrystal_CM9V-T1A-2pin_1.6x1.0mm:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Crystal MicroCrystal CM9V-T1A series http://www.microcrystal.com/images/_Product-Documentation/01_TF_ceramic_Packages/01_Datasheet/CM9V-T1A.pdf
+  footprint_name: Crystal_SMD_MicroCrystal_CM9V-T1A
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  pack_bevel: 0
+  pack_height: 1.0
+  pack_width: 1.6
+  pad:
+  - 0.6
+  - 1.2
+  pad_sep_x: 1.2
+  pad_sep_y: 0
+  pins: 2
+  style: rect
+  tags: SMD SMT crystal
+Crystal_SMD_MicroCrystal_CM9V-T1A-2pin_1.6x1.0mm_HandSoldering:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Crystal MicroCrystal CM9V-T1A series http://www.microcrystal.com/images/_Product-Documentation/01_TF_ceramic_Packages/01_Datasheet/CM9V-T1A.pdf,
+    hand-soldering
+  footprint_name: Crystal_SMD_MicroCrystal_CM9V-T1A
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  name_addition: _HandSoldering
+  pack_bevel: 0
+  pack_height: 1.0
+  pack_width: 1.6
+  pad:
+  - 1.05
+  - 1.2
+  pad_sep_x: 1.65
+  pad_sep_y: 0.0
+  pins: 2
+  style: rect
+  tags: SMD SMT crystal hand-soldering
+Crystal_SMD_MicroCrystal_MS1V-T1K:
+  ddrill: 1
+  description: SMD Watch Crystal MicroCrystal MS1V-T1K 6.1mm length 2.0mm diameter
+    http://www.microcrystal.com/images/_Product-Documentation/03_TF_metal_Packages/01_Datasheet/MS1V-T1K.pdf
+  footprint_name: Crystal_SMD_MicroCrystal_MS1V-T1K
+  func: makeCrystal
+  lib_name: Crystal
+  pack_height: 2
+  pack_offset: 1.6
+  pack_rm: 1
+  pack_width: 6.1
+  package_pad: true
+  package_pad_add_holes: false
+  package_pad_ddrill: 0.8
+  package_pad_drill_size:
+  - 1.2
+  - 1.2
+  package_pad_offset: 5.3
+  package_pad_size:
+  - 2.5
+  - 3
+  pad_size:
+  - 1.6
+  - 1
+  pad_style: smd
+  rm: 2.54
+  style: flat
+  tags:
+  - MS1V-T1K
+Crystal_SMD_MicroCrystal_MS3V-T1R:
+  ddrill: 1
+  description: SMD Watch Crystal MicroCrystal MS3V-T1R 5.2mm length 1.4mm diameter
+    http://www.microcrystal.com/images/_Product-Documentation/03_TF_metal_Packages/01_Datasheet/MS3V-T1R.pdf
+  footprint_name: Crystal_SMD_MicroCrystal_MS3V-T1R
+  func: makeCrystal
+  lib_name: Crystal
+  pack_height: 1.4
+  pack_offset: 1.2
+  pack_rm: 0.7
+  pack_width: 5.2
+  package_pad: true
+  package_pad_add_holes: false
+  package_pad_ddrill: 0.8
+  package_pad_drill_size:
+  - 1.2
+  - 1.2
+  package_pad_offset: 4.4
+  package_pad_size:
+  - 2.4
+  - 1.5
+  pad_size:
+  - 1.1
+  - 0.6
+  pad_style: smd
+  rm: 1
+  style: flat
+  tags:
+  - MS3V-T1R
+Crystal_SMD_SeikoEpson_FA238-4pin_3.2x2.5mm:
+  addSizeFootprintName: true
+  adhesiveSize: 1
+  description: crystal Epson Toyocom FA-238 series http://www.mouser.com/ds/2/137/1721499-465440.pdf
+  footprint_name: Crystal_SMD_SeikoEpson_FA238
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  pack_bevel: 0.1
+  pack_height: 2.5
+  pack_width: 3.2
+  pad:
+  - 1.4
+  - 1.2
+  pad_sep_x: 2.2
+  pad_sep_y: 1.6
+  pins: 4
+  scale3d:
+  - 0.24
+  - 0.24
+  - 0.24
+  style: rect
+  tags: SMD SMT crystal
+Crystal_SMD_SeikoEpson_FA238-4pin_3.2x2.5mm_HandSoldering:
+  addSizeFootprintName: true
+  adhesiveSize: 1
+  description: crystal Epson Toyocom FA-238 series http://www.mouser.com/ds/2/137/1721499-465440.pdf,
+    hand-soldering
+  footprint_name: Crystal_SMD_SeikoEpson_FA238
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  name_addition: _HandSoldering
+  pack_bevel: 0.1
+  pack_height: 2.5
+  pack_width: 3.2
+  pad:
+  - 2.0999999999999996
+  - 1.7999999999999998
+  pad_sep_x: 2.9000000000000004
+  pad_sep_y: 2.2
+  pins: 4
+  scale3d:
+  - 0.24
+  - 0.24
+  - 0.24
+  style: rect
+  tags: SMD SMT crystal hand-soldering
+Crystal_SMD_SeikoEpson_FA238V-4pin_3.2x2.5mm:
+  addSizeFootprintName: true
+  adhesiveSize: 1
+  description: crystal Epson Toyocom FA-238 series http://www.mouser.com/ds/2/137/1721499-465440.pdf
+  footprint_name: Crystal_SMD_SeikoEpson_FA238V
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  pack_bevel: 0.1
+  pack_height: 2.5
+  pack_width: 3.2
+  pad:
+  - 1.4
+  - 1.2
+  pad_sep_x: 2.4
+  pad_sep_y: 1.9
+  pins: 4
+  style: rect
+  tags: SMD SMT crystal
+Crystal_SMD_SeikoEpson_FA238V-4pin_3.2x2.5mm_HandSoldering:
+  addSizeFootprintName: true
+  adhesiveSize: 1
+  description: crystal Epson Toyocom FA-238 series http://www.mouser.com/ds/2/137/1721499-465440.pdf,
+    hand-soldering
+  footprint_name: Crystal_SMD_SeikoEpson_FA238V
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  name_addition: _HandSoldering
+  pack_bevel: 0.1
+  pack_height: 2.5
+  pack_width: 3.2
+  pad:
+  - 2.0999999999999996
+  - 1.7999999999999998
+  pad_sep_x: 3.0999999999999996
+  pad_sep_y: 2.5
+  pins: 4
+  style: rect
+  tags: SMD SMT crystal hand-soldering
+Crystal_SMD_SeikoEpson_MA406-4pin_11.7x4.0mm:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Crystal Seiko Epson MC-506 http://media.digikey.com/pdf/Data%20Sheets/Epson%20PDFs/MA-505,506.pdf
+  footprint_name: Crystal_SMD_SeikoEpson_MA406
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  pack_bevel: 0
+  pack_height: 4
+  pack_width: 11.7
+  pad:
+  - 1.8
+  - 1.9
+  pad_sep_x: 9.6
+  pad_sep_y: 3.6
+  pins: 4
+  style: dip
+  tags: SMD SMT crystal
+Crystal_SMD_SeikoEpson_MA406-4pin_11.7x4.0mm_HandSoldering:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Crystal Seiko Epson MC-506 http://media.digikey.com/pdf/Data%20Sheets/Epson%20PDFs/MA-505,506.pdf,
+    hand-soldering
+  footprint_name: Crystal_SMD_SeikoEpson_MA406
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  name_addition: _HandSoldering
+  pack_bevel: 0
+  pack_height: 4
+  pack_width: 11.7
+  pad:
+  - 1.9800000000000002
+  - 2.8499999999999996
+  pad_sep_x: 9.78
+  pad_sep_y: 4.55
+  pins: 4
+  style: dip
+  tags: SMD SMT crystal hand-soldering
+Crystal_SMD_SeikoEpson_MA505-2pin_12.7x5.1mm:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Crystal Seiko Epson MC-505 http://media.digikey.com/pdf/Data%20Sheets/Epson%20PDFs/MA-505,506.pdf
+  footprint_name: Crystal_SMD_SeikoEpson_MA505
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  pack_bevel: 0
+  pack_height: 5.08
+  pack_width: 12.7
+  pad:
+  - 4.1
+  - 5.6
+  pad_sep_x: 11.1
+  pad_sep_y: 0
+  pins: 2
+  style: rect
+  tags: SMD SMT crystal
+Crystal_SMD_SeikoEpson_MA505-2pin_12.7x5.1mm_HandSoldering:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Crystal Seiko Epson MC-505 http://media.digikey.com/pdf/Data%20Sheets/Epson%20PDFs/MA-505,506.pdf,
+    hand-soldering
+  footprint_name: Crystal_SMD_SeikoEpson_MA505
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  name_addition: _HandSoldering
+  pack_bevel: 0
+  pack_height: 5.08
+  pack_width: 12.7
+  pad:
+  - 7.174999999999999
+  - 5.6
+  pad_sep_x: 14.174999999999999
+  pad_sep_y: 0.0
+  pins: 2
+  style: rect
+  tags: SMD SMT crystal hand-soldering
+Crystal_SMD_SeikoEpson_MA506-4pin_12.7x5.1mm:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Crystal Seiko Epson MC-506 http://media.digikey.com/pdf/Data%20Sheets/Epson%20PDFs/MA-505,506.pdf
+  footprint_name: Crystal_SMD_SeikoEpson_MA506
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  pack_bevel: 0
+  pack_height: 5.08
+  pack_width: 12.7
+  pad:
+  - 4.1
+  - 2.05
+  pad_sep_x: 11.1
+  pad_sep_y: 3.55
+  pins: 4
+  style: rect
+  tags: SMD SMT crystal
+Crystal_SMD_SeikoEpson_MA506-4pin_12.7x5.1mm_HandSoldering:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Crystal Seiko Epson MC-506 http://media.digikey.com/pdf/Data%20Sheets/Epson%20PDFs/MA-505,506.pdf,
+    hand-soldering
+  footprint_name: Crystal_SMD_SeikoEpson_MA506
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  name_addition: _HandSoldering
+  pack_bevel: 0
+  pack_height: 5.08
+  pack_width: 12.7
+  pad:
+  - 6.1499999999999995
+  - 3.0749999999999997
+  pad_sep_x: 13.149999999999999
+  pad_sep_y: 4.574999999999999
+  pins: 4
+  style: rect
+  tags: SMD SMT crystal hand-soldering
+Crystal_SMD_SeikoEpson_MC146-4pin_6.7x1.5mm:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Crystal Seiko Epson MC-146 https://support.epson.biz/td/api/doc_check.php?dl=brief_MC-156_en.pdf
+  footprint_name: Crystal_SMD_SeikoEpson_MC146
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  pack_bevel: 0.4
+  pack_height: 1.5
+  pack_width: 6.7
+  pad:
+  - 1.2
+  - 0.6
+  pad_sep_x: 6.3
+  pad_sep_y: 0.9
+  pins: 4
+  style: rect
+  tags: SMD SMT crystal
+Crystal_SMD_SeikoEpson_MC146-4pin_6.7x1.5mm_HandSoldering:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Crystal Seiko Epson MC-146 https://support.epson.biz/td/api/doc_check.php?dl=brief_MC-156_en.pdf,
+    hand-soldering
+  footprint_name: Crystal_SMD_SeikoEpson_MC146
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  name_addition: _HandSoldering
+  pack_bevel: 0.4
+  pack_height: 1.5
+  pack_width: 6.7
+  pad:
+  - 2.1
+  - 0.6
+  pad_sep_x: 7.199999999999999
+  pad_sep_y: 0.9
+  pins: 4
+  style: rect
+  tags: SMD SMT crystal hand-soldering
+Crystal_SMD_SeikoEpson_MC156-4pin_7.1x2.5mm:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Crystal Seiko Epson MC-156 https://support.epson.biz/td/api/doc_check.php?dl=brief_MC-156_en.pdf
+  footprint_name: Crystal_SMD_SeikoEpson_MC156
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  pack_bevel: 0
+  pack_height: 2.5
+  pack_width: 7.1
+  pad:
+  - 1.2
+  - 1.5
+  pad_sep_x: 5.08
+  pad_sep_y: 2.5
+  pins: 4
+  style: dip
+  tags: SMD SMT crystal
+Crystal_SMD_SeikoEpson_MC156-4pin_7.1x2.5mm_HandSoldering:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Crystal Seiko Epson MC-156 https://support.epson.biz/td/api/doc_check.php?dl=brief_MC-156_en.pdf,
+    hand-soldering
+  footprint_name: Crystal_SMD_SeikoEpson_MC156
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  name_addition: _HandSoldering
+  pack_bevel: 0
+  pack_height: 2.5
+  pack_width: 7.1
+  pad:
+  - 1.32
+  - 2.25
+  pad_sep_x: 5.2
+  pad_sep_y: 3.25
+  pins: 4
+  style: dip
+  tags: SMD SMT crystal hand-soldering
+Crystal_SMD_SeikoEpson_MC306-4pin_8.0x3.2mm:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Crystal Seiko Epson MC-306 https://support.epson.biz/td/api/doc_check.php?dl=brief_MC-306_en.pdf
+  footprint_name: Crystal_SMD_SeikoEpson_MC306
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  pack_bevel: 0
+  pack_height: 3.2
+  pack_width: 8
+  pad:
+  - 1.3
+  - 1.9
+  pad_sep_x: 5.5
+  pad_sep_y: 3.2
+  pins: 4
+  style: dip
+  tags: SMD SMT crystal
+Crystal_SMD_SeikoEpson_MC306-4pin_8.0x3.2mm_HandSoldering:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Crystal Seiko Epson MC-306 https://support.epson.biz/td/api/doc_check.php?dl=brief_MC-306_en.pdf,
+    hand-soldering
+  footprint_name: Crystal_SMD_SeikoEpson_MC306
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  name_addition: _HandSoldering
+  pack_bevel: 0
+  pack_height: 3.2
+  pack_width: 8
+  pad:
+  - 1.4300000000000002
+  - 2.8499999999999996
+  pad_sep_x: 5.63
+  pad_sep_y: 4.15
+  pins: 4
+  style: dip
+  tags: SMD SMT crystal hand-soldering
+Crystal_SMD_SeikoEpson_MC405-2pin_9.6x4.1mm:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Crystal Seiko Epson MC-405 https://support.epson.biz/td/api/doc_check.php?dl=brief_MC-306_en.pdf
+  footprint_name: Crystal_SMD_SeikoEpson_MC405
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  pack_bevel: 0
+  pack_height: 4.06
+  pack_width: 9.6
+  pad:
+  - 4.1
+  - 4.1
+  pad_sep_x: 8
+  pad_sep_y: 0
+  pins: 2
+  style: rect
+  tags: SMD SMT crystal
+Crystal_SMD_SeikoEpson_MC405-2pin_9.6x4.1mm_HandSoldering:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Crystal Seiko Epson MC-405 https://support.epson.biz/td/api/doc_check.php?dl=brief_MC-306_en.pdf,
+    hand-soldering
+  footprint_name: Crystal_SMD_SeikoEpson_MC405
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  name_addition: _HandSoldering
+  pack_bevel: 0
+  pack_height: 4.06
+  pack_width: 9.6
+  pad:
+  - 7.174999999999999
+  - 4.1
+  pad_sep_x: 11.075
+  pad_sep_y: 0.0
+  pins: 2
+  style: rect
+  tags: SMD SMT crystal hand-soldering
+Crystal_SMD_SeikoEpson_MC406-4pin_9.6x4.1mm:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Crystal Seiko Epson MC-406 https://support.epson.biz/td/api/doc_check.php?dl=brief_MC-306_en.pdf
+  footprint_name: Crystal_SMD_SeikoEpson_MC406
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  pack_bevel: 0
+  pack_height: 4.06
+  pack_width: 9.6
+  pad:
+  - 4.1
+  - 1.52
+  pad_sep_x: 8
+  pad_sep_y: 2.32
+  pins: 4
+  style: rect
+  tags: SMD SMT crystal
+Crystal_SMD_SeikoEpson_MC406-4pin_9.6x4.1mm_HandSoldering:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Crystal Seiko Epson MC-406 https://support.epson.biz/td/api/doc_check.php?dl=brief_MC-306_en.pdf,
+    hand-soldering
+  footprint_name: Crystal_SMD_SeikoEpson_MC406
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  name_addition: _HandSoldering
+  pack_bevel: 0
+  pack_height: 4.06
+  pack_width: 9.6
+  pad:
+  - 6.1499999999999995
+  - 1.6720000000000002
+  pad_sep_x: 10.05
+  pad_sep_y: 2.472
+  pins: 4
+  style: rect
+  tags: SMD SMT crystal hand-soldering
+Crystal_SMD_SeikoEpson_TSX3225-4pin_3.2x2.5mm:
+  addSizeFootprintName: true
+  adhesiveSize: 1
+  description: crystal Epson Toyocom TSX-3225 series http://www.mouser.com/ds/2/137/1721499-465440.pdf
+  footprint_name: Crystal_SMD_SeikoEpson_TSX3225
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  pack_bevel: 0.1
+  pack_height: 2.5
+  pack_width: 3.2
+  pad:
+  - 1.4
+  - 1.15
+  pad_sep_x: 2.2
+  pad_sep_y: 1.6
+  pins: 4
+  scale3d:
+  - 0.24
+  - 0.24
+  - 0.24
+  style: rect
+  tags: SMD SMT crystal
+Crystal_SMD_SeikoEpson_TSX3225-4pin_3.2x2.5mm_HandSoldering:
+  addSizeFootprintName: true
+  adhesiveSize: 1
+  description: crystal Epson Toyocom TSX-3225 series http://www.mouser.com/ds/2/137/1721499-465440.pdf,
+    hand-soldering
+  footprint_name: Crystal_SMD_SeikoEpson_TSX3225
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  name_addition: _HandSoldering
+  pack_bevel: 0.1
+  pack_height: 2.5
+  pack_width: 3.2
+  pad:
+  - 2.0999999999999996
+  - 1.7249999999999999
+  pad_sep_x: 2.9000000000000004
+  pad_sep_y: 2.175
+  pins: 4
+  scale3d:
+  - 0.24
+  - 0.24
+  - 0.24
+  style: rect
+  tags: SMD SMT crystal hand-soldering
+Crystal_SMD_TXC_7M-4pin_3.2x2.5mm:
+  addSizeFootprintName: true
+  adhesiveSize: 0.4
+  description: SMD Crystal TXC 7M http://www.txccrystal.com/images/pdf/7m-accuracy.pdf
+  footprint_name: Crystal_SMD_TXC_7M
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  pack_bevel: 0
+  pack_height: 2.5
+  pack_width: 3.2
+  pad:
+  - 1.4
+  - 1.2
+  pad_sep_x: 2.2
+  pad_sep_y: 1.7
+  pins: 4
+  style: rect
+  tags: SMD SMT crystal
+Crystal_SMD_TXC_7M-4pin_3.2x2.5mm_HandSoldering:
+  addSizeFootprintName: true
+  adhesiveSize: 0.4
+  description: SMD Crystal TXC 7M http://www.txccrystal.com/images/pdf/7m-accuracy.pdf,
+    hand-soldering
+  footprint_name: Crystal_SMD_TXC_7M
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  name_addition: _HandSoldering
+  pack_bevel: 0
+  pack_height: 2.5
+  pack_width: 3.2
+  pad:
+  - 2.0999999999999996
+  - 1.7999999999999998
+  pad_sep_x: 2.9000000000000004
+  pad_sep_y: 2.3
+  pins: 4
+  style: rect
+  tags: SMD SMT crystal hand-soldering
+Crystal_SMD_TXC_9HT11-2pin_2.0x1.2mm:
+  addSizeFootprintName: true
+  adhesiveSize: 0.4
+  description: SMD Crystal TXC 9HT11 http://txccrystal.com/images/pdf/9ht11.pdf
+  footprint_name: Crystal_SMD_TXC_9HT11
+  func: makeSMDCrystal
+  hasAdhesive: true
+  lib_name: Crystal
+  pack_bevel: 0
+  pack_height: 1.2
+  pack_width: 2
+  pad:
+  - 0.6
+  - 1.1
+  pad_sep_x: 1.4
+  pad_sep_y: 0
+  pins: 2
+  style: rect
+  tags: SMD SMT crystal
+Crystal_SMD_TXC_9HT11-2pin_2.0x1.2mm_HandSoldering:
+  addSizeFootprintName: true
+  adhesiveSize: 0.4
+  description: SMD Crystal TXC 9HT11 http://txccrystal.com/images/pdf/9ht11.pdf, hand-soldering
+  footprint_name: Crystal_SMD_TXC_9HT11
+  func: makeSMDCrystal
+  hasAdhesive: true
+  lib_name: Crystal
+  name_addition: _HandSoldering
+  pack_bevel: 0
+  pack_height: 1.2
+  pack_width: 2
+  pad:
+  - 1.05
+  - 1.1
+  pad_sep_x: 1.8499999999999999
+  pad_sep_y: 0.0
+  pins: 2
+  style: rect
+  tags: SMD SMT crystal hand-soldering
+Resonator_SMD-3pin_7.2x3.0mm:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: 'SMD Resomator/Filter 7.2x3.0mm, Murata CSTCC8M00G53-R0; 8MHz resonator,
+    SMD, Farnell (Element 14) #1170435, http://www.farnell.com/datasheets/19296.pdf?_ga=1.247244932.122297557.1475167906'
+  footprint_name: Resonator_SMD
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  pack_bevel: 0
+  pack_height: 3
+  pack_width: 7.2
+  pad:
+  - 1.4
+  - 3.8
+  pad_sep_x: 2.5
+  pad_sep_y: 0
+  pins: 3
+  style: rect
+  tags: SMD SMT ceramic resonator filter filter
+Resonator_SMD-3pin_7.2x3.0mm_HandSoldering:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: 'SMD Resomator/Filter 7.2x3.0mm, Murata CSTCC8M00G53-R0; 8MHz resonator,
+    SMD, Farnell (Element 14) #1170435, http://www.farnell.com/datasheets/19296.pdf?_ga=1.247244932.122297557.1475167906,
+    hand-soldering'
+  footprint_name: Resonator_SMD
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  name_addition: _HandSoldering
+  pack_bevel: 0
+  pack_height: 3
+  pack_width: 7.2
+  pad:
+  - 2.4499999999999997
+  - 3.8
+  pad_sep_x: 3.55
+  pad_sep_y: 0.0
+  pins: 3
+  style: rect
+  tags: SMD SMT ceramic resonator filter filter hand-soldering
+Resonator_SMD_Murata_CDSCB-2pin_4.5x2.0mm:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Resomator/Filter Murata CDSCB, http://cdn-reichelt.de/documents/datenblatt/B400/SFECV-107.pdf
+  footprint_name: Resonator_SMD_Murata_CDSCB
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  pack_bevel: 0
+  pack_height: 2
+  pack_width: 4.5
+  pad:
+  - 1
+  - 2.6
+  pad_sep_x: 3
+  pad_sep_y: 0
+  pins: 2
+  style: rect
+  tags: SMD SMT ceramic resonator filter filter
+Resonator_SMD_Murata_CDSCB-2pin_4.5x2.0mm_HandSoldering:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Resomator/Filter Murata CDSCB, http://cdn-reichelt.de/documents/datenblatt/B400/SFECV-107.pdf,
+    hand-soldering
+  footprint_name: Resonator_SMD_Murata_CDSCB
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  name_addition: _HandSoldering
+  pack_bevel: 0
+  pack_height: 2
+  pack_width: 4.5
+  pad:
+  - 1
+  - 4.55
+  pad_sep_x: 3
+  pad_sep_y: 1.9500000000000002
+  pins: 2
+  style: rect
+  tags: SMD SMT ceramic resonator filter filter hand-soldering
+Resonator_SMD_Murata_SFECV-3pin_6.9x2.9mm:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Resomator/Filter Murata SFECV, http://cdn-reichelt.de/documents/datenblatt/B400/SFECV-107.pdf
+  footprint_name: Resonator_SMD_Murata_SFECV
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  pack_bevel: 0
+  pack_height: 2.9
+  pack_width: 6.9
+  pad:
+  - 1.2
+  - 4
+  pad_sep_x: 2.85
+  pad_sep_y: 0
+  pins: 3
+  style: rect
+  tags: SMD SMT ceramic resonator filter filter
+Resonator_SMD_Murata_SFECV-3pin_6.9x2.9mm_HandSoldering:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Resomator/Filter Murata SFECV, http://cdn-reichelt.de/documents/datenblatt/B400/SFECV-107.pdf,
+    hand-soldering
+  footprint_name: Resonator_SMD_Murata_SFECV
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  name_addition: _HandSoldering
+  pack_bevel: 0
+  pack_height: 2.9
+  pack_width: 6.9
+  pad:
+  - 2.1
+  - 4
+  pad_sep_x: 3.75
+  pad_sep_y: 0
+  pins: 3
+  style: rect
+  tags: SMD SMT ceramic resonator filter filter hand-soldering
+Resonator_SMD_Murata_SFSKA-3pin_7.9x3.8mm:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Resomator/Filter Murata SFSKA, http://cdn-reichelt.de/documents/datenblatt/B400/SFECV-107.pdf
+  footprint_name: Resonator_SMD_Murata_SFSKA
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  pack_bevel: 0
+  pack_height: 3.8
+  pack_width: 7.9
+  pad:
+  - 1
+  - 4.8
+  pad_sep_x: 2.5
+  pad_sep_y: 0
+  pins: 3
+  style: rect
+  tags: SMD SMT ceramic resonator filter filter
+Resonator_SMD_Murata_SFSKA-3pin_7.9x3.8mm_HandSoldering:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Resomator/Filter Murata SFSKA, http://cdn-reichelt.de/documents/datenblatt/B400/SFECV-107.pdf,
+    hand-soldering
+  footprint_name: Resonator_SMD_Murata_SFSKA
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  name_addition: _HandSoldering
+  pack_bevel: 0
+  pack_height: 3.8
+  pack_width: 7.9
+  pad:
+  - 1.75
+  - 4.8
+  pad_sep_x: 3.25
+  pad_sep_y: 0.0
+  pins: 3
+  style: rect
+  tags: SMD SMT ceramic resonator filter filter hand-soldering
+Resonator_SMD_Murata_TPSKA-3pin_7.9x3.8mm:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Resomator/Filter Murata TPSKA, http://cdn-reichelt.de/documents/datenblatt/B400/SFECV-107.pdf
+  footprint_name: Resonator_SMD_Murata_TPSKA
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  pack_bevel: 0
+  pack_height: 3.8
+  pack_width: 7.9
+  pad:
+  - 1
+  - 4.8
+  pad_sep_x: 2.5
+  pad_sep_y: 0
+  pins: 3
+  style: rect
+  tags: SMD SMT ceramic resonator filter filter
+Resonator_SMD_Murata_TPSKA-3pin_7.9x3.8mm_HandSoldering:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Resomator/Filter Murata TPSKA, http://cdn-reichelt.de/documents/datenblatt/B400/SFECV-107.pdf,
+    hand-soldering
+  footprint_name: Resonator_SMD_Murata_TPSKA
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  name_addition: _HandSoldering
+  pack_bevel: 0
+  pack_height: 3.8
+  pack_width: 7.9
+  pad:
+  - 1.75
+  - 4.8
+  pad_sep_x: 3.25
+  pad_sep_y: 0.0
+  pins: 3
+  style: rect
+  tags: SMD SMT ceramic resonator filter filter hand-soldering
