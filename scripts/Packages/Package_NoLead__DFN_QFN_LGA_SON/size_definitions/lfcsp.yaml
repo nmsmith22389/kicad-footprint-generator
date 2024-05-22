@@ -1312,3 +1312,4 @@ LFCSP-56-1EP_8x8mm_P0.5mm_EP6.6x6.6mm:
   num_pins_y: 14
   compatible_mpns:
      - Analog-LFCSP_WQ-CP-56-9
+     - JEDEC-MO-220-WLLD-5-Modified-EP-size
