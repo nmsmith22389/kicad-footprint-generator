@@ -34,3 +34,17 @@ pytest:
     when: always
     reports:
       junit: report.xml
+
+generate:
+  stage: Test
+  only:
+    refs:
+      - merge_requests
+  before_script:
+    - python --version
+    - python -m pip install --upgrade pip
+    - pip install -r requirements.txt
+  script:
+    - cd scripts
+    - ls -lah
+    - ./generate.sh
