@@ -934,3 +934,13 @@ DiodesInc_GEA20_WLCSP-20_1.70x2.10mm_Layout4x5_P0.4mm:
   pad_diameter: 0.230
   layout_x: 4
   layout_y: 5
+Macronix_WLCSP-12_2.02x2.09mm_P0.5mm:
+  description: "WLCSP-12"
+  size_source: "https://www.macronix.com/Lists/Datasheet/Attachments/8909/MX25U3232F,%201.8V,%2032Mb,%20v1.2.pdf#page=93"
+  body_size_x: 2.02
+  body_size_y: 2.09
+  pitch: 0.5
+  pad_diameter: 0.2
+  layout_x: 4
+  layout_y: 4
+  row_skips: [[], [1, 4], [1, 4], []]
