@@ -41,6 +41,7 @@ a single source.
     - `padSpacing`: Optional. Defaults to `none`, which means pads are at the physical edge of the component. Use `edge` for edge-to-edge spacing
     for physical pads, or `center` if datasheet uses center-to-center dimensions.
 - `tags`: Optional. The word `inductor` as a tag is included already in the script. You should add the series name.
+- `has_orientation`: Optional. A boolean to denote that the inductor has a polarity. Typically this is the case for drum cores as these have a short coil lead and a longer return lead.
 
 
 ## CSV input files / parts list entries

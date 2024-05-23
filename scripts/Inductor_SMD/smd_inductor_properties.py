@@ -13,7 +13,6 @@ from pathlib import Path
 
 
 class TwoPadDimensions:
-
     """
 
     Defines two pads spaced like this (doesn't have to be in the x-direction,
@@ -40,22 +39,24 @@ class TwoPadDimensions:
     size_inline: float
     spacing_inside: float
 
-    def __init__(self,
-                 size_crosswise: float,
-                 size_inline: Optional[float] = None,
-                 spacing_centre: Optional[float] = None,
-                 spacing_inside: Optional[float] = None,
-                 spacing_outside: Optional[float] = None):
+    def __init__(
+        self,
+        size_crosswise: float,
+        size_inline: Optional[float] = None,
+        spacing_centre: Optional[float] = None,
+        spacing_inside: Optional[float] = None,
+        spacing_outside: Optional[float] = None,
+    ):
         """
-        Handle the various methods of providing sufficient dimensions to
-        derive a size, and the inside edge to edge distance
-        that this script works with internally.
+                Handle the various methods of providing sufficient dimensions to
+                derive a size, and the inside edge to edge distance
+                that this script works with internally.
 
-        Exactly two of the size_inline and spacing parameters are needed.
-_
-        @param size_crosswise: the size perpendicular to the spacing dimensions
-        @param size_inline: the size parallel to the spacing dimensions
-        @param spacing_centre: the spacing between pad centres
+                Exactly two of the size_inline and spacing parameters are needed.
+        _
+                @param size_crosswise: the size perpendicular to the spacing dimensions
+                @param size_inline: the size parallel to the spacing dimensions
+                @param spacing_centre: the spacing between pad centres
         """
 
         if size_inline and spacing_inside:
@@ -69,7 +70,9 @@ _
             size_inline = (spacing_outside - spacing_inside) / 2
 
         if size_inline is None or spacing_inside is None:
-            raise ValueError("Could not derive the two-pad size from the given parameters")
+            raise ValueError(
+                "Could not derive the two-pad size from the given parameters"
+            )
 
         self.size_inline = size_inline
         self.spacing_inside = spacing_inside
@@ -108,15 +111,15 @@ class SmdInductorProperties:
 
     def __init__(self, part_block: dict[str, str]):
 
-        self.width_x = float(part_block['widthX'])
-        self.length_y = float(part_block['lengthY'])
-        self.height = float(part_block['height'])
+        self.width_x = float(part_block["widthX"])
+        self.length_y = float(part_block["lengthY"])
+        self.height = float(part_block["height"])
 
         self.landing_dims = self._derive_landing_size(part_block)
         self.device_pad_dims = self._derive_pad_spacing(part_block)
 
-        self.part_number = part_block['PartNumber']
-        self.datasheet = part_block.get('datasheet', None)
+        self.part_number = part_block["PartNumber"]
+        self.datasheet = part_block.get("datasheet", None)
 
     @staticmethod
     def _get_key_as_float_or_none(d, key: str) -> float:
@@ -134,7 +137,7 @@ class SmdInductorProperties:
         :return: a TwoPadDimension object
         """
 
-        landing_y = float(data['landingY'])
+        landing_y = float(data["landingY"])
 
         xin = self._get_key_as_float_or_none(data, "landingX")
         spc_c = self._get_key_as_float_or_none(data, "landingSpacingX")
@@ -144,8 +147,10 @@ class SmdInductorProperties:
         try:
             return TwoPadDimensions(landing_y, xin, spc_c, spc_ix, spc_ox)
         except ValueError:
-            raise RuntimeError("Unhandled combination of landing dimensions, "
-                               "saw: " + ', '.join(data.keys()))
+            raise RuntimeError(
+                "Unhandled combination of landing dimensions, "
+                "saw: " + ", ".join(data.keys())
+            )
 
     def _derive_pad_spacing(self, data: Dict[str, str]) -> TwoPadDimensions:
         """
@@ -160,17 +165,19 @@ class SmdInductorProperties:
         :return: a TwoPadDimension object
         """
 
-        pad_y = self._get_key_as_float_or_none(data, 'padY')
+        pad_y = self._get_key_as_float_or_none(data, "padY")
 
         if pad_y is None:
-            logging.info('No physical pad dimensions (padY) found - using body and PCB landing dimensions '
-                         '(lengthY, landingY) as a substitute.')
+            logging.info(
+                "No physical pad dimensions (padY) found - using body and PCB landing dimensions "
+                "(lengthY, landingY) as a substitute."
+            )
             pad_y = min(self.landing_dims.size_crosswise, self.length_y)
 
         spc_c = self._get_key_as_float_or_none(data, "padSpacing")
         spc_ix = self._get_key_as_float_or_none(data, "padInsideX")
         spc_ox = self._get_key_as_float_or_none(data, "padOutsideX")
-        pad_x = self._get_key_as_float_or_none(data, 'padX')
+        pad_x = self._get_key_as_float_or_none(data, "padX")
 
         try:
             pad_dims = TwoPadDimensions(pad_y, pad_x, spc_c, spc_ix, spc_ox)
@@ -178,14 +185,17 @@ class SmdInductorProperties:
             # We don't have enough info here to construct the pad dimensions
             # So construct a pad width to be getting on with
 
-            logging.info('No physical pad dimensions (padX) found - using landing dimensions '
-                         'as a substitute.')
+            logging.info(
+                "No physical pad dimensions (padX) found - using landing dimensions "
+                "as a substitute."
+            )
             # limit the outside dim to the overall package size
             pad_ox = min(self.landing_dims.spacing_outside, self.width_x)
             pad_dims = TwoPadDimensions(
                 pad_y,
                 spacing_inside=self.landing_dims.spacing_inside,
-                spacing_outside=pad_ox)
+                spacing_outside=pad_ox,
+            )
 
         return pad_dims
 
@@ -201,35 +211,40 @@ class InductorSeriesProperties:
     datasheet: Optional[str]
     tags: List[str]
 
+    # Some inductors have an orientation and require a pin 1 marker
+    has_orientation: Optional[bool]
+
     library_name: str
 
     # List of the part definitions in the series
     parts: List[SmdInductorProperties]
 
     def __init__(self, series_block: dict, csv_dir: Optional[Path]):
-        self.name = series_block['series']
+        self.name = series_block["series"]
 
         logging.info(f"Processing properties for series: {self.name}")
 
-        self.manufacturer = series_block['manufacturer']
+        self.manufacturer = series_block["manufacturer"]
         # allow empty datasheet in case of unique per-part datasheets
-        self.datasheet = series_block.get('datasheet', '')
+        self.datasheet = series_block.get("datasheet", "")
         # space delimited list of the tags
-        self.tags = series_block.get('tags', [])
+        self.tags = series_block.get("tags", [])
 
-        self.library_name = series_block['library_name']
+        self.has_orientation = series_block.get("has_orientation")
 
-        if 'csv' in series_block:
-            csv_file = series_block['csv']
+        self.library_name = series_block["library_name"]
+
+        if "csv" in series_block:
+            csv_file = series_block["csv"]
 
             if csv_dir is not None:
                 csv_file = csv_dir / csv_file
 
-            with open(csv_file, encoding='utf-8-sig') as f:
+            with open(csv_file, encoding="utf-8-sig") as f:
                 self.parts = [SmdInductorProperties(x) for x in csv.DictReader(f)]
 
-        elif 'parts' in series_block:
+        elif "parts" in series_block:
             # Load directly from the YAML (for a single-size series, for example)
-            self.parts = [SmdInductorProperties(x) for x in series_block['parts']]
+            self.parts = [SmdInductorProperties(x) for x in series_block["parts"]]
         else:
             raise RuntimeError("Data block must contain a 'csv' or 'parts' key")
