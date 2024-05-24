@@ -944,3 +944,16 @@ Macronix_WLCSP-12_2.02x2.09mm_P0.5mm:
   layout_x: 4
   layout_y: 4
   row_skips: [[], [1, 4], [1, 4], []]
+Dialog_WLCSP-34_4.54x1.66mm_Stagger:
+  additional_tags:
+    - "34-ball"
+  description: "Dialog Semiconductor (Renesas) WLCSP-34, staggered array"
+  size_source: "https://www.renesas.com/us/en/document/dst/da7212-datasheet"
+  body_size_x: 4.54
+  body_size_y: 1.66
+  pitch_x: 0.25
+  pitch_y: 0.34
+  pad_diameter: 0.2 # Ball diameter: 0.25mm
+  layout_x: 17
+  layout_y: 4
+  row_skips: [[2, 4, 6, 8, 10, 12, 14, 16], [1, 3, 5, 7, 9, 11, 13, 15, 17], [2, 4, 6, 8, 10, 12, 14, 16], [1, 3, 5, 7, 9, 11, 13, 15, 17]]
