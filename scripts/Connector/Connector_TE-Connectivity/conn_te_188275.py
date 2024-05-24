@@ -145,7 +145,7 @@ def make_module(pin_count, configuration):
 	]
 
 	kicad_mod.append(PolygonLine(
-		polygone = fab_body_outline,
+		polygon = fab_body_outline,
 		layer = 'F.Fab',
 		width = configuration['fab_line_width']))
 
@@ -156,7 +156,7 @@ def make_module(pin_count, configuration):
 	]
 
 	kicad_mod.append(PolygonLine(
-		polygone = fab_pin1_mark,
+		polygon = fab_pin1_mark,
 		layer = 'F.Fab',
 		width = configuration['fab_line_width']))
 
@@ -179,7 +179,7 @@ def make_module(pin_count, configuration):
 	]
 
 	kicad_mod.append(PolygonLine(
-		polygone = silk_outline_pin1,
+		polygon = silk_outline_pin1,
 		layer = 'F.SilkS',
 		width = configuration['silk_line_width']))
 	
@@ -192,7 +192,7 @@ def make_module(pin_count, configuration):
 	]
 	
 	kicad_mod.append(PolygonLine(
-		polygone = silk_outline_right,
+		polygon = silk_outline_right,
 		layer = 'F.SilkS',
 		width = configuration['silk_line_width']))
 
