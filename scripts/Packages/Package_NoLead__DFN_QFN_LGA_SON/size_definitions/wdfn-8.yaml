@@ -39,3 +39,35 @@ W-PDFN-8-1EP_6x5mm_P1.27mm_EP3x3mm:
   pitch: 1.27
   num_pins_x: 0
   num_pins_y: 4
+
+WDFN-8-1EP_8x6mm_P1.27mm_EP6x4.8mm_ThermalVias:
+  device_type: 'WDFN'
+  size_source: 'https://ww1.microchip.com/downloads/en/DeviceDoc/8L_WDFN_6x8mm_MN_C04172A.pdf'
+  ipc_class: 'qfn'
+
+  body_size_x: 8.0
+  body_size_y: 6.0
+
+  lead_width: 0.35 .. 0.40 ..0.45
+  lead_len: 0.45 .. 0.50 .. 0.55
+
+  overall_height: 0.7 .. 0.75 .. 0.8
+  
+  EP_size_x: 6
+  EP_size_y: 4.8
+  EP_num_paste_pads: [3, 2]
+
+  pitch: 1.27
+
+  num_pins_x: 0
+  num_pins_y: 4 
+
+  thermal_vias:
+    count: [3, 2]
+    drill: 0.33
+    paste_via_clearance: 0.1
+    EP_num_paste_pads: [2, 2]
+    paste_avoid_via: True
+
+  compatible_mpns:
+    - Microchip-8L-WDFN-6x8mm-MN-C04172A
