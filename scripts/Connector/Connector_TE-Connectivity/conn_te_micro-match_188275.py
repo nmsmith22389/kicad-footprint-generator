@@ -18,7 +18,6 @@
 #
 # (C) 2020 Cedric de Wijs, <https://gitlab.com/Cedric5008>
 #
-#!/usr/bin/env python3
 
 import sys
 import os
