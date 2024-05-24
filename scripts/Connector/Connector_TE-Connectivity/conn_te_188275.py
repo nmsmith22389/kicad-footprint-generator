@@ -144,7 +144,7 @@ def make_module(pin_count, configuration):
 		{'x': -x_overhang_from_middle_of_pin+x_pin1_offset_from_center,'y': (-y_body_size/2)}, #bot left again, close the rect
 	]
 
-	kicad_mod.append(PolygoneLine(
+	kicad_mod.append(PolygonLine(
 		polygone = fab_body_outline,
 		layer = 'F.Fab',
 		width = configuration['fab_line_width']))
@@ -155,7 +155,7 @@ def make_module(pin_count, configuration):
 		{'x': 0.5+x_pin1_offset_from_center, 'y': -y_body_size/2}
 	]
 
-	kicad_mod.append(PolygoneLine(
+	kicad_mod.append(PolygonLine(
 		polygone = fab_pin1_mark,
 		layer = 'F.Fab',
 		width = configuration['fab_line_width']))
@@ -178,7 +178,7 @@ def make_module(pin_count, configuration):
 		{'x': pitch-pad_size_x/2-silk_pad_clearance-silk_line_width/2+x_pin1_offset_from_center  ,'y': y_body_size/2}, #pin 2
 	]
 
-	kicad_mod.append(PolygoneLine(
+	kicad_mod.append(PolygonLine(
 		polygone = silk_outline_pin1,
 		layer = 'F.SilkS',
 		width = configuration['silk_line_width']))
@@ -191,7 +191,7 @@ def make_module(pin_count, configuration):
 		{'x': x_pin1_offset_from_center+(pin_count-1)*pitch+pad_size_x/2+silk_pad_clearance+silk_line_width/2 ,'y': (y_body_size/2)}, #bot last pin
 	]
 	
-	kicad_mod.append(PolygoneLine(
+	kicad_mod.append(PolygonLine(
 		polygone = silk_outline_right,
 		layer = 'F.SilkS',
 		width = configuration['silk_line_width']))
