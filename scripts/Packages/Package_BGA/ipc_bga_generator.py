@@ -2,9 +2,11 @@
 
 import math
 import os
+import re
 import sys
 import argparse
 import yaml
+import warnings
 from pathlib import Path
 import itertools
 
@@ -56,7 +58,6 @@ class BGAConfiguration:
 
 
 class BGAGenerator:
-
     def generateFootprint(self, config, fpParams, fpId):
         createFp = False
 
@@ -71,26 +72,23 @@ class BGAGenerator:
                     fpParams["pad_size"] = [padSize, padSize]
                     createFp = True
                 except KeyError as e:
-                    print(f"{e}mm is an invalid ball diameter. See ipc_7351b_bga_land_patterns.yaml for valid values. "
-                          "No footprint generated.")
+                    self.error(f"{e}mm is an invalid ball diameter. See ipc_7351b_bga_land_patterns.yaml for valid values.")
             except KeyError as e:
-                print(f"{e} is an invalid ball type. See ipc_7351b_bga_land_patterns.yaml for valid values. "
-                      "No footprint generated.")
+                self.error(f"{e} is an invalid ball type. See ipc_7351b_bga_land_patterns.yaml for valid values.")
 
             if "pad_diameter" in fpParams:
-                print("Pad size is being derived using IPC rules even though pad diameter is defined.")
+                self.warn("Pad size is being derived using IPC rules even though pad diameter is defined.")
         elif "ball_type" in fpParams and "ball_diameter" not in fpParams:
-            raise KeyError("Ball diameter is missing. No footprint generated.")
+            self.error("When ball_type is given, ball_diameter is required, but it is missing.")
         elif "ball_diameter" in fpParams and "ball_type" not in fpParams:
-            raise KeyError("Ball type is missing. No footprint generated.")
+            self.error("When ball_diameter is given, ball_type is required, but it is missing.")
         elif "pad_diameter" in fpParams:
             fpParams["pad_size"] = [fpParams["pad_diameter"], fpParams["pad_diameter"]]
-            print("Pads size is set by the footprint definition. "
-                  "This should only be done for manufacturer-specific footprints.")
+            if 'CSP' not in fpId and not re.fullmatch(r'[^_-]+_[^_-]*(BGA|CSP)[^_-]*-[0-9]+_.*', fpId):
+                self.warn("Pads size is set by the footprint definition. This should only be done for manufacturer-specific footprints.")
             createFp = True
         else:
-            print("The config file must include 'ball_type' and 'ball_diameter' or 'pad_diameter'. "
-                  "No footprint generated.")
+            self.error("The config file must either include both 'ball_type' and 'ball_diameter', or it must include 'pad_diameter'.")
 
         if createFp:
             self._createFootprintVariant(config, device_config, fpId)
@@ -271,6 +269,48 @@ class BGAGenerator:
         f.tags = [packageType, str(balls), pdesc]
         f.tags += device_config.additional_tags.tags
 
+        #if not re.fullmatch(r'.*-[0-9]+_[0-9.]+x[0-9.]+(x[0-9.]+)?mm(_Layout[0-9]+x[0-9]+)?(_P[0-9.]+(x[0-9.]+)?mm)(_.+)?', fpId):
+        #    self.warn(f'KLC F3.4: Footprint name {fpId} does not match KLC F3.4 [PKG]-[Pincount]_[X]x[Y]x[Z]_Layout[Columns]x[Rows]_P[Pitch X]x[Pitch Y]_Ball[Ball]_Pad[Pad]_[NSMD/SMD]_[Modifiers]_[Options]')
+
+        if (m := re.search(r'.+?-([0-9]+)_', fpId)):
+            n_balls_name = int(m.group(1))
+            if n_balls_name != balls:
+                self.warn(f'KLC F3.4: Footprint {fpId} is named like it has {n_balls_name} balls, but the footprint actually has {balls} balls.')
+
+            if n_balls_name != balls:
+                self.warn(f'KLC F3.4: Footprint {fpId} is named like it has {n_balls_name} balls, but the footprint actually has {balls} balls.')
+        
+        else:
+            self.warn(f'KLC F3.4: Footprint {fpId} is missing the ball count in the footprint name (e.g. "BGA-123" for 123 balls).')
+
+        if (m := re.search(r'_([0-9.]+)x([0-9.]+)(x[0-9.]+)?(mm)?', fpId)):
+            x, y = float(m.group(1)), float(m.group(2))
+            if (round(x, 2), round(y, 2)) != (round(pkgX, 2), round(pkgY, 2)):
+                self.warn(f'KLC F3.4: Size {m.group(0).strip("_")} in name of footprint {fpId} does not match the actual size of the footprint ({pkgX:.3f}x{pkgY:.3f}mm).')
+            if m.group(4) is None:
+                self.warn(f'KLC F3.4: Size {m.group(0).strip("_")} in name of footprint {fpId} is missing unit.')
+        else:
+            self.warn(f'KLC F3.4: Footprint {fpId} is missing the package size in the footprint name.')
+
+        if (m := re.search(r'_Layout([0-9.]+)x([0-9.]+)', fpId)):
+            x, y = float(m.group(1)), float(m.group(2))
+            if (x, y) != (layoutX, layoutY):
+                self.warn(f'KLC F3.4: Layout size {m.group(0).strip("_")} in name of footprint {fpId} does not match the actual ball layout size of the footprint ({layoutX}x{layoutY} balls).')
+        elif not staggered:
+            self.warn(f'KLC F3.4: Footprint {fpId} is missing the ball layout size in the name.')
+
+        if (m := re.search(r'_P([0-9.]+)(x([0-9.]+))?(mm)?', fpId)):
+            x, y = m.group(1), m.group(3)
+            if float(x) != float(fpParams.get('pitch', pitchX)) or (y is not None and float(y) != float(fpParams.get('pitchY', pitchY))):
+                self.warn(f'KLC F3.4: Pitch specification {m.group(0).strip("_")} in name of footprint {fpId} does not match the actual pitch of the footprint ({pitchX:.3f}x{pitchY:.3f} mm).')
+            if m.group(4) is None:
+                self.warn(f'KLC F3.4: Pitch specification {m.group(0).strip("_")} in name of footprint {fpId} is missing unit.')
+        elif not staggered:
+            self.warn(f'KLC F3.4: Footprint {fpId} is missing the ball pitch in the name.')
+
+        if packageType == 'CSP' and not re.fullmatch(r'[^_-]+_[^_-]*(BGA|CSP)[^_-]*-[0-9]+_.*', fpId):
+            self.warn(f"Manufacturer-specific CSP footprints should include the manufacturer's name at the start of their footprint name")
+
         outputDir = Path(f'Package_{packageType}.pretty')
         outputDir.mkdir(exist_ok=True)
 
@@ -389,6 +429,19 @@ class BGAGenerator:
         return layoutX * layoutY - len(padSkips)
 
 
+    def warn(self, *args):
+        print('\033[38;5;214m' + ' '.join(map(str, args)) + '\033[0m', file=sys.stderr)
+
+
+    def error(self, *args):
+        print('\033[91m' + ' '.join(map(str, args)) + '\033[0m', file=sys.stderr)
+        raise GeneratorError()
+
+
+class GeneratorError(ValueError):
+    pass
+
+
 def rowNameGenerator(seq):
     for n in itertools.count(1):
         for s in itertools.product(seq, repeat=n):
@@ -443,5 +496,8 @@ if __name__ == '__main__':
             except yaml.YAMLError as exc:
                 print(exc)
         for pkg in cmd_file:
-            print("generating part for parameter set {}".format(pkg))
-            generator.generateFootprint(configuration, cmd_file[pkg], pkg)
+            print(f'\033[38;5;244mGenerating footprint "{pkg}"...\033[0m', file=sys.stderr)
+            try:
+                generator.generateFootprint(configuration, cmd_file[pkg], pkg)
+            except GeneratorError:
+                print(f'\033[91mNo footprint generated.\033[0m')
