@@ -1,4 +1,5 @@
-# This module is built on top of the kicad-footprint-generator framework
+#!/usr/bin/env python3
+# # This module is built on top of the kicad-footprint-generator framework
 # by Thomas Pointhuber, https://github.com/pointhi/kicad-footprint-generator
 #
 # This module is free software: you can redistribute it and/or
