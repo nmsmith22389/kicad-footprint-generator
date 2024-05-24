@@ -1048,3 +1048,39 @@ VQFN-64-1EP_9x9mm_P0.5mm_EP7.15X7.15mm:
   #pad_length_addition: 0.5
   #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
   #include_suffix_in_3dpath: 'False'
+
+
+VQFN-64-1EP_9x9mm_P0.5mm_EP5.4x5.4mm:
+  device_type: 'VQFN'
+  size_source: 'https://ww1.microchip.com/downloads/en/DeviceDoc/PIC16LF19195-6-7-Data-Sheet-40001873D.pdf#page=718'
+  ipc_class: 'qfn'
+  body_size_x:
+    nominal: 9
+  body_size_y:
+    nominal: 9
+  overall_height:
+    minimum: 0.9
+    nominal: 0.9
+    maximum: 1
+  lead_width:
+    minimum: 0.2
+    nominal: 0.25
+    maximum: 0.3
+  lead_len:
+    minimum: 0.3
+    nominal: 0.4
+    maximum: 0.5
+
+  EP_size_x: 5.3 .. 5.4 .. 5.5
+  EP_size_y: 5.3 .. 5.4 .. 5.5
+  EP_num_paste_pads: [3, 3]
+
+  thermal_vias:
+    count: [5, 5]
+    drill: 0.33
+    paste_via_clearance: 0.1
+    paste_avoid_via: False
+
+  pitch: 0.5
+  num_pins_x: 16
+  num_pins_y: 16
