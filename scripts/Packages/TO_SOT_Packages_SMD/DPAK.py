@@ -125,10 +125,10 @@ class DPAK(object):
 
 
     def add_labels(self, m, variant, dim):
-        m.append(Text(type='reference', text='REF**', size=[1,1], at=[dim.label_centre_x_mm, -dim.label_centre_y_mm],
+        m.append(Property(name=Property.REFERENCE, text='REF**', size=[1,1], at=[dim.label_centre_x_mm, -dim.label_centre_y_mm],
                       layer='F.SilkS'))
-        m.append(Text(type='user', text='${REFERENCE}', size=[1,1], at=[0, 0], layer='F.Fab'))
-        m.append(Text(type='value', text=dim.name, at=[dim.label_centre_x_mm, dim.label_centre_y_mm], layer='F.Fab'))
+        m.append(Text(text='${REFERENCE}', size=[1,1], at=[0, 0], layer='F.Fab'))
+        m.append(Property(name=Property.VALUE, text=dim.name, at=[dim.label_centre_x_mm, dim.label_centre_y_mm], layer='F.Fab'))
         return m
 
 

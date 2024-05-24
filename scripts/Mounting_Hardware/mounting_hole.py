@@ -38,8 +38,8 @@ def create_footprint(name, **kwargs):
     courtjard_y = pad_y + 2*courtjard
 
     # set general values
-    kicad_mod.append(Text(type='reference', text='REF**', at=[0, -courtjard_y/2 - 0.75], layer='F.SilkS'))
-    kicad_mod.append(Text(type='value', text=name, at=[0, courtjard_y/2 + 0.75], layer='F.Fab'))
+    kicad_mod.append(Property(name=Property.REFERENCE, text='REF**', at=[0, -courtjard_y/2 - 0.75], layer='F.SilkS'))
+    kicad_mod.append(Property(name=Property.VALUE, text=name, at=[0, courtjard_y/2 + 0.75], layer='F.Fab'))
 
     # create courtyard
     if hole_x == hole_y:

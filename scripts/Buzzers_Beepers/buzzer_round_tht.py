@@ -20,15 +20,15 @@ def buzzer_round_tht(args):
     kicad_mod.setTags("buzzer round tht")
 
     # set general values
-    kicad_mod.append(Text(type='reference', text='REF**', at=[buzzer_center, -buzzer_radius - 1], layer='F.SilkS'))
-    kicad_mod.append(Text(type='user', text='${REFERENCE}', at=[buzzer_center, -buzzer_radius - 1], layer='F.Fab'))
-    kicad_mod.append(Text(type='value', text=args['name'], at=[buzzer_center, buzzer_radius + 1], layer='F.Fab'))
+    kicad_mod.append(Property(name=Property.REFERENCE, text='REF**', at=[buzzer_center, -buzzer_radius - 1], layer='F.SilkS'))
+    kicad_mod.append(Text(text='${REFERENCE}', at=[buzzer_center, -buzzer_radius - 1], layer='F.Fab'))
+    kicad_mod.append(Property(name=Property.VALUE, text=args['name'], at=[buzzer_center, buzzer_radius + 1], layer='F.Fab'))
 
     # create silkscreen
     kicad_mod.append(Circle(center=[buzzer_center, 0], radius=buzzer_radius + 0.1, layer='F.SilkS'))
 
-    kicad_mod.append(Text(type='user', text='+', at=[0, -args['pad_size'] / 2 - 1], layer='F.SilkS'))
-    kicad_mod.append(Text(type='user', text='+', at=[0, -args['pad_size']/2 - 1], layer='F.Fab'))
+    kicad_mod.append(Text(text='+', at=[0, -args['pad_size'] / 2 - 1], layer='F.SilkS'))
+    kicad_mod.append(Text(text='+', at=[0, -args['pad_size']/2 - 1], layer='F.Fab'))
 
     # create fabrication layer
     kicad_mod.append(Circle(center=[buzzer_center, 0], radius=buzzer_radius, layer='F.Fab'))

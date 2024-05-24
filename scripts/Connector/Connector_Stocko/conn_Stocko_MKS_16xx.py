@@ -82,7 +82,7 @@ for itr in range (1, 20 + 1):
 
     #CREATE SILKSCREEN
     #name
-    kicad_mod.append(Text(type = 'reference', text='REF**', at=[(pin_count - 1) * (pad_span / 2), -4.5], layer='F.SilkS'))
+    kicad_mod.append(Property(name = Property.REFERENCE, text='REF**', at=[(pin_count - 1) * (pad_span / 2), -4.5], layer='F.SilkS'))
     #top
     kicad_mod.append(Line(start = [-silks_outline_x + silks_arc_r, -silks_outline_y],
                           end = [(pin_cnt - 1) * pad_span + silks_outline_x - silks_arc_r, -silks_outline_y], layer = 'F.SilkS'))
@@ -125,8 +125,8 @@ for itr in range (1, 20 + 1):
 
     #CREATE FABRICATION
     #name
-    kicad_mod.append(Text(type = 'user', text = '${REFERENCE}', at = [(pin_count - 1) * (pad_span / 2), -2], layer = 'F.Fab'))
-    kicad_mod.append(Text(type = 'value', text = footprint_name, at = [(pin_count - 1) * (pad_span / 2), silks_outline_y + 2], layer = 'F.Fab'))
+    kicad_mod.append(Text(text = '${REFERENCE}', at = [(pin_count - 1) * (pad_span / 2), -2], layer = 'F.Fab'))
+    kicad_mod.append(Property(name = Property.VALUE, text = footprint_name, at = [(pin_count - 1) * (pad_span / 2), silks_outline_y + 2], layer = 'F.Fab'))
     #top
     kicad_mod.append(Line(start = [-fab_outline_x + fab_arc_r, -fab_outline_y],
                           end = [(pin_cnt - 1) * pad_span + fab_outline_x - fab_arc_r, -fab_outline_y], layer = 'F.Fab'))

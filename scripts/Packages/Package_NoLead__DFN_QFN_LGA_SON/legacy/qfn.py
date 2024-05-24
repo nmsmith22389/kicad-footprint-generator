@@ -118,11 +118,11 @@ def qfn(args):
     yBottom2Silk = yCenter + v2
 
     # Text
-    f.append(Text(type="reference", text="REF**", at=[xCenter, yRef],
+    f.append(Property(name=Property.REFERENCE, text="REF**", at=[xCenter, yRef],
                   layer="F.SilkS", size=s2, thickness=t2))
-    f.append(Text(type="value", text=footprint_name, at=[xCenter, yValue],
+    f.append(Property(name=Property.VALUE, text=footprint_name, at=[xCenter, yValue],
                   layer="F.Fab", size=s2, thickness=t2))
-    f.append(Text(type="user", text='${REFERENCE}', at=[xCenter, yCenter],
+    f.append(Text(text='${REFERENCE}', at=[xCenter, yCenter],
                   layer="F.Fab", size=s1, thickness=t1))
 
     # Fab

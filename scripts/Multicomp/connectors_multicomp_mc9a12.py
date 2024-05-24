@@ -26,8 +26,8 @@ kicad_mod.setDescription('http://www.farnell.com/datasheets/1520732.pdf')
 kicad_mod.setTags('connector multicomp MC9A MC9A12')
 
 # set general values
-kicad_mod.addText('reference', 'REF**', {'x':start_pos_x-3, 'y':-7}, 'F.SilkS')
-kicad_mod.addText('value', footprint_name, {'x':end_pos_x/2., 'y':5}, 'F.Fab')
+kicad_mod.append(Property(name=Property.REFERENCE, 'REF**', {'x':start_pos_x-3, 'y':-7}, 'F.SilkS'))
+kicad_mod.append(Property(name=Property.VALUE, footprint_name, {'x':end_pos_x/2., 'y':-5}, 'F.Fab'))
 
 # create Silkscreen
 
@@ -58,7 +58,7 @@ else:
                               ,{'x':((start_pos_x+end_pos_x)/2)-4.45/2-7.3, 'y':1.9}
                               ,{'x':((start_pos_x+end_pos_x)/2)-4.45/2, 'y':1.9}
                               ,{'x':((start_pos_x+end_pos_x)/2)-4.45/2, 'y':3.2}], 'F.SilkS', 0.15)
-    
+
     kicad_mod.addPolygonLine([{'x':((start_pos_x+end_pos_x)/2)+4.45/2+7.3, 'y':3.2}
                               ,{'x':((start_pos_x+end_pos_x)/2)+4.45/2+7.3, 'y':1.9}
                               ,{'x':((start_pos_x+end_pos_x)/2)+4.45/2, 'y':1.9}

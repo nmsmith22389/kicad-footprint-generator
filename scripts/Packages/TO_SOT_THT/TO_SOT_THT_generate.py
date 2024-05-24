@@ -123,10 +123,10 @@ def makeVERT(lib_name, pck, has3d=False, x_3d=[0, 0, 0], s_3d=[1,1,1], lptext="_
     kicad_mod.append(kicad_modt)
 
     # set general values
-    kicad_modt.append(Text(type='reference', text='REF**', at=[txt_x, t_slkp - txt_offset], layer='F.SilkS'))
-    kicad_modt.append(Text(type='user', text='${REFERENCE}', at=[txt_x, t_slkp - txt_offset], layer='F.Fab'))
+    kicad_modt.append(Property(name=Property.REFERENCE, text='REF**', at=[txt_x, t_slkp - txt_offset], layer='F.SilkS'))
+    kicad_modt.append(Text(text='${REFERENCE}', at=[txt_x, t_slkp - txt_offset], layer='F.Fab'))
     kicad_modt.append(
-        Text(type='value', text=footprint_name, at=[txt_x, t_slkp + max(h_slkm, h_slkp, -t_slkp+h_crt+t_crt) + txt_offset], layer='F.Fab'))
+        Property(name=Property.VALUE, text=footprint_name, at=[txt_x, t_slkp + max(h_slkm, h_slkp, -t_slkp+h_crt+t_crt) + txt_offset], layer='F.Fab'))
 
     # create FAB-layer
     kicad_modt.append(
@@ -341,9 +341,9 @@ def makeHOR(lib_name, pck, has3d=False, x_3d=[0, 0, 0], s_3d=[1,1,1], lptext="_L
     kicad_mod.append(kicad_modt)
 
     # set general values
-    kicad_modt.append(Text(type='reference', text='REF**', at=[txt_x, txt_t], layer='F.SilkS'))
-    kicad_modt.append(Text(type='user', text='${REFERENCE}', at=[txt_x, txt_t], layer='F.Fab'))
-    kicad_modt.append(Text(type='value', text=footprint_name, at=[txt_x, txt_b], layer='F.Fab'))
+    kicad_modt.append(Property(name=Property.REFERENCE, text='REF**', at=[txt_x, txt_t], layer='F.SilkS'))
+    kicad_modt.append(Text(text='${REFERENCE}', at=[txt_x, txt_t], layer='F.Fab'))
+    kicad_modt.append(Property(name=Property.VALUE, text=footprint_name, at=[txt_x, txt_b], layer='F.Fab'))
 
     # create FAB-layer
     if (h_fabm > 0):
@@ -514,10 +514,10 @@ def makeVERTLS(lib_name, pck, has3d=False, x_3d=[0, 0, 0], s_3d=[1,1,1], lptext=
     kicad_mod.append(kicad_modt)
 
     # set general values
-    kicad_modt.append(Text(type='reference', text='REF**', at=[txt_x, t_slkp - txt_offset], layer='F.SilkS'))
-    kicad_modt.append(Text(type='user', text='${REFERENCE}', at=[txt_x, t_slkp - txt_offset], layer='B.Fab'))
+    kicad_modt.append(Property(name=Property.REFERENCE, text='REF**', at=[txt_x, t_slkp - txt_offset], layer='F.SilkS'))
+    kicad_modt.append(Text(text='${REFERENCE}', at=[txt_x, t_slkp - txt_offset], layer='B.Fab'))
     kicad_modt.append(
-        Text(type='value', text=footprint_name, at=[txt_x, t_slkp + max(h_slkm, h_slkp) + txt_offset], layer='B.Fab'))
+        Property(name=Property.VALUE, text=footprint_name, at=[txt_x, t_slkp + max(h_slkm, h_slkp) + txt_offset], layer='B.Fab'))
 
     # create FAB-layer
     kicad_modt.append(
@@ -700,9 +700,9 @@ def makeHORLS(lib_name, pck, has3d=False, x_3d=[0, 0, 0], s_3d=[1,1,1], lptext="
     kicad_mod.append(kicad_modt)
 
     # set general values
-    kicad_modt.append(Text(type='reference', text='REF**', at=[txt_x, txt_t], layer='F.SilkS'))
-    kicad_modt.append(Text(type='user', text='${REFERENCE}', at=[txt_x, txt_t], layer='B.Fab'))
-    kicad_modt.append(Text(type='value', text=footprint_name, at=[txt_x, txt_b], layer='B.Fab'))
+    kicad_modt.append(Property(name=Property.REFERENCE, text='REF**', at=[txt_x, txt_t], layer='F.SilkS'))
+    kicad_modt.append(Text(text='${REFERENCE}', at=[txt_x, txt_t], layer='B.Fab'))
+    kicad_modt.append(Property(name=Property.VALUE, text=footprint_name, at=[txt_x, txt_b], layer='B.Fab'))
 
     # create FAB-layer
 
@@ -892,9 +892,9 @@ def makeHORREV(lib_name, pck, has3d=False, x_3d=[0, 0, 0], s_3d=[1 ,1,1], lptext
     kicad_mod.setTags(tags)
 
     # set general values
-    kicad_mod.append(Text(type='reference', text='REF**', at=[txt_x, txt_t], layer='F.SilkS'))
-    kicad_mod.append(Text(type='user', text='${REFERENCE}', at=[txt_x, txt_t], layer='F.Fab'))
-    kicad_mod.append(Text(type='value', text=footprint_name, at=[txt_x, txt_b], layer='F.Fab'))
+    kicad_mod.append(Property(name=Property.REFERENCE, text='REF**', at=[txt_x, txt_t], layer='F.SilkS'))
+    kicad_mod.append(Text(text='${REFERENCE}', at=[txt_x, txt_t], layer='F.Fab'))
+    kicad_mod.append(Property(name=Property.VALUE, text=footprint_name, at=[txt_x, txt_b], layer='F.Fab'))
 
 
     if (h_fabm > 0):
@@ -1046,9 +1046,9 @@ def makeTORound(lib_name, pck, has3d=False, x_3d=[0, 0, 0], s_3d=[1,1,1], lptext
     kicad_mod.append(kicad_modt)
 
     # set general values
-    kicad_modt.append(Text(type='reference', text='REF**', at=[0, txt_t], layer='F.SilkS'))
-    kicad_modt.append(Text(type='user', text='${REFERENCE}', at=[0, txt_t], layer='F.Fab'))
-    kicad_modt.append(Text(type='value', text=footprint_name, at=[0, txt_b], layer='F.Fab'))
+    kicad_modt.append(Property(name=Property.REFERENCE, text='REF**', at=[0, txt_t], layer='F.SilkS'))
+    kicad_modt.append(Text(text='${REFERENCE}', at=[0, txt_t], layer='F.Fab'))
+    kicad_modt.append(Property(name=Property.VALUE, text=footprint_name, at=[0, txt_b], layer='F.Fab'))
 
     # create FAB-layer
     kicad_modt.append(Circle(center=[0, 0], radius=pck.diameter_inner / 2, layer='F.Fab', width=lw_fab))

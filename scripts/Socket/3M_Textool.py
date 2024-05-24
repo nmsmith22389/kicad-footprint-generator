@@ -115,11 +115,11 @@ def textool(args):
     yBottomLeverCrtYd = roundCrtYd(yBottomLever + crtYd)
 
     # Text
-    f.append(Text(type="reference", text="REF**", at=[xMiddle, yRef],
+    f.append(Property(name=Property.REFERENCE, text="REF**", at=[xMiddle, yRef],
                   layer="F.SilkS", size=s2, thickness=t2))
-    f.append(Text(type="value", text=footprint_name, at=[xMiddle, yValue],
+    f.append(Property(name=Property.VALUE, text=footprint_name, at=[xMiddle, yValue],
                   layer="F.Fab", size=s1, thickness=t1))
-    f.append(Text(type="user", text='${REFERENCE}', at=[xMiddle, yFabRef],
+    f.append(Text(text='${REFERENCE}', at=[xMiddle, yFabRef],
                   layer="F.Fab", size=s2, thickness=t2))
 
     # Courtyard

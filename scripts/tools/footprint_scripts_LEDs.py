@@ -185,8 +185,8 @@ def makeLEDRadial(rm, w, h, ddrill, win=0, rin=0, pins=2, type="round", x_3d=[0,
     kicad_mod.append(kicad_modg)
 
     # set general values
-    kicad_modg.append(Text(type='reference', text='REF**', at=[0, t_slk - txtoffset], layer='F.SilkS'))
-    kicad_modg.append(Text(type='value', text=footprint_name, at=[0, t_slk + h_slk + txtoffset], layer='F.Fab'))
+    kicad_modg.append(Property(name=Property.REFERENCE, text='REF**', at=[0, t_slk - txtoffset], layer='F.SilkS'))
+    kicad_modg.append(Property(name=Property.VALUE, text=footprint_name, at=[0, t_slk + h_slk + txtoffset], layer='F.Fab'))
 
     # create FAB-layer
     if type == "round":
@@ -477,8 +477,8 @@ def makeLEDHorizontal(pins=2,rm=2.544,dled=5,dledout=5.8,offsetled=2.54,wled=8.6
     kicad_mod.append(kicad_modg)
 
     # set general values
-    kicad_modg.append(Text(type='reference', text='REF**', at=[0, t_slk - txtoffset], layer='F.SilkS'))
-    kicad_modg.append(Text(type='value', text=footprint_name, at=[0, t_slk + h_slk + txtoffset], layer='F.Fab'))
+    kicad_modg.append(Property(name=Property.REFERENCE, text='REF**', at=[0, t_slk - txtoffset], layer='F.SilkS'))
+    kicad_modg.append(Property(name=Property.VALUE, text=footprint_name, at=[0, t_slk + h_slk + txtoffset], layer='F.Fab'))
 
     # create FAB-layer
     if type == "round":

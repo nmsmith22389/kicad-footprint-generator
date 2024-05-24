@@ -156,15 +156,15 @@ for converter in converters:
     #
     cx = 0 - ((L - (pin2x - pin1x)) / 2.0) + 2
     cy = 0 - ((W - (pin3y - pin1y)) / 2.0) - 1.5
-    fp.append(Text(type='reference', text='REF**', at=[round(cx, 2), round(cy, 2)], layer='F.SilkS'))
+    fp.append(Property(name=Property.REFERENCE, text='REF**', at=[round(cx, 2), round(cy, 2)], layer='F.SilkS'))
     #
     cx = (pin2x - pin1x) / 2.0
     cy = ((pin3y - pin1y)) - ((L - (pin3y - pin1y)) / 2.0)
-    fp.append(Text(type='value', text=fp_name,     at=[round(cx, 2), round(cy, 2)], layer='F.Fab'))
+    fp.append(Property(name=Property.VALUE, text=fp_name,     at=[round(cx, 2), round(cy, 2)], layer='F.Fab'))
     #
     cx = (L / 2.0) + (0 - ((L - (pin2x - pin1x)) / 2.0) - myLayerD)
     cy = (pin3y - pin1y) / 2.0
-    fp.append(Text(type='user', text='${REFERENCE}', at=[round(cx, 2), round(cy, 2)], layer='F.Fab'))
+    fp.append(Text(text='${REFERENCE}', at=[round(cx, 2), round(cy, 2)], layer='F.Fab'))
 
     #
     # Add 3D model

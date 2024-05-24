@@ -108,7 +108,7 @@ def generate_one_footprint(pins, variant, configuration):
     kicad_mod.append(RectLine(start=[x1,y1],end=[x2,y2],layer='F.Fab', width=configuration['fab_line_width']))
 
     # set general values
-    #kicad_mod.append(Text(type='reference', text='REF**', at=[x_mid,-3.5], layer='F.SilkS'))
+    #kicad_mod.append(Property(name=Property.REFERENCE, text='REF**', at=[x_mid,-3.5], layer='F.SilkS'))
 
     if pins == 2:
         drill = 1.0

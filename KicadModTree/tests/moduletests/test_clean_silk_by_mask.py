@@ -46,9 +46,9 @@ def gen_footprint():
             kicad_mod.append(Pad(at=Vector2D(pos) * Vector2D(1, s), shape=Pad.SHAPE_CIRCLE,
                                  type=Pad.TYPE_NPTH, drill=0.5, size=[0.5, 0.5], layers=Pad.LAYERS_NPTH))
 
-    kicad_mod.append(Text(type='reference', text='REF**', at=[0, -3], layer='F.SilkS'))
-    kicad_mod.append(Text(type='user', text='${REFERENCE}', at=[0, -3], layer='F.Fab'))
-    kicad_mod.append(Text(type='value', text="test", at=[0, 3], layer='F.Fab'))
+    kicad_mod.append(Property(name=Property.REFERENCE, text='REF**', at=[0, -3], layer='F.SilkS'))
+    kicad_mod.append(Text(text='${REFERENCE}', at=[0, -3], layer='F.Fab'))
+    kicad_mod.append(Property(name=Property.VALUE, text="test", at=[0, 3], layer='F.Fab'))
 
     return kicad_mod
 

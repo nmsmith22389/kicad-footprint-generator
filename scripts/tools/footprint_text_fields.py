@@ -1,6 +1,6 @@
 import sys, os
 sys.path.append(os.path.join(sys.path[0],"..","..")) # load kicad_mod path
-from KicadModTree import *  # NOQA
+from KicadModTree import Text, Property
 
 def _roundToBase(value, base):
     return round(value/base) * base
@@ -84,17 +84,17 @@ def _getTextFieldDetails(field_definition, body_edges, courtyard, text_y_inside_
 
 def addTextFields(kicad_mod, configuration, body_edges, courtyard, fp_name, text_y_inside_position = 'center', allow_rotation = False):
     reference_fields = configuration['references']
-    kicad_mod.append(Text(type='reference', text='REF**',
+    kicad_mod.append(Property(name='Reference', text='REF**',
         **_getTextFieldDetails(reference_fields[0], body_edges, courtyard, text_y_inside_position, allow_rotation)))
 
     for additional_ref in reference_fields[1:]:
-        kicad_mod.append(Text(type='user', text='${REFERENCE}',
+        kicad_mod.append(Text(text='${REFERENCE}',
         **_getTextFieldDetails(additional_ref, body_edges, courtyard, text_y_inside_position, allow_rotation)))
 
     value_fields = configuration['values']
-    kicad_mod.append(Text(type='value', text=fp_name,
+    kicad_mod.append(Property(name='Value', text=fp_name,
         **_getTextFieldDetails(value_fields[0], body_edges, courtyard, text_y_inside_position, allow_rotation)))
 
     for additional_value in value_fields[1:]:
-        kicad_mod.append(Text(type='user', text='%V',
+        kicad_mod.append(Text(text='%V',
             **_getTextFieldDetails(additional_value, body_edges, courtyard, text_y_inside_position, allow_rotation)))

@@ -62,9 +62,9 @@ def makeSIPVertical(pins, rm, ddrill, pad, package_size, left_offset, top_offset
             else:
                 keepout=keepout+addKeepoutRound((x - 1) * rm,0,pad[0]+2*min_pad_distance+2*lw_slk, pad[1]+2*min_pad_distance+2*lw_slk)
     # set general values
-    kicad_mod.append(Text(type='reference', text='REF**', at=[(pins-1) / 2 * rm, min(-pady/2,t_slk) - txt_offset], layer='F.SilkS'))
-    kicad_mod.append(Text(type='user', text='${REFERENCE}', at=[(pins-1) / 2 * rm, t_fab +h_fab/2], layer='F.Fab'))
-    kicad_mod.append(Text(type='value', text=footprint_name, at=[(pins-1) / 2 * rm, t_fab+h_fab + txt_offset], layer='F.Fab'))
+    kicad_mod.append(Property(name=Property.REFERENCE, text='REF**', at=[(pins-1) / 2 * rm, min(-pady/2,t_slk) - txt_offset], layer='F.SilkS'))
+    kicad_mod.append(Text(text='${REFERENCE}', at=[(pins-1) / 2 * rm, t_fab +h_fab/2], layer='F.Fab'))
+    kicad_mod.append(Property(name=Property.VALUE, text=footprint_name, at=[(pins-1) / 2 * rm, t_fab+h_fab + txt_offset], layer='F.Fab'))
 
     # create FAB-layer
     pin1TL=True
@@ -156,9 +156,9 @@ def makeSIPHorizontal(pins, rm, ddrill, pad, package_size, left_offset, pin_bott
             else:
                 keepout=keepout+addKeepoutRound((x - 1) * rm,0,pad[0]+2*min_pad_distance+2*lw_slk, pad[1]+2*min_pad_distance+2*lw_slk)
     # set general values
-    kicad_mod.append(Text(type='reference', text='REF**', at=[(pins-1) / 2 * rm, min(-pady/2,t_slk) - txt_offset], layer='F.SilkS'))
-    kicad_mod.append(Text(type='user', text='${REFERENCE}', at=[(pins-1) / 2 * rm, t_fab +h_fab/2], layer='F.Fab'))
-    kicad_mod.append(Text(type='value', text=footprint_name, at=[(pins-1) / 2 * rm, pady/2 + txt_offset], layer='F.Fab'))
+    kicad_mod.append(Property(name=Property.REFERENCE, text='REF**', at=[(pins-1) / 2 * rm, min(-pady/2,t_slk) - txt_offset], layer='F.SilkS'))
+    kicad_mod.append(Text(text='${REFERENCE}', at=[(pins-1) / 2 * rm, t_fab +h_fab/2], layer='F.Fab'))
+    kicad_mod.append(Property(name=Property.VALUE, text=footprint_name, at=[(pins-1) / 2 * rm, pady/2 + txt_offset], layer='F.Fab'))
 
     # create FAB-layer
     pin1size=min(1, h_fab/2)
@@ -216,8 +216,8 @@ def makeResistorSIP(pins, footprint_name, description):
     kicad_mod.setTags("R")
 
     # set general values
-    kicad_mod.append(Text(type='reference', text='REF**', at=[pins / 2 * rm, t_slk - txt_offset], layer='F.SilkS'))
-    kicad_mod.append(Text(type='value', text=footprint_name, at=[pins / 2 * rm, h_slk / 2 + txt_offset], layer='F.Fab'))
+    kicad_mod.append(Property(name=Property.REFERENCE, text='REF**', at=[pins / 2 * rm, t_slk - txt_offset], layer='F.SilkS'))
+    kicad_mod.append(Property(name=Property.VALUE, text=footprint_name, at=[pins / 2 * rm, h_slk / 2 + txt_offset], layer='F.Fab'))
 
     # create FAB-layer
     kicad_mod.append(RectLine(start=[left, top], end=[left + w, top + h], layer='F.Fab', width=lw_fab))

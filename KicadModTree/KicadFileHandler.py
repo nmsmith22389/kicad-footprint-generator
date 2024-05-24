@@ -192,17 +192,9 @@ class KicadFileHandler(FileHandler):
 
         sexpr = []
 
-        # serialize initial text nodes
-        if 'Text' in grouped_nodes:
-            reference_nodes = list(filter(lambda node: node.type == 'reference', grouped_nodes['Text']))
-            for node in reference_nodes:
-                sexpr.append(self._serialize_Property(node))
-                grouped_nodes['Text'].remove(node)
-
-            value_nodes = list(filter(lambda node: node.type == 'value', grouped_nodes['Text']))
-            for node in value_nodes:
-                sexpr.append(self._serialize_Property(node))
-                grouped_nodes['Text'].remove(node)
+        # serialize initial property nodes
+        for property_node in grouped_nodes.get('Property', []):
+            sexpr.append(self._serialize_Property(property_node))
 
         # Kicad 8 puts the attributes at the end of the properties
 
@@ -332,7 +324,7 @@ class KicadFileHandler(FileHandler):
     def _serialise_Boolean(self, name: str, value: bool):
         return [SexprSerializer.Symbol(name), SexprSerializer.Symbol('yes' if value else 'no')]
 
-    def _serialize_TextualNode(self, node):
+    def _serialize_TextBaseNode(self, node):
         """Serialise fp_text and property field bodies
         """
         sexpr = [node.text]
@@ -375,10 +367,11 @@ class KicadFileHandler(FileHandler):
         """Serialise a normal text node
         """
         sexpr = [
+            # would be gr_text in a PCB
             SexprSerializer.Symbol('fp_text'),
-            SexprSerializer.Symbol(node.type)
+            SexprSerializer.Symbol('user')
         ]
-        sexpr += self._serialize_TextualNode(node)
+        sexpr += self._serialize_TextBaseNode(node)
         return sexpr
 
     def _serialize_Property(self, node):
@@ -386,10 +379,9 @@ class KicadFileHandler(FileHandler):
         """
         sexpr = [
             SexprSerializer.Symbol('property'),
-            # TODO: Avoid this hack by setting the field names correctly everwhere
-            node.type[0].upper() + node.type[1:]
+            node.name,
         ]
-        sexpr += self._serialize_TextualNode(node)
+        sexpr += self._serialize_TextBaseNode(node)
         return sexpr
 
     def _serialize_Model(self, node):

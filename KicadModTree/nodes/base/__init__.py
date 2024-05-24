@@ -25,6 +25,6 @@ from .Pad import Pad
 
 from .Polygon import Polygon
 
-from .Text import Text
+from .Text import Text, Property
 
 from .Zone import Zone, Keepouts, PadConnection, Hatch

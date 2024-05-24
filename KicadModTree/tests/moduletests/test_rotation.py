@@ -995,7 +995,7 @@ class RotationTests(unittest.TestCase):
 
         for t in range(0, 360, 45):
             kicad_mod.append(
-                Text(type=Text.TYPE_USER, text="-1", at=at).rotate(t, origin=center))
+                Text(text="-1", at=at).rotate(t, origin=center))
 
         file_handler = KicadFileHandler(kicad_mod)
         # file_handler.writeFile('test_rotate_text.kicad_mod')

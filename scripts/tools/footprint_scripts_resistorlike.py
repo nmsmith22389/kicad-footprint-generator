@@ -198,12 +198,12 @@ def makeResistorAxialHorizontal(seriesname, rm, rmdisp, w, d, ddrill, R_POW, typ
     kicad_mod.setTags(tags)
 
     # set general values
-    kicad_mod.append(Text(type='reference', text='REF**', at=[rm/2, t_slk-txt_offset], layer='F.SilkS'))
-    kicad_mod.append(Text(type='value', text=footprint_name, at=[rm/2, h_slk/2+txt_offset], layer='F.Fab'))
+    kicad_mod.append(Property(name=Property.REFERENCE, text='REF**', at=[rm/2, t_slk-txt_offset], layer='F.SilkS'))
+    kicad_mod.append(Property(name=Property.VALUE, text=footprint_name, at=[rm/2, h_slk/2+txt_offset], layer='F.Fab'))
     if deco=="diode":
-        kicad_mod.append(Text(type='user', text='${REFERENCE}', at=[rm/2+w_fab*0.15/2, 0], layer='F.Fab', size=[fabtxt_size, fabtxt_size], thickness=fabtxt_thick))
+        kicad_mod.append(Text(text='${REFERENCE}', at=[rm/2+w_fab*0.15/2, 0], layer='F.Fab', size=[fabtxt_size, fabtxt_size], thickness=fabtxt_thick))
     else:
-        kicad_mod.append(Text(type='user', text='${REFERENCE}', at=[rm/2, 0], layer='F.Fab', size=[fabtxt_size, fabtxt_size], thickness=fabtxt_thick))
+        kicad_mod.append(Text(text='${REFERENCE}', at=[rm/2, 0], layer='F.Fab', size=[fabtxt_size, fabtxt_size], thickness=fabtxt_thick))
 
     # create FAB-layer
     if deco=="elco" or deco=="cp" or deco=="tantal":
@@ -262,8 +262,8 @@ def makeResistorAxialHorizontal(seriesname, rm, rmdisp, w, d, ddrill, R_POW, typ
         kicad_mod.append(Line(start=[l_dbar_slk, t_slk], end=[l_dbar_slk, t_slk+h_slk], layer='F.SilkS', width=lw_slk))
         kicad_mod.append(Line(start=[l_dbar_slk+lw_slk, t_slk], end=[l_dbar_slk+lw_slk, t_slk+h_slk], layer='F.SilkS', width=lw_slk))
         kicad_mod.append(Line(start=[l_dbar_slk-lw_slk, t_slk], end=[l_dbar_slk-lw_slk, t_slk+h_slk], layer='F.SilkS', width=lw_slk))
-        kicad_mod.append(Text(type='user', text="K", at=[0,-pady/2-1], layer='F.Fab'))
-        kicad_mod.append(Text(type='user', text="K", at=[0,-pady/2-1], layer='F.SilkS'))
+        kicad_mod.append(Text(text="K", at=[0,-pady/2-1], layer='F.Fab'))
+        kicad_mod.append(Text(text="K", at=[0,-pady/2-1], layer='F.SilkS'))
 
     # create courtyard
     kicad_mod.append(RectLine(start=[roundCrt(l_crt), roundCrt(t_crt)], end=[roundCrt(l_crt+w_crt), roundCrt(t_crt+h_crt)], layer='F.CrtYd', width=lw_crt))
@@ -429,18 +429,18 @@ def makeResistorAxialVertical(seriesname,rm, rmdisp, l, d, ddrill, R_POW, type="
     kicad_mod.setTags(tags)
 
     # set general values
-    kicad_mod.append(Text(type='reference', text='REF**', at=[rm / 2, t_slk - txt_offset], layer='F.SilkS'))
-    kicad_mod.append(Text(type='value', text=footprint_name, at=[rm / 2, d_slk / 2 + txt_offset+valoffset], layer='F.Fab'))
+    kicad_mod.append(Property(name=Property.REFERENCE, text='REF**', at=[rm / 2, t_slk - txt_offset], layer='F.SilkS'))
+    kicad_mod.append(Property(name=Property.VALUE, text=footprint_name, at=[rm / 2, d_slk / 2 + txt_offset+valoffset], layer='F.Fab'))
     if deco=="diode_KUP":
         if d/2-pady/2>1.5*fabtxt_size:
-            kicad_mod.append(Text(type='user', text='${REFERENCE}', at=[rm, -pady/2-fabtxt_size/2], layer='F.Fab', size=[fabtxt_size, fabtxt_size], thickness=fabtxt_thick))
+            kicad_mod.append(Text(text='${REFERENCE}', at=[rm, -pady/2-fabtxt_size/2], layer='F.Fab', size=[fabtxt_size, fabtxt_size], thickness=fabtxt_thick))
         else:
-            kicad_mod.append(Text(type='user', text='${REFERENCE}', at=[rm / 2, t_slk - txt_offset], layer='F.Fab'))
+            kicad_mod.append(Text(text='${REFERENCE}', at=[rm / 2, t_slk - txt_offset], layer='F.Fab'))
     else: # diode, resistor, etc.
         if d/2-pady/2>1.5*fabtxt_size:
-            kicad_mod.append(Text(type='user', text='${REFERENCE}', at=[0, -pady/2-fabtxt_size/2], layer='F.Fab', size=[fabtxt_size, fabtxt_size], thickness=fabtxt_thick))
+            kicad_mod.append(Text(text='${REFERENCE}', at=[0, -pady/2-fabtxt_size/2], layer='F.Fab', size=[fabtxt_size, fabtxt_size], thickness=fabtxt_thick))
         else:
-            kicad_mod.append(Text(type='user', text='${REFERENCE}', at=[rm / 2, t_slk - txt_offset], layer='F.Fab'))
+            kicad_mod.append(Text(text='${REFERENCE}', at=[rm / 2, t_slk - txt_offset], layer='F.Fab'))
 
     # create FAB-layer
     if type=="cyl":
@@ -454,25 +454,25 @@ def makeResistorAxialVertical(seriesname,rm, rmdisp, l, d, ddrill, R_POW, type="
     if deco=="diode":
         if rm>d/2*1.2 and d/2-pady/2<1:
             if rm<3:
-                kicad_mod.append(Text(type='user', text="A", at=[rm+padx/2+1,0], layer='F.Fab'))
-                kicad_mod.append(Text(type='user', text="A", at=[rm+padx/2+1,0], layer='F.SilkS'))
+                kicad_mod.append(Text(text="A", at=[rm+padx/2+1,0], layer='F.Fab'))
+                kicad_mod.append(Text(text="A", at=[rm+padx/2+1,0], layer='F.SilkS'))
             else:
-                kicad_mod.append(Text(type='user', text="A", at=[rm-padx/2-0.7,(pady/2)], layer='F.Fab'))
-                kicad_mod.append(Text(type='user', text="A", at=[rm-padx/2-0.7,(pady/2)], layer='F.SilkS'))
+                kicad_mod.append(Text(text="A", at=[rm-padx/2-0.7,(pady/2)], layer='F.Fab'))
+                kicad_mod.append(Text(text="A", at=[rm-padx/2-0.7,(pady/2)], layer='F.SilkS'))
         else:
-            kicad_mod.append(Text(type='user', text="A", at=[rm,(pady/2+1)], layer='F.Fab'))
-            kicad_mod.append(Text(type='user', text="A", at=[rm,(pady/2+1)], layer='F.SilkS'))
+            kicad_mod.append(Text(text="A", at=[rm,(pady/2+1)], layer='F.Fab'))
+            kicad_mod.append(Text(text="A", at=[rm,(pady/2+1)], layer='F.SilkS'))
     elif deco=="diode_KUP":
         if rm>d/2*1.2 and d/2-pady/2<1:
             if rm<3:
-                kicad_mod.append(Text(type='user', text="K", at=[0-padx/2-1,0], layer='F.Fab'))
-                kicad_mod.append(Text(type='user', text="K", at=[0-padx/2-1,0], layer='F.SilkS'))
+                kicad_mod.append(Text(text="K", at=[0-padx/2-1,0], layer='F.Fab'))
+                kicad_mod.append(Text(text="K", at=[0-padx/2-1,0], layer='F.SilkS'))
             else:
-                kicad_mod.append(Text(type='user', text="K", at=[0+padx/2+0.7,(pady/2)], layer='F.Fab'))
-                kicad_mod.append(Text(type='user', text="K", at=[0+padx/2+0.7,(pady/2)], layer='F.SilkS'))
+                kicad_mod.append(Text(text="K", at=[0+padx/2+0.7,(pady/2)], layer='F.Fab'))
+                kicad_mod.append(Text(text="K", at=[0+padx/2+0.7,(pady/2)], layer='F.SilkS'))
         else:
-            kicad_mod.append(Text(type='user', text="K", at=[0,(pady/2+1)], layer='F.Fab'))
-            kicad_mod.append(Text(type='user', text="K", at=[0,(pady/2+1)], layer='F.SilkS'))
+            kicad_mod.append(Text(text="K", at=[0,(pady/2+1)], layer='F.Fab'))
+            kicad_mod.append(Text(text="K", at=[0,(pady/2+1)], layer='F.SilkS'))
 
     # create SILKSCREEN-layer
     xs1 = d_slk / 2
@@ -884,9 +884,9 @@ def makeResistorRadial(seriesname, rm, w, h, ddrill, R_POW, innerw=0,innerh=0,rm
 
 
     # set general values
-    kicad_modg.append(Text(type='reference', text='REF**', at=[0, t_crt - txtoffset], layer='F.SilkS'))
-    kicad_modg.append(Text(type='value', text=footprint_name, at=[0, t_crt+h_crt + txtoffset], layer='F.Fab'))
-    kicad_mod.append(Text(type='user', text='${REFERENCE}', at=[rm/2, 0], layer='F.Fab', size=[fabtxt_size, fabtxt_size], thickness=fabtxt_thick))
+    kicad_modg.append(Property(name=Property.REFERENCE, text='REF**', at=[0, t_crt - txtoffset], layer='F.SilkS'))
+    kicad_modg.append(Property(name=Property.VALUE, text=footprint_name, at=[0, t_crt+h_crt + txtoffset], layer='F.Fab'))
+    kicad_mod.append(Text(text='${REFERENCE}', at=[rm/2, 0], layer='F.Fab', size=[fabtxt_size, fabtxt_size], thickness=fabtxt_thick))
 
     # create FAB-layer
     if type=="round" or type=="concentric":

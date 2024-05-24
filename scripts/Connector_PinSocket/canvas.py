@@ -98,7 +98,7 @@ class Layer:
 #        else:
 #            self.setGridSpacing(0.001)
 
-    @staticmethod        
+    @staticmethod
     def getBevel(width, height):
         return min(1.0, min(width, height) * 0.25)
 
@@ -128,7 +128,7 @@ class Layer:
                 self.text_size_max = round(max_size, 2)
             if min_size != None:
                 self.text_size_min = round(min_size, 2)
-        return self    
+        return self
 
     def setTextSize(self, height, width=None, thickness=None):
         height = round(height, 2)
@@ -185,7 +185,7 @@ class Layer:
                 line[2] = self._align(line[2])
                 line[3] = self._align(line[3])
                 self.footprint.append(Line(start=[line[0], line[1]], end=[line[2], line[3]], layer=self.layer, width=self.line_width))
-        else:            
+        else:
             self.footprint.append(Line(start=[self.x, self.y], end=[self.x + x, self.y + y], layer=self.layer, width=self.line_width))
 
     def to(self, x, y, draw=True):
@@ -248,7 +248,7 @@ class Layer:
     def arc(self, center_x, center_y, angle):
         arc = Arc(start=[self.x, self.y], center=[self.x + center_x, self.y + center_y], angle=angle, layer=self.layer, width=self.line_width)
         self.footprint.append(arc)
-        end = arc._calulateEndPos()    
+        end = arc._calulateEndPos()
         self.x += center_x + end.y
         self.y += center_y + end.x
         return self
@@ -258,21 +258,21 @@ class Layer:
             line_width = radius / 3.0 + self.line_width / 2.0
             r = line_width / 2.0
             while r < radius:
-                self.footprint.append(Circle(center=[self.x, self.y], radius=r, layer=self.layer, width=line_width))        
+                self.footprint.append(Circle(center=[self.x, self.y], radius=r, layer=self.layer, width=line_width))
                 r += line_width - self.line_width / 2.0
         else:
             line_width = round(min(self.line_width, radius / 2.0), 3)
             self.footprint.append(Circle(center=[self.x, self.y], radius=radius, layer=self.layer, width=line_width))
         return self
-   
+
     def fillrect(self, w, h): #TODO: add origin handling
         x = self.x
         y = self.y
         w = self._align(w)
         h = self._align(h - self.line_width)
-        
+
         #self.jump(self._align(-w / 2.0), self._align(-h / 2.0))
-        
+
         l = math.ceil(h / self.line_width)
         h = h / l
 
@@ -281,7 +281,7 @@ class Layer:
         while(l > 0):
             self._line(w, 0.0)
             self.jump(0.0, h)
-            l -= 1   
+            l -= 1
 
         self.x = x
         self.y = y
@@ -293,7 +293,7 @@ class Layer:
         y = self.y
         w = self._align(w)
         h = self._align(h)
-        
+
         if type(bevel) in [int, float]:
             bevel = [bevel] * 4
         elif bevel == None:
@@ -340,8 +340,8 @@ class Layer:
         if origin == 'center':
             self.jump(self._align(-w / 2.0), self._align(-h / 2.0))
 
-        w -= radius * 2.0          
-        h -= radius * 2.0          
+        w -= radius * 2.0
+        h -= radius * 2.0
 
         self.jump(radius, 0.0)
         self.right(w)
@@ -358,8 +358,16 @@ class Layer:
 
         return self
 
-    def text(self, type, text, rotation=0):
-        self.footprint.append(Text(type=type, text=text, at=[self.x, self.y], rotation=rotation, layer=self.layer, size=self.txt_size, thickness=self.txt_thickness))
+    def text(self, text, rotation=0):
+        self.footprint.append(Text(text=text, at=[self.x, self.y],
+            rotation=rotation, layer=self.layer, size=self.txt_size,
+            thickness=self.txt_thickness))
+        return self
+
+    def fp_property(self, name, text):
+        self.footprint.append(Property(name=name, text=text, at=[self.x, self.y],
+            rotation=rotation, layer=self.layer, size=self.txt_size,
+            thickness=self.txt_thickness))
         return self
 
 # TODO: add methods for offsetting etc
@@ -367,7 +375,7 @@ class PolyLine ():
 
     def __init__(self, vertices=None):
         self.vertices = []
-        if vertices != None:   
+        if vertices != None:
             for vertex in vertices:
                 self.vertices.append(Point(vertex))
 
@@ -376,12 +384,12 @@ class PolyLine ():
             return False if len(self.vertices) < 3 else self.vertices[0].x == self.vertices[-1].x and self.vertices[0].y == self.vertices[-1].y
         else:
             raise AttributeError
-        
+
     def append(self, x, y):
         self.vertices.append([x, y])
         return self
 
-    
+
 class PadLayer:
 
     def __init__(self, footprint, size, type, shape, shape_first=None, drill=None, layers=None, x_offset=0.0, y_offset=0.0):
@@ -419,7 +427,7 @@ class PadLayer:
 
         if y_offset == None:
             y_offset = self.y_offset
-            
+
         if shape == None:
             shape=self.shape_first if number == 1 else self.shape
 
@@ -442,23 +450,23 @@ _RectWH = namedtuple("_RectWH", [
     'width'
 ])
 
-class _Point: 
+class _Point:
     def __init__(self, x, y):
         self.x = x
         self.y = y
 
     def __repr__(self):
         return "(x={x}, y={y})".format(x=formatFloat(self.x), y=formatFloat(self.y))
-        
-class _Line: 
+
+class _Line:
     def __init__(self, a, b, x1=None, y1=None, normalize=False):
         if x1 == None and y1 == None:
             self._add_points(a, b, normalize)
-        else:    
+        else:
             self._add_points(_Point(a, b), _Point(x1, y1), normalize)
 
     def _add_points(self, a, b, normalize):
-        if normalize:  
+        if normalize:
             self.x0 = round(min(a.x, b.x), 8)
             self.x1 = round(max(a.x, b.x), 8)
             self.y0 = round(min(a.y, b.y), 8)
@@ -467,12 +475,12 @@ class _Line:
             self.x0 = a.x
             self.x1 = b.x
             self.y0 = a.y
-            self.y1 = b.y           
+            self.y1 = b.y
         else:
             self.x0 = b.x
             self.x1 = a.x
             self.y0 = b.y
-            self.y1 = a.y           
+            self.y1 = a.y
 
     def __repr__(self):
         return "(x0={x0}, y0={y0}, x1={x1}, y1={y1})".format(x0=formatFloat(self.x0), y0=formatFloat(self.y0),
@@ -484,10 +492,10 @@ class _Keepout:
         self.radius = radius
         if x1 == None and y1 == None:
             self._add_points(a, b)
-        else:    
+        else:
             self._add_points(_Point(a, b), _Point(x1, y1))
 
-    def _add_points(self, a, b):        
+    def _add_points(self, a, b):
         self.x0 = round(min(a.x, b.x), 5)
         self.x1 = round(max(a.x, b.x), 5)
         self.y0 = round(min(a.y, b.y), 5)
@@ -499,7 +507,7 @@ class _Keepout:
 
     def _feq(self, a, b):
         return abs(a-b) < 0.0001
-    
+
     def _bbox_overlap(self, bbox):
         x0 = min(bbox.x0, bbox.x1)
         x1 = max(bbox.x0, bbox.x1)
@@ -508,20 +516,20 @@ class _Keepout:
         return not (self.x0 < x1 and self.x1 > x0 and self.y0 > y1 and self.y1 < y0)
 
     def lineIntersects(self, l):
-        
+
         # skip proccesing if line bounding box is completely outside keepout bounding box
         if not self._bbox_overlap(l):
             return False
-    
+
         points = []
-  
+
         # get lines representing keepout bounding box
         if len(self.lines) == 0:
             self.lines.append(_Line(self.x0, self.y0, self.x1, self.y0))
             self.lines.append(_Line(self.x1, self.y0, self.x1, self.y1))
             self.lines.append(_Line(self.x0, self.y1, self.x1, self.y1))
             self.lines.append(_Line(self.x0, self.y0, self.x0, self.y1))
-        
+
         # find and return intersecting points
         a1 = l.y1 - l.y0
         b1 = l.x0 - l.x1
@@ -533,13 +541,13 @@ class _Keepout:
             a2 = k.y1 - k.y0
             b2 = k.x0 - k.x1
             d = a1 * b2 - a2 * b1
-                    
+
             if d != 0.0:
                 c2 = a2 * k.x0 + b2 * k.y0;
                 c1 = a1 * l.x0 + b1 * l.y0
                 xp = (b2 * c1 - b1 * c2) / d
                 yp = (a1 * c2 - a2 * c1) / d
-  
+
                 ka = (xp >= l.x0 and xp <= l.x1) if lr else (xp <= l.x0 and xp >= l.x1)
                 kb = self._feq(xp, k.x0) if k.x0 == k.x1 else self._feq(yp, k.y0)
 
@@ -548,7 +556,7 @@ class _Keepout:
                         points.insert(0, [xp, yp, i])
                     else:
                         points.append([xp, yp, i])
-            i += 1       
+            i += 1
 
         return False if len(points) == 0 else points
 
@@ -561,7 +569,7 @@ class _Keepout:
     def _HLineTrim(self, y, r):
         h = (self.y0 + r - y if y < self.y0 + r else y - self.y1 + r)
         return r - math.sqrt(r * r - h * h)
-        
+
     def _VLineTrim(self, x, r):
         h = (self.x0 + r - x if x < self.x0 + r else x - self.x1 + r)
         return r - math.sqrt(r * r - h * h)
@@ -587,7 +595,7 @@ class _Keepout:
             if line.x1 > self.x1:
                 segments.append([self.x1, line.y0, line.x1, line.y1])
         elif line.x1 > self.x0 and line.x0 < self.x1:
-            h = self._HLineTrim(line.y0, r) 
+            h = self._HLineTrim(line.y0, r)
             if line.x0 < self.x0 + r:
                 segments.append([line.x0, line.y0, min(line.x1, self.x0 + h), line.y1])
             if line.x1 > self.x1 - r:
@@ -615,7 +623,7 @@ class _Keepout:
             if line.y1 > self.y1:
                 segments.append([line.x0, self.y1, line.x1, line.y1])
         elif line.y1 > self.y0 and line.y0 < self.y1:
-            h = self._VLineTrim(line.x0, r) 
+            h = self._VLineTrim(line.x0, r)
             if line.y0 < self.y0 + r:
                 segments.append([line.x0, line.y0, line.x1, min(line.y1, self.y0 + h)])
             if line.y1 > self.y1 - r:
@@ -672,14 +680,14 @@ class Keepout():
     def addRound(self, x, y, w, h, offset=None):
         if offset == None:
             offset = self.offset
-#        d = w - h         
+#        d = w - h
         r = min(h, w) / 2.0 + offset
         w = w / 2.0 + offset
         h = h / 2.0 + offset
         self._add(x - w, y - h, x + w, y + h, r)
 #        self.addRect(x - w, y - w, d if d > 0.0 else 0.0, -d if d < 0.0 else 0.0, r)
         return self
-    
+
     def addPads(self):
         nodes = self.layer.footprint.getNormalChilds()
         offset = self.offset
@@ -702,9 +710,9 @@ class Keepout():
 
     # internal method for keepout-processing
     def _processHVLine(self, line):
-        
+
         def add_segment(x0, y0, x1, y1):
-            length = x1 - x0 + y1 - y0 
+            length = x1 - x0 + y1 - y0
             if length >= self.min_length:
                 segments.append([x0, y0, x1, y1])
 
@@ -726,7 +734,7 @@ class Keepout():
                             segments.pop(i)
                             for segment in changes:
                                 add_segment(segment[0], segment[1], segment[2], segment[3])
-                            
+
                         if self.DEBUG & 2:
                             print("CHOP - line:", segment[0], segment[1], segment[2], segment[3], "keepout:", keepout)
 
@@ -737,7 +745,7 @@ class Keepout():
             print("LI", segments)
 
         return segments
-    
+
     # split an arbitrary line so it does not interfere with keepout areas defined as [[x0,x1,y0,y1], ...]
     def processLine(self, x0, y0, x1, y1):
 
@@ -745,9 +753,9 @@ class Keepout():
 
         if line.x0 == line.x1 or line.y0 == line.y1: # use simpler and faster algorithm for horizontal and vertical lines
             return self._processHVLine(line)
-    
+
         # TODO: update to handle keepout area proper, now only respects the bounding box.
-        
+
         segments=[[line.x0, line.y0, line.x1, line.y1]]
         for keepout in self.keepouts:
             for i in reversed(range(0, len(segments))):
@@ -758,7 +766,7 @@ class Keepout():
                     segments.append([segment[0], segment[1], changes[0][0], changes[0][1]])
                     if len(changes) == 2:
                         segments.append([changes[1][0], changes[1][1], segment[2], segment[3]])
-        return segments       
+        return segments
 
     # draws the keepouts
     def debug_draw(self):
@@ -781,13 +789,13 @@ class Keepout():
 
 class OutDir:
 
-    def __init__(self, root_dir=None):    
+    def __init__(self, root_dir=None):
         self.root_dir = "" if root_dir == None else root_dir
         if root_dir != "" and self.root_dir[-1] != os.sep:
             self.root_dir += os.sep
 
     def saveTo(self, lib_name):
-        out_dir = "" if self.root_dir == "" else self.root_dir + lib_name + ".pretty" + os.sep   
+        out_dir = "" if self.root_dir == "" else self.root_dir + lib_name + ".pretty" + os.sep
         if not os.path.exists(out_dir):
             os.makedirs(out_dir)
         return out_dir

@@ -32,8 +32,8 @@ if __name__ == '__main__':
     kicad_mod.setTags("example")
 
     # set general values
-    kicad_mod.append(Text(type='reference', text='REF**', at=[0, -3], layer='F.SilkS'))
-    kicad_mod.append(Text(type='value', text=footprint_name, at=[1.5, 3], layer='F.Fab'))
+    kicad_mod.append(Property(name=Property.REFERENCE, text='REF**', at=[0, -3], layer='F.SilkS'))
+    kicad_mod.append(Property(name=Property.VALUE, text=footprint_name, at=[1.5, 3], layer='F.Fab'))
 
     # create polygon
     kicad_mod.append(Polygon(nodes=[[-2, 0], [0, -2], [4, 0], [0, 2], [-2, 0], [0, -2], [4, 0], [0, 2]],

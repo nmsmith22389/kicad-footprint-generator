@@ -23,9 +23,9 @@ def gen_footprint(offsets: list):
     for offset in offsets:
         kicad_mod.append(poly.duplicate(offset=offset, layer="F.SilkS", width=0.1))
 
-    kicad_mod.append(Text(type='reference', text='REF**', at=[0, -5], layer='F.SilkS'))
-    kicad_mod.append(Text(type='user', text='${REFERENCE}', at=[0, -5], layer='F.Fab'))
-    kicad_mod.append(Text(type='value', text="test", at=[0, 5], layer='F.Fab'))
+    kicad_mod.append(Property(name=Property.REFERENCE, text='REF**', at=[0, -5], layer='F.SilkS'))
+    kicad_mod.append(Text(text='${REFERENCE}', at=[0, -5], layer='F.Fab'))
+    kicad_mod.append(Property(name=Property.VALUE, text="test", at=[0, 5], layer='F.Fab'))
 
     return kicad_mod
 

@@ -28,8 +28,8 @@ for pincount in range(2,16):
     kicad_mod.setTags(tags)
 
     # set general values
-    kicad_mod.addText('reference', 'REF**', {'x':0, 'y':2.5}, 'F.SilkS')
-    kicad_mod.addText('value', footprint_name, {'x':0, 'y':4}, 'F.Fab')
+    kicad_mod.append(Property(name=Property.REFERNECE, 'REF**', {'x':0, 'y':2.5}, 'F.SilkS'))
+    kicad_mod.addText(Property(name=Property.VALUE, footprint_name, {'x':0, 'y':4}, 'F.Fab'))
 
     drill = 0.6
 

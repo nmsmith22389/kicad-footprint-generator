@@ -93,8 +93,8 @@ for pincount in pins:
     fp.setTags(tags)
 
     # text
-    fp.append(Text(type='reference', text='REF**', at=[0, -5.2], layer='F.SilkS'))
-    fp.append(Text(type='value', text=footprint_name, at=[0,5.4 ], layer='F.Fab'))
+    fp.append(Property(name=Property.REFERENCE, text='REF**', at=[0, -5.2], layer='F.SilkS'))
+    fp.append(Property(name=Property.VALUE, text=footprint_name, at=[0,5.4 ], layer='F.Fab'))
 
     #Major dimensions
     B = ( pincount - 1 ) * pitch

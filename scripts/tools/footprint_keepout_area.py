@@ -48,7 +48,7 @@ def addRectangularKeepout(kicad_mod, center, size, text='KEEPOUT', config=KEEPOU
         thickness = config['text']['fontwidth'] * fs
 
 
-    kicad_mod.append(Text(type='user', text=text,
+    kicad_mod.append(Text(text=text,
         at=center, rotation=rot,
         layer=config['text']['layer'], size=size,
         thickness=thickness))

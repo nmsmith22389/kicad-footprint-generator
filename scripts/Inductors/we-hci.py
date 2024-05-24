@@ -63,8 +63,8 @@ for inductor in inductors:
     fp.setDescription(description)
 
     # set general values
-    fp.append(Text(type='reference', text='REF**', at=[0,-w/2 - 1], layer='F.SilkS'))
-    fp.append(Text(type='value', text=fp_name, at=[0,w/2 + 1.5], layer='F.Fab'))
+    fp.append(Property(name=Property.REFERENCE, text='REF**', at=[0,-w/2 - 1], layer='F.SilkS'))
+    fp.append(Property(name=Property.VALUE, text=fp_name, at=[0,w/2 + 1.5], layer='F.Fab'))
 
     #add inductor outline
     fp.append(RectLine(start=[-l/2,-w/2],end=[l/2,w/2],layer='F.Fab',width=0.15))
@@ -98,11 +98,11 @@ for inductor in inductors:
     {'x':  x1, 'y': y1},
     {'x':  x1, 'y': ly},
     ]
-    
-    
+
+
     fp.append(PolygonLine(polygon=top))
     fp.append(PolygonLine(polygon=top, y_mirror=0))
-    
+
     #Add a model
     fp.append(Model(filename="Inductors.3dshapes/" + fp_name + ".wrl"))
 

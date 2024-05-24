@@ -112,11 +112,11 @@ for padNum in padNums:
     yValue -= yOffset
     yRef -= yOffset
 
-    f.append(Text(type="reference", text="REF**", at=[xCenter, yRef],
+    f.append(Property(name=Property.REFERENCE, text="REF**", at=[xCenter, yRef],
                   layer="F.SilkS", size=s, thickness=t2))
-    f.append(Text(type="value", text=footprint_name, at=[xCenter, yValue],
+    f.append(Property(name=Property.VALUE, text=footprint_name, at=[xCenter, yValue],
                   layer="F.Fab", size=s, thickness=t2))
-    f.append(Text(type="user", text='${REFERENCE}', at=[xCenter, yCenter],
+    f.append(Text(text='${REFERENCE}', at=[xCenter, yCenter],
                   layer="F.Fab", size=sFabRef, thickness=t1))
 
     f.append(RectLine(start=[xLeftCrtYd, yTopCrtYd],
@@ -251,7 +251,7 @@ for padNum in padNums:
     f.append(PolygonLine(polygon=[[xSpaceCneterRightLeft + centerSpaceWidth, yEdge - chamferLength],
                                    [xSpaceRightLeft, yEdge - chamferLength]],
                          layer="Dwgs.User", width=wCut))
-    f.append(Text(type="user", text=chamferComment, at=[xCenter, yEdge + sFabRef[0]],
+    f.append(Text(text=chamferComment, at=[xCenter, yEdge + sFabRef[0]],
                   layer="Cmts.User", size=sFabRef, thickness=t2))
 
     file_handler = KicadFileHandler(f)

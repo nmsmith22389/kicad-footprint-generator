@@ -23,8 +23,8 @@ def create_shielding(name, outer_size, size,
     courtjard_size = outer_size / 2. + attachment_diameter / 2. + 0.25
 
     # set general values
-    kicad_mod.append(Text(type='reference', text='REF**', at=[0, -courtjard_size - 1], layer='F.SilkS'))
-    kicad_mod.append(Text(type='value', text=name, at=[0, courtjard_size + 1], layer='F.Fab'))
+    kicad_mod.append(Property(name=Property.REFERENCE, text='REF**', at=[0, -courtjard_size - 1], layer='F.SilkS'))
+    kicad_mod.append(Property(name=Property.VALUE, text=name, at=[0, courtjard_size + 1], layer='F.Fab'))
 
     # create courtyard
     kicad_mod.append(RectLine(start=[-courtjard_size, -courtjard_size],

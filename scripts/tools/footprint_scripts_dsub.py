@@ -165,8 +165,8 @@ def makeDSubStraight(
 
     # set general values
     kicad_modg.append(
-        Text(
-            type="reference",
+        Property(
+            name=Property.REFERENCE,
             text="REF**",
             at=[l_fab + w_fab / 2, t_slk - txt_offset],
             layer="F.SilkS",
@@ -183,8 +183,8 @@ def makeDSubStraight(
         )
     )
     kicad_modg.append(
-        Text(
-            type="value",
+        Property(
+            name=Property.VALUE,
             text=footprint_name,
             at=[l_fab + w_fab / 2, t_slk + h_slk + txt_offset],
             layer="F.Fab",
@@ -585,8 +585,8 @@ def makeDSubEdge(
 
     # set general values
     kicad_mod.append(
-        Text(
-            type="reference",
+        Property(
+            name=Property.REFERENCE,
             text="REF**",
             at=[x10 - topoffset - pad[0] / 2 - text_size[0] * 3, 0],
             layer="F.SilkS",
@@ -594,7 +594,6 @@ def makeDSubEdge(
     )
     kicad_mod.append(
         Text(
-            type="user",
             text="${REFERENCE}",
             at=[0, ypcb_edge + smaller_backcan_height / 2],
             layer="F.Fab",
@@ -603,8 +602,8 @@ def makeDSubEdge(
         )
     )
     kicad_mod.append(
-        Text(
-            type="value",
+        Property(
+            name=Property.VALUE,
             text=footprint_name,
             at=[
                 0,
@@ -1148,8 +1147,8 @@ def makeDSubAngled(
 
     # set general values
     kicad_modg.append(
-        Text(
-            type="reference",
+        Property(
+            type=Property.REFERENCE,
             text="REF**",
             at=[0, ypcb_edge - back_height - text_size[0]],
             layer="F.SilkS",
@@ -1157,7 +1156,6 @@ def makeDSubAngled(
     )
     kicad_modg.append(
         Text(
-            type="user",
             text="${REFERENCE}",
             at=[0, ypcb_edge + shield_thickness + can_height / 2],
             layer="F.Fab",
@@ -1166,8 +1164,8 @@ def makeDSubAngled(
         )
     )
     kicad_modg.append(
-        Text(
-            type="value",
+        Property(
+            name=Property.VALUE,
             text=footprint_name,
             at=[0, ypcb_edge + shield_thickness + can_height + text_size[0] * 1.5],
             layer="F.Fab",
@@ -1482,7 +1480,7 @@ def makeDSubAngled(
 
     # PCB edge marker
     # kicad_modg.append(Line(start=[-shield_width/2, ypcb_edge], end=[shield_width/2, ypcb_edge], layer='Dwgs.User', width=lw_crt))
-    # kicad_modg.append(Text(type='user', text='PCB edge', at=[-shield_width/2+5*text_size[0], ypcb_edge-text_size[1]*2/3], layer='Dwgs.User', size=[text_size[0]/2,text_size[1]/2] ,thickness=text_t/2))
+    # kicad_modg.append(Text(text='PCB edge', at=[-shield_width/2+5*text_size[0], ypcb_edge-text_size[1]*2/3], layer='Dwgs.User', size=[text_size[0]/2,text_size[1]/2] ,thickness=text_t/2))
 
     # outline
     if not hasNoBackBox:

@@ -14,7 +14,7 @@ import logging
 
 # load parent path of KicadModTree
 sys.path.append(os.path.join(sys.path[0], "..", ".."))
-from KicadModTree import Footprint, FootprintType, Text, Line, Pad, RectLine, Vector2D
+from KicadModTree import Footprint, FootprintType, Text, Line, Pad, RectLine, Vector2D, Property
 from scripts.tools.drawing_tools import (
     draw_triangle_pointing_south,
     getStandardSilkArrowSize,
@@ -178,12 +178,11 @@ class InductorGenerator(FootprintGenerator):
         )
         # Create silkscreen REF** and lines
         elements = [
-            Text(
-                type="reference",
-                text="REF**",
+            Property(
+                name=Property.REFERENCE,
+                text='REF**',
                 at=[0, -max(landing_pad_dimension.y, part_dimension.y) / 2 - 1],
-                layer="F.SilkS",
-            ),
+                layer='F.SilkS'),
             Line(  # Bottom line
                 start=silkscreen_corner * (-1, 1),
                 end=silkscreen_corner,
@@ -191,6 +190,7 @@ class InductorGenerator(FootprintGenerator):
                 width=stroke_width,
             ),
         ]
+
         # Create pin 1 marker if needed
         if has_orientation:
             # insert a pin 1 marker above the pad 1. Make a cutout of arrow_size + stroke_width to fit
@@ -358,8 +358,8 @@ class InductorGenerator(FootprintGenerator):
             ),
             # Fab ${value} placed below the footprint as per KLC F5.2
             # Calculate maximum size of the footprint in y-direction, add 1 mm and place the text there
-            Text(
-                type="value",
+            Property(
+                name=Property.VALUE,
                 text=ref_value,
                 at=[0, max(landing_pad_dimension.y, part_dimension.y) / 2 + 1],
                 layer="F.Fab",

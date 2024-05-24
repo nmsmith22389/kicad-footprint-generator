@@ -164,9 +164,9 @@ def generate_one_footprint(pins, configuration, variant):
                                                [keepout_center_x[1] + keepout_width/2, keepout_center_y - keepout_height/2],
                                                [keepout_center_x[1] - keepout_width/2, keepout_center_y - keepout_height/2]],
                                      layer='Dwgs.User', width=0.1))
-        kicad_mod.append(Text(type='user', text='CU KEEPOUT', at=[keepout_center_x[0], keepout_center_y],
+        kicad_mod.append(Text(text='CU KEEPOUT', at=[keepout_center_x[0], keepout_center_y],
             layer='Cmts.User', size=[keepout_text_width, keepout_text_width], thickness=keepout_text_thickness))
-        kicad_mod.append(Text(type='user', text='CU KEEPOUT', at=[keepout_center_x[1], keepout_center_y],
+        kicad_mod.append(Text(text='CU KEEPOUT', at=[keepout_center_x[1], keepout_center_y],
             layer='Cmts.User', size=[keepout_text_width, keepout_text_width], thickness=keepout_text_thickness))
 
 

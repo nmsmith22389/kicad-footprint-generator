@@ -143,17 +143,17 @@ class pinSocketVerticalTHT (object):
 
         # add text to silk layer
         silk.goto(c_ofs, t_crt - silk.txt_offset)\
-            .text('reference', 'REF**')\
+            .fp_property(Property.REFERENCE, 'REF**')\
             .setOrigin(-w_slk / 2.0 + c_ofs, t_slk)
 
         # add fab layer
         bevel = Layer.getBevel(h_fab, w_fab)
         fab.goto(c_ofs, h_crt + t_crt + fab.txt_offset)\
-           .text('value', footprint_name)\
+           .fp_property(Property.VALUE, footprint_name)\
            .goto(c_ofs, h_fab / 2.0 + t_fab)\
            .setTextDefaults(max_size=1.0)\
            .setTextSize(0.6 * (h_fab if param.num_pins == 1 and param.num_pin_rows <= 2 else w_fab))\
-           .text('user', '${REFERENCE}', rotation=0 if param.num_pins == 1 and param.num_pin_rows <= 2 else 90)\
+           .text('${REFERENCE}', rotation=0 if param.num_pins == 1 and param.num_pin_rows <= 2 else 90)\
            .setOrigin(-w_fab / 2.0 + c_ofs, t_fab)\
            .rect(w_fab, h_fab, bevel=(0.0 if isSocket else bevel, bevel if isSocket else 0.0, 0.0, 0.0), origin="topLeft")
 
@@ -309,16 +309,16 @@ class pinSocketHorizontalTHT (object):
 
         # add text to silk
         silk.goto(l_crt + w_crt / 2.0, t_crt - silk.txt_offset)\
-            .text('reference', 'REF**')
+            .fp_property(Property.REFERENCE, 'REF**')
 
         # create FAB-layer
         bevel = min(Layer.getBevel(h_fab, abs(w_fab)), -t_fab - param.pin_width / 2.0)
 
         fab.goto(l_fab + w_fab / 2.0, (h_fab - param.pin_pitch) / 2.0)\
-           .text('user', '${REFERENCE}', rotation=(90 if h_fab >= -w_fab else 0))\
+           .text('${REFERENCE}', rotation=(90 if h_fab >= -w_fab else 0))\
            .rect(-w_fab, h_fab, bevel=(0.0, bevel, 0.0, 0.0))\
            .goto(l_crt + w_crt / 2.0, h_crt + t_crt + fab.txt_offset)\
-           .text('value', footprint_name)
+           .fp_property(Property.VALUE, footprint_name)
 
         # add pin markers
         fab.goto(l_fab / 2.0, 0.0)
@@ -476,7 +476,7 @@ class pinSocketVerticalSMD (object):
 
         # add text and outline to silk layer
         silk.goto(0.0, -(h_crt / 2.0) - silk.txt_offset)\
-            .text('reference', 'REF**')\
+            .fp_property(Property.REFERENCE, 'REF**')\
             .setOrigin(-w_slk / 2.0, -h_slk / 2.0)\
             .rect(w_slk, h_slk, origin = "topLeft")
 
@@ -492,11 +492,11 @@ class pinSocketVerticalSMD (object):
         bevel = min(Layer.getBevel(h_fab, w_fab), -t_fab + rmh + param.pin_width / 2.0)
 
         fab.down((h_crt) / 2.0 + fab.txt_offset, draw=False)\
-           .text('value', footprint_name)\
+           .fp_property(Property.VALUE, footprint_name)\
            .goHome()\
            .setTextDefaults(max_size=1.0)\
            .setTextSize(0.6 * (h_fab if param.num_pins == 1 and param.num_pin_rows <= 2 else w_fab))\
-           .text('user', '${REFERENCE}', rotation=(90 if h_fab >= w_fab else 0))\
+           .text('${REFERENCE}', rotation=(90 if h_fab >= w_fab else 0))\
            .rect(w_fab, h_fab, bevel=(0.0 if param.pin1start_right else bevel, bevel if param.pin1start_right else 0.0, 0.0, 0.0))\
            .setOrigin(-w_fab / 2.0, -h_fab / 2.0)
 

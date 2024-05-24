@@ -179,7 +179,7 @@ class StandardBox(Node):
         # place the silk avoiding the pin 1 marker
         silk_ref_des_pos = corner_pos + Point2D(ref_des_x_inset, -silk_ref_des_size[1] / 2 - 2 * self.FSilkSWidth)
 
-        new_node = Text(type='reference', text='REF**', at=silk_ref_des_pos, size=silk_ref_des_size, layer='F.SilkS')
+        new_node = Property(name=Property.REFERENCE, text='REF**', at=silk_ref_des_pos, size=silk_ref_des_size, layer='F.SilkS')
         new_node._parent = self
         return new_node
 
@@ -213,7 +213,7 @@ class StandardBox(Node):
                 self.REF_P_h = self.REF_P_w
 
         fab_ref_des_pos = self.at + (self.size / 2)
-        new_node = Text(type='user', text='${REFERENCE}', at=fab_ref_des_pos, layer='F.Fab', size=[self.REF_P_w, self.REF_P_h])
+        new_node = Text(text='${REFERENCE}', at=fab_ref_des_pos, layer='F.Fab', size=[self.REF_P_w, self.REF_P_h])
         new_node._parent = self
         self.virtual_childs.append(new_node)
 
@@ -227,7 +227,7 @@ class StandardBox(Node):
             self.at.y + self.size.y + fab_value_y_offset + 1.0
         )
 
-        new_node = Text(type="value", text=self.footprint_name, at=fab_value_pos, layer="F.Fab")
+        new_node = Property(name=Property.VALUE, text=self.footprint_name, at=fab_value_pos, layer="F.Fab")
         new_node._parent = self
         self.virtual_childs.append(new_node)
 
@@ -261,7 +261,7 @@ class StandardBox(Node):
             for n in self.extratexts:
                 at = [n[0], 0.0-n[1]]
                 stss = n[2]
-                new_node = Text(type="user", text=stss, at=at)
+                new_node = Text(text=stss, at=at)
                 #
                 if len(n) > 3:
                     new_node.layer = n[3]
@@ -749,14 +749,14 @@ class StandardBox(Node):
                     cy_max_y = p_max_y
                 else:
                     cy_max_y = min(cy_max_y, p_max_y)
-                
-                
+
+
         for f in self.boxffabline:
             cy_min_x = min(f.sx, f.ex, cy_min_x)
             cy_min_y = min(f.sy, f.ey, cy_min_y)
             cy_max_x = max(f.sx, f.ex, cy_max_x)
             cy_max_y = max(f.sy, f.ey, cy_max_y)
-            
+
         cy_min_x -= 0.005 # ensure that rounding of courtyard to nearest 0.01mm grid point below is always away from the part
         cy_min_x -= clearance.x
         cy_min_y -= 0.005
@@ -765,27 +765,27 @@ class StandardBox(Node):
         cy_max_x += clearance.y
         cy_max_y += 0.005
         cy_max_y += clearance.x
-        
+
         #(min, min) -> (min, max)
         new_node = Line(start=Point2D(roundG(cy_min_x, 0.01), roundG(cy_min_y, 0.01)), end=Point2D(roundG(cy_min_x, 0.01), roundG(cy_max_y, 0.01)), layer='F.CrtYd', width=self.FCrtYdWidth)
         new_node._parent = self
         self.virtual_childs.append(new_node)
-        
+
         #(min, max) -> (max, max)
         new_node = Line(start=Point2D(roundG(cy_min_x, 0.01), roundG(cy_max_y, 0.01)), end=Point2D(roundG(cy_max_x, 0.01), roundG(cy_max_y, 0.01)), layer='F.CrtYd', width=self.FCrtYdWidth)
         new_node._parent = self
         self.virtual_childs.append(new_node)
-        
+
         #(max, max) -> (max, min)
         new_node = Line(start=Point2D(roundG(cy_max_x, 0.01), roundG(cy_max_y, 0.01)), end=Point2D(roundG(cy_max_x, 0.01), roundG(cy_min_y, 0.01)), layer='F.CrtYd', width=self.FCrtYdWidth)
         new_node._parent = self
         self.virtual_childs.append(new_node)
-        
+
         #(max, min) -> (min, min)
         new_node = Line(start=Point2D(roundG(cy_max_x, 0.01), roundG(cy_min_y, 0.01)), end=Point2D(roundG(cy_min_x, 0.01), roundG(cy_min_y, 0.01)), layer='F.CrtYd', width=self.FCrtYdWidth)
         new_node._parent = self
         self.virtual_childs.append(new_node)
-        
+
     def calculateBoundingBox(self):
         min_x = self.at.x
         min_y = self.at.y

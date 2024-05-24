@@ -78,6 +78,6 @@
     * Line (fp_line (start 5.6 2.6207495318350236) (end 5.6 3.6) (layer F.SilkS) (width 0.1))
     * Line (fp_line (start 5.6 3.6) (end -4.2485281374238575 3.6) (layer F.SilkS) (width 0.1))
     * Line (fp_line (start -4.2485281374238575 3.6) (end -5.424264068711929 2.4242640687119286) (layer F.SilkS) (width 0.1))
-  * Text [type: "reference", text: "REF**", at: (at 0.0 -5.0), layer: F.SilkS, size: (size 1.0 1.0), thickness: 0.15]
-  * Text [type: "user", text: "${REFERENCE}", at: (at 0.0 -5.0), layer: F.Fab, size: (size 1.0 1.0), thickness: 0.15]
-  * Text [type: "value", text: "test", at: (at 0.0 5.0), layer: F.Fab, size: (size 1.0 1.0), thickness: 0.15]
+  * Text [text: "REF**", at: (at 0.0 -5.0), layer: F.SilkS, size: (size 1.0 1.0), thickness: 0.15]
+  * Text [text: "${REFERENCE}", at: (at 0.0 -5.0), layer: F.Fab, size: (size 1.0 1.0), thickness: 0.15]
+  * Text [text: "test", at: (at 0.0 5.0), layer: F.Fab, size: (size 1.0 1.0), thickness: 0.15]

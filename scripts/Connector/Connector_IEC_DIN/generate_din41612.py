@@ -164,12 +164,13 @@ def BFemale(size, pin_cb, more_description):
 		width=0.12,
 		layer='F.Fab'))
 	kicad_mod.append(Text(
-		type='value', text=footprint_name,
+		name=Property.VALUE,
+		text=footprint_name,
 		at=[mid_x, mid_y + outer_length/2 + 1.3],
 		layer='F.Fab'))
 	# Very small Reference Designator to fit between the pins.
 	kicad_mod.append(Text(
-		type='user', text='${REFERENCE}',
+		text='${REFERENCE}',
 		at=[mid_x, mid_y],
 		size=[0.6, 0.6], thickness=0.07,
 		layer='F.Fab'))
@@ -194,8 +195,8 @@ def BFemale(size, pin_cb, more_description):
 		polygon=pin_a1_arrow,
 		width=0.12,
 		layer='F.SilkS'))
-	kicad_mod.append(Text(
-		type='reference', text='REF**',
+	kicad_mod.append(Property(
+		name=Property.REFERENCE, text='REF**',
 		at=[mid_x, mid_y - outer_length/2 - 1],
 		layer='F.SilkS'))
 
@@ -320,8 +321,8 @@ def BMale(size, pin_cb, more_description):
 		polygon=pin_a1_arrow,
 		width=0.12,
 		layer='F.SilkS'))
-	kicad_mod.append(Text(
-		type='reference', text='REF**',
+	kicad_mod.append(Property(
+		name=Property.REFERENCE, text='REF**',
 		at=[mid_x - npth_step * 0.5, row_step * 0.5],
 		layer='F.SilkS'))
 
@@ -329,12 +330,12 @@ def BMale(size, pin_cb, more_description):
 	kicad_mod.append(PolygonLine(
 		polygon = package_outline + [package_outline[0]],
 		layer = 'F.Fab'))
-	kicad_mod.append(Text(
-		type='value', text=footprint_name,
+	kicad_mod.append(Property(
+		name=Property.VALUE, text=footprint_name,
 		at=[mid_x, npth_y + jack_to_npth - 1.3],
 		layer='F.Fab'))
 	kicad_mod.append(Text(
-		type='user', text='${REFERENCE}',
+		text='${REFERENCE}',
 		at=[mid_x, npth_y],
 		size=[1, 1], thickness=0.15,
 		layer='F.Fab'))
@@ -380,7 +381,7 @@ def BMale(size, pin_cb, more_description):
 		width = 0.1,
 		layer = 'Cmts.User'))
 	kicad_mod.append(Text(
-		type='user', text='Board edge',
+		text='Board edge',
 		at=[mid_x, -board_edge_to_a - 2],
 		size=[0.7, 0.7], thickness=0.1,
 		layer='Cmts.User'))

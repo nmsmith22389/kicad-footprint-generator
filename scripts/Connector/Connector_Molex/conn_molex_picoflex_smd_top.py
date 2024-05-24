@@ -335,7 +335,7 @@ def generate_one_footprint(pins, configuration):
     y2 = y1 + KeepOutAreaHeight
     kicad_mod.append(RectLine(start=[round(x1, 2), round(y1, 2)],
         end=[round(x2, 2), round(y2, 2)], layer='Dwgs.User', width=0.1))
-    kicad_mod.append(Text(type='user', text='KEEPOUT',
+    kicad_mod.append(Text(text='KEEPOUT',
         at=[0,0], rotation=90,
         layer='Cmts.User'))
     x1 = 0 - (KeepOutAreaWidth / 2)

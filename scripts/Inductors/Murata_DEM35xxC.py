@@ -62,11 +62,11 @@ yFabTop = -yFabBottom
 yValue = yFabBottom + 1.25
 yRef = yFabTop - 1.25
 
-f.append(Text(type="reference", text="REF**", at=[xCenter, yRef],
+f.append(Property(name=Property.REFERENCE, text="REF**", at=[xCenter, yRef],
               layer="F.SilkS", size=textSize, thickness=thickness2))
-f.append(Text(type="value", text=footprint_name, at=[xCenter, yValue],
+f.append(Property(name=Property.VALUE, text=footprint_name, at=[xCenter, yValue],
               layer="F.Fab", size=textSize, thickness=thickness2))
-f.append(Text(type="user", text='${REFERENCE}', at=[xCenter, yCenter],
+f.append(Text(text='${REFERENCE}', at=[xCenter, yCenter],
               layer="F.Fab", size=fabRefTextSize, thickness=thickness1))
 
 f.append(RectLine(start=[xLeftCrtYd, yTopCrtYd],

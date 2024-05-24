@@ -69,8 +69,8 @@ for inductor in inductors:
     fp.append(RectLine(start=[-cx,-cy],end=[cx,cy],offset=0.35,width=0.05,grid=0.05,layer="F.CrtYd"))
 
     # set general values
-    fp.append(Text(type='reference', text='REF**', at=[0,-cy - 1], layer='F.SilkS'))
-    fp.append(Text(type='value', text=fp_name, at=[0,cy + 1.5], layer='F.Fab'))
+    fp.append(Property(name=Property.REFERENCE, text='REF**', at=[0,-cy - 1], layer='F.SilkS'))
+    fp.append(Property(name=Property.VALUE, text=fp_name, at=[0,cy + 1.5], layer='F.Fab'))
 
 
     #calculate pad center
@@ -91,12 +91,12 @@ for inductor in inductors:
         {'x': -l/2-0.1,'y': -w/2-0.1},
         {'x': 0,'y': -w/2-0.1},
     ]
-    
+
     fp.append(PolygonLine(polygon=poly))
     fp.append(PolygonLine(polygon=poly, x_mirror=0))
     fp.append(PolygonLine(polygon=poly, y_mirror=0))
     fp.append(PolygonLine(polygon=poly, x_mirror=0))
-    
+
     #Add a model
     fp.append(Model(filename="Inductors.3dshapes/" + fp_name + ".wrl"))
 

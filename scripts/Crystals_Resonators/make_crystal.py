@@ -25,8 +25,8 @@ class CrystalResonatorGenerator(FootprintGenerator):
         super().__init__(**kwargs)
 
         self.configuration = configuration
-        
-    def generateFootprint(self, device_params: dict, pkg_id: str, header_info: dict = None):    
+
+    def generateFootprint(self, device_params: dict, pkg_id: str, header_info: dict = None):
         _funcs = {
             "makeCrystal": self.makeCrystal,
             "makeCrystalAll": self.makeCrystalAll,
@@ -38,10 +38,10 @@ class CrystalResonatorGenerator(FootprintGenerator):
         if func_name not in _funcs:
             raise ValueError(f"Unknown 'func': {func_name}")
         func = _funcs[func_name]
-        
+
         # Run function
         func(**device_params)
-        
+
     def makeSMDCrystalAndHand(self, footprint_name, addSizeFootprintName, pins, pad_sep_x, pad_sep_y, pad, pack_width,
                             pack_height, pack_bevel, hasAdhesive=False, adhesivePos=[0, 0], adhesiveSize=1, style="rect",
                             description="Crystal SMD SMT", tags=[], lib_name="Crystal", offset3d=[0, 0, 0],
@@ -167,12 +167,16 @@ class CrystalResonatorGenerator(FootprintGenerator):
 
         # set general values
         kicad_modg.append(
-            Text(type='reference', text='REF**', at=[0, min(t_slk, -overpad_height / 2, -pack_height / 2) - txt_offset],
-                layer='F.SilkS'))
+            Property(name=Property.REFERENCE,
+                     text='REF**',
+                     at=[0, min(t_slk, -overpad_height / 2, -pack_height / 2) - txt_offset],
+                     layer='F.SilkS'))
         # kicad_modg.append(Text(type='user', text='${REFERENCE}', at=[0, min(t_slk,-overpad_height/2,-pack_height/2)-txt_offset], layer='F.Fab'))
         kicad_modg.append(
-            Text(type='value', text=fpname, at=[0, max(t_slk + h_slk, overpad_height / 2, pack_height / 2) + txt_offset],
-                layer='F.Fab'))
+            Property(name=Property.VALUE,
+                     text=fpname,
+                     at=[0, max(t_slk + h_slk, overpad_height / 2, pack_height / 2) + txt_offset],
+                     layer='F.Fab'))
 
         # create FAB-layer
         if style == 'hc49':
@@ -218,14 +222,14 @@ class CrystalResonatorGenerator(FootprintGenerator):
                                             width=lw_slk))
                 kicad_modg.append(Line(start=[l_slk - 2 * lw_slk, t_slk],
                                     end=[l_slk - 2 * lw_slk, t_slk + h_slk], layer='F.SilkS', width=lw_slk))
-                
+
                 kicad_modg.append(PolygonLine(polygon=[[-overpads_x_slk / 2, mark_b_slk],
                                                         [-overpads_x_slk / 2, t_slk + h_slk],
                                                         [l_slk, t_slk + h_slk],
                                                         [l_slk, t_slk],
                                                         [-overpads_x_slk / 2, t_slk]], layer='F.SilkS',
                                             width=lw_slk))
-            
+
             else:
                 kicad_modg.append(PolygonLine(polygon=[[-overpads_x_slk / 2, -overpads_y_slk / 2],
                                                         [-overpads_x_slk / 2, overpads_y_slk / 2],
@@ -239,7 +243,7 @@ class CrystalResonatorGenerator(FootprintGenerator):
                                             width=lw_slk))
             else:
                 if (pack_height < overpad_height and pack_width < overpad_width):
-                    
+
                     kicad_modg.append(PolygonLine(polygon=[[mark_l_slk, betweenpads_y_slk / 2],
                                                             [l_slk, betweenpads_y_slk / 2],
                                                             [l_slk, -betweenpads_y_slk / 2]], layer='F.SilkS',
@@ -284,7 +288,7 @@ class CrystalResonatorGenerator(FootprintGenerator):
                                                                     [-betweenpads_x_slk / 2, t_slk + h_slk],
                                                                     [-betweenpads_x_slk / 2, mark_b_slk]], layer='F.SilkS',
                                                         width=lw_slk))
-                
+
                 elif (pack_height > overpad_height and pack_width < overpad_width):
                     kicad_modg.append(PolygonLine(polygon=[[l_slk, -overpads_y_slk / 2],
                                                             [l_slk, t_slk],
@@ -305,7 +309,7 @@ class CrystalResonatorGenerator(FootprintGenerator):
                         kicad_modg.append(PolygonLine(polygon=[[l_slk + w_slk, -betweenpads_y_slk / 2],
                                                                 [l_slk + w_slk, betweenpads_y_slk / 2]], layer='F.SilkS',
                                                     width=lw_slk))
-        
+
         # create courtyard
         kicad_mod.append(RectLine(start=[roundCrt(l_crt + offset[0]), roundCrt(t_crt + offset[1])],
                                 end=[roundCrt(l_crt + offset[0] + w_crt), roundCrt(t_crt + offset[1] + h_crt)],
@@ -377,7 +381,7 @@ class CrystalResonatorGenerator(FootprintGenerator):
 
         # write file
         self.write_footprint(kicad_mod, lib_name)
-        
+
     def makeCrystalAll(self, footprint_name, rm, pad_size, ddrill, pack_width, pack_height, pack_offset, pack_rm, style="flat",
                     package_pad=False, package_pad_add_holes=False, package_pad_offset=0, package_pad_size=[0, 0],
                     package_pad_drill_size=[1.2, 1.2], package_pad_ddrill=0.8, description="Crystal THT",
@@ -529,11 +533,15 @@ class CrystalResonatorGenerator(FootprintGenerator):
 
         # set general values
         kicad_modg.append(
-            Text(type='reference', text='REF**', at=[l_slk - bev / 2 - txt_offset-extra_textoffset, t_crt + h_crt / 4], layer='F.SilkS',
-                rotation=90))
+            Property(name=Property.REFERENCE, text='REF**',
+                     at=[l_slk - bev / 2 - txt_offset-extra_textoffset, t_crt + h_crt / 4],
+                     layer='F.SilkS',
+                     rotation=90))
         kicad_modg.append(
-            Text(type='value', text=fpname, at=[l_slk + w_slk + txt_offset+extra_textoffset + bev / 2, t_crt + h_crt / 4], layer='F.Fab',
-                rotation=90))
+            Property(name=Property.VALUE, text=fpname,
+                     at=[l_slk + w_slk + txt_offset+extra_textoffset + bev / 2, t_crt + h_crt / 4],
+                     layer='F.Fab',
+                     rotation=90))
 
         # create FAB-layer
         kicad_modg.append(RectLine(start=[l_fab, t_fab],
@@ -618,7 +626,7 @@ class CrystalResonatorGenerator(FootprintGenerator):
 
         # write file
         self.write_footprint(kicad_mod, lib_name)
-        
+
 
     #      +----------------------------------------------------+       ^
     #    /                                                       \      |
@@ -723,8 +731,14 @@ class CrystalResonatorGenerator(FootprintGenerator):
         kicad_modg = kicad_mod
 
         # set general values
-        kicad_modg.append(Text(type='reference', text='REF**', at=[centerpos[0], t_slk-txt_offset], layer='F.SilkS'))
-        kicad_modg.append(Text(type='value', text=fpname, at=[centerpos[0], t_slk+h_slk+txt_offset], layer='F.Fab'))
+        kicad_modg.append(Property(name=Property.REFERENCE,
+                                   text='REF**',
+                                   at=[centerpos[0], t_slk-txt_offset],
+                                   layer='F.SilkS'))
+        kicad_modg.append(Property(name=Property.VALUE,
+                                   text=fpname,
+                                   at=[centerpos[0], t_slk+h_slk+txt_offset],
+                                   layer='F.Fab'))
 
         # create FAB-layer
         THTQuartz(kicad_modg, [l_fab,t_fab], [w_fab,h_fab], 'F.Fab', lw_fab)
@@ -765,7 +779,7 @@ class CrystalResonatorGenerator(FootprintGenerator):
 
         # write file
         self.write_footprint(kicad_mod, lib_name)
-        
+
 
     #       +---------------------------------------+
     #      /                                         \
@@ -836,9 +850,15 @@ class CrystalResonatorGenerator(FootprintGenerator):
 
         # set general values
         kicad_modg.append(
-            Text(type='reference', text='REF**', at=[centerpos[0], ct_slk - d_slk / 2 - txt_offset], layer='F.SilkS'))
+            Property(name=Property.REFERENCE,
+                     text='REF**',
+                     at=[centerpos[0], ct_slk - d_slk / 2 - txt_offset],
+                     layer='F.SilkS'))
         kicad_modg.append(
-            Text(type='value', text=fpname, at=[centerpos[0], ct_slk + d_slk / 2 + txt_offset], layer='F.Fab'))
+            Property(name=Property.VALUE,
+                     text=fpname,
+                     at=[centerpos[0], ct_slk + d_slk / 2 + txt_offset],
+                     layer='F.Fab'))
 
         # create FAB-layer
         kicad_mod.append(Circle(center=[cl_fab, ct_fab], radius=d_fab / 2, layer='F.Fab', width=lw_fab))
@@ -873,11 +893,11 @@ class CrystalResonatorGenerator(FootprintGenerator):
         # write file
         self.write_footprint(kicad_mod, lib_name)
 
-        
+
 if __name__ == '__main__':
     standardtags="THT crystal"
     standardtagsres="THT ceramic resonator filter"
-    
+
     script3dhc49="crystal_hc49_2pin.py"
     with open(script3dhc49, "w") as myfile:
         myfile.write("#\n# SCRIPT to generate 3D models\n#\n\n")

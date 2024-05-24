@@ -30,8 +30,8 @@ if __name__ == '__main__':
     kicad_mod.setTags("example")
 
     # Set general values
-    kicad_mod.append(Text(type='reference', text='REF**', at=[0, -3], layer='F.SilkS'))
-    kicad_mod.append(Text(type='value', text=footprint_name, at=[1.5, 3], layer='F.Fab'))
+    kicad_mod.append(Property(name=Property.REFERENCE, text='REF**', at=[0, -3], layer='F.SilkS'))
+    kicad_mod.append(Property(name=Property.VALUE, text=footprint_name, at=[1.5, 3], layer='F.Fab'))
 
     # Add model
     kicad_mod.append(Model(filename="example.3dshapes/example_footprint.wrl",

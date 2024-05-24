@@ -195,24 +195,23 @@ for series in data:
 
         # Minimal text references
         kicad_modt.append(
-            Text(
-                type="reference",
+            Property(
+                name=Property.REFERENCE,
                 text="REF**",
                 at=[0, courtyard_y_up - 1],
                 layer="F.SilkS",
             )
         )
         kicad_modt.append(
-            Text(
-                type="value",
+            Property(
+                name=Property.VALUE,
                 text=footprint_name,
                 at=[0, fab_down + 1],
                 layer="F.Fab",
             )
         )
         kicad_modt.append(
-            Text(
-                type="user",
+            Property(
                 text="${REFERENCE}",
                 at=[0, 0],
                 layer="F.Fab",

@@ -60,8 +60,8 @@ for inductor in inductors:
     fp.setDescription(description)
 
     # set general values
-    fp.append(Text(type='reference', text='REF**', at=[0,-y/2 - 1], layer='F.SilkS'))
-    fp.append(Text(type='value', text=fp_name, at=[0,y/2 + 1.5], layer='F.Fab'))
+    fp.append(Property(name=Property.REFERENCE, text='REF**', at=[0,-y/2 - 1], layer='F.SilkS'))
+    fp.append(Property(name=Property.VALUE, text=fp_name, at=[0,y/2 + 1.5], layer='F.Fab'))
 
     #calculate pad center
     #pad-width pw

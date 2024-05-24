@@ -263,8 +263,8 @@ class SimpleFootprintTests(unittest.TestCase):
         kicad_mod.setDescription("A example footprint")
         kicad_mod.tags = "example"
 
-        kicad_mod.append(Text(type='reference', text='REF**', at=[0, -3], layer='F.SilkS'))
-        kicad_mod.append(Text(type='value', text="test", at=[1.5, 3], layer='F.Fab'))
+        kicad_mod.append(Property(name=Property.REFERENCE, text='REF**', at=[0, -3], layer='F.SilkS'))
+        kicad_mod.append(Property(name=Property.VALUE, text="test", at=[1.5, 3], layer='F.Fab'))
         kicad_mod.append(RectLine(start=[-2, -2], end=[5, 2], layer='F.SilkS'))
         kicad_mod.append(RectLine(start=[-2.25, -2.25], end=[5.25, 2.25], layer='F.CrtYd'))
         kicad_mod.append(Pad(number=1, type=Pad.TYPE_THT, shape=Pad.SHAPE_RECT,
@@ -282,8 +282,8 @@ class SimpleFootprintTests(unittest.TestCase):
     def testBasicNodes(self):
         kicad_mod = Footprint("test", FootprintType.SMD)
 
-        kicad_mod.append(Text(type='reference', text='REF**', at=[0, -3], layer='F.SilkS'))
-        kicad_mod.append(Text(type='value', text="footprint name", at=[0, 3], layer='F.Fab'))
+        kicad_mod.append(Property(name=Property.REFERENCE, text='REF**', at=[0, -3], layer='F.SilkS'))
+        kicad_mod.append(Property(name=Property.VALUE, text="footprint name", at=[0, 3], layer='F.Fab'))
 
         kicad_mod.append(Arc(center=[0, 0], start=[-1, 0], angle=180, layer='F.SilkS'))
         kicad_mod.append(Circle(center=[0, 0], radius=1.5, layer='F.SilkS'))

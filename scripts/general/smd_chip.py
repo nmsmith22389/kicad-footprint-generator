@@ -19,9 +19,9 @@ def smd_chip(args):
     text_x = 0.
     text_y = max([args['pad_y'] / 2., args['part_y'] / 2.]) + args['courtyard'] + 0.75
 
-    kicad_mod.append(Text(type='reference', text='REF**', at=[text_x, -text_y], layer='F.SilkS'))
-    kicad_mod.append(Text(type='user', text='${REFERENCE}', at=[text_x, -text_y], layer='F.Fab'))
-    kicad_mod.append(Text(type='value', text=args['name'], at=[text_x, text_y], layer='F.Fab'))
+    kicad_mod.append(Property(name=Property.REFERENCE, text='REF**', at=[text_x, -text_y], layer='F.SilkS'))
+    kicad_mod.append(Text(text='${REFERENCE}', at=[text_x, -text_y], layer='F.Fab'))
+    kicad_mod.append(Property(name=Property.VALUE, text=args['name'], at=[text_x, text_y], layer='F.Fab'))
 
     # create silkscreen
     silk_x = args['part_x'] / 2.

@@ -124,16 +124,16 @@ def makeDIP(pins, rm, pinrow_distance_in, package_width, overlen_top, overlen_bo
 
     # set general values
     kicad_modg.append(
-        Text(type='reference', text='REF**',
+        Property(name=Property.REFERENCE, text='REF**',
              at=[body_centre.x, t_slk - txt_offset],
              layer='F.SilkS'))
     kicad_modg.append(
-        Text(type='user', text='${REFERENCE}',
+        Text(text='${REFERENCE}',
              at=body_centre,
              rotation=fab_refdes_rotation,
              layer='F.Fab'))
     kicad_modg.append(
-        Text(type='value', text=footprint_name,
+        Property(name=Property.VALUE, text=footprint_name,
              at=[body_centre.x, t_slk + h_slk + txt_offset],
              layer='F.Fab'))
 
@@ -342,13 +342,13 @@ def makeDIPSwitch(pins, rm, pinrow_distance, package_width, overlen_top, overlen
         ss=max(0.25, min((package_width-switch_width)*0.35, 0.8))
         fab_ref_size = [ss, ss]
 
-    kicad_modg.append(Text(type='reference', text='REF**', at=[pinrow_distance / 2, t_slk - txt_offset], layer='F.SilkS'))
-    kicad_modg.append(Text(type='value', text=footprint_name, at=[pinrow_distance / 2, t_slk + h_slk + txt_offset], layer='F.Fab'))
+    kicad_modg.append(Property(name=Property.REFERENCE, text='REF**', at=[pinrow_distance / 2, t_slk - txt_offset], layer='F.SilkS'))
+    kicad_modg.append(Property(name=Property.VALUE, text=footprint_name, at=[pinrow_distance / 2, t_slk + h_slk + txt_offset], layer='F.Fab'))
     if (mode == 'Piano'):
-        kicad_modg.append(Text(type='user', text='${REFERENCE}', at=[pinrow_distance/2, t_fab + h_fab /2], size=fab_ref_size, layer='F.Fab', thickness=fab_ref_size[0]*0.15))
+        kicad_modg.append(Text(text='${REFERENCE}', at=[pinrow_distance/2, t_fab + h_fab /2], size=fab_ref_size, layer='F.Fab', thickness=fab_ref_size[0]*0.15))
     else:
-        kicad_modg.append(Text(type='user', text='${REFERENCE}', at=[pinrow_distance/2 + (package_width+switch_width)/4, t_fab + h_fab /2], rotation=90, size=fab_ref_size, layer='F.Fab', thickness=fab_ref_size[0]*0.15))
-        kicad_modg.append(Text(type='user', text='on', at=[pinrow_distance/2 + (package_width+switch_width)/4-pinrow_distance/4, t_fab + (overlen_top-switch_height/2)/2], rotation=0, size=fab_ref_size, layer='F.Fab', thickness=fab_ref_size[0]*0.15))
+        kicad_modg.append(Text(text='${REFERENCE}', at=[pinrow_distance/2 + (package_width+switch_width)/4, t_fab + h_fab /2], rotation=90, size=fab_ref_size, layer='F.Fab', thickness=fab_ref_size[0]*0.15))
+        kicad_modg.append(Text(text='on', at=[pinrow_distance/2 + (package_width+switch_width)/4-pinrow_distance/4, t_fab + (overlen_top-switch_height/2)/2], rotation=0, size=fab_ref_size, layer='F.Fab', thickness=fab_ref_size[0]*0.15))
 
 
     # create pads
