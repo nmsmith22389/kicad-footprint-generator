@@ -88,7 +88,6 @@ def make_module(pin_count, configuration):
 	footprint_name = footprint_name.replace("__",'_')
 
 	kicad_mod = Footprint(footprint_name, FootprintType.SMD)
-	kicad_mod.setAttribute('smd')
 	kicad_mod.setDescription(
 		("Molex {:s}, {:s}, {:d} Circuits ({:s}), " +
 		 "generated with kicad-footprint-generator").format(
