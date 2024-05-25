@@ -314,6 +314,23 @@ Texas_MicroStar_Junior_BGA-113_7.0x7.0mm_Layout12x12_P0.5mm:
   layout_y: 12
   mask_margin: 0.025
   row_skips: [[], [], [[4, 11]], [3, 10], [3, 10], [3, 6, 7, 10], [3, 6, 7, 10], [3, 10], [3, 10], [[3, 11]], [], []]
+
+Texas_YFP0020_DSBGA-20_1.56x1.96mm_Layout4x5_P0.4mm:
+  description: "Texas Instruments, YFP0020, DSBGA-20, area grid"
+  size_source: "https://www.ti.com/lit/ds/symlink/txs0206.pdf"
+  body_size_x: 1.588 # 1.527 .. 1.588
+  body_size_y: 1.988 # 1.928 .. 1.988
+  overall_height: 0.5
+  pitch: 0.4
+  # NOTE: Generates non-Solder-mask-defined pads
+  # with 0.05mm radial solder mask expansion, which is
+  # the "preferred" variant according to the datasheet.
+  # NOTE: Ball diameter is 0.21..0.25mm
+  pad_diameter: 0.23 # 0.23mm is DS recommended pad size. 
+  mask_margin: 0.05
+  layout_x: 4
+  layout_y: 5
+
 TFBGA-49_3x3mm_Layout7x7_P0.4mm:
   description: "TFBGA-49, NSMD"
   size_source: "https://www.efinixinc.com/docs/trion-packaging-ug-v4.9.pdf"
