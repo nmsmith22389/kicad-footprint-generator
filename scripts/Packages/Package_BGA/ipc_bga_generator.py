@@ -12,7 +12,7 @@ import itertools
 sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))
 
 from KicadModTree import KicadFileHandler, Vector2D
-from KicadModTree.nodes import Pad, Footprint, FootprintType, Model, Text, RectLine, PolygonLine
+from KicadModTree.nodes import Pad, Footprint, FootprintType, Model, Text, RectLine, PolygonLine, Property
 from scripts.tools.drawing_tools import TriangleArrowPointingSouthEast
 from scripts.tools.declarative_def_tools import tags_properties
 
