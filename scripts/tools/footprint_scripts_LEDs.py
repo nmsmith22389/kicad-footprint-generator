@@ -60,7 +60,7 @@ from footprint_global_properties import *
 # in the center a second circle is drawn if rin>0
 def makeLEDRadial(rm, w, h, ddrill, win=0, rin=0, pins=2, led_type="round", x_3d=[0, 0, 0],
                   s_3d=[1, 1, 1], has3d=1, specialfpname="", special_info=None, add_description="",
-                  classname="LED", lib_name="LED_THT", name_additions=None, script3d="", height3d=8, height3d_bottom=1):
+                  base_filename="LED", lib_name="LED_THT", name_additions=None, script3d="", height3d=8, height3d_bottom=1):
     if special_info is None:
         special_info = []
     if name_additions is None:
@@ -130,10 +130,10 @@ def makeLEDRadial(rm, w, h, ddrill, win=0, rin=0, pins=2, led_type="round", x_3d
         if led_type == "box":
             pincount_filename = pincount_filename + "pins"
 
-    footprint_name = classname + size_filename + pincount_filename
+    footprint_name = base_filename + size_filename + pincount_filename
 
-    description = [classname]
-    tags = [classname]
+    description = ["LED"]
+    tags = ["LED"]
 
     added_info = list(special_info) + size_info
     if len(pincount_tag) > 0:
@@ -354,7 +354,7 @@ def makeLEDRadial(rm, w, h, ddrill, win=0, rin=0, pins=2, led_type="round", x_3d
 #  led_type="round"/"rect"
 def makeLEDHorizontal(pins=2,rm=2.544,dled=5,dledout=5.8,offsetled=2.54,wled=8.6, ddrill=0.8, wledback=1, led_type="round", x_3d=[0, 0, 0],
                   s_3d=[1, 1, 1], has3d=1, specialfpname="", special_info=None, add_description="",
-                  classname="LED", lib_name="LED_THT", name_additions=None, script3d="", height3d=5, ledypos=0):
+                  base_filename="LED", lib_name="LED_THT", name_additions=None, script3d="", height3d=5, ledypos=0):
     if special_info is None:
         special_info = []
     if name_additions is None:
@@ -420,10 +420,10 @@ def makeLEDHorizontal(pins=2,rm=2.544,dled=5,dledout=5.8,offsetled=2.54,wled=8.6
     if pins > 2:
         pincount_filename = "-{0:d}pins".format(pins)
 
-    footprint_name = classname + size_filename + pincount_filename
+    footprint_name = base_filename + size_filename + pincount_filename
 
-    description = [classname]
-    tags = [classname]
+    description = ["LED"]
+    tags = ["LED"]
 
     added_info = list(special_info) + size_info
     if len(pincount_tag) > 0:
