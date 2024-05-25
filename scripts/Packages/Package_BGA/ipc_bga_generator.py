@@ -7,6 +7,7 @@ import argparse
 import yaml
 from pathlib import Path
 import itertools
+import logging
 
 # load parent path of KicadModTree
 sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))
@@ -15,6 +16,7 @@ from KicadModTree import KicadFileHandler, Vector2D
 from KicadModTree.nodes import Pad, Footprint, FootprintType, Model, Text, RectLine, PolygonLine, Property
 from scripts.tools.drawing_tools import TriangleArrowPointingSouthEast
 from scripts.tools.declarative_def_tools import tags_properties
+from scripts.tools.footprint_generator import FootprintGenerator
 
 from string import ascii_uppercase
 
@@ -55,9 +57,18 @@ class BGAConfiguration:
         return self._spec_dictionary
 
 
-class BGAGenerator:
+class BGAGenerator(FootprintGenerator):
+    def __init__(self, configuration, **kwargs):
+        super().__init__(**kwargs)
 
-    def generateFootprint(self, config, fpParams, fpId):
+        self.configuration = configuration
+
+    def generateFootprint(self, device_params: dict, pkg_id: str, header_info: dict = None):
+        # Thin wrapper around generateBGAFootprint
+        logging.info(f"Generating BGA footprint: {pkg_id}")
+        self.generateBGAFootprint(self.configuration, device_params, pkg_id)
+
+    def generateBGAFootprint(self, config, fpParams, fpId):
         createFp = False
 
         device_config = BGAConfiguration(fpParams)
@@ -85,7 +96,7 @@ class BGAGenerator:
             raise KeyError("Ball type is missing. No footprint generated.")
         elif "pad_diameter" in fpParams:
             fpParams["pad_size"] = [fpParams["pad_diameter"], fpParams["pad_diameter"]]
-            print("Pads size is set by the footprint definition. "
+            logging.info(f"Pad size of {fpId} is set by the footprint definition. "
                   "This should only be done for manufacturer-specific footprints.")
             createFp = True
         else:
@@ -256,9 +267,6 @@ class BGAGenerator:
         # If this looks like a CSP footprint, use the CSP 3dshapes library
         packageType = 'CSP' if 'BGA' not in fpId and 'CSP' in fpId else 'BGA'
 
-        f.append(Model(filename="{}Package_{}.3dshapes/{}.wrl".format(
-                    config['3d_model_prefix'], packageType, fpId)))
-
         if staggered:
             pdesc = str(fpParams.get('pitch')) if 'pitch' in fpParams else f'{pitchX}x{pitchY}'
             sdesc = f'{staggered.upper()}-staggered '
@@ -271,11 +279,11 @@ class BGAGenerator:
         f.tags = [packageType, str(balls), pdesc]
         f.tags += device_config.additional_tags.tags
 
-        outputDir = Path(f'Package_{packageType}.pretty')
-        outputDir.mkdir(exist_ok=True)
-
-        file_handler = KicadFileHandler(f)
-        file_handler.writeFile(str(outputDir / f'{fpId}.kicad_mod'))
+        lib_name = Path(f'Package_{packageType}')
+        
+        # #################### Output and 3d model ############################
+        self.add_standard_3d_model_to_footprint(f, lib_name, fpId)
+        self.write_footprint(f, lib_name)
 
     def makePadGrid(self, f, lParams, config, fpParams={}, xCenter=0.0, yCenter=0.0):
         layoutX = lParams["layout_x"]
@@ -397,7 +405,7 @@ def rowNameGenerator(seq):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='use config .yaml files to create footprints.')
-    parser.add_argument('files', metavar='file', type=str, nargs='+',
+    parser.add_argument('files', metavar='file', type=str, nargs='*',
                         help='list of files holding information about what devices should be created.')
     parser.add_argument('--global_config', type=str, nargs='?',
                         help='the config file defining how the footprint will look like. (KLC)',
@@ -406,11 +414,8 @@ if __name__ == '__main__':
     #                     help='the config file defining series parameters.', default='../package_config_KLCv3.yaml')
     parser.add_argument('--ipc_doc', type=str, nargs='?', help='IPC definition document',
                         default='ipc_7351b_bga_land_patterns.yaml')
-    parser.add_argument('-v', '--verbose', action='count', help='set debug level')
-    args = parser.parse_args()
-
-    if args.verbose:
-        DEBUG_LEVEL = args.verbose
+    
+    args = FootprintGenerator.add_standard_arguments(parser)
 
     with open(args.global_config, 'r') as config_stream:
         try:
@@ -434,14 +439,9 @@ if __name__ == '__main__':
     rowNamesList = [x for x in ascii_uppercase if x not in 'IOQSXZ']
     configuration.update({'row_names': list(itertools.islice(rowNameGenerator(rowNamesList), 80))})
 
-    generator = BGAGenerator()
-
-    for filepath in args.files:
-        with open(filepath, 'r') as command_stream:
-            try:
-                cmd_file = yaml.safe_load(command_stream)
-            except yaml.YAMLError as exc:
-                print(exc)
-        for pkg in cmd_file:
-            print("generating part for parameter set {}".format(pkg))
-            generator.generateFootprint(configuration, cmd_file[pkg], pkg)
+    FootprintGenerator.run_on_files(
+        BGAGenerator,
+        args,
+        file_autofind_dir='size_definitions',
+        configuration=configuration,
+    )
