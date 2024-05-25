@@ -1,7 +1,9 @@
 #! /usr/bin/env bash
 
+set -ex
+
 run_generate() {
-    ./ipc_noLead_generator.py "$1" -v
+    ./dip_generator.py "$1" -v
 }
 
 for file in size_definitions/*.yaml; do
