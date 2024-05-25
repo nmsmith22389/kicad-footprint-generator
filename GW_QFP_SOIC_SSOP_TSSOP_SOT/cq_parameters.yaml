@@ -2943,6 +2943,38 @@ SOIC-8_3.9x4.9mm_Pitch1.27mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.ti.com/lit/ml/msoi002j/msoi002j.pdf'
 
+SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.29x3mm:
+  the: 9.0
+  tb_s: 0.0
+  c: 0.21
+  R1: 0.1
+  R2: 0.1
+  S: 0.3
+  fp_s: True
+  fp_r: 0.6
+  fp_d: 0.05
+  fp_z: 0.05
+  ef: 0.0
+  cc1: 0.25
+  D1: 4.9
+  E1: 3.9
+  E: 6.0
+  A1: 0.05
+  A2: 1.5
+  b: 0.41
+  e: 1.27
+  npx: 4
+  npy: 0
+  epad: [3, 2.29]
+  excluded_pins: null
+  model_name: SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.29x3mm
+  rotation: -90
+  body_color_key: 'black body'
+  pin_color_key: 'metal grey pins'
+  mark_color_key: 'light brown label'
+  destination_dir: 'Package_SO.3dshapes'
+  source: 'https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/soic_edrd/RD_8_1.pdf'
+
 SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.41x3.81mm:
   the: 9.0
   tb_s: 0.0
