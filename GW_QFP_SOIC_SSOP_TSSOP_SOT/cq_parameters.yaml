@@ -6023,6 +6023,40 @@ SOT-23:
   destination_dir: 'TO_SOT_Packages_SMD.3dshapes'
   source: 'http://www.ti.com/lit/ml/mpds026k/mpds026k.pdf'
 
+SOT-23-3:
+  # alternate name for SOT-23; footprints exist for both
+  the: 8.0
+  tb_s: 0.05
+  c: 0.15
+  R1: 0.1
+  R2: 0.1
+  S: 0.0
+  fp_s: True
+  fp_r: 0.0
+  fp_d: 0.08
+  fp_z: 0.03
+  ef: 0.0
+  cc1: 0.12
+  D1: 3.0
+  E1: 1.4
+  E: 2.5
+  A1: 0.1
+  A2: 1.1
+  b: 0.4
+  e: 0.95
+  npx: 3
+  npy: 0
+  epad: null
+  excluded_pins: [2, 4, 6]
+  model_name: SOT-23-3
+  rotation: -90
+  body_color_key: 'black body'
+  pin_color_key: 'metal grey pins'
+  mark_color_key: 'light brown label'
+  destination_dir: 'TO_SOT_Packages_SMD.3dshapes'
+  source: 'http://www.ti.com/lit/ml/mpds026k/mpds026k.pdf'
+
+
 SOT-23W:
   the: 8.0
   tb_s: 0.05
