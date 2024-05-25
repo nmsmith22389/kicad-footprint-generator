@@ -4995,6 +4995,38 @@ SSOP-8_5.25x5.24mm_P1.27mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.fujitsu.com/ca/en/Images/MB85RS2MT-DS501-00023-1v0-E.pdf'
 
+ST_PowerSSO-16_SlugDown:
+  the: 9.0
+  tb_s: 0.15
+  c: 0.2
+  R1: 0.1
+  R2: 0.1
+  L: 0.6
+  fp_s: 1
+  fp_r: 0.4
+  fp_d: 0.5
+  fp_z: 0.05
+  ef: 0.0
+  cc1: 0.25
+  D1: 4.9
+  E1: 3.9
+  E: 6
+  A1: 0.1
+  A2: 1.4
+  b: 0.25
+  e: 0.5
+  npx: 8
+  npy: 0
+  epad: null
+  excluded_pins: null
+  model_name: ST_PowerSSO-16_SlugDown
+  rotation: -90
+  body_color_key: 'black body'
+  pin_color_key: 'metal grey pins'
+  mark_color_key: 'light brown label'
+  destination_dir: 'Package_SO.3dshapes'
+  source: 'https://www.st.com/resource/en/datasheet/vnd7020aj.pdf'
+
 ST_PowerSSO-24_SlugDown:
   the: 9.0
   tb_s: 0.15
