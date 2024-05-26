@@ -58,8 +58,8 @@ from footprint_global_properties import *
 #                 <-rm->
 #           <-------w-------->
 # in the center a second circle is drawn if rin>0
-def makeLEDRadial(rm, w, h, ddrill, win=0, rin=0, pins=2, led_type="round", x_3d=[0, 0, 0],
-                  s_3d=[1, 1, 1], has3d=1, specialfpname="", special_info=None, add_description="",
+def makeLEDRadial(rm, w, h, ddrill, win=0, rin=0, pins=2, led_type="round",
+                  has3d=1, specialfpname="", special_info=None, add_description="",
                   base_filename="LED", lib_name="LED_THT", name_additions=None, script3d="", height3d=8, height3d_bottom=1):
     if special_info is None:
         special_info = []
@@ -329,7 +329,7 @@ def makeLEDRadial(rm, w, h, ddrill, win=0, rin=0, pins=2, led_type="round", x_3d
     # add model
     if (has3d != 0):
         kicad_modg.append(
-            Model(filename="${KICAD8_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl", at=x_3d, scale=s_3d, rotate=[0, 0, 0]))
+            Model(filename="${KICAD8_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl", at=[0, 0, 0], scale=[1, 1, 1], rotate=[0, 0, 0]))
 
     # print render tree
     # print(kicad_mod.getRenderTree())
@@ -352,8 +352,8 @@ def makeLEDRadial(rm, w, h, ddrill, win=0, rin=0, pins=2, led_type="round", x_3d
 #                    <--wled->
 #
 #  led_type="round"/"rect"
-def makeLEDHorizontal(pins=2,rm=2.544,dled=5,dledout=5.8,offsetled=2.54,wled=8.6, ddrill=0.8, wledback=1, led_type="round", x_3d=[0, 0, 0],
-                  s_3d=[1, 1, 1], has3d=1, specialfpname="", special_info=None, add_description="",
+def makeLEDHorizontal(pins=2,rm=2.544,dled=5,dledout=5.8,offsetled=2.54,wled=8.6, ddrill=0.8, wledback=1, led_type="round",
+                  has3d=1, specialfpname="", special_info=None, add_description="",
                   base_filename="LED", lib_name="LED_THT", name_additions=None, script3d="", height3d=5, ledypos=0):
     if special_info is None:
         special_info = []
@@ -570,7 +570,7 @@ def makeLEDHorizontal(pins=2,rm=2.544,dled=5,dledout=5.8,offsetled=2.54,wled=8.6
     # add model
     if (has3d != 0):
         kicad_modg.append(
-            Model(filename="${KICAD8_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl", at=x_3d, scale=s_3d, rotate=[0, 0, 0]))
+            Model(filename="${KICAD8_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl", at=[0, 0, 0], scale=[1, 1, 1], rotate=[0, 0, 0]))
 
     # print render tree
     # print(kicad_mod.getRenderTree())
