@@ -59,12 +59,14 @@ from footprint_global_properties import *
 #           <-------w-------->
 # in the center a second circle is drawn if rin>0
 def makeLEDRadial(rm, w, h, ddrill, win=0, rin=0, pins=2, led_type="round",
-                  has3d=1, specialfpname="", special_info=None, add_description="",
+                  has3d=1, specialfpname="", special_info=None, add_description=None,
                   base_filename="LED", lib_name="LED_THT", name_additions=None, script3d="", height3d=8, height3d_bottom=1):
     if special_info is None:
         special_info = []
     if name_additions is None:
         name_additions = []
+    if add_description is None:
+        add_description = []
 
     padx = 2 * ddrill
     pady = padx
@@ -103,7 +105,6 @@ def makeLEDRadial(rm, w, h, ddrill, win=0, rin=0, pins=2, led_type="round",
     sn = ""
     snt = ""
 
-    # TODO: strip out suffixes from class name? we don't want LED_sideemitter_rectangular in description, just LED
     size_filename = ""
     size_info = []
     if led_type == "round" or led_type == "round_simple":
@@ -145,8 +146,9 @@ def makeLEDRadial(rm, w, h, ddrill, win=0, rin=0, pins=2, led_type="round",
     if (specialfpname != ""):
         footprint_name = specialfpname;
 
-    if len(add_description) > 0:
-        description.append(add_description)
+    for t in add_description:
+        if len(t):
+            description.append(t)
 
     for n in name_additions:
         if len(n) > 0:
@@ -353,12 +355,14 @@ def makeLEDRadial(rm, w, h, ddrill, win=0, rin=0, pins=2, led_type="round",
 #
 #  led_type="round"/"rect"
 def makeLEDHorizontal(pins=2,rm=2.544,dled=5,dledout=5.8,offsetled=2.54,wled=8.6, ddrill=0.8, wledback=1, led_type="round",
-                  has3d=1, specialfpname="", special_info=None, add_description="",
+                  has3d=1, specialfpname="", special_info=None, add_description=None,
                   base_filename="LED", lib_name="LED_THT", name_additions=None, script3d="", height3d=5, ledypos=0):
     if special_info is None:
         special_info = []
     if name_additions is None:
         name_additions = []
+    if add_description is None:
+        add_description = []
 
     padx = 2 * ddrill
     pady = padx
@@ -437,8 +441,9 @@ def makeLEDHorizontal(pins=2,rm=2.544,dled=5,dledout=5.8,offsetled=2.54,wled=8.6
     if (specialfpname != ""):
         footprint_name = specialfpname;
 
-    if len(add_description) > 0:
-        description.append(add_description)
+    for t in add_description:
+        if len(t):
+            description.append(t)
 
     for n in name_additions:
         if len(n) > 0:
