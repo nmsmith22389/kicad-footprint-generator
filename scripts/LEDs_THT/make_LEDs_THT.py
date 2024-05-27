@@ -133,7 +133,7 @@ if __name__ == '__main__':
         add_description=add_description,
         base_filename=clname,
         lib_name=lbname,
-        name_additions=name_additions,
+        name_additions=["RGB"],
         script3d=script3d_rv,
         height3d=height3d,
         height3d_bottom=height3d_bottom
