@@ -59,14 +59,14 @@ from footprint_global_properties import *
 #           <-------w-------->
 # in the center a second circle is drawn if rin>0
 def makeLEDRadial(rm, w, h, ddrill, win=0, rin=0, pins=2, led_type="round",
-                  has3d=1, specialfpname="", special_info=None, add_description=None,
+                  has3d=1, specialfpname="", desc_extras_start=None, desc_extras_end=None,
                   base_filename="LED", lib_name="LED_THT", name_additions=None, script3d="", height3d=8, height3d_bottom=1):
-    if special_info is None:
-        special_info = []
+    if desc_extras_start is None:
+        desc_extras_start = []
     if name_additions is None:
         name_additions = []
-    if add_description is None:
-        add_description = []
+    if desc_extras_end is None:
+        desc_extras_end = []
 
     padx = 2 * ddrill
     pady = padx
@@ -136,7 +136,7 @@ def makeLEDRadial(rm, w, h, ddrill, win=0, rin=0, pins=2, led_type="round",
     description = ["LED"]
     tags = ["LED"]
 
-    added_info = list(special_info) + size_info
+    added_info = list(desc_extras_start) + size_info
     if len(pincount_tag) > 0:
         added_info.append(pincount_tag)
 
@@ -146,7 +146,7 @@ def makeLEDRadial(rm, w, h, ddrill, win=0, rin=0, pins=2, led_type="round",
     if (specialfpname != ""):
         footprint_name = specialfpname;
 
-    for t in add_description:
+    for t in desc_extras_end:
         if len(t):
             description.append(t)
 
@@ -355,14 +355,14 @@ def makeLEDRadial(rm, w, h, ddrill, win=0, rin=0, pins=2, led_type="round",
 #
 #  led_type="round"/"rect"
 def makeLEDHorizontal(pins=2,rm=2.544,dled=5,dledout=5.8,offsetled=2.54,wled=8.6, ddrill=0.8, wledback=1, led_type="round",
-                  has3d=1, specialfpname="", special_info=None, add_description=None,
+                  has3d=1, specialfpname="", desc_extras_start=None, desc_extras_end=None,
                   base_filename="LED", lib_name="LED_THT", name_additions=None, script3d="", height3d=5, ledypos=0):
-    if special_info is None:
-        special_info = []
+    if desc_extras_start is None:
+        desc_extras_start = []
     if name_additions is None:
         name_additions = []
-    if add_description is None:
-        add_description = []
+    if desc_extras_end is None:
+        desc_extras_end = []
 
     padx = 2 * ddrill
     pady = padx
@@ -431,7 +431,7 @@ def makeLEDHorizontal(pins=2,rm=2.544,dled=5,dledout=5.8,offsetled=2.54,wled=8.6
     description = ["LED"]
     tags = ["LED"]
 
-    added_info = list(special_info) + size_info
+    added_info = list(desc_extras_start) + size_info
     if len(pincount_tag) > 0:
         added_info.append(pincount_tag)
 
@@ -441,7 +441,7 @@ def makeLEDHorizontal(pins=2,rm=2.544,dled=5,dledout=5.8,offsetled=2.54,wled=8.6
     if (specialfpname != ""):
         footprint_name = specialfpname;
 
-    for t in add_description:
+    for t in desc_extras_end:
         if len(t):
             description.append(t)
 
