@@ -37,6 +37,7 @@ if __name__ == '__main__':
     lbname="LED_THT"
     ddrill = 0.9
 
+    # LED_D3.0mm
     led_type="round"; pins=2;
     rm=2.54; rin=3; w=3.8; h=w; height3d=4.3; height3d_bottom=1; name_additions=None; special_info=None; add_description=None
     makeLEDRadial(
@@ -54,6 +55,72 @@ if __name__ == '__main__':
         base_filename=clname,
         lib_name=lbname,
         name_additions=name_additions,
+        script3d=script3d_rv,
+        height3d=height3d,
+        height3d_bottom=height3d_bottom
+    )
+    # LED_D3.0mm_Clear
+    led_type="round"; pins=2;
+    rm=2.54; rin=3; w=3.8; h=w; height3d=4.3; height3d_bottom=1; name_additions=None; special_info=None; add_description=None
+    makeLEDRadial(
+        pins=pins,
+        rm=rm,
+        w=w,
+        h=h,
+        ddrill=ddrill,
+        rin=rin,
+        led_type=led_type,
+        has3d=1,
+        specialfpname="",
+        special_info=special_info,
+        add_description=["clear"],
+        base_filename=clname,
+        lib_name=lbname,
+        name_additions=["Clear"],
+        script3d=script3d_rv,
+        height3d=height3d,
+        height3d_bottom=height3d_bottom
+    )
+    # LED_D3.0mm_IRBlack
+    led_type="round"; pins=2;
+    rm=2.54; rin=3; w=3.8; h=w; height3d=4.3; height3d_bottom=1; name_additions=None; special_info=None; add_description=None
+    makeLEDRadial(
+        pins=pins,
+        rm=rm,
+        w=w,
+        h=h,
+        ddrill=ddrill,
+        rin=rin,
+        led_type=led_type,
+        has3d=1,
+        specialfpname="",
+        special_info=special_info,
+        add_description=["infrared", "black"],
+        base_filename=clname,
+        lib_name=lbname,
+        name_additions=["IRBlack"],
+        script3d=script3d_rv,
+        height3d=height3d,
+        height3d_bottom=height3d_bottom
+    )
+    # LED_D3.0mm_IRGrey
+    led_type="round"; pins=2;
+    rm=2.54; rin=3; w=3.8; h=w; height3d=4.3; height3d_bottom=1; name_additions=None; special_info=None; add_description=None
+    makeLEDRadial(
+        pins=pins,
+        rm=rm,
+        w=w,
+        h=h,
+        ddrill=ddrill,
+        rin=rin,
+        led_type=led_type,
+        has3d=1,
+        specialfpname="",
+        special_info=special_info,
+        add_description=["infrared", "grey"],
+        base_filename=clname,
+        lib_name=lbname,
+        name_additions=["IRGrey"],
         script3d=script3d_rv,
         height3d=height3d,
         height3d_bottom=height3d_bottom
@@ -78,6 +145,7 @@ if __name__ == '__main__':
         height3d=height3d,
         height3d_bottom=height3d_bottom
     )
+    # LED_D5.0mm
     pins=2; rm=2.54; rin=5; w=5.8; h=w; height3d=7.6; height3d_bottom=1; name_additions=None; special_info=None; add_description=["http://cdn-reichelt.de/documents/datenblatt/A500/LL-504BC2E-009.pdf"]
     makeLEDRadial(
         pins=pins,
@@ -94,6 +162,69 @@ if __name__ == '__main__':
         base_filename=clname,
         lib_name=lbname,
         name_additions=name_additions,
+        script3d=script3d_rv,
+        height3d=height3d,
+        height3d_bottom=height3d_bottom
+    )
+    # LED_D5.0mm_Clear
+    pins=2; rm=2.54; rin=5; w=5.8; h=w; height3d=7.6; height3d_bottom=1; name_additions=None; special_info=None; add_description=["clear", "http://cdn-reichelt.de/documents/datenblatt/A500/LL-504BC2E-009.pdf"]
+    makeLEDRadial(
+        pins=pins,
+        rm=rm,
+        w=w,
+        h=h,
+        ddrill=ddrill,
+        rin=rin,
+        led_type=led_type,
+        has3d=1,
+        specialfpname="",
+        special_info=special_info,
+        add_description=add_description,
+        base_filename=clname,
+        lib_name=lbname,
+        name_additions=["Clear"],
+        script3d=script3d_rv,
+        height3d=height3d,
+        height3d_bottom=height3d_bottom
+    )
+    # LED_D5.0mm_IRBlack
+    pins=2; rm=2.54; rin=5; w=5.8; h=w; height3d=7.6; height3d_bottom=1; name_additions=None; special_info=None; add_description=["infrared", "black", "http://cdn-reichelt.de/documents/datenblatt/A500/LL-504BC2E-009.pdf"]
+    makeLEDRadial(
+        pins=pins,
+        rm=rm,
+        w=w,
+        h=h,
+        ddrill=ddrill,
+        rin=rin,
+        led_type=led_type,
+        has3d=1,
+        specialfpname="",
+        special_info=special_info,
+        add_description=add_description,
+        base_filename=clname,
+        lib_name=lbname,
+        name_additions=["IRBlack"],
+        script3d=script3d_rv,
+        height3d=height3d,
+        height3d_bottom=height3d_bottom
+    )
+    # LED_D5.0mm_IRGrey
+    pins=2; rm=2.54; rin=5; w=5.8; h=w; height3d=7.6; height3d_bottom=1; name_additions=None; special_info=None; add_description=["infrared", "grey", "http://cdn-reichelt.de/documents/datenblatt/A500/LL-504BC2E-009.pdf"]
+    makeLEDRadial(
+        pins=pins,
+        rm=rm,
+        w=w,
+        h=h,
+        ddrill=ddrill,
+        rin=rin,
+        led_type=led_type,
+        has3d=1,
+        specialfpname="",
+        special_info=special_info,
+        add_description=add_description,
+        base_filename=clname,
+        lib_name=lbname,
+        name_additions=["IRGrey"],
         script3d=script3d_rv,
         height3d=height3d,
         height3d_bottom=height3d_bottom
@@ -118,6 +249,7 @@ if __name__ == '__main__':
         height3d=height3d,
         height3d_bottom=height3d_bottom
     )
+    # LED_D5.0mm-4_RGB, which would normally be called LED_D5.0mm-4
     pins = 4; rm=1.27; add_description=["http://www.kingbright.com/attachments/file/psearch/000/00/00/L-154A4SUREQBFZGEW(Ver.9A).pdf"]
     makeLEDRadial(
         pins=pins,
@@ -615,4 +747,3 @@ if __name__ == '__main__':
                 script3d=script3d_reh,
                 height3d=height3d
             )
-
