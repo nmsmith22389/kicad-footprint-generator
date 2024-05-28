@@ -32,7 +32,7 @@ if __name__ == '__main__':
 
     from C_Trimmer_factory import *
 
-    CONFIG = 'C_Trimmer_config.yaml' 
+    CONFIG = 'size_definitions/C_Trimmer_config.yaml'
                 
     f = Factory(CONFIG)
 
