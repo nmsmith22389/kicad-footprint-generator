@@ -17,6 +17,7 @@ import re
 from typing import Optional
 
 from KicadModTree.FileHandler import FileHandler
+from KicadModTree.util.UUIDGenerator import DeterministicUUIDGenerator
 from KicadModTree.util.kicad_util import SexprSerializer
 from KicadModTree.util.kicad_util import *
 # TODO: why .KicadModTree is not enough?
@@ -436,20 +437,20 @@ class KicadFileHandler(FileHandler):
         sexpr += self._serialize_TextBaseNode(node)
         return sexpr
 
-    def _serialize_Property(self, node):
+    def _serialize_Property(self, node, with_uuid=True):
         """Serialise a property node
         """
-        # Assemble seed for deterministic UUID seeding
-        seed_str = f"{self.kicad_mod.name}/property/{node.name}/{node.text}"
-        print(seed_str)
         sexpr = [
             SexprSerializer.Symbol('property'),
             node.name,
         ]
         sexpr += self._serialize_TextBaseNode(node)
-        sexpr.append([
-            SexprSerializer.Symbol('uuid'), 123
-        ])
+        if with_uuid:
+            # Assemble seed for deterministic UUID generation
+            seed_str = f"{self.kicad_mod.name}|property|{node.name}|{node.text}"
+            sexpr.append(
+                DeterministicUUIDGenerator.uuid_sexpr_node(seed_str)
+            )
         return sexpr
 
     def _serialize_Model(self, node):

@@ -34,8 +34,8 @@ class DeterministicUUIDGenerator(object):
         # Hash seed so the generated UUID has more entropy
         digest = hashlib.sha3_256(seed.encode('utf-8')).digest()
         # Generate UUID4 from digest
-        uuid = uuid.UUID(bytes=digest[:16], version=4)
-        return str(uuid)
+        _uuid = uuid.UUID(bytes=digest[:16], version=4)
+        return str(_uuid)
         
     @staticmethod
     def uuid_sexpr_node(seed: str) -> List:
@@ -43,6 +43,7 @@ class DeterministicUUIDGenerator(object):
         Get a Sexpr UUID node which can be added to a KicadModTree
         """
         return [
-            SexprSerializer.Symbol('uuid'), 123
-        ])
+            SexprSerializer.Symbol('uuid'),
+            DeterministicUUIDGenerator.generate(seed)
+        ]
         
