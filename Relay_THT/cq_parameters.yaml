@@ -105,6 +105,68 @@ Relay_SPST_Omron_G5NB:
   destination_dir: Relay_THT.3dshapes
   source: "https://omronfs.omron.com/en_US/ecb/products/pdf/en-g5nb_el.pdf"
 
+Relay_DPDT_Omron_G6A:
+  model_name: Relay_DPDT_Omron_G6A
+  roundbelly: 0
+  L: 9.9
+  W: 20
+  H: 8.2
+  rim: [0.50, 1.0, 0.64]
+  pinpadsize: 1
+  pinpadh: 3.16
+  pintype: tht
+  rotation: 0
+  pin1corner: [-1.21, -1.14]
+  pin:
+    - [0.0, 0.0, rect, 0.3, 0.6]
+    - [0.0, 7.62, rect, 0.3, 0.6]
+    - [0.0, 12.7, rect, 0.3, 0.6]
+    - [0.0, 17.78, rect, 0.3, 0.6]
+    - [7.62, 0.0, rect, 0.3, 0.6]
+    - [7.62, 7.62, rect, 0.3, 0.6]
+    - [7.62, 12.7, rect, 0.3, 0.6]
+    - [7.62, 17.78, rect, 0.3, 0.6]
+  A1: 0.0
+  corner: none
+  show_top: 0
+  body_color_key: black body
+  body_top_color_key: black body
+  pin_color_key: metal grey pins
+  destination_dir: Relay_THT.3dshapes
+  source: "https://omronfs.omron.com/en_US/ecb/products/pdf/en-g6a.pdf"
+
+Relay_DPDT_Omron_G6AK:
+  model_name: Relay_DPDT_Omron_G6AK
+  roundbelly: 0
+  L: 9.9
+  W: 20
+  H: 8.2
+  rim: [0.50, 1.0, 0.64]
+  pinpadsize: 1
+  pinpadh: 3.16
+  pintype: tht
+  rotation: 0
+  pin1corner: [-1.21, -1.14]
+  pin:
+    - [0.0, 0.0, rect, 0.3, 0.6]
+    - [0.0, 2.54, rect, 0.3, 0.6]
+    - [0.0, 7.62, rect, 0.3, 0.6]
+    - [0.0, 12.7, rect, 0.3, 0.6]
+    - [0.0, 17.78, rect, 0.3, 0.6]
+    - [7.62, 0.0, rect, 0.3, 0.6]
+    - [7.62, 2.54, rect, 0.3, 0.6]
+    - [7.62, 7.62, rect, 0.3, 0.6]
+    - [7.62, 12.7, rect, 0.3, 0.6]
+    - [7.62, 17.78, rect, 0.3, 0.6]
+  A1: 0.0
+  corner: none
+  show_top: 0
+  body_color_key: black body
+  body_top_color_key: black body
+  pin_color_key: metal grey pins
+  destination_dir: Relay_THT.3dshapes
+  source: "https://omronfs.omron.com/en_US/ecb/products/pdf/en-g6a.pdf"
+
 Relay_SPDT_SANYOU_SRD_Series_Form_C:
   model_name: Relay_SPDT_SANYOU_SRD_Series_Form_C
   roundbelly: 0
