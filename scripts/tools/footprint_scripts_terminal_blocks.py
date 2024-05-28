@@ -288,7 +288,7 @@ def makeTerminalBlockVertical(footprint_name, pins, rm, package_height, leftbott
     text_t = text_size[0] * 0.15
 
 
-    description = "{2}, vertical (cable from top), {0:d} pins, pitch {1:.3g}mm, size {3:.3g}x{4:.3g}mm^2, drill diameter {5:.3g}mm, pad diameter {6:.3g}mm, see {7}, script-generated with "\
+    description = "{2}, vertical (cable from top), {0:d} pins, pitch {1:.3g}mm, size {3:.3g}x{4:.3g}mm^2, drill diameter {5:.3g}mm, pad diameter {6:.3g}mm, see {7}"\
         .format(pins, rm, classname_description, package_size[0], package_size[1], ddrill, max(pad), webpage)
     tags = "THT {2} vertical pitch {1:.3g}mm size {3:.3g}x{4:.3g}mm^2 drill {5:.3g}mm pad {6:.3g}mm"\
         .format(pins, rm, classname_description, package_size[0], package_size[1], ddrill, max(pad))
@@ -511,7 +511,7 @@ def makeTerminalBlock45Degree(footprint_name, pins, rm, package_height, leftbott
     text_t = text_size[0] * 0.15
 
 
-    description = "{2}, 45Degree (cable under 45degree), {0:d} pins, pitch {1:.3g}mm, size {3:.3g}x{4:.3g}mm^2, drill diameter {5:.3g}mm, pad diameter {6:.3g}mm, see {7}, script-generated with "\
+    description = "{2}, 45Degree (cable under 45degree), {0:d} pins, pitch {1:.3g}mm, size {3:.3g}x{4:.3g}mm^2, drill diameter {5:.3g}mm, pad diameter {6:.3g}mm, see {7}"\
         .format(pins, rm,classname_description, package_size[0], package_size[1], ddrill, max(pad), webpage)
     tags = "THT {2} 45Degree pitch {1:.3g}mm size {3:.3g}x{4:.3g}mm^2 drill {5:.3g}mm pad {6:.3g}mm"\
         .format(pins, rm,classname_description, package_size[0], package_size[1], ddrill, max(pad))
