@@ -128,7 +128,7 @@ if __name__ == '__main__':
         height3d_bottom=height3d_bottom
     )
     # LED_D3.0mm-3
-    pins = 3; desc_extras_end=["http://www.kingbright.com/attachments/file/psearch/000/00/00/L-3VSURKCGKC(Ver.8A).pdf"]
+    pins = 3; desc_extras_end=["https://www.kingbright.com/attachments/file/psearch/000/00/00/L-3VSURKCGKC(Ver.12A).pdf"]
     makeLEDRadial(
         pins=pins,
         rm=rm,
@@ -235,7 +235,7 @@ if __name__ == '__main__':
         height3d_bottom=height3d_bottom
     )
     # LED_D5.0mm-3
-    pins = 3; desc_extras_end=["http://www.kingbright.com/attachments/file/psearch/000/00/00/L-59EGC(Ver.17A).pdf"]
+    pins = 3; desc_extras_end=["https://www.kingbright.com/attachments/file/psearch/000/00/00/L-59EGC(Ver.20A).pdf"]
     makeLEDRadial(
         pins=pins,
         rm=rm,
@@ -256,7 +256,7 @@ if __name__ == '__main__':
         height3d_bottom=height3d_bottom
     )
     # LED_D5.0mm-4_RGB, which would normally be called LED_D5.0mm-4
-    pins = 4; rm=1.27; desc_extras_end=["http://www.kingbright.com/attachments/file/psearch/000/00/00/L-154A4SUREQBFZGEW(Ver.9A).pdf"]
+    pins = 4; rm=1.27; desc_extras_end=["https://www.kingbright.com/attachments/file/psearch/000/00/00/L-154A4SUREQBFZGEW(Ver.11A).pdf"]
     makeLEDRadial(
         pins=pins,
         rm=rm,
@@ -277,7 +277,7 @@ if __name__ == '__main__':
         height3d_bottom=height3d_bottom
     )
     # LED_D4.0mm
-    pins=2; rm=2.54; rin=4; w=4.8; h=w; height3d=6; height3d_bottom=1; name_additions=None; desc_extras_start=None; desc_extras_end=["http://www.kingbright.com/attachments/file/psearch/000/00/00/L-43GD(Ver.12B).pdf"]
+    pins=2; rm=2.54; rin=4; w=4.8; h=w; height3d=6; height3d_bottom=1; name_additions=None; desc_extras_start=None; desc_extras_end=["https://www.kingbright.com/attachments/file/psearch/000/00/00/L-43GD(Ver.17B).pdf"]
     makeLEDRadial(
         pins=pins,
         rm=rm,
@@ -361,7 +361,7 @@ if __name__ == '__main__':
         height3d_bottom=height3d_bottom
     )
     # LED_D10.0mm-3
-    pins = 3; desc_extras_end=["http://www.kingbright.com/attachments/file/psearch/000/00/00/L-819EGW(Ver.14A).pdf"]
+    pins = 3; desc_extras_end=["http://www.kingbright.com/attachments/file/psearch/000/00/20131112/L-819EGW(Ver.13A).pdf"]
     makeLEDRadial(
         pins=pins,
         rm=rm,
@@ -403,7 +403,7 @@ if __name__ == '__main__':
         height3d_bottom=height3d_bottom
     )
     # LED_Oval_W5.2mm_H3.8mm
-    led_type="oval"; pins=2; rm=2.54; rin=0; w=5.2; h=3.8; height3d=7; height3d_bottom=0; name_additions=None; desc_extras_start=None; desc_extras_end=["http://www.kingbright.com/attachments/file/psearch/000/00/00/L-5603QBC-D(Ver.12B).pdf"]
+    led_type="oval"; pins=2; rm=2.54; rin=0; w=5.2; h=3.8; height3d=7; height3d_bottom=0; name_additions=None; desc_extras_start=None; desc_extras_end=["https://www.kingbright.com/attachments/file/psearch/000/00/00/L-5603QBC-D(Ver.17B).pdf"]
     makeLEDRadial(
         pins=pins,
         rm=rm,
@@ -424,7 +424,7 @@ if __name__ == '__main__':
         height3d_bottom=height3d_bottom
     )
     # LED_D2.0mm_W4.8mm_H2.5mm_FlatTop
-    led_type="box"; pins=2; rm=2.54; rin=2; w=4.8; h=2.5; height3d=4.5; height3d_bottom=3.5; name_additions=["FlatTop"]; desc_extras_start=["Round", "FlatTop"]; desc_extras_end=["http://www.kingbright.com/attachments/file/psearch/000/00/00/L-13GD(Ver.11B).pdf"]
+    led_type="box"; pins=2; rm=2.54; rin=2; w=4.8; h=2.5; height3d=4.5; height3d_bottom=3.5; name_additions=["FlatTop"]; desc_extras_start=["Round", "Flat Top"]; desc_extras_end=["http://www.kingbright.com/attachments/file/psearch/000/00/00/L-13GD(Ver.11B).pdf"]
     makeLEDRadial(
         pins=pins,
         rm=rm,
@@ -466,7 +466,7 @@ if __name__ == '__main__':
         height3d_bottom=height3d_bottom
     )
     # LED_D3.0mm_FlatTop
-    led_type="round"; pins=2; rm=2.54; rin=3; w=3.8; h=w; height3d=4.8; height3d_bottom=6-4.8; name_additions=["FlatTop"]; desc_extras_start=["Round","FlatTop"]; desc_extras_end=["http://www.kingbright.com/attachments/file/psearch/000/00/00/L-47XEC(Ver.9A).pdf"]
+    led_type="round"; pins=2; rm=2.54; rin=3; w=3.8; h=w; height3d=4.8; height3d_bottom=6-4.8; name_additions=["FlatTop"]; desc_extras_start=["Round","Flat Top"]; desc_extras_end=["http://www.kingbright.com/attachments/file/psearch/000/00/00/L-47XEC(Ver.9A).pdf"]
     makeLEDRadial(
         pins=pins,
         rm=rm,
@@ -487,7 +487,7 @@ if __name__ == '__main__':
         height3d_bottom=height3d_bottom
     )
     # LED_D5.0mm_FlatTop
-    led_type="round"; pins=2; rm=2.54; rin=5; w=5.9; h=w; height3d=8.6; height3d_bottom=1; name_additions=["FlatTop"]; desc_extras_start=["Round","FlatTop"]; desc_extras_end=["http://www.kingbright.com/attachments/file/psearch/000/00/00/L-483GDT(Ver.15B).pdf"]
+    led_type="round"; pins=2; rm=2.54; rin=5; w=5.9; h=w; height3d=8.6; height3d_bottom=1; name_additions=["FlatTop"]; desc_extras_start=["Round","Flat Top"]; desc_extras_end=["http://www.kingbright.com/attachments/file/psearch/000/00/00/L-483GDT(Ver.15B).pdf"]
     makeLEDRadial(
         pins=pins,
         rm=rm,
@@ -508,7 +508,7 @@ if __name__ == '__main__':
         height3d_bottom=height3d_bottom
     )
     # LED_D2.0mm_W4.0mm_H2.8mm_FlatTop
-    led_type="box"; pins=2; rm=2.54; rin=2; w=4; h=2.8; height3d=1.95; height3d_bottom=5-1.95; name_additions=["FlatTop"]; desc_extras_start=["Round","FlatTop"]; desc_extras_end=["http://www.kingbright.com/attachments/file/psearch/000/00/00/L-1034IDT(Ver.9A).pdf"]
+    led_type="box"; pins=2; rm=2.54; rin=2; w=4; h=2.8; height3d=1.95; height3d_bottom=5-1.95; name_additions=["FlatTop"]; desc_extras_start=["Round","Flat Top"]; desc_extras_end=["https://www.kingbright.com/attachments/file/psearch/000/00/00/L-1034IDT(Ver.14A).pdf"]
     makeLEDRadial(
         pins=pins,
         rm=rm,
@@ -528,8 +528,8 @@ if __name__ == '__main__':
         height3d=height3d,
         height3d_bottom=height3d_bottom
     )
-    # LED_Rectangular_W3.9mm_H1.8mm_FlatTop
-    led_type="box"; pins=2; rm=2.54; rin=0; w=3.9; h=1.75; height3d=7; height3d_bottom=0; name_additions=["FlatTop"]; desc_extras_start=None; desc_extras_end=["http://www.kingbright.com/attachments/file/psearch/000/00/00/L-2774GD(Ver.7B).pdf"]
+    # LED_Rectangular_W3.9mm_H1.8mm
+    led_type="box"; pins=2; rm=2.54; rin=0; w=3.9; h=1.75; height3d=7; height3d_bottom=0; name_additions=None; desc_extras_start=None; desc_extras_end=["http://www.kingbright.com/attachments/file/psearch/000/00/20160808bak/L-2774GD(Ver.7B).pdf"]
     makeLEDRadial(
         pins=pins,
         rm=rm,
@@ -550,7 +550,7 @@ if __name__ == '__main__':
         height3d_bottom=height3d_bottom
     )
     # LED_Rectangular_W3.9mm_H1.9mm
-    led_type="box"; pins=2; rm=2.54; rin=0; w=3.9; h=1.9; height3d=7; height3d_bottom=0; name_additions=None; desc_extras_start=None; desc_extras_end=["http://www.kingbright.com/attachments/file/psearch/000/00/00/L-144GDT(Ver.14B).pdf"]
+    led_type="box"; pins=2; rm=2.54; rin=0; w=3.9; h=1.9; height3d=7; height3d_bottom=0; name_additions=None; desc_extras_start=None; desc_extras_end=["https://www.kingbright.com/attachments/file/psearch/000/00/watermark00/L-144GDT(Ver.11B).pdf"]
     makeLEDRadial(
         pins=pins,
         rm=rm,
@@ -571,7 +571,7 @@ if __name__ == '__main__':
         height3d_bottom=height3d_bottom
     )
     # LED_Rectangular_W3.0mm_H2.0mm
-    led_type="box"; pins=2; rm=2.54; rin=0; w=3; h=2;  height3d=7; height3d_bottom=0; name_additions=None; desc_extras_start=None; desc_extras_end=["http://www.kingbright.com/attachments/file/psearch/000/00/00/L-169XCGDK(Ver.9B).pdf"]
+    led_type="box"; pins=2; rm=2.54; rin=0; w=3; h=2;  height3d=7; height3d_bottom=0; name_additions=None; desc_extras_start=None; desc_extras_end=["http://www.kingbright.com/attachments/file/psearch/000/00/20160808bak/L-169XCGDK(Ver.8B).pdf"]
     makeLEDRadial(
         pins=pins,
         rm=rm,
@@ -613,7 +613,7 @@ if __name__ == '__main__':
         height3d_bottom=height3d_bottom
     )
     # LED_Rectangular_W5.0mm_H2.0mm-3Pins
-    led_type="box"; pins=3; rm=2.54; rin=0; w=5; h=2;  height3d=9.7; height3d_bottom=0; name_additions=None; desc_extras_start=None; desc_extras_end=["http://www.kingbright.com/attachments/file/psearch/000/00/00/L-169XCGDK(Ver.9B).pdf"]
+    led_type="box"; pins=3; rm=2.54; rin=0; w=5; h=2;  height3d=9.7; height3d_bottom=0; name_additions=None; desc_extras_start=None; desc_extras_end=["http://www.kingbright.com/attachments/file/psearch/000/00/20160808bak/L-169XCGDK(Ver.8B).pdf"]
     makeLEDRadial(
         pins=pins,
         rm=rm,
@@ -634,7 +634,7 @@ if __name__ == '__main__':
         height3d_bottom=height3d_bottom
     )
     # LED_Rectangular_W5.0mm_H5.0mm
-    led_type="box"; pins=2; rm=2.54; rin=0; w=5; h=5;  height3d=9.7; height3d_bottom=0; name_additions=None; desc_extras_start=None; desc_extras_end=["http://www.kingbright.com/attachments/file/psearch/000/00/00/L-169XCGDK(Ver.9B).pdf"]
+    led_type="box"; pins=2; rm=2.54; rin=0; w=5; h=5;  height3d=9.7; height3d_bottom=0; name_additions=None; desc_extras_start=None; desc_extras_end=["http://www.kingbright.com/attachments/file/psearch/000/00/20160808bak/L-169XCGDK(Ver.8B).pdf"]
     makeLEDRadial(
         pins=pins,
         rm=rm,
@@ -655,7 +655,7 @@ if __name__ == '__main__':
         height3d_bottom=height3d_bottom
     )
     # LED_SideEmitter_Rectangular_W4.5mm_H1.6mm
-    led_type="box"; pins=2; rm=2.54; rin=0; w=4.5; h=1.6;  height3d=5.7; height3d_bottom=0; name_additions=None; desc_extras_start=["SideEmitter"]; desc_extras_end=["http://cdn-reichelt.de/documents/datenblatt/A500/LED15MMGE_LED15MMGN%23KIN.pdf"]
+    led_type="box"; pins=2; rm=2.54; rin=0; w=4.5; h=1.6;  height3d=5.7; height3d_bottom=0; name_additions=None; desc_extras_start=["Side Emitter"]; desc_extras_end=["http://cdn-reichelt.de/documents/datenblatt/A500/LED15MMGE_LED15MMGN%23KIN.pdf"]
     makeLEDRadial(
         pins=pins,
         rm=rm,
