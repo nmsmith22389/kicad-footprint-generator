@@ -439,11 +439,17 @@ class KicadFileHandler(FileHandler):
     def _serialize_Property(self, node):
         """Serialise a property node
         """
+        # Assemble seed for deterministic UUID seeding
+        seed_str = f"{self.kicad_mod.name}/property/{node.name}/{node.text}"
+        print(seed_str)
         sexpr = [
             SexprSerializer.Symbol('property'),
             node.name,
         ]
         sexpr += self._serialize_TextBaseNode(node)
+        sexpr.append([
+            SexprSerializer.Symbol('uuid'), 123
+        ])
         return sexpr
 
     def _serialize_Model(self, node):
