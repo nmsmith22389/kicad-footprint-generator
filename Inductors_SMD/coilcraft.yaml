@@ -9,3 +9,40 @@
   tags:
     - xal
   library_name: Inductor_SMD
+
+- series: MSS
+  manufacturer: Coilcraft
+  csv: coilcraft_mss_rounded_rectangular_base.csv
+  3d:
+    type: shielded_drum_rounded_rectangular_base
+    bodyColor: black body
+    pinColor: metal grey pins
+    padThickness: 0.635
+  tags:
+    - mss
+  has_orientation: true
+  library_name: Inductor_SMD
+
+- series: MSS
+  manufacturer: Coilcraft
+  csv: coilcraft_mss_circular_base.csv
+  tags:
+    - mss
+  has_orientation: true
+  library_name: Inductor_SMD
+
+- series: MSS
+  manufacturer: Coilcraft
+  csv: coilcraft_mss_octagonal_base.csv
+  tags:
+    - mss
+  has_orientation: true
+  library_name: Inductor_SMD
+
+- series: MSS
+  manufacturer: Coilcraft
+  csv: coilcraft_mss_rounded_chamfered_rectangular_base.csv
+  tags:
+    - mss
+  has_orientation: true
+  library_name: Inductor_SMD
