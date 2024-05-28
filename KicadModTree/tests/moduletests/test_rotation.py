@@ -576,6 +576,7 @@ RESULT_rotCircle = """(footprint "test_rotate_circle"
 			(type solid)
 		)
 		(layer "F.SilkS")
+		(fill none)
 	)
 	(fp_circle
 		(center 5.673033 -0.516436)
@@ -585,6 +586,7 @@ RESULT_rotCircle = """(footprint "test_rotate_circle"
 			(type solid)
 		)
 		(layer "F.SilkS")
+		(fill none)
 	)
 	(fp_circle
 		(center 5.232051 -0.133975)
@@ -594,6 +596,7 @@ RESULT_rotCircle = """(footprint "test_rotate_circle"
 			(type solid)
 		)
 		(layer "F.SilkS")
+		(fill none)
 	)
 	(fp_circle
 		(center 4.707107 0.12132)
@@ -603,6 +606,7 @@ RESULT_rotCircle = """(footprint "test_rotate_circle"
 			(type solid)
 		)
 		(layer "F.SilkS")
+		(fill none)
 	)
 	(fp_circle
 		(center 4.133975 0.232051)
@@ -612,6 +616,7 @@ RESULT_rotCircle = """(footprint "test_rotate_circle"
 			(type solid)
 		)
 		(layer "F.SilkS")
+		(fill none)
 	)
 	(fp_circle
 		(center 3.551712 0.190671)
@@ -621,6 +626,7 @@ RESULT_rotCircle = """(footprint "test_rotate_circle"
 			(type solid)
 		)
 		(layer "F.SilkS")
+		(fill none)
 	)
 	(fp_circle
 		(center 3 0)
@@ -630,6 +636,7 @@ RESULT_rotCircle = """(footprint "test_rotate_circle"
 			(type solid)
 		)
 		(layer "F.SilkS")
+		(fill none)
 	)
 	(fp_circle
 		(center 2.516436 -0.326967)
@@ -639,6 +646,7 @@ RESULT_rotCircle = """(footprint "test_rotate_circle"
 			(type solid)
 		)
 		(layer "F.SilkS")
+		(fill none)
 	)
 	(fp_circle
 		(center 2.133975 -0.767949)
@@ -648,6 +656,7 @@ RESULT_rotCircle = """(footprint "test_rotate_circle"
 			(type solid)
 		)
 		(layer "F.SilkS")
+		(fill none)
 	)
 	(fp_circle
 		(center 1.87868 -1.292893)
@@ -657,6 +666,7 @@ RESULT_rotCircle = """(footprint "test_rotate_circle"
 			(type solid)
 		)
 		(layer "F.SilkS")
+		(fill none)
 	)
 	(fp_circle
 		(center 1.767949 -1.866025)
@@ -666,6 +676,7 @@ RESULT_rotCircle = """(footprint "test_rotate_circle"
 			(type solid)
 		)
 		(layer "F.SilkS")
+		(fill none)
 	)
 	(fp_circle
 		(center 1.809329 -2.448288)
@@ -675,6 +686,7 @@ RESULT_rotCircle = """(footprint "test_rotate_circle"
 			(type solid)
 		)
 		(layer "F.SilkS")
+		(fill none)
 	)
 	(fp_circle
 		(center 2 -3)
@@ -684,6 +696,7 @@ RESULT_rotCircle = """(footprint "test_rotate_circle"
 			(type solid)
 		)
 		(layer "F.SilkS")
+		(fill none)
 	)
 	(fp_circle
 		(center 2.326967 -3.483564)
@@ -693,6 +706,7 @@ RESULT_rotCircle = """(footprint "test_rotate_circle"
 			(type solid)
 		)
 		(layer "F.SilkS")
+		(fill none)
 	)
 	(fp_circle
 		(center 2.767949 -3.866025)
@@ -702,6 +716,7 @@ RESULT_rotCircle = """(footprint "test_rotate_circle"
 			(type solid)
 		)
 		(layer "F.SilkS")
+		(fill none)
 	)
 	(fp_circle
 		(center 3.292893 -4.12132)
@@ -711,6 +726,7 @@ RESULT_rotCircle = """(footprint "test_rotate_circle"
 			(type solid)
 		)
 		(layer "F.SilkS")
+		(fill none)
 	)
 	(fp_circle
 		(center 3.866025 -4.232051)
@@ -720,6 +736,7 @@ RESULT_rotCircle = """(footprint "test_rotate_circle"
 			(type solid)
 		)
 		(layer "F.SilkS")
+		(fill none)
 	)
 	(fp_circle
 		(center 4.448288 -4.190671)
@@ -729,6 +746,7 @@ RESULT_rotCircle = """(footprint "test_rotate_circle"
 			(type solid)
 		)
 		(layer "F.SilkS")
+		(fill none)
 	)
 	(fp_circle
 		(center 5 -4)
@@ -738,6 +756,7 @@ RESULT_rotCircle = """(footprint "test_rotate_circle"
 			(type solid)
 		)
 		(layer "F.SilkS")
+		(fill none)
 	)
 	(fp_circle
 		(center 5.483564 -3.673033)
@@ -747,6 +766,7 @@ RESULT_rotCircle = """(footprint "test_rotate_circle"
 			(type solid)
 		)
 		(layer "F.SilkS")
+		(fill none)
 	)
 	(fp_circle
 		(center 5.866025 -3.232051)
@@ -756,6 +776,7 @@ RESULT_rotCircle = """(footprint "test_rotate_circle"
 			(type solid)
 		)
 		(layer "F.SilkS")
+		(fill none)
 	)
 	(fp_circle
 		(center 6.12132 -2.707107)
@@ -765,6 +786,7 @@ RESULT_rotCircle = """(footprint "test_rotate_circle"
 			(type solid)
 		)
 		(layer "F.SilkS")
+		(fill none)
 	)
 	(fp_circle
 		(center 6.232051 -2.133975)
@@ -774,6 +796,7 @@ RESULT_rotCircle = """(footprint "test_rotate_circle"
 			(type solid)
 		)
 		(layer "F.SilkS")
+		(fill none)
 	)
 	(fp_circle
 		(center 6.190671 -1.551712)
@@ -783,6 +806,7 @@ RESULT_rotCircle = """(footprint "test_rotate_circle"
 			(type solid)
 		)
 		(layer "F.SilkS")
+		(fill none)
 	)
 )"""  # NOQA: W191
 

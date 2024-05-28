@@ -15,6 +15,7 @@
 
 import sys
 import io
+import os
 
 from KicadModTree.nodes import Footprint
 
@@ -53,6 +54,7 @@ class FileHandler(object):
         >>> file_handler.writeFile('example_footprint.kicad_mod')
         """
 
+        fp = None
         with io.open(filename, "w", newline='\n') as f:
             output = self.serialize(**kwargs)
 
@@ -61,7 +63,10 @@ class FileHandler(object):
 
             f.write(output)
 
+            fp = os.path.realpath(f.name)
+
             f.close()
+        return fp
 
     def serialize(self, **kwargs):
         r"""Get a valid string representation of the footprint in the specified format
@@ -74,4 +79,5 @@ class FileHandler(object):
         >>> print(file_handler.serialize())
         """
 
-        raise NotImplementedError("serialize has to be implemented by child class")
+        raise NotImplementedError(
+            "serialize has to be implemented by child class")

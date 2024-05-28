@@ -18,7 +18,7 @@ from KicadModTree.Vector import *
 from KicadModTree.nodes.Node import Node
 
 from enum import Enum
-
+import uuid
 
 '''
 This is my new approach, using a render tree for footprint generation.
@@ -49,7 +49,7 @@ class Footprint(Node):
     Root Node to generate KicadMod
     '''
 
-    def __init__(self, name: str, footprintType: FootprintType):
+    def __init__(self, name: str, footprintType: FootprintType, tstamp_seed: uuid.UUID = None):
         """
         :param name: Name of the footprint
         :param footprintType: Type of the footprint (None is the deprecated default)
@@ -70,6 +70,9 @@ class Footprint(Node):
         self.maskMargin = None
         self.pasteMargin = None
         self.pasteMarginRatio = None
+
+        if tstamp_seed is not None:
+            self.getTStampCls().setTStampSeed(tstamp_seed=tstamp_seed)
 
     def setName(self, name):
         self.name = name
@@ -101,7 +104,8 @@ class Footprint(Node):
     @footprintType.setter
     def footprintType(self, footprintType: FootprintType) -> None:
         if not isinstance(footprintType, FootprintType):
-            raise TypeError("footprintType must be a FootprintType, not {}".format(type(footprintType)))
+            raise TypeError(
+                "footprintType must be a FootprintType, not {}".format(type(footprintType)))
         self._footprintType = footprintType
 
     def setMaskMargin(self, value):
@@ -112,7 +116,8 @@ class Footprint(Node):
 
     def setPasteMarginRatio(self, value):
         # paste_margin_ratio is unitless between 0 and 1 while GUI uses percentage
-        assert abs(value) <= 1, "Solder paste margin must be between -1 and 1. {} is too large.".format(value)
+        assert abs(
+            value) <= 1, "Solder paste margin must be between -1 and 1. {} is too large.".format(value)
 
         self.pasteMarginRatio = value
 

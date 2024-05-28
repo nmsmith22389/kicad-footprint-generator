@@ -18,7 +18,9 @@ from typing import Optional
 
 from KicadModTree.FileHandler import FileHandler
 from KicadModTree.util.kicad_util import SexprSerializer
-from KicadModTree.nodes.base.Pad import Pad  # TODO: why .KicadModTree is not enough?
+from KicadModTree.util.kicad_util import *
+# TODO: why .KicadModTree is not enough?
+from KicadModTree.nodes.base.Pad import Pad
 from KicadModTree.nodes.base.Arc import Arc
 from KicadModTree.nodes.base.Circle import Circle
 from KicadModTree.nodes.base.Line import Line
@@ -135,6 +137,9 @@ class KicadFileHandler(FileHandler):
             [SexprSerializer.Symbol('layer'), 'F.Cu'],
         ]
 
+        if self.kicad_mod.hasValidTStamp():
+            sexpr.append(self._serialize_TStamp(self.kicad_mod))
+
         if self.kicad_mod.description:
             sexpr.append([SexprSerializer.Symbol('descr'), self.kicad_mod.description])
 
@@ -207,12 +212,17 @@ class KicadFileHandler(FileHandler):
 
         for key, value in sorted(grouped_nodes.items()):
             # check if key is a base node, except Model
-            if key not in {'Arc', 'Circle', 'Line', 'Pad', 'Polygon', 'Text', 'Zone'}:
+            if key not in {'Arc', 'Circle', 'Line', 'Pad', 'Polygon', 'Text', 'Zone',
+                           'NativeCPad', 'CompoundPolygon', 'PolygonArc', 'FPRect', 'Group'}:
                 continue
 
             # render base nodes
             for node in value:
-                sexpr.append(self._callSerialize(node))
+                subnode_sexpr = self._callSerialize(node)
+                if subnode_sexpr is not None:
+                    # allow conditionally no additional results to be added,
+                    # for nodes that may or may not use solely virtual nodes depending on their configuration.
+                    sexpr.append(subnode_sexpr)
 
         # serialize 3D Models at the end
         if grouped_nodes.get('Model'):
@@ -243,6 +253,7 @@ class KicadFileHandler(FileHandler):
         '''
         method_type = node.__class__.__name__
         method_name = "_serialize_{0}".format(method_type)
+
         if hasattr(self, method_name):
             return getattr(self, method_name)(node)
         else:
@@ -251,10 +262,21 @@ class KicadFileHandler(FileHandler):
 
     def _serialize_Stroke(self, node):
         width = _get_layer_width(node.layer, node.width)
-
+        if hasattr(node, 'stroke_type'):
+            stype = node.stroke_type
+        else:
+            stype = 'solid'
         return [
             [SexprSerializer.Symbol('width'), width],
-            [SexprSerializer.Symbol('type'), SexprSerializer.Symbol('solid')],
+            [SexprSerializer.Symbol('type'), SexprSerializer.Symbol(stype)],
+        ]
+
+    def _serialize_Fill(self, node):
+        fill = SexprSerializer.Symbol('solid') if ((not hasattr(node, 'fill')) or (
+            str(node.fill).lower() != 'none')) else SexprSerializer.Symbol('none')
+
+        return [
+            [SexprSerializer.Symbol('fill'), fill],
         ]
 
     def _serialize_ArcPoints(self, node):
@@ -270,6 +292,12 @@ class KicadFileHandler(FileHandler):
             [SexprSerializer.Symbol('end'), end_pos.x, end_pos.y],
         ]
 
+    def _serialize_PolygonArc(self, node):
+        sexpr = [SexprSerializer.Symbol('arc')]
+        sexpr += self._serialize_ArcPoints(node)
+
+        return sexpr
+
     def _serialize_Arc(self, node):
         sexpr = [SexprSerializer.Symbol('fp_arc')]
         sexpr += self._serialize_ArcPoints(node)
@@ -277,6 +305,8 @@ class KicadFileHandler(FileHandler):
                   [SexprSerializer.Symbol('stroke')] + self._serialize_Stroke(node),
                   [SexprSerializer.Symbol('layer'), node.layer],
                  ]  # NOQA
+        if node.hasValidTStamp():
+            sexpr.append(self._serialize_TStamp(node))
 
         return sexpr
 
@@ -297,6 +327,29 @@ class KicadFileHandler(FileHandler):
             [SexprSerializer.Symbol('layer'), node.layer],
         ]
 
+        if hasattr(node, 'fill'):
+            sexpr += self._serialize_Fill(node)
+
+        if node.hasValidTStamp():
+            sexpr.append(self._serialize_TStamp(node))
+
+        return sexpr
+
+    def _serialize_FPRect(self, node):
+        sexpr = [SexprSerializer.Symbol('fp_rect')]
+        sexpr += self._serialize_RectPoints(node)
+        sexpr += [
+                  # SexprSerializer.NEW_LINE,
+                  [SexprSerializer.Symbol('stroke')] + self._serialize_Stroke(node),
+                 ]  # NOQA
+        if hasattr(node, 'fill'):
+            sexpr += self._serialize_Fill(node)
+        sexpr += [
+            [SexprSerializer.Symbol('layer'), SexprSerializer.Symbol(node.layer)],
+        ]
+        if node.hasValidTStamp():
+            sexpr.append(self._serialize_TStamp(node))
+
         return sexpr
 
     def _serialise_Layers(self, node):
@@ -311,6 +364,10 @@ class KicadFileHandler(FileHandler):
             [SexprSerializer.Symbol('end'), end_pos.x, end_pos.y]
         ]
 
+    def _serialize_RectPoints(self, node):
+        # identical for current kicad format
+        return self._serialize_LinePoints(node)
+
     def _serialize_Line(self, node):
         sexpr = [SexprSerializer.Symbol('fp_line')]
         sexpr += self._serialize_LinePoints(node)
@@ -318,6 +375,8 @@ class KicadFileHandler(FileHandler):
             [SexprSerializer.Symbol('stroke')] + self._serialize_Stroke(node),
             [SexprSerializer.Symbol('layer'), node.layer],
         ]
+        if node.hasValidTStamp():
+            sexpr.append(self._serialize_TStamp(node))
 
         return sexpr
 
@@ -360,6 +419,9 @@ class KicadFileHandler(FileHandler):
             effects.append([SexprSerializer.Symbol('justify')] + justify)
 
         sexpr.append(effects)
+
+        if node.hasValidTStamp():
+            sexpr.append(self._serialize_TStamp(node))
 
         return sexpr
 
@@ -428,6 +490,7 @@ class KicadFileHandler(FileHandler):
             # render base nodes
             for p in value:
                 if isinstance(p, Polygon):
+
                     sp = [SexprSerializer.Symbol('gr_poly'),
                           self._serialize_PolygonPoints(p)
                          ]  # NOQA
@@ -442,6 +505,7 @@ class KicadFileHandler(FileHandler):
                 sp.append([SexprSerializer.Symbol('width'),
                            DEFAULT_WIDTH_POLYGON_PAD if p.width is None else p.width])
                 sexpr_primitives.append(sp)
+                # sexpr_primitives.append(SexprSerializer.NEW_LINE)
 
         return sexpr_primitives
 
@@ -467,6 +531,13 @@ class KicadFileHandler(FileHandler):
             Pad.ZoneConnection.SOLID: 2,
         }
         return mapping[node.zone_connection]
+
+    def _serialize_NativeCPad(self, node):
+        from KicadModTree.nodes.base.NativeCPad import NativeCPad
+        node: NativeCPad = node
+        sexpr = node.serialize_specific_node(kicadFileHandler=self)
+
+        return sexpr
 
     def _serialize_Pad(self, node):
         sexpr = [
@@ -516,7 +587,11 @@ class KicadFileHandler(FileHandler):
                     [SexprSerializer.Symbol('anchor'), SexprSerializer.Symbol(node.anchor_shape)]])
 
             sexpr_primitives = self._serialize_CustomPadPrimitives(node)
+
             sexpr.append([SexprSerializer.Symbol('primitives')] + sexpr_primitives)
+
+        if node.hasValidTStamp():
+            sexpr.append(self._serialize_TStamp(node))
 
         if node.solder_paste_margin_ratio != 0 or node.solder_mask_margin != 0 or node.solder_paste_margin != 0:
             if node.solder_mask_margin != 0:
@@ -537,6 +612,7 @@ class KicadFileHandler(FileHandler):
 
     def _serialize_PolygonPoints(self, node):
         node_points = [SexprSerializer.Symbol('pts')]
+
         for n in node.nodes:
             n_pos = node.getRealPosition(n)
             node_points.append([SexprSerializer.Symbol('xy'), n_pos.x, n_pos.y])
@@ -552,6 +628,26 @@ class KicadFileHandler(FileHandler):
                  [SexprSerializer.Symbol('fill'), SexprSerializer.Symbol('solid')],
                  [SexprSerializer.Symbol('layer'), node.layer],
                 ]  # NOQA
+
+        if node.hasValidTStamp():
+            sexpr += [
+                self._serialize_TStamp(node),
+                # SexprSerializer.NEW_LINE,
+            ]
+
+        return sexpr
+
+    def _serialize_CompoundPolygon(self, node):
+        from KicadModTree.nodes.base.CompoundPolygon import CompoundPolygon
+        node: CompoundPolygon = node
+        sexpr = node.serialize_specific_node(kicadFileHandler=self)
+
+        return sexpr
+
+    def _serialize_Group(self, node):
+        from KicadModTree.nodes.base.Group import Group
+        node: Group = node
+        sexpr = node.serialize_specific_node(kicadFileHandler=self)
 
         return sexpr
 
@@ -627,7 +723,8 @@ class KicadFileHandler(FileHandler):
                     [
                         SexprSerializer.Symbol('smoothing'),
                         SexprSerializer.Symbol(node.smoothing),
-                        [SexprSerializer.Symbol('radius'), node.smoothing_radius]],
+                        [SexprSerializer.Symbol('radius'), node.smoothing_radius]
+                    ],
                 ]
 
             if node.island_removal_mode is not None:
@@ -646,11 +743,16 @@ class KicadFileHandler(FileHandler):
 
             sexpr += node_if_not_none(node.hatch_thickness, 'hatch_thickness')
             sexpr += node_if_not_none(node.hatch_gap, 'hatch_gap')
-            sexpr += node_if_not_none(node.hatch_orientation, 'hatch_orientation')
-            sexpr += node_if_not_none(node.hatch_smoothing_level, 'hatch_smoothing_level')
-            sexpr += node_if_not_none(node.hatch_smoothing_value, 'hatch_smoothing_value')
-            sexpr += node_if_not_none(node.hatch_border_algorithm, 'hatch_border_algorithm')
-            sexpr += node_if_not_none(node.hatch_min_hole_area, 'hatch_min_hole_area')
+            sexpr += node_if_not_none(node.hatch_orientation,
+                                      'hatch_orientation')
+            sexpr += node_if_not_none(node.hatch_smoothing_level,
+                                      'hatch_smoothing_level')
+            sexpr += node_if_not_none(node.hatch_smoothing_value,
+                                      'hatch_smoothing_value')
+            sexpr += node_if_not_none(node.hatch_border_algorithm,
+                                      'hatch_border_algorithm')
+            sexpr += node_if_not_none(node.hatch_min_hole_area,
+                                      'hatch_min_hole_area')
             return sexpr
 
         sexpr = [
@@ -661,6 +763,12 @@ class KicadFileHandler(FileHandler):
             [SexprSerializer.Symbol('name'), node.name],
             _serialize_Hatch(node.hatch)
         ]
+
+        if node.hasValidTStamp():
+            sexpr += [
+                self._serialize_TStamp(node),
+                # SexprSerializer.NEW_LINE,
+            ]
 
         # Optional node
         if node.priority is not None:
@@ -683,6 +791,7 @@ class KicadFileHandler(FileHandler):
 
         sexpr += [
             _serialise_ZoneFill(node.fill),
+            # SexprSerializer.NEW_LINE,
             [
                 SexprSerializer.Symbol('polygon'),
                 self._serialize_PolygonPoints(node)
@@ -690,3 +799,15 @@ class KicadFileHandler(FileHandler):
         ]
 
         return sexpr
+
+    def _serialize_TStamp(self, node):
+        # from KicadModTree.nodes import Node
+        # node:Node = node
+        sexpr = []
+        if hasattr(node, 'getTStamp') and hasattr(node, 'hasValidTStamp'):
+            if (node.hasValidTStamp()):
+                tstmp = node.getTStamp()
+                sexpr.append(SexprSerializer.Symbol('tstamp'))
+                sexpr.append(SexprSerializer.Symbol(str(tstmp)))
+                return sexpr
+        return [""]

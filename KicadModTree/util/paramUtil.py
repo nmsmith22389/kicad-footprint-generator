@@ -163,13 +163,30 @@ def toVectorUseCopyIfNumber(value, length=2, low_limit=None, must_be_larger=True
         raise ValueError("length must be 2 or 3")
 
     if low_limit is not None and isAnyLarger(result, low_limit, must_be_larger):
-        raise ValueError("One value in ({}) too small. Limit is {}.".format(result, low_limit))
+        raise ValueError(
+            "One value in ({}) too small. Limit is {}.".format(result, low_limit))
 
     return result
 
 
+def getOptionalBoolTypeParam(
+        kwargs: dict, param_name, default_value=None):
+    val = kwargs.get(param_name, default_value)
+    if val is not None:
+        if ((isinstance(val, bool) and val)
+                or (val == 1)
+                or (isinstance(val, str) and (str(val).lower() == "true" or str(val).lower() == "yes"))):
+            return True
+        elif ((isinstance(val, bool) and not val)
+                or (val == 0)
+                or (isinstance(val, str) and (str(val).lower() == "false" or str(val).lower() == "no"))):
+            return False
+        return default_value
+    return val
+
+
 def getOptionalNumberTypeParam(
-        kwargs, param_name, default_value=None,
+        kwargs: dict, param_name, default_value=None,
         low_limit=None, high_limit=None, allow_equal_limit=True):
     r""" Get a named parameter from packed dict and guarantee it is a number (float or int)
 
@@ -195,7 +212,8 @@ def getOptionalNumberTypeParam(
     val = kwargs.get(param_name, default_value)
     if val is not None:
         if type(val) not in [int, float]:
-            raise TypeError('{} needs to be of type int or float'.format(param_name))
+            raise TypeError(
+                '{} needs to be of type int or float'.format(param_name))
         if low_limit is not None:
             if val < low_limit or (val == low_limit and not allow_equal_limit):
                 raise ValueError(

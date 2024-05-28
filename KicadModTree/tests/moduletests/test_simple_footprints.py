@@ -204,6 +204,7 @@ RESULT_BASIC_NODES = """(footprint "test"
 			(type solid)
 		)
 		(layer "F.SilkS")
+		(fill none)
 	)
 	(fp_line
 		(start 1 0)

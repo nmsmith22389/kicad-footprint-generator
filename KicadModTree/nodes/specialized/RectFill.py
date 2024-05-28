@@ -50,13 +50,19 @@ class RectFill(Node):
         self.layer = kwargs.get('layer', 'F.SilkS')
         self.width = kwargs.get('width', 0.12)  # TODO: auto detection
 
-        self.virtual_childs = self._createChildNodes(self.start_pos, self.end_pos, self.layer, self.width)
+        self.virtual_childs = self._createChildNodes(
+            self.start_pos, self.end_pos, self.layer, self.width)
 
     def _createChildNodes(self, start_pos, end_pos, layer, width):
         nodes = []
 
         cur_y_pos = min([start_pos.y, end_pos.y])
         max_y_pos = max([start_pos.y, end_pos.y])
+
+        if width <= 1e-12:
+            raise ValueError(
+                f"Filled Rect cannot have close to zero width ({width} <= 1e-12), "
+                + f"because it is filled with lines of width size!")
 
         while (cur_y_pos + width) < max_y_pos:
             cur_y_pos += width

@@ -35,6 +35,8 @@ class Circle(Node, geometricCircle):
           layer on which the circle is drawn (default: 'F.SilkS')
         * *width* (``float``) --
           width of the circle line (default: None, which means auto detection)
+        * *fill* (``str``) --
+            fill style of the circle (default: 'none'), 'solid' or 'none'
 
     :Example:
 
@@ -44,10 +46,12 @@ class Circle(Node, geometricCircle):
 
     def __init__(self, **kwargs):
         Node.__init__(self)
-        geometricCircle.__init__(self, center=Vector2D(kwargs['center']), radius=float(kwargs['radius']))
+        geometricCircle.__init__(self, center=Vector2D(
+            kwargs['center']), radius=float(kwargs['radius']))
 
         self.layer = kwargs.get('layer', 'F.SilkS')
         self.width = kwargs.get('width')
+        self.fill = kwargs.get('fill', 'none')
 
     def rotate(self, angle, origin=(0, 0), use_degrees=True):
         r""" Rotate circle around given origin
@@ -61,7 +65,8 @@ class Circle(Node, geometricCircle):
                 rotation angle is given in degrees. default:True
         """
 
-        self.center_pos.rotate(angle=angle, origin=origin, use_degrees=use_degrees)
+        self.center_pos.rotate(angle=angle, origin=origin,
+                               use_degrees=use_degrees)
         return self
 
     def translate(self, distance_vector):
@@ -77,7 +82,8 @@ class Circle(Node, geometricCircle):
 
     def asArc(self):
         return Arc(
-            center=self.center_pos, start=self.center_pos + Vector2D(self.radius, 0),
+            center=self.center_pos, start=self.center_pos +
+            Vector2D(self.radius, 0),
             angle=360, layer=self.layer, width=self.width
         )
 
@@ -103,7 +109,8 @@ class Circle(Node, geometricCircle):
 
     def _getRenderTreeText(self):
         render_strings = ['fp_circle']
-        render_strings.append('(center {x} {y})'.format(**self.center_pos.to_dict()))
+        render_strings.append('(center {x} {y})'.format(
+            **self.center_pos.to_dict()))
         render_strings.append('(radius {radius})'.format(radius=self.radius))
         render_strings.append('(layer {layer})'.format(layer=self.layer))
         render_strings.append('(width {width})'.format(width=self.width))

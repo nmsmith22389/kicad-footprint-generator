@@ -17,13 +17,23 @@ from .Arc import Arc
 
 from .Circle import Circle
 
+from .CompoundPolygon import CompoundPolygon
+
+from .Group import Group
+
+from .FPRect import FPRect
+
 from .Line import Line
 
 from .Model import Model
 
+from .NativeCPad import NativeCPad
+
 from .Pad import Pad
 
 from .Polygon import Polygon
+
+from .PolygonArc import PolygonArc
 
 from .Text import Text, Property
 

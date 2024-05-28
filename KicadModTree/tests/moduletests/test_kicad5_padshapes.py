@@ -289,6 +289,7 @@ RESULT_CHAMFERED_PAD_AVOID_CIRCLE = """(footprint "avoid_circle"
 			(type solid)
 		)
 		(layer "F.SilkS")
+		(fill none)
 	)
 	(pad "1" smd custom
 		(at 2 2.5)
@@ -566,6 +567,7 @@ RESULT_CHAMFERED_PAD_GRID_AVOID_CIRCLE = """(footprint "chamfered_grid_corner_on
 			(type solid)
 		)
 		(layer "F.SilkS")
+		(fill none)
 	)
 	(pad "1" smd custom
 		(at -1.4 -2.1)
