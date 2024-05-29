@@ -53,7 +53,7 @@ sys.path.append(os.path.dirname(os.path.realpath(__file__)) + "\\..\\..")
 
 from collections import namedtuple
 
-from KicadModTree import Point
+from KicadModTree import Point, Property
 from KicadModTree.nodes.base import Line, Arc, Circle, Text, Pad
 from KicadModTree.nodes.specialized import RectFill
 from KicadModTree.util.kicad_util import formatFloat
@@ -364,7 +364,7 @@ class Layer:
             thickness=self.txt_thickness))
         return self
 
-    def fp_property(self, name, text):
+    def fp_property(self, name, text, rotation=0):
         self.footprint.append(Property(name=name, text=text, at=[self.x, self.y],
             rotation=rotation, layer=self.layer, size=self.txt_size,
             thickness=self.txt_thickness))
