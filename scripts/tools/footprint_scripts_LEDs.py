@@ -23,7 +23,7 @@ from footprint_global_properties import *
 #           |  OO        OO  | h
 #           |                | |
 #           +----------------+ v
-#               <---rm--->
+#             <---pitch--->
 #           <-------w-------->
 #     2. led_type="round"
 #              /----------\   ^
@@ -31,7 +31,7 @@ from footprint_global_properties import *
 #             |  OO    OO   | h
 #             |            /  |
 #              \__________/   v
-#                 <-rm->
+#               <-pitch->
 #           <-------w-------->
 #     3. led_type="roundedbox"
 #           +--------------\   ^
@@ -39,7 +39,7 @@ from footprint_global_properties import *
 #           |  OO        OO  | h
 #           |               /  |
 #           +--------------/   v
-#               <---rm--->
+#              <--pitch-->
 #           <-------w-------->
 #     4. led_type="oval"
 #           +----------------+ ^
@@ -47,7 +47,7 @@ from footprint_global_properties import *
 #           |  OO        OO  | h
 #           |                | |
 #           +----------------+ v
-#               <---rm--->
+#               <--pitch->
 #           <-------w-------->
 #     2. led_type="round_simple"
 #              /----------\   ^
@@ -55,11 +55,11 @@ from footprint_global_properties import *
 #            |   OO    OO   | h
 #             \            /  |
 #              \__________/   v
-#                 <-rm->
+#               <-pitch->
 #           <-------w-------->
 # in the center a second circle is drawn if rin>0
 def makeLEDRadial(
-    rm,
+    pitch,
     w,
     h,
     ddrill,
@@ -90,20 +90,20 @@ def makeLEDRadial(
 
     padx = 2 * ddrill
     pady = padx
-    if padx + min_pad_distance > rm:
-        padx = (rm - min_pad_distance)
+    if padx + min_pad_distance > pitch:
+        padx = (pitch - min_pad_distance)
     txtoffset = txt_offset
 
     pad1style = Pad.SHAPE_RECT
 
     padpos = []
     offset = [0, 0]
-    overpad_width = (pins - 1) * rm
+    overpad_width = (pins - 1) * pitch
     xpad = -overpad_width / 2
     offset = [-xpad, 0]
     for p in range(1, pins + 1):
         padpos.append([p, xpad, 0, ddrill, padx, pady])
-        xpad = xpad + rm
+        xpad = xpad + pitch
 
     l_fab = -w / 2
     t_fab = -h / 2
@@ -191,7 +191,7 @@ def makeLEDRadial(
             myfile.write("# rin\nApp.ActiveDocument.Spreadsheet.set('B1', '{0}')\n".format(rin))
             myfile.write("# w\nApp.ActiveDocument.Spreadsheet.set('B2', '{0}')\n".format(w))
             myfile.write("# h\nApp.ActiveDocument.Spreadsheet.set('C2', '{0}')\n".format(h))
-            myfile.write("# RM\nApp.ActiveDocument.Spreadsheet.set('B3', '{0}')\n".format(rm))
+            myfile.write("# pitch\nApp.ActiveDocument.Spreadsheet.set('B3', '{0}')\n".format(pitch))
             myfile.write("# d_wire\nApp.ActiveDocument.Spreadsheet.set('B4', '{0}')\n".format(ddrill - 0.3))
             myfile.write("# H\nApp.ActiveDocument.Spreadsheet.set('B5', '{0}')\n".format(height3d))
             myfile.write("# H_bottom\nApp.ActiveDocument.Spreadsheet.set('B6', '{0}')\n".format(height3d_bottom))
@@ -260,7 +260,7 @@ def makeLEDRadial(
     if led_type == "box":
         addRectWithKeepout(kicad_modg, l_slk, t_slk, w_slk, h_slk, 'F.SilkS', lw_slk, keepouts)
         if pins == 3:
-            addVLineWithKeepout(kicad_modg, -offset[0] + rm / 2, t_slk, t_slk + h_slk, 'F.SilkS', lw_slk, keepouts)
+            addVLineWithKeepout(kicad_modg, -offset[0] + pitch / 2, t_slk, t_slk + h_slk, 'F.SilkS', lw_slk, keepouts)
         else:
             addVLineWithKeepout(kicad_modg, l_slk + lw_slk, t_slk, t_slk + h_slk, 'F.SilkS', lw_slk, keepouts)
             addVLineWithKeepout(kicad_modg, l_slk + 2 * lw_slk, t_slk, t_slk + h_slk, 'F.SilkS', lw_slk, keepouts)
@@ -371,7 +371,7 @@ def makeLEDRadial(
 #     1. led_type="simple"
 #                    +------\    ^
 #     ^       OO     |       \   |
-#     rm             |        |  dled
+#     pitch          |        |  dled
 #     v       OO     |       /   |
 #                    +------/    v
 #             <------>offsetled
@@ -380,7 +380,7 @@ def makeLEDRadial(
 #  led_type="round"/"rect"
 def makeLEDHorizontal(
     pins=2,
-    rm=2.544,
+    pitch=2.54,
     dled=5,
     dledout=5.8,
     offsetled=2.54,
@@ -411,20 +411,20 @@ def makeLEDHorizontal(
 
     padx = 2 * ddrill
     pady = padx
-    if padx + min_pad_distance > rm:
-        padx = (rm - min_pad_distance)
+    if padx + min_pad_distance > pitch:
+        padx = (pitch - min_pad_distance)
     txtoffset = txt_offset
 
     pad1style = Pad.SHAPE_RECT
 
     padpos = []
     offset = [0, 0]
-    overpad_width = (pins - 1) * rm
+    overpad_width = (pins - 1) * pitch
     xpad = -overpad_width / 2
     offset = [-xpad, 0]
     for p in range(1, pins + 1):
         padpos.append([p, xpad, 0, ddrill, padx, pady])
-        xpad = xpad + rm
+        xpad = xpad + pitch
 
     l_fab = -max(dledout ,overpad_width+padx)/2
     t_fab = -pady / 2
@@ -513,7 +513,7 @@ def makeLEDHorizontal(
             myfile.write("# dled\nApp.ActiveDocument.Spreadsheet.set('B1', '{0}')\n".format(dled))
             myfile.write("# dledout\nApp.ActiveDocument.Spreadsheet.set('B2', '{0}')\n".format(dledout))
             myfile.write("# offsetled\nApp.ActiveDocument.Spreadsheet.set('B3', '{0}')\n".format(offsetled))
-            myfile.write("# RM\nApp.ActiveDocument.Spreadsheet.set('B4', '{0}')\n".format(rm))
+            myfile.write("# pitch\nApp.ActiveDocument.Spreadsheet.set('B4', '{0}')\n".format(pitch))
             myfile.write("# d_wire\nApp.ActiveDocument.Spreadsheet.set('B5', '{0}')\n".format(ddrill - 0.3))
             myfile.write("# H\nApp.ActiveDocument.Spreadsheet.set('B6', '{0}')\n".format(height3d))
             myfile.write("# wled\nApp.ActiveDocument.Spreadsheet.set('B7', '{0}')\n".format(wled))
