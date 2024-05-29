@@ -58,9 +58,27 @@ from footprint_global_properties import *
 #                 <-rm->
 #           <-------w-------->
 # in the center a second circle is drawn if rin>0
-def makeLEDRadial(rm, w, h, ddrill, win=0, rin=0, pins=2, led_type="round",
-                  has3d=1, specialfpname="", desc_extras_start=None, desc_extras_end=None, tag_extras=None,
-                  base_filename="LED", lib_name="LED_THT", name_additions=None, script3d="", height3d=8, height3d_bottom=1):
+def makeLEDRadial(
+    rm,
+    w,
+    h,
+    ddrill,
+    win=0,
+    rin=0,
+    pins=2,
+    led_type="round",
+    has3d=1,
+    specialfpname="",
+    desc_extras_start=None,
+    desc_extras_end=None,
+    tag_extras=None,
+    base_filename="LED",
+    lib_name="LED_THT",
+    name_additions=None,
+    script3d="",
+    height3d=8,
+    height3d_bottom=1
+):
     if desc_extras_start is None:
         desc_extras_start = []
     if name_additions is None:
@@ -360,9 +378,28 @@ def makeLEDRadial(rm, w, h, ddrill, win=0, rin=0, pins=2, led_type="round",
 #                    <--wled->
 #
 #  led_type="round"/"rect"
-def makeLEDHorizontal(pins=2,rm=2.544,dled=5,dledout=5.8,offsetled=2.54,wled=8.6, ddrill=0.8, wledback=1, led_type="round",
-                  has3d=1, specialfpname="", desc_extras_start=None, desc_extras_end=None, tag_extras=None,
-                  base_filename="LED", lib_name="LED_THT", name_additions=None, script3d="", height3d=5, ledypos=0):
+def makeLEDHorizontal(
+    pins=2,
+    rm=2.544,
+    dled=5,
+    dledout=5.8,
+    offsetled=2.54,
+    wled=8.6,
+    ddrill=0.8,
+    wledback=1,
+    led_type="round",
+    has3d=1,
+    specialfpname="",
+    desc_extras_start=None,
+    desc_extras_end=None,
+    tag_extras=None,
+    base_filename="LED",
+    lib_name="LED_THT",
+    name_additions=None,
+    script3d="",
+    height3d=5,
+    ledypos=0
+):
     if desc_extras_start is None:
         desc_extras_start = []
     if name_additions is None:
