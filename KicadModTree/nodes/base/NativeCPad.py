@@ -17,9 +17,11 @@
 
 from __future__ import annotations
 
-from KicadModTree.nodes.base.Pad import *
-# from KicadModTree.nodes.specialized.ChamferedNativePad import CornerSelection
-import uuid
+from KicadModTree import Vector2D
+from KicadModTree.nodes.base.Pad import Pad, RoundRadiusHandler
+from KicadModTree.util.paramUtil import getOptionalNumberTypeParam, \
+    getOptionalBoolTypeParam, toVectorUseCopyIfNumber
+
 from typing import TypedDict, Callable
 from typing_extensions import Unpack
 
@@ -46,15 +48,8 @@ class CornerSelectionNative():
     BOTTOM_RIGHT = 'br'
     BOTTOM_LEFT = 'bl'
 
-    KICAD_TOP_LEFT = "top_left"
-    KICAD_TOP_RIGHT = "top_right"
-    KICAD_BOTTOM_LEFT = "bottom_left"
-    KICAD_BOTTOM_RIGHT = "bottom_right"
-
-    VALID_CORNER_VALUES = [0, 1, 2, 3, TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT,
-                           KICAD_TOP_LEFT, KICAD_TOP_RIGHT, KICAD_BOTTOM_LEFT, KICAD_BOTTOM_RIGHT]
-    VALID_CORNER_NAMES = [TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT,
-                          KICAD_TOP_LEFT, KICAD_TOP_RIGHT, KICAD_BOTTOM_LEFT, KICAD_BOTTOM_RIGHT]
+    VALID_CORNER_VALUES = [0, 1, 2, 3, TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT]
+    VALID_CORNER_NAMES = [TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT]
 
     def __init__(self, chamfer_select):
         self.top_left = False
@@ -170,19 +165,15 @@ class CornerSelectionNative():
 
     def __setitem__(self, item, value):
         if item in [0, CornerSelectionNative.TOP_LEFT,
-                    CornerSelectionNative.KICAD_TOP_LEFT,
                     NativeCPad.TOP_LEFT]:
             self.top_left = bool(value)
         elif item in [1, CornerSelectionNative.TOP_RIGHT,
-                      CornerSelectionNative.KICAD_TOP_RIGHT,
                       NativeCPad.TOP_RIGHT]:
             self.top_right = bool(value)
         elif item in [2, CornerSelectionNative.BOTTOM_RIGHT,
-                      CornerSelectionNative.KICAD_BOTTOM_RIGHT,
                       NativeCPad.BOTTOM_RIGHT]:
             self.bottom_right = bool(value)
         elif item in [3, CornerSelectionNative.BOTTOM_LEFT,
-                      CornerSelectionNative.KICAD_BOTTOM_LEFT,
                       NativeCPad.BOTTOM_LEFT]:
             self.bottom_left = bool(value)
         else:
@@ -196,36 +187,8 @@ class CornerSelectionNative():
             CornerSelectionNative.BOTTOM_LEFT: self.bottom_left
         }
 
-    def _serializeCorner(self):
-        from KicadModTree.util.kicad_util import SexprSerializer
-
-        sexpr = [SexprSerializer.Symbol('chamfer')]
-        lst = []
-        if (self.top_left):
-            lst += [SexprSerializer.Symbol(CornerSelectionNative.KICAD_TOP_LEFT)]
-
-        if self.top_right:
-            lst += [SexprSerializer.Symbol(CornerSelectionNative.KICAD_TOP_RIGHT)]
-
-        if self.bottom_left:
-            lst += [SexprSerializer.Symbol(CornerSelectionNative.KICAD_BOTTOM_LEFT)]
-
-        if self.bottom_right:
-            lst += [SexprSerializer.Symbol(CornerSelectionNative.KICAD_BOTTOM_RIGHT)]
-
-        if len(lst) > 0:
-            if False:
-                sexpr += [lst]
-            else:
-                sexpr += lst
-            return sexpr
-        else:
-            return []
-
     def __str__(self):
         return str(self.to_dict())
-
-        ChamferSizeHandler(cha)
 
 
 class ChamferSizeHandler(object):
@@ -270,16 +233,12 @@ class ChamferSizeHandler(object):
         self.chamfer_exact = getOptionalNumberTypeParam(
             kwargs, 'chamfer_exact', default_value=chamfer_size)
 
-        self.kicad4_compatible = kwargs.get('kicad4_compatible', False)
-
     def getChamferRatio(self, shortest_sidelength):
         r"""get the resulting chamfer ratio
 
         :param shortest_sidelength: shortest sidelength of a pad
         :return: the resulting round radius ratio to be used for the pad
         """
-        # if self.kicad4_compatible:
-        #    return 0
 
         if self.chamfer_exact is not None:
             if self.chamfer_exact > shortest_sidelength/2:
@@ -539,8 +498,6 @@ class NativeCPad(Pad):
     ZONE_THERMAL_RELIEF_CONNECT = 1
     ZONE_SOLID_CONNECT = 2
 
-    tolerance = 1e-9  # mm
-
     def __init__(self, **kwargs: Unpack[NativeCPadArgs]):
         super().__init__(**kwargs)
 
@@ -685,117 +642,6 @@ class NativeCPad(Pad):
         # else:
         #    self.shape = Pad.SHAPE_ROUNDRECT
         return self.chamfer_ratio
-
-    def serialize_specific_node(self, kicadFileHandler):
-        from KicadModTree.util.kicad_util import SexprSerializer
-        node = self
-
-        sexpr = [SexprSerializer.Symbol('pad'), node.number,
-                 SexprSerializer.Symbol(node.type), SexprSerializer.Symbol(node.shape)]
-        # sexpr.append(SexprSerializer.NEW_LINE)
-
-        position, rotation = node.getRealPosition(node.at, node.rotation)
-        if (True or (abs(rotation % 360) > self.tolerance)):  # kicad 8 alsways writes rotation
-            sexpr.append([SexprSerializer.Symbol('at'), position.x, position.y, rotation])
-        else:
-            sexpr.append([SexprSerializer.Symbol('at'), position.x, position.y])
-
-        if node.locked is not None and node.locked:
-            sexpr.append([SexprSerializer.Symbol('locked')])
-
-        sexpr.append([SexprSerializer.Symbol('size'), node.size.x, node.size.y])
-
-        if node.type in [Pad.TYPE_THT, Pad.TYPE_NPTH] and (node.drill is not None):
-
-            if abs(node.drill.x - node.drill.y) < self.tolerance:
-                drill_config = [SexprSerializer.Symbol('drill'), node.drill.x]
-            else:
-                drill_config = [SexprSerializer.Symbol('drill'),
-                                SexprSerializer.Symbol('oval'),
-                                node.drill.x, node.drill.y]
-
-            # append offset only if necessary
-            if ((node.offset is not None)
-                    and ((abs(node.offset.x) > self.tolerance) or (abs(node.offset.y) > self.tolerance))):
-                drill_config.append([SexprSerializer.Symbol('offset'), node.offset.x,  node.offset.y])
-
-            sexpr.append(drill_config)
-
-        sexpr.append(kicadFileHandler._serialise_Layers(node))
-
-        if node.pad_property is not None:
-            sexpr.append([SexprSerializer.Symbol('property'), str(node.pad_property)])
-
-        if node.remove_unused_layer is not None and node.remove_unused_layer:
-            sexpr.append([SexprSerializer.Symbol('remove_unused_layer')])
-
-        if node.keep_end_layers is not None and node.keep_end_layers:
-            sexpr.append([SexprSerializer.Symbol('keep_end_layers')])
-
-        if node.shape == Pad.SHAPE_ROUNDRECT:
-            if (node.radius_ratio is not None):
-                sexpr.append([SexprSerializer.Symbol('roundrect_rratio'), node.radius_ratio])
-
-            if (node.chamfer_ratio is not None):
-                sexpr.append([SexprSerializer.Symbol('chamfer_ratio'), node.chamfer_ratio])
-
-                sval = node.chamfer_corners._serializeCorner()
-                if (sval is not None) and sval:
-                    sexpr.append(sval)
-
-        elif node.shape == Pad.SHAPE_CUSTOM:
-            # gr_line, gr_arc, gr_circle or gr_poly
-            # sexpr.append(SexprSerializer.NEW_LINE)
-            sexpr.append([SexprSerializer.Symbol('options'),
-                         [SexprSerializer.Symbol('clearance'), SexprSerializer.Symbol(node.shape_in_zone)],
-                         [SexprSerializer.Symbol('anchor'), SexprSerializer.Symbol(node.anchor_shape)]
-                        ])  # NOQA
-            # sexpr.append(SexprSerializer.NEW_LINE)
-            sexpr_primitives = kicadFileHandler._serialize_CustomPadPrimitives(
-                node)
-            sexpr.append(
-                [SexprSerializer.Symbol('primitives')] + sexpr_primitives)
-
-        if node.net is not None:
-            sexpr.append(['net', str(int(node.net[0])), str(node.net[1])])
-
-        if node.hasValidTStamp():
-            sexpr.append(kicadFileHandler._serialize_TStamp(node))
-
-        if False:  # only in PCB, populated from schematic
-            sexpr.append([SexprSerializer.Symbol('pinfunction'), str(node.pinfunction)])
-            sexpr.append([SexprSerializer.Symbol('pintype'), str(node.pintype)])
-
-        if node.die_length is not None:
-            sexpr.append([SexprSerializer.Symbol('die_length'), node.die_length])
-
-        if node.solder_paste_margin_ratio != 0 or node.solder_mask_margin != 0 or node.solder_paste_margin != 0:
-            # sexpr.append(SexprSerializer.NEW_LINE)
-            if (node.solder_mask_margin is not None) and (node.solder_mask_margin != 0):
-                sexpr.append([SexprSerializer.Symbol('solder_mask_margin'), node.solder_mask_margin])
-            if (node.solder_paste_margin is not None) and (node.solder_paste_margin != 0):
-                sexpr.append([SexprSerializer.Symbol('solder_paste_margin'), node.solder_paste_margin])
-            if (node.solder_paste_margin_ratio is not None) and (node.solder_paste_margin_ratio != 0):
-                sexpr.append([SexprSerializer.Symbol('solder_paste_margin_ratio'),
-                             node.solder_paste_margin_ratio])
-
-        if node.clearance is not None:
-            sexpr.append([SexprSerializer.Symbol('clearance'), node.clearance])
-
-        if node.zone_connect is not None:
-            sexpr.append([SexprSerializer.Symbol('zone_connect'), SexprSerializer.Symbol(str(int(node.zone_connect)))])
-
-        if node.thermal_bridge_width is not None:
-            sexpr.append([SexprSerializer.Symbol('thermal_bridge_width'), node.thermal_bridge_width])
-        if node.thermal_bridge_angle is not None:
-            sexpr.append([SexprSerializer.Symbol('thermal_bridge_angle'), node.thermal_bridge_angle])
-        if node.thermal_gap is not None:
-            sexpr.append([SexprSerializer.Symbol('thermal_gap'), node.thermal_gap])
-
-        # Custom Pad Options: see above for Pad.SHAPE_CUSTOM
-        # Custom Pad Primitives: see above for Pad.SHAPE_CUSTOM
-        # sexpr.append(SexprSerializer.NEW_LINE)
-        return sexpr
 
 
 class NativeCPadFactory(object):

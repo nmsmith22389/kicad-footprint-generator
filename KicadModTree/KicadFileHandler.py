@@ -20,11 +20,16 @@ from KicadModTree.FileHandler import FileHandler
 from KicadModTree.util.kicad_util import SexprSerializer
 from KicadModTree.util.kicad_util import *
 # TODO: why .KicadModTree is not enough?
+from KicadModTree import PolygonPoints
+from KicadModTree.nodes.base.Group import Group
+from KicadModTree.nodes.base.NativeCPad import NativeCPad, CornerSelectionNative
 from KicadModTree.nodes.base.Pad import Pad
 from KicadModTree.nodes.base.Arc import Arc
 from KicadModTree.nodes.base.Circle import Circle
 from KicadModTree.nodes.base.Line import Line
 from KicadModTree.nodes.base.Polygon import Polygon
+from KicadModTree.nodes.base.PolygonArc import PolygonArc
+from KicadModTree.nodes.base.CompoundPolygon import CompoundPolygon
 from KicadModTree.nodes.Footprint import Footprint, FootprintType
 from KicadModTree.nodes.base.Zone import PadConnection, ZoneFill, Keepouts
 
@@ -115,6 +120,9 @@ class KicadFileHandler(FileHandler):
     # In theory, this could also encode which sub-generator was used, but for now
     # this is just a fixed string, same as for KiCad v7 generators.
     GENERATOR_NAME: str = 'kicad-footprint-generator'
+
+    angle_tolerance_deg: float = 1e-9  # degrees
+    size_tolerance_mm: float = 1e-9  # mm
 
     def __init__(self, kicad_mod: Footprint):
         FileHandler.__init__(self, kicad_mod)
@@ -339,7 +347,6 @@ class KicadFileHandler(FileHandler):
         sexpr = [SexprSerializer.Symbol('fp_rect')]
         sexpr += self._serialize_RectPoints(node)
         sexpr += [
-                  # SexprSerializer.NEW_LINE,
                   [SexprSerializer.Symbol('stroke')] + self._serialize_Stroke(node),
                  ]  # NOQA
         if hasattr(node, 'fill'):
@@ -532,11 +539,136 @@ class KicadFileHandler(FileHandler):
         }
         return mapping[node.zone_connection]
 
-    def _serialize_NativeCPad(self, node):
-        from KicadModTree.nodes.base.NativeCPad import NativeCPad
-        node: NativeCPad = node
-        sexpr = node.serialize_specific_node(kicadFileHandler=self)
+    def _serialize_NativeCPad(self, node: NativeCPad):
 
+        def _serializeCorner(corner: CornerSelectionNative):
+
+            KICAD_TOP_LEFT = "top_left"
+            KICAD_TOP_RIGHT = "top_right"
+            KICAD_BOTTOM_LEFT = "bottom_left"
+            KICAD_BOTTOM_RIGHT = "bottom_right"
+
+            sexpr = [SexprSerializer.Symbol('chamfer')]
+            lst = []
+            if (corner.top_left):
+                lst += [SexprSerializer.Symbol(KICAD_TOP_LEFT)]
+
+            if corner.top_right:
+                lst += [SexprSerializer.Symbol(KICAD_TOP_RIGHT)]
+
+            if corner.bottom_left:
+                lst += [SexprSerializer.Symbol(KICAD_BOTTOM_LEFT)]
+
+            if corner.bottom_right:
+                lst += [SexprSerializer.Symbol(KICAD_BOTTOM_RIGHT)]
+
+            if len(lst) > 0:
+                sexpr += lst
+                return sexpr
+            else:
+                return []
+
+        sexpr = [SexprSerializer.Symbol('pad'), node.number,
+                 SexprSerializer.Symbol(node.type), SexprSerializer.Symbol(node.shape)]
+
+        position, rotation = node.getRealPosition(node.at, node.rotation)
+        if (abs(rotation % 360) > self.angle_tolerance_deg):
+            sexpr.append([SexprSerializer.Symbol('at'), position.x, position.y, rotation])
+        else:
+            sexpr.append([SexprSerializer.Symbol('at'), position.x, position.y])
+
+        if node.locked is not None and node.locked:
+            sexpr.append([SexprSerializer.Symbol('locked')])
+
+        sexpr.append([SexprSerializer.Symbol('size'), node.size.x, node.size.y])
+
+        if node.type in [Pad.TYPE_THT, Pad.TYPE_NPTH] and (node.drill is not None):
+
+            if abs(node.drill.x - node.drill.y) < self.size_tolerance_mm:
+                drill_config = [SexprSerializer.Symbol('drill'), node.drill.x]
+            else:
+                drill_config = [SexprSerializer.Symbol('drill'),
+                                SexprSerializer.Symbol('oval'),
+                                node.drill.x, node.drill.y]
+
+            # append offset only if necessary
+            if ((node.offset is not None)
+                    and ((abs(node.offset.x) > self.size_tolerance_mm)
+                         or (abs(node.offset.y) > self.size_tolerance_mm))):
+                drill_config.append([SexprSerializer.Symbol('offset'), node.offset.x,  node.offset.y])
+
+            sexpr.append(drill_config)
+
+        sexpr.append(self._serialise_Layers(node))
+
+        if node.pad_property is not None:
+            sexpr.append([SexprSerializer.Symbol('property'), str(node.pad_property)])
+
+        if node.remove_unused_layer is not None and node.remove_unused_layer:
+            sexpr.append([SexprSerializer.Symbol('remove_unused_layer')])
+
+        if node.keep_end_layers is not None and node.keep_end_layers:
+            sexpr.append([SexprSerializer.Symbol('keep_end_layers')])
+
+        if node.shape == Pad.SHAPE_ROUNDRECT:
+            if (node.radius_ratio is not None):
+                sexpr.append([SexprSerializer.Symbol('roundrect_rratio'), node.radius_ratio])
+
+            if (node.chamfer_ratio is not None):
+                sexpr.append([SexprSerializer.Symbol('chamfer_ratio'), node.chamfer_ratio])
+
+                sval = _serializeCorner(node.chamfer_corners)
+                if (sval is not None) and sval:
+                    sexpr.append(sval)
+
+        elif node.shape == Pad.SHAPE_CUSTOM:
+            # gr_line, gr_arc, gr_circle or gr_poly
+            sexpr.append([SexprSerializer.Symbol('options'),
+                         [SexprSerializer.Symbol('clearance'), SexprSerializer.Symbol(node.shape_in_zone)],
+                         [SexprSerializer.Symbol('anchor'), SexprSerializer.Symbol(node.anchor_shape)]
+                        ])  # NOQA
+            sexpr_primitives = self._serialize_CustomPadPrimitives(
+                node)
+            sexpr.append(
+                [SexprSerializer.Symbol('primitives')] + sexpr_primitives)
+
+        if node.net is not None:
+            sexpr.append(['net', str(int(node.net[0])), str(node.net[1])])
+
+        if node.hasValidTStamp():
+            sexpr.append(self._serialize_TStamp(node))
+
+        if False:  # only in PCB, populated from schematic
+            sexpr.append([SexprSerializer.Symbol('pinfunction'), str(node.pinfunction)])
+            sexpr.append([SexprSerializer.Symbol('pintype'), str(node.pintype)])
+
+        if node.die_length is not None:
+            sexpr.append([SexprSerializer.Symbol('die_length'), node.die_length])
+
+        if node.solder_paste_margin_ratio != 0 or node.solder_mask_margin != 0 or node.solder_paste_margin != 0:
+            if (node.solder_mask_margin is not None) and (node.solder_mask_margin != 0):
+                sexpr.append([SexprSerializer.Symbol('solder_mask_margin'), node.solder_mask_margin])
+            if (node.solder_paste_margin is not None) and (node.solder_paste_margin != 0):
+                sexpr.append([SexprSerializer.Symbol('solder_paste_margin'), node.solder_paste_margin])
+            if (node.solder_paste_margin_ratio is not None) and (node.solder_paste_margin_ratio != 0):
+                sexpr.append([SexprSerializer.Symbol('solder_paste_margin_ratio'),
+                             node.solder_paste_margin_ratio])
+
+        if node.clearance is not None:
+            sexpr.append([SexprSerializer.Symbol('clearance'), node.clearance])
+
+        if node.zone_connect is not None:
+            sexpr.append([SexprSerializer.Symbol('zone_connect'), SexprSerializer.Symbol(str(int(node.zone_connect)))])
+
+        if node.thermal_bridge_width is not None:
+            sexpr.append([SexprSerializer.Symbol('thermal_bridge_width'), node.thermal_bridge_width])
+        if node.thermal_bridge_angle is not None:
+            sexpr.append([SexprSerializer.Symbol('thermal_bridge_angle'), node.thermal_bridge_angle])
+        if node.thermal_gap is not None:
+            sexpr.append([SexprSerializer.Symbol('thermal_gap'), node.thermal_gap])
+
+        # Custom Pad Options: see above for Pad.SHAPE_CUSTOM
+        # Custom Pad Primitives: see above for Pad.SHAPE_CUSTOM
         return sexpr
 
     def _serialize_Pad(self, node):
@@ -632,22 +764,76 @@ class KicadFileHandler(FileHandler):
         if node.hasValidTStamp():
             sexpr += [
                 self._serialize_TStamp(node),
-                # SexprSerializer.NEW_LINE,
             ]
 
         return sexpr
 
-    def _serialize_CompoundPolygon(self, node):
-        from KicadModTree.nodes.base.CompoundPolygon import CompoundPolygon
-        node: CompoundPolygon = node
-        sexpr = node.serialize_specific_node(kicadFileHandler=self)
+    def _serialize_CompoundPolygon(self, node: CompoundPolygon):
 
-        return sexpr
+        def _serialize_PolygonPointsSegment(self, polygonpoints: PolygonPoints):
+            node_points = []
 
-    def _serialize_Group(self, node):
-        from KicadModTree.nodes.base.Group import Group
-        node: Group = node
-        sexpr = node.serialize_specific_node(kicadFileHandler=self)
+            for n in polygonpoints:
+                n_pos = node.getRealPosition(n)
+                node_points.append([SexprSerializer.Symbol('xy'), n_pos.x, n_pos.y])
+
+            return node_points
+
+        if node.isSerializedAsFPPoly():
+
+            node_points_sexpr = [SexprSerializer.Symbol('pts')]
+
+            for geom in node.polygon_geometries:
+                if isinstance(geom, PolygonPoints):
+                    node_points_sexpr.extend(_serialize_PolygonPointsSegment(polygonpoints=geom))
+                elif isinstance(geom, PolygonArc):
+                    node_points_sexpr.append(
+                        self._serialize_PolygonArc(geom))
+                else:
+                    node_points_sexpr.append(
+                        self._callSerialize(geom))
+            sexpr = [SexprSerializer.Symbol('fp_poly'),
+                 node_points_sexpr,
+                 [SexprSerializer.Symbol('stroke')] + self._serialize_Stroke(node),
+                 [SexprSerializer.Symbol('fill'), SexprSerializer.Symbol(node.fill)],
+                 [SexprSerializer.Symbol('layer'), SexprSerializer.Symbol(node.layer)],
+                ]  # NOQA
+
+            if node.hasValidTStamp():
+                sexpr.append(self._serialize_TStamp(node))
+
+            return sexpr
+
+        else:  # kicad 7 does not (yet) support open polygons or polylines, therefore convert to virtual nodes
+            # for all primitives (see getVirtualChilds, serialize_get_virtual_nodes )
+            sexpr = []  # no serialization here, see childs
+            group_ids = []
+
+            return None
+
+    def _serialize_Group(self, node: Group):
+        sexpr = []
+        sexpr.append(SexprSerializer.Symbol('group'))
+        sexpr.append(f'{node.getGroupName()}')
+        if node.hasValidTStamp():
+            tstamp_uuid = str(node.getTStamp())
+        else:
+            if node.hasValidSeedForTStamp():
+                node.getTStampCls().reCalcTStamp()
+                if node.hasValidTStamp():
+                    tstamp_uuid = str(node.getTStamp())
+                else:
+                    raise ValueError(
+                        "TStamp for Group must be valid once serialization happpens")
+            else:
+                raise ValueError(
+                    "TStamp Seed for Group must be valid once serialization happpens")
+
+        sexpr.append([SexprSerializer.Symbol('id'), SexprSerializer.Symbol(tstamp_uuid)])
+        grp_members = [SexprSerializer.Symbol('members')]
+        for gid in node.getSortedGroupMemberTStamps():
+            grp_members.append(SexprSerializer.Symbol(gid))
+        sexpr.append(grp_members)
 
         return sexpr
 
@@ -767,7 +953,6 @@ class KicadFileHandler(FileHandler):
         if node.hasValidTStamp():
             sexpr += [
                 self._serialize_TStamp(node),
-                # SexprSerializer.NEW_LINE,
             ]
 
         # Optional node
@@ -791,7 +976,6 @@ class KicadFileHandler(FileHandler):
 
         sexpr += [
             _serialise_ZoneFill(node.fill),
-            # SexprSerializer.NEW_LINE,
             [
                 SexprSerializer.Symbol('polygon'),
                 self._serialize_PolygonPoints(node)

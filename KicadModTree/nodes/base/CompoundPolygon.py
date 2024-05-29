@@ -22,19 +22,17 @@ from KicadModTree.PolygonPoints import *
 from KicadModTree.Vector import *
 from KicadModTree.nodes.Node import Node
 from KicadModTree.nodes.base.Arc import Arc
-from KicadModTree.nodes.base.PolygonArc import PolygonArc, geometricArc
-
-from collections import deque
-
+from KicadModTree.nodes.base.PolygonArc import PolygonArc
 from KicadModTree.nodes.base.Line import Line, geometricLine
 from KicadModTree.nodes.base.Group import Group
+from KicadModTree.util.geometric_util import geometricArc
 
+from collections import deque
 from enum import Enum
 
 from copy import copy
 
-import uuid
-from typing import TypedDict, Callable
+from typing import TypedDict
 from typing_extensions import Unpack
 
 
@@ -446,17 +444,6 @@ class CompoundPolygon(Node):
         self.stroke_type = kwargs.get('stroke_type', 'solid')
         self.fill = kwargs.get('fill', 'solid')
 
-    def _serialize_PolygonPointsSegment(self, kicadFileHandler, polygonpoints: PolygonPoints):
-        from KicadModTree.util.kicad_util import SexprSerializer
-
-        node_points = []
-
-        for n in polygonpoints:
-            n_pos = self.getRealPosition(n)
-            node_points.append([SexprSerializer.Symbol('xy'), n_pos.x, n_pos.y])
-
-        return node_points
-
     def get_tstamp_from_sexpr(self, sexpr: list):
         for item in sexpr:
             if isinstance(item, list) or isinstance(item, tuple):
@@ -531,51 +518,6 @@ class CompoundPolygon(Node):
             return self._serialize_get_virtual_nodes()
         else:
             return []  # serialize using serialize_specific_node function to create fp_poly
-
-    def serialize_specific_node(self, kicadFileHandler):
-        from KicadModTree.util.kicad_util import SexprSerializer
-        node = self
-
-        if node.isSerializedAsFPPoly():
-
-            node_points_sexpr = [SexprSerializer.Symbol('pts')]
-            # node_points_sexpr.append(SexprSerializer.NEW_LINE)
-
-            for geom in node.polygon_geometries:
-                if isinstance(geom, PolygonPoints):
-                    node_points_sexpr.extend(self._serialize_PolygonPointsSegment(
-                        kicadFileHandler=kicadFileHandler, polygonpoints=geom))
-                    # node_points_sexpr.append(SexprSerializer.NEW_LINE)
-                elif isinstance(geom, PolygonArc):
-                    node_points_sexpr.append(
-                        kicadFileHandler._serialize_PolygonArc(geom))
-                    # node_points_sexpr.append(SexprSerializer.NEW_LINE)
-                else:
-                    node_points_sexpr.append(
-                        kicadFileHandler._callSerialize(geom))
-                    # node_points_sexpr.append(SexprSerializer.NEW_LINE)
-
-            sexpr = [SexprSerializer.Symbol('fp_poly'),
-                 # SexprSerializer.NEW_LINE,
-                 node_points_sexpr,
-                 # SexprSerializer.NEW_LINE,
-                 [SexprSerializer.Symbol('stroke')] + kicadFileHandler._serialize_Stroke(node),
-                 [SexprSerializer.Symbol('fill'), SexprSerializer.Symbol(node.fill)],
-                 [SexprSerializer.Symbol('layer'), SexprSerializer.Symbol(node.layer)],
-                 # SexprSerializer.NEW_LINE,
-                ]  # NOQA
-
-            if node.hasValidTStamp():
-                sexpr.append(kicadFileHandler._serialize_TStamp(node))
-
-            return sexpr
-
-        else:  # kicad 7 does not (yet) support open polygons or polylines, therefore convert to virtual nodes
-            # for all primitives (see getVirtualChilds, serialize_get_virtual_nodes )
-            sexpr = []  # no serialization here, see childs
-            group_ids = []
-
-            return None
 
     def rotate(self, angle, origin=(0, 0), use_degrees=True):
         r""" Rotate polygon around given origin

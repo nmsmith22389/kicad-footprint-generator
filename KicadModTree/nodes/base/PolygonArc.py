@@ -14,11 +14,7 @@
 # (C) 2016 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 # (C) 2024 by C. Kuhlmann, gitlab @CKuhlmann
 
-from KicadModTree.Vector import *
-from KicadModTree.nodes.Node import Node
-import math
-from KicadModTree.util.geometric_util import geometricArc, BaseNodeIntersection
-from KicadModTree.nodes.base.Arc import *
+from KicadModTree.nodes.base.Arc import Arc
 
 
 class PolygonArc(Arc):

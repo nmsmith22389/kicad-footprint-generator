@@ -13,10 +13,9 @@
 #
 # (C) 2016 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 
-from KicadModTree.Vector import *
+from KicadModTree.Vector import Vector2D
 from KicadModTree.nodes.Node import Node
-import math
-from KicadModTree.util.geometric_util import geometricArc, BaseNodeIntersection
+from KicadModTree.util.geometric_util import geometricArc
 
 
 class Arc(Node, geometricArc):

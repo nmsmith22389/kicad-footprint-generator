@@ -18,7 +18,8 @@ import warnings
 import enum
 from typing import Union
 
-from KicadModTree.util.paramUtil import *
+from KicadModTree.util.paramUtil import getOptionalNumberTypeParam, \
+    toVectorUseCopyIfNumber
 from KicadModTree.Vector import Vector2D
 from KicadModTree.nodes.Node import Node
 from KicadModTree.util.kicad_util import lispString

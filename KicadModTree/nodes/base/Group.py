@@ -17,7 +17,6 @@ from __future__ import annotations
 
 from KicadModTree.nodes.Node import Node
 from KicadModTree.nodes.Node import TStamp
-from KicadModTree.KicadFileHandler import SexprSerializer
 
 
 class Group(Node):
@@ -75,31 +74,3 @@ class Group(Node):
                     rem += nd
             for r in rem:
                 self._member_nodes.remove(r)
-
-    def serialize_specific_node(self, kicadFileHandler, parent_sexpr: list | None = None):
-        node = self
-        sexpr = []
-        sexpr.append(SexprSerializer.Symbol('group'))
-        sexpr.append(f'{node.getGroupName()}')
-        if node.hasValidTStamp():
-            tstamp_uuid = str(node.getTStamp())
-        else:
-            if node.hasValidSeedForTStamp():
-                node.getTStampCls().reCalcTStamp()
-                if node.hasValidTStamp():
-                    tstamp_uuid = str(node.getTStamp())
-                else:
-                    raise ValueError(
-                        "TStamp for Group must be valid once serialization happpens")
-            else:
-                raise ValueError(
-                    "TStamp Seed for Group must be valid once serialization happpens")
-
-        sexpr.append([SexprSerializer.Symbol('id'), SexprSerializer.Symbol(tstamp_uuid)])
-        grp_members = [SexprSerializer.Symbol('members')]
-        for gid in node.getSortedGroupMemberTStamps():
-            grp_members.append(SexprSerializer.Symbol(gid))
-            # grp_members.append(SexprSerializer.NEW_LINE)
-        sexpr.append(grp_members)
-
-        return sexpr
