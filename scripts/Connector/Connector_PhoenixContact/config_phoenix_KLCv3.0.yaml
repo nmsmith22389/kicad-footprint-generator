@@ -10,7 +10,9 @@ manufacturer: "PhoenixContact"
 fp_name_format_string: '{man:s}_{mpn:s}_{num_rows:d}x{num_pins:02d}_P{pitch:.2f}mm_{orientation:s}{flanged:s}{mount_hole:s}'
 
 mpn_format_string: '{subseries:s}_{rating:s}_{num_pins:d}-{style:s}{pitch:s}'
+mpn_format_string_no_rating: '{subseries:s}_{num_pins:d}-{style:s}{pitch:s}'
 mpn_format_string_description: '{subseries:s}_{rating:s}/{num_pins:d}-{style:s}{pitch:s}'
+mpn_format_string_description_no_rating: '{subseries:s}/{num_pins:d}-{style:s}{pitch:s}'
 #mpn_format_string: '{subseries:s}-{style:s}'
 3d_model_prefix: '${KICAD8_3DMODEL_DIR}/'
 #keywords_format_string: 'phoenix_contact connector {mpn:s}{param_name:s}{order_info:s}'
