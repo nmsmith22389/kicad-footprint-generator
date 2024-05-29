@@ -457,11 +457,11 @@ def makeLEDHorizontal(pins=2,rm=2.544,dled=5,dledout=5.8,offsetled=2.54,wled=8.6
         if len(t):
             tags.append(t)
 
+    footprint_name=footprint_name+"_Horizontal_O{0:1.2f}mm{1}".format(offsetled,fnypos)
+
     for n in name_additions:
         if len(n) > 0:
             footprint_name = footprint_name + "_" + n
-
-    footprint_name=footprint_name+"_Horizontal_O{0:1.2f}mm{1}".format(offsetled,fnypos)
 
     print(footprint_name)
 
