@@ -15,7 +15,7 @@
 
 from KicadModTree.Vector import *
 from KicadModTree.nodes.Node import Node
-from KicadModTree.nodes.base import Line
+from KicadModTree.nodes.base.Line import Line
 
 
 class RectFill(Node):
