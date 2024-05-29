@@ -165,3 +165,35 @@ USON-8-1EP_3x2mm_P0.5mm_EP0.2x1.6mm:
   EP_size_x: 0.15 .. 0.2 .. 0.25
   EP_size_y: 1.55 .. 1.6 .. 1.65
 
+MicroCrystal_C7_SON-8_1.5x3.2mm_P0.9mm:
+  device_type: 'SON'
+  library: Package_SON
+  manufacturer: 'MicroCrystal'
+  part_number: 'C7'
+  size_source: 'https://www.microcrystal.com/fileadmin/Media/Products/RTC/App.Manual/RV-3028-C7_App-Manual.pdf#page=107'
+  ipc_class: 'qfn'
+
+  overall_height:
+    maximum: 0.8
+
+  body_size_x:
+    nominal: 1.5
+    tolerance: 0.1
+  body_size_y:
+    nominal: 3.2
+    tolerance: 0.1
+
+  lead_width:
+    # Widened pad for solderability: 0.4 (package lead width) + 0.2
+    # Resultant pad width = 0.65 mm (> 0.5 mm in recommended footprint)
+    nominal: 0.6
+  lead_len:
+    # Resultant pad length = 0.925 mm (> 0.8 mm in recommended footprint)
+    nominal: 0.5
+
+  pitch: 0.9
+  num_pins_x: 0
+  num_pins_y: 4
+
+  compatible_mpns:
+    - MicroCrystal-RV3028-C7
