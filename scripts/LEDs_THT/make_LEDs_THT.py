@@ -256,7 +256,7 @@ if __name__ == '__main__':
         height3d_bottom=height3d_bottom
     )
     # LED_D5.0mm-4_RGB, which would normally be called LED_D5.0mm-4
-    pins = 4; rm=1.27; desc_extras_end=["https://www.kingbright.com/attachments/file/psearch/000/00/00/L-154A4SUREQBFZGEW(Ver.11A).pdf"]
+    pins = 4; rm=1.27; desc_extras_end=["https://www.kingbright.com/attachments/file/psearch/000/00/00/L-154A4SUREQBFZGEW(Ver.13A).pdf"]
     makeLEDRadial(
         pins=pins,
         rm=rm,
@@ -267,7 +267,7 @@ if __name__ == '__main__':
         led_type=led_type,
         has3d=1,
         specialfpname="",
-        desc_extras_start=desc_extras_start,
+        desc_extras_start=["RGB"],
         desc_extras_end=desc_extras_end,
         base_filename=clname,
         lib_name=lbname,
@@ -424,7 +424,7 @@ if __name__ == '__main__':
         height3d_bottom=height3d_bottom
     )
     # LED_D2.0mm_W4.8mm_H2.5mm_FlatTop
-    led_type="box"; pins=2; rm=2.54; rin=2; w=4.8; h=2.5; height3d=4.5; height3d_bottom=3.5; name_additions=["FlatTop"]; desc_extras_start=["Round", "Flat Top"]; desc_extras_end=["http://www.kingbright.com/attachments/file/psearch/000/00/00/L-13GD(Ver.11B).pdf"]
+    led_type="box"; pins=2; rm=2.54; rin=2; w=4.8; h=2.5; height3d=4.5; height3d_bottom=3.5; name_additions=["FlatTop"]; desc_extras_start=["Round", "Flat Top"]; desc_extras_end=["http://www.kingbright.com/attachments/file/psearch/000/00/20160808bak/L-13GD(Ver.9B).pdf"]
     makeLEDRadial(
         pins=pins,
         rm=rm,
@@ -466,7 +466,7 @@ if __name__ == '__main__':
         height3d_bottom=height3d_bottom
     )
     # LED_D3.0mm_FlatTop
-    led_type="round"; pins=2; rm=2.54; rin=3; w=3.8; h=w; height3d=4.8; height3d_bottom=6-4.8; name_additions=["FlatTop"]; desc_extras_start=["Round","Flat Top"]; desc_extras_end=["http://www.kingbright.com/attachments/file/psearch/000/00/00/L-47XEC(Ver.9A).pdf"]
+    led_type="round"; pins=2; rm=2.54; rin=3; w=3.8; h=w; height3d=4.8; height3d_bottom=6-4.8; name_additions=["FlatTop"]; desc_extras_start=["Round","Flat Top"]; desc_extras_end=["https://www.kingbright.com/attachments/file/psearch/000/00/00/L-47XEC(Ver.14A).pdf"]
     makeLEDRadial(
         pins=pins,
         rm=rm,
@@ -487,7 +487,7 @@ if __name__ == '__main__':
         height3d_bottom=height3d_bottom
     )
     # LED_D5.0mm_FlatTop
-    led_type="round"; pins=2; rm=2.54; rin=5; w=5.9; h=w; height3d=8.6; height3d_bottom=1; name_additions=["FlatTop"]; desc_extras_start=["Round","Flat Top"]; desc_extras_end=["http://www.kingbright.com/attachments/file/psearch/000/00/00/L-483GDT(Ver.15B).pdf"]
+    led_type="round"; pins=2; rm=2.54; rin=5; w=5.9; h=w; height3d=8.6; height3d_bottom=1; name_additions=["FlatTop"]; desc_extras_start=["Round","Flat Top"]; desc_extras_end=["https://www.kingbright.com/attachments/file/psearch/000/00/watermark00/L-483GDT(Ver.12B).pdf"]
     makeLEDRadial(
         pins=pins,
         rm=rm,
