@@ -319,14 +319,14 @@ def generate_package3d(params, part_params, mpn):
     )
 
     # Build model name
-    model_name = "Connector_Wuerth_{series_prefix}_{type}_{rows}x{pins:02d}_P{pitch}_{orientation}_{mpn}".format(
+    model_name = "Wuerth_{series_prefix}_{mpn}_{type}_{rows}x{pins:02d}_P{pitch}mm_{orientation}".format(
         series_prefix=params["series_prefix"],
+        mpn=mpn,
         type=params["type"],
         rows=part_params["rows"],
         pins=part_params["pins"] // 2,
         pitch=params["pitch"],
         orientation=params["orientation"],
-        mpn=mpn,
     )
     FreeCAD.Console.PrintMessage("\r\nGenerate: " + model_name + "\r\n")
 
@@ -361,9 +361,7 @@ def generate_package3d(params, part_params, mpn):
     expVRML.say(material_substitutions)
 
     # Create output directory
-    output_dir = "Connector_Wuerth_{series_prefix}_Bottom-Entry.3dshapes/".format(
-        series_prefix=params["series_prefix"]
-    )
+    output_dir = "Connector_Wuerth.3dshapes/"
     if not os.path.isdir(output_dir):
         os.makedirs(output_dir)
     filename = "{output_dir:s}{model_name:s}.wrl".format(

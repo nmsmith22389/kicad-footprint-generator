@@ -140,14 +140,14 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
                 os.makedirs(output_dir)
 
             # Assemble the filename
-            file_name = "Connector_Wuerth_{series_prefix}_{type}_{rows}x{pins:02d}_P{pitch}_{orientation}_{mpn}".format(
+            file_name = "Wuerth_{series_prefix}_{mpn}_{type}_{rows}x{pins:02d}_P{pitch}mm_{orientation}".format(
                 series_prefix=all_params[model]["series_prefix"],
+                mpn=mpn,
                 type=all_params[model]["type"],
                 rows=all_params[model]["parts"][mpn]["rows"],
                 pins=all_params[model]["parts"][mpn]["pins"] // 2,
                 pitch=all_params[model]["pitch"],
                 orientation=all_params[model]["orientation"],
-                mpn=mpn,
             )
 
             # Export the assembly to STEP
