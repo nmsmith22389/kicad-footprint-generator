@@ -701,6 +701,74 @@ if __name__ == '__main__':
                 script3d=script3d_rh,
                 height3d=height3d
             )
+    # LED_D3.0mm_Horizontal_O1.27mm_Z2.0mm_Clear
+    offset = 1.27
+    ledypos = 2.0
+    makeLEDHorizontal(
+        ledypos=ledypos,
+        pins=pins,
+        rm=rm,
+        ddrill=ddrill,
+        dled=dled,
+        dledout=dledout,
+        offsetled=offset,
+        wled=wled,
+        led_type=led_type,
+        has3d=1,
+        specialfpname="",
+        desc_extras_start=desc_extras_start,
+        desc_extras_end=["clear"],
+        base_filename=clname,
+        lib_name=lbname,
+        name_additions=["Clear"],
+        script3d=script3d_rh,
+        height3d=height3d
+    )
+    # LED_D3.0mm_Horizontal_O1.27mm_Z2.0mm_IRBlack
+    makeLEDHorizontal(
+        ledypos=ledypos,
+        pins=pins,
+        rm=rm,
+        ddrill=ddrill,
+        dled=dled,
+        dledout=dledout,
+        offsetled=offset,
+        wled=wled,
+        led_type=led_type,
+        has3d=1,
+        specialfpname="",
+        desc_extras_start=desc_extras_start,
+        desc_extras_end=["infrared", "black"],
+        tag_extras=["IR"],
+        base_filename=clname,
+        lib_name=lbname,
+        name_additions=["IRBlack"],
+        script3d=script3d_rh,
+        height3d=height3d
+    )
+    # LED_D3.0mm_Horizontal_O1.27mm_Z2.0mm_IRGrey
+    makeLEDHorizontal(
+        ledypos=ledypos,
+        pins=pins,
+        rm=rm,
+        ddrill=ddrill,
+        dled=dled,
+        dledout=dledout,
+        offsetled=offset,
+        wled=wled,
+        led_type=led_type,
+        has3d=1,
+        specialfpname="",
+        desc_extras_start=desc_extras_start,
+        desc_extras_end=["infrared", "grey"],
+        tag_extras=["IR"],
+        base_filename=clname,
+        lib_name=lbname,
+        name_additions=["IRGrey"],
+        script3d=script3d_rh,
+        height3d=height3d
+    )
+
     # LED_D5.0mm_Horizontal_O-.--mm_Z-.--mm
     led_type="round"; pins=2; rm=2.54; dled=5; dledout=5.8; offset=2.54;wled=8.6; height3d=5; name_additions=None; desc_extras_start=None; desc_extras_end=None
     for ledypos in [3,9,15]:
@@ -725,6 +793,97 @@ if __name__ == '__main__':
                 script3d=script3d_rh,
                 height3d=height3d
             )
+    # LED_D5.0mm_Horizontal_O1.27mm_Z3.0mm_Clear
+    offset = 1.27
+    ledypos = 3.0
+    makeLEDHorizontal(
+        ledypos=ledypos,
+        pins=pins,
+        rm=rm,
+        ddrill=ddrill,
+        dled=dled,
+        dledout=dledout,
+        offsetled=offset,
+        wled=wled,
+        led_type=led_type,
+        has3d=1,
+        specialfpname="",
+        desc_extras_start=desc_extras_start,
+        desc_extras_end=["clear"],
+        base_filename=clname,
+        lib_name=lbname,
+        name_additions=["Clear"],
+        script3d=script3d_rh,
+        height3d=height3d
+    )
+    # LED_D5.0mm_Horizontal_O1.27mm_Z3.0mm_IRBlack
+    makeLEDHorizontal(
+        ledypos=ledypos,
+        pins=pins,
+        rm=rm,
+        ddrill=ddrill,
+        dled=dled,
+        dledout=dledout,
+        offsetled=offset,
+        wled=wled,
+        led_type=led_type,
+        has3d=1,
+        specialfpname="",
+        desc_extras_start=desc_extras_start,
+        desc_extras_end=["infrared", "black"],
+        tag_extras=["IR"],
+        base_filename=clname,
+        lib_name=lbname,
+        name_additions=["IRBlack"],
+        script3d=script3d_rh,
+        height3d=height3d
+    )
+    # LED_D5.0mm_Horizontal_O1.27mm_Z3.0mm_IRGrey
+    makeLEDHorizontal(
+        ledypos=ledypos,
+        pins=pins,
+        rm=rm,
+        ddrill=ddrill,
+        dled=dled,
+        dledout=dledout,
+        offsetled=offset,
+        wled=wled,
+        led_type=led_type,
+        has3d=1,
+        specialfpname="",
+        desc_extras_start=desc_extras_start,
+        desc_extras_end=["infrared", "grey"],
+        tag_extras=["IR"],
+        base_filename=clname,
+        lib_name=lbname,
+        name_additions=["IRGrey"],
+        script3d=script3d_rh,
+        height3d=height3d
+    )
+    # LED_D5.0mm-3_Horizontal_O3.81mm_Z3.0mm
+    offset = 3.81
+    ledypos = 3.0
+    makeLEDHorizontal(
+        ledypos=ledypos,
+        pins=3,
+        rm=rm,
+        ddrill=ddrill,
+        dled=dled,
+        dledout=dledout,
+        offsetled=offset,
+        wled=wled,
+        led_type=led_type,
+        has3d=1,
+        specialfpname="",
+        desc_extras_start=desc_extras_start,
+        desc_extras_end=desc_extras_end,
+        base_filename=clname,
+        lib_name=lbname,
+        name_additions=name_additions,
+        script3d=script3d_rh,
+        height3d=height3d
+    )
+
     # LED_D1.8mm_W1.8mm_H2.4mm_Horizontal_O-.--mm_Z-.-mm
     led_type="box"; pins=2; rm=2.54; dled=1.8; dledout=3.3; wled=3; wledback=1.6; height3d=2.4; height3d_bottom=1.6; name_additions=None; desc_extras_start=None; desc_extras_end=None
     for ledypos in [1.65, 1.65+3.3, 1.65+3.3*2]:
