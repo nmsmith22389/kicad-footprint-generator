@@ -432,7 +432,7 @@ def makeLEDHorizontal(pins=2,rm=2.544,dled=5,dledout=5.8,offsetled=2.54,wled=8.6
     pincount_filename = ""
     pincount_tag = "{0:d} pins".format(pins)
     if pins > 2:
-        pincount_filename = "-{0:d}pins".format(pins)
+        pincount_filename = "-{0:d}".format(pins)
 
     footprint_name = base_filename + size_filename + pincount_filename
 
