@@ -2,27 +2,7 @@ from KicadModTree.nodes import Pad, NativeCPad, Footprint, FootprintType
 from KicadModTree.nodes.base.NativeCPad import CornerSelectionNative
 from KicadModTree import Vector2D
 
-from node_test_utils import assert_serialises_as
-
-# Trick pycodestyle into not assuming tab indents
-if False:
-    pass
-
-RESULT_Basic = """(footprint "padtest"
-	(version 20240108)
-	(generator "kicad-footprint-generator")
-	(layer "F.Cu")
-	(attr smd)
-	(pad "42" smd roundrect
-		(at 0 0)
-		(size 1 1)
-		(layers "F.Cu")
-		(roundrect_rratio 0.25)
-		(chamfer_ratio 0.25)
-		(chamfer bottom_left)
-	)
-)"""  # NOQA: W191
-
+from KicadModTree.tests.test_utils.fp_file_test import SerialisationTest
 
 # Basic pad test arguments
 DEFAULT_FCU_KWARGS = {
@@ -35,27 +15,31 @@ DEFAULT_FCU_KWARGS = {
 }
 
 
-def test_corner_selection():
+class TestNativeCPadSerialisation(SerialisationTest):
 
-    cs = CornerSelectionNative(chamfer_select=None)
+    def setUp(self):
+        super().setUp(__file__, 'data')
 
-    assert cs.isAnySelected() is False
+    def test_corner_selection(self):
 
-    cs = CornerSelectionNative(chamfer_select=[CornerSelectionNative.TOP_LEFT])
+        cs = CornerSelectionNative(chamfer_select=None)
 
-    assert cs.isAnySelected() is True
+        assert cs.isAnySelected() is False
 
-    cs.clearAll()
+        cs = CornerSelectionNative(chamfer_select=[CornerSelectionNative.TOP_LEFT])
 
-    assert cs.isAnySelected() is False
+        assert cs.isAnySelected() is True
 
+        cs.clearAll()
 
-def test_basic_nativecpad():
+        assert cs.isAnySelected() is False
 
-    corner = CornerSelectionNative(chamfer_select=[CornerSelectionNative.BOTTOM_LEFT])
+    def test_basic_nativecpad(self):
 
-    pad = NativeCPad(chamfer_corners=corner, **DEFAULT_FCU_KWARGS)
+        corner = CornerSelectionNative(chamfer_select=[CornerSelectionNative.BOTTOM_LEFT])
 
-    kicad_mod = Footprint("padtest", FootprintType.SMD)
-    kicad_mod.append(pad)
-    assert_serialises_as(kicad_mod, RESULT_Basic, dump=True)
+        pad = NativeCPad(chamfer_corners=corner, **DEFAULT_FCU_KWARGS)
+
+        kicad_mod = Footprint("padtest", FootprintType.SMD)
+        kicad_mod.append(pad)
+        self.assert_serialises_as(kicad_mod, 'nativecpad_basic.kicad_mod')

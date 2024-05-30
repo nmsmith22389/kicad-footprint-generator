@@ -1,0 +1,8 @@
+(footprint "test"
+	(version 20240108)
+	(generator "kicad-footprint-generator")
+	(layer "F.Cu")
+	(descr "A example footprint")
+	(tags "example example2 example3 example4")
+	(attr smd)
+)

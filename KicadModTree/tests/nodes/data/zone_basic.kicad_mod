@@ -1,0 +1,34 @@
+(footprint "zonetest"
+	(version 20240108)
+	(generator "kicad-footprint-generator")
+	(layer "F.Cu")
+	(zone
+		(net 1)
+		(net_name "GND")
+		(layers)
+		(name "")
+		(hatch edge 0.5)
+		(priority 1)
+		(connect_pads
+			(clearance 0)
+		)
+		(filled_areas_thickness no)
+		(min_thickness 0.25)
+		(keepout
+			(tracks allowed)
+			(vias not_allowed)
+			(copperpour allowed)
+			(pads allowed)
+			(footprints allowed)
+		)
+		(fill)
+		(polygon
+			(pts
+				(xy 0 0)
+				(xy 0 1)
+				(xy 1 1)
+				(xy 1 0)
+			)
+		)
+	)
+)
