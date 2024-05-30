@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import sys
 import os
@@ -58,9 +58,3 @@ if __name__ == '__main__':
                                   tags_additional=[], lib_name='${KICAD8_3DMODEL_DIR}/'+classname, classname=classname, classname_description=classname_description,
                                   webpage=webpage, script_generated_note=script_generated_note)
 
-     
-    
-    
-    
-    
-    

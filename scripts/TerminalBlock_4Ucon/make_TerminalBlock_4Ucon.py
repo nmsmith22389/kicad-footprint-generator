@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import sys
 import os
@@ -22,9 +22,6 @@ if __name__ == '__main__':
 
     script_generated_note="script-generated using https://gitlab.com/kicad/libraries/kicad-footprint-generator/-/tree/master/scripts/TerminalBlock_4Ucon";
     classname="TerminalBlock_4Ucon"
-    
-    
-
  
     pins=[2,3,4,5,6,7,8,9,10,11,12,13,14,15]
     rm=3.5
