@@ -64,11 +64,11 @@ def makeLEDRadial(
     h,
     ddrill,
     win=0,
-    rin=0,
+    diameter=0,
     pins=2,
     led_type="round",
     has3d=1,
-    specialfpname="",
+    fpname_override="",
     desc_extras_start=None,
     desc_extras_end=None,
     tag_extras=None,
@@ -110,7 +110,7 @@ def makeLEDRadial(
     w_fab = w
     h_fab = h
     d_fab = max(w, h)
-    d2_fab = rin
+    d2_fab = diameter
     h_slk = h_fab + 2 * slk_offset
     w_slk = w_fab + 2 * slk_offset
     l_slk = l_fab - slk_offset
@@ -128,8 +128,8 @@ def makeLEDRadial(
     size_filename = ""
     size_info = []
     if led_type == "round" or led_type == "round_simple":
-        size_filename = "_D{0:0.1f}mm".format(rin)
-        size_info.append("diameter {0:0.1f}mm".format(rin))
+        size_filename = "_D{0:0.1f}mm".format(diameter)
+        size_info.append("diameter {0:0.1f}mm".format(diameter))
     else:
         if led_type == "oval":
             size_info.append("Oval")
@@ -140,9 +140,9 @@ def makeLEDRadial(
             wsize = win
         size_filename = size_filename + "_W{0:0.1f}mm_H{1:0.1f}mm".format(wsize, h)
         size_info.append("size {0:0.1f}x{1:0.1f}mm".format(wsize, h))
-        if rin > 0:
-            size_filename = "_D{0:0.1f}mm".format(rin) + size_filename
-            size_info.append("diameter {0:0.1f}mm".format(rin))
+        if diameter > 0:
+            size_filename = "_D{0:0.1f}mm".format(diameter) + size_filename
+            size_info.append("diameter {0:0.1f}mm".format(diameter))
 
     pincount_filename = ""
     pincount_tag = "{0:d} pins".format(pins)
@@ -163,8 +163,8 @@ def makeLEDRadial(
     for t in added_info:
         if len(t):
             description.append(t)
-    if (specialfpname != ""):
-        footprint_name = specialfpname;
+    if (fpname_override != ""):
+        footprint_name = fpname_override;
 
     for t in desc_extras_end:
         if len(t):
@@ -188,7 +188,7 @@ def makeLEDRadial(
             myfile.write("import os.path\n\n")
             myfile.write("# d_wire\nApp.ActiveDocument.Spreadsheet.set('B4', '0.02')\n")
             myfile.write("App.ActiveDocument.recompute()\n")
-            myfile.write("# rin\nApp.ActiveDocument.Spreadsheet.set('B1', '{0}')\n".format(rin))
+            myfile.write("# diameter\nApp.ActiveDocument.Spreadsheet.set('B1', '{0}')\n".format(diameter))
             myfile.write("# w\nApp.ActiveDocument.Spreadsheet.set('B2', '{0}')\n".format(w))
             myfile.write("# h\nApp.ActiveDocument.Spreadsheet.set('C2', '{0}')\n".format(h))
             myfile.write("# pitch\nApp.ActiveDocument.Spreadsheet.set('B3', '{0}')\n".format(pitch))
@@ -389,7 +389,7 @@ def makeLEDHorizontal(
     wledback=1,
     led_type="round",
     has3d=1,
-    specialfpname="",
+    fpname_override="",
     desc_extras_start=None,
     desc_extras_end=None,
     tag_extras=None,
@@ -483,8 +483,8 @@ def makeLEDHorizontal(
     for t in added_info:
         if len(t):
             description.append(t)
-    if (specialfpname != ""):
-        footprint_name = specialfpname;
+    if (fpname_override != ""):
+        footprint_name = fpname_override;
 
     for t in desc_extras_end:
         if len(t):
