@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 #http://katalog.we-online.com/en/pbs/WE-MAPI]
 
 #sizes,shapes,etc]

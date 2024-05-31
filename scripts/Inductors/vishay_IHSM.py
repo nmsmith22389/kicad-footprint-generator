@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 vishay IHSM series inductors
 http://www.vishay.com/docs/34018/ihsm3825.pdf

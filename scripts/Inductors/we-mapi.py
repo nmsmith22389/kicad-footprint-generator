@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 #http://katalog.we-online.com/en/pbs/WE-MAPI]
 
 #sizes,shapes,etc]
@@ -18,6 +19,10 @@ inductors = [
 
 import sys
 import os
+
+#import KicadModTree files
+sys.path.append(os.path.join(sys.path[0], "..", ".."))
+
 
 output_dir = os.getcwd()
 
