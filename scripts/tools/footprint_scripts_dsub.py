@@ -1148,7 +1148,7 @@ def makeDSubAngled(
     # set general values
     kicad_modg.append(
         Property(
-            type=Property.REFERENCE,
+            name=Property.REFERENCE,
             text="REF**",
             at=[0, ypcb_edge - back_height - text_size[0]],
             layer="F.SilkS",
