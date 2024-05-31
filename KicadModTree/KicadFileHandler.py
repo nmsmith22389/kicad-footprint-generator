@@ -924,11 +924,11 @@ class KicadFileHandler(FileHandler):
                     ZoneFill.ISLAND_REMOVAL_MINIMUM_AREA: 2,
                 }[node.island_removal_mode]
 
-                sexpr + [SexprSerializer.Symbol('island_removal_mode'), island_removal_mode]
+                sexpr += [[SexprSerializer.Symbol('island_removal_mode'), island_removal_mode]]
 
                 # only valid in mode 2
                 if node.island_removal_mode == 'minimum_area':
-                    sexpr += [SexprSerializer.Symbol('island_area_min'), node.island_area_min]
+                    sexpr += [[SexprSerializer.Symbol('island_area_min'), node.island_area_min]]
 
             sexpr += node_if_not_none(node.hatch_thickness, 'hatch_thickness')
             sexpr += node_if_not_none(node.hatch_gap, 'hatch_gap')
