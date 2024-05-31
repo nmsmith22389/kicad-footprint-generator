@@ -13,6 +13,8 @@
 #
 # (C) 2016 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 
+from typing import Optional
+
 from KicadModTree.Vector import *
 from KicadModTree.PolygonPoints import *
 from KicadModTree.nodes.Node import Node
@@ -39,11 +41,17 @@ class PolygonLine(Node):
     >>> PolygonLine(polygon=[[0, 0], [0, 1], [1, 1], [0, 0]], layer='F.SilkS')
     """
 
+    layer: str
+    width: Optional[float]
+
     def __init__(self, **kwargs):
         Node.__init__(self)
 
         self.layer = kwargs.get('layer', 'F.SilkS')
-        self.width = kwargs.get('width')
+        self.width = kwargs.get('width', None)
+
+        if self.width is not None:
+            self.width = float(self.width)
 
         self._initPolyPoint(**kwargs)
 

@@ -18,7 +18,7 @@ def gen_footprint(offsets: list):
             (5, 2), (6, 2), (5, 2.05), (5, 3),
             # bottom contour
             (5, 3), (-4, 3), (-5, 2),
-        ], layer="F.Fab", width="0.1")
+        ], layer="F.Fab", width=0.1)
     kicad_mod.append(poly)
     for offset in offsets:
         kicad_mod.append(poly.duplicate(offset=offset, layer="F.SilkS", width=0.1))
