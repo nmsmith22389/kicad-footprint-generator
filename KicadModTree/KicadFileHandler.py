@@ -909,7 +909,10 @@ class KicadFileHandler(FileHandler):
                     [
                         SexprSerializer.Symbol('smoothing'),
                         SexprSerializer.Symbol(node.smoothing),
-                        [SexprSerializer.Symbol('radius'), node.smoothing_radius]
+                    ],
+                    [
+                        SexprSerializer.Symbol('radius'),
+                        node.smoothing_radius
                     ],
                 ]
 
