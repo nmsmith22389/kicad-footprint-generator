@@ -1,0 +1,202 @@
+Resonator_SMD-3Pin_7.2x3.0mm:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: 'SMD Resomator/Filter 7.2x3.0mm, Murata CSTCC8M00G53-R0; 8MHz resonator,
+    SMD, Farnell (Element 14) #1170435, http://www.farnell.com/datasheets/19296.pdf?_ga=1.247244932.122297557.1475167906'
+  footprint_name: Resonator_SMD
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  pack_bevel: 0
+  pack_height: 3
+  pack_width: 7.2
+  pad:
+  - 1.4
+  - 3.8
+  pad_sep_x: 2.5
+  pad_sep_y: 0
+  pins: 3
+  style: rect
+  tags: SMD SMT ceramic resonator filter filter
+Resonator_SMD-3Pin_7.2x3.0mm_HandSoldering:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: 'SMD Resomator/Filter 7.2x3.0mm, Murata CSTCC8M00G53-R0; 8MHz resonator,
+    SMD, Farnell (Element 14) #1170435, http://www.farnell.com/datasheets/19296.pdf?_ga=1.247244932.122297557.1475167906,
+    hand-soldering'
+  footprint_name: Resonator_SMD
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  name_addition: _HandSoldering
+  pack_bevel: 0
+  pack_height: 3
+  pack_width: 7.2
+  pad:
+  - 2.4499999999999997
+  - 3.8
+  pad_sep_x: 3.55
+  pad_sep_y: 0.0
+  pins: 3
+  style: rect
+  tags: SMD SMT ceramic resonator filter filter hand-soldering
+Resonator_SMD_Murata_CDSCB-2Pin_4.5x2.0mm:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Resomator/Filter Murata CDSCB, http://cdn-reichelt.de/documents/datenblatt/B400/SFECV-107.pdf
+  footprint_name: Resonator_SMD_Murata_CDSCB
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  pack_bevel: 0
+  pack_height: 2
+  pack_width: 4.5
+  pad:
+  - 1
+  - 2.6
+  pad_sep_x: 3
+  pad_sep_y: 0
+  pins: 2
+  style: rect
+  tags: SMD SMT ceramic resonator filter filter
+Resonator_SMD_Murata_CDSCB-2Pin_4.5x2.0mm_HandSoldering:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Resomator/Filter Murata CDSCB, http://cdn-reichelt.de/documents/datenblatt/B400/SFECV-107.pdf,
+    hand-soldering
+  footprint_name: Resonator_SMD_Murata_CDSCB
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  name_addition: _HandSoldering
+  pack_bevel: 0
+  pack_height: 2
+  pack_width: 4.5
+  pad:
+  - 1
+  - 4.55
+  pad_sep_x: 3
+  pad_sep_y: 1.9500000000000002
+  pins: 2
+  style: rect
+  tags: SMD SMT ceramic resonator filter filter hand-soldering
+Resonator_SMD_Murata_SFECV-3Pin_6.9x2.9mm:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Resomator/Filter Murata SFECV, http://cdn-reichelt.de/documents/datenblatt/B400/SFECV-107.pdf
+  footprint_name: Resonator_SMD_Murata_SFECV
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  pack_bevel: 0
+  pack_height: 2.9
+  pack_width: 6.9
+  pad:
+  - 1.2
+  - 4
+  pad_sep_x: 2.85
+  pad_sep_y: 0
+  pins: 3
+  style: rect
+  tags: SMD SMT ceramic resonator filter filter
+Resonator_SMD_Murata_SFECV-3Pin_6.9x2.9mm_HandSoldering:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Resomator/Filter Murata SFECV, http://cdn-reichelt.de/documents/datenblatt/B400/SFECV-107.pdf,
+    hand-soldering
+  footprint_name: Resonator_SMD_Murata_SFECV
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  name_addition: _HandSoldering
+  pack_bevel: 0
+  pack_height: 2.9
+  pack_width: 6.9
+  pad:
+  - 2.1
+  - 4
+  pad_sep_x: 3.75
+  pad_sep_y: 0
+  pins: 3
+  style: rect
+  tags: SMD SMT ceramic resonator filter filter hand-soldering
+Resonator_SMD_Murata_SFSKA-3Pin_7.9x3.8mm:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Resomator/Filter Murata SFSKA, http://cdn-reichelt.de/documents/datenblatt/B400/SFECV-107.pdf
+  footprint_name: Resonator_SMD_Murata_SFSKA
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  pack_bevel: 0
+  pack_height: 3.8
+  pack_width: 7.9
+  pad:
+  - 1
+  - 4.8
+  pad_sep_x: 2.5
+  pad_sep_y: 0
+  pins: 3
+  style: rect
+  tags: SMD SMT ceramic resonator filter filter
+Resonator_SMD_Murata_SFSKA-3Pin_7.9x3.8mm_HandSoldering:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Resomator/Filter Murata SFSKA, http://cdn-reichelt.de/documents/datenblatt/B400/SFECV-107.pdf,
+    hand-soldering
+  footprint_name: Resonator_SMD_Murata_SFSKA
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  name_addition: _HandSoldering
+  pack_bevel: 0
+  pack_height: 3.8
+  pack_width: 7.9
+  pad:
+  - 1.75
+  - 4.8
+  pad_sep_x: 3.25
+  pad_sep_y: 0.0
+  pins: 3
+  style: rect
+  tags: SMD SMT ceramic resonator filter filter hand-soldering
+Resonator_SMD_Murata_TPSKA-3Pin_7.9x3.8mm:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Resomator/Filter Murata TPSKA, http://cdn-reichelt.de/documents/datenblatt/B400/SFECV-107.pdf
+  footprint_name: Resonator_SMD_Murata_TPSKA
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  pack_bevel: 0
+  pack_height: 3.8
+  pack_width: 7.9
+  pad:
+  - 1
+  - 4.8
+  pad_sep_x: 2.5
+  pad_sep_y: 0
+  pins: 3
+  style: rect
+  tags: SMD SMT ceramic resonator filter filter
+Resonator_SMD_Murata_TPSKA-3Pin_7.9x3.8mm_HandSoldering:
+  addSizeFootprintName: true
+  adhesiveSize: 0.5
+  description: SMD Resomator/Filter Murata TPSKA, http://cdn-reichelt.de/documents/datenblatt/B400/SFECV-107.pdf,
+    hand-soldering
+  footprint_name: Resonator_SMD_Murata_TPSKA
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  name_addition: _HandSoldering
+  pack_bevel: 0
+  pack_height: 3.8
+  pack_width: 7.9
+  pad:
+  - 1.75
+  - 4.8
+  pad_sep_x: 3.25
+  pad_sep_y: 0.0
+  pins: 3
+  style: rect
+  tags: SMD SMT ceramic resonator filter filter hand-soldering

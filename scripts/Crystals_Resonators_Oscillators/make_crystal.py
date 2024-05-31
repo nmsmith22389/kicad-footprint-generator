@@ -20,7 +20,7 @@ import argparse
 from KicadModTree import *  # NOQA
 from drawing_tools import *
 
-class CrystalResonatorGenerator(FootprintGenerator):
+class CrystalResonatorOscillatorGenerator(FootprintGenerator):
     def __init__(self, configuration, **kwargs):
         super().__init__(**kwargs)
 
@@ -100,7 +100,7 @@ class CrystalResonatorGenerator(FootprintGenerator):
                     rotate3d=[0, 0, 0], name_addition=""):
         fpname = footprint_name
         if addSizeFootprintName:
-            fpname += "-{2}pin_{0:2.1f}x{1:2.1f}mm".format(pack_width, pack_height, pins)
+            fpname += "-{2}Pin_{0:2.1f}x{1:2.1f}mm".format(pack_width, pack_height, pins)
         fpname = fpname + name_addition
 
         overpad_height = pad_sep_y + pad[1]
@@ -649,7 +649,7 @@ class CrystalResonatorGenerator(FootprintGenerator):
         tag_s = tags
 
         if addSizeFootprintName:
-            fpname += "-{2}pin_w{0:2.1f}mm_h{1:2.1f}mm".format(pack_width, pack_height, pins)
+            fpname += "-{2}Pin_W{0:2.1f}mm_H{1:2.1f}mm".format(pack_width, pack_height, pins)
             desc = description + ", length*width={0:2.1f}x{1:2.1f}mm^2 package, package length={0:2.1f}mm, package width={1:2.1f}mm, {2} pins".format(pack_width, pack_height,pins)
             tag_s = tags + " {0:2.1f}x{1:2.1f}mm^2 package length {0:2.1f}mm width {1:2.1f}mm {2} pins".format(pack_width, pack_height,pins)
 
@@ -923,7 +923,7 @@ if __name__ == '__main__':
     args = FootprintGenerator.add_standard_arguments(parser)
 
     FootprintGenerator.run_on_files(
-        CrystalResonatorGenerator,
+        CrystalResonatorOscillatorGenerator,
         args,
         file_autofind_dir='size_definitions',
         configuration=GlobalConfig.load_from_file(args.global_config),
