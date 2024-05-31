@@ -74,10 +74,14 @@ def qfn(args):
         f.append(StandardBox(footprint=f, description=description, datasheet=datasheet, at=at,
                              size=size, tags=tags, extratexts=extratexts, pins=pins,
                              file3Dname=file3Dname))
-        #
-        #
+        
+        
+        output_dir = 'TerminalBlock_Altech.pretty' + os.sep
+        if not os.path.isdir(output_dir):
+            os.makedirs(output_dir)
+        
         file_handler = KicadFileHandler(f)
-        file_handler.writeFile(footprint_name + ".kicad_mod")
+        file_handler.writeFile(output_dir + footprint_name + ".kicad_mod")
 
 
 if __name__ == '__main__':
