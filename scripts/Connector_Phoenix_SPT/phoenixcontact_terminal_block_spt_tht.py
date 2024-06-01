@@ -142,7 +142,9 @@ if __name__ == "__main__":
     # Parse arguments
     parser = argparse.ArgumentParser(description='use config .yaml files to create footprints.')
     parser.add_argument('--global_config', type=str, nargs='?', help='the config file defining how the footprint will look like. (KLC)', default='../tools/global_config_files/config_KLCv3.0.yaml')
-    parser.add_argument('--params', type=str, nargs='?', help='the part definition file', default='./phoenixcontact_terminal_block_spt_tht.yaml')
+    parser.add_argument('param_file', type=str, help='the part definition file')
+    # NOTE: Just added for intermediate compat to FootprintGenerator, this has currently no effect!
+    parser.add_argument('-v', '--verbose', action="store_true", help='the part definition file')
     args = parser.parse_args()
 
     # Load configuration
@@ -153,7 +155,7 @@ if __name__ == "__main__":
             print(exc)
 
     # Load yaml file for this library
-    with open(args.params, 'r') as params_stream:
+    with open(args.param_file, 'r') as params_stream:
         try:
             params = yaml.safe_load(params_stream)
         except yaml.YAMLError as exc:
