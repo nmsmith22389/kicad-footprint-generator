@@ -14,7 +14,7 @@
 # (C) 2016-2018 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 
 import re
-from typing import Optional
+from typing import Optional, List, Union
 
 from KicadModTree.FileHandler import FileHandler
 from KicadModTree.util.kicad_util import SexprSerializer
@@ -22,6 +22,8 @@ from KicadModTree.util.kicad_util import *
 # TODO: why .KicadModTree is not enough?
 from KicadModTree import PolygonPoints
 from KicadModTree.nodes.base.Group import Group
+from KicadModTree.nodes.base.FPRect import FPRect
+from KicadModTree.nodes.base.Text import Text, Property
 from KicadModTree.nodes.base.NativeCPad import NativeCPad, CornerSelectionNative
 from KicadModTree.nodes.base.Pad import Pad
 from KicadModTree.nodes.base.Arc import Arc
@@ -30,8 +32,9 @@ from KicadModTree.nodes.base.Line import Line
 from KicadModTree.nodes.base.Polygon import Polygon
 from KicadModTree.nodes.base.PolygonArc import PolygonArc
 from KicadModTree.nodes.base.CompoundPolygon import CompoundPolygon
+from KicadModTree.nodes.base.Model import Model
 from KicadModTree.nodes.Footprint import Footprint, FootprintType
-from KicadModTree.nodes.base.Zone import PadConnection, ZoneFill, Keepouts
+from KicadModTree.nodes.base.Zone import Zone, PadConnection, ZoneFill, Keepouts
 
 
 DEFAULT_LAYER_WIDTH = {'F.SilkS': 0.12,
@@ -65,8 +68,8 @@ def layer_key_func(layer: str) -> int:
         "F.Adhes": 33,
         "B.Paste": 34,
         "F.Paste": 35,
-        "B.Silk": 36,
-        "F.Silk": 37,
+        "B.SilkS": 36,
+        "F.SilkS": 37,
         "B.Mask": 38,
         "F.MasK": 39,
         "Dwgs.User": 40,
@@ -90,7 +93,159 @@ def layer_key_func(layer: str) -> int:
         # user layers
         if m := re.match(r'^User\.(\d)$', layer):
             return 49 + int(m.group(1))
-    return 0
+
+    raise ValueError(f"Unhandled layer for sorting: {layer}")
+
+
+def graphic_key_func(item) -> List[int]:
+    """
+    Approximate sorting order from FOOTPRINT::cmp_drawings in KiCad's
+    pcbnew/footprint.cpp.
+
+    The KiCad drawing function handles text too, but we separate that
+    out earlier.
+    """
+
+    def graphic_shape_key(item):
+        if isinstance(item, Line):
+            return 0
+        elif isinstance(item, FPRect):
+            return 1
+        elif isinstance(item, Arc):
+            return 2
+        elif isinstance(item, Circle):
+            return 3
+        elif isinstance(item, Polygon):
+            return 4
+        # Not yet implements
+        # elif isinstance(item, Bezier):
+            # return 5
+
+        raise ValueError(f"Graphic shape ordering not defined: {item}")
+
+    keys = [layer_key_func(item.layer), graphic_shape_key(item)]
+
+    # after this point, the different shape types will only
+    # be compared amongst themselves
+
+    if isinstance(item, (Line, FPRect)):
+        keys += [
+            item.start_pos.x, item.start_pos.y,
+            item.end_pos.x, item.end_pos.y
+        ]
+    elif isinstance(item, Arc):
+        keys += [
+            item.start_pos.x, item.start_pos.y,
+            item.getEndPoint().x, item.getEndPoint().y
+        ]
+    elif isinstance(item, Circle):
+        keys += [
+            item.center_pos.x, item.center_pos.y,
+            item.center_pos.x + item.radius, item.center_pos.y,
+        ]
+
+    if isinstance(item, Arc):
+        keys += [item.center_pos.x, item.center_pos.y]
+
+    if isinstance(item, Polygon):
+        keys += [len(item.nodes)]
+        keys += [[pt.x, pt.y] for pt in item.nodes]
+
+    if isinstance(item, Text):
+        keys += [item.thickness]
+    else:
+        keys += [item.width]
+
+    if item.hasValidTStamp():
+        keys += [item.getTStamp()]
+
+    return keys
+
+
+def text_key_func(text: Text) -> List[int]:
+    """
+    Approximate sorting order from FOOTPRINT::cmp_drawings in KiCad's
+    pcbnew/footprint.cpp.
+
+    In KiCad, this is done in the same container as graphics, but it's
+    easer to separate this here.
+    """
+    return [layer_key_func(text.layer)]
+
+
+def pad_shape_key_func(shape: str) -> int:
+
+    shapes = ['circle', 'rect', 'oval', 'trapezoid', 'roundrect', 'custom']
+
+    try:
+        return shapes.index(shape)
+    except ValueError:
+        return 1000
+
+
+def pad_key_func(pad: Pad) -> List[int]:
+    """
+    Approximate sorting order from FOOTPRINT::cmp_pad in KiCad's
+    pcbnew/footprint.cpp.
+    """
+    def pad_num_key(n: str) -> list:
+        # empty pads first
+        if not n:
+            return [0]
+
+        # numeric strings sort first, and by integer
+        if n.isnumeric():
+            return [100, int(n)]
+
+        # lexicographic sort, after numerics
+        return [200, n]
+
+    keys = [pad_num_key(str(pad.number)),
+            pad.at.x, pad.at.y,
+            pad.size.x, pad.size.y,
+            pad_shape_key_func(pad.shape)
+            ]
+    return keys
+
+
+def zone_key_func(zone: Zone) -> List:
+    """
+    Approximate sorting order from FOOTPRINT::cmp_zones in KiCad's
+    pcbnew/footprint.cpp.
+    """
+    keys = [zone.priority if zone.priority else 0,
+            [layer_key_func(layer) for layer in zone.layers],
+            len(zone.nodes),
+            [[pt.x, pt.y] for pt in zone.nodes]
+            ]
+
+    if zone.hasValidTStamp():
+        keys += [zone.getTStamp()]
+
+    return keys
+
+
+def node_key_func(node) -> List:
+    """
+    Approximate sorting order for all nodes in a Footprint, following
+    the logic in PCB_IO_KICAD_SEXPR::format( const FOOTPRINT* ...)
+    """
+
+    # This is all graphics, but not the text
+    if isinstance(node, (Arc, Circle, Line, Polygon, CompoundPolygon,
+                         PolygonArc, FPRect)):
+        return [100] + graphic_key_func(node)
+    elif isinstance(node, Text):
+        return [200] + text_key_func(node)
+    elif isinstance(node, (Pad, NativeCPad)):
+        return [300] + pad_key_func(node)
+    elif isinstance(node, Zone):
+        return [400] + zone_key_func(node)
+    elif isinstance(node, Model):
+        # Models right at the end
+        return [1000]
+
+    raise ValueError(f"Node ordering not defined: {node}")
 
 
 class KicadFileHandler(FileHandler):
@@ -193,24 +348,28 @@ class KicadFileHandler(FileHandler):
     def _serializeTree(self):
         nodes = self.kicad_mod.serialize()
 
-        grouped_nodes = {}
+        ordered_nodes = []
+        property_nodes = []
 
         for single_node in nodes:
-            node_type = single_node.__class__.__name__
 
-            current_nodes = grouped_nodes.get(node_type, [])
-            current_nodes.append(single_node)
+            if isinstance(single_node, Property):
+                property_nodes.append(single_node)
 
-            grouped_nodes[node_type] = current_nodes
+            # add all the 'base' nodes that we know how to serialise
+            elif isinstance(single_node, (Arc, Circle, Line, Pad, NativeCPad,
+                                          Polygon, CompoundPolygon,
+                                          PolygonArc, FPRect, Group, Text, Zone,
+                                          Model)):
+                ordered_nodes.append(single_node)
 
         sexpr = []
 
         # serialize initial property nodes
-        for property_node in grouped_nodes.get('Property', []):
+        for property_node in property_nodes:
             sexpr.append(self._serialize_Property(property_node))
 
         # Kicad 8 puts the attributes at the end of the properties
-
         attributes = self._serialize_attributes()
         # There might be no attributes
         if len(attributes) > 0:
@@ -218,24 +377,16 @@ class KicadFileHandler(FileHandler):
 
         # serialize the rest of the nodes
 
-        for key, value in sorted(grouped_nodes.items()):
-            # check if key is a base node, except Model
-            if key not in {'Arc', 'Circle', 'Line', 'Pad', 'Polygon', 'Text', 'Zone',
-                           'NativeCPad', 'CompoundPolygon', 'PolygonArc', 'FPRect', 'Group'}:
-                continue
+        # reorder to the KiCad native order
+        ordered_nodes.sort(key=node_key_func)
 
-            # render base nodes
-            for node in value:
-                subnode_sexpr = self._callSerialize(node)
-                if subnode_sexpr is not None:
-                    # allow conditionally no additional results to be added,
-                    # for nodes that may or may not use solely virtual nodes depending on their configuration.
-                    sexpr.append(subnode_sexpr)
-
-        # serialize 3D Models at the end
-        if grouped_nodes.get('Model'):
-            for node in grouped_nodes.get('Model'):
-                sexpr.append(self._serialize_Model(node))
+        # render base nodes
+        for node in ordered_nodes:
+            subnode_sexpr = self._callSerialize(node)
+            if subnode_sexpr is not None:
+                # allow conditionally no additional results to be added,
+                # for nodes that may or may not use solely virtual nodes depending on their configuration.
+                sexpr.append(subnode_sexpr)
 
         return sexpr
 

@@ -3,132 +3,6 @@
 	(generator "kicad-footprint-generator")
 	(layer "F.Cu")
 	(attr smd)
-	(pad "3" smd rect
-		(at 0 0)
-		(size 5 5)
-		(property pad_prop_heatsink)
-		(layers "F.Cu" "F.Mask")
-		(zone_connect 2)
-	)
-	(pad "3" thru_hole circle
-		(at -2.2 -2.2)
-		(size 0.6 0.6)
-		(drill 0.3)
-		(property pad_prop_heatsink)
-		(layers "*.Cu")
-	)
-	(pad "3" thru_hole circle
-		(at -0.733333 -2.2)
-		(size 0.6 0.6)
-		(drill 0.3)
-		(property pad_prop_heatsink)
-		(layers "*.Cu")
-	)
-	(pad "3" thru_hole circle
-		(at 0.733333 -2.2)
-		(size 0.6 0.6)
-		(drill 0.3)
-		(property pad_prop_heatsink)
-		(layers "*.Cu")
-	)
-	(pad "3" thru_hole circle
-		(at 2.2 -2.2)
-		(size 0.6 0.6)
-		(drill 0.3)
-		(property pad_prop_heatsink)
-		(layers "*.Cu")
-	)
-	(pad "3" thru_hole circle
-		(at -2.2 -0.733333)
-		(size 0.6 0.6)
-		(drill 0.3)
-		(property pad_prop_heatsink)
-		(layers "*.Cu")
-	)
-	(pad "3" thru_hole circle
-		(at -0.733333 -0.733333)
-		(size 0.6 0.6)
-		(drill 0.3)
-		(property pad_prop_heatsink)
-		(layers "*.Cu")
-	)
-	(pad "3" thru_hole circle
-		(at 0.733333 -0.733333)
-		(size 0.6 0.6)
-		(drill 0.3)
-		(property pad_prop_heatsink)
-		(layers "*.Cu")
-	)
-	(pad "3" thru_hole circle
-		(at 2.2 -0.733333)
-		(size 0.6 0.6)
-		(drill 0.3)
-		(property pad_prop_heatsink)
-		(layers "*.Cu")
-	)
-	(pad "3" thru_hole circle
-		(at -2.2 0.733333)
-		(size 0.6 0.6)
-		(drill 0.3)
-		(property pad_prop_heatsink)
-		(layers "*.Cu")
-	)
-	(pad "3" thru_hole circle
-		(at -0.733333 0.733333)
-		(size 0.6 0.6)
-		(drill 0.3)
-		(property pad_prop_heatsink)
-		(layers "*.Cu")
-	)
-	(pad "3" thru_hole circle
-		(at 0.733333 0.733333)
-		(size 0.6 0.6)
-		(drill 0.3)
-		(property pad_prop_heatsink)
-		(layers "*.Cu")
-	)
-	(pad "3" thru_hole circle
-		(at 2.2 0.733333)
-		(size 0.6 0.6)
-		(drill 0.3)
-		(property pad_prop_heatsink)
-		(layers "*.Cu")
-	)
-	(pad "3" thru_hole circle
-		(at -2.2 2.2)
-		(size 0.6 0.6)
-		(drill 0.3)
-		(property pad_prop_heatsink)
-		(layers "*.Cu")
-	)
-	(pad "3" thru_hole circle
-		(at -0.733333 2.2)
-		(size 0.6 0.6)
-		(drill 0.3)
-		(property pad_prop_heatsink)
-		(layers "*.Cu")
-	)
-	(pad "3" thru_hole circle
-		(at 0.733333 2.2)
-		(size 0.6 0.6)
-		(drill 0.3)
-		(property pad_prop_heatsink)
-		(layers "*.Cu")
-	)
-	(pad "3" thru_hole circle
-		(at 2.2 2.2)
-		(size 0.6 0.6)
-		(drill 0.3)
-		(property pad_prop_heatsink)
-		(layers "*.Cu")
-	)
-	(pad "3" smd rect
-		(at 0 0)
-		(size 5 5)
-		(property pad_prop_heatsink)
-		(layers "B.Cu")
-		(zone_connect 2)
-	)
 	(pad "" smd custom
 		(at -1.833333 -1.833333)
 		(size 0.491134 0.491134)
@@ -152,6 +26,90 @@
 	)
 	(pad "" smd custom
 		(at -1.833333 -1.1)
+		(size 0.491134 0.491134)
+		(layers "F.Paste")
+		(options
+			(clearance outline)
+			(anchor circle)
+		)
+		(primitives
+			(gr_poly
+				(pts
+					(xy -0.294628 -0.294628)
+					(xy 0.294628 -0.294628)
+					(xy 0.294628 0.294628)
+					(xy -0.155863 0.294628)
+					(xy -0.294628 0.155863)
+				)
+				(width 0)
+			)
+		)
+	)
+	(pad "" smd custom
+		(at -1.833333 -0.366667)
+		(size 0.491134 0.491134)
+		(layers "F.Paste")
+		(options
+			(clearance outline)
+			(anchor circle)
+		)
+		(primitives
+			(gr_poly
+				(pts
+					(xy -0.294628 -0.155863)
+					(xy -0.155863 -0.294628)
+					(xy 0.294628 -0.294628)
+					(xy 0.294628 0.294628)
+					(xy -0.294628 0.294628)
+				)
+				(width 0)
+			)
+		)
+	)
+	(pad "" smd custom
+		(at -1.833333 0.366667)
+		(size 0.491134 0.491134)
+		(layers "F.Paste")
+		(options
+			(clearance outline)
+			(anchor circle)
+		)
+		(primitives
+			(gr_poly
+				(pts
+					(xy -0.294628 -0.294628)
+					(xy 0.294628 -0.294628)
+					(xy 0.294628 0.294628)
+					(xy -0.155863 0.294628)
+					(xy -0.294628 0.155863)
+				)
+				(width 0)
+			)
+		)
+	)
+	(pad "" smd custom
+		(at -1.833333 1.1)
+		(size 0.491134 0.491134)
+		(layers "F.Paste")
+		(options
+			(clearance outline)
+			(anchor circle)
+		)
+		(primitives
+			(gr_poly
+				(pts
+					(xy -0.294628 -0.155863)
+					(xy -0.155863 -0.294628)
+					(xy 0.294628 -0.294628)
+					(xy 0.294628 0.294628)
+					(xy -0.294628 0.294628)
+				)
+				(width 0)
+			)
+		)
+	)
+	(pad "" smd custom
+		(at -1.833333 1.833333)
 		(size 0.491134 0.491134)
 		(layers "F.Paste")
 		(options
@@ -214,48 +172,6 @@
 		)
 	)
 	(pad "" smd custom
-		(at -1.833333 -0.366667)
-		(size 0.491134 0.491134)
-		(layers "F.Paste")
-		(options
-			(clearance outline)
-			(anchor circle)
-		)
-		(primitives
-			(gr_poly
-				(pts
-					(xy -0.294628 -0.155863)
-					(xy -0.155863 -0.294628)
-					(xy 0.294628 -0.294628)
-					(xy 0.294628 0.294628)
-					(xy -0.294628 0.294628)
-				)
-				(width 0)
-			)
-		)
-	)
-	(pad "" smd custom
-		(at -1.833333 0.366667)
-		(size 0.491134 0.491134)
-		(layers "F.Paste")
-		(options
-			(clearance outline)
-			(anchor circle)
-		)
-		(primitives
-			(gr_poly
-				(pts
-					(xy -0.294628 -0.294628)
-					(xy 0.294628 -0.294628)
-					(xy 0.294628 0.294628)
-					(xy -0.155863 0.294628)
-					(xy -0.294628 0.155863)
-				)
-				(width 0)
-			)
-		)
-	)
-	(pad "" smd custom
 		(at -1.1 -0.366667)
 		(size 0.491134 0.491134)
 		(layers "F.Paste")
@@ -292,48 +208,6 @@
 					(xy 0.294628 0.155863)
 					(xy 0.155863 0.294628)
 					(xy -0.294628 0.294628)
-				)
-				(width 0)
-			)
-		)
-	)
-	(pad "" smd custom
-		(at -1.833333 1.1)
-		(size 0.491134 0.491134)
-		(layers "F.Paste")
-		(options
-			(clearance outline)
-			(anchor circle)
-		)
-		(primitives
-			(gr_poly
-				(pts
-					(xy -0.294628 -0.155863)
-					(xy -0.155863 -0.294628)
-					(xy 0.294628 -0.294628)
-					(xy 0.294628 0.294628)
-					(xy -0.294628 0.294628)
-				)
-				(width 0)
-			)
-		)
-	)
-	(pad "" smd custom
-		(at -1.833333 1.833333)
-		(size 0.491134 0.491134)
-		(layers "F.Paste")
-		(options
-			(clearance outline)
-			(anchor circle)
-		)
-		(primitives
-			(gr_poly
-				(pts
-					(xy -0.294628 -0.294628)
-					(xy 0.294628 -0.294628)
-					(xy 0.294628 0.294628)
-					(xy -0.155863 0.294628)
-					(xy -0.294628 0.155863)
 				)
 				(width 0)
 			)
@@ -424,48 +298,6 @@
 		)
 	)
 	(pad "" smd custom
-		(at 0.366667 -1.833333)
-		(size 0.491134 0.491134)
-		(layers "F.Paste")
-		(options
-			(clearance outline)
-			(anchor circle)
-		)
-		(primitives
-			(gr_poly
-				(pts
-					(xy -0.294628 -0.294628)
-					(xy 0.155863 -0.294628)
-					(xy 0.294628 -0.155863)
-					(xy 0.294628 0.294628)
-					(xy -0.294628 0.294628)
-				)
-				(width 0)
-			)
-		)
-	)
-	(pad "" smd custom
-		(at 0.366667 -1.1)
-		(size 0.491134 0.491134)
-		(layers "F.Paste")
-		(options
-			(clearance outline)
-			(anchor circle)
-		)
-		(primitives
-			(gr_poly
-				(pts
-					(xy -0.294628 -0.294628)
-					(xy 0.294628 -0.294628)
-					(xy 0.294628 0.155863)
-					(xy 0.155863 0.294628)
-					(xy -0.294628 0.294628)
-				)
-				(width 0)
-			)
-		)
-	)
-	(pad "" smd custom
 		(at -0.366667 -0.366667)
 		(size 0.491134 0.491134)
 		(layers "F.Paste")
@@ -508,48 +340,6 @@
 		)
 	)
 	(pad "" smd custom
-		(at 0.366667 -0.366667)
-		(size 0.491134 0.491134)
-		(layers "F.Paste")
-		(options
-			(clearance outline)
-			(anchor circle)
-		)
-		(primitives
-			(gr_poly
-				(pts
-					(xy -0.294628 -0.294628)
-					(xy 0.155863 -0.294628)
-					(xy 0.294628 -0.155863)
-					(xy 0.294628 0.294628)
-					(xy -0.294628 0.294628)
-				)
-				(width 0)
-			)
-		)
-	)
-	(pad "" smd custom
-		(at 0.366667 0.366667)
-		(size 0.491134 0.491134)
-		(layers "F.Paste")
-		(options
-			(clearance outline)
-			(anchor circle)
-		)
-		(primitives
-			(gr_poly
-				(pts
-					(xy -0.294628 -0.294628)
-					(xy 0.294628 -0.294628)
-					(xy 0.294628 0.155863)
-					(xy 0.155863 0.294628)
-					(xy -0.294628 0.294628)
-				)
-				(width 0)
-			)
-		)
-	)
-	(pad "" smd custom
 		(at -0.366667 1.1)
 		(size 0.491134 0.491134)
 		(layers "F.Paste")
@@ -586,6 +376,90 @@
 					(xy 0.294628 0.294628)
 					(xy -0.155863 0.294628)
 					(xy -0.294628 0.155863)
+				)
+				(width 0)
+			)
+		)
+	)
+	(pad "" smd custom
+		(at 0.366667 -1.833333)
+		(size 0.491134 0.491134)
+		(layers "F.Paste")
+		(options
+			(clearance outline)
+			(anchor circle)
+		)
+		(primitives
+			(gr_poly
+				(pts
+					(xy -0.294628 -0.294628)
+					(xy 0.155863 -0.294628)
+					(xy 0.294628 -0.155863)
+					(xy 0.294628 0.294628)
+					(xy -0.294628 0.294628)
+				)
+				(width 0)
+			)
+		)
+	)
+	(pad "" smd custom
+		(at 0.366667 -1.1)
+		(size 0.491134 0.491134)
+		(layers "F.Paste")
+		(options
+			(clearance outline)
+			(anchor circle)
+		)
+		(primitives
+			(gr_poly
+				(pts
+					(xy -0.294628 -0.294628)
+					(xy 0.294628 -0.294628)
+					(xy 0.294628 0.155863)
+					(xy 0.155863 0.294628)
+					(xy -0.294628 0.294628)
+				)
+				(width 0)
+			)
+		)
+	)
+	(pad "" smd custom
+		(at 0.366667 -0.366667)
+		(size 0.491134 0.491134)
+		(layers "F.Paste")
+		(options
+			(clearance outline)
+			(anchor circle)
+		)
+		(primitives
+			(gr_poly
+				(pts
+					(xy -0.294628 -0.294628)
+					(xy 0.155863 -0.294628)
+					(xy 0.294628 -0.155863)
+					(xy 0.294628 0.294628)
+					(xy -0.294628 0.294628)
+				)
+				(width 0)
+			)
+		)
+	)
+	(pad "" smd custom
+		(at 0.366667 0.366667)
+		(size 0.491134 0.491134)
+		(layers "F.Paste")
+		(options
+			(clearance outline)
+			(anchor circle)
+		)
+		(primitives
+			(gr_poly
+				(pts
+					(xy -0.294628 -0.294628)
+					(xy 0.294628 -0.294628)
+					(xy 0.294628 0.155863)
+					(xy 0.155863 0.294628)
+					(xy -0.294628 0.294628)
 				)
 				(width 0)
 			)
@@ -676,48 +550,6 @@
 		)
 	)
 	(pad "" smd custom
-		(at 1.833333 -1.833333)
-		(size 0.491134 0.491134)
-		(layers "F.Paste")
-		(options
-			(clearance outline)
-			(anchor circle)
-		)
-		(primitives
-			(gr_poly
-				(pts
-					(xy -0.294628 -0.294628)
-					(xy 0.155863 -0.294628)
-					(xy 0.294628 -0.155863)
-					(xy 0.294628 0.294628)
-					(xy -0.294628 0.294628)
-				)
-				(width 0)
-			)
-		)
-	)
-	(pad "" smd custom
-		(at 1.833333 -1.1)
-		(size 0.491134 0.491134)
-		(layers "F.Paste")
-		(options
-			(clearance outline)
-			(anchor circle)
-		)
-		(primitives
-			(gr_poly
-				(pts
-					(xy -0.294628 -0.294628)
-					(xy 0.294628 -0.294628)
-					(xy 0.294628 0.155863)
-					(xy 0.155863 0.294628)
-					(xy -0.294628 0.294628)
-				)
-				(width 0)
-			)
-		)
-	)
-	(pad "" smd custom
 		(at 1.1 -0.366667)
 		(size 0.491134 0.491134)
 		(layers "F.Paste")
@@ -754,48 +586,6 @@
 					(xy 0.294628 0.294628)
 					(xy -0.155863 0.294628)
 					(xy -0.294628 0.155863)
-				)
-				(width 0)
-			)
-		)
-	)
-	(pad "" smd custom
-		(at 1.833333 -0.366667)
-		(size 0.491134 0.491134)
-		(layers "F.Paste")
-		(options
-			(clearance outline)
-			(anchor circle)
-		)
-		(primitives
-			(gr_poly
-				(pts
-					(xy -0.294628 -0.294628)
-					(xy 0.155863 -0.294628)
-					(xy 0.294628 -0.155863)
-					(xy 0.294628 0.294628)
-					(xy -0.294628 0.294628)
-				)
-				(width 0)
-			)
-		)
-	)
-	(pad "" smd custom
-		(at 1.833333 0.366667)
-		(size 0.491134 0.491134)
-		(layers "F.Paste")
-		(options
-			(clearance outline)
-			(anchor circle)
-		)
-		(primitives
-			(gr_poly
-				(pts
-					(xy -0.294628 -0.294628)
-					(xy 0.294628 -0.294628)
-					(xy 0.294628 0.155863)
-					(xy 0.155863 0.294628)
-					(xy -0.294628 0.294628)
 				)
 				(width 0)
 			)
@@ -844,6 +634,90 @@
 		)
 	)
 	(pad "" smd custom
+		(at 1.833333 -1.833333)
+		(size 0.491134 0.491134)
+		(layers "F.Paste")
+		(options
+			(clearance outline)
+			(anchor circle)
+		)
+		(primitives
+			(gr_poly
+				(pts
+					(xy -0.294628 -0.294628)
+					(xy 0.155863 -0.294628)
+					(xy 0.294628 -0.155863)
+					(xy 0.294628 0.294628)
+					(xy -0.294628 0.294628)
+				)
+				(width 0)
+			)
+		)
+	)
+	(pad "" smd custom
+		(at 1.833333 -1.1)
+		(size 0.491134 0.491134)
+		(layers "F.Paste")
+		(options
+			(clearance outline)
+			(anchor circle)
+		)
+		(primitives
+			(gr_poly
+				(pts
+					(xy -0.294628 -0.294628)
+					(xy 0.294628 -0.294628)
+					(xy 0.294628 0.155863)
+					(xy 0.155863 0.294628)
+					(xy -0.294628 0.294628)
+				)
+				(width 0)
+			)
+		)
+	)
+	(pad "" smd custom
+		(at 1.833333 -0.366667)
+		(size 0.491134 0.491134)
+		(layers "F.Paste")
+		(options
+			(clearance outline)
+			(anchor circle)
+		)
+		(primitives
+			(gr_poly
+				(pts
+					(xy -0.294628 -0.294628)
+					(xy 0.155863 -0.294628)
+					(xy 0.294628 -0.155863)
+					(xy 0.294628 0.294628)
+					(xy -0.294628 0.294628)
+				)
+				(width 0)
+			)
+		)
+	)
+	(pad "" smd custom
+		(at 1.833333 0.366667)
+		(size 0.491134 0.491134)
+		(layers "F.Paste")
+		(options
+			(clearance outline)
+			(anchor circle)
+		)
+		(primitives
+			(gr_poly
+				(pts
+					(xy -0.294628 -0.294628)
+					(xy 0.294628 -0.294628)
+					(xy 0.294628 0.155863)
+					(xy 0.155863 0.294628)
+					(xy -0.294628 0.294628)
+				)
+				(width 0)
+			)
+		)
+	)
+	(pad "" smd custom
 		(at 1.833333 1.1)
 		(size 0.491134 0.491134)
 		(layers "F.Paste")
@@ -884,5 +758,131 @@
 				(width 0)
 			)
 		)
+	)
+	(pad "3" thru_hole circle
+		(at -2.2 -2.2)
+		(size 0.6 0.6)
+		(drill 0.3)
+		(property pad_prop_heatsink)
+		(layers "*.Cu")
+	)
+	(pad "3" thru_hole circle
+		(at -2.2 -0.733333)
+		(size 0.6 0.6)
+		(drill 0.3)
+		(property pad_prop_heatsink)
+		(layers "*.Cu")
+	)
+	(pad "3" thru_hole circle
+		(at -2.2 0.733333)
+		(size 0.6 0.6)
+		(drill 0.3)
+		(property pad_prop_heatsink)
+		(layers "*.Cu")
+	)
+	(pad "3" thru_hole circle
+		(at -2.2 2.2)
+		(size 0.6 0.6)
+		(drill 0.3)
+		(property pad_prop_heatsink)
+		(layers "*.Cu")
+	)
+	(pad "3" thru_hole circle
+		(at -0.733333 -2.2)
+		(size 0.6 0.6)
+		(drill 0.3)
+		(property pad_prop_heatsink)
+		(layers "*.Cu")
+	)
+	(pad "3" thru_hole circle
+		(at -0.733333 -0.733333)
+		(size 0.6 0.6)
+		(drill 0.3)
+		(property pad_prop_heatsink)
+		(layers "*.Cu")
+	)
+	(pad "3" thru_hole circle
+		(at -0.733333 0.733333)
+		(size 0.6 0.6)
+		(drill 0.3)
+		(property pad_prop_heatsink)
+		(layers "*.Cu")
+	)
+	(pad "3" thru_hole circle
+		(at -0.733333 2.2)
+		(size 0.6 0.6)
+		(drill 0.3)
+		(property pad_prop_heatsink)
+		(layers "*.Cu")
+	)
+	(pad "3" smd rect
+		(at 0 0)
+		(size 5 5)
+		(property pad_prop_heatsink)
+		(layers "F.Cu" "F.Mask")
+		(zone_connect 2)
+	)
+	(pad "3" smd rect
+		(at 0 0)
+		(size 5 5)
+		(property pad_prop_heatsink)
+		(layers "B.Cu")
+		(zone_connect 2)
+	)
+	(pad "3" thru_hole circle
+		(at 0.733333 -2.2)
+		(size 0.6 0.6)
+		(drill 0.3)
+		(property pad_prop_heatsink)
+		(layers "*.Cu")
+	)
+	(pad "3" thru_hole circle
+		(at 0.733333 -0.733333)
+		(size 0.6 0.6)
+		(drill 0.3)
+		(property pad_prop_heatsink)
+		(layers "*.Cu")
+	)
+	(pad "3" thru_hole circle
+		(at 0.733333 0.733333)
+		(size 0.6 0.6)
+		(drill 0.3)
+		(property pad_prop_heatsink)
+		(layers "*.Cu")
+	)
+	(pad "3" thru_hole circle
+		(at 0.733333 2.2)
+		(size 0.6 0.6)
+		(drill 0.3)
+		(property pad_prop_heatsink)
+		(layers "*.Cu")
+	)
+	(pad "3" thru_hole circle
+		(at 2.2 -2.2)
+		(size 0.6 0.6)
+		(drill 0.3)
+		(property pad_prop_heatsink)
+		(layers "*.Cu")
+	)
+	(pad "3" thru_hole circle
+		(at 2.2 -0.733333)
+		(size 0.6 0.6)
+		(drill 0.3)
+		(property pad_prop_heatsink)
+		(layers "*.Cu")
+	)
+	(pad "3" thru_hole circle
+		(at 2.2 0.733333)
+		(size 0.6 0.6)
+		(drill 0.3)
+		(property pad_prop_heatsink)
+		(layers "*.Cu")
+	)
+	(pad "3" thru_hole circle
+		(at 2.2 2.2)
+		(size 0.6 0.6)
+		(drill 0.3)
+		(property pad_prop_heatsink)
+		(layers "*.Cu")
 	)
 )
