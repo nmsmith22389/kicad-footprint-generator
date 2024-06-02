@@ -1606,6 +1606,27 @@ Maxim_TDFN-6-1EP_3x3mm_P0.95mm_EP1.5x2.3mm:
   num_pins_x: 0
   num_pins_y: 3
 
+Maxim_TDFN-10-1EP_3x3mm_P0.95mm_EP1.5x2.3mm:
+  device_type: 'TDFN'
+  manufacturer: 'Maxim'
+  #part_number: 'MAX31331'
+  #package variant: T1033-2
+  size_source: 'https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/tqfn/21-0137.pdf'
+  ipc_class: 'qfn'
+  body_size_x: 2.9 .. 3.1
+  body_size_y: 2.9 .. 3.1
+  overall_height: 0.7 .. 0.8
+  lead_width: 0.3 +/- 0.05
+  lead_len: 0.2 .. 0.4
+  EP_size_x: 1.5 +/- 0.1
+  EP_size_y: 2.3 +/- 0.1
+  EP_num_paste_pads: [2, 2]
+  EP_size_x_overwrite: 1.58
+  EP_size_y_overwrite: 2.35
+  pitch: 0.5
+  num_pins_x: 0
+  num_pins_y: 5
+
 TDFN-12-1EP_3x3mm_P0.4mm_EP1.7x2.45mm:
   device_type: 'TDFN'
   size_source: 'https://www.renesas.com/us/en/document/psc/package-drawing-tdfn-12pin-l123x3c'
@@ -1811,6 +1832,8 @@ TDFN-8-1EP_3x2mm_P0.5mm_EP1.4x1.4mm:
   pitch: 0.50
   num_pins_x: 0
   num_pins_y: 4
+
+  num_pins_y: 5
 
 DFN-14_1.35x3.5mm_P0.5mm:
   device_type: 'DFN'
