@@ -33,6 +33,45 @@ UQFN-10_1.3x1.8mm_P0.4mm:
   #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
   #include_suffix_in_3dpath: 'False'
 
+UQFN-10_1.4x1.8mm_P0.4mm:
+  device_type: 'UQFN'
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'https://www.onsemi.com/pub/Collateral/488AT.PDF'
+  ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  # custom_name_format:
+  body_size_x:
+    nominal: 1.4
+    tolerance: 0
+  body_size_y:
+    nominal: 1.8
+    tolerance: 0
+  lead_width:
+    minimum: 0.15
+    maximum: 0.25
+  lead_len_V:
+    minimum: 0.3
+    maximum: 0.5
+  lead_len_H:
+    minimum: 0.3
+    maximum: 0.5
+
+  heel_reduction: 0.05 # necessary to reach 0.15mm clearance between vertical and horizontal pads
+
+  pad_overrides:
+    1:
+      lead_len: 0.4 .. 0.6
+      size_increase: [0.2, null] # 0.2mm wider than standard pins
+      move: [0.1, null] # Move inside (half of size increase)
+
+  pitch: 0.4
+  num_pins_x: 3
+  num_pins_y: 2
+
+  compatible_mpns:
+    - 'ONSemi-UQFN10-488AT-01' # e.g. NL3S22S
+
 UQFN-10_1.6x2.1mm_P0.5mm:
   device_type: 'UQFN'
   #manufacturer: 'man'
