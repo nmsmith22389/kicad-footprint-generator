@@ -530,7 +530,19 @@ TSSOP-8_4.4x3mm_P0.65mm:
   num_pins_y: 4
 
 TSSOP-16_4.4x5mm_P0.65mm:
-  size_source: 'JEDEC MO-153 Var AB https://www.jedec.org/document_search?search_api_views_fulltext=MO-153'
+  size_source: 'https://www.jedec.org/document_search?search_api_views_fulltext=MO-153'
+  compatible_mpns:
+    - JEDEC-MO-153-AB
+    # https://www.ti.com/lit/pdf/MPDS361
+    - TI-PW0016A
+    # https://ww1.microchip.com/downloads/en/DeviceDoc/16L_TSSOP_4_4_ST_C04-0068A.pdf
+    - Microchip-ST
+    # https://toshiba.semicon-storage.com/us/semiconductor/design-development/package/detail.TSSOP16.html
+    - Toshiba-TSSOP16-P-0044-0.65A
+    # https://www.nxp.com/docs/en/package-information/SOT403-1.pdf
+    - NXP-SOT403-1
+    # https://www.infineon.com/cms/en/product/packages/P-TSSOP/P-TSSOP-16-800/
+    - Infineon-P-TSSOP-16-800
   body_size_x: 4.4 +/-0.1
   body_size_y: 5.0 +/-0.1
   overall_size_x: 6.4
