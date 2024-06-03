@@ -446,6 +446,105 @@ M2:
       datasheet: https://katalog.we-online.de/em/datasheet/9774080243.pdf
       h: 8
 
+M2.5_1:
+  series_prefix: WA-SMSI
+  footprint:
+    ring:
+      id: 3.7
+      od: 6
+      paste: 
+        clearance: 0.65
+        id: 3.8
+        od: 5.84
+    npth: 3.7
+  mechanical:
+    id: M2.5
+    od: 5.1
+    od1: 3.5
+    h1: 0.5
+  parts:
+    9774005151:
+      datasheet: https://www.we-online.com/components/products/datasheet/9774005151R.pdf
+      h: 0.5
+
+M2.5:
+  series_prefix: WA-SMSI
+  footprint:
+    ring:
+      id: 3.7
+      od: 6
+      paste: 
+        clearance: 0.65
+        id: 3.8
+        od: 5.84
+    npth: 3.7
+  mechanical:
+    id: M2.5
+    od: 5.1
+    od1: 3.5
+    h1: 1.4
+  parts:
+    9774010151R:
+      datasheet: https://www.we-online.com/components/products/datasheet/9774010151R.pdf
+      h: 1
+    9774015151R:
+      datasheet: https://www.we-online.com/components/products/datasheet/9774015151R.pdf
+      h: 1.5
+    9774020151R:
+      datasheet: https://www.we-online.com/components/products/datasheet/9774020151R.pdf
+      h: 2
+    9774025151R:
+      datasheet: https://www.we-online.com/components/products/datasheet/9774025151R.pdf
+      h: 2.5
+    9774027151R:
+      datasheet: https://www.we-online.com/components/products/datasheet/9774027151R.pdf
+      h: 2.7
+    9774030151R:
+      datasheet: https://www.we-online.com/components/products/datasheet/9774030151R.pdf
+      h: 3
+    9774035151R:
+      datasheet: https://www.we-online.com/components/products/datasheet/9774035151R.pdf
+      h: 3.5
+    9774040151R:
+      datasheet: https://www.we-online.com/components/products/datasheet/9774040151R.pdf
+      h: 4
+    9774045151R:
+      datasheet: https://www.we-online.com/components/products/datasheet/9774045151R.pdf
+      h: 4.5
+    9774050151R:
+      datasheet: https://www.we-online.com/components/products/datasheet/9774050151R.pdf
+      h: 5
+    9774055151R:
+      datasheet: https://www.we-online.com/components/products/datasheet/9774055151R.pdf
+      h: 5.5
+    9774060151R:
+      datasheet: https://www.we-online.com/components/products/datasheet/9774060151R.pdf
+      h: 6
+    9774065151R:
+      datasheet: https://www.we-online.com/components/products/datasheet/9774065151R.pdf
+      h: 6.5
+    9774070151R:
+      datasheet: https://www.we-online.com/components/products/datasheet/9774070151R.pdf
+      h: 7
+    9774075151R:
+      datasheet: https://www.we-online.com/components/products/datasheet/9774075151R.pdf
+      h: 7.5
+    9774080151R:
+      datasheet: https://www.we-online.com/components/products/datasheet/9774080151R.pdf
+      h: 8
+    9774085151R:
+      datasheet: https://www.we-online.com/components/products/datasheet/9774085151R.pdf
+      h: 8.5
+    9774090151R:
+      datasheet: https://www.we-online.com/components/products/datasheet/9774090151R.pdf
+      h: 9
+    9774095151R:
+      datasheet: https://www.we-online.com/components/products/datasheet/9774095151R.pdf
+      h: 9.5
+    9774100151R:
+      datasheet: https://www.we-online.com/components/products/datasheet/9774100151R.pdf
+      h: 10
+
 M3:
   series_prefix: WA-SMSI
   footprint:
