@@ -1,0 +1,11 @@
+- series: XAL
+  manufacturer: Coilcraft
+  csv: coilcraft_xal.csv
+  3d:
+    type: 1
+    bodyColor: black body
+    pinColor: metal grey pins
+    padThickness: 0.05
+  tags:
+    - xal
+  library_name: Inductor_SMD

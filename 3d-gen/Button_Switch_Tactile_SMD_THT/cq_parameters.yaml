@@ -1,0 +1,1244 @@
+SW_SPST_B3S-1000:
+  serie: 'B3S'
+  modelName: 'SW_SPST_B3S-1000'
+  model_class: 'cqMakerTactSwitch'
+  with_gnd_pin: null
+  gnd_pin_tip_to_center: null
+  no_gnd_pins: null
+  offset_gnd_pin: null
+  gnd_pin_width: null
+  body_board_distance: 0.0
+  body_setback_distance: 0.0
+  rotation: 90
+  body_width: 6.0             
+  body_length: 6.6               
+  body_height: 3.4
+  pin_pitch: 4.5
+  distance_pinTip_rows: 9.0
+  pin_width: 0.7
+  pin_thickness: 0.1
+  terminal_shape: 'GW'
+  button_dia: 3.3
+  body_height_with_button: 4.3
+  button_type: 'FLAT'
+  cover_color_key: 'metal grey pins'        
+  body_color_key: 'black body'        
+  button_color_key: 'orange body'        
+  pins_color_key: 'gold pins'
+  destination_dir : 'Button_Switch_SMD.3dshapes'
+
+SW_SPST_B3S-1100:
+  serie: 'B3S'
+  modelName: 'SW_SPST_B3S-1100'
+  model_class: 'cqMakerTactSwitch'
+  no_gnd_pins: null
+  offset_gnd_pin: null
+  gnd_pin_width: null
+  body_board_distance: 0.0
+  body_setback_distance: 0.9
+  rotation: 90
+  body_width: 6.0             
+  body_length: 6.6               
+  body_height: 3.4
+  pin_pitch: 4.5
+  distance_pinTip_rows: 9.0
+  pin_width: 0.7
+  pin_thickness: 0.1
+  terminal_shape: 'GW'
+  button_dia: 3.3
+  body_height_with_button: 4.3
+  button_type: 'FLAT'
+  with_gnd_pin: True
+  gnd_pin_tip_to_center: 4.2
+  cover_color_key: 'metal grey pins'        
+  body_color_key: 'black body'        
+  button_color_key: 'black body'        
+  pins_color_key: 'gold pins'  
+  destination_dir: 'Button_Switch_SMD.3dshapes'
+
+SW_SPST_B3SL-1002P:
+  serie: 'B3SL'
+  modelName: 'SW_SPST_B3SL-1002P'
+  model_class: 'cqMakerTactSwitch'
+  with_gnd_pin: null
+  gnd_pin_tip_to_center: null
+  no_gnd_pins: null
+  offset_gnd_pin: null
+  gnd_pin_width: null
+  body_board_distance: 0.0
+  body_setback_distance: 0.0
+  rotation: 90
+  body_width: 6.2             
+  body_length: 6.5               
+  body_height: 2.5
+  pin_pitch: 4.0
+  distance_pinTip_rows: 7.0
+  pin_width: 0.7
+  pin_thickness: 0.3
+  terminal_shape: 'JH'
+  button_dia: 2.5
+  body_height_with_button: 3.4
+  button_type: 'FLAT'
+  cover_color_key: 'metal grey pins'        
+  body_color_key: 'black body'        
+  button_color_key: 'green body'        
+  pins_color_key: 'metal silver'  
+  destination_dir : 'Button_Switch_SMD.3dshapes'
+
+SW_SPST_B3SL-1022P:
+  serie: 'B3SL'
+  modelName: 'SW_SPST_B3SL-1022P'
+  model_class: 'cqMakerTactSwitch'
+  with_gnd_pin: null
+  gnd_pin_tip_to_center: null
+  no_gnd_pins: null
+  offset_gnd_pin: null
+  gnd_pin_width: null
+  body_board_distance: 0.0
+  body_setback_distance: 0.0
+  rotation: 90
+  body_width: 6.2             
+  body_length: 6.5               
+  body_height: 2.5
+  pin_pitch: 4.0
+  distance_pinTip_rows: 7.0
+  pin_width: 0.7
+  pin_thickness: 0.3
+  terminal_shape: 'JH'
+  button_dia: 2.5
+  body_height_with_button: 5.1
+  button_type: 'FLAT'
+  cover_color_key: 'metal grey pins'        
+  body_color_key: 'black body'        
+  button_color_key: 'grey body'        
+  pins_color_key: 'metal silver'
+  destination_dir : 'Button_Switch_SMD.3dshapes'
+
+SW_SPST_B3U-1100P-B:
+  serie: 'B3U1'
+  modelName: 'SW_SPST_B3U-1100P-B'
+  model_class: 'cqMakerTactSwitch'
+  no_gnd_pins: null
+  offset_gnd_pin: null
+  body_board_distance: 0.0
+  body_setback_distance: 0.8
+  rotation: 90
+  body_width: 3.0             
+  body_length: 2.5               
+  body_height: 1.2
+  pin_pitch: 0.0
+  distance_pinTip_rows: 4.0
+  pin_width: 1.4
+  pin_thickness: 0.2
+  has_pegs: True
+  pegs_radius: 0.325
+  pegs_pitch: 0.0
+  pegs_heigth: 0.5
+  terminal_shape: 'GW'
+  button_dia: 1.5
+  body_height_with_button: 1.6
+  button_type: 'FLAT'
+  with_gnd_pin: True
+  gnd_pin_tip_to_center: 1.9
+  gnd_pin_width: 0.5
+  cover_color_key: 'metal grey pins'        
+  body_color_key: 'black body'        
+  button_color_key: 'black body'        
+  pins_color_key: 'metal silver'
+  destination_dir: 'Button_Switch_SMD.3dshapes'
+
+SW_SPST_B3U-1100P:
+  serie: 'B3U1'
+  modelName: 'SW_SPST_B3U-1100P'
+  model_class: 'cqMakerTactSwitch'
+  no_gnd_pins: null
+  offset_gnd_pin: null
+  body_board_distance: 0.0
+  body_setback_distance: 0.8
+  rotation: 90
+  body_width: 3.0             
+  body_length: 2.5               
+  body_height: 1.2
+  pin_pitch: 0.0
+  distance_pinTip_rows: 4.0
+  pin_width: 1.4
+  pin_thickness: 0.2
+  terminal_shape: 'GW'
+  button_dia: 1.5
+  body_height_with_button: 1.6
+  button_type: 'FLAT'
+  with_gnd_pin: True
+  gnd_pin_tip_to_center: 1.9
+  gnd_pin_width: 0.5
+  cover_color_key: 'metal grey pins'        
+  body_color_key: 'black body'        
+  button_color_key: 'black body'        
+  pins_color_key: 'metal silver'  
+  destination_dir: 'Button_Switch_SMD.3dshapes'
+
+SW_SPST_Omron_B3FS-100xP:
+  serie: 'B3FS'
+  modelName: 'SW_SPST_Omron_B3FS-100xP'
+  model_class: 'cqMakerTactSwitch'
+  no_gnd_pins: null
+  with_gnd_pin: null
+  gnd_pin_tip_to_center: null
+  offset_gnd_pin: null
+  gnd_pin_width: null
+  rotation: 90
+  body_board_distance: 0.0
+  body_setback_distance: 0.0
+  body_width: 6.0             
+  body_length: 6.3               
+  body_height: 2.6
+  pin_pitch: 4.5
+  distance_pinTip_rows: 8.0
+  pin_width: 0.7
+  pin_thickness: 0.3
+  terminal_shape: 'GW'
+  button_dia: 3.0
+  body_height_with_button: 3.1
+  button_type: 'FLAT'
+  cover_color_key: 'metal grey pins'        
+  body_color_key: 'black body'        
+  button_color_key: 'blue body'        
+  pins_color_key: 'metal silver'
+  destination_dir : 'Button_Switch_SMD.3dshapes'
+
+SW_SPST_Omron_B3FS-101xP:
+  modelName: 'SW_SPST_Omron_B3FS-101xP'
+  model_class: 'cqMakerTactSwitch'
+  serie: 'B3FS'
+  no_gnd_pins: null
+  gnd_pin_tip_to_center: null
+  offset_gnd_pin: null
+  with_gnd_pin: null
+  gnd_pin_width: null
+  rotation: 90
+  body_board_distance: 0.0
+  body_setback_distance: 0.0
+  body_width: 6.0             
+  body_length: 6.3               
+  body_height: 2.6
+  pin_pitch: 4.5
+  distance_pinTip_rows: 8.0
+  pin_width: 0.7
+  pin_thickness: 0.3
+  terminal_shape: 'GW'
+  button_dia: 3.0
+  body_height_with_button: 4.3
+  button_type: 'FLAT'
+  cover_color_key: 'metal grey pins'        
+  body_color_key: 'black body'        
+  button_color_key: 'blue body'        
+  pins_color_key: 'metal silver'  
+  destination_dir : 'Button_Switch_SMD.3dshapes'
+
+SW_SPST_Omron_B3FS-105xP:
+  modelName: 'SW_SPST_Omron_B3FS-105xP'
+  model_class: 'cqMakerTactSwitch'
+  serie: 'B3FS'
+  no_gnd_pins: null
+  gnd_pin_tip_to_center: null
+  offset_gnd_pin: null
+  with_gnd_pin: null
+  gnd_pin_width: null
+  rotation: 90
+  body_board_distance: 0.0
+  body_setback_distance: 0.0
+  body_width: 6.0             
+  body_length: 6.3               
+  body_height: 2.6
+  pin_pitch: 4.5
+  distance_pinTip_rows: 8.0
+  pin_width: 0.7
+  pin_thickness: 0.3
+  terminal_shape: 'GW'
+  button_dia: 3.0
+  body_height_with_button: 7.3
+  button_type: 'PROJ'
+  cover_color_key: 'metal grey pins'        
+  body_color_key: 'black body'        
+  button_color_key: 'yellow body'        
+  pins_color_key: 'metal silver'  
+  destination_dir : 'Button_Switch_SMD.3dshapes'
+
+SW_TH_Tactile_Omron_B3F-10xx:
+  modelName: 'SW_TH_Tactile_Omron_B3F-10xx'
+  model_class: 'cqMakerTactSwitch'
+  serie: 'B3F'
+  no_gnd_pins: null
+  with_gnd_pin: null
+  gnd_pin_tip_to_center: null
+  offset_gnd_pin: null
+  gnd_pin_width: null
+  rotation: 90
+  body_board_distance: 0.0
+  body_setback_distance: -2.5
+  body_width: 6.0
+  body_length: 6.0
+  body_height: 3.4
+  pin_pitch: 4.5
+  distance_pinTip_rows: 6.5
+  pin_width: 0.7
+  pin_thickness: 0.3
+  pin_length_below_body: 3.5
+  terminal_shape: 'THC'
+  button_dia: 3.5
+  body_height_with_button: 4.3
+  button_type: 'FLAT'
+  cover_color_key: 'metal grey pins'        
+  body_color_key: 'black body'        
+  button_color_key: 'yellow body'        
+  pins_color_key: 'metal silver'  
+  destination_dir: 'Button_Switch_THT.3dshapes'
+
+SW_TH_Tactile_Omron_B3F-11xx:
+  modelName: 'SW_TH_Tactile_Omron_B3F-11xx'
+  model_class: 'cqMakerTactSwitch'
+  serie: 'B3F'
+  no_gnd_pins: null
+  offset_gnd_pin: null
+  gnd_pin_width: null
+  rotation: 90
+  body_board_distance: 0.0
+  body_setback_distance: 0.0
+  body_width: 6.0
+  body_length: 6.0
+  body_height: 3.4
+  pin_pitch: 4.5
+  distance_pinTip_rows: 6.5
+  pin_width: 0.7
+  pin_thickness: 0.3
+  pin_length_below_body: 3.5
+  terminal_shape: 'THC'
+  button_dia: 3.5
+  body_height_with_button: 4.3
+  button_type: 'FLAT'
+  with_gnd_pin: True
+  gnd_pin_tip_to_center: 4.1
+  cover_color_key: 'metal grey pins'        
+  body_color_key: 'black body'        
+  button_color_key: 'yellow body'        
+  pins_color_key: 'metal silver'
+  destination_dir: 'Button_Switch_THT.3dshapes'
+
+SW_push_1P1T_NO_CK_KSC6xxJxxx:
+  modelName: 'SW_push_1P1T_NO_CK_KSC6xxJxxx'
+  model_class: 'cqMakerTactSwitch'
+  serie: 'KSC'
+  with_gnd_pin: null
+  offset_gnd_pin: null
+  gnd_pin_tip_to_center: null
+  no_gnd_pins: null
+  no_gnd_pins: null
+  gnd_pin_width: null
+  rotation: 90
+  body_board_distance: 0.0
+  body_setback_distance: 0.0
+  body_width: 6.2
+  body_length: 6.2
+  body_height: 2.8
+  pin_pitch: 4.0
+  distance_pinTip_rows: 6.8
+  pin_width: 0.7
+  pin_thickness: 0.3
+  terminal_shape: 'JH'
+  button_dia: 2.9
+  body_height_with_button: 7.6
+  button_type: 'FLAT'
+  button_ring: 'ROUND'
+  button_ring_radius: 2.35
+  button_ring_heigth: 1.6
+  cover_color_key: 'metal grey pins'        
+  body_color_key: 'black body'        
+  button_color_key: 'black body'        
+  pins_color_key: 'metal silver'
+  destination_dir: 'Button_Switch_SMD.3dshapes'
+
+SW_push_1P1T_NO_CK_KSC7xxJxxx:
+  modelName: 'SW_push_1P1T_NO_CK_KSC7xxJxxx'
+  model_class: 'cqMakerTactSwitch'
+  serie: 'KSC'
+  with_gnd_pin: null
+  offset_gnd_pin: null
+  gnd_pin_tip_to_center: null
+  no_gnd_pins: null
+  gnd_pin_width: null
+  rotation: 90
+  body_board_distance: 0.0
+  body_setback_distance: 0.0
+  body_width: 6.2
+  body_length: 6.2
+  body_height: 2.8
+  pin_pitch: 4.0
+  distance_pinTip_rows: 6.8
+  pin_width: 0.7
+  pin_thickness: 0.3
+  terminal_shape: 'JH'
+  button_dia: 3.0
+  body_height_with_button: 4.2
+  button_type: 'FLAT'
+  cover_color_key: 'metal grey pins'
+  body_color_key: 'black body'
+  button_color_key: 'blue body'
+  pins_color_key: 'metal silver'
+  destination_dir: 'Button_Switch_SMD.3dshapes'
+
+SW_SPST_EVPBF:
+  modelName: 'SW_SPST_EVPBF'
+  model_class: 'cqMakerTactSwitch'
+  serie: 'EVPBF'
+  with_gnd_pin: null
+  offset_gnd_pin: null
+  gnd_pin_tip_to_center: null
+  no_gnd_pins: null
+  gnd_pin_width: null
+  rotation: 90
+  body_board_distance: 0.0
+  body_setback_distance: 0.0
+  body_width: 6.0
+  body_length: 6.0
+  body_height: 2.5
+  cover_thickness: 0.15
+  pin_pitch: 4.0
+  distance_pinTip_rows: 6.6
+  pin_width: 0.8
+  pin_thickness: 0.2
+  terminal_shape: 'JH'
+  button_dia: 3.4
+  body_height_with_button: 3.5
+  button_type: 'FLAT'
+  cover_color_key: 'metal grey pins'
+  body_color_key: 'black body'
+  button_color_key: 'white body'
+  pins_color_key: 'metal silver'
+  destination_dir: 'Button_Switch_SMD.3dshapes'
+
+SW_SPST_EVQP0:
+  modelName: 'SW_SPST_EVQP0'
+  model_class: 'cqMakerTactSwitch'
+  serie: 'EVQP0'
+  with_gnd_pin: null
+  offset_gnd_pin: null
+  gnd_pin_tip_to_center: null
+  no_gnd_pins: null
+  gnd_pin_width: null
+  rotation: 90
+  body_board_distance: 0.0
+  body_setback_distance: 0.0
+  body_width: 6.2
+  body_length: 6.0
+  body_height: 1.8
+  cover_thickness: 0.15
+  pin_pitch: 4.0
+  distance_pinTip_rows: 6.6
+  pin_width: 0.8
+  pin_thickness: 0.2
+  terminal_shape: 'JH'
+  button_dia: 2.0
+  body_height_with_button: 2.5
+  button_type: 'FLAT'
+  cover_color_key: 'metal grey pins'
+  body_color_key: 'black body'
+  button_color_key: 'blue body'
+  pins_color_key: 'metal silver'
+  destination_dir: 'Button_Switch_SMD.3dshapes'
+
+SW_SPST_EVQP2:
+  modelName: 'SW_SPST_EVQP2'
+  model_class: 'cqMakerTactSwitch'
+  serie: 'EVQP2'
+  with_gnd_pin: null
+  offset_gnd_pin: null
+  gnd_pin_tip_to_center: null
+  no_gnd_pins: null
+  gnd_pin_width: null
+  rotation: 90
+  body_board_distance: 0.0
+  body_setback_distance: 0.0
+  body_width: 4.7
+  body_length: 3.5
+  body_height: 1.65
+  cover_thickness: 0.15
+  pin_pitch: 1.7
+  distance_pinTip_rows: 5.5
+  pin_width: 0.6
+  pin_thickness: 0.2
+  terminal_shape: 'JH'
+  button_dia: 1.8
+  body_height_with_button: 2.5
+  button_type: 'FLAT'
+  cover_color_key: 'metal grey pins'
+  body_color_key: 'black body'
+  button_color_key: 'grey body'
+  pins_color_key: 'metal silver'
+  destination_dir: 'Button_Switch_SMD.3dshapes'
+
+SW_SPST_Panasonic_EVQPL_3PL_5PL_PT_A08:
+  modelName: 'SW_SPST_Panasonic_EVQPL_3PL_5PL_PT_A08'
+  model_class: 'cqMakerTactSwitch'
+  serie: 'EVQPL'
+  rotation: 0
+  body_board_distance: 0.0
+  body_setback_distance: 0.0
+  body_width: 4.9
+  body_length: 4.9
+  body_height: 0.8
+  cover_thickness: 0.15
+  pin_pitch: 3.7
+  distance_pinTip_rows: 5.2
+  pin_width: 0.5
+  pin_thickness: 0.2
+  terminal_shape: 'JH'
+  button_dia: 3.2
+  body_height_with_button: 0.8
+  button_type: 'FLAT'
+  with_gnd_pin: True
+  gnd_pin_tip_to_center: 2.45
+  no_gnd_pins: 2
+  offset_gnd_pin: 0.35
+  gnd_pin_width: 0.3
+  cover_color_key: 'metal grey pins'
+  body_color_key: 'black body'
+  button_color_key: 'white body'
+  pins_color_key: 'metal silver'
+  destination_dir: 'Button_Switch_SMD.3dshapes'
+
+SW_SPST_Panasonic_EVQPL_3PL_5PL_PT_A15:
+  modelName: 'SW_SPST_Panasonic_EVQPL_3PL_5PL_PT_A15'
+  model_class: 'cqMakerTactSwitch'
+  serie: 'EVQPL'
+  rotation: 0
+  body_board_distance: 0.0
+  body_setback_distance: 0.0
+  body_width: 4.9
+  body_length: 4.9
+  body_height: 0.8
+  cover_thickness: 0.15
+  pin_pitch: 3.7
+  distance_pinTip_rows: 5.2
+  pin_width: 0.5
+  pin_thickness: 0.2
+  terminal_shape: 'JH'
+  button_dia: 3.2
+  body_height_with_button: 1.5
+  button_type: 'FLAT'
+  button_ring: 'OCTA'
+  button_ring_width: 3.7
+  button_ring_length: 3.7
+  button_ring_heigth: 0.4
+  with_gnd_pin: True
+  gnd_pin_tip_to_center: 2.45
+  no_gnd_pins: 2
+  offset_gnd_pin: 0.35
+  gnd_pin_width: 0.3
+  cover_color_key: 'metal grey pins'
+  body_color_key: 'black body'
+  button_color_key: 'white body'
+  pins_color_key: 'metal silver'
+  destination_dir: 'Button_Switch_SMD.3dshapes'
+
+SW_Tactile_Straight_KSA0Axx1LFTR:
+  modelName: 'SW_Tactile_Straight_KSA0Axx1LFTR'
+  model_class: 'cqMakerTactSwitch'
+  serie: 'KSx0A'
+  with_gnd_pin: null
+  offset_gnd_pin: null
+  gnd_pin_tip_to_center: null
+  no_gnd_pins: null
+  gnd_pin_width: null
+  rotation: 90
+  body_board_distance: 0.0
+  body_setback_distance: 0.0
+  body_width: 7.4
+  body_length: 7.3
+  body_height: 2.6
+  cover_thickness: 0.3
+  pin_pitch: 5.08
+  distance_pinTip_rows: 7.65
+  pin_width: 0.53
+  pin_thickness: 0.3
+  pin_length_below_body: 4.2
+  terminal_shape: 'THC'
+  button_dia: 3.0
+  body_height_with_button: 4.7
+  button_type: 'FLAT'
+  button_ring: 'ROUND'
+  button_ring_radius: 2.4
+  button_ring_heigth: 1.1
+  cover_color_key: 'metal grey pins'
+  body_color_key: 'black body'
+  button_color_key: 'blue body'
+  pins_color_key: 'metal silver'
+  destination_dir: 'Button_Switch_THT.3dshapes'
+
+SW_Tactile_Straight_KSL0Axx1LFTR:
+  modelName: 'SW_Tactile_Straight_KSL0Axx1LFTR'
+  model_class: 'cqMakerTactSwitch'
+  serie: 'KSx0A'
+  with_gnd_pin: null
+  offset_gnd_pin: null
+  gnd_pin_tip_to_center: null
+  no_gnd_pins: null
+  gnd_pin_width: null
+  rotation: 90
+  body_board_distance: 0.0
+  body_setback_distance: 0.0
+  body_width: 7.4
+  body_length: 7.3
+  body_height: 2.6
+  cover_thickness: 0.3
+  pin_pitch: 5.08
+  distance_pinTip_rows: 7.65
+  pin_width: 0.53
+  pin_thickness: 0.3
+  pin_length_below_body: 4.2
+  terminal_shape: 'THC'
+  button_dia: 3.0
+  body_height_with_button: 9.9
+  button_type: 'FLAT'
+  button_ring: 'ROUND'
+  button_ring_radius: 2.4
+  button_ring_heigth: 1.1
+  cover_color_key: 'metal grey pins'
+  body_color_key: 'black body'
+  button_color_key: 'red body'
+  pins_color_key: 'metal silver'
+  destination_dir: 'Button_Switch_THT.3dshapes'
+
+SW_PUSH_6mm_H8.5mm:
+  modelName: 'SW_PUSH_6mm_H8.5mm'
+  model_class: 'cqMakerTactSwitch'
+  with_gnd_pin: null
+  offset_gnd_pin: null
+  gnd_pin_tip_to_center: null
+  no_gnd_pins: null
+  gnd_pin_width: null
+  rotation: 90
+  body_board_distance: 0.0
+  body_setback_distance: 0.0
+  body_width: 6.0
+  body_length: 6.0
+  body_height: 3.6
+  pin_pitch: 4.5
+  distance_pinTip_rows: 6.5
+  pin_width: 0.7
+  pin_thickness: 0.3
+  pin_length_below_body: 3.5
+  terminal_shape: 'THL'
+  button_dia: 3.5
+  body_height_with_button: 8.5
+  button_type: 'FLAT'
+  cover_color_key: 'metal grey pins'
+  body_color_key: 'black body'
+  button_color_key: 'black body'
+  pins_color_key: 'metal silver'
+  serie: 'B3F'
+  destination_dir: 'Button_Switch_THT.3dshapes'
+
+SW_PUSH_6mm_H9.5mm:
+  modelName: 'SW_PUSH_6mm_H9.5mm'
+  model_class: 'cqMakerTactSwitch'
+  serie: 'B3F'
+  with_gnd_pin: null
+  offset_gnd_pin: null
+  gnd_pin_tip_to_center: null
+  no_gnd_pins: null
+  gnd_pin_width: null
+  rotation: 90
+  body_board_distance: 0.0
+  body_setback_distance: 0.0
+  body_width: 6.0
+  body_length: 6.0
+  body_height: 3.45
+  pin_pitch: 4.5
+  distance_pinTip_rows: 9.0
+  pin_width: 0.7
+  pin_thickness: 0.3
+  terminal_shape: 'GW'
+  button_dia: 3.5
+  body_height_with_button: 9.5
+  button_type: 'FLAT'
+  cover_color_key: 'metal grey pins'        
+  body_color_key: 'black body'        
+  button_color_key: 'black body'        
+  pins_color_key: 'metal silver'  
+  destination_dir: 'Button_Switch_SMD.3dshapes'
+
+SW_SPST_SKQG_WithStem:
+  modelName: 'SW_SPST_SKQG_WithStem'
+  model_class: 'cqMakerTactSwitch'
+  serie: 'SKOG'
+  with_gnd_pin: null
+  offset_gnd_pin: null
+  gnd_pin_tip_to_center: null
+  no_gnd_pins: null
+  gnd_pin_width: null
+  rotation: 90
+  body_board_distance: 0.0
+  body_setback_distance: 0.0
+  body_width: 5.2
+  body_length: 5.2
+  body_height: 0.8
+  cover_thickness: 0.15
+  pin_pitch: 3.7
+  distance_pinTip_rows: 6.4
+  pin_width: 0.5
+  pin_thickness: 0.15
+  terminal_shape: 'GW'
+  button_dia: 2.0
+  body_height_with_button: 1.5
+  button_type: 'FLAT'
+  button_ring: 'OCTA'
+  button_ring_width: 3.7
+  button_ring_length: 3.7
+  button_ring_heigth: 0.4
+  cover_color_key: 'metal grey pins'
+  body_color_key: 'black body'
+  button_color_key: 'white body'
+  pins_color_key: 'metal silver'
+  destination_dir: 'Button_Switch_SMD.3dshapes'
+
+SW_SPST_SKQG_WithoutStem:
+  modelName: 'SW_SPST_SKQG_WithoutStem'
+  model_class: 'cqMakerTactSwitch'
+  serie: 'SKOG'
+  with_gnd_pin: null
+  offset_gnd_pin: null
+  gnd_pin_tip_to_center: null
+  no_gnd_pins: null
+  gnd_pin_width: null
+  rotation: 90
+  body_board_distance: 0.0
+  body_setback_distance: 0.0
+  body_width: 5.2
+  body_length: 5.2
+  body_height: 0.8
+  cover_thickness: 0.15
+  pin_pitch: 3.7
+  distance_pinTip_rows: 6.4
+  pin_width: 0.5
+  pin_thickness: 0.15
+  terminal_shape: 'GW'
+  button_dia: 2.0
+  body_height_with_button: 0.7
+  button_type: 'FLAT'
+  cover_color_key: 'metal grey pins'
+  body_color_key: 'black body'
+  button_color_key: 'black body'
+  pins_color_key: 'metal silver'
+  destination_dir: 'Button_Switch_SMD.3dshapes'
+
+SW_SPST_TL3305A:
+  modelName: 'SW_SPST_TL3305A'
+  model_class: 'cqMakerTactSwitch'
+  serie: 'B3F'   # Tact switch bodys from E-Switch serie TL3305 are similar to Omron B3F but TL3305 are SMD type
+  with_gnd_pin: null
+  offset_gnd_pin: null
+  gnd_pin_tip_to_center: null
+  no_gnd_pins: null
+  gnd_pin_width: null
+  rotation: 90
+  body_board_distance: 0.0
+  body_setback_distance: 0.0
+  body_width: 4.5
+  body_length: 4.5
+  body_height: 3.0
+  pin_pitch: 3.0
+  distance_pinTip_rows: 7.5
+  pin_width: 0.7
+  pin_thickness: 0.3
+  terminal_shape: 'GW'
+  button_dia: 2.5
+  body_height_with_button: 3.8
+  button_type: 'FLAT'
+  cover_color_key: 'metal grey pins'
+  body_color_key: 'black body'
+  button_color_key: 'black body'
+  pins_color_key: 'metal silver'
+  destination_dir: 'Button_Switch_SMD.3dshapes'
+
+SW_SPST_TL3305B:
+  modelName: 'SW_SPST_TL3305B'
+  model_class: 'cqMakerTactSwitch'
+  serie: 'B3F'      # Tact switch bodys from E-Switch serie TL3305 are similar to Omron B3F but TL3305 are SMD type
+  with_gnd_pin: null
+  offset_gnd_pin: null
+  gnd_pin_tip_to_center: null
+  no_gnd_pins: null
+  gnd_pin_width: null
+  rotation: 90
+  body_board_distance: 0.0
+  body_setback_distance: 0.0
+  body_width: 4.5
+  body_length: 4.5
+  body_height: 3.0
+  pin_pitch: 3.0
+  distance_pinTip_rows: 7.5
+  pin_width: 0.7
+  pin_thickness: 0.3
+  terminal_shape: 'GW'
+  button_dia: 2.5
+  body_height_with_button: 5.0
+  button_type: 'FLAT'
+  cover_color_key: 'metal grey pins'
+  body_color_key: 'black body'
+  button_color_key: 'black body'
+  pins_color_key: 'metal silver'
+  destination_dir: 'Button_Switch_SMD.3dshapes'
+
+SW_SPST_TL3305C:
+  modelName: 'SW_SPST_TL3305C'
+  model_class: 'cqMakerTactSwitch'
+  serie: 'B3F'      # Tact switch bodys from E-Switch serie TL3305 are similar to Omron B3F but TL3305 are SMD type
+  with_gnd_pin: null
+  offset_gnd_pin: null
+  gnd_pin_tip_to_center: null
+  no_gnd_pins: null
+  gnd_pin_width: null
+  rotation: 90
+  body_board_distance: 0.0
+  body_setback_distance: 0.0
+  body_width: 4.5
+  body_length: 4.5
+  body_height: 3.0
+  pin_pitch: 3.0
+  distance_pinTip_rows: 7.5
+  pin_width: 0.7
+  pin_thickness: 0.3
+  terminal_shape: 'GW'
+  button_dia: 2.5
+  body_height_with_button: 7.0
+  button_type: 'FLAT'
+  cover_color_key: 'metal grey pins'
+  body_color_key: 'black body'
+  button_color_key: 'black body'
+  pins_color_key: 'metal silver'
+  destination_dir: 'Button_Switch_SMD.3dshapes'
+
+SW_Push_SPST_NO_Alps_SKRK:
+  modelName: 'SW_Push_SPST_NO_Alps_SKRK'
+  model_class: 'cqMakerTactSwitch'
+  with_gnd_pin: null
+  offset_gnd_pin: null
+  gnd_pin_tip_to_center: null
+  no_gnd_pins: null
+  gnd_pin_width: null
+  rotation: 90
+  body_board_distance: 0.0
+  body_setback_distance: 0.0
+  body_width: 3.9
+  body_length: 2.9
+  body_height: 1.5
+  pin_pitch: 0.0
+  distance_pinTip_rows: 4.8
+  pin_width: 1.4
+  pin_thickness: 0.2
+  terminal_shape: 'GW'
+  button_dia: 1.8
+  body_height_with_button: 2.0
+  button_type: 'FLAT'
+  cover_color_key: 'metal grey pins'
+  body_color_key: 'white body'
+  button_color_key: 'black body'
+  pins_color_key: 'metal silver'
+  serie: 'SKRK'
+  destination_dir: 'Button_Switch_SMD.3dshapes'
+
+SW_Push_1P1T_NO_CK_PTS125Sx43PSMTR:
+  modelName: 'SW_Push_1P1T_NO_CK_PTS125Sx43PSMTR'
+  model_class: 'cqMakerCuKPTS125SxTactSwitch'
+  offset_gnd_pin: null
+  gnd_pin_tip_to_center: null
+  no_gnd_pins: null
+  gnd_pin_width: null
+  body_board_distance: 0.0
+  body_setback_distance: 0.0
+  rotation: 90
+  body_width: 12.0
+  body_length: 12.0
+  body_height: 3.3
+  has_pegs: True
+  pegs_radius: 0.75
+  pegs_pitch: 9.0
+  pegs_heigth: 1.5
+  pin_pitch: 5.0
+  distance_pinTip_rows: 15.3
+  pin_width: 1.0
+  pin_thickness: 0.3
+  terminal_shape: 'GW'
+  button_dia: 7.0
+  body_height_with_button: 4.3
+  button_type: 'FLAT'
+  with_gnd_pin: False
+  cover_color_key: 'metal grey pins'
+  body_color_key: 'black body'
+  button_color_key: 'blue body'
+  pins_color_key: 'metal silver'
+  serie: 'PTS125S'
+  destination_dir: 'Button_Switch_SMD.3dshapes'
+
+SW_Push_1P1T_NO_CK_PTS125Sx85PSMTR:
+  modelName: 'SW_Push_1P1T_NO_CK_PTS125Sx85PSMTR'
+  model_class: 'cqMakerCuKPTS125SxTactSwitch'
+  offset_gnd_pin: null
+  gnd_pin_tip_to_center: null
+  no_gnd_pins: null
+  gnd_pin_width: null
+  body_board_distance: 0.0
+  body_setback_distance: 0.0
+  rotation: 90
+  body_width: 12.0
+  body_length: 12.0
+  body_height: 3.3
+  has_pegs: True
+  pegs_radius: 0.75
+  pegs_pitch: 9.0
+  pegs_heigth: 1.5
+  pin_pitch: 5.0
+  distance_pinTip_rows: 15.3
+  pin_width: 1.0
+  pin_thickness: 0.3
+  terminal_shape: 'GW'
+  button_dia: 7.0
+  body_height_with_button: 8.5
+  button_type: 'FLAT'
+  with_gnd_pin: False
+  cover_color_key: 'metal grey pins'
+  body_color_key: 'black body'
+  button_color_key: 'blue body'
+  pins_color_key: 'metal silver'
+  serie: 'PTS125S'
+  destination_dir: 'Button_Switch_SMD.3dshapes'
+
+SW_Push_1P1T_NO_CK_PTS125Sx73PSMTR:
+  modelName: 'SW_Push_1P1T_NO_CK_PTS125Sx73PSMTR'
+  model_class: 'cqMakerCuKPTS125SxTactSwitch'
+  offset_gnd_pin: null
+  gnd_pin_tip_to_center: null
+  no_gnd_pins: null
+  gnd_pin_width: null
+  body_board_distance: 0.0
+  body_setback_distance: 0.0
+  rotation: 90
+  body_width: 12.0
+  body_length: 12.0
+  body_height: 3.3
+  has_pegs: True
+  pegs_radius: 0.75
+  pegs_pitch: 9.0
+  pegs_heigth: 1.5
+  pin_pitch: 5.0
+  distance_pinTip_rows: 15.3
+  pin_width: 1.0
+  pin_thickness: 0.3
+  terminal_shape: 'GW'
+  button_dia: 7.0
+  body_height_with_button: 7.3
+  button_type: 'PROJ'
+  with_gnd_pin: False
+  cover_color_key: 'metal grey pins'
+  body_color_key: 'black body'
+  button_color_key: 'blue body'
+  pins_color_key: 'metal silver'
+  serie: 'PTS125S'
+  destination_dir: 'Button_Switch_SMD.3dshapes'
+
+SW_Push_1P1T_NO_CK_PTS125Sx43SMTR:
+  modelName: 'SW_Push_1P1T_NO_CK_PTS125Sx43SMTR'
+  model_class: 'cqMakerCuKPTS125SxTactSwitch'
+  offset_gnd_pin: null
+  gnd_pin_tip_to_center: null
+  no_gnd_pins: null
+  gnd_pin_width: null
+  body_board_distance: 0.0
+  body_setback_distance: 0.0
+  rotation: 90
+  body_width: 12.0
+  body_length: 12.0
+  body_height: 3.3
+  pin_pitch: 5.0
+  distance_pinTip_rows: 15.3
+  pin_width: 1.0
+  pin_thickness: 0.3
+  terminal_shape: 'GW'
+  button_dia: 7.0
+  body_height_with_button: 4.3
+  button_type: 'FLAT'
+  with_gnd_pin: False
+  cover_color_key: 'metal grey pins'
+  body_color_key: 'black body'
+  button_color_key: 'blue body'
+  pins_color_key: 'metal silver'
+  serie: 'PTS125S'
+  destination_dir: 'Button_Switch_SMD.3dshapes'
+
+SW_Push_1P1T_NO_CK_PTS125Sx85SMTR:
+  modelName: 'SW_Push_1P1T_NO_CK_PTS125Sx85SMTR'
+  model_class: 'cqMakerCuKPTS125SxTactSwitch'
+  offset_gnd_pin: null
+  gnd_pin_tip_to_center: null
+  no_gnd_pins: null
+  gnd_pin_width: null
+  body_board_distance: 0.0
+  body_setback_distance: 0.0
+  rotation: 90
+  body_width: 12.0
+  body_length: 12.0
+  body_height: 3.3
+  pin_pitch: 5.0
+  distance_pinTip_rows: 15.3
+  pin_width: 1.0
+  pin_thickness: 0.3
+  terminal_shape: 'GW'
+  button_dia: 7.0
+  body_height_with_button: 8.5
+  button_type: 'FLAT'
+  with_gnd_pin: False
+  cover_color_key: 'metal grey pins'
+  body_color_key: 'black body'
+  button_color_key: 'blue body'
+  pins_color_key: 'metal silver'
+  serie: 'PTS125S'
+  destination_dir: 'Button_Switch_SMD.3dshapes'
+
+SW_Push_1P1T_NO_CK_PTS125Sx73SMTR:
+  modelName: 'SW_Push_1P1T_NO_CK_PTS125Sx73SMTR'
+  model_class: 'cqMakerCuKPTS125SxTactSwitch'
+  offset_gnd_pin: null
+  gnd_pin_tip_to_center: null
+  no_gnd_pins: null
+  gnd_pin_width: null
+  body_board_distance: 0.0
+  body_setback_distance: 0.0
+  rotation: 90
+  body_width: 12.0
+  body_length: 12.0
+  body_height: 3.3
+  pin_pitch: 5.0
+  distance_pinTip_rows: 15.3
+  pin_width: 1.0
+  pin_thickness: 0.3
+  terminal_shape: 'GW'
+  button_dia: 7.0
+  body_height_with_button: 7.3
+  button_type: 'PROJ'
+  with_gnd_pin: False
+  cover_color_key: 'metal grey pins'
+  body_color_key: 'black body'
+  button_color_key: 'blue body'
+  pins_color_key: 'metal silver'
+  serie: 'PTS125S'
+  destination_dir: 'Button_Switch_SMD.3dshapes'
+
+SW_PUSH-12mm:
+  modelName: 'SW_PUSH-12mm'
+  model_class: 'cqMakerCuKPTS125SxTactSwitch'
+  offset_gnd_pin: null
+  gnd_pin_tip_to_center: null
+  no_gnd_pins: null
+  gnd_pin_width: null
+  body_board_distance: 0.0
+  body_setback_distance: 0.0
+  rotation: 90
+  body_width: 12.0
+  body_length: 12.0
+  body_height: 3.3
+  pin_pitch: 5.0
+  distance_pinTip_rows: 12.5
+  pin_width: 1.0
+  pin_thickness: 0.3
+  terminal_shape: 'THL'
+  pin_length_below_body: 3.5
+  button_dia: 7.0
+  body_height_with_button: 7.3
+  button_type: 'PROJ'
+  with_gnd_pin: False
+  cover_color_key: 'metal grey pins'
+  body_color_key: 'black body'
+  button_color_key: 'blue body'
+  pins_color_key: 'metal silver'
+  serie: 'PTS125S'
+  destination_dir: 'Button_Switch_THT.3dshapes'
+
+SW_PUSH-12mm_Wuerth-430476085716:
+  modelName: 'SW_PUSH-12mm_Wuerth-430476085716'
+  model_class: 'cqMakerCuKPTS125SxTactSwitch'
+  offset_gnd_pin: null
+  gnd_pin_tip_to_center: null
+  no_gnd_pins: null
+  gnd_pin_width: null
+  body_board_distance: 0.0
+  body_setback_distance: 0.0
+  rotation: 90
+  body_width: 12.0
+  body_length: 12.0
+  body_height: 3.5
+  pin_pitch: 5.0
+  distance_pinTip_rows: 12.5
+  pin_width: 1.0
+  pin_thickness: 0.3
+  terminal_shape: 'THL'
+  pin_length_below_body: 3.5
+  button_dia: 7.0
+  body_height_with_button: 8.5
+  button_type: 'FLAT'
+  with_gnd_pin: False
+  cover_color_key: 'metal grey pins'
+  body_color_key: 'black body'
+  button_color_key: 'blue body'
+  pins_color_key: 'metal silver'
+  serie: 'WS_TATV'
+  destination_dir: 'Button_Switch_THT.3dshapes'
+
+Panasonic_EVQPUJ_EVQPUA:
+  modelName: 'Panasonic_EVQPUJ_EVQPUA'
+  model_class: 'cqMakerUltraSmallTactSwitch'
+  offset_gnd_pin: null
+  gnd_pin_tip_to_center: null
+  no_gnd_pins: null
+  gnd_pin_width: null
+  body_board_distance: 0.0
+  body_setback_distance: 0.0
+  rotation: 90
+  body_width: 4.7
+  body_length: 3.5
+  body_height: 1.65
+  pin_pitch: 1.7
+  distance_pinTip_rows: 6.4
+  pin_width: 0.6
+  pin_thickness: 0.2
+  terminal_shape: 'GW'
+  button_side_width: 2.6
+  button_side_height: 1.4
+  body_length_with_button: 4.5
+  button_type: 'SIDE_T'
+  with_gnd_pin: False
+  cover_color_key: 'metal grey pins'
+  body_color_key: 'black body'
+  button_color_key: 'black body'
+  pins_color_key: 'metal silver'
+  serie: 'EVQPU'
+  destination_dir: 'Button_Switch_SMD.3dshapes'
+
+Panasonic_EVQPUK_EVQPUB:
+  modelName: 'Panasonic_EVQPUK_EVQPUB'
+  model_class: 'cqMakerUltraSmallTactSwitch'
+  offset_gnd_pin: null
+  gnd_pin_tip_to_center: null
+  no_gnd_pins: null
+  gnd_pin_width: null
+  body_board_distance: 0.0
+  body_setback_distance: 0.0
+  rotation: 90
+  body_width: 4.7
+  body_length: 3.5
+  body_height: 1.65
+  pin_pitch: 1.7
+  distance_pinTip_rows: 5.5
+  pin_width: 0.6
+  pin_thickness: 0.2
+  terminal_shape: 'JH'
+  button_side_width: 2.6
+  button_side_height: 1.4
+  body_length_with_button: 4.5
+  button_type: 'SIDE_T'
+  with_gnd_pin: False
+  cover_color_key: 'metal grey pins'
+  body_color_key: 'black body'
+  button_color_key: 'black body'
+  pins_color_key: 'metal silver'
+  serie: 'EVQPU'
+  destination_dir: 'Button_Switch_SMD.3dshapes'
+
+SW_Push_1P1T-SH_NO_CK_KMR2xxG:
+  modelName: 'SW_Push_1P1T-SH_NO_CK_KMR2xxG'
+  model_class: 'cqMakerCuK_Kmr2xTactSwitch'
+  offset_gnd_pin: null
+  gnd_pin_tip_to_center: null
+  no_gnd_pins: null
+  gnd_pin_width: null
+  body_board_distance: 0.0
+  body_setback_distance: 0.0
+  rotation: 90
+  body_width: 4.2
+  body_length: 2.8
+  body_height: 1.4
+  pin_pitch: 1.6
+  distance_pinTip_rows: 4.6
+  pin_width: 0.6
+  pin_thickness: 0.15
+  terminal_shape: 'GW'
+  button_oval_width: 2.11
+  button_oval_length: 1.61
+  body_height_with_button: 1.9
+  button_type: 'FLAT'
+  with_gnd_pin: True
+  gnd_pin_width: 1.2
+  cover_color_key: 'metal grey pins'
+  body_color_key: 'black body'
+  button_color_key: 'black body'
+  pins_color_key: 'metal silver'
+  serie: 'KMR2'
+  destination_dir: 'Button_Switch_SMD.3dshapes'
+
+SW_Push_1P1T_NO_CK_KMR2:
+  modelName: 'SW_Push_1P1T_NO_CK_KMR2'
+  model_class: 'cqMakerCuK_Kmr2xTactSwitch'
+  offset_gnd_pin: null
+  gnd_pin_tip_to_center: null
+  no_gnd_pins: null
+  gnd_pin_width: null
+  body_board_distance: 0.0
+  body_setback_distance: 0.0
+  rotation: 90
+  body_width: 4.2
+  body_length: 2.8
+  body_height: 1.4
+  pin_pitch: 1.6
+  distance_pinTip_rows: 4.6
+  pin_width: 0.6
+  pin_thickness: 0.15
+  terminal_shape: 'GW'
+  button_oval_width: 2.11
+  button_oval_length: 1.61
+  body_height_with_button: 1.9
+  button_type: 'FLAT'
+  with_gnd_pin: False
+  cover_color_key: 'metal grey pins'
+  body_color_key: 'black body'
+  button_color_key: 'black body'
+  pins_color_key: 'metal silver'
+  serie: 'KMR2'
+  destination_dir: 'Button_Switch_SMD.3dshapes'
+
+SW_SPST_PTS810:
+  modelName: 'SW_SPST_PTS810'
+  model_class: 'cqMakerCuK_PTS810xTactSwitch'
+  offset_gnd_pin: null
+  gnd_pin_tip_to_center: null
+  no_gnd_pins: null
+  gnd_pin_width: null
+  body_board_distance: 0.0
+  body_setback_distance: 0.0
+  rotation: 90
+  body_width: 4.2
+  body_length: 3.2
+  body_height: 1.8
+  pin_pitch: 2.15
+  distance_pinTip_rows: 4.6
+  pin_width: 0.55
+  pin_thickness: 0.1
+  terminal_shape: 'JH'
+  button_oval_width: 3.0
+  button_oval_length: 2.2
+  body_height_with_button: 2.5
+  button_type: 'FLAT'
+  with_gnd_pin: null
+  cover_color_key: 'metal grey pins'
+  body_color_key: 'black body'
+  button_color_key: 'blue body'
+  pins_color_key: 'metal silver'
+  serie: 'PTS810'
+  destination_dir: 'Button_Switch_SMD.3dshapes'
