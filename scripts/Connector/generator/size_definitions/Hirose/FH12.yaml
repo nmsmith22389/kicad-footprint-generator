@@ -1,0 +1,65 @@
+defaults:
+  library: 'FFC-FPC'
+
+FH12-xxS-0.5SVA:
+  inherit: 'defaults'
+#  fp_name: 'Hirose_FH12-{str(int(num_pos*2))}S-0.5SVA-1MP_P1mm'
+  fp_name: 'Hirose_FH12-{fp_name_pins_per_row}S-0.5SVA'
+  fp_name_pitch: 0.5
+  fp_name_rows: 1
+  fp_suffix: '_Vertical'     # optional: defaults to ''
+  description: 'Hirose FH12, FFC/FPC connector, '
+  doc_parameters:
+    details: ""
+    fp_name_pins_per_row: eval(int(num_pos*2))
+  source: 'https://www.hirose.com/en/product/document?clcode=CL0586-0757-7-98&productname=FH12-12S-0.5SVA(98)&series=FH12&documenttype=2DDrawing&lang=en&documentid=0001240634'
+  tags: 'connector Hirose FH12 vertical'
+  positions: [3, 5, 6, 6.5, 7.5, 8, 8.5, 9, 10, 11, 12, 13, 15, 16, 16.5, 17, 17.5, 18, 20, 22.5, 24.5, 25, 30]
+  pad_pitch: 1.0
+  pads:
+    size:
+      x: 0.6
+      y: 1.5
+  mount_pads:
+    pad_l: # left weld tab pads
+      center:
+        x_offset: 1   # offset from edge-pad center
+        y: [-1.35, 1.35]   # 2 pads on the same x-location
+      size:
+        x: 0.8
+        y: 1.8
+      paste: False
+      name: 'MP'
+      ends: 'both'
+    pad_l_paste: # left weld tab pads
+      center:
+        x_offset: 1   # offset from edge-pad center
+        y: [-1.35, 1.35]   # 2 pads on the same x-location
+      size:
+        x: 0.65
+        y: 1.8
+      paste: True
+      copper: False
+      name: 'MP'
+      ends: 'both'
+  row_pitch: 3.0
+  row_x_offset: 0.5
+  body_size:
+    x_offset: 2.2
+    y: 2.5
+  rule_areas:
+    actuator:
+      name: "Actuator"
+      layers: 'F.Cu'
+      shapes:
+        - 'rect': [[r-0.25, t-1.75-0.5],[l+0.25, t-1.55]]
+      keepouts:
+        footprints: deny
+
+  first_pin:
+    position: 'bottom'     # top (default) or bottom
+    marker:
+      shape: 'triangle' # shape of pin 1 marker on Silk and Fab (circle or triangle)
+      size: 0.5       # size of the pin 1 marker (default: pad_size.y)
+      offset: 0.9    # offset from the body edge (default: 0 corresponds to silk line width)
+
