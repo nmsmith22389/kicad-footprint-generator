@@ -32,7 +32,7 @@ if __name__ == '__main__':
     screw_offset=[0,0]
     slit_screw=True
     name="360272"
-    webpage="http://www.metz-connect.com/de/system/files/METZ_CONNECT_U_Contact_Katalog_Anschlusssysteme_fuer_Leiterplatten_DE_31_07_2017_OFF_024803.pdf?language=en page 131"
+    webpage="https://www.metz-connect.com/externalfiles/360272/863850.PDF"
     footprint_name="TerminalBlock_MetzConnect_{0}_1x01_Horizontal_ScrewM2.6".format(name)
     classname_description="single screw terminal block Metz Connect {0}".format(name)
     makeScrewTerminalSingleStd(footprint_name, block_size=block_size, block_offset=block_offset, pins=pins, ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, screw_offset=screw_offset, slit_screw=slit_screw,
@@ -41,6 +41,7 @@ if __name__ == '__main__':
     block_size=[5,4]
     block_offset=[0.5,0]
     name="360273"
+    webpage="https://www.metz-connect.com/externalfiles/360273/863857.PDF"
     footprint_name="TerminalBlock_MetzConnect_{0}_1x01_Horizontal_ScrewM2.6_WireProtection".format(name)
     classname_description="single screw terminal block Metz Connect {0}".format(name)
     makeScrewTerminalSingleStd(footprint_name, block_size=block_size, block_offset=block_offset, pins=pins, ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, screw_offset=screw_offset, slit_screw=slit_screw,
@@ -55,13 +56,13 @@ if __name__ == '__main__':
     screw_offset=[0,0]
     slit_screw=True
     name="360410"
-    webpage="http://www.metz-connect.com/de/system/files/METZ_CONNECT_U_Contact_Katalog_Anschlusssysteme_fuer_Leiterplatten_DE_31_07_2017_OFF_024803.pdf?language=en page 132"
+    webpage="https://www.metz-connect.com/externalfiles/360410/863875.PDF"
     footprint_name="TerminalBlock_MetzConnect_{0}_1x01_Horizontal_ScrewM3.0".format(name)
     classname_description="single screw terminal block Metz Connect {0}".format(name)
     makeScrewTerminalSingleStd(footprint_name, block_size=block_size, block_offset=block_offset, pins=pins, ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, screw_offset=screw_offset, slit_screw=slit_screw,
                         tags_additional=[], lib_name="${KICAD8_3DMODEL_DIR}/"+classname, classname=classname, classname_description=classname_description, webpage=webpage, script_generated_note=script_generated_note)
     name="360381"
-    webpage="http://www.metz-connect.com/de/system/files/METZ_CONNECT_U_Contact_Katalog_Anschlusssysteme_fuer_Leiterplatten_DE_31_07_2017_OFF_024803.pdf?language=en page 133"
+    webpage="https://www.metz-connect.com/externalfiles/360381/863870.PDF"
     footprint_name="TerminalBlock_MetzConnect_{0}_1x01_Horizontal_ScrewM3.0".format(name)
     classname_description="single screw terminal block Metz Connect {0}".format(name)
     makeScrewTerminalSingleStd(footprint_name, block_size=block_size, block_offset=block_offset, pins=pins, ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, screw_offset=screw_offset, slit_screw=slit_screw,
@@ -70,6 +71,7 @@ if __name__ == '__main__':
     block_size=[6,4]
     block_offset=[1,0]
     name="360322"
+    webpage="https://www.metz-connect.com/externalfiles/360322/863879.PDF"
     footprint_name="TerminalBlock_MetzConnect_{0}_1x01_Horizontal_ScrewM3.0_WireProtection".format(name)
     classname_description="single screw terminal block Metz Connect {0}".format(name)
     makeScrewTerminalSingleStd(footprint_name, block_size=block_size, block_offset=block_offset, pins=pins, ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, screw_offset=screw_offset, slit_screw=slit_screw,
@@ -84,7 +86,7 @@ if __name__ == '__main__':
     screw_offset=[0,0]
     slit_screw=True
     name="360291"
-    webpage="http://www.metz-connect.com/de/system/files/METZ_CONNECT_U_Contact_Katalog_Anschlusssysteme_fuer_Leiterplatten_DE_31_07_2017_OFF_024803.pdf?language=en page 133"
+    webpage="https://www.metz-connect.com/externalfiles/360291/863863.PDF"
     footprint_name="TerminalBlock_MetzConnect_{0}_1x01_Horizontal_ScrewM3.0_Boxed".format(name)
     classname_description="single screw terminal block Metz Connect {0}".format(name)
     makeScrewTerminalSingleStd(footprint_name, block_size=block_size, block_offset=block_offset, pins=pins, ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, screw_offset=screw_offset, slit_screw=slit_screw,
@@ -99,7 +101,7 @@ if __name__ == '__main__':
     screw_offset=[0,0]
     slit_screw=True
     name="360271"
-    webpage="http://www.metz-connect.com/de/system/files/METZ_CONNECT_U_Contact_Katalog_Anschlusssysteme_fuer_Leiterplatten_DE_31_07_2017_OFF_024803.pdf?language=en page 134"
+    webpage="https://www.metz-connect.com/externalfiles/360271/863846.PDF"
     footprint_name="TerminalBlock_MetzConnect_{0}_1x01_Horizontal_ScrewM3.0_Boxed".format(name)
     classname_description="single screw terminal block Metz Connect {0}".format(name)
     makeScrewTerminalSingleStd(footprint_name, block_size=block_size, block_offset=block_offset, pins=pins, ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, screw_offset=screw_offset, slit_screw=slit_screw,
@@ -114,7 +116,7 @@ if __name__ == '__main__':
     screw_offset=[0,0]
     slit_screw=True
     name="360425"
-    webpage="http://www.metz-connect.com/de/system/files/METZ_CONNECT_U_Contact_Katalog_Anschlusssysteme_fuer_Leiterplatten_DE_31_07_2017_OFF_024803.pdf?language=en page 134"
+    webpage="https://www.metz-connect.com/externalfiles/360425/863882.PDF"
     footprint_name="TerminalBlock_MetzConnect_{0}_1x01_Horizontal_ScrewM4.0_Boxed".format(name)
     classname_description="single screw terminal block Metz Connect {0}".format(name)
     makeScrewTerminalSingleStd(footprint_name, block_size=block_size, block_offset=block_offset, pins=pins, ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, screw_offset=screw_offset, slit_screw=slit_screw,
