@@ -1,0 +1,57 @@
+Analog_28L-TQFN-EP-T2844_1:
+  device_type: 'QFN'
+  manufacturer: 'Analog devices'
+  #part_number: 'mpn'
+  # Outline source:
+  size_source: 'https://www.maximintegrated.com/content/dam/files/design/emmi/90-0035.pdf'
+  ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  custom_name_format: 'Analog_TQFN-{pincount}-1EP_{size_x:g}x{size_y:g}mm_P{pitch:g}mm_EP{ep_size_x:g}x{ep_size_y:g}mm'
+  body_size_x:
+    minimum: 3.9
+    maximum: 4.1
+  body_size_y:
+    minimum: 3.9
+    maximum: 4.1
+  overall_height:
+    minimum: 0.7
+    maximum: 0.8
+
+  # NOTE: These values are correct (from the outline datasheet:
+  # https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/tqfn-cu/21-0139.pdf
+  # however, the resulting computed IPC pad width is 0.85mm
+  # This is close enough to the datasheet's recommended 0.8mm
+  lead_width:
+    minimum: 0.15
+    maximum: 0.25
+  lead_len:
+    minimum: 0.3
+    maximum: 0.5
+
+  # Exposed pad size: 2.7x2.7mm according to land pattern PDF (90-0035) mfr recommendation
+  EP_size_x:
+    nominal: 2.7
+    tolerance: 0.02
+  EP_size_y:
+    nominal: 2.7
+    tolerance: 0.02
+
+  # Force position of pads according to manufacturer's recommendation
+  # (These values force the position of the *lead*, not the pad.
+  #  they have been adjusted manually to match the correct datasheet pad size)
+  lead_center_pos_x: 1.85
+  lead_center_pos_y: 1.85
+
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 2]
+
+  pitch: 0.4
+  num_pins_x: 7
+  num_pins_y: 7
+
+
+  #chamfer_edge_pins: 0.25
+  #pin_count_grid:
+  #pad_length_addition: 0.5
+  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
+  #include_suffix_in_3dpath: 'False'
