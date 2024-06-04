@@ -1,0 +1,41 @@
+TE_281698:
+  library: 'TE-Connectivity'
+  pad_pitch: 2.54
+  row_pitch: null # only one row
+  first_pin:
+    position: 'bottom'     # top (default) or bottom
+    offset: 
+    marker:
+      shape: 'triangle' 
+      offset: 2.2
+      fab: True
+      size: 1.1547 # 1mm side arrow
+    pad:
+      shape: 'rect'
+      drill: 1.025
+      size: [1.7, 1.7]
+  clean_silk: True
+  description: 'Shrouded connector, 2.54 mm Pitch, Single Row, {options}'
+  tags: 'conn  wire'
+  pads:
+    drill: 1.025
+    size: [1.7, 1.7]
+  source: 'https://www.te.com/commerce/DocumentDelivery/DDEController?Action=showdoc&DocId=Customer+Drawing%7F281698%7FG1%7Ftif%7FEnglish%7FENG_CD_281698_G1.tif%7F281698-5'
+  options: 'open sides, horizontal (right angle)'
+  fp_suffix: '_Horizontal'
+  offset:
+    body: [0, -7.1]
+  body_size:
+    x_offset: 1.27
+    y: 11.4
+
+TE_281698-x:
+  inherit: 'TE_281698'
+  fp_name: "TE_281698-{str(int(num_pos % 10))}"
+  positions: [2, 3, 4, 5, 6, 7, 8]
+
+TE_1-281698-x:
+  inherit: 'TE_281698'
+  fp_name: "TE_{str(int(num_pos // 10))}-281698-{str(int(num_pos % 10))}"
+  positions: [10, 12, 15, 17, 18]
+
