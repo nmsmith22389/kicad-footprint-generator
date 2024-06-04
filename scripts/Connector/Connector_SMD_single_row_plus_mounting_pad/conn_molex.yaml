@@ -520,3 +520,324 @@ device_definition:
             depth: -2.6 # > 0: cutout, < 0: protrusion
             start_from_body_side: 0.33
             end_from_body_side: 0.33
+
+    MicroLockPlus_side_entry_125:
+        series: 'Micro-LockPlus'
+        mpn_format_string: '505567-{pincount:02d}71'
+        orientation: 'H'
+        datasheet: 'https://www.molex.com/pdm_docs/sd/5055670271_sd.pdf'
+        pinrange: ['range', [2,17]]
+        text_inside_pos: 'center'
+        pitch: 1.25
+        pad1_position: 'top-left' # 'top-left' | 'bottom-left' -> pin 2 always to the right of pin 1
+        mounting_pad_size: [1.3, 2.15]
+        # x position mounting inner mounting pad edge relative to nearest pad center
+        center_pad_to_mounting_pad_edge: 1.25
+        # y dimensions for pad given relative to mounting pad edge
+        rel_pad_y_outside_edge: 3.97
+        rel_pad_y_inside_edge: 2.77
+        pad_size_x: 0.8
+        # y position for body edge relative to mounting pad edge (positive -> body extends outside bounding box)
+        rel_body_edge_y: 0.48
+        body_size_y: 4.2
+        # body_fin_protrusion: 1.6
+        # body_fin_width: 0.8
+        rel_body_edge_x: 2.25
+        # amount to shift y position of center for pick-and-place (positive -> shift whole footprint up)
+        center_shift_y: -0.75
+        additional_drawing:
+          # left keepout area
+          -
+            layer: 'Dwgs.User'
+            thickness: 0.05
+            reference_point: ['left', 'top']
+            polygone:
+              - [-0.65, -0.50]
+              - [1.85, -0.50]
+              - [1.85, 0.95]
+              - [2.40, 0.95]
+              - [2.40, 5.05]
+              - [0.15, 5.05]
+              - [0.15, 3.75]
+              - [1.00, 3.75]
+              - [1.00, 1.55]
+              - [-0.65, 1.55]
+              - [-0.65, -0.50]
+          # left keepout area hatching
+          -
+            layer: 'Dwgs.User'
+            thickness: 0.05
+            reference_point: ['left', 'top']
+            polygone:
+              - [-0.15, -0.50]
+              - [-0.65, 0]
+          -
+            layer: 'Dwgs.User'
+            thickness: 0.05
+            reference_point: ['left', 'top']
+            polygone:
+              - [0.35, -0.50]
+              - [-0.65, 0.50]
+          -
+            layer: 'Dwgs.User'
+            thickness: 0.05
+            reference_point: ['left', 'top']
+            polygone:
+              - [0.85, -0.50]
+              - [-0.65, 1.00]
+          -
+            layer: 'Dwgs.User'
+            thickness: 0.05
+            reference_point: ['left', 'top']
+            polygone:
+              - [1.35, -0.50]
+              - [-0.65, 1.50]
+          -
+            layer: 'Dwgs.User'
+            thickness: 0.05
+            reference_point: ['left', 'top']
+            polygone:
+              - [1.85, -0.50]
+              - [-0.20, 1.55]
+          -
+            layer: 'Dwgs.User'
+            thickness: 0.05
+            reference_point: ['left', 'top']
+            polygone:
+              - [1.85, 0.00]
+              - [0.30, 1.55]
+          -
+            layer: 'Dwgs.User'
+            thickness: 0.05
+            reference_point: ['left', 'top']
+            polygone:
+              - [1.85, 0.50]
+              - [0.80, 1.55]
+          -
+            layer: 'Dwgs.User'
+            thickness: 0.05
+            reference_point: ['left', 'top']
+            polygone:
+              - [1.90, 0.95]
+              - [1.00, 1.85]
+          -
+            layer: 'Dwgs.User'
+            thickness: 0.05
+            reference_point: ['left', 'top']
+            polygone:
+              - [2.40, 0.95]
+              - [1.00, 2.35]
+          -
+            layer: 'Dwgs.User'
+            thickness: 0.05
+            reference_point: ['left', 'top']
+            polygone:
+              - [2.40, 1.45]
+              - [1.00, 2.85]
+          -
+            layer: 'Dwgs.User'
+            thickness: 0.05
+            reference_point: ['left', 'top']
+            polygone:
+              - [2.40, 1.95]
+              - [1.00, 3.35]
+          -
+            layer: 'Dwgs.User'
+            thickness: 0.05
+            reference_point: ['left', 'top']
+            polygone:
+              - [0.60, 3.75]
+              - [0.15, 4.20]
+          -
+            layer: 'Dwgs.User'
+            thickness: 0.05
+            reference_point: ['left', 'top']
+            polygone:
+              - [2.40, 2.45]
+              - [0.15, 4.70]
+          -
+            layer: 'Dwgs.User'
+            thickness: 0.05
+            reference_point: ['left', 'top']
+            polygone:
+              - [2.40, 2.95]
+              - [0.30, 5.05]
+          -
+            layer: 'Dwgs.User'
+            thickness: 0.05
+            reference_point: ['left', 'top']
+            polygone:
+              - [2.40, 3.45]
+              - [0.80, 5.05]
+          -
+            layer: 'Dwgs.User'
+            thickness: 0.05
+            reference_point: ['left', 'top']
+            polygone:
+              - [2.40, 3.95]
+              - [1.30, 5.05]
+          -
+            layer: 'Dwgs.User'
+            thickness: 0.05
+            reference_point: ['left', 'top']
+            polygone:
+              - [2.40, 4.45]
+              - [1.80, 5.05]
+          -
+            layer: 'Dwgs.User'
+            thickness: 0.05
+            reference_point: ['left', 'top']
+            polygone:
+              - [2.40, 4.95]
+              - [2.30, 5.05]
+          # right keepout area
+          -
+            layer: 'Dwgs.User'
+            thickness: 0.05
+            reference_point: ['right', 'top']
+            polygone:
+              - [0.65, -0.50]
+              - [-1.85, -0.50]
+              - [-1.85, 0.95]
+              - [-2.40, 0.95]
+              - [-2.40, 5.05]
+              - [-0.15, 5.05]
+              - [-0.15, 3.75]
+              - [-1.00, 3.75]
+              - [-1.00, 1.55]
+              - [0.65, 1.55]
+              - [0.65, -0.50]
+          # right keepout area hatching
+          -
+            layer: 'Dwgs.User'
+            thickness: 0.05
+            reference_point: ['right', 'top']
+            polygone:
+              - [-1.35, -0.50]
+              - [-1.85, 0]
+          -
+            layer: 'Dwgs.User'
+            thickness: 0.05
+            reference_point: ['right', 'top']
+            polygone:
+              - [-0.85, -0.50]
+              - [-1.85, 0.50]
+          -
+            layer: 'Dwgs.User'
+            thickness: 0.05
+            reference_point: ['right', 'top']
+            polygone:
+              - [-0.35, -0.50]
+              - [-2.40, 1.55]
+          -
+            layer: 'Dwgs.User'
+            thickness: 0.05
+            reference_point: ['right', 'top']
+            polygone:
+              - [-2.30, 0.95]
+              - [-2.40, 1.05]
+          -
+            layer: 'Dwgs.User'
+            thickness: 0.05
+            reference_point: ['right', 'top']
+            polygone:
+              - [0.15, -0.50]
+              - [-2.40, 2.05]
+          -
+            layer: 'Dwgs.User'
+            thickness: 0.05
+            reference_point: ['right', 'top']
+            polygone:
+              - [0.65, -0.50]
+              - [-2.40, 2.55]
+          -
+            layer: 'Dwgs.User'
+            thickness: 0.05
+            reference_point: ['right', 'top']
+            polygone:
+              - [0.65, 0.00]
+              - [-0.90, 1.55]
+          -
+            layer: 'Dwgs.User'
+            thickness: 0.05
+            reference_point: ['right', 'top']
+            polygone:
+              - [0.65, 0.50]
+              - [-0.40, 1.55]
+          -
+            layer: 'Dwgs.User'
+            thickness: 0.05
+            reference_point: ['right', 'top']
+            polygone:
+              - [0.65, 1.00]
+              - [0.10, 1.55]
+          -
+            layer: 'Dwgs.User'
+            thickness: 0.05
+            reference_point: ['right', 'top']
+            polygone:
+              - [0.65, 1.50]
+              - [0.60, 1.55]
+          -
+            layer: 'Dwgs.User'
+            thickness: 0.05
+            reference_point: ['right', 'top']
+            polygone:
+              - [-1.00, 1.65]
+              - [-2.40, 3.05]
+          -
+            layer: 'Dwgs.User'
+            thickness: 0.05
+            reference_point: ['right', 'top']
+            polygone:
+              - [-1.00, 2.15]
+              - [-2.40, 3.55]
+          -
+            layer: 'Dwgs.User'
+            thickness: 0.05
+            reference_point: ['right', 'top']
+            polygone:
+              - [-1.00, 2.65]
+              - [-2.40, 4.05]
+          -
+            layer: 'Dwgs.User'
+            thickness: 0.05
+            reference_point: ['right', 'top']
+            polygone:
+              - [-1.00, 3.15]
+              - [-2.40, 4.55]
+          -
+            layer: 'Dwgs.User'
+            thickness: 0.05
+            reference_point: ['right', 'top']
+            polygone:
+              - [-1.00, 3.65]
+              - [-2.40, 5.05]
+          -
+            layer: 'Dwgs.User'
+            thickness: 0.05
+            reference_point: ['right', 'top']
+            polygone:
+              - [-0.60, 3.75]
+              - [-1.90, 5.05]
+          -
+            layer: 'Dwgs.User'
+            thickness: 0.05
+            reference_point: ['right', 'top']
+            polygone:
+              - [-0.15, 3.80]
+              - [-1.40, 5.05]
+          -
+            layer: 'Dwgs.User'
+            thickness: 0.05
+            reference_point: ['right', 'top']
+            polygone:
+              - [-0.15, 4.30]
+              - [-0.90, 5.05]
+          -
+            layer: 'Dwgs.User'
+            thickness: 0.05
+            reference_point: ['right', 'top']
+            polygone:
+              - [-0.15, 4.80]
+              - [-0.40, 5.05]
