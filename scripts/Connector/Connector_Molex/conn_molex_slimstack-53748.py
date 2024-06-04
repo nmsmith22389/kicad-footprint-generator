@@ -21,14 +21,15 @@ import os
 
 # export PYTHONPATH="${PYTHONPATH}<path to kicad-footprint-generator directory>"
 sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))  # load parent path of KicadModTree
+sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))  # load parent path of tools
+
 import math
 from math import sqrt
 import argparse
 import yaml
-from helpers import *
+from drawing_tools import roundG
 from KicadModTree import *
 
-sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))  # load parent path of tools
 from footprint_text_fields import addTextFields
 
 series = "SlimStack"
@@ -95,8 +96,8 @@ def generate_one_footprint(pincount, configuration):
     courtyard_width = configuration['courtyard_line_width']
     courtyard_precision = configuration['courtyard_grid']
     courtyard_clearance = configuration['courtyard_offset']['connector']
-    courtyard_x = roundToBase(max(h_body_width + tab_width, (pad_x_spacing + pad_width)/2) + courtyard_clearance, courtyard_precision)
-    courtyard_y = roundToBase(h_body_length + courtyard_clearance, courtyard_precision)
+    courtyard_x = roundG(max(h_body_width + tab_width, (pad_x_spacing + pad_width)/2) + courtyard_clearance, courtyard_precision)
+    courtyard_y = roundG(h_body_length + courtyard_clearance, courtyard_precision)
 
     # create pads
     kicad_mod.append(PadArray(pincount=pincount//2, x_spacing=0, y_spacing=pad_y_spacing,\

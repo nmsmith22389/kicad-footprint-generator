@@ -21,13 +21,14 @@ import os
 
 # export PYTHONPATH="${PYTHONPATH}<path to kicad-footprint-generator directory>"
 sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))  # load parent path of KicadModTree
+sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))  # load parent path of tools
+
 from math import sqrt
 import argparse
 import yaml
-from helpers import *
+from drawing_tools import roundG
 from KicadModTree import *
 
-sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))  # load parent path of tools
 from footprint_text_fields import addTextFields
 
 series = "SL"
@@ -205,11 +206,11 @@ def generate_one_footprint(pins_per_row, variant, configuration):
     kicad_mod.append(PolygonLine(polygon = pin, width = configuration['fab_line_width'], layer ='F.Fab'))
 
     ########################### CrtYd #################################
-    cx1 = roundToBase(bounding_box['left'] - configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
-    cy1 = roundToBase(bounding_box['top'] - configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
+    cx1 = roundG(bounding_box['left'] - configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
+    cy1 = roundG(bounding_box['top'] - configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
 
-    cx2 = roundToBase(bounding_box['right'] + configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
-    cy2 = roundToBase(bounding_box['bottom'] + configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
+    cx2 = roundG(bounding_box['right'] + configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
+    cy2 = roundG(bounding_box['bottom'] + configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
 
     if variant_params[variant]['mount_pins']:
        pass

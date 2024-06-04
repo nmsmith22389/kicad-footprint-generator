@@ -33,13 +33,14 @@ import os
 
 # export PYTHONPATH="${PYTHONPATH}<path to kicad-footprint-generator directory>"
 sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))  # load parent path of KicadModTree
+sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))  # load parent path of tools
+
 from math import sqrt
 import argparse
 import yaml
-from helpers import *
+from drawing_tools import roundG
 from KicadModTree import *
 
-sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))  # load parent path of tools
 from footprint_text_fields import addTextFields
 
 manufacturer = "TE-Connectivity"
@@ -94,9 +95,9 @@ def generate_one_footprint(partnumber, pincount, configuration):
 
     courtyard_precision = configuration['courtyard_grid']
     courtyard_clearance = configuration['courtyard_offset']['connector']
-    courtyard_x = roundToBase(half_actuator_width + courtyard_clearance, courtyard_precision)
-    courtyard_y1 = roundToBase(pad_y - pad_height / 2.0 - courtyard_clearance, courtyard_precision)
-    courtyard_y2 = roundToBase(actuator_y2 + courtyard_clearance, courtyard_precision)
+    courtyard_x = roundG(half_actuator_width + courtyard_clearance, courtyard_precision)
+    courtyard_y1 = roundG(pad_y - pad_height / 2.0 - courtyard_clearance, courtyard_precision)
+    courtyard_y2 = roundG(actuator_y2 + courtyard_clearance, courtyard_precision)
 
     label_y_offset = 0.7
 

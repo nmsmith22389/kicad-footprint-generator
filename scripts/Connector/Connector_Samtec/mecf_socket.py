@@ -5,7 +5,6 @@ import os
 import math
 
 from operator import add
-from helpers import *
 from math import sqrt
 import argparse
 import yaml
@@ -17,6 +16,7 @@ sys.path.append(os.path.join(sys.path[0], "..", "..", "..")) # load kicad_mod pa
 sys.path.append(os.path.join(sys.path[0], "..", "..", "tools")) # load kicad_mod path
 
 from KicadModTree import *  # NOQA
+from drawing_tools import roundG
 # from drawing_tools import *
 # from footprint_scripts_potentiometers import *
 from footprint_text_fields import addTextFields
@@ -198,10 +198,10 @@ def generate_one_footprint(weld, pol, pcb_thickness, n, configuration):
                           layer='F.SilkS', width=configuration['silk_line_width']))   #corner
 
 
-    top = roundToBase(body_edge['top'] - CrtYd_offset, configuration['courtyard_grid'])
-    bot = roundToBase(body_edge['bottom'] + CrtYd_offset, configuration['courtyard_grid'])
-    left = roundToBase(body_edge['left'] - CrtYd_offset, configuration['courtyard_grid'])
-    right = roundToBase(body_edge['right'] + CrtYd_offset, configuration['courtyard_grid'])
+    top = roundG(body_edge['top'] - CrtYd_offset, configuration['courtyard_grid'])
+    bot = roundG(body_edge['bottom'] + CrtYd_offset, configuration['courtyard_grid'])
+    left = roundG(body_edge['left'] - CrtYd_offset, configuration['courtyard_grid'])
+    right = roundG(body_edge['right'] + CrtYd_offset, configuration['courtyard_grid'])
 
     cy1 = top
     cy2 = bot

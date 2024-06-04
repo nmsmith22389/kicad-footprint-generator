@@ -22,7 +22,9 @@ import yaml
 import pprint
 
 sys.path.append(os.path.join(sys.path[0], "../.."))  # enable package import from parent directory
+sys.path.append(os.path.join(sys.path[0], "..", "tools"))  # enable package import from parent directory
 
+from drawing_tools import roundG
 from KicadModTree import *  # NOQA
 
 

@@ -21,13 +21,14 @@ import os
 
 # export PYTHONPATH="${PYTHONPATH}<path to kicad-footprint-generator directory>"
 sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))  # load parent path of KicadModTree
+sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))  # load parent path of tools
+
 from math import sqrt
 import argparse
 import yaml
-from helpers import *
+from drawing_tools import roundG
 from KicadModTree import *
 
-sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))  # load parent path of tools
 from footprint_text_fields import addTextFields
 
 series = "PicoBlade"
@@ -148,18 +149,18 @@ def generate_one_footprint(pins, configuration):
 
 
         out = [
-        {'x': roundToBase(B/2, grid),
-         'y': roundToBase(-P - off, grid)},
-        {'x': roundToBase(x1 + T + off, grid),
-         'y': roundToBase(-P  - off, grid)},
-        {'x': roundToBase(x1 + T + off, grid),
-         'y': roundToBase(y1 - off, grid)},
-        {'x': roundToBase(x1 - off, grid),
-         'y': roundToBase(y1 - off, grid)},
-        {'x': roundToBase(x1 - off, grid),
-         'y': roundToBase(y2 + off, grid)},
-        {'x': roundToBase(B/2, grid),
-         'y': roundToBase(y2 + off, grid)},
+        {'x': roundG(B/2, grid),
+         'y': roundG(-P - off, grid)},
+        {'x': roundG(x1 + T + off, grid),
+         'y': roundG(-P  - off, grid)},
+        {'x': roundG(x1 + T + off, grid),
+         'y': roundG(y1 - off, grid)},
+        {'x': roundG(x1 - off, grid),
+         'y': roundG(y1 - off, grid)},
+        {'x': roundG(x1 - off, grid),
+         'y': roundG(y2 + off, grid)},
+        {'x': roundG(B/2, grid),
+         'y': roundG(y2 + off, grid)},
         ]
 
         return out

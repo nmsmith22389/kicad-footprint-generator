@@ -21,13 +21,14 @@ import os
 
 # export PYTHONPATH="${PYTHONPATH}<path to kicad-footprint-generator directory>"
 sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))  # load parent path of KicadModTree
+sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))  # load parent path of tools
+
 from math import sqrt
 import argparse
 import yaml
-from helpers import *
+from drawing_tools import roundG
 from KicadModTree import *
 
-sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))  # load parent path of tools
 from footprint_text_fields import addTextFields
 
 series = "Nano-Fit"
@@ -179,18 +180,18 @@ def generate_one_footprint(pins, params, configuration):
 
     def outline(off = 0, grid = 0):
         out = [
-        {'y': roundToBase(B/2, grid),
-        'x': roundToBase(x2+off, grid)},
-        {'y': roundToBase(y1-off, grid),
-        'x': roundToBase(x2+off, grid)},
-        {'y': roundToBase(y1-off, grid),
-        'x': roundToBase(x1-off, grid)},
-        {'y': roundToBase(B/2-TL/2-off, grid),
-        'x': roundToBase(x1-off, grid)},
-        {'y': roundToBase(B/2-TL/2-off, grid),
-        'x': roundToBase(x1-TW-off, grid)},
-        {'y': roundToBase(B/2, grid),
-        'x': roundToBase(x1-TW-off, grid)}
+        {'y': roundG(B/2, grid),
+        'x': roundG(x2+off, grid)},
+        {'y': roundG(y1-off, grid),
+        'x': roundG(x2+off, grid)},
+        {'y': roundG(y1-off, grid),
+        'x': roundG(x1-off, grid)},
+        {'y': roundG(B/2-TL/2-off, grid),
+        'x': roundG(x1-off, grid)},
+        {'y': roundG(B/2-TL/2-off, grid),
+        'x': roundG(x1-TW-off, grid)},
+        {'y': roundG(B/2, grid),
+        'x': roundG(x1-TW-off, grid)}
         ]
 
         return out

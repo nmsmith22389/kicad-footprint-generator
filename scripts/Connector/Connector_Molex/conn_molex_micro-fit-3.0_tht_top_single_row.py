@@ -21,13 +21,14 @@ import os
 
 # export PYTHONPATH="${PYTHONPATH}<path to kicad-footprint-generator directory>"
 sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))  # load parent path of KicadModTree
+sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))  # load parent path of tools
+
 from math import sqrt
 import argparse
 import yaml
-from helpers import *
+from drawing_tools import roundG
 from KicadModTree import *
 
-sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))  # load parent path of tools
 from footprint_text_fields import addTextFields
 
 series = "Micro-Fit_3.0"
@@ -231,10 +232,10 @@ def generate_one_footprint(pins_per_row, variant, configuration):
     CrtYd_offset = configuration['courtyard_offset']['connector']
     CrtYd_grid = configuration['courtyard_grid']
 
-    cy_top = roundToBase(y_top_min - CrtYd_offset, CrtYd_grid)
-    cy_bottom = roundToBase(body_edge['bottom'] + tab_w + CrtYd_offset, CrtYd_grid)
-    cy_left = roundToBase(body_edge['left'] - CrtYd_offset, CrtYd_grid)
-    cy_right = roundToBase(body_edge['right'] + CrtYd_offset, CrtYd_grid)
+    cy_top = roundG(y_top_min - CrtYd_offset, CrtYd_grid)
+    cy_bottom = roundG(body_edge['bottom'] + tab_w + CrtYd_offset, CrtYd_grid)
+    cy_left = roundG(body_edge['left'] - CrtYd_offset, CrtYd_grid)
+    cy_right = roundG(body_edge['right'] + CrtYd_offset, CrtYd_grid)
 
     poly_cy = [
         {'x': cy_left, 'y':cy_top},

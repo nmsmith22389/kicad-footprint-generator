@@ -5,7 +5,6 @@ import os
 import math
 
 from operator import add
-from helpers import *
 from math import sqrt
 import argparse
 import yaml
@@ -17,6 +16,7 @@ sys.path.append(os.path.join(sys.path[0], "..", "..", "..")) # load kicad_mod pa
 sys.path.append(os.path.join(sys.path[0], "..", "..", "tools")) # load kicad_mod path
 
 from KicadModTree import *  # NOQA
+from drawing_tools import roundG
 # from drawing_tools import *
 # from footprint_scripts_potentiometers import *
 from footprint_text_fields import addTextFields
@@ -176,10 +176,10 @@ def generate_one_footprint(pol, n, configuration):
                           end=[round(right, 2), round(top, 2)],
                           layer='B.SilkS', width=configuration['silk_line_width'])) #right line
 
-    top = roundToBase(body_edge['top'] - CrtYd_offset, configuration['courtyard_grid'])
-    bot = roundToBase(body_edge['bottom'], configuration['courtyard_grid'])
-    left = roundToBase(body_edge['left'] - CrtYd_offset, configuration['courtyard_grid'])
-    right = roundToBase(body_edge['right'] + CrtYd_offset, configuration['courtyard_grid'])
+    top = roundG(body_edge['top'] - CrtYd_offset, configuration['courtyard_grid'])
+    bot = roundG(body_edge['bottom'], configuration['courtyard_grid'])
+    left = roundG(body_edge['left'] - CrtYd_offset, configuration['courtyard_grid'])
+    right = roundG(body_edge['right'] + CrtYd_offset, configuration['courtyard_grid'])
 
     cy1 = top
     cy2 = bot
@@ -207,7 +207,7 @@ def generate_one_footprint(pol, n, configuration):
 
     ## grid ends
     nextGrid = math.ceil((K[n]/2.0)/0.25 + 1.0) * 0.25
-    #nextGrid = roundToBase(K[n]/2, 0.25)
+    #nextGrid = roundG(K[n]/2, 0.25)
     kicad_mod.append(Line(start=[-nextGrid, top, 2],
         end=[-K[n]/2.0, top, 2], layer='Edge.Cuts', width=configuration['edge_cuts_line_width'])) #left line
     kicad_mod.append(Line(start=[+nextGrid, top, 2],

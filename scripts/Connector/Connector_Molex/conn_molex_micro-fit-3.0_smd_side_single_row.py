@@ -24,18 +24,17 @@ import os
 sys.path.append(
     os.path.join(sys.path[0], "..", "..", "..")
 )  # load parent path of KicadModTree
-from math import sqrt
-import argparse
-import yaml
-from helpers import roundToBase
-from KicadModTree import *
-
 sys.path.append(
     os.path.join(sys.path[0], "..", "..", "tools")
 )  # load parent path of tools
+
+from math import sqrt
+import argparse
+import yaml
+from drawing_tools import roundG
+from KicadModTree import *
+
 from footprint_text_fields import addTextFields
-
-
 
 series = "Micro-Fit_3.0"
 series_long = "Micro-Fit 3.0 Connector System"
@@ -196,19 +195,19 @@ def generate_one_footprint(pins, variant, configuration):
         x1 = 0
         y1 = body_edge["top"] - LineDX
 
-        points.append([roundToBase(x1, grid), roundToBase(y1, grid)])
+        points.append([roundG(x1, grid), roundG(y1, grid)])
         #
         x1 = (A / 2) - 1 + LineDX
         y1 = y1
-        points.append([roundToBase(x1, grid), roundToBase(y1, grid)])
+        points.append([roundG(x1, grid), roundG(y1, grid)])
         #
         x1 = (A / 2) + LineDX
         y1 = y1 + 2
-        points.append([roundToBase(x1, grid), roundToBase(y1, grid)])
+        points.append([roundG(x1, grid), roundG(y1, grid)])
         #
         x1 = x1
         y1 = mount_pad_y - ((mount_hole_pad_diameter / 2) + LineDX + LineDelta)
-        points.append([roundToBase(x1, grid), roundToBase(y1, grid)])
+        points.append([roundG(x1, grid), roundG(y1, grid)])
         #
         if Layer == "F.SilkS":  # SilkS
             kicad_mod.append(
@@ -229,20 +228,20 @@ def generate_one_footprint(pins, variant, configuration):
             points = []
             x1 = x1
             y1 = mount_pad_y + ((mount_hole_diameter / 2) + LineDX + LineDelta)
-            points.append([roundToBase(x1, grid), roundToBase(y1, grid)])
+            points.append([roundG(x1, grid), roundG(y1, grid)])
         #
         x1 = x1
         y1 = body_edge["bottom"] + LineDX
-        points.append([roundToBase(x1, grid), roundToBase(y1, grid)])
+        points.append([roundG(x1, grid), roundG(y1, grid)])
         #
         x1 = (B / 2) + (pad_size[0] / 2) + LineDX + LineDelta
         y1 = y1
-        points.append([roundToBase(x1, grid), roundToBase(y1, grid)])
+        points.append([roundG(x1, grid), roundG(y1, grid)])
         #
         if Layer == "F.Fab":
             x1 = 0
             y1 = y1
-            points.append([roundToBase(x1, grid), roundToBase(y1, grid)])
+            points.append([roundG(x1, grid), roundG(y1, grid)])
 
         if Layer == "F.SilkS":
             ttx1 = x1
@@ -253,12 +252,12 @@ def generate_one_footprint(pins, variant, configuration):
             y1 = pad_row_1_y + (pad_size[1] / 2) + LineDX
             ttx1 = x1
             tty1 = y1
-            points.append([roundToBase(x1, grid), roundToBase(y1, grid)])
+            points.append([roundG(x1, grid), roundG(y1, grid)])
             #
             #
             x1 = 0
             y1 = y1
-            points.append([roundToBase(x1, grid), roundToBase(y1, grid)])
+            points.append([roundG(x1, grid), roundG(y1, grid)])
         #
         # Reflect right part around the X-axis
         #
@@ -280,7 +279,7 @@ def generate_one_footprint(pins, variant, configuration):
             points2.append(p4)
             points2.append(ps)
         elif Layer == "F.SilkS":  # silk
-            points2.append([roundToBase(0 - ttx1, grid), roundToBase(tty1, grid)])
+            points2.append([roundG(0 - ttx1, grid), roundG(tty1, grid)])
 
         #
         #
@@ -289,12 +288,12 @@ def generate_one_footprint(pins, variant, configuration):
         kicad_mod.append(PolygonLine(polygon=points2, layer=Layer, width=LineWidth))
 
     ######################### Text Fields ###############################
-    cy_top = roundToBase(
+    cy_top = roundG(
         body_edge["top"] - configuration["courtyard_offset"]["connector"],
         configuration["courtyard_grid"],
     )
 
-    cy_bottom = roundToBase(
+    cy_bottom = roundG(
         pad_row_1_y + pad_size[1] / 2 + configuration["courtyard_offset"]["connector"],
         configuration["courtyard_grid"],
     )

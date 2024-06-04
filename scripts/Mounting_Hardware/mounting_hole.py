@@ -7,16 +7,11 @@ import yaml
 import math
 
 sys.path.append(os.path.join(sys.path[0], "..", ".."))  # load parent path of KicadModTree
+sys.path.append(os.path.join(sys.path[0], "..", "tools"))
 
 from KicadModTree import *  # NOQA
 from KicadModTree.nodes.base.Pad import Pad  # NOQA
-
-
-# https://stackoverflow.com/questions/4265546/python-round-to-nearest-05
-def round_to(n, precision):
-    correction = 0.5 if n >= 0 else -0.5
-    return int(n/precision+correction) * precision
-
+from drawing_tools import roundG
 
 def create_footprint(name, **kwargs):
     kicad_mod = Footprint(name, FootprintType.THT)

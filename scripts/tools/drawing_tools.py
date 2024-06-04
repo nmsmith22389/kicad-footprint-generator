@@ -33,7 +33,14 @@ def roundGDown(x: float, g: float) -> float:
 
 # round for grid g
 def roundG(x: float, g: float) -> float:
-    return roundGUp(x, g) if x > 0 else roundGDown(x, g)
+    if g == 0:
+      return x
+    if isinstance(x, list):
+      return_list = []
+      for value in x:
+        return_list.append(roundG(value, g))
+      return return_list
+    return round(roundGUp(x, g),6) if x > 0 else round(roundGDown(x, g),6)
 
 
 # round for grid g

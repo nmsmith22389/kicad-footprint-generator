@@ -21,13 +21,14 @@ import os
 
 # export PYTHONPATH="${PYTHONPATH}<path to kicad-footprint-generator directory>"
 sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))  # load parent path of KicadModTree
+sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))  # load parent path of tools
+
 from math import sqrt
 import argparse
 import yaml
-from helpers import *
+from drawing_tools import roundG
 from KicadModTree import *
 
-sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))  # load parent path of tools
 from footprint_text_fields import addTextFields
 
 series = "SPOX"
@@ -121,7 +122,7 @@ def generate_one_footprint(pins_per_row, configuration):
         if grid == 0:
             return poly
         else:
-            return [{'x':roundToBase(p['x'], grid), 'y':roundToBase(p['y'], grid)} for p in poly]
+            return [{'x':roundG(p['x'], grid), 'y':roundG(p['y'], grid)} for p in poly]
 
     # outline on Fab
     kicad_mod.append(PolygonLine(polygon=generateOutline(),
