@@ -1,0 +1,56 @@
+BGA-63_9.0x11.0mm_Layout10x12_P0.8mm:
+  description: "BGA-63"
+  size_source: "http://www.onfi.org/-/media/client/onfi/specs/onfi_4_0-gold.pdf?la=en"
+  body_size_x: 9.0
+  body_size_y: 11.0
+  pitch: 0.8
+  pad_diameter: 0.5
+  mask_margin: 0.05
+  layout_x: 10
+  layout_y: 12
+  row_skips: [[3,4,5,6,7,8], [2,3,4,5,6,7,8], [1,2,9,10], [1,2,9,10], [1,2,9,10], [1,2,9,10], [1,2,9,10], [1,2,9,10], [1,2,9,10], [1,2,9,10], [3,4,5,6,7,8], [3,4,5,6,7,8]]
+BGA-132_12.0x18.0mm_Layout13x17_P1.0mm:
+  description: "BGA-132"
+  size_source: "http://www.onfi.org/-/media/client/onfi/specs/onfi_4_0-gold.pdf?la=en"
+  body_size_x: 12.0
+  body_size_y: 18.0
+  pitch: 1
+  pad_diameter: 0.5
+  mask_margin: 0.05
+  layout_x: 11
+  layout_y: 17
+  row_skips: [[4,5,6,7,8], [4,5,6,7,8], [6], [6], [1,6,11], [1,6,11], [1,6,11], [1,6,11], [1,6,11], [1,6,11], [1,6,11], [1,6,11], [1,6,11], [6], [6], [4,5,6,7,8], [4,5,6,7,8]]
+BGA-152_14.0x18.0mm_Layout13x17_P1.0mm:
+  description: "BGA-152"
+  size_source: "http://www.onfi.org/-/media/client/onfi/specs/onfi_4_0-gold.pdf?la=en"
+  body_size_x: 14.0
+  body_size_y: 18.0
+  pitch: 1
+  pad_diameter: 0.5
+  mask_margin: 0.05
+  layout_x: 13
+  layout_y: 17
+  row_skips: [[5,6,7,8,9], [5,6,7,8,9], [7], [7], [1,2,7,12,13], [1,2,7,12,13], [1,2,7,12,13], [1,2,7,12,13], [1,2,7,12,13], [1,2,7,12,13], [1,2,7,12,13], [1,2,7,12,13], [1,2,7,12,13], [7], [7], [5,6,7,8,9], [5,6,7,8,9]]
+BGA-100_12.0x18.0mm_Layout10x17_P1.0mm:
+  description: "BGA-100"
+  size_source: "http://www.onfi.org/-/media/client/onfi/specs/onfi_4_0-gold.pdf?la=en"
+  body_size_x: 12.0
+  body_size_y: 18.0
+  pitch: 1
+  pad_diameter: 0.5
+  mask_margin: 0.05
+  layout_x: 10
+  layout_y: 17
+  row_skips: [[3,4,5,6,7,8], [2,3,4,5,6,7,8,9], [1,2,3,4,5,6,7,8,9,10], [1,10], [1,10], [1,10], [1,10], [1,10], [1,10],  [1,10], [1,10], [1,10], [1,10], [1,10], [1,2,3,4,5,6,7,8,9,10], [2,3,4,5,6,7,8,9], [3,4,5,6,7,8]]
+BGA-100_14.0x18.0mm_Layout10x17_P1.0mm:
+  description: "BGA-100"
+  size_source: "http://www.onfi.org/-/media/client/onfi/specs/onfi_4_0-gold.pdf?la=en"
+  body_size_x: 14.0
+  body_size_y: 18.0
+  pitch: 1
+  pad_diameter: 0.5
+  mask_margin: 0.05
+  layout_x: 10
+  layout_y: 17
+  row_skips: [[3,4,5,6,7,8], [2,3,4,5,6,7,8,9], [1,2,3,4,5,6,7,8,9,10], [1,10], [1,10], [1,10], [1,10], [1,10], [1,10], [1,10], [1,10], [1,10], [1,10], [1,10], [1,2,3,4,5,6,7,8,9,10], [2,3,4,5,6,7,8,9], [3,4,5,6,7,8]]
+
