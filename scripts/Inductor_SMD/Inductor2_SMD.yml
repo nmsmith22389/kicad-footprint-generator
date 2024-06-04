@@ -1,0 +1,153 @@
+# The Inductor2 generator simplifies generation of centered, rectangular
+# footprints with exactly two pads.
+# Dimensions are automatically added to the footprint description as WxHmm.
+# 
+# The footprint is automatically centered and placed horizontically 
+# (with the pads at the left & right).
+# The pads are equally aligned around the center to have the specified step.
+# 
+# This is the pad step:
+#  +---+     +---+
+#  |   |     |   |
+#  |   |  x  |   |
+#  |   |     |   |
+#  +---+     +---+
+#    |<------->|
+# 
+
+L_Fastron_1212FPS:
+  description: "Inductor, Shielded Power Inductor, Fastron, 1212FPS"
+  datasheet: "https://fastrongroup.com/uploads/datasheets/Series/Complete-DataSheet/1212FPS.pdf"
+  tags: "Inductor Fastron SMD"
+  size: [3.1, 3.1]
+  pad_size: [1.0, 2.8]
+  pad_step: 2.2
+
+L_Fastron_1616FPS:
+  description: "Inductor, Shielded Power Inductor, Fastron, 1616FPS"
+  datasheet: "https://fastrongroup.com/uploads/datasheets/Series/Complete-DataSheet/1616FPS.pdf"
+  tags: "Inductor Fastron SMD"
+  size: [4.2, 4.2]
+  pad_size: [1.4, 3.8]
+  pad_step: 2.8
+
+L_Fastron_242408FPS:
+  description: "Inductor, Shielded Power Inductor, Fastron, 242408FPS"
+  datasheet: "https://fastrongroup.com/uploads/datasheets/Series/Complete-DataSheet/242408FPS.pdf"
+  tags: "Inductor Fastron SMD"
+  size: [6.2, 6.2]
+  pad_size: [2, 5.7]
+  pad_step: 4.2
+
+L_Fastron_242416FPS:
+  description: "Inductor, Shielded Power Inductor, Fastron, 242416FPS"
+  datasheet: "https://fastrongroup.com/uploads/datasheets/Series/Complete-DataSheet/242418FPS.pdf"
+  tags: "Inductor Fastron SMD"
+  size: [6.2, 6.2]
+  pad_size: [2, 5.7]
+  pad_step: 4.2
+
+L_Fastron_4408AF:
+  description: "Inductor, RFID Transponder, Fastron, 4408AF"
+  datasheet: "https://fastrongroup.com/uploads/datasheets/Series/Complete-DataSheet/4408AF.pdf"
+  tags: "Inductor Fastron SMD Transponder"
+  size: [11.6, 3.2]
+  pad_size: [1.78, 2.79]
+  pad_step: 10.23
+
+L_Fastron_4408AQ:
+  description: "Inductor, RFID Transponder, Fastron, 4408AQ"
+  datasheet: "https://fastrongroup.com/uploads/datasheets/Series/Complete-DataSheet/4408AQ.pdf"
+  tags: "Inductor Fastron SMD Transponder"
+  size: [11.35, 3.3]
+  pad_size: [1.78, 2.79]
+  pad_step: 10.23
+
+L_Fastron_SMB001:
+  description: "Inductor, SMD Bead, Fastron, SMB/001"
+  datasheet: "https://fastrongroup.com/uploads/datasheets/Series/Complete-DataSheet/SMDBeads.pdf"
+  tags: "Inductor Fastron SMD Bead"
+  size: [4.2, 3.2]
+  pad_size: [2.7, 1.8]
+  pad_step: 4.2
+
+L_Fastron_SMB002:
+  description: "Inductor, SMD Bead, Fastron, SMB/002"
+  datasheet: "https://fastrongroup.com/uploads/datasheets/Series/Complete-DataSheet/SMDBeads.pdf"
+  tags: "Inductor Fastron SMD Bead"
+  size: [8.75, 3.15]
+  pad_size: [3.0, 1.8]
+  pad_step: 7.5
+
+L_Fastron_PIHV4119:
+  description: "Inductor, High Voltage Power Inductor, Fastron, PIHV4119"
+  datasheet: "https://fastrongroup.com/uploads/datasheets/Series/Complete-DataSheet/PIHV4119.pdf"
+  tags: "Inductor Fastron SMD"
+  size: [10.4, 9.7]
+  pad_size: [2.7, 4.8]
+  pad_step: 8.3
+
+L_Fastron_PISA2408:
+  description: "Inductor, Magnetically Shielded Power Inductor, Fastron, PISA2408"
+  datasheet: "https://fastrongroup.com/uploads/datasheets/Series/Complete-DataSheet/PISA2408.pdf"
+  tags: "Inductor Fastron SMD"
+  size: [6.1, 6.5]
+  pad_size: [2.1, 2.3]
+  pad_step: 5.2
+
+L_Fastron_PISA2416:
+  description: "Inductor, Magnetically Shielded Power Inductor, Fastron, PISA2416"
+  datasheet: "https://fastrongroup.com/uploads/datasheets/Series/Complete-DataSheet/PISA2416.pdf"
+  tags: "Inductor Fastron SMD"
+  size: [6.1, 6.5]
+  pad_size: [2.1, 2.3]
+  pad_step: 5.2
+
+L_Fastron_PISA2812:
+  description: "Inductor, Magnetically Shielded Power Inductor, Fastron, PISA2812"
+  datasheet: "https://fastrongroup.com/uploads/datasheets/Series/Complete-DataSheet/PISA2812.pdf"
+  tags: "Inductor Fastron SMD"
+  size: [7.5, 7.5]
+  pad_size: [2.38, 1.85]
+  pad_step: 5.63
+
+L_Fastron_PISA2816:
+  description: "Inductor, Magnetically Shielded Power Inductor, Fastron, PISA2816"
+  datasheet: "https://fastrongroup.com/uploads/datasheets/Series/Complete-DataSheet/PISA2816.pdf"
+  tags: "Inductor Fastron SMD"
+  size: [7.5, 7.5]
+  pad_size: [2.38, 1.85]
+  pad_step: 5.63
+
+L_Fastron_PISA4119:
+  description: "Inductor, Magnetically Shielded Power Inductor, Fastron, PISA4119"
+  datasheet: "https://fastrongroup.com/uploads/datasheets/Series/Complete-DataSheet/PISA4119.pdf"
+  tags: "Inductor Fastron SMD"
+  size: [10.4, 10.4]
+  pad_size: [2.7, 4.8]
+  pad_step: 8.3
+
+L_Fastron_PISA4716:
+  description: "Inductor, Magnetically Shielded Power Inductor, Fastron, PISA4716"
+  datasheet: "https://fastrongroup.com/uploads/datasheets/Series/Complete-DataSheet/PISA4716.pdf"
+  tags: "Inductor Fastron SMD"
+  size: [12.3, 12.3]
+  pad_size: [3.1, 5.4]
+  pad_step: 9.7
+
+L_Fastron_PISA4720:
+  description: "Inductor, Magnetically Shielded Power Inductor, Fastron, PISA4720"
+  datasheet: "https://fastrongroup.com/uploads/datasheets/Series/Complete-DataSheet/PISA4720.pdf"
+  tags: "Inductor Fastron SMD"
+  size: [12.3, 12.3]
+  pad_size: [3.1, 5.4]
+  pad_step: 9.7
+
+L_Fastron_PISA4728:
+  description: "Inductor, Magnetically Shielded Power Inductor, Fastron, PISA4728"
+  datasheet: "https://fastrongroup.com/uploads/datasheets/Series/Complete-DataSheet/PISA4728.pdf"
+  tags: "Inductor Fastron SMD"
+  size: [12.3, 12.3]
+  pad_size: [3.1, 5.4]
+  pad_step: 9.7
+
