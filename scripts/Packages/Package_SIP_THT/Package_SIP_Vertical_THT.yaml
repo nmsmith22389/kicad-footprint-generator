@@ -1,0 +1,1428 @@
+# Example:
+# Converter_DCDC_TRACO_TBA_1-xxxx_THT:
+#   package:
+#     length:
+#       nominal: 19.5
+#       tolerance: 0.35
+#     width:
+#       nominal: 6
+#       tolerance: 0.35
+#     height:
+#       nominal: 9.5
+#       tolerance: 0.35
+#   top_offset: 1.35
+#   left_offset: 2.4
+#   pitch: 2.54
+#   pins: 7
+#   missing_pins: [3, 5, 7]
+#   pin:
+#     length:
+#       nominal: 0.5
+#       tolerance: 0.01
+#     width:
+#       nominal: 0.25
+#       tolerance: 0.01
+# #   diameter:
+# #     nominal: 0.8
+# #     tolerance: 0.05
+# # ddrill: 1.0
+# # pad:
+# #   length:
+# #     nominal: 0.5
+# #     tolerance: 0.01
+# #   width:
+# #     nominal: 0.25
+# #     tolerance: 0.01
+#   library: "Converter_DCDC"
+#   tags: "DC/DC Converter"
+#   description: "Traco TBA 1 Series"
+#   datasheet: "https://www.tracopower.com/sites/default/files/products/datasheets/tba1_datasheet.pdf#page=3"
+#   revision: "April 27, 2020"
+
+Converter_DCDC_TRACO_TBA_1-xxxx_THT:
+    package:
+      length:
+        nominal: 11.68
+        tolerance: 0.35
+      width:
+        nominal: 6
+        tolerance: 0.35
+      height:
+        nominal: 9.65
+        tolerance: 0.35
+    top_offset: 4.65
+    left_offset: 2.03
+    pitch: 2.54
+    pins: 4
+    pin:
+      length:
+        nominal: 0.5
+      #   tolerance: 0.35
+      width:
+        nominal: 0.25
+      #   tolerance: 0.35
+    library: "Converter_DCDC"
+    tags: "DC/DC Converter"
+    description: "Traco TBA 1"
+    datasheet: "https://www.tracopower.com/sites/default/files/products/datasheets/tba1_datasheet.pdf#page=3"
+    revision: "April 27, 2020"
+    
+  Converter_DCDC_TRACO_TBA_1-xx1xE_THT:
+    package:
+      length:
+        nominal: 19.5
+        tolerance: 0.35
+      width:
+        nominal: 6
+        tolerance: 0.35
+      height:
+        nominal: 9.5
+        tolerance: 0.35
+    top_offset: 1.35
+    left_offset: 2.4
+    pitch: 2.54
+    pins: 7
+    missing_pins: [3, 5, 7]
+    pin:
+      length:
+        nominal: 0.5
+      #   tolerance: 0.35
+      width:
+        nominal: 0.25
+      #   tolerance: 0.35
+    library: "Converter_DCDC"
+    tags: "DC/DC Converter"
+    description: "Traco TBA 1E Single Output"
+    datasheet: "https://www.tracopower.com/sites/default/files/products/datasheets/tba1e_datasheet.pdf#page=3"
+    revision: "April 27, 2020"
+  
+  Converter_DCDC_TRACO_TBA_1-xx2xE_THT:
+    package:
+      length:
+        nominal: 19.5
+        tolerance: 0.35
+      width:
+        nominal: 6
+        tolerance: 0.35
+      height:
+        nominal: 9.5
+        tolerance: 0.35
+    top_offset: 1.35
+    left_offset: 2.4
+    pitch: 2.54
+    pins: 7
+    missing_pins: [3, 7]
+    pin:
+      length:
+        nominal: 0.5
+      #   tolerance: 0.35
+      width:
+        nominal: 0.25
+      #   tolerance: 0.35
+    library: "Converter_DCDC"
+    tags: "DC/DC Converter"
+    description: "Traco TBA 1E Dual Output"
+    datasheet: "https://www.tracopower.com/sites/default/files/products/datasheets/tba1e_datasheet.pdf#page=3"
+    revision: "April 27, 2020"
+  
+  Converter_DCDC_TRACO_TBA_1-xx1xHI_THT:
+    package:
+      length:
+        nominal: 19.5
+        tolerance: 0.35
+      width:
+        nominal: 6
+        tolerance: 0.35
+      height:
+        nominal: 9.5
+        tolerance: 0.35
+    top_offset: 1.35
+    left_offset: 2.4
+    pitch: 2.54
+    pins: 7
+    missing_pins: [3, 4, 6]
+    pin:
+      length:
+        nominal: 0.5
+      #   tolerance: 0.35
+      width:
+        nominal: 0.25
+      #   tolerance: 0.35
+    library: "Converter_DCDC"
+    tags: "DC/DC Converter"
+    description: "Traco TBA 1HI Single Output"
+    datasheet: "https://www.tracopower.com/sites/default/files/products/datasheets/tba1hi_datasheet.pdf#page=3"
+    revision: "April 27, 2020"
+    
+  Converter_DCDC_TRACO_TBA_1-xx2xHI_THT:
+    package:
+      length:
+        nominal: 19.5
+        tolerance: 0.35
+      width:
+        nominal: 6
+        tolerance: 0.35
+      height:
+        nominal: 9.5
+        tolerance: 0.35
+    top_offset: 1.35
+    left_offset: 2.4
+    pitch: 2.54
+    pins: 7
+    missing_pins: [3, 4]
+    pin:
+      length:
+        nominal: 0.5
+      #   tolerance: 0.35
+      width:
+        nominal: 0.25
+      #   tolerance: 0.35
+    library: "Converter_DCDC"
+    tags: "DC/DC Converter"
+    description: "Traco TBA 1HI Dual Output"
+    datasheet: "https://www.tracopower.com/sites/default/files/products/datasheets/tba1hi_datasheet.pdf#page=3"
+    revision: "April 27, 2020"
+    
+  Converter_DCDC_TRACO_TBA_2-xx1x_THT:
+    package:
+      length:
+        nominal: 19.55
+        tolerance: 0.35
+      width:
+        nominal: 7.6
+        tolerance: 0.35
+      height:
+        nominal: 10.2
+        tolerance: 0.35
+    top_offset: 1.35
+    left_offset: 2.4
+    pitch: 2.54
+    pins: 7
+    missing_pins: [3, 5, 7]
+    pin:
+      length:
+        nominal: 0.5
+      #   tolerance: 0.35
+      width:
+        nominal: 0.25
+      #   tolerance: 0.35
+    library: "Converter_DCDC"
+    tags: "DC/DC Converter"
+    description: "Traco TBA 2 Single Output"
+    datasheet: "https://www.tracopower.com/sites/default/files/products/datasheets/tba2_datasheet.pdf#page=3"
+    revision: "April 27, 2020"
+    
+  Converter_DCDC_TRACO_TBA_2-xx2x_THT:
+    package:
+      length:
+        nominal: 19.55
+        tolerance: 0.35
+      width:
+        nominal: 7.6
+        tolerance: 0.35
+      height:
+        nominal: 10.2
+        tolerance: 0.35
+    top_offset: 1.35
+    left_offset: 2.4
+    pitch: 2.54
+    pins: 7
+    missing_pins: [3, 7]
+    pin:
+      length:
+        nominal: 0.5
+      #   tolerance: 0.35
+      width:
+        nominal: 0.25
+      #   tolerance: 0.35
+    library: "Converter_DCDC"
+    tags: "DC/DC Converter"
+    description: "Traco TBA 2 Dual Output"
+    datasheet: "https://www.tracopower.com/sites/default/files/products/datasheets/tba2_datasheet.pdf#page=3"
+    revision: "April 27, 2020"
+    
+  Converter_DCDC_TRACO_TMA_05xxS_TMA_12xxS_THT:
+    package:
+      length:
+        nominal: 19.5
+        tolerance: 0.25
+      width:
+        nominal: 6.1
+        tolerance: 0.25
+      height:
+        nominal: 10.2
+        tolerance: 0.25
+    top_offset: 1.175
+    left_offset: 2.4
+    pitch: 2.54
+    pins: 7
+    missing_pins: [3, 5, 7]
+    pin:
+      length:
+        nominal: 0.5
+        tolerance: 0.05
+      width:
+        nominal: 0.25
+        tolerance: 0.05
+    library: "Converter_DCDC"
+    tags: "DC/DC Converter"
+    description: "Traco TMA 5V/12V Input Single Output"
+    datasheet: "https://www.tracopower.com/sites/default/files/products/datasheets/tma_datasheet.pdf#page=3"
+    revision: "October 23, 2018"
+    
+  Converter_DCDC_TRACO_TMA_05xxD_TMA_12xxD_THT:
+    package:
+      length:
+        nominal: 19.5
+        tolerance: 0.25
+      width:
+        nominal: 6.1
+        tolerance: 0.25
+      height:
+        nominal: 10.2
+        tolerance: 0.25
+    top_offset: 1.175
+    left_offset: 2.4
+    pitch: 2.54
+    pins: 7
+    missing_pins: [3, 7]
+    pin:
+      length:
+        nominal: 0.5
+        tolerance: 0.05
+      width:
+        nominal: 0.25
+        tolerance: 0.05
+    library: "Converter_DCDC"
+    tags: "DC/DC Converter"
+    description: "Traco TMA 5V/12V Input Dual Output"
+    datasheet: "https://www.tracopower.com/sites/default/files/products/datasheets/tma_datasheet.pdf#page=3"
+    revision: "October 23, 2018"
+    
+  Converter_DCDC_TRACO_TMA_15xxS_TMA_24xxS_THT:
+    package:
+      length:
+        nominal: 19.5
+        tolerance: 0.25
+      width:
+        nominal: 7.1
+        tolerance: 0.25
+      height:
+        nominal: 10.2
+        tolerance: 0.25
+    top_offset: 1.175
+    left_offset: 2.4
+    pitch: 2.54
+    pins: 7
+    missing_pins: [3, 5, 7]
+    pin:
+      length:
+        nominal: 0.5
+        tolerance: 0.05
+      width:
+        nominal: 0.25
+        tolerance: 0.05
+    library: "Converter_DCDC"
+    tags: "DC/DC Converter"
+    description: "Traco TMA 15V/24V Input Single Output"
+    datasheet: "https://www.tracopower.com/sites/default/files/products/datasheets/tma_datasheet.pdf#page=3"
+    revision: "October 23, 2018"
+    
+  Converter_DCDC_TRACO_TMA_15xxD_TMA_24xxD_THT:
+    package:
+      length:
+        nominal: 19.5
+        tolerance: 0.25
+      width:
+        nominal: 7.1
+        tolerance: 0.25
+      height:
+        nominal: 10.2
+        tolerance: 0.25
+    top_offset: 1.175
+    left_offset: 2.4
+    pitch: 2.54
+    pins: 7
+    missing_pins: [3, 7]
+    pin:
+      length:
+        nominal: 0.5
+        tolerance: 0.05
+      width:
+        nominal: 0.25
+        tolerance: 0.05
+    library: "Converter_DCDC"
+    tags: "DC/DC Converter"
+    description: "Traco TMA 15V/24V Input Single Output"
+    datasheet: "https://www.tracopower.com/sites/default/files/products/datasheets/tma_datasheet.pdf#page=3"
+    revision: "October 23, 2018"
+    
+  Converter_DCDC_TRACO_TMAP_xxxxS_THT:
+    package:
+      length:
+        nominal: 19.5
+        tolerance: 0.5
+      width:
+        nominal: 7.1
+        tolerance: 0.5
+      height:
+        nominal: 10.2
+        tolerance: 0.5
+    top_offset: 1.925
+    left_offset: 2.1
+    pitch: 2.54
+    pins: 7
+    missing_pins: [3, 5, 7]
+    pin:
+      length:
+        nominal: 0.5
+        # tolerance: 0.5
+      width:
+        nominal: 0.25
+        # tolerance: 0.25
+    library: "Converter_DCDC"
+    tags: "DC/DC Converter"
+    description: "Traco TMAP Single Output"
+    datasheet: "https://www.tracopower.com/sites/default/files/products/datasheets/tmap_datasheet.pdf#page=4"
+    revision: "August 14, 2020"
+    
+  Converter_DCDC_TRACO_TMAP_xxxxD_THT:
+    package:
+      length:
+        nominal: 19.5
+        tolerance: 0.5
+      width:
+        nominal: 7.1
+        tolerance: 0.5
+      height:
+        nominal: 10.2
+        tolerance: 0.5
+    top_offset: 1.925
+    left_offset: 2.1
+    pitch: 2.54
+    pins: 7
+    missing_pins: [3, 7]
+    pin:
+      length:
+        nominal: 0.5
+        # tolerance: 0.5
+      width:
+        nominal: 0.25
+        # tolerance: 0.25
+    library: "Converter_DCDC"
+    tags: "DC/DC Converter"
+    description: "Traco TMAP Dual Output"
+    datasheet: "https://www.tracopower.com/sites/default/files/products/datasheets/tmap_datasheet.pdf#page=4"
+    revision: "August 14, 2020"
+    
+  Converter_DCDC_TRACO_TME_03xxS_TME_05xxS_TME_12xxS_THT:
+    package:
+      length:
+        nominal: 11.5
+        tolerance: 0.25
+      width:
+        nominal: 6.1
+        tolerance: 0.25
+      height:
+        nominal: 10.2
+        tolerance: 0.25
+    top_offset: 4.325
+    left_offset: 1.9
+    pitch: 2.54
+    pins: 4
+    pin:
+      length:
+        nominal: 0.5
+        tolerance: 0.05
+      width:
+        nominal: 0.25
+        tolerance: 0.05
+    library: "Converter_DCDC"
+    tags: "DC/DC Converter"
+    description: "Traco TME 3.3V/5V/12V Input Single Output"
+    datasheet: "https://www.tracopower.com/sites/default/files/products/datasheets/tme_datasheet.pdf#page=3"
+    revision: "October 23, 2018"
+    
+  Converter_DCDC_TRACO_TME_24xxS_THT:
+    package:
+      length:
+        nominal: 11.5
+        tolerance: 0.25
+      width:
+        nominal: 7.1
+        tolerance: 0.25
+      height:
+        nominal: 10.2
+        tolerance: 0.25
+    top_offset: 5.325
+    left_offset: 1.9
+    pitch: 2.54
+    pins: 4
+    pin:
+      length:
+        nominal: 0.5
+        tolerance: 0.05
+      width:
+        nominal: 0.25
+        tolerance: 0.05
+    library: "Converter_DCDC"
+    tags: "DC/DC Converter"
+    description: "Traco TME 24V Input Single Output"
+    datasheet: "https://www.tracopower.com/sites/default/files/products/datasheets/tme_datasheet.pdf#page=3"
+    revision: "October 23, 2018"
+    
+  Converter_DCDC_TRACO_TMR_1-xx1x_THT:
+    package:
+      length:
+        nominal: 17
+        tolerance: 0.5
+      width:
+        nominal: 7.62
+        tolerance: 0.5
+      height:
+        nominal: 11
+        tolerance: 0.5
+    top_offset: 2.375
+    left_offset: 2.15
+    pitch: 2.54
+    pins: 6
+    missing_pins: [3, 5]
+    pin:
+      length:
+        nominal: 0.5
+        # tolerance: 0.5
+      width:
+        nominal: 0.25
+        # tolerance: 0.5
+    library: "Converter_DCDC"
+    tags: "DC/DC Converter"
+    description: "Traco TMR 1 Single Output"
+    datasheet: "https://www.tracopower.com/sites/default/files/products/datasheets/tmr1_datasheet.pdf#page=4"
+    revision: "April 27, 2020"
+    
+  Converter_DCDC_TRACO_TMR_1-xx2x_THT:
+    package:
+      length:
+        nominal: 17
+        tolerance: 0.5
+      width:
+        nominal: 7.62
+        tolerance: 0.5
+      height:
+        nominal: 11
+        tolerance: 0.5
+    top_offset: 2.375
+    left_offset: 2.15
+    pitch: 2.54
+    pins: 6
+    missing_pins: [3]
+    pin:
+      length:
+        nominal: 0.5
+        # tolerance: 0.5
+      width:
+        nominal: 0.25
+        # tolerance: 0.5
+    library: "Converter_DCDC"
+    tags: "DC/DC Converter"
+    description: "Traco TMR 1 Dual Output"
+    datasheet: "https://www.tracopower.com/sites/default/files/products/datasheets/tmr1_datasheet.pdf#page=4"
+    revision: "April 27, 2020"
+    
+  Converter_DCDC_TRACO_TMV_05xxS_TMV_12xxS_THT:
+    package:
+      length:
+        nominal: 19.5
+        tolerance: 0.25
+      width:
+        nominal: 6.1
+        tolerance: 0.25
+      height:
+        nominal: 10.2
+        tolerance: 0.25
+    top_offset: 1.375
+    left_offset: 2.3
+    pitch: 2.54
+    pins: 7
+    missing_pins: [3, 4, 6]
+    pin:
+      length:
+        nominal: 0.5
+        tolerance: 0.05
+      width:
+        nominal: 0.25
+        tolerance: 0.05
+    library: "Converter_DCDC"
+    tags: "DC/DC Converter"
+    description: "Traco TMV 5V/12V Input Single Output"
+    datasheet: "https://www.tracopower.com/sites/default/files/products/datasheets/tmv_datasheet.pdf#page=3"
+    revision: "October 23, 2018"
+    
+  Converter_DCDC_TRACO_TMV_24xxS_THT:
+    package:
+      length:
+        nominal: 19.5
+        tolerance: 0.25
+      width:
+        nominal: 7.1
+        tolerance: 0.25
+      height:
+        nominal: 10.2
+        tolerance: 0.25
+    top_offset: 1.375
+    left_offset: 2.3
+    pitch: 2.54
+    pins: 7
+    missing_pins: [3, 4, 6]
+    pin:
+      length:
+        nominal: 0.5
+        tolerance: 0.05
+      width:
+        nominal: 0.25
+        tolerance: 0.05
+    library: "Converter_DCDC"
+    tags: "DC/DC Converter"
+    description: "Traco TMV 24V Input Single Output"
+    datasheet: "https://www.tracopower.com/sites/default/files/products/datasheets/tmv_datasheet.pdf#page=3"
+    revision: "October 23, 2018"
+    
+  Converter_DCDC_TRACO_TMV_05xxD_TMV_12xxD_THT:
+    package:
+      length:
+        nominal: 19.5
+        tolerance: 0.25
+      width:
+        nominal: 6.1
+        tolerance: 0.25
+      height:
+        nominal: 10.2
+        tolerance: 0.25
+    top_offset: 1.375
+    left_offset: 2.3
+    pitch: 2.54
+    pins: 7
+    missing_pins: [3, 4]
+    pin:
+      length:
+        nominal: 0.5
+        tolerance: 0.05
+      width:
+        nominal: 0.25
+        tolerance: 0.05
+    library: "Converter_DCDC"
+    tags: "DC/DC Converter"
+    description: "Traco TMV 5V/12V Input Dual Output"
+    datasheet: "https://www.tracopower.com/sites/default/files/products/datasheets/tmv_datasheet.pdf#page=3"
+    revision: "October 23, 2018"
+    
+  Converter_DCDC_TRACO_TMV_24xxD_THT:
+    package:
+      length:
+        nominal: 19.5
+        tolerance: 0.25
+      width:
+        nominal: 7.1
+        tolerance: 0.25
+      height:
+        nominal: 10.2
+        tolerance: 0.25
+    top_offset: 1.375
+    left_offset: 2.3
+    pitch: 2.54
+    pins: 7
+    missing_pins: [3, 4]
+    pin:
+      length:
+        nominal: 0.5
+        tolerance: 0.05
+      width:
+        nominal: 0.25
+        tolerance: 0.05
+    library: "Converter_DCDC"
+    tags: "DC/DC Converter"
+    description: "Traco TMV 24V Input Dual Output"
+    datasheet: "https://www.tracopower.com/sites/default/files/products/datasheets/tmv_datasheet.pdf#page=3"
+    revision: "October 23, 2018"
+    
+  Converter_DCDC_TRACO_TMV_xxxx_EN_THT:
+    package:
+      length:
+        nominal: 22
+        tolerance: 0.5
+      width:
+        nominal: 7.5
+        tolerance: 0.5
+      height:
+        nominal: 12.5
+        tolerance: 0.5
+    top_offset: 1.875
+    left_offset: 3.5
+    pitch: 2.54
+    pins: 7
+    missing_pins: [3, 4, 6]
+    pin:
+      length:
+        nominal: 0.5
+        tolerance: 0.05
+      width:
+        nominal: 0.25
+        tolerance: 0.05
+    library: "Converter_DCDC"
+    tags: "DC/DC Converter"
+    description: "Traco TMV-EN Single Output"
+    datasheet: "https://www.tracopower.com/sites/default/files/products/datasheets/tmv_en_datasheet.pdf#page=3"
+    revision: "February 18, 2020"
+    
+  Converter_DCDC_TRACO_TMV_xxxxD_EN_THT:
+    package:
+      length:
+        nominal: 22
+        tolerance: 0.5
+      width:
+        nominal: 7.5
+        tolerance: 0.5
+      height:
+        nominal: 12.5
+        tolerance: 0.5
+    top_offset: 1.875
+    left_offset: 3.5
+    pitch: 2.54
+    pins: 7
+    missing_pins: [3, 4]
+    pin:
+      length:
+        nominal: 0.5
+        tolerance: 0.05
+      width:
+        nominal: 0.25
+        tolerance: 0.05
+    library: "Converter_DCDC"
+    tags: "DC/DC Converter"
+    description: "Traco TMV-EN Dual Output"
+    datasheet: "https://www.tracopower.com/sites/default/files/products/datasheets/tmv_en_datasheet.pdf#page=3"
+    revision: "February 18, 2020"
+    
+  Converter_DCDC_TRACO_TMV_xxxxSHI_THT:
+    package:
+      length:
+        nominal: 19.5
+        tolerance: 0.5
+      width:
+        nominal: 7.5
+        tolerance: 0.5
+      height:
+        nominal: 10.2
+        tolerance: 0.5
+    top_offset: 1.675
+    left_offset: 2.3
+    pitch: 2.54
+    pins: 7
+    missing_pins: [3, 4, 6]
+    pin:
+      length:
+        nominal: 0.5
+        tolerance: 0.05
+      width:
+        nominal: 0.25
+        tolerance: 0.05
+    library: "Converter_DCDC"
+    tags: "DC/DC Converter"
+    description: "Traco TMV-HI Single Output"
+    datasheet: "https://www.tracopower.com/sites/default/files/products/datasheets/tmv_hi_datasheet.pdf#page=4"
+    revision: "August 27, 2020"
+    
+  Converter_DCDC_TRACO_TMV_xxxxDHI_TMV_xxxx9HI_THT:
+    package:
+      length:
+        nominal: 19.5
+        tolerance: 0.5
+      width:
+        nominal: 7.5
+        tolerance: 0.5
+      height:
+        nominal: 10.2
+        tolerance: 0.5
+    top_offset: 1.675
+    left_offset: 2.3
+    pitch: 2.54
+    pins: 7
+    missing_pins: [3, 4]
+    pin:
+      length:
+        nominal: 0.5
+        tolerance: 0.05
+      width:
+        nominal: 0.25
+        tolerance: 0.05
+    library: "Converter_DCDC"
+    tags: "DC/DC Converter"
+    description: "Traco TMV-HI Single Output"
+    datasheet: "https://www.tracopower.com/sites/default/files/products/datasheets/tmv_hi_datasheet.pdf#page=4"
+    revision: "August 27, 2020"
+    
+  Converter_DCDC_TRACO_TRV_1-xx1xM_THT:
+    package:
+      length:
+        nominal: 19.6
+        tolerance: 0.5
+      width:
+        nominal: 9.9
+        tolerance: 0.5
+      height:
+        nominal: 12.5
+        tolerance: 0.5
+    top_offset: 2.3
+    left_offset: 1.8
+    pitch: 2
+    pins: 9
+    missing_pins: [3, 4, 5, 6, 8]
+    pin:
+      length:
+        nominal: 0.5
+        tolerance: 0.1
+      width:
+        nominal: 0.25
+        tolerance: 0.1
+    library: "Converter_DCDC"
+    tags: "DC/DC Converter"
+    description: "Traco TRV 1M Single Output"
+    datasheet: "https://www.tracopower.com/sites/default/files/products/datasheets/trv1m_datasheet.pdf#page=4"
+    revision: "August 24, 2020"
+    
+  Converter_DCDC_TRACO_TRV_1-xx2xM_THT:
+    package:
+      length:
+        nominal: 19.6
+        tolerance: 0.5
+      width:
+        nominal: 9.9
+        tolerance: 0.5
+      height:
+        nominal: 12.5
+        tolerance: 0.5
+    top_offset: 2.3
+    left_offset: 1.8
+    pitch: 2
+    pins: 9
+    missing_pins: [3, 4, 5, 6]
+    pin:
+      length:
+        nominal: 0.5
+        tolerance: 0.1
+      width:
+        nominal: 0.25
+        tolerance: 0.1
+    library: "Converter_DCDC"
+    tags: "DC/DC Converter"
+    description: "Traco TRV 1M Dual Output"
+    datasheet: "https://www.tracopower.com/sites/default/files/products/datasheets/trv1m_datasheet.pdf#page=4"
+    revision: "August 24, 2020"
+    
+  Converter_DCDC_TRACO_TEC_2-xxxx_TEC_2-xxxxWI_TEC_3-xxxx_TEC_3-xxxxWI_THT:
+    package:
+      length:
+        nominal: 21.8
+        tolerance: 0.5
+      width:
+        nominal: 9.1
+        tolerance: 0.5
+      height:
+        nominal: 11.2
+        tolerance: 0.5
+    top_offset: 3.325
+    left_offset: 2.02
+    pitch: 2.54
+    pins: 8
+    missing_pins: [4]
+    pin:
+      length:
+        nominal: 0.5
+        tolerance: 0.1
+      width:
+        nominal: 0.25
+        tolerance: 0.1
+    library: "Converter_DCDC"
+    tags: "DC/DC Converter"
+    description: "Traco TEC 2, TEC 2WI, TEC 3, TEC 3WI"
+    datasheet: "https://www.tracopower.com/sites/default/files/products/datasheets/tec2_datasheet.pdf#page=4"
+    revision: "April 27, 2020"
+    
+  Converter_DCDC_TRACO_TMH_xxxxS_THT:
+    package:
+      length:
+        nominal: 19.5
+        tolerance: 0.25
+      width:
+        nominal: 7.5
+        tolerance: 0.25
+      height:
+        nominal: 10.2
+        tolerance: 0.25
+    top_offset: 1.375
+    left_offset: 2.3
+    pitch: 2.54
+    pins: 7
+    missing_pins: [3, 5, 7]
+    pin:
+      length:
+        nominal: 0.5
+        tolerance: 0.05
+      width:
+        nominal: 0.25
+        tolerance: 0.05
+    library: "Converter_DCDC"
+    tags: "DC/DC Converter"
+    description: "Traco TMH Single Output"
+    datasheet: "https://www.tracopower.com/sites/default/files/products/datasheets/tmh_datasheet.pdf#page=3"
+    revision: "October 23, 2018"
+    
+  Converter_DCDC_TRACO_TMH_xxxxD_THT:
+    package:
+      length:
+        nominal: 19.5
+        tolerance: 0.25
+      width:
+        nominal: 7.5
+        tolerance: 0.25
+      height:
+        nominal: 10.2
+        tolerance: 0.25
+    top_offset: 1.375
+    left_offset: 2.3
+    pitch: 2.54
+    pins: 7
+    missing_pins: [3, 7]
+    pin:
+      length:
+        nominal: 0.5
+        tolerance: 0.05
+      width:
+        nominal: 0.25
+        tolerance: 0.05
+    library: "Converter_DCDC"
+    tags: "DC/DC Converter"
+    description: "Traco TMH Dual Output"
+    datasheet: "https://www.tracopower.com/sites/default/files/products/datasheets/tmh_datasheet.pdf#page=3"
+    revision: "October 23, 2018"
+    
+  Converter_DCDC_TRACO_TMR_xxxx_TMR_3-xxxxWI_THT:
+    package:
+      length:
+        nominal: 21.8
+        tolerance: 0.5
+      width:
+        nominal: 9.2
+        tolerance: 0.5
+      height:
+        nominal: 11.1
+        tolerance: 0.5
+    top_offset: 3.325
+    left_offset: 2
+    pitch: 2.54
+    pins: 8
+    missing_pins: [4]
+    pin:
+      length:
+        nominal: 0.5
+        # tolerance: 0.5
+      width:
+        nominal: 0.25
+        # tolerance: 0.5
+    library: "Converter_DCDC"
+    tags: "DC/DC Converter"
+    description: "Traco TMR 2, TMR 3WI"
+    datasheet: "https://www.tracopower.com/sites/default/files/products/datasheets/tmr2_datasheet.pdf#page=4"
+    revision: "April 27, 2020"
+    
+  Converter_DCDC_TRACO_TMR_2-xxxxE_THT:
+    package:
+      length:
+        nominal: 21.8
+        tolerance: 0.5
+      width:
+        nominal: 9.3
+        tolerance: 0.5
+      height:
+        nominal: 11.2
+        tolerance: 0.5
+    top_offset: 2.575
+    left_offset: 2
+    pitch: 2.54
+    pins: 8
+    missing_pins: [3]
+    pin:
+      length:
+        nominal: 0.5
+        # tolerance: 0.5
+      width:
+        nominal: 0.25
+        # tolerance: 0.5
+    library: "Converter_DCDC"
+    tags: "DC/DC Converter"
+    description: "Traco TMR 2E"
+    datasheet: "https://www.tracopower.com/sites/default/files/products/datasheets/tmr2e_datasheet.pdf#page=4"
+    revision: "April 27, 2020"
+    
+  Converter_DCDC_TRACO_TMR_2-xxxxWI_THT:
+    package:
+      length:
+        nominal: 25.95
+        tolerance: 0.5
+      width:
+        nominal: 9.25
+        tolerance: 0.5
+      height:
+        nominal: 12.45
+        tolerance: 0.5
+    top_offset: 2.375
+    left_offset: 2
+    pitch: 2.54
+    pins: 9
+    missing_pins: [4, 5]
+    pin:
+      length:
+        nominal: 0.5
+        tolerance: 0.05
+      width:
+        nominal: 0.25
+        tolerance: 0.05
+    library: "Converter_DCDC"
+    tags: "DC/DC Converter"
+    description: "Traco TMR 2WI"
+    datasheet: "https://www.tracopower.com/sites/default/files/products/datasheets/tmr2wi_datasheet.pdf#page=4"
+    revision: "April 27, 2020"
+    
+    Converter_DCDC_TRACO_TMV_2-xxxxSHI_THT:
+      package:
+        length:
+          nominal: 19.5
+          tolerance: 0.5
+        width:
+          nominal: 7.1
+          tolerance: 0.5
+        height:
+          nominal: 10.2
+          tolerance: 0.5
+      top_offset: 1.675
+      left_offset: 2.3
+      pitch: 2.54
+      pins: 7
+      missing_pins: [3, 4, 6]
+      pin:
+        length:
+          nominal: 0.5
+          tolerance: 0.05
+        width:
+          nominal: 0.25
+          tolerance: 0.05
+      library: "Converter_DCDC"
+      tags: "DC/DC Converter"
+      description: "Traco TMV 2HI Single Output"
+      datasheet: "https://www.tracopower.com/sites/default/files/products/datasheets/tmv2hi_datasheet.pdf#page=4"
+      revision: "August 27, 2020"
+      
+  Converter_DCDC_TRACO_TMV_2-xxxxDHI_TMV_2-xxxx9HI_THT:
+    package:
+      length:
+        nominal: 19.5
+        tolerance: 0.5
+      width:
+        nominal: 7.1
+        tolerance: 0.5
+      height:
+        nominal: 10.2
+        tolerance: 0.5
+    top_offset: 1.675
+    left_offset: 2.3
+    pitch: 2.54
+    pins: 7
+    missing_pins: [3, 4]
+    pin:
+      length:
+        nominal: 0.5
+        tolerance: 0.05
+      width:
+        nominal: 0.25
+        tolerance: 0.05
+    library: "Converter_DCDC"
+    tags: "DC/DC Converter"
+    description: "Traco TMV 2HI Dual Output"
+    datasheet: "https://www.tracopower.com/sites/default/files/products/datasheets/tmv2hi_datasheet.pdf#page=4"
+    revision: "August 27, 2020"
+    
+  Converter_DCDC_TRACO_TMR 3-xxxx_THT:
+    package:
+      length:
+        nominal: 21.8
+        tolerance: 0.5
+      width:
+        nominal: 9.2
+        tolerance: 0.5
+      height:
+        nominal: 11.1
+        tolerance: 0.5
+    top_offset: 3.325
+    left_offset: 2
+    pitch: 2.54
+    pins: 8
+    missing_pins: [4]
+    pin:
+      length:
+        nominal: 0.5
+        tolerance: 0.1
+      width:
+        nominal: 0.25
+        tolerance: 0.1
+    library: "Converter_DCDC"
+    tags: "DC/DC Converter"
+    description: "Traco TMR 3"
+    datasheet: "https://www.tracopower.com/sites/default/files/products/datasheets/tmr3_datasheet.pdf#page=4"
+    revision: "April 27, 2020"
+    
+  Converter_DCDC_TRACO_TMR_3-xxxxE_TMR_3-xxxxWIE_THT:
+    package:
+      length:
+        nominal: 21.8
+        tolerance: 0.5
+      width:
+        nominal: 9.3
+        tolerance: 0.5
+      height:
+        nominal: 11.2
+        tolerance: 0.5
+    top_offset: 2.575
+    left_offset: 2
+    pitch: 2.54
+    pins: 8
+    missing_pins: [4]
+    pin:
+      length:
+        nominal: 0.5
+        tolerance: 0.1
+      width:
+        nominal: 0.25
+        tolerance: 0.1
+    library: "Converter_DCDC"
+    tags: "DC/DC Converter"
+    description: "Traco TMR 3E, TMR 3WIE"
+    datasheet: "https://www.tracopower.com/sites/default/files/products/datasheets/tmr3e_datasheet.pdf#page=4"
+    revision: "April 27, 2020"
+    
+  Converter_DCDC_TRACO_TMR_3-xxxxHI_THT:
+    package:
+      length:
+        nominal: 21.8
+        tolerance: 0.5
+      width:
+        nominal: 9.2
+        tolerance: 0.5
+      height:
+        nominal: 11.1
+        tolerance: 0.5
+    top_offset: 3.325
+    left_offset: 2
+    pitch: 2.54
+    pins: 8
+    missing_pins: [4, 5]
+    pin:
+      length:
+        nominal: 0.5
+        tolerance: 0.1
+      width:
+        nominal: 0.25
+        tolerance: 0.1
+    library: "Converter_DCDC"
+    tags: "DC/DC Converter"
+    description: "Traco TMR 3HI"
+    datasheet: "https://www.tracopower.com/sites/default/files/products/datasheets/tmr3hi_datasheet.pdf#page=4"
+    revision: "April 27, 2020"
+    
+  Converter_DCDC_TRACO_TRA_3-xxxx_THT:
+    package:
+      length:
+        nominal: 19.5
+        tolerance: 0.25
+      width:
+        nominal: 7.6
+        tolerance: 0.25
+      height:
+        nominal: 10.2
+        tolerance: 0.25
+    top_offset: 1.175
+    left_offset: 2.55
+    pitch: 2.54
+    pins: 7
+    missing_pins: [3, 5, 7]
+    pin:
+      length:
+        nominal: 0.5
+        # tolerance: 0.05
+      width:
+        nominal: 0.25
+        # tolerance: 0.05
+    library: "Converter_DCDC"
+    tags: "DC/DC Converter"
+    description: "Traco TRA 3"
+    datasheet: "https://www.tracopower.com/sites/default/files/products/datasheets/tra3_datasheet.pdf#page=3"
+    revision: "December 13, 2017"
+    
+  Converter_DCDC_TRACO_TMR_6-xxxx_TMR_6-xxxxWI_THT:
+    package:
+      length:
+        nominal: 21.8
+        tolerance: 0.5
+      width:
+        nominal: 9.1
+        tolerance: 0.5
+      height:
+        nominal: 11.2
+        tolerance: 0.5
+    top_offset: 3.325
+    left_offset: 2
+    pitch: 2.54
+    pins: 8
+    missing_pins: [4]
+    pin:
+      length:
+        nominal: 0.5
+        # tolerance: 0.5
+      width:
+        nominal: 0.25
+        # tolerance: 0.5
+    library: "Converter_DCDC"
+    tags: "DC/DC Converter"
+    description: "Traco TMR 6, TMR 6WI"
+    datasheet: "https://www.tracopower.com/sites/default/files/products/datasheets/tmr6_datasheet.pdf#page=4"
+    revision: "April 27, 2020"
+    
+  Converter_DCDC_TRACO_TMR_9-xxxxWI_Option_Plastic_Package_THT:
+    package:
+      length:
+        nominal: 21.8
+        tolerance: 0.5
+      width:
+        nominal: 9.1
+        tolerance: 0.5
+      height:
+        nominal: 11.2
+        tolerance: 0.5
+    top_offset: 3.325
+    left_offset: 2
+    pitch: 2.54
+    pins: 8
+    missing_pins: [4, 5]
+    pin:
+      length:
+        nominal: 0.5
+        # tolerance: 0.5
+      width:
+        nominal: 0.25
+        # tolerance: 0.5
+    library: "Converter_DCDC"
+    tags: "DC/DC Converter"
+    description: "Traco TMR 9WI Plastic Package Option"
+    datasheet: "https://www.tracopower.com/sites/default/files/products/datasheets/tmr9wi_datasheet.pdf#page=5"
+    revision: "April 27, 2020"
+    
+  Converter_DCDC_TRACO_TMA_05xxS_TMA_12xxS_THT:
+    package:
+      length:
+        nominal: 19.5
+        tolerance: 0.25
+      width:
+        nominal: 6.1
+        tolerance: 0.25
+      height:
+        nominal: 10.2
+        tolerance: 0.25
+    top_offset: 1.175
+    left_offset: 2.1
+    pitch: 2.54
+    pins: 7
+    missing_pins: [3, 5, 7]
+    pin:
+      length:
+        nominal: 0.5
+        tolerance: 0.05
+      width:
+        nominal: 0.25
+        tolerance: 0.05
+    library: "Converter_DCDC"
+    tags: "DC/DC Converter"
+    description: "Traco TMA 5V/12V Input Single Output"
+    datasheet: "https://www.tracopower.com/sites/default/files/products/datasheets/tma_datasheet.pdf#page=3"
+    revision: "August 14, 2020"
+    
+  Converter_DCDC_TRACO_TMA_15xxS_TMA_24xxS_THT:
+    package:
+      length:
+        nominal: 19.5
+        tolerance: 0.25
+      width:
+        nominal: 7.1
+        tolerance: 0.25
+      height:
+        nominal: 10.2
+        tolerance: 0.25
+    top_offset: 1.175
+    left_offset: 2.1
+    pitch: 2.54
+    pins: 7
+    missing_pins: [3, 5, 7]
+    pin:
+      length:
+        nominal: 0.5
+        tolerance: 0.05
+      width:
+        nominal: 0.25
+        tolerance: 0.05
+    library: "Converter_DCDC"
+    tags: "DC/DC Converter"
+    description: "Traco TMA 15V/24V Input Single Output"
+    datasheet: "https://www.tracopower.com/sites/default/files/products/datasheets/tma_datasheet.pdf#page=3"
+    revision: "August 14, 2020"
+    
+  Converter_DCDC_TRACO_TMA_05xxD_TMA_12xxD_THT:
+    package:
+      length:
+        nominal: 19.5
+        tolerance: 0.25
+      width:
+        nominal: 6.1
+        tolerance: 0.25
+      height:
+        nominal: 10.2
+        tolerance: 0.25
+    top_offset: 1.175
+    left_offset: 2.1
+    pitch: 2.54
+    pins: 7
+    missing_pins: [3, 7]
+    pin:
+      length:
+        nominal: 0.5
+        tolerance: 0.05
+      width:
+        nominal: 0.25
+        tolerance: 0.05
+    library: "Converter_DCDC"
+    tags: "DC/DC Converter"
+    description: "Traco TMA 5V/12V Input Dual Output"
+    datasheet: "https://www.tracopower.com/sites/default/files/products/datasheets/tma_datasheet.pdf#page=3"
+    revision: "August 14, 2020"
+    
+  Converter_DCDC_TRACO_TMA_15xxD_TMA_24xxD_THT:
+    package:
+      length:
+        nominal: 19.5
+        tolerance: 0.25
+      width:
+        nominal: 7.1
+        tolerance: 0.25
+      height:
+        nominal: 10.2
+        tolerance: 0.25
+    top_offset: 1.175
+    left_offset: 2.1
+    pitch: 2.54
+    pins: 7
+    missing_pins: [3, 7]
+    pin:
+      length:
+        nominal: 0.5
+        tolerance: 0.05
+      width:
+        nominal: 0.25
+        tolerance: 0.05
+    library: "Converter_DCDC"
+    tags: "DC/DC Converter"
+    description: "Traco TMA 15V/24V Input Dual Output"
+    datasheet: "https://www.tracopower.com/sites/default/files/products/datasheets/tma_datasheet.pdf#page=3"
+    revision: "August 14, 2020"
+    
+  Converter_DCDC_TRACO_TEA_1-0505_THT:
+    package:
+      length:
+        nominal: 11.68
+        tolerance: 0.35
+      width:
+        nominal: 6
+        tolerance: 0.35
+      height:
+        nominal: 9.65
+        tolerance: 0.35
+    top_offset: 5.1
+    left_offset: 2.03
+    pitch: 2.54
+    pins: 4
+    pin:
+      length:
+        nominal: 0.5
+        # tolerance: 0.35
+      width:
+        nominal: 0.25
+        # tolerance: 0.35
+    library: "Converter_DCDC"
+    tags: "DC/DC Converter"
+    description: "Traco TEA 1"
+    datasheet: "https://www.tracopower.com/sites/default/files/products/datasheets/tea1_datasheet.pdf#page=3"
+    revision: "April 27, 2020"
+    
+  Converter_DCDC_TRACO_TEA_1-0505E_THT:
+    package:
+      length:
+        nominal: 19.5
+        tolerance: 0.35
+      width:
+        nominal: 6
+        tolerance: 0.35
+      height:
+        nominal: 9.5
+        tolerance: 0.35
+    top_offset: 0.9
+    left_offset: 2.4
+    pitch: 2.54
+    pins: 7
+    missing_pins: [3, 5, 7]
+    pin:
+      length:
+        nominal: 0.5
+        # tolerance: 0.35
+      width:
+        nominal: 0.25
+        # tolerance: 0.35
+    library: "Converter_DCDC"
+    tags: "DC/DC Converter"
+    description: "Traco TEA 1E"
+    datasheet: "https://www.tracopower.com/sites/default/files/products/datasheets/tea1e_datasheet.pdf#page=3"
+    revision: "April 27, 2020"
+    
+  Converter_DCDC_TRACO_TEA_1-0505HI_THT:
+    package:
+      length:
+        nominal: 19.5
+        tolerance: 0.35
+      width:
+        nominal: 6
+        tolerance: 0.35
+      height:
+        nominal: 9.5
+        tolerance: 0.35
+    top_offset: 0.9
+    left_offset: 2.4
+    pitch: 2.54
+    pins: 7
+    missing_pins: [3, 4, 6]
+    pin:
+      length:
+        nominal: 0.5
+        # tolerance: 0.35
+      width:
+        nominal: 0.25
+        # tolerance: 0.35
+    library: "Converter_DCDC"
+    tags: "DC/DC Converter"
+    description: "Traco TEA 1HI"
+    datasheet: "https://www.tracopower.com/sites/default/files/products/datasheets/tea1hi_datasheet.pdf#page=3"
+    revision: "April 27, 2020"
