@@ -1,0 +1,31 @@
+group_definitions:
+    manufacturer: 'Wuerth'
+
+device_definition:
+    WR-WTB_side_entry:
+        series: 'WR-WTB'
+        mpn_format_string: '6201{pincount:02d}10822'
+        orientation: 'H'
+        datasheet: 'https://www.we-online.com/catalog/datasheet/620102131822.pdf'
+        pinrange: ['list', [2,3,4,5,6,7,8,9,10]]
+        text_inside_pos: 'center'
+        pitch: 2.0
+        pad1_position: 'top-left' # 'top-left' | 'bottom-left' -> pin 2 always to the right of pin 1
+        mounting_pad_size: [1.4, 3.1]
+        # x position mounting inner mounting pad edge relative to nearest pad center
+        center_pad_to_mounting_pad_edge: 1.6
+        # y dimensions for pad given relative to mounting pad edge
+        rel_pad_y_outside_edge: 8.9
+        rel_pad_y_inside_edge: 5.5
+        pad_size_x: 1.5
+        # y position for body edge relative to mounting pad edge (positive -> body extends outside bounding box)
+        rel_body_edge_y: 0.1
+        body_size_y: 6.3
+        # body_fin_protrusion: 1.6
+        # body_fin_width: 0.8
+        # x body edge relative to nearest pin
+        rel_body_edge_x: 3.0
+        edge_modifier_mount_pad_side:
+            depth: 0 # > 0: cutout, < 0: protrusion
+            start_from_body_side: 0.33
+            end_from_body_side: 0.33
