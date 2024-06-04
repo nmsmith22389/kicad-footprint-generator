@@ -25,6 +25,29 @@ device_definition:
         # body_fin_width: 0.8
         # x body edge relative to nearest pin
         rel_body_edge_x: 3.25
+    DF3EA_top_entry:
+        series: ''
+        mpn_format_string: 'DF3EA-{pincount:02d}P-2V'
+        orientation: 'V'
+        datasheet: 'https://www.hirose.com/en/product/document?clcode=CL0543-0315-0-21&productname=DF3EA-2P-2V(21)&series=DF3&documenttype=2DDrawing&lang=en&documentid=0001162002'
+        pinrange: ['list', [2,3,4,5,6,7,8,9,10,11,12,13,14,15]]
+        text_inside_pos: 'center'
+        pitch: 2
+        pad1_position: 'top-left'
+        mounting_pad_size: [2.3, 3.3]
+        # x position mounting inner mounting pad edge relative to nearest pad center
+        center_pad_to_mounting_pad_edge: 3.37 #(D-B)/2
+        # y dimensions for pad given relative to mounting pad edge
+        rel_pad_y_outside_edge: 7.4 #4.8+2.6, taken from "Recommended Pattern" diagram
+        rel_pad_y_inside_edge: 4.8 #taken from "Recommended Pattern" diagram
+        pad_size_x: 1.2
+        # y position for body edge relative to mounting pad edge (positive -> body extends outside bounding box)
+        rel_body_edge_y: 1.025 # tabHeight is 2.2. pad height is 3.3. Tab is 1.575 from body top edge. 1.575-(3.3-2.2)/2
+        body_size_y: 5.6 # directly from top view diagram
+        # body_fin_protrusion: 1.6
+        # body_fin_width: 0.8
+        # x body edge relative to nearest pin
+        rel_body_edge_x: 3.25 # (C-B)/2
     # DF13C:
     #     series: 'DF13C'
     #     mpn_format_string: 'CL535-04{pincount:02d}-{param_1:s}-51'
