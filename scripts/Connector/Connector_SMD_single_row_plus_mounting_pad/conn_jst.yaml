@@ -221,6 +221,27 @@ device_definition:
                     reference_is: 'center' # 'center' | 'first' | 'last'
                     count: 'pincount' # 'pincount' | value
 
+    PA_side_entry:
+        series: 'PA'
+        mpn_format_string: 'SM{pincount:02}B-PASS'
+        orientation: 'H'
+        datasheet: 'https://www.jst-mfg.com/product/pdf/eng/ePA-F.pdf'
+        pinrange: ['list', [2,3,4,5,6,7,8,9,10,11,12,13,15]]
+        text_inside_pos: 1.5
+        pitch: 2
+        pad1_position: 'top-left' # 'top-left' | 'bottom-left' -> pin 2 always to the right of pin 1
+        mounting_pad_size: [1.8, 3.8]
+        # x position mounting inner mounting pad edge relative to nearest pad center
+        center_pad_to_mounting_pad_edge: 1.6
+        # y dimensions for pad given relative to mounting pad edge
+        rel_pad_y_outside_edge: 7.85
+        rel_pad_y_inside_edge: 5.15
+        pad_size_x: 1
+        # y position for body edge relative to mounting pad edge (positive -> body extends outside bounding box)
+        rel_body_edge_y: 2.8
+        body_size_y: 8.9
+        # x body edge relative to nearest pin
+        rel_body_edge_x: 3 #(8-2)/2
 
     PH_side_entry:
         series: 'PH'
