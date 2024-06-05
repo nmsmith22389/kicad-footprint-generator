@@ -6,8 +6,7 @@ import os
 import sys
 from copy import deepcopy
 from typing import List, Union
-
-import yaml
+from dataclasses import dataclass
 
 # ensure that the kicad-footprint-generator directory is available
 sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))
@@ -21,11 +20,12 @@ from scripts.tools.footprint_scripts_DIP import makeDIP
 from scripts.tools.global_config_files.global_config import GlobalConfig
 
 
+@dataclass
 class DIPConfiguration:
     """
     Type-safe representation of a DIP footprint configuration
     """
-    pins: int
+    pins: List[int]
     pitch_x: float
     pitch_y: float
     body_size: Vector2D
@@ -40,6 +40,14 @@ class DIPConfiguration:
 
     def __init__(self, spec):
         self.pins = spec['pins']
+        if not isinstance(self.pins, list): # Handle a single pincount
+            assert isinstance(self.pins, int)
+            self.pins = [self.pins]
+        # Various plausibility checks
+        assert all(isinstance(pincount, int) for pincount in self.pins)
+        assert all(pincount > 0 for pincount in self.pins)
+        assert all(pincount % 2 == 0 for pincount in self.pins)
+        
         self.pitch_x = spec['pitch_x']
         self.pitch_y = spec['pitch_y']
         self.body_size = Vector2D(spec['body_size_x'], spec['body_size_y'])
@@ -61,8 +69,7 @@ class DIPConfiguration:
         )
         self.socket_size_outset = self._get_socket_size_outset(spec)
 
-        assert self.pins % 2 == 0
-        assert self.drill > 0
+        # Validate the configuration
 
     def _get_socket_size_outset(self, spec) -> Union[Vector2D, None]:
         outset = spec.get('socket_size_outset', None)
@@ -105,14 +112,16 @@ class DIPGenerator(FootprintGenerator):
         # Again, would be good to make this a parameter of a 'policy'
         self.socket_size_outset = Vector2D(2.54, 2.54)
 
-    def make_from_config(self, config: DIPConfiguration):
+    def make_from_config(self, pincount: int, config: DIPConfiguration):
         """
-        Construct a footprint from a DIPConfiguration object
+        Construct a footprint from a DIPConfiguration object.
+        
+        This functions operates on a SINGLE pincount.
         """
 
         # Munge the geometry into what makeDIP wants
 
-        pin_row_length = (config.pins / 2 - 1) * config.pitch_y
+        pin_row_length = (pincount / 2 - 1) * config.pitch_y
         overlen_total = config.body_size.y - pin_row_length
 
         if config.socket_size_outset is None:
@@ -120,10 +129,10 @@ class DIPGenerator(FootprintGenerator):
             socket_height = 0
         else:
             socket_width = config.pitch_x + config.socket_size_outset.x
-            socket_height = (config.pins / 2 - 1) * config.pitch_y + config.socket_size_outset.y
+            socket_height = (pincount / 2 - 1) * config.pitch_y + config.socket_size_outset.y
 
         args = {
-            'pins': config.pins,
+            'pins': pincount,
             'rm': config.pitch_y,
             'pinrow_distance_in': config.pitch_x,  # not actuall in inches!
             'package_width': config.body_size.x,
@@ -180,8 +189,10 @@ class DIPGenerator(FootprintGenerator):
             for mutator in variant:
                 mutator(variant_config)
 
-            self.make_from_config(variant_config)
-            
+                # Generate all pincounts                
+                for pincount in variant_config.pins:
+                    self.make_from_config(pincount, variant_config)
+
     def generateFootprint(self, device_params: dict, pkg_id: str, header_info: dict = None):
         # Ignore defaults and base packages
         if pkg_id.startswith('base') or pkg_id.startswith('defaults'):
