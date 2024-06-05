@@ -30,7 +30,7 @@ D_SOD-123:
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
   destination_dir: 'Diode_SMD.3dshapes'
-  source: 'http://www.nxp.com/documents/outline_drawing/SOD123.pdf'
+  source: 'https://assets.nexperia.com/documents/package-information/SOD123.pdf#page=2'
 
 D_SOD-323:
   the: 8.0
@@ -63,7 +63,7 @@ D_SOD-323:
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
   destination_dir: 'Diode_SMD.3dshapes'
-  source: 'http://www.nxp.com/documents/outline_drawing/SOD123.pdf'
+  source: 'https://assets.nexperia.com/documents/package-information/SOD323.pdf#page=2'
 
 D_SOT-23:
   the: 8.0
