@@ -20,6 +20,7 @@ if __name__ == "__main__":
     parser.add_argument('--paste_clearance', type=float, help='clearance between paste areas', nargs='?')
     parser.add_argument('--mask_margin', type=float, help='soldermask margin, default:0', default=0)
     parser.add_argument('--paste_margin', type=float, help='solderpaste margin, default:0 (means controlled by footprint or board setup)', default=0)
+    parser.add_argument('--anchor_margin', type=float, help='margin between pad primitives and the anchor pad. default:0.2', default=0.2)
     args = parser.parse_args()
 
 kicad_mod = Footprint(args.name)
@@ -31,7 +32,8 @@ kicad_mod.append(
         num_anchor=args.anchor_count, num_paste_zones=args.paste_count,
         solder_paste_margin=args.paste_margin, solder_mask_margin=args.mask_margin,
         paste_round_radius_radio=args.paste_round_radius_radio,
-        paste_to_paste_clearance=args.paste_clearance))
+        paste_to_paste_clearance=args.paste_clearance,
+        anchor_margin=args.anchor_margin))
 
 
 file_handler = KicadFileHandler(kicad_mod)

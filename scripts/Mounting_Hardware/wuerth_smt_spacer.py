@@ -66,7 +66,8 @@ def generate_footprint(params, mpn, configuration):
             paste_max_round_radius=0.1,
             paste_to_paste_clearance=fp_params['ring']['paste']['clearance'],
             paste_inner_diameter=fp_params['ring']['paste']['id'],
-            paste_outer_diameter=fp_params['ring']['paste']['od']
+            paste_outer_diameter=fp_params['ring']['paste']['od'],
+            anchor_margin=configuration['anchor_margin']
             ))
     if 'npth' in fp_params:
         kicad_mod.append(
@@ -121,6 +122,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='use confing .yaml files to create footprints.')
     parser.add_argument('--global_config', type=str, nargs='?', help='the config file defining how the footprint will look like. (KLC)', default='../tools/global_config_files/config_KLCv3.0.yaml')
     parser.add_argument('--params', type=str, nargs='?', help='the part definition file', default='./wuerth_smt_spacer.yaml')
+    parser.add_argument('--anchor_margin', type=float, help='margin between pad primitives and the anchor pad. default:0.2', default=0.2)
     args = parser.parse_args()
 
     with open(args.global_config, 'r') as config_stream:
@@ -128,6 +130,8 @@ if __name__ == "__main__":
             configuration = yaml.safe_load(config_stream)
         except yaml.YAMLError as exc:
             print(exc)
+
+    configuration['anchor_margin'] = args.anchor_margin
 
     with open(args.params, 'r') as params_stream:
         try:

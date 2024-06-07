@@ -44,6 +44,8 @@ class RingPadPrimitive(Node):
         layers used for creating the pad
       * *number* (``int``, ``str``) --
         number/name of the pad (default: \"\")
+      * *anchor_margin* (``float``) --
+        margin between ring edge and anchor pad. (default: 0)
     """
 
     def __init__(self, **kwargs):
@@ -53,19 +55,23 @@ class RingPadPrimitive(Node):
         self.width = float(kwargs['width'])
         self.layers = kwargs['layers']
         self.number = kwargs.get('number', "")
+        self.anchor_margin = kwargs.get('anchor_margin', 0)
+        if(self.width <= 2*self.anchor_margin):
+            raise ValueError("selected anchor clearance too large for the given ring width")
 
     def copy(self):
         return RingPadPrimitive(
                     at=self.at, radius=self.radius,
                     width=self.width, layers=self.layers,
-                    number=self.number
+                    number=self.number,
+                    anchor_margin=self.anchor_margin
                     )
 
     def getVirtualChilds(self):
         return [Pad(number=self.number,
                     type=Pad.TYPE_SMT, shape=Pad.SHAPE_CUSTOM,
                     at=(self.at+Vector2D(self.radius, 0)),
-                    size=self.width, layers=self.layers,
+                    size=self.width-2*self.anchor_margin, layers=self.layers,
                     primitives=[Circle(
                         center=(-self.radius, 0),
                         radius=self.radius,
@@ -101,6 +107,8 @@ class ArcPadPrimitive(Node):
           line confining the side near the reference points end point
         * *minimum_overlap* (``float``)
           minimum overlap. default 0.1
+        * *anchor_margin* (``float``) --
+          margin between ring edge and anchor pad. (default: 0)
     """
 
     def __init__(self, **kwargs):
@@ -111,6 +119,10 @@ class ArcPadPrimitive(Node):
         self.number = kwargs.get('number', "")
         self.layers = kwargs['layers']
         self.minimum_overlap = kwargs.get('minimum_overlap', 0.1)
+
+        self.anchor_margin = kwargs.get('anchor_margin', 0)
+        if(self.width <= 2*self.anchor_margin):
+            raise ValueError("selected anchor clearance too large for the given ring width")
 
         self.setRoundRadius(**kwargs)
         self.setLimitingLines(**kwargs)
@@ -145,7 +157,8 @@ class ArcPadPrimitive(Node):
                     layers=self.layers,
                     start_line=self.start_line,
                     end_line=self.end_line,
-                    minimum_overlap=self.minimum_overlap
+                    minimum_overlap=self.minimum_overlap,
+                    anchor_margin=self.anchor_margin
                     )
 
     def rotate(self, angle, origin=(0, 0), use_degrees=True):
@@ -228,6 +241,7 @@ class ArcPadPrimitive(Node):
         return result
 
     def getVirtualChilds(self):
+        # ToDo: properly calculate the maximum anchor pad size (the limiting lines need to be taken into account)
         at = self.reference_arc.getMidPoint()
         primitives = self._getArcPrimitives()
         for p in primitives:
@@ -235,7 +249,7 @@ class ArcPadPrimitive(Node):
         return [Pad(
                     number=self.number,
                     type=Pad.TYPE_SMT, shape=Pad.SHAPE_CUSTOM,
-                    at=at, size=self.width/2, layers=self.layers,
+                    at=at, size=self.width-2*self.anchor_margin, layers=self.layers,
                     primitives=primitives
                     )]
 
@@ -283,6 +297,8 @@ class RingPad(Node):
           solder mask margin of the pad (default: 0)
         * *minimum_overlap* (``float``) --
           minimum arc overlap. default 0.1
+        * *anchor_margin* (``float``) --
+          margin between ring edge and anchor pad. (default: 0)
     """
 
     def __init__(self, **kwargs):
@@ -294,6 +310,7 @@ class RingPad(Node):
         self._initNumber(**kwargs)
         self._initPasteSettings(**kwargs)
         self._initNumAnchor(**kwargs)
+        self._initAnchorClearance(**kwargs)
         self._generatePads()
 
     def _initSize(self, **kwargs):
@@ -318,6 +335,11 @@ class RingPad(Node):
         self.num_anchor = int(kwargs.get('num_anchor', 1))
         if self.num_anchor < 1:
             raise ValueError('num_anchor must be a positive integer')
+
+    def _initAnchorClearance(self, **kwargs):
+        self.anchor_margin = kwargs.get('anchor_margin', 0)
+        if(self.width <= 2*self.anchor_margin):
+            raise ValueError("selected anchor clearance too large for the given ring width")
 
     def _initPosition(self, **kwargs):
         if 'at' not in kwargs:
@@ -385,7 +407,8 @@ class RingPad(Node):
                             round_radius_ratio=self.paste_round_radius_radio,
                             max_round_radius=self.paste_max_round_radius,
                             layers=['F.Paste'], reference_arc=ref_arc,
-                            minimum_overlap=self.minimum_overlap
+                            minimum_overlap=self.minimum_overlap,
+                            anchor_margin=self.anchor_margin
                             )
 
         w = pad.round_radius*2
@@ -411,7 +434,8 @@ class RingPad(Node):
                 at=self.at,
                 width=self.width+2*self.solder_mask_margin,
                 layers=['F.Mask'],
-                radius=self.radius
+                radius=self.radius,
+                anchor_margin=self.anchor_margin
                 ))
 
     def _generateCopperPads(self):
@@ -427,7 +451,8 @@ class RingPad(Node):
                         at=self.at,
                         width=self.width+2*self.solder_paste_margin,
                         layers=['F.Paste'],
-                        radius=self.radius
+                        radius=self.radius,
+                        anchor_margin=self.anchor_margin
                         ))
 
         if self.solder_mask_margin == 0:
@@ -441,16 +466,18 @@ class RingPad(Node):
                 at=self.at,
                 width=self.width,
                 layers=layers,
-                radius=self.radius
+                radius=self.radius,
+                anchor_margin=self.anchor_margin
                 ))
 
         a = 360/self.num_anchor
         pos = Vector2D(self.radius, 0)
+
         for i in range(1, self.num_anchor):
             pos.rotate(a)
             self.pads.append(Pad(number=self.number,
                                  type=Pad.TYPE_SMT, shape=Pad.SHAPE_CIRCLE,
-                                 at=(self.at+pos), size=self.width-0.0001,
+                                 at=(self.at+pos), size=self.width-2*self.anchor_margin,
                                  layers=['F.Cu'],
                                  ))
 
