@@ -1,0 +1,1903 @@
+QFN-12-1EP_3x3mm_P0.65mm:
+  device_type: 'QFN'
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'https://www.sempac.com/product/mlp3x3-12-op-01/'
+  ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  # custom_name_format:
+  body_size_x:
+    nominal: 3
+    tolerance: 0.05
+  body_size_y:
+    nominal: 3
+    tolerance: 0.05
+  overall_height:
+    nominal: 0.75
+    tolerance: 0.1
+
+  lead_width:
+    nominal: 0.3
+    tolerance: 0.05
+  lead_len:
+    nominal: 0.38
+    tolerance: 0.05
+
+  EP_size_x:
+    nominal: 1.360
+    tolerance: 0.05
+  EP_size_y:
+    nominal: 1.360
+    tolerance: 0.05
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [2, 2]
+    drill: 0.2
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    # EP_num_paste_pads: [2, 2]
+    paste_between_vias: 1
+    paste_rings_outside: 1
+    #EP_paste_coverage: 0.75
+    grid: [0.55, 0.55]
+    # bottom_pad_size:
+    paste_avoid_via: True
+
+  pitch: 0.65
+  num_pins_x: 3
+  num_pins_y: 3
+  #chamfer_edge_pins: 0.1
+  #pin_count_grid:
+  #pad_length_addition: 0.5
+  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
+  #include_suffix_in_3dpath: 'False'
+
+QFN-16-1EP_3x3mm_P0.65mm:
+  device_type: 'QFN'
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'https://www.sempac.com/product/mlp3x3-16-op-01/'
+  ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  # custom_name_format:
+  body_size_x:
+    nominal: 3
+    tolerance: 0.05
+  body_size_y:
+    nominal: 3
+    tolerance: 0.05
+  overall_height:
+    nominal: 0.75
+    tolerance: 0.1
+
+  lead_width:
+    nominal: 0.2
+    tolerance: 0.05
+  lead_len:
+    nominal: 0.35
+    tolerance: 0.05
+
+  EP_size_x:
+    nominal: 1.360
+    tolerance: 0.05
+  EP_size_y:
+    nominal: 1.360
+    tolerance: 0.05
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [2, 2]
+    drill: 0.2
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    # EP_num_paste_pads: [2, 2]
+    paste_between_vias: 1
+    paste_rings_outside: 1
+    #EP_paste_coverage: 0.75
+    grid: [0.55, 0.55]
+    # bottom_pad_size:
+    paste_avoid_via: True
+
+  pitch: 0.5
+  num_pins_x: 4
+  num_pins_y: 4
+  #chamfer_edge_pins: 0.1
+  #pin_count_grid:
+  #pad_length_addition: 0.5
+  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
+  #include_suffix_in_3dpath: 'False'
+
+QFN-12-1EP_4x4mm_P0.8mm:
+  device_type: 'QFN'
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'https://www.sempac.com/product/mlp4x4-12-op-01/'
+  ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  # custom_name_format:
+  body_size_x:
+    nominal: 4
+    tolerance: 0.05
+  body_size_y:
+    nominal: 4
+    tolerance: 0.05
+  overall_height:
+    nominal: 0.8
+    tolerance: 0.1
+
+  lead_width:
+    nominal: 0.35
+    tolerance: 0.05
+  lead_len:
+    nominal: 0.4
+    tolerance: 0.05
+
+  EP_size_x:
+    nominal: 2.30
+    tolerance: 0.05
+  EP_size_y:
+    nominal: 2.30
+    tolerance: 0.05
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [2, 2]
+    drill: 0.2
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    # EP_num_paste_pads: [2, 2]
+    paste_between_vias: 1
+    paste_rings_outside: 1
+    #EP_paste_coverage: 0.75
+    grid: [0.85, 0.85]
+    # bottom_pad_size:
+    paste_avoid_via: True
+
+  pitch: 0.8
+  num_pins_x: 3
+  num_pins_y: 3
+  #chamfer_edge_pins: 0.1
+  #pin_count_grid:
+  #pad_length_addition: 0.5
+  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
+  #include_suffix_in_3dpath: 'False'
+
+QFN-16-1EP_4x4mm_P0.65mm:
+  device_type: 'QFN'
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'https://www.sempac.com/product/mlp4x4-16-op-01/'
+  ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  # custom_name_format:
+  body_size_x:
+    nominal: 4
+    tolerance: 0.05
+  body_size_y:
+    nominal: 4
+    tolerance: 0.05
+  overall_height:
+    nominal: 0.8
+    tolerance: 0.1
+
+  lead_width:
+    nominal: 0.3
+    tolerance: 0.05
+  lead_len:
+    nominal: 0.4
+    tolerance: 0.05
+
+  EP_size_x:
+    nominal: 2.30
+    tolerance: 0.05
+  EP_size_y:
+    nominal: 2.30
+    tolerance: 0.05
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [2, 2]
+    drill: 0.2
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    # EP_num_paste_pads: [2, 2]
+    paste_between_vias: 1
+    paste_rings_outside: 1
+    #EP_paste_coverage: 0.75
+    grid: [0.55, 0.55]
+    # bottom_pad_size:
+    paste_avoid_via: True
+
+  pitch: 0.65
+  num_pins_x: 4
+  num_pins_y: 4
+  #chamfer_edge_pins: 0.1
+  #pin_count_grid:
+  #pad_length_addition: 0.5
+  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
+  #include_suffix_in_3dpath: 'False'  
+
+QFN-20-1EP_4x4mm_P0.5mm:
+  device_type: 'QFN'
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'https://www.sempac.com/product/mlp4x4-20-op-01/'
+  ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  # custom_name_format:
+  body_size_x:
+    nominal: 4
+    tolerance: 0.05
+  body_size_y:
+    nominal: 4
+    tolerance: 0.05
+  overall_height:
+    nominal: 0.8
+    tolerance: 0.1
+
+  lead_width:
+    nominal: 0.23
+    tolerance: 0.05
+  lead_len:
+    nominal: 0.40
+    tolerance: 0.05
+
+  EP_size_x:
+    nominal: 2.30
+    tolerance: 0.05
+  EP_size_y:
+    nominal: 2.30
+    tolerance: 0.05
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [2, 2]
+    drill: 0.2
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    # EP_num_paste_pads: [2, 2]
+    paste_between_vias: 1
+    paste_rings_outside: 1
+    #EP_paste_coverage: 0.75
+    grid: [0.85, 0.85]
+    # bottom_pad_size:
+    paste_avoid_via: True
+
+  pitch: 0.5
+  num_pins_x: 5
+  num_pins_y: 5
+  #chamfer_edge_pins: 0.1
+  #pin_count_grid:
+  #pad_length_addition: 0.5
+  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
+  #include_suffix_in_3dpath: 'False'
+  
+QFN-24-1EP_4x4mm_P0.5mm:
+  device_type: 'QFN'
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'https://www.sempac.com/product/mlp4x4-24-op-01/'
+  ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  # custom_name_format:
+  body_size_x:
+    nominal: 4
+    tolerance: 0.05
+  body_size_y:
+    nominal: 4
+    tolerance: 0.05
+  overall_height:
+    nominal: 0.8
+    tolerance: 0.1
+
+  lead_width:
+    nominal: 0.22
+    tolerance: 0.05
+  lead_len:
+    nominal: 0.35
+    tolerance: 0.05
+
+  EP_size_x:
+    nominal: 2.30
+    tolerance: 0.05
+  EP_size_y:
+    nominal: 2.30
+    tolerance: 0.05
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [2, 2]
+    drill: 0.2
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    # EP_num_paste_pads: [2, 2]
+    paste_between_vias: 1
+    paste_rings_outside: 1
+    #EP_paste_coverage: 0.75
+    grid: [0.85, 0.85]
+    # bottom_pad_size:
+    paste_avoid_via: True
+
+  pitch: 0.5
+  num_pins_x: 6
+  num_pins_y: 6
+  #chamfer_edge_pins: 0.1
+  #pin_count_grid:
+  #pad_length_addition: 0.5
+  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
+  #include_suffix_in_3dpath: 'False'  
+
+QFN-16-1EP_5x5mm_P0.8mm:
+  device_type: 'QFN'
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'https://www.sempac.com/product/mlp5x5-16-op-01/'
+  ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  # custom_name_format:
+  body_size_x:
+    nominal: 5
+    tolerance: 0.05
+  body_size_y:
+    nominal: 5
+    tolerance: 0.05
+  overall_height:
+    nominal: 0.8
+    tolerance: 0.1
+
+  lead_width:
+    nominal: 0.35
+    tolerance: 0.05
+  lead_len:
+    nominal: 0.35
+    tolerance: 0.05
+
+  EP_size_x:
+    nominal: 3.30
+    tolerance: 0.05
+  EP_size_y:
+    nominal: 3.30
+    tolerance: 0.05
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [2, 2]
+    drill: 0.2
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    # EP_num_paste_pads: [2, 2]
+    paste_between_vias: 1
+    paste_rings_outside: 1
+    #EP_paste_coverage: 0.75
+    grid: [0.85, 0.85]
+    # bottom_pad_size:
+    paste_avoid_via: True
+
+  pitch: 0.8
+  num_pins_x: 4
+  num_pins_y: 4
+  #chamfer_edge_pins: 0.1
+  #pin_count_grid:
+  #pad_length_addition: 0.5
+  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
+  #include_suffix_in_3dpath: 'False'  
+  
+QFN-20-1EP_5x5mm_P0.8mm:
+  device_type: 'QFN'
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'https://www.sempac.com/product/mlp5x5-20-op-01/'
+  ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  # custom_name_format:
+  body_size_x:
+    nominal: 5
+    tolerance: 0.05
+  body_size_y:
+    nominal: 5
+    tolerance: 0.05
+  overall_height:
+    nominal: 0.8
+    tolerance: 0.1
+
+  lead_width:
+    nominal: 0.30
+    tolerance: 0.05
+  lead_len:
+    nominal: 0.40
+    tolerance: 0.05
+
+  EP_size_x:
+    nominal: 3.30
+    tolerance: 0.05
+  EP_size_y:
+    nominal: 3.30
+    tolerance: 0.05
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [2, 2]
+    drill: 0.2
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    # EP_num_paste_pads: [2, 2]
+    paste_between_vias: 1
+    paste_rings_outside: 1
+    #EP_paste_coverage: 0.75
+    grid: [0.85, 0.85]
+    # bottom_pad_size:
+    paste_avoid_via: True
+
+  pitch: 0.65
+  num_pins_x: 5
+  num_pins_y: 5
+  #chamfer_edge_pins: 0.1
+  #pin_count_grid:
+  #pad_length_addition: 0.5
+  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
+  #include_suffix_in_3dpath: 'False'
+
+QFN-24-1EP_5x5mm_P0.8mm:
+  device_type: 'QFN'
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'https://www.sempac.com/product/mlp5x5-24-op-01/'
+  ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  # custom_name_format:
+  body_size_x:
+    nominal: 5
+    tolerance: 0.05
+  body_size_y:
+    nominal: 5
+    tolerance: 0.05
+  overall_height:
+    nominal: 0.8
+    tolerance: 0.1
+
+  lead_width:
+    nominal: 0.30
+    tolerance: 0.05
+  lead_len:
+    nominal: 0.40
+    tolerance: 0.05
+
+  EP_size_x:
+    nominal: 3.30
+    tolerance: 0.05
+  EP_size_y:
+    nominal: 3.30
+    tolerance: 0.05
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [2, 2]
+    drill: 0.2
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    # EP_num_paste_pads: [2, 2]
+    paste_between_vias: 1
+    paste_rings_outside: 1
+    #EP_paste_coverage: 0.75
+    grid: [0.85, 0.85]
+    # bottom_pad_size:
+    paste_avoid_via: True
+
+  pitch: 0.65
+  num_pins_x: 6
+  num_pins_y: 6
+  #chamfer_edge_pins: 0.1
+  #pin_count_grid:
+  #pad_length_addition: 0.5
+  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
+  #include_suffix_in_3dpath: 'False'  
+
+QFN-28-1EP_5x5mm_P0.8mm:
+  device_type: 'QFN'
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'https://www.sempac.com/product/mlp5x5-28-op-01/'
+  ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  # custom_name_format:
+  body_size_x:
+    nominal: 5
+    tolerance: 0.05
+  body_size_y:
+    nominal: 5
+    tolerance: 0.05
+  overall_height:
+    nominal: 0.8
+    tolerance: 0.1
+
+  lead_width:
+    nominal: 0.24
+    tolerance: 0.05
+  lead_len:
+    nominal: 0.40
+    tolerance: 0.05
+
+  EP_size_x:
+    nominal: 3.30
+    tolerance: 0.05
+  EP_size_y:
+    nominal: 3.30
+    tolerance: 0.05
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [2, 2]
+    drill: 0.2
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    # EP_num_paste_pads: [2, 2]
+    paste_between_vias: 1
+    paste_rings_outside: 1
+    #EP_paste_coverage: 0.75
+    grid: [0.85, 0.85]
+    # bottom_pad_size:
+    paste_avoid_via: True
+
+  pitch: 0.50
+  num_pins_x: 7
+  num_pins_y: 7
+  #chamfer_edge_pins: 0.1
+  #pin_count_grid:
+  #pad_length_addition: 0.5
+  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
+  #include_suffix_in_3dpath: 'False'  
+
+QFN-32-1EP_5x5mm_P0.8mm:
+  device_type: 'QFN'
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'https://www.sempac.com/product/mlp5x5-32-op-01/'
+  ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  # custom_name_format:
+  body_size_x:
+    nominal: 5
+    tolerance: 0.05
+  body_size_y:
+    nominal: 5
+    tolerance: 0.05
+  overall_height:
+    nominal: 0.8
+    tolerance: 0.1
+
+  lead_width:
+    nominal: 0.23
+    tolerance: 0.05
+  lead_len:
+    nominal: 0.33
+    tolerance: 0.05
+
+  EP_size_x:
+    nominal: 3.30
+    tolerance: 0.05
+  EP_size_y:
+    nominal: 3.30
+    tolerance: 0.05
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [2, 2]
+    drill: 0.2
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    # EP_num_paste_pads: [2, 2]
+    paste_between_vias: 1
+    paste_rings_outside: 1
+    #EP_paste_coverage: 0.75
+    grid: [0.85, 0.85]
+    # bottom_pad_size:
+    paste_avoid_via: True
+
+  pitch: 0.50
+  num_pins_x: 8
+  num_pins_y: 8
+  #chamfer_edge_pins: 0.1
+  #pin_count_grid:
+  #pad_length_addition: 0.5
+  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
+  #include_suffix_in_3dpath: 'False'  
+
+QFN-40-1EP_5x5mm_P0.4mm:
+  device_type: 'QFN'
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'https://www.sempac.com/product/mlp5x5-40-op-01/'
+  ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  # custom_name_format:
+  body_size_x:
+    nominal: 5
+    tolerance: 0.05
+  body_size_y:
+    nominal: 5
+    tolerance: 0.05
+  overall_height:
+    nominal: 0.8
+    tolerance: 0.1
+
+  lead_width:
+    nominal: 0.20
+    tolerance: 0.05
+  lead_len:
+    nominal: 0.34
+    tolerance: 0.05
+
+  EP_size_x:
+    nominal: 3.30
+    tolerance: 0.05
+  EP_size_y:
+    nominal: 3.30
+    tolerance: 0.05
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [2, 2]
+    drill: 0.2
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    # EP_num_paste_pads: [2, 2]
+    paste_between_vias: 1
+    paste_rings_outside: 1
+    #EP_paste_coverage: 0.75
+    grid: [0.85, 0.85]
+    # bottom_pad_size:
+    paste_avoid_via: True
+
+  pitch: 0.4
+  num_pins_x: 10
+  num_pins_y: 10
+  #chamfer_edge_pins: 0.1
+  #pin_count_grid:
+  #pad_length_addition: 0.5
+  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
+  #include_suffix_in_3dpath: 'False'
+  
+QFN-40-1EP_5x7mm_P0.5mm:
+  device_type: 'QFN'
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'https://www.sempac.com/product/mlp5x7-40-op-01/'
+  ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  # custom_name_format:
+  body_size_x:
+    nominal: 5
+    tolerance: 0.05
+  body_size_y:
+    nominal: 7
+    tolerance: 0.05
+  overall_height:
+    nominal: 0.8
+    tolerance: 0.1
+
+  lead_width:
+    nominal: 0.23
+    tolerance: 0.05
+  lead_len:
+    nominal: 0.36
+    tolerance: 0.05
+
+  EP_size_x:
+    nominal: 3.34
+    tolerance: 0.05
+  EP_size_y:
+    nominal: 5.40
+    tolerance: 0.05
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [2, 2]
+    drill: 0.2
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    # EP_num_paste_pads: [2, 2]
+    paste_between_vias: 1
+    paste_rings_outside: 1
+    #EP_paste_coverage: 0.75
+    grid: [0.85, 0.85]
+    # bottom_pad_size:
+    paste_avoid_via: True
+
+  pitch: 0.5
+  num_pins_x: 10
+  num_pins_y: 10
+  #chamfer_edge_pins: 0.1
+  #pin_count_grid:
+  #pad_length_addition: 0.5
+  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
+  #include_suffix_in_3dpath: 'False'  
+
+QFN-16-1EP_6x6mm_P1.0mm:
+  device_type: 'QFN'
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'https://www.sempac.com/product/mlp6x6-16-op-01/'
+  ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  # custom_name_format:
+  body_size_x:
+    nominal: 6
+    tolerance: 0.05
+  body_size_y:
+    nominal: 6
+    tolerance: 0.05
+  overall_height:
+    nominal: 0.8
+    tolerance: 0.1
+
+  lead_width:
+    nominal: 0.50
+    tolerance: 0.05
+  lead_len:
+    nominal: 0.50
+    tolerance: 0.05
+
+  EP_size_x:
+    nominal: 4.35
+    tolerance: 0.05
+  EP_size_y:
+    nominal: 4.35
+    tolerance: 0.05
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [2, 2]
+    drill: 0.2
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    # EP_num_paste_pads: [2, 2]
+    paste_between_vias: 1
+    paste_rings_outside: 1
+    #EP_paste_coverage: 0.75
+    grid: [0.85, 0.85]
+    # bottom_pad_size:
+    paste_avoid_via: True
+
+  pitch: 1.0
+  num_pins_x: 4
+  num_pins_y: 4
+  #chamfer_edge_pins: 0.1
+  #pin_count_grid:
+  #pad_length_addition: 0.5
+  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
+  #include_suffix_in_3dpath: 'False'
+
+QFN-24-1EP_6x6mm_P0.65mm:
+  device_type: 'QFN'
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'https://www.sempac.com/product/mlp6x6-24-op-01/'
+  ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  # custom_name_format:
+  body_size_x:
+    nominal: 6
+    tolerance: 0.05
+  body_size_y:
+    nominal: 6
+    tolerance: 0.05
+  overall_height:
+    nominal: 0.8
+    tolerance: 0.1
+
+  lead_width:
+    nominal: 0.30
+    tolerance: 0.05
+  lead_len:
+    nominal: 0.38
+    tolerance: 0.05
+
+  EP_size_x:
+    nominal: 4.24
+    tolerance: 0.05
+  EP_size_y:
+    nominal: 4.24
+    tolerance: 0.05
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [2, 2]
+    drill: 0.2
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    # EP_num_paste_pads: [2, 2]
+    paste_between_vias: 1
+    paste_rings_outside: 1
+    #EP_paste_coverage: 0.75
+    grid: [0.85, 0.85]
+    # bottom_pad_size:
+    paste_avoid_via: True
+
+  pitch: 0.65
+  num_pins_x: 6
+  num_pins_y: 6
+  #chamfer_edge_pins: 0.1
+  #pin_count_grid:
+  #pad_length_addition: 0.5
+  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
+  #include_suffix_in_3dpath: 'False'
+
+QFN-28-1EP_6x6mm_P0.65mm:
+  device_type: 'QFN'
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'https://www.sempac.com/product/mlp6x6-28-op-01/'
+  ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  # custom_name_format:
+  body_size_x:
+    nominal: 6
+    tolerance: 0.05
+  body_size_y:
+    nominal: 6
+    tolerance: 0.05
+  overall_height:
+    nominal: 0.8
+    tolerance: 0.1
+
+  lead_width:
+    nominal: 0.30
+    tolerance: 0.05
+  lead_len:
+    nominal: 0.38
+    tolerance: 0.05
+
+  EP_size_x:
+    nominal: 4.24
+    tolerance: 0.05
+  EP_size_y:
+    nominal: 4.24
+    tolerance: 0.05
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [2, 2]
+    drill: 0.2
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    # EP_num_paste_pads: [2, 2]
+    paste_between_vias: 1
+    paste_rings_outside: 1
+    #EP_paste_coverage: 0.75
+    grid: [0.85, 0.85]
+    # bottom_pad_size:
+    paste_avoid_via: True
+
+  pitch: 0.65
+  num_pins_x: 7
+  num_pins_y: 7
+  #chamfer_edge_pins: 0.1
+  #pin_count_grid:
+  #pad_length_addition: 0.5
+  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
+  #include_suffix_in_3dpath: 'False'
+
+QFN-36-1EP_6x6mm_P0.5mm:
+  device_type: 'QFN'
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'https://www.sempac.com/product/mlp6x6-36-op-01/'
+  ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  # custom_name_format:
+  body_size_x:
+    nominal: 6
+    tolerance: 0.05
+  body_size_y:
+    nominal: 6
+    tolerance: 0.05
+  overall_height:
+    nominal: 0.8
+    tolerance: 0.1
+
+  lead_width:
+    nominal: 0.25
+    tolerance: 0.05
+  lead_len:
+    nominal: 0.38
+    tolerance: 0.05
+
+  EP_size_x:
+    nominal: 4.24
+    tolerance: 0.05
+  EP_size_y:
+    nominal: 4.24
+    tolerance: 0.05
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [2, 2]
+    drill: 0.2
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    # EP_num_paste_pads: [2, 2]
+    paste_between_vias: 1
+    paste_rings_outside: 1
+    #EP_paste_coverage: 0.75
+    grid: [0.85, 0.85]
+    # bottom_pad_size:
+    paste_avoid_via: True
+
+  pitch: 0.5
+  num_pins_x: 9
+  num_pins_y: 9
+  #chamfer_edge_pins: 0.1
+  #pin_count_grid:
+  #pad_length_addition: 0.5
+  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
+  #include_suffix_in_3dpath: 'False'
+
+QFN-40-1EP_6x6mm_P0.5mm:
+  device_type: 'QFN'
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'https://www.sempac.com/product/mlp6x6-40-op-01/'
+  ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  # custom_name_format:
+  body_size_x:
+    nominal: 6
+    tolerance: 0.05
+  body_size_y:
+    nominal: 6
+    tolerance: 0.05
+  overall_height:
+    nominal: 0.8
+    tolerance: 0.1
+
+  lead_width:
+    nominal: 0.23
+    tolerance: 0.05
+  lead_len:
+    nominal: 0.38
+    tolerance: 0.05
+
+  EP_size_x:
+    nominal: 4.24
+    tolerance: 0.05
+  EP_size_y:
+    nominal: 4.24
+    tolerance: 0.05
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [2, 2]
+    drill: 0.2
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    # EP_num_paste_pads: [2, 2]
+    paste_between_vias: 1
+    paste_rings_outside: 1
+    #EP_paste_coverage: 0.75
+    grid: [0.85, 0.85]
+    # bottom_pad_size:
+    paste_avoid_via: True
+
+  pitch: 0.5
+  num_pins_x: 10
+  num_pins_y: 10
+  #chamfer_edge_pins: 0.1
+  #pin_count_grid:
+  #pad_length_addition: 0.5
+  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
+  #include_suffix_in_3dpath: 'False'
+
+QFN-48-1EP_6x6mm_P0.4mm:
+  device_type: 'QFN'
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'https://www.sempac.com/product/mlp6x6-48-op-01/'
+  ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  # custom_name_format:
+  body_size_x:
+    nominal: 6
+    tolerance: 0.05
+  body_size_y:
+    nominal: 6
+    tolerance: 0.05
+  overall_height:
+    nominal: 0.8
+    tolerance: 0.1
+
+  lead_width:
+    nominal: 0.2
+    tolerance: 0.05
+  lead_len:
+    nominal: 0.35
+    tolerance: 0.05
+
+  EP_size_x:
+    nominal: 4.34
+    tolerance: 0.05
+  EP_size_y:
+    nominal: 4.34
+    tolerance: 0.05
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [2, 2]
+    drill: 0.2
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    # EP_num_paste_pads: [2, 2]
+    paste_between_vias: 1
+    paste_rings_outside: 1
+    #EP_paste_coverage: 0.75
+    grid: [0.85, 0.85]
+    # bottom_pad_size:
+    paste_avoid_via: True
+
+  pitch: 0.4
+  num_pins_x: 12
+  num_pins_y: 12
+  #chamfer_edge_pins: 0.1
+  #pin_count_grid:
+  #pad_length_addition: 0.5
+  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
+  #include_suffix_in_3dpath: 'False'
+
+QFN-28-1EP_7x7mm_P0.80mm:
+  device_type: 'QFN'
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'https://www.sempac.com/product/mlp7x7-28-op-01/'
+  ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  # custom_name_format:
+  body_size_x:
+    nominal: 7
+    tolerance: 0.05
+  body_size_y:
+    nominal: 7
+    tolerance: 0.05
+  overall_height:
+    nominal: 0.8
+    tolerance: 0.1
+
+  lead_width:
+    nominal: 0.31
+    tolerance: 0.05
+  lead_len:
+    nominal: 0.32
+    tolerance: 0.05
+
+  EP_size_x:
+    nominal: 5.2
+    tolerance: 0.05
+  EP_size_y:
+    nominal: 5.2
+    tolerance: 0.05
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [2, 2]
+    drill: 0.2
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    # EP_num_paste_pads: [2, 2]
+    paste_between_vias: 1
+    paste_rings_outside: 1
+    #EP_paste_coverage: 0.75
+    grid: [0.85, 0.85]
+    # bottom_pad_size:
+    paste_avoid_via: True
+
+  pitch: 0.8
+  num_pins_x: 7
+  num_pins_y: 7
+  #chamfer_edge_pins: 0.1
+  #pin_count_grid:
+  #pad_length_addition: 0.5
+  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
+  #include_suffix_in_3dpath: 'False'
+
+QFN-32-1EP_7x7mm_P0.65mm:
+  device_type: 'QFN'
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'https://www.sempac.com/product/mlp7x7-32-op-01/'
+  ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  # custom_name_format:
+  body_size_x:
+    nominal: 7
+    tolerance: 0.05
+  body_size_y:
+    nominal: 7
+    tolerance: 0.05
+  overall_height:
+    nominal: 0.8
+    tolerance: 0.1
+
+  lead_width:
+    nominal: 0.31
+    tolerance: 0.05
+  lead_len:
+    nominal: 0.50
+    tolerance: 0.05
+
+  EP_size_x:
+    nominal: 5.2
+    tolerance: 0.05
+  EP_size_y:
+    nominal: 5.2
+    tolerance: 0.05
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [2, 2]
+    drill: 0.2
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    # EP_num_paste_pads: [2, 2]
+    paste_between_vias: 1
+    paste_rings_outside: 1
+    #EP_paste_coverage: 0.75
+    grid: [0.85, 0.85]
+    # bottom_pad_size:
+    paste_avoid_via: True
+
+  pitch: 0.65
+  num_pins_x: 8
+  num_pins_y: 8
+  #chamfer_edge_pins: 0.1
+  #pin_count_grid:
+  #pad_length_addition: 0.5
+  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
+  #include_suffix_in_3dpath: 'False' 
+  
+QFN-44-1EP_7x7mm_P0.50mm:
+  device_type: 'QFN'
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'https://www.sempac.com/product/mlp7x7-44-op-01/'
+  ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  # custom_name_format:
+  body_size_x:
+    nominal: 7
+    tolerance: 0.05
+  body_size_y:
+    nominal: 7
+    tolerance: 0.05
+  overall_height:
+    nominal: 0.8
+    tolerance: 0.1
+
+  lead_width:
+    nominal: 0.25
+    tolerance: 0.05
+  lead_len:
+    nominal: 0.45
+    tolerance: 0.05
+
+  EP_size_x:
+    nominal: 5.2
+    tolerance: 0.05
+  EP_size_y:
+    nominal: 5.2
+    tolerance: 0.05
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [2, 2]
+    drill: 0.2
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    # EP_num_paste_pads: [2, 2]
+    paste_between_vias: 1
+    paste_rings_outside: 1
+    #EP_paste_coverage: 0.75
+    grid: [0.85, 0.85]
+    # bottom_pad_size:
+    paste_avoid_via: True
+
+  pitch: 0.50
+  num_pins_x: 11
+  num_pins_y: 11
+  #chamfer_edge_pins: 0.1
+  #pin_count_grid:
+  #pad_length_addition: 0.5
+  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
+  #include_suffix_in_3dpath: 'False' 
+  
+QFN-48-1EP_7x7mm_P0.50mm:
+  device_type: 'QFN'
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'https://www.sempac.com/product/mlp7x7-48-op-01/'
+  ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  # custom_name_format:
+  body_size_x:
+    nominal: 7
+    tolerance: 0.05
+  body_size_y:
+    nominal: 7
+    tolerance: 0.05
+  overall_height:
+    nominal: 0.8
+    tolerance: 0.1
+
+  lead_width:
+    nominal: 0.23
+    tolerance: 0.05
+  lead_len:
+    nominal: 0.32
+    tolerance: 0.05
+
+  EP_size_x:
+    nominal: 5.2
+    tolerance: 0.05
+  EP_size_y:
+    nominal: 5.2
+    tolerance: 0.05
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [2, 2]
+    drill: 0.2
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    # EP_num_paste_pads: [2, 2]
+    paste_between_vias: 1
+    paste_rings_outside: 1
+    #EP_paste_coverage: 0.75
+    grid: [0.85, 0.85]
+    # bottom_pad_size:
+    paste_avoid_via: True
+
+  pitch: 0.50
+  num_pins_x: 12
+  num_pins_y: 12
+  #chamfer_edge_pins: 0.1
+  #pin_count_grid:
+  #pad_length_addition: 0.5
+  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
+  #include_suffix_in_3dpath: 'False' 
+
+QFN-56-1EP_7x7mm_P0.40mm:
+  device_type: 'QFN'
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'https://www.sempac.com/product/mlp7x7-56-op-01/'
+  ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  # custom_name_format:
+  body_size_x:
+    nominal: 7
+    tolerance: 0.05
+  body_size_y:
+    nominal: 7
+    tolerance: 0.05
+  overall_height:
+    nominal: 0.8
+    tolerance: 0.1
+
+  lead_width:
+    nominal: 0.20
+    tolerance: 0.05
+  lead_len:
+    nominal: 0.25
+    tolerance: 0.05
+
+  EP_size_x:
+    nominal: 5.2
+    tolerance: 0.05
+  EP_size_y:
+    nominal: 5.2
+    tolerance: 0.05
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [2, 2]
+    drill: 0.2
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    # EP_num_paste_pads: [2, 2]
+    paste_between_vias: 1
+    paste_rings_outside: 1
+    #EP_paste_coverage: 0.75
+    grid: [0.85, 0.85]
+    # bottom_pad_size:
+    paste_avoid_via: True
+
+  pitch: 0.40
+  num_pins_x: 14
+  num_pins_y: 14
+  #chamfer_edge_pins: 0.1
+  #pin_count_grid:
+  #pad_length_addition: 0.5
+  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
+  #include_suffix_in_3dpath: 'False' 
+
+QFN-60-1EP_7x7mm_P0.40mm:
+  device_type: 'QFN'
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'https://www.sempac.com/product/mlp7x7-60-op-01/'
+  ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  # custom_name_format:
+  body_size_x:
+    nominal: 7
+    tolerance: 0.05
+  body_size_y:
+    nominal: 7
+    tolerance: 0.05
+  overall_height:
+    nominal: 0.8
+    tolerance: 0.1
+
+  lead_width:
+    nominal: 0.20
+    tolerance: 0.05
+  lead_len:
+    nominal: 0.35
+    tolerance: 0.05
+
+  EP_size_x:
+    nominal: 5.20
+    tolerance: 0.05
+  EP_size_y:
+    nominal: 5.20
+    tolerance: 0.05
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [2, 2]
+    drill: 0.2
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    # EP_num_paste_pads: [2, 2]
+    paste_between_vias: 1
+    paste_rings_outside: 1
+    #EP_paste_coverage: 0.75
+    grid: [0.85, 0.85]
+    # bottom_pad_size:
+    paste_avoid_via: True
+
+  pitch: 0.40
+  num_pins_x: 15
+  num_pins_y: 15
+  #chamfer_edge_pins: 0.1
+  #pin_count_grid:
+  #pad_length_addition: 0.5
+  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
+  #include_suffix_in_3dpath: 'False' 
+
+QFN-28-1EP_8x8mm_P0.80mm:
+  device_type: 'QFN'
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'https://www.sempac.com/product/mlp8x8-28-op-01/'
+  ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  # custom_name_format:
+  body_size_x:
+    nominal: 8
+    tolerance: 0.05
+  body_size_y:
+    nominal: 8
+    tolerance: 0.05
+  overall_height:
+    nominal: 0.8
+    tolerance: 0.1
+
+  lead_width:
+    nominal: 0.35
+    tolerance: 0.05
+  lead_len:
+    nominal: 0.45
+    tolerance: 0.05
+
+  EP_size_x:
+    nominal: 6.04
+    tolerance: 0.05
+  EP_size_y:
+    nominal: 6.04
+    tolerance: 0.05
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [2, 2]
+    drill: 0.2
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    # EP_num_paste_pads: [2, 2]
+    paste_between_vias: 1
+    paste_rings_outside: 1
+    #EP_paste_coverage: 0.75
+    grid: [0.85, 0.85]
+    # bottom_pad_size:
+    paste_avoid_via: True
+
+  pitch: 0.80
+  num_pins_x: 7
+  num_pins_y: 7
+  #chamfer_edge_pins: 0.1
+  #pin_count_grid:
+  #pad_length_addition: 0.5
+  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
+  #include_suffix_in_3dpath: 'False'  
+
+QFN-32-1EP_8x8mm_P0.80mm:
+  device_type: 'QFN'
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'https://www.sempac.com/product/mlp8x8-32-op-01/'
+  ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  # custom_name_format:
+  body_size_x:
+    nominal: 8
+    tolerance: 0.05
+  body_size_y:
+    nominal: 8
+    tolerance: 0.05
+  overall_height:
+    nominal: 0.8
+    tolerance: 0.1
+
+  lead_width:
+    nominal: 0.35
+    tolerance: 0.05
+  lead_len:
+    nominal: 0.45
+    tolerance: 0.05
+
+  EP_size_x:
+    nominal: 6.04
+    tolerance: 0.05
+  EP_size_y:
+    nominal: 6.04
+    tolerance: 0.05
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [2, 2]
+    drill: 0.2
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    # EP_num_paste_pads: [2, 2]
+    paste_between_vias: 1
+    paste_rings_outside: 1
+    #EP_paste_coverage: 0.75
+    grid: [0.85, 0.85]
+    # bottom_pad_size:
+    paste_avoid_via: True
+
+  pitch: 0.80
+  num_pins_x: 8
+  num_pins_y: 8
+  #chamfer_edge_pins: 0.1
+  #pin_count_grid:
+  #pad_length_addition: 0.5
+  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
+  #include_suffix_in_3dpath: 'False'  
+
+QFN-52-1EP_8x8mm_P0.50mm:
+  device_type: 'QFN'
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'https://www.sempac.com/product/mlp8x8-52-op-01/'
+  ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  # custom_name_format:
+  body_size_x:
+    nominal: 8
+    tolerance: 0.05
+  body_size_y:
+    nominal: 8
+    tolerance: 0.05
+  overall_height:
+    nominal: 0.8
+    tolerance: 0.1
+
+  lead_width:
+    nominal: 0.24
+    tolerance: 0.05
+  lead_len:
+    nominal: 0.32
+    tolerance: 0.05
+
+  EP_size_x:
+    nominal: 6.04
+    tolerance: 0.05
+  EP_size_y:
+    nominal: 6.04
+    tolerance: 0.05
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [2, 2]
+    drill: 0.2
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    # EP_num_paste_pads: [2, 2]
+    paste_between_vias: 1
+    paste_rings_outside: 1
+    #EP_paste_coverage: 0.75
+    grid: [0.85, 0.85]
+    # bottom_pad_size:
+    paste_avoid_via: True
+
+  pitch: 0.50
+  num_pins_x: 13
+  num_pins_y: 13
+  #chamfer_edge_pins: 0.1
+  #pin_count_grid:
+  #pad_length_addition: 0.5
+  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
+  #include_suffix_in_3dpath: 'False' 
+
+QFN-56-1EP_8x8mm_P0.50mm:
+  device_type: 'QFN'
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'https://www.sempac.com/product/mlp8x8-56-op-01/'
+  ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  # custom_name_format:
+  body_size_x:
+    nominal: 8
+    tolerance: 0.05
+  body_size_y:
+    nominal: 8
+    tolerance: 0.05
+  overall_height:
+    nominal: 0.8
+    tolerance: 0.1
+
+  lead_width:
+    nominal: 0.23
+    tolerance: 0.05
+  lead_len:
+    nominal: 0.32
+    tolerance: 0.05
+
+  EP_size_x:
+    nominal: 6.04
+    tolerance: 0.05
+  EP_size_y:
+    nominal: 6.04
+    tolerance: 0.05
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [2, 2]
+    drill: 0.2
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    # EP_num_paste_pads: [2, 2]
+    paste_between_vias: 1
+    paste_rings_outside: 1
+    #EP_paste_coverage: 0.75
+    grid: [0.85, 0.85]
+    # bottom_pad_size:
+    paste_avoid_via: True
+
+  pitch: 0.50
+  num_pins_x: 14
+  num_pins_y: 14
+  #chamfer_edge_pins: 0.1
+  #pin_count_grid:
+  #pad_length_addition: 0.5
+  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
+  #include_suffix_in_3dpath: 'False' 
+
+QFN-44-1EP_9x9mm_P0.65mm:
+  device_type: 'QFN'
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'https://www.sempac.com/product/mlp9x9-44-op-01/'
+  ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  # custom_name_format:
+  body_size_x:
+    nominal: 9
+    tolerance: 0.05
+  body_size_y:
+    nominal: 9
+    tolerance: 0.05
+  overall_height:
+    nominal: 0.8
+    tolerance: 0.1
+
+  lead_width:
+    nominal: 0.33
+    tolerance: 0.05
+  lead_len:
+    nominal: 0.40
+    tolerance: 0.05
+
+  EP_size_x:
+    nominal: 6.90
+    tolerance: 0.05
+  EP_size_y:
+    nominal: 6.90
+    tolerance: 0.05
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [2, 2]
+    drill: 0.2
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    # EP_num_paste_pads: [2, 2]
+    paste_between_vias: 1
+    paste_rings_outside: 1
+    #EP_paste_coverage: 0.75
+    grid: [0.85, 0.85]
+    # bottom_pad_size:
+    paste_avoid_via: True
+
+  pitch: 0.65
+  num_pins_x: 11
+  num_pins_y: 11
+  #chamfer_edge_pins: 0.1
+  #pin_count_grid:
+  #pad_length_addition: 0.5
+  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
+  #include_suffix_in_3dpath: 'False'  
+
+QFN-64-1EP_9x9mm_P0.5mm:
+  device_type: 'QFN'
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'https://www.sempac.com/product/mlp9x9-64-op-01/'
+  ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  # custom_name_format:
+  body_size_x:
+    nominal: 9
+    tolerance: 0.05
+  body_size_y:
+    nominal: 9
+    tolerance: 0.05
+  overall_height:
+    nominal: 0.8
+    tolerance: 0.1
+
+  lead_width:
+    nominal: 0.20
+    tolerance: 0.05
+  lead_len:
+    nominal: 0.38
+    tolerance: 0.05
+
+  EP_size_x:
+    nominal: 6.90
+    tolerance: 0.05
+  EP_size_y:
+    nominal: 6.90
+    tolerance: 0.05
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [2, 2]
+    drill: 0.2
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    # EP_num_paste_pads: [2, 2]
+    paste_between_vias: 1
+    paste_rings_outside: 1
+    #EP_paste_coverage: 0.75
+    grid: [0.85, 0.85]
+    # bottom_pad_size:
+    paste_avoid_via: True
+
+  pitch: 0.5
+  num_pins_x: 16
+  num_pins_y: 16
+  #chamfer_edge_pins: 0.1
+  #pin_count_grid:
+  #pad_length_addition: 0.5
+  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
+  #include_suffix_in_3dpath: 'False'  
+
+QFN-28-1EP_12x7mm_P0.8mm:
+  device_type: 'QFN'
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'https://www.sempac.com/product/mlp12x7-28-op-01/'
+  ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  # custom_name_format:
+  body_size_x:
+    nominal: 12
+    tolerance: 0.05
+  body_size_y:
+    nominal: 7
+    tolerance: 0.05
+  overall_height:
+    nominal: 0.8
+    tolerance: 0.1
+
+  lead_width:
+    nominal: 0.40
+    tolerance: 0.05
+  lead_len:
+    nominal: 0.50
+    tolerance: 0.05
+
+  EP_size_x:
+    nominal: 9.0
+    tolerance: 0.05
+  EP_size_y:
+    nominal: 4.7
+    tolerance: 0.05
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [2, 2]
+    drill: 0.2
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    # EP_num_paste_pads: [2, 2]
+    paste_between_vias: 1
+    paste_rings_outside: 1
+    #EP_paste_coverage: 0.75
+    grid: [0.85, 0.85]
+    # bottom_pad_size:
+    paste_avoid_via: True
+
+  pitch: 0.8
+  num_pins_x: 7
+  num_pins_y: 7
+  #chamfer_edge_pins: 0.1
+  #pin_count_grid:
+  #pad_length_addition: 0.5
+  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
+  #include_suffix_in_3dpath: 'False'  
+
+QFN-80-1EP_12x12mm_P0.5mm:
+  device_type: 'QFN'
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'https://www.sempac.com/product/mlp12x12-80-op-02/'
+  ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  # custom_name_format:
+  body_size_x:
+    nominal: 12
+    tolerance: 0.05
+  body_size_y:
+    nominal: 12
+    tolerance: 0.05
+  overall_height:
+    nominal: 0.8
+    tolerance: 0.1
+
+  lead_width:
+    nominal: 0.25
+    tolerance: 0.05
+  lead_len:
+    nominal: 0.40
+    tolerance: 0.05
+
+  EP_size_x:
+    nominal: 9.0
+    tolerance: 0.05
+  EP_size_y:
+    nominal: 9.0
+    tolerance: 0.05
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [2, 2]
+    drill: 0.2
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    # EP_num_paste_pads: [2, 2]
+    paste_between_vias: 1
+    paste_rings_outside: 1
+    #EP_paste_coverage: 0.75
+    grid: [0.85, 0.85]
+    # bottom_pad_size:
+    paste_avoid_via: True
+
+  pitch: 0.5
+  num_pins_x: 20
+  num_pins_y: 20
+  #chamfer_edge_pins: 0.1
+  #pin_count_grid:
+  #pad_length_addition: 0.5
+  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
+  #include_suffix_in_3dpath: 'False'
+
+QFN-100-1EP_12x12mm_P0.4mm:
+  device_type: 'QFN'
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'https://www.sempac.com/product/mlp12x12-100-op-03/'
+  ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  # custom_name_format:
+  body_size_x:
+    nominal: 12
+    tolerance: 0.05
+  body_size_y:
+    nominal: 12
+    tolerance: 0.05
+  overall_height:
+    nominal: 0.8
+    tolerance: 0.1
+
+  lead_width:
+    nominal: 0.20
+    tolerance: 0.05
+  lead_len:
+    nominal: 0.40
+    tolerance: 0.05
+
+  EP_size_x:
+    nominal: 9.3
+    tolerance: 0.05
+  EP_size_y:
+    nominal: 9.3
+    tolerance: 0.05
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [2, 2]
+    drill: 0.2
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    # EP_num_paste_pads: [2, 2]
+    paste_between_vias: 1
+    paste_rings_outside: 1
+    #EP_paste_coverage: 0.75
+    grid: [0.85, 0.85]
+    # bottom_pad_size:
+    paste_avoid_via: True
+
+  pitch: 0.4
+  num_pins_x: 25
+  num_pins_y: 25
+  #chamfer_edge_pins: 0.1
+  #pin_count_grid:
+  #pad_length_addition: 0.5
+  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
+  #include_suffix_in_3dpath: 'False'  
