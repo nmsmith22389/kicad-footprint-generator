@@ -26,7 +26,7 @@ setup(
     ],
     extras_require={
         'test': [
-            'pep8',
+            'pycodestyle',
             'flake8',
             'unittest2',
             'nose2',

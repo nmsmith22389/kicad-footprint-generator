@@ -20,9 +20,9 @@ update_dev_packages() {
     pip3 install --upgrade -r "$BASE_DIR/requirements-dev.txt"
 }
 
-pep8_check() {
+pycodestyle_check() {
     echo ''
-    echo '[!] Running pep8 check'
+    echo '[!] Running pycodestyle check'
     pycodestyle --max-line-length=120 "$KICADMODTREE_DIR/" \
         "scripts/tools/geometry"
 }
@@ -48,7 +48,7 @@ py_test_coverage() {
 tests() {
     set -e
     unit_tests
-    pep8_check
+    pycodestyle_check
     set +e
 }
 
@@ -62,7 +62,7 @@ help() {
 Commands
 ========
     help                 - This text
-    pep8_check           - pep8 validation
+    pycodestyle_check    - pep8 validation
     flake8_check         - flake8 validation
     unit_tests           - Run unit tests
     py_test_coverage     - Unit test coverage
