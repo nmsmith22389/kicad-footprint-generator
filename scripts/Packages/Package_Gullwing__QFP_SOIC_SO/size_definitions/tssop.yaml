@@ -742,7 +742,7 @@ TSSOP-28-1EP_4.4x9.7mm_P0.65mm_EP2.85x6.7mm:
     maximum: 6.90
   EP_num_paste_pads: [2, 3]
 
-  SOP-28-1EP_4.4x9.7mm_P0.65mm_EP3.1mmx4.0mm:
+TSSOP-28-1EP_4.4x9.7mm_P0.65mm_EP3.1mmx4.0mm:
   size_source: 'Texas Instruments TAS5805M https://www.ti.com/lit/gpn/tas5805m'
   
   body_size_x:
