@@ -778,7 +778,7 @@ TSSOP-28-1EP_4.4x9.7mm_P0.65mm_EP3.1mmx4.0mm:
     nominal: 4.05
 
   EP_size_x:
-    noiminal: 3.4
+    nominal: 3.4
   EP_size_y:
     nominal: 9.7
 
