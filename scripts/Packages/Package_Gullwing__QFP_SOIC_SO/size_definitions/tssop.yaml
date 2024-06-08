@@ -773,7 +773,7 @@ TSSOP-28-1EP_4.4x9.7mm_P0.65mm_EP3.1mmx4.0mm:
   num_pins_y: 14
 
   EP_mask_x:
-    noiminal: 3.10
+    nominal: 3.10
   EP_mask_y:
     nominal: 4.05
 
