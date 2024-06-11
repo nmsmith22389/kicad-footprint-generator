@@ -551,7 +551,7 @@ device_definition:
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['left', 'top']
-            polygone:
+            polygon:
               - [-0.65, -0.50]
               - [1.85, -0.50]
               - [1.85, 0.95]
@@ -568,126 +568,126 @@ device_definition:
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['left', 'top']
-            polygone:
+            polygon:
               - [-0.15, -0.50]
               - [-0.65, 0]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['left', 'top']
-            polygone:
+            polygon:
               - [0.35, -0.50]
               - [-0.65, 0.50]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['left', 'top']
-            polygone:
+            polygon:
               - [0.85, -0.50]
               - [-0.65, 1.00]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['left', 'top']
-            polygone:
+            polygon:
               - [1.35, -0.50]
               - [-0.65, 1.50]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['left', 'top']
-            polygone:
+            polygon:
               - [1.85, -0.50]
               - [-0.20, 1.55]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['left', 'top']
-            polygone:
+            polygon:
               - [1.85, 0.00]
               - [0.30, 1.55]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['left', 'top']
-            polygone:
+            polygon:
               - [1.85, 0.50]
               - [0.80, 1.55]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['left', 'top']
-            polygone:
+            polygon:
               - [1.90, 0.95]
               - [1.00, 1.85]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['left', 'top']
-            polygone:
+            polygon:
               - [2.40, 0.95]
               - [1.00, 2.35]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['left', 'top']
-            polygone:
+            polygon:
               - [2.40, 1.45]
               - [1.00, 2.85]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['left', 'top']
-            polygone:
+            polygon:
               - [2.40, 1.95]
               - [1.00, 3.35]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['left', 'top']
-            polygone:
+            polygon:
               - [0.60, 3.75]
               - [0.15, 4.20]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['left', 'top']
-            polygone:
+            polygon:
               - [2.40, 2.45]
               - [0.15, 4.70]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['left', 'top']
-            polygone:
+            polygon:
               - [2.40, 2.95]
               - [0.30, 5.05]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['left', 'top']
-            polygone:
+            polygon:
               - [2.40, 3.45]
               - [0.80, 5.05]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['left', 'top']
-            polygone:
+            polygon:
               - [2.40, 3.95]
               - [1.30, 5.05]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['left', 'top']
-            polygone:
+            polygon:
               - [2.40, 4.45]
               - [1.80, 5.05]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['left', 'top']
-            polygone:
+            polygon:
               - [2.40, 4.95]
               - [2.30, 5.05]
           # right keepout area
@@ -695,7 +695,7 @@ device_definition:
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['right', 'top']
-            polygone:
+            polygon:
               - [0.65, -0.50]
               - [-1.85, -0.50]
               - [-1.85, 0.95]
@@ -712,133 +712,133 @@ device_definition:
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['right', 'top']
-            polygone:
+            polygon:
               - [-1.35, -0.50]
               - [-1.85, 0]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['right', 'top']
-            polygone:
+            polygon:
               - [-0.85, -0.50]
               - [-1.85, 0.50]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['right', 'top']
-            polygone:
+            polygon:
               - [-0.35, -0.50]
               - [-2.40, 1.55]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['right', 'top']
-            polygone:
+            polygon:
               - [-2.30, 0.95]
               - [-2.40, 1.05]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['right', 'top']
-            polygone:
+            polygon:
               - [0.15, -0.50]
               - [-2.40, 2.05]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['right', 'top']
-            polygone:
+            polygon:
               - [0.65, -0.50]
               - [-2.40, 2.55]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['right', 'top']
-            polygone:
+            polygon:
               - [0.65, 0.00]
               - [-0.90, 1.55]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['right', 'top']
-            polygone:
+            polygon:
               - [0.65, 0.50]
               - [-0.40, 1.55]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['right', 'top']
-            polygone:
+            polygon:
               - [0.65, 1.00]
               - [0.10, 1.55]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['right', 'top']
-            polygone:
+            polygon:
               - [0.65, 1.50]
               - [0.60, 1.55]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['right', 'top']
-            polygone:
+            polygon:
               - [-1.00, 1.65]
               - [-2.40, 3.05]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['right', 'top']
-            polygone:
+            polygon:
               - [-1.00, 2.15]
               - [-2.40, 3.55]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['right', 'top']
-            polygone:
+            polygon:
               - [-1.00, 2.65]
               - [-2.40, 4.05]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['right', 'top']
-            polygone:
+            polygon:
               - [-1.00, 3.15]
               - [-2.40, 4.55]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['right', 'top']
-            polygone:
+            polygon:
               - [-1.00, 3.65]
               - [-2.40, 5.05]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['right', 'top']
-            polygone:
+            polygon:
               - [-0.60, 3.75]
               - [-1.90, 5.05]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['right', 'top']
-            polygone:
+            polygon:
               - [-0.15, 3.80]
               - [-1.40, 5.05]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['right', 'top']
-            polygone:
+            polygon:
               - [-0.15, 4.30]
               - [-0.90, 5.05]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['right', 'top']
-            polygone:
+            polygon:
               - [-0.15, 4.80]
               - [-0.40, 5.05]
 
@@ -870,7 +870,7 @@ device_definition:
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['left', 'top']
-            polygone:
+            polygon:
               - [1.625, -0.82]
               - [0.1, -0.82]
               - [0.1, 0.28]
@@ -885,7 +885,7 @@ device_definition:
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['right', 'top']
-            polygone:
+            polygon:
               - [-1.625, -0.82]
               - [-0.1, -0.82]
               - [-0.1, 0.28]
@@ -900,7 +900,7 @@ device_definition:
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['center', 'top']
-            polygone:
+            polygon:
               - [-0.625, -0.82]
               - [0.625, -0.82]
             repeat:
@@ -912,7 +912,7 @@ device_definition:
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['center', 'bottom']
-            polygone:
+            polygon:
               - [-0.625, -0.8]
               - [0.625, -0.8]
             repeat:
@@ -924,7 +924,7 @@ device_definition:
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['center', 'top']
-            polygone:
+            polygon:
              - [0, -0.82]
              - [-0.625, -0.195]
             repeat:
@@ -935,7 +935,7 @@ device_definition:
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['center', 'top']
-            polygone:
+            polygon:
              - [0.625, -0.82]
              - [-0.625, 0.43]
             repeat:
@@ -946,7 +946,7 @@ device_definition:
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['center', 'top']
-            polygone:
+            polygon:
              - [0.625, -0.195]
              - [-0.625, 1.055]
             repeat:
@@ -957,7 +957,7 @@ device_definition:
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['center', 'top']
-            polygone:
+            polygon:
              - [0.625, 0.43]
              - [-0.625, 1.68]
             repeat:
@@ -968,7 +968,7 @@ device_definition:
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['center', 'top']
-            polygone:
+            polygon:
              - [0.625, 1.055]
              - [-0.625, 2.305]
             repeat:
@@ -979,7 +979,7 @@ device_definition:
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['center', 'top']
-            polygone:
+            polygon:
              - [0.625, 1.68]
              - [-0.625, 2.93]
             repeat:
@@ -990,7 +990,7 @@ device_definition:
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['center', 'top']
-            polygone:
+            polygon:
              - [0.625, 2.305]
              - [-0.12, 3.05]
             repeat:
@@ -1001,7 +1001,7 @@ device_definition:
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['center', 'top']
-            polygone:
+            polygon:
              - [0.625, 2.93]
              - [0.505, 3.05]
             repeat:
@@ -1013,91 +1013,91 @@ device_definition:
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['left', 'top']
-            polygone:
+            polygon:
               - [0.375, -0.82]
               - [0.1, -0.545]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['left', 'top']
-            polygone:
+            polygon:
               - [1.0, -0.82]
               - [0.1, 0.08]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['left', 'top']
-            polygone:
+            polygon:
               - [1.625, -0.82]
               - [0.525, 0.28]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['left', 'top']
-            polygone:
+            polygon:
               - [1.625, -0.195]
               - [0.95, 0.48]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['left', 'top']
-            polygone:
+            polygon:
               - [1.625, 0.43]
               - [0.95, 1.105]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['left', 'top']
-            polygone:
+            polygon:
               - [1.625, 1.055]
               - [0.95, 1.73]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['left', 'top']
-            polygone:
+            polygon:
               - [1.625, 1.68]
               - [0.95, 2.355]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['left', 'top']
-            polygone:
+            polygon:
               - [1.625, 2.305]
               - [-0.4, 4.33]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['left', 'top']
-            polygone:
+            polygon:
               - [1.625, 2.93]
               - [0.225, 4.33]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['left', 'top']
-            polygone:
+            polygon:
               - [1.625, 3.555]
               - [0.85, 4.33]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['left', 'top']
-            polygone:
+            polygon:
               - [0.875, 2.43]
               - [-0.75, 4.055]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['left', 'top']
-            polygone:
+            polygon:
               - [0.25, 2.43]
               - [-0.75, 3.43]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['left', 'top']
-            polygone:
+            polygon:
               - [-0.375, 2.43]
               - [-0.75, 2.805]
           # keepout area hatching (right side)
@@ -1105,97 +1105,97 @@ device_definition:
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['right', 'top']
-            polygone:
+            polygon:
              - [-1.625, -0.194]
              - [-0.999, -0.82]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['right', 'top']
-            polygone:
+            polygon:
              - [-1.625, 0.43]
              - [-0.375, -0.82]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['right', 'top']
-            polygone:
+            polygon:
              - [-1.625, 1.055]
              - [-0.95, 0.38]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['right', 'top']
-            polygone:
+            polygon:
              - [-1.625, 1.68]
              - [-0.95, 1.005]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['right', 'top']
-            polygone:
+            polygon:
              - [-1.625, 2.305]
              - [-0.95, 1.63]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['right', 'top']
-            polygone:
+            polygon:
              - [-1.625, 2.93]
              - [-0.95, 2.255]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['right', 'top']
-            polygone:
+            polygon:
              - [-0.85, 0.28]
              - [-0.1, -0.47]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['right', 'top']
-            polygone:
+            polygon:
              - [-0.225, 0.28]
              - [-0.1, 0.155]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['right', 'top']
-            polygone:
+            polygon:
              - [-1.625, 3.555]
              - [-0.5, 2.43]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['right', 'top']
-            polygone:
+            polygon:
              - [-1.625, 4.18]
              - [0.125, 2.43]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['right', 'top']
-            polygone:
+            polygon:
              - [-1.15, 4.33]
              - [0.75, 2.43]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['right', 'top']
-            polygone:
+            polygon:
              - [-0.525, 4.33]
              - [0.75, 3.055]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['right', 'top']
-            polygone:
+            polygon:
              - [0.1, 4.33]
              - [0.75, 3.68]
           -
             layer: 'Dwgs.User'
             thickness: 0.05
             reference_point: ['right', 'top']
-            polygone:
+            polygon:
              - [0.725, 4.33]
              - [0.75, 4.305]
