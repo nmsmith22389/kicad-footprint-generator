@@ -12,35 +12,37 @@ KICADMODTREE_DIR="$BASE_DIR/KicadModTree"
 ACTION=$1
 
 update_packages() {
-    pip install --upgrade -r "$BASE_DIR/requirements.txt"
+    pip3 install --upgrade -r "$BASE_DIR/requirements.txt"
 }
 
 update_dev_packages() {
 	update_packages
-    pip install --upgrade -r "$BASE_DIR/requirements-dev.txt"
+    pip3 install --upgrade -r "$BASE_DIR/requirements-dev.txt"
 }
 
 pep8_check() {
     echo ''
     echo '[!] Running pep8 check'
-    pep8 --max-line-length=120 "$KICADMODTREE_DIR/"
+    pycodestyle --max-line-length=120 "$KICADMODTREE_DIR/" \
+        "scripts/tools/geometry"
 }
 
 flake8_check() {
     echo ''
     echo '[!] Running flake8 check'
-    flake8 "$KICADMODTREE_DIR/"
+    flake8 "$KICADMODTREE_DIR/" \
+        "scripts/tools/geometry"
 }
 
 unit_tests() {
     echo ''
     echo '[!] Running unit tests'
-    python "$KICADMODTREE_DIR/tests/test.py"
+    python3 -m pytest
 }
 
 py_test_coverage() {
     echo '[!] Running python test coverage'
-    PYTHONPATH=`pwd` python -m nose2 -C --coverage "$KICADMODTREE_DIR" --coverage-report term-missing -s "$KICADMODTREE_DIR/tests"
+    PYTHONPATH=`pwd` python3 -m nose2 -C --coverage "$KICADMODTREE_DIR" --coverage-report term-missing -s "$KICADMODTREE_DIR/tests"
 }
 
 tests() {

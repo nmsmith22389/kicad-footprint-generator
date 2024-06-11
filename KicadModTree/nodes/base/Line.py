@@ -77,14 +77,15 @@ class Line(Node, geometricLine):
         result = []
         glines = geometricLine.cut(self, *other)
         for g in glines:
-            result.append(self.copyReplaceGeometry(g))
+            if not (g.start_pos - g.end_pos).is_nullvec(1e-6):
+                result.append(self.copyReplaceGeometry(g))
 
         return result
 
     def _getRenderTreeText(self):
         render_strings = ['fp_line']
-        render_strings.append(self.start_pos.render('(start {x} {y})'))
-        render_strings.append(self.end_pos.render('(end {x} {y})'))
+        render_strings.append('(start {x} {y})'.format(**self.start_pos.to_dict()))
+        render_strings.append('(end {x} {y})'.format(**self.end_pos.to_dict()))
         render_strings.append('(layer {layer})'.format(layer=self.layer))
         render_strings.append('(width {width})'.format(width=self.width))
 
@@ -102,4 +103,4 @@ class Line(Node, geometricLine):
         max_x = max([render_start_pos.x, render_end_pos.x])
         max_y = max([render_start_pos.y, render_end_pos.y])
 
-        return Node.calculateBoundingBox({'min': Vector2D(min_x, min_y), 'max': Vector2D(max_x, max_y)})
+        return {'min': Vector2D(min_x, min_y), 'max': Vector2D(max_x, max_y)}

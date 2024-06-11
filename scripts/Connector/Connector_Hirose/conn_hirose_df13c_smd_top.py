@@ -16,7 +16,7 @@ sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))  # load parent p
 from footprint_text_fields import addTextFields
 from footprint_keepout_area import addRectangularKeepout
 
-series = "DF13C"
+series = 'DF13C'
 series_long = 'DF13C SMD'
 manufacturer = 'Hirose'
 orientation = 'V'
@@ -61,9 +61,8 @@ def generate_one_footprint(idx, pins, configuration):
 
     footprint_name = footprint_name.replace("__",'_')
 
-    kicad_mod = Footprint(footprint_name)
-    kicad_mod.setAttribute('smd')
-    kicad_mod.setDescription("Molex {:s}, {:s}, {:d} Pins per row ({:s}), generated with kicad-footprint-generator".format(series_long, mpn, pins_per_row, datasheet))
+    kicad_mod = Footprint(footprint_name, FootprintType.SMD)
+    kicad_mod.setDescription("{:s} {:s}, {:s}, {:d} Pins per row ({:s}), generated with kicad-footprint-generator".format(manufacturer, series_long, mpn, pins_per_row, datasheet))
     kicad_mod.setTags(configuration['keyword_fp_string'].format(series=series,
         orientation=orientation_str, man=manufacturer,
         entry=configuration['entry_direction'][orientation]))
@@ -122,24 +121,24 @@ def generate_one_footprint(idx, pins, configuration):
     silk_pad_x_left = -A/2 - pad_size[0]/2 - pad_silk_off
     silk_mp_top = mpad_y - mp_size[1]/2 - pad_silk_off
     silk_mp_bottom = mpad_y + mp_size[1]/2 + pad_silk_off
-    kicad_mod.append(PolygoneLine(
-        polygone=[
+    kicad_mod.append(PolygonLine(
+        polygon=[
             {'x': silk_pad_x_left,'y':y1},
             {'x': x1,'y':y1},
             {'x': x1,'y':silk_mp_top}
         ],
         layer='F.SilkS', width=configuration['silk_line_width']))
 
-    kicad_mod.append(PolygoneLine(
-        polygone=[
+    kicad_mod.append(PolygonLine(
+        polygon=[
             {'x': -silk_pad_x_left,'y':y1},
             {'x': x2,'y':y1},
             {'x': x2,'y':silk_mp_top}
         ],
         layer='F.SilkS', width=configuration['silk_line_width']))
 
-    kicad_mod.append(PolygoneLine(
-        polygone=[
+    kicad_mod.append(PolygonLine(
+        polygon=[
             {'x': x1,'y':silk_mp_bottom},
             {'x': x1,'y':y2},
             {'x': x2,'y':y2},
@@ -160,8 +159,8 @@ def generate_one_footprint(idx, pins, configuration):
         {'y': body_edge['top'] + sl/sqrt(2), 'x': -A/2},
         {'y': body_edge['top'], 'x': -A/2+sl/2}
     ]
-    kicad_mod.append(PolygoneLine(polygone=pin,
-        width=configuration['fab_line_width'], layer='F.Fab'))
+    kicad_mod.append(PolygonLine(polygon=pin,
+                                 width=configuration['fab_line_width'], layer='F.Fab'))
 
 
     ########################### KEEPOUT #################################
@@ -187,7 +186,7 @@ def generate_one_footprint(idx, pins, configuration):
         courtyard={'top':cy1, 'bottom':cy2}, fp_name=footprint_name, text_y_inside_position='bottom')
 
     ##################### Output and 3d model ############################
-    model3d_path_prefix = configuration.get('3d_model_prefix','${KISYS3DMOD}/')
+    model3d_path_prefix = configuration.get('3d_model_prefix','${KICAD8_3DMODEL_DIR}/')
 
     lib_name = configuration['lib_name_format_string'].format(series=series, man=manufacturer)
     model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}.wrl'.format(

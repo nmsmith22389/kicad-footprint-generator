@@ -19,7 +19,7 @@ def round_to(n, precision):
 
 
 def create_footprint(name, **kwargs):
-    kicad_mod = Footprint(name)
+    kicad_mod = Footprint(name, FootprintType.THT)
 
     # init kicad footprint
     kicad_mod.setDescription(kwargs['description'])
@@ -38,8 +38,8 @@ def create_footprint(name, **kwargs):
     courtjard_y = pad_y + 2*courtjard
 
     # set general values
-    kicad_mod.append(Text(type='reference', text='REF**', at=[0, -courtjard_y/2 - 0.75], layer='F.SilkS'))
-    kicad_mod.append(Text(type='value', text=name, at=[0, courtjard_y/2 + 0.75], layer='F.Fab'))
+    kicad_mod.append(Property(name=Property.REFERENCE, text='REF**', at=[0, -courtjard_y/2 - 0.75], layer='F.SilkS'))
+    kicad_mod.append(Property(name=Property.VALUE, text=name, at=[0, courtjard_y/2 + 0.75], layer='F.Fab'))
 
     # create courtyard
     if hole_x == hole_y:
@@ -73,7 +73,7 @@ def create_footprint(name, **kwargs):
         'type': Pad.TYPE_THT,
         'at': [0, 0],
         'size': [pad_x, pad_y],
-        'layers': ['*.Cu', '*.Mask']
+        'layers': Pad.LAYERS_THT
     }
     if hole_x == hole_y:
         kicad_mod.append(Pad(**pad_kwargs, shape=Pad.SHAPE_CIRCLE, drill=hole_x))
@@ -142,7 +142,7 @@ def create_footprint(name, **kwargs):
                 raise "invalid scope_step"
 
             kicad_mod.append(Pad(number=1, type=Pad.TYPE_THT, shape=Pad.SHAPE_CIRCLE,
-                                 at=[step_x, step_y], size=[via_diameter+0.1, via_diameter+0.1], drill=via_diameter, layers=['*.Cu', '*.Mask']))
+                                 at=[step_x, step_y], size=[via_diameter+0.1, via_diameter+0.1], drill=via_diameter, layers=Pad.LAYERS_THT))
 
     # write file
     file_handler = KicadFileHandler(kicad_mod)

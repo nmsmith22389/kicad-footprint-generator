@@ -62,10 +62,9 @@ def generate_one_footprint(idx, pincount, series_definition, configuration, grou
         pitch=series_definition['pitch'], orientation=orientation)
     footprint_name = footprint_name.replace('__', '_')
 
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, FootprintType.SMD)
     kicad_mod.setDescription("{:s} {:s} series connector, {:s} ({:s}), generated with kicad-footprint-generator".format(group_definition['manufacturer'],
         series_definition['series'], mpn, series_definition['datasheet']))
-    kicad_mod.setAttribute('smd')
     kicad_mod.setTags(configuration['keyword_fp_string'].format(series=series_definition['series'],
         orientation=orientation, man=group_definition['manufacturer'],
         entry=configuration['entry_direction'][series_definition['orientation']]))
@@ -73,12 +72,10 @@ def generate_one_footprint(idx, pincount, series_definition, configuration, grou
 
     ############################# Pads ##################################
     optional_pad_params = {}
-    if configuration['kicad4_compatible']:
-        pad_shape=Pad.SHAPE_RECT
-    else:
-        pad_shape=Pad.SHAPE_ROUNDRECT
-        optional_pad_params['radius_ratio'] = configuration.get('radius_ratio', 0.25)
-        optional_pad_params['maximum_radius'] = configuration.get('maximum_radius', 0.25)
+
+    pad_shape = Pad.SHAPE_ROUNDRECT
+    optional_pad_params['radius_ratio'] = configuration.get('radius_ratio', 0.25)
+    optional_pad_params['maximum_radius'] = configuration.get('maximum_radius', 0.25)
 
     kicad_mod.append(PadArray(
         center=[0, pad_pos_y], x_spacing=series_definition['pitch'], pincount=pincount,
@@ -158,7 +155,7 @@ def generate_one_footprint(idx, pincount, series_definition, configuration, grou
                 {'x': pad_1_x_outside_edge - pad_edge_silk_center_offset, 'y': side_line_y_pin_side + silk_y_offset_pin_side},
                 {'x': pad_1_x_outside_edge - pad_edge_silk_center_offset, 'y': pin_edge_outside}
             ]
-            if abs(pin_edge_outside) - abs(side_line_y_pin_side + silk_y_offset_pin_side) < configuration['silk_line_lenght_min']:
+            if abs(pin_edge_outside) - abs(side_line_y_pin_side + silk_y_offset_pin_side) < configuration['silk_line_length_min']:
                 needs_additional_silk_pin1_marker = True
 
             poly_silk_edge_right = [
@@ -176,7 +173,7 @@ def generate_one_footprint(idx, pincount, series_definition, configuration, grou
                 {'x': pad_1_x_outside_edge - pad_edge_silk_center_offset, 'y': body_edge_pin + silk_y_offset_pin_side},
                 {'x': pad_1_x_outside_edge - pad_edge_silk_center_offset, 'y': pin_edge_outside}
             ]
-            if abs(pin_edge_outside) - abs(body_edge_pin + silk_y_offset_pin_side) < configuration['silk_line_lenght_min']:
+            if abs(pin_edge_outside) - abs(body_edge_pin + silk_y_offset_pin_side) < configuration['silk_line_length_min']:
                 needs_additional_silk_pin1_marker = True
 
             poly_silk_edge_right = [
@@ -197,7 +194,7 @@ def generate_one_footprint(idx, pincount, series_definition, configuration, grou
             {'x': pad_1_x_outside_edge - pad_edge_silk_center_offset, 'y': body_edge_pin + silk_y_offset_pin_side},
             {'x': pad_1_x_outside_edge - pad_edge_silk_center_offset, 'y': pin_edge_outside}
         ]
-        if abs(pin_edge_outside) - abs(body_edge_pin + silk_y_offset_pin_side) < configuration['silk_line_lenght_min']:
+        if abs(pin_edge_outside) - abs(body_edge_pin + silk_y_offset_pin_side) < configuration['silk_line_length_min']:
             needs_additional_silk_pin1_marker = True
 
         poly_silk_edge_right = [
@@ -205,10 +202,10 @@ def generate_one_footprint(idx, pincount, series_definition, configuration, grou
             {'x': body_edge['right'] + configuration['silk_fab_offset'], 'y': side_line_y_pin_side + silk_y_offset_pin_side},
             {'x': -pad_1_x_outside_edge + pad_edge_silk_center_offset, 'y': body_edge_pin + silk_y_offset_pin_side}
         ]
-    kicad_mod.append(PolygoneLine(polygone=poly_fab_pin_side, layer='F.Fab', width=configuration['fab_line_width']))
+    kicad_mod.append(PolygonLine(polygon=poly_fab_pin_side, layer='F.Fab', width=configuration['fab_line_width']))
     if series_definition.get('no_automatic_silk_autline','False') != 'True':
-        kicad_mod.append(PolygoneLine(polygone=poly_silk_edge_left, layer='F.SilkS', width=configuration['silk_line_width']))
-        kicad_mod.append(PolygoneLine(polygone=poly_silk_edge_right, layer='F.SilkS', width=configuration['silk_line_width']))
+        kicad_mod.append(PolygonLine(polygon=poly_silk_edge_left, layer='F.SilkS', width=configuration['silk_line_width']))
+        kicad_mod.append(PolygonLine(polygon=poly_silk_edge_right, layer='F.SilkS', width=configuration['silk_line_width']))
 
     # Mount pad side
     bounding_box_y_mount_pad_side = mount_pad_y_pos + (-mounting_pad_size[1]/2 if pins_toward_bottom else mounting_pad_size[1]/2)
@@ -278,7 +275,7 @@ def generate_one_footprint(idx, pincount, series_definition, configuration, grou
         poly_silk_mp_side[0]['x'] = body_edge['left']
         poly_silk_mp_side[len(poly_silk_mp_side)-1]['x'] = body_edge['right']
 
-    if series_definition['rel_body_edge_y'] > pad_edge_silk_center_offset + configuration['silk_line_lenght_min']:
+    if series_definition['rel_body_edge_y'] > pad_edge_silk_center_offset + configuration['silk_line_length_min']:
         poly_silk_mp_side[0]['x'] = body_edge['left'] - configuration['silk_fab_offset']
         poly_silk_mp_side[len(poly_silk_mp_side)-1]['x'] = body_edge['right'] + configuration['silk_fab_offset']
 
@@ -286,9 +283,9 @@ def generate_one_footprint(idx, pincount, series_definition, configuration, grou
         poly_silk_mp_side.append({'x': body_edge['right'] + configuration['silk_fab_offset'], 'y': silk_y_mp_outside})
 
     if series_definition.get('no_automatic_silk_autline','False') != 'True':
-        kicad_mod.append(PolygoneLine(polygone=poly_silk_mp_side, layer='F.SilkS', width=configuration['silk_line_width']))
+        kicad_mod.append(PolygonLine(polygon=poly_silk_mp_side, layer='F.SilkS', width=configuration['silk_line_width']))
 
-    kicad_mod.append(PolygoneLine(polygone=poly_fab_mp_side, layer='F.Fab', width=configuration['fab_line_width']))
+    kicad_mod.append(PolygonLine(polygon=poly_fab_mp_side, layer='F.Fab', width=configuration['fab_line_width']))
 
     kicad_mod.append(Line(start=[body_edge['left'], side_line_y_pin_side], end=[body_edge['left'], body_edge_mount_pad],
                             layer='F.Fab', width=configuration['fab_line_width']))
@@ -352,12 +349,12 @@ def generate_one_footprint(idx, pincount, series_definition, configuration, grou
         ]
 
     if modified_pinside_x_inner < -dimension_A/2 - configuration['fab_pin1_marker_length']/2:
-        kicad_mod.append(PolygoneLine(polygone=poly_pin1_marker, layer='F.Fab', width=configuration['fab_line_width']))
+        kicad_mod.append(PolygonLine(polygon=poly_pin1_marker, layer='F.Fab', width=configuration['fab_line_width']))
     else:
-        kicad_mod.append(PolygoneLine(polygone=poly_pin1_marker_small, layer='F.Fab', width=configuration['fab_line_width']))
+        kicad_mod.append(PolygonLine(polygon=poly_pin1_marker_small, layer='F.Fab', width=configuration['fab_line_width']))
 
     if needs_additional_silk_pin1_marker:
-        kicad_mod.append(PolygoneLine(polygone=poly_pin1_marker_small, layer='F.SilkS', width=configuration['silk_line_width']))
+        kicad_mod.append(PolygonLine(polygon=poly_pin1_marker_small, layer='F.SilkS', width=configuration['silk_line_width']))
 
 
     ######################### Text Fields ###############################
@@ -366,7 +363,7 @@ def generate_one_footprint(idx, pincount, series_definition, configuration, grou
         courtyard={'top':cy1, 'bottom':cy2}, fp_name=footprint_name, text_y_inside_position=text_center)
 
     ########################### file names ###############################
-    model3d_path_prefix = configuration.get('3d_model_prefix','${KISYS3DMOD}/')
+    model3d_path_prefix = configuration.get('3d_model_prefix','${KICAD8_3DMODEL_DIR}/')
 
     lib_name = configuration['lib_name_format_string'].format(man=group_definition['manufacturer'],
         series=series_definition['series'])
@@ -403,7 +400,6 @@ if __name__ == "__main__":
                         help='list of files holding information about what devices should be created.')
     parser.add_argument('--global_config', type=str, nargs='?', help='the config file defining how the footprint will look like. (KLC)', default='../../tools/global_config_files/config_KLCv3.0.yaml')
     parser.add_argument('--series_config', type=str, nargs='?', help='the config file defining series parameters.', default='../conn_config_KLCv3.yaml')
-    parser.add_argument('--kicad4_compatible', action='store_true', help='Create footprints kicad 4 compatible')
     args = parser.parse_args()
 
     with open(args.global_config, 'r') as config_stream:
@@ -417,8 +413,6 @@ if __name__ == "__main__":
             configuration.update(yaml.safe_load(config_stream))
         except yaml.YAMLError as exc:
             print(exc)
-    configuration['kicad4_compatible'] = args.kicad4_compatible
-
     for filepath in args.files:
         with open(filepath, 'r') as stream:
             try:

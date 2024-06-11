@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 #http://katalog.we-online.com/en/pbs/WE-MAPI]
 
 #sizes,shapes,etc]
@@ -8,14 +9,15 @@ inductors = [
 ["RN114",  1, 4, 20.1, 12.5, 13.2, 22.5, 21.5,  4.0,  0.8,  2.0 ],
 ["RN116",  1, 4, 20.1, 12.5, 13.2, 22.5, 21.5,  4.0,  0.8,  2.0 ],
 ["RN122",  1, 4, 25.0, 15.0, 16.5, 28.0, 27.0,  4.0,  0.8,  2.0 ],
-["RN142",  1, 4, 30.0, 15.2, 19.7, 33.1, 32.5,  4.3,  0.8,  2.0 ],
-["RN143",  1, 4, 30.0, 10.0, 19.7, 33.1, 32.5,  4.3,  0.8,  2.0 ],
+["RN142",  1, 4, 30.0, 20.0, 19.7, 33.1, 32.5,  4.3,  0.8,  2.0 ],
+["RN143",  1, 4, 30.0, 20.0, 19.7, 33.1, 32.5,  4.3,  0.8,  2.0 ],
 ["RN152",  2, 4, 40.0, 15.0, 25.0, 43.0, 41.8,  4.5,  1.2,  2.5 ],
-["RN202",  3, 4,  5.1, 10.0, 13.5,  8.8, 18.2,  4.5,  0.8,  2.0 ],
+["RN202",  3, 4,  5.1, 15.2, 13.5,  8.8, 18.2,  4.5,  0.8,  2.0 ],
 ["RN204",  3, 4,  7.6, 10.0, 14.3,  9.0, 14.0,  4.0,  0.5,  2.0 ],
 ["RN212",  3, 4, 10.0, 15.0, 20.0, 12.5, 18.0,  4.0,  0.8,  2.0 ],
 ["RN214",  3, 4, 12.5, 10.0, 25.0, 15.5, 23.0,  4.0,  0.8,  2.0 ],
 ["RN216",  3, 4, 12.5, 10.0, 25.0, 15.5, 23.0,  4.0,  0.8,  2.0 ],
+["RN218",  3, 4, 10.0, 12.5, 20.0, 12.5, 18.0,  4.0,  0.8,  2.0 ],
 ["RN222",  3, 4, 15.0, 12.5, 29.3, 18.0, 31.0,  4.0,  0.8,  2.0 ],
 ["RN232",  3, 4, 15.0, 12.5, 34.3, 18.0, 31.0,  4.2,  0.8,  2.0 ],
 ["RN242",  3, 4, 15.0, 12.5, 34.3, 18.0, 31.0,  4.2,  0.8,  2.0 ]
@@ -30,7 +32,7 @@ output_dir = os.getcwd()
 #if specified as an argument, extract the target directory for output footprints
 if len(sys.argv) > 1:
     out_dir = sys.argv[1]
-    
+
     if os.path.isabs(out_dir) and os.path.isdir(out_dir):
         output_dir = out_dir
     else:
@@ -40,9 +42,9 @@ if len(sys.argv) > 1:
 
 if output_dir and not output_dir.endswith(os.sep):
     output_dir += os.sep
-        
+
 #import KicadModTree files
-sys.path.append("..\\..")
+sys.path.append(os.path.join(sys.path[0], "..", ".."))
 from KicadModTree import *
 from KicadModTree.nodes.specialized.PadArray import PadArray
 
@@ -51,14 +53,14 @@ part = "{serie}-0{pn}"
 dims  = "{l:0.1f}mmx{w:0.1f}mm"
 dims2 = "{l:0.1f}x{w:0.1f}mm"
 
-desc = "Current-compensated Chokes, Scaffner, {pn}"
+desc = "Current-compensated Chokes, Schaffner, {pn}"
 tags = "chokes schaffner tht"
-TargetDir = "Inductors_THT.3dshapes"
+TargetDir = "Inductor_THT.3dshapes"
 Datasheet = "https://www.schaffner.com/products/download/product/datasheet/rn-series-common-mode-chokes-new/"
 
 for inductor in inductors:
     Serie,Type,PN,A,B,H,L,W,P,PDiam,PadSize=inductor
-    
+
     Pin1x1 = 0
     Pin1y1 = 0
     Pin1dx = 1.0
@@ -69,9 +71,9 @@ for inductor in inductors:
     cy = round(B / 2, 2)
 
     fp_name = prefix + part.format(serie=str(Serie), pn=str(PN)) + "-" + dims2.format(l=L,w=W)
-    fp = Footprint(fp_name)
+    fp = Footprint(fp_name, FootprintType.THT)
     description = desc.format(pn = part.format(serie=str(Serie), pn=str(PN))) + ", " + dims.format(l=L,w=W) + " " + Datasheet
-    
+
 #    fp.append(Line(start=[cx - (L / 2), cy - (W / 2)], end=[cx + (L / 2), cy - (W / 2)],layer='F.Fab', width=0.01))
 #    fp.append(Line(start=[cx + (L / 2), cy - (W / 2)], end=[cx + (L / 2), cy + (W / 2)],layer='F.Fab', width=0.01))
 #    fp.append(Line(start=[cx + (L / 2), cy + (W / 2)], end=[cx - (L / 2), cy + (W / 2)],layer='F.Fab', width=0.01))
@@ -141,11 +143,11 @@ for inductor in inductors:
             fp.append(Line(start=[round(x1, 2), round(y1, 2)],end=[round(x2, 2), round(y2, 2)],layer=myLayer,width=myLayerW))
             # Top left arc
             fp.append(Arc(center=[round(0, 2), round(0, 2)], start=[round(x2, 2), round(y2, 2)], angle=90.0, layer=myLayer, width=myLayerW))
-            
+
             Pin1x1 = 0 - (((L - A) / 2) + 0.25)
             Pin1y1 = 0 - (((W - B) / 2) + 0.25)
             Pin1dx = 3.0
-        
+
     elif Type == 1:
         #
         # This have the shape of a box with rounded top and bottom side
@@ -285,7 +287,7 @@ for inductor in inductors:
                 #
                 Fabx1 = x2;
                 Faby1 = y2;
-                
+
             else:
                 #
                 # Y delta
@@ -655,7 +657,7 @@ for inductor in inductors:
         x1 = x2
         y1 = y2
         x2 = x1
-        y2 = scy 
+        y2 = scy
         fp.append(Line(start=[round(x1, 2), round(y1, 2)],end=[round(x2, 2), round(y2, 2)],layer='F.CrtYd',width=0.05))
         x1 = x2
         y1 = y2
@@ -667,7 +669,7 @@ for inductor in inductors:
         Pin1y1 = scy
 
         RefX1 = 10.0
-        
+
     elif Type == 3:
         #
         # This have the shape of a box
@@ -724,7 +726,7 @@ for inductor in inductors:
         fp.append(Line(start=[round(x1, 2), round(y1, 2)],end=[round(x2, 2), round(y2, 2)],layer='F.SilkS',width=0.12))
         #
         x1 = x1 + L + 0.24
-        y1 = y2 
+        y1 = y2
         x2 = x1
         y2 = y1 + W + 0.24
         if (x1 < (A + ((PadSize / 2) + 0.25))):
@@ -742,7 +744,7 @@ for inductor in inductors:
         fp.append(Line(start=[round(x1, 2), round(y1, 2)],end=[round(x2, 2), round(y2, 2)],layer='F.SilkS',width=0.12))
         #
         x1 = x2
-        y1 = y2 
+        y1 = y2
         x2 = x1
         y2 = (0 - ((W - B) / 2)) - 0.12
         if (x1 > (0 - ((PadSize / 2) + 0.25))):
@@ -792,19 +794,19 @@ for inductor in inductors:
 
     fp.setTags(tags)
     fp.setDescription(description)
-    
+
     #
     # Set general values
     #
-    fp.append(Text(type='reference', text='REF**', at=[RefX1, RefY1], layer='F.SilkS'))
-    fp.append(Text(type='value', text=fp_name,     at=[round((A / 2), 2), round(((W - B) / 2) + B + 1.5,   2)], layer='F.Fab'))
-    fp.append(Text(type='user', text="%R",         at=[round((A / 2), 2), round((B / 2), 2)], layer='F.Fab'))
-    
+    fp.append(Property(name=Property.REFERENCE, text='REF**',   at=[RefX1, RefY1], layer='F.SilkS'))
+    fp.append(Property(name=Property.VALUE, text=fp_name,       at=[round((A / 2), 2), round(((W - B) / 2) + B + 1.5,   2)], layer='F.Fab'))
+    fp.append(Text(text='${REFERENCE}', at=[round((A / 2), 2), round((B / 2), 2)], layer='F.Fab'))
+
     #
     # Add 3D model
     #
-    fp.append(Model(filename="${KISYS3DMOD}/" + TargetDir + "/" + fp_name + ".wrl", at=[0, 0, 0], scale=[1, 1, 1], rotate=[0, 0, 0]))
-    
+    fp.append(Model(filename="${KICAD8_3DMODEL_DIR}/" + TargetDir + "/" + fp_name + ".wrl", at=[0, 0, 0], scale=[1, 1, 1], rotate=[0, 0, 0]))
+
     #
     # Add pads
     #
@@ -815,7 +817,6 @@ for inductor in inductors:
 
     #filename
     filename = output_dir + fp_name + ".kicad_mod"
-    
+
     file_handler = KicadFileHandler(fp)
     file_handler.writeFile(filename)
-    

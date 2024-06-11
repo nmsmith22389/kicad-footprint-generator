@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import sys
 import os
@@ -14,7 +14,7 @@ def create_shielding(name, outer_size, size,
 
     attachment_positions = sorted(attachment_positions)
 
-    kicad_mod = Footprint(name)
+    kicad_mod = Footprint(name, FootprintType.THT)
 
     # init kicad footprint
     kicad_mod.setDescription('WE-SHC Shielding Cabinet THT {size}x{size}mm'.format(size=size))
@@ -23,8 +23,8 @@ def create_shielding(name, outer_size, size,
     courtjard_size = outer_size / 2. + attachment_diameter / 2. + 0.25
 
     # set general values
-    kicad_mod.append(Text(type='reference', text='REF**', at=[0, -courtjard_size - 1], layer='F.SilkS'))
-    kicad_mod.append(Text(type='value', text=name, at=[0, courtjard_size + 1], layer='F.Fab'))
+    kicad_mod.append(Property(name=Property.REFERENCE, text='REF**', at=[0, -courtjard_size - 1], layer='F.SilkS'))
+    kicad_mod.append(Property(name=Property.VALUE, text=name, at=[0, courtjard_size + 1], layer='F.Fab'))
 
     # create courtyard
     kicad_mod.append(RectLine(start=[-courtjard_size, -courtjard_size],
@@ -41,7 +41,7 @@ def create_shielding(name, outer_size, size,
                       'shape': Pad.SHAPE_CIRCLE,
                       'size': [attachment_diameter, attachment_diameter],
                       'drill': attachment_drill,
-                      'layers': ['*.Cu', '*.Mask']}
+                      'layers': Pad.LAYERS_THT}
 
     # create pads
     for position in attachment_positions:

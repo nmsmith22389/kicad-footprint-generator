@@ -86,7 +86,7 @@ def generate_one_footprint(pincount, configuration):
 
     footprint_name = footprint_name.replace("__", '_')
 
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, FootprintType.THT)
     descr_format_str = "Molex {:s}, {:s} , {:d} Pins ({:s}), generated with kicad-footprint-generator"
     kicad_mod.setDescription(descr_format_str.format(series_long, mpn, pincount, datasheet))
     kicad_mod.setTags(configuration['keyword_fp_string'].format(series=series,
@@ -110,10 +110,7 @@ def generate_one_footprint(pincount, configuration):
 
     # create pads
     optional_pad_params = {}
-    if configuration['kicad4_compatible']:
-        optional_pad_params['tht_pad1_shape'] = Pad.SHAPE_RECT
-    else:
-        optional_pad_params['tht_pad1_shape'] = Pad.SHAPE_ROUNDRECT
+    optional_pad_params['tht_pad1_shape'] = Pad.SHAPE_ROUNDRECT
 
     kicad_mod.append(PadArray(initial=1, start=[start_pos_x, 0],
         x_spacing=pitch, pincount=pincount,
@@ -128,8 +125,8 @@ def generate_one_footprint(pincount, configuration):
     # create silkscreen
     x1 = start_pos_x -pad_size[0]/2 - pad_silk_off
     xn = end_pos_x + pad_size[0]/2 + pad_silk_off
-    kicad_mod.append(PolygoneLine(
-        polygone=[
+    kicad_mod.append(PolygonLine(
+        polygon=[
             {'x': x1, 'y': body_edge['top']-nudge},
             {'x': body_edge['left']-nudge, 'y': body_edge['top']-nudge},
             {'x': body_edge['left']-nudge, 'y': body_edge['bottom']+nudge},
@@ -150,8 +147,8 @@ def generate_one_footprint(pincount, configuration):
     p1s_off = configuration['silk_fab_offset'] + 0.3
     p1s_L = 2
     # pin 1 markers
-    kicad_mod.append(PolygoneLine(
-        polygone=[
+    kicad_mod.append(PolygonLine(
+        polygon=[
             {'x': body_edge['left'] - p1s_off, 'y': body_edge['top'] + p1s_L},
             {'x': body_edge['left'] - p1s_off, 'y': body_edge['top'] - p1s_off},
             {'x': x1, 'y': body_edge['top'] - p1s_off}
@@ -164,7 +161,7 @@ def generate_one_footprint(pincount, configuration):
         {'y': body_edge['top'] + sl/sqrt(2), 'x': 0},
         {'y': body_edge['top'], 'x': sl/2}
     ]
-    kicad_mod.append(PolygoneLine(polygone=poly_pin1_marker, layer='F.Fab', width=fab_w))
+    kicad_mod.append(PolygonLine(polygon=poly_pin1_marker, layer='F.Fab', width=fab_w))
 
     ########################### CrtYd #################################
     cx1 = roundToBase(body_edge['left']-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
@@ -182,7 +179,7 @@ def generate_one_footprint(pincount, configuration):
         courtyard={'top':cy1, 'bottom':cy2}, fp_name=footprint_name, text_y_inside_position='bottom')
 
     ##################### Output and 3d model ############################
-    model3d_path_prefix = configuration.get('3d_model_prefix','${KISYS3DMOD}/')
+    model3d_path_prefix = configuration.get('3d_model_prefix','${KICAD8_3DMODEL_DIR}/')
 
     lib_name = configuration['lib_name_format_string'].format(series=series, man=manufacturer)
     model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}.wrl'.format(
@@ -201,7 +198,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='use confing .yaml files to create footprints.')
     parser.add_argument('--global_config', type=str, nargs='?', help='the config file defining how the footprint will look like. (KLC)', default='../../tools/global_config_files/config_KLCv3.0.yaml')
     parser.add_argument('--series_config', type=str, nargs='?', help='the config file defining series parameters.', default='../conn_config_KLCv3.yaml')
-    parser.add_argument('--kicad4_compatible', action='store_true', help='Create footprints kicad 4 compatible')
     args = parser.parse_args()
 
     with open(args.global_config, 'r') as config_stream:
@@ -215,8 +211,6 @@ if __name__ == "__main__":
             configuration.update(yaml.safe_load(config_stream))
         except yaml.YAMLError as exc:
             print(exc)
-
-    configuration['kicad4_compatible'] = args.kicad4_compatible
 
     for pincount in pinrange:
         generate_one_footprint(pincount, configuration)

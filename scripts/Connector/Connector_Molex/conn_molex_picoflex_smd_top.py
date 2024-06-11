@@ -62,13 +62,11 @@ def generate_one_footprint(pins, configuration):
         mpn=mpn, num_rows=number_of_rows, pins_per_row=pins//2, mounting_pad = "",
         pitch=pitch, orientation=orientation_str)
 
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, FootprintType.SMD)
     kicad_mod.setDescription("Molex {:s}, {:s}, {:d} Pins ({:s}), generated with kicad-footprint-generator".format(series_long, mpn, pins, datasheet))
     kicad_mod.setTags(configuration['keyword_fp_string'].format(series=series,
         orientation=orientation_str, man=manufacturer,
         entry=configuration['entry_direction'][orientation]))
-
-    kicad_mod.setAttribute('smd')
 
     #
     # Draw all graphical objects
@@ -141,8 +139,8 @@ def generate_one_footprint(pins, configuration):
     y1 = 0 - HalfBodyHeight
     x2 = x1
     y2 = y1 + BodyHeight
-    kicad_mod.append(PolygoneLine(
-        polygone=[[round(x1, 2), round(y1, 2)], [round(x2, 2), round(y2, 2)]],
+    kicad_mod.append(PolygonLine(
+        polygon=[[round(x1, 2), round(y1, 2)], [round(x2, 2), round(y2, 2)]],
         layer='F.Fab', width=configuration['fab_line_width']))
     #
     # Bottom line to bottom drill hole
@@ -150,8 +148,8 @@ def generate_one_footprint(pins, configuration):
     y1 = y2
     x2 = GuideHoleX1 + (GuideHoleDrillSize / 2)
     y2 = y2
-    kicad_mod.append(PolygoneLine(
-        polygone=[[round(x1, 2), round(y1, 2)], [round(x2, 2), round(y2, 2)]],
+    kicad_mod.append(PolygonLine(
+        polygon=[[round(x1, 2), round(y1, 2)], [round(x2, 2), round(y2, 2)]],
         layer='F.Fab', width=configuration['fab_line_width']))
     # Arc around bottom drill hole
     ccx = GuideHoleX1
@@ -166,29 +164,29 @@ def generate_one_footprint(pins, configuration):
     y1 = GuideHoleY2 - (GuideHoleDrillSize / 2) - 0.17
     x2 = x1
     y2 = 0 - (HalfAllPadsHeight - (PadHeight / 2))
-    kicad_mod.append(PolygoneLine(
-        polygone=[[round(x1, 2), round(y1, 2)], [round(x2, 2), round(y2, 2)]],
+    kicad_mod.append(PolygonLine(
+        polygon=[[round(x1, 2), round(y1, 2)], [round(x2, 2), round(y2, 2)]],
         layer='F.Fab', width=configuration['fab_line_width']))
     x1 = x2
     y1 = y2
     x2 = x1 + (PadHeight / 2)
     y2 = y2 - (PadHeight / 2)
-    kicad_mod.append(PolygoneLine(
-        polygone=[[round(x1, 2), round(y1, 2)], [round(x2, 2), round(y2, 2)]],
+    kicad_mod.append(PolygonLine(
+        polygon=[[round(x1, 2), round(y1, 2)], [round(x2, 2), round(y2, 2)]],
         layer='F.Fab', width=configuration['fab_line_width']))
     x1 = x2
     y1 = y2
     x2 = x1 - (PadHeight / 2)
     y2 = y2 - (PadHeight / 2)
-    kicad_mod.append(PolygoneLine(
-        polygone=[[round(x1, 2), round(y1, 2)], [round(x2, 2), round(y2, 2)]],
+    kicad_mod.append(PolygonLine(
+        polygon=[[round(x1, 2), round(y1, 2)], [round(x2, 2), round(y2, 2)]],
         layer='F.Fab', width=configuration['fab_line_width']))
     x1 = x2
     y1 = y2
     x2 = x1
     y2 = GuideHoleY1 + (GuideHoleDrillSize / 2) + 0.17
-    kicad_mod.append(PolygoneLine(
-        polygone=[[round(x1, 2), round(y1, 2)], [round(x2, 2), round(y2, 2)]],
+    kicad_mod.append(PolygonLine(
+        polygon=[[round(x1, 2), round(y1, 2)], [round(x2, 2), round(y2, 2)]],
         layer='F.Fab', width=configuration['fab_line_width']))
 
     # Arc around top drill hole
@@ -204,8 +202,8 @@ def generate_one_footprint(pins, configuration):
     y1 = 0 - HalfBodyHeight
     x2 = GuideHoleX1 + (GuideHoleDrillSize / 2) + 0.02
     y2 = y1
-    kicad_mod.append(PolygoneLine(
-        polygone=[[round(x1, 2), round(y1, 2)], [round(x2, 2), round(y2, 2)]],
+    kicad_mod.append(PolygonLine(
+        polygon=[[round(x1, 2), round(y1, 2)], [round(x2, 2), round(y2, 2)]],
         layer='F.Fab', width=configuration['fab_line_width']))
 
     #
@@ -216,20 +214,20 @@ def generate_one_footprint(pins, configuration):
     y1 = 0 - HalfBodyHeight - 0.13
     x2 = x1
     y2 = 0 - ((HalfAllPadsHeight - pitch) + (PadHeight / 2) + 0.3)
-    kicad_mod.append(PolygoneLine(
-        polygone=[[round(x1, 2), round(y1, 2)], [round(x2, 2), round(y2, 2)]],
+    kicad_mod.append(PolygonLine(
+        polygon=[[round(x1, 2), round(y1, 2)], [round(x2, 2), round(y2, 2)]],
         layer='F.SilkS', width=configuration['silk_line_width']))
     y1 = 0 - ((HalfAllPadsHeight - pitch) - (PadHeight / 2) - 0.4)
     y2 = 0 - ((HalfAllPadsHeight - (3 *pitch)) + (PadHeight / 2) + 0.4)
-    kicad_mod.append(PolygoneLine(
-        polygone=[[round(x1, 2), round(y1, 2)], [round(x2, 2), round(y2, 2)]],
+    kicad_mod.append(PolygonLine(
+        polygon=[[round(x1, 2), round(y1, 2)], [round(x2, 2), round(y2, 2)]],
         layer='F.SilkS', width=configuration['silk_line_width']))
     if (pins > 3):
         for halfpins in range(int((pins / 2)) - 2):
             y1 = y1 + (2 * pitch)
             y2 = y2 + (2 * pitch)
-            kicad_mod.append(PolygoneLine(
-                polygone=[[round(x1, 2), round(y1 + 0.06, 2)],
+            kicad_mod.append(PolygonLine(
+                polygon=[[round(x1, 2), round(y1 + 0.06, 2)],
                     [round(x2, 2), round(y2 - 0.06, 2)]],
                 layer='F.SilkS', width=configuration['silk_line_width']))
 
@@ -237,8 +235,8 @@ def generate_one_footprint(pins, configuration):
     y1 = HalfAllPadsHeight + (PadHeight / 2) + 0.3
     x2 = HalfBodyWidth + 0.13
     y2 = HalfBodyHeight + 0.13
-    kicad_mod.append(PolygoneLine(
-        polygone=[[round(x1, 2), round(y1, 2)], [round(x2, 2), round(y2, 2)]],
+    kicad_mod.append(PolygonLine(
+        polygon=[[round(x1, 2), round(y1, 2)], [round(x2, 2), round(y2, 2)]],
         layer='F.SilkS', width=configuration['silk_line_width']))
     #
     # Bottom line to bottom drill hole
@@ -246,8 +244,8 @@ def generate_one_footprint(pins, configuration):
     y1 = y2
     x2 = GuideHoleX1 + (GuideHoleDrillSize / 2) + 0.1
     y2 = y2
-    kicad_mod.append(PolygoneLine(
-        polygone=[[round(x1, 2), round(y1, 2)], [round(x2, 2), round(y2, 2)]],
+    kicad_mod.append(PolygonLine(
+        polygon=[[round(x1, 2), round(y1, 2)], [round(x2, 2), round(y2, 2)]],
         layer='F.SilkS', width=configuration['silk_line_width']))
     # Arc around bottom drill hole
     ccx = GuideHoleX1
@@ -263,21 +261,21 @@ def generate_one_footprint(pins, configuration):
     x2 = x1
     y2 = y1 - 0.5
     y2 = HalfAllPadsHeight - pitch + (PadHeight / 2) + 0.3
-    kicad_mod.append(PolygoneLine(
-        polygone=[[round(x1, 2), round(y1, 2)], [round(x2, 2), round(y2, 2)]],
+    kicad_mod.append(PolygonLine(
+        polygon=[[round(x1, 2), round(y1, 2)], [round(x2, 2), round(y2, 2)]],
         layer='F.SilkS', width=configuration['silk_line_width']))
     y1 = ((HalfAllPadsHeight - pitch) - (PadHeight / 2) - 0.4)
     y2 = ((HalfAllPadsHeight - (3 *pitch)) + (PadHeight / 2) + 0.4)
-    kicad_mod.append(PolygoneLine(
-        polygone=[[round(x1, 2), round(y1, 2)], [round(x2, 2), round(y2, 2)]],
+    kicad_mod.append(PolygonLine(
+        polygon=[[round(x1, 2), round(y1, 2)], [round(x2, 2), round(y2, 2)]],
         layer='F.SilkS', width=configuration['silk_line_width']))
     # Add small lines between pads
     if (pins > 3):
         for halfpins in range(int((pins / 2)) - 2):
             y1 = y1 - (2 * pitch)
             y2 = y2 - (2 * pitch)
-            kicad_mod.append(PolygoneLine(
-                polygone=[[round(x1, 2), round(y1 + 0.06, 2)],
+            kicad_mod.append(PolygonLine(
+                polygon=[[round(x1, 2), round(y1 + 0.06, 2)],
                     [round(x2, 2), round(y2 - 0.06, 2)]],
                 layer='F.SilkS', width=configuration['silk_line_width']))
 
@@ -295,15 +293,15 @@ def generate_one_footprint(pins, configuration):
     yyy1 = csy
     xxx2 = xxx1
     yyy2 = 0 - (HalfAllPadsHeight + (PadHeight / 2) + 0.3)
-    kicad_mod.append(PolygoneLine(
-        polygone=[[round(xxx1, 2), round(yyy1, 2)], [round(xxx2, 2), round(yyy2, 2)]],
+    kicad_mod.append(PolygonLine(
+        polygon=[[round(xxx1, 2), round(yyy1, 2)], [round(xxx2, 2), round(yyy2, 2)]],
         layer='F.SilkS', width=configuration['silk_line_width']))
     xxx1 = xxx2
     yyy1 = yyy2
     xxx2 = 0 - (HalfAllPadsWidth + (PadWidth / 2))
     yyy2 = yyy1
-    kicad_mod.append(PolygoneLine(
-        polygone=[[round(xxx1, 2), round(yyy1, 2)], [round(xxx2, 2), round(yyy2, 2)]],
+    kicad_mod.append(PolygonLine(
+        polygon=[[round(xxx1, 2), round(yyy1, 2)], [round(xxx2, 2), round(yyy2, 2)]],
         layer='F.SilkS', width=configuration['silk_line_width']))
     #
     kicad_mod.append(Arc(
@@ -314,8 +312,8 @@ def generate_one_footprint(pins, configuration):
     y1 = 0 - HalfBodyHeight - 0.13
     x2 = GuideHoleX1 + (GuideHoleDrillSize / 2) + 0.13
     y2 = y1
-    kicad_mod.append(PolygoneLine(
-        polygone=[[round(x1, 2), round(y1, 2)], [round(x2, 2), round(y2, 2)]],
+    kicad_mod.append(PolygonLine(
+        polygon=[[round(x1, 2), round(y1, 2)], [round(x2, 2), round(y2, 2)]],
         layer='F.SilkS', width=configuration['silk_line_width']))
 
     #
@@ -326,7 +324,7 @@ def generate_one_footprint(pins, configuration):
 #        y1 = 0 - HalfAllPadsHeight - 1
 #        x2 = x1
 #        y2 = round(y1 + 3, 0)
-#        kicad_mod.append(PolygoneLine(polygone=[[round(x1, 2), round(y1, 2)],        [round(x2, 2),        round(y2, 2)]],        layer='F.SilkS', width=configuration['silk_line_width']))
+#        kicad_mod.append(PolygonLine(polygon=[[round(x1, 2), round(y1, 2)],        [round(x2, 2),        round(y2, 2)]],        layer='F.SilkS', width=configuration['silk_line_width']))
 
     #
     # Add the keep out area
@@ -337,7 +335,7 @@ def generate_one_footprint(pins, configuration):
     y2 = y1 + KeepOutAreaHeight
     kicad_mod.append(RectLine(start=[round(x1, 2), round(y1, 2)],
         end=[round(x2, 2), round(y2, 2)], layer='Dwgs.User', width=0.1))
-    kicad_mod.append(Text(type='user', text='KEEPOUT',
+    kicad_mod.append(Text(text='KEEPOUT',
         at=[0,0], rotation=90,
         layer='Cmts.User'))
     x1 = 0 - (KeepOutAreaWidth / 2)
@@ -361,8 +359,8 @@ def generate_one_footprint(pins, configuration):
             x2 = (KeepOutAreaWidth / 2)
             y2 = y1 - KeepOutAreaWidth
         if (x1 < (KeepOutAreaWidth / 2)):
-            kicad_mod.append(PolygoneLine(
-                polygone=[[round(x1, 2), round(yy1, 2)],
+            kicad_mod.append(PolygonLine(
+                polygon=[[round(x1, 2), round(yy1, 2)],
                     [round(x2, 2), round(y2, 2)]],
                 layer='Dwgs.User',width=0.1))
 
@@ -383,7 +381,7 @@ def generate_one_footprint(pins, configuration):
         fp_name=footprint_name, text_y_inside_position='left')
 
     ##################### Output and 3d model ############################
-    model3d_path_prefix = configuration.get('3d_model_prefix','${KISYS3DMOD}/')
+    model3d_path_prefix = configuration.get('3d_model_prefix','${KICAD8_3DMODEL_DIR}/')
 
     lib_name = configuration['lib_name_format_string'].format(series=series, man=manufacturer)
     model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}.wrl'.format(

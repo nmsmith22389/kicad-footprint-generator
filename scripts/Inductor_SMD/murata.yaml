@@ -1,0 +1,11 @@
+- series: DFE2016
+  manufacturer: Murata
+  csv: murata_dfe2016.csv
+  datasheet: "https://www.murata.com/~/media/webrenewal/products/inductor/chip/tokoproducts/wirewoundmetalalloychiptype/m_dfe201610p.ashx"
+  3d:
+    type: 2 # best effort, these parts are more like chip resistors
+  tags:
+    - power
+    - chip
+    - flatwire
+  library_name: Inductor_SMD

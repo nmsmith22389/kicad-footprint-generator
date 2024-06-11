@@ -38,14 +38,14 @@ class Vector2D(object):
         # parse constructor
         if coordinates is None:
             coordinates = {}
-        elif type(coordinates) in [int, float]:
+        elif isinstance(coordinates, (float, int)):
             if y is not None:
                 coordinates = [coordinates, y]
             else:
                 raise TypeError('you have to give x and y coordinate')
         elif isinstance(coordinates, Vector2D):
             # convert Vector2D as well as Vector3D to dict
-            coordinates = coordinates.__dict__()
+            coordinates = coordinates.to_dict()
 
         # parse vectors with format: Vector2D({'x':0, 'y':0})
         if type(coordinates) is dict:
@@ -72,11 +72,13 @@ class Vector2D(object):
 
         >>> from KicadModTree import *
         >>> Vector2D(0.1234, 0.5678).round_to(0.01)
+        >>> # or
+        >>> Vector3D(0.123, 0.456, 0.789).round_to(0.01)
         """
         if base == 0 or base is None:
             return self.__copy__()
 
-        return Vector2D([round(v / base) * base for v in self])
+        return self.__class__([round(v / base) * base for v in self])
 
     def distance_to(self, value):
         r"""Distance between this and another point
@@ -140,6 +142,9 @@ class Vector2D(object):
         return Vector2D({'x': self.x * other.x,
                          'y': self.y * other.y})
 
+    def __rmul__(self, other):
+        return Vector2D.__mul__(self, other)
+
     def __div__(self, value):
         other = Vector2D.__arithmetic_parse(value)
 
@@ -149,7 +154,13 @@ class Vector2D(object):
     def __truediv__(self, obj):
         return self.__div__(obj)
 
-    def __dict__(self):
+    def min(self, other):
+        return Vector2D(*[min(*v) for v in zip(self, other)])
+
+    def max(self, other):
+        return Vector2D(*[max(*v) for v in zip(self, other)])
+
+    def to_dict(self):
         return {'x': self.x, 'y': self.y}
 
     def render(self, formatcode):
@@ -161,10 +172,10 @@ class Vector2D(object):
                                  y=formatFloat(self.y))
 
     def __repr__(self):
-        return "Vector2D (x={x}, y={y})".format(**self.__dict__())
+        return "Vector2D (x={x}, y={y})".format(**self.to_dict())
 
     def __str__(self):
-        return "(x={x}, y={y})".format(**self.__dict__())
+        return "(x={x}, y={y})".format(**self.to_dict())
 
     def __getitem__(self, key):
         if key == 0 or key == 'x':
@@ -228,13 +239,64 @@ class Vector2D(object):
         op = Vector2D(origin)
 
         diff = self - op
-        radius = hypot(diff.x, diff.y)
-
-        angle = atan2(diff.y, diff.x)
-        if use_degrees:
-            angle = degrees(angle)
+        radius = diff.norm()
+        angle = diff.arg(use_degrees)
 
         return (radius, angle)
+
+    def norm(self):
+        """
+        Calculate the length (cartesian norm) of a vector
+        """
+        return hypot(*self)
+
+    def arg(self, use_degrees=True):
+        """
+        Calculate the angle of a vector
+
+        Args:
+            use_degrees: angle in degrees (default: True)
+
+        Returns:
+            angle of the vector
+        """
+        phi = atan2(self.y, self.x)
+        if use_degrees:
+            phi = degrees(phi)
+        return phi
+
+    def inner(self, other):
+        """
+        Calculate the inner product of a vector with ``other``
+        """
+        return sum(s * o for s, o in zip(self, other))
+
+    def orthogonal(self):
+        """
+        Calculate the orthogonal onto a vector
+        """
+        return Vector2D(-self.y, self.x)
+
+    def is_nullvec(self, tol: float = 1e-7):
+        """
+        Check if a vector is the null-vector (up to tol)
+
+        Args:
+            tol: minimum length to be considered as null vector
+        """
+        return Vector2D.norm(self) < tol
+
+    def normalize(self, tol: float = 1e-7):
+        """
+        Normalize a vector (scale it to unit length)
+
+        Args:
+            tol: minimum length to be considered as null vector
+        """
+        norm = self.norm()
+        if norm > tol:
+            self /= norm
+        return self
 
     @staticmethod
     def from_polar(radius, angle, origin=(0, 0), use_degrees=True):
@@ -242,7 +304,7 @@ class Vector2D(object):
 
         :params:
             * *radius* (``float``)
-                lenght of the vector
+                length of the vector
             * *angle* (``float``)
                 angle of the vector
             * *origin* (``Vector2D``)
@@ -307,7 +369,7 @@ class Vector3D(Vector2D):
                 raise TypeError('you have to give at least x and y coordinate')
         elif isinstance(coordinates, Vector2D):
             # convert Vector2D as well as Vector3D to dict
-            coordinates = coordinates.__dict__()
+            coordinates = coordinates.to_dict()
 
         # parse vectors with format: Vector2D({'x':0, 'y':0})
         if type(coordinates) is dict:
@@ -334,20 +396,6 @@ class Vector3D(Vector2D):
 
         else:
             raise TypeError('dict or list type required')
-
-    def round_to(self, base):
-        r"""Round to a specific base (like it's required for a grid)
-
-        :param base: base we want to round to
-        :return: rounded point
-
-        >>> from KicadModTree import *
-        >>> Vector3D(0.123, 0.456, 0.789).round_to(0.01)
-        """
-        if base == 0 or base is None:
-            return self.__copy__()
-
-        return Vector3D([round(v / base) * base for v in self])
 
     def cross_product(self, other):
         other = Vector3D.__arithmetic_parse(other)
@@ -431,7 +479,7 @@ class Vector3D(Vector2D):
     def __truediv__(self, obj):
         return self.__div__(obj)
 
-    def __dict__(self):
+    def to_dict(self):
         return {'x': self.x, 'y': self.y, 'z': self.z}
 
     def render(self, formatcode):
@@ -444,10 +492,10 @@ class Vector3D(Vector2D):
                                  z=formatFloat(self.z))
 
     def __repr__(self):
-        return "Vector3D (x={x}, y={y}, z={z})".format(**self.__dict__())
+        return "Vector3D (x={x}, y={y}, z={z})".format(**self.to_dict())
 
     def __str__(self):
-        return "(x={x}, y={y}, z={z})".format(**self.__dict__())
+        return "(x={x}, y={y}, z={z})".format(**self.to_dict())
 
     def __getitem__(self, key):
         if key == 0 or key == 'x':

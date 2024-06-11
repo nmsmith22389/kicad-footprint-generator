@@ -16,7 +16,7 @@ sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))  # load parent p
 from footprint_text_fields import addTextFields
 from footprint_keepout_area import addRectangularKeepout
 
-series = ""
+series = 'FH12'
 series_long = 'FH12, FFC/FPC connector'
 manufacturer = 'Hirose'
 orientation = 'H'
@@ -57,16 +57,15 @@ def generate_one_footprint(pins, configuration):
     off = configuration['silk_fab_offset']
     # handle arguments
     orientation_str = configuration['orientation_options'][orientation]
-    footprint_name = configuration['fp_name_format_string'].format(man=manufacturer,
+    footprint_name = configuration['fp_name_no_series_format_string'].format(man=manufacturer,
         series=series,
         mpn=mpn, num_rows=number_of_rows, pins_per_row=pins, mounting_pad = "-1MP",
         pitch=pitch, orientation=orientation_str)
 
     footprint_name = footprint_name.replace("__",'_')
 
-    kicad_mod = Footprint(footprint_name)
-    kicad_mod.setAttribute('smd')
-    kicad_mod.setDescription("Hirose {:s}, {:s}, {:d} Pins per row ({:s}), generated with kicad-footprint-generator".format(series_long, mpn, pins_per_row, datasheet))
+    kicad_mod = Footprint(footprint_name, FootprintType.SMD)
+    kicad_mod.setDescription("{:s} {:s}, {:s}, {:d} Pins per row ({:s}), generated with kicad-footprint-generator".format(manufacturer, series_long, mpn, pins_per_row, datasheet))
     kicad_mod.setTags(configuration['keyword_fp_string'].format(series=series,
         orientation=orientation_str, man=manufacturer,
         entry=configuration['entry_direction'][orientation]))
@@ -123,11 +122,11 @@ def generate_one_footprint(pins, configuration):
         {'x': body_edge['left'] + hatch_reduced_width/2, 'y':  body_edge['bottom']},
         {'x': 0, 'y':  body_edge['bottom']}
     ]
-    kicad_mod.append(PolygoneLine(
-        polygone=poly_outline,
+    kicad_mod.append(PolygonLine(
+        polygon=poly_outline,
         layer='F.Fab', width=configuration['fab_line_width']))
-    kicad_mod.append(PolygoneLine(
-        polygone=poly_outline, x_mirror = 0.0000000001,
+    kicad_mod.append(PolygonLine(
+        polygon=poly_outline, x_mirror = 0.0000000001,
         layer='F.Fab', width=configuration['fab_line_width']))
 
     #line offset
@@ -143,24 +142,24 @@ def generate_one_footprint(pins, configuration):
     silk_pad_x_left = -A/2 - pad_size[0]/2 - pad_silk_off
     silk_mp_top = mpad_y - mp_size[1]/2 - pad_silk_off
     silk_mp_bottom = mpad_y + mp_size[1]/2 + pad_silk_off
-    kicad_mod.append(PolygoneLine(
-        polygone=[
+    kicad_mod.append(PolygonLine(
+        polygon=[
             {'x': silk_pad_x_left,'y':y1},
             {'x': x1,'y':y1},
             {'x': x1,'y':silk_mp_top}
         ],
         layer='F.SilkS', width=configuration['silk_line_width']))
 
-    kicad_mod.append(PolygoneLine(
-        polygone=[
+    kicad_mod.append(PolygonLine(
+        polygon=[
             {'x': -silk_pad_x_left,'y':y1},
             {'x': x2,'y':y1},
             {'x': x2,'y':silk_mp_top}
         ],
         layer='F.SilkS', width=configuration['silk_line_width']))
 
-    kicad_mod.append(PolygoneLine(
-        polygone=[
+    kicad_mod.append(PolygonLine(
+        polygon=[
             {'x': x1,'y':silk_mp_bottom},
             {'x': x1,'y':y2},
             {'x': x2,'y':y2},
@@ -181,8 +180,8 @@ def generate_one_footprint(pins, configuration):
         {'y': body_edge['top'] + sl/sqrt(2), 'x': -A/2},
         {'y': body_edge['top'], 'x': -A/2+sl/2}
     ]
-    kicad_mod.append(PolygoneLine(polygone=pin,
-        width=configuration['fab_line_width'], layer='F.Fab'))
+    kicad_mod.append(PolygonLine(polygon=pin,
+                                 width=configuration['fab_line_width'], layer='F.Fab'))
 
 
     ########################### KEEPOUT #################################
@@ -208,7 +207,7 @@ def generate_one_footprint(pins, configuration):
         courtyard={'top':cy1, 'bottom':cy2}, fp_name=footprint_name, text_y_inside_position='bottom')
 
     ##################### Output and 3d model ############################
-    model3d_path_prefix = configuration.get('3d_model_prefix','${KISYS3DMOD}/')
+    model3d_path_prefix = configuration.get('3d_model_prefix','${KICAD8_3DMODEL_DIR}/')
 
 
     if lib_by_conn_category:

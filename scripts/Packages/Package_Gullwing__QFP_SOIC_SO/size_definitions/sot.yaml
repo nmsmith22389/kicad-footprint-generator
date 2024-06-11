@@ -1,0 +1,72 @@
+FileHeader:
+  library_Suffix: 'TO_SOT_SMD'
+  device_type: 'SOT'
+
+SOT-23:
+  size_source: 'https://www.jedec.org/system/files/docs/to-236h.pdf variant AB'
+  custom_name_format: 'SOT-23'
+  body_size_x: 1.20 .. 1.30 .. 1.40
+  body_size_y: 2.8 .. 2.9 .. 3.04
+  overall_size_x: 2.10 .. 2.64
+  lead_width: 0.3 .. 0.5
+  lead_len: 0.40 .. 0.50 .. 0.6
+  pitch: 0.95
+  num_pins_x: 0
+  num_pins_y: 3
+  deleted_pins: [2, 4, 6]
+
+SOT-23-3:
+  size_source: 'https://www.jedec.org/sites/default/files/docs/Mo-178D.PDF inferred 3-pin variant'
+  # this is not a JEDEC part, but that does not stop manufacturers from creating a 1.6mm body-width SOT-23
+  # so here we are, creating a part based on JEDEC, but with just 3 pins.
+  # examples for parts that use this
+  # https://www.diodes.com/assets/Datasheets/AP2127.pdf (AP2127N3-xx)
+  # https://www.richtek.com/assets/product_file/RT9058/DS9058-02.pdf
+  # https://www.torexsemi.com/file/SOT-23/SOT-23-pkg.pdf
+  custom_name_format: 'SOT-23-3'
+  body_size_x: 1.6
+  body_size_y: 2.9
+  overall_size_x: 2.8
+  lead_width: 0.3 .. 0.5
+  lead_len: 0.3 .. 0.45 .. 0.6
+  pitch: 0.95
+  num_pins_x: 0
+  num_pins_y: 3
+  deleted_pins: [2, 4, 6]
+
+SOT-23-5:
+  size_source: 'https://www.jedec.org/sites/default/files/docs/Mo-178c.PDF variant AA'
+  custom_name_format: 'SOT-23-5'
+  body_size_x: 1.6
+  body_size_y: 2.9
+  overall_size_x: 2.8
+  lead_width: 0.3 .. 0.5
+  lead_len: 0.3 .. 0.45 .. 0.6
+  pitch: 0.95
+  num_pins_x: 0
+  num_pins_y: 3
+  deleted_pins: [5]
+
+SOT-23-6:
+  size_source: 'https://www.jedec.org/sites/default/files/docs/Mo-178c.PDF variant AB'
+  custom_name_format: 'SOT-23-6'
+  body_size_x: 1.6
+  body_size_y: 2.9
+  overall_size_x: 2.8
+  lead_width: 0.3 .. 0.5
+  lead_len: 0.3 .. 0.45 .. 0.6
+  pitch: 0.95
+  num_pins_x: 0
+  num_pins_y: 3
+  
+SOT-23-8:
+  size_source: 'https://www.jedec.org/sites/default/files/docs/Mo-178c.PDF variant BA'
+  custom_name_format: 'SOT-23-8'
+  body_size_x: 1.6
+  body_size_y: 2.9
+  overall_size_x: 2.8
+  lead_width: 0.22 .. 0.38
+  lead_len: 0.3 .. 0.45 .. 0.6
+  pitch: 0.65
+  num_pins_x: 0
+  num_pins_y: 4

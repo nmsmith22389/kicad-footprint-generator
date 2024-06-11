@@ -26,7 +26,7 @@ from drawing_tools import *
 #
 # This library choose to use the prefix "Conn_DIN41612_", because Din 41612 is
 # more common term.
-# METHOD and further are ommited, because the footprint is suited for
+# METHOD and further are omitted, because the footprint is suited for
 # soldering and press fit.
 #
 # It includes half and third sized connectors, that are not part of IEC 60603
@@ -111,7 +111,7 @@ def BFemale(size, pin_cb, more_description):
 		num_rows=2, pins_per_row=pin_count//2, orientation=ORIENTATION['V'])
 
 	# init kicad footprint
-	kicad_mod = Footprint(footprint_name)
+	kicad_mod = Footprint(footprint_name, FootprintType.THT)
 	size_descs = ["B", "B/2", "B/3"]
 	kicad_mod.setDescription("DIN 41612 connector, type " + size_descs[size] + ", vertical, " + str(cols) + " pins wide, 2 rows" + more_description)
 	kicad_mod.setTags("DIN 41512 IEC 60603 " + size_descs[size])
@@ -156,20 +156,21 @@ def BFemale(size, pin_cb, more_description):
 		[mid_x - outer_width/2 - 0.2,  0.0],
 	]
 
-	kicad_mod.append(PolygoneLine(
-		polygone=jack_notch_left + jack_notch_right + [jack_notch_left[0]],
+	kicad_mod.append(PolygonLine(
+		polygon=jack_notch_left + jack_notch_right + [jack_notch_left[0]],
 		layer='F.Fab'))
-	kicad_mod.append(PolygoneLine(
-		polygone=pin_a1_arrow,
+	kicad_mod.append(PolygonLine(
+		polygon=pin_a1_arrow,
 		width=0.12,
 		layer='F.Fab'))
 	kicad_mod.append(Text(
-		type='value', text=footprint_name,
+		name=Property.VALUE,
+		text=footprint_name,
 		at=[mid_x, mid_y + outer_length/2 + 1.3],
 		layer='F.Fab'))
 	# Very small Reference Designator to fit between the pins.
 	kicad_mod.append(Text(
-		type='user', text='%R',
+		text='${REFERENCE}',
 		at=[mid_x, mid_y],
 		size=[0.6, 0.6], thickness=0.07,
 		layer='F.Fab'))
@@ -182,27 +183,27 @@ def BFemale(size, pin_cb, more_description):
 		end=[mid_x + outer_width/2 + 0.1, mid_y + outer_length/2 + 0.1],
 		width=0.15,
 		layer='F.SilkS'))
-	kicad_mod.append(PolygoneLine(
-		polygone=jack_notch_left,
+	kicad_mod.append(PolygonLine(
+		polygon=jack_notch_left,
 		width=0.15,
 		layer='F.SilkS'))
-	kicad_mod.append(PolygoneLine(
-		polygone=jack_notch_right,
+	kicad_mod.append(PolygonLine(
+		polygon=jack_notch_right,
 		width=0.15,
 		layer='F.SilkS'))
-	kicad_mod.append(PolygoneLine(
-		polygone=pin_a1_arrow,
+	kicad_mod.append(PolygonLine(
+		polygon=pin_a1_arrow,
 		width=0.12,
 		layer='F.SilkS'))
-	kicad_mod.append(Text(
-		type='reference', text='REF**',
+	kicad_mod.append(Property(
+		name=Property.REFERENCE, text='REF**',
 		at=[mid_x, mid_y - outer_length/2 - 1],
 		layer='F.SilkS'))
 
 	# ------ 3D reference ------
 	# in case someone wants to make a model
 	kicad_mod.append(Model(
-		filename="${KISYS3DMOD}/Connectors_IEC_DIN.3dshapes/" + footprint_name + ".wrl",
+		filename="${KICAD8_3DMODEL_DIR}/Connectors_IEC_DIN.3dshapes/" + footprint_name + ".wrl",
 		at=[0, 0, 0], scale=[1, 1, 1], rotate=[0, 0, 0]))
 
 	# ------ Output ------
@@ -250,7 +251,7 @@ def BMale(size, pin_cb, more_description):
 		num_rows=2, pins_per_row=pin_count//2, orientation=ORIENTATION['H'])
 
 	# init kicad footprint
-	kicad_mod = Footprint(footprint_name)
+	kicad_mod = Footprint(footprint_name, FootprintType.THT)
 	size_descs = ["B", "B/2", "B/3"]
 	kicad_mod.setDescription("DIN 41612 connector, type " + size_descs[size] + ", horizontal, " + str(cols) + " pins wide, 2 rows" + more_description)
 	kicad_mod.setTags("DIN 41512 IEC 60603 " + size_descs[size])
@@ -308,33 +309,33 @@ def BMale(size, pin_cb, more_description):
 		[-pin_pad/2 - 0.5 - 0.6, 0.3],
 		[-pin_pad/2 - 0.5 - 0.0, 0.0]
 	]
-	kicad_mod.append(PolygoneLine(
-		polygone=silkscreen_left,
+	kicad_mod.append(PolygonLine(
+		polygon=silkscreen_left,
 		width=0.15,
 		layer='F.SilkS'))
-	kicad_mod.append(PolygoneLine(
-		polygone=silkscreen_right,
+	kicad_mod.append(PolygonLine(
+		polygon=silkscreen_right,
 		width=0.15,
 		layer='F.SilkS'))
-	kicad_mod.append(PolygoneLine(
-		polygone=pin_a1_arrow,
+	kicad_mod.append(PolygonLine(
+		polygon=pin_a1_arrow,
 		width=0.12,
 		layer='F.SilkS'))
-	kicad_mod.append(Text(
-		type='reference', text='REF**',
+	kicad_mod.append(Property(
+		name=Property.REFERENCE, text='REF**',
 		at=[mid_x - npth_step * 0.5, row_step * 0.5],
 		layer='F.SilkS'))
 
 	# ------ Fabrication layer ------
-	kicad_mod.append(PolygoneLine(
-		polygone = package_outline + [package_outline[0]],
+	kicad_mod.append(PolygonLine(
+		polygon = package_outline + [package_outline[0]],
 		layer = 'F.Fab'))
-	kicad_mod.append(Text(
-		type='value', text=footprint_name,
+	kicad_mod.append(Property(
+		name=Property.VALUE, text=footprint_name,
 		at=[mid_x, npth_y + jack_to_npth - 1.3],
 		layer='F.Fab'))
 	kicad_mod.append(Text(
-		type='user', text='%R',
+		text='${REFERENCE}',
 		at=[mid_x, npth_y],
 		size=[1, 1], thickness=0.15,
 		layer='F.Fab'))
@@ -356,8 +357,8 @@ def BMale(size, pin_cb, more_description):
 		[(cols - 1) * col_step + pin_pad/2 + 0.5, package_outline[ 1][1] + 0.5],
 		[(cols - 1) * col_step + pin_pad/2 + 0.5, row_step + pin_pad/2 + 0.5],
 	]
-	kicad_mod.append(PolygoneLine(
-		polygone = courtyard + [courtyard[0]],
+	kicad_mod.append(PolygonLine(
+		polygon = courtyard + [courtyard[0]],
 		layer = 'F.CrtYd'))
 
 	# ------ Board edge ------
@@ -371,8 +372,8 @@ def BMale(size, pin_cb, more_description):
 		end = [mid_x, -board_edge_to_a - 0.1],
 		width = 0.1,
 		layer = 'Cmts.User'))
-	kicad_mod.append(PolygoneLine(
-		polygone = [
+	kicad_mod.append(PolygonLine(
+		polygon = [
 			[mid_x - 0.2, -board_edge_to_a - 0.6],
 			[mid_x, -board_edge_to_a - 0.1],
 			[mid_x + 0.2, -board_edge_to_a - 0.6],
@@ -380,7 +381,7 @@ def BMale(size, pin_cb, more_description):
 		width = 0.1,
 		layer = 'Cmts.User'))
 	kicad_mod.append(Text(
-		type='user', text='Board edge',
+		text='Board edge',
 		at=[mid_x, -board_edge_to_a - 2],
 		size=[0.7, 0.7], thickness=0.1,
 		layer='Cmts.User'))
@@ -388,7 +389,7 @@ def BMale(size, pin_cb, more_description):
 	# ------ 3D reference ------
 	# in case someone wants to make a model
 	kicad_mod.append(Model(
-		filename="{prefix}{lib_name}.3dshapes/{fp_name}.wrl".format(prefix = '${KISYS3DMOD}/', lib_name=LIBRARY_NAME, fp_name=footprint_name),
+		filename="{prefix}{lib_name}.3dshapes/{fp_name}.wrl".format(prefix = '${KICAD8_3DMODEL_DIR}/', lib_name=LIBRARY_NAME, fp_name=footprint_name),
 		at=[0, 0, 0], scale=[1, 1, 1], rotate=[0, 0, 0]))
 
 	# ------ Output ------

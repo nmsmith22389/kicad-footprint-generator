@@ -72,14 +72,11 @@ def generate_one_footprint(pins, configuration):
         mpn=mpn, num_rows=number_of_rows, pins_per_row=pins_per_row, mounting_pad = "-1MP",
         pitch=pitch, orientation=orientation_str)
 
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, FootprintType.SMD)
     kicad_mod.setDescription("Molex {:s}, {:s} (compatible alternatives: {:s}), {:d} Pins per row ({:s}), generated with kicad-footprint-generator".format(series_long, mpn, ', '.join(alt_mpn), pins_per_row, datasheet))
     kicad_mod.setTags(configuration['keyword_fp_string'].format(series=series,
         orientation=orientation_str, man=manufacturer,
         entry=configuration['entry_direction'][orientation]))
-
-
-    kicad_mod.setAttribute('smd')
 
     # Calculate dimensions
     if (pins < 4):
@@ -166,7 +163,7 @@ def generate_one_footprint(pins, configuration):
         points.append([roundToBase(x1, grid), roundToBase(y1, grid)])
         #
         if (i == 1): # SilkS
-            kicad_mod.append(PolygoneLine(polygone=points, layer=Layer, width=LineWidth))
+            kicad_mod.append(PolygonLine(polygon=points, layer=Layer, width=LineWidth))
             #
             # Need to do something ugly here, becosue we will do points = []
             # We need to reflect these points already here
@@ -174,7 +171,7 @@ def generate_one_footprint(pins, configuration):
             points2 = []
             for pp in points:
                 points2.append([-pp[0], pp[1]])
-            kicad_mod.append(PolygoneLine(polygone=points2, layer=Layer, width=LineWidth))
+            kicad_mod.append(PolygonLine(polygon=points2, layer=Layer, width=LineWidth))
             #
             #
             points = []
@@ -247,9 +244,9 @@ def generate_one_footprint(pins, configuration):
 
         #
         #
-        kicad_mod.append(PolygoneLine(polygone=points, layer=Layer, width=LineWidth))
+        kicad_mod.append(PolygonLine(polygon=points, layer=Layer, width=LineWidth))
         #
-        kicad_mod.append(PolygoneLine(polygone=points2, layer=Layer, width=LineWidth))
+        kicad_mod.append(PolygonLine(polygon=points2, layer=Layer, width=LineWidth))
 
     ######################### Text Fields ###############################
     cy1 = roundToBase(body_edge['top']-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
@@ -260,7 +257,7 @@ def generate_one_footprint(pins, configuration):
         courtyard={'top':cy1, 'bottom':cy2}, fp_name=footprint_name, text_y_inside_position='top')
 
     ##################### Output and 3d model ############################
-    model3d_path_prefix = configuration.get('3d_model_prefix','${KISYS3DMOD}/')
+    model3d_path_prefix = configuration.get('3d_model_prefix','${KICAD8_3DMODEL_DIR}/')
 
     lib_name = configuration['lib_name_format_string'].format(series=series, man=manufacturer)
     model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}.wrl'.format(

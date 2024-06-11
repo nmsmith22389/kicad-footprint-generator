@@ -16,11 +16,17 @@
 # (C) 2017 by @SchrodingersGat
 # (C) 2017 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 
+from typing import List
+
+from types import GeneratorType
+from collections import namedtuple
 from KicadModTree.nodes.base.Pad import *
 from KicadModTree.nodes.specialized.ChamferedPad import *
 from KicadModTree.nodes.Node import Node
 
 from KicadModTree.util.paramUtil import *
+
+ApplyOverrideResult = namedtuple('ApplyOverrideResult', ['number', 'position', 'parameters'])
 
 
 class PadArray(Node):
@@ -74,11 +80,14 @@ class PadArray(Node):
         * *end_pads_size_reduction* (``dict with keys x-,x+,y-,y+``) --
           size is reduced on the given side. (size reduced plus center moved.)
         * *tht_pad1_shape* (``Pad.SHAPE_RECT``, ``Pad.SHAPE_ROUNDRECT``, ...) --
-          shape for marking pad 1 for through hole components. (deafult: ``Pad.SHAPE_ROUNDRECT``)
+          shape for marking pad 1 for through hole components. (default: ``Pad.SHAPE_ROUNDRECT``)
         * *tht_pad1_id* (``int, string``) --
           pad number used for "pin 1" (default: 1)
-        * *exclude_pin_list* (``int, Vector1D``) --
-          which pin number should be skipped"
+        * *hidden_pins* (``int, Vector1D``) --
+          pin number(s) to be skipped; a footprint with hidden pins has missing pads and matching pin numbers
+        * *deleted_pins* (``int, Vector1D``) --
+          pin locations(s) to be skipped; a footprint with deleted pins has pads missing but no missing pin numbers"
+
 
     :Example:
 
@@ -104,15 +113,21 @@ class PadArray(Node):
         if type(self.pincount) is not int or self.pincount <= 0:
             raise ValueError('{pc} is an invalid value for pincount'.format(pc=self.pincount))
 
+        if kwargs.get('hidden_pins') and kwargs.get('deleted_pins'):
+            raise KeyError('hidden pins and deleted pins cannot be used together')
+
         self.exclude_pin_list = []
-        if kwargs.get('exclude_pin_list'):
-            self.exclude_pin_list = kwargs.get('exclude_pin_list')
+        if kwargs.get('hidden_pins'):
+            # exclude_pin_list is for pads being removed based on pad number
+            # deleted pins are filtered out later by pad location (not number)
+            self.exclude_pin_list = kwargs.get('hidden_pins')
+
             if type(self.exclude_pin_list) not in [list, tuple]:
                 raise TypeError('exclude pin list must be specified like "exclude_pin_list=[0,1]"')
             elif any([type(i) not in [int] for i in self.exclude_pin_list]):
                 raise ValueError('exclude pin list must be integer value')
 
-    # Where to start the aray
+    # Where to start the array
     def _initStartingPosition(self, **kwargs):
         """
         can use the 'start' argument to start a pad array at a given position
@@ -169,7 +184,7 @@ class PadArray(Node):
             self.spacing = kwargs.get('spacing')
             if type(self.spacing) not in [list, tuple]:
                 raise TypeError('spacing must be specified like "spacing=[0,1]"')
-            elif len(self.spacing) is not 2:
+            elif len(self.spacing) != 2:
                 raise ValueError('spacing must be supplied as x,y pair')
             elif any([type(i) not in [int, float] for i in self.spacing]):
                 raise ValueError('spacing must be numerical value')
@@ -189,6 +204,78 @@ class PadArray(Node):
         if all([i == 0 for i in self.spacing]):
             raise ValueError('pad spacing ({sp}) must be non-zero'.format(sp=self.spacing))
 
+    def _applyOverrides(self,
+                        pad_number: int,
+                        pad_position,
+                        pad_parameters,
+                        pad_overrides) -> ApplyOverrideResult:
+        """
+        Apply pad overrides to the current pad position and parameters.
+        """
+        # No overrides? Just return input
+        if pad_overrides is None:
+            return ApplyOverrideResult(pad_number, pad_position, pad_parameters)
+
+        # Check if pad number is in dictionary
+        this_pad_override = pad_overrides.overrides.get(pad_number)
+
+        # No overrides for this pad? Just return input
+        if this_pad_override is None:
+            return ApplyOverrideResult(pad_number, pad_position, pad_parameters)
+
+        #
+        # Copy input variables
+        # (to avoid changing the outer state)
+        #
+        pad_position = list(pad_position)  # copy
+        pad_parameters = dict(pad_parameters)
+        # Not all parameters are deep copyable,
+        # so we only copy what might change
+        if isinstance(pad_parameters["size"], list):
+            pad_parameters["size"] = \
+                list(pad_parameters["size"])
+
+        # Apply relative move:
+        # {'pad_override': {1: {"move": [0.1, 0.0]}}}
+        if this_pad_override.move:
+            if this_pad_override.move[0] is not None:
+                pad_position[0] += this_pad_override.move[0]
+            if this_pad_override.move[1] is not None:
+                pad_position[1] += this_pad_override.move[1]
+
+        # Apply "absolute" position transformation ("set position")
+        # {'pad_override': {1: {"at": [0.1, 0.0]}}}
+        # Any of the coordinates can be set to None to ignore that coordinate.
+        if this_pad_override.at:
+            if this_pad_override.at[0] is not None:
+                pad_position[0] = this_pad_override.at[0]
+            if this_pad_override.at[1] is not None:
+                pad_position[1] = this_pad_override.at[1]
+
+        # Apply "size_increase" relative size change
+        # {'pad_override': {1: {"size_increase": [0.1, -0.5]}}}
+        if this_pad_override.size_increase:
+            if this_pad_override.size_increase[0] is not None:
+                pad_parameters['size'][0] += this_pad_override.size_increase[0]
+            if this_pad_override.size_increase[1] is not None:
+                pad_parameters['size'][1] += this_pad_override.size_increase[1]
+
+        # Apply "size" absolute override
+        # {'pad_override': {1: {"size": [1.5, 0.7]}}}
+        # Any of the coordinates can be set to None to ignore that coordinate.
+        if this_pad_override.size:
+            if this_pad_override.size[0] is not None:
+                pad_parameters['size'][0] = this_pad_override.size[0]
+            if this_pad_override.size[1] is not None:
+                pad_parameters['size'][1] = this_pad_override.size[1]
+
+        # Apply "number" override
+        # {'pad_override': {1: {"override_numbers": "B6"}}}
+        # Pleeease use this only as a way of last resort :-)
+        pad_number = this_pad_override.override_number or pad_number
+
+        return ApplyOverrideResult(pad_number, pad_position, pad_parameters)
+
     def _createPads(self, **kwargs):
 
         pads = []
@@ -202,14 +289,16 @@ class PadArray(Node):
         # this can be used for creating an array with all the same pad number
         if self.increment == 0:
             pad_numbers = [self.initialPin] * self.pincount
-        elif type(self.increment) == int:
+        elif isinstance(self.increment, int):
             pad_numbers = range(self.initialPin, self.initialPin + (self.pincount * self.increment), self.increment)
         elif callable(self.increment):
             pad_numbers = [self.initialPin]
             for idx in range(1, self.pincount):
                 pad_numbers.append(self.increment(pad_numbers[-1]))
+        elif isinstance(self.increment, GeneratorType):
+            pad_numbers = [next(self.increment) for i in range(self.pincount)]
         else:
-            raise TypeError("Wrong type for increment. It must be either a int or callable.")
+            raise TypeError("Wrong type for increment. It must be either a int, callable or generator.")
 
         end_pad_params = copy(kwargs)
         if kwargs.get('end_pads_size_reduction'):
@@ -231,10 +320,18 @@ class PadArray(Node):
             delta_pos = Vector2D(0, 0)
 
         for i, number in enumerate(pad_numbers):
-            includePad = (i + self.initialPin) not in self.exclude_pin_list
-            for exi in self.exclude_pin_list:
-                if (i + self.initialPin) == exi:
-                    includePad = False
+            includePad = True
+
+            # deleted pins are filtered by pad/pin position (they are 'None' in pad_numbers list)
+            if not isinstance(number, (int, str)):
+                includePad = False
+
+            # hidden pins are filtered out by pad number (index of pad_numbers list)
+            if not kwargs.get('deleted_pins'):
+                if isinstance(self.initialPin, int):
+                    includePad = (self.initialPin + i) not in self.exclude_pin_list
+                else:
+                    includePad = number is not None and number not in self.exclude_pin_list
 
             if includePad:
                 current_pad_pos = Vector2D(
@@ -253,26 +350,47 @@ class PadArray(Node):
                         current_pad_params['maximum_radius'] = 0.25
                 else:
                     current_pad_params['shape'] = padShape
+
+                pad_params_with_override = self._applyOverrides(
+                    number, current_pad_pos, current_pad_params,
+                    kwargs.get("pad_overrides")
+                )
+
                 if kwargs.get('chamfer_size'):
                     if i == 0 and 'chamfer_corner_selection_first' in kwargs:
                         pads.append(
                             ChamferedPad(
-                                number=number, at=current_pad_pos,
+                                number=pad_params_with_override.number,
+                                at=pad_params_with_override.position,
                                 corner_selection=kwargs.get('chamfer_corner_selection_first'),
-                                **current_pad_params
+                                **pad_params_with_override.parameters
                                 ))
                         continue
                     if i == len(pad_numbers)-1 and 'chamfer_corner_selection_last' in kwargs:
                         pads.append(
                             ChamferedPad(
-                                number=number, at=current_pad_pos,
+                                number=pad_params_with_override.number,
+                                at=pad_params_with_override.position,
                                 corner_selection=kwargs.get('chamfer_corner_selection_last'),
-                                **current_pad_params
+                                **pad_params_with_override.parameters
                                 ))
                         continue
-                pads.append(Pad(number=number, at=current_pad_pos, **current_pad_params))
+
+                pads.append(Pad(number=pad_params_with_override.number,
+                                at=pad_params_with_override.position,
+                                **pad_params_with_override.parameters))
 
         return pads
 
     def getVirtualChilds(self):
         return self.virtual_childs
+
+
+def get_pad_radius_from_arrays(pad_arrays: List[PadArray]) -> float:
+    pad_radius = 0.0
+    for pa in pad_arrays:
+        if (pad_radius == 0.0):
+            pads = pa.getVirtualChilds()
+            if (len(pads)):
+                pad_radius = pads[0].getRoundRadius()
+    return pad_radius

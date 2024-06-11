@@ -1,0 +1,12 @@
+- series: MDA
+  manufacturer: KOHERelec
+  # Datasheet for MDA7030 series, I don't know if there is an overarching datasheet for more MDA series
+  datasheet: "https://www.lcsc.com/datasheet/lcsc_datasheet_2401252310_KOHERelec-MDA7030-220M_C2847487.pdf"
+  csv: koherelec_mda.csv
+  3d:
+    type: 2
+  tags:
+    - high-current
+    - power
+    - shielded
+  library_name: Inductor_SMD

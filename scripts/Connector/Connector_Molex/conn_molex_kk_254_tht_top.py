@@ -38,7 +38,7 @@ number_of_rows = 1
 datasheet = 'http://www.molex.com/pdm_docs/sd/022272021_sd.pdf'
 
 pitch = 2.54
-drill = 1.2 # square pins:0.64mm -> touching circle: ~0.9mm -> minimum drill accourding to KLC: 1.1mm
+drill = 1.19 # from datasheet
 start_pos_x = 0 # Where should pin 1 be located.
 pad_to_pad_clearance = 0.8
 max_annular_ring = 0.5 #How much copper should be in y direction?
@@ -69,7 +69,7 @@ def generate_one_footprint(pincount, configuration):
         mpn=mpn, num_rows=number_of_rows, pins_per_row=pincount, mounting_pad = "",
         pitch=pitch, orientation=orientation_str)
 
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, FootprintType.THT)
     descr_format_str = "Molex {:s}, old/engineering part number: {:s} example for new part number: {:s}, {:d} Pins ({:s}), generated with kicad-footprint-generator"
     kicad_mod.setDescription(descr_format_str.format(series_long, mpn, new_mpn, pincount, datasheet))
     kicad_mod.setTags(configuration['keyword_fp_string'].format(series=series,
@@ -97,10 +97,7 @@ def generate_one_footprint(pincount, configuration):
     #                     drill=drill, layers=Pad.LAYERS_THT))
 
     optional_pad_params = {}
-    if configuration['kicad4_compatible']:
-        optional_pad_params['tht_pad1_shape'] = Pad.SHAPE_RECT
-    else:
-        optional_pad_params['tht_pad1_shape'] = Pad.SHAPE_ROUNDRECT
+    optional_pad_params['tht_pad1_shape'] = Pad.SHAPE_ROUNDRECT
 
     kicad_mod.append(PadArray(initial=1, start=[start_pos_x, 0],
         x_spacing=pitch, pincount=pincount,
@@ -126,21 +123,21 @@ def generate_one_footprint(pincount, configuration):
         {'x': body_edge['left'] + sl/sqrt(2), 'y': 0},
         {'x': body_edge['left'], 'y': sl/2}
     ]
-    kicad_mod.append(PolygoneLine(polygone=poly_pin1_marker, layer='F.Fab', width=fab_w))
+    kicad_mod.append(PolygonLine(polygon=poly_pin1_marker, layer='F.Fab', width=fab_w))
 
     yr1=body_edge['bottom']+nudge
     yr2 = yr1 - 1
     yr3 = yr2 - 0.53
     if pincount <= 6:
         # one ramp
-        kicad_mod.append(PolygoneLine(polygone=[[start_pos_x, yr1], [start_pos_x, yr2],\
-            [end_pos_x, yr2], [end_pos_x, yr1]], layer='F.SilkS', width=silk_w))
-        kicad_mod.append(PolygoneLine(polygone=[[start_pos_x, yr2], [start_pos_x+0.25, yr3],\
-            [end_pos_x-0.25, yr3], [end_pos_x, yr2] ],layer='F.SilkS', width=silk_w))
-        kicad_mod.append(PolygoneLine(polygone=[[start_pos_x+0.25, yr1],\
-            [start_pos_x+0.25, yr2]], layer='F.SilkS', width=silk_w))
-        kicad_mod.append(PolygoneLine(polygone=[[end_pos_x-0.25, yr1],\
-            [end_pos_x-0.25, yr2]], layer='F.SilkS', width=silk_w))
+        kicad_mod.append(PolygonLine(polygon=[[start_pos_x, yr1], [start_pos_x, yr2], \
+                                               [end_pos_x, yr2], [end_pos_x, yr1]], layer='F.SilkS', width=silk_w))
+        kicad_mod.append(PolygonLine(polygon=[[start_pos_x, yr2], [start_pos_x + 0.25, yr3], \
+                                               [end_pos_x-0.25, yr3], [end_pos_x, yr2]], layer='F.SilkS', width=silk_w))
+        kicad_mod.append(PolygonLine(polygon=[[start_pos_x + 0.25, yr1], \
+                                               [start_pos_x+0.25, yr2]], layer='F.SilkS', width=silk_w))
+        kicad_mod.append(PolygonLine(polygon=[[end_pos_x - 0.25, yr1], \
+                                               [end_pos_x-0.25, yr2]], layer='F.SilkS', width=silk_w))
 
     else:
         # two ramps
@@ -161,13 +158,13 @@ def generate_one_footprint(pincount, configuration):
             {'x': start_pos_x+0.25, 'y': yr2}
         ]
 
-        kicad_mod.append(PolygoneLine(polygone=poly1, layer='F.SilkS', width=silk_w))
-        kicad_mod.append(PolygoneLine(polygone=poly2, layer='F.SilkS', width=silk_w))
-        kicad_mod.append(PolygoneLine(polygone=poly3, layer='F.SilkS', width=silk_w))
+        kicad_mod.append(PolygonLine(polygon=poly1, layer='F.SilkS', width=silk_w))
+        kicad_mod.append(PolygonLine(polygon=poly2, layer='F.SilkS', width=silk_w))
+        kicad_mod.append(PolygonLine(polygon=poly3, layer='F.SilkS', width=silk_w))
 
-        kicad_mod.append(PolygoneLine(polygone=poly1, x_mirror=centre_x, layer='F.SilkS', width=silk_w))
-        kicad_mod.append(PolygoneLine(polygone=poly2, x_mirror=centre_x, layer='F.SilkS', width=silk_w))
-        kicad_mod.append(PolygoneLine(polygone=poly3, x_mirror=centre_x, layer='F.SilkS', width=silk_w))
+        kicad_mod.append(PolygonLine(polygon=poly1, x_mirror=centre_x, layer='F.SilkS', width=silk_w))
+        kicad_mod.append(PolygonLine(polygon=poly2, x_mirror=centre_x, layer='F.SilkS', width=silk_w))
+        kicad_mod.append(PolygonLine(polygon=poly3, x_mirror=centre_x, layer='F.SilkS', width=silk_w))
 
     for i in range(0, pincount):
         middle_x = start_pos_x + i * pitch
@@ -175,8 +172,8 @@ def generate_one_footprint(pincount, configuration):
         end_x = middle_x + 1.6/2
         y1 = body_edge['top'] - nudge
         y2 = y1 + 0.6
-        kicad_mod.append(PolygoneLine(polygone=[[start_x, y1], [start_x, y2],\
-            [end_x, y2], [end_x, y1]], layer='F.SilkS', width=silk_w))
+        kicad_mod.append(PolygonLine(polygon=[[start_x, y1], [start_x, y2], \
+                                               [end_x, y2], [end_x, y1]], layer='F.SilkS', width=silk_w))
 
     ########################### CrtYd #################################
     cx1 = roundToBase(body_edge['left']-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
@@ -194,7 +191,7 @@ def generate_one_footprint(pincount, configuration):
         courtyard={'top':cy1, 'bottom':cy2}, fp_name=footprint_name, text_y_inside_position='top')
 
     ##################### Output and 3d model ############################
-    model3d_path_prefix = configuration.get('3d_model_prefix','${KISYS3DMOD}/')
+    model3d_path_prefix = configuration.get('3d_model_prefix','${KICAD8_3DMODEL_DIR}/')
 
     lib_name = configuration['lib_name_format_string'].format(series=series, man=manufacturer)
     model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}.wrl'.format(
@@ -213,7 +210,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='use confing .yaml files to create footprints.')
     parser.add_argument('--global_config', type=str, nargs='?', help='the config file defining how the footprint will look like. (KLC)', default='../../tools/global_config_files/config_KLCv3.0.yaml')
     parser.add_argument('--series_config', type=str, nargs='?', help='the config file defining series parameters.', default='../conn_config_KLCv3.yaml')
-    parser.add_argument('--kicad4_compatible', action='store_true', help='Create footprints kicad 4 compatible')
     args = parser.parse_args()
 
     with open(args.global_config, 'r') as config_stream:
@@ -227,8 +223,6 @@ if __name__ == "__main__":
             configuration.update(yaml.safe_load(config_stream))
         except yaml.YAMLError as exc:
             print(exc)
-
-    configuration['kicad4_compatible'] = args.kicad4_compatible
 
     for pincount in range(2, 17):
         generate_one_footprint(pincount, configuration)

@@ -74,7 +74,7 @@ def make_module(pins_per_row, configuration):
 
     footprint_name = footprint_name.replace("__",'_')
 
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, FootprintType.THT)
     kicad_mod.setDescription("Molex {:s}, {:s}, {:d} Circuits ({:s}), generated with kicad-footprint-generator".format(series_long, mpn, pins_per_row, datasheet))
     kicad_mod.setTags(configuration['keyword_fp_string'].format(series=series,
         orientation=orientation_str, man=manufacturer,
@@ -102,10 +102,7 @@ def make_module(pins_per_row, configuration):
 
     ############################## Pins ###############################
     optional_pad_params = {}
-    if configuration['kicad4_compatible']:
-        optional_pad_params['tht_pad1_shape'] = Pad.SHAPE_RECT
-    else:
-        optional_pad_params['tht_pad1_shape'] = Pad.SHAPE_ROUNDRECT
+    optional_pad_params['tht_pad1_shape'] = Pad.SHAPE_ROUNDRECT
 
     for row_idx in range(2):
         kicad_mod.append(PadArray(
@@ -143,10 +140,10 @@ def make_module(pins_per_row, configuration):
             {'x': body_edge['right']-T, 'y': YCb},
             {'x': body_edge['right']-T, 'y': A/2},
         ])
-    kicad_mod.append(PolygoneLine(polygone=poly_silk_b,
-        layer="F.SilkS", width=configuration['silk_line_width']))
-    kicad_mod.append(PolygoneLine(polygone=poly_silk_b, y_mirror=A/2,
-        layer="F.SilkS", width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(polygon=poly_silk_b,
+                                 layer="F.SilkS", width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(polygon=poly_silk_b, y_mirror=A / 2,
+                                 layer="F.SilkS", width=configuration['silk_line_width']))
 
 
     if pin_center_silk_y == 0:
@@ -193,10 +190,10 @@ def make_module(pins_per_row, configuration):
             {'x': x2, 'y':YCb},
             {'x': x2, 'y':YBb+pin_w/2}
         ]
-        kicad_mod.append(PolygoneLine(polygone=poly,
-            layer="F.SilkS", width=configuration['silk_line_width']))
-        kicad_mod.append(PolygoneLine(polygone=poly, y_mirror=A/2,
-            layer="F.SilkS", width=configuration['silk_line_width']))
+        kicad_mod.append(PolygonLine(polygon=poly,
+                                     layer="F.SilkS", width=configuration['silk_line_width']))
+        kicad_mod.append(PolygonLine(polygon=poly, y_mirror=A / 2,
+                                     layer="F.SilkS", width=configuration['silk_line_width']))
 
 
     #pins
@@ -215,23 +212,23 @@ def make_module(pins_per_row, configuration):
                     {'x': x2, 'y': ypc+pin_w/2},
                     {'x': x1, 'y': ypc+pin_w/2}
                 ]
-                kicad_mod.append(PolygoneLine(polygone=pin_poly,
-                    layer="F.SilkS", width=configuration['silk_line_width']))
+                kicad_mod.append(PolygonLine(polygon=pin_poly,
+                                             layer="F.SilkS", width=configuration['silk_line_width']))
 
     ########################### Pin 1 #################################
 
     p1s_sl = 2
     p1s_off = off + 0.3
-    kicad_mod.append(PolygoneLine(
-        polygone=[
+    kicad_mod.append(PolygonLine(
+        polygon=[
             {'x': body_edge['left'] + p1s_sl, 'y': body_edge['top'] - p1s_off},
             {'x': body_edge['left'] - p1s_off, 'y': body_edge['top'] - p1s_off},
             {'x': body_edge['left'] - p1s_off, 'y': body_edge['top'] + p1s_sl}
         ], layer="F.SilkS", width=configuration['silk_line_width']))
 
     p1f_sl = 1
-    kicad_mod.append(PolygoneLine(
-        polygone=[
+    kicad_mod.append(PolygonLine(
+        polygon=[
             {'x': body_edge['left'], 'y': p1f_sl/2},
             {'x': body_edge['left'] + p1f_sl/sqrt(2), 'y': 0},
             {'x': body_edge['left'], 'y': -p1f_sl/2}
@@ -253,7 +250,7 @@ def make_module(pins_per_row, configuration):
         courtyard={'top':cy1, 'bottom':cy2}, fp_name=footprint_name, text_y_inside_position='bottom')
 
     ##################### Output and 3d model ############################
-    model3d_path_prefix = configuration.get('3d_model_prefix','${KISYS3DMOD}/')
+    model3d_path_prefix = configuration.get('3d_model_prefix','${KICAD8_3DMODEL_DIR}/')
 
 
     lib_name = configuration['lib_name_format_string'].format(series=series, man=manufacturer)
@@ -274,7 +271,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='use confing .yaml files to create footprints.')
     parser.add_argument('--global_config', type=str, nargs='?', help='the config file defining how the footprint will look like. (KLC)', default='../../tools/global_config_files/config_KLCv3.0.yaml')
     parser.add_argument('--series_config', type=str, nargs='?', help='the config file defining series parameters.', default='../conn_config_KLCv3.yaml')
-    parser.add_argument('--kicad4_compatible', action='store_true', help='Create footprints kicad 4 compatible')
     args = parser.parse_args()
 
     with open(args.global_config, 'r') as config_stream:
@@ -288,8 +284,6 @@ if __name__ == "__main__":
             configuration.update(yaml.safe_load(config_stream))
         except yaml.YAMLError as exc:
             print(exc)
-
-    configuration['kicad4_compatible'] = args.kicad4_compatible
 
     for pins_per_row in pins_per_row_range:
         make_module(pins_per_row, configuration)

@@ -2,8 +2,49 @@ FileHeader:
   library_Suffix: 'QFP'
   device_type: 'PQFP'
 
-PQFP_100:
+PQFP-32_5x5mm_P0.5mm:
+  size_source: 'https://www.ti.com/lit/ds/symlink/ads127l01.pdf#page=87'
+  body_size_x: 4.95 .. 5.05
+  body_size_y: 4.95 .. 5.05
+  overall_size_x: 6.9 .. 7.1
+  overall_size_y: 6.9 .. 7.1
+  lead_width: 0.17 .. 0.23
+  lead_len: 0.4 .. 0.7
+  pitch: 0.5
+  num_pins_x: 8
+  num_pins_y: 8
+
+PQFP-64_14x14mm_P0.5mm:
+  size_source: 'https://www.renesas.com/us/en/document/psc/package-drawing-qfp-64pin-prqp0064gb'
+  body_size_x:
+    nominal: 14
+  body_size_y:
+    nominal: 14
+  overall_size_x:
+    minimum: 16.9
+    nominal: 17.2
+    maximum: 17.5
+  overall_size_y:
+    minimum: 16.9
+    nominal: 17.2
+    maximum: 17.5
+  overall_height:
+    maximum: 3.05
+  lead_width:
+    minimum: 0.29
+    nominal: 0.37
+    maximum: 0.45
+  lead_len:
+    minimum: 0.5
+    nominal: 0.8
+    maximum: 1.1
+  pitch: 0.8
+  num_pins_x: 16
+  num_pins_y: 16
+
+PQFP-100_14x20mm_P0.65mm:
   size_source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
+  force_small_pitch_ipc_definition: True
   body_size_x:
     nominal: 14
     tolerance: 0
@@ -28,8 +69,9 @@ PQFP_100:
   num_pins_x: 20
   num_pins_y: 30
 
-PQFP_144:
+PQFP-144_28x28mm_P0.65mm:
   size_source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
+  force_small_pitch_ipc_definition: True
   body_size_x:
     nominal: 28
   body_size_y:
@@ -48,8 +90,9 @@ PQFP_144:
   num_pins_x: 36
   num_pins_y: 36
 
-PQFP_160:
+PQFP-160_28x28mm_P0.65mm:
   size_source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
+  force_small_pitch_ipc_definition: True
   body_size_x:
     nominal: 28
   body_size_y:
@@ -67,6 +110,35 @@ PQFP_160:
   pitch: 0.65
   num_pins_x: 40
   num_pins_y: 40
+
+PQFP-168_28x28mm_P0.65mm:
+  size_source: 'https://www.renesas.cn/cn/zh/document/psc/package-drawing-qfp-168pin-prqp0168jb'
+  force_small_pitch_ipc_definition: True
+  body_size_x:
+    nominal: 28
+  body_size_y:
+    nominal: 28
+  overall_size_x:
+    minimum: 31
+    nominal: 31.2
+    maximum: 31.4
+  overall_size_y:
+    minimum: 31
+    nominal: 31.2
+    maximum: 31.4
+  overall_height:
+    maximum: 3.56
+  lead_width:
+    minimum: 0.24
+    nominal: 0.32
+    maximum: 0.4
+  lead_len:
+    minimum: 0.6
+    nominal: 0.8
+    maximum: 1
+  pitch: 0.65
+  num_pins_x: 42
+  num_pins_y: 42
 
 PQFP_208:
   size_source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'

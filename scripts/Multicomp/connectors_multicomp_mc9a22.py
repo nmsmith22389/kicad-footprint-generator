@@ -26,8 +26,8 @@ kicad_mod.setDescription('http://www.farnell.com/cad/360651.pdf')
 kicad_mod.setTags('connector multicomp MC9A MC9A22')
 
 # set general values
-kicad_mod.addText('reference', 'REF**', {'x':start_pos_x-3, 'y':-15}, 'F.SilkS')
-kicad_mod.addText('value', footprint_name, {'x':end_pos_x/2., 'y':-5.5}, 'F.Fab')
+kicad_mod.append(Property(name=Property.REFERENCE, 'REF**', {'x':start_pos_x-3, 'y':-15}, 'F.SilkS'))
+kicad_mod.append(Property(name=Property.VALUE, footprint_name, {'x':end_pos_x/2., 'y':-5.5}, 'F.Fab'))
 
 # create Silkscreen
 
@@ -38,14 +38,14 @@ kicad_mod.addRectLine({'x':start_pos_x-3.87-1.2, 'y':-pad_spacing-1.8}, {'x':end
 
 # slot(s)
 def draw_pin_silk(slot_pin_x):
-    kicad_mod.addPolygoneLine([{'x':slot_pin_x-0.4, 'y':-pad_spacing-1.8-8.9+6.6}
+    kicad_mod.addPolygonLine([{'x':slot_pin_x-0.4, 'y':-pad_spacing-1.8-8.9+6.6}
                               ,{'x':slot_pin_x-0.4, 'y':-pad_spacing-1.8-8.5}
                               ,{'x':slot_pin_x-0.2, 'y':-pad_spacing-1.8-8.7}
                               ,{'x':slot_pin_x+0.2, 'y':-pad_spacing-1.8-8.7}
                               ,{'x':slot_pin_x+0.4, 'y':-pad_spacing-1.8-8.5}
                               ,{'x':slot_pin_x+0.4, 'y':-pad_spacing-1.8-8.9+6.6}], 'F.SilkS', 0.15)
-                              
-kicad_mod.addPolygoneLine([{'x':((start_pos_x+end_pos_x)/2)-4.45/2, 'y':-pad_spacing-1.8-8.9}
+
+kicad_mod.addPolygonLine([{'x':((start_pos_x+end_pos_x)/2)-4.45/2, 'y':-pad_spacing-1.8-8.9}
                           ,{'x':((start_pos_x+end_pos_x)/2)-4.45/2, 'y':-pad_spacing-1.8-8.9+6.6}
                           ,{'x':((start_pos_x+end_pos_x)/2)+4.45/2, 'y':-pad_spacing-1.8-8.9+6.6}
                           ,{'x':((start_pos_x+end_pos_x)/2)+4.45/2, 'y':-pad_spacing-1.8-8.9}], 'F.SilkS', 0.15)
@@ -57,31 +57,31 @@ if pincount%4 != 0:
 else:
     slot_pin_x = start_pos_x+((int)(pincount/4-1)*pad_spacing)
     draw_pin_silk(slot_pin_x)
-    
+
     slot_pin_x = start_pos_x+((int)(pincount/4)*pad_spacing)
     draw_pin_silk(slot_pin_x)
-    
+
     if pincount >= 60:
         slot_pin_x = start_pos_x+((int)(pincount/4-1-4)*pad_spacing)
         draw_pin_silk(slot_pin_x)
-        
+
         slot_pin_x = start_pos_x+((int)(pincount/4+4)*pad_spacing)
         draw_pin_silk(slot_pin_x)
-    
+
 
 if pincount >= 60:
-    kicad_mod.addPolygoneLine([{'x':((start_pos_x+end_pos_x)/2)-4.45/2-7.3, 'y':-pad_spacing-1.8-8.9}
+    kicad_mod.addPolygonLine([{'x':((start_pos_x+end_pos_x)/2)-4.45/2-7.3, 'y':-pad_spacing-1.8-8.9}
                               ,{'x':((start_pos_x+end_pos_x)/2)-4.45/2-7.3, 'y':-pad_spacing-1.8-8.9+6.6}
                               ,{'x':((start_pos_x+end_pos_x)/2)-4.45/2-7.3-4.1, 'y':-pad_spacing-1.8-8.9+6.6}
                               ,{'x':((start_pos_x+end_pos_x)/2)-4.45/2-7.3-4.1, 'y':-pad_spacing-1.8-8.9}], 'F.SilkS', 0.15)
-  
-    kicad_mod.addPolygoneLine([{'x':((start_pos_x+end_pos_x)/2)+4.45/2+7.3, 'y':-pad_spacing-1.8-8.9}
+
+    kicad_mod.addPolygonLine([{'x':((start_pos_x+end_pos_x)/2)+4.45/2+7.3, 'y':-pad_spacing-1.8-8.9}
                               ,{'x':((start_pos_x+end_pos_x)/2)+4.45/2+7.3, 'y':-pad_spacing-1.8-8.9+6.6}
                               ,{'x':((start_pos_x+end_pos_x)/2)+4.45/2+7.3+4.1, 'y':-pad_spacing-1.8-8.9+6.6}
                               ,{'x':((start_pos_x+end_pos_x)/2)+4.45/2+7.3+4.1, 'y':-pad_spacing-1.8-8.9}], 'F.SilkS', 0.15)
 
 # triangle which is pointing at 1
-kicad_mod.addPolygoneLine([{'x':start_pos_x-1, 'y':-12.5}
+kicad_mod.addPolygonLine([{'x':start_pos_x-1, 'y':-12.5}
                           ,{'x':start_pos_x+1, 'y':-12.5}
                           ,{'x':start_pos_x, 'y':-11}
                           ,{'x':start_pos_x-1, 'y':-12.5}], 'F.SilkS', 0.15)
@@ -105,10 +105,10 @@ for pad_number in range(1, pincount, 2):
         kicad_mod.addPad(pad_number, 'thru_hole', 'circle', {'x':pad_pos_x, 'y':0}, pad_size, pad_diameter, ['*.Cu', '*.Mask', 'F.SilkS'])
 
     kicad_mod.addPad(pad_number+1, 'thru_hole', 'circle', {'x':pad_pos_x, 'y':-pad_spacing}, pad_size, pad_diameter, ['*.Cu', '*.Mask', 'F.SilkS'])
-    
+
     kicad_mod.addLine({'x':pad_pos_x-0.4, 'y':-1.1}, {'x':pad_pos_x-0.4, 'y':-pad_spacing+1.1}, 'F.SilkS', 0.15)
     kicad_mod.addLine({'x':pad_pos_x+0.4, 'y':-1.1}, {'x':pad_pos_x+0.4, 'y':-pad_spacing+1.1}, 'F.SilkS', 0.15)
-    
+
     kicad_mod.addLine({'x':pad_pos_x-0.4, 'y':-pad_spacing-1.1}, {'x':pad_pos_x-0.4, 'y':-pad_spacing-1.8}, 'F.SilkS', 0.15)
     kicad_mod.addLine({'x':pad_pos_x+0.4, 'y':-pad_spacing-1.1}, {'x':pad_pos_x+0.4, 'y':-pad_spacing-1.8}, 'F.SilkS', 0.15)
 

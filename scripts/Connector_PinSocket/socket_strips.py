@@ -4,7 +4,8 @@
 # Parts script module for socket strip footprints for KicCad
 #
 # This script is built on top of the kicad-footprint-generator framework
-# by Thomas Pointhuber, https://github.com/pointhi/kicad-footprint-generator
+# by Thomas Pointhuber,
+# https://gitlab.com/kicad/libraries/kicad-footprint-generator
 #
 # This module is free software: you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as published by
@@ -31,7 +32,7 @@ import os
 
 sys.path.append(os.path.dirname(os.path.realpath(__file__)) + "/../..")
 
-from KicadModTree import Footprint, Translation, Pad, Model, KicadFileHandler
+from KicadModTree import Footprint, FootprintType, Translation, Pad, Model, KicadFileHandler, Property
 from canvas import Layer, PadLayer, Keepout, OutDir
 from cq_base_parameters import PinStyle, CaseType
 
@@ -86,7 +87,7 @@ class pinSocketVerticalTHT (object):
         print(footprint_name, "in", lib_name)
 
         # init kicad footprint
-        kicad_mod = Footprint(footprint_name)
+        kicad_mod = Footprint(footprint_name, FootprintType.THT)
         kicad_mod.setDescription(description)
         kicad_mod.setTags(tags)
 
@@ -142,17 +143,17 @@ class pinSocketVerticalTHT (object):
 
         # add text to silk layer
         silk.goto(c_ofs, t_crt - silk.txt_offset)\
-            .text('reference', 'REF**')\
+            .fp_property(Property.REFERENCE, 'REF**')\
             .setOrigin(-w_slk / 2.0 + c_ofs, t_slk)
 
         # add fab layer
         bevel = Layer.getBevel(h_fab, w_fab)
         fab.goto(c_ofs, h_crt + t_crt + fab.txt_offset)\
-           .text('value', footprint_name)\
+           .fp_property(Property.VALUE, footprint_name)\
            .goto(c_ofs, h_fab / 2.0 + t_fab)\
            .setTextDefaults(max_size=1.0)\
            .setTextSize(0.6 * (h_fab if param.num_pins == 1 and param.num_pin_rows <= 2 else w_fab))\
-           .text('user', '%R', rotation=0 if param.num_pins == 1 and param.num_pin_rows <= 2 else 90)\
+           .text('${REFERENCE}', rotation=0 if param.num_pins == 1 and param.num_pin_rows <= 2 else 90)\
            .setOrigin(-w_fab / 2.0 + c_ofs, t_fab)\
            .rect(w_fab, h_fab, bevel=(0.0 if isSocket else bevel, bevel if isSocket else 0.0, 0.0, 0.0), origin="topLeft")
 
@@ -196,7 +197,7 @@ class pinSocketVerticalTHT (object):
            .rect(w_crt, h_crt, origin="topLeft")
 
         # add model
-        kicad_modg.append(Model(filename="${KISYS3DMOD}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl"))
+        kicad_modg.append(Model(filename="${KICAD8_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl"))
 
         # write file
         file_handler = KicadFileHandler(kicad_mod)
@@ -257,7 +258,7 @@ class pinSocketHorizontalTHT (object):
         print(footprint_name, "in", lib_name)
 
         # init kicad footprint
-        kicad_mod = Footprint(footprint_name)
+        kicad_mod = Footprint(footprint_name, FootprintType.THT)
         kicad_mod.setDescription(description)
         kicad_mod.setTags(tags)
 
@@ -308,16 +309,16 @@ class pinSocketHorizontalTHT (object):
 
         # add text to silk
         silk.goto(l_crt + w_crt / 2.0, t_crt - silk.txt_offset)\
-            .text('reference', 'REF**')
+            .fp_property(Property.REFERENCE, 'REF**')
 
         # create FAB-layer
         bevel = min(Layer.getBevel(h_fab, abs(w_fab)), -t_fab - param.pin_width / 2.0)
 
         fab.goto(l_fab + w_fab / 2.0, (h_fab - param.pin_pitch) / 2.0)\
-           .text('user', '%R', rotation=(90 if h_fab >= -w_fab else 0))\
+           .text('${REFERENCE}', rotation=(90 if h_fab >= -w_fab else 0))\
            .rect(-w_fab, h_fab, bevel=(0.0, bevel, 0.0, 0.0))\
            .goto(l_crt + w_crt / 2.0, h_crt + t_crt + fab.txt_offset)\
-           .text('value', footprint_name)
+           .fp_property(Property.VALUE, footprint_name)
 
         # add pin markers
         fab.goto(l_fab / 2.0, 0.0)
@@ -361,7 +362,7 @@ class pinSocketHorizontalTHT (object):
            .rect(w_crt, h_crt)
 
         # add model
-        kicad_modg.append(Model(filename="${KISYS3DMOD}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl"))
+        kicad_modg.append(Model(filename="${KICAD8_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl"))
 
         # write file
         file_handler = KicadFileHandler(kicad_mod)
@@ -419,10 +420,9 @@ class pinSocketVerticalSMD (object):
         print(footprint_name, "in", lib_name)
 
         # init kicad footprint
-        kicad_mod = Footprint(footprint_name)
+        kicad_mod = Footprint(footprint_name, FootprintType.SMD)
         kicad_mod.setDescription(description)
         kicad_mod.setTags(tags)
-        kicad_mod.setAttribute('smd')
 
         # anchor for SMD-symbols is in the center
         kicad_modg = Translation(0.0, 0.0)
@@ -476,7 +476,7 @@ class pinSocketVerticalSMD (object):
 
         # add text and outline to silk layer
         silk.goto(0.0, -(h_crt / 2.0) - silk.txt_offset)\
-            .text('reference', 'REF**')\
+            .fp_property(Property.REFERENCE, 'REF**')\
             .setOrigin(-w_slk / 2.0, -h_slk / 2.0)\
             .rect(w_slk, h_slk, origin = "topLeft")
 
@@ -492,11 +492,11 @@ class pinSocketVerticalSMD (object):
         bevel = min(Layer.getBevel(h_fab, w_fab), -t_fab + rmh + param.pin_width / 2.0)
 
         fab.down((h_crt) / 2.0 + fab.txt_offset, draw=False)\
-           .text('value', footprint_name)\
+           .fp_property(Property.VALUE, footprint_name)\
            .goHome()\
            .setTextDefaults(max_size=1.0)\
            .setTextSize(0.6 * (h_fab if param.num_pins == 1 and param.num_pin_rows <= 2 else w_fab))\
-           .text('user', '%R', rotation=(90 if h_fab >= w_fab else 0))\
+           .text('${REFERENCE}', rotation=(90 if h_fab >= w_fab else 0))\
            .rect(w_fab, h_fab, bevel=(0.0 if param.pin1start_right else bevel, bevel if param.pin1start_right else 0.0, 0.0, 0.0))\
            .setOrigin(-w_fab / 2.0, -h_fab / 2.0)
 
@@ -532,7 +532,7 @@ class pinSocketVerticalSMD (object):
         crt.rect(w_crt, h_crt)
 
         # add model
-        kicad_modg.append(Model(filename="${KISYS3DMOD}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl"))
+        kicad_modg.append(Model(filename="${KICAD8_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl"))
 
         # write file
         file_handler = KicadFileHandler(kicad_mod)

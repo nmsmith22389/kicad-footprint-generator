@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 from __future__ import division
 
@@ -18,8 +18,8 @@ from footprint_scripts_terminal_blocks import *
 
 
 if __name__ == '__main__':
-    script_generated_note = ("script-generated using https://github.com"
-            "/pointhi/kicad-footprint-generator/scripts/TerminalBlock_TE-Connectivity")
+    script_generated_note = ("script-generated using https://gitlab.com"
+            "/kicad/libraries/kicad-footprint-generator/scripts/TerminalBlock_TE-Connectivity")
     long_classname = "TerminalBlock_TE-Connectivity"
     classname = "TerminalBlock_TE"
 
@@ -78,7 +78,7 @@ if __name__ == '__main__':
                 nibblePos=nibblePos,
                 fabref_offset=fabref_offset,
                 tags_additional=[],
-                lib_name='${KISYS3DMOD}/'+long_classname,
+                lib_name='${KICAD8_3DMODEL_DIR}/'+long_classname,
                 classname=classname,
                 classname_description=classname_description,
                 webpage=webpage,

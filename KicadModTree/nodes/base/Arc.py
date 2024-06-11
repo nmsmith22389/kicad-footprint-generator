@@ -13,10 +13,9 @@
 #
 # (C) 2016 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 
-from KicadModTree.Vector import *
+from KicadModTree.Vector import Vector2D
 from KicadModTree.nodes.Node import Node
-import math
-from KicadModTree.util.geometric_util import geometricArc, BaseNodeIntersection
+from KicadModTree.util.geometric_util import geometricArc
 
 
 class Arc(Node, geometricArc):
@@ -78,7 +77,8 @@ class Arc(Node, geometricArc):
         result = []
         garcs = geometricArc.cut(self, *other)
         for g in garcs:
-            result.append(self.copyReplaceGeometry(g))
+            if (abs(g.angle) > 1e-6):
+                result.append(self.copyReplaceGeometry(g))
 
         return result
 
@@ -105,12 +105,12 @@ class Arc(Node, geometricArc):
             print("TODO: add angle side: {1}".format(float_angle))
         '''
 
-        return Node.calculateBoundingBox({'min': Vector2D((min_x, min_y)), 'max': Vector2D((max_x, max_y))})
+        return {'min': Vector2D((min_x, min_y)), 'max': Vector2D((max_x, max_y))}
 
     def _getRenderTreeText(self):
         render_strings = ['fp_arc']
-        render_strings.append(self.center_pos.render('(center {x} {y})'))
-        render_strings.append(self.start_pos.render('(start {x} {y})'))
+        render_strings.append('(center {x} {y})'.format(**self.center_pos.to_dict()))
+        render_strings.append('(start {x} {y})'.format(**self.start_pos.to_dict()))
         render_strings.append('(angle {angle})'.format(angle=self.angle))
         render_strings.append('(layer {layer})'.format(layer=self.layer))
         render_strings.append('(width {width})'.format(width=self.width))

@@ -30,7 +30,7 @@ from KicadModTree import *
 sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))  # load parent path of tools
 from footprint_text_fields import addTextFields
 
-series = "DF12"
+series = 'DF12'
 series_long = 'DF12E SMD'
 manufacturer = 'Hirose'
 orientation = 'V'
@@ -57,9 +57,8 @@ def generate_one_footprint(idx, pins, configuration):
         mpn=mpn, num_rows=number_of_rows, pins_per_row=int(pins/2), mounting_pad = "",
         pitch=pitch, orientation=orientation_str)
 
-    kicad_mod = Footprint(footprint_name)
-    kicad_mod.setAttribute('smd')
-    kicad_mod.setDescription("Hirose {:s}, {:s}, {:d} Pins per row ({:s}), generated with kicad-footprint-generator".format(series_long, mpn, pins, datasheet))
+    kicad_mod = Footprint(footprint_name, FootprintType.SMD)
+    kicad_mod.setDescription("{:s} {:s}, {:s}, {:d} Pins per row ({:s}), generated with kicad-footprint-generator".format(manufacturer, series_long, mpn, pins, datasheet))
     kicad_mod.setTags(configuration['keyword_fp_string'].format(series=series,
         orientation=orientation_str, man=manufacturer,
         entry=configuration['entry_direction'][orientation]))
@@ -112,11 +111,11 @@ def generate_one_footprint(idx, pins, configuration):
         type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT, layers=["F.Cu", "F.Mask"]))
 
     #F.Paste
-    kicad_mod.append(PadArray(start=[-B/2, 2], initial="",
+    kicad_mod.append(PadArray(start=[-B/2, 2], initial='', increment=0,
         pincount=CPins,  x_spacing=pitch, size=pad_size_paste,
         type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT, layers=["F.Paste"]))
 
-    kicad_mod.append(PadArray(start=[-B/2, -2], initial="",
+    kicad_mod.append(PadArray(start=[-B/2, -2], initial='', increment=0,
         pincount=CPins,  x_spacing=pitch, size=pad_size_paste,
         type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT, layers=["F.Paste"]))
 
@@ -128,8 +127,8 @@ def generate_one_footprint(idx, pins, configuration):
         {'x': body_edge_out['right'], 'y': body_edge_out['bottom']},
         {'x': body_edge_out['left'], 'y': body_edge_out['bottom']}
     ]
-    kicad_mod.append(PolygoneLine(polygone=main_body_out_poly,
-        width=configuration['fab_line_width'], layer="F.Fab"))
+    kicad_mod.append(PolygonLine(polygon=main_body_out_poly,
+                                 width=configuration['fab_line_width'], layer="F.Fab"))
 
     main_body_in_poly= [
         {'x': body_edge_in['left'], 'y': body_edge_in['bottom']},
@@ -138,8 +137,8 @@ def generate_one_footprint(idx, pins, configuration):
         {'x': body_edge_in['right'], 'y': body_edge_in['bottom']},
         {'x': body_edge_in['left'], 'y': body_edge_in['bottom']}
     ]
-    kicad_mod.append(PolygoneLine(polygone=main_body_in_poly,
-        width=configuration['fab_line_width'], layer="F.Fab"))
+    kicad_mod.append(PolygonLine(polygon=main_body_in_poly,
+                                 width=configuration['fab_line_width'], layer="F.Fab"))
 
     main_arrow_poly= [
         {'x': (-B/2)-0.2, 'y': body_edge_out['bottom'] + 0.75},
@@ -147,8 +146,8 @@ def generate_one_footprint(idx, pins, configuration):
         {'x': (-B/2)+0.2, 'y': body_edge_out['bottom'] + 0.75},
         {'x': (-B/2)-0.2, 'y': body_edge_out['bottom'] + 0.75}
     ]
-    kicad_mod.append(PolygoneLine(polygone=main_arrow_poly,
-        width=configuration['fab_line_width'], layer="F.Fab"))
+    kicad_mod.append(PolygonLine(polygon=main_arrow_poly,
+                                 width=configuration['fab_line_width'], layer="F.Fab"))
 
     ######################## SilkS Layer ###########################
     offset = (pad_size[0]/2)+0.2+.06
@@ -161,8 +160,8 @@ def generate_one_footprint(idx, pins, configuration):
         {'x': -(B/2) - offset, 'y': body_edge_out['top'] - configuration['silk_fab_offset']}
     ]
 
-    kicad_mod.append(PolygoneLine(polygone=poly_left,
-        width=configuration['silk_line_width'], layer="F.SilkS"))
+    kicad_mod.append(PolygonLine(polygon=poly_left,
+                                 width=configuration['silk_line_width'], layer="F.SilkS"))
 
     poly_right= [
         {'x': (B/2) + offset, 'y': body_edge_out['bottom'] + configuration['silk_fab_offset']},
@@ -171,8 +170,8 @@ def generate_one_footprint(idx, pins, configuration):
         {'x': (B/2) + offset, 'y': body_edge_out['top'] - configuration['silk_fab_offset']}
     ]
 
-    kicad_mod.append(PolygoneLine(polygone=poly_right,
-        width=configuration['silk_line_width'], layer="F.SilkS"))
+    kicad_mod.append(PolygonLine(polygon=poly_right,
+                                 width=configuration['silk_line_width'], layer="F.SilkS"))
 
     ######################## CrtYd Layer ###########################
     CrtYd_offset = configuration['courtyard_offset']['connector']
@@ -186,8 +185,8 @@ def generate_one_footprint(idx, pins, configuration):
         {'x': roundToBase(body_edge_out['left'] - CrtYd_offset, CrtYd_grid), 'y': roundToBase(-2.6 - CrtYd_offset, CrtYd_grid)}
     ]
 
-    kicad_mod.append(PolygoneLine(polygone=poly_yd,
-        layer='F.CrtYd', width=configuration['courtyard_line_width']))
+    kicad_mod.append(PolygonLine(polygon=poly_yd,
+                                 layer='F.CrtYd', width=configuration['courtyard_line_width']))
 
     ######################### Text Fields ###############################
     cy1 = roundToBase(body_edge_out['top'] -1 - configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
@@ -197,7 +196,7 @@ def generate_one_footprint(idx, pins, configuration):
         courtyard={'top':cy1, 'bottom':cy2}, fp_name=footprint_name, text_y_inside_position='top')
 
     ##################### Write to File and 3D ############################
-    model3d_path_prefix = configuration.get('3d_model_prefix','${KISYS3DMOD}/')
+    model3d_path_prefix = configuration.get('3d_model_prefix','${KICAD8_3DMODEL_DIR}/')
 
     lib_name = configuration['lib_name_format_string'].format(series=series, man=manufacturer)
     model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}.wrl'.format(
@@ -220,13 +219,13 @@ if __name__ == "__main__":
 
     with open(args.global_config, 'r') as config_stream:
         try:
-            configuration = yaml.load(config_stream)
+            configuration = yaml.safe_load(config_stream)
         except yaml.YAMLError as exc:
             print(exc)
 
     with open(args.series_config, 'r') as config_stream:
         try:
-            configuration.update(yaml.load(config_stream))
+            configuration.update(yaml.safe_load(config_stream))
         except yaml.YAMLError as exc:
             print(exc)
 

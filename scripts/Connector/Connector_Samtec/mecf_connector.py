@@ -79,7 +79,7 @@ def generate_one_footprint(pol, n, configuration):
         fp_name += '_Polarized'
     fp_name += '_Edge'
 
-    kicad_mod = Footprint(fp_name)
+    kicad_mod = Footprint(fp_name, FootprintType.UNSPECIFIED)
 
     description = "Highspeed card edge connector for PCB's with " + n + " contacts "
 
@@ -88,7 +88,8 @@ def generate_one_footprint(pol, n, configuration):
     else:
         description = description + '(not polarized)'
 
-    kicad_mod.setAttribute('virtual')
+    kicad_mod.excludeFromBOM = True
+    kicad_mod.excludeFromPositionFiles = True
 
     #set the FP description
     kicad_mod.setDescription(description)
@@ -274,9 +275,9 @@ def generate_one_footprint(pol, n, configuration):
     #print(kicad_mod.getRenderTree())
     #print(kicad_mod.getCompleteRenderTree())
 
-    # kicad_mod.append(Text(type='reference', text='REF**', at=[0,-6.35], layer='F.SilkS'))
-    # kicad_mod.append(Text(type='user', text='%R', at=[0,-2.54], layer='F.Fab'))
-    # kicad_mod.append(Text(type='value', text=fp_name, at=[0,-3.81], layer='F.Fab'))
+    # kicad_mod.append(Property(name=Property.REFERENCE, text='REF**', at=[0,-6.35], layer='F.SilkS'))
+    # kicad_mod.append(Text(text='${REFERENCE}', at=[0,-2.54], layer='F.Fab'))
+    # kicad_mod.append(Property(name=Property.VALUE, text=fp_name, at=[0,-3.81], layer='F.Fab'))
     ######################### Text Fields ###############################
     addTextFields(kicad_mod=kicad_mod, configuration=configuration, body_edges=body_edge,
         courtyard={'top':cy1, 'bottom':cy2}, fp_name=fp_name, text_y_inside_position=-2.54)

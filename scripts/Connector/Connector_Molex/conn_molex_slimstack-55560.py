@@ -56,13 +56,11 @@ def generate_one_footprint(pincount, configuration):
         mpn=mpn, num_rows=number_of_rows, pins_per_row=pincount//2, mounting_pad = "",
         pitch=pitch, orientation=orientation_str)
 
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, FootprintType.SMD)
     kicad_mod.setDescription("Molex {:s}, {:s}, {:d} Pins ({:s}), generated with kicad-footprint-generator".format(series_long, mpn, pincount, datasheet))
     kicad_mod.setTags(configuration['keyword_fp_string'].format(series=series,
         orientation=orientation_str, man=manufacturer,
         entry=configuration['entry_direction'][orientation]))
-
-    kicad_mod.setAttribute('smd')
 
     # calculate working values
     pad_x_spacing = pitch
@@ -88,8 +86,6 @@ def generate_one_footprint(pincount, configuration):
     courtyard_x = roundToBase(h_body_length + courtyard_clearance, courtyard_precision)
     courtyard_y = roundToBase((pad_y_spacing + pad_height) / 2.0 + courtyard_clearance, courtyard_precision)
 
-
-
     # create pads
     kicad_mod.append(PadArray(pincount=pincount//2, x_spacing=pad_x_spacing, y_spacing=0,\
         center=[0,-pad_y_spacing/2.0], initial=1, increment=2, type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT, size=[pad_width, pad_height],\
@@ -113,8 +109,8 @@ def generate_one_footprint(pincount, configuration):
                     [-h_body_length+outline_x, -h_body_width-nudge], [-h_body_length+outline_x, -h_body_width-marker_y]]
     right_outline = [[h_body_length-outline_x, h_body_width+nudge], [h_body_length+nudge, h_body_width+nudge], [h_body_length+nudge, -h_body_width-nudge],\
                      [h_body_length-outline_x, -h_body_width-nudge]]
-    kicad_mod.append(PolygoneLine(polygone=left_outline, layer='F.SilkS', width=silk_width))
-    kicad_mod.append(PolygoneLine(polygone=right_outline, layer='F.SilkS', width=silk_width))
+    kicad_mod.append(PolygonLine(polygon=left_outline, layer='F.SilkS', width=silk_width))
+    kicad_mod.append(PolygonLine(polygon=right_outline, layer='F.SilkS', width=silk_width))
 
     # create courtyard
     kicad_mod.append(RectLine(start=[-courtyard_x, -courtyard_y], end=[courtyard_x, courtyard_y], layer='F.CrtYd', width=courtyard_width))
@@ -126,7 +122,7 @@ def generate_one_footprint(pincount, configuration):
         fp_name=footprint_name, text_y_inside_position='center')
 
     ##################### Output and 3d model ############################
-    model3d_path_prefix = configuration.get('3d_model_prefix','${KISYS3DMOD}/')
+    model3d_path_prefix = configuration.get('3d_model_prefix','${KICAD8_3DMODEL_DIR}/')
 
     lib_name = configuration['lib_name_format_string'].format(series=series, man=manufacturer)
     model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}.wrl'.format(

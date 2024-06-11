@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import sys
 import os
@@ -12,16 +12,15 @@ from KicadModTree.nodes.base.Pad import Pad  # NOQA
 def create_shielding(name, outer_size, size,
                      attachment_width, attachment_length, attachment_positions, outer_attachment_length):
 
-    kicad_mod = Footprint(name)
+    kicad_mod = Footprint(name, FootprintType.SMD)
 
     # init kicad footprint
     kicad_mod.setDescription('WE-SHC Shielding Cabinet SMD {size}x{size}mm'.format(size=size))
     kicad_mod.setTags('Shielding Cabinet')
-    kicad_mod.setAttribute('smd')
 
     # set general values
-    kicad_mod.append(Text(type='reference', text='REF**', at=[0, -outer_size / 2. - 1], layer='F.SilkS'))
-    kicad_mod.append(Text(type='value', text=name, at=[0, outer_size / 2. + 1], layer='F.Fab'))
+    kicad_mod.append(Property(name=Property.REFERENCE, text='REF**', at=[0, -outer_size / 2. - 1], layer='F.SilkS'))
+    kicad_mod.append(Property(name=Property.VALUE, text=name, at=[0, outer_size / 2. + 1], layer='F.Fab'))
 
     # create courtyard
     kicad_mod.append(RectLine(start=[-outer_size / 2. - 0.25, -outer_size / 2. - 0.25],

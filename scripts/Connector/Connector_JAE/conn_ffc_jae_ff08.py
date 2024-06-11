@@ -52,13 +52,11 @@ def make_module(pin_count, configuration):
 
     footprint_name = footprint_name.replace("__",'_')
 
-    kicad_mod = Footprint(footprint_name)
-    kicad_mod.setAttribute('smd')
+    kicad_mod = Footprint(footprint_name, FootprintType.SMD)
     kicad_mod.setDescription("Molex {:s}, {:s}, {:d} Circuits ({:s}), generated with kicad-footprint-generator".format(series_long, mpn, pin_count, datasheet))
     kicad_mod.setTags(configuration['keyword_fp_string'].format(series=series,
         orientation=orientation_str, man=manufacturer,
         entry=configuration['entry_direction'][orientation]))
-
 
     pad_to_pad_inside = 2
     pad_to_pad_outside = pad_to_pad_inside + odd_pad_size[0] + even_pad_size[0]
@@ -101,8 +99,8 @@ def make_module(pin_count, configuration):
         end=[body_edge['right'], body_edge['bottom']],
         layer="F.Fab", width=configuration['fab_line_width']
     ))
-    kicad_mod.append(PolygoneLine(
-        polygone=[
+    kicad_mod.append(PolygonLine(
+        polygon=[
             {'x': body_edge['right'], 'y': -bar_width/2},
             {'x': bar_down_edge, 'y': -bar_width/2 + bar_chamfer_y},
             {'x': bar_down_edge, 'y': bar_width/2 - bar_chamfer_y},
@@ -120,12 +118,12 @@ def make_module(pin_count, configuration):
         {'x': bar_down_edge + off, 'y': bar_width/2 - bar_chamfer_y + off},
         {'x': bar_down_edge + off, 'y': 0}
     ]
-    kicad_mod.append(PolygoneLine(
-        polygone=silk_outline,
+    kicad_mod.append(PolygonLine(
+        polygon=silk_outline,
         layer="F.SilkS", width=configuration['silk_line_width']
     ))
-    kicad_mod.append(PolygoneLine(
-        polygone=silk_outline, y_mirror=0,
+    kicad_mod.append(PolygonLine(
+        polygon=silk_outline, y_mirror=0,
         layer="F.SilkS", width=configuration['silk_line_width']
     ))
 
@@ -151,8 +149,8 @@ def make_module(pin_count, configuration):
         {'x': p1s_x -  ps1_m/sqrt(2), 'y': pin1_y+ps1_m/2},
         {'x': p1s_x -  ps1_m/sqrt(2), 'y': pin1_y-ps1_m/2}
     ]
-    kicad_mod.append(PolygoneLine(polygone=pin,
-        layer="F.SilkS", width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(polygon=pin,
+                                 layer="F.SilkS", width=configuration['silk_line_width']))
 
     sl=0.6
     pin = [
@@ -160,8 +158,8 @@ def make_module(pin_count, configuration):
         {'x': body_edge['left'] + sl/sqrt(2), 'y': pin1_y},
         {'x': body_edge['left'], 'y': pin1_y+sl/2}
     ]
-    kicad_mod.append(PolygoneLine(polygone=pin,
-        width=configuration['fab_line_width'], layer='F.Fab'))
+    kicad_mod.append(PolygonLine(polygon=pin,
+                                 width=configuration['fab_line_width'], layer='F.Fab'))
 
     ########################### CrtYd #################################
     cx1 = roundToBase(bounding_box['left']-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
@@ -179,7 +177,7 @@ def make_module(pin_count, configuration):
         courtyard={'top':cy1, 'bottom':cy2}, fp_name=footprint_name, text_y_inside_position='right')
 
     ##################### Output and 3d model ############################
-    model3d_path_prefix = configuration.get('3d_model_prefix','${KISYS3DMOD}/')
+    model3d_path_prefix = configuration.get('3d_model_prefix','${KICAD8_3DMODEL_DIR}/')
 
     if lib_by_conn_category:
         lib_name = configuration['lib_name_specific_function_format_string'].format(category=conn_category)

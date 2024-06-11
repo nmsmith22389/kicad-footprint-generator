@@ -26,10 +26,10 @@ mountingHoleSpacing = 5.0
 backPadOffset = 11.0
 backPadSpacing = 4.5
 
-f = Footprint(footprint_name)
+f = Footprint(footprint_name, FootprintType.THT)
 f.setDescription(datasheet)
 f.setTags("Connector Audio Switronic ST-005-G")
-f.append(Model(filename="${KISYS3DMOD}/Connector_Audio.3dshapes/" + footprint_name + ".wrl",
+f.append(Model(filename="${KICAD8_3DMODEL_DIR}/Connector_Audio.3dshapes/" + footprint_name + ".wrl",
                at=[0.0, 0.0, 0.0],
                scale=[1.0, 1.0, 1.0],
                rotate=[0.0, 0.0, 0.0]))
@@ -91,11 +91,11 @@ yTopCrtYd = -yBottomCrtYd
 yValue = yFabBottom + 1.25
 yRef = yFabTop - 1.25
 
-f.append(Text(type="reference", text="REF**", at=[xCenter, yRef],
+f.append(Property(name=Property.REFERENCE, text="REF**", at=[xCenter, yRef],
               layer="F.SilkS", size=s, thickness=t2))
-f.append(Text(type="value", text=footprint_name, at=[xCenter, yValue],
+f.append(Property(name=Property.VALUE, text=footprint_name, at=[xCenter, yValue],
               layer="F.Fab", size=s, thickness=t2))
-f.append(Text(type="user", text="%R", at=[xCenter, yCenter],
+f.append(Text(text='${REFERENCE}', at=[xCenter, yCenter],
               layer="F.Fab", size=sFabRef, thickness=t1))
 
 f.append(RectLine(start=[xLeftCrtYd, yTopCrtYd],
@@ -103,25 +103,25 @@ f.append(RectLine(start=[xLeftCrtYd, yTopCrtYd],
                   layer="F.CrtYd", width=wCrtYd))
 
 f.append(Circle(center=[xBackPad, ySilkBackPadTop], radius=0.3, layer="F.Fab"))
-f.append(PolygoneLine(polygone=[[xFabLeft, yFabOutletTop],
-                                [xFabBaseLeft, yFabOutletTop],
-                                [xFabBaseLeft, yFabTop],
-                                [xFabRight, yFabTop],
-                                [xFabRight, yFabBottom],
-                                [xFabBaseLeft, yFabBottom],
-                                [xFabBaseLeft, yFabOutletBottom],
-                                [xFabLeft, yFabOutletBottom],
-                                [xFabLeft, yFabOutletTop]],
-                      layer="F.Fab", width=wFab))
+f.append(PolygonLine(polygon=[[xFabLeft, yFabOutletTop],
+                               [xFabBaseLeft, yFabOutletTop],
+                               [xFabBaseLeft, yFabTop],
+                               [xFabRight, yFabTop],
+                               [xFabRight, yFabBottom],
+                               [xFabBaseLeft, yFabBottom],
+                               [xFabBaseLeft, yFabOutletBottom],
+                               [xFabLeft, yFabOutletBottom],
+                               [xFabLeft, yFabOutletTop]],
+                     layer="F.Fab", width=wFab))
 
-f.append(PolygoneLine(polygone=[[xSilkFrontPadLeft, ySilkBottom],
-                                [xSilkBaseLeft, ySilkBottom],
-                                [xSilkBaseLeft, ySilkOutletBottom]],
-                      layer="F.SilkS", width=wSilkS))
-f.append(PolygoneLine(polygone=[[xSilkBaseLeft, ySilkOutletTop],
-                                [xSilkBaseLeft, ySilkTop],
-                                [xSilkFrontPadLeft, ySilkTop]],
-                      layer="F.SilkS", width=wSilkS))
+f.append(PolygonLine(polygon=[[xSilkFrontPadLeft, ySilkBottom],
+                               [xSilkBaseLeft, ySilkBottom],
+                               [xSilkBaseLeft, ySilkOutletBottom]],
+                     layer="F.SilkS", width=wSilkS))
+f.append(PolygonLine(polygon=[[xSilkBaseLeft, ySilkOutletTop],
+                               [xSilkBaseLeft, ySilkTop],
+                               [xSilkFrontPadLeft, ySilkTop]],
+                     layer="F.SilkS", width=wSilkS))
 f.append(Line(start=[xSilkFrontPadRight, ySilkTop],
               end=[xSilkBackPadLeft, ySilkTop],
               layer="F.SilkS", width=wSilkS))
@@ -134,16 +134,16 @@ f.append(Line(start=[xSilkRight, ySilkBackPadTop],
 
 f.append(Pad(number="T", type=Pad.TYPE_THT, shape=Pad.SHAPE_CIRCLE,
              at=[xFrontPad, yFrontPadTop], size=padSize,
-             drill=padDrill, layers=['*.Cu', '*.Mask']))
+             drill=padDrill, layers=Pad.LAYERS_THT))
 f.append(Pad(number="T", type=Pad.TYPE_THT, shape=Pad.SHAPE_CIRCLE,
              at=[xFrontPad, yFrontPadBottom], size=padSize,
-             drill=padDrill, layers=['*.Cu', '*.Mask']))
+             drill=padDrill, layers=Pad.LAYERS_THT))
 f.append(Pad(number="R", type=Pad.TYPE_THT, shape=Pad.SHAPE_RECT,
              at=[xBackPad, yBackPadTop], size=padSize,
-             drill=padDrill, layers=['*.Cu', '*.Mask']))
+             drill=padDrill, layers=Pad.LAYERS_THT))
 f.append(Pad(number="S", type=Pad.TYPE_THT, shape=Pad.SHAPE_CIRCLE,
              at=[xBackPad, yBackPadBottom], size=padSize,
-             drill=padDrill, layers=['*.Cu', '*.Mask']))
+             drill=padDrill, layers=Pad.LAYERS_THT))
 f.append(Pad(type=Pad.TYPE_NPTH, shape=Pad.SHAPE_CIRCLE,
              at=[xMountingHole, yMountingHoleBottom], size=mountingHoleSize,
              drill=mountingHoleSize, layers=Pad.LAYERS_NPTH))

@@ -82,6 +82,6 @@ def add_rect_chamfer(m, start_pos, end_pos, layer, width, offset=(0,0), chamfers
                      {'x': left_bottom_mid_pos.x, 'y': left_bottom_mid_pos.y},
                      {'x': left_top_mid_pos.x, 'y': left_top_mid_pos.y},
                      {'x': top_left_pos.x, 'y': top_left_pos.y} ]
-    m.append(PolygoneLine(polygone=polygon_line, layer=layer, width=width))
+    m.append(PolygonLine(polygon=polygon_line, layer=layer, width=width))
     return m
 

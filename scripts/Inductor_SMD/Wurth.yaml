@@ -1,0 +1,14 @@
+- series: WE-MAPI
+  manufacturer: Wurth
+  datasheet: "https://www.we-online.com/en/components/products/WE-MAPI?kicad"
+  csv: Wurth_mapi.csv
+  3d:
+    type: 2
+    bodyColor: dark grey body
+    pinColor: metal grey pins
+    padThickness: 0.05
+  tags:
+    - Würth
+     -SMT
+     -MAPI
+  library_name: Inductor_SMD_Wurth

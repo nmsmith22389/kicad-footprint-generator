@@ -13,15 +13,117 @@
 #
 # (C) 2016 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 # (C) 2018 by Rene Poeschl, github @poeschlr
+import warnings
 
-from KicadModTree.util.paramUtil import *
-from KicadModTree.Vector import *
+import enum
+from typing import Union
+
+from KicadModTree.util.paramUtil import getOptionalNumberTypeParam, \
+    toVectorUseCopyIfNumber
+from KicadModTree.Vector import Vector2D
 from KicadModTree.nodes.Node import Node
 from KicadModTree.util.kicad_util import lispString
 from KicadModTree.nodes.base.Arc import Arc
 from KicadModTree.nodes.base.Circle import Circle
 from KicadModTree.nodes.base.Line import Line
 from KicadModTree.nodes.base.Polygon import Polygon
+
+
+class RoundRadiusHandler(object):
+    r"""Handles round radius setting of a pad
+
+    :param \**kwargs:
+        See below
+
+    :Keyword Arguments:
+    * *radius_ratio* (``float [0 <= r <= 0.5]``) --
+      The radius ratio of the rounded rectangle. (default set by default_radius_ratio)
+    * *maximum_radius* (``float``) --
+      The maximum radius for the rounded rectangle.
+      If the radius produced by the radius_ratio parameter for the pad would
+      exceed the maximum radius, the ratio is reduced to limit the radius.
+      (This is useful for IPC-7351C compliance as it suggests 25% ratio with limit 0.25mm)
+    * *round_radius_exact* (``float``) --
+      Set an exact round radius for a pad.
+    * *default_radius_ratio* (``float [0 <= r <= 0.5]``) --
+      This parameter allows to set the default radius ratio
+      (backwards compatibility option for chamfered pads)
+    """
+    def __init__(self, **kwargs):
+        default_radius_ratio = getOptionalNumberTypeParam(
+                            kwargs, 'default_radius_ratio', default_value=0.25,
+                            low_limit=0, high_limit=0.5)
+        self.radius_ratio = getOptionalNumberTypeParam(
+                            kwargs, 'radius_ratio', default_value=default_radius_ratio,
+                            low_limit=0, high_limit=0.5)
+
+        self.maximum_radius = getOptionalNumberTypeParam(kwargs, 'maximum_radius')
+        self.round_radius_exact = getOptionalNumberTypeParam(kwargs, 'round_radius_exact')
+
+    def getRadiusRatio(self, shortest_sidelength):
+        r"""get the resulting round radius ratio
+
+        :param shortest_sidelength: shortest sidelength of a pad
+        :return: the resulting round radius ratio to be used for the pad
+        """
+        if self.round_radius_exact is not None:
+            if self.round_radius_exact > shortest_sidelength/2:
+                raise ValueError(
+                    "requested round radius of {} is too large for pad size of {}"
+                    .format(self.round_radius_exact, pad_size)
+                    )
+            if self.maximum_radius is not None:
+                return min(self.round_radius_exact, self.maximum_radius)/shortest_sidelength
+            else:
+                return self.round_radius_exact/shortest_sidelength
+        if self.maximum_radius is not None:
+            if self.radius_ratio*shortest_sidelength > self.maximum_radius:
+                return self.maximum_radius/shortest_sidelength
+
+        return self.radius_ratio
+
+    def getRoundRadius(self, shortest_sidelength):
+        r"""get the resulting round radius
+
+        :param shortest_sidelength: shortest sidelength of a pad
+        :return: the resulting round radius to be used for the pad
+        """
+        return self.getRadiusRatio(shortest_sidelength)*shortest_sidelength
+
+    def roundingRequested(self):
+        r"""Check if the pad has a rounded corner
+
+        :return: True if rounded corners are required
+        """
+        if self.maximum_radius == 0:
+            return False
+
+        if self.round_radius_exact == 0:
+            return False
+
+        if self.radius_ratio == 0:
+            return False
+
+        return True
+
+    def limitMaxRadius(self, limit):
+        r"""Set a new maximum limit
+
+        :param limit: the new limit.
+        """
+
+        if not self.roundingRequested():
+            return
+        if self.maximum_radius is not None:
+            self.maximum_radius = min(self.maximum_radius, limit)
+        else:
+            self.maximum_radius = limit
+
+    def __str__(self):
+        return "ratio {}, max {}, exact {}".format(
+                    self.radius_ratio, self.maximum_radius,
+                    self.round_radius_exact
+                    )
 
 
 class Pad(Node):
@@ -38,6 +140,12 @@ class Pad(Node):
         * *shape* (``Pad.SHAPE_CIRCLE``, ``Pad.SHAPE_OVAL``, ``Pad.SHAPE_RECT``, ``SHAPE_ROUNDRECT``,
         ``Pad.SHAPE_TRAPEZE``, ``SHAPE_CUSTOM``) --
           shape of the pad
+        * *layers* (``Pad.LAYERS_SMT``, ``Pad.LAYERS_THT``, ``Pad.LAYERS_NPTH``) --
+          layers on which are used for the pad
+        * *fab_property* (``Pad.PROPERTY_BGA``, ``Pad.PROPERTY_FIDUCIAL_GLOBAL``,
+          ``Pad.PROPERTY_FIDUCIAL_LOCAL``, ``Pad.PROPERTY_TESTPOINT``, ``Pad.PROPERTY_HEATSINK``,
+          ``Pad.PROPERTY_CASTELLATED``) -- the pad fabrication property
+
         * *at* (``Vector2D``) --
           center position of the pad
         * *rotation* (``float``) --
@@ -48,23 +156,34 @@ class Pad(Node):
           offset of the pad
         * *drill* (``float``, ``Vector2D``) --
           drill-size of the pad
+
         * *radius_ratio* (``float``) --
           The radius ratio of the rounded rectangle.
-          Ignored for every other shape.
+          Ignored for every shape except round rect.
         * *maximum_radius* (``float``) --
           The maximum radius for the rounded rectangle.
           If the radius produced by the radius_ratio parameter for the pad would
-          exceed the maximum radius, the ratio is reduced to limit the ratio.
+          exceed the maximum radius, the ratio is reduced to limit the radius.
           (This is useful for IPC-7351C compliance as it suggests 25% ratio with limit 0.25mm)
-          Ignored for every other shape.
+          Ignored for every shape except round rect.
+        * *round_radius_exact* (``float``) --
+          Set an exact round radius for a pad.
+          Ignored for every shape except round rect
+        * *round_radius_handler* (``RoundRadiusHandler``) --
+          An instance of the RoundRadiusHandler class
+          If this is given then all other round radius specifiers are ignored
+          Ignored for every shape except round rect
+
         * *solder_paste_margin_ratio* (``float``) --
           solder paste margin ratio of the pad (default: 0)
         * *solder_paste_margin* (``float``) --
           solder paste margin of the pad (default: 0)
         * *solder_mask_margin* (``float``) --
           solder mask margin of the pad (default: 0)
-        * *layers* (``Pad.LAYERS_SMT``, ``Pad.LAYERS_THT``, ``Pad.LAYERS_NPTH``) --
-          layers on which are used for the pad
+
+        * *zone_connection* (``Pad.ZoneConnection``) --
+          zone connection of the pad (default: Pad.ZoneConnection.INHERIT_FROM_FOOTPRINT)
+
         * *x_mirror* (``[int, float](mirror offset)``) --
           mirror x direction around offset "point"
         * *y_mirror* (``[int, float](mirror offset)``) --
@@ -91,9 +210,11 @@ class Pad(Node):
     SHAPE_CUSTOM = 'custom'
     _SHAPES = [SHAPE_CIRCLE, SHAPE_OVAL, SHAPE_RECT, SHAPE_ROUNDRECT, SHAPE_TRAPEZE, SHAPE_CUSTOM]
 
-    LAYERS_SMT = ['F.Cu', 'F.Mask', 'F.Paste']
+    LAYERS_SMT = ['F.Cu', 'F.Paste', 'F.Mask']
     LAYERS_THT = ['*.Cu', '*.Mask']
     LAYERS_NPTH = ['*.Cu', '*.Mask']
+    LAYERS_CONNECT_FRONT = ['F.Cu', 'F.Mask']
+    LAYERS_CONNECT_BACK = ['B.Cu', 'B.Mask']
 
     ANCHOR_CIRCLE = 'circle'
     ANCHOR_RECT = 'rect'
@@ -103,12 +224,44 @@ class Pad(Node):
     SHAPE_IN_ZONE_OUTLINE = 'outline'
     _SHAPE_IN_ZONE = [SHAPE_IN_ZONE_CONVEX, SHAPE_IN_ZONE_OUTLINE]
 
+    class FabProperty(enum.Enum):
+        """
+        Type-safe pad fabrication property
+        """
+
+        # Note that these constants do not necessarily correspond to the
+        # strings used in the KiCad file format.
+        BGA = 'bga'
+        FIDUCIAL_GLOBAL = 'fiducial_global'
+        FIDUCIAL_LOCAL = 'fiducial_local'
+        TESTPOINT = 'testpoint'
+        HEATSINK = 'heatsink'
+        CASTELLATED = 'castellated'
+
+    class ZoneConnection(enum.Enum):
+        """
+        Type-safe pad zone connection.
+        """
+
+        # Note that these constants do not necessarily correspond to the
+        # values used in the KiCad file format, thay can be anything
+        INHERIT_FROM_FOOTPRINT = 0
+        NONE = 1
+        THERMAL_RELIEF = 2
+        SOLID = 3
+
+    at: Vector2D
+    size: Vector2D
+    _fab_property: Union[FabProperty, None]
+    _zone_connection: ZoneConnection
+
     def __init__(self, **kwargs):
         Node.__init__(self)
         self.radius_ratio = 0
 
         self._initNumber(**kwargs)
         self._initType(**kwargs)
+        self._initFabProperty(**kwargs)
         self._initShape(**kwargs)
         self._initPosition(**kwargs)
         self._initSize(**kwargs)
@@ -117,6 +270,7 @@ class Pad(Node):
         self._initSolderPasteMargin(**kwargs)
         self._initSolderPasteMarginRatio(**kwargs)
         self._initSolderMaskMargin(**kwargs)
+        self._initZoneConnection(**kwargs)
         self._initLayers(**kwargs)
         self._initMirror(**kwargs)
 
@@ -163,6 +317,14 @@ class Pad(Node):
         if self.type not in Pad._TYPES:
             raise ValueError('{type} is an invalid type for pads'.format(type=self.type))
 
+    def _initFabProperty(self, **kwargs):
+        prop = kwargs.get('fab_property', None)
+
+        if prop is not None:
+            self._fab_property = Pad.FabProperty(prop)
+        else:
+            self._fab_property = None
+
     def _initShape(self, **kwargs):
         if not kwargs.get('shape'):
             raise KeyError('shape not declared (like "shape=Pad.SHAPE_CIRCLE")')
@@ -204,28 +366,21 @@ class Pad(Node):
     def _initSolderMaskMargin(self, **kwargs):
         self.solder_mask_margin = kwargs.get('solder_mask_margin', 0)
 
+    def _initZoneConnection(self, **kwargs):
+        self._zone_connection = kwargs.get('zone_connection', Pad.ZoneConnection.INHERIT_FROM_FOOTPRINT)
+
     def _initLayers(self, **kwargs):
         if not kwargs.get('layers'):
             raise KeyError('layers not declared (like "layers=[\'*.Cu\', \'*.Mask\', \'F.SilkS\']")')
         self.layers = kwargs.get('layers')
 
     def _initRadiusRatio(self, **kwargs):
-        radius_ratio = kwargs.get('radius_ratio', 0)
-        if type(radius_ratio) not in [int, float]:
-            raise TypeError('radius ratio needs to be of type int or float')
-        if radius_ratio >= 0 and radius_ratio <= 0.5:
-            self.radius_ratio = radius_ratio
+        if 'round_radius_handler' in kwargs:
+            self.round_radius_handler = kwargs['round_radius_handler']
         else:
-            raise ValueError('radius ratio out of allowed range (0 <= rr <= 0.5)')
+            self.round_radius_handler = RoundRadiusHandler(**kwargs)
 
-        if kwargs.get('maximum_radius') is not None:
-            maximum_radius = kwargs.get('maximum_radius')
-            if type(maximum_radius) not in [int, float]:
-                raise TypeError('maximum radius needs to be of type int or float')
-
-            shortest_sidelength = min(self.size)
-            if self.radius_ratio*shortest_sidelength > maximum_radius:
-                self.radius_ratio = maximum_radius/shortest_sidelength
+        self.radius_ratio = self.round_radius_handler.getRadiusRatio(min(self.size))
 
         if self.radius_ratio == 0:
             self.shape = Pad.SHAPE_RECT
@@ -273,25 +428,34 @@ class Pad(Node):
 
     # calculate the outline of a pad
     def calculateBoundingBox(self):
-        return Node.calculateBoundingBox(self)
+        if (self.shape in [Pad.SHAPE_CIRCLE]):
+            return {"min": self.at - self.size / 2, "max": self.at + self.size / 2}
+        elif (self.shape in [Pad.SHAPE_RECT, Pad.SHAPE_ROUNDRECT, Pad.SHAPE_OVAL]):
+            from ..specialized import RectLine
+            rect = RectLine(start=- self.size / 2,
+                            end=self.size / 2,
+                            layer=None, width=0).rotate(self.rotation).translate(self.at)
+            return rect.calculateBoundingBox()
+        else:
+            raise NotImplementedError("calculateBoundingBox is not implemented for pad shape '%s'" % self.shape)
 
     def _getRenderTreeText(self):
         render_strings = ['pad']
         render_strings.append(lispString(self.number))
         render_strings.append(lispString(self.type))
         render_strings.append(lispString(self.shape))
-        render_strings.append(self.at.render('(at {x} {y})'))
-        render_strings.append(self.size.render('(size {x} {y})'))
+        render_strings.append('(at {x} {y})'.format(**self.at.to_dict()))
+        render_strings.append('(size {x} {y})'.format(**self.size.to_dict()))
         render_strings.append('(drill {})'.format(self.drill))
         render_strings.append('(layers {})'.format(' '.join(self.layers)))
 
         render_text = Node._getRenderTreeText(self)
-        render_text += '({})'.format(' '.join(render_strings))
+        render_text += ' ({})'.format(' '.join(render_strings))
 
         return render_text
 
     def addPrimitive(self, p):
-        r""" add a primitve to a custom pad
+        r""" add a primitive to a custom pad
 
         :param p: the primitive to add
         """
@@ -305,4 +469,26 @@ class Pad(Node):
                 if r > r_max:
                     r_max = r
             return r_max
-        return self.radius_ratio*min(self.size)
+        return self.round_radius_handler.getRoundRadius(min(self.size))
+
+    @property
+    def fab_property(self) -> Union[FabProperty, None]:
+        """
+        The fabrication property of the pad.
+
+        :return: one of the Pad.PROPERTY_* constants, or None
+        """
+        return self._fab_property
+
+    @property
+    def zone_connection(self) -> ZoneConnection:
+        """
+        The zone connection of the pad.
+
+        :return: one of the Pad.ZoneConnection constants
+        """
+        return self._zone_connection
+
+    @property
+    def roundRadius(self):
+        return self.getRoundRadius()

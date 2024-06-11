@@ -14,11 +14,22 @@ sys.path.append(os.path.join(sys.path[0],"..","..","tools")) # load kicad_mod pa
 from KicadModTree import *  # NOQA
 from footprint_scripts_DIP import *
 
-
-
-
+import argparse
+from pathlib import Path
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Use .yaml files to create DIP footprints.')
+    parser.add_argument('-o', '--output-dir', type=Path,
+                        default='.',
+                        help='Sets the directory to which to write the generated footprints')
+    args = parser.parse_args()
+    
+    output_dir_dip = args.output_dir / 'Package_DIP.pretty'
+    output_dir_switches_tht = args.output_dir / 'Button_Switch_THT.pretty'
+    output_dir_switches_smd = args.output_dir / 'Button_Switch_SMD.pretty'
+    
+    args.output_dir.mkdir(parents=True, exist_ok=True)
+    
     # common settings
     overlen_top=1.27
     overlen_bottom=1.27
@@ -35,13 +46,13 @@ if __name__ == '__main__':
     package_width=6.35
     socket_width=pinrow_distance+2.54
     for p in pins:
-        makeDIP(p,rm,pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad,False,0,0,0)
-        makeDIP(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_large, False, 0,0,0, ["LongPads"])
+        makeDIP(p,rm,pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad,False,0,0,0, outdir=output_dir_dip)
+        makeDIP(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_large, False, 0,0,0, ["LongPads"], outdir=output_dir_dip)
         socket_height = (p / 2 - 1) * rm + 2.54
-        makeDIP(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad, False, socket_width,socket_height,0, ["Socket"])
-        makeDIP(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_large, False, socket_width,socket_height,0,  ["Socket","LongPads"])
-        makeDIP(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_smdsocket, True, socket_width,socket_height,1.27, ["SMDSocket","LongPads"])
-        makeDIP(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_smdsocket_small, True,socket_width, socket_height, 0, ["SMDSocket", "SmallPads"])
+        makeDIP(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad, False, socket_width,socket_height,0, ["Socket"], outdir=output_dir_dip)
+        makeDIP(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_large, False, socket_width,socket_height,0,  ["Socket","LongPads"], outdir=output_dir_dip)
+        makeDIP(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_smdsocket, True, socket_width,socket_height,1.27, ["SMDSocket","LongPads"], outdir=output_dir_dip)
+        makeDIP(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_smdsocket_small, True,socket_width, socket_height, 0, ["SMDSocket", "SmallPads"], outdir=output_dir_dip)
 
     # narrow 7.62 DIPs
     pins=[4,6,8,10,12,14,16,]
@@ -49,8 +60,8 @@ if __name__ == '__main__':
     package_width=6.35
     socket_width=pinrow_distance+2.54
     for p in pins:
-        makeDIP(p,rm,pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad,False,0,0,0)
-        makeDIP(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_large, False, 0,0,0, ["LongPads"])
+        makeDIP(p,rm,pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad,False,0,0,0, outdir=output_dir_dip)
+        makeDIP(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_large, False, 0,0,0, ["LongPads"], outdir=output_dir_dip)
 
     # mid 10.16 DIPs
     pins=[22,24]
@@ -58,15 +69,15 @@ if __name__ == '__main__':
     package_width=9.14
     socket_width=pinrow_distance+2.54
     for p in pins:
-        makeDIP(p,rm,pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad,False,0,0,0)
-        makeDIP(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_large, False, 0,0,0, ["LongPads"])
+        makeDIP(p,rm,pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad,False,0,0,0, outdir=output_dir_dip)
+        makeDIP(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_large, False, 0,0,0, ["LongPads"], outdir=output_dir_dip)
         socket_height = (p / 2 - 1) * rm + 2.54
-        makeDIP(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad, False, socket_width,socket_height,0, ["Socket"])
-        makeDIP(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_large, False, socket_width,socket_height,0,  ["Socket","LongPads"])
+        makeDIP(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad, False, socket_width,socket_height,0, ["Socket"], outdir=output_dir_dip)
+        makeDIP(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_large, False, socket_width,socket_height,0,  ["Socket","LongPads"], outdir=output_dir_dip)
         makeDIP(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_smdsocket, True,
-            socket_width, socket_height, 1.27, ["SMDSocket", "LongPads"])
+            socket_width, socket_height, 1.27, ["SMDSocket", "LongPads"], outdir=output_dir_dip)
         makeDIP(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_smdsocket_small, True,
-            socket_width, socket_height, 0, ["SMDSocket", "SmallPads"])
+            socket_width, socket_height, 0, ["SMDSocket", "SmallPads"], outdir=output_dir_dip)
 
     # mid 15.24 DIPs
     pins=[24,28,32,40,42,48,64]
@@ -74,15 +85,15 @@ if __name__ == '__main__':
     package_width=14.73
     socket_width=pinrow_distance+2.54
     for p in pins:
-        makeDIP(p,rm,pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad,False,0,0,0)
-        makeDIP(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_large, False, 0,0,0, ["LongPads"])
+        makeDIP(p,rm,pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad,False,0,0,0, outdir=output_dir_dip)
+        makeDIP(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_large, False, 0,0,0, ["LongPads"], outdir=output_dir_dip)
         socket_height = (p / 2 - 1) * rm + 2.54
-        makeDIP(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad, False, socket_width,socket_height,0, ["Socket"])
-        makeDIP(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_large, False, socket_width,socket_height,0,  ["Socket","LongPads"])
+        makeDIP(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad, False, socket_width,socket_height,0, ["Socket"], outdir=output_dir_dip)
+        makeDIP(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_large, False, socket_width,socket_height,0,  ["Socket","LongPads"], outdir=output_dir_dip)
         makeDIP(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_smdsocket, True,
-            socket_width, socket_height, 1.27, ["SMDSocket", "LongPads"])
+            socket_width, socket_height, 1.27, ["SMDSocket", "LongPads"], outdir=output_dir_dip)
         makeDIP(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_smdsocket_small, True,
-            socket_width, socket_height, 0, ["SMDSocket", "SmallPads"])
+            socket_width, socket_height, 0, ["SMDSocket", "SmallPads"], outdir=output_dir_dip)
 
     # large 22.86 DIPs
     pins=[64]
@@ -90,15 +101,15 @@ if __name__ == '__main__':
     package_width=22.35
     socket_width=pinrow_distance+2.54
     for p in pins:
-        makeDIP(p,rm,pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad,False,0,0,0)
-        makeDIP(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_large, False, 0,0,0, ["LongPads"])
+        makeDIP(p,rm,pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad,False,0,0,0, outdir=output_dir_dip)
+        makeDIP(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_large, False, 0,0,0, ["LongPads"], outdir=output_dir_dip)
         socket_height = (p / 2 - 1) * rm + 2.54
-        makeDIP(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad, False, socket_width,socket_height,0, ["Socket"])
-        makeDIP(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_large, False, socket_width,socket_height,0,  ["Socket","LongPads"])
+        makeDIP(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad, False, socket_width,socket_height,0, ["Socket"], outdir=output_dir_dip)
+        makeDIP(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_large, False, socket_width,socket_height,0,  ["Socket","LongPads"], outdir=output_dir_dip)
         makeDIP(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_smdsocket, True,
-            socket_width, socket_height, 1.27, ["SMDSocket", "LongPads"])
+            socket_width, socket_height, 1.27, ["SMDSocket", "LongPads"], outdir=output_dir_dip)
         makeDIP(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_smdsocket_small, True,
-            socket_width, socket_height, 0, ["SMDSocket", "SmallPads"])
+            socket_width, socket_height, 0, ["SMDSocket", "SmallPads"], outdir=output_dir_dip)
 
     # large 25.4 DIPs
     pins=[40,64]
@@ -106,15 +117,15 @@ if __name__ == '__main__':
     package_width=24.89
     socket_width=pinrow_distance+2.54
     for p in pins:
-        makeDIP(p,rm,pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad,False,0,0,0)
-        makeDIP(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_large, False, 0,0,0, ["LongPads"])
+        makeDIP(p,rm,pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad,False,0,0,0, outdir=output_dir_dip)
+        makeDIP(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_large, False, 0,0,0, ["LongPads"], outdir=output_dir_dip)
         socket_height = (p / 2 - 1) * rm + 2.54
-        makeDIP(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad, False, socket_width,socket_height,0, ["Socket"])
-        makeDIP(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_large, False, socket_width,socket_height,0,  ["Socket","LongPads"])
+        makeDIP(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad, False, socket_width,socket_height,0, ["Socket"], outdir=output_dir_dip)
+        makeDIP(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_large, False, socket_width,socket_height,0,  ["Socket","LongPads"], outdir=output_dir_dip)
         makeDIP(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_smdsocket, True,
-            socket_width, socket_height, 1.27, ["SMDSocket", "LongPads"])
+            socket_width, socket_height, 1.27, ["SMDSocket", "LongPads"], outdir=output_dir_dip)
         makeDIP(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_smdsocket_small, True,
-            socket_width, socket_height, 0, ["SMDSocket", "SmallPads"])
+            socket_width, socket_height, 0, ["SMDSocket", "SmallPads"], outdir=output_dir_dip)
 
     # special SMD footprints
     smd_pins=[4,6,8,10,12,14,16,18,20,22,24,32]
@@ -123,14 +134,14 @@ if __name__ == '__main__':
     package_width=6.35
     for p in smd_pins:
         for prd in smd_pinrow_distances:
-            makeDIP(p, rm, prd, package_width, overlen_top, overlen_bottom, ddrill, pad_smd, True,  0,0,0, [], "Housings_DIP", [0, 0, 0], [1, 1, 1], [0, 0, 0], 'SMDIP', 'surface-mounted (SMD) DIP', 'SMD DIP DIL PDIP SMDIP')
+            makeDIP(p, rm, prd, package_width, overlen_top, overlen_bottom, ddrill, pad_smd, True,  0,0,0, [], "Housings_DIP", [0, 0, 0], [1, 1, 1], [0, 0, 0], 'SMDIP', 'surface-mounted (SMD) DIP', 'SMD DIP DIL PDIP SMDIP', outdir=output_dir_dip)
     smd_pins=[4,6,8,10,12,14,16,18,20,22]
     pad_smd = [1.5, 1.78]
     smd_pinrow_distances=[9.53]
     package_width=6.35
     for p in smd_pins:
         for prd in smd_pinrow_distances:
-            makeDIP(p, rm, prd, package_width, overlen_top, overlen_bottom, ddrill, pad_smd, True,  0,0,0, ['Clearance8mm'], "Housings_DIP", [0, 0, 0], [1, 1, 1], [0, 0, 0], 'SMDIP', 'surface-mounted (SMD) DIP', 'SMD DIP DIL PDIP SMDIP')
+            makeDIP(p, rm, prd, package_width, overlen_top, overlen_bottom, ddrill, pad_smd, True,  0,0,0, ['Clearance8mm'], "Housings_DIP", [0, 0, 0], [1, 1, 1], [0, 0, 0], 'SMDIP', 'surface-mounted (SMD) DIP', 'SMD DIP DIL PDIP SMDIP', outdir=output_dir_dip)
 
     smd_pins=[24,28,32,40,42,48,64]
     pad_smd = [2, 1.78]
@@ -138,14 +149,14 @@ if __name__ == '__main__':
     package_width=14.73
     for p in smd_pins:
         for prd in smd_pinrow_distances:
-            makeDIP(p, rm, prd, package_width, overlen_top, overlen_bottom, ddrill, pad_smd, True,  0,0,0, [], "Housings_DIP", [0, 0, 0], [1, 1, 1], [0, 0, 0], 'SMDIP', 'surface-mounted (SMD) DIP', 'SMD DIP DIL PDIP SMDIP')
+            makeDIP(p, rm, prd, package_width, overlen_top, overlen_bottom, ddrill, pad_smd, True,  0,0,0, [], "Housings_DIP", [0, 0, 0], [1, 1, 1], [0, 0, 0], 'SMDIP', 'surface-mounted (SMD) DIP', 'SMD DIP DIL PDIP SMDIP', outdir=output_dir_dip)
     smd_pins=[40]
     pad_smd = [2, 1.78]
     smd_pinrow_distances=[25.24]
     package_width=24.89
     for p in smd_pins:
         for prd in smd_pinrow_distances:
-            makeDIP(p, rm, prd, package_width, overlen_top, overlen_bottom, ddrill, pad_smd, True,  0,0,0, [], "Housings_DIP", [0, 0, 0], [1, 1, 1], [0, 0, 0], 'SMDIP', 'surface-mounted (SMD) DIP', 'SMD DIP DIL PDIP SMDIP')
+            makeDIP(p, rm, prd, package_width, overlen_top, overlen_bottom, ddrill, pad_smd, True,  0,0,0, [], "Housings_DIP", [0, 0, 0], [1, 1, 1], [0, 0, 0], 'SMDIP', 'surface-mounted (SMD) DIP', 'SMD DIP DIL PDIP SMDIP', outdir=output_dir_dip)
 
 
     # DIP-switches:
@@ -170,10 +181,10 @@ if __name__ == '__main__':
     overlen_bottom_piano = 2.05
 
     for p in pins:
-        makeDIPSwitch(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad, switch_width, switch_height, 'Slide', False, [])
-        makeDIPSwitch(p, rm, pinrow_distance, package_width_narrow, overlen_top_narrow, overlen_bottom_narrow, ddrill, pad, switch_width_narrow, switch_height_narrow, 'Slide', False, ["LowProfile"])
-        makeDIPSwitch(p, rm, pinrow_distance_smd, package_width_narrow, overlen_top_narrow, overlen_bottom_narrow, ddrill, pad_smd, switch_width_narrow, switch_height_narrow, 'Slide', True,["SMD","LowProfile"], 'Buttons_Switches_SMD')
-        makeDIPSwitch(p, rm, pinrow_distance, package_width_piano, overlen_top_piano, overlen_bottom_piano, ddrill, pad, switch_width_piano, switch_height_piano, 'Piano', False, [])
+        makeDIPSwitch(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad, switch_width, switch_height, 'Slide', False, [], outdir=output_dir_switches_tht)
+        makeDIPSwitch(p, rm, pinrow_distance, package_width_narrow, overlen_top_narrow, overlen_bottom_narrow, ddrill, pad, switch_width_narrow, switch_height_narrow, 'Slide', False, ["LowProfile"], outdir=output_dir_switches_tht)
+        makeDIPSwitch(p, rm, pinrow_distance_smd, package_width_narrow, overlen_top_narrow, overlen_bottom_narrow, ddrill, pad_smd, switch_width_narrow, switch_height_narrow, 'Slide', True,["SMD","LowProfile"], 'Buttons_Switches_SMD', outdir=output_dir_switches_tht)
+        makeDIPSwitch(p, rm, pinrow_distance, package_width_piano, overlen_top_piano, overlen_bottom_piano, ddrill, pad, switch_width_piano, switch_height_piano, 'Piano', False, [], outdir=output_dir_switches_tht)
 
     # Copal CVS DIP-switches (http://www.nidec-copal-electronics.com/e/catalog/switch/cvs.pdf):
     pins = [2, 4, 6, 8, 16]
@@ -190,9 +201,7 @@ if __name__ == '__main__':
     for p in pins:
         makeDIPSwitch(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_smd, switch_width,
                       switch_height, 'Slide', True, ["Copal_CVS"], "Buttons_Switches_SMD", [0, 0, 0], [1, 1, 1],
-                      [0, 0, 0], "", True, [0.7, 0.7], 0.2, 0)
-
-
+                      [0, 0, 0], "", True, [0.7, 0.7], 0.2, 0, outdir=output_dir_switches_smd)
 
     # Omron A6H DIP-switches (https://www.omron.com/ecb/products/pdf/en-a6h.pdf):
     pins = [4,8,12,16,20]
@@ -209,7 +218,7 @@ if __name__ == '__main__':
     for p in pins:
         makeDIPSwitch(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_smd, switch_width,
                       switch_height, 'Slide', True, ["Omron_A6H"], "Buttons_Switches_SMD", [0, 0, 0], [1, 1, 1],
-                      [0, 0, 0], "", True)
+                      [0, 0, 0], "", True, outdir=output_dir_switches_smd)
 
     # Copal CHS DIP-switches (http://www.nidec-copal-electronics.com/e/catalog/switch/chs.pdf):
     pins = [2, 4, 8, 12, 16, 20]
@@ -227,10 +236,10 @@ if __name__ == '__main__':
     for p in pins:
         makeDIPSwitch(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_smd, switch_width,
                       switch_height, 'Slide', True, ["Copal_CHS-A"], "Buttons_Switches_SMD", [0, 0, 0], [1, 1, 1],
-                      [0, 0, 0], "", True)
+                      [0, 0, 0], "", True, outdir=output_dir_switches_smd)
         makeDIPSwitch(p, rm, pinrow_distanceB, package_width, overlen_top, overlen_bottom, ddrill, pad_smd, switch_width,
                       switch_height, 'Slide', True, ["Copal_CHS-B"], "Buttons_Switches_SMD", [0, 0, 0], [1, 1, 1],
-                      [0, 0, 0], "", True)
+                      [0, 0, 0], "", True, outdir=output_dir_switches_smd)
 
     #
     # Special DIP
@@ -252,7 +261,7 @@ if __name__ == '__main__':
     pinrow_distance=7.62
     package_width=6.35
     socket_width=pinrow_distance+2.54
-    makeDIP(16, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad,       False, 0, 0, 0, prefix_name = '8', skip_pin = [3, 4, 5, 6, 11, 12, 13, 14], skip_count = True, right_cnt_start = 5)
+    makeDIP(16, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad,       False, 0, 0, 0, prefix_name = '8', skip_pin = [3, 4, 5, 6, 11, 12, 13, 14], skip_count = True, right_cnt_start = 5, outdir=output_dir_dip)
     socket_height = (p / 2 - 1) * rm + 2.54
-    makeDIP(16, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad,       False, socket_width, socket_height,0, ["Socket"],            prefix_name = '8', skip_pin = [3, 4, 5, 6, 11, 12, 13, 14], skip_count = True, right_cnt_start = 5)
-    makeDIP(16, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_large, False, socket_width, socket_height,0, ["Socket","LongPads"], prefix_name = '8', skip_pin = [3, 4, 5, 6, 11, 12, 13, 14], skip_count = True, right_cnt_start = 5)
+    makeDIP(16, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad,       False, socket_width, socket_height,0, ["Socket"],            prefix_name = '8', skip_pin = [3, 4, 5, 6, 11, 12, 13, 14], skip_count = True, right_cnt_start = 5, outdir=output_dir_dip)
+    makeDIP(16, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_large, False, socket_width, socket_height,0, ["Socket","LongPads"], prefix_name = '8', skip_pin = [3, 4, 5, 6, 11, 12, 13, 14], skip_count = True, right_cnt_start = 5, outdir=output_dir_dip)

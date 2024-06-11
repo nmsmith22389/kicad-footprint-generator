@@ -19,9 +19,9 @@ import re
 
 def formatFloat(val):
     '''
-    return well formated float
+    return well formatted float
     '''
-    result = ('%f' % val).rstrip('0').rstrip('.')
+    result = ('%f' % round(val, 6)).rstrip('0').rstrip('.')
     if result == '-0':
         result = '0'
     return result
@@ -34,7 +34,7 @@ def lispString(string):
     if type(string) is not str:
         string = str(string)
 
-    if len(string) == 0 or re.match(".*\s.*", string):
+    if len(string) == 0 or re.match(r".*\s.*", string):
         return '"{}"'.format(string.replace('"', '\\"'))  # escape text
 
     return string
@@ -84,7 +84,7 @@ def lispTokenizer(input):
     if in_string:
         raise RuntimeError("missing closing quotation mark")
 
-    # TOOD: remove invalid spaces from quotation (when having brackets inside)
+    # TODO: remove invalid spaces from quotation (when having brackets inside)
 
     return tokens
 
@@ -124,7 +124,15 @@ class SexprSerializer(object):
     Converts a nested python list into a sexpr syntax which can be parsed by KiCad
     '''
 
-    NEW_LINE = object
+    class Symbol:
+        def __init__(self, name):
+            self.name = name
+
+        def __str__(self):
+            return f"Symbol({self.name})"
+
+        def __repr__(self):
+            return str(self)
 
     def __init__(self, sexpr):
         '''
@@ -139,48 +147,42 @@ class SexprSerializer(object):
         elif pType is float:
             return formatFloat(primitive)
         elif pType is str:
-            return lispString(primitive)
+            # Always quote (KiCad v8-style), escaping quotes
+            return "\"" + primitive.replace('"', '\\"') + "\""
         else:
             raise RuntimeError("unexpected type: {}".format(pType))
 
     def sexpr_to_string(self, sexpr, prefix=None):
+        indent = '\t'
         if prefix is None:
             prefix = ""
 
         serial_string = "("
 
-        # see: https://stackoverflow.com/questions/3190706/nonlocal-keyword-in-python-2-x
-        loop_ctrl = {'first': True, 'indentation': False}
-
-        def get_separator():
-            if loop_ctrl['first']:
-                loop_ctrl['first'] = False
-                return_str = ""
-            else:
-                return_str = " "
-
-            if loop_ctrl['indentation']:
-                return_str += " "
-                loop_ctrl['indentation'] = False
-
-            return return_str
+        first_on_line = True
+        had_any_lists = False
 
         for attr in sexpr:
-            if isinstance(attr, (tuple, list)):
-                return_string = self.sexpr_to_string(attr, prefix + " ")
 
-                if loop_ctrl['indentation']:
-                    return_string = return_string.replace('\n', '\n ')
-                serial_string += get_separator()
-
-                serial_string += return_string
-            elif attr == SexprSerializer.NEW_LINE:
-                serial_string += "\n"
-                serial_string += prefix
-                loop_ctrl['indentation'] = True
+            if first_on_line:
+                first_on_line = False
+                separator = ""
             else:
-                serial_string += get_separator()
-                serial_string += self.primitive_to_string(attr)
+                separator = " "
+
+            if isinstance(attr, (tuple, list)):
+                new_indent = prefix + indent
+                serial_string += '\n' + new_indent + self.sexpr_to_string(attr, new_indent)
+                had_any_lists = True
+                first_on_line = True
+            elif isinstance(attr, SexprSerializer.Symbol):
+                # symbols are not quoted
+                serial_string += separator + attr.name
+            else:
+                serial_string += separator + self.primitive_to_string(attr)
+
+        if had_any_lists:
+            serial_string += "\n" + prefix
 
         serial_string += ")"
         return serial_string
@@ -194,7 +196,7 @@ class SexprSerializer(object):
 
 def parseTimestamp(timestamp):
     raise NotImplemented()
-    return time.time()  # TOOD
+    return time.time()  # TODO
 
 
 def formatTimestamp(timestamp=None):

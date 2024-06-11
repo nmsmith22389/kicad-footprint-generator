@@ -191,3 +191,64 @@ class Vector2DTests(unittest.TestCase):
         r, a = p1.to_polar(use_degrees=True)
         self.assertAlmostEqual(r, math.sqrt(2))
         self.assertAlmostEqual(a, -135)
+
+    def test_right_mul(self):
+        p = 3 * Vector2D(1, 2)
+        self.assertAlmostEqual(p.x, 3)
+        self.assertAlmostEqual(p.y, 6)
+
+    def test_norm_arg(self):
+        self.assertAlmostEqual(Vector2D(1, 1).norm(), sqrt(2))
+        self.assertAlmostEqual(Vector2D(1, 1).arg(), 45)
+        self.assertAlmostEqual(Vector2D(1, 1).arg(use_degrees=False), math.pi/4)
+        self.assertAlmostEqual(Vector2D(-1, -1).arg(), -135)
+        self.assertAlmostEqual(Vector2D(-1, -1).arg(use_degrees=False), -3*math.pi/4)
+
+    def test_inner(self):
+        v1 = Vector2D(2, 3)
+        v2 = Vector2D(4, 5)
+
+        self.assertEqual(v1.inner(v2), 23)
+        self.assertEqual(v2.inner(v1), 23)
+
+        v2 = v1.orthogonal()
+        self.assertEqual(v1.inner(v2), 0)
+        self.assertEqual(v1.inner(-v2), 0)
+
+    def test_normalize(self):
+        v = Vector2D(0, 0)
+        n = Vector2D.normalize(v)
+        self.assertEqual(n.norm(), 0)
+
+        v = Vector2D(sin(math.pi/6), cos(math.pi/6))
+        n = Vector2D.normalize(v)
+        self.assertEqual(n.norm(), 1)
+
+        n1 = Vector2D(1, 2).normalize()
+        n2 = Vector2D(0.1, 0.2).normalize()
+        self.assertEqual(n1.norm(), 1)
+        self.assertEqual(n2.norm(), 1)
+        self.assertAlmostEqual((n1 - n2).norm(), 0)
+
+    def test_min_max(self):
+        v1 = Vector2D(3, 2)
+        v2 = Vector2D(1, 4)
+
+        v = v1.max(v2)
+        self.assertEqual(v.x, 3)
+        self.assertEqual(v.y, 4)
+        v = v2.max(v1)
+        self.assertEqual(v.x, 3)
+        self.assertEqual(v.y, 4)
+
+        v = v1.min(v2)
+        self.assertEqual(v.x, 1)
+        self.assertEqual(v.y, 2)
+        v = v2.min(v1)
+        self.assertEqual(v.x, 1)
+        self.assertEqual(v.y, 2)
+
+        # check for iterables
+        v = Vector2D.min((3, 2), (1, 4))
+        self.assertEqual(v.x, 1)
+        self.assertEqual(v.y, 2)

@@ -49,10 +49,10 @@ def generate_one_footprint(pins, series_params, configuration):
     #calculate dimensions
     A = (pins - 1) * pitch
     B = A + 3.9
-    
+
     post_omitted = True if len(series_params) == 4 else False
     pins_used = pins - len(series_params[3]) if post_omitted else pins
-    
+
     # if removed pins are a fixed pattern (every 2 pins, every 3 pins, etc.),
     # then we can determine an effective pitch
     # if all pins are loaded or removed pins are disorderly use the default pitch
@@ -70,7 +70,7 @@ def generate_one_footprint(pins, series_params, configuration):
         mpn=mpn, num_rows=number_of_rows, pins_per_row=pins_used, mounting_pad = "",
         pitch=pitch_effective, orientation=orientation_str)
 
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, FootprintType.THT)
     kicad_mod.setDescription("JST {:s} series connector, {:s} ({:s}), generated with kicad-footprint-generator".format(series_params[2], mpn, datasheet))
     kicad_mod.setTags(configuration['keyword_fp_string'].format(series=series,
         orientation=orientation_str, man=manufacturer,
@@ -97,11 +97,11 @@ def generate_one_footprint(pins, series_params, configuration):
     #draw rectangle on F.Fab for latch
     x3 = -0.75
     x4 = pitch * (pins - 1) + 0.75
-    kicad_mod.append(PolygoneLine(polygone=[{'x':x3,'y':y1},{'x':x3,'y':y3},{'x':x4,'y':y3},{'x':x4,'y':y1}], layer='F.Fab', width=configuration['fab_line_width']))
+    kicad_mod.append(PolygonLine(polygon=[{ 'x':x3, 'y':y1 }, { 'x':x3, 'y':y3 }, { 'x':x4, 'y':y3 }, { 'x':x4, 'y':y1 }], layer='F.Fab', width=configuration['fab_line_width']))
 
     #draw pin1 mark on F.Fab
-    kicad_mod.append(PolygoneLine(polygone=[{'x':x1,'y':-1},{'x':(x1+1),'y':0}], layer='F.Fab', width=configuration['fab_line_width']))
-    kicad_mod.append(PolygoneLine(polygone=[{'x':x1,'y':1},{'x':(x1+1),'y':0}], layer='F.Fab', width=configuration['fab_line_width']))
+    kicad_mod.append(PolygonLine(polygon=[{ 'x':x1, 'y':-1 }, { 'x':(x1 + 1), 'y':0 }], layer='F.Fab', width=configuration['fab_line_width']))
+    kicad_mod.append(PolygonLine(polygon=[{ 'x':x1, 'y':1 }, { 'x':(x1 + 1), 'y':0 }], layer='F.Fab', width=configuration['fab_line_width']))
 
     ########################### CrtYd #################################
     cx1 = roundToBase(x1-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
@@ -124,7 +124,7 @@ def generate_one_footprint(pins, series_params, configuration):
     y3 -= off
     x4 += off
 
-    kicad_mod.append(PolygoneLine(polygone=[
+    kicad_mod.append(PolygonLine(polygon=[
             {'x':x1,'y':y2},
             {'x':x1,'y':y1},
             {'x':x3,'y':y1},
@@ -141,7 +141,7 @@ def generate_one_footprint(pins, series_params, configuration):
     m = 0.3
 
     marker = [{'x': px,'y': 0},{'x': px-2*m,'y': m},{'x': px-2*m,'y': -m},{'x': px,'y': 0}]
-    kicad_mod.append(PolygoneLine(polygone=marker, layer='F.SilkS', width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(polygon=marker, layer='F.SilkS', width=configuration['silk_line_width']))
 
 
     pad_size = [pitch - pad_to_pad_clearance, drill + 2*pad_copper_y_solder_length]
@@ -155,10 +155,7 @@ def generate_one_footprint(pins, series_params, configuration):
         shape=Pad.SHAPE_CIRCLE
 
     optional_pad_params = {}
-    if configuration['kicad4_compatible']:
-        optional_pad_params['tht_pad1_shape'] = Pad.SHAPE_RECT
-    else:
-        optional_pad_params['tht_pad1_shape'] = Pad.SHAPE_ROUNDRECT
+    optional_pad_params['tht_pad1_shape'] = Pad.SHAPE_ROUNDRECT
         optional_pad_params['radius_ratio'] = 0.25
         optional_pad_params['maximum_radius'] = 0.25
 
@@ -194,7 +191,7 @@ def generate_one_footprint(pins, series_params, configuration):
         courtyard={'top':cy1, 'bottom':cy2}, fp_name=footprint_name, text_y_inside_position='bottom')
 
     ##################### Output and 3d model ############################
-    model3d_path_prefix = configuration.get('3d_model_prefix','${KISYS3DMOD}/')
+    model3d_path_prefix = configuration.get('3d_model_prefix','${KICAD8_3DMODEL_DIR}/')
 
     lib_name = configuration['lib_name_format_string'].format(series=series, man=manufacturer)
     model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}.wrl'.format(
@@ -213,7 +210,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='use confing .yaml files to create footprints.')
     parser.add_argument('--global_config', type=str, nargs='?', help='the config file defining how the footprint will look like. (KLC)', default='../../tools/global_config_files/config_KLCv3.0.yaml')
     parser.add_argument('--series_config', type=str, nargs='?', help='the config file defining series parameters.', default='../conn_config_KLCv3.yaml')
-    parser.add_argument('--kicad4_compatible', action='store_true', help='Create footprints kicad 4 compatible')
     args = parser.parse_args()
 
     with open(args.global_config, 'r') as config_stream:
@@ -227,8 +223,6 @@ if __name__ == "__main__":
             configuration.update(yaml.safe_load(config_stream))
         except yaml.YAMLError as exc:
             print(exc)
-
-    configuration['kicad4_compatible'] = args.kicad4_compatible
 
     #tuple argument meaning: [start,end] list for range of pin counts, MPN suffix, material, optional list of missing pins
     #the first two tuples generate the fully-stuffed parts while the last tuple makes a 3-pin part with pin 2 missing

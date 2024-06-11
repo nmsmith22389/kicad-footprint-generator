@@ -11,18 +11,17 @@ from KicadModTree.nodes.base.Pad import Pad  # NOQA
 
 def smd_chip(args):
     # init kicad footprint
-    kicad_mod = Footprint(args['name'])
+    kicad_mod = Footprint(args['name'], FootprintType.SMD)
     kicad_mod.setDescription(args['description'])
     kicad_mod.setTags(args['tags'])
-    kicad_mod.setAttribute('smd')
 
     # set general values
     text_x = 0.
     text_y = max([args['pad_y'] / 2., args['part_y'] / 2.]) + args['courtyard'] + 0.75
 
-    kicad_mod.append(Text(type='reference', text='REF**', at=[text_x, -text_y], layer='F.SilkS'))
-    kicad_mod.append(Text(type='user', text='%R', at=[text_x, -text_y], layer='F.Fab'))
-    kicad_mod.append(Text(type='value', text=args['name'], at=[text_x, text_y], layer='F.Fab'))
+    kicad_mod.append(Property(name=Property.REFERENCE, text='REF**', at=[text_x, -text_y], layer='F.SilkS'))
+    kicad_mod.append(Text(text='${REFERENCE}', at=[text_x, -text_y], layer='F.Fab'))
+    kicad_mod.append(Property(name=Property.VALUE, text=args['name'], at=[text_x, text_y], layer='F.Fab'))
 
     # create silkscreen
     silk_x = args['part_x'] / 2.

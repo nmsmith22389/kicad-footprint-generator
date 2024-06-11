@@ -7,11 +7,9 @@ create custom KiCAD footprint. A big bunch of footprints of the KiCad library wa
 
 **Maintainer:** Thomas Pointhuber
 
-[![Build Status](https://travis-ci.org/pointhi/kicad-footprint-generator.svg?branch=master)](https://travis-ci.org/pointhi/kicad-footprint-generator)
-[![Code Climate](https://codeclimate.com/github/pointhi/kicad-footprint-generator/badges/gpa.svg)](https://codeclimate.com/github/pointhi/kicad-footprint-generator)
-[![Documentation Status](https://readthedocs.org/projects/kicad-footprint-generator/badge/?version=latest)](http://kicad-footprint-generator.readthedocs.io/en/latest/?badge=latest)
+[![Documentation Status](https://readthedocs.org/projects/kicad-footprint-generator/badge/?version=latest)](https://kicad-footprint-generator.readthedocs.io/en/latest/?badge=latest)
 
-**Supports:** Python 2.7 and 3.3+
+**Supports:** Python 3.7+
 
 ## About
 
@@ -37,7 +35,7 @@ When you serialize your footprint, the serialize command only has to handle base
 upon the base nodes. This allows us to write specialized nodes without worrying about the FileHandlers or other core systems.
 You simply create your special node, and the framework knows how to handle it seamlessly.
 
-Please look into the **[Documentation](http://kicad-footprint-generator.readthedocs.io/en/latest/)** for further details
+Please look into the **[Documentation](https://kicad-footprint-generator.readthedocs.io/en/latest/)** for further details
 
 ```
 KicadModTree        - The KicadModTree framework which is used for footprint generation
@@ -67,15 +65,15 @@ from KicadModTree import *
 footprint_name = "example_footprint"
 
 # init kicad footprint
-kicad_mod = Footprint(footprint_name)
+kicad_mod = Footprint(footprint_name, FootprintType.THT)
 kicad_mod.setDescription("A example footprint")
 kicad_mod.setTags("example")
 
 # set general values
-kicad_mod.append(Text(type='reference', text='REF**', at=[0, -3], layer='F.SilkS'))
-kicad_mod.append(Text(type='value', text=footprint_name, at=[1.5, 3], layer='F.Fab'))
+kicad_mod.append(Property(name=Property.REFERENCE, text='REF**', at=[0, -3], layer='F.SilkS'))
+kicad_mod.append(Property(name=Property.VALUE, text=footprint_name, at=[1.5, 3], layer='F.Fab'))
 
-# create silscreen
+# create silkscreen
 kicad_mod.append(RectLine(start=[-2, -2], end=[5, 2], layer='F.SilkS'))
 
 # create courtyard

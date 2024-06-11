@@ -51,9 +51,9 @@ class Model(Node):
         render_text = Node._getRenderTreeText(self)
 
         render_string = ['filename: {filename}'.format(filename=self.filename),
-                         'at: {at}'.format(at=self.at.render('(xyz {x} {y} {z})')),
-                         'scale: {scale}'.format(scale=self.scale.render('(xyz {x} {y} {z})')),
-                         'rotate: {rotate}'.format(rotate=self.rotate.render('(xyz {x} {y} {z})'))]
+                         'at: (xyz {x} {y} {z})'.format(**self.at.to_dict()),
+                         'scale: (xyz {x} {y} {z})'.format(*self.scale.to_dict()),
+                         'rotate: (xyz {x} {y} {z})'.format(**self.rotate.to_dict())]
 
         render_text += " [{}]".format(", ".join(render_string))
 

@@ -3,7 +3,8 @@
 import sys
 import os
 import math
-import time
+import enum
+from typing import Tuple
 
 # ensure that the kicad-footprint-generator directory is available
 # sys.path.append(os.environ.get('KIFOOTPRINTGENERATOR'))  # enable package import from parent directory
@@ -12,19 +13,28 @@ sys.path.append(os.path.join(sys.path[0], "..", "..", "kicad_mod"))  # load kica
 sys.path.append(os.path.join(sys.path[0], "..", ".."))  # load kicad_mod path
 
 from KicadModTree import *  # NOQA
-from footprint_global_properties import *
+from KicadModTree import Vector2D
+from KicadModTree import Footprint, PolygonLine, Polygon, Line, Arc
+from scripts.tools.footprint_global_properties import *
+from scripts.tools.geometry.bounding_box import BoundingBox
 
 # tool function for generating 3D-scripts
 def script3d_writevariable(file, line, varname, value):
     file.write("# {0}\nApp.ActiveDocument.Spreadsheet.set('A{1}', 'var {0} = '); App.ActiveDocument.Spreadsheet.set('B{1}', '{2}'); App.ActiveDocument.Spreadsheet.setAlias('B{1}', '{0}')\n".format(varname, line, value))
 
 
+def roundGUp(x: float, g: float) -> float:
+    return math.ceil(x / g) * g
+
+
+def roundGDown(x: float, g: float) -> float:
+    return math.floor(x / g) * g
+
+
 # round for grid g
-def roundG(x, g):
-    if (x > 0):
-        return math.ceil(x / g) * g
-    else:
-        return math.floor(x / g) * g
+def roundG(x: float, g: float) -> float:
+    return roundGUp(x, g) if x > 0 else roundGDown(x, g)
+
 
 # round for grid g
 def sqr(x):
@@ -35,6 +45,21 @@ def sqr(x):
 def roundCrt(x):
     return roundG(x, grid_crt)
 
+
+def courtyardFromBoundingBox(bbox: BoundingBox, off: float, grid: float) -> dict:
+    """
+    Get a courtyard of the given box, with some offset, rounded to the grid
+
+    :param bbox: bounding box of the body
+    :param off: clearance
+    :param grid: grid size to round to
+    """
+    return {
+        'left': roundGDown(bbox.left - off, grid),
+        'right': roundGUp(bbox.right + off, grid),
+        'top': roundGDown(bbox.top - off, grid),
+        'bottom': roundGUp(bbox.bottom + off, grid)
+    }
 
 # float-variant of range()
 def frange(x, y, jump):
@@ -350,19 +375,19 @@ def addCrossScrew(kicad_mod, x, y, radius, layer, width, roun=0.001):
     kicad_mod.append(kkt)
     dd = radius * 0.1 / 2
     dw = 0.8 * radius
-    kkt.append(PolygoneLine(polygone=[[roundG(-dw, roun), roundG(-dd, roun)],
-                                      [roundG(-dd, roun), roundG(-dd, roun)],
-                                      [roundG(-dd, roun), roundG(-dw, roun)],
-                                      [roundG(+dd, roun), roundG(-dw, roun)],
-                                      [roundG(+dd, roun), roundG(-dd, roun)],
-                                      [roundG(+dw, roun), roundG(-dd, roun)],
-                                      [roundG(+dw, roun), roundG(+dd, roun)],
-                                      [roundG(+dd, roun), roundG(+dd, roun)],
-                                      [roundG(+dd, roun), roundG(+dw, roun)],
-                                      [roundG(-dd, roun), roundG(+dw, roun)],
-                                      [roundG(-dd, roun), roundG(+dd, roun)],
-                                      [roundG(-dw, roun), roundG(+dd, roun)],
-                                      [roundG(-dw, roun), roundG(-dd, roun)]], layer=layer, width=width))
+    kkt.append(PolygonLine(polygon=[[roundG(-dw, roun), roundG(-dd, roun)],
+                                     [roundG(-dd, roun), roundG(-dd, roun)],
+                                     [roundG(-dd, roun), roundG(-dw, roun)],
+                                     [roundG(+dd, roun), roundG(-dw, roun)],
+                                     [roundG(+dd, roun), roundG(-dd, roun)],
+                                     [roundG(+dw, roun), roundG(-dd, roun)],
+                                     [roundG(+dw, roun), roundG(+dd, roun)],
+                                     [roundG(+dd, roun), roundG(+dd, roun)],
+                                     [roundG(+dd, roun), roundG(+dw, roun)],
+                                     [roundG(-dd, roun), roundG(+dw, roun)],
+                                     [roundG(-dd, roun), roundG(+dd, roun)],
+                                     [roundG(-dw, roun), roundG(+dd, roun)],
+                                     [roundG(-dw, roun), roundG(-dd, roun)]], layer=layer, width=width))
 
 
 # draw a circle with a cross-screw under 45 deg
@@ -373,7 +398,7 @@ def addCrossScrewWithKeepouts(kicad_mod, x, y, radius, layer, width, keepouts=[]
     kicad_mod.append(kkt)
     dd = radius * 0.1 / 2
     dw = 0.8 * radius
-    polygone = [[roundG(-dw, roun), roundG(-dd, roun)],
+    polygon = [[roundG(-dw, roun), roundG(-dd, roun)],
                 [roundG(-dd, roun), roundG(-dd, roun)],
                 [roundG(-dd, roun), roundG(-dw, roun)],
                 [roundG(+dd, roun), roundG(-dw, roun)],
@@ -386,7 +411,7 @@ def addCrossScrewWithKeepouts(kicad_mod, x, y, radius, layer, width, keepouts=[]
                 [roundG(-dd, roun), roundG(+dd, roun)],
                 [roundG(-dw, roun), roundG(+dd, roun)],
                 [roundG(-dw, roun), roundG(-dd, roun)]];
-    addPolyLineWithKeepout(kicad_mod, polygone, layer, width, keepouts)
+    addPolyLineWithKeepout(kicad_mod, polygon, layer, width, keepouts)
 
 
 # split a vertical line so it does not interfere with keepout areas defined as [[x0,x1,y0,y1], ...]
@@ -468,15 +493,15 @@ def allBevelRect(model, x, size, layer, width, bevel_size=0.2):
     if bevel_size <= 0:
         model.append(RectLine(start=x, end=[x[0] + size[0], x[1] + size[1]], layer=layer, width=width))
     else:
-        model.append(PolygoneLine(polygone=[[x[0] + bevel_size, x[1]],
-                                            [x[0] + size[0] - bevel_size, x[1]],
-                                            [x[0] + size[0], x[1] + bevel_size],
-                                            [x[0] + size[0], x[1] + size[1] - bevel_size],
-                                            [x[0] + size[0] - bevel_size, x[1] + size[1]],
-                                            [x[0] + bevel_size, x[1] + size[1]],
-                                            [x[0], x[1] + size[1] - bevel_size],
-                                            [x[0], x[1] + bevel_size],
-                                            [x[0] + bevel_size, x[1]]], layer=layer, width=width))
+        model.append(PolygonLine(polygon=[[x[0] + bevel_size, x[1]],
+                                           [x[0] + size[0] - bevel_size, x[1]],
+                                           [x[0] + size[0], x[1] + bevel_size],
+                                           [x[0] + size[0], x[1] + size[1] - bevel_size],
+                                           [x[0] + size[0] - bevel_size, x[1] + size[1]],
+                                           [x[0] + bevel_size, x[1] + size[1]],
+                                           [x[0], x[1] + size[1] - bevel_size],
+                                           [x[0], x[1] + bevel_size],
+                                           [x[0] + bevel_size, x[1]]], layer=layer, width=width))
 
 # draw a trapezoid with a given angle of the vertical lines
 #
@@ -492,25 +517,25 @@ def allTrapezoid(model, x, size, angle, layer, width):
     if angle == 0:
         model.append(RectLine(start=x, end=[x[0] + size[0], x[1] + size[1]], layer=layer, width=width))
     elif angle<0:
-        model.append(PolygoneLine(polygone=[[x[0] + dx, x[1]],
-                                            [x[0] + size[0] - dx, x[1]],
-                                            [x[0] + size[0], x[1] + size[1]],
-                                            [x[0], x[1] + size[1] ],
-                                            [x[0] + dx, x[1]]], layer=layer, width=width))
+        model.append(PolygonLine(polygon=[[x[0] + dx, x[1]],
+                                           [x[0] + size[0] - dx, x[1]],
+                                           [x[0] + size[0], x[1] + size[1]],
+                                           [x[0], x[1] + size[1] ],
+                                           [x[0] + dx, x[1]]], layer=layer, width=width))
     elif angle>0:
-        model.append(PolygoneLine(polygone=[[x[0], x[1]],
-                                            [x[0] + size[0], x[1]],
-                                            [x[0] + size[0]-dx, x[1] + size[1]],
-                                            [x[0] + dx, x[1] + size[1] ],
-                                            [x[0] , x[1]]], layer=layer, width=width))
+        model.append(PolygonLine(polygon=[[x[0], x[1]],
+                                           [x[0] + size[0], x[1]],
+                                           [x[0] + size[0]-dx, x[1] + size[1]],
+                                           [x[0] + dx, x[1] + size[1] ],
+                                           [x[0] , x[1]]], layer=layer, width=width))
 
 # draw a downward equal-sided triangle
 def allEqualSidedDownTriangle(model, xcenter, side_length, layer, width):
     h=sqrt(3)/6*side_length
-    model.append(PolygoneLine(polygone=[[xcenter[0]-side_length/2, xcenter[1]-h],
-                                        [xcenter[0]+side_length/2, xcenter[1]-h],
-                                        [xcenter[0], xcenter[1]+2*h],
-                                        [xcenter[0]-side_length/2, xcenter[1]-h],
+    model.append(PolygonLine(polygon=[[xcenter[0] - side_length / 2, xcenter[1] - h],
+                                       [xcenter[0]+side_length/2, xcenter[1]-h],
+                                       [xcenter[0], xcenter[1]+2*h],
+                                       [xcenter[0]-side_length/2, xcenter[1]-h],
                                        ], layer=layer, width=width))
 
 # draw a trapezoid with a given angle of the vertical lines and rounded corners
@@ -614,8 +639,8 @@ def fillCircle(model, center, radius, layer, width):
 #
 #
 def bevelRectTL(model, x, size, layer, width, bevel_size=1):
-    model.append(PolygoneLine(
-        polygone=[[x[0] + bevel_size, x[1]], [x[0] + size[0], x[1]], [x[0] + size[0], x[1] + size[1]],
+    model.append(PolygonLine(
+        polygon=[[x[0] + bevel_size, x[1]], [x[0] + size[0], x[1]], [x[0] + size[0], x[1] + size[1]],
                   [x[0], x[1] + size[1]], [x[0], x[1] + bevel_size], [x[0] + bevel_size, x[1]]], layer=layer,
         width=width))
 
@@ -631,9 +656,9 @@ def bevelRectTL(model, x, size, layer, width, bevel_size=1):
 #
 #
 def bevelRectBL(model, x, size, layer, width, bevel_size=1):
-    model.append(PolygoneLine(polygone=[[x[0], x[1]], [x[0] + size[0], x[1]], [x[0] + size[0], x[1] + size[1]],
-                                        [x[0] + bevel_size, x[1] + size[1]], [x[0], x[1] + size[1] - bevel_size],
-                                        [x[0], x[1]]], layer=layer, width=width))
+    model.append(PolygonLine(polygon=[[x[0], x[1]], [x[0] + size[0], x[1]], [x[0] + size[0], x[1] + size[1]],
+                                       [x[0] + bevel_size, x[1] + size[1]], [x[0], x[1] + size[1] - bevel_size],
+                                       [x[0], x[1]]], layer=layer, width=width))
 
 # draws a DIP-package with half-circle at the top
 #
@@ -646,8 +671,8 @@ def bevelRectBL(model, x, size, layer, width, bevel_size=1):
 # |          |
 # +----------+
 def DIPRectT(model, x, size, layer, width, marker_size=2):
-    model.append(PolygoneLine(
-        polygone=[[x[0] + size[0] / 2 - marker_size / 2, x[1]], [x[0], x[1]], [x[0], x[1] + size[1]],
+    model.append(PolygonLine(
+        polygon=[[x[0] + size[0] / 2 - marker_size / 2, x[1]], [x[0], x[1]], [x[0], x[1] + size[1]],
                   [x[0] + size[0], x[1] + size[1]], [x[0] + size[0], x[1]],
                   [x[0] + size[0] / 2 + marker_size / 2, x[1]]], layer=layer, width=width))
     model.append(Arc(center=[x[0] + size[0] / 2, x[1]], start=[x[0] + size[0] / 2 - marker_size / 2, x[1]], angle=-180,
@@ -662,12 +687,12 @@ def DIPRectT(model, x, size, layer, width, marker_size=2):
 # |-/             |
 # +---------------+
 def DIPRectL(model, x, size, layer, width, marker_size=2):
-    model.append(PolygoneLine(polygone=[[x[0], x[1] + size[1] / 2 - marker_size / 2],
-                                        [x[0], x[1]],
-                                        [x[0] + size[0], x[1]],
-                                        [x[0] + size[0], x[1] + size[1]],
-                                        [x[0], x[1] + size[1]],
-                                        [x[0], x[1] + size[1] / 2 + marker_size / 2]], layer=layer, width=width))
+    model.append(PolygonLine(polygon=[[x[0], x[1] + size[1] / 2 - marker_size / 2],
+                                       [x[0], x[1]],
+                                       [x[0] + size[0], x[1]],
+                                       [x[0] + size[0], x[1] + size[1]],
+                                       [x[0], x[1] + size[1]],
+                                       [x[0], x[1] + size[1] / 2 + marker_size / 2]], layer=layer, width=width))
     model.append(Arc(center=[x[0], x[1] + size[1] / 2], start=[x[0], x[1] + size[1] / 2 - marker_size / 2], angle=180,
                      layer=layer, width=width))
 
@@ -740,6 +765,222 @@ def THTQuartzIncomplete(model, x, size, angle, layer, width):
         model.append(Arc(center=cl, start=xbl, angle=angle, layer=layer, width=width))
         model.append(Arc(center=cr, start=xbr, angle=-angle, layer=layer, width=width))
 
+
+def TriangleArrowPointingSouthEast(model: Footprint, apex_position: Vector2D, size: float,
+                                   layer: str, line_width_mm: float):
+    """Make and append a 45-degree south-east-pointing triangle
+
+    Size is between nodes, overall size will include 1*line_width overall
+
+        + ---
+       /|  |<-size
+      +-+ ---
+
+    :param size: size of the triangle
+    """
+
+    arrow_pts = [
+        apex_position,
+        apex_position + [-size, 0],
+        apex_position + [0, -size],
+        apex_position
+    ]
+
+    poly = Polygon(nodes=arrow_pts, layer=layer, width=line_width_mm)
+    model.append(poly)
+
+
+def TriangleArrowPointingSouth(model: Footprint, apex_position: Vector2D,
+                               size: float, length: float,
+                               layer: str, line_width_mm: float):
+    r"""Make and append a south-pointing triangle
+
+    Size is the overall size of the triangle, including line_width overall
+
+      size
+    |-----|
+    +-----+  ---
+     \   /    |
+      \ /     |length
+       +     ---
+
+    :param size: size of the triangle
+    """
+
+    model.append(
+        draw_triangle_pointing_south(apex_position, size, length, layer, line_width_mm)
+    )
+
+
+def draw_triangle_pointing_south(apex_position: Vector2D, size: float, length: float, layer: str, line_width_mm: float):
+    """
+    Draw an equilateral triangle pointing south-east.
+    """
+    arrow_pts = [
+        apex_position,
+        apex_position + [-size / 2, -length],
+        apex_position + [size / 2, -length],
+        apex_position
+    ]
+
+    return Polygon(nodes=arrow_pts, layer=layer, width=line_width_mm)
+
+
+def TriangleArrowPointingEast(model: Footprint, apex_position: Vector2D, size: float,
+                              length: float, layer: str, line_width_mm: float):
+    r"""Make and append an east-pointing triangle
+
+    Size is between nodes, overall size will include 1*line_width overall
+
+    +\
+    | \
+    |  +
+    | /
+    +/
+
+    :param size: size of the triangle
+    """
+
+    arrow_pts = [
+        apex_position,
+        apex_position + [-length, -size * 0.50],
+        apex_position + [-length, size * 0.50],
+        apex_position
+    ]
+
+    poly = Polygon(nodes=arrow_pts, layer=layer, width=line_width_mm)
+    model.append(poly)
+
+
+def CornerBracketWithArrowPointingSouthEast(model: Footprint, apex: Vector2D,
+                                            arrow_size: float,
+                                            arrow_length: float,
+                                            bracket_max_x: float,
+                                            bracket_max_y: float,
+                                            layer: str,
+                                            line_width_mm: float,
+                                            silk_min_len: float):
+    """Create an south-east triangular arrow and 90-degree bracket lines
+
+      +
+     /|
+    +-+  ---
+            | bracket_max_x
+      |
+      | __bracket_max_y
+
+    """
+    # minimum clearance between nodes of the lines
+    silk_silk_node_clearance = 2 * line_width_mm
+
+    TriangleArrowPointingSouthEast(model, apex, arrow_size, arrow_length,
+                                   layer, line_width_mm)
+
+    pin_1_silk_line_len_x = bracket_max_x - (apex.x + silk_silk_node_clearance)
+    pin_1_silk_line_len_y = bracket_max_y - (apex.y + silk_silk_node_clearance)
+
+    # There's a gap to avoid merging with the arrow
+    # make sure there's enough line left to draw the lines
+
+    if pin_1_silk_line_len_x > silk_min_len:
+        tl_horz_line = Line(
+            start=Vector2D(apex.x + 2 * line_width_mm, apex.y),
+            end=Vector2D(bracket_max_x, apex.y),
+            width=line_width_mm)
+        model.append(tl_horz_line)
+
+    if pin_1_silk_line_len_y > silk_min_len:
+        tl_vert_line = Line(
+            start=Vector2D(apex.x, apex.y + 2 * line_width_mm),
+            end=Vector2D(apex.x, bracket_max_y),
+            width=line_width_mm)
+        model.append(tl_vert_line)
+
+
+def CornerBracketWithArrowPointingSouth(model: Footprint, apex: Vector2D,
+                                        arrow_size: float,
+                                        arrow_length: float,
+                                        bracket_max_x: float,
+                                        bracket_max_y: float,
+                                        layer: str,
+                                        line_width_mm: float,
+                                        silk_min_len: float):
+    r"""Create an south-east triangular arrow and 90-degree bracket lines
+
+    Move the whole triangle left if it will hit the pad on the right.
+
+    +---+
+     \ /
+      +  ---
+            | bracket_max_x
+      |
+      | __bracket_max_y
+
+    """
+
+    # minimum clearance between nodes of the lines
+    silk_silk_node_clearance = 2 * line_width_mm
+
+    # shove arrow left away from the pad on the right
+    apex.x = min(apex.x, bracket_max_x - arrow_size / 2)
+
+    # Round the apex away from the body corner
+    apex.x = roundGDown(apex.x, 0.01)
+    apex.y = roundGDown(apex.y, 0.01)
+
+    TriangleArrowPointingSouth(model, apex, arrow_size, arrow_length,
+                               layer, line_width_mm)
+
+    # a little extra clearance on the side of the arrow
+    pin_1_silk_line_len_x = bracket_max_x - (apex.x + silk_silk_node_clearance + line_width_mm / 2)
+    pin_1_silk_line_len_y = bracket_max_y - (apex.y + silk_silk_node_clearance)
+
+    # There's a gap to avoid merging with the arrow
+    # make sure there's enough line left to draw the lines
+
+    if pin_1_silk_line_len_x > silk_min_len:
+        tl_horz_line = Line(
+            start=Vector2D(bracket_max_x, apex.y),
+            end=Vector2D(bracket_max_x - pin_1_silk_line_len_x, apex.y),
+            width=line_width_mm)
+        model.append(tl_horz_line)
+
+    if pin_1_silk_line_len_y > silk_min_len:
+        tl_vert_line = Line(
+            start=Vector2D(apex.x, bracket_max_y),
+            end=Vector2D(apex.x, bracket_max_y - pin_1_silk_line_len_y),
+            width=line_width_mm)
+        model.append(tl_vert_line)
+
+
+class SilkArrowSize(enum.Enum):
+    """
+    Silkscreen arrow edge length in mm.
+    """
+    SMALL = 0.4
+    MEDIUM = 0.6
+    LARGE = 0.8
+    HUGE = 1.0  # IPC maximum
+
+
+def getStandardSilkArrowSize(size: SilkArrowSize,
+                             silk_line_width: float) -> Tuple[float, float]:
+    """
+    Get the normal size of the arrow for a given enum value.
+
+    This gives the "node-node" size.
+    """
+    # slight squashed relative to equilateral triangle
+    # reduces intrusion of arrows into other footprints' spaces
+    standard_arrow_aspect_ratio = 0.7
+
+    # allows for 0.01mm grid-snap on each side of the apex
+    width = roundGDown(size.value - silk_line_width, 0.02)
+    length = roundGDown(width * standard_arrow_aspect_ratio, 0.01)
+
+    return width, length
+
+
 #
 # This is an alternative to using silk keepout areas for simple cases.
 # It calculates a new endpoint for a horizontal or vertical line such that
@@ -754,12 +995,12 @@ def THTQuartzIncomplete(model, x, size, angle, layer, width):
 #   - moving_point: The point that will be moved (toward the fixed point)
 #     if the line intersects the pads clearance area.
 #   - silk_pad_offset: offset between edge of the pad and silk line center.
-#   - min_lenght: minimum silk line length
+#   - min_length: minimum silk line length
 #
 # Returns a new point along the line or None if no valid point could be found
 #
 def nearestSilkPointOnOrthogonalLineSmallClerance(pad_size, pad_position, pad_radius, fixed_point, moving_point,
-        silk_pad_offset_default, silk_pad_offset_reduced, min_lenght):
+        silk_pad_offset_default, silk_pad_offset_reduced, min_length):
     if silk_pad_offset_reduced < silk_pad_offset_default:
         offset = (silk_pad_offset_default, silk_pad_offset_reduced)
     else:
@@ -768,7 +1009,7 @@ def nearestSilkPointOnOrthogonalLineSmallClerance(pad_size, pad_position, pad_ra
     for silk_pad_offset in (silk_pad_offset_default, silk_pad_offset_reduced):
         point = nearestSilkPointOnOrthogonalLine(
                 pad_size, pad_position, pad_radius, fixed_point, moving_point,
-                silk_pad_offset, min_lenght)
+                silk_pad_offset, min_length)
         if point is not None:
             return point
     return None
@@ -785,12 +1026,12 @@ def nearestSilkPointOnOrthogonalLineSmallClerance(pad_size, pad_position, pad_ra
 #   - moving_point: The point that will be moved (toward the fixed point)
 #     if the line intersects the pads clearance area.
 #   - silk_pad_offset: offset between edge of the pad and silk line center.
-#   - min_lenght: minimum silk line length
+#   - min_length: minimum silk line length
 #
 # Returns a new point along the line or None if no valid point could be found
 #
 def nearestSilkPointOnOrthogonalLine(pad_size, pad_position, pad_radius, fixed_point, moving_point,
-        silk_pad_offset, min_lenght):
+        silk_pad_offset, min_length):
     if fixed_point[0] == moving_point[0]:
         normal_dir_idx = 0
     elif fixed_point[1] == moving_point[1]:
@@ -827,10 +1068,73 @@ def nearestSilkPointOnOrthogonalLine(pad_size, pad_position, pad_radius, fixed_p
         ep_new[inline_dir_idx] =  pad_position[inline_dir_idx] -\
             sign*(pad_size[inline_dir_idx]/2 + silk_pad_offset)
 
-    if sign*(ep_new[inline_dir_idx] - fixed_point[inline_dir_idx]) <  min_lenght:
+    if sign*(ep_new[inline_dir_idx] - fixed_point[inline_dir_idx]) <  min_length:
         return None
 
     if abs(ep_new[inline_dir_idx] - fixed_point[inline_dir_idx]) > math.fabs(moving_point[inline_dir_idx] - fixed_point[inline_dir_idx]):
         return moving_point
 
     return ep_new
+
+#
+# Check if c point intersects the line segment from a to b points
+#
+# Parameters:
+#    a: point coordinates as Vector2D
+#    b: point coordinates as Vector2D
+#    c: point coordinates as Vector2D
+#
+# Return iff point c intersects the line segment from a to b.
+#
+# Code adapted from post from Darius Bacon (code posted at 2008) at:
+# https://stackoverflow.com/questions/328107/how-can-you-determine-a-point-is-between-two-other-points-on-a-line-segment
+#
+# StackOverflow licensing is CC BY-SA 2.5. Check at: https://stackoverflow.com/help/licensing
+#
+def point_is_on_segment(a, b, c):
+    "Return true iff point c intersects the line segment from a to b."
+    # (or the degenerate case that all 3 points are coincident)
+    return (collinear_points(a, b, c)
+            and (point_within(a.x, c.x, b.x) if a.x != b.x else
+                 point_within(a.y, c.y, b.y)))
+
+#
+# Check if a,b,c points all lie on the same line.
+#
+# Parameters:
+#    a: point coordinates as Vector2D
+#    b: point coordinates as Vector2D
+#    c: point coordinates as Vector2D
+#
+# Return true iff a, b, and c all lie on the same line.
+#
+# Code adapted from post from Darius Bacon (code posted at 2008) at:
+# https://stackoverflow.com/questions/328107/how-can-you-determine-a-point-is-between-two-other-points-on-a-line-segment
+#
+# StackOverflow licensing is CC BY-SA 2.5. Check at: https://stackoverflow.com/help/licensing
+#
+def collinear_points(a, b, c):
+    "Return true iff a, b, and c all lie on the same line."
+    if  ( abs(((b.x - a.x) * (c.y - a.y)) - ((c.x - a.x) * (b.y - a.y)) )) <= 0.000001:
+        return True
+    else:
+        return False
+
+#
+# Check if q point is between p and r points
+#
+# Parameters:
+#    p: scalar coordinate
+#    q: scalar coordinate
+#    r: scalar coordinate
+#
+# Return true iff q is between p and r (inclusive).
+#
+# Code adapted from post from Darius Bacon (code posted at 2008) at:
+# https://stackoverflow.com/questions/328107/how-can-you-determine-a-point-is-between-two-other-points-on-a-line-segment
+#
+# StackOverflow licensing is CC BY-SA 2.5. Check at: https://stackoverflow.com/help/licensing
+#
+def point_within(p, q, r):
+    "Return true iff q is between p and r (inclusive)."
+    return p <= q <= r or r <= q <= p

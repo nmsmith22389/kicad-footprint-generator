@@ -17,15 +17,13 @@ from KicadModTree.Vector import *
 from KicadModTree.nodes.Node import Node
 
 
-class Text(Node):
+class _TextBase(Node):
     r"""Add a Line to the render tree
 
     :param \**kwargs:
         See below
 
     :Keyword Arguments:
-        * *type* (``str``) --
-          type of text
         * *text* (``str``) --
           text which is been visualized
         * *at* (``Vector2D``) --
@@ -46,18 +44,15 @@ class Text(Node):
     :Example:
 
     >>> from KicadModTree import *
-    >>> Text(type='reference', text='REF**', at=[0, -3], layer='F.SilkS')
-    >>> Text(type='value', text="footprint name", at=[0, 3], layer='F.Fab')
+    >>> Text(text='REF**', at=[0, -3], layer='F.SilkS')
+    >>> Property(name='Value', text="footprint name", at=[0, 3], layer='F.Fab')
+    >>> Text(text='test', at=[0, 0], layer='Cmts.User')
     """
 
-    TYPE_REFERENCE = 'reference'
-    TYPE_VALUE = 'value'
-    TYPE_USER = 'user'
-    _TYPES = [TYPE_REFERENCE, TYPE_VALUE, TYPE_USER]
+    text: str
 
     def __init__(self, **kwargs):
         Node.__init__(self)
-        self._initType(**kwargs)
 
         self.text = kwargs['text']
         self.at = Vector2D(kwargs['at'])
@@ -67,13 +62,9 @@ class Text(Node):
         self.layer = kwargs.get('layer', 'F.SilkS')
         self.size = Vector2D(kwargs.get('size', [1, 1]))
         self.thickness = kwargs.get('thickness', 0.15)
+        self.justify = kwargs.get('justify', None)
 
         self.hide = kwargs.get('hide', False)
-
-    def _initType(self, **kwargs):
-        self.type = kwargs['type']
-        if self.type not in Text._TYPES:
-            raise ValueError('Illegal type selected for text field.')
 
     def rotate(self, angle, origin=(0, 0), use_degrees=True):
         r""" Rotate text around given origin
@@ -114,18 +105,59 @@ class Text(Node):
         max_x = self.at['x']+width/2.
         max_y = self.at['y']+height/2.
 
-        return Node.calculateBoundingBox({'min': Vector2D(min_x, min_y), 'max': Vector2D(max_x, max_y)})
+        return {'min': Vector2D(min_x, min_y), 'max': Vector2D(max_x, max_y)}
 
     def _getRenderTreeText(self):
         render_text = Node._getRenderTreeText(self)
 
-        render_string = ['type: "{}"'.format(self.type),
-                         'text: "{}"'.format(self.text),
-                         'at: {}'.format(self.at.render('(at {x} {y})')),
+        render_string = ['text: "{}"'.format(self.text),
+                         'at: (at {x} {y})'.format(**self.at.to_dict()),
                          'layer: {}'.format(self.layer),
-                         'size: {}'.format(self.size.render('(size {x} {y})')),
+                         'size: (size {x} {y})'.format(**self.size.to_dict()),
                          'thickness: {}'.format(self.thickness)]
+        if (self.justify):
+            render_string.append('justify: {}'.format(self.justify))
 
         render_text += " [{}]".format(", ".join(render_string))
 
         return render_text
+
+
+class Text(_TextBase):
+    """
+    A non-field PCB_TEXT in the KiCad code, or gr_text etc in the s-exp
+    """
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        # Other gr_text/fp_text-specific members here
+        # locked (as in can't be selected status) could go here, except
+        # that it applies only to gr_text, not fp_text so we don't need it now.
+
+
+class Property(_TextBase):
+    """
+    A PCB_FIELD in the KiCad code, which is a subclass of
+    PCB_TEXT. 'property' in the s-expr format.
+
+    Note: this is not a derived class of Text, as Text could have members
+    that don't apply to Property instances.
+    """
+
+    REFERENCE = 'Reference'
+    VALUE = 'Value'
+    DATASHEET = 'Datasheet'
+    DESCRIPTION = 'Description'
+    FOOTPRINT = 'Footprint'
+
+    _name: str
+
+    def __init__(self, name: str, **kwargs):
+        super().__init__(**kwargs)
+
+        # fields have canonical names
+        self._name = name
+
+    @property
+    def name(self) -> str:
+        return self._name

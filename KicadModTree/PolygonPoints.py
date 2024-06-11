@@ -26,7 +26,7 @@ class PolygonPoints(object):
     :Keyword Arguments:
         * *nodes* (``list(Point)``) --
           2D points describing the "polygon"
-        * *polygone* (``list(Point)``) --
+        * *polygon* (``list(Point)``) --
           alternative naming for the nodes parameter for backwards compatibility.
         * *x_mirror* (``[int, float](mirror offset)``) --
           mirror x direction around offset "point"
@@ -48,17 +48,17 @@ class PolygonPoints(object):
         if 'nodes' in kwargs:
             for n in kwargs['nodes']:
                 self.nodes.append(Vector2D(n))
-            if 'polygone' in kwargs:
-                raise KeyError('Use of "nodes" and "polygone" parameter at the same time is not supported.')
-        elif 'polygone' in kwargs:
+            if 'polygon' in kwargs:
+                raise KeyError('Use of "nodes" and "polygon" parameter at the same time is not supported.')
+        elif 'polygon' in kwargs:
             warnings.warn(
-                "polygone argument is deprecated, use nodes instead",
+                "polygon argument is deprecated, use nodes instead",
                 DeprecationWarning
             )
-            for n in kwargs['polygone']:
+            for n in kwargs['polygon']:
                 self.nodes.append(Vector2D(n))
         else:
-            raise KeyError('Either "nodes" or "polygone" parameter is required for creating a PolyPoint instance.')
+            raise KeyError('Either "nodes" or "polygon" parameter is required for creating a PolyPoint instance.')
 
         for point in self.nodes:
             if self.mirror[0] is not None:
@@ -74,15 +74,18 @@ class PolygonPoints(object):
             self.mirror[1] = kwargs['y_mirror']
 
     def calculateBoundingBox(self):
-        min = max = self.getRealPosition(self.nodes[0])
-
-        for n in self.nodes:
-            min.x = min([min.x, n.x])
-            min.y = min([min.y, n.y])
-            max.x = max([max.x, n.x])
-            max.y = max([max.y, n.y])
-
-        return Node.calculateBoundingBox({'min': min, 'max': max})
+        # getRealPosition is not implemented for PolygonPoints, therefore calculateBoundingBox fails.
+        # This was obviously dead code so far, now we raise an exception.
+        raise NotImplementedError("calculateBoundingBox is not implemeted for %s" % self.__class__.__name__)
+        # bb_min = bb_max = self.getRealPosition(self.nodes[0])
+        #
+        # for n in self.nodes:
+        #     bb_min.x = min([bb_min.x, n.x])
+        #     bb_min.y = min([bb_min.y, n.y])
+        #     bb_max.x = max([bb_max.x, n.x])
+        #     bb_max.y = max([bb_max.y, n.y])
+        #
+        # return {'min': bb_min, 'max': bb_max}
 
     def findNearestPoints(self, other):
         r""" Find the nearest points for two polygons

@@ -1,6 +1,6 @@
 # Kicad currently does not support adding keepout zones directly to footprints
-# For this reason the library maintainance team decided to communicate keepouts as follows:
-#  - A polygone outlining the keepout area (on layer Dwgs.User)
+# For this reason the library maintenance team decided to communicate keepouts as follows:
+#  - A polygon outlining the keepout area (on layer Dwgs.User)
 #  - Hatching of this area on the same layer
 #  - Text on Cmts.User: KEEPOUT (with additional information if necessary)
 
@@ -48,7 +48,7 @@ def addRectangularKeepout(kicad_mod, center, size, text='KEEPOUT', config=KEEPOU
         thickness = config['text']['fontwidth'] * fs
 
 
-    kicad_mod.append(Text(type='user', text=text,
+    kicad_mod.append(Text(text=text,
         at=center, rotation=rot,
         layer=config['text']['layer'], size=size,
         thickness=thickness))

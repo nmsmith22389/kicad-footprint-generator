@@ -1,0 +1,40 @@
+(footprint "avoid_circle"
+	(version 20240108)
+	(generator "kicad-footprint-generator")
+	(layer "F.Cu")
+	(attr smd)
+	(fp_circle
+		(center 3 3.5)
+		(end 3.3 3.5)
+		(stroke
+			(width 0.01)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(fill none)
+	)
+	(pad "1" smd custom
+		(at 2 2.5)
+		(size 1.445 1.445)
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(options
+			(clearance outline)
+			(anchor circle)
+		)
+		(primitives
+			(gr_poly
+				(pts
+					(xy -0.875 -0.693665)
+					(xy -0.443665 -1.125)
+					(xy 0.443665 -1.125)
+					(xy 0.875 -0.693665)
+					(xy 0.875 0.693665)
+					(xy 0.443665 1.125)
+					(xy -0.443665 1.125)
+					(xy -0.875 0.693665)
+				)
+				(width 0)
+			)
+		)
+	)
+)

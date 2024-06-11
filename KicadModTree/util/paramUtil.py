@@ -23,17 +23,17 @@ def toNumberArray(value, length=2, min_value=1, member_type=int):
 
     :param value:
         Possible input types:
-          * numnber (int or float) -> returns array filled with copies of value
-          * dict -> arreay created with values for keys 'x', 'y', 'z'.
+          * number (int or float) -> returns array filled with copies of value
+          * dict -> array created with values for keys 'x', 'y', 'z'.
             dict only supported for len 2 and 3
           * list or tuple -> truncated to length
-          * Vector -> truncated to lenght
+          * Vector -> truncated to length
 
     :param length: (``int``) -- default: 2
         Defines the length of the resulting array
 
     :min_value: (``int``) -- default: 1
-        Defines the minimum alowed value (raise value error if too low)
+        Defines the minimum allowed value (raise value error if too low)
         None -> No check
 
     :param mamber_type: (``type``) -- default: <type: int>
@@ -52,7 +52,8 @@ def toNumberArray(value, length=2, min_value=1, member_type=int):
             result = value[:length]
     elif type(value) in [Vector2D, Vector3D]:
         if len(value) < length:
-            raise TypeError('Vector dimensions ({}) are too low. Must be at least {}'.format(len(value), length))
+            raise TypeError(
+                'Vector dimensions ({}) are too low. Must be at least {}'.format(len(value), length))
         result = list(value)
     else:
         raise TypeError('Unsupported type: {}'.format(type(value)))
@@ -60,7 +61,8 @@ def toNumberArray(value, length=2, min_value=1, member_type=int):
     result = [member_type(v) for v in result]
 
     if min_value is not None and isAnyLarger(result, min_value, False):
-        raise ValueError("At least one value in ({}) too small. Linit is {}.".format(result, min_value))
+        raise ValueError(
+            "At least one value in ({}) too small. Linit is {}.".format(result, min_value))
 
     return result
 
@@ -70,17 +72,17 @@ def toIntArray(value, length=2, min_value=1):
 
     :param value:
         Possible input types:
-          * numnber (int or float) -> returns array filled with copies of value
-          * dict -> arreay created with values for keys 'x', 'y', 'z'.
+          * number (int or float) -> returns array filled with copies of value
+          * dict -> array created with values for keys 'x', 'y', 'z'.
             dict only supported for len 2 and 3
           * list or tuple -> truncated to length
-          * Vector -> truncated to lenght
+          * Vector -> truncated to length
 
     :param length: (``int``) -- default: 2
         Defines the length of the resulting array
 
     :min_value: (``int``) -- default: 1
-        Defines the minimum alowed value (raise value error if too low)
+        Defines the minimum allowed value (raise value error if too low)
         None -> No check
     """
     return toNumberArray(value, length, min_value, member_type=int)
@@ -91,17 +93,17 @@ def toFloatArray(value, length=2, min_value=1):
 
     :param value:
         Possible input types:
-          * numnber (int or float) -> returns array filled with copies of value
-          * dict -> arreay created with values for keys 'x', 'y', 'z'.
+          * number (int or float) -> returns array filled with copies of value
+          * dict -> array created with values for keys 'x', 'y', 'z'.
             dict only supported for len 2 and 3
           * list or tuple -> truncated to length
-          * Vector -> truncated to lenght
+          * Vector -> truncated to length
 
     :param length: (``int``) -- default: 2
         Defines the length of the resulting array
 
     :min_value: (``int``) -- default: 1
-        Defines the minimum alowed value (raise value error if too low)
+        Defines the minimum allowed value (raise value error if too low)
         None -> No check
     """
     return toNumberArray(value, length, min_value, member_type=float)
@@ -114,7 +116,7 @@ def isAnyLarger(values, low_limits, must_be_larger=False):
         The values to check.
 
     :param low_limit: (``int``)
-        Defines the minimum alowed value (raise value error if too low)
+        Defines the minimum allowed value (raise value error if too low)
         None -> No check
 
     :param must_be_larger: (``bool``) -- default: True
@@ -140,7 +142,7 @@ def toVectorUseCopyIfNumber(value, length=2, low_limit=None, must_be_larger=True
         Defines the dimension of the resulting vector
 
     :param low_limit: (``int``) -- default: None
-        Defines the minimum alowed value (raise value error if too low)
+        Defines the minimum allowed value (raise value error if too low)
         None -> No check
 
     :param must_be_larger: (``bool``) -- default: True
@@ -161,6 +163,81 @@ def toVectorUseCopyIfNumber(value, length=2, low_limit=None, must_be_larger=True
         raise ValueError("length must be 2 or 3")
 
     if low_limit is not None and isAnyLarger(result, low_limit, must_be_larger):
-        raise ValueError("One value in ({}) too small. Limit is {}.".format(result, low_limit))
+        raise ValueError(
+            "One value in ({}) too small. Limit is {}.".format(result, low_limit))
 
     return result
+
+
+def getOptionalBoolTypeParam(
+        kwargs: dict, param_name, default_value=None):
+    val = kwargs.get(param_name, default_value)
+    if val is not None:
+        if ((isinstance(val, bool) and val)
+                or (val == 1)
+                or (isinstance(val, str) and (str(val).lower() == "true" or str(val).lower() == "yes"))):
+            return True
+        elif ((isinstance(val, bool) and not val)
+                or (val == 0)
+                or (isinstance(val, str) and (str(val).lower() == "false" or str(val).lower() == "no"))):
+            return False
+        return default_value
+    return val
+
+
+def getOptionalNumberTypeParam(
+        kwargs: dict, param_name, default_value=None,
+        low_limit=None, high_limit=None, allow_equal_limit=True):
+    r""" Get a named parameter from packed dict and guarantee it is a number (float or int)
+
+    :param param_name:
+        The name of the parameter (=key)
+
+    :param default_value: -- default: None
+        The value to be used if the parameter is not in the dict
+
+    :param low_limit: -- default: None
+        The minimum allowable value
+
+    :param high_limit: -- default: None
+        The maximum allowable value
+
+    :param allow_equal_limit: -- default: True
+        Limits are included in range of allowable values
+        (min <= x <= max if true else min < x < max)
+
+    :param **kwargs:
+        The parameters as packed dict
+    """
+    val = kwargs.get(param_name, default_value)
+    if val is not None:
+        if type(val) not in [int, float]:
+            raise TypeError(
+                '{} needs to be of type int or float'.format(param_name))
+        if low_limit is not None:
+            if val < low_limit or (val == low_limit and not allow_equal_limit):
+                raise ValueError(
+                    '{} with value {} violates the low limit of {}'
+                    .format(param_name, val, low_limit))
+        if high_limit is not None:
+            if val > high_limit or (val == low_limit and not allow_equal_limit):
+                raise ValueError(
+                    '{} with value {} violates the high limit of {}'
+                    .format(param_name, val, high_limit))
+    return val
+
+
+def round_to(value, base):
+    r""" Round a value to a given base value
+
+    :param value:
+        The value to round
+
+    :param base:
+        The base value. The resulting value will be rounded to a multiple of it
+
+    :return:
+        The rounded value
+    """
+
+    return round(value/base) * base

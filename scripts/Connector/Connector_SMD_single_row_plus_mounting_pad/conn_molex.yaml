@@ -124,7 +124,7 @@ device_definition:
                 reference_point: ['center', 1.525] # [x,y]: x = 'left' | 'center' | 'right' | value; y = 'top' | 'center' | 'bottom' | value; named values are relative to body
                 rectangle:
                     size: [0.3, 0.6] # centered around reference_point
-                    # start: [-0.25, -0.25] #releative to reference_point
+                    # start: [-0.25, -0.25] #relative to reference_point
                     # end: [0.25, 0.25] #relative to reference_point
                 repeat:
                     spacing: ['pitch', 0] # x,y= 'pitch' | value
@@ -134,7 +134,7 @@ device_definition:
                 layer: 'F.Fab'
                 # thickness: 0.1 #optional parameter. If not given: take fab_line_width and silk_line_width from config file. Needed if layer not silk or fab!
                 reference_point: ['left', 'bottom'] # [x,y]: x = 'left' | 'center' | 'right' | value; y = 'top' | 'center' | 'bottom' | value; named values are relative to body
-                polygone:
+                polygon:
                     - [0, 0]
                     - [-1.5, 0]
                     - [-1.7, -0.2]
@@ -146,7 +146,7 @@ device_definition:
                 layer: 'F.Fab'
                 # thickness: 0.1 #optional parameter. If not given: take fab_line_width and silk_line_width from config file. Needed if layer not silk or fab!
                 reference_point: ['right', 'bottom'] # [x,y]: x = 'left' | 'center' | 'right' | value; y = 'top' | 'center' | 'bottom' | value; named values are relative to body
-                polygone:
+                polygon:
                     - [0, 0]
                     - [1.5, 0]
                     - [1.7, -0.2]
@@ -185,7 +185,7 @@ device_definition:
                 layer: 'F.Fab'
                 # thickness: 0.1 #optional parameter. If not given: take fab_line_width and silk_line_width from config file. Needed if layer not silk or fab!
                 reference_point: ['left', 'top'] # [x,y]: x = 'left' | 'center' | 'right' | value; y = 'top' | 'center' | 'bottom' | value; named values are relative to body
-                polygone:
+                polygon:
                     - [0, 1]
                     - [-1.5, 1]
                     - [-1.7, 1.2]
@@ -197,7 +197,7 @@ device_definition:
                 layer: 'F.Fab'
                 # thickness: 0.1 #optional parameter. If not given: take fab_line_width and silk_line_width from config file. Needed if layer not silk or fab!
                 reference_point: ['right', 'top'] # [x,y]: x = 'left' | 'center' | 'right' | value; y = 'top' | 'center' | 'bottom' | value; named values are relative to body
-                polygone:
+                polygon:
                     - [0, 1]
                     - [1.5, 1]
                     - [1.7, 1.2]
@@ -236,7 +236,7 @@ device_definition:
                 reference_point: ['center', 0] # [x,y]: x = 'left' | 'center' | 'right' | value; y = 'top' | 'center' | 'bottom' | value; named values are relative to body
                 rectangle:
                     size: [0.25, 0.5] # centered around reference_point
-                    # start: [-0.25, -0.25] #releative to reference_point
+                    # start: [-0.25, -0.25] #relative to reference_point
                     # end: [0.25, 0.25] #relative to reference_point
                 repeat:
                     spacing: ['pitch', 0] # x,y= 'pitch' | value
@@ -279,7 +279,7 @@ device_definition:
                 reference_point: ['center', 0] # [x,y]: x = 'left' | 'center' | 'right' | value; y = 'top' | 'center' | 'bottom' | value; named values are relative to body
                 rectangle:
                     size: [0.25, 0.5] # centered around reference_point
-                    # start: [-0.25, -0.25] #releative to reference_point
+                    # start: [-0.25, -0.25] #relative to reference_point
                     # end: [0.25, 0.25] #relative to reference_point
                 repeat:
                     spacing: ['pitch', 0] # x,y= 'pitch' | value
@@ -315,10 +315,10 @@ device_definition:
         mpn_format_string: '504050-{pincount:02d}91'
         orientation: 'H'
         datasheet: 'http://www.molex.com/pdm_docs/sd/5040500891_sd.pdf'
-        pinrange: ['list', [4,5,6,7,8,10,12]]
+        pinrange: ['list', [2,3,4,5,6,7,8,9,10,11,12]]
         text_inside_pos: 'center'
         pitch: 1.5
-        pad1_position: 'bottom-left' # 'top-left' | 'bottom-left' -> pin 2 always to the right of pin 1
+        pad1_position: 'top-left' # 'top-left' | 'bottom-left' -> pin 2 always to the right of pin 1
         mounting_pad_size: [1.25, 1.8]
         # x position mounting inner mounting pad edge relative to nearest pad center
         center_pad_to_mounting_pad_edge: 1.98
@@ -339,6 +339,33 @@ device_definition:
             start_from_body_side: 1.95
             #width_end: 4.5
             end_from_body_side: 1.95
+
+    PicoLock_2mm_205338_side_entry:
+        series: 'Pico-Lock'
+        mpn_format_string: '205338-{pincount:04d}'
+        orientation: 'H'
+        datasheet: 'https://www.molex.com/pdm_docs/sd/2053380002_sd.pdf'
+        pinrange: ['list', [2,4,6,8,10]]
+        text_inside_pos: 'center'
+        pitch: 2
+        pad1_position: 'top-left' # 'top-left' | 'bottom-left' -> pin 2 always to the right of pin 1
+        mounting_pad_size: [1.35, 2.9]
+        # x position mounting inner mounting pad edge relative to nearest pad center
+        center_pad_to_mounting_pad_edge: 2.22
+        # y dimensions for pad given relative to mounting pad edge
+        rel_pad_y_outside_edge: 8.17
+        rel_pad_y_inside_edge: 6.72
+        pad_size_x: 1.1
+        # y position for body edge relative to mounting pad edge (positive -> body extends outside bounding box)
+        rel_body_edge_y: 0.08
+        body_size_y: 7.6
+        rel_body_edge_x: 2.975
+        edge_modifier_mount_pad_side:
+            # depth measured from 3D cad model, top of connector
+            depth: 2 # > 0: cutout, < 0: protrusion
+            # Measured from 3D cad model, bottom of connector
+            start_from_body_side: 1.775
+            end_from_body_side: 1.775
 
     CLIKmate_top_entry:
         series: 'CLIK-Mate'

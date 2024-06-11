@@ -59,8 +59,7 @@ def make_module(pin_count, configuration):
 
     footprint_name = footprint_name.replace("__",'_')
 
-    kicad_mod = Footprint(footprint_name)
-    kicad_mod.setAttribute('smd')
+    kicad_mod = Footprint(footprint_name, FootprintType.SMD)
     kicad_mod.setDescription(
         ("Molex {:s}, {:s}, {:d} Circuits ({:s}), " +
          "generated with kicad-footprint-generator").format(
@@ -127,8 +126,8 @@ def make_module(pin_count, configuration):
         {'x': toe_ins_corner[0], 'y': toe_ins_corner[1] - toe_size[1]}
     ]
 
-    kicad_mod.append(PolygoneLine(
-        polygone = fab_body_outline,
+    kicad_mod.append(PolygonLine(
+        polygon = fab_body_outline,
         layer = 'F.Fab',
         width = configuration['fab_line_width']))
 
@@ -138,8 +137,8 @@ def make_module(pin_count, configuration):
         {'x': -(pin_span / 2) + 0.5, 'y': toe_ins_corner[1]}
     ]
 
-    kicad_mod.append(PolygoneLine(
-        polygone = fab_pin1_mark,
+    kicad_mod.append(PolygonLine(
+        polygon = fab_pin1_mark,
         layer = 'F.Fab',
         width = configuration['fab_line_width']))
 
@@ -151,8 +150,8 @@ def make_module(pin_count, configuration):
         {'x': lever_out_corner[0], 'y': lever_out_corner[1] - lever_size[1]}
     ]
 
-    kicad_mod.append(PolygoneLine(
-        polygone = fab_lever_outline,
+    kicad_mod.append(PolygonLine(
+        polygon = fab_lever_outline,
         layer = 'F.Fab',
         width = configuration['fab_line_width']))
 
@@ -187,18 +186,18 @@ def make_module(pin_count, configuration):
         {'x': ((pin_span / 2) + (pad_size[0] / 2)) + pad_silk_off, 'y': toe_ins_corner[1] - fab_silk_off}
     ]
 
-    kicad_mod.append(PolygoneLine(
-        polygone = silk_outline1,
+    kicad_mod.append(PolygonLine(
+        polygon = silk_outline1,
         layer = 'F.SilkS',
         width = configuration['silk_line_width']))
 
-    kicad_mod.append(PolygoneLine(
-        polygone = silk_outline2,
+    kicad_mod.append(PolygonLine(
+        polygon = silk_outline2,
         layer = 'F.SilkS',
         width = configuration['silk_line_width']))
 
-    kicad_mod.append(PolygoneLine(
-        polygone = silk_outline3,
+    kicad_mod.append(PolygonLine(
+        polygon = silk_outline3,
         layer = 'F.SilkS',
         width = configuration['silk_line_width']))
 
@@ -228,7 +227,7 @@ def make_module(pin_count, configuration):
 
 
     ##################### Output and 3d model ############################
-    model3d_path_prefix = configuration.get('3d_model_prefix','${KISYS3DMOD}/')
+    model3d_path_prefix = configuration.get('3d_model_prefix','${KICAD8_3DMODEL_DIR}/')
 
     if lib_by_conn_category:
         lib_name = configuration['lib_name_specific_function_format_string'].format(category=conn_category)

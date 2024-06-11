@@ -18,9 +18,23 @@ import unittest
 from KicadModTree.nodes.Node import *
 
 
-class TestChildNode(Node):
+class HelperTestChildNode(Node):
     def __init__(self):
         Node.__init__(self)
+
+
+class HelperNodeWithVirtualChilds(Node):
+    def __init__(self, *, normal_childs, virtual_childs=[]):
+        Node.__init__(self)
+        for c in normal_childs:
+            self.append(c)
+        self._virtual_childs = []
+        for c in virtual_childs:
+            self._virtual_childs.append(c)
+            c._parent = self
+
+    def getVirtualChilds(self):
+        return self._virtual_childs
 
 
 class NodeTests(unittest.TestCase):
@@ -83,7 +97,7 @@ class NodeTests(unittest.TestCase):
         self.assertEqual(childNode2.getParent(), node)
         self.assertEqual(len(node.getNormalChilds()), 2)
 
-        childNode3 = TestChildNode()
+        childNode3 = HelperTestChildNode()
         node.append(childNode3)
         self.assertIn(childNode1, node.getNormalChilds())
         self.assertIn(childNode2, node.getNormalChilds())
@@ -264,3 +278,98 @@ class NodeTests(unittest.TestCase):
         node.insert(insertNode)
         self.assertEqual(len(node.getNormalChilds()), 1)
         self.assertEqual(len(insertNode.getNormalChilds()), 200)
+
+    def testRemoveTraversed(self):
+        parent = Node()
+        gen1a = Node()
+        gen1b = Node()
+        gen1a1 = Node()
+        gen1a2 = Node()
+
+        gen1a.append(gen1a1)
+        gen1a.append(gen1a2)
+        parent.append(gen1a)
+        parent.append(gen1b)
+
+        self.assertEqual(len(parent.getAllChilds()), 2)
+        self.assertEqual(len(gen1a.getAllChilds()), 2)
+        self.assertEqual(len(gen1b.getAllChilds()), 0)
+
+        # try to remove gen1a1 from parent directly
+        parent.remove(gen1a1)
+        self.assertEqual(len(parent.getAllChilds()), 2)
+        self.assertEqual(len(gen1a.getAllChilds()), 2)
+        self.assertIsNotNone(gen1a1._parent)
+        self.assertEqual(len(gen1b.getAllChilds()), 0)
+
+        # remove gen1a1 from parent (traversing through the hierarchy))
+        parent.remove(gen1a1, traverse=True)
+        self.assertEqual(len(parent.getAllChilds()), 2)
+        self.assertEqual(len(gen1a.getAllChilds()), 1)
+        self.assertIsNone(gen1a1._parent)
+        self.assertEqual(len(gen1b.getAllChilds()), 0)
+
+        # remove gen1a from parent
+        parent.remove(gen1a)
+        self.assertEqual(len(parent.getAllChilds()), 1)
+        self.assertEqual(len(gen1a.getAllChilds()), 1)
+        self.assertIsNone(gen1a._parent)
+        self.assertEqual(len(gen1b.getAllChilds()), 0)
+
+    def testRemoveVirtual(self):
+        node = HelperNodeWithVirtualChilds(
+            normal_childs=[Node() for _ in range(3)],
+            virtual_childs=[Node() for _ in range(5)],
+        )
+        self.assertEqual(node.num_normal_nodes, 3)
+        self.assertEqual(node.num_virtual_nodes, 5)
+        self.assertEqual(node.num_all_nodes, 8)
+
+        parent = Node()
+        parent.append(node)
+
+        for n in range(node.num_virtual_nodes):
+            c = node.getVirtualChilds()[n]
+            self.assertRaises(VirtualNodeError, Node.remove, node, c)
+            self.assertRaises(VirtualNodeError, Node.remove, parent, c, traverse=True)
+            self.assertEqual(node.num_all_nodes, 8)
+
+        for c in node.allChildItems():
+            parent.remove(c)
+            self.assertEqual(node.num_all_nodes, 8)
+
+        count = node.num_all_nodes
+        for _ in range(node.num_all_nodes):
+            parent.remove(node.getAllChilds()[0], traverse=True, virtual=True)
+            count -= 1
+            self.assertEqual(node.num_all_nodes, count)
+
+    def testIter(self):
+        node = HelperNodeWithVirtualChilds(
+            normal_childs=[Node() for _ in range(3)],
+            virtual_childs=[Node() for _ in range(5)],
+        )
+        self.assertEqual(node.num_normal_nodes, 3)
+        self.assertEqual(node.num_virtual_nodes, 5)
+        self.assertEqual(node.num_all_nodes, 8)
+
+        count = 0
+        for _ in node.normalChildItems():
+            count += 1
+        self.assertEqual(count, node.num_normal_nodes)
+
+        count = 0
+        for _ in node:
+            count += 1
+        self.assertEqual(count, node.num_all_nodes)
+        self.assertEqual(len(node), node.num_all_nodes)
+
+        count = 0
+        for _ in node.virtualChildItems():
+            count += 1
+        self.assertEqual(count, node.num_virtual_nodes)
+
+        count = 0
+        for _ in node.allChildItems():
+            count += 1
+        self.assertEqual(count, node.num_all_nodes)

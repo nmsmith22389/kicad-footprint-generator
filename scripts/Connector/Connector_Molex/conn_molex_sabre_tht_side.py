@@ -117,7 +117,7 @@ def generate_one_footprint(pins, params, configuration):
         pitch=pitch, orientation=orientation_str)
     footprint_name += params['fp_name_suffix']
 
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, FootprintType.THT)
     desc_format_str = "Molex {:s}, {:s}{:s}, {:d} Pins per row ({:s}), generated with kicad-footprint-generator"
     kicad_mod.setDescription(desc_format_str.format(series_long, mpn, params['description'], pins, params['datasheet']))
     kicad_mod.setTags(configuration['keyword_fp_string'].format(series=series,
@@ -204,17 +204,17 @@ def generate_one_footprint(pins, params, configuration):
             {'x': body_edge['left']-off, 'y': body_edge['top']-off},
             {'x': body_edge['left']-off, 'y': ret_dy-ret_size/2},
         ]
-        kicad_mod.append(PolygoneLine(polygone=silk1, layer='F.SilkS', width=configuration['silk_line_width']))
-        kicad_mod.append(PolygoneLine(polygone=silk1, layer='F.SilkS', width=configuration['silk_line_width'], x_mirror=P/2))
+        kicad_mod.append(PolygonLine(polygon=silk1, layer='F.SilkS', width=configuration['silk_line_width']))
+        kicad_mod.append(PolygonLine(polygon=silk1, layer='F.SilkS', width=configuration['silk_line_width'], x_mirror=P / 2))
         silk2 = [
             {'x': body_edge['left']-off, 'y': ret_dy+ret_size/2},
             {'x': body_edge['left']-off, 'y': body_edge['bottom']+off},
             {'x': P/2, 'y': body_edge['bottom']+off},
         ]
-        kicad_mod.append(PolygoneLine(polygone=silk2,
-            layer='F.SilkS', width=configuration['silk_line_width']))
-        kicad_mod.append(PolygoneLine(polygone=silk2,
-            layer='F.SilkS', width=configuration['silk_line_width'], x_mirror=P/2))
+        kicad_mod.append(PolygonLine(polygon=silk2,
+                                     layer='F.SilkS', width=configuration['silk_line_width']))
+        kicad_mod.append(PolygonLine(polygon=silk2,
+                                     layer='F.SilkS', width=configuration['silk_line_width'], x_mirror=P/2))
     else:
         kicad_mod.append(RectLine(
             start=[body_edge['left'], body_edge['top']],
@@ -242,14 +242,14 @@ def generate_one_footprint(pins, params, configuration):
         {'x': 0, 'y': body_edge['top'] + pin1_sl/sqrt(2)},
         {'x': pin1_sl/2, 'y': body_edge['top']}
     ]
-    kicad_mod.append(PolygoneLine(polygone=pin1,
-        layer='F.Fab', width=configuration['fab_line_width']))
+    kicad_mod.append(PolygonLine(polygon=pin1,
+                                 layer='F.Fab', width=configuration['fab_line_width']))
 
     pin1 = [
         {'x': -pad_size[0]/2 - pad_silk_off, 'y': body_edge['top']-off},
         {'x': -pad_size[0]/2 - pad_silk_off, 'y': -offset_second_pad-pad_size[1]/2}
     ]
-    kicad_mod.append(PolygoneLine(polygone=pin1, layer='F.SilkS', width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(polygon=pin1, layer='F.SilkS', width=configuration['silk_line_width']))
 
     # pin1 = [
     #     {'x': 0, 'y': 8},
@@ -257,7 +257,7 @@ def generate_one_footprint(pins, params, configuration):
     #     {'x': -0.5, 'y': 9},
     #     {'x': 0, 'y': 8},
     # ]
-    # kicad_mod.append(PolygoneLine(polygone=pin1, layer='F.SilkS', width=configuration['silk_line_width']))
+    # kicad_mod.append(PolygonLine(polygon=pin1, layer='F.SilkS', width=configuration['silk_line_width']))
 
     ########################### CrtYd #################################
     cx1 = roundToBase(bounding_box['left']-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
@@ -275,7 +275,7 @@ def generate_one_footprint(pins, params, configuration):
         courtyard={'top':cy1, 'bottom':cy2}, fp_name=footprint_name, text_y_inside_position='bottom')
 
     ##################### Output and 3d model ############################
-    model3d_path_prefix = configuration.get('3d_model_prefix','${KISYS3DMOD}/')
+    model3d_path_prefix = configuration.get('3d_model_prefix','${KICAD8_3DMODEL_DIR}/')
 
     lib_name = configuration['lib_name_format_string'].format(series=series, man=manufacturer)
     model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}.wrl'.format(

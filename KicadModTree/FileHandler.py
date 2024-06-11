@@ -15,6 +15,9 @@
 
 import sys
 import io
+import os
+
+from KicadModTree.nodes import Footprint
 
 
 class FileHandler(object):
@@ -27,12 +30,13 @@ class FileHandler(object):
     :Example:
 
     >>> from KicadModTree import *
-    >>> kicad_mod = Footprint("example_footprint")
+    >>> kicad_mod = Footprint("example_footprint", FootprintType.THT)
     >>> file_handler = KicadFileHandler(kicad_mod)  # KicadFileHandler is a implementation of FileHandler
     >>> file_handler.writeFile('example_footprint.kicad_mod')
     """
+    kicad_mod: Footprint
 
-    def __init__(self, kicad_mod):
+    def __init__(self, kicad_mod: Footprint):
         self.kicad_mod = kicad_mod
 
     def writeFile(self, filename, **kwargs):
@@ -45,21 +49,24 @@ class FileHandler(object):
         :Example:
 
         >>> from KicadModTree import *
-        >>> kicad_mod = Footprint("example_footprint")
+        >>> kicad_mod = Footprint("example_footprint", FootprintType.THT)
         >>> file_handler = KicadFileHandler(kicad_mod)  # KicadFileHandler is a implementation of FileHandler
         >>> file_handler.writeFile('example_footprint.kicad_mod')
         """
 
+        fp = None
         with io.open(filename, "w", newline='\n') as f:
             output = self.serialize(**kwargs)
 
-            # convert to unicode if running python2
-            if sys.version_info[0] == 2 and type(output) != unicode:
-                output = unicode(output, "utf-8")
+            if not output.endswith("\n"):
+                output += "\n"
 
             f.write(output)
 
+            fp = os.path.realpath(f.name)
+
             f.close()
+        return fp
 
     def serialize(self, **kwargs):
         r"""Get a valid string representation of the footprint in the specified format
@@ -67,9 +74,10 @@ class FileHandler(object):
         :Example:
 
         >>> from KicadModTree import *
-        >>> kicad_mod = Footprint("example_footprint")
+        >>> kicad_mod = Footprint("example_footprint", FootprintType.THT)
         >>> file_handler = KicadFileHandler(kicad_mod)  # KicadFileHandler is a implementation of FileHandler
         >>> print(file_handler.serialize())
         """
 
-        raise NotImplementedError("serialize has to be implemented by child class")
+        raise NotImplementedError(
+            "serialize has to be implemented by child class")

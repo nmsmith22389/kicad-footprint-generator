@@ -16,7 +16,7 @@
 from .Translation import Translation
 from .Rotation import Rotation
 
-from .PolygoneLine import PolygoneLine
+from .PolygonLine import PolygonLine
 from .RectLine import RectLine
 from .RectFill import RectFill
 from .FilledRect import FilledRect

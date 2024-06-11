@@ -611,6 +611,38 @@ LQFP-144_20x20mm_P0.5mm:
   num_pins_x: 36
   num_pins_y: 36
 
+LQFP-144_20x20mm_P0.5mm_EP6.5x6.5mm:
+  size_source: https://www.infineon.com/dgdl/Infineon-XMC4500-DS-v01_05-EN.pdf?fileId=5546d46254e133b40154e1b56cbe0123
+  compatible_mpns:
+    # Has 'U-groove'/anti-flash groove, overall EP size for soldering purposes is 6.5x6.5
+    # See also https://www.infineon.com/dgdl/Infineon-Board_Assembly_Recommendations-QFP-Package-v06_00-EN.pdf?fileId=5546d46275b79adb0175bd38e18f6099#page=7
+    - Infineon-PG-LQFP-144-24
+    # No U-groove
+    - Infineon-PG-LQFP-144-26
+  body_size_x:
+    nominal: 20
+  body_size_y:
+    nominal: 20
+  overall_size_x:
+    nominal: 22
+  overall_size_y:
+    nominal: 22
+  lead_width: 0.2 + 0.07 - 0.03
+  lead_len: 0.6 +/- 0.15
+  pitch: 0.5
+  num_pins_x: 36
+  num_pins_y: 36
+
+  EP_size_x:
+    nominal: 6.5
+  EP_size_y:
+    nominal: 6.5
+  EP_num_paste_pads: [3, 3]
+
+  thermal_vias:
+    count: [4, 4]
+    drill: 0.2
+
 LQFP-160_24x24mm_P0.5mm:
   size_source: 'https://www.nxp.com/docs/en/package-information/SOT435-1.pdf'
   body_size_x:

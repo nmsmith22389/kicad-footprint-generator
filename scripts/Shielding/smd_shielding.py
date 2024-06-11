@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import sys
 import os
@@ -30,13 +30,12 @@ def calculate_pad_spacer(pad_spacer, mirror_spacer):
 
 
 def create_smd_shielding(name, **kwargs):
-    kicad_mod = Footprint(name)
+    kicad_mod = Footprint(name, FootprintType.SMD)
 
     # init kicad footprint
     kicad_mod.setDescription(kwargs['description'])
     kicad_mod.setTags('Shielding Cabinet')
-    kicad_mod.setAttribute('smd')
-    kicad_mod.append(Model(filename="${KISYS3DMOD}/RF_Shielding.3dshapes/" + name + ".wrl"))
+    kicad_mod.append(Model(filename="${KICAD8_3DMODEL_DIR}/RF_Shielding.3dshapes/" + name + ".wrl"))
 
     # do some pre calculations
     # TODO: when mirror=False, array has to have even number of array elements
@@ -59,9 +58,9 @@ def create_smd_shielding(name, **kwargs):
     y_part_max = kwargs['y_part_size'] / 2.
 
     # set general values
-    kicad_mod.append(Text(type='reference', text='REF**', at=[0, y_pad_min - kwargs['courtjard'] - 0.75], layer='F.SilkS'))
-    kicad_mod.append(Text(type='value', text=name, at=[0, y_pad_max + kwargs['courtjard'] + 0.75], layer='F.Fab'))
-    kicad_mod.append(Text(type='user', text='%R', at=[0, 0], layer='F.Fab'))
+    kicad_mod.append(Property(name=Property.REFERENCE, text='REF**', at=[0, y_pad_min - kwargs['courtjard'] - 0.75], layer='F.SilkS'))
+    kicad_mod.append(Property(name=Property.VALUE, text=name, at=[0, y_pad_max + kwargs['courtjard'] + 0.75], layer='F.Fab'))
+    kicad_mod.append(Text(text='${REFERENCE}', at=[0, 0], layer='F.Fab'))
 
     # create courtyard
     x_courtjard_min = round_to(x_pad_min - kwargs['courtjard'], 0.05)
@@ -92,7 +91,8 @@ def create_smd_shielding(name, **kwargs):
     general_kwargs = {'number': 1,
                       'type': Pad.TYPE_SMT,
                       'shape': Pad.SHAPE_RECT,
-                      'layers': ['F.Cu', 'F.Mask', 'F.Paste']}
+                      'layers': Pad.LAYERS_SMT,
+    }
 
     # create edge pads
     kicad_mod.append(Pad(at=[x_pad_min_center, y_pad_min_center],

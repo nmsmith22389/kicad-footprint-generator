@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import sys
 import os
@@ -20,11 +20,8 @@ from footprint_scripts_terminal_blocks import *
 
 if __name__ == '__main__':
 
-    script_generated_note="script-generated using https://github.com/pointhi/kicad-footprint-generator/scripts/TerminalBlock_4Ucon";
+    script_generated_note="script-generated using https://gitlab.com/kicad/libraries/kicad-footprint-generator/-/tree/master/scripts/TerminalBlock_4Ucon";
     classname="TerminalBlock_4Ucon"
-    
-    
-
  
     pins=[2,3,4,5,6,7,8,9,10,11,12,13,14,15]
     rm=3.5
@@ -58,7 +55,7 @@ if __name__ == '__main__':
                                   opening=opening, opening_yoffset=opening_yoffset, 
                                   bevel_height=bevel_height, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset, 
                                   nibbleSize=nibbleSize, nibblePos=nibblePos, fabref_offset=fabref_offset,
-                                  tags_additional=[], lib_name="${KISYS3DMOD}/"+classname, classname=classname, classname_description=classname_description, webpage=webpage, script_generated_note=script_generated_note)
+                                  tags_additional=[], lib_name="${KICAD8_3DMODEL_DIR}/"+classname, classname=classname, classname_description=classname_description, webpage=webpage, script_generated_note=script_generated_note)
 
 
     
@@ -94,7 +91,7 @@ if __name__ == '__main__':
                                   package_height=package_height, leftbottom_offset=leftbottom_offset, 
                                   ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, bevel_height=bevel_height, slit_screw=slit_screw, screw_pin_offset=screw_pin_offset, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset, 
                                   nibbleSize=nibbleSize, nibblePos=nibblePos, fabref_offset=fabref_offset,
-                                  tags_additional=[], lib_name='${KISYS3DMOD}/'+classname, classname=classname, classname_description=classname_description, 
+                                  tags_additional=[], lib_name='${KICAD8_3DMODEL_DIR}/'+classname, classname=classname, classname_description=classname_description, 
                                   webpage=webpage, script_generated_note=script_generated_note)
 
      

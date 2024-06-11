@@ -1,0 +1,40 @@
+# VSCode Regex to cleanup the copy/paste
+# ±[\d\. ]*
+- series: SWPA
+  manufacturer: Sunlord
+  datasheet: "https://www.sunlordinc.com/UploadFiles/PDF_Cat/20120704094224784.pdf"
+  csv: sunlord_swpa.csv
+  3d:
+    type: 1
+    bodyColor: black body
+    pinColor: metal grey pins
+    padThickness: 0.05
+  tags:
+    - swpa
+  library_name: Inductor_SMD
+
+- series: MWSA-S
+  manufacturer: Sunlord
+  datasheet: "https://sunlordinc.com/Download.aspx?file=L1VwbG9hZEZpbGVzL1BERl9DYXQvMjAyMjExMTUxNDQ4MDU0NTQucGRm&lan=en"
+  csv: sunlord_mwsa.csv
+  3d:
+    type: 2
+    bodyColor: black body
+    pinColor: metal grey pins
+  tags:
+    - mwsa
+  library_name: Inductor_SMD
+
+- series: SWRB-S
+  manufacturer: Sunlord
+  datasheet: "https://www.sunlordinc.com/Download.aspx?file=L1VwbG9hZEZpbGVzL1BERl9DYXQvMjAyMTA2MTAxMTMyMzc4MTEucGRm&lan=en"
+  csv: sunlord_swrb.csv
+  3d:
+    type: 1
+    bodyColor: black body
+    pinColor: metal grey pins
+    padThickness: 0.05
+    cornerRadius: 2
+  tags:
+    - swrb
+  library_name: Inductor_SMD

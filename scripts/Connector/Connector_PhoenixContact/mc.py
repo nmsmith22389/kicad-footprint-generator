@@ -45,7 +45,7 @@ def generate_one_footprint(motel, params, configuration):
     silk_top_left=v_offset(body_top_left, configuration['silk_fab_offset'])
     silk_bottom_right=v_offset(body_bottom_right, configuration['silk_fab_offset'])
     center_x = (params.num_pins-1)/2.0*params.pin_pitch
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, FootprintType.THT)
 
     body_edge={
         'left': body_top_left[0],
@@ -62,10 +62,7 @@ def generate_one_footprint(motel, params, configuration):
 
     #add the pads
     optional_pad_params = {}
-    if configuration['kicad4_compatible']:
-        optional_pad_params['tht_pad1_shape'] = Pad.SHAPE_RECT
-    else:
-        optional_pad_params['tht_pad1_shape'] = Pad.SHAPE_ROUNDRECT
+    optional_pad_params['tht_pad1_shape'] = Pad.SHAPE_ROUNDRECT
 
     kicad_mod.append(PadArray(initial=1, start=[0, 0],
         x_spacing=params.pin_pitch, pincount=params.num_pins,
@@ -103,8 +100,8 @@ def generate_one_footprint(motel, params, configuration):
         if configuration['with_fab_layer']:
             kicad_mod.append(RectLine(start=body_top_left, end=body_bottom_right, layer='F.Fab', width=configuration['fab_line_width']))
 
-        left = silk_top_left[0] + (seriesParams.flange_lenght if params.flanged else 0)
-        right = silk_bottom_right[0] - (seriesParams.flange_lenght if params.flanged else 0)
+        left = silk_top_left[0] + (seriesParams.flange_length if params.flanged else 0)
+        right = silk_bottom_right[0] - (seriesParams.flange_length if params.flanged else 0)
         scoreline_y = seriesParams.scoreline_from_back+params.back_to_pin
         kicad_mod.append(Line(start=[left, scoreline_y], end=[right, scoreline_y], layer='F.SilkS', width=configuration['silk_line_width']))
         if configuration['inner_details_on_fab']:
@@ -127,17 +124,17 @@ def generate_one_footprint(motel, params, configuration):
                     {'x':silk_top_left[0], 'y':silk_bottom_right[1]},
                     {'x':silk_bottom_right[0], 'y':silk_bottom_right[1]},
                     {'x':silk_bottom_right[0], 'y':silk_top_left[1]+flange_cutout},
-                    {'x':silk_bottom_right[0]-seriesParams.flange_lenght, 'y':silk_top_left[1]+flange_cutout},
-                    {'x':silk_bottom_right[0]-seriesParams.flange_lenght, 'y':silk_top_left[1]},
-                    {'x':silk_top_left[0]+seriesParams.flange_lenght, 'y':silk_top_left[1]},
-                    {'x':silk_top_left[0]+seriesParams.flange_lenght, 'y':silk_top_left[1]+flange_cutout},
+                    {'x':silk_bottom_right[0]-seriesParams.flange_length, 'y':silk_top_left[1]+flange_cutout},
+                    {'x':silk_bottom_right[0]-seriesParams.flange_length, 'y':silk_top_left[1]},
+                    {'x':silk_top_left[0]+seriesParams.flange_length, 'y':silk_top_left[1]},
+                    {'x':silk_top_left[0]+seriesParams.flange_length, 'y':silk_top_left[1]+flange_cutout},
                     {'x':silk_top_left[0], 'y':silk_top_left[1]+flange_cutout},
                     {'x':silk_top_left[0], 'y':silk_bottom_right[1]}
                 ]
-            kicad_mod.append(PolygoneLine(polygone=outline_poly, layer='F.SilkS', width=configuration['silk_line_width']))
+            kicad_mod.append(PolygonLine(polygon=outline_poly, layer='F.SilkS', width=configuration['silk_line_width']))
             if configuration['with_fab_layer']:
                 outline_poly=offset_polyline(outline_poly,-configuration['silk_fab_offset'],(center_x,0))
-                kicad_mod.append(PolygoneLine(polygone=outline_poly, layer="F.Fab", width=configuration['fab_line_width']))
+                kicad_mod.append(PolygonLine(polygon=outline_poly, layer="F.Fab", width=configuration['fab_line_width']))
 
         if params.flanged:
             kicad_mod.append(Circle(center=calc_dim.mount_hole_left, radius=1.9, layer='F.SilkS', width=configuration['silk_line_width']))
@@ -169,10 +166,10 @@ def generate_one_footprint(motel, params, configuration):
                 {'x':seriesParams.plug_cut_len/2.0, 'y':calc_dim.plug_front},
                 {'x':seriesParams.plug_arc_len/2.0, 'y':calc_dim.plug_front}
             ]
-            plug_outline_translation.append(PolygoneLine(polygone=plug_outline_poly, layer='F.SilkS', width=configuration['silk_line_width']))
+            plug_outline_translation.append(PolygonLine(polygon=plug_outline_poly, layer='F.SilkS', width=configuration['silk_line_width']))
             plug_outline_translation.append(Arc(start=[-seriesParams.plug_arc_len/2.0,calc_dim.plug_front], center=[0,calc_dim.plug_front+1.7], angle=47.6, layer='F.SilkS', width=configuration['silk_line_width']))
             if configuration['inner_details_on_fab']:
-                plug_outline_translation.append(PolygoneLine(polygone=plug_outline_poly,  layer="F.Fab", width=configuration['fab_line_width']))
+                plug_outline_translation.append(PolygonLine(polygon=plug_outline_poly, layer="F.Fab", width=configuration['fab_line_width']))
                 plug_outline_translation.append(Arc(start=[-seriesParams.plug_arc_len/2.0,calc_dim.plug_front], center=[0,calc_dim.plug_front+1.7], angle=47.6,  layer="F.Fab", width=configuration['fab_line_width']))
             kicad_mod.append(plug_outline_translation)
     if params.mount_hole:
@@ -203,21 +200,21 @@ def generate_one_footprint(motel, params, configuration):
     if not params.angled:
         pin1_marker_poly = create_pin1_marker_corner(crtyd_top_left[1],
             body_top_left[0] - configuration['courtyard_offset']['connector'] +
-            (seriesParams.flange_lenght if params.flanged else 0), [2,1.25])
-        kicad_mod.append(PolygoneLine(polygone=pin1_marker_poly, layer='F.SilkS', width=configuration['silk_line_width']))
+            (seriesParams.flange_length if params.flanged else 0), [2,1.25])
+        kicad_mod.append(PolygonLine(polygon=pin1_marker_poly, layer='F.SilkS', width=configuration['silk_line_width']))
         if configuration['with_fab_layer']:
-            kicad_mod.append(PolygoneLine(polygone=pin1_marker_poly, layer='F.Fab', width=configuration['fab_line_width']))
+            kicad_mod.append(PolygonLine(polygon=pin1_marker_poly, layer='F.Fab', width=configuration['fab_line_width']))
     else:
-        kicad_mod.append(PolygoneLine(polygone=create_pin1_marker_triangle(-params.pin_Sy/2-0.2),
-            layer='F.SilkS', width=configuration['silk_line_width']))
+        kicad_mod.append(PolygonLine(polygon=create_pin1_marker_triangle(-params.pin_Sy / 2 - 0.2),
+                                     layer='F.SilkS', width=configuration['silk_line_width']))
         if configuration['with_fab_layer']:
-            kicad_mod.append(PolygoneLine(
-                polygone=create_pin1_marker_triangle(bottom_y = 0,
+            kicad_mod.append(PolygonLine(
+                polygon=create_pin1_marker_triangle(bottom_y = 0,
                     dimensions = [params.pin_Sx - 0.2, -body_top_left[1]], with_top_line = False),
                 layer='F.Fab', width=configuration['fab_line_width']))
 
     #################################################### 3d file ###################################################
-    p3dname = '{prefix:s}{lib_name:s}.3dshapes/{fp_name}.wrl'.format(prefix = configuration.get('3d_model_prefix', '${KISYS3DMOD}/'), lib_name=lib_name, fp_name=footprint_name)
+    p3dname = '{prefix:s}{lib_name:s}.3dshapes/{fp_name}.wrl'.format(prefix = configuration.get('3d_model_prefix', '${KICAD8_3DMODEL_DIR}/'), lib_name=lib_name, fp_name=footprint_name)
     kicad_mod.append(Model(filename=p3dname,
                            at=[0, 0, 0], scale=[1, 1, 1], rotate=[0, 0, 0]))
 
@@ -233,7 +230,6 @@ if __name__ == "__main__":
     parser.add_argument('--global_config', type=str, nargs='?', help='the config file defining how the footprint will look like. (KLC)', default='../../tools/global_config_files/config_KLCv3.0.yaml')
     parser.add_argument('--series_config', type=str, nargs='?', help='the config file defining series parameters.', default='config_phoenix_KLCv3.0.yaml')
     parser.add_argument('--model_filter', type=str, nargs='?', help='define a filter for what should be generated.', default="*")
-    parser.add_argument('--kicad4_compatible', action='store_true', help='Create footprints kicad 4 compatible')
     args = parser.parse_args()
 
     with open(args.global_config, 'r') as config_stream:
@@ -247,8 +243,6 @@ if __name__ == "__main__":
             configuration.update(yaml.safe_load(config_stream))
         except yaml.YAMLError as exc:
             print(exc)
-
-    configuration['kicad4_compatible'] = args.kicad4_compatible
 
     model_filter_regobj=re.compile(fnmatch.translate(args.model_filter))
     for model, params in all_params.items():

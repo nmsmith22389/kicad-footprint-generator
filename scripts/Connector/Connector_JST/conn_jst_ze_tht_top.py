@@ -54,7 +54,7 @@ def generate_one_footprint(pincount, variant, configuration):
         mpn=mpn, num_rows=number_of_rows, pins_per_row=pincount, mounting_pad = "",
         pitch=pitch, orientation=orientation_str)
 
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, FootprintType.THT)
     kicad_mod.setDescription("JST {:s} series connector, {:s}{:s} ({:s}), generated with kicad-footprint-generator"\
         .format(series, mpn, variant_parameters[variant]['descr_str'], datasheet))
 
@@ -104,24 +104,11 @@ def generate_one_footprint(pincount, variant, configuration):
     # create odd numbered pads
     # createNumberedPadsTHT(kicad_mod, ceil(pincount/2), pitch * 2, drill, {'x':dia, 'y':dia},  increment=2)
     #special treatment for pin 1 (rectangular pad alone would reduce the clearance too much)
-    if configuration['kicad4_compatible']:
-        kicad_mod.append(Pad(number=1, at=[0, 0],
-            size=pad_size, drill=drill,
-            type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, layers=Pad.LAYERS_THT))
-
-        kicad_mod.append(Pad(number=1, at=[-pad_size[0]/4, 0],
-            size=[pad_size[0]/2,pad_size[1]],
-            type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT, layers=['F.Cu', 'F.Mask']))
-        kicad_mod.append(Pad(number=1, at=[-pad_size[0]/4, 0],
-            size=[pad_size[0]/2,pad_size[1]],
-            type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT, layers=['B.Cu', 'B.Mask']))
-
-    else:
-        kicad_mod.append(ChamferedPad(number=1, at=[0, 0],
-            size=pad_size, drill=drill,
-            type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, layers=Pad.LAYERS_THT,
-            chamfer_size=0.4, radius_ratio=0.25, maximum_radius=0.25,
-            corner_selection=CornerSelection({CornerSelection.TOP_RIGHT:True})))
+    kicad_mod.append(ChamferedPad(number=1, at=[0, 0],
+        size=pad_size, drill=drill,
+        type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, layers=Pad.LAYERS_THT,
+        chamfer_size=0.4, radius_ratio=0.25, maximum_radius=0.25,
+        corner_selection=CornerSelection({CornerSelection.TOP_RIGHT:True})))
 
     if pincount > 2:
         kicad_mod.append(PadArray(initial=3, start=[2*pitch, 0],
@@ -158,8 +145,8 @@ def generate_one_footprint(pincount, variant, configuration):
             {'x': x2, 'y': y2},
             {'x': pos_last_odd_pad + (pad_size[0]/2 + silk_pad_offset), 'y': y2},
         ]
-        kicad_mod.append(PolygoneLine(polygone=poly_silk,
-            width=configuration['silk_line_width'], layer="F.SilkS"))
+        kicad_mod.append(PolygonLine(polygon=poly_silk,
+                                     width=configuration['silk_line_width'], layer="F.SilkS"))
         for i in range(num_odd_pins-1):
             kicad_mod.append(Line(start=[i * 2*pitch + (pad_size[0]/2 + silk_pad_offset), y2],
                 end=[(i+1) * 2*pitch - (pad_size[0]/2 + silk_pad_offset), y2],
@@ -175,7 +162,7 @@ def generate_one_footprint(pincount, variant, configuration):
         kicad_mod.append(Pad(at={'x': -1.65, 'y': -3.8}, type=Pad.TYPE_NPTH, shape=Pad.SHAPE_CIRCLE, layers=Pad.LAYERS_NPTH,
             drill=mh_drill, size=mh_drill))
 
-    #thicknes t of sidewalls
+    #thickness t of sidewalls
     t = 0.8
     xa = xMid - A/2 - 0.25 + out
     xb = xMid + A/2 + 0.25 - out
@@ -199,7 +186,7 @@ def generate_one_footprint(pincount, variant, configuration):
 
     #left side
     if not boss:
-        kicad_mod.append(PolygoneLine(polygone=[
+        kicad_mod.append(PolygonLine(polygon=[
             {'x': xa,'y': y3},
             {'x': x1+t,'y':y3},
             {'x': x1+t,'y':y2-t},
@@ -212,7 +199,7 @@ def generate_one_footprint(pincount, variant, configuration):
             width=configuration['silk_line_width'], layer="F.SilkS"
             ))
 
-        kicad_mod.append(PolygoneLine(polygone=[
+        kicad_mod.append(PolygonLine(polygon=[
             {'x': x1+t,'y': -3},
             {'x': x1+t,'y': y2-t},
             {'x': -1,'y': y2-t},
@@ -224,7 +211,7 @@ def generate_one_footprint(pincount, variant, configuration):
     else:
         xEnd = floor(pincount / 2) * (2 * pitch) + 1
 
-    kicad_mod.append(PolygoneLine(polygone=[
+    kicad_mod.append(PolygonLine(polygon=[
         {'x': xb,'y': y3},
         {'x': x2-t,'y': y3},
         {'x': x2-t,'y': y2-t},
@@ -274,15 +261,15 @@ def generate_one_footprint(pincount, variant, configuration):
         {'x': xp2,'y': yp2},
     ]
 
-    kicad_mod.append(PolygoneLine(polygone=pin1,width=configuration['silk_line_width'], layer='F.SilkS'))
-    kicad_mod.append(PolygoneLine(polygone=pin1,layer='F.Fab', width=configuration['fab_line_width']))
+    kicad_mod.append(PolygonLine(polygon=pin1, width=configuration['silk_line_width'], layer='F.SilkS'))
+    kicad_mod.append(PolygonLine(polygon=pin1, layer='F.Fab', width=configuration['fab_line_width']))
 
     ######################### Text Fields ###############################
     addTextFields(kicad_mod=kicad_mod, configuration=configuration, body_edges=body_edge,
         courtyard={'top':cy1, 'bottom':cy2}, fp_name=footprint_name, text_y_inside_position='top')
 
     ##################### Output and 3d model ############################
-    model3d_path_prefix = configuration.get('3d_model_prefix','${KISYS3DMOD}/')
+    model3d_path_prefix = configuration.get('3d_model_prefix','${KICAD8_3DMODEL_DIR}/')
 
     lib_name = configuration['lib_name_format_string'].format(series=series, man=manufacturer)
     model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}.wrl'.format(
@@ -301,7 +288,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='use confing .yaml files to create footprints.')
     parser.add_argument('--global_config', type=str, nargs='?', help='the config file defining how the footprint will look like. (KLC)', default='../../tools/global_config_files/config_KLCv3.0.yaml')
     parser.add_argument('--series_config', type=str, nargs='?', help='the config file defining series parameters.', default='../conn_config_KLCv3.yaml')
-    parser.add_argument('--kicad4_compatible', action='store_true', help='Create footprints kicad 4 compatible')
     args = parser.parse_args()
 
     with open(args.global_config, 'r') as config_stream:
@@ -315,8 +301,6 @@ if __name__ == "__main__":
             configuration.update(yaml.safe_load(config_stream))
         except yaml.YAMLError as exc:
             print(exc)
-
-    configuration['kicad4_compatible'] = args.kicad4_compatible
 
     for variant in variant_parameters:
         for pincount in variant_parameters[variant]['pin_range']:

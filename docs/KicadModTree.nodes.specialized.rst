@@ -5,10 +5,10 @@ To simpilfy the creation on footprints, we have special classes which are build 
 converted to base nodes when creating the footprint, and allows us to create much more complex shapes with as little
 boilerplate code as possible.
 
-KicadModTree.nodes.specialized.PolygoneLine module
+KicadModTree.nodes.specialized.PolygonLine module
 --------------------------------------------------
 
-.. automodule:: KicadModTree.nodes.specialized.PolygoneLine
+.. automodule:: KicadModTree.nodes.specialized.PolygonLine
     :members:
     :show-inheritance:
 

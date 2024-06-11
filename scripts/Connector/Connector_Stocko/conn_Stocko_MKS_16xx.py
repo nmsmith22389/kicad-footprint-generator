@@ -65,7 +65,7 @@ for itr in range (1, 20 + 1):
 
     #init kicad footprint
     footprint_name = "Stocko_MKS_16{}-6-0-{}{:02d}_1x{}_P2.50mm_Vertical".format(50 + itr, pin_count, pin_count, pin_count)
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, FootprintType.THT)
     kicad_mod.setDescription("Stocko MKS 16xx series connector, (https://www.stocko-contact.com/downloads/steckverbindersystem-raster-2,5-mm.pdf#page=15), generated with kicad-footprint-generator")
     kicad_mod.setTags("Stocko RFK MKS 16xx")
 
@@ -82,7 +82,7 @@ for itr in range (1, 20 + 1):
 
     #CREATE SILKSCREEN
     #name
-    kicad_mod.append(Text(type = 'reference', text='REF**', at=[(pin_count - 1) * (pad_span / 2), -4.5], layer='F.SilkS'))
+    kicad_mod.append(Property(name = Property.REFERENCE, text='REF**', at=[(pin_count - 1) * (pad_span / 2), -4.5], layer='F.SilkS'))
     #top
     kicad_mod.append(Line(start = [-silks_outline_x + silks_arc_r, -silks_outline_y],
                           end = [(pin_cnt - 1) * pad_span + silks_outline_x - silks_arc_r, -silks_outline_y], layer = 'F.SilkS'))
@@ -125,8 +125,8 @@ for itr in range (1, 20 + 1):
 
     #CREATE FABRICATION
     #name
-    kicad_mod.append(Text(type = 'user', text = '%R', at = [(pin_count - 1) * (pad_span / 2), -2], layer = 'F.Fab'))
-    kicad_mod.append(Text(type = 'value', text = footprint_name, at = [(pin_count - 1) * (pad_span / 2), silks_outline_y + 2], layer = 'F.Fab'))
+    kicad_mod.append(Text(text = '${REFERENCE}', at = [(pin_count - 1) * (pad_span / 2), -2], layer = 'F.Fab'))
+    kicad_mod.append(Property(name = Property.VALUE, text = footprint_name, at = [(pin_count - 1) * (pad_span / 2), silks_outline_y + 2], layer = 'F.Fab'))
     #top
     kicad_mod.append(Line(start = [-fab_outline_x + fab_arc_r, -fab_outline_y],
                           end = [(pin_cnt - 1) * pad_span + fab_outline_x - fab_arc_r, -fab_outline_y], layer = 'F.Fab'))
@@ -177,7 +177,7 @@ for itr in range (1, 20 + 1):
                               end = [(pin_cnt - 1) * pad_span + fab_outline_x + courtyard_outline, fab_outline_y + courtyard_outline],
                               layer = 'F.CrtYd'))
     #add 3D model
-    kicad_mod.append(Model(filename="${{KISYS3DMOD}}/Connector_Stocko.3dshapes/{}.wrl".format(footprint_name),
+    kicad_mod.append(Model(filename="${{KICAD8_3DMODEL_DIR}}/Connector_Stocko.3dshapes/{}.wrl".format(footprint_name),
                         at=[0, 0, 0], scale=[1, 1, 1], rotate=[0, 0, 0]))
     #output kicad model
     file_handler = KicadFileHandler(kicad_mod)

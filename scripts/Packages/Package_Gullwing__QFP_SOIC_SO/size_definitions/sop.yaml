@@ -135,8 +135,8 @@ SOP-8_3.9x4.9mm_P1.27mm:
     minimum: 4.77
     maximum: 5.03
   overall_height:
-    minimum: 1.45 # not specified, min.A1(0.10) + min.A2(1.35) gives this value 
-    maximum: 1.75 
+    minimum: 1.45 # not specified, min.A1(0.10) + min.A2(1.35) gives this value
+    maximum: 1.75
   overall_size_x:
     minimum: 5.80
     maximum: 6.20
@@ -199,6 +199,19 @@ SOP-8_6.62x9.15mm_P2.54mm:
   num_pins_x: 0
   num_pins_y: 4
 
+SOP-8_6.605x9.655mm_P2.54mm:
+  size_source: 'https://www.onsemi.com/pdf/datasheet/hcpl2631m-d.pdf'
+  body_size_x: 6.35 .. 6.86
+  body_size_y: 9.40 .. 9.91
+  overall_height: 4.19 .. 5.08
+  overall_size_x: 8.8 .. 10.30
+  lead_width: 1.14 .. 1.78
+  lead_len: 0.40 .. 1.15
+
+  pitch: 2.54
+  num_pins_x: 0
+  num_pins_y: 4
+
 SOP-16_4.4.55x10.3mm_P1.27mm:
   size_source: 'https://toshiba.semicon-storage.com/info/docget.jsp?did=12855&prodName=TLP290-4'
   body_size_x:
@@ -251,7 +264,33 @@ SOP-18_7.0x12.5mm_P1.27mm:
   pitch: 1.27
   num_pins_x: 0
   num_pins_y: 9
-  
+
+SOP-18_7.495x11.515mm_P1.27mm:
+  # mpn: 'P-SOP18-0812-1.27-001'
+  size_source: 'https://toshiba.semicon-storage.com/info/docget.jsp?did=30523'
+  body_size_x:
+    minimum: 7.37
+    maximum: 7.62
+  body_size_y:
+    minimum: 11.35
+    maximum: 11.68
+  overall_height:
+    maximum: 2.85
+
+  overall_size_x:
+    minimum: 10.01
+    maximum: 10.64
+  lead_width:
+    minimum: 0.36
+    maximum: 0.51
+  lead_len:
+    nominal: 0.85
+    tolerance: 0.15
+
+  pitch: 1.27
+  num_pins_x: 0
+  num_pins_y: 9
+
 STC_SOP-16_3.9x9.9mm_P1.27mm:
   size_source: 'https://www.stcmicro.com/datasheet/STC15F2K60S2-en.pdf#page=156'
   manufacturer: 'STC'
@@ -284,6 +323,79 @@ STC_SOP-16_3.9x9.9mm_P1.27mm:
   num_pins_x: 0
   num_pins_y: 8
 
+SOP-16_3.9x9.9mm_P1.27mm:
+  size_source: 'https://www.diodes.com/assets/Datasheets/PAM8403.pdf'
+  body_size_x: # E1
+    minimum: 3.80
+    maximum: 4.00
+  body_size_y: # D
+    minimum: 9.80
+    maximum: 10.00
+  overall_height: # A
+    minimum: 1.35
+    maximum: 1.75
+  overall_size_x: # E
+    minimum: 5.80
+    maximum: 6.30
+  lead_len: # L
+    minimum: 0.40
+    maximum: 1.27
+  lead_width: # b
+    minimum: 0.33
+    maximum: 0.51
+
+  pitch: 1.27 # e
+  num_pins_x: 0
+  num_pins_y: 8
+
+SOP-16_4.4x10.4mm_P1.27mm:
+  size_source: 'https://www.vishay.com/docs/83513/tcmd1000.pdf'
+  body_size_x:
+    nominal: 4.40
+    tolerance: 0.20
+  body_size_y:
+    nominal: 10.4
+  overall_height:
+    nominal: 2.1
+  overall_size_x:
+    minimum: 6.6
+    nominal: 7
+    maximum: 7.3
+  lead_len:
+    minimum: 0.30
+    nominal: 0.70
+    maximum: 1.00
+  lead_width:
+    nominal: 0.45
+    tolerance: 0.10
+
+  pitch: 1.27
+  num_pins_x: 0
+  num_pins_y: 8
+
+SOP-20_7.5x12.8mm_P1.27mm:
+  size_source: 'https://www.holtek.com/documents/10179/116723/sop20-300.pdf'
+  body_size_x:
+    nominal: 7.50
+  body_size_y:
+    nominal: 12.80
+  overall_height:
+    maximum: 2.65
+
+  overall_size_x:
+    nominal: 10.30
+
+  lead_width:
+    minimum: 0.31
+    maximum: 0.51
+  lead_len:
+    minimum: 0.40
+    maximum: 1.27
+
+  pitch: 1.27
+  num_pins_x: 0
+  num_pins_y: 10
+
 SOP-24_7.5x15.4mm_P1.27mm:
   size_source: 'http://www.issi.com/WW/pdf/31FL3218.pdf#page=14'
   body_size_x:
@@ -311,3 +423,61 @@ SOP-24_7.5x15.4mm_P1.27mm:
   pitch: 1.27
   num_pins_x: 0
   num_pins_y: 12
+
+SOP-28_8.4x18.16mm_P1.27mm:
+  size_source: 'https://www.issi.com/WW/pdf/62-65C256AL.pdf#page=12'
+  body_size_x:
+    minimum: 8.23
+    nominal: 8.4
+    maximum: 8.9
+  body_size_y:
+    minimum: 17.70
+    maximum: 18.62
+  overall_height:
+    minimum: 2.55
+    maximum: 3.05
+
+  overall_size_x:
+    minimum: 11.50
+    maximum: 12.7
+  lead_width:
+    minimum: 0.35
+    maximum: 0.50
+  lead_len:
+    minimum: 0.4
+    maximum: 1.27
+
+  pitch: 1.27
+  num_pins_x: 0
+  num_pins_y: 14
+
+SOP-44_12.6x28.5mm_P1.27mm:
+  size_source: 'https://www.mxic.com.tw/Lists/Datasheet/Attachments/8177/MX23C6410,%205V,%2064Mb,%20v3.1.pdf#page=5'
+  body_size_x:
+    minimum: 12.47
+    nominal: 12.6
+    maximum: 12.73
+  body_size_y:
+    minimum: 28.37
+    nominal: 28.5
+    maximum: 28.63
+  overall_height:
+    maximum: 3
+
+  overall_size_x:
+    minimum: 15.83
+    nominal: 16.03
+    maximum: 16.23
+  lead_width:
+    minimum: 0.36
+    nominal: 0.41
+    maximum: 0.51
+  lead_len:
+    minimum: 0.56
+    nominal: 0.76
+    maximum: 0.96
+
+  pitch: 1.27
+  num_pins_x: 0
+  num_pins_y: 22
+

@@ -21,11 +21,11 @@ def ptc_fuse_tht(args):
     pitch = args["pitch"]
     offset = args["offset"]
 
-    f = Footprint(footprint_name)
+    f = Footprint(footprint_name, FootprintType.THT)
     f.setDescription("PTC Resettable Fuse, Ihold = " + ihold +
                      ", Itrip=" + itrip + ", " + datasheet)
     f.setTags("ptc resettable fuse polyfuse THT")
-    f.append(Model(filename="${KISYS3DMOD}/Fuse.3dshapes/" +
+    f.append(Model(filename="${KICAD8_3DMODEL_DIR}/Fuse.3dshapes/" +
                    footprint_name + ".wrl",
                    at=[0.0, 0.0, 0.0],
                    scale=[1.0, 1.0, 1.0],
@@ -81,11 +81,11 @@ def ptc_fuse_tht(args):
         pin = pin + 1
 
     # Text
-    f.append(Text(type="reference", text="REF**", at=[xCenter, yRef],
+    f.append(Property(name=Property.REFERENCE, text="REF**", at=[xCenter, yRef],
                   layer="F.SilkS", size=s, thickness=t))
-    f.append(Text(type="value", text=footprint_name, at=[xCenter, yValue],
+    f.append(Property(name=Property.VALUE, text=footprint_name, at=[xCenter, yValue],
                   layer="F.Fab", size=s, thickness=t))
-    f.append(Text(type="user", text="%R", at=[xCenter, yCenter],
+    f.append(Text(text='${REFERENCE}', at=[xCenter, yCenter],
                   layer="F.Fab", size=s, thickness=t))
 
     # Fab outline

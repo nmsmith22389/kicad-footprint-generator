@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import sys
 import os
@@ -13,10 +13,6 @@ sys.path.append(os.path.join(sys.path[0],"..","tools")) # load kicad_mod path
 
 from KicadModTree import *  # NOQA
 from footprint_scripts_DIP import *
-
-
-
-
 
 if __name__ == '__main__':
     cwd= os.getcwd()

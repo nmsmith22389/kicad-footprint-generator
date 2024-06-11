@@ -109,11 +109,9 @@ def generate_one_footprint(partnumber, pincount, configuration):
         side = "top"
 
     # initialise footprint
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, FootprintType.SMD)
     kicad_mod.setDescription('TE FPC connector, {pc:02g} {side}-side contacts, 1.0mm pitch, 1.0mm height, SMT, {ds}'.format(pc=pincount, side=side, ds=datasheet))
     kicad_mod.setTags('te fpc {:s}'.format(partnumber))
-    kicad_mod.setAttribute('smd')
-
 
     # create pads
     kicad_mod.append(PadArray(pincount=pincount, x_spacing=pitch, center=[0,pad_y],
@@ -129,8 +127,8 @@ def generate_one_footprint(partnumber, pincount, configuration):
         size=[tab_width, tab_height], layers=Pad.LAYERS_SMT))
 
     # create fab outline and pin 1 marker
-    kicad_mod.append(PolygoneLine(
-        polygone=[
+    kicad_mod.append(PolygonLine(
+        polygon=[
             [-half_body_width, body_y1],
             [half_body_width, body_y1],
             [half_body_width, actuator_y1-ear_height],
@@ -142,16 +140,16 @@ def generate_one_footprint(partnumber, pincount, configuration):
             [-half_body_width, body_y1]],
         layer='F.Fab', width=configuration['fab_line_width']))
 
-    kicad_mod.append(PolygoneLine(
-        polygone=[
+    kicad_mod.append(PolygonLine(
+        polygon=[
             [-pad1_x-0.5, body_y1],
             [-pad1_x, body_y1+1],
             [-pad1_x+0.5, body_y1]],
         layer='F.Fab', width=configuration['fab_line_width']))
 
     # create open actuator outline
-    kicad_mod.append(PolygoneLine(
-        polygone=[
+    kicad_mod.append(PolygonLine(
+        polygon=[
             [half_body_width, actuator_y1],
             [half_body_width, actuator_y2-ear_height],
             [half_actuator_width, actuator_y2-ear_height],
@@ -163,8 +161,8 @@ def generate_one_footprint(partnumber, pincount, configuration):
         layer='F.Fab', width=configuration['fab_line_width']))
 
     # create silkscreen outline and pin 1 marker
-    kicad_mod.append(PolygoneLine(
-        polygone=[
+    kicad_mod.append(PolygonLine(
+        polygon=[
             [half_body_width+nudge, tab_y+tab_height/2.0+silk_clearance],
             [half_body_width+nudge, actuator_y1-ear_height-nudge],
             [half_actuator_width+nudge, actuator_y1-ear_height-nudge],
@@ -175,8 +173,8 @@ def generate_one_footprint(partnumber, pincount, configuration):
             [-half_body_width-nudge, tab_y+tab_height/2.0+silk_clearance]],
         layer='F.SilkS', width=configuration['silk_line_width']))
 
-    kicad_mod.append(PolygoneLine(
-        polygone=[
+    kicad_mod.append(PolygonLine(
+        polygon=[
             [-tab_x+tab_width/2.0+silk_clearance, body_y1-nudge],
             [-pad1_x-pad_width/2.0-silk_clearance, body_y1-nudge],
             [-pad1_x-pad_width/2.0-silk_clearance, body_y1-nudge-marker_y]],
@@ -190,16 +188,16 @@ def generate_one_footprint(partnumber, pincount, configuration):
     # create courtyard
     kicad_mod.append(RectLine(start=[-courtyard_x, courtyard_y1], end=[courtyard_x, courtyard_y2],
         layer='F.CrtYd', width=configuration['courtyard_line_width']))
-    # kicad_mod.append(Text(type='reference', text='REF**', size=[1,1], at=[0, courtyard_y1 - label_y_offset], layer='F.SilkS'))
-    # kicad_mod.append(Text(type='user', text='%R', size=[1,1], at=[0, tab_y], layer='F.Fab'))
-    # kicad_mod.append(Text(type='value', text=footprint_name, at=[0, courtyard_y2 + label_y_offset], layer='F.Fab'))
+    # kicad_mod.append(Property(name=Property.REFERENCE, text='REF**', size=[1,1], at=[0, courtyard_y1 - label_y_offset], layer='F.SilkS'))
+    # kicad_mod.append(Text(text='${REFERENCE}', size=[1,1], at=[0, tab_y], layer='F.Fab'))
+    # kicad_mod.append(Property(name=Property.VALUE, text=footprint_name, at=[0, courtyard_y2 + label_y_offset], layer='F.Fab'))
 
     ######################### Text Fields ###############################
     addTextFields(kicad_mod=kicad_mod, configuration=configuration, body_edges=body_edge,
         courtyard={'top':courtyard_y1, 'bottom':courtyard_y2}, fp_name=footprint_name, text_y_inside_position=[0, tab_y])
 
     ##################### Output and 3d model ############################
-    model3d_path_prefix = configuration.get('3d_model_prefix','${KISYS3DMOD}/')
+    model3d_path_prefix = configuration.get('3d_model_prefix','${KICAD8_3DMODEL_DIR}/')
 
     if lib_by_conn_category:
         lib_name = configuration['lib_name_specific_function_format_string'].format(category=conn_category)

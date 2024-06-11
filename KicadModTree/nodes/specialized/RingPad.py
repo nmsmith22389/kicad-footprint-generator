@@ -360,7 +360,7 @@ class RingPad(Node):
             layers = ['F.Cu', 'F.Mask']
             self._generatePastePads()
         else:
-            layers = ['F.Cu', 'F.Mask', 'F.Paste']
+            layers = Pad.LAYERS_SMT
 
         if not self.is_circle:
             self._generateCopperPads()

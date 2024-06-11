@@ -86,15 +86,15 @@ for pincount in pins:
 
     print(footprint_name)
 
-    fp = Footprint(footprint_name)
+    fp = Footprint(footprint_name, FootprintType.THT)
 
     #description
     fp.setDescription(desc.format(manu=manu, series=series, p=pitch, code=part))
     fp.setTags(tags)
 
     # text
-    fp.append(Text(type='reference', text='REF**', at=[0, -5.2], layer='F.SilkS'))
-    fp.append(Text(type='value', text=footprint_name, at=[0,5.4 ], layer='F.Fab'))
+    fp.append(Property(name=Property.REFERENCE, text='REF**', at=[0, -5.2], layer='F.SilkS'))
+    fp.append(Property(name=Property.VALUE, text=footprint_name, at=[0,5.4 ], layer='F.Fab'))
 
     #Major dimensions
     B = ( pincount - 1 ) * pitch
@@ -143,11 +143,11 @@ for pincount in pins:
 
         return outline
 
-    fp.append(PolygoneLine(polygone=outline(),layer='F.Fab'))
-    fp.append(PolygoneLine(polygone=outline(),layer='F.Fab',x_mirror=B/2))
+    fp.append(PolygonLine(polygon=outline(), layer='F.Fab'))
+    fp.append(PolygonLine(polygon=outline(), layer='F.Fab', x_mirror=B / 2))
 
-    fp.append(PolygoneLine(polygone=outline(offset=0.15)))
-    fp.append(PolygoneLine(polygone=outline(offset=0.15),x_mirror=B/2))
+    fp.append(PolygonLine(polygon=outline(offset=0.15)))
+    fp.append(PolygonLine(polygon=outline(offset=0.15), x_mirror=B / 2))
 
     #draw lines between pads on F.Fab
     for i in range(pincount - 1):
@@ -175,13 +175,13 @@ for pincount in pins:
     {'x': 0,'y': yb},
     ]
 
-    fp.append(PolygoneLine(polygone=outline,layer='F.Fab'))
-    fp.append(PolygoneLine(polygone=outline,layer='F.Fab',x_mirror=0))
+    fp.append(PolygonLine(polygon=outline,layer='F.Fab'))
+    fp.append(PolygonLine(polygon=outline,layer='F.Fab',x_mirror=0))
 
     #draw pin-1 indicator on F.Fab
     #size of arrow a
     a = 0.6
-    fp.append(PolygoneLine(polygone=[
+    fp.append(PolygonLine(polygon=[
         {'x': -B/2, 'y': yt + a},
         {'x': -B/2 - a/2, 'y': yt},
         {'x': -B/2 + a/2, 'y': yt},
@@ -189,7 +189,7 @@ for pincount in pins:
 
     #draw pin-1 indicator on Silk.S
     ya = -2
-    fp.append(PolygoneLine(polygone=[
+    fp.append(PolygonLine(polygon=[
         {'x': -B/2, 'y': ya},
         {'x': -B/2 - a/2, 'y': ya - a},
         {'x': -B/2 + a/2, 'y': ya - a},
@@ -211,8 +211,8 @@ for pincount in pins:
     {'x': -A/2 - of, 'y': ym - mh / 2 - op},
     ]
 
-    fp.append(PolygoneLine(polygone = silk))
-    fp.append(PolygoneLine(polygone = silk, x_mirror = 0))
+    fp.append(PolygonLine(polygon = silk))
+    fp.append(PolygonLine(polygon = silk, x_mirror = 0))
 
     #bottom line
     fp.append(Line(

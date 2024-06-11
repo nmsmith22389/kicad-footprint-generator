@@ -115,7 +115,7 @@ def generate_one_footprint(weld, pol, pcb_thickness, n, configuration):
     fp_name = fp_name + '_Socket'
     fp_name = fp_name + '_Horizontal'
 
-    kicad_mod = Footprint(fp_name)
+    kicad_mod = Footprint(fp_name, FootprintType.SMD)
 
     description = "Highspeed card edge connector for "
     if pcb_thickness == '01':
@@ -132,7 +132,7 @@ def generate_one_footprint(weld, pol, pcb_thickness, n, configuration):
 
     #set the FP description
     kicad_mod.setDescription(description)
-    kicad_mod.setAttribute('smd')
+    kicad_mod.footprintType = FootprintType.SMD
 
     tags = "conn samtec card-edge high-speed"
 
@@ -249,14 +249,14 @@ def generate_one_footprint(weld, pol, pcb_thickness, n, configuration):
 
     # output kicad model
     #print(kicad_mod
-    # kicad_mod.append(Text(type='reference', text='REF**', at=[0,3.81], layer='F.SilkS'))
-    # kicad_mod.append(Text(type='user', text='%R', at=[0,0], layer='F.Fab'))
-    # kicad_mod.append(Text(type='value', text=fp_name, at=[0,-3.81], layer='F.Fab'))
+    # kicad_mod.append(Property(name=Property.REFERENCE, text='REF**', at=[0,3.81], layer='F.SilkS'))
+    # kicad_mod.append(Text(text='${REFERENCE}', at=[0,0], layer='F.Fab'))
+    # kicad_mod.append(Property(name=Property.VALUE, text=fp_name, at=[0,-3.81], layer='F.Fab'))
     addTextFields(kicad_mod=kicad_mod, configuration=configuration, body_edges=body_edge,
         courtyard={'top':cy1, 'bottom':cy2}, fp_name=fp_name, text_y_inside_position='center')
 
     ##################### Output and 3d model ############################
-    model3d_path_prefix = configuration.get('3d_model_prefix','${KISYS3DMOD}/')
+    model3d_path_prefix = configuration.get('3d_model_prefix','${KICAD8_3DMODEL_DIR}/')
 
     #lib_name = configuration['lib_name_format_string'].format(series=series, man=manufacturer)
     lib_name = configuration['lib_name_specific_function_format_string'].format(category=lib_name_category)

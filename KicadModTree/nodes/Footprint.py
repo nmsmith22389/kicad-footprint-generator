@@ -17,6 +17,8 @@
 from KicadModTree.Vector import *
 from KicadModTree.nodes.Node import Node
 
+from enum import Enum
+import uuid
 
 '''
 This is my new approach, using a render tree for footprint generation.
@@ -36,20 +38,41 @@ render_order = ['descr', 'tags', 'attr', 'solder_mask_margin',
 # TODO: sort Text by type
 
 
+class FootprintType(Enum):
+    UNSPECIFIED = 0
+    SMD = 1
+    THT = 2
+
+
 class Footprint(Node):
     '''
     Root Node to generate KicadMod
     '''
-    def __init__(self, name):
+
+    def __init__(self, name: str, footprintType: FootprintType, tstamp_seed: uuid.UUID = None):
+        """
+        :param name: Name of the footprint
+        :param footprintType: Type of the footprint (None is the deprecated default)
+        """
         Node.__init__(self)
 
         self.name = name
         self.description = None
-        self.tags = None
-        self.attribute = None
+        self._tags = []
+
+        # These are attrs in the s-exp, but we can be type-safe here
+        # and convert to strings in the file output layer
+        self._footprintType = footprintType
+        self.excludeFromBOM = False
+        self.excludeFromPositionFiles = False
+        self.allow_soldermask_bridges = False
+
         self.maskMargin = None
         self.pasteMargin = None
         self.pasteMarginRatio = None
+
+        if tstamp_seed is not None:
+            self.getTStampCls().setTStampSeed(tstamp_seed=tstamp_seed)
 
     def setName(self, name):
         self.name = name
@@ -57,11 +80,33 @@ class Footprint(Node):
     def setDescription(self, description):
         self.description = description
 
-    def setTags(self, tags):
+    @property
+    def tags(self) -> list:
+        return self._tags
+
+    @tags.setter
+    def tags(self, tags) -> None:
+        if isinstance(tags, list):
+            self._tags = tags
+        else:
+            self._tags = [tags]
+
+    def setTags(self, tags) -> None:
+        """
+        Legacy setter
+        """
         self.tags = tags
 
-    def setAttribute(self, value):
-        self.attribute = value
+    @property
+    def footprintType(self) -> FootprintType:
+        return self._footprintType
+
+    @footprintType.setter
+    def footprintType(self, footprintType: FootprintType) -> None:
+        if not isinstance(footprintType, FootprintType):
+            raise TypeError(
+                "footprintType must be a FootprintType, not {}".format(type(footprintType)))
+        self._footprintType = footprintType
 
     def setMaskMargin(self, value):
         self.maskMargin = value
@@ -71,6 +116,12 @@ class Footprint(Node):
 
     def setPasteMarginRatio(self, value):
         # paste_margin_ratio is unitless between 0 and 1 while GUI uses percentage
-        assert abs(value) <= 1, "Solder paste margin must be between -1 and 1. {} is too large.".format(value)
+        assert abs(
+            value) <= 1, "Solder paste margin must be between -1 and 1. {} is too large.".format(value)
 
         self.pasteMarginRatio = value
+
+    def cleanSilkMaskOverlap(self, side: str = 'F', silk_pad_clearance: float = 0.2, silk_line_width: float = 0.12):
+        from KicadModTree.util.silkmask_util import cleanSilkOverMask
+        cleanSilkOverMask(footprint=self, side=side, silk_pad_clearance=silk_pad_clearance,
+                          silk_line_width=silk_line_width)

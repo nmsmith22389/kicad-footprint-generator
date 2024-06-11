@@ -34,7 +34,7 @@ slk_offset = lw_slk
 #
 def makeTerminalBlockStd(footprint_name, pins, rm, package_height, leftbottom_offset, ddrill, pad, screw_diameter, bevel_height, slit_screw=True, screw_pin_offset=[0,0], secondHoleDiameter=0, secondHoleOffset=[0,0], thirdHoleDiameter=0, thirdHoleOffset=[0,0], fourthHoleDiameter=0, fourthHoleOffset=[0,0],secondDrillDiameter=0,secondDrillOffset=[0,0],secondDrillPad=[0,0],nibbleSize=[],nibblePos=[], fabref_offset=[0,0],
                         stackable=False,
-                        tags_additional=[], lib_name="${{KISYS3DMOD}}/Connectors_Terminal_Blocks", classname="Connectors_Terminal_Blocks", classname_description="terminal block", webpage="", script_generated_note=""):
+                        tags_additional=[], lib_name="${{KICAD8_3DMODEL_DIR}}/Connectors_Terminal_Blocks", classname="Connectors_Terminal_Blocks", classname_description="terminal block", webpage="", script_generated_note=""):
 
     package_size=[2*leftbottom_offset[0]+(pins-1)*rm, package_height];
     if len(leftbottom_offset)==3:
@@ -67,7 +67,7 @@ def makeTerminalBlockStd(footprint_name, pins, rm, package_height, leftbottom_of
     text_t = text_size[0] * 0.15
 
 
-    description = "{2}, {0:d} pins, pitch {1:.3g}mm, size {3:.3g}x{4:.3g}mm^2, drill diamater {5:.3g}mm, pad diameter {6:.3g}mm, see {7:s}"\
+    description = "{2}, {0:d} pins, pitch {1:.3g}mm, size {3:.3g}x{4:.3g}mm^2, drill diameter {5:.3g}mm, pad diameter {6:.3g}mm, see {7:s}"\
         .format(pins, rm, classname_description, package_size[0], package_size[1], ddrill, max(pad), webpage)
     tags = "THT {2} pitch {1:.3g}mm size {3:.3g}x{4:.3g}mm^2 drill {5:.3g}mm pad {6:.3g}mm"\
         .format(pins, rm, classname_description, package_size[0], package_size[1], ddrill, max(pad))
@@ -84,7 +84,7 @@ def makeTerminalBlockStd(footprint_name, pins, rm, package_height, leftbottom_of
     print(footprint_name)
 
     # init kicad footprint
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, FootprintType.THT)
     kicad_mod.setDescription(description)
     kicad_mod.setTags(tags)
 
@@ -94,12 +94,12 @@ def makeTerminalBlockStd(footprint_name, pins, rm, package_height, leftbottom_of
     kicad_mod.append(kicad_modg)
 
     # set general values
-    kicad_modg.append(Text(type='reference', text='REF**', at=[l_fab+w_fab/2, t_slk - txt_offset], layer='F.SilkS'))
+    kicad_modg.append(Property(name=Property.REFERENCE, text='REF**', at=[l_fab+w_fab/2, t_slk - txt_offset], layer='F.SilkS'))
     if (type(fabref_offset) in (tuple, list)):
-        kicad_modg.append(Text(type='user', text='%R', at=[l_fab+w_fab/2+fabref_offset[0], t_fab+h_fab/2+fabref_offset[1]], layer='F.Fab', size=text_size ,thickness=text_t))
+        kicad_modg.append(Text(text='${REFERENCE}', at=[l_fab+w_fab/2+fabref_offset[0], t_fab+h_fab/2+fabref_offset[1]], layer='F.Fab', size=text_size ,thickness=text_t))
     else:
-        kicad_modg.append(Text(type='user', text='%R', at=[l_fab+w_fab/2,  t_slk - txt_offset], layer='F.Fab', size=text_size ,thickness=text_t))
-    kicad_modg.append(Text(type='value', text=footprint_name, at=[l_fab+w_fab/2, t_slk + h_slk + txt_offset], layer='F.Fab'))
+        kicad_modg.append(Text(text='${REFERENCE}', at=[l_fab+w_fab/2,  t_slk - txt_offset], layer='F.Fab', size=text_size ,thickness=text_t))
+    kicad_modg.append(Property(name=Property.VALUE, text=footprint_name, at=[l_fab+w_fab/2, t_slk + h_slk + txt_offset], layer='F.Fab'))
 
 
     # create pads
@@ -255,7 +255,7 @@ def makeTerminalBlockStd(footprint_name, pins, rm, package_height, leftbottom_of
 #
 def makeTerminalBlockVertical(footprint_name, pins, rm, package_height, leftbottom_offset, ddrill, pad, opening, opening_yoffset, bevel_height, opening_xoffset=0, secondHoleDiameter=0, secondHoleOffset=[0,0], thirdHoleDiameter=0, thirdHoleOffset=[0,0], fourthHoleDiameter=0, fourthHoleOffset=[0,0],secondDrillDiameter=0,secondDrillOffset=[0,0],secondDrillPad=[0,0],nibbleSize=[],nibblePos=[], fabref_offset=[0,0],
                         stackable=False,
-                        tags_additional=[], lib_name="${{KISYS3DMOD}}/Connectors_Terminal_Blocks", classname="Connectors_Terminal_Blocks", classname_description="terminal block", webpage="", script_generated_note=""):
+                        tags_additional=[], lib_name="${{KICAD8_3DMODEL_DIR}}/Connectors_Terminal_Blocks", classname="Connectors_Terminal_Blocks", classname_description="terminal block", webpage="", script_generated_note=""):
 
     package_size=[2*leftbottom_offset[0]+(pins-1)*rm, package_height];
     if len(leftbottom_offset)==3:
@@ -288,7 +288,7 @@ def makeTerminalBlockVertical(footprint_name, pins, rm, package_height, leftbott
     text_t = text_size[0] * 0.15
 
 
-    description = "{2}, vertical (cable from top), {0:d} pins, pitch {1:.3g}mm, size {3:.3g}x{4:.3g}mm^2, drill diamater {5:.3g}mm, pad diameter {6:.3g}mm, see {7}, script-generated with "\
+    description = "{2}, vertical (cable from top), {0:d} pins, pitch {1:.3g}mm, size {3:.3g}x{4:.3g}mm^2, drill diameter {5:.3g}mm, pad diameter {6:.3g}mm, see {7}"\
         .format(pins, rm, classname_description, package_size[0], package_size[1], ddrill, max(pad), webpage)
     tags = "THT {2} vertical pitch {1:.3g}mm size {3:.3g}x{4:.3g}mm^2 drill {5:.3g}mm pad {6:.3g}mm"\
         .format(pins, rm, classname_description, package_size[0], package_size[1], ddrill, max(pad))
@@ -305,7 +305,7 @@ def makeTerminalBlockVertical(footprint_name, pins, rm, package_height, leftbott
     print(footprint_name)
 
     # init kicad footprint
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, FootprintType.THT)
     kicad_mod.setDescription(description)
     kicad_mod.setTags(tags)
 
@@ -315,12 +315,12 @@ def makeTerminalBlockVertical(footprint_name, pins, rm, package_height, leftbott
     kicad_mod.append(kicad_modg)
 
     # set general values
-    kicad_modg.append(Text(type='reference', text='REF**', at=[l_fab+w_fab/2, t_slk - txt_offset], layer='F.SilkS'))
+    kicad_modg.append(Property(name=Property.REFERENCE, text='REF**', at=[l_fab+w_fab/2, t_slk - txt_offset], layer='F.SilkS'))
     if (type(fabref_offset) in (tuple, list)):
-        kicad_modg.append(Text(type='user', text='%R', at=[l_fab+w_fab/2+fabref_offset[0], t_fab+h_fab/2+fabref_offset[1]], layer='F.Fab', size=text_size ,thickness=text_t))
+        kicad_modg.append(Text(text='${REFERENCE}', at=[l_fab+w_fab/2+fabref_offset[0], t_fab+h_fab/2+fabref_offset[1]], layer='F.Fab', size=text_size ,thickness=text_t))
     else:
-        kicad_modg.append(Text(type='user', text='%R', at=[l_fab+w_fab/2,  t_slk - txt_offset], layer='F.Fab', size=text_size ,thickness=text_t))
-    kicad_modg.append(Text(type='value', text=footprint_name, at=[l_fab+w_fab/2, t_slk + h_slk + txt_offset], layer='F.Fab'))
+        kicad_modg.append(Text(text='${REFERENCE}', at=[l_fab+w_fab/2,  t_slk - txt_offset], layer='F.Fab', size=text_size ,thickness=text_t))
+    kicad_modg.append(Property(name=Property.VALUE, text=footprint_name, at=[l_fab+w_fab/2, t_slk + h_slk + txt_offset], layer='F.Fab'))
 
 
     # create pads
@@ -478,7 +478,7 @@ def makeTerminalBlockVertical(footprint_name, pins, rm, package_height, leftbott
 #
 def makeTerminalBlock45Degree(footprint_name, pins, rm, package_height, leftbottom_offset, ddrill, pad, opening, opening_xoffset, opening_yoffset, opening_elliptic=False, bevel_height=[], vsegment_lines_offset=[], secondHoleDiameter=0, secondHoleOffset=[0,0], thirdHoleDiameter=0, thirdHoleOffset=[0,0], fourthHoleDiameter=0, fourthHoleOffset=[0,0], fifthHoleDiameter=0, fifthHoleOffset=[0,0],secondDrillDiameter=0,secondDrillOffset=[0,0],secondDrillPad=[0,0],nibbleSize=[],nibblePos=[], fabref_offset=[0,0],secondEllipseSize=[0,0],secondEllipseOffset=[0,0],
                         stackable=False,
-                        tags_additional=[], lib_name="${{KISYS3DMOD}}/Connectors_Terminal_Blocks", classname="Connectors_Terminal_Blocks", classname_description="terminal block", webpage="", script_generated_note=""):
+                        tags_additional=[], lib_name="${{KICAD8_3DMODEL_DIR}}/Connectors_Terminal_Blocks", classname="Connectors_Terminal_Blocks", classname_description="terminal block", webpage="", script_generated_note=""):
 
     package_size=[2*leftbottom_offset[0]+(pins-1)*rm, package_height];
     if len(leftbottom_offset)==3:
@@ -511,7 +511,7 @@ def makeTerminalBlock45Degree(footprint_name, pins, rm, package_height, leftbott
     text_t = text_size[0] * 0.15
 
 
-    description = "{2}, 45Degree (cable under 45degree), {0:d} pins, pitch {1:.3g}mm, size {3:.3g}x{4:.3g}mm^2, drill diamater {5:.3g}mm, pad diameter {6:.3g}mm, see {7}, script-generated with "\
+    description = "{2}, 45Degree (cable under 45degree), {0:d} pins, pitch {1:.3g}mm, size {3:.3g}x{4:.3g}mm^2, drill diameter {5:.3g}mm, pad diameter {6:.3g}mm, see {7}"\
         .format(pins, rm,classname_description, package_size[0], package_size[1], ddrill, max(pad), webpage)
     tags = "THT {2} 45Degree pitch {1:.3g}mm size {3:.3g}x{4:.3g}mm^2 drill {5:.3g}mm pad {6:.3g}mm"\
         .format(pins, rm,classname_description, package_size[0], package_size[1], ddrill, max(pad))
@@ -528,7 +528,7 @@ def makeTerminalBlock45Degree(footprint_name, pins, rm, package_height, leftbott
     print(footprint_name)
 
     # init kicad footprint
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, FootprintType.THT)
     kicad_mod.setDescription(description)
     kicad_mod.setTags(tags)
 
@@ -538,12 +538,12 @@ def makeTerminalBlock45Degree(footprint_name, pins, rm, package_height, leftbott
     kicad_mod.append(kicad_modg)
 
     # set general values
-    kicad_modg.append(Text(type='reference', text='REF**', at=[l_fab+w_fab/2, t_slk - txt_offset], layer='F.SilkS'))
+    kicad_modg.append(Property(name=Property.REFERENCE, text='REF**', at=[l_fab+w_fab/2, t_slk - txt_offset], layer='F.SilkS'))
     if (type(fabref_offset) in (tuple, list)):
-        kicad_modg.append(Text(type='user', text='%R', at=[l_fab+w_fab/2+fabref_offset[0], t_fab+h_fab/2+fabref_offset[1]], layer='F.Fab', size=text_size ,thickness=text_t))
+        kicad_modg.append(Text(text='${REFERENCE}', at=[l_fab+w_fab/2+fabref_offset[0], t_fab+h_fab/2+fabref_offset[1]], layer='F.Fab', size=text_size ,thickness=text_t))
     else:
-        kicad_modg.append(Text(type='user', text='%R', at=[l_fab+w_fab/2,  t_slk - txt_offset], layer='F.Fab', size=text_size ,thickness=text_t))
-    kicad_modg.append(Text(type='value', text=footprint_name, at=[l_fab+w_fab/2, t_slk + h_slk + txt_offset], layer='F.Fab'))
+        kicad_modg.append(Text(text='${REFERENCE}', at=[l_fab+w_fab/2,  t_slk - txt_offset], layer='F.Fab', size=text_size ,thickness=text_t))
+    kicad_modg.append(Property(name=Property.VALUE, text=footprint_name, at=[l_fab+w_fab/2, t_slk + h_slk + txt_offset], layer='F.Fab'))
 
 
     # create pads
@@ -712,7 +712,7 @@ def makeTerminalBlock45Degree(footprint_name, pins, rm, package_height, leftbott
 # slit_screw=true|False: type of screw
 # block_size [w,h]: size of block
 def makeScrewTerminalSingleStd(footprint_name, block_size, block_offset, pins, ddrill, pad, screw_diameter, screw_offset, slit_screw=True,
-                        tags_additional=[], lib_name="${{KISYS3DMOD}}/Connectors_Terminal_Blocks", classname="Connectors_Terminal_Blocks", classname_description="single screw terminal terminal block", webpage="", script_generated_note=""):
+                        tags_additional=[], lib_name="${{KICAD8_3DMODEL_DIR}}/Connectors_Terminal_Blocks", classname="Connectors_Terminal_Blocks", classname_description="single screw terminal terminal block", webpage="", script_generated_note=""):
 
 
     h_fab = block_size[1]
@@ -743,7 +743,7 @@ def makeScrewTerminalSingleStd(footprint_name, block_size, block_offset, pins, d
     txt_offset=text_size[1]
 
 
-    description = "{2}, block size {3:.3g}x{4:.3g}mm^2, drill diamater {5:.3g}mm, {1:d} pads, pad diameter {6:.3g}mm, see {7}"\
+    description = "{2}, block size {3:.3g}x{4:.3g}mm^2, drill diameter {5:.3g}mm, {1:d} pads, pad diameter {6:.3g}mm, see {7}"\
         .format(0, len(pins), classname_description, block_size[0], block_size[1], ddrill, max(pad), webpage)
     tags = "THT {2} size {3:.3g}x{4:.3g}mm^2 drill {5:.3g}mm pad {6:.3g}mm"\
         .format(0, len(pins), classname_description, block_size[0], block_size[1], ddrill, max(pad))
@@ -760,7 +760,7 @@ def makeScrewTerminalSingleStd(footprint_name, block_size, block_offset, pins, d
     print(footprint_name)
 
     # init kicad footprint
-    kicad_mod = Footprint(footprint_name)
+    kicad_mod = Footprint(footprint_name, FootprintType.THT)
     kicad_mod.setDescription(description)
     kicad_mod.setTags(tags)
 
@@ -770,9 +770,9 @@ def makeScrewTerminalSingleStd(footprint_name, block_size, block_offset, pins, d
     kicad_mod.append(kicad_modg)
 
     # set general values
-    kicad_modg.append(Text(type='reference', text='REF**', at=[l_fab+w_fab/2, t_slk - txt_offset], layer='F.SilkS'))
-    kicad_modg.append(Text(type='user', text='%R', at=[l_fab+w_fab/2, t_slk - txt_offset], layer='F.Fab'))
-    kicad_modg.append(Text(type='value', text=footprint_name, at=[l_fab+w_fab/2, t_slk + h_slk + txt_offset], layer='F.Fab'))
+    kicad_modg.append(Property(name=Property.REFERENCE, text='REF**', at=[l_fab+w_fab/2, t_slk - txt_offset], layer='F.SilkS'))
+    kicad_modg.append(Text(text='${REFERENCE}', at=[l_fab+w_fab/2, t_slk - txt_offset], layer='F.Fab'))
+    kicad_modg.append(Property(name=Property.VALUE, text=footprint_name, at=[l_fab+w_fab/2, t_slk + h_slk + txt_offset], layer='F.Fab'))
 
 
     # create pads
