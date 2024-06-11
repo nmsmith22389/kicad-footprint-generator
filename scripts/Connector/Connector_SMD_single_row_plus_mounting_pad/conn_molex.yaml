@@ -845,7 +845,7 @@ device_definition:
     MicroLockPlus_top_entry_125:
         series: 'Micro-LockPlus'
         mpn_format_string: '505568-{pincount:02d}71'
-        orientation: 'H'
+        orientation: 'V'
         datasheet: 'https://www.molex.com/pdm_docs/sd/5055680271_sd.pdf'
         pinrange: ['range', [2,17]]
         text_inside_pos: 'center'
