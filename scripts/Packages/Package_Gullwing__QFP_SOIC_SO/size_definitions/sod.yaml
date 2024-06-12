@@ -1,0 +1,59 @@
+FileHeader:
+  override_lib_name: 'Diode_SMD'
+  device_type: 'SOD'
+
+# This footprint is synthesised from the dimensions given by JEITA and several
+# major manufacturers for SOD-123 / SC-77 devices. See table below
+SOD-123-2_2.85mmx1.8mm_P3.35:
+  custom_name_format: 'D_SOD-123'
+  size_source: 'https://www.jeita.or.jp/japanese/standard/book/ED-7500B/#target/page_no=49 et al.'
+  body_size_x: 2.54 .. 2.85
+  body_size_y: 1.40 .. 1.80
+  overall_size_x: 3.45 .. 3.95
+  overall_height: 0.94 .. 1.45
+  lead_width: 0.45 .. 0.71
+  lead_len: 0.15 .. 0.50
+  pitch: 3.35 # Max from those surveyed. Meaningless, but required by generator
+  num_pins_x: 0
+  num_pins_y: 1
+
+# SOD-123 / SC-77 data sheets surveyed:
+
+# | mfg                 | mpn       | body_size_x          | body_size_y          | overall_size_x       | overall_height       | lead_width           | lead_len             | pitch             | link                                                                                      |
+# |---------------------|-----------|----------------------|----------------------|----------------------|----------------------|----------------------|----------------------|-------------------|-------------------------------------------------------------------------------------------|
+# | JEITA               | (SC-77)   | 2.55 .. 2.85         | 1.40 .. 1.70         | 3.65 .. 3.95         | 1.35 (max)           | 0.50 .. 0.70         | 0.20 .. 0.50         | 3.30              | https://www.jeita.or.jp/japanese/standard/book/ED-7500B/#target/page_no=49                |
+# | Diodes Incorporated | (SOD-123) | 2.55 .. 2.65 .. 2.85 | 1.40 .. 1.55 .. 1.70 | 3.55 .. 3.65 .. 3.85 | 1.00 .. 1.05 .. 1.35 | 0.52 .. 0.57 .. 0.62 | 0.25 .. 0.30 .. 0.40 | 3.15 (calculated) | https://www.diodes.com/assets/Package-Files/SOD123.pdf                                    |
+# | MCC                 | BAS16W    | 2.55 .. 2.85         | 1.40 .. 1.80         | 3.55 .. 3.85         | 1.35 (max)           | 0.45 .. 0.65         | 0.15 (min)           | 3.27 (calculated) | https://www.mccsemi.com/pdf/Products/BAS16W(SOD-123.pdf)                                  |
+# | MDD                 | 1N4148W   | 2.54 .. 2.84         | 1.40 .. 1.80         | 3.56 .. 3.86         | 0.94 .. 1.35         | 0.50 .. 0.71         | 0.25 (min)           |                   | https://datasheet.lcsc.com/lcsc/1809052017_MDD-Microdiode-Electronics--1N4148W_C84367.pdf |
+# | Nexperia            | (SOD-123) | 2.55 .. 2.80         | 1.50 .. 1.70         | 3.45 .. 3.75         | 1.00 .. 1.30         | 0.55 .. 0.70         | 0.15 .. 0.45         | 3.27              | https://assets.nexperia.com/documents/package-information/SOD123.pdf                      |
+# | onsemi              | MMSD301T1 | 2.54 .. 2.69 .. 2.84 | 1.40 .. 1.60 .. 1.80 | 3.56 .. 3.68 .. 3.86 | 0.94 .. 1.17 .. 1.35 | 0.51 .. 0.61 .. 0.71 | 0.25 (min)           | 3.28 (calculated) | https://www.onsemi.com/pdf/datasheet/mmsd301t1-d.pdf                                      |
+# | STMicroelectronics  | BAT48     | 2.55 .. 2.85         | 1.40 .. 1.70         | 3.55 .. 3.75         | 1.45 (max)           | 0.55 (typ)           | 0.25 (min)           | 3.35 (calculated) | https://www.st.com/resource/en/datasheet/bat48.pdf                                        |
+# | Vishay              | BAT42W    | 2.55 .. 2.85         | 1.40 .. 1.70         | 3.55 .. 3.85         | 1.00 .. 1.35         | 0.45 .. 0.65         | 0.25 .. 0.45         | 3.35 (calculated) | https://www.vishay.com/docs/85661/bat42w.pdf                                              |
+
+# This footprint is synthesised from the dimensions given by JEITA and several
+# major manufacturers for SOD-323 / SC-76 devices. See table below
+SOD-323-2_1.95mmx1.5mm_P2.44:
+  custom_name_format: 'D_SOD-323'
+  size_source: 'https://www.jeita.or.jp/japanese/standard/book/ED-7500B/#target/page_no=47 et al.'
+  body_size_x: 1.52 .. 1.95
+  body_size_y: 1.10 .. 1.50
+  overall_size_x: 2.30 .. 2.85
+  overall_height: 0.80 .. 1.17
+  lead_width: 0.20 .. 0.44
+  lead_len: 0.08 .. 0.46
+  pitch: 2.44 # Max from those surveyed. Meaningless, but required by generator
+  num_pins_x: 0
+  num_pins_y: 1
+
+# SOD-323 / SC-76 data sheets surveyed:
+
+# | mfg                 | mpn          | body_size_x          | body_size_y          | overall_size_x       | overall_height       | lead_width           | lead_len             | pitch             | link                                                                                     |
+# |---------------------|--------------|----------------------|----------------------|----------------------|----------------------|----------------------|----------------------|-------------------|------------------------------------------------------------------------------------------|
+# | JEITA               | (SC-76)      | 1.60 .. 1.80         | 1.15 .. 1.45         | 2.30 .. 2.70         | 1.10 (max)           | 0.25 .. 0.40         | 0.10 .. 0.30         | 2.20              | https://www.jeita.or.jp/japanese/standard/book/ED-7500B/#target/page_no=47               |
+# | Diodes Incorporated | (SOD-323)    | 1.60 .. 1.70 .. 1.80 | 1.20 .. 1.30 .. 1.40 | 2.30 .. 2.50 .. 2.70 | 1.00 .. 1.05 .. 1.10 | 0.25 .. 0.30 .. 0.30 | 0.20 .. 0.30 .. 0.40 | 2.11 (calculated) | https://www.diodes.com/assets/Package-Files/SOD323.pdf                                   |
+# | MCC                 | BAS316       | 1.60 .. 1.80         | 1.15 .. 1.35         | 2.30 .. 2.70         | 0.80 .. 1.15         | 0.25 .. 0.40         | 0.10 .. 0.45         | 2.44 (calculated) | https://www.mccsemi.com/pdf/Products/BAS316(SOD-323.pdf)                                 |
+# | MDD                 | B16WS        | 1.60 .. 1.80         | 1.15 .. 1.35         | 2.30 .. 2.75         | 0.80 .. 1.00         | 0.25 .. 0.40         | 0.08 (min)           |                   | https://datasheet.lcsc.com/lcsc/1912111437_MDD-Microdiode-Electronics--B16WS_C364278.pdf |
+# | Nexperia            | (SOD-323)    | 1.60 .. 1.70 .. 1.80 | 1.15 .. 1.25 .. 1.35 | 2.30 .. 2.70         | 0.80 .. 0.95 .. 1.10 | 0.25 .. 0.40         | 0.15 .. 0.45         | 2.20              | https://assets.nexperia.com/documents/package-information/SOD323.pdf                     |
+# | onsemi              | SD05T1       | 1.60 .. 1.70 .. 1.80 | 1.15 .. 1.25 .. 1.35 | 2.30 .. 2.50 .. 2.70 | 0.80 .. 0.90 .. 1.00 | 0.25 .. 0.32 .. 0.40 | 0.08 (min)           | 2.22 (calculated) | https://www.onsemi.com/pdf/datasheet/sd05t1-d.pdf                                        |
+# | STMicroelectronics  | ESDLIN1524BJ | 1.52 .. 1.80         | 1.11 .. 1.45         | 2.30 .. 2.70         | 1.17 (max)           | 0.25 .. 0.44         | 0.10 .. 0.46         | 2.14 (calculated) | https://www.st.com/resource/en/datasheet/esdlin1524bj.pdf                                |
+# | Vishay              | BAT42WS      | 1.60 .. 1.95         | 1.10 .. 1.50         | 2.50 .. 2.85         | 0.80 .. 1.15         | 0.20 .. 0.40         | 0.25 .. 0.40         | 2.40 (calculated) | https://www.vishay.com/docs/81813/bat42ws.pdf                                            |
