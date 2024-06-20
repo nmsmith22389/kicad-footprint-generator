@@ -1,0 +1,13 @@
+- series: PA4332
+  manufacturer: Pulse
+  datasheet: "https://productfinder.pulseelectronics.com/api/open/part-attachments/datasheet/pa4332.222nlt"
+  csv: Pulse.csv
+  3d:
+    type: 2
+    bodyColor: black body
+    pinColor: metal grey pins
+  tags:
+    - Pulse
+     -SMT
+     -PA4332
+  library_name: Inductor_SMD
