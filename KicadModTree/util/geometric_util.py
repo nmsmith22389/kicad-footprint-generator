@@ -357,33 +357,34 @@ class geometricArc():
             raise KeyError('Arcs defined with center and angle must either define the start or midpoint.')
 
     def _initFromCenterAndEnd(self, **kwargs):
+
+        if not all(arg in kwargs for arg in ['center', 'start', 'end']):
+            raise KeyError('Arcs defined by center, start, and end points must define all three')
+
         self.center_pos = Vector2D(kwargs['center'])
-        if 'start' in kwargs:
-            self.start_pos = Vector2D(kwargs['start'])
-            sp_r, sp_a = self.start_pos.to_polar(
-                origin=self.center_pos, use_degrees=True)
-            ep_r, ep_a = Vector2D(kwargs['end']).to_polar(
-                origin=self.center_pos, use_degrees=True)
+        self.start_pos = Vector2D(kwargs['start'])
+        sp_r, sp_a = self.start_pos.to_polar(
+            origin=self.center_pos, use_degrees=True)
+        ep_r, ep_a = Vector2D(kwargs['end']).to_polar(
+            origin=self.center_pos, use_degrees=True)
 
-            if abs(sp_r - ep_r) > 1e-7:
-                warnings.warn(
-                    """Start and end point are not an same arc.
-                    Extended line from center to end point used to determine angle."""
-                )
-            self._initAngle(ep_a - sp_a)
+        if abs(sp_r - ep_r) > 1e-7:
+            warnings.warn(
+                """Start and end point are not an same arc.
+                Extended line from center to end point used to determine angle."""
+            )
+        self._initAngle(ep_a - sp_a)
 
-            if kwargs.get('long_way', False):
-                if abs(self.angle) < 180:
-                    self.angle = -math.copysign((360-abs(self.angle)), self.angle)
-                if self.angle == -180:
-                    self.angle = 180
-            else:
-                if abs(self.angle) > 180:
-                    self.angle = -math.copysign((abs(self.angle) - 360), self.angle)
-                if self.angle == 180:
-                    self.angle = -180
+        if kwargs.get('long_way', False):
+            if abs(self.angle) < 180:
+                self.angle = -math.copysign((360-abs(self.angle)), self.angle)
+            if self.angle == -180:
+                self.angle = 180
         else:
-            raise KeyError('Arcs defined with center and endpoint must define the start point.')
+            if abs(self.angle) > 180:
+                self.angle = -math.copysign((abs(self.angle) - 360), self.angle)
+            if self.angle == 180:
+                self.angle = -180
 
     def _initFrom3PointArc(self, **kwargs):
 
