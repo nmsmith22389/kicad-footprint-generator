@@ -177,6 +177,9 @@ class geometricLine():
         else:
             raise IndexError('Index {} is out of range'.format(key))
 
+    def __str__(self) -> str:
+        return f"geometricLine({self.start_pos}, {self.end_pos})"
+
 
 class geometricCircle():
     r"""Handle the geometric side of circles
@@ -287,6 +290,9 @@ class geometricCircle():
             self.center_pos = item
         else:
             raise IndexError('Index {} is out of range'.format(key))
+
+    def __str__(self) -> str:
+        return f"geometricCircle(c={self.center_pos}, r={self.radius})"
 
 
 class geometricArc():
@@ -624,6 +630,9 @@ class geometricArc():
             return self.start_pos
         else:
             raise IndexError('Index {} is out of range'.format(key))
+
+    def __str__(self) -> str:
+        return f"geometricArc(c={self.center_pos}, s={self.start_pos}, a={self.angle})"
 
 
 class BaseNodeIntersection():
