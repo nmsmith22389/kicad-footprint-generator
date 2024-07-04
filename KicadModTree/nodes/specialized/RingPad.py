@@ -221,7 +221,8 @@ class ArcPadPrimitive(Node):
         result = []
         for current_arc in arcs:
             try:
-                result.append(current_arc.cut(line)[index_to_keep])
+                cut_arcs = current_arc.cut(line)
+                result.append(cut_arcs[index_to_keep])
             except IndexError as e:
                 raise ValueError("Cutting the arc primitive with one of its endlines " +
                                  "did not result in the expected number of arcs.")
@@ -391,8 +392,8 @@ class RingPad(Node):
         w = pad.round_radius*2
         y = (self.paste_to_paste_clearance + w)/2
 
-        start_line = geometricLine(start=self.at+(0, y), end=self.at+(1, y))
-        end_line = geometricLine(start=self.at+(0, -y), end=self.at+(1, -y)).rotate(ref_angle, origin=self.at)
+        start_line = geometricLine(start=self.at+(0, y), end=self.at+(self.size, y))
+        end_line = geometricLine(start=self.at+(0, -y), end=self.at+(self.size, -y)).rotate(ref_angle, origin=self.at)
 
         if self.num_paste_zones == 2:
             end_line = None
