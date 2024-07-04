@@ -549,7 +549,7 @@ class geometricArc():
         # rotate to local coordinate system (start point is at 0 degree)
         ang_e_s = self.angle
 
-        return self._compareAngles(ang_p_s, ang_e_s) == -1 and abs(rad_s - rad_p) < tolerance
+        return self._compareAngles(ang_p_s, ang_e_s) in [0, -1] and abs(rad_s - rad_p) < tolerance
 
     def sortPointsRelativeToStart(self, points):
         r""" sort given points relative to start point on the arc
