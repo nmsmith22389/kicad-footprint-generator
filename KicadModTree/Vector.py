@@ -154,6 +154,12 @@ class Vector2D(object):
     def __truediv__(self, obj):
         return self.__div__(obj)
 
+    def __abs__(self):
+        """
+        Gets the length of the vector (same as norm())
+        """
+        return hypot(*self)
+
     def min(self, other):
         return Vector2D(*[min(*v) for v in zip(self, other)])
 

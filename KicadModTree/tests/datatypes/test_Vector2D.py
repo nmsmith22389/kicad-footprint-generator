@@ -51,24 +51,19 @@ class Vector2DTests(unittest.TestCase):
 
     def test_round_to(self):
         p1 = Vector2D([1.234, 5.678]).round_to(0)
-        self.assertAlmostEqual(p1.x, 1.234)
-        self.assertAlmostEqual(p1.y, 5.678)
+        self.assertAlmostEqual(p1, (1.234, 5.678))
 
         p2 = Vector2D([1.234, 5.678]).round_to(0.1)
-        self.assertAlmostEqual(p2.x, 1.2)
-        self.assertAlmostEqual(p2.y, 5.7)
+        self.assertAlmostEqual(p2, (1.2, 5.7))
 
         p3 = Vector2D([1.234, 5.678]).round_to(0.01)
-        self.assertAlmostEqual(p3.x, 1.23)
-        self.assertAlmostEqual(p3.y, 5.68)
+        self.assertAlmostEqual(p3, (1.23, 5.68))
 
         p4 = Vector2D([1.234, 5.678]).round_to(0.001)
-        self.assertAlmostEqual(p4.x, 1.234)
-        self.assertAlmostEqual(p4.y, 5.678)
+        self.assertAlmostEqual(p4, (1.234, 5.678))
 
         p5 = Vector2D([1.234, 5.678]).round_to(0.0001)
-        self.assertAlmostEqual(p5.x, 1.234)
-        self.assertAlmostEqual(p5.y, 5.678)
+        self.assertAlmostEqual(p5, (1.234, 5.678))
 
     def test_add(self):
         p1 = Vector2D([1, 2])
@@ -165,28 +160,23 @@ class Vector2DTests(unittest.TestCase):
 
     def test_polar(self):
         p1 = Vector2D.from_polar(math.sqrt(2), 45, use_degrees=True)
-        self.assertAlmostEqual(p1.x, 1)
-        self.assertAlmostEqual(p1.y, 1)
+        self.assertAlmostEqual(p1, (1, 1))
 
         p1 = Vector2D.from_polar(2, -90, use_degrees=True, origin=(6, 1))
-        self.assertAlmostEqual(p1.x, 6)
-        self.assertAlmostEqual(p1.y, -1)
+        self.assertAlmostEqual(p1, (6, -1))
 
         r, a = p1.to_polar(use_degrees=True, origin=(6, 1))
         self.assertAlmostEqual(r, 2)
         self.assertAlmostEqual(a, -90)
 
         p1.rotate(90, use_degrees=True, origin=(6, 1))
-        self.assertAlmostEqual(p1.x, 8)
-        self.assertAlmostEqual(p1.y, 1)
+        self.assertAlmostEqual(p1, (8, 1))
 
         p1 = Vector2D.from_polar(math.sqrt(2), 135, use_degrees=True)
-        self.assertAlmostEqual(p1.x, -1)
-        self.assertAlmostEqual(p1.y, 1)
+        self.assertAlmostEqual(p1, (-1, 1))
 
         p1.rotate(90, use_degrees=True)
-        self.assertAlmostEqual(p1.x, -1)
-        self.assertAlmostEqual(p1.y, -1)
+        self.assertAlmostEqual(p1, (-1, -1))
 
         r, a = p1.to_polar(use_degrees=True)
         self.assertAlmostEqual(r, math.sqrt(2))
@@ -194,8 +184,7 @@ class Vector2DTests(unittest.TestCase):
 
     def test_right_mul(self):
         p = 3 * Vector2D(1, 2)
-        self.assertAlmostEqual(p.x, 3)
-        self.assertAlmostEqual(p.y, 6)
+        self.assertAlmostEqual(p, (3, 6))
 
     def test_norm_arg(self):
         self.assertAlmostEqual(Vector2D(1, 1).norm(), sqrt(2))
