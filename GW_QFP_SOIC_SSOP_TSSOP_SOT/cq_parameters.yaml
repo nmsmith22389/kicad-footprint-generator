@@ -4995,7 +4995,7 @@ SSOP-8_5.25x5.24mm_P1.27mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.fujitsu.com/ca/en/Images/MB85RS2MT-DS501-00023-1v0-E.pdf'
 
-ST_PowerSSO-16_SlugDown:
+PowerSSO-16-1EP_3.9x4.9mm_P0.5mm_EP2.5x3.61mm:
   the: 9.0
   tb_s: 0.15
   c: 0.2
@@ -5019,7 +5019,7 @@ ST_PowerSSO-16_SlugDown:
   npy: 0
   epad: null
   excluded_pins: null
-  model_name: ST_PowerSSO-16_SlugDown
+  model_name: PowerSSO-16-1EP_3.9x4.9mm_P0.5mm_EP2.5x3.61mm
   rotation: -90
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
