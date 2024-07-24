@@ -178,3 +178,14 @@ SSOP-10-1EP_3.9x4.9mm_P1.0mm_EP2.1x3.3mm:
     EP_num_paste_pads: 1
     grid: [2.54, 1.27]
     paste_avoid_via: False
+
+SSOP-4_4.4x2.6mm_P1.27mm:
+  size_source: 'https://www.vishay.com/docs/83465/vos618a.pdf'
+  body_size_x: 4.2 .. 4.4 .. 4.6
+  body_size_y: 2.3 .. 2.6 .. 2.9
+  overall_size_x: 6.3 .. 7.0 .. 7.2
+  lead_width: 0.3 .. 0.4 .. 0.5
+  lead_len: 0.5
+  pitch: 1.27
+  num_pins_x: 0
+  num_pins_y: 2
