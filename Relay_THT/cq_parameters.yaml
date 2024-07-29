@@ -25,6 +25,37 @@ Relay_SPST_Panasonic_ADW11:
   destination_dir: Relay_THT.3dshapes
   source: 'https://api.pim.na.industrial.panasonic.com/file_stream/main/fileversion/270'
 
+Relay_DPDT_Hongfa_HF115F-2Z-x4:
+  model_name: Relay_DPDT_Hongfa_HF115F-2Z-x4
+  roundbelly: 0
+  L: 29
+  W: 12.7
+  H: 15.7
+  rim: [0.5, 1.5, 0.3]
+  pinpadsize: 1.0
+  pinpadh: 3.5
+  pintype: tht
+  rotation: 0
+  pin1corner: [-2.54, -2.54]
+  pin: [
+    [0.0, 0.0, 'rect', 0.5, 0.5],
+    [15.2, 0.0, 'rect',  0.5, 0.8],
+    [20.16, 0.0, 'rect', 0.5, 0.8],
+    [25.2, 0.0, 'rect',  0.5, 0.8],
+    [0.0, 7.56, 'rect',  0.5, 0.5],
+    [15.2, 7.56, 'rect',  0.5, 0.8],
+    [20.16, 7.56, 'rect', 0.5, 0.8],
+    [25.2, 7.56, 'rect',  0.5, 0.8],
+  ]
+  A1: 0.1
+  corner: none
+  show_top: 0
+  body_color_key: white body
+  body_top_color_key: white body
+  pin_color_key: metal grey pins
+  destination_dir: Relay_THT.3dshapes
+  source: 'https://source.hongfa.com//pdf/web/viewer.html?file=/Uploads/Product/PDF/HF115F_I_en.pdf'
+
 Relay_SPST_SANYOU_SRD_Series_Form_A:
   model_name: Relay_SPST_SANYOU_SRD_Series_Form_A
   roundbelly: 0
