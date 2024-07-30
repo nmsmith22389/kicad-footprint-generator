@@ -8875,6 +8875,39 @@ SOP-8_6.605x9.655mm_P2.54mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'https://www.onsemi.com/pdf/datasheet/hcpl2631m-d.pdf'
 
+SOP-8_5.28x5.23mm_P1.27mm:
+  the: 8.0 # body angle in degrees
+  tb_s: 0.1 # top part of body is that much smaller
+  c: 0.2 # pin thickness, body center part height
+  R1: 0.15 # pin upper corner, inner radius
+  R2: 0.15 # pin lower corner, inner radius
+  S: null # pin top flat part length (excluding corner arc) - you can specify either S or L, the other will be calculated
+  L: 0.65 #  pin bottom flat part length (including corner arc)
+  fp_s: True  # True for circular pinmark, False for square pinmark (useful for diodes)
+  fp_r: 0.60 # first pin indicator radius
+  fp_d: 0.14 # first pin indicator distance from edge
+  fp_z: 0.05 # first pin indicator depth
+  ef: 0 # fillet of edges  Note: bigger bytes model with fillet
+  cc1: 0.25 # chamfer of the 1st pin corner
+  D1: 5.23 # body length
+  E1: 5.28 # body width
+  E: 7.90 # body overall width  (E - E1) = 2 * (S + R1 + L)
+  A1: 0.15 # body-board separation
+  A2: 1.80 # body height
+  b: 0.41 # pin width
+  e: 1.27 # pin (center-to-center) distance
+  npx: 4 # number of pins along X axis (width)
+  npy: 0 # number of pins along y axis (length)
+  epad: null  # e Pad
+  excluded_pins: null # no pin excluded
+  model_name: SOP-8_5.28x5.23mm_P1.27mm # model name
+  rotation: -90 # rotation if required
+  body_color_key: 'black body'
+  pin_color_key: 'metal grey pins'
+  mark_color_key: 'light brown label'
+  destination_dir: 'Package_SO.3dshapes'
+  source: 'https://www.mxic.com.tw/Lists/Datasheet/Attachments/8983/MX25V16066,%202.5V,%2016Mb,%20v1.5.pdf'
+
 HTSSOP-56-1EP_6.1x14mm_Pitch0.5mm:
   the: 12.0
   tb_s: 0.1
