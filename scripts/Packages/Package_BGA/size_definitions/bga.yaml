@@ -1122,3 +1122,16 @@ Analog_BGA-77_9.0x15.0mm_Layout7x11_P1.27mm_Ball0.63mm:
   layout_x: 7
   layout_y: 11
 
+Texas_PicoStar_BGA-4_0.758x0.758mm_Layout2x2_P0.4mm:
+  description: "Texas Instruments PicoStar - 0.15 mm max height"
+  size_source: "https://www.ti.com/lit/ds/symlink/tmp114.pdf"
+  additional_tags:
+    - "PicoStar"
+  body_size_x: 0.758
+  body_size_y: 0.758
+  overall_height: 0.15
+  pitch: 0.4
+  pad_diameter: 0.23
+  mask_margin: 0.05
+  layout_x: 2
+  layout_y: 2
