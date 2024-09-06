@@ -351,3 +351,19 @@ Converter_DCDC_TRACO_TOS06-12SIL_THT:
     ["tht", "4", 0, -17.78, 2.1, 2.1, 1.3],
     ["tht", "5", 0, -20.32, 2.1, 2.1, 1.3]
   ]
+
+Converter_ACDC_TRACO_TMF_051xx_THT:
+  library_name: 'Converter_ACDC'
+  description: "ACDC-Converter, TRACO, TMF 051xx, 5W, Rev. August 26. 2024"
+  datasheet: "https://www.tracopower.com/products/tmf05.pdf"
+  tags: "ACDC-Converter TRACO TMF05 THT 5W"
+  extratexts: []
+  at: [-4.1, 3.4]
+  size: [41.2, 27.2]
+  body_position_tolerance: [0.5, 0.5]
+  pins: [
+    ["thtr", "1", 0, 0, 2.5, 2.5, 1.5],
+    ["tht", "2", 0, -19, 2.5, 2.5, 1.5],
+    ["tht", "3", 33, 0, 2.5, 2.5, 1.5],
+    ["tht", "4", 33, -12.7, 2.5, 2.5, 1.5]
+  ]
