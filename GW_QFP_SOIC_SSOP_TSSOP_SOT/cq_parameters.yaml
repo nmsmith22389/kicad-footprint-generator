@@ -3264,6 +3264,38 @@ SOIC-20W_7.5x12.8mm_Pitch1.27mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.ti.com/lit/ml/mpds173b/mpds173b.pdf'
 
+SOIC-20W_7.5x15.4mm_P1.27mm:
+  the: 9.0
+  tb_s: 0.15
+  c: 0.275
+  R1: 0.1
+  R2: 0.1
+  S: 0.25
+  fp_s: True
+  fp_r: 0.6
+  fp_d: 0.2
+  fp_z: 0.1
+  ef: 0.0
+  cc1: 0.25
+  D1: 15.4
+  E1: 7.5
+  E: 10.31
+  A1: 0.18
+  A2: 2.36 #slightly different from midpoint to make nominal height match
+  b: 0.42
+  e: 1.27
+  npx: 10
+  npy: 0
+  epad: null
+  excluded_pins: null
+  model_name: SOIC-20W_7.5x15.4mm_P1.27mm
+  rotation: -90
+  body_color_key: 'black body'
+  pin_color_key: 'metal grey pins'
+  mark_color_key: 'light brown label'
+  destination_dir: 'Package_SO.3dshapes'
+  source: 'https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/soic_wide-rw/RI_20_1.pdf'
+
 SOIC-24W_7.5x15.4mm_Pitch1.27mm:
   the: 9.0
   tb_s: 0.15
