@@ -1908,3 +1908,22 @@ OnSemi_DFN-14-1EP_4x4mm_P0.5mm_EP2.7x3.4mm:
   pitch: 0.5
   num_pins_x: 0
   num_pins_y: 7
+
+DFN-6_1.6x1.3mm_P0.4mm:
+  device_type: 'DFN'
+  size_source: 'https://www.st.com/resource/en/datasheet/tsv991.pdf'
+  body_size_x: 1.6
+  body_size_y: 1.3
+
+  overall_height:
+    minimum: 0.50
+    nominal: 0.55
+    maximum: 0.60
+
+  lead_width: 0.15 .. 0.20 .. 0.25
+  lead_len: 0.453 .. 0.553 .. 0.653
+
+  pitch: 0.4
+  num_pins_x: 0
+  num_pins_y: 3
+  
