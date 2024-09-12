@@ -367,3 +367,19 @@ Converter_ACDC_TRACO_TMF_051xx_THT:
     ["tht", "3", 33, 0, 2.5, 2.5, 1.5],
     ["tht", "4", 33, -12.7, 2.5, 2.5, 1.5]
   ]
+
+Converter_ACDC_TRACO_TMF_101xx_THT:
+  library_name: 'Converter_ACDC'
+  description: "ACDC-Converter, TRACO, TMF 101xx, 10W, Rev. August 27. 2024"
+  datasheet: "https://www.tracopower.com/products/tmf10.pdf"
+  tags: "ACDC-Converter TRACO TMF10 THT 10W"
+  extratexts: []
+  at: [-3.24, 3.24]
+  size: [52.2, 26.8]
+  body_position_tolerance: [0.5, 0.5]
+  pins: [
+    ["thtr", "1", 0, 0, 2.5, 2.5, 1.5],
+    ["tht", "2", 0, -20.32, 2.5, 2.5, 1.5],
+    ["tht", "3", 45.72, 0, 2.5, 2.5, 1.5],
+    ["tht", "4", 45.72, -10.16, 2.5, 2.5, 1.5]
+  ]
