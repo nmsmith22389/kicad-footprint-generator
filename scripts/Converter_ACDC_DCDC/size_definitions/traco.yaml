@@ -383,3 +383,21 @@ Converter_ACDC_TRACO_TMF_101xx_THT:
     ["tht", "3", 45.72, 0, 2.5, 2.5, 1.5],
     ["tht", "4", 45.72, -10.16, 2.5, 2.5, 1.5]
   ]
+
+Converter_ACDC_TRACO_TMF_201xx_THT:
+  library_name: 'Converter_ACDC'
+  description: "ACDC-Converter, TRACO, TMF 201xx, 20W, Rev. August 28. 2024"
+  datasheet: "https://www.tracopower.com/products/tmf20.pdf"
+  tags: "ACDC-Converter TRACO TMF20 THT 20W"
+  extratexts: []
+  at: [-3.85, 22.5]
+  size: [54.7, 44.9]
+  body_position_tolerance: [0.5, 0.5]
+  pins: [
+    ["thtr", "1", 0, 0, 2.5, 2.5, 1.5],
+    ["tht", "2", 0, -17.5, 2.5, 2.5, 1.5],
+    ["tht", "3", 47, 10.05, 2.5, 2.5, 1.5],
+    ["tht", "4", 47, -9.95, 2.5, 2.5, 1.5]
+  ]
+
+
