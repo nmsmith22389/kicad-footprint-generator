@@ -1007,12 +1007,90 @@ Texas_WQFN-16_RUM0016A:
     count: [3, 3]
     drill: 0.2
     paste_via_clearance: 0.1
-    EP_paste_coverage: 0.7
+    EP_paste_coverage: 0.743
     paste_avoid_via: False
 
   pitch: 0.65
   num_pins_x: 4
   num_pins_y: 4
+
+Texas_WQFN-30_RNP0030B:
+  device_type: 'WQFN'
+  manufacturer: 'Texas'
+  part_number: 'RNP0030B'
+  size_source: 'https://www.ti.com/lit/ds/symlink/lm76003-q1.pdf#page=53'
+  ipc_class: 'qfn'
+  body_size_x:
+    minimum: 3.9
+    maximum: 4.1
+  body_size_y:
+    minimum: 5.9
+    maximum: 6.1
+  overall_height:
+    maximum: 0.8
+
+  lead_width:
+    minimum: 0.2
+    maximum: 0.3
+  lead_len:
+    minimum: 0.45
+    maximum: 0.65
+
+  EP_size_x:
+    nominal: 1.8
+    tolerance: 0.1
+  EP_size_y:
+    nominal: 4.5
+    tolerance: 0.1
+  EP_num_paste_pads: [2,4]
+
+  # Note: The generator does not support non-rect-grid vias as spec'd in the DS,
+  # and "paste avoid via" fails to compute as of 2024-08-25,
+  # so this is best-effort to get as little paste via overlap as possible
+  thermal_vias:
+    count: [3, 5]
+    drill: 0.2
+    paste_via_clearance: 0.1
+    EP_paste_coverage: 0.743 # Datasheet specifies 74.3% coverage
+    paste_avoid_via: False
+
+  pad_overrides:
+    12:
+      lead_len: 0.3 .. 0.5
+      size_increase: [null, -0.15] # 0.15mm narrower than horizontal pins
+      move: [null, 0.075] # Move inside (half of size increase)
+    13:
+      lead_len: 0.3 .. 0.5
+      size_increase: [null, -0.15] # 0.15mm narrower than horizontal pins
+      move: [null, 0.075] # Move inside (half of size increase)
+    14:
+      lead_len: 0.3 .. 0.5
+      size_increase: [null, -0.15] # 0.15mm narrower than horizontal pins
+      move: [null, 0.075] # Move inside (half of size increase)
+    15:
+      lead_len: 0.3 .. 0.5
+      size_increase: [null, -0.15] # 0.15mm narrower than horizontal pins
+      move: [null, 0.075] # Move inside (half of size increase)
+    27:
+      lead_len: 0.3 .. 0.5
+      size_increase: [null, -0.15] # 0.15mm narrower than horizontal pins
+      move: [null, -0.075] # Move inside (half of size increase)
+    28:
+      lead_len: 0.3 .. 0.5
+      size_increase: [null, -0.15] # 0.15mm narrower than horizontal pins
+      move: [null, -0.075] # Move inside (half of size increase)
+    29:
+      lead_len: 0.3 .. 0.5
+      size_increase: [null, -0.15] # 0.15mm narrower than horizontal pins
+      move: [null, -0.075] # Move inside (half of size increase)
+    30:
+      lead_len: 0.3 .. 0.5
+      size_increase: [null, -0.15] # 0.15mm narrower than horizontal pins
+      move: [null, -0.075] # Move inside (half of size increase)
+
+  pitch: 0.5
+  num_pins_x: 4
+  num_pins_y: 11
 
 
 Texas_WQFN-32_RSN:
