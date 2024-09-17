@@ -72,8 +72,8 @@ if __name__ == '__main__':
     rm=3.81
     package_height=7.3
     leftbottom_offset=[1.85, 3.6]
-    ddrill=0.7
-    pad=[1.4,1.4]
+    ddrill=1.1
+    pad=[1.75,1.75]
     screw_diameter=2.5
     bevel_height=[0.6,1.9,package_height-2]
     slit_screw=True
@@ -455,5 +455,3 @@ if __name__ == '__main__':
                                   nibbleSize=nibbleSize, nibblePos=nibblePos, fabref_offset=fabref_offset,
                                   tags_additional=[], lib_name='${KICAD8_3DMODEL_DIR}/'+classname, classname=classname, classname_description=classname_description, 
                                   webpage=webpage, script_generated_note=script_generated_note)
-
-                                  
