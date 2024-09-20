@@ -121,3 +121,39 @@ VSON-8-1EP_3x3mm_P0.65mm_EP1.65x2.4mm:
       x: 2
       y: 3
     drill: 0.2
+
+VSON-14-1EP_3x4.5mm_P0.65mm_EP1.6x4.2mm:
+  device_type: 'VSON'
+  library: Package_SON
+  size_source: 'https://www.ti.com/lit/ds/symlink/lp8868x-q1.pdf#page=45'
+  ipc_class: 'qfn'
+  body_size_x:
+    minimum: 2.9
+    maximum: 3.1
+  body_size_y:
+    minimum: 4.4
+    maximum: 4.5
+  lead_width:
+    minimum: 0.25
+    maximum: 0.35
+  lead_len:
+    minimum: 0.35
+    maximum: 0.45
+  overall_height:
+    minimum: 0.8
+    maximum: 1.0
+  pitch: 0.65
+  num_pins_x: 0
+  num_pins_y: 7
+  EP_size_x:
+    minimum: 1.5
+    maximum: 1.7
+  EP_size_y:
+    minimum: 4.1
+    maximum: 4.3
+  thermal_vias:
+    count: [2, 3]
+    drill: 0.2
+    paste_between_vias: [1, 1]
+    grid: [0.75, 1.5]
+    paste_rings_outside: [1, 1]
