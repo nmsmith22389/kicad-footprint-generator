@@ -73,3 +73,22 @@ WDFN-8-1EP_8x6mm_P1.27mm_EP6x4.8mm_ThermalVias:
 
   compatible_mpns:
     - Microchip-8L-WDFN-6x8mm-MN-C04172A
+
+WFDFPN-8-1EP_3x2mm_P0.5mm_EP1.2x1.3mm:
+  device_type: 'WFDFPN'
+  size_source: 'https://www.st.com/resource/en/datasheet/m95512-r.pdf#page=34'
+  ipc_class: 'qfn'
+
+  body_size_x: 2.9 .. 3.0 .. 3.1
+  body_size_y: 1.9 .. 2.0 .. 2.1
+
+  lead_width: 0.2 .. 0.25 .. 0.3
+  lead_len: 0.3 .. 0.5
+
+  EP_size_x: 1.050 .. 1.450
+  EP_size_y: 1.050 .. 1.650
+
+  pitch: 0.5
+  num_pins_x: 0
+  num_pins_y: 4
+  
