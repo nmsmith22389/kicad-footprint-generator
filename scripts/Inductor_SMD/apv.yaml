@@ -15,3 +15,23 @@
     - power
     - shielded
   library_name: Inductor_SMD
+
+- series: APH
+  manufacturer: APV
+  # Complete APH series datasheet
+  # Website: http://en.apvind.com/ANRseries/?keywords=APH
+  datasheet: "http://en.apvind.com/public/upload/20240408/996aafa961154ed753e4983e7eb80fa7.pdf"
+  # Body width is assumed to be 0.2mm smaller than
+  #   (i.e. 0.1mm contact width per side)
+  # padInsideX is computed as [OriginalB - 2*D]
+  # Original data has been extracted from PDF using ChatGPT
+  csv: apv_aph.csv
+  3d:
+    # best effort, it's wirewound, not really the classic block style
+    # also, the series describes three body styles.
+    type: 2
+  tags:
+    - molded
+    - power
+    - shielded
+  library_name: Inductor_SMD
