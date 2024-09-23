@@ -937,6 +937,17 @@ Analog_BGA-49_6.25x6.25mm_Layout7x7_P0.8mm_Ball0.5mm_Pad0.4mm:
    layout_x: 7
    layout_y: 7
 
+Analog_BGA-165_11.9x16.0mm_Layout11x15_P1.0mm_Ball0.6mm_Pad0.5mm:
+   description: "Analog BGA-165 (Reference LTC DWG#05-08-1605 Rev B)"
+   size_source: "https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/ltc-legacy-bga/05081605_b_bga165.pdf"
+   body_size_x: 11.9
+   body_size_y: 16.0
+   pitch: 1.0
+   pad_diameter: 0.5
+   mask_margin: 0.05
+   layout_x: 11
+   layout_y: 15
+
 Analog_BGA-209_9.5x16mm_Layout11x19_P0.8mm_Ball0.5mm_Pad0.4mm:
    description: "Analog BGA-209 (Reference LTC DWG#05-08-1561 Rev B)"
    size_source: "https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/ltc-legacy-bga/05081561_bga209.pdf"
