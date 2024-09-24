@@ -1,7 +1,6 @@
 - series: MDA
   manufacturer: KOHERelec
-  # Datasheet for MDA7030 series, I don't know if there is an overarching datasheet for more MDA series
-  datasheet: "https://www.lcsc.com/datasheet/lcsc_datasheet_2401252310_KOHERelec-MDA7030-220M_C2847487.pdf"
+  # Manufacturer page link: http://www.kohergroup.com/en/product/584.html
   csv: koherelec_mda.csv
   3d:
     type: 2
