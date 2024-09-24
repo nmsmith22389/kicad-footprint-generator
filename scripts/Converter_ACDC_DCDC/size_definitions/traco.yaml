@@ -400,4 +400,23 @@ Converter_ACDC_TRACO_TMF_201xx_THT:
     ["tht", "4", 47, -9.95, 2.5, 2.5, 1.5]
   ]
 
-
+Converter_DCDC_TRACO_TEC3-24xxUI_THT:
+  library_name: 'Converter_DCDC'
+  description: "DCDC-Converter, TRACO, TEC3-24xxUI, 3W, Rev. July 31. 2024"
+  datasheet: "https://www.tracopower.com/products/tec3ui.pdf"
+  tags: "DCDC-Converter TRACO TEC3UI THT SIP-8 3W"
+  extratexts: []
+  at: [-6.6, 2.26]
+  size: [10, 22.3]
+  body_size_tolerance: [0.5, 0.5]
+  # For future use
+  height: 11.3
+  pins: [
+    ["thtr", "1", 0, 0, 1.5, 1.5, 1],
+    ["tht", "2", 0, -2.54, 1.5, 1.5, 1],
+    ["tht", "3", 0, -5.08, 1.5, 1.5, 1],
+    ["tht", "5", 0, -10.16, 1.5, 1.5, 1],
+    ["tht", "6", 0, -12.7, 1.5, 1.5, 1],
+    ["tht", "7", 0, -15.24, 1.5, 1.5, 1],
+    ["tht", "8", 0, -17.78, 1.5, 1.5, 1]
+  ]
