@@ -748,7 +748,7 @@ class StandardBox(Node):
                 if cy_max_y is None:
                     cy_max_y = p_max_y
                 else:
-                    cy_max_y = min(cy_max_y, p_max_y)
+                    cy_max_y = max(cy_max_y, p_max_y)
 
 
         for f in self.boxffabline:
