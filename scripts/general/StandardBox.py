@@ -449,6 +449,14 @@ class StandardBox(Node):
 
         fab_silk_outset = self._getMainFSilkOutsetFromFabLineCentre()
 
+        # to determine in which direction to outset the silkscren line
+        # we determine the center point of the box and use it to determine
+        # if a given line is top/bottom/left/right
+
+        n_lines = len (self.boxffabline)
+        x0 = sum ([(n.sx + n.ex)/2 for n in self.boxffabline]) / n_lines
+        y0 = sum ([(n.sy + n.ey)/2 for n in self.boxffabline]) / n_lines
+
         # Check all holes and pads, if a pad or hole is on the silk line
         # then jump over the pad/hole
         for n in self.boxffabline:
@@ -458,7 +466,7 @@ class StandardBox(Node):
             y2 = max(n.sy, n.ey)
             #
             #
-            if (x1 < 0.0 and y1 < 0.0 and y2 < 0.0) or (x1 < 0.0 and y1 > 0.0 and y2 > 0.0):
+            if (x1 < x0 and y1 < y0 and y2 < y0) or (x1 < x0 and y1 > y0 and y2 > y0):
                 #
                 # Top and bottom line
                 #
@@ -467,7 +475,7 @@ class StandardBox(Node):
                 x3_t = x1_t
                 x4_t = x2_t
                 #
-                if y1 < 0.0:
+                if y1 < y0:
                     # Top line
                     y1_t = y1 - fab_silk_outset.y
                     y2_t = y2 - fab_silk_outset.y
@@ -545,7 +553,7 @@ class StandardBox(Node):
                         #
                         # No pads was in the way
                         #
-                        if y1 < 0.0 and UseCorner:
+                        if y1 < y0 and UseCorner:
                             # Top line
                             for nn in self.corners:
                                 if nn[0] == 'ULR':
@@ -572,7 +580,7 @@ class StandardBox(Node):
                                     new_node._parent = self
                                     self.virtual_childs.append(new_node)
 
-                        if y1 > 0.0 and UseCorner:
+                        if y1 > y0 and UseCorner:
                             # Bottom line
                             for nn in self.corners:
                                 if nn[0] == 'LLR':
@@ -626,14 +634,14 @@ class StandardBox(Node):
                             new_node._parent = self
                             self.virtual_childs.append(new_node)
 
-            if (x1 < 0.0 and y1 < 0.0 and y2 > 0.0) or (x1 > 0.0 and y1 < 0.0 and y2 > 0.0):
+            if (x1 < x0 and y1 < y0 and y2 > y0) or (x1 > x0 and y1 < y0 and y2 > y0):
                 #
                 # Left and right line
                 #
                 y1_t = y1 - fab_silk_outset.y
                 y2_t = y2 + fab_silk_outset.y
                 #
-                if x1 < 0.0:
+                if x1 < x0:
                     # Left line
                     x1_t = min(x1 - fab_silk_outset.x, x2 - fab_silk_outset.x)
                     x2_t = max(x1 - fab_silk_outset.x, x2 - fab_silk_outset.x)
