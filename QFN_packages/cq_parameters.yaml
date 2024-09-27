@@ -4683,6 +4683,42 @@ QFN-64-1EP_9x9mm_Pitch0.5mm:
   mark_color_key: 'light brown label'
   source: 'N/A'
 
+QFN-68-1EP_7x7mm_P0.35mm_EP5.49x5.49mm:
+  c: 0.2
+  L: 0.4
+  fp_s: True
+  fp_r: 0.5
+  fp_d: 0.2
+  fp_dx: null
+  fp_dy: null
+  fp_z: 0.01
+  ef: 0.0 
+  cce: 0.35
+  D: 7.0
+  E: 7.0
+  A1: 0.02
+  A2: 0.88
+  b: 0.15
+  e: 0.35
+  m: 0.0 
+  ps: rounded 
+  npx: 17
+  npy: 17
+  epad: [5.49, 5.49]
+  epad_offsetX: null 
+  epad_offsetY: null 
+  epad_n: null  
+  epad_pitch: null
+  excluded_pins: null 
+  model_name: 'ArtInChip_QFN-68-1EP_7x7mm_P0.35mm_EP5.49x5.49mm'
+  rotation: -90
+  destination_dir: Package_DFN_QFN.3dshapes
+  body_color_key: 'black body'
+  pin_color_key: 'metal grey pins'
+  mark_color_key: 'light brown label'
+  pin_shapes: null 
+  source: 'https://artinchip.com/upload/files/product/20240112/17050529177725663.pdf/#page=42'
+
 QFN-68-1EP_8x8mm_P0.4mm_EP5.2x5.2mm:
   c: 0.2
   L: 0.4
@@ -4790,6 +4826,78 @@ QFN-76-1EP_9x9mm_P0.4mm_EP5.81x6.31mm:
   mark_color_key: 'light brown label'               # mark_color_key: 'light brown label'
   pin_shapes: null                                  # pin_shapes: coords for pin shapes as [(x,y)]
   source: 'https://www.marvell.com/documents/bqcwxsoiqfjkcjdjhkvc/' # source: 'link to datasheet'
+
+QFN-88-1EP_10x10mm_P0.4mm_EP6.74x6.74mm:
+  c: 0.2
+  L: 0.4
+  fp_s: True
+  fp_r: 0.5
+  fp_d: 0.2
+  fp_dx: null
+  fp_dy: null
+  fp_z: 0.01
+  ef: 0.0
+  cce: 0.35
+  D: 10.0
+  E: 10.0
+  A1: 0.02
+  A2: 0.88
+  b: 0.2
+  e: 0.4
+  m: 0.0
+  ps: rounded
+  npx: 22
+  npy: 22
+  epad: [6.74, 6.74]
+  epad_offsetX: null
+  epad_offsetY: null
+  epad_n: null
+  epad_pitch: null
+  excluded_pins: null
+  model_name: 'ArtInChip_QFN-88-1EP_10x10mm_P0.4mm_EP6.74x6.74mm'
+  rotation: -90
+  destination_dir: Package_DFN_QFN.3dshapes
+  pin_shapes: null
+  body_color_key: 'black body'
+  pin_color_key: 'metal grey pins'
+  mark_color_key: 'light brown label'
+  source: 'https://artinchip.com/upload/files/product/20240112/17050529177725663.pdf/#page=43'
+
+QFN-100-1EP_12x12mm_P0.4mm_EP7.4x7.4mm:
+  c: 0.203
+  L: 0.4
+  fp_s: True
+  fp_r: 0.5
+  fp_d: 0.2
+  fp_dx: null
+  fp_dy: null
+  fp_z: 0.01
+  ef: 0.0
+  cce: 0.35
+  D: 12.0
+  E: 12.0
+  A1: 0.02
+  A2: 0.83
+  b: 0.2
+  e: 0.4
+  m: 0.0
+  ps: rounded
+  npx: 25
+  npy: 25
+  epad: [7.4, 7.4]
+  epad_offsetX: null
+  epad_offsetY: null
+  epad_n: null
+  epad_pitch: null
+  excluded_pins: null
+  model_name: 'ArtInChip_QFN-100-1EP_12x12mm_P0.4mm_EP7.4x7.4mm'
+  rotation: -90
+  destination_dir: Package_DFN_QFN.3dshapes
+  pin_shapes: null
+  body_color_key: 'black body'
+  pin_color_key: 'metal grey pins'
+  mark_color_key: 'light brown label'
+  source: 'https://artinchip.com/upload/files/product/20240112/17050529177725663.pdf/#page=44'
 
 UQFN-10_1.4x1.8mm_Pitch0.4mm:
   c: 0.2
