@@ -4739,6 +4739,39 @@ SSO-8_9.6x6.3mm_P1.27mm_Clearance10.5mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'https://docs.broadcom.com/cs/Satellite?blobcol=urldata&blobheader=application%2Fpdf&blobheadername1=Content-Disposition&blobheadername2=Content-Type&blobheadername3=MDT-Type&blobheadervalue1=attachment%3Bfilename%3DIPD-Selection-Guide_AV00-0254EN_030617.pdf&blobheadervalue2=application%2Fx-download&blobheadervalue3=abinary%253B%2Bcharset%253DUTF-8&blobkey=id&blobnocache=true&blobtable=MungoBlobs&blobwhere=1430884105675&ssbinary=true'
 
+SSO-8-7_6.4x9.7mm_P2.54mm:
+  the: 9.0
+  tb_s: 0.0
+  c: 0.25
+  R1: 0.1
+  R2: 0.1
+  L: 1.3
+  fp_s: True
+  fp_r: 0.8
+  fp_d: 0.3
+  fp_z: 0.05
+  ef: 0.0
+  cc1: 0.0
+  D1: 9.7
+  E1: 6.4
+  E: 10.0
+  A1: 0.1
+  A2: 3.4
+  b: 0.5
+  e: 2.54
+  npx: 4
+  npy: 0
+  epad: null
+  excluded_pins: [7]
+  model_name: SSO-8-7_6.4x9.7mm_P2.54mm
+  rotation: -90
+  body_color_key: 'black body'
+  pin_color_key: 'metal grey pins'
+  mark_color_key: 'light brown label'
+  destination_dir: 'Package_SO.3dshapes'
+  source: 'https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2312161855_BC-BC2213A_C596512.pdf'
+
+
 SSOP-10_3.9x4.9mm_P1.00mm:
   the: 9.0
   tb_s: 0.15
@@ -10349,3 +10382,4 @@ IXYS_Flatpak-8_6.3x9.7mm_P2.54mm:
   mark_color_key: 'light brown label'
   destination_dir: 'Package_DIP.3dshapes'
   source: 'https://www.littelfuse.com/media?resourcetype=datasheets&itemid=996c6e8f-cc1b-44f6-811e-251c6e004c56&filename=littelfuse-integrated-circuits-loc112-datasheet'
+
