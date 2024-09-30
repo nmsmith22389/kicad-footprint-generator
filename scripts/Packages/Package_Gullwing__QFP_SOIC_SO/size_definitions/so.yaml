@@ -2,6 +2,39 @@ FileHeader:
   library_Suffix: 'SO'
   device_type: 'SO'
 
+SO-4_7.6x3.6mm_P2.54mm:
+  # EL101X-G datasheet
+  size_source: 'https://everlightamericas.com/index.php?controller=attachment&id_attachment=3535'
+  body_size_x:
+    nominal: 7.6
+    tolerance: 0.2
+  body_size_y:
+    nominal: 3.6
+    tolerance: 0.2
+  overall_height:
+    maximum: 2.2
+
+  overall_size_x:
+    nominal: 10.2
+    tolerance: 0.3
+  lead_width:
+    nominal: 0.40
+    tolerance: 0.10
+  lead_len:
+    # Only minimum given in datasheet.
+    # We need to assume that users will use this for other (similar) parts
+    # so the pad can't be too small!
+    minimum: 0.5
+    nominal: 0.7 # Not given, assumption based on Vishay TCLT1000
+    maximum: 1.0
+
+  pitch: 2.54
+  num_pins_x: 0
+  num_pins_y: 2
+
+  compatible_mpns:
+    - Everlight_EL101X-G
+
 SO-8_5.3x6.2mm_P1.27mm:
   size_source: 'https://www.ti.com/lit/ml/msop001a/msop001a.pdf'
   body_size_x: 5.00 .. 5.60
