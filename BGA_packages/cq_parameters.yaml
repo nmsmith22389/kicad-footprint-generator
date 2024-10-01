@@ -1083,6 +1083,36 @@ Analog_BGA-49_6.25x6.25mm_Layout7x7_P0.8mm_Ball0.5mm_Pad0.4mm:
   pins_color_key: "metal grey pins"
   marking_color_key: "light brown label"
 
+Analog_BGA-77_9.0x15.0mm_Layout7x11_P1.27mm_Ball0.63mm:
+  # from https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/ltc-legacy-bga/05081964_B_bga77.pdf
+  fp_r: 0.4      # first pin indicator radius
+  fp_d: 0.08     # first pin indicator distance from edge
+  fp_z: 0.01     # first pin indicator depth
+  ef: 0.0        # fillet of edges  Note: bigger bytes model with fillet
+  cf: null
+  cff: null
+  D1: null
+  D: 15.0        # body overall length
+  E1: null
+  E: 9.0         # body overall width
+  A1: 0.6        # body-board separation
+  A2: null
+  A: 2.42        # body overall height
+  b: 0.75        # ball pin width diameter with a small extra to obtain a union of balls and case
+  e: 1.27        # pin (center-to-center) distance
+  ex: null       # pin (center-to-center) distance
+  sp: 0.2        # seating plane (pcb penetration)
+  npx: 11        # number of pins along X axis (width)
+  npy: 7         # number of pins along y axis (length)
+  excluded_pins: null # pins to exclude -> None or "internals"
+  molded: null
+  modelName: "Analog_BGA-77_9.0x15.0mm_Layout7x11_P1.27mm_Ball0.63mm"
+  rotation: -90  # rotation if required
+  body_bot_color_key: "dark green body"
+  body_color_key: "black body"
+  pins_color_key: "metal grey pins"
+  marking_color_key: "light brown label"
+
 Analog_BGA-209_9.5x16mm_Layout11x19_P0.8mm_Ball0.5mm_Pad0.4mm:
   # from https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/ltc-legacy-bga/05081561_bga209.pdf
   fp_r: 0.75
