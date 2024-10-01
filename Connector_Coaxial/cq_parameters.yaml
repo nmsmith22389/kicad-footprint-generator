@@ -26,7 +26,7 @@ SMA_Amphenol_132134_Vertical:
   rotationy: null
   translate: null
   destination_dir: 'Connector_Coaxial.3dshapes' # destination directory
-  source: 'https://www.cui.com/product/resource/sj1-353xng.pdf'
+  source: 'https://www.amphenolrf.com/library/download/link/link_id/593003/parent/132134/'
 
 SMA_Amphenol_901-144_Vertical:
   model_name: 'SMA_Amphenol_901-144_Vertical'    # modelName
@@ -56,7 +56,7 @@ SMA_Amphenol_901-144_Vertical:
   rotationy: null
   translate: null
   destination_dir: 'Connector_Coaxial.3dshapes' # destination directory
-  source: 'https://www.cui.com/product/resource/sj1-353xng.pdf'
+  source: 'https://www.amphenolrf.com/library/download/link/link_id/593640/parent/901-144/'
 
 SMA_Amphenol_132134-11_Vertical:
   model_name: 'SMA_Amphenol_132134-11_Vertical'  # modelName
@@ -86,7 +86,7 @@ SMA_Amphenol_132134-11_Vertical:
   rotationy: null
   translate: null
   destination_dir: 'Connector_Coaxial.3dshapes' # destination directory
-  source: 'https://www.cui.com/product/resource/sj1-353xng.pdf'
+  source: 'https://www.amphenolrf.com/library/download/link/link_id/596215/parent/132134-11/'
 
 SMA_Amphenol_132134-14_Vertical:
   model_name: 'SMA_Amphenol_132134-14_Vertical'  # modelName
@@ -116,7 +116,7 @@ SMA_Amphenol_132134-14_Vertical:
   rotationy: null
   translate: null
   destination_dir: 'Connector_Coaxial.3dshapes' # destination directory
-  source: 'https://www.cui.com/product/resource/sj1-353xng.pdf'
+  source: 'https://www.amphenolrf.com/library/download/link/link_id/596217/parent/132134-14/'
 
 SMA_Amphenol_132134-16_Vertical:
   model_name: 'SMA_Amphenol_132134-16_Vertical'  # modelName
@@ -146,7 +146,7 @@ SMA_Amphenol_132134-16_Vertical:
   rotationy: null
   translate: null
   destination_dir: 'Connector_Coaxial.3dshapes' # destination directory
-  source: 'https://www.cui.com/product/resource/sj1-353xng.pdf'
+  source: 'https://www.amphenolrf.com/library/download/link/link_id/598157/parent/132134-16/'
 
 SMA_Amphenol_132289_EdgeMount:
   model_name: 'SMA_Amphenol_132289_EdgeMount'    # modelName
@@ -176,7 +176,7 @@ SMA_Amphenol_132289_EdgeMount:
   rotationy: 90                                 # Rotation if required
   translate: [2.0, 0.0, 0.8]                    # translation
   destination_dir: 'Connector_Coaxial.3dshapes' # destination directory
-  source: 'https://www.cui.com/product/resource/sj1-353xng.pdf'
+  source: 'https://www.amphenolrf.com/library/download/link/link_id/595984/parent/132289/'
 
 SMA_Amphenol_132134-10_Vertical:
   model_name: 'SMA_Amphenol_132134-10_Vertical'  # modelName
@@ -206,7 +206,7 @@ SMA_Amphenol_132134-10_Vertical:
   rotationy: null
   translate: [0.0, 0.0, 1.27]                    # translation
   destination_dir: 'Connector_Coaxial.3dshapes' # destination directory
-  source: 'http://www.molex.com/pdm_docs/sd/734120110_sd.pdf'
+  source: 'https://www.amphenolrf.com/library/download/link/link_id/596219/parent/132134-10/'
 
 BNC_TEConnectivity_1478204_Vertical:
   model_name: 'BNC_TEConnectivity_1478204_Vertical'  # modelName
@@ -264,7 +264,7 @@ SMA_Molex_73251-2200_Horizontal:
   rotationy: null
   translate: null
   destination_dir: 'Connector_Coaxial.3dshapes' # destination directory
-  source: 'https://www.cui.com/product/resource/sj1-353xng.pdf'
+  source: 'https://www.molex.com/content/dam/molex/molex-dot-com/products/automated/en-us/salesdrawingpdf/732/73251/732512200_sd.pdf?inline'
 
 U.FL_Molex_MCRF_73412-0110_Vertical:
   model_name: 'U.FL_Molex_MCRF_73412-0110_Vertical'  # modelName
@@ -325,7 +325,7 @@ SMA_Molex_73251-1153_EdgeMount_Horizontal:
   rotationy: 270                                 # Rotation if required
   translate: [-4.9, 0.0, 1.20]                    # translation
   destination_dir: 'Connector_Coaxial.3dshapes' # destination directory
-  source: 'http://www.molex.com/pdm_docs/sd/732511150_sd.pdf'
+  source: 'https://tools.molex.com/pdm_docs/sd/732511150_sd.pdf'
 
 SMA_Samtec_SMA-J-P-H-ST-EM1_EdgeMount:
   model_name: 'SMA_Samtec_SMA-J-P-H-ST-EM1_EdgeMount'    # modelName
@@ -355,4 +355,4 @@ SMA_Samtec_SMA-J-P-H-ST-EM1_EdgeMount:
   rotationy: 90                                 # Rotation if required
   translate: [2.0, 0.0, 0.6]                    # translation
   destination_dir: 'Connector_Coaxial.3dshapes' # destination directory
-  source: 'https://www.cui.com/product/resource/sj1-353xng.pdf'
+  source: 'https://suddendocs.samtec.com/prints/sma-j-p-x-st-em1-mkt.pdf'
