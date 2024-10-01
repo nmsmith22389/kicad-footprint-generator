@@ -929,6 +929,119 @@ Texas_WQFN-16_RTY:
   num_pins_y: 4
 
 
+Texas_QFN-24_RMQ0024A:
+  device_type: 'WQFN'
+  manufacturer: 'Texas'
+  part_number: 'RMQ0024A'
+  # Example datasheet https://www.ti.com/lit/ds/symlink/dp83825i.pdf
+  size_source: 'https://www.ti.com/jp/lit/ml/mpqf398a/mpqf398a.pdf'
+  ipc_class: 'qfn'
+  body_size_x:
+    minimum: 2.9
+    maximum: 3.1
+  body_size_y:
+    minimum: 2.9
+    maximum: 3.1
+  overall_height:
+    maximum: 0.8
+
+  lead_width:
+    minimum: 0.15
+    maximum: 0.25
+  lead_len: 0.25+0.05-0.1
+
+  EP_size_x:
+    minimum: 1.8
+    nominal: 1.9
+    maximum: 2.0
+  EP_size_y:
+    minimum: 1.8
+    nominal: 1.9
+    maximum: 2.0
+
+  EP_num_paste_pads: [1, 1]
+
+  thermal_vias:
+    count: [2, 2]
+    drill: 0.2
+    paste_via_clearance: 0.1
+    EP_paste_coverage: 0.81 # From datasheet
+    paste_avoid_via: False
+
+  pitch: 0.4
+  num_pins_x: 7
+  num_pins_y: 5
+
+  pad_overrides:
+    #
+    # Left row
+    #
+    1: # Move to make space for wide pad
+      move: [null, -0.1]
+    2: # Move to make space for wide pad
+      move: [null, -0.1]
+    3: # Wide pad
+      lead_width: 0.35 .. 0.45
+      size_increase: [null, 0.2]
+    4: # Move to make space for wide pad
+      move: [null, 0.1]
+    5: # Move to make space for wide pad
+      move: [null,  0.1]
+    #
+    # Bottom row
+    #
+    6: # Square corner pin
+      size_increase: [0.05,  -0.425]
+      move: [-0.125, -0.2125]
+    7: # Move to make space for wide pad
+      move: [-0.1, null]
+    8: # Move to make space for wide pad
+      move: [-0.1, null]
+    9: # Wide pad
+      lead_width: 0.35 .. 0.45
+      size_increase: [0.2, null]
+    10: # Move to make space for wide pad
+      move: [0.1, null]
+    11: # Move to make space for wide pad
+      move: [0.1, null]
+    12: # Square corner pin
+      size_increase: [0.05,  -0.425]
+      move: [0.125, -0.2125]
+    #
+    # Right row
+    #
+    17: # Move to make space for wide pad
+      move: [null, -0.1]
+    16: # Move to make space for wide pad
+      move: [null, -0.1]
+    15: # Wide pad
+      lead_width: 0.35 .. 0.45
+      size_increase: [null, 0.2]
+    14: # Move to make space for wide pad
+      move: [null, 0.1]
+    13: # Move to make space for wide pad
+      move: [null,  0.1]
+    #
+    # Top row
+    #
+    24: # Square corner pin
+      size_increase: [0.05,  -0.425]
+      move: [-0.125, 0.2125]
+    23: # Move to make space for wide pad
+      move: [-0.1, null]
+    22: # Move to make space for wide pad
+      move: [-0.1, null]
+    21: # Wide pad
+      lead_width: 0.35 .. 0.45
+      size_increase: [0.2, null]
+    20: # Move to make space for wide pad
+      move: [0.1, null]
+    19: # Move to make space for wide pad
+      move: [0.1, null]
+    18: # Square corner pin
+      size_increase: [0.05,  -0.425]
+      move: [0.125, 0.2125]
+
 Texas_WQFN-24_RTW:
   device_type: 'WQFN'
   manufacturer: 'Texas'
