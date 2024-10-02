@@ -1,0 +1,13 @@
+- series: PA4340
+  manufacturer: Pulse
+  datasheet: "https://productfinder.pulseelectronics.com/api/open/part-attachments/datasheet/PA4340.183NLT"
+  csv: Pulse.csv
+  3d:
+    type: 2
+    bodyColor: black body
+    pinColor: metal grey pins
+  tags:
+    - Pulse
+     -SMT
+     -PA4340
+  library_name: Inductor_SMD
