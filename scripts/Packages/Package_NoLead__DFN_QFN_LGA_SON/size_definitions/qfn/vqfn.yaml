@@ -1084,3 +1084,42 @@ VQFN-64-1EP_9x9mm_P0.5mm_EP5.4x5.4mm:
   pitch: 0.5
   num_pins_x: 16
   num_pins_y: 16
+
+VQFN-100-1EP_12x12mm_P0.4mm_EP8x8mm:
+  device_type: 'VQFN'
+  size_source: 'https://ww1.microchip.com/downloads/aemDocuments/documents/UNG/ProductDocuments/DataSheets/USB7206C-Data-Sheet-DS00003850.pdf'
+  ipc_class: 'qfn'
+  body_size_x:
+    nominal: 12
+  body_size_y:
+    nominal: 12
+  overall_height:
+    minimum: 0.8
+    nominal: 0.85
+    maximum: 0.9
+  lead_width:
+    minimum: 0.15
+    nominal: 0.2
+    maximum: 0.25
+  lead_len:
+    minimum: 0.5
+    nominal: 0.6
+    maximum: 0.7
+
+  EP_size_x:
+    nominal: 8
+    tolerance: 0.1
+  EP_size_y:
+    nominal: 8
+    tolerance: 0.1
+  EP_num_paste_pads: [4, 4]
+
+  thermal_vias:
+    count: [5, 5]
+    drill: 0.2
+    paste_via_clearance: 0.1
+    paste_avoid_via: False
+
+  pitch: 0.4
+  num_pins_x: 25
+  num_pins_y: 25
