@@ -982,6 +982,11 @@ QFN-48-1EP_7x7mm_P0.5mm_EP5.6x5.6mm:
   #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
   #include_suffix_in_3dpath: 'False'
 
+  compatible_mpns:
+    - ST_UFQFPN48 # from size source
+    - Analog_CP-48-13 # ADIN2111 datasheet
+    - JEDEC_MO-220-WKKD-4 # listed as compatible in ADIN2111 datasheet
+
 QFN-48-1EP_7x7mm_P0.5mm_EP5.15x5.15mm:
   device_type: 'QFN'
   #manufacturer: 'man'
