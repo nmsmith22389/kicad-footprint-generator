@@ -2,6 +2,38 @@ FileHeader:
   library_Suffix: 'SO'
   device_type: 'SOP'
 
+SOP-4_7.5x4.1mm_P2.54mm:
+  size_source: 'https://www.vishay.com/docs/83515/tclt1000.pdf'
+  body_size_x:
+    nominal: 7.5
+    tolerance: 0.2
+  body_size_y:
+    maximum: 4.1 # Including protrusion
+    nominal: 4.1 # Not given in datasheet, assuming = maximum
+  overall_height:
+    maximum: 2.3
+
+  overall_size_x:
+    # Datasheet: tolerance: +0.3/-0.4 
+    minimum: 9.8
+    nominal: 10.2
+    maximum: 10.5
+  lead_width:
+    nominal: 0.45
+    tolerance: 0.10
+  lead_len:
+    # Datasheet: tolerance: +0.3/-0.4
+    minimum: 0.3
+    nominal: 0.7
+    maximum: 1.0
+
+  pitch: 2.54
+  num_pins_x: 0
+  num_pins_y: 2
+
+  compatible_mpns:
+    - Vishay_TCLT100x
+
 SOP-8-1EP_4.57x4.57mm_P1.27mm_EP4.57x4.45mm:
   size_source: 'https://ww2.minicircuits.com/case_style/XX112.pdf'
   body_size_x:
