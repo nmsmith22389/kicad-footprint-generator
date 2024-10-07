@@ -678,6 +678,39 @@ DFN-8-1EP_2x2mm_P0.5mm_EP0.9x1.5mm:
   #include_suffix_in_3dpath: 'False'
   #include_pad_size: 'fp_name_only' # 'both' | 'none' (default)
 
+DFN-8-1EP_2x2mm_P0.5mm_EP0.86x1.55mm:
+  device_type: 'DFN'
+  size_source: 'https://www.diodes.com/assets/Datasheets/PAM2841.pdf'
+  body_size_x:
+    minimum: 1.95
+    nominal: 2.0
+    maximum: 2.075
+  body_size_y:
+    minimum: 1.95
+    nominal: 2.0
+    maximum: 2.075
+  lead_width:
+    minimum: 0.2
+    nominal: 0.25
+    maximum: 0.3
+  lead_len:
+    minimum: 0.25
+    nominal: 0.3
+    maximum: 0.35
+
+  EP_size_x:
+    minimum: 0.76
+    nominal: 0.86
+    maximum: 0.96
+  EP_size_y:
+    minimum: 1.45
+    nominal: 1.55
+    maximum: 1.65
+  EP_num_paste_pads: [2, 2]
+  pitch: 0.5
+  num_pins_x: 0
+  num_pins_y: 4
+
 DFN-8-1EP_3x2mm_P0.5mm_EP1.7x1.4mm:
   device_type: 'DFN'
   #manufacturer: 'man'
