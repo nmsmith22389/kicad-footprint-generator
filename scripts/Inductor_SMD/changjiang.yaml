@@ -14,13 +14,13 @@
     - shielded
   library_name: Inductor_SMD
 
-- series: FXL1365
+- series: FXL
   library_name: Inductor_SMD
   manufacturer: Changjiang
-  datasheet: "https://www.lcsc.com/datasheet/lcsc_datasheet_2303201000_cjiang--Changjiang-Microelectronics-Tech-FXL1365-330-M_C5359277.pdf"
-  # CSV fields: (partno,A-0.55,B,C,D,E,A,atyp,[(b-a)/2],ctyp])
-  # (0.55 is a guess on the nominal body size, with the) actual body being 0.275mm smaller than the body plus contacts)
-  csv: changjiang_fxl1365.csv
+  datasheet: "https://www.lcsc.com/datasheet/lcsc_datasheet_2404260921_cjiang--Changjiang-Microelectronics-Tech-FXL0420-2R2-M_C167206.pdf"
+  # CSV fields: (partno,A-0.55,B,C,D,E,atyp,btyp,ctyp])
+  # (0.55 is a guess on the nominal body size, with the actual body being 0.275mm smaller than the body plus contacts)
+  csv: changjiang_fxl.csv
   3d:
     type: 2
     bodyColor: black body
