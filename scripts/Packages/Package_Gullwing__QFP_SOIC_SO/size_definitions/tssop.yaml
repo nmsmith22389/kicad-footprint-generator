@@ -704,6 +704,46 @@ TSSOP-28_4.4x9.7mm_P0.65mm:
   num_pins_x: 0
   num_pins_y: 14
 
+TSSOP-28-1EP_4.4x9.7mm_P0.65mm_EP2.74x4.75mm:
+  size_source: 'https://www.analog.com/media/en/technical-documentation/data-sheets/lt3762.pdf'
+  
+  body_size_x:
+    minimum: 4.30 
+    maximum: 4.50 
+  body_size_y:
+    minimum: 9.60
+    maximum: 9.80
+
+  overall_size_x: 6.4
+
+  overall_height:
+    maximum: 1.20
+
+  lead_width:
+    minimum: 0.195
+    maximum: 0.30
+
+  lead_len: 
+    minimum: 0.50
+    maximum: 0.75
+
+  pitch: 0.65
+
+  num_pins_x: 0
+  num_pins_y: 14
+
+  EP_size_x:
+    nominal: 2.74
+  EP_size_y:
+    nominal: 4.75
+  EP_num_paste_pads: [2, 3]
+
+  thermal_vias:
+    count: [3, 4]
+    drill: 0.2
+    paste_avoid_via: false
+    EP_num_paste_pads: [2, 3]
+
 TSSOP-28-1EP_4.4x9.7mm_P0.65mm_EP2.85x6.7mm:
   size_source: 'JEDEC MO-153 Var AET Pkg.Code U28E-4 https://pdfserv.maximintegrated.com/package_dwgs/21-0108.PDF'
   
