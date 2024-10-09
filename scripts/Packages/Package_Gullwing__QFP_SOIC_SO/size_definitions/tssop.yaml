@@ -742,6 +742,54 @@ TSSOP-28-1EP_4.4x9.7mm_P0.65mm_EP2.85x6.7mm:
     maximum: 6.90
   EP_num_paste_pads: [2, 3]
 
+TSSOP-28-1EP_4.4x9.7mm_P0.65mm_EP3.1mmx4.0mm:
+  size_source: 'Texas Instruments TAS5805M https://www.ti.com/lit/gpn/tas5805m'
+  
+  body_size_x:
+    minimum: 4.30 
+    maximum: 4.50 
+  body_size_y:
+    minimum: 9.60
+    maximum: 9.80
+
+  overall_size_x: 
+    minimum: 6.20
+    maximum: 6.60
+
+  overall_height:
+    maximum: 1.20
+
+  lead_width:
+    minimum: 0.19
+    maximum: 0.30
+
+  lead_len: 
+    minimum: 0.50
+    maximum: 0.75
+
+  pitch: 0.65
+
+  num_pins_x: 0
+  num_pins_y: 14
+
+  EP_mask_x:
+    nominal: 3.10
+  EP_mask_y:
+    nominal: 4.05
+
+  EP_size_x:
+    nominal: 3.4
+  EP_size_y:
+    nominal: 9.7
+
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [3, 8]
+    drill: 0.2
+    paste_avoid_via: false
+    EP_num_paste_pads: [2, 2]
+
 ##############################################################################
 # TSSOP Variations - 0.65 PITCH
 # BODY WIDTH (E1) = 6.10 NOM
