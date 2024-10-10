@@ -830,6 +830,58 @@ TSSOP-28-1EP_4.4x9.7mm_P0.65mm_EP3.1mmx4.0mm:
     paste_avoid_via: false
     EP_num_paste_pads: [2, 2]
 
+Texas_PWP0028V:
+  manufacturer: 'Texas'
+  part_number: 'PWP0028V'
+  size_source: 'https://www.ti.com/lit/ds/symlink/lm5176.pdf?ts=1728516913971&ref_url=https%253A%252F%252Fwww.ti.com%252Fproduct%252FLM5176'
+  body_size_x:
+    minimum: 4.3
+    maximum: 4.5
+  body_size_y:
+    minimum: 9.6
+    maximum: 9.8
+  overall_size_x:
+    minimum: 6.2
+    maximum: 6.6
+  overall_height:
+    maximum: 1.2
+  lead_width:
+    minimum: 0.17
+    maximum: 0.30
+  lead_len:
+    minimum: 0.5
+    maximum: 0.75
+  pitch: 0.65
+  num_pins_y: 14
+  num_pins_x: 0
+
+  EP_size_x:
+    minimum: 2.24
+    maximum: 2.94
+  EP_size_y:
+    minimum: 4.92
+    maximum: 5.62
+  EP_size_x_overwrite: 3.4
+  EP_size_y_overwrite: 9.7
+  EP_mask_x: 2.94
+  EP_mask_y: 5.62
+
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 5]
+
+  thermal_vias:
+    count: [3, 8]
+    drill: 0.2
+    grid: [1.47, 1.12]
+    # min_annular_ring: 0.15
+    #paste_via_clearance: 0.1
+    EP_num_paste_pads: [2, 5]
+    #paste_between_vias: 1
+    #paste_rings_outside: 1
+    EP_paste_coverage: 0.75
+    # bottom_pad_size:
+    paste_avoid_via: false
+
 ##############################################################################
 # TSSOP Variations - 0.65 PITCH
 # BODY WIDTH (E1) = 6.10 NOM
