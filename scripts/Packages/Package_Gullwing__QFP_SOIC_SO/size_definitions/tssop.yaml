@@ -830,6 +830,46 @@ TSSOP-28-1EP_4.4x9.7mm_P0.65mm_EP3.1mmx4.0mm:
     paste_avoid_via: false
     EP_num_paste_pads: [2, 2]
 
+TSSOP-28-1EP_4.4x9.7mm_P0.65mm_EP3.05x7.56mm:
+  size_source: 'https://www.analog.com/media/en/technical-documentation/data-sheets/38921fc.pdf'
+  
+  body_size_x:
+    minimum: 4.30 
+    maximum: 4.50 
+  body_size_y:
+    minimum: 9.60
+    maximum: 9.80
+
+  overall_size_x: 6.4
+
+  overall_height:
+    maximum: 1.20
+
+  lead_width:
+    minimum: 0.195
+    maximum: 0.30
+
+  lead_len: 
+    minimum: 0.50
+    maximum: 0.75
+
+  pitch: 0.65
+
+  num_pins_x: 0
+  num_pins_y: 14
+
+  EP_size_x:
+    nominal: 3.05
+  EP_size_y:
+    nominal: 7.56
+  EP_num_paste_pads: [2, 4]
+
+  thermal_vias:
+    count: [3, 5]
+    drill: 0.2
+    paste_avoid_via: false
+    EP_num_paste_pads: [2, 4]
+
 Texas_PWP0028V:
   manufacturer: 'Texas'
   part_number: 'PWP0028V'
