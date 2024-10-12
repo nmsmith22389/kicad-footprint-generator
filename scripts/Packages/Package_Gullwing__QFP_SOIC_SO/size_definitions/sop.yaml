@@ -513,3 +513,35 @@ SOP-44_12.6x28.5mm_P1.27mm:
   num_pins_x: 0
   num_pins_y: 22
 
+SOP-44_13.3x28.2mm_P1.27mm:
+  # Am29F400B datasheet
+  size_source: 'https://www.mouser.com/datasheet/2/380/AM29F400B_EOL_21505e8-9219.pdf'
+  body_size_x:
+    minimum: 13.10
+    nominal: 13.30
+    maximum: 13.50
+  body_size_y:
+    minimum: 28.00
+    nominal: 28.20
+    maximum: 28.40
+  overall_height:
+    maximum: 2.80
+
+  overall_size_x:
+    minimum: 15.70
+    nominal: 16.00
+    maximum: 16.30
+  lead_width:
+    # nominal not given in datasheet, symbol/dimension b
+    minimum: 0.35
+    maximum: 0.50
+  lead_len:
+    # symbol/dimension L in datasheet
+    minimum: 0.60
+    nominal: 0.80
+    maximum: 1.00
+
+  pitch: 1.27
+  num_pins_x: 0
+  num_pins_y: 22
+
