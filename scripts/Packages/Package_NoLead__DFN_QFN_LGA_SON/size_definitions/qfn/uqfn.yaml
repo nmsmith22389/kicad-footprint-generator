@@ -68,6 +68,39 @@ UQFN-10_1.6x2.1mm_P0.5mm:
   #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
   #include_suffix_in_3dpath: 'False'
 
+Texas_RSW0010A_UQFN-10_1.4x1.8mm_P0.4mm:
+  device_type: 'UQFN'
+  manufacturer: 'Texas'
+  part_number: 'RSW0010A'
+  size_source: 'https://www.ti.com/lit/ds/symlink/ts3a5223.pdf#page=19'
+  ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  # custom_name_format:
+  body_size_x:
+    minimum: 1.35
+    maximum: 1.45
+  body_size_y:
+    minimum: 1.75
+    maximum: 1.85
+  lead_width:
+    minimum: 0.15
+    maximum: 0.25
+  lead_len:
+    minimum: 0.35
+    maximum: 0.45
+
+  #heel_reduction: 0.05 # necessary to reach 0.15mm clearance between vertical and horizontal pads
+
+  pad_overrides:
+    1:
+      lead_len: 0.45..0.55
+      size_increase: [0.1, null] # 0.1mm wider than standard pins
+      move: [0.05, null] # Move inside (half of size increase)
+
+  pitch: 0.4
+  num_pins_x: 3
+  num_pins_y: 2
+
 # IMPORTANT: Manual modification needed: make pad 1 0.1 mm longer to the inside of the IC, see datasheet https://www.ti.com/lit/ds/symlink/ts3a5017.pdf#page=28
 UQFN-16_1.8x2.6mm_P0.4mm:
   device_type: 'UQFN'
