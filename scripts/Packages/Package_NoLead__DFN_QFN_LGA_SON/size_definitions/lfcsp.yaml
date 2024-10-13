@@ -755,7 +755,7 @@ LFCSP-16-1EP_4x4mm_P0.65mm_EP2.6x2.6mm:
   library: Package_CSP
   #manufacturer: 'Analog'
   #part_number: 'CP-16-17'
-  size_source: 'https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/lfcspcp/cp_16_17.pdf'
+  size_source: 'https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/lfcspcp/cp-16/cp_16_17.pdf'
   ipc_class: 'qfn' # 'qfn_pull_back'
   #ipc_density: 'least' #overwrite global value for this device.
   # custom_name_format:
