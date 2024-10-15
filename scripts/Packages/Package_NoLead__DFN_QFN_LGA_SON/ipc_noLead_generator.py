@@ -353,6 +353,17 @@ class NoLeadGenerator(FootprintGenerator):
 
         device_dimensions = NoLeadGenerator.deviceDimensions(nolead_config, pkg_id)
 
+        if 'deleted_pins' in device_params:
+            if type(device_params['deleted_pins']) is int:
+                device_params['deleted_pins'] = [device_params['deleted_pins']]
+
+        if 'hidden_pins' in device_params:
+            if type(device_params['hidden_pins']) is int:
+                device_params['hidden_pins'] = [device_params['hidden_pins']]
+
+        if 'deleted_pins' in device_params and 'hidden_pins' in device_params:
+            raise ValueError("A footprint may not have deleted pins and hidden pins.")
+
         if device_dimensions['has_EP'] and 'thermal_vias' in device_params:
             self.__createFootprintVariant(nolead_config, device_dimensions, True)
 
@@ -365,7 +376,23 @@ class NoLeadGenerator(FootprintGenerator):
 
         lib_name = device_params.get('library', default_library)
 
-        pincount = device_params['num_pins_x'] * 2 + device_params['num_pins_y'] * 2
+        #pincount = device_params['num_pins_x'] * 2 + device_params['num_pins_y'] * 2
+        pincount_full = device_params['num_pins_x'] * 2 + device_params['num_pins_y'] * 2
+
+        if 'pin_count' in device_params:
+            # If the pin count is explicitly given, we use that and don't adjust for hidden/deleted pins
+            pincount_full = device_params['pin_count']
+            pincount_text = '{}'.format(pincount_full)
+            pincount = pincount_full
+        elif 'hidden_pins' in device_params and len(device_params['hidden_pins'])>0:
+            pincount_text = '{}-{}'.format(pincount_full - len(device_params['hidden_pins']), pincount_full)
+            pincount = pincount_full - len(device_params['hidden_pins'])
+        elif 'deleted_pins' in device_params and len(device_params['deleted_pins'])>0:
+            pincount_text = '{}-{}'.format(pincount_full, pincount_full - len(device_params['deleted_pins']))
+            pincount = pincount_full - len(device_params['deleted_pins'])
+        else:
+            pincount_text = '{}'.format(pincount_full)
+            pincount = pincount_full
 
         is_pull_back = 'lead_to_edge' in device_params
 
@@ -381,7 +408,9 @@ class NoLeadGenerator(FootprintGenerator):
 
         layout = ''
         if device_dimensions['has_EP']:
-            name_format = self.configuration['fp_name_EP_format_string_no_trailing_zero']
+            #name_format = self.configuration['fp_name_EP_format_string_no_trailing_zero']
+            name_format = self.configuration['fp_name_EP_format_string_no_trailing_zero_pincount_text']
+            
             if 'EP_size_x_overwrite' in device_params:
                 EP_size = Vector2D(
                     device_params['EP_size_x_overwrite'],
@@ -397,9 +426,13 @@ class NoLeadGenerator(FootprintGenerator):
                 device_dimensions['EP_center_y'].nominal
             )
         else:
-            name_format = self.configuration['fp_name_format_string_no_trailing_zero']
+            #name_format = self.configuration['fp_name_format_string_no_trailing_zero']
+            name_format = self.configuration['fp_name_format_string_no_trailing_zero_pincount_text']
+
             if device_params.get('use_name_format', 'QFN') == 'LGA':
-                name_format = self.configuration['fp_name_lga_format_string_no_trailing_zero']
+                #name_format = self.configuration['fp_name_lga_format_string_no_trailing_zero']
+                name_format = self.configuration['fp_name_lga_format_string_no_trailing_zero_pincount_text']
+
                 if device_params['num_pins_x'] > 0 and device_params['num_pins_y'] > 0:
                     layout = self.configuration['lga_layout_border'].format(
                         nx=device_params['num_pins_x'], ny=device_params['num_pins_y'])
@@ -428,7 +461,7 @@ class NoLeadGenerator(FootprintGenerator):
             man=device_params.get('manufacturer', ''),
             mpn=device_params.get('part_number', ''),
             pkg=device_params['device_type'],
-            pincount=pincount,
+            pincount=pincount_text,
             size_y=size_y,
             size_x=size_x,
             pitch=device_dimensions['pitch_x'],
@@ -444,7 +477,7 @@ class NoLeadGenerator(FootprintGenerator):
             man=device_params.get('manufacturer', ''),
             mpn=device_params.get('part_number', ''),
             pkg=device_params['device_type'],
-            pincount=pincount,
+            pincount=pincount_text,
             size_y=size_y,
             size_x=size_x,
             pitch=device_dimensions['pitch_x'],
@@ -504,7 +537,7 @@ class NoLeadGenerator(FootprintGenerator):
 
         if device_dimensions['has_EP']:
             pad_shape_details = getEpRoundRadiusParams(device_params, self.configuration, pad_radius)
-            ep_pad_number = device_params.get('EP_pin_number', pincount + 1)
+            ep_pad_number = device_params.get('EP_pin_number', pincount_full + 1)
             if with_thermal_vias:
                 thermals = device_params['thermal_vias']
                 paste_coverage = thermals.get('EP_paste_coverage',

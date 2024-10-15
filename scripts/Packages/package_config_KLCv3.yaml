@@ -9,6 +9,7 @@ fp_name_format_string_no_trailing_zero: '{man:s}_{mpn:s}_{pkg:s}-{pincount:d}_{s
 fp_name_format_string_no_trailing_zero_pincount_text: '{man:s}_{mpn:s}_{pkg:s}-{pincount:s}_{size_x:g}x{size_y:g}mm_P{pitch:g}mm{suffix:s}{suffix2:s}'
 
 fp_name_lga_format_string_no_trailing_zero: '{man:s}_{mpn:s}_{pkg:s}-{pincount:d}_{size_x:g}x{size_y:g}mm_P{pitch:g}mm{layout:s}{suffix:s}{suffix2:s}'
+fp_name_lga_format_string_no_trailing_zero_pincount_text: '{man:s}_{mpn:s}_{pkg:s}-{pincount:s}_{size_x:g}x{size_y:g}mm_P{pitch:g}mm{layout:s}{suffix:s}{suffix2:s}'
 
 lga_layout_grid: '_LayoutGrid{nx:d}x{ny:d}'
 lga_layout_border: '_LayoutBorder{nx:d}x{ny:d}y'
