@@ -1,15 +1,16 @@
 import math
 import sys
 import os
-import argparse
 import yaml
-import pprint
+from typing import Optional
 
 sys.path.append(
     os.path.join(sys.path[0], "../../..")
 )  # enable package import from parent directory
 
 from KicadModTree import *  # NOQA
+from scripts.tools.drawing_tools import SilkArrowSize
+from scripts.tools.drawing_tools_silk import draw_silk_triangle_north_of_pad
 
 
 class Dimensions(object):
@@ -111,6 +112,8 @@ class Dimensions(object):
         self.silk_line_nudge_mm = (
             0.20  #  amount to shift to stop silkscreen lines overlapping fab lines
         )
+        # Usual KLC value (TODO: get this from KLC config)
+        self.silk_pad_clearance_mm = 0.20
 
     @staticmethod
     def round_to(n, precision, direction: str = None):
@@ -134,9 +137,13 @@ class Dimensions(object):
 
 class DPAK(object):
 
-    def __init__(self, config_file):
+    first_pad : Optional[Pad]
+
+    def __init__(self):
         self.SERIES = None
         self.config = None
+        # The first pad (usually pin 1)
+        self.first_pad = None
 
     def load_config(self, config_file):
         try:
@@ -286,9 +293,10 @@ class DPAK(object):
         m = self.draw_pins(m, variant, dim, cut_pin)
         return m
 
-    def draw_markers(self, m, variant, dim):
+    def draw_silk(self, m, variant, dim):
         magic_number = 1.3  # TODO needs better name
         other_magic_number = 1.5  #  TODO needs better name
+
         if dim.body_offset_y_mm < dim.tab_size_y_mm / 2:
             right_x = (
                 dim.device_offset_x_mm
@@ -312,11 +320,6 @@ class DPAK(object):
             - dim.silk_line_nudge_mm
             - dim.footprint_origin_x_mm
         )
-        left_x = (
-            dim.pad_1_centre_x_mm
-            - variant["pad"]["x_mm"] / 2.0
-            - dim.footprint_origin_x_mm
-        )
         top_y = -dim.body_offset_y_mm - dim.silk_line_nudge_mm
         bottom_y = (
             dim.pad_1_centre_y_mm
@@ -327,31 +330,35 @@ class DPAK(object):
             [right_x, top_y],
             [middle_x, top_y],
             [middle_x, bottom_y],
-            [left_x, bottom_y],
         ]
         m.append(
             PolygonLine(
                 polygon=top_marker, layer="F.SilkS", width=dim.silk_line_width_mm
             )
         )
+
+        # Top line
         top_y = -top_y
         bottom_y = -bottom_y
-        left_x = (
-            dim.device_offset_x_mm
-            - dim.tab_project_x_mm
-            - dim.body_x_mm
-            - magic_number
-            - dim.footprint_origin_x_mm
-        )
         bottom_marker = [
             [right_x, top_y],
             [middle_x, top_y],
             [middle_x, bottom_y],
-            [left_x, bottom_y],
         ]
         m.append(
             PolygonLine(
                 polygon=bottom_marker, layer="F.SilkS", width=dim.silk_line_width_mm
+            )
+        )
+
+        # Pin 1 (or first pin if pin 1 cut):
+        assert(self.first_pad is not None) # should have done this first
+        m.append(
+            draw_silk_triangle_north_of_pad(
+                self.first_pad,
+                SilkArrowSize.LARGE,
+                dim.silk_line_width_mm,
+                dim.silk_pad_clearance_mm,
             )
         )
         return m
@@ -359,8 +366,7 @@ class DPAK(object):
     def draw_pads(self, m, base, variant, dim, cut_pin):
         for pin in range(1, variant["pins"] + 1):
             if not (pin == dim.centre_pin and cut_pin):
-                m.append(
-                    Pad(
+                pad = Pad(
                         number=pin,
                         type=Pad.TYPE_SMT,
                         shape=Pad.SHAPE_ROUNDRECT,
@@ -373,7 +379,13 @@ class DPAK(object):
                         maximum_radius=dim.roundrect_radius_max_mm,
                         layers=Pad.LAYERS_SMT,
                     )
-                )
+
+                # Remember this pad so we can draw silk near it
+                if self.first_pad is None:
+                    self.first_pad = pad
+
+                m.append(pad)
+
         tab_layers = Pad.LAYERS_SMT[:]
         if dim.split_paste:
             tab_layers.remove("F.Paste")
@@ -472,6 +484,9 @@ class DPAK(object):
         # calculate dimensions and other attributes specific to this variant
         dim = Dimensions(base, variant, cut_pin, tab_linked)
 
+        # Slightly poor OOO design here - there should be an object per generated FP
+        self.first_pad = None
+
         # initialise footprint
         kicad_mod = Footprint(dim.name, FootprintType.SMD)
         kicad_mod = self.add_properties(kicad_mod, variant)
@@ -484,7 +499,7 @@ class DPAK(object):
         kicad_mod = self.draw_outline(kicad_mod, variant, dim, cut_pin)
 
         # create silkscreen marks and pin 1 marker
-        kicad_mod = self.draw_markers(kicad_mod, variant, dim)
+        kicad_mod = self.draw_silk(kicad_mod, variant, dim)
 
         # create courtyard
         kicad_mod = self.draw_courtyard(kicad_mod, dim)
@@ -514,6 +529,7 @@ class DPAK(object):
 class TO252(DPAK):
 
     def __init__(self, config_file):
+        super().__init__()
         self.SERIES = "TO-252"
         self.config = self.load_config(config_file)
 
@@ -521,6 +537,7 @@ class TO252(DPAK):
 class TO263(DPAK):
 
     def __init__(self, config_file):
+        super().__init__()
         self.SERIES = "TO-263"
         self.config = self.load_config(config_file)
 
@@ -528,6 +545,7 @@ class TO263(DPAK):
 class TO268(DPAK):
 
     def __init__(self, config_file):
+        super().__init__()
         self.SERIES = "TO-268"
         self.config = self.load_config(config_file)
 
@@ -535,6 +553,7 @@ class TO268(DPAK):
 class ATPAK(DPAK):
 
     def __init__(self, config_file):
+        super().__init__()
         self.SERIES = "ATPAK"
         self.config = self.load_config(config_file)
 
@@ -542,5 +561,6 @@ class ATPAK(DPAK):
 class Texas_NDW(DPAK):
 
     def __init__(self, config_file):
+        super().__init__()
         self.SERIES = "Texas_NDW"
         self.config = self.load_config(config_file)
