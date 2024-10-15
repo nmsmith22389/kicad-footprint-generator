@@ -57,6 +57,14 @@ manage.sh update_dev_packages
 manage.sh tests
 ```
 
+### Configuring the git repository
+
+To ignore formatting-only commits:
+
+```sh
+git config blame.ignoreRevsFile .git-blame-ignore-revs
+```
+
 ## Example Script
 
 ```python
