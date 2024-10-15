@@ -144,6 +144,7 @@ class DPAK(object):
     m: Footprint
 
     first_pad: Optional[Pad]
+    tab_pad: Optional[Pad]
 
     def __init__(self, base: dict, variant: dict, cut_pin: bool, tab_linked: bool):
         """
@@ -155,8 +156,12 @@ class DPAK(object):
         self.base = base
         self.variant = variant
         self.cut_pin = cut_pin
+
+        # Drawing state:
         # The first pad (usually pin 1)
         self.first_pad = None
+        # The tab pad
+        self.tab_pad = None
 
         # calculate self.dimensions and other attributes specific to this variant
         self.dim = Dimensions(self.base, self.variant, self.cut_pin, tab_linked)
@@ -295,16 +300,17 @@ class DPAK(object):
         self.draw_pins()
 
     def draw_silk(self):
-        magic_number = 1.3  # TODO needs better name
+
         other_magic_number = 1.5  #  TODO needs better name
 
         if self.dim.body_offset_y_mm < self.dim.tab_size_y_mm / 2:
+            # The silk must end before the pad
+            assert self.tab_pad is not None
             right_x = (
-                self.dim.device_offset_x_mm
-                - max(0, self.dim.tab_project_x_mm)
-                - self.dim.body_x_mm
-                + magic_number
-                - self.dim.footprint_origin_x_mm
+                self.tab_pad.at.x
+                - self.tab_pad.size.x / 2
+                - self.dim.silk_pad_clearance_mm
+                - self.dim.silk_line_width_mm / 2
             )
         else:
             right_x = (
@@ -392,24 +398,26 @@ class DPAK(object):
             tab_layers.remove("F.Paste")
         paste_layers = Pad.LAYERS_SMT[:]
         paste_layers.remove("F.Mask")
-        self.m.append(
-            Pad(
-                number=self.dim.tab_pin_number,
-                type=Pad.TYPE_SMT,
-                shape=Pad.SHAPE_ROUNDRECT,
-                at=[
-                    self.dim.tab_centre_x_mm - self.dim.footprint_origin_x_mm,
-                    self.dim.tab_centre_y_mm,
-                ],
-                size=[
-                    self.base["footprint"]["tab"]["x_mm"],
-                    self.base["footprint"]["tab"]["y_mm"],
-                ],
-                radius_ratio=self.dim.roundrect_ratio,
-                maximum_radius=self.dim.roundrect_radius_max_mm,
-                layers=tab_layers,
-            )
+
+        tab_pad = Pad(
+            number=self.dim.tab_pin_number,
+            type=Pad.TYPE_SMT,
+            shape=Pad.SHAPE_ROUNDRECT,
+            at=[
+                self.dim.tab_centre_x_mm - self.dim.footprint_origin_x_mm,
+                self.dim.tab_centre_y_mm,
+            ],
+            size=[
+                self.base["footprint"]["tab"]["x_mm"],
+                self.base["footprint"]["tab"]["y_mm"],
+            ],
+            radius_ratio=self.dim.roundrect_ratio,
+            maximum_radius=self.dim.roundrect_radius_max_mm,
+            layers=tab_layers,
         )
+        self.m.append(tab_pad)
+        self.tab_pad = tab_pad
+
         if self.dim.split_paste:
             gutter = self.base["footprint"]["paste_gutter_mm"]
             paste_x_mm = (self.base["footprint"]["tab"]["x_mm"] - gutter) / 2.0
