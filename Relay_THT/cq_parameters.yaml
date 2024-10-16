@@ -313,6 +313,138 @@ Relay_SPDT_Finder_36.11:
   destination_dir: Relay_THT.3dshapes
   source: 'https://cdn.findernet.com/app/uploads/S36EN.pdf'
 
+Relay_DPDT_Kemet_EC2_NU:
+  model_name: Relay_DPDT_Kemet_EC2_NU
+  roundbelly: 0
+  L: 7.5
+  W: 15.0
+  H: 9.4
+  rim: [0, 0.5, 0.5]
+  pinpadsize: 0.5
+  pinpadh: 3.2
+  pintype: tht
+  rotation: 0
+  pin1corner: [ -1.21, -1.15 ]
+  destination_dir: Relay_THT.3dshapes
+  pin: [
+      [ 0.00,  0.00, 'rect', 0.25, 0.5 ],
+      [ 5.08,  0.00, 'rect', 0.25, 0.5 ],
+      [ 0.00,  5.08, 'rect', 0.25, 0.5 ],
+      [ 5.08,  5.08, 'rect', 0.25, 0.5 ],
+      [ 0.00,  7.62, 'rect', 0.25, 0.5 ],
+      [ 5.08,  7.62, 'rect', 0.25, 0.5 ],
+      [ 0.00, 10.16, 'rect', 0.25, 0.5 ],
+      [ 5.08, 10.16, 'rect', 0.25, 0.5 ],
+  ]
+  A1: 0.0
+  corner: none
+  show_top: 0
+  body_color_key: orange body
+  body_top_color_key: orange body
+  pin_color_key: metal grey pins
+  destination_dir: Relay_THT.3dshapes
+  source: 'https://content.kemet.com/datasheets/KEM_R7002_EC2_EE2.pdf'
+
+Relay_DPDT_Kemet_EC2_NJ:
+  model_name: Relay_DPDT_Kemet_EC2_NJ
+  roundbelly: 0
+  L: 7.5
+  W: 15.0
+  H: 9.4
+  rim: [0, 0.5, 0.5]
+  pinpadsize: 0.5
+  pinpadh: 2.8
+  pintype: tht
+  rotation: 0
+  pin1corner: [ -1.21, -1.15 ]
+  destination_dir: Relay_THT.3dshapes
+  pin: [
+      [ 0.00,  0.00, 'rect', 0.25, 0.5 ],
+      [ 5.08,  0.00, 'rect', 0.25, 0.5 ],
+      [ 0.00,  5.08, 'rect', 0.25, 0.5 ],
+      [ 5.08,  5.08, 'rect', 0.25, 0.5 ],
+      [ 0.00,  7.62, 'rect', 0.25, 0.5 ],
+      [ 5.08,  7.62, 'rect', 0.25, 0.5 ],
+      [ 0.00, 10.16, 'rect', 0.25, 0.5 ],
+      [ 5.08, 10.16, 'rect', 0.25, 0.5 ],
+  ]
+  A1: 0.0
+  corner: none
+  show_top: 0
+  body_color_key: orange body
+  body_top_color_key: orange body
+  pin_color_key: metal grey pins
+  destination_dir: Relay_THT.3dshapes
+  source: 'https://content.kemet.com/datasheets/KEM_R7002_EC2_EE2.pdf'
+
+Relay_DPDT_Kemet_EC2_NU_DoubleCoil:
+  model_name: Relay_DPDT_Kemet_EC2_NU_DoubleCoil
+  roundbelly: 0
+  L: 7.5
+  W: 15.0
+  H: 9.4
+  rim: [0, 0.5, 0.5]
+  pinpadsize: 0.5
+  pinpadh: 3.2
+  pintype: tht
+  rotation: 0
+  pin1corner: [ -1.21, -1.15 ]
+  destination_dir: Relay_THT.3dshapes
+  pin: [
+      [ 0.00,  0.00, 'rect', 0.25, 0.5 ],
+      [ 5.08,  0.00, 'rect', 0.25, 0.5 ],
+      [ 0.00,  5.08, 'rect', 0.25, 0.5 ],
+      [ 5.08,  5.08, 'rect', 0.25, 0.5 ],
+      [ 0.00,  7.62, 'rect', 0.25, 0.5 ],
+      [ 5.08,  7.62, 'rect', 0.25, 0.5 ],
+      [ 0.00, 10.16, 'rect', 0.25, 0.5 ],
+      [ 5.08, 10.16, 'rect', 0.25, 0.5 ],
+      [ 0.00, 12.70, 'rect', 0.25, 0.5 ],
+      [ 5.08, 12.70, 'rect', 0.25, 0.5 ],
+  ]
+  A1: 0.0
+  corner: none
+  show_top: 0
+  body_color_key: orange body
+  body_top_color_key: orange body
+  pin_color_key: metal grey pins
+  destination_dir: Relay_THT.3dshapes
+  source: 'https://content.kemet.com/datasheets/KEM_R7002_EC2_EE2.pdf'
+
+Relay_DPDT_Kemet_EC2_NJ_DoubleCoil:
+  model_name: Relay_DPDT_Kemet_EC2_NJ_DoubleCoil
+  roundbelly: 0
+  L: 7.5
+  W: 15.0
+  H: 9.4
+  rim: [0, 0.5, 0.5]
+  pinpadsize: 0.5
+  pinpadh: 2.8
+  pintype: tht
+  rotation: 0
+  pin1corner: [ -1.21, -1.15 ]
+  destination_dir: Relay_THT.3dshapes
+  pin: [
+      [ 0.00,  0.00, 'rect', 0.25, 0.5 ],
+      [ 5.08,  0.00, 'rect', 0.25, 0.5 ],
+      [ 0.00,  5.08, 'rect', 0.25, 0.5 ],
+      [ 5.08,  5.08, 'rect', 0.25, 0.5 ],
+      [ 0.00,  7.62, 'rect', 0.25, 0.5 ],
+      [ 5.08,  7.62, 'rect', 0.25, 0.5 ],
+      [ 0.00, 10.16, 'rect', 0.25, 0.5 ],
+      [ 5.08, 10.16, 'rect', 0.25, 0.5 ],
+      [ 0.00, 12.70, 'rect', 0.25, 0.5 ],
+      [ 5.08, 12.70, 'rect', 0.25, 0.5 ],
+  ]
+  A1: 0.0
+  corner: none
+  show_top: 0
+  body_color_key: orange body
+  body_top_color_key: orange body
+  pin_color_key: metal grey pins
+  destination_dir: Relay_THT.3dshapes
+  source: 'https://content.kemet.com/datasheets/KEM_R7002_EC2_EE2.pdf'
+
 Relay_DPDT_Kemet_UA2-NE_NU_NJ:
   model_name: Relay_DPDT_Kemet_UA2-NE_NU_NJ
   roundbelly: 0
