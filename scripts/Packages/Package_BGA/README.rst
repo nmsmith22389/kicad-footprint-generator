@@ -24,6 +24,9 @@ The YAML file contains a list of packages definitions to export. For example, th
 625-pin BGA, with outside dimensions 21mm x 21mm, and ball pitch 0.8mm. The Kicad footprint identifier of the generated
 footprint will be ``BGA-625_21.0x21.0mm_Layout25x25_P0.8mm``.
 
+Each YAML file has a header structure that specifies if this YAML file contains BGA or CSP packages. The packages get
+tagged with keywords accordingly, and will end up in the right library.
+
 .. code-block:: yaml
 
     BGA-625_21.0x21.0mm_Layout25x25_P0.8mm:

@@ -1,3 +1,6 @@
+FileHeader:
+  package_type: BGA
+
 # Artix-7 FPGA Packages
 # Notes:
 #  - Often names are similar, e.g. FB, FBG and FBV. I choose FBG as it is the common one.

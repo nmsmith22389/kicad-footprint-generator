@@ -1,3 +1,6 @@
+FileHeader:
+  package_type: BGA
+
 BGA-624_21.0x21.0mm_Layout25x25_P0.8mm:
   description: "BGA-624"
   size_source: "https://www.nxp.com/docs/en/package-information/SOT1529-1.pdf"

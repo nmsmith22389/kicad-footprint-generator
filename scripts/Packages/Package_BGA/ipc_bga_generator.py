@@ -66,9 +66,9 @@ class BGAGenerator(FootprintGenerator):
     def generateFootprint(self, device_params: dict, pkg_id: str, header_info: dict = None):
         # Thin wrapper around generateBGAFootprint
         logging.info(f"Generating BGA footprint: {pkg_id}")
-        self.generateBGAFootprint(self.configuration, device_params, pkg_id)
+        self.generateBGAFootprint(self.configuration, device_params, pkg_id, header_info)
 
-    def generateBGAFootprint(self, config, fpParams, fpId):
+    def generateBGAFootprint(self, config, fpParams, fpId, header_info):
         createFp = False
 
         device_config = BGAConfiguration(fpParams)
@@ -104,7 +104,7 @@ class BGAGenerator(FootprintGenerator):
                   "No footprint generated.")
 
         if createFp:
-            self._createFootprintVariant(config, device_config, fpId)
+            self._createFootprintVariant(config, device_config, fpId, header_info)
 
     def compute_stagger(self, lParams):
         staggered = lParams.get('staggered')
@@ -127,7 +127,7 @@ class BGAGenerator(FootprintGenerator):
 
         return pitchX, pitchY, None
 
-    def _createFootprintVariant(self, config, device_config: BGAConfiguration, fpId):
+    def _createFootprintVariant(self, config, device_config: BGAConfiguration, fpId, header_info):
         # Pull out the old-style parameter dictionary
         fpParams = device_config.spec_dictionary
 
@@ -277,7 +277,9 @@ class BGAGenerator(FootprintGenerator):
             f.append(Text(text=str(extra_text.pop("text")), at=[x, y], **extra_text))
 
         # If this looks like a CSP footprint, use the CSP 3dshapes library
-        packageType = 'CSP' if 'BGA' not in fpId and 'CSP' in fpId else 'BGA'
+        packageType = str(header_info.get('package_type', 'BGA')).upper()
+        if packageType not in ['CSP', 'BGA']:
+            print(f'Invalid package type "{packageType}" in file header. No footprint generated.')
 
         if staggered:
             pdesc = str(fpParams.get('pitch')) if 'pitch' in fpParams else f'{pitchX}x{pitchY}'
