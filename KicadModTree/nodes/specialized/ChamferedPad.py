@@ -17,160 +17,11 @@ from __future__ import division
 
 from copy import copy
 from KicadModTree.util.paramUtil import *
+from KicadModTree.util.corner_selection import CornerSelection
 from KicadModTree.Vector import *
 from KicadModTree.nodes.base.Polygon import *
 from KicadModTree.nodes.base.Pad import Pad, RoundRadiusHandler
 from math import sqrt
-
-
-class CornerSelection():
-    r"""Class for handling chamfer selection
-        :param chamfer_select:
-            * A list of bools do directly set the corners
-              (top left, top right, bottom right, bottom left)
-            * A dict with keys (constants see below)
-            * The integer 1 means all corners
-            * The integer 0 means no corners
-
-        :constants:
-            * CornerSelection.TOP_LEFT
-            * CornerSelection.TOP_RIGHT
-            * CornerSelection.BOTTOM_RIGHT
-            * CornerSelection.BOTTOM_LEFT
-    """
-
-    TOP_LEFT = 'tl'
-    TOP_RIGHT = 'tr'
-    BOTTOM_RIGHT = 'br'
-    BOTTOM_LEFT = 'bl'
-
-    def __init__(self, chamfer_select):
-        self.top_left = False
-        self.top_right = False
-        self.bottom_right = False
-        self.bottom_left = False
-
-        if chamfer_select == 1:
-            self.selectAll()
-            return
-
-        if chamfer_select == 0:
-            return
-
-        if type(chamfer_select) is dict:
-            for key in chamfer_select:
-                self[key] = bool(chamfer_select[key])
-        else:
-            for i, value in enumerate(chamfer_select):
-                self[i] = bool(value)
-
-    def selectAll(self):
-        for i in range(len(self)):
-            self[i] = True
-
-    def clearAll(self):
-        for i in range(len(self)):
-            self[i] = False
-
-    def setLeft(self, value=1):
-        self.top_left = bool(value)
-        self.bottom_left = bool(value)
-
-    def setTop(self, value=1):
-        self.top_left = bool(value)
-        self.top_right = bool(value)
-
-    def setRight(self, value=1):
-        self.top_right = bool(value)
-        self.bottom_right = bool(value)
-
-    def setBottom(self, value=1):
-        self.bottom_left = bool(value)
-        self.bottom_right = bool(value)
-
-    def isAnySelected(self):
-        for v in self:
-            if v:
-                return True
-        return False
-
-    def rotateCW(self):
-        top_left_old = self.top_left
-
-        self.top_left = self.bottom_left
-        self.bottom_left = self.bottom_right
-        self.bottom_right = self.top_right
-        self.top_right = top_left_old
-        return self
-
-    def rotateCCW(self):
-        top_left_old = self.top_left
-
-        self.top_left = self.top_right
-        self.top_right = self.bottom_right
-        self.bottom_right = self.bottom_left
-        self.bottom_left = top_left_old
-        return self
-
-    def __or__(self, other):
-        return CornerSelection([s or o for s, o in zip(self, other)])
-
-    def __ior__(self, other):
-        for i in range(len(self)):
-            self[i] |= other[i]
-        return self
-
-    def __and__(self, other):
-        return CornerSelection([s and o for s, o in zip(self, other)])
-
-    def __iand__(self, other):
-        for i in range(len(self)):
-            self[i] &= other[i]
-        return self
-
-    def __len__(self):
-        return 4
-
-    def __iter__(self):
-        yield self.top_left
-        yield self.top_right
-        yield self.bottom_right
-        yield self.bottom_left
-
-    def __getitem__(self, item):
-        if item in [0, CornerSelection.TOP_LEFT]:
-            return self.top_left
-        if item in [1, CornerSelection.TOP_RIGHT]:
-            return self.top_right
-        if item in [2, CornerSelection.BOTTOM_RIGHT]:
-            return self.bottom_right
-        if item in [3, CornerSelection.BOTTOM_LEFT]:
-            return self.bottom_left
-
-        raise IndexError('Index {} is out of range'.format(item))
-
-    def __setitem__(self, item, value):
-        if item in [0, CornerSelection.TOP_LEFT]:
-            self.top_left = bool(value)
-        elif item in [1, CornerSelection.TOP_RIGHT]:
-            self.top_right = bool(value)
-        elif item in [2, CornerSelection.BOTTOM_RIGHT]:
-            self.bottom_right = bool(value)
-        elif item in [3, CornerSelection.BOTTOM_LEFT]:
-            self.bottom_left = bool(value)
-        else:
-            raise IndexError('Index {} is out of range'.format(item))
-
-    def to_dict(self):
-        return {
-            CornerSelection.TOP_LEFT: self.top_left,
-            CornerSelection.TOP_RIGHT: self.top_right,
-            CornerSelection.BOTTOM_RIGHT: self.bottom_right,
-            CornerSelection.BOTTOM_LEFT: self.bottom_left
-            }
-
-    def __str__(self):
-        return str(self.to_dict())
 
 
 class ChamferedPad(Node):
@@ -275,6 +126,8 @@ class ChamferedPad(Node):
         self.padargs.pop('shape', None)
         self.padargs.pop('at', None)
         self.padargs.pop('round_radius_handler', None)
+        self.padargs.pop('corner_selection', None)
+        self.padargs.pop('chamfer_size', None)
 
     def _generatePad(self):
         if self.chamfer_size[0] >= self.size[0] or self.chamfer_size[1] >= self.size[1]:

@@ -13,13 +13,13 @@
 #
 # (C) 2016 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 # (C) 2018 by Rene Poeschl, github @poeschlr
-import warnings
 
 import enum
 from typing import Union
 
 from KicadModTree.util.paramUtil import getOptionalNumberTypeParam, \
     toVectorUseCopyIfNumber
+from KicadModTree.util.corner_selection import CornerSelection
 from KicadModTree.Vector import Vector2D
 from KicadModTree.nodes.Node import Node
 from KicadModTree.util.kicad_util import lispString
@@ -124,6 +124,118 @@ class RoundRadiusHandler(object):
                     self.radius_ratio, self.maximum_radius,
                     self.round_radius_exact
                     )
+
+
+class ChamferSizeHandler(object):
+    r"""Handles chamfer setting of a pad
+
+    :param \**kwargs:
+        See below
+
+    :Keyword Arguments:
+    * *chamfer_ratio* (``float [0 <= r <= 0.5]``) --
+      The chamfer ratio of the rounded rectangle. (default set by default_chamfer_ratio)
+    * *maximum_chamfer* (``float``) --
+      The maximum radius for the rounded rectangle.
+      If the radius produced by the chamfer_ratio parameter for the pad would
+      exceed the maximum radius, the ratio is reduced to limit the radius.
+      (This is useful for IPC-7351C compliance as it suggests 25% ratio with limit 0.25mm)
+    * *chamfer_exact* (``float``) --
+      Set an exact round chamfer size for a pad.
+    * *default_chamfer_ratio* (``float [0 <= r <= 0.5]``) --
+      This parameter allows to set the default chamfer ratio
+    """
+
+    def __init__(self, **kwargs):
+        default_chamfer_ratio = getOptionalNumberTypeParam(
+            kwargs, 'default_chamfer_ratio', default_value=0.25,
+            low_limit=0, high_limit=0.5)
+        self.chamfer_ratio = getOptionalNumberTypeParam(
+            kwargs, 'chamfer_ratio', default_value=default_chamfer_ratio,
+            low_limit=0, high_limit=0.5)
+
+        self.maximum_chamfer = getOptionalNumberTypeParam(
+            kwargs, 'maximum_chamfer')
+        chamfer_size = toVectorUseCopyIfNumber(kwargs.get(
+            'chamfer_size'), low_limit=0, must_be_larger=False)
+
+        # ChamferedPad, ChamferedNativePad use chamfer_size vector
+        if (chamfer_size is not None) and ('chamfer_size' in kwargs.keys()) and (len(chamfer_size) > 1):
+            chamfer_size = chamfer_size[0]
+        else:
+            chamfer_size = None
+
+        self.chamfer_exact = getOptionalNumberTypeParam(
+            kwargs, 'chamfer_exact', default_value=chamfer_size)
+
+    def getChamferRatio(self, shortest_sidelength):
+        r"""get the resulting chamfer ratio
+
+        :param shortest_sidelength: shortest sidelength of a pad
+        :return: the resulting round radius ratio to be used for the pad
+        """
+
+        if self.chamfer_exact is not None:
+            if self.chamfer_exact > shortest_sidelength/2:
+                raise ValueError(
+                    "requested round radius of {} is too large for pad size of {}"
+                    .format(self.chamfer_exact, shortest_sidelength)
+                )
+            if self.maximum_chamfer is not None:
+                return min(self.chamfer_exact, self.maximum_chamfer)/shortest_sidelength
+            else:
+                return self.chamfer_exact/shortest_sidelength
+        if self.maximum_chamfer is not None:
+            if self.chamfer_ratio*shortest_sidelength > self.maximum_chamfer:
+                return self.maximum_chamfer/shortest_sidelength
+
+        return self.chamfer_ratio
+
+    def getChamferSize(self, shortest_sidelength):
+        r"""get the resulting round radius
+
+        :param shortest_sidelength: shortest sidelength of a pad
+        :return: the resulting round radius to be used for the pad
+        """
+        return self.getChamferRatio(shortest_sidelength)*shortest_sidelength
+
+    def roundingRequested(self):
+        r"""Check if the pad has a rounded corner
+
+        :return: True if rounded corners are required
+        """
+        if self.kicad4_compatible:
+            return False
+
+        if self.maximum_chamfer == 0:
+            return False
+
+        if self.chamfer_exact == 0:
+            return False
+
+        if self.chamfer_ratio == 0:
+            return False
+
+        return True
+
+    def limitMaxChamfer(self, limit):
+        r"""Set a new maximum limit
+
+        :param limit: the new limit.
+        """
+
+        if not self.roundingRequested():
+            return
+        if self.maximum_chamfer is not None:
+            self.maximum_chamfer = min(self.maximum_chamfer, limit)
+        else:
+            self.maximum_chamfer = limit
+
+    def __str__(self):
+        return "ratio {}, max {}, exact {}, v4 compatible {}".format(
+            self.chamfer_ratio, self.maximum_chamfer,
+            self.chamfer_exact, self.kicad4_compatible
+        )
 
 
 class Pad(Node):
@@ -254,6 +366,7 @@ class Pad(Node):
     size: Vector2D
     _fab_property: Union[FabProperty, None]
     _zone_connection: ZoneConnection
+    _chamfer_corners: CornerSelection
 
     def __init__(self, **kwargs):
         Node.__init__(self)
@@ -281,6 +394,8 @@ class Pad(Node):
             self.radius_ratio = 0.5
         if self.shape == Pad.SHAPE_ROUNDRECT:
             self._initRadiusRatio(**kwargs)
+            self._initChamferRatio(**kwargs)
+            self._initChamferCorners(**kwargs)
 
         if self.shape == Pad.SHAPE_CUSTOM:
             self._initAnchorShape(**kwargs)
@@ -384,6 +499,24 @@ class Pad(Node):
 
         if self.radius_ratio == 0:
             self.shape = Pad.SHAPE_RECT
+
+    def _initChamferRatio(self, **kwargs):
+
+        if ('chamfer_size_handler' in kwargs) and (kwargs['chamfer_size_handler'] is not None):
+            self.chamfer_size_handler = kwargs['chamfer_size_handler']
+        else:
+            self.chamfer_size_handler = ChamferSizeHandler(**kwargs)
+
+        self.chamfer_ratio = self.chamfer_size_handler.getChamferRatio(min(self.size))
+
+        if self.chamfer_ratio == 0 and self.radius_ratio == 0:
+            self.shape = Pad.SHAPE_RECT
+
+        return self.chamfer_ratio
+
+    def _initChamferCorners(self, **kwargs):
+        val = kwargs.get('chamfer_corners', None)
+        self._chamfer_corners = CornerSelection(val)
 
     def _initAnchorShape(self, **kwargs):
         self.anchor_shape = kwargs.get('anchor_shape', Pad.ANCHOR_CIRCLE)
@@ -492,3 +625,7 @@ class Pad(Node):
     @property
     def roundRadius(self):
         return self.getRoundRadius()
+
+    @property
+    def chamfer_corners(self) -> CornerSelection:
+        return self._chamfer_corners

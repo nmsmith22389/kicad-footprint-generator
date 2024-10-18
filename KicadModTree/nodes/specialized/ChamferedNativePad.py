@@ -21,12 +21,8 @@ from copy import copy
 from KicadModTree.util.paramUtil import *
 from KicadModTree.Vector import *
 from KicadModTree.nodes.base.Polygon import *
-from KicadModTree.nodes.base.Pad import Pad
-# from KicadModTree.nodes.base.Pad import Pad
-from KicadModTree.nodes.base.NativeCPad import NativeCPad
-from KicadModTree.nodes.base.NativeCPad import CornerSelectionNative
-from KicadModTree.nodes.base.NativeCPad import ChamferSizeHandler
-from KicadModTree.nodes.base.NativeCPad import RoundRadiusHandler
+from KicadModTree.nodes.base.Pad import Pad, ChamferSizeHandler, RoundRadiusHandler
+from KicadModTree.util.corner_selection import CornerSelection
 from math import sqrt
 from sys import float_info
 
@@ -35,6 +31,10 @@ class ChamferedNativePad(Node):
     r"""Add a ChamferedNativePad to the render tree
 
     This pad creates a native KiCad pad set to ``chamfered with other corners rounded``
+
+    Some geometry (like non-45 degree corners and corners greater than halfthe shorter size)
+    is not supported by the native KiCad pad. In this case use the ChamferedPad class,
+    which creates a chamfered pad using custom primitives.
 
     :param \**kwargs:
         See below
@@ -117,7 +117,7 @@ class ChamferedNativePad(Node):
             raise KeyError(
                 'corner selection is required for chamfered pads (like "corner_selection=[1,0,0,0]")')
 
-        self.corner_selection = CornerSelectionNative(
+        self.corner_selection = CornerSelection(
             kwargs.get('corner_selection'))
 
         if 'chamfer_size' not in kwargs:
@@ -173,16 +173,14 @@ class ChamferedNativePad(Node):
                     + f"Use KicadModTree.nodes.specialized.ChamferedPad to generate a "
                     + f"chamfered pad with cusom primitives instead.")
 
-        if is_chamfered:
-
-            return NativeCPad(
+            return Pad(
                 at=self.at, shape=Pad.SHAPE_ROUNDRECT, size=self.size,
                 chamfer_size_handler=self.chamfer_size_handler, chamfer_exact=chamfer,
                 round_radius_handler=self.round_radius_handler, **self.padargs
             )
 
         else:
-            return NativeCPad(
+            return Pad(
                 at=self.at, shape=Pad.SHAPE_ROUNDRECT, size=self.size,
                 round_radius_handler=self.round_radius_handler, **self.padargs
             )

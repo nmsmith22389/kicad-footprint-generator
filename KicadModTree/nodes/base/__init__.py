@@ -27,8 +27,6 @@ from .Line import Line
 
 from .Model import Model
 
-from .NativeCPad import NativeCPad
-
 from .Pad import Pad
 
 from .Polygon import Polygon
