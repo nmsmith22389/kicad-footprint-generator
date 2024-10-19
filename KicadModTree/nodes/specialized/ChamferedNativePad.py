@@ -18,10 +18,10 @@
 from __future__ import division
 
 from copy import copy
-from KicadModTree.util.paramUtil import *
-from KicadModTree.Vector import *
-from KicadModTree.nodes.base.Polygon import *
-from KicadModTree.nodes.base.Pad import Pad, ChamferSizeHandler, RoundRadiusHandler
+from KicadModTree.util.paramUtil import toVectorUseCopyIfNumber
+from KicadModTree.Vector import Vector2D
+from KicadModTree import Node, Pad
+from KicadModTree.util.corner_handling import ChamferSizeHandler, RoundRadiusHandler
 from KicadModTree.util.corner_selection import CornerSelection
 from math import sqrt
 from sys import float_info
@@ -171,7 +171,7 @@ class ChamferedNativePad(Node):
                 raise ValueError(
                     "Native KiCad pads do not support non-45-degree chamfers yet. "
                     + f"Use KicadModTree.nodes.specialized.ChamferedPad to generate a "
-                    + f"chamfered pad with cusom primitives instead.")
+                    + f"chamfered pad with custom primitives instead.")
 
             return Pad(
                 at=self.at, shape=Pad.SHAPE_ROUNDRECT, size=self.size,

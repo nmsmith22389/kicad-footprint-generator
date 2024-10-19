@@ -2,7 +2,7 @@ import pytest
 
 from KicadModTree import Vector2D
 from KicadModTree.nodes import Footprint, FootprintType
-from KicadModTree.nodes.base.Pad import Pad, ChamferSizeHandler
+from KicadModTree.nodes.base.Pad import Pad
 from KicadModTree.util.corner_selection import CornerSelection
 
 from KicadModTree.tests.test_utils.fp_file_test import SerialisationTest
@@ -99,44 +99,3 @@ class TestPadSerialisaion(SerialisationTest):
 
         # And we can use this one to test the serialisation
         self.assert_serialises_as(kicad_mod, 'pad_chamfer_basic.kicad_mod')
-
-
-class TestChamferHandler:
-
-    def test_non_square(self):
-        # For now, the ChamferSizeHandler only supports square chamfers
-        # (and ChamferedPad does its own thing)
-        with pytest.raises(ValueError):
-            ChamferSizeHandler(
-                chamfer_size=Vector2D(0.1, 0.2)
-            )
-
-    def test_chamfer_size(self):
-
-        chamfer_handler = ChamferSizeHandler(
-            chamfer_size=Vector2D(0.1, 0.1)
-        )
-
-        assert chamfer_handler.chamferRequested()
-
-        # Computed values
-        assert chamfer_handler.getChamferRatio(2) == 0.05
-        assert chamfer_handler.getChamferSize(2) == 0.1
-
-    def test_chamfer_exact(self):
-
-        chamfer_handler = ChamferSizeHandler(
-            chamfer_exact=0.1
-        )
-
-        assert chamfer_handler.chamferRequested()
-
-        # Computed values
-
-        # Size on the limit of the maximums kicking in
-        assert chamfer_handler.getChamferRatio(0.2) == 0.1 / 0.2
-        assert chamfer_handler.getChamferSize(0.2) == 0.1
-
-        # Can't make a ratio larger than the size
-        with pytest.raises(ValueError):
-            chamfer_handler.getChamferRatio(0.1)
