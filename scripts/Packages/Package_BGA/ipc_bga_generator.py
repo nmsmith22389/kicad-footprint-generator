@@ -277,6 +277,7 @@ class BGAGenerator(FootprintGenerator):
         f.setDescription(f'{fpParams["description"]}, {pkgX}x{pkgY}mm, {balls} Ball, {sdesc}{layoutX}x{layoutY} Layout, {pdesc}mm Pitch, {fpParams["size_source"]}')  # NOQA
 
         f.tags = [packageType, str(balls), pdesc]
+        f.tags += device_config.compatible_mpns.tags
         f.tags += device_config.additional_tags.tags
 
         lib_name = Path(f'Package_{packageType}')
