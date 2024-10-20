@@ -217,6 +217,7 @@ def makeLEDRadial(
     # set general values
     kicad_modg.append(Property(name=Property.REFERENCE, text='REF**', at=[0, t_slk - txtoffset], layer='F.SilkS'))
     kicad_modg.append(Property(name=Property.VALUE, text=footprint_name, at=[0, t_slk + h_slk + txtoffset], layer='F.Fab'))
+    kicad_modg.append(Text(text='${REFERENCE}', at=[0, 0], layer='F.Fab', size=[0.8, 0.8], thickness=0.12))
 
     # create FAB-layer
     if led_type == "round":
@@ -541,6 +542,9 @@ def makeLEDHorizontal(
     # set general values
     kicad_modg.append(Property(name=Property.REFERENCE, text='REF**', at=[0, t_slk - txtoffset], layer='F.SilkS'))
     kicad_modg.append(Property(name=Property.VALUE, text=footprint_name, at=[0, t_slk + h_slk + txtoffset], layer='F.Fab'))
+    ref_size = [0.8, 0.8]
+    ref_pos = [0, offsetled + wled/2 - ref_size[1]]
+    kicad_modg.append(Text(text='${REFERENCE}', at=ref_pos, layer='F.Fab', size=ref_size, thickness=0.12))
 
     # create FAB-layer
     if led_type == "round":
