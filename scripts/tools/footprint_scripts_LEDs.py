@@ -149,7 +149,7 @@ def makeLEDRadial(
     if pins > 2:
         pincount_filename = "-{0:d}".format(pins)
         if led_type == "box":
-            pincount_filename = pincount_filename + "pins"
+            pincount_filename = pincount_filename + "Pins"
 
     footprint_name = base_filename + size_filename + pincount_filename
 
