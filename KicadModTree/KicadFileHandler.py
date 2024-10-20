@@ -755,8 +755,12 @@ class KicadFileHandler(FileHandler):
         if node.pad_property is not None:
             sexpr.append([SexprSerializer.Symbol('property'), str(node.pad_property)])
 
-        if node.remove_unused_layer is not None and node.remove_unused_layer:
-            sexpr.append([SexprSerializer.Symbol('remove_unused_layer')])
+        if node.type == Pad.TYPE_THT:
+            sexpr.append(
+                self._serialise_Boolean(
+                    "remove_unused_layers", node.remove_unused_layer
+                )
+            )
 
         if node.keep_end_layers is not None and node.keep_end_layers:
             sexpr.append([SexprSerializer.Symbol('keep_end_layers')])
@@ -859,6 +863,11 @@ class KicadFileHandler(FileHandler):
             sexpr.append([SexprSerializer.Symbol('property'), property_value])
 
         sexpr.append([SexprSerializer.Symbol('layers')] + node.layers)
+
+        # The generator pads don't support this, but KiCad always writes it for PTH pads
+        if node.type == Pad.TYPE_THT:
+            sexpr.append(self._serialise_Boolean("remove_unused_layers", False))
+
         if node.shape == Pad.SHAPE_ROUNDRECT:
             sexpr.append([SexprSerializer.Symbol('roundrect_rratio'), node.radius_ratio])
 

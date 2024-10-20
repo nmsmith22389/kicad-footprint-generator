@@ -57,6 +57,7 @@
 		(size 2 2)
 		(drill 1.2)
 		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
 	)
 	(model "example.3dshapes/example_footprint.wrl"
 		(offset

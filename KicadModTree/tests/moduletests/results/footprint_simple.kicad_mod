@@ -102,12 +102,14 @@
 		(size 2 2)
 		(drill 1.2)
 		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
 	)
 	(pad "2" thru_hole circle
 		(at 3 0)
 		(size 2 2)
 		(drill 1.2)
 		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
 	)
 	(model "example.3dshapes/example_footprint.wrl"
 		(offset

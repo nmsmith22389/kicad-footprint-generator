@@ -19,6 +19,7 @@
 		(drill 0.3)
 		(property pad_prop_heatsink)
 		(layers "*.Cu")
+		(remove_unused_layers no)
 	)
 	(pad "3" smd rect
 		(at -2 -2)
@@ -33,6 +34,7 @@
 		(drill 0.3)
 		(property pad_prop_heatsink)
 		(layers "*.Cu")
+		(remove_unused_layers no)
 	)
 	(pad "3" smd rect
 		(at 2 -2)
