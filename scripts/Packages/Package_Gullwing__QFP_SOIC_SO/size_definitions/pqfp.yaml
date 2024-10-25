@@ -14,6 +14,34 @@ PQFP-32_5x5mm_P0.5mm:
   num_pins_x: 8
   num_pins_y: 8
 
+PQFP-44_10x10mm_P0.8mm:
+  manufacturer: 'Microchip'
+  size_source: 'https://ww1.microchip.com/downloads/aemDocuments/documents/OTH/ProductDocuments/DataSheets/20005418B.pdf#page=10'
+  body_size_x:
+    nominal: 10
+  body_size_y:
+    nominal: 10
+  overall_size_x:
+    minimum: 13.65
+    nominal: 13.90
+    maximum: 14.15
+  overall_size_y:
+    minimum: 13.65
+    nominal: 13.90
+    maximum: 14.15
+  overall_height:
+    maximum: 2.35
+  lead_width:
+    minimum: 0.30
+    maximum: 0.45
+  lead_len:
+    minimum: 0.73
+    nominal: 0.88
+    maximum: 1.03
+  pitch: 0.8
+  num_pins_x: 11
+  num_pins_y: 11
+
 PQFP-64_14x14mm_P0.5mm:
   size_source: 'https://www.renesas.com/us/en/document/psc/package-drawing-qfp-64pin-prqp0064gb'
   body_size_x:
