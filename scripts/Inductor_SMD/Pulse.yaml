@@ -8,8 +8,8 @@
     pinColor: metal grey pins
   tags:
     - Pulse
-     -SMT
-     -PA4332
+    - SMT
+    - PA4332
   library_name: Inductor_SMD
 
 - series: PA4340
@@ -22,6 +22,6 @@
     pinColor: metal grey pins
   tags:
     - Pulse
-     -SMT
-     -PA4340
+    - SMT
+    - PA4340
   library_name: Inductor_SMD
