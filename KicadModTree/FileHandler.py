@@ -55,7 +55,7 @@ class FileHandler(object):
         """
 
         fp = None
-        with io.open(filename, "w", newline='\n') as f:
+        with io.open(filename, "w") as f:
             output = self.serialize(**kwargs)
 
             if not output.endswith("\n"):
