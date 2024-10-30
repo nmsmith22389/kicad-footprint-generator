@@ -5,6 +5,7 @@ ezdxf
 multimethod>=1.7,<2.0
 nlopt>=2.7.1
 nptyping==2.0.1
+numpy==1.23.5
 typish
 casadi
 path
