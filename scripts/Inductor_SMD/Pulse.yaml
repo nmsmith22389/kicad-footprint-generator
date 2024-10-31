@@ -25,3 +25,26 @@
     - SMT
     - PA4340
   library_name: Inductor_SMD
+
+- series: PA5402
+  manufacturer: Pulse
+  datasheet: "https://productfinder.pulseelectronics.com/api/open/part-attachments/datasheet/PM5402.222NLT"
+  parts:
+    - PartNumber: PA5402
+      lengthY: 4.06 # B
+      widthX: 4.45 # A
+      height: 1.8 # C
+      padX: 0.76 # D
+      padY: 2.0 # E
+      landingOutsideX: 5.2 # L
+      landingInsideX: 2.2 # G
+      landingY: 2.4 # H
+  3d:
+    type: 2
+    bodyColor: black body
+    pinColor: metal grey pins
+  tags:
+    - Pulse
+    - SMT
+    - PA5402
+  library_name: Inductor_SMD
