@@ -144,9 +144,9 @@
 		(layer "F.SilkS")
 	)
 	(fp_arc
-		(start -5 -2.2)
-		(mid 0.091169 -0.091169)
-		(end 2.2 5)
+		(start -13.4 5)
+		(mid -10.939697 -0.939697)
+		(end -5 -3.4)
 		(stroke
 			(width 0.12)
 			(type solid)
@@ -154,9 +154,9 @@
 		(layer "F.SilkS")
 	)
 	(fp_arc
-		(start -13.4 5)
-		(mid -10.939697 -0.939697)
-		(end -5 -3.4)
+		(start -5 -2.2)
+		(mid 0.091169 -0.091169)
+		(end 2.2 5)
 		(stroke
 			(width 0.12)
 			(type solid)
