@@ -134,18 +134,22 @@ def graphic_key_func(item) -> List[int]:
             item.end_pos.x, item.end_pos.y
         ]
     elif isinstance(item, Arc):
+        start_pos = item.getStartPoint()
+        end_pos = item.getEndPoint()
+        # Match KiCad normalisation of negative arc angles
+        # (and the one in _serialize_ArcPoints).
+        if item.angle < 0:
+            start_pos, end_pos = end_pos, start_pos
         keys += [
-            item.start_pos.x, item.start_pos.y,
-            item.getEndPoint().x, item.getEndPoint().y
+            start_pos.x, start_pos.y,
+            end_pos.x, end_pos.y,
+            item.center_pos.x, item.center_pos.y,
         ]
     elif isinstance(item, Circle):
         keys += [
             item.center_pos.x, item.center_pos.y,
             item.center_pos.x + item.radius, item.center_pos.y,
         ]
-
-    if isinstance(item, Arc):
-        keys += [item.center_pos.x, item.center_pos.y]
 
     if isinstance(item, Polygon):
         keys += [len(item.nodes)]
@@ -468,8 +472,9 @@ class KicadFileHandler(FileHandler):
         start_pos = node.getRealPosition(node.getStartPoint())
         end_pos = node.getRealPosition(node.getEndPoint())
         mid_pos = node.getRealPosition(node.getMidPoint())
-        # swap start and end for negative angles to overcome a bug in KiCAD v6 and some v7 versions
-        if (node.angle < 0):
+        # Match KiCad normalisation of negative arc angles.
+        # Swap start and end for negative angles to overcome a bug in KiCAD v6 and some v7 versions.
+        if node.angle < 0:
             start_pos, end_pos = end_pos, start_pos
         return [
             [SexprSerializer.Symbol('start'), start_pos.x, start_pos.y],
