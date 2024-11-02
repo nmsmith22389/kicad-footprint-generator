@@ -26,6 +26,30 @@
      -PA4340
   library_name: Inductor_SMD
 
+- series: PA4341
+  manufacturer: Pulse
+  datasheet: "https://productfinder.pulseelectronics.com/api/open/part-attachments/datasheet/pa4341.102anlt"
+  parts:
+    - PartNumber: PA4341
+      widthX: 6.4 # A'
+      lengthY: 6.6 # B
+      height: 2.8 # C
+      padY: 3.0 # E
+      padOutsideX: 7.1 # A
+      padX: 1.6 # D
+      landingY: 3.4 # H
+      landingOutsideX: 8.0 # L
+      landingInsideX: 3.7 # G
+  3d:
+    type: 2
+    bodyColor: black body
+    pinColor: metal grey pins
+  tags:
+    - Pulse
+    - SMT
+    - PA4341
+  library_name: Inductor_SMD
+
 - series: PA5402
   manufacturer: Pulse
   datasheet: "https://productfinder.pulseelectronics.com/api/open/part-attachments/datasheet/PM5402.222NLT"
