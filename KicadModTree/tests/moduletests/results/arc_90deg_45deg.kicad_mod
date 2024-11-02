@@ -1,12 +1,12 @@
-(footprint "test"
+(footprint "arc_90deg_45deg"
 	(version 20240108)
 	(generator "kicad-footprint-generator")
 	(layer "F.Cu")
 	(attr smd)
 	(fp_arc
-		(start -5 13.6)
-		(mid -11.081118 11.081118)
-		(end -13.6 5)
+		(start -13.4 5)
+		(mid -10.939697 -0.939697)
+		(end -5 -3.4)
 		(stroke
 			(width 0.12)
 			(type solid)
@@ -34,9 +34,9 @@
 		(layer "F.SilkS")
 	)
 	(fp_arc
-		(start -0.615938 9.384062)
-		(mid -9.384062 9.384062)
-		(end -9.384062 0.615938)
+		(start -9.242641 0.757359)
+		(mid -0.757359 0.757359)
+		(end -0.757359 9.242641)
 		(stroke
 			(width 0.12)
 			(type solid)
@@ -84,9 +84,9 @@
 		(layer "F.SilkS")
 	)
 	(fp_arc
-		(start -2.454416 7.545584)
-		(mid -5 8.6)
-		(end -7.545584 7.545584)
+		(start -7.404163 7.404163)
+		(mid -8.4 5)
+		(end -7.404163 2.595837)
 		(stroke
 			(width 0.12)
 			(type solid)
@@ -94,9 +94,9 @@
 		(layer "F.SilkS")
 	)
 	(fp_arc
-		(start -7.404163 7.404163)
-		(mid -8.4 5)
-		(end -7.404163 2.595837)
+		(start -7.262742 2.737258)
+		(mid -5 1.8)
+		(end -2.737258 2.737258)
 		(stroke
 			(width 0.12)
 			(type solid)
@@ -124,16 +124,6 @@
 		(layer "F.SilkS")
 	)
 	(fp_arc
-		(start -3.868629 6.131371)
-		(mid -5 6.6)
-		(end -6.131371 6.131371)
-		(stroke
-			(width 0.12)
-			(type solid)
-		)
-		(layer "F.SilkS")
-	)
-	(fp_arc
 		(start -5.989949 5.989949)
 		(mid -6.4 5)
 		(end -5.989949 4.010051)
@@ -144,9 +134,19 @@
 		(layer "F.SilkS")
 	)
 	(fp_arc
-		(start -13.4 5)
-		(mid -10.939697 -0.939697)
-		(end -5 -3.4)
+		(start -5.848528 4.151472)
+		(mid -5 3.8)
+		(end -4.151472 4.151472)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(layer "F.SilkS")
+	)
+	(fp_arc
+		(start -5 -3.2)
+		(mid 0.798276 -0.798276)
+		(end 3.2 5)
 		(stroke
 			(width 0.12)
 			(type solid)
@@ -174,9 +174,9 @@
 		(layer "F.SilkS")
 	)
 	(fp_arc
-		(start 3 5)
-		(mid 0.656854 10.656854)
-		(end -5 13)
+		(start -5 13.6)
+		(mid -11.081118 11.081118)
+		(end -13.6 5)
 		(stroke
 			(width 0.12)
 			(type solid)
@@ -194,9 +194,9 @@
 		(layer "F.SilkS")
 	)
 	(fp_arc
-		(start -5.848528 4.151472)
-		(mid -5 3.8)
-		(end -4.151472 4.151472)
+		(start -3.868629 6.131371)
+		(mid -5 6.6)
+		(end -6.131371 6.131371)
 		(stroke
 			(width 0.12)
 			(type solid)
@@ -234,9 +234,9 @@
 		(layer "F.SilkS")
 	)
 	(fp_arc
-		(start -7.262742 2.737258)
-		(mid -5 1.8)
-		(end -2.737258 2.737258)
+		(start -2.454416 7.545584)
+		(mid -5 8.6)
+		(end -7.545584 7.545584)
 		(stroke
 			(width 0.12)
 			(type solid)
@@ -284,9 +284,9 @@
 		(layer "F.SilkS")
 	)
 	(fp_arc
-		(start -9.242641 0.757359)
-		(mid -0.757359 0.757359)
-		(end -0.757359 9.242641)
+		(start -0.615938 9.384062)
+		(mid -9.384062 9.384062)
+		(end -9.384062 0.615938)
 		(stroke
 			(width 0.12)
 			(type solid)
@@ -314,9 +314,9 @@
 		(layer "F.SilkS")
 	)
 	(fp_arc
-		(start -5 -3.2)
-		(mid 0.798276 -0.798276)
-		(end 3.2 5)
+		(start 3 5)
+		(mid 0.656854 10.656854)
+		(end -5 13)
 		(stroke
 			(width 0.12)
 			(type solid)
