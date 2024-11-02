@@ -234,18 +234,44 @@ def node_key_func(node) -> List:
     # This is all graphics, but not the text
     if isinstance(node, (Arc, Circle, Line, Polygon, CompoundPolygon,
                          PolygonArc, FPRect)):
-        return [100] + graphic_key_func(node)
+        return [100] + round_numbers_in_key_func(graphic_key_func(node))
     elif isinstance(node, Text):
-        return [200] + text_key_func(node)
+        return [200] + round_numbers_in_key_func(text_key_func(node))
     elif isinstance(node, (Pad, NativeCPad)):
-        return [300] + pad_key_func(node)
+        return [300] + round_numbers_in_key_func(pad_key_func(node))
     elif isinstance(node, Zone):
-        return [400] + zone_key_func(node)
+        return [400] + round_numbers_in_key_func(zone_key_func(node))
     elif isinstance(node, Model):
         # Models right at the end
         return [1000]
 
     raise ValueError(f"Node ordering not defined: {node}")
+
+
+# This function rounds all floating numbers inside a nested list
+# in order to avoid issues with wrong sorting order in serialized output.
+#
+# When KiCad sees values like:
+#     [ 1E-15, 2]
+#     [-1E-15, 3]
+# it would serialize them first and then sort them into the following order:
+#     (0, 2)
+#     (0, 3)
+# On the other hand, without this function, Python would sort them as:
+#     [-1E-15, 3]
+#     [ 1E-15, 2]
+# which would lead to wrong serialization:
+#     (0, 3)
+#     (0, 2)
+# So we have to make sure that all numbers get rounded first
+# before being fed into a sort function.
+def round_numbers_in_key_func(keys: List) -> List:
+    for i, key in enumerate(keys):
+        if isinstance(key, List):
+            keys[i] = round_numbers_in_key_func(key)
+        elif isinstance(key, float):
+            keys[i] = float(formatFloat(key))
+    return keys
 
 
 class KicadFileHandler(FileHandler):
