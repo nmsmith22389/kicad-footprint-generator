@@ -268,7 +268,7 @@ class ArcSerialisation(SerialisationTest):
         while the geometry is tested above, the actual validity of the
         values in the output is not rigourously checked.
         """
-        kicad_mod = Footprint("test", FootprintType.SMD)
+        kicad_mod = Footprint("arc_90deg", FootprintType.SMD)
 
         center = Vector2D(0, 0)
         kicad_mod.append(
@@ -358,7 +358,7 @@ class ArcSerialisation(SerialisationTest):
         self.assert_serialises_as(kicad_mod, 'arc_90deg.kicad_mod')
 
     def testArcsKx90degOffsetRotated(self):
-        kicad_mod = Footprint("test", FootprintType.SMD)
+        kicad_mod = Footprint("arc_90deg_45deg", FootprintType.SMD)
 
         center = Vector2D(-5, 5)
         kicad_mod.append(
@@ -576,7 +576,7 @@ class ArcSerialisation(SerialisationTest):
         self.assert_serialises_as(kicad_mod, 'arc_90deg_45deg.kicad_mod')
 
     def testArcsKx3Point(self):
-        kicad_mod = Footprint("test", FootprintType.SMD)
+        kicad_mod = Footprint("arc_3point", FootprintType.SMD)
 
         root2div2 = (2 ** 0.5) / 2
 
