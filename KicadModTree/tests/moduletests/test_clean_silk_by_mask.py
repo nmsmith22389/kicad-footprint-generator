@@ -1,8 +1,6 @@
-import unittest
 from KicadModTree import *
 from KicadModTree.tests.utility import *
-import os
-import inspect
+from KicadModTree.tests.test_utils.fp_file_test import SerialisationTest
 
 
 def gen_footprint():
@@ -53,7 +51,10 @@ def gen_footprint():
     return kicad_mod
 
 
-class CleanSilkByMaskTest(unittest.TestCase):
+class CleanSilkByMaskTest(SerialisationTest):
+
+    def setUp(self):
+        super().setUp(__file__, 'results')
 
     def test_clean_over_smd_rect(self):
 
@@ -61,11 +62,4 @@ class CleanSilkByMaskTest(unittest.TestCase):
 
         kicad_mod.cleanSilkMaskOverlap(silk_pad_clearance=0.0, silk_line_width=0.12)
 
-        # save result to kicad_mod file
-        file_handler = KicadFileHandler(kicad_mod)
-        with open(regressionFilename(".kicad_mod"), "w") as file:
-            file.write(file_handler.serialize())
-
-        # create render-tree and compare with regression file
-        mod_tree = kicad_mod.getCompleteRenderTree()
-        self.assertTrue(compareWithRegressionFile(mod_tree, tol=1e-7), "comparison with regression file failed")
+        self.assert_serialises_as(kicad_mod, 'test_clean_silk_by_mask.test_clean_over_smd_rect.kicad_mod')
