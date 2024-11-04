@@ -49,8 +49,8 @@
 			(width 0.12)
 			(type solid)
 		)
-		(layer "F.SilkS")
 		(fill none)
+		(layer "F.SilkS")
 	)
 	(pad "1" thru_hole rect
 		(at 0 0)

@@ -10,8 +10,8 @@
 			(width 0.01)
 			(type solid)
 		)
-		(layer "F.SilkS")
 		(fill none)
+		(layer "F.SilkS")
 	)
 	(pad "1" smd custom
 		(at 2 2.5)
