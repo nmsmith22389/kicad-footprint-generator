@@ -5,6 +5,17 @@ FileHeader:
 #
 # [1] ST does not specify this value in the linked datasheet, but they do in datasheets of similar parts. We use the
 #     value that they "usually" specify.
+Anpec_WLCSP-20_1.73x2.0mm_P0.4mm:
+  description: "WLCSP-20"
+  size_source: 'https://www.lcsc.com/datasheet/lcsc_datasheet_2007032014_Anpec-Elec-APW7261HAI-TRG_C691404.pdf'
+  body_size_x: 1.76
+  body_size_y: 2.03
+  pitch: 0.4
+  ball_diameter: 0.25
+  ball_type: 'collapsible'
+  mask_margin: 0.05
+  layout_x: 4
+  layout_y: 5
 Efinix_WLCSP-64_3.5353x3.3753mm_Layout8x8_P0.4mm:
   description: "Efinix WLCSP, NSMD pad definition Page 60"
   size_source: "https://www.efinixinc.com/docs/titanium-packaging-ug-v5.2.pdf"
