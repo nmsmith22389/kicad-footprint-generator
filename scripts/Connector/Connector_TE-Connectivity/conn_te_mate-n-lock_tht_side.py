@@ -108,7 +108,6 @@ drill = 1.4
 pad_to_pad_clearance = 1.5
 max_annular_ring = 0.95
 min_annular_ring = 0.15
-row = 4.14
 
 peg_drill = 3.86
 peg_to_nearest_pin = 7.34
@@ -117,37 +116,7 @@ width = 12.7
 peg_to_body_right = 6.86
 
 def generate_one_footprint(pins_per_row, variant_param, configuration):
-    silk_pad_off = configuration['silk_pad_clearance']+configuration['silk_line_width']/2
-    off = configuration['silk_fab_offset']
-
     number_of_rows = variant_param['number_of_rows']
-
-    pad_size = [row - pad_to_pad_clearance, pitch - pad_to_pad_clearance]
-    if number_of_rows == 1:
-        pad_size[0] = drill + 2*max_annular_ring
-
-    if pad_size[0] - drill < 2*min_annular_ring:
-        pad_size[0] = drill + 2*min_annular_ring
-    if pad_size[0] - drill > 2*max_annular_ring:
-        pad_size[0] = drill + 2*max_annular_ring
-
-    if pad_size[1] - drill < 2*min_annular_ring:
-        pad_size[1] = drill + 2*min_annular_ring
-    if pad_size[1] - drill > 2*max_annular_ring:
-        pad_size[1] = drill + 2*max_annular_ring
-
-    pad_shape = Pad.SHAPE_OVAL
-    if pad_size[0] == pad_size[1]:
-        pad_shape = Pad.SHAPE_CIRCLE
-
-    first_to_last_pad_y = (pins_per_row-1)*pitch
-    first_to_last_pad_x = (number_of_rows-1)*row
-
-    center_y = first_to_last_pad_y/2
-    peg_x = (number_of_rows-1)*row + peg_to_nearest_pin
-    peg_pos = [[peg_x, center_y + variant_param['peg_from_center']]]
-    if variant_param['number_pegs'] == 2:
-        peg_pos.append([peg_x, center_y - variant_param['peg_from_center']])
 
     mpn = variant_param['part_code'][pins_per_row*number_of_rows].format(n=pins_per_row*2)
 
@@ -166,12 +135,64 @@ def generate_one_footprint(pins_per_row, variant_param, configuration):
         entry=configuration['entry_direction'][orientation])
     kicad_mod.setTags(tags)
 
+    silk_pad_off = configuration['silk_pad_clearance']+configuration['silk_line_width']/2
+    silk_fab_offset = configuration['silk_fab_offset']
 
-    x2 = peg_x + peg_to_body_right
-    x1 = x2 - width
-    body_length = 5.72+first_to_last_pad_y
-    y1 = -(body_length - first_to_last_pad_y)/2
-    y2 = y1 + body_length
+    pad_size = [pitch - pad_to_pad_clearance, pitch - pad_to_pad_clearance]
+    if number_of_rows == 1:
+        pad_size[1] = drill + 2*max_annular_ring
+    else:
+        if pad_size[1] - drill < 2*min_annular_ring:
+            pad_size[1] = drill + 2*min_annular_ring
+        if pad_size[1] - drill > 2*max_annular_ring:
+            pad_size[1] = drill + 2*max_annular_ring
+
+    if pad_size[0] - drill < 2*min_annular_ring:
+        pad_size[0] = drill + 2*min_annular_ring
+    if pad_size[0] - drill > 2*max_annular_ring:
+        pad_size[0] = drill + 2*max_annular_ring
+
+    pad_shape = Pad.SHAPE_OVAL
+    if pad_size[0] == pad_size[1]:
+        pad_shape = Pad.SHAPE_CIRCLE
+
+    peg_from_center = variant_param['peg_from_center']
+
+    # Single row and dual row headers have opposite pin orders!
+    if number_of_rows == 1:
+        first_to_last_pad_x = (pins_per_row-1)*pitch
+        first_to_last_pad_y = (number_of_rows-1)*pitch
+
+        center_x = first_to_last_pad_x/2
+        peg_x = center_x
+        peg_y = (number_of_rows - 1) * pitch + peg_to_nearest_pin
+        peg_pos = [[peg_x + peg_from_center, peg_y]]
+        if variant_param['number_pegs'] == 2:
+            peg_pos.append([peg_x - peg_from_center, peg_y])
+
+        y2 = peg_y + peg_to_body_right
+        y1 = y2 - width
+        body_length = 5.72 + first_to_last_pad_x
+        x1 = -(body_length - first_to_last_pad_x)/2
+        x2 = x1 + body_length
+    else:
+        first_to_last_pad_y = (pins_per_row-1)*pitch
+        first_to_last_pad_x = (number_of_rows-1)*pitch
+
+        center_y = first_to_last_pad_y/2
+        peg_x = (number_of_rows - 1) * pitch + peg_to_nearest_pin
+        peg_pos = [[peg_x, center_y + peg_from_center]]
+        if variant_param['number_pegs'] == 2:
+            peg_pos.append([peg_x, center_y - peg_from_center])
+
+        x2 = peg_x + peg_to_body_right
+        x1 = x2 - width
+        body_length = 5.72 + first_to_last_pad_y
+        y1 = -(body_length - first_to_last_pad_y) / 2
+        y2 = y1 + body_length
+    for peg in peg_pos:
+        kicad_mod.append(Pad(at=peg, type=Pad.TYPE_NPTH, shape=Pad.SHAPE_CIRCLE,
+            size=peg_drill, drill=peg_drill, layers=Pad.LAYERS_NPTH))
 
     #calculate fp dimensions
     body_edge={
@@ -181,60 +202,106 @@ def generate_one_footprint(pins_per_row, variant_param, configuration):
         'top': y1
         }
     bounding_box = body_edge.copy()
-    bounding_box['left'] = -pad_size[0]/2
-
+    if number_of_rows==1:
+        bounding_box['top'] = -pad_size[1]/2
+    else:
+        bounding_box['left'] = -pad_size[0]/2
 
     #generate the pads
     optional_pad_params = {}
     optional_pad_params['tht_pad1_shape'] = Pad.SHAPE_ROUNDRECT
 
     for row_idx in range(number_of_rows):
-        initial = row_idx*pins_per_row + 1
+        initial = row_idx*pins_per_row+1
         kicad_mod.append(PadArray(
-            pincount=pins_per_row, initial=initial, start=[row_idx*row, 0],
-            y_spacing=pitch, type=Pad.TYPE_THT, shape=pad_shape,
-            size=pad_size, drill=drill, layers=Pad.LAYERS_THT,
-            **optional_pad_params))
-
-    for peg in peg_pos:
-        kicad_mod.append(Pad(at=peg, type=Pad.TYPE_NPTH, shape=Pad.SHAPE_CIRCLE,
-            size=peg_drill, drill=peg_drill, layers=Pad.LAYERS_NPTH))
-
+            pincount=pins_per_row, initial=initial,
+            start=[0, row_idx * pitch] if number_of_rows==1 else [row_idx * pitch, 0],
+            spacing=[pitch, 0] if number_of_rows==1 else [0, pitch],
+            type=Pad.TYPE_THT,
+            shape=pad_shape,
+            size=pad_size,
+            drill=drill,
+            layers=Pad.LAYERS_THT,
+            **optional_pad_params,
+        ))
 
     #draw the outline of the shape
     kicad_mod.append(RectLine(start=[x1,y1],end=[x2,y2],
         layer='F.Fab',width=configuration['fab_line_width']))
 
-    dx = body_edge['left'] - off - (number_of_rows-1)*row - (pad_size[0] - pad_size[1])/2
+    if number_of_rows==1:
+        dy = body_edge['top'] - silk_fab_offset - (number_of_rows-1)*pitch - (pad_size[1] - pad_size[0])/2
 
-    if dx < (pad_size[1]/2 + silk_pad_off):
-        dy = sqrt((pad_size[1]/2 + silk_pad_off)**2-dx**2)
+        if dy < (pad_size[1]/2 + silk_pad_off):
+            dx = sqrt((pad_size[0]/2 + silk_pad_off)**2-dy**2)
+        else:
+            dx = 0
+
+        dx_rect = pad_size[0]/2 + silk_pad_off
+
+        left_silk_pad = -dx_rect
+        right_silk_pad = (first_to_last_pad_x + dx) if pins_per_row > 1 else dx_rect
+
+        silk_poly = [
+            # Top left next to pad
+            {'x': left_silk_pad, 'y': body_edge['top']-silk_fab_offset},
+            # Top left corner
+            {'x': body_edge['left'] - silk_fab_offset, 'y': body_edge['top'] - silk_fab_offset},
+            # Bottom left corner
+            {'x': body_edge['left'] - silk_fab_offset, 'y': body_edge['bottom'] + silk_fab_offset},
+            # Bottom right corner
+            {'x': body_edge['right'] + silk_fab_offset, 'y': body_edge['bottom'] + silk_fab_offset},
+            # Top right corner
+            {'x': body_edge['right'] + silk_fab_offset, 'y': body_edge['top'] - silk_fab_offset},
+            # Top right next to pad
+            {'x': right_silk_pad, 'y': body_edge['top'] - silk_fab_offset},
+        ]
     else:
-        dy = 0
+        dx = body_edge['left'] - silk_fab_offset - (number_of_rows - 1) * pitch - (pad_size[0] - pad_size[1]) / 2
 
-    dy_rect = pad_size[1]/2 + silk_pad_off
+        if dx < (pad_size[1] / 2 + silk_pad_off):
+            dy = sqrt((pad_size[1] / 2 + silk_pad_off)**2 - dx**2)
+        else:
+            dy = 0
 
-    top_silk_pad = -dy if number_of_rows == 2 else -dy_rect
-    bottom_silk_pad = (first_to_last_pad_y + dy) if pins_per_row > 1 else dy_rect
+        dy_rect = pad_size[1] / 2 + silk_pad_off
+        top_silk_pad = -dy
+        bottom_silk_pad = (first_to_last_pad_y + dy) if pins_per_row > 1 else dy_rect
 
-    silk_poly = [
-        {'x': body_edge['left']-off,'y': top_silk_pad},
-        {'x': body_edge['left']-off,'y': body_edge['top']-off},
-        {'x': body_edge['right']+off,'y': body_edge['top']-off},
-        {'x': body_edge['right']+off,'y': body_edge['bottom']+off},
-        {'x': body_edge['left']-off,'y': body_edge['bottom']+off},
-        {'x': body_edge['left']-off,'y': bottom_silk_pad},
-    ]
+        silk_poly = [
+            {'x': body_edge['left'] - silk_fab_offset,'y': top_silk_pad},
+            {'x': body_edge['left'] - silk_fab_offset,'y': body_edge['top'] - silk_fab_offset},
+            {'x': body_edge['right'] + silk_fab_offset,'y': body_edge['top'] - silk_fab_offset},
+            {'x': body_edge['right'] + silk_fab_offset,'y': body_edge['bottom'] + silk_fab_offset},
+            {'x': body_edge['left'] - silk_fab_offset,'y': body_edge['bottom'] + silk_fab_offset},
+            {'x': body_edge['left'] - silk_fab_offset,'y': bottom_silk_pad},
+        ]
+
     kicad_mod.append(PolygonLine(polygon=silk_poly,
-                                 layer='F.SilkS', width=configuration['silk_line_width']))
+                                layer='F.SilkS', width=configuration['silk_line_width']))
 
+    # Draw lines across top, between pads
     for i in range(pins_per_row-1):
-        yt = i*pitch + (dy if number_of_rows == 2 or i > 1 else dy_rect)
-        yb = (i+1)*pitch - dy
+        if number_of_rows==1:
+            line_start_x = i * pitch + (dx if i > 1 else dx_rect)
+            line_end_x = (i + 1) * pitch - dx
+            line_y = body_edge['top'] - silk_fab_offset
+            line_start = [line_start_x, line_y]
+            line_end = [line_end_x, line_y]
+        else: # 2 rows
+            line_start_y = i * pitch + dy
+            line_end_y = (i + 1) * pitch - dy
+            line_x = body_edge['left'] - silk_fab_offset
+            line_start = [line_x, line_start_y]
+            line_end = [line_x, line_end_y]
         kicad_mod.append(Line(
-            start=[body_edge['left']-off, yt], end=[body_edge['left']-off, yb],
-            layer='F.SilkS', width=configuration['silk_line_width']))
+            start=line_start,
+            end=line_end,
+            layer='F.SilkS',
+            width=configuration['silk_line_width'],
+        ))
 
+    # Draw L shaped polarization marker
     O = silk_pad_off + 0.2
 
     pin = [
@@ -263,8 +330,14 @@ def generate_one_footprint(pins_per_row, variant_param, configuration):
         layer='F.CrtYd', width=configuration['courtyard_line_width']))
 
     ######################### Text Fields ###############################
-    addTextFields(kicad_mod=kicad_mod, configuration=configuration, body_edges=body_edge,
-        courtyard={'top':cy1, 'bottom':cy2}, fp_name=footprint_name, text_y_inside_position='right')
+    addTextFields(
+        kicad_mod=kicad_mod,
+        configuration=configuration,
+        body_edges=body_edge,
+        courtyard={'top':cy1, 'bottom':cy2},
+        fp_name=footprint_name,
+        text_y_inside_position='bottom' if number_of_rows==1 else 'right',
+    )
 
     ##################### Output and 3d model ############################
     model3d_path_prefix = configuration.get('3d_model_prefix','${KICAD8_3DMODEL_DIR}/')
