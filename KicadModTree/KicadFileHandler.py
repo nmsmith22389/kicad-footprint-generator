@@ -353,7 +353,7 @@ class KicadFileHandler(FileHandler):
 
         sexpr.extend(self._serializeTree())
 
-        return str(SexprSerializer(sexpr))
+        return str(SexprSerializer(sexpr)) + "\n"
 
     def _serialize_attributes(self):
         attributes = []
