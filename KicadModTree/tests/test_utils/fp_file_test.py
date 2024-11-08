@@ -47,5 +47,4 @@ class SerialisationTest(unittest.TestCase):
             # load the expected file and do the test
             expected_content = open(exp_file, 'r').read()
 
-            expected_content = expected_content.strip()
             assert rendered == expected_content
