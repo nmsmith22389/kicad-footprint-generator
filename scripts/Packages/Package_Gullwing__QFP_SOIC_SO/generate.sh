@@ -2,14 +2,11 @@
 
 set -ex
 
-run_generate() {
-    ./ipc_gullwing_generator.py "$1" -v
-}
 
 for file in size_definitions/*.yaml; do
-    run_generate "$file"
+    ./ipc_gullwing_generator.py "$file" -v
 done
 
 for file in test_definitions/*.yaml; do
-    run_generate "$file"
+   ./ipc_gullwing_generator.py "$file" -v --output-dir "test_output"
 done

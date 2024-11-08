@@ -5,7 +5,7 @@
 #
 
 FileHeader:
-  library_Suffix: 'SO'
+  library_Suffix: 'SO_TEST'
   device_type: 'HTSSOP'
 
 test_original_fp:

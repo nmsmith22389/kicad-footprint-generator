@@ -5,7 +5,7 @@
 # deleted pins do not support custom numbering schemes https://gitlab.com/kicad/libraries/kicad-footprint-generator/-/merge_requests/371
 
 FileHeader:
-  library_Suffix: 'TO_SOT_SMD'
+  library_Suffix: 'TO_SOT_SMD_TEST'
   device_type: 'SOT'
 
 # test add_quad_pad_border() in quad_dual_pad_border.py
@@ -130,9 +130,9 @@ LQFP-16_3x3mm_P0.5mm_hidden_first_side:
   hidden_pins: [1,2,3,4]
 
 # test add_dual_pad_border_y() in quad_dual_pad_border.py
-SOT-23-6:
+SOT-23-6_TEST:
   size_source: '~'
-  custom_name_format: 'SOT-23-6'
+  custom_name_format: 'SOT-23-6_TEST'
   body_size_x: 1.6
   body_size_y: 2.9
   overall_size_x: 2.8
@@ -161,9 +161,9 @@ SOIC-14-16_3.9x9.9mm_P1.27mm:
   hidden_pins: [2, 13]
 
 # test add_dual_pad_border_y() in quad_dual_pad_border.py with deleted pins
-SOT-23-5:
+SOT-23-5_TEST:
   size_source: '~'
-  custom_name_format: 'SOT-23-5'
+  custom_name_format: 'SOT-23-5_TEST'
   body_size_x: 1.6
   body_size_y: 2.9
   overall_size_x: 2.8
@@ -175,9 +175,9 @@ SOT-23-5:
   deleted_pins: 5
 
 # test add_dual_pad_border_x() in quad_dual_pad_border.py
-SOT-23-6R:
+SOT-23-6R_TEST:
   size_source: '~'
-  custom_name_format: 'SOT-23-6R'
+  custom_name_format: 'SOT-23-6R_TEST'
   body_size_x: 1.6
   body_size_y: 2.9
   overall_size_x: 2.8
@@ -216,9 +216,9 @@ SOT-23-6R_deleted:
   deleted_pins: [5]
 
 # test footprint with removed pins on both sides
-SOT-23:
+SOT-23_Deleted:
   size_source: '~'
-  custom_name_format: 'SOT-23'
+  custom_name_format: 'SOT-23_Deleted'
   body_size_x: 1.6
   body_size_y: 2.9
   overall_size_x: 2.8
