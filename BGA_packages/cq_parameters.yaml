@@ -463,37 +463,6 @@ BGA-121_9.0x9.0mm_Layout11x11_P0.8mm:
   pins_color_key: "metal grey pins"
   marking_color_key: "light brown label"
 
-BGA-121_11x11_12.0x12.0mm_Pitch1.0mm:
-  # from http://cds.linear.com/docs/en/packaging/05081891_A_bga121.pdf
-  fp_r: 0.4
-  fp_d: 0.08
-  fp_z: 0.01
-  ef: 0.0
-  cff: null
-  cf: null
-  D: 12.0
-  E: 12.0
-  D1: null
-  E1: null
-  A1: 0.3
-  A2: null
-  A: 4.92
-  b: 0.4
-  e: 1.0
-  ex: null
-  sp: 0.0
-  npx: 11
-  npy: 11
-  excluded_pins: ['internals']
-  molded: null
-  old_modelName: "BGA-121_11x11_12.0x12.0mm_Pitch1.0mm"
-  modelName: "BGA-121_12.0x12.0mm_Layout11x11_P1.0mm"
-  rotation: -90
-  body_bot_color_key: "dark green body"
-  body_color_key: "black body"
-  pins_color_key: "metal grey pins"
-  marking_color_key: "light brown label"
-
 BGA-144_7.0x7.0mm_Layout13x13_P0.5mm_Ball0.3mm_Pad0.25mm_NSMD:
   # from https://www.altera.com/content/dam/altera-www/global/en_US/pdfs/literature/packaging/04r00346-00.pdf
   fp_r: 0.4
