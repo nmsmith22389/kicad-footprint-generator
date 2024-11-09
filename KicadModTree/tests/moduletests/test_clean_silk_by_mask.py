@@ -1,5 +1,4 @@
 from KicadModTree import *
-from KicadModTree.tests.utility import *
 from KicadModTree.tests.test_utils.fp_file_test import SerialisationTest
 
 
