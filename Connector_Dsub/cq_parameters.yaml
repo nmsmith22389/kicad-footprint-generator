@@ -275,11 +275,14 @@
 
 # Horizontal with housing, 5.0mm footprint
 
-9_Horizontal_P2.77x2.84mm_EdgePinOffset4.94mm_Housed_MountingHolesOffset7.48mm:
+9_Horizontal_P2.77x2.84mm_EdgePinOffset4.94mm_Housed_MountingHolesOffset4.94mm:
   pin: ['round1', 9, 2.77, 2.84, 0.64, 3.9]
   genders: ['male', 'female']
   serie: 2
-  npthserie: [2, 7.78, 10.48, 0.3]
+  # Distance between the edge of the PCB and pin 1: 5.34 - 0.40 + 2.84 = 7.78
+  # Body depth: 8.6
+  # Distance between the mounting hole and pin 1: 2.84
+  npthserie: [2, 7.78, 8.6, 2.84]
   npth_pin_color_key: 'black body'
   body_top_color_key: 'white body'
   body_color_key: 'metal grey pins'
@@ -289,14 +292,14 @@
   rotatez: null
   translate: null
   destination_dir: Connector_Dsub.3dshapes
-  model_name: DSUB-9_{}_Horizontal_P2.77x2.84mm_EdgePinOffset4.94mm_Housed_MountingHolesOffset7.48mm
-  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+  model_name: DSUB-9_{}_Horizontal_P2.77x2.84mm_EdgePinOffset4.94mm_Housed_MountingHolesOffset4.94mm
+  source: 'https://disti-assets.s3.amazonaws.com/tonar/files/datasheets/16730.pdf#page=4'
 
-15_Horizontal_P2.77x2.84mm_EdgePinOffset4.94mm_Housed_MountingHolesOffset7.48mm:
+15_Horizontal_P2.77x2.84mm_EdgePinOffset4.94mm_Housed_MountingHolesOffset4.94mm:
   pin: ['round1', 15, 2.77, 2.84, 0.64, 3.9]
   genders: ['male', 'female']
   serie: 2
-  npthserie: [2, 7.78, 10.48, 0.3]
+  npthserie: [2, 7.78, 8.6, 2.84]
   npth_pin_color_key: 'black body'
   body_top_color_key: 'white body'
   body_color_key: 'metal grey pins'
@@ -306,14 +309,14 @@
   rotatez: null
   translate: null
   destination_dir: Connector_Dsub.3dshapes
-  model_name: DSUB-15_{}_Horizontal_P2.77x2.84mm_EdgePinOffset4.94mm_Housed_MountingHolesOffset7.48mm
-  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+  model_name: DSUB-15_{}_Horizontal_P2.77x2.84mm_EdgePinOffset4.94mm_Housed_MountingHolesOffset4.94mm
+  source: 'https://disti-assets.s3.amazonaws.com/tonar/files/datasheets/16730.pdf#page=4'
 
-25_Horizontal_P2.77x2.84mm_EdgePinOffset4.94mm_Housed_MountingHolesOffset7.48mm:
+25_Horizontal_P2.77x2.84mm_EdgePinOffset4.94mm_Housed_MountingHolesOffset4.94mm:
   pin: ['round1', 25, 2.77, 2.84, 0.64, 3.9]
   genders: ['male', 'female']
   serie: 2
-  npthserie: [2, 7.78, 10.48, 0.0]
+  npthserie: [2, 7.78, 8.6, 2.84]
   npth_pin_color_key: 'black body'
   body_top_color_key: 'white body'
   body_color_key: 'metal grey pins'
@@ -323,14 +326,14 @@
   rotatez: null
   translate: null
   destination_dir: Connector_Dsub.3dshapes
-  model_name: DSUB-25_{}_Horizontal_P2.77x2.84mm_EdgePinOffset4.94mm_Housed_MountingHolesOffset7.48mm
-  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+  model_name: DSUB-25_{}_Horizontal_P2.77x2.84mm_EdgePinOffset4.94mm_Housed_MountingHolesOffset4.94mm
+  source: 'https://disti-assets.s3.amazonaws.com/tonar/files/datasheets/16730.pdf#page=4'
 
-37_Horizontal_P2.77x2.84mm_EdgePinOffset4.94mm_Housed_MountingHolesOffset7.48mm:
+37_Horizontal_P2.77x2.84mm_EdgePinOffset4.94mm_Housed_MountingHolesOffset4.94mm:
   pin: ['round1', 37, 2.77, 2.84, 0.64, 3.9]
   genders: ['male', 'female']
   serie: 2
-  npthserie: [2, 11.04, 13.74, 1.42]
+  npthserie: [2, 7.78, 8.6, 2.84]
   npth_pin_color_key: 'black body'
   body_top_color_key: 'white body'
   body_color_key: 'metal grey pins'
@@ -340,8 +343,8 @@
   rotatez: null
   translate: null
   destination_dir: Connector_Dsub.3dshapes
-  model_name: DSUB-37_{}_Horizontal_P2.77x2.84mm_EdgePinOffset4.94mm_Housed_MountingHolesOffset7.48mm
-  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+  model_name: DSUB-37_{}_Horizontal_P2.77x2.84mm_EdgePinOffset4.94mm_Housed_MountingHolesOffset4.94mm
+  source: 'https://disti-assets.s3.amazonaws.com/tonar/files/datasheets/16730.pdf#page=4'
 
 # Horizontal with housing
 
