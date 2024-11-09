@@ -1,6 +1,5 @@
-import unittest
 from KicadModTree import *
-from KicadModTree.tests.utility import *
+from KicadModTree.tests.test_utils.fp_file_test import SerialisationTest
 
 
 def gen_footprint(offsets: list):
@@ -30,15 +29,11 @@ def gen_footprint(offsets: list):
     return kicad_mod
 
 
-class PolygonOffsetTests(unittest.TestCase):
+class PolygonOffsetTests(SerialisationTest):
+
+    def setUp(self):
+        super().setUp(__file__, 'results')
 
     def test_offset(self):
         kicad_mod = gen_footprint(offsets=[0.2, 0.4, 0.6])
-        # save result to kicad_mod file
-        file_handler = KicadFileHandler(kicad_mod)
-        with open(regressionFilename(".kicad_mod"), "w") as file:
-            file.write(file_handler.serialize())
-        # create render-tree
-        mod_tree = kicad_mod.getCompleteRenderTree()
-        # compare with regression file
-        self.assertTrue(compareWithRegressionFile(mod_tree, tol=1e-7))
+        self.assert_serialises_as(kicad_mod, 'test_offset_polygon.test_offset.kicad_mod')
