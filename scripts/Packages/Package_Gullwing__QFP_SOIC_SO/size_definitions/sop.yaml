@@ -483,6 +483,30 @@ SOP-28_8.4x18.16mm_P1.27mm:
   num_pins_x: 0
   num_pins_y: 14
 
+SOP-32_11.3x20.495mm_P1.27mm:
+  # similar to JEITA/EIAJ P-SOP08, ED-7311-19: 32-001-EAA
+  size_source: 'http://www.issi.com/WW/pdf/61-64C5128AL.pdf'
+  body_size_x:
+    minimum: 11.18
+    maximum: 11.43
+  body_size_y:
+    minimum: 20.24
+    maximum: 20.75
+  overall_size_x:
+    minimum: 13.79
+    maximum: 14.45
+  lead_width:
+    minimum: 0.33
+    maximum: 0.51
+  overall_height:
+    maximum: 3.05
+  lead_len:
+    minimum: 0.38
+    maximum: 1.27
+  pitch: 1.27
+  num_pins_x: 0
+  num_pins_y: 16
+
 Renesas_SOP-32_11.4x20.75mm_P1.27mm:
   size_source: 'https://www.renesas.com/en/document/psc/package-drawing-sop-32pin-prsp0032df'
   manufacturer: 'Renesas'
