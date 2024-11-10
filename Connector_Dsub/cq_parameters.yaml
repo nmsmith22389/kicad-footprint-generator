@@ -141,6 +141,7 @@
 9_Horizontal_P2.77x2.54mm_EdgePinOffset9.40mm:
   pin: ['round1', 9, 2.77, 2.54, 0.64, 3.9]
   serie: 2
+  # Distance between the edge of the PCB and pin 1: 9.40 + 2.54 = 11.94
   npthserie: [3, 11.94]
   genders: ['male', 'female']
   body_top_color_key: 'white body'
@@ -150,7 +151,7 @@
   model_name: 'DSUB-9_{}_Horizontal_P2.77x2.54mm_EdgePinOffset9.40mm'
   destination_dir: 'Connector_Dsub.3dshapes'
   translate: null
-  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+  source: 'https://docs.rs-online.com/02d6/0900766b81585df2.pdf'
 
 15_Horizontal_P2.77x2.54mm_EdgePinOffset9.40mm:
   pin: ['round1', 15, 2.77, 2.54, 0.64, 3.9]
@@ -167,7 +168,7 @@
   translate: null
   destination_dir: Connector_Dsub.3dshapes
   model_name: DSUB-15_{}_Horizontal_P2.77x2.54mm_EdgePinOffset9.40mm
-  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+  source: 'https://docs.rs-online.com/02d6/0900766b81585df2.pdf'
 
 25_Horizontal_P2.77x2.54mm_EdgePinOffset9.40mm:
   pin: ['round1', 25, 2.77, 2.54, 0.64, 3.9]
@@ -184,13 +185,13 @@
   translate: null
   destination_dir: Connector_Dsub.3dshapes
   model_name: DSUB-25_{}_Horizontal_P2.77x2.54mm_EdgePinOffset9.40mm
-  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+  source: 'https://docs.rs-online.com/02d6/0900766b81585df2.pdf'
 
 37_Horizontal_P2.77x2.54mm_EdgePinOffset9.40mm:
   pin: ['round1', 37, 2.77, 2.54, 0.64, 3.9]
   genders: ['male', 'female']
   serie: 2
-  npthserie: [3, 11.04]
+  npthserie: [3, 11.94]
   npth_pin_color_key: 'black body'
   body_top_color_key: 'white body'
   body_color_key: 'metal grey pins'
@@ -201,7 +202,7 @@
   translate: null
   destination_dir: Connector_Dsub.3dshapes
   model_name: DSUB-37_{}_Horizontal_P2.77x2.54mm_EdgePinOffset9.40mm
-  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+  source: 'https://docs.rs-online.com/02d6/0900766b81585df2.pdf'
 
 # Horizontal with no housing, P2.77x2.84mm
 
@@ -209,6 +210,7 @@
   pin: ['round1', 9, 2.77, 2.54, 0.64, 3.9]
   genders: ['male', 'female']
   serie: 2
+  # Distance between the edge of the PCB and pin 1: 9.40 + 2.84 = 12.24
   npthserie: [3, 12.24]
   npth_pin_color_key: 'black body'
   body_top_color_key: 'white body'
@@ -220,7 +222,7 @@
   translate: null
   destination_dir: Connector_Dsub.3dshapes
   model_name: DSUB-9_{}_Horizontal_P2.77x2.84mm_EdgePinOffset9.40mm
-  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+  source: 'https://docs.rs-online.com/02d6/0900766b81585df2.pdf'
 
 15_Horizontal_P2.77x2.84mm_EdgePinOffset9.40mm:
   pin: ['round1', 15, 2.77, 2.84, 0.64, 3.9]
@@ -237,7 +239,7 @@
   translate: null
   destination_dir: Connector_Dsub.3dshapes
   model_name: DSUB-15_{}_Horizontal_P2.77x2.84mm_EdgePinOffset9.40mm
-  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+  source: 'https://docs.rs-online.com/02d6/0900766b81585df2.pdf'
 
 25_Horizontal_P2.77x2.84mm_EdgePinOffset9.40mm:
   pin: ['round1', 25, 2.77, 2.84, 0.64, 3.9]
@@ -254,13 +256,13 @@
   translate: null
   destination_dir: Connector_Dsub.3dshapes
   model_name: DSUB-25_{}_Horizontal_P2.77x2.84mm_EdgePinOffset9.40mm
-  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+  source: 'https://docs.rs-online.com/02d6/0900766b81585df2.pdf'
 
 37_Horizontal_P2.77x2.84mm_EdgePinOffset9.40mm:
   pin: ['round1', 37, 2.77, 2.84, 0.64, 3.9]
   genders: ['male', 'female']
   serie: 2
-  npthserie: [3, 12.35]
+  npthserie: [3, 12.24]
   npth_pin_color_key: 'black body'
   body_top_color_key: 'white body'
   body_color_key: 'metal grey pins'
@@ -271,7 +273,7 @@
   translate: null
   destination_dir: Connector_Dsub.3dshapes
   model_name: DSUB-37_{}_Horizontal_P2.77x2.84mm_EdgePinOffset9.40mm
-  source: 'http://service.powerdynamics.com/ec/Catalog17/Section%2007.pdf'
+  source: 'https://docs.rs-online.com/02d6/0900766b81585df2.pdf'
 
 # Horizontal with housing, 5.0mm footprint
 
