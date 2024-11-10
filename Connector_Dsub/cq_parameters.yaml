@@ -207,7 +207,7 @@
 # Horizontal with no housing, P2.77x2.84mm
 
 9_Horizontal_P2.77x2.84mm_EdgePinOffset9.40mm:
-  pin: ['round1', 9, 2.77, 2.54, 0.64, 3.9]
+  pin: ['round1', 9, 2.77, 2.84, 0.64, 3.9]
   genders: ['male', 'female']
   serie: 2
   # Distance between the edge of the PCB and pin 1: 9.40 + 2.84 = 12.24
