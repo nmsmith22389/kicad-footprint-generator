@@ -408,6 +408,8 @@ def makeLEDHorizontal(pins=2,rm=2.544,dled=5,dledout=5.8,offsetled=2.54,wled=8.6
         size_filename = size_filename + "_W{0:0.1f}mm_H{1:0.1f}mm".format(dled, height3d)
         size_info.append("size {0:0.1f}x{1:0.1f}mm".format(dled, height3d))
 
+    size_info.append("horizontal offset {}mm".format(offsetled))
+
     fnypos=""
     if ledypos>0:
         fnypos = "_Z{0:0.1f}mm".format(ledypos)
