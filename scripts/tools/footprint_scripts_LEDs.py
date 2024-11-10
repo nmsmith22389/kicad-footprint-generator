@@ -118,7 +118,7 @@ def makeLEDRadial(rm, w, h, ddrill, win=0, rin=0, pins=2, led_type="round", x_3d
         if led_type == "box" and win > 0:
             wsize = win
         size_filename = size_filename + "_W{0:0.1f}mm_H{1:0.1f}mm".format(wsize, h)
-        size_info.append("size {0:0.1f}x{1:0.1f}mm^2".format(wsize, h))
+        size_info.append("size {0:0.1f}x{1:0.1f}mm".format(wsize, h))
         if rin > 0:
             size_filename = "_D{0:0.1f}mm".format(rin) + size_filename
             size_info.append("diameter {0:0.1f}mm".format(rin))
@@ -406,7 +406,7 @@ def makeLEDHorizontal(pins=2,rm=2.544,dled=5,dledout=5.8,offsetled=2.54,wled=8.6
         else:
             size_info.append("Rectangular")
         size_filename = size_filename + "_W{0:0.1f}mm_H{1:0.1f}mm".format(dled, height3d)
-        size_info.append("size {0:0.1f}x{1:0.1f}mm^2".format(dled, height3d))
+        size_info.append("size {0:0.1f}x{1:0.1f}mm".format(dled, height3d))
 
     fnypos=""
     if ledypos>0:
