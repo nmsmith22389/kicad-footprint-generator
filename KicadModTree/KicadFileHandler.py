@@ -71,7 +71,7 @@ def layer_key_func(layer: str) -> int:
         "B.SilkS": 36,
         "F.SilkS": 37,
         "B.Mask": 38,
-        "F.MasK": 39,
+        "F.Mask": 39,
         "Dwgs.User": 40,
         "Cmts.User": 41,
         "Eco1.User": 42,
