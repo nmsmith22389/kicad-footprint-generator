@@ -334,6 +334,26 @@ Texas_YFP0020_DSBGA-20_1.56x1.96mm_Layout4x5_P0.4mm:
   layout_x: 4
   layout_y: 5
 
+Alliance_TFBGA-36_6x8mm_Layout6x8_P0.75mm:
+  # similar to JEDEC MO-207N: AD-2 (see Ayy-2 / AD-z),
+  # but ball_diameter 'b' = 0.35 instead of 0.45 --> AD-2a
+  # and n = 36 instead of 48
+  description: "Alliance TFBGA-36, NSMD"
+  size_source: "https://www.alliancememory.com/wp-content/uploads/pdf/AS6C1008_Mar_2023V1.2.pdf"
+  additional_tags:
+    - "36-ball"
+    - "FBGA"
+  body_size_x: 6.0
+  body_size_y: 8.0
+  overall_height: 1.2
+  pitch: 0.75
+  ball_type: 'collapsible'
+  ball_diameter: 0.35
+  mask_margin: 0.05
+  layout_x: 6
+  layout_y: 8
+  row_skips: [[], [], [2, 5], [2, 3, 4, 5], [2, 3, 4, 5], [2, 5], [], []]
+
 TFBGA-49_3x3mm_Layout7x7_P0.4mm:
   description: "TFBGA-49, NSMD"
   size_source: "https://www.efinixinc.com/docs/trion-packaging-ug-v4.9.pdf"
