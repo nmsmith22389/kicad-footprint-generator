@@ -30,6 +30,8 @@
 # *     jmwright (https://github.com/jmwright)                               *
 # *     Work sponsored by KiCAD Services Corporation                         *
 # *          (https://www.kipro-pcb.com/)                                    *
+# * Copyright (c) 2024                                                       *
+# *     Martin Sotirov <martin@libtec.org>                                   *
 # *                                                                          *
 # * All trademarks within this guide belong to their legitimate owners.      *
 # *                                                                          *
@@ -82,6 +84,7 @@ from .cq_parameters_StarMicronics_HMB_06_HMB_12 import (
 )
 from .cq_parameters_TDK_PS1240P02BT import cq_parameters_TDK_PS1240P02BT
 from .cq_parameters_tht_generic_round import cq_parameters_tht_generic_round
+from . import cq_parameters_smd_generic_rectangular
 
 
 def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
@@ -192,6 +195,39 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             colors.append(all_params[model]["pins_color_key"])
             if npth_pins:
                 colors.append(all_params[model]["npth_pin_color_key"])
+        elif all_params[model]["model_class"] == "cq_parameters_smd_generic_rectangular":
+            cqm = cq_parameters_smd_generic_rectangular
+
+            # Load the appropriate colors
+            body_color = shaderColors.named_colors[
+                all_params[model]["body_color_key"]
+            ].getDiffuseFloat()
+            pins_color = shaderColors.named_colors[
+                all_params[model]["pins_color_key"]
+            ].getDiffuseFloat()
+
+            # Generate the models
+            body = cqm.make_body(all_params[model])
+            pins = cqm.make_pins(all_params[model])
+
+            component.add(
+                body,
+                color=cq_color_correct.Color(
+                    body_color[0], body_color[1], body_color[2]
+                ),
+            )
+            component.add(
+                pins,
+                color=cq_color_correct.Color(
+                    pins_color[0], pins_color[1], pins_color[2]
+                ),
+            )
+
+            # Save information for VRML export
+            parts.append(body)
+            parts.append(pins)
+            colors.append(all_params[model]["body_color_key"])
+            colors.append(all_params[model]["pins_color_key"])
         elif all_params[model]["model_class"] == "cq_parameters_murata_PKMCS0909E4000":
             cqm = cq_parameters_murata_PKMCS0909E4000()
 
