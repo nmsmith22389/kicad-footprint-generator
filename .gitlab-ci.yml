@@ -40,6 +40,7 @@ generate:
   only:
     refs:
       - merge_requests
+  image: python:3.10  # some scripts require more recent Python features
   before_script:
     - python --version
     - python -m pip install --upgrade pip
