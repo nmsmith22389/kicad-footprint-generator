@@ -134,11 +134,11 @@ def generate_one_footprint(pins_per_row, params, configuration):
         center=[0, pad_y], x_spacing=pitch, pincount=pins_per_row,
         size=pad_size, type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT, layers=Pad.LAYERS_SMT))
 
-    kicad_mod.append(Pad(number ='""', type=Pad.TYPE_NPTH, shape=Pad.SHAPE_CIRCLE,
+    kicad_mod.append(Pad(number ='', type=Pad.TYPE_NPTH, shape=Pad.SHAPE_CIRCLE,
                         at=[boss_x, boss_y],
                         size=boss_drill, drill=boss_drill,
                         layers=Pad.LAYERS_NPTH))
-    kicad_mod.append(Pad(number ='""', type=Pad.TYPE_NPTH, shape=Pad.SHAPE_CIRCLE,
+    kicad_mod.append(Pad(number ='', type=Pad.TYPE_NPTH, shape=Pad.SHAPE_CIRCLE,
                         at=[-boss_x, boss_y],
                         size=boss_drill, drill=boss_drill,
                         layers=Pad.LAYERS_NPTH))
