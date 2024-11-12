@@ -37,6 +37,7 @@ def main():
     parser.add_argument(
         "-p",
         "--package",
+        nargs="*",
         help="Selects a specific package configuration to generate models for.",
     )
     parser.add_argument("-v", "--verbose", help="Show OCCT output", action="store_true")
@@ -56,7 +57,7 @@ def main():
     args.enable_vrml = args.enable_vrml.lower() == "true"
 
     # Error out if only package has been specified without a library
-    if args.library is None and args.package is not None:
+    if args.library is None and args.package:
         print("You need to specify -l/--library along with -p/--package.")
         sys.exit(1)
 
@@ -95,43 +96,43 @@ def main():
         # Import the current library to run the generator
         mod = importlib.import_module(library + ".main_generator")
 
+        packages_to_generate = []
+
         # Some libraries like Inductors_SMD don't list their parts, so they need special handling
         if known_packages is None:
-            if args.package is None:
+            if not args.package:
                 print(
                     f"Generating library {index+1}/{len(libraries_to_generate)}: {library} with unknown number of entries"
                 )
-                if not args.dry_run:
-                    mod.make_models("all", args.output_dir, args.enable_vrml)
+                packages_to_generate = ["all"]
+
             elif args.library is not None:
-                print(
-                    f"    => Generating part '{args.package}' from library '{library}'"
-                )
-                if not args.dry_run:
-                    mod.make_models(args.package, args.output_dir, args.enable_vrml)
+                packages_to_generate += args.package
         else:
             # Generate all or a specific package based on the command line arguments
-            if args.package is None:
+            if not args.package:
                 packages_to_generate = known_packages
             else:
-                # If the part exists in that library, generate it, otherwise error out
-                if args.package in known_packages:
-                    packages_to_generate = [args.package]
-                else:
-                    print(f"Part '{args.package}' does not exist in library {library}")
-                    sys.exit(1)
 
-            if len(packages_to_generate) > 1:
-                print(
-                    f"Generating library {index+1}/{len(libraries_to_generate)}: {library}"
-                )
+                for package in args.package:
+                    # If the part exists in that library, generate it, otherwise error out
+                    if package in known_packages:
+                        packages_to_generate.append(package)
+                    else:
+                        print(f"Part '{package}' does not exist in library {library}")
+                        sys.exit(1)
 
-            for package_index, package in enumerate(packages_to_generate):
-                print(
-                    f"    => Generating part {package_index+1}/{len(packages_to_generate)}: '{package}' from library '{library}'"
-                )
-                if not args.dry_run:
-                    mod.make_models(package, args.output_dir, args.enable_vrml)
+        if len(packages_to_generate) > 1:
+            print(
+                f"Generating library {index+1}/{len(libraries_to_generate)}: {library}"
+            )
+
+        for package_index, package in enumerate(packages_to_generate):
+            print(
+                f"    => Generating part {package_index+1}/{len(packages_to_generate)}: '{package}' from library '{library}'"
+            )
+            if not args.dry_run:
+                mod.make_models(package, args.output_dir, args.enable_vrml)
 
     print("Generation complete.")
 
