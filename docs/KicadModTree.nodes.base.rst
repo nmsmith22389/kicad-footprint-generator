@@ -52,3 +52,10 @@ KicadModTree.nodes.base.Text module
 .. automodule:: KicadModTree.nodes.base.Text
     :members:
     :show-inheritance:
+
+KicadModTree.nodes.base.Zone module
+-----------------------------------
+
+.. automodule:: KicadModTree.nodes.base.Zone
+    :members:
+    :show-inheritance:

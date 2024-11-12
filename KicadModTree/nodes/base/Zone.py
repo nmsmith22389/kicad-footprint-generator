@@ -49,6 +49,21 @@ class PadConnection(Node):
 class Keepouts(Node):
     r"""
     Add a keepout definition to the render tree
+
+    All keyword arguments take values of either ``Keepouts.ALLOW`` (the
+    default) or ``Keepouts.DENY``.
+
+    :Keyword Arguments:
+        * *tracks* --
+            whether to allow tracks in the keepout area
+        * *vias* --
+            whether to allow vias in the keepout area
+        * *copperpour* --
+            whether to allow copper pour in the keepout area
+        * *pads* --
+            whether to allow pads in the keepout area
+        * *footprints* --
+            whether to allow footprints in the keepout area
     """
 
     ALLOW = False
@@ -79,11 +94,29 @@ class Keepouts(Node):
 
 
 class Hatch(Node):
+    r"""
+    Add a hatch definition to the render tree
+
+    :param style:
+        the style of the hatch (``Hatch.NONE``, ``Hatch.EDGE`` or
+        ``Hatch.FULL``)
+    :param float pitch:
+        the pitch of the hatch (determines distance between lines)
+
+    """
     NONE = "none"
     EDGE = "edge"
     FULL = "full"
 
-    def __init__(self, style, pitch):
+    def __init__(
+        self,
+        style: typing.Union[
+            typing.Literal["none"],
+            typing.Literal["edge"],
+            typing.Literal["full"],
+        ],
+        pitch: float
+    ):
         Node.__init__(self)
         self.style = style
         self.pitch = pitch
@@ -215,15 +248,15 @@ class ZoneFill(Node):
 
 
 class Zone(Node):
-    r"""Add a Line to the render tree
+    r"""Add a Zone to the render tree
 
-    :param polygon_pts (``list``) --
+    :param list polygon_pts:
         list of points defining the polygon of the zone
-    :param hatch (``Hatch``) --
+    :param Hatch hatch:
         hatch parameters of the zone
-    :param keepouts (``Keepouts``) --
+    :param Keepouts keepouts:
         keepout rules for the zone
-    :param fill (``ZoneFill``) --
+    :param ZoneFill fill:
         Zone fill parameters (or none)
     :param \**kwargs:
         See below
@@ -231,24 +264,16 @@ class Zone(Node):
     :Keyword Arguments:
         * *layers* (``list``) --
             layers the zone is present on
-        * *polygon_pts* (``list``) --
-            list of points defining the polygon of the zone
         * *net* (``int``) --
             net number of the zone
         * *net_name* (``str``) --
             net name of the zone
         * *name* (``str``) --
             human readable name of the zone
-        * *hatch* (``Hatch``) --
-            hatch parameters of the zone
         * *filled_areas_thickness* (``bool``) --
             if the zone line width should be used when determining the fill area
         * *min_thickness* (``float``) --
             minimum thickness of the zone
-        * *keepouts* (``Keepouts``) --
-            keepout rules for the zone
-        * *connect_pads* (``PadConnection``) --
-            pad connection rules for the zone
         * *priority* (``int``) --
             priority of the zone (optional, default None)
     """
@@ -258,8 +283,8 @@ class Zone(Node):
         polygon_pts: list,
         hatch: Hatch,
         keepouts: typing.Optional[Keepouts] = None,
-        fill=None,
-        connect_pads=PadConnection(),
+        fill: typing.Optional[ZoneFill] = None,
+        connect_pads: PadConnection = PadConnection(),
         **kwargs,
     ):
         Node.__init__(self)
