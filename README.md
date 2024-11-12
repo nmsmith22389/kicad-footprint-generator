@@ -3,7 +3,7 @@ create custom KiCAD footprint. A big bunch of footprints of the KiCad library wa
 
 # KicadModTree
 
-**Licence:** GNU GPLv3+
+**License:** GNU GPLv3+
 
 **Maintainer:** Thomas Pointhuber
 
@@ -28,7 +28,7 @@ node, and can be structured like a tree. In other words, you can group parts of 
 way you want. Also cloning & co. is no problem anymore because of this concept.
 
 To be able to create custom Nodes, I separated the system in two parts. Base nodes, which represents simple structures
-and also be used by KiCAD itself, and specialized nodes which alter the behaviour of base nodes (for example positioning),
+and also be used by KiCAD itself, and specialized nodes which alter the behavior of base nodes (for example positioning),
 or represent a specialized usage of base nodes (for example RectLine).
 
 When you serialize your footprint, the serialize command only has to handle base nodes, because all other nodes are based

@@ -62,7 +62,7 @@ def toNumberArray(value, length=2, min_value=1, member_type=int):
 
     if min_value is not None and isAnyLarger(result, min_value, False):
         raise ValueError(
-            "At least one value in ({}) too small. Linit is {}.".format(result, min_value))
+            "At least one value in ({}) too small. Limit is {}.".format(result, min_value))
 
     return result
 

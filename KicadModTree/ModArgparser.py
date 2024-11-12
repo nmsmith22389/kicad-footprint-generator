@@ -35,7 +35,7 @@ class ModArgparser(object):
     Using this class allows us to separate between the implementation of a footprint generator, and the data which
     represents a single footprint. To do so, we need to define which parameters are expected in those data-files.
 
-    To improve the usablity of this class, it is able to do type checks of provided parameters, as well as defining
+    To improve the usability of this class, it is able to do type checks of provided parameters, as well as defining
     default values and do a simple check if a parameter can be considered as required or optional.
 
     :param footprint_function:
