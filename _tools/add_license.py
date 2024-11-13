@@ -124,7 +124,7 @@ def FNCT_modify_step(
                 "/* " + str(FNME_stepfile) + " 3D STEP model for use in ECAD systems"
             )
             for licline in LIST_license:
-                PMBL_modstepfile.append(" * " + licline)
+                PMBL_modstepfile.append((" * " + licline).rstrip())
             PMBL_modstepfile.append(" */")
             PMBL_modstepfile.append("")
             FLAG_addLicense = False
