@@ -23,7 +23,7 @@ from KicadModTree.util.corner_selection import CornerSelection
 # TODO: why .KicadModTree is not enough?
 from KicadModTree import PolygonPoints
 from KicadModTree.nodes.base.Group import Group
-from KicadModTree.nodes.base.FPRect import FPRect
+from KicadModTree.nodes.base.Rect import Rect
 from KicadModTree.nodes.base.Text import Text, Property
 from KicadModTree.nodes.base.Pad import Pad
 from KicadModTree.nodes.base.Arc import Arc
@@ -109,7 +109,7 @@ def graphic_key_func(item) -> List[int]:
     def graphic_shape_key(item):
         if isinstance(item, Line):
             return 0
-        elif isinstance(item, FPRect):
+        elif isinstance(item, Rect):
             return 1
         elif isinstance(item, Arc):
             return 2
@@ -128,7 +128,7 @@ def graphic_key_func(item) -> List[int]:
     # after this point, the different shape types will only
     # be compared amongst themselves
 
-    if isinstance(item, (Line, FPRect)):
+    if isinstance(item, (Line, Rect)):
         keys += [
             item.start_pos.x, item.start_pos.y,
             item.end_pos.x, item.end_pos.y
@@ -237,7 +237,7 @@ def node_key_func(node) -> List:
 
     # This is all graphics, but not the text
     if isinstance(node, (Arc, Circle, Line, Polygon, CompoundPolygon,
-                         PolygonArc, FPRect)):
+                         PolygonArc, Rect)):
         return [100] + round_numbers_in_key_func(graphic_key_func(node))
     elif isinstance(node, Text):
         return [200] + round_numbers_in_key_func(text_key_func(node))
@@ -389,7 +389,7 @@ class KicadFileHandler(FileHandler):
             # add all the 'base' nodes that we know how to serialise
             elif isinstance(single_node, (Arc, Circle, Line, Pad,
                                           Polygon, CompoundPolygon,
-                                          PolygonArc, FPRect, Group, Text, Zone,
+                                          PolygonArc, Rect, Group, Text, Zone,
                                           Model)):
                 ordered_nodes.append(single_node)
 
@@ -526,7 +526,7 @@ class KicadFileHandler(FileHandler):
 
         return sexpr
 
-    def _serialize_FPRect(self, node):
+    def _serialize_Rect(self, node: Rect):
         sexpr = [SexprSerializer.Symbol('fp_rect')]
         sexpr += self._serialize_RectPoints(node)
         sexpr += [

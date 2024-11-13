@@ -15,11 +15,9 @@
 
 from KicadModTree.Vector import *
 from KicadModTree.nodes.Node import Node
-from KicadModTree.nodes.specialized import RectLine
-from KicadModTree.nodes.specialized import RectFill
 
 
-class FPRect(Node):
+class Rect(Node):
     r"""Add a (filled) footprint rect ``fp_rect`` to the render tree
 
     :param \**kwargs:
@@ -40,7 +38,7 @@ class FPRect(Node):
     :Example:
 
     >>> from KicadModTree import *
-    >>> FilledRect(start=[-3, -2], end=[3, 2], layer='F.SilkS')
+    >>> Rect(start=[-3, -2], end=[3, 2], layer='F.SilkS')
     """
 
     def __init__(self, **kwargs):
@@ -57,8 +55,6 @@ class FPRect(Node):
             self.fill = 'solid'
         else:
             self.fill = 'none'
-
-        # self.virtual_childs = [rect_line, rect_fill]
 
     def _getRenderTreeText(self):
         render_text = Node._getRenderTreeText(self)

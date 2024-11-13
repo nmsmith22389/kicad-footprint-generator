@@ -21,7 +21,7 @@ from .CompoundPolygon import CompoundPolygon
 
 from .Group import Group
 
-from .FPRect import FPRect
+from .Rect import Rect
 
 from .Line import Line
 
