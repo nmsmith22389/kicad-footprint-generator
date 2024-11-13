@@ -775,22 +775,22 @@ class StandardBox(Node):
         cy_max_y += clearance.x
 
         #(min, min) -> (min, max)
-        new_node = Line(start=Point2D(roundG(cy_min_x, 0.01), roundG(cy_min_y, 0.01)), end=Point2D(roundG(cy_min_x, 0.01), roundG(cy_max_y, 0.01)), layer='F.CrtYd', width=self.FCrtYdWidth)
+        new_node = Line(start=Point2D(round_to_grid(cy_min_x, 0.01), round_to_grid(cy_min_y, 0.01)), end=Point2D(round_to_grid(cy_min_x, 0.01), round_to_grid(cy_max_y, 0.01)), layer='F.CrtYd', width=self.FCrtYdWidth)
         new_node._parent = self
         self.virtual_childs.append(new_node)
 
         #(min, max) -> (max, max)
-        new_node = Line(start=Point2D(roundG(cy_min_x, 0.01), roundG(cy_max_y, 0.01)), end=Point2D(roundG(cy_max_x, 0.01), roundG(cy_max_y, 0.01)), layer='F.CrtYd', width=self.FCrtYdWidth)
+        new_node = Line(start=Point2D(round_to_grid(cy_min_x, 0.01), round_to_grid(cy_max_y, 0.01)), end=Point2D(round_to_grid(cy_max_x, 0.01), round_to_grid(cy_max_y, 0.01)), layer='F.CrtYd', width=self.FCrtYdWidth)
         new_node._parent = self
         self.virtual_childs.append(new_node)
 
         #(max, max) -> (max, min)
-        new_node = Line(start=Point2D(roundG(cy_max_x, 0.01), roundG(cy_max_y, 0.01)), end=Point2D(roundG(cy_max_x, 0.01), roundG(cy_min_y, 0.01)), layer='F.CrtYd', width=self.FCrtYdWidth)
+        new_node = Line(start=Point2D(round_to_grid(cy_max_x, 0.01), round_to_grid(cy_max_y, 0.01)), end=Point2D(round_to_grid(cy_max_x, 0.01), round_to_grid(cy_min_y, 0.01)), layer='F.CrtYd', width=self.FCrtYdWidth)
         new_node._parent = self
         self.virtual_childs.append(new_node)
 
         #(max, min) -> (min, min)
-        new_node = Line(start=Point2D(roundG(cy_max_x, 0.01), roundG(cy_min_y, 0.01)), end=Point2D(roundG(cy_min_x, 0.01), roundG(cy_min_y, 0.01)), layer='F.CrtYd', width=self.FCrtYdWidth)
+        new_node = Line(start=Point2D(round_to_grid(cy_max_x, 0.01), round_to_grid(cy_min_y, 0.01)), end=Point2D(round_to_grid(cy_min_x, 0.01), round_to_grid(cy_min_y, 0.01)), layer='F.CrtYd', width=self.FCrtYdWidth)
         new_node._parent = self
         self.virtual_childs.append(new_node)
 

@@ -15,7 +15,7 @@ from KicadModTree import *  # NOQA
 
 
 # round for grid g
-def roundG(x, g):
+def round_to_grid(x, g):
     if (x>0):
         return math.ceil(x/g)*g
     else:
@@ -23,7 +23,7 @@ def roundG(x, g):
 
 # round for courtyard grid
 def roundCrt(x):
-    return roundG(x, 0.01)
+    return round_to_grid(x, 0.01)
 
 # float-variant of range()
 def frange(x, y, jump):
@@ -110,7 +110,7 @@ def addHLineWithKeepout(kicad_mod, x0, x1, y,layer, width, keepouts=[], roun=0.0
     #print("addHLineWithKeepout",y)
     linesout = applyKeepouts([[min(x0,x1), max(x0,x1)]], y, 0,2,keepouts)
     for l in linesout:
-        kicad_mod.append(Line(start=[roundG(l[0], roun), roundG(y, roun)], end=[roundG(l[1], roun), roundG(y, roun)], layer=layer, width=width))
+        kicad_mod.append(Line(start=[round_to_grid(l[0], roun), round_to_grid(y, roun)], end=[round_to_grid(l[1], roun), round_to_grid(y, roun)], layer=layer, width=width))
 
 # split a vertical line into dashes, so it does not interfere with keepout areas defined as [[x0,x1,y0,y1], ...]
 def addHDLineWithKeepout(kicad_mod, x0, dx, x1, y, layer, width, keepouts=[], roun=0.001):
@@ -131,7 +131,7 @@ def addHDLineWithKeepout(kicad_mod, x0, dx, x1, y, layer, width, keepouts=[], ro
     linesout = applyKeepouts(lines, y, 0, 2, keepouts)
 
     for l in linesout:
-        kicad_mod.append(Line(start=[roundG(l[0], roun), roundG(y, roun)], end=[roundG(l[1], roun), roundG(y, roun)],layer=layer, width=width))
+        kicad_mod.append(Line(start=[round_to_grid(l[0], roun), round_to_grid(y, roun)], end=[round_to_grid(l[1], roun), round_to_grid(y, roun)],layer=layer, width=width))
 
 
 
@@ -140,7 +140,7 @@ def addVLineWithKeepout(kicad_mod, x, y0, y1,layer, width, keepouts=[], roun=0.0
     #print("addVLineWithKeepout",x)
     linesout = applyKeepouts([[min(y0,y1), max(y0,y1)]], x, 2, 0, keepouts)
     for l in linesout:
-        kicad_mod.append(Line(start=[roundG(x, roun), roundG(l[0], roun)], end=[roundG(x, roun), roundG(l[1], roun)], layer=layer, width=width))
+        kicad_mod.append(Line(start=[round_to_grid(x, roun), round_to_grid(l[0], roun)], end=[round_to_grid(x, roun), round_to_grid(l[1], roun)], layer=layer, width=width))
 
 # split a vertical line so it does not interfere with keepout areas defined as [[x0,x1,y0,y1], ...]
 def addVDLineWithKeepout(kicad_mod, x, y0, dy, y1, layer, width, keepouts=[], roun=0.001):
@@ -159,7 +159,7 @@ def addVDLineWithKeepout(kicad_mod, x, y0, dy, y1, layer, width, keepouts=[], ro
 
     linesout = applyKeepouts(lines, x, 2, 0, keepouts)
     for l in linesout:
-        kicad_mod.append(Line(start=[roundG(x, roun), roundG(l[0], roun)], end=[roundG(x, roun), roundG(l[1], roun)], layer=layer, width=width))
+        kicad_mod.append(Line(start=[round_to_grid(x, roun), round_to_grid(l[0], roun)], end=[round_to_grid(x, roun), round_to_grid(l[1], roun)], layer=layer, width=width))
 
 
 # add a rectangle that has two angled corners at the top
@@ -172,12 +172,12 @@ def addRectAngledTop(kicad_mod, x1, x2, angled_delta, layer, width, roun=0.001):
     yma = min(x1[1], x2[1])
     ya = yma + angled_delta[1]
     kicad_mod.append(
-        PolygonLine(polygon=[[roundG(xmi, roun), roundG(ymi, roun)], [roundG(xmi, roun), roundG(ya, roun)],
-                              [roundG(xl, roun), roundG(yma, roun)],
-                              [roundG(xa, roun), roundG(yma, roun)],
-                              [roundG(xma, roun),roundG(ya, roun)],
-                              [roundG(xma, roun),roundG(ymi, roun)],
-                              [roundG(xmi, roun),roundG(ymi, roun)]], layer=layer, width=width))
+        PolygonLine(polygon=[[round_to_grid(xmi, roun), round_to_grid(ymi, roun)], [round_to_grid(xmi, roun), round_to_grid(ya, roun)],
+                              [round_to_grid(xl, roun), round_to_grid(yma, roun)],
+                              [round_to_grid(xa, roun), round_to_grid(yma, roun)],
+                              [round_to_grid(xma, roun),round_to_grid(ya, roun)],
+                              [round_to_grid(xma, roun),round_to_grid(ymi, roun)],
+                              [round_to_grid(xmi, roun),round_to_grid(ymi, roun)]], layer=layer, width=width))
 
 
 
@@ -192,11 +192,11 @@ def addRectAngledTopNoBottom(kicad_mod, x1, x2, angled_delta, layer, width, roun
     yma = min(x1[1], x2[1])
     ya = yma + angled_delta[1]
     kicad_mod.append(
-        PolygonLine(polygon=[[roundG(xmi, roun), roundG(ymi, roun)], [roundG(xmi, roun), roundG(ya, roun)],
-                              [roundG(xl, roun), roundG(yma, roun)],
-                              [roundG(xa, roun), roundG(yma, roun)],
-                              [roundG(xma, roun),roundG(ya, roun)],
-                              [roundG(xma, roun),roundG(ymi, roun)]], layer=layer, width=width))
+        PolygonLine(polygon=[[round_to_grid(xmi, roun), round_to_grid(ymi, roun)], [round_to_grid(xmi, roun), round_to_grid(ya, roun)],
+                              [round_to_grid(xl, roun), round_to_grid(yma, roun)],
+                              [round_to_grid(xa, roun), round_to_grid(yma, roun)],
+                              [round_to_grid(xma, roun),round_to_grid(ya, roun)],
+                              [round_to_grid(xma, roun),round_to_grid(ymi, roun)]], layer=layer, width=width))
 
 
 # add a rectangle that has two angled corners at the bottom
@@ -209,18 +209,18 @@ def addRectAngledBottom(kicad_mod, x1, x2, angled_delta, layer, width, roun=0.00
     yma = max(x1[1], x2[1])
     ya = yma - angled_delta[1]
     kicad_mod.append(
-        PolygonLine(polygon=[[roundG(xmi, roun), roundG(ymi, roun)], [roundG(xmi, roun), roundG(ya, roun)],
-                              [roundG(xl, roun), roundG(yma, roun)],
-                              [roundG(xa, roun), roundG(yma, roun)],
-                              [roundG(xma, roun),roundG(ya, roun)],
-                              [roundG(xma, roun),roundG(ymi, roun)],
-                              [roundG(xmi, roun),roundG(ymi, roun)]], layer=layer, width=width))
+        PolygonLine(polygon=[[round_to_grid(xmi, roun), round_to_grid(ymi, roun)], [round_to_grid(xmi, roun), round_to_grid(ya, roun)],
+                              [round_to_grid(xl, roun), round_to_grid(yma, roun)],
+                              [round_to_grid(xa, roun), round_to_grid(yma, roun)],
+                              [round_to_grid(xma, roun),round_to_grid(ya, roun)],
+                              [round_to_grid(xma, roun),round_to_grid(ymi, roun)],
+                              [round_to_grid(xmi, roun),round_to_grid(ymi, roun)]], layer=layer, width=width))
 
 # add a circle which is filled with 45° lines
 def addCircleLF(kicad_mod, center, radius, layer, width, linedist=0.3, roun=0.001):
     trans=Translation(center[0], center[1])
     kicad_mod.append(trans)
-    rend=roundG(radius, linedist)+linedist
+    rend=round_to_grid(radius, linedist)+linedist
     M11=math.cos(45/180*math.pi)
     M12 = -math.sin(45 / 180 * math.pi)
     M21 = math.sin(45 / 180 * math.pi)
@@ -230,8 +230,8 @@ def addCircleLF(kicad_mod, center, radius, layer, width, linedist=0.3, roun=0.00
             x1 = -math.sqrt(radius*radius-y*y)
             x2 = -x1
             if x1!=x2:
-                #print([roundG(x1, roun),roundG(y, roun)], [roundG(x2, roun),roundG(y, roun)])
-                trans.append(Line(start=[roundG(M11*x1+M12*y, roun),roundG(M21*x1+M22*y, roun)], end=[roundG(M11*x2+M12*y, roun),roundG(M21*x2+M22*y, roun)], layer=layer, width=width))
+                #print([round_to_grid(x1, roun),round_to_grid(y, roun)], [round_to_grid(x2, roun),round_to_grid(y, roun)])
+                trans.append(Line(start=[round_to_grid(M11*x1+M12*y, roun),round_to_grid(M21*x1+M22*y, roun)], end=[round_to_grid(M11*x2+M12*y, roun),round_to_grid(M21*x2+M22*y, roun)], layer=layer, width=width))
 
 
-    kicad_mod.append(Circle(center=[roundG(center[0], roun), roundG(center[1], roun)], radius=roundG(radius, roun), layer=layer,  width=width))
+    kicad_mod.append(Circle(center=[round_to_grid(center[0], roun), round_to_grid(center[1], roun)], radius=round_to_grid(radius, roun), layer=layer,  width=width))

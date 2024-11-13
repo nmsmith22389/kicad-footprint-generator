@@ -23,17 +23,24 @@ def script3d_writevariable(file, line, varname, value):
     file.write("# {0}\nApp.ActiveDocument.Spreadsheet.set('A{1}', 'var {0} = '); App.ActiveDocument.Spreadsheet.set('B{1}', '{2}'); App.ActiveDocument.Spreadsheet.setAlias('B{1}', '{0}')\n".format(varname, line, value))
 
 
-def roundGUp(x: float, g: float) -> float:
+def round_to_grid_up(x: float, g: float) -> float:
     return math.ceil(x / g) * g
 
 
-def roundGDown(x: float, g: float) -> float:
+def round_to_grid_down(x: float, g: float) -> float:
     return math.floor(x / g) * g
 
 
 # round for grid g
-def roundG(x: float, g: float) -> float:
-    return roundGUp(x, g) if x > 0 else roundGDown(x, g)
+def round_to_grid(x: float, g: float) -> float:
+    if g == 0:
+      return x
+    if isinstance(x, list):
+      return_list = []
+      for value in x:
+        return_list.append(round_to_grid(value, g))
+      return return_list
+    return round(round_to_grid_up(x, g),6) if x > 0 else round(round_to_grid_down(x, g),6)
 
 
 # round for grid g
@@ -43,7 +50,7 @@ def sqr(x):
 
 # round for courtyard grid
 def roundCrt(x):
-    return roundG(x, grid_crt)
+    return round_to_grid(x, grid_crt)
 
 
 def courtyardFromBoundingBox(bbox: BoundingBox, off: float, grid: float) -> dict:
@@ -55,10 +62,10 @@ def courtyardFromBoundingBox(bbox: BoundingBox, off: float, grid: float) -> dict
     :param grid: grid size to round to
     """
     return {
-        'left': roundGDown(bbox.left - off, grid),
-        'right': roundGUp(bbox.right + off, grid),
-        'top': roundGDown(bbox.top - off, grid),
-        'bottom': roundGUp(bbox.bottom + off, grid)
+        'left': round_to_grid_down(bbox.left - off, grid),
+        'right': round_to_grid_up(bbox.right + off, grid),
+        'top': round_to_grid_down(bbox.top - off, grid),
+        'bottom': round_to_grid_up(bbox.bottom + off, grid)
     }
 
 # float-variant of range()
@@ -173,7 +180,7 @@ def addHLineWithKeepout(kicad_mod, x0, x1, y, layer, width, keepouts=[], roun=0.
         linesout = applyKeepouts([[min(x0, x1), max(x0, x1)]], y, 0, 2, keepouts)
         for l in linesout:
             kicad_mod.append(
-                Line(start=[roundG(l[0], roun), roundG(y, roun)], end=[roundG(l[1], roun), roundG(y, roun)], layer=layer,width=width))
+                Line(start=[round_to_grid(l[0], roun), round_to_grid(y, roun)], end=[round_to_grid(l[1], roun), round_to_grid(y, roun)], layer=layer,width=width))
 
 # draw a circle minding the keepouts
 def addCircleWithKeepout(kicad_mod, x, y, radius, layer, width, keepouts=[], roun=0.001):
@@ -190,7 +197,7 @@ def addCircleWithKeepout(kicad_mod, x, y, radius, layer, width, keepouts=[], rou
 
         if containedInAnyKeepout(x1,y1, keepouts):
             if hasToDraw and math.fabs(a-start)>0:
-                kicad_mod.append( Arc(center=[roundG(x, roun), roundG(y, roun)], start=[roundG(startx, roun), roundG(starty, roun)], angle=-1*(a - start)/3.1415*180, layer=layer, width=width))
+                kicad_mod.append( Arc(center=[round_to_grid(x, roun), round_to_grid(y, roun)], start=[round_to_grid(startx, roun), round_to_grid(starty, roun)], angle=-1*(a - start)/3.1415*180, layer=layer, width=width))
             hasToDraw = False
             startx=x1; starty=y1; start=a
             noneUsed = False
@@ -200,15 +207,15 @@ def addCircleWithKeepout(kicad_mod, x, y, radius, layer, width, keepouts=[], rou
         a = a + dalpha
     if noneUsed:
         kicad_mod.append(
-            Circle(center=[roundG(x, roun), roundG(y, roun)], radius=radius, layer=layer, width=width))
+            Circle(center=[round_to_grid(x, roun), round_to_grid(y, roun)], radius=radius, layer=layer, width=width))
     elif hasToDraw and math.fabs(a - start) > 0:
-        kicad_mod.append( Arc(center=[roundG(x, roun), roundG(y, roun)], start=[roundG(startx, roun), roundG(starty, roun)], angle=-1*(a - start)/3.1415*180, layer=layer, width=width))
+        kicad_mod.append( Arc(center=[round_to_grid(x, roun), round_to_grid(y, roun)], start=[round_to_grid(startx, roun), round_to_grid(starty, roun)], angle=-1*(a - start)/3.1415*180, layer=layer, width=width))
 
 # draw an arc
 def addArcByAngles(kicad_mod, x, y, radius, angle_start, angle_end, layer, width, roun=0.001):
     startx = x + radius * math.sin(angle_start/180*3.1415)
     starty = y + radius * math.cos(angle_start/180*3.1415)
-    kicad_mod.append( Arc(center=[roundG(x, roun), roundG(y, roun)], start=[roundG(startx, roun), roundG(starty, roun)], angle=-(angle_end-angle_start), layer=layer, width=width))
+    kicad_mod.append( Arc(center=[round_to_grid(x, roun), round_to_grid(y, roun)], start=[round_to_grid(startx, roun), round_to_grid(starty, roun)], angle=-(angle_end-angle_start), layer=layer, width=width))
 
 # draw an arc minding the keepouts
 def addArcByAnglesWithKeepout(kicad_mod, x, y, radius, angle_start, angle_end, layer, width, keepouts=[], roun=0.001):
@@ -238,7 +245,7 @@ def addArcWithKeepout(kicad_mod, x, y, startx, starty, angle, layer, width, keep
         if containedInAnyKeepout(x1,y1, keepouts):
             if hasToDraw and math.fabs(a-start)>0:
                 #print('DRAW ',x1,y1)
-                kicad_mod.append( Arc(center=[roundG(x, roun), roundG(y, roun)], start=[roundG(istartx, roun), roundG(istarty, roun)], angle=-1*(a - start)/3.1415*180, layer=layer, width=width))
+                kicad_mod.append( Arc(center=[round_to_grid(x, roun), round_to_grid(y, roun)], start=[round_to_grid(istartx, roun), round_to_grid(istarty, roun)], angle=-1*(a - start)/3.1415*180, layer=layer, width=width))
             hasToDraw = False
             istartx=x1; istarty=y1; start=a
             noneUsed = False
@@ -248,9 +255,9 @@ def addArcWithKeepout(kicad_mod, x, y, startx, starty, angle, layer, width, keep
         a = a + dalpha
     if noneUsed:
         kicad_mod.append(
-            Arc(center=[roundG(x, roun), roundG(y, roun)], start=[roundG(startx, roun), roundG(starty, roun)], angle=angle, layer=layer, width=width))
+            Arc(center=[round_to_grid(x, roun), round_to_grid(y, roun)], start=[round_to_grid(startx, roun), round_to_grid(starty, roun)], angle=angle, layer=layer, width=width))
     elif hasToDraw and math.fabs(a - start) > 0:
-        kicad_mod.append( Arc(center=[roundG(x, roun), roundG(y, roun)], start=[roundG(istartx, roun), roundG(istarty, roun)], angle=-1*(a - start)/3.1415*180, layer=layer, width=width))
+        kicad_mod.append( Arc(center=[round_to_grid(x, roun), round_to_grid(y, roun)], start=[round_to_grid(istartx, roun), round_to_grid(istarty, roun)], angle=-1*(a - start)/3.1415*180, layer=layer, width=width))
 
 # draw an ellipse with one axis along x-axis and one axis along y-axis and given width/height
 def addEllipse(kicad_mod, x, y, w, h, layer, width, roun=0.001):
@@ -285,7 +292,7 @@ def addDCircleWithKeepout(kicad_mod, x, y, radius, layer, width, keepouts=[], ro
             if containedInAnyKeepout(xx, yy, keepouts):
                 ok=False
             aa=aa+dalpha/20
-        if ok: kicad_mod.append(Arc(center=[roundG(x, roun), roundG(y, roun)], start=[roundG(x1, roun), roundG(y1, roun)],
+        if ok: kicad_mod.append(Arc(center=[round_to_grid(x, roun), round_to_grid(y, roun)], start=[round_to_grid(x1, roun), round_to_grid(y1, roun)],
                              angle=-1*dalpha / 2 / 3.1415 * 180, layer=layer, width=width))
         a = a + dalpha
 
@@ -301,14 +308,14 @@ def addLineWithKeepout(kicad_mod, x1, y1, x2,y2, layer, width, keepouts=[], roun
         if containedInAnyKeepout(x+dx, y+dy, keepouts):
             if hasToDraw:
                 didDrawAny=True
-                kicad_mod.append(Line(start=[roundG(xs, roun), roundG(ys, roun)], end=[roundG(x, roun), roundG(y, roun)], layer=layer, width=width))
+                kicad_mod.append(Line(start=[round_to_grid(xs, roun), round_to_grid(ys, roun)], end=[round_to_grid(x, roun), round_to_grid(y, roun)], layer=layer, width=width))
             xs=x+2*dx; ys=y+2*dy; hasToDraw=False
         else:
             hasToDraw = True
 
         x=x+dx; y=y+dy
     if hasToDraw and ((xs!=x2 or ys!=y2) or (not didDrawAny)):
-        kicad_mod.append(Line(start=[roundG(xs, roun), roundG(ys, roun)], end=[roundG(x2, roun), roundG(y2, roun)], layer=layer, width=width))
+        kicad_mod.append(Line(start=[round_to_grid(xs, roun), round_to_grid(ys, roun)], end=[round_to_grid(x2, roun), round_to_grid(y2, roun)], layer=layer, width=width))
 
 
 # split an arbitrary line so it does not interfere with keepout areas defined as [[x0,x1,y0,y1], ...]
@@ -328,13 +335,13 @@ def addDCircle(kicad_mod, x, y, radius, layer, width, roun=0.001):
         y1 = y + radius * math.cos(a)
         x2 = x + radius * math.sin(a + dalpha / 2)
         y2 = y + radius * math.cos(a + dalpha / 2)
-        kicad_mod.append(Arc(center=[roundG(x, roun), roundG(y, roun)], start=[roundG(x1, roun), roundG(y1, roun)],
+        kicad_mod.append(Arc(center=[round_to_grid(x, roun), round_to_grid(y, roun)], start=[round_to_grid(x1, roun), round_to_grid(y1, roun)],
                              angle=dalpha / 2 / 3.1415 + 180, layer=layer, width=width))
         a = a + dalpha
 
 # draw a circle with a screw slit under 45 degrees
 def addSlitScrew(kicad_mod, x, y, radius, layer, width, roun=0.001):
-    kicad_mod.append(Circle(center=[roundG(x, roun), roundG(y, roun)], radius=radius, layer=layer, width=width))
+    kicad_mod.append(Circle(center=[round_to_grid(x, roun), round_to_grid(y, roun)], radius=radius, layer=layer, width=width))
     da = 5
     dx1 = 0.99 * radius * math.sin((135 - da) / 180 * 3.1415)
     dy1 = 0.99 * radius * math.cos((135 - da) / 180 * 3.1415)
@@ -345,10 +352,10 @@ def addSlitScrew(kicad_mod, x, y, radius, layer, width, roun=0.001):
     dx4 = 0.99 * radius * math.sin((315 + da) / 180 * 3.1415)
     dy4 = 0.99 * radius * math.cos((315 + da) / 180 * 3.1415)
     # print(x,y,dx1,dy1,dx4,dy4)
-    kicad_mod.append(Line(start=[roundG(x + dx1, roun), roundG(y + dy1, roun)],
-                          end=[roundG(x + dx4, roun), roundG(y + dy4, roun)], layer=layer, width=width))
-    kicad_mod.append(Line(start=[roundG(x + dx2, roun), roundG(y + dy2, roun)],
-                          end=[roundG(x + dx3, roun), roundG(y + dy3, roun)], layer=layer, width=width))
+    kicad_mod.append(Line(start=[round_to_grid(x + dx1, roun), round_to_grid(y + dy1, roun)],
+                          end=[round_to_grid(x + dx4, roun), round_to_grid(y + dy4, roun)], layer=layer, width=width))
+    kicad_mod.append(Line(start=[round_to_grid(x + dx2, roun), round_to_grid(y + dy2, roun)],
+                          end=[round_to_grid(x + dx3, roun), round_to_grid(y + dy3, roun)], layer=layer, width=width))
 
 # draw a circle with a screw slit under 45 degrees
 def addSlitScrewWithKeepouts(kicad_mod, x, y, radius, layer, width, keepouts, roun=0.001):
@@ -369,25 +376,25 @@ def addSlitScrewWithKeepouts(kicad_mod, x, y, radius, layer, width, keepouts, ro
 
 # draw a circle with a cross-screw under 45 deg
 def addCrossScrew(kicad_mod, x, y, radius, layer, width, roun=0.001):
-    kicad_mod.append(Circle(center=[roundG(x, roun), roundG(y, roun)], radius=radius, layer=layer, width=width))
+    kicad_mod.append(Circle(center=[round_to_grid(x, roun), round_to_grid(y, roun)], radius=radius, layer=layer, width=width))
 
     kkt = Translation(x, y)
     kicad_mod.append(kkt)
     dd = radius * 0.1 / 2
     dw = 0.8 * radius
-    kkt.append(PolygonLine(polygon=[[roundG(-dw, roun), roundG(-dd, roun)],
-                                     [roundG(-dd, roun), roundG(-dd, roun)],
-                                     [roundG(-dd, roun), roundG(-dw, roun)],
-                                     [roundG(+dd, roun), roundG(-dw, roun)],
-                                     [roundG(+dd, roun), roundG(-dd, roun)],
-                                     [roundG(+dw, roun), roundG(-dd, roun)],
-                                     [roundG(+dw, roun), roundG(+dd, roun)],
-                                     [roundG(+dd, roun), roundG(+dd, roun)],
-                                     [roundG(+dd, roun), roundG(+dw, roun)],
-                                     [roundG(-dd, roun), roundG(+dw, roun)],
-                                     [roundG(-dd, roun), roundG(+dd, roun)],
-                                     [roundG(-dw, roun), roundG(+dd, roun)],
-                                     [roundG(-dw, roun), roundG(-dd, roun)]], layer=layer, width=width))
+    kkt.append(PolygonLine(polygon=[[round_to_grid(-dw, roun), round_to_grid(-dd, roun)],
+                                     [round_to_grid(-dd, roun), round_to_grid(-dd, roun)],
+                                     [round_to_grid(-dd, roun), round_to_grid(-dw, roun)],
+                                     [round_to_grid(+dd, roun), round_to_grid(-dw, roun)],
+                                     [round_to_grid(+dd, roun), round_to_grid(-dd, roun)],
+                                     [round_to_grid(+dw, roun), round_to_grid(-dd, roun)],
+                                     [round_to_grid(+dw, roun), round_to_grid(+dd, roun)],
+                                     [round_to_grid(+dd, roun), round_to_grid(+dd, roun)],
+                                     [round_to_grid(+dd, roun), round_to_grid(+dw, roun)],
+                                     [round_to_grid(-dd, roun), round_to_grid(+dw, roun)],
+                                     [round_to_grid(-dd, roun), round_to_grid(+dd, roun)],
+                                     [round_to_grid(-dw, roun), round_to_grid(+dd, roun)],
+                                     [round_to_grid(-dw, roun), round_to_grid(-dd, roun)]], layer=layer, width=width))
 
 
 # draw a circle with a cross-screw under 45 deg
@@ -398,19 +405,19 @@ def addCrossScrewWithKeepouts(kicad_mod, x, y, radius, layer, width, keepouts=[]
     kicad_mod.append(kkt)
     dd = radius * 0.1 / 2
     dw = 0.8 * radius
-    polygon = [[roundG(-dw, roun), roundG(-dd, roun)],
-                [roundG(-dd, roun), roundG(-dd, roun)],
-                [roundG(-dd, roun), roundG(-dw, roun)],
-                [roundG(+dd, roun), roundG(-dw, roun)],
-                [roundG(+dd, roun), roundG(-dd, roun)],
-                [roundG(+dw, roun), roundG(-dd, roun)],
-                [roundG(+dw, roun), roundG(+dd, roun)],
-                [roundG(+dd, roun), roundG(+dd, roun)],
-                [roundG(+dd, roun), roundG(+dw, roun)],
-                [roundG(-dd, roun), roundG(+dw, roun)],
-                [roundG(-dd, roun), roundG(+dd, roun)],
-                [roundG(-dw, roun), roundG(+dd, roun)],
-                [roundG(-dw, roun), roundG(-dd, roun)]];
+    polygon = [[round_to_grid(-dw, roun), round_to_grid(-dd, roun)],
+                [round_to_grid(-dd, roun), round_to_grid(-dd, roun)],
+                [round_to_grid(-dd, roun), round_to_grid(-dw, roun)],
+                [round_to_grid(+dd, roun), round_to_grid(-dw, roun)],
+                [round_to_grid(+dd, roun), round_to_grid(-dd, roun)],
+                [round_to_grid(+dw, roun), round_to_grid(-dd, roun)],
+                [round_to_grid(+dw, roun), round_to_grid(+dd, roun)],
+                [round_to_grid(+dd, roun), round_to_grid(+dd, roun)],
+                [round_to_grid(+dd, roun), round_to_grid(+dw, roun)],
+                [round_to_grid(-dd, roun), round_to_grid(+dw, roun)],
+                [round_to_grid(-dd, roun), round_to_grid(+dd, roun)],
+                [round_to_grid(-dw, roun), round_to_grid(+dd, roun)],
+                [round_to_grid(-dw, roun), round_to_grid(-dd, roun)]];
     addPolyLineWithKeepout(kicad_mod, polygon, layer, width, keepouts)
 
 
@@ -423,7 +430,7 @@ def addVLineWithKeepout(kicad_mod, x, y0, y1, layer, width, keepouts=[], roun=0.
         linesout = applyKeepouts([[min(y0, y1), max(y0, y1)]], x, 2, 0, keepouts)
         for l in linesout:
             kicad_mod.append(
-                Line(start=[roundG(x, roun), roundG(l[0], roun)], end=[roundG(x, roun), roundG(l[1], roun)], layer=layer,
+                Line(start=[round_to_grid(x, roun), round_to_grid(l[0], roun)], end=[round_to_grid(x, roun), round_to_grid(l[1], roun)], layer=layer,
                      width=width))
 
 # split a dashed horizontal line so it does not interfere with keepout areas defined as [[x0,x1,y0,y1], ...]
@@ -446,7 +453,7 @@ def addVDLineWithKeepout(kicad_mod, x, y0, y1, layer, width, keepouts=[], roun=0
 
 # split a rectangle
 def addRectWith(kicad_mod, x, y, w, h, layer, width, roun=0.001):
-	kicad_mod.append(RectLine(start=[roundG(x, roun),roundG(y, roun)], end=[roundG(x+w, roun),roundG(y+h, roun)], layer=layer, width=width))
+	kicad_mod.append(RectLine(start=[round_to_grid(x, roun),round_to_grid(y, roun)], end=[round_to_grid(x+w, roun),round_to_grid(y+h, roun)], layer=layer, width=width))
 
 
 # split a rectangle so it does not interfere with keepout areas defined as [[x0,x1,y0,y1], ...]
@@ -925,8 +932,8 @@ def CornerBracketWithArrowPointingSouth(model: Footprint, apex: Vector2D,
     apex.x = min(apex.x, bracket_max_x - arrow_size / 2)
 
     # Round the apex away from the body corner
-    apex.x = roundGDown(apex.x, 0.01)
-    apex.y = roundGDown(apex.y, 0.01)
+    apex.x = round_to_grid_down(apex.x, 0.01)
+    apex.y = round_to_grid_down(apex.y, 0.01)
 
     TriangleArrowPointingSouth(model, apex, arrow_size, arrow_length,
                                layer, line_width_mm)
@@ -975,8 +982,8 @@ def getStandardSilkArrowSize(size: SilkArrowSize,
     standard_arrow_aspect_ratio = 0.7
 
     # allows for 0.01mm grid-snap on each side of the apex
-    width = roundGDown(size.value - silk_line_width, 0.02)
-    length = roundGDown(width * standard_arrow_aspect_ratio, 0.01)
+    width = round_to_grid_down(size.value - silk_line_width, 0.02)
+    length = round_to_grid_down(width * standard_arrow_aspect_ratio, 0.01)
 
     return width, length
 

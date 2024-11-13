@@ -18,8 +18,8 @@ from KicadModTree import Footprint, FootprintType, Text, Line, Pad, RectLine, Ve
 from scripts.tools.drawing_tools import (
     draw_triangle_pointing_south,
     getStandardSilkArrowSize,
-    roundGUp,
-    roundGDown,
+    round_to_grid_up,
+    round_to_grid_down,
     SilkArrowSize,
 )
 from scripts.tools.footprint_generator import FootprintGenerator
@@ -318,12 +318,12 @@ class InductorGenerator(FootprintGenerator):
         return (
             RectLine(
                 start=[
-                    roundGDown(-max_x - clearance, grid),
-                    roundGDown(-max_y - clearance, grid),
+                    round_to_grid_down(-max_x - clearance, grid),
+                    round_to_grid_down(-max_y - clearance, grid),
                 ],
                 end=[
-                    roundGUp(max_x + clearance, grid),
-                    roundGUp(max_y + clearance, grid),
+                    round_to_grid_up(max_x + clearance, grid),
+                    round_to_grid_up(max_y + clearance, grid),
                 ],
                 layer="F.CrtYd",
                 width=stroke_width,

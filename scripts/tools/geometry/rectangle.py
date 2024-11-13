@@ -5,7 +5,7 @@ from KicadModTree import Vector2D
 # Despite the name, this is a pure geometry class
 from KicadModTree import PolygonPoints
 
-from scripts.tools.drawing_tools import roundGUp, roundGDown
+from scripts.tools.drawing_tools import round_to_grid_up, round_to_grid_down
 
 from .bounding_box import BoundingBox
 
@@ -57,12 +57,12 @@ class Rectangle:
         if outwards:
             # doesn't matter where the rectangle is, the top-left goes up and left,
             # the bottom-right goes down and right
-            new_tl = Vector2D(roundGDown(tl.x, grid), roundGDown(tl.y, grid))
-            new_br = Vector2D(roundGUp(br.x, grid), roundGUp(br.y, grid))
+            new_tl = Vector2D(round_to_grid_down(tl.x, grid), round_to_grid_down(tl.y, grid))
+            new_br = Vector2D(round_to_grid_up(br.x, grid), round_to_grid_up(br.y, grid))
         else:
             # The other way
-            new_tl = Vector2D(roundGUp(tl.x, grid), roundGUp(tl.y, grid))
-            new_br = Vector2D(roundGDown(br.x, grid), roundGDown(br.y, grid))
+            new_tl = Vector2D(round_to_grid_up(tl.x, grid), round_to_grid_up(tl.y, grid))
+            new_br = Vector2D(round_to_grid_down(br.x, grid), round_to_grid_down(br.y, grid))
 
         return Rectangle.by_corners(new_tl, new_br)
 

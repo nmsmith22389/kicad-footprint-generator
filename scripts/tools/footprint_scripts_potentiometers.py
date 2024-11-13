@@ -315,8 +315,8 @@ def makePotentiometerHorizontal(class_name="", wbody=0, hbody=0, dscrew=0, style
         addRectWithKeepout(kicad_modg, lshaft_slk, tshaft_slk, wshaft_slk, hshaft_slk, 'F.SilkS', lw_slk, keepouts,0.001)
 
     # create courtyard
-    kicad_mod.append(RectLine(start=[roundG(l_crt + offset[0], grid_crt), roundG(t_crt + offset[1], grid_crt)],
-                              end=[roundG(l_crt + w_crt + offset[0], grid_crt), roundG(t_crt + h_crt + offset[1], grid_crt)],layer='F.CrtYd', width=lw_crt))
+    kicad_mod.append(RectLine(start=[round_to_grid(l_crt + offset[0], grid_crt), round_to_grid(t_crt + offset[1], grid_crt)],
+                              end=[round_to_grid(l_crt + w_crt + offset[0], grid_crt), round_to_grid(t_crt + h_crt + offset[1], grid_crt)],layer='F.CrtYd', width=lw_crt))
 
     # create pads
     for p in padpos:
@@ -716,8 +716,8 @@ def makePotentiometerVertical(class_name, wbody, hbody, screwstyle="none", style
         addRectWithKeepout(kicad_modg, lbody_slk, tbody_slk, wbody_slk, hbody_slk, 'F.SilkS', lw_slk, keepouts,0.001)
 
     # create courtyard
-    kicad_mod.append(RectLine(start=[roundG(l_crt + offset[0], grid_crt), roundG(t_crt + offset[1], grid_crt)],
-                              end=[roundG(l_crt + w_crt + offset[0], grid_crt), roundG(t_crt + h_crt + offset[1], grid_crt)],
+    kicad_mod.append(RectLine(start=[round_to_grid(l_crt + offset[0], grid_crt), round_to_grid(t_crt + offset[1], grid_crt)],
+                              end=[round_to_grid(l_crt + w_crt + offset[0], grid_crt), round_to_grid(t_crt + h_crt + offset[1], grid_crt)],
                               layer='F.CrtYd', width=lw_crt))
     # create pads
     for p in padpos:
@@ -1024,8 +1024,8 @@ def makeSpindleTrimmer(class_name, wbody, hbody, pinxoffset, pinyoffset, rmx2, r
             addCrossScrewWithKeepouts(kicad_modg, lscrew_slk, tscrew_slk, wscrew_slk / 2.0, 'F.SilkS', lw_slk, keepouts)'''
 
     # create courtyard
-    kicad_mod.append(RectLine(start=[roundG(l_crt + offset[0], grid_crt), roundG(t_crt + offset[1], grid_crt)],
-                             end=[roundG(l_crt + w_crt + offset[0], grid_crt), roundG(t_crt + h_crt + offset[1], grid_crt)], layer='F.CrtYd', width=lw_crt))
+    kicad_mod.append(RectLine(start=[round_to_grid(l_crt + offset[0], grid_crt), round_to_grid(t_crt + offset[1], grid_crt)],
+                             end=[round_to_grid(l_crt + w_crt + offset[0], grid_crt), round_to_grid(t_crt + h_crt + offset[1], grid_crt)], layer='F.CrtYd', width=lw_crt))
 
     # create pads
     for p in padpos:

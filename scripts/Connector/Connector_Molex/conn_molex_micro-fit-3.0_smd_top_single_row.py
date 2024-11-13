@@ -24,15 +24,16 @@ import os
 sys.path.append(
     os.path.join(sys.path[0], "..", "..", "..")
 )  # load parent path of KicadModTree
-from math import sqrt
-import argparse
-import yaml
-from helpers import roundToBase
-from KicadModTree import *
-
 sys.path.append(
     os.path.join(sys.path[0], "..", "..", "tools")
 )  # load parent path of tools
+
+from math import sqrt
+import argparse
+import yaml
+from drawing_tools import round_to_grid
+from KicadModTree import *
+
 from footprint_text_fields import addTextFields
 
 series = "Micro-Fit_3.0"
@@ -334,23 +335,23 @@ def generate_one_footprint(pins_per_row, variant, configuration):
     CrtYd_offset = configuration["courtyard_offset"]["connector"]
     CrtYd_grid = configuration["courtyard_grid"]
 
-    cy_top = roundToBase(bounding_box["top"] - CrtYd_offset, CrtYd_grid)
-    cy_body_top = roundToBase(y_top_min - CrtYd_offset, CrtYd_grid)
-    cy_mp_top = roundToBase(
+    cy_top = round_to_grid(bounding_box["top"] - CrtYd_offset, CrtYd_grid)
+    cy_body_top = round_to_grid(y_top_min - CrtYd_offset, CrtYd_grid)
+    cy_mp_top = round_to_grid(
         mount_pad_y - mount_pad_size[1] / 2 - CrtYd_offset, CrtYd_grid
     )
-    cy_mp_bottom = roundToBase(
+    cy_mp_bottom = round_to_grid(
         mount_pad_y + mount_pad_size[1] / 2 + CrtYd_offset, CrtYd_grid
     )
-    cy_body_bottom = roundToBase(body_edge["bottom"] + CrtYd_offset, CrtYd_grid)
-    cy_bottom = roundToBase(bounding_box["bottom"] + CrtYd_offset, CrtYd_grid)
+    cy_body_bottom = round_to_grid(body_edge["bottom"] + CrtYd_offset, CrtYd_grid)
+    cy_bottom = round_to_grid(bounding_box["bottom"] + CrtYd_offset, CrtYd_grid)
 
-    cy_left = roundToBase(bounding_box["left"] - CrtYd_offset, CrtYd_grid)
-    cy_body_left = roundToBase(body_edge["left"] - CrtYd_offset, CrtYd_grid)
-    cy_pad_left = roundToBase(pad1_x - pad_size[0] / 2 - CrtYd_offset, CrtYd_grid)
-    cy_pad_right = roundToBase(pad1_x + B + pad_size[0] / 2 + CrtYd_offset, CrtYd_grid)
-    cy_body_right = roundToBase(body_edge["right"] + CrtYd_offset, CrtYd_grid)
-    cy_right = roundToBase(bounding_box["right"] + CrtYd_offset, CrtYd_grid)
+    cy_left = round_to_grid(bounding_box["left"] - CrtYd_offset, CrtYd_grid)
+    cy_body_left = round_to_grid(body_edge["left"] - CrtYd_offset, CrtYd_grid)
+    cy_pad_left = round_to_grid(pad1_x - pad_size[0] / 2 - CrtYd_offset, CrtYd_grid)
+    cy_pad_right = round_to_grid(pad1_x + B + pad_size[0] / 2 + CrtYd_offset, CrtYd_grid)
+    cy_body_right = round_to_grid(body_edge["right"] + CrtYd_offset, CrtYd_grid)
+    cy_right = round_to_grid(bounding_box["right"] + CrtYd_offset, CrtYd_grid)
 
     CrtYd_poly_t = [
         {"x": pad1_x + B / 2, "y": cy_top},

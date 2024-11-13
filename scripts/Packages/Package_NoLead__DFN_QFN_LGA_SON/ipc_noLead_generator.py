@@ -21,7 +21,7 @@ from scripts.tools.ipc_pad_size_calculators import TolerancedSize, \
         ipc_body_edge_inside_pull_back, ipc_pad_center_plus_size
 from scripts.tools.quad_dual_pad_border import create_dual_or_quad_pad_border
 from scripts.tools import drawing_tools
-from scripts.tools.drawing_tools import courtyardFromBoundingBox, roundGDown
+from scripts.tools.drawing_tools import courtyardFromBoundingBox, round_to_grid_down
 from scripts.tools.geometry.bounding_box import BoundingBox
 from scripts.tools.declarative_def_tools import tags_properties, pad_overrides, \
         rule_area_properties, ast_evaluator
@@ -667,8 +667,8 @@ class NoLeadGenerator(FootprintGenerator):
             arrow_apex = top_left_pad_top_left_corner - (silk_pad_offset * (sqrt(2) / 2))
 
             # round off away from the pad edge
-            arrow_apex.x = roundGDown(arrow_apex.x, 0.01)
-            arrow_apex.y = roundGDown(arrow_apex.y, 0.01)
+            arrow_apex.x = round_to_grid_down(arrow_apex.x, 0.01)
+            arrow_apex.y = round_to_grid_down(arrow_apex.y, 0.01)
 
             drawing_tools.TriangleArrowPointingSouthEast(
                     kicad_mod, arrow_apex, arrow_size,

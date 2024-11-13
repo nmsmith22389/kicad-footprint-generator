@@ -21,13 +21,14 @@ import os
 
 # export PYTHONPATH="${PYTHONPATH}<path to kicad-footprint-generator directory>"
 sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))  # load parent path of KicadModTree
+sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))  # load parent path of tools
+
 from math import sqrt
 import argparse
 import yaml
-from helpers import *
+from drawing_tools import round_to_grid
 from KicadModTree import *
 
-sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))  # load parent path of tools
 from footprint_text_fields import addTextFields
 
 series = "Micro-Fit_3.0"
@@ -238,23 +239,23 @@ def generate_one_footprint(pins, configuration, variant):
     CrtYd_right = pad1_x + clip_x_offset + clip_C + clip_pad[0]/2 if variant == 'clip' else body_edge['right']
 
     poly_yd = [
-        {'x': roundToBase(CrtYd_left - CrtYd_offset, CrtYd_grid), 'y': roundToBase(body_edge['bottom'] + CrtYd_offset, CrtYd_grid)},
-        {'x': roundToBase(CrtYd_left - CrtYd_offset, CrtYd_grid), 'y': roundToBase(body_edge['top'] - CrtYd_offset, CrtYd_grid)},
-        {'x': roundToBase(CrtYd_right + CrtYd_offset, CrtYd_grid), 'y': roundToBase(body_edge['top'] - CrtYd_offset, CrtYd_grid)},
-        {'x': roundToBase(CrtYd_right + CrtYd_offset, CrtYd_grid), 'y': roundToBase(body_edge['bottom'] + CrtYd_offset, CrtYd_grid)},
-        {'x': roundToBase(B + pad_to_pad_clearance/2 + CrtYd_offset, CrtYd_grid), 'y': roundToBase(body_edge['bottom'] + CrtYd_offset, CrtYd_grid)},
-        {'x': roundToBase(B + pad_to_pad_clearance/2 + CrtYd_offset, CrtYd_grid), 'y': roundToBase(pitch + pad_to_pad_clearance/2 + CrtYd_offset, CrtYd_grid)},
-        {'x': roundToBase(- pad_to_pad_clearance/2 - CrtYd_offset, CrtYd_grid), 'y': roundToBase(pitch + pad_to_pad_clearance/2 + CrtYd_offset, CrtYd_grid)},
-        {'x': roundToBase(- pad_to_pad_clearance/2 - CrtYd_offset, CrtYd_grid), 'y': roundToBase(body_edge['bottom'] + CrtYd_offset, CrtYd_grid)},
-        {'x': roundToBase(CrtYd_left - CrtYd_offset, CrtYd_grid), 'y': roundToBase(body_edge['bottom'] + CrtYd_offset, CrtYd_grid)}
+        {'x': round_to_grid(CrtYd_left - CrtYd_offset, CrtYd_grid), 'y': round_to_grid(body_edge['bottom'] + CrtYd_offset, CrtYd_grid)},
+        {'x': round_to_grid(CrtYd_left - CrtYd_offset, CrtYd_grid), 'y': round_to_grid(body_edge['top'] - CrtYd_offset, CrtYd_grid)},
+        {'x': round_to_grid(CrtYd_right + CrtYd_offset, CrtYd_grid), 'y': round_to_grid(body_edge['top'] - CrtYd_offset, CrtYd_grid)},
+        {'x': round_to_grid(CrtYd_right + CrtYd_offset, CrtYd_grid), 'y': round_to_grid(body_edge['bottom'] + CrtYd_offset, CrtYd_grid)},
+        {'x': round_to_grid(B + pad_to_pad_clearance/2 + CrtYd_offset, CrtYd_grid), 'y': round_to_grid(body_edge['bottom'] + CrtYd_offset, CrtYd_grid)},
+        {'x': round_to_grid(B + pad_to_pad_clearance/2 + CrtYd_offset, CrtYd_grid), 'y': round_to_grid(pitch + pad_to_pad_clearance/2 + CrtYd_offset, CrtYd_grid)},
+        {'x': round_to_grid(- pad_to_pad_clearance/2 - CrtYd_offset, CrtYd_grid), 'y': round_to_grid(pitch + pad_to_pad_clearance/2 + CrtYd_offset, CrtYd_grid)},
+        {'x': round_to_grid(- pad_to_pad_clearance/2 - CrtYd_offset, CrtYd_grid), 'y': round_to_grid(body_edge['bottom'] + CrtYd_offset, CrtYd_grid)},
+        {'x': round_to_grid(CrtYd_left - CrtYd_offset, CrtYd_grid), 'y': round_to_grid(body_edge['bottom'] + CrtYd_offset, CrtYd_grid)}
     ]
 
     kicad_mod.append(PolygonLine(polygon=poly_yd,
                                  layer='F.CrtYd', width=configuration['courtyard_line_width']))
 
     ######################### Text Fields ###############################
-    cy1 = roundToBase(body_edge['top'] - configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
-    cy2 = roundToBase(pad_row_2_y + pad_size[1] + configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
+    cy1 = round_to_grid(body_edge['top'] - configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
+    cy2 = round_to_grid(pad_row_2_y + pad_size[1] + configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
 
     addTextFields(kicad_mod=kicad_mod, configuration=configuration, body_edges=body_edge,
         courtyard={'top':cy1, 'bottom':cy2}, fp_name=footprint_name, text_y_inside_position='top')

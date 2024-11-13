@@ -1110,7 +1110,7 @@ def makeTORound(lib_name, pck, has3d=False, x_3d=[0, 0, 0], s_3d=[1,1,1], lptext
     for p in range(0, len(pads)):
         if p == 0:
             kicad_modt.append(
-                Pad(number=p + 1, type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, at=pads[p], size=[roundG(padsize[0]*1.3,0.1),padsize[1]], drill=pck.drill,
+                Pad(number=p + 1, type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, at=pads[p], size=[round_to_grid(padsize[0]*1.3,0.1),padsize[1]], drill=pck.drill,
                     layers=Pad.LAYERS_THT))
         else:
             kicad_modt.append(
