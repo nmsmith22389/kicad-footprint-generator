@@ -13,7 +13,7 @@
 #
 # (C) 2016 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 
-from KicadModTree.Vector import *
+from KicadModTree.Vector import Vector3D
 from KicadModTree.nodes.Node import Node
 
 
@@ -40,6 +40,11 @@ class Model(Node):
     ...       at=[0, 0, 0], scale=[1, 1, 1], rotate=[0, 0, 0])
     """
 
+    filename: str
+    at: Vector3D
+    scale: Vector3D
+    rotate: Vector3D
+
     def __init__(self, **kwargs):
         Node.__init__(self)
         self.filename = kwargs['filename']
@@ -52,7 +57,7 @@ class Model(Node):
 
         render_string = ['filename: {filename}'.format(filename=self.filename),
                          'at: (xyz {x} {y} {z})'.format(**self.at.to_dict()),
-                         'scale: (xyz {x} {y} {z})'.format(*self.scale.to_dict()),
+                         'scale: (xyz {x} {y} {z})'.format(**self.scale.to_dict()),
                          'rotate: (xyz {x} {y} {z})'.format(**self.rotate.to_dict())]
 
         render_text += " [{}]".format(", ".join(render_string))
