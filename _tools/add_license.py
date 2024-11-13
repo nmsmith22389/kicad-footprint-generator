@@ -150,8 +150,8 @@ def FNCT_modify_step(
             # NAME
             PMBL_modstepfile.append("FILE_NAME(")
             PMBL_modstepfile.append("/* name */ '" + str(FNME_stepfile) + "',")
-            STR_TS = datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
-            PMBL_modstepfile.append("/* time_stamp */ '" + STR_TS + "',")
+            # Adding a timestamp makes the output non-reproducible
+            # PMBL_modstepfile.append("/* time_stamp */ '" + datetime.now().strftime("%Y-%m-%dT%H:%M:%S") + "',")
             PMBL_modstepfile.append(
                 "/* author */ ('" + STR_licAuthor + "','" + STR_licEmail + "'),"
             ),
