@@ -9,3 +9,6 @@ run_generate() {
 for file in size_definitions/*.yaml; do
     run_generate "$file"
 done
+
+# Legacy generator
+./make_DIP_footprints.py

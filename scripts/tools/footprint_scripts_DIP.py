@@ -470,6 +470,8 @@ def makeDIPSwitch(pins, rm, pinrow_distance, package_width, overlen_top, overlen
     # print(kicad_mod.getRenderTree())
     # print(kicad_mod.getCompleteRenderTree())
 
+    os.makedirs(outdir, exist_ok=True)
+
     # write file
     file_handler = KicadFileHandler(kicad_mod)
     file_handler.writeFile(os.path.join(outdir, footprint_name + '.kicad_mod'))
