@@ -458,6 +458,17 @@ Microchip_TFBGA-196_11x11mm_Layout14x14_P0.75mm_SMD:
   paste_margin: 0.000001
   layout_x: 14
   layout_y: 14
+BGA-196_15x15mm_Layout14x14_P1.0mm_Ball0.5mm:
+  description: "BGA-196"
+  size_source: "http://ww1.microchip.com/downloads/en/DeviceDoc/VMDS-10502.pdf#page=99"
+  body_size_x: 15.0
+  body_size_y: 15.0
+  pitch: 1.0
+  ball_type: 'collapsible'
+  ball_diameter: 0.5
+  mask_margin: 0.05
+  layout_x: 14
+  layout_y: 14
 TFBGA-216_13x13mm_Layout15x15_P0.8mm:
   description: "TFBGA-216"
   size_source: "http://www.st.com/resource/en/datasheet/stm32f746zg.pdf#page=219"
