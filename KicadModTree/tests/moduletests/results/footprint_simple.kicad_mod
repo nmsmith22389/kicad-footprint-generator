@@ -25,76 +25,24 @@
 		)
 	)
 	(attr smd)
-	(fp_line
+	(fp_rect
 		(start -2 -2)
-		(end -2 2)
-		(stroke
-			(width 0.12)
-			(type solid)
-		)
-		(layer "F.SilkS")
-	)
-	(fp_line
-		(start -2 2)
 		(end 5 2)
 		(stroke
 			(width 0.12)
 			(type solid)
 		)
+		(fill none)
 		(layer "F.SilkS")
 	)
-	(fp_line
-		(start 5 -2)
-		(end -2 -2)
-		(stroke
-			(width 0.12)
-			(type solid)
-		)
-		(layer "F.SilkS")
-	)
-	(fp_line
-		(start 5 2)
-		(end 5 -2)
-		(stroke
-			(width 0.12)
-			(type solid)
-		)
-		(layer "F.SilkS")
-	)
-	(fp_line
+	(fp_rect
 		(start -2.25 -2.25)
-		(end -2.25 2.25)
-		(stroke
-			(width 0.05)
-			(type solid)
-		)
-		(layer "F.CrtYd")
-	)
-	(fp_line
-		(start -2.25 2.25)
 		(end 5.25 2.25)
 		(stroke
-			(width 0.05)
+			(width 0.12)
 			(type solid)
 		)
-		(layer "F.CrtYd")
-	)
-	(fp_line
-		(start 5.25 -2.25)
-		(end -2.25 -2.25)
-		(stroke
-			(width 0.05)
-			(type solid)
-		)
-		(layer "F.CrtYd")
-	)
-	(fp_line
-		(start 5.25 2.25)
-		(end 5.25 -2.25)
-		(stroke
-			(width 0.05)
-			(type solid)
-		)
+		(fill none)
 		(layer "F.CrtYd")
 	)
 	(pad "1" thru_hole rect

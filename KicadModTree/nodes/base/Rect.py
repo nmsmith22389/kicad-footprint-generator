@@ -13,8 +13,10 @@
 #
 # (C) 2016 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 
-from KicadModTree.Vector import *
+from KicadModTree.Vector import Vector2D
 from KicadModTree.nodes.Node import Node
+
+from typing import Union, Literal
 
 
 class Rect(Node):
@@ -25,21 +27,27 @@ class Rect(Node):
 
     :Keyword Arguments:
         * *start* (``Vector2D``) --
-          start edge of the rect
+          start corner of the rect
         * *end* (``Vector2D``) --
-          end edge of the rect
+          end corner of the rect
         * *layer* (``str``) --
           layer on which the rect is drawn (default: 'F.SilkS')
         * *width* (``float``) --
           width of the outer line (default: 0.15)
         * *fill* (``str, bool``) --
-          valid values are 'solid', 'none' or True and False respectively
+          valid values are 'solid', 'none'
 
     :Example:
 
     >>> from KicadModTree import *
     >>> Rect(start=[-3, -2], end=[3, 2], layer='F.SilkS')
     """
+
+    start_pos: Vector2D
+    end_pos: Vector2D
+    layer: str
+    width: float
+    fill: Union[Literal["solid"], Literal["none"]]
 
     def __init__(self, **kwargs):
         Node.__init__(self)
@@ -50,22 +58,17 @@ class Rect(Node):
         # TODO: better variation to get line width
         self.width = float(kwargs.get('width', 0.12))
 
-        fill = kwargs.get('fill', 'none')
-        if (fill == 'solid') or (isinstance(fill, bool) and fill):
-            self.fill = 'solid'
-        else:
-            self.fill = 'none'
+        self.fill = kwargs.get('fill', 'none')
 
     def _getRenderTreeText(self):
         render_text = Node._getRenderTreeText(self)
 
-        render_string = ['start: [x: {sx}, y: {sy}]'.format(sx=self.start_pos.x, sy=self.start_pos.y),
-                         'end: [x: {ex}, y: {ey}]'.format(
-                             ex=self.end_pos.x, ey=self.end_pos.y),
-                         'style: [outline-width: {f}, fill: {ey}]'.format(
-                             ex=self.width, ey=self.fill)
-                         ]
+        render_string = [
+            f"start: [x: {self.start_pos.x}, y: {self.start_pos.x}], "
+            f"end: [x: {self.end_pos.x}, y: {self.end_pos.y}], "
+            f"style: [outline-width: {self.width}, fill: {self.fill}]"
+        ]
 
-        render_text += " [{}]".format(", ".join(render_string))
+        render_text += f" [{render_string}]"
 
         return render_text

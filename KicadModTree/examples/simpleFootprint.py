@@ -36,10 +36,10 @@ if __name__ == '__main__':
     kicad_mod.append(Property(name=Property.VALUE, text=footprint_name, at=[1.5, 3], layer='F.Fab'))
 
     # create silkscreen
-    kicad_mod.append(RectLine(start=[-2, -2], end=[5, 2], layer='F.SilkS'))
+    kicad_mod.append(Rect(start=[-2, -2], end=[5, 2], layer='F.SilkS'))
 
     # create courtyard
-    kicad_mod.append(RectLine(start=[-2.25, -2.25], end=[5.25, 2.25], layer='F.CrtYd'))
+    kicad_mod.append(Rect(start=[-2.25, -2.25], end=[5.25, 2.25], layer='F.CrtYd'))
 
     # create pads
     kicad_mod.append(Pad(number=1, type=Pad.TYPE_THT, shape=Pad.SHAPE_RECT,

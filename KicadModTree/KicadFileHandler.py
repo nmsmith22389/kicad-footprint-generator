@@ -535,7 +535,7 @@ class KicadFileHandler(FileHandler):
         if hasattr(node, 'fill'):
             sexpr += self._serialize_Fill(node)
         sexpr += [
-            [SexprSerializer.Symbol('layer'), SexprSerializer.Symbol(node.layer)],
+            [SexprSerializer.Symbol('layer'), node.layer],
         ]
         if node.hasValidTStamp():
             sexpr.append(self._serialize_TStamp(node))
