@@ -207,5 +207,5 @@
   cover_color_key: 'metal grey pins'
   pin_color_key: 'metal grey pins'
   ring_color_key: 'black body'
-  destination_dir: 'Button_Switch_SMD.3dshapes'
+  destination_dir: 'Button_Switch_THT.3dshapes'
   source: 'N/A'
