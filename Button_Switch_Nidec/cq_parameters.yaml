@@ -47,7 +47,7 @@
   pin_color_key: 'metal grey pins'
   ring_color_key: 'black body'
   destination_dir: 'Button_Switch_SMD.3dshapes'
-  source: 'N/A'
+  source: 'https://www.nidec-components.com/e/catalog/switch/sh-7000.pdf'
 
 7010B:
   body_height: 3.75
@@ -99,7 +99,7 @@
   pin_color_key: 'metal grey pins'
   ring_color_key: 'black body'
   destination_dir: 'Button_Switch_SMD.3dshapes'
-  source: 'N/A'
+  source: 'https://www.nidec-components.com/e/catalog/switch/sh-7000.pdf'
 
 7040B:
   body_height: 3.75
@@ -151,7 +151,7 @@
   pin_color_key: 'metal grey pins'
   ring_color_key: 'black body'
   destination_dir: 'Button_Switch_SMD.3dshapes'
-  source: 'N/A'
+  source: 'https://www.nidec-components.com/e/catalog/switch/sh-7000.pdf'
 
 7010C:
   body_height: 3.7
@@ -208,4 +208,4 @@
   pin_color_key: 'metal grey pins'
   ring_color_key: 'black body'
   destination_dir: 'Button_Switch_THT.3dshapes'
-  source: 'N/A'
+  source: 'https://www.nidec-components.com/e/catalog/switch/sh-7000.pdf'
