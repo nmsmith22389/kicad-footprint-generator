@@ -1729,7 +1729,7 @@ TFBGA-265_14x14mm_Layout17x17_P0.8mm:
   pins_color_key: "metal grey pins"
   marking_color_key: "light brown label"
 
-TFBGA-636_19.0x19.0mm_Layout28x28_P0.65mm:
+TFBGA-636_19x19mm_Layout28x28_P0.65mm:
   fp_r: 0.3
   fp_d: 0.01
   fp_z: 0.01
@@ -1751,8 +1751,8 @@ TFBGA-636_19.0x19.0mm_Layout28x28_P0.65mm:
   npy: 28
   excluded_pins: ['internals']
   molded: null
-  old_modelName: "TFBGA-636_19.0x19.0mm_Layout28x28_P0.65mm"
-  modelName: "TFBGA-636_19.0x19.0mm_Layout28x28_P0.65mm"
+  old_modelName: "TFBGA-636_19x19mm_Layout28x28_P0.65mm"
+  modelName: "TFBGA-636_19x19mm_Layout28x28_P0.65mm"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
