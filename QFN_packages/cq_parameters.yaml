@@ -1255,7 +1255,7 @@ AVX_M620720:
   rotation: 0
   destination_dir: RF_Antenna.3dshapes
   pin_shapes: null
-  body_color_key: 'black body'
+  body_color_key: 'white body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
   source: 'http://datasheets.avx.com/ethertronics/AVX-E_M620720.pdf'
