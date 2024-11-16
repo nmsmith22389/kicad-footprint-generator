@@ -376,6 +376,13 @@ class PadArray(Node):
                                 ))
                         continue
 
+                # A normal unchamfered pad
+
+                # TODO: This is a hack - assuming the PadArray kwargs must be valid for
+                # all the pads, chamfered or not, seems dangerously implicit.
+                if "chamfer_size" in pad_params_with_override.parameters:
+                    pad_params_with_override.parameters.pop("chamfer_size")
+
                 pads.append(Pad(number=pad_params_with_override.number,
                                 at=pad_params_with_override.position,
                                 **pad_params_with_override.parameters))
