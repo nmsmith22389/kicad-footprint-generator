@@ -391,7 +391,7 @@ SMD-1x1.00mm_Vertical_Right:
   num_pin_rows: 1
   pin_pitch: 1.00
   body_width: 1.5
-  body_height: 2.25
+  body_height: 2.10
   body_board_distance: 0.15
   body_overlength: 0.5
   body_offset: 0.0
@@ -420,7 +420,7 @@ SMD-1x1.00mm_Vertical_Left:
   num_pin_rows: 1
   pin_pitch: 1.00
   body_width: 1.5
-  body_height: 2.25
+  body_height: 2.10
   body_board_distance: 0.15
   body_overlength: 0.5
   body_offset: 0.0
@@ -623,7 +623,7 @@ SMD-2x1.00mm_Vertical:
   num_pin_rows: 2
   pin_pitch: 1.00
   body_width: 2.5
-  body_height: 2.25
+  body_height: 2.10
   body_board_distance: 0.15
   body_overlength: 0.5
   body_offset: 0.0
