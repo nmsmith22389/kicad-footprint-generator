@@ -222,6 +222,20 @@ ST_WLCSP-36_Die458:
   paste_margin: 0.0125
   layout_x: 6
   layout_y: 6
+ST_WLCSP-41_2.98x2.76mm_P0.40mm_Stagger:
+  description: "ST WLCSP-41"
+  size_source: "https://www.st.com/resource/en/datasheet/stm32wba55hg.pdf#page=140"
+  body_size_x: 2.98
+  body_size_y: 2.76
+  pitch: 0.40
+  staggered: x
+  first_ball: A2
+  pad_diameter: 0.250
+  mask_margin: 0.0375
+  paste_margin: 0.0375
+  layout_x: 13
+  layout_y: 7
+  pad_skips: [A2,A4,B1,B3]
 ST_WLCSP-42_2.93mmx2.82_P0.40mm_Stagger:
   description: "ST WLCSP-42, ST Die ID 489"
   size_source: "https://www.st.com/resource/en/datasheet/stm32u073rc.pdf"
