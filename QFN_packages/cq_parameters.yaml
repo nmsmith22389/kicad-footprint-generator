@@ -2487,9 +2487,9 @@ DFN-12-1EP_4x4mm_Pitch0.65mm:
   mark_color_key: 'light brown label'
   source: 'http://www.onsemi.com/pub/Collateral/506CE.PDF'
 
-DFN-14-1EP_4x4mm_Pitch0.5mm:
+OnSemi_DFN-14-1EP_4x4mm_P0.5mm_EP2.7x3.4mm:
   c: 0.2
-  L: 0.4
+  L: 0.35
   fp_s: True
   fp_r: 0.5
   fp_d: 0.1
@@ -2500,28 +2500,28 @@ DFN-14-1EP_4x4mm_Pitch0.5mm:
   cce: 0.35
   D: 4.0
   E: 4.0
-  A1: 0.02
-  A2: 0.75
-  b: 0.25
+  A1: 0.025
+  A2: 0.875
+  b: 0.24
   e: 0.5
   m: 0.0
   ps: rounded
   npx: 7
   npy: 0
-  epad: [3.6, 2.86]
+  epad: [3.4, 2.7]
   epad_offsetX: null
   epad_offsetY: null
   epad_n: null
   epad_pitch: null
   excluded_pins: null
-  model_name: DFN-14-1EP_4x4mm_Pitch0.5mm
+  model_name: OnSemi_DFN-14-1EP_4x4mm_P0.5mm_EP2.7x3.4mm
   rotation: -90
   destination_dir: Package_DFN_QFN.3dshapes
   pin_shapes: null
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
-  source: 'https://web.archive.org/web/20180227072736if_/http://cds.linear.com:80/docs/en/packaging/05081963_0_DFN14%2812%29.pdf'
+  source: 'https://www.onsemi.com/pub/Collateral/506CM.PDF'
 
 DFN-16-1EP_3x4mm_Pitch0.45mm:
   c: 0.2
