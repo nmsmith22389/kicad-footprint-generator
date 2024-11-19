@@ -31,7 +31,7 @@ Crystal_SMD_0603-2Pin_6.0x3.5mm_HandSoldering:
   pack_height: 3.5
   pack_width: 6
   pad:
-  - 3.3249999999999997
+  - 3.325
   - 2.5
   pad_sep_x: 5.825
   pad_sep_y: 0.0
@@ -72,9 +72,9 @@ Crystal_SMD_0603-4Pin_6.0x3.5mm_HandSoldering:
   pack_width: 6
   pad:
   - 2.7
-  - 2.0999999999999996
-  pad_sep_x: 5.300000000000001
-  pad_sep_y: 3.0999999999999996
+  - 2.1
+  pad_sep_x: 5.3
+  pad_sep_y: 3.1
   pins: 4
   style: rect
   tags: SMD SMT crystal hand-soldering
@@ -112,7 +112,7 @@ Crystal_SMD_2012-2Pin_2.0x1.2mm_HandSoldering:
   pad:
   - 1.05
   - 1.1
-  pad_sep_x: 1.8499999999999999
+  pad_sep_x: 1.85
   pad_sep_y: 0.0
   pins: 2
   style: rect
@@ -186,9 +186,9 @@ Crystal_SMD_3225-4Pin_3.2x2.5mm_HandSoldering:
   pack_height: 2.5
   pack_width: 3.2
   pad:
-  - 2.0999999999999996
-  - 1.7999999999999998
-  pad_sep_x: 2.9000000000000004
+  - 2.1
+  - 1.8
+  pad_sep_x: 2.9
   pad_sep_y: 2.3
   pins: 4
   style: rect
@@ -210,10 +210,6 @@ Crystal_SMD_5032-2Pin_5.0x3.2mm:
   pad_sep_x: 3.7
   pad_sep_y: 0
   pins: 2
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   style: rect
   tags: SMD SMT crystal
 Crystal_SMD_5032-2Pin_5.0x3.2mm_HandSoldering:
@@ -235,10 +231,6 @@ Crystal_SMD_5032-2Pin_5.0x3.2mm_HandSoldering:
   pad_sep_x: 5.2
   pad_sep_y: 0.0
   pins: 2
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   style: rect
   tags: SMD SMT crystal hand-soldering
 Crystal_SMD_5032-4Pin_5.0x3.2mm:
@@ -258,10 +250,6 @@ Crystal_SMD_5032-4Pin_5.0x3.2mm:
   pad_sep_x: 3.3
   pad_sep_y: 2.0
   pins: 4
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   tags: SMD SMT crystal
 Crystal_SMD_7050-2Pin_7.0x5.0mm:
   addSizeFootprintName: true
@@ -296,7 +284,7 @@ Crystal_SMD_7050-2Pin_7.0x5.0mm_HandSoldering:
   pack_height: 5
   pack_width: 7
   pad:
-  - 4.8999999999999995
+  - 4.9
   - 3
   pad_sep_x: 7.3
   pad_sep_y: 0
@@ -354,9 +342,9 @@ Crystal_SMD_Abracon_ABM3-2Pin_5.0x3.2mm_HandSoldering:
   pack_height: 3.2
   pack_width: 5
   pad:
-  - 3.3249999999999997
+  - 3.325
   - 2.4
-  pad_sep_x: 5.5249999999999995
+  pad_sep_x: 5.525
   pad_sep_y: 0.0
   pins: 2
   style: rect
@@ -488,10 +476,10 @@ Crystal_SMD_EuroQuartz_MJ-4Pin_5.0x3.2mm_HandSoldering:
   pack_height: 3.2
   pack_width: 5
   pad:
-  - 2.8499999999999996
-  - 1.6500000000000001
+  - 2.85
+  - 1.65
   pad_sep_x: 4.65
-  pad_sep_y: 2.8499999999999996
+  pad_sep_y: 2.85
   pins: 4
   style: rect
   tags: SMD SMT crystal hand-soldering
@@ -528,7 +516,7 @@ Crystal_SMD_EuroQuartz_MQ-4Pin_7.0x5.0mm_HandSoldering:
   pack_height: 5
   pack_width: 7
   pad:
-  - 3.3000000000000003
+  - 3.3
   - 1.54
   pad_sep_x: 7.4
   pad_sep_y: 2.64
@@ -568,7 +556,7 @@ Crystal_SMD_EuroQuartz_MQ2-2Pin_7.0x5.0mm_HandSoldering:
   pack_height: 5
   pack_width: 7
   pad:
-  - 3.8500000000000005
+  - 3.85
   - 2.4
   pad_sep_x: 7.95
   pad_sep_y: 0.0
@@ -608,7 +596,7 @@ Crystal_SMD_EuroQuartz_MT-4Pin_3.2x2.5mm_HandSoldering:
   pack_height: 2.5
   pack_width: 3.2
   pad:
-  - 1.9500000000000002
+  - 1.95
   - 1.5
   pad_sep_x: 2.85
   pad_sep_y: 2.3
@@ -648,7 +636,7 @@ Crystal_SMD_EuroQuartz_X22-4Pin_2.5x2.0mm_HandSoldering:
   pack_height: 2
   pack_width: 2.5
   pad:
-  - 1.7999999999999998
+  - 1.8
   - 1.5
   pad_sep_x: 2.2
   pad_sep_y: 1.7
@@ -688,7 +676,7 @@ Crystal_SMD_FOX_FE-2Pin_7.5x5.0mm_HandSoldering:
   pack_height: 5
   pack_width: 7.5
   pad:
-  - 3.8500000000000005
+  - 3.85
   - 2.4
   pad_sep_x: 7.95
   pad_sep_y: 0.0
@@ -728,7 +716,7 @@ Crystal_SMD_FOX_FQ7050-2Pin_7.0x5.0mm_HandSoldering:
   pack_height: 5
   pack_width: 7
   pad:
-  - 4.8999999999999995
+  - 4.9
   - 3
   pad_sep_x: 7.3
   pad_sep_y: 0
@@ -894,7 +882,7 @@ Crystal_SMD_MicroCrystal_CC1V-T1A-2Pin_8.0x3.7mm_HandSoldering:
   pack_height: 3.7
   pack_width: 8
   pad:
-  - 4.0249999999999995
+  - 4.025
   - 4.2
   pad_sep_x: 8.025
   pad_sep_y: 0.0
@@ -936,7 +924,7 @@ Crystal_SMD_MicroCrystal_CC4V-T1A-2Pin_5.0x1.9mm_HandSoldering:
   pad:
   - 2.275
   - 2.2
-  pad_sep_x: 5.175000000000001
+  pad_sep_x: 5.175
   pad_sep_y: 0.0
   pins: 2
   style: rect
@@ -974,7 +962,7 @@ Crystal_SMD_MicroCrystal_CC5V-T1A-2Pin_4.1x1.5mm_HandSoldering:
   pack_height: 1.5
   pack_width: 4.1
   pad:
-  - 1.9250000000000003
+  - 1.925
   - 1.9
   pad_sep_x: 4.225
   pad_sep_y: 0.0
@@ -1054,7 +1042,7 @@ Crystal_SMD_MicroCrystal_CC8V-T1A-2Pin_2.0x1.2mm_HandSoldering:
   pack_height: 1.2
   pack_width: 2
   pad:
-  - 1.4000000000000001
+  - 1.4
   - 1.5
   pad_sep_x: 2.1
   pad_sep_y: 0.0
@@ -1176,10 +1164,6 @@ Crystal_SMD_SeikoEpson_FA238-4Pin_3.2x2.5mm:
   pad_sep_x: 2.2
   pad_sep_y: 1.6
   pins: 4
-  scale3d:
-  - 0.24
-  - 0.24
-  - 0.24
   style: rect
   tags: SMD SMT crystal
 Crystal_SMD_SeikoEpson_FA238-4Pin_3.2x2.5mm_HandSoldering:
@@ -1196,15 +1180,11 @@ Crystal_SMD_SeikoEpson_FA238-4Pin_3.2x2.5mm_HandSoldering:
   pack_height: 2.5
   pack_width: 3.2
   pad:
-  - 2.0999999999999996
-  - 1.7999999999999998
-  pad_sep_x: 2.9000000000000004
+  - 2.1
+  - 1.8
+  pad_sep_x: 2.9
   pad_sep_y: 2.2
   pins: 4
-  scale3d:
-  - 0.24
-  - 0.24
-  - 0.24
   style: rect
   tags: SMD SMT crystal hand-soldering
 Crystal_SMD_SeikoEpson_FA238V-4Pin_3.2x2.5mm:
@@ -1240,9 +1220,9 @@ Crystal_SMD_SeikoEpson_FA238V-4Pin_3.2x2.5mm_HandSoldering:
   pack_height: 2.5
   pack_width: 3.2
   pad:
-  - 2.0999999999999996
-  - 1.7999999999999998
-  pad_sep_x: 3.0999999999999996
+  - 2.1
+  - 1.8
+  pad_sep_x: 3.1
   pad_sep_y: 2.5
   pins: 4
   style: rect
@@ -1280,8 +1260,8 @@ Crystal_SMD_SeikoEpson_MA406-4Pin_11.7x4.0mm_HandSoldering:
   pack_height: 4
   pack_width: 11.7
   pad:
-  - 1.9800000000000002
-  - 2.8499999999999996
+  - 1.98
+  - 2.85
   pad_sep_x: 9.78
   pad_sep_y: 4.55
   pins: 4
@@ -1320,9 +1300,9 @@ Crystal_SMD_SeikoEpson_MA505-2Pin_12.7x5.1mm_HandSoldering:
   pack_height: 5.08
   pack_width: 12.7
   pad:
-  - 7.174999999999999
+  - 7.175
   - 5.6
-  pad_sep_x: 14.174999999999999
+  pad_sep_x: 14.175
   pad_sep_y: 0.0
   pins: 2
   style: rect
@@ -1360,10 +1340,10 @@ Crystal_SMD_SeikoEpson_MA506-4Pin_12.7x5.1mm_HandSoldering:
   pack_height: 5.08
   pack_width: 12.7
   pad:
-  - 6.1499999999999995
-  - 3.0749999999999997
-  pad_sep_x: 13.149999999999999
-  pad_sep_y: 4.574999999999999
+  - 6.15
+  - 3.075
+  pad_sep_x: 13.15
+  pad_sep_y: 4.575
   pins: 4
   style: rect
   tags: SMD SMT crystal hand-soldering
@@ -1402,7 +1382,7 @@ Crystal_SMD_SeikoEpson_MC146-4Pin_6.7x1.5mm_HandSoldering:
   pad:
   - 2.1
   - 0.6
-  pad_sep_x: 7.199999999999999
+  pad_sep_x: 7.2
   pad_sep_y: 0.9
   pins: 4
   style: rect
@@ -1480,8 +1460,8 @@ Crystal_SMD_SeikoEpson_MC306-4Pin_8.0x3.2mm_HandSoldering:
   pack_height: 3.2
   pack_width: 8
   pad:
-  - 1.4300000000000002
-  - 2.8499999999999996
+  - 1.43
+  - 2.85
   pad_sep_x: 5.63
   pad_sep_y: 4.15
   pins: 4
@@ -1520,7 +1500,7 @@ Crystal_SMD_SeikoEpson_MC405-2Pin_9.6x4.1mm_HandSoldering:
   pack_height: 4.06
   pack_width: 9.6
   pad:
-  - 7.174999999999999
+  - 7.175
   - 4.1
   pad_sep_x: 11.075
   pad_sep_y: 0.0
@@ -1560,8 +1540,8 @@ Crystal_SMD_SeikoEpson_MC406-4Pin_9.6x4.1mm_HandSoldering:
   pack_height: 4.06
   pack_width: 9.6
   pad:
-  - 6.1499999999999995
-  - 1.6720000000000002
+  - 6.15
+  - 1.672
   pad_sep_x: 10.05
   pad_sep_y: 2.472
   pins: 4
@@ -1584,10 +1564,6 @@ Crystal_SMD_SeikoEpson_TSX3225-4Pin_3.2x2.5mm:
   pad_sep_x: 2.2
   pad_sep_y: 1.6
   pins: 4
-  scale3d:
-  - 0.24
-  - 0.24
-  - 0.24
   style: rect
   tags: SMD SMT crystal
 Crystal_SMD_SeikoEpson_TSX3225-4Pin_3.2x2.5mm_HandSoldering:
@@ -1604,15 +1580,11 @@ Crystal_SMD_SeikoEpson_TSX3225-4Pin_3.2x2.5mm_HandSoldering:
   pack_height: 2.5
   pack_width: 3.2
   pad:
-  - 2.0999999999999996
-  - 1.7249999999999999
-  pad_sep_x: 2.9000000000000004
+  - 2.1
+  - 1.725
+  pad_sep_x: 2.9
   pad_sep_y: 2.175
   pins: 4
-  scale3d:
-  - 0.24
-  - 0.24
-  - 0.24
   style: rect
   tags: SMD SMT crystal hand-soldering
 Crystal_SMD_TXC_7M-4Pin_3.2x2.5mm:
@@ -1648,9 +1620,9 @@ Crystal_SMD_TXC_7M-4Pin_3.2x2.5mm_HandSoldering:
   pack_height: 2.5
   pack_width: 3.2
   pad:
-  - 2.0999999999999996
-  - 1.7999999999999998
-  pad_sep_x: 2.9000000000000004
+  - 2.1
+  - 1.8
+  pad_sep_x: 2.9
   pad_sep_y: 2.3
   pins: 4
   style: rect
@@ -1689,7 +1661,7 @@ Crystal_SMD_TXC_9HT11-2Pin_2.0x1.2mm_HandSoldering:
   pad:
   - 1.05
   - 1.1
-  pad_sep_x: 1.8499999999999999
+  pad_sep_x: 1.85
   pad_sep_y: 0.0
   pins: 2
   style: rect

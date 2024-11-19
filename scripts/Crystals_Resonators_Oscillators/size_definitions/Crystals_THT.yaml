@@ -1,16 +1,12 @@
 Crystal_AT310_D3.0mm_L10.0mm_Horizontal:
   ddrill: 0.5
-  description: Crystal THT AT310 10.0mm-10.5mm length 3.0mm diameter
+  description: Crystal THT AT310 10.0mm-10.5mm length 3.0mm diameter, https://www.cinetech.com.tw/upload/2011/04/20110401165201.pdf
   footprint_name: Crystal_AT310_D3.0mm_L10.0mm_Horizontal
   func: makeCrystal
   height3d: 4.65
   iheight3d: 4
   lib_name: Crystal
   name_addition: ''
-  offset3d:
-  - 0.05
-  - 0
-  - 0
   pack_height: 3
   pack_offset: 3
   pack_rm: 1.2
@@ -33,17 +29,13 @@ Crystal_AT310_D3.0mm_L10.0mm_Horizontal:
   - AT310
 Crystal_AT310_D3.0mm_L10.0mm_Horizontal_1EP_style1:
   ddrill: 0.5
-  description: Crystal THT AT310 10.0mm-10.5mm length 3.0mm diameter
+  description: Crystal THT AT310 10.0mm-10.5mm length 3.0mm diameter, https://www.cinetech.com.tw/upload/2011/04/20110401165201.pdf
   footprint_name: Crystal_AT310_D3.0mm_L10.0mm_Horizontal
   func: makeCrystal
   height3d: 4.65
   iheight3d: 4
   lib_name: Crystal
   name_addition: _1EP_style1
-  offset3d:
-  - 0.05
-  - 0
-  - 0
   pack_height: 3
   pack_offset: 3
   pack_rm: 1.2
@@ -66,17 +58,13 @@ Crystal_AT310_D3.0mm_L10.0mm_Horizontal_1EP_style1:
   - AT310
 Crystal_AT310_D3.0mm_L10.0mm_Horizontal_1EP_style2:
   ddrill: 0.5
-  description: Crystal THT AT310 10.0mm-10.5mm length 3.0mm diameter
+  description: Crystal THT AT310 10.0mm-10.5mm length 3.0mm diameter, https://www.cinetech.com.tw/upload/2011/04/20110401165201.pdf
   footprint_name: Crystal_AT310_D3.0mm_L10.0mm_Horizontal
   func: makeCrystal
   height3d: 4.65
   iheight3d: 4
   lib_name: Crystal
   name_addition: _1EP_style2
-  offset3d:
-  - 0.05
-  - 0
-  - 0
   pack_height: 3
   pack_offset: 3
   pack_rm: 1.2
@@ -99,17 +87,13 @@ Crystal_AT310_D3.0mm_L10.0mm_Horizontal_1EP_style2:
   - AT310
 Crystal_AT310_D3.0mm_L10.0mm_Vertical:
   ddrill: 0.5
-  description: Crystal THT AT310 10.0mm-10.5mm length 3.0mm diameter
+  description: Crystal THT AT310 10.0mm-10.5mm length 3.0mm diameter, https://www.cinetech.com.tw/upload/2011/04/20110401165201.pdf
   footprint_name: Crystal_AT310_D3.0mm_L10.0mm_Vertical
   func: makeCrystalRoundVert
   lib_name: Crystal
   pack_diameter: 3
   pad_size: 1
   rm: 2.54
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   tags:
   - AT310
 Crystal_C26-LF_D2.1mm_L6.5mm_Horizontal:
@@ -138,10 +122,6 @@ Crystal_C26-LF_D2.1mm_L6.5mm_Horizontal:
   pad_size: 1
   pad_style: tht
   rm: 1.9
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   style: flat
   tags:
   - C26-LF
@@ -171,10 +151,6 @@ Crystal_C26-LF_D2.1mm_L6.5mm_Horizontal_1EP_style1:
   pad_size: 1
   pad_style: tht
   rm: 1.9
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   style: flat
   tags:
   - C26-LF
@@ -204,10 +180,6 @@ Crystal_C26-LF_D2.1mm_L6.5mm_Horizontal_1EP_style2:
   pad_size: 1
   pad_style: tht
   rm: 1.9
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   style: flat
   tags:
   - C26-LF
@@ -220,10 +192,6 @@ Crystal_C26-LF_D2.1mm_L6.5mm_Vertical:
   pack_diameter: 2.06
   pad_size: 1
   rm: 1.9
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   tags:
   - C26-LF
 Crystal_C38-LF_D3.0mm_L8.0mm_Horizontal:
@@ -252,10 +220,6 @@ Crystal_C38-LF_D3.0mm_L8.0mm_Horizontal:
   pad_size: 1
   pad_style: tht
   rm: 1.9
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   style: flat
   tags:
   - C38-LF
@@ -285,10 +249,6 @@ Crystal_C38-LF_D3.0mm_L8.0mm_Horizontal_1EP_style1:
   pad_size: 1
   pad_style: tht
   rm: 1.9
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   style: flat
   tags:
   - C38-LF
@@ -318,10 +278,6 @@ Crystal_C38-LF_D3.0mm_L8.0mm_Horizontal_1EP_style2:
   pad_size: 1
   pad_style: tht
   rm: 1.9
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   style: flat
   tags:
   - C38-LF
@@ -334,10 +290,6 @@ Crystal_C38-LF_D3.0mm_L8.0mm_Vertical:
   pack_diameter: 3
   pad_size: 1
   rm: 1.9
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   tags:
   - C38-LF
 Crystal_DS10_D1.0mm_L4.3mm_Horizontal:
@@ -366,10 +318,6 @@ Crystal_DS10_D1.0mm_L4.3mm_Horizontal:
   pad_size: 1
   pad_style: tht
   rm: 1.5
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   style: flat
   tags:
   - DS10
@@ -399,10 +347,6 @@ Crystal_DS10_D1.0mm_L4.3mm_Horizontal_1EP_style1:
   pad_size: 1
   pad_style: tht
   rm: 1.5
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   style: flat
   tags:
   - DS10
@@ -432,10 +376,6 @@ Crystal_DS10_D1.0mm_L4.3mm_Horizontal_1EP_style2:
   pad_size: 1
   pad_style: tht
   rm: 1.5
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   style: flat
   tags:
   - DS10
@@ -448,10 +388,6 @@ Crystal_DS10_D1.0mm_L4.3mm_Vertical:
   pack_diameter: 1
   pad_size: 1
   rm: 1.5
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   tags:
   - DS10
 Crystal_DS15_D1.5mm_L5.0mm_Horizontal:
@@ -480,10 +416,6 @@ Crystal_DS15_D1.5mm_L5.0mm_Horizontal:
   pad_size: 1
   pad_style: tht
   rm: 1.7
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   style: flat
   tags:
   - DS15
@@ -513,10 +445,6 @@ Crystal_DS15_D1.5mm_L5.0mm_Horizontal_1EP_style1:
   pad_size: 1
   pad_style: tht
   rm: 1.7
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   style: flat
   tags:
   - DS15
@@ -546,10 +474,6 @@ Crystal_DS15_D1.5mm_L5.0mm_Horizontal_1EP_style2:
   pad_size: 1
   pad_style: tht
   rm: 1.7
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   style: flat
   tags:
   - DS15
@@ -562,10 +486,6 @@ Crystal_DS15_D1.5mm_L5.0mm_Vertical:
   pack_diameter: 1.5
   pad_size: 1
   rm: 1.7
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   tags:
   - DS15
 Crystal_DS26_D2.0mm_L6.0mm_Horizontal:
@@ -594,10 +514,6 @@ Crystal_DS26_D2.0mm_L6.0mm_Horizontal:
   pad_size: 1
   pad_style: tht
   rm: 1.9
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   style: flat
   tags:
   - DS26
@@ -627,10 +543,6 @@ Crystal_DS26_D2.0mm_L6.0mm_Horizontal_1EP_style1:
   pad_size: 1
   pad_style: tht
   rm: 1.9
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   style: flat
   tags:
   - DS26
@@ -660,10 +572,6 @@ Crystal_DS26_D2.0mm_L6.0mm_Horizontal_1EP_style2:
   pad_size: 1
   pad_style: tht
   rm: 1.9
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   style: flat
   tags:
   - DS26
@@ -676,10 +584,6 @@ Crystal_DS26_D2.0mm_L6.0mm_Vertical:
   pack_diameter: 2
   pad_size: 1
   rm: 1.9
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   tags:
   - DS26
 Crystal_HC18-U_Horizontal:
@@ -708,10 +612,6 @@ Crystal_HC18-U_Horizontal:
   pad_size: 1.5
   pad_style: tht
   rm: 4.9
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   script3d: crystal_hc49_2pin_hor.py
   style: hc49
   tags: ''
@@ -741,10 +641,6 @@ Crystal_HC18-U_Horizontal_1EP_style1:
   pad_size: 1.5
   pad_style: tht
   rm: 4.9
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   script3d: crystal_hc49_2pin_hor.py
   style: hc49
   tags: ''
@@ -774,10 +670,6 @@ Crystal_HC18-U_Horizontal_1EP_style2:
   pad_size: 1.5
   pad_style: tht
   rm: 4.9
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   script3d: crystal_hc49_2pin_hor.py
   style: hc49
   tags: ''
@@ -795,10 +687,6 @@ Crystal_HC18-U_Vertical:
   pad_size: 1.5
   pins: 2
   rm: 4.9
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   script3d: crystal_hc49_2pin.py
   tags: THT crystalHC-18/U
 Crystal_HC33-U_Horizontal:
@@ -827,10 +715,6 @@ Crystal_HC33-U_Horizontal:
   pad_size: 2.7
   pad_style: tht
   rm: 12.34
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   script3d: crystal_hc49_2pin_hor.py
   style: hc49
   tags: ''
@@ -860,10 +744,6 @@ Crystal_HC33-U_Horizontal_1EP_style1:
   pad_size: 2.7
   pad_style: tht
   rm: 12.34
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   script3d: crystal_hc49_2pin_hor.py
   style: hc49
   tags: ''
@@ -893,10 +773,6 @@ Crystal_HC33-U_Horizontal_1EP_style2:
   pad_size: 2.7
   pad_style: tht
   rm: 12.34
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   script3d: crystal_hc49_2pin_hor.py
   style: hc49
   tags: ''
@@ -914,10 +790,6 @@ Crystal_HC33-U_Vertical:
   pad_size: 2.7
   pins: 2
   rm: 12.34
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   script3d: crystal_hc49_2pin.py
   tags: THT crystalHC-33/U
 Crystal_HC49-4H_Vertical:
@@ -934,10 +806,6 @@ Crystal_HC49-4H_Vertical:
   pad_size: 1.5
   pins: 2
   rm: 4.88
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   script3d: crystal_hc49_2pin.py
   tags: THT crystalHC-49-4H
 Crystal_HC49-U-3Pin_Vertical:
@@ -954,10 +822,6 @@ Crystal_HC49-U-3Pin_Vertical:
   pad_size: 1.5
   pins: 3
   rm: 4.88
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   script3d: crystal_hc49_3pin.py
   tags: THT crystalHC-49/U
 Crystal_HC49-U_Horizontal:
@@ -986,10 +850,6 @@ Crystal_HC49-U_Horizontal:
   pad_size: 1.5
   pad_style: tht
   rm: 4.9
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   script3d: crystal_hc49_2pin_hor.py
   style: hc49
   tags: ''
@@ -1019,10 +879,6 @@ Crystal_HC49-U_Horizontal_1EP_style1:
   pad_size: 1.5
   pad_style: tht
   rm: 4.9
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   script3d: crystal_hc49_2pin_hor.py
   style: hc49
   tags: ''
@@ -1052,10 +908,6 @@ Crystal_HC49-U_Horizontal_1EP_style2:
   pad_size: 1.5
   pad_style: tht
   rm: 4.9
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   script3d: crystal_hc49_2pin_hor.py
   style: hc49
   tags: ''
@@ -1073,10 +925,6 @@ Crystal_HC49-U_Vertical:
   pad_size: 1.5
   pins: 2
   rm: 4.88
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   script3d: crystal_hc49_2pin.py
   tags: THT crystalHC-49/U
 Crystal_HC50_Horizontal:
@@ -1105,10 +953,6 @@ Crystal_HC50_Horizontal:
   pad_size: 2.3
   pad_style: tht
   rm: 4.9
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   script3d: crystal_hc49_2pin_hor.py
   style: hc49
   tags: ''
@@ -1138,10 +982,6 @@ Crystal_HC50_Horizontal_1EP_style1:
   pad_size: 2.3
   pad_style: tht
   rm: 4.9
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   script3d: crystal_hc49_2pin_hor.py
   style: hc49
   tags: ''
@@ -1171,10 +1011,6 @@ Crystal_HC50_Horizontal_1EP_style2:
   pad_size: 2.3
   pad_style: tht
   rm: 4.9
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   script3d: crystal_hc49_2pin_hor.py
   style: hc49
   tags: ''
@@ -1192,10 +1028,6 @@ Crystal_HC50_Vertical:
   pad_size: 2.3
   pins: 2
   rm: 4.9
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   script3d: crystal_hc49_2pin.py
   tags: THT crystalHC-50
 Crystal_HC51-U_Vertical:
@@ -1212,10 +1044,6 @@ Crystal_HC51-U_Vertical:
   pad_size: 2.3
   pins: 2
   rm: 12.35
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   script3d: crystal_hc49_2pin.py
   tags: THT crystalHC-51/U
 Crystal_HC51_Horizontal:
@@ -1244,10 +1072,6 @@ Crystal_HC51_Horizontal:
   pad_size: 2.3
   pad_style: tht
   rm: 12.35
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   script3d: crystal_hc49_2pin_hor.py
   style: hc49
   tags: ''
@@ -1277,10 +1101,6 @@ Crystal_HC51_Horizontal_1EP_style1:
   pad_size: 2.3
   pad_style: tht
   rm: 12.35
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   script3d: crystal_hc49_2pin_hor.py
   style: hc49
   tags: ''
@@ -1310,10 +1130,6 @@ Crystal_HC51_Horizontal_1EP_style2:
   pad_size: 2.3
   pad_style: tht
   rm: 12.35
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   script3d: crystal_hc49_2pin_hor.py
   style: hc49
   tags: ''
@@ -1343,10 +1159,6 @@ Crystal_HC52-6mm_Horizontal:
   pad_size: 1.5
   pad_style: tht
   rm: 3.8
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   script3d: crystal_hc49_2pin_hor.py
   style: hc49
   tags: ''
@@ -1376,10 +1188,6 @@ Crystal_HC52-6mm_Horizontal_1EP_style1:
   pad_size: 1.5
   pad_style: tht
   rm: 3.8
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   script3d: crystal_hc49_2pin_hor.py
   style: hc49
   tags: ''
@@ -1409,10 +1217,6 @@ Crystal_HC52-6mm_Horizontal_1EP_style2:
   pad_size: 1.5
   pad_style: tht
   rm: 3.8
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   script3d: crystal_hc49_2pin_hor.py
   style: hc49
   tags: ''
@@ -1430,10 +1234,6 @@ Crystal_HC52-6mm_Vertical:
   pad_size: 1.5
   pins: 2
   rm: 3.8
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   script3d: crystal_hc49_2pin.py
   tags: THT crystalHC-49/U
 Crystal_HC52-8mm_Horizontal:
@@ -1462,10 +1262,6 @@ Crystal_HC52-8mm_Horizontal:
   pad_size: 1.5
   pad_style: tht
   rm: 3.8
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   script3d: crystal_hc49_2pin_hor.py
   style: hc49
   tags: ''
@@ -1495,10 +1291,6 @@ Crystal_HC52-8mm_Horizontal_1EP_style1:
   pad_size: 1.5
   pad_style: tht
   rm: 3.8
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   script3d: crystal_hc49_2pin_hor.py
   style: hc49
   tags: ''
@@ -1528,10 +1320,6 @@ Crystal_HC52-8mm_Horizontal_1EP_style2:
   pad_size: 1.5
   pad_style: tht
   rm: 3.8
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   script3d: crystal_hc49_2pin_hor.py
   style: hc49
   tags: ''
@@ -1549,10 +1337,6 @@ Crystal_HC52-8mm_Vertical:
   pad_size: 1.5
   pins: 2
   rm: 3.8
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   script3d: crystal_hc49_2pin.py
   tags: THT crystalHC-49/U
 Crystal_HC52-U-3Pin_Vertical:
@@ -1569,10 +1353,6 @@ Crystal_HC52-U-3Pin_Vertical:
   pad_size: 1.5
   pins: 3
   rm: 3.8
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   script3d: crystal_hc49_3pin.py
   tags: THT crystalHC-52/U
 Crystal_HC52-U_Horizontal:
@@ -1601,10 +1381,6 @@ Crystal_HC52-U_Horizontal:
   pad_size: 1.5
   pad_style: tht
   rm: 3.8
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   script3d: crystal_hc49_2pin_hor.py
   style: hc49
   tags: ''
@@ -1634,10 +1410,6 @@ Crystal_HC52-U_Horizontal_1EP_style1:
   pad_size: 1.5
   pad_style: tht
   rm: 3.8
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   script3d: crystal_hc49_2pin_hor.py
   style: hc49
   tags: ''
@@ -1667,10 +1439,6 @@ Crystal_HC52-U_Horizontal_1EP_style2:
   pad_size: 1.5
   pad_style: tht
   rm: 3.8
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   script3d: crystal_hc49_2pin_hor.py
   style: hc49
   tags: ''
@@ -1688,10 +1456,6 @@ Crystal_HC52-U_Vertical:
   pad_size: 1.5
   pins: 2
   rm: 3.8
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   script3d: crystal_hc49_2pin.py
   tags: THT crystalHC-52/U
 Crystal_Round_D1.0mm_Vertical:
@@ -1703,10 +1467,6 @@ Crystal_Round_D1.0mm_Vertical:
   pack_diameter: 1
   pad_size: 1
   rm: 1.5
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   tags:
   - DS10
 Crystal_Round_D1.5mm_Vertical:
@@ -1718,10 +1478,6 @@ Crystal_Round_D1.5mm_Vertical:
   pack_diameter: 1.5
   pad_size: 1
   rm: 1.7
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   tags:
   - DS15
 Crystal_Round_D2.0mm_Vertical:
@@ -1733,10 +1489,6 @@ Crystal_Round_D2.0mm_Vertical:
   pack_diameter: 2
   pad_size: 1
   rm: 1.9
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   tags:
   - DS26
 Crystal_Round_D3.0mm_Vertical:
@@ -1748,9 +1500,5 @@ Crystal_Round_D3.0mm_Vertical:
   pack_diameter: 3
   pad_size: 1
   rm: 1.9
-  scale3d:
-  - 0.39370078740157477
-  - 0.39370078740157477
-  - 0.39370078740157477
   tags:
   - C38-LF

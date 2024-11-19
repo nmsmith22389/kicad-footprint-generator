@@ -33,7 +33,7 @@ Resonator_SMD-3Pin_7.2x3.0mm_HandSoldering:
   pack_height: 3
   pack_width: 7.2
   pad:
-  - 2.4499999999999997
+  - 2.45
   - 3.8
   pad_sep_x: 3.55
   pad_sep_y: 0.0
@@ -76,7 +76,7 @@ Resonator_SMD_Murata_CDSCB-2Pin_4.5x2.0mm_HandSoldering:
   - 1
   - 4.55
   pad_sep_x: 3
-  pad_sep_y: 1.9500000000000002
+  pad_sep_y: 1.95
   pins: 2
   style: rect
   tags: SMD SMT ceramic resonator filter filter hand-soldering
