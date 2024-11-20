@@ -873,3 +873,33 @@ SOIC-28W_7.5x18.7mm_P1.27mm:
   pitch: 1.27
   num_pins_x: 0
   num_pins_y: 14
+
+SOIC-32_7.518x20.777mm_P1.27mm:
+  # .300" width body, .818" lenght, .050" pitch
+  size_source: 'JEDEC MO-119-B, 300 mils width, variation AC, https://www.jedec.org/system/files/docs/Mo-119b.pdf'
+  # second source: https://www.mouser.com/ds/2/100/STK14C88-3_001-50592-356490.pdf
+  body_size_x:
+    minimum: 7.417
+    nominal: 7.518
+    maximum: 7.595
+  body_size_y:
+    minimum: 20.625
+    nominal: 20.777
+    maximum: 20.930
+  overall_height:
+    maximum: 2.6416
+  overall_size_x:
+    minimum: 10.287
+    nominal: 10.465
+    maximum: 10.643
+  lead_len:
+    minimum: 0.533
+    nominal: 0.787
+    maximum: 1.041
+  lead_width:
+    minimum: 0.355
+    nominal: 0.406
+    maximum: 0.508
+  pitch: 1.27
+  num_pins_x: 0
+  num_pins_y: 16
