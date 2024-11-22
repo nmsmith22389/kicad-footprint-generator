@@ -354,6 +354,29 @@ Alliance_TFBGA-36_6x8mm_Layout6x8_P0.75mm:
   layout_y: 8
   row_skips: [[], [], [2, 5], [2, 3, 4, 5], [2, 3, 4, 5], [2, 5], [], []]
 
+TFBGA-48_6x10mm_Layout6x8_P0.75mm:
+  # JEDEC MO-207N: AF-2 (Ayy-2 / AF-z), thin profile
+  description: "TFBGA-48, NSMD"
+  size_source: "https://www.jedec.org/system/files/docs/MO-207N.pdf"
+  additional_tags:
+    - "48-ball"
+    - "FBGA"
+  body_size_x: 6.0
+  body_size_y: 10.0
+  overall_height: 1.20
+  pitch: 0.75
+  ball_type: 'collapsible'
+  ball_diameter: 0.45
+  layout_x: 6
+  layout_y: 8
+
+Infineon_TFBGA-48_6x10mm_Layout6x8_P0.75mm:
+  # Similar to JEDEC MO-207N: AF-2, thin profile, but ball b = 0.30 mm
+  inherit: TFBGA-48_6x10mm_Layout6x8_P0.75mm
+  description: "Cypress / Infineon TFBGA-48, NSMD"
+  size_source: "https://www.infineon.com/dgdl/Infineon-CY14U256LA_256-Kbit_(32_K_8)_nvSRAM-DataSheet-v03_00-EN.pdf?fileId=8ac78c8c7d0d8da4017d0ec0a9c33546"
+  ball_diameter: 0.30
+
 TFBGA-49_3x3mm_Layout7x7_P0.4mm:
   description: "TFBGA-49, NSMD"
   size_source: "https://www.efinixinc.com/docs/trion-packaging-ug-v4.9.pdf"
