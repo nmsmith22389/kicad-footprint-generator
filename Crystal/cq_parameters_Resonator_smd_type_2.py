@@ -352,8 +352,10 @@ class cq_parameters_Resonator_smd_type_2:
         pl = params["p_length"]  # pin length
         pw = params["p_width"]  # pin width
         rotation = params["rotation"]  # Rotation if required
-
+        pin_thickness = 0.1
         # print('make_pins ...\r\n')
+        if "p_thickness" in params:
+            pin_thickness = params["p_thickness"] # pin thickness
 
         pins = None
         pil = pl
@@ -366,7 +368,7 @@ class cq_parameters_Resonator_smd_type_2:
                 .workplane(offset=0.0)
                 .moveTo((psx / 2.0), 0.0)
                 .rect(pil, pw)
-                .extrude(0.3)
+                .extrude(pin_thickness)
             )
 
             pin = (
@@ -374,7 +376,7 @@ class cq_parameters_Resonator_smd_type_2:
                 .workplane(offset=0.0)
                 .moveTo(0.0 - (psx / 2.0), 0.0)
                 .rect(pil, pw)
-                .extrude(0.3)
+                .extrude(pin_thickness)
             )
             pins = pins.union(pin)
 
@@ -384,7 +386,7 @@ class cq_parameters_Resonator_smd_type_2:
                 .workplane(offset=0.0)
                 .moveTo((psx / 2.0), psy / 2.0)
                 .rect(pil, pw)
-                .extrude(0.3)
+                .extrude(pin_thickness)
             )
 
             pin = (
@@ -392,7 +394,7 @@ class cq_parameters_Resonator_smd_type_2:
                 .workplane(offset=0.0)
                 .moveTo(0.0 - (psx / 2.0), psy / 2.0)
                 .rect(pil, pw)
-                .extrude(0.3)
+                .extrude(pin_thickness)
             )
             pins = pins.union(pin)
 
@@ -401,7 +403,7 @@ class cq_parameters_Resonator_smd_type_2:
                 .workplane(offset=0.0)
                 .moveTo((psx / 2.0), 0.0 - (psy / 2.0))
                 .rect(pil, pw)
-                .extrude(0.3)
+                .extrude(pin_thickness)
             )
             pins = pins.union(pin)
 
@@ -410,7 +412,7 @@ class cq_parameters_Resonator_smd_type_2:
                 .workplane(offset=0.0)
                 .moveTo(0.0 - (psx / 2.0), 0.0 - (psy / 2.0))
                 .rect(pil, pw)
-                .extrude(0.3)
+                .extrude(pin_thickness)
             )
             pins = pins.union(pin)
 
