@@ -134,8 +134,6 @@ def make_case(params):
     if ex == 0:
         ex = e
 
-    place_pinMark = False
-
     if params["excluded_pins"] is not None:
         epl = list(params["excluded_pins"])
         # expVRML.say(epl)
@@ -185,7 +183,6 @@ def make_case(params):
 
     # first pin indicator is created with a spherical pocket
     if fp_r == 0:
-        place_pinMark = False
         fp_r = 0.1
     if molded is not None:
         the = 24
@@ -234,11 +231,8 @@ def make_case(params):
             ((D - D1_t) / 2 + fp_d + cff, (E - E1_t) / 2 + fp_d + cff, -sp)
         )
         # stop
-        # if (color_pin_mark==False) and (place_pinMark==True):
-        if place_pinMark == True:
-            case = case.cut(pinmark)
+        case = case.cut(pinmark)
         # extract pins from case
-        # case = case.cut(pins)
         case_bot = case_bot.cut(pins)
         ##
 
@@ -265,9 +259,7 @@ def make_case(params):
         )
         # pinmark=pinmark.translate((0,0,A1-sp))
         # stop
-        # if (color_pin_mark==False) and (place_pinMark==True):
-        if place_pinMark == True:
-            case = case.cut(pinmark)
+        case = case.cut(pinmark)
         # extract pins from case
         case = case.cut(pins)
         case_bot = None
@@ -276,8 +268,8 @@ def make_case(params):
     if params["rotation"] != 0:
         # if case_bot != None:
         #     case_bot = case_bot.rotateAboutCenter((0, 1, 0), rot)
-        case = case.rotateAboutCenter((0, 0, 1), rot)
-        pins = pins.rotateAboutCenter((0, 0, 1), rot)
+        case = case.rotate((0, 0, 0), (0, 0, 1), rot)
+        pins = pins.rotate((0, 0, 0), (0, 0, 1), rot)
         pinmark = pinmark.rotate((0, 0, 0), (0, 0, 1), rot)
 
     return (case_bot, case, pins, pinmark)
