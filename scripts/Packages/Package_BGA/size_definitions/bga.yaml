@@ -248,9 +248,26 @@ Texas_DSBGA-8_1.5195x1.5195mm_Layout3x3_P0.5mm:
   layout_y: 3
   mask_margin: 0.05
   row_skips: [[], [2], []]
+Texas_DSBGA-6_0.757x1.01mm_Layout2x3_P0.35mm:
+  description: "Texas Instruments, DSBGA-6, 0.757x1.01mm, SMD, YKA0006 pad definition"
+  size_source: "https://www.ti.com/lit/ds/symlink/tps62843.pdf"
+  additional_tags:
+    - "TI"
+    - "0.787x1.04mm (max)"
+  body_size_x: 0.757
+  body_size_y: 1.01
+  overall_height: 0.4
+  pitch: 0.35
+  pad_diameter: 0.265
+  layout_x: 2
+  layout_y: 3
+  mask_margin: -0.0325
+  paste_shape: "roundrect"
+  paste_margin: -0.0275
+  paste_corner_radius: 0.05
 Texas_DSBGA-6_0.704x1.054mm_Layout2x3_P0.35mm:
-  description: "Texas Instruments, DSBGA-6, 0.704x1.054mm, NSMD, YKA pad definition"
-  size_source: "https://www.ti.com/lit/ml/mxbg383/mxbg383.pdf, https://www.ti.com/lit/ds/symlink/tps62800.pdf"
+  description: "Texas Instruments, DSBGA-6, 0.704x1.054mm, NSMD, YKA0006-C01 pad definition"
+  size_source: "https://www.ti.com/lit/ds/symlink/tps62800.pdf"
   body_size_x: 0.704
   body_size_y: 1.054
   overall_height: 0.4

@@ -94,10 +94,6 @@ In addition to the above, package definitions can use the following, optional pa
 ``paste_ratio``
     Paste ratio to be stored in the footprint. Defaults to whatever the user sets in the board options.
 
-``paste_corner_radius``
-    Radius of the rounded corners of the solder paste stencil opening of shape type ``roundrect``. Defaults to 
-	``round_rect_radius_ratio`` (25%) times the smallest dimension of the paste mask opening.
-
 ``row_names``
     Contains a list with names to be used instead of the default IPC row names ('A', 'B', 'C', ..., 'AA', 'AB', ...)
 

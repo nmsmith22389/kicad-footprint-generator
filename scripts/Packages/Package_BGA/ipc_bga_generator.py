@@ -390,16 +390,13 @@ class BGAGenerator(FootprintGenerator):
                             pasteShape = 'roundrect'
 
                     elif pasteShape == 'roundrect':
+                        corner_radius = min(size) * corner_ratio
                         size[0] += 2*pasteMargin
                         size[1] += 2*pasteMargin
-                        corner_radius = lParams.get('paste_corner_radius', fpParams.get('paste_corner_radius'))
-                        if corner_radius == None:
-                            corner_radius = min(size) * corner_ratio
-                            #corner_radius += pasteMargin
+                        corner_radius += pasteMargin
 
-                        if corner_radius <= 0:
+                        if corner_radius < 0:
                             pasteShape = 'rect'
-                            corner_ratio = 0
                         else:
                             corner_ratio = corner_radius / min(size)
 
