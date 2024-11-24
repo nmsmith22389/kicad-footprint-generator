@@ -681,7 +681,7 @@ SMD-2x2.00mm_Vertical:
   num_pin_rows: 2
   pin_pitch: 2.00
   body_width: 4.0
-  body_height: 4.5
+  body_height: 4.3
   body_board_distance: 0.3
   body_overlength: 0.0
   body_offset: 0.0
@@ -700,7 +700,7 @@ SMD-2x2.00mm_Vertical:
   body_color_key: 'black body'
   pins_color_key: 'gold pins'
   destination_dir : 'Connector_PinSocket_2.00mm.3dshapes'
-  source: 'from Kicad 4.0.7'
+  source: 'https://gct.co/files/drawings/bf100.pdf'
 
 SMD-2x2.54mm_Vertical:
   model_name: 'PinSocket_{0}x{1}_P2.54mm_Vertical_SMD'
