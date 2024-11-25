@@ -1173,6 +1173,36 @@ NXP_VFBGA-42_2.6x3mm_Layout6x7_P0.4mm_Ball0.25mm_Pad0.24mm:
   pins_color_key: "metal grey pins"
   marking_color_key: "light brown label"
 
+Texas_DSBGA-6_0.757x1.01mm_Layout2x3_P0.35mm:
+  # YKA0006 pad definition from https://www.ti.com/lit/ds/symlink/tps62843.pdf
+  fp_r: 0.15
+  fp_d: 0.01
+  fp_z: 0.01
+  ef: 0.0
+  cff: null
+  cf: null
+  D: 1.01
+  E: 0.757
+  D1: null
+  E1: null
+  A1: 0.155
+  A2: null
+  A: 0.375
+  b: 0.215
+  e: 0.35
+  ex: null
+  sp: 0.0
+  npx: 3
+  npy: 2
+  excluded_pins: ['internals']
+  molded: null
+  modelName: "Texas_DSBGA-6_0.757x1.01mm_Layout2x3_P0.35mm"
+  rotation: -90
+  body_bot_color_key: "dark green body"
+  body_color_key: "black body"
+  pins_color_key: "metal grey pins"
+  marking_color_key: "light brown label"
+
 Texas_DSBGA-8_0.705x1.468mm_Layout2x4_P0.4mm:
   # YBJ pad definition  from https://www.ti.com/lit/ds/symlink/ina234.pdf
   fp_r: 0.2
