@@ -349,7 +349,7 @@ class smd_socket_strip(socket_strip):
             self.pin1start_right = False
 
         # self.pin1start_right = params['pin1start_right']
-        self.offsets = (0, 0, self.pin_thickness * 1.5)
+        self.offsets = (0, 0, self.body_board_distance)
 
     def makeModelName(self, genericName):
         return socket_strip.makeModelName(self, genericName) + (
