@@ -401,7 +401,7 @@ class BGAGenerator(FootprintGenerator):
                             corner_ratio = corner_radius / min(size)
 
                     f.append(Pad(
-                        number="{}{}".format(row, col), type=Pad.TYPE_SMT,
+                        number="", type=Pad.TYPE_SMT,
                         shape=pasteShape,
                         at=[xPadLeft + (col-1) * pitchX, yPadTop + rowNum * pitchY],
                         size=size,
