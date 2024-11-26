@@ -37,7 +37,7 @@ def main():
     parser.add_argument(
         "-p",
         "--package",
-        nargs="*",
+        action="append",
         help="Selects a specific package configuration to generate models for.",
     )
     parser.add_argument("-v", "--verbose", help="Show OCCT output", action="store_true")
