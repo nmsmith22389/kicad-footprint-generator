@@ -360,6 +360,42 @@ AMS_LGA-10-1EP_2.7x4mm_P0.6mm:
   mark_color_key: 'light brown label'
   source: 'https://web.archive.org/web/20181207160723if_/http://ams.com:80/documents/20143/36005/CCS811_DS000459_6-00.pdf/c7091525-c7e5-37ac-eedb-b6c6828b0dcf'
 
+ST_HLGA-10_2x2mm_P0.5mm_LayoutBorder3x2y:
+  c: 0.2
+  L: 0.275
+  fp_s: True
+  fp_r: 0.2
+  fp_d: 0.05
+  fp_dx: null
+  fp_dy: null
+  fp_z: 0.02
+  ef: 0.0
+  cce: null
+  D: 2.0
+  E: 2.0
+  A1: 0.07
+  A2: 0.73
+  b: 0.25
+  e: 0.5
+  m: 0.1
+  ps: square
+  npx: 2
+  npy: 3
+  epad: null
+  epad_offsetX: null
+  epad_offsetY: null
+  epad_n: null
+  epad_pitch: null
+  excluded_pins: null
+  model_name: ST_HLGA-10_2x2mm_P0.5mm_LayoutBorder3x2y
+  rotation: -90
+  destination_dir: Package_LGA.3dshapes
+  pin_shapes: null
+  body_color_key: 'black body'
+  pin_color_key: 'metal grey pins'
+  mark_color_key: 'light brown label'
+  source: 'https://www.st.com/resource/en/datasheet/lps22hh.pdf'
+  
 LGA-12_2x2mm_P0.5mm:
   c: 0.2
   L: 0.25
