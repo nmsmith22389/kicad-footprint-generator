@@ -40,6 +40,19 @@ formatting:
       # - audit_log.txt
   when: manual
 
+.model_with_packages:
+  extends:
+    - .model
+  script:
+    - |
+      package_args=""
+      for package in $packages
+        do
+          package_args="$package_args -p $package"
+        done
+    - echo "./generator.py --output_dir ./3dmodels --library $library $package_args"
+    - ./generator.py --output_dir ./3dmodels --library $library $package_args
+
 #
 # 4UCON_17809
 #
@@ -138,18 +151,6 @@ Capacitor_THT:
     library: Capacitor_THT
   extends:
     - .model
-
-#
-# Connector_PinSocket
-#
-Connector_PinSocket:
-  variables:
-    library: Connector_PinSocket
-  extends:
-    - .model
-  timeout: 6 hours
-  tags:
-    - kicad-ubuntu20.04
 
 #
 # Connector_Stocko
@@ -584,3 +585,79 @@ Varistor:
     library: Varistor
   extends:
     - .model
+
+#
+# Connector_PinSocket
+#
+Connector_PinSocket_THT_1.00:
+  variables:
+    library: Connector_PinSocket
+    packages: >
+      THT-1x1.00mm_Vertical
+  extends:
+    - .model_with_packages
+Connector_PinSocket_SMD_1.00:
+  variables:
+    library: Connector_PinSocket
+    packages: >
+      SMD-1x1.00mm_Vertical_Right
+      SMD-1x1.00mm_Vertical_Left
+      SMD-2x1.00mm_Vertical
+  extends:
+    - .model_with_packages
+Connector_PinSocket_THT_1.27:
+  variables:
+    library: Connector_PinSocket
+    packages: >
+      THT-1x1.27mm_Vertical
+      THT-2x1.27mm_Vertical
+      THT-2x1.27mm_Horizontal
+  extends:
+    - .model_with_packages
+Connector_PinSocket_SMD_1.27:
+  variables:
+    library: Connector_PinSocket
+    packages: >
+      SMD-1x1.27mm_Vertical_Right
+      SMD-1x1.27mm_Vertical_Left
+      SMD-2x1.27mm_Vertical
+  extends:
+    - .model_with_packages
+Connector_PinSocket_THT_2.00:
+  variables:
+    library: Connector_PinSocket
+    packages: >
+      THT-1x2.00mm_Vertical
+      THT-2x2.00mm_Vertical
+      THT-1x2.00mm_Horizontal
+      THT-2x2.00mm_Horizontal
+  extends:
+    - .model_with_packages
+Connector_PinSocket_SMD_2.00:
+  variables:
+    library: Connector_PinSocket
+    packages: >
+      SMD-1x2.00mm_Vertical_Right
+      SMD-1x2.00mm_Vertical_Left
+      SMD-2x2.00mm_Vertical
+  extends:
+    - .model_with_packages
+Connector_PinSocket_THT_2.54:
+  variables:
+    library: Connector_PinSocket
+    packages: >
+      THT-1x2.54mm_Vertical
+      THT-2x2.54mm_Vertical
+      THT-1x2.54mm_Horizontal
+      THT-2x2.54mm_Horizontal
+  extends:
+    - .model_with_packages
+Connector_PinSocket_SMD_2.54:
+  variables:
+    library: Connector_PinSocket
+    packages: >
+      SMD-1x2.54mm_Vertical_Right
+      SMD-1x2.54mm_Vertical_Left
+      SMD-2x2.54mm_Vertical
+  extends:
+    - .model_with_packages
