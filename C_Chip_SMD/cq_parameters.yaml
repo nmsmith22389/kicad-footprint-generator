@@ -178,10 +178,10 @@ C_2010_5025Metric:
   destination_dir : 'Capacitor_SMD.3dshapes'
   source: 'http://www.topline.tv/SizeChart.html'
 
-C_2220_5650Metric:
-  modelName: 'C_2220_5650Metric'
+C_2220_5750Metric:
+  modelName: 'C_2220_5750Metric'
   model_class: 'c_chip_smd'
-  length: 5.6
+  length: 5.7
   width: 5.0
   height: 2.9
   pin_band: 0.5
