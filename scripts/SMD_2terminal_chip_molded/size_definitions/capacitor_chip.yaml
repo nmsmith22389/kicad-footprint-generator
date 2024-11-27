@@ -53,6 +53,21 @@ C_1210:
         minimum: 0.25
         maximum: 0.75
     size_info: '(Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)'
+    
+C_1808:
+    code_imperial: "1808"
+    code_metric: "4520"
+    body_length:
+        minimum: 4.1
+        maximum: 5
+    body_width:
+        minimum: 1.8
+        maximum: 2.3
+    terminal_length:
+        minimum: 0.2
+        maximum: 1
+# See also http://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GA342DR7GF102KW02-01.pdf
+    size_info: '(Body size source: datasheet page 3, https://product.tdk.com/system/files/dam/doc/product/capacitor/ceramic/mlcc/catalog/mlcc_commercial_soft_en.pdf)'
 
 C_1812:
     code_imperial: "1812"
