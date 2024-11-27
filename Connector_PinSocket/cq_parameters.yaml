@@ -566,7 +566,7 @@ SMD-1x2.54mm_Vertical_Right:
   pin_pitch: 2.54
   body_width: 2.54
   body_height: 7.1
-  body_board_distance: 0.3
+  body_board_distance: 0.4
   body_overlength: 0.2
   body_offset: 0.0
   pin1start_right: true
@@ -595,7 +595,7 @@ SMD-1x2.54mm_Vertical_Left:
   pin_pitch: 2.54
   body_width: 2.54
   body_height: 7.1
-  body_board_distance: 0.3
+  body_board_distance: 0.4
   body_overlength: 0.2
   body_offset: 0.0
   pin1start_right: false
@@ -710,7 +710,7 @@ SMD-2x2.54mm_Vertical:
   num_pin_rows: 2
   pin_pitch: 2.54
   body_width: 5.08
-  body_height: 7.0
+  body_height: 7.15 # body_height + body_board_distance = 7.45; body_height cannot be deducted from the datasheet
   body_board_distance: 0.3
   body_overlength: 0.0
   body_offset: 0.0
@@ -720,7 +720,7 @@ SMD-2x2.54mm_Vertical:
   pin_width: 0.64
   pin_thickness: 0.2
   pins_drill: None
-  pin_length: 7.84
+  pin_length: 6.70
   pins_offset: 0.0
   pads_length: 3.0
   pads_width: 1.0
@@ -729,4 +729,4 @@ SMD-2x2.54mm_Vertical:
   body_color_key: 'black body'
   pins_color_key: 'gold pins'
   destination_dir : 'Connector_PinSocket_2.54mm.3dshapes'
-  source: 'from Kicad 4.0.7'
+  source: 'https://www.we-online.com/components/products/datasheet/61000421821.pdf'
