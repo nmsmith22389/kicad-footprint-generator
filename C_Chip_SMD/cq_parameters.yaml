@@ -117,6 +117,21 @@ C_1806_4516Metric:
   pins_color_key: 'metal grey pins'
   destination_dir : 'Capacitor_SMD.3dshapes'
   source: 'http://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GA342DR7GF102KW02-01.pdf'
+  
+C_1808_4520Metric:
+  modelName: 'C_1808_4520Metric'
+  model_class: 'c_chip_smd'
+  length: 4.5
+  width: 2.0
+  height: 2.0
+  pin_band: 0.25
+  pin_thickness: 'auto'
+  edge_fillet: 'auto'
+  rotation: 0
+  body_color_key: 'brown body'
+  pins_color_key: 'metal grey pins'
+  destination_dir : 'Capacitor_SMD.3dshapes'
+  source: 'http://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GA342DR7GF102KW02-01.pdf'
 
 C_1812_4532Metric:
   modelName: 'C_1812_4532Metric'
@@ -163,10 +178,10 @@ C_2010_5025Metric:
   destination_dir : 'Capacitor_SMD.3dshapes'
   source: 'http://www.topline.tv/SizeChart.html'
 
-C_2220_5750Metric:
-  modelName: 'C_2220_5750Metric'
+C_2220_5650Metric:
+  modelName: 'C_2220_5650Metric'
   model_class: 'c_chip_smd'
-  length: 5.7
+  length: 5.6
   width: 5.0
   height: 2.9
   pin_band: 0.5
