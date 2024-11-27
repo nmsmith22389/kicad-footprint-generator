@@ -4,6 +4,8 @@ import argparse
 import importlib
 import os
 import sys
+import datetime
+import multiprocessing
 
 from OCP.Message import Message, Message_Gravity
 
@@ -51,6 +53,13 @@ def main():
         help="Do not run the generators, only print the list of parts and libraries.",
         action="store_true",
     )
+    parser.add_argument(
+        "-t",
+        "--threads",
+        default=1,
+        help="Parallelize library generation, specify number of processes to generate libraries. Example: -t 2 will use two processes to generate libraries.",
+        type=int,
+    )
     args = parser.parse_args()
 
     # This is an odd CLI, but it's always been like this
@@ -91,50 +100,73 @@ def main():
             sys.exit(1)
         libraries_to_generate = [library]
 
-    for index, library in enumerate(libraries_to_generate):
-        known_packages = get_package_names(library)
-        # Import the current library to run the generator
-        mod = importlib.import_module(library + ".main_generator")
-
-        packages_to_generate = []
-
-        # Some libraries like Inductors_SMD don't list their parts, so they need special handling
-        if known_packages is None:
-            if not args.package:
-                print(
-                    f"Generating library {index+1}/{len(libraries_to_generate)}: {library} with unknown number of entries"
-                )
-                packages_to_generate = ["all"]
-
-            elif args.library is not None:
-                packages_to_generate += args.package
+    start_time = datetime.datetime.now()
+    if args.threads == 1:
+        for index, library in enumerate(libraries_to_generate):
+            generate_library(library, index, len(libraries_to_generate), args)
+    else:
+        if args.threads == 0:
+            threads = os.cpu_count()
         else:
-            # Generate all or a specific package based on the command line arguments
-            if not args.package:
-                packages_to_generate = known_packages
-            else:
+            threads = args.threads
+        with multiprocessing.Pool(processes=threads) as pool:
+            for index, library in enumerate(libraries_to_generate):
+                pool.apply_async(
+                    generate_library,
+                    args=(
+                        library,
+                        index,
+                        len(libraries_to_generate),
+                        args,
+                    ),
+                )
+            pool.close()
+            pool.join()
 
-                for package in args.package:
-                    # If the part exists in that library, generate it, otherwise error out
-                    if package in known_packages:
-                        packages_to_generate.append(package)
-                    else:
-                        print(f"Part '{package}' does not exist in library {library}")
-                        sys.exit(1)
+    stop_time = datetime.datetime.now()
+    print("Generation complete. Execution time:", stop_time - start_time)
 
-        if len(packages_to_generate) > 1:
+
+def generate_library(library, index, libraries_count, args):
+    known_packages = get_package_names(library)
+    # Import the current library to run the generator
+    mod = importlib.import_module(library + ".main_generator")
+
+    packages_to_generate = []
+
+    # Some libraries like Inductors_SMD don't list their parts, so they need special handling
+    if known_packages is None:
+        if not args.package:
             print(
-                f"Generating library {index+1}/{len(libraries_to_generate)}: {library}"
+                f"Generating library {index+1}/{libraries_count}: {library} with unknown number of entries"
             )
+            packages_to_generate = ["all"]
 
-        for package_index, package in enumerate(packages_to_generate):
-            print(
-                f"    => Generating part {package_index+1}/{len(packages_to_generate)}: '{package}' from library '{library}'"
-            )
-            if not args.dry_run:
-                mod.make_models(package, args.output_dir, args.enable_vrml)
+        elif args.library is not None:
+            packages_to_generate += args.package
+    else:
+        # Generate all or a specific package based on the command line arguments
+        if not args.package:
+            packages_to_generate = known_packages
+        else:
 
-    print("Generation complete.")
+            for package in args.package:
+                # If the part exists in that library, generate it, otherwise error out
+                if package in known_packages:
+                    packages_to_generate.append(package)
+                else:
+                    print(f"Part '{package}' does not exist in library {library}")
+                    sys.exit(1)
+
+    if len(packages_to_generate) > 1:
+        print(f"Generating library {index+1}/{libraries_count}: {library}")
+
+    for package_index, package in enumerate(packages_to_generate):
+        print(
+            f"    => Generating part {package_index+1}/{len(packages_to_generate)}: '{package}' from library '{library}'"
+        )
+        if not args.dry_run:
+            mod.make_models(package, args.output_dir, args.enable_vrml)
 
 
 if __name__ == "__main__":
