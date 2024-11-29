@@ -1,5 +1,7 @@
 from math import sqrt
 
+import cadquery as cq
+
 
 def v_add(p1, p2):
     return (p1[0] + p2[0], p1[1] + p2[1])
@@ -42,7 +44,5 @@ def poline(points, plane):
 
 
 def union_all(objects):
-    o = objects[0]
-    for i in range(1, len(objects)):
-        o = o.union(objects[i])
-    return o
+    shapes = [wp.val() for wp in objects]
+    return cq.Workplane().union(cq.Workplane().add(shapes))

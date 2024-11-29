@@ -37,6 +37,8 @@ from math import cos, radians, sin, tan
 
 import cadquery as cq
 
+from _tools.cq_helpers import union_all
+
 from .cq_base_model import PartBase, Polyline
 from .cq_parameters import CodeFormat, ShapeOfTerminal
 
@@ -604,7 +606,7 @@ class switchNidecSH70x0x(PartBaseExt):  # , partParams):
             nextPin = nextPin.rotate((0, 0, 0), (0, 0, 1), 180.0 * (i // m))
             if not (i == 4 and codeFormat == CodeFormat.GRAY):
                 pins.append(nextPin)
-        return self._union_all(pins)
+        return union_all(pins)
 
     def _makeGwPin(self, params):
         return self._make_angular_gullwing_pin(

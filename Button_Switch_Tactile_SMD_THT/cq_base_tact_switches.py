@@ -50,6 +50,8 @@ from collections.abc import Mapping
 
 import cadquery as cq
 
+from _tools.cq_helpers import union_all
+
 from .cq_base_model import PartBase, Polyline  # modules parameters
 
 # import cq_parameters  # modules parameters
@@ -1151,7 +1153,7 @@ class cqMakerTactSwitch(PartBase, partParamsTactSwitches):
             nextPin = onePin.translate((-pitch * (i % m), 0, 0))
             nextPin = nextPin.rotate((0, 0, 0), (0, 0, 1), 180.0 * (i // m))
             pins.append(nextPin)
-        return self._union_all(pins)
+        return union_all(pins)
 
     def _makeGwPin(self):
         """create a gullwing pin

@@ -41,6 +41,8 @@ from math import radians, sin, tan
 
 import cadquery as cq
 
+from _tools.cq_helpers import union_all
+
 # import FreeCAD
 
 
@@ -336,7 +338,6 @@ class PartBase(object):
     """Base class for model creation, to be subclassed
 
     .. document private functions
-    .. automethod:: _union_all
     .. automethod:: _mirror
     .. automethod:: _make_gullwing_pin
     .. automethod:: _make_Jhook_pin
@@ -419,12 +420,6 @@ class PartBase(object):
     def say(self, msg):
         print("##: " + str(msg) + "\n")
 
-    def _union_all(self, objects):
-        o = objects[0]
-        for i in range(1, len(objects)):
-            o = o.union(objects[i])
-        return o
-
     def _mirror(self, obj, pins=None, pitch=None):
 
         if pins is None:
@@ -437,7 +432,7 @@ class PartBase(object):
         for i in range(2, int(pins) + 1):
             objs.append(obj.translate((-pitch * (i - 1), 0, 0)))
 
-        return self._union_all(objs)
+        return union_all(objs)
 
     def _make_plastic_body(
         self, pin_area_height=None, body_angle_top=12.0, body_angle_bottom=12.0

@@ -2,6 +2,8 @@ from math import radians, tan
 
 import cadquery as cq
 
+from _tools.cq_helpers import union_all
+
 CASE_THT_TYPE = "tht"
 CASE_SMD_TYPE = "smd"
 CASE_THTSMD_TYPE = "thtsmd"
@@ -274,12 +276,6 @@ def make_pins_tht(params):
     pinsL.append(pinl)
     pinsR.append(pinl.translate((0, 0, 0)))
 
-    def union_all(objects):
-        o = objects[0]
-        for i in range(1, len(objects)):
-            o = o.union(objects[i])
-        return o
-
     # print('\r\n')
     pinsLNew = []
     pinsRNew = []
@@ -526,12 +522,6 @@ def make_pins_smd(params):
 
     pinsL.append(pinl)
     pinsR.append(pinl.translate((0, 0, 0)))
-
-    def union_all(objects):
-        o = objects[0]
-        for i in range(1, len(objects)):
-            o = o.union(objects[i])
-        return o
 
     # print('\r\n')
     pinsLNew = []

@@ -51,6 +51,8 @@ from collections import namedtuple
 
 import cadquery as cq
 
+from _tools.cq_helpers import union_all
+
 # from Helpers import show
 
 # import FreeCAD, Draft, FreeCADGui
@@ -139,12 +141,6 @@ class cqMakerWagoConn734:
         """
         return self.make_me
 
-    def _union_all(self, objects):
-        o = objects[0]
-        for i in range(1, len(objects)):
-            o = o.union(objects[i])
-        return o
-
     def _mirror(self, obj, pins=None, pitch=None):
 
         if pins is None:
@@ -157,7 +153,7 @@ class cqMakerWagoConn734:
         for i in range(2, pins + 1):
             objs.append(obj.translate((-pitch * (i - 1), 0, 0)))
 
-        return self._union_all(objs)
+        return union_all(objs)
 
     def __innerPocket(self):
         """create a body to be used for cutting the inner part of the connector.
@@ -379,7 +375,7 @@ class cqMakerWagoConn734:
         for i in range(1, noPins):
             nextPin = onePin.translate((pitch * (i), 0, 0))
             pins.append(nextPin)
-        return self._union_all(pins)
+        return union_all(pins)
 
     def _make_straight_pin(self):
         """create a straigth pin centered at (0, 0, -self.pin_length_below_body) for vertical connectors.

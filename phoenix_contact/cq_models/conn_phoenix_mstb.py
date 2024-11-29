@@ -59,7 +59,7 @@ from collections import namedtuple
 import cadquery as cq
 
 # import FreeCAD
-from .cq_helpers import *
+from _tools.cq_helpers import *
 
 # from conn_phoenix_mstb_params import *
 
