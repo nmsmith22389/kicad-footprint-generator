@@ -94,7 +94,7 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             os.makedirs(output_dir)
 
         # Export the assembly to STEP
-        component.name = file_name
+        component.name = model
         component.save(
             os.path.join(output_dir, model + ".step"),
             cq.exporters.ExportTypes.STEP,
