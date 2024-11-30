@@ -123,12 +123,12 @@ class socket_strip(PartBase):
 
         # create first pin pocket
         pocket = (
-            cq.Workplane("XY", origin=first_pin_pos + (self.body_height,))
+            cq.Workplane("XY", origin=first_pin_pos + (self.body_height + 0.001,))
             .rect(rsz, rsz)
-            .extrude(-rsz / 4.0)
+            .extrude(-rsz / 4.0 - 0.001)
             .faces("<Z")
             .edges()
-            .chamfer(rsz / 4.0 - 0.001)
+            .chamfer(rsz / 4.0)
             .faces("<Z")
             .rect(self.pin_socket_size, self.pin_socket_size)
             .extrude(-self.body_height + rsz)
