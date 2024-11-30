@@ -62,9 +62,7 @@ def get_colored_meshes(export_objects, used_color_keys, scale=None):
         face_color = used_color_keys[shape_index]
 
         # Step through all of the faces in the shape
-        for face_index in range(len(occt_shape.Faces())):
-            single_face = occt_shape.Faces()[face_index]
-
+        for single_face in occt_shape.Faces():
             # Triangulate the face to a mesh and save it
             meshes.append(shape_to_mesh(single_face, face_color, transparency, scale))
 
