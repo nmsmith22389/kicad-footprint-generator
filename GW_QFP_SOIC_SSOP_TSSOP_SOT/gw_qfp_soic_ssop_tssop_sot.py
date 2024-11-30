@@ -52,6 +52,8 @@ from math import radians, sqrt, tan
 
 import cadquery as cq
 
+from _tools.cq_helpers import union_all
+
 max_cc1 = 1
 color_pin_mark = False
 place_pinMark = True
@@ -428,12 +430,9 @@ def make_gw(params):
             # extrude(A1+A1/10)
             pins.append(epad)
     # merge all pins to a single object
-    merged_pins = pins[0]
-    for p in pins[1:]:
-        merged_pins = merged_pins.union(p)
-    pins = merged_pins
+    merged_pins = union_all(pins);
 
     # extract pins from case
-    case = case.cut(pins)
+    case = case.cut(merged_pins)
 
-    return (case, pins, pinmark)
+    return (case, merged_pins, pinmark)
