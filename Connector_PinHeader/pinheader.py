@@ -53,6 +53,8 @@ ___ver___ = "2.0.0 21/11/2017"
 
 import cadquery as cq
 
+from _tools.cq_helpers import union_all
+
 
 def make_Vertical_THT_base(n, pitch, rows, base_width, base_height, base_chamfer):
     if base_chamfer == 0:
@@ -263,13 +265,13 @@ def make_Vertical_THT_pins(
     )
     if pin_end_chamfer > 0:
         pin = pin.edges("#Z").chamfer(pin_end_chamfer)
-    pins = cq.Workplane("XY").workplane(
-        centerOption="CenterOfMass", offset=-pin_length_below_board
-    )
+
+    pins = []
     for x in range(rows):
         for y in range(n):
-            pins = pins.union(pin.translate((x * pitch, y * -pitch, 0)))
-    return pins
+            pins.append(pin.translate((x * pitch, y * -pitch, 0)))
+
+    return union_all(pins)
 
 
 def make_Horizontal_THT_pins(
@@ -327,11 +329,13 @@ def make_Horizontal_THT_pins(
         if pin_end_chamfer > 0:
             pin_array[row] = pin_array[row].faces("<Z").chamfer(pin_end_chamfer)
             pin_array[row] = pin_array[row].faces(">X").chamfer(pin_end_chamfer)
-    pins = cq.Workplane("XY")  # .workplane(offset=-pin_length_below_board)
+
+    pins = []
     for x in range(rows):
         for y in range(n):
-            pins = pins.union(pin_array[x].translate((0, y * -pitch, 0)))
-    return pins
+            pins.append(pin_array[x].translate((0, y * -pitch, 0)))
+
+    return union_all(pins)
 
 
 def make_Vertical_SMD_pins(
@@ -393,7 +397,7 @@ def make_Vertical_SMD_pins(
     if pin_end_chamfer > 0:
         pin_array[1] = pin_array[1].faces(">Z").chamfer(pin_end_chamfer)
         pin_array[1] = pin_array[1].faces(">X").chamfer(pin_end_chamfer)
-    pins = cq.Workplane("XY")  # .workplane(offset=-pin_length_below_board)
+
     if rows == 1:
         if pin_1_start == "right":
             right_pin = range(1, n, 2)
@@ -407,8 +411,9 @@ def make_Vertical_SMD_pins(
         right_pin = range(n)
         left_pin = range(n)
 
+    pins = []
     for y in right_pin:
-        pins = pins.union(pin_array[0].translate((0, y * -pitch, 0)))
+        pins.append(pin_array[0].translate((0, y * -pitch, 0)))
     for y in left_pin:
-        pins = pins.union(pin_array[1].translate((0, y * -pitch, 0)))
-    return pins
+        pins.append(pin_array[1].translate((0, y * -pitch, 0)))
+    return union_all(pins)
