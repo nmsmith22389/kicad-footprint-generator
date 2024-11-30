@@ -199,6 +199,9 @@ def make_models(model_to_build=None, output_dir=None, enable_vrml=True):
         # Check for a proper union
         export_tools.check_step_export_union(component, output_dir, model)
 
+        # Do STEP post-processing
+        export_tools.postprocess_step(component, output_dir, model)
+
         # Export the assembly to VRML
         if enable_vrml:
             export_VRML(

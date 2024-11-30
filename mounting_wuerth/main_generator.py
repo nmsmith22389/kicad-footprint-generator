@@ -184,6 +184,9 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             # Check for a proper union
             export_tools.check_step_export_union(component, output_dir, file_name)
 
+            # Do STEP post-processing
+            export_tools.postprocess_step(component, output_dir, file_name)
+
             # Add the custom license info
             from _tools import add_license
 

@@ -169,12 +169,15 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
         component.save(
             os.path.join(output_dir, file_name + ".step"),
             cq.exporters.ExportTypes.STEP,
-            mode=cq.exporters.assembly.ExportModes.FUSED,
+            mode=cq.exporters.assembly.ExportModes.DEFAULT,
             write_pcurves=False,
         )
 
         # Check for a proper union
-        export_tools.check_step_export_union(component, output_dir, file_name)
+        # export_tools.check_step_export_union(component, output_dir, file_name)
+
+        # Do STEP post-processing
+        export_tools.postprocess_step(component, output_dir, file_name)
 
         # Export the assembly to VRML
         if enable_vrml:

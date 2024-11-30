@@ -215,6 +215,9 @@ class SmdInductorGenerator:
         # Check for a proper union
         export_tools.check_step_export_union(component, output_dir, file_name)
 
+        # Do STEP post-processing
+        export_tools.postprocess_step(component, output_dir, file_name)
+
         # Export the assembly to VRML
         # Dec 2022- do not use CadQuery VRML export, it scales/uses inches.
         export_VRML(
