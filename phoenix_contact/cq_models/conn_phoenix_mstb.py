@@ -217,11 +217,11 @@ def generate_pins(params):
     else:
         pin = generate_straight_pin(params)
 
-    pins = pin
+    pins = []
     for i in range(0, num_pins):
-        pins = pins.union(pin.translate((i * pin_pitch, 0, 0)))
+        pins.append(pin.translate((i * pin_pitch, 0, 0)))
 
-    return pins
+    return union_all(pins)
 
 
 def generate_body(params, calc_dim, with_details=False):
@@ -314,12 +314,12 @@ def generate_straight_body(params, calc_dim, with_details):
             .extrude(-plug_depth)
         )
 
-        plug_cutouts = plug_cutout
+        plug_cutouts = []
         for i in range(0, num_pins):
-            plug_cutouts = plug_cutouts.union(
+            plug_cutouts.append(
                 plug_cutout.translate((i * pin_pitch, 0, 0))
             )
-        body = body.cut(plug_cutouts)
+        body = body.cut(union_all(plug_cutouts))
 
     back_width = body_width - plug_width - (front_side - plug_front)
     lock_cutout = (
@@ -333,20 +333,20 @@ def generate_straight_body(params, calc_dim, with_details):
         .extrude(back_width)
     )
 
-    lock_cutouts = lock_cutout
+    lock_cutouts = []
     for i in range(0, num_pins):
-        lock_cutouts = lock_cutouts.union(lock_cutout.translate((i * pin_pitch, 0, 0)))
+        lock_cutouts.append(lock_cutout.translate((i * pin_pitch, 0, 0)))
 
     if params["flanged"]:
-        lock_cutouts = lock_cutouts.union(
+        lock_cutouts.append(
             lock_cutout.translate((-mount_hole_to_pin, 0, 0))
         )
-        lock_cutouts = lock_cutouts.union(
+        lock_cutouts.append(
             lock_cutout.translate(
                 (mount_hole_to_pin + (num_pins - 1) * pin_pitch, 0, 0)
             )
         )
-    body = body.cut(lock_cutouts)
+    body = body.cut(union_all(lock_cutouts))
 
     insert = None
     if params["flanged"] and with_details:
@@ -558,10 +558,10 @@ def generate_plug_straight(params, calc_dim):
         .rect(2 * 2, 0.4)
         .cutBlind(-0.3)
     )
-    screws = single_screw
+    screws = []
     for i in range(params["num_pins"]):
         # temp=single_screw.translate((i*params['pin_pitch, 0, 0))
-        screws = screws.union(single_screw.translate((i * params["pin_pitch"], 0, 0)))
+        screws.append(single_screw.translate((i * params["pin_pitch"], 0, 0)))
 
     for i in range(params["num_pins"]):
         plug_body = plug_body.cut(
@@ -604,8 +604,8 @@ def generate_plug_straight(params, calc_dim):
             .cutBlind(-0.3)
         )
 
-        screws = screws.union(plug_mount_screw)
-        screws = screws.union(plug_mount_screw.translate((-mh_distance, 0, 0)))
+        screws.append(plug_mount_screw)
+        screws.append(plug_mount_screw.translate((-mh_distance, 0, 0)))
         plug_body = plug_body.union(plug_flange)
 
         BS = cq.selectors.BoxSelector
@@ -637,7 +637,7 @@ def generate_plug_straight(params, calc_dim):
             wire_cutout.translate((i * params["pin_pitch"], 0, 0))
         )
 
-    return plug_body, screws
+    return plug_body, union_all(screws)
 
 
 def generate_plug(params, calc_dim):

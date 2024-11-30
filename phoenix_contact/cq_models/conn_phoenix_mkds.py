@@ -1,5 +1,7 @@
 import cadquery as cq
 
+from _tools.cq_helpers import union_all
+
 
 def make_case_MKDS_1_5_10_5_08(params, pinnumber):
     W = params["W"]  # package width
@@ -110,7 +112,7 @@ def make_pins_MKDS_1_5_10_5_08(params, pinnumber):
     rotation = params["rotation"]  # rotation if required
 
     px = 0.0
-    pins = None
+    pins = []
 
     for i in range(0, pinnumber):
         if PF == "round":
@@ -121,7 +123,7 @@ def make_pins_MKDS_1_5_10_5_08(params, pinnumber):
                 .circle(PD[0] / 2.0, False)
                 .extrude(0 - (A1 + PL))
             )
-            pint = pins.faces("<Z").fillet(PD[0] / 2.2)
+            pint = pint.faces("<Z").fillet(PD[0] / 2.2)
         else:
             pint = (
                 cq.Workplane("XY")
@@ -135,10 +137,7 @@ def make_pins_MKDS_1_5_10_5_08(params, pinnumber):
             else:
                 pint = pint.faces("<Z").fillet(PD[1] / 2.2)
 
-        if i == 0:
-            pins = pint
-        else:
-            pins = pins.union(pint)
+        pins.append(pint)
 
         px = px + PS
 
@@ -165,7 +164,7 @@ def make_pins_MKDS_1_5_10_5_08(params, pinnumber):
             .extrude(0.0 - 1.0)
         )
         pint = pint.cut(pint2)
-        pins = pins.union(pint)
+        pins.append(pint)
 
         px = px + PS
 
@@ -192,10 +191,12 @@ def make_pins_MKDS_1_5_10_5_08(params, pinnumber):
         )
         pint = pint.cut(pint2)
         pint = pint.faces("<Y").fillet(0.1)
-        pins = pins.union(pint)
+        pins.append(pint)
         px = px + PS
 
-    if rotation > 0.01:
-        pins = pins.rotate((0, 0, 0), (0, 0, 1), rotation)
+    merged_pins = union_all(pins)
 
-    return pins
+    if rotation > 0.01:
+        merged_pins = merged_pins.rotate((0, 0, 0), (0, 0, 1), rotation)
+
+    return merged_pins

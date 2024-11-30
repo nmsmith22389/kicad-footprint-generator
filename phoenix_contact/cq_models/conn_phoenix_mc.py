@@ -218,11 +218,11 @@ def generate_pins(params, calc_dim):
     else:
         pin = generate_straight_pin(params)
 
-    pins = pin
+    pins = []
     for i in range(0, num_pins):
-        pins = pins.union(pin.translate((i * pin_pitch, 0, 0)))
+        pins.append(pin.translate((i * pin_pitch, 0, 0)))
 
-    return pins
+    return union_all(pins)
 
 
 def generate_body(params, calc_dim, with_details=True):
@@ -367,12 +367,12 @@ def generate_straight_body(params, calc_dim, with_details):
             .close()
             .extrude(seriesParams.plug_cutout_depth)
         )
-        plug_cutouts = single_cutout
+        plug_cutouts = []
         for i in range(0, params["num_pins"]):
-            plug_cutouts = plug_cutouts.union(
+            plug_cutouts.append(
                 single_cutout.translate((i * params["pin_pitch"], 0, 0))
             )
-        body = body.cut(plug_cutouts)
+        body = body.cut(union_all(plug_cutouts))
     insert = None
     if params["flanged"] and with_details:
         thread_insert = (
@@ -649,20 +649,20 @@ def generate_plug_staight(params, calc_dim):
     )
     # .close().extrude(2)
 
-    screwhole_cutouts = single_screwhole_cutout
-    screws = single_screw
-    wire_input_cutouts = wire_input_single_cutout
+    screwhole_cutouts = []
+    screws = []
+    wire_input_cutouts = []
     for i in range(0, params["num_pins"]):
-        screwhole_cutouts = screwhole_cutouts.union(
+        screwhole_cutouts.append(
             single_screwhole_cutout.translate((i * params["pin_pitch"], 0, 0))
         )
-        screws = screws.union(single_screw.translate((i * params["pin_pitch"], 0, 0)))
-        wire_input_cutouts = wire_input_cutouts.union(
+        screws.append(single_screw.translate((i * params["pin_pitch"], 0, 0)))
+        wire_input_cutouts.append(
             wire_input_single_cutout.translate((i * params["pin_pitch"], 0, 0))
         )
 
-    plug_body = plug_body.cut(screwhole_cutouts)
-    plug_body = plug_body.cut(wire_input_cutouts)
+    plug_body = plug_body.cut(union_all(screwhole_cutouts))
+    plug_body = plug_body.cut(union_all(wire_input_cutouts))
 
     if params["flanged"]:
         flange_screw = (
@@ -683,9 +683,9 @@ def generate_plug_staight(params, calc_dim):
             + (params["num_pins"] - 1) * params["pin_pitch"]
         )
 
-        screws = screws.union(flange_screw)
-        screws = screws.union(flange_screw.translate((flange_screw_distance, 0, 0)))
-    return plug_body, screws
+        screws.append(flange_screw)
+        screws.append(flange_screw.translate((flange_screw_distance, 0, 0)))
+    return plug_body, union_all(screws)
 
 
 def generate_part(params, with_plug=False):
