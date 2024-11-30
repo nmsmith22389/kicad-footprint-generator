@@ -50,7 +50,7 @@ def make_Smx(params):
     # sleep
     pinmark = (
         cq.Workplane(cq.Plane.XY())
-        .workplane(centerOption="CenterOfMass", offset=H - T * 0.01 + 0.01)
+        .workplane(centerOption="CenterOfMass", offset=H)
         .rect(W - dtop - dtop, pml)
         .workplane(centerOption="CenterOfMass", offset=T * 0.01)
         .rect(W - dtop - dtop, pml)
