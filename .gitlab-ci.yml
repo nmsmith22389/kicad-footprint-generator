@@ -89,6 +89,15 @@ generate-and-compare:
     # Collect them into generated_footprints/
     - cd "$CI_PROJECT_DIR"
     - gitlabci/collect_generated_footprints.sh
+    # Hack: Ensure at least an empty dir exists in base_footprints/ for each
+    # dir in generated_footprints/ (otherwise html_diff.py tries to interpret
+    # paths of the former as Git revisions when new footprint libs are added)
+    # (=> TODO: Add CLI arg to html_diff.py to force interpretation as dir?)
+    - |
+      shopt -s globstar nullglob
+      for dir_path in generated_footprints/**/; do
+        mkdir -p "base_footprints/${dir_path#generated_footprints/}"
+      done
     # Generate visual diff between base and generated (adapted from
     # kicad-library-utils/tools/gitlabci/gitlab-ci-footprints.yml)
     # (=> TODO: Refactor to extract common functionality?)
