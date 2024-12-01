@@ -4,6 +4,9 @@ stages:
 - basic
 - generate
 
+variables:
+  PYTHONUNBUFFERED: "1"
+
 formatting:
   stage: basic
   before_script:
