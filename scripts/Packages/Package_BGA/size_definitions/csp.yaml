@@ -236,7 +236,7 @@ ST_WLCSP-41_2.98x2.76mm_P0.40mm_Stagger:
   layout_x: 13
   layout_y: 7
   pad_skips: [A2,A4,B1,B3]
-ST_WLCSP-42_2.93mmx2.82_P0.40mm_Stagger:
+ST_WLCSP-42_2.93x2.82mm_P0.40mm_Stagger:
   description: "ST WLCSP-42, ST Die ID 489"
   size_source: "https://www.st.com/resource/en/datasheet/stm32u073rc.pdf"
   body_size_x: 2.93
