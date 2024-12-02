@@ -56,7 +56,7 @@ def split(s, delim):
     parts = s.split(delim, 1)
     return parts if len(parts) == 2 else parts + ['']
 
-def stepreduce(input_file, output_file):
+def stepreduce(input_file, output_file, verbose=False):
     with open(input_file, 'r') as f:
         lines = f.read().splitlines()
 
@@ -146,7 +146,8 @@ def stepreduce(input_file, output_file):
         for line in footer:
             f.write(line + '\n')
 
-    print(f"stepreduce: {input_file} {n_lines} shrunk to {len(out_lines) + len(header) + len(footer)}")
+    if verbose:
+        print(f"stepreduce: {input_file} {n_lines} shrunk to {len(out_lines) + len(header) + len(footer)}")
 
 if __name__ == "__main__":
     stepreduce(sys.argv[1], sys.argv[2])
