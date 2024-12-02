@@ -60,7 +60,9 @@ from exportVRML.export_part_to_VRML import export_VRML
 from .cq_model_relay_smd import make_case, make_marker, make_pins
 
 __title__ = "main generator for Relay_SMD model generators"
-__author__ = "scripts: hyOzd, Maurice, jmwright, Martin Sotirov; models: see cq_model files;"
+__author__ = (
+    "scripts: hyOzd, Maurice, jmwright, Martin Sotirov; models: see cq_model files;"
+)
 __Comment__ = """Generates Relay SMD models for KiCad libraries"""
 
 ___ver___ = "2.0.0"
@@ -109,28 +111,46 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
         # Used to wrap all the parts into an assembly
         component = cq.Assembly()
 
-        has_marker = ('marker_pos' in all_params[model] and
-                      'marker_dim' in all_params[model] and
-                      'marker_color_key' in all_params[model])
+        has_marker = (
+            "marker_pos" in all_params[model]
+            and "marker_dim" in all_params[model]
+            and "marker_color_key" in all_params[model]
+        )
 
         body = make_case(all_params[model], has_marker)
         body = body.translate(all_params[model]["translation"])
         body = body.rotate((0, 0, 0), (0, 0, 1), all_params[model]["rotation"])
-        body_color = shaderColors.named_colors[all_params[model]["body_color_key"]].getDiffuseFloat()
-        component.add(body, color=cq_color_correct.Color(body_color[0], body_color[1], body_color[2]))
+        body_color = shaderColors.named_colors[
+            all_params[model]["body_color_key"]
+        ].getDiffuseFloat()
+        component.add(
+            body,
+            color=cq_color_correct.Color(body_color[0], body_color[1], body_color[2]),
+        )
 
         if has_marker:
             marker = make_marker(all_params[model])
             marker = marker.translate(all_params[model]["translation"])
             marker = marker.rotate((0, 0, 0), (0, 0, 1), all_params[model]["rotation"])
-            marker_color = shaderColors.named_colors[all_params[model]["marker_color_key"]].getDiffuseFloat()
-            component.add(marker,color=cq_color_correct.Color(marker_color[0], marker_color[1], marker_color[2]))
+            marker_color = shaderColors.named_colors[
+                all_params[model]["marker_color_key"]
+            ].getDiffuseFloat()
+            component.add(
+                marker,
+                color=cq_color_correct.Color(
+                    marker_color[0], marker_color[1], marker_color[2]
+                ),
+            )
 
         pins = make_pins(all_params[model])
         pins = pins.translate(all_params[model]["translation"])
         pins = pins.rotate((0, 0, 0), (0, 0, 1), all_params[model]["rotation"])
-        pin_color = shaderColors.named_colors[all_params[model]["pin_color_key"]].getDiffuseFloat()
-        component.add(pins, color=cq_color_correct.Color(pin_color[0], pin_color[1], pin_color[2]))
+        pin_color = shaderColors.named_colors[
+            all_params[model]["pin_color_key"]
+        ].getDiffuseFloat()
+        component.add(
+            pins, color=cq_color_correct.Color(pin_color[0], pin_color[1], pin_color[2])
+        )
 
         # Create the output directory if it does not exist
         if not os.path.exists(output_dir):
@@ -155,10 +175,10 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
 
         # Export the assembly to VRML
         if enable_vrml:
-            parts  = [body, pins]
+            parts = [body, pins]
             colors = [
-                    all_params[model]["body_color_key"],
-                    all_params[model]["pin_color_key"],
+                all_params[model]["body_color_key"],
+                all_params[model]["pin_color_key"],
             ]
 
             if has_marker:

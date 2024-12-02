@@ -430,7 +430,7 @@ def make_gw(params):
             # extrude(A1+A1/10)
             pins.append(epad)
     # merge all pins to a single object
-    merged_pins = union_all(pins);
+    merged_pins = union_all(pins)
 
     # extract pins from case
     case = case.cut(merged_pins)

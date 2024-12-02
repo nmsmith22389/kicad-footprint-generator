@@ -374,7 +374,7 @@ class cq_parameters_Resonator_peterman_smd:
         rotation = params["rotation"]  # Rotation if required
         pin_thickness = 0.1
         if "p_thickness" in params:
-            pin_thickness = params["p_thickness"] # pin thickness
+            pin_thickness = params["p_thickness"]  # pin thickness
         # print('make_pins ...\r\n')
 
         pins = None

@@ -195,7 +195,9 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             colors.append(all_params[model]["pins_color_key"])
             if npth_pins:
                 colors.append(all_params[model]["npth_pin_color_key"])
-        elif all_params[model]["model_class"] == "cq_parameters_smd_generic_rectangular":
+        elif (
+            all_params[model]["model_class"] == "cq_parameters_smd_generic_rectangular"
+        ):
             cqm = cq_parameters_smd_generic_rectangular
 
             # Load the appropriate colors

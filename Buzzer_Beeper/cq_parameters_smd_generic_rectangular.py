@@ -21,12 +21,12 @@
 import cadquery as cq
 
 
-def make_body (params):
-    body = cq.Workplane ('XY')
-    body = body.rect (params['D'], params['E'])
-    body = body.extrude (params['H'])
+def make_body(params):
+    body = cq.Workplane("XY")
+    body = body.rect(params["D"], params["E"])
+    body = body.extrude(params["H"])
 
-    top_sound_holes_params = params.get ('top_sound_holes')
+    top_sound_holes_params = params.get("top_sound_holes")
     if top_sound_holes_params:
         for hole_params in top_sound_holes_params:
             hole_x = hole_params[0]
@@ -34,40 +34,40 @@ def make_body (params):
             hole_diameter = hole_params[2]
             hole_depth = hole_params[3]
 
-            hole = cq.Workplane ('XY', origin=(hole_x, hole_y, params['H']))
-            hole = hole.circle (hole_diameter / 2)
-            hole = hole.extrude (-hole_depth)
-            body = body.cut (hole)
+            hole = cq.Workplane("XY", origin=(hole_x, hole_y, params["H"]))
+            hole = hole.circle(hole_diameter / 2)
+            hole = hole.extrude(-hole_depth)
+            body = body.cut(hole)
 
     return body
 
 
-def make_pins (params):
+def make_pins(params):
     pins = None
 
-    for pin_params in params['pin']:
-        p = pin_params.copy ()
+    for pin_params in params["pin"]:
+        p = pin_params.copy()
         x = p.pop(0)
         y = p.pop(0)
         w = p.pop(0)
         h = p.pop(0)
-        pin = cq.Workplane ('XY', origin=(x, y))
-        pin = pin.rect (w, h)
-        pin = pin.extrude (params['pin_thickness'])
+        pin = cq.Workplane("XY", origin=(x, y))
+        pin = pin.rect(w, h)
+        pin = pin.extrude(params["pin_thickness"])
 
         while p:
-            pp = p.pop (0)
-            if pp == 'hole':
-                hole_diameter = p.pop (0)
-                hole = cq.Workplane ('XY', origin=(x, y))
-                hole = hole.circle (hole_diameter / 2)
-                hole = hole.extrude (params['pin_thickness'])
-                pin = pin.cut (hole)
+            pp = p.pop(0)
+            if pp == "hole":
+                hole_diameter = p.pop(0)
+                hole = cq.Workplane("XY", origin=(x, y))
+                hole = hole.circle(hole_diameter / 2)
+                hole = hole.extrude(params["pin_thickness"])
+                pin = pin.cut(hole)
             else:
-                raise ValueError (f"Unknown pin paramter: {pp}")
+                raise ValueError(f"Unknown pin paramter: {pp}")
 
         if pins:
-            pins = pins.union (pin)
+            pins = pins.union(pin)
         else:
             pins = pin
 

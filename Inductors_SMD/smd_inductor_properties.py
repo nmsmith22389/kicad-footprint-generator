@@ -116,8 +116,16 @@ class SmdInductorProperties:
         self.width_x = float(part_block["widthX"])
         self.length_y = float(part_block["lengthY"])
         self.height = float(part_block["height"])
-        self.corner_radius = float(part_block["cornerRadius"]) if part_block.get("cornerRadius") else None
-        self.core_diameter = float(part_block["coreDiameter"]) if part_block.get("coreDiameter") else None
+        self.corner_radius = (
+            float(part_block["cornerRadius"])
+            if part_block.get("cornerRadius")
+            else None
+        )
+        self.core_diameter = (
+            float(part_block["coreDiameter"])
+            if part_block.get("coreDiameter")
+            else None
+        )
 
         self.landing_dims = self._derive_landing_size(part_block)
         self.device_pad_dims = self._derive_pad_spacing(part_block)

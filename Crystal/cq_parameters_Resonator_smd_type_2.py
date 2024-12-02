@@ -355,7 +355,7 @@ class cq_parameters_Resonator_smd_type_2:
         pin_thickness = 0.1
         # print('make_pins ...\r\n')
         if "p_thickness" in params:
-            pin_thickness = params["p_thickness"] # pin thickness
+            pin_thickness = params["p_thickness"]  # pin thickness
 
         pins = None
         pil = pl

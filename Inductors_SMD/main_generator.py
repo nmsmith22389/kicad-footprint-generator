@@ -165,10 +165,16 @@ class SmdInductorGenerator:
         series_3d_props: Inductor3DProperties,
         part_data: SmdInductorProperties,
     ):
-        if series_3d_props.body_type in (1,2):
-            case, pins, = self.generate_cubic_inductor(part_data, series_3d_props)
+        if series_3d_props.body_type in (1, 2):
+            (
+                case,
+                pins,
+            ) = self.generate_cubic_inductor(part_data, series_3d_props)
         elif series_3d_props.body_type == "shielded_drum_rounded_rectangular_base":
-            case, pins, = self.genenerate_shielded_drum_model(part_data, series_3d_props)
+            (
+                case,
+                pins,
+            ) = self.genenerate_shielded_drum_model(part_data, series_3d_props)
         else:
             raise ValueError("Invalid 'body_type'.")
 
@@ -283,33 +289,55 @@ class SmdInductorGenerator:
     def genenerate_shielded_drum_model(self, part_data, series_3d_props):
 
         # Required model parameters
-        assert (part_data.core_diameter is not None and part_data.corner_radius is not None)
+        assert (
+            part_data.core_diameter is not None and part_data.corner_radius is not None
+        )
 
         # Create a baseplate for the inductor to rest on
         baseplate = (
             cq.Workplane("XY")
             .box(part_data.width_x, part_data.length_y, 1.2, (True, True, False))
             .edges("|Z")
-            .chamfer((part_data.length_y-part_data.device_pad_dims.size_crosswise)/2)
+            .chamfer(
+                (part_data.length_y - part_data.device_pad_dims.size_crosswise) / 2
+            )
         )
         # Create the shield that encases the inductor. Start with a cuboid with rounded edges.
         shield = (
             cq.Workplane("XY")
             .workplane(centerOption="CenterOfMass", offset=1.2)
-            .box(part_data.width_x, part_data.length_y, part_data.height - 1.2, (True, True, False))
+            .box(
+                part_data.width_x,
+                part_data.length_y,
+                part_data.height - 1.2,
+                (True, True, False),
+            )
             .edges("|Z")
             .fillet(part_data.corner_radius)
         )
         # Drill a hole in the center and four more into the corners
-        drill_hole_diam = part_data.corner_radius  # This is a guess and was measured for the MSS110 series
+        drill_hole_diam = (
+            part_data.corner_radius
+        )  # This is a guess and was measured for the MSS110 series
         shield = (
             shield.faces(">Z")
             .workplane()
-            .cboreHole(part_data.core_diameter+0.75, cboreDiameter=part_data.core_diameter + 1.25, cboreDepth=0.25)
+            .cboreHole(
+                part_data.core_diameter + 0.75,
+                cboreDiameter=part_data.core_diameter + 1.25,
+                cboreDepth=0.25,
+            )
             .moveTo(0, 0)
-            .rect(0.5**0.5*(part_data.core_diameter+0.75), 0.5**0.5*(part_data.core_diameter+0.75), centered=True, forConstruction=True)
+            .rect(
+                0.5**0.5 * (part_data.core_diameter + 0.75),
+                0.5**0.5 * (part_data.core_diameter + 0.75),
+                centered=True,
+                forConstruction=True,
+            )
             .vertices()
-            .cboreHole(drill_hole_diam, cboreDiameter=drill_hole_diam+0.5, cboreDepth=0.25)
+            .cboreHole(
+                drill_hole_diam, cboreDiameter=drill_hole_diam + 0.5, cboreDepth=0.25
+            )
         )
 
         # Add a cap that goes on top of the inductor located in the center.
@@ -333,7 +361,8 @@ class SmdInductorGenerator:
 
         # Create the pins
         pin1 = (
-            cq.Workplane("XY").box(
+            cq.Workplane("XY")
+            .box(
                 part_data.device_pad_dims.size_inline,
                 part_data.device_pad_dims.size_crosswise,
                 series_3d_props.pad_thickness,
@@ -342,7 +371,8 @@ class SmdInductorGenerator:
             .translate((-part_data.device_pad_dims.spacing_centre / 2, 0, 0))
         )
         pin2 = (
-            cq.Workplane("XY").box(
+            cq.Workplane("XY")
+            .box(
                 part_data.device_pad_dims.size_inline,
                 part_data.device_pad_dims.size_crosswise,
                 series_3d_props.pad_thickness,

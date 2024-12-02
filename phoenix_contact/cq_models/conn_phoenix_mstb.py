@@ -316,9 +316,7 @@ def generate_straight_body(params, calc_dim, with_details):
 
         plug_cutouts = []
         for i in range(0, num_pins):
-            plug_cutouts.append(
-                plug_cutout.translate((i * pin_pitch, 0, 0))
-            )
+            plug_cutouts.append(plug_cutout.translate((i * pin_pitch, 0, 0)))
         body = body.cut(union_all(plug_cutouts))
 
     back_width = body_width - plug_width - (front_side - plug_front)
@@ -338,9 +336,7 @@ def generate_straight_body(params, calc_dim, with_details):
         lock_cutouts.append(lock_cutout.translate((i * pin_pitch, 0, 0)))
 
     if params["flanged"]:
-        lock_cutouts.append(
-            lock_cutout.translate((-mount_hole_to_pin, 0, 0))
-        )
+        lock_cutouts.append(lock_cutout.translate((-mount_hole_to_pin, 0, 0)))
         lock_cutouts.append(
             lock_cutout.translate(
                 (mount_hole_to_pin + (num_pins - 1) * pin_pitch, 0, 0)

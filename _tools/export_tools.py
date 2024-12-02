@@ -7,7 +7,9 @@ from _tools.stepreduce import stepreduce
 skip_list = []
 
 
-def check_step_export_union(component: cq.Assembly, output_dir: str, model: str) -> None:
+def check_step_export_union(
+    component: cq.Assembly, output_dir: str, model: str
+) -> None:
     # Skip models that cannot be unioned properly
     if model in skip_list:
         return
@@ -58,11 +60,15 @@ def postprocess_step(component: cq.Assembly, output_dir: str, model: str) -> Non
         # Check volumes
         orig_volume = orig_cmp.Volume()
         reduced_volume = reduced_cmp.Volume()
-        assert orig_volume == reduced_volume, f"Volume mismatch: {orig_volume} != {reduced_volume}"
+        assert (
+            orig_volume == reduced_volume
+        ), f"Volume mismatch: {orig_volume} != {reduced_volume}"
 
         # Check center of mass
         orig_center_of_mass = orig_cmp.Center()
         reduced_center_of_mass = reduced_cmp.Center()
-        assert orig_center_of_mass == reduced_center_of_mass, f"Center of mass mismatch: {orig_center_of_mass} != {reduced_center_of_mass}"
+        assert (
+            orig_center_of_mass == reduced_center_of_mass
+        ), f"Center of mass mismatch: {orig_center_of_mass} != {reduced_center_of_mass}"
     else:
         stepreduce(cur_path, cur_path)

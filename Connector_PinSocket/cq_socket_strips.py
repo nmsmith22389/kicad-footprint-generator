@@ -72,7 +72,9 @@ class socket_strip(PartBase):
         self.destination_dir = "Connector_PinSocket_{0:03.2f}mm.3dshapes".format(
             self.pin_pitch
         )
-        self.footprints_dir = "Connector_PinSocket_{0:03.2f}mm.pretty".format(self.pin_pitch)
+        self.footprints_dir = "Connector_PinSocket_{0:03.2f}mm.pretty".format(
+            self.pin_pitch
+        )
         self.rotation = params["rotation"]
         self.pin_style = params["pin_style"]
 

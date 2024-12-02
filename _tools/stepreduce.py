@@ -52,12 +52,14 @@ def emplace(d, key, val):
         d[key] = val
         return ((key, val), True)
 
+
 def split(s, delim):
     parts = s.split(delim, 1)
-    return parts if len(parts) == 2 else parts + ['']
+    return parts if len(parts) == 2 else parts + [""]
+
 
 def stepreduce(input_file, output_file, verbose=False):
-    with open(input_file, 'r') as f:
+    with open(input_file, "r") as f:
         lines = f.read().splitlines()
 
     n_lines = len(lines)
@@ -82,7 +84,7 @@ def stepreduce(input_file, output_file, verbose=False):
                     out_lines[-1] += line
                 else:
                     out_lines.append(line)
-                continuing = (line[-1] != ';')
+                continuing = line[-1] != ";"
         else:
             if "DATA;" in line:
                 past_header = True
@@ -99,15 +101,17 @@ def stepreduce(input_file, output_file, verbose=False):
         lookup.clear()
 
         for line in in_lines:
-            elems = split(line, '=')
+            elems = split(line, "=")
             elems[0] = elems[0][1:]
             oldnum = int(elems[0])
             elems[1] = elems[1].rstrip().lstrip()
-                
+
             (pair, was_inserted) = emplace(uniques, elems[1], len(out_lines) + 1)
 
-            while (elems[1].startswith("PRODUCT_DEFINITION") or 
-                   elems[1].startswith("SHAPE_REPRESENTATION")) and not was_inserted:
+            while (
+                elems[1].startswith("PRODUCT_DEFINITION")
+                or elems[1].startswith("SHAPE_REPRESENTATION")
+            ) and not was_inserted:
                 elems[1] += " "
                 (pair, was_inserted) = emplace(uniques, elems[1], len(out_lines) + 1)
 
@@ -122,7 +126,7 @@ def stepreduce(input_file, output_file, verbose=False):
                 out_lines.append(f"#{len(out_lines) + 1}={elems[1]}")
 
         for i in range(len(out_lines)):
-            elems = split(out_lines[i], '=')
+            elems = split(out_lines[i], "=")
             line = elems[0] + "="
             while True:
                 match = pattern.search(elems[1])
@@ -130,24 +134,27 @@ def stepreduce(input_file, output_file, verbose=False):
                     break
                 oldval = int(match.group(1))
                 newval = lookup.get(oldval, oldval)
-                line += elems[1][:match.start()] + f"#{newval}"
-                elems[1] = elems[1][match.end():]
+                line += elems[1][: match.start()] + f"#{newval}"
+                elems[1] = elems[1][match.end() :]
             line += elems[1]
             out_lines[i] = line
 
         if len(in_lines) <= len(out_lines):
             break
 
-    with open(output_file, 'w') as f:
+    with open(output_file, "w") as f:
         for line in header:
-            f.write(line + '\n')
+            f.write(line + "\n")
         for line in out_lines:
-            f.write(line + '\n')
+            f.write(line + "\n")
         for line in footer:
-            f.write(line + '\n')
+            f.write(line + "\n")
 
     if verbose:
-        print(f"stepreduce: {input_file} {n_lines} shrunk to {len(out_lines) + len(header) + len(footer)}")
+        print(
+            f"stepreduce: {input_file} {n_lines} shrunk to {len(out_lines) + len(header) + len(footer)}"
+        )
+
 
 if __name__ == "__main__":
     stepreduce(sys.argv[1], sys.argv[2])
