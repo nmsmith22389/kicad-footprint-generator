@@ -68,6 +68,7 @@ import cadquery as cq
 from _tools import cq_color_correct, cq_globals, export_tools, parameters, shaderColors
 from exportVRML.export_part_to_VRML import export_VRML
 
+from . import cq_parameters_smd_generic_rectangular
 from .cq_parameters_CUI_CST_931RP_A import cq_parameters_CUI_CST_931RP_A
 from .cq_parameters_EMB84Q_RO_SMT_0825_S_4_R import (
     cq_parameters_EMB84Q_RO_SMT_0825_S_4_R,
@@ -84,7 +85,6 @@ from .cq_parameters_StarMicronics_HMB_06_HMB_12 import (
 )
 from .cq_parameters_TDK_PS1240P02BT import cq_parameters_TDK_PS1240P02BT
 from .cq_parameters_tht_generic_round import cq_parameters_tht_generic_round
-from . import cq_parameters_smd_generic_rectangular
 
 
 def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):

@@ -57,7 +57,7 @@ import cadquery as cq
 from _tools import cq_color_correct, cq_globals, export_tools, parameters, shaderColors
 from exportVRML.export_part_to_VRML import export_VRML
 
-from .cq_model_relay_smd import make_case, make_pins, make_marker
+from .cq_model_relay_smd import make_case, make_marker, make_pins
 
 __title__ = "main generator for Relay_SMD model generators"
 __author__ = "scripts: hyOzd, Maurice, jmwright, Martin Sotirov; models: see cq_model files;"

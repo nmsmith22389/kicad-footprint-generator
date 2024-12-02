@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 
 import argparse
+import datetime
 import importlib
+import multiprocessing
 import os
 import sys
-import datetime
-import multiprocessing
 
 from OCP.Message import Message, Message_Gravity
 
