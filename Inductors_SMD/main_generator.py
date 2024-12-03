@@ -60,11 +60,12 @@ from pathlib import Path
 import cadquery as cq
 import yaml
 
-from _tools import cq_color_correct, export_tools, shaderColors
+from _tools import add_license, cq_color_correct, export_tools, shaderColors
 from exportVRML.export_part_to_VRML import export_VRML
 
 from .smd_inductor_properties import InductorSeriesProperties, SmdInductorProperties
 
+from .src.make_coil_model import DSectionFootAirCoreCoil
 
 class Inductor3DProperties:
     """
@@ -77,14 +78,30 @@ class Inductor3DProperties:
     pad_thickness: float
     body_type: int | str
     corner_radius: float
+    coil_color: str
+    coil_style: int | None
+    has_body: bool
 
     def __init__(self, data: dict):
-        # TODO: probably defaults indicate the input data is missing something
-        # - would likely be better to fill it in that magic up defaults
-        self.body_color = data.get("bodyColor", "black body")
+        self.has_body = data.get("has_body", True)
+        self.coil_style = data.get("coil_style", None)
+
+        if self.has_body:
+            self.body_color = data.get("bodyColor", "black body")
+            self.body_type = data.get("type", 1)
+        else:
+            self.body_type = None
+
+        if self.coil_style is not None:
+            self.coil_color = data.get("wireColor", "metal dark cu")
+            self.wire_dia = data.get("wireDia", {})
+        else:
+            self.coil_color = ""
+            self.wire_dia = 0
+
         self.pad_color = data.get("pinColor", "metal grey pins")
         self.pad_thickness = data.get("padThickness", 0.05)
-        self.body_type = data.get("type", 1)
+
         self.corner_radius = data.get("cornerRadius", 0)
 
 
@@ -165,46 +182,68 @@ class SmdInductorGenerator:
         series_3d_props: Inductor3DProperties,
         part_data: SmdInductorProperties,
     ):
-        if series_3d_props.body_type in (1, 2):
-            (
-                case,
-                pins,
-            ) = self.generate_cubic_inductor(part_data, series_3d_props)
-        elif series_3d_props.body_type == "shielded_drum_rounded_rectangular_base":
-            (
-                case,
-                pins,
-            ) = self.genenerate_shielded_drum_model(part_data, series_3d_props)
-        else:
-            raise ValueError("Invalid 'body_type'.")
 
         # Used to wrap all the parts into an assembly
         component = cq.Assembly()
         # Add the parts to the assembly
-        stepBodyColor = shaderColors.named_colors[
-            series_3d_props.body_color
-        ].getDiffuseFloat()
+        pins = None
+        if series_3d_props.has_body:
+            if series_3d_props.body_type in (1, 2):
+                (
+                    case,
+                    pins,
+                ) = self.generate_cubic_inductor(part_data, series_3d_props)
+            elif series_3d_props.body_type == "shielded_drum_rounded_rectangular_base":
+                (
+                    case,
+                    pins,
+                ) = self.genenerate_shielded_drum_model(part_data, series_3d_props)
+            else:
+                raise ValueError("Invalid 'body_type'.")
+            stepBodyColor = shaderColors.named_colors[
+                series_3d_props.body_color
+            ].getDiffuseFloat()
+            component.add(
+                case,
+                color=cq_color_correct.Color(
+                    stepBodyColor[0], stepBodyColor[1], stepBodyColor[2]
+                ),
+            )
+        if series_3d_props.coil_style is not None:
+            aCoil = DSectionFootAirCoreCoil(part_data, series_3d_props)
+            (
+                coil,
+                pins,
+            ) = aCoil.make_coil()
+
+            stepCoilColor = shaderColors.named_colors[
+                series_3d_props.coil_color
+            ].getDiffuseFloat()
+            component.add(
+                coil,
+                color=cq_color_correct.Color(
+                    stepCoilColor[0], stepCoilColor[1], stepCoilColor[2]
+                ),
+            )
+
         stepPinColor = shaderColors.named_colors[
             series_3d_props.pad_color
         ].getDiffuseFloat()
-        component.add(
-            case,
-            color=cq_color_correct.Color(
-                stepBodyColor[0], stepBodyColor[1], stepBodyColor[2]
-            ),
-        )
-        component.add(
-            pins,
-            color=cq_color_correct.Color(
-                stepPinColor[0], stepPinColor[1], stepPinColor[2]
-            ),
-        )
+
+        if pins is not None:
+            component.add(
+                pins,
+                color=cq_color_correct.Color(
+                    stepPinColor[0], stepPinColor[1], stepPinColor[2]
+                ),
+            )
 
         # Assemble the filename
         file_name = f"L_{series_data.manufacturer}_{part_data.part_number}"
 
-        output_dir = self.output_prefix / (series_data.library_name + ".3dshapes")
-
+        output_dir = os.path.join(
+            self.output_prefix, (series_data.library_name + ".3dshapes")
+        )
         # Create the output directory if it does not exist
         if not os.path.exists(output_dir):
             os.makedirs(output_dir)
@@ -226,10 +265,32 @@ class SmdInductorGenerator:
 
         # Export the assembly to VRML
         # Dec 2022- do not use CadQuery VRML export, it scales/uses inches.
+        PartList = []
+        ColorList = []
+        if series_3d_props.has_body:
+            PartList.append(case)
+            ColorList.append(series_3d_props.body_color)
+        if series_3d_props.coil_style is not None:
+            PartList.append(coil)
+            ColorList.append(series_3d_props.coil_color)
+        if pins is not None:
+            PartList.append(pins)
+            ColorList.append(series_3d_props.pad_color)
         export_VRML(
             os.path.join(output_dir, file_name + ".wrl"),
-            [case, pins],
-            [series_3d_props.body_color, series_3d_props.pad_color],
+            PartList,
+            ColorList,
+        )
+
+        # Update the license
+        add_license.addLicenseToStep(
+            output_dir,
+            file_name + ".step",
+            add_license.LIST_int_license,
+            add_license.STR_int_licAuthor,
+            add_license.STR_int_licEmail,
+            add_license.STR_int_licOrgSys,
+            add_license.STR_int_licPreProc,
         )
 
     def generate_cubic_inductor(self, part_data, series_3d_props):
