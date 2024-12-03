@@ -6,6 +6,7 @@ stages:
 
 pep8:
   stage: Static Analysis
+  needs: []
   only:
     refs:
       - merge_requests
@@ -20,6 +21,7 @@ pep8:
 
 pytest:
   stage: Test
+  needs: []
   only:
     refs:
       - merge_requests
@@ -37,6 +39,7 @@ pytest:
 
 generate:
   stage: Test
+  needs: []
   only:
     refs:
       - master
@@ -62,6 +65,7 @@ generate:
 
 generate-and-compare:
   stage: Test
+  needs: []
   only:
     refs:
       - merge_requests
