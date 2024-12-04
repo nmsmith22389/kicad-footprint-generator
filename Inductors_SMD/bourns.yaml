@@ -56,7 +56,7 @@
       height: 5.8
       padX: 1.4
       padY: 5.3
-      padSpacingX: 2.6
+      padInsideX: 2.6
       landingInsideX: 2.5
       landingOutsideX: 5.6
       landingY: 5.6
