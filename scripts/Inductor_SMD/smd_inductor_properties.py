@@ -174,7 +174,7 @@ class SmdInductorProperties:
             )
             pad_y = min(self.landing_dims.size_crosswise, self.length_y)
 
-        spc_c = self._get_key_as_float_or_none(data, "padSpacing")
+        spc_c = self._get_key_as_float_or_none(data, "padSpacingX")
         spc_ix = self._get_key_as_float_or_none(data, "padInsideX")
         spc_ox = self._get_key_as_float_or_none(data, "padOutsideX")
         pad_x = self._get_key_as_float_or_none(data, "padX")
