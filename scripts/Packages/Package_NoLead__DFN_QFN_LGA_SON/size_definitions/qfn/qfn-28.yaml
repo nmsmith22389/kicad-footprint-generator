@@ -527,6 +527,78 @@ QFN-28-1EP_4x5mm_P0.5mm_EP2.65x3.65mm:
   #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
   #include_suffix_in_3dpath: 'False'
 
+QFN-28-1EP_5x5mm_P0.5mm_EP2.7x2.7mm:
+  device_type: 'QFN'
+  size_source: 'JEDEC MO-220-K.01, variation VHHD-1,  https://www.jedec.org/system/files/docs/MO-220K01.pdf'
+  ipc_class: 'qfn'
+  body_size_x:
+    nominal: 5.0
+    tolerance: 0
+  body_size_y:
+    nominal: 5.0
+    tolerance: 0
+  overall_height:
+    minimum: 0.8
+    nominal: 0.9
+    maximum: 1.0
+  lead_width:
+    minimum: 0.18
+    nominal: 0.25
+    maximum: 0.30
+  lead_len:
+    minimum: 0.45
+    nominal: 0.55
+    maximum: 0.75
+  EP_size_x:
+    minimum: 2.35
+    nominal: 2.70
+    maximum: 3.35
+  EP_size_y:
+    minimum: 2.35
+    nominal: 2.70
+    maximum: 3.35
+  # Reference material for paste pads and thermal vias
+  # https://www.ti.com/lit/an/sloa122/sloa122.pdf#page=3
+  # https://www.infineon.com/dgdl/Infineon-AN72845_Design_Guidelines_For_Infineon_Quad_Flat_No_Lead_(QFN)_Packaged_Devices-ApplicationNotes-v04_00-EN.pdf?fileId=8ac78c8c7cdc391c017d0735936858e5#page=17
+  EP_num_paste_pads: [3, 3]
+  thermal_vias:
+    count: [3, 3]
+    grid: [0.9, 0.9]
+    drill: 0.2
+    EP_num_paste_pads: [2, 2]
+    paste_between_vias: 1
+    paste_rings_outside: 1
+  pitch: 0.5
+  num_pins_x: 7
+  num_pins_y: 7
+
+QFN-28-1EP_5x5mm_P0.5mm_EP3.25x3.25mm:
+  inherit: QFN-28-1EP_5x5mm_P0.5mm_EP2.7x2.7mm
+  size_source: 'https://www.silabs.com/documents/public/data-sheets/C8051F32x.pdf#page=39'
+  lead_width:
+    minimum: 0.18
+    nominal: 0.23
+    maximum: 0.30
+  lead_len:
+    minimum: 0.35
+    nominal: 0.55
+    maximum: 0.65
+  lead_len_V: 0.50 # trick here, Y1=0.85...0.95, recommended PCB Land Pattern, page 40
+  lead_len_H: 0.50
+  EP_size_x:
+    minimum: 2.90
+    nominal: 3.15
+    maximum: 3.35
+  EP_size_x_overwrite: 3.25
+  EP_size_y:
+    minimum: 2.90
+    nominal: 3.15
+    maximum: 3.35
+  EP_size_y_overwrite: 3.25
+  EP_paste_coverage: 0.67
+  thermal_vias:
+    grid: [1.0, 1.0]
+
 QFN-28-1EP_5x5mm_P0.5mm_EP3.1x3.1mm:
   device_type: 'QFN'
   #manufacturer: 'man'
