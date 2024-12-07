@@ -77,7 +77,7 @@ def stepreduce(input_file, output_file, verbose=False):
                 past_data = True
                 footer.append(line)
             else:
-                line = line.rstrip()
+                line = line.strip()
                 if continuing:
                     if line[0].isalpha():
                         out_lines[-1] += " "
@@ -104,7 +104,7 @@ def stepreduce(input_file, output_file, verbose=False):
             elems = split(line, "=")
             elems[0] = elems[0][1:]
             oldnum = int(elems[0])
-            elems[1] = elems[1].rstrip().lstrip()
+            elems[1] = elems[1].strip()
 
             (pair, was_inserted) = emplace(uniques, elems[1], len(out_lines) + 1)
 
