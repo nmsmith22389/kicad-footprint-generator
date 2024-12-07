@@ -134,9 +134,6 @@ class socket_strip(PartBase):
             .faces("<Z")
             .rect(self.pin_socket_size, self.pin_socket_size)
             .extrude(-self.body_height + rsz)
-            .faces("<Z")
-            .rect(self.pin_socket_size, self.pin_thickness)
-            .extrude(-rsz + self.body_board_distance)
         )
 
         pockets = self._mirror(pocket, int(self.num_pins / self.num_pin_rows))
