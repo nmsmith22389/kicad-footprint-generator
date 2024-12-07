@@ -142,7 +142,7 @@ def stepreduce(input_file, output_file, verbose=False):
         if len(in_lines) <= len(out_lines):
             break
 
-    with open(output_file, "w") as f:
+    with open(output_file, "w", newline="\n") as f:
         for line in header:
             f.write(line + "\n")
         for line in out_lines:

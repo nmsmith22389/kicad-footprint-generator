@@ -239,7 +239,7 @@ def addLicenseToStep(
 
             # overwrite step file
             try:
-                HDLR_stepfile_w = open(filepath, "w")  # open
+                HDLR_stepfile_w = open(filepath, "w", newline="\n")  # open
             except Exception as exception:
                 print("Add License: Can't open step file for write access\n")
                 print("{:s}\n".format(exception))

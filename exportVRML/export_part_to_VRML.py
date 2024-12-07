@@ -85,7 +85,7 @@ def write_VRML_file(objects, filepath, used_color_keys, licence_info=None):
     if used_color_keys is not None:
         used_colors = {x: shaderColors.named_colors[x] for x in used_color_keys}
 
-    with open(filepath, "w") as f:
+    with open(filepath, "w", newline="\n") as f:
         # Write the standard VRML header
         f.write("#VRML V2.0 utf8\n#kicad StepUp wrl exported\n\n")
         if licence_info is not None:
