@@ -515,3 +515,26 @@ Converter_DCDC_TRACO_TSR0.6-48xxWI_TSR0.6-48xxxWI_THT:
     ["tht", "2", 0, -2.54, 1.5, 1.5, 1],
     ["tht", "3", 0, -5.08, 1.5, 1.5, 1]
   ]
+
+Converter_DCDC_TRACO_TEN10-110xxWIRH_THT:
+  library_name: 'Converter_DCDC'
+  description: "DCDC-Converter, TRACO, TEN 10-110xxWIRH, 10W, Rev. December 4. 2024"
+  datasheet: "https://www.tracopower.com/products/ten10wirh.pdf"
+  tags: "DCDC-Converter TRACO TEN10WIRH THT DIP-24"
+  extratexts: []
+  at: [-2.53, 2]
+  size: [20.3, 31.8]
+  body_position_tolerance: [0.5, 0.5]
+  # For future use
+  height: 10.5
+  pins: [
+    ["thtr", "1", 0, 0, 1.8, 1.8, 1.1],
+    ["tht", "2", 0, -2.54, 1.8, 1.8, 1.1],
+    ["tht", "3", 0, -5.08, 1.8, 1.8, 1.1],
+    ["tht", "9", 0, -20.32, 1.8, 1.8, 1.1],
+    ["tht", "11", 0, -25.4, 1.8, 1.8, 1.1],
+    ["tht", "14", 15.24, -25.4, 1.8, 1.8, 1.1],
+    ["tht", "16", 15.24, -20.32, 1.8, 1.8, 1.1],
+    ["tht", "22", 15.24, -5.08, 1.8, 1.8, 1.1],
+    ["tht", "23", 15.24, -2.54, 1.8, 1.8, 1.1],
+  ]
