@@ -762,6 +762,42 @@ SOIC-20W_7.5x12.8mm_P1.27mm:
   num_pins_x: 0
   num_pins_y: 10
 
+Infineon_SOIC-20W_7.6x12.8mm_P1.27mm:
+  # similar to JEDEC MS-013G / variation AC, but body_size_x (E1 dimension) close to 300 mil
+  # inherit: SOIC-20W_7.5x12.8mm_P1.27mm
+  custom_name_format: '{man}_SOIC-{pincount}W_{size_x:.2g}x{size_y:.3g}mm_P{pitch:g}mm'
+  size_source: 'https://www.infineon.com/dgdl/Infineon-PG-DSO-20-77_SPO_PDF-Package-v15_00-EN.pdf?fileId=5546d4625c54d85b015c627e1a0c23b3, https://www.infineon.com/dgdl/Infineon-PG-DSO-20-77_FPD_PDF-Footprint-v15_00-EN.pdf?fileId=5546d4625c54d85b015c5f0f49614324'
+  manufacturer: 'Infineon'
+  compatible_mpns:
+    - 'PG-DSO-20'
+    - 'PG-DSO-20-6'
+    - 'PG-DSO-20-9'
+    - 'PG-DSO-20-31'
+    - 'PG-DSO-20-32'
+    - 'PG-DSO-20-36'
+    - 'PG-DSO-20-43'
+    - 'PG-DSO-20-45'
+    - 'PG-DSO-20-55'
+    - 'PG-DSO-20-66'
+    - 'PG-DSO-20-77'
+
+  body_size_x: 7.6 +0.0 -0.2
+  body_size_y: 12.8 +0.0 -0.2
+  overall_height:
+    maximum: 2.65
+  overall_size_x: 10.3 +/-0.3
+
+  lead_len: 0.4 +0.8 -0.0 # first source
+  lead_width: 0.35 +0.15 -0.0
+
+  pad_size_y_overwrite: 0.65 # second source, pad width
+  pad_to_pad_min_x_overwrite: 8.06 # = 9.73 - 1.67
+  pad_to_pad_max_x_overwrite: 11.4 # = 9.73 + 1.67, see second source
+
+  pitch: 1.27
+  num_pins_x: 0
+  num_pins_y: 10
+
 SOIC-20W_7.5x15.4mm_P1.27mm:
   #round to two significant digits to comply with old name
   custom_name_format: SOIC-{pincount}W_{size_x:.2g}x{size_y:.3g}mm_P{pitch:g}mm
