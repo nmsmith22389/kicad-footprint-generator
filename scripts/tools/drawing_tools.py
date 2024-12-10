@@ -325,7 +325,6 @@ def addPolyLineWithKeepout(kicad_mod, poly, layer, width, keepouts=[], roun=0.00
             addLineWithKeepout(kicad_mod, poly[p][0], poly[p][1], poly[p+1][0], poly[p+1][1], layer, width, keepouts, roun)
 
 
-
 # add a dashed circle
 def addDCircle(kicad_mod, x, y, radius, layer, width, roun=0.001):
     dalpha = 2 * 3.1415 / (2 * 3.1415 * radius / (6 * width))
@@ -448,7 +447,6 @@ def addVDLineWithKeepout(kicad_mod, x, y0, y1, layer, width, keepouts=[], roun=0
     while y < max(y0, y1):
         addVLineWithKeepout(kicad_mod, x, y, min(y1,y+dy), layer, width, keepouts, roun)
         y = y + dy * 2
-
 
 
 # split a rectangle
@@ -619,7 +617,6 @@ def addRoundedRect(model, x, size, corner_radius, layer, width=0.2):
         model.append(Arc(center=[x[0]+ size[0]-corner_radius, x[1] +size[1]-corner_radius], start=[x[0]+ size[0], x[1] +size[1]-corner_radius], angle=90, layer=layer, width=width))
 
 
-
 # draws a filled circle consisting of concentric circles of varying widths (e.g. for glue dots!)
 def fillCircle(model, center, radius, layer, width):
     model.append(Circle(center=center, radius=radius, layer=layer, width=width))
@@ -632,7 +629,6 @@ def fillCircle(model, center, radius, layer, width):
         else:
             model.append(Circle(center=center, radius=r, layer=layer, width=w))
         r = r - 0.9 * w
-
 
 
 #     +------+
@@ -775,7 +771,7 @@ def THTQuartzIncomplete(model, x, size, angle, layer, width):
 
 def TriangleArrowPointingSouthEast(model: Footprint, apex_position: Vector2D, size: float,
                                    layer: str, line_width_mm: float):
-    """Make and append a 45-degree south-east-pointing triangle
+    """Make and append a 45-degree south-east-pointing filled triangle
 
     Size is between nodes, overall size will include 1*line_width overall
 
@@ -793,14 +789,14 @@ def TriangleArrowPointingSouthEast(model: Footprint, apex_position: Vector2D, si
         apex_position
     ]
 
-    poly = Polygon(nodes=arrow_pts, layer=layer, width=line_width_mm)
+    poly = Polygon(nodes=arrow_pts, layer=layer, width=line_width_mm, fill=True)
     model.append(poly)
 
 
 def TriangleArrowPointingSouth(model: Footprint, apex_position: Vector2D,
                                size: float, length: float,
                                layer: str, line_width_mm: float):
-    r"""Make and append a south-pointing triangle
+    r"""Make and append a south-pointing filled triangle
 
     Size is the overall size of the triangle, including line_width overall
 
@@ -821,7 +817,7 @@ def TriangleArrowPointingSouth(model: Footprint, apex_position: Vector2D,
 
 def draw_triangle_pointing_south(apex_position: Vector2D, size: float, length: float, layer: str, line_width_mm: float):
     """
-    Draw an equilateral triangle pointing south-east.
+    Draw a filled equilateral triangle pointing south-east.
     """
     arrow_pts = [
         apex_position,
@@ -830,12 +826,12 @@ def draw_triangle_pointing_south(apex_position: Vector2D, size: float, length: f
         apex_position
     ]
 
-    return Polygon(nodes=arrow_pts, layer=layer, width=line_width_mm)
+    return Polygon(nodes=arrow_pts, layer=layer, width=line_width_mm, fill=True)
 
 
 def TriangleArrowPointingEast(model: Footprint, apex_position: Vector2D, size: float,
                               length: float, layer: str, line_width_mm: float):
-    r"""Make and append an east-pointing triangle
+    r"""Make and append an east-pointing filled triangle
 
     Size is between nodes, overall size will include 1*line_width overall
 
@@ -855,7 +851,7 @@ def TriangleArrowPointingEast(model: Footprint, apex_position: Vector2D, size: f
         apex_position
     ]
 
-    poly = Polygon(nodes=arrow_pts, layer=layer, width=line_width_mm)
+    poly = Polygon(nodes=arrow_pts, layer=layer, width=line_width_mm, fill=True)
     model.append(poly)
 
 

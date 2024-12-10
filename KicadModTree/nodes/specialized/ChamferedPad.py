@@ -180,7 +180,7 @@ class ChamferedPad(Node):
                 else:
                     points.append(corner_vectors[i]*outside)
 
-            primitives = [Polygon(nodes=points, width=polygon_width, **self.mirror)]
+            primitives = [Polygon(nodes=points, width=polygon_width, fill=True, **self.mirror)]
             # TODO make size calculation more resilient
             size = min(self.size.x, self.size.y)-max(self.chamfer_size[0], self.chamfer_size[1])/sqrt(2)
             if size <= 0:

@@ -71,7 +71,7 @@ class RotationTests(SerialisationTest):
 
         for t in range(0, 360, 60):
             kicad_mod.append(
-                Polygon(nodes=nodes).rotate(t, origin=rot_center))
+                Polygon(nodes=nodes, fill=True, width=None, layer="F.SilkS").rotate(t, origin=rot_center))
 
         self.assert_serialises_as(kicad_mod, 'rotation_polygon.kicad_mod')
 
@@ -80,7 +80,7 @@ class RotationTests(SerialisationTest):
 
         rot_center = Vector2D(0.35, 0)
         nodes = [(-1, 0), (-1.2, 0.5), (0, 0), (-1.2, -0.5)]
-        prim = Polygon(nodes=nodes)
+        prim = Polygon(nodes=nodes, fill=True, width=None, layer=None)
         i = 1
         for t in range(0, 300, 60):
             kicad_mod.append(

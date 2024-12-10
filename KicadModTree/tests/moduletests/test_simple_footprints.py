@@ -45,8 +45,8 @@ class SimpleFootprintTests(SerialisationTest):
 
         kicad_mod.append(Property(name=Property.REFERENCE, text='REF**', at=[0, -3], layer='F.SilkS'))
         kicad_mod.append(Property(name=Property.VALUE, text="test", at=[1.5, 3], layer='F.Fab'))
-        kicad_mod.append(Rect(start=[-2, -2], end=[5, 2], layer='F.SilkS'))
-        kicad_mod.append(Rect(start=[-2.25, -2.25], end=[5.25, 2.25], layer='F.CrtYd'))
+        kicad_mod.append(Rect(start=[-2, -2], end=[5, 2], layer='F.SilkS', fill=False, width=0.12))
+        kicad_mod.append(Rect(start=[-2.25, -2.25], end=[5.25, 2.25], layer='F.CrtYd', fill=False, width=0.12))
         kicad_mod.append(Pad(number=1, type=Pad.TYPE_THT, shape=Pad.SHAPE_RECT,
                              at=[0, 0], size=[2, 2], drill=1.2, layers=Pad.LAYERS_THT))
         kicad_mod.append(Pad(number=2, type=Pad.TYPE_THT, shape=Pad.SHAPE_CIRCLE,

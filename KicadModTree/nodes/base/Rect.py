@@ -31,11 +31,11 @@ class Rect(Node):
         * *end* (``Vector2D``) --
           end corner of the rect
         * *layer* (``str``) --
-          layer on which the rect is drawn (default: 'F.SilkS')
+          layer on which the rect is drawn
         * *width* (``float``) --
-          width of the outer line (default: 0.15)
+          width of the outer line, 0 for no outline
         * *fill* (``str, bool``) --
-          valid values are 'solid', 'none'
+          fill the rectangle, (default: False)
 
     :Example:
 
@@ -47,18 +47,24 @@ class Rect(Node):
     end_pos: Vector2D
     layer: str
     width: float
-    fill: Union[Literal["solid"], Literal["none"]]
+    fill: bool
 
-    def __init__(self, **kwargs):
+    def __init__(
+        self,
+        start: Vector2D,
+        end: Vector2D,
+        width: float,
+        layer: str,
+        fill: bool = False,
+    ):
         Node.__init__(self)
-        self.start_pos = Vector2D(kwargs['start'])
-        self.end_pos = Vector2D(kwargs['end'])
+        self.start_pos = Vector2D(start)
+        self.end_pos = Vector2D(end)
 
-        self.layer = kwargs.get('layer', 'F.SilkS')
-        # TODO: better variation to get line width
-        self.width = float(kwargs.get('width', 0.12))
+        self.layer = layer
+        self.width = width
 
-        self.fill = kwargs.get('fill', 'none')
+        self.fill = fill
 
     def _getRenderTreeText(self):
         render_text = Node._getRenderTreeText(self)

@@ -461,11 +461,21 @@ class KicadFileHandler(FileHandler):
         ]
 
     def _serialize_Fill(self, node):
-        fill = SexprSerializer.Symbol('solid') if ((not hasattr(node, 'fill')) or (
-            str(node.fill).lower() != 'none')) else SexprSerializer.Symbol('none')
+
+        fill = False
+        if hasattr(node, 'fill'):
+            if isinstance(node.fill, bool):
+                fill = node.fill
+            else:
+                fill = node.fill == "solid"
 
         return [
-            [SexprSerializer.Symbol('fill'), fill],
+            SexprSerializer.Symbol("fill"),
+            (
+                SexprSerializer.Symbol("solid")
+                if fill
+                else SexprSerializer.Symbol("none")
+            ),
         ]
 
     def _serialize_ArcPoints(self, node):
@@ -516,7 +526,7 @@ class KicadFileHandler(FileHandler):
             [SexprSerializer.Symbol('stroke')] + self._serialize_Stroke(node),
         ]
         if hasattr(node, 'fill'):
-            sexpr += self._serialize_Fill(node)
+            sexpr += [self._serialize_Fill(node)]
         sexpr += [
             [SexprSerializer.Symbol('layer'), node.layer],
         ]
@@ -533,7 +543,7 @@ class KicadFileHandler(FileHandler):
                   [SexprSerializer.Symbol('stroke')] + self._serialize_Stroke(node),
                  ]  # NOQA
         if hasattr(node, 'fill'):
-            sexpr += self._serialize_Fill(node)
+            sexpr += [self._serialize_Fill(node)]
         sexpr += [
             [SexprSerializer.Symbol('layer'), node.layer],
         ]
@@ -840,7 +850,7 @@ class KicadFileHandler(FileHandler):
         sexpr = [SexprSerializer.Symbol('fp_poly'),
                  node_points,
                  [SexprSerializer.Symbol('stroke')] + self._serialize_Stroke(node),
-                 [SexprSerializer.Symbol('fill'), SexprSerializer.Symbol('solid')],
+                 self._serialize_Fill(node),
                  [SexprSerializer.Symbol('layer'), node.layer],
                 ]  # NOQA
 

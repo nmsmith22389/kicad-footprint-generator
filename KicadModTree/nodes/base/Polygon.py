@@ -17,6 +17,8 @@ from KicadModTree.PolygonPoints import *
 from KicadModTree.Vector import *
 from KicadModTree.nodes.Node import Node
 
+from typing import Optional
+
 
 class Polygon(Node):
     r"""Add a Polygon to the render tree
@@ -28,26 +30,42 @@ class Polygon(Node):
         * *polygon* (``list(Point)``) --
           outer nodes of the polygon
         * *layer* (``str``) --
-          layer on which the line is drawn (default: 'F.SilkS')
+          layer on which the line is drawn (default: None, only useful for pad primitives)
         * *width* (``float``) --
-          width of the line (default: None, which means auto detection)
+          width of the line (default: 0, which mean no outline)
         * *x_mirror* (``[int, float](mirror offset)``) --
           mirror x direction around offset "point"
         * *y_mirror* (``[int, float](mirror offset)``) --
           mirror y direction around offset "point"
+        * *fill* (``bool``) --
+          is the polygon filled or just the outline
 
     :Example:
 
     >>> from KicadModTree import *
-    >>> Polygon(nodes=[[-2, 0], [0, -2], [4, 0], [0, 2]], layer='F.SilkS')
+    >>> Polygon(nodes=[[-2, 0], [0, -2], [4, 0], [0, 2]], layer='F.SilkS', width=0.1, fill=True)
     """
 
-    def __init__(self, **kwargs):
-        Node.__init__(self)
-        self.nodes = PolygonPoints(**kwargs)
+    nodes: PolygonPoints
+    layer: Optional[str]
+    width: float
+    fill: bool
 
-        self.layer = kwargs.get('layer', 'F.SilkS')
-        self.width = kwargs.get('width')
+    def __init__(
+        self,
+        nodes: list,
+        fill: bool,
+        width: float,
+        layer: Optional[str] = None,
+        mirror_x: bool = False,
+        mirror_y: bool = False,
+    ):
+        Node.__init__(self)
+        self.nodes = PolygonPoints(nodes=nodes, x_mirror=mirror_x, y_mirror=mirror_y)
+
+        self.layer = layer
+        self.width = width
+        self.fill = fill
 
     def rotate(self, angle, origin=(0, 0), use_degrees=True):
         r""" Rotate polygon around given origin
