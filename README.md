@@ -45,16 +45,48 @@ scripts             - scripts which are generating footprints based on this libr
 
 ## Development
 
-### Install development Dependencies
+### Install development dependencies
+
+You should install this in a virtual environment to avoid conflicts with other projects.
+Create a virtual environment with the following command:
 
 ```sh
-manage.sh update_dev_packages
+python -m venv /path/to/venv
 ```
 
-### run tests
+You can choose where to create the virtual environment. `.venv` in the root of the repository
+is a common choice.
+
+Once the virtual environment is created, use this command to activate it (you need to
+run this command in every new shell you want to use the virtual environment in):
 
 ```sh
-manage.sh tests
+source /path/to/venv/bin/activate
+```
+
+This installs the dependencies required for development and the package itself in editable mode.
+You only need to run this command once per virtual environment:
+
+```sh
+./manage.sh update_dev_packages
+```
+
+If you get the error `ModuleNotFoundError: No module named 'KicadModTree'`, this means you need to run the
+second command above. This can happen if you have an old virtual environment that hasn't had this command run
+in it yet.
+
+To uninstall the package, run the following command in the virtual environment:
+
+```sh
+pip uninstall kicad-footprint-generator
+```
+
+### Run tests
+
+This runs the unit tests and the linter:
+
+```sh
+./manage.sh tests
 ```
 
 ### Configuring the git repository

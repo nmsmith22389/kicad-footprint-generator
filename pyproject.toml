@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kicad-footprint-generator"
+version = "1.1.2"
+description = "Creating kicad footprints using Python scripts"
+readme = "README.md"
+
+# Who created the project
+authors = [
+    {name = "Thomas Pointhuber", email = "thomas.pointhuber@gmx.at"},
+    {name = "KiCad Library Team" },
+]
+
+# Project dependencies
+dependencies = [
+    "asteval",
+    "typing_extensions",
+    "pyyaml",
+    "future",
+]
+
+# Optional: development dependencies
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pycodestyle",
+    "black",
+    "pep8",
+    "flake8",
+    "unittest2",
+    "nose2",
+    "nose2-cov"
+]
+
+docs = [
+    "sphinx",
+    "sphinx_rtd_theme",
+]
+
+# Package discovery configuration
+[tool.setuptools.packages.find]
+where = ["."]
+include = [
+    "KicadModTree*",
+    "scripts.general*",
+    "scripts.tools*",
+    "scripts.Packages.utils",
+]

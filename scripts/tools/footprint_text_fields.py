@@ -1,6 +1,6 @@
-import sys, os
-sys.path.append(os.path.join(sys.path[0],"..","..")) # load kicad_mod path
+
 from KicadModTree import Text, Property
+
 
 def _roundToBase(value, base):
     return round(value/base) * base

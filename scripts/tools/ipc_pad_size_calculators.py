@@ -7,7 +7,6 @@ import enum
 def roundToBase(value, base):
     return round(value / base) * base
 
-
 class TolerancedSize():
     def to_metric(value, unit):
         if unit == "inch":

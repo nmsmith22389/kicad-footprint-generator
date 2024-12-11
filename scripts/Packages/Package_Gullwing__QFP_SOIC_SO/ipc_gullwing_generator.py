@@ -1,16 +1,12 @@
 #!/usr/bin/env python3
 
-import sys
 import os
 import argparse
 import yaml
 from typing import List, Optional, Union, Literal
 
-sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))  # load parent path of KicadModTree
-
-from KicadModTree import *  # NOQA
 from KicadModTree import Vector2D, Footprint, FootprintType, ExposedPad, \
-    RectLine, PolygonLine, Model, KicadFileHandler, Pad
+    RectLine, PolygonLine, Pad
 from KicadModTree.nodes.specialized.PadArray import PadArray, get_pad_radius_from_arrays
 from KicadModTree.nodes.specialized.Cruciform import Cruciform
 

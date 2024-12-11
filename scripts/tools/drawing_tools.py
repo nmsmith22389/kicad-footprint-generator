@@ -6,12 +6,6 @@ import math
 import enum
 from typing import Tuple
 
-# ensure that the kicad-footprint-generator directory is available
-# sys.path.append(os.environ.get('KIFOOTPRINTGENERATOR'))  # enable package import from parent directory
-# sys.path.append("D:\hardware\KiCAD\kicad-footprint-generator")  # enable package import from parent directory
-sys.path.append(os.path.join(sys.path[0], "..", "..", "kicad_mod"))  # load kicad_mod path
-sys.path.append(os.path.join(sys.path[0], "..", ".."))  # load kicad_mod path
-
 from KicadModTree import *  # NOQA
 from KicadModTree import Vector2D
 from KicadModTree import Footprint, PolygonLine, Polygon, Line, Arc

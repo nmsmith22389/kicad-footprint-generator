@@ -1,19 +1,14 @@
 #!/usr/bin/env python3
 
 import math
-import os
-import sys
 import argparse
 import yaml
 from pathlib import Path
 import itertools
 import logging
 
-# load parent path of KicadModTree
-sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))
-
-from KicadModTree import KicadFileHandler, Vector2D
-from KicadModTree.nodes import Pad, Footprint, FootprintType, Model, Text, RectLine, PolygonLine, Property
+from KicadModTree import Vector2D
+from KicadModTree.nodes import Pad, Footprint, FootprintType, Text, RectLine, PolygonLine, Property
 from scripts.tools.drawing_tools import TriangleArrowPointingSouthEast
 from scripts.tools.declarative_def_tools import tags_properties
 from scripts.tools.footprint_generator import FootprintGenerator
@@ -295,7 +290,7 @@ class BGAGenerator(FootprintGenerator):
         f.tags += device_config.additional_tags.tags
 
         lib_name = Path(f'Package_{packageType}')
-        
+
         # #################### Output and 3d model ############################
         self.add_standard_3d_model_to_footprint(f, lib_name, fpId)
         self.write_footprint(f, lib_name)
@@ -429,7 +424,7 @@ if __name__ == '__main__':
     #                     help='the config file defining series parameters.', default='../package_config_KLCv3.yaml')
     parser.add_argument('--ipc_doc', type=str, nargs='?', help='IPC definition document',
                         default='ipc_7351b_bga_land_patterns.yaml')
-    
+
     args = FootprintGenerator.add_standard_arguments(parser)
 
     with open(args.global_config, 'r') as config_stream:

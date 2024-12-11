@@ -4,10 +4,10 @@
 #  - Hatching of this area on the same layer
 #  - Text on Cmts.User: KEEPOUT (with additional information if necessary)
 
-import sys, os
-sys.path.append(os.path.join(sys.path[0],"..","..")) # load kicad_mod path
-from KicadModTree import *  # NOQA
 from math import sqrt
+
+from KicadModTree import *  # NOQA
+
 
 KEEPOUT_DEFAULT_CONFIG={
     'graphical_layer':'Dwgs.User',

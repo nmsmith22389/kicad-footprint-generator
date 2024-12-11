@@ -8,10 +8,8 @@ import yaml
 from math import sqrt
 from typing import List
 
-sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))  # load parent path of KicadModTree
-
 from KicadModTree import Vector2D, Footprint, FootprintType, ExposedPad, Line, \
-    PolygonLine, RectLine, Model, Pad, KicadFileHandler
+    PolygonLine, RectLine, Pad
 from KicadModTree.nodes.specialized.PadArray import PadArray, get_pad_radius_from_arrays
 
 from scripts.tools.footprint_generator import FootprintGenerator
@@ -26,8 +24,8 @@ from scripts.tools.geometry.bounding_box import BoundingBox
 from scripts.tools.declarative_def_tools import tags_properties, pad_overrides, \
         rule_area_properties, ast_evaluator
 
-sys.path.append(os.path.join(sys.path[0], "..", "utils"))
-from ep_handling_utils import getEpRoundRadiusParams
+from scripts.Packages.utils.ep_handling_utils import getEpRoundRadiusParams
+
 
 ipc_density = 'nominal'
 ipc_doc_file = '../ipc_definitions.yaml'
@@ -410,7 +408,7 @@ class NoLeadGenerator(FootprintGenerator):
         if device_dimensions['has_EP']:
             #name_format = self.configuration['fp_name_EP_format_string_no_trailing_zero']
             name_format = self.configuration['fp_name_EP_format_string_no_trailing_zero_pincount_text']
-            
+
             if 'EP_size_x_overwrite' in device_params:
                 EP_size = Vector2D(
                     device_params['EP_size_x_overwrite'],

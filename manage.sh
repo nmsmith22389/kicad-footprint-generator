@@ -12,12 +12,11 @@ KICADMODTREE_DIR="$BASE_DIR/KicadModTree"
 ACTION=$1
 
 update_packages() {
-    pip3 install --upgrade -r "$BASE_DIR/requirements.txt"
+    pip3 install --upgrade -e .
 }
 
 update_dev_packages() {
-	update_packages
-    pip3 install --upgrade -r "$BASE_DIR/requirements-dev.txt"
+    pip3 install --upgrade -e '.[dev]'
 }
 
 pep8_check() {

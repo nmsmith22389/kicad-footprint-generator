@@ -15,11 +15,6 @@ You should have received a copy of the GNU General Public License
 along with kicad-footprint-generator. If not, see < http://www.gnu.org/licenses/ >.
 '''
 
-import sys
-import os
-sys.path.append(os.path.join(sys.path[0],".."))
-#sys.path.append('../..') # enable package import from parent directory
-
 from KicadModTree import *
 from KicadModTree.nodes.specialized.PadArray import PadArray
 

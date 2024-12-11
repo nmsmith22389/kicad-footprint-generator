@@ -1,17 +1,14 @@
 #!/usr/bin/env python
 
-import sys
 import os
 import argparse
 import yaml
 import math
 
-sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))  # load parent path of KicadModTree
-
 from scripts.tools.footprint_generator import FootprintGenerator
 from scripts.tools.footprint_text_fields import addTextFields
 from KicadModTree import Footprint, FootprintType, \
-    PolygonLine, Model, KicadFileHandler, Pad
+    PolygonLine, Pad
 from KicadModTree.nodes.specialized.PadArray import PadArray
 from scripts.tools.declarative_def_tools import tags_properties
 
@@ -491,7 +488,7 @@ if __name__ == "__main__":
                         default='../ipc_definitions.yaml')
     parser.add_argument('--force_rectangle_pads', action='store_true',
                         help='Force the generation of rectangle pads instead of rounded rectangle')
-    
+
     args = FootprintGenerator.add_standard_arguments(parser)
 
     if args.density == 'L':
