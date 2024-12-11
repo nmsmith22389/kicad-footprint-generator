@@ -1,10 +1,9 @@
-
-
 from pathlib import Path
 import os
 import yaml
 import argparse
 import logging
+from typing import Optional
 
 from KicadModTree import Footprint, KicadFileHandler, Model
 from scripts.tools.global_config_files.global_config import GlobalConfig
@@ -31,7 +30,7 @@ class FootprintGenerator:
         # output kicad model
         file_handler = KicadFileHandler(kicad_mod)
         file_handler.writeFile(output_library_path / f'{kicad_mod.name}.kicad_mod')
-        
+
     def get_standard_3d_model_path(self, library_name: str, model_name: str) -> str:
         """
         Get the path of the the "usual" 3D model (with the global config path)
@@ -55,7 +54,12 @@ class FootprintGenerator:
         ))
 
     @classmethod
-    def add_standard_arguments(self, parser, file_autofind: bool=False) -> argparse.Namespace:
+    def add_standard_arguments(
+        self,
+        parser,
+        file_autofind: bool = False,
+        default_global_config: Optional[str] = None,
+    ) -> argparse.Namespace:
         """
         Helper function to add "standard" argument to a command line parser,
         which can then be used to init a FootprintGenerator.
@@ -68,6 +72,15 @@ class FootprintGenerator:
             parser.add_argument('files', metavar='file', type=str, nargs='*',
                                 help='list of files holding information about what devices should be created.' +
                                      ' If none are given, all .yaml files in the current directory are used (recursively).')
+
+        if default_global_config:
+            parser.add_argument(
+                "--global-config",
+                type=Path,
+                nargs="?",
+                help="the config file defining how the footprint will look like. (KLC)",
+                default=default_global_config,
+            )
 
         parser.add_argument('-v', '--verbose', action='count', default=0,
                             help='Set debug level, use -vv for more debug.')

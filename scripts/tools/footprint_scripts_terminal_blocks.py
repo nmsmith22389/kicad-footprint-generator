@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import os
+from typing import Optional
 
 import scripts.tools.drawing_tools as DT
 from KicadModTree import (
@@ -64,7 +65,7 @@ def makeTerminalBlockStd(
     fabref_offset=[0, 0],
     stackable=False,
     tags_additional=[],
-    lib_name="${{KICAD8_3DMODEL_DIR}}/Connectors_Terminal_Blocks",
+    lib_name: Optional[str]="${{KICAD8_3DMODEL_DIR}}/Connectors_Terminal_Blocks",
     classname="Connectors_Terminal_Blocks",
     classname_description="terminal block",
     webpage="",
@@ -600,29 +601,33 @@ def makeTerminalBlockStd(
         )
     )
 
-    # add model
-    kicad_modg.append(
-        Model(
-            filename=lib_name + ".3dshapes/" + footprint_name + ".wrl",
-            at=[0, 0, 0],
-            scale=[1, 1, 1],
-            rotate=[0, 0, 0],
+    # If no lib_name is given, the caller handles this
+    if lib_name is not None:
+
+        # add model
+        kicad_modg.append(
+            Model(
+                filename=lib_name + ".3dshapes/" + footprint_name + ".wrl",
+                at=[0, 0, 0],
+                scale=[1, 1, 1],
+                rotate=[0, 0, 0],
+            )
         )
-    )
 
-    # write file
-    if "/" in lib_name:
-        fp_lib_name = lib_name.split("/")[-1]
-    elif "\\" in lib_name:
-        fp_lib_name = lib_name.split("\\")[-1]
+        # write file
+        if "/" in lib_name:
+            fp_lib_name = lib_name.split("/")[-1]
+        elif "\\" in lib_name:
+            fp_lib_name = lib_name.split("\\")[-1]
 
-    output_dir = fp_lib_name + ".pretty" + os.sep
-    if not os.path.isdir(output_dir):
-        os.makedirs(output_dir)
+        output_dir = fp_lib_name + ".pretty" + os.sep
+        if not os.path.isdir(output_dir):
+            os.makedirs(output_dir)
 
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile(output_dir + footprint_name + ".kicad_mod")
+        file_handler = KicadFileHandler(kicad_mod)
+        file_handler.writeFile(output_dir + footprint_name + ".kicad_mod")
 
+    return kicad_mod
 
 #
 #  +----------------------------------------+                      ^
@@ -665,7 +670,7 @@ def makeTerminalBlockVertical(
     fabref_offset=[0, 0],
     stackable=False,
     tags_additional=[],
-    lib_name="${{KICAD8_3DMODEL_DIR}}/Connectors_Terminal_Blocks",
+    lib_name: Optional[str]="${{KICAD8_3DMODEL_DIR}}/Connectors_Terminal_Blocks",
     classname="Connectors_Terminal_Blocks",
     classname_description="terminal block",
     webpage="",
@@ -1175,28 +1180,32 @@ def makeTerminalBlockVertical(
         )
     )
 
-    # add model
-    kicad_modg.append(
-        Model(
-            filename=lib_name + ".3dshapes/" + footprint_name + ".wrl",
-            at=[0, 0, 0],
-            scale=[1, 1, 1],
-            rotate=[0, 0, 0],
+    # None means the caller will deal with this
+    if lib_name is not None:
+        # add model
+        kicad_modg.append(
+            Model(
+                filename=lib_name + ".3dshapes/" + footprint_name + ".wrl",
+                at=[0, 0, 0],
+                scale=[1, 1, 1],
+                rotate=[0, 0, 0],
+            )
         )
-    )
 
-    # write file
-    if "/" in lib_name:
-        fp_lib_name = lib_name.split("/")[-1]
-    elif "\\" in lib_name:
-        fp_lib_name = lib_name.split("\\")[-1]
+        # write file
+        if "/" in lib_name:
+            fp_lib_name = lib_name.split("/")[-1]
+        elif "\\" in lib_name:
+            fp_lib_name = lib_name.split("\\")[-1]
 
-    output_dir = fp_lib_name + ".pretty" + os.sep
-    if not os.path.isdir(output_dir):
-        os.makedirs(output_dir)
+        output_dir = fp_lib_name + ".pretty" + os.sep
+        if not os.path.isdir(output_dir):
+            os.makedirs(output_dir)
 
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile(output_dir + footprint_name + ".kicad_mod")
+        file_handler = KicadFileHandler(kicad_mod)
+        file_handler.writeFile(output_dir + footprint_name + ".kicad_mod")
+
+    return kicad_mod
 
 
 #    <-----> vsegment_lines_offset
@@ -1246,7 +1255,7 @@ def makeTerminalBlock45Degree(
     secondEllipseOffset=[0, 0],
     stackable=False,
     tags_additional=[],
-    lib_name="${{KICAD8_3DMODEL_DIR}}/Connectors_Terminal_Blocks",
+    lib_name: Optional[str] = "${{KICAD8_3DMODEL_DIR}}/Connectors_Terminal_Blocks",
     classname="Connectors_Terminal_Blocks",
     classname_description="terminal block",
     webpage="",
@@ -1864,28 +1873,32 @@ def makeTerminalBlock45Degree(
         )
     )
 
-    # add model
-    kicad_modg.append(
-        Model(
-            filename=lib_name + ".3dshapes/" + footprint_name + ".wrl",
-            at=[0, 0, 0],
-            scale=[1, 1, 1],
-            rotate=[0, 0, 0],
+    if lib_name is not None:
+
+        # add model
+        kicad_modg.append(
+            Model(
+                filename=lib_name + ".3dshapes/" + footprint_name + ".wrl",
+                at=[0, 0, 0],
+                scale=[1, 1, 1],
+                rotate=[0, 0, 0],
+            )
         )
-    )
 
-    # write file
-    if "/" in lib_name:
-        fp_lib_name = lib_name.split("/")[-1]
-    elif "\\" in lib_name:
-        fp_lib_name = lib_name.split("\\")[-1]
+        # write file
+        if "/" in lib_name:
+            fp_lib_name = lib_name.split("/")[-1]
+        elif "\\" in lib_name:
+            fp_lib_name = lib_name.split("\\")[-1]
 
-    output_dir = fp_lib_name + ".pretty" + os.sep
-    if not os.path.isdir(output_dir):
-        os.makedirs(output_dir)
+        output_dir = fp_lib_name + ".pretty" + os.sep
+        if not os.path.isdir(output_dir):
+            os.makedirs(output_dir)
 
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile(output_dir + footprint_name + ".kicad_mod")
+        file_handler = KicadFileHandler(kicad_mod)
+        file_handler.writeFile(output_dir + footprint_name + ".kicad_mod")
+
+    return kicad_mod
 
 
 # pins [[x,y], [x,y], ...] location of pins (relative to center of block)
@@ -1906,7 +1919,7 @@ def makeScrewTerminalSingleStd(
     screw_offset,
     slit_screw=True,
     tags_additional=[],
-    lib_name="${{KICAD8_3DMODEL_DIR}}/Connectors_Terminal_Blocks",
+    lib_name: Optional[str] = "${{KICAD8_3DMODEL_DIR}}/Connectors_Terminal_Blocks",
     classname="Connectors_Terminal_Blocks",
     classname_description="single screw terminal terminal block",
     webpage="",
@@ -2101,25 +2114,29 @@ def makeScrewTerminalSingleStd(
         )
     )
 
-    # add model
-    kicad_modg.append(
-        Model(
-            filename=lib_name + ".3dshapes/" + footprint_name + ".wrl",
-            at=[0, 0, 0],
-            scale=[1, 1, 1],
-            rotate=[0, 0, 0],
+    if lib_name is not None:
+
+        # add model
+        kicad_modg.append(
+            Model(
+                filename=lib_name + ".3dshapes/" + footprint_name + ".wrl",
+                at=[0, 0, 0],
+                scale=[1, 1, 1],
+                rotate=[0, 0, 0],
+            )
         )
-    )
 
-    # write file
-    if "/" in lib_name:
-        fp_lib_name = lib_name.split("/")[-1]
-    elif "\\" in lib_name:
-        fp_lib_name = lib_name.split("\\")[-1]
+        # write file
+        if "/" in lib_name:
+            fp_lib_name = lib_name.split("/")[-1]
+        elif "\\" in lib_name:
+            fp_lib_name = lib_name.split("\\")[-1]
 
-    output_dir = fp_lib_name + ".pretty" + os.sep
-    if not os.path.isdir(output_dir):
-        os.makedirs(output_dir)
+        output_dir = fp_lib_name + ".pretty" + os.sep
+        if not os.path.isdir(output_dir):
+            os.makedirs(output_dir)
 
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile(output_dir + footprint_name + ".kicad_mod")
+        file_handler = KicadFileHandler(kicad_mod)
+        file_handler.writeFile(output_dir + footprint_name + ".kicad_mod")
+
+    return kicad_mod
