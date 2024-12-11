@@ -1,5 +1,8 @@
 # The following command will enable ignoring formatting commits:
 #    git config blame.ignoreRevsFile .git-blame-ignore-revs
 
+# Normalised line endings
+218f8d4c61192addb63cd8ed1f765884e242bb25
+
 # Reformated DPAK python files
 2970eadbc51ff23b5213ff6f2963989125723809
