@@ -4,11 +4,11 @@ import sys
 import os
 
 sys.path.append("../../kicad_mod") # load kicad_mod path
-sys.path.append(os.path.join(sys.path[0], "..", "tools"))
 
 import argparse
 from kicad_mod import KicadMod, createNumberedPadsTHT
-from drawing_tools import round_to_grid
+from scripts.tools.drawing_tools import round_to_grid
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument('pincount', help='number of pins of the jst connector', type=int, nargs=1)

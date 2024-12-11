@@ -15,11 +15,6 @@
 #
 # (C) 2016 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 
-import sys
-import os
-
-sys.path.append(os.path.join(sys.path[0], "../.."))  # enable package import from parent directory
-
 from KicadModTree import *  # NOQA
 
 

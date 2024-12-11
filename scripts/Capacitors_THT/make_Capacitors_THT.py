@@ -1,26 +1,8 @@
 #!/usr/bin/env python
 
-import sys
-import os
-import math
-
-# ensure that the kicad-footprint-generator directory is available
-#sys.path.append(os.environ.get('KIFOOTPRINTGENERATOR'))  # enable package import from parent directory
-#sys.path.append("D:\hardware\KiCAD\kicad-footprint-generator")  # enable package import from parent directory
-sys.path.append(os.path.join(sys.path[0],"..","..","kicad_mod")) # load kicad_mod path
-sys.path.append(os.path.join(sys.path[0],"..","..")) # load kicad_mod path
-sys.path.append(os.path.join(sys.path[0],"..","tools")) # load kicad_mod path
-
 from KicadModTree import *  # NOQA
-from drawing_tools import *
-from footprint_scripts_resistorlike import *
-
-
-
-
-
-
-
+from scripts.tools.drawing_tools import *
+from scripts.tools.footprint_scripts_resistorlike import *
 
 
 if __name__ == '__main__':
@@ -473,7 +455,7 @@ if __name__ == '__main__':
 
     ###########################################################
     # radial nonpolar electrolytic capacitors
-    
+
     # package sizes taken from:
     # http://nichicon-us.com/english/products/pdfs/e-ump.pdf
     # http://nichicon-us.com/english/products/pdfs/e-usp.pdf
@@ -525,7 +507,7 @@ if __name__ == '__main__':
                            specialtags=special_tags, classname="C", lib_name="${KICAD8_3DMODEL_DIR}/Capacitor_THT", deco=deco,
                            script3d=scriptcprad, height3d=h3d)
 
-                           
+
     ###########################################################
     # radial electrolytic capacitors, 3 pins
     ###########################################################

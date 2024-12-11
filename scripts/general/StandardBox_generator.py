@@ -3,14 +3,9 @@
 import sys
 import os
 
-# load parent path of KicadModTree
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", ".."))
-
-# load scripts
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), ".."))
-
 from KicadModTree import Footprint, FootprintType, KicadFileHandler, ModArgparser, Vector2D
-from general.StandardBox import StandardBox
+from scripts.general.StandardBox import StandardBox
+
 
 def converter(args):
 

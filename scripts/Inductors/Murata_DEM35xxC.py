@@ -1,11 +1,5 @@
 #!/usr/bin/env python3
 
-import sys
-import os
-
-# load parent path of KicadModTree
-sys.path.append(os.path.join(sys.path[0], "..", ".."))
-
 from KicadModTree import *
 
 datasheet = "https://www.murata.com/~/media/webrenewal/products/inductor/chip/tokoproducts/wirewoundferritetypeforpl/m_dem3518c.ashx"

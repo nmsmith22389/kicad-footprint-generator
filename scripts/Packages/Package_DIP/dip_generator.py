@@ -1,17 +1,9 @@
 #!/usr/bin/env python
 
 import argparse
-import logging
 import os
-import sys
 from copy import deepcopy
 from typing import List, Union
-
-import yaml
-
-# ensure that the kicad-footprint-generator directory is available
-sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))
-sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))
 
 from KicadModTree import Vector2D
 from scripts.tools.declarative_def_tools import tags_properties
@@ -147,7 +139,7 @@ class DIPGenerator(FootprintGenerator):
             desc.append(config.standard)
 
         args['DIPDescription'] = ', '.join(desc)
-        
+
         # Compute output directory
         outdir = self.output_path / 'Package_DIP.pretty'
         os.makedirs(outdir, exist_ok=True)
@@ -181,7 +173,7 @@ class DIPGenerator(FootprintGenerator):
                 mutator(variant_config)
 
             self.make_from_config(variant_config)
-            
+
     def generateFootprint(self, device_params: dict, pkg_id: str, header_info: dict = None):
         # Ignore defaults and base packages
         if pkg_id.startswith('base') or pkg_id.startswith('defaults'):
@@ -198,7 +190,7 @@ if __name__ == '__main__':
                         help='the config file defining how the footprint will look like. (KLC)',
                         default='../../tools/global_config_files/config_KLCv3.0.yaml')
     args = FootprintGenerator.add_standard_arguments(parser)
-    
+
     global_config = GlobalConfig.load_from_file(args.global_config)
 
     FootprintGenerator.run_on_files(

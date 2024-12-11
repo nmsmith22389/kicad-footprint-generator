@@ -1,4 +1,11 @@
 #!/usr/bin/env python3
+
+import sys
+import os
+
+from KicadModTree import *
+
+
 #http://katalog.we-online.com/en/pbs/WE-MAPI]
 
 #sizes,shapes,etc]
@@ -17,9 +24,6 @@ inductors = [
 [4020,4.0,4.0,3.35,1.39,3.7],
 ]
 
-import sys
-import os
-
 output_dir = os.getcwd()
 
 #if specified as an argument, extract the target directory for output footprints
@@ -36,10 +40,6 @@ if len(sys.argv) > 1:
 if output_dir and not output_dir.endswith(os.sep):
     output_dir += os.sep
 
-#import KicadModTree files
-sys.path.append(os.path.join(sys.path[0], "..", ".."))
-from KicadModTree import *
-from KicadModTree.nodes.specialized.PadArray import PadArray
 
 prefix = "Inductor_"
 part = "Wurth_MAPI-{pn}"

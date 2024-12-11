@@ -15,16 +15,7 @@
 #
 # (C) 2016 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 
-import sys
-import os
-import argparse
-import yaml
-import pprint
-
-sys.path.append(os.path.join(sys.path[0], "../.."))  # enable package import from parent directory
-sys.path.append(os.path.join(sys.path[0], "..", "tools"))  # enable package import from parent directory
-
-from drawing_tools import round_to_grid
+from scripts.tools.drawing_tools import round_to_grid
 from KicadModTree import *  # NOQA
 
 
@@ -35,7 +26,7 @@ if __name__ == '__main__':
     from C_Trimmer_factory import *
 
     CONFIG = 'size_definitions/C_Trimmer_config.yaml'
-                
+
     f = Factory(CONFIG)
 
     for series in f.build_list:

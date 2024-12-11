@@ -1,4 +1,11 @@
 #!/usr/bin/env python3
+
+import os
+import sys
+
+from KicadModTree import *
+
+
 """
 vishay IHSM series inductors
 http://www.vishay.com/docs/34018/ihsm3825.pdf
@@ -16,9 +23,6 @@ inductors = [
 [7382, 21.34, 8.13, 6.6, 7.4, 13.462, "http://www.vishay.com/docs/34021/ihsm7832.pdf"]
 ]
 
-import sys
-import os
-
 output_dir = os.getcwd()
 
 #if specified as an argument, extract the target directory for output footprints
@@ -34,12 +38,6 @@ if len(sys.argv) > 1:
 
 if output_dir and not output_dir.endswith(os.sep):
     output_dir += os.sep
-
-#import KicadModTree files
-sys.path.append(os.path.join(sys.path[0], "..", ".."))
-
-from KicadModTree import *
-from KicadModTree.nodes.specialized.PadArray import PadArray
 
 prefix = "Inductor_"
 part = "Vishay_IHSM-{pn}"

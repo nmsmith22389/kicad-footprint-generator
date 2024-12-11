@@ -25,13 +25,6 @@
 # refactored by and (C) 2017 Terje Io, <http://github.com/terjeio>
 #
 
-# 2017-11-25
-
-import sys
-import os
-
-sys.path.append(os.path.dirname(os.path.realpath(__file__)) + "/../..")
-
 from KicadModTree import Footprint, FootprintType, Translation, Pad, Model, KicadFileHandler, Property
 from canvas import Layer, PadLayer, Keepout, OutDir
 from cq_base_parameters import PinStyle, CaseType

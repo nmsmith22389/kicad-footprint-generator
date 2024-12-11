@@ -1,18 +1,11 @@
 #!/usr/bin/env python3
 
-import sys
 import os
-import math
 
-# ensure that the kicad-footprint-generator directory is available
-#sys.path.append(os.environ.get('KIFOOTPRINTGENERATOR'))  # enable package import from parent directory
-#sys.path.append("D:\hardware\KiCAD\kicad-footprint-generator")  # enable package import from parent directory
-sys.path.append(os.path.join(sys.path[0],"..","..","kicad_mod")) # load kicad_mod path
-sys.path.append(os.path.join(sys.path[0],"..","..")) # load kicad_mod path
-sys.path.append(os.path.join(sys.path[0],"..","tools")) # load kicad_mod path
 
 from KicadModTree import *  # NOQA
-from footprint_scripts_DIP import *
+from scripts.tools.footprint_scripts_DIP import *
+
 
 if __name__ == '__main__':
     cwd= os.getcwd()
@@ -20,7 +13,7 @@ if __name__ == '__main__':
       os.mkdir("SMD")
     except:
       print("THT exists")
-      
+
     try:
       os.mkdir("THT")
     except:
@@ -67,7 +60,7 @@ if __name__ == '__main__':
         makeDIPSwitch(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad, switch_width, switch_height, 'Slide', False, [], webpage="e.g. https://www.ctscorp.com/wp-content/uploads/206-208.pdf",switchtype=switchtype)
         makeDIPSwitch(p, rm, pinrow_distance, package_width_narrow, overlen_top_narrow, overlen_bottom_narrow, ddrill, pad, switch_width_narrow, switch_height_narrow, 'Slide', False, ["LowProfile"], webpage="e.g. https://www.ctscorp.com/wp-content/uploads/209-210.pdf",switchtype=switchtype)
         makeDIPSwitch(p, rm, pinrow_distance, package_width_piano, overlen_top_piano, overlen_bottom_piano, ddrill, pad, switch_width_piano, switch_height_piano, 'Piano', False, [], webpage="",switchtype=switchtype)
-        
+
         os.chdir(cwd)
         os.chdir("SMD")
         makeDIPSwitch(p, rm, pinrow_distance_smd, package_width_narrow, overlen_top_narrow, overlen_bottom_narrow, ddrill, pad_smd, switch_width_narrow, switch_height_narrow, 'Slide', True,["SMD","LowProfile"], 'Button_Switch_SMD', webpage="e.g. https://www.ctscorp.com/wp-content/uploads/219.pdf",switchtype=switchtype)
@@ -118,7 +111,7 @@ if __name__ == '__main__':
     overlen_bottom = 1.27
     ddrill = 0
     pad_smd = [1.25, 0.76]
-    
+
     os.chdir(cwd)
     os.chdir("SMD")
     for p in pins:
@@ -159,7 +152,7 @@ if __name__ == '__main__':
     overlen_bottom = 1.27
     ddrill = 0
     pad_smd = [1.6, 0.76]
-    
+
     os.chdir(cwd)
     os.chdir("SMD")
     for p in pins:
@@ -182,7 +175,7 @@ if __name__ == '__main__':
     overlen_bottom = overlen_top
     ddrill = 0
     pad_smd = [(8.89-6.35)/2, 0.76]
-    
+
     os.chdir(cwd)
     os.chdir("SMD")
     for p in pins:
@@ -202,12 +195,12 @@ if __name__ == '__main__':
     overlen_bottom = overlen_top
     ddrill = 0
     pad_smd = [(7.9-2.6)/2, 0.76]
-    
+
     os.chdir(cwd)
     os.chdir("SMD")
     for p in pins:
         makeDIPSwitch(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_smd, switch_width,
                       switch_height, 'Slide', True, ["JPin"], "Button_Switch_SMD", [0, 0, 0], [1, 1, 1],
                       [0, 0, 0], "", True, webpage="http://www.kingtek.net.cn/pic/201601201446313350.pdf", device_name="KingTek_DSHP{0:02}TJ".format(int(p/2)),switchtype=switchtype)
-    
+
     os.chdir(cwd)

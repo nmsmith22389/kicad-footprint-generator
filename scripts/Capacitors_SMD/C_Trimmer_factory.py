@@ -1,13 +1,9 @@
-import sys
-import os
+#! /usr/bin/env python3
+
 import argparse
 import yaml
-import pprint
 
-sys.path.append(os.path.join(sys.path[0], "../.."))  # enable package import from parent directory
-sys.path.append(os.path.join(sys.path[0], "..", "tools"))  # enable package import from parent directory
-
-from drawing_tools import round_to_grid
+from scripts.tools.drawing_tools import round_to_grid
 from KicadModTree import *  # NOQA
 from bump import *
 from corners import *

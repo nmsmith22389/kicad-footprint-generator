@@ -1,21 +1,9 @@
 #!/usr/bin/env python3
 
-import math
-import os
-import sys
-
-# ensure that the kicad-footprint-generator directory is available
-# sys.path.append(os.environ.get('KIFOOTPRINTGENERATOR'))  # enable package import from parent directory
-# sys.path.append("D:\hardware\KiCAD\kicad-footprint-generator")  # enable package import from parent directory
-sys.path.append(
-    os.path.join(sys.path[0], "..", "..", "kicad_mod")
-)  # load kicad_mod path
-sys.path.append(os.path.join(sys.path[0], "..", ".."))  # load kicad_mod path
-sys.path.append(os.path.join(sys.path[0], "..", "tools"))  # load kicad_mod path
-
-from drawing_tools import *
-from footprint_scripts_LEDs import *
 from KicadModTree import *  # NOQA
+from scripts.tools.drawing_tools import *
+from scripts.tools.footprint_scripts_LEDs import *
+
 
 if __name__ == "__main__":
     led_type = "round"

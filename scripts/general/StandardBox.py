@@ -16,9 +16,6 @@
 import sys
 import os
 
-sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)),"..","tools")) # load kicad_mod path
-
-
 #
 # This module Create a standard box in various layers including a pin 1 marker tap or chamfer
 #
@@ -29,7 +26,8 @@ from KicadModTree.nodes.Node import Node
 from KicadModTree.nodes.base.Line import Line
 from KicadModTree.nodes.base.Text import Text
 
-from drawing_tools import *
+from scripts.tools.drawing_tools import *
+
 
 class koaLine:
 

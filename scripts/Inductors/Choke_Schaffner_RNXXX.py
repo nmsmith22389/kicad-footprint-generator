@@ -1,3 +1,11 @@
+#! /usr/bin/env python3
+
+import sys
+import os
+import math
+
+from KicadModTree import *
+
 #!/usr/bin/env python3
 #http://katalog.we-online.com/en/pbs/WE-MAPI]
 
@@ -23,10 +31,6 @@ inductors = [
 ["RN242",  3, 4, 15.0, 12.5, 34.3, 18.0, 31.0,  4.2,  0.8,  2.0 ]
 ]
 
-import sys
-import os
-import math
-
 output_dir = os.getcwd()
 
 #if specified as an argument, extract the target directory for output footprints
@@ -42,11 +46,6 @@ if len(sys.argv) > 1:
 
 if output_dir and not output_dir.endswith(os.sep):
     output_dir += os.sep
-
-#import KicadModTree files
-sys.path.append(os.path.join(sys.path[0], "..", ".."))
-from KicadModTree import *
-from KicadModTree.nodes.specialized.PadArray import PadArray
 
 prefix = "Choke_Schaffner_"
 part = "{serie}-0{pn}"

@@ -1,28 +1,15 @@
 #!/usr/bin/env python3
 
 import math
-import os
-import sys
-
-# ensure that the kicad-footprint-generator directory is available
-# sys.path.append(os.environ.get('KIFOOTPRINTGENERATOR'))  # enable package import from parent directory
-# sys.path.append("D:\hardware\KiCAD\kicad-footprint-generator")  # enable package import from parent directory
-sys.path.append(
-    os.path.join(sys.path[0], "..", "..", "kicad_mod")
-)  # load kicad_mod path
-sys.path.append(os.path.join(sys.path[0], "..", ".."))  # load kicad_mod path
-sys.path.append(os.path.join(sys.path[0], "..", "tools"))  # load kicad_mod path
-
 import argparse
 
-import yaml
-from drawing_tools import *
-from footprint_generator import FootprintGenerator
 from KicadModTree import *  # NOQA
+from scripts.tools.drawing_tools import *
+from scripts.tools.footprint_generator import FootprintGenerator
 from scripts.tools.global_config_files.global_config import GlobalConfig
 
-slk_clearance = 0.2
 
+slk_clearance = 0.2
 
 class CrystalResonatorOscillatorGenerator(FootprintGenerator):
     def __init__(self, configuration, **kwargs):

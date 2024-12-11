@@ -1,14 +1,7 @@
 #!/usr/bin/env python3
 
-import sys
-import os
-
-# load parent path of KicadModTree
-sys.path.append(os.path.join(sys.path[0], "..", ".."))
-sys.path.append(os.path.join(sys.path[0], "..", "tools"))
-
 from KicadModTree import *
-from drawing_tools import *
+from scripts.tools.drawing_tools import *
 
 def ptc_fuse_tht(args):
     footprint_name = args["name"]

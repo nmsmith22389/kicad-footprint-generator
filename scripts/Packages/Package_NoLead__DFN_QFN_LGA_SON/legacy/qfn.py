@@ -1,16 +1,12 @@
 #!/usr/bin/env python3
 
-import sys
 import os
 import re
 
-# load parent path of KicadModTree
-sys.path.append(os.path.join(sys.path[0], "..", "..", "..", ".."))
-
-lib_name = "Package_DFN_QFN"
-
 from KicadModTree import *
 
+
+lib_name = "Package_DFN_QFN"
 
 def qfn(args):
     footprint_name = args["name"]

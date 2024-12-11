@@ -1,17 +1,12 @@
 #!/usr/bin/env python
 
-import sys
-import os
 import argparse
 import yaml
 import math
 
-sys.path.append(os.path.join(sys.path[0], "..", ".."))  # load parent path of KicadModTree
-sys.path.append(os.path.join(sys.path[0], "..", "tools"))
-
 from KicadModTree import *  # NOQA
 from KicadModTree.nodes.base.Pad import Pad  # NOQA
-from drawing_tools import round_to_grid
+
 
 def create_footprint(name, **kwargs):
     kicad_mod = Footprint(name, FootprintType.THT)

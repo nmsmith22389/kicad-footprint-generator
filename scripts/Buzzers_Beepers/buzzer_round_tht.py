@@ -1,10 +1,5 @@
 #!/usr/bin/env python
 
-import sys
-import os
-
-sys.path.append(os.path.join(sys.path[0], "..", ".."))  # load parent path of KicadModTree
-
 from KicadModTree import *  # NOQA
 from KicadModTree.nodes.base.Pad import Pad  # NOQA
 

@@ -1,15 +1,12 @@
 #!/usr/bin/env python3
 
-import sys
 import os
-sys.path.append(os.path.join(sys.path[0], "..", ".."))
 import argparse
 import yaml
-from KicadModTree import *
 
-# Load parent path of tools
-sys.path.append(os.path.join(sys.path[0], "..", "tools"))
-from footprint_text_fields import addTextFields
+from KicadModTree import *
+from scripts.tools.footprint_text_fields import addTextFields
+
 
 # Function used to generate footprint
 def generate_footprint(params, part_params, mpn, configuration):

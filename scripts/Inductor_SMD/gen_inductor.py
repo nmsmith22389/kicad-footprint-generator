@@ -3,17 +3,12 @@
 #####
 # Usage : python gen_inductor.py <inputfile.yaml> <outputPath>
 
-
-import sys
 import os
-
 import yaml
 from pathlib import Path
 import argparse
 import logging
 
-# load parent path of KicadModTree
-sys.path.append(os.path.join(sys.path[0], "..", ".."))
 from KicadModTree import Footprint, FootprintType, Text, Line, Pad, RectLine, Vector2D, Property
 from scripts.tools.drawing_tools import (
     draw_triangle_pointing_south,

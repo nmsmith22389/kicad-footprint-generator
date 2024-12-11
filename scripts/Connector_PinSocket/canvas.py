@@ -43,19 +43,12 @@
 # the bounding box but outside the keepout area proper.
 #
 
-# 2017-11-25
-
-import sys
 import os
 import math
-
-sys.path.append(os.path.dirname(os.path.realpath(__file__)) + "\\..\\..")
-
 from collections import namedtuple
 
 from KicadModTree import Point, Property
 from KicadModTree.nodes.base import Line, Arc, Circle, Text, Pad
-from KicadModTree.nodes.specialized import RectFill
 from KicadModTree.util.kicad_util import formatFloat
 
 class Layer:

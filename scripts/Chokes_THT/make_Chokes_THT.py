@@ -1,21 +1,8 @@
 #!/usr/bin/env python
 
-import sys
-import os
-import math
-
-# ensure that the kicad-footprint-generator directory is available
-#sys.path.append(os.environ.get('KIFOOTPRINTGENERATOR'))  # enable package import from parent directory
-#sys.path.append("D:\hardware\KiCAD\kicad-footprint-generator")  # enable package import from parent directory
-sys.path.append(os.path.join(sys.path[0],"..","..","kicad_mod")) # load kicad_mod path
-sys.path.append(os.path.join(sys.path[0],"..","..")) # load kicad_mod path
-sys.path.append(os.path.join(sys.path[0],"..","tools")) # load kicad_mod path
-
 from KicadModTree import *  # NOQA
-from drawing_tools import *
-from footprint_scripts_resistorlike import *
-
-
+from scripts.tools.drawing_tools import *
+from scripts.tools.footprint_scripts_resistorlike import *
 
 
 if __name__ == '__main__':
