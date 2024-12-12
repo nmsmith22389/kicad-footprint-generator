@@ -409,6 +409,28 @@ HTSSOP-44-1EP_6.1x14.0mm_P0.635mm_EP4.31x8.26mm_Mask4.31x8.26mm_ThermalVias:
     paste_avoid_via: False
 
 
+Texas_DAD0032A_HTSSOP-32_6.1x11mm_P0.65mm_TopEP3.71x3.81mm:
+  size_source: 'https://www.ti.com/lit/ds/symlink/tpa3116d2.pdf'
+  manufacturer: Texas
+  part_number: DAD0032A
+  additional_tags:
+    - 'PowerPAD'
+  body_size_x: 6.0 .. 6.2
+  body_size_y: 10.9 .. 11.1
+  overall_size_x: 7.9 .. 8.3
+  overall_height: 1.0 .. 1.15
+  lead_width: 0.19 .. 0.30
+  lead_len: 0.5 .. 0.75
+  pitch: 0.65
+  num_pins_x: 0
+  num_pins_y: 16
+
+  top_slug:
+    shape: rectangle
+    x: 3.31 .. 4.11
+    y: 3.26 .. 4.36
+
+
 Texas_PWP0014A:
 # HTSSOP-14-1EP_4.4x5.0mm_P0.65mm_EP3.4x5.0mm_Mask3.0x3.1mm:
   size_source: 'http://www.ti.com/lit/ds/symlink/lm5161.pdf#page=34'

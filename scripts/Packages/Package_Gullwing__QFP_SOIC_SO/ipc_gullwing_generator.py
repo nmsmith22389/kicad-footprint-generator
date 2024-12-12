@@ -12,6 +12,7 @@ from KicadModTree import *  # NOQA
 from KicadModTree import Vector2D, Footprint, FootprintType, ExposedPad, \
     RectLine, PolygonLine, Model, KicadFileHandler, Pad
 from KicadModTree.nodes.specialized.PadArray import PadArray, get_pad_radius_from_arrays
+from KicadModTree.nodes.specialized.Cruciform import Cruciform
 
 from scripts.tools.footprint_generator import FootprintGenerator
 from scripts.tools.footprint_text_fields import addTextFields
@@ -65,6 +66,46 @@ def find_top_left_pad(pad_arrays: List[PadArray]) -> Pad:
     return tl_pad
 
 
+class TopSlugConfiguration:
+    """
+    A type that represents the configuration of a "top slug"
+    (top heat sink pad), probably from a YAML config block.
+    """
+
+    shape: str
+    x: TolerancedSize
+    y: TolerancedSize
+    # Optional tail_x for rectangular slugs with vertical "tails" to the
+    # package edge.
+    tail_x: Optional[TolerancedSize]
+
+    def __init__(self, spec: dict):
+
+        self.shape = spec['shape']
+
+        if self.shape not in ['rectangle', 'cruciform']:
+            raise ValueError(f"Unsupported top slug shape: {self.shape}")
+
+        self.x = TolerancedSize.fromYaml(spec, base_name='x')
+        self.y = TolerancedSize.fromYaml(spec, base_name='y')
+
+        self.tail_x = None
+
+        if self.shape == 'cruciform':
+            self.tail_x = TolerancedSize.fromYaml(spec, base_name='tail_x')
+
+    def get_name_suffix(self):
+
+        # See https://github.com/KiCad/kicad-footprints/issues/955 for discussion
+        s = 'TopEP'
+
+        if self.shape == 'rectangle' or self.shape == 'cruciform':
+            s += f'{self.x.nominal:.2f}x{self.y.nominal:.2f}mm'
+        else:
+            raise ValueError(f"Unsupported top slug shape: {self.shape}")
+
+        return s
+
 class GullwingConfiguration:
     """
     A type that represents the configuration of a gullwing footprint
@@ -78,6 +119,8 @@ class GullwingConfiguration:
     compatible_mpns: Optional[tags_properties.TagsProperties]
     additional_tags: Optional[tags_properties.TagsProperties]
 
+    top_slug: Optional[TopSlugConfiguration]
+
     def __init__(self, spec: dict):
         self._spec_dictionary = spec
 
@@ -90,6 +133,10 @@ class GullwingConfiguration:
             spec.get(tags_properties.ADDITIONAL_TAGS_KEY, [])
         )
 
+        self.top_slug = None
+        if 'top_slug' in spec:
+            self.top_slug = TopSlugConfiguration(spec['top_slug'])
+
     @property
     def spec_dictionary(self) -> dict:
         """
@@ -99,6 +146,10 @@ class GullwingConfiguration:
         type-safe declarative definitions, but that requires deep changes
         """
         return self._spec_dictionary
+
+    @property
+    def has_top_slug(self) -> bool:
+        return self.top_slug is not None
 
 
 class GullwingGenerator(FootprintGenerator):
@@ -262,7 +313,7 @@ class GullwingGenerator(FootprintGenerator):
 
         self.__createFootprintVariant(gullwing_config, header_info, dimensions, False)
 
-    def __createFootprintVariant(self, gullwing_config, header, dimensions, with_thermal_vias):
+    def __createFootprintVariant(self, gullwing_config: GullwingConfiguration, header, dimensions, with_thermal_vias):
         fab_line_width = self.global_config.fab_line_width
 
         device_params = gullwing_config.spec_dictionary
@@ -355,9 +406,19 @@ class GullwingGenerator(FootprintGenerator):
         if 'custom_name_format' in device_params:
             name_format = device_params['custom_name_format']
 
+        # This suffix is always added to the footprint name, as it is important for the 3D model
+        always_suffix = ""
+
+        if gullwing_config.has_top_slug:
+            always_suffix = "_" + gullwing_config.top_slug.get_name_suffix()
+
         suffix = device_params.get('suffix', '').format(pad_x=pad_details['left']['size'][0],
                                                         pad_y=pad_details['left']['size'][1])
-        suffix_3d = suffix if device_params.get('include_suffix_in_3dpath', 'True') == 'True' else ""
+
+        if always_suffix:
+            suffix = always_suffix + suffix
+
+        suffix_3d = suffix if device_params.get('include_suffix_in_3dpath', 'True') == 'True' else always_suffix
 
         fp_name = name_format.format(
             man=device_params.get('manufacturer', ''),
@@ -781,6 +842,37 @@ class GullwingGenerator(FootprintGenerator):
             polygon=poly_fab,
             width=fab_line_width,
             layer="F.Fab"))
+
+        # ########################## Top heat slugs ###############################
+
+        if gullwing_config.has_top_slug:
+
+            if gullwing_config.top_slug.shape in ['rectangle', 'cruciform']:
+                cruciform_w = gullwing_config.top_slug.x.nominal
+                cruciform_tail_h = gullwing_config.top_slug.y.nominal
+
+                # Default to a rectangle
+                cruciform_h = cruciform_tail_h
+                cruciform_tail_w = cruciform_w
+
+                if gullwing_config.top_slug.shape == 'cruciform':
+                    cruciform_tail_w = gullwing_config.top_slug.tail_x.nominal
+                    # Tail to the top and bottom of the package
+                    cruciform_h = body_edge['bottom'] - body_edge['top']
+
+                topslug_rect = Cruciform(
+                    overall_w=cruciform_w,
+                    overall_h=cruciform_h,
+                    tail_w=cruciform_tail_w,
+                    tail_h=cruciform_tail_h,
+                    layer="Cmts.User",
+                    width=0.1,
+                    fill=False
+                )
+
+                kicad_mod.append(topslug_rect)
+            else:
+                raise ValueError("Unsupported top slug shape: {}".format(gullwing_config.top_slug.shape))
 
         # ######################### Text Fields ###############################
 
