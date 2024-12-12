@@ -187,7 +187,7 @@ def makeTerminalBlockStd(
     y1 = 0
 
     pad_type = Pad.TYPE_THT
-    pad_shape1 = Pad.SHAPE_RECT
+    pad_shape1 = Pad.SHAPE_ROUNDRECT
     pad_shapeother = Pad.SHAPE_CIRCLE
     if pad[0] != pad[1]:
         pad_shapeother = Pad.SHAPE_OVAL
@@ -226,6 +226,8 @@ def makeTerminalBlockStd(
                     size=pad,
                     drill=ddrill,
                     layers=pad_layers,
+                    radius_ratio=0.25,
+                    maximum_radius=0.25,
                 )
             )
             keepouts = keepouts +  DT.addKeepoutRect(
@@ -794,7 +796,7 @@ def makeTerminalBlockVertical(
     y1 = 0
 
     pad_type = Pad.TYPE_THT
-    pad_shape1 = Pad.SHAPE_RECT
+    pad_shape1 = Pad.SHAPE_ROUNDRECT
     pad_shapeother = Pad.SHAPE_CIRCLE
     if pad[0] != pad[1]:
         pad_shapeother = Pad.SHAPE_OVAL
@@ -831,6 +833,8 @@ def makeTerminalBlockVertical(
                     size=pad,
                     drill=ddrill,
                     layers=pad_layers,
+                    radius_ratio=0.25,
+                    maximum_radius=0.25,
                 )
             )
             keepouts = keepouts +  DT.addKeepoutRect(
@@ -1381,7 +1385,7 @@ def makeTerminalBlock45Degree(
     y1 = 0
 
     pad_type = Pad.TYPE_THT
-    pad_shape1 = Pad.SHAPE_RECT
+    pad_shape1 = Pad.SHAPE_ROUNDRECT
     pad_shapeother = Pad.SHAPE_CIRCLE
     if pad[0] != pad[1]:
         pad_shapeother = Pad.SHAPE_OVAL
@@ -1420,6 +1424,8 @@ def makeTerminalBlock45Degree(
                     size=pad,
                     drill=ddrill,
                     layers=pad_layers,
+                    radius_ratio=0.25,
+                    maximum_radius=0.25,
                 )
             )
             keepouts = keepouts +  DT.addKeepoutRect(
