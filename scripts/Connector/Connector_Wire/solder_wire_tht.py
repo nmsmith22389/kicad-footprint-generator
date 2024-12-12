@@ -1,8 +1,9 @@
+#! /usr/bin/env python3
+
 import sys
 import os
 import argparse
 import yaml
-import math
 
 from copy import deepcopy
 

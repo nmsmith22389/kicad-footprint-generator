@@ -3,9 +3,6 @@
 import sys
 import os
 import math
-
-from operator import add
-from math import sqrt
 import argparse
 import yaml
 
@@ -13,13 +10,10 @@ import yaml
 #sys.path.append(os.environ.get('KIFOOTPRINTGENERATOR'))  # enable package import from parent directory
 #sys.path.append("D:\hardware\KiCAD\kicad-footprint-generator")  # enable package import from parent directory
 sys.path.append(os.path.join(sys.path[0], "..", "..", "..")) # load kicad_mod path
-sys.path.append(os.path.join(sys.path[0], "..", "..", "tools")) # load kicad_mod path
 
 from KicadModTree import *  # NOQA
-from drawing_tools import round_to_grid
-# from drawing_tools import *
-# from footprint_scripts_potentiometers import *
-from footprint_text_fields import addTextFields
+from scripts.tools.footprint_text_fields import addTextFields
+
 
 lib_name_category = 'PCBEdge'
 
@@ -65,6 +59,13 @@ POL = { '05': [ 3],
         '60': [31, 63],
         '70': [53, 115]
       }
+
+
+def roundToBase(value, base):
+    if base == 0:
+        return value
+    return round(value/base) * base
+
 
 def generate_one_footprint(pol, n, configuration):
     off = configuration['silk_fab_offset']
@@ -176,10 +177,10 @@ def generate_one_footprint(pol, n, configuration):
                           end=[round(right, 2), round(top, 2)],
                           layer='B.SilkS', width=configuration['silk_line_width'])) #right line
 
-    top = round_to_grid(body_edge['top'] - CrtYd_offset, configuration['courtyard_grid'])
-    bot = round_to_grid(body_edge['bottom'], configuration['courtyard_grid'])
-    left = round_to_grid(body_edge['left'] - CrtYd_offset, configuration['courtyard_grid'])
-    right = round_to_grid(body_edge['right'] + CrtYd_offset, configuration['courtyard_grid'])
+    top = roundToBase(body_edge['top'] - CrtYd_offset, configuration['courtyard_grid'])
+    bot = roundToBase(body_edge['bottom'], configuration['courtyard_grid'])
+    left = roundToBase(body_edge['left'] - CrtYd_offset, configuration['courtyard_grid'])
+    right = roundToBase(body_edge['right'] + CrtYd_offset, configuration['courtyard_grid'])
 
     cy1 = top
     cy2 = bot
@@ -190,27 +191,24 @@ def generate_one_footprint(pol, n, configuration):
     kicad_mod.append(RectLine(start=[left, top], end=[right , bot],
             layer='B.CrtYd', width=configuration['courtyard_line_width']))
 
-
-
-
     top = body_edge['top']
     bot =  body_edge['bottom']
     slot_height = 7.0
 
 
     ## create cutout
-    kicad_mod.append(Line(start=[-K[n]/2.0, bot, 2],
-                          end=[-K[n]/2.0, top, 2], layer='Edge.Cuts', width=configuration['edge_cuts_line_width'])) #left line
-    kicad_mod.append(Line(start=[K[n]/2.0, bot, 2],
+    kicad_mod.append(Line(start=[-K[n]/2.0, bot],
+                          end=[-K[n]/2.0, top], layer='Edge.Cuts', width=configuration['edge_cuts_line_width'])) #left line
+    kicad_mod.append(Line(start=[K[n]/2.0, bot],
                           end=[K[n]/2.0, top], layer='Edge.Cuts', width=configuration['edge_cuts_line_width'])) #right line
 
 
     ## grid ends
     nextGrid = math.ceil((K[n]/2.0)/0.25 + 1.0) * 0.25
     #nextGrid = round_to_grid(K[n]/2, 0.25)
-    kicad_mod.append(Line(start=[-nextGrid, top, 2],
-        end=[-K[n]/2.0, top, 2], layer='Edge.Cuts', width=configuration['edge_cuts_line_width'])) #left line
-    kicad_mod.append(Line(start=[+nextGrid, top, 2],
+    kicad_mod.append(Line(start=[-nextGrid, top],
+        end=[-K[n]/2.0, top], layer='Edge.Cuts', width=configuration['edge_cuts_line_width'])) #left line
+    kicad_mod.append(Line(start=[+nextGrid, top],
         end=[K[n]/2.0, top], layer='Edge.Cuts', width=configuration['edge_cuts_line_width'])) #right line
 
 

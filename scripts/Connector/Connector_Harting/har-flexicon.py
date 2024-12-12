@@ -1,3 +1,5 @@
+#! /usr/bin/env python3
+
 import sys
 import os
 
@@ -211,7 +213,8 @@ for series in data:
             )
         )
         kicad_modt.append(
-            Property(
+            Text(
+                type="user",
                 text="${REFERENCE}",
                 at=[0, 0],
                 layer="F.Fab",

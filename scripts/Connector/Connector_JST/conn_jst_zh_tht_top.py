@@ -2,18 +2,15 @@
 
 import sys
 import os
-#sys.path.append(os.path.join(sys.path[0],"..","..","kicad_mod")) # load kicad_mod path
 
-
-# export PYTHONPATH="${PYTHONPATH}<path to kicad-footprint-generator directory>"
 sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))  # load parent path of KicadModTree
 import argparse
 import yaml
-from helpers import *
 from KicadModTree import *
 
-sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))  # load parent path of tools
-from footprint_text_fields import addTextFields
+from scripts.tools.drawing_tools import round_to_grid
+from scripts.tools.footprint_text_fields import addTextFields
+
 
 series = "ZH"
 manufacturer = 'JST'
@@ -31,7 +28,7 @@ pin1_marker_linelen = 0.8
 inner_silkscreen_inset = 0.4 # how much inner silkscreen is inset from outer housing silkscreen
 silkscreen_pin_delimiter_protrusion_length = 0.4
 
-drill_size = 0.73 #Datasheet: 0.7 +0.03/-0.03 
+drill_size = 0.73 #Datasheet: 0.7 +0.03/-0.03
 pad_to_pad_clearance = 0.8
 pad_copper_y_solder_length = 0.5 #How much copper should be in y direction?
 min_annular_ring = 0.15
@@ -50,8 +47,8 @@ housing_width = 3.5 # mm
 # pin 1 is at (x=0, y=0)
 
 x_min = -1.5 #housing length past pin 1 on each side (always negative)
-y_max = 2.2 
-y_min = (y_max - housing_width) 
+y_max = 2.2
+y_min = (y_max - housing_width)
 
 def generate_one_footprint(pincount, configuration):
     silk_x_min = x_min - configuration['silk_fab_offset']
@@ -81,7 +78,7 @@ def generate_one_footprint(pincount, configuration):
     kicad_mod.append(RectLine(start=[silk_x_min,silk_y_min], end=[silk_x_max,silk_y_max],
         layer='F.SilkS', width=configuration['silk_line_width']))
 
-  
+
 
     poly_silk_p1_protrusion=[
         {'x':-0.3, 'y':silk_y_min},
@@ -97,8 +94,8 @@ def generate_one_footprint(pincount, configuration):
         silk_inner_x_min= silk_x_min + inner_silkscreen_inset     # x pos of left inner silkscreeen box
         silk_inner_x_max= silk_x_max - inner_silkscreen_inset    # x pos of right inner silkscreeen box
 
-        silk_inner_y_min= silk_y_min + inner_silkscreen_inset     
-        silk_inner_y_max= silk_y_max - inner_silkscreen_inset 
+        silk_inner_y_min= silk_y_min + inner_silkscreen_inset
+        silk_inner_y_max= silk_y_max - inner_silkscreen_inset
 
 
         # inner outline
@@ -106,7 +103,7 @@ def generate_one_footprint(pincount, configuration):
         # poly_silk_inner_outline = [
         #     # {'x':0.5, 'y':silk_y_min},       #
         #     {'x':0.5, 'y':silk_y_min},             #
-        #     {'x':silk_inner_x_min, 'y':-1.2}, # 
+        #     {'x':silk_inner_x_min, 'y':-1.2}, #
         #     {'x':silk_inner_x_min, 'y':2.3},
         #     {'x':silk_inner_x_max, 'y':2.3},
         #     {'x':silk_inner_x_max, 'y':-1.2},
@@ -121,7 +118,7 @@ def generate_one_footprint(pincount, configuration):
 
         # side gaps
         side_gap_width  = 1.0  # width on x from startx in + direction
-        side_gap_startx = -0.5  # offset from pins. in this case -0.5 + 1.0 = 0.5: so goes from -0.5 to 0.5        
+        side_gap_startx = -0.5  # offset from pins. in this case -0.5 + 1.0 = 0.5: so goes from -0.5 to 0.5
         side_gap_endx   = side_gap_startx + side_gap_width
         kicad_mod.append(Line(start=[silk_x_min, side_gap_startx], end=[silk_inner_x_min, side_gap_startx], layer='F.SilkS', width=configuration['silk_line_width']))
         kicad_mod.append(Line(start=[silk_x_min, side_gap_endx], end=[silk_inner_x_min, side_gap_endx], layer='F.SilkS', width=configuration['silk_line_width']))
@@ -135,7 +132,7 @@ def generate_one_footprint(pincount, configuration):
         inner_prot_xwidth = 0.2
         for i in range(0, pincount-1):
             middle_x = pitch/2 + i*pitch  #x pos between pins
-            start_x = middle_x - (inner_prot_xwidth/2) 
+            start_x = middle_x - (inner_prot_xwidth/2)
             end_x = middle_x + (inner_prot_xwidth/2)
             poly_silk_inner_protrusion=[
                 {'x':start_x, 'y':inner_prot_ymax},
@@ -173,11 +170,11 @@ def generate_one_footprint(pincount, configuration):
     part_y_min = y_min
     part_y_max = y_max
 
-    cx1 = roundToBase(part_x_min-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
-    cy1 = roundToBase(part_y_min-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
+    cx1 = round_to_grid(part_x_min-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
+    cy1 = round_to_grid(part_y_min-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
 
-    cx2 = roundToBase(part_x_max+configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
-    cy2 = roundToBase(part_y_max+configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
+    cx2 = round_to_grid(part_x_max+configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
+    cy2 = round_to_grid(part_y_max+configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
 
     kicad_mod.append(RectLine(
         start=[cx1, cy1], end=[cx2, cy2],
@@ -194,10 +191,7 @@ def generate_one_footprint(pincount, configuration):
     #                     drill=drill_size, layers=Pad.LAYERS_THT))
 
     optional_pad_params = {}
-    if configuration['kicad4_compatible']:
-        optional_pad_params['tht_pad1_shape'] = Pad.SHAPE_RECT
-    else:
-            optional_pad_params['tht_pad1_shape'] = Pad.SHAPE_ROUNDRECT
+    optional_pad_params['tht_pad1_shape'] = Pad.SHAPE_ROUNDRECT
 
     kicad_mod.append(PadArray(initial=1, start=[0, 0],
         x_spacing=pitch, pincount=pincount,
@@ -230,7 +224,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='use confing .yaml files to create footprints.')
     parser.add_argument('--global_config', type=str, nargs='?', help='the config file defining how the footprint will look like. (KLC)', default='../../tools/global_config_files/config_KLCv3.0.yaml')
     parser.add_argument('--series_config', type=str, nargs='?', help='the config file defining series parameters.', default='../conn_config_KLCv3.yaml')
-    parser.add_argument('--kicad4_compatible', action='store_true', help='Create footprints kicad 4 compatible')
     args = parser.parse_args()
 
     with open(args.global_config, 'r') as config_stream:
@@ -244,8 +237,6 @@ if __name__ == "__main__":
             configuration.update(yaml.safe_load(config_stream))
         except yaml.YAMLError as exc:
             print(exc)
-
-    configuration['kicad4_compatible'] = args.kicad4_compatible
 
     for pincount in pin_range:
         generate_one_footprint(pincount, configuration)

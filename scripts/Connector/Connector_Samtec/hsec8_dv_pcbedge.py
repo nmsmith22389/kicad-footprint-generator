@@ -17,8 +17,6 @@
 import sys
 import os
 
-from helpers import *
-from math import sqrt
 import argparse
 import yaml
 
@@ -26,10 +24,10 @@ import yaml
 #sys.path.append(os.environ.get('KIFOOTPRINTGENERATOR'))  # enable package import from parent directory
 #sys.path.append("D:\hardware\KiCAD\kicad-footprint-generator")  # enable package import from parent directory
 sys.path.append(os.path.join(sys.path[0], "..", "..", "..")) # load kicad_mod path
-sys.path.append(os.path.join(sys.path[0], "..", "..", "tools")) # load kicad_mod path
 
-from KicadModTree import *  # NOQA
-from footprint_text_fields import addTextFields
+from KicadModTree import Footprint, FootprintType, Line, Text, Arc, Pad, RectLine, KicadFileHandler
+from scripts.tools.drawing_tools import round_to_grid
+from scripts.tools.footprint_text_fields import addTextFields
 
 lib_name_category = 'Samtec_HSEC8'
 
@@ -144,10 +142,10 @@ def generate_one_footprint(positions: int, variant: str, configuration):
             kicad_mod.append(Line(start=[right, top], end=[ right, bot], **props))   #right line
             kicad_mod.append(Line(start=[left, bot - 0.88], end=[right, bot - 0.88], **props))   #PCBedge chamfer line
 
-    top = roundToBase(body_edge['top'] - CrtYd_offset, configuration['courtyard_grid'])
-    bot = roundToBase(body_edge['bottom'] + CrtYd_offset, configuration['courtyard_grid'])
-    left = roundToBase(body_edge['left'] - CrtYd_offset, configuration['courtyard_grid'])
-    right = roundToBase(body_edge['right'] + CrtYd_offset, configuration['courtyard_grid'])
+    top = round_to_grid(body_edge['top'] - CrtYd_offset, configuration['courtyard_grid'])
+    bot = round_to_grid(body_edge['bottom'] + CrtYd_offset, configuration['courtyard_grid'])
+    left = round_to_grid(body_edge['left'] - CrtYd_offset, configuration['courtyard_grid'])
+    right = round_to_grid(body_edge['right'] + CrtYd_offset, configuration['courtyard_grid'])
 
     cy1 = top
     cy2 = bot

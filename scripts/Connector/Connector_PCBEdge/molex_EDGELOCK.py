@@ -44,7 +44,7 @@ for padNum in padNums:
     housingWidth = datasheetB + datasheetBtoHousingLeft + datasheetBtoHousingRight
     edgeToHousingTop = edgeToHoleBottom + holeHeight
 
-    f = Footprint(footprint_name, Footprint.UNSPECIFIED)
+    f = Footprint(footprint_name, FootprintType.UNSPECIFIED)
     f.setDescription(datasheet)
     f.setTags("Connector PCBEdge molex EDGELOCK")
 

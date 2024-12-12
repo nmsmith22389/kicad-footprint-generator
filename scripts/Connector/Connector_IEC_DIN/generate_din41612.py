@@ -2,7 +2,6 @@
 
 import sys
 import os
-import math
 
 sys.path.append(os.path.join(sys.path[0],"..","..","..")) # for KicadModTree
 sys.path.append(os.path.join(sys.path[0],"..","..","tools")) # for drawing_tools

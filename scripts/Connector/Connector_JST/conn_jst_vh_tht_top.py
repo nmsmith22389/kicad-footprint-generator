@@ -20,14 +20,13 @@ import os
 
 # export PYTHONPATH="${PYTHONPATH}<path to kicad-footprint-generator directory>"
 sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))  # load parent path of KicadModTree
-sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))  # load parent path of tools
 
 import argparse
 import yaml
-from drawing_tools import round_to_grid
 from KicadModTree import *
 
-from footprint_text_fields import addTextFields
+from scripts.tools.drawing_tools import round_to_grid
+from scripts.tools.footprint_text_fields import addTextFields
 
 series = "VH"
 manufacturer = 'JST'
@@ -157,8 +156,8 @@ def generate_one_footprint(pins, series_params, configuration):
 
     optional_pad_params = {}
     optional_pad_params['tht_pad1_shape'] = Pad.SHAPE_ROUNDRECT
-        optional_pad_params['radius_ratio'] = 0.25
-        optional_pad_params['maximum_radius'] = 0.25
+    optional_pad_params['radius_ratio'] = 0.25
+    optional_pad_params['maximum_radius'] = 0.25
 
     exclude_pin_list = series_params[3] if post_omitted else []
     if post_omitted:

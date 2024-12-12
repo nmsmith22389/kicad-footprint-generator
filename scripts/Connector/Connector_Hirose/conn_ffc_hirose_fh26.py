@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
 #####
-# 
+#
 # Based on conn_ffc_molex_502250.py script
-# 
+#
 #####
 
 import sys
@@ -13,12 +13,19 @@ sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))  # load parent path
 from math import sqrt
 import argparse
 import yaml
-from helpers import *
-from KicadModTree import *
 
-sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))  # load parent path of tools
-from footprint_text_fields import addTextFields
-from footprint_keepout_area import addRectangularKeepout
+from KicadModTree import (
+    Footprint,
+    FootprintType,
+    Pad,
+    PadArray,
+    Model,
+    RectLine,
+    PolygonLine,
+    KicadFileHandler,
+)
+from scripts.tools.drawing_tools import round_to_grid
+from scripts.tools.footprint_text_fields import addTextFields
 
 pinrange = [13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 41, 45, 51, 55, 57, 61, 71]
 
@@ -55,8 +62,7 @@ def make_module(pin_count, configuration):
 
     footprint_name = footprint_name.replace("__",'_')
 
-    kicad_mod = Footprint(footprint_name)
-    kicad_mod.setAttribute('smd')
+    kicad_mod = Footprint(footprint_name, FootprintType.SMD)
     kicad_mod.setDescription("Hirose {:s}, {:s}, {:d} Circuits ({:s}), generated with kicad-footprint-generator".format(series_long, mpn, pin_count, datasheet))
     kicad_mod.setTags(configuration['keyword_fp_string'].format(series=series,
         orientation=orientation_str, man=manufacturer,
@@ -85,7 +91,7 @@ def make_module(pin_count, configuration):
     anchor_pad_spacing = pins_width + 1.4
 
     anchor_pad_x = odd_pad_x - odd_pad_size[0]/2 + anchor_pad_size[0]/2 + 0.2
-    
+
     width = pins_width + 1.8		# overall width OK!
 
     body_edge = {
@@ -99,7 +105,7 @@ def make_module(pin_count, configuration):
         'top': -anchor_pad_spacing/2-anchor_pad_size[1]/2-pad_silk_off,
         'bottom': anchor_pad_spacing/2+anchor_pad_size[1]/2+pad_silk_off,
         'left': odd_pad_x-odd_pad_size[0]/2-pad_silk_off,
-        'right': even_pad_right+pad_silk_off 
+        'right': even_pad_right+pad_silk_off
     }
 
     silk_left_cutout = [-silk_edge['left']+anchor_pad_x-anchor_pad_size[0]/2-pad_silk_off, 0.75]
@@ -131,12 +137,12 @@ def make_module(pin_count, configuration):
         {'x': body_edge['right'], 'y':0}
     ]
 
-    kicad_mod.append(PolygoneLine(
-        polygone=fab_outline,
+    kicad_mod.append(PolygonLine(
+        nodes=fab_outline,
         layer="F.Fab", width=configuration['fab_line_width']
     ))
-    kicad_mod.append(PolygoneLine(
-        polygone=fab_outline, y_mirror=0,
+    kicad_mod.append(PolygonLine(
+        nodes=fab_outline, y_mirror=0,
         layer="F.Fab", width=configuration['fab_line_width']
     ))
 
@@ -147,12 +153,12 @@ def make_module(pin_count, configuration):
         {'x': body_edge['left']+cutout[0][0]+cutout[1][0]+cutout[2][0], 'y': body_edge['bottom']-cutout[2][1]},
     ]
 
-    kicad_mod.append(PolygoneLine(
-        polygone=bar_fab_outline, 
+    kicad_mod.append(PolygonLine(
+        nodes=bar_fab_outline,
         layer="F.Fab", width=configuration['fab_line_width']
     ))
-    kicad_mod.append(PolygoneLine(
-        polygone=bar_fab_outline, y_mirror=0,
+    kicad_mod.append(PolygonLine(
+        nodes=bar_fab_outline, y_mirror=0,
         layer="F.Fab", width=configuration['fab_line_width']
     ))
 
@@ -168,13 +174,13 @@ def make_module(pin_count, configuration):
         {'x': silk_edge['left'], 'y':silk_edge['bottom']-silk_left_cutout[1]},
         {'x': silk_edge['left'], 'y': 0}
     ]
-    
-    kicad_mod.append(PolygoneLine(
-        polygone=silk_outline,
+
+    kicad_mod.append(PolygonLine(
+        nodes=silk_outline,
         layer="F.SilkS", width=configuration['silk_line_width']
     ))
-    kicad_mod.append(PolygoneLine(
-        polygone=silk_outline, y_mirror=0,
+    kicad_mod.append(PolygonLine(
+        nodes=silk_outline, y_mirror=0,
         layer="F.SilkS", width=configuration['silk_line_width']
     ))
 
@@ -190,7 +196,6 @@ def make_module(pin_count, configuration):
             initial=2, increment=2, y_spacing=2*cable_pitch,
             type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT,
             size=even_pad_size, layers=Pad.LAYERS_SMT))
-
 
     def anchor_pad(direction):
         kicad_mod.append(Pad(number=configuration['mounting_pad_number'], type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT,
@@ -208,8 +213,9 @@ def make_module(pin_count, configuration):
         {'x': p1s_x -  ps1_m/sqrt(2), 'y': pin1_y+ps1_m/2},
         {'x': p1s_x -  ps1_m/sqrt(2), 'y': pin1_y-ps1_m/2}
     ]
-    kicad_mod.append(PolygoneLine(polygone=pin,
-        layer="F.SilkS", width=configuration['silk_line_width']))
+    kicad_mod.append(
+        PolygonLine(nodes=pin, layer="F.SilkS", width=configuration["silk_line_width"])
+    )
 
     sl=0.4
     pin1x=-0.6
@@ -220,15 +226,16 @@ def make_module(pin_count, configuration):
         {'x': pin1x, 'y': pin1_y-sl/2}
 
     ]
-    kicad_mod.append(PolygoneLine(polygone=pin,
-        width=configuration['fab_line_width'], layer='F.Fab'))
+    kicad_mod.append(
+        PolygonLine(nodes=pin, width=configuration["fab_line_width"], layer="F.Fab")
+    )
 
     ########################### CrtYd #################################
-    cx1 = roundToBase(bounding_box['left']-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
-    cy1 = roundToBase(bounding_box['top']-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
+    cx1 = round_to_grid(bounding_box['left']-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
+    cy1 = round_to_grid(bounding_box['top']-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
 
-    cx2 = roundToBase(bounding_box['right']+configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
-    cy2 = roundToBase(bounding_box['bottom']+configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
+    cx2 = round_to_grid(bounding_box['right']+configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
+    cy2 = round_to_grid(bounding_box['bottom']+configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
 
     kicad_mod.append(RectLine(
         start=[cx1, cy1], end=[cx2, cy2],
