@@ -14,6 +14,8 @@
 # (C) 2016-2018 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 
 import math
+from typing import List
+
 from KicadModTree.Vector import *
 
 
@@ -41,6 +43,9 @@ class geometricLine():
           end point of the line
     """
 
+    start_pos: Vector2D
+    end_pos: Vector2D
+
     def __init__(self, **kwargs):
         if 'geometry' in kwargs:
             geometry = kwargs['geometry']
@@ -52,6 +57,10 @@ class geometricLine():
 
     def copy(self):
         return geometricLine(geometry=self)
+
+    @property
+    def length(self):
+        return abs(self.start_pos - self.end_pos)
 
     def rotate(self, angle, origin=(0, 0), use_degrees=True):
         r""" Rotate around given origin
@@ -685,6 +694,9 @@ class BaseNodeIntersection():
 
     @staticmethod
     def intersectTwoLines(line1, line2):
+        """
+        Intersect two (infinitely long) lines
+        """
         # we use homogeneous coordinates here.
         l1 = line1.to_homogeneous()
         l2 = line2.to_homogeneous()
@@ -694,6 +706,19 @@ class BaseNodeIntersection():
             return []
 
         return [Vector2D.from_homogeneous(ip)]
+
+    @staticmethod
+    def intersectTwoSegments(line1: geometricLine, line2: geometricLine) -> List[Vector2D]:
+
+        p = BaseNodeIntersection.intersectTwoLines(line1, line2)
+        if not p:
+            return []
+
+        if line1.isPointOnSelf(p[0]) and line2.isPointOnSelf(p[0]):
+            return [p[0]]
+
+        # The lines are not parallel, but the intersection point is not on either line
+        return []
 
     @staticmethod
     def intersectLineWithCircle(line, circle, tol: float = 1e-7):
@@ -730,6 +755,22 @@ class BaseNodeIntersection():
         return intersection
 
     @staticmethod
+    def intersectSegmentWithCircle(
+        line: geometricLine, circle: geometricCircle, tol: float = 1e-7
+    ) -> List[Vector2D]:
+
+        line_intersections = BaseNodeIntersection.intersectLineWithCircle(line, circle, tol)
+
+        ret = []
+
+        # Discard points that are not on the line segment itself
+        for p in line_intersections:
+            if line.isPointOnSelf(p):
+                ret.append(p)
+
+        return ret
+
+    @staticmethod
     def intersectTwoCircles(circle1: geometricCircle, circle2: geometricCircle, tol: float = 1e-7):
         # from https://mathworld.wolfram.com/Circle-CircleIntersection.html
         # Equations are for circle1 center on (0, 0) and circle2 center on (d, 0)
@@ -751,3 +792,37 @@ class BaseNodeIntersection():
 
         signs = [0] if (y < tol) else [0.5, -0.5]
         return [Vector2D(x, s * y).rotate(angle=phi) + circle1.center_pos for s in signs]
+
+    @staticmethod
+    def intersectSegmentWithArc(
+        line: geometricLine, arc: geometricArc, tol: float = 1e-7
+    ) -> List[Vector2D]:
+
+        arc_circle = geometricCircle(center=arc.center_pos, radius=arc.getRadius())
+        line_intersections = BaseNodeIntersection.intersectSegmentWithCircle(line, arc_circle, tol)
+
+        ret = []
+
+        # Discard points that are not on the arc itself
+        for p in line_intersections:
+            if arc.isPointOnSelf(p):
+                ret.append(p)
+
+        return ret
+
+    @staticmethod
+    def intersectCircleWithArc(
+        circle: geometricCircle, arc: geometricArc, tol: float = 1e-7
+    ) -> List[Vector2D]:
+
+        arc_circle = geometricCircle(center=arc.center_pos, radius=arc.getRadius())
+        circle_intersections = BaseNodeIntersection.intersectTwoCircles(circle, arc_circle, tol)
+
+        ret = []
+
+        # Discard points that are not on the arc itself
+        for p in circle_intersections:
+            if arc.isPointOnSelf(p):
+                ret.append(p)
+
+        return ret

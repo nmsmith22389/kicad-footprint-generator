@@ -4,6 +4,7 @@ import os
 
 from KicadModTree import *  # NOQA
 from scripts.tools.drawing_tools import *  # NOQA
+from scripts.tools.geometry import keepout
 
 
 crt_offset = 0.5 # different for connectors
@@ -120,7 +121,7 @@ def makeTerminalBlockStd(footprint_name, pins, rm, package_height, leftbottom_of
         pad_shape_extra = Pad.SHAPE_OVAL
 
     pad_layers = Pad.LAYERS_THT
-    keepouts=[];
+    keepouts: list[keepout.Keepout]=[]
     for p in range(1, pins + 1):
         pextra=0
         if secondDrillPad[0]>0:
@@ -168,11 +169,11 @@ def makeTerminalBlockStd(footprint_name, pins, rm, package_height, leftbottom_of
         for p in range(1,pins+1):
             if screw_diameter>0:
                 if slit_screw:
-                    addSlitScrew(kicad_modg, (p-1)*rm+screw_pin_offset[0], 0+screw_pin_offset[1], screw_diameter/2, 'F.Fab', lw_fab, roun=0.001)
-                    addSlitScrewWithKeepouts(kicad_modg, (p-1)*rm+screw_pin_offset[0], 0+screw_pin_offset[1], screw_diameter/2+3*slk_offset, 'F.SilkS', lw_slk, keepouts, roun=0.001)
+                    addSlitScrew(kicad_modg, [(p-1)*rm+screw_pin_offset[0], 0+screw_pin_offset[1]], screw_diameter/2, 'F.Fab', lw_fab, roun=0.001)
+                    addSlitScrew(kicad_modg, [(p-1)*rm+screw_pin_offset[0], 0+screw_pin_offset[1]], screw_diameter/2+3*slk_offset, 'F.SilkS', lw_slk, keepouts=keepouts, roun=0.001)
                 else:
-                    addCrossScrew(kicad_modg, (p-1)*rm+screw_pin_offset[0], 0+screw_pin_offset[1], screw_diameter/2, 'F.Fab', lw_fab, roun=0.001)
-                    addCrossScrewWithKeepouts(kicad_modg, (p-1)*rm+screw_pin_offset[0], 0+screw_pin_offset[1], screw_diameter/2+3*slk_offset, 'F.SilkS', lw_slk, keepouts, roun=0.001)
+                    addCrossScrew(kicad_modg, [(p-1)*rm+screw_pin_offset[0], 0+screw_pin_offset[1]], screw_diameter/2, 'F.Fab', lw_fab, roun=0.001)
+                    addCrossScrew(kicad_modg, [(p-1)*rm+screw_pin_offset[0], 0+screw_pin_offset[1]], screw_diameter/2+3*slk_offset, 'F.SilkS', lw_slk, keepouts=keepouts, roun=0.001)
 
             if not (type(secondHoleDiameter) in (tuple, list)) and secondHoleDiameter>0 and (p-1)*rm+secondHoleOffset[0]<l_fab+w_fab:
                 kicad_modg.append(Circle(center=[(p-1)*rm+secondHoleOffset[0], 0+secondHoleOffset[1]], radius=secondHoleDiameter/2, layer='F.Fab', width=lw_fab))
@@ -213,8 +214,6 @@ def makeTerminalBlockStd(footprint_name, pins, rm, package_height, leftbottom_of
     # add model
     kicad_modg.append(
         Model(filename=lib_name + ".3dshapes/" + footprint_name + ".wrl", at=[0,0,0], scale=[1,1,1], rotate=[0,0,0]))
-
-    #debug_draw_keepouts(kicad_modg,keepouts)
 
     # write file
     if "/" in lib_name:
@@ -341,7 +340,7 @@ def makeTerminalBlockVertical(footprint_name, pins, rm, package_height, leftbott
         pad_shape_extra = Pad.SHAPE_OVAL
 
     pad_layers = Pad.LAYERS_THT
-    keepouts=[];
+    keepouts: list[keepout.Keepout]=[]
 
     for p in range(1, pins + 1):
 
@@ -431,8 +430,6 @@ def makeTerminalBlockVertical(footprint_name, pins, rm, package_height, leftbott
     # add model
     kicad_modg.append(
         Model(filename=lib_name + ".3dshapes/" + footprint_name + ".wrl", at=[0,0,0], scale=[1,1,1], rotate=[0,0,0]))
-
-    #debug_draw_keepouts(kicad_modg,keepouts)
 
     # write file
     if "/" in lib_name:
@@ -564,7 +561,7 @@ def makeTerminalBlock45Degree(footprint_name, pins, rm, package_height, leftbott
         pad_shape_extra = Pad.SHAPE_OVAL
 
     pad_layers = Pad.LAYERS_THT
-    keepouts=[];
+    keepouts: list[keepout.Keepout]=[]
 
     for p in range(1, pins + 1):
         pextra=0
@@ -676,8 +673,6 @@ def makeTerminalBlock45Degree(footprint_name, pins, rm, package_height, leftbott
     kicad_modg.append(
         Model(filename=lib_name + ".3dshapes/" + footprint_name + ".wrl", at=[0,0,0], scale=[1,1,1], rotate=[0,0,0]))
 
-    #debug_draw_keepouts(kicad_modg,keepouts)
-
     # write file
     if "/" in lib_name:
         fp_lib_name = lib_name.split('/')[-1]
@@ -776,21 +771,21 @@ def makeScrewTerminalSingleStd(footprint_name, block_size, block_offset, pins, d
     pad_type = Pad.TYPE_THT
     pad_shapeother = Pad.SHAPE_CIRCLE
     pad_layers = Pad.LAYERS_THT
-    keepouts=[];
+    keepouts: list[keepout.Keepout] = []
     for p in pins:
         kicad_modg.append(Pad(number=1, type=pad_type, shape=pad_shapeother, at=p, size=pad, drill=ddrill, layers=pad_layers))
         keepouts=keepouts+addKeepoutRound(p[0], p[1], pad[0]+8*slk_offset, pad[0]+8*slk_offset)
 
     # screw
-    keepouts_screw=[];
+    keepouts_screw: list[keepout.Keepout] = []
     if screw_diameter>0:
         keepouts_screw=keepouts_screw+addKeepoutRound(screw_offset[0], screw_offset[1], screw_diameter, screw_diameter)
         if slit_screw:
-            addSlitScrew(kicad_modg, screw_offset[0], screw_offset[1], screw_diameter/2, 'F.Fab', lw_fab)
-            addSlitScrewWithKeepouts(kicad_modg, screw_offset[0], screw_offset[1], screw_diameter/2+1*slk_offset, 'F.SilkS', lw_slk, keepouts)
+            addSlitScrew(kicad_modg, [screw_offset[0], screw_offset[1]], screw_diameter/2, 'F.Fab', lw_fab)
+            addSlitScrew(kicad_modg, [screw_offset[0], screw_offset[1]], screw_diameter/2+1*slk_offset, 'F.SilkS', lw_slk, keepouts=keepouts)
         else:
-            addCrossScrew(kicad_modg, screw_offset[0], screw_offset[1], screw_diameter/2, 'F.Fab', lw_fab)
-            addCrossScrewWithKeepouts(kicad_modg, screw_offset[0], screw_offset[1], screw_diameter/2+1*slk_offset, 'F.SilkS', lw_slk, keepouts)
+            addCrossScrew(kicad_modg, [screw_offset[0], screw_offset[1]], screw_diameter/2, 'F.Fab', lw_fab)
+            addCrossScrew(kicad_modg, [screw_offset[0], screw_offset[1]], screw_diameter/2+1*slk_offset, 'F.SilkS', lw_slk, keepouts=keepouts)
 
     # create Body
     addRectWithKeepout(kicad_modg, l_fab, t_fab, w_fab, h_fab, layer='F.Fab', width=lw_fab, keepouts=keepouts_screw)
@@ -805,8 +800,6 @@ def makeScrewTerminalSingleStd(footprint_name, block_size, block_offset, pins, d
     # add model
     kicad_modg.append(
         Model(filename=lib_name + ".3dshapes/" + footprint_name + ".wrl", at=[0,0,0], scale=[1,1,1], rotate=[0,0,0]))
-
-    #debug_draw_keepouts(kicad_modg,keepouts)
 
     # write file
     if "/" in lib_name:

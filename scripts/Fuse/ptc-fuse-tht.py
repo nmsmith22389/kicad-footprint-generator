@@ -2,6 +2,8 @@
 
 from KicadModTree import *
 from scripts.tools.drawing_tools import *
+from scripts.tools.geometry import keepout
+
 
 def ptc_fuse_tht(args):
     footprint_name = args["name"]
@@ -61,7 +63,7 @@ def ptc_fuse_tht(args):
     yTopCrtYd = yTop - crtYd
     yBottomCrtYd = yBottom + crtYd
 
-    keepout = []
+    keepouts: list[keepout.Keepout] = []
     ko_diameter = p[0] + 2 * clearance
 
     # Pads
@@ -69,8 +71,9 @@ def ptc_fuse_tht(args):
     for coord in [[xPin1, yPin1], [xPin2, yPin2]]:
         f.append(Pad(number=str(pin), type=Pad.TYPE_THT, shape=Pad.SHAPE_CIRCLE,
                  at=coord, size=p, layers=Pad.LAYERS_THT, drill=d))
-        keepout = keepout + addKeepoutRound(coord[0], coord[1],
-                                            ko_diameter, ko_diameter)
+        keepouts += addKeepoutRound(
+            coord[0], coord[1], ko_diameter, ko_diameter
+        )
         pin = pin + 1
 
     # Text
@@ -89,7 +92,7 @@ def ptc_fuse_tht(args):
     # Silk outline
     addRectWithKeepout(f, xLeftSilk, yTopSilk,
                        xRightSilk - xLeftSilk, yBottomSilk - yTopSilk,
-                       "F.SilkS", wSilkS, keepout)
+                       "F.SilkS", wSilkS, keepouts)
 
     # Courtyard
     f.append(RectLine(start=[xLeftCrtYd, yTopCrtYd],

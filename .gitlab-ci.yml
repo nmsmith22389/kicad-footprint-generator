@@ -95,7 +95,7 @@ fp-generate-and-compare:
     # Generate footprints
     - cd scripts
     - ls -lah
-    - ./generate.sh
+    - time ./generate.sh
     # Collect them into generated_footprints/
     - cd "$CI_PROJECT_DIR"
     - gitlabci/collect_generated_footprints.sh

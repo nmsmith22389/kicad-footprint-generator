@@ -350,7 +350,7 @@ def makeDIPSwitch(pins, rm, pinrow_distance, package_width, overlen_top, overlen
     p2 = int(pins / 2 + 1)
     x2 = pinrow_distance
     y2 = (pins / 2 - 1) * rm
-    keepouts=[];
+    keepouts=[]
 
     if smd_pads:
         pad_type = Pad.TYPE_SMT

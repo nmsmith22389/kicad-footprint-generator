@@ -675,9 +675,9 @@ def makePotentiometerVertical(class_name, wbody, hbody, screwstyle="none", style
     if dscrew > 0:
         #kicad_modg.append(Circle(center=[clbody_fab, ctbody_fab], radius=dscrew / 2.0, layer='F.Fab', width=lw_fab))
         if screwstyle == "slit":
-            addSlitScrew(kicad_modg, clbody_fab, ctbody_fab, dscrew / 2.0, 'F.Fab', lw_fab)
+            addSlitScrew(kicad_modg, [clbody_fab, ctbody_fab], dscrew / 2.0, 'F.Fab', lw_fab)
         elif screwstyle == "cross":
-            addCrossScrew(kicad_modg, clbody_fab, ctbody_fab, dscrew / 2.0, 'F.Fab', lw_fab)
+            addCrossScrew(kicad_modg, [clbody_fab, ctbody_fab], dscrew / 2.0, 'F.Fab', lw_fab)
 
     if dshaft > 0 and shaft_hole == False:
         kicad_modg.append(Circle(center=[clbody_fab, ctbody_fab], radius=dshaft / 2.0, layer='F.Fab', width=lw_fab))
@@ -990,9 +990,9 @@ def makeSpindleTrimmer(class_name, wbody, hbody, pinxoffset, pinyoffset, rmx2, r
 
         if shaft_hole == False:
             if screwstyle=="slit":
-                addSlitScrew(kicad_modg, lscrew_fab, tscrew_fab, wscrew_fab / 2.0, 'F.Fab', lw_fab)
+                addSlitScrew(kicad_modg, [lscrew_fab, tscrew_fab], wscrew_fab / 2.0, 'F.Fab', lw_fab)
             else:
-                addCrossScrew(kicad_modg, lscrew_fab, tscrew_fab, wscrew_fab / 2.0, 'F.Fab', lw_fab)
+                addCrossScrew(kicad_modg, [lscrew_fab, tscrew_fab], wscrew_fab / 2.0, 'F.Fab', lw_fab)
 
     # build keepout for silkscreen
     keepouts = []
