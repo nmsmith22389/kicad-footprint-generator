@@ -738,3 +738,98 @@ Oscillator_SMD_TXC_7C-4Pin_5.0x3.2mm_HandSoldering:
   pins: 4
   style: rect
   tags: SMD SMT crystal oscillator hand-soldering
+Oscillator_SMD_SiT-PQFN-4Pin_7.0x5.0x0.9mm:
+  addSizeFootprintName: true
+  adhesiveSize: 1
+  description: mems programmable oscillator https://www.sitime.com/datasheet/SiT8008 page 12
+  footprint_name: Oscillator_SMD_SiT_PQFN
+  func: makeSMDCrystal
+  hasAdhesive: true
+  lib_name: Oscillator
+  pack_bevel: 0.2
+  pack_height: 5.0
+  pack_width: 7.0
+  pad:
+  - 2.2
+  - 2.0
+  pad_sep_x: 5.08
+  pad_sep_y: 3.81
+  pins: 4
+  style: rect
+  tags: SMD SMT oscillator mems programmable
+Oscillator_SMD_SiT-PQFN-4Pin_5.0x3.2x0.75mm:
+  addSizeFootprintName: true
+  adhesiveSize: 1
+  description: mems programmable oscillator https://www.sitime.com/datasheet/SiT8008 page 11
+  footprint_name: Oscillator_SMD_SiT_PQFN
+  func: makeSMDCrystal
+  hasAdhesive: true
+  lib_name: Oscillator
+  pack_bevel: 0.2
+  pack_height: 3.2
+  pack_width: 5.0
+  pad:
+  - 1.5
+  - 1.6
+  pad_sep_x: 2.54
+  pad_sep_y: 2.2
+  pins: 4
+  style: rect
+  tags: SMD SMT oscillator mems programmable
+Oscillator_SMD_SiT-PQFN-4Pin_3.2x2.5x0.75mm:
+  addSizeFootprintName: true
+  adhesiveSize: 1
+  description: mems programmable oscillator https://www.sitime.com/datasheet/SiT8008 page 11
+  footprint_name: Oscillator_SMD_SiT_PQFN
+  func: makeSMDCrystal
+  hasAdhesive: true
+  lib_name: Oscillator
+  pack_bevel: 0.2
+  pack_height: 2.5
+  pack_width: 3.2
+  pad:
+  - 1.4
+  - 1.2
+  pad_sep_x: 2.2
+  pad_sep_y: 1.9
+  pins: 4
+  style: rect
+  tags: SMD SMT oscillator mems programmable
+Oscillator_SMD_SiT-PQFN-4Pin_2.5x2.0x0.75mm:
+  addSizeFootprintName: true
+  adhesiveSize: 1
+  description: mems programmable oscillator https://www.sitime.com/datasheet/SiT8008 page 10
+  footprint_name: Oscillator_SMD_SiT_PQFN
+  func: makeSMDCrystal
+  hasAdhesive: true
+  lib_name: Oscillator
+  pack_bevel: 0.2
+  pack_height: 2.0
+  pack_width: 2.5
+  pad:
+  - 1.1
+  - 1.0
+  pad_sep_x: 1.9
+  pad_sep_y: 1.5
+  pins: 4
+  style: rect
+  tags: SMD SMT oscillator mems programmable
+Oscillator_SMD_SiT-PQFN-4Pin_2.0x1.6x0.75mm:
+  addSizeFootprintName: true
+  adhesiveSize: 1
+  description: mems programmable oscillator https://www.sitime.com/datasheet/SiT8008 page 10
+  footprint_name: Oscillator_SMD_SiT_PQFN
+  func: makeSMDCrystal
+  hasAdhesive: true
+  lib_name: Oscillator
+  pack_bevel: 0.2
+  pack_height: 1.6
+  pack_width: 2.0
+  pad:
+  - 0.9
+  - 0.8
+  pad_sep_x: 1.5
+  pad_sep_y: 1.2
+  pins: 4
+  style: rect
+  tags: SMD SMT oscillator mems programmable
