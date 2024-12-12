@@ -25,21 +25,19 @@ https://www.lcsc.com/datasheet/lcsc_datasheet_2304140030_JUSHUO-AFA07-S04FCA-00_
 
 import sys
 import os
-#sys.path.append(os.path.join(sys.path[0],"..","..","kicad_mod")) # load kicad_mod path
+# sys.path.append(os.path.join(sys.path[0],"..","..","kicad_mod")) # load kicad_mod path
 
 # export PYTHONPATH="${PYTHONPATH}<path to kicad-footprint-generator directory>"
 sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))  # load parent path of KicadModTree
-from math import sqrt
+
 import argparse
 import yaml
-from helpers import *
-from KicadModTree import *
-
-sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))  # load parent path of tools
-from footprint_text_fields import addTextFields
+from KicadModTree import Footprint, FootprintType, Model, Pad, PadArray, PolygonLine, Line, RectLine, KicadFileHandler
+from scripts.tools.footprint_text_fields import addTextFields
 
 from scripts.tools import drawing_tools
 from KicadModTree import Vector2D
+
 
 manufacturer = "JUSHUO"
 conn_category = "FFC-FPC"
@@ -60,15 +58,15 @@ def generate_one_footprint(pincount, configuration):
     # see graphic below "Section A-A" in the datasheet
 
     pitch = 1 # Attribute of part family
-    
+
     # Pin pad (1..n) properties
     pad_width = 0.6 # Datasheet, suggested pad layout
     pad_height = 1.8 # Datasheet, suggested pad layout
     pad_x_span = pitch * (pincount - 1)
     pad1_x = pad_x_span / 2.0
-    
+
     marker_y = 0.8*pad_height # How long the pin 1 marker is in vertical direction
-    
+
     # How much further than the body do the pins extend in Y direction?
     pin_protrusion_from_body = 1.45 # Below "Section A-A" in datasheet
 
@@ -81,19 +79,19 @@ def generate_one_footprint(pincount, configuration):
 
     # Compute position of top left corner of body (?)
     body_y1 = pad_y + pad_height / 2.0
-    
+
     # Compute body width
     body_width =  5.05+(pitch*pincount) # Dim "C" in datasheet
     half_body_width = body_width / 2.0
-    
+
     # Compute width of the actuator (in X direction)
     actuator_width = 7+(pitch*pincount) # Dim "D" in datasheet
     half_actuator_width = actuator_width / 2.0
-    
+
     # Actuator position in extended and retracted state
     actuator_y1 = body_y1 + 6.75 - pin_protrusion_from_body # "Section A-A" in datasheet
     actuator_y2 = body_y1 + 8.4 - pin_protrusion_from_body # Below "Section A-A" in datasheet
-    
+
     acutator_height = 1.0 # Extent of actuator part in Y direction. Measured from EasyEDA model.
 
     body_edge = {
@@ -108,9 +106,15 @@ def generate_one_footprint(pincount, configuration):
 
     courtyard_precision = configuration['courtyard_grid']
     courtyard_clearance = configuration['courtyard_offset']['connector']
-    courtyard_x = roundToBase(half_actuator_width + courtyard_clearance, courtyard_precision)
-    courtyard_y1 = roundToBase(pad_y - pad_height / 2.0 - courtyard_clearance, courtyard_precision)
-    courtyard_y2 = roundToBase(actuator_y2 + courtyard_clearance, courtyard_precision)
+    courtyard_x = drawing_tools.round_to_grid(
+        half_actuator_width + courtyard_clearance, courtyard_precision
+    )
+    courtyard_y1 = drawing_tools.round_to_grid(
+        pad_y - pad_height / 2.0 - courtyard_clearance, courtyard_precision
+    )
+    courtyard_y2 = drawing_tools.round_to_grid(
+        actuator_y2 + courtyard_clearance, courtyard_precision
+    )
 
     # initialise footprint
     kicad_mod = Footprint(footprint_name, FootprintType.SMD)
@@ -129,7 +133,7 @@ def generate_one_footprint(pincount, configuration):
     kicad_mod.append(Pad(number=configuration['mounting_pad_number'],
         at=[tab_x, tab_y], type=Pad.TYPE_SMT, shape=Pad.SHAPE_ROUNDRECT,
         size=[mounting_pad_width, mounting_pad_height], layers=Pad.LAYERS_SMT))
-    
+
     # Start of the angled side section of the actuator
     actuator_angle_start_y = actuator_y1-acutator_height - 1.5 # 1.5mm measured from EasyEDA model
     # Where the rectangular (slightly wider) section of the actuator starts
@@ -143,29 +147,29 @@ def generate_one_footprint(pincount, configuration):
             [-half_body_width, body_y1],
             # Right upper corner
             [half_body_width, body_y1],
-            
+
             # Rectangular section of actuator
             [half_body_width, actuator_rectangular_section_start_y], # Start
             [actuator_rectangular_section_half_width, actuator_rectangular_section_start_y],
             [actuator_rectangular_section_half_width, actuator_angle_start_y], # Down
-            
+
             # Actuator angled section
             [half_actuator_width, actuator_y1-acutator_height],
-            
+
             # Front (cable-facing) section of actuator
             [half_actuator_width, actuator_y1],
-            
+
             # Line from lower right to lower left corner
             [-half_actuator_width, actuator_y1],
             # Actuator angled section
             [-half_actuator_width, actuator_y1-acutator_height],
-            
+
             # Rectangular section of actuator
             [-actuator_rectangular_section_half_width, actuator_angle_start_y], # Up
             [-actuator_rectangular_section_half_width, actuator_rectangular_section_start_y],
             [-half_body_width, actuator_rectangular_section_start_y], # Start
 
-            # End            
+            # End
             [-half_body_width, body_y1]
         ],
         layer='F.Fab', width=configuration['fab_line_width']))
@@ -193,19 +197,19 @@ def generate_one_footprint(pincount, configuration):
     #
     # create silkscreen outline and pin 1 marker
     #
-    
+
     # Silkscreen outline
     kicad_mod.append(PolygonLine(
         polygon=[
             # This line was disabled due to copper/silkscreen clearance
             #[actuator_rectangular_section_half_width+nudge,actuator_rectangular_section_start_y-nudge],
             [actuator_rectangular_section_half_width+nudge, actuator_angle_start_y],
-            
+
             [half_actuator_width+nudge, actuator_y1-acutator_height],
             [half_actuator_width+nudge, actuator_y1+nudge],
             [-half_actuator_width-nudge, actuator_y1+nudge],
             [-half_actuator_width-nudge, actuator_y1-acutator_height],
-            
+
             [-actuator_rectangular_section_half_width-nudge, actuator_angle_start_y],
             # This line was disabled due to copper/silkscreen clearance
             # [-actuator_rectangular_section_half_width-nudge,actuator_rectangular_section_start_y-nudge],

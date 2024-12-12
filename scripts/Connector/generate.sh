@@ -11,6 +11,7 @@ dir_list=(
     Connector_IEC_DIN
     Connector_JAE
     Connector_JST
+    Connector_JUSHUO
     Connector_Molex
     Connector_PCBEdge
     Connector_PhoenixContact
