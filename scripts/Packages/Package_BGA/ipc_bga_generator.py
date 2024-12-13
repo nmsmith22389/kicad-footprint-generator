@@ -20,7 +20,11 @@ from KicadModTree import (
 )
 from kilibs.geom import Direction, Vector2D
 from scripts.tools.nodes import pin1_arrow
-from scripts.tools.declarative_def_tools import common_metadata
+from scripts.tools.declarative_def_tools import (
+    ast_evaluator,
+    common_metadata,
+    fp_additional_drawing,
+)
 from scripts.tools.footprint_generator import FootprintGenerator
 from scripts.tools.global_config_files import global_config as GC
 
@@ -43,6 +47,17 @@ class BGAConfiguration:
         self._spec_dictionary = spec
 
         self.metadata = common_metadata.CommonMetadata(spec)
+
+        if "pitch" in spec:
+            self.pitch = Vector2D(spec["pitch"], spec["pitch"])
+        elif "pitch_x" in spec and "pitch_y" in spec:
+            self.pitch = Vector2D(spec["pitch_x"], spec["pitch_y"])
+        else:
+            raise KeyError("Either pitch or both pitch_x and pitch_y must be given.")
+
+        self.additional_drawings = (
+            fp_additional_drawing.FPAdditionalDrawing.from_standard_yaml(spec)
+        )
 
     @property
     def spec_dictionary(self) -> dict:
@@ -196,6 +211,12 @@ class BGAGenerator(FootprintGenerator):
         # Pull out the old-style parameter dictionary
         fpParams = device_config.spec_dictionary
 
+        evaluator_params = {
+            "pitch": device_config.pitch,
+        }
+
+        fp_evaluator = ast_evaluator.ASTevaluator(symbols=evaluator_params)
+
         pkgX = fpParams["body_size_x"]
         pkgY = fpParams["body_size_y"]
         layoutX = fpParams["layout_x"]
@@ -333,17 +354,10 @@ class BGAGenerator(FootprintGenerator):
         for layout in fpParams.get('secondary_layouts', []):
             balls += self.makePadGrid(f, layout, config, fpParams, xCenter=xCenter, yCenter=yCenter)
 
-        # Extra text items
-        for extra_text in fpParams.get('extra_text', []):
-            x, y = extra_text.get('x', 0), extra_text.get('y', 0)
-            if 'anchor' in extra_text:
-                anchor = str(extra_text.pop('anchor'))
-                for n in f.getNormalChilds():
-                    if isinstance(n, Pad) and n.number == anchor:
-                        x += n.at.x
-                        y += n.at.y
-            # Pass through any unprocessed options from the YAML to the Text() constructor.
-            f.append(Text(text=str(extra_text.pop("text")), at=[x, y], **extra_text))
+        dwg_nodes = fp_additional_drawing.create_additional_drawings(
+            device_config.additional_drawings, self.global_config, fp_evaluator
+        )
+        f.extend(dwg_nodes)
 
         # If this looks like a CSP footprint, use the CSP 3dshapes library
         packageType = str(header_info.get('package_type', 'BGA')).upper()

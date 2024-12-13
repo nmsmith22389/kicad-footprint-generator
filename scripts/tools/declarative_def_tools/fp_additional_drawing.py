@@ -1,9 +1,11 @@
 from dataclasses import dataclass
 from typing import Callable
 
-from KicadModTree import Node, Rect, Circle, PolygonLine
+from KicadModTree import Circle, Node, Line, Rect, PolygonLine
+from KicadModTree.nodes.specialized import Cross
+from kilibs.geom import Vector2D
 from kilibs.declarative_defs import additional_drawings as ADs
-from kilibs.declarative_defs import repeat_defs
+from kilibs.declarative_defs import repeat_defs, evaluable_defs as EDs
 
 from . import shape_properties as SP
 from scripts.tools.global_config_files.global_config import GlobalConfig
@@ -122,6 +124,42 @@ class PolyDrawingProvider(FPDrawingProvider):
         ]
 
 
+class CrossDrawingProvider(FPDrawingProvider):
+    """
+    Draws a cross: "+"
+    """
+
+    center: EDs.EvaluableVector2D
+    size: EDs.EvaluableVector2D
+    angle: float
+
+    def __init__(self, spec: dict):
+        super().__init__(spec)
+
+        size_spec = spec["size"]
+        if not isinstance(size_spec, list):
+            size_spec = [size_spec, size_spec]
+
+        self.center = EDs.EvaluableVector2D(spec["center"])
+        self.size = EDs.EvaluableVector2D(size_spec)
+        # Handle the negative PCB y-axis (match pad rotation direction)
+        self.angle = -spec.get("angle", 0)
+
+    def make_nodes(self, context: FPDrawingProvider.Context) -> list[Node]:
+        center = self.center.evaluate(context.evaluator)
+        size = self.size.evaluate(context.evaluator)
+
+        return [
+            Cross.Cross(
+                center=center,
+                size=size,
+                angle=self.angle,
+                layer=context.layer,
+                width=context.width,
+            )
+        ]
+
+
 class FPAdditionalDrawing(ADs.AdditionalDrawing):
     """
     A specific additional drawing object for footprints, which knows how to
@@ -137,6 +175,7 @@ class FPAdditionalDrawing(ADs.AdditionalDrawing):
             "rect": RectDrawingProvider,
             "circle": CircleDrawingProvider,
             "poly": PolyDrawingProvider,
+            "cross": CrossDrawingProvider,
         }
 
         self._default_fp_providers.update(additional_providers)

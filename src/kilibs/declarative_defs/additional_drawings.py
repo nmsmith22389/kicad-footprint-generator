@@ -1,10 +1,10 @@
-from typing import Callable, Generator
-from itertools import product
 from abc import ABC, abstractmethod
+from itertools import product
+from typing import Callable, Generator
 
+from kilibs.declarative_defs import repeat_defs
 from kilibs.geom import Vector2D
 from kilibs.util import dict_tools
-from kilibs.declarative_defs import repeat_defs
 
 
 class DrawingProvider:

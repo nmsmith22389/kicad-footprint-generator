@@ -207,6 +207,9 @@ class Vector2D(object):
     def rotate(self, angle, origin=(0, 0), use_degrees=True) -> "Vector2D":
         r""" Rotate vector around given origin
 
+        When the co-ordinates are y-up (schematic), this is visually Clockwise
+        When y-down (PCB), this is Counterclockwise.
+
         :params:
             * *angle* (``float``)
                 rotation angle
