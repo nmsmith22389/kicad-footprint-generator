@@ -243,11 +243,11 @@ QFN-28-1EP_4x4mm_P0.4mm_EP2.6x2.6mm:
   #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
   #include_suffix_in_3dpath: 'False'
 
-QFN-28-1EP_4x4mm_P0.4mm_EP2.8x2.8mm:
+QFN-28-1EP_4x4mm_P0.4mm_EP2.7x2.7mm:
   device_type: 'QFN'
   #manufacturer: 'man'
   #part_number: 'mpn'
-  size_source: 'QFN28X4; https://www.wch-ic.com/downloads/CH32V203DS0_PDF.html'
+  size_source: 'QFN28; https://www.wch-ic.com/downloads/CH32V203DS0_PDF.html'
   ipc_class: 'qfn' # 'qfn_pull_back'
   #ipc_density: 'least' #overwrite global value for this device.
   # custom_name_format:
@@ -269,17 +269,17 @@ QFN-28-1EP_4x4mm_P0.4mm_EP2.8x2.8mm:
     nominal: 0.2
     maximum: 0.25
   lead_len:
-    minimum: 0.35
-    nominal: 0.4
+    minimum: 0.25
+    nominal: 0.35
     maximum: 0.45
 
   EP_size_x:
-    minimum: 2.7
-    nominal: 2.8
+    minimum: 2.5
+    nominal: 2.7
     maximum: 2.9
   EP_size_y:
-    minimum: 2.7
-    nominal: 2.8
+    minimum: 2.5
+    nominal: 2.7
     maximum: 2.9
   # EP_paste_coverage: 0.65
   EP_num_paste_pads: [2, 2]
