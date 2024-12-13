@@ -151,6 +151,8 @@ class InductorGenerator(FootprintGenerator):
                 at=[position * (landing_pad_spacing + landing_pad_dimension.x) / 2, 0],
                 size=landing_pad_dimension,
                 layers=Pad.LAYERS_SMT,
+                radius_ratio=0.25,
+                maximum_radius=0.25,
             )
             for pin_number, position in enumerate((-1, 1), start=1)
         )
