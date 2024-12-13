@@ -5,8 +5,16 @@ import argparse
 import yaml
 from typing import List, Optional, Union, Literal
 
-from KicadModTree import Vector2D, Footprint, FootprintType, ExposedPad, \
-    RectLine, PolygonLine, Pad
+from KicadModTree import (
+    Direction,
+    ExposedPad,
+    Footprint,
+    FootprintType,
+    Pad,
+    PolygonLine,
+    RectLine,
+    Vector2D,
+)
 from KicadModTree.nodes.specialized.PadArray import PadArray, get_pad_radius_from_arrays
 from KicadModTree.nodes.specialized.Cruciform import Cruciform
 
@@ -18,6 +26,7 @@ from scripts.tools.geometry.bounding_box import BoundingBox
 from scripts.tools.quad_dual_pad_border import create_dual_or_quad_pad_border
 from scripts.tools import drawing_tools
 from scripts.tools.drawing_tools import nearestSilkPointOnOrthogonalLine
+from scripts.tools.nodes import pin1_arrow
 
 from scripts.tools.declarative_def_tools import tags_properties
 
@@ -813,16 +822,23 @@ class GullwingGenerator(FootprintGenerator):
                     # put a down arrow top of pin1
                     arrow_apex = Vector2D(pad_left_body_left_midpoint,
                                           tl_pad_with_clearance_top - silk_line_width / 2)
-                    drawing_tools.TriangleArrowPointingSouth(
-                            kicad_mod, arrow_apex, arrow_size, arrow_length,
-                            "F.SilkS", silk_line_width)
+                    arrow_direction = Direction.SOUTH
                 else:
                     # put a East arrow left of pin1
                     arrow_apex = Vector2D(tl_pad_with_clearance_left - silk_line_width / 2,
                                           tl_pad.at.y)
-                    drawing_tools.TriangleArrowPointingEast(
-                            kicad_mod, arrow_apex, arrow_size, arrow_length,
-                            "F.SilkS", silk_line_width)
+                    arrow_direction = Direction.EAST
+
+                kicad_mod.append(
+                    pin1_arrow.Pin1SilkscreenArrow(
+                        arrow_apex,
+                        arrow_direction,
+                        arrow_size,
+                        arrow_length,
+                        "F.SilkS",
+                        silk_line_width,
+                    )
+                )
 
             else:
                 # Pins on the top and bottom side
@@ -839,16 +855,23 @@ class GullwingGenerator(FootprintGenerator):
 
                     arrow_apex = Vector2D(tl_pad_with_clearance_left - silk_line_width / 2,
                                           pad_top_body_top_midpoint)
-                    drawing_tools.TriangleArrowPointingEast(
-                            kicad_mod, arrow_apex, arrow_size, arrow_length,
-                            "F.SilkS", silk_line_width)
+                    arrow_direction = Direction.EAST.value
                 else:
                     # put a down arrow top of pin1
                     arrow_apex = Vector2D(tl_pad.at.x,
                                           tl_pad_with_clearance_top - silk_line_width / 2)
-                    drawing_tools.TriangleArrowPointingSouth(
-                            kicad_mod, arrow_apex, arrow_size, arrow_length,
-                            "F.SilkS", silk_line_width)
+                    arrow_direction = Direction.SOUTH
+
+                kicad_mod.append(
+                    pin1_arrow.Pin1SilkscreenArrow(
+                        arrow_apex,
+                        arrow_direction,
+                        arrow_size,
+                        arrow_length,
+                        "F.SilkS",
+                        silk_line_width,
+                    )
+                )
 
         # # ######################## Fabrication Layer ###########################
 

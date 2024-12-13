@@ -7,9 +7,18 @@ from pathlib import Path
 import itertools
 import logging
 
-from KicadModTree import Vector2D
-from KicadModTree.nodes import Pad, Footprint, FootprintType, Text, RectLine, PolygonLine, Property
-from scripts.tools.drawing_tools import TriangleArrowPointingSouthEast
+from KicadModTree import (
+    Direction,
+    Footprint,
+    FootprintType,
+    Pad,
+    PolygonLine,
+    Property,
+    RectLine,
+    Text,
+    Vector2D,
+)
+from scripts.tools.nodes import pin1_arrow
 from scripts.tools.declarative_def_tools import tags_properties
 from scripts.tools.footprint_generator import FootprintGenerator
 
@@ -240,7 +249,11 @@ class BGAGenerator(FootprintGenerator):
         min_arrow_size = wSilkS * 3
         arrow_size = max(min_arrow_size, crtYdOffset / 2)
 
-        TriangleArrowPointingSouthEast(f, arrow_apex, arrow_size, "F.SilkS", wSilkS)
+        f.append(
+            pin1_arrow.Pin1SilkScreenArrow45Deg(
+                arrow_apex, Direction.SOUTHEAST, arrow_size, "F.SilkS", wSilkS
+            )
+        )
 
         f.append(PolygonLine(
             polygon=[

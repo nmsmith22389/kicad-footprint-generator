@@ -32,10 +32,22 @@ sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))  # load parent path
 
 import argparse
 import yaml
-from KicadModTree import Footprint, FootprintType, Model, Pad, PadArray, PolygonLine, Line, RectLine, KicadFileHandler
+from KicadModTree import (
+    Direction,
+    Footprint,
+    FootprintType,
+    Model,
+    Pad,
+    PadArray,
+    PolygonLine,
+    Line,
+    RectLine,
+    KicadFileHandler,
+)
 from scripts.tools.footprint_text_fields import addTextFields
 
 from scripts.tools import drawing_tools
+from scripts.tools.nodes import pin1_arrow
 from KicadModTree import Vector2D
 
 
@@ -228,9 +240,17 @@ def generate_one_footprint(pincount, configuration):
     arrow_size, arrow_length = drawing_tools.getStandardSilkArrowSize(
         arrow_size_enum, configuration['silk_line_width'])
     arrow_apex = Vector2D(-tab_x+mounting_pad_width/2.0+silk_clearance+0.1, (body_y1-nudge + body_y1-nudge-marker_y)/2-0.1)
-    drawing_tools.TriangleArrowPointingEast(
-            kicad_mod, arrow_apex, arrow_size, arrow_length,
-            "F.SilkS", configuration['silk_line_width'])
+
+    kicad_mod.append(
+        pin1_arrow.Pin1SilkscreenArrow(
+            apex_position=arrow_apex,
+            angle=Direction.EAST,
+            size=arrow_size,
+            length=arrow_length,
+            layer="F.SilkS",
+            line_width_mm=configuration["silk_line_width"],
+        )
+    )
 
     # Small line to the right of the pins
     kicad_mod.append(Line(

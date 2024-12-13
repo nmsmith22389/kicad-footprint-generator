@@ -4,9 +4,17 @@ import math
 import enum
 from typing import Tuple, List, Union, Optional, Any
 
-from KicadModTree import *  # NOQA
-from KicadModTree import Vector2D
-from KicadModTree import Footprint, PolygonLine, Polygon, Line, Arc
+from KicadModTree import (
+    Arc,
+    Circle,
+    Direction,
+    Footprint,
+    Line,
+    Node,
+    PolygonLine,
+    RectLine,
+    Vector2D,
+)
 from KicadModTree.util.geometric_util import (
     geometricCircle,
     geometricArc,
@@ -15,6 +23,7 @@ from KicadModTree.util.geometric_util import (
 from scripts.tools.geometry.keepout import Keepout, KeepoutRect, KeepoutRound
 from scripts.tools.footprint_global_properties import *
 from scripts.tools.geometry.bounding_box import BoundingBox
+from scripts.tools.nodes import pin1_arrow
 
 # tool function for generating 3D-scripts
 def script3d_writevariable(file, line, varname, value):
@@ -494,7 +503,7 @@ def allTrapezoid(model, x, size, angle, layer, width):
 
 # draw a downward equal-sided triangle
 def allEqualSidedDownTriangle(model, xcenter, side_length, layer, width):
-    h=sqrt(3)/6*side_length
+    h=math.sqrt(3)/6*side_length
     model.append(PolygonLine(polygon=[[xcenter[0] - side_length / 2, xcenter[1] - h],
                                        [xcenter[0]+side_length/2, xcenter[1]-h],
                                        [xcenter[0], xcenter[1]+2*h],
@@ -727,92 +736,6 @@ def THTQuartzIncomplete(model, x, size, angle, layer, width):
         model.append(Arc(center=cr, start=xbr, angle=-angle, layer=layer, width=width))
 
 
-def TriangleArrowPointingSouthEast(model: Footprint, apex_position: Vector2D, size: float,
-                                   layer: str, line_width_mm: float):
-    """Make and append a 45-degree south-east-pointing filled triangle
-
-    Size is between nodes, overall size will include 1*line_width overall
-
-        + ---
-       /|  |<-size
-      +-+ ---
-
-    :param size: size of the triangle
-    """
-
-    arrow_pts = [
-        apex_position,
-        apex_position + [-size, 0],
-        apex_position + [0, -size],
-        apex_position
-    ]
-
-    poly = Polygon(nodes=arrow_pts, layer=layer, width=line_width_mm, fill=True)
-    model.append(poly)
-
-
-def TriangleArrowPointingSouth(model: Footprint, apex_position: Vector2D,
-                               size: float, length: float,
-                               layer: str, line_width_mm: float):
-    r"""Make and append a south-pointing filled triangle
-
-    Size is the overall size of the triangle, including line_width overall
-
-      size
-    |-----|
-    +-----+  ---
-     \   /    |
-      \ /     |length
-       +     ---
-
-    :param size: size of the triangle
-    """
-
-    model.append(
-        draw_triangle_pointing_south(apex_position, size, length, layer, line_width_mm)
-    )
-
-
-def draw_triangle_pointing_south(apex_position: Vector2D, size: float, length: float, layer: str, line_width_mm: float):
-    """
-    Draw a filled equilateral triangle pointing south-east.
-    """
-    arrow_pts = [
-        apex_position,
-        apex_position + [-size / 2, -length],
-        apex_position + [size / 2, -length],
-        apex_position
-    ]
-
-    return Polygon(nodes=arrow_pts, layer=layer, width=line_width_mm, fill=True)
-
-
-def TriangleArrowPointingEast(model: Footprint, apex_position: Vector2D, size: float,
-                              length: float, layer: str, line_width_mm: float):
-    r"""Make and append an east-pointing filled triangle
-
-    Size is between nodes, overall size will include 1*line_width overall
-
-    +\
-    | \
-    |  +
-    | /
-    +/
-
-    :param size: size of the triangle
-    """
-
-    arrow_pts = [
-        apex_position,
-        apex_position + [-length, -size * 0.50],
-        apex_position + [-length, size * 0.50],
-        apex_position
-    ]
-
-    poly = Polygon(nodes=arrow_pts, layer=layer, width=line_width_mm, fill=True)
-    model.append(poly)
-
-
 def CornerBracketWithArrowPointingSouthEast(model: Footprint, apex: Vector2D,
                                             arrow_size: float,
                                             arrow_length: float,
@@ -834,8 +757,10 @@ def CornerBracketWithArrowPointingSouthEast(model: Footprint, apex: Vector2D,
     # minimum clearance between nodes of the lines
     silk_silk_node_clearance = 2 * line_width_mm
 
-    TriangleArrowPointingSouthEast(model, apex, arrow_size, arrow_length,
-                                   layer, line_width_mm)
+    model.append(
+        pin1_arrow.Pin1SilkScreenArrow45Deg(
+            apex, Direction.SOUTHEAST, arrow_size, layer, line_width_mm)
+        )
 
     pin_1_silk_line_len_x = bracket_max_x - (apex.x + silk_silk_node_clearance)
     pin_1_silk_line_len_y = bracket_max_y - (apex.y + silk_silk_node_clearance)
@@ -889,8 +814,11 @@ def CornerBracketWithArrowPointingSouth(model: Footprint, apex: Vector2D,
     apex.x = round_to_grid_down(apex.x, 0.01)
     apex.y = round_to_grid_down(apex.y, 0.01)
 
-    TriangleArrowPointingSouth(model, apex, arrow_size, arrow_length,
-                               layer, line_width_mm)
+    model.append(
+        pin1_arrow.Pin1SilkscreenArrow(
+            apex, Direction.SOUTH, arrow_size, arrow_length, layer, line_width_mm
+        )
+    )
 
     # a little extra clearance on the side of the arrow
     pin_1_silk_line_len_x = bracket_max_x - (apex.x + silk_silk_node_clearance + line_width_mm / 2)
@@ -1021,7 +949,7 @@ def nearestSilkPointOnOrthogonalLine(pad_size, pad_position, pad_radius, fixed_p
         if round(dr_normal_dir, 6) >= round(r, 6):
             return moving_point
 
-        dr_inline = sqrt(r**2 - dr_normal_dir**2)
+        dr_inline = math.sqrt(r**2 - dr_normal_dir**2)
 
         ep_new[inline_dir_idx] =  pad_position[inline_dir_idx] -\
             sign*(pad_size[inline_dir_idx]/2 - (pad_radius-dr_inline))

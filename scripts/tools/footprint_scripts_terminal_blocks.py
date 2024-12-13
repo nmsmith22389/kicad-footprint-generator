@@ -6,6 +6,7 @@ from typing import Optional
 import scripts.tools.drawing_tools as DT
 from KicadModTree import (
     Circle,
+    Direction,
     Footprint,
     FootprintType,
     KicadFileHandler,

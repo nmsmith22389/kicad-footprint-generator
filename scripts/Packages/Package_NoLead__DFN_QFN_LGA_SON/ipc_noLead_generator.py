@@ -8,8 +8,17 @@ import yaml
 from math import sqrt
 from typing import List
 
-from KicadModTree import Vector2D, Footprint, FootprintType, ExposedPad, Line, \
-    PolygonLine, RectLine, Pad
+from KicadModTree import (
+    Direction,
+    ExposedPad,
+    Footprint,
+    FootprintType,
+    Line,
+    Pad,
+    PolygonLine,
+    RectLine,
+    Vector2D,
+)
 from KicadModTree.nodes.specialized.PadArray import PadArray, get_pad_radius_from_arrays
 
 from scripts.tools.footprint_generator import FootprintGenerator
@@ -18,6 +27,7 @@ from scripts.tools.footprint_text_fields import addTextFields
 from scripts.tools.ipc_pad_size_calculators import TolerancedSize, \
         ipc_body_edge_inside_pull_back, ipc_pad_center_plus_size
 from scripts.tools.quad_dual_pad_border import create_dual_or_quad_pad_border
+from scripts.tools.nodes import pin1_arrow
 from scripts.tools import drawing_tools
 from scripts.tools.drawing_tools import courtyardFromBoundingBox, round_to_grid_down
 from scripts.tools.geometry.bounding_box import BoundingBox
@@ -374,7 +384,7 @@ class NoLeadGenerator(FootprintGenerator):
 
         lib_name = device_params.get('library', default_library)
 
-        #pincount = device_params['num_pins_x'] * 2 + device_params['num_pins_y'] * 2
+        # pincount = device_params['num_pins_x'] * 2 + device_params['num_pins_y'] * 2
         pincount_full = device_params['num_pins_x'] * 2 + device_params['num_pins_y'] * 2
 
         if 'pin_count' in device_params:
@@ -406,7 +416,7 @@ class NoLeadGenerator(FootprintGenerator):
 
         layout = ''
         if device_dimensions['has_EP']:
-            #name_format = self.configuration['fp_name_EP_format_string_no_trailing_zero']
+            # name_format = self.configuration['fp_name_EP_format_string_no_trailing_zero']
             name_format = self.configuration['fp_name_EP_format_string_no_trailing_zero_pincount_text']
 
             if 'EP_size_x_overwrite' in device_params:
@@ -424,11 +434,11 @@ class NoLeadGenerator(FootprintGenerator):
                 device_dimensions['EP_center_y'].nominal
             )
         else:
-            #name_format = self.configuration['fp_name_format_string_no_trailing_zero']
+            # name_format = self.configuration['fp_name_format_string_no_trailing_zero']
             name_format = self.configuration['fp_name_format_string_no_trailing_zero_pincount_text']
 
             if device_params.get('use_name_format', 'QFN') == 'LGA':
-                #name_format = self.configuration['fp_name_lga_format_string_no_trailing_zero']
+                # name_format = self.configuration['fp_name_lga_format_string_no_trailing_zero']
                 name_format = self.configuration['fp_name_lga_format_string_no_trailing_zero_pincount_text']
 
                 if device_params['num_pins_x'] > 0 and device_params['num_pins_y'] > 0:
@@ -494,7 +504,7 @@ class NoLeadGenerator(FootprintGenerator):
             fp_name = prefix + fp_name
             fp_name_2 = prefix + fp_name_2
 
-        #model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}.wrl'\
+        # model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}.wrl'\
         #    .format(
         #        model3d_path_prefix=model3d_path_prefix, lib_name=lib_name,
         #        fp_name=fp_name_2)
@@ -668,9 +678,15 @@ class NoLeadGenerator(FootprintGenerator):
             arrow_apex.x = round_to_grid_down(arrow_apex.x, 0.01)
             arrow_apex.y = round_to_grid_down(arrow_apex.y, 0.01)
 
-            drawing_tools.TriangleArrowPointingSouthEast(
-                    kicad_mod, arrow_apex, arrow_size,
-                    "F.SilkS", silk_line_width_mm)
+            kicad_mod.append(
+                pin1_arrow.Pin1SilkScreenArrow45Deg(
+                    arrow_apex,
+                    Direction.SOUTHEAST,
+                    arrow_size,
+                    "F.SilkS",
+                    silk_line_width_mm,
+                )
+            )
 
             if vertical_lines:
                 # stay outside the body _and_ the pad clearance

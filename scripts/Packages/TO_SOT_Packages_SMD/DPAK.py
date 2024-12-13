@@ -9,8 +9,9 @@ sys.path.append(
 )  # enable package import from parent directory
 
 from KicadModTree import *  # NOQA
+from KicadModTree import Direction
 from scripts.tools.drawing_tools import SilkArrowSize
-from scripts.tools.drawing_tools_silk import draw_silk_triangle_north_of_pad
+from scripts.tools.drawing_tools_silk import draw_silk_triangle_for_pad
 
 
 class Dimensions(object):
@@ -363,8 +364,10 @@ class DPAK(object):
         # Pin 1 (or first pin if pin 1 cut):
         assert self.first_pad is not None  # should have done this first
         self.m.append(
-            draw_silk_triangle_north_of_pad(
-                self.first_pad, SilkArrowSize.LARGE, self.dim.silk_line_width_mm,
+            draw_silk_triangle_for_pad(
+                self.first_pad, SilkArrowSize.LARGE,
+                Direction.SOUTH,
+                self.dim.silk_line_width_mm,
                 self.dim.silk_pad_clearance_mm
             )
         )

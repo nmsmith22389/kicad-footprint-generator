@@ -9,9 +9,18 @@ from pathlib import Path
 import argparse
 import logging
 
-from KicadModTree import Footprint, FootprintType, Text, Line, Pad, RectLine, Vector2D, Property
+from KicadModTree import (
+    Direction,
+    Footprint,
+    FootprintType,
+    Text,
+    Line,
+    Pad,
+    RectLine,
+    Vector2D,
+    Property,
+)
 from scripts.tools.drawing_tools import (
-    draw_triangle_pointing_south,
     getStandardSilkArrowSize,
     round_to_grid_up,
     round_to_grid_down,
@@ -19,6 +28,7 @@ from scripts.tools.drawing_tools import (
 )
 from scripts.tools.footprint_generator import FootprintGenerator
 from scripts.tools.global_config_files.global_config import GlobalConfig
+from scripts.tools.nodes import pin1_arrow
 
 from smd_inductor_properties import InductorSeriesProperties, SmdInductorProperties
 
@@ -234,11 +244,12 @@ class InductorGenerator(FootprintGenerator):
             )
 
             elements.append(
-                draw_triangle_pointing_south(
+                pin1_arrow.Pin1SilkscreenArrow(
                     apex_position=Vector2D(
                         -(landing_pad_dimension.x + landing_pad_spacing) / 2,
                         -silkscreen_corner.y,
                     ),
+                    angle=Direction.SOUTH,
                     size=silk_arrow_size,
                     length=silk_arrow_length,
                     layer="F.SilkS",
