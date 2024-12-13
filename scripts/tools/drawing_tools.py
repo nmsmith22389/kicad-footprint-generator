@@ -375,29 +375,11 @@ def addCrossScrew(kicad_mod, c, radius, layer, width, keepouts=[], roun=0.001):
     :param keepouts: list of keepouts (can be empty)
     """
     c = Vector2D(c)
+    dw = 0.75 * radius
 
     addCircleWithKeepout(kicad_mod, c.x, c.y, radius, layer, width, keepouts, roun)
-
-    kkt = Translation(c.x, c.y)
-    kicad_mod.append(kkt)
-    dd = radius * 0.1 / 2
-    dw = 0.8 * radius
-    polygon = [
-        [round_to_grid(-dw, roun), round_to_grid(-dd, roun)],
-        [round_to_grid(-dd, roun), round_to_grid(-dd, roun)],
-        [round_to_grid(-dd, roun), round_to_grid(-dw, roun)],
-        [round_to_grid(+dd, roun), round_to_grid(-dw, roun)],
-        [round_to_grid(+dd, roun), round_to_grid(-dd, roun)],
-        [round_to_grid(+dw, roun), round_to_grid(-dd, roun)],
-        [round_to_grid(+dw, roun), round_to_grid(+dd, roun)],
-        [round_to_grid(+dd, roun), round_to_grid(+dd, roun)],
-        [round_to_grid(+dd, roun), round_to_grid(+dw, roun)],
-        [round_to_grid(-dd, roun), round_to_grid(+dw, roun)],
-        [round_to_grid(-dd, roun), round_to_grid(+dd, roun)],
-        [round_to_grid(-dw, roun), round_to_grid(+dd, roun)],
-        [round_to_grid(-dw, roun), round_to_grid(-dd, roun)],
-    ]
-    addPolyLineWithKeepout(kkt, polygon, layer, width, keepouts)
+    addHLineWithKeepout(kicad_mod, c.x - dw, c.x + dw, c.y, layer, width, keepouts, roun)
+    addVLineWithKeepout(kicad_mod, c.x, c.y - dw, c.y + dw, layer, width, keepouts, roun)
 
 # split a dashed horizontal line so it does not interfere with keepout areas defined as [[x0,x1,y0,y1], ...]
 def addHDLineWithKeepout(kicad_mod, x0, x1, y, layer, width, keepouts=[], roun=0.001):
