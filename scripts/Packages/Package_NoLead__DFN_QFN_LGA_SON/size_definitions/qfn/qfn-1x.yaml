@@ -880,3 +880,28 @@ QFN-16-1EP_3x3mm_P0.5mm_EP1.675x1.675mm:
   pitch: 0.5
   num_pins_x: 4
   num_pins_y: 4
+
+WCH_QFN-16-1EP_3x3mm_P0.5mm_EP1.8x1.8mm:
+  device_type: 'QFN'
+  manufacturer: 'WCH'
+  #part_number: 'mpn'
+  size_source: 'https://www.wch.cn/downloads/PACKAGE_PDF.html' # QFN16（QFN16-3*3）
+  ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  # custom_name_format:
+  body_size_x: 3+/-0.1
+  body_size_y: 3+/-0.1
+  # Datasheet is unclear if its 0.75 or 0.55 +- 0.05. Using the worst case
+  overall_height: 0.75+/-0.05
+  lead_width: 0.25+/-0.07
+  lead_len: 0.35+/-0.12
+
+  pitch: 0.5
+  num_pins_x: 4
+  num_pins_y: 4
+
+  EP_size_x: 1.8+/-0.2
+  EP_size_y: 1.8+/-0.2
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 2]
+  #heel_reduction: 0.2 #for relatively large EP pads (increase clearance)
