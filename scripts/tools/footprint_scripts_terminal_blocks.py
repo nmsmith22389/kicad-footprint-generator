@@ -12,17 +12,74 @@ from KicadModTree import (
     KicadFileHandler,
     Line,
     Model,
+    Node,
     Pad,
     Property,
     RectLine,
     Text,
     Translation,
+    Vector2D,
 )
+from KicadModTree.util.direction import Direction
 from scripts.tools.footprint_global_properties import *
 from scripts.tools.geometry import keepout
+from scripts.tools.nodes import pin1_arrow
+
 
 crt_offset = 0.5  # different for connectors
 slk_offset = lw_slk
+
+
+def make_silk_outline_with_pin1_arrow(
+    parent: Node,
+    silk_tl: Vector2D,
+    silk_size: Vector2D,
+    arrow_x: float,
+    line_width: float,
+    keepouts: list,
+):
+    """
+
+    +-------------------------+
+    |                         |
+    +---  --------------------+
+        /\
+        --
+    """
+
+    # Terminal blocks are big items, so we use a bigger arrow
+    # (it's still not that big really)
+    arrow_size, arrow_length = DT.getStandardSilkArrowSize(
+        DT.SilkArrowSize.HUGE, lw_slk
+    )
+
+    pin1_arrow_apex = Vector2D(arrow_x, silk_tl.y + silk_size.y)
+    pin1_arrow_keepout = DT.KeepoutRect(
+        pin1_arrow_apex, Vector2D(0.6, 0.6)
+    )
+
+    DT.addRectWithKeepout(
+        parent,
+        silk_tl.x,
+        silk_tl.y,
+        silk_size.x,
+        silk_size.y,
+        layer="F.SilkS",
+        width=lw_slk,
+        keepouts=keepouts + [pin1_arrow_keepout],
+    )
+
+    # Silkscreen pin1 marker
+    parent.append(
+        pin1_arrow.Pin1SilkscreenArrow(
+            apex_position=pin1_arrow_apex,
+            angle=Direction.NORTH,
+            size=arrow_size,
+            length=arrow_length,
+            layer="F.SilkS",
+            line_width_mm=line_width,
+        )
+    )
 
 
 #
@@ -329,16 +386,11 @@ def makeTerminalBlockStd(
             width=lw_slk,
             keepouts=keepouts,
         )
-    DT.addRectWithKeepout(
-        kicad_modg,
-        l_slk,
-        t_slk,
-        w_slk,
-        h_slk,
-        layer="F.SilkS",
-        width=lw_slk,
-        keepouts=keepouts,
+
+    make_silk_outline_with_pin1_arrow(
+        kicad_modg, Vector2D(l_slk, t_slk), Vector2D(w_slk, h_slk), 0, lw_slk, keepouts
     )
+
     # screws + other repeated features
     if screw_diameter > 0:
         for p in range(1, pins + 1):
@@ -573,24 +625,6 @@ def makeTerminalBlockStd(
             lw_slk,
             keepouts,
         )
-
-    # create SILKSCREEN-pin1-marker
-    kicad_modg.append(
-        Line(
-            start=[l_slk - 2 * lw_slk, t_slk + h_slk - chamfer],
-            end=[l_slk - 2 * lw_slk, t_slk + h_slk + 2 * lw_slk],
-            layer="F.SilkS",
-            width=lw_slk,
-        )
-    )
-    kicad_modg.append(
-        Line(
-            start=[l_slk - 2 * lw_slk, t_slk + h_slk + 2 * lw_slk],
-            end=[l_slk - 2 * lw_slk + chamfer, t_slk + h_slk + 2 * lw_slk],
-            layer="F.SilkS",
-            width=lw_slk,
-        )
-    )
 
     # create courtyard
     kicad_mod.append(
@@ -944,15 +978,9 @@ def makeTerminalBlockVertical(
             width=lw_slk,
             keepouts=keepouts,
         )
-    DT.addRectWithKeepout(
-        kicad_modg,
-        l_slk,
-        t_slk,
-        w_slk,
-        h_slk,
-        layer="F.SilkS",
-        width=lw_slk,
-        keepouts=keepouts,
+
+    make_silk_outline_with_pin1_arrow(
+        kicad_modg, Vector2D(l_slk, t_slk), Vector2D(w_slk, h_slk), 0, lw_slk, keepouts
     )
 
     # opening + other repeated features
@@ -1155,24 +1183,6 @@ def makeTerminalBlockVertical(
             lw_slk,
             keepouts,
         )
-
-    # create SILKSCREEN-pin1-marker
-    kicad_modg.append(
-        Line(
-            start=[l_slk - 2 * lw_slk, t_slk + h_slk - chamfer],
-            end=[l_slk - 2 * lw_slk, t_slk + h_slk + 2 * lw_slk],
-            layer="F.SilkS",
-            width=lw_slk,
-        )
-    )
-    kicad_modg.append(
-        Line(
-            start=[l_slk - 2 * lw_slk, t_slk + h_slk + 2 * lw_slk],
-            end=[l_slk - 2 * lw_slk + chamfer, t_slk + h_slk + 2 * lw_slk],
-            layer="F.SilkS",
-            width=lw_slk,
-        )
-    )
 
     # create courtyard
     kicad_mod.append(
@@ -1527,15 +1537,9 @@ def makeTerminalBlock45Degree(
             width=lw_slk,
             keepouts=keepouts,
         )
-    DT.addRectWithKeepout(
-        kicad_modg,
-        l_slk,
-        t_slk,
-        w_slk,
-        h_slk,
-        layer="F.SilkS",
-        width=lw_slk,
-        keepouts=keepouts,
+
+    make_silk_outline_with_pin1_arrow(
+        kicad_modg, Vector2D(l_slk, t_slk), Vector2D(w_slk, h_slk), 0, lw_slk, keepouts
     )
 
     # opening + other repeated features
@@ -1851,24 +1855,6 @@ def makeTerminalBlock45Degree(
             lw_slk,
             keepouts,
         )
-
-    # create SILKSCREEN-pin1-marker
-    kicad_modg.append(
-        Line(
-            start=[l_slk - 2 * lw_slk, t_slk + h_slk - chamfer],
-            end=[l_slk - 2 * lw_slk, t_slk + h_slk + 2 * lw_slk],
-            layer="F.SilkS",
-            width=lw_slk,
-        )
-    )
-    kicad_modg.append(
-        Line(
-            start=[l_slk - 2 * lw_slk, t_slk + h_slk + 2 * lw_slk],
-            end=[l_slk - 2 * lw_slk + chamfer, t_slk + h_slk + 2 * lw_slk],
-            layer="F.SilkS",
-            width=lw_slk,
-        )
-    )
 
     # create courtyard
     kicad_mod.append(
