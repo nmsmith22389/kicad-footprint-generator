@@ -59,7 +59,7 @@ class Vector2D(object):
             else:
                 raise TypeError('invalid list size (2 elements expected)')
 
-        raise TypeError('invalid parameters given')
+        raise TypeError(f'invalid parameters given: {coordinates}')
 
     def round_to(self, base):
         r"""Round to a specific base (like it's required for a grid)
@@ -204,7 +204,7 @@ class Vector2D(object):
     def __copy__(self):
         return Vector2D(self.x, self.y)
 
-    def rotate(self, angle, origin=(0, 0), use_degrees=True):
+    def rotate(self, angle, origin=(0, 0), use_degrees=True) -> "Vector2D":
         r""" Rotate vector around given origin
 
         :params:
@@ -226,6 +226,13 @@ class Vector2D(object):
         self.x = temp
 
         return self
+
+    def with_rotation(self, angle, origin=(0, 0), use_degrees=True) -> "Vector2D":
+        r""" Return a new vector that is rotated around given origin"""
+
+        new_vec = self.__copy__()
+        new_vec.rotate(angle, origin, use_degrees)
+        return new_vec
 
     def to_polar(self, origin=(0, 0), use_degrees=True):
         r""" Get polar representation of the vector

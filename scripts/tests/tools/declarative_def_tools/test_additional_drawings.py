@@ -1,35 +1,62 @@
-from scripts.tools.declarative_def_tools import additional_drawing as AD
-
-import yaml
 import pytest
 
+from scripts.tools.declarative_def_tools import fp_additional_drawing as AD
+from scripts.tools.declarative_def_tools import ast_evaluator
+from scripts.tests.test_utils import node_test_utils
+from scripts.tests.test_utils.node_test_utils import testing_global_config
 
-def test_basic():
 
-    spec = """
-additional_drawings:
-    port_inner:
-        type: circle
-        layer: mechanical
-        center: [0, 0]
-        diameter: 3.0
-    port_outer:
-        inherit: port_inner
-        diameter: 1.0
-"""
+def test_basic(testing_global_config):
 
-    ad_yaml = yaml.safe_load(spec)
+    spec = {
+        "additional_drawings": {
+            "port_inner": {
+                "type": "circle",
+                "layer": "mechanical",
+                "width": 0.1,
+                "center": [0, 0],
+                "diameter": 3.0,
+            },
+            "port_outer": {
+                "type": "circle",
+                "layer": "mechanical",
+                "width": 0.1,
+                "center": ["$(FooVar + 1)", 0],
+                "diameter": 1.0,
+            },
+        }
+    }
 
-    ads = AD.AdditionalDrawing.from_standard_yaml(ad_yaml)
+    # This creates the AdditionalDrawing objects from the spec
+    # which we will later resolve into actual drawing nodes with
+    # the AST evaluator and other parameters.
+    ads = AD.FPAdditionalDrawing.from_standard_yaml(spec)
 
     assert len(ads) == 2
 
-    assert ads[0].type == 'circle'
-    assert ads[0].layer == 'mechanical'
-    assert ads[0].shape.exprs.cx_expr == 0
-    assert ads[0].shape.exprs.cy_expr == 0
+    # From this high level (FPAdditionalDrawing) the only interface we get
+    # (or need!) is the one that returns the nodes to draw. We don't care,
+    # and aren't told, about the details of how the shapes are configured.
 
-    assert ads[1].type == 'circle'
-    assert ads[1].layer == 'mechanical'
-    assert ads[1].shape.exprs.cx_expr == 0
-    assert ads[1].shape.exprs.cy_expr == 0
+    eval_symbols = {
+        "FooVar": 42,
+    }
+
+    evaluator = ast_evaluator.ASTevaluator(symbols=eval_symbols)
+
+    nodes = AD.create_additional_drawings(ads, testing_global_config, evaluator)
+
+    assert len(nodes) == 2
+
+    c1 = node_test_utils.find_circles(nodes, radius=1.5)[0]
+    c2 = node_test_utils.find_circles(nodes, radius=0.5)[0]
+
+    assert c1.layer == "Cmts.User"
+    assert c1.width == 0.1
+    assert c1.center_pos.x == 0
+    assert c1.center_pos.y == 0
+
+    assert c2.layer == "Cmts.User"
+    assert c2.width == 0.1
+    assert c2.center_pos.x == pytest.approx(43)  # FooVar + 1
+    assert c2.center_pos.y == 0

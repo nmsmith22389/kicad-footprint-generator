@@ -1,4 +1,5 @@
 from scripts.tools.declarative_def_tools import rule_area_properties as RAP
+from scripts.tools.declarative_def_tools import shape_properties as SP
 
 import yaml
 
@@ -30,10 +31,8 @@ shapes:
 
     rect = kp.shapes[0]
 
-    assert rect.exprs.x1_expr == 'a'
-    assert rect.exprs.y1_expr == 'b'
-    assert rect.exprs.x2_expr == 'c'
-    assert rect.exprs.y2_expr == 1
+    # Make sure we decoded to the right shape
+    assert isinstance(rect, SP.RectProperties)
 
 
 def test_multilayer():

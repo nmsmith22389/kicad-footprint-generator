@@ -27,9 +27,9 @@ from scripts.tools.drawing_tools import nearestSilkPointOnOrthogonalLine
 from scripts.tools.nodes import pin1_arrow
 
 from scripts.tools.declarative_def_tools import (
-    additional_drawing,
     ast_evaluator,
     common_metadata,
+    fp_additional_drawing,
 )
 
 from scripts.Packages.utils.ep_handling_utils import getEpRoundRadiusParams
@@ -130,7 +130,7 @@ class GullwingConfiguration:
     ipc_density: IpcDensity
 
     top_slug: Optional[TopSlugConfiguration]
-    additional_drawings: list[additional_drawing.AdditionalDrawing]
+    additional_drawings: list[fp_additional_drawing.FPAdditionalDrawing]
 
     def __init__(self, spec: dict):
         self._spec_dictionary = spec
@@ -164,7 +164,7 @@ class GullwingConfiguration:
         self.ipc_density = IpcDensity.from_str(spec.get('ipc_density', 'nominal'))
 
         self.additional_drawings = (
-            additional_drawing.AdditionalDrawing.from_standard_yaml(spec)
+            fp_additional_drawing.FPAdditionalDrawing.from_standard_yaml(spec)
         )
 
     @property
@@ -953,7 +953,7 @@ class GullwingGenerator(FootprintGenerator):
 
         if gullwing_config.additional_drawings:
             kicad_mod.extend(
-                additional_drawing.create_additional_drawings(
+                fp_additional_drawing.create_additional_drawings(
                     gullwing_config.additional_drawings,
                     self.global_config,
                     fp_ast_evaluator,

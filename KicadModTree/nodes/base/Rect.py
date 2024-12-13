@@ -78,3 +78,12 @@ class Rect(Node):
         render_text += f" [{render_string}]"
 
         return render_text
+
+    def __repr__(self):
+        return (
+            f"Rect(start={self.start_pos}, end={self.end_pos}, "
+            f"layer={self.layer}, width={self.width}, fill={self.fill})"
+        )
+
+    def __str__(self):
+        return self.__repr__()

@@ -1,50 +1,50 @@
-import abc
 from dataclasses import dataclass
+from typing import Callable
 
-from typing import Union, Callable, Any
-from .ast_evaluator import ASTevaluator
-
-from kilibs.geom import geometricCircle, Rectangle, Vector2D
-
-
-RECT = 'rect'
-CIRCLE = 'circle'
+from kilibs.geom import geometricCircle, Rectangle, Vector2D, PolygonPoints
+from kilibs.declarative_defs import evaluable_defs as EDs
 
 
-class ShapeProperties(abc.ABC):
+class ShapeProperties(EDs.Evaluable):
 
-    @abc.abstractmethod
-    def evaluate_expressions(self, expr_evaluator: Callable) -> Any:
-        """
-        Evaluate the expressions in the shape properties and return the
-        corresponding geometric object (or objects)
-        """
-        pass
+    offset: EDs.EvaluableVector2D | None
+    """An offset applied to all evaluated points of the shape.
 
+    This can be used if all the points are relative to some other point
+    rather than having to copy the same offset into each point's definition.
+    """
+
+    def __init__(self, shape_def: dict):
+
+        self.offset = None
+        if 'offset' in shape_def:
+            self.offset = EDs.EvaluableVector2D(shape_def['offset'])
+
+    def _evaluate_offset(self, expr_evaluator: Callable) -> Vector2D:
+        if self.offset is None:
+            return Vector2D(0, 0)
+
+        return self.offset.evaluate(expr_evaluator)
 
 class RectProperties(ShapeProperties):
 
-    type = RECT
     # Expressions that define the coordinates of the rectangle
     # (these will be evaluated in the context of each footprint)
     # which can only happen much later when the variables are known
     @dataclass
     class CornerExprs:
-        x1_expr: str
-        y1_expr: str
-        x2_expr: str
-        y2_expr: str
+        corner1: EDs.EvaluableVector2D
+        corner2: EDs.EvaluableVector2D
 
     @dataclass
     class CenterSizeExprs:
-        cx_expr: str
-        cy_expr: str
-        width_expr: str
-        height_expr: str
+        center: EDs.EvaluableVector2D
+        size: EDs.EvaluableVector2D
 
-    exprs: Union[CornerExprs, CenterSizeExprs]
+    exprs: CornerExprs | CenterSizeExprs
 
     def __init__(self, rect: dict):
+        super().__init__(rect)
 
         if 'center' in rect:
             if not 'size' in rect:
@@ -54,10 +54,8 @@ class RectProperties(ShapeProperties):
                 raise ValueError('Both "center" and "size" must have exactly two coordinates')
 
             self.exprs = self.CenterSizeExprs(
-                cx_expr=rect['center'][0],
-                cy_expr=rect['center'][1],
-                width_expr=rect['size'][0],
-                height_expr=rect['size'][1]
+                center=EDs.EvaluableVector2D(rect['center']),
+                size=EDs.EvaluableVector2D(rect['size'])
             )
         elif 'corners' in rect:
             corners = rect['corners']
@@ -66,45 +64,41 @@ class RectProperties(ShapeProperties):
                 raise ValueError('Each point of the rectangular shape must have exactly two coordinates')
 
             self.exprs = self.CornerExprs(
-                x1_expr=corners[0][0],
-                y1_expr=corners[0][1],
-                x2_expr=corners[1][0],
-                y2_expr=corners[1][1]
+                corner1=EDs.EvaluableVector2D(corners[0]),
+                corner2=EDs.EvaluableVector2D(corners[1])
             )
         else:
             raise ValueError('Rectangular shape must have either "center/size" or "corners" definition')
 
-    def evaluate_expressions(self, expr_evaluator: Callable) -> Rectangle:
+    def evaluate(self, expr_evaluator: Callable) -> Rectangle:
+
+        offset = self._evaluate_offset(expr_evaluator)
+
         if isinstance(self.exprs, RectProperties.CornerExprs):
-            corner1 = Vector2D(expr_evaluator(self.exprs.x1_expr),
-                           expr_evaluator(self.exprs.y1_expr))
-            corner2 = Vector2D(expr_evaluator(self.exprs.x2_expr),
-                            expr_evaluator(self.exprs.y2_expr))
-            return Rectangle.by_corners(corner1, corner2)
+            corner1 = self.exprs.corner1.evaluate(expr_evaluator)
+            corner2 = self.exprs.corner2.evaluate(expr_evaluator)
+            return Rectangle.by_corners(corner1 + offset, corner2 + offset)
 
         elif isinstance(self.exprs, RectProperties.CenterSizeExprs):
+            center = self.exprs.center.evaluate(expr_evaluator)
+            size = self.exprs.size.evaluate(expr_evaluator)
+            return Rectangle(center + offset, size)
 
-            center = Vector2D(expr_evaluator(self.exprs.cx_expr),
-                              expr_evaluator(self.exprs.cy_expr))
-            size = Vector2D(expr_evaluator(self.exprs.width_expr),
-                            expr_evaluator(self.exprs.height_expr))
-            return Rectangle(center, size)
-
-        raise RuntimeError("Invalid rectangle expression type")
+        raise RuntimeError(f"Invalid rectangle expression type: {self.exprs}")
 
 
 class CircleProperties(ShapeProperties):
 
-    type = RECT
     # Expressions that define the coordinates of the rectangle
     # (these will be evaluated in the context of each footprint)
     # which can only happen much later when the variables are known
     @dataclass
     class CenterSizeExprs:
-        cx_expr: str
-        cy_expr: str
-        radius_expr: str | None
-        diameter_expr: str | None
+        center: EDs.EvaluableVector2D
+        rad_diam: EDs.EvaluableScalar
+        is_diam: bool
+
+    exprs: CenterSizeExprs
 
     def __init__(self, circle: dict):
         """
@@ -120,43 +114,96 @@ class CircleProperties(ShapeProperties):
         where x, y, and d/r are expressions that will be evaluated in the context of each footprint.
         """
 
+        super().__init__(circle)
+
         if not 'center' in circle:
             raise ValueError('Circle shape must have a "center" key')
 
         if 'diameter' in circle and 'radius' in circle:
             raise ValueError('Circle shape must have either "diameter" or "radius" key, not both')
 
+        print(circle)
+
+        rad_diam_expr = circle.get('diameter', circle.get('radius'))
+        is_diam = 'diameter' in circle
+
         self.exprs = self.CenterSizeExprs(
-            cx_expr=circle['center'][0],
-            cy_expr=circle['center'][1],
-            radius_expr=circle.get('radius', None),
-            diameter_expr=circle.get('diameter', None)
+            center=EDs.EvaluableVector2D(circle['center']),
+            rad_diam=EDs.EvaluableScalar(rad_diam_expr),
+            is_diam=is_diam
         )
 
-    def evaluate_expressions(self, expr_evaluator: Callable) -> geometricCircle:
-        center = Vector2D(expr_evaluator(self.exprs.cx_expr),
-                          expr_evaluator(self.exprs.cy_expr))
+    def evaluate(self, expr_evaluator: Callable) -> geometricCircle:
+        offset = self._evaluate_offset(expr_evaluator)
+        center = self.exprs.center.evaluate(expr_evaluator)
+        radius = self.exprs.rad_diam.evaluate(expr_evaluator)
 
-        if self.exprs.radius_expr is not None:
-            radius = expr_evaluator(self.exprs.radius_expr)
-        elif self.exprs.diameter_expr is not None:
-            radius = expr_evaluator(self.exprs.diameter_expr) / 2
-        else:
-            raise RuntimeError("Invalid circle expression type")
+        if self.exprs.is_diam:
+            radius /= 2.0
 
-        return geometricCircle(center=center, radius=radius)
+        return geometricCircle(center=center + offset, radius=radius)
 
 
-def construct_shape(shape_spec: dict):
+class PolyProperties(ShapeProperties):
+
+    pts: list[EDs.EvaluableVector2D]
+
+    def __init__(self, poly: dict):
+        """
+        Initialise a polygon/polyline properties from the given dictionary.
+
+        Polygon or polyline shapes are defined by a list of points, each of which
+        can be an expression that will be evaluated in the context of each footprint.
+
+        It is up to the caller to figure out if it makes a distinction between
+        polygons and polylines, or if it treats them the same (it can use the first
+        and last points to determine if it's a closed shape or not after evaluation).
+
+        Looks something like this:
+
+            type: poly
+            layer: 'F.Fab'
+            points:
+                - [0,    1]
+                - [-1.5, 1]
+            offset: [$(body_left_x), $(body_top_y)]
+        """
+
+        super().__init__(poly)
+        self.pts = []
+
+        if not 'points' in poly or not isinstance(poly['points'], list):
+            raise ValueError('Polygon/polyline shape must have a "points" key that is a list')
+
+        for pt in poly['points']:
+            self.pts.append(EDs.EvaluableVector2D(pt))
+
+        if len(self.pts) < 2:
+            raise ValueError('Polygon/polyline shape must have at least two points')
+
+    def evaluate(self, expr_evaluator: Callable) -> PolygonPoints:
+        offset = self._evaluate_offset(expr_evaluator)
+        nodes: list[Vector2D] = []
+
+        for pt in self.pts:
+            evaled_pt = pt.evaluate(expr_evaluator)
+            nodes.append(evaled_pt + offset)
+
+        return PolygonPoints(nodes=nodes)
+
+
+def construct_shape(shape_spec: dict) -> ShapeProperties | None:
 
     if not 'type' in shape_spec:
         raise ValueError('Shape must have a "type" key')
 
     type = shape_spec['type']
 
-    if type == RECT:
+    if type == "rect":
         return RectProperties(shape_spec)
-    elif type == CIRCLE:
+    elif type == "circle":
         return CircleProperties(shape_spec)
+    elif type == "poly":
+        return PolyProperties(shape_spec)
 
-    raise ValueError(f'Unknown shape type {type}')
+    return None

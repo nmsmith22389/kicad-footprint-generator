@@ -14,7 +14,6 @@ import yaml
 from math import sqrt
 
 from kilibs.geom import Rectangle
-from helpers import *
 from KicadModTree import *
 from scripts.tools.declarative_def_tools.connectors_config import (
     ConnectorsConfiguration,
@@ -23,6 +22,7 @@ from scripts.tools.declarative_def_tools.connectors_config import (
 from scripts.tools.drawing_tools import round_to_grid
 from scripts.tools.footprint_text_fields import addTextFields
 from scripts.tools.global_config_files import global_config as GC
+from scripts.tools.declarative_def_tools import ast_evaluator, fp_additional_drawing
 
 
 class SMDSingleRowPlusMPProperties:
@@ -73,6 +73,8 @@ class SMDSingleRowPlusMPProperties:
     """The list of pin counts that this series supports"""
 
     automatic_silk_outline: bool
+
+    additional_drawings: list[fp_additional_drawing.FPAdditionalDrawing]
 
     def __init__(self, series_def: dict, group_def: dict, id: str):
         self._series_def = series_def
@@ -148,6 +150,12 @@ class SMDSingleRowPlusMPProperties:
 
         self.automatic_silk_outline = series_def.get("automatic_silk_outline", True)
 
+        self.additional_drawings = (
+            fp_additional_drawing.FPAdditionalDrawing.from_standard_yaml(
+                series_definition
+            )
+        )
+
     def pin_row_length_c_to_c(self, pincount: int) -> float:
         """
         Center-to-center distance of the main pin row
@@ -220,6 +228,20 @@ def generate_one_footprint(
         orientation=orientation,
     )
     footprint_name = footprint_name.replace("__", "_")
+
+    # Symbols that expressions can use
+    fp_symbols = {
+        "pitch_x": series_props.pitch,
+        "pin_count": pincount,
+        "body_left_x": body_rect.left,
+        "body_right_x": body_rect.right,
+        "body_top_y": body_rect.top,
+        "body_bottom_y": body_rect.bottom,
+        "body_center_x": body_rect.center.x,
+        "body_center_y": body_rect.center.y
+    }
+
+    fp_evaluator = ast_evaluator.ASTevaluator(symbols=fp_symbols)
 
     kicad_mod = Footprint(footprint_name, FootprintType.SMD)
     kicad_mod.description = "{:s} {:s} series connector, {:s} ({:s}), {:s}".format(
@@ -465,13 +487,12 @@ def generate_one_footprint(
     kicad_mod.append(Line(start=[body_rect.right, side_line_y_pin_side], end=[body_rect.right, body_edge_mount_pad],
                             layer='F.Fab', width=global_config.fab_line_width))
 
-    ###################### Additional Drawing ###########################
-    if 'additional_drawing' in series_definition:
-        for drawing in series_definition['additional_drawing']:
-            parseAdditionalDrawing(kicad_mod, drawing, global_config, series_definition,
-                                   # Temporary reconstruction of the dict-rect values util we replace this function entirely.
-                                   {'left': body_rect.left, 'right': body_rect.right, 'top': body_rect.top, 'bottom': body_rect.bottom},
-                                   pincount)
+    ###################### Additional Drawings ###########################
+
+    dwg_nodes = fp_additional_drawing.create_additional_drawings(
+        series_props.additional_drawings, global_config, fp_evaluator
+    )
+    kicad_mod.extend(dwg_nodes)
 
     ############################# CrtYd ##################################
     mp_left_edge = mount_pad_left_x_pos - mounting_pad_size.x / 2

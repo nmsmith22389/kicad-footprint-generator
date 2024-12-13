@@ -131,8 +131,8 @@ def create_rule_area_zones(rule_areas: Union[RuleAreaProperties, List[RuleAreaPr
         for shape in rule_area.shapes:
 
             # First construct the rule area polygon from the shape definition
-            if shape.type == shape_properties.RECT:
-                rect = shape.evaluate_expressions(expr_evaluator)
+            if isinstance(shape, shape_properties.RectProperties):
+                rect = shape.evaluate(expr_evaluator)
                 layers = rule_area.layers
 
                 # Map spec keepout rules to the KicadModTree format
@@ -153,5 +153,7 @@ def create_rule_area_zones(rule_areas: Union[RuleAreaProperties, List[RuleAreaPr
                             keepouts=keepouts,
                 )
                 zones.append(zone)
+            else:
+                raise ValueError(f"Unsupported shape type {shape}")
 
     return zones

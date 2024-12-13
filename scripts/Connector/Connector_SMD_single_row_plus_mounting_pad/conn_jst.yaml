@@ -201,25 +201,17 @@ device_definition:
         body_size_y: 4.25
         # x body edge relative to nearest pin
         rel_body_edge_x: 2.25
-        additional_drawing:
-            -
+        additional_drawings:
+            pins:
+                type: rect
+                center: [0, -0.25]
+                size: [0.5, 0.5]
                 layer: 'F.Fab'
-                # thickness: 0.1 #optional parameter. If not given: take fab_line_width and silk_line_width from config file. Needed if layer not silk or fab!
-                reference_point: ['center', -0.25] # [x,y]: x = 'left' | 'center' | 'right' | value; y = 'top' | 'center' | 'bottom' | value; named values are relative to body
-                rectangle:
-                    size: [0.5, 0.5] # centered around reference_point
-                    # start: [-0.25, -0.25] #relative to reference_point
-                    # end: [0.25, 0.25] #relative to reference_point
-                # polygon:
-                #     - [-0.25,-0.25]
-                #     - [-0.25,0.25]
-                #     - [0.25,0.25]
-                #     - [0.25,-0.25]
-                #     - [-0.25,-0.25]
                 repeat:
-                    spacing: ['pitch', 0] # x,y= 'pitch' | value
-                    reference_is: 'center' # 'center' | 'first' | 'last'
-                    count: 'pincount' # 'pincount' | value
+                    type: grid
+                    spacing: ['$(pitch_x)', 0]
+                    reference_is: 'center'
+                    count: ['$(pin_count)', 1]
 
 
     PH_side_entry:
@@ -268,25 +260,17 @@ device_definition:
         body_size_y: 5
         # x body edge relative to nearest pin
         rel_body_edge_x: 2.975 #(7.95-2)/2
-        additional_drawing:
-            -
+        additional_drawings:
+            pins:
+                type: rect
+                center: [0, -2.5]
+                size: [0.5, 0.5]
                 layer: 'F.Fab'
-                # thickness: 0.1 #optional parameter. If not given: take fab_line_width and silk_line_width from config file. Needed if layer not silk or fab!
-                reference_point: ['center', -2.5] # [x,y]: x = 'left' | 'center' | 'right' | value; y = 'top' | 'center' | 'bottom' | value; named values are relative to body
-                rectangle:
-                    size: [0.5, 0.5] # centered around reference_point
-                    # start: [-0.25, -0.25] #relative to reference_point
-                    # end: [0.25, 0.25] #relative to reference_point
-                # polygon:
-                #     - [-0.25,-0.25]
-                #     - [-0.25,0.25]
-                #     - [0.25,0.25]
-                #     - [0.25,-0.25]
-                #     - [-0.25,-0.25]
                 repeat:
-                    spacing: ['pitch', 0] # x,y= 'pitch' | value
-                    reference_is: 'center' # 'center' | 'first' | 'last'
-                    count: 'pincount' # 'pincount' | value
+                    type: grid
+                    spacing: ['$(pitch_x)', 0]
+                    reference_is: 'center'
+                    count: ['$(pin_count)', 1]
 
     SFH_side_entry:
         series: 'SFH'
@@ -294,7 +278,7 @@ device_definition:
         orientation: 'H'
         datasheet: 'http://www.jst-mfg.com/product/pdf/eng/eSFH.pdf'
         pinrange: ['list', [2]]
-        text_inside_pos: 0.5
+        text_inside_pos: 0
         pitch: 4.2
         pad1_position: 'top-left' # 'top-left' | 'bottom-left' -> pin 2 always to the right of pin 1
         mounting_pad_size: [0.85, 1.75]
@@ -312,35 +296,28 @@ device_definition:
         # x body edge relative to nearest pin
         rel_body_edge_x: 0.5
         automatic_silk_outline: False
-        additional_drawing:
-            -
+        additional_drawings:
+            top:
+                type: poly
                 layer: 'F.SilkS'
-                # thickness: 0.1 #optional parameter. If not given: take fab_line_width and silk_line_width from config file. Needed if layer not silk or fab!
-                reference_point: ['center', 'top'] # [x,y]: x = 'left' | 'center' | 'right' | value; y = 'top' | 'center' | 'bottom' | value; named values are relative to body
-                polygon:
+                points:
                     - [-1.315, -0.11]
                     - [1.315, -0.11]
-            -
-                layer: 'F.SilkS'
-                # thickness: 0.1 #optional parameter. If not given: take fab_line_width and silk_line_width from config file. Needed if layer not silk or fab!
-                reference_point: ['center', 'bottom'] # [x,y]: x = 'left' | 'center' | 'right' | value; y = 'top' | 'center' | 'bottom' | value; named values are relative to body
-                polygon:
+                offset: [0, $(body_top_y)]
+            bottom:
+                inherit: top
+                points:
                     - [-1.515, 0.11]
                     - [1.515, 0.11]
-            -
-                layer: 'F.SilkS'
-                # thickness: 0.1 #optional parameter. If not given: take fab_line_width and silk_line_width from config file. Needed if layer not silk or fab!
-                reference_point: ['left', 0] # [x,y]: x = 'left' | 'center' | 'right' | value; y = 'top' | 'center' | 'bottom' | value; named values are relative to body
-                polygon:
+                offset: [0, $(body_bottom_y)]
+            left_right:
+                inherit: top
+                points:
                     - [-0.11, -1.165]
                     - [-0.11, 1.215]
-            -
-                layer: 'F.SilkS'
-                # thickness: 0.1 #optional parameter. If not given: take fab_line_width and silk_line_width from config file. Needed if layer not silk or fab!
-                reference_point: ['right', 0] # [x,y]: x = 'left' | 'center' | 'right' | value; y = 'top' | 'center' | 'bottom' | value; named values are relative to body
-                polygon:
-                    - [0.11, -1.165]
-                    - [0.11, 1.215]
+                offset: [$(body_left_x), 0]
+                mirror:
+                    x: $(body_center_x)
 
     SHL_side_entry:
         series: 'SHL'
@@ -395,7 +372,7 @@ device_definition:
         mpn_format_string: 'BM{pincount:02}B-SRSS-TB'
         orientation: 'V'
         datasheet: 'http://www.jst-mfg.com/product/pdf/eng/eSH.pdf'
-        pinrange: ['range', [2,16]]
+        pinrange: ['range', [2, 16]]
         text_inside_pos: -0.25
         pitch: 1
         pad1_position: 'bottom-left' # 'top-left' | 'bottom-left' -> pin 2 always to the right of pin 1
@@ -413,25 +390,17 @@ device_definition:
         # body_fin_width: 0.8
         # x body edge relative to nearest pin
         rel_body_edge_x: 1.5
-        additional_drawing:
-            -
+        additional_drawings:
+            pins:
+                type: rect
                 layer: 'F.Fab'
-                # thickness: 0.1 #optional parameter. If not given: take fab_line_width and silk_line_width from config file. Needed if layer not silk or fab!
-                reference_point: ['center', -1.25] # [x,y]: x = 'left' | 'center' | 'right' | value; y = 'top' | 'center' | 'bottom' | value; named values are relative to body
-                rectangle:
-                    size: [0.3, 0.6] # centered around reference_point
-                    # start: [-0.25, -0.25] #relative to reference_point
-                    # end: [0.25, 0.25] #relative to reference_point
-                # polygon:
-                #     - [-0.25,-0.25]
-                #     - [-0.25,0.25]
-                #     - [0.25,0.25]
-                #     - [0.25,-0.25]
-                #     - [-0.25,-0.25]
+                center: [0, -1.25]
+                size: [0.3, 0.6]
                 repeat:
-                    spacing: ['pitch', 0] # x,y= 'pitch' | value
-                    reference_is: 'center' # 'center' | 'first' | 'last'
-                    count: 'pincount' # 'pincount' | value
+                    type: grid
+                    spacing: ['$(pitch_x)', 0]
+                    reference_is: 'center'
+                    count: ['$(pin_count)', 1]
 
     SUR_side_entry:
         series: 'SUR'
@@ -585,19 +554,17 @@ device_definition:
         # body_fin_width: 0.8
         # x body edge relative to nearest pin
         rel_body_edge_x: 3
-        additional_drawing:
-            -
+        additional_drawings:
+            pins:
+                type: rect
                 layer: 'F.Fab'
-                # thickness: 0.1 #optional parameter. If not given: take fab_line_width and silk_line_width from config file. Needed if layer not silk or fab!
-                reference_point: ['center', -0.25] # [x,y]: x = 'left' | 'center' | 'right' | value; y = 'top' | 'center' | 'bottom' | value; named values are relative to body
-                rectangle:
-                    size: [0.5, 0.5] # centered around reference_point
-                    # start: [-0.25, -0.25] #relative to reference_point
-                    # end: [0.25, 0.25] #relative to reference_point
+                center: [0, -0.25]
+                size: [0.5, 0.5]
                 repeat:
-                    spacing: ['pitch', 0] # x,y= 'pitch' | value
-                    reference_is: 'center' # 'center' | 'first' | 'last'
-                    count: 'pincount' # 'pincount' | value
+                    type: grid
+                    spacing: ['$(pitch_x)', 0]
+                    reference_is: 'center'
+                    count: ['$(pin_count)', 1]
 
     ZH_SM4_side_entry:
         series: 'ZH'
@@ -646,16 +613,14 @@ device_definition:
         # body_fin_width: 0.8
         # x body edge relative to nearest pin
         rel_body_edge_x: 2.25
-        additional_drawing:
-            -
+        additional_drawings:
+            pins:
+                type: rect
+                center: [0, -0.25]
+                size: [0.5, 0.5]
                 layer: 'F.Fab'
-                # thickness: 0.1 #optional parameter. If not given: take fab_line_width and silk_line_width from config file. Needed if layer not silk or fab!
-                reference_point: ['center', -0.25] # [x,y]: x = 'left' | 'center' | 'right' | value; y = 'top' | 'center' | 'bottom' | value; named values are relative to body
-                rectangle:
-                    size: [0.5, 0.5] # centered around reference_point
-                    # start: [-0.25, -0.25] #relative to reference_point
-                    # end: [0.25, 0.25] #relative to reference_point
                 repeat:
-                    spacing: ['pitch', 0] # x,y= 'pitch' | value
-                    reference_is: 'center' # 'center' | 'first' | 'last'
-                    count: 'pincount' # 'pincount' | value
+                    type: grid
+                    spacing: ['$(pitch_x)', 0]
+                    reference_is: 'center'
+                    count: ['$(pin_count)', 1]

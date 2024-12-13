@@ -117,24 +117,21 @@ device_definition:
         rel_body_edge_x: 1.5
         # amount to shift y position of center for pick-and-place (positive -> shift whole footprint up)
         center_shift_y: -0.55
-        additional_drawing:
-            -
+        additional_drawings:
+            pins:
+                type: rect
+                center: [0, 1.525]
+                size: [0.3, 0.6]
                 layer: 'F.Fab'
-                # thickness: 0.1 #optional parameter. If not given: take fab_line_width and silk_line_width from config file. Needed if layer not silk or fab!
-                reference_point: ['center', 1.525] # [x,y]: x = 'left' | 'center' | 'right' | value; y = 'top' | 'center' | 'bottom' | value; named values are relative to body
-                rectangle:
-                    size: [0.3, 0.6] # centered around reference_point
-                    # start: [-0.25, -0.25] #relative to reference_point
-                    # end: [0.25, 0.25] #relative to reference_point
                 repeat:
-                    spacing: ['pitch', 0] # x,y= 'pitch' | value
-                    reference_is: 'center' # 'center' | 'first' | 'last'
-                    count: 'pincount' # 'pincount' | value
-            -
+                    type: grid
+                    spacing: ['$(pitch_x)', 0]
+                    reference_is: 'center'
+                    count: ['$(pin_count)', 1]
+            tabs:
+                type: poly
                 layer: 'F.Fab'
-                # thickness: 0.1 #optional parameter. If not given: take fab_line_width and silk_line_width from config file. Needed if layer not silk or fab!
-                reference_point: ['left', 'bottom'] # [x,y]: x = 'left' | 'center' | 'right' | value; y = 'top' | 'center' | 'bottom' | value; named values are relative to body
-                polygon:
+                points:
                     - [0, 0]
                     - [-1.5, 0]
                     - [-1.7, -0.2]
@@ -142,18 +139,9 @@ device_definition:
                     - [-1.5, -2.2]
                     - [-1.5, -2.8]
                     - [0, -2.8]
-            -
-                layer: 'F.Fab'
-                # thickness: 0.1 #optional parameter. If not given: take fab_line_width and silk_line_width from config file. Needed if layer not silk or fab!
-                reference_point: ['right', 'bottom'] # [x,y]: x = 'left' | 'center' | 'right' | value; y = 'top' | 'center' | 'bottom' | value; named values are relative to body
-                polygon:
-                    - [0, 0]
-                    - [1.5, 0]
-                    - [1.7, -0.2]
-                    - [1.7, -2.0]
-                    - [1.5, -2.2]
-                    - [1.5, -2.8]
-                    - [0, -2.8]
+                offset: [$(body_left_x), $(body_bottom_y)]
+                mirror:
+                    x: 0
 
     PicoBlade_side_entry:
         series: 'PicoBlade'
@@ -180,31 +168,21 @@ device_definition:
         rel_body_edge_x: 1.5
         # amount to shift y position of center for pick-and-place (positive -> shift whole footprint up)
         center_shift_y: 0.6
-        additional_drawing:
-            -
+        additional_drawings:
+            tabs:
+                type: poly
                 layer: 'F.Fab'
-                # thickness: 0.1 #optional parameter. If not given: take fab_line_width and silk_line_width from config file. Needed if layer not silk or fab!
-                reference_point: ['left', 'top'] # [x,y]: x = 'left' | 'center' | 'right' | value; y = 'top' | 'center' | 'bottom' | value; named values are relative to body
-                polygon:
-                    - [0, 1]
+                points:
+                    - [0,    1]
                     - [-1.5, 1]
                     - [-1.7, 1.2]
                     - [-1.7, 3.0]
                     - [-1.5, 3.2]
                     - [-1.5, 3.8]
-                    - [0, 3.8]
-            -
-                layer: 'F.Fab'
-                # thickness: 0.1 #optional parameter. If not given: take fab_line_width and silk_line_width from config file. Needed if layer not silk or fab!
-                reference_point: ['right', 'top'] # [x,y]: x = 'left' | 'center' | 'right' | value; y = 'top' | 'center' | 'bottom' | value; named values are relative to body
-                polygon:
-                    - [0, 1]
-                    - [1.5, 1]
-                    - [1.7, 1.2]
-                    - [1.7, 3.0]
-                    - [1.5, 3.2]
-                    - [1.5, 3.8]
-                    - [0, 3.8]
+                    - [0,    3.8]
+                offset: [$(body_left_x), $(body_top_y)]
+                mirror:
+                    x: 0
 
     PicoClasp_top_entry_1:
         series: 'Pico-Clasp'
@@ -229,19 +207,17 @@ device_definition:
         # body_fin_width: 0.8
         # x body edge relative to nearest pin
         rel_body_edge_x: 1.5
-        additional_drawing:
-            -
+        additional_drawings:
+            pins:
+                type: rect
+                center: [0, 0]
+                size: [0.25, 0.5]
                 layer: 'F.Fab'
-                # thickness: 0.1 #optional parameter. If not given: take fab_line_width and silk_line_width from config file. Needed if layer not silk or fab!
-                reference_point: ['center', 0] # [x,y]: x = 'left' | 'center' | 'right' | value; y = 'top' | 'center' | 'bottom' | value; named values are relative to body
-                rectangle:
-                    size: [0.25, 0.5] # centered around reference_point
-                    # start: [-0.25, -0.25] #relative to reference_point
-                    # end: [0.25, 0.25] #relative to reference_point
                 repeat:
-                    spacing: ['pitch', 0] # x,y= 'pitch' | value
-                    reference_is: 'center' # 'center' | 'first' | 'last'
-                    count: 'pincount' # 'pincount' | value
+                    type: grid
+                    spacing: ['$(pitch_x)', 0]
+                    reference_is: 'center'
+                    count: ['$(pin_count)', 1]
 
     PicoClasp_top_entry_2:
         series: 'Pico-Clasp'
@@ -272,19 +248,17 @@ device_definition:
             #start_from_body_side: 1.9
             width_end: 4.5
             #end_from_body_side: 2.3
-        additional_drawing:
-            -
+        additional_drawings:
+            pins:
+                type: rect
+                center: [0, 0]
+                size: [0.25, 0.5]
                 layer: 'F.Fab'
-                # thickness: 0.1 #optional parameter. If not given: take fab_line_width and silk_line_width from config file. Needed if layer not silk or fab!
-                reference_point: ['center', 0] # [x,y]: x = 'left' | 'center' | 'right' | value; y = 'top' | 'center' | 'bottom' | value; named values are relative to body
-                rectangle:
-                    size: [0.25, 0.5] # centered around reference_point
-                    # start: [-0.25, -0.25] #relative to reference_point
-                    # end: [0.25, 0.25] #relative to reference_point
                 repeat:
-                    spacing: ['pitch', 0] # x,y= 'pitch' | value
-                    reference_is: 'center' # 'center' | 'first' | 'last'
-                    count: 'pincount' # 'pincount' | value
+                    type: grid
+                    spacing: ['$(pitch_x)', 0]
+                    reference_is: 'center'
+                    count: ['$(pin_count)', 1]
 
     PicoClasp_side_entry:
         series: 'Pico-Clasp'

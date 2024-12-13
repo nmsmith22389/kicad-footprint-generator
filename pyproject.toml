@@ -59,6 +59,7 @@ include = [
     "KicadModTree*",
     "scripts.general*",
     "scripts.tools*",
+    "scripts.tests*",
     "scripts.Packages.utils",
 ]
 
