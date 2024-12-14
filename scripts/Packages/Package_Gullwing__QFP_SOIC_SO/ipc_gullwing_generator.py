@@ -4,7 +4,7 @@ import sys
 import os
 import argparse
 import yaml
-from typing import List, Optional
+from typing import List, Optional, Union, Literal
 
 sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))  # load parent path of KicadModTree
 
@@ -17,7 +17,7 @@ from KicadModTree.nodes.specialized.Cruciform import Cruciform
 from scripts.tools.footprint_generator import FootprintGenerator
 from scripts.tools.footprint_text_fields import addTextFields
 from scripts.tools.global_config_files.global_config import GlobalConfig
-from scripts.tools.ipc_pad_size_calculators import TolerancedSize, ipc_gull_wing
+from scripts.tools.ipc_pad_size_calculators import TolerancedSize, IpcDensity, ipc_gull_wing
 from scripts.tools.geometry.bounding_box import BoundingBox
 from scripts.tools.quad_dual_pad_border import create_dual_or_quad_pad_border
 from scripts.tools import drawing_tools
@@ -28,7 +28,6 @@ from scripts.tools.declarative_def_tools import tags_properties
 from scripts.Packages.utils.ep_handling_utils import getEpRoundRadiusParams
 
 
-ipc_density = 'nominal'
 ipc_doc_file = '../ipc_definitions.yaml'
 
 DEFAULT_PASTE_COVERAGE = 0.65
@@ -119,6 +118,11 @@ class GullwingConfiguration:
     compatible_mpns: Optional[tags_properties.TagsProperties]
     additional_tags: Optional[tags_properties.TagsProperties]
 
+    lead_type: Union[Literal['gullwing', 'flat_lead']]
+    pitch: float
+    force_small_pitch_ipc_definition: bool
+    ipc_density: IpcDensity
+
     top_slug: Optional[TopSlugConfiguration]
 
     def __init__(self, spec: dict):
@@ -136,6 +140,28 @@ class GullwingConfiguration:
         self.top_slug = None
         if 'top_slug' in spec:
             self.top_slug = TopSlugConfiguration(spec['top_slug'])
+
+        self.lead_type = spec.get('lead_type', 'gullwing')
+
+        # only gullwing and flat are supported by this generator
+        if self.lead_type not in ['gullwing', 'flat_lead']:
+            raise ValueError(f"Unsupported lead type: {self.lead_type}")
+
+        self.pitch = spec["pitch"]
+
+        if self.pitch <= 0:
+            raise ValueError(f"Pitch must be positive, got {self.pitch}")
+
+        self.force_small_pitch_ipc_definition = spec.get(
+            "force_small_pitch_ipc_definition", False
+        )
+
+        if self.force_small_pitch_ipc_definition and self.lead_type != "gullwing":
+            raise ValueError(
+                f"force_small_pitch_ipc_definition is not supported for lead type: {self.lead_type}"
+            )
+
+        self.ipc_density = IpcDensity.from_str(spec.get('ipc_density', 'nominal'))
 
     @property
     def spec_dictionary(self) -> dict:
@@ -345,15 +371,18 @@ class GullwingGenerator(FootprintGenerator):
             pincount_text = '{}'.format(pincount_full)
             pincount = pincount_full
 
-        ipc_reference = 'ipc_spec_gw_large_pitch' if device_params['pitch'] >= 0.625 else 'ipc_spec_gw_small_pitch'
-        if device_params.get('force_small_pitch_ipc_definition', False):
-            ipc_reference = 'ipc_spec_gw_small_pitch'
+        if gullwing_config.lead_type == 'flat_lead':
+            ipc_reference = 'ipc_spec_flat_lead'
+        else:
+            if gullwing_config.pitch < 0.625 or gullwing_config.force_small_pitch_ipc_definition:
+                ipc_reference = 'ipc_spec_gw_small_pitch'
+            else:
+                ipc_reference = 'ipc_spec_gw_large_pitch'
 
-        used_density = device_params.get('ipc_density', ipc_density)
-        ipc_data_set = self.ipc_defintions[ipc_reference][used_density]
+        ipc_data_set = self.ipc_defintions[ipc_reference][gullwing_config.ipc_density.value]
         ipc_round_base = self.ipc_defintions[ipc_reference]['round_base']
 
-        pitch = device_params['pitch']
+        pitch = gullwing_config.pitch
 
         name_format = self.configuration['fp_name_format_string_no_trailing_zero_pincount_text']
         EP_size = {'x': 0, 'y': 0}
