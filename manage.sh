@@ -19,10 +19,11 @@ update_dev_packages() {
     pip3 install --upgrade -e '.[dev]'
 }
 
-pep8_check() {
+fp_format_check() {
     echo ''
-    echo '[!] Running pep8 check'
-    pycodestyle --max-line-length=120 "$KICADMODTREE_DIR/" \
+    echo '[!] Running footprint formatting check'
+    pycodestyle --max-line-length=120 \
+        "$KICADMODTREE_DIR/" \
         "scripts/tools/geometry"
 }
 
@@ -35,7 +36,7 @@ flake8_check() {
 
 unit_tests() {
     echo ''
-    echo '[!] Running unit tests'
+    echo '[!] Running footprint unit tests'
     python3 -m pytest
 }
 
@@ -44,10 +45,19 @@ py_test_coverage() {
     PYTHONPATH=`pwd` python3 -m nose2 -C --coverage "$KICADMODTREE_DIR" --coverage-report term-missing -s "$KICADMODTREE_DIR/tests"
 }
 
+3d_format_check() {
+    echo ''
+    echo '[!] Running 3D formatting check'
+    cd '3d-model-generators'
+    python -m isort .
+    black .
+}
+
 tests() {
     set -e
     unit_tests
-    pep8_check
+    fp_format_check
+    # 3d_format_check
     set +e
 }
 

@@ -1,24 +1,24 @@
-image: python:3.10-slim
-
-stages:
-- basic
-- generate
-
 variables:
   PYTHONUNBUFFERED: "1"
 
-formatting:
-  stage: basic
+3d-formatting:
+  stage: Static Analysis
+  needs: []
+  only:
+    refs:
+      - merge_requests
   before_script:
+    - python --version
     - python -m pip install --upgrade pip
-    - pip install black isort
+    - pip install -e '.[dev]'
   script:
-    - python -m isort .
-    - black .
+    - ./manage.sh 3d_format_check
 
 .model:
-  stage: generate
+  stage: 3D Generate
   needs: []
+  rules:
+    - when: manual
   before_script:
     - apt-get update -q -y
     - apt-get install -y libgl1-mesa-glx git fontconfig
@@ -27,21 +27,20 @@ formatting:
   #  - apt-get install -y build-essential libgl1-mesa-glx kicad
     - python --version
     - python -m pip install --upgrade pip
-    - pip install virtualenv
-    - virtualenv venv
-    - source venv/bin/activate
-    - pip install -r requirements.txt
+    - pip install -e '.[3d]'
   script:
+    - cd '3d-model-generators'
     - ./generator.py --output_dir ./3dmodels --library $library --enable-vrml True
     # - sudo find / -iname 3dmodels > models_location.txt
     # - ./validator.py --unvalidated_dir /tmp/3dmodels --validated_dir /usr/share/kicad/3dmodels/ > audit_log.txt
     # - cat ./audit_log.txt
   artifacts:
     paths:
-      - 3dmodels
+      - 3d-model-generators/3dmodels
       # - models_location.txt
       # - audit_log.txt
-  when: manual
+  # Avoid hanging the status of the pipeline on the success of this job
+  allow_failure: true
 
 .model_with_packages:
   extends:

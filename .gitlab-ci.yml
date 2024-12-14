@@ -1,10 +1,14 @@
-image: "python:3.8"
+image: python:3.10-slim
 
 stages:
   - Static Analysis
   - Test
+  # Separate FP and model generate stages, so the FP job isn't
+  # overwhelmed by the 3D model (manual) jobs.
+  - Footprint Generate
+  - 3D Generate
 
-pep8:
+fp-formatting:
   stage: Static Analysis
   needs: []
   only:
@@ -15,17 +19,17 @@ pep8:
     - python -m pip install --upgrade pip
     - pip install .[dev]
   script:
-    - pycodestyle --max-line-length=120
-      "KicadModTree/"
-      "scripts/tools/geometry"
+    - ./manage.sh fp_format_check
 
-pytest:
+fp-test:
   stage: Test
   needs: []
   only:
     refs:
       - merge_requests
-
+    changes:
+    - KicadModTree/**
+    - scripts/**
   before_script:
     - python --version
     - python -m pip install --upgrade pip
@@ -37,8 +41,8 @@ pytest:
     reports:
       junit: report.xml
 
-generate:
-  stage: Test
+fp-generate:
+  stage: Footprint Generate
   needs: []
   only:
     refs:
@@ -63,7 +67,7 @@ generate:
       - footprints.tar.xz
     when: always
 
-generate-and-compare:
+fp-generate-and-compare:
   stage: Test
   needs: []
   only:
@@ -121,3 +125,6 @@ generate-and-compare:
   environment:
     name: review/$CI_COMMIT_REF_NAME
     url: $DYNAMIC_ENVIRONMENT_URL
+
+# Include the 3d-model-generators pipelines
+include: '3d-model-generators/.gitlab-ci.yml'
