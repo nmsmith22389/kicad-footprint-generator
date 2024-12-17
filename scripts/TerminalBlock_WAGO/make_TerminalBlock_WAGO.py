@@ -15,19 +15,25 @@ from KicadModTree import *  # NOQA
 from footprint_scripts_terminal_blocks import *
 
 
-
-
+# These terminal blocks can be split and joined as needed to make terminal strips
+# of any length, the last terminal in the row usually gets a cover plate.
+# They are usually sold as loose terminals and cover plates but can be ordered
+# as pre-assembled strips of various terminal counts as well. Not all the types
+# are available in all pre-assembled sizes, though.
+# The 804-xx series seems to be sold only pre-assembled in strips of two terminals
+# and more (12/2024).
 
 if __name__ == '__main__':
 
     script_generated_note="script-generated using https://gitlab.com/kicad/libraries/kicad-footprint-generator/-/tree/master/scripts/TerminalBlock_WAGO";
     classname="TerminalBlock_WAGO"
-    
-    
 
-   
-    
-    pins=[1,2,3,4,5,6,7,8,9,10,11,12,16,24]
+
+
+
+    # 2 through 12 is available from WAGO as of 2024
+    # 1, 16, 24 used to be in the library in addition
+    pins=[ *range(2, 1+12), 1, 16, 24 ]
     rm=7.5
     package_height=15
     leftbottom_offset=[2.75, 6.7, 3.75]
@@ -61,9 +67,9 @@ if __name__ == '__main__':
         webpage="";
         classname_description="Terminal Block WAGO {0}".format(name);
         footprint_name="TerminalBlock_WAGO_{0}_1x{2:02}_P{1:3.2f}mm_45Degree".format(name, rm, p)
-        makeTerminalBlock45Degree(footprint_name=footprint_name, 
-                                  pins=p, rm=rm, 
-                                  package_height=package_height, leftbottom_offset=leftbottom_offset, 
+        makeTerminalBlock45Degree(footprint_name=footprint_name,
+                                  pins=p, rm=rm,
+                                  package_height=package_height, leftbottom_offset=leftbottom_offset,
                                   ddrill=ddrill, pad=pad, vsegment_lines_offset=vsegment_lines_offset,
                                   opening=opening, opening_xoffset=opening_xoffset, opening_yoffset=opening_yoffset, opening_elliptic=opening_elliptic,
                                   bevel_height=bevel_height, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset, fifthHoleDiameter=fifthHoleDiameter,fifthHoleOffset=fifthHoleOffset,
@@ -72,11 +78,10 @@ if __name__ == '__main__':
                                   nibbleSize=nibbleSize, nibblePos=nibblePos, fabref_offset=fabref_offset,
                                   tags_additional=[], lib_name="${KICAD8_3DMODEL_DIR}/"+classname, classname=classname, classname_description=classname_description, webpage=webpage, script_generated_note=script_generated_note)
 
-     
-     
 
-    
-    pins=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,24]
+    # 2 through 16 is available from WAGO as of 2024
+    # 1, 24 used to be in the library in addition
+    pins=[ *range(2, 1+16), 1, 24 ]
     rm=5
     package_height=15
     leftbottom_offset=[2.75, 6.7, 3.75]
@@ -110,9 +115,9 @@ if __name__ == '__main__':
         webpage="";
         classname_description="Terminal Block WAGO {0}".format(name);
         footprint_name="TerminalBlock_WAGO_{0}_1x{2:02}_P{1:3.2f}mm_45Degree".format(name, rm, p)
-        makeTerminalBlock45Degree(footprint_name=footprint_name, 
-                                  pins=p, rm=rm, 
-                                  package_height=package_height, leftbottom_offset=leftbottom_offset, 
+        makeTerminalBlock45Degree(footprint_name=footprint_name,
+                                  pins=p, rm=rm,
+                                  package_height=package_height, leftbottom_offset=leftbottom_offset,
                                   ddrill=ddrill, pad=pad,  vsegment_lines_offset=vsegment_lines_offset,
                                   opening=opening, opening_xoffset=opening_xoffset, opening_yoffset=opening_yoffset, opening_elliptic=opening_elliptic,
                                   bevel_height=bevel_height, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset, fifthHoleDiameter=fifthHoleDiameter,fifthHoleOffset=fifthHoleOffset,
@@ -122,7 +127,11 @@ if __name__ == '__main__':
                                   tags_additional=[], lib_name="${KICAD8_3DMODEL_DIR}/"+classname, classname=classname, classname_description=classname_description, webpage=webpage, script_generated_note=script_generated_note)
 
 
-    pins=[1,2,3,4,5,6,7,8,9,12,14,16,24,36,48]
+
+
+    # Available as individual terminals
+    # Provide 1 through 16 for the sake of completeness, and 24, 36, 48  for historic reasons
+    pins=[ *range(1, 1+16), 24, 36, 48 ]
     rm=5
     package_height=14
     leftbottom_offset=[3.5, 9, 3.8]
@@ -150,29 +159,32 @@ if __name__ == '__main__':
         webpage="";
         classname_description="Terminal Block WAGO {0}".format(name);
         footprint_name="TerminalBlock_WAGO_{0}_1x{2:02}_P{1:3.2f}mm_45Degree".format(name, rm, p)
-        makeTerminalBlock45Degree(footprint_name=footprint_name, 
-                                  pins=p, rm=rm, 
-                                  package_height=package_height, leftbottom_offset=leftbottom_offset, 
-                                  ddrill=ddrill, pad=pad, 
-                                  opening=opening, opening_xoffset=opening_xoffset, opening_yoffset=opening_yoffset, 
-                                  bevel_height=bevel_height, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset, 
+        makeTerminalBlock45Degree(footprint_name=footprint_name,
+                                  pins=p, rm=rm,
+                                  package_height=package_height, leftbottom_offset=leftbottom_offset,
+                                  ddrill=ddrill, pad=pad,
+                                  opening=opening, opening_xoffset=opening_xoffset, opening_yoffset=opening_yoffset,
+                                  bevel_height=bevel_height, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset,
                                   nibbleSize=nibbleSize, nibblePos=nibblePos, fabref_offset=fabref_offset,
                                   tags_additional=[], lib_name="${KICAD8_3DMODEL_DIR}/"+classname, classname=classname, classname_description=classname_description, webpage=webpage, script_generated_note=script_generated_note)
         name="236-{0}".format(400+p);
         webpage="";
         classname_description="Terminal Block WAGO {0}".format(name);
         footprint_name="TerminalBlock_WAGO_{0}_1x{2:02}_P{1:3.2f}mm_45Degree".format(name, rm, p)
-        makeTerminalBlock45Degree(footprint_name=footprint_name, 
-                                  pins=p, rm=rm, 
-                                  package_height=package_height, leftbottom_offset=leftbottom_offset, 
-                                  ddrill=ddrill, pad=pad, 
-                                  opening=opening, opening_xoffset=opening_xoffset, opening_yoffset=opening_yoffset, 
-                                  bevel_height=bevel_height, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset, 
+        makeTerminalBlock45Degree(footprint_name=footprint_name,
+                                  pins=p, rm=rm,
+                                  package_height=package_height, leftbottom_offset=leftbottom_offset,
+                                  ddrill=ddrill, pad=pad,
+                                  opening=opening, opening_xoffset=opening_xoffset, opening_yoffset=opening_yoffset,
+                                  bevel_height=bevel_height, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset,
                                   secondDrillDiameter=secondDrillDiameter,secondDrillOffset=secondDrillOffset,secondDrillPad=secondDrillPad,
                                   nibbleSize=nibbleSize, nibblePos=nibblePos, fabref_offset=fabref_offset,
                                   tags_additional=[], lib_name="${KICAD8_3DMODEL_DIR}/"+classname, classname=classname, classname_description=classname_description, webpage=webpage, script_generated_note=script_generated_note)
 
-    pins=[1,2,3,4,5,6,7,8,9,12,16,24]
+
+    # Available as individual terminals
+    # Provide 1 through 16 for the sake of completeness, and 24 for historic reasons
+    pins=[ *range(1, 1+16), 24 ]
     rm=7.5
     package_height=14
     leftbottom_offset=[3.5, 9, 6.3]
@@ -200,29 +212,31 @@ if __name__ == '__main__':
         webpage="";
         classname_description="Terminal Block WAGO {0}".format(name);
         footprint_name="TerminalBlock_WAGO_{0}_1x{2:02}_P{1:3.2f}mm_45Degree".format(name, rm, p)
-        makeTerminalBlock45Degree(footprint_name=footprint_name, 
-                                  pins=p, rm=rm, 
-                                  package_height=package_height, leftbottom_offset=leftbottom_offset, 
-                                  ddrill=ddrill, pad=pad, 
-                                  opening=opening, opening_xoffset=opening_xoffset, opening_yoffset=opening_yoffset, 
-                                  bevel_height=bevel_height, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset, 
+        makeTerminalBlock45Degree(footprint_name=footprint_name,
+                                  pins=p, rm=rm,
+                                  package_height=package_height, leftbottom_offset=leftbottom_offset,
+                                  ddrill=ddrill, pad=pad,
+                                  opening=opening, opening_xoffset=opening_xoffset, opening_yoffset=opening_yoffset,
+                                  bevel_height=bevel_height, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset,
                                   nibbleSize=nibbleSize, nibblePos=nibblePos, fabref_offset=fabref_offset,
                                   tags_additional=[], lib_name="${KICAD8_3DMODEL_DIR}/"+classname, classname=classname, classname_description=classname_description, webpage=webpage, script_generated_note=script_generated_note)
         name="236-{0}".format(500+p);
         webpage="";
         classname_description="Terminal Block WAGO {0}".format(name);
         footprint_name="TerminalBlock_WAGO_{0}_1x{2:02}_P{1:3.2f}mm_45Degree".format(name, rm, p)
-        makeTerminalBlock45Degree(footprint_name=footprint_name, 
-                                  pins=p, rm=rm, 
-                                  package_height=package_height, leftbottom_offset=leftbottom_offset, 
-                                  ddrill=ddrill, pad=pad, 
-                                  opening=opening, opening_xoffset=opening_xoffset, opening_yoffset=opening_yoffset, 
-                                  bevel_height=bevel_height, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset, 
+        makeTerminalBlock45Degree(footprint_name=footprint_name,
+                                  pins=p, rm=rm,
+                                  package_height=package_height, leftbottom_offset=leftbottom_offset,
+                                  ddrill=ddrill, pad=pad,
+                                  opening=opening, opening_xoffset=opening_xoffset, opening_yoffset=opening_yoffset,
+                                  bevel_height=bevel_height, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset,
                                   secondDrillDiameter=secondDrillDiameter,secondDrillOffset=secondDrillOffset,secondDrillPad=secondDrillPad,
                                   nibbleSize=nibbleSize, nibblePos=nibblePos, fabref_offset=fabref_offset,
                                   tags_additional=[], lib_name="${KICAD8_3DMODEL_DIR}/"+classname, classname=classname, classname_description=classname_description, webpage=webpage, script_generated_note=script_generated_note)
 
-    pins=[1,2,3,4,5,6,8,9,12,16,24]
+    # Available as individual terminals
+    # Provide 1 through 16 for the sake of completeness, and 24 for historic reasons
+    pins=[ *range(1, 1+16), 24 ]
     rm=10
     package_height=14
     leftbottom_offset=[3.5, 9, 8.8]
@@ -250,24 +264,24 @@ if __name__ == '__main__':
         webpage="";
         classname_description="Terminal Block WAGO {0}".format(name);
         footprint_name="TerminalBlock_WAGO_{0}_1x{2:02}_P{1:3.2f}mm_45Degree".format(name, rm, p)
-        makeTerminalBlock45Degree(footprint_name=footprint_name, 
-                                  pins=p, rm=rm, 
-                                  package_height=package_height, leftbottom_offset=leftbottom_offset, 
-                                  ddrill=ddrill, pad=pad, 
-                                  opening=opening, opening_xoffset=opening_xoffset, opening_yoffset=opening_yoffset, 
-                                  bevel_height=bevel_height, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset, 
+        makeTerminalBlock45Degree(footprint_name=footprint_name,
+                                  pins=p, rm=rm,
+                                  package_height=package_height, leftbottom_offset=leftbottom_offset,
+                                  ddrill=ddrill, pad=pad,
+                                  opening=opening, opening_xoffset=opening_xoffset, opening_yoffset=opening_yoffset,
+                                  bevel_height=bevel_height, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset,
                                   nibbleSize=nibbleSize, nibblePos=nibblePos, fabref_offset=fabref_offset,
                                   tags_additional=[], lib_name="${KICAD8_3DMODEL_DIR}/"+classname, classname=classname, classname_description=classname_description, webpage=webpage, script_generated_note=script_generated_note)
         name="236-{0}".format(600+p);
         webpage="";
         classname_description="Terminal Block WAGO {0}".format(name);
         footprint_name="TerminalBlock_WAGO_{0}_1x{2:02}_P{1:3.2f}mm_45Degree".format(name, rm, p)
-        makeTerminalBlock45Degree(footprint_name=footprint_name, 
-                                  pins=p, rm=rm, 
-                                  package_height=package_height, leftbottom_offset=leftbottom_offset, 
-                                  ddrill=ddrill, pad=pad, 
-                                  opening=opening, opening_xoffset=opening_xoffset, opening_yoffset=opening_yoffset, 
-                                  bevel_height=bevel_height, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset, 
+        makeTerminalBlock45Degree(footprint_name=footprint_name,
+                                  pins=p, rm=rm,
+                                  package_height=package_height, leftbottom_offset=leftbottom_offset,
+                                  ddrill=ddrill, pad=pad,
+                                  opening=opening, opening_xoffset=opening_xoffset, opening_yoffset=opening_yoffset,
+                                  bevel_height=bevel_height, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset,
                                   secondDrillDiameter=secondDrillDiameter,secondDrillOffset=secondDrillOffset,secondDrillPad=secondDrillPad,
                                   nibbleSize=nibbleSize, nibblePos=nibblePos, fabref_offset=fabref_offset,
                                   tags_additional=[], lib_name="${KICAD8_3DMODEL_DIR}/"+classname, classname=classname, classname_description=classname_description, webpage=webpage, script_generated_note=script_generated_note)
