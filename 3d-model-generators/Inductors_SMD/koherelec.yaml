@@ -1,0 +1,11 @@
+- series: MDA
+  manufacturer: KOHERelec
+  # Manufacturer page link: http://www.kohergroup.com/en/product/584.html
+  csv: koherelec_mda.csv
+  3d:
+    type: 2
+  tags:
+    - high-current
+    - power
+    - shielded
+  library_name: Inductor_SMD
