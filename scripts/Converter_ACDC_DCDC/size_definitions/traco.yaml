@@ -518,9 +518,14 @@ Converter_DCDC_TRACO_TSR0.6-48xxWI_TSR0.6-48xxxWI_THT:
 
 Converter_DCDC_TRACO_TEN10-110xxWIRH_THT:
   library_name: 'Converter_DCDC'
-  description: "DCDC-Converter, TRACO, TEN 10-110xxWIRH, 10W, Rev. December 4. 2024"
+  description: "DCDC-Converter, TRACO, TEN 10-110xxWIRH, 10W, Rev. December 16. 2024"
   datasheet: "https://www.tracopower.com/products/ten10wirh.pdf"
-  tags: "DCDC-Converter TRACO TEN10WIRH THT DIP-24"
+  tags: "DCDC-Converter TRACO TEN10WIRH THT DIP-24 COMPATIBLE_MPNS TEN3WIRH TEN6WIRH"
+  #compatible_mpns:
+    # https://www.tracopower.com/products/ten3wirh.pdf
+    #- TEN 3WIRH
+    # https://www.tracopower.com/products/ten6wirh.pdf
+    #- TEN 6WIRH
   extratexts: []
   at: [-2.53, 2]
   size: [20.3, 31.8]
