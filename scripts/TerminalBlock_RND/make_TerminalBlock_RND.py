@@ -39,19 +39,19 @@ if __name__ == '__main__':
     fourthHoleDiameter=0
     fourthHoleOffset=[0,0]
     fabref_offset=[0,3]
-    nibbleSize=[]
-    nibblePos=[]
+    nibbleSize = None
+    nibblePos = None
     for p in pins:
-        makeTerminalBlockVertical(footprint_name="TerminalBlock_RND_205-{0:05}_1x{2:02}_P{1:3.2f}mm_Vertical".format(274+p, rm, p), 
-                                  pins=p, rm=rm, 
-                                  package_height=package_height, leftbottom_offset=leftbottom_offset, 
-                                  ddrill=ddrill, pad=pad, 
-                                  opening=opening, opening_yoffset=opening_yoffset, 
-                                  bevel_height=bevel_height, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset, 
+        makeTerminalBlockVertical(footprint_name="TerminalBlock_RND_205-{0:05}_1x{2:02}_P{1:3.2f}mm_Vertical".format(274+p, rm, p),
+                                  pins=p, rm=rm,
+                                  package_height=package_height, leftbottom_offset=leftbottom_offset,
+                                  ddrill=ddrill, pad=pad,
+                                  opening=opening, opening_yoffset=opening_yoffset,
+                                  bevel_height=bevel_height, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset,
                                   nibbleSize=nibbleSize,nibblePos=nibblePos, fabref_offset=fabref_offset,
                                   tags_additional=[], lib_name="${KICAD8_3DMODEL_DIR}/TerminalBlock_RND", classname="TerminalBlock_RND", classname_description="terminal block RND 205-{0:05}".format(76+p), webpage="http://cdn-reichelt.de/documents/datenblatt/C151/RND_205-00276_DB_EN.pdf", script_generated_note=script_generated_note)
 
-    
+
     pins=range(2,12+1)
     rm=5.08
     package_height=10.6
@@ -68,23 +68,23 @@ if __name__ == '__main__':
     thirdHoleOffset=[0,0]
     fourthHoleDiameter=0
     fourthHoleOffset=[0,0]
-    nibbleSize=[]#[0.6,1.2]
-    nibblePos=[]#[-nibbleSize[0],0.25]
+    nibbleSize = None  # [0.6,1.2]
+    nibblePos = None  # [-nibbleSize[0],0.25]
     fabref_offset=0
     for p in pins:
         name="205-{0:05}".format(285+p)
         footprint_name="TerminalBlock_RND_{0}_1x{2:02}_P{1:3.2f}mm_Horizontal".format(name, rm, p)
         classname_description="terminal block RND {0}".format(name)
         webpage="http://cdn-reichelt.de/documents/datenblatt/C151/RND_205-00287_DB_EN.pdf"
-        makeTerminalBlockStd(footprint_name=footprint_name, 
-                                  pins=p, rm=rm, 
-                                  package_height=package_height, leftbottom_offset=leftbottom_offset, 
-                                  ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, bevel_height=bevel_height, slit_screw=slit_screw, screw_pin_offset=screw_pin_offset, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset, 
+        makeTerminalBlockStd(footprint_name=footprint_name,
+                                  pins=p, rm=rm,
+                                  package_height=package_height, leftbottom_offset=leftbottom_offset,
+                                  ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, bevel_height=bevel_height, slit_screw=slit_screw, screw_pin_offset=screw_pin_offset, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset,
                                   nibbleSize=nibbleSize, nibblePos=nibblePos, fabref_offset=fabref_offset,
                                   tags_additional=[], lib_name='${KICAD8_3DMODEL_DIR}/'+classname, classname=classname, classname_description=classname_description,
                                   webpage=webpage, script_generated_note=script_generated_note)
 
-                                  
+
     pins=range(2,12+1)
     rm=5
     package_height=8.1
@@ -102,17 +102,17 @@ if __name__ == '__main__':
     fourthHoleDiameter=0
     fourthHoleOffset=[rm/2,-(package_height-leftbottom_offset[1])+secondHoleDiameter[1]/2]
     fabref_offset=0
-    nibbleSize=[]
-    nibblePos=[]
+    nibbleSize = None
+    nibblePos = None
     for p in pins:
         name="205-{0:05}".format(43+p)
         footprint_name="TerminalBlock_RND_{0}_1x{2:02}_P{1:3.2f}mm_Horizontal".format(name, rm, p)
         classname_description="terminal block RND {0}".format(name)
         webpage="http://cdn-reichelt.de/documents/datenblatt/C151/RND_205-00045_DB_EN.pdf"
-        makeTerminalBlockStd(footprint_name=footprint_name, 
-                                  pins=p, rm=rm, 
-                                  package_height=package_height, leftbottom_offset=leftbottom_offset, 
-                                  ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, bevel_height=bevel_height, slit_screw=slit_screw, screw_pin_offset=screw_pin_offset, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset, 
+        makeTerminalBlockStd(footprint_name=footprint_name,
+                                  pins=p, rm=rm,
+                                  package_height=package_height, leftbottom_offset=leftbottom_offset,
+                                  ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, bevel_height=bevel_height, slit_screw=slit_screw, screw_pin_offset=screw_pin_offset, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset,
                                   nibbleSize=nibbleSize, nibblePos=nibblePos, fabref_offset=fabref_offset,
                                   tags_additional=[], lib_name='${KICAD8_3DMODEL_DIR}/'+classname, classname=classname, classname_description=classname_description,
                                   webpage=webpage, script_generated_note=script_generated_note)
@@ -144,16 +144,16 @@ if __name__ == '__main__':
     secondEllipseSize=[3.2,2.5]
     secondEllipseOffset=[0,-4.7]
     fabref_offset=[0,-1]
-    nibbleSize=[]
-    nibblePos=[]
+    nibbleSize = None
+    nibblePos = None
     for p in pins:
         name="205-{0:05}".format(54+p)
         footprint_name="TerminalBlock_RND_{0}_1x{2:02}_P{1:3.2f}mm_45Degree".format(name, rm, p)
         classname_description="terminal block RND {0}".format(name)
         webpage="http://cdn-reichelt.de/documents/datenblatt/C151/RND_205-00056_DB_EN.pdf"
-        makeTerminalBlock45Degree(footprint_name=footprint_name, 
-                                  pins=p, rm=rm, 
-                                  package_height=package_height, leftbottom_offset=leftbottom_offset, 
+        makeTerminalBlock45Degree(footprint_name=footprint_name,
+                                  pins=p, rm=rm,
+                                  package_height=package_height, leftbottom_offset=leftbottom_offset,
                                   ddrill=ddrill, pad=pad,  vsegment_lines_offset=vsegment_lines_offset,
                                   opening=opening, opening_xoffset=opening_xoffset, opening_yoffset=opening_yoffset, opening_elliptic=opening_elliptic,
                                   bevel_height=bevel_height, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset, fifthHoleDiameter=fifthHoleDiameter,fifthHoleOffset=fifthHoleOffset,
@@ -161,7 +161,7 @@ if __name__ == '__main__':
                                   secondEllipseSize=secondEllipseSize,secondEllipseOffset=secondEllipseOffset,
                                   nibbleSize=nibbleSize, nibblePos=nibblePos, fabref_offset=fabref_offset,
                                   tags_additional=[], lib_name="${KICAD8_3DMODEL_DIR}/"+classname, classname=classname, classname_description=classname_description, webpage=webpage, script_generated_note=script_generated_note)
-   
+
     pins=range(2,12+1)
     rm=10
     package_height=10.3
@@ -179,22 +179,22 @@ if __name__ == '__main__':
     fourthHoleDiameter=[2.5,1]
     fourthHoleOffset=[rm/2,-(package_height-leftbottom_offset[1])+secondHoleDiameter[1]/2]
     fabref_offset=[0,3]
-    nibbleSize=[]
-    nibblePos=[]
+    nibbleSize = None
+    nibblePos = None
     for p in pins:
         name="205-{0:05}".format(76+p)
         footprint_name="TerminalBlock_RND_{0}_1x{2:02}_P{1:3.2f}mm_Horizontal".format(name, rm, p)
         classname_description="terminal block RND {0}".format(name)
         webpage="http://cdn-reichelt.de/documents/datenblatt/C151/RND_205-00078_DB_EN.pdf"
-        makeTerminalBlockStd(footprint_name=footprint_name, 
-                                  pins=p, rm=rm, 
-                                  package_height=package_height, leftbottom_offset=leftbottom_offset, 
-                                  ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, bevel_height=bevel_height, slit_screw=slit_screw, screw_pin_offset=screw_pin_offset, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset, 
+        makeTerminalBlockStd(footprint_name=footprint_name,
+                                  pins=p, rm=rm,
+                                  package_height=package_height, leftbottom_offset=leftbottom_offset,
+                                  ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, bevel_height=bevel_height, slit_screw=slit_screw, screw_pin_offset=screw_pin_offset, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset,
                                   nibbleSize=nibbleSize, nibblePos=nibblePos, fabref_offset=fabref_offset,
                                   tags_additional=[], lib_name='${KICAD8_3DMODEL_DIR}/'+classname, classname=classname, classname_description=classname_description,
                                   webpage=webpage, script_generated_note=script_generated_note)
 
-    
+
     pins=range(2,12+1)
     rm=7.5
     package_height=10.3
@@ -212,22 +212,22 @@ if __name__ == '__main__':
     fourthHoleDiameter=0
     fourthHoleOffset=[rm/2,-(package_height-leftbottom_offset[1])+secondHoleDiameter[1]/2]
     fabref_offset=[0,3]
-    nibbleSize=[]
-    nibblePos=[]
+    nibbleSize = None
+    nibblePos = None
     for p in pins:
         name="205-{0:05}".format(65+p)
         footprint_name="TerminalBlock_RND_{0}_1x{2:02}_P{1:3.2f}mm_Horizontal".format(name, rm, p)
         classname_description="terminal block RND {0}".format(name)
         webpage="http://cdn-reichelt.de/documents/datenblatt/C151/RND_205-00067_DB_EN.pdf"
-        makeTerminalBlockStd(footprint_name=footprint_name, 
-                                  pins=p, rm=rm, 
-                                  package_height=package_height, leftbottom_offset=leftbottom_offset, 
-                                  ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, bevel_height=bevel_height, slit_screw=slit_screw, screw_pin_offset=screw_pin_offset, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset, 
+        makeTerminalBlockStd(footprint_name=footprint_name,
+                                  pins=p, rm=rm,
+                                  package_height=package_height, leftbottom_offset=leftbottom_offset,
+                                  ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, bevel_height=bevel_height, slit_screw=slit_screw, screw_pin_offset=screw_pin_offset, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset,
                                   nibbleSize=nibbleSize, nibblePos=nibblePos, fabref_offset=fabref_offset,
                                   tags_additional=[], lib_name='${KICAD8_3DMODEL_DIR}/'+classname, classname=classname, classname_description=classname_description,
                                   webpage=webpage, script_generated_note=script_generated_note)
 
-                                  
+
     pins=range(2,12+1)
     rm=10
     package_height=8.1
@@ -245,22 +245,22 @@ if __name__ == '__main__':
     fourthHoleDiameter=[2.5,1]
     fourthHoleOffset=[rm/2,-(package_height-leftbottom_offset[1])+secondHoleDiameter[1]/2]
     fabref_offset=0
-    nibbleSize=[]
-    nibblePos=[]
+    nibbleSize = None
+    nibblePos = None
     for p in pins:
         name="205-{0:05}".format(296+p)
         footprint_name="TerminalBlock_RND_{0}_1x{2:02}_P{1:3.2f}mm_Horizontal".format(name, rm, p)
         classname_description="terminal block RND {0}".format(name)
         webpage="http://cdn-reichelt.de/documents/datenblatt/C151/RND_205-00298_DB_EN.pdf"
-        makeTerminalBlockStd(footprint_name=footprint_name, 
-                                  pins=p, rm=rm, 
-                                  package_height=package_height, leftbottom_offset=leftbottom_offset, 
-                                  ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, bevel_height=bevel_height, slit_screw=slit_screw, screw_pin_offset=screw_pin_offset, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset, 
+        makeTerminalBlockStd(footprint_name=footprint_name,
+                                  pins=p, rm=rm,
+                                  package_height=package_height, leftbottom_offset=leftbottom_offset,
+                                  ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, bevel_height=bevel_height, slit_screw=slit_screw, screw_pin_offset=screw_pin_offset, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset,
                                   nibbleSize=nibbleSize, nibblePos=nibblePos, fabref_offset=fabref_offset,
                                   tags_additional=[], lib_name='${KICAD8_3DMODEL_DIR}/'+classname, classname=classname, classname_description=classname_description,
                                   webpage=webpage, script_generated_note=script_generated_note)
- 
-    
+
+
     pins=range(2,12+1)
     rm=5.08
     package_height=8.45
@@ -277,8 +277,8 @@ if __name__ == '__main__':
     thirdHoleOffset=[0,0]
     fourthHoleDiameter=0
     fourthHoleOffset=[0,0]
-    nibbleSize=[]#[0.6,1.2]
-    nibblePos=[]#[-nibbleSize[0],0.25]
+    nibbleSize = None  # [0.6,1.2]
+    nibblePos = None  # [-nibbleSize[0],0.25]
     fabref_offset=0
     for p in pins:
         name="205-{0:05}".format(230+p)
@@ -286,13 +286,13 @@ if __name__ == '__main__':
         classname_description="terminal block RND {0}".format(name)
         webpage="http://cdn-reichelt.de/documents/datenblatt/C151/RND_205-00232_DB_EN.pdf"
         makeTerminalBlockStd(footprint_name=footprint_name,
-                                  pins=p, rm=rm, 
-                                  package_height=package_height, leftbottom_offset=leftbottom_offset, 
-                                  ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, bevel_height=bevel_height, slit_screw=slit_screw, screw_pin_offset=screw_pin_offset, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset, 
+                                  pins=p, rm=rm,
+                                  package_height=package_height, leftbottom_offset=leftbottom_offset,
+                                  ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, bevel_height=bevel_height, slit_screw=slit_screw, screw_pin_offset=screw_pin_offset, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset,
                                   nibbleSize=nibbleSize, nibblePos=nibblePos, fabref_offset=fabref_offset,
                                   tags_additional=[], lib_name='${KICAD8_3DMODEL_DIR}/'+classname, classname=classname, classname_description=classname_description,
                                   webpage=webpage, script_generated_note=script_generated_note)
-    
+
     pins=range(2,12+1)
     rm=5
     package_height=7.6
@@ -309,23 +309,23 @@ if __name__ == '__main__':
     thirdHoleOffset=[0,0]
     fourthHoleDiameter=0
     fourthHoleOffset=[0,0]
-    nibbleSize=[]#[0.6,1.2]
-    nibblePos=[]#[-nibbleSize[0],0.25]
+    nibbleSize = None  # [0.6,1.2]
+    nibblePos = None  # [-nibbleSize[0],0.25]
     fabref_offset=0
     for p in pins:
         name="205-{0:05}".format(10+p)
         footprint_name="TerminalBlock_RND_{0}_1x{2:02}_P{1:3.2f}mm_Horizontal".format(name, rm, p)
         classname_description="terminal block RND {0}".format(name)
         webpage="http://cdn-reichelt.de/documents/datenblatt/C151/RND_205-00012_DB_EN.pdf"
-        makeTerminalBlockStd(footprint_name=footprint_name, 
-                                  pins=p, rm=rm, 
-                                  package_height=package_height, leftbottom_offset=leftbottom_offset, 
-                                  ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, bevel_height=bevel_height, slit_screw=slit_screw, screw_pin_offset=screw_pin_offset, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset, 
+        makeTerminalBlockStd(footprint_name=footprint_name,
+                                  pins=p, rm=rm,
+                                  package_height=package_height, leftbottom_offset=leftbottom_offset,
+                                  ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, bevel_height=bevel_height, slit_screw=slit_screw, screw_pin_offset=screw_pin_offset, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset,
                                   nibbleSize=nibbleSize, nibblePos=nibblePos, fabref_offset=fabref_offset,
                                   tags_additional=[], lib_name='${KICAD8_3DMODEL_DIR}/'+classname, classname=classname, classname_description=classname_description,
                                   webpage=webpage, script_generated_note=script_generated_note)
 
-                                  
+
     pins=range(2,12+1)
     rm=10.16
     package_height=8.3
@@ -343,17 +343,17 @@ if __name__ == '__main__':
     fourthHoleDiameter=secondHoleDiameter
     fourthHoleOffset=[rm/2,secondHoleOffset[1]]
     fabref_offset=0 #[0,2.5]
-    nibbleSize=[]
-    nibblePos=[]
+    nibbleSize = None
+    nibblePos = None
     for p in pins:
         name="205-{0:05}".format(239+p)
         footprint_name="TerminalBlock_RND_{0}_1x{2:02}_P{1:3.2f}mm_Horizontal".format(name, rm, p)
         classname_description="terminal block RND {0}".format(name)
         webpage="http://cdn-reichelt.de/documents/datenblatt/C151/RND_205-00023_DB_EN.pdf"
-        makeTerminalBlockStd(footprint_name=footprint_name, 
-                                  pins=p, rm=rm, 
-                                  package_height=package_height, leftbottom_offset=leftbottom_offset, 
-                                  ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, bevel_height=bevel_height, slit_screw=slit_screw, screw_pin_offset=screw_pin_offset, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset, 
+        makeTerminalBlockStd(footprint_name=footprint_name,
+                                  pins=p, rm=rm,
+                                  package_height=package_height, leftbottom_offset=leftbottom_offset,
+                                  ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, bevel_height=bevel_height, slit_screw=slit_screw, screw_pin_offset=screw_pin_offset, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset,
                                   nibbleSize=nibbleSize, nibblePos=nibblePos, fabref_offset=fabref_offset,
                                   tags_additional=[], lib_name='${KICAD8_3DMODEL_DIR}/'+classname, classname=classname, classname_description=classname_description,
                                   webpage=webpage, script_generated_note=script_generated_note)
@@ -375,22 +375,22 @@ if __name__ == '__main__':
     fourthHoleDiameter=0
     fourthHoleOffset=[0,0]
     fabref_offset=0 #[0,3.8]
-    nibbleSize=[]
-    nibblePos=[]
+    nibbleSize = None
+    nibblePos = None
     for p in pins:
         name="205-{0:05}".format(p-1)
         footprint_name="TerminalBlock_RND_{0}_1x{2:02}_P{1:3.2f}mm_Horizontal".format(name, rm, p)
         classname_description="terminal block RND {0}".format(name)
         webpage="http://cdn-reichelt.de/documents/datenblatt/C151/RND_205-00001_DB_EN.pdf"
-        makeTerminalBlockStd(footprint_name=footprint_name, 
-                                  pins=p, rm=rm, 
-                                  package_height=package_height, leftbottom_offset=leftbottom_offset, 
-                                  ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, bevel_height=bevel_height, slit_screw=slit_screw, screw_pin_offset=screw_pin_offset, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset, 
+        makeTerminalBlockStd(footprint_name=footprint_name,
+                                  pins=p, rm=rm,
+                                  package_height=package_height, leftbottom_offset=leftbottom_offset,
+                                  ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, bevel_height=bevel_height, slit_screw=slit_screw, screw_pin_offset=screw_pin_offset, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset,
                                   nibbleSize=nibbleSize, nibblePos=nibblePos, fabref_offset=fabref_offset,
                                   tags_additional=[], lib_name='${KICAD8_3DMODEL_DIR}/'+classname, classname=classname, classname_description=classname_description,
                                   webpage=webpage, script_generated_note=script_generated_note)
 
-                                  
+
     pins=range(2,12+1)
     rm=10
     package_height=9
@@ -408,17 +408,17 @@ if __name__ == '__main__':
     fourthHoleDiameter=1.8
     fourthHoleOffset=[rm/2,-3]
     fabref_offset=[0,3.8]
-    nibbleSize=[]
-    nibblePos=[]
+    nibbleSize = None
+    nibblePos = None
     for p in pins:
         name="205-{0:05}".format(21+p)
         footprint_name="TerminalBlock_RND_{0}_1x{2:02}_P{1:3.2f}mm_Horizontal".format(name, rm, p)
         classname_description="terminal block RND {0}".format(name)
         webpage="http://cdn-reichelt.de/documents/datenblatt/C151/RND_205-00023_DB_EN.pdf"
-        makeTerminalBlockStd(footprint_name=footprint_name, 
-                                  pins=p, rm=rm, 
-                                  package_height=package_height, leftbottom_offset=leftbottom_offset, 
-                                  ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, bevel_height=bevel_height, slit_screw=slit_screw, screw_pin_offset=screw_pin_offset, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset, 
+        makeTerminalBlockStd(footprint_name=footprint_name,
+                                  pins=p, rm=rm,
+                                  package_height=package_height, leftbottom_offset=leftbottom_offset,
+                                  ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, bevel_height=bevel_height, slit_screw=slit_screw, screw_pin_offset=screw_pin_offset, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset,
                                   nibbleSize=nibbleSize, nibblePos=nibblePos, fabref_offset=fabref_offset,
                                   tags_additional=[], lib_name='${KICAD8_3DMODEL_DIR}/'+classname, classname=classname, classname_description=classname_description,
                                   webpage=webpage, script_generated_note=script_generated_note)

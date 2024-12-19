@@ -22,7 +22,7 @@ if __name__ == '__main__':
 
     script_generated_note="script-generated using https://gitlab.com/kicad/libraries/kicad-footprint-generator/-/tree/master/scripts/TerminalBlock_MetzConnect";
     classname="TerminalBlock_MetzConnect"
-        
+
     pins=[2,3,4,5,6]
     rm=5
     package_height=12.5
@@ -50,16 +50,16 @@ if __name__ == '__main__':
     secondEllipseSize=[3.6,2.8]
     secondEllipseOffset=[0,-4.4]
     fabref_offset=[0,-1]
-    nibbleSize=[]
-    nibblePos=[]
+    nibbleSize = None
+    nibblePos = None
     for p in pins:
         name="Type205_RT045{0:02}UBLC".format(p)
         webpage="http://www.metz-connect.com/de/system/files/productfiles/Datenblatt_312051_RT045xxUBLC_OFF-022759T.pdf"
         footprint_name="TerminalBlock_MetzConnect_{0}_1x{2:02}_P{1:3.2f}mm_45Degree".format(name, rm, p)
         classname_description="terminal block Metz Connect {0}".format(name, rm)
-        makeTerminalBlock45Degree(footprint_name=footprint_name, 
-                                  pins=p, rm=rm, 
-                                  package_height=package_height, leftbottom_offset=leftbottom_offset, 
+        makeTerminalBlock45Degree(footprint_name=footprint_name,
+                                  pins=p, rm=rm,
+                                  package_height=package_height, leftbottom_offset=leftbottom_offset,
                                   ddrill=ddrill, pad=pad,  vsegment_lines_offset=vsegment_lines_offset,
                                   opening=opening, opening_xoffset=opening_xoffset, opening_yoffset=opening_yoffset, opening_elliptic=opening_elliptic,
                                   bevel_height=bevel_height, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset, fifthHoleDiameter=fifthHoleDiameter,fifthHoleOffset=fifthHoleOffset,
@@ -85,19 +85,19 @@ if __name__ == '__main__':
     fourthHoleDiameter=0
     fourthHoleOffset=[0,0]
     fabref_offset=[0,2.45]
-    nibbleSize=[]
-    nibblePos=[]
+    nibbleSize = None
+    nibblePos = None
     for p in pins:
         name="Type086_RT034{0:02}HBLC".format(p)
         webpage="http://www.metz-connect.com/de/system/files/productfiles/Datenblatt_310861_RT034xxHBLC_OFF-026114K.pdf"
         footprint_name="TerminalBlock_MetzConnect_{0}_1x{2:02}_P{1:3.2f}mm_Horizontal".format(name, rm, p)
         classname_description="terminal block Metz Connect {0}".format(name, rm)
-        makeTerminalBlockStd(footprint_name=footprint_name, 
-                                  pins=p, rm=rm, 
-                                  package_height=package_height, leftbottom_offset=leftbottom_offset, 
-                                  ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, bevel_height=bevel_height, slit_screw=slit_screw, screw_pin_offset=screw_pin_offset, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset, 
+        makeTerminalBlockStd(footprint_name=footprint_name,
+                                  pins=p, rm=rm,
+                                  package_height=package_height, leftbottom_offset=leftbottom_offset,
+                                  ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, bevel_height=bevel_height, slit_screw=slit_screw, screw_pin_offset=screw_pin_offset, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset,
                                   nibbleSize=nibbleSize, nibblePos=nibblePos, fabref_offset=fabref_offset,
-                                  tags_additional=[], lib_name='${KICAD8_3DMODEL_DIR}/'+classname, classname=classname, classname_description=classname_description, 
+                                  tags_additional=[], lib_name='${KICAD8_3DMODEL_DIR}/'+classname, classname=classname, classname_description=classname_description,
                                   webpage=webpage, script_generated_note=script_generated_note)
 
     pins=range(2,6+1)
@@ -117,21 +117,21 @@ if __name__ == '__main__':
     fourthHoleDiameter=0
     fourthHoleOffset=[0,0]
     fabref_offset=[0,4.5]
-    nibbleSize=[]
-    nibblePos=[]
+    nibbleSize = None
+    nibblePos = None
     for p in pins:
         name="Type011_RT055{0:02}HBWC".format(p)
         webpage="http://www.metz-connect.com/de/system/files/productfiles/Datenblatt_310111_RT055xxHBLC_OFF-022717S.pdf"
         footprint_name="TerminalBlock_MetzConnect_{0}_1x{2:02}_P{1:3.2f}mm_Horizontal".format(name, rm, p)
         classname_description="terminal block Metz Connect {0}".format(name, rm)
-        makeTerminalBlockStd(footprint_name=footprint_name, 
-                                  pins=p, rm=rm, 
-                                  package_height=package_height, leftbottom_offset=leftbottom_offset, 
-                                  ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, bevel_height=bevel_height, slit_screw=slit_screw, screw_pin_offset=screw_pin_offset, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset, 
+        makeTerminalBlockStd(footprint_name=footprint_name,
+                                  pins=p, rm=rm,
+                                  package_height=package_height, leftbottom_offset=leftbottom_offset,
+                                  ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, bevel_height=bevel_height, slit_screw=slit_screw, screw_pin_offset=screw_pin_offset, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset,
                                   nibbleSize=nibbleSize, nibblePos=nibblePos, fabref_offset=fabref_offset,
-                                  tags_additional=[], lib_name='${KICAD8_3DMODEL_DIR}/'+classname, classname=classname, classname_description=classname_description, 
+                                  tags_additional=[], lib_name='${KICAD8_3DMODEL_DIR}/'+classname, classname=classname, classname_description=classname_description,
                                   webpage=webpage, script_generated_note=script_generated_note)
-                                  
+
 
     pins=range(2,5+1)
     rm=10
@@ -150,19 +150,19 @@ if __name__ == '__main__':
     fourthHoleDiameter=0
     fourthHoleOffset=[0,0]
     fabref_offset=[0,3]
-    nibbleSize=[]
-    nibblePos=[]
+    nibbleSize = None
+    nibblePos = None
     for p in pins:
         name="Type067_RT019{0:02}HDWC".format(p)
         webpage="http://www.metz-connect.com/de/system/files/productfiles/Datenblatt_310671_RT019xxHDWC_OFF-023605N.pdf"
         footprint_name="TerminalBlock_MetzConnect_{0}_1x{2:02}_P{1:3.2f}mm_Horizontal".format(name, rm, p)
         classname_description="terminal block Metz Connect {0}".format(name, rm)
-        makeTerminalBlockStd(footprint_name=footprint_name, 
-                                  pins=p, rm=rm, 
-                                  package_height=package_height, leftbottom_offset=leftbottom_offset, 
-                                  ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, bevel_height=bevel_height, slit_screw=slit_screw, screw_pin_offset=screw_pin_offset, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset, 
+        makeTerminalBlockStd(footprint_name=footprint_name,
+                                  pins=p, rm=rm,
+                                  package_height=package_height, leftbottom_offset=leftbottom_offset,
+                                  ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, bevel_height=bevel_height, slit_screw=slit_screw, screw_pin_offset=screw_pin_offset, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset,
                                   nibbleSize=nibbleSize, nibblePos=nibblePos, fabref_offset=fabref_offset,
-                                  tags_additional=[], lib_name='${KICAD8_3DMODEL_DIR}/'+classname, classname=classname, classname_description=classname_description, 
+                                  tags_additional=[], lib_name='${KICAD8_3DMODEL_DIR}/'+classname, classname=classname, classname_description=classname_description,
                                   webpage=webpage, script_generated_note=script_generated_note)
 
 
@@ -183,21 +183,21 @@ if __name__ == '__main__':
     fourthHoleDiameter=0
     fourthHoleOffset=[0,0]
     fabref_offset=[0,3.5]
-    nibbleSize=[]
-    nibblePos=[]
+    nibbleSize = None
+    nibblePos = None
     for p in pins:
         name="Type703_RT10N{0:02}HGLU".format(p)
         webpage="http://www.metz-connect.com/de/system/files/productfiles/Datenblatt_317031_RT10NxxHGLU_OFF-022897S.pdf"
         footprint_name="TerminalBlock_MetzConnect_{0}_1x{2:02}_P{1:3.2f}mm_Horizontal".format(name, rm, p)
         classname_description="terminal block Metz Connect {0}".format(name, rm)
-        makeTerminalBlockStd(footprint_name=footprint_name, 
-                                  pins=p, rm=rm, 
-                                  package_height=package_height, leftbottom_offset=leftbottom_offset, 
-                                  ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, bevel_height=bevel_height, slit_screw=slit_screw, screw_pin_offset=screw_pin_offset, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset, 
+        makeTerminalBlockStd(footprint_name=footprint_name,
+                                  pins=p, rm=rm,
+                                  package_height=package_height, leftbottom_offset=leftbottom_offset,
+                                  ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, bevel_height=bevel_height, slit_screw=slit_screw, screw_pin_offset=screw_pin_offset, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset,
                                   nibbleSize=nibbleSize, nibblePos=nibblePos, fabref_offset=fabref_offset,
-                                  tags_additional=[], lib_name='${KICAD8_3DMODEL_DIR}/'+classname, classname=classname, classname_description=classname_description, 
+                                  tags_additional=[], lib_name='${KICAD8_3DMODEL_DIR}/'+classname, classname=classname, classname_description=classname_description,
                                   webpage=webpage, script_generated_note=script_generated_note)
-  
+
     pins=range(2,6+1)
     rm=5.0
     package_height=8.3
@@ -215,19 +215,19 @@ if __name__ == '__main__':
     fourthHoleDiameter=0
     fourthHoleOffset=[0,0]
     fabref_offset=[0,2.9]
-    nibbleSize=[]
-    nibblePos=[]
+    nibbleSize = None
+    nibblePos = None
     for p in pins:
         name="Type094_RT035{0:02}HBLU".format(p)
         webpage="http://www.metz-connect.com/ru/system/files/productfiles/Data_sheet_310941_RT035xxHBLU_OFF-022742T.pdf"
         footprint_name="TerminalBlock_MetzConnect_{0}_1x{2:02}_P{1:3.2f}mm_Horizontal".format(name, rm, p)
         classname_description="terminal block Metz Connect {0}".format(name, rm)
-        makeTerminalBlockStd(footprint_name=footprint_name, 
-                                  pins=p, rm=rm, 
-                                  package_height=package_height, leftbottom_offset=leftbottom_offset, 
-                                  ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, bevel_height=bevel_height, slit_screw=slit_screw, screw_pin_offset=screw_pin_offset, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset, 
+        makeTerminalBlockStd(footprint_name=footprint_name,
+                                  pins=p, rm=rm,
+                                  package_height=package_height, leftbottom_offset=leftbottom_offset,
+                                  ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, bevel_height=bevel_height, slit_screw=slit_screw, screw_pin_offset=screw_pin_offset, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset,
                                   nibbleSize=nibbleSize, nibblePos=nibblePos, fabref_offset=fabref_offset,
-                                  tags_additional=[], lib_name='${KICAD8_3DMODEL_DIR}/'+classname, classname=classname, classname_description=classname_description, 
+                                  tags_additional=[], lib_name='${KICAD8_3DMODEL_DIR}/'+classname, classname=classname, classname_description=classname_description,
                                   webpage=webpage, script_generated_note=script_generated_note)
 
     pins=range(2,6+1)
@@ -247,19 +247,19 @@ if __name__ == '__main__':
     fourthHoleDiameter=0
     fourthHoleOffset=[0,0]
     fabref_offset=[0,3]
-    nibbleSize=[]
-    nibblePos=[]
+    nibbleSize = None
+    nibblePos = None
     for p in pins:
         name="Type101_RT016{0:02}HBWC".format(p)
         webpage="http://www.metz-connect.com/de/system/files/productfiles/Datenblatt_311011_RT016xxHBWC_OFF-022771S.pdf"
         footprint_name="TerminalBlock_MetzConnect_{0}_1x{2:02}_P{1:3.2f}mm_Horizontal".format(name, rm, p)
         classname_description="terminal block Metz Connect {0}".format(name, rm)
-        makeTerminalBlockStd(footprint_name=footprint_name, 
-                                  pins=p, rm=rm, 
-                                  package_height=package_height, leftbottom_offset=leftbottom_offset, 
-                                  ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, bevel_height=bevel_height, slit_screw=slit_screw, screw_pin_offset=screw_pin_offset, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset, 
+        makeTerminalBlockStd(footprint_name=footprint_name,
+                                  pins=p, rm=rm,
+                                  package_height=package_height, leftbottom_offset=leftbottom_offset,
+                                  ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, bevel_height=bevel_height, slit_screw=slit_screw, screw_pin_offset=screw_pin_offset, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset,
                                   nibbleSize=nibbleSize, nibblePos=nibblePos, fabref_offset=fabref_offset,
-                                  tags_additional=[], lib_name='${KICAD8_3DMODEL_DIR}/'+classname, classname=classname, classname_description=classname_description, 
+                                  tags_additional=[], lib_name='${KICAD8_3DMODEL_DIR}/'+classname, classname=classname, classname_description=classname_description,
                                   webpage=webpage, script_generated_note=script_generated_note)
 
     pins=range(2,6+1)
@@ -279,19 +279,19 @@ if __name__ == '__main__':
     fourthHoleDiameter=0
     fourthHoleOffset=[0,0]
     fabref_offset=[0,2.5]
-    nibbleSize=[]
-    nibblePos=[]
+    nibbleSize = None
+    nibblePos = None
     for p in pins:
         name="Type059_RT063{0:02}HBWC".format(p)
         webpage="http://www.metz-connect.com/de/system/files/productfiles/Datenblatt_310591_RT063xxHBWC_OFF-022684T.pdf"
         footprint_name="TerminalBlock_MetzConnect_{0}_1x{2:02}_P{1:3.2f}mm_Horizontal".format(name, rm, p)
         classname_description="terminal block Metz Connect {0}".format(name, rm)
-        makeTerminalBlockStd(footprint_name=footprint_name, 
-                                  pins=p, rm=rm, 
-                                  package_height=package_height, leftbottom_offset=leftbottom_offset, 
-                                  ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, bevel_height=bevel_height, slit_screw=slit_screw, screw_pin_offset=screw_pin_offset, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset, 
+        makeTerminalBlockStd(footprint_name=footprint_name,
+                                  pins=p, rm=rm,
+                                  package_height=package_height, leftbottom_offset=leftbottom_offset,
+                                  ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, bevel_height=bevel_height, slit_screw=slit_screw, screw_pin_offset=screw_pin_offset, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset,
                                   nibbleSize=nibbleSize, nibblePos=nibblePos, fabref_offset=fabref_offset,
-                                  tags_additional=[], lib_name='${KICAD8_3DMODEL_DIR}/'+classname, classname=classname, classname_description=classname_description, 
+                                  tags_additional=[], lib_name='${KICAD8_3DMODEL_DIR}/'+classname, classname=classname, classname_description=classname_description,
                                   webpage=webpage, script_generated_note=script_generated_note)
 
 
@@ -312,19 +312,19 @@ if __name__ == '__main__':
     fourthHoleDiameter=0
     fourthHoleOffset=[0,0]
     fabref_offset=[0,3.5]
-    nibbleSize=[]
-    nibblePos=[]
+    nibbleSize = None
+    nibblePos = None
     for p in pins:
         name="Type073_RT026{0:02}HBLU".format(p)
         webpage="http://www.metz-connect.com/de/system/files/productfiles/Datenblatt_310731_RT026xxHBLU_OFF-022792U.pdf"
         footprint_name="TerminalBlock_MetzConnect_{0}_1x{2:02}_P{1:3.2f}mm_Horizontal".format(name, rm, p)
         classname_description="terminal block Metz Connect {0}".format(name, rm)
-        makeTerminalBlockStd(footprint_name=footprint_name, 
-                                  pins=p, rm=rm, 
-                                  package_height=package_height, leftbottom_offset=leftbottom_offset, 
-                                  ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, bevel_height=bevel_height, slit_screw=slit_screw, screw_pin_offset=screw_pin_offset, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset, 
+        makeTerminalBlockStd(footprint_name=footprint_name,
+                                  pins=p, rm=rm,
+                                  package_height=package_height, leftbottom_offset=leftbottom_offset,
+                                  ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, bevel_height=bevel_height, slit_screw=slit_screw, screw_pin_offset=screw_pin_offset, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset,
                                   nibbleSize=nibbleSize, nibblePos=nibblePos, fabref_offset=fabref_offset,
-                                  tags_additional=[], lib_name='${KICAD8_3DMODEL_DIR}/'+classname, classname=classname, classname_description=classname_description, 
+                                  tags_additional=[], lib_name='${KICAD8_3DMODEL_DIR}/'+classname, classname=classname, classname_description=classname_description,
                                   webpage=webpage, script_generated_note=script_generated_note)
 
     pins=range(2,3+1)
@@ -344,19 +344,19 @@ if __name__ == '__main__':
     fourthHoleDiameter=0
     fourthHoleOffset=[0,0]
     fabref_offset=[0,3.5]
-    nibbleSize=[]
-    nibblePos=[]
+    nibbleSize = None
+    nibblePos = None
     for p in pins:
         name="Type701_RT11L{0:02}HGLU".format(p)
         webpage="http://www.metz-connect.com/de/system/files/productfiles/Datenblatt_317011_RT11LxxHGLU_OFF-022798U.pdf"
         footprint_name="TerminalBlock_MetzConnect_{0}_1x{2:02}_P{1:3.2f}mm_Horizontal".format(name, rm, p)
         classname_description="terminal block Metz Connect {0}".format(name, rm)
-        makeTerminalBlockStd(footprint_name=footprint_name, 
-                                  pins=p, rm=rm, 
-                                  package_height=package_height, leftbottom_offset=leftbottom_offset, 
-                                  ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, bevel_height=bevel_height, slit_screw=slit_screw, screw_pin_offset=screw_pin_offset, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset, 
+        makeTerminalBlockStd(footprint_name=footprint_name,
+                                  pins=p, rm=rm,
+                                  package_height=package_height, leftbottom_offset=leftbottom_offset,
+                                  ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, bevel_height=bevel_height, slit_screw=slit_screw, screw_pin_offset=screw_pin_offset, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset,
                                   nibbleSize=nibbleSize, nibblePos=nibblePos, fabref_offset=fabref_offset,
-                                  tags_additional=[], lib_name='${KICAD8_3DMODEL_DIR}/'+classname, classname=classname, classname_description=classname_description, 
+                                  tags_additional=[], lib_name='${KICAD8_3DMODEL_DIR}/'+classname, classname=classname, classname_description=classname_description,
                                   webpage=webpage, script_generated_note=script_generated_note)
 
 
@@ -377,21 +377,21 @@ if __name__ == '__main__':
     fourthHoleDiameter=0
     fourthHoleOffset=[0,0]
     fabref_offset=[0,3.5]
-    nibbleSize=[]
-    nibblePos=[]
+    nibbleSize = None
+    nibblePos = None
     for p in pins:
         name="Type171_RT137{0:02}HBWC".format(p)
         webpage="http://www.metz-connect.com/de/system/files/productfiles/Datenblatt_311711_RT137xxHBWC_OFF-022811Q.pdf"
         footprint_name="TerminalBlock_MetzConnect_{0}_1x{2:02}_P{1:3.2f}mm_Horizontal".format(name, rm, p)
         classname_description="terminal block Metz Connect {0}".format(name, rm)
-        makeTerminalBlockStd(footprint_name=footprint_name, 
-                                  pins=p, rm=rm, 
-                                  package_height=package_height, leftbottom_offset=leftbottom_offset, 
-                                  ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, bevel_height=bevel_height, slit_screw=slit_screw, screw_pin_offset=screw_pin_offset, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset, 
+        makeTerminalBlockStd(footprint_name=footprint_name,
+                                  pins=p, rm=rm,
+                                  package_height=package_height, leftbottom_offset=leftbottom_offset,
+                                  ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, bevel_height=bevel_height, slit_screw=slit_screw, screw_pin_offset=screw_pin_offset, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset,
                                   nibbleSize=nibbleSize, nibblePos=nibblePos, fabref_offset=fabref_offset,
-                                  tags_additional=[], lib_name='${KICAD8_3DMODEL_DIR}/'+classname, classname=classname, classname_description=classname_description, 
+                                  tags_additional=[], lib_name='${KICAD8_3DMODEL_DIR}/'+classname, classname=classname, classname_description=classname_description,
                                   webpage=webpage, script_generated_note=script_generated_note)
- 
+
     pins=range(2,6+1)
     rm=7.5
     package_height=11
@@ -409,19 +409,19 @@ if __name__ == '__main__':
     fourthHoleDiameter=0
     fourthHoleOffset=[0,0]
     fabref_offset=[0,4]
-    nibbleSize=[]
-    nibblePos=[]
+    nibbleSize = None
+    nibblePos = None
     for p in pins:
         name="Type175_RT027{0:02}HBLC".format(p)
         webpage="http://www.metz-connect.com/de/system/files/productfiles/Datenblatt_311751_RT027xxHBLC_OFF-022814U.pdf"
         footprint_name="TerminalBlock_MetzConnect_{0}_1x{2:02}_P{1:3.2f}mm_Horizontal".format(name, rm, p)
         classname_description="terminal block Metz Connect {0}".format(name, rm)
-        makeTerminalBlockStd(footprint_name=footprint_name, 
-                                  pins=p, rm=rm, 
-                                  package_height=package_height, leftbottom_offset=leftbottom_offset, 
-                                  ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, bevel_height=bevel_height, slit_screw=slit_screw, screw_pin_offset=screw_pin_offset, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset, 
+        makeTerminalBlockStd(footprint_name=footprint_name,
+                                  pins=p, rm=rm,
+                                  package_height=package_height, leftbottom_offset=leftbottom_offset,
+                                  ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, bevel_height=bevel_height, slit_screw=slit_screw, screw_pin_offset=screw_pin_offset, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset,
                                   nibbleSize=nibbleSize, nibblePos=nibblePos, fabref_offset=fabref_offset,
-                                  tags_additional=[], lib_name='${KICAD8_3DMODEL_DIR}/'+classname, classname=classname, classname_description=classname_description, 
+                                  tags_additional=[], lib_name='${KICAD8_3DMODEL_DIR}/'+classname, classname=classname, classname_description=classname_description,
                                   webpage=webpage, script_generated_note=script_generated_note)
 
     pins=range(2,4+1)
@@ -441,17 +441,17 @@ if __name__ == '__main__':
     fourthHoleDiameter=0
     fourthHoleOffset=[0,0]
     fabref_offset=[0,3]
-    nibbleSize=[]
-    nibblePos=[]
+    nibbleSize = None
+    nibblePos = None
     for p in pins:
         name="Type055_RT015{0:02}HDWU".format(p)
         webpage="http://www.metz-connect.com/de/system/files/productfiles/Datenblatt_310551_RT015xxHDWU_OFF-022723S.pdf"
         footprint_name="TerminalBlock_MetzConnect_{0}_1x{2:02}_P{1:3.2f}mm_Horizontal".format(name, rm, p)
         classname_description="terminal block Metz Connect {0}".format(name, rm)
-        makeTerminalBlockStd(footprint_name=footprint_name, 
-                                  pins=p, rm=rm, 
-                                  package_height=package_height, leftbottom_offset=leftbottom_offset, 
-                                  ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, bevel_height=bevel_height, slit_screw=slit_screw, screw_pin_offset=screw_pin_offset, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset, 
+        makeTerminalBlockStd(footprint_name=footprint_name,
+                                  pins=p, rm=rm,
+                                  package_height=package_height, leftbottom_offset=leftbottom_offset,
+                                  ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, bevel_height=bevel_height, slit_screw=slit_screw, screw_pin_offset=screw_pin_offset, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset,
                                   nibbleSize=nibbleSize, nibblePos=nibblePos, fabref_offset=fabref_offset,
-                                  tags_additional=[], lib_name='${KICAD8_3DMODEL_DIR}/'+classname, classname=classname, classname_description=classname_description, 
+                                  tags_additional=[], lib_name='${KICAD8_3DMODEL_DIR}/'+classname, classname=classname, classname_description=classname_description,
                                   webpage=webpage, script_generated_note=script_generated_note)

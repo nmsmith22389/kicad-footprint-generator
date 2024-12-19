@@ -60,8 +60,8 @@ def makeTerminalBlockStd(
     secondDrillDiameter=0,
     secondDrillOffset=[0, 0],
     secondDrillPad=[0, 0],
-    nibbleSize=[],
-    nibblePos=[],
+    nibbleSize: Optional[Vector2D] = None,
+    nibblePos: Optional[Vector2D] = None,
     fabref_offset=[0, 0],
     stackable=False,
     tags_additional=[],
@@ -547,7 +547,8 @@ def makeTerminalBlockStd(
                 )
 
     # nibble
-    if len(nibbleSize) == 2 and len(nibblePos) == 2:
+    if nibbleSize is not None:
+        assert nibblePos is not None
         kicad_modg.append(
             RectLine(
                 start=[l_fab + nibblePos[0], t_fab + nibblePos[1]],
@@ -665,8 +666,8 @@ def makeTerminalBlockVertical(
     secondDrillDiameter=0,
     secondDrillOffset=[0, 0],
     secondDrillPad=[0, 0],
-    nibbleSize=[],
-    nibblePos=[],
+    nibbleSize: Optional[Vector2D] = None,
+    nibblePos: Optional[Vector2D] = None,
     fabref_offset=[0, 0],
     stackable=False,
     tags_additional=[],
@@ -1126,7 +1127,8 @@ def makeTerminalBlockVertical(
             )
 
     # nibble
-    if len(nibbleSize) == 2 and len(nibblePos) == 2:
+    if nibbleSize is not None:
+        assert nibblePos is not None
         kicad_modg.append(
             RectLine(
                 start=[l_fab + nibblePos[0], t_fab + nibblePos[1]],
@@ -1248,8 +1250,8 @@ def makeTerminalBlock45Degree(
     secondDrillDiameter=0,
     secondDrillOffset=[0, 0],
     secondDrillPad=[0, 0],
-    nibbleSize=[],
-    nibblePos=[],
+    nibbleSize: Optional[Vector2D] = None,
+    nibblePos: Optional[Vector2D] = None,
     fabref_offset=[0, 0],
     secondEllipseSize=[0, 0],
     secondEllipseOffset=[0, 0],
@@ -1819,7 +1821,8 @@ def makeTerminalBlock45Degree(
             )
 
     # nibble
-    if len(nibbleSize) == 2 and len(nibblePos) == 2:
+    if nibbleSize is not None:
+        assert nibblePos is not None
         kicad_modg.append(
             RectLine(
                 start=[l_fab + nibblePos[0], t_fab + nibblePos[1]],

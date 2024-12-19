@@ -38,8 +38,8 @@ if __name__ == "__main__":
     fourthHoleDiameter = 0
     fourthHoleOffset = [0, 0]
     fabref_offset = [0, 2.0]
-    nibbleSize = []
-    nibblePos = []
+    nibbleSize = None
+    nibblePos = None
 
     for p in pins:
         name = "XY308-{0:3.2f}-{1}P".format(rm, p)

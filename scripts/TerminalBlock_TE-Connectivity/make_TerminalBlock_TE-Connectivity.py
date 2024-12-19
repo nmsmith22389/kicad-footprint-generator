@@ -43,8 +43,8 @@ if __name__ == '__main__':
     fourthHoleDiameter = 0
     fourthHoleOffset = [0,0]
     fabref_offset = [0,2.0]
-    nibbleSize = []
-    nibblePos = []
+    nibbleSize = None
+    nibblePos = None
     for p in pins:
         name_prefix = "{}-".format(p // 10) if p // 10 > 0 else ""
         name = "{}282834-{}".format(name_prefix, p % 10)
@@ -56,9 +56,9 @@ if __name__ == '__main__':
                 classname, name, p, rm)
         makeTerminalBlockStd(footprint_name=footprint_name,
                 pins=p,
-                rm=rm, 
+                rm=rm,
                 package_height=package_height,
-                leftbottom_offset=leftbottom_offset, 
+                leftbottom_offset=leftbottom_offset,
                 ddrill=ddrill,
                 pad=pad,
                 screw_diameter=screw_diameter,
@@ -70,7 +70,7 @@ if __name__ == '__main__':
                 thirdHoleDiameter=thirdHoleDiameter,
                 thirdHoleOffset=thirdHoleOffset,
                 fourthHoleDiameter=fourthHoleDiameter,
-                fourthHoleOffset=fourthHoleOffset, 
+                fourthHoleOffset=fourthHoleOffset,
                 secondDrillDiameter=secondDrillDiameter,
                 secondDrillOffset=secondDrillOffset,
                 secondDrillPad=secondDrillPad,

@@ -60,8 +60,8 @@ if __name__ == '__main__':
     secondEllipseSize=[0,0]
     secondEllipseOffset=[1.25,2.5]
     fabref_offset=[0,-1]
-    nibbleSize=[]
-    nibblePos=[]
+    nibbleSize = None
+    nibblePos = None
     for p in pins:
         name="804-{0}".format(300+p);
         webpage="";
@@ -108,8 +108,8 @@ if __name__ == '__main__':
     secondEllipseSize=[0,0]
     secondEllipseOffset=[1.25,2.5]
     fabref_offset=[0,-1]
-    nibbleSize=[]
-    nibblePos=[]
+    nibbleSize = None
+    nibblePos = None
     for p in pins:
         name="804-{0}".format(100+p);
         webpage="";
@@ -152,8 +152,8 @@ if __name__ == '__main__':
     fourthHoleDiameter=[1,2.5]
     fourthHoleOffset=[0.5,-3.4]
     fabref_offset=[0,-1]
-    nibbleSize=[]
-    nibblePos=[]
+    nibbleSize = None
+    nibblePos = None
     for p in pins:
         name="236-{0}".format(100+p);
         webpage="";
@@ -205,8 +205,8 @@ if __name__ == '__main__':
     fourthHoleDiameter=1,2.5
     fourthHoleOffset=[0.5,-3.4]
     fabref_offset=[0,-1]
-    nibbleSize=[]
-    nibblePos=[]
+    nibbleSize = None
+    nibblePos = None
     for p in pins:
         name="236-{0}".format(200+p);
         webpage="";
@@ -257,8 +257,8 @@ if __name__ == '__main__':
     fourthHoleDiameter=1,2.5
     fourthHoleOffset=[0.5,-3.4]
     fabref_offset=[0,-1]
-    nibbleSize=[]
-    nibblePos=[]
+    nibbleSize = None
+    nibblePos = None
     for p in pins:
         name="236-{0}".format(300+p);
         webpage="";

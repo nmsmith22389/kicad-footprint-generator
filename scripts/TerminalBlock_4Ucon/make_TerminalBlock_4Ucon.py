@@ -40,8 +40,8 @@ class FourUcon_H8_3_TerminalBlock(FourUcon_TerminalBlock):
         fourthHoleDiameter = 0
         fourthHoleOffset = [0, 0]
         fabref_offset = [0, 3]
-        nibbleSize = []
-        nibblePos = []
+        nibbleSize = None
+        nibblePos = None
 
         itemno = 10691 + pins
 
@@ -108,8 +108,8 @@ class FourUCon_H7_TerminalBlock(FourUcon_TerminalBlock):
         fourthHoleDiameter=0
         fourthHoleOffset=[0,0]
         fabref_offset=[0,2.8]
-        nibbleSize=[]
-        nibblePos=[]
+        nibbleSize = None
+        nibblePos = None
 
         webpage=f"http://www.4uconnector.com/online/object/4udrawing/{itemno}.pdf"
         classname_description=f"Terminal Block 4Ucon ItemNo. {itemno}"

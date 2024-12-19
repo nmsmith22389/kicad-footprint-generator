@@ -22,7 +22,7 @@ class MaiXu_MX126_Generator(object):
     script_generated_note = f"script-generated using https://gitlab.com/kicad/libraries/kicad-footprint-generator/-/tree/master/scripts/TerminalBlock_MaiXu";
 
     available_pincounts = range(2, 24+1)
-    rm = 5.0 # Distance beteen any 
+    rm = 5.0 # Distance beteen any
     package_height = 7.8 # Y size of footprint, not height above PCB!
     leftbottom_offset=[
         3,
@@ -42,16 +42,16 @@ class MaiXu_MX126_Generator(object):
     fourthHoleDiameter=0 # ?
     fourthHoleOffset=[0,0] # ?
     fabref_offset=[0,4.5] # ?
-    nibbleSize=[] # ?
-    nibblePos=[] # ?
-    
+    nibbleSize = None # ?
+    nibblePos = None # ?
+
     def part_mpn(self, pincount):
         return f"MX126-{self.rm:.1f}-{pincount:02}P"
-    
+
     def footprint_name(self, pincount: int):
         name = self.part_mpn(pincount)
         return f"TerminalBlock_MaiXu_{name}_1x{pincount:02}_P{self.rm:3.2f}mm"
-    
+
     def classname_description(self, pincount: int):
         name = self.part_mpn(pincount)
         return f"terminal block MaiXu {name}"
@@ -60,16 +60,16 @@ class MaiXu_MX126_Generator(object):
         """Generate all footprints"""
         for pincount in self.available_pincounts:
             makeTerminalBlockStd(footprint_name=self.footprint_name(pincount),
-                pins=pincount, rm=self.rm, 
+                pins=pincount, rm=self.rm,
                 package_height=self.package_height,
-                leftbottom_offset=self.leftbottom_offset, 
+                leftbottom_offset=self.leftbottom_offset,
                 ddrill=self.ddrill,
                 pad=self.pad,
                 screw_diameter=self.screw_diameter,
                 bevel_height=self.bevel_height,
                 slit_screw=self.slit_screw,
                 screw_pin_offset=self.screw_pin_offset,
-                secondHoleDiameter=self.secondHoleDiameter, 
+                secondHoleDiameter=self.secondHoleDiameter,
                 secondHoleOffset=self.secondHoleOffset,
                 thirdHoleDiameter=self.thirdHoleDiameter,
                 thirdHoleOffset=self.thirdHoleOffset,
@@ -79,14 +79,13 @@ class MaiXu_MX126_Generator(object):
                 nibblePos=self.nibblePos,
                 fabref_offset=self.fabref_offset,
                 tags_additional=[], lib_name=f'${{KICAD8_3DMODEL_DIR}}/{self.fplib_name}',
-                classname=self.fplib_name, classname_description=self.classname_description, 
+                classname=self.fplib_name, classname_description=self.classname_description,
                 webpage=self.datasheet,
                 script_generated_note=self.script_generated_note)
-        
+
 generators = [MaiXu_MX126_Generator]
 
 if __name__ == '__main__':
     for Type_ in generators:
         generator = Type_()
         generator.generate()
-        

@@ -40,8 +40,8 @@ if __name__ == '__main__':
     fourthHoleDiameter = 0
     fourthHoleOffset = [0, 0]
     fabref_offset = [0, 0]
-    nibbleSize = []
-    nibblePos = []
+    nibbleSize = None
+    nibblePos = None
     for p in pins:
         name = "TB007-508-{:02}".format(p)
         webpage = "https://www.cuidevices.com/product/resource/tb007-508.pdf"
