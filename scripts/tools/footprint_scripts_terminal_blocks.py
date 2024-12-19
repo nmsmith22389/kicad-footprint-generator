@@ -103,25 +103,20 @@ def makeTerminalBlockStd(
     text_size = [text_size, text_size]
     text_t = text_size[0] * 0.15
 
-    description = "{2}, {0:d} pins, pitch {1:.3g}mm, size {3:.3g}x{4:.3g}mm^2, drill diameter {5:.3g}mm, pad diameter {6:.3g}mm, see {7:s}".format(
-        pins,
-        rm,
-        classname_description,
-        package_size[0],
-        package_size[1],
-        ddrill,
-        max(pad),
-        webpage,
+    description = (
+        f"{classname_description}, {pins} pins, pitch {rm:.3g}mm, "
+        f"size {package_size[0]:.3g}x{package_size[1]:.3g}mm, "
+        f"drill diameter {ddrill:.3g}mm, pad diameter {max(pad):.3g}mm, {webpage}"
     )
-    tags = "THT {2} pitch {1:.3g}mm size {3:.3g}x{4:.3g}mm^2 drill {5:.3g}mm pad {6:.3g}mm".format(
-        pins,
-        rm,
+
+    tags = [
+        "THT",
         classname_description,
-        package_size[0],
-        package_size[1],
-        ddrill,
-        max(pad),
-    )
+        f"pitch {rm:.3g}mm",
+        f"size {package_size[0]:.3g}x{package_size[1]:.3g}mm",
+        f"drill {ddrill:.3g}mm",
+        f"pad {max(pad):.3g}mm",
+    ]
 
     if len(script_generated_note) > 0:
         description = description + ", " + script_generated_note
@@ -130,14 +125,14 @@ def makeTerminalBlockStd(
         for t in tags_additional:
             footprint_name = footprint_name + "_" + t
             description = description + ", " + t
-            tags = tags + " " + t
+            tags.append(t)
 
     print(footprint_name)
 
     # init kicad footprint
     kicad_mod = Footprint(footprint_name, FootprintType.THT)
     kicad_mod.setDescription(description)
-    kicad_mod.setTags(tags)
+    kicad_mod.tags = tags
 
     # anchor for SMD-symbols is in the center, for THT-sybols at pin1
     offset = [0, 0]
@@ -240,7 +235,7 @@ def makeTerminalBlockStd(
                     num = ""
                     extra_shape = pad_shape_extra
                 else:
-                    num = p
+                    num = str(p)
                     extra_shape = Pad.SHAPE_RECT
                 kicad_modg.append(
                     Pad(
@@ -283,7 +278,7 @@ def makeTerminalBlockStd(
                 if extradrill1_type == Pad.TYPE_NPTH:
                     num = ""
                 else:
-                    num = p
+                    num = str(p)
                 kicad_modg.append(
                     Pad(
                         number=num,
@@ -709,25 +704,21 @@ def makeTerminalBlockVertical(
     text_size = [text_size, text_size]
     text_t = text_size[0] * 0.15
 
-    description = "{2}, vertical (cable from top), {0:d} pins, pitch {1:.3g}mm, size {3:.3g}x{4:.3g}mm^2, drill diameter {5:.3g}mm, pad diameter {6:.3g}mm, see {7}".format(
-        pins,
-        rm,
-        classname_description,
-        package_size[0],
-        package_size[1],
-        ddrill,
-        max(pad),
-        webpage,
+    description = (
+        f"{classname_description}, vertical (cable from top), "
+        f"{pins} pins, pitch {rm:.3g}mm, size {package_size[0]:.3g}x{package_size[1]:.3g}mm, "
+        f"drill diameter {ddrill:.3g}mm, pad diameter {max(pad):.3g}mm, {webpage}"
     )
-    tags = "THT {2} vertical pitch {1:.3g}mm size {3:.3g}x{4:.3g}mm^2 drill {5:.3g}mm pad {6:.3g}mm".format(
-        pins,
-        rm,
+
+    tags = [
+        "THT",
         classname_description,
-        package_size[0],
-        package_size[1],
-        ddrill,
-        max(pad),
-    )
+        "vertical",
+        f"pitch {rm:.3g}mm",
+        f"size {package_size[0]:.3g}x{package_size[1]:.3g}mm",
+        f"drill {ddrill:.3g}mm",
+        f"pad {max(pad):.3g}mm",
+    ]
 
     if len(script_generated_note) > 0:
         description = description + ", " + script_generated_note
@@ -736,14 +727,14 @@ def makeTerminalBlockVertical(
         for t in tags_additional:
             footprint_name = footprint_name + "_" + t
             description = description + ", " + t
-            tags = tags + " " + t
+            tags.append(t)
 
     print(footprint_name)
 
     # init kicad footprint
     kicad_mod = Footprint(footprint_name, FootprintType.THT)
     kicad_mod.setDescription(description)
-    kicad_mod.setTags(tags)
+    kicad_mod.tags = tags
 
     # anchor for SMD-symbols is in the center, for THT-sybols at pin1
     offset = [0, 0]
@@ -844,7 +835,7 @@ def makeTerminalBlockVertical(
                     num = ""
                     extra_shape = pad_shape_extra
                 else:
-                    num = p
+                    num = str(p)
                     extra_shape = Pad.SHAPE_RECT
                 kicad_modg.append(
                     Pad(
@@ -887,7 +878,7 @@ def makeTerminalBlockVertical(
                 if extradrill1_type == Pad.TYPE_NPTH:
                     num = ""
                 else:
-                    num = p
+                    num = str(p)
                 kicad_modg.append(
                     Pad(
                         number=num,
@@ -1294,25 +1285,22 @@ def makeTerminalBlock45Degree(
     text_size = [text_size, text_size]
     text_t = text_size[0] * 0.15
 
-    description = "{2}, 45Degree (cable under 45degree), {0:d} pins, pitch {1:.3g}mm, size {3:.3g}x{4:.3g}mm^2, drill diameter {5:.3g}mm, pad diameter {6:.3g}mm, see {7}".format(
-        pins,
-        rm,
-        classname_description,
-        package_size[0],
-        package_size[1],
-        ddrill,
-        max(pad),
-        webpage,
+
+    description = (
+        f"{classname_description}, 45Degree (cable under 45degree), {pins:d} pins, pitch {rm:.3g}mm, "
+        f"size {package_size[0]:.3g}x{package_size[1]:.3g}mm, drill diameter {ddrill:.3g}mm, "
+        f"pad diameter {max(pad):.3g}mm, {webpage}"
     )
-    tags = "THT {2} 45Degree pitch {1:.3g}mm size {3:.3g}x{4:.3g}mm^2 drill {5:.3g}mm pad {6:.3g}mm".format(
-        pins,
-        rm,
+
+    tags = [
+        "THT",
         classname_description,
-        package_size[0],
-        package_size[1],
-        ddrill,
-        max(pad),
-    )
+        "45Degree",
+        f"pitch {rm:.3g}mm",
+        f"size {package_size[0]:.3g}x{package_size[1]:.3g}mm",
+        f"drill {ddrill:.3g}mm",
+        f"pad {max(pad):.3g}mm",
+    ]
 
     if len(script_generated_note) > 0:
         description = description + ", " + script_generated_note
@@ -1321,14 +1309,14 @@ def makeTerminalBlock45Degree(
         for t in tags_additional:
             footprint_name = footprint_name + "_" + t
             description = description + ", " + t
-            tags = tags + " " + t
+            tags.append(t)
 
     print(footprint_name)
 
     # init kicad footprint
     kicad_mod = Footprint(footprint_name, FootprintType.THT)
     kicad_mod.setDescription(description)
-    kicad_mod.setTags(tags)
+    kicad_mod.tags = tags
 
     # anchor for SMD-symbols is in the center, for THT-sybols at pin1
     offset = [0, 0]
@@ -1431,7 +1419,7 @@ def makeTerminalBlock45Degree(
                     num = ""
                     extra_shape = pad_shape_extra
                 else:
-                    num = p
+                    num = str(p)
                     extra_shape = Pad.SHAPE_RECT
                 kicad_modg.append(
                     Pad(
@@ -1474,7 +1462,7 @@ def makeTerminalBlock45Degree(
                 if extradrill1_type == Pad.TYPE_NPTH:
                     num = ""
                 else:
-                    num = p
+                    num = str(p)
                 kicad_modg.append(
                     Pad(
                         number=num,
@@ -1951,25 +1939,20 @@ def makeScrewTerminalSingleStd(
     text_t = text_size[0] * 0.15
     txt_offset = text_size[1]
 
-    description = "{2}, block size {3:.3g}x{4:.3g}mm^2, drill diameter {5:.3g}mm, {1:d} pads, pad diameter {6:.3g}mm, see {7}".format(
-        0,
-        len(pins),
-        classname_description,
-        block_size[0],
-        block_size[1],
-        ddrill,
-        max(pad),
-        webpage,
+    description = (
+        f"{classname_description}, block "
+        f"size {block_size[0]:.3g}x{block_size[1]:.3g}mm, "
+        f"drill diameter {ddrill:.3g}mm, pad diameter {max(pad):.3g}mm, "
+        f"{webpage}"
     )
-    tags = "THT {2} size {3:.3g}x{4:.3g}mm^2 drill {5:.3g}mm pad {6:.3g}mm".format(
-        0,
-        len(pins),
+
+    tags = [
+        "THT",
         classname_description,
-        block_size[0],
-        block_size[1],
-        ddrill,
-        max(pad),
-    )
+        f"size {block_size[0]:.3g}x{block_size[1]:.3g}mm",
+        f"drill {ddrill:.3g}mm",
+        f"pad {max(pad):.3g}mm",
+    ]
 
     if len(script_generated_note) > 0:
         description = description + ", " + script_generated_note
@@ -1978,14 +1961,14 @@ def makeScrewTerminalSingleStd(
         for t in tags_additional:
             footprint_name = footprint_name + "_" + t
             description = description + ", " + t
-            tags = tags + " " + t
+            tags.append(t)
 
     print(footprint_name)
 
     # init kicad footprint
     kicad_mod = Footprint(footprint_name, FootprintType.THT)
     kicad_mod.setDescription(description)
-    kicad_mod.setTags(tags)
+    kicad_mod.tags = tags
 
     # anchor for SMD-symbols is in the center, for THT-sybols at pin1
     offset = pins[0]
