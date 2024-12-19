@@ -47,14 +47,15 @@
   has_orientation: true
   library_name: Inductor_SMD
 
-- series: xxxxSQ
+- series: SQ
   manufacturer: Coilcraft
-  csv: coilcraft_xxxxSQ.csv
+  datasheet: "https://www.coilcraft.com/getmedia/a4eed406-a97e-4630-9d8e-771bb470867f/1515sq.pdf"
+  csv: coilcraft_sq.csv
   3d:
     has_body: false
     coil_style: 1
     wireColor: metal copper
     pinColor: metal grey pins
   tags:
-    - SQ
+    - sq
   library_name: Inductor_SMD

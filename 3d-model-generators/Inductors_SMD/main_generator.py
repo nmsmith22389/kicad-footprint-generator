@@ -118,7 +118,7 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
     # find yaml files here, need to figure out the path to do so
 
     inductorPath = os.path.dirname(os.path.realpath(__file__))
-    allYamlFiles = glob.glob(f"{inductorPath}/*.yaml")
+    allYamlFiles = glob.glob(f"{inductorPath}/../../data/Inductor_SMD/*.yaml")
 
     if not allYamlFiles:
         print("No YAML files found to process.")
