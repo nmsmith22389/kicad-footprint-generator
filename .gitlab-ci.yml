@@ -75,6 +75,10 @@ fp-generate-and-compare:
   only:
     refs:
       - merge_requests
+    changes:
+    - KicadModTree/**
+    - scripts/**
+    - data/**
   allow_failure: true
   image: kicad/kicad:8.0
   before_script:
