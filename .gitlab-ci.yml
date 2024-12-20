@@ -70,6 +70,8 @@ fp-generate:
 fp-generate-and-compare:
   stage: Test
   needs: []
+  tags:
+    - saas-linux-medium-amd64
   only:
     refs:
       - merge_requests

@@ -2,7 +2,7 @@
 # Meant to be run in CI only.
 # Adapted from kicad-library-utils/tools/gitlabci/visual_diff.sh
 # => TODO: Refactor to extract common functionality?
-set -e
+set -ex
 
 source "$CI_BUILDS_DIR/kicad-library-utils/tools/gitlabci/common.sh"
 
@@ -17,7 +17,7 @@ echo "Comparing $BASE_DIR to $TARGET_DIR"
 for target_path in $(git diff --no-index --name-only "$BASE_DIR" "$TARGET_DIR" | xargs dirname | sort | uniq | grep '\.pretty$'); do
     base_path="$BASE_DIR/${target_path#$TARGET_DIR}"
     echo "Diffing $base_path against $target_path"
-    python3 "$CI_BUILDS_DIR/kicad-library-utils/html-diff/src/html_diff.py" "$base_path" "$target_path"
+    python3 "$CI_BUILDS_DIR/kicad-library-utils/html-diff/src/html_diff.py" -j0 -v "$base_path" "$target_path"
 done
 
 # Hack to get around render_index_html only looking at top-level directories:
