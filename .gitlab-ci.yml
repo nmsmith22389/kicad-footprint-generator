@@ -11,9 +11,8 @@ stages:
 fp-formatting:
   stage: Static Analysis
   needs: []
-  only:
-    refs:
-      - merge_requests
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
   before_script:
     - python --version
     - python -m pip install --upgrade pip
@@ -24,12 +23,11 @@ fp-formatting:
 fp-test:
   stage: Test
   needs: []
-  only:
-    refs:
-      - merge_requests
-    changes:
-    - KicadModTree/**
-    - scripts/**
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      changes:
+        - KicadModTree/**/*
+        - scripts/**/*
   before_script:
     - python --version
     - python -m pip install --upgrade pip
@@ -44,9 +42,8 @@ fp-test:
 fp-generate:
   stage: Footprint Generate
   needs: []
-  only:
-    refs:
-      - master
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master"
   image: python:3.10  # some scripts require more recent Python features
   before_script:
     - python --version
@@ -72,13 +69,12 @@ fp-generate-and-compare:
   needs: []
   tags:
     - saas-linux-medium-amd64
-  only:
-    refs:
-      - merge_requests
-    changes:
-    - KicadModTree/**
-    - scripts/**
-    - data/**
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      changes:
+        - KicadModTree/**/*
+        - scripts/**/*
+        - data/**/*
   allow_failure: true
   image: kicad/kicad:8.0
   before_script:

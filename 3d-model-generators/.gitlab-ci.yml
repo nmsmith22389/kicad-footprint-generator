@@ -4,9 +4,8 @@ variables:
 3d-formatting:
   stage: Static Analysis
   needs: []
-  only:
-    refs:
-      - merge_requests
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
   before_script:
     - python --version
     - python -m pip install --upgrade pip
