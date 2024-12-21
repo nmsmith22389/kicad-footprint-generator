@@ -543,3 +543,23 @@ Converter_DCDC_TRACO_TEN10-110xxWIRH_THT:
     ["tht", "22", 15.24, -5.08, 1.8, 1.8, 1.1],
     ["tht", "23", 15.24, -2.54, 1.8, 1.8, 1.1],
   ]
+
+Converter_DCDC_TRACO_TSR2-24xxN_TSR2-24xxxN_THT:
+  library_name: 'Converter_DCDC'
+  description: "DCDC-Converter, TRACO, TSR2-24xxN, TSR2-24xxxN, 2A, Rev. December 19. 2024"
+  datasheet: "https://www.tracopower.com/products/tsr2n.pdf"
+  tags: "DCDC-Converter SWITCHING-REGULATOR STEP-DOWN TRACO TSR2N 2.54MM THT SIP-3 2A COMPATIBLE_MPNS TSR3N"
+  #compatible_mpns:
+    # https://www.tracopower.com/products/tsr3n.pdf
+    #- TSR 3N
+  extratexts: []
+  at: [-6.16, 4.46]
+  size: [7.6, 14]
+  body_position_tolerance: [0.5, 0.5]
+  # For future use
+  height: 10.2
+  pins: [
+    ["thtr", "1", 0, 0, 2, 2, 1.4],
+    ["tht", "2", 0, -2.54, 2, 2, 1.4],
+    ["tht", "3", 0, -5.08, 2, 2, 1.4]
+  ]
