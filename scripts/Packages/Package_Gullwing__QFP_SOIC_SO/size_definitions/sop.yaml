@@ -1,3 +1,8 @@
+# SOP - Small outline package
+#
+# This file cointains JEITA/EIAJ SOP packages with lead space / pitch 1.27 mm
+# See ED-7311-19 standard for more info
+
 FileHeader:
   library_Suffix: 'SO'
   device_type: 'SOP'
@@ -429,6 +434,7 @@ SOP-20_7.5x12.8mm_P1.27mm:
   num_pins_y: 10
 
 SOP-24_7.5x15.4mm_P1.27mm:
+  # JEDEC MS-013, it's SOIC actually
   size_source: 'http://www.issi.com/WW/pdf/31FL3218.pdf#page=14'
   body_size_x:
     minimum: 7.4
@@ -457,6 +463,7 @@ SOP-24_7.5x15.4mm_P1.27mm:
   num_pins_y: 12
 
 SOP-28_8.4x18.16mm_P1.27mm:
+  # JEDEC MO-059, it's SOIC actually
   size_source: 'https://www.issi.com/WW/pdf/62-65C256AL.pdf#page=12'
   body_size_x:
     minimum: 8.23
@@ -569,6 +576,7 @@ SOP-44_12.6x28.5mm_P1.27mm:
   num_pins_y: 22
 
 SOP-44_13.3x28.2mm_P1.27mm:
+  # JEDEC MO-180, it's SOIC actually
   # Am29F400B datasheet
   size_source: 'https://www.mouser.com/datasheet/2/380/AM29F400B_EOL_21505e8-9219.pdf'
   body_size_x:
