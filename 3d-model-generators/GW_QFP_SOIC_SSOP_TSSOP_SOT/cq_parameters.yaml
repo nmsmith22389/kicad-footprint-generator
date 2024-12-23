@@ -7276,7 +7276,7 @@ MSOP-10-1EP_3x3mm_Pitch0.5mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://cds.linear.com/docs/en/packaging/05081664_I_MSE.pdf'
 
-MSOP-12_3x4mm_Pitch0.65mm:
+MSOP-12_3x4.039mm_P0.65mm:
   the: 12.0
   tb_s: 0.15
   c: 0.18
@@ -7289,7 +7289,7 @@ MSOP-12_3x4mm_Pitch0.65mm:
   fp_z: 0.1
   ef: 0
   cc1: 0.25
-  D1: 4.0
+  D1: 4.039
   E1: 3.0
   E: 4.9
   A1: 0.1
@@ -7300,7 +7300,7 @@ MSOP-12_3x4mm_Pitch0.65mm:
   npy: 0
   epad: null
   excluded_pins: null
-  model_name: MSOP-12_3x4mm_P0.65mm
+  model_name: MSOP-12_3x4.039mm_P0.65mm
   rotation: -90
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -7308,7 +7308,7 @@ MSOP-12_3x4mm_Pitch0.65mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://cds.linear.com/docs/en/packaging/05081668_A_MS12.pdf'
 
-MSOP-12-1EP_3x4mm_Pitch0.65mm:
+MSOP-12-1EP_3x4.039mm_P0.65mm_EP1.651x2.845mm:
   the: 12.0
   tb_s: 0.15
   c: 0.18
@@ -7321,7 +7321,7 @@ MSOP-12-1EP_3x4mm_Pitch0.65mm:
   fp_z: 0.1
   ef: 0
   cc1: 0.25
-  D1: 4.0
+  D1: 4.039
   E1: 3.0
   E: 4.9
   A1: 0.1
@@ -7332,7 +7332,7 @@ MSOP-12-1EP_3x4mm_Pitch0.65mm:
   npy: 0
   epad: [2.845, 1.651]
   excluded_pins: null
-  model_name: MSOP-12-1EP_3x4mm_P0.65mm
+  model_name: MSOP-12-1EP_3x4.039mm_P0.65mm_EP1.651x2.845mm
   rotation: -90
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -7340,7 +7340,7 @@ MSOP-12-1EP_3x4mm_Pitch0.65mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://cds.linear.com/docs/en/packaging/05081666_G_MSE12.pdf'
 
-MSOP-16_3x4mm_Pitch0.5mm:
+MSOP-16_3x4.039mm_P0.5mm:
   the: 12.0
   tb_s: 0.1
   c: 0.18
@@ -7353,7 +7353,7 @@ MSOP-16_3x4mm_Pitch0.5mm:
   fp_z: 0.1
   ef: 0
   cc1: 0.25
-  D1: 4.0
+  D1: 4.039
   E1: 3.0
   E: 4.9
   A1: 0.1
@@ -7364,7 +7364,7 @@ MSOP-16_3x4mm_Pitch0.5mm:
   npy: 0
   epad: null
   excluded_pins: null
-  model_name: MSOP-16_3x4mm_P0.5mm
+  model_name: MSOP-16_3x4.039mm_P0.5mm
   rotation: -90
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -7372,7 +7372,7 @@ MSOP-16_3x4mm_Pitch0.5mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://cds.linear.com/docs/en/packaging/05081669_A_MS16.pdf'
 
-MSOP-16-1EP_3x4mm_Pitch0.5mm:
+MSOP-16-1EP_3x4.039mm_P0.5mm_EP1.651x2.845mm:
   the: 12.0
   tb_s: 0.1
   c: 0.18
@@ -7385,7 +7385,7 @@ MSOP-16-1EP_3x4mm_Pitch0.5mm:
   fp_z: 0.1
   ef: 0
   cc1: 0.25
-  D1: 4.0
+  D1: 4.039
   E1: 3.0
   E: 4.9
   A1: 0.1
@@ -7394,9 +7394,9 @@ MSOP-16-1EP_3x4mm_Pitch0.5mm:
   e: 0.5
   npx: 8
   npy: 0
-  epad: [2.84, 1.65]
+  epad: [2.845, 1.651]
   excluded_pins: null
-  model_name: MSOP-16-1EP_3x4mm_P0.5mm
+  model_name: MSOP-16-1EP_3x4.039mm_P0.5mm_EP1.651x2.845mm
   rotation: -90
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
