@@ -1,20 +1,11 @@
 #!/usr/bin/env python
 
-import sys
-import os
-import math
+import argparse
 
-# ensure that the kicad-footprint-generator directory is available
-#sys.path.append(os.environ.get('KIFOOTPRINTGENERATOR'))  # enable package import from parent directory
-#sys.path.append("D:\hardware\KiCAD\kicad-footprint-generator")  # enable package import from parent directory
-sys.path.append(os.path.join(sys.path[0],"..","..","kicad_mod")) # load kicad_mod path
-sys.path.append(os.path.join(sys.path[0],"..","..")) # load kicad_mod path
-sys.path.append(os.path.join(sys.path[0],"..","tools")) # load kicad_mod path
+from scripts.tools.footprint_generator import FootprintGenerator, GlobalConfig
+from scripts.tools.footprint_scripts_terminal_blocks import makeTerminalBlockStd
 
-from KicadModTree import *  # NOQA
-from footprint_scripts_terminal_blocks import *
-
-class MaiXu_MX126_Generator(object):
+class MaiXu_MX126_Generator(FootprintGenerator):
     # Generic properties
     fplib_name = "TerminalBlock" # Name of the footprint library
     # Series datasheet: https://www.cnmaixu.com/Sites/maixu/static/upload/file/20240108/1704697250343193.pdf
@@ -41,7 +32,7 @@ class MaiXu_MX126_Generator(object):
     thirdHoleOffset=[0,-4] # ?
     fourthHoleDiameter=0 # ?
     fourthHoleOffset=[0,0] # ?
-    fabref_offset=[0,4.5] # ?
+    fabref_offset=[0,2.75]  # ?
     nibbleSize = None # ?
     nibblePos = None # ?
 
@@ -56,36 +47,55 @@ class MaiXu_MX126_Generator(object):
         name = self.part_mpn(pincount)
         return f"terminal block MaiXu {name}"
 
-    def generate(self):
+    def generateFootprint(self, pincount: int):
         """Generate all footprints"""
-        for pincount in self.available_pincounts:
-            makeTerminalBlockStd(footprint_name=self.footprint_name(pincount),
-                pins=pincount, rm=self.rm,
-                package_height=self.package_height,
-                leftbottom_offset=self.leftbottom_offset,
-                ddrill=self.ddrill,
-                pad=self.pad,
-                screw_diameter=self.screw_diameter,
-                bevel_height=self.bevel_height,
-                slit_screw=self.slit_screw,
-                screw_pin_offset=self.screw_pin_offset,
-                secondHoleDiameter=self.secondHoleDiameter,
-                secondHoleOffset=self.secondHoleOffset,
-                thirdHoleDiameter=self.thirdHoleDiameter,
-                thirdHoleOffset=self.thirdHoleOffset,
-                fourthHoleDiameter=self.fourthHoleDiameter,
-                fourthHoleOffset=self.fourthHoleOffset,
-                nibbleSize=self.nibbleSize,
-                nibblePos=self.nibblePos,
-                fabref_offset=self.fabref_offset,
-                tags_additional=[], lib_name=f'${{KICAD8_3DMODEL_DIR}}/{self.fplib_name}',
-                classname=self.fplib_name, classname_description=self.classname_description,
-                webpage=self.datasheet,
-                script_generated_note=self.script_generated_note)
 
-generators = [MaiXu_MX126_Generator]
+        footprint_name = self.footprint_name(pincount)
+        classname = self.fplib_name
+
+        kicad_mod = makeTerminalBlockStd(
+            footprint_name=footprint_name,
+            pins=pincount,
+            rm=self.rm,
+            package_height=self.package_height,
+            leftbottom_offset=self.leftbottom_offset,
+            ddrill=self.ddrill,
+            pad=self.pad,
+            screw_diameter=self.screw_diameter,
+            bevel_height=self.bevel_height,
+            slit_screw=self.slit_screw,
+            screw_pin_offset=self.screw_pin_offset,
+            secondHoleDiameter=self.secondHoleDiameter,
+            secondHoleOffset=self.secondHoleOffset,
+            thirdHoleDiameter=self.thirdHoleDiameter,
+            thirdHoleOffset=self.thirdHoleOffset,
+            fourthHoleDiameter=self.fourthHoleDiameter,
+            fourthHoleOffset=self.fourthHoleOffset,
+            nibbleSize=self.nibbleSize,
+            nibblePos=self.nibblePos,
+            fabref_offset=self.fabref_offset,
+            tags_additional=[],
+            lib_name=None,
+            classname=classname,
+            classname_description=self.classname_description(pincount),
+            webpage=self.datasheet,
+            script_generated_note=self.script_generated_note
+        )
+
+        self.add_standard_3d_model_to_footprint(kicad_mod, classname, footprint_name)
+        self.write_footprint(kicad_mod, classname)
 
 if __name__ == '__main__':
-    for Type_ in generators:
-        generator = Type_()
-        generator.generate()
+
+    parser = argparse.ArgumentParser(description='Generate a 4Ucon Terminal Block Footprint')
+
+    args = FootprintGenerator.add_standard_arguments(
+        parser, default_global_config="../tools/global_config_files/config_KLCv3.0.yaml"
+    )
+
+    global_config = GlobalConfig.load_from_file(args.global_config)
+
+    g = MaiXu_MX126_Generator(args.output_dir, global_config)
+
+    for pins in g.available_pincounts:
+        g.generateFootprint(pins)
