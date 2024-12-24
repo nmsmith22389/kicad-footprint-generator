@@ -532,7 +532,7 @@ class GullwingGenerator(FootprintGenerator):
                                               device_params.get('EP_paste_coverage', DEFAULT_PASTE_COVERAGE))
 
                 EP = ExposedPad(
-                    number=pincount + 1, size=EP_size, mask_size=EP_mask_size,
+                    number=pincount_full + 1, size=EP_size, mask_size=EP_mask_size,
                     paste_layout=thermals.get('EP_num_paste_pads'),
                     paste_coverage=paste_coverage,
                     via_layout=thermals.get('count', 0),
@@ -548,7 +548,7 @@ class GullwingGenerator(FootprintGenerator):
                 )
             else:
                 EP = ExposedPad(
-                    number=pincount + 1, size=EP_size, mask_size=EP_mask_size,
+                    number=pincount_full + 1, size=EP_size, mask_size=EP_mask_size,
                     paste_layout=device_params.get('EP_num_paste_pads', 1),
                     paste_coverage=device_params.get('EP_paste_coverage', DEFAULT_PASTE_COVERAGE),
                     **pad_shape_details
