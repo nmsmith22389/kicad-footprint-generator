@@ -33,7 +33,7 @@ KicadModTree.ModArgparser module
     :show-inheritance:
 
 KicadModTree.Vector module
--------------------------
+--------------------------
 
 .. automodule:: KicadModTree.Vector
     :members:

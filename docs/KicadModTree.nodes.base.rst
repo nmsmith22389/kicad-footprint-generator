@@ -40,7 +40,7 @@ KicadModTree.nodes.base.Pad module
     :show-inheritance:
 
 KicadModTree.nodes.base.Polygon module
-----------------------------------
+--------------------------------------
 
 .. automodule:: KicadModTree.nodes.base.Polygon
     :members:

@@ -41,7 +41,7 @@ class Pad(Node):
         * *type* (``Pad.TYPE_THT``, ``Pad.TYPE_SMT``, ``Pad.TYPE_CONNECT``, ``Pad.TYPE_NPTH``) --
           type of the pad
         * *shape* (``Pad.SHAPE_CIRCLE``, ``Pad.SHAPE_OVAL``, ``Pad.SHAPE_RECT``, ``SHAPE_ROUNDRECT``,
-        ``Pad.SHAPE_TRAPEZE``, ``SHAPE_CUSTOM``) --
+          ``Pad.SHAPE_TRAPEZE``, ``SHAPE_CUSTOM``) --
           shape of the pad
         * *layers* (``Pad.LAYERS_SMT``, ``Pad.LAYERS_THT``, ``Pad.LAYERS_NPTH``) --
           layers on which are used for the pad
