@@ -197,3 +197,20 @@ MicroCrystal_C7_SON-8_1.5x3.2mm_P0.9mm:
 
   compatible_mpns:
     - MicroCrystal-RV3028-C7
+
+# USON-8_3x4mm_P0.8mm:
+#   device_type: 'USON'
+#   library: Package_SON
+#   manufacturer: 'Winbond'
+#   size_source: 'https://www.winbond.com/hq/support/documentation/levelOne.jsp?__locale=en&DocNo=DA00-W25Q16JV.1#page=69'
+#   ipc_class: 'qfn'
+
+#   body_size_x: 2.9 .. 3.0 .. 3.1
+#   body_size_y: 3.9 .. 4.0 .. 4.1
+
+#   lead_width: 0.25 .. 0.30 .. 0.35
+#   lead_len: 0.55 .. 0.60 .. 0.65
+
+#   pitch: 0.8
+#   num_pins_x: 0
+#   num_pins_y: 4
