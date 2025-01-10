@@ -344,6 +344,60 @@ HTSSOP-28-1EP_4.4x9.7mm_P0.65mm_EP2.75x6.20mm:
     paste_avoid_via: false
     EP_num_paste_pads: [1, 3]
 
+HTSSOP-38-1EP_4.4x9.7mm_P0.5mm_EP1.5x3.3mm:
+  size_source: 'JEDEC MO-153 Var BDT-1 https://www.jedec.org/document_search?search_api_views_fulltext=MO-153'
+  body_size_x: 4.4 +/-0.1
+  body_size_y: 9.7 +/-0.1
+  overall_size_x: 6.4
+  body_height: 1.2
+  lead_width: 0.17 .. 0.27
+  lead_len: 0.6 +/-0.15
+  pitch: 0.5
+  num_pins_x: 0
+  num_pins_y: 19
+  EP_size_x:
+    nominal: 1.50
+  EP_size_y:
+    nominal: 3.30
+  EP_num_paste_pads: [1, 2]
+  thermal_vias:
+    count: [2, 4]
+    grid: [0.9, 0.9]
+    drill: 0.2
+    EP_num_paste_pads: [1, 3]
+    paste_avoid_via: false
+
+HTSSOP-38-1EP_4.4x9.7mm_P0.5mm_EP2.74x4.75mm:
+  inherit: 'HTSSOP-38-1EP_4.4x9.7mm_P0.5mm_EP1.5x3.3mm'
+  size_source: 'JEDEC MO-153 Var BDT-1 https://www.jedec.org/document_search?search_api_views_fulltext=MO-153 https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/ltc-legacy-tssop/tssop_38_05-08-1865.pdf'
+  EP_size_x:
+    nominal: 2.74
+  EP_size_y:
+    nominal: 4.75
+  EP_num_paste_pads: [2, 3]
+  thermal_vias:
+    count: [3, 5]
+    EP_num_paste_pads: [2, 3]
+
+Linear_HTSSOP-31-38-1EP_4.4x9.7mm_P0.5mm_EP2.74x4.75mm:
+  inherit: 'HTSSOP-38-1EP_4.4x9.7mm_P0.5mm_EP1.5x3.3mm'
+  size_source: 'https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/ltc-legacy-tssop/tssop_38_05-08-1865.pdf'
+  manufacturer: 'Linear'
+  compatible_mpns:
+    - 'FE38-(31)'
+  lead_len: 0.50 .. 0.75
+  pad_to_pad_min_x_overwrite: 4.50 
+  pad_to_pad_max_x_overwrite: 6.60
+  pad_size_y_overwrite: 0.315
+  hidden_pins: [23, 25, 27, 29, 31, 33, 35]
+  EP_size_x:
+    nominal: 2.74
+  EP_size_y:
+    nominal: 4.75
+  EP_num_paste_pads: [2, 3]
+  thermal_vias:
+    count: [3, 5]
+    EP_num_paste_pads: [2, 3]
 
 HTSSOP-44_6.1x14.0mm_P0.5mm_TopEP4.14x7.01mm:
   size_source: 'http://www.ti.com/lit/ds/symlink/tpa3251.pdf#page=38'
