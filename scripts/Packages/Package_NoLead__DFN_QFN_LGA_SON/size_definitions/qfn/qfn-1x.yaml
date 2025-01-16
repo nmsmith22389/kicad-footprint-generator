@@ -905,3 +905,50 @@ WCH_QFN-16-1EP_3x3mm_P0.5mm_EP1.8x1.8mm:
   # EP_paste_coverage: 0.65
   EP_num_paste_pads: [2, 2]
   #heel_reduction: 0.2 #for relatively large EP pads (increase clearance)
+
+
+HXQFN-16-1EP_3x3mm_P0.5mm_EP1.85x1.85mm:
+  device_type: 'HXQFN'
+  size_source: 'https://www.nxp.com/docs/en/data-sheet/NX3L4051.pdf#page=17'
+  ipc_class: 'qfn'
+  body_size_x:
+    minimum: 2.9
+    nominal: 3
+    maximum: 3.1
+  body_size_y:
+    minimum: 2.9
+    nominal: 3
+    maximum: 3.1
+  overall_height:
+    maximum: 0.5
+
+  lead_width:
+    minimum: 0.25
+    maximum: 0.35
+  lead_len:
+    minimum: 0.3
+    maximum: 0.5
+
+  EP_size_x:
+    minimum: 1.75
+    maximum: 1.95
+  EP_size_y:
+    minimum: 1.75
+    maximum: 1.95
+
+  pitch: 0.5
+  num_pins_x: 4
+  num_pins_y: 4
+  
+  EP_num_paste_pads: [2, 2]
+  
+  thermal_vias:
+    count: [2, 2]
+    drill: 0.2
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    EP_num_paste_pads: [2, 2]
+    #paste_between_vias: 1
+    #grid: [1, 1]
+    # bottom_pad_size:
+    paste_avoid_via: False

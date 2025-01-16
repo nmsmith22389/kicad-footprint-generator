@@ -9159,3 +9159,41 @@ VQFN-12-1EP_4x4mm_P0.8mm_EP2.1x2.1mm:
   pin_color_key: metal grey pins
   mark_color_key: light brown label
   source: 'https://www.mouser.ch/datasheet/2/268/EMC2301_2_3_5_Data_Sheet_DS20006532A-3443118.pdf (page 56-58)'
+
+HXQFN-16-1EP_3x3mm_P0.5mm_EP1.85x1.85mm:
+  c: 0.127
+  L: 0.35
+  fp_s: True
+  fp_r: 0.4
+  fp_d: 0.5
+  fp_dx: null
+  fp_dy: null
+  fp_z: 0.1
+  ef: 0.0
+  cce: 0.2
+  D: 3.0
+  E: 3.0
+  A1: 0.05
+  A2: 0.45
+  b: 0.3
+  e: 0.5
+  m: 0.0
+  ps: rounded
+  npx: 4
+  npy: 4
+  epad: [1.85, 1.85]
+  epad_offsetX: null
+  epad_offsetY: null
+  epad_n: null
+  epad_pitch: null
+  excluded_pins: null
+  model_name: HXQFN-16-1EP_3x3mm_P0.5mm_EP1.85x1.85mm
+  rotation: -90
+  destination_dir: Package_DFN_QFN.3dshapes
+  body_color_key: black body
+  pin_shapes: null
+  pin_color_key: metal grey pins
+  mark_color_key: light brown label
+  source: 'https://www.nxp.com/docs/en/data-sheet/NX3L4051.pdf (page 17)'
+
+
