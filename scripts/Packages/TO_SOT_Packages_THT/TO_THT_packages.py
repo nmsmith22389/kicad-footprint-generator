@@ -393,6 +393,8 @@ class pack:
                 self.webpage="http://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/ltc-legacy-to-220/to-220_5_05-08-1421.pdf?domain=www.linear.com, https://www.diodes.com/assets/Package-Files/TO220-5.pdf"
                 if staggered_type==0:
                     self.webpage="http://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/ltc-legacy-to-220/to-220_5_05-08-1421_straight_lead.pdf"
+            if (pins==7):
+                self.webpage="https://www.mouser.com/datasheet/2/389/cd00000076-1795191.pdf#page=14, https://www.jedec.org/system/files/docs/TO-220L-01.pdf"
             self.plastic = [10, 9.25, 4.4]  # width,height,depth of plastic package, starting at bottom-left
             self.metal = [self.plastic[0], 15.65, 1.27]  # width,height,thickness of metal plate, starting at metal_offset from bottom-left
             self.pins = 3  # number of pins
@@ -414,21 +416,42 @@ class pack:
             self.staggered_pad = [1.8, 1.8]  # width/height of pads
             if pins == 5:
                 self.tags.append("Pentawatt")
-                self.tags.append("Multiwatt-5")
+                #self.tags.append("Multiwatt-5")  # Multiwatt package is about the width, not number of pins
                 #self.more_packnames.append("Pentawatt")
                 #self.more_packnames.append("Multiwatt-5")
                 self.staggered_pin_minlength = 2.05+1.28  # y-offset of back-pins in staggered mode
                 self.rm = 1.7
                 self.pad = [1.3, 1.8]
+            if pins == 7:
+                self.tags.append("Heptawatt-V")
+                # self.tags.append("Heptawatt-H")
+                self.tags.append("NDZ0007B") # only for Vertical
+                self.plastic = [10.16, 15.5-6.35, 4.8] # H2 (0.4" in JEDEC), L6-L7, A max, see Vertical; 'A' nominal is 165 mils / 4.20 mm in JEDEC
+                # self.plastic = [10.16, (15.1+15.8)/2-(6+6.6)/2, 4.8] # H2 max, L6-L7, A, see Horizontal
+                self.metal = [self.plastic[0], 15.5, 1.37] # H2 max, L6, C max, see Vertical
+                # self.metal = [self.plastic[0], (15.1+15.8)/2, 1.37] # H2 max, L6, C max, see Horizontal
+                self.mounting_hole_pos = [self.plastic[0] / 2,
+                                          self.metal[1] - (2.6+3)/2]
+                self.mounting_hole_diameter = (3.65+3.85)/2
+                self.rm = 2.54/2  # G/2
+                self.staggered_rm = [5.08,5.10]  # M1 in Heptawatt V, L3 in Heptawatt H
+                self.staggered_pin_offset_z = 2.8  # dimension: M in Heptawatt V
+                self.staggered_pin_minlength = 15.8-((15.1+15.8)/2-(2.6+3)/2)-((0.35+0.55)/2)/2  # = 2.925 mm --> L2-(L6-L5)-E/2 in Heptawatt H, will be used only in Horizontal footprints
+                # self.staggered_pin_minlength = 18.4-((15.1+15.8)/2-(2.6+3)/2)-((0.35+0.55)/2)/2  # = 5.975 mm if using this source: https://www.st.com/resource/en/datasheet/cd00000208.pdf#page=12
+                self.pinw = [(0.6+0.8)/2, (0.35+0.55)/2]  # F, E
+                # self.pad is actually the pad sizes in the PCB
             if pins == 9:
                 self.pinw = [0.5, 0.38];
                 self.drill = 0.7
                 self.pad = [1.3, 1.3]
                 self.staggered_pad = [1.5, 1.5]  # width/height of pads
-            if pins >5:
+            # Multiwatt == "double TO-220", i.e. they have TO-220 width x2, so TO-220-7 and TO-220-9 are not Multiwatt if package width == 10.x mm
+            # see:
+            # - https://www.st.com/resource/en/technical_note/tn1258-an-innovative-high-power-ic-surface-mount-package-family-powerso20--powerso36-power-ic-packaging-from-insertion-to-surface-mounting-stmicroelectronics.pdf
+            # - https://bitsavers.org/components/sgs/_dataBooks/1991_SGS-THOMSON_Packaging_Outlines_and_Dimensions_for_Selected_Dedicated_Products.pdf#page=72
+            if pins > 9:
                 self.tags.append("Multiwatt-{0}".format(pins))
                 #self.more_packnames.append("Multiwatt-{0}".format(pins))
-            if pins>9:
                 if pins==11:
                     self.webpage="http://www.st.com/resource/en/datasheet/tda7391lv.pdf"
                 if pins==15:
@@ -485,8 +508,8 @@ class pack:
             self.staggered_pin_minlength = 2.05  # y-offset of back-pins in staggered mode
             self.staggered_pad = [1.8, 1.8]  # width/height of pads
             if pins == 5:
-                self.tags.append("PentawattF-")
-                self.tags.append("MultiwattF-5")
+                self.tags.append("PentawattF")
+                #self.tags.append("MultiwattF-5")  # it's not Multiwatt (depends on width, not number of pins), see links in TO-220 / above
                 #self.more_packnames.append("Pentawatt")
                 #self.more_packnames.append("Multiwatt-5")
                 self.staggered_pin_minlength = 2.05+1.28  # y-offset of back-pins in staggered mode
@@ -497,7 +520,7 @@ class pack:
                 self.drill = 0.7
                 self.pad = [1.3, 1.3]
                 self.staggered_pad = [1.5, 1.5]  # width/height of pads
-            if pins >9:
+            if pins > 9:
                 if pins==11:
                     self.webpage="http://www.ti.com/lit/ds/symlink/lm3886.pdf"
                 self.plastic = [20.02, 10.64, 4.5]  # width,height,depth of plastic package, starting at bottom-left
