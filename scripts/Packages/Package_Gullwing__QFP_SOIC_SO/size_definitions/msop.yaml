@@ -566,3 +566,31 @@ MSOP-16-1EP_3x4.039mm_P0.5mm_EP1.651x2.845mm:
   pitch: 0.5
   num_pins_x: 0
   num_pins_y: 8
+
+######################################################################################################
+
+Analog_MSOP-12-16_3x4.039mm_P0.5mm:
+  inherit: MSOP-16_3x4.039mm_P0.5mm
+  additional_tags:
+    - 'Linear-Technology'
+  compatible_mpns:
+    - 'MS16-(12)'
+  manufacturer: Analog
+  size_source: 'https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/ltc-legacy-msop/05081847_b_ms16(12).pdf'
+  hidden_pins: [2, 4, 13, 15]
+  pad_size_y_overwrite: 0.305
+  pad_to_pad_min_x_overwrite: 3.322 # 5.10 - 2*0.889
+  pad_to_pad_max_x_overwrite: 5.10
+
+Analog_MSOP-12-16-1EP_3x4.039mm_P0.5mm_EP1.651x2.845mm:
+  inherit: MSOP-16-1EP_3x4.039mm_P0.5mm_EP1.651x2.845mm
+  additional_tags:
+    - 'Linear-Technology'
+  compatible_mpns:
+    - 'MSE16-(12)'
+  manufacturer: Analog
+  size_source: 'https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/ltc-legacy-msop/05081871_d_mse16(12).pdf https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/ltc-legacy-msop/05081667_F_MSE16.pdf'
+  hidden_pins: [2, 4, 13, 15]
+  pad_size_y_overwrite: 0.305
+  pad_to_pad_min_x_overwrite: 3.322 # 5.10 - 2*0.889
+  pad_to_pad_max_x_overwrite: 5.10

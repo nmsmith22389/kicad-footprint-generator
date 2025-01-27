@@ -3712,70 +3712,6 @@ HTSSOP-38-1EP_6.1x12.5mm_P0.65mm_EP5.2x12.5mm_Mask3.39x6.35mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.ti.com/lit/ds/symlink/tlc5951.pdf#page=47&zoom=140,-67,15'
 
-Linear_MSOP-12-16-1EP_3x4mm_P0.5mm:
-  the: 9.0
-  tb_s: 0.15
-  c: 0.1
-  R1: 0.1
-  R2: 0.1
-  S: 0.1
-  fp_s: 1
-  fp_r: 0.2
-  fp_d: 0.3
-  fp_z: 0.05
-  ef: 0.0
-  cc1: 0.25
-  D1: 4.0
-  E1: 3.0
-  E: 5.21
-  A1: 0.1
-  A2: 1.0
-  b: 0.2
-  e: 0.5
-  npx: 6
-  npy: 0
-  epad: null
-  excluded_pins: null
-  model_name: Linear_MSOP-12-16-1EP_3x4mm_P0.5mm
-  rotation: -90
-  body_color_key: 'black body'
-  pin_color_key: 'metal grey pins'
-  mark_color_key: 'light brown label'
-  destination_dir: 'Package_SO.3dshapes'
-  source: 'http://cds.linear.com/docs/en/datasheet/3630fd.pdf'
-
-MSOP-12-16-1EP_3x4mm_Pitch0.5mm_EP1.65x2.85mm:
-  the: 9.0
-  tb_s: 0.15
-  c: 0.1
-  R1: 0.1
-  R2: 0.1
-  S: 0.1
-  fp_s: 1
-  fp_r: 0.2
-  fp_d: 0.3
-  fp_z: 0.05
-  ef: 0.0
-  cc1: 0.25
-  D1: 4.0
-  E1: 3.0
-  E: 4.4
-  A1: 0.1
-  A2: 1.0
-  b: 0.2
-  e: 0.5
-  npx: 8
-  npy: 0
-  epad: null
-  excluded_pins: [2, 4, 13, 15]
-  model_name: MSOP-12-16-1EP_3x4mm_Pitch0.5mm_EP1.65x2.85mm
-  rotation: -90
-  body_color_key: 'black body'
-  pin_color_key: 'metal grey pins'
-  mark_color_key: 'light brown label'
-  destination_dir: 'Package_SO.3dshapes'
-  source: 'N/A'
-
 MSOP-16-1EP_3x4mm_Pitch0.5mm_EP1.65x2.85mm:
   the: 9.0
   tb_s: 0.15
@@ -7436,45 +7372,45 @@ MSOP-16-1EP_3x4.039mm_P0.5mm_EP1.651x2.845mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://cds.linear.com/docs/en/packaging/05081667_F_MSE16.pdf'
 
-MSOP-12-16_3x4mm_Pitch0.5mm:
+Analog_MSOP-12-16_3x4.039mm_P0.5mm:
   the: 12.0
   tb_s: 0.1
   c: 0.18
   R1: 0.05
   R2: 0.05
-  S: 0.25
+  L: 0.53
   fp_s: True
   fp_r: 0.5
   fp_d: 0.2
   fp_z: 0.1
   ef: 0
   cc1: 0.25
-  D1: 4.0
+  D1: 4.039
   E1: 3.0
   E: 4.9
-  A1: 0.1
-  A2: 0.85
+  A1: 0.1016
+  A2: 0.86
   b: 0.22
   e: 0.5
   npx: 8
   npy: 0
   epad: null
   excluded_pins: [2, 4, 13, 15]
-  model_name: MSOP-12-16_3x4mm_P0.5mm
+  model_name: Analog_MSOP-12-16_3x4.039mm_P0.5mm
   rotation: -90
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
   destination_dir: 'Package_SO.3dshapes'
-  source: 'http://cds.linear.com/docs/en/packaging/05081871_D_MSE16%2812%29.pdf'
+  source: 'https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/ltc-legacy-msop/05081847_b_ms16(12).pdf'
 
-MSOP-12-16-1EP_3x4mm_Pitch0.5mm:
+Analog_MSOP-12-16-1EP_3x4.039mm_P0.5mm_EP1.651x2.845mm:
   the: 12.0
   tb_s: 0.1
   c: 0.18
   R1: 0.05
   R2: 0.05
-  S: 0.25
+  L: 0.53
   fp_s: True
   fp_r: 0.5
   fp_d: 0.2
@@ -7484,21 +7420,21 @@ MSOP-12-16-1EP_3x4mm_Pitch0.5mm:
   D1: 4.0
   E1: 3.0
   E: 4.9
-  A1: 0.1
-  A2: 0.85
+  A1: 0.1016
+  A2: 0.86
   b: 0.22
   e: 0.5
   npx: 8
   npy: 0
-  epad: [2.84, 1.65]
+  epad: [2.845, 1.651]
   excluded_pins: [2, 4, 13, 15]
-  model_name: MSOP-12-16-1EP_3x4mm_P0.5mm
+  model_name: Analog_MSOP-12-16-1EP_3x4.039mm_P0.5mm_EP1.651x2.845mm
   rotation: -90
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
   destination_dir: 'Package_SO.3dshapes'
-  source: 'http://cds.linear.com/docs/en/packaging/05081871_D_MSE16%2812%29.pdf'
+  source: 'https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/ltc-legacy-msop/05081871_d_mse16(12).pdf'
 
 OnSemi_Micro8:
   the: 12.0
