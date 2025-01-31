@@ -73,6 +73,9 @@ class CommonToPackage:
         self.additional_package_names: list[str] = device_params.get(
             "additional_package_names", []
         )
+        self.manufacturer = device_params.get("manufacturer", "")
+        self.part_number = device_params.get("part_number", "")
+        self.device_type = device_params.get("device_type", "")
 
         if "device_type" in device_params:
             self.name_base = device_params["device_type"] + "-" + f"{self.pins}"
@@ -145,14 +148,14 @@ class RectangularToPackage(CommonToPackage):
         if "staggered_pitch" not in device_params:
             self.pad_dimensions[0] = min(self.pad_dimensions[0], 0.75 * self.pitch)
 
-    def init_footprint(self, orientation: str, modifier: str, staggered_type: int):
+    def init_footprint(self, orientation: str, modifier: str, staggered_type: int, config: dict):
         description, tags, name = self._get_descr_tags_fpname(
-            orientation, modifier, staggered_type
+            orientation, modifier, staggered_type, config
         )
         return super().init_footprint(description, tags, name)
 
     def _get_descr_tags_fpname(
-        self, orientation: str, modifier: str, staggered_type: int
+        self, orientation: str, modifier: str, staggered_type: int, config: dict
     ):
         # Tags
         tags = [
@@ -176,24 +179,36 @@ class RectangularToPackage(CommonToPackage):
             description += ", see " + self.webpage
 
         # Footprint name
-        footprint_name = self.name_base
-        if orientation == "Vertical" and staggered_type > 0:
-            pitch_y = self.staggered_pitch[0]
-        elif orientation == "Horizontal":
-            if staggered_type > 0:
-                pitch_y = self.staggered_pitch[1]
-            if self.additional_pin_pad_position_size:
-                footprint_name += "-1EP"
-        for t in self.additional_package_names:
-            footprint_name += "_" + t
-        footprint_name += "_" + orientation
-        if modifier:
-            footprint_name += "_" + modifier
-        for t in fpnametags:
-            footprint_name += "_" + t
         if staggered_type > 0:
-            footprint_name = footprint_name + "_Py{0}mm".format(pitch_y, 3)
-
+            name_format = config["fp_name_to_tht_staggered_format_string_no_trailing_zero"]
+            if orientation == "Vertical":
+                pitch_y = self.staggered_pitch[0]
+                lead = pitch_y - self.plastic_dimensions[2] + self.pin_offset_z
+            else:
+                pitch_y = self.staggered_pitch[1]
+                lead = pitch_y + self.pin_min_length_before_90deg_bend
+            footprint_name = name_format.format(
+                man = self.manufacturer,
+                mpn = self.part_number,
+                pkg = self.device_type,
+                pincount = self.pins,
+                pitch_x = 2*self.pitch,
+                pitch_y = pitch_y,
+                parity = "Odd" if staggered_type == 1 else "Even",
+                lead = lead,
+                orientation = orientation if orientation == "Vertical" else modifier,
+            ).replace("__", "_").lstrip("_")
+        else:
+            footprint_name = self.name_base
+            if orientation == "Horizontal" and self.additional_pin_pad_position_size:
+                footprint_name += "-1EP"
+            for t in self.additional_package_names:
+                footprint_name += "_" + t
+            footprint_name += "_" + orientation
+            if modifier:
+                footprint_name += "_" + modifier
+            for t in fpnametags:
+                footprint_name += "_" + t
         return description, tags, footprint_name
 
 
@@ -262,9 +277,9 @@ class TOGenerator(FootprintGenerator):
         self.configuration = configuration
         self.configuration_constants = ConfigurationConstants(configuration)
 
-    def save_footprint(self, f: Footprint):
-        self.add_standard_3d_model_to_footprint(f, "Package_TO_SOT_THT", f.name)
-        self.write_footprint(f, "Package_TO_SOT_THT")
+    def save_footprint(self, fp: Footprint):
+        self.add_standard_3d_model_to_footprint(fp, "Package_TO_SOT_THT", fp.name)
+        self.write_footprint(fp, "Package_TO_SOT_THT")
 
     def generateFootprint(
         self, device_params: dict, pkg_id: str, header_info: dict = None
@@ -298,7 +313,7 @@ class TOGenerator(FootprintGenerator):
     def generate_rect_to_fp_vertical(
         self, pkg: RectangularToPackage, pkg_id: str, staggered_type: int = 0
     ):
-        fp = pkg.init_footprint("Vertical", "", staggered_type)
+        fp = pkg.init_footprint("Vertical", "", staggered_type, self.configuration)
         c = self.configuration_constants
 
         left_fab_plastic = -pkg.pin_offset_x
@@ -655,7 +670,7 @@ class TOGenerator(FootprintGenerator):
     def generate_rect_to_fp_horizontal_tab_down(
         self, pkg: RectangularToPackage, pkg_id: str, staggered_type: int = 0
     ):
-        fp = pkg.init_footprint("Horizontal", "TabDown", staggered_type)
+        fp = pkg.init_footprint("Horizontal", "TabDown", staggered_type, self.configuration)
         c = self.configuration_constants
 
         left_fab_plastic = -pkg.pin_offset_x
@@ -1078,7 +1093,7 @@ class TOGenerator(FootprintGenerator):
             )
             return
 
-        fp = pkg.init_footprint("Horizontal", "TabUp", 0)
+        fp = pkg.init_footprint("Horizontal", "TabUp", 0, self.configuration)
         c = self.configuration_constants
 
         left_fab_plastic = -pkg.pin_offset_x
@@ -1636,8 +1651,8 @@ if __name__ == "__main__":
         help="the config file defining how the footprint will look like. (KLC)",
         default="../../tools/global_config_files/config_KLCv3.0.yaml",
     )
-    # parser.add_argument('--series_config', type=str, nargs='?',
-    #                     help='the config file defining series parameters.', default='../package_config_KLCv3.yaml')
+    parser.add_argument('--naming_config', type=str, nargs='?',
+                         help='the config file defining footprint naming.', default='../package_config_KLCv3.yaml')
     args = FootprintGenerator.add_standard_arguments(parser)
 
     with open(args.global_config, "r") as config_stream:
@@ -1646,11 +1661,11 @@ if __name__ == "__main__":
         except yaml.YAMLError as exc:
             print(exc)
 
-    # with open(args.series_config, 'r') as config_stream:
-    # try:
-    # configuration.update(yaml.safe_load(config_stream))
-    # except yaml.YAMLError as exc:
-    # print(exc)
+    with open(args.naming_config, "r") as config_stream:
+        try:
+            configuration.update(yaml.safe_load(config_stream))
+        except yaml.YAMLError as exc:
+            print(exc)
 
     FootprintGenerator.run_on_files(
         TOGenerator,

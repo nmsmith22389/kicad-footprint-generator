@@ -185,12 +185,12 @@ TO-220-5_Staggered:
   additional_tags: ["Pentawatt"]
   pin_min_length_before_90deg_bend: 3.33  # 2.05+1.28  # y-offset of back-pins in staggered mode
 
-TO-220-7_Staggered:
+TO-220-7_Staggered_Vertical:
   inherit: TO-220-4_Staggered
   size_source: "https://www.mouser.com/datasheet/2/389/cd00000076-1795191.pdf#page=14, https://www.jedec.org/system/files/docs/TO-220L-01.pdf"
   number_of_pins: 7
   pitch: 1.27  # G/2
-  additional_tags: ["Heptawatt-V", "NDZ0007B"]     # XYZ TODO: "NDZ0007B" only for Vertical
+  additional_tags: ["Heptawatt-V", "NDZ0007B"]
   plastic_dimensions_xyz: [10.16, 9.15, 4.8] # H2 (0.4" in JEDEC), L6-L7 = 15.5-6.35, A max, see Vertical; 'A' nominal is 165 mils / 4.20 mm in JEDEC
   # plastic_dimensions_xyz: [10.16, (15.1+15.8)/2-(6+6.6)/2, 4.8] # H2 max, L6-L7, A, see Horizontal
   metal_dimensions_xyz: [10.16, 15.5, 1.37] # H2 max, L6, C max, see Vertical
@@ -202,6 +202,12 @@ TO-220-7_Staggered:
   pin_offset_z: 2.8  # dimension: M in Heptawatt V
   pin_min_length_before_90deg_bend: 2.925000000000002  # 15.8-((15.1+15.8)/2-(2.6+3)/2)-((0.35+0.55)/2)/2 --> L2-(L6-L5)-E/2 in Heptawatt H, will be used only in Horizontal footprints
   # pin_min_length_before_90deg_bend: 5.975  # 18.4-((15.1+15.8)/2-(2.6+3)/2)-((0.35+0.55)/2)/2 if using this source: https://www.st.com/resource/en/datasheet/cd00000208.pdf#page=12
+  generate_footprint_type: vertical-odd
+
+TO-220-7_Staggered_Horizontal:
+  inherit: TO-220-7_Staggered_Vertical
+  additional_tags: ["Heptawatt-H"]
+  generate_footprint_type: horizontal-odd
 
 TO-220-9_Staggered:
   inherit: TO-220-4_Staggered
@@ -218,7 +224,7 @@ TO-220-11_Staggered:
   number_of_pins: 11
   pitch: 1.7
   pin_width_height: [0.7, 0.5]
-  additional_tags: [] # XYZ TODO change to: ["Multiwatt-11"]
+  additional_tags: ["Multiwatt-11"]
   plastic_dimensions_xyz: [20.2, 10.7, 5]
   metal_dimensions_xyz: [20.2, 17.5, 1.6]
   metal_angled: [2.25, 2.25]
@@ -234,6 +240,7 @@ TO-220-11_Staggered:
 
 TO-220-15_Staggered:
   inherit: TO-220-11_Staggered
+  additional_tags: ["Multiwatt-15"]
   size_source: "http://www.st.com/resource/en/datasheet/l298.pdf"
   number_of_pins: 15
   pitch: 1.27
@@ -365,7 +372,7 @@ TO-220F-4_Staggered_Py3.7mm:
   pin_offset_z: 4.5  # z-offset of back-pins in staggered mode
   pin_min_length_before_90deg_bend: 2.05  # y-offset of back-pins in staggered mode
   pad_dimensions_xy: [1.8, 1.8]  # width/height of pads
-  generate_footprint_type: vertical-odd, vertical-even, horizontal-odd, horizontal-even
+  generate_footprint_type: vertical-odd, vertical-even
 
 TO-220F-4_Staggered_Py2.05mm:
   inherit: TO-220F-4_Staggered_Py3.7mm
@@ -388,6 +395,7 @@ TO-220F-7_Staggered:
   size_source: ""
   number_of_pins: 7
   pitch: 1.27
+  generate_footprint_type: vertical-odd, vertical-even
 
 TO-220F-9_Staggered:
   inherit: TO-220F-4_Staggered_Py3.7mm

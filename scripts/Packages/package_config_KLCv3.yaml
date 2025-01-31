@@ -8,6 +8,8 @@ lib_name_format_string: 'Package_{category:s}'
 fp_name_format_string_no_trailing_zero: '{man:s}_{mpn:s}_{pkg:s}-{pincount:d}_{size_x:g}x{size_y:g}mm_P{pitch:g}mm{suffix:s}{suffix2:s}'
 fp_name_format_string_no_trailing_zero_pincount_text: '{man:s}_{mpn:s}_{pkg:s}-{pincount:s}_{size_x:g}x{size_y:g}mm_P{pitch:g}mm{suffix:s}{suffix2:s}'
 
+fp_name_to_tht_staggered_format_string_no_trailing_zero: '{man:s}_{mpn:s}_{pkg:s}-{pincount:d}_P{pitch_x:g}x{pitch_y:g}mm_Stagger{parity:s}_Lead{lead:g}mm_{orientation:s}'
+
 fp_name_lga_format_string_no_trailing_zero: '{man:s}_{mpn:s}_{pkg:s}-{pincount:d}_{size_x:g}x{size_y:g}mm_P{pitch:g}mm{layout:s}{suffix:s}{suffix2:s}'
 fp_name_lga_format_string_no_trailing_zero_pincount_text: '{man:s}_{mpn:s}_{pkg:s}-{pincount:s}_{size_x:g}x{size_y:g}mm_P{pitch:g}mm{layout:s}{suffix:s}{suffix2:s}'
 
