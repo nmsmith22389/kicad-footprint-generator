@@ -1,1330 +1,1660 @@
 #!/usr/bin/env python3
 
+
+import argparse
+import logging
 import math
 
-from KicadModTree import *  # NOQA
-from tools import *
-from TO_THT_packages import *
+import yaml
+from tools import (
+    addCircleLF,
+    addHDLineWithKeepout,
+    addHLineWithKeepout,
+    addKeepoutRect,
+    addKeepoutRound,
+    addRectAngledBottom,
+    addRectAngledTop,
+    addRectAngledTopNoBottom,
+    addVDLineWithKeepout,
+    addVLineWithKeepout,
+    round_to_grid,
+    roundCrt,
+)
+
+from KicadModTree import (
+    Arc,
+    Circle,
+    Footprint,
+    FootprintType,
+    Line,
+    Pad,
+    Property,
+    RectLine,
+    Text,
+    Translation,
+)
+from scripts.tools.footprint_generator import FootprintGenerator
 
 
-# vertical symbols for rectangular transistors
-def makeVERT(lib_name, pck, has3d=False, x_3d=[0, 0, 0], s_3d=[1,1,1], lptext="_LargePads", r_3d=[0, 0, 0]):
-    padsize=pck.pad
-    l_fabp = -pck.pin_offset_x
-    t_fabp = -pck.pin_offset_z
-    if pck.staggered_type >0:
-        t_fabp=-pck.staggered_pin_offset_z
+class ConfigurationConstants:
+    """Class grouping KLC footprint constants"""
 
-    w_fabp = pck.plastic[0]
-    h_fabp = pck.plastic[2]
+    def __init__(self, configuration: dict):
+        self.courtyard_offset: float = configuration["courtyard_offset"]["default"]
+        self.silk_fab_offset: float = (
+            0.12  # XYZ TODO change to: configuration["silk_fab_offset"]
+        )
+        self.silk_pad_clearance: float = (
+            0.15  # XYZ TODO change to: configuration["silk_pad_clearance"] and change in the code to additionally subtract half the width of the silkscreen line
+        )
+        self.fab_line_width: float = configuration["fab_line_width"]
+        self.courtyard_line_width: float = configuration["courtyard_line_width"]
+        self.silk_line_width: float = configuration["silk_line_width"]
+        self.text_offset: float = 1
 
-    w_fabm = pck.metal[0]
-    h_fabm = pck.metal[2]
 
-    l_slkp = l_fabp - slk_offset
-    t_slkp = t_fabp - slk_offset
-    w_slkp = w_fabp + 2 * slk_offset
-    h_slkp = h_fabp + 2 * slk_offset
-    w_slkm = w_fabm + 2 * slk_offset
-    h_slkm = h_fabm + 2 * slk_offset
+class CommonToPackage:
+    """Class for properties common to both types of TO packages"""
 
-    l_mounth = l_fabp + pck.mounting_hole_pos[0]
+    def __init__(self, device_params: dict, pkg_id: str):
+        try:
+            self.pins: int = device_params["number_of_pins"]
+            self.pad_dimensions: list[float] = device_params["pad_dimensions_xy"]
+            self.drill: float = device_params["pad_hole_diameter"]
+        except Exception as e:
+            msg = f"Error in '{pkg_id}': Parameter '{e.args[0]}' must be provided!"
+            print("\n" + msg + "\n")
+            raise KeyError(msg)
 
-    txt_x = l_slkp + max(w_slkp, w_slkm) / 2
+        self.name_base: str = ""
+        self.additional_tags: list[str] = device_params.get("additional_tags", [])
+        self.fpnametags = []
+        self.webpage: str = device_params.get("size_source", "")
+        self.additional_package_names: list[str] = device_params.get(
+            "additional_package_names", []
+        )
 
-    # calculate pad positions
-    pads=[]
-    yshift=0
-    y1=0
-    y2=0
-    maxpiny=0
-    if pck.staggered_type == 1:
-        y1 = pck.staggered_rm[0]
-        yshift = -pck.staggered_rm[0]
-        y2 = 0
-        maxpiny = pck.staggered_rm[0]
-        if len(pck.staggered_pad)>0:
-            padsize=pck.staggered_pad
-    elif pck.staggered_type == 2:
-        y1 = 0
+        if "device_type" in device_params:
+            self.name_base = device_params["device_type"] + "-" + f"{self.pins}"
+        else:
+            self.name_base = pkg_id
+
+    def init_footprint(self, description: str, tags: list[str], name: str):
+        fp = Footprint(name, FootprintType.THT)
+        fp.setDescription(description)
+        fp.tags = tags
+        return fp
+
+
+class RectangularToPackage(CommonToPackage):
+    """Class for properties of rectangular shaped TO packages"""
+
+    def __init__(self, device_params: dict, pkg_id: str):
+        super().__init__(device_params, pkg_id)
+        try:
+            self.plastic_dimensions: list[float] = device_params["plastic_dimensions_xyz"]  # fmt: skip
+            self.pitch: float = device_params["pitch"]
+        except Exception as e:
+            msg = f"Error in '{pkg_id}': Parameter '{e.args[0]}' must be provided!"
+            print("\n" + msg + "\n")
+            raise KeyError(msg)
+
+        self.metal_dimensions: list[float] = device_params.get(
+            "metal_dimensions_xyz", [0, 0, 0]
+        )
+        self.metal_offset_x: float = device_params.get(
+            "metal_offset_x", 0
+        )  # offset of metal from left
+        self.mounting_hole_position: list[int] = device_params.get(
+            "mounting_hole_position", [0, 0]
+        )
+        self.mounting_hole_diameter: float = device_params.get(
+            "mounting_hole_diameter_on_package", 0
+        )
+        self.mounting_hole_drill: float = device_params.get(
+            "mounting_hole_diameter_on_pcb", 0
+        )
+        self.pin_min_length_before_90deg_bend: float = device_params.get(
+            "pin_min_length_before_90deg_bend", 0
+        )
+        self.pin_width_height: list[float] = device_params.get(
+            "pin_width_height", [0, 0]
+        )
+        self.pin_offset_x: float = 0
+        self.pin_offset_z: float = device_params.get("pin_offset_z", 0)
+        self.additional_pin_pad_position: list[float] = device_params.get(
+            "additional_pin_pad_position", []
+        )
+        self.additional_pin_pad_position_size: list[float] = device_params.get(
+            "additional_pin_pad_position_size", []
+        )
+        self.plastic_angled: list[float] = device_params.get("plastic_angled", [])
+        self.metal_angled: list[float] = device_params.get("metal_angled", [])
+
+        self.generate_footprint_type: int = device_params.get("generate_footprint_type")
+        self.staggered_pitch: list[float] = device_params.get("staggered_pitch")
+        self.pitch_list: list[float] = device_params.get("pitch_list", [])
+
+        if self.pitch_list:
+            self.pin_spread = sum(self.pitch_list)
+        else:
+            self.pin_spread = (self.pins - 1) * self.pitch
+        self.pin_offset_x = (self.plastic_dimensions[0] - self.pin_spread) / 2
+
+        # If pads are too wide, make them narrower for non-staggered devices
+        if "staggered_pitch" not in device_params:
+            self.pad_dimensions[0] = min(self.pad_dimensions[0], 0.75 * self.pitch)
+
+    def init_footprint(self, orientation: str, modifier: str, staggered_type: int):
+        description, tags, name = self._get_descr_tags_fpname(
+            orientation, modifier, staggered_type
+        )
+        return super().init_footprint(description, tags, name)
+
+    def _get_descr_tags_fpname(
+        self, orientation: str, modifier: str, staggered_type: int
+    ):
+        # Tags
+        tags = [
+            self.name_base,
+            orientation,
+            f"RM {self.pitch}mm",
+        ] + self.additional_tags
+        fpnametags = self.fpnametags
+        if staggered_type == 1:
+            tags.append("staggered type-1")
+            fpnametags = ["StaggeredType1"] + fpnametags
+        elif staggered_type == 2:
+            tags.append("staggered type-2")
+            fpnametags = ["StaggeredType2"] + fpnametags
+
+        # Description
+        description = self.name_base
+        for tag in tags[1:]:
+            description += ", " + tag
+        if self.webpage:
+            description += ", see " + self.webpage
+
+        # Footprint name
+        footprint_name = self.name_base
+        if orientation == "Vertical" and staggered_type > 0:
+            pitch_y = self.staggered_pitch[0]
+        elif orientation == "Horizontal":
+            if staggered_type > 0:
+                pitch_y = self.staggered_pitch[1]
+            if self.additional_pin_pad_position_size:
+                footprint_name += "-1EP"
+        for t in self.additional_package_names:
+            footprint_name += "_" + t
+        footprint_name += "_" + orientation
+        if modifier:
+            footprint_name += "_" + modifier
+        for t in fpnametags:
+            footprint_name += "_" + t
+        if staggered_type > 0:
+            footprint_name = footprint_name + "_Py{0}mm".format(pitch_y, 3)
+
+        return description, tags, footprint_name
+
+
+class RoundToPackage(CommonToPackage):
+    """Class for properties of round shaped TO packages"""
+
+    def __init__(self, device_params: dict, pkg_id: str):
+        super().__init__(device_params, pkg_id)
+        try:
+            self.pin_circle_diameter: float = device_params["pin_circle_diameter"]
+            self.diameter_inner: float = device_params[
+                "diameter_inner"
+            ]  # diameter of top can
+            self.diameter_outer: float = device_params[
+                "diameter_outer"
+            ]  # diameter of bottom can
+        except Exception as e:
+            msg = f"Error in '{pkg_id}': Parameter '{e.args[0]}' must be provided!"
+            print("\n" + msg + "\n")
+            raise KeyError(msg)
+
+        self.mark_width: float = device_params.get("mark_width", 0)
+        self.mark_length: float = device_params.get("mark_length", 0)
+        self.pin1_angle: float = device_params.get("pin1_angle", 180)
+        self.angle_between_pins: float = device_params.get(
+            "angle_between_pins", -90 if self.pins == 3 else -360 / self.pins
+        )
+        self.mark_angle: float = device_params.get("mark_angle", self.pin1_angle + 45)
+        self.window_diameter: float = device_params.get("window_diameter", 0)
+        self.deleted_pins: list[int] = device_params.get("deleted_pins", [])
+
+    def init_footprint(self, footprint_type: str):
+        description, tags, name = self._get_descr_tags_fpname(footprint_type)
+        return super().init_footprint(description, tags, name)
+
+    def _get_descr_tags_fpname(self, footprint_type: str):
+        # Tags
+        name = self.name_base
+        tags = []
+        if footprint_type == "window" or footprint_type == "lens":
+            name += "_" + footprint_type.capitalize()
+            tags.append(footprint_type.capitalize())
+
+        # Footprint name
+        for t in self.additional_package_names:
+            name += "_" + t
+        for t in self.fpnametags:
+            name += "_" + t
+
+        # Description
+        tags = (
+            [name] + tags + self.additional_tags
+        )  # XYZ TODO: change back to: self.name_base
+        description = name  # XYZ TODO: change back to: self.name_base
+        for t in tags[1:]:
+            description += ", " + t
+        if self.webpage:
+            description += ", see " + self.webpage
+
+        return description, tags, name
+
+
+class TOGenerator(FootprintGenerator):
+    def __init__(self, configuration, **kwargs):
+        super().__init__(**kwargs)
+        self.configuration = configuration
+        self.configuration_constants = ConfigurationConstants(configuration)
+
+    def save_footprint(self, f: Footprint):
+        self.add_standard_3d_model_to_footprint(f, "Package_TO_SOT_THT", f.name)
+        self.write_footprint(f, "Package_TO_SOT_THT")
+
+    def generateFootprint(
+        self, device_params: dict, pkg_id: str, header_info: dict = None
+    ):
+        footprint_type = device_params.get("generate_footprint_type", [])
+
+        if isinstance(footprint_type, str):
+            footprint_type = footprint_type.replace(" ", "")
+            footprint_type = footprint_type.split(",")
+
+        if "plastic_dimensions_xyz" in device_params:
+            pkg = RectangularToPackage(device_params, pkg_id)
+            if "vertical" in footprint_type:
+                self.generate_rect_to_fp_vertical(pkg, pkg_id)
+            if "horizontal" in footprint_type:
+                self.generate_rect_to_fp_horizontal_tab_down(pkg, pkg_id)
+                self.generate_rect_to_fp_horizontal_tab_up(pkg, pkg_id)
+            if "vertical-odd" in footprint_type:
+                self.generate_rect_to_fp_vertical(pkg, pkg_id, 1)
+            if "vertical-even" in footprint_type:
+                self.generate_rect_to_fp_vertical(pkg, pkg_id, 2)
+            if "horizontal-odd" in footprint_type:
+                self.generate_rect_to_fp_horizontal_tab_down(pkg, pkg_id, 1)
+            if "horizontal-even" in footprint_type:
+                self.generate_rect_to_fp_horizontal_tab_down(pkg, pkg_id, 2)
+        elif "diameter_inner" in device_params:
+            pkg = RoundToPackage(device_params, pkg_id)
+            for type in footprint_type:
+                self.generate_round_to_fp(pkg, pkg_id, type)
+
+    def generate_rect_to_fp_vertical(
+        self, pkg: RectangularToPackage, pkg_id: str, staggered_type: int = 0
+    ):
+        fp = pkg.init_footprint("Vertical", "", staggered_type)
+        c = self.configuration_constants
+
+        left_fab_plastic = -pkg.pin_offset_x
+        top_fab_plastic = -pkg.pin_offset_z
+        width_fab_plastic = pkg.plastic_dimensions[0]
+        height_fab_plastic = pkg.plastic_dimensions[2]
+        width_fab_metal = pkg.metal_dimensions[0]
+        height_fab_metal = pkg.metal_dimensions[2]
+
+        left_silk_plastic = left_fab_plastic - c.silk_fab_offset
+        top_silk_plastic = top_fab_plastic - c.silk_fab_offset
+        width_silk_plastic = width_fab_plastic + 2 * c.silk_fab_offset
+        height_silk_plastic = height_fab_plastic + 2 * c.silk_fab_offset
+        width_silk_metal = width_fab_metal + 2 * c.silk_fab_offset
+        height_silk_metal = height_fab_metal + 2 * c.silk_fab_offset
+        x_mount_hole = left_fab_plastic + pkg.mounting_hole_position[0]
+        x_text = left_silk_plastic + max(width_silk_plastic, width_silk_metal) / 2
+
+        # calculate pad positions
+        pads = []
         yshift = 0
-        y2=pck.staggered_rm[0]
-        maxpiny = pck.staggered_rm[0]
-        if len(pck.staggered_pad) > 0:
-            padsize = pck.staggered_pad
-
-    pinwid = (pck.pins - 1) * pck.rm
-    if len(pck.rm_list) > 0:
-        pinwid = 0
-        for rm in pck.rm_list:
-            pinwid = pinwid + rm
-
-    l_crt = min(-padsize[0] / 2, l_fabp) - crt_offset
-    t_crt = min(-padsize[1] / 2, t_fabp) - crt_offset
-    w_crt = max(max(w_fabp, w_fabm), pinwid + padsize[0]) + 2 * crt_offset
-    h_crt = max(t_fabp+max(h_fabp, h_fabm)+ crt_offset-t_crt, -t_crt + maxpiny + padsize[1] / 2 + crt_offset)
-
-    y=y1
-    x = 0
-    for p in range(1, pck.pins + 1):
-        if (p % 2) == 1:
-            y = y1
-        else:
-            y = y2
-        pads.append([x, y])
-        if len(pck.rm_list)>0 and p<=len(pck.rm_list):
-            x = x + pck.rm_list[p-1]
-        else:
-            x = x + pck.rm
-
-
-    tag_items = ["Vertical", "RM {0}mm".format(pck.rm)]
-
-    footprint_name = pck.name
-    for t in pck.more_packnames:
-        footprint_name = footprint_name + "_" + t
-    footprint_name = footprint_name + "_Vertical"
-    for t in pck.fpnametags:
-        footprint_name = footprint_name + "_" + t
-    if pck.staggered_type>0:
-        footprint_name = footprint_name + "_Py{0}mm".format(pck.staggered_rm[0],3)
-    if pck.largepads:
-        tag_items.append("large Pads")
-        footprint_name = footprint_name + lptext
-
-    print(footprint_name)
-
-    description = pck.name
-    tags = pck.name
-    for t in tag_items:
-        description = description + ", " + t
-        tags = tags + " " + t
-    for t in pck.tags:
-        description = description + ", " + t
-        tags = tags + " " + t
-    if len(pck.webpage)>0:
-        description = description + ", see " + pck.webpage
-
-    # init kicad footprint
-    kicad_mod = Footprint(footprint_name, FootprintType.THT)
-    kicad_mod.setDescription(description)
-    kicad_mod.setTags(tags)
-
-    kicad_modt = Translation(0, yshift)
-    kicad_mod.append(kicad_modt)
-
-    # set general values
-    kicad_modt.append(Property(name=Property.REFERENCE, text='REF**', at=[txt_x, t_slkp - txt_offset], layer='F.SilkS'))
-    kicad_modt.append(Text(text='${REFERENCE}', at=[txt_x, t_slkp - txt_offset], layer='F.Fab'))
-    kicad_modt.append(
-        Property(name=Property.VALUE, text=footprint_name, at=[txt_x, t_slkp + max(h_slkm, h_slkp, -t_slkp+h_crt+t_crt) + txt_offset], layer='F.Fab'))
-
-    # create FAB-layer
-    kicad_modt.append(
-        RectLine(start=[l_fabp, t_fabp], end=[l_fabp + w_fabp, t_fabp + h_fabp], layer='F.Fab', width=lw_fab))
-    if (pck.metal[2] > 0):
-        kicad_modt.append(
-            Line(start=[l_fabp, t_fabp + h_fabm], end=[l_fabp + w_fabp, t_fabp + h_fabm], layer='F.Fab', width=lw_fab))
-        if pck.mounting_hole_diameter > 0:
-            kicad_modt.append(Line(start=[l_mounth - pck.mounting_hole_diameter / 2, t_fabp],
-                                  end=[l_mounth - pck.mounting_hole_diameter / 2, t_fabp + h_fabm], layer='F.Fab',
-                                  width=lw_fab))
-            kicad_modt.append(Line(start=[l_mounth + pck.mounting_hole_diameter / 2, t_fabp],
-                                  end=[l_mounth + pck.mounting_hole_diameter / 2, t_fabp + h_fabm], layer='F.Fab',
-                                  width=lw_fab))
-    else:
-        if pck.mounting_hole_diameter > 0:
-            kicad_modt.append(Line(start=[l_mounth - pck.mounting_hole_diameter / 2, t_fabp],
-                                  end=[l_mounth - pck.mounting_hole_diameter / 2, t_fabp + h_fabp], layer='F.Fab',
-                                  width=lw_fab))
-            kicad_modt.append(Line(start=[l_mounth + pck.mounting_hole_diameter / 2, t_fabp],
-                                  end=[l_mounth + pck.mounting_hole_diameter / 2, t_fabp + h_fabp], layer='F.Fab',
-                                  width=lw_fab))
-    for p in range(0, len(pads)):
-        yl1=t_fabp + h_fabp
-        yl2=pads[p][1]
-        if yl2>yl1:
-            kicad_modt.append(Line(start=[pads[p][0], yl1], end=[pads[p][0], yl2], layer='F.Fab', width=lw_fab))
-
-    # create SILKSCREEN-layer
-    keepouts = []
-    for p in range(0,len(pads)):
-        if p==0:
-            keepouts=keepouts+addKeepoutRect(pads[p][0],pads[p][1],padsize[0]+2*slk_dist,padsize[1]+2*slk_dist)
-        else:
-            keepouts=keepouts+addKeepoutRound(pads[p][0],pads[p][1],padsize[0]+2*slk_dist,padsize[1]+2*slk_dist)
-
-    #for ko in keepouts:
-    #    kicad_modt.append(
-    #        RectLine(start=[ko[0],ko[2]], end=[ko[1],ko[3]], layer='B.Fab', width=lw_fab))
-
-    addHLineWithKeepout(kicad_modt, l_slkp, l_slkp + w_slkp, t_slkp, 'F.SilkS', lw_slk, keepouts)
-    addHLineWithKeepout(kicad_modt, l_slkp, l_slkp + w_slkp, t_slkp + h_slkp, 'F.SilkS', lw_slk, keepouts)
-    addVLineWithKeepout(kicad_modt, l_slkp, t_slkp, t_slkp + h_slkp, 'F.SilkS', lw_slk, keepouts)
-    addVLineWithKeepout(kicad_modt, l_slkp + w_slkp, t_slkp, t_slkp + h_slkp, 'F.SilkS', lw_slk, keepouts)
-    if (pck.metal[2] > 0):
-        addHLineWithKeepout(kicad_modt, l_slkp, l_slkp + w_slkp, t_slkp + h_slkm, 'F.SilkS', lw_slk, keepouts)
-        if pck.mounting_hole_diameter > 0:
-            addVLineWithKeepout(kicad_modt, l_mounth - pck.mounting_hole_diameter / 2, t_slkp, t_slkp + h_slkm,
-                                'F.SilkS', lw_slk, keepouts)
-            addVLineWithKeepout(kicad_modt, l_mounth + pck.mounting_hole_diameter / 2, t_slkp, t_slkp + h_slkm,
-                                'F.SilkS', lw_slk, keepouts)
-    else:
-        if pck.mounting_hole_diameter > 0:
-            addVLineWithKeepout(kicad_modt, l_mounth - pck.mounting_hole_diameter / 2, t_slkp, t_slkp + h_slkp,
-                                'F.SilkS', lw_slk, keepouts)
-            addVLineWithKeepout(kicad_modt, l_mounth + pck.mounting_hole_diameter / 2, t_slkp, t_slkp + h_slkp,
-                                'F.SilkS', lw_slk, keepouts)
-    for p in range(0, len(pads)):
-        yl1 = t_slkp + h_slkp
-        yl2 = pads[p][1]
-        if yl2>yl1:
-            addVLineWithKeepout(kicad_modt,pads[p][0], yl1, yl2, 'F.SilkS', lw_slk, keepouts)
-
-    # create courtyard
-    kicad_mod.append(
-        RectLine(start=[roundCrt(l_crt), roundCrt(t_crt+yshift)], end=[roundCrt(l_crt + w_crt), roundCrt(t_crt + h_crt+yshift)],
-                 layer='F.CrtYd', width=lw_crt))
-
-    # create pads
-    for p in range(0,len(pads)):
-        if p==0:
-            kicad_modt.append(
-                Pad(number=p+1, type=Pad.TYPE_THT, shape=Pad.SHAPE_RECT, at=pads[p], size=padsize, drill=pck.drill,
-                    layers=Pad.LAYERS_THT))
-        else:
-            kicad_modt.append(
-                Pad(number=p+1, type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, at=pads[p], size=padsize, drill=pck.drill,
-                    layers=Pad.LAYERS_THT))
-
-
-    # add model
-    if (has3d):
-        kicad_modt.append(
-            Model(filename=lib_name + ".3dshapes/" + footprint_name + ".wrl", at=x_3d, scale=s_3d, rotate=r_3d))
-
-    # print render tree
-    # print(kicad_mod.getRenderTree())
-    # print(kicad_mod.getCompleteRenderTree())
-
-    # write file
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile(footprint_name + '.kicad_mod')
-
-
-
-# horizontal symbols for rectangular transistors
-def makeHOR(lib_name, pck, has3d=False, x_3d=[0, 0, 0], s_3d=[1,1,1], lptext="_LargePads", r_3d=[0, 0, 0]):
-    padsize = pck.pad
-    l_fabp = -pck.pin_offset_x
-    t_fabp = -pck.pin_minlength
-    if pck.staggered_type >0:
-        t_fabp=-pck.staggered_pin_minlength
-    w_fabp = pck.plastic[0]
-    h_fabp = pck.plastic[1]
-
-    w_fabm = pck.metal[0]
-    h_fabm = pck.metal[1]
-
-    l_mounth = l_fabp + pck.mounting_hole_pos[0]
-    t_mounth = t_fabp - pck.mounting_hole_pos[1]
-
-    # calculate pad positions
-    pads = []
-    yshift = 0
-    y1 = 0
-    y2 = 0
-    maxpiny = 0
-    if pck.staggered_type == 1:
-        y1 = pck.staggered_rm[1]
-        yshift = -pck.staggered_rm[1]
-        y2 = 0
-        maxpiny = pck.staggered_rm[1]
-        if len(pck.staggered_pad) > 0:
-            padsize = pck.staggered_pad
-    elif pck.staggered_type == 2:
         y1 = 0
+        y2 = 0
+        y_pins_max = 0
+        if staggered_type:
+            if staggered_type == 1:
+                y1 = pkg.staggered_pitch[0]
+                yshift = -pkg.staggered_pitch[0]
+            else:
+                y2 = pkg.staggered_pitch[0]
+            y_pins_max = pkg.staggered_pitch[0]
+
+        leftop_crt = (
+            min(-pkg.pad_dimensions[0] / 2, left_fab_plastic) - c.courtyard_offset
+        )
+        top_crt = min(-pkg.pad_dimensions[1] / 2, top_fab_plastic) - c.courtyard_offset
+        widtheight_crt = (
+            max(
+                max(width_fab_plastic, width_fab_metal),
+                pkg.pin_spread + pkg.pad_dimensions[0],
+            )
+            + 2 * c.courtyard_offset
+        )
+        heightop_crt = max(
+            top_fab_plastic
+            + max(height_fab_plastic, height_fab_metal)
+            + c.courtyard_offset
+            - top_crt,
+            -top_crt + y_pins_max + pkg.pad_dimensions[1] / 2 + c.courtyard_offset,
+        )
+
+        y = y1
+        x = 0
+        for p in range(pkg.pins):
+            y = y2 if p % 2 else y1
+            pads.append((x, y))
+            if pkg.pitch_list and p < len(pkg.pitch_list):
+                x += pkg.pitch_list[p]
+            else:
+                x += pkg.pitch
+
+        fpt = Translation(0, yshift)
+        fp.append(fpt)
+
+        # set general values
+        fpt.append(
+            Property(
+                name=Property.REFERENCE,
+                text="REF**",
+                at=[x_text, top_silk_plastic - c.text_offset],
+                layer="F.SilkS",
+            )
+        )
+        fpt.append(
+            Text(
+                text="${REFERENCE}",
+                at=[x_text, top_silk_plastic - c.text_offset],
+                layer="F.Fab",
+            )
+        )
+        fpt.append(
+            Property(
+                name=Property.VALUE,
+                text=fp.name,
+                at=[
+                    x_text,
+                    top_silk_plastic
+                    + max(
+                        height_silk_metal,
+                        height_silk_plastic,
+                        -top_silk_plastic + heightop_crt + top_crt,
+                    )
+                    + c.text_offset,
+                ],
+                layer="F.Fab",
+            )
+        )
+
+        # create FAB layer
+        fpt.append(
+            RectLine(
+                start=[left_fab_plastic, top_fab_plastic],
+                end=[
+                    left_fab_plastic + width_fab_plastic,
+                    top_fab_plastic + height_fab_plastic,
+                ],
+                layer="F.Fab",
+                width=c.fab_line_width,
+            )
+        )
+        if pkg.metal_dimensions[2] > 0:
+            fpt.append(
+                Line(
+                    start=[left_fab_plastic, top_fab_plastic + height_fab_metal],
+                    end=[
+                        left_fab_plastic + width_fab_plastic,
+                        top_fab_plastic + height_fab_metal,
+                    ],
+                    layer="F.Fab",
+                    width=c.fab_line_width,
+                )
+            )
+            if pkg.mounting_hole_diameter > 0:
+                fpt.append(
+                    Line(
+                        start=[
+                            x_mount_hole - pkg.mounting_hole_diameter / 2,
+                            top_fab_plastic,
+                        ],
+                        end=[
+                            x_mount_hole - pkg.mounting_hole_diameter / 2,
+                            top_fab_plastic + height_fab_metal,
+                        ],
+                        layer="F.Fab",
+                        width=c.fab_line_width,
+                    )
+                )
+                fpt.append(
+                    Line(
+                        start=[
+                            x_mount_hole + pkg.mounting_hole_diameter / 2,
+                            top_fab_plastic,
+                        ],
+                        end=[
+                            x_mount_hole + pkg.mounting_hole_diameter / 2,
+                            top_fab_plastic + height_fab_metal,
+                        ],
+                        layer="F.Fab",
+                        width=c.fab_line_width,
+                    )
+                )
+        else:
+            if pkg.mounting_hole_diameter > 0:
+                fpt.append(
+                    Line(
+                        start=[
+                            x_mount_hole - pkg.mounting_hole_diameter / 2,
+                            top_fab_plastic,
+                        ],
+                        end=[
+                            x_mount_hole - pkg.mounting_hole_diameter / 2,
+                            top_fab_plastic + height_fab_plastic,
+                        ],
+                        layer="F.Fab",
+                        width=c.fab_line_width,
+                    )
+                )
+                fpt.append(
+                    Line(
+                        start=[
+                            x_mount_hole + pkg.mounting_hole_diameter / 2,
+                            top_fab_plastic,
+                        ],
+                        end=[
+                            x_mount_hole + pkg.mounting_hole_diameter / 2,
+                            top_fab_plastic + height_fab_plastic,
+                        ],
+                        layer="F.Fab",
+                        width=c.fab_line_width,
+                    )
+                )
+        for p in range(len(pads)):
+            yl1 = top_fab_plastic + height_fab_plastic
+            yl2 = pads[p][1]
+            if yl2 > yl1:
+                fpt.append(
+                    Line(
+                        start=[pads[p][0], yl1],
+                        end=[pads[p][0], yl2],
+                        layer="F.Fab",
+                        width=c.fab_line_width,
+                    )
+                )
+
+        # create silkscreen layer
+        keepouts = []
+        for p in range(len(pads)):
+            if p == 0:
+                keepouts = keepouts + addKeepoutRect(
+                    pads[p][0],
+                    pads[p][1],
+                    pkg.pad_dimensions[0] + 2 * c.silk_pad_clearance,
+                    pkg.pad_dimensions[1] + 2 * c.silk_pad_clearance,
+                )
+            else:
+                keepouts = keepouts + addKeepoutRound(
+                    pads[p][0],
+                    pads[p][1],
+                    pkg.pad_dimensions[0] + 2 * c.silk_pad_clearance,
+                    pkg.pad_dimensions[1] + 2 * c.silk_pad_clearance,
+                )
+
+        addHLineWithKeepout(
+            fpt,
+            left_silk_plastic,
+            left_silk_plastic + width_silk_plastic,
+            top_silk_plastic,
+            "F.SilkS",
+            c.silk_line_width,
+            keepouts,
+        )
+        addHLineWithKeepout(
+            fpt,
+            left_silk_plastic,
+            left_silk_plastic + width_silk_plastic,
+            top_silk_plastic + height_silk_plastic,
+            "F.SilkS",
+            c.silk_line_width,
+            keepouts,
+        )
+        addVLineWithKeepout(
+            fpt,
+            left_silk_plastic,
+            top_silk_plastic,
+            top_silk_plastic + height_silk_plastic,
+            "F.SilkS",
+            c.silk_line_width,
+            keepouts,
+        )
+        addVLineWithKeepout(
+            fpt,
+            left_silk_plastic + width_silk_plastic,
+            top_silk_plastic,
+            top_silk_plastic + height_silk_plastic,
+            "F.SilkS",
+            c.silk_line_width,
+            keepouts,
+        )
+        if pkg.metal_dimensions[2] > 0:
+            addHLineWithKeepout(
+                fpt,
+                left_silk_plastic,
+                left_silk_plastic + width_silk_plastic,
+                top_silk_plastic + height_silk_metal,
+                "F.SilkS",
+                c.silk_line_width,
+                keepouts,
+            )
+            if pkg.mounting_hole_diameter > 0:
+                addVLineWithKeepout(
+                    fpt,
+                    x_mount_hole - pkg.mounting_hole_diameter / 2,
+                    top_silk_plastic,
+                    top_silk_plastic + height_silk_metal,
+                    "F.SilkS",
+                    c.silk_line_width,
+                    keepouts,
+                )
+                addVLineWithKeepout(
+                    fpt,
+                    x_mount_hole + pkg.mounting_hole_diameter / 2,
+                    top_silk_plastic,
+                    top_silk_plastic + height_silk_metal,
+                    "F.SilkS",
+                    c.silk_line_width,
+                    keepouts,
+                )
+        else:
+            if pkg.mounting_hole_diameter > 0:
+                addVLineWithKeepout(
+                    fpt,
+                    x_mount_hole - pkg.mounting_hole_diameter / 2,
+                    top_silk_plastic,
+                    top_silk_plastic + height_silk_plastic,
+                    "F.SilkS",
+                    c.silk_line_width,
+                    keepouts,
+                )
+                addVLineWithKeepout(
+                    fpt,
+                    x_mount_hole + pkg.mounting_hole_diameter / 2,
+                    top_silk_plastic,
+                    top_silk_plastic + height_silk_plastic,
+                    "F.SilkS",
+                    c.silk_line_width,
+                    keepouts,
+                )
+        for p in range(len(pads)):
+            yl1 = top_silk_plastic + height_silk_plastic
+            yl2 = pads[p][1]
+            if yl2 > yl1:
+                addVLineWithKeepout(
+                    fpt,
+                    pads[p][0],
+                    yl1,
+                    yl2,
+                    "F.SilkS",
+                    c.silk_line_width,
+                    keepouts,
+                )
+
+        # create courtyard
+        fp.append(
+            RectLine(
+                start=[roundCrt(leftop_crt), roundCrt(top_crt + yshift)],
+                end=[
+                    roundCrt(leftop_crt + widtheight_crt),
+                    roundCrt(top_crt + heightop_crt + yshift),
+                ],
+                layer="F.CrtYd",
+                width=c.courtyard_line_width,
+            )
+        )
+
+        # create pads
+        for p in range(len(pads)):
+            if p == 0:
+                fpt.append(
+                    Pad(
+                        number=p + 1,
+                        type=Pad.TYPE_THT,
+                        shape=Pad.SHAPE_RECT,
+                        at=pads[p],
+                        size=pkg.pad_dimensions,
+                        drill=pkg.drill,
+                        layers=Pad.LAYERS_THT,
+                    )
+                )
+            else:
+                fpt.append(
+                    Pad(
+                        number=p + 1,
+                        type=Pad.TYPE_THT,
+                        shape=Pad.SHAPE_OVAL,
+                        at=pads[p],
+                        size=pkg.pad_dimensions,
+                        drill=pkg.drill,
+                        layers=Pad.LAYERS_THT,
+                    )
+                )
+
+        self.save_footprint(fp)
+
+    def generate_rect_to_fp_horizontal_tab_down(
+        self, pkg: RectangularToPackage, pkg_id: str, staggered_type: int = 0
+    ):
+        fp = pkg.init_footprint("Horizontal", "TabDown", staggered_type)
+        c = self.configuration_constants
+
+        left_fab_plastic = -pkg.pin_offset_x
+        top_fab_plastic = -pkg.pin_min_length_before_90deg_bend
+        width_fab_plastic = pkg.plastic_dimensions[0]
+        height_fab_plastic = pkg.plastic_dimensions[1]
+        width_fab_metal = pkg.metal_dimensions[0]
+        height_fab_metal = pkg.metal_dimensions[1]
+
+        left_silk_plastic = left_fab_plastic - c.silk_fab_offset
+        top_silk_plastic = top_fab_plastic + c.silk_fab_offset
+        width_silk_plastic = width_fab_plastic + 2 * c.silk_fab_offset
+        height_silk_plastic = height_fab_plastic + 2 * c.silk_fab_offset
+        width_silk_metal = width_fab_metal + 2 * c.silk_fab_offset
+        height_silk_metal = height_fab_metal + 2 * c.silk_fab_offset
+        x_mount_hole = left_fab_plastic + pkg.mounting_hole_position[0]
+        y_mount_hole = top_fab_plastic - pkg.mounting_hole_position[1]
+
+        # calculate pad positions
+        pads = []
         yshift = 0
-        y2 = pck.staggered_rm[1]
-        maxpiny = pck.staggered_rm[1]
-        if len(pck.staggered_pad) > 0:
-            padsize = pck.staggered_pad
+        y1 = 0
+        y2 = 0
+        maxpiny = 0
+        if staggered_type == 1:
+            y1 = pkg.staggered_pitch[1]
+            yshift = -pkg.staggered_pitch[1]
+            y2 = 0
+            maxpiny = pkg.staggered_pitch[1]
+        elif staggered_type == 2:
+            y1 = 0
+            yshift = 0
+            y2 = pkg.staggered_pitch[1]
+            maxpiny = pkg.staggered_pitch[1]
 
-    y=y1
-    x = 0
-    for p in range(1, pck.pins + 1):
-        if (p % 2) == 1:
-            y = y1
-        else:
-            y = y2
-        pads.append([x, y])
-        if len(pck.rm_list)>0 and p<=len(pck.rm_list):
-            x = x + pck.rm_list[p-1]
-        else:
-            x = x + pck.rm
-
-    pinwid = (pck.pins - 1) * pck.rm
-    if len(pck.rm_list) > 0:
-        pinwid = 0
-        for rm in pck.rm_list:
-            pinwid = pinwid + rm
-
-    l_slkp = l_fabp - slk_offset
-    t_slkp = t_fabp + slk_offset
-    w_slkp = w_fabp + 2 * slk_offset
-    h_slkp = h_fabp + 2 * slk_offset
-    w_slkm = w_fabm + 2 * slk_offset
-    h_slkm = h_fabm + 2 * slk_offset
-    addpad = 0
-    l_crt = min(-padsize[0] / 2, l_fabp) - crt_offset
-    t_crt = t_fabp - max(h_fabp, h_fabm) - crt_offset
-    h_crt = (-t_crt + maxpiny+padsize[1] / 2) + crt_offset
-    if len(pck.additional_pin_pad_size) > 0:
-        h_crt = h_crt + (pck.additional_pin_pad[1] + pck.additional_pin_pad_size[1] / 2 - h_fabm)
-        t_crt = t_crt - (pck.additional_pin_pad[1] + pck.additional_pin_pad_size[1] / 2 - h_fabm)
-        addpad = pck.additional_pin_pad_size[0]
-        addpadx = l_fabp + pck.additional_pin_pad[0]
-        addpady = t_fabp - pck.additional_pin_pad[1]
-    w_crt = max(max(max(w_fabp, w_fabm), pinwid + padsize[0]), addpad) + 2 * crt_offset
-
-
-    txt_x = l_slkp + max(w_slkp, w_slkm) / 2
-    txt_t = (t_slkp - max(h_slkm, h_slkp)) - txt_offset
-    txt_b = maxpiny+padsize[1] / 2 + txt_offset
-    if len(pck.additional_pin_pad_size) > 0:
-        txt_t = txt_t - (pck.additional_pin_pad[1] + pck.additional_pin_pad_size[1] / 2 - h_fabm)
-    tag_items = ["Horizontal", "RM {0}mm".format(pck.rm)]
-
-    footprint_name = pck.name
-    if len(pck.additional_pin_pad_size) > 0:
-        footprint_name = footprint_name + "-1EP"
-    for t in pck.more_packnames:
-        footprint_name = footprint_name + "_" + t
-    footprint_name = footprint_name + "_Horizontal_TabDown"
-    for t in pck.fpnametags:
-        footprint_name = footprint_name + "_" + t
-
-    if pck.staggered_type>0:
-        footprint_name = footprint_name + "_Py{0}mm".format(pck.staggered_rm[1],3)
-
-    if pck.largepads:
-        tag_items.append("large Pads")
-        footprint_name = footprint_name + lptext
-    print(footprint_name)
-
-    description = pck.name
-    tags = pck.name
-    for t in tag_items:
-        description = description + ", " + t
-        tags = tags + " " + t
-    for t in pck.tags:
-        description = description + ", " + t
-        tags = tags + " " + t
-    if len(pck.webpage)>0:
-        description = description + ", see " + pck.webpage
-
-    # init kicad footprint
-    kicad_mod = Footprint(footprint_name, FootprintType.THT)
-    kicad_mod.setDescription(description)
-    kicad_mod.setTags(tags)
-
-    kicad_modt = Translation(0, yshift)
-    kicad_mod.append(kicad_modt)
-
-    # set general values
-    kicad_modt.append(Property(name=Property.REFERENCE, text='REF**', at=[txt_x, txt_t], layer='F.SilkS'))
-    kicad_modt.append(Text(text='${REFERENCE}', at=[txt_x, txt_t], layer='F.Fab'))
-    kicad_modt.append(Property(name=Property.VALUE, text=footprint_name, at=[txt_x, txt_b], layer='F.Fab'))
-
-    # create FAB-layer
-    if (h_fabm > 0):
-        if len(pck.plastic_angled)>0:
-            if len(pck.metal_angled) > 0:
-                addRectAngledTopNoBottom(kicad_modt, [l_fabp + pck.metal_offset_x, t_fabp - h_fabp+pck.plastic_angled[1]],
-                                 [l_fabp + pck.metal_offset_x + w_fabm, t_fabp - h_fabm], pck.metal_angled, 'F.Fab',
-                                 lw_fab)
+        y = y1
+        x = 0
+        for p in range(1, pkg.pins + 1):
+            if (p % 2) == 1:
+                y = y1
             else:
-                kicad_modt.append(RectLine(start=[l_fabp + pck.metal_offset_x, t_fabp - h_fabp-pck.plastic_angled[1]],
-                                           end=[l_fabp + pck.metal_offset_x + w_fabm, t_fabp - h_fabm], layer='F.Fab',
-                                           width=lw_fab))
-        else:
-            if len(pck.metal_angled)>0:
-                addRectAngledTop(kicad_modt, [l_fabp + pck.metal_offset_x, t_fabp - h_fabp], [l_fabp + pck.metal_offset_x + w_fabm, t_fabp - h_fabm], pck.metal_angled, 'F.Fab', lw_fab)
+                y = y2
+            pads.append([x, y])
+            if len(pkg.pitch_list) > 0 and p <= len(pkg.pitch_list):
+                x += pkg.pitch_list[p - 1]
             else:
-                kicad_modt.append(RectLine(start=[l_fabp + pck.metal_offset_x, t_fabp - h_fabp],
-                                      end=[l_fabp + pck.metal_offset_x + w_fabm, t_fabp - h_fabm], layer='F.Fab',
-                                      width=lw_fab))
+                x += pkg.pitch
 
-    if len(pck.plastic_angled)>0:
-         addRectAngledTop(kicad_modt, [l_fabp, t_fabp],
-                         [l_fabp + w_fabp, t_fabp - h_fabp], pck.plastic_angled, 'F.Fab', lw_fab)
-    else:
-        kicad_modt.append(
-            RectLine(start=[l_fabp, t_fabp], end=[l_fabp + w_fabp, t_fabp - h_fabp], layer='F.Fab', width=lw_fab))
-    if pck.mounting_hole_diameter > 0:
-        kicad_modt.append(
-            Circle(center=[l_mounth, t_mounth], radius=pck.mounting_hole_diameter / 2, layer='F.Fab', width=lw_fab))
+        addpad = 0
+        leftop_crt = (
+            min(-pkg.pad_dimensions[0] / 2, left_fab_plastic) - c.courtyard_offset
+        )
+        top_crt = (
+            top_fab_plastic
+            - max(height_fab_plastic, height_fab_metal)
+            - c.courtyard_offset
+        )
+        height_crt = (
+            -top_crt + maxpiny + pkg.pad_dimensions[1] / 2
+        ) + c.courtyard_offset
+        if len(pkg.additional_pin_pad_position_size) > 0:
+            height_crt = height_crt + (
+                pkg.additional_pin_pad_position[1]
+                + pkg.additional_pin_pad_position_size[1] / 2
+                - height_fab_metal
+            )
+            top_crt = top_crt - (
+                pkg.additional_pin_pad_position[1]
+                + pkg.additional_pin_pad_position_size[1] / 2
+                - height_fab_metal
+            )
+            addpad = pkg.additional_pin_pad_position_size[0]
+            addpadx = left_fab_plastic + pkg.additional_pin_pad_position[0]
+            addpady = top_fab_plastic - pkg.additional_pin_pad_position[1]
+        width_crt = (
+            max(
+                max(
+                    max(width_fab_plastic, width_fab_metal),
+                    pkg.pin_spread + pkg.pad_dimensions[0],
+                ),
+                addpad,
+            )
+            + 2 * c.courtyard_offset
+        )
 
-    for p in range(0, len(pads)):
-        kicad_modt.append(Line(start=[pads[p][0], t_fabp], end=[pads[p][0], pads[p][1]], layer='F.Fab', width=lw_fab))
+        txt_x = left_silk_plastic + max(width_silk_plastic, width_silk_metal) / 2
+        txt_t = (
+            top_silk_plastic - max(height_silk_metal, height_silk_plastic)
+        ) - c.text_offset
+        txt_b = maxpiny + pkg.pad_dimensions[1] / 2 + c.text_offset
+        if len(pkg.additional_pin_pad_position_size) > 0:
+            txt_t = txt_t - (
+                pkg.additional_pin_pad_position[1]
+                + pkg.additional_pin_pad_position_size[1] / 2
+                - height_fab_metal
+            )
 
-    # create SILKSCREEN-layer
-    keepouts = []
-    for p in range(0,len(pads)):
-        if p==0:
-            keepouts=keepouts+addKeepoutRect(pads[p][0],pads[p][1],padsize[0]+2*slk_dist,padsize[1]+2*slk_dist)
+        fpt = Translation(0, yshift)
+        fp.append(fpt)
+
+        # set general values
+        fpt.append(
+            Property(
+                name=Property.REFERENCE,
+                text="REF**",
+                at=[txt_x, txt_t],
+                layer="F.SilkS",
+            )
+        )
+        fpt.append(Text(text="${REFERENCE}", at=[txt_x, txt_t], layer="F.Fab"))
+        fpt.append(
+            Property(
+                name=Property.VALUE,
+                text=fp.name,
+                at=[txt_x, txt_b],
+                layer="F.Fab",
+            )
+        )
+
+        # create FAB layer
+        if height_fab_metal > 0:
+            if len(pkg.plastic_angled) > 0:
+                if len(pkg.metal_angled) > 0:
+                    addRectAngledTopNoBottom(
+                        fpt,
+                        [
+                            left_fab_plastic + pkg.metal_offset_x,
+                            top_fab_plastic
+                            - height_fab_plastic
+                            + pkg.plastic_angled[1],
+                        ],
+                        [
+                            left_fab_plastic + pkg.metal_offset_x + width_fab_metal,
+                            top_fab_plastic - height_fab_metal,
+                        ],
+                        pkg.metal_angled,
+                        "F.Fab",
+                        c.fab_line_width,
+                    )
+                else:
+                    fpt.append(
+                        RectLine(
+                            start=[
+                                left_fab_plastic + pkg.metal_offset_x,
+                                top_fab_plastic
+                                - height_fab_plastic
+                                - pkg.plastic_angled[1],
+                            ],
+                            end=[
+                                left_fab_plastic + pkg.metal_offset_x + width_fab_metal,
+                                top_fab_plastic - height_fab_metal,
+                            ],
+                            layer="F.Fab",
+                            width=c.fab_line_width,
+                        )
+                    )
+            else:
+                if len(pkg.metal_angled) > 0:
+                    addRectAngledTop(
+                        fpt,
+                        [
+                            left_fab_plastic + pkg.metal_offset_x,
+                            top_fab_plastic - height_fab_plastic,
+                        ],
+                        [
+                            left_fab_plastic + pkg.metal_offset_x + width_fab_metal,
+                            top_fab_plastic - height_fab_metal,
+                        ],
+                        pkg.metal_angled,
+                        "F.Fab",
+                        c.fab_line_width,
+                    )
+                else:
+                    fpt.append(
+                        RectLine(
+                            start=[
+                                left_fab_plastic + pkg.metal_offset_x,
+                                top_fab_plastic - height_fab_plastic,
+                            ],
+                            end=[
+                                left_fab_plastic + pkg.metal_offset_x + width_fab_metal,
+                                top_fab_plastic - height_fab_metal,
+                            ],
+                            layer="F.Fab",
+                            width=c.fab_line_width,
+                        )
+                    )
+
+        if len(pkg.plastic_angled) > 0:
+            addRectAngledTop(
+                fpt,
+                [left_fab_plastic, top_fab_plastic],
+                [
+                    left_fab_plastic + width_fab_plastic,
+                    top_fab_plastic - height_fab_plastic,
+                ],
+                pkg.plastic_angled,
+                "F.Fab",
+                c.fab_line_width,
+            )
         else:
-            keepouts=keepouts+addKeepoutRound(pads[p][0],pads[p][1],padsize[0]+2*slk_dist,padsize[1]+2*slk_dist)
+            fpt.append(
+                RectLine(
+                    start=[left_fab_plastic, top_fab_plastic],
+                    end=[
+                        left_fab_plastic + width_fab_plastic,
+                        top_fab_plastic - height_fab_plastic,
+                    ],
+                    layer="F.Fab",
+                    width=c.fab_line_width,
+                )
+            )
+        if pkg.mounting_hole_diameter > 0:
+            fpt.append(
+                Circle(
+                    center=[x_mount_hole, y_mount_hole],
+                    radius=pkg.mounting_hole_diameter / 2,
+                    layer="F.Fab",
+                    width=c.fab_line_width,
+                )
+            )
 
-    if len(pck.additional_pin_pad_size) > 0:
-        keepouts.append([addpadx - pck.additional_pin_pad_size[0] / 2 - slk_dist,
-                         addpadx + pck.additional_pin_pad_size[0] / 2 + slk_dist,
-                         addpady - pck.additional_pin_pad_size[1] / 2 - slk_dist,
-                         addpady + pck.additional_pin_pad_size[1] / 2 + slk_dist])
+        for p in range(len(pads)):
+            fpt.append(
+                Line(
+                    start=[pads[p][0], top_fab_plastic],
+                    end=[pads[p][0], pads[p][1]],
+                    layer="F.Fab",
+                    width=c.fab_line_width,
+                )
+            )
 
-    addHLineWithKeepout(kicad_modt, l_slkp, l_slkp + w_slkp, t_slkp, 'F.SilkS', lw_slk, keepouts)
-    if h_fabm > 0:
-        addHLineWithKeepout(kicad_modt, l_slkp, l_slkp + w_slkp, t_slkp - h_slkm, 'F.SilkS', lw_slk, keepouts)
-        addVLineWithKeepout(kicad_modt, l_slkp, t_slkp, t_slkp - h_slkm, 'F.SilkS', lw_slk, keepouts)
-        addVLineWithKeepout(kicad_modt, l_slkp + w_slkp, t_slkp, t_slkp - h_slkm, 'F.SilkS', lw_slk, keepouts)
-    else:
-        addHLineWithKeepout(kicad_modt, l_slkp, l_slkp + w_slkp, t_slkp - h_slkp, 'F.SilkS', lw_slk, keepouts)
-        addVLineWithKeepout(kicad_modt, l_slkp, t_slkp, t_slkp - h_slkp, 'F.SilkS', lw_slk, keepouts)
-        addVLineWithKeepout(kicad_modt, l_slkp + w_slkp, t_slkp, t_slkp - h_slkp, 'F.SilkS', lw_slk, keepouts)
+        # create silkscreen layer
+        keepouts = []
+        for p in range(len(pads)):
+            if p == 0:
+                keepouts = keepouts + addKeepoutRect(
+                    pads[p][0],
+                    pads[p][1],
+                    pkg.pad_dimensions[0] + 2 * c.silk_pad_clearance,
+                    pkg.pad_dimensions[1] + 2 * c.silk_pad_clearance,
+                )
+            else:
+                keepouts = keepouts + addKeepoutRound(
+                    pads[p][0],
+                    pads[p][1],
+                    pkg.pad_dimensions[0] + 2 * c.silk_pad_clearance,
+                    pkg.pad_dimensions[1] + 2 * c.silk_pad_clearance,
+                )
 
+        if len(pkg.additional_pin_pad_position_size) > 0:
+            keepouts.append(
+                [
+                    addpadx
+                    - pkg.additional_pin_pad_position_size[0] / 2
+                    - c.silk_pad_clearance,
+                    addpadx
+                    + pkg.additional_pin_pad_position_size[0] / 2
+                    + c.silk_pad_clearance,
+                    addpady
+                    - pkg.additional_pin_pad_position_size[1] / 2
+                    - c.silk_pad_clearance,
+                    addpady
+                    + pkg.additional_pin_pad_position_size[1] / 2
+                    + c.silk_pad_clearance,
+                ]
+            )
 
-
-    for p in range(0, len(pads)):
-        addVLineWithKeepout(kicad_modt, pads[p][0], t_slkp, pads[p][1], 'F.SilkS', lw_slk, keepouts)
-
-    # create courtyard
-    kicad_mod.append(
-        RectLine(start=[roundCrt(l_crt), roundCrt(t_crt+yshift)], end=[roundCrt(l_crt + w_crt), roundCrt(t_crt + h_crt+yshift)],
-                 layer='F.CrtYd', width=lw_crt))
-
-    # create mounting hole
-    if pck.mounting_hole_drill > 0:
-        kicad_modt.append(Pad(type=Pad.TYPE_NPTH, shape=Pad.SHAPE_OVAL, at=[l_mounth, t_mounth],
-                             size=[pck.mounting_hole_drill, pck.mounting_hole_drill], drill=pck.mounting_hole_drill,
-                             layers=Pad.LAYERS_THT))
-
-    if len(pck.additional_pin_pad_size) > 0:
-        kicad_modt.append(Pad(number=pck.pins + 1, type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT, at=[addpadx, addpady],
-                             size=pck.additional_pin_pad_size, drill=0, layers=Pad.LAYERS_SMT))
-
-    # create pads
-    for p in range(0,len(pads)):
-        if p==0:
-            kicad_modt.append(
-                Pad(number=p+1, type=Pad.TYPE_THT, shape=Pad.SHAPE_RECT, at=pads[p], size=padsize, drill=pck.drill,
-                    layers=Pad.LAYERS_THT))
+        addHLineWithKeepout(
+            fpt,
+            left_silk_plastic,
+            left_silk_plastic + width_silk_plastic,
+            top_silk_plastic,
+            "F.SilkS",
+            c.silk_line_width,
+            keepouts,
+        )
+        if height_fab_metal > 0:
+            addHLineWithKeepout(
+                fpt,
+                left_silk_plastic,
+                left_silk_plastic + width_silk_plastic,
+                top_silk_plastic - height_silk_metal,
+                "F.SilkS",
+                c.silk_line_width,
+                keepouts,
+            )
+            addVLineWithKeepout(
+                fpt,
+                left_silk_plastic,
+                top_silk_plastic,
+                top_silk_plastic - height_silk_metal,
+                "F.SilkS",
+                c.silk_line_width,
+                keepouts,
+            )
+            addVLineWithKeepout(
+                fpt,
+                left_silk_plastic + width_silk_plastic,
+                top_silk_plastic,
+                top_silk_plastic - height_silk_metal,
+                "F.SilkS",
+                c.silk_line_width,
+                keepouts,
+            )
         else:
-            kicad_modt.append(
-                Pad(number=p+1, type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, at=pads[p], size=padsize, drill=pck.drill,
-                    layers=Pad.LAYERS_THT))
+            addHLineWithKeepout(
+                fpt,
+                left_silk_plastic,
+                left_silk_plastic + width_silk_plastic,
+                top_silk_plastic - height_silk_plastic,
+                "F.SilkS",
+                c.silk_line_width,
+                keepouts,
+            )
+            addVLineWithKeepout(
+                fpt,
+                left_silk_plastic,
+                top_silk_plastic,
+                top_silk_plastic - height_silk_plastic,
+                "F.SilkS",
+                c.silk_line_width,
+                keepouts,
+            )
+            addVLineWithKeepout(
+                fpt,
+                left_silk_plastic + width_silk_plastic,
+                top_silk_plastic,
+                top_silk_plastic - height_silk_plastic,
+                "F.SilkS",
+                c.silk_line_width,
+                keepouts,
+            )
 
+        for p in range(len(pads)):
+            addVLineWithKeepout(
+                fpt,
+                pads[p][0],
+                top_silk_plastic,
+                pads[p][1],
+                "F.SilkS",
+                c.silk_line_width,
+                keepouts,
+            )
 
-    # add model
-    if (has3d):
-        kicad_modt.append(
-            Model(filename=lib_name + ".3dshapes/" + footprint_name + ".wrl", at=x_3d, scale=s_3d, rotate=r_3d))
+        # create courtyard
+        fp.append(
+            RectLine(
+                start=[roundCrt(leftop_crt), roundCrt(top_crt + yshift)],
+                end=[
+                    roundCrt(leftop_crt + width_crt),
+                    roundCrt(top_crt + height_crt + yshift),
+                ],
+                layer="F.CrtYd",
+                width=c.courtyard_line_width,
+            )
+        )
 
-    # print render tree
-    # print(kicad_mod.getRenderTree())
-    # print(kicad_mod.getCompleteRenderTree())
+        # create mounting hole
+        if pkg.mounting_hole_drill > 0:
+            fpt.append(
+                Pad(
+                    type=Pad.TYPE_NPTH,
+                    shape=Pad.SHAPE_OVAL,
+                    at=[x_mount_hole, y_mount_hole],
+                    size=[pkg.mounting_hole_drill, pkg.mounting_hole_drill],
+                    drill=pkg.mounting_hole_drill,
+                    layers=Pad.LAYERS_THT,
+                )
+            )
 
-    # write file
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile(footprint_name + '.kicad_mod')
+        if len(pkg.additional_pin_pad_position_size) > 0:
+            fpt.append(
+                Pad(
+                    number=pkg.pins + 1,
+                    type=Pad.TYPE_SMT,
+                    shape=Pad.SHAPE_RECT,
+                    at=[addpadx, addpady],
+                    size=pkg.additional_pin_pad_position_size,
+                    drill=0,
+                    layers=Pad.LAYERS_SMT,
+                )
+            )
 
+        # create pads
+        for p in range(len(pads)):
+            if p == 0:
+                fpt.append(
+                    Pad(
+                        number=p + 1,
+                        type=Pad.TYPE_THT,
+                        shape=Pad.SHAPE_RECT,
+                        at=pads[p],
+                        size=pkg.pad_dimensions,
+                        drill=pkg.drill,
+                        layers=Pad.LAYERS_THT,
+                    )
+                )
+            else:
+                fpt.append(
+                    Pad(
+                        number=p + 1,
+                        type=Pad.TYPE_THT,
+                        shape=Pad.SHAPE_OVAL,
+                        at=pads[p],
+                        size=pkg.pad_dimensions,
+                        drill=pkg.drill,
+                        layers=Pad.LAYERS_THT,
+                    )
+                )
 
-# vertical, mounted-from-Lowerside symbols for rectangular transistors
-def makeVERTLS(lib_name, pck, has3d=False, x_3d=[0, 0, 0], s_3d=[1,1,1], lptext="_LargePads", r_3d=[0, 0, 0]):
-    l_fabp = -pck.pin_offset_x
-    t_fabp = -pck.pin_offset_z
-    w_fabp = pck.plastic[0]
-    h_fabp = pck.plastic[2]
+        self.save_footprint(fp)
 
-    w_fabm = pck.metal[0]
-    h_fabm = pck.metal[2]
+    def generate_rect_to_fp_horizontal_tab_up(
+        self, pkg: RectangularToPackage, pkg_id: str
+    ):
+        if pkg.additional_pin_pad_position:
+            logging.info(
+                f"{pkg_id}: Cannot create 'horizontal tab up' version of a package with additional pin pad."
+            )
+            return
 
-    pinwid=(pck.pins - 1) * pck.rm
-    if len(pck.rm_list)>0:
-        pinwid=0
-        for rm in pck.rm_list:
-            pinwid=pinwid+rm
+        fp = pkg.init_footprint("Horizontal", "TabUp", 0)
+        c = self.configuration_constants
 
-    l_slkp = l_fabp - slk_offset
-    t_slkp = t_fabp - slk_offset
-    w_slkp = w_fabp + 2 * slk_offset
-    h_slkp = h_fabp + 2 * slk_offset
-    w_slkm = w_fabm + 2 * slk_offset
-    h_slkm = h_fabm + 2 * slk_offset
+        left_fab_plastic = -pkg.pin_offset_x
+        top_fab_plastic = pkg.pin_min_length_before_90deg_bend
+        width_fab_plastic = pkg.plastic_dimensions[0]
+        height_fab_plastic = pkg.plastic_dimensions[1]
 
-    l_crt = min(-pck.pad[0] / 2, l_fabp) - crt_offset
-    t_crt = min(-pck.pad[1] / 2, t_fabp) - crt_offset
-    w_crt = max(max(w_fabp, w_fabm), pinwid + pck.pad[0]) + 2 * crt_offset
-    h_crt = max(t_fabp+max(h_fabp, h_fabm) +  crt_offset-t_crt, -t_crt + pck.pad[1] / 2+crt_offset)
+        width_fab_metal = pkg.metal_dimensions[0]
+        height_fab_metal = pkg.metal_dimensions[1]
 
-    l_mounth = l_fabp + pck.mounting_hole_pos[0]
+        left_silk_plastic = left_fab_plastic - c.silk_fab_offset
+        top_silk_plastic = top_fab_plastic - c.silk_fab_offset
+        width_silk_plastic = width_fab_plastic + 2 * c.silk_fab_offset
+        height_silk_plastic = height_fab_plastic + 2 * c.silk_fab_offset
+        width_silk_metal = width_fab_metal + 2 * c.silk_fab_offset
+        height_silk_metal = height_fab_metal + 2 * c.silk_fab_offset
 
-    txt_x = l_slkp + max(w_slkp, w_slkm) / 2
+        leftop_crt = (
+            min(-pkg.pad_dimensions[0] / 2, left_fab_plastic) - c.courtyard_offset
+        )
+        top_crt = -pkg.pad_dimensions[1] / 2 - c.courtyard_offset
+        width_crt = (
+            max(
+                max(width_fab_plastic, width_fab_metal),
+                pkg.pin_spread + pkg.pad_dimensions[0],
+            )
+            + 2 * c.courtyard_offset
+        )
+        height_crt = (
+            -top_crt
+            + top_fab_plastic
+            + max(height_fab_plastic, height_fab_metal)
+            + c.courtyard_offset
+        )
 
-    tag_items = ["Vertical", "RM {0}mm".format(pck.rm), "mount on lower-side of PCB"]
+        x_mount_hole = left_fab_plastic + pkg.mounting_hole_position[0]
+        y_mount_hole = top_fab_plastic + pkg.mounting_hole_position[1]
 
-    footprint_name = pck.name
-    for t in pck.more_packnames:
-        footprint_name = footprint_name + "_" + t
-    footprint_name = footprint_name + "_Vertical"
-    for t in pck.fpnametags:
-        footprint_name = footprint_name + "_" + t
-    footprint_name = footprint_name + "_MountFromLS"
-    if pck.largepads:
-        tag_items.append("large Pads")
-        footprint_name = footprint_name + lptext
+        txt_x = left_silk_plastic + max(width_silk_plastic, width_silk_metal) / 2
+        txt_t = (
+            top_silk_plastic + max(height_silk_metal, height_silk_plastic)
+        ) + c.text_offset
+        txt_b = -pkg.pad_dimensions[1] / 2 - c.text_offset
 
-    print(footprint_name)
+        # set general values
+        fp.append(
+            Property(
+                name=Property.REFERENCE,
+                text="REF**",
+                at=[txt_x, txt_t],
+                layer="F.SilkS",
+            )
+        )
+        fp.append(Text(text="${REFERENCE}", at=[txt_x, txt_t], layer="F.Fab"))
+        fp.append(
+            Property(
+                name=Property.VALUE,
+                text=fp.name,
+                at=[txt_x, txt_b],
+                layer="F.Fab",
+            )
+        )
 
-    description = pck.name
-    tags = pck.name
-    for t in tag_items:
-        description = description + ", " + t
-        tags = tags + " " + t
-    for t in pck.tags:
-        description = description + ", " + t
-        tags = tags + " " + t
-    if len(pck.webpage)>0:
-        description = description + ", see " + pck.webpage
+        if height_fab_metal > 0:
+            if len(pkg.metal_angled) > 0:
+                addRectAngledBottom(
+                    fp,
+                    [
+                        left_fab_plastic + pkg.metal_offset_x,
+                        top_fab_plastic + height_fab_plastic,
+                    ],
+                    [
+                        left_fab_plastic + pkg.metal_offset_x + width_fab_metal,
+                        top_fab_plastic + height_fab_metal,
+                    ],
+                    pkg.metal_angled,
+                    "F.Fab",
+                    c.fab_line_width,
+                )
+            else:
+                fp.append(
+                    RectLine(
+                        start=[
+                            left_fab_plastic + pkg.metal_offset_x,
+                            top_fab_plastic + height_fab_plastic,
+                        ],
+                        end=[
+                            left_fab_plastic + pkg.metal_offset_x + width_fab_metal,
+                            top_fab_plastic + height_fab_metal,
+                        ],
+                        layer="F.Fab",
+                        width=c.fab_line_width,
+                    )
+                )
 
-    # init kicad footprint
-    kicad_mod = Footprint(footprint_name, FootprintType.THT)
-    kicad_mod.setDescription(description)
-    kicad_mod.setTags(tags)
-
-    kicad_modt = Translation(-pinwid, 0)
-    kicad_mod.append(kicad_modt)
-
-    # set general values
-    kicad_modt.append(Property(name=Property.REFERENCE, text='REF**', at=[txt_x, t_slkp - txt_offset], layer='F.SilkS'))
-    kicad_modt.append(Text(text='${REFERENCE}', at=[txt_x, t_slkp - txt_offset], layer='B.Fab'))
-    kicad_modt.append(
-        Property(name=Property.VALUE, text=footprint_name, at=[txt_x, t_slkp + max(h_slkm, h_slkp) + txt_offset], layer='B.Fab'))
-
-    # create FAB-layer
-    kicad_modt.append(
-        RectLine(start=[l_fabp, t_fabp], end=[l_fabp + w_fabp, t_fabp + h_fabp], layer='B.Fab', width=lw_fab))
-    if (pck.metal[2] > 0):
-        kicad_modt.append(
-            Line(start=[l_fabp, t_fabp + h_fabm], end=[l_fabp + w_fabp, t_fabp + h_fabm], layer='B.Fab', width=lw_fab))
-        if pck.mounting_hole_diameter > 0:
-            kicad_modt.append(Line(start=[l_mounth - pck.mounting_hole_diameter / 2, t_fabp],
-                                   end=[l_mounth - pck.mounting_hole_diameter / 2, t_fabp + h_fabm], layer='B.Fab',
-                                   width=lw_fab))
-            kicad_modt.append(Line(start=[l_mounth + pck.mounting_hole_diameter / 2, t_fabp],
-                                   end=[l_mounth + pck.mounting_hole_diameter / 2, t_fabp + h_fabm], layer='B.Fab',
-                                   width=lw_fab))
-    else:
-        if pck.mounting_hole_diameter > 0:
-            kicad_modt.append(Line(start=[l_mounth - pck.mounting_hole_diameter / 2, t_fabp],
-                                   end=[l_mounth - pck.mounting_hole_diameter / 2, t_fabp + h_fabp], layer='B.Fab',
-                                   width=lw_fab))
-            kicad_modt.append(Line(start=[l_mounth + pck.mounting_hole_diameter / 2, t_fabp],
-                                   end=[l_mounth + pck.mounting_hole_diameter / 2, t_fabp + h_fabp], layer='B.Fab',
-                                   width=lw_fab))
-
-    # create SILKSCREEN-layer
-    keepouts = []
-    x = pinwid
-
-    for p in range(1, pck.pins + 1):
-        if p == 1:
-            keepouts = keepouts + addKeepoutRect(x, 0, pck.pad[0] + 2 * slk_dist, pck.pad[1] + 2 * slk_dist)
+        if len(pkg.plastic_angled) > 0:
+            addRectAngledBottom(
+                fp,
+                [left_fab_plastic, top_fab_plastic],
+                [
+                    left_fab_plastic + width_fab_plastic,
+                    top_fab_plastic + height_fab_plastic,
+                ],
+                pkg.plastic_angled,
+                "F.Fab",
+                c.fab_line_width,
+            )
         else:
-            keepouts = keepouts + addKeepoutRound(x, 0, pck.pad[0] + 2 * slk_dist, pck.pad[1] + 2 * slk_dist)
-        if len(pck.rm_list)>0 and p<=len(pck.rm_list):
-            x = x - pck.rm_list[p-1]
-        else:
-            x = x - pck.rm
-
-
-    #for ko in keepouts:
-    #    kicad_modt.append(
-    #        RectLine(start=[ko[0], ko[2]],
-    #                 end=[ko[1], ko[3]],
-    #                 layer='F.CrtYd', width=0.01))
-
-    addHDLineWithKeepout(kicad_modt, l_slkp, 3 * lw_slk, l_slkp + w_slkp, t_slkp, 'F.SilkS', lw_slk, keepouts)
-    addHDLineWithKeepout(kicad_modt, l_slkp, 3 * lw_slk, l_slkp + w_slkp, t_slkp + h_slkp, 'F.SilkS', lw_slk, keepouts)
-    addVDLineWithKeepout(kicad_modt, l_slkp, t_slkp, 3 * lw_slk, t_slkp + h_slkp, 'F.SilkS', lw_slk, keepouts)
-    addVDLineWithKeepout(kicad_modt, l_slkp + w_slkp, t_slkp, 3 * lw_slk, t_slkp + h_slkp, 'F.SilkS', lw_slk, keepouts)
-    if (pck.metal[2] > 0):
-        addHDLineWithKeepout(kicad_modt, l_slkp, 3 * lw_slk, l_slkp + w_slkp, t_slkp + h_slkm, 'F.SilkS', lw_slk,
-                             keepouts)
-        if pck.mounting_hole_diameter > 0:
-            addVDLineWithKeepout(kicad_modt, l_mounth - pck.mounting_hole_diameter / 2, t_slkp, 3 * lw_slk,
-                                 t_slkp + h_slkm,
-                                 'F.SilkS', lw_slk, keepouts)
-            addVDLineWithKeepout(kicad_modt, l_mounth + pck.mounting_hole_diameter / 2, t_slkp, 3 * lw_slk,
-                                 t_slkp + h_slkm,
-                                 'F.SilkS', lw_slk, keepouts)
-    else:
-        if pck.mounting_hole_diameter > 0:
-            addVDLineWithKeepout(kicad_modt, l_mounth - pck.mounting_hole_diameter / 2, t_slkp, 3 * lw_slk,
-                                 t_slkp + h_slkp,
-                                 'F.SilkS', lw_slk, keepouts)
-            addVDLineWithKeepout(kicad_modt, l_mounth + pck.mounting_hole_diameter / 2, t_slkp, 3 * lw_slk,
-                                 t_slkp + h_slkp,
-                                 'F.SilkS', lw_slk, keepouts)
-
-    # create courtyard
-    kicad_mod.append(
-        RectLine(start=[roundCrt(l_crt-pinwid), roundCrt(t_crt)], end=[roundCrt(l_crt + w_crt-pinwid), roundCrt(t_crt + h_crt)],
-                 layer='B.CrtYd', width=lw_crt))
-
-    # create pads
-    x = pinwid
-    for p in range(1, pck.pins + 1):
-        if (p == 1):
-            kicad_modt.append(
-                Pad(number=p, type=Pad.TYPE_THT, shape=Pad.SHAPE_RECT, at=[x, 0], size=pck.pad, drill=pck.drill,
-                    layers=Pad.LAYERS_THT))
-        else:
-            kicad_modt.append(
-                Pad(number=p, type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, at=[x, 0], size=pck.pad, drill=pck.drill,
-                    layers=Pad.LAYERS_THT))
-        if len(pck.rm_list)>0 and p<=len(pck.rm_list):
-            x = x - pck.rm_list[p-1]
-        else:
-            x = x - pck.rm
-
-
-    # add model
-    if (has3d):
-        kicad_modt.append(
-            Model(filename=lib_name + ".3dshapes/" + footprint_name + ".wrl", at=x_3d, scale=s_3d, rotate=r_3d))
-
-    # print render tree
-    # print(kicad_mod.getRenderTree())
-    # print(kicad_mod.getCompleteRenderTree())
-
-    # write file
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile(footprint_name + '.kicad_mod')
-
-
-# horizontal, mounted-from-Lowerside symbols for rectangular transistors
-def makeHORLS(lib_name, pck, has3d=False, x_3d=[0, 0, 0], s_3d=[1,1,1], lptext="_LargePads", r_3d=[0, 0, 0]):
-    l_fabp = -pck.pin_offset_x
-    t_fabp = -pck.pin_minlength
-    w_fabp = pck.plastic[0]
-    h_fabp = pck.plastic[1]
-
-    w_fabm = pck.metal[0]
-    h_fabm = pck.metal[1]
-
-    l_slkp = l_fabp - slk_offset
-    t_slkp = t_fabp + slk_offset
-    w_slkp = w_fabp + 2 * slk_offset
-    h_slkp = h_fabp + 2 * slk_offset
-    w_slkm = w_fabm + 2 * slk_offset
-    h_slkm = h_fabm + 2 * slk_offset
-
-    pinwid = (pck.pins - 1) * pck.rm
-    if len(pck.rm_list) > 0:
-        pinwid = 0
-        for rm in pck.rm_list:
-            pinwid = pinwid + rm
-
-    l_crt = min(-pck.pad[0] / 2, l_fabp) - crt_offset
-    t_crt = t_fabp - max(h_fabp, h_fabm) - crt_offset
-    h_crt = (-t_crt + pck.pad[1] / 2) + crt_offset
-    addpad = 0
-    if len(pck.additional_pin_pad_size) > 0:
-        h_crt = h_crt + (pck.additional_pin_pad[1] + pck.additional_pin_pad_size[1] / 2 - h_fabm)
-        t_crt = t_crt - (pck.additional_pin_pad[1] + pck.additional_pin_pad_size[1] / 2 - h_fabm)
-        addpad = pck.additional_pin_pad_size[0]
-        addpadx = l_fabp + pck.additional_pin_pad[0]
-        addpady = t_fabp - pck.additional_pin_pad[1]
-    w_crt = max(max(max(w_fabp, w_fabm), pinwid + pck.pad[0]), addpad) + 2 * crt_offset
-
-    l_mounth = l_fabp + pck.mounting_hole_pos[0]
-    t_mounth = t_fabp - pck.mounting_hole_pos[1]
-
-    txt_x = l_slkp + max(w_slkp, w_slkm) / 2
-    txt_t = (t_slkp - max(h_slkm, h_slkp)) - txt_offset
-    txt_b = pck.pad[1] / 2 + txt_offset
-    if len(pck.additional_pin_pad_size) > 0:
-        txt_t = txt_t - (pck.additional_pin_pad[1] + pck.additional_pin_pad_size[1] / 2 - h_fabm)
-    tag_items = ["Horizontal", "RM {0}mm".format(pck.rm), "mount on lower-side of PCB", "mount with cooling pad pointing away from PCB", "Reversed"]
-
-    footprint_name = pck.name
-    if len(pck.additional_pin_pad_size) > 0:
-        footprint_name = footprint_name + "-1EP"
-    for t in pck.more_packnames:
-        footprint_name = footprint_name + "_" + t
-    footprint_name = footprint_name + "_Horizontal"
-    for t in pck.fpnametags:
-        footprint_name = footprint_name + "_" + t
-    footprint_name = footprint_name + "_TabUp_MountFromLS"
-    if pck.largepads:
-        tag_items.append("large Pads")
-        footprint_name = footprint_name + lptext
-    print(footprint_name)
-
-    description = pck.name
-    tags = pck.name
-    for t in tag_items:
-        description = description + ", " + t
-        tags = tags + " " + t
-    for t in pck.tags:
-        description = description + ", " + t
-        tags = tags + " " + t
-    if len(pck.webpage)>0:
-        description = description + ", see " + pck.webpage
-
-    # init kicad footprint
-    kicad_mod = Footprint(footprint_name, FootprintType.THT)
-    kicad_mod.setDescription(description)
-    kicad_mod.setTags(tags)
-
-    kicad_modt=Translation(0,0)#-(pck.pins - 1) * pck.rm,0)
-    kicad_mod.append(kicad_modt)
-
-    # set general values
-    kicad_modt.append(Property(name=Property.REFERENCE, text='REF**', at=[txt_x, txt_t], layer='F.SilkS'))
-    kicad_modt.append(Text(text='${REFERENCE}', at=[txt_x, txt_t], layer='B.Fab'))
-    kicad_modt.append(Property(name=Property.VALUE, text=footprint_name, at=[txt_x, txt_b], layer='B.Fab'))
-
-    # create FAB-layer
-
-    if (h_fabm > 0):
-        if len(pck.metal_angled) > 0:
-            addRectAngledTop(kicad_modt, [l_fabp + pck.metal_offset_x, t_fabp - h_fabp],
-                             [l_fabp + pck.metal_offset_x + w_fabm, t_fabp - h_fabm], pck.metal_angled, 'B.Fab', lw_fab)
-        else:
-            kicad_modt.append(RectLine(start=[l_fabp + pck.metal_offset_x, t_fabp - h_fabp],
-                                       end=[l_fabp + pck.metal_offset_x + w_fabm, t_fabp - h_fabm], layer='B.Fab',
-                                       width=lw_fab))
-
-    if len(pck.plastic_angled) > 0:
-        addRectAngledTop(kicad_modt, [l_fabp, t_fabp],
-                         [l_fabp + w_fabp, t_fabp - h_fabp], pck.plastic_angled, 'B.Fab', lw_fab)
-    else:
-        kicad_modt.append(
-            RectLine(start=[l_fabp, t_fabp], end=[l_fabp + w_fabp, t_fabp - h_fabp], layer='B.Fab', width=lw_fab))
-
-#    if (h_fabm > 0):
-#        kicad_modt.append(RectLine(start=[l_fabp + pck.metal_offset_x, t_fabp - h_fabp],
-#                                  end=[l_fabp + pck.metal_offset_x + w_fabm, t_fabp - h_fabm], layer='B.Fab',
-#                                  width=lw_fab))
-#    kicad_modt.append(
-#        RectLine(start=[l_fabp, t_fabp], end=[l_fabp + w_fabp, t_fabp - h_fabp], layer='B.Fab', width=lw_fab))
-#    kicad_modt.append(
-#        RectLine(start=[l_fabp, t_fabp], end=[l_fabp + w_fabp, t_fabp - h_fabp], layer='B.Fab', width=lw_fab))
-    if pck.mounting_hole_diameter > 0:
-        kicad_modt.append(
-            Circle(center=[l_mounth, t_mounth], radius=pck.mounting_hole_diameter / 2, layer='B.Fab', width=lw_fab))
-    x = 0
-    for p in range(1, pck.pins + 1):
-        kicad_modt.append(Line(start=[x, t_fabp], end=[x, 0], layer='B.Fab', width=lw_fab))
-        if len(pck.rm_list)>0 and p<=len(pck.rm_list):
-            x = x + pck.rm_list[p-1]
-        else:
-            x = x + pck.rm
-
-
-    # create SILKSCREEN-layer
-    keepouts = []
-    x = 0
-    for p in range(1, pck.pins + 1):
-        if p == 1:
-            keepouts = keepouts + addKeepoutRect(x, 0, pck.pad[0] + 2 * slk_dist, pck.pad[1] + 2 * slk_dist)
-        else:
-            keepouts = keepouts + addKeepoutRound(x, 0, pck.pad[0] + 2 * slk_dist, pck.pad[1] + 2 * slk_dist)
-        if len(pck.rm_list)>0 and p<=len(pck.rm_list):
-            x = x + pck.rm_list[p-1]
-        else:
-            x = x + pck.rm
-
-
-    if len(pck.additional_pin_pad_size) > 0:
-        keepouts.append([addpadx - pck.additional_pin_pad_size[0] / 2 - slk_dist,
-                         addpadx + pck.additional_pin_pad_size[0] / 2 + slk_dist,
-                         addpady - pck.additional_pin_pad_size[1] / 2 - slk_dist,
-                         addpady + pck.additional_pin_pad_size[1] / 2 + slk_dist])
-
-    addHDLineWithKeepout(kicad_modt, l_slkp, 3 * lw_slk, l_slkp + w_slkp, t_slkp, 'F.SilkS', lw_slk, keepouts)
-    if h_fabm > 0:
-        addHDLineWithKeepout(kicad_modt, l_slkp, 3 * lw_slk, l_slkp + w_slkp, t_slkp - h_slkm, 'F.SilkS', lw_slk, keepouts)
-        addHDLineWithKeepout(kicad_modt, l_slkp, 3 * lw_slk, l_slkp + w_slkp, t_fabp - h_fabp, 'F.SilkS', lw_slk, keepouts)
-        addVDLineWithKeepout(kicad_modt, l_slkp, t_slkp, 3 * lw_slk, t_slkp - h_slkm, 'F.SilkS', lw_slk, keepouts)
-        addVDLineWithKeepout(kicad_modt, l_slkp + w_slkp, t_slkp, 3 * lw_slk, t_slkp - h_slkm, 'F.SilkS', lw_slk, keepouts)
-    else:
-        addHDLineWithKeepout(kicad_modt, l_slkp, 3 * lw_slk, l_slkp + w_slkp, t_slkp - h_slkp, 'F.SilkS', lw_slk, keepouts)
-        addVDLineWithKeepout(kicad_modt, l_slkp, t_slkp, 3 * lw_slk, t_slkp - h_slkp, 'F.SilkS', lw_slk, keepouts)
-        addVDLineWithKeepout(kicad_modt, l_slkp + w_slkp, t_slkp, 3 * lw_slk, t_slkp - h_slkp, 'F.SilkS', lw_slk, keepouts)
-
-    x = 0
-    for p in range(1, pck.pins + 1):
-        addVDLineWithKeepout(kicad_modt, x, t_slkp, 3 * lw_slk, -(pck.pad[1]/2+slk_dist), 'F.SilkS', lw_slk, keepouts)
-        if len(pck.rm_list)>0 and p<=len(pck.rm_list):
-            x = x + pck.rm_list[p-1]
-        else:
-            x = x + pck.rm
-
-
-    # create courtyard
-    kicad_modt.append(
-        RectLine(start=[roundCrt(l_crt), roundCrt(t_crt)], end=[roundCrt(l_crt + w_crt), roundCrt(t_crt + h_crt)],
-                 layer='B.CrtYd', width=lw_crt))
-
-    # create mounting hole
-    if pck.mounting_hole_drill > 0:
-        kicad_modt.append(Pad(type=Pad.TYPE_NPTH, shape=Pad.SHAPE_OVAL, at=[l_mounth, t_mounth],
-                             size=[pck.mounting_hole_drill, pck.mounting_hole_drill], drill=pck.mounting_hole_drill,
-                             layers=Pad.LAYERS_THT))
-
-    if len(pck.additional_pin_pad_size) > 0:
-        kicad_modt.append(Pad(number=pck.pins + 1, type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT, at=[addpadx, addpady],
-                             size=pck.additional_pin_pad_size, drill=0, layers=['B.Cu', 'B.Paste', 'F.Mask']))
-
-    # create pads
-    x = 0
-    for p in range(1, pck.pins + 1):
-        if (p == 1):
-            kicad_modt.append(
-                Pad(number=p, type=Pad.TYPE_THT, shape=Pad.SHAPE_RECT, at=[x, 0], size=pck.pad, drill=pck.drill,
-                    layers=Pad.LAYERS_THT))
-        else:
-            kicad_modt.append(
-                Pad(number=p, type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, at=[x, 0], size=pck.pad, drill=pck.drill,
-                    layers=Pad.LAYERS_THT))
-        if len(pck.rm_list)>0 and p<=len(pck.rm_list):
-            x = x + pck.rm_list[p-1]
-        else:
-            x = x + pck.rm
-
-    # add model
-    if (has3d):
-        kicad_modt.append(
-            Model(filename=lib_name + ".3dshapes/" + footprint_name + ".wrl", at=x_3d, scale=s_3d, rotate=r_3d))
-
-    # print render tree
-    # print(kicad_mod.getRenderTree())
-    # print(kicad_mod.getCompleteRenderTree())
-
-    # write file
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile(footprint_name + '.kicad_mod')
-
-
-# horizontal reversed symbols for rectangular transistors
-def makeHORREV(lib_name, pck, has3d=False, x_3d=[0, 0, 0], s_3d=[1 ,1,1], lptext="_LargePads", r_3d=[0, 0, 0]):
-    l_fabp = -pck.pin_offset_x
-    t_fabp = pck.pin_minlength
-    w_fabp = pck.plastic[0]
-    h_fabp = pck.plastic[1]
-
-    w_fabm = pck.metal[0]
-    h_fabm = pck.metal[1]
-
-    l_slkp = l_fabp - slk_offset
-    t_slkp = t_fabp - slk_offset
-    w_slkp = w_fabp + 2 * slk_offset
-    h_slkp = h_fabp + 2 * slk_offset
-    w_slkm = w_fabm + 2 * slk_offset
-    h_slkm = h_fabm + 2 * slk_offset
-
-    pinwid = (pck.pins - 1) * pck.rm
-    if len(pck.rm_list) > 0:
-        pinwid = 0
-        for rm in pck.rm_list:
-            pinwid = pinwid + rm
-
-    l_crt = min(-pck.pad[0] / 2, l_fabp) - crt_offset
-    t_crt = -pck.pad[1]/2- crt_offset
-    w_crt = max(max(w_fabp, w_fabm), pinwid + pck.pad[0]) + 2 * crt_offset
-    h_crt = -t_crt + t_fabp+max(h_fabp, h_fabm) +  crt_offset
-
-    l_mounth = l_fabp + pck.mounting_hole_pos[0]
-    t_mounth = t_fabp + pck.mounting_hole_pos[1]
-
-    txt_x = l_slkp + max(w_slkp, w_slkm) / 2
-    txt_t = (t_slkp + max(h_slkm, h_slkp)) + txt_offset
-    txt_b = -pck.pad[1] / 2 - txt_offset
-
-    tag_items = ["Horizontal", "RM {0}mm".format(pck.rm)]
-
-    footprint_name = pck.name
-    for t in pck.more_packnames:
-        footprint_name = footprint_name + "_" + t
-    footprint_name = footprint_name + "_Horizontal" + "_TabUp"
-    for t in pck.fpnametags:
-        footprint_name = footprint_name + "_" + t
-    if pck.largepads:
-        tag_items.append("large Pads")
-        footprint_name = footprint_name + lptext
-    print(footprint_name)
-
-    description = pck.name
-    tags = pck.name
-    for t in tag_items:
-        description = description + ", " + t
-        tags = tags + " " + t
-    for t in pck.tags:
-        description = description + ", " + t
-        tags = tags + " " + t
-    if len(pck.webpage)>0:
-        description = description + ", see " + pck.webpage
-
-    # init kicad footprint
-    kicad_mod = Footprint(footprint_name, FootprintType.THT)
-    kicad_mod.setDescription(description)
-    kicad_mod.setTags(tags)
-
-    # set general values
-    kicad_mod.append(Property(name=Property.REFERENCE, text='REF**', at=[txt_x, txt_t], layer='F.SilkS'))
-    kicad_mod.append(Text(text='${REFERENCE}', at=[txt_x, txt_t], layer='F.Fab'))
-    kicad_mod.append(Property(name=Property.VALUE, text=footprint_name, at=[txt_x, txt_b], layer='F.Fab'))
-
-
-    if (h_fabm > 0):
-        if len(pck.metal_angled) > 0:
-            addRectAngledBottom(kicad_mod, [l_fabp + pck.metal_offset_x, t_fabp + h_fabp],
-                                [l_fabp + pck.metal_offset_x + w_fabm, t_fabp + h_fabm], pck.metal_angled, 'F.Fab', lw_fab)
-        else:
-            kicad_mod.append(RectLine(start=[l_fabp + pck.metal_offset_x, t_fabp + h_fabp],
-                                       end=[l_fabp + pck.metal_offset_x + w_fabm, t_fabp + h_fabm], layer='F.Fab',
-                                       width=lw_fab))
-
-    if len(pck.plastic_angled) > 0:
-        addRectAngledBottom(kicad_mod, [l_fabp, t_fabp],
-                            [l_fabp + w_fabp, t_fabp + h_fabp], pck.plastic_angled, 'F.Fab', lw_fab)
-    else:
-        kicad_mod.append(
-            RectLine(start=[l_fabp, t_fabp], end=[l_fabp + w_fabp, t_fabp + h_fabp], layer='F.Fab', width=lw_fab))
-
-    if pck.mounting_hole_diameter > 0:
-        kicad_mod.append(Circle(center=[l_mounth, t_mounth], radius=pck.mounting_hole_diameter / 2, layer='F.Fab', width=lw_fab))
-    x = 0
-    for p in range(1, pck.pins + 1):
-        kicad_mod.append(Line(start=[x, t_fabp], end=[x, 0], layer='F.Fab', width=lw_fab))
-        if len(pck.rm_list)>0 and p<=len(pck.rm_list):
-            x = x + pck.rm_list[p-1]
-        else:
-            x = x + pck.rm
-
-
-    # create SILKSCREEN-layer
-    keepouts = []
-    x = 0
-    for p in range(1, pck.pins + 1):
-        if p==1:
-            keepouts=keepouts+addKeepoutRect(x,0,pck.pad[0]+2*slk_dist,pck.pad[1]+2*slk_dist)
-        else:
-            keepouts=keepouts+addKeepoutRound(x,0,pck.pad[0]+2*slk_dist,pck.pad[1]+2*slk_dist)
-        x = x + pck.rm
-
-    addHLineWithKeepout(kicad_mod, l_slkp, l_slkp + w_slkp, t_slkp, 'F.SilkS', lw_slk, keepouts)
-    addHLineWithKeepout(kicad_mod, l_slkp, l_slkp + w_slkp, t_slkp + h_slkp, 'F.SilkS', lw_slk, keepouts)
-    addVLineWithKeepout(kicad_mod, l_slkp, t_slkp, t_slkp + h_slkp, 'F.SilkS', lw_slk, keepouts)
-    addVLineWithKeepout(kicad_mod, l_slkp + w_slkp, t_slkp, t_slkp + h_slkp, 'F.SilkS', lw_slk, keepouts)
-    if (h_fabm > 0):
-        addHDLineWithKeepout(kicad_mod, l_slkp + pck.metal_offset_x, 10*lw_slk, l_slkp + pck.metal_offset_x + w_slkm, t_slkp + h_slkm, 'F.SilkS', lw_slk, keepouts)
-        addVDLineWithKeepout(kicad_mod, l_slkp + pck.metal_offset_x, t_slkp + h_slkp+lw_slk*2, 10 * lw_slk, t_slkp + h_slkm, 'F.SilkS', lw_slk, keepouts)
-        addVDLineWithKeepout(kicad_mod, l_slkp + pck.metal_offset_x + w_slkm, t_slkp + h_slkp+lw_slk*2, 10 * lw_slk, t_slkp + h_slkm, 'F.SilkS', lw_slk, keepouts)
-    x = 0
-    for p in range(1, pck.pins + 1):
-        addVLineWithKeepout(kicad_mod, x, t_slkp, pck.pad[1]/2+slk_dist, 'F.SilkS', lw_slk, keepouts)
-        if len(pck.rm_list)>0 and p<=len(pck.rm_list):
-            x = x + pck.rm_list[p-1]
-        else:
-            x = x + pck.rm
-
-    # create courtyard
-    kicad_mod.append(
-        RectLine(start=[roundCrt(l_crt), roundCrt(t_crt)], end=[roundCrt(l_crt + w_crt), roundCrt(t_crt + h_crt)],
-                 layer='F.CrtYd', width=lw_crt))
-
-    # create mounting hole
-    if pck.mounting_hole_drill > 0:
-        kicad_mod.append(Pad(type=Pad.TYPE_NPTH, shape=Pad.SHAPE_OVAL, at=[l_mounth, t_mounth],
-                         size=[pck.mounting_hole_drill, pck.mounting_hole_drill], drill=pck.mounting_hole_drill,
-                         layers=Pad.LAYERS_THT))
-
-    # create pads
-    x = 0
-    for p in range(1, pck.pins + 1):
-        if (p==1):
-            kicad_mod.append(Pad(number=p, type=Pad.TYPE_THT, shape=Pad.SHAPE_RECT, at=[x, 0], size=pck.pad, drill=pck.drill, layers=Pad.LAYERS_THT))
-        else:
-            kicad_mod.append(Pad(number=p, type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, at=[x, 0], size=pck.pad, drill=pck.drill,layers=Pad.LAYERS_THT))
-        if len(pck.rm_list)>0 and p<=len(pck.rm_list):
-            x = x + pck.rm_list[p-1]
-        else:
-            x = x + pck.rm
-
-
-    # add model
-    if (has3d):
-        kicad_mod.append(
-            Model(filename=lib_name + ".3dshapes/" + footprint_name + ".wrl", at=x_3d, scale=s_3d, rotate=r_3d))
-
-    # print render tree
-    # print(kicad_mod.getRenderTree())
-    # print(kicad_mod.getCompleteRenderTree())
-
-    # write file
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile(footprint_name + '.kicad_mod')
-
-
-# horizontal symbols for rectangular transistors
-def makeTORound(lib_name, pck, has3d=False, x_3d=[0, 0, 0], s_3d=[1,1,1], lptext="_LargePads"):
-    padsize = pck.pad
-    d_fab=pck.diameter_outer
-    d_slk=pck.diameter_outer+2*slk_offset
-
-    # calculate pad positions
-    pads = []
-    yshift = 0
-    xshift = 0
-    a=pck.pin1_angle
-    firstPin=True
-    for p in range(1, pck.pins + 1):
-        x=pck.pin_circle_diameter/2*math.cos(a/180*math.pi)
-        y=pck.pin_circle_diameter/2*math.sin(a/180*math.pi)
-        a = a + pck.pin_dangle
-        if (len(pck.used_pins)<=0) or ((p-1) in pck.used_pins):
+            fp.append(
+                RectLine(
+                    start=[left_fab_plastic, top_fab_plastic],
+                    end=[
+                        left_fab_plastic + width_fab_plastic,
+                        top_fab_plastic + height_fab_plastic,
+                    ],
+                    layer="F.Fab",
+                    width=c.fab_line_width,
+                )
+            )
+
+        if pkg.mounting_hole_diameter > 0:
+            fp.append(
+                Circle(
+                    center=[x_mount_hole, y_mount_hole],
+                    radius=pkg.mounting_hole_diameter / 2,
+                    layer="F.Fab",
+                    width=c.fab_line_width,
+                )
+            )
+        x = 0
+        for p in range(1, pkg.pins + 1):
+            fp.append(
+                Line(
+                    start=[x, top_fab_plastic],
+                    end=[x, 0],
+                    layer="F.Fab",
+                    width=c.fab_line_width,
+                )
+            )
+            if len(pkg.pitch_list) > 0 and p <= len(pkg.pitch_list):
+                x = x + pkg.pitch_list[p - 1]
+            else:
+                x = x + pkg.pitch
+
+        # create silkscreen layer
+        keepouts = []
+        x = 0
+        for p in range(1, pkg.pins + 1):
+            if p == 1:
+                keepouts = keepouts + addKeepoutRect(
+                    x,
+                    0,
+                    pkg.pad_dimensions[0] + 2 * c.silk_pad_clearance,
+                    pkg.pad_dimensions[1] + 2 * c.silk_pad_clearance,
+                )
+            else:
+                keepouts = keepouts + addKeepoutRound(
+                    x,
+                    0,
+                    pkg.pad_dimensions[0] + 2 * c.silk_pad_clearance,
+                    pkg.pad_dimensions[1] + 2 * c.silk_pad_clearance,
+                )
+            x = x + pkg.pitch
+
+        addHLineWithKeepout(
+            fp,
+            left_silk_plastic,
+            left_silk_plastic + width_silk_plastic,
+            top_silk_plastic,
+            "F.SilkS",
+            c.silk_line_width,
+            keepouts,
+        )
+        addHLineWithKeepout(
+            fp,
+            left_silk_plastic,
+            left_silk_plastic + width_silk_plastic,
+            top_silk_plastic + height_silk_plastic,
+            "F.SilkS",
+            c.silk_line_width,
+            keepouts,
+        )
+        addVLineWithKeepout(
+            fp,
+            left_silk_plastic,
+            top_silk_plastic,
+            top_silk_plastic + height_silk_plastic,
+            "F.SilkS",
+            c.silk_line_width,
+            keepouts,
+        )
+        addVLineWithKeepout(
+            fp,
+            left_silk_plastic + width_silk_plastic,
+            top_silk_plastic,
+            top_silk_plastic + height_silk_plastic,
+            "F.SilkS",
+            c.silk_line_width,
+            keepouts,
+        )
+        if height_fab_metal > 0:
+            addHDLineWithKeepout(
+                fp,
+                left_silk_plastic + pkg.metal_offset_x,
+                10 * c.silk_line_width,
+                left_silk_plastic + pkg.metal_offset_x + width_silk_metal,
+                top_silk_plastic + height_silk_metal,
+                "F.SilkS",
+                c.silk_line_width,
+                keepouts,
+            )
+            addVDLineWithKeepout(
+                fp,
+                left_silk_plastic + pkg.metal_offset_x,
+                top_silk_plastic + height_silk_plastic + c.silk_line_width * 2,
+                10 * c.silk_line_width,
+                top_silk_plastic + height_silk_metal,
+                "F.SilkS",
+                c.silk_line_width,
+                keepouts,
+            )
+            addVDLineWithKeepout(
+                fp,
+                left_silk_plastic + pkg.metal_offset_x + width_silk_metal,
+                top_silk_plastic + height_silk_plastic + c.silk_line_width * 2,
+                10 * c.silk_line_width,
+                top_silk_plastic + height_silk_metal,
+                "F.SilkS",
+                c.silk_line_width,
+                keepouts,
+            )
+        x = 0
+        for p in range(1, pkg.pins + 1):
+            addVLineWithKeepout(
+                fp,
+                x,
+                top_silk_plastic,
+                pkg.pad_dimensions[1] / 2 + c.silk_pad_clearance,
+                "F.SilkS",
+                c.silk_line_width,
+                keepouts,
+            )
+            if len(pkg.pitch_list) > 0 and p <= len(pkg.pitch_list):
+                x += pkg.pitch_list[p - 1]
+            else:
+                x += pkg.pitch
+
+        # create courtyard
+        fp.append(
+            RectLine(
+                start=[roundCrt(leftop_crt), roundCrt(top_crt)],
+                end=[roundCrt(leftop_crt + width_crt), roundCrt(top_crt + height_crt)],
+                layer="F.CrtYd",
+                width=c.courtyard_line_width,
+            )
+        )
+
+        # create mounting hole
+        if pkg.mounting_hole_drill > 0:
+            fp.append(
+                Pad(
+                    type=Pad.TYPE_NPTH,
+                    shape=Pad.SHAPE_OVAL,
+                    at=[x_mount_hole, y_mount_hole],
+                    size=[pkg.mounting_hole_drill, pkg.mounting_hole_drill],
+                    drill=pkg.mounting_hole_drill,
+                    layers=Pad.LAYERS_THT,
+                )
+            )
+
+        # create pads
+        x = 0
+        for p in range(1, pkg.pins + 1):
+            if p == 1:
+                fp.append(
+                    Pad(
+                        number=p,
+                        type=Pad.TYPE_THT,
+                        shape=Pad.SHAPE_RECT,
+                        at=[x, 0],
+                        size=pkg.pad_dimensions,
+                        drill=pkg.drill,
+                        layers=Pad.LAYERS_THT,
+                    )
+                )
+            else:
+                fp.append(
+                    Pad(
+                        number=p,
+                        type=Pad.TYPE_THT,
+                        shape=Pad.SHAPE_OVAL,
+                        at=[x, 0],
+                        size=pkg.pad_dimensions,
+                        drill=pkg.drill,
+                        layers=Pad.LAYERS_THT,
+                    )
+                )
+            if len(pkg.pitch_list) > 0 and p <= len(pkg.pitch_list):
+                x += pkg.pitch_list[p - 1]
+            else:
+                x += pkg.pitch
+
+        self.save_footprint(fp)
+
+    def generate_round_to_fp(
+        self, pkg: RoundToPackage, pkg_id: str, footprint_type: str
+    ):
+        fp = pkg.init_footprint(footprint_type)
+        c = self.configuration_constants
+
+        d_fab = pkg.diameter_outer
+        d_slk = pkg.diameter_outer + 2 * c.silk_fab_offset
+
+        # calculate pad positions
+        pads = []
+        yshift = 0
+        xshift = 0
+        a = pkg.pin1_angle
+        firstPin = True
+        for p in range(1, pkg.pins + 1):
+            x = pkg.pin_circle_diameter / 2 * math.cos(a / 180 * math.pi)
+            y = pkg.pin_circle_diameter / 2 * math.sin(a / 180 * math.pi)
+            a += pkg.angle_between_pins
+            if p in pkg.deleted_pins:
+                continue
             pads.append([x, y])
             if firstPin:
-                xshift=-x
-                yshift=-y
-                firstPin=False
+                xshift = -x
+                yshift = -y
+                firstPin = False
 
+        txt_t = -d_slk / 2 - c.text_offset
+        txt_b = d_slk / 2 + c.text_offset
 
-    txt_t = -d_slk/2 - txt_offset
-    txt_b = d_slk/2 + txt_offset
-    tag_items = []
+        fpt = Translation(xshift, yshift)
+        fp.append(fpt)
 
-    footprint_name = pck.name
-    for t in pck.more_packnames:
-        footprint_name = footprint_name + "_" + t
-    for t in pck.fpnametags:
-        footprint_name = footprint_name + "_" + t
-    if pck.largepads:
-        tag_items.append("large Pads")
-        footprint_name = footprint_name + lptext
-    print(footprint_name)
+        # set general values
+        fpt.append(
+            Property(
+                name=Property.REFERENCE, text="REF**", at=[0, txt_t], layer="F.SilkS"
+            )
+        )
+        fpt.append(Text(text="${REFERENCE}", at=[0, txt_t], layer="F.Fab"))
+        fpt.append(
+            Property(name=Property.VALUE, text=fp.name, at=[0, txt_b], layer="F.Fab")
+        )
 
-    description = pck.name
-    tags = pck.name
-    for t in tag_items:
-        description = description + ", " + t
-        tags = tags + " " + t
-    for t in pck.tags:
-        description = description + ", " + t
-        tags = tags + " " + t
-    if len(pck.webpage)>0:
-        description = description + ", see " + pck.webpage
-
-    # init kicad footprint
-    kicad_mod = Footprint(footprint_name, FootprintType.THT)
-    kicad_mod.setDescription(description)
-    kicad_mod.setTags(tags)
-
-    kicad_modt = Translation(xshift, yshift)
-    kicad_mod.append(kicad_modt)
-
-    # set general values
-    kicad_modt.append(Property(name=Property.REFERENCE, text='REF**', at=[0, txt_t], layer='F.SilkS'))
-    kicad_modt.append(Text(text='${REFERENCE}', at=[0, txt_t], layer='F.Fab'))
-    kicad_modt.append(Property(name=Property.VALUE, text=footprint_name, at=[0, txt_b], layer='F.Fab'))
-
-    # create FAB-layer
-    kicad_modt.append(Circle(center=[0, 0], radius=pck.diameter_inner / 2, layer='F.Fab', width=lw_fab))
-    if pck.mark_width > 0 and pck.mark_len > 0:
-        a=pck.mark_angle
-        da=math.asin(pck.mark_width/d_fab)/math.pi*180
-        a1=a+da
-        a2=a-da
-        x1 = [(pck.diameter_outer / 2) * math.cos(a1 / 180 * math.pi), (pck.diameter_outer / 2) * math.sin(a1 / 180 * math.pi)]
-        x3 = [(pck.diameter_outer / 2) * math.cos(a2 / 180 * math.pi), (pck.diameter_outer / 2) * math.sin(a2 / 180 * math.pi)]
-        dx1=  (pck.mark_len) * math.cos(a / 180 * math.pi)
-        dx2 = (pck.mark_len) * math.sin(a / 180 * math.pi)
-        x2 = [x1[0] + dx1, x1[1] + dx2]
-        x4 = [x3[0] + dx1, x3[1] + dx2]
-        minx=min(x2[0],x4[0])
-        miny=min(x2[1],x4[1])
-        kicad_modt.append(Arc(center=[0, 0], start=x1, angle=(360-2*da), layer='F.Fab', width=lw_fab))
-        kicad_modt.append(Line(start=x1, end=x2, angle=0, layer='F.Fab', width=lw_fab))
-        kicad_modt.append(Line(start=x2, end=x4, angle=0, layer='F.Fab', width=lw_fab))
-        kicad_modt.append(Line(start=x4, end=x3, angle=0, layer='F.Fab', width=lw_fab))
-    else:
-        kicad_modt.append(Circle(center=[0, 0], radius=pck.diameter_outer / 2, layer='F.Fab', width=lw_fab))
-    if pck.window_diameter>0:
-        addCircleLF(kicad_modt, [0,0], pck.window_diameter/2, 'F.Fab', lw_fab, 4*lw_fab)
-
-
-    # create SILKSCREEN-layer
-    if pck.mark_width>0 and pck.mark_len>0:
-        a=pck.mark_angle
-        da=math.asin((pck.mark_width+2*slk_offset)/d_slk)/math.pi*180
-        a1=a+da
-        a2=a-da
-        x1 = [(d_slk / 2) * math.cos(a1 / 180 * math.pi), (d_slk / 2) * math.sin(a1 / 180 * math.pi)]
-        x3 = [(d_slk / 2) * math.cos(a2 / 180 * math.pi), (d_slk / 2) * math.sin(a2 / 180 * math.pi)]
-        dx1=  (pck.mark_len+slk_offset) * math.cos(a / 180 * math.pi)
-        dx2 = (pck.mark_len+slk_offset) * math.sin(a / 180 * math.pi)
-        x2 = [x1[0] + dx1, x1[1] + dx2]
-        x4 = [x3[0] + dx1, x3[1] + dx2]
-        #minx=min(x2[0],x4[0])
-        #miny=min(x2[1],x4[1])
-        kicad_modt.append(Arc(center=[0, 0], start=x1, angle=(360-2*da), layer='F.SilkS', width=lw_slk))
-        kicad_modt.append(Line(start=x1, end=x2, angle=0, layer='F.SilkS', width=lw_slk))
-        kicad_modt.append(Line(start=x2, end=x4, angle=0, layer='F.SilkS', width=lw_slk))
-        kicad_modt.append(Line(start=x4, end=x3, angle=0, layer='F.SilkS', width=lw_slk))
-    else:
-        kicad_modt.append(Circle(center=[0, 0], radius=d_slk/2, layer='F.SilkS', width=lw_slk))
-
-
-
-    if pck.mark_width > 0 and pck.mark_len > 0:
-        kicad_mod.append(
-            RectLine(start=[roundCrt(xshift+min(minx-crt_offset,-d_fab/2-crt_offset)), roundCrt(yshift+min(miny-crt_offset,-d_fab/2-crt_offset))], end=[roundCrt(xshift+d_fab/2+crt_offset), roundCrt(yshift+d_fab/2+crt_offset)],
-                     layer='F.CrtYd', width=lw_crt))
-    else:
-        kicad_mod.append(Circle(center=[roundCrt(xshift), roundCrt(yshift)], radius=roundCrt(d_fab / 2+crt_offset), layer='F.CrtYd', width=lw_crt))
-
-
-    # create pads
-    for p in range(0, len(pads)):
-        if p == 0:
-            kicad_modt.append(
-                Pad(number=p + 1, type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, at=pads[p], size=[round_to_grid(padsize[0]*1.3,0.1),padsize[1]], drill=pck.drill,
-                    layers=Pad.LAYERS_THT))
+        # create FAB layer
+        fpt.append(
+            Circle(
+                center=[0, 0],
+                radius=pkg.diameter_inner / 2,
+                layer="F.Fab",
+                width=c.fab_line_width,
+            )
+        )
+        if pkg.mark_width > 0 and pkg.mark_length > 0:
+            a = pkg.mark_angle
+            da = math.asin(pkg.mark_width / d_fab) / math.pi * 180
+            a1 = a + da
+            a2 = a - da
+            x1 = [
+                (pkg.diameter_outer / 2) * math.cos(a1 / 180 * math.pi),
+                (pkg.diameter_outer / 2) * math.sin(a1 / 180 * math.pi),
+            ]
+            x3 = [
+                (pkg.diameter_outer / 2) * math.cos(a2 / 180 * math.pi),
+                (pkg.diameter_outer / 2) * math.sin(a2 / 180 * math.pi),
+            ]
+            dx1 = (pkg.mark_length) * math.cos(a / 180 * math.pi)
+            dx2 = (pkg.mark_length) * math.sin(a / 180 * math.pi)
+            x2 = [x1[0] + dx1, x1[1] + dx2]
+            x4 = [x3[0] + dx1, x3[1] + dx2]
+            minx = min(x2[0], x4[0])
+            miny = min(x2[1], x4[1])
+            fpt.append(
+                Arc(
+                    center=[0, 0],
+                    start=x1,
+                    angle=(360 - 2 * da),
+                    layer="F.Fab",
+                    width=c.fab_line_width,
+                )
+            )
+            fpt.append(
+                Line(start=x1, end=x2, angle=0, layer="F.Fab", width=c.fab_line_width)
+            )
+            fpt.append(
+                Line(start=x2, end=x4, angle=0, layer="F.Fab", width=c.fab_line_width)
+            )
+            fpt.append(
+                Line(start=x4, end=x3, angle=0, layer="F.Fab", width=c.fab_line_width)
+            )
         else:
-            kicad_modt.append(
-                Pad(number=p + 1, type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, at=pads[p], size=padsize, drill=pck.drill,
-                    layers=Pad.LAYERS_THT))
+            fpt.append(
+                Circle(
+                    center=[0, 0],
+                    radius=pkg.diameter_outer / 2,
+                    layer="F.Fab",
+                    width=c.fab_line_width,
+                )
+            )
+        if footprint_type == "window" or footprint_type == "lens":
+            addCircleLF(
+                fpt,
+                [0, 0],
+                pkg.window_diameter / 2,
+                "F.Fab",
+                c.fab_line_width,
+                4 * c.fab_line_width,
+            )
 
-    # add model
-    if (has3d):
-        kicad_modt.append(
-            Model(filename=lib_name + ".3dshapes/" + footprint_name + ".wrl", at=x_3d, scale=s_3d, rotate=[0, 0, 0]))
+        # create silkscreen layer
+        if pkg.mark_width > 0 and pkg.mark_length > 0:
+            a = pkg.mark_angle
+            da = (
+                math.asin((pkg.mark_width + 2 * c.silk_fab_offset) / d_slk)
+                / math.pi
+                * 180
+            )
+            a1 = a + da
+            a2 = a - da
+            x1 = [
+                (d_slk / 2) * math.cos(a1 / 180 * math.pi),
+                (d_slk / 2) * math.sin(a1 / 180 * math.pi),
+            ]
+            x3 = [
+                (d_slk / 2) * math.cos(a2 / 180 * math.pi),
+                (d_slk / 2) * math.sin(a2 / 180 * math.pi),
+            ]
+            dx1 = (pkg.mark_length + c.silk_fab_offset) * math.cos(a / 180 * math.pi)
+            dx2 = (pkg.mark_length + c.silk_fab_offset) * math.sin(a / 180 * math.pi)
+            x2 = [x1[0] + dx1, x1[1] + dx2]
+            x4 = [x3[0] + dx1, x3[1] + dx2]
+            fpt.append(
+                Arc(
+                    center=[0, 0],
+                    start=x1,
+                    angle=(360 - 2 * da),
+                    layer="F.SilkS",
+                    width=c.silk_line_width,
+                )
+            )
+            fpt.append(
+                Line(
+                    start=x1, end=x2, angle=0, layer="F.SilkS", width=c.silk_line_width
+                )
+            )
+            fpt.append(
+                Line(
+                    start=x2, end=x4, angle=0, layer="F.SilkS", width=c.silk_line_width
+                )
+            )
+            fpt.append(
+                Line(
+                    start=x4, end=x3, angle=0, layer="F.SilkS", width=c.silk_line_width
+                )
+            )
+        else:
+            fpt.append(
+                Circle(
+                    center=[0, 0],
+                    radius=d_slk / 2,
+                    layer="F.SilkS",
+                    width=c.silk_line_width,
+                )
+            )
 
-    # print render tree
-    # print(kicad_mod.getRenderTree())
-    # print(kicad_mod.getCompleteRenderTree())
+        if pkg.mark_width > 0 and pkg.mark_length > 0:
+            fp.append(
+                RectLine(
+                    start=[
+                        roundCrt(
+                            xshift
+                            + min(
+                                minx - c.courtyard_offset,
+                                -d_fab / 2 - c.courtyard_offset,
+                            )
+                        ),
+                        roundCrt(
+                            yshift
+                            + min(
+                                miny - c.courtyard_offset,
+                                -d_fab / 2 - c.courtyard_offset,
+                            )
+                        ),
+                    ],
+                    end=[
+                        roundCrt(xshift + d_fab / 2 + c.courtyard_offset),
+                        roundCrt(yshift + d_fab / 2 + c.courtyard_offset),
+                    ],
+                    layer="F.CrtYd",
+                    width=c.courtyard_line_width,
+                )
+            )
+        else:
+            fp.append(
+                Circle(
+                    center=[roundCrt(xshift), roundCrt(yshift)],
+                    radius=roundCrt(d_fab / 2 + c.courtyard_offset),
+                    layer="F.CrtYd",
+                    width=c.courtyard_line_width,
+                )
+            )
 
-    # write file
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile(footprint_name + '.kicad_mod')
+        # create pads
+        for p in range(len(pads)):
+            if p == 0:
+                fpt.append(
+                    Pad(
+                        number=p + 1,
+                        type=Pad.TYPE_THT,
+                        shape=Pad.SHAPE_OVAL,
+                        at=pads[p],
+                        size=[
+                            round_to_grid(pkg.pad_dimensions[0] * 1.3, 0.1),
+                            pkg.pad_dimensions[1],
+                        ],
+                        drill=pkg.drill,
+                        layers=Pad.LAYERS_THT,
+                    )
+                )
+            else:
+                fpt.append(
+                    Pad(
+                        number=p + 1,
+                        type=Pad.TYPE_THT,
+                        shape=Pad.SHAPE_OVAL,
+                        at=pads[p],
+                        size=pkg.pad_dimensions,
+                        drill=pkg.drill,
+                        layers=Pad.LAYERS_THT,
+                    )
+                )
 
-
-if __name__ == '__main__':
-    # make standard packages
-    packs = ["TO-264", "TO-247", "TO-218", "TO-251", "TO-126", "TO-220", "TO-3P", "TO-262", "SIPAK","TO-3PB", "TO-220F"]
-    pins = [[2, 3,5], [2, 3,4,5], [2, 3], [2, 3], [2, 3], [2, 3, 4,5], [3], [3,5], [3],  [3], [2, 3, 4, 5, ]]
-    rms = [ [0, 0,3.81], [0, 0,2.54,2.54], [0, 0], [0, 0], [5.08, 2.28], [0, 0, 2.54,1.7], [0], [0,1.7], [0],  [0], [0, 0, 2.54,1.7]]
-
-    #makeVERTLS("${KICAD8_3DMODEL_DIR}/Package_TO_SOT_THT", pack("SOT93", 2, 0, 0, False),False, [0, 0, 0], [0, 0, 0])
-    #exit()
-    for p in range(0, len(packs)):
-        for pidx in range(0, len(pins[p])):
-            o3d = [0, 0, 0]
-            o3dh = [0, 0, 0]
-            o3dls = [0, 0, 0]
-            o3dvls = [0, 0, 0]
-            s3d = [1,1,1]
-            r3d=[0,0,0]
-            r3dr=r3d
-
-            pack_norm = pack(packs[p], pins[p][pidx], rms[p][pidx], 0, False)
-            libn = "${KICAD8_3DMODEL_DIR}/Package_TO_SOT_THT"
-            makeVERT(libn, pack_norm, True, o3d, s3d, "_LargePads", r3d)
-            #makeVERTLS(libn, pack_norm, True, o3dvls, s3d, "_LargePads", r3d)
-            makeHOR(libn, pack_norm, True, o3dh, s3d, "_LargePads", r3d)
-            if (len(pack_norm.additional_pin_pad) <= 0):
-                #makeHORLS(libn, pack_norm, True, o3dls, s3d, "_LargePads", r3d)
-                makeHORREV(libn, pack_norm, True, o3d, s3d, "_LargePads", r3dr)
-
-
-    # make staggered packages
-    packs =       [ "TO-220",                                         "TO-220F",                              ]
-    pins =        [ [4,      5,     7,     9,     11,       15,    ], [ 4,    4,      5,     5,      7,    9,  11,   15 ], ]
-    rms =         [ [2.54, 1.7,  1.27,  0.97,    1.7,    1.27,     ], [ 2.54, 2.54, 1.7,   1.7,   1.27,  0.9, 1.7, 1.27 ], ]
-    pitchys =     [ [],                                               [    0, 2.05,   0,  2.06,      0,    0,   0,    0 ], ]
-    ypinoffsets = [ [],                                               [    0,    0,   0,   4.5,      0,    0,   0,    0 ], ]
-    for p in range(0, len(packs)):
-        for pidx in range(0, len(pins[p])):
-            o3d = [0, 0, 0]
-            s3d = [1,1,1]
-            pitchy=0
-            if p<len(pitchys):
-                if pidx<len(pitchys[p]):
-                    pitchy=pitchys[p][pidx]
-            ypinoffset=0
-            if p<len(ypinoffsets):
-                if pidx<len(ypinoffsets[p]):
-                    ypinoffset=ypinoffsets[p][pidx]
-
-            pack_norm1 = pack(packs[p], pins[p][pidx], rms[p][pidx], 1, False, pitchy,ypinoffset)
-            pack_norm2 = pack(packs[p], pins[p][pidx], rms[p][pidx], 2, False, pitchy,ypinoffset)
-            libn = "${KICAD8_3DMODEL_DIR}/Package_TO_SOT_THT"
-            makeVERT(libn, pack_norm1, True, o3d, s3d)
-            makeVERT(libn, pack_norm2, True, o3d, s3d)
-            makeHOR(libn, pack_norm1, True, o3d, s3d)
-            makeHOR(libn, pack_norm2, True, o3d, s3d)
-
-
-
-                            #pack_largepins=pack(packs[p], pins[p][pidx], rms[p][pidx], True)
-            #makeVERT("${KICAD8_3DMODEL_DIR}/Package_TO_SOT_THT", pack_largepins, True, o3d, s3d)
-            #makeHOR("${KICAD8_3DMODEL_DIR}/Package_TO_SOT_THT", pack_largepins, True, o3d, s3d)
-            #if (len(pack_largepins.additional_pin_pad) <= 0):
-            #    makeHORREV("${KICAD8_3DMODEL_DIR}/Package_TO_SOT_THT", pack_largepins, True, o3d, s3d)
-
-    # make round packages
-    packs=[]
-    modifiers=[]
-    pins=[]
-    has3d=[]
-    off3d=[]
-    scale3d=[]
-
-    packs.append("TO-5")
-    modifiers.append(["", "Window"])
-    pins.append([2, 3, 4, 6, 8, 10])
-    has3d.append([True, True, True, True, True, True])
-    off3d.append([])
-    scale3d.append([])
-
-    packs.append("TO-5_PD5.08")
-    modifiers.append(["", "Window"])
-    pins.append([8])
-    has3d.append([True])
-    off3d.append([])
-    scale3d.append([])
-
-    packs.append("TO-8")
-    modifiers.append(["", "Window"])
-    pins.append([2, 3])
-    has3d.append([True, True])
-    off3d.append([])
-    scale3d.append([])
-
-    packs.append("TO-11")
-    modifiers.append(["", "Window"])
-    pins.append([2, 3])
-    has3d.append([True, True])
-    off3d.append([])
-    scale3d.append([])
-
-    packs.append("TO-12")
-    modifiers.append(["", "Window"])
-    pins.append([4])
-    has3d.append([True])
-    off3d.append([[]])
-    scale3d.append([[]])
-
-    packs.append("TO-17")
-    modifiers.append(["", "Window"])
-    pins.append([4])
-    has3d.append([True])
-    off3d.append([[]])
-    scale3d.append([[]])
-
-    packs.append("TO-18")
-    modifiers.append(["", "Window", "Lens"])
-    pins.append([2, 3, 4])
-    has3d.append([True, True, True])
-    off3d.append([])
-    scale3d.append([])
-
-    packs.append("TO-33")
-    modifiers.append(["", "Window"])
-    pins.append([4])
-    has3d.append([True])
-    off3d.append([[]])
-    scale3d.append([[]])
-
-    packs.append("TO-38")
-    modifiers.append(["", "Window"])
-    pins.append([2, 3])
-    has3d.append([True, True])
-    off3d.append([])
-    scale3d.append([])
-
-    packs.append("TO-39")
-    modifiers.append(["", "Window"])
-    pins.append([2, 3, 4, 6, 8, 10])
-    has3d.append([True, True, True, True, True, True])
-    off3d.append([])
-    scale3d.append([])
-
-    packs.append("TO-46")
-    modifiers.append(["", "Window"])
-    pins.append([2, 3, 4])
-    has3d.append([True, True, True])
-    off3d.append([])
-    scale3d.append([])
-
-    packs.append("TO-52")
-    modifiers.append(["", "Window"])
-    pins.append([2, 3])
-    has3d.append([True, True])
-    off3d.append([])
-    scale3d.append([])
-
-    packs.append("TO-72")
-    modifiers.append(["", "Window"])
-    pins.append([4])
-    has3d.append([True])
-    off3d.append([[]])
-    scale3d.append([[]])
-
-    packs.append("TO-78")
-    modifiers.append(["", "Window"])
-    pins.append([6, 8, 10])
-    has3d.append([True, True, True])
-    off3d.append([])
-    scale3d.append([])
-
-    packs.append("TO-99")
-    modifiers.append(["", "Window"])
-    pins.append([6,8])
-    has3d.append([True,True])
-    off3d.append([])
-    scale3d.append([])
-
-    packs.append("TO-100")
-    modifiers.append(["", "Window"])
-    pins.append([10])
-    has3d.append([True,True])
-    off3d.append([])
-    scale3d.append([])
+        self.save_footprint(fp)
 
 
-    packs.append("TO-75")
-    modifiers.append(["", "Window"])
-    pins.append([6])
-    has3d.append([True])
-    off3d.append([[]])
-    scale3d.append([[]])
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        description="use config .yaml files to create footprints."
+    )
+    parser.add_argument(
+        "files",
+        metavar="file",
+        type=str,
+        nargs="*",
+        help="list of files holding information about what devices should be created.",
+    )
+    parser.add_argument(
+        "--global_config",
+        type=str,
+        nargs="?",
+        help="the config file defining how the footprint will look like. (KLC)",
+        default="../../tools/global_config_files/config_KLCv3.0.yaml",
+    )
+    # parser.add_argument('--series_config', type=str, nargs='?',
+    #                     help='the config file defining series parameters.', default='../package_config_KLCv3.yaml')
+    args = FootprintGenerator.add_standard_arguments(parser)
 
+    with open(args.global_config, "r") as config_stream:
+        try:
+            configuration = yaml.safe_load(config_stream)
+        except yaml.YAMLError as exc:
+            print(exc)
 
+    # with open(args.series_config, 'r') as config_stream:
+    # try:
+    # configuration.update(yaml.safe_load(config_stream))
+    # except yaml.YAMLError as exc:
+    # print(exc)
 
-
-    for p in range(0, len(packs)):
-        mi=0
-        for m in modifiers[p]:
-            for pidx in range(0, len(pins[p])):
-
-                o3d = [0, 0, 0]
-                s3d = [1,1,1]
-
-                pack = pack_round(packs[p], pins[p][pidx], m, False)
-                libn = "${KICAD8_3DMODEL_DIR}/Package_TO_SOT_THT"
-                makeTORound(libn, pack, has3d[p][pidx], o3d, s3d)
-            mi=mi+1
+    FootprintGenerator.run_on_files(
+        TOGenerator,
+        args,
+        file_autofind_dir="size_definitions",
+        configuration=configuration,
+    )

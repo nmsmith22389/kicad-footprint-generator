@@ -1,17 +1,8 @@
 #!/usr/bin/env python
 
-import sys
-import os
 import math
-import time
 
-# ensure that the kicad-footprint-generator directory is available
-#sys.path.append(os.environ.get('KIFOOTPRINTGENERATOR'))  # enable package import from parent directory
-#sys.path.append("D:\hardware\KiCAD\kicad-footprint-generator")  # enable package import from parent directory
-sys.path.append(os.path.join(sys.path[0],"..","..","..","kicad_mod")) # load kicad_mod path
-sys.path.append(os.path.join(sys.path[0],"..","..","..")) # load kicad_mod path
-
-from KicadModTree import *  # NOQA
+from KicadModTree import Circle, Line, PolygonLine, Translation
 
 
 # round for grid g
@@ -21,9 +12,11 @@ def round_to_grid(x, g):
     else:
         return math.floor(x/g)*g
 
+
 # round for courtyard grid
 def roundCrt(x):
     return round_to_grid(x, 0.01)
+
 
 # float-variant of range()
 def frange(x, y, jump):
@@ -31,11 +24,13 @@ def frange(x, y, jump):
     yield x
     x += jump
 
+
 # inclusice float-variant of range()
 def frangei(x, y, jump):
   while x <= y:
     yield x
     x += jump
+
 
 # returns a list with a single rectangle around x,y with width and height w and h
 def addKeepoutRect(x, y, w, h):
@@ -61,7 +56,6 @@ def addKeepoutRound(x,y, w,h):
                 res.append([x - xx-0.015, x + xx+0.015, y+yy-0.015, y+yy+r/Nrects+0.015])
             yysum=yysum+yy
         return res
-
 
 
 def applyKeepouts(lines_in, y, xi, yi, keepouts):
@@ -104,7 +98,6 @@ def applyKeepouts(lines_in, y, xi, yi, keepouts):
     return lines
 
 
-
 #split a vertical line so it does not interfere with keepout areas defined as [[x0,x1,y0,y1], ...]
 def addHLineWithKeepout(kicad_mod, x0, x1, y,layer, width, keepouts=[], roun=0.001):
     #print("addHLineWithKeepout",y)
@@ -134,9 +127,8 @@ def addHDLineWithKeepout(kicad_mod, x0, dx, x1, y, layer, width, keepouts=[], ro
         kicad_mod.append(Line(start=[round_to_grid(l[0], roun), round_to_grid(y, roun)], end=[round_to_grid(l[1], roun), round_to_grid(y, roun)],layer=layer, width=width))
 
 
-
 #split a vertical line so it does not interfere with keepout areas defined as [[x0,x1,y0,y1], ...]
-def addVLineWithKeepout(kicad_mod, x, y0, y1,layer, width, keepouts=[], roun=0.001):
+def addVLineWithKeepout(kicad_mod, x, y0, y1, layer, width, keepouts=[], roun=0.001):
     #print("addVLineWithKeepout",x)
     linesout = applyKeepouts([[min(y0,y1), max(y0,y1)]], x, 2, 0, keepouts)
     for l in linesout:
@@ -178,8 +170,6 @@ def addRectAngledTop(kicad_mod, x1, x2, angled_delta, layer, width, roun=0.001):
                               [round_to_grid(xma, roun),round_to_grid(ya, roun)],
                               [round_to_grid(xma, roun),round_to_grid(ymi, roun)],
                               [round_to_grid(xmi, roun),round_to_grid(ymi, roun)]], layer=layer, width=width))
-
-
 
 
 # add a rectangle that has two angled corners at the top
@@ -232,6 +222,5 @@ def addCircleLF(kicad_mod, center, radius, layer, width, linedist=0.3, roun=0.00
             if x1!=x2:
                 #print([round_to_grid(x1, roun),round_to_grid(y, roun)], [round_to_grid(x2, roun),round_to_grid(y, roun)])
                 trans.append(Line(start=[round_to_grid(M11*x1+M12*y, roun),round_to_grid(M21*x1+M22*y, roun)], end=[round_to_grid(M11*x2+M12*y, roun),round_to_grid(M21*x2+M22*y, roun)], layer=layer, width=width))
-
 
     kicad_mod.append(Circle(center=[round_to_grid(center[0], roun), round_to_grid(center[1], roun)], radius=round_to_grid(radius, roun), layer=layer,  width=width))
