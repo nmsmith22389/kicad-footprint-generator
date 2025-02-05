@@ -178,6 +178,42 @@ def containedInAnyKeepout(p: Vector2D, keepouts: List[Keepout]) -> bool:
     return False
 
 
+def renderKeepouts(
+    keeouts: list[Keepout], layer: str = "Cmts.User", width: float = 0.1
+) -> list[Node]:
+    """
+    Debugging function to render keepouts.
+
+    Just add the returned nodes to the footprint to see the keepouts
+    (e.g. with `mod.extend( renderKeepouts( keepouts ) ) )`)
+    """
+
+    nodes: list[Node] = []
+    for ko in keeouts:
+        if isinstance(ko, KeepoutRect):
+            nodes.append(
+                RectLine(
+                    start=Vector2D(ko.left, ko.top),
+                    end=Vector2D(ko.right, ko.bottom),
+                    layer=layer,
+                    width=width,
+                )
+            )
+        elif isinstance(ko, KeepoutRound):
+            nodes.append(
+                Circle(
+                    center=Vector2D(ko.center[0], ko.center[1]),
+                    radius=ko.radius,
+                    layer=layer,
+                    width=width,
+                )
+            )
+        else:
+            raise ValueError(f"Unknown keepout type: {ko}")
+
+    return nodes
+
+
 def _add_kept_out(
     items: List[Union[geometricArc, geometricCircle, geometricLine]], layer, width, roun
 ) -> List[Node]:
