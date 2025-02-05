@@ -14,8 +14,32 @@ class Keepout(ABC):
     """
     This is a geometric representation of a keepout  - not in the PCB sense, but in a
     geometric sense for limiting the extent of other geometric objects.
+
+    The general idea is that a keepout can be applied to a line, circle or arc, and
+    the result is either:
+      - None: The object is entirely unaffected by the keepout (i.e. it is entirely outside)
+      - An empty list: The object is entirely inside the keepout (i.e. it is entirely deleted)
+      - A list of objects: The object is partially inside the keepout, and the list contains
+        the parts of the object that are outside the keepout.
+
+    For example: a rectangular keepout applied to these three lines:
+
+      +--------------+
+      |   -----(A)   |
+      |          --------(B)
+      |              |   -----(C)
+      +--------------+
+
+    The result would be:
+
+      +--------------+
+      |              |
+      |              |---(B)
+      |              |   -----(C)
+      +--------------+
     """
 
+    # A function that takes a point and returns True or False
     PointPredicate: TypeAlias = Callable[[Vector2D], bool]
 
     @abstractmethod
@@ -137,6 +161,9 @@ class Keepout(ABC):
 
 
 class KeepoutRect(Keepout):
+    """
+    A rectangular keepout area, defined by a center and size
+    """
 
     def __init__(self, center: Vector2D, size: Vector2D):
         if not isinstance(center, Vector2D):
@@ -167,6 +194,9 @@ class KeepoutRect(Keepout):
         self.bottom_side = geometricLine(start=[self.left, self.bottom], end=[self.right, self.bottom])
         self.left_side = geometricLine(start=[self.left, self.top], end=[self.left, self.bottom])
         self.right_side = geometricLine(start=[self.right, self.top], end=[self.right, self.bottom])
+
+    def __str__(self):
+        return f"KeepoutRect(center=({self.x}, {self.y}), size=({self.w}, {self.h}))"
 
     def contains(self, pt: Vector2D) -> bool:
         return self.left <= pt.x <= self.right and self.top <= pt.y <= self.bottom
@@ -256,7 +286,7 @@ class KeepoutRect(Keepout):
 
 class KeepoutRound(Keepout):
     """
-    Create a circular keepout area
+    A circular keepout area, defined by a center and radius
     """
 
     def __init__(self, center: Vector2D, radius: float):
@@ -264,6 +294,9 @@ class KeepoutRound(Keepout):
         self.radius = radius
 
         self._circle = geometricCircle(center=self.center, radius=self.radius)
+
+    def __str__(self):
+        return f"KeepoutRound(center=({self.center.x}, {self.center.y}), radius={self.radius})"
 
     def contains(self, pt) -> bool:
         return (pt - self.center).norm() <= self.radius

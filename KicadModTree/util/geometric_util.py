@@ -189,6 +189,9 @@ class geometricLine():
     def __str__(self) -> str:
         return f"geometricLine({self.start_pos}, {self.end_pos})"
 
+    def __repr__(self) -> str:
+        return self.__str__()
+
 
 class geometricCircle():
     r"""Handle the geometric side of circles
@@ -302,6 +305,9 @@ class geometricCircle():
 
     def __str__(self) -> str:
         return f"geometricCircle(c={self.center_pos}, r={self.radius})"
+
+    def __repr__(self) -> str:
+        return self.__str__()
 
 
 class geometricArc():
@@ -643,6 +649,9 @@ class geometricArc():
 
     def __str__(self) -> str:
         return f"geometricArc(c={self.center_pos}, s={self.start_pos}, a={self.angle})"
+
+    def __repr__(self) -> str:
+        return self.__str__()
 
 
 class BaseNodeIntersection():

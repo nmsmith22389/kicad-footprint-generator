@@ -131,7 +131,8 @@ def addKeepoutRound(x, y, w, h):
 
 # internal method for keepout-processing
 def applyKeepouts(
-    items: List[Union[geometricLine, geometricCircle, geometricArc]], keepouts: List
+    items: List[Union[geometricLine, geometricCircle, geometricArc]],
+    keepouts: List[Keepout],
 ) -> List[Union[geometricLine, geometricArc, geometricCircle]]:
 
     if len(keepouts) == 0:
@@ -139,12 +140,16 @@ def applyKeepouts(
 
     # Apply all the keepouts to a single line
     def applyKeepoutsToOneItem(item, kos: List[Keepout]):
-
         items = [item]
 
         for ko in kos:
-            kept_out: Optional[list[Any]] = []
+
+            # Items left after applying this keepout
+            new_items = []
+
             for i in items:
+                kept_out: Optional[list[Any]] = []
+
                 if isinstance(i, geometricLine):
                     kept_out = ko.keepout_line(i)
                 elif isinstance(i, geometricCircle):
@@ -152,12 +157,16 @@ def applyKeepouts(
                 elif isinstance(i, geometricArc):
                     kept_out = ko.keepout_arc(i)
 
-                # This keepout does not affect this item
                 if kept_out is None:
-                    continue
+                    # This keepout does not affect this item
+                    new_items.append(i)
+                else:
+                    # Whatever is left after applying the keepout
+                    new_items += kept_out
 
-                items.remove(i)
-                items += kept_out
+            # Once one Keepout has been applied, we need to apply the next one(s)
+            # to the new items
+            items = new_items
 
         return items
 
