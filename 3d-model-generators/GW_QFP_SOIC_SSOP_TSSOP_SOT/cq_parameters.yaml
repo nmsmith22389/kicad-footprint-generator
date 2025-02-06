@@ -3040,38 +3040,6 @@ SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.41x3.81mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/soic_edrd/RD_8_2.pdf'
 
-SOIC-8_5.275x5.275mm_P1.27mm:
-  the: 8.0
-  tb_s: 0.15
-  c: 0.22
-  R1: 0.1
-  R2: 0.1
-  S: 0.3
-  fp_s: True
-  fp_r: 0.6
-  fp_d: 0.05
-  fp_z: 0.05
-  ef: 0.0
-  cc1: 0.25
-  D1: 5.275
-  E1: 5.275
-  E: 7.9
-  A1: 0.1
-  A2: 1.955
-  b: 0.425
-  e: 1.27
-  npx: 4
-  npy: 0
-  epad: null
-  excluded_pins: null
-  model_name: SOIC-8_5.275x5.275mm_P1.27mm
-  rotation: -90
-  body_color_key: 'black body'
-  pin_color_key: 'metal grey pins'
-  mark_color_key: 'light brown label'
-  destination_dir: 'Package_SO.3dshapes'
-  source: 'http://ww1.microchip.com/downloads/en/DeviceDoc/20005045C.pdf#page=23'
-
 SOIC-8_7.5x5.85mm_P1.27mm:
   the: 8.0
   tb_s: 0.15
@@ -4292,37 +4260,71 @@ SO-8_3.9x4.9mm_P1.27mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'https://www.ti.com/lit/ds/symlink/thvd1400.pdf'
 
-SO-8_5.3x6.2mm_P1.27mm:
-  the: 9.0
-  tb_s: 0.15
-  c: 0.1
+SOIC-8_5.3x5.3mm_P1.27mm:
+  the: 9.0 # let's use same value of other packages in this file, 2 of 3 sources we listed here does not give this value
+  tb_s: 0.0
+  c: 0.22 # (0.19+0.25)/2, S2AE/F
   R1: 0.1
   R2: 0.1
-  S: 0.1
-  fp_s: 1
+  L: 0.65 # (0.45 + 0.85)/2, JEITA Lp minimum value .. Atmel '8S2' L maximum value
+  fp_s: True
   fp_r: 0.4
   fp_d: 0.5
   fp_z: 0.05
   ef: 0.0
-  cc1: 0.25
-  D1: 6.2
+  cc1: 0.0
+  D1: 5.3
   E1: 5.3
-  E: 8.4
-  A1: 0.1
-  A2: 1.5
-  b: 0.39
+  E: 7.80  # JEITA nominal HE
+  A1: 0.15 # S2AE/F and 8S2 --> A1: 0.15 ; JEITA (nominal) --> A1: 0.10 ;
+  A2: 2.01 # A2 = A_max - A1, where A_max = 2.16mm in S2AE/F and 8S2 packages
+  b: 0.45 # JEITA bp, (0.35+0.55)/2
   e: 1.27
   npx: 4
   npy: 0
   epad: null
   excluded_pins: null
-  model_name: SO-8_5.3x6.2mm_P1.27mm
+  model_name: SOIC-8_5.3x5.3mm_P1.27mm
   rotation: -90
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
   destination_dir: 'Package_SO.3dshapes'
-  source: 'http://www.ti.com.cn/cn/lit/ds/symlink/tl7705a.pdf'
+  # JEITA/EIAJ 08-001-BBA and Atmel/Microchip, 208 mils width:
+  source: 'https://www.jeita.or.jp/japanese/standard/book/ED-7311-19/#target/page_no=21, https://ww1.microchip.com/downloads/en/DeviceDoc/20005045C.pdf#page=23, https://ww1.microchip.com/downloads/en/DeviceDoc/doc2535.pdf#page=162'
+
+
+SOIC-8_5.3x6.2mm_P1.27mm:
+  the: 9.0
+  tb_s: 0.0
+  c: 0.15
+  R1: 0.1
+  R2: 0.1
+  L: 0.75 # (0.55+0.95)/2
+  fp_s: True
+  fp_r: 0.4
+  fp_d: 0.5
+  fp_z: 0.05
+  ef: 0.0
+  cc1: 0.0
+  D1: 6.2
+  E1: 5.3
+  E: 7.8 # (7.40+8.20)/2
+  A1: 0.1 # (0.05+0.15)/2
+  A2: 1.9 # A2 = A_max - A1 = 2.00 - 0.1 = 1.9
+  b: 0.43 # (0.35+0.51)/2
+  e: 1.27
+  npx: 4
+  npy: 0
+  epad: null
+  excluded_pins: null
+  model_name: SOIC-8_5.3x6.2mm_P1.27mm
+  rotation: -90
+  body_color_key: 'black body'
+  pin_color_key: 'metal grey pins'
+  mark_color_key: 'light brown label'
+  destination_dir: 'Package_SO.3dshapes'
+  source: 'https://www.ti.com.cn/cn/lit/ds/symlink/tl7705a.pdf#page=24, https://www.ti.com/lit/ml/msop001a/msop001a.pdf' # same packages, alternative links
 
 SOIC-16W-12_7.5x10.3mm_P1.27mm:
   the: 9.0
@@ -8940,39 +8942,6 @@ SOP-8_6.605x9.655mm_P2.54mm:
   mark_color_key: 'light brown label'
   destination_dir: 'Package_SO.3dshapes'
   source: 'https://www.onsemi.com/pdf/datasheet/hcpl2631m-d.pdf'
-
-SOP-8_5.28x5.23mm_P1.27mm:
-  the: 8.0 # body angle in degrees
-  tb_s: 0.1 # top part of body is that much smaller
-  c: 0.2 # pin thickness, body center part height
-  R1: 0.15 # pin upper corner, inner radius
-  R2: 0.15 # pin lower corner, inner radius
-  S: null # pin top flat part length (excluding corner arc) - you can specify either S or L, the other will be calculated
-  L: 0.65 #  pin bottom flat part length (including corner arc)
-  fp_s: True  # True for circular pinmark, False for square pinmark (useful for diodes)
-  fp_r: 0.60 # first pin indicator radius
-  fp_d: 0.14 # first pin indicator distance from edge
-  fp_z: 0.05 # first pin indicator depth
-  ef: 0 # fillet of edges  Note: bigger bytes model with fillet
-  cc1: 0.25 # chamfer of the 1st pin corner
-  D1: 5.23 # body length
-  E1: 5.28 # body width
-  E: 7.90 # body overall width  (E - E1) = 2 * (S + R1 + L)
-  A1: 0.15 # body-board separation
-  A2: 1.80 # body height
-  b: 0.41 # pin width
-  e: 1.27 # pin (center-to-center) distance
-  npx: 4 # number of pins along X axis (width)
-  npy: 0 # number of pins along y axis (length)
-  epad: null  # e Pad
-  excluded_pins: null # no pin excluded
-  model_name: SOP-8_5.28x5.23mm_P1.27mm # model name
-  rotation: -90 # rotation if required
-  body_color_key: 'black body'
-  pin_color_key: 'metal grey pins'
-  mark_color_key: 'light brown label'
-  destination_dir: 'Package_SO.3dshapes'
-  source: 'https://www.mxic.com.tw/Lists/Datasheet/Attachments/8983/MX25V16066,%202.5V,%2016Mb,%20v1.5.pdf'
 
 HTSSOP-56-1EP_6.1x14mm_Pitch0.5mm:
   the: 12.0

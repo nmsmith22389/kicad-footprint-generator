@@ -1,7 +1,22 @@
 # SOP - Small outline package
 #
-# This file cointains JEITA/EIAJ SOP packages with lead space / pitch 1.27 mm
-# See ED-7311-19 standard for more info
+# This file was supposed to contain JEITA/EIAJ P-SOP (or simplifying SOP) packages with lead space / pitch 1.27 mm
+# See ED-7311-19 and EDR-7320 standards for more info
+# 
+# Right now there are some SOIC packages here included by mistake (JEDEC standard), and since...
+# - the term 'SOP' is quite ambiguous, it also means 'a superset of SSOP, TSOP, MSOP etc',
+# - searching for SOP brings other packages in user interface, and/or may have problem with filters (try *SOP*4.*P1.27 for example),
+# - we are trying to leave the library without duplicate footprints, keeping same standards (or similar standards) in the same files,
+# - each manufacturer uses a different for SOIC, like SOIC, SO, SOP,
+# - SOIC is widely used / known...
+#
+# ... we will move definitions from this file to soic.yaml in future updates, so please DO NOT include new definitions here.
+#
+# If you are making a new SOP package, do this in soic.yaml:
+# - name it as 'SOIC-...' for example
+# - include 'P-SOP', 'SOP', 'SOP-4', 'SOP-8' and others designators in compatible_mpns,
+# - as well put info about JEITA in size_source, example : 'JEITA/EIAJ variation xx-xxx-BBA, ...'
+
 
 FileHeader:
   library_Suffix: 'SO'
@@ -187,29 +202,7 @@ SOP-8_3.9x4.9mm_P1.27mm:
   num_pins_x: 0
   num_pins_y: 4
 
-SOP-8_5.28x5.23mm_P1.27mm:
-  size_source: 'http://www.macronix.com/Lists/Datasheet/Attachments/7534/MX25R3235F,%20Wide%20Range,%2032Mb,%20v1.6.pdf#page=80'
-  body_size_x:
-    minimum: 5.18
-    maximum: 5.38
-  body_size_y:
-    minimum: 5.13
-    maximum: 5.33
-  overall_height:
-    minimum: 1.75
-    maximum: 2.16
-  overall_size_x:
-    minimum: 7.70
-    maximum: 8.10
-  lead_width:
-    minimum: 0.36
-    maximum: 0.51
-  lead_len:
-    minimum: 0.50
-    maximum: 0.80
-  pitch: 1.27
-  num_pins_x: 0
-  num_pins_y: 4
+# SOP-8_5.28x5.23mm_P1.27mm => replaced by/see: SOIC-8_5.3x5.3mm_P1.27mm in soic.yaml
 
 SOP-8_6.62x9.15mm_P2.54mm:
   size_source: 'http://www.ti.com/lit/ds/symlink/iso1050.pdf'
@@ -329,6 +322,8 @@ SOP-18_7.495x11.515mm_P1.27mm:
   num_pins_y: 9
 
 STC_SOP-16_3.9x9.9mm_P1.27mm:
+  # it can be JEDEC MS-012 (max height match, but not lead length)
+  # and also JEITA 16-001-ABA (but max height = 2.00 there; lead length match better here)
   size_source: 'https://www.stcmicro.com/datasheet/STC15F2K60S2-en.pdf#page=156'
   manufacturer: 'STC'
   body_size_x: # E1
@@ -361,6 +356,8 @@ STC_SOP-16_3.9x9.9mm_P1.27mm:
   num_pins_y: 8
 
 SOP-16_3.9x9.9mm_P1.27mm:
+  # probably JEDEC MS-012, should be SOIC, see lead length (it's 0.835 +/- 0.435 mm), JEITA is tighter (0.45 .. 0.75mm)
+  # height also does not match, in JEITA 16-001-ABA it's max 2.00mm
   size_source: 'https://www.diodes.com/assets/Datasheets/PAM8403.pdf'
   body_size_x: # E1
     minimum: 3.80
@@ -546,6 +543,7 @@ Renesas_SOP-32_11.4x20.75mm_P1.27mm:
   num_pins_y: 16
 
 SOP-44_12.6x28.5mm_P1.27mm:
+  # JEDEC MO-175 (see datasheet), it's SOIC actually
   size_source: 'https://www.mxic.com.tw/Lists/Datasheet/Attachments/8177/MX23C6410,%205V,%2064Mb,%20v3.1.pdf#page=5'
   body_size_x:
     minimum: 12.47

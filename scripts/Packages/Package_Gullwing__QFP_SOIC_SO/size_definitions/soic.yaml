@@ -1,18 +1,23 @@
 # SOIC - small outline integrated circuit
 #
-# This file cointains JEDEC SOIC packages with lead space / pitch 1.27 mm
+# This file cointains JEDEC SOIC and JEITA/EIAJ P-SOP (or simplifying SOP) packages with lead space / pitch 1.27 mm
 #
-# standard  | width                                             | height                 | PS
-# MS-012    | 150 mil (3.81 mm) / 3.75 mm / 3.90 mm (de facto)  | 1.75 mm                |
-# MS-013    | 300 mil (7.62 mm) / 7.50 mm                       | 2.65 mm                |
-# MO-046    | 200 mil (5.08 mm) / 5.30 mm                       | 1.80 mm                |
-# MO-059    | 8.4 mm (330 mil)                                  | 2.54 / 3.05 mm         |
-# MO-119    | 300 mil (7.62 mm)                                 | 2.64 mm                |
-# MO-120    | 350 mil (8.89 mm)                                 | 2.64 mm                |
-# MO-155    | 4.40 mm                                           | 3.00 mm                |
-# MO-180    | 13.30 mm                                          | 2.80 / 2.00 / 1.90 mm  | pitch 1.27 / 0.80 / 0.50 mm
+# Here some definitions of a JEDEC SOIC package (see JEP95 from JEDEC JC-11 committee for more info):
 #
-# See JEP95 from JEDEC JC-11 committee for more info
+# standard  | width                                             | height (max)     | leads (N)                   | PS
+# MS-012    | 150 mil (3.81 mm) / 3.75 mm / 3.90 mm (de facto)  | 1.75 mm          | 8, 14, 16                   |
+# MS-013    | 300 mil (7.62 mm) / 7.50 mm                       | 2.65 mm          | 8, 14, 16, 18, 20, 24, 28   | has thermal variations
+# MO-046    | 200 mil (5.08 mm) / 5.30 mm                       | 1.80 mm          | 14, 16, 20                  |
+# MO-059    | 8.4 mm (330 mil)                                  | 2.54 / 3.05 mm   | 24, 28                      |
+# MO-099    | 11.2 mm (440 mil)                                 | 3.04 mm          | 28, 32                      |
+# MO-119    | 300 mil (7.62 mm)                                 | 2.64 mm          | 24, 28, 32, 36              |
+# MO-120    | 350 mil (8.89 mm)                                 | 2.64 mm          | 24, 28, 32, 36              |
+# MO-155    | 4.40 mm                                           | 3.00 mm          | 5                           |
+# MO-175    | 12.60 mm                                          | 3.10 mm          | 44, 48                      |
+# MO-180    | 13.30 mm                                          | 2.80 mm          | 44                          | there are two other packages with pitch 0.80 and 0.50 mm, please do not add them to this file
+#
+# For more info about JEITA/EIAJ SOP packages, see ED-7311-19 and EDR-7320 standards
+
 
 FileHeader:
   library_Suffix: 'SO'
@@ -420,61 +425,101 @@ SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.62x3.51mm:
     # bottom_pad_size:
     paste_avoid_via: False
 
-    
-    
-SOIC-8_5.23x5.23mm_P1.27mm:
-  size_source: 'http://www.winbond.com/resource-files/w25q32jv%20revg%2003272018%20plus.pdf#page=68'
-  body_size_x:
-    minimum: 5.13
-    nominal: 5.23
-    maximum: 5.33
-  body_size_y:
-    minimum: 5.13
-    nominal: 5.23
-    maximum: 5.33
-  overall_height:
-    minimum: 1.75
-    nominal: 1.95
-    maximum: 2.16
 
-  overall_size_x:
-    minimum: 7.7
-    nominal: 7.9
-    maximum: 8.1
-  lead_len:
-    minimum: 0.5
-    nominal: 0.65
-    maximum: 0.8
-  lead_width:
-    minimum: 0.35
-    nominal: 0.42
-    maximum: 0.48
-
+SOIC-8_5.3x5.3mm_P1.27mm:
+  # formerly SOIC-8W_5.3x5.3mm_P1.27mm, 208 mils width, we are removing 'W' since it does not make sense in this package width
+  # it replaces:
+  # - SOP-8_5.28x5.23mm_P1.27mm
+  # - SOIC-8_5.23x5.23mm_P1.27mm
+  # - SOIC-8_5.275x5.275mm_P1.27mm
+  # - SOIC-8W_5.3x5.3mm_P1.27mm
+  #
+  # based on JEITA/EIAJ 08-001-BBA + Atmel/Microchip + others manufacturers
+  size_source: 'JEITA/EIAJ 08-001-BBA and Atmel/Microchip, 208 mils width, https://www.jeita.or.jp/japanese/standard/book/ED-7311-19/#target/page_no=21, https://ww1.microchip.com/downloads/en/DeviceDoc/20005045C.pdf#page=23, https://ww1.microchip.com/downloads/en/DeviceDoc/doc2535.pdf#page=162'
+  compatible_mpns:
+    - 'P-SOP SOP SOP-8'
+    - 'SO SO-8'
+    - '8S2'              # Atmel/Microchip, see link above
+    - 'S2AE/F'           # Microchip, https://ww1.microchip.com/downloads/aemDocuments/documents/corporate-responsibilty/environmental/material-compliance-documents/8L_SOIC_point208inch_S2AE_F_C0414500A.pdf
+    - 'K04-056'          # Microchip, https://ww1.microchip.com/downloads/en/devicedoc/40139e.pdf#page=102
+    - 'CASE-751BE'       # Onsemi, https://www.onsemi.com/pdf/datasheet/cat24m01-d.pdf#page=12
+    - 'SO8W'             # Micron, https://www.mouser.de/datasheet/2/671/M25PX32-1282938.pdf#page=59
+    - '8-Pin-SOIC'       # Winbond, https://www.winbond.com/resource-files/w25q32jv%20revg%2003272018%20plus.pdf#page=68
+    - 'PSA'              # Texas, https://www.ti.com/lit/ml/mpds329/mpds329.pdf, https://www.ti.com/lit/ds/symlink/amc1203.pdf#page=29
+    - 'W8-2 W8-4 W8MS-1' # Maxim/Analog, https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/soic/21-0262.pdf
+  body_size_x: 5.15 .. 5.30 .. 5.40 # 5.30mm from JEITA
+  body_size_y: 5.15 .. 5.30 .. 5.40 # 5.30mm nominal is good for all manufacturers sources used here, but "out of the standard" in JEITA, same value of old SOIC-8W
+  overall_size_x: 7.70 .. 7.80 .. 8.10 # minimum / maximum from manufacturers, nominal from JEITA
+  overall_height: 1.75 .. 2.16 # JEITA is 2.15mm, manufacturers use 2.16mm
+  lead_width: 0.35 .. 0.55  # JEITA bp
+  lead_len: 0.45 .. 0.85 # JEITA Lp minimum value .. Atmel '8S2' L maximum value
   pitch: 1.27
   num_pins_x: 0
   num_pins_y: 4
 
-SOIC-8_5.275x5.275mm_P1.27mm:
-  size_source: 'http://ww1.microchip.com/downloads/en/DeviceDoc/20005045C.pdf#page=23'
-  body_size_x:
-    minimum: 5.15
-    maximum: 5.4
-  body_size_y:
-    minimum: 5.15
-    maximum: 5.4
-  overall_size_x:
-    minimum: 7.7
-    maximum: 8.1
-  overall_height:
-    minimum: 1.75
-    maximum: 2.16
-  lead_width:
-    minimum: 0.35
-    maximum: 0.5
-  lead_len:
-    minimum: 0.5
-    maximum: 0.8
+#SOP-8_5.28x5.23mm_P1.27mm:
+#  # originaly it was in sop.yaml
+#  # old link, 'http://www.macronix.com/Lists/Datasheet/Attachments/7534/MX25R3235F,%20Wide%20Range,%2032Mb,%20v1.6.pdf#page=80'
+#  # they call SOP-8, 'official name - 209MIL' which is = 5.308mm
+#  # second source, https://www.macronix.com/Lists/ApplicationNote/Attachments/1886/AN182V1-209mil%208-SOP%20and%206x5mm%208-WSON%20Dual%20Layout%20Guide.pdf
+#  size_source: 'https://web.archive.org/web/20190226212332/http://www.macronix.com/Lists/Datasheet/Attachments/7534/MX25R3235F,%20Wide%20Range,%2032Mb,%20v1.6.pdf#page=80'
+#  body_size_x: 5.18 .. 5.28 .. 5.38
+#  body_size_y: 5.13 .. 5.23 .. 5.33
+#  overall_height: 1.75 .. 1.95 .. 2.16
+#  overall_size_x: 7.70 .. 7.90 .. 8.10
+#  lead_width: 0.36 .. 0.41 .. 0.51
+#  lead_len: 0.50 .. 0.65 .. 0.80
 
+#SOP-8_5.29x5.24mm_P1.27mm:
+#  # this one is just for reference (never existed in the library),
+#  # many ATtiny in lib use Package_SO:SOIC-8W_5.3x5.3mm_P1.27mm, manually created, its source is https://ww1.microchip.com/downloads/en/PackagingSpec/00000049BQ.pdf#page=174
+#  # but then on their datasheet you can find Atmel 8S2 package, 208 mils == 5.283 mm
+#  size_source: 'https://ww1.microchip.com/downloads/en/DeviceDoc/doc2535.pdf#page=162'
+#  # other source that mentions '8S2', here it's 210 mils == 5.334 mm and has different measures, older? https://datasheet.octopart.com/AT86RF233-ZU-Atmel-datasheet-22122754.pdf#page=27
+#  compatible_mpns:
+#    - '8S2'
+#  body_size_x: 5.18 .. 5.40
+#  body_size_y: 5.13 .. 5.35
+#  overall_height: 1.70 .. 2.16
+#  overall_size_x: 7.70 .. 8.26
+#  lead_width: 0.35 .. 0.48
+#  lead_len: 0.51 .. 0.85
+
+#SOIC-8_5.28x5.28mm_P1.27mm:
+#  # formerly SOIC-8_5.23x5.23mm_P1.27mm (it was using E1 and D1 by mistake in name), replaced by/see: SOIC-8_5.3x5.3mm_P1.27mm
+#  size_source: 'http://www.winbond.com/resource-files/w25q32jv%20revg%2003272018%20plus.pdf#page=68'
+#  body_size_x: 5.18 .. 5.28 .. 5.38 # E
+#  body_size_y: 5.18 .. 5.28 .. 5.38 # D
+#  overall_height: 1.75 .. 1.95 .. 2.16
+#  overall_size_x: 7.7 .. 7.9 .. 8.1
+#  lead_len: 0.5 .. 0.65 .. 0.8
+#  lead_width: 0.35 .. 0.42 .. 0.48
+
+#SOIC-8_5.275x5.275mm_P1.27mm:
+#  # replaced by/see: SOIC-8_5.3x5.3mm_P1.27mm
+#  size_source: 'http://ww1.microchip.com/downloads/en/DeviceDoc/20005045C.pdf#page=23'
+#  body_size_x: 5.15 .. 5.4
+#  body_size_y: 5.15 .. 5.4
+#  overall_size_x: 7.7 .. 8.1
+#  overall_height: 1.75 .. 2.16
+#  lead_width: 0.35 .. 0.5
+#  lead_len: 0.5 .. 0.8
+
+SOIC-8_5.3x6.2mm_P1.27mm:
+  # formerly SO-8_5.3x6.2mm_P1.27mm
+  # similar to JEITA/EIAJ 08-001-BBA, which is E=5.30mm, D=6.10mm, A=2.15mm
+  # see https://www.ti.com/packaging/docs/searchtipackages.tsp?packageName=SO, they call this package SOP
+  size_source: 'Texas Instruments (based on JEITA/EIAJ 08-001-BBA), 208 mils width, https://www.ti.com/lit/ml/msop001a/msop001a.pdf'
+  compatible_mpns:
+    - 'P-SOP SOP SOP-8'
+    - 'SO SO-8'
+    - 'PS' # Texas, https://www.ti.com/lit/ds/symlink/lm2904.pdf#page=61
+  body_size_x: 5.00 .. 5.60
+  body_size_y: 5.90 .. 6.50
+  overall_height: 2.00
+  overall_size_x: 7.40 .. 8.20
+  lead_width: 0.35 .. 0.51
+  lead_len: 0.55 .. 0.95 # JEITA Lp is maximum 0.75
   pitch: 1.27
   num_pins_x: 0
   num_pins_y: 4
