@@ -21,12 +21,13 @@ for target_path in "${changed_dirs[@]}"; do
 
     # Get the relative path to the target path from target_dir
     rel_target=$(realpath --relative-to="${target_dir}" "${target_path}")
+    rel_base="${base_dir}/${rel_target}"
     # Strip the .pretty suffix, add .diff
     output_subdir="$output_dir/${rel_target%.*}.diff"
 
     echo "Diffing $rel_target against $target_path -> $output_subdir"
 
-    python3 "${KICAD_LIBRARY_UTILS}/html-diff/src/html_diff.py" -j0 -v "$base_path" "$target_path" -o "$output_subdir"
+    python3 "${KICAD_LIBRARY_UTILS}/html-diff/src/html_diff.py" -j0 -v "$rel_base" "$target_path" -o "$output_subdir"
 done
 
 # Create the index HTML file
