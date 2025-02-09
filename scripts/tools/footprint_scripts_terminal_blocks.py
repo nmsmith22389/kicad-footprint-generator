@@ -6,7 +6,6 @@ from typing import Optional
 import scripts.tools.drawing_tools as DT
 from KicadModTree import (
     Circle,
-    Direction,
     Footprint,
     FootprintType,
     KicadFileHandler,
@@ -19,8 +18,7 @@ from KicadModTree import (
     Text,
     Translation,
 )
-from kilibs.geom import Vector2D, keepout
-from KicadModTree.util.direction import Direction
+from kilibs.geom import Direction, Vector2D, keepout
 from scripts.tools.footprint_global_properties import *
 from scripts.tools.nodes import pin1_arrow
 

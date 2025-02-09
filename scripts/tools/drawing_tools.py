@@ -7,14 +7,13 @@ from typing import Tuple, List, Union, Optional, Any
 from KicadModTree import (
     Arc,
     Circle,
-    Direction,
     Footprint,
     Line,
     Node,
     PolygonLine,
     RectLine,
 )
-from kilibs.geom import Vector2D, BoundingBox
+from kilibs.geom import Direction, Vector2D, BoundingBox
 from kilibs.geom.rounding import (
     round_to_grid,
     round_to_grid_down,

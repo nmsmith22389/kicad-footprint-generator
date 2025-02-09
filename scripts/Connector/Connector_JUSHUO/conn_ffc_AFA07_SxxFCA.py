@@ -33,7 +33,6 @@ sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))  # load parent path
 import argparse
 import yaml
 from KicadModTree import (
-    Direction,
     Footprint,
     FootprintType,
     Model,
@@ -48,7 +47,7 @@ from scripts.tools.footprint_text_fields import addTextFields
 
 from scripts.tools import drawing_tools
 from scripts.tools.nodes import pin1_arrow
-from kilibs.geom import Vector2D
+from kilibs.geom import Direction, Vector2D
 
 
 manufacturer = "JUSHUO"

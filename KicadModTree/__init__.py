@@ -16,9 +16,6 @@
 # all different types of nodes
 from KicadModTree.nodes import *
 
-# Common utility classes that many generators will use
-from KicadModTree.util.direction import Direction
-
 # File Handlers
 from KicadModTree.KicadFileHandler import KicadFileHandler
 

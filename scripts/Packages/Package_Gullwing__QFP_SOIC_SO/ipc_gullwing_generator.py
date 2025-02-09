@@ -6,7 +6,6 @@ import yaml
 from typing import List, Optional, Union, Literal
 
 from KicadModTree import (
-    Direction,
     ExposedPad,
     Footprint,
     FootprintType,
@@ -14,7 +13,7 @@ from KicadModTree import (
     PolygonLine,
     RectLine,
 )
-from kilibs.geom import Vector2D, BoundingBox
+from kilibs.geom import Direction, Vector2D, BoundingBox
 from KicadModTree.nodes.specialized.PadArray import PadArray, get_pad_radius_from_arrays
 from KicadModTree.nodes.specialized.Cruciform import Cruciform
 

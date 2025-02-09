@@ -10,7 +10,6 @@ import argparse
 import logging
 
 from KicadModTree import (
-    Direction,
     Footprint,
     FootprintType,
     Text,
@@ -19,7 +18,7 @@ from KicadModTree import (
     RectLine,
     Property,
 )
-from kilibs.geom import Vector2D, rounding
+from kilibs.geom import Direction, Vector2D, rounding
 from scripts.tools.drawing_tools import (
     getStandardSilkArrowSize,
     SilkArrowSize,

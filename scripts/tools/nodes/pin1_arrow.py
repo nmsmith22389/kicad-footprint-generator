@@ -1,7 +1,7 @@
 from typing import Union
 
-from KicadModTree import Direction, Node, Polygon
-from kilibs.geom import Vector2D
+from KicadModTree import Node, Polygon
+from kilibs.geom import Direction, Vector2D
 
 
 class Pin1SilkscreenArrow(Node):

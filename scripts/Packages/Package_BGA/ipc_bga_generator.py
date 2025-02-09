@@ -8,7 +8,6 @@ import itertools
 import logging
 
 from KicadModTree import (
-    Direction,
     Footprint,
     FootprintType,
     Pad,
@@ -17,7 +16,7 @@ from KicadModTree import (
     RectLine,
     Text,
 )
-from kilibs.geom import Vector2D
+from kilibs.geom import Direction, Vector2D
 from scripts.tools.nodes import pin1_arrow
 from scripts.tools.declarative_def_tools import tags_properties
 from scripts.tools.footprint_generator import FootprintGenerator

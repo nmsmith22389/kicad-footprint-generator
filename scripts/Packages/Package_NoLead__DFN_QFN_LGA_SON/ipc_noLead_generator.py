@@ -9,7 +9,6 @@ from math import sqrt
 from typing import List
 
 from KicadModTree import (
-    Direction,
     ExposedPad,
     Footprint,
     FootprintType,
@@ -18,7 +17,7 @@ from KicadModTree import (
     PolygonLine,
     RectLine,
 )
-from kilibs.geom import Vector2D, BoundingBox, rounding
+from kilibs.geom import Direction, Vector2D, BoundingBox, rounding
 from KicadModTree.nodes.specialized.PadArray import PadArray, get_pad_radius_from_arrays
 
 from scripts.tools.footprint_generator import FootprintGenerator

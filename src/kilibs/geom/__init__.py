@@ -6,6 +6,8 @@
 
 from .vector import Vector2D, Vector3D
 
+from .direction import Direction
+
 from .rectangle import Rectangle
 
 from .bounding_box import BoundingBox

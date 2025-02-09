@@ -9,7 +9,7 @@ sys.path.append(
 )  # enable package import from parent directory
 
 from KicadModTree import *  # NOQA
-from KicadModTree import Direction
+from kilibs.geom import Direction
 from scripts.tools.drawing_tools import SilkArrowSize
 from scripts.tools.drawing_tools_silk import draw_silk_triangle_for_pad
 

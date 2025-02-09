@@ -5,8 +5,8 @@ from scripts.tools.drawing_tools import (
     SilkArrowSize,
 )
 from scripts.tools.nodes import pin1_arrow
-from KicadModTree import Direction, Pad
-from kilibs.geom import Vector2D
+from KicadModTree import Pad
+from kilibs.geom import Direction, Vector2D
 
 
 def draw_silk_triangle_for_pad(
