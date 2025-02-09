@@ -88,13 +88,13 @@ def makeDSubStraight(
     if HighDensity:
         footprint_name = footprint_name + "-HD"
     if isMale:
-        description = description + ", male"
-        tags = tags + " male"
-        footprint_name = footprint_name + "_Male"
+        description = description + ", pins (male)"
+        tags = tags + " pins"
+        footprint_name = footprint_name + "_Pins"
     else:
-        description = description + ", female"
-        tags = tags + " female"
-        footprint_name = footprint_name + "_Female"
+        description = description + ", socket (female)"
+        tags = tags + " socket"
+        footprint_name = footprint_name + "_Socket"
 
     description = description + ", pitch {:g}x{:g}mm".format(rmx, rmy)
     tags = tags + " pitch {:g}x{:g}mm".format(rmx, rmy)
@@ -526,13 +526,13 @@ def makeDSubEdge(
     tags = "{0}-pin {1} edge mount solder cup".format(pins, classname_description)
     footprint_name = "{0}-{1}".format(classname, pins)
     if isMale:
-        description = description + ", male"
-        tags = tags + " male"
-        footprint_name = footprint_name + "_Male"
+        description = description + ", pins (male)"
+        tags = tags + " pins"
+        footprint_name = footprint_name + "_Pins"
     else:
-        description = description + ", female"
-        tags = tags + " female"
-        footprint_name = footprint_name + "_Female"
+        description = description + ", socket (female)"
+        tags = tags + " socket"
+        footprint_name = footprint_name + "_Socket"
 
     description = description + ", x-pin-pitch {:g}mm".format(rmx)
     tags = tags + " x-pin-pitch {:g}mm".format(rmx)
@@ -1021,13 +1021,13 @@ def makeDSubAngled(
     if HighDensity:
         footprint_name = footprint_name + "-HD"
     if isMale:
-        description = description + ", male"
-        tags = tags + " male"
-        footprint_name = footprint_name + "_Male"
+        description = description + ", pins (male)"
+        tags = tags + " pins"
+        footprint_name = footprint_name + "_Pins"
     else:
-        description = description + ", female"
-        tags = tags + " female"
-        footprint_name = footprint_name + "_Female"
+        description = description + ", socket (female)"
+        tags = tags + " socket"
+        footprint_name = footprint_name + "_Socket"
 
     rmy_default = 2.84
     description = description + ", pitch {:g}x{:g}mm, pin-PCB-offset {:g}mm".format(

@@ -6,7 +6,7 @@
 
 9_Vertical_P2.77x2.84mm:
   pin: ['round', 9, 2.77, 2.84, 0.64, 3.9]
-  genders: ['male', 'female']
+  genders: ['pins', 'socket']
   serie: 2
   npthserie: [1]
   npth_pin_color_key: 'black body'
@@ -22,7 +22,7 @@
   source: 'https://disti-assets.s3.amazonaws.com/tonar/files/datasheets/16730.pdf#page=16'
 9_Vertical_P2.77x2.84mm_MountingHoles:
   pin: ['round', 9, 2.77, 2.84, 0.64, 3.9]
-  genders: ['male', 'female']
+  genders: ['pins', 'socket']
   serie: 2
   npthserie: [1]
   npth_pin_color_key: 'black body'
@@ -39,7 +39,7 @@
 
 15_Vertical_P2.77x2.84mm:
   pin: ['round', 15, 2.77, 2.84, 0.64, 3.9]
-  genders: ['male', 'female']
+  genders: ['pins', 'socket']
   serie: 2
   npthserie: [1]
   npth_pin_color_key: 'black body'
@@ -55,7 +55,7 @@
   source: 'https://disti-assets.s3.amazonaws.com/tonar/files/datasheets/16730.pdf#page=16'
 15_Vertical_P2.77x2.84mm_MountingHoles:
   pin: ['round', 15, 2.77, 2.84, 0.64, 3.9]
-  genders: ['male', 'female']
+  genders: ['pins', 'socket']
   serie: 2
   npthserie: [1]
   npth_pin_color_key: 'black body'
@@ -72,7 +72,7 @@
 
 25_Vertical_P2.77x2.84mm:
   pin: ['round', 25, 2.77, 2.84, 0.64, 3.9]
-  genders: ['male', 'female']
+  genders: ['pins', 'socket']
   serie: 2
   npthserie: [1]
   npth_pin_color_key: 'black body'
@@ -88,7 +88,7 @@
   source: 'https://disti-assets.s3.amazonaws.com/tonar/files/datasheets/16730.pdf#page=16'
 25_Vertical_P2.77x2.84mm_MountingHoles:
   pin: ['round', 25, 2.77, 2.84, 0.64, 3.9]
-  genders: ['male', 'female']
+  genders: ['pins', 'socket']
   serie: 2
   npthserie: [1]
   npth_pin_color_key: 'black body'
@@ -105,7 +105,7 @@
 
 37_Vertical_P2.77x2.84mm:
   pin: ['round', 37, 2.77, 2.84, 0.64, 3.9]
-  genders: ['male', 'female']
+  genders: ['pins', 'socket']
   serie: 2
   npthserie: [1]
   npth_pin_color_key: 'black body'
@@ -121,7 +121,7 @@
   source: 'https://disti-assets.s3.amazonaws.com/tonar/files/datasheets/16730.pdf#page=16'
 37_Vertical_P2.77x2.84mm_MountingHoles:
   pin: ['round', 37, 2.77, 2.84, 0.64, 3.9]
-  genders: ['male', 'female']
+  genders: ['pins', 'socket']
   serie: 2
   npthserie: [1]
   npth_pin_color_key: 'black body'
@@ -143,7 +143,7 @@
   serie: 2
   # Distance between the edge of the PCB and pin 1: 9.40 + 2.54 = 11.94
   npthserie: [3, 11.94]
-  genders: ['male', 'female']
+  genders: ['pins', 'socket']
   body_top_color_key: 'white body'
   body_color_key: 'metal grey pins'
   pin_color_key: 'metal grey pins'
@@ -155,7 +155,7 @@
 
 15_Horizontal_P2.77x2.54mm_EdgePinOffset9.40mm:
   pin: ['round1', 15, 2.77, 2.54, 0.64, 3.9]
-  genders: ['male', 'female']
+  genders: ['pins', 'socket']
   serie: 2
   npthserie: [3, 11.94]
   npth_pin_color_key: 'black body'
@@ -172,7 +172,7 @@
 
 25_Horizontal_P2.77x2.54mm_EdgePinOffset9.40mm:
   pin: ['round1', 25, 2.77, 2.54, 0.64, 3.9]
-  genders: ['male', 'female']
+  genders: ['pins', 'socket']
   serie: 2
   npthserie: [3, 11.94]
   npth_pin_color_key: 'black body'
@@ -189,7 +189,7 @@
 
 37_Horizontal_P2.77x2.54mm_EdgePinOffset9.40mm:
   pin: ['round1', 37, 2.77, 2.54, 0.64, 3.9]
-  genders: ['male', 'female']
+  genders: ['pins', 'socket']
   serie: 2
   npthserie: [3, 11.94]
   npth_pin_color_key: 'black body'
@@ -208,7 +208,7 @@
 
 9_Horizontal_P2.77x2.84mm_EdgePinOffset9.40mm:
   pin: ['round1', 9, 2.77, 2.84, 0.64, 3.9]
-  genders: ['male', 'female']
+  genders: ['pins', 'socket']
   serie: 2
   # Distance between the edge of the PCB and pin 1: 9.40 + 2.84 = 12.24
   npthserie: [3, 12.24]
@@ -226,7 +226,7 @@
 
 15_Horizontal_P2.77x2.84mm_EdgePinOffset9.40mm:
   pin: ['round1', 15, 2.77, 2.84, 0.64, 3.9]
-  genders: ['male', 'female']
+  genders: ['pins', 'socket']
   serie: 2
   npthserie: [3, 12.24]
   npth_pin_color_key: 'black body'
@@ -243,7 +243,7 @@
 
 25_Horizontal_P2.77x2.84mm_EdgePinOffset9.40mm:
   pin: ['round1', 25, 2.77, 2.84, 0.64, 3.9]
-  genders: ['male', 'female']
+  genders: ['pins', 'socket']
   serie: 2
   npthserie: [3, 12.24]
   npth_pin_color_key: 'black body'
@@ -260,7 +260,7 @@
 
 37_Horizontal_P2.77x2.84mm_EdgePinOffset9.40mm:
   pin: ['round1', 37, 2.77, 2.84, 0.64, 3.9]
-  genders: ['male', 'female']
+  genders: ['pins', 'socket']
   serie: 2
   npthserie: [3, 12.24]
   npth_pin_color_key: 'black body'
@@ -279,7 +279,7 @@
 
 9_Horizontal_P2.77x2.84mm_EdgePinOffset4.94mm_Housed_MountingHolesOffset4.94mm:
   pin: ['round1', 9, 2.77, 2.84, 0.64, 3.9]
-  genders: ['male', 'female']
+  genders: ['pins', 'socket']
   serie: 2
   # Distance between the edge of the PCB and pin 1: 5.34 - 0.40 + 2.84 = 7.78
   # Body depth: 8.6
@@ -299,7 +299,7 @@
 
 15_Horizontal_P2.77x2.84mm_EdgePinOffset4.94mm_Housed_MountingHolesOffset4.94mm:
   pin: ['round1', 15, 2.77, 2.84, 0.64, 3.9]
-  genders: ['male', 'female']
+  genders: ['pins', 'socket']
   serie: 2
   npthserie: [2, 7.78, 8.6, 2.84]
   npth_pin_color_key: 'black body'
@@ -316,7 +316,7 @@
 
 25_Horizontal_P2.77x2.84mm_EdgePinOffset4.94mm_Housed_MountingHolesOffset4.94mm:
   pin: ['round1', 25, 2.77, 2.84, 0.64, 3.9]
-  genders: ['male', 'female']
+  genders: ['pins', 'socket']
   serie: 2
   npthserie: [2, 7.78, 8.6, 2.84]
   npth_pin_color_key: 'black body'
@@ -333,7 +333,7 @@
 
 37_Horizontal_P2.77x2.84mm_EdgePinOffset4.94mm_Housed_MountingHolesOffset4.94mm:
   pin: ['round1', 37, 2.77, 2.84, 0.64, 3.9]
-  genders: ['male', 'female']
+  genders: ['pins', 'socket']
   serie: 2
   npthserie: [2, 7.78, 8.6, 2.84]
   npth_pin_color_key: 'black body'
@@ -352,7 +352,7 @@
 
 9_Horizontal_P2.77x2.84mm_EdgePinOffset7.70mm_Housed_MountingHolesOffset9.12mm:
   pin: ['round1', 9, 2.77, 2.84, 0.64, 3.9]
-  genders: ['male', 'female']
+  genders: ['pins', 'socket']
   serie: 2
   # Distance between the edge of the PCB and pin 1: 8.1 - 0.4 + 2.84 = 10.54
   # Body depth: 8.1 - 0.4 + 2.84 + ??[1.8] = 12.34
@@ -372,7 +372,7 @@
 
 15_Horizontal_P2.77x2.84mm_EdgePinOffset7.70mm_Housed_MountingHolesOffset9.12mm:
   pin: ['round1', 15, 2.77, 2.84, 0.64, 3.9]
-  genders: ['male', 'female']
+  genders: ['pins', 'socket']
   serie: 2
   npthserie: [2, 10.54, 12.34, 1.42]
   npth_pin_color_key: 'black body'
@@ -389,7 +389,7 @@
 
 25_Horizontal_P2.77x2.84mm_EdgePinOffset7.70mm_Housed_MountingHolesOffset9.12mm:
   pin: ['round1', 25, 2.77, 2.84, 0.64, 3.9]
-  genders: ['male', 'female']
+  genders: ['pins', 'socket']
   serie: 2
   npthserie: [2, 10.54, 12.34, 1.42]
   npth_pin_color_key: 'black body'
@@ -406,7 +406,7 @@
 
 37_Horizontal_P2.77x2.84mm_EdgePinOffset7.70mm_Housed_MountingHolesOffset9.12mm:
   pin: ['round1', 37, 2.77, 2.84, 0.64, 3.9]
-  genders: ['male', 'female']
+  genders: ['pins', 'socket']
   serie: 2
   npthserie: [2, 10.54, 12.34, 1.42]
   npth_pin_color_key: 'black body'
@@ -425,7 +425,7 @@
 
 9_Horizontal_P2.77x2.84mm_EdgePinOffset9.90mm_Housed_MountingHolesOffset11.32mm:
   pin: ['round1', 9, 2.77, 2.84, 0.64, 3.9]
-  genders: ['male', 'female']
+  genders: ['pins', 'socket']
   serie: 2
   # Distance between the edge of the PCB and pin 1: 10.3 - 0.4 + 2.84 = 12.74
   # Body depth: 10.3 - 0.4 + 2.84 + ??[1.8] = 14.54
@@ -445,7 +445,7 @@
 
 15_Horizontal_P2.77x2.84mm_EdgePinOffset9.90mm_Housed_MountingHolesOffset11.32mm:
   pin: ['round1', 15, 2.77, 2.84, 0.64, 3.9]
-  genders: ['male', 'female']
+  genders: ['pins', 'socket']
   serie: 2
   npthserie: [2, 12.74, 14.54, 1.42]
   npth_pin_color_key: 'black body'
@@ -462,7 +462,7 @@
 
 25_Horizontal_P2.77x2.84mm_EdgePinOffset9.90mm_Housed_MountingHolesOffset11.32mm:
   pin: ['round1', 25, 2.77, 2.84, 0.64, 3.9]
-  genders: ['male', 'female']
+  genders: ['pins', 'socket']
   serie: 2
   npthserie: [2, 12.74, 14.54, 1.42]
   npth_pin_color_key: 'black body'
@@ -479,7 +479,7 @@
 
 37_Horizontal_P2.77x2.84mm_EdgePinOffset9.90mm_Housed_MountingHolesOffset11.32mm:
   pin: ['round1', 37, 2.77, 2.84, 0.64, 3.9]
-  genders: ['male', 'female']
+  genders: ['pins', 'socket']
   serie: 2
   npthserie: [2, 12.74, 14.54, 1.42]
   npth_pin_color_key: 'black body'
@@ -498,7 +498,7 @@
 
 9_Horizontal_P2.77x2.84mm_EdgePinOffset14.56mm_Housed_MountingHolesOffset8.20mm:
   pin: ['round1', 9, 2.77, 2.84, 0.64, 3.9]
-  genders: ['male', 'female']
+  genders: ['pins', 'socket']
   serie: 2
   # Distance between the edge of the PCB and pin 1: 14.96 - 0.4 + 2.84 = 17.4
   # Body depth: 14.96 - 0.4 + 2.84 + ??[1.8] = 19.2
@@ -518,7 +518,7 @@
 
 15_Horizontal_P2.77x2.84mm_EdgePinOffset14.56mm_Housed_MountingHolesOffset8.20mm:
   pin: ['round1', 15, 2.77, 2.84, 0.64, 3.9]
-  genders: ['male', 'female']
+  genders: ['pins', 'socket']
   serie: 2
   npthserie: [2, 17.4, 19.2, 9.2]
   npth_pin_color_key: 'black body'
@@ -535,7 +535,7 @@
 
 25_Horizontal_P2.77x2.84mm_EdgePinOffset14.56mm_Housed_MountingHolesOffset8.20mm:
   pin: ['round1', 25, 2.77, 2.84, 0.64, 3.9]
-  genders: ['male', 'female']
+  genders: ['pins', 'socket']
   serie: 2
   npthserie: [2, 17.4, 19.2, 9.2]
   npth_pin_color_key: 'black body'
@@ -552,7 +552,7 @@
 
 37_Horizontal_P2.77x2.84mm_EdgePinOffset14.56mm_Housed_MountingHolesOffset8.20mm:
   pin: ['round1', 37, 2.77, 2.84, 0.64, 3.9]
-  genders: ['male', 'female']
+  genders: ['pins', 'socket']
   serie: 2
   npthserie: [2, 17.4, 19.2, 9.2]
   npth_pin_color_key: 'black body'
@@ -571,7 +571,7 @@
 
 9_Horizontal_P2.77x2.84mm_EdgePinOffset14.56mm_Housed_MountingHolesOffset15.98mm:
   pin: ['round1', 9, 2.77, 2.84, 0.64, 3.9]
-  genders: ['male', 'female']
+  genders: ['pins', 'socket']
   serie: 2
   # Distance between the edge of the PCB and pin 1: 14.96 - 0.4 + 2.84 = 17.4
   # Body depth: 14.96 - 0.4 + 2.84 + ??[1.8] = 19.2
@@ -591,7 +591,7 @@
 
 15_Horizontal_P2.77x2.84mm_EdgePinOffset14.56mm_Housed_MountingHolesOffset15.98mm:
   pin: ['round1', 15, 2.77, 2.84, 0.64, 3.9]
-  genders: ['male', 'female']
+  genders: ['pins', 'socket']
   serie: 2
   npthserie: [2, 17.4, 19.2, 1.42]
   npth_pin_color_key: 'black body'
@@ -608,7 +608,7 @@
 
 25_Horizontal_P2.77x2.84mm_EdgePinOffset14.56mm_Housed_MountingHolesOffset15.98mm:
   pin: ['round1', 25, 2.77, 2.84, 0.64, 3.9]
-  genders: ['male', 'female']
+  genders: ['pins', 'socket']
   serie: 2
   npthserie: [2, 17.4, 19.2, 1.42]
   npth_pin_color_key: 'black body'
@@ -625,7 +625,7 @@
 
 37_Horizontal_P2.77x2.84mm_EdgePinOffset14.56mm_Housed_MountingHolesOffset15.98mm:
   pin: ['round1', 37, 2.77, 2.84, 0.64, 3.9]
-  genders: ['male', 'female']
+  genders: ['pins', 'socket']
   serie: 2
   npthserie: [2, 17.4, 19.2, 1.42]
   npth_pin_color_key: 'black body'
@@ -648,7 +648,7 @@
 
 15_Vertical_P2.29x1.98mm_MountingHoles:
   pin: ['round', 15, 2.29, 1.98, 0.64, 3.9]
-  genders: ['male', 'female']
+  genders: ['pins', 'socket']
   serie: 3
   npthserie: [1]
   npth_pin_color_key: 'black body'
@@ -665,7 +665,7 @@
 
 26_Vertical_P2.29x1.98mm_MountingHoles:
   pin: ['round', 26, 2.29, 1.98, 0.64, 3.9]
-  genders: ['male', 'female']
+  genders: ['pins', 'socket']
   serie: 3
   npthserie: [1]
   npth_pin_color_key: 'black body'
@@ -682,7 +682,7 @@
 
 44_Vertical_P2.29x1.98mm_MountingHoles:
   pin: ['round', 44, 2.29, 1.98, 0.64, 3.9]
-  genders: ['male', 'female']
+  genders: ['pins', 'socket']
   serie: 3
   npthserie: [1]
   npth_pin_color_key: 'black body'
@@ -699,7 +699,7 @@
 
 62_Vertical_P2.41x1.98mm_MountingHoles:
   pin: ['round', 62, 2.41, 1.98, 0.64, 3.9]
-  genders: ['male', 'female']
+  genders: ['pins', 'socket']
   serie: 3
   npthserie: [1]
   npth_pin_color_key: 'black body'
@@ -718,7 +718,7 @@
 
 15_Horizontal_P2.29x1.90mm_EdgePinOffset3.03mm_Housed_MountingHolesOffset4.94mm:
   pin: ['round1', 15, 2.29, 1.90, 0.64, 3.9]
-  genders: ['male', 'female']
+  genders: ['pins', 'socket']
   serie: 3
   # Distance between the edge of the PCB and pin 1: 5.34 - 0.4 + 1.9 = 6.84
   # Body depth: 8.6
@@ -738,7 +738,7 @@
 
 26_Horizontal_P2.29x1.90mm_EdgePinOffset3.03mm_Housed_MountingHolesOffset4.94mm:
   pin: ['round1', 26, 2.29, 1.90, 0.64, 3.9]
-  genders: ['male', 'female']
+  genders: ['pins', 'socket']
   serie: 3
   npthserie: [2, 6.84, 8.6, 1.90]
   npth_pin_color_key: 'black body'
@@ -755,7 +755,7 @@
 
 44_Horizontal_P2.29x1.90mm_EdgePinOffset3.03mm_Housed_MountingHolesOffset4.94mm:
   pin: ['round1', 44, 2.29, 1.90, 0.64, 3.9]
-  genders: ['male', 'female']
+  genders: ['pins', 'socket']
   serie: 3
   npthserie: [2, 6.84, 8.6, 1.90]
   npth_pin_color_key: 'black body'
@@ -772,7 +772,7 @@
 
 62_Horizontal_P2.41x1.90mm_EdgePinOffset3.03mm_Housed_MountingHolesOffset4.94mm:
   pin: ['round1', 62, 2.41, 1.90, 0.64, 3.9]
-  genders: ['male', 'female']
+  genders: ['pins', 'socket']
   serie: 3
   npthserie: [2, 6.84, 8.6, 1.90]
   npth_pin_color_key: 'black body'
@@ -791,7 +791,7 @@
 
 15_Horizontal_P2.29x2.54mm_EdgePinOffset8.35mm_Housed_MountingHolesOffset10.89mm:
   pin: ['round1', 15, 2.29, 2.54, 0.64, 3.9]
-  genders: ['male', 'female']
+  genders: ['pins', 'socket']
   serie: 3
   # Distance between the edge of the PCB and pin 1: 11.29 - 0.4 + 2.54 = 13.43
   # Body depth: 11.29 - 0.4 + 2.54 + ??[1.8] = 15.23
@@ -811,7 +811,7 @@
 
 26_Horizontal_P2.29x2.54mm_EdgePinOffset8.35mm_Housed_MountingHolesOffset10.89mm:
   pin: ['round1', 26, 2.29, 2.54, 0.64, 3.9]
-  genders: ['male', 'female']
+  genders: ['pins', 'socket']
   serie: 3
   npthserie: [2, 13.43, 15.23, 2.54]
   npth_pin_color_key: 'black body'
@@ -828,7 +828,7 @@
 
 44_Horizontal_P2.29x2.54mm_EdgePinOffset8.35mm_Housed_MountingHolesOffset10.89mm:
   pin: ['round1', 44, 2.29, 2.54, 0.64, 3.9]
-  genders: ['male', 'female']
+  genders: ['pins', 'socket']
   serie: 3
   npthserie: [2, 13.43, 15.23, 2.54]
   npth_pin_color_key: 'black body'
@@ -845,7 +845,7 @@
 
 62_Horizontal_P2.41x2.54mm_EdgePinOffset8.35mm_Housed_MountingHolesOffset10.89mm:
   pin: ['round1', 62, 2.41, 2.54, 0.64, 3.9]
-  genders: ['male', 'female']
+  genders: ['pins', 'socket']
   serie: 3
   npthserie: [2, 13.43, 15.23, 2.54]
   npth_pin_color_key: 'black body'

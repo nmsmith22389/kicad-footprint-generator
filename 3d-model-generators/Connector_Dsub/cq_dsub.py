@@ -86,12 +86,12 @@ class cq_dsub:
     #     for n in self.all_params:
     #         if n == modelID:
     #             if self.all_params[modelID].serie == 3:
-    #                 if gender == 'male':
+    #                 if gender == 'pins':
     #                     return 'DSUB-' + str(self.all_params[modelID].pin[1]) + '-HD_Male_' + self.all_params[modelID].modelName
     #                 else:
     #                     return 'DSUB-' + str(self.all_params[modelID].pin[1]) + '-HD_Female_' + self.all_params[modelID].modelName
     #             else:
-    #                 if gender == 'male':
+    #                 if gender == 'pins':
     #                     return 'DSUB-' + str(self.all_params[modelID].pin[1]) + '_Male_' + self.all_params[modelID].modelName
     #                 else:
     #                     return 'DSUB-' + str(self.all_params[modelID].pin[1]) + '_Female_' + self.all_params[modelID].modelName
@@ -191,7 +191,7 @@ class cq_dsub:
         ttdy = dy
         ttdz = dz
 
-        if params["gender"] == "male":
+        if params["gender"] == "pins":
             if serie == 2:
                 if pn == 9:
                     ttdx = 2.0 * pindx
@@ -216,7 +216,7 @@ class cq_dsub:
                     ttdx = 9.75 * pindx
                 ttdy = pindy
 
-        if params["gender"] == "female":
+        if params["gender"] == "socket":
             if serie == 2:
                 if pn == 9:
                     ttdx = 0.0 - (2.0 * pindx)
@@ -346,7 +346,7 @@ class cq_dsub:
         metal_plate_height = 12.50
         mounting_hole_diameter = 3.2
 
-        if params["gender"] == "female":
+        if params["gender"] == "socket":
             connector_height = 7.9
         else:
             connector_height = 8.3
@@ -358,7 +358,7 @@ class cq_dsub:
         #
         #
         if (serie == 2 and pn == 9) or (serie == 3 and pn == 15):
-            if params["gender"] == "female":
+            if params["gender"] == "socket":
                 connector_width = 16.30  # A
             else:
                 connector_width = 16.92
@@ -368,7 +368,7 @@ class cq_dsub:
         #
         #
         if (serie == 2 and pn == 15) or (serie == 3 and pn == 26):
-            if params["gender"] == "female":
+            if params["gender"] == "socket":
                 connector_width = 24.60
             else:
                 connector_width = 25.25
@@ -378,7 +378,7 @@ class cq_dsub:
         #
         #
         if (serie == 2 and pn == 25) or (serie == 3 and pn == 44):
-            if params["gender"] == "female":
+            if params["gender"] == "socket":
                 connector_width = 38.30
             else:
                 connector_width = 38.96
@@ -388,7 +388,7 @@ class cq_dsub:
         #
         #
         if (serie == 2 and pn == 37) or (serie == 3 and pn == 62):
-            if params["gender"] == "female":
+            if params["gender"] == "socket":
                 connector_width = 54.80
             else:
                 connector_width = 55.42
@@ -617,7 +617,7 @@ class cq_dsub:
         A, B, C, D, E, F, G = self.get_dsub_size(params)
 
         ttdz = 6.0
-        if params["gender"] == "male":
+        if params["gender"] == "pins":
             ttdz = 2.0
 
         case = self.make_center_body(params, ttdz, 0.2)
@@ -627,9 +627,9 @@ class cq_dsub:
         #
         #
         #
-        # Add holes if female
+        # Add holes if socket
         #
-        if params["gender"] == "female":
+        if params["gender"] == "socket":
 
             if serie == 2:
                 #
@@ -645,7 +645,7 @@ class cq_dsub:
                 x = ((np / 2.0) * pindx) - (pindx / 2.0)
                 y = (E / 2.0) - pindy
                 tddx = pindx
-                if params["gender"] == "female":
+                if params["gender"] == "socket":
                     tddx = 0.0 - pindx
                 #
                 for i in range(0, np):
@@ -689,7 +689,7 @@ class cq_dsub:
                 x = (((np / 2.0) * pindx)) - (0.75 * pindx)
                 y = pindy
                 tddx = pindx
-                if params["gender"] == "female":
+                if params["gender"] == "socket":
                     tddx = 0.0 - pindx
                 #
                 for i in range(0, np):
@@ -810,7 +810,7 @@ class cq_dsub:
         case = case.union(case1)
         case = case.faces(">Z").edges("<X").chamfer(0.05)
 
-        #        if params['gender'] == 'female':
+        #        if params['gender'] == 'socket':
         #            case = case.faces(">Z[2]").edges("not(<X or >X or <Y or >Y)").fillet(0.6)
         #        else:
         try:
@@ -954,9 +954,9 @@ class cq_dsub:
             else:
                 case = case.union(case1)
 
-            if (t == "round" or t == "round1") and params["gender"] == "male":
+            if (t == "round" or t == "round1") and params["gender"] == "pins":
                 #
-                # Add the pigs inside the connector if it is a male
+                # Add the pigs inside the connector is of type pins
                 #
                 if serie == 2:
                     if t == "round1":
@@ -1025,7 +1025,7 @@ class cq_dsub:
         x = 0.0
         y = 0.0
         tddx = pindx
-        if params["gender"] == "female":
+        if params["gender"] == "socket":
             tddx = 0.0 - pindx
         case = self.make_pin_help(params, x, y, tddx, np, (F / 2.0) + (pindy / 2.0))
         #
@@ -1034,7 +1034,7 @@ class cq_dsub:
         # Make the bottom row
         #
         x = 0.0 + (pindx / 2.0)
-        if params["gender"] == "female":
+        if params["gender"] == "socket":
             x = 0.0 - (pindx / 2.0)
         y = 0.0 - pindy
         #
@@ -1071,7 +1071,7 @@ class cq_dsub:
         tddx = pindx
         x = 0.0
         y = 0.0
-        if params["gender"] == "female":
+        if params["gender"] == "socket":
             tddx = 0.0 - pindx
         #
         case = self.make_pin_help(params, x, y, tddx, np, (F / 2.0) + pindy)
@@ -1079,7 +1079,7 @@ class cq_dsub:
         # Make center row
         #
         x = 0.0 - (pindx / 2.0)
-        if params["gender"] == "female":
+        if params["gender"] == "socket":
             x = 0.0 + (pindx / 2.0)
         y = 0.0 - pindy
         case1 = self.make_pin_help(params, x, y, tddx, np, (F / 2.0))
@@ -1089,7 +1089,7 @@ class cq_dsub:
         #
         np = int(pn) - (2 * np)
         x = 0.0
-        if params["gender"] == "female":
+        if params["gender"] == "socket":
             tddx = 0.0 - pindx
         y = 0.0 - (2.0 * pindy)
         case1 = self.make_pin_help(params, x, y, tddx, np, (F / 2.0) - pindy)
