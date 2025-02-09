@@ -16,8 +16,8 @@
 
 from __future__ import division
 
-from KicadModTree.util.paramUtil import *
 from kilibs.geom import Vector2D
+from kilibs.util.param_util import toVectorUseCopyIfNumber, toIntArray
 from KicadModTree.nodes.base.Polygon import *
 from KicadModTree.nodes.specialized.ChamferedPad import *
 

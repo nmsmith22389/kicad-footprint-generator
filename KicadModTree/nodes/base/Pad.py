@@ -17,10 +17,10 @@
 import enum
 from typing import Union
 
-from KicadModTree.util.paramUtil import toVectorUseCopyIfNumber
 from KicadModTree.util.corner_selection import CornerSelection
 from KicadModTree.util.corner_handling import RoundRadiusHandler, ChamferSizeHandler
 from kilibs.geom import Vector2D
+from kilibs.util.param_util import toVectorUseCopyIfNumber
 from KicadModTree.nodes.Node import Node
 from KicadModTree.util.kicad_util import lispString
 from KicadModTree.nodes.base.Arc import Arc

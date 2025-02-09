@@ -1,9 +1,9 @@
-# KicadModTree is free software: you can redistribute it and/or
+# KiLibs is free software: you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #
-# KicadModTree is distributed in the hope that it will be useful,
+# KiLibs is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
@@ -15,7 +15,7 @@
 
 import unittest
 
-from KicadModTree.util import paramUtil as PU
+from kilibs.util import param_util as PU
 from kilibs.geom import Vector2D, Vector3D
 
 

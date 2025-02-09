@@ -24,8 +24,6 @@ from KicadModTree.nodes.base.Pad import *
 from KicadModTree.nodes.specialized.ChamferedPad import *
 from KicadModTree.nodes.Node import Node
 
-from KicadModTree.util.paramUtil import *
-
 ApplyOverrideResult = namedtuple('ApplyOverrideResult', ['number', 'position', 'parameters'])
 
 

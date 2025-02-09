@@ -18,7 +18,7 @@
 from __future__ import division
 
 from copy import copy
-from KicadModTree.util.paramUtil import toVectorUseCopyIfNumber
+from kilibs.util.param_util import toVectorUseCopyIfNumber
 from kilibs.geom import Vector2D
 from KicadModTree import Node, Pad
 from KicadModTree.util.corner_handling import ChamferSizeHandler, RoundRadiusHandler

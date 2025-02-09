@@ -1,4 +1,4 @@
-from KicadModTree.util.paramUtil import getOptionalNumberTypeParam, toVectorUseCopyIfNumber
+from kilibs.util.param_util import getOptionalNumberTypeParam, toVectorUseCopyIfNumber
 
 
 class RoundRadiusHandler(object):

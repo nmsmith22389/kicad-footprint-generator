@@ -16,9 +16,10 @@
 from __future__ import division
 
 from copy import copy
-from KicadModTree.util.paramUtil import *
-from KicadModTree.util.corner_selection import CornerSelection
+
 from kilibs.geom import Vector2D
+from kilibs.util.param_util import toVectorUseCopyIfNumber
+from KicadModTree.util.corner_selection import CornerSelection
 from KicadModTree.nodes.base.Polygon import *
 from KicadModTree.nodes.base.Pad import Pad, RoundRadiusHandler
 from math import sqrt
