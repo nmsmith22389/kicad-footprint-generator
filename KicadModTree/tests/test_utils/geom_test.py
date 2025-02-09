@@ -1,5 +1,5 @@
-from KicadModTree import Vector2D
 from KicadModTree.util.geometric_util import geometricLine, geometricCircle, geometricArc
+from kilibs.geom import Vector2D
 import pytest
 
 

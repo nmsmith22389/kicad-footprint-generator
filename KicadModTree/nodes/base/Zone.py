@@ -15,7 +15,7 @@
 
 import typing
 
-from KicadModTree.Vector import *
+from kilibs.geom import Vector2D
 from KicadModTree.nodes.Node import Node
 import KicadModTree.PolygonPoints as PPts
 

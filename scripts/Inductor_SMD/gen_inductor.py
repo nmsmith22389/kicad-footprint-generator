@@ -17,9 +17,9 @@ from KicadModTree import (
     Line,
     Pad,
     RectLine,
-    Vector2D,
     Property,
 )
+from kilibs.geom import Vector2D
 from scripts.tools.drawing_tools import (
     getStandardSilkArrowSize,
     round_to_grid_up,

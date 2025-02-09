@@ -18,8 +18,8 @@ from KicadModTree import (
     RectLine,
     Text,
     Translation,
-    Vector2D,
 )
+from kilibs.geom import Vector2D
 from KicadModTree.util.direction import Direction
 from scripts.tools.footprint_global_properties import *
 from scripts.tools.geometry import keepout

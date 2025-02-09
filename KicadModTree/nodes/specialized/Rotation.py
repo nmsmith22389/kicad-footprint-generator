@@ -15,7 +15,7 @@
 
 import math
 
-from KicadModTree.Vector import *
+from kilibs.geom import Vector2D
 from KicadModTree.nodes.Node import Node
 
 

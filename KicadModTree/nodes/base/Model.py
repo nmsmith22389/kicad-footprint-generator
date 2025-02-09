@@ -13,7 +13,7 @@
 #
 # (C) 2016 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 
-from KicadModTree.Vector import Vector3D
+from kilibs.geom import Vector3D
 from KicadModTree.nodes.Node import Node
 
 

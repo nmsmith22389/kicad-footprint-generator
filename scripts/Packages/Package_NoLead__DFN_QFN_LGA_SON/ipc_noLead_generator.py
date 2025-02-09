@@ -17,8 +17,8 @@ from KicadModTree import (
     Pad,
     PolygonLine,
     RectLine,
-    Vector2D,
 )
+from kilibs.geom import Vector2D
 from KicadModTree.nodes.specialized.PadArray import PadArray, get_pad_radius_from_arrays
 
 from scripts.tools.footprint_generator import FootprintGenerator

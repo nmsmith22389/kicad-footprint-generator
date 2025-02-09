@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from typing import Union, Callable
 from .ast_evaluator import ASTevaluator
 
-from KicadModTree import Vector2D
+from kilibs.geom import Vector2D
 from scripts.tools.geometry.rectangle import Rectangle
 
 RECT = 'rect'

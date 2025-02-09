@@ -15,7 +15,7 @@
 
 import unittest
 
-from KicadModTree.Vector import *
+from kilibs.geom import Vector3D
 
 
 class Vector3DTests(unittest.TestCase):

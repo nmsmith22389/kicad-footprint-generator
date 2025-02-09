@@ -15,7 +15,7 @@
 # (C) 2018 by Rene Poeschl, github @poeschlr
 
 
-from KicadModTree.Vector import *
+from kilibs.geom import Vector2D, Vector3D
 
 
 def toNumberArray(value, length=2, min_value=1, member_type=int):

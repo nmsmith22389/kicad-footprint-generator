@@ -20,11 +20,11 @@
 from __future__ import division
 
 from KicadModTree.util.paramUtil import *
-from KicadModTree import Vector2D
 from KicadModTree.nodes.base.Pad import Pad, RoundRadiusHandler
 from KicadModTree.nodes.specialized.ChamferedPadGrid import ChamferedPadGrid, ChamferSelPadGrid
 from KicadModTree.nodes.specialized.PadArray import PadArray
 from KicadModTree.nodes.Node import Node
+from kilibs.geom import Vector2D
 from math import sqrt, floor
 from copy import copy
 import traceback

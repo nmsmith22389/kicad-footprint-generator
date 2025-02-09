@@ -17,7 +17,7 @@
 from __future__ import division
 
 from KicadModTree.util.paramUtil import *
-from KicadModTree.Vector import *
+from kilibs.geom import Vector2D
 from KicadModTree.nodes.base.Polygon import *
 from KicadModTree.nodes.specialized.ChamferedPad import *
 

@@ -13,8 +13,8 @@ from KicadModTree import (
     Node,
     PolygonLine,
     RectLine,
-    Vector2D,
 )
+from kilibs.geom import Vector2D
 from KicadModTree.util.geometric_util import (
     geometricCircle,
     geometricArc,

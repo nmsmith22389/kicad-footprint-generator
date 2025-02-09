@@ -19,7 +19,7 @@ from KicadModTree.nodes import *
 from KicadModTree.util import geometric_util as geo
 from typing import Iterable
 
-from math import tan
+from math import tan, radians
 
 
 def calculateOffsetPolygonNodes(nodes: Iterable[Vector2D], offset: float, split_angle: float = 90):

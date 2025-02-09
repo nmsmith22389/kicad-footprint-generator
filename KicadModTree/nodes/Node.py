@@ -22,7 +22,7 @@ from hashlib import sha1
 # from json import dumps
 from enum import Enum
 
-from KicadModTree.Vector import *
+from kilibs.geom import Vector2D, Vector3D
 
 
 class MultipleParentsError(RuntimeError):

@@ -20,7 +20,7 @@ from typing import Union
 from KicadModTree.util.paramUtil import toVectorUseCopyIfNumber
 from KicadModTree.util.corner_selection import CornerSelection
 from KicadModTree.util.corner_handling import RoundRadiusHandler, ChamferSizeHandler
-from KicadModTree.Vector import Vector2D
+from kilibs.geom import Vector2D
 from KicadModTree.nodes.Node import Node
 from KicadModTree.util.kicad_util import lispString
 from KicadModTree.nodes.base.Arc import Arc

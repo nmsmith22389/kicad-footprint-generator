@@ -1,6 +1,6 @@
 import unittest
-import math
-from KicadModTree import *
+from kilibs.geom import Vector2D
+from KicadModTree import Line, RectLine, Circle
 
 
 class IntersectionTests(unittest.TestCase):

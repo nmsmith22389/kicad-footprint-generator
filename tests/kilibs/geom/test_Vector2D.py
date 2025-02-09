@@ -15,7 +15,7 @@
 
 import unittest
 import math
-from KicadModTree.Vector import *
+from kilibs.geom import Vector2D
 
 
 class Vector2DTests(unittest.TestCase):
@@ -187,7 +187,7 @@ class Vector2DTests(unittest.TestCase):
         self.assertAlmostEqual(p, (3, 6))
 
     def test_norm_arg(self):
-        self.assertAlmostEqual(Vector2D(1, 1).norm(), sqrt(2))
+        self.assertAlmostEqual(Vector2D(1, 1).norm(), math.sqrt(2))
         self.assertAlmostEqual(Vector2D(1, 1).arg(), 45)
         self.assertAlmostEqual(Vector2D(1, 1).arg(use_degrees=False), math.pi/4)
         self.assertAlmostEqual(Vector2D(-1, -1).arg(), -135)
@@ -209,7 +209,7 @@ class Vector2DTests(unittest.TestCase):
         n = Vector2D.normalize(v)
         self.assertEqual(n.norm(), 0)
 
-        v = Vector2D(sin(math.pi/6), cos(math.pi/6))
+        v = Vector2D(math.sin(math.pi/6), math.cos(math.pi/6))
         n = Vector2D.normalize(v)
         self.assertEqual(n.norm(), 1)
 

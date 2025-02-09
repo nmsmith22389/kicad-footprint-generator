@@ -13,7 +13,7 @@
 #
 # (C) 2016 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 
-from KicadModTree.Vector import *
+from kilibs.geom import Vector2D
 from KicadModTree.nodes.Node import Node
 from KicadModTree.nodes.specialized import RectLine
 from KicadModTree.nodes.specialized import RectFill

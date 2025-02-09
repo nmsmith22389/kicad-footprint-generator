@@ -19,7 +19,7 @@ from copy import copy
 from KicadModTree.nodes.Node import Node
 from KicadModTree.util.paramUtil import *
 from KicadModTree.util.geometric_util import geometricArc, geometricLine, BaseNodeIntersection
-from KicadModTree.Vector import *
+from kilibs.geom import Vector2D
 from KicadModTree.nodes.base.Pad import Pad
 from KicadModTree.nodes.base.Circle import Circle
 from KicadModTree.nodes.base.Arc import Arc

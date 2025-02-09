@@ -19,7 +19,7 @@
 from __future__ import annotations
 
 from KicadModTree.PolygonPoints import *
-from KicadModTree.Vector import *
+from kilibs.geom import Vector2D
 from KicadModTree.nodes.Node import Node
 from KicadModTree.nodes.base.Arc import Arc
 from KicadModTree.nodes.base.PolygonArc import PolygonArc

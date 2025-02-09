@@ -1,7 +1,7 @@
 import pytest
 
 from KicadModTree.util.corner_handling import ChamferSizeHandler
-from KicadModTree.Vector import Vector2D
+from kilibs.geom import Vector2D
 
 
 class TestChamferHandler:

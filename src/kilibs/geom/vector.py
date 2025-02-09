@@ -1,9 +1,9 @@
-# KicadModTree is free software: you can redistribute it and/or
+# kilibs is free software: you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #
-# KicadModTree is distributed in the hope that it will be useful,
+# kilibs is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
@@ -16,10 +16,7 @@
 from __future__ import division
 from builtins import round
 
-import warnings
-
-from KicadModTree.util.kicad_util import formatFloat
-from math import sqrt, sin, cos, hypot, atan2, degrees, radians
+from math import sin, cos, hypot, atan2, degrees, radians
 
 
 class Vector2D(object):
@@ -168,14 +165,6 @@ class Vector2D(object):
 
     def to_dict(self):
         return {'x': self.x, 'y': self.y}
-
-    def render(self, formatcode):
-        warnings.warn(
-            "render is deprecated, read values directly instead",
-            DeprecationWarning
-        )
-        return formatcode.format(x=formatFloat(self.x),
-                                 y=formatFloat(self.y))
 
     def __repr__(self):
         return "Vector2D (x={x}, y={y})".format(**self.to_dict())
@@ -487,15 +476,6 @@ class Vector3D(Vector2D):
 
     def to_dict(self):
         return {'x': self.x, 'y': self.y, 'z': self.z}
-
-    def render(self, formatcode):
-        warnings.warn(
-            "render is deprecated, read values directly instead",
-            DeprecationWarning
-        )
-        return formatcode.format(x=formatFloat(self.x),
-                                 y=formatFloat(self.y),
-                                 z=formatFloat(self.z))
 
     def __repr__(self):
         return "Vector3D (x={x}, y={y}, z={z})".format(**self.to_dict())

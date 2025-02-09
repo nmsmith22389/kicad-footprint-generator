@@ -16,7 +16,7 @@
 import math
 from typing import List
 
-from KicadModTree.Vector import *
+from kilibs.geom import Vector2D
 
 
 def isGeometricPrimitive(obj):
@@ -797,7 +797,7 @@ class BaseNodeIntersection():
                 raise ValueError("the two circles you are trying to intersect are identical")
         else:
             x = (d**2 - r**2 + R**2) / (2 * d)
-            y = sqrt(4 * d**2 * R**2 - (d**2 - r**2 + R**2)**2) / d
+            y = math.sqrt(4 * d**2 * R**2 - (d**2 - r**2 + R**2)**2) / d
 
         signs = [0] if (y < tol) else [0.5, -0.5]
         return [Vector2D(x, s * y).rotate(angle=phi) + circle1.center_pos for s in signs]

@@ -1,5 +1,6 @@
 import unittest
 import math
+from kilibs.geom import Vector2D
 from KicadModTree import *
 from KicadModTree.util import geometric_util as geo
 
@@ -229,7 +230,7 @@ class ArcTests(unittest.TestCase):
         # circles on arbitrary positions
         center = Vector2D(3, -2)
         for angle in [0, 30, -30, 180, -180, 72, 143]:
-            offset = Vector2D(sin(radians(angle)), cos(radians(angle)))
+            offset = Vector2D(math.sin(math.radians(angle)), math.cos(math.radians(angle)))
             c1 = geo.geometricCircle(center=center, radius=math.sqrt(2))
             c2 = geo.geometricCircle(center=center + 2 * offset, radius=math.sqrt(2))
             ip = geo.BaseNodeIntersection.intersectTwoNodes(c1, c2)

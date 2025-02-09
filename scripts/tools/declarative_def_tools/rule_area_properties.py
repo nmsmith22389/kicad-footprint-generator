@@ -3,7 +3,7 @@ from typing import List, Union, Callable
 # remove after Python 3.11 is required
 from typing_extensions import Self
 
-from KicadModTree import Vector2D, Zone, Hatch, Keepouts
+from KicadModTree import Zone, Hatch, Keepouts
 from kilibs.util import dict_tools
 from . import utils, shape_properties, ast_evaluator
 

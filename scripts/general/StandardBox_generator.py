@@ -3,7 +3,8 @@
 import sys
 import os
 
-from KicadModTree import Footprint, FootprintType, KicadFileHandler, ModArgparser, Vector2D
+from KicadModTree import Footprint, FootprintType, KicadFileHandler, ModArgparser
+from kilibs.geom import Vector2D
 from scripts.general.StandardBox import StandardBox
 
 

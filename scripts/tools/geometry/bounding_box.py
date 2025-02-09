@@ -1,7 +1,7 @@
 from typing import Optional
 from typing_extensions import Self  # After 3.11 -> typing.Self
 
-from KicadModTree import Vector2D
+from kilibs.geom import Vector2D
 
 
 class BoundingBox:

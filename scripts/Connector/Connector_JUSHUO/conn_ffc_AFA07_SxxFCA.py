@@ -48,7 +48,7 @@ from scripts.tools.footprint_text_fields import addTextFields
 
 from scripts.tools import drawing_tools
 from scripts.tools.nodes import pin1_arrow
-from KicadModTree import Vector2D
+from kilibs.geom import Vector2D
 
 
 manufacturer = "JUSHUO"

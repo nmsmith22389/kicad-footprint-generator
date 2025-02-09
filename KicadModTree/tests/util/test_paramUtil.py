@@ -16,7 +16,7 @@
 import unittest
 
 from KicadModTree.util import paramUtil as PU
-from KicadModTree.Vector import Vector2D, Vector3D
+from kilibs.geom import Vector2D, Vector3D
 
 
 class ParamUtilTests(unittest.TestCase):

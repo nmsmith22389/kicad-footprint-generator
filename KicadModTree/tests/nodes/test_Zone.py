@@ -1,6 +1,6 @@
 from KicadModTree.nodes import Footprint, FootprintType
 from KicadModTree.nodes.base.Zone import Zone, Keepouts, PadConnection, Hatch, ZoneFill
-from KicadModTree.Vector import Vector2D
+from kilibs.geom import Vector2D
 
 from KicadModTree.tests.test_utils.fp_file_test import SerialisationTest
 

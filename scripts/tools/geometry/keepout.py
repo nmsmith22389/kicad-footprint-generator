@@ -7,7 +7,7 @@ from KicadModTree.util.geometric_util import (
     geometricArc,
     BaseNodeIntersection,
 )
-from KicadModTree import Vector2D
+from kilibs.geom import Vector2D
 
 
 class Keepout(ABC):

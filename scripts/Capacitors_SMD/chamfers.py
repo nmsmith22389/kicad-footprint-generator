@@ -1,4 +1,5 @@
-from KicadModTree import *
+from KicadModTree import PolygonLine
+from kilibs.geom import Vector2D
 
 def add_rect_chamfer(m, start_pos, end_pos, layer, width, offset=(0,0), chamfers=[]):
 
@@ -13,27 +14,27 @@ def add_rect_chamfer(m, start_pos, end_pos, layer, width, offset=(0,0), chamfers
     start_pos[1] = y1 - offset[1]
     end_pos[0] = x2 + offset[0]
     end_pos[1] = y2 + offset[1]
-        
+
     # Work out intermediate positions on each side to use later when drawing corners or chamfers
     JOG = 0.01  # avoid coincident intermediate points on non-chamfered sides
-    top_left_mid_pos = Point([start_pos[0] + JOG, start_pos[1]])
-    top_right_mid_pos = Point([end_pos[0] - JOG, start_pos[1]])
-    bottom_left_mid_pos = Point([start_pos[0] + JOG, end_pos[1]])
-    bottom_right_mid_pos = Point([end_pos[0] - JOG, end_pos[1]])
-    left_top_mid_pos = Point([start_pos[0], start_pos[1] + JOG])
-    left_bottom_mid_pos = Point([start_pos[0], end_pos[1] - JOG])
-    right_top_mid_pos = Point([end_pos[0], start_pos[1] + JOG])
-    right_bottom_mid_pos = Point([end_pos[0], end_pos[1] - JOG])
+    top_left_mid_pos = Vector2D([start_pos[0] + JOG, start_pos[1]])
+    top_right_mid_pos = Vector2D([end_pos[0] - JOG, start_pos[1]])
+    bottom_left_mid_pos = Vector2D([start_pos[0] + JOG, end_pos[1]])
+    bottom_right_mid_pos = Vector2D([end_pos[0] - JOG, end_pos[1]])
+    left_top_mid_pos = Vector2D([start_pos[0], start_pos[1] + JOG])
+    left_bottom_mid_pos = Vector2D([start_pos[0], end_pos[1] - JOG])
+    right_top_mid_pos = Vector2D([end_pos[0], start_pos[1] + JOG])
+    right_bottom_mid_pos = Vector2D([end_pos[0], end_pos[1] - JOG])
 
     # Set the positions of the corners
-    top_left_pos = Point([start_pos[0], start_pos[1]])
-    top_right_pos = Point([end_pos[0], start_pos[1]])
-    bottom_left_pos = Point([start_pos[0], end_pos[1]])
-    bottom_right_pos = Point([end_pos[0], end_pos[1]])
+    top_left_pos = Vector2D([start_pos[0], start_pos[1]])
+    top_right_pos = Vector2D([end_pos[0], start_pos[1]])
+    bottom_left_pos = Vector2D([start_pos[0], end_pos[1]])
+    bottom_right_pos = Vector2D([end_pos[0], end_pos[1]])
 
     for c in chamfers:
         # Need to shift chamfered edges so they maintain constant distance from non-offset line
-        # tan(22.5) = 0.414 works correctly when chamfer is at 45 degrees (same  and Y offset), 
+        # tan(22.5) = 0.414 works correctly when chamfer is at 45 degrees (same  and Y offset),
         # and still looks OK when X and Y offsets are different
         try:
             x_delta = c['size'] + 0.414 * offset[0]

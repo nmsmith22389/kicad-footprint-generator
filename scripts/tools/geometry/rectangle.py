@@ -1,7 +1,7 @@
 from typing import List
 from typing_extensions import Self  # After 3.11 -> typing.Self
 
-from KicadModTree import Vector2D
+from kilibs.geom import Vector2D
 # Despite the name, this is a pure geometry class
 from KicadModTree import PolygonPoints
 

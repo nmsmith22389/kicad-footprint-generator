@@ -1,5 +1,5 @@
 from scripts.tools.geometry.bounding_box import BoundingBox
-from KicadModTree import Vector2D
+from kilibs.geom import Vector2D
 
 import pytest
 

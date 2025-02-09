@@ -47,9 +47,10 @@ import os
 import math
 from collections import namedtuple
 
-from KicadModTree import Point, Property
+from KicadModTree import Property
 from KicadModTree.nodes.base import Line, Arc, Circle, Text, Pad
 from KicadModTree.util.kicad_util import formatFloat
+from kilibs.geom import Vector2D
 
 class Layer:
 
@@ -370,7 +371,7 @@ class PolyLine ():
         self.vertices = []
         if vertices != None:
             for vertex in vertices:
-                self.vertices.append(Point(vertex))
+                self.vertices.append(Vector2D(vertex))
 
     def __getattr__(self, name):
         if name == "isClosed":

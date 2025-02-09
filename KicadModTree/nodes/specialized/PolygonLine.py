@@ -15,7 +15,7 @@
 
 from typing import Optional
 
-from KicadModTree.Vector import *
+from kilibs.geom import Vector2D
 from KicadModTree.PolygonPoints import *
 from KicadModTree.nodes.Node import Node
 from KicadModTree.nodes.base.Line import Line

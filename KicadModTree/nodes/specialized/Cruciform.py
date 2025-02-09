@@ -1,7 +1,7 @@
 from KicadModTree.nodes.Node import Node
 from KicadModTree.nodes.base import Rect
 from KicadModTree.nodes.specialized import Polygon
-from KicadModTree.Vector import Vector2D
+from kilibs.geom import Vector2D
 
 
 class Cruciform(Node):

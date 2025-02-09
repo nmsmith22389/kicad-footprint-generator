@@ -16,7 +16,7 @@
 
 import warnings
 
-from KicadModTree.Vector import Vector2D
+from kilibs.geom import Vector2D
 from KicadModTree.nodes.Node import Node
 
 

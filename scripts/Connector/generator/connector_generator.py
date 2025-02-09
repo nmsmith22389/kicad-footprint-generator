@@ -28,7 +28,7 @@ import re
 
 import argparse
 import yaml
-from math import pi, floor, ceil
+import math
 from fnmatch import fnmatch
 from typing import Iterable, Callable
 from dataclasses import dataclass, asdict
@@ -92,9 +92,9 @@ def _round_to(val, base, direction: str=None):
     if (isinstance(val, Iterable)):
         return [round_to(v, base, direction) for v in val]
     if (direction in ['+', 1]):
-        return ceil(val / base) * base
+        return math.ceil(val / base) * base
     elif (direction in ['-', -1]):
-        return floor(val / base) * base
+        return math.floor(val / base) * base
     else:
         return round(val / base) * base
 
@@ -450,7 +450,7 @@ def generate_one_footprint(positions: int, *, spec, configuration: dict, idx=0):
         pos_y = (0.5 if row == 0 else -0.5) * fp_config.pad_pos_range.y * fp_config.scale_y + fp_config.pad_center_offset.y
         row_x_offset = 0 if (row % 2)== 0 else fp_config.row_x_offset
         col_num = 0
-        for col in range(ceil(positions) + fp_config.gap_size):
+        for col in range(math.ceil(positions) + fp_config.gap_size):
             if (col not in fp_config.skipped_positions):
                 pad_number = fp_config.num_rows * col_num + row + 1
                 if (pad_number > fp_config.num_rows * positions):
@@ -565,8 +565,8 @@ def make_pin1_marker(*, pos, radius, shape, flip_marker, width, offset):
         pnts = []
         for n in range(3):
             vertex = Vector2D(
-                sin(2 * n * pi / 3),
-                cos(2 * n * pi / 3) * (1 if flip_marker else -1)
+                math.sin(2 * n * math.pi / 3),
+                math.cos(2 * n * math.pi / 3) * (1 if flip_marker else -1)
             )
             pnts.append(pos - offset_vec + radius * vertex)
         pin1_silk = PolygonLine(nodes=pnts + pnts[:1], layer='F.SilkS', width=width)

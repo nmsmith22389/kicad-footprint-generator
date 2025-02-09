@@ -5,7 +5,7 @@ import os
 from copy import deepcopy
 from typing import List, Union
 
-from KicadModTree import Vector2D
+from kilibs.geom import Vector2D
 from scripts.tools.declarative_def_tools import tags_properties
 from scripts.tools.footprint_generator import FootprintGenerator
 from scripts.tools.footprint_scripts_DIP import makeDIP
