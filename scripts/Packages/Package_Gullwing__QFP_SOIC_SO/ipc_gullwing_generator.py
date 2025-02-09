@@ -14,7 +14,7 @@ from KicadModTree import (
     PolygonLine,
     RectLine,
 )
-from kilibs.geom import Vector2D
+from kilibs.geom import Vector2D, BoundingBox
 from KicadModTree.nodes.specialized.PadArray import PadArray, get_pad_radius_from_arrays
 from KicadModTree.nodes.specialized.Cruciform import Cruciform
 
@@ -22,7 +22,6 @@ from scripts.tools.footprint_generator import FootprintGenerator
 from scripts.tools.footprint_text_fields import addTextFields
 from scripts.tools.global_config_files.global_config import GlobalConfig
 from scripts.tools.ipc_pad_size_calculators import TolerancedSize, IpcDensity, ipc_gull_wing
-from scripts.tools.geometry.bounding_box import BoundingBox
 from scripts.tools.quad_dual_pad_border import create_dual_or_quad_pad_border
 from scripts.tools import drawing_tools
 from scripts.tools.drawing_tools import nearestSilkPointOnOrthogonalLine

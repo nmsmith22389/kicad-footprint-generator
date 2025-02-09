@@ -5,8 +5,7 @@ from kilibs.geom import Vector2D
 # Despite the name, this is a pure geometry class
 from KicadModTree import PolygonPoints
 
-from scripts.tools.drawing_tools import round_to_grid_up, round_to_grid_down
-
+from .rounding import round_to_grid_up, round_to_grid_down
 from .bounding_box import BoundingBox
 
 

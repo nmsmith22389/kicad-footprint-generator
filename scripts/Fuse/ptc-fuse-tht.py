@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
 from KicadModTree import *
+from kilibs.geom import keepout
 from scripts.tools.drawing_tools import *
-from scripts.tools.geometry import keepout
 
 
 def ptc_fuse_tht(args):

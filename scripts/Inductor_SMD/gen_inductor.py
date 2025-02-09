@@ -19,11 +19,9 @@ from KicadModTree import (
     RectLine,
     Property,
 )
-from kilibs.geom import Vector2D
+from kilibs.geom import Vector2D, rounding
 from scripts.tools.drawing_tools import (
     getStandardSilkArrowSize,
-    round_to_grid_up,
-    round_to_grid_down,
     SilkArrowSize,
 )
 from scripts.tools.footprint_generator import FootprintGenerator
@@ -326,12 +324,12 @@ class InductorGenerator(FootprintGenerator):
         return (
             RectLine(
                 start=[
-                    round_to_grid_down(-max_x - clearance, grid),
-                    round_to_grid_down(-max_y - clearance, grid),
+                    rounding.round_to_grid_down(-max_x - clearance, grid),
+                    rounding.round_to_grid_down(-max_y - clearance, grid),
                 ],
                 end=[
-                    round_to_grid_up(max_x + clearance, grid),
-                    round_to_grid_up(max_y + clearance, grid),
+                    rounding.round_to_grid_up(max_x + clearance, grid),
+                    rounding.round_to_grid_up(max_y + clearance, grid),
                 ],
                 layer="F.CrtYd",
                 width=stroke_width,

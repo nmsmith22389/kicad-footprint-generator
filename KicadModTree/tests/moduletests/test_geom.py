@@ -3,7 +3,7 @@ Simple test of some geometry functions, including confidence tests
 of geom_test utility functions.
 """
 
-import KicadModTree.tests.test_utils.geom_test as geom_test
+import kilibs.test_utils.geom_test as geom_test
 
 
 def test_geom_line():

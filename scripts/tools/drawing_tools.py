@@ -14,64 +14,25 @@ from KicadModTree import (
     PolygonLine,
     RectLine,
 )
-from kilibs.geom import Vector2D
+from kilibs.geom import Vector2D, BoundingBox
+from kilibs.geom.rounding import (
+    round_to_grid,
+    round_to_grid_down,
+    round_to_grid_up,
+    round_to_grid_nearest,
+)
+from kilibs.geom.keepout import Keepout, KeepoutRect, KeepoutRound
 from KicadModTree.util.geometric_util import (
     geometricCircle,
     geometricArc,
     geometricLine,
 )
-from scripts.tools.geometry.keepout import Keepout, KeepoutRect, KeepoutRound
 from scripts.tools.footprint_global_properties import *
-from scripts.tools.geometry.bounding_box import BoundingBox
 from scripts.tools.nodes import pin1_arrow
 
 # tool function for generating 3D-scripts
 def script3d_writevariable(file, line, varname, value):
     file.write("# {0}\nApp.ActiveDocument.Spreadsheet.set('A{1}', 'var {0} = '); App.ActiveDocument.Spreadsheet.set('B{1}', '{2}'); App.ActiveDocument.Spreadsheet.setAlias('B{1}', '{0}')\n".format(varname, line, value))
-
-
-def round_to_grid_up(x: float, g: float) -> float:
-    return math.ceil(x / g) * g
-
-
-def round_to_grid_down(x: float, g: float) -> float:
-    return math.floor(x / g) * g
-
-
-# round for grid g
-def round_to_grid(x: float, g: float) -> float:
-    """
-    Round a number to a multiple of the grid size, _always_ rounding away
-    from zero.
-
-    This is the most suitable way to round for many outlines, especially simple
-    outlines around objects centred at the origin (e.g. courtyards and silkscreen).
-    """
-    if g == 0:
-        return x
-    if isinstance(x, list):
-        return_list = []
-        for value in x:
-            return_list.append(round_to_grid(value, g))
-        return return_list
-    return (
-        round(round_to_grid_up(x, g), 6)
-        if x > 0
-        else round(round_to_grid_down(x, g), 6)
-    )
-
-
-def round_to_grid_nearest(x: float, g: float) -> float:
-    """
-    Round a number to a multiple of the grid size, rounding to the nearest
-    multiple of the grid size.
-
-    This is the most suitable way to round in case where you are just rounding
-    off floating point errors, and you want to round to the nearest grid point.
-    """
-    if g == 0:
-        return x
-    return round(round(x / g) * g, 6)
 
 
 # round for grid g

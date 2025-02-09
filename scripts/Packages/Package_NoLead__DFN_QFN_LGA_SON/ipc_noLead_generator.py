@@ -18,7 +18,7 @@ from KicadModTree import (
     PolygonLine,
     RectLine,
 )
-from kilibs.geom import Vector2D
+from kilibs.geom import Vector2D, BoundingBox, rounding
 from KicadModTree.nodes.specialized.PadArray import PadArray, get_pad_radius_from_arrays
 
 from scripts.tools.footprint_generator import FootprintGenerator
@@ -29,8 +29,7 @@ from scripts.tools.ipc_pad_size_calculators import TolerancedSize, \
 from scripts.tools.quad_dual_pad_border import create_dual_or_quad_pad_border
 from scripts.tools.nodes import pin1_arrow
 from scripts.tools import drawing_tools
-from scripts.tools.drawing_tools import courtyardFromBoundingBox, round_to_grid_down
-from scripts.tools.geometry.bounding_box import BoundingBox
+from scripts.tools.drawing_tools import courtyardFromBoundingBox
 from scripts.tools.declarative_def_tools import tags_properties, pad_overrides, \
         rule_area_properties, ast_evaluator
 
@@ -675,8 +674,8 @@ class NoLeadGenerator(FootprintGenerator):
             arrow_apex = top_left_pad_top_left_corner - (silk_pad_offset * (sqrt(2) / 2))
 
             # round off away from the pad edge
-            arrow_apex.x = round_to_grid_down(arrow_apex.x, 0.01)
-            arrow_apex.y = round_to_grid_down(arrow_apex.y, 0.01)
+            arrow_apex.x = rounding.round_to_grid_down(arrow_apex.x, 0.01)
+            arrow_apex.y = rounding.round_to_grid_down(arrow_apex.y, 0.01)
 
             kicad_mod.append(
                 pin1_arrow.Pin1SilkScreenArrow45Deg(

@@ -5,3 +5,7 @@
 # rather than importing in two statements).
 
 from .vector import Vector2D, Vector3D
+
+from .rectangle import Rectangle
+
+from .bounding_box import BoundingBox

@@ -24,14 +24,14 @@ fp_format_check() {
     echo '[!] Running footprint formatting check'
     pycodestyle --max-line-length=120 \
         "$KICADMODTREE_DIR/" \
-        "scripts/tools/geometry"
+        "src/kilibs/geom"
 }
 
 flake8_check() {
     echo ''
     echo '[!] Running flake8 check'
     flake8 "$KICADMODTREE_DIR/" \
-        "scripts/tools/geometry"
+        "src/kilibs/geom"
 }
 
 unit_tests() {

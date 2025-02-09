@@ -17,7 +17,6 @@
 import warnings
 
 from kilibs.geom import Vector2D
-from KicadModTree.nodes.Node import Node
 
 
 class PolygonPoints(object):

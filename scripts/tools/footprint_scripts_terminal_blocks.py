@@ -19,10 +19,9 @@ from KicadModTree import (
     Text,
     Translation,
 )
-from kilibs.geom import Vector2D
+from kilibs.geom import Vector2D, keepout
 from KicadModTree.util.direction import Direction
 from scripts.tools.footprint_global_properties import *
-from scripts.tools.geometry import keepout
 from scripts.tools.nodes import pin1_arrow
 
 
@@ -54,7 +53,7 @@ def make_silk_outline_with_pin1_arrow(
     )
 
     pin1_arrow_apex = Vector2D(arrow_x, silk_tl.y + silk_size.y)
-    pin1_arrow_keepout = DT.KeepoutRect(
+    pin1_arrow_keepout = keepout.KeepoutRect(
         pin1_arrow_apex, Vector2D(0.6, 0.6)
     )
 

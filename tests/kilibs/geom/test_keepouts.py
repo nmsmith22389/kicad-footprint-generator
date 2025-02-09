@@ -9,10 +9,10 @@ visual diffs of the generated graphics than by delicate stacks of numerical test
 """
 
 from KicadModTree.util.geometric_util import geometricLine
-from scripts.tools.geometry.keepout import KeepoutRect
+from kilibs.geom.keepout import KeepoutRect
 from scripts.tools.drawing_tools import applyKeepouts
 
-import KicadModTree.tests.test_utils.geom_test as GeomTest
+import kilibs.test_utils.geom_test as GeomTest
 
 import pytest
 
