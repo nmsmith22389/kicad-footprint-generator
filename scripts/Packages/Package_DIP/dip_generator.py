@@ -7,7 +7,6 @@ from typing import List, Union
 
 from KicadModTree import Vector2D
 from scripts.tools.declarative_def_tools import tags_properties
-from scripts.tools.dict_tools import dictInherit
 from scripts.tools.footprint_generator import FootprintGenerator
 from scripts.tools.footprint_scripts_DIP import makeDIP
 from scripts.tools.global_config_files.global_config import GlobalConfig

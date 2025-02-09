@@ -32,6 +32,7 @@ fp-test:
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
       changes:
+        - src/**/*
         - KicadModTree/**/*
         - scripts/**/*
   before_script:
@@ -78,6 +79,7 @@ fp-generate-and-compare:
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
       changes:
+        - src/**/*
         - KicadModTree/**/*
         - scripts/**/*
         - data/**/*

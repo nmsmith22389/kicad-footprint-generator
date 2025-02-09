@@ -94,6 +94,8 @@ git config blame.ignoreRevsFile .git-blame-ignore-revs
 
 The repository is structured as follows:
 
+* `src`: Reusable code that can be used by generators or utilties
+  * `kilibs`: Generic utilities and tools for KiCad library generators, CI scripts and so on
 * `KicadModTree`: The KicadModTree framework which is used for footprint generation
 * `scripts`: The footprint generators themselves
 * `3d-model-generator`: The 3D model generators

@@ -40,8 +40,8 @@ sys.path.append(os.path.join(sys.path[0], "..", "..", "..")) # load kicad_mod pa
 #sys.path.append(os.path.join(sys.path[0], "..", "..", "tools")) # load kicad_mod path
 
 from KicadModTree import *  # NOQA
+from kilibs.util import dict_tools
 from scripts.tools.footprint_text_fields import addTextFields
-from scripts.tools.dict_tools import dictMerge, dictInherit
 from scripts.tools.declarative_def_tools import utils, rule_area_properties, shape_properties
 from scripts.tools.declarative_def_tools.utils import DotDict
 from scripts.tools.declarative_def_tools.ast_evaluator import ASTevaluator, ASTexprEvaluator
@@ -735,7 +735,7 @@ if __name__ == "__main__":
         except yaml.YAMLError as exc:
             print(exc)
 
-    dictInherit(yaml_spec)
+    dict_tools.dictInherit(yaml_spec)
 
     for variant, spec in yaml_spec.items():
         if variant == "defaults" or "fp_name" not in spec or not fnmatch(variant, args.filter):

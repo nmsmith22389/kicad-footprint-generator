@@ -50,8 +50,9 @@ docs = [
 
 # Package discovery configuration
 [tool.setuptools.packages.find]
-where = ["."]
+where = ["src", "."]
 include = [
+    "kilibs*",
     "KicadModTree*",
     "scripts.general*",
     "scripts.tools*",

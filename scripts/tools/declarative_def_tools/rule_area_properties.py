@@ -4,8 +4,8 @@ from typing import List, Union, Callable
 from typing_extensions import Self
 
 from KicadModTree import Vector2D, Zone, Hatch, Keepouts
+from kilibs.util import dict_tools
 from . import utils, shape_properties, ast_evaluator
-from scripts.tools import dict_tools
 
 @dataclass
 class KeepoutProperties():

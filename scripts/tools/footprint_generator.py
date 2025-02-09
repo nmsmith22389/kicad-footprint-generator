@@ -7,7 +7,7 @@ from typing import Optional
 
 from KicadModTree import Footprint, KicadFileHandler, Model
 from scripts.tools.global_config_files.global_config import GlobalConfig
-from scripts.tools.dict_tools import dictInherit
+from kilibs.util import dict_tools
 
 
 class FootprintGenerator:
@@ -118,7 +118,7 @@ class FootprintGenerator:
                 except yaml.YAMLError as exc:
                     print(exc)
 
-            dictInherit(cmd_file)
+            dict_tools.dictInherit(cmd_file)
 
             # The def file header, if there is one
             try:
