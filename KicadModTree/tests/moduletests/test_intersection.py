@@ -1,7 +1,5 @@
 import unittest
-import math
 from KicadModTree import *
-from KicadModTree.util import geometric_util as geo
 
 
 def _dir_vec(line):

@@ -1,7 +1,4 @@
-import unittest
-import math
 from KicadModTree import Footprint, Line, FootprintType
-from KicadModTree.util import geometric_util as geo
 from kilibs.geom import Vector2D
 
 from KicadModTree.tests.test_utils.fp_file_test import SerialisationTest

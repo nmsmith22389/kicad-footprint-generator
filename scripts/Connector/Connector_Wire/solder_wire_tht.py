@@ -12,7 +12,7 @@ sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))
 sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))
 
 from KicadModTree import *  # NOQA
-from KicadModTree.util.geometric_util import geometricLine, geometricCircle
+from kilibs.geom.geometric_util import geometricLine, geometricCircle
 from drawing_tools import round_to_grid
 
  # load parent path of tools

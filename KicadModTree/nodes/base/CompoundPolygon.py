@@ -25,7 +25,7 @@ from KicadModTree.nodes.base.Arc import Arc
 from KicadModTree.nodes.base.PolygonArc import PolygonArc
 from KicadModTree.nodes.base.Line import Line, geometricLine
 from KicadModTree.nodes.base.Group import Group
-from KicadModTree.util.geometric_util import geometricArc
+from kilibs.geom.geometric_util import geometricArc
 
 from collections import deque
 from enum import Enum

@@ -16,7 +16,7 @@
 import sys
 
 from KicadModTree.nodes import *
-from KicadModTree.util import geometric_util as geo
+from kilibs.geom import geometric_util as geo
 from typing import Iterable
 
 from math import tan, radians

@@ -15,7 +15,7 @@
 
 import unittest
 
-from KicadModTree.util.geometric_util import geometricArc, geometricLine
+from kilibs.geom.geometric_util import geometricArc, geometricLine
 
 # Useful arcs for tests (don't have to use these)
 ARC_90_UPPER_RIGHT_QUADRANT = geometricArc(center=(0, 0), start=(100, 0), end=(0, 100))

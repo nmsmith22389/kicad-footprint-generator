@@ -15,7 +15,7 @@
 
 from kilibs.geom import Vector2D
 from KicadModTree.nodes.Node import Node
-from KicadModTree.util.geometric_util import geometricCircle, BaseNodeIntersection
+from kilibs.geom.geometric_util import geometricCircle, BaseNodeIntersection
 
 from .Arc import Arc
 

@@ -1,7 +1,7 @@
 from typing import List, Optional, Callable, TypeAlias
 from abc import ABC, abstractmethod
 
-from KicadModTree.util.geometric_util import (
+from kilibs.geom.geometric_util import (
     geometricLine,
     geometricCircle,
     geometricArc,

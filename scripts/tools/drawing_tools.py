@@ -21,7 +21,7 @@ from kilibs.geom.rounding import (
     round_to_grid_nearest,
 )
 from kilibs.geom.keepout import Keepout, KeepoutRect, KeepoutRound
-from KicadModTree.util.geometric_util import (
+from kilibs.geom.geometric_util import (
     geometricCircle,
     geometricArc,
     geometricLine,

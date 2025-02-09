@@ -2,7 +2,8 @@ import unittest
 import math
 from kilibs.geom import Vector2D
 from KicadModTree import *
-from KicadModTree.util import geometric_util as geo
+from kilibs.geom import geometric_util as geo
+from kilibs.test_utils import geom_test
 
 from KicadModTree.tests.test_utils.fp_file_test import SerialisationTest
 
@@ -11,31 +12,16 @@ class ArcTests(unittest.TestCase):
 
     def testArcGeometry(self):
 
-        def assert_vectors_approx(v1: Vector2D, v2: Vector2D):
-            """
-            Assert that two vectors are almost equal
-            """
-            self.assertAlmostEqual(v1.x, v2.x)
-            self.assertAlmostEqual(v1.y, v2.y)
-
-        def vector_from_tuple(v):
-            """
-            Convert a tuple to a Vector2D if needed
-            """
-            if isinstance(v, tuple) or isinstance(v, list):
-                return Vector2D(v[0], v[1])
-            return v
-
         def assert_arc_geom(
             arc: geo.geometricArc, start, end, center, midpoint, radius: float
         ) -> None:
             """
             Assert that the arc has the given geometry
             """
-            assert_vectors_approx(arc.getStartPoint(), vector_from_tuple(start))
-            assert_vectors_approx(arc.getEndPoint(), vector_from_tuple(end))
-            assert_vectors_approx(arc.getCenter(), vector_from_tuple(center))
-            assert_vectors_approx(arc.getMidPoint(), vector_from_tuple(midpoint))
+            geom_test.vector_approx_equal(arc.getStartPoint(), start)
+            geom_test.vector_approx_equal(arc.getEndPoint(), end)
+            geom_test.vector_approx_equal(arc.getCenter(), center)
+            geom_test.vector_approx_equal(arc.getMidPoint(), midpoint)
             self.assertAlmostEqual(arc.getRadius(), radius)
 
         sqrt2_2 = math.sqrt(2) / 2
