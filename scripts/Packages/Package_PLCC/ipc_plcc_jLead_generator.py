@@ -478,9 +478,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='use confing .yaml files to create footprints.')
     parser.add_argument('files', metavar='file', type=str, nargs='*',
                         help='list of files holding information about what devices should be created.')
-    parser.add_argument('--global_config', type=str, nargs='?',
-                        help='the config file defining how the footprint will look like. (KLC)',
-                        default='../../tools/global_config_files/config_KLCv3.0.yaml')
     parser.add_argument('--series_config', type=str, nargs='?',
                         help='the config file defining series parameters.', default='../package_config_KLCv3.yaml')
     parser.add_argument('--density', type=str, nargs='?', help='Density level (L,N,M)', default='N')
@@ -498,7 +495,7 @@ if __name__ == "__main__":
 
     ipc_doc_file = args.ipc_doc
 
-    with open(args.global_config, 'r') as config_stream:
+    with open(args.global_config_file, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
         except yaml.YAMLError as exc:

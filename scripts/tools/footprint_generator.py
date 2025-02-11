@@ -3,6 +3,7 @@ import os
 import yaml
 import argparse
 import logging
+from importlib import resources
 from typing import Optional
 
 from KicadModTree import Footprint, KicadFileHandler, Model
@@ -58,7 +59,6 @@ class FootprintGenerator:
         self,
         parser,
         file_autofind: bool = False,
-        default_global_config: Optional[str] = None,
     ) -> argparse.Namespace:
         """
         Helper function to add "standard" argument to a command line parser,
@@ -73,14 +73,11 @@ class FootprintGenerator:
                                 help='list of files holding information about what devices should be created.' +
                                      ' If none are given, all .yaml files in the current directory are used (recursively).')
 
-        if default_global_config:
-            parser.add_argument(
-                "--global-config",
-                type=Path,
-                nargs="?",
-                help="the config file defining how the footprint will look like. (KLC)",
-                default=default_global_config,
-            )
+        parser.add_argument(
+            "--global-config",
+            type=Path,
+            help="the config file defining how the footprint will look like. (KLC)",
+        )
 
         parser.add_argument('-v', '--verbose', action='count', default=0,
                             help='Set debug level, use -vv for more debug.')
@@ -92,14 +89,29 @@ class FootprintGenerator:
         elif args.verbose > 1:
             logging.basicConfig(level=logging.DEBUG)
 
+        if args.global_config is None:
+            # If the user doesn't provide a global config file, use the default one
+            # provided in the package data
+            default_global_config_name = "config_KLCv3.0.yaml"
+
+            with resources.path(
+                "scripts.tools.global_config_files", default_global_config_name
+            ) as default_global_config:
+                args.global_config_file = default_global_config
+        else:
+            args.global_config_file = args.global_config
+
+        # Some generators still load the global config themselves as a dict and then
+        # extend it, which isn't very type-safe. But for now, allow access to both
+        # the filename (so they can do that themselves) as well as the GlobalConfig
+        # object which provides validation, type-checking, utility functions, etc.
+        args.global_config = GlobalConfig.load_from_file(args.global_config_file)
+
         return args
 
     @classmethod
     def run_on_files(self, generator, args: argparse.Namespace,
                      file_autofind_dir: str='.', **kwargs):
-
-        # Load global config
-        global_config = GlobalConfig.load_from_file(args.global_config)
 
         # If no files are given, find all YAML files in the current
         # directory recursively
@@ -109,7 +121,7 @@ class FootprintGenerator:
 
         for filepath in args.files:
             generator_instance = generator(output_dir=args.output_dir,
-                                           global_config=global_config,
+                                           global_config=args.global_config,
                                            **kwargs)
 
             with open(filepath, 'r', encoding="utf-8") as command_stream:

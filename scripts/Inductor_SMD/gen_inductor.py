@@ -445,29 +445,16 @@ if __name__ == "__main__":
         nargs="+",
         help="list of files holding information about what devices should be created.",
     )
-    # global_config is for backwards compatibility
-    parser.add_argument(
-        "--global-config",
-        "--global_config",
-        type=Path,
-        nargs="?",
-        help="the config file defining how the footprint will look like. (KLC)",
-        default="../tools/global_config_files/config_KLCv3.0.yaml",
-    )
 
-    FootprintGenerator.add_standard_arguments(parser)
-
-    args = parser.parse_args()
+    args = FootprintGenerator.add_standard_arguments(parser)
 
     if args.verbose == 1:
         logging.basicConfig(level=logging.INFO)
     elif args.verbose > 1:
         logging.basicConfig(level=logging.DEBUG)
 
-    global_config = GlobalConfig.load_from_file(args.global_config)
-
     generator = InductorGenerator(
-        output_dir=args.output_dir, global_config=global_config
+        output_dir=args.output_dir, global_config=args.global_config
     )
 
     for data_file in args.files:

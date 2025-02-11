@@ -89,13 +89,9 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description='Generate a 4Ucon Terminal Block Footprint')
 
-    args = FootprintGenerator.add_standard_arguments(
-        parser, default_global_config="../tools/global_config_files/config_KLCv3.0.yaml"
-    )
+    args = FootprintGenerator.add_standard_arguments(parser)
 
-    global_config = GlobalConfig.load_from_file(args.global_config)
-
-    g = MaiXu_MX126_Generator(args.output_dir, global_config)
+    g = MaiXu_MX126_Generator(args.output_dir, args.global_config)
 
     for pins in g.available_pincounts:
         g.generateFootprint(pins)

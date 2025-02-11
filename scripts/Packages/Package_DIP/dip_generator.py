@@ -185,16 +185,11 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Use .yaml files to create DIP footprints.')
     parser.add_argument('files', metavar='file', type=str, nargs='*',
                         help='list of files holding information about what devices should be created.')
-    parser.add_argument('--global_config', type=str, nargs='?',
-                        help='the config file defining how the footprint will look like. (KLC)',
-                        default='../../tools/global_config_files/config_KLCv3.0.yaml')
     args = FootprintGenerator.add_standard_arguments(parser)
-
-    global_config = GlobalConfig.load_from_file(args.global_config)
 
     FootprintGenerator.run_on_files(
         DIPGenerator,
         args,
         file_autofind_dir='size_definitions',
-        configuration=global_config,
+        configuration=args.global_config,
     )

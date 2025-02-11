@@ -59,5 +59,10 @@ include = [
     "scripts.Packages.utils",
 ]
 
+[tool.setuptools.package-data]
+"scripts.tools" = [
+    "global_config_files/*.yaml",
+]
+
 [tool.isort]
 profile = "black"
