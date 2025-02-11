@@ -1291,3 +1291,41 @@ Texas_PicoStar_BGA-4_0.758x0.758mm_Layout2x2_P0.4mm:
   mask_margin: 0.05
   layout_x: 2
   layout_y: 2
+
+LFBGA-169_12x16mm_Layout14x28_P0.5mm_Ball0.3mm:
+  description: "JEDEC eMMC AA BGA-169"
+  size_source: "https://www.jedec.org/sites/default/files/docs/MO-276F.pdf"
+  body_size_x: 12.0
+  body_size_y: 16.0
+  overall_height: 1.4
+  pitch: 0.5
+  ball_type: 'collapsible'
+  ball_diameter: 0.3
+  layout_x: 14
+  layout_y: 28
+  row_skips: [[1, 2, 3, 5, 7, 8, 10, 12, 13, 14], [1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], [], [], [], [5, 6, 7, 8, 9, 10, 11], [4, 11], [4, 6, 7, 8, 9, 11], [4, 6, 7, 8, 9, 11], [4, 6, 7, 8, 9, 11], [4, 6, 7, 8, 9, 11], [4, 11], [4, 5, 6, 7, 8, 9, 10, 11], [], [], [], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], [1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14], [1, 2, 3, 5, 7, 8, 10, 12, 13, 14]]
+
+LFBGA-169_12x18mm_Layout14x28_P0.5mm_Ball0.3mm:
+  inherit: LFBGA-169_12x16mm_Layout14x28_P0.5mm_Ball0.3mm
+  description: "JEDEC eMMC AB BGA-169"
+  body_size_x: 12.0
+  body_size_y: 18.0
+
+LFBGA-169_14x18mm_Layout14x28_P0.5mm_Ball0.3mm:
+  inherit: LFBGA-169_12x16mm_Layout14x28_P0.5mm_Ball0.3mm
+  description: "JEDEC eMMC AC BGA-169"
+  body_size_x: 14.0
+  body_size_y: 18.0
+
+LFBGA-153_11.5x13x1.4mm_Layout14x14_P0.5mm_Ball0.3mm:
+  description: "JEDEC eMMC AN BGA-153"
+  size_source: "https://www.jedec.org/sites/default/files/docs/MO-276F.pdf"
+  body_size_x: 11.5
+  body_size_y: 13.0
+  overall_height: 1.4
+  pitch: 0.5
+  ball_type: 'collapsible'
+  ball_diameter: 0.3
+  layout_x: 14
+  layout_y: 14
+  row_skips: [[], [], [], [5, 6, 7, 8, 9, 10, 11], [4, 11], [4, 6, 7, 8, 9, 11], [4, 6, 7, 8, 9, 11], [4, 6, 7, 8, 9, 11], [4, 6, 7, 8, 9, 11], [4, 11], [4, 5, 6, 7, 8, 9, 10, 11], [], [], []]
