@@ -3,10 +3,7 @@ from KicadModTree import *
 from KicadModTree.tests.test_utils.fp_file_test import SerialisationTest
 
 
-class RotationTests(SerialisationTest):
-
-    def setUp(self):
-        super().setUp(__file__, 'results')
+class TestRotation(SerialisationTest):
 
     def testTextRotation(self):
         kicad_mod = Footprint("test_rotate_text", FootprintType.SMD)

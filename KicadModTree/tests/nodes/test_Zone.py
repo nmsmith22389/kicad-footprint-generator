@@ -16,10 +16,9 @@ DEFAULT_TEST_POLYGON = [
 DEFAULT_HATCH = Hatch(Hatch.EDGE, 0.5)
 
 
-class TestZoneSerialistion(SerialisationTest):
+class TestZoneSerialisation(SerialisationTest):
 
-    def setUp(self):
-        super().setUp(__file__, 'data')
+    RESULTS_DIR_NAME = 'data'
 
     def test_basic(self):
         ko = Keepouts(

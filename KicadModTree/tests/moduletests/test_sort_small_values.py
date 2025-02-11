@@ -4,10 +4,7 @@ from kilibs.geom import Vector2D
 from KicadModTree.tests.test_utils.fp_file_test import SerialisationTest
 
 
-class SmallValueSerialisation(SerialisationTest):
-
-    def setUp(self):
-        super().setUp(__file__, 'results')
+class TestSmallValueSerialisation(SerialisationTest):
 
     def testSortSmallValues(self):
         """

@@ -17,10 +17,7 @@ from KicadModTree import *
 from KicadModTree.tests.test_utils.fp_file_test import SerialisationTest
 
 
-class SimpleFootprintTests(SerialisationTest):
-
-    def setUp(self):
-        super().setUp(__file__, 'results')
+class TestSimpleFootprints(SerialisationTest):
 
     def testMinimum(self):
         kicad_mod = Footprint("test", FootprintType.SMD)

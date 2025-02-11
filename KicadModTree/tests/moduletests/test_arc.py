@@ -1,5 +1,5 @@
-import unittest
 import math
+import pytest
 from kilibs.geom import Vector2D
 from KicadModTree import *
 from kilibs.geom import geometric_util as geo
@@ -8,243 +8,242 @@ from kilibs.test_utils import geom_test
 from KicadModTree.tests.test_utils.fp_file_test import SerialisationTest
 
 
-class ArcTests(unittest.TestCase):
+def assert_arc_geom(
+    arc: geo.geometricArc, start, end, center, midpoint, radius: float
+) -> None:
+    """
+    Assert that the arc has the given geometry
+    """
+    geom_test.vector_approx_equal(arc.getStartPoint(), start)
+    geom_test.vector_approx_equal(arc.getEndPoint(), end)
+    geom_test.vector_approx_equal(arc.getCenter(), center)
+    geom_test.vector_approx_equal(arc.getMidPoint(), midpoint)
+    assert arc.getRadius() == pytest.approx(radius)
 
-    def testArcGeometry(self):
 
-        def assert_arc_geom(
-            arc: geo.geometricArc, start, end, center, midpoint, radius: float
-        ) -> None:
-            """
-            Assert that the arc has the given geometry
-            """
-            geom_test.vector_approx_equal(arc.getStartPoint(), start)
-            geom_test.vector_approx_equal(arc.getEndPoint(), end)
-            geom_test.vector_approx_equal(arc.getCenter(), center)
-            geom_test.vector_approx_equal(arc.getMidPoint(), midpoint)
-            self.assertAlmostEqual(arc.getRadius(), radius)
+def test_arcGeometry():
 
-        sqrt2_2 = math.sqrt(2) / 2
+    sqrt2_2 = math.sqrt(2) / 2
 
-        # A semi-circular arc
-        semicircle = geo.geometricArc(
-            center=Vector2D(0, 0), start=Vector2D(1, 0), angle=180
-        )
+    # A semi-circular arc
+    semicircle = geo.geometricArc(
+        center=Vector2D(0, 0), start=Vector2D(1, 0), angle=180
+    )
 
-        assert_arc_geom(
-            arc=semicircle,
-            start=(1, 0),
-            end=(-1, 0),
-            center=(0, 0),
-            midpoint=(0, 1),
-            radius=1,
-        )
+    assert_arc_geom(
+        arc=semicircle,
+        start=(1, 0),
+        end=(-1, 0),
+        center=(0, 0),
+        midpoint=(0, 1),
+        radius=1,
+    )
 
-        # A semi-circular arc by endpoint goes in a specific direction
-        semicircle_by_endpoint = geo.geometricArc(
-            center=Vector2D(0, 0), start=Vector2D(1, 0), end=Vector2D(-1, 0)
-        )
+    # A semi-circular arc by endpoint goes in a specific direction
+    semicircle_by_endpoint = geo.geometricArc(
+        center=Vector2D(0, 0), start=Vector2D(1, 0), end=Vector2D(-1, 0)
+    )
 
-        assert_arc_geom(
-            arc=semicircle_by_endpoint,
-            start=(1, 0),
-            end=(-1, 0),
-            center=(0, 0),
-            midpoint=(0, -1),
-            radius=1,
-        )
+    assert_arc_geom(
+        arc=semicircle_by_endpoint,
+        start=(1, 0),
+        end=(-1, 0),
+        center=(0, 0),
+        midpoint=(0, -1),
+        radius=1,
+    )
 
-        # Check that end or angle is required
-        with self.assertRaises(KeyError):
-            geo.geometricArc(center=Vector2D(0, 0), start=Vector2D(1, 0))
+    # Check that end or angle is required
+    with pytest.raises(KeyError):
+        geo.geometricArc(center=Vector2D(0, 0), start=Vector2D(1, 0))
 
-        # Test that the negative angle goes the other way
-        negative_semicircle = geo.geometricArc(
-            center=Vector2D(0, 0), start=Vector2D(1, 0), angle=-180
-        )
+    # Test that the negative angle goes the other way
+    negative_semicircle = geo.geometricArc(
+        center=Vector2D(0, 0), start=Vector2D(1, 0), angle=-180
+    )
 
-        assert_arc_geom(
-            arc=negative_semicircle,
-            start=(1, 0),
-            end=(-1, 0),
-            center=(0, 0),
-            midpoint=(0, -1),
-            radius=1,
-        )
+    assert_arc_geom(
+        arc=negative_semicircle,
+        start=(1, 0),
+        end=(-1, 0),
+        center=(0, 0),
+        midpoint=(0, -1),
+        radius=1,
+    )
 
-        arc_90deg_down = geo.geometricArc(
-            center=Vector2D(0, 0), start=Vector2D(1, 0), angle=-90
-        )
+    arc_90deg_down = geo.geometricArc(
+        center=Vector2D(0, 0), start=Vector2D(1, 0), angle=-90
+    )
 
-        assert_arc_geom(
-            arc=arc_90deg_down,
-            start=(1, 0),
-            end=(0, -1),
-            center=(0, 0),
-            midpoint=(sqrt2_2, -sqrt2_2),
-            radius=1,
-        )
+    assert_arc_geom(
+        arc=arc_90deg_down,
+        start=(1, 0),
+        end=(0, -1),
+        center=(0, 0),
+        midpoint=(sqrt2_2, -sqrt2_2),
+        radius=1,
+    )
 
-        arc_90deg_down_nonunity_radius = geo.geometricArc(
-            center=Vector2D(0, 0), start=Vector2D(0, -1.2), angle=-90
-        )
+    arc_90deg_down_nonunity_radius = geo.geometricArc(
+        center=Vector2D(0, 0), start=Vector2D(0, -1.2), angle=-90
+    )
 
-        assert_arc_geom(
-            arc=arc_90deg_down_nonunity_radius,
-            start=(0, -1.2),
-            end=(-1.2, 0),
-            center=(0, 0),
-            midpoint=1.2 * Vector2D(-sqrt2_2, -sqrt2_2),
-            radius=1.2,
-        )
+    assert_arc_geom(
+        arc=arc_90deg_down_nonunity_radius,
+        start=(0, -1.2),
+        end=(-1.2, 0),
+        center=(0, 0),
+        midpoint=1.2 * Vector2D(-sqrt2_2, -sqrt2_2),
+        radius=1.2,
+    )
 
-        # Arc not centred on the origin
-        arc_not_on_origin = geo.geometricArc(
-            center=Vector2D(1, 1), start=Vector2D(2, 1), angle=-90
-        )
+    # Arc not centred on the origin
+    arc_not_on_origin = geo.geometricArc(
+        center=Vector2D(1, 1), start=Vector2D(2, 1), angle=-90
+    )
 
-        assert_arc_geom(
-            arc=arc_not_on_origin,
-            start=(2, 1),
-            end=(1, 0),
-            center=(1, 1),
-            midpoint=(1 + sqrt2_2, 1 - sqrt2_2),
-            radius=1
-        )
+    assert_arc_geom(
+        arc=arc_not_on_origin,
+        start=(2, 1),
+        end=(1, 0),
+        center=(1, 1),
+        midpoint=(1 + sqrt2_2, 1 - sqrt2_2),
+        radius=1
+    )
 
-        # Not a simple angle for the midpoint
-        arc_45_deg = geo.geometricArc(center=Vector2D(0, 0), start=Vector2D(1, 0), angle=45)
+    # Not a simple angle for the midpoint
+    arc_45_deg = geo.geometricArc(center=Vector2D(0, 0), start=Vector2D(1, 0), angle=45)
 
-        assert_arc_geom(
-            arc=arc_45_deg,
-            start=(1, 0),
-            end=(sqrt2_2, sqrt2_2),
-            center=(0, 0),
-            midpoint=(math.cos(math.radians(22.5)), math.sin(math.radians(22.5))),
-            radius=1,
-        )
+    assert_arc_geom(
+        arc=arc_45_deg,
+        start=(1, 0),
+        end=(sqrt2_2, sqrt2_2),
+        center=(0, 0),
+        midpoint=(math.cos(math.radians(22.5)), math.sin(math.radians(22.5))),
+        radius=1,
+    )
 
-        # Degenerate radius
-        a_zero_radius = geo.geometricArc(
-            center=Vector2D(0, 0), start=Vector2D(0, 0), angle=42
-        )
+    # Degenerate radius
+    a_zero_radius = geo.geometricArc(
+        center=Vector2D(0, 0), start=Vector2D(0, 0), angle=42
+    )
 
-        assert_arc_geom(
-            arc=a_zero_radius,
-            start=(0, 0),
-            end=(0, 0),
-            center=(0, 0),
-            midpoint=(0, 0),
-            radius=0,
-        )
+    assert_arc_geom(
+        arc=a_zero_radius,
+        start=(0, 0),
+        end=(0, 0),
+        center=(0, 0),
+        midpoint=(0, 0),
+        radius=0,
+    )
 
-    def testCircleCircleIntersection(self):
-        # check intersection of two circles with identical radii
-        c1 = geo.geometricCircle(center=[0, 0], radius=math.sqrt(2))
-        c2 = geo.geometricCircle(center=[2, 0], radius=math.sqrt(2))
+
+def testCircleCircleIntersection():
+    # check intersection of two circles with identical radii
+    c1 = geo.geometricCircle(center=[0, 0], radius=math.sqrt(2))
+    c2 = geo.geometricCircle(center=[2, 0], radius=math.sqrt(2))
+    ip = geo.BaseNodeIntersection.intersectTwoNodes(c1, c2)
+    assert len(ip) == 2
+    for p in ip:
+        assert any((p - Vector2D(1, y)).is_nullvec(tol=1e-7) for y in [1, -1])
+
+    # check intersection of two circles with different radii
+    c1 = geo.geometricCircle(center=[0, 0], radius=2)
+    c2 = geo.geometricCircle(center=[2 * math.sqrt(3/4), 0], radius=1)
+    ip = geo.BaseNodeIntersection.intersectTwoNodes(c1, c2)
+    assert len(ip) == 2
+    for p in ip:
+        assert any((p - Vector2D(2 * math.sqrt(3/4), y)).is_nullvec(tol=1e-7) for y in [1, -1])
+
+    # check intersection of two circles with different radii, too far apart
+    c1 = geo.geometricCircle(center=[0, 0], radius=2)
+    c2 = geo.geometricCircle(center=[4, 0], radius=1)
+    ip = geo.BaseNodeIntersection.intersectTwoNodes(c1, c2)
+    assert len(ip) == 0
+
+    # check intersection of two circles with different radii, contained in each other
+    c1 = geo.geometricCircle(center=[0, 0], radius=2)
+    c2 = geo.geometricCircle(center=[0.5, 0], radius=1)
+    ip = geo.BaseNodeIntersection.intersectTwoNodes(c1, c2)
+    assert len(ip) == 0
+
+    # check intersection point of circles touching outside
+    c1 = geo.geometricCircle(center=[0, 0], radius=1)
+    c2 = geo.geometricCircle(center=[2, 0], radius=1)
+    ip = geo.BaseNodeIntersection.intersectTwoNodes(c1, c2)
+    assert len(ip) == 1
+    assert (ip[0] - Vector2D(1, 0)).is_nullvec(tol=1e-7)
+
+    # check intersection point of circles touching inside
+    c1 = geo.geometricCircle(center=[0, 0], radius=2)
+    c2 = geo.geometricCircle(center=[1, 0], radius=1)
+    ip = geo.BaseNodeIntersection.intersectTwoNodes(c1, c2)
+    assert len(ip) == 1
+    assert (ip[0] - Vector2D(2, 0)).is_nullvec(tol=1e-7)
+
+    # vary position on x and y axis
+    c1 = geo.geometricCircle(center=[0, 0], radius=math.sqrt(2))
+    c2 = geo.geometricCircle(center=[0, 2], radius=math.sqrt(2))
+    ip = geo.BaseNodeIntersection.intersectTwoNodes(c1, c2)
+    assert len(ip) == 2
+    for p in ip:
+        assert any((p - Vector2D(x, 1)).is_nullvec(tol=1e-7) for x in [1, -1])
+    c2 = geo.geometricCircle(center=[-2, 0], radius=math.sqrt(2))
+    ip = geo.BaseNodeIntersection.intersectTwoNodes(c1, c2)
+    assert len(ip) == 2
+    for p in ip:
+        assert any((p - Vector2D(-1, y)).is_nullvec(tol=1e-7) for y in [1, -1])
+    c2 = geo.geometricCircle(center=[0, -2], radius=math.sqrt(2))
+    for p in geo.BaseNodeIntersection.intersectTwoNodes(c1, c2):
+        assert any((p - Vector2D(x, -1)).is_nullvec(tol=1e-7) for x in [1, -1])
+
+    # circle 2 on the first median
+    c1 = geo.geometricCircle(center=[0, 0], radius=1)
+    c2 = geo.geometricCircle(center=[1, 1], radius=1)
+    ip = geo.BaseNodeIntersection.intersectTwoNodes(c1, c2)
+    assert len(ip) == 2
+    for p in ip:
+        assert any((p - Vector2D(x, y)).is_nullvec(tol=1e-7) for x, y in [(1, 0), (0, 1)])
+
+    # circle 2 on the fourth median
+    c1 = geo.geometricCircle(center=[0, 0], radius=1)
+    c2 = geo.geometricCircle(center=[1, -1], radius=1)
+    ip = geo.BaseNodeIntersection.intersectTwoNodes(c1, c2)
+    assert len(ip) == 2
+    for p in ip:
+        assert any((p - Vector2D(x, y)).is_nullvec(tol=1e-7) for x, y in [(1, 0), (0, -1)])
+
+    # circles on arbitrary positions
+    center = Vector2D(3, -2)
+    for angle in [0, 30, -30, 180, -180, 72, 143]:
+        offset = Vector2D(math.sin(math.radians(angle)), math.cos(math.radians(angle)))
+        c1 = geo.geometricCircle(center=center, radius=math.sqrt(2))
+        c2 = geo.geometricCircle(center=center + 2 * offset, radius=math.sqrt(2))
         ip = geo.BaseNodeIntersection.intersectTwoNodes(c1, c2)
-        self.assertEqual(len(ip), 2)
+        assert len(ip) == 2
         for p in ip:
-            self.assertTrue(any((p - Vector2D(1, y)).is_nullvec(tol=1e-7) for y in [1, -1]))
+            assert any(
+                (p - (center + offset + s * copy(offset).rotate(90))).is_nullvec(tol=1e-7)
+                for s in [-1, 1])
 
-        # check intersection of two circles with different radii
-        c1 = geo.geometricCircle(center=[0, 0], radius=2)
-        c2 = geo.geometricCircle(center=[2 * math.sqrt(3/4), 0], radius=1)
-        ip = geo.BaseNodeIntersection.intersectTwoNodes(c1, c2)
-        self.assertEqual(len(ip), 2)
-        for p in ip:
-            self.assertTrue(any((p - Vector2D(2 * math.sqrt(3/4), y)).is_nullvec(tol=1e-7) for y in [1, -1]))
+    # two degenerated circles with the same center
+    center = Vector2D(3, -2)
+    c1 = geo.geometricCircle(center=center, radius=0)
+    c2 = geo.geometricCircle(center=center, radius=0)
+    ip = geo.BaseNodeIntersection.intersectTwoNodes(c1, c2)
+    assert len(ip) == 1
+    assert (ip[0] - center).is_nullvec(tol=1e-7)
 
-        # check intersection of two circles with different radii, too far apart
-        c1 = geo.geometricCircle(center=[0, 0], radius=2)
-        c2 = geo.geometricCircle(center=[4, 0], radius=1)
-        ip = geo.BaseNodeIntersection.intersectTwoNodes(c1, c2)
-        self.assertEqual(len(ip), 0)
+    # two identical circles with the same center
+    center = Vector2D(3, -2)
+    c1 = geo.geometricCircle(center=center, radius=1)
+    c2 = geo.geometricCircle(center=center, radius=1)
 
-        # check intersection of two circles with different radii, contained in each other
-        c1 = geo.geometricCircle(center=[0, 0], radius=2)
-        c2 = geo.geometricCircle(center=[0.5, 0], radius=1)
-        ip = geo.BaseNodeIntersection.intersectTwoNodes(c1, c2)
-        self.assertEqual(len(ip), 0)
-
-        # check intersection point of circles touching outside
-        c1 = geo.geometricCircle(center=[0, 0], radius=1)
-        c2 = geo.geometricCircle(center=[2, 0], radius=1)
-        ip = geo.BaseNodeIntersection.intersectTwoNodes(c1, c2)
-        self.assertEqual(len(ip), 1)
-        self.assertTrue((ip[0] - Vector2D(1, 0)).is_nullvec(tol=1e-7))
-
-        # check intersection point of circles touching inside
-        c1 = geo.geometricCircle(center=[0, 0], radius=2)
-        c2 = geo.geometricCircle(center=[1, 0], radius=1)
-        ip = geo.BaseNodeIntersection.intersectTwoNodes(c1, c2)
-        self.assertEqual(len(ip), 1)
-        self.assertTrue((ip[0] - Vector2D(2, 0)).is_nullvec(tol=1e-7))
-
-        # vary position on x and y axis
-        c1 = geo.geometricCircle(center=[0, 0], radius=math.sqrt(2))
-        c2 = geo.geometricCircle(center=[0, 2], radius=math.sqrt(2))
-        ip = geo.BaseNodeIntersection.intersectTwoNodes(c1, c2)
-        self.assertEqual(len(ip), 2)
-        for p in ip:
-            self.assertTrue(any((p - Vector2D(x, 1)).is_nullvec(tol=1e-7) for x in [1, -1]))
-        c2 = geo.geometricCircle(center=[-2, 0], radius=math.sqrt(2))
-        ip = geo.BaseNodeIntersection.intersectTwoNodes(c1, c2)
-        self.assertEqual(len(ip), 2)
-        for p in ip:
-            self.assertTrue(any((p - Vector2D(-1, y)).is_nullvec(tol=1e-7) for y in [1, -1]))
-        c2 = geo.geometricCircle(center=[0, -2], radius=math.sqrt(2))
-        for p in geo.BaseNodeIntersection.intersectTwoNodes(c1, c2):
-            self.assertTrue(any((p - Vector2D(x, -1)).is_nullvec(tol=1e-7) for x in [1, -1]))
-
-        # circle 2 on the first median
-        c1 = geo.geometricCircle(center=[0, 0], radius=1)
-        c2 = geo.geometricCircle(center=[1, 1], radius=1)
-        ip = geo.BaseNodeIntersection.intersectTwoNodes(c1, c2)
-        self.assertEqual(len(ip), 2)
-        for p in ip:
-            self.assertTrue(any((p - Vector2D(x, y)).is_nullvec(tol=1e-7) for x, y in [(1, 0), (0, 1)]))
-
-        # circle 2 on the fourth median
-        c1 = geo.geometricCircle(center=[0, 0], radius=1)
-        c2 = geo.geometricCircle(center=[1, -1], radius=1)
-        ip = geo.BaseNodeIntersection.intersectTwoNodes(c1, c2)
-        self.assertEqual(len(ip), 2)
-        for p in ip:
-            self.assertTrue(any((p - Vector2D(x, y)).is_nullvec(tol=1e-7) for x, y in [(1, 0), (0, -1)]))
-
-        # circles on arbitrary positions
-        center = Vector2D(3, -2)
-        for angle in [0, 30, -30, 180, -180, 72, 143]:
-            offset = Vector2D(math.sin(math.radians(angle)), math.cos(math.radians(angle)))
-            c1 = geo.geometricCircle(center=center, radius=math.sqrt(2))
-            c2 = geo.geometricCircle(center=center + 2 * offset, radius=math.sqrt(2))
-            ip = geo.BaseNodeIntersection.intersectTwoNodes(c1, c2)
-            self.assertEqual(len(ip), 2)
-            for p in ip:
-                self.assertTrue(any(
-                    (p - (center + offset + s * copy(offset).rotate(90))).is_nullvec(tol=1e-7)
-                    for s in [-1, 1]))
-
-        # two degenerated circles with the same center
-        center = Vector2D(3, -2)
-        c1 = geo.geometricCircle(center=center, radius=0)
-        c2 = geo.geometricCircle(center=center, radius=0)
-        ip = geo.BaseNodeIntersection.intersectTwoNodes(c1, c2)
-        self.assertEqual(len(ip), 1)
-        self.assertTrue((ip[0] - center).is_nullvec(tol=1e-7))
-
-        # two identical circles with the same center
-        center = Vector2D(3, -2)
-        c1 = geo.geometricCircle(center=center, radius=1)
-        c2 = geo.geometricCircle(center=center, radius=1)
-        self.assertRaises(ValueError, geo.BaseNodeIntersection.intersectTwoNodes, c1, c2)
+    with pytest.raises(ValueError):
+        geo.BaseNodeIntersection.intersectTwoNodes(c1, c2)
 
 
-class ArcSerialisation(SerialisationTest):
-
-    def setUp(self):
-        super().setUp(__file__, 'results')
+class TestArcSerialisation(SerialisationTest):
 
     def testArcsKx90deg(self):
         """

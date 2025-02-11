@@ -1,5 +1,5 @@
 import os
-import unittest
+import pytest
 import re
 import math
 
@@ -13,13 +13,16 @@ class CustomException(AssertionError):
     pass
 
 
-class TestASTevaluator(unittest.TestCase):
+class TestASTevaluator:
 
     __num_pos__ = 17
     failureException = CustomException
 
-    def setUp(self):
-        self.ast = ASTevaluator(symbols=dict(num_pos=self.__num_pos__))
+    @pytest.fixture(autouse=True)
+    def setup_fixtures(self, request):
+        """Automatically injects `ast` into the class."""
+
+        request.cls.ast = ASTevaluator(symbols=dict(num_pos=self.__num_pos__))
 
     def test_unallowed(self):
         import tempfile
@@ -33,46 +36,52 @@ class TestASTevaluator(unittest.TestCase):
         weak_ast = ASTevaluator(restricted=False)
 
         open(filename, 'w')
-        self.assertEqual(1, weak_ast.eval(r_stmt))
-        self.assertRaises(Exception, ast.eval, r_stmt, suppress_warnings=True)
-        self.assertRaises(Exception, weak_ast.eval, w_stmt, suppress_warnings=True)
-        self.assertRaises(Exception, ast.eval, w_stmt, suppress_warnings=True)
-        self.assertRaises(Exception, weak_ast.eval, a_stmt, suppress_warnings=True)
-        self.assertRaises(Exception, ast.eval, a_stmt, suppress_warnings=True)
+        assert 1 == weak_ast.eval(r_stmt)
+        pytest.raises(Exception, ast.eval, r_stmt, suppress_warnings=True)
+        pytest.raises(Exception, weak_ast.eval, w_stmt, suppress_warnings=True)
+        pytest.raises(Exception, ast.eval, w_stmt, suppress_warnings=True)
+        pytest.raises(Exception, weak_ast.eval, a_stmt, suppress_warnings=True)
+        pytest.raises(Exception, ast.eval, a_stmt, suppress_warnings=True)
         # make sure opening a file without read permissions fails
         os.chmod(filename, 0)
         if (not os.access(filename, os.R_OK)):
-            self.assertRaises(Exception, weak_ast.eval, r_stmt, suppress_warnings=True)
-        self.assertRaises(Exception, ast.eval, r_stmt, suppress_warnings=True)
+            pytest.raises(Exception, weak_ast.eval, r_stmt, suppress_warnings=True)
+        pytest.raises(Exception, ast.eval, r_stmt, suppress_warnings=True)
         os.remove(filename)
 
-        self.assertRaises(Exception, weak_ast.eval, r_stmt, suppress_warnings=True)
-        self.assertRaises(Exception, ast.eval, r_stmt, suppress_warnings=True)
-        self.assertRaises(Exception, weak_ast.eval, w_stmt, suppress_warnings=True)
-        self.assertRaises(Exception, ast.eval, w_stmt, suppress_warnings=True)
-        self.assertRaises(Exception, weak_ast.eval, a_stmt, suppress_warnings=True)
-        self.assertRaises(Exception, ast.eval, a_stmt, suppress_warnings=True)
+        pytest.raises(Exception, weak_ast.eval, r_stmt, suppress_warnings=True)
+        pytest.raises(Exception, ast.eval, r_stmt, suppress_warnings=True)
+        pytest.raises(Exception, weak_ast.eval, w_stmt, suppress_warnings=True)
+        pytest.raises(Exception, ast.eval, w_stmt, suppress_warnings=True)
+        pytest.raises(Exception, weak_ast.eval, a_stmt, suppress_warnings=True)
+        pytest.raises(Exception, ast.eval, a_stmt, suppress_warnings=True)
 
     def test_eval_str(self):
         from math import sin, cos, radians
         ast = self.ast
-        self.assertEqual(ast.eval("hallo $(1 - (2 - 3) - (2 - 1) + (0)), das ist der zweite $('string')"),
-                         "hallo 1, das ist der zweite string")
-        self.assertEqual(ast.eval("$(1 - (2 - 3) - (1 - 2) + (17))"), 20)
-        self.assertEqual(ast.eval("das ist ein $('string')"), "das ist ein string")
-        self.assertEqual(ast.eval("hallo $(1 - (2 - 3) - (1 - 2))"), "hallo 3")
-        self.assertEqual(ast.eval("hallo ((as"), "hallo ((as")
-        self.assertEqual(ast.eval("$(sin(radians(30)))"), sin(radians(30)))
-        self.assertEqual(ast.eval("$( [sin(radians(30)), cos(radians(30))] )"),
-                         [sin(radians(30)), cos(radians(30))])
-        self.assertEqual(ast.eval("$(1+1) +"), "2 +")
-        self.assertEqual(ast.eval("$(1+1) $!"), "2 $")
-        self.assertEqual(ast.eval("$(1+1)$"), "2$")
-        self.assertEqual(ast.eval("$(1+1))"), "2)")
-        self.assertEqual(ast.eval("($(1+1)("), "(2(")
-        self.assertEqual(ast.eval("$(1+1)$!(a$!$(2+2)"), "2$(a$4")
-        self.assertEqual(ast.eval("$( ())"), ())
-        self.assertEqual(ast.eval("$"), "$")
+        assert (
+            ast.eval(
+                "hallo $(1 - (2 - 3) - (2 - 1) + (0)), das ist der zweite $('string')"
+            )
+            == "hallo 1, das ist der zweite string"
+        )
+        assert ast.eval("$(1 - (2 - 3) - (1 - 2) + (17))") == 20
+        assert ast.eval("das ist ein $('string')") == "das ist ein string"
+        assert ast.eval("hallo $(1 - (2 - 3) - (1 - 2))") == "hallo 3"
+        assert ast.eval("hallo ((as") == "hallo ((as"
+        assert ast.eval("$(sin(radians(30)))") == sin(radians(30))
+        assert ast.eval("$( [sin(radians(30)), cos(radians(30))] )") == [
+            sin(radians(30)),
+            cos(radians(30)),
+        ]
+        assert ast.eval("$(1+1) +") == "2 +"
+        assert ast.eval("$(1+1) $!") == "2 $"
+        assert ast.eval("$(1+1)$") == "2$"
+        assert ast.eval("$(1+1))") == "2)"
+        assert ast.eval("($(1+1)(") == "(2("
+        assert ast.eval("$(1+1)$!(a$!$(2+2)") == "2$(a$4"
+        assert ast.eval("$( ())") == ()
+        assert ast.eval("$") == "$"
 
     def __check_dict(self, expected_dct: DotDict, dct: dict, *, location) -> int:
         num_checked = 0
@@ -82,7 +91,7 @@ class TestASTevaluator(unittest.TestCase):
             elif (expct := expected_dct[key]):
                 num_checked += 1
                 msg = f"{location}: YAML line {expct.line}: {key}: {expct.expr}"
-                self.assertEqual(expct.value, value, msg)
+                assert expct.value == value, msg
 
         return num_checked
 
@@ -103,7 +112,9 @@ class TestASTevaluator(unittest.TestCase):
                     expected_dct[key] = None
 
         num_checked = self.__check_dict(expected_dct, dct, location=__caller_frame__())
-        self.assertEqual(num_checks, num_checked, f"{__caller_frame__()}: {num_checks} checks expected, only {num_checked} done")
+        assert (
+            num_checks == num_checked
+        ), f"{__caller_frame__()}: {num_checks} checks expected, only {num_checked} done"
 
     def test_asteval_dict(self):
 
@@ -181,28 +192,28 @@ class TestASTevaluator(unittest.TestCase):
         expected = DotDict({"a": math.pi, "aa": math.pi, "aaa": math.pi, "d": {"a": math.pi, "aa": math.pi, "aaa": math.pi}})
 
         result = self.ast.eval(dct, allow_self_ref=True)
-        self.assertEqual(expected, result)
+        assert expected == result
 
         result = self.ast.eval(dct, allow_self_ref=True, skip=["a"], suppress_warnings=True)
         expct = expected.copy()
         expct.a = dct.a
-        self.assertEqual(expct, result)
+        assert expct == result
 
         result = self.ast.eval(dct, allow_self_ref=True, skip=["d.a"], suppress_warnings=True)
         expct = expected.copy()
         expct.d.a = dct.d.a
-        self.assertEqual(expct, result)
+        assert expct == result
 
         result = self.ast.eval(dct, allow_self_ref=True, skip=[r"^(.+\.)?a$"], suppress_warnings=True)
         expct = expected.copy()
         expct.a = dct.a
         expct.d.a = dct.d.a
-        self.assertEqual(expct, result)
+        assert expct == result
 
         result = self.ast.eval(dct, allow_self_ref=True, skip=["d"], suppress_warnings=True)
         expct = expected.copy()
         expct.d = dct.d.copy()
-        self.assertEqual(expct, result)
+        assert expct == result
 
     def test_ast_evaluator_resolve(self):
         dct = {
@@ -213,70 +224,68 @@ class TestASTevaluator(unittest.TestCase):
         }
         expct = { "a3": 3, "b2": 2, "c0": 0, "d1": 1, }
         result = self.ast.eval(dct, allow_self_ref=True, try_resolve=True)
-        self.assertEqual(expct, result)
+        assert expct == result
 
         expct = dct.copy()
         expct.update({"c0": 0, "d1": 1, })
         result = self.ast.eval(dct, allow_self_ref=True, try_resolve=False, raise_errors=False, suppress_warnings=True)
-        self.assertEqual(expct, result)
-
+        assert expct == result
 
     def test_eval(self):
         # some tests which are assumed to call eval
-        self.assertEqual("test", self.ast.eval("test"))
-        self.assertEqual("1+1", self.ast.eval("1+1"))
-        self.assertEqual(2, self.ast.eval("$(1+1)"))
+        assert "test" == self.ast.eval("test")
+        assert "1+1" == self.ast.eval("1+1")
+        assert 2 == self.ast.eval("$(1+1)")
         # tests which just return the argument
-        self.assertIsNone(self.ast.eval(None))
-        self.assertEqual(2.2, self.ast.eval(1.2+1))
+        assert self.ast.eval(None) is None
+        assert 2.2 == self.ast.eval(1.2+1)
         # tests containing containers
-        self.assertListEqual([1, "1+1", 3], self.ast.eval([1, "1+1", "$(1+2)"]))
-        self.assertTupleEqual((1, "1+1", 3), self.ast.eval((1, "1+1", "$(1+2)")))
-        self.assertSetEqual({1, "1+1", 3}, self.ast.eval({1, "1+1", "$(1+2)"}))
-        self.assertListEqual([1, "1+1", 3, (10, "10+1", 12)],
-                             self.ast.eval([1, "1+1", "$(1+2)", (10, "10+1", "$(10+2)")]))
-        self.assertDictEqual({"a1": 1, "b1": { "a2": 2, "b2": { "a3": 3}}},
-                             self.ast.eval({"a1": "$(1)", "b1": { "a2": "$(a1 + 1)", "b2": { "a3": "$(a1 + b1.a2)"}}},
-                                           allow_self_ref=True))
+        assert [1, "1+1", 3] == self.ast.eval([1, "1+1", "$(1+2)"])
+        assert (1, "1+1", 3) == self.ast.eval((1, "1+1", "$(1+2)"))
+        assert {1, "1+1", 3} == self.ast.eval({1, "1+1", "$(1+2)"})
+        assert [1, "1+1", 3, (10, "10+1", 12)] == self.ast.eval(
+            [1, "1+1", "$(1+2)", (10, "10+1", "$(10+2)")]
+        )
+        assert {"a1": 1, "b1": {"a2": 2, "b2": {"a3": 3}}} == self.ast.eval(
+            {"a1": "$(1)", "b1": {"a2": "$(a1 + 1)", "b2": {"a3": "$(a1 + b1.a2)"}}},
+            allow_self_ref=True,
+        )
 
     def test_eval_max_depth(self):
         # test that recursion depth can be controlled in containers
         input = ["$(1)", ["$(2)", ["$(3)", ["$(4)"]]]]
         expected = input.copy()
-        self.assertEqual(expected, self.ast.eval(input, max_depth=0, suppress_warnings=True))
+        assert expected == self.ast.eval(input, max_depth=0, suppress_warnings=True)
         expected[0] = 1
-        self.assertEqual(expected, self.ast.eval(input, max_depth=1, suppress_warnings=True))
+        assert expected == self.ast.eval(input, max_depth=1, suppress_warnings=True)
         expected[1][0] = 2
-        self.assertEqual(expected, self.ast.eval(input, max_depth=2, suppress_warnings=True))
+        assert expected == self.ast.eval(input, max_depth=2, suppress_warnings=True)
         expected[1][1][0] = 3
-        self.assertEqual(expected, self.ast.eval(input, max_depth=3, suppress_warnings=True))
+        assert expected == self.ast.eval(input, max_depth=3, suppress_warnings=True)
         expected[1][1][1][0] = 4
-        self.assertEqual(expected, self.ast.eval(input, max_depth=4))
+        assert expected == self.ast.eval(input, max_depth=4)
         # test that recursion depth can be controlled in containers
         input = DotDict(a="$(1)", b=DotDict(a="$(2)", b=DotDict(a="$(3)", b=DotDict(a="$(4)"))))
         expected = DotDict(input)
-        self.assertEqual(expected, self.ast.eval(input, max_depth=0, suppress_warnings=True))
+        assert expected == self.ast.eval(input, max_depth=0, suppress_warnings=True)
         expected.a = 1
-        self.assertEqual(expected, self.ast.eval(input, max_depth=1, suppress_warnings=True))
+        assert expected == self.ast.eval(input, max_depth=1, suppress_warnings=True)
         expected.b.a = 2
-        self.assertEqual(expected, self.ast.eval(input, max_depth=2, suppress_warnings=True))
+        assert expected == self.ast.eval(input, max_depth=2, suppress_warnings=True)
         expected.b.b.a = 3
-        self.assertEqual(expected, self.ast.eval(input, max_depth=3, suppress_warnings=True))
+        assert expected == self.ast.eval(input, max_depth=3, suppress_warnings=True)
         expected.b.b.b.a = 4
-        self.assertEqual(expected, self.ast.eval(input, max_depth=4))
+        assert expected == self.ast.eval(input, max_depth=4)
         pass
 
     def test_expr_evaluator(self):
         evaluate_expr = ASTexprEvaluator(symbols={ "a": 1, "b": 2 })
-        self.assertEqual(1, evaluate_expr("a"))
-        self.assertEqual(2, evaluate_expr("b"))
-        self.assertEqual('a', evaluate_expr("'a'"))
-        self.assertEqual(1, evaluate_expr(1))
-        self.assertEqual(math.sqrt(2), evaluate_expr("sqrt(2)"))
-        self.assertEqual(1, evaluate_expr("1 if (sqrt(2) < 2) else 2"))
-        self.assertEqual(2, evaluate_expr("1 if (sqrt(2) > 2) else 2"))
-        self.assertEqual([0, 1], evaluate_expr("[n for n in range(2)]"))
 
-
-if __name__ == '__main__':
-    unittest.main()
+        assert 1 == evaluate_expr("a")
+        assert 2 == evaluate_expr("b")
+        assert 'a' == evaluate_expr("'a'")
+        assert 1 == evaluate_expr(1)
+        assert math.sqrt(2) == evaluate_expr("sqrt(2)")
+        assert 1 == evaluate_expr("1 if (sqrt(2) < 2) else 2")
+        assert 2 == evaluate_expr("1 if (sqrt(2) > 2) else 2")
+        assert [0, 1] == evaluate_expr("[n for n in range(2)]")

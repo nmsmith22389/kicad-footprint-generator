@@ -1,5 +1,5 @@
 
-import unittest
+import pytest
 
 from pathlib import Path
 import os
@@ -7,24 +7,18 @@ import os
 from KicadModTree.KicadFileHandler import KicadFileHandler
 
 
-class SerialisationTest(unittest.TestCase):
+class SerialisationTest:
 
-    def setUp(self, testcase_file: str, test_data: Path):
-        """
-        Set up a test case with the given testcase file and test data directory.
+    RESULTS_DIR_NAME = "results"  # Default directory, can be overridden by subclasses
 
-        :param testcase_file: The file of the test case, which the test data directory is relative to
-        :param test_data: The test data directory
-        """
+    @pytest.fixture(autouse=True)
+    def setup_fixtures(self, request):
+        """Automatically injects `assert_serialises_as` into the class."""
 
-        test_dir = os.path.dirname(os.path.realpath(testcase_file))
-        self.test_data_dir = os.path.join(test_dir, test_data)
+        request.cls.results_dir = os.path.join(os.path.dirname(request.fspath), self.RESULTS_DIR_NAME)
+        request.cls.assert_serialises_as = self._assert_serialises_as
 
-        self.maxDiff = None
-
-        self.write_golden_files = os.getenv('WRITE_GOLDEN_FILES', False)
-
-    def assert_serialises_as(self, kicad_mod, exp_content_file: Path):
+    def _assert_serialises_as(self, kicad_mod, exp_content_file: Path):
         """
         Serialise the given kicad_mod and compare it to the expected value.
 
@@ -38,9 +32,11 @@ class SerialisationTest(unittest.TestCase):
 
         rendered = file_handler.serialize(timestamp=0)
 
-        exp_file = os.path.join(self.test_data_dir, exp_content_file)
+        exp_file = os.path.join(self.results_dir, exp_content_file)
 
-        if self.write_golden_files:
+        write_golden_files = os.getenv('WRITE_GOLDEN_FILES', False)
+
+        if write_golden_files:
             with open(exp_file, 'w') as file:
                 file.write(rendered)
         else:

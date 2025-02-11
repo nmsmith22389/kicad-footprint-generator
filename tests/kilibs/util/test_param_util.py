@@ -13,30 +13,28 @@
 #
 # (C) 2023 by Kicad Library Generator contributors
 
-import unittest
+import pytest
 
 from kilibs.util import param_util as PU
 from kilibs.geom import Vector2D, Vector3D
 
 
-class ParamUtilTests(unittest.TestCase):
+def test_toVectorUseCopyIfNumber():
 
-    def testToVectorUseCopyIfNumber(self):
+    assert (PU.toVectorUseCopyIfNumber(1) == Vector2D(1, 1))
+    assert (PU.toVectorUseCopyIfNumber((1, 2)) == Vector2D(1, 2))
 
-        assert (PU.toVectorUseCopyIfNumber(1) == Vector2D(1, 1))
-        assert (PU.toVectorUseCopyIfNumber((1, 2)) == Vector2D(1, 2))
+    # Test that low_limit is enforced when must_be_larger=True
+    with pytest.raises(ValueError):
+        PU.toVectorUseCopyIfNumber((2, 2), low_limit=2, must_be_larger=True)
 
-        # Test that low_limit is enforced when must_be_larger=True
-        with self.assertRaises(ValueError):
-            PU.toVectorUseCopyIfNumber((2, 2), low_limit=2, must_be_larger=True)
+    # And the default is the same
+    with pytest.raises(ValueError):
+        PU.toVectorUseCopyIfNumber((2, 2), low_limit=2)
 
-        # And the default is the same
-        with self.assertRaises(ValueError):
-            PU.toVectorUseCopyIfNumber((2, 2), low_limit=2)
+    # Equal is OK with must_be_larger=False
+    assert (PU.toVectorUseCopyIfNumber(
+        (2, 2), low_limit=2, must_be_larger=False) == Vector2D(2, 2))
 
-        # Equal is OK with must_be_larger=False
-        assert (PU.toVectorUseCopyIfNumber(
-            (2, 2), low_limit=2, must_be_larger=False) == Vector2D(2, 2))
-
-        # 3D mode
-        assert (PU.toVectorUseCopyIfNumber(1, length=3) == Vector3D(1, 1, 1))
+    # 3D mode
+    assert (PU.toVectorUseCopyIfNumber(1, length=3) == Vector3D(1, 1, 1))

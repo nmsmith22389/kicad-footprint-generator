@@ -29,10 +29,7 @@ def gen_footprint(offsets: list):
     return kicad_mod
 
 
-class PolygonOffsetTests(SerialisationTest):
-
-    def setUp(self):
-        super().setUp(__file__, 'results')
+class TestPolygonOffset(SerialisationTest):
 
     def test_offset(self):
         kicad_mod = gen_footprint(offsets=[0.2, 0.4, 0.6])

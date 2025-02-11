@@ -19,10 +19,7 @@ from KicadModTree import *
 from KicadModTree.tests.test_utils.fp_file_test import SerialisationTest
 
 
-class ExposedPadTests(SerialisationTest):
-
-    def setUp(self):
-        super().setUp(__file__, 'results')
+class TestExposedPads(SerialisationTest):
 
     def testSimpleExposedPad(self):
         kicad_mod = Footprint("simple_exposed", FootprintType.SMD)

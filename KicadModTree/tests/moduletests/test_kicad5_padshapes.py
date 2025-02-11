@@ -22,10 +22,7 @@ from KicadModTree import *
 from KicadModTree.tests.test_utils.fp_file_test import SerialisationTest
 
 
-class Kicad5PadsTests(SerialisationTest):
-
-    def setUp(self):
-        super().setUp(__file__, 'results')
+class TestKicad5Pads(SerialisationTest):
 
     def testRoundRectPad(self):
         kicad_mod = Footprint("roundrect_pad", FootprintType.SMD)

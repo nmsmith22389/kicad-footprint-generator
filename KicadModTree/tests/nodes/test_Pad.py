@@ -30,10 +30,9 @@ PAD_CHAMFER_KWARGS = {
 }
 
 
-class TestPadSerialisaion(SerialisationTest):
+class TestPadSerialisation(SerialisationTest):
 
-    def setUp(self):
-        super().setUp(__file__, 'data')
+    RESULTS_DIR_NAME = 'data'
 
     def test_basic(self):
 

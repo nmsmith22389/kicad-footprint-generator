@@ -50,10 +50,7 @@ def gen_footprint():
     return kicad_mod
 
 
-class CleanSilkByMaskTest(SerialisationTest):
-
-    def setUp(self):
-        super().setUp(__file__, 'results')
+class TestCleanSilkByMask(SerialisationTest):
 
     def test_clean_over_smd_rect(self):
 
