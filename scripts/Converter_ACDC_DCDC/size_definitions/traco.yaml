@@ -563,3 +563,21 @@ Converter_DCDC_TRACO_TSR2-24xxN_TSR2-24xxxN_THT:
     ["tht", "2", 0, -2.54, 2, 2, 1.4],
     ["tht", "3", 0, -5.08, 2, 2, 1.4]
   ]
+
+Converter_DCDC_TRACO_TRA3-xxxx_THT:
+  library_name: 'Converter_DCDC'
+  description: "DCDC-Converter, TRACO, TRA3-xxxx, 3W, Rev. February 4. 2025"
+  datasheet: "https://www.tracopower.com/products/tra3.pdf"
+  tags: "DCDC-Converter TRACO TRA3 THT SIP-7 3W"
+  extratexts: []
+  at: [-6.42, 2.1]
+  size: [7.6, 19.5]
+  body_position_tolerance: [0.25, 0.25]
+  # For future use
+  height: 10.2
+  pins: [
+    ["thtr", "1", 0, 0, 1.6, 1.6, 1],
+    ["tht", "2", 0, -2.54, 1.6, 1.6, 1],
+    ["tht", "4", 0, -7.62, 1.6, 1.6, 1],
+    ["tht", "6", 0, -12.7, 1.6, 1.6, 1]
+  ]
