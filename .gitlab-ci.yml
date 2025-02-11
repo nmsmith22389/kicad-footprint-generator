@@ -32,6 +32,8 @@ fp-test:
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
       changes:
+        - gitlabci/**/*
+        - .gitlab-ci.yml
         - src/**/*
         - KicadModTree/**/*
         - scripts/**/*
@@ -79,6 +81,8 @@ fp-generate-and-compare:
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
       changes:
+        - gitlabci/**/*
+        - .gitlab-ci.yml
         - src/**/*
         - KicadModTree/**/*
         - scripts/**/*
@@ -136,12 +140,22 @@ fp-generate-and-compare:
     # kicad-library-utils/tools/gitlabci/gitlab-ci-footprints.yml)
     # (=> TODO: Refactor to extract common functionality?)
     - gitlabci/visual_diff.sh "base_footprints" "generated_footprints" "diffs"
+
+    # Write out the generation results for metric reporting
+    - fp_count=$(find "generated_footprints" -type f -name "*.kicad_mod" | wc -l)
+    - lib_count=$(find "generated_footprints" -type d -name "*.pretty" | wc -l)
+
+    - echo "generated_fp_count=$fp_count" > metrics.txt
+    - echo "generated_lib_count=$lib_count" >> metrics.txt
+
+    - cat "metrics.txt"
   artifacts:
     expose_as: "Visual Diff"
     paths:
       - "diffs/"
     reports:
       dotenv: deploy.env
+      metrics: metrics.txt
   environment:
     name: review/$CI_COMMIT_REF_NAME
     url: $DYNAMIC_ENVIRONMENT_URL
