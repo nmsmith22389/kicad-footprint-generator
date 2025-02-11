@@ -145,8 +145,8 @@ fp-generate-and-compare:
     - fp_count=$(find "generated_footprints" -type f -name "*.kicad_mod" | wc -l)
     - lib_count=$(find "generated_footprints" -type d -name "*.pretty" | wc -l)
 
-    - echo "generated_fp_count=$fp_count" > metrics.txt
-    - echo "generated_lib_count=$lib_count" >> metrics.txt
+    - echo "generated_fp_count $fp_count" > metrics.txt
+    - echo "generated_lib_count $lib_count" >> metrics.txt
 
     - cat "metrics.txt"
   artifacts:
