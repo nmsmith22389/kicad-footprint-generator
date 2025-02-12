@@ -1,10 +1,9 @@
 from KicadModTree import *  # NOQA
+from KicadModTree.nodes.specialized import Trapezoid
 from scripts.tools.drawing_tools import (
     addKeepoutRect,
     addKeepoutRound,
-    addRoundedRect,
     allEqualSidedDownTriangle,
-    allRoundedBevelRect,
     roundCrt,
 )
 # Vestigial global properties that should be from global_config
@@ -422,21 +421,23 @@ def makeDSubStraight(
     lw_slk = global_config.silk_line_width
 
     # outline
-    addRoundedRect(
-        kicad_modg,
-        [l_fab, t_fab],
-        [w_fab, h_fab],
-        outline_cornerradius,
-        layer="F.Fab",
-        width=lw_fab,
+    kicad_modg.append(
+        Trapezoid.RoundRect(
+            size=Vector2D(w_fab, h_fab),
+            start=Vector2D(l_fab, t_fab),
+            corner_radius=outline_cornerradius,
+            layer="F.Fab",
+            width=lw_fab,
+        )
     )
-    addRoundedRect(
-        kicad_modg,
-        [l_slk, t_slk],
-        [w_slk, h_slk],
-        outline_cornerradius + slk_offset,
-        layer="F.SilkS",
-        width=lw_slk,
+    kicad_modg.append(
+        Trapezoid.RoundRect(
+            size=Vector2D(w_slk, h_slk),
+            start=Vector2D(l_slk, t_slk),
+            corner_radius=outline_cornerradius + slk_offset,
+            layer="F.SilkS",
+            width=lw_slk,
+        )
     )
 
     # pin1 mark
@@ -449,23 +450,25 @@ def makeDSubStraight(
     )
 
     # connector_inside
-    allRoundedBevelRect(
-        kicad_modg,
-        [li_fab, ti_fab],
-        [wi_fab, hi_fab],
-        side_angle_degree,
-        conn_cornerradius,
-        layer="F.Fab",
-        width=lw_fab,
+    kicad_modg.append(
+        Trapezoid.Trapezoid(
+            center=Vector2D(0, 0),
+            size=Vector2D(wi_fab, hi_fab),
+            angle=side_angle_degree,
+            corner_radius=conn_cornerradius,
+            layer="F.Fab",
+            width=lw_fab,
+        )
     )
-    allRoundedBevelRect(
-        kicad_modg,
-        [li_slk, ti_slk],
-        [wi_slk, hi_slk],
-        side_angle_degree,
-        conn_cornerradius + slk_offset,
-        layer="F.SilkS",
-        width=lw_slk,
+    kicad_modg.append(
+        Trapezoid.Trapezoid(
+            size=Vector2D(wi_slk, hi_slk),
+            start=Vector2D(li_slk, ti_slk),
+            angle=side_angle_degree,
+            corner_radius=conn_cornerradius + slk_offset,
+            layer="F.SilkS",
+            width=lw_slk,
+        )
     )
 
     # create courtyard
