@@ -74,6 +74,25 @@ class GlobalConfig:
         """
         return min(self.fab_bevel_size_absolute, overall_size * self.fab_bevel_size_relative)
 
+    @property
+    def silk_pad_offset(self):
+        """
+        Get the center offset for silk line centerline from the pad edge.
+
+        This assumes the default silk line width and pad clearance
+
+        --------------
+        Silk line     ) ---
+        --------------   ^
+                         | silk-pad offset
+                         v
+        --------+ --------
+        Pad     |
+                |
+        """
+
+        return self.silk_pad_clearance + self.silk_line_width / 2
+
     @classmethod
     def load_from_file(self, path: Path):
         """

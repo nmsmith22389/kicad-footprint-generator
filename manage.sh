@@ -25,6 +25,16 @@ fp_format_check() {
     pycodestyle --max-line-length=120 \
         "$KICADMODTREE_DIR/" \
         "src/kilibs/geom"
+
+    # Include "clean" scripts (one day this will be all of them)
+    local clean_files=(
+        "scripts/Connector_Dsub"
+    )
+
+    black --check \
+        "${clean_files[@]}"
+    isort --check-only \
+        "${clean_files[@]}"
 }
 
 flake8_check() {

@@ -6,7 +6,6 @@ lw_fab = 0.1
 lw_crt = 0.05
 lw_slk = 0.12
 slk_offset = lw_slk/2
-slk_pad_offset = lw_slk/2+0.2
 txt_offset = 1
 grid_crt=0.01
 min_pad_distance=0.2

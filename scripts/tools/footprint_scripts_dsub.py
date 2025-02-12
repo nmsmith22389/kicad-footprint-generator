@@ -1,12 +1,19 @@
-#!/usr/bin/env python
-
-from math import sqrt
-
 from KicadModTree import *  # NOQA
-from scripts.tools.drawing_tools import *  # NOQA
-
-
-crt_offset = 0.5  # different for connectors
+from scripts.tools.drawing_tools import (
+    addKeepoutRect,
+    addKeepoutRound,
+    addRoundedRect,
+    allEqualSidedDownTriangle,
+    allRoundedBevelRect,
+    roundCrt,
+)
+# Vestigial global properties that should be from global_config
+from scripts.tools.footprint_global_properties import (
+    fab_text_size_min,
+    slk_offset,
+    txt_offset,
+)
+from scripts.tools.global_config_files.global_config import GlobalConfig
 
 
 def makeDSubStraight(
@@ -26,13 +33,13 @@ def makeDSubStraight(
     connheight,
     side_angle_degree,
     conn_cornerradius,
+    global_config: GlobalConfig,
     tags_additional=[],
-    lib_name="${{KICAD8_3DMODEL_DIR}}/Connectors_DSub",
     classname="DSub",
     classname_description="D-Sub connector",
     webpage="",
     HighDensityOffsetMidLeft=0,
-):
+) -> Footprint:
 
     hasMountingHoles = mountingdrill > 0 and mountingdistance > 0
 
@@ -60,7 +67,7 @@ def makeDSubStraight(
     li_slk = li_fab - slk_offset
     ti_slk = ti_fab - slk_offset
 
-    package_size = [0, 0]
+    crt_offset = global_config.get_courtyard_offset(GlobalConfig.CourtyardType.CONNECTOR)
 
     w_crt = (
         max([w_fab, mountingpad + mountingdistance, mountingpad + mountingdistance])
@@ -192,6 +199,11 @@ def makeDSubStraight(
     pad_shapeother = Pad.SHAPE_CIRCLE
     pad_layers = Pad.LAYERS_THT
     keepouts = []
+
+    lw_fab = global_config.fab_line_width
+    lw_crt = global_config.courtyard_line_width
+    lw_slk = global_config.silk_line_width
+    slk_pad_offset = global_config.silk_pad_offset
 
     y1 = -drmy
     x1pos = 0
@@ -405,6 +417,10 @@ def makeDSubStraight(
             mountingpad + (slk_pad_offset + 2 * lw_slk),
         )
 
+    lw_fab = global_config.fab_line_width
+    lw_crt = global_config.courtyard_line_width
+    lw_slk = global_config.silk_line_width
+
     # outline
     addRoundedRect(
         kicad_modg,
@@ -465,19 +481,7 @@ def makeDSubStraight(
         )
     )
 
-    # add model
-    kicad_mod.append(
-        Model(
-            filename=lib_name + ".3dshapes/" + footprint_name + ".wrl",
-            at=[0, 0, 0],
-            scale=[1, 1, 1],
-            rotate=[0, 0, 0],
-        )
-    )
-
-    # write file
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile(footprint_name + ".kicad_mod")
+    return kicad_mod
 
 
 def makeDSubEdge(
@@ -498,17 +502,21 @@ def makeDSubEdge(
     soldercup_length,
     soldercup_diameter,
     soldercup_pad_edge_offset,
+    global_config: GlobalConfig,
     tags_additional=[],
-    lib_name="${{KICAD8_3DMODEL_DIR}}/Connectors_DSub",
     classname="DSub",
     classname_description="D-Sub connector",
     webpage="",
-):
+) -> Footprint:
+
+    lw_fab = global_config.fab_line_width
+    lw_crt = global_config.courtyard_line_width
+    lw_slk = global_config.silk_line_width
+    slk_pad_offset = global_config.silk_pad_offset
 
     w_slk = int((pins - 1) / 2) * rmx + pad[0] + (slk_pad_offset + 2 * lw_slk)
-    h_slk = pad[1]
-    l_slk = -w_slk / 2
-    t_slk = -h_slk / 2
+
+    crt_offset = global_config.get_courtyard_offset(GlobalConfig.CourtyardType.CONNECTOR)
 
     text_size = w_slk * 0.6
     fab_text_size_max = 1.0
@@ -957,19 +965,7 @@ def makeDSubEdge(
         )
     )
 
-    # add model
-    kicad_mod.append(
-        Model(
-            filename=lib_name + ".3dshapes/" + footprint_name + ".wrl",
-            at=[0, 0, 0],
-            scale=[1, 1, 1],
-            rotate=[0, 0, 0],
-        )
-    )
-
-    # write file
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile(footprint_name + ".kicad_mod")
+    return kicad_mod
 
 
 def makeDSubAngled(
@@ -993,20 +989,25 @@ def makeDSubAngled(
     backbox_height,
     nut_diameter,
     nut_length,
+    global_config: GlobalConfig,
     backcan_width=0,
     backcan_height=0,
     tags_additional=[],
-    lib_name="${{KICAD8_3DMODEL_DIR}}/Connectors_DSub",
     classname="DSub",
     classname_description="D-Sub connector",
     webpage="",
     HighDensityOffsetMidLeft=0,
-):
+) -> Footprint:
 
     hasMountingHoles = mountingdrill > 0 and mountingdistance > 0
     hasNoBackBox = (
         backcan_width * backcan_height > 0 and backbox_width * backbox_height == 0
     )
+
+    lw_fab = global_config.fab_line_width
+    lw_crt = global_config.courtyard_line_width
+    lw_slk = global_config.silk_line_width
+    slk_pad_offset = global_config.silk_pad_offset
 
     text_size = 1
     text_size = round(text_size, 2)
@@ -1098,6 +1099,8 @@ def makeDSubAngled(
         botoffset = rmx / 2
 
     ypcb_edge = drmy + pin_pcb_distance
+
+    crt_offset = global_config.get_courtyard_offset(GlobalConfig.CourtyardType.CONNECTOR)
 
     back_height = backbox_height
     if hasNoBackBox:
@@ -1788,16 +1791,4 @@ def makeDSubAngled(
             )
         )
 
-    # add model
-    kicad_mod.append(
-        Model(
-            filename=lib_name + ".3dshapes/" + footprint_name + ".wrl",
-            at=[0, 0, 0],
-            scale=[1, 1, 1],
-            rotate=[0, 0, 0],
-        )
-    )
-
-    # write file
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile(footprint_name + ".kicad_mod")
+    return kicad_mod
