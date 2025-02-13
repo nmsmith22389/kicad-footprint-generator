@@ -1,22 +1,16 @@
 #!/usr/bin/env python
 
-import sys
-import os
 import math
 
-# ensure that the kicad-footprint-generator directory is available
-#sys.path.append(os.environ.get('KIFOOTPRINTGENERATOR'))  # enable package import from parent directory
-#sys.path.append("D:\hardware\KiCAD\kicad-footprint-generator")  # enable package import from parent directory
-sys.path.append(os.path.join(sys.path[0],"..","..","kicad_mod")) # load kicad_mod path
-sys.path.append(os.path.join(sys.path[0],"..","..")) # load kicad_mod path
-sys.path.append(os.path.join(sys.path[0],"..","tools")) # load kicad_mod path
-
-from KicadModTree import *  # NOQA
-from drawing_tools import *
-from footprint_scripts_potentiometers import *
+from scripts.tools.footprint_scripts_potentiometers import (
+    makePotentiometerHorizontal,
+    makePotentiometerVertical,
+    makeSpindleTrimmer,
+)
 
 
 if __name__ == '__main__':
+
     script3d_tsl="trimmer_screwleft.py"
     with open(script3d_tsl, "w") as myfile:
         myfile.write("#\n# SCRIPT to generate 3D models\n#\n\n")
@@ -63,7 +57,7 @@ if __name__ == '__main__':
     voffsetx=1.75; dbody=16.9; vwbody=5; vpinyoffset=(hbody-2*rmy)/2.0; c_offsety=dbody/2.0; c_offsetx=10.8
     #makePotentiometerVertical(shaft_hole=True, class_name=class_name, wbody=vwbody, hbody=hbody, d_body=dbody, dshaft=dshaft, dscrew=dscrew, c_ddrill=dscrew+0.5,c_offsetx=c_offsetx, c_offsety=c_offsety, pinxoffset=voffsetx,pinyoffset=pinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, specialtags=[], add_description=add_description, name_additions=[], script3d=script3d_ph_bel,height3d=height3d)
     makePotentiometerVertical(shaft_hole=False, class_name=class_name, wbody=vwbody, hbody=hbody, d_body=dbody, dshaft=dshaft, dscrew=dscrew, c_ddrill=dscrew+0.5,c_offsetx=c_offsetx, c_offsety=c_offsety, pinxoffset=voffsetx,pinyoffset=pinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, specialtags=[], add_description=add_description, name_additions=[], script3d=script3d_ph,height3d=height3d)
-    
+
     class_name="Vishay 248GJ-249GJ Single"; add_description="http://www.vishay.com/docs/57054/248249.pdf"
     pins = 3; rmx=7.62; rmy=2.54; ddrill=1; wbody=7.6; hbody=12.5; height3d = 13.1; screwzpos = 12.7/2.0+0.6; wscrew=9.5; dscrew=(3/8.0)*25.4
     wshaft=22.22-wscrew; dshaft=(1/4.0)*25.4; pinxoffset=5.08; pinyoffset=(hbody-2*rmy)/2.0
@@ -119,7 +113,7 @@ if __name__ == '__main__':
     class_name="Piher T-16H Double"
     pins = 6; wbody=15
     makePotentiometerHorizontal(class_name=class_name, wbody=wbody, hbody=hbody, wscrew=wscrew, dscrew=dscrew, wshaft=wshaft, dshaft=dshaft, pinxoffset=pinxoffset,pinyoffset=pinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, R_POW=R_POW, specialtags=[], add_description=add_description, name_additions=[], script3d=script3d_pv,height3d=height3d, screwzpos=screwzpos)
- 
+
     class_name="Alps RK163 Single"; add_description="http://www.alps.com/prod/info/E/HTML/Potentiometer/RotaryPotentiometers/RK16/RK16_list.html"
     pins = 3; rmx=5.0; rmy=5.0; ddrill=1.3; wbody=10.5; hbody=17.9; height3d = 21; screwzpos = 12.5; wscrew=5; dscrew=7
     wshaft=15-wscrew; dshaft=6; pinxoffset=3.8; pinyoffset=(hbody-2*rmy)/2.0
@@ -127,7 +121,7 @@ if __name__ == '__main__':
     class_name="Alps RK163 Dual"
     pins = 6; wbody=12.1; wscrew=7
     makePotentiometerHorizontal(class_name=class_name, wbody=wbody, hbody=hbody, wscrew=wscrew, dscrew=dscrew, wshaft=wshaft, dshaft=dshaft, pinxoffset=pinxoffset,pinyoffset=pinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, R_POW=R_POW, specialtags=[], add_description=add_description, name_additions=[], script3d=script3d_pv,height3d=height3d, screwzpos=screwzpos)
-    
+
     class_name="Alps RK097 Single"; add_description="http://www.alps.com/prod/info/E/HTML/Potentiometer/RotaryPotentiometers/RK097/RK097_list.html"
     pins = 3; rmx=2.5; rmy=2.5; ddrill=1; wbody=7.05; hbody=9.5; height3d = 6.5+0.25+4.85; screwzpos = 6.5+0.25; wscrew=5; dscrew=7
     wshaft=15-wscrew; dshaft=6; pinxoffset=5; pinyoffset=(hbody-2*rmy)/2.0
@@ -142,7 +136,7 @@ if __name__ == '__main__':
     makePotentiometerHorizontal(mh_ddrill=2.3, mh_count=2, mh_rmx=0, mh_rmy=10, mh_xoffset=-3.3, mh_yoffset=(10-2*rmy)/2.0, class_name=class_name, wbody=wbody, hbody=hbody, wscrew=wscrew, dscrew=dscrew, wshaft=wshaft, dshaft=dshaft, pinxoffset=pinxoffset,pinyoffset=pinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, R_POW=R_POW, specialtags=[], add_description=add_description, name_additions=[], script3d=script3d_pv,height3d=height3d, screwzpos=screwzpos)
     class_name="Bourns PTV09A-1 Single"
     voffsetx=1; dbody=0; vwbody=12; vpinyoffset=(hbody-2*rmy)/2.0; c_offsetx=6.5; c_offsety=hbody/2.0
-    makePotentiometerVertical(mh_ddrill=2, mh_count=2, mh_rmx=0, mh_rmy=8.8, mh_xoffset=7, mh_yoffset=(8.8-2*rmy)/2.0, shaft_hole=False, class_name=class_name, wbody=vwbody, hbody=hbody, d_body=dbody, dshaft=dshaft, dscrew=dscrew, c_ddrill=dscrew+0.5,c_offsetx=c_offsetx, c_offsety=c_offsety, pinxoffset=voffsetx,pinyoffset=pinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, specialtags=[], add_description=add_description, name_additions=[], script3d=script3d_ph_bel,height3d=height3d)    
+    makePotentiometerVertical(mh_ddrill=2, mh_count=2, mh_rmx=0, mh_rmy=8.8, mh_xoffset=7, mh_yoffset=(8.8-2*rmy)/2.0, shaft_hole=False, class_name=class_name, wbody=vwbody, hbody=hbody, d_body=dbody, dshaft=dshaft, dscrew=dscrew, c_ddrill=dscrew+0.5,c_offsetx=c_offsetx, c_offsety=c_offsety, pinxoffset=voffsetx,pinyoffset=pinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, specialtags=[], add_description=add_description, name_additions=[], script3d=script3d_ph_bel,height3d=height3d)
 
     class_name="Alps RK09K Single"; add_description="http://www.alps.com/prod/info/E/HTML/Potentiometer/RotaryPotentiometers/RK09K/RK09K_list.html"
     pins = 3; rmx=2.5; rmy=2.5; ddrill=1; wbody=6.8; hbody=9.8; height3d = 6.5+5.5; screwzpos = 6.5; wscrew=0.8; dscrew=6.5
@@ -151,7 +145,7 @@ if __name__ == '__main__':
     class_name="Alps RK09K Single"
     voffsetx=1; dbody=0; vwbody=12; vpinyoffset=(hbody-2*rmy)/2.0; c_offsetx=6.5; c_offsety=hbody/2.0
     makePotentiometerVertical(mh_ddrill=2, mh_count=2, mh_rmx=0, mh_rmy=8.8, mh_xoffset=7, mh_yoffset=(8.8-2*rmy)/2.0, shaft_hole=False, class_name=class_name, wbody=vwbody, hbody=hbody, d_body=dbody, dshaft=dshaft, dscrew=dscrew, c_ddrill=dscrew+0.5,c_offsetx=c_offsetx, c_offsety=c_offsety, pinxoffset=voffsetx,pinyoffset=pinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, specialtags=[], add_description=add_description, name_additions=[], script3d=script3d_ph_bel,height3d=height3d)
-    
+
     class_name="Alps RK09L Single"; add_description="http://www.alps.com/prod/info/E/HTML/Potentiometer/RotaryPotentiometers/RK09L/RK09L_list.html"
     pins = 3; rmx=2.5; rmy=2.5; ddrill=1; wbody=7.45; hbody=12.1; height3d = 6.5+0.25+4.85; screwzpos = 6.5+0.25; wscrew=5; dscrew=9
     wshaft=15-wscrew; dshaft=6; pinxoffset=5; pinyoffset=(hbody-2*rmy)/2.0
@@ -193,7 +187,7 @@ if __name__ == '__main__':
     wshaft=0; dshaft=0; pinxoffset=0; pinyoffset=(hbody-2*rmy)/2.0
     voffsetx=-rmx; vwbody=0; vpinyoffset=(hbody-2*rmy)/2.0; c_offsetx=2.5; c_offsety=hbody/2.0; c_ddrill=2
     makePotentiometerVertical(screwstyle='slit', style="trimmer", shaft_hole=False, class_name=class_name, wbody=vwbody, hbody=hbody, d_body=dbody, dshaft=dshaft, dscrew=dscrew, c_ddrill=c_ddrill,c_offsetx=c_offsetx, c_offsety=c_offsety, pinxoffset=voffsetx,pinyoffset=pinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, specialtags=[], add_description=add_description, name_additions=[], script3d=script3d_ph_bel,height3d=height3d)
-    
+
     class_name="Bourns 3386X"; add_description="https://www.bourns.com/pdfs/3386.pdf"
     pins = 3; rmx=2.54; rmy=2.54; ddrill=0.8; wbody=-4.83; hbody=9.53; dbody=0; height3d = 9.53; screwzpos = 5.33; wscrew=0; dscrew=3.15
     wshaft=0; dshaft=0; pinxoffset=-(4.83-2.54)/2.0; pinyoffset=(hbody-2*rmy)/2.0
@@ -251,7 +245,7 @@ if __name__ == '__main__':
     #name_additions = ["Px{0:1.1f}mm_Py{1:1.1f}mm".format(rmx, 2 * rmy)]
     makePotentiometerVertical(style="trimmer", shaft_hole=False, class_name=class_name, wbody=vwbody, hbody=hbody, d_body=dbody, dshaft=dshaft, dscrew=dscrew, c_ddrill=c_ddrill,c_offsetx=c_offsetx, c_offsety=c_offsety, pinxoffset=voffsetx,pinyoffset=pinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, specialtags=[], add_description=add_description, name_additions=[], script3d=script3d_trh_bel,height3d=height3d)
     #name_additions = []
-    
+
     class_name="Piher PT-15-H05"; add_description="http://www.piher-nacesa.com/pdf/14-PT15v03.pdf"
     pins = 3; rmx=5.0; rmy=5; ddrill=1.3; wbody=-5; hbody=15; height3d = 17.5; screwzpos = 10; dbody=15; wscrew=-wbody; dscrew=6
     wshaft=0; dshaft=4.4; pinxoffset=0; pinyoffset=(hbody-2*rmy)/2.0
@@ -280,7 +274,7 @@ if __name__ == '__main__':
     makePotentiometerVertical(style="trimmer", shaft_hole=False, class_name=class_name, wbody=vwbody, hbody=hbody, d_body=dbody, dshaft=dshaft, dscrew=dscrew, c_ddrill=c_ddrill,c_offsetx=c_offsetx, c_offsety=c_offsety, pinxoffset=voffsetx,pinyoffset=pinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, specialtags=[], add_description=add_description, name_additions=[], script3d=script3d_trh,height3d=height3d)
     makePotentiometerVertical(style="trimmer", shaft_hole=True, class_name=class_name, wbody=vwbody, hbody=hbody, d_body=dbody, dshaft=dshaft, dscrew=dscrew, c_ddrill=c_ddrill,c_offsetx=c_offsetx, c_offsety=c_offsety, pinxoffset=voffsetx,pinyoffset=pinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, specialtags=[], add_description=add_description, name_additions=[], script3d=script3d_trh_bel,height3d=height3d)
     #name_additions=[]
-    
+
     class_name="ACP CA6-H2,5"; add_description="http://www.acptechnologies.com/wp-content/uploads/2017/06/01-ACP-CA6.pdf"
     pins = 3; rmx=2.5; rmy=2.5; ddrill=0.9; wbody=-3.5; hbody=6.3; dbody=0; height3d = 4.5+hbody/2.0; screwzpos = 4.5; wscrew=-wbody; dscrew=2
     wshaft=0; dshaft=1.8; pinxoffset=0; pinyoffset=(hbody-2*rmy)/2.0
@@ -305,7 +299,7 @@ if __name__ == '__main__':
     makePotentiometerVertical(style="trimmer", shaft_hole=False, class_name=class_name, wbody=vwbody, hbody=hbody, d_body=dbody, dshaft=dshaft, dscrew=dscrew, c_ddrill=c_ddrill,c_offsetx=c_offsetx, c_offsety=c_offsety, pinxoffset=voffsetx,pinyoffset=vpinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, specialtags=[], add_description=add_description, name_additions=[], script3d=script3d_trh,height3d=height3d)
     makePotentiometerVertical(style="trimmer", shaft_hole=True, class_name=class_name, wbody=vwbody, hbody=hbody, d_body=dbody, dshaft=dshaft, dscrew=dscrew, c_ddrill=c_ddrill,c_offsetx=c_offsetx, c_offsety=c_offsety, pinxoffset=voffsetx,pinyoffset=vpinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, specialtags=[], add_description=add_description, name_additions=[], script3d=script3d_trh_bel,height3d=height3d)
     #name_additions=[]
-    
+
     class_name="ACP CA14-H2,5"; add_description="http://www.acptechnologies.com/wp-content/uploads/2017/10/03-ACP-CA14-CE14.pdf"
     pins = 3; rmx=2.5; rmy=5; ddrill=1.3; wbody=-5.0; hbody=14; dbody=0; height3d = 17; screwzpos = 10; wscrew=-wbody; dscrew=6
     wshaft=0; dshaft=5; pinxoffset=0; pinyoffset=(hbody-2*rmy)/2.0
@@ -325,12 +319,12 @@ if __name__ == '__main__':
     makePotentiometerVertical(style="trimmer", shaft_hole=False, class_name=class_name, wbody=vwbody, hbody=hbody, d_body=dbody, dshaft=dshaft, dscrew=dscrew, c_ddrill=c_ddrill,c_offsetx=c_offsetx, c_offsety=c_offsety, pinxoffset=voffsetx,pinyoffset=vpinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, specialtags=[], add_description=add_description, name_additions=[], script3d=script3d_trh,height3d=height3d)
     makePotentiometerVertical(style="trimmer", shaft_hole=True, class_name=class_name, wbody=vwbody, hbody=hbody, d_body=dbody, dshaft=dshaft, dscrew=dscrew, c_ddrill=c_ddrill,c_offsetx=c_offsetx, c_offsety=c_offsety, pinxoffset=voffsetx,pinyoffset=vpinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, specialtags=[], add_description=add_description, name_additions=[], script3d=script3d_trh_bel,height3d=height3d)
     #name_additions=[]
-    
+
     class_name="Bourns 3005"; add_description = "http://www.bourns.com/docs/Product-Datasheets/3005.pdf";
     wbody=19.3; hbody=4.06; pinxoffset=16; pinyoffset=(hbody-2.54)/2.0+2.54; height3d = 7.87; rmx2=-7.62; rmy2=-2.54; rmx3=-12.7; rmy3=0; ddrill=1; dscrew=3; wscrew = 1.52; screwxoffset = 0; screwyoffset = hbody/2.0
     style = "screwleft"; SMD_pads = False; SMD_padsize = []
     makeSpindleTrimmer(shaft_hole=False, class_name=class_name, ddrill=ddrill, wbody=wbody, hbody=hbody, pinxoffset=pinxoffset, pinyoffset=pinyoffset, rmx2=rmx2, rmy2=rmy2, rmx3=rmx3, rmy3=rmy3, dscrew=dscrew, wscrew=wscrew, screwxoffset=screwxoffset, screwyoffset=screwyoffset, style=style, SMD_pads=SMD_pads, SMD_padsize=SMD_padsize, specialtags=[], add_description=add_description, name_additions=[], script3d=script3d_tsl, height3d=height3d)
-    
+
     class_name="Vishay 43"; add_description = "http://www.vishay.com/docs/57026/43.pdf";
     wbody=19.0; hbody=4.8; pinxoffset=16; pinyoffset=(hbody-2.54)/2.0+2.54; height3d = 6.35; rmx2=-7.62; rmy2=-2.54; rmx3=-12.7; rmy3=0; ddrill=1; dscrew=2.36; wscrew = 1.52; screwxoffset = 0; screwyoffset = hbody/2.0
     style = "screwleft"; SMD_pads = False; SMD_padsize = []
@@ -419,4 +413,4 @@ if __name__ == '__main__':
     class_name="Bourns 3266P"
     wbody=6.71; hbody=6.71; pinxoffset=wbody/2.0; pinyoffset=(hbody-5.08)/2.0; height3d = 4.5; rmx2=-2.54; rmy2=2.54; rmx3=0; rmy3=5.08; ddrill=0.8; dscrew=1.78; wscrew = 1.52; screwxoffset = 0; screwyoffset = 1.27
     style = "screwleft"; SMD_pads = False; SMD_padsize = []
-    makeSpindleTrimmer(shaft_hole=False, class_name=class_name, ddrill=ddrill, wbody=wbody, hbody=hbody, pinxoffset=pinxoffset, pinyoffset=pinyoffset, rmx2=rmx2, rmy2=rmy2, rmx3=rmx3, rmy3=rmy3, dscrew=dscrew, wscrew=wscrew, screwxoffset=screwxoffset, screwyoffset=screwyoffset, style=style, SMD_pads=SMD_pads, SMD_padsize=SMD_padsize, specialtags=[], add_description=add_description, name_additions=[], script3d=script3d_tsl, height3d=height3d)    
+    makeSpindleTrimmer(shaft_hole=False, class_name=class_name, ddrill=ddrill, wbody=wbody, hbody=hbody, pinxoffset=pinxoffset, pinyoffset=pinyoffset, rmx2=rmx2, rmy2=rmy2, rmx3=rmx3, rmy3=rmy3, dscrew=dscrew, wscrew=wscrew, screwxoffset=screwxoffset, screwyoffset=screwyoffset, style=style, SMD_pads=SMD_pads, SMD_padsize=SMD_padsize, specialtags=[], add_description=add_description, name_additions=[], script3d=script3d_tsl, height3d=height3d)

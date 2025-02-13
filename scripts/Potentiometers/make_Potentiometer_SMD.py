@@ -1,22 +1,13 @@
 #!/usr/bin/env python
 
-import sys
-import os
-import math
-
-# ensure that the kicad-footprint-generator directory is available
-#sys.path.append(os.environ.get('KIFOOTPRINTGENERATOR'))  # enable package import from parent directory
-#sys.path.append("D:\hardware\KiCAD\kicad-footprint-generator")  # enable package import from parent directory
-sys.path.append(os.path.join(sys.path[0],"..","..","kicad_mod")) # load kicad_mod path
-sys.path.append(os.path.join(sys.path[0],"..","..")) # load kicad_mod path
-sys.path.append(os.path.join(sys.path[0],"..","tools")) # load kicad_mod path
-
-from KicadModTree import *  # NOQA
-from drawing_tools import *
-from footprint_scripts_potentiometers import *
+from scripts.tools.footprint_scripts_potentiometers import (
+    makePotentiometerVertical,
+    makeSpindleTrimmer,
+)
 
 
 if __name__ == '__main__':
+
     script3d_tsl="trimmer_screwleft.py"
     with open(script3d_tsl, "w") as myfile:
         myfile.write("#\n# SCRIPT to generate 3D models\n#\n\n")
@@ -59,19 +50,19 @@ if __name__ == '__main__':
     pins = 5; rmx=16.5; rmy=2.5; ddrill=1; wbody=13; hbody=11.7; height3d = 7.2; wscrew=4.3; dscrew=6.8
     wshaft=20-wbody-wscrew; dshaft=6; pinxoffset=1.75; pinyoffset=(hbody-2*rmy)/2.0; dbody=0; vpinyoffset=(hbody-2*rmy)/2.0; c_offsetx=6.5; c_offsety=hbody/2.0; mh_rmy=11.3
     makePotentiometerVertical(SMD_pads=True, SMD_padsize=[4,2], mh_ddrill=1.5, mh_count=2, mh_rmx=0, mh_rmy=mh_rmy, mh_xoffset=8.25, mh_yoffset=(mh_rmy-2*rmy)/2.0, mh_nopads=True, shaft_hole=False, class_name=class_name, wbody=wbody, hbody=hbody, d_body=dbody, dshaft=dshaft, dscrew=dscrew, c_ddrill=dscrew+0.5,c_offsetx=c_offsetx, c_offsety=c_offsety, pinxoffset=pinxoffset,pinyoffset=pinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, specialtags=[], add_description=add_description, name_additions=[], script3d=script3d_ph_bel,height3d=height3d)
-    
+
     class_name="ACP CA6-VSMD"; add_description="http://www.acptechnologies.com/wp-content/uploads/2017/06/01-ACP-CA6.pdf"
     pins = 3; rmx=8.65; rmy=4.3/2.0; ddrill=0.9; wbody=6.5; hbody=6.5; dbody=0; height3d = 4.5+hbody/2.0; screwzpos = 4.5; wscrew=-wbody; dscrew=2
     wshaft=0; dshaft=1.8; pinxoffset=1.075; pinyoffset=(hbody-2*rmy)/2.0; dbody=0; vpinyoffset=(hbody-2*rmy)/2.0; c_offsetx=3.525; c_offsety=hbody/2.0; c_ddrill=2.5
     makePotentiometerVertical(SMD_pads=True, SMD_padsize=[2.5,2], style="trimmer", shaft_hole=False, class_name=class_name, wbody=wbody, hbody=hbody, d_body=dbody, dshaft=dshaft, dscrew=dscrew, c_ddrill=c_ddrill,c_offsetx=c_offsetx, c_offsety=c_offsety, pinxoffset=pinxoffset,pinyoffset=vpinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, specialtags=[], add_description=add_description, name_additions=[], script3d=script3d_trh_smd,height3d=height3d)
     makePotentiometerVertical(SMD_pads=True, SMD_padsize=[2.5,2], style="trimmer", shaft_hole=True, class_name=class_name, wbody=wbody, hbody=hbody, d_body=dbody, dshaft=dshaft, dscrew=dscrew, c_ddrill=c_ddrill,c_offsetx=c_offsetx, c_offsety=c_offsety, pinxoffset=pinxoffset,pinyoffset=vpinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, specialtags=[], add_description=add_description, name_additions=[], script3d=script3d_trh_smd_bel,height3d=height3d)
-    
+
     class_name="ACP CA9-VSMD"; add_description="http://www.acptechnologies.com/wp-content/uploads/2017/05/02-ACP-CA9-CE9.pdf"
     pins = 3; rmx=9.25; rmy=2.5; ddrill=1.3; hbody=9.8; wbody=10; dbody=0; screwzpos = 7; wscrew=-wbody; dscrew=3
     wshaft=0; dshaft=2.1; pinxoffset=-0.375; pinyoffset=(hbody-2*rmy)/2.0; dbody=0; vpinyoffset=(hbody-2*rmy)/2.0; c_offsetx=5.125; c_offsety=hbody/2.0; c_ddrill=4; height3d=5.5
     makePotentiometerVertical(SMD_pads=True, SMD_padsize=[2.5,2.5], style="trimmer", shaft_hole=False, class_name=class_name, wbody=wbody, hbody=hbody, d_body=dbody, dshaft=dshaft, dscrew=dscrew, c_ddrill=c_ddrill,c_offsetx=c_offsetx, c_offsety=c_offsety, pinxoffset=pinxoffset,pinyoffset=vpinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, specialtags=[], add_description=add_description, name_additions=[], script3d=script3d_trh_smd,height3d=height3d)
     makePotentiometerVertical(SMD_pads=True, SMD_padsize=[2.5,2.5], style="trimmer", shaft_hole=True, class_name=class_name, wbody=wbody, hbody=hbody, d_body=dbody, dshaft=dshaft, dscrew=dscrew, c_ddrill=c_ddrill,c_offsetx=c_offsetx, c_offsety=c_offsety, pinxoffset=pinxoffset,pinyoffset=vpinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, specialtags=[], add_description=add_description, name_additions=[], script3d=script3d_trh_smd_bel,height3d=height3d)
-    
+
     class_name="ACP CA14-VSMD"; add_description="http://www.acptechnologies.com/wp-content/uploads/2017/10/03-ACP-CA14-CE14.pdf"
     pins = 3; rmx=13; rmy=5; dbody=0; pinxoffset=-0.7; wbody=14; hbody=14; vpinyoffset=(hbody-2*rmy)/2.0; c_offsetx=7; c_offsety=hbody/2.0; c_ddrill=7; height3d=5.8
     makePotentiometerVertical(SMD_pads=True, SMD_padsize=[3,3], style="trimmer", shaft_hole=False, class_name=class_name, wbody=wbody, hbody=hbody, d_body=dbody, dshaft=dshaft, dscrew=dscrew, c_ddrill=c_ddrill,c_offsetx=c_offsetx, c_offsety=c_offsety, pinxoffset=pinxoffset,pinyoffset=vpinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, specialtags=[], add_description=add_description, name_additions=[], script3d=script3d_trh_smd,height3d=height3d)

@@ -1,15 +1,24 @@
 #!/usr/bin/env python3
 
-import sys
-
-import os
-
-# load parent path of KicadModTree
-sys.path.append(os.path.join(sys.path[0], "..", ".."))
-sys.path.append(os.path.join(sys.path[0], "..", "tools"))
-
-from KicadModTree import *
-from drawing_tools import *
+from KicadModTree import (
+    Footprint,
+    FootprintType,
+    Model,
+    Property,
+    Text,
+    Pad,
+    Circle,
+    PolygonLine,
+    RectLine,
+    Line,
+    KicadFileHandler,
+    ModArgparser,
+)
+from scripts.tools.drawing_tools import (
+    addKeepoutRect,
+    addKeepoutRound,
+    addRectWithKeepout,
+)
 
 def slide_pot(args):
     footprint_name = args["name"]
