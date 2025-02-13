@@ -581,3 +581,20 @@ Converter_DCDC_TRACO_TRA3-xxxx_THT:
     ["tht", "4", 0, -7.62, 1.6, 1.6, 1],
     ["tht", "6", 0, -12.7, 1.6, 1.6, 1]
   ]
+
+Converter_DCDC_TRACO_TSR2-xxxx_THT:
+  library_name: 'Converter_DCDC'
+  description: "DCDC-Converter, TRACO, TSR2-xxxx, 2A, Rev. January 20. 2025"
+  datasheet: "https://www.tracopower.com/products/tsr2.pdf"
+  tags: "DCDC-Converter SWITCHING-REGULATOR STEP-DOWN TRACO TSR2 2.54MM THT SIP-3 2A"
+  extratexts: []
+  at: [-3.89, 4.42]
+  size: [7.5, 14]
+  body_position_tolerance: [0.5, 0.5]
+  # For future use
+  height: 10.1
+  pins: [
+    ["thtr", "1", 0, 0, 1.7, 1.7, 1.1],
+    ["tht", "2", 0, -2.54, 1.7, 1.7, 1.1],
+    ["tht", "3", 0, -5.08, 1.7, 1.7, 1.1]
+  ]
