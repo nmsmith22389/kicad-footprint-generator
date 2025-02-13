@@ -57,3 +57,8 @@ docs/_build/
 # kicad specific files
 *.kicad_mod
 *.pretty/
+
+# CI results
+metrics.txt
+footprints.tar.*
+

@@ -68,9 +68,14 @@ fp-generate:
     - gitlabci/collect_generated_footprints.sh
     - mv generated_footprints/ footprints/
     - tar -cJf footprints.tar.xz footprints/
+
+    # Write out the generation results for metric reporting
+    - ./gitlabci/library_metrics.sh "footprints" "metrics.txt"
   artifacts:
     paths:
       - footprints.tar.xz
+    reports:
+      metrics: metrics.txt
     when: always
 
 fp-generate-and-compare:
@@ -142,13 +147,7 @@ fp-generate-and-compare:
     - gitlabci/visual_diff.sh "base_footprints" "generated_footprints" "diffs"
 
     # Write out the generation results for metric reporting
-    - fp_count=$(find "generated_footprints" -type f -name "*.kicad_mod" | wc -l)
-    - lib_count=$(find "generated_footprints" -type d -name "*.pretty" | wc -l)
-
-    - echo "generated_fp_count $fp_count" > metrics.txt
-    - echo "generated_lib_count $lib_count" >> metrics.txt
-
-    - cat "metrics.txt"
+    - ./gitlabci/library_metrics.sh "generated_footprints" "metrics.txt"
   artifacts:
     expose_as: "Visual Diff"
     paths:
