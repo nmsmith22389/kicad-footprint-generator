@@ -131,18 +131,14 @@ class StandardBox(Node):
         self._initFile3DNameNode(**kwargs)
         self._initExtraTextNode(**kwargs)
 
-        #
-        # Create foot print parts
+        # Create footprint parts
         self._createPinsNode()
         self._createFFabLine()
         self._createPin1MarkerLine()
         self._createFSilkSLine()
         self._createFCrtYdLine()
-        #
 
     def getVirtualChilds(self):
-        #
-        #
         return self.virtual_childs
 
     def _initPosition(self, **kwargs):
@@ -159,9 +155,12 @@ class StandardBox(Node):
             self.size = Vector2D([kwargs.get('size'), kwargs.get('size')])
         else:
             size_original = kwargs.get('size')
-            self.corners = []
+
             if len(size_original ) > 2:
-                self.corners = size_original[2:]
+                raise ValueError(
+                    "Size must be a list of 2 elements (corners are no longer handled in this way)"
+                )
+
             self.size = Vector2D(size_original[0], size_original[1])
 
     def _createFSilkRefDesText(self):
@@ -268,8 +267,7 @@ class StandardBox(Node):
     def _createFFabLine(self):
         ffabline = []
         self.boxffabline = []
-        #
-        #
+
         x = self.at.x
         y = self.at.y
         w = self.size.x
@@ -314,93 +312,13 @@ class StandardBox(Node):
         y7 = y + dd
         x8 = x7
         y8 = y7
-        #
-        #
-        for nn in self.corners:
-
-            if nn[0] == 'ULP':
-                x0 = x + nn[1]
-                x9 = x0
-                y8 = y + nn[2]
-                y9 = y8
-                y7 = y8
-                new_node = Line(start=Vector2D(x9, y9), end=Vector2D(x0, y0), layer='F.Fab', width=self.FFabWidth)
-                new_node._parent = self
-                self.virtual_childs.append(new_node)
-
-            if nn[0] == 'ULR':
-                x0 = x + nn[1]
-                y7 = y + nn[1]
-                x8 = x7
-                x9 = x7
-                y8 = y7
-                y9 = y7
-                new_node = Arc(center=Vector2D(x0, y7), start=Vector2D(x7, y7), layer='F.Fab', width=self.FFabWidth, angle=90.0)
-                new_node._parent = self
-                self.virtual_childs.append(new_node)
-
-
-            if nn[0] == 'URP':
-                x1 = (x + w) - nn[1]
-                y2 = y + nn[2]
-                new_node = Line(start=Vector2D(x1, y1), end=Vector2D(x1, y2), layer='F.Fab', width=self.FFabWidth)
-                new_node._parent = self
-                self.virtual_childs.append(new_node)
-                #
-                new_node = Line(start=Vector2D(x1, y2), end=Vector2D(x2, y2), layer='F.Fab', width=self.FFabWidth)
-                new_node._parent = self
-                self.virtual_childs.append(new_node)
-
-            if nn[0] == 'URR':
-                x1 = (x + w) - nn[1]
-                y2 = y + nn[1]
-                new_node = Arc(center=Vector2D(x1, y2), start=Vector2D(x1, y1), layer='F.Fab', width=self.FFabWidth, angle=90.0)
-                new_node._parent = self
-                self.virtual_childs.append(new_node)
-
-            if nn[0] == 'LRP':
-                x4 = (x + w) - nn[1]
-                y3 = (y + h) - nn[1]
-                new_node = Line(start=Vector2D(x3, y3), end=Vector2D(x4, y3), layer='F.Fab', width=self.FFabWidth)
-                new_node._parent = self
-                self.virtual_childs.append(new_node)
-                #
-                new_node = Line(start=Vector2D(x4, y3), end=Vector2D(x4, y4), layer='F.Fab', width=self.FFabWidth)
-                new_node._parent = self
-                self.virtual_childs.append(new_node)
-
-            if nn[0] == 'LRR':
-                x4 = (x + w) - nn[1]
-                y3 = (y + h) - nn[1]
-                new_node = Arc(center=Vector2D(x4, y3), start=Vector2D(x3, y3), layer='F.Fab', width=self.FFabWidth, angle=90.0)
-                new_node._parent = self
-                self.virtual_childs.append(new_node)
-
-            if nn[0] == 'LLR':
-                x5 = x + nn[1]
-                y6 = (y + h) - nn[1]
-                new_node = Arc(center=Vector2D(x5, y6), start=Vector2D(x5, y5), layer='F.Fab', width=self.FFabWidth, angle=90.0)
-                new_node._parent = self
-                self.virtual_childs.append(new_node)
-
-            if nn[0] == 'LLP':
-                x5 = x + nn[1]
-                y6 = (y + h) - nn[2]
-                new_node = Line(start=Vector2D(x5, y5), end=Vector2D(x5, y6), layer='F.Fab', width=self.FFabWidth)
-                new_node._parent = self
-                self.virtual_childs.append(new_node)
-                #
-                new_node = Line(start=Vector2D(x5, y6), end=Vector2D(x6, y6), layer='F.Fab', width=self.FFabWidth)
-                new_node._parent = self
-                self.virtual_childs.append(new_node)
 
         ffabline.append(koaLine(x0, y0, x1, y1, 'F.Fab', self.FFabWidth))
         ffabline.append(koaLine(x2, y2, x3, y3, 'F.Fab', self.FFabWidth))
         ffabline.append(koaLine(x4, y4, x5, y5, 'F.Fab', self.FFabWidth))
         ffabline.append(koaLine(x6, y6, x7, y7, 'F.Fab', self.FFabWidth))
         ffabline.append(koaLine(x8, y8, x9, y9, 'F.Fab', self.FFabWidth))
-        #
-        #
+
         for n in ffabline:
             new_node = Line(start=Vector2D(n.sx, n.sy), end=Vector2D(n.ex, n.ey), layer=n.layer, width=n.width)
             if n.width < 0.0:
@@ -476,45 +394,17 @@ class StandardBox(Node):
                     y2_t = y2 - fab_silk_outset.y
                     y3_t = y1_t
                     y4_t = y2_t
-                    #
-                    for nn in self.corners:
-                        if nn[0] == 'URR':
-                            x2_t = x2_t - (nn[1] + fab_silk_outset.x)
-                        if nn[0] == 'ULR':
-                            x1_t = x1_t + (nn[1] + fab_silk_outset.x)
-                        if nn[0] == 'ULP':
-                            x3_t = x1_t
-                            x1_t = x1_t + (nn[1])
-                            y3_t = y1_t + (nn[2])
-                        if nn[0] == 'URP':
-                            x4_t = x2_t
-                            x2_t = x2_t - (nn[1])
-                            y4_t = y1_t + (nn[2])
                 else:
                     # Bottom line
                     y1_t = y1 + fab_silk_outset.y
                     y2_t = y2 + fab_silk_outset.y
                     y3_t = y1_t
                     y4_t = y2_t
-                    #
-                    for nn in self.corners:
-                        if nn[0] == 'LRR':
-                            x2_t = x2_t - (nn[1] + fab_silk_outset.x)
-                        if nn[0] == 'LLR':
-                            x1_t = x1_t + (nn[1] + fab_silk_outset.x)
-                        if nn[0] == 'LLP':
-                            x3_t = x1_t
-                            x1_t = x1_t + (nn[1])
-                            y3_t = y1_t - (nn[2])
-                        if nn[0] == 'LRP':
-                            x4_t = x2_t
-                            x2_t = x2_t - (nn[1])
-                            y4_t = y1_t - (nn[2])
 
                 #
                 EndLine = True
                 foundPad = False
-                UseCorner = True
+
                 while EndLine:
                     px1 = 10000000.0
                     px2 = 10000000.0
@@ -545,89 +435,11 @@ class StandardBox(Node):
                             self.fsilksline.append(koaLine(x1_t, y1_t, px1 - 0.25, y2_t, 'F.SilkS', self.FSilkSWidth))
                         x1_t = px2 + 0.25
                     else:
-                        #
-                        # No pads was in the way
-                        #
-                        if y1 < y0 and UseCorner:
-                            # Top line
-                            for nn in self.corners:
-                                if nn[0] == 'ULR':
-                                    urcdy0 = y1_t + (nn[1] + fab_silk_outset.y)
-                                    urcdx1 = x1_t - (nn[1] + fab_silk_outset.x)
-                                    new_node = Arc(center=Vector2D(x1_t, urcdy0), start=Vector2D(urcdx1, urcdy0), layer='F.SilkS', width=self.FSilkSWidth, angle=90.0)
-                                    new_node._parent = self
-                                    self.virtual_childs.append(new_node)
-
-                                if nn[0] == 'ULP':
-                                    new_node = Line(start=Vector2D(x1_t, y3_t), end=Vector2D(x1_t, y1_t), layer='F.SilkS', width=self.FSilkSWidth)
-                                    new_node._parent = self
-                                    self.virtual_childs.append(new_node)
-                                    new_node = Line(start=Vector2D(x1_t, y3_t), end=Vector2D(x3_t, y3_t), layer='F.SilkS', width=self.FSilkSWidth)
-                                    new_node._parent = self
-                                    self.virtual_childs.append(new_node)
-                                    #
-                                if nn[0] == 'URP':
-                                    urcdy0 = y4_t + (nn[2])
-                                    new_node = Line(start=Vector2D(x2_t, y4_t), end=Vector2D(x2_t, y2_t), layer='F.SilkS', width=self.FSilkSWidth)
-                                    new_node._parent = self
-                                    self.virtual_childs.append(new_node)
-                                    new_node = Line(start=Vector2D(x2_t, y4_t), end=Vector2D(x4_t, y4_t), layer='F.SilkS', width=self.FSilkSWidth)
-                                    new_node._parent = self
-                                    self.virtual_childs.append(new_node)
-
-                        if y1 > y0 and UseCorner:
-                            # Bottom line
-                            for nn in self.corners:
-                                if nn[0] == 'LLR':
-                                    urcdy0 = y1_t - (nn[1] + fab_silk_outset.y)
-                                    new_node = Arc(center=Vector2D(x1_t, urcdy0), start=Vector2D(x1_t, y1_t), layer='F.SilkS', width=self.FSilkSWidth, angle=90.0)
-                                    new_node._parent = self
-                                    self.virtual_childs.append(new_node)
-
-                                if nn[0] == 'LLP':
-                                    new_node = Line(start=Vector2D(x1_t, y3_t), end=Vector2D(x1_t, y1_t), layer='F.SilkS', width=self.FSilkSWidth)
-                                    new_node._parent = self
-                                    self.virtual_childs.append(new_node)
-                                    new_node = Line(start=Vector2D(x1_t, y3_t), end=Vector2D(x3_t, y3_t), layer='F.SilkS', width=self.FSilkSWidth)
-                                    new_node._parent = self
-                                    self.virtual_childs.append(new_node)
-                                    #
-                                if nn[0] == 'LRP':
-                                    urcdy0 = y4_t + (nn[2])
-                                    new_node = Line(start=Vector2D(x2_t, y4_t), end=Vector2D(x2_t, y2_t), layer='F.SilkS', width=self.FSilkSWidth)
-                                    new_node._parent = self
-                                    self.virtual_childs.append(new_node)
-                                    new_node = Line(start=Vector2D(x2_t, y4_t), end=Vector2D(x4_t, y4_t), layer='F.SilkS', width=self.FSilkSWidth)
-                                    new_node._parent = self
-                                    self.virtual_childs.append(new_node)
-                        #
                         self.fsilksline.append(koaLine(x1_t, y1_t, x2_t, y2_t, 'F.SilkS', self.FSilkSWidth))
                         EndLine = False
 
                     if x1_t >= x2:
                         EndLine = False
-
-                    UseCorner = False
-
-                if not foundPad and y1 < 0:
-                    #
-                    for nn in self.corners:
-                        if nn[0] == 'URR':
-                            urcdy1 = y1_t + (nn[1] + fab_silk_outset.y)
-                            new_node = Arc(center=Vector2D(x2_t, urcdy1), start=Vector2D(x2_t, y2_t), layer='F.SilkS', width=self.FSilkSWidth, angle=90.0)
-                            new_node._parent = self
-                            self.virtual_childs.append(new_node)
-
-
-                if not foundPad and y1 > 0:
-                    #
-                    for nn in self.corners:
-                        if nn[0] == 'LRR':
-                            urcdx1 = x2_t + (nn[1] + fab_silk_outset.x)
-                            urcdy1 = y2_t - (nn[1] + fab_silk_outset.y)
-                            new_node = Arc(center=Vector2D(x2_t, urcdy1), start=Vector2D(urcdx1, urcdy1), layer='F.SilkS', width=self.FSilkSWidth, angle=90.0)
-                            new_node._parent = self
-                            self.virtual_childs.append(new_node)
 
             if (x1 < x0 and y1 < y0 and y2 > y0) or (x1 > x0 and y1 < y0 and y2 > y0):
                 #
@@ -641,33 +453,11 @@ class StandardBox(Node):
                     x1_t = min(x1 - fab_silk_outset.x, x2 - fab_silk_outset.x)
                     x2_t = max(x1 - fab_silk_outset.x, x2 - fab_silk_outset.x)
 
-                    for nn in self.corners:
-                        if nn[0] == 'ULR':
-                            y1_t = y1_t + (nn[1] + fab_silk_outset.y)
-                        if nn[0] == 'LLR':
-                            y2_t = y2_t - (nn[1] + fab_silk_outset.y)
-                        if nn[0] == 'ULP':
-                            y1_t = y1_t + (nn[2])
-                        if nn[0] == 'LLP':
-                            y2_t = y2_t - (nn[2])
-
                 else:
                     # Right line
                     x1_t = min(x1 + fab_silk_outset.x, x2 + fab_silk_outset.x)
                     x2_t = max(x1 + fab_silk_outset.x, x2 + fab_silk_outset.x)
 
-                    #
-                    for nn in self.corners:
-                        if nn[0] == 'URR':
-                            y1_t = y1_t + (nn[1] + fab_silk_outset.y)
-                        if nn[0] == 'LRR':
-                            y2_t = y2_t - (nn[1] + fab_silk_outset.y)
-                        if nn[0] == 'URP':
-                            y1_t = y1_t + (nn[2])
-                        if nn[0] == 'LRP':
-                            y2_t = y2_t - (nn[2])
-
-                #
                 EndLine = True
                 while EndLine:
                     py1 = 10000000.0
@@ -708,8 +498,7 @@ class StandardBox(Node):
 
                     if y1_t >= y2:
                         EndLine = False
-        #
-        #
+
         for n in self.fsilksline:
             new_node = Line(start=Vector2D(n.sx, n.sy), end=Vector2D(n.ex, n.ey), layer=n.layer, width=n.width)
             if n.width < 0.0:
