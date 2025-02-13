@@ -15,9 +15,8 @@
 
 import typing
 
-from kilibs.geom import Vector2D
 from KicadModTree.nodes.Node import Node
-import KicadModTree.PolygonPoints as PPts
+from KicadModTree.PolygonPoints import PolygonPoints
 
 
 class PadConnection(Node):
@@ -279,7 +278,7 @@ class Zone(Node):
 
     def __init__(
         self,
-        polygon_pts: list,
+        polygon_pts: PolygonPoints,
         hatch: Hatch,
         keepouts: typing.Optional[Keepouts] = None,
         fill: typing.Optional[ZoneFill] = None,
@@ -292,7 +291,7 @@ class Zone(Node):
             raise ValueError("Zone must have a Hatch set to be well-formed")
 
         self.layers = kwargs.get("layers", [])
-        self.nodes = PPts.PolygonPoints(nodes=polygon_pts)
+        self.nodes = polygon_pts
         self.net = kwargs.get("net", 0)
         self.net_name = kwargs.get("net_name", "")
         self.name = kwargs.get("name", "")
