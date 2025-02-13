@@ -649,7 +649,7 @@ BGA-256_17.0x17.0mm_Layout16x16_P1.0mm_Ball0.5mm_Pad0.4mm_NSMD:
   pins_color_key: "metal grey pins"
   marking_color_key: "light brown label"
 
-Texas_BGA-289_15.0x15.0mm_Layout17x17_P0.8mm_Ball0.5mm_Pad0.4mm:
+Texas_BGA-289_15x15mm_Layout17x17_P0.8mm:
   # from https://www.ti.com/lit/ml/mpbg777/mpbg777.pdf
   fp_r: 0.3       # first pin indicator radius
   fp_d: 0.04      # first pin indicator distance from edge
@@ -866,7 +866,7 @@ BGA-484_23.0x23.0mm_Layout22x22_P1.0mm:
   pins_color_key: "metal grey pins"
   marking_color_key: "light brown label"
 
-BGA-624_21.0x21.0mm_Layout25x25_P0.8mm:
+BGA-624_21x21mm_Layout25x25_P0.8mm:
   # from https://www.nxp.com/docs/en/package-information/SOT1529-1.pdf
   fp_r: 0.5
   fp_d: 0.12
@@ -890,7 +890,7 @@ BGA-624_21.0x21.0mm_Layout25x25_P0.8mm:
   excluded_pins: ['internals', 1]
   molded: null
   old_modelName: "BGA-624_25x25_21.0x21.0mm_Pitch0.8mm"
-  modelName: "BGA-624_21.0x21.0mm_Layout25x25_P0.8mm"
+  modelName: "BGA-624_21x21mm_Layout25x25_P0.8mm"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -1021,7 +1021,7 @@ BGA-1295_36x36_37.5x37.5mm_Pitch1.0mm:
   pins_color_key: "metal grey pins"
   marking_color_key: "light brown label"
 
-Analog_BGA-49_6.25x6.25mm_Layout7x7_P0.8mm_Ball0.5mm_Pad0.4mm:
+Analog_BGA-49_6.25x6.25mm_Layout7x7_P0.8mm:
   # from https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/ltc-legacy-bga/05081600_0_bga49.pdf
   fp_r: 0.75
   fp_d: 0.25
@@ -1045,14 +1045,14 @@ Analog_BGA-49_6.25x6.25mm_Layout7x7_P0.8mm_Ball0.5mm_Pad0.4mm:
   excluded_pins: null
   molded: null
   old_modelName: "Analog_BGA-49_7x7_6.25x6.25mm_Pitch0.8mm"
-  modelName: "Analog_BGA-49_6.25x6.25mm_Layout7x7_P0.8mm_Ball0.5mm_Pad0.4mm"
+  modelName: "Analog_BGA-49_6.25x6.25mm_Layout7x7_P0.8mm"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
   pins_color_key: "metal grey pins"
   marking_color_key: "light brown label"
 
-Analog_BGA-77_9.0x15.0mm_Layout7x11_P1.27mm_Ball0.63mm:
+Analog_BGA-77_9x15mm_Layout7x11_P1.27mm:
   # from https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/ltc-legacy-bga/05081964_B_bga77.pdf
   fp_r: 0.4      # first pin indicator radius
   fp_d: 0.08     # first pin indicator distance from edge
@@ -1075,14 +1075,14 @@ Analog_BGA-77_9.0x15.0mm_Layout7x11_P1.27mm_Ball0.63mm:
   npy: 7         # number of pins along y axis (length)
   excluded_pins: null # pins to exclude -> None or "internals"
   molded: null
-  modelName: "Analog_BGA-77_9.0x15.0mm_Layout7x11_P1.27mm_Ball0.63mm"
+  modelName: "Analog_BGA-77_9x15mm_Layout7x11_P1.27mm"
   rotation: -90  # rotation if required
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
   pins_color_key: "metal grey pins"
   marking_color_key: "light brown label"
 
-Analog_BGA-165_11.9x16.0mm_Layout11x15_P1.0mm_Ball0.6mm_Pad0.5mm:
+Analog_BGA-165_11.9x16mm_Layout11x15_P1.0mm:
   # from https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/ltc-legacy-bga/05081605_b_bga165.pdf
   fp_r: 0.4      # first pin indicator radius
   fp_d: 0.08     # first pin indicator distance from edge
@@ -1105,14 +1105,14 @@ Analog_BGA-165_11.9x16.0mm_Layout11x15_P1.0mm_Ball0.6mm_Pad0.5mm:
   npy: 11        # number of pins along y axis (length)
   excluded_pins: null # pins to exclude -> None or "internals"
   molded: null
-  modelName: "Analog_BGA-165_11.9x16.0mm_Layout11x15_P1.0mm_Ball0.6mm_Pad0.5mm" # old_modelName
+  modelName: "Analog_BGA-165_11.9x16mm_Layout11x15_P1.0mm" # old_modelName
   rotation: -90  # rotation if required
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
   pins_color_key: "metal grey pins"
   marking_color_key: "light brown label"
 
-Analog_BGA-209_9.5x16mm_Layout11x19_P0.8mm_Ball0.5mm_Pad0.4mm:
+Analog_BGA-209_9.5x16mm_Layout11x19_P0.8mm:
   # from https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/ltc-legacy-bga/05081561_bga209.pdf
   fp_r: 0.75
   fp_d: 0.25
@@ -1135,14 +1135,14 @@ Analog_BGA-209_9.5x16mm_Layout11x19_P0.8mm_Ball0.5mm_Pad0.4mm:
   npy: 11
   excluded_pins: null
   molded: null
-  modelName: "Analog_BGA-209_9.5x16mm_Layout11x19_P0.8mm_Ball0.5mm_Pad0.4mm"
+  modelName: "Analog_BGA-209_9.5x16mm_Layout11x19_P0.8mm"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
   pins_color_key: "metal grey pins"
   marking_color_key: "light brown label"
 
-NXP_VFBGA-42_2.6x3mm_Layout6x7_P0.4mm_Ball0.25mm_Pad0.24mm:
+NXP_VFBGA-42_2.6x3mm_Layout6x7_P0.4mm:
   # from https://www.nxp.com/docs/en/package-information/SOT1963-1.pdf
   fp_r: 0.5   # first pin indicator radius
   fp_d: 0.2   # first pin indicator distance from edge
@@ -1166,7 +1166,7 @@ NXP_VFBGA-42_2.6x3mm_Layout6x7_P0.4mm_Ball0.25mm_Pad0.24mm:
   excluded_pins: null
   molded: null
   old_modelName: "NXP_VFBGA-42_6x7_2.6x3mm_Pitch0.4mm"
-  modelName: "NXP_VFBGA-42_2.6x3mm_Layout6x7_P0.4mm_Ball0.25mm_Pad0.24mm"
+  modelName: "NXP_VFBGA-42_2.6x3mm_Layout6x7_P0.4mm"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -1513,7 +1513,7 @@ Texas_MicroStar_Junior_BGA-80_5.0x5.0mm_Layout9x9_P0.5mm:
   pins_color_key: "metal grey pins"
   marking_color_key: "light brown label"
 
-Texas_MicroStar_Junior_BGA-113_7.0x7.0mm_Layout12x12_P0.5mm:
+Texas_MicroStar_Junior_BGA-113_7x7mm_Layout12x12_P0.5mm:
   # from http://www.ti.com/lit/ml/mpbg674/mpbg674.pdf
   fp_r: 0.3
   fp_d: 0.01
@@ -1536,8 +1536,8 @@ Texas_MicroStar_Junior_BGA-113_7.0x7.0mm_Layout12x12_P0.5mm:
   npy: 12
   excluded_pins: ['internals']
   molded: null
-  old_modelName: "Texas_MicroStar_Junior_BGA-113_7.0x7.0mm_Layout12x12_P0.5mm"
-  modelName: "Texas_MicroStar_Junior_BGA-113_7.0x7.0mm_Layout12x12_P0.5mm"
+  old_modelName: "Texas_MicroStar_Junior_BGA-113_7x7mm_Layout12x12_P0.5mm"
+  modelName: "Texas_MicroStar_Junior_BGA-113_7x7mm_Layout12x12_P0.5mm"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -1759,7 +1759,7 @@ TFBGA-265_14x14mm_Layout17x17_P0.8mm:
   pins_color_key: "metal grey pins"
   marking_color_key: "light brown label"
 
-TFBGA-636_19x19mm_Layout28x28_P0.65mm:
+TFBGA-644_19x19mm_Layout28x28_P0.65mm:
   fp_r: 0.3
   fp_d: 0.01
   fp_z: 0.01
@@ -1781,8 +1781,8 @@ TFBGA-636_19x19mm_Layout28x28_P0.65mm:
   npy: 28
   excluded_pins: ['internals']
   molded: null
-  old_modelName: "TFBGA-636_19x19mm_Layout28x28_P0.65mm"
-  modelName: "TFBGA-636_19x19mm_Layout28x28_P0.65mm"
+  old_modelName: "TFBGA-644_19x19mm_Layout28x28_P0.65mm"
+  modelName: "TFBGA-644_19x19mm_Layout28x28_P0.65mm"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -1944,7 +1944,7 @@ WLP-4_0.86x0.86mm_P0.4mm:
   pins_color_key: "metal grey pins"
   marking_color_key: "light brown label"
 
-DiodesInc_GEA20_WLCSP-20_1.70x2.10mm_Layout4x5_P0.4mm:
+DiodesInc_GEA20_WLCSP-20_1.7x2.1mm_Layout4x5_P0.4mm:
   # from https://www.diodes.com/assets/Package-Files/GEA20.pdf
   fp_r: 0.3       # first pin indicator radius
   fp_d: 0.04      # first pin indicator distance from edge
@@ -1967,8 +1967,8 @@ DiodesInc_GEA20_WLCSP-20_1.70x2.10mm_Layout4x5_P0.4mm:
   npy: 4          # number of pins along y axis (length)
   excluded_pins: null # pins to exclude
   molded: null    # molded = True, omitted -> None
-  old_modelName: "DiodesInc_GEA20_WLCSP-20_1.70x2.10mm_Layout4x5_P0.4mm" # old_modelName
-  modelName: "DiodesInc_GEA20_WLCSP-20_1.70x2.10mm_Layout4x5_P0.4mm" # modelName
+  old_modelName: "DiodesInc_GEA20_WLCSP-20_1.7x2.1mm_Layout4x5_P0.4mm" # old_modelName
+  modelName: "DiodesInc_GEA20_WLCSP-20_1.7x2.1mm_Layout4x5_P0.4mm" # modelName
   rotation: -90   # rotation if required
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -1976,7 +1976,7 @@ DiodesInc_GEA20_WLCSP-20_1.70x2.10mm_Layout4x5_P0.4mm:
   marking_color_key: "light brown label"
   library_name: "Package_CSP"
 
-WLCSP-9_1.21x1.22mm_P0.4mm:
+WLCSP-9_1.21x1.22mm_Layout3x3_P0.4mm:
   # from https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/wlcspcb/cb_9_3.pdf
   fp_r: 0.3       # first pin indicator radius
   fp_d: 0.04      # first pin indicator distance from edge
@@ -1999,8 +1999,8 @@ WLCSP-9_1.21x1.22mm_P0.4mm:
   npy: 3          # number of pins along y axis (length)
   excluded_pins: null # pins to exclude
   molded: null    # molded = True, omitted -> None
-  old_modelName: "WLCSP-9_1.21x1.22mm_P0.4mm" # old_modelName
-  modelName: "WLCSP-9_1.21x1.22mm_P0.4mm" # modelName
+  old_modelName: "WLCSP-9_1.21x1.22mm_Layout3x3_P0.4mm" # old_modelName
+  modelName: "WLCSP-9_1.21x1.22mm_Layout3x3_P0.4mm" # modelName
   rotation: -90   # rotation if required
   body_bot_color_key: "dark green body"
   body_color_key: "black body"

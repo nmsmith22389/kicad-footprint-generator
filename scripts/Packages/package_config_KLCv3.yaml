@@ -13,6 +13,8 @@ fp_name_to_tht_staggered_format_string_no_trailing_zero: '{man:s}_{mpn:s}_{pkg:s
 fp_name_lga_format_string_no_trailing_zero: '{man:s}_{mpn:s}_{pkg:s}-{pincount:d}_{size_x:g}x{size_y:g}mm_P{pitch:g}mm{layout:s}{suffix:s}{suffix2:s}'
 fp_name_lga_format_string_no_trailing_zero_pincount_text: '{man:s}_{mpn:s}_{pkg:s}-{pincount:s}_{size_x:g}x{size_y:g}mm_P{pitch:g}mm{layout:s}{suffix:s}{suffix2:s}'
 
+fp_name_bga_format_string_no_trailing_zero: '{man:s}_{mpn:s}_{pkg:s}-{pincount:d}_{size_x:g}x{size_y:g}mm_Layout{nx:d}x{ny:d}_{pitch:s}{ball_d:s}{pad_d:s}{stagger:s}{offcenter:s}{suffix:s}{suffix2:s}'
+
 lga_layout_grid: '_LayoutGrid{nx:d}x{ny:d}'
 lga_layout_border: '_LayoutBorder{nx:d}x{ny:d}y'
 

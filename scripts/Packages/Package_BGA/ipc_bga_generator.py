@@ -130,6 +130,81 @@ class BGAGenerator(FootprintGenerator):
 
         return pitchX, pitchY, None
 
+    def _compose_fp_name(self, config: dict, device_config: BGAConfiguration,
+                        fpId: str, header_info: dict) -> str:
+        device_params = device_config.spec_dictionary
+
+        if "name" in device_params:
+            return device_params["name"]
+        
+        if device_params.get("name_equal_to_key"):
+            return fpId
+        
+        # To facilitate iteration through the layouts create a list with main
+        # and sublayouts
+        layouts = [device_params] + device_params.get("secondary_layouts", [])
+        
+        # Compute number of balls + diverse suffix strings
+        pitch_text = ""
+        stagger_text = ""
+        offcenter_text = ""
+        balls = 0
+        for layout in layouts:
+            balls += self.makePadGrid(None, layout, config, device_params)
+            if pitch := layout.get("pitch"):
+                new_pitch_text = f"P{pitch}mm"
+            else:
+                pitch_x = layout.get("pitch_x")
+                pitch_y = layout.get("pitch_y")
+                if not (pitch_x and pitch_y):
+                    raise KeyError("Either pitch or both pitch_x and pitch_y must "
+                                   "be given.")
+                new_pitch_text = f"P{pitch_x}x{pitch_y}mm"
+            if not pitch_text.endswith(new_pitch_text):
+                pitch_text += new_pitch_text
+            if "staggered" in layout:
+                stagger_text = "_Stagger"
+            if "offset_x" in layout or "offset_y" in layout:
+                offcenter_text = "_Offcenter"
+
+        if "custom_name_format" in device_params:
+            name_format = device_params["custom_name_format"]
+        else:
+            name_format = config["fp_name_bga_format_string_no_trailing_zero"]
+
+        pad_suffix = ""
+        if (device_params.get("include_pad_diameter_in_name")
+            and "pad_diameter" in device_params):
+            pad_diameter = device_params["pad_diameter"]
+            pad_suffix = f"_Pad{pad_diameter}mm"
+
+        ball_suffix = ""
+        if (device_params.get("include_ball_diameter_in_name")
+            and "ball_diameter" in device_params):
+            ball_diameter = device_params["ball_diameter"]
+            ball_suffix = f"_Ball{ball_diameter}mm"
+ 
+        suffix = device_params.get("suffix", "")
+
+        fp_name = name_format.format(
+            man=device_params.get("manufacturer", header_info.get("manufacturer", "")),
+            mpn=device_params.get("part_number", ""),
+            pkg=device_params.get("device_type", header_info["package_type"]),
+            pincount=balls,
+            size_x=device_params["body_size_x"],
+            size_y=device_params["body_size_y"],
+            nx=device_params["layout_x"],
+            ny=device_params["layout_y"],
+            pitch=pitch_text,
+            ball_d=ball_suffix,
+            pad_d=pad_suffix,
+            stagger=stagger_text,
+            offcenter=offcenter_text,
+            suffix=suffix,
+            suffix2="",
+        ).replace("__", "_").lstrip("_")
+        return fp_name
+
     def _createFootprintVariant(self, config, device_config: BGAConfiguration, fpId, header_info):
         # Pull out the old-style parameter dictionary
         fpParams = device_config.spec_dictionary
@@ -140,7 +215,8 @@ class BGAGenerator(FootprintGenerator):
         layoutY = fpParams["layout_y"]
         fFabRefRot = 0
 
-        f = Footprint(fpId, FootprintType.SMD)
+        fp_name = self._compose_fp_name(config, device_config, fpId, header_info)
+        f = Footprint(fp_name, FootprintType.SMD)
         if "mask_margin" in fpParams:
             f.setMaskMargin(fpParams["mask_margin"])
         if "paste_margin" in fpParams:
@@ -223,7 +299,7 @@ class BGAGenerator(FootprintGenerator):
         # Text
         f.append(Property(name=Property.REFERENCE, text="REF**", at=[xCenter, yRef],
                       layer="F.SilkS", size=s1, thickness=t1))
-        f.append(Property(name=Property.VALUE, text=fpId, at=[xCenter, yValue],
+        f.append(Property(name=Property.VALUE, text=fp_name, at=[xCenter, yValue],
                       layer="F.Fab", size=s1, thickness=t1))
         f.append(Text(text='${REFERENCE}', at=[xCenter, yCenter],
                       layer="F.Fab", size=s2, thickness=t2, rotation=fFabRefRot))
@@ -304,7 +380,7 @@ class BGAGenerator(FootprintGenerator):
         lib_name = Path(f'Package_{packageType}')
 
         # #################### Output and 3d model ############################
-        self.add_standard_3d_model_to_footprint(f, lib_name, fpId)
+        self.add_standard_3d_model_to_footprint(f, lib_name, fp_name)
         self.write_footprint(f, lib_name)
 
     def makePadGrid(self, f, lParams, config, fpParams={}, xCenter=0.0, yCenter=0.0):
@@ -342,6 +418,9 @@ class BGAGenerator(FootprintGenerator):
                     is_even = (row_num + col) % 2 == 0
                     if is_even == skip_even:
                         padSkips.add(f'{row}{col+1}')
+
+        if f is None:
+            return layoutX * layoutY - len(padSkips) 
 
         padShape = lParams.get('pad_shape', fpParams.get('pad_shape', 'circle'))
         pasteShape = lParams.get('paste_shape', fpParams.get('paste_shape'))
@@ -429,8 +508,11 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='use config .yaml files to create footprints.')
     parser.add_argument('files', metavar='file', type=str, nargs='*',
                         help='list of files holding information about what devices should be created.')
-    # parser.add_argument('--series_config', type=str, nargs='?',
-    #                     help='the config file defining series parameters.', default='../package_config_KLCv3.yaml')
+    parser.add_argument('--global_config', type=str, nargs='?',
+                        help='the config file defining how the footprint will look like. (KLC)',
+                        default='../../tools/global_config_files/config_KLCv3.0.yaml')
+    parser.add_argument('--naming_config', type=str, nargs='?',
+                         help='the config file defining footprint naming.', default='../package_config_KLCv3.yaml')
     parser.add_argument('--ipc_doc', type=str, nargs='?', help='IPC definition document',
                         default='ipc_7351b_bga_land_patterns.yaml')
 
@@ -442,11 +524,11 @@ if __name__ == '__main__':
         except yaml.YAMLError as exc:
             print(exc)
 
-    # with open(args.series_config, 'r') as config_stream:
-        # try:
-            # configuration.update(yaml.safe_load(config_stream))
-        # except yaml.YAMLError as exc:
-            # print(exc)
+    with open(args.naming_config, 'r') as config_stream:
+        try:
+            configuration.update(yaml.safe_load(config_stream))
+        except yaml.YAMLError as exc:
+            print(exc)
 
     with open(args.ipc_doc, 'r') as config_stream:
         try:

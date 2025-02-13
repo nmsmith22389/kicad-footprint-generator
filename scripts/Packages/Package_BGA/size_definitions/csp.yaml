@@ -5,7 +5,9 @@ FileHeader:
 #
 # [1] ST does not specify this value in the linked datasheet, but they do in datasheets of similar parts. We use the
 #     value that they "usually" specify.
-Anpec_WLCSP-20_1.73x2.0mm_P0.4mm:
+Anpec_WLCSP-20_1.76x2.03mm_Layout4x5_P0.4mm:
+  manufacturer: "Anpec"
+  device_type: "WLCSP"
   description: "WLCSP-20"
   size_source: 'https://www.lcsc.com/datasheet/lcsc_datasheet_2007032014_Anpec-Elec-APW7261HAI-TRG_C691404.pdf'
   body_size_x: 1.76
@@ -17,6 +19,8 @@ Anpec_WLCSP-20_1.73x2.0mm_P0.4mm:
   layout_x: 4
   layout_y: 5
 Efinix_WLCSP-64_3.5353x3.3753mm_Layout8x8_P0.4mm:
+  manufacturer: "Efinix"
+  device_type: "WLCSP"
   description: "Efinix WLCSP, NSMD pad definition Page 60"
   size_source: "https://www.efinixinc.com/docs/titanium-packaging-ug-v5.2.pdf"
   additional_tags:
@@ -31,6 +35,8 @@ Efinix_WLCSP-64_3.5353x3.3753mm_Layout8x8_P0.4mm:
   layout_x: 8
   layout_y: 8
 Efinix_WLCSP-80_4.4567x3.5569mm_Layout10x8_P0.4mm:
+  manufacturer: "Efinix"
+  device_type: "WLCSP"
   description: "WLCSP-80, NSMD pad definition Page 54"
   size_source: "https://www.efinixinc.com/docs/trion-packaging-ug-v4.9.pdf"
   additional_tags:
@@ -44,7 +50,9 @@ Efinix_WLCSP-80_4.4567x3.5569mm_Layout10x8_P0.4mm:
   mask_margin: 0.0375
   layout_x: 10
   layout_y: 8
-Nexperia_WLCSP-15_6-3-6_2.37x1.17mm_Layout6x3_P0.4mm:
+Nexperia_WLCSP-15_2.37x1.17mm_Layout6x3_P0.4mmP0.8mm:
+  manufacturer: "Nexperia"
+  device_type: "WLCSP"
   description: "Nexperia wafer level chip-size package; 15 bumps (6-3-6)"
   size_source: "https://assets.nexperia.com/documents/data-sheet/PCMFXUSB3S_SER.pdf"
   body_size_x: 2.37
@@ -61,20 +69,24 @@ Nexperia_WLCSP-15_6-3-6_2.37x1.17mm_Layout6x3_P0.4mm:
       layout_x: 3
       layout_y: 1
       row_names: [B]
-WLCSP-12_1.403x1.555mm_P0.4mm_Stagger:
+WLCSP-12_1.403x1.555mm_Layout6x4_P0.4mm_Stagger:
+  device_type: "WLCSP"
   description: "WLCSP-12, staggered array"
   size_source: "http://ww1.microchip.com/downloads/en/devicedoc/atmel-8235-8-bit-avr-microcontroller-attiny20_datasheet.pdf#page=208"
   body_size_x: 1.403
   body_size_y: 1.555
-  pitch_x: 0.2
-  pitch_y: 0.346333
+  pitch: 0.4
+  staggered: x
+  first_ball: A1
   pad_diameter: 0.215
   mask_margin: 0.0325
   paste_margin: 0.000001
   layout_x: 6
   layout_y: 4
   row_skips: [[2, 4, 6], [1, 3, 5], [2, 4, 6], [1, 3, 5]]
-ST_WLCSP-12_1.70x1.42mm_P0.35mm_Stagger:
+ST_WLCSP-12_1.7x1.42mm_Layout4x6_P0.35mm_Stagger:
+  manufacturer: "ST"
+  device_type: "WLCSP"
   description: "ST WLCSP-12, ST Die ID 443"
   size_source: "https://www.st.com/resource/en/datasheet/stm32c011d6.pdf"
   body_size_x: 1.70
@@ -87,7 +99,9 @@ ST_WLCSP-12_1.70x1.42mm_P0.35mm_Stagger:
   paste_margin: 0.0125
   layout_x: 4
   layout_y: 6
-ST_WLCSP-18_1.86x2.14mm_P0.4mm_Stagger:
+ST_WLCSP-18_1.86x2.14mm_Layout7x5_P0.4mm_Stagger:
+  manufacturer: "ST"
+  device_type: "WLCSP"
   description: "ST WLCSP-18, ST Die ID 466"
   size_source: "https://www.st.com/resource/en/datasheet/stm32g031y8.pdf"
   body_size_x: 1.86
@@ -100,7 +114,9 @@ ST_WLCSP-18_1.86x2.14mm_P0.4mm_Stagger:
   paste_margin: 0.0125
   layout_x: 7
   layout_y: 5
-ST_WLCSP-20_1.94x2.40mm_Layout4x5_P0.4mm:
+ST_WLCSP-20_1.94x2.4mm_Layout4x5_P0.4mm:
+  manufacturer: "ST"
+  device_type: "WLCSP"
   description: "ST WLCSP-20, ST die ID 456"
   size_source: "https://www.st.com/resource/en/datasheet/stm32g051f8.pdf#page=102"
   body_size_x: 1.94
@@ -112,6 +128,9 @@ ST_WLCSP-20_1.94x2.40mm_Layout4x5_P0.4mm:
   layout_x: 4
   layout_y: 5
 ST_WLCSP-25_Die425:
+  manufacturer: "ST"
+  device_type: "WLCSP"
+  name_equal_to_key: True
   description: "WLCSP-25"
   size_source: "http://www.st.com/resource/en/datasheet/stm32l031f6.pdf#page=112"
   body_size_x: 2.097
@@ -123,6 +142,9 @@ ST_WLCSP-25_Die425:
   layout_x: 5
   layout_y: 5
 ST_WLCSP-25_Die444:
+  manufacturer: "ST"
+  device_type: "WLCSP"
+  name_equal_to_key: True
   description: "WLCSP-25"
   size_source: "http://www.st.com/resource/en/datasheet/stm32f031k6.pdf#page=93"
   body_size_x: 2.423
@@ -134,6 +156,9 @@ ST_WLCSP-25_Die444:
   layout_x: 5
   layout_y: 5
 ST_WLCSP-25_Die457:
+  manufacturer: "ST"
+  device_type: "WLCSP"
+  name_equal_to_key: True
   description: "WLCSP-25"
   size_source: "http://www.st.com/resource/en/datasheet/stm32l011k3.pdf#page=100"
   body_size_x: 2.133
@@ -145,6 +170,8 @@ ST_WLCSP-25_Die457:
   layout_x: 5
   layout_y: 5
 ST_WLCSP-25_2.33x2.24mm_Layout5x5_P0.4mm:
+  manufacturer: "ST"
+  device_type: "WLCSP"
   description: "ST WLCSP-25, ST Die ID 474"
   size_source: "https://www.st.com/resource/en/datasheet/stm32h503eb.pdf"
   body_size_x: 2.33
@@ -155,7 +182,9 @@ ST_WLCSP-25_2.33x2.24mm_Layout5x5_P0.4mm:
   paste_margin: 0.0125
   layout_x: 5
   layout_y: 5
-ST_WLCSP-27_2.34x2.55mm_P0.40mm_Stagger:
+ST_WLCSP-27_2.34x2.55mm_Layout9x6_P0.4mm_Stagger:
+  manufacturer: "ST"
+  device_type: "WLCSP"
   description: "ST WLCSP-27, ST Die ID 459"
   size_source: "https://www.st.com/resource/en/datasheet/stm32u031g6.pdf"
   body_size_x: 2.34
@@ -168,7 +197,9 @@ ST_WLCSP-27_2.34x2.55mm_P0.40mm_Stagger:
   paste_margin: 0.0375
   layout_x: 9
   layout_y: 6
-Maxim_WLCSP-35_3.0x2.17mm_Layout7x5_P0.4mm_Ball0.27mm_Pad0.25mm:
+Maxim_WLCSP-35_2.998x2.168mm_Layout7x5_P0.4mm:
+  manufacturer: "Maxim"
+  device_type: "WLCSP"
   description: "WLCSP-35"
   size_source: "https://pdfserv.maximintegrated.com/package_dwgs/21-100489.PDF"
   body_size_x: 2.998
@@ -179,6 +210,9 @@ Maxim_WLCSP-35_3.0x2.17mm_Layout7x5_P0.4mm_Ball0.27mm_Pad0.25mm:
   layout_x: 7
   layout_y: 5
 ST_WLCSP-36_Die417:
+  manufacturer: "ST"
+  device_type: "WLCSP"
+  name_equal_to_key: True
   description: "WLCSP-36"
   size_source: "http://www.st.com/resource/en/datasheet/stm32l052t8.pdf#page=123"
   body_size_x: 2.61
@@ -190,6 +224,9 @@ ST_WLCSP-36_Die417:
   layout_x: 6
   layout_y: 6
 ST_WLCSP-36_Die440:
+  manufacturer: "ST"
+  device_type: "WLCSP"
+  name_equal_to_key: True
   description: "WLCSP-36"
   size_source: "http://www.st.com/resource/en/datasheet/stm32f051t8.pdf#page=103"
   body_size_x: 2.605
@@ -201,6 +238,9 @@ ST_WLCSP-36_Die440:
   layout_x: 6
   layout_y: 6
 ST_WLCSP-36_Die445:
+  manufacturer: "ST"
+  device_type: "WLCSP"
+  name_equal_to_key: True
   description: "WLCSP-36"
   size_source: "http://www.st.com/resource/en/datasheet/stm32f042k6.pdf#page=96"
   body_size_x: 2.605
@@ -212,6 +252,9 @@ ST_WLCSP-36_Die445:
   layout_x: 6
   layout_y: 6
 ST_WLCSP-36_Die458:
+  manufacturer: "ST"
+  device_type: "WLCSP"
+  name_equal_to_key: True
   description: "WLCSP-36"
   size_source: "http://www.st.com/resource/en/datasheet/stm32f410t8.pdf#page=119"
   body_size_x: 2.553
@@ -222,7 +265,9 @@ ST_WLCSP-36_Die458:
   paste_margin: 0.0125
   layout_x: 6
   layout_y: 6
-ST_WLCSP-41_2.98x2.76mm_P0.40mm_Stagger:
+ST_WLCSP-41_2.98x2.76mm_Layout13x7_P0.4mm_Stagger:
+  manufacturer: "ST"
+  device_type: "WLCSP"
   description: "ST WLCSP-41"
   size_source: "https://www.st.com/resource/en/datasheet/stm32wba55hg.pdf#page=140"
   body_size_x: 2.98
@@ -236,7 +281,9 @@ ST_WLCSP-41_2.98x2.76mm_P0.40mm_Stagger:
   layout_x: 13
   layout_y: 7
   pad_skips: [A2,A4,B1,B3]
-ST_WLCSP-42_2.93x2.82mm_P0.40mm_Stagger:
+ST_WLCSP-42_2.93x2.82mm_Layout12x7_P0.4mm_Stagger:
+  manufacturer: "ST"
+  device_type: "WLCSP"
   description: "ST WLCSP-42, ST Die ID 489"
   size_source: "https://www.st.com/resource/en/datasheet/stm32u073rc.pdf"
   body_size_x: 2.93
@@ -250,6 +297,9 @@ ST_WLCSP-42_2.93x2.82mm_P0.40mm_Stagger:
   layout_x: 12
   layout_y: 7
 ST_WLCSP-49_Die423:
+  manufacturer: "ST"
+  device_type: "WLCSP"
+  name_equal_to_key: True
   description: "WLCSP-49"
   size_source: "http://www.st.com/resource/en/datasheet/stm32f401vc.pdf#page=115"
   body_size_x: 2.965
@@ -261,6 +311,9 @@ ST_WLCSP-49_Die423:
   layout_x: 7
   layout_y: 7
 ST_WLCSP-49_Die431:
+  manufacturer: "ST"
+  device_type: "WLCSP"
+  name_equal_to_key: True
   description: "WLCSP-49"
   size_source: "http://www.st.com/resource/en/datasheet/stm32f411vc.pdf#page=124"
   body_size_x: 2.999
@@ -272,6 +325,9 @@ ST_WLCSP-49_Die431:
   layout_x: 7
   layout_y: 7
 ST_WLCSP-49_Die433:
+  manufacturer: "ST"
+  device_type: "WLCSP"
+  name_equal_to_key: True
   description: "WLCSP-49"
   size_source: "http://www.st.com/resource/en/datasheet/stm32f401ce.pdf#page=116"
   body_size_x: 3.029
@@ -283,6 +339,9 @@ ST_WLCSP-49_Die433:
   layout_x: 7
   layout_y: 7
 ST_WLCSP-49_Die435:
+  manufacturer: "ST"
+  device_type: "WLCSP"
+  name_equal_to_key: True
   description: "WLCSP-49"
   size_source: "http://www.st.com/resource/en/datasheet/DM00257211.pdf#page=191"
   body_size_x: 3.141
@@ -294,6 +353,9 @@ ST_WLCSP-49_Die435:
   layout_x: 7
   layout_y: 7
 ST_WLCSP-49_Die438:
+  manufacturer: "ST"
+  device_type: "WLCSP"
+  name_equal_to_key: True
   description: "WLCSP-49"
   size_source: "http://www.st.com/resource/en/datasheet/stm32f303r8.pdf#page=112"
   body_size_x: 3.89
@@ -305,6 +367,9 @@ ST_WLCSP-49_Die438:
   layout_x: 7
   layout_y: 7
 ST_WLCSP-49_Die439:
+  manufacturer: "ST"
+  device_type: "WLCSP"
+  name_equal_to_key: True
   description: "WLCSP-49"
   size_source: "http://www.st.com/resource/en/datasheet/stm32f301r8.pdf#page=117"
   body_size_x: 3.417
@@ -316,6 +381,9 @@ ST_WLCSP-49_Die439:
   layout_x: 7
   layout_y: 7
 ST_WLCSP-49_Die447:
+  manufacturer: "ST"
+  device_type: "WLCSP"
+  name_equal_to_key: True
   description: "WLCSP-49"
   size_source: "http://www.st.com/resource/en/datasheet/stm32l072kz.pdf#page=134"
   body_size_x: 3.294
@@ -327,6 +395,9 @@ ST_WLCSP-49_Die447:
   layout_x: 7
   layout_y: 7
 ST_WLCSP-49_Die448:
+  manufacturer: "ST"
+  device_type: "WLCSP"
+  name_equal_to_key: True
   description: "WLCSP-49"
   size_source: "http://www.st.com/resource/en/datasheet/stm32f071v8.pdf#page=106"
   body_size_x: 3.277
@@ -337,7 +408,9 @@ ST_WLCSP-49_Die448:
   paste_margin: 0.000001
   layout_x: 7
   layout_y: 7
-ST_WLCSP-52_3.09x3.15mm_P0.4mm_Stagger:
+ST_WLCSP-52_3.09x3.15mm_Layout13x8_P0.4mm_Stagger:
+  manufacturer: "ST"
+  device_type: "WLCSP"
   description: "ST WLCSP-52, ST die ID 467"
   size_source: "https://www.st.com/resource/en/datasheet/stm32g0b1ne.pdf#page=136"
   body_size_x: 3.09
@@ -350,7 +423,9 @@ ST_WLCSP-52_3.09x3.15mm_P0.4mm_Stagger:
   paste_margin: 0.0125
   layout_x: 13
   layout_y: 8
-ST_WLCSP-56_3.38x3.38mm_P0.4m_Stagger:
+ST_WLCSP-56_3.38x3.38mm_Layout14x8_P0.4mm_Stagger:
+  manufacturer: "ST"
+  device_type: "WLCSP"
   description: "ST WLCSP-56, ST die ID 455"
   size_source: "https://www.st.com/resource/en/datasheet/stm32u535je.pdf"
   body_size_x: 3.38
@@ -364,6 +439,9 @@ ST_WLCSP-56_3.38x3.38mm_P0.4m_Stagger:
   layout_x: 14
   layout_y: 8
 ST_WLCSP-63_Die427:
+  manufacturer: "ST"
+  device_type: "WLCSP"
+  name_equal_to_key: True
   description: "WLCSP-63"
   size_source: "http://www.st.com/resource/en/datasheet/stm32l151cc.pdf#page=125"
   body_size_x: 3.228
@@ -375,6 +453,9 @@ ST_WLCSP-63_Die427:
   layout_x: 7
   layout_y: 9
 ST_WLCSP-64_Die414:
+  manufacturer: "ST"
+  device_type: "WLCSP"
+  name_equal_to_key: True
   description: "WLCSP-64"
   size_source: "http://www.st.com/resource/en/datasheet/stm32f103ze.pdf#page=120"
   body_size_x: 4.466
@@ -386,6 +467,9 @@ ST_WLCSP-64_Die414:
   layout_x: 8
   layout_y: 8
 ST_WLCSP-64_Die427:
+  manufacturer: "ST"
+  device_type: "WLCSP"
+  name_equal_to_key: True
   description: "WLCSP-64"
   size_source: "http://www.st.com/resource/en/datasheet/stm32l152zc.pdf#page=126"
   body_size_x: 4.539
@@ -397,6 +481,9 @@ ST_WLCSP-64_Die427:
   layout_x: 8
   layout_y: 8
 ST_WLCSP-64_Die435:
+  manufacturer: "ST"
+  device_type: "WLCSP"
+  name_equal_to_key: True
   description: "WLCSP-64"
   size_source: "http://www.st.com/resource/en/datasheet/DM00257211.pdf#page=188"
   body_size_x: 3.141
@@ -408,6 +495,9 @@ ST_WLCSP-64_Die435:
   layout_x: 8
   layout_y: 8
 ST_WLCSP-64_Die436:
+  manufacturer: "ST"
+  device_type: "WLCSP"
+  name_equal_to_key: True
   description: "WLCSP-64"
   size_source: "http://www.st.com/resource/en/datasheet/stm32l152zd.pdf#page=143"
   body_size_x: 4.539
@@ -419,6 +509,9 @@ ST_WLCSP-64_Die436:
   layout_x: 8
   layout_y: 8
 ST_WLCSP-64_Die441:
+  manufacturer: "ST"
+  device_type: "WLCSP"
+  name_equal_to_key: True
   description: "WLCSP-64"
   size_source: "http://www.st.com/resource/en/datasheet/DM00213872.pdf#page=167"
   body_size_x: 3.623
@@ -430,6 +523,9 @@ ST_WLCSP-64_Die441:
   layout_x: 8
   layout_y: 8
 ST_WLCSP-64_Die442:
+  manufacturer: "ST"
+  device_type: "WLCSP"
+  name_equal_to_key: True
   description: "WLCSP-64"
   size_source: "http://www.st.com/resource/en/datasheet/stm32f091vb.pdf#page=109"
   body_size_x: 3.347
@@ -441,6 +537,9 @@ ST_WLCSP-64_Die442:
   layout_x: 8
   layout_y: 8
 ST_WLCSP-64_Die462:
+  manufacturer: "ST"
+  device_type: "WLCSP"
+  name_equal_to_key: True
   description: "WLCSP-64"
   size_source: "http://www.st.com/resource/en/datasheet/DM00340475.pdf#page=189"
   body_size_x: 3.357
@@ -452,6 +551,9 @@ ST_WLCSP-64_Die462:
   layout_x: 8
   layout_y: 8
 ST_WLCSP-66_Die411:
+  manufacturer: "ST"
+  device_type: "WLCSP"
+  name_equal_to_key: True
   description: "WLCSP-66"
   size_source: "http://www.st.com/resource/en/datasheet/stm32f207vg.pdf#page=154"
   body_size_x: 3.639
@@ -464,6 +566,9 @@ ST_WLCSP-66_Die411:
   layout_y: 9
   row_skips: [[], [], [[4, 7]], [[4, 7]], [[4, 7]], [[4, 7]], [[4, 7]], [], []]
 ST_WLCSP-66_Die432:
+  manufacturer: "ST"
+  device_type: "WLCSP"
+  name_equal_to_key: True
   description: "WLCSP-66"
   size_source: "http://www.st.com/resource/en/datasheet/stm32f378vc.pdf#page=114"
   body_size_x: 3.767
@@ -476,6 +581,9 @@ ST_WLCSP-66_Die432:
   layout_y: 9
   row_skips: [[], [], [], [4, 5], [4, 5], [4, 5], [], [], []]
 ST_WLCSP-72_Die415:
+  manufacturer: "ST"
+  device_type: "WLCSP"
+  name_equal_to_key: True
   description: "WLCSP-72"
   size_source: "http://www.st.com/resource/en/datasheet/stm32l476me.pdf#page=255"
   body_size_x: 4.4084
@@ -487,7 +595,9 @@ ST_WLCSP-72_Die415:
   layout_x: 9
   layout_y: 9
   row_skips: [[], [], [], [[4, 7]], [[4, 7]], [[4, 7]], [], [], []]
-ST_WLCSP-72_3.38x3.38mm_P0.35m_Stagger:
+ST_WLCSP-72_3.38x3.38mm_Layout16x9_P0.35mm_Stagger:
+  manufacturer: "ST"
+  device_type: "WLCSP"
   description: "ST WLCSP-72, ST die ID 455"
   size_source: "https://www.st.com/resource/en/datasheet/stm32u535je.pdf"
   body_size_x: 3.38
@@ -500,7 +610,9 @@ ST_WLCSP-72_3.38x3.38mm_P0.35m_Stagger:
   paste_margin: 0.0375
   layout_x: 16
   layout_y: 9
-ST_WLCSP-80_3.50x3.27mm_P0.35mm_Stagger:
+ST_WLCSP-80_3.5x3.27mm_Layout10x16_P0.35mm_Stagger_Offcenter:
+  manufacturer: "ST"
+  device_type: "WLCSP"
   description: "ST WLCSP-80, ST die ID 484"
   size_source: "https://www.st.com/resource/en/datasheet/stm32h563mi.pdf"
   body_size_x: 3.50
@@ -516,6 +628,9 @@ ST_WLCSP-80_3.50x3.27mm_P0.35mm_Stagger:
   layout_x: 10
   layout_y: 16
 ST_WLCSP-81_Die415:
+  manufacturer: "ST"
+  device_type: "WLCSP"
+  name_equal_to_key: True
   description: "WLCSP-81"
   size_source: "http://www.st.com/resource/en/datasheet/stm32l476me.pdf#page=252"
   body_size_x: 4.4084
@@ -527,6 +642,9 @@ ST_WLCSP-81_Die415:
   layout_x: 9
   layout_y: 9
 ST_WLCSP-81_Die421:
+  manufacturer: "ST"
+  device_type: "WLCSP"
+  name_equal_to_key: True
   description: "WLCSP-81"
   size_source: "http://www.st.com/resource/en/datasheet/stm32f446ze.pdf#page=192"
   body_size_x: 3.693
@@ -538,6 +656,9 @@ ST_WLCSP-81_Die421:
   layout_x: 9
   layout_y: 9
 ST_WLCSP-81_Die463:
+  manufacturer: "ST"
+  device_type: "WLCSP"
+  name_equal_to_key: True
   description: "WLCSP-81"
   size_source: "http://www.st.com/resource/en/datasheet/DM00282249.pdf#page=175"
   body_size_x: 4.039
@@ -549,6 +670,8 @@ ST_WLCSP-81_Die463:
   layout_x: 9
   layout_y: 9
 ST_WLCSP-81_4.02x4.27mm_Layout9x9_P0.4mm:
+  manufacturer: "ST"
+  device_type: "WLCSP"
   description: "ST WLCSP-81, ST die ID 469"
   size_source: "https://www.st.com/resource/en/datasheet/stm32g483me.pdf"
   body_size_x: 4.02
@@ -560,6 +683,9 @@ ST_WLCSP-81_4.02x4.27mm_Layout9x9_P0.4mm:
   layout_x: 9
   layout_y: 9
 ST_WLCSP-90_Die413:
+  manufacturer: "ST"
+  device_type: "WLCSP"
+  name_equal_to_key: True
   description: "WLCSP-90"
   size_source: "http://www.st.com/resource/en/datasheet/stm32f405og.pdf#page=164"
   body_size_x: 4.223
@@ -570,7 +696,9 @@ ST_WLCSP-90_Die413:
   paste_margin: 0.000001
   layout_x: 10
   layout_y: 9
-ST_WLCSP-90_4.20x3.95mm_P0.4mm_Stagger:
+ST_WLCSP-90_4.2x3.95mm_Layout18x10_P0.4mm_Stagger:
+  manufacturer: "ST"
+  device_type: "WLCSP"
   description: "ST WLCSP-90, ST die ID 482"
   size_source: "https://www.st.com/resource/en/datasheet/stm32u575og.pdf#page=306"
   body_size_x: 4.20
@@ -583,7 +711,9 @@ ST_WLCSP-90_4.20x3.95mm_P0.4mm_Stagger:
   paste_margin: 0.0125
   layout_x: 18
   layout_y: 10
-ST_WLCSP-99_4.42x3.77mm_Layout9x11_P0.35mm:
+ST_WLCSP-99_4.42x3.77mm_Layout11x9_P0.35mm:
+  manufacturer: "ST"
+  device_type: "WLCSP"
   description: "ST WLCSP-99, ST die ID 415"
   size_source: "https://www.st.com/resource/en/datasheet/stm32l476vg.pdf"
   body_size_x: 4.42
@@ -595,6 +725,9 @@ ST_WLCSP-99_4.42x3.77mm_Layout9x11_P0.35mm:
   layout_x: 11
   layout_y: 9
 ST_WLCSP-100_Die422:
+  manufacturer: "ST"
+  device_type: "WLCSP"
+  name_equal_to_key: True
   description: "WLCSP-100"
   size_source: "http://www.st.com/resource/en/datasheet/stm32f302vc.pdf#page=133"
   body_size_x: 4.201
@@ -606,6 +739,9 @@ ST_WLCSP-100_Die422:
   layout_x: 10
   layout_y: 10
 ST_WLCSP-100_Die446:
+  manufacturer: "ST"
+  device_type: "WLCSP"
+  name_equal_to_key: True
   description: "WLCSP-100"
   size_source: "http://www.st.com/resource/en/datasheet/stm32f303zd.pdf#page=162"
   body_size_x: 4.775
@@ -617,6 +753,9 @@ ST_WLCSP-100_Die446:
   layout_x: 10
   layout_y: 10
 ST_WLCSP-100_Die452:
+  manufacturer: "ST"
+  device_type: "WLCSP"
+  name_equal_to_key: True
   description: "WLCSP-100"
   size_source: "http://www.st.com/resource/en/datasheet/DM00330506.pdf#page=218"
   body_size_x: 4.201
@@ -628,6 +767,9 @@ ST_WLCSP-100_Die452:
   layout_x: 10
   layout_y: 10
 ST_WLCSP-100_Die461:
+  manufacturer: "ST"
+  device_type: "WLCSP"
+  name_equal_to_key: True
   description: "WLCSP-100"
   size_source: "http://www.st.com/resource/en/datasheet/DM00284211.pdf#page=259"
   body_size_x: 4.618
@@ -638,7 +780,9 @@ ST_WLCSP-100_Die461:
   paste_margin: 0.000001
   layout_x: 10
   layout_y: 10
-ST_WLCSP-100_4.40x4.38mm_Layout10x10_P0.4mm_Offcenter:
+ST_WLCSP-100_4.4x4.38mm_Layout10x10_P0.4mm_Offcenter:
+  manufacturer: "ST"
+  device_type: "WLCSP"
   description: "ST WLCSP-100, off-center ball grid, ST die ID 495"
   size_source: "https://www.st.com/resource/en/datasheet/stm32wb55vc.pdf"
   body_size_x: 4.40
@@ -651,7 +795,9 @@ ST_WLCSP-100_4.40x4.38mm_Layout10x10_P0.4mm_Offcenter:
   layout_y: 10
   offset_x: -0.08
   offset_y: -0.08
-ST_WLCSP-101_3.86x3.79mm_P0.35mm_Stagger:
+ST_WLCSP-101_3.86x3.79mm_Layout11x19_P0.35mm_Stagger:
+  manufacturer: "ST"
+  device_type: "WLCSP"
   description: "ST WLCSP-101, ST Die ID 485"
   size_source: "https://www.st.com/resource/en/datasheet/stm32h7r3v8.pdf"
   body_size_x: 3.86
@@ -666,6 +812,9 @@ ST_WLCSP-101_3.86x3.79mm_P0.35mm_Stagger:
   layout_y: 19
   pad_skips: [W2,W4,W6]
 ST_WLCSP-104_Die437:
+  manufacturer: "ST"
+  device_type: "WLCSP"
+  name_equal_to_key: True
   description: "WLCSP-104"
   size_source: "http://www.st.com/resource/en/datasheet/stm32l152ze.pdf#page=127"
   body_size_x: 4.095
@@ -677,7 +826,9 @@ ST_WLCSP-104_Die437:
   layout_x: 9
   layout_y: 12
   row_skips: [[], [], [], [], [5], [5], [5], [5], [], [], [], []]
-ST_WLCSP-115_4.63x4.15mm_P0.4mm_Stagger:
+ST_WLCSP-115_4.63x4.15mm_Layout21x11_P0.4mm_Stagger:
+  manufacturer: "ST"
+  device_type: "WLCSP"
   description: "ST WLCSP-115, ST die ID 461"
   size_source: "https://www.st.com/resource/en/datasheet/stm32l496wg.pdf"
   body_size_x: 4.63
@@ -690,7 +841,9 @@ ST_WLCSP-115_4.63x4.15mm_P0.4mm_Stagger:
   paste_margin: 0.0125
   layout_x: 21
   layout_y: 11
-ST_WLCSP-115_3.73x4.15mm_P0.35mm_Stagger:
+ST_WLCSP-115_3.73x4.15mm_Layout11x21_P0.35mm_Stagger:
+  manufacturer: "ST"
+  device_type: "WLCSP"
   description: "ST WLCSP-115, ST die ID 483"
   size_source: "https://www.st.com/resource/en/datasheet/stm32h725vg.pdf"
   body_size_x: 3.73
@@ -704,6 +857,9 @@ ST_WLCSP-115_3.73x4.15mm_P0.35mm_Stagger:
   layout_x: 11
   layout_y: 21
 ST_WLCSP-143_Die419:
+  manufacturer: "ST"
+  device_type: "WLCSP"
+  name_equal_to_key: True
   description: "WLCSP-143"
   size_source: "http://www.st.com/resource/en/datasheet/stm32f429ng.pdf#page=203"
   body_size_x: 4.521
@@ -715,6 +871,9 @@ ST_WLCSP-143_Die419:
   layout_x: 11
   layout_y: 13
 ST_WLCSP-143_Die449:
+  manufacturer: "ST"
+  device_type: "WLCSP"
+  name_equal_to_key: True
   description: "WLCSP-143"
   size_source: "http://www.st.com/resource/en/datasheet/stm32f746zg.pdf#page=202"
   body_size_x: 4.539
@@ -726,6 +885,9 @@ ST_WLCSP-143_Die449:
   layout_x: 11
   layout_y: 13
 ST_WLCSP-144_Die470:
+  manufacturer: "ST"
+  device_type: "WLCSP"
+  name_equal_to_key: True
   description: "WLCSP-144"
   size_source: "http://www.st.com/resource/en/datasheet/DM00366448.pdf#page=295"
   body_size_x: 5.24
@@ -736,7 +898,9 @@ ST_WLCSP-144_Die470:
   paste_margin: 0.0125
   layout_x: 12
   layout_y: 12
-ST_WLCSP-150_5.38x5.47mm_P0.4m_Stagger:
+ST_WLCSP-150_5.38x5.47mm_Layout13x23_P0.4mm_Stagger:
+  manufacturer: "ST"
+  device_type: "WLCSP"
   description: "ST WLCSP-150, ST die ID 481"
   size_source: "https://www.st.com/resource/en/datasheet/stm32u595zj.pdf"
   body_size_x: 5.38
@@ -750,6 +914,9 @@ ST_WLCSP-150_5.38x5.47mm_P0.4m_Stagger:
   layout_x: 13
   layout_y: 23
 ST_WLCSP-168_Die434:
+  manufacturer: "ST"
+  device_type: "WLCSP"
+  name_equal_to_key: True
   description: "WLCSP-168"
   size_source: "http://www.st.com/resource/en/datasheet/stm32f469ni.pdf#page=198"
   body_size_x: 4.891
@@ -761,6 +928,9 @@ ST_WLCSP-168_Die434:
   layout_x: 12
   layout_y: 14
 ST_WLCSP-180_Die451:
+  manufacturer: "ST"
+  device_type: "WLCSP"
+  name_equal_to_key: True
   description: "WLCSP-180"
   size_source: "http://www.st.com/resource/en/datasheet/DM00273119.pdf#page=240"
   body_size_x: 5.537
@@ -772,7 +942,9 @@ ST_WLCSP-180_Die451:
   layout_x: 13
   layout_y: 14
   row_skips: [[], [], [], [], [], [], [7], [7], [], [], [], [], [], []]
-ST_WLCSP-208_5.38x5.47mm_P0.35mm_Stagger:
+ST_WLCSP-208_5.38x5.47mm_Layout26x16_P0.35mm_Stagger:
+  manufacturer: "ST"
+  device_type: "WLCSP"
   description: "ST WLCSP-208, ST die ID 481"
   size_source: "https://www.st.com/resource/en/datasheet/stm32u5a5aj.pdf"
   body_size_x: 5.38
@@ -785,7 +957,9 @@ ST_WLCSP-208_5.38x5.47mm_P0.35mm_Stagger:
   paste_margin: 0.0125
   layout_x: 26
   layout_y: 16
-ST_WLCSP-208_5.8x5.6mm_P0.35_Stagger:
+ST_WLCSP-208_5.8x5.6mm_Layout26x16_P0.35mm_Stagger:
+  manufacturer: "ST"
+  device_type: "WLCSP"
   description: "ST WLCSP-208, ST die ID 476"
   size_source: "https://www.st.com/resource/en/datasheet/stm32u5f9bj.pdf"
   body_size_x: 5.8
@@ -799,6 +973,8 @@ ST_WLCSP-208_5.8x5.6mm_P0.35_Stagger:
   layout_x: 26
   layout_y: 16
 ST_WLCSP-100_4.437x4.456mm_Layout10x10_P0.4mm:
+  manufacturer: "ST"
+  device_type: "WLCSP"
   description: "ST WLCSP-100, ST die ID 471"
   size_source: "https://www.st.com/resource/en/datasheet/stm32l4p5ve.pdf"
   body_size_x: 4.437
@@ -810,6 +986,8 @@ ST_WLCSP-100_4.437x4.456mm_Layout10x10_P0.4mm:
   layout_x: 10
   layout_y: 10
 ST_WLCSP-132_4.57x4.37mm_Layout12x11_P0.35mm:
+  manufacturer: "ST"
+  device_type: "WLCSP"
   description: "ST WLCSP-132, ST die ID 480"
   size_source: "https://www.st.com/resource/en/datasheet/stm32h7a3ai.pdf"
   body_size_x: 4.57
@@ -821,6 +999,8 @@ ST_WLCSP-132_4.57x4.37mm_Layout12x11_P0.35mm:
   layout_x: 12
   layout_y: 11
 ST_WLCSP-156_4.96x4.64mm_Layout13x12_P0.35mm:
+  manufacturer: "ST"
+  device_type: "WLCSP"
   description: "ST WLCSP-156, ST die ID 450"
   size_source: "https://www.st.com/resource/en/datasheet/stm32h747xi.pdf"
   body_size_x: 4.96
@@ -831,7 +1011,9 @@ ST_WLCSP-156_4.96x4.64mm_Layout13x12_P0.35mm:
   paste_margin: 0.0125
   layout_x: 13
   layout_y: 12
-ST_WLCSP-25_2.30x2.48mm_Layout5x5_P0.4mm:
+ST_WLCSP-25_2.3x2.48mm_Layout5x5_P0.4mm:
+  manufacturer: "ST"
+  device_type: "WLCSP"
   description: "ST WLCSP-25, ST die ID 460"
   size_source: "https://www.st.com/resource/en/datasheet/stm32g071eb.pdf"
   body_size_x: 2.30
@@ -843,6 +1025,8 @@ ST_WLCSP-25_2.30x2.48mm_Layout5x5_P0.4mm:
   layout_x: 5
   layout_y: 5
 ST_WLCSP-36_2.58x3.07mm_Layout6x6_P0.4mm:
+  manufacturer: "ST"
+  device_type: "WLCSP"
   description: "ST WLCSP-36, ST die ID 464"
   size_source: "https://www.st.com/resource/en/datasheet/stm32l412t8.pdf"
   body_size_x: 2.58
@@ -854,6 +1038,8 @@ ST_WLCSP-36_2.58x3.07mm_Layout6x6_P0.4mm:
   layout_x: 6
   layout_y: 6
 ST_WLCSP-49_3.15x3.13mm_Layout7x7_P0.4mm:
+  manufacturer: "ST"
+  device_type: "WLCSP"
   description: "ST WLCSP-49, ST die ID 468"
   size_source: "https://www.st.com/resource/en/datasheet/stm32g431c6.pdf"
   body_size_x: 3.15
@@ -864,7 +1050,9 @@ ST_WLCSP-49_3.15x3.13mm_Layout7x7_P0.4mm:
   paste_margin: 0.000001
   layout_x: 7
   layout_y: 7
-ST_WLCSP-49_3.30x3.38mm_Layout7x7_P0.4mm_Offcenter:
+ST_WLCSP-49_3.3x3.38mm_Layout7x7_P0.4mm_Offcenter:
+  manufacturer: "ST"
+  device_type: "WLCSP"
   description: "ST WLCSP-49, off-center ball grid, ST die ID 494"
   size_source: "https://www.st.com/resource/en/datasheet/stm32wb15cc.pdf#page=119"
   body_size_x: 3.30
@@ -878,6 +1066,8 @@ ST_WLCSP-49_3.30x3.38mm_Layout7x7_P0.4mm_Offcenter:
   offset_x: -0.129
   offset_y: 0.012
 ST_WLCSP-64_3.56x3.52mm_Layout8x8_P0.4mm:
+  manufacturer: "ST"
+  device_type: "WLCSP"
   description: "ST WLCSP-64, ST die ID 479"
   size_source: "https://www.st.com/resource/en/datasheet/stm32g491re.pdf"
   body_size_x: 3.56
@@ -889,6 +1079,8 @@ ST_WLCSP-64_3.56x3.52mm_Layout8x8_P0.4mm:
   layout_x: 8
   layout_y: 8
 ST_WLCSP-81_4.36x4.07mm_Layout9x9_P0.4mm:
+  manufacturer: "ST"
+  device_type: "WLCSP"
   description: "ST WLCSP-81, ST die ID 472"
   size_source: "https://www.st.com/resource/en/datasheet/stm32l562ce.pdf"
   body_size_x: 4.36
@@ -899,7 +1091,8 @@ ST_WLCSP-81_4.36x4.07mm_Layout9x9_P0.4mm:
   paste_margin: 0.0125
   layout_x: 9
   layout_y: 9
-WLCSP-16_1.409x1.409mm_P0.35mm:
+WLCSP-16_1.409x1.409mm_Layout4x4_P0.35mm:
+  device_type: "WLCSP"
   description: "WLCSP-16"
   size_source: 'http://www.latticesemi.com/view_document?document_id=213'
   body_size_x: 1.409
@@ -908,7 +1101,8 @@ WLCSP-16_1.409x1.409mm_P0.35mm:
   pad_diameter: 0.2
   layout_x: 4
   layout_y: 4
-WLCSP-16_2.225x2.17mm_P0.5mm:
+WLCSP-16_2.225x2.17mm_Layout4x4_P0.5mm:
+  device_type: "WLCSP"
   description: "WLCSP-16 2.225x2.17mm"
   size_source: 'https://ww1.microchip.com/downloads/en/DeviceDoc/16B_WLCSP_CS_C04-06036c.pdf'
   body_size_x: 2.225
@@ -917,7 +1111,8 @@ WLCSP-16_2.225x2.17mm_P0.5mm:
   pad_diameter: 0.327
   layout_x: 4
   layout_y: 4
-WLCSP-9_1.21x1.22mm_P0.4mm:
+WLCSP-9_1.21x1.22mm_Layout3x3_P0.4mm:
+  device_type: "WLCSP"
   description: "WLCSP-9"
   size_source: "https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/wlcspcb/cb_9_3.pdf"
   body_size_x: 1.21
@@ -926,7 +1121,8 @@ WLCSP-9_1.21x1.22mm_P0.4mm:
   pad_diameter: 0.2
   layout_x: 3
   layout_y: 3
-WLCSP-8_1.551x2.284mm_P0.5mm:
+WLCSP-8_1.551x2.284mm_Layout2x4_P0.5mm:
+  device_type: "WLCSP"
   description: "WLCSP-8"
   size_source: "https://www.adestotech.com/wp-content/uploads/AT25SL321_112.pdf#page=75"
   body_size_x: 1.551
@@ -935,7 +1131,8 @@ WLCSP-8_1.551x2.284mm_P0.5mm:
   pad_diameter: 0.2
   layout_x: 2
   layout_y: 4
-WLCSP-4_0.64x0.64mm_P0.35mm:
+WLCSP-4_0.64x0.64mm_Layout2x2_P0.35mm:
+  device_type: "WLCSP"
   description: "WLCSP-4"
   size_source: 'https://www.onsemi.com/pdf/datasheet/ncp163-d.pdf#page=23'
   body_size_x: 0.64
@@ -944,8 +1141,9 @@ WLCSP-4_0.64x0.64mm_P0.35mm:
   pad_diameter: 0.21
   layout_x: 2
   layout_y: 2
-WLCSP-4-X1-WLB0909-4_0.89x0.89mm_P0.5mm:
-  description: "X1-WLB0909"
+WLCSP-4_0.89x0.89mm_Layout2x2_P0.5mm:
+  device_type: "WLCSP"
+  description: "X1-WLB0909-4"
   size_source: 'https://www.diodes.com/assets/Datasheets/AP22913.pdf'
   body_size_x: 0.89
   body_size_y: 0.89
@@ -953,7 +1151,10 @@ WLCSP-4-X1-WLB0909-4_0.89x0.89mm_P0.5mm:
   pad_diameter: 0.235 # even though ball_diameter is 0.235 analog recommends a landing pad of 0.235
   layout_x: 2
   layout_y: 2
-DiodesInc_GEA20_WLCSP-20_1.70x2.10mm_Layout4x5_P0.4mm:
+DiodesInc_GEA20_WLCSP-20_1.7x2.1mm_Layout4x5_P0.4mm:
+  manufacturer: "DiodesInc"
+  part_number: "GEA20"
+  device_type: "WLCSP"
   description: "Diodes Incorporated WLCSP-20, GEA20"
   size_source: "https://www.diodes.com/assets/Package-Files/GEA20.pdf"
   body_size_x: 1.70
@@ -962,7 +1163,9 @@ DiodesInc_GEA20_WLCSP-20_1.70x2.10mm_Layout4x5_P0.4mm:
   pad_diameter: 0.230
   layout_x: 4
   layout_y: 5
-Macronix_WLCSP-12_2.02x2.09mm_P0.5mm:
+Macronix_WLCSP-12_2.02x2.09mm_Layout4x4_P0.5mm:
+  manufacturer: "Macronix"
+  device_type: "WLCSP"
   description: "WLCSP-12"
   size_source: "https://www.macronix.com/Lists/Datasheet/Attachments/8909/MX25U3232F,%201.8V,%2032Mb,%20v1.2.pdf#page=93"
   body_size_x: 2.02
@@ -972,7 +1175,9 @@ Macronix_WLCSP-12_2.02x2.09mm_P0.5mm:
   layout_x: 4
   layout_y: 4
   row_skips: [[], [1, 4], [1, 4], []]
-Dialog_WLCSP-34_4.54x1.66mm_Stagger:
+Dialog_WLCSP-34_4.54x1.66mm_Layout17x4_P0.25x0.34mm:
+  manufacturer: "Dialog"
+  device_type: "WLCSP"
   additional_tags:
     - "34-ball"
   description: "Dialog Semiconductor (Renesas) WLCSP-34, staggered array"
@@ -985,7 +1190,10 @@ Dialog_WLCSP-34_4.54x1.66mm_Stagger:
   layout_x: 17
   layout_y: 4
   row_skips: [[2, 4, 6, 8, 10, 12, 14, 16], [1, 3, 5, 7, 9, 11, 13, 15, 17], [2, 4, 6, 8, 10, 12, 14, 16], [1, 3, 5, 7, 9, 11, 13, 15, 17]]
-OnSemi_ODCSP36_BGA-36_6.13x6.13mm_P1.0mm_Ball0.26mm:
+OnSemi_ODCSP36_BGA-36_6.13x6.13mm_Layout6x6_P1.0mm:
+  manufacturer: "OnSemi"
+  part_number: "ODCSP36"
+  device_type: "BGA"
   description: "OnSemi ODCSP36 (Case 570CP), 0.27mm pad"
   size_source: "https://www.onsemi.com/pub/Collateral/570CP.PDF"
   extra_text:
@@ -1004,12 +1212,16 @@ OnSemi_ODCSP36_BGA-36_6.13x6.13mm_P1.0mm_Ball0.26mm:
   mask_margin: 0.1
   layout_x: 6
   layout_y: 6
-OnSemi_ODCSP36_BGA-36_6.13x6.13mm_P1.0mm_Ball0.26mm_ManualAssembly:
-  inherit: "OnSemi_ODCSP36_BGA-36_6.13x6.13mm_P1.0mm_Ball0.26mm"
+OnSemi_ODCSP36_BGA-36_6.13x6.13mm_Layout6x6_P1.0mm_ManualAssembly:
+  inherit: "OnSemi_ODCSP36_BGA-36_6.13x6.13mm_Layout6x6_P1.0mm"
+  suffix: "_ManualAssembly"
   description: "OnSemi ODCSP36 (Case 570CP), 0.47mm pad, manual assembly variant (larger pads)"
   pad_diameter: 0.47 # This is made larger (to the recommended mask size) for better manual soldering
   mask_margin: 0.0 # Pads are already at MFR recommended mask opening size (0.47mm)
-OnSemi_ODCSP8_BGA-8_3.16x3.16mm_P1.26mm_Ball0.26mm:
+OnSemi_ODCSP8_BGA-8_3.16x3.16mm_Layout3x3_P1.26mm:
+  manufacturer: "OnSemi"
+  part_number: "ODCSP8"
+  device_type: "BGA"
   description: "OnSemi ODCSP8 (Case 570CS), 0.27mm pad"
   size_source: "https://www.onsemi.com/pub/Collateral/570CS.PDF"
   extra_text:
@@ -1029,8 +1241,9 @@ OnSemi_ODCSP8_BGA-8_3.16x3.16mm_P1.26mm_Ball0.26mm:
   layout_x: 3
   layout_y: 3
   pad_skips: [B2]
-OnSemi_ODCSP8_BGA-8_3.16x3.16mm_P1.26mm_Ball0.26mm_ManualAssembly:
+OnSemi_ODCSP8_BGA-8_3.16x3.16mm_Layout3x3_P1.26mm_ManualAssembly:
+  inherit: "OnSemi_ODCSP8_BGA-8_3.16x3.16mm_Layout3x3_P1.26mm"
+  suffix: "_ManualAssembly"
   description: "OnSemi ODCSP8 (Case 570CS), 0.46mm pad, manual assembly variant (larger pads)"
-  inherit: "OnSemi_ODCSP8_BGA-8_3.16x3.16mm_P1.26mm_Ball0.26mm"
   pad_diameter: 0.47 # Pads at the size recommended for the solder mask
   mask_margin: 0.0 # Pads are already at MFR recommended mask opening size (0.47mm)

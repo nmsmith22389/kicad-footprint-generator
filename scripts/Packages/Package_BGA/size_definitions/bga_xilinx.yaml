@@ -1,5 +1,6 @@
 FileHeader:
   package_type: BGA
+  manufacturer: "Xilinx"
 
 # Artix-7 FPGA Packages
 # Notes:
@@ -23,6 +24,7 @@ Xilinx_CPG236:
   layout_x: 19
   layout_y: 19
   row_skips: [[], [], [], [[4,17]], [[4,17]], [[4,17]], [[4,7],[14,17]], [[4,7],[14,17]], [[4,7],[14,17]], [[4,7],[9,12],[14,17]], [[4,7],[14,17]], [[4,7],[14,17]], [[4,7],[14,17]], [[4,17]], [[4,17]], [[4,17]], [], [], []]
+  name_equal_to_key: True
 Xilinx_CPG238:
   description: "Artix-7 BGA, NSMD pad definition Appendix A"
   size_source: "https://www.xilinx.com/support/documentation/user_guides/ug475_7Series_Pkg_Pinout.pdf#page=267"
@@ -35,6 +37,7 @@ Xilinx_CPG238:
   layout_x: 19
   layout_y: 19
   row_skips: [[], [], [], [[4,17]], [[4,17]], [[4,17]], [[4,7],[14,17]], [[4,7],[14,17]], [[4,7],[14,17]], [[4,7],[9,12],[14,17]], [[4,7],[14,17]], [[4,7],[14,17]], [[4,7],[14,17]], [[4,17]], [[4,17]], [[4,17]], [], [], []]
+  name_equal_to_key: True
 Xilinx_CSG324:
   description: "Artix-7 BGA, NSMD pad definition Appendix A"
   size_source: "https://www.xilinx.com/support/documentation/user_guides/ug475_7Series_Pkg_Pinout.pdf#page=268"
@@ -46,6 +49,7 @@ Xilinx_CSG324:
   mask_margin: 0.05
   layout_x: 18
   layout_y: 18
+  name_equal_to_key: True
 Xilinx_CSG325:
   description: "Artix-7 BGA, NSMD pad definition Appendix A"
   size_source: "https://www.xilinx.com/support/documentation/user_guides/ug475_7Series_Pkg_Pinout.pdf#page=268"
@@ -57,6 +61,7 @@ Xilinx_CSG325:
   mask_margin: 0.05
   layout_x: 18
   layout_y: 18
+  name_equal_to_key: True
 Xilinx_SBG484:
   description: "Artix-7 BGA, NSMD pad definition Appendix A"
   size_source: "https://www.xilinx.com/support/documentation/user_guides/ug475_7Series_Pkg_Pinout.pdf#page=270"
@@ -68,6 +73,7 @@ Xilinx_SBG484:
   mask_margin: 0.05
   layout_x: 22
   layout_y: 22
+  name_equal_to_key: True
 Xilinx_RS484:
   description: "Artix-7 BGA, NSMD pad definition Appendix A"
   size_source: "https://www.xilinx.com/support/documentation/user_guides/ug475_7Series_Pkg_Pinout.pdf#page=279"
@@ -79,6 +85,7 @@ Xilinx_RS484:
   mask_margin: 0.05
   layout_x: 22
   layout_y: 22
+  name_equal_to_key: True
 Xilinx_FTG256:
   description: "Artix-7 BGA, NSMD pad definition Appendix A"
   size_source: "https://www.xilinx.com/support/documentation/user_guides/ug475_7Series_Pkg_Pinout.pdf#page=269"
@@ -90,6 +97,7 @@ Xilinx_FTG256:
   mask_margin: 0.05
   layout_x: 16
   layout_y: 16
+  name_equal_to_key: True
 Xilinx_FBG484:
   description: "Artix-7, Kintex-7 and Zynq-7000 BGA, NSMD pad definition Appendix A"
   size_source: "https://www.xilinx.com/support/documentation/user_guides/ug475_7Series_Pkg_Pinout.pdf#page=271, ttps://www.xilinx.com/support/documentation/user_guides/ug475_7Series_Pkg_Pinout.pdf#page=281, https://www.xilinx.com/support/documentation/user_guides/ug865-Zynq-7000-Pkg-Pinout.pdf#page=82"
@@ -101,6 +109,7 @@ Xilinx_FBG484:
   mask_margin: 0.05
   layout_x: 22
   layout_y: 22
+  name_equal_to_key: True
 Xilinx_FGG484:
   description: "Artix-7 BGA, NSMD pad definition Appendix A"
   size_source: "https://www.xilinx.com/support/documentation/user_guides/ug475_7Series_Pkg_Pinout.pdf#page=275"
@@ -112,6 +121,7 @@ Xilinx_FGG484:
   mask_margin: 0.05
   layout_x: 22
   layout_y: 22
+  name_equal_to_key: True
 Xilinx_RB484:
   description: "Artix-7 and Zynq-7000 BGA, NSMD pad definition Appendix A"
   size_source: "https://www.xilinx.com/support/documentation/user_guides/ug475_7Series_Pkg_Pinout.pdf#page=278, https://www.xilinx.com/support/documentation/user_guides/ug865-Zynq-7000-Pkg-Pinout.pdf#page=92"
@@ -123,6 +133,7 @@ Xilinx_RB484:
   mask_margin: 0.05
   layout_x: 22
   layout_y: 22
+  name_equal_to_key: True
 Xilinx_FBG676:
   description: "Artix-7, Kintex-7 and Zynq-7000 BGA, NSMD pad definition Appendix A"
   size_source: "https://www.xilinx.com/support/documentation/user_guides/ug475_7Series_Pkg_Pinout.pdf#page=273, https://www.xilinx.com/support/documentation/user_guides/ug475_7Series_Pkg_Pinout.pdf#page=284, https://www.xilinx.com/support/documentation/user_guides/ug865-Zynq-7000-Pkg-Pinout.pdf#page=84"
@@ -134,6 +145,7 @@ Xilinx_FBG676:
   mask_margin: 0.05
   layout_x: 26
   layout_y: 26
+  name_equal_to_key: True
 Xilinx_FGG676:
   description: "Artix-7 BGA, NSMD pad definition Appendix A"
   size_source: "https://www.xilinx.com/support/documentation/user_guides/ug475_7Series_Pkg_Pinout.pdf#page=276"
@@ -145,6 +157,7 @@ Xilinx_FGG676:
   mask_margin: 0.05
   layout_x: 26
   layout_y: 26
+  name_equal_to_key: True
 Xilinx_RB676:
   description: "Artix-7 BGA, NSMD pad definition Appendix A"
   size_source: "https://www.xilinx.com/support/documentation/user_guides/ug475_7Series_Pkg_Pinout.pdf#page=280"
@@ -156,6 +169,7 @@ Xilinx_RB676:
   mask_margin: 0.05
   layout_x: 26
   layout_y: 26
+  name_equal_to_key: True
 Xilinx_FFG1156:
   description: "Artix-7, Kintex-7 and Zynq-7000 BGA, NSMD pad definition Appendix A"
   size_source: "https://www.xilinx.com/support/documentation/user_guides/ug475_7Series_Pkg_Pinout.pdf#page=277, https://www.xilinx.com/support/documentation/user_guides/ug475_7Series_Pkg_Pinout.pdf#page=296, https://www.xilinx.com/support/documentation/user_guides/ug865-Zynq-7000-Pkg-Pinout.pdf#page=91"
@@ -167,6 +181,7 @@ Xilinx_FFG1156:
   mask_margin: 0.05
   layout_x: 34
   layout_y: 34
+  name_equal_to_key: True
   
 # Spartan-7 FPGA Packages
 # Notes:
@@ -181,6 +196,7 @@ Xilinx_CPGA196:
   mask_margin: 0.05
   layout_x: 14
   layout_y: 14
+  name_equal_to_key: True
 Xilinx_FTGB196:
   description: "Spartan-7 BGA, NSMD pad definition Appendix A"
   size_source: "https://www.xilinx.com/support/documentation/user_guides/ug475_7Series_Pkg_Pinout.pdf#page=261"
@@ -192,6 +208,7 @@ Xilinx_FTGB196:
   mask_margin: 0.05
   layout_x: 14
   layout_y: 14
+  name_equal_to_key: True
 Xilinx_CSGA225:
   description: "Spartan-7 BGA, NSMD pad definition Appendix A"
   size_source: "https://www.xilinx.com/support/documentation/user_guides/ug475_7Series_Pkg_Pinout.pdf#page=262"
@@ -203,6 +220,7 @@ Xilinx_CSGA225:
   mask_margin: 0.05
   layout_x: 15
   layout_y: 15
+  name_equal_to_key: True
 Xilinx_CSGA324:
   description: "Spartan-7 BGA, NSMD pad definition Appendix A"
   size_source: "https://www.xilinx.com/support/documentation/user_guides/ug475_7Series_Pkg_Pinout.pdf#page=263"
@@ -214,6 +232,7 @@ Xilinx_CSGA324:
   mask_margin: 0.05
   layout_x: 18
   layout_y: 18
+  name_equal_to_key: True
 Xilinx_FGGA484:
   description: "Spartan-7 BGA, NSMD pad definition Appendix A"
   size_source: "https://www.xilinx.com/support/documentation/user_guides/ug475_7Series_Pkg_Pinout.pdf#page=264"
@@ -225,6 +244,7 @@ Xilinx_FGGA484:
   mask_margin: 0.05
   layout_x: 22
   layout_y: 22
+  name_equal_to_key: True
 Xilinx_FGGA676:
   description: "Spartan-7 BGA, NSMD pad definition Appendix A"
   size_source: "https://www.xilinx.com/support/documentation/user_guides/ug475_7Series_Pkg_Pinout.pdf#page=265"
@@ -236,6 +256,7 @@ Xilinx_FGGA676:
   mask_margin: 0.05
   layout_x: 26
   layout_y: 26
+  name_equal_to_key: True
   
 # Virtex-7 FPGA Packages
 # Notes: 
@@ -254,6 +275,7 @@ Xilinx_FFG1157_FFG1158:
   mask_margin: 0.05
   layout_x: 34
   layout_y: 34
+  name_equal_to_key: True
 Xilinx_FFG1761:
   description: "Virtex-7 BGA, NSMD pad definition Appendix A"
   size_source: "https://www.xilinx.com/support/documentation/user_guides/ug475_7Series_Pkg_Pinout.pdf#page=300"
@@ -266,6 +288,7 @@ Xilinx_FFG1761:
   layout_x: 42
   layout_y: 42
   row_skips: [[1,42], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [1,42]] 
+  name_equal_to_key: True
 Xilinx_FFV1761:
   description: "Virtex-7 BGA, NSMD pad definition Appendix A"
   size_source: "https://www.xilinx.com/support/documentation/user_guides/ug475_7Series_Pkg_Pinout.pdf#page=301"
@@ -278,6 +301,7 @@ Xilinx_FFV1761:
   layout_x: 42
   layout_y: 42
   row_skips: [[1,42], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [1,42]] 
+  name_equal_to_key: True
 Xilinx_FHG1761:
   description: "Virtex-7 BGA, NSMD pad definition Appendix A"
   size_source: "https://www.xilinx.com/support/documentation/user_guides/ug475_7Series_Pkg_Pinout.pdf#page=302"
@@ -290,6 +314,7 @@ Xilinx_FHG1761:
   layout_x: 42
   layout_y: 42
   row_skips: [[1,42], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [1,42]] 
+  name_equal_to_key: True
 Xilinx_FFG1926_FFG1927_FFG1928_FFG1930:
   description: "Virtex-7 BGA, NSMD pad definition Appendix A"
   size_source: "https://www.xilinx.com/support/documentation/user_guides/ug475_7Series_Pkg_Pinout.pdf#page=303"
@@ -302,6 +327,7 @@ Xilinx_FFG1926_FFG1927_FFG1928_FFG1930:
   layout_x: 44
   layout_y: 44
   row_skips: [[1,2,43,44], [1,44], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [1,44], [1,2,43,44]] 
+  name_equal_to_key: True
 Xilinx_FLG1925_FLG1926_FLG1928_FLG1930:
   description: "Virtex-7 BGA, NSMD pad definition Appendix A"
   size_source: "https://www.xilinx.com/support/documentation/user_guides/ug475_7Series_Pkg_Pinout.pdf#page=304"
@@ -314,6 +340,7 @@ Xilinx_FLG1925_FLG1926_FLG1928_FLG1930:
   layout_x: 44
   layout_y: 44
   row_skips: [[1,2,43,44], [1,44], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [1,44], [1,2,43,44]] 
+  name_equal_to_key: True
 Xilinx_RF1157_RF1158:
   description: "Virtex-7 BGA, NSMD pad definition Appendix A"
   size_source: "https://www.xilinx.com/support/documentation/user_guides/ug475_7Series_Pkg_Pinout.pdf#page=305"
@@ -325,6 +352,7 @@ Xilinx_RF1157_RF1158:
   mask_margin: 0.05
   layout_x: 34
   layout_y: 34
+  name_equal_to_key: True
 Xilinx_RF1761:
   description: "Virtex-7 BGA, NSMD pad definition Appendix A"
   size_source: "https://www.xilinx.com/support/documentation/user_guides/ug475_7Series_Pkg_Pinout.pdf#page=306"
@@ -337,6 +365,7 @@ Xilinx_RF1761:
   layout_x: 42
   layout_y: 42
   row_skips: [[1,42], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [1,42]]
+  name_equal_to_key: True
 Xilinx_RF1930:
   description: "Virtex-7 BGA, NSMD pad definition Appendix A"
   size_source: "https://www.xilinx.com/support/documentation/user_guides/ug475_7Series_Pkg_Pinout.pdf#page=307"
@@ -349,6 +378,7 @@ Xilinx_RF1930:
   layout_x: 44
   layout_y: 44
   row_skips: [[1,2,43,44], [1,44], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [1,44], [1,2,43,44]] 
+  name_equal_to_key: True
 
 # Kintex-7 FPGA Packages
 # Notes: 
@@ -370,6 +400,7 @@ Xilinx_FBG900:
   mask_margin: 0.05
   layout_x: 30
   layout_y: 30
+  name_equal_to_key: True
 Xilinx_FFG676:
   description: "Kintex-7 and Zynq-7000 BGA, NSMD pad definition Appendix A"
   size_source: "https://www.xilinx.com/support/documentation/user_guides/ug475_7Series_Pkg_Pinout.pdf#page=292, https://www.xilinx.com/support/documentation/user_guides/ug865-Zynq-7000-Pkg-Pinout.pdf#page=88"
@@ -381,6 +412,7 @@ Xilinx_FFG676:
   mask_margin: 0.05
   layout_x: 26
   layout_y: 26
+  name_equal_to_key: True
 Xilinx_FFG900_FFG901:
   description: "Kintex-7 and Zynq-7000 BGA, NSMD pad definition Appendix A"
   size_source: "https://www.xilinx.com/support/documentation/user_guides/ug475_7Series_Pkg_Pinout.pdf#page=294, https://www.xilinx.com/support/documentation/user_guides/ug865-Zynq-7000-Pkg-Pinout.pdf#page=90"
@@ -392,6 +424,7 @@ Xilinx_FFG900_FFG901:
   mask_margin: 0.05
   layout_x: 30
   layout_y: 30
+  name_equal_to_key: True
 # For Xilinx_FFG1156 refer to Artix-7 
 Xilinx_RF676:
   description: "Kintex-7 BGA, NSMD pad definition Appendix A"
@@ -404,6 +437,7 @@ Xilinx_RF676:
   mask_margin: 0.05
   layout_x: 26
   layout_y: 26
+  name_equal_to_key: True
 Xilinx_RF900:
   description: "Kintex-7 and Zynq-7000 BGA, NSMD pad definition Appendix A"
   size_source: "https://www.xilinx.com/support/documentation/user_guides/ug475_7Series_Pkg_Pinout.pdf#page=298, https://www.xilinx.com/support/documentation/user_guides/ug865-Zynq-7000-Pkg-Pinout.pdf#page=94"
@@ -415,6 +449,7 @@ Xilinx_RF900:
   mask_margin: 0.05
   layout_x: 30
   layout_y: 30
+  name_equal_to_key: True
 
 # Zynq-7000 FPGA Packages
 # Notes: 
@@ -436,6 +471,7 @@ Xilinx_CLG225:
   mask_margin: 0.05
   layout_x: 15
   layout_y: 15
+  name_equal_to_key: True
 Xilinx_CLG400:
   description: "Zynq-7000 BGA, NSMD pad definition Appendix A"
   size_source: "https://www.xilinx.com/support/documentation/user_guides/ug865-Zynq-7000-Pkg-Pinout.pdf#page=78"
@@ -447,6 +483,7 @@ Xilinx_CLG400:
   mask_margin: 0.05
   layout_x: 20
   layout_y: 20
+  name_equal_to_key: True
 Xilinx_CLG484_CLG485:
   description: "Zynq-7000 BGA, NSMD pad definition Appendix A"
   size_source: "https://www.xilinx.com/support/documentation/user_guides/ug865-Zynq-7000-Pkg-Pinout.pdf#page=79"
@@ -458,6 +495,7 @@ Xilinx_CLG484_CLG485:
   mask_margin: 0.05
   layout_x: 22
   layout_y: 22
+  name_equal_to_key: True
 Xilinx_SBG485:
   description: "Zynq-7000 BGA, NSMD pad definition Appendix A"
   size_source: "https://www.xilinx.com/support/documentation/user_guides/ug865-Zynq-7000-Pkg-Pinout.pdf#page=80"
@@ -469,6 +507,7 @@ Xilinx_SBG485:
   mask_margin: 0.05
   layout_x: 22
   layout_y: 22
+  name_equal_to_key: True
 # For Xilinx_FBG484 refer to Artix-7
 # For Xilinx_FBG676 refer to Artix-7
 # For Xilinx_FFG676 refer to Kintex-7
@@ -486,6 +525,7 @@ Xilinx_RFG676:
   mask_margin: 0.05
   layout_x: 26
   layout_y: 26
+  name_equal_to_key: True
 # For Xilinx_RF900 refer to Kintex-7
 Xilinx_RF1156:
   description: "Zynq-7000 BGA, NSMD pad definition Appendix A"
@@ -498,3 +538,4 @@ Xilinx_RF1156:
   mask_margin: 0.05
   layout_x: 34
   layout_y: 34
+  name_equal_to_key: True
