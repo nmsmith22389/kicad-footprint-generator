@@ -15,6 +15,7 @@ if __name__ == "__main__":
     parser.add_argument('-o', '--outer_diameter', type=float, help='outside diameter', required=True)
     parser.add_argument('-p', '--number', type=str, help='the pin number, default: 1', default='1')
     parser.add_argument('--anchor_count', type=int, help='number of anchor (trace connection points), default: 4', default=4)
+    parser.add_argument('--anchor_clearance', type=float, help='clearance between anchor and ringpad edge', nargs='?')
     parser.add_argument('--paste_count', type=int, help='number of paste areas, default: 4', default=4)
     parser.add_argument('--paste_round_radius_radio', type=float, help='round radius ratio for the paste pads', default=0.25)
     parser.add_argument('--paste_clearance', type=float, help='clearance between paste areas', nargs='?')
@@ -29,6 +30,7 @@ kicad_mod.append(
         number=args.number, at=args.at,
         size=args.outer_diameter, inner_diameter=args.inner_diameter,
         num_anchor=args.anchor_count, num_paste_zones=args.paste_count,
+        anchor_to_edge_clearance=args.anchor_clearance,
         solder_paste_margin=args.paste_margin, solder_mask_margin=args.mask_margin,
         paste_round_radius_radio=args.paste_round_radius_radio,
         paste_to_paste_clearance=args.paste_clearance))

@@ -259,6 +259,9 @@ class RingPad(Node):
           outside diameter of the pad
         * *num_anchors* (``int``) --
           number of anchor pads around the circle
+        * *anchor_to_edge_clearance* (``float``) --
+          clearance from anchorpad to edge of the ringpad,
+          needed for NPTH center pads
         * *num_paste_zones* (``int``) --
           number of paste zones
         * *paste_to_paste_clearance* (``float``) --
@@ -318,6 +321,8 @@ class RingPad(Node):
         self.num_anchor = int(kwargs.get('num_anchor', 1))
         if self.num_anchor < 1:
             raise ValueError('num_anchor must be a positive integer')
+
+        self.anchor_to_edge_clearance = kwargs.get('anchor_to_edge_clearance', 0)
 
     def _initPosition(self, **kwargs):
         if 'at' not in kwargs:
@@ -443,14 +448,16 @@ class RingPad(Node):
                 layers=layers,
                 radius=self.radius
                 ))
-
+        if self.width - 2 * self.anchor_to_edge_clearance < 0:
+            raise ValueError('Anchor pad width must be > 0')
         a = 360/self.num_anchor
         pos = Vector2D(self.radius, 0)
         for i in range(1, self.num_anchor):
             pos.rotate(a)
             self.pads.append(Pad(number=self.number,
                                  type=Pad.TYPE_SMT, shape=Pad.SHAPE_CIRCLE,
-                                 at=(self.at+pos), size=self.width-0.0001,
+                                 at=(self.at+pos),
+                                 size=self.width-(2*self.anchor_to_edge_clearance),
                                  layers=['F.Cu'],
                                  ))
 

@@ -50,13 +50,16 @@ def generate_footprint(params, mpn, configuration):
 
     kicad_mod.setTags('Mounting {} {}'.format(size, mpn))
 
+    kicad_mod.allow_soldermask_bridges = True
+
     paste_count = fp_params['ring']['paste'].get('paste_count', 4)
 
     kicad_mod.append(
         RingPad(
             number='1', at=(0, 0),
             size=fp_params['ring']['od'], inner_diameter=fp_params['ring']['id'],
-            num_anchor=4, num_paste_zones=paste_count,
+            num_anchor=4, anchor_to_edge_clearance=0.254,
+            num_paste_zones=paste_count,
             paste_round_radius_radio=0.25,
             paste_max_round_radius=0.1,
             paste_to_paste_clearance=fp_params['ring']['paste']['clearance'],
