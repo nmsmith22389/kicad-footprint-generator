@@ -21,7 +21,7 @@ def makePotentiometerHorizontal(class_name="", wbody=0, hbody=0, dscrew=0, style
                               wscrew=0, wshaft=0, dshaft=0,
                               pinxoffset=0, pinyoffset=0, pins=3, R_POW=0, x_3d=[0, 0, 0], s_3d=[1, 1, 1], r_3d=[0, 0, 0], has3d=1,
                               rmx=5.08, rmy=5.08,
-                              specialtags=[], add_description="", lib_name="Potentiometer", name_additions=[], script3d="",
+                              specialtags=[], add_description="", lib_name="Potentiometer", name_additions=[],
                               height3d=10, screwzpos=5, mh_ddrill=1.5, mh_count=0, mh_rmx=0, mh_rmy=15, mh_xoffset=0, mh_yoffset=0):
     """
     create potentiometer footprints, horizontally mounted
@@ -212,62 +212,6 @@ def makePotentiometerHorizontal(class_name="", wbody=0, hbody=0, dscrew=0, style
 
     print(footprint_name)
 
-    if script3d != "":
-        with open(script3d, "a") as myfile:
-            myfile.write("\n\n # {0}\n".format(footprint_name))
-            myfile.write("import FreeCAD\n")
-            myfile.write("import os\n")
-            myfile.write("import os.path\n\n")
-            myfile.write("App.ActiveDocument.clearAll()\n")
-
-            line=0
-            line += 1; script3d_writevariable(myfile, line, 'lbody_fab', min(lbody_fab+wbody_fab,lbody_fab)+offset[0])
-            line += 1; script3d_writevariable(myfile, line, 'tbody_fab', min(tbody_fab+hbody_fab,tbody_fab)+offset[1])
-            line += 1; script3d_writevariable(myfile, line, 'wbody_fab', math.fabs(wbody_fab))
-            line += 1; script3d_writevariable(myfile, line, 'hbody_fab', math.fabs(hbody_fab))
-            line += 1; script3d_writevariable(myfile, line, 'lscrew_fab', min(lscrew_fab+wscrew_fab,lscrew_fab)+offset[0])
-            line += 1; script3d_writevariable(myfile, line, 'tscrew_fab', min(tscrew_fab+hscrew_fab,tscrew_fab)+offset[1])
-            line += 1; script3d_writevariable(myfile, line, 'wscrew_fab', math.fabs(wscrew_fab))
-            line += 1; script3d_writevariable(myfile, line, 'hscrew_fab', math.fabs(hscrew_fab))
-            line += 1; script3d_writevariable(myfile, line, 'lshaft_fab', min(lshaft_fab+wshaft_fab,lshaft_fab)+offset[0])
-            line += 1; script3d_writevariable(myfile, line, 'tshaft_fab', min(tshaft_fab+hshaft_fab,tshaft_fab)+offset[1])
-            line += 1; script3d_writevariable(myfile, line, 'wshaft_fab', math.fabs(wshaft_fab))
-            line += 1; script3d_writevariable(myfile, line, 'hshaft_fab', math.fabs(hshaft_fab))
-            line += 1; script3d_writevariable(myfile, line, 'rmx', rmx)
-            line += 1; script3d_writevariable(myfile, line, 'rmy', rmy)
-            for p in padpos:
-                if p[0]==1:
-                    line += 1;
-                    script3d_writevariable(myfile, line, 'padx', p[1])
-                    line += 1;
-                    script3d_writevariable(myfile, line, 'pady', p[2])
-            line += 1; script3d_writevariable(myfile, line, 'd_wire', ddrill-0.3)
-            line += 1; script3d_writevariable(myfile, line, 'height', height3d)
-            line += 1; script3d_writevariable(myfile, line, 'screwzpos', screwzpos)
-            written=False
-            for p in padpos:
-                if p[0] == 0 and not written:
-                    line += 1;
-                    script3d_writevariable(myfile, line, 'mhpadx', p[1])
-                    line += 1;
-                    script3d_writevariable(myfile, line, 'mhpady', p[2])
-                    written=True
-            line += 1; script3d_writevariable(myfile, line, 'mh_rmx', mh_rmx)
-            line += 1; script3d_writevariable(myfile, line, 'mh_rmy', mh_rmy)
-            line += 1; script3d_writevariable(myfile, line, 'offsetx', offset[0])
-            line += 1; script3d_writevariable(myfile, line, 'offsety', offset[1])
-
-
-            myfile.write("App.ActiveDocument.recompute()\n\n")
-            myfile.write("doc = FreeCAD.activeDocument()\n")
-            myfile.write("__objs__=[]\n")
-            myfile.write("for obj in doc.Objects:	\n")
-            myfile.write("    if obj.ViewObject.Visibility:\n")
-            myfile.write("        __objs__.append(obj)\n")
-            myfile.write("\nFreeCADGui.export(__objs__,os.path.split(doc.FileName)[0]+os.sep+\"{0}.wrl\")\n".format(footprint_name))
-            myfile.write("doc.saveCopy(os.path.split(doc.FileName)[0]+os.sep+\"{0}.FCStd\")\n".format(footprint_name))
-            myfile.write("print(\"created {0}\")\n".format(footprint_name))
-
     # init kicad footprint
     kicad_mod = Footprint(footprint_name, FootprintType.THT)
     kicad_mod.setDescription(description)
@@ -336,7 +280,7 @@ def makePotentiometerVertical(class_name, wbody, hbody, screwstyle="none", style
                                 pins=3, rmx=5.08, rmy=5.08, ddrill=1.5, shaft_hole=False, SMD_pads=False,
                                 SMD_padsize=[], SMD_type="3-5", R_POW=0, x_3d=[0, 0, 0], s_3d=[1, 1, 1], r_3d=[0, 0, 0], has3d=1,
                                 specialtags=[], add_description="", lib_name="Potentiometer", name_additions=[],
-                                script3d="", height3d=10, mh_ddrill=1.5, mh_count=0, mh_rmx=0, mh_rmy=15,
+                                height3d=10, mh_ddrill=1.5, mh_count=0, mh_rmx=0, mh_rmy=15,
                                 mh_xoffset=0, mh_yoffset=0, mh_smd=False, mh_padsize=[], mh_nopads=False):
     """
     create potentiometer footprints, vertically mounted
@@ -558,58 +502,6 @@ def makePotentiometerVertical(class_name, wbody, hbody, screwstyle="none", style
 
     print(footprint_name)
 
-    if script3d != "":
-        with open(script3d, "a") as myfile:
-            myfile.write("\n\n # {0}\n".format(footprint_name))
-            myfile.write("import FreeCAD\n")
-            myfile.write("import os\n")
-            myfile.write("import os.path\n\n")
-
-            myfile.write("App.ActiveDocument.clearAll()\n")
-
-            line = 0
-            line += 1; script3d_writevariable(myfile, line, 'lbody_fab', min(lbody_fab+wbody_fab,lbody_fab)+offset[0])
-            line += 1; script3d_writevariable(myfile, line, 'tbody_fab', min(tbody_fab+hbody_fab,tbody_fab)+offset[1])
-            line += 1; script3d_writevariable(myfile, line, 'wbody_fab', math.fabs(wbody_fab))
-            line += 1; script3d_writevariable(myfile, line, 'hbody_fab', math.fabs(hbody_fab))
-            line += 1; script3d_writevariable(myfile, line, 'clbody_fab', clbody_fab+offset[0])
-            line += 1; script3d_writevariable(myfile, line, 'ctbody_fab', ctbody_fab+offset[1])
-            line += 1; script3d_writevariable(myfile, line, 'cdbody_fab', cdbody_fab)
-            line += 1; script3d_writevariable(myfile, line, 'dscrew', dscrew)
-            line += 1; script3d_writevariable(myfile, line, 'dshaft', dshaft)
-            line += 1; script3d_writevariable(myfile, line, 'rmx', rmx)
-            line += 1; script3d_writevariable(myfile, line, 'rmy', rmy)
-            for p in padpos:
-                if p[0] == 1:
-                    line += 1;
-                    script3d_writevariable(myfile, line, 'padx', p[1])
-                    line += 1;
-                    script3d_writevariable(myfile, line, 'pady', p[2])
-            line += 1; script3d_writevariable(myfile, line, 'd_wire', ddrill-0.3)
-            line += 1; script3d_writevariable(myfile, line, 'height', height3d)
-            written=False
-            for p in padpos:
-                if p[0] == 0 and not written:
-                    line += 1;
-                    script3d_writevariable(myfile, line, 'mhpadx', p[1])
-                    line += 1;
-                    script3d_writevariable(myfile, line, 'mhpady', p[2])
-                    written=True
-            line += 1; script3d_writevariable(myfile, line, 'mh_rmx', mh_rmx)
-            line += 1; script3d_writevariable(myfile, line, 'mh_rmy', mh_rmy)
-            line += 1; script3d_writevariable(myfile, line, 'offsetx', offset[0])
-            line += 1; script3d_writevariable(myfile, line, 'offsety', offset[1])
-
-            myfile.write("App.ActiveDocument.recompute()\n\n")
-            myfile.write("doc = FreeCAD.activeDocument()\n")
-            myfile.write("__objs__=[]\n")
-            myfile.write("for obj in doc.Objects:	\n")
-            myfile.write("    if obj.ViewObject.Visibility:\n")
-            myfile.write("        __objs__.append(obj)\n")
-            myfile.write("\nFreeCADGui.export(__objs__,os.path.split(doc.FileName)[0]+os.sep+\"{0}.wrl\")\n".format(footprint_name))
-            myfile.write("doc.saveCopy(os.path.split(doc.FileName)[0]+os.sep+\"{0}.FCStd\")\n".format(footprint_name))
-            myfile.write("print(\"created {0}\")\n".format(footprint_name))
-
     footprint_type = FootprintType.SMD if SMD_pads else FootprintType.THT
 
     # init kicad footprint
@@ -737,7 +629,7 @@ def makeSpindleTrimmer(class_name, wbody, hbody, pinxoffset, pinyoffset, rmx2, r
                             wscrew=0, screwxoffset=0, screwyoffset=0, style = "screwleft", screwstyle="slit",
                             shaft_hole=False, SMD_pads=False, SMD_padsize=[], R_POW=0, x_3d=[0, 0, 0], s_3d=[1, 1, 1], r_3d=[0, 0, 0],
                             has3d=1, specialtags=[], add_description="", lib_name="Potentiometer", name_additions=[],
-                            script3d="", height3d=10):
+                            height3d=10):
     """
     create spindle trimmer potentiometer (only valid for 3-pin!!!)
                                                           <-----------rmx2------------->
@@ -899,50 +791,6 @@ def makeSpindleTrimmer(class_name, wbody, hbody, pinxoffset, pinyoffset, rmx2, r
     if shaft_hole: footprint_name = footprint_name + "_Hole"
 
     print(footprint_name)
-
-    if script3d != "":
-        with open(script3d, "a") as myfile:
-
-            myfile.write("\n\n # {0}\n".format(footprint_name))
-            myfile.write("import FreeCAD\n")
-            myfile.write("import os\n")
-            myfile.write("import os.path\n\n")
-            myfile.write("App.ActiveDocument.clearAll()\n")
-            line = 0
-            line += 1; script3d_writevariable(myfile, line, 'lbody_fab', min(lbody_fab+wbody_fab,lbody_fab)+offset[0])
-            line += 1; script3d_writevariable(myfile, line, 'tbody_fab', min(tbody_fab+hbody_fab,tbody_fab)+offset[1])
-            line += 1; script3d_writevariable(myfile, line, 'wbody_fab', math.fabs(wbody_fab))
-            line += 1; script3d_writevariable(myfile, line, 'hbody_fab', math.fabs(hbody_fab))
-            line += 1; script3d_writevariable(myfile, line, 'lscrew_fab', min(lscrew_fab+wscrew_fab,lscrew_fab)+offset[0])
-            line += 1; script3d_writevariable(myfile, line, 'tscrew_fab', min(tscrew_fab+hscrew_fab,tscrew_fab)+offset[1])
-            line += 1; script3d_writevariable(myfile, line, 'wscrew_fab', math.fabs(wscrew_fab))
-            line += 1; script3d_writevariable(myfile, line, 'hscrew_fab', math.fabs(hscrew_fab))
-            line += 1; script3d_writevariable(myfile, line, 'dscrew', dscrew)
-            line += 1; script3d_writevariable(myfile, line, 'wscrew', wscrew)
-            line += 1; script3d_writevariable(myfile, line, 'rmxtwo', rmx2)
-            line += 1; script3d_writevariable(myfile, line, 'rmytwo', rmy2)
-            line += 1; script3d_writevariable(myfile, line, 'rmxthree', rmx3)
-            line += 1; script3d_writevariable(myfile, line, 'rmythree', rmy3)
-            for p in padpos:
-                if p[0] == 1:
-                    line += 1;
-                    script3d_writevariable(myfile, line, 'padx', p[1])
-                    line += 1;
-                    script3d_writevariable(myfile, line, 'pady', p[2])
-            line += 1; script3d_writevariable(myfile, line, 'd_wire', ddrill-0.3)
-            line += 1; script3d_writevariable(myfile, line, 'height', height3d)
-            line += 1; script3d_writevariable(myfile, line, 'offsetx', offset[0])
-            line += 1; script3d_writevariable(myfile, line, 'offsety', offset[1])
-
-            myfile.write("App.ActiveDocument.recompute()\n\n")
-            myfile.write("doc = FreeCAD.activeDocument()\n")
-            myfile.write("__objs__=[]\n")
-            myfile.write("for obj in doc.Objects:	\n")
-            myfile.write("    if obj.ViewObject.Visibility:\n")
-            myfile.write("        __objs__.append(obj)\n")
-            myfile.write("\nFreeCADGui.export(__objs__,os.path.split(doc.FileName)[0]+os.sep+\"{0}.wrl\")\n".format(footprint_name))
-            myfile.write("doc.saveCopy(os.path.split(doc.FileName)[0]+os.sep+\"{0}.FCStd\")\n".format(footprint_name))
-            myfile.write("print(\"created {0}\")\n".format(footprint_name))
 
     footprint_type = FootprintType.SMD if SMD_pads else FootprintType.THT
 
