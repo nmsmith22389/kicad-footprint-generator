@@ -786,8 +786,15 @@ class BaseNodeIntersection():
         # so we translate the results back accordingle
         R, r = circle1.getRadius(), circle2.getRadius()
         d, phi = (circle2.center_pos - circle1.center_pos).to_polar()
-        if (R + r < d or d < R - r):
+
+        # Circles are too far away to touch
+        if (R + r < d):
             return []
+
+        # One circle is inside the other
+        if d < abs(R - r):
+            return []
+
         if (abs(d) < tol):
             # circles have the same center
             if (abs(r) < tol and abs(R) < tol):
