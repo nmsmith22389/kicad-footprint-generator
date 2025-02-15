@@ -66,3 +66,6 @@ include = [
 
 [tool.isort]
 profile = "black"
+# COMMON is a made-up name listing a bunch of regularly used imports
+sections = ['FUTURE', 'STDLIB', 'COMMON', 'THIRDPARTY', 'FIRSTPARTY', 'LOCALFOLDER']
+known_common = ['cadquery', 'yaml', 'OCP']
