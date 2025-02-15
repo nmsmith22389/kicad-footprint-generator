@@ -46,6 +46,7 @@ variables:
     - .model
   script:
     - |
+      cd '3d-model-generators'
       package_args=""
       for package in $packages
         do
