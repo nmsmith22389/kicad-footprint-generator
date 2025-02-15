@@ -61,8 +61,8 @@ py_test_coverage() {
     echo ''
     echo '[!] Running 3D formatting check'
     cd '3d-model-generators'
-    python -m isort .
-    black .
+    python -m isort --check .
+    black --check .
 }
 
 tests() {
