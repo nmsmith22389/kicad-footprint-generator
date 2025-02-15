@@ -64,8 +64,8 @@ from _tools import add_license, cq_color_correct, export_tools, shaderColors
 from exportVRML.export_part_to_VRML import export_VRML
 
 from .smd_inductor_properties import InductorSeriesProperties, SmdInductorProperties
-
 from .src.make_coil_model import DSectionFootAirCoreCoil
+
 
 class Inductor3DProperties:
     """
