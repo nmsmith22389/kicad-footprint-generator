@@ -86,10 +86,7 @@ class DSectionFoot:
             .close()
         )
 
-        extrude = (
-            end_cross_section
-                .extrude(extrude_x, both=False)
-        )
+        extrude = end_cross_section.extrude(extrude_x, both=False)
 
         # Create the circular upright cylinder
         circle_radius = self.width_y / 2
@@ -229,7 +226,7 @@ class DSectionFootAirCoreCoil:
         )
 
         # Shift the coil to sit on the surface
-        surface_coil_z_gap = max(0, self.part_data.height-self.part_data.length_y)
+        surface_coil_z_gap = max(0, self.part_data.height - self.part_data.length_y)
         coil_offset_z = coil_dia / 2.0 + self.wireSize / 2.0 + surface_coil_z_gap
 
         coil = coil.translate((0, 0, coil_offset_z))
@@ -238,7 +235,7 @@ class DSectionFootAirCoreCoil:
         coil_end_point = (
             coil_connection_points[1][0],
             coil_connection_points[1][1],
-            coil_connection_points[1][2] + coil_offset_z + 0.001
+            coil_connection_points[1][2] + coil_offset_z + 0.001,
         )
 
         # Figure out the pin foot connection point

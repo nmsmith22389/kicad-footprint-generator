@@ -1,12 +1,12 @@
 """
-    ribbon
-    ======
+ribbon
+======
 
-    A helper module for CadQuery and FreeCAD
+A helper module for CadQuery and FreeCAD
 
-    This software is licensed by Ray Benitez under the MIT License.
+This software is licensed by Ray Benitez under the MIT License.
 
-    git@hackscribble.com | http://www.hackscribble.com
+git@hackscribble.com | http://www.hackscribble.com
 
 """
 
