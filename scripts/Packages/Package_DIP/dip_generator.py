@@ -130,6 +130,7 @@ class DIPGenerator(FootprintGenerator):
             'tags_additional': config.additional_tags.tags,
             'DIPName': config.package_type,
             'DIPTags': ' '.join(config.package_tags),
+            'global_config': self.global_config,
         }
 
         desc = [config.description]

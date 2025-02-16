@@ -1,7 +1,10 @@
 import yaml
 from enum import Enum, auto
+from importlib import resources
 
 from pathlib import Path
+
+from KicadModTree.util.corner_handling import RoundRadiusHandler
 
 class GlobalConfig:
     """
@@ -57,6 +60,9 @@ class GlobalConfig:
 
         self.model_3d_prefix = data["3d_model_prefix"]
 
+        self.round_rect_default_radius = data["round_rect_radius_ratio"]
+        self.round_rect_max_radius = data["round_rect_max_radius"]
+
         # Map the string keys into the typed enum
         self._cy_offs = {
             self.CourtyardType.DEFAULT: float(data["courtyard_offset"]['default']),
@@ -66,6 +72,13 @@ class GlobalConfig:
 
     def get_courtyard_offset(self, courtyard_type: CourtyardType) -> float:
         return self._cy_offs[courtyard_type]
+
+    @property
+    def roundrect_radius_handler(self) -> RoundRadiusHandler:
+        return RoundRadiusHandler(
+            default_redius_ratio=self.round_rect_default_radius,
+            maximum_radius=self.round_rect_max_radius,
+        )
 
     def get_fab_bevel_size(self, overall_size: float) -> float:
         """
@@ -101,3 +114,27 @@ class GlobalConfig:
         with open(path, 'r') as config_stream:
             data = yaml.safe_load(config_stream)
             return GlobalConfig(data)
+
+
+def DefaultGlobalConfig() -> GlobalConfig:
+    """
+    Get a default global config object (the current KLC version)
+
+    This should be used only for when a generator is not yet ported to
+    FootprintGenerator or similar where the global config can be injected
+    properly.
+
+    But it's better than using the global variables in footprint_global_properties,
+    or hardcoding values. It also makes it very easy to port later, as you just
+    inject a GlobalConfig object into the generator, rather than calling this
+    function.
+    """
+
+    default_global_config_name = "config_KLCv3.0.yaml"
+
+    with resources.path(
+        "scripts.tools.global_config_files", default_global_config_name
+    ) as default_global_config:
+        global_config = GlobalConfig.load_from_file(default_global_config)
+
+    return global_config

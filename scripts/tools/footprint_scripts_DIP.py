@@ -4,6 +4,7 @@ import os
 
 from KicadModTree import *  # NOQA
 from scripts.tools.drawing_tools import *  # NOQA
+from scripts.tools.global_config_files import global_config as GC
 
 
 #    overlen_top                           overlen_bottom
@@ -25,7 +26,12 @@ def makeDIP(pins, rm, pinrow_distance_in, package_width, overlen_top, overlen_bo
             socket_width=0, socket_height=0, socket_pinrow_distance_offset=0, tags_additional=[],
             lib_name="Package_DIP", offset3d=[0, 0, 0], scale3d=[1, 1, 1], rotate3d=[0, 0, 0], DIPName='DIP', DIPDescription='though-hole mounted DIP', DIPTags='THT DIP DIL PDIP',
             prefix_name = "", skip_pin = [], skip_count = False, right_cnt_start = -1,
-            datasheet=None, outdir="."):
+            datasheet=None,
+            global_config: GC.GlobalConfig=None,
+            outdir="."):
+
+    if global_config is None:
+        global_config = GC.DefaultGlobalConfig()
 
     pinrow_distance = pinrow_distance_in + socket_pinrow_distance_offset
     h_fab = (pins / 2 - 1) * rm + overlen_top + overlen_bottom
@@ -165,12 +171,12 @@ def makeDIP(pins, rm, pinrow_distance_in, package_width, overlen_top, overlen_bo
 
     if smd_pads:
         pad_type = Pad.TYPE_SMT
-        pad_shape1 = Pad.SHAPE_RECT
-        pad_shapeother = Pad.SHAPE_RECT
+        pad_shape1 = Pad.SHAPE_ROUNDRECT
+        pad_shapeother = Pad.SHAPE_ROUNDRECT
         pad_layers = Pad.LAYERS_SMT
     else:
         pad_type = Pad.TYPE_THT
-        pad_shape1 = Pad.SHAPE_RECT
+        pad_shape1 = Pad.SHAPE_ROUNDRECT
         pad_shapeother = Pad.SHAPE_OVAL
         pad_layers = Pad.LAYERS_THT
 
@@ -185,10 +191,12 @@ def makeDIP(pins, rm, pinrow_distance_in, package_width, overlen_top, overlen_bo
         if addpinL:
             if p == 1:
                 kicad_modg.append(Pad(number=p1, type=pad_type, shape=pad_shape1, at=[x1, y1], size=pad, drill=ddrill,
-                                      layers=pad_layers))
+                                      layers=pad_layers,
+                                      round_radius_handler=global_config.roundrect_radius_handler))
             else:
                 kicad_modg.append(Pad(number=p1, type=pad_type, shape=pad_shapeother, at=[x1, y1], size=pad, drill=ddrill,
-                                      layers=pad_layers))
+                                      layers=pad_layers,
+                                      round_radius_handler=global_config.roundrect_radius_handler))
 
         addpinR = True
         for sp in skip_pin:
@@ -198,7 +206,8 @@ def makeDIP(pins, rm, pinrow_distance_in, package_width, overlen_top, overlen_bo
 
         if addpinR:
             kicad_modg.append(Pad(number=p2, type=pad_type, shape=pad_shapeother, at=[x2, y2], size=pad, drill=ddrill,
-                              layers=pad_layers))
+                              layers=pad_layers,
+                              round_radius_handler=global_config.roundrect_radius_handler))
 
         # Do not increase the pin number if it should be skipped
         if not (skip_count and not addpinL):
@@ -246,7 +255,12 @@ def makeDIPSwitch(pins, rm, pinrow_distance, package_width, overlen_top, overlen
                   switch_height, mode='Piano', smd_pads=False, tags_additional=[],
                   lib_name="Button_Switch_THT", offset3d=[0, 0, 0], scale3d=[1, 1, 1], rotate3d=[0, 0, 90],
                   specialFPName="", SOICStyleSilk=False, cornerPads=[], cornerPadOffsetX=0, cornerPadOffsetY=0, webpage="", device_name="", switchtype="SPST",
+                  global_config: GC.GlobalConfig=None,
                   outdir="."):
+
+    if global_config is None:
+        global_config = GC.DefaultGlobalConfig()
+
     switches = int(pins / 2)
 
     h_fab = (pins / 2 - 1) * rm + overlen_top + overlen_bottom
@@ -354,25 +368,31 @@ def makeDIPSwitch(pins, rm, pinrow_distance, package_width, overlen_top, overlen
 
     if smd_pads:
         pad_type = Pad.TYPE_SMT
-        pad_shape1 = Pad.SHAPE_RECT
-        pad_shapeother = Pad.SHAPE_RECT
+        pad_shape1 = Pad.SHAPE_ROUNDRECT
+        pad_shapeother = Pad.SHAPE_ROUNDRECT
         pad_layers = Pad.LAYERS_SMT
     else:
         pad_type = Pad.TYPE_THT
-        pad_shape1 = Pad.SHAPE_RECT
+        pad_shape1 = Pad.SHAPE_ROUNDRECT
         pad_shapeother = Pad.SHAPE_OVAL
         pad_layers = Pad.LAYERS_THT
 
     keepout_addsize=4*max(slk_offset, lw_slk)
     for p in range(1, int(pins / 2 + 1)):
         if p == 1:
-            kicad_modg.append(Pad(number=p1, type=pad_type, shape=pad_shape1, at=[x1, y1], size=pad, drill=ddrill, layers=pad_layers))
+            kicad_modg.append(Pad(number=p1, type=pad_type, shape=pad_shape1, at=[x1, y1], size=pad, drill=ddrill,
+                                  layers=pad_layers,
+                                  round_radius_handler=global_config.roundrect_radius_handler))
             keepouts=keepouts+addKeepoutRect(x1, y1, pad[0]+keepout_addsize, pad[1]+keepout_addsize)
         else:
-            kicad_modg.append(Pad(number=p1, type=pad_type, shape=pad_shapeother, at=[x1, y1], size=pad, drill=ddrill, layers=pad_layers))
+            kicad_modg.append(Pad(number=p1, type=pad_type, shape=pad_shapeother, at=[x1, y1], size=pad, drill=ddrill,
+                                  layers=pad_layers,
+                                  round_radius_handler=global_config.roundrect_radius_handler))
             keepouts=keepouts+addKeepoutRound(x1, y1, pad[0]+keepout_addsize, pad[1]+keepout_addsize)
 
-        kicad_modg.append(Pad(number=p2, type=pad_type, shape=pad_shapeother, at=[x2, y2], size=pad, drill=ddrill, layers=pad_layers))
+        kicad_modg.append(Pad(number=p2, type=pad_type, shape=pad_shapeother, at=[x2, y2], size=pad, drill=ddrill,
+                              layers=pad_layers,
+                              round_radius_handler=global_config.roundrect_radius_handler))
         keepouts=keepouts+addKeepoutRound(x2, y2, pad[0]+keepout_addsize, pad[1]+keepout_addsize)
 
         p1 = p1 + 1
@@ -381,24 +401,26 @@ def makeDIPSwitch(pins, rm, pinrow_distance, package_width, overlen_top, overlen
         y2 = y2 - rm
 
     if len(cornerPads) == 2:
-        kicad_modg.append(Pad(number=pins + 1, type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT,
+        kicad_modg.append(Pad(number=pins + 1, type=Pad.TYPE_SMT, shape=Pad.SHAPE_ROUNDRECT,
                               at=[l_fab + cornerPadOffsetX, t_fab + cornerPadOffsetY], size=cornerPads, drill=0,
-                              layers=pad_layers))
+                              layers=pad_layers,
+                              round_radius_handler=global_config.roundrect_radius_handler))
         keepouts=keepouts+addKeepoutRect(l_fab + cornerPadOffsetX, t_fab + cornerPadOffsetY, cornerPads[0]+keepout_addsize, cornerPads[1]+keepout_addsize)
-        kicad_modg.append(Pad(number=pins + 1, type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT,
+        kicad_modg.append(Pad(number=pins + 1, type=Pad.TYPE_SMT, shape=Pad.SHAPE_ROUNDRECT,
                               at=[l_fab + w_fab - cornerPadOffsetX, t_fab + cornerPadOffsetY], size=cornerPads, drill=0,
-                              layers=pad_layers))
+                              layers=pad_layers,
+                              round_radius_handler=global_config.roundrect_radius_handler))
         keepouts=keepouts+addKeepoutRect(l_fab + w_fab - cornerPadOffsetX, t_fab + cornerPadOffsetY, cornerPads[0]+keepout_addsize, cornerPads[1]+keepout_addsize)
-        kicad_modg.append(Pad(number=pins + 1, type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT,
+        kicad_modg.append(Pad(number=pins + 1, type=Pad.TYPE_SMT, shape=Pad.SHAPE_ROUNDRECT,
                               at=[l_fab + cornerPadOffsetX, t_fab + h_fab - cornerPadOffsetY], size=cornerPads, drill=0,
-                              layers=pad_layers))
+                              layers=pad_layers,
+                              round_radius_handler=global_config.roundrect_radius_handler))
         keepouts=keepouts+addKeepoutRect(l_fab + cornerPadOffsetX, t_fab + h_fab - cornerPadOffsetY, cornerPads[0]+keepout_addsize, cornerPads[1]+keepout_addsize)
-        kicad_modg.append(Pad(number=pins + 1, type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT,
+        kicad_modg.append(Pad(number=pins + 1, type=Pad.TYPE_SMT, shape=Pad.SHAPE_ROUNDRECT,
                               at=[l_fab + w_fab - cornerPadOffsetX, t_fab + h_fab - cornerPadOffsetY], size=cornerPads,
-                              drill=0, layers=pad_layers))
+                              drill=0, layers=pad_layers,
+                              round_radius_handler=global_config.roundrect_radius_handler))
         keepouts=keepouts+addKeepoutRect(l_fab + w_fab - cornerPadOffsetX, t_fab + h_fab - cornerPadOffsetY, cornerPads[0]+keepout_addsize, cornerPads[1]+keepout_addsize)
-
-
 
     # create FAB-layer
     bevelRectTL(kicad_modg, [l_fab, t_fab], [w_fab, h_fab], 'F.Fab', lw_fab)
