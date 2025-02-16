@@ -13,11 +13,10 @@
 #
 # (C) 2016-2018 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 
-import sys
 import io
 import os
 
-from KicadModTree.nodes import Footprint
+from KicadModTree.nodes.Footprint import Footprint
 
 
 class FileHandler(object):

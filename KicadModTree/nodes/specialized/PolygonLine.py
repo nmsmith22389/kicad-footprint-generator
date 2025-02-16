@@ -147,7 +147,8 @@ class PolygonLine(Node):
         self.updateVirtualChilds()
         return self
 
-    def duplicate(self, *, offset: float = 0.0, layer: str = None, width: float = None, split_angle: float = 90):
+    def duplicate(self, *, offset: float = 0.0, layer: str | None = None, width: float | None = None,
+                  split_angle: float = 90):
         """
         Create a duplicate of the polygon.
 

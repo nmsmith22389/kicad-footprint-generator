@@ -17,12 +17,12 @@ import sys
 
 from KicadModTree.nodes import *
 from kilibs.geom import geometric_util as geo
-from typing import Iterable
+from typing import Sequence
 
 from math import tan, radians
 
 
-def calculateOffsetPolygonNodes(nodes: Iterable[Vector2D], offset: float, split_angle: float = 90):
+def calculateOffsetPolygonNodes(nodes: Sequence[Vector2D], offset: float, split_angle: float = 90):
     """
     Calculates the polygon with a specified offset from the given polygon.
 
@@ -106,7 +106,7 @@ def calculateOffsetPolygonNodes(nodes: Iterable[Vector2D], offset: float, split_
 
 
 def _collectNodesAsGeometricShapes(node: Node,
-                                   layer: str,
+                                   layer: str | list[str],
                                    select_drill: bool = False,
                                    silk_pad_clearance: float = 0.0):
     """
@@ -126,7 +126,7 @@ def _collectNodesAsGeometricShapes(node: Node,
         - drills are (optionally) included as circles (other shapes not yet supported)
         - silk_pad_clearance is an additional offset around pads and holes
     """
-    if (not isinstance(layer, str) and isinstance(layer, Iterable)):
+    if (not isinstance(layer, str) and isinstance(layer, list)):
         layers = layer
     else:
         layers = [layer]

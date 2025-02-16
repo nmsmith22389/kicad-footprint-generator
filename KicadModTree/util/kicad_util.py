@@ -126,6 +126,10 @@ class SexprSerializer(object):
 
     class Symbol:
         def __init__(self, name):
+
+            if not isinstance(name, str):
+                raise RuntimeError("name must be a string")
+
             self.name = name
 
         def __str__(self):

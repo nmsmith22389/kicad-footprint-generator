@@ -38,6 +38,9 @@ class PolygonPoints(object):
     >>> PolyPoint([(0, 0),(1, 0)])
     >>> PolyPoint([{'x': 0, 'y':0}, {'x': 1, 'y':0}])
     """
+
+    nodes: list[Vector2D]
+
     def __init__(self, **kwargs):
         self._initMirror(**kwargs)
         self._initNodes(**kwargs)

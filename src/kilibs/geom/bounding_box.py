@@ -9,7 +9,7 @@ class BoundingBox:
     min: Optional[Vector2D]
     max: Optional[Vector2D]
 
-    def __init__(self, min_pt: Vector2D = None, max_pt: Vector2D = None):
+    def __init__(self, min_pt: Optional[Vector2D] = None, max_pt: Optional[Vector2D] = None):
 
         if (min_pt is None) != (max_pt is None):
             raise ValueError("Must provide both min and max or neither")
@@ -23,12 +23,16 @@ class BoundingBox:
             self.min = point
             self.max = point
         else:
+            assert self.max is not None
             self.min = Vector2D(min(self.min.x, point.x), min(self.min.y, point.y))
             self.max = Vector2D(max(self.max.x, point.x), max(self.max.y, point.y))
 
     def include_bbox(self, bbox: Self):
-        self.include_point(bbox.min)
-        self.include_point(bbox.max)
+
+        if bbox.min is not None:
+            assert bbox.max is not None
+            self.include_point(bbox.min)
+            self.include_point(bbox.max)
 
     def _expect_nonempty(self):
         if self.min is None or self.max is None:

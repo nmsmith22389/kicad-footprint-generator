@@ -109,7 +109,12 @@ class CompoundPolygon(Node):
     >>> Polygon(nodes=[[-2, 0], [0, -2], [4, 0], [0, 2]], layer='F.SilkS')
     """
 
-    tolerance = 1e-9
+    tolerance: float = 1e-9
+
+    polygon_geometries: list[PolygonPoints | PolygonArc]
+    _firstPolyPoint: Vector2D | None
+    _lastAppendedPolyGeomEndPoint: Vector2D | None
+    _lastAppendedPrimitiveType: CompoundPolygonPrimitives | None
 
     def _enforePolyContinuousIfDesired(self, lst):
         if (self.enforce_continuous
@@ -166,7 +171,7 @@ class CompoundPolygon(Node):
         self._lastAppendedPolyGeomEndPoint = Vector2D(new_end_point)
         self._rememberFirstPolyPointIfUnset(new_end_point)
 
-    def _getGeomStart(self, node):
+    def _getGeomStart(self, node) -> Vector2D:
         if isinstance(node, PolygonPoints):
             pnts = node.getPoints()
             return pnts[0]
@@ -175,9 +180,9 @@ class CompoundPolygon(Node):
             # endpnt = node.getEndPoint()
             return startpnt
         else:
-            NotImplementedError("Unknown geometry of type "+type(node))
+            raise NotImplementedError("Unknown geometry of type "+type(node))
 
-    def _getGeomEnd(self, node):
+    def _getGeomEnd(self, node) -> Vector2D:
         if isinstance(node, PolygonPoints):
             pnts = node.getPoints()
             return pnts[-1]
@@ -186,7 +191,7 @@ class CompoundPolygon(Node):
             endpnt = node.getEndPoint()
             return endpnt
         else:
-            NotImplementedError("Unknown geometry of type "+type(node))
+            raise NotImplementedError("Unknown geometry of type "+type(node))
 
     def _appendGeometry(self, node, force_append=False):
         if isinstance(node, PolygonPoints):
@@ -253,19 +258,19 @@ class CompoundPolygon(Node):
         def __init__(self) -> None:
             pass
 
-    def _removeDuplicatePointsInList(self, points):
-        prev: Vector2D = None
+    def _removeDuplicatePointsInList(self, points) -> list[Vector2D]:
+        prev: Vector2D | None = None
         unique_points: list[Vector2D] = []
         for pt in points:
-            pt: Vector2D = Vector2D(pt)
+            pt = Vector2D(pt)
             if (prev is not None) and (abs(prev.x - pt.x) < self.tolerance) and (abs(prev.y - pt.y) < self.tolerance):
                 pass  # duplicate
             else:
                 unique_points.append(pt)
         return unique_points
 
-    def _handleAndAppendGeometry(self, node):
-        node
+    def _handleAndAppendGeometry(self, node) -> None:
+
         if isinstance(node, Vector2D):
             if ((self._lastAppendedPolyGeomEndPoint is not None)
                     and (self._checkPointsCoincident(self._lastAppendedPolyGeomEndPoint, node))):
@@ -281,7 +286,6 @@ class CompoundPolygon(Node):
         elif isinstance(node, Line) or isinstance(node, geometricLine):
             if (not self.remove_point_duplicates):
                 self._appendPolygonPointsTempToPolygonAndReset()
-            node: geometricLine = node
             line_points = [node.start_pos, node.end_pos]
             if (self._polyGeometryChecksAndReturnIsReversed(node.start_pos, node.end_pos)):  # reversed
                 line_points.reverse()
@@ -324,7 +328,6 @@ class CompoundPolygon(Node):
 
         elif isinstance(node, Arc) or isinstance(node, PolygonArc):
             self._appendPolygonPointsTempToPolygonAndReset()
-            node: PolygonArc = node
             startpnt = node.getStartPoint()
             endpnt = node.getEndPoint()
             # points = [start, end]
@@ -368,7 +371,7 @@ class CompoundPolygon(Node):
         super().__init__()
         # Node.__init__(self)
 
-        self.polyargs = copy(kwargs)
+        self.polyargs = dict(kwargs)
         self.polyargs.pop('polygon', None)
         self.polyargs.pop('nodes', None)
 

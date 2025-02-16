@@ -21,7 +21,7 @@ from KicadModTree.util.kicad_util import SexprSerializer
 from KicadModTree.util.kicad_util import *
 from KicadModTree.util.corner_selection import CornerSelection
 # TODO: why .KicadModTree is not enough?
-from KicadModTree import PolygonPoints
+from KicadModTree.PolygonPoints import PolygonPoints
 from KicadModTree.nodes.base.Group import Group
 from KicadModTree.nodes.base.Rect import Rect
 from KicadModTree.nodes.base.Text import Text, Property
@@ -420,7 +420,7 @@ class KicadFileHandler(FileHandler):
 
         return sexpr
 
-    def _typeToAttributeSymbol(self, footprintType: FootprintType) -> SexprSerializer.Symbol:
+    def _typeToAttributeSymbol(self, footprintType: FootprintType) -> SexprSerializer.Symbol | None:
         """
         Convert the footprint type to the corresponding attribute string
         in the .kicad_mod format s-expr attr node
@@ -537,7 +537,7 @@ class KicadFileHandler(FileHandler):
         return sexpr
 
     def _serialize_Rect(self, node: Rect):
-        sexpr = [SexprSerializer.Symbol('fp_rect')]
+        sexpr: list = [SexprSerializer.Symbol('fp_rect')]
         sexpr += self._serialize_RectPoints(node)
         sexpr += [
                   [SexprSerializer.Symbol('stroke')] + self._serialize_Stroke(node),
@@ -863,7 +863,7 @@ class KicadFileHandler(FileHandler):
 
     def _serialize_CompoundPolygon(self, node: CompoundPolygon):
 
-        def _serialize_PolygonPointsSegment(self, polygonpoints: PolygonPoints):
+        def _serialize_PolygonPointsSegment(polygonpoints: PolygonPoints):
             node_points = []
 
             for n in polygonpoints:
@@ -900,12 +900,10 @@ class KicadFileHandler(FileHandler):
         else:  # kicad 7 does not (yet) support open polygons or polylines, therefore convert to virtual nodes
             # for all primitives (see getVirtualChilds, serialize_get_virtual_nodes )
             sexpr = []  # no serialization here, see childs
-            group_ids = []
-
             return None
 
     def _serialize_Group(self, node: Group):
-        sexpr = []
+        sexpr: list = []
         sexpr.append(SexprSerializer.Symbol('group'))
         sexpr.append(f'{node.getGroupName()}')
         if node.hasValidTStamp():

@@ -49,7 +49,9 @@ class Footprint(Node):
     Root Node to generate KicadMod
     '''
 
-    def __init__(self, name: str, footprintType: FootprintType, tstamp_seed: uuid.UUID = None):
+    _tags: list[str]
+
+    def __init__(self, name: str, footprintType: FootprintType, tstamp_seed: uuid.UUID | None = None):
         """
         :param name: Name of the footprint
         :param footprintType: Type of the footprint (None is the deprecated default)

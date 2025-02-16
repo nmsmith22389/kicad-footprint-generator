@@ -49,7 +49,7 @@ class Rectangle:
         nodes.append(nodes[0])
         return PolygonPoints(nodes=nodes)
 
-    def rounded(self, outwards: bool, grid: float) -> Self:
+    def rounded(self, outwards: bool, grid: float) -> "Rectangle":
         tl = self.top_left
         br = self.bottom_right
 

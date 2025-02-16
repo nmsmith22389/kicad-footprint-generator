@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
-import collections.abc
+from typing import Mapping
 import copy
 
-def dictMerge(a: dict, b: dict) -> dict:
+def dictMerge(a: dict, b: Mapping) -> dict:
     """Recursively merges the contents of two dict objects
 
     This function is similar to the built-in dict.update() method, but instead
@@ -31,7 +31,7 @@ def dictMerge(a: dict, b: dict) -> dict:
     {'a': 1, 'b': 2, 'c': {'a': 1, 'b': 3}, 'd': 4}
     """
     for (k, v) in b.items():
-        if isinstance(v, collections.abc.Mapping):
+        if isinstance(v, Mapping):
             a[k] = dictMerge(a.get(k, {}), v)
         else:
             a[k] = v
@@ -113,7 +113,7 @@ def dictInherit(d: dict) -> None:
             return dictInherit(d, parent, d[parent['inherit']])
 
     for (k, v) in d.items():
-        if isinstance(v, collections.abc.Mapping) and 'inherit' in v:
+        if isinstance(v, Mapping) and 'inherit' in v:
             d[k] = dictInherit(d, v, d[v['inherit']])
         else:
             continue

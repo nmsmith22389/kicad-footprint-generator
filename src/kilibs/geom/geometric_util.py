@@ -746,7 +746,7 @@ class BaseNodeIntersection():
         D = lt.start_pos.x*lt.end_pos.y - lt.end_pos.x*lt.start_pos.y
 
         discriminant = circle.getRadius()**2 * dr**2 - D**2
-        intersection = []
+        intersection: list[Vector2D] = []
         if discriminant < 0:
             return intersection
 
@@ -806,7 +806,7 @@ class BaseNodeIntersection():
             x = (d**2 - r**2 + R**2) / (2 * d)
             y = math.sqrt(4 * d**2 * R**2 - (d**2 - r**2 + R**2)**2) / d
 
-        signs = [0] if (y < tol) else [0.5, -0.5]
+        signs = [0.0] if (y < tol) else [0.5, -0.5]
         return [Vector2D(x, s * y).rotate(angle=phi) + circle1.center_pos for s in signs]
 
     @staticmethod

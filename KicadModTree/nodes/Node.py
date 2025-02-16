@@ -46,6 +46,13 @@ class VirtualNodeError(RuntimeError):
 
 
 class TStamp(object):
+
+    _tstamp: uuid.UUID | str | None
+    _tstamp_seed: uuid.UUID | None
+    _unique_id: str | None
+    _isTStampManualFixed: bool
+    _parentNode: Node | None
+
     def parseAsUUID(self, tstamp_uuid: str | uuid.UUID):
         if isinstance(tstamp_uuid, uuid.UUID):
             return tstamp_uuid
@@ -63,10 +70,10 @@ class TStamp(object):
         self.updateTStampConditionally()
 
     def unsetTStamp(self):
-        self._tstamp: uuid.UUID | str | None = None
-        self._tstamp_seed: uuid.UUID | None = None
-        self._unique_id: str | None = None
-        self._isTStampManualFixed: bool = False
+        self._tstamp = None
+        self._tstamp_seed = None
+        self._unique_id = None
+        self._isTStampManualFixed = False
 
     def setParentNode(self, node):
         self._parentNode = node
@@ -131,11 +138,11 @@ class TStamp(object):
         ), name=f"KicadModTree.Node.{str(__class__.__name__)}.{str(self._unique_id)}"))
         return self.getTStampSeed()
 
-    def updateTStampConditionally(self) -> uuid.UUID:
+    def updateTStampConditionally(self) -> uuid.UUID | str | None:
         if (self._tstamp is None) or (not self._isTStampManualFixed):
             return self.reCalcTStamp()
-        else:
-            return self.getTStamp()
+
+        return self.getTStamp()
 
     def setTStampSeed(self, tstamp_seed: uuid.UUID | str):
         self._tstamp_seed = uuid.UUID(str(tstamp_seed))
@@ -143,25 +150,25 @@ class TStamp(object):
             self.updateTStampConditionally()
 
     def __init__(self, tstamp: uuid.UUID | str | None = None, tstamp_seed: uuid.UUID | None = None,
-                 parent: Node = None, unique_id: str | None = None) -> None:
+                 parent: Node | None = None, unique_id: str | None = None) -> None:
         if tstamp is not None:
             tstamp = self.parseAsUUID(tstamp)
-        self._tstamp: uuid.UUID | str | None = tstamp
+        self._tstamp = tstamp
 
         if tstamp_seed is not None:
             tstamp_seed = self.parseAsUUID(tstamp_seed)
-        self._tstamp_seed: uuid.UUID | None = tstamp_seed
+        self._tstamp_seed = tstamp_seed
 
         fixed = (tstamp is not None) and (tstamp_seed is None)
-        self._isTStampManualFixed: bool = fixed
+        self._isTStampManualFixed = fixed
 
         if unique_id is not None:
             unique_id = str(unique_id)
-        self._unique_id: str | None = unique_id
+        self._unique_id = unique_id
 
         if parent is not None and not isinstance(parent, Node):
             print(f"WARNING: Parent should be a Node: {print_stack()}")
-        self._parentNode: Node | None = parent
+        self._parentNode = parent
 
     def __str__(self) -> str:
         return str(self.getTStamp())
