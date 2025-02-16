@@ -18,8 +18,6 @@ from .Rotation import Rotation
 
 from .PolygonLine import PolygonLine
 from .RectLine import RectLine
-from .RectFill import RectFill
-from .FilledRect import FilledRect
 
 from .PadArray import PadArray
 from .ExposedPad import ExposedPad
