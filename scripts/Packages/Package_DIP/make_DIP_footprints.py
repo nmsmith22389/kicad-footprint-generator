@@ -4,7 +4,7 @@ import argparse
 from pathlib import Path
 
 from KicadModTree import *  # NOQA
-from scripts.tools.footprint_scripts_DIP import *
+from scripts.tools.footprint_scripts_DIP import makeDIP
 
 
 if __name__ == '__main__':
@@ -148,90 +148,6 @@ if __name__ == '__main__':
         for prd in smd_pinrow_distances:
             makeDIP(p, rm, prd, package_width, overlen_top, overlen_bottom, ddrill, pad_smd, True,  0,0,0, [], "Housings_DIP", [0, 0, 0], [1, 1, 1], [0, 0, 0], 'SMDIP', 'surface-mounted (SMD) DIP', 'SMD DIP DIL PDIP SMDIP', outdir=output_dir_dip)
 
-
-    # DIP-switches:
-    pins=[2,4,6,8,10,12,14,16,18,20,22,24]
-    pinrow_distance = 7.62
-    package_width = 9.78
-    switch_width=4.06
-    switch_height=1.27
-    overlen_top = 2.36
-    overlen_bottom = 2.36
-    package_width_narrow = 6.68
-    switch_width_narrow = 3.62
-    switch_height_narrow = 1.27
-    overlen_top_narrow = 2.05
-    overlen_bottom_narrow = 2.05
-    pad_smd=[2.44,1.12]
-    pinrow_distance_smd=8.61
-    switch_width_piano=1.8
-    switch_height_piano=1.5
-    package_width_piano=10.8
-    overlen_top_piano = 2.05
-    overlen_bottom_piano = 2.05
-
-    for p in pins:
-        makeDIPSwitch(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad, switch_width, switch_height, 'Slide', False, [], outdir=output_dir_switches_tht)
-        makeDIPSwitch(p, rm, pinrow_distance, package_width_narrow, overlen_top_narrow, overlen_bottom_narrow, ddrill, pad, switch_width_narrow, switch_height_narrow, 'Slide', False, ["LowProfile"], outdir=output_dir_switches_tht)
-        makeDIPSwitch(p, rm, pinrow_distance_smd, package_width_narrow, overlen_top_narrow, overlen_bottom_narrow, ddrill, pad_smd, switch_width_narrow, switch_height_narrow, 'Slide', True,["SMD","LowProfile"], 'Buttons_Switches_SMD', outdir=output_dir_switches_tht)
-        makeDIPSwitch(p, rm, pinrow_distance, package_width_piano, overlen_top_piano, overlen_bottom_piano, ddrill, pad, switch_width_piano, switch_height_piano, 'Piano', False, [], outdir=output_dir_switches_tht)
-
-    # Copal CVS DIP-switches (http://www.nidec-copal-electronics.com/e/catalog/switch/cvs.pdf):
-    pins = [2, 4, 6, 8, 16]
-    rm = 1
-    pinrow_distance = 5.9
-    package_width = 4.7
-    switch_width = 2
-    switch_height = 0.5
-    overlen_top = 1
-    overlen_bottom = 1
-    ddrill = 0
-    pad_smd = [1.2, 0.5]
-
-    for p in pins:
-        makeDIPSwitch(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_smd, switch_width,
-                      switch_height, 'Slide', True, ["Copal_CVS"], "Buttons_Switches_SMD", [0, 0, 0], [1, 1, 1],
-                      [0, 0, 0], "", True, [0.7, 0.7], 0.2, 0, outdir=output_dir_switches_smd)
-
-    # Omron A6H DIP-switches (https://www.omron.com/ecb/products/pdf/en-a6h.pdf):
-    pins = [4,8,12,16,20]
-    rm = 1.27
-    pinrow_distance = 6.15
-    package_width = 4.5
-    switch_width = 3.2
-    switch_height = 0.5
-    overlen_top = 1.27
-    overlen_bottom = 1.27
-    ddrill = 0
-    pad_smd = [1.25, 0.76]
-
-    for p in pins:
-        makeDIPSwitch(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_smd, switch_width,
-                      switch_height, 'Slide', True, ["Omron_A6H"], "Buttons_Switches_SMD", [0, 0, 0], [1, 1, 1],
-                      [0, 0, 0], "", True, outdir=output_dir_switches_smd)
-
-    # Copal CHS DIP-switches (http://www.nidec-copal-electronics.com/e/catalog/switch/chs.pdf):
-    pins = [2, 4, 8, 12, 16, 20]
-    rm = 1.27
-    pinrow_distance = 5.08
-    pinrow_distanceB = 7.62
-    package_width = 5.4
-    switch_width = 3
-    switch_height = 0.5
-    overlen_top = 1.27
-    overlen_bottom = 1.27
-    ddrill = 0
-    pad_smd = [1.6, 0.76]
-
-    for p in pins:
-        makeDIPSwitch(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_smd, switch_width,
-                      switch_height, 'Slide', True, ["Copal_CHS-A"], "Buttons_Switches_SMD", [0, 0, 0], [1, 1, 1],
-                      [0, 0, 0], "", True, outdir=output_dir_switches_smd)
-        makeDIPSwitch(p, rm, pinrow_distanceB, package_width, overlen_top, overlen_bottom, ddrill, pad_smd, switch_width,
-                      switch_height, 'Slide', True, ["Copal_CHS-B"], "Buttons_Switches_SMD", [0, 0, 0], [1, 1, 1],
-                      [0, 0, 0], "", True, outdir=output_dir_switches_smd)
-
-    #
     # Special DIP
     #
     # http://www.experimentalistsanonymous.com/diy/Datasheets/MN3005.pdf
@@ -248,10 +164,11 @@ if __name__ == '__main__':
 
     # narrow 7.62 DIPs
     pins=[8]
+    sizes_for_pins=20
     pinrow_distance=7.62
     package_width=6.35
     socket_width=pinrow_distance+2.54
     makeDIP(16, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad,       False, 0, 0, 0, prefix_name = '8', skip_pin = [3, 4, 5, 6, 11, 12, 13, 14], skip_count = True, right_cnt_start = 5, outdir=output_dir_dip)
-    socket_height = (p / 2 - 1) * rm + 2.54
+    socket_height = (sizes_for_pins / 2 - 1) * rm + 2.54
     makeDIP(16, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad,       False, socket_width, socket_height,0, ["Socket"],            prefix_name = '8', skip_pin = [3, 4, 5, 6, 11, 12, 13, 14], skip_count = True, right_cnt_start = 5, outdir=output_dir_dip)
     makeDIP(16, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_large, False, socket_width, socket_height,0, ["Socket","LongPads"], prefix_name = '8', skip_pin = [3, 4, 5, 6, 11, 12, 13, 14], skip_count = True, right_cnt_start = 5, outdir=output_dir_dip)
