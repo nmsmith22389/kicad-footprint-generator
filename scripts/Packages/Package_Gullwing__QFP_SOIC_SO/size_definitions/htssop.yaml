@@ -399,6 +399,18 @@ Linear_HTSSOP-31-38-1EP_4.4x9.7mm_P0.5mm_EP2.74x4.75mm:
     count: [3, 5]
     EP_num_paste_pads: [2, 3]
 
+HTSSOP-38-1EP_4.4x9.7mm_P0.5mm_EP3.05x6.65mm:
+  inherit: 'HTSSOP-38-1EP_4.4x9.7mm_P0.5mm_EP1.5x3.3mm'
+  size_source: 'JEDEC MO-153 variation BDT-1 (with exposed pad size from Maxim / Analog Devices), https://www.jedec.org/document_search?search_api_views_fulltext=MO-153, https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/tssop-exp/21-0714.pdf'
+  compatible_mpns:
+    - 'U38E-3C' # Maxim Integrated / Analog Devices
+  EP_size_x: 2.80 .. 3.05 .. 3.15
+  EP_size_y: 6.40 .. 6.65 .. 6.75
+  EP_num_paste_pads: [2, 4]
+  thermal_vias:
+    count: [3, 7]
+    EP_num_paste_pads: [2, 4]
+
 HTSSOP-44_6.1x14.0mm_P0.5mm_TopEP4.14x7.01mm:
   size_source: 'http://www.ti.com/lit/ds/symlink/tpa3251.pdf#page=38'
   custom_name_format: 'HTSSOP-{pincount}_{size_x:g}x{size_y:g}mm_P{pitch}mm_TopEP4.14x7.01mm'
