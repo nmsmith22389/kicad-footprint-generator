@@ -11,4 +11,4 @@ for file in size_definitions/*.yaml; do
 done
 
 # Run make_DIPSwitches.py which does not take any parameter
-./make_DIPSwitches.py -v
+./make_DIPSwitches.py
