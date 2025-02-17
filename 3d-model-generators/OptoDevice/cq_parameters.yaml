@@ -11,3 +11,16 @@ Vishay_CNY70:
   pin_color_key: 'metal grey pins'
   destination_dir: 'OptoDevice.3dshapes'
   source: 'https://www.vishay.com/docs/83751/cny70.pdf'
+
+Vishay_TCRT5000:
+  model_name: 'Vishay_TCRT5000'
+  pin_xyz: [0.4,0.65,3.5]
+  pin_dx_dy: [5.5,2.54]
+  rotation: 0
+  body_color_key: 'black body'
+  emitter_color_key: 'led blue'
+  detector_color_key: 'glass_grey'
+  text_color_key: 'white body'
+  pin_color_key: 'metal grey pins'
+  destination_dir: 'OptoDevice.3dshapes'
+  source: 'https://www.vishay.com/docs/83760/tcrt5000.pdf'

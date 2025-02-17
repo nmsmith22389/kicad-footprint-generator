@@ -41,6 +41,7 @@ from _tools import cq_color_correct, cq_globals, export_tools, parameters, shade
 from exportVRML.export_part_to_VRML import export_VRML
 
 from .vishay_cny70 import make_Vishay_CNY70
+from .vishay_tcrt5000 import make_Vishay_TCRT5000
 
 
 def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
@@ -99,8 +100,13 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             all_params[model]["pin_color_key"]
         ].getDiffuseFloat()
 
+        modelName = all_params[model]["model_name"]
         # Make the parts of the model
-        (body, em, dt, text, pin) = make_Vishay_CNY70(all_params[model])
+        if modelName == "Vishay_CNY70":
+            (body, em, dt, text, pin) = make_Vishay_CNY70(all_params[model])
+        elif modelName == "Vishay_TCRT5000":
+            (body, em, dt, text, pin) = make_Vishay_TCRT5000(all_params[model])
+
         body = body.rotate((0, 0, 0), (0, 0, 1), all_params[model]["rotation"])
         em = em.rotate((0, 0, 0), (0, 0, 1), all_params[model]["rotation"])
         dt = dt.rotate((0, 0, 0), (0, 0, 1), all_params[model]["rotation"])
