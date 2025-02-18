@@ -42,7 +42,9 @@ docs = [
 
 3d = [
     "cadquery==2.3.1",
-    "cadquery-ocp>=7.7.0a0,<7.8",
+    # This should have been '7.7.0,<7.8', but pip picks up a broken version 7.7.2.2b2 instead
+    # "cadquery-ocp>=7.7.0,<7.8",
+    "cadquery-ocp==7.7.2",
     "nptyping==2.0.1",
     "nlopt==2.7.1",
     "numpy==1.23.5",
