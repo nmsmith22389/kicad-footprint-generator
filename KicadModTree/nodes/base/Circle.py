@@ -35,14 +35,18 @@ class Circle(Node, geometricCircle):
           layer on which the circle is drawn (default: 'F.SilkS')
         * *width* (``float``) --
           width of the circle line (default: None, which means auto detection)
-        * *fill* (``str``) --
-            fill style of the circle (default: 'none'), 'solid' or 'none'
+        * *fill* (``bool``) --
+          the circle has a fill (default: False)
 
     :Example:
 
     >>> from KicadModTree import *
     >>> Circle(center=[0, 0], radius=1.5, layer='F.SilkS')
     """
+
+    layer: str
+    width: float
+    fill: bool
 
     def __init__(self, **kwargs):
         Node.__init__(self)
@@ -51,7 +55,7 @@ class Circle(Node, geometricCircle):
 
         self.layer = kwargs.get('layer', 'F.SilkS')
         self.width = kwargs.get('width')
-        self.fill = kwargs.get('fill', 'none')
+        self.fill = kwargs.get('fill', False)
 
     def rotate(self, angle, origin=(0, 0), use_degrees=True):
         r""" Rotate circle around given origin

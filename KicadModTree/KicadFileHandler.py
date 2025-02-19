@@ -706,21 +706,31 @@ class KicadFileHandler(FileHandler):
 
             # render base nodes
             for p in value:
+
+                filled = False
                 if isinstance(p, Polygon):
 
-                    sp = [SexprSerializer.Symbol('gr_poly'),
-                          self._serialize_PolygonPoints(p)
-                         ]  # NOQA
+                    sp = [
+                        SexprSerializer.Symbol("gr_poly"),
+                        self._serialize_PolygonPoints(p),
+                    ]
+                    filled = p.fill
+
                 elif isinstance(p, Line):
                     sp = [SexprSerializer.Symbol('gr_line')] + self._serialize_LinePoints(p)
                 elif isinstance(p, Circle):
                     sp = [SexprSerializer.Symbol('gr_circle')] + self._serialize_CirclePoints(p)
+                    filled = p.fill
                 elif isinstance(p, Arc):
                     sp = [SexprSerializer.Symbol('gr_arc')] + self._serialize_ArcPoints(p)
                 else:
                     raise TypeError('Unsuported type of primitive for custom pad.')
                 sp.append([SexprSerializer.Symbol('width'),
                            DEFAULT_WIDTH_POLYGON_PAD if p.width is None else p.width])
+
+                if filled:
+                    sp.append([SexprSerializer.Symbol('fill'), SexprSerializer.Symbol('yes')])
+
                 sexpr_primitives.append(sp)
                 # sexpr_primitives.append(SexprSerializer.NEW_LINE)
 

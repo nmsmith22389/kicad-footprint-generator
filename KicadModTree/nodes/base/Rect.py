@@ -34,7 +34,7 @@ class Rect(Node):
           layer on which the rect is drawn
         * *width* (``float``) --
           width of the outer line, 0 for no outline
-        * *fill* (``str, bool``) --
+        * *fill* (``bool``) --
           fill the rectangle, (default: False)
 
     :Example:
