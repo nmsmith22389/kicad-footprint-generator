@@ -24,7 +24,7 @@ from footprint_scripts_resistorlike import *
 
 
 if __name__ == '__main__':
-    lib_name="${KICAD8_3DMODEL_DIR}/Resistor_THT"
+    lib_name="${KICAD9_3DMODEL_DIR}/Resistor_THT"
 
     # standard resistors: http://cdn-reichelt.de/documents/datenblatt/B400/1_4W%23YAG.pdf
     type = "cyl"
@@ -98,7 +98,7 @@ if __name__ == '__main__':
     for rm in [7.62]:
         makeResistorAxialVertical(seriesname=seriesname, rm=rm, rmdisp=rm, l=w, d=d, ddrill=ddrill, R_POW=R_POW, type=type, d2=d2, x_3d=[0, 0, 0], s_3d=[1,1,1], has3d=1, specialfpname="", largepadsx=0, largepadsy=0, add_description=add_description, name_additions=name_additions, specialtags=[],script3d=script3dv, lib_name=lib_name)
 
-		
+
 
 
     # POWER Resistors (rectangular)
@@ -179,7 +179,7 @@ if __name__ == '__main__':
     makeResistorAxialHorizontal(seriesname=seriesname, rm=rm, rmdisp=rm, w=w, d=d, ddrill=ddrill, R_POW=R_POW, type=type,d2=d2,  x_3d=[0,0,0], s_3d=[1,1,1], has3d=1, specialfpname="", add_description=add_description, name_additions=name_additions, specialtags=[], lib_name=lib_name)
     rm = 20.3; w=rm+1; R_POW=5
     makeResistorAxialHorizontal(seriesname=seriesname, rm=rm, rmdisp=rm, w=w, d=d, ddrill=ddrill, R_POW=R_POW, type=type,d2=d2,  x_3d=[0,0,0], s_3d=[1,1,1], has3d=1, specialfpname="", add_description=add_description, name_additions=name_additions, specialtags=[], lib_name=lib_name)
-    
+
     # radial resistors, 45deg wires
     script3dv = "res_radial_power_ver.py"
     with open(script3dv, "w") as myfile:

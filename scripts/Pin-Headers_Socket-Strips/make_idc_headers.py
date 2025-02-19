@@ -22,7 +22,7 @@ if __name__ == '__main__':
     # and  http://www.oupiin.com/product_iii.html?c1=10&c2=54
     # and  http://www.assmann-wsw.com/fileadmin/catalogue/04_Multiflex_rev4-0.pdf
     # and  https://docs.google.com/spreadsheets/d/16SsEcesNF15N3Lb4niX7dcUr-NY5_MFPQhobNuNppn4/edit#gid=0
-    
+
     tags_additional = []
     extra_description = 'https://docs.google.com/spreadsheets/d/16SsEcesNF15N3Lb4niX7dcUr-NY5_MFPQhobNuNppn4/edit#gid=0'
 
@@ -30,7 +30,7 @@ if __name__ == '__main__':
     cols = 2
     ddrill=1
     pad=[1.7,1.7]
-    
+
     orientation='Vertical'
     latching = True
     body_width=8.8
@@ -59,8 +59,8 @@ if __name__ == '__main__':
                                     latch_len, latch_width,
                                     mh_ddrill, mh_pad, mh_overlen, mh_offset, mh_number,
                                     tags_additional, extra_description, "Connector_IDC", "IDC-Header", "IDC header",
-                                    [0, 0, 0], [1, 1, 1], [0, 0, 0], "${KICAD8_3DMODEL_DIR}")
-    
+                                    [0, 0, 0], [1, 1, 1], [0, 0, 0], "${KICAD9_3DMODEL_DIR}")
+
     # the above datasheets cover both horizontal and vertical
     # latches are assumed to hang off the PCB so they aren't included here
     # for this footprint the body outline is hard-coded into the script
@@ -72,7 +72,7 @@ if __name__ == '__main__':
     mh_pad=[8,8] # existing KiCad footprint is 3.05mm
     mh_overlen=5.905 # existing KiCad footprint is 5.84
     mh_offset=1.8 # existing KiCad footprint is 1.78
-    
+
     for rows in [5,6,7,8,10,12,13,15,17,20,25,30,32]:
         for mh_ddrill, mh_pad, mh_overlen in zip([0, mh_ddrill], [[0,0], mh_pad], [0, mh_overlen]):
             makeIdcHeader(rows, cols, rm, rm, body_width,
@@ -83,15 +83,15 @@ if __name__ == '__main__':
                                 latch_len, latch_width,
                                 mh_ddrill, mh_pad, mh_overlen, mh_offset, mh_number,
                                 tags_additional, extra_description, "Connector_IDC", "IDC-Header", "IDC header",
-                                [0, 0, 0], [1, 1, 1], [0, 0, 0], "${KICAD8_3DMODEL_DIR}")
+                                [0, 0, 0], [1, 1, 1], [0, 0, 0], "${KICAD9_3DMODEL_DIR}")
 
-    
+
     # from http://multimedia.3m.com/mws/media/330367O/3m-four-wall-header-2500-series-ts-0770.pdf
     # and  https://www.te.com/commerce/DocumentDelivery/DDEController?Action=srchrtrv&DocNm=1761681&DocType=Customer+Drawing&DocLang=English
     # and  https://cdn.amphenol-icc.com/media/wysiwyg/files/drawing/75869.pdf
     # and  https://katalog.we-online.de/em/datasheet/6120xx21621.pdf
     # and  https://docs.google.com/spreadsheets/d/16SsEcesNF15N3Lb4niX7dcUr-NY5_MFPQhobNuNppn4/edit#gid=0
-    
+
     orientation='Vertical'
     latching = False
     has_latch=False
@@ -99,7 +99,7 @@ if __name__ == '__main__':
     body_overlen=5.1
     body_offset=0
     mating_overlen=3.91
-    
+
     for rows in [3,4,5,6,7,8,9,10,11,12,13,15,17,20,22,25,30,32]:
         makeIdcHeader(rows, cols, rm, rm, body_width,
                             body_overlen, body_overlen, body_offset,
@@ -109,7 +109,7 @@ if __name__ == '__main__':
                             0, 0,
                             0, [0,0], 0, 0, 0,
                             tags_additional, extra_description, "Connector_IDC", "IDC-Header", "IDC box header",
-                            [0, 0, 0], [1, 1, 1], [0, 0, 0], "${KICAD8_3DMODEL_DIR}")
+                            [0, 0, 0], [1, 1, 1], [0, 0, 0], "${KICAD9_3DMODEL_DIR}")
 
     # from http://multimedia.3m.com/mws/media/22504O/3mtm-100-in-loprof-hdr-100x-100strt-ra-4-wall-ts0818.pdf
     # and  https://b2b.harting.com/files/download/PRD/PDF_TS/09185XXX323_100154466DRW007A.pdf
@@ -117,10 +117,10 @@ if __name__ == '__main__':
     # and  https://katalog.we-online.de/em/datasheet/6120xx21721.pdf
     # and  https://cdn.amphenol-icc.com/media/wysiwyg/files/drawing/75867.pdf
     # and  https://docs.google.com/spreadsheets/d/16SsEcesNF15N3Lb4niX7dcUr-NY5_MFPQhobNuNppn4/edit#gid=0
-    
+
     orientation='Horizontal'
     body_offset=4.38 # distance from pin 1 row to the closest edge of the plastic body
-    
+
     for rows in [3,4,5,6,7,8,9,10,11,12,13,15,17,20,22,25,30,32]:
         makeIdcHeader(rows, cols, rm, rm, body_width,
                             body_overlen, body_overlen, body_offset,
@@ -130,10 +130,10 @@ if __name__ == '__main__':
                             0, 0,
                             0, [0,0], 0, 0, 0,
                             tags_additional, extra_description, "Connector_IDC", "IDC-Header", "IDC box header",
-                            [0, 0, 0], [1, 1, 1], [0, 0, 0], "${KICAD8_3DMODEL_DIR}")
+                            [0, 0, 0], [1, 1, 1], [0, 0, 0], "${KICAD9_3DMODEL_DIR}")
 
     # from https://www.tme.eu/Document/4baa0e952ce73e37bc68cf730b541507/T821M114A1S100CEU-B.pdf
-    
+
     rm=2.54
     cols = 2
     ddrill=0
@@ -147,11 +147,11 @@ if __name__ == '__main__':
     body_offset=0
     mating_overlen=2.72
     wall_thickness=1.2
-    latch_lengths = [] 
-    latch_width=0 
+    latch_lengths = []
+    latch_width=0
     mh_ddrill=0
-    mh_pad=[] 
-    mh_overlen=0 
+    mh_pad=[]
+    mh_overlen=0
     mh_offset=0
     mh_number=''
     extra_description = 'https://www.tme.eu/Document/4baa0e952ce73e37bc68cf730b541507/T821M114A1S100CEU-B.pdf'
@@ -165,5 +165,5 @@ if __name__ == '__main__':
                             0, 0,
                             0, [0,0], 0, 0, 0,
                             tags_additional, extra_description, "Connector_IDC", "IDC-Header", "IDC box header",
-                            [0, 0, 0], [1, 1, 1], [0, 0, 0], "${KICAD8_3DMODEL_DIR}")
+                            [0, 0, 0], [1, 1, 1], [0, 0, 0], "${KICAD9_3DMODEL_DIR}")
 

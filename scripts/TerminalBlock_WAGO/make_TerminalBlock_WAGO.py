@@ -76,7 +76,7 @@ if __name__ == '__main__':
                                   secondDrillDiameter=secondDrillDiameter,secondDrillOffset=secondDrillOffset,secondDrillPad=secondDrillPad,
                                   secondEllipseSize=secondEllipseSize,secondEllipseOffset=secondEllipseOffset,
                                   nibbleSize=nibbleSize, nibblePos=nibblePos, fabref_offset=fabref_offset,
-                                  tags_additional=[], lib_name="${KICAD8_3DMODEL_DIR}/"+classname, classname=classname, classname_description=classname_description, webpage=webpage, script_generated_note=script_generated_note)
+                                  tags_additional=[], lib_name="${KICAD9_3DMODEL_DIR}/"+classname, classname=classname, classname_description=classname_description, webpage=webpage, script_generated_note=script_generated_note)
 
 
     # 2 through 16 is available from WAGO as of 2024
@@ -124,7 +124,7 @@ if __name__ == '__main__':
                                   secondDrillDiameter=secondDrillDiameter,secondDrillOffset=secondDrillOffset,secondDrillPad=secondDrillPad,
                                   secondEllipseSize=secondEllipseSize,secondEllipseOffset=secondEllipseOffset,
                                   nibbleSize=nibbleSize, nibblePos=nibblePos, fabref_offset=fabref_offset,
-                                  tags_additional=[], lib_name="${KICAD8_3DMODEL_DIR}/"+classname, classname=classname, classname_description=classname_description, webpage=webpage, script_generated_note=script_generated_note)
+                                  tags_additional=[], lib_name="${KICAD9_3DMODEL_DIR}/"+classname, classname=classname, classname_description=classname_description, webpage=webpage, script_generated_note=script_generated_note)
 
 
 
@@ -166,7 +166,7 @@ if __name__ == '__main__':
                                   opening=opening, opening_xoffset=opening_xoffset, opening_yoffset=opening_yoffset,
                                   bevel_height=bevel_height, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset,
                                   nibbleSize=nibbleSize, nibblePos=nibblePos, fabref_offset=fabref_offset,
-                                  tags_additional=[], lib_name="${KICAD8_3DMODEL_DIR}/"+classname, classname=classname, classname_description=classname_description, webpage=webpage, script_generated_note=script_generated_note)
+                                  tags_additional=[], lib_name="${KICAD9_3DMODEL_DIR}/"+classname, classname=classname, classname_description=classname_description, webpage=webpage, script_generated_note=script_generated_note)
         name="236-{0}".format(400+p);
         webpage="";
         classname_description="Terminal Block WAGO {0}".format(name);
@@ -179,7 +179,7 @@ if __name__ == '__main__':
                                   bevel_height=bevel_height, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset,
                                   secondDrillDiameter=secondDrillDiameter,secondDrillOffset=secondDrillOffset,secondDrillPad=secondDrillPad,
                                   nibbleSize=nibbleSize, nibblePos=nibblePos, fabref_offset=fabref_offset,
-                                  tags_additional=[], lib_name="${KICAD8_3DMODEL_DIR}/"+classname, classname=classname, classname_description=classname_description, webpage=webpage, script_generated_note=script_generated_note)
+                                  tags_additional=[], lib_name="${KICAD9_3DMODEL_DIR}/"+classname, classname=classname, classname_description=classname_description, webpage=webpage, script_generated_note=script_generated_note)
 
 
     # Available as individual terminals
@@ -219,7 +219,7 @@ if __name__ == '__main__':
                                   opening=opening, opening_xoffset=opening_xoffset, opening_yoffset=opening_yoffset,
                                   bevel_height=bevel_height, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset,
                                   nibbleSize=nibbleSize, nibblePos=nibblePos, fabref_offset=fabref_offset,
-                                  tags_additional=[], lib_name="${KICAD8_3DMODEL_DIR}/"+classname, classname=classname, classname_description=classname_description, webpage=webpage, script_generated_note=script_generated_note)
+                                  tags_additional=[], lib_name="${KICAD9_3DMODEL_DIR}/"+classname, classname=classname, classname_description=classname_description, webpage=webpage, script_generated_note=script_generated_note)
         name="236-{0}".format(500+p);
         webpage="";
         classname_description="Terminal Block WAGO {0}".format(name);
@@ -232,7 +232,7 @@ if __name__ == '__main__':
                                   bevel_height=bevel_height, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset,
                                   secondDrillDiameter=secondDrillDiameter,secondDrillOffset=secondDrillOffset,secondDrillPad=secondDrillPad,
                                   nibbleSize=nibbleSize, nibblePos=nibblePos, fabref_offset=fabref_offset,
-                                  tags_additional=[], lib_name="${KICAD8_3DMODEL_DIR}/"+classname, classname=classname, classname_description=classname_description, webpage=webpage, script_generated_note=script_generated_note)
+                                  tags_additional=[], lib_name="${KICAD9_3DMODEL_DIR}/"+classname, classname=classname, classname_description=classname_description, webpage=webpage, script_generated_note=script_generated_note)
 
     # Available as individual terminals
     # Provide 1 through 16 for the sake of completeness, and 24 for historic reasons
@@ -271,7 +271,7 @@ if __name__ == '__main__':
                                   opening=opening, opening_xoffset=opening_xoffset, opening_yoffset=opening_yoffset,
                                   bevel_height=bevel_height, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset,
                                   nibbleSize=nibbleSize, nibblePos=nibblePos, fabref_offset=fabref_offset,
-                                  tags_additional=[], lib_name="${KICAD8_3DMODEL_DIR}/"+classname, classname=classname, classname_description=classname_description, webpage=webpage, script_generated_note=script_generated_note)
+                                  tags_additional=[], lib_name="${KICAD9_3DMODEL_DIR}/"+classname, classname=classname, classname_description=classname_description, webpage=webpage, script_generated_note=script_generated_note)
         name="236-{0}".format(600+p);
         webpage="";
         classname_description="Terminal Block WAGO {0}".format(name);
@@ -284,4 +284,4 @@ if __name__ == '__main__':
                                   bevel_height=bevel_height, secondHoleDiameter=secondHoleDiameter, secondHoleOffset=secondHoleOffset, thirdHoleDiameter=thirdHoleDiameter, thirdHoleOffset=thirdHoleOffset, fourthHoleDiameter=fourthHoleDiameter, fourthHoleOffset=fourthHoleOffset,
                                   secondDrillDiameter=secondDrillDiameter,secondDrillOffset=secondDrillOffset,secondDrillPad=secondDrillPad,
                                   nibbleSize=nibbleSize, nibblePos=nibblePos, fabref_offset=fabref_offset,
-                                  tags_additional=[], lib_name="${KICAD8_3DMODEL_DIR}/"+classname, classname=classname, classname_description=classname_description, webpage=webpage, script_generated_note=script_generated_note)
+                                  tags_additional=[], lib_name="${KICAD9_3DMODEL_DIR}/"+classname, classname=classname, classname_description=classname_description, webpage=webpage, script_generated_note=script_generated_note)

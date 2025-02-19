@@ -54,12 +54,12 @@ def qfn(args):
         f = Footprint(footprint_name, FootprintType.THT)
 
 
-        file3Dname = "${KICAD8_3DMODEL_DIR}/" + dest_dir_3D_prefix + "/" + footprint_name + ".wrl"
+        file3Dname = "${KICAD9_3DMODEL_DIR}/" + dest_dir_3D_prefix + "/" + footprint_name + ".wrl"
         words = footprint_name.split("_")
         if words[-1].lower().startswith('handsolder'):
             words[-1] = ''
             ff = '_'.join(words)
-            file3Dname = "${KICAD8_3DMODEL_DIR}/" + dest_dir_3D_prefix + "/" + ff + ".wrl"
+            file3Dname = "${KICAD9_3DMODEL_DIR}/" + dest_dir_3D_prefix + "/" + ff + ".wrl"
 
         lw = ((2.0 * PE) + ((pinnumber - 1) * PS))
         at = [0.0 - PE, W - WD]
@@ -74,12 +74,12 @@ def qfn(args):
         f.append(StandardBox(footprint=f, description=description, datasheet=datasheet, at=at,
                              size=size, tags=tags, extratexts=extratexts, pins=pins,
                              file3Dname=file3Dname))
-        
-        
+
+
         output_dir = 'TerminalBlock_Altech.pretty' + os.sep
         if not os.path.isdir(output_dir):
             os.makedirs(output_dir)
-        
+
         file_handler = KicadFileHandler(f)
         file_handler.writeFile(output_dir + footprint_name + ".kicad_mod")
 

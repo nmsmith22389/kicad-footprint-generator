@@ -349,7 +349,7 @@ def makeLEDRadial(
     # add model
     if (has3d != 0):
         kicad_modg.append(
-            Model(filename="${KICAD8_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl", at=[0, 0, 0], scale=[1, 1, 1], rotate=[0, 0, 0]))
+            Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl", at=[0, 0, 0], scale=[1, 1, 1], rotate=[0, 0, 0]))
 
     # print render tree
     # print(kicad_mod.getRenderTree())
@@ -622,7 +622,7 @@ def makeLEDHorizontal(
     # add model
     if (has3d != 0):
         kicad_modg.append(
-            Model(filename="${KICAD8_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl", at=[0, 0, 0], scale=[1, 1, 1], rotate=[0, 0, 0]))
+            Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl", at=[0, 0, 0], scale=[1, 1, 1], rotate=[0, 0, 0]))
 
     # print render tree
     # print(kicad_mod.getRenderTree())

@@ -132,7 +132,7 @@ def gen_footprint(pinnum, manpart, configuration):
         {'x': -6.775+padsize[0]/2-(2.5/2+configuration['silk_pad_clearance']+configuration['silk_line_width']), 'y': -(pitch*(pinnum-1))/2-1/2-configuration['silk_line_width']-configuration['silk_pad_clearance']},
         {'x': -6.775+padsize[0]/2, 'y': -(pitch*(pinnum-1))/2-1/2-configuration['silk_line_width']-configuration['silk_pad_clearance']},
     ]
-    kicad_mod.append(PolygonLine(polygon=s_pin1, 
+    kicad_mod.append(PolygonLine(polygon=s_pin1,
                                  width=configuration['silk_line_width'], layer="F.SilkS"))
 
     # CrtYd
@@ -169,7 +169,7 @@ def gen_footprint(pinnum, manpart, configuration):
         courtyard={'top':cy_top, 'bottom':cy_bottom}, fp_name=footprint_name, text_y_inside_position='center', allow_rotation=True)
 
     # 3D model
-    model3d_path_prefix = configuration.get('3d_model_prefix','${KICAD8_3DMODEL_DIR}/')
+    model3d_path_prefix = configuration.get('3d_model_prefix','${KICAD9_3DMODEL_DIR}/')
     lib_name = configuration['lib_name_format_string'].format(series=series, man=manufacturer)
     model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}.wrl'.format(
         model3d_path_prefix=model3d_path_prefix, lib_name=lib_name, fp_name=footprint_name)

@@ -89,7 +89,7 @@ def makeSIPVertical(pins, rm, ddrill, pad, package_size, left_offset, top_offset
                  layer='F.CrtYd', width=lw_crt))
 
     # add model
-    kicad_mod.append(Model(filename="${KICAD8_3DMODEL_DIR}/"+lib_name + ".3dshapes/" + footprint_name + ".wrl",
+    kicad_mod.append(Model(filename="${KICAD9_3DMODEL_DIR}/"+lib_name + ".3dshapes/" + footprint_name + ".wrl",
                            at=[0, 0, 0], scale=[1,1,1], rotate=[0, 0, 0]))
 
     # write file
@@ -169,7 +169,7 @@ def makeSIPHorizontal(pins, rm, ddrill, pad, package_size, left_offset, pin_bott
                  layer='F.CrtYd', width=lw_crt))
 
     # add model
-    kicad_mod.append(Model(filename="${KICAD8_3DMODEL_DIR}/"+lib_name + ".3dshapes/" + footprint_name + ".wrl",
+    kicad_mod.append(Model(filename="${KICAD9_3DMODEL_DIR}/"+lib_name + ".3dshapes/" + footprint_name + ".wrl",
                            at=[0, 0, 0], scale=[1,1,1], rotate=[0, 0, 0]))
 
     # write file
@@ -232,7 +232,7 @@ def makeResistorSIP(pins, footprint_name, description):
                              drill=ddrill, layers=Pad.LAYERS_THT))
 
     # add model
-    kicad_mod.append(Model(filename="${KICAD8_3DMODEL_DIR}/"+lib_name + ".3dshapes/" + footprint_name + ".wrl",
+    kicad_mod.append(Model(filename="${KICAD9_3DMODEL_DIR}/"+lib_name + ".3dshapes/" + footprint_name + ".wrl",
                            at=[0, 0, 0], scale=[1 / 2.54, 1 / 2.54, 1 / 2.54], rotate=[0, 0, 0]))
 
     # print render tree

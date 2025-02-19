@@ -14,7 +14,7 @@ base:
            colour: 'white body'
         rotor:
            colour: 'white body'
-    3d_prefix: '${KICAD8_3DMODEL_DIR}/Capacitors_SMD.3dshapes'
+    3d_prefix: '${KICAD9_3DMODEL_DIR}/Capacitors_SMD.3dshapes'
 variants:
     - series: TZR1
       manufacturer: Murata
@@ -30,7 +30,7 @@ variants:
           chamfer:
               sides: []
               size_mm: 0.0
-          projection: 
+          projection:
               sides: ['top', 'bottom', 'right']
               offset_mm: 0.1
               x_side_mm: 0.9
@@ -51,10 +51,10 @@ variants:
           chamfer:
               sides: []
               size_mm: 0.0
-          projection: 
+          projection:
               sides: ['top', 'bottom', 'right']
               offset_mm: 0.2
-              x_side_mm: 1.8              
+              x_side_mm: 1.8
               y_side_mm: 1.0
       keywords: 'Murata TZY2'
       datasheet: http://www.murata.com/~/media/webrenewal/support/library/catalog/products/capacitor/trimmer/t13e.ashx?la=en-gb
@@ -72,7 +72,7 @@ variants:
           chamfer:
               sides: []
               size_mm: 0.0
-          projection: 
+          projection:
               sides: ['top', 'bottom']
               offset_mm: 0.1
               x_side_mm: 3.0
@@ -93,7 +93,7 @@ variants:
           chamfer:
               sides: ['left']
               size_mm: 0.6
-          projection: 
+          projection:
               sides: ['right']
               offset_mm: 0.4
               x_side_mm: 0.0
@@ -114,7 +114,7 @@ variants:
           chamfer:
               sides: []
               size_mm: 0.0
-          projection: 
+          projection:
               sides: ['top', 'bottom', 'right']
               offset_mm: 0.1
               x_side_mm: 0.9
@@ -135,10 +135,10 @@ variants:
           chamfer:
               sides: []
               size_mm: 0.0
-          projection: 
+          projection:
               sides: ['top', 'bottom', 'right']
               offset_mm: 0.2
-              x_side_mm: 1.8              
+              x_side_mm: 1.8
               y_side_mm: 1.0
       keywords: 'Voltronics JV'
       datasheet: http://www.knowlescapacitors.com/File%20Library/Voltronics/English/GlobalNavigation/Products/Trimmer%20Capacitors/CerChipTrimCap.pdf
@@ -156,10 +156,10 @@ variants:
           chamfer:
               sides: []
               size_mm: 0.0
-          projection: 
+          projection:
               sides: ['top', 'bottom', 'right']
               offset_mm: 0.2
-              x_side_mm: 1.5            
+              x_side_mm: 1.5
               y_side_mm: 1.0
       keywords: 'Voltronics JQ'
       datasheet: http://www.knowlescapacitors.com/File%20Library/Voltronics/English/GlobalNavigation/Products/Trimmer%20Capacitors/CerChipTrimCap.pdf
@@ -180,7 +180,7 @@ base:
            colour: 'white body'
         rotor:
            colour: 'white body'
-    3d_prefix: '${KICAD8_3DMODEL_DIR}/Capacitors_SMD.3dshapes'
+    3d_prefix: '${KICAD9_3DMODEL_DIR}/Capacitors_SMD.3dshapes'
 variants:
     - series: TZC3
       manufacturer: Murata
@@ -196,7 +196,7 @@ variants:
           chamfer:
               sides: ['left']
               size_mm: 0.6
-          projection: 
+          projection:
               sides: []
               offset_mm:
               x_side_mm:
@@ -220,7 +220,7 @@ base:
            colour: 'white body'
         rotor:
            colour: 'white body'
-    3d_prefix: '${KICAD8_3DMODEL_DIR}/Capacitors_SMD.3dshapes'
+    3d_prefix: '${KICAD9_3DMODEL_DIR}/Capacitors_SMD.3dshapes'
 variants:
     - series: JZ
       manufacturer: Voltronics
@@ -236,7 +236,7 @@ variants:
           chamfer:
               sides: ['left']
               size_mm: 0.6
-          projection: 
+          projection:
               sides: []
               offset_mm:
               x_side_mm:
@@ -257,7 +257,7 @@ variants:
           chamfer:
               sides: ['left']
               size_mm: 0.6
-          projection: 
+          projection:
               sides: []
               offset_mm:
               x_side_mm:
@@ -281,7 +281,7 @@ base:
            colour: 'white body'
         rotor:
            colour: 'white body'
-    3d_prefix: '${KICAD8_3DMODEL_DIR}/Capacitors_SMD.3dshapes'
+    3d_prefix: '${KICAD9_3DMODEL_DIR}/Capacitors_SMD.3dshapes'
 variants:
     - series: TZB4-A
       manufacturer: Murata
@@ -297,7 +297,7 @@ variants:
           chamfer:
               sides: []
               size_mm:
-          projection: 
+          projection:
               sides: ['left', 'right']
               offset_mm: 0.25
               x_side_mm:
@@ -318,7 +318,7 @@ variants:
           chamfer:
               sides: []
               size_mm:
-          projection: 
+          projection:
               sides: ['left', 'right']
               offset_mm: 1.25
               x_side_mm:

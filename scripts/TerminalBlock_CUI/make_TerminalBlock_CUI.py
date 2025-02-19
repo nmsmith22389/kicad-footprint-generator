@@ -72,7 +72,7 @@ if __name__ == '__main__':
                 nibblePos=nibblePos,
                 fabref_offset=fabref_offset,
                 tags_additional=[],
-                lib_name='${KICAD8_3DMODEL_DIR}/'+classname,
+                lib_name='${KICAD9_3DMODEL_DIR}/'+classname,
                 classname=classname,
                 classname_description=classname_description,
                 webpage=webpage,
