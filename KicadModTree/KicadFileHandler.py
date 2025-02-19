@@ -322,7 +322,7 @@ class KicadFileHandler(FileHandler):
     #
     # The version number is a date in the format YYYYMMDD and corresponds to the
     # version in the pcb_io_kicad_sexpr.h file for a stable release of KiCad.
-    FORMAT_VERSION: int = 20240108
+    FORMAT_VERSION: int = 20241229
 
     # The name of the generator (this is put in the .kicad_mod file)
     #
