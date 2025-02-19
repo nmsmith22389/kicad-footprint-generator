@@ -950,6 +950,18 @@ class KicadFileHandler(FileHandler):
 
             return sexpr
 
+        def _serialise_Placement():
+            """
+            For footprint purposes, placement is always disabled
+            """
+            sexpr = [
+                SexprSerializer.Symbol("placement"),
+                self._serialise_Boolean("enabled", False),
+                [SexprSerializer.Symbol("sheetname"), ""],
+            ]
+
+            return sexpr
+
         def _serialize_Hatch(node):
             return [
                 SexprSerializer.Symbol('hatch'),
@@ -1062,10 +1074,13 @@ class KicadFileHandler(FileHandler):
             [SexprSerializer.Symbol('min_thickness'), node.min_thickness],
         ]
 
-        # Optional node
-        if node.keepouts is not None:
+        is_rule_area = node.keepouts is not None
+
+        # Rule areas always seem to output keepout and placement
+        if is_rule_area:
             sexpr += [
                 _serialise_Keepout(node.keepouts),
+                _serialise_Placement(),
             ]
 
         sexpr += [
