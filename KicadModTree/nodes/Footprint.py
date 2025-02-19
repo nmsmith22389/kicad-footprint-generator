@@ -16,6 +16,7 @@
 
 from kilibs.geom import Vector2D
 from KicadModTree.nodes.Node import Node
+from KicadModTree.nodes.base.EmbeddedFonts import EmbeddedFonts
 
 from enum import Enum
 import uuid
@@ -50,6 +51,7 @@ class Footprint(Node):
     '''
 
     _tags: list[str]
+    _embedded_fonts: EmbeddedFonts
 
     def __init__(self, name: str, footprintType: FootprintType, tstamp_seed: uuid.UUID | None = None):
         """
@@ -76,6 +78,11 @@ class Footprint(Node):
         if tstamp_seed is not None:
             self.getTStampCls().setTStampSeed(tstamp_seed=tstamp_seed)
 
+        # All footprints from v9 have an embedded_fonts node
+        # even if it's not enabled
+        self._embedded_fonts = EmbeddedFonts()
+        self.append(self._embedded_fonts)
+
     def setName(self, name):
         self.name = name
 
@@ -87,7 +94,7 @@ class Footprint(Node):
         return self._tags
 
     @tags.setter
-    def tags(self, tags) -> None:
+    def tags(self, tags: list | str) -> None:
         if isinstance(tags, list):
             self._tags = tags
         else:
@@ -109,6 +116,10 @@ class Footprint(Node):
             raise TypeError(
                 "footprintType must be a FootprintType, not {}".format(type(footprintType)))
         self._footprintType = footprintType
+
+    @property
+    def embeddedFonts(self) -> EmbeddedFonts:
+        return self._embedded_fonts
 
     def setMaskMargin(self, value):
         self.maskMargin = value

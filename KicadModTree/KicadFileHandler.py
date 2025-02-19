@@ -22,6 +22,7 @@ from KicadModTree.util.kicad_util import *
 from KicadModTree.util.corner_selection import CornerSelection
 # TODO: why .KicadModTree is not enough?
 from KicadModTree.PolygonPoints import PolygonPoints
+from KicadModTree.nodes.base.EmbeddedFonts import EmbeddedFonts
 from KicadModTree.nodes.base.Group import Group
 from KicadModTree.nodes.base.Rect import Rect
 from KicadModTree.nodes.base.Text import Text, Property
@@ -245,9 +246,11 @@ def node_key_func(node) -> List:
         return [300] + round_numbers_in_key_func(pad_key_func(node))
     elif isinstance(node, Zone):
         return [400] + round_numbers_in_key_func(zone_key_func(node))
+    elif isinstance(node, EmbeddedFonts):
+        return [1000]
     elif isinstance(node, Model):
         # Models right at the end
-        return [1000]
+        return [1100]
 
     raise ValueError(f"Node ordering not defined: {node}")
 
@@ -390,7 +393,7 @@ class KicadFileHandler(FileHandler):
             elif isinstance(single_node, (Arc, Circle, Line, Pad,
                                           Polygon, CompoundPolygon,
                                           PolygonArc, Rect, Group, Text, Zone,
-                                          Model)):
+                                          EmbeddedFonts, Model)):
                 ordered_nodes.append(single_node)
 
         sexpr = []
@@ -1104,3 +1107,9 @@ class KicadFileHandler(FileHandler):
                 sexpr.append(SexprSerializer.Symbol(str(tstmp)))
                 return sexpr
         return [""]
+
+    def _serialize_EmbeddedFonts(self, node: EmbeddedFonts):
+        if not node.enabled:
+            return self._serialise_Boolean('embedded_fonts', False)
+
+        raise NotImplementedError("'enabled' embedded fonts are not yet supported")

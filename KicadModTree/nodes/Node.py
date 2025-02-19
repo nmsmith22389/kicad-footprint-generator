@@ -247,7 +247,7 @@ class Node(object):
     def __len__(self):
         return len(self.getNormalChilds()) + len(self.getVirtualChilds())
 
-    def append(self, node):
+    def append(self, node: Node):
         '''
         add node to child nodes
         '''
