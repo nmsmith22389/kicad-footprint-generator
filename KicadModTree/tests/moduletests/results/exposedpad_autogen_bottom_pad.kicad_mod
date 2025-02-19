@@ -1,4 +1,4 @@
-(footprint "exposed_paste_autogen_bottom_pad"
+(footprint "exposedpad_autogen_bottom_pad"
 	(version 20241229)
 	(generator "kicad-footprint-generator")
 	(layer "F.Cu")

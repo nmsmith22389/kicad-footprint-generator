@@ -1,4 +1,4 @@
-(footprint "exposed_paste_autogen_autogen_inner_and_outer"
+(footprint "exposedpad_autogen_inner_outer"
 	(version 20241229)
 	(generator "kicad-footprint-generator")
 	(layer "F.Cu")

@@ -1,4 +1,4 @@
-(footprint "simple_exposed"
+(footprint "exposedpad_simple"
 	(version 20241229)
 	(generator "kicad-footprint-generator")
 	(layer "F.Cu")

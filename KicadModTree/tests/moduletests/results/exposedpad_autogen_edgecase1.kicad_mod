@@ -1,4 +1,4 @@
-(footprint "exposed_paste_autogen_case1"
+(footprint "exposedpad_autogen_edgecase1"
 	(version 20241229)
 	(generator "kicad-footprint-generator")
 	(layer "F.Cu")

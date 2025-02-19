@@ -1,4 +1,4 @@
-(footprint "simple_no_rounding"
+(footprint "exposedpad_no_rounding"
 	(version 20241229)
 	(generator "kicad-footprint-generator")
 	(layer "F.Cu")

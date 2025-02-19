@@ -1,4 +1,4 @@
-(footprint "exposed_paste_via_tented"
+(footprint "exposedpad_via_tented"
 	(version 20241229)
 	(generator "kicad-footprint-generator")
 	(layer "F.Cu")
