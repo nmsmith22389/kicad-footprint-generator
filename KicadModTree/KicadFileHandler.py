@@ -944,8 +944,8 @@ class KicadFileHandler(FileHandler):
 
             add_keepout(keepouts.tracks, 'tracks')
             add_keepout(keepouts.vias, 'vias')
-            add_keepout(keepouts.copperpour, 'copperpour')
             add_keepout(keepouts.pads, 'pads')
+            add_keepout(keepouts.copperpour, 'copperpour')
             add_keepout(keepouts.footprints, 'footprints')
 
             return sexpr
