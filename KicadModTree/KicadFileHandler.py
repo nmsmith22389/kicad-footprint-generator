@@ -472,14 +472,7 @@ class KicadFileHandler(FileHandler):
             else:
                 fill = node.fill == "solid"
 
-        return [
-            SexprSerializer.Symbol("fill"),
-            (
-                SexprSerializer.Symbol("solid")
-                if fill
-                else SexprSerializer.Symbol("none")
-            ),
-        ]
+        return self._serialise_Boolean('fill', fill)
 
     def _serialize_ArcPoints(self, node):
         start_pos = node.getRealPosition(node.getStartPoint())
@@ -888,13 +881,13 @@ class KicadFileHandler(FileHandler):
                 else:
                     node_points_sexpr.append(
                         self._callSerialize(geom))
-            sexpr = [SexprSerializer.Symbol('fp_poly'),
-                 node_points_sexpr,
-                 [SexprSerializer.Symbol('stroke')] + self._serialize_Stroke(node),
-                 [SexprSerializer.Symbol('fill'), SexprSerializer.Symbol(node.fill)],
-                 [SexprSerializer.Symbol('layer'), SexprSerializer.Symbol(node.layer)],
-                ]  # NOQA
-
+            sexpr = [
+                SexprSerializer.Symbol("fp_poly"),
+                node_points_sexpr,
+                [SexprSerializer.Symbol("stroke")] + self._serialize_Stroke(node),
+                self._serialize_Fill(node),
+                [SexprSerializer.Symbol("layer"), SexprSerializer.Symbol(node.layer)],
+            ]
             if node.hasValidTStamp():
                 sexpr.append(self._serialize_TStamp(node))
 
