@@ -59,41 +59,62 @@ def _get_layer_width(layer, width=None):
 
 def layer_key_func(layer: str) -> int:
     """
-    Get the KiCad sorting key for a layer name
+    Get the KiCad sorting key for a layer name.
+
+    Approximate sorting order from PCB_IO_KICAD_SEXPR::formatLayers()
     """
 
     layer_map = {
+
+        # These are specials in this order in formatLayers()
+        # which come first
+        "*.Cu": -1000,
+        "F&B.Cu": -999,
+        "*.Adhes": -998,
+        "*.Paste": -997,
+        "*.SilkS": -996,
+        "*.Mask": -995,
+        "*.CrtYd": -994,
+        "*.Fab": -993,
+
+        # Single layer IDs come after
+        # Copper layers are even numbers
         "F.Cu": 0,
-        "B.Cu": 31,
-        "B.Adhes": 32,
-        "F.Adhes": 33,
-        "B.Paste": 34,
-        "F.Paste": 35,
-        "B.SilkS": 36,
-        "F.SilkS": 37,
-        "B.Mask": 38,
-        "F.Mask": 39,
-        "Dwgs.User": 40,
-        "Cmts.User": 41,
-        "Eco1.User": 42,
-        "Eco2.User": 43,
-        "Edge.Cuts": 44,
-        "Margin": 45,
-        "B.CrtYd": 46,
-        "F.CrtYd": 47,
-        "B.Fab": 48,
-        "F.Fab": 49,
+        "B.Cu": 2,
+
+        "F.Mask": 1,
+        "B.Mask": 3,
+        "F.SilkS": 5,
+        "B.SilkS": 7,
+        "F.Adhes": 9,
+        "B.Adhes": 11,
+        "F.Paste": 13,
+        "B.Paste": 15,
+
+        "Dwgs.User": 17,
+        "Cmts.User": 19,
+        "Eco1.User": 21,
+        "Eco2.User": 23,
+
+        "Edge.Cuts": 25,
+        "Margin": 27,
+
+        "B.CrtYd": 29,
+        "F.CrtYd": 31,
+
+        "B.Fab": 33,
+        "F.Fab": 35,
     }
 
     try:
         return layer_map[layer]
     except KeyError:
-        # inner layers
+        # inner layers: even numbers from 4
         if m := re.match(r'^In(\d+)\.$', layer):
-            return int(m.group(1))
-        # user layers
+            return int(m.group(1) + 1) * 2
+        # user layers from 39 onwards
         if m := re.match(r'^User\.(\d)$', layer):
-            return 49 + int(m.group(1))
+            return 38 + int(m.group(1))
 
     raise ValueError(f"Unhandled layer for sorting: {layer}")
 
@@ -784,7 +805,7 @@ class KicadFileHandler(FileHandler):
             property_value = self._serialize_PadFabProperty(node)
             sexpr.append([SexprSerializer.Symbol('property'), property_value])
 
-        sexpr.append([SexprSerializer.Symbol('layers')] + node.layers)
+        sexpr.append(self._serialise_Layers(node))
 
         # The generator pads don't support this, but KiCad always writes it for PTH pads
         if node.type == Pad.TYPE_THT:
