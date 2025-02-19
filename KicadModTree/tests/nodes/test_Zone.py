@@ -48,7 +48,7 @@ class TestZoneSerialisation(SerialisationTest):
         assert z.connect_pads.type == PadConnection.THERMAL_RELIEF
         assert z.connect_pads.clearance == 0
 
-        assert z.fill is None
+        assert z.fill.fill == ZoneFill.FILL_NONE
 
         kicad_mod = Footprint("zonetest", FootprintType.UNSPECIFIED)
         kicad_mod.append(z)

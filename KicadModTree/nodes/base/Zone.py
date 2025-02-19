@@ -125,7 +125,7 @@ class Hatch(Node):
             raise ValueError("Invalid hatch style: %s" % style)
 
 
-class ZoneFill(Node):
+class ZoneFill:
     r"""
     Add a zone fill definition to the render tree
 
@@ -145,6 +145,7 @@ class ZoneFill(Node):
 
     """
 
+    FILL_NONE = "none"
     FILL_SOLID = "solid"
     FILL_HATCHED = "hatched"
 
@@ -166,7 +167,7 @@ class ZoneFill(Node):
     def __init__(self, **kwargs):
         self.fill = kwargs.get("fill", self.FILL_SOLID)
 
-        valid_fills = [self.FILL_SOLID, self.FILL_HATCHED]
+        valid_fills = [self.FILL_SOLID, self.FILL_HATCHED, self.FILL_NONE]
 
         if self.fill not in valid_fills:
             raise ValueError("Invalid fill style: %s" % self.fill)
@@ -301,4 +302,8 @@ class Zone(Node):
         self.keepouts = keepouts
         self.connect_pads = connect_pads
         self.priority = kwargs.get("priority", None)
-        self.fill = fill
+
+        if fill is not None:
+            self.fill = fill
+        else:
+            self.fill = ZoneFill(fill=ZoneFill.FILL_NONE)

@@ -1008,12 +1008,9 @@ class KicadFileHandler(FileHandler):
         def _serialise_ZoneFill(node):
             sexpr = [SexprSerializer.Symbol('fill')]
 
-            # no fill, all other tokens are unnecessary
-            if node is None:
-                return sexpr
-
             # we do have a fill
-            sexpr.append(SexprSerializer.Symbol('yes'))
+            if node.fill != ZoneFill.FILL_NONE:
+                sexpr.append(SexprSerializer.Symbol('yes'))
 
             def node_if_not_none(property: Optional[str], keyword: str) -> list:
                 if property is None:
@@ -1023,7 +1020,7 @@ class KicadFileHandler(FileHandler):
                 ]
 
             # soild is encoded as no mode
-            if node.fill != ZoneFill.FILL_SOLID:
+            if node.fill not in [ZoneFill.FILL_NONE, ZoneFill.FILL_SOLID]:
                 sexpr += [
                     [SexprSerializer.Symbol('mode'), node.fill],
                 ]
@@ -1039,14 +1036,22 @@ class KicadFileHandler(FileHandler):
                     [
                         SexprSerializer.Symbol('smoothing'),
                         SexprSerializer.Symbol(node.smoothing),
-                    ],
-                    [
-                        SexprSerializer.Symbol('radius'),
-                        node.smoothing_radius
-                    ],
+                    ]
                 ]
 
-            if node.island_removal_mode is not None:
+                if node.smoothing_radius > 0:
+                    sexpr += [
+                        [
+                            SexprSerializer.Symbol('radius'),
+                            node.smoothing_radius
+                        ],
+                    ]
+
+            # KiCad only outputs the island removal mode if it's not the 'remove' default
+            if (
+                node.island_removal_mode is not None
+                and node.island_removal_mode != ZoneFill.ISLAND_REMOVAL_REMOVE
+            ):
                 # Look up the encoding
                 island_removal_mode = {
                     ZoneFill.ISLAND_REMOVAL_REMOVE: 0,
@@ -1097,8 +1102,8 @@ class KicadFileHandler(FileHandler):
         sexpr += [
             _serialize_ConnectPads(node.connect_pads),
             # technically optional, but we can just always put it in
-            self._serialise_Boolean('filled_areas_thickness', node.filled_areas_thickness),
             [SexprSerializer.Symbol('min_thickness'), node.min_thickness],
+            self._serialise_Boolean('filled_areas_thickness', node.filled_areas_thickness),
         ]
 
         is_rule_area = node.keepouts is not None
