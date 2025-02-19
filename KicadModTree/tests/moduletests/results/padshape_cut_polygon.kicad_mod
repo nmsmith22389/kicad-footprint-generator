@@ -1,12 +1,12 @@
 (footprint "cut_polygon"
-	(version 20240108)
+	(version 20241229)
 	(generator "kicad-footprint-generator")
 	(layer "F.Cu")
 	(attr smd)
 	(pad "1" smd custom
 		(at 0 0)
 		(size 0.5 0.5)
-		(layers "F.Cu" "F.Paste" "F.Mask")
+		(layers "F.Cu" "F.Mask" "F.Paste")
 		(options
 			(clearance outline)
 			(anchor circle)
@@ -26,7 +26,9 @@
 					(xy -2 2)
 				)
 				(width 0)
+				(fill yes)
 			)
 		)
 	)
+	(embedded_fonts no)
 )

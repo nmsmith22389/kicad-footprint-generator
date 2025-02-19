@@ -1,5 +1,5 @@
 (footprint "test"
-	(version 20240108)
+	(version 20241229)
 	(generator "kicad-footprint-generator")
 	(layer "F.Cu")
 	(descr "A example footprint")
@@ -32,7 +32,7 @@
 			(width 0.12)
 			(type solid)
 		)
-		(fill none)
+		(fill no)
 		(layer "F.SilkS")
 	)
 	(fp_rect
@@ -42,7 +42,7 @@
 			(width 0.12)
 			(type solid)
 		)
-		(fill none)
+		(fill no)
 		(layer "F.CrtYd")
 	)
 	(pad "1" thru_hole rect
@@ -59,6 +59,7 @@
 		(layers "*.Cu" "*.Mask")
 		(remove_unused_layers no)
 	)
+	(embedded_fonts no)
 	(model "example.3dshapes/example_footprint.wrl"
 		(offset
 			(xyz 0 0 0)

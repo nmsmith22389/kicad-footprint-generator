@@ -1,12 +1,12 @@
 (footprint "chamfered_pad"
-	(version 20240108)
+	(version 20241229)
 	(generator "kicad-footprint-generator")
 	(layer "F.Cu")
 	(attr smd)
 	(pad "1" smd custom
 		(at 0 0)
 		(size 0.764298 0.764298)
-		(layers "F.Cu" "F.Paste" "F.Mask")
+		(layers "F.Cu" "F.Mask" "F.Paste")
 		(options
 			(clearance outline)
 			(anchor circle)
@@ -24,13 +24,14 @@
 					(xy -0.5 0.166667)
 				)
 				(width 0)
+				(fill yes)
 			)
 		)
 	)
 	(pad "1" smd custom
 		(at 2 2)
 		(size 1.357538 1.357538)
-		(layers "F.Cu" "F.Paste" "F.Mask")
+		(layers "F.Cu" "F.Mask" "F.Paste")
 		(options
 			(clearance outline)
 			(anchor circle)
@@ -48,7 +49,9 @@
 					(xy -1.05 0.5)
 				)
 				(width 0)
+				(fill yes)
 			)
 		)
 	)
+	(embedded_fonts no)
 )

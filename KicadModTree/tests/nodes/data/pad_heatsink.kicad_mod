@@ -1,5 +1,5 @@
 (footprint "padtest"
-	(version 20240108)
+	(version 20241229)
 	(generator "kicad-footprint-generator")
 	(layer "F.Cu")
 	(attr smd)
@@ -9,4 +9,5 @@
 		(property pad_prop_heatsink)
 		(layers "F.Cu")
 	)
+	(embedded_fonts no)
 )

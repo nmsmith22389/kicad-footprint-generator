@@ -1,12 +1,12 @@
 (footprint "test_rotate_pad"
-	(version 20240108)
+	(version 20241229)
 	(generator "kicad-footprint-generator")
 	(layer "F.Cu")
 	(attr smd)
 	(pad "1" smd custom
 		(at 0 0)
 		(size 0.2 0.2)
-		(layers "F.Cu" "F.Paste" "F.Mask")
+		(layers "F.Cu" "F.Mask" "F.Paste")
 		(options
 			(clearance outline)
 			(anchor circle)
@@ -20,13 +20,14 @@
 					(xy -1.2 -0.5)
 				)
 				(width 0)
+				(fill yes)
 			)
 		)
 	)
 	(pad "2" smd custom
 		(at 0.175 -0.303109 -60)
 		(size 0.2 0.2)
-		(layers "F.Cu" "F.Paste" "F.Mask")
+		(layers "F.Cu" "F.Mask" "F.Paste")
 		(options
 			(clearance outline)
 			(anchor circle)
@@ -40,13 +41,14 @@
 					(xy -1.2 -0.5)
 				)
 				(width 0)
+				(fill yes)
 			)
 		)
 	)
 	(pad "3" smd custom
 		(at 0.525 -0.303109 -120)
 		(size 0.2 0.2)
-		(layers "F.Cu" "F.Paste" "F.Mask")
+		(layers "F.Cu" "F.Mask" "F.Paste")
 		(options
 			(clearance outline)
 			(anchor circle)
@@ -60,13 +62,14 @@
 					(xy -1.2 -0.5)
 				)
 				(width 0)
+				(fill yes)
 			)
 		)
 	)
 	(pad "4" smd custom
 		(at 0.7 0 -180)
 		(size 0.2 0.2)
-		(layers "F.Cu" "F.Paste" "F.Mask")
+		(layers "F.Cu" "F.Mask" "F.Paste")
 		(options
 			(clearance outline)
 			(anchor circle)
@@ -80,13 +83,14 @@
 					(xy -1.2 -0.5)
 				)
 				(width 0)
+				(fill yes)
 			)
 		)
 	)
 	(pad "5" smd custom
 		(at 0.525 0.303109 -240)
 		(size 0.2 0.2)
-		(layers "F.Cu" "F.Paste" "F.Mask")
+		(layers "F.Cu" "F.Mask" "F.Paste")
 		(options
 			(clearance outline)
 			(anchor circle)
@@ -100,7 +104,9 @@
 					(xy -1.2 -0.5)
 				)
 				(width 0)
+				(fill yes)
 			)
 		)
 	)
+	(embedded_fonts no)
 )

@@ -1,12 +1,12 @@
 (footprint "custom_pad_other"
-	(version 20240108)
+	(version 20241229)
 	(generator "kicad-footprint-generator")
 	(layer "F.Cu")
 	(attr smd)
 	(pad "1" smd custom
 		(at 0 0)
 		(size 1 1)
-		(layers "F.Cu" "F.Paste" "F.Mask")
+		(layers "F.Cu" "F.Mask" "F.Paste")
 		(options
 			(clearance outline)
 			(anchor circle)
@@ -38,7 +38,7 @@
 	(pad "2" smd custom
 		(at 0 3)
 		(size 1 1)
-		(layers "F.Cu" "F.Paste" "F.Mask")
+		(layers "F.Cu" "F.Mask" "F.Paste")
 		(options
 			(clearance outline)
 			(anchor circle)
@@ -70,7 +70,7 @@
 	(pad "3" smd custom
 		(at 0 -3)
 		(size 1 1)
-		(layers "F.Cu" "F.Paste" "F.Mask")
+		(layers "F.Cu" "F.Mask" "F.Paste")
 		(options
 			(clearance outline)
 			(anchor circle)
@@ -83,4 +83,5 @@
 			)
 		)
 	)
+	(embedded_fonts no)
 )

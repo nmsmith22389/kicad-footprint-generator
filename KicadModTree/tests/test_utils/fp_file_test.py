@@ -6,8 +6,10 @@ import os
 
 from KicadModTree.KicadFileHandler import KicadFileHandler
 
-
-@pytest.mark.xfail(reason="Expected failure for all SerialisationTest tests until golden files are up-revved")
+# When updating formats in a train of commits, this decorator can be used to mark all
+# serialisation tests as expected to fail until the golden files are up-revved at the
+# end of the process.
+# @pytest.mark.xfail(reason="Expected failure for all SerialisationTest tests until golden files are up-revved")
 class SerialisationTest:
 
     RESULTS_DIR_NAME = "results"  # Default directory, can be overridden by subclasses

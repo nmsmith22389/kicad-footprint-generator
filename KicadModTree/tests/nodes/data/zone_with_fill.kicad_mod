@@ -1,5 +1,5 @@
 (footprint "filltest"
-	(version 20240108)
+	(version 20241229)
 	(generator "kicad-footprint-generator")
 	(layer "F.Cu")
 	(zone
@@ -11,14 +11,12 @@
 		(connect_pads
 			(clearance 0)
 		)
-		(filled_areas_thickness no)
 		(min_thickness 0.25)
+		(filled_areas_thickness no)
 		(fill yes
 			(thermal_gap 0.5)
 			(thermal_bridge_width 0.5)
 			(smoothing fillet)
-			(radius 0)
-			(island_removal_mode 0)
 		)
 		(polygon
 			(pts
@@ -29,4 +27,5 @@
 			)
 		)
 	)
+	(embedded_fonts no)
 )

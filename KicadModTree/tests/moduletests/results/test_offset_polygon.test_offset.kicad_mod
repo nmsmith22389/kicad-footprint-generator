@@ -1,5 +1,5 @@
 (footprint "test"
-	(version 20240108)
+	(version 20241229)
 	(generator "kicad-footprint-generator")
 	(layer "F.Cu")
 	(property "Reference" "REF**"
@@ -708,4 +708,5 @@
 			)
 		)
 	)
+	(embedded_fonts no)
 )

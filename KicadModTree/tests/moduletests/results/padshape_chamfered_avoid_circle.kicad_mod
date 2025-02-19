@@ -1,5 +1,5 @@
 (footprint "avoid_circle"
-	(version 20240108)
+	(version 20241229)
 	(generator "kicad-footprint-generator")
 	(layer "F.Cu")
 	(attr smd)
@@ -10,13 +10,13 @@
 			(width 0.01)
 			(type solid)
 		)
-		(fill none)
+		(fill no)
 		(layer "F.SilkS")
 	)
 	(pad "1" smd custom
 		(at 2 2.5)
 		(size 1.445 1.445)
-		(layers "F.Cu" "F.Paste" "F.Mask")
+		(layers "F.Cu" "F.Mask" "F.Paste")
 		(options
 			(clearance outline)
 			(anchor circle)
@@ -34,7 +34,9 @@
 					(xy -0.875 0.693665)
 				)
 				(width 0)
+				(fill yes)
 			)
 		)
 	)
+	(embedded_fonts no)
 )

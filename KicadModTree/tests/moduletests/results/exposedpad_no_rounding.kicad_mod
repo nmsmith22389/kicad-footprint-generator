@@ -1,5 +1,5 @@
 (footprint "simple_no_rounding"
-	(version 20240108)
+	(version 20241229)
 	(generator "kicad-footprint-generator")
 	(layer "F.Cu")
 	(attr smd)
@@ -100,4 +100,5 @@
 		(layers "*.Cu")
 		(remove_unused_layers no)
 	)
+	(embedded_fonts no)
 )

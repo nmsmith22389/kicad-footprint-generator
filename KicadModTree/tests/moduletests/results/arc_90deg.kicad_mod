@@ -1,5 +1,5 @@
 (footprint "arc_90deg"
-	(version 20240108)
+	(version 20241229)
 	(generator "kicad-footprint-generator")
 	(layer "F.Cu")
 	(attr smd)
@@ -323,4 +323,5 @@
 		)
 		(layer "F.SilkS")
 	)
+	(embedded_fonts no)
 )

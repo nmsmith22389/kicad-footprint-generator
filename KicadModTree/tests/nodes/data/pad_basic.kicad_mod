@@ -1,5 +1,5 @@
 (footprint "padtest"
-	(version 20240108)
+	(version 20241229)
 	(generator "kicad-footprint-generator")
 	(layer "F.Cu")
 	(attr smd)
@@ -8,4 +8,5 @@
 		(size 1 1)
 		(layers "F.Cu")
 	)
+	(embedded_fonts no)
 )

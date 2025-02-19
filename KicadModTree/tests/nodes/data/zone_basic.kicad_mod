@@ -1,5 +1,5 @@
 (footprint "zonetest"
-	(version 20240108)
+	(version 20241229)
 	(generator "kicad-footprint-generator")
 	(layer "F.Cu")
 	(zone
@@ -12,16 +12,23 @@
 		(connect_pads
 			(clearance 0)
 		)
-		(filled_areas_thickness no)
 		(min_thickness 0.25)
+		(filled_areas_thickness no)
 		(keepout
 			(tracks allowed)
 			(vias not_allowed)
-			(copperpour allowed)
 			(pads allowed)
+			(copperpour allowed)
 			(footprints allowed)
 		)
-		(fill)
+		(placement
+			(enabled no)
+			(sheetname "")
+		)
+		(fill
+			(thermal_gap 0.5)
+			(thermal_bridge_width 0.5)
+		)
 		(polygon
 			(pts
 				(xy 0 0)
@@ -31,4 +38,5 @@
 			)
 		)
 	)
+	(embedded_fonts no)
 )

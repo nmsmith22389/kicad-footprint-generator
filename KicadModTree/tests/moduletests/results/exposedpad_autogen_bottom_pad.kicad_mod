@@ -1,5 +1,5 @@
 (footprint "exposed_paste_autogen_bottom_pad"
-	(version 20240108)
+	(version 20241229)
 	(generator "kicad-footprint-generator")
 	(layer "F.Cu")
 	(attr smd)
@@ -50,4 +50,5 @@
 		(layers "B.Cu" "B.Mask")
 		(zone_connect 2)
 	)
+	(embedded_fonts no)
 )
