@@ -65,6 +65,43 @@ SOP-4_3.8x4.1mm_P2.54mm:
   num_pins_x: 0
   num_pins_y: 2
 
+OnSemi_SOIC-4_751EP:
+  # it was previously in bridge_rectifier.yaml file, generates OnSemi_751EP_SOIC-4_3.9x4.725mm_P2.54mm
+  device_type: 'SOIC'
+  size_source: 'https://www.onsemi.com/pdf/datasheet/mb8s-d.pdf'
+  manufacturer: 'OnSemi'
+  part_number: '751EP'
+  body_size_x:
+    minimum: 3.6
+    maximum: 4.2
+  body_size_y:
+    minimum: 4.5
+    maximum: 4.95
+  overall_height:
+    minimum: 2.4
+    maximum: 2.9
+
+  overall_size_x:
+    # Actually 6.4..7.0mm but modified so it fits the mfr land pattern better!!
+    # (because of huuuuuge tolerance of the overall size X)
+    nominal: 7.8
+  lead_width:
+    # Actually 0.43..0.84mm but modified so it fits the mfr land pattern better!!
+    # (because of huuuuuge tolerance of the pitch)
+    nominal: 1.4
+  lead_len:
+    # Actually 0.48..1.1mm but modified so it fits the mfr land pattern better!!
+    # (because of huuuuuge tolerance of all parameters)
+    nominal: 1.3
+
+  pitch: 2.54 # Datasheet: 2.2 .. 2.7
+  num_pins_x: 0
+  num_pins_y: 2
+
+  compatible_mpns:
+    - OnSemi_MB8S
+    - OnSemi_SOIC4W
+
 SOIC-4_4.55x3.7mm_P2.54mm:
   custom_name_format: 'SOIC-4_4.55x3.7mm_P2.54mm' #does not take into account the excluded pins
   size_source: 'https://toshiba.semicon-storage.com/info/docget.jsp?did=11791&prodName=TLP185'
