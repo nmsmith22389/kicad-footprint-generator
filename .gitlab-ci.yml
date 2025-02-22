@@ -93,7 +93,7 @@ fp-generate-and-compare:
         - scripts/**/*
         - data/**/*
   allow_failure: true
-  image: kicad/kicad:8.0
+  image: kicad/kicad:9.0
   before_script:
     # Required when using kicad Docker image (kicad-cli needed for visu diff):
     - sudo apt update -qq
