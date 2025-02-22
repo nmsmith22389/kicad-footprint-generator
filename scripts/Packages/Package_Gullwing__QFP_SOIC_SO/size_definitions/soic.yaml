@@ -13,8 +13,13 @@
 # MO-119    | 300 mil (7.62 mm)                                 | 2.64 mm          | 24, 28, 32, 36              |
 # MO-120    | 350 mil (8.89 mm)                                 | 2.64 mm          | 24, 28, 32, 36              |
 # MO-155    | 4.40 mm                                           | 3.00 mm          | 5                           |
+# MO-166    | 11.00 mm                                          | 3.60 mm          | 20                          | heat slug / thermal pad on top; see [1]
 # MO-175    | 12.60 mm                                          | 3.10 mm          | 44, 48                      |
-# MO-180    | 13.30 mm                                          | 2.80 mm          | 44                          | there are two other packages with pitch 0.80 and 0.50 mm, please do not add them to this file
+# MO-180    | 13.30 mm                                          | 2.80 mm          | 44                          | see [1]
+# MO-184    | 9.40 mm                                           | 3.70 mm          | 10                          | heat slug / thermal pad on bottom; see [1]
+# MO-230    | 11.00 mm                                          | 3.60 mm          | 20                          | heat slug / thermal pad on bottom; see [1]
+#
+# [1] there are other packages with pitch different from 1.27 mm, please do not add them to this file
 #
 # For more info about JEITA/EIAJ SOP packages, see ED-7311-19 and EDR-7320 standards
 #
