@@ -370,8 +370,8 @@ SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.514x3.2mm:
     # bottom_pad_size:
     paste_avoid_via: False
 
-    
-       
+
+
 SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.62x3.51mm:
   size_source: 'https://www.monolithicpower.com/en/documentview/productdocument/index/version/2/document_type/Datasheet/lang/en/sku/MP2303A/document_id/494#page=14'
   body_size_x:
@@ -697,7 +697,7 @@ SOIC-16W_5.3x10.2mm_P1.27mm:
   overall_size_x:
     minimum: 7.4
     maximum: 8.2
-  lead_len: 
+  lead_len:
     minimum: 1.05 # From overall_size_x[min] - body_size_x[nominal]
     maximum: 1.45 # From overall_size_x[max] - body_size_x[nominal]
   lead_width:
@@ -864,7 +864,7 @@ SOIC-20W_7.5x15.4mm_P1.27mm:
   #round to two significant digits to comply with old name
   custom_name_format: SOIC-{pincount}W_{size_x:.2g}x{size_y:.3g}mm_P{pitch:g}mm
   size_source: 'JEDEC MS-013AD, https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/soic_wide-rw/RI_20_1.pdf'
-  body_size_x: 
+  body_size_x:
     minimum: 7.39
     maximum: 7.59
   body_size_y:
@@ -880,7 +880,7 @@ SOIC-20W_7.5x15.4mm_P1.27mm:
   lead_len:
     minimum: 0.4
     maximum: 1.27
-  lead_width: 
+  lead_width:
     minimum: 0.36
     maximum: 0.48
 

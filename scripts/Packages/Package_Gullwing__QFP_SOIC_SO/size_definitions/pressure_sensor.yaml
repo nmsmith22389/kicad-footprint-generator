@@ -29,7 +29,7 @@ CFSensor_XGZP6859D:
   overall_size_x:
     nominal: 10.6
     tolerance: 0.2 # guess
-  
+
   lead_len:
     nominal: 1.8 # (10.6-7)/2
     tolerance: 0.1 # guess

@@ -2,7 +2,7 @@
 #
 # This file was supposed to contain JEITA/EIAJ P-SOP (or simplifying SOP) packages with lead space / pitch 1.27 mm
 # See ED-7311-19 and EDR-7320 standards for more info
-# 
+#
 # Right now there are some SOIC packages here included by mistake (JEDEC standard), and since...
 # - the term 'SOP' is quite ambiguous, it also means 'a superset of SSOP, TSOP, MSOP etc',
 # - searching for SOP brings other packages in user interface, and/or may have problem with filters (try *SOP*4.*P1.27 for example),
@@ -34,7 +34,7 @@ SOP-4_7.5x4.1mm_P2.54mm:
     maximum: 2.3
 
   overall_size_x:
-    # Datasheet: tolerance: +0.3/-0.4 
+    # Datasheet: tolerance: +0.3/-0.4
     minimum: 9.8
     nominal: 10.2
     maximum: 10.5
@@ -605,4 +605,3 @@ SOP-44_13.3x28.2mm_P1.27mm:
   pitch: 1.27
   num_pins_x: 0
   num_pins_y: 22
-

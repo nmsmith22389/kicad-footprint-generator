@@ -386,7 +386,7 @@ Linear_HTSSOP-31-38-1EP_4.4x9.7mm_P0.5mm_EP2.74x4.75mm:
   compatible_mpns:
     - 'FE38-(31)'
   lead_len: 0.50 .. 0.75
-  pad_to_pad_min_x_overwrite: 4.50 
+  pad_to_pad_min_x_overwrite: 4.50
   pad_to_pad_max_x_overwrite: 6.60
   pad_size_y_overwrite: 0.315
   hidden_pins: [23, 25, 27, 29, 31, 33, 35]

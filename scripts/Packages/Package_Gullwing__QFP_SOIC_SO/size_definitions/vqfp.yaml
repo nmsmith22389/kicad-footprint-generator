@@ -9,7 +9,7 @@ VQFP_80:
   body_size_x:
     nominal: 14
     tolerance: 0
-    # minimum: 
+    # minimum:
     # maximum:
   body_size_y:
     nominal: 14

@@ -58,7 +58,7 @@ SOT-23-6:
   pitch: 0.95
   num_pins_x: 0
   num_pins_y: 3
-  
+
 SOT-23-8:
   size_source: 'JEDEC MO-178 Var BA https://www.jedec.org/document_search?search_api_views_fulltext=MO-178'
   custom_name_format: 'SOT-23-8'

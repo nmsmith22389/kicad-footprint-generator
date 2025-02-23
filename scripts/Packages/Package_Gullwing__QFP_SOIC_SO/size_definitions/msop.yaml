@@ -562,7 +562,7 @@ MSOP-16-1EP_3x4.039mm_P0.5mm_EP1.651x2.845mm:
     paste_via_clearance: 0.1
     EP_num_paste_pads: [2, 2]
     paste_avoid_via: False
-  
+
   pitch: 0.5
   num_pins_x: 0
   num_pins_y: 8

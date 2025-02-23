@@ -601,15 +601,15 @@ TSSOP-20_4.4x6.5mm_P0.65mm:
 
 TSSOP-20_4.4x6.5mm_P0.65mm_EP2.15x3.35mm:
   size_source: 'https://pdfserv.maximintegrated.com/package_dwgs/21-100132.PDF'
-  
+
   body_size_x:
     minimum: 4.30
-    maximum: 4.50 
+    maximum: 4.50
   body_size_y:
     minimum: 6.40
     maximum: 6.60
 
-  overall_size_x: 
+  overall_size_x:
     minimum: 6.30
     maximum: 6.50
 
@@ -620,7 +620,7 @@ TSSOP-20_4.4x6.5mm_P0.65mm_EP2.15x3.35mm:
     minimum: 0.195
     maximum: 0.30
 
-  lead_len: 
+  lead_len:
     minimum: 0.50
     maximum: 0.70
 
@@ -681,17 +681,17 @@ TSSOP-24_4.4x7.8mm_P0.65mm:
 
 TSSOP-24-1EP_4.4x7.8mm_P0.65mm_EP3.2x5mm:
   size_source: 'https://www.st.com/resource/en/datasheet/led1642gw.pdf#page=37'
-  
+
   body_size_x:
-    minimum: 4.30 
-    nominal: 4.40 
-    maximum: 4.50 
+    minimum: 4.30
+    nominal: 4.40
+    maximum: 4.50
   body_size_y:
     minimum: 7.70
     nominal: 7.80
     maximum: 7.90
 
-  overall_size_x: 
+  overall_size_x:
     minimum: 6.30
     nominal: 6.40
     maximum: 6.50
@@ -700,7 +700,7 @@ TSSOP-24-1EP_4.4x7.8mm_P0.65mm_EP3.2x5mm:
 
   lead_width: 0.19 .. 0.30
 
-  lead_len: 
+  lead_len:
     minimum: 0.45
     nominal: 0.60
     maximum: 0.75
@@ -734,10 +734,10 @@ TSSOP-28_4.4x9.7mm_P0.65mm:
 
 TSSOP-28-1EP_4.4x9.7mm_P0.65mm_EP2.74x4.75mm:
   size_source: 'https://www.analog.com/media/en/technical-documentation/data-sheets/lt3762.pdf'
-  
+
   body_size_x:
-    minimum: 4.30 
-    maximum: 4.50 
+    minimum: 4.30
+    maximum: 4.50
   body_size_y:
     minimum: 9.60
     maximum: 9.80
@@ -751,7 +751,7 @@ TSSOP-28-1EP_4.4x9.7mm_P0.65mm_EP2.74x4.75mm:
     minimum: 0.195
     maximum: 0.30
 
-  lead_len: 
+  lead_len:
     minimum: 0.50
     maximum: 0.75
 
@@ -774,15 +774,15 @@ TSSOP-28-1EP_4.4x9.7mm_P0.65mm_EP2.74x4.75mm:
 
 TSSOP-28-1EP_4.4x9.7mm_P0.65mm_EP2.85x6.7mm:
   size_source: 'JEDEC MO-153 Var AET Pkg.Code U28E-4 https://pdfserv.maximintegrated.com/package_dwgs/21-0108.PDF'
-  
+
   body_size_x:
-    minimum: 4.30 
-    maximum: 4.50 
+    minimum: 4.30
+    maximum: 4.50
   body_size_y:
     minimum: 9.60
     maximum: 9.80
 
-  overall_size_x: 
+  overall_size_x:
     minimum: 6.25
     maximum: 6.50
 
@@ -793,7 +793,7 @@ TSSOP-28-1EP_4.4x9.7mm_P0.65mm_EP2.85x6.7mm:
     minimum: 0.19
     maximum: 0.30
 
-  lead_len: 
+  lead_len:
     minimum: 0.50
     maximum: 0.70
 
@@ -812,15 +812,15 @@ TSSOP-28-1EP_4.4x9.7mm_P0.65mm_EP2.85x6.7mm:
 
 TSSOP-28-1EP_4.4x9.7mm_P0.65mm_EP3.1mmx4.0mm:
   size_source: 'Texas Instruments TAS5805M https://www.ti.com/lit/gpn/tas5805m'
-  
+
   body_size_x:
-    minimum: 4.30 
-    maximum: 4.50 
+    minimum: 4.30
+    maximum: 4.50
   body_size_y:
     minimum: 9.60
     maximum: 9.80
 
-  overall_size_x: 
+  overall_size_x:
     minimum: 6.20
     maximum: 6.60
 
@@ -831,7 +831,7 @@ TSSOP-28-1EP_4.4x9.7mm_P0.65mm_EP3.1mmx4.0mm:
     minimum: 0.19
     maximum: 0.30
 
-  lead_len: 
+  lead_len:
     minimum: 0.50
     maximum: 0.75
 
@@ -860,10 +860,10 @@ TSSOP-28-1EP_4.4x9.7mm_P0.65mm_EP3.1mmx4.0mm:
 
 TSSOP-28-1EP_4.4x9.7mm_P0.65mm_EP3.05x7.56mm:
   size_source: 'https://www.analog.com/media/en/technical-documentation/data-sheets/38921fc.pdf'
-  
+
   body_size_x:
-    minimum: 4.30 
-    maximum: 4.50 
+    minimum: 4.30
+    maximum: 4.50
   body_size_y:
     minimum: 9.60
     maximum: 9.80
@@ -877,7 +877,7 @@ TSSOP-28-1EP_4.4x9.7mm_P0.65mm_EP3.05x7.56mm:
     minimum: 0.195
     maximum: 0.30
 
-  lead_len: 
+  lead_len:
     minimum: 0.50
     maximum: 0.75
 
@@ -1126,4 +1126,3 @@ Texas_DYY0016A_TSOT-23-16:
   pitch: 0.5
   num_pins_x: 0
   num_pins_y: 8
-
