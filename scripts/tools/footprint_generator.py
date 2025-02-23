@@ -130,6 +130,10 @@ class FootprintGenerator:
                 except yaml.YAMLError as exc:
                     print(exc)
 
+            # Skip empty/comment-only files
+            if cmd_file is None:
+                continue
+
             dict_tools.dictInherit(cmd_file)
 
             # The def file header, if there is one
