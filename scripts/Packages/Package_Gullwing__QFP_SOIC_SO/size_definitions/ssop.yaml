@@ -1,8 +1,30 @@
+# SSOP - shrink small outline package
+#
+# This file cointains JEDEC SSOP and JEITA/EIAJ P-SSOP packages with lead space / pitch equal or less than 1.00 mm, and height greater than 1.70 mm
+#
+# Here some definitions of a JEDEC SOIC package (see JEP95 from JEDEC JC-11 committee for more info):
+#
+# standard  | pitch                   | width                | height (max)      | leads (N)                                                                   | PS
+# MO-117    | 0.80 mm                 | 12.00 mm             | 2.38 mm           | 64                                                                          |
+# MO-118    | 0.025" (0.635 mm)       | 0.295" (~7.50mm)     | 0.110" (2.79mm)   | 28, 48, 56, 64                                                              | 0.300" width in title
+# MO-137    | 0.025" (0.635 mm)       | 0.154" (~3.91mm)     | 0.069" (1.75mm)   | 14, 16, 18, 20, 24, 28                                                      | has thermal variations; 0.150" width is just in 'Title'
+# MO-150    | 0.65 mm                 | 5.30 mm              | 2.00 mm           | 8, 14, 16, 18, 20, 22, 24, 28, 30, 38                                       |
+# MO-152    | 0.65 / 0.50 / 0.40 mm   | 4.4 / 6.1 / 8.0 mm   | 2.00 mm           | 8, 14, 16, 20, 24, 28, 24, 28, 30, 32, 36, 40, 44, 48, 52, 56, 64, 68, 80   | not all combinations exist, see the standard
+# MO-154    | 0.40 / 0.50 mm          | 3.9 mm               | 2.00 mm           | 32, 40, 48, 80, 96                                                          |
+# MO-164    | 0.50 / 1.00 mm          | 9.90 mm              | 2.90 mm           | 36, 70                                                                      |
+#
+# Other JEDEC standards: MO-166 *, MO-180 *, MO-184 *, MO-226, MO-230 *, MO-271, MO-272, MO-286
+#                        * just for some variations, these standards overlaps SOIC
+#
+# JEITA standards: ED-7311-20 and EDR-7314A
+
 FileHeader:
   library_Suffix: 'SO'
   device_type: 'SSOP'
 
 SSOP-20_5.3x7.2mm_P0.65mm:
+  device_type: 'SSOP' # temporary
+  # MO-150, height A = 2.00mm max
   size_source: 'http://ww1.microchip.com/downloads/en/DeviceDoc/40001800C.pdf'
   body_size_x:
     minimum: 5.0
@@ -24,7 +46,11 @@ SSOP-20_5.3x7.2mm_P0.65mm:
   num_pins_y: 10
 
 SSOP-16_5.3x6.2mm_P0.65mm:
+  device_type: 'SSOP' # temporary
+  # MO-150, height A = 2.00mm max
   size_source: 'https://assets.nexperia.com/documents/data-sheet/74HC_HCT165.pdf#page=14'
+  # new datasheet link, old is broken: 'https://www.mouser.com/datasheet/2/302/74HC_HCT165-224942.pdf#page=15'
+  # backup source: https://www.alldatasheet.com/datasheet-pdf/pdf/731258/PHILIPS/74HC_HCT165_15.html
   body_size_x:
     minimum: 5.2
     maximum: 5.4
@@ -44,51 +70,8 @@ SSOP-16_5.3x6.2mm_P0.65mm:
   num_pins_x: 0
   num_pins_y: 8
 
-SSOP-8_3.9x5.05mm_P1.27mm:
-  size_source: 'https://www.fujitsu.com/uk/Images/MB85RS16.pdf'
-  # old datasheet: 'http://www.fujitsu.com/ca/en/Images/MB85RS16-DS501-00014-6v0-E.pdf'
-  body_size_x:
-    minimum: 3.60
-    maximum: 4.20
-  body_size_y:
-    minimum: 4.80
-    maximum: 5.30
-  overall_size_x:
-    minimum: 5.80
-    maximum: 6.20
-  lead_width:
-    minimum: 0.36
-    maximum: 0.52
-  lead_len:
-    minimum: 0.45
-    maximum: 0.75
-  pitch: 1.27
-  num_pins_x: 0
-  num_pins_y: 4
-
-SSOP-8_5.25x5.24mm_P1.27mm:
-  size_source: 'http://www.fujitsu.com/ca/en/Images/MB85RS2MT-DS501-00023-1v0-E.pdf'
-  body_size_x:
-    minimum: 5.20
-    maximum: 5.30
-  body_size_y:
-    minimum: 5.14
-    maximum: 5.34
-  overall_size_x:
-    minimum: 7.70
-    maximum: 8.25
-  lead_width:
-    minimum: 0.38
-    maximum: 0.48
-  lead_len:
-    minimum: 0.55
-    maximum: 0.85
-  pitch: 1.27
-  num_pins_x: 0
-  num_pins_y: 4
-
-
 SSOP-20_4.4x6.5mm_P0.65:
+  device_type: 'SSOP' # temporary
   size_source: 'https://www.jedec.org/system/files/docs/Mo-152c.pdf'
   compatible_mpns:
     - JEDEC-MO-152-AC
@@ -112,6 +95,8 @@ SSOP-20_4.4x6.5mm_P0.65:
 
 
 SSOP-48_5.3x12.8mm_P0.5mm:
+  device_type: 'SSOP' # temporary
+  # height A = 2.00mm max
   size_source: 'https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/ltc-legacy-ssop/05081887_A_G48.pdf'
   body_size_x:
     minimum: 5.00
@@ -132,7 +117,40 @@ SSOP-48_5.3x12.8mm_P0.5mm:
   num_pins_x: 0
   num_pins_y: 24
 
+SOIC-10_3.9x4.9mm_P1.00mm:
+  device_type: 'SOIC' # temporary
+  # it was previously in soic.yaml file, generates SOIC-10_3.9x4.9mm_P1mm
+  custom_name_format: SOIC-{pincount}_{size_x:.2g}x{size_y:.2g}mm_P{pitch:.3g}mm
+  size_source: 'https://www.onsemi.com/pub/Collateral/751BQ.PDF'
+  additional_tags:
+  - "SOIC-10 NB"
+  body_size_x:
+    minimum: 3.8
+    maximum: 4.0
+  body_size_y:
+    minimum: 4.8
+    maximum: 5.0
+  overall_height:
+    minimum: 1.25
+    maximum: 1.75
+
+  overall_size_x:
+    minimum: 5.8
+    maximum: 6.2
+  lead_len:
+    minimum: 0.4
+    maximum: 0.8
+  lead_width:
+    minimum: 0.31
+    maximum: 0.51
+
+  pitch: 1.00
+  num_pins_x: 0
+  num_pins_y: 5
+
 SSOP-10-1EP_3.9x4.9mm_P1.0mm_EP2.1x3.3mm:
+  device_type: 'SSOP' # temporary
+  # height A = 1.85 mm max
   size_source: 'http://download.py32.org/%E6%95%B0%E6%8D%AE%E6%89%8B%E5%86%8C/zh-CN/PY32F002A%20%E7%B3%BB%E5%88%97%E6%95%B0%E6%8D%AE%E6%89%8B%E5%86%8C_Rev1.0.pdf#page=44'
   compatible_mpns:
     - 'ESSOP-10'
@@ -159,13 +177,3 @@ SSOP-10-1EP_3.9x4.9mm_P1.0mm_EP2.1x3.3mm:
     grid: [2.54, 1.27]
     paste_avoid_via: False
 
-SSOP-4_4.4x2.6mm_P1.27mm:
-  size_source: 'https://www.vishay.com/docs/83465/vos618a.pdf'
-  body_size_x: 4.2 .. 4.4 .. 4.6
-  body_size_y: 2.3 .. 2.6 .. 2.9
-  overall_size_x: 6.3 .. 7.0 .. 7.2
-  lead_width: 0.3 .. 0.4 .. 0.5
-  lead_len: 0.5
-  pitch: 1.27
-  num_pins_x: 0
-  num_pins_y: 2
