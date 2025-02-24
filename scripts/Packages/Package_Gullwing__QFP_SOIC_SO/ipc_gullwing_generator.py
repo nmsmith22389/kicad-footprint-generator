@@ -11,7 +11,7 @@ from KicadModTree import (
     FootprintType,
     Pad,
     PolygonLine,
-    RectLine,
+    Rect,
 )
 from kilibs.geom import Direction, Vector2D, BoundingBox
 from KicadModTree.nodes.specialized.PadArray import PadArray, get_pad_radius_from_arrays
@@ -620,7 +620,7 @@ class GullwingGenerator(FootprintGenerator):
         if device_params['num_pins_y'] == 0 or device_params['num_pins_x'] == 0:
             # Dual pin-row devices - simple rectangle at the bounding box
 
-            kicad_mod.append(RectLine(
+            kicad_mod.append(Rect(
                 start=courtyard_bbox.min,
                 end=courtyard_bbox.max,
                 width=courtyard_line_width,

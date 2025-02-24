@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-import sys
 import os
 import argparse
 import logging
@@ -15,7 +14,7 @@ from KicadModTree import (
     Line,
     Pad,
     PolygonLine,
-    RectLine,
+    Rect,
 )
 from kilibs.geom import Direction, Vector2D, BoundingBox, rounding
 from KicadModTree.nodes.specialized.PadArray import PadArray, get_pad_radius_from_arrays
@@ -29,6 +28,7 @@ from scripts.tools.quad_dual_pad_border import create_dual_or_quad_pad_border
 from scripts.tools.nodes import pin1_arrow
 from scripts.tools import drawing_tools
 from scripts.tools.drawing_tools import courtyardFromBoundingBox
+from scripts.tools.drawing_tools_fab import draw_chamfer_rect_fab
 from scripts.tools.declarative_def_tools import tags_properties, pad_overrides, \
         rule_area_properties, ast_evaluator
 
@@ -784,22 +784,9 @@ class NoLeadGenerator(FootprintGenerator):
 
         # # ######################## Fabrication Layer ###########################
 
-        fab_bevel_size = min(configuration['fab_bevel_size_absolute'],
-                             configuration['fab_bevel_size_relative'] * min(size_x, size_y))
-
-        poly_fab = [
-            {'x': body_edge['left'] + fab_bevel_size, 'y': body_edge['top']},
-            {'x': body_edge['right'], 'y': body_edge['top']},
-            {'x': body_edge['right'], 'y': body_edge['bottom']},
-            {'x': body_edge['left'], 'y': body_edge['bottom']},
-            {'x': body_edge['left'], 'y': body_edge['top'] + fab_bevel_size},
-            {'x': body_edge['left'] + fab_bevel_size, 'y': body_edge['top']},
-        ]
-
-        kicad_mod.append(PolygonLine(
-            polygon=poly_fab,
-            width=self.global_config.fab_line_width,
-            layer="F.Fab"))
+        kicad_mod.append(
+            draw_chamfer_rect_fab(Vector2D(size_x, size_y), self.global_config)
+        )
 
         # # ############################ CrtYd ##################################
 
@@ -808,7 +795,7 @@ class NoLeadGenerator(FootprintGenerator):
 
         cy_box = courtyardFromBoundingBox(bounding_box, off, grid)
 
-        kicad_mod.append(RectLine(
+        kicad_mod.append(Rect(
             start={
                 'x': cy_box['left'],
                 'y': cy_box['top']
@@ -818,7 +805,8 @@ class NoLeadGenerator(FootprintGenerator):
                 'y': cy_box['bottom']
             },
             width=configuration['courtyard_line_width'],
-            layer='F.CrtYd'))
+            layer='F.CrtYd')
+        )
 
         # ######################### Rule Areas ################################
 
