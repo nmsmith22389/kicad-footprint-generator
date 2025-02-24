@@ -63,6 +63,11 @@ class Polygon(Node):
         Node.__init__(self)
         self.nodes = PolygonPoints(nodes=nodes, x_mirror=mirror_x, y_mirror=mirror_y)
 
+        # If we are handed a closed polygon, don't double up the final point:
+        # Polygons (not PolyLines!) are implicitly closed in KiCad
+        if self.nodes.nodes[0] == self.nodes.nodes[-1]:
+            self.nodes.nodes.pop()
+
         self.layer = layer
         self.width = width
         self.fill = fill
