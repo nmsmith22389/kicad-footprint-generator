@@ -1,23 +1,12 @@
 #!/usr/bin/env python3
 
-import sys
 import os
-import math
-import argparse
-import yaml
-
-# load parent path of KicadModTree
-sys.path.append(os.path.join(sys.path[0], "..", ".."))
-
-# load scripts
-sys.path.append(os.path.join(sys.path[0], ".."))
 
 from KicadModTree import *
-from general.StandardBox import *
+from scripts.general.StandardBox import StandardBox
+
 
 def qfn(args):
-
-    extraffablines = []
 
     name = args["name"]
     description = args["description"]
@@ -42,6 +31,7 @@ def qfn(args):
     PD = args["PD"]
     rotation = args["rotation"]
     dest_dir_3D_prefix = args["dest_dir_3D_prefix"]
+    out_dir = args["output_dir"]
 
 
     for pinnumber in pinnumbers:
@@ -76,12 +66,11 @@ def qfn(args):
                              file3Dname=file3Dname))
 
 
-        output_dir = 'TerminalBlock_Altech.pretty' + os.sep
-        if not os.path.isdir(output_dir):
-            os.makedirs(output_dir)
+        output_dir = out_dir / 'TerminalBlock_Altech.pretty'
+        os.makedirs(output_dir, exist_ok=True)
 
         file_handler = KicadFileHandler(f)
-        file_handler.writeFile(output_dir + footprint_name + ".kicad_mod")
+        file_handler.writeFile(output_dir / (footprint_name + ".kicad_mod"))
 
 
 if __name__ == '__main__':

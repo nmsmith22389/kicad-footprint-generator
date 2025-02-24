@@ -6,6 +6,7 @@ import os
 
 from KicadModTree.KicadFileHandler import KicadFileHandler
 
+
 # When updating formats in a train of commits, this decorator can be used to mark all
 # serialisation tests as expected to fail until the golden files are up-revved at the
 # end of the process.

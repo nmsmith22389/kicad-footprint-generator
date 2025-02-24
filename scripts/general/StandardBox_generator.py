@@ -2,6 +2,7 @@
 
 import sys
 import os
+from pathlib import Path
 
 from KicadModTree import Footprint, FootprintType, KicadFileHandler, ModArgparser
 from kilibs.geom import Vector2D
@@ -23,6 +24,7 @@ def converter(args):
     body_position_tolerance = Vector2D(args["body_position_tolerance"])
     body_size_tolerance = Vector2D(args["body_size_tolerance"])
     courtyard = args["courtyard"]
+    out_dir: Path = args["output_dir"]
 
     # This a very naive way of calculating the total tolerance referenced to the
     # origin, but it's a start
@@ -52,7 +54,7 @@ def converter(args):
                          file3Dname=file3Dname, courtyard_clearance=courtyard_clearance,
                          fab_to_silk_clearance=fab_to_silk_clearance))
 
-    target_library_dir = f"{library_name}.pretty"
+    target_library_dir = out_dir / f"{library_name}.pretty"
     target_filename = os.path.join(target_library_dir, f"{footprint_name}.kicad_mod")
 
     os.makedirs(target_library_dir, exist_ok=True)

@@ -16,6 +16,7 @@
 import sys
 import argparse
 import csv
+from pathlib import Path
 
 try:
     import yaml
@@ -110,12 +111,17 @@ class ModArgparser(object):
             description='Parse footprint definition file(s) and create matching footprints')
         parser.add_argument('files', metavar='file', type=str, nargs='*', help='.yml or .csv files which contains data')
         parser.add_argument('-v', '--verbose', help='show some additional information', action='store_true')  # TODO
+        parser.add_argument('-o', '--output-dir', type=Path,
+                            default='.',
+                            help='Sets the directory to which to write the generated footprints')
         parser.add_argument('--print_yml', help='print example .yml file', action='store_true')
         parser.add_argument('--print_csv', help='print example .csv file', action='store_true')
 
         # TODO: allow writing into sub dir
 
         args = parser.parse_args()
+
+        self.output_dir = args.output_dir
 
         if args.print_yml:
             self._print_example_yml()
@@ -257,6 +263,9 @@ class ModArgparser(object):
             except (ValueError, ParserException) as e:
                 error = True
                 print("ERROR: {}".format(e))
+
+        # Pass in the "common" parameters from the original command line
+        parsed_args['output_dir'] = self.output_dir
 
         print("  - generate {name}.kicad_mod".format(name=kwargs.get('name', '<anon>')))
 
