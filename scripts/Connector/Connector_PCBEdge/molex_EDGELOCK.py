@@ -8,6 +8,7 @@ sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))
 
 from KicadModTree import *
 
+lib_name = "Connector_PCBEdge"
 padNums = [2, 4, 6, 8]
 datasheet = "https://www.molex.com/pdm_docs/sd/2008900106_sd.pdf"
 
@@ -51,7 +52,7 @@ for padNum in padNums:
     f.excludeFromBOM = True
     f.excludeFromPositionFiles = True
 
-    f.append(Model(filename="${KICAD9_3DMODEL_DIR}/Connector_PCBEdge.3dshapes/" + footprint_name + ".wrl",
+    f.append(Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl",
                    at=[0.0, 0.0, 0.0],
                    scale=[1.0, 1.0, 1.0],
                    rotate=[0.0, 0.0, 0.0]))
@@ -254,5 +255,5 @@ for padNum in padNums:
     f.append(Text(text=chamferComment, at=[xCenter, yEdge + sFabRef[0]],
                   layer="Cmts.User", size=sFabRef, thickness=t2))
 
-    file_handler = KicadFileHandler(f)
-    file_handler.writeFile(footprint_name + ".kicad_mod")
+    lib = KicadPrettyLibrary(lib_name, None)
+    lib.save(f)

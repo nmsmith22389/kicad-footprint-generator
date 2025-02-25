@@ -19,10 +19,12 @@ def plcc4(args):
 
     desc = str(pkgWidth) + "mm x " + str(pkgHeight) + "mm PLCC4 LED, "
 
+    lib_name = "LED_SMD"
+
     f = Footprint(footprint_name, FootprintType.SMD)
     f.setDescription(desc + args["datasheet"])
     f.setTags("LED Cree PLCC-4")
-    f.append(Model(filename="${KICAD9_3DMODEL_DIR}/LEDs.3dshapes/" + footprint_name + ".wrl",
+    f.append(Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl",
                    at=[0.0, 0.0, 0.0],
                    scale=[1.0, 1.0, 1.0],
                    rotate=[0.0, 0.0, 0.0]))
@@ -111,8 +113,8 @@ def plcc4(args):
     f.append(Pad(number=pads[3], type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT,
                  at=[xPadLeft, yPadBottom], size=p, layers=Pad.LAYERS_SMT))
 
-    file_handler = KicadFileHandler(f)
-    file_handler.writeFile(footprint_name + ".kicad_mod")
+    lib = KicadPrettyLibrary(lib_name, None)
+    lib.save(f)
 
 
 if __name__ == '__main__':

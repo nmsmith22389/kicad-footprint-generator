@@ -519,14 +519,8 @@ def generate_one_footprint(positions: int, *, spec, configuration: dict, idx=0):
     ## 3D model
     kicad_mod.append(Model(filename=f"{KICAD_3DMODEL_DIR}/{lib_name}.3dshapes/{fp_name}.wrl", at=[0, 0, 0], scale=[1, 1, 1], rotate=[0, 0, 0]))
 
-    output_dir = '{lib_name:s}.pretty/'.format(lib_name=lib_name)
-    if not os.path.isdir(output_dir): #returns false if path does not yet exist!! (Does not check path validity)
-        os.makedirs(output_dir)
-    filename =  '{outdir:s}{fp_name:s}.kicad_mod'.format(outdir=output_dir, fp_name=fp_name)
-
-    # write file
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile(filename)
+    lib = KicadPrettyLibrary(lib_name, None)
+    lib.save(kicad_mod)
 
 
 def calculate_courtyard(bbox, offsets, configuration):

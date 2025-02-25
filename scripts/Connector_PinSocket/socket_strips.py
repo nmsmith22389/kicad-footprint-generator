@@ -25,7 +25,7 @@
 # refactored by and (C) 2017 Terje Io, <http://github.com/terjeio>
 #
 
-from KicadModTree import Footprint, FootprintType, Translation, Pad, Model, KicadFileHandler, Property
+from KicadModTree import Footprint, FootprintType, Translation, Pad, Model, KicadPrettyLibrary, Property
 from canvas import Layer, PadLayer, Keepout, OutDir
 from cq_base_parameters import PinStyle, CaseType
 
@@ -192,8 +192,8 @@ class pinSocketVerticalTHT (object):
         kicad_modg.append(Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl"))
 
         # write file
-        file_handler = KicadFileHandler(kicad_mod)
-        file_handler.writeFile(root_dir.saveTo(lib_name) + footprint_name + '.kicad_mod')
+        lib = KicadPrettyLibrary(lib_name, None)
+        lib.save(kicad_mod)
 
 
 
@@ -356,9 +356,8 @@ class pinSocketHorizontalTHT (object):
         kicad_modg.append(Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl"))
 
         # write file
-        file_handler = KicadFileHandler(kicad_mod)
-        file_handler.writeFile(root_dir.saveTo(lib_name) + footprint_name + '.kicad_mod')
-
+        lib = KicadPrettyLibrary(lib_name, None)
+        lib.save(kicad_mod)
 
 
 class pinSocketVerticalSMD (object):
@@ -525,7 +524,5 @@ class pinSocketVerticalSMD (object):
         kicad_modg.append(Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl"))
 
         # write file
-        file_handler = KicadFileHandler(kicad_mod)
-        file_handler.writeFile(root_dir.saveTo(lib_name) + footprint_name + '.kicad_mod')
-
-### EOF ###
+        lib = KicadPrettyLibrary(lib_name, None)
+        lib.save(kicad_mod)

@@ -263,11 +263,8 @@ def makePinHeadStraight(rows, cols, rm, coldist, package_width, overlen_top, ove
     # print(kicad_mod.getCompleteRenderTree())
 
     # write file
-    output_dir = '{lib_name:s}.pretty/'.format(lib_name=lib_name)
-    if not os.path.isdir(output_dir): #returns false if path does not yet exist!! (Does not check path validity)
-        os.makedirs(output_dir)
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile('{outdir:s}{fp_name:s}.kicad_mod'.format(outdir=output_dir, fp_name=footprint_name))
+    lib = KicadPrettyLibrary(lib_name, None)
+    lib.save(kicad_mod)
 
 
 def makeIdcHeader(rows, cols, rm, coldist, body_width, overlen_top, overlen_bottom, body_offset, ddrill, pad,
@@ -564,16 +561,8 @@ def makeIdcHeader(rows, cols, rm, coldist, body_width, overlen_top, overlen_bott
     # add model (even if there are mounting holes on the footprint do not include that in the 3D model)
     kicad_modg.append(Model(filename="{0}/{1}.3dshapes/{2}.wrl".format(model3d_path_prefix, lib_name, footprint_name), at=offset3d, scale=scale3d, rotate=rotate3d))
 
-    # print render tree
-    # print(kicad_mod.getRenderTree())
-    # print(kicad_mod.getCompleteRenderTree())
-
-    # write file
-    output_dir = '{lib_name:s}.pretty/'.format(lib_name=lib_name)
-    if not os.path.isdir(output_dir): #returns false if path does not yet exist!! (Does not check path validity)
-        os.makedirs(output_dir)
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile('{outdir:s}{fp_name:s}.kicad_mod'.format(outdir=output_dir, fp_name=footprint_name))
+    lib = KicadPrettyLibrary(lib_name, None)
+    lib.save(kicad_mod)
 
 
 #
@@ -848,16 +837,9 @@ def makePinHeadAngled(rows, cols, rm, coldist, pack_width, pack_offset, pin_leng
     kicad_modg.append(
         Model(filename=model3d_path_prefix + "/" + lib_name + ".3dshapes/" + footprint_name + ".wrl", at=offset3d, scale=scale3d, rotate=rotate3d))
 
-    # print render tree
-    # print(kicad_mod.getRenderTree())
-    # print(kicad_mod.getCompleteRenderTree())
+    lib = KicadPrettyLibrary(lib_name, None)
+    lib.save(kicad_mod)
 
-    # write file
-    output_dir = '{lib_name:s}.pretty/'.format(lib_name=lib_name)
-    if not os.path.isdir(output_dir): #returns false if path does not yet exist!! (Does not check path validity)
-        os.makedirs(output_dir)
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile('{outdir:s}{fp_name:s}.kicad_mod'.format(outdir=output_dir, fp_name=footprint_name))
 
 #
 #                                                          <-->pack_offset
@@ -1027,19 +1009,8 @@ def makeSocketStripAngled(rows, cols, rm, coldist, pack_width, pack_offset, pin_
     kicad_modg.append(
         Model(filename=model3d_path_prefix + "/" + lib_name + ".3dshapes/" + footprint_name + ".wrl", at=offset3d, scale=scale3d, rotate=rotate3d))
 
-    # print render tree
-    # print(kicad_mod.getRenderTree())
-    # print(kicad_mod.getCompleteRenderTree())
-
-    # write file
-    output_dir = '{lib_name:s}.pretty/'.format(lib_name=lib_name)
-    if not os.path.isdir(output_dir): #returns false if path does not yet exist!! (Does not check path validity)
-        os.makedirs(output_dir)
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile('{outdir:s}{fp_name:s}.kicad_mod'.format(outdir=output_dir, fp_name=footprint_name))
-
-
-
+    lib = KicadPrettyLibrary(lib_name, None)
+    lib.save(kicad_mod)
 
 
 def makePinHeadStraightSMD(rows, cols, rm, coldist, rmx_pad_offset,rmx_pin_length, pin_width, package_width, overlen_top, overlen_bottom, pad,
@@ -1227,13 +1198,5 @@ def makePinHeadStraightSMD(rows, cols, rm, coldist, rmx_pad_offset,rmx_pin_lengt
     kicad_modg.append(
         Model(filename=model3d_path_prefix + "/" + lib_name + ".3dshapes/" + footprint_name + ".wrl", at=offset3d, scale=scale3d, rotate=rotate3d))
 
-    # print render tree
-    # print(kicad_mod.getRenderTree())
-    # print(kicad_mod.getCompleteRenderTree())
-
-    # write file
-    output_dir = '{lib_name:s}.pretty/'.format(lib_name=lib_name)
-    if not os.path.isdir(output_dir): #returns false if path does not yet exist!! (Does not check path validity)
-        os.makedirs(output_dir)
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile('{outdir:s}{fp_name:s}.kicad_mod'.format(outdir=output_dir, fp_name=footprint_name))
+    lib = KicadPrettyLibrary(lib_name, None)
+    lib.save(kicad_mod)

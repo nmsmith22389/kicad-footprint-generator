@@ -8,7 +8,7 @@ from KicadModTree import (
     Circle,
     Footprint,
     FootprintType,
-    KicadFileHandler,
+    KicadPrettyLibrary,
     Line,
     Model,
     Node,
@@ -650,12 +650,8 @@ def makeTerminalBlockStd(
             )
         )
 
-        output_dir = lib_name + ".pretty" + os.sep
-        if not os.path.isdir(output_dir):
-            os.makedirs(output_dir)
-
-        file_handler = KicadFileHandler(kicad_mod)
-        file_handler.writeFile(output_dir + footprint_name + ".kicad_mod")
+        lib = KicadPrettyLibrary(lib_name, None)
+        lib.save(kicad_mod)
 
     return kicad_mod
 
@@ -1202,12 +1198,8 @@ def makeTerminalBlockVertical(
             )
         )
 
-        output_dir = lib_name + ".pretty" + os.sep
-        if not os.path.isdir(output_dir):
-            os.makedirs(output_dir)
-
-        file_handler = KicadFileHandler(kicad_mod)
-        file_handler.writeFile(output_dir + footprint_name + ".kicad_mod")
+        lib = KicadPrettyLibrary(lib_name, None)
+        lib.save(kicad_mod)
 
     return kicad_mod
 
@@ -1869,12 +1861,8 @@ def makeTerminalBlock45Degree(
             )
         )
 
-        output_dir = lib_name + ".pretty" + os.sep
-        if not os.path.isdir(output_dir):
-            os.makedirs(output_dir)
-
-        file_handler = KicadFileHandler(kicad_mod)
-        file_handler.writeFile(output_dir + footprint_name + ".kicad_mod")
+        lib = KicadPrettyLibrary(lib_name, None)
+        lib.save(kicad_mod)
 
     return kicad_mod
 
@@ -2105,11 +2093,7 @@ def makeScrewTerminalSingleStd(
             )
         )
 
-        output_dir = lib_name + ".pretty" + os.sep
-        if not os.path.isdir(output_dir):
-            os.makedirs(output_dir)
-
-        file_handler = KicadFileHandler(kicad_mod)
-        file_handler.writeFile(output_dir + footprint_name + ".kicad_mod")
+        lib = KicadPrettyLibrary(lib_name, None)
+        lib.save(kicad_mod)
 
     return kicad_mod

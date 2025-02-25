@@ -69,11 +69,9 @@ def qfn(args):
                              file3Dname=file3Dname))
 
 
-        output_dir = out_dir / 'TerminalBlock_Altech.pretty'
-        os.makedirs(output_dir, exist_ok=True)
-
-        file_handler = KicadFileHandler(f)
-        file_handler.writeFile(output_dir / (footprint_name + ".kicad_mod"))
+        lib_name = 'TerminalBlock_Altech.pretty'
+        lib = KicadPrettyLibrary(lib_name, out_dir)
+        lib.save(f)
 
 
 if __name__ == '__main__':

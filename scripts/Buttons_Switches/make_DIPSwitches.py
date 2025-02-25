@@ -20,11 +20,7 @@ if __name__ == '__main__':
     )
     args = parser.parse_args()
 
-    smd_dir = args.output_dir / "Button_Switch_SMD.pretty"
-    tht_dir = args.output_dir / "Button_Switch_THT.pretty"
-
-    smd_dir.mkdir(parents=True, exist_ok=True)
-    tht_dir.mkdir(parents=True, exist_ok=True)
+    output_dir = args.output_dir
 
     # common settings
     overlen_top=1.27
@@ -62,18 +58,18 @@ if __name__ == '__main__':
 
     for p in pins:
         makeDIPSwitch(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad, switch_width, switch_height, 'Slide', False, [], webpage="e.g. https://www.ctscorp.com/wp-content/uploads/206-208.pdf",switchtype=switchtype,
-                      outdir=tht_dir)
+                      outdir=output_dir)
         makeDIPSwitch(p, rm, pinrow_distance, package_width_narrow, overlen_top_narrow, overlen_bottom_narrow, ddrill, pad, switch_width_narrow, switch_height_narrow, 'Slide', False, ["LowProfile"], webpage="e.g. https://www.ctscorp.com/wp-content/uploads/209-210.pdf",switchtype=switchtype,
-                      outdir=tht_dir)
+                      outdir=output_dir)
         makeDIPSwitch(p, rm, pinrow_distance, package_width_piano, overlen_top_piano, overlen_bottom_piano, ddrill, pad, switch_width_piano, switch_height_piano, 'Piano', False, [], webpage="",switchtype=switchtype,
-                      outdir=tht_dir)
+                      outdir=output_dir)
 
         makeDIPSwitch(p, rm, pinrow_distance_smd, package_width_narrow, overlen_top_narrow, overlen_bottom_narrow, ddrill, pad_smd, switch_width_narrow, switch_height_narrow, 'Slide', True,["SMD","LowProfile"], 'Button_Switch_SMD', webpage="e.g. https://www.ctscorp.com/wp-content/uploads/219.pdf",switchtype=switchtype,
-                      outdir=smd_dir)
+                      outdir=output_dir)
         makeDIPSwitch(p, rm, pinrow_distance_smd, package_width, overlen_top, overlen_bottom, ddrill, pad_smd, switch_width, switch_height, 'Slide', True,["SMD"], 'Button_Switch_SMD', webpage="e.g. https://www.ctscorp.com/wp-content/uploads/204.pdf",switchtype=switchtype,
-                      outdir=smd_dir)
+                      outdir=output_dir)
         makeDIPSwitch(p, rm, pinrow_distance_smd_J, package_width_narrow, overlen_top_narrow, overlen_bottom_narrow, ddrill, pad_smd_J, switch_width_narrow, switch_height_narrow, 'Slide', True,["SMD","LowProfile","JPin"], 'Button_Switch_SMD', webpage="e.g. https://www.ctscorp.com/wp-content/uploads/219.pdf",switchtype=switchtype,
-                      outdir=smd_dir)
+                      outdir=output_dir)
 
     pins=[4,6,8,10,12,14,16,18,20,22,24]
     switch_width_piano=1.14
@@ -84,7 +80,7 @@ if __name__ == '__main__':
 
     for p in pins:
         makeDIPSwitch(p, rm, pinrow_distance, package_width_piano, overlen_top_piano, overlen_bottom_piano, ddrill, pad, switch_width_piano, switch_height_piano, 'Piano', False, device_name="CTS_Series194-{0}MSTN".format(int(p/2)), webpage="https://www.ctscorp.com/wp-content/uploads/194-195.pdf",switchtype=switchtype,
-                      outdir=tht_dir)
+                      outdir=output_dir)
 
     # Copal CVS DIP-switches (http://www.nidec-copal-electronics.com/e/catalog/switch/cvs.pdf):
     pins = [2, 4, 6, 8, 16]
@@ -102,7 +98,7 @@ if __name__ == '__main__':
         makeDIPSwitch(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_smd, switch_width,
                       switch_height, 'Slide', True, [], "Button_Switch_SMD", [0, 0, 0], [1, 1, 1],
                       [0, 0, 0], "", True, [0.7, 0.7], 0.2, 0, webpage="http://www.nidec-copal-electronics.com/e/catalog/switch/cvs.pdf", device_name="Copal_CVS-{0:02}xB".format(int(p/2)),switchtype=switchtype,
-                      outdir=smd_dir)
+                      outdir=output_dir)
 
     # Omron A6H DIP-switches (https://www.omron.com/ecb/products/pdf/en-a6h.pdf):
     pins = [4,8,12,16,20]
@@ -120,7 +116,7 @@ if __name__ == '__main__':
         makeDIPSwitch(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_smd, switch_width,
                       switch_height, 'Slide', True, [], "Button_Switch_SMD", [0, 0, 0], [1, 1, 1],
                       [0, 0, 0], "", True, webpage="https://www.omron.com/ecb/products/pdf/en-a6h.pdf", device_name="Omron_A6H-{0}101".format(int(p/2)),switchtype=switchtype,
-                      outdir=smd_dir)
+                      outdir=output_dir)
 
     # Omron A6S DIP-switches (http://omronfs.omron.com/en_US/ecb/products/pdf/en-a6s.pdf):
     pins = [2,4,6,8,10,12,14,16,18,20]
@@ -138,7 +134,7 @@ if __name__ == '__main__':
         makeDIPSwitch(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_smd, switch_width,
                       switch_height, 'Slide', True, [], "Button_Switch_SMD", [0, 0, 0], [1, 1, 1],
                       [0, 0, 0], "", True, webpage="http://omronfs.omron.com/en_US/ecb/products/pdf/en-a6s.pdf", device_name="Omron_A6S-{0}10x".format(int(p/2)),switchtype=switchtype,
-                      outdir=smd_dir)
+                      outdir=output_dir)
 
     # Copal CHS DIP-switches (http://www.nidec-copal-electronics.com/e/catalog/switch/chs.pdf):
     pins = [2, 4, 8, 12, 16, 20]
@@ -157,11 +153,11 @@ if __name__ == '__main__':
         makeDIPSwitch(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_smd, switch_width,
                       switch_height, 'Slide', True,["SMD","JPin"], "Button_Switch_SMD", [0, 0, 0], [1, 1, 1],
                       [0, 0, 0], "", True, webpage="http://www.nidec-copal-electronics.com/e/catalog/switch/chs.pdf", device_name="Copal_CHS-{0:02}A".format(int(p/2)),switchtype=switchtype,
-                      outdir=smd_dir)
+                      outdir=output_dir)
         makeDIPSwitch(p, rm, pinrow_distanceB, package_width, overlen_top, overlen_bottom, ddrill, pad_smd, switch_width,
                       switch_height, 'Slide', True,["SMD"], "Button_Switch_SMD", [0, 0, 0], [1, 1, 1],
                       [0, 0, 0], "", True, webpage="http://www.nidec-copal-electronics.com/e/catalog/switch/chs.pdf", device_name="Copal_CHS-{0:02}B".format(int(p/2)),switchtype=switchtype,
-                      outdir=smd_dir)
+                      outdir=output_dir)
 
     # KingTek DSHPxxTS DIP-switches (http://www.kingtek.net.cn/pic/201601201417455112.pdf):
     pins = [4,6,8,10,12,14,16,18,20]
@@ -179,7 +175,7 @@ if __name__ == '__main__':
         makeDIPSwitch(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_smd, switch_width,
                       switch_height, 'Slide', True, [], "Button_Switch_SMD", [0, 0, 0], [1, 1, 1],
                       [0, 0, 0], "", True, webpage="http://www.kingtek.net.cn/pic/201601201417455112.pdf", device_name="KingTek_DSHP{0:02}TS".format(int(p/2)),switchtype=switchtype,
-                      outdir=smd_dir)
+                      outdir=output_dir)
 
     # KingTek DSHPxxTJ DIP-switches (http://www.kingtek.net.cn/pic/201601201446313350.pdf):
     pins = [4,6,8,10,12,14,16,18,20]
@@ -197,4 +193,4 @@ if __name__ == '__main__':
         makeDIPSwitch(p, rm, pinrow_distance, package_width, overlen_top, overlen_bottom, ddrill, pad_smd, switch_width,
                       switch_height, 'Slide', True, ["JPin"], "Button_Switch_SMD", [0, 0, 0], [1, 1, 1],
                       [0, 0, 0], "", True, webpage="http://www.kingtek.net.cn/pic/201601201446313350.pdf", device_name="KingTek_DSHP{0:02}TJ".format(int(p/2)),switchtype=switchtype,
-                      outdir=smd_dir)
+                      outdir=output_dir)

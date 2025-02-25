@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
 from KicadModTree import *  # NOQA
-from KicadModTree.nodes.base.Pad import Pad  # NOQA
+from KicadModTree import KicadPrettyLibrary
+from KicadModTree.nodes.base.Pad import Pad
 
 
 def buzzer_round_tht(args):
@@ -38,8 +39,9 @@ def buzzer_round_tht(args):
                          at=[args['pad_spacing'], 0], size=args['pad_size'], drill=args['hole_size'], layers=Pad.LAYERS_THT))
 
     # write file
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile('{}.kicad_mod'.format(args['name']))
+    lib_name = "Buzzers_Beepers"
+    lib = KicadPrettyLibrary(lib_name, args["output_dir"])
+    lib.save(kicad_mod)
 
 
 if __name__ == '__main__':

@@ -13,6 +13,8 @@ data = csv.DictReader(open("har-flexicon.csv"))
 # Create footprint for all configurations
 max_configurations = 12
 
+lib_name = "Connector_Harting"
+
 for series in data:
     for configuration in range(2, max_configurations + 1):
 
@@ -47,7 +49,7 @@ for series in data:
         )
         kicad_mod.append(
             Model(
-                filename="${KICAD9_3DMODEL_DIR}/Connector_Harting.3dshapes/"
+                filename="${KICAD9_3DMODEL_DIR}/" + lib_name + ".3dshapes/"
                 + footprint_name
                 + ".wrl"
             )
@@ -251,5 +253,5 @@ for series in data:
         )
 
         # Save file
-        file_handler = KicadFileHandler(kicad_mod)
-        file_handler.writeFile(footprint_name + ".kicad_mod")
+        lib = KicadPrettyLibrary(lib_name, None)
+        lib.save(kicad_mod)

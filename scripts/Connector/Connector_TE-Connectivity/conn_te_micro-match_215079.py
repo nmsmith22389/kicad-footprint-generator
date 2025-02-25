@@ -212,13 +212,8 @@ def generate_one_footprint(pincount, configuration):
     model_name = f'{model3d_path_prefix}{lib_name}.3dshapes/{footprint_name}.wrl'
     kicad_mod.append(Model(filename=model_name))
 
-    output_dir = f'{lib_name}.pretty/'
-    if not os.path.isdir(output_dir):
-        os.makedirs(output_dir)
-    filename = f'{output_dir}{footprint_name}.kicad_mod'
-
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile(filename)
+    lib = KicadPrettyLibrary(lib_name, None)
+    lib.save(kicad_mod)
 
 
 if __name__ == '__main__':

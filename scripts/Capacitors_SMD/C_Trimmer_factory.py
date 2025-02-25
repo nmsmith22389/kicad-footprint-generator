@@ -201,9 +201,9 @@ class CapacitorTrimmer:
             print(kicad_mod.getRenderTree())
 
         # write file
-        file_handler = KicadFileHandler(kicad_mod)
-        file_handler.writeFile('{:s}.kicad_mod'.format(dim.name))
-
+        lib_name = "Capacitors_SMD"
+        lib = KicadPrettyLibrary(lib_name, None)
+        lib.save(kicad_mod)
 
     def build_series(self, verbose=False):
         print('Making {p:s}'.format(p=self.config['base']['description']))

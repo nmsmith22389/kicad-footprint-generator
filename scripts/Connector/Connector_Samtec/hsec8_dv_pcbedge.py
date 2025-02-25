@@ -20,14 +20,10 @@ import os
 import argparse
 import yaml
 
-# ensure that the kicad-footprint-generator directory is available
-#sys.path.append(os.environ.get('KIFOOTPRINTGENERATOR'))  # enable package import from parent directory
-#sys.path.append("D:\hardware\KiCAD\kicad-footprint-generator")  # enable package import from parent directory
-sys.path.append(os.path.join(sys.path[0], "..", "..", "..")) # load kicad_mod path
-
-from KicadModTree import Footprint, FootprintType, Line, Text, Arc, Pad, RectLine, KicadFileHandler
+from KicadModTree import Footprint, FootprintType, Line, Text, Arc, Pad, RectLine, KicadPrettyLibrary
 from scripts.tools.drawing_tools import round_to_grid
 from scripts.tools.footprint_text_fields import addTextFields
+
 
 lib_name_category = 'Samtec_HSEC8'
 
@@ -218,15 +214,9 @@ def generate_one_footprint(positions: int, variant: str, configuration):
                   courtyard={'top':cy1, 'bottom':cy2}, fp_name=fp_name, text_y_inside_position=-2.54)
 
     lib_name = configuration['lib_name_specific_function_format_string'].format(category=lib_name_category)
-    output_dir = '{lib_name:s}.pretty/'.format(lib_name=lib_name)
-    if not os.path.isdir(output_dir): #returns false if path does not yet exist!! (Does not check path validity)
-        os.makedirs(output_dir)
-    filename =  '{outdir:s}{fp_name:s}.kicad_mod'.format(outdir=output_dir, fp_name=fp_name)
 
-
-    # write file
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile(filename)
+    lib = KicadPrettyLibrary(lib_name, None)
+    lib.save(kicad_mod)
 
 
 def print_table(table_num: int = None):

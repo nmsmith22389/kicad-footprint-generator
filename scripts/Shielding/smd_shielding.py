@@ -26,12 +26,13 @@ def calculate_pad_spacer(pad_spacer, mirror_spacer):
 
 
 def create_smd_shielding(name, **kwargs):
+    lib_name = "RF_Shielding"
     kicad_mod = Footprint(name, FootprintType.SMD)
 
     # init kicad footprint
     kicad_mod.setDescription(kwargs['description'])
     kicad_mod.setTags('Shielding Cabinet')
-    kicad_mod.append(Model(filename="${KICAD9_3DMODEL_DIR}/RF_Shielding.3dshapes/" + name + ".wrl"))
+    kicad_mod.append(Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + name + ".wrl"))
 
     # do some pre calculations
     # TODO: when mirror=False, array has to have even number of array elements
@@ -147,8 +148,8 @@ def create_smd_shielding(name, **kwargs):
                                   end=[x_part_max + 0.15, pad_end], layer='F.SilkS'))
 
     # write file
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile('{name}.kicad_mod'.format(name=name))
+    lib = KicadPrettyLibrary(lib_name, None)
+    lib.save(kicad_mod)
 
 
 def parse_and_execute_yml_file(filepath):

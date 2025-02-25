@@ -54,8 +54,8 @@ def smd_chip(args):
                            at=[0, 0, 0], scale=[1, 1, 1], rotate=[0, 0, 0]))
 
     # write file
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile('{}.kicad_mod'.format(args['name']))
+    lib = KicadPrettyLibrary(args["model_dir"], None)
+    lib.save(kicad_mod)
 
 
 if __name__ == '__main__':

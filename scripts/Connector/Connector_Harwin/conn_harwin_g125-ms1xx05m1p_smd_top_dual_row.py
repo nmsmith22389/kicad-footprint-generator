@@ -16,9 +16,7 @@ import os
 import argparse
 import yaml
 
-sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))  # load parent path of KicadModTree
-
-from KicadModTree import Pad, PadArray, Footprint, FootprintType, PolygonLine, KicadFileHandler
+from KicadModTree import Pad, PadArray, Footprint, FootprintType, PolygonLine, KicadPrettyLibrary
 from scripts.tools.footprint_text_fields import addTextFields
 from scripts.tools.drawing_tools import addArcByAngles
 
@@ -158,14 +156,8 @@ def generate_footprint(pins, configuration):
 
     lib_name = configuration['lib_name_format_string'].format(series=series, man=manufacturer)
 
-
-    output_dir = '{lib_name:s}.pretty/'.format(lib_name=lib_name)
-    if not os.path.isdir(output_dir): #returns false if path does not yet exist!! (Does not check path validity)
-        os.makedirs(output_dir)
-    filename =  '{outdir:s}{fp_name:s}.kicad_mod'.format(outdir=output_dir, fp_name=footprint_name)
-
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile(filename)
+    lib = KicadPrettyLibrary(lib_name, None)
+    lib.save(kicad_mod)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='use confing .yaml files to create footprints.')

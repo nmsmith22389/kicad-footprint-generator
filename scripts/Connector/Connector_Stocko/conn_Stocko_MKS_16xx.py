@@ -177,8 +177,10 @@ for itr in range (1, 20 + 1):
                               end = [(pin_cnt - 1) * pad_span + fab_outline_x + courtyard_outline, fab_outline_y + courtyard_outline],
                               layer = 'F.CrtYd'))
     #add 3D model
-    kicad_mod.append(Model(filename="${{KICAD9_3DMODEL_DIR}}/Connector_Stocko.3dshapes/{}.wrl".format(footprint_name),
+    lib_name = "Connector_Stocko"
+    kicad_mod.append(Model(filename="${{KICAD9_3DMODEL_DIR}}/{}.3dshapes/{}.wrl".format(lib_name, footprint_name),
                         at=[0, 0, 0], scale=[1, 1, 1], rotate=[0, 0, 0]))
     #output kicad model
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile(output_dir + '/' + footprint_name + '.kicad_mod')
+
+    lib = KicadPrettyLibrary(lib_name, None)
+    lib.save(kicad_mod)

@@ -229,10 +229,8 @@ for pincount in pins:
     """
 
     #add a 3D model reference
-    fp.append(Model(filename="Connectors_Hirose.3dshapes/" + footprint_name + ".wrl"))
+    fp.append(Model(filename=lib_name + ".3dshapes/" + footprint_name + ".wrl"))
 
-    #filename
-    filename = output_dir + footprint_name + ".kicad_mod"
-
-    file_handler = KicadFileHandler(fp)
-    file_handler.writeFile(filename)
+    lib_name = "Connector_Hirose"
+    lib = KicadPrettyLibrary(lib_name, None)
+    lib.save(fp)

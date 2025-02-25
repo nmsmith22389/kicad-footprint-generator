@@ -140,11 +140,7 @@ class DIPGenerator(FootprintGenerator):
 
         args['DIPDescription'] = ', '.join(desc)
 
-        # Compute output directory
-        outdir = self.output_path / 'Package_DIP.pretty'
-        os.makedirs(outdir, exist_ok=True)
-
-        makeDIP(**args, outdir=outdir)
+        makeDIP(**args, outdir=self.output_path)
 
     def make_all_variants_from_device_params(self, device_params: dict):
 

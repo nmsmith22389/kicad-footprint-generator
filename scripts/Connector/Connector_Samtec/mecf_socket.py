@@ -264,15 +264,8 @@ def generate_one_footprint(weld, pol, pcb_thickness, n, configuration):
         model3d_path_prefix=model3d_path_prefix, lib_name=lib_name, fp_name=fp_name)
     kicad_mod.append(Model(filename=model_name))
 
-    output_dir = '{lib_name:s}.pretty/'.format(lib_name=lib_name)
-    if not os.path.isdir(output_dir): #returns false if path does not yet exist!! (Does not check path validity)
-        os.makedirs(output_dir)
-    filename =  '{outdir:s}{fp_name:s}.kicad_mod'.format(outdir=output_dir, fp_name=fp_name)
-
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile(filename)
-
-
+    lib = KicadPrettyLibrary(lib_name, None)
+    lib.save(kicad_mod)
 
 
 if __name__ == '__main__':

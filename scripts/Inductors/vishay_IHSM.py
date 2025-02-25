@@ -39,6 +39,7 @@ if len(sys.argv) > 1:
 if output_dir and not output_dir.endswith(os.sep):
     output_dir += os.sep
 
+lib_name = "Inductor_SMD"
 prefix = "Inductor_"
 part = "Vishay_IHSM-{pn}"
 dims = "{l:0.1f}mmx{w:0.1f}mm"
@@ -97,12 +98,9 @@ for inductor in inductors:
     fp.append(PolygonLine(polygon=poly, x_mirror=0))
 
     #Add a model
-    fp.append(Model(filename="Inductors.3dshapes/" + fp_name + ".wrl"))
+    fp.append(Model(filename=lib_name + ".3dshapes/" + fp_name + ".wrl"))
 
-    #filename
-    filename = output_dir + fp_name + ".kicad_mod"
-
-    file_handler = KicadFileHandler(fp)
-    file_handler.writeFile(filename)
+    lib = KicadPrettyLibrary(lib_name, None)
+    lib.save(fp)
 
     print(fp_name)

@@ -89,14 +89,12 @@ def makeSIPVertical(pins, rm, ddrill, pad, package_size, left_offset, top_offset
                  layer='F.CrtYd', width=lw_crt))
 
     # add model
-    kicad_mod.append(Model(filename="${KICAD9_3DMODEL_DIR}/"+lib_name + ".3dshapes/" + footprint_name + ".wrl",
+    kicad_mod.append(Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl",
                            at=[0, 0, 0], scale=[1,1,1], rotate=[0, 0, 0]))
 
     # write file
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile(footprint_name + '.kicad_mod')
-
-
+    lib = KicadPrettyLibrary(lib_name, None)
+    lib.save(kicad_mod)
 
 
 def makeSIPHorizontal(pins, rm, ddrill, pad, package_size, left_offset, pin_bottom_offset, footprint_name, description, tags, lib_name, missing_pins=[]):
@@ -169,12 +167,12 @@ def makeSIPHorizontal(pins, rm, ddrill, pad, package_size, left_offset, pin_bott
                  layer='F.CrtYd', width=lw_crt))
 
     # add model
-    kicad_mod.append(Model(filename="${KICAD9_3DMODEL_DIR}/"+lib_name + ".3dshapes/" + footprint_name + ".wrl",
+    kicad_mod.append(Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl",
                            at=[0, 0, 0], scale=[1,1,1], rotate=[0, 0, 0]))
 
     # write file
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile(footprint_name + '.kicad_mod')
+    lib = KicadPrettyLibrary(lib_name, None)
+    lib.save(kicad_mod)
 
 
 def makeResistorSIP(pins, footprint_name, description):
@@ -235,10 +233,5 @@ def makeResistorSIP(pins, footprint_name, description):
     kicad_mod.append(Model(filename="${KICAD9_3DMODEL_DIR}/"+lib_name + ".3dshapes/" + footprint_name + ".wrl",
                            at=[0, 0, 0], scale=[1 / 2.54, 1 / 2.54, 1 / 2.54], rotate=[0, 0, 0]))
 
-    # print render tree
-    # print(kicad_mod.getRenderTree())
-    # print(kicad_mod.getCompleteRenderTree())
-
-    # write file
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile(footprint_name + '.kicad_mod')
+    lib = KicadPrettyLibrary(lib_name, None)
+    lib.save(kicad_mod)

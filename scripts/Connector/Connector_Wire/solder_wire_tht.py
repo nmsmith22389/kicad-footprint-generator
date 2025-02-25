@@ -290,16 +290,9 @@ def make_fp(wire_def, fp_type, pincount, configuration):
         model3d_path_prefix=model3d_path_prefix, lib_name=lib_name, fp_name=fp_name)
     kicad_mod.append(Model(filename=model_name))
 
-    output_dir = '{lib_name:s}.pretty/'.format(lib_name=lib_name)
-    if not os.path.isdir(output_dir):
-        #returns false if path does not yet exist!! (Does not check path validity)
-        os.makedirs(output_dir)
+    lib = KicadPrettyLibrary(lib_name, None)
+    lib.save(kicad_mod)
 
-    filename = '{outdir:s}{fp_name:s}.kicad_mod'\
-            .format(outdir=output_dir, fp_name=fp_name)
-
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile(filename)
 
 def make_for_wire(wire_def, configuration):
     for fp_type in FOOTPRINT_TYPES:

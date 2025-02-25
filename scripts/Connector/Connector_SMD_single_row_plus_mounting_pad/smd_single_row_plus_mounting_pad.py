@@ -373,13 +373,9 @@ def generate_one_footprint(idx, pincount, series_definition, configuration, grou
         model3d_path_prefix=model3d_path_prefix, lib_name=lib_name, fp_name=footprint_name)
     kicad_mod.append(Model(filename=model_name))
 
-    output_dir = '{lib_name:s}.pretty/'.format(lib_name=lib_name)
-    if not os.path.isdir(output_dir): #returns false if path does not yet exist!! (Does not check path validity)
-        os.makedirs(output_dir)
-    filename =  '{outdir:s}{fp_name:s}.kicad_mod'.format(outdir=output_dir, fp_name=footprint_name)
+    lib = KicadPrettyLibrary(lib_name, None)
+    lib.save(kicad_mod)
 
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile(filename)
 
 def generate_series(configuration, series_definition, id, group_definition):
     idx = 0

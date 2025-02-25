@@ -59,7 +59,7 @@ for converter in converters:
 
         desc = "Vigortronix " + Serie + " serie of ACDC converter"
         tags = "Vigortronix " + Serie + " serie of ACDC converter"
-        TargetDir = "Converters_DCDC_ACDC.3dshapes"
+        lib_name = "Converters_DCDC_ACDC"
         Datasheet = "http://www.vigortronix.com/10WattACDCPCBPowerModule.aspx"
         PadSize = 2.0 * PDiam
 
@@ -169,11 +169,7 @@ for converter in converters:
     #
     # Add 3D model
     #
-    fp.append(Model(filename="${KICAD9_3DMODEL_DIR}/" + TargetDir + "/" + fp_name + ".wrl", at=[0, 0, 0], scale=[1, 1, 1], rotate=[0, 0, 0]))
+    fp.append(Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + fp_name + ".wrl", at=[0, 0, 0], scale=[1, 1, 1], rotate=[0, 0, 0]))
 
-
-    #filename
-    filename = output_dir + fp_name + ".kicad_mod"
-
-    file_handler = KicadFileHandler(fp)
-    file_handler.writeFile(filename)
+    lib = KicadPrettyLibrary(lib_name, None)
+    lib.save(fp)

@@ -3,6 +3,7 @@
 from KicadModTree import *
 
 
+lib_name = "LED_SMD"
 datasheet = "https://www.rohm.com/datasheet/SMLVN6RGB1U"
 footprint_name = "LED_ROHM_SMLVN6"
 pkgWidth = 3.1
@@ -16,7 +17,7 @@ padCornerHeight = 0.8
 f = Footprint(footprint_name, FootprintType.SMD)
 f.setDescription(datasheet)
 f.setTags("LED ROHM SMLVN6")
-f.append(Model(filename="${KICAD9_3DMODEL_DIR}/LED_SMD.3dshapes/" + footprint_name + ".wrl",
+f.append(Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl",
                at=[0.0, 0.0, 0.0],
                scale=[1.0, 1.0, 1.0],
                rotate=[0.0, 0.0, 0.0]))
@@ -113,5 +114,5 @@ f.append(Pad(number=pads[5], type=Pad.TYPE_SMT, shape=padShape,
              at=[xPadRight, yPadBottom], size=pCorner, layers=Pad.LAYERS_SMT,
              radius_ratio=radiusRatio))
 
-file_handler = KicadFileHandler(f)
-file_handler.writeFile(footprint_name + ".kicad_mod")
+file_handler = KicadPrettyLibrary(lib_name, None)
+file_handler.save(f)

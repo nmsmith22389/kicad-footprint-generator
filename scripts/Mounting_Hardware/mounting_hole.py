@@ -135,8 +135,9 @@ def create_footprint(name, **kwargs):
                                  at=[step_x, step_y], size=[via_diameter+0.1, via_diameter+0.1], drill=via_diameter, layers=Pad.LAYERS_THT))
 
     # write file
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile('{name}.kicad_mod'.format(name=name))
+    lib_name = "MountingHole"
+    lib = KicadPrettyLibrary(lib_name, None)
+    lib.save(kicad_mod)
 
 
 def parse_and_execute_yml_file(filepath):

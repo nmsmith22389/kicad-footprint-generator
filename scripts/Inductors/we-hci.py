@@ -103,10 +103,8 @@ for inductor in inductors:
     fp.append(PolygonLine(polygon=top, y_mirror=0))
 
     #Add a model
-    fp.append(Model(filename="Inductors.3dshapes/" + fp_name + ".wrl"))
+    lib_name = "Inductor_SMD"
+    fp.append(Model(filename=lib_name + ".3dshapes/" + fp_name + ".wrl"))
 
-    #filename
-    filename = output_dir + fp_name + ".kicad_mod"
-
-    file_handler = KicadFileHandler(fp)
-    file_handler.writeFile(filename)
+    lib = KicadPrettyLibrary(lib_name, None)
+    lib.save(fp)

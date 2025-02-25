@@ -16,6 +16,7 @@ suffix = "Straight"
 
 desc = "Hirose DF33 series connector, 3.30mm pitch, top entry PTH"
 tags = "connector hirose df33 top straight vertical through thru hole"
+lib_name = "Connector_Hirose"
 
 for pincount in range(2,16):
 
@@ -144,7 +145,7 @@ for pincount in range(2,16):
 
     kicad_mod.addRectLine({'x':x1-cy,'y':y1-cy},{'x':x2+cy,'y':y2+cy},"F.CrtYd",0.05)
 
-    kicad_mod.model = "Connectors_Hirose.3dshapes/" + footprint_name + ".wrl"
+    kicad_mod.model = lib_name + ".3dshapes/" + footprint_name + ".wrl"
 
     #shift the model along
 

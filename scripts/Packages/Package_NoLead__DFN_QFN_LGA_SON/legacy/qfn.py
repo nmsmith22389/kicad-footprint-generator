@@ -44,7 +44,7 @@ def qfn(args):
     f = Footprint(footprint_name, FootprintType.SMD)
     f.setDescription(desc)
     f.setTags("QFN " + str(pitch))
-    f.append(Model(filename="${KICAD9_3DMODEL_DIR}/Package_DFN_QFN.3dshapes/" + model + ".wrl",
+    f.append(Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + model + ".wrl",
                    at=[0.0, 0.0, 0.0],
                    scale=[1.0, 1.0, 1.0],
                    rotate=[0.0, 0.0, 0.0]))
@@ -261,13 +261,8 @@ def qfn(args):
                                      shape=Pad.SHAPE_CIRCLE, at=[x, y], size=p1,
                                      layers=["*.Cu"], drill=d))
 
-    output_dir = '{lib_name:s}.pretty/'.format(lib_name=lib_name)
-    if not os.path.isdir(output_dir):  # returns false if path does not yet exist!! (Does not check path validity)
-        os.makedirs(output_dir)
-    filename = '{outdir:s}{fp_name:s}.kicad_mod'.format(outdir=output_dir, fp_name=footprint_name)
-
-    file_handler = KicadFileHandler(f)
-    file_handler.writeFile(filename)
+    lib = KicadPrettyLibrary(lib_name, None)
+    lib.save(f)
 
 
 if __name__ == '__main__':

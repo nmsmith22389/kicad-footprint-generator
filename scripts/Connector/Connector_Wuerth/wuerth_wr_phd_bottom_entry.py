@@ -25,23 +25,23 @@ def generate_footprint(params, part_params, mpn, configuration):
     # Description
     kicad_mod.setDescription("Connector Wuerth, WR-PHD {pitch}mm Dual Socket Header Bottom Entry {type}, Wuerth electronics {mpn} ({datasheet}), generated with kicad-footprint-generator".format(
         pitch=params['pitch'], type=params['type'], mpn=mpn, datasheet=part_params['datasheet']))
-        
+
     # Keywords
     kicad_mod.setTags("Connector Wuerth WR-PHD {pitch}mm {mpn}".format(
         pitch=params['pitch'], mpn=mpn))
-        
+
     # Pads
     if params['type'] == 'SMD':
-        kicad_mod.append(PadArray(initial=1, start=[-params['pitch']/2-params['holes']['offset'], -params['pitch']*(part_params['pins']//2-1)/2], y_spacing=params['pitch'], pincount=part_params['pins']//2, increment=2, 
+        kicad_mod.append(PadArray(initial=1, start=[-params['pitch']/2-params['holes']['offset'], -params['pitch']*(part_params['pins']//2-1)/2], y_spacing=params['pitch'], pincount=part_params['pins']//2, increment=2,
             size=[params['pads']['x'], params['pads']['y']], type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT, layers=['F.Cu', 'F.Paste', 'F.Mask']))
         kicad_mod.append(PadArray(initial=2, start=[params['pitch']/2+params['holes']['offset'], -params['pitch']*(part_params['pins']//2-1)/2], y_spacing=params['pitch'], pincount=part_params['pins']//2, increment=2,
             size=[params['pads']['x'], params['pads']['y']], type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT, layers=['F.Cu', 'F.Paste', 'F.Mask']))
     else:
-        kicad_mod.append(PadArray(initial=1, start=[0, 0], y_spacing=params['pitch'], pincount=part_params['pins']//2, increment=2, 
+        kicad_mod.append(PadArray(initial=1, start=[0, 0], y_spacing=params['pitch'], pincount=part_params['pins']//2, increment=2,
             size=[params['pads']['diameter'], params['pads']['diameter']], drill=params['pads']['drill'], type=Pad.TYPE_THT, tht_pad1_shape=Pad.SHAPE_RECT, shape=Pad.SHAPE_OVAL, layers=['*.Cu', '*.Mask']))
         kicad_mod.append(PadArray(initial=2, start=[params['pitch']+2*params['holes']['offset'], 0], y_spacing=params['pitch'], pincount=part_params['pins']//2, increment=2,
             size=[params['pads']['diameter'], params['pads']['diameter']], drill=params['pads']['drill'], type=Pad.TYPE_THT, tht_pad1_shape=Pad.SHAPE_RECT, shape=Pad.SHAPE_OVAL, layers=['*.Cu', '*.Mask']))
-    
+
     # Bottom entry holes
     if params['type'] == 'SMD':
         kicad_mod.append(PadArray(initial="", start=[params['pitch']/2, -params['pitch']*(part_params['pins']//2-1)/2], y_spacing=params['pitch'], pincount=part_params['pins']//2, increment="",
@@ -53,7 +53,7 @@ def generate_footprint(params, part_params, mpn, configuration):
             size=params['holes']['drill'], drill=params['holes']['drill'], type=Pad.TYPE_NPTH, shape=Pad.SHAPE_CIRCLE, layers=Pad.LAYERS_NPTH))
         kicad_mod.append(PadArray(initial="", start=[params['pitch']+params['holes']['offset'], 0], y_spacing=params['pitch'], pincount=part_params['pins']//2, increment="",
             size=params['holes']['drill'], drill=params['holes']['drill'], type=Pad.TYPE_NPTH, shape=Pad.SHAPE_CIRCLE, layers=Pad.LAYERS_NPTH))
-    
+
     # Add fab layer
     if params['type'] == 'SMD':
         body_top_left = [-params['width']/2, -params['top']-params['pitch']*(part_params['pins']//2-1)/2]
@@ -62,7 +62,7 @@ def generate_footprint(params, part_params, mpn, configuration):
         body_top_left = [(-params['width']+params['pitch'])/2+params['holes']['offset'], -params['top']]
         body_bottom_right = [(-params['width']+params['pitch'])/2+params['width']+params['holes']['offset'], params['top']+params['pitch']*(part_params['pins']//2-1)]
     kicad_mod.append(RectLine(start=body_top_left, end=body_bottom_right, layer='F.Fab', width=configuration['fab_line_width']))
-    
+
     # Add silkscreen layer
     silk_top_left = [body_top_left[0] - configuration['silk_fab_offset'], body_top_left[1] - configuration['silk_fab_offset']]
     silk_bottom_right = [body_bottom_right[0] + configuration['silk_fab_offset'], body_bottom_right[1] + configuration['silk_fab_offset']]
@@ -83,7 +83,7 @@ def generate_footprint(params, part_params, mpn, configuration):
     kicad_mod.append(Line(start=[silk_bottom_right[0], silk_bottom_right[1]], end=[silk_bottom_right[0], silk_bottom_right[1] - 1.27/2], layer='F.SilkS', width=configuration['silk_line_width']))
     kicad_mod.append(Line(start=[silk_top_left[0], silk_bottom_right[1]], end=[silk_top_left[0], silk_bottom_right[1] - 1.27/2], layer='F.SilkS', width=configuration['silk_line_width']))
     kicad_mod.append(Line(start=[silk_top_left[0], silk_bottom_right[1]], end=[silk_bottom_right[0], silk_bottom_right[1]], layer='F.SilkS', width=configuration['silk_line_width']))
-    
+
     # Add courtyard layer
     courtyard_top_left = [body_top_left[0] - configuration['courtyard_offset']['connector'], body_top_left[1] - configuration['courtyard_offset']['connector']]
     if params['type'] == 'SMD':
@@ -100,27 +100,24 @@ def generate_footprint(params, part_params, mpn, configuration):
         if courtyard_bottom_right[0] < params['pitch'] + 2*params['holes']['offset'] + params['pads']['diameter']/2 + configuration['courtyard_offset']['connector']:
             courtyard_bottom_right[0] = params['pitch'] + 2*params['holes']['offset'] + params['pads']['diameter']/2 + configuration['courtyard_offset']['connector']
     kicad_mod.append(RectLine(start=courtyard_top_left, end=courtyard_bottom_right, layer='F.CrtYd', width=configuration['courtyard_line_width']))
-    
+
     # Add texts
     body_edge={'left': body_top_left[0], 'right': body_bottom_right[0], 'top': body_top_left[1], 'bottom': body_bottom_right[1]}
     addTextFields(kicad_mod=kicad_mod, configuration=configuration, body_edges=body_edge, fp_name=fp_name, text_y_inside_position='top',
         courtyard={'top': body_edge['top'] - configuration['courtyard_offset']['connector'], 'bottom': body_edge['bottom'] + configuration['courtyard_offset']['connector'] + 0.2})
 
     # 3D model definition
+    lib_name = "Connector_Wuerth"
     model3d_path_prefix = configuration.get('3d_model_prefix', '${KISYS3DMOD}/')
-    model_name = "{model3d_path_prefix:s}Connector_Wuerth.3dshapes/{fp_name:s}.wrl".format(
-        model3d_path_prefix=model3d_path_prefix, fp_name=fp_name)
+    model_name = "{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}.wrl".format(
+        model3d_path_prefix=model3d_path_prefix, fp_name=fp_name, lib_name=lib_name)
     kicad_mod.append(Model(filename=model_name))
 
     # Create output directory
-    output_dir = 'Connector_Wuerth.pretty/'
-    if not os.path.isdir(output_dir):
-        os.makedirs(output_dir)
-    filename =  '{output_dir:s}{fp_name:s}.kicad_mod'.format(output_dir=output_dir, fp_name=fp_name)
 
-    # Create footprint
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile(filename)
+    lib = KicadPrettyLibrary(lib_name, None)
+    lib.save(kicad_mod)
+
 
 if __name__ == "__main__":
 

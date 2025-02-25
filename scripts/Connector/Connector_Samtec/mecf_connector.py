@@ -281,16 +281,9 @@ def generate_one_footprint(pol, n, configuration):
         courtyard={'top':cy1, 'bottom':cy2}, fp_name=fp_name, text_y_inside_position=-2.54)
 
     lib_name = configuration['lib_name_specific_function_format_string'].format(category=lib_name_category)
-    output_dir = '{lib_name:s}.pretty/'.format(lib_name=lib_name)
-    if not os.path.isdir(output_dir): #returns false if path does not yet exist!! (Does not check path validity)
-        os.makedirs(output_dir)
-    filename =  '{outdir:s}{fp_name:s}.kicad_mod'.format(outdir=output_dir, fp_name=fp_name)
 
-
-    # write file
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile(filename)
-
+    lib = KicadPrettyLibrary(lib_name, None)
+    lib.save(kicad_mod)
 
 
 if __name__ == "__main__":

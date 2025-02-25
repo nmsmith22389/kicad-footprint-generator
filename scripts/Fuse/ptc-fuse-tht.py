@@ -15,12 +15,13 @@ def ptc_fuse_tht(args):
     h = args["height"]
     pitch = args["pitch"]
     offset = args["offset"]
+    lib_name = "Fuse"
 
     f = Footprint(footprint_name, FootprintType.THT)
     f.setDescription("PTC Resettable Fuse, Ihold = " + ihold +
                      ", Itrip=" + itrip + ", " + datasheet)
     f.setTags("ptc resettable fuse polyfuse THT")
-    f.append(Model(filename="${KICAD9_3DMODEL_DIR}/Fuse.3dshapes/" +
+    f.append(Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + ".3dshapes/" +
                    footprint_name + ".wrl",
                    at=[0.0, 0.0, 0.0],
                    scale=[1.0, 1.0, 1.0],
@@ -99,8 +100,8 @@ def ptc_fuse_tht(args):
                       end=[xRightCrtYd, yBottomCrtYd],
                       layer="F.CrtYd", width=wCrtYd))
 
-    file_handler = KicadFileHandler(f)
-    file_handler.writeFile(footprint_name + ".kicad_mod")
+    lib = KicadPrettyLibrary(lib_name, None)
+    lib.save(f)
 
 
 if __name__ == '__main__':

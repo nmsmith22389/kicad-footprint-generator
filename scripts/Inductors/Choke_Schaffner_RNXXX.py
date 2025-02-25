@@ -54,7 +54,8 @@ dims2 = "{l:0.1f}x{w:0.1f}mm"
 
 desc = "Current-compensated Chokes, Schaffner, {pn}"
 tags = "chokes schaffner tht"
-TargetDir = "Inductor_THT.3dshapes"
+lib_name = "Inductor_THT"
+TargetDir = lib_name + ".3dshapes"
 Datasheet = "https://www.schaffner.com/products/download/product/datasheet/rn-series-common-mode-chokes-new/"
 
 for inductor in inductors:
@@ -814,8 +815,5 @@ for inductor in inductors:
     fp.append(Pad(number=3,at=[0, B], layers=Pad.LAYERS_THT, shape=Pad.SHAPE_CIRCLE, type=Pad.TYPE_THT,  size=[PadSize,PadSize], drill=round(PDiam + 0.1, 2)))
     fp.append(Pad(number=4,at=[A, B], layers=Pad.LAYERS_THT, shape=Pad.SHAPE_CIRCLE, type=Pad.TYPE_THT,  size=[PadSize,PadSize], drill=round(PDiam + 0.1, 2)))
 
-    #filename
-    filename = output_dir + fp_name + ".kicad_mod"
-
-    file_handler = KicadFileHandler(fp)
-    file_handler.writeFile(filename)
+    lib = KicadPrettyLibrary(lib_name, None)
+    lib.save(fp)

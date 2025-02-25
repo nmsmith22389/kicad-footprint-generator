@@ -202,18 +202,12 @@ def BFemale(size, pin_cb, more_description):
 	# ------ 3D reference ------
 	# in case someone wants to make a model
 	kicad_mod.append(Model(
-		filename="${KICAD9_3DMODEL_DIR}/Connectors_IEC_DIN.3dshapes/" + footprint_name + ".wrl",
+		filename="${KICAD9_3DMODEL_DIR}/" + LIBRARY_NAME + ".3dshapes/" + footprint_name + ".wrl",
 		at=[0, 0, 0], scale=[1, 1, 1], rotate=[0, 0, 0]))
 
 	# ------ Output ------
-	file_handler = KicadFileHandler(kicad_mod)
-
-	output_dir = '{lib_name:s}.pretty/'.format(lib_name=LIBRARY_NAME)
-	if not os.path.isdir(output_dir): #returns false if path does not yet exist!! (Does not check path validity)
-		os.makedirs(output_dir)
-	filename =  '{outdir:s}{fp_name:s}.kicad_mod'.format(outdir=output_dir, fp_name=footprint_name)
-
-	file_handler.writeFile(filename)
+	lib = KicadPrettyLibrary(LIBRARY_NAME, None)
+	lib.save(kicad_mod)
 
 
 def BMale(size, pin_cb, more_description):
@@ -239,7 +233,7 @@ def BMale(size, pin_cb, more_description):
 	mid_y = 0.5 * row_step
 
 	# ------ Init ------
-	pin_count = 0;
+	pin_count = 0
 	for col in range(1, cols + 1):
 		pin_count += int(pin_cb('A', col))
 		pin_count += int(pin_cb('B', col))
@@ -392,16 +386,8 @@ def BMale(size, pin_cb, more_description):
 		at=[0, 0, 0], scale=[1, 1, 1], rotate=[0, 0, 0]))
 
 	# ------ Output ------
-	file_handler = KicadFileHandler(kicad_mod)
-
-	output_dir = '{lib_name:s}.pretty/'.format(lib_name=LIBRARY_NAME)
-	if not os.path.isdir(output_dir): #returns false if path does not yet exist!! (Does not check path validity)
-		os.makedirs(output_dir)
-	filename =  '{outdir:s}{fp_name:s}.kicad_mod'.format(outdir=output_dir, fp_name=footprint_name)
-
-	file_handler.writeFile(filename)
-
-
+	lib = KicadPrettyLibrary(LIBRARY_NAME, None)
+	lib.save(kicad_mod)
 
 
 BFemale(0, AllPins, ", full configuration")

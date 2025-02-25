@@ -4,6 +4,7 @@ from KicadModTree import *
 
 datasheet = "https://www.murata.com/~/media/webrenewal/products/inductor/chip/tokoproducts/wirewoundferritetypeforpl/m_dem3518c.ashx"
 footprint_name = "L_Murata_DEM35xxC"
+lib_name = "Inductor_SMD"
 
 pkgWidth = 3.9
 pkgHeight = 3.7
@@ -14,7 +15,7 @@ padHeight = 1.4
 f = Footprint(footprint_name, FootprintType.SMD)
 f.setDescription(datasheet)
 f.setTags("Inductor SMD DEM35xxC")
-f.append(Model(filename="${KICAD9_3DMODEL_DIR}/Inductor_SMD.3dshapes/" + footprint_name + ".wrl",
+f.append(Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl",
                at=[0.0, 0.0, 0.0],
                scale=[1.0, 1.0, 1.0],
                rotate=[0.0, 0.0, 0.0]))
@@ -91,5 +92,5 @@ f.append(Pad(number=2, type=Pad.TYPE_SMT, shape=padShape,
              at=[xPadRight, yCenter], size=padSize, layers=Pad.LAYERS_SMT,
              radius_ratio=radiusRatio))
 
-file_handler = KicadFileHandler(f)
-file_handler.writeFile(footprint_name + ".kicad_mod")
+lib = KicadPrettyLibrary(lib_name, None)
+lib.save(f)

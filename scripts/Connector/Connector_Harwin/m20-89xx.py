@@ -176,13 +176,9 @@ def gen_footprint(pinnum, manpart, configuration):
     kicad_mod.append(Model(filename=model_name))
 
     # Output
-    output_dir = '{lib_name:s}.pretty/'.format(lib_name=lib_name)
-    if not os.path.isdir(output_dir): #returns false if path does not yet exist!! (Does not check path validity)
-        os.makedirs(output_dir)
-    filename =  '{outdir:s}{fp_name:s}.kicad_mod'.format(outdir=output_dir, fp_name=footprint_name)
+    lib = KicadPrettyLibrary(lib_name, None)
+    lib.save(kicad_mod)
 
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile(filename)
 
 def gen_family(configuration):
     for x in range(pin_min, pin_max+1):

@@ -12,6 +12,7 @@ from KicadModTree.nodes.base.Pad import Pad  # NOQA
 def create_shielding(name, outer_size, size,
                      attachment_width, attachment_length, attachment_positions, outer_attachment_length):
 
+    lib_name = "RF_Shielding"
     kicad_mod = Footprint(name, FootprintType.SMD)
 
     # init kicad footprint
@@ -95,8 +96,8 @@ def create_shielding(name, outer_size, size,
                          size=[attachment_width, inner_edge_length], **general_kwargs))
 
     # write file
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile('{name}.kicad_mod'.format(name=name))
+    lib = KicadPrettyLibrary(lib_name, None)
+    lib.save(kicad_mod)
 
 
 if __name__ == '__main__':

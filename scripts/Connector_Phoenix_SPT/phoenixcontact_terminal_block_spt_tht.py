@@ -119,20 +119,16 @@ def generate_footprint(params, part_params, mpn, configuration):
         courtyard={'top': body_edge['top'] - configuration['courtyard_offset']['connector'], 'bottom': body_edge['bottom'] + configuration['courtyard_offset']['connector'] + 0.2})
 
     # 3D model definition
+    lib_name = 'Connector_Phoenix_SPT'
     model3d_path_prefix = configuration.get('3d_model_prefix', '${KISYS3DMOD}/')
-    model_name = "{model3d_path_prefix:s}Connector_Phoenix_SPT.3dshapes/{fp_name:s}.wrl".format(
-        model3d_path_prefix=model3d_path_prefix, fp_name=fp_name)
+    model_name = "{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}.wrl".format(
+        model3d_path_prefix=model3d_path_prefix, fp_name=fp_name, lib_name=lib_name)
     kicad_mod.append(Model(filename=model_name))
 
     # Create output directory
-    output_dir = 'Connector_Phoenix_SPT.pretty/'
-    if not os.path.isdir(output_dir):
-        os.makedirs(output_dir)
-    filename =  '{output_dir:s}{fp_name:s}.kicad_mod'.format(output_dir=output_dir, fp_name=fp_name)
+    lib = KicadPrettyLibrary(lib_name, None)
+    lib.save(kicad_mod)
 
-    # Create footprint
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile(filename)
 
 if __name__ == "__main__":
 

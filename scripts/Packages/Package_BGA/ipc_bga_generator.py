@@ -136,14 +136,14 @@ class BGAGenerator(FootprintGenerator):
 
         if "name" in device_params:
             return device_params["name"]
-        
+
         if device_params.get("name_equal_to_key"):
             return fpId
-        
+
         # To facilitate iteration through the layouts create a list with main
         # and sublayouts
         layouts = [device_params] + device_params.get("secondary_layouts", [])
-        
+
         # Compute number of balls + diverse suffix strings
         pitch_text = ""
         stagger_text = ""
@@ -183,7 +183,7 @@ class BGAGenerator(FootprintGenerator):
             and "ball_diameter" in device_params):
             ball_diameter = device_params["ball_diameter"]
             ball_suffix = f"_Ball{ball_diameter}mm"
- 
+
         suffix = device_params.get("suffix", "")
 
         fp_name = name_format.format(
@@ -377,7 +377,7 @@ class BGAGenerator(FootprintGenerator):
         f.tags += device_config.compatible_mpns.tags
         f.tags += device_config.additional_tags.tags
 
-        lib_name = Path(f'Package_{packageType}')
+        lib_name = f'Package_{packageType}'
 
         # #################### Output and 3d model ############################
         self.add_standard_3d_model_to_footprint(f, lib_name, fp_name)
@@ -420,7 +420,7 @@ class BGAGenerator(FootprintGenerator):
                         padSkips.add(f'{row}{col+1}')
 
         if f is None:
-            return layoutX * layoutY - len(padSkips) 
+            return layoutX * layoutY - len(padSkips)
 
         padShape = lParams.get('pad_shape', fpParams.get('pad_shape', 'circle'))
         pasteShape = lParams.get('paste_shape', fpParams.get('paste_shape'))

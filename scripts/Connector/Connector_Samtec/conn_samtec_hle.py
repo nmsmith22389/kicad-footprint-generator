@@ -410,13 +410,9 @@ def generate_one_footprint(pins_per_row, variant, configuration):
     # To save disk space the link to the 3D model of footprints with BE option will be set to the 3D model without BE option.
     kicad_mod.append(Model(filename=model_name.replace ("DV-BE", "DV")))
 
-    output_dir = '{lib_name:s}.pretty/'.format(lib_name=lib_name)
-    if not os.path.isdir(output_dir): #returns false if path does not yet exist!! (Does not check path validity)
-        os.makedirs(output_dir)
-    filename =  '{outdir:s}{fp_name:s}.kicad_mod'.format(outdir=output_dir, fp_name=footprint_name)
+    lib = KicadPrettyLibrary(lib_name, None)
+    lib.save(kicad_mod)
 
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile(filename)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='use confing .yaml files to create footprints.')

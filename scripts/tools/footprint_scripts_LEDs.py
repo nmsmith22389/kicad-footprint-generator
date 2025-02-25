@@ -324,13 +324,8 @@ def makeLEDRadial(
         kicad_modg.append(
             Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl", at=[0, 0, 0], scale=[1, 1, 1], rotate=[0, 0, 0]))
 
-    # print render tree
-    # print(kicad_mod.getRenderTree())
-    # print(kicad_mod.getCompleteRenderTree())
-
-    # write file
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile(footprint_name + '.kicad_mod')
+    lib = KicadPrettyLibrary(lib_name, None)
+    lib.save(kicad_mod)
 
 
 # LED footprints for horizontally mounted LEDs
@@ -568,11 +563,6 @@ def makeLEDHorizontal(
         kicad_modg.append(
             Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl", at=[0, 0, 0], scale=[1, 1, 1], rotate=[0, 0, 0]))
 
-    # print render tree
-    # print(kicad_mod.getRenderTree())
-    # print(kicad_mod.getCompleteRenderTree())
-
-    # write file
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile(footprint_name + '.kicad_mod')
+    lib = KicadPrettyLibrary(lib_name, None)
+    lib.save(kicad_mod)
 

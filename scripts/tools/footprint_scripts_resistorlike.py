@@ -238,13 +238,8 @@ def makeResistorAxialHorizontal(seriesname, rm, rmdisp, w, d, ddrill, R_POW, typ
         model_filename = global_config.model_3d_prefix + lib_name + ".3dshapes/" + footprint_name + ".wrl"
         kicad_mod.append(Model(filename=model_filename, at=x_3d, scale=s_3d, rotate=[0, 0, 0]))
 
-    # print render tree
-    # print(kicad_mod.getRenderTree())
-    # print(kicad_mod.getCompleteRenderTree())
-
-    # write file
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile(footprint_name+'.kicad_mod')
+    lib = KicadPrettyLibrary(lib_name, None)
+    lib.save(kicad_mod)
 
 
 # simple axial round (type="cyl")/ box (type="box") resistor, vertically mounted
@@ -466,13 +461,8 @@ def makeResistorAxialVertical(seriesname,rm, rmdisp, l, d, ddrill, R_POW, type="
         kicad_mod.append(
             Model(filename=model_filename, at=x_3d, scale=s_3d, rotate=[0, 0, 0]))
 
-    # print render tree
-    # print(kicad_mod.getRenderTree())
-    # print(kicad_mod.getCompleteRenderTree())
-
-    # write file
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile(footprint_name + '.kicad_mod')
+    lib = KicadPrettyLibrary(lib_name, None)
+    lib.save(kicad_mod)
 
 
 # simple radial rectangular resistor, vertically mounted
@@ -903,10 +893,5 @@ def makeResistorRadial(seriesname, rm, w, h, ddrill, R_POW, innerw=0,innerh=0,rm
         model_filename = global_config.model_3d_prefix + lib_name + ".3dshapes/" + footprint_name + ".wrl"
         kicad_modg.append(Model(filename=model_filename, at=x_3d, scale=s_3d, rotate=[0, 0, 0]))
 
-    # print render tree
-    # print(kicad_mod.getRenderTree())
-    # print(kicad_mod.getCompleteRenderTree())
-
-    # write file
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile(footprint_name + '.kicad_mod')
+    lib = KicadPrettyLibrary(lib_name, None)
+    lib.save(kicad_mod)

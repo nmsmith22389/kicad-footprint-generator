@@ -22,6 +22,7 @@ def textool(args):
     lever = args["lever"]
     minWidth = args["min"]
     maxWidth = args["max"]
+    lib_name = "Socket"
 
     widths = "_W" + str(minWidth)
     for i in range(0, 15):
@@ -35,7 +36,7 @@ def textool(args):
     f = Footprint(footprint_name, FootprintType.THT)
     f.setDescription("3M " + str(nPads) + "-pin zero insertion force socket, through-hole, row spacing " + str(dimC) + " mm (" + str(mils) + " mils), http://multimedia.3m.com/mws/media/494546O/3mtm-dip-sockets-100-2-54-mm-ts0365.pdf")
     f.setTags("THT DIP DIL ZIF " + str(dimC) + "mm " + str(mils) + "mil Socket")
-    f.append(Model(filename="${KICAD9_3DMODEL_DIR}/Socket.3dshapes/" + footprint_name + ".wrl", at=[0.0, 0.0, 0.0], scale=[1.0, 1.0, 1.0], rotate=[0.0, 0.0, 0.0]))
+    f.append(Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl", at=[0.0, 0.0, 0.0], scale=[1.0, 1.0, 1.0], rotate=[0.0, 0.0, 0.0]))
 
     pitch = 2.54
 
@@ -189,8 +190,8 @@ def textool(args):
         f.append(Pad(number=str(nPads-i), type=Pad.TYPE_THT, shape=pShape,
                      at=[xRightPads, y], size=p, layers=Pad.LAYERS_THT, drill=d))
 
-    file_handler = KicadFileHandler(f)
-    file_handler.writeFile(footprint_name + ".kicad_mod")
+    lib = KicadPrettyLibrary(lib_name, None)
+    lib.save(f)
 
 
 if __name__ == '__main__':

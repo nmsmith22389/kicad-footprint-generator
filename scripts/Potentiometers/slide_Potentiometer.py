@@ -11,7 +11,7 @@ from KicadModTree import (
     PolygonLine,
     RectLine,
     Line,
-    KicadFileHandler,
+    KicadPrettyLibrary,
     ModArgparser,
 )
 from scripts.tools.drawing_tools import (
@@ -29,10 +29,12 @@ def slide_pot(args):
     dimE = args["dimE"]
     travel = args["travel"]
 
+    lib_name = "Potentiometer_THT"
+
     f = Footprint(footprint_name, FootprintType.THT)
     f.setDescription("Bourns single-gang slide potentiometer, " + str(travel) + "mm travel, https://www.bourns.com/docs/Product-Datasheets/pta.pdf")
     f.setTags("Bourns single-gang slide potentiometer " + str(travel) + "mm")
-    f.append(Model(filename="${KISYS3DMOD}/Potentiometer_THT.3dshapes/" + footprint_name + ".wrl", at=[0.0, 0.0, 0.0], scale=[1.0, 1.0, 1.0], rotate=[0.0, 0.0, 0.0]))
+    f.append(Model(filename="${KISYS3DMOD}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl", at=[0.0, 0.0, 0.0], scale=[1.0, 1.0, 1.0], rotate=[0.0, 0.0, 0.0]))
 
     dPin = [1.2, 1.2]
     dMP = [1.7, 1.7]
@@ -172,8 +174,8 @@ def slide_pot(args):
                       layer="F.CrtYd",
                       width=wCrtYd))
 
-    file_handler = KicadFileHandler(f)
-    file_handler.writeFile(footprint_name + ".kicad_mod")
+    lib = KicadPrettyLibrary(lib_name, None)
+    lib.save(f)
 
 
 if __name__ == '__main__':

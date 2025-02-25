@@ -531,8 +531,9 @@ class DPAK(object):
             print(self.m.getRenderTree())
 
         # write file
-        file_handler = KicadFileHandler(self.m)
-        file_handler.writeFile("{:s}.kicad_mod".format(self.dim.name))
+        lib_name = self.base["libname"]
+        lib = KicadPrettyLibrary(lib_name, None)
+        lib.save(self.m)
 
 
 class DPAKSeries:

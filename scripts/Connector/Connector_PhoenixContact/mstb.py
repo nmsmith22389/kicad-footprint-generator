@@ -273,11 +273,8 @@ def generate_one_footprint(model, params, configuration):
     kicad_mod.append(Model(filename=p3dname,
                            at=[0, 0, 0], scale=[1, 1, 1], rotate=[0, 0, 0]))
 
-    file_handler = KicadFileHandler(kicad_mod)
-    out_dir = '{:s}.pretty/'.format(lib_name)
-    if not os.path.exists(out_dir):
-        os.makedirs(out_dir)
-    file_handler.writeFile('{:s}.pretty/{:s}.kicad_mod'.format(lib_name, footprint_name))
+    lib = KicadPrettyLibrary(lib_name, None)
+    lib.save(kicad_mod)
 
 
 if __name__ == "__main__":

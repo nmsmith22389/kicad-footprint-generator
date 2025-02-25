@@ -14,6 +14,7 @@ def create_shielding(name, outer_size, size,
 
     attachment_positions = sorted(attachment_positions)
 
+    lib_name = "RF_Shielding"
     kicad_mod = Footprint(name, FootprintType.THT)
 
     # init kicad footprint
@@ -97,8 +98,8 @@ def create_shielding(name, outer_size, size,
     # kicad_mod.insert(Translation(outer_size / 2., attachment_positions[-1] / 2.))
 
     # write file
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile('{name}.kicad_mod'.format(name=name))
+    lib = KicadPrettyLibrary(lib_name, None)
+    lib.save(kicad_mod)
 
 
 if __name__ == '__main__':

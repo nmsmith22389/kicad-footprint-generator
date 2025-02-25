@@ -6,10 +6,10 @@ import os
 from KicadModTree import *
 
 
-#http://katalog.we-online.com/en/pbs/WE-MAPI]
+# http://katalog.we-online.com/en/pbs/WE-MAPI]
 
-#sizes,shapes,etc]
-#name, L, W, pad-w, pad-gap, pad-h
+# sizes,shapes,etc]
+# name, L, W, pad-w, pad-gap, pad-h
 inductors = [
 [1610,1.6,1.6,1.8,0.4,1.8],
 [2010,2.0,1.6,2.3,0.6,1.9],
@@ -26,7 +26,7 @@ inductors = [
 
 output_dir = os.getcwd()
 
-#if specified as an argument, extract the target directory for output footprints
+# if specified as an argument, extract the target directory for output footprints
 if len(sys.argv) > 1:
     out_dir = sys.argv[1]
 
@@ -64,35 +64,37 @@ for inductor in inductors:
     fp.append(Property(name=Property.REFERENCE, text='REF**', at=[0,-y/2 - 1], layer='F.SilkS'))
     fp.append(Property(name=Property.VALUE, text=fp_name, at=[0,y/2 + 1.5], layer='F.Fab'))
 
-    #calculate pad center
-    #pad-width pw
+    # calculate pad center
+    # pad-width pw
     pw = (x-g) / 2
     c = g/2 + pw/2
 
-    #add the component outline
+    # add the component outline
     fp.append(RectLine(start=[-l/2,-w/2],end=[l/2,w/2],layer='F.Fab',width=0.15))
 
     layers = Pad.LAYERS_SMT
 
-    #add pads
+    # add pads
     fp.append(Pad(number=1,at=[-c,0],layers=layers,shape=Pad.SHAPE_RECT,type=Pad.TYPE_SMT,size=[pw,y]))
     fp.append(Pad(number=2,at=[c,0],layers=layers,shape=Pad.SHAPE_RECT,type=Pad.TYPE_SMT,size=[pw,y]))
 
-    #add inductor courtyard
+    # add inductor courtyard
     cx = c + pw/2
     cy = y / 2
 
     fp.append(RectLine(start=[-cx,-cy],end=[cx,cy],offset=0.35,width=0.05,grid=0.05,layer="F.CrtYd"))
 
-    #add lines
+    # add lines
     fp.append(Line(start=[-g/2+0.2,-w/2-0.1],end=[g/2-0.2,-w/2-0.1]))
     fp.append(Line(start=[-g/2+0.2,w/2+0.1],end=[g/2-0.2,w/2+0.1]))
 
-    #Add a model
-    fp.append(Model(filename="Inductors.3dshapes/" + fp_name + ".wrl"))
+    # Add a model
+    lib_name = "Inductors"
+    model_name = "${{KICAD9_3DMODEL_DIR}}/{}.3dshapes/{}.wrl".format(lib_name, fp_name)
+    fp.append(Model(filename=model_name))
 
-    #filename
+    # filename
     filename = output_dir + fp_name + ".kicad_mod"
 
-    file_handler = KicadFileHandler(fp)
-    file_handler.writeFile(filename)
+    lib = KicadPrettyLibrary(lib_name, None)
+    lib.save(fp)

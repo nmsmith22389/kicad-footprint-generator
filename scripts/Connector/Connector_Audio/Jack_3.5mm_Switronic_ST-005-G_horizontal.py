@@ -10,6 +10,7 @@ from KicadModTree import *
 
 datasheet = "http://akizukidenshi.com/download/ds/switronic/ST-005-G.pdf"
 footprint_name = "Jack_3.5mm_Switronic_ST-005-G_horizontal"
+lib_name = "Connector_Audio"
 
 baseWidth = 11.5
 baseHeight = 6.5
@@ -26,10 +27,11 @@ mountingHoleSpacing = 5.0
 backPadOffset = 11.0
 backPadSpacing = 4.5
 
+
 f = Footprint(footprint_name, FootprintType.THT)
 f.setDescription(datasheet)
 f.setTags("Connector Audio Switronic ST-005-G")
-f.append(Model(filename="${KICAD9_3DMODEL_DIR}/Connector_Audio.3dshapes/" + footprint_name + ".wrl",
+f.append(Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl",
                at=[0.0, 0.0, 0.0],
                scale=[1.0, 1.0, 1.0],
                rotate=[0.0, 0.0, 0.0]))
@@ -151,5 +153,5 @@ f.append(Pad(type=Pad.TYPE_NPTH, shape=Pad.SHAPE_CIRCLE,
              at=[xMountingHole, yMountingHoleTop], size=mountingHoleSize,
              drill=mountingHoleSize, layers=Pad.LAYERS_NPTH))
 
-file_handler = KicadFileHandler(f)
-file_handler.writeFile(footprint_name + ".kicad_mod")
+lib = KicadPrettyLibrary(lib_name, None)
+lib.save(f)

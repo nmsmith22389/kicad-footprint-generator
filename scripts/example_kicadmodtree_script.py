@@ -43,7 +43,8 @@ if __name__ == '__main__':
     kicad_mod.append(Pad(number=12, type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT, at=[3,0], size=[2,2], drill=1.2, layers=['*.Cu', '*.Mask', 'F.SilkS']))
 
     # add model
-    kicad_mod.append(Model(filename="example.3dshapes/example_footprint.wrl"
+    lib_name = "example"
+    kicad_mod.append(Model(filename=lib_name + ".3dshapes/example_footprint.wrl"
                           ,at=[0,0,0]
                           ,scale=[1,1,1]
                           ,rotate=[0,0,0]))
@@ -58,7 +59,5 @@ if __name__ == '__main__':
     #print(kicad_mod.getCompleteRenderTree())
 
     # write file
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile('example_footprint.kicad_mod')
-
-
+    lib = KicadPrettyLibrary(lib_name, None)
+    lib.save(kicad_mod)

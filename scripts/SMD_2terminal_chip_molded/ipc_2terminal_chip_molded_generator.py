@@ -334,13 +334,9 @@ class TwoTerminalSMD():
                       courtyard={'top': -CrtYd_rect[1] / 2, 'bottom': CrtYd_rect[1] / 2}, fp_name=fp_name, text_y_inside_position='center')
 
         kicad_mod.append(Model(filename=model_name))
-        output_dir = '{lib_name:s}.pretty/'.format(lib_name=footprint_group_data['fp_lib_name'])
-        if not os.path.isdir(output_dir):  # returns false if path does not yet exist!! (Does not check path validity)
-            os.makedirs(output_dir)
-        filename = '{outdir:s}{fp_name:s}.kicad_mod'.format(outdir=output_dir, fp_name=fp_name)
 
-        file_handler = KicadFileHandler(kicad_mod)
-        file_handler.writeFile(filename)
+        lib = KicadPrettyLibrary(footprint_group_data["fp_lib_name"], None)
+        lib.save(kicad_mod)
 
 
 if __name__ == "__main__":

@@ -262,16 +262,10 @@ def makePotentiometerHorizontal(class_name="", wbody=0, hbody=0, dscrew=0, style
 
     # add model
     if (has3d != 0):
-        kicad_modg.append(Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + "_THT.3dshapes/" + footprint_name + ".wrl", at=x_3d, scale=s_3d, rotate=r_3d))
+        kicad_modg.append(Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl", at=x_3d, scale=s_3d, rotate=r_3d))
 
-    # print render tree
-    # print(kicad_mod.getRenderTree())
-    # print(kicad_mod.getCompleteRenderTree())
-
-    # write file
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile(footprint_name + '.kicad_mod')
-
+    lib = KicadPrettyLibrary(lib_name, None)
+    lib.save(kicad_mod)
 
 
 def makePotentiometerVertical(class_name, wbody, hbody, screwstyle="none", style="normal", d_body=0, dshaft=6,
@@ -610,17 +604,12 @@ def makePotentiometerVertical(class_name, wbody, hbody, screwstyle="none", style
     # add model
     if (has3d != 0):
         if SMD_pads:
-            kicad_modg.append(Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + "_SMD.3dshapes/" + footprint_name + ".wrl", at=x_3d, scale=s_3d, rotate=r_3d))
+            kicad_modg.append(Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl", at=x_3d, scale=s_3d, rotate=r_3d))
         else:
-            kicad_modg.append(Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + "_THT.3dshapes/" + footprint_name + ".wrl", at=x_3d, scale=s_3d, rotate=r_3d))
+            kicad_modg.append(Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl", at=x_3d, scale=s_3d, rotate=r_3d))
 
-    # print render tree
-    # print(kicad_mod.getRenderTree())
-    # print(kicad_mod.getCompleteRenderTree())
-
-    # write file
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile(footprint_name + '.kicad_mod')
+    lib = KicadPrettyLibrary(lib_name, None)
+    lib.save(kicad_mod)
 
 
 def makeSpindleTrimmer(class_name, wbody, hbody, pinxoffset, pinyoffset, rmx2, rmy2, rmx3, rmy3, dscrew, ddrill=1,
@@ -875,14 +864,9 @@ def makeSpindleTrimmer(class_name, wbody, hbody, pinxoffset, pinyoffset, rmx2, r
     # add model
     if (has3d != 0):
         if SMD_pads:
-            kicad_modg.append(Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + "_SMD.3dshapes/" + footprint_name + ".wrl", at=x_3d, scale=s_3d, rotate=r_3d))
+            kicad_modg.append(Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl", at=x_3d, scale=s_3d, rotate=r_3d))
         else:
-            kicad_modg.append(Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + "_THT.3dshapes/" + footprint_name + ".wrl", at=x_3d, scale=s_3d, rotate=r_3d))
+            kicad_modg.append(Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl", at=x_3d, scale=s_3d, rotate=r_3d))
 
-    # print render tree
-    # print(kicad_mod.getRenderTree())
-    # print(kicad_mod.getCompleteRenderTree())
-
-    # write file
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile(footprint_name + '.kicad_mod')
+    lib = KicadPrettyLibrary(lib_name, None)
+    lib.save(kicad_mod)

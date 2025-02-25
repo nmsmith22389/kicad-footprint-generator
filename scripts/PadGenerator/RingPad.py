@@ -35,6 +35,5 @@ kicad_mod.append(
         paste_round_radius_radio=args.paste_round_radius_radio,
         paste_to_paste_clearance=args.paste_clearance))
 
-
 file_handler = KicadFileHandler(kicad_mod)
 file_handler.writeFile(args.name + '.kicad_mod')

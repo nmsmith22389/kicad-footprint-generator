@@ -4,7 +4,7 @@ import sys
 import os
 from pathlib import Path
 
-from KicadModTree import Footprint, FootprintType, KicadFileHandler, ModArgparser
+from KicadModTree import Footprint, FootprintType, KicadPrettyLibrary, ModArgparser
 from kilibs.geom import Vector2D
 from scripts.general.StandardBox import StandardBox
 from scripts.tools.global_config_files import global_config
@@ -59,13 +59,9 @@ def converter(args):
                          file3Dname=file3Dname, courtyard_clearance=courtyard_clearance,
                          fab_to_silk_clearance=fab_to_silk_clearance))
 
-    target_library_dir = out_dir / f"{library_name}.pretty"
-    target_filename = os.path.join(target_library_dir, f"{footprint_name}.kicad_mod")
+    lib = KicadPrettyLibrary(library_name, None)
+    lib.save(f)
 
-    os.makedirs(target_library_dir, exist_ok=True)
-
-    file_handler = KicadFileHandler(f)
-    file_handler.writeFile(target_filename)
 
 def main(args):
     ipc_default_courtyard_clearance = 0.25

@@ -224,13 +224,9 @@ def makeDIP(pins, rm, pinrow_distance_in, package_width, overlen_top, overlen_bo
     kicad_modg.append(
         Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl", at=offset3d, scale=scale3d, rotate=rotate3d))
 
-    # print render tree
-    # print(kicad_mod.getRenderTree())
-    # print(kicad_mod.getCompleteRenderTree())
-
     # write file
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile(os.path.join(outdir, footprint_name + '.kicad_mod'))
+    lib = KicadPrettyLibrary(lib_name, outdir)
+    lib.save(kicad_mod)
 
 
 #    overlen_top                           overlen_bottom
@@ -480,12 +476,5 @@ def makeDIPSwitch(pins, rm, pinrow_distance, package_width, overlen_top, overlen
     kicad_modg.append(
         Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl", at=offset3d, scale=scale3d, rotate=rotate3d))
 
-    # print render tree
-    # print(kicad_mod.getRenderTree())
-    # print(kicad_mod.getCompleteRenderTree())
-
-    os.makedirs(outdir, exist_ok=True)
-
-    # write file
-    file_handler = KicadFileHandler(kicad_mod)
-    file_handler.writeFile(os.path.join(outdir, footprint_name + '.kicad_mod'))
+    lib = KicadPrettyLibrary(lib_name, outdir)
+    lib.save(kicad_mod)
