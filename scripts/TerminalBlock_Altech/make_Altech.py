@@ -4,7 +4,7 @@ import os
 
 from KicadModTree import *
 from scripts.general.StandardBox import StandardBox
-
+from scripts.tools.global_config_files import global_config
 
 def qfn(args):
 
@@ -33,6 +33,8 @@ def qfn(args):
     dest_dir_3D_prefix = args["dest_dir_3D_prefix"]
     out_dir = args["output_dir"]
 
+    # Until this can be passed in properly, use the default global config
+    global_cfg = global_config.DefaultGlobalConfig()
 
     for pinnumber in pinnumbers:
         footprint_name = ''
@@ -61,7 +63,8 @@ def qfn(args):
         for ii in range(1, pinnumber + 1):
             pins.append(["tht", str(ii), dx, 0.0, PD, PD, DD])
             dx = dx + PS
-        f.append(StandardBox(footprint=f, description=description, datasheet=datasheet, at=at,
+        f.append(StandardBox(global_config=global_cfg,
+                             footprint=f, description=description, datasheet=datasheet, at=at,
                              size=size, tags=tags, extratexts=extratexts, pins=pins,
                              file3Dname=file3Dname))
 

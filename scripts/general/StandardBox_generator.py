@@ -7,6 +7,7 @@ from pathlib import Path
 from KicadModTree import Footprint, FootprintType, KicadFileHandler, ModArgparser
 from kilibs.geom import Vector2D
 from scripts.general.StandardBox import StandardBox
+from scripts.tools.global_config_files import global_config
 
 
 def converter(args):
@@ -26,6 +27,9 @@ def converter(args):
     courtyard = args["courtyard"]
     out_dir: Path = args["output_dir"]
 
+    # Until this can be passed in properly, use the default global config
+    global_cfg = global_config.DefaultGlobalConfig()
+
     # This a very naive way of calculating the total tolerance referenced to the
     # origin, but it's a start
     total_body_tolerance = body_position_tolerance + body_size_tolerance
@@ -40,16 +44,17 @@ def converter(args):
     footprint_type = FootprintType.SMD if SmdTht == "smd" else FootprintType.THT
     f = Footprint(footprint_name, footprint_type)
 
-    file3Dname = "${KICAD9_3DMODEL_DIR}/" + dir3D + "/" + footprint_name + ".wrl"
+    file3Dname = global_cfg.model_3d_prefix + dir3D + "/" + footprint_name + ".wrl"
 
     words = footprint_name.split("_")
 
     if words[-1].lower().startswith('handsolder'):
         words[-1] = ''
         ff = '_'.join(words)
-        file3Dname = "${KICAD9_3DMODEL_DIR}/" + dir3D + "/" + ff + ".wrl"
+        file3Dname = global_cfg.model_3d_prefix + dir3D + "/" + ff + ".wrl"
 
-    f.append(StandardBox(footprint=f, description=description, datasheet=datasheet,
+    f.append(StandardBox(global_config=global_cfg,
+                         footprint=f, description=description, datasheet=datasheet,
                          at=at, size=size, tags=fptag, extratexts=extratexts, pins=pins,
                          file3Dname=file3Dname, courtyard_clearance=courtyard_clearance,
                          fab_to_silk_clearance=fab_to_silk_clearance))

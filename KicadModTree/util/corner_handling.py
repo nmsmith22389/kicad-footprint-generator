@@ -172,13 +172,13 @@ class ChamferSizeHandler(object):
 
         return self.chamfer_ratio
 
-    def getChamferSize(self, shortest_sidelength):
+    def getChamferSize(self, shortest_sidelength) -> float:
         r"""get the resulting chamfer size
 
         :param shortest_sidelength: shortest sidelength of a pad
         :return: the resulting chamfer size to be used for the pad
         """
-        return self.getChamferRatio(shortest_sidelength)*shortest_sidelength
+        return self.getChamferRatio(shortest_sidelength) * shortest_sidelength
 
     def chamferRequested(self):
         r"""Check if the handler indicates a non-zero chamfer

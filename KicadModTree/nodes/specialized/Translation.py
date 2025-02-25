@@ -20,7 +20,7 @@ from KicadModTree.nodes.Node import Node
 class Translation(Node):
     """Apply translation to the child tree
 
-    :param x: change of x coordinate
+    :param x: change of x coordinate, or a whole Vector2D
     :type x: ``float``
     :param y: change of y coordinate
     :type y: ``float``
@@ -30,8 +30,12 @@ class Translation(Node):
     >>> from KicadModTree import *
     >>> Translation(1, 2)
     """
-    def __init__(self, x, y):
+    def __init__(self, x: float | Vector2D, y: float | None = None):
         Node.__init__(self)
+
+        if isinstance(x, Vector2D):
+            assert y is None, "If x is a Vector2D, y must be None"
+            x, y = x.x, x.y
 
         # translation information
         self.offset_x = x

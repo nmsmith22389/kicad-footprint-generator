@@ -4,7 +4,7 @@ from importlib import resources
 
 from pathlib import Path
 
-from KicadModTree.util.corner_handling import RoundRadiusHandler
+from KicadModTree.util.corner_handling import RoundRadiusHandler, ChamferSizeHandler
 
 class GlobalConfig:
     """
@@ -75,6 +75,9 @@ class GlobalConfig:
 
     @property
     def roundrect_radius_handler(self) -> RoundRadiusHandler:
+        """
+        Get the default pad radius handler for roundrects
+        """
         return RoundRadiusHandler(
             default_redius_ratio=self.round_rect_default_radius,
             maximum_radius=self.round_rect_max_radius,
@@ -86,6 +89,16 @@ class GlobalConfig:
         of the part.
         """
         return min(self.fab_bevel_size_absolute, overall_size * self.fab_bevel_size_relative)
+
+    @property
+    def get_fab_bevel(self) -> ChamferSizeHandler:
+        """
+        Get the default fab bevel size handler
+        """
+        return ChamferSizeHandler(
+            maximum_chamfer=self.fab_bevel_size_absolute,
+            default_chamfer_ratio=self.fab_bevel_size_relative,
+        )
 
     @property
     def silk_pad_offset(self):
@@ -105,6 +118,16 @@ class GlobalConfig:
         """
 
         return self.silk_pad_clearance + self.silk_line_width / 2
+
+    @property
+    def silk_fab_clearance(self):
+        """
+        Get the clearance between the silk and fab layers.
+
+        This is the distance from the silk line centerline to the fab line centerline.
+        """
+
+        return self.silk_fab_offset - (self.silk_line_width + self.fab_line_width) / 2
 
     @classmethod
     def load_from_file(self, path: Path):

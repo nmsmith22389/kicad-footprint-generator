@@ -24,6 +24,8 @@ from KicadModTree.nodes.base.Text import Text
 from kilibs.geom import Vector2D
 
 from scripts.tools.drawing_tools import *
+from scripts.tools.drawing_tools_fab import draw_chamfer_rect_fab
+from scripts.tools.global_config_files.global_config import GlobalConfig
 
 
 class koaLine:
@@ -105,16 +107,25 @@ class StandardBox(Node):
     courtyard_clearance: Vector2D
     fab_silk_clearance: Vector2D
 
-    def __init__(self, **kwargs):
+    def __init__(self, global_config: GlobalConfig, **kwargs):
         Node.__init__(self)
 
-        default_ipc_courtyard_mm = 0.25
+        self.global_config = global_config
+
+        default_ipc_courtyard_mm = self.global_config.get_courtyard_offset(
+            GlobalConfig.CourtyardType.DEFAULT
+        )
 
         self.courtyard_clearance = kwargs.get('courtyard_clearance', Vector2D(
             default_ipc_courtyard_mm, default_ipc_courtyard_mm))
 
+        default_silk_fab_clearance = self.global_config.silk_fab_clearance
+
         # By default fab just touches the fab outline
-        self.fab_silk_clearance = kwargs.get('fab_to_silk_clearance', Vector2D(0, 0))
+        self.fab_silk_clearance = kwargs.get(
+            "fab_to_silk_clearance",
+            Vector2D(default_silk_fab_clearance, default_silk_fab_clearance),
+        )
 
         self.extraffablines = kwargs.get('extraffablines')
         self.typeOfBox = str(kwargs.get('typeOfBox'))
@@ -162,6 +173,11 @@ class StandardBox(Node):
                 )
 
             self.size = Vector2D(size_original[0], size_original[1])
+
+        # This is the transform that will be used to place an origin-centred
+        # box in the right place
+        self._box_transform = Translation(self.size / 2 + self.at)
+        self.append(self._box_transform)
 
     def _createFSilkRefDesText(self):
 
@@ -265,7 +281,6 @@ class StandardBox(Node):
                 self.virtual_childs.append(new_node)
 
     def _createFFabLine(self):
-        ffabline = []
         self.boxffabline = []
 
         x = self.at.x
@@ -276,55 +291,8 @@ class StandardBox(Node):
         self.boxffabline.append(koaLine(x + w, y, x + w, y + h, 'F.Fab', self.FFabWidth))
         self.boxffabline.append(koaLine(x + w, y + h, x, y + h, 'F.Fab', self.FFabWidth))
         self.boxffabline.append(koaLine(x, y + h, x, y, 'F.Fab', self.FFabWidth))
-        #
-        # Add a chamfer
-        #
-        dd = w * 0.25
-        if dd > 1.0:
-            dd = 1.0
-        if w < 2.0:
-            dd = w / 3.0
-        if h < 2.0:
-            dd = h / 3.0
-        #
-        #
-        x0 = x + dd
-        y0 = y
-        x9 = x0
-        y9 = y0
-        #
-        x1 = x + w
-        y1 = y
-        x2 = x1
-        y2 = y1
-        #
-        x3 = x + w
-        y3 = y + h
-        x4 = x3
-        y4 = y3
-        #
-        x5 = x
-        y5 = y + h
-        x6 = x5
-        y6 = y5
-        #
-        x7 = x
-        y7 = y + dd
-        x8 = x7
-        y8 = y7
 
-        ffabline.append(koaLine(x0, y0, x1, y1, 'F.Fab', self.FFabWidth))
-        ffabline.append(koaLine(x2, y2, x3, y3, 'F.Fab', self.FFabWidth))
-        ffabline.append(koaLine(x4, y4, x5, y5, 'F.Fab', self.FFabWidth))
-        ffabline.append(koaLine(x6, y6, x7, y7, 'F.Fab', self.FFabWidth))
-        ffabline.append(koaLine(x8, y8, x9, y9, 'F.Fab', self.FFabWidth))
-
-        for n in ffabline:
-            new_node = Line(start=Vector2D(n.sx, n.sy), end=Vector2D(n.ex, n.ey), layer=n.layer, width=n.width)
-            if n.width < 0.0:
-                new_node = Line(start=Vector2D(n.sx, n.sy), end=Vector2D(n.ex, n.ey), layer=n.layer)
-            new_node._parent = self
-            self.virtual_childs.append(new_node)
+        self._box_transform.append(draw_chamfer_rect_fab(self.size, self.global_config))
 
     def _getPin1ChevronCorner(self) -> Vector2D:
         main_silk_outset = self._getMainFSilkOutsetFromFabLineCentre()
@@ -521,27 +489,26 @@ class StandardBox(Node):
         cy_max_y = None
 
         for p in self.pad:
-                p_min_x = p.at.x - (p.size.x / 2.0)
-                p_min_y = p.at.y - (p.size.y / 2.0)
-                p_max_x = p_min_x + p.size.x
-                p_max_y = p_min_y + p.size.y
-                if cy_min_x is None:
-                    cy_min_x = p_min_x
-                else:
-                    cy_min_x = min(cy_min_x, p_min_x)
-                if cy_min_y is None:
-                    cy_min_y = p_min_y
-                else:
-                    cy_min_y = min(cy_min_y, p_min_y)
-                if cy_max_x is None:
-                    cy_max_x = p_max_x
-                else:
-                    cy_max_x = max(cy_max_x, p_max_x)
-                if cy_max_y is None:
-                    cy_max_y = p_max_y
-                else:
-                    cy_max_y = max(cy_max_y, p_max_y)
-
+            p_min_x = p.at.x - (p.size.x / 2.0)
+            p_min_y = p.at.y - (p.size.y / 2.0)
+            p_max_x = p_min_x + p.size.x
+            p_max_y = p_min_y + p.size.y
+            if cy_min_x is None:
+                cy_min_x = p_min_x
+            else:
+                cy_min_x = min(cy_min_x, p_min_x)
+            if cy_min_y is None:
+                cy_min_y = p_min_y
+            else:
+                cy_min_y = min(cy_min_y, p_min_y)
+            if cy_max_x is None:
+                cy_max_x = p_max_x
+            else:
+                cy_max_x = max(cy_max_x, p_max_x)
+            if cy_max_y is None:
+                cy_max_y = p_max_y
+            else:
+                cy_max_y = max(cy_max_y, p_max_y)
 
         for f in self.boxffabline:
             cy_min_x = min(f.sx, f.ex, cy_min_x)
@@ -558,22 +525,22 @@ class StandardBox(Node):
         cy_max_y += 0.005
         cy_max_y += clearance.x
 
-        #(min, min) -> (min, max)
+        # (min, min) -> (min, max)
         new_node = Line(start=Vector2D(round_to_grid(cy_min_x, 0.01), round_to_grid(cy_min_y, 0.01)), end=Vector2D(round_to_grid(cy_min_x, 0.01), round_to_grid(cy_max_y, 0.01)), layer='F.CrtYd', width=self.FCrtYdWidth)
         new_node._parent = self
         self.virtual_childs.append(new_node)
 
-        #(min, max) -> (max, max)
+        # (min, max) -> (max, max)
         new_node = Line(start=Vector2D(round_to_grid(cy_min_x, 0.01), round_to_grid(cy_max_y, 0.01)), end=Vector2D(round_to_grid(cy_max_x, 0.01), round_to_grid(cy_max_y, 0.01)), layer='F.CrtYd', width=self.FCrtYdWidth)
         new_node._parent = self
         self.virtual_childs.append(new_node)
 
-        #(max, max) -> (max, min)
+        # (max, max) -> (max, min)
         new_node = Line(start=Vector2D(round_to_grid(cy_max_x, 0.01), round_to_grid(cy_max_y, 0.01)), end=Vector2D(round_to_grid(cy_max_x, 0.01), round_to_grid(cy_min_y, 0.01)), layer='F.CrtYd', width=self.FCrtYdWidth)
         new_node._parent = self
         self.virtual_childs.append(new_node)
 
-        #(max, min) -> (min, min)
+        # (max, min) -> (min, min)
         new_node = Line(start=Vector2D(round_to_grid(cy_max_x, 0.01), round_to_grid(cy_min_y, 0.01)), end=Vector2D(round_to_grid(cy_min_x, 0.01), round_to_grid(cy_min_y, 0.01)), layer='F.CrtYd', width=self.FCrtYdWidth)
         new_node._parent = self
         self.virtual_childs.append(new_node)
@@ -624,16 +591,16 @@ class StandardBox(Node):
                     new_pad = Pad(number=c, type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL,
                                   at=[x, 0.0 - y], size=[sx, sy], drill=dh, layers=Pad.LAYERS_THT)
             elif n[0] == 'smd':
-                    new_pad = Pad(number=c, type=Pad.TYPE_SMT, shape=Pad.SHAPE_ROUNDRECT, radius_ratio=0.25,
+                new_pad = Pad(number=c, type=Pad.TYPE_SMT, shape=Pad.SHAPE_ROUNDRECT, radius_ratio=0.25,
                                   at=[x, 0.0 - y], size=[sx, sy], drill=dh, layers=Pad.LAYERS_SMT)
             elif n[0] == 'npth':
-                    if sy == 0:
-                        new_pad = Pad(type=Pad.TYPE_NPTH, shape=Pad.SHAPE_CIRCLE,
+                if sy == 0:
+                    new_pad = Pad(type=Pad.TYPE_NPTH, shape=Pad.SHAPE_CIRCLE,
                                       at=[x, 0.0 - y], size=[sx, sx], drill=dh, layers=Pad.LAYERS_NPTH)
-                    else:
-                        new_pad = Pad(type=Pad.TYPE_NPTH, shape=Pad.SHAPE_RECT,
+                else:
+                    new_pad = Pad(type=Pad.TYPE_NPTH, shape=Pad.SHAPE_RECT,
                                       at=[x, 0.0 - y], size=[sx, sy], drill=dh, layers=Pad.LAYERS_NPTH)
             if new_pad != False:
-                    self.footprint.append(new_pad)
-                    self.pad.append(new_pad)
+                self.footprint.append(new_pad)
+                self.pad.append(new_pad)
             #
