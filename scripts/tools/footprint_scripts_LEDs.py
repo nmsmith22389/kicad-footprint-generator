@@ -67,7 +67,6 @@ def makeLEDRadial(
     base_filename="LED",
     lib_name="LED_THT",
     name_additions=None,
-    script3d="",
     height3d=8,
     height3d_bottom=1
 ):
@@ -172,32 +171,6 @@ def makeLEDRadial(
             footprint_name = footprint_name + "_" + n
 
     print(footprint_name)
-
-    if script3d != "":
-        with open(script3d, "a") as myfile:
-            myfile.write("\n\n # {0}\n".format(footprint_name))
-            myfile.write("import FreeCAD\n")
-            myfile.write("import os\n")
-            myfile.write("import os.path\n\n")
-            myfile.write("# d_wire\nApp.ActiveDocument.Spreadsheet.set('B4', '0.02')\n")
-            myfile.write("App.ActiveDocument.recompute()\n")
-            myfile.write("# diameter\nApp.ActiveDocument.Spreadsheet.set('B1', '{0}')\n".format(diameter))
-            myfile.write("# w\nApp.ActiveDocument.Spreadsheet.set('B2', '{0}')\n".format(w))
-            myfile.write("# h\nApp.ActiveDocument.Spreadsheet.set('C2', '{0}')\n".format(h))
-            myfile.write("# pitch\nApp.ActiveDocument.Spreadsheet.set('B3', '{0}')\n".format(pitch))
-            myfile.write("# d_wire\nApp.ActiveDocument.Spreadsheet.set('B4', '{0}')\n".format(ddrill - 0.3))
-            myfile.write("# H\nApp.ActiveDocument.Spreadsheet.set('B5', '{0}')\n".format(height3d))
-            myfile.write("# H_bottom\nApp.ActiveDocument.Spreadsheet.set('B6', '{0}')\n".format(height3d_bottom))
-            myfile.write("App.ActiveDocument.recompute()\n")
-            myfile.write("doc = FreeCAD.activeDocument()\n")
-            myfile.write("__objs__=[]\n")
-            myfile.write("for obj in doc.Objects:	\n")
-            myfile.write("    if obj.ViewObject.Visibility:\n")
-            myfile.write("        __objs__.append(obj)\n")
-            myfile.write("\nFreeCADGui.export(__objs__,os.path.split(doc.FileName)[0]+os.sep+\"{0}.wrl\")\n".format(
-                footprint_name))
-            myfile.write("doc.saveCopy(os.path.split(doc.FileName)[0]+os.sep+\"{0}.FCStd\")\n".format(footprint_name))
-            myfile.write("print(\"created {0}\")\n".format(footprint_name))
 
     # init kicad footprint
     kicad_mod = Footprint(footprint_name, FootprintType.THT)
@@ -390,7 +363,6 @@ def makeLEDHorizontal(
     base_filename="LED",
     lib_name="LED_THT",
     name_additions=None,
-    script3d="",
     height3d=5,
     ledypos=0
 ):
@@ -496,34 +468,6 @@ def makeLEDHorizontal(
             footprint_name = footprint_name + "_" + n
 
     print(footprint_name)
-
-    if script3d != "":
-        with open(script3d, "a") as myfile:
-            myfile.write("\n\n # {0}\n".format(footprint_name))
-            myfile.write("import FreeCAD\n")
-            myfile.write("import os\n")
-            myfile.write("import os.path\n\n")
-            myfile.write("# d_wire\nApp.ActiveDocument.Spreadsheet.set('B4', '0.02')\n")
-            myfile.write("App.ActiveDocument.recompute()\n")
-            myfile.write("# dled\nApp.ActiveDocument.Spreadsheet.set('B1', '{0}')\n".format(dled))
-            myfile.write("# dledout\nApp.ActiveDocument.Spreadsheet.set('B2', '{0}')\n".format(dledout))
-            myfile.write("# offsetled\nApp.ActiveDocument.Spreadsheet.set('B3', '{0}')\n".format(offsetled))
-            myfile.write("# pitch\nApp.ActiveDocument.Spreadsheet.set('B4', '{0}')\n".format(pitch))
-            myfile.write("# d_wire\nApp.ActiveDocument.Spreadsheet.set('B5', '{0}')\n".format(ddrill - 0.3))
-            myfile.write("# H\nApp.ActiveDocument.Spreadsheet.set('B6', '{0}')\n".format(height3d))
-            myfile.write("# wled\nApp.ActiveDocument.Spreadsheet.set('B7', '{0}')\n".format(wled))
-            myfile.write("# ledypos\nApp.ActiveDocument.Spreadsheet.set('B8', '{0}')\n".format(ledypos))
-            myfile.write("# wledback\nApp.ActiveDocument.Spreadsheet.set('B9', '{0}')\n".format(wledback))
-            myfile.write("App.ActiveDocument.recompute()\n")
-            myfile.write("doc = FreeCAD.activeDocument()\n")
-            myfile.write("__objs__=[]\n")
-            myfile.write("for obj in doc.Objects:	\n")
-            myfile.write("    if obj.ViewObject.Visibility:\n")
-            myfile.write("        __objs__.append(obj)\n")
-            myfile.write("\nFreeCADGui.export(__objs__,os.path.split(doc.FileName)[0]+os.sep+\"{0}.wrl\")\n".format(
-                footprint_name))
-            myfile.write("doc.saveCopy(os.path.split(doc.FileName)[0]+os.sep+\"{0}.FCStd\")\n".format(footprint_name))
-            myfile.write("print(\"created {0}\")\n".format(footprint_name))
 
     # init kicad footprint
     kicad_mod = Footprint(footprint_name, FootprintType.THT)

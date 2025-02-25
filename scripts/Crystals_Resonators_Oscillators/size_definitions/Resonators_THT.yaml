@@ -13,7 +13,6 @@ Resonator-2Pin_W10.0mm_H5.0mm:
   pad_size: 1.5
   pins: 2
   rm: 5
-  script3d: resonator_2pin.py
   tags: THT ceramic resonator filter
 Resonator-2Pin_W6.0mm_H3.0mm:
   addSizeFootprintName: true
@@ -30,7 +29,6 @@ Resonator-2Pin_W6.0mm_H3.0mm:
   pad_size: 1.7
   pins: 2
   rm: 5
-  script3d: resonator_2pin.py
   tags: THT ceramic resonator filter
 Resonator-2Pin_w7.0mm_h2.5mm:
   addSizeFootprintName: true
@@ -47,7 +45,6 @@ Resonator-2Pin_w7.0mm_h2.5mm:
   pad_size: 1.7
   pins: 2
   rm: 5
-  script3d: resonator_2pin.py
   tags: THT ceramic resonator filter
 Resonator-2Pin_w8.0mm_h3.5mm:
   addSizeFootprintName: true
@@ -64,7 +61,6 @@ Resonator-2Pin_w8.0mm_h3.5mm:
   pad_size: 1.7
   pins: 2
   rm: 5
-  script3d: resonator_2pin.py
   tags: THT ceramic resonator filter
 Resonator-3Pin_w10.0mm_h5.0mm:
   addSizeFootprintName: true
@@ -82,7 +78,6 @@ Resonator-3Pin_w10.0mm_h5.0mm:
   pad_size: 1.5
   pins: 3
   rm: 5
-  script3d: resonator_3pin.py
   tags: THT ceramic resonator filter
 Resonator-3Pin_w6.0mm_h3.0mm:
   addSizeFootprintName: true
@@ -99,7 +94,6 @@ Resonator-3Pin_w6.0mm_h3.0mm:
   pad_size: 1.7
   pins: 3
   rm: 5
-  script3d: resonator_3pin.py
   tags: THT ceramic resonator filter
 Resonator-3Pin_w7.0mm_h2.5mm:
   addSizeFootprintName: true
@@ -116,7 +110,6 @@ Resonator-3Pin_w7.0mm_h2.5mm:
   pad_size: 1.7
   pins: 3
   rm: 5
-  script3d: resonator_3pin.py
   tags: THT ceramic resonator filter
 Resonator-3Pin_w8.0mm_h3.5mm:
   addSizeFootprintName: true
@@ -133,7 +126,6 @@ Resonator-3Pin_w8.0mm_h3.5mm:
   pad_size: 1.7
   pins: 3
   rm: 5
-  script3d: resonator_3pin.py
   tags: THT ceramic resonator filter
 Resonator_Murata_CSTLSxxxG-3Pin_w8.0mm_h3.0mm:
   addSizeFootprintName: true
@@ -150,7 +142,6 @@ Resonator_Murata_CSTLSxxxG-3Pin_w8.0mm_h3.0mm:
   pad_size: 1.7
   pins: 3
   rm: 5
-  script3d: resonator_3pin.py
   tags: THT ceramic resonator filter CSTLSxxxG
 Resonator_Murata_CSTLSxxxX-3Pin_w5.5mm_h3.0mm:
   addSizeFootprintName: true
@@ -167,7 +158,6 @@ Resonator_Murata_CSTLSxxxX-3Pin_w5.5mm_h3.0mm:
   pad_size: 1.7
   pins: 3
   rm: 5
-  script3d: resonator_3pin.py
   tags: THT ceramic resonator filter CSTLSxxxX
 Resonator_Murata_DSN6-3Pin_W7.0mm_H2.5mm:
   addSizeFootprintName: true
@@ -184,7 +174,6 @@ Resonator_Murata_DSN6-3Pin_W7.0mm_H2.5mm:
   pad_size: 1.7
   pins: 3
   rm: 5
-  script3d: resonator_3pin.py
   tags: THT ceramic resonator filter DSN6
 Resonator_Murata_DSS6-3Pin_W7.0mm_H2.5mm:
   addSizeFootprintName: true
@@ -201,5 +190,4 @@ Resonator_Murata_DSS6-3Pin_W7.0mm_H2.5mm:
   pad_size: 1.7
   pins: 3
   rm: 5
-  script3d: resonator_3pin.py
   tags: THT ceramic resonator filter DSS6

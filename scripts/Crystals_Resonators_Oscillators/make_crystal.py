@@ -889,7 +889,6 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
         rotate3d=[0, 0, 0],
         name_addition="",
         pad_style="tht",
-        script3d="",
         height3d=4.65,
         iheight3d=4,
     ):
@@ -917,7 +916,6 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
             rotate3d,
             name_addition,
             pad_style,
-            script3d,
             height3d,
             iheight3d,
         )
@@ -946,7 +944,6 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
                 rotate3d,
                 name_addition + "_1EP_style1",
                 pad_style,
-                script3d,
                 height3d,
                 iheight3d,
             )
@@ -975,7 +972,6 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
                 rotate3d,
                 name_addition + "_1EP_style2",
                 pad_style,
-                script3d,
                 height3d,
                 iheight3d,
             )
@@ -1024,7 +1020,6 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
         rotate3d=[0, 0, 0],
         name_addition="",
         pad_style="tht",
-        script3d="",
         height3d=4.65,
         iheight3d=4,
     ):
@@ -1126,34 +1121,6 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
                 + crt_offset
                 - l_crt,
             )
-
-        #        if script3d!="":
-        #            with open(script3d, "a") as myfile:
-        #                myfile.write("\n\n # {0}\n".format(footprint_name))
-        #                myfile.write("import FreeCAD\n")
-        #                myfile.write("import os\n")
-        #                myfile.write("import os.path\n\n")
-        #                myfile.write("# d_wire\nApp.ActiveDocument.Spreadsheet.set('B5', '0.02')\n")
-        #                myfile.write("App.ActiveDocument.recompute()\n")
-        #                myfile.write("# W\nApp.ActiveDocument.Spreadsheet.set('B1', '{0}')\n".format(pack_width) )
-        #                myfile.write("# Wi\nApp.ActiveDocument.Spreadsheet.set('C1', '{0}')\n".format(int(pack_width*0.96)) )
-        #                myfile.write("# H\nApp.ActiveDocument.Spreadsheet.set('B2', '{0}')\n".format(pack_height))
-        #                myfile.write("# Hi\nApp.ActiveDocument.Spreadsheet.set('C2', '{0}')\n".format(int(pack_height*0.96)))
-        #                myfile.write("# height3d\nApp.ActiveDocument.Spreadsheet.set('B3', '{0}')\n".format(height3d))
-        #                myfile.write("# iheight3d\nApp.ActiveDocument.Spreadsheet.set('C3', '{0}')\n".format(iheight3d))
-        #                myfile.write("# RM\nApp.ActiveDocument.Spreadsheet.set('B4', '{0}')\n".format(rm))
-        #                myfile.write("# d_wire\nApp.ActiveDocument.Spreadsheet.set('B5', '{0}')\n".format(ddrill-0.3))
-        #                myfile.write("# pack_offset\nApp.ActiveDocument.Spreadsheet.set('B6', '{0}')\n".format(pack_offset))
-        #                myfile.write("# pack_rm\nApp.ActiveDocument.Spreadsheet.set('B7', '{0}')\n".format(pack_rm))
-        #                myfile.write("App.ActiveDocument.recompute()\n")
-        #                myfile.write("doc = FreeCAD.activeDocument()\n")
-        #                myfile.write("__objs__=[]\n")
-        #                myfile.write("for obj in doc.Objects:	\n")
-        #                myfile.write("    if obj.ViewObject.Visibility:\n")
-        #                myfile.write("        __objs__.append(obj)\n")
-        #                myfile.write("\nFreeCADGui.export(__objs__,os.path.split(doc.FileName)[0]+os.sep+\"{0}.wrl\")\n".format(fpname))
-        #                myfile.write("doc.saveCopy(os.path.split(doc.FileName)[0]+os.sep+\"{0}.FCStd\")\n".format(fpname))
-        #                myfile.write("print(\"created {0}\")\n".format(fpname))
 
         desc = description
         tag_s = tags
@@ -1483,7 +1450,6 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
         scale3d=[1, 1, 1],
         rotate3d=[0, 0, 0],
         addSizeFootprintName=False,
-        script3d="",
         height3d=10,
     ):
         fpname = footprint_name
@@ -1547,31 +1513,6 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
             angle_slk = (
                 math.acos((pad[1] / 2 + slk_offset) / (h_slk / 2)) / 3.1415 * 180
             )
-
-        #        if script3d!="":
-        #            with open(script3d, "a") as myfile:
-        #                myfile.write("\n\n # {0}\n".format(footprint_name))
-        #                myfile.write("import FreeCAD\n")
-        #                myfile.write("import os\n")
-        #                myfile.write("import os.path\n\n")
-        #                myfile.write("# d_wire\nApp.ActiveDocument.Spreadsheet.set('B5', '0.02')\n")
-        #                myfile.write("App.ActiveDocument.recompute()\n")
-        #                myfile.write("# W\nApp.ActiveDocument.Spreadsheet.set('B1', '{0}')\n".format(pack_width) )
-        #                myfile.write("# Wi\nApp.ActiveDocument.Spreadsheet.set('C1', '{0}')\n".format(innerpack_width) )
-        #                myfile.write("# H\nApp.ActiveDocument.Spreadsheet.set('B2', '{0}')\n".format(pack_height))
-        #                myfile.write("# Hi\nApp.ActiveDocument.Spreadsheet.set('C2', '{0}')\n".format(innerpack_height))
-        #                myfile.write("# height3d\nApp.ActiveDocument.Spreadsheet.set('B3', '{0}')\n".format(height3d))
-        #                myfile.write("# RM\nApp.ActiveDocument.Spreadsheet.set('B4', '{0}')\n".format(rm))
-        #                myfile.write("# d_wire\nApp.ActiveDocument.Spreadsheet.set('B5', '{0}')\n".format(ddrill-0.3))
-        #                myfile.write("App.ActiveDocument.recompute()\n")
-        #                myfile.write("doc = FreeCAD.activeDocument()\n")
-        #                myfile.write("__objs__=[]\n")
-        #                myfile.write("for obj in doc.Objects:	\n")
-        #                myfile.write("    if obj.ViewObject.Visibility:\n")
-        #                myfile.write("        __objs__.append(obj)\n")
-        #                myfile.write("\nFreeCADGui.export(__objs__,os.path.split(doc.FileName)[0]+os.sep+\"{0}.wrl\")\n".format(fpname))
-        #                myfile.write("doc.saveCopy(os.path.split(doc.FileName)[0]+os.sep+\"{0}.FCStd\")\n".format(fpname))
-        #                myfile.write("print(\"created {0}\")\n".format(fpname))
 
         # init kicad footprint
         kicad_mod = Footprint(fpname, FootprintType.THT)
@@ -1886,22 +1827,6 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
 if __name__ == "__main__":
     standardtags = "THT crystal"
     standardtagsres = "THT ceramic resonator filter"
-
-    #    script3dhc49="crystal_hc49_2pin.py"
-    #    with open(script3dhc49, "w") as myfile:
-    #        myfile.write("#\n# SCRIPT to generate 3D models\n#\n\n")
-    #    script3dhc493p="crystal_hc49_3pin.py"
-    #    with open(script3dhc493p, "w") as myfile:
-    #        myfile.write("#\n# SCRIPT to generate 3D models\n#\n\n")
-    #    script3dres3="resonator_3pin.py"
-    #    with open(script3dres3, "w") as myfile:
-    #        myfile.write("#\n# SCRIPT to generate 3D models\n#\n\n")
-    #    script3dres2="resonator_2pin.py"
-    #    with open(script3dres2, "w") as myfile:
-    #        myfile.write("#\n# SCRIPT to generate 3D models\n#\n\n")
-    #    script3dhc49h="crystal_hc49_2pin_hor.py"
-    #    with open(script3dhc49h, "w") as myfile:
-    #        myfile.write("#\n# SCRIPT to generate 3D models\n#\n\n")
 
     parser = argparse.ArgumentParser(description="Generate crystal footprints")
     parser.add_argument(

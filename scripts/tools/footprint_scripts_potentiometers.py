@@ -73,7 +73,6 @@ def makePotentiometerHorizontal(class_name="", wbody=0, hbody=0, dscrew=0, style
         add_description: descriptive text [default = ""] (str)
         lib_name: library name [default = "Potentiometers"] (str)
         name_additions: extra text for footprint name that will be underscore-delimited [default = []] (list of strs)
-        script3d: script to kick off 3D model generation in FreeCad [default = ""] (str)
         height3d: height of 3D model [default = 10] (float)
         screwzpos: height of collar above bottom of body [default = 5] (float)
         mh_ddrill: drill hole diameter of mounting holes [default = 1.5] (float)
@@ -340,7 +339,6 @@ def makePotentiometerVertical(class_name, wbody, hbody, screwstyle="none", style
         add_description: descriptive text [default = ""] (str)
         lib_name: library name [default = "Potentiometers"] (str)
         name_additions: extra text for footprint name that will be underscore-delimited [default = []] (list of strs)
-        script3d: script to kick off 3D model generation in FreeCad [default = ""] (str)
         height3d: height of 3D model [default = 10] (float)
         mh_ddrill: drill hole diameter of mounting holes [default = 1.5] (float)
         mh_count: number of mounting holes; 1, 2, or 4 are supported [default = 0] (int)
@@ -672,7 +670,6 @@ def makeSpindleTrimmer(class_name, wbody, hbody, pinxoffset, pinyoffset, rmx2, r
         add_description: descriptive text [default = ""] (str)
         lib_name: library name [default = "Potentiometers"] (str)
         name_additions: extra text for footprint name that will be underscore-delimited [default = []] (list of strs)
-        script3d: script to kick off 3D model generation in FreeCad [default = ""] (str)
         height3d: height of 3D model [default = 10] (float)
 
     Returns:

@@ -7,18 +7,6 @@ from scripts.tools.footprint_scripts_LEDs import *
 
 if __name__ == "__main__":
     led_type = "round"
-    script3d_rv = "leds_round_ver.py"
-    with open(script3d_rv, "w") as myfile:
-        myfile.write("#\n# SCRIPT to generate 3D models\n#\n\n")
-    script3d_rh = "leds_round_hor.py"
-    with open(script3d_rh, "w") as myfile:
-        myfile.write("#\n# SCRIPT to generate 3D models\n#\n\n")
-    script3d_reh = "leds_rect_hor.py"
-    with open(script3d_reh, "w") as myfile:
-        myfile.write("#\n# SCRIPT to generate 3D models\n#\n\n")
-    script3d_rreh = "leds_rect_round_hor.py"
-    with open(script3d_rreh, "w") as myfile:
-        myfile.write("#\n# SCRIPT to generate 3D models\n#\n\n")
 
     d2 = 0
     R_POW = 0
@@ -53,7 +41,6 @@ if __name__ == "__main__":
         base_filename=clname,
         lib_name=lbname,
         name_additions=name_additions,
-        script3d=script3d_rv,
         height3d=height3d,
         height3d_bottom=height3d_bottom,
     )
@@ -84,7 +71,6 @@ if __name__ == "__main__":
         base_filename=clname,
         lib_name=lbname,
         name_additions=["Clear"],
-        script3d=script3d_rv,
         height3d=height3d,
         height3d_bottom=height3d_bottom,
     )
@@ -116,7 +102,6 @@ if __name__ == "__main__":
         base_filename=clname,
         lib_name=lbname,
         name_additions=["IRBlack"],
-        script3d=script3d_rv,
         height3d=height3d,
         height3d_bottom=height3d_bottom,
     )
@@ -148,7 +133,6 @@ if __name__ == "__main__":
         base_filename=clname,
         lib_name=lbname,
         name_additions=["IRGrey"],
-        script3d=script3d_rv,
         height3d=height3d,
         height3d_bottom=height3d_bottom,
     )
@@ -172,7 +156,6 @@ if __name__ == "__main__":
         base_filename=clname,
         lib_name=lbname,
         name_additions=name_additions,
-        script3d=script3d_rv,
         height3d=height3d,
         height3d_bottom=height3d_bottom,
     )
@@ -204,7 +187,6 @@ if __name__ == "__main__":
         base_filename=clname,
         lib_name=lbname,
         name_additions=name_additions,
-        script3d=script3d_rv,
         height3d=height3d,
         height3d_bottom=height3d_bottom,
     )
@@ -237,7 +219,6 @@ if __name__ == "__main__":
         base_filename=clname,
         lib_name=lbname,
         name_additions=["Clear"],
-        script3d=script3d_rv,
         height3d=height3d,
         height3d_bottom=height3d_bottom,
     )
@@ -272,7 +253,6 @@ if __name__ == "__main__":
         base_filename=clname,
         lib_name=lbname,
         name_additions=["IRBlack"],
-        script3d=script3d_rv,
         height3d=height3d,
         height3d_bottom=height3d_bottom,
     )
@@ -307,7 +287,6 @@ if __name__ == "__main__":
         base_filename=clname,
         lib_name=lbname,
         name_additions=["IRGrey"],
-        script3d=script3d_rv,
         height3d=height3d,
         height3d_bottom=height3d_bottom,
     )
@@ -331,7 +310,6 @@ if __name__ == "__main__":
         base_filename=clname,
         lib_name=lbname,
         name_additions=name_additions,
-        script3d=script3d_rv,
         height3d=height3d,
         height3d_bottom=height3d_bottom,
     )
@@ -356,7 +334,6 @@ if __name__ == "__main__":
         base_filename=clname,
         lib_name=lbname,
         name_additions=["RGB"],
-        script3d=script3d_rv,
         height3d=height3d,
         height3d_bottom=height3d_bottom,
     )
@@ -388,7 +365,6 @@ if __name__ == "__main__":
         base_filename=clname,
         lib_name=lbname,
         name_additions=name_additions,
-        script3d=script3d_rv,
         height3d=height3d,
         height3d_bottom=height3d_bottom,
     )
@@ -420,7 +396,6 @@ if __name__ == "__main__":
         base_filename=clname,
         lib_name=lbname,
         name_additions=name_additions,
-        script3d=script3d_rv,
         height3d=height3d,
         height3d_bottom=height3d_bottom,
     )
@@ -442,7 +417,6 @@ if __name__ == "__main__":
         base_filename=clname,
         lib_name=lbname,
         name_additions=name_additions,
-        script3d=script3d_rv,
         height3d=height3d,
         height3d_bottom=height3d_bottom,
     )
@@ -474,7 +448,6 @@ if __name__ == "__main__":
         base_filename=clname,
         lib_name=lbname,
         name_additions=name_additions,
-        script3d=script3d_rv,
         height3d=height3d,
         height3d_bottom=height3d_bottom,
     )
@@ -498,7 +471,6 @@ if __name__ == "__main__":
         base_filename=clname,
         lib_name=lbname,
         name_additions=name_additions,
-        script3d=script3d_rv,
         height3d=height3d,
         height3d_bottom=height3d_bottom,
     )
@@ -530,7 +502,6 @@ if __name__ == "__main__":
         base_filename=clname,
         lib_name=lbname,
         name_additions=name_additions,
-        script3d=script3d_rv,
         height3d=height3d,
         height3d_bottom=height3d_bottom,
     )
@@ -563,7 +534,6 @@ if __name__ == "__main__":
         base_filename=clname + "_Oval",
         lib_name=lbname,
         name_additions=name_additions,
-        script3d=script3d_rv,
         height3d=height3d,
         height3d_bottom=height3d_bottom,
     )
@@ -596,7 +566,6 @@ if __name__ == "__main__":
         base_filename=clname + "",
         lib_name=lbname,
         name_additions=name_additions,
-        script3d=script3d_rv,
         height3d=height3d,
         height3d_bottom=height3d_bottom,
     )
@@ -627,7 +596,6 @@ if __name__ == "__main__":
         base_filename=clname + "",
         lib_name=lbname,
         name_additions=name_additions,
-        script3d=script3d_rv,
         height3d=height3d,
         height3d_bottom=height3d_bottom,
     )
@@ -660,7 +628,6 @@ if __name__ == "__main__":
         base_filename=clname + "",
         lib_name=lbname,
         name_additions=name_additions,
-        script3d=script3d_rv,
         height3d=height3d,
         height3d_bottom=height3d_bottom,
     )
@@ -693,7 +660,6 @@ if __name__ == "__main__":
         base_filename=clname + "",
         lib_name=lbname,
         name_additions=name_additions,
-        script3d=script3d_rv,
         height3d=height3d,
         height3d_bottom=height3d_bottom,
     )
@@ -726,7 +692,6 @@ if __name__ == "__main__":
         base_filename=clname + "",
         lib_name=lbname,
         name_additions=name_additions,
-        script3d=script3d_rv,
         height3d=height3d,
         height3d_bottom=height3d_bottom,
     )
@@ -759,7 +724,6 @@ if __name__ == "__main__":
         base_filename=clname + "_Rectangular",
         lib_name=lbname,
         name_additions=name_additions,
-        script3d=script3d_rv,
         height3d=height3d,
         height3d_bottom=height3d_bottom,
     )
@@ -792,7 +756,6 @@ if __name__ == "__main__":
         base_filename=clname + "_Rectangular",
         lib_name=lbname,
         name_additions=name_additions,
-        script3d=script3d_rv,
         height3d=height3d,
         height3d_bottom=height3d_bottom,
     )
@@ -825,7 +788,6 @@ if __name__ == "__main__":
         base_filename=clname + "_Rectangular",
         lib_name=lbname,
         name_additions=name_additions,
-        script3d=script3d_rv,
         height3d=height3d,
         height3d_bottom=height3d_bottom,
     )
@@ -858,7 +820,6 @@ if __name__ == "__main__":
         base_filename=clname + "_Rectangular",
         lib_name=lbname,
         name_additions=name_additions,
-        script3d=script3d_rv,
         height3d=height3d,
         height3d_bottom=height3d_bottom,
     )
@@ -891,7 +852,6 @@ if __name__ == "__main__":
         base_filename=clname + "_Rectangular",
         lib_name=lbname,
         name_additions=name_additions,
-        script3d=script3d_rv,
         height3d=height3d,
         height3d_bottom=height3d_bottom,
     )
@@ -924,7 +884,6 @@ if __name__ == "__main__":
         base_filename=clname + "_Rectangular",
         lib_name=lbname,
         name_additions=name_additions,
-        script3d=script3d_rv,
         height3d=height3d,
         height3d_bottom=height3d_bottom,
     )
@@ -957,7 +916,6 @@ if __name__ == "__main__":
         base_filename=clname + "_SideEmitter_Rectangular",
         lib_name=lbname,
         name_additions=name_additions,
-        script3d=script3d_rv,
         height3d=height3d,
         height3d_bottom=height3d_bottom,
     )
@@ -994,7 +952,6 @@ if __name__ == "__main__":
                 base_filename=clname,
                 lib_name=lbname,
                 name_additions=name_additions,
-                script3d=script3d_rh,
                 height3d=height3d,
             )
     # LED_D3.0mm_Horizontal_O1.27mm_Z2.0mm_Clear
@@ -1017,7 +974,6 @@ if __name__ == "__main__":
         base_filename=clname,
         lib_name=lbname,
         name_additions=["Clear"],
-        script3d=script3d_rh,
         height3d=height3d,
     )
     # LED_D3.0mm_Horizontal_O1.27mm_Z2.0mm_IRBlack
@@ -1039,7 +995,6 @@ if __name__ == "__main__":
         base_filename=clname,
         lib_name=lbname,
         name_additions=["IRBlack"],
-        script3d=script3d_rh,
         height3d=height3d,
     )
     # LED_D3.0mm_Horizontal_O1.27mm_Z2.0mm_IRGrey
@@ -1061,7 +1016,6 @@ if __name__ == "__main__":
         base_filename=clname,
         lib_name=lbname,
         name_additions=["IRGrey"],
-        script3d=script3d_rh,
         height3d=height3d,
     )
 
@@ -1096,7 +1050,6 @@ if __name__ == "__main__":
                 base_filename=clname,
                 lib_name=lbname,
                 name_additions=name_additions,
-                script3d=script3d_rh,
                 height3d=height3d,
             )
     # LED_D5.0mm_Horizontal_O1.27mm_Z3.0mm_Clear
@@ -1119,7 +1072,6 @@ if __name__ == "__main__":
         base_filename=clname,
         lib_name=lbname,
         name_additions=["Clear"],
-        script3d=script3d_rh,
         height3d=height3d,
     )
     # LED_D5.0mm_Horizontal_O1.27mm_Z3.0mm_IRBlack
@@ -1141,7 +1093,6 @@ if __name__ == "__main__":
         base_filename=clname,
         lib_name=lbname,
         name_additions=["IRBlack"],
-        script3d=script3d_rh,
         height3d=height3d,
     )
     # LED_D5.0mm_Horizontal_O1.27mm_Z3.0mm_IRGrey
@@ -1163,7 +1114,6 @@ if __name__ == "__main__":
         base_filename=clname,
         lib_name=lbname,
         name_additions=["IRGrey"],
-        script3d=script3d_rh,
         height3d=height3d,
     )
     # LED_D5.0mm-3_Horizontal_O3.81mm_Z3.0mm
@@ -1186,7 +1136,6 @@ if __name__ == "__main__":
         base_filename=clname,
         lib_name=lbname,
         name_additions=name_additions,
-        script3d=script3d_rh,
         height3d=height3d,
     )
 
@@ -1223,7 +1172,6 @@ if __name__ == "__main__":
                 base_filename=clname + "",
                 lib_name=lbname,
                 name_additions=name_additions,
-                script3d=script3d_rreh,
                 height3d=height3d,
             )
     # LED_Rectangular_W5.0mm_H2.0mm_Horizontal_O-.--mm_Z-.-mm
@@ -1259,6 +1207,5 @@ if __name__ == "__main__":
                 base_filename=clname + "_Rectangular",
                 lib_name=lbname,
                 name_additions=name_additions,
-                script3d=script3d_reh,
                 height3d=height3d,
             )

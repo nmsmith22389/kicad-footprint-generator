@@ -29,10 +29,6 @@ from kilibs.geom.geometric_util import (
 from scripts.tools.footprint_global_properties import *
 from scripts.tools.nodes import pin1_arrow
 
-# tool function for generating 3D-scripts
-def script3d_writevariable(file, line, varname, value):
-    file.write("# {0}\nApp.ActiveDocument.Spreadsheet.set('A{1}', 'var {0} = '); App.ActiveDocument.Spreadsheet.set('B{1}', '{2}'); App.ActiveDocument.Spreadsheet.setAlias('B{1}', '{0}')\n".format(varname, line, value))
-
 
 # round for grid g
 def sqr(x):

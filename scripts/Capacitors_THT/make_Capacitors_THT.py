@@ -146,24 +146,21 @@ if __name__ == '__main__':
     for w in [7.6,7.8,7.9,9.1,9.6,11,11.9,12.2,13,13.8,14.2,16]:
         caps+=[  29, w,  19, 27.5,      1.2,            ["MKT"],                           "https://en.tdk.eu/inf/20/20/db/fc_2009/MKT_B32560_564.pdf"],
 
-    script3rect="CQ_params_C_Rect.py"
-    with open(script3rect, "w") as myfile:
-        myfile.write("#\n# SCRIPT to generate 3D models\n#\n\n")
     for c in caps:
-        seriesname = "Rect";
-        w = c[0];
-        d = c[1];
+        seriesname = "Rect"
+        w = c[0]
+        d = c[1]
         h3d=c[2]
-        w2 = 0;
-        rm = c[3];
-        ddrill = c[4];
-        add_description = c[6];
+        w2 = 0
+        rm = c[3]
+        ddrill = c[4]
+        add_description = c[6]
         name_additions = c[5]
-        scr=script3rect
+
         makeResistorRadial(seriesname=seriesname, rm=rm, w=w, h=d, ddrill=ddrill, R_POW=R_POW,
                                     type=type, w2=w2, x_3d=[0, 0, 0], s_3d=[1, 1, 1], has3d=1,
                                     specialfpname="", add_description=add_description, name_additions=name_additions,
-                                    specialtags=specialtags, classname="C", lib_name="${KICAD9_3DMODEL_DIR}/Capacitor_THT_Rectangular", script3d=scr, height3d=h3d)
+                                    specialtags=specialtags, classname="C", lib_name="${KICAD9_3DMODEL_DIR}/Capacitor_THT_Rectangular", height3d=h3d)
 
 
     ###########################################################
@@ -176,21 +173,20 @@ if __name__ == '__main__':
     caps+=[    13,     6.5,     7.5,     10,       0.8,            [""],                           ""],
 
     for c in caps:
-        seriesname = "Rect";
+        seriesname = "Rect"
         type="simple"
-        w = c[0];
-        d = c[1];
-        w2 = 0;
-        rm = c[2];
-        rm2 = c[3];
-        ddrill = c[4];
-        add_description = c[6];
+        w = c[0]
+        d = c[1]
+        w2 = 0
+        rm = c[2]
+        rm2 = c[3]
+        ddrill = c[4]
+        add_description = c[6]
         name_additions = c[5]
-        scr = script3rect
         makeResistorRadial(seriesname=seriesname, rm=rm, rm2=rm2, w=w, h=d, ddrill=ddrill, R_POW=R_POW,
                                     type=type, w2=w2, x_3d=[0, 0, 0], s_3d=[1, 1, 1], has3d=1,
                                     specialfpname="", add_description=add_description, name_additions=name_additions,
-                                    specialtags=specialtags, classname="C", lib_name="${KICAD9_3DMODEL_DIR}/Capacitor_THT_Rectangular", script3d=scr, height3d=10)
+                                    specialtags=specialtags, classname="C", lib_name="${KICAD9_3DMODEL_DIR}/Capacitor_THT_Rectangular", height3d=10)
 
 
 
@@ -243,22 +239,20 @@ if __name__ == '__main__':
         [ 16.0,5.0,   10,        1,                          [],                              "http://www.vishay.com/docs/28535/vy2series.pdf"],
     ]
 
-    script3mkt="CQ_params_C_Disc.py"
-
     for c in caps:
-        seriesname = "Disc";
+        seriesname = "Disc"
         type = "disc"
-        w = c[0];
-        d = c[1];
-        w2 = 0;
-        rm = c[2];
-        ddrill = c[3];
-        add_description = c[5];
+        w = c[0]
+        d = c[1]
+        w2 = 0
+        rm = c[2]
+        ddrill = c[3]
+        add_description = c[5]
         name_additions = c[4]
         makeResistorRadial(seriesname=seriesname, rm=rm, w=w, h=d, ddrill=ddrill, R_POW=R_POW,
                            type=type, w2=w2, x_3d=[0, 0, 0], s_3d=[1, 1, 1], has3d=1,
                            specialfpname="", add_description=add_description, name_additions=name_additions,
-                           specialtags=specialtags, classname="C", lib_name="${KICAD9_3DMODEL_DIR}/Capacitor_THT", script3d=script3mkt)
+                           specialtags=specialtags, classname="C", lib_name="${KICAD9_3DMODEL_DIR}/Capacitor_THT")
 
 
 
@@ -273,9 +267,6 @@ if __name__ == '__main__':
     ###########################################################
     # axial capacitors
     ###########################################################
-    scriptaxh="CQ_params_C_Axial.py"
-    with open(scriptaxh, "w") as myfile:
-        myfile.write("#\n# SCRIPT to generate 3D models\n#\n\n")
 
     d2=0
     seriesname = "Axial"; w = 3.8; d = 2.6; ddrill = 0.8; R_POW = 0; add_description = "http://www.vishay.com/docs/45231/arseries.pdf"; name_additions = []
@@ -283,14 +274,14 @@ if __name__ == '__main__':
         makeResistorAxialHorizontal(seriesname=seriesname, rm=rm, rmdisp=rm, w=w, d=d, ddrill=ddrill, R_POW=R_POW,
                                     type=type, d2=d2, x_3d=[0, 0, 0], s_3d=[1, 1, 1], has3d=1,
                                     specialfpname="", add_description=add_description, name_additions=name_additions,
-                                    specialtags=name_additions, classname="C", lib_name="${KICAD9_3DMODEL_DIR}/Capacitor_THT", script3d=scriptaxh)
+                                    specialtags=name_additions, classname="C", lib_name="${KICAD9_3DMODEL_DIR}/Capacitor_THT")
 
     seriesname = "Axial"; w = 5.1; d = 3.1; ddrill = 0.8; R_POW = 0; add_description = "http://www.vishay.com/docs/45231/arseries.pdf"; name_additions = []
     for rm in [7.5, 10, 12.5, 15]:
         makeResistorAxialHorizontal(seriesname=seriesname, rm=rm, rmdisp=rm, w=w, d=d, ddrill=ddrill, R_POW=R_POW,
                                     type=type, d2=d2, x_3d=[0, 0, 0], s_3d=[1, 1, 1], has3d=1,
                                     specialfpname="", add_description=add_description, name_additions=name_additions,
-                                    specialtags=name_additions, classname="C", lib_name="${KICAD9_3DMODEL_DIR}/Capacitor_THT", script3d=scriptaxh)
+                                    specialtags=name_additions, classname="C", lib_name="${KICAD9_3DMODEL_DIR}/Capacitor_THT")
     for w in [12,17,19,22]:
         if w == 12:
             rms = [15, 20]
@@ -310,31 +301,31 @@ if __name__ == '__main__':
                 makeResistorAxialHorizontal(seriesname=seriesname, rm=rm, rmdisp=rm, w=w, d=d, ddrill=ddrill, R_POW=R_POW,
                                             type=type, d2=d2, x_3d=[0, 0, 0], s_3d=[1, 1, 1], has3d=1,
                                             specialfpname="", add_description=add_description, name_additions=name_additions,
-                                            specialtags=name_additions, classname="C", lib_name="${KICAD9_3DMODEL_DIR}/Capacitor_THT", script3d=scriptaxh)
+                                            specialtags=name_additions, classname="C", lib_name="${KICAD9_3DMODEL_DIR}/Capacitor_THT")
     seriesname = "Axial"; w = 12; d = 6.5; ddrill = 0.8; R_POW = 0; add_description = "http://cdn-reichelt.de/documents/datenblatt/B300/STYROFLEX.pdf"; name_additions = []
     for rm in [15,20]:
         makeResistorAxialHorizontal(seriesname=seriesname, rm=rm, rmdisp=rm, w=w, d=d, ddrill=ddrill, R_POW=R_POW,
                                     type=type, d2=d2, x_3d=[0, 0, 0], s_3d=[1, 1, 1], has3d=1,
                                     specialfpname="", add_description=add_description, name_additions=name_additions,
-                                    specialtags=name_additions, classname="C", lib_name="${KICAD9_3DMODEL_DIR}/Capacitor_THT", script3d=scriptaxh)
+                                    specialtags=name_additions, classname="C", lib_name="${KICAD9_3DMODEL_DIR}/Capacitor_THT")
     seriesname = "Axial"; w = 12; d = 7.5; ddrill = 0.8; R_POW = 0; add_description = "http://cdn-reichelt.de/documents/datenblatt/B300/STYROFLEX.pdf"; name_additions = []
     for rm in [15,20]:
         makeResistorAxialHorizontal(seriesname=seriesname, rm=rm, rmdisp=rm, w=w, d=d, ddrill=ddrill, R_POW=R_POW,
                                     type=type, d2=d2, x_3d=[0, 0, 0], s_3d=[1, 1, 1], has3d=1,
                                     specialfpname="", add_description=add_description, name_additions=name_additions,
-                                    specialtags=name_additions, classname="C", lib_name="${KICAD9_3DMODEL_DIR}/Capacitor_THT", script3d=scriptaxh)
+                                    specialtags=name_additions, classname="C", lib_name="${KICAD9_3DMODEL_DIR}/Capacitor_THT")
     seriesname = "Axial"; w = 12; d = 8.5; ddrill = 0.8; R_POW = 0; add_description = "http://cdn-reichelt.de/documents/datenblatt/B300/STYROFLEX.pdf"; name_additions = []
     for rm in [15,20]:
         makeResistorAxialHorizontal(seriesname=seriesname, rm=rm, rmdisp=rm, w=w, d=d, ddrill=ddrill, R_POW=R_POW,
                                     type=type, d2=d2, x_3d=[0, 0, 0], s_3d=[1, 1, 1], has3d=1,
                                     specialfpname="", add_description=add_description, name_additions=name_additions,
-                                    specialtags=name_additions, classname="C", lib_name="${KICAD9_3DMODEL_DIR}/Capacitor_THT", script3d=scriptaxh)
+                                    specialtags=name_additions, classname="C", lib_name="${KICAD9_3DMODEL_DIR}/Capacitor_THT")
     seriesname = "Axial"; w = 12; d = 9.5; ddrill = 0.8; R_POW = 0; add_description = "http://cdn-reichelt.de/documents/datenblatt/B300/STYROFLEX.pdf"; name_additions = []
     for rm in [15,20]:
         makeResistorAxialHorizontal(seriesname=seriesname, rm=rm, rmdisp=rm, w=w, d=d, ddrill=ddrill, R_POW=R_POW,
                                     type=type, d2=d2, x_3d=[0, 0, 0], s_3d=[1, 1, 1], has3d=1,
                                     specialfpname="", add_description=add_description, name_additions=name_additions,
-                                    specialtags=name_additions, classname="C", lib_name="${KICAD9_3DMODEL_DIR}/Capacitor_THT", script3d=scriptaxh)
+                                    specialtags=name_additions, classname="C", lib_name="${KICAD9_3DMODEL_DIR}/Capacitor_THT")
 
 
 
@@ -369,24 +360,20 @@ if __name__ == '__main__':
 
     ]
 
-    scripttan="CQ_params_CP_Tantal.py"
-    with open(scripttan, "w") as myfile:
-        myfile.write("#\n# SCRIPT to generate 3D models\n#\n\n")
-
     for c in caps:
-        seriesname = "Radial_Tantal";
+        seriesname = "Radial_Tantal"
         type = "round"
         deco="tantal"
-        d = c[0];
-        w2 = 0;
-        rm = c[1];
-        ddrill = c[2];
-        add_description = c[4];
+        d = c[0]
+        w2 = 0
+        rm = c[1]
+        ddrill = c[2]
+        add_description = c[4]
         name_additions = c[3]
         makeResistorRadial(seriesname=seriesname, rm=rm, w=d, h=d, ddrill=ddrill, R_POW=R_POW,
                            type=type, w2=w2, x_3d=[0, 0, 0], s_3d=[1, 1, 1], has3d=1,
                            specialfpname="", add_description=add_description, name_additions=name_additions,
-                           specialtags=specialtags, classname="CP", lib_name="${KICAD9_3DMODEL_DIR}/Capacitor_THT", deco=deco, script3d=scripttan)
+                           specialtags=specialtags, classname="CP", lib_name="${KICAD9_3DMODEL_DIR}/Capacitor_THT", deco=deco)
 
     ###########################################################
     # radial electrolytic capacitors
@@ -430,9 +417,6 @@ if __name__ == '__main__':
         [35, 50, 10, 0, 2, ["SnapIn"], [], ", http://www.vishay.com/docs/28342/058059pll-si.pdf"],
         [40, 50, 10, 0, 2, ["SnapIn"], [], ", http://www.vishay.com/docs/28342/058059pll-si.pdf"],
     ]
-    scriptcprad = "CQ_params_CP_Radial.py"
-    with open(scriptcprad, "w") as myfile:
-        myfile.write("#\n# SCRIPT to generate 3D models\n#\n\n")
 
     for c in caps:
         seriesname = "Radial";
@@ -451,7 +435,7 @@ if __name__ == '__main__':
                            type=type, w2=w2, x_3d=[0, 0, 0], s_3d=[1, 1, 1], has3d=1,
                            specialfpname="", add_description=add_description, name_additions=name_additions,
                            specialtags=special_tags, classname="CP", lib_name="${KICAD9_3DMODEL_DIR}/Capacitor_THT", deco=deco,
-                           script3d=scriptcprad, height3d=h3d)
+                           height3d=h3d)
 
     ###########################################################
     # radial nonpolar electrolytic capacitors
@@ -484,28 +468,25 @@ if __name__ == '__main__':
         [16, 31.5, 7.5, 0, 1, [], [], ""],
         [18, 35.5, 7.5, 0, 1, [], [], ""]
     ]
-    scriptcprad = "CQ_params_C_Radial.py"
-    with open(scriptcprad, "w") as myfile:
-        myfile.write("#\n# SCRIPT to generate 3D models\n#\n\n")
 
     for c in caps:
-        seriesname = "Radial";
+        seriesname = "Radial"
         type = "round"
         deco = "electrolytic nonpolar"
-        d = c[0];
+        d = c[0]
         h3d = c[1]
-        w2 = 0;
-        rm = c[2];
+        w2 = 0
+        rm = c[2]
         rm2 = c[3]
-        ddrill = c[4];
-        add_description = c[7];
+        ddrill = c[4]
+        add_description = c[7]
         name_additions = c[5]
         special_tags = specialtags + c[6]
         makeResistorRadial(seriesname=seriesname, rm=rm, rm2=rm2, w=d, h=d, ddrill=ddrill, R_POW=R_POW,
                            type=type, w2=w2, x_3d=[0, 0, 0], s_3d=[1, 1, 1], has3d=1,
                            specialfpname="", add_description=add_description, name_additions=name_additions,
                            specialtags=special_tags, classname="C", lib_name="${KICAD9_3DMODEL_DIR}/Capacitor_THT", deco=deco,
-                           script3d=scriptcprad, height3d=h3d)
+                           height3d=h3d)
 
 
     ###########################################################
@@ -525,21 +506,18 @@ if __name__ == '__main__':
         [       40,         50,         10,     [2,10-3.3,4.75,2.5],        2, ["3pin", "SnapIn"], [], ", http://www.vishay.com/docs/28342/058059pll-si.pdf"],
 
     ]
-    scriptcprad3p = "CQ_params_CP_Radial_3Pin.py"
-    with open(scriptcprad3p, "w") as myfile:
-        myfile.write("#\n# SCRIPT to generate 3D models\n#\n\n")
 
     for c in caps:
-        seriesname = "Radial";
+        seriesname = "Radial"
         type = "round"
         deco = "elco"
-        d = c[0];
+        d = c[0]
         h3d = c[1]
-        w2 = 0;
-        rm = c[2];
+        w2 = 0
+        rm = c[2]
         rm2 = 0
-        ddrill = c[4];
-        add_description = c[7];
+        ddrill = c[4]
+        add_description = c[7]
         name_additions = c[5]
         special_tags = specialtags + c[6]
         ap=[c[3]]
@@ -547,7 +525,7 @@ if __name__ == '__main__':
                            type=type, w2=w2, x_3d=[0, 0, 0], s_3d=[1, 1, 1], has3d=1,
                            specialfpname="", add_description=add_description, name_additions=name_additions,
                            specialtags=special_tags, classname="CP", lib_name="${KICAD9_3DMODEL_DIR}/Capacitor_THT", deco=deco,
-                           script3d=scriptcprad3p, height3d=h3d, additionalPins=ap)
+                           height3d=h3d, additionalPins=ap)
 
 
 
@@ -613,22 +591,19 @@ if __name__ == '__main__':
         [        6,        11,          18,            1.2,                          [],                        [],                              ""],
         [        8,        21,          28,            1.2,                          [],                        [],                              ""],
     ]
-    scriptcpax="CQ_params_CP_Axial.py"
-    with open(scriptcpax, "w") as myfile:
-        myfile.write("#\n# SCRIPT to generate 3D models\n#\n\n")
 
     for c in caps:
-        seriesname = "Axial";
+        seriesname = "Axial"
         type = "cyl"
         deco = "elco"
-        d = c[0];
-        l = c[1];
+        d = c[0]
+        l = c[1]
         rm = c[2]
-        ddrill = c[3];
-        add_description = c[6];
+        ddrill = c[3]
+        add_description = c[6]
         name_additions = c[4]
         special_tags = specialtags + c[5]
         makeResistorAxialHorizontal(seriesname=seriesname, rm=rm, rmdisp=rm, w=l, d=d, ddrill=ddrill, R_POW=R_POW,
                            type=type, x_3d=[0, 0, 0], s_3d=[1, 1, 1], has3d=1,
                            specialfpname="", add_description=add_description, name_additions=name_additions,
-                           specialtags=special_tags, classname="CP", lib_name="${KICAD9_3DMODEL_DIR}/Capacitor_THT", deco=deco, script3d=scriptcpax)
+                           specialtags=special_tags, classname="CP", lib_name="${KICAD9_3DMODEL_DIR}/Capacitor_THT", deco=deco)
