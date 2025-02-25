@@ -1,21 +1,14 @@
 #!/usr/bin/env python3
 
-import sys
-import os
 from helpers import *
 import re
 import fnmatch
 import argparse
 import yaml
 
-#sys.path.append(os.path.join(sys.path[0],"..","..")) # load KicadModTree path
-#add KicadModTree to searchpath using export PYTHONPATH="${PYTHONPATH}<absolute path>/kicad-footprint-generator/"
-sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))
-sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))  # load parent path of tools
 from KicadModTree import *
-
-from footprint_text_fields import addTextFields
-from drawing_tools import round_to_grid
+from scripts.tools.footprint_text_fields import addTextFields
+from scripts.tools.drawing_tools import round_to_grid
 
 from mc_params import seriesParams, dimensions, generate_description, all_params
 

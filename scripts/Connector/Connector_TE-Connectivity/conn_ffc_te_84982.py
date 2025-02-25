@@ -18,18 +18,12 @@ along with kicad-footprint-generator. If not, see < http://www.gnu.org/licenses/
 
 import argparse
 import yaml
-import sys
-import os
-
-from math import sqrt, ceil, floor
-
-sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))  # load parent path of KicadModTree
-sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))  # load parent path of tools
+from math import  ceil, floor
 
 from KicadModTree import *
-from drawing_tools import round_to_grid
+from scripts.tools.drawing_tools import round_to_grid
+from scripts.tools.footprint_text_fields import addTextFields
 
-from footprint_text_fields import addTextFields
 
 lib_by_conn_category = True
 

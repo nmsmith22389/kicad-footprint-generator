@@ -2,21 +2,15 @@
 
 # Generator for jst smd connectors (single row with two mounting pads)
 
-import sys
-import os
-
-# export PYTHONPATH="${PYTHONPATH}<path to kicad-footprint-generator directory>"
-sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))  # load parent path of KicadModTree
-sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))  # load parent path of tools
-
 import argparse
 import yaml
+from math import sqrt
+
 from helpers import *
 from KicadModTree import *
-from math import sqrt
-from drawing_tools import round_to_grid
+from scripts.tools.drawing_tools import round_to_grid
+from scripts.tools.footprint_text_fields import addTextFields
 
-from footprint_text_fields import addTextFields
 
 def generate_one_footprint(idx, pincount, series_definition, configuration, group_definition):
     if 'mpn_param_1' in series_definition:

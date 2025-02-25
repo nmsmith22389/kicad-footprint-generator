@@ -7,16 +7,11 @@ https://www.te.com/commerce/DocumentDelivery/DDEController?Action=showdoc&DocId=
 
 """
 
-import sys
-import os
-sys.path.append(os.path.abspath(os.path.join('.','..','..','..')))
-sys.path.append(os.path.abspath(os.path.join('.','..','..','tools')))
-
 import argparse
 import math
 import yaml
 from KicadModTree import *
-from footprint_text_fields import addTextFields
+from scripts.tools.footprint_text_fields import addTextFields
 
 
 man_lib = 'TE-Connectivity'

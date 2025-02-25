@@ -1,23 +1,15 @@
 #! /usr/bin/env python3
 
-import sys
-import os
 import argparse
 import yaml
 
 from copy import deepcopy
 
-# load parent path of KicadModTree
-sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))
-sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))
-
 from KicadModTree import *  # NOQA
 from kilibs.geom.geometric_util import geometricLine, geometricCircle
-from drawing_tools import round_to_grid
+from scripts.tools.drawing_tools import round_to_grid
+from scripts.tools.footprint_text_fields import addTextFields
 
- # load parent path of tools
-sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))
-from footprint_text_fields import addTextFields
 
 DEFAULT_MIN_PAD_DRILL_INC = 0.2
 DEFAULT_PAD_DRILL_INC_FACTOR = 1.25

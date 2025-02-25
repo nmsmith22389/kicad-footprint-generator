@@ -1,20 +1,12 @@
 #!/usr/bin/env python3
 
-import sys
-import os
-#sys.path.append(os.path.join(sys.path[0],"..","..","kicad_mod")) # load kicad_mod path
-
-# export PYTHONPATH="${PYTHONPATH}<path to kicad-footprint-generator directory>"
-sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))  # load parent path of KicadModTree
-
 from math import sqrt
 import argparse
 import yaml
-from KicadModTree import *
 
+from KicadModTree import *
 from scripts.tools.drawing_tools import round_to_grid
 from scripts.tools.footprint_text_fields import addTextFields
-from scripts.tools.footprint_keepout_area import addRectangularKeepout
 
 series = 'FH12'
 series_long = 'FH12, FFC/FPC connector'

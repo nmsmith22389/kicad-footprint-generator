@@ -34,8 +34,6 @@ if len(sys.argv) > 1:
 if output_dir and not output_dir.endswith(os.sep):
     output_dir += os.sep
 
-#import KicadModTree files
-sys.path.append("..\\..")
 from KicadModTree import *
 from KicadModTree.nodes.specialized.PadArray import PadArray
 

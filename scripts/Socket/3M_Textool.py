@@ -1,11 +1,5 @@
 #!/usr/bin/env python3
 
-import sys
-import os
-
-# load parent path of KicadModTree
-sys.path.append(os.path.join(sys.path[0], "..", ".."))
-
 from KicadModTree import *
 
 def roundCrtYd(x):

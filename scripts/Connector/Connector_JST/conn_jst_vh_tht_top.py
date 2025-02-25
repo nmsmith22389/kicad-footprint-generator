@@ -15,12 +15,6 @@ You should have received a copy of the GNU General Public License
 along with kicad-footprint-generator. If not, see < http://www.gnu.org/licenses/ >.
 '''
 
-import sys
-import os
-
-# export PYTHONPATH="${PYTHONPATH}<path to kicad-footprint-generator directory>"
-sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))  # load parent path of KicadModTree
-
 import argparse
 import yaml
 from KicadModTree import *

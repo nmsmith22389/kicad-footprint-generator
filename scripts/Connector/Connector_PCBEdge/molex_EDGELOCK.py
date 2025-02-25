@@ -1,12 +1,7 @@
 #!/usr/bin/env python3
 
-import sys
-import os
-
-# load parent path of KicadModTree
-sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))
-
 from KicadModTree import *
+
 
 lib_name = "Connector_PCBEdge"
 padNums = [2, 4, 6, 8]

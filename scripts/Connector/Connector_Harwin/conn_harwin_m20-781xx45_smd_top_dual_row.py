@@ -11,18 +11,12 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with kicad-footprint-generator. If not, see < http://www.gnu.org/licenses/ >.
 '''
-import sys
-import os
-#sys.path.append(os.path.join(sys.path[0],"..","..","kicad_mod")) # load kicad_mod path
-# export PYTHONPATH="${PYTHONPATH}<path to kicad-footprint-generator directory>"
-sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))  # load parent path of KicadModTree
-from math import sqrt
+
 import argparse
 import yaml
-#from helpers import *
 from KicadModTree import *
-sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))  # load parent path of tools
-from footprint_text_fields import addTextFields
+from scripts.tools.footprint_text_fields import addTextFields
+
 
 series = 'M20'
 series_long = 'Female Vertical Surface Mount Double Row 2.54mm (0.1 inch) Pitch PCB Connector'

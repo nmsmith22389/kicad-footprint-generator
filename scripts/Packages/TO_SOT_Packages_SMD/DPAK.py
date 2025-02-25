@@ -1,12 +1,6 @@
 import math
-import sys
-import os
 import yaml
 from typing import Optional
-
-sys.path.append(
-    os.path.join(sys.path[0], "../../..")
-)  # enable package import from parent directory
 
 from KicadModTree import *  # NOQA
 from kilibs.geom import Direction

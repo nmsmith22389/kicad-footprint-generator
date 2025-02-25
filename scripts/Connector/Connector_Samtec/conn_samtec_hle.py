@@ -15,21 +15,13 @@ You should have received a copy of the GNU General Public License
 along with kicad-footprint-generator. If not, see < http://www.gnu.org/licenses/ >.
 '''
 
-import sys
-import os
-#sys.path.append(os.path.join(sys.path[0],"..","..","kicad_mod")) # load kicad_mod path
-
-# export PYTHONPATH="${PYTHONPATH}<path to kicad-footprint-generator directory>"
-sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))  # load parent path of KicadModTree
-sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))  # load parent path of tools
-
 from math import sqrt
 import argparse
 import yaml
-from drawing_tools import round_to_grid
-from KicadModTree import *
 
-from footprint_text_fields import addTextFields
+from KicadModTree import *
+from scripts.tools.drawing_tools import round_to_grid
+from scripts.tools.footprint_text_fields import addTextFields
 
 series = 'HLE'
 series_long = 'HLE .100" Tiger Beam Cost-effective Single Beam Socket Strip'

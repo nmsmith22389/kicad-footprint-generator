@@ -1,15 +1,9 @@
 #!/usr/bin/env python3
 
-import sys
-import os
-
-sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))  # load parent path of KicadModTree
-sys.path.append(os.path.join(sys.path[0], "..", "..", "tools"))  # load parent path of tools
-
-from footprint_text_fields import addTextFields
 import argparse
 import yaml
 from KicadModTree import *
+from scripts.tools.footprint_text_fields import addTextFields
 
 series = 'M20-890'
 series_long = 'Male Horizontal Surface Mount Single Row 2.54mm (0.1 inch) Pitch PCB Connector'

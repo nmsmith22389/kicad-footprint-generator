@@ -1,16 +1,11 @@
 #!/usr/bin/env python3
 
-import sys
-import os
 import argparse
 import yaml
 
-sys.path.append(os.path.join(sys.path[0], "..", ".."))  # load parent path of KicadModTree
-sys.path.append(os.path.join(sys.path[0], "..", "tools"))
-
 from KicadModTree import *  # NOQA
 from KicadModTree.nodes.base.Pad import Pad  # NOQA
-from drawing_tools import round_to_grid
+from scripts.tools.drawing_tools import round_to_grid
 
 
 def calculate_pad_spacer(pad_spacer, mirror_spacer):

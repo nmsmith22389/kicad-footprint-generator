@@ -1,19 +1,14 @@
 #!/usr/bin/env python3
 
-import sys
-import os
 import argparse
 import yaml
-import math
-
-sys.path.append(os.path.join(sys.path[0], "..", ".."))  # load parent path of KicadModTree
 
 from KicadModTree import *  # NOQA
 from KicadModTree.nodes.base.Pad import Pad  # NOQA
-sys.path.append(os.path.join(sys.path[0], "..", "tools"))  # load parent path of tools
-from footprint_text_fields import addTextFields
-from ipc_pad_size_calculators import *
-from drawing_tools import nearestSilkPointOnOrthogonalLineSmallClerance
+from scripts.tools.footprint_text_fields import addTextFields
+from scripts.tools.ipc_pad_size_calculators import *
+from scripts.tools.drawing_tools import nearestSilkPointOnOrthogonalLineSmallClerance
+
 
 size_definition_path = "size_definitions/"
 

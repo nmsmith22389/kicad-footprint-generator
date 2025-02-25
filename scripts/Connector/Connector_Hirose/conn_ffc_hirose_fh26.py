@@ -6,10 +6,6 @@
 #
 #####
 
-import sys
-import os
-
-sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))  # load parent path of KicadModTree
 from math import sqrt
 import argparse
 import yaml

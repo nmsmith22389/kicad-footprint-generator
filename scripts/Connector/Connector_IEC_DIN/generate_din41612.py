@@ -1,13 +1,9 @@
 #!/usr/bin/env python3
 
-import sys
 import os
 
-sys.path.append(os.path.join(sys.path[0],"..","..","..")) # for KicadModTree
-sys.path.append(os.path.join(sys.path[0],"..","..","tools")) # for drawing_tools
-
 from KicadModTree import *
-from drawing_tools import *
+from scripts.tools.drawing_tools import *
 
 # According to IEC 60603-2 §3 and DIN 41612-1 §2 connector names should be like
 # this:

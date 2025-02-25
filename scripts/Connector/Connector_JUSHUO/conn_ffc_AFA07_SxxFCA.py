@@ -23,13 +23,6 @@ https://www.lcsc.com/datasheet/lcsc_datasheet_2304140030_JUSHUO-AFA07-S04FCA-00_
 
 """
 
-import sys
-import os
-# sys.path.append(os.path.join(sys.path[0],"..","..","kicad_mod")) # load kicad_mod path
-
-# export PYTHONPATH="${PYTHONPATH}<path to kicad-footprint-generator directory>"
-sys.path.append(os.path.join(sys.path[0], "..", "..", ".."))  # load parent path of KicadModTree
-
 import argparse
 import yaml
 from KicadModTree import (
