@@ -6,7 +6,7 @@ import logging
 from importlib import resources
 from typing import Optional
 
-from KicadModTree import Footprint, KicadFileHandler, Model
+from KicadModTree import Footprint, KicadPrettyLibrary, Model
 from scripts.tools.global_config_files.global_config import GlobalConfig
 from kilibs.util import dict_tools
 
@@ -24,13 +24,11 @@ class FootprintGenerator:
         self.global_config = global_config
 
     def write_footprint(self, kicad_mod: Footprint, library_name: str):
-        output_library_path = self.output_path / f'{library_name}.pretty'
 
-        os.makedirs(output_library_path, exist_ok=True)
-
-        # output kicad model
-        file_handler = KicadFileHandler(kicad_mod)
-        file_handler.writeFile(output_library_path / f'{kicad_mod.name}.kicad_mod')
+        # This is the point in future where the FootprintGenerator can dispatch
+        # to the IPC API instead of writing to disk ourselves.
+        output_library = KicadPrettyLibrary(library_name, output_dir=self.output_path)
+        output_library.save(kicad_mod)
 
     def get_standard_3d_model_path(self, library_name: str, model_name: str) -> str:
         """

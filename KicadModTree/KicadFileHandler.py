@@ -13,8 +13,10 @@
 #
 # (C) 2016-2018 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 
+import abc
 import re
-from typing import Optional, List, Union
+from pathlib import Path
+from typing import Optional, List
 
 from KicadModTree.FileHandler import FileHandler
 from KicadModTree.util.kicad_util import SexprSerializer
@@ -330,13 +332,16 @@ class KicadFileHandler(FileHandler):
     # this is just a fixed string, same as for KiCad v7 generators.
     GENERATOR_NAME: str = 'kicad-footprint-generator'
 
+    kicad_mod: Footprint
+
     angle_tolerance_deg: float = 1e-9  # degrees
     size_tolerance_mm: float = 1e-9  # mm
 
     def __init__(self, kicad_mod: Footprint):
-        FileHandler.__init__(self, kicad_mod)
+        super().__init__()
+        self.kicad_mod = kicad_mod
 
-    def serialize(self, **kwargs):
+    def serialize(self):
         r"""Get a valid string representation of the footprint in the .kicad_mod format
 
         :Example:
@@ -1142,3 +1147,40 @@ class KicadFileHandler(FileHandler):
             return self._serialise_Boolean('embedded_fonts', False)
 
         raise NotImplementedError("'enabled' embedded fonts are not yet supported")
+
+
+class KicadModLibrary(abc.ABC):
+    """
+    Abstract base class for serialising a footprint to a library
+    (e.g. a .kicad_mod file, a .pretty directory, or a nickname in an
+    IPC library).
+    """
+
+    @abc.abstractmethod
+    def save(self, fp: Footprint):
+        pass
+
+
+class KicadPrettyLibrary(KicadModLibrary):
+    """
+    Implementation of the KicadModLibrary for .pretty directories
+    (i.e. direct file write)
+    """
+
+    def __init__(self, lib_name: str, output_dir: Path | None):
+
+        if not lib_name.endswith(".pretty"):
+            lib_name += ".pretty"
+
+        if output_dir is None:
+            self.path = Path(lib_name)
+        else:
+            self.path = output_dir / lib_name
+
+    def save(self, fp: Footprint):
+
+        self.path.mkdir(parents=True, exist_ok=True)
+
+        # Delegate to the s-expression serialiser
+        file_handler = KicadFileHandler(fp)
+        file_handler.writeFile(self.path / (fp.name + ".kicad_mod"))

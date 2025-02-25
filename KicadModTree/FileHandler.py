@@ -15,47 +15,25 @@
 
 import io
 import os
+import abc
 
-from KicadModTree.nodes.Footprint import Footprint
 
-
-class FileHandler(object):
-    r"""some basic methods to write footprints, and which is the base class of footprint writer implementations
-
-    :param kicad_mod:
-        Main object representing the footprint
-    :type kicad_mod: ``KicadModTree.Footprint``
-
-    :Example:
-
-    >>> from KicadModTree import *
-    >>> kicad_mod = Footprint("example_footprint", FootprintType.THT)
-    >>> file_handler = KicadFileHandler(kicad_mod)  # KicadFileHandler is a implementation of FileHandler
-    >>> file_handler.writeFile('example_footprint.kicad_mod')
+class FileHandler(abc.ABC):
+    r"""some basic methods to write KiCad library files, the base class
+    of footprint (and perhaps later, symbol) direct-file writer implementations
     """
-    kicad_mod: Footprint
 
-    def __init__(self, kicad_mod: Footprint):
-        self.kicad_mod = kicad_mod
-
-    def writeFile(self, filename, **kwargs):
+    def writeFile(self, filename):
         r"""Write the output of FileHandler.serialize to a file
 
         :param filename:
             path of the output file
         :type filename: ``str``
-
-        :Example:
-
-        >>> from KicadModTree import *
-        >>> kicad_mod = Footprint("example_footprint", FootprintType.THT)
-        >>> file_handler = KicadFileHandler(kicad_mod)  # KicadFileHandler is a implementation of FileHandler
-        >>> file_handler.writeFile('example_footprint.kicad_mod')
         """
 
         fp = None
         with io.open(filename, "w") as f:
-            output = self.serialize(**kwargs)
+            output = self.serialize()
 
             if not output.endswith("\n"):
                 output += "\n"
@@ -67,7 +45,8 @@ class FileHandler(object):
             f.close()
         return fp
 
-    def serialize(self, **kwargs):
+    @abc.abstractmethod
+    def serialize(self):
         r"""Get a valid string representation of the footprint in the specified format
 
         :Example:

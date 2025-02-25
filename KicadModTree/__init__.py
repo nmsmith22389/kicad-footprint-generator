@@ -17,7 +17,7 @@
 from KicadModTree.nodes import *
 
 # File Handlers
-from KicadModTree.KicadFileHandler import KicadFileHandler
+from KicadModTree.KicadFileHandler import KicadFileHandler, KicadPrettyLibrary
 
 # Argparser
 from KicadModTree.ModArgparser import ModArgparser

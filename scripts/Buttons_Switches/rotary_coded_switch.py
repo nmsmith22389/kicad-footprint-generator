@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 from KicadModTree import *
+from KicadModTree.KicadFileHandler import KicadPrettyLibrary
 
 
 def rotary_coded_switch(args):
@@ -24,11 +25,13 @@ def rotary_coded_switch(args):
         tech = "SMD"
         footprint_type = FootprintType.SMD
 
+    lib_name = "Buttons_Switches_" + tech
+
     f = Footprint(footprint_name, footprint_type)
     f.setDescription("4-bit rotary coded switch, " + style + ", " + datasheet)
     f.setTags("rotary switch bcd")
 
-    f.append(Model(filename="${KICAD9_3DMODEL_DIR}/Buttons_Switches_" + tech + ".3dshapes/" + footprint_name + ".wrl", at=[0, 0, 0], scale=[1, 1, 1], rotate=[0.0, 0.0, 0.0]))
+    f.append(Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl", at=[0, 0, 0], scale=[1, 1, 1], rotate=[0.0, 0.0, 0.0]))
 
     wCrtYd = 0.05
     wFab = 0.1
@@ -174,8 +177,8 @@ def rotary_coded_switch(args):
                                  size=p,
                                  layers=Pad.LAYERS_SMT))
 
-    file_handler = KicadFileHandler(f)
-    file_handler.writeFile(footprint_name + ".kicad_mod")
+    lib = KicadPrettyLibrary(lib_name, None)
+    lib.save(f)
 
 
 if __name__ == '__main__':

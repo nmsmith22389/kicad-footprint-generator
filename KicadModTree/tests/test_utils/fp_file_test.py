@@ -34,7 +34,7 @@ class SerialisationTest:
         """
         file_handler = KicadFileHandler(kicad_mod)
 
-        rendered = file_handler.serialize(timestamp=0)
+        rendered = file_handler.serialize()
 
         exp_file = os.path.join(self.results_dir, exp_content_file)
 
