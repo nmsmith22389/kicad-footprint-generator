@@ -633,25 +633,26 @@ SOIC-14W_7.5x9.0mm_P1.27mm:
   num_pins_y: 7
 
 SOIC-16_3.9x9.9mm_P1.27mm:
-  size_source: 'JEDEC MS-012AC, https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/soic_narrow-r/r_16.pdf'
-  body_size_x: # from JEDEC
-    nominal: 3.9
-    tolerance: 0.1
-  body_size_y:
-    minimum: 9.8
-    maximum: 10
+  size_source: 'JEDEC MS-012, variation AC, https://www.jedec.org/document_search?search_api_views_fulltext=MS-012, https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/soic_narrow-r/r_16.pdf'
+  compatible_mpns:
+    - '16-pin-NSOP'   # https://www.holtek.com/webapi/116711/HT42B534-xv120.pdf#page=15
+    - 'R-16'          # https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/soic_narrow-r/r_16.pdf
+    - 'R-16-S'        # https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/soic-narrow-sensor/R-16-S.pdf
+    - 'D0016A'        # https://www.ti.com/lit/ml/mpds432a/mpds432a.pdf
+    - 'M2B'           # https://ww1.microchip.com/downloads/aemDocuments/documents/package-outline-drawings/c04-21317a.pdf
+    - 'SO16 SOT109-1' # https://www.nxp.com/docs/en/package-information/SOT109-1.pdf
+    - '751B'          # https://www.onsemi.com/download/package-drawing/pdf/751b.pdf
+    - 'SOIC_N'        # '_N' stands for narrow, used by some manufacturers
+  additional_tags:
+    - 'narrow'
+  body_size_x: 3.90 +/- 0.10 # JEDEC + tolerance from Analog Devices
+  body_size_y: 9.90 +/- 0.10
   overall_height:
     maximum: 1.75
 
-  overall_size_x: # from JEDEC (agrees with linked datasheet)
-    nominal: 6
-    tolerance: 0.2
-  lead_len:
-    minimum: 0.4
-    maximum: 1.27
-  lead_width: # from JEDEC (agrees with linked datasheet)
-    minimum: 0.31
-    maximum: 0.51
+  overall_size_x: 6.00 +/- 0.20 # JEDEC + tolerance from Analog Devices
+  lead_len: 0.835 +/- 0.435 # the same as 0.40 .. 1.27
+  lead_width: 0.31 .. 0.51 # from JEDEC (agrees with linked datasheet)
 
   pitch: 1.27
   num_pins_x: 0
