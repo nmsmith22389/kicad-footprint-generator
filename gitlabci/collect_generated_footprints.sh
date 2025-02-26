@@ -3,15 +3,16 @@
 # Move generated footprints from scripts/ to generated_footprints/
 set -e
 
-SRC_ROOT=scripts/
-DEST_ROOT=generated_footprints/
+src_root="$1"
+dest_root="$2"
 
-mkdir "$DEST_ROOT"
+mkdir -p "$dest_root"
 
 shopt -s globstar nullglob
-for src_fp_path in "$SRC_ROOT"**/*.kicad_mod; do
-  relative_fp_path="${src_fp_path#$SRC_ROOT}"
-  dest_fp_parent_path="$(dirname "$DEST_ROOT/$relative_fp_path")"
+
+for src_fp_path in "$src_root"/**/*.kicad_mod; do
+  relative_fp_path="${src_fp_path#"$src_root"}"
+  dest_fp_parent_path="$(dirname "$dest_root/$relative_fp_path")"
   mkdir -p "$dest_fp_parent_path"
   mv "$src_fp_path" -t "$dest_fp_parent_path"
 done
@@ -21,7 +22,7 @@ done
 # properly)
 # (TODO: This should probably be solved differently later on, e.g. by teaching
 # subsequent processes to treat these dirs no different from ones with .pretty)
-for dir_path in "$DEST_ROOT"**/; do
+for dir_path in "$dest_root"/**/; do
   fps=( "$dir_path"/*.kicad_mod )
   if [[ -n "${fps[0]}" && ! "$dir_path" =~ \.pretty/$ ]]; then
     # Extra _renamed suffix added to avoid collisions, because at least one

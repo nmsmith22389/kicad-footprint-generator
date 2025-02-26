@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
-# Meant to be run in CI only.
+
+# Script to diff two directories of footprints and generate HTML diffs
+#
 # Adapted from kicad-library-utils/tools/gitlabci/visual_diff.sh
 # => TODO: Refactor to extract common functionality?
 set -ex
@@ -15,7 +17,7 @@ output_dir="$3"   # output directory for the diffs
 
 echo "Comparing $base_dir to $target_dir"
 
-readarray -t changed_dirs < <(git diff --no-index --name-only "$base_dir" "$target_dir" | xargs dirname | sort | uniq | grep '\.pretty$')
+readarray -t changed_dirs < <(git diff --no-index --name-only "$base_dir" "$target_dir" | xargs --no-run-if-empty dirname | sort | uniq | grep '\.pretty$')
 
 for target_path in "${changed_dirs[@]}"; do
 

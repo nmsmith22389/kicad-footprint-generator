@@ -65,6 +65,12 @@ py_test_coverage() {
     black --check .
 }
 
+run_shellcheck() {
+    echo ''
+    echo '[!] Running shellcheck'
+    shellcheck gitlabci/*.sh
+}
+
 tests() {
     set -e
     unit_tests

@@ -62,3 +62,5 @@ docs/_build/
 metrics.txt
 footprints.tar.*
 
+# Default generate-and-compare location
+output
