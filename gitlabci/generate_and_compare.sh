@@ -146,12 +146,12 @@ function generate_all_footprints() {
         # Hopefully one day this can be `make $targets[@]` and we can save a bunch of time
         for subdir in "${script_subdirs[@]}"; do
             cd "$subdir"
-            time ./generate.sh
+            time ./generator.py -j0
         done
     else
         # Generate in the main script directory = all
         cd "$src_root/scripts"
-        time ./generate.sh
+        time ./generator.py -j0
     fi
 
     # We have to move all the generated footprints to the correct directory
