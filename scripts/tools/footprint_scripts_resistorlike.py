@@ -704,17 +704,18 @@ def makeResistorRadial(seriesname, rm, w, h, ddrill, R_POW, innerw=0,innerh=0,rm
         else:
             dimdesc = "diameterX*diameterY={0}*{1}mm^2".format(w, h)
             dimdesct = "diameterX {0}mm diameterY {1}mm".format(w, h)
-        if classname[0].upper() == "C":
+
+        # I have no idea why CP_ doesn't get height, but changing that requires a lot
+        # of effort and synchronised 3D changes, so is procedurally impractical.
+        if classname in ["C"]:
             footprint_name = classname + "{2}_D{1:0.1f}mm_H{3:0.1f}mm{0}".format(fnpins, w, snfp, height3d) # radial caps
         else:
             footprint_name = classname + "{2}_D{1:0.1f}mm{0}".format(fnpins, w, snfp)
     elif type=="disc" or type == "disc45":
         footprint_name = classname+"{3}_D{1:0.1f}mm_W{2:0.1f}mm{0}".format(fnpins, w, h, snfp)
     else:
-        if classname[0].upper() == "C":
-            footprint_name = classname+"{3}_L{1:0.1f}mm_W{2:0.1f}mm_H{4:0.1f}mm{0}".format(fnpins, w, h, snfp, height3d) #rect (box) caps
-        else:
-            footprint_name = classname+"{3}_L{1:0.1f}mm_W{2:0.1f}mm{0}".format(fnpins, w, h, snfp)
+        # No rect caps currently have height-based names
+        footprint_name = classname+"{3}_L{1:0.1f}mm_W{2:0.1f}mm{0}".format(fnpins, w, h, snfp)
 
     if classname[0].upper() == "C":
         description = classnamefancy+"{2}, Radial, pin pitch={0}, {1}".format(pind, dimdesc, sn)
