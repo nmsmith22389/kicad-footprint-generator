@@ -160,7 +160,7 @@ if __name__ == '__main__':
         makeResistorRadial(seriesname=seriesname, rm=rm, w=w, h=d, ddrill=ddrill, R_POW=R_POW,
                                     type=type, w2=w2, x_3d=[0, 0, 0], s_3d=[1, 1, 1], has3d=1,
                                     specialfpname="", add_description=add_description, name_additions=name_additions,
-                                    specialtags=specialtags, classname="C", lib_name="${KICAD9_3DMODEL_DIR}/Capacitor_THT_Rectangular", height3d=h3d)
+                                    specialtags=specialtags, classname="C", lib_name="${KICAD9_3DMODEL_DIR}/Capacitor_THT", height3d=h3d)
 
 
     ###########################################################
@@ -186,7 +186,7 @@ if __name__ == '__main__':
         makeResistorRadial(seriesname=seriesname, rm=rm, rm2=rm2, w=w, h=d, ddrill=ddrill, R_POW=R_POW,
                                     type=type, w2=w2, x_3d=[0, 0, 0], s_3d=[1, 1, 1], has3d=1,
                                     specialfpname="", add_description=add_description, name_additions=name_additions,
-                                    specialtags=specialtags, classname="C", lib_name="${KICAD9_3DMODEL_DIR}/Capacitor_THT_Rectangular", height3d=10)
+                                    specialtags=specialtags, classname="C", lib_name="${KICAD9_3DMODEL_DIR}/Capacitor_THT", height3d=10)
 
 
 
