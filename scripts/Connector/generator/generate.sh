@@ -1,5 +1,7 @@
 #! /usr/bin/env bash
 
+set -ex
+
 run_generate() {
     python3 ./connector_generator.py $1
 }
