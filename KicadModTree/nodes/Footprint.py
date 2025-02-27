@@ -20,6 +20,7 @@ from KicadModTree.nodes.base.EmbeddedFonts import EmbeddedFonts
 
 from enum import Enum
 import uuid
+import re
 
 '''
 This is my new approach, using a render tree for footprint generation.
@@ -50,6 +51,7 @@ class Footprint(Node):
     Root Node to generate KicadMod
     '''
 
+    _description: str | None
     _tags: list[str]
     _embedded_fonts: EmbeddedFonts
 
@@ -61,7 +63,7 @@ class Footprint(Node):
         Node.__init__(self)
 
         self.name = name
-        self.description = None
+        self._description = None
         self._tags = []
 
         # These are attrs in the s-exp, but we can be type-safe here
@@ -86,7 +88,29 @@ class Footprint(Node):
     def setName(self, name):
         self.name = name
 
-    def setDescription(self, description):
+    @property
+    def description(self) -> str | None:
+        return self._description
+
+    _COMMA_FIXER_RE = re.compile(r',(\s*,)+')
+
+    @description.setter
+    def description(self, description: str) -> None:
+        # Many generators have a bad habit of constructing descriptions
+        # with hardcoded format strings with comma-separated empty values,
+        # which results in cruft like ", , " in the description.
+        #
+        # Tidy this up here, but one day, this should be an exception and
+        # callers should just get it right, becaue magical "helpful" fixes
+        # are technical debt with a wig on.
+
+        description = self._COMMA_FIXER_RE.sub(',', description)
+        self._description = description
+
+    def setDescription(self, description: str):
+        """
+        Compatibility setter, use the property instead
+        """
         self.description = description
 
     @property
