@@ -12,6 +12,7 @@ from KicadModTree import *  # NOQA
 from kilibs.geom import Direction
 from scripts.tools.drawing_tools import SilkArrowSize
 from scripts.tools.drawing_tools_silk import draw_silk_triangle_for_pad
+from scripts.tools.global_config_files import global_config as GC
 
 
 class Dimensions(object):
@@ -147,6 +148,8 @@ class DPAK(object):
     first_pad: Optional[Pad]
     tab_pad: Optional[Pad]
 
+    global_config: GC.GlobalConfig
+
     def __init__(self, base: dict, variant: dict, cut_pin: bool, tab_linked: bool):
         """
         :param base: The base configuration for the DPAK series
@@ -154,6 +157,9 @@ class DPAK(object):
         :param cut_pin: Whether to remove the centre pin
         :param tab_linked: Whether the tab is linked to the centre pin, or has its own number
         """
+
+        self.global_config = GC.DefaultGlobalConfig()
+
         self.base = base
         self.variant = variant
         self.cut_pin = cut_pin
@@ -459,11 +465,16 @@ class DPAK(object):
                 )
 
     def add_3D_model(self):
+        model_filename = (
+            self.global_config.model_3d_prefix
+            + self.base["libname"]
+            + "/"
+            + self.dim.name
+            + ".wrl"
+        )
         self.m.append(
             Model(
-                filename="{p:s}/{n:s}.wrl".format(
-                    p=self.base["3d_prefix"], n=self.dim.name
-                ),
+                filename=model_filename,
                 at=[0, 0, 0],
                 scale=[1, 1, 1],
                 rotate=[0, 0, 0],

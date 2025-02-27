@@ -36,6 +36,7 @@ class GlobalConfig:
 
     edge_cuts_line_width: float
 
+    # Includes trailing '/'
     model_3d_prefix: str
 
     def __init__(self, data: dict):

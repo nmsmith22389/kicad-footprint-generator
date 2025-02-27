@@ -160,7 +160,7 @@ if __name__ == '__main__':
         makeResistorRadial(seriesname=seriesname, rm=rm, w=w, h=d, ddrill=ddrill, R_POW=R_POW,
                                     type=type, w2=w2, x_3d=[0, 0, 0], s_3d=[1, 1, 1], has3d=1,
                                     specialfpname="", add_description=add_description, name_additions=name_additions,
-                                    specialtags=specialtags, classname="C", lib_name="${KICAD9_3DMODEL_DIR}/Capacitor_THT", height3d=h3d)
+                                    specialtags=specialtags, classname="C", lib_name="Capacitor_THT", height3d=h3d)
 
 
     ###########################################################
@@ -186,7 +186,7 @@ if __name__ == '__main__':
         makeResistorRadial(seriesname=seriesname, rm=rm, rm2=rm2, w=w, h=d, ddrill=ddrill, R_POW=R_POW,
                                     type=type, w2=w2, x_3d=[0, 0, 0], s_3d=[1, 1, 1], has3d=1,
                                     specialfpname="", add_description=add_description, name_additions=name_additions,
-                                    specialtags=specialtags, classname="C", lib_name="${KICAD9_3DMODEL_DIR}/Capacitor_THT", height3d=10)
+                                    specialtags=specialtags, classname="C", lib_name="Capacitor_THT", height3d=10)
 
 
 
@@ -252,7 +252,7 @@ if __name__ == '__main__':
         makeResistorRadial(seriesname=seriesname, rm=rm, w=w, h=d, ddrill=ddrill, R_POW=R_POW,
                            type=type, w2=w2, x_3d=[0, 0, 0], s_3d=[1, 1, 1], has3d=1,
                            specialfpname="", add_description=add_description, name_additions=name_additions,
-                           specialtags=specialtags, classname="C", lib_name="${KICAD9_3DMODEL_DIR}/Capacitor_THT")
+                           specialtags=specialtags, classname="C", lib_name="Capacitor_THT")
 
 
 
@@ -274,14 +274,14 @@ if __name__ == '__main__':
         makeResistorAxialHorizontal(seriesname=seriesname, rm=rm, rmdisp=rm, w=w, d=d, ddrill=ddrill, R_POW=R_POW,
                                     type=type, d2=d2, x_3d=[0, 0, 0], s_3d=[1, 1, 1], has3d=1,
                                     specialfpname="", add_description=add_description, name_additions=name_additions,
-                                    specialtags=name_additions, classname="C", lib_name="${KICAD9_3DMODEL_DIR}/Capacitor_THT")
+                                    specialtags=name_additions, classname="C", lib_name="Capacitor_THT")
 
     seriesname = "Axial"; w = 5.1; d = 3.1; ddrill = 0.8; R_POW = 0; add_description = "http://www.vishay.com/docs/45231/arseries.pdf"; name_additions = []
     for rm in [7.5, 10, 12.5, 15]:
         makeResistorAxialHorizontal(seriesname=seriesname, rm=rm, rmdisp=rm, w=w, d=d, ddrill=ddrill, R_POW=R_POW,
                                     type=type, d2=d2, x_3d=[0, 0, 0], s_3d=[1, 1, 1], has3d=1,
                                     specialfpname="", add_description=add_description, name_additions=name_additions,
-                                    specialtags=name_additions, classname="C", lib_name="${KICAD9_3DMODEL_DIR}/Capacitor_THT")
+                                    specialtags=name_additions, classname="C", lib_name="Capacitor_THT")
     for w in [12,17,19,22]:
         if w == 12:
             rms = [15, 20]
@@ -301,31 +301,31 @@ if __name__ == '__main__':
                 makeResistorAxialHorizontal(seriesname=seriesname, rm=rm, rmdisp=rm, w=w, d=d, ddrill=ddrill, R_POW=R_POW,
                                             type=type, d2=d2, x_3d=[0, 0, 0], s_3d=[1, 1, 1], has3d=1,
                                             specialfpname="", add_description=add_description, name_additions=name_additions,
-                                            specialtags=name_additions, classname="C", lib_name="${KICAD9_3DMODEL_DIR}/Capacitor_THT")
+                                            specialtags=name_additions, classname="C", lib_name="Capacitor_THT")
     seriesname = "Axial"; w = 12; d = 6.5; ddrill = 0.8; R_POW = 0; add_description = "http://cdn-reichelt.de/documents/datenblatt/B300/STYROFLEX.pdf"; name_additions = []
     for rm in [15,20]:
         makeResistorAxialHorizontal(seriesname=seriesname, rm=rm, rmdisp=rm, w=w, d=d, ddrill=ddrill, R_POW=R_POW,
                                     type=type, d2=d2, x_3d=[0, 0, 0], s_3d=[1, 1, 1], has3d=1,
                                     specialfpname="", add_description=add_description, name_additions=name_additions,
-                                    specialtags=name_additions, classname="C", lib_name="${KICAD9_3DMODEL_DIR}/Capacitor_THT")
+                                    specialtags=name_additions, classname="C", lib_name="Capacitor_THT")
     seriesname = "Axial"; w = 12; d = 7.5; ddrill = 0.8; R_POW = 0; add_description = "http://cdn-reichelt.de/documents/datenblatt/B300/STYROFLEX.pdf"; name_additions = []
     for rm in [15,20]:
         makeResistorAxialHorizontal(seriesname=seriesname, rm=rm, rmdisp=rm, w=w, d=d, ddrill=ddrill, R_POW=R_POW,
                                     type=type, d2=d2, x_3d=[0, 0, 0], s_3d=[1, 1, 1], has3d=1,
                                     specialfpname="", add_description=add_description, name_additions=name_additions,
-                                    specialtags=name_additions, classname="C", lib_name="${KICAD9_3DMODEL_DIR}/Capacitor_THT")
+                                    specialtags=name_additions, classname="C", lib_name="Capacitor_THT")
     seriesname = "Axial"; w = 12; d = 8.5; ddrill = 0.8; R_POW = 0; add_description = "http://cdn-reichelt.de/documents/datenblatt/B300/STYROFLEX.pdf"; name_additions = []
     for rm in [15,20]:
         makeResistorAxialHorizontal(seriesname=seriesname, rm=rm, rmdisp=rm, w=w, d=d, ddrill=ddrill, R_POW=R_POW,
                                     type=type, d2=d2, x_3d=[0, 0, 0], s_3d=[1, 1, 1], has3d=1,
                                     specialfpname="", add_description=add_description, name_additions=name_additions,
-                                    specialtags=name_additions, classname="C", lib_name="${KICAD9_3DMODEL_DIR}/Capacitor_THT")
+                                    specialtags=name_additions, classname="C", lib_name="Capacitor_THT")
     seriesname = "Axial"; w = 12; d = 9.5; ddrill = 0.8; R_POW = 0; add_description = "http://cdn-reichelt.de/documents/datenblatt/B300/STYROFLEX.pdf"; name_additions = []
     for rm in [15,20]:
         makeResistorAxialHorizontal(seriesname=seriesname, rm=rm, rmdisp=rm, w=w, d=d, ddrill=ddrill, R_POW=R_POW,
                                     type=type, d2=d2, x_3d=[0, 0, 0], s_3d=[1, 1, 1], has3d=1,
                                     specialfpname="", add_description=add_description, name_additions=name_additions,
-                                    specialtags=name_additions, classname="C", lib_name="${KICAD9_3DMODEL_DIR}/Capacitor_THT")
+                                    specialtags=name_additions, classname="C", lib_name="Capacitor_THT")
 
 
 
@@ -373,7 +373,7 @@ if __name__ == '__main__':
         makeResistorRadial(seriesname=seriesname, rm=rm, w=d, h=d, ddrill=ddrill, R_POW=R_POW,
                            type=type, w2=w2, x_3d=[0, 0, 0], s_3d=[1, 1, 1], has3d=1,
                            specialfpname="", add_description=add_description, name_additions=name_additions,
-                           specialtags=specialtags, classname="CP", lib_name="${KICAD9_3DMODEL_DIR}/Capacitor_THT", deco=deco)
+                           specialtags=specialtags, classname="CP", lib_name="Capacitor_THT", deco=deco)
 
     ###########################################################
     # radial electrolytic capacitors
@@ -434,7 +434,7 @@ if __name__ == '__main__':
         makeResistorRadial(seriesname=seriesname, rm=rm, rm2=rm2, w=d, h=d, ddrill=ddrill, R_POW=R_POW,
                            type=type, w2=w2, x_3d=[0, 0, 0], s_3d=[1, 1, 1], has3d=1,
                            specialfpname="", add_description=add_description, name_additions=name_additions,
-                           specialtags=special_tags, classname="CP", lib_name="${KICAD9_3DMODEL_DIR}/Capacitor_THT", deco=deco,
+                           specialtags=special_tags, classname="CP", lib_name="Capacitor_THT", deco=deco,
                            height3d=h3d)
 
     ###########################################################
@@ -485,7 +485,7 @@ if __name__ == '__main__':
         makeResistorRadial(seriesname=seriesname, rm=rm, rm2=rm2, w=d, h=d, ddrill=ddrill, R_POW=R_POW,
                            type=type, w2=w2, x_3d=[0, 0, 0], s_3d=[1, 1, 1], has3d=1,
                            specialfpname="", add_description=add_description, name_additions=name_additions,
-                           specialtags=special_tags, classname="C", lib_name="${KICAD9_3DMODEL_DIR}/Capacitor_THT", deco=deco,
+                           specialtags=special_tags, classname="C", lib_name="Capacitor_THT", deco=deco,
                            height3d=h3d)
 
 
@@ -524,7 +524,7 @@ if __name__ == '__main__':
         makeResistorRadial(seriesname=seriesname, rm=rm, rm2=rm2, w=d, h=d, ddrill=ddrill, R_POW=R_POW,
                            type=type, w2=w2, x_3d=[0, 0, 0], s_3d=[1, 1, 1], has3d=1,
                            specialfpname="", add_description=add_description, name_additions=name_additions,
-                           specialtags=special_tags, classname="CP", lib_name="${KICAD9_3DMODEL_DIR}/Capacitor_THT", deco=deco,
+                           specialtags=special_tags, classname="CP", lib_name="Capacitor_THT", deco=deco,
                            height3d=h3d, additionalPins=ap)
 
 
@@ -606,4 +606,4 @@ if __name__ == '__main__':
         makeResistorAxialHorizontal(seriesname=seriesname, rm=rm, rmdisp=rm, w=l, d=d, ddrill=ddrill, R_POW=R_POW,
                            type=type, x_3d=[0, 0, 0], s_3d=[1, 1, 1], has3d=1,
                            specialfpname="", add_description=add_description, name_additions=name_additions,
-                           specialtags=special_tags, classname="CP", lib_name="${KICAD9_3DMODEL_DIR}/Capacitor_THT", deco=deco)
+                           specialtags=special_tags, classname="CP", lib_name="Capacitor_THT", deco=deco)

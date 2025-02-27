@@ -4,6 +4,7 @@ import argparse
 import yaml
 
 from scripts.tools.drawing_tools import round_to_grid
+from scripts.tools.global_config_files import global_config as GC
 from KicadModTree import *  # NOQA
 from bump import *
 from corners import *
@@ -60,14 +61,19 @@ class Dimensions(object):
         return name
 
 
-class CapacitorTrimmer(object):
+class CapacitorTrimmer:
+
+    global_config: GC.GlobalConfig
 
     def __init__(self, config_file):
         self.FAMILY = None
         self.config = None
 
-
     def _load_config(self, config_file):
+
+        # This will come from FootprintGenerator one day
+        self.global_config = GC.DefaultGlobalConfig()
+
         try:
             devices = yaml.safe_load_all(open(config_file))
         except FileNotFoundError as fnfe:
@@ -80,12 +86,10 @@ class CapacitorTrimmer(object):
                 break
         return config
 
-
     def _add_properties(self, m, variant):
         m.setDescription('{bd:s}, {vd:s}'.format(bd=self.config['base']['description'], vd=variant['datasheet']))
         m.setTags('{bk:s} {vk:s}'.format(bk=self.config['base']['keywords'], vk=variant['keywords']))
         return m
-
 
     def _add_labels(self, m, variant, dim):
         m.append(Property(name=Property.REFERENCE, text='REF**', size=dim.silk_text_size, thickness=dim.silk_text_thickness, at=[dim.label_centre_x_mm, -dim.label_centre_y_mm],
@@ -93,7 +97,6 @@ class CapacitorTrimmer(object):
         m.append(Text(text='${REFERENCE}', size=dim.fab_reference_text_size, thickness=dim.fab_reference_text_thickness, at=[0, 0], layer='F.Fab'))
         m.append(Property(name=Property.VALUE, text=dim.name, size=dim.fab_text_size, thickness=dim.fab_text_thickness, at=[dim.label_centre_x_mm, dim.label_centre_y_mm], layer='F.Fab'))
         return m
-
 
     def _draw_pads(self, m, variant, dim):
         m.append(Pad(number=1, type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT,
@@ -105,7 +108,6 @@ class CapacitorTrimmer(object):
                              size=[variant['footprint']['pad']['x_mm'], variant['footprint']['pad']['y_mm']],
                              layers=Pad.LAYERS_SMT))
         return m
-
 
     def _draw_fab_outline(self, m, variant, dim, width, offset):
         # draw body
@@ -135,7 +137,6 @@ class CapacitorTrimmer(object):
             m = add_bump(m, [left_x, 0], p['y_side_mm'], p['offset_mm'], 'left', 'F.Fab', width, offset)
         return m
 
-
     def _draw_silk_outline(self, m, variant, dim, width, offset):
         right_x = dim.device_offset_x_mm
         left_x = right_x - dim.body_x_mm
@@ -150,20 +151,24 @@ class CapacitorTrimmer(object):
         m = add_corners(m, [left_x, top_y], [right_x, bottom_y], 0.5, 0.5, 'F.SilkS', width, offset, chamfers)
         return m
 
-
     def _draw_courtyard(self, m ,dim):
         m.append(RectLine(start=[-dim.courtyard_offset_x_mm, -dim.courtyard_offset_y_mm],
                                   end=[dim.courtyard_offset_x_mm, dim.courtyard_offset_y_mm], layer='F.CrtYd',
                                   width=dim.courtyard_line_width_mm))
         return m
 
-
     def _add_3D_model(self, m, base, dim):
+        model_filename = (
+            self.global_config.model_3d_prefix
+            + base["3d_libname"]
+            + ".3dshapes/"
+            + dim.name
+            + ".wrl"
+        )
         m.append(
-            Model(filename="{p:s}/{n:s}.wrl".format(p=base['3d_prefix'], n=dim.name), at=[0, 0, 0], scale=[1, 1, 1],
+            Model(filename=model_filename, at=[0, 0, 0], scale=[1, 1, 1],
                   rotate=[0, 0, 0]))
         return m
-
 
     def _build_footprint(self, base, variant, cut_pin=False, tab_linked=False, verbose=False):
 
@@ -266,4 +271,3 @@ class Factory(object):
                 self.build_list.append(StyleD(self._config_file))
             if not self.build_list:
                 print('Family not recognised')
-

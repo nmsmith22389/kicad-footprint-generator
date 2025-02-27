@@ -4,6 +4,7 @@ import math
 
 from KicadModTree import *  # NOQA
 from scripts.tools.drawing_tools import *
+from scripts.tools.global_config_files import global_config as GC
 from scripts.tools.footprint_global_properties import *
 
 
@@ -40,6 +41,9 @@ def getPowRat(R_POW=0.0):
 # deco="none"/"elco"/"diode"
 
 def makeResistorAxialHorizontal(seriesname, rm, rmdisp, w, d, ddrill, R_POW, type="cyl", d2=0, hasShuntPins=False, shuntPinsRM=0, x_3d=[0,0,0], s_3d=[1, 1, 1], has3d=1, specialfpname="", specialtags=[], add_description="", classname="R", lib_name="Resistor_THT", name_additions=[], deco="none"):
+
+    global_config = GC.DefaultGlobalConfig()
+
     padx=2*ddrill
     pady=padx
 
@@ -231,7 +235,8 @@ def makeResistorAxialHorizontal(seriesname, rm, rmdisp, w, d, ddrill, R_POW, typ
 
     # add model
     if (has3d!=0):
-        kicad_mod.append(Model(filename=lib_name + ".3dshapes/"+footprint_name+".wrl", at=x_3d, scale=s_3d, rotate=[0, 0, 0]))
+        model_filename = global_config.model_3d_prefix + lib_name + ".3dshapes/" + footprint_name + ".wrl"
+        kicad_mod.append(Model(filename=model_filename, at=x_3d, scale=s_3d, rotate=[0, 0, 0]))
 
     # print render tree
     # print(kicad_mod.getRenderTree())
@@ -246,6 +251,9 @@ def makeResistorAxialHorizontal(seriesname, rm, rmdisp, w, d, ddrill, R_POW, typ
 # deco="none"/"elco"/"cp"/"tantal"/"diode"/"diode_KUP"
 
 def makeResistorAxialVertical(seriesname,rm, rmdisp, l, d, ddrill, R_POW, type="cyl", d2=0, x_3d=[0, 0, 0], s_3d=[1,1,1], has3d=1, specialfpname="", largepadsx=0, largepadsy=0, specialtags=[], add_description="", classname="R", lib_name="Resistor_THT", name_additions=[],deco="none"):
+
+    global_config = GC.DefaultGlobalConfig()
+
     padx = 2 * ddrill
     if padx>rm-0.3:
         padx=max(ddrill+0.3, rm-0.3)
@@ -280,7 +288,7 @@ def makeResistorAxialVertical(seriesname,rm, rmdisp, l, d, ddrill, R_POW, type="
     t_crt = t_fab - crt_offset
 
 
-    fabtxt_size=1;
+    fabtxt_size=1
     fabtxt_thick=0.15
     if d<=5:
         fabtxt_size=d/5
@@ -336,7 +344,7 @@ def makeResistorAxialVertical(seriesname,rm, rmdisp, l, d, ddrill, R_POW, type="
         description = description + ", " + t
         tags = tags + " " + t
     if (specialfpname != ""):
-        footprint_name = specialfpname;
+        footprint_name = specialfpname
 
     if len(add_description) > 0:
         description = description + ", " + add_description
@@ -454,8 +462,9 @@ def makeResistorAxialVertical(seriesname,rm, rmdisp, l, d, ddrill, R_POW, type="
 
     # add model
     if (has3d != 0):
+        model_filename = global_config.model_3d_prefix + lib_name + ".3dshapes/" + footprint_name + ".wrl"
         kicad_mod.append(
-            Model(filename=lib_name + ".3dshapes/" + footprint_name + ".wrl", at=x_3d, scale=s_3d, rotate=[0, 0, 0]))
+            Model(filename=model_filename, at=x_3d, scale=s_3d, rotate=[0, 0, 0]))
 
     # print render tree
     # print(kicad_mod.getRenderTree())
@@ -540,6 +549,9 @@ def makeResistorAxialVertical(seriesname,rm, rmdisp, l, d, ddrill, R_POW, type="
 # deco="none","elco" (round),"tantal" (simple),"chokewire" (concentric)
 
 def makeResistorRadial(seriesname, rm, w, h, ddrill, R_POW, innerw=0,innerh=0,rm2=0, pins=2, vlines=False,w2=0, type="simple", x_3d=[0, 0, 0], s_3d=[1,1,1], has3d=1, specialfpname="", specialtags=[], add_description="", classname="R", lib_name="Resistor_THT", name_additions=[], deco="none",height3d=10, additionalPins=[]):
+
+    global_config = GC.DefaultGlobalConfig()
+
     if innerw<=0:
         innerw=w
     if innerh<=0:
@@ -886,12 +898,10 @@ def makeResistorRadial(seriesname, rm, w, h, ddrill, R_POW, innerw=0,innerh=0,rm
             ps=pad1style
         kicad_modg.append(Pad(number=p[0], type=Pad.TYPE_THT, shape=ps, at=[p[1], p[2]], size=[p[4],p[5]], drill=p[3], layers=Pad.LAYERS_THT))
 
-
-
-
     # add model
     if (has3d != 0):
-        kicad_modg.append(Model(filename=lib_name + ".3dshapes/" + footprint_name + ".wrl", at=x_3d, scale=s_3d, rotate=[0, 0, 0]))
+        model_filename = global_config.model_3d_prefix + lib_name + ".3dshapes/" + footprint_name + ".wrl"
+        kicad_modg.append(Model(filename=model_filename, at=x_3d, scale=s_3d, rotate=[0, 0, 0]))
 
     # print render tree
     # print(kicad_mod.getRenderTree())
