@@ -131,6 +131,19 @@ class FPGenerateShGenerator(Generator):
         return self.generate_sh.parent.name
 
 
+class GenerationResult:
+    """
+    The result of a generation operation.
+
+    Exentually, this will record all sorts of stats, like number of footprints generated,
+    time taken, etc. But for now, with generate.sh generators, it's just a success flag.
+    """
+
+    def __init__(self, generator: Generator, success: bool):
+        self.generator = generator
+        self.success = success
+
+
 class GeneratorRunner:
 
     _generators: list[Generator]
@@ -143,6 +156,7 @@ class GeneratorRunner:
         self.separate_outputs = False
 
         self._generators = []
+        self._failures = []
 
         with Timer("Generator discovery"):
             # Discover generators
@@ -206,25 +220,50 @@ class GeneratorRunner:
 
             return (g, gen_output_dir, self.separate_outputs)
 
+        results = []
+
         if jobs == 1 or len(gens) == 1:
             # In-process generation when single-threaded case for easier debugging
             # (generators may still shell out if they want, can't help that)
             for g in gens:
-                self._do_generate(*args_for_gen(g))
+                result = self._do_generate(*args_for_gen(g))
+                results.append(result)
         else:
             # Multiprocess jobs of 'None' means use the number of CPUs
             mp_jobs = jobs if jobs else None
 
             with Pool(mp_jobs) as p:
-                p.starmap(self._do_generate, (args_for_gen(g) for g in gens))
+                results = p.starmap(self._do_generate, (args_for_gen(g) for g in gens))
+
+        # Process results
+
+        failed_gens = []
+
+        for result in results:
+            if not result.success:
+                failed_gens.append(result.generator)
+
+        if failed_gens:
+            logging.error(f"Generation failed for the following {len(failed_gens)} generators:")
+
+            for g in failed_gens:
+                logging.error(f"  - {g.name}")
+        else:
+            logging.info(f"Generation completed with no failures.")
+
+        return len(failed_gens) == 0
 
     @staticmethod
-    def _do_generate(gen: Generator, output_dir: Path | None, separate_paths: bool):
+    def _do_generate(gen: Generator, output_dir: Path | None, separate_paths: bool) -> GenerationResult:
+        success = False
         with Timer(f"Generating {gen.name}"):
             try:
                 gen.generate(output_dir)
+                success = True
             except Generator.GenerationError as e:
                 logging.error(f"Failed to generate footprints for {gen.name}: {e}")
+
+        return GenerationResult(gen, success)
 
 
 if __name__ == "__main__":
@@ -287,4 +326,13 @@ if __name__ == "__main__":
             print(g.name)
         sys.exit(0)
 
-    generator.generate(args.library if args.library else [], jobs=args.jobs)
+    success = generator.generate(args.library if args.library else [], jobs=args.jobs)
+
+    ret_code = 0 if success else 2
+
+    if ret_code != 0:
+        logging.error(f"Generation failed, returning exit code {ret_code}")
+    else:
+        logging.info(f"Generation successful, returning exit code {ret_code}")
+
+    sys.exit(ret_code)
