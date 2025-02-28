@@ -20,6 +20,7 @@ dependencies = [
     "typing_extensions",
     "pyyaml",
     "future",
+    "tabulate",
 ]
 
 # Optional: development dependencies

@@ -13,8 +13,17 @@ import os
 import subprocess
 import sys
 import time
+import traceback
 from multiprocessing import Pool
 from pathlib import Path
+
+try:
+    import tabulate
+except ImportError:
+    print(
+        "Import failed. Use 'pip install -e' to install dependencies. See the README.md file."
+    )
+    sys.exit(1)
 
 
 class Timer:
@@ -36,17 +45,18 @@ class Timer:
 
     @property
     def duration(self):
-        return self.duration
+        return time.perf_counter() - self.start
 
 
 class Generator(abc.ABC):
+
     def __init__(self):
         pass
 
     @abc.abstractmethod
-    def generate(self):
+    def generate(self) -> "GenerationResult":
         """
-        Run the generator
+        Run the generator, returning a GenerationResult.
         """
         pass
 
@@ -74,6 +84,39 @@ class Generator(abc.ABC):
         pass
 
 
+class GenerationResult:
+    """
+    The result of a generation operation.
+
+    Exentually, this will record all sorts of stats, like number of footprints generated,
+    time taken, etc. But for now, with generate.sh generators, it's just a success flag.
+
+    Some of this data by not be known by the generator itself (e.g. if the generator dies),
+    so it is filled in by the runner.
+    """
+
+    generator: Generator
+    success: bool
+
+    # An exception that was raised during generation, None if no exception
+    exception: Generator.GenerationError | None
+
+    # Time taken to generate footprints, None if didn't start
+    time: float | None
+
+    # Number of series generated (None = Generator didn't say)
+    num_series: int | None
+    # Number of footprints generated (None = Generator didn't say)
+    num_fps: int | None
+
+    def __init__(self, generator: Generator):
+        self.generator = generator
+        self.success = False
+        self.time = 0
+        self.num_series = None
+        self.num_fps = None
+
+
 class FPGenerateShGenerator(Generator):
     """
     A generator that runs a generate.sh script.
@@ -97,7 +140,7 @@ class FPGenerateShGenerator(Generator):
     def base_path(self):
         return self.generate_sh.parent
 
-    def generate(self, output_dir: Path | None):
+    def generate(self, output_dir: Path | None) -> "GenerationResult":
         logging.info("Running generate.sh: %s" % self.generate_sh)
 
         cmd = [self.generate_sh.absolute()]
@@ -107,10 +150,21 @@ class FPGenerateShGenerator(Generator):
         if output_dir is not None:
             env.update({"KICAD_FP_GENERATOR_OUTPUT_DIR": output_dir})
 
+        res = GenerationResult(self)
+
         try:
             subprocess.run(cmd, check=True, cwd=cwd, env=env)
+            res.success = True
         except subprocess.CalledProcessError as e:
-            raise Generator.GenerationError(f"Failed to run {self.generate_sh}: {e}")
+            res.exception = Generator.GenerationError(
+                f"Failed to run {self.generate_sh}: {e}"
+            )
+
+        # Calculating these is tricky, as there may be existing FPs in the directory
+        # and generate.sh doesn't clear
+        res.num_fps = None
+        res.num_series = None
+        return res
 
     def matches(self, lib_filter: str) -> bool:
         """
@@ -124,24 +178,16 @@ class FPGenerateShGenerator(Generator):
         ):
             return True
 
+        # Try a match on just the name
+        if fnmatch.fnmatch(self.base_path.name, lib_filter):
+            return True
+
         return super().matches(lib_filter)
 
     @property
     def name(self):
-        return self.generate_sh.parent.name
-
-
-class GenerationResult:
-    """
-    The result of a generation operation.
-
-    Exentually, this will record all sorts of stats, like number of footprints generated,
-    time taken, etc. But for now, with generate.sh generators, it's just a success flag.
-    """
-
-    def __init__(self, generator: Generator, success: bool):
-        self.generator = generator
-        self.success = success
+        rel = self.generate_sh.parent.relative_to(self.root_path)
+        return rel.as_posix()
 
 
 class GeneratorRunner:
@@ -240,7 +286,7 @@ class GeneratorRunner:
                 rel_path = g.base_path.relative_to(self.root)
                 gen_output_dir /= rel_path
 
-            return (g, gen_output_dir, self.separate_outputs)
+            return (g, gen_output_dir)
 
         results = []
 
@@ -259,33 +305,85 @@ class GeneratorRunner:
 
         # Process results
 
+        print("")
+        print(self._format_results(results))
+        print("")
+
+        # Last of all: print the failed generators so they are easy to find in the log
+        self._print_failures(results)
+
+        return all(r.success for r in results)
+
+    @staticmethod
+    def _do_generate(gen: Generator, output_dir: Path | None) -> GenerationResult:
+
+        with Timer(f"Generating {gen.name}") as timer:
+            result = gen.generate(output_dir)
+            result.time = timer.duration
+
+        return result
+
+    @staticmethod
+    def _format_results(results):
+        rows = []
+
+        for result in results:
+            rows.append(
+                (
+                    result.generator.name,
+                    "Success" if result.success else "Failure",
+                    result.time,
+                    result.num_series if result.num_series else "-",
+                    result.num_fps if result.num_fps else "-",
+                )
+            )
+
+        # Sort by name
+        rows.sort(key=lambda x: x[0])
+
+        rows.append(tabulate.SEPARATING_LINE)
+
+        success = len([r for r in results if r.success])
+
+        total_series = sum(r.num_series for r in results if r.num_series)
+        total_fps = sum(r.num_fps for r in results if r.num_fps)
+
+        rows.append(
+            (
+                "TOTAL",
+                f"{success}/{len(results)}",
+                sum(r.time for r in results),
+                total_series if total_series else "-",
+                total_fps if total_fps else "-",
+            )
+        )
+
+        headers = ["Generator", "Result", "Time (s)", "Series", "Footprints"]
+
+        return tabulate.tabulate(rows, headers=headers, floatfmt=".2f")
+
+    @staticmethod
+    def _print_failures(results):
+
         failed_gens = []
 
         for result in results:
             if not result.success:
+
+                if result.exception:
+                    traceback.print_exception(result.exception, colorize=True)
+
                 failed_gens.append(result.generator)
 
         if failed_gens:
-            logging.error(f"Generation failed for the following {len(failed_gens)} generators:")
+            logging.error(
+                f"Generation failed for the following {len(failed_gens)} generators:"
+            )
 
             for g in failed_gens:
                 logging.error(f"  - {g.name}")
         else:
             logging.info(f"Generation completed with no failures.")
-
-        return len(failed_gens) == 0
-
-    @staticmethod
-    def _do_generate(gen: Generator, output_dir: Path | None, separate_paths: bool) -> GenerationResult:
-        success = False
-        with Timer(f"Generating {gen.name}"):
-            try:
-                gen.generate(output_dir)
-                success = True
-            except Generator.GenerationError as e:
-                logging.error(f"Failed to generate footprints for {gen.name}: {e}")
-
-        return GenerationResult(gen, success)
 
 
 if __name__ == "__main__":
