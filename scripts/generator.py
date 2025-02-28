@@ -164,6 +164,28 @@ class GeneratorRunner:
 
             logging.info("Discovered %d generators" % len(self._generators))
 
+        # Prioritise generators that we know are slow
+        # This is a bit of a hack and the real answer is to break the generators
+        # up by series to keep all cores busy, but that needs generators to report
+        # which series they generate.
+        def _generator_sort_key(g):
+
+            prio_prefixes = [
+                "generator",  # the connector generator is slow
+                "Pin-Headers",
+                "Package_NoLead",
+                "Connector_PinSocket",
+                "Connector_Molex",
+            ]
+
+            for i, prefix in enumerate(prio_prefixes):
+                if g.name.startswith(prefix):
+                    return i
+            # everything else just goes in whatever order
+            return len(prio_prefixes)
+
+        self._generators.sort(key=_generator_sort_key)
+
     def _discover_generate_sh_generators(self) -> list[Generator]:
 
         generate_shs = []
