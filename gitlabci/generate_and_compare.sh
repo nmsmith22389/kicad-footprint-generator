@@ -127,11 +127,6 @@ delete_if_only_kicad_mod "${curr_output_dir}"
 rm -rf "${diff_output_dir}/index.html"
 rm -rf "${diff_output_dir}/*.diff"
 
-# Make subdirs absolute
-for i in "${!script_subdirs[@]}"; do
-    script_subdirs[i]=$(realpath "${script_subdirs[$i]}")
-done
-
 # Run the script to generate the footprints
 # $1: The script directory (scripts in the repo)
 # $2: The output directory
@@ -141,17 +136,14 @@ function generate_all_footprints() {
     src_root="$1"
     dest_root="$2"
 
+    # Generate in the main script directory = all
+    cd "$src_root/scripts"
+
     if [ ${#script_subdirs[@]} -ne 0 ]; then
-        # Generate in the specified subdirs if given
-        # Hopefully one day this can be `make $targets[@]` and we can save a bunch of time
-        for subdir in "${script_subdirs[@]}"; do
-            cd "$subdir"
-            time ./generator.py -j0
-        done
+        # Collect all the subdirectories to run the generator in the -l parameter
+        time ./generator.py -j0 -v -l "${script_subdirs[@]}"
     else
-        # Generate in the main script directory = all
-        cd "$src_root/scripts"
-        time ./generator.py -j0
+        time ./generator.py -j0 -v
     fi
 
     # We have to move all the generated footprints to the correct directory
