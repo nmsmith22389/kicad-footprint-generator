@@ -196,7 +196,7 @@ else
         curl -L -o "$baseline_file" "$base_url"
     fi
 
-    tar -xvf "$baseline_file"
+    tar -xf "$baseline_file"
     mv footprints "$base_output_dir"
 fi
 
