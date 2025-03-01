@@ -241,3 +241,36 @@ def test_min_max():
     v = Vector2D.min((3, 2), (1, 4))
     assert v.x == 1
     assert v.y == 2
+
+
+SQRT2 = math.sqrt(2)
+
+
+@pytest.mark.parametrize(
+    "v1, v2, exp",
+    [
+        ((0, 0), (0, 1), 1),
+        ((0, 0), (1, 0), 1),
+        ((0, 0), (1, 1), SQRT2),
+    ],
+)
+def test_distance(v1, v2, exp):
+    v1 = Vector2D(v1)
+    v2 = Vector2D(v2)
+    assert v1.distance_to(v2) == pytest.approx(exp)
+    assert v2.distance_to(v1) == pytest.approx(exp)
+
+
+@pytest.mark.parametrize(
+    "v1, v2, exp",
+    [
+        ((0, 0),           (0, 0), True),
+        ((0, 0.000000001), (0, 0), True),
+    ],
+)  # fmt: skip
+def test_is_close(v1, v2, exp):
+    v1 = Vector2D(v1)
+    v2 = Vector2D(v2)
+
+    assert v1.is_close(v2) == exp
+    assert v2.is_close(v1) == exp

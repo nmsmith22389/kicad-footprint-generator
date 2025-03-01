@@ -77,15 +77,21 @@ class Vector2D(object):
 
         return self.__class__([round(v / base) * base for v in self])
 
-    def distance_to(self, value):
+    def distance_to(self, other: "Vector2D"):
         r"""Distance between this and another point
 
         :param value: the other point
         :return: distance between self and other point
         """
-        other = Vector2D.__arithmetic_parse(value)
-        d = other - self
-        return hypot(d.x, d.y)
+        return hypot(other.x - self.x, other.y - self.y)
+
+    def is_close(self, other: "Vector2D", tol: float = 1e-7):
+        r"""Check if two points are close to each other
+
+        :param other: the other point
+        :return: True if the points are close
+        """
+        return self.distance_to(other) < tol
 
     @staticmethod
     def __arithmetic_parse(value):
@@ -167,10 +173,10 @@ class Vector2D(object):
         return {'x': self.x, 'y': self.y}
 
     def __repr__(self):
-        return "Vector2D (x={x}, y={y})".format(**self.to_dict())
+        return f"Vector2D(x={self.x}, y={self.y})"
 
     def __str__(self):
-        return "(x={x}, y={y})".format(**self.to_dict())
+        return f"({self.x}, {self.y})"
 
     def __getitem__(self, key):
         if key == 0 or key == 'x':

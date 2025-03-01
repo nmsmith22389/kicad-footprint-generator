@@ -163,6 +163,23 @@ class geometricLine():
         p2 = self.end_pos.to_homogeneous()
         return p1.cross_product(p2)
 
+    def is_approx(self, other, ordered, tol=1e-7):
+
+        same_order_close = (
+            self.start_pos.is_close(other.start_pos, tol) and
+            self.end_pos.is_close(other.end_pos, tol)
+        )  # fmt: skip
+
+        if ordered:
+            return same_order_close
+
+        rev_order_close = (
+            self.start_pos.is_close(other.end_pos, tol) and
+            self.end_pos.is_close(other.start_pos, tol)
+        )  # fmt: skip
+
+        return same_order_close or rev_order_close
+
     def __iter__(self):
         yield self.start_pos
         yield self.end_pos
