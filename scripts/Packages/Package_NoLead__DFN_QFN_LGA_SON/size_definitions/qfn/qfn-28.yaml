@@ -720,7 +720,36 @@ QFN-28-1EP_5x5mm_P0.5mm_EP3.35x3.35mm:
   #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
   #include_suffix_in_3dpath: 'False'
 
+VQFN-28-1EP_5x5mm_P0.5mm_EP3.7x3.7mm:
+  device_type: 'VQFN'
+  size_source: 'Based on JEDEC MO-220-K.01 variation VHHD-3 and exposed pad nominal size from ADI Trinamic / Analog Devices, https://www.jedec.org/system/files/docs/MO-220K01.pdf, https://www.analog.com/media/en/technical-documentation/data-sheets/TMC2209_datasheet_rev1.09.pdf#page=83'
+  ipc_class: 'qfn'
+
+  body_size_x: 5.00
+  body_size_y: 5.00
+  overall_height: 0.80 .. 0.90 .. 1.00 # JEDEC, so we make it more compatible with standard and other components
+
+  lead_width: 0.18 .. 0.25 .. 0.30 # JEDEC
+  lead_len: 0.35 .. 0.40 .. 0.45
+
+  EP_size_x: 3.50 .. 3.70 .. 3.80 # Using AD Trinamic / Analog Devices nominal size and min / max values from JEDEC (VHHD-3 is 3.50 .. 3.65 .. 3.80),
+  EP_size_y: 3.50 .. 3.70 .. 3.80 # making nominal value 0.05mm greater than JEDEC will makes this footprint still compatible with components that follow strictly JEDEC, see https://gitlab.com/kicad/libraries/kicad-footprint-generator/-/merge_requests/1393#note_2358639915
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [4, 4]
+    grid: [1.0, 1.0] # Using good practice of https://www.ti.com/lit/an/sloa122/sloa122.pdf#page=3
+    drill: 0.2
+    paste_via_clearance: 0.1
+    paste_avoid_via: False
+    EP_num_paste_pads: [2, 2]
+
+  pitch: 0.50
+  num_pins_x: 7
+  num_pins_y: 7
+
 QFN-28-1EP_5x5mm_P0.5mm_EP3.75x3.75mm:
+  # this is actually WQFN, JEDEC MO-220 standard should be used here instead, backup datasheet link: https://cmlmicro.com/Content/Downloads/CMX901_ds.pdf
   device_type: 'QFN'
   #manufacturer: 'man'
   #part_number: 'mpn'
