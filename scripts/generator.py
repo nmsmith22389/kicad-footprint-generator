@@ -14,6 +14,7 @@ import subprocess
 import sys
 import time
 import traceback
+from collections.abc import Generator
 from multiprocessing import Pool
 from pathlib import Path
 
@@ -53,15 +54,15 @@ class Timer:
         return time.perf_counter() - self.start
 
 
-class Generator(abc.ABC):
+class FpGenerator(abc.ABC):
 
     def __init__(self):
         pass
 
     @abc.abstractmethod
-    def generate(self) -> "GenerationResult":
+    def generate(self) -> "FpGenerationResult":
         """
-        Run the generator, returning a GenerationResult.
+        Run the generator, returning a FpGenerationResult.
         """
         pass
 
@@ -88,8 +89,22 @@ class Generator(abc.ABC):
 
         pass
 
+    class DiscoveryFactory(abc.ABC):
+        """
+        A class that discovers FpGenerators.
+        """
 
-class GenerationResult:
+        @abc.abstractmethod
+        def discover(self) -> Generator["FpGenerator", None, None]:
+            """
+            Yield all generators found in "some context".
+
+            For example, all generators found in a directory.
+            """
+            pass
+
+
+class FpGenerationResult:
     """
     The result of a generation operation.
 
@@ -100,21 +115,21 @@ class GenerationResult:
     so it is filled in by the runner.
     """
 
-    generator: Generator
+    generator: FpGenerator
     success: bool
 
     # An exception that was raised during generation, None if no exception
-    exception: Generator.GenerationError | None
+    exception: FpGenerator.GenerationError | None
 
     # Time taken to generate footprints, None if didn't start
     time: float | None
 
-    # Number of series generated (None = Generator didn't say)
+    # Number of series generated (None = FpGenerator didn't say)
     num_series: int | None
-    # Number of footprints generated (None = Generator didn't say)
+    # Number of footprints generated (None = FpGenerator didn't say)
     num_fps: int | None
 
-    def __init__(self, generator: Generator):
+    def __init__(self, generator: FpGenerator):
         self.generator = generator
         self.success = False
         self.time = 0
@@ -122,7 +137,7 @@ class GenerationResult:
         self.num_fps = None
 
 
-class FPGenerateShGenerator(Generator):
+class FpGenerateShGenerator(FpGenerator):
     """
     A generator that runs a generate.sh script.
 
@@ -145,7 +160,7 @@ class FPGenerateShGenerator(Generator):
     def base_path(self):
         return self.generate_sh.parent
 
-    def generate(self, output_dir: Path | None) -> "GenerationResult":
+    def generate(self, output_dir: Path | None) -> "FpGenerationResult":
         logging.info("Running generate.sh: %s" % self.generate_sh)
 
         cmd = [self.generate_sh.absolute()]
@@ -155,13 +170,13 @@ class FPGenerateShGenerator(Generator):
         if output_dir is not None:
             env.update({"KICAD_FP_GENERATOR_OUTPUT_DIR": output_dir})
 
-        res = GenerationResult(self)
+        res = FpGenerationResult(self)
 
         try:
             subprocess.run(cmd, check=True, cwd=cwd, env=env)
             res.success = True
         except subprocess.CalledProcessError as e:
-            res.exception = Generator.GenerationError(
+            res.exception = FpGenerator.GenerationError(
                 f"Failed to run {self.generate_sh}: {e}"
             )
 
@@ -179,7 +194,7 @@ class FPGenerateShGenerator(Generator):
 
         # Try a relative glob first
         if fnmatch.fnmatch(
-            self.base_path.relative_to(self.root_path), Path(lib_filter)
+            self.base_path.relative_to(self.root_path).as_posix(), Path(lib_filter)
         ):
             return True
 
@@ -194,10 +209,40 @@ class FPGenerateShGenerator(Generator):
         rel = self.generate_sh.parent.relative_to(self.root_path)
         return rel.as_posix()
 
+    class DiscoveryFactory(FpGenerator.DiscoveryFactory):
+        """
+        Class to discover and construct FpGenerateShGenerator instances
+        from files found under a root path.
+        """
+
+        root_path: Path
+
+        def __init__(self, root_path):
+            self.root_path = root_path
+
+        def discover(self):
+            """
+            Yields all generators found under the root path
+            """
+            for gen_sh_path in self._find_shs():
+                gen = FpGenerateShGenerator(self.root_path, gen_sh_path)
+                yield gen
+
+        SH_NAME = "generate.sh"
+
+        def _find_shs(self):
+            """
+            Yields generate.sh filepaths under the root path
+            """
+            for dirpath, dirs, filenames in os.walk(self.root_path):
+                for filename in filenames:
+                    if filename == self.SH_NAME:
+                        yield Path(dirpath) / self.SH_NAME
+
 
 class GeneratorRunner:
 
-    _generators: list[Generator]
+    _generators: list[FpGenerator]
     output_dir: Path | None
     separate_outputs: bool
 
@@ -209,9 +254,14 @@ class GeneratorRunner:
         self._generators = []
         self._failures = []
 
+        factories = [
+            FpGenerateShGenerator.DiscoveryFactory(root),
+        ]
+
         with Timer("Generator discovery"):
             # Discover generators
-            self._generators += self._discover_generate_sh_generators()
+            for factory in factories:
+                self._generators += list(factory.discover())
 
             logging.info("Discovered %d generators" % len(self._generators))
 
@@ -236,23 +286,6 @@ class GeneratorRunner:
             return len(prio_prefixes)
 
         self._generators.sort(key=_generator_sort_key)
-
-    def _discover_generate_sh_generators(self) -> list[Generator]:
-
-        generate_shs = []
-
-        # Walk the root dir, looking for generate.sh files
-        for dirpath, dirs, filenames in os.walk(self.root):
-            if "generate.sh" in filenames:
-                generate_shs.append(os.path.join(dirpath, "generate.sh"))
-
-        sh_gens: list[Generator] = []
-
-        for generate_sh in generate_shs:
-            gen_sh_path = Path(generate_sh)
-            sh_gens.append(FPGenerateShGenerator(self.root, gen_sh_path))
-
-        return sh_gens
 
     def generate(self, libraries: list[str], jobs: int):
         """
@@ -320,7 +353,7 @@ class GeneratorRunner:
         return all(r.success for r in results)
 
     @staticmethod
-    def _do_generate(gen: Generator, output_dir: Path | None) -> GenerationResult:
+    def _do_generate(gen: FpGenerator, output_dir: Path | None) -> FpGenerationResult:
 
         with Timer(f"Generating {gen.name}") as timer:
             result = gen.generate(output_dir)
