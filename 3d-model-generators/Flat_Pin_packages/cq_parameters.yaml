@@ -597,3 +597,33 @@ SOT-563:
   mark_color_key: 'light brown label'
   pin_color_key: 'metal grey pins'
   source: 'http://www.goodark.com/en/products/outline/s5779.html'
+
+SOT-583-8:
+  the: 4.0
+  c: 0.13
+  fp_s: True
+  fp_r: 0.0
+  fp_d: 0.1
+  fp_z: 0.03
+  ef: 0.0
+  L: null
+  D1: 2.1
+  E1: 1.2
+  E: 1.6
+  A1: 0.025
+  A2: 0.6
+  b: 0.22
+  e: 0.5
+  npx: 4
+  npy: 0
+  epad: null
+  excluded_pins: []
+  model_name: SOT-583-8
+  color_pin_mark: true
+  place_pinMark: true
+  rotation: -90
+  destination_dir: TO_SOT_Packages_SMD.3dshapes
+  body_color_key: 'black body'
+  mark_color_key: 'light brown label'
+  pin_color_key: 'metal grey pins'
+  source: 'https://www.ti.com/lit/ml/mpcs002f/mpcs002f.pdf'
