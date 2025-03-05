@@ -9,7 +9,6 @@ run_generate() {
     ./vishay_IHSM.py -v
     ./we-hci.py -v
     ./we-hcm.py -v
-    ./we-mapi.py -v
 }
 
 run_generate
