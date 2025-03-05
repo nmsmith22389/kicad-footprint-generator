@@ -9,6 +9,7 @@ It discovers generators in the `scripts` directory and runs them to generate foo
 import abc
 import fnmatch
 import logging
+import os
 import subprocess
 import sys
 import time
@@ -85,19 +86,29 @@ class FPGenerateShGenerator(Generator):
 
     # Path to the generate.sh script
     generate_sh: Path
+    # Root path of scripts top level dir
+    root_path: Path
 
     def __init__(self, root_path, generate_sh: Path):
         self.generate_sh = generate_sh
         self.root_path = root_path
 
-    def generate(self):
+    @property
+    def base_path(self):
+        return self.generate_sh.parent
+
+    def generate(self, output_dir: Path | None):
         logging.info("Running generate.sh: %s" % self.generate_sh)
 
         cmd = [self.generate_sh.absolute()]
-        cwd = self.generate_sh.parent
+        cwd = self.base_path
+
+        env = os.environ.copy()
+        if output_dir is not None:
+            env.update({"KICAD_FP_GENERATOR_OUTPUT_DIR": output_dir})
 
         try:
-            subprocess.run(cmd, check=True, cwd=cwd)
+            subprocess.run(cmd, check=True, cwd=cwd, env=env)
         except subprocess.CalledProcessError as e:
             raise Generator.GenerationError(f"Failed to run {self.generate_sh}: {e}")
 
@@ -107,10 +118,10 @@ class FPGenerateShGenerator(Generator):
         as well as the path to the directory
         """
 
-        our_dir = self.generate_sh.parent
-
         # Try a relative glob first
-        if fnmatch.fnmatch(our_dir.relative_to(self.root_path), Path(lib_filter)):
+        if fnmatch.fnmatch(
+            self.base_path.relative_to(self.root_path), Path(lib_filter)
+        ):
             return True
 
         return super().matches(lib_filter)
@@ -123,9 +134,13 @@ class FPGenerateShGenerator(Generator):
 class GeneratorRunner:
 
     _generators: list[Generator]
+    output_dir: Path | None
+    separate_outputs: bool
 
-    def __init__(self, root):
+    def __init__(self, root, output_dir: Path | None):
         self.root = root
+        self.output_dir = output_dir
+        self.separate_outputs = False
 
         self._generators = []
 
@@ -180,23 +195,34 @@ class GeneratorRunner:
         for g in gens:
             logging.info(f"  - {g.name}")
 
+        def args_for_gen(g):
+            gen_output_dir = self.output_dir
+            # If we're not merging outputs (e.g. into kicad-footprints repo),
+            # and not in-place, distribute the outputs into the same directory
+            # structure as the generate.sh scripts themselves
+            if self.separate_outputs and gen_output_dir:
+                rel_path = g.base_path.relative_to(self.root)
+                gen_output_dir /= rel_path
+
+            return (g, gen_output_dir, self.separate_outputs)
+
         if jobs == 1 or len(gens) == 1:
             # In-process generation when single-threaded case for easier debugging
             # (generators may still shell out if they want, can't help that)
             for g in gens:
-                self._do_generate(g)
+                self._do_generate(*args_for_gen(g))
         else:
             # Multiprocess jobs of 'None' means use the number of CPUs
             mp_jobs = jobs if jobs else None
 
             with Pool(mp_jobs) as p:
-                p.map(self._do_generate, gens)
+                p.starmap(self._do_generate, (args_for_gen(g) for g in gens))
 
     @staticmethod
-    def _do_generate(gen: Generator):
+    def _do_generate(gen: Generator, output_dir: Path | None, separate_paths: bool):
         with Timer(f"Generating {gen.name}"):
             try:
-                gen.generate()
+                gen.generate(output_dir)
             except Generator.GenerationError as e:
                 logging.error(f"Failed to generate footprints for {gen.name}: {e}")
 
@@ -223,6 +249,18 @@ if __name__ == "__main__":
         help="List available generators and exit. Filter with --library.",
     )
     parser.add_argument(
+        "-o",
+        "--output-dir",
+        type=Path,
+        help="Output directory for generated footprints",
+    )
+    parser.add_argument(
+        "-S",
+        "--separate-outputs",
+        action="store_true",
+        help="Place each generator's output in a separate directory"
+    )
+    parser.add_argument(
         "-j", "--jobs", type=int, default=1, help="Number of jobs to run in parallel"
     )
     parser.add_argument(
@@ -238,7 +276,9 @@ if __name__ == "__main__":
 
     root_dir = os.path.dirname(os.path.abspath(__file__))
 
-    generator = GeneratorRunner(root_dir)
+    generator = GeneratorRunner(root_dir, args.output_dir)
+
+    generator.separate_outputs = args.separate_outputs
 
     if args.list:
         for g in generator._generators:

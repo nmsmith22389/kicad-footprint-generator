@@ -112,7 +112,6 @@ class ModArgparser(object):
         parser.add_argument('files', metavar='file', type=str, nargs='*', help='.yml or .csv files which contains data')
         parser.add_argument('-v', '--verbose', help='show some additional information', action='store_true')  # TODO
         parser.add_argument('-o', '--output-dir', type=Path,
-                            default='.',
                             help='Sets the directory to which to write the generated footprints')
         parser.add_argument('--print_yml', help='print example .yml file', action='store_true')
         parser.add_argument('--print_csv', help='print example .csv file', action='store_true')

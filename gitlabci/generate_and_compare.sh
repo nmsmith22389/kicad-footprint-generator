@@ -141,19 +141,10 @@ function generate_all_footprints() {
 
     if [ ${#script_subdirs[@]} -ne 0 ]; then
         # Collect all the subdirectories to run the generator in the -l parameter
-        time ./generator.py -j0 -v -l "${script_subdirs[@]}"
+        time ./generator.py -j0 -v --output-dir "${dest_root}" --separate-outputs -l "${script_subdirs[@]}"
     else
-        time ./generator.py -j0 -v
+        time ./generator.py -j0 -v --output-dir "${dest_root}" --separate-outputs
     fi
-
-    # We have to move all the generated footprints to the correct directory
-    # This is because the script generates the footprints in the same directory
-    # which is evil, but until we port everything to FootprintGenerator or similar,
-    # we just have to live with it.
-    #
-    # See: https://gitlab.com/kicad/libraries/kicad-footprint-generator/-/issues/691
-
-    "$kfg_repo_dir"/gitlabci/collect_generated_footprints.sh "$src_root/scripts" "$dest_root"
 
     popd
 }

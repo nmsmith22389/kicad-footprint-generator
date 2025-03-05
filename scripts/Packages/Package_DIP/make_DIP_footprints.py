@@ -10,7 +10,6 @@ from scripts.tools.footprint_scripts_DIP import makeDIP
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Use .yaml files to create DIP footprints.')
     parser.add_argument('-o', '--output-dir', type=Path,
-                        default='.',
                         help='Sets the directory to which to write the generated footprints')
     args = parser.parse_args()
 

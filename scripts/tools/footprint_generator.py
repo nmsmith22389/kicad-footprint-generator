@@ -14,12 +14,12 @@ from kilibs.util import dict_tools
 class FootprintGenerator:
 
     # The output path (the directory that contains .pretty libraries)
-    output_path: Path
+    output_path: Path | None
 
     # The global config (e.g. KLC settings)
     global_config: GlobalConfig
 
-    def __init__(self, output_dir: Path, global_config: GlobalConfig):
+    def __init__(self, output_dir: Path | None, global_config: GlobalConfig):
         self.output_path = output_dir
         self.global_config = global_config
 
@@ -63,7 +63,6 @@ class FootprintGenerator:
         which can then be used to init a FootprintGenerator.
         """
         parser.add_argument('-o', '--output-dir', type=Path,
-                            default='.',
                             help='Sets the directory to which to write the generated footprints')
 
         if file_autofind:

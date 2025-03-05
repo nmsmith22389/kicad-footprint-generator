@@ -1172,10 +1172,32 @@ class KicadPrettyLibrary(KicadModLibrary):
         if not lib_name.endswith(".pretty"):
             lib_name += ".pretty"
 
-        if output_dir is None:
-            self.path = Path(lib_name)
-        else:
-            self.path = output_dir / lib_name
+        # If the environment variable is set, it will be the output
+        # prefix to any non-absolute paths.
+        #
+        # This is a bit of a hack to allow this to work with
+        # generate.sh type generators (which don't allow the output
+        # dir to be set, ans have no unified interface)
+        #
+        # The correct thing to do is inject this path properly, but
+        # that requires all the generators to be updated to be
+        # fully-Python.
+        import os
+        env_var = os.getenv("KICAD_FP_GENERATOR_OUTPUT_DIR")
+
+        # In these cases, apply the prefix
+        if env_var:
+            if not output_dir:
+                output_dir = Path(env_var)
+            elif not output_dir.is_absolute():
+                output_dir = Path(env_var) / output_dir
+
+        # No environment variable, or given path
+        # Legacy behaviour, just use the current working directory
+        if not output_dir:
+            output_dir = Path.cwd()
+
+        self.path = output_dir / lib_name
 
     def save(self, fp: Footprint):
 

@@ -15,7 +15,6 @@ if __name__ == '__main__':
         "-o",
         "--output-dir",
         type=Path,
-        default=".",
         help="Sets the directory to which to write the generated footprints",
     )
     args = parser.parse_args()
