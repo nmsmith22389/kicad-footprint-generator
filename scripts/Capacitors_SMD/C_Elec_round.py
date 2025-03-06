@@ -135,20 +135,6 @@ def create_footprint(name, configuration, **kwargs):
     kicad_mod.append(Line(start=[-fab_x, fab_y_edge], end=[-fab_x_edge, fab_y], layer='F.Fab', width=configuration['fab_line_width']))
     kicad_mod.append(Circle(center=[0, 0], radius=body_size['diameter']/2.0, layer='F.Fab', width=configuration['fab_line_width']))
 
-    # fab polarity marker for polarized caps
-    if name[:2].upper() == "CP":
-        fab_pol_size = body_size['diameter']/10.0
-        fab_pol_wing = fab_pol_size/2.0
-        fab_pol_distance = body_size['diameter']/2.0 - fab_pol_wing - configuration['fab_line_width']
-        fab_pol_pos_y = fab_text_size/2.0 + configuration['silk_pad_clearance'] + fab_pol_size
-        fab_pol_pos_x = math.sqrt(fab_pol_distance*fab_pol_distance-fab_pol_pos_y*fab_pol_pos_y)
-        fab_pol_pos_x = -fab_pol_pos_x
-        fab_pol_pos_y = -fab_pol_pos_y
-        kicad_mod.append(Line(start=[fab_pol_pos_x-fab_pol_wing, fab_pol_pos_y], end=[fab_pol_pos_x+fab_pol_wing, fab_pol_pos_y],
-            layer='F.Fab', width=configuration['fab_line_width']))
-        kicad_mod.append(Line(start=[fab_pol_pos_x, fab_pol_pos_y-fab_pol_wing], end=[fab_pol_pos_x, fab_pol_pos_y+fab_pol_wing],
-            layer='F.Fab', width=configuration['fab_line_width']))
-
     # create silkscreen
     fab_to_silk_offset = configuration['silk_fab_offset']
     silk_x = body_size['length'] / 2.0 + fab_to_silk_offset
@@ -175,19 +161,6 @@ def create_footprint(name, configuration, **kwargs):
 
         kicad_mod.append(Line(start=[-silk_x_cut, -silk_y_edge_cut], end=[-silk_x_edge, -silk_y], layer='F.SilkS', width=configuration['silk_line_width']))
         kicad_mod.append(Line(start=[-silk_x_cut, silk_y_edge_cut], end=[-silk_x_edge, silk_y], layer='F.SilkS', width=configuration['silk_line_width']))
-
-    # silk polarity marker
-    if name[:2].upper() == "CP":
-        silk_pol_size = body_size['diameter']/8.0
-        silk_pol_wing = silk_pol_size/2.0
-        silk_pol_pos_y = silk_y_start + silk_pol_size
-        silk_pol_pos_x = silk_x + silk_pol_wing + configuration['silk_line_width']*2
-        silk_pol_pos_x = -silk_pol_pos_x
-        silk_pol_pos_y = -silk_pol_pos_y
-        kicad_mod.append(Line(start=[silk_pol_pos_x-silk_pol_wing, silk_pol_pos_y], end=[silk_pol_pos_x+silk_pol_wing, silk_pol_pos_y],
-            layer='F.SilkS', width=configuration['silk_line_width']))
-        kicad_mod.append(Line(start=[silk_pol_pos_x, silk_pol_pos_y-silk_pol_wing], end=[silk_pol_pos_x, silk_pol_pos_y+silk_pol_wing],
-            layer='F.SilkS', width=configuration['silk_line_width']))
 
     # create courtyard
     courtyard_offset = configuration['courtyard_offset']['default']
