@@ -1,7 +1,7 @@
-- series: WE-MAPI
-  manufacturer: Wurth
+- series: MAPI
+  manufacturer: Wuerth
   datasheet: "https://www.we-online.com/en/components/products/WE-MAPI?kicad"
-  csv: Wurth_mapi.csv
+  csv: Wuerth_mapi.csv
   3d:
     type: 2
     bodyColor: dark grey body
@@ -10,5 +10,4 @@
   tags:
     - Würth
      -SMT
-     -MAPI
-  library_name: Inductor_SMD_Wurth
+  library_name: Inductor_SMD
