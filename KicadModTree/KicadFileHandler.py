@@ -112,8 +112,8 @@ def layer_key_func(layer: str) -> int:
         return layer_map[layer]
     except KeyError:
         # inner layers: even numbers from 4
-        if m := re.match(r'^In(\d+)\.$', layer):
-            return int(m.group(1) + 1) * 2
+        if m := re.match(r'^In(\d+)\.Cu$', layer):
+            return (int(m.group(1)) + 1) * 2
         # user layers from 39 onwards
         if m := re.match(r'^User\.(\d)$', layer):
             return 38 + int(m.group(1))
