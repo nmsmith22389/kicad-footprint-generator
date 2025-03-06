@@ -8,9 +8,11 @@ import math
 from KicadModTree import *  # NOQA
 from KicadModTree.nodes.base.Pad import Pad  # NOQA
 from scripts.tools.ipc_pad_size_calculators import *
+from scripts.tools.global_config_files.global_config import DefaultGlobalConfig
 
 
 def create_footprint(name, configuration, **kwargs):
+    global_config = DefaultGlobalConfig()
     kicad_mod = Footprint(name, FootprintType.SMD)
 
     # init kicad footprint
@@ -46,15 +48,15 @@ def create_footprint(name, configuration, **kwargs):
     # set general values
     text_offset_y = body_size['width'] / 2.0 + configuration['courtyard_offset']['default'] + 0.8
 
-    #silkscreen REF**
+    # silkscreen REF**
     silk_text_size = configuration['references'][0]['size']
     silk_text_thickness = silk_text_size[0]*configuration['references'][0]['fontwidth']
     kicad_mod.append(Property(name=Property.REFERENCE, text='REF**', at=[0, -text_offset_y], layer='F.SilkS', size=[silk_text_size[0], silk_text_size[1]], thickness= silk_text_thickness))
-    #fab value
+    # fab value
     fab_text_size = configuration['values'][0]['size']
     fab_text_thickness = fab_text_size[0]*configuration['values'][0]['fontwidth']
     kicad_mod.append(Property(name=Property.VALUE, text=name, at=[0, text_offset_y], layer='F.Fab', size=[fab_text_size[0], fab_text_size[1]], thickness= fab_text_thickness))
-    #fab REF**
+    # fab REF**
     fab_text_size = body_size['diameter']/5.0
     fab_text_size = min(fab_text_size, configuration['references'][1]['size_max'][0])
     fab_text_size = max(fab_text_size, configuration['references'][1]['size_min'][0])
@@ -63,13 +65,16 @@ def create_footprint(name, configuration, **kwargs):
 
     # create pads
     # all pads have these properties
-    pad_params = {'type': Pad.TYPE_SMT, 'layers': Pad.LAYERS_SMT, 'shape': Pad.SHAPE_RECT}
+    pad_params = {
+        "type": Pad.TYPE_SMT,
+        "layers": Pad.LAYERS_SMT,
+        "shape": Pad.SHAPE_RECT,
+    }
 
     # prefer IPC-7351C compliant rounded rectangle pads
     if not configuration['force_rectangle_pads']:
         pad_params['shape'] = Pad.SHAPE_ROUNDRECT
-        pad_params['radius_ratio'] = 0.25
-        pad_params['maximum_radius'] = 0.25
+        pad_params['round_radius_handler'] = global_config.roundrect_radius_handler
 
     # prefer calculating pads from lead dimensions per IPC
     # fall back to using pad sizes directly if necessary
@@ -130,8 +135,7 @@ def create_footprint(name, configuration, **kwargs):
     kicad_mod.append(Line(start=[-fab_x, fab_y_edge], end=[-fab_x_edge, fab_y], layer='F.Fab', width=configuration['fab_line_width']))
     kicad_mod.append(Circle(center=[0, 0], radius=body_size['diameter']/2.0, layer='F.Fab', width=configuration['fab_line_width']))
 
-
-    #fab polarity marker for polarized caps
+    # fab polarity marker for polarized caps
     if name[:2].upper() == "CP":
         fab_pol_size = body_size['diameter']/10.0
         fab_pol_wing = fab_pol_size/2.0
@@ -144,7 +148,6 @@ def create_footprint(name, configuration, **kwargs):
             layer='F.Fab', width=configuration['fab_line_width']))
         kicad_mod.append(Line(start=[fab_pol_pos_x, fab_pol_pos_y-fab_pol_wing], end=[fab_pol_pos_x, fab_pol_pos_y+fab_pol_wing],
             layer='F.Fab', width=configuration['fab_line_width']))
-
 
     # create silkscreen
     fab_to_silk_offset = configuration['silk_fab_offset']
@@ -173,7 +176,7 @@ def create_footprint(name, configuration, **kwargs):
         kicad_mod.append(Line(start=[-silk_x_cut, -silk_y_edge_cut], end=[-silk_x_edge, -silk_y], layer='F.SilkS', width=configuration['silk_line_width']))
         kicad_mod.append(Line(start=[-silk_x_cut, silk_y_edge_cut], end=[-silk_x_edge, silk_y], layer='F.SilkS', width=configuration['silk_line_width']))
 
-    #silk polarity marker
+    # silk polarity marker
     if name[:2].upper() == "CP":
         silk_pol_size = body_size['diameter']/8.0
         silk_pol_wing = silk_pol_size/2.0
@@ -199,7 +202,7 @@ def create_footprint(name, configuration, **kwargs):
     if courtyard_y_edge < courtyard_pad_y:
         courtyard_x_lower_edge = courtyard_x_lower_edge - courtyard_pad_y + courtyard_y_edge
         courtyard_y_edge = courtyard_pad_y
-    #rounding
+    # rounding
     courtyard_x = float(format(courtyard_x, ".2f"))
     courtyard_y = float(format(courtyard_y, ".2f"))
     courtyard_pad_x = float(format(courtyard_pad_x, ".2f"))

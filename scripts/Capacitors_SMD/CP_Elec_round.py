@@ -7,9 +7,12 @@ import math
 
 from KicadModTree import *  # NOQA
 from KicadModTree.nodes.base.Pad import Pad  # NOQA
+from scripts.tools.global_config_files.global_config import DefaultGlobalConfig
 
 
 def create_footprint(name, configuration, **kwargs):
+    global_config = DefaultGlobalConfig()
+
     kicad_mod = Footprint(name, FootprintType.SMD)
 
     body_width = kwargs['body_width']['nominal']
@@ -198,8 +201,9 @@ def create_footprint(name, configuration, **kwargs):
 
     # all pads have this kwargs, so we only write them once
     pad_kwargs = {'type': Pad.TYPE_SMT,
-                  'shape': Pad.SHAPE_RECT,
-                  'layers': Pad.LAYERS_SMT
+                  'shape': Pad.SHAPE_ROUNDRECT,
+                  'layers': Pad.LAYERS_SMT,
+                  'round_radius_handler': global_config.roundrect_radius_handler,
     }
 
     # create pads
