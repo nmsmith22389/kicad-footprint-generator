@@ -549,6 +549,12 @@ class NoLeadGenerator(FootprintGenerator):
                 paste_coverage = thermals.get('EP_paste_coverage',
                                               device_params.get('EP_paste_coverage', DEFAULT_PASTE_COVERAGE))
 
+                # Override the via avoid setting in the YAML to avoid broken paste
+                # aperture spacing.
+                # See the same reasoning in the gullwing generator for more background.
+                # (https://gitlab.com/kicad/libraries/kicad-footprint-generator/-/issues/674)
+                paste_via_avoid = False
+
                 kicad_mod.append(ExposedPad(
                     number=ep_pad_number, size=EP_size,
                     at=EP_center,
@@ -559,7 +565,7 @@ class NoLeadGenerator(FootprintGenerator):
                     paste_rings_outside=thermals.get('paste_rings_outside'),
                     via_drill=thermals.get('drill', 0.3),
                     via_grid=thermals.get('grid'),
-                    paste_avoid_via=thermals.get('paste_avoid_via', True),
+                    paste_avoid_via=paste_via_avoid,
                     via_paste_clarance=thermals.get('paste_via_clearance', DEFAULT_VIA_PASTE_CLEARANCE),
                     min_annular_ring=thermals.get('min_annular_ring', DEFAULT_MIN_ANNULAR_RING),
                     bottom_pad_min_size=thermals.get('bottom_min_size', 0),

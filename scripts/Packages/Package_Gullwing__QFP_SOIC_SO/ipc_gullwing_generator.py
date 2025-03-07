@@ -537,21 +537,35 @@ class GullwingGenerator(FootprintGenerator):
             pad_shape_details = getEpRoundRadiusParams(device_params, self.configuration, pad_radius)
             EP_mask_size = EP_mask_size if EP_mask_size['x'] > 0 else None
 
+            device_paste_pads = device_params.get('EP_num_paste_pads', 1)
+
             if with_thermal_vias:
                 thermals = device_params['thermal_vias']
                 paste_coverage = thermals.get('EP_paste_coverage',
                                               device_params.get('EP_paste_coverage', DEFAULT_PASTE_COVERAGE))
 
+                # The paste_avoid_via function is pretty badly broken for smaller footprints
+                # (the paste regions get too close by trying to even out area)
+                #
+                # See: https://gitlab.com/kicad/libraries/kicad-footprint-generator/-/issues/674
+                #
+                # In the interests of allowing these footprints to actually be regenerated
+                # at all, we override YAML options here to disable it.
+                #
+                # When this function works again, reinstate this line.
+                # And also decide if default-on is correct.
+                paste_avoid_via = False  # thermals.get('paste_avoid_via', True)
+
                 EP = ExposedPad(
                     number=pincount_full + 1, size=EP_size, mask_size=EP_mask_size,
-                    paste_layout=thermals.get('EP_num_paste_pads'),
+                    paste_layout=thermals.get('EP_num_paste_pads', device_paste_pads),
                     paste_coverage=paste_coverage,
                     via_layout=thermals.get('count', 0),
                     paste_between_vias=thermals.get('paste_between_vias'),
                     paste_rings_outside=thermals.get('paste_rings_outside'),
                     via_drill=thermals.get('drill', 0.3),
                     via_grid=thermals.get('grid'),
-                    paste_avoid_via=thermals.get('paste_avoid_via', True),
+                    paste_avoid_via=paste_avoid_via,
                     via_paste_clarance=thermals.get('paste_via_clearance', DEFAULT_VIA_PASTE_CLEARANCE),
                     min_annular_ring=thermals.get('min_annular_ring', DEFAULT_MIN_ANNULAR_RING),
                     bottom_pad_min_size=thermals.get('bottom_min_size', 0),
@@ -560,7 +574,7 @@ class GullwingGenerator(FootprintGenerator):
             else:
                 EP = ExposedPad(
                     number=pincount_full + 1, size=EP_size, mask_size=EP_mask_size,
-                    paste_layout=device_params.get('EP_num_paste_pads', 1),
+                    paste_layout=device_paste_pads,
                     paste_coverage=device_params.get('EP_paste_coverage', DEFAULT_PASTE_COVERAGE),
                     **pad_shape_details
                 )
