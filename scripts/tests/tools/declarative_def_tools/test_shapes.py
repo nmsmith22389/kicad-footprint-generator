@@ -47,3 +47,20 @@ size: [c,d]
     assert(rp.exprs.cy_expr == 'b')
     assert(rp.exprs.width_expr == 'c')
     assert(rp.exprs.height_expr == 'd')
+
+
+def test_circle_rad():
+
+    spec = """
+type: circle
+center: [a,b]
+radius: 1
+"""
+    spec_yaml = yaml.safe_load(spec)
+
+    kp = SP.CircleProperties(spec_yaml)
+
+    assert kp.exprs.cx_expr == 'a'
+    assert kp.exprs.cy_expr == 'b'
+    assert kp.exprs.radius_expr == 1
+    assert kp.exprs.diameter_expr is None

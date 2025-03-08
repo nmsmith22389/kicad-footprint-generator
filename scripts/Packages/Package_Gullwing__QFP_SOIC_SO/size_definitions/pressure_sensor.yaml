@@ -9,12 +9,6 @@ CFSensor_XGZP6859D:
   manufacturer: CFSensor
   part_number: XGZP6859D
   custom_name_format: '{man}_{mpn:s}_{size_x:g}x{size_y:g}mm'
-  # Add marker for pressure port
-  manual_modification_required: true
-
-  # For future use
-  port_external_diameter: 3.0
-  port_internal_diameter: 1.0
 
   body_size_x: # from JEDEC
     nominal: 7.0
@@ -36,6 +30,17 @@ CFSensor_XGZP6859D:
   lead_width:
     nominal: 0.8
     tolerance: 0.1 # guess
+
+  # This is a pressure sensor, draw the port OD/ID
+  additional_drawings:
+    port_inner:
+      type: circle
+      layer: mechanical
+      center: [0, 0]
+      diameter: 3.0
+    port_outer:
+      inherit: port_inner
+      diameter: 1.0
 
   pitch: 2.54
   num_pins_x: 0

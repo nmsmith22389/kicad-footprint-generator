@@ -203,14 +203,18 @@ class geometricCircle():
           radius of the circle
     """
 
-    def __init__(self, **kwargs):
-        if 'geometry' in kwargs:
-            geometry = kwargs['geometry']
+    def __init__(
+        self,
+        center: Vector2D | None = None,
+        radius: float | None = None,
+        geometry: "geometricCircle" = None,
+    ):
+        if geometry is not None:
             self.center_pos = Vector2D(geometry.center_pos)
             self.radius = float(geometry.radius)
         else:
-            self.center_pos = Vector2D(kwargs['center'])
-            self.radius = float(kwargs['radius'])
+            self.center_pos = Vector2D(center)
+            self.radius = float(radius)
 
     def getRadius(self):
         return self.radius

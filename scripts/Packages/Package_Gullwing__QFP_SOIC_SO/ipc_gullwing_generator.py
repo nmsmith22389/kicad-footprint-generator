@@ -26,7 +26,11 @@ from scripts.tools import drawing_tools
 from scripts.tools.drawing_tools import nearestSilkPointOnOrthogonalLine
 from scripts.tools.nodes import pin1_arrow
 
-from scripts.tools.declarative_def_tools import tags_properties
+from scripts.tools.declarative_def_tools import (
+    additional_drawing,
+    ast_evaluator,
+    tags_properties,
+)
 
 from scripts.Packages.utils.ep_handling_utils import getEpRoundRadiusParams
 
@@ -127,6 +131,7 @@ class GullwingConfiguration:
     ipc_density: IpcDensity
 
     top_slug: Optional[TopSlugConfiguration]
+    additional_drawings: list[additional_drawing.AdditionalDrawing]
 
     def __init__(self, spec: dict):
         self._spec_dictionary = spec
@@ -165,6 +170,10 @@ class GullwingConfiguration:
             )
 
         self.ipc_density = IpcDensity.from_str(spec.get('ipc_density', 'nominal'))
+
+        self.additional_drawings = (
+            additional_drawing.AdditionalDrawing.from_standard_yaml(spec)
+        )
 
     @property
     def spec_dictionary(self) -> dict:
@@ -346,6 +355,10 @@ class GullwingGenerator(FootprintGenerator):
         fab_line_width = self.global_config.fab_line_width
 
         device_params = gullwing_config.spec_dictionary
+
+        # The evaluator for complex expressions
+        # Any useful variables can be injected into this object for use in expressions.
+        fp_ast_evaluator = ast_evaluator.ASTevaluator()
 
         if 'override_lib_name' in header:
             lib_name = header['override_lib_name']
@@ -925,6 +938,17 @@ class GullwingGenerator(FootprintGenerator):
         addTextFields(kicad_mod=kicad_mod, configuration=configuration, body_edges=body_edge,
                       courtyard={'top': courtyard_bbox.top, 'bottom': courtyard_bbox.bottom},
                       fp_name=fp_name, text_y_inside_position='center')
+
+        # ######################### Additional drawings #######################
+
+        if gullwing_config.additional_drawings:
+            kicad_mod.extend(
+                additional_drawing.create_additional_drawings(
+                    gullwing_config.additional_drawings,
+                    self.global_config,
+                    fp_ast_evaluator,
+                )
+            )
 
         # #################### Output and 3d model ############################
 

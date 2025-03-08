@@ -18,6 +18,13 @@ courtyard_offset:
 
 edge_cuts_line_width: 0.12
 
+default_line_width: 0.1
+
+# Mapping of functional layers to board layers
+layer_functions:
+    # Mechanical drawings (e.g. physical object outlines)
+    mechanical: Cmts.User
+
 references:
     -
           layer: 'F.Fab'

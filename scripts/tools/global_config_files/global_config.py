@@ -36,8 +36,14 @@ class GlobalConfig:
 
     edge_cuts_line_width: float
 
+    # The default line width for anything without a specific
+    # default (e.g. silk, fab, etc)
+    default_line_width: float
+
     # Includes trailing '/'
     model_3d_prefix: str
+
+    _layer_functions: dict
 
     def __init__(self, data: dict):
         """
@@ -59,6 +65,8 @@ class GlobalConfig:
 
         self.edge_cuts_line_width = float(data["edge_cuts_line_width"])
 
+        self.default_line_width = float(data["default_line_width"])
+
         self.model_3d_prefix = data["3d_model_prefix"]
 
         self.round_rect_default_radius = data["round_rect_radius_ratio"]
@@ -70,6 +78,8 @@ class GlobalConfig:
             self.CourtyardType.CONNECTOR: float(data["courtyard_offset"]['connector']),
             self.CourtyardType.BGA: float(data["courtyard_offset"]['bga']),
         }
+
+        self._layer_functions = data["layer_functions"]
 
     def get_courtyard_offset(self, courtyard_type: CourtyardType) -> float:
         return self._cy_offs[courtyard_type]
@@ -129,6 +139,34 @@ class GlobalConfig:
         """
 
         return self.silk_fab_offset - (self.silk_line_width + self.fab_line_width) / 2
+
+    def get_layer_for_function(self, layer_or_function: str) -> float:
+        """
+        Get the layer function for the given function name.
+
+        :param function_or_layer: The function name or layer name to get the function for.
+            If it is not in the layer functions, it is assumed to be a layer name and
+            returned directly.
+        """
+        if layer_or_function in self._layer_functions:
+            return self._layer_functions[layer_or_function]
+
+        return layer_or_function
+
+    def get_default_width_for_layer(self, layer: str) -> float:
+        """
+        Get the default line width for a given layer.
+        """
+        if layer in ["F.SilkS", "B.SilkS"]:
+            return self.silk_line_width
+        elif layer in ["F.Fab", "B.Fab"]:
+            return self.fab_line_width
+        elif layer in ["Edge.Cuts"]:
+            return self.edge_cuts_line_width
+        elif layer in ["F.CrtYd", "B.CrtYd"]:
+            return self.courtyard_line_width
+
+        return self.default_line_width
 
     @classmethod
     def load_from_file(self, path: Path):
