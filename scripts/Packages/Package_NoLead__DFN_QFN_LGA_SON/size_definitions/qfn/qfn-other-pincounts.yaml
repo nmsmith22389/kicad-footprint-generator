@@ -28,7 +28,7 @@ QFN-76-1EP_9x9mm_P0.4mm_EP5.81x6.31mm:
     nominal: 6.31
     tolerance: 0.25
   #EP_paste_coverage: 0.65
-  EP_num_paste_pads: [1, 1]
+  EP_num_paste_pads: [3, 3]
   #heel_reduction: 0.1 #for relatively large EP pads (increase clearance)
 
   thermal_vias:
