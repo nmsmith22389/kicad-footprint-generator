@@ -227,8 +227,8 @@ for pincount in pins:
     """
 
     #add a 3D model reference
-    fp.append(Model(filename=lib_name + ".3dshapes/" + footprint_name + ".wrl"))
-
     lib_name = "Connector_Hirose"
+
+    fp.append(Model(filename=lib_name + ".3dshapes/" + footprint_name + ".wrl"))
     lib = KicadPrettyLibrary(lib_name, None)
     lib.save(fp)
