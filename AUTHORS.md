@@ -81,3 +81,4 @@ People who have submitted patches, reported bugs, consulted features or generall
 * Mathias Walter, @tolot27
 * Michael Munch, @Munken
 * @waschhauser
+* Bence Csókás, @bence98
