@@ -258,7 +258,7 @@ if __name__ == "__main__":
         "-S",
         "--separate-outputs",
         action="store_true",
-        help="Place each generator's output in a separate directory"
+        help="Place each generator's output in a separate directory",
     )
     parser.add_argument(
         "-j", "--jobs", type=int, default=1, help="Number of jobs to run in parallel"
