@@ -248,8 +248,11 @@ class DPAK(object):
             [right_x, top_y],
         ]
         self.m.append(
-            PolygonLine(
-                polygon=body_outline, layer="F.Fab", width=self.dim.fab_line_width_mm
+            Polygon(
+                nodes=body_outline,
+                layer="F.Fab",
+                width=self.dim.fab_line_width_mm,
+                fill=False,
             )
         )
 
@@ -494,7 +497,7 @@ class DPAK(object):
             self.dim.courtyard_offset_y_mm, self.dim.courtyard_precision_mm, "+"
         )
         self.m.append(
-            RectLine(
+            Rect(
                 start=[left, top],
                 end=[right, bottom],
                 layer="F.CrtYd",

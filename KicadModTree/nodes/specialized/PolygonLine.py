@@ -24,6 +24,11 @@ from KicadModTree.nodes.base.Line import Line
 class PolygonLine(Node):
     r"""Add a Polygon Line to the render tree
 
+    A "polygon line" is a "polyline" - a chain of line segments.
+
+    As of v9, KiCad doesn't support a specific node type like this, but rather we
+    will represent it as a chain of (n_pts - 1) line segments.
+
     :param \**kwargs:
         See below
 
