@@ -404,8 +404,7 @@ class DPAK(object):
         tab_layers = Pad.LAYERS_SMT[:]
         if self.dim.split_paste:
             tab_layers.remove("F.Paste")
-        paste_layers = Pad.LAYERS_SMT[:]
-        paste_layers.remove("F.Mask")
+        paste_layers = ["F.Paste"]
 
         tab_pad = Pad(
             number=self.dim.tab_pin_number,
@@ -451,7 +450,7 @@ class DPAK(object):
             ]:
                 self.m.append(
                     Pad(
-                        number=self.dim.tab_pin_number,
+                        number="",
                         type=Pad.TYPE_SMT,
                         shape=Pad.SHAPE_ROUNDRECT,
                         at=pad_xy,
