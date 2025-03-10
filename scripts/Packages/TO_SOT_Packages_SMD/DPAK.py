@@ -3,6 +3,7 @@ import yaml
 from typing import Optional
 
 from KicadModTree import *  # NOQA
+from KicadModTree.util.corner_handling import RoundRadiusHandler
 from kilibs.geom import Direction
 from scripts.tools.drawing_tools import SilkArrowSize
 from scripts.tools.drawing_tools_silk import draw_silk_triangle_for_pad
@@ -11,15 +12,14 @@ from scripts.tools.global_config_files import global_config as GC
 
 class Dimensions(object):
 
-    def __init__(self, base, variant, cut_pin=False, tab_linked=False):
+    def __init__(self, global_config: GC.GlobalConfig, base, variant, cut_pin=False, tab_linked=False):
         # FROM KLC
-        self.fab_line_width_mm = 0.1
-        self.silk_line_width_mm = 0.12
-        self.courtyard_line_width_mm = 0.05
-        self.courtyard_clearance_mm = 0.25
-        self.courtyard_precision_mm = 0.01
-        self.roundrect_ratio = 0.25
-        self.roundrect_radius_max_mm = 0.25
+        self.fab_line_width_mm = global_config.fab_line_width
+        self.silk_line_width_mm = global_config.silk_line_width
+        self.courtyard_line_width_mm = global_config.courtyard_line_width
+        self.courtyard_clearance_mm = global_config.get_courtyard_offset(GC.GlobalConfig.CourtyardType.DEFAULT)
+        self.courtyard_precision_mm = global_config.courtyard_grid
+        self.roundrect_radius_handler = global_config.roundrect_radius_handler
 
         # PIN NUMBERING
         self.centre_pin = 1 + variant["pins"] // 2
@@ -108,8 +108,7 @@ class Dimensions(object):
         self.silk_line_nudge_mm = (
             0.20  #  amount to shift to stop silkscreen lines overlapping fab lines
         )
-        # Usual KLC value (TODO: get this from KLC config)
-        self.silk_pad_clearance_mm = 0.20
+        self.silk_pad_clearance_mm = global_config.silk_pad_clearance
 
     @staticmethod
     def round_to(n, precision, direction: str = None):
@@ -165,7 +164,7 @@ class DPAK(object):
         self.tab_pad = None
 
         # calculate self.dimensions and other attributes specific to this variant
-        self.dim = Dimensions(self.base, self.variant, self.cut_pin, tab_linked)
+        self.dim = Dimensions(self.global_config, self.base, self.variant, self.cut_pin, tab_linked)
 
         # initialise footprint
         self.m = Footprint(self.dim.name, FootprintType.SMD)
@@ -376,6 +375,7 @@ class DPAK(object):
         )
 
     def draw_pads(self):
+
         for pin in range(1, self.variant["pins"] + 1):
             if not (pin == self.dim.centre_pin and self.cut_pin):
                 pad = Pad(
@@ -387,10 +387,12 @@ class DPAK(object):
                         self.dim.pad_1_centre_y_mm
                         + (pin - 1) * self.variant["pitch_mm"],
                     ],
-                    size=[self.variant["pad"]["x_mm"], self.variant["pad"]["y_mm"]],
-                    radius_ratio=self.dim.roundrect_ratio,
-                    maximum_radius=self.dim.roundrect_radius_max_mm,
-                    layers=Pad.LAYERS_SMT,
+                    size=[
+                        self.variant["pad"]["x_mm"],
+                        self.variant["pad"]["y_mm"]
+                    ],
+                    round_radius_handler=self.dim.roundrect_radius_handler,
+                    layers=Pad.LAYERS_SMT
                 )
 
                 # Remember this pad so we can draw silk near it
@@ -417,8 +419,7 @@ class DPAK(object):
                 self.base["footprint"]["tab"]["x_mm"],
                 self.base["footprint"]["tab"]["y_mm"],
             ],
-            radius_ratio=self.dim.roundrect_ratio,
-            maximum_radius=self.dim.roundrect_radius_max_mm,
+            round_radius_handler=self.dim.roundrect_radius_handler,
             layers=tab_layers,
         )
         self.m.append(tab_pad)
@@ -455,8 +456,7 @@ class DPAK(object):
                         shape=Pad.SHAPE_ROUNDRECT,
                         at=pad_xy,
                         size=[paste_x_mm, paste_y_mm],
-                        radius_ratio=self.dim.roundrect_ratio,
-                        maximum_radius=self.dim.roundrect_radius_max_mm,
+                        round_radius_handler=self.dim.roundrect_radius_handler,
                         layers=paste_layers,
                     )
                 )
