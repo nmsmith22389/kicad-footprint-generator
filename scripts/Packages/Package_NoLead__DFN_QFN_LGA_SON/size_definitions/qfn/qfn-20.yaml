@@ -179,6 +179,61 @@ QFN-20-1EP_3x4mm_P0.5mm_EP1.65x2.65mm:
   #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
   #include_suffix_in_3dpath: 'False'
 
+QFN-20-1EP_3.5x3.5mm_P0.5mm_EP2x2mm:
+  device_type: 'QFN'
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'http://www.ti.com/lit/ml/mpqf239/mpqf239.pdf'
+  ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  # custom_name_format:
+  body_size_x:
+    minimum: 3.35
+    maximum: 3.65
+  body_size_y:
+    minimum: 3.35
+    maximum: 3.65
+  overall_height:
+    minimum: 0.8
+    maximum: 1.0
+
+  lead_width:
+    minimum: 0.18
+    maximum: 0.3
+  lead_len:
+    minimum: 0.3
+    maximum: 0.5
+
+  EP_size_x:
+    nominal: 2
+  EP_size_y:
+    nominal: 2
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 2]
+
+
+  thermal_vias:
+    count: [2, 2]
+    drill: 0.2
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    #EP_num_paste_pads: [2, 2]
+    paste_between_vias: 2
+    #paste_rings_outside: 1
+    EP_paste_coverage: 0.75
+    #grid: [1, 1]
+    # bottom_pad_size:
+    paste_avoid_via: False
+
+  pitch: 0.5
+  num_pins_x: 5
+  num_pins_y: 5
+  #chamfer_edge_pins: 0.15
+  #pin_count_grid:
+  #pad_length_addition: 0.5
+  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
+  #include_suffix_in_3dpath: 'False'
+
 QFN-20-1EP_4x4mm_P0.5mm_EP2.5x2.5mm:
   device_type: 'QFN'
   #manufacturer: 'man'
@@ -367,46 +422,55 @@ QFN-20-1EP_4x4mm_P0.5mm_EP2.7x2.7mm:
   #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
   #include_suffix_in_3dpath: 'False'
 
-QFN-20-1EP_3.5x3.5mm_P0.5mm_EP2x2mm:
-  device_type: 'QFN'
+TQFN-20-1EP_4x4mm_P0.5mm_EP2.1x2.1mm:
+# This is a WQFN, JEDEC MO-220-K.01, variation WGGD-5 (but custom Exposed Pad from Maxim)
+  device_type: 'TQFN'
   #manufacturer: 'man'
   #part_number: 'mpn'
-  size_source: 'http://www.ti.com/lit/ml/mpqf239/mpqf239.pdf'
+  size_source: 'https://pdfserv.maximintegrated.com/package_dwgs/21-0139.PDF (T2044-2)'
   ipc_class: 'qfn' # 'qfn_pull_back'
   #ipc_density: 'least' #overwrite global value for this device.
   # custom_name_format:
   body_size_x:
-    minimum: 3.35
-    maximum: 3.65
+    minimum: 3.9
+    nominal: 4
+    maximum: 4.1
   body_size_y:
-    minimum: 3.35
-    maximum: 3.65
+    minimum: 3.9
+    nominal: 4
+    maximum: 4.1
   overall_height:
-    minimum: 0.8
-    maximum: 1.0
+    minimum: 0.7
+    nominal: 0.75
+    maximum: 0.8
 
   lead_width:
-    minimum: 0.18
+    minimum: 0.2
+    nominal: 0.25
     maximum: 0.3
   lead_len:
-    minimum: 0.3
-    maximum: 0.5
+    minimum: 0.45
+    nominal: 0.55
+    maximum: 0.65
 
   EP_size_x:
-    nominal: 2
+    minimum: 1.95
+    nominal: 2.1
+    maximum: 2.25
   EP_size_y:
-    nominal: 2
+    minimum: 1.95
+    nominal: 2.1
+    maximum: 2.25
   # EP_paste_coverage: 0.65
   EP_num_paste_pads: [2, 2]
-
 
   thermal_vias:
     count: [2, 2]
     drill: 0.2
     # min_annular_ring: 0.15
     paste_via_clearance: 0.1
-    #EP_num_paste_pads: [2, 2]
-    paste_between_vias: 2
+    # EP_num_paste_pads: [2, 2]
+    #paste_between_vias: 1
     #paste_rings_outside: 1
     EP_paste_coverage: 0.75
     #grid: [1, 1]
@@ -416,7 +480,7 @@ QFN-20-1EP_3.5x3.5mm_P0.5mm_EP2x2mm:
   pitch: 0.5
   num_pins_x: 5
   num_pins_y: 5
-  #chamfer_edge_pins: 0.15
+  #chamfer_edge_pins: 0.25
   #pin_count_grid:
   #pad_length_addition: 0.5
   #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
@@ -484,6 +548,134 @@ MLF-20-1EP_4x4mm_P0.5mm_EP2.6x2.6mm:
   #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
   #include_suffix_in_3dpath: 'False'
 
+TQFN-20-1EP_4x4mm_P0.5mm_EP2.7x2.7mm:
+# This is a WQFN
+  device_type: 'TQFN'
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'https://pdfserv.maximintegrated.com/package_dwgs/21-0139.PDF (T2044-5C)'
+  ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  # custom_name_format:
+  body_size_x:
+    minimum: 3.9
+    nominal: 4
+    maximum: 4.1
+  body_size_y:
+    minimum: 3.9
+    nominal: 4
+    maximum: 4.1
+  overall_height:
+    minimum: 0.7
+    nominal: 0.75
+    maximum: 0.8
+
+  lead_width:
+    minimum: 0.2
+    nominal: 0.25
+    maximum: 0.3
+  lead_len:
+    minimum: 0.35
+    nominal: 0.4
+    maximum: 0.45
+
+  EP_size_x:
+    minimum: 2.6
+    nominal: 2.7
+    maximum: 2.8
+  EP_size_y:
+    minimum: 2.6
+    nominal: 2.7
+    maximum: 2.8
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [3, 3]
+    drill: 0.2
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    # EP_num_paste_pads: [2, 2]
+    #paste_between_vias: 1
+    #paste_rings_outside: 1
+    EP_paste_coverage: 0.75
+    #grid: [1, 1]
+    # bottom_pad_size:
+    paste_avoid_via: False
+
+  pitch: 0.5
+  num_pins_x: 5
+  num_pins_y: 5
+  #chamfer_edge_pins: 0.25
+  #pin_count_grid:
+  #pad_length_addition: 0.5
+  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
+  #include_suffix_in_3dpath: 'False'
+
+TQFN-20-1EP_4x4mm_P0.5mm_EP2.9x2.9mm:
+# This is a WQFN
+  device_type: 'TQFN'
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'https://pdfserv.maximintegrated.com/package_dwgs/21-100172.PDF'
+  ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  # custom_name_format:
+  body_size_x:
+    minimum: 3.9
+    nominal: 4
+    maximum: 4.1
+  body_size_y:
+    minimum: 3.9
+    nominal: 4
+    maximum: 4.1
+  overall_height:
+    minimum: 0.7
+    nominal: 0.75
+    maximum: 0.8
+
+  lead_width:
+    minimum: 0.2
+    nominal: 0.25
+    maximum: 0.3
+  lead_len:
+    minimum: 0.25
+    nominal: 0.3
+    maximum: 0.35
+
+  EP_size_x:
+    minimum: 2.85
+    nominal: 2.9
+    maximum: 2.95
+  EP_size_y:
+    minimum: 2.85
+    nominal: 2.9
+    maximum: 2.95
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [3, 3]
+    drill: 0.2
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    # EP_num_paste_pads: [2, 2]
+    #paste_between_vias: 1
+    #paste_rings_outside: 1
+    EP_paste_coverage: 0.75
+    #grid: [1, 1]
+    # bottom_pad_size:
+    paste_avoid_via: False
+
+  pitch: 0.5
+  num_pins_x: 5
+  num_pins_y: 5
+  #chamfer_edge_pins: 0.25
+  #pin_count_grid:
+  #pad_length_addition: 0.5
+  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
+  #include_suffix_in_3dpath: 'False'
+
 QFN-20-1EP_4x5mm_P0.5mm_EP2.65x3.65mm:
   device_type: 'QFN'
   #manufacturer: 'man'
@@ -536,6 +728,131 @@ QFN-20-1EP_4x5mm_P0.5mm_EP2.65x3.65mm:
   pitch: 0.5
   num_pins_x: 4
   num_pins_y: 6
+  #chamfer_edge_pins: 0.25
+  #pin_count_grid:
+  #pad_length_addition: 0.5
+  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
+  #include_suffix_in_3dpath: 'False'
+
+TQFN-20-1EP_5x5mm_P0.65mm_EP3.1x3.1mm:
+# This is a WQFN
+  device_type: 'TQFN'
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'https://pdfserv.maximintegrated.com/package_dwgs/21-0140.PDF (T2055-3)'
+  ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  # custom_name_format:
+  body_size_x:
+    nominal: 5
+  body_size_y:
+    nominal: 5
+  overall_height:
+    minimum: 0.7
+    nominal: 0.75
+    maximum: 0.8
+
+  lead_width:
+    minimum: 0.25
+    nominal: 0.30
+    maximum: 0.35
+  lead_len:
+    minimum: 0.45
+    nominal: 0.55
+    maximum: 0.65
+
+  EP_size_x:
+    minimum: 3.0
+    nominal: 3.1
+    maximum: 3.2
+  EP_size_y:
+    minimum: 3.0
+    nominal: 3.1
+    maximum: 3.2
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [3, 3]
+    drill: 0.2
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    # EP_num_paste_pads: [2, 2]
+    #paste_between_vias: 1
+    #paste_rings_outside: 1
+    EP_paste_coverage: 0.75
+    #grid: [1, 1]
+    # bottom_pad_size:
+    paste_avoid_via: False
+
+  pitch: 0.65
+  num_pins_x: 5
+  num_pins_y: 5
+  #chamfer_edge_pins: 0.25
+  #pin_count_grid:
+  #pad_length_addition: 0.5
+  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
+  #include_suffix_in_3dpath: 'False'
+
+TQFN-20-1EP_5x5mm_P0.65mm_EP3.25x3.25mm:
+# This is a WQFN
+  device_type: 'TQFN'
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'https://pdfserv.maximintegrated.com/package_dwgs/21-0140.PDF (T2055-5)'
+  ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  # custom_name_format:
+  body_size_x:
+    nominal: 5
+  body_size_y:
+    nominal: 5
+  overall_height:
+    minimum: 0.7
+    nominal: 0.75
+    maximum: 0.8
+
+  lead_width:
+    minimum: 0.25
+    nominal: 0.30
+    maximum: 0.35
+
+  # The footprints with EP3.25mm have a specified lead length of 0.4mm
+  # (while the default for 20-pins is 0.55mm). This uses the default lead
+  # length (instead of the actual 0.4mm) for calculating the pad size,
+  # to match the landing pattern recommended by Maxim (90-0010).
+  lead_len:
+    minimum: 0.30
+    nominal: 0.40
+    maximum: 0.50
+
+  EP_size_x:
+    minimum: 3.15
+    nominal: 3.25
+    maximum: 3.35
+  EP_size_y:
+    minimum: 3.15
+    nominal: 3.25
+    maximum: 3.35
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [3, 3]
+    drill: 0.2
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    # EP_num_paste_pads: [2, 2]
+    #paste_between_vias: 1
+    #paste_rings_outside: 1
+    EP_paste_coverage: 0.75
+    #grid: [1, 1]
+    # bottom_pad_size:
+    paste_avoid_via: False
+
+  pitch: 0.65
+  num_pins_x: 5
+  num_pins_y: 5
   #chamfer_edge_pins: 0.25
   #pin_count_grid:
   #pad_length_addition: 0.5
