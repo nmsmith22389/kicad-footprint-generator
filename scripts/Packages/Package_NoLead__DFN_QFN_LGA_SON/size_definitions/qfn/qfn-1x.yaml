@@ -146,7 +146,7 @@ QFN-12-1EP_3x3mm_P0.5mm_EP1.45x1.45mm:
   num_pins_x: 3
   num_pins_y: 3
 
-QFN-16-1EP_1.8x2.6_P0.4mm_EP0.7x1.5mm:
+QFN-16-1EP_1.8x2.6mm_P0.4mm_EP0.7x1.5mm:
   device_type: 'QFN'
   size_source: https://www.st.com/resource/en/datasheet/stg3692.pdf#page=13
   ipc_class: 'qfn'
@@ -192,7 +192,7 @@ QFN-16-1EP_1.8x2.6_P0.4mm_EP0.7x1.5mm:
   num_pins_x: 4
   num_pins_y: 4
 
-Renesas_UQFN-16_2x2_P0.4mm:
+Renesas_UQFN-16_2x2mm_P0.4mm:
 # This package is very small, so lead length matters. The closest package in
 # JEDEC MO-248-E appears to be variation UCCE (which is not listed in the 
 # tables / combinations).
