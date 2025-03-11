@@ -146,6 +146,36 @@ QFN-16-1EP_1.8x2.6_P0.4mm_EP0.7x1.5mm:
   num_pins_x: 4
   num_pins_y: 4
 
+Renesas_UQFN-16_2x2_P0.4mm:
+# This package is very small, so lead length matters. The closest package in
+# JEDEC MO-248-E appears to be variation UCCE (which is not listed in the 
+# tables / combinations).
+# in JEITA there is 12-001-UAAEA (but it has 12 leads). The smallest 16-leads
+# packages in both standards seems to be 3.00x3.00mm, so we are using
+# manufacturer's prefix here.
+  device_type: 'UQFN'
+  size_source: 'Renesas STQFN-16L, https://www.renesas.com/en/document/dst/slg47011-datasheet#page=228'
+  manufacturer: 'Renesas'
+  ipc_class: 'qfn'
+  ipc_density: 'least'
+  body_size_x: 2.0 +/- 0.1
+  body_size_y: 2.0 +/- 0.1
+  overall_height: 0.55 +/- 0.05 # This makes it a UQFN, 'Ultra Thin'
+
+  lead_width: 0.18 +/- 0.05 # Similar to JEITA, 0.15 .. 0.20 .. 0.25 mm in JEDEC
+  # lead_len: 0.30 +/- 0.05 # Generates 0.75 mm; 0.30 .. 0.40 .. 0.50 mm in JEDEC
+  lead_len: 0.23 # HACK, generates pads with 0.575 mm (0.30 mm inside the component / F.Fab outline), so distance between opposite pads = 1.4 mm (see land pattern in datasheet, page 230)
+
+  pad_overrides:
+    3:
+      # lead_len: 0.40 +/- 0.05 # Generates 0.85 mm, but it's NOT WORKING
+      size_increase: [0.10, null]
+      move: [0.05, null]
+
+  pitch: 0.40
+  num_pins_x: 3
+  num_pins_y: 5
+
 QFN-16-1EP_3x3mm_P0.5mm_EP1.45x1.45mm:
   device_type: 'QFN'
   #manufacturer: 'man'
