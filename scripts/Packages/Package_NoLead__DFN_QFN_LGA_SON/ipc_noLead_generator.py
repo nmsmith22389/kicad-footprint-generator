@@ -248,11 +248,11 @@ class NoLeadGenerator(FootprintGenerator):
 
         heel_reduction_max = 0
 
-        if Gmin_x - 2 * min_ep_to_pad_clearance < EP_size['x']:
+        if EP_size['x'] > 0 and Gmin_x - 2 * min_ep_to_pad_clearance < EP_size['x']:
             heel_reduction_max = ((EP_size['x'] + 2 * min_ep_to_pad_clearance - Gmin_x) / 2)
             # print('{}, {}, {}'.format(Gmin_x, EP_size['x'], min_ep_to_pad_clearance))
             Gmin_x = EP_size['x'] + 2 * min_ep_to_pad_clearance
-        if Gmin_y - 2 * min_ep_to_pad_clearance < EP_size['y']:
+        if EP_size['y'] > 0 and Gmin_y - 2 * min_ep_to_pad_clearance < EP_size['y']:
             heel_reduction = ((EP_size['y'] + 2 * min_ep_to_pad_clearance - Gmin_y) / 2)
             if heel_reduction > heel_reduction_max:
                 heel_reduction_max = heel_reduction
