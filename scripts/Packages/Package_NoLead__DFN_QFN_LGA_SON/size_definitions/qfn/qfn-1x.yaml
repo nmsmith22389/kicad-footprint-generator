@@ -217,7 +217,7 @@ QFN-12-1EP_3x3mm_P0.5mm_EP1.45x1.45mm:
   num_pins_x: 3
   num_pins_y: 3
 
-VQFN-12-1EP_4x3mm_P0.8mm_EP2.1x2.1mm:
+VQFN-12-1EP_4x4mm_P0.8mm_EP2.1x2.1mm:
   device_type: 'VQFN'
   size_source: 'https://www.mouser.ch/datasheet/2/268/EMC2301_2_3_5_Data_Sheet_DS20006532A-3443118.pdf'
   ipc_class: 'qfn'
