@@ -381,6 +381,48 @@ Texas_VQFN-24_RGE0024H:
     paste_avoid_via: False
 
 
+Texas_VQFN-24_RHF0024A:
+  device_type: 'VQFN'
+  manufacturer: 'Texas'
+  part_number: 'RHF0024A'
+  size_source: 'http://www.ti.com/lit/ds/symlink/tps2660.pdf#page=51'
+  ipc_class: 'qfn'
+  body_size_x:
+    minimum: 3.9
+    maximum: 4.1
+  body_size_y:
+    minimum: 4.9
+    maximum: 5.1
+  overall_height:
+    maximum: 1.0
+
+  lead_width:
+    minimum: 0.18
+    maximum: 0.3
+  lead_len:
+    minimum: 0.3
+    maximum: 0.5
+
+  EP_size_x:
+    nominal: 2.65
+    tolerance: 0.1
+  EP_size_y:
+    nominal: 3.65
+    tolerance: 0.1
+  EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 3]
+
+  pitch: 0.5
+  num_pins_x: 5
+  num_pins_y: 7
+  thermal_vias:
+    count: [3, 4]
+    drill: 0.2
+    EP_paste_coverage: 0.75
+    EP_num_paste_pads: [2, 3]
+    paste_avoid_via: False
+
+
 Texas_VQFN-28_RVE0028A:
   device_type: 'VQFN'
   manufacturer: 'Texas'
