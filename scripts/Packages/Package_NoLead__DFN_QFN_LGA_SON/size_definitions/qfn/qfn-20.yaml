@@ -605,3 +605,56 @@ QFN-20-1EP_5x5mm_P0.65mm_EP3.35x3.35mm:
   #pad_length_addition: 0.5
   #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
   #include_suffix_in_3dpath: 'False'
+
+Renesas_UQFN-20_2x3mm_LayoutBorder4x6y:
+  device_type: 'UQFN'
+  manufacturer: 'Renesas'
+  size_source: 'Renesas STQFN-20L, https://www.renesas.com/en/document/dst/slg465808283-datasheet#page=200'
+  ipc_class: 'qfn'
+  body_size_x:
+    minimum: 1.95
+    nominal: 2.00
+    maximum: 2.05
+  body_size_y:
+    minimum: 2.95
+    nominal: 3.00
+    maximum: 3.05
+  overall_height:
+    minimum: 0.50
+    nominal: 0.55
+    maximum: 0.60
+
+  lead_width:
+    minimum: 0.13
+    nominal: 0.18
+    maximum: 0.23
+  lead_len:
+    # Proper values
+    # minimum: 0.25
+    # nominal: 0.30
+    # maximum: 0.35
+
+    # HACK, as corner pads are too close otherwise
+    nominal: 0.25
+
+  pad_overrides:
+    # Bottom (short)
+    7:  &short_pad_override_bot
+      size_increase: [null, -0.075]
+      move: [null, 0.0375]
+    10: *short_pad_override_bot
+    # Top (short)
+    17: &short_pad_override_top
+      size_increase: [null, -0.075]
+      move: [null, -0.0375]
+    20: *short_pad_override_top
+
+    # Top (long)
+    19:
+      size_increase: [null, 0.10]
+      move: [null, 0.05]
+
+  pitch: 0.4
+  num_pins_x: 4
+  num_pins_y: 6
+  suffix: '_LayoutBorder4x6y'
