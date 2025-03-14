@@ -1,59 +1,3 @@
-QFN-28-1EP_3x6mm_P0.5mm_EP1.7x4.75mm:
-  device_type: 'QFN'
-  #manufacturer: 'man'
-  #part_number: 'mpn'
-  size_source: 'http://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/ltc-legacy-qfn/05081926_0_UDE28.pdf'
-  ipc_class: 'qfn' # 'qfn_pull_back'
-  #ipc_density: 'least' #overwrite global value for this device.
-  # custom_name_format:
-  body_size_x:
-    nominal: 3
-    tolerance: 0.1
-  body_size_y:
-    nominal: 6
-    tolerance: 0.1
-  overall_height:
-    nominal: 0.75
-    tolerance: 0.05
-
-  lead_width:
-    nominal: 0.25
-    tolerance: 0.05
-  lead_len:
-    nominal: 0.4
-    tolerance: 0.1
-
-  EP_size_x:
-    nominal: 1.7
-    tolerance: 0.1
-  EP_size_y:
-    nominal: 4.75
-    tolerance: 0.1
-  # EP_paste_coverage: 0.65
-  EP_num_paste_pads: [2, 4]
-
-  thermal_vias:
-    count: [2, 4]
-    drill: 0.2
-    # min_annular_ring: 0.15
-    paste_via_clearance: 0.1
-    # EP_num_paste_pads: [2, 2]
-    paste_between_vias: 1
-    paste_rings_outside: 1
-    # EP_paste_coverage: 0.75
-    grid: [1, 1]
-    # bottom_pad_size:
-    # paste_avoid_via: False
-
-  pitch: 0.5
-  num_pins_x: 4
-  num_pins_y: 10
-  #chamfer_edge_pins: 0.25
-  #pin_count_grid:
-  #pad_length_addition: 0.5
-  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
-  #include_suffix_in_3dpath: 'False'
-
 QFN-28-1EP_4x4mm_P0.4mm_EP2.3x2.3mm:
   device_type: 'QFN'
   #manufacturer: 'man'
@@ -385,6 +329,62 @@ QFN-28-1EP_4x4mm_P0.45mm_EP2.6x2.6mm:
   #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
   #include_suffix_in_3dpath: 'False'
 
+QFN-28-1EP_3x6mm_P0.5mm_EP1.7x4.75mm:
+  device_type: 'QFN'
+  #manufacturer: 'man'
+  #part_number: 'mpn'
+  size_source: 'http://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/ltc-legacy-qfn/05081926_0_UDE28.pdf'
+  ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  # custom_name_format:
+  body_size_x:
+    nominal: 3
+    tolerance: 0.1
+  body_size_y:
+    nominal: 6
+    tolerance: 0.1
+  overall_height:
+    nominal: 0.75
+    tolerance: 0.05
+
+  lead_width:
+    nominal: 0.25
+    tolerance: 0.05
+  lead_len:
+    nominal: 0.4
+    tolerance: 0.1
+
+  EP_size_x:
+    nominal: 1.7
+    tolerance: 0.1
+  EP_size_y:
+    nominal: 4.75
+    tolerance: 0.1
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 4]
+
+  thermal_vias:
+    count: [2, 4]
+    drill: 0.2
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    # EP_num_paste_pads: [2, 2]
+    paste_between_vias: 1
+    paste_rings_outside: 1
+    # EP_paste_coverage: 0.75
+    grid: [1, 1]
+    # bottom_pad_size:
+    # paste_avoid_via: False
+
+  pitch: 0.5
+  num_pins_x: 4
+  num_pins_y: 10
+  #chamfer_edge_pins: 0.25
+  #pin_count_grid:
+  #pad_length_addition: 0.5
+  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
+  #include_suffix_in_3dpath: 'False'
+
 QFN-28_4x4mm_P0.5mm:
   device_type: 'QFN'
   #manufacturer: 'man'
@@ -578,7 +578,7 @@ QFN-28-1EP_5x5mm_P0.5mm_EP2.7x2.7mm:
   num_pins_x: 7
   num_pins_y: 7
 
-TQFN-28-1EP_5x5mm_P0.50mm_EP2.70x2.70mm:
+TQFN-28-1EP_5x5mm_P0.5mm_EP2.7x2.7mm:
 # This is a WQFN, JEDEC MO-220-K.01, variation WHHD-3 (but custom Exposed Pad from Maxim)
   device_type: 'TQFN'
   #manufacturer: 'man'
@@ -779,7 +779,7 @@ VQFN-28-1EP_5x5mm_P0.5mm_EP3.25x3.25mm:
   #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
   #include_suffix_in_3dpath: 'False'
 
-TQFN-28-1EP_5x5mm_P0.50mm_EP3.25x3.25mm:
+TQFN-28-1EP_5x5mm_P0.5mm_EP3.25x3.25mm:
 # This is a WQFN
   device_type: 'TQFN'
   #manufacturer: 'man'
