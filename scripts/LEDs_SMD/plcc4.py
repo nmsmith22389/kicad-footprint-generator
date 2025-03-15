@@ -17,13 +17,13 @@ def plcc4(args):
 
     pads_clockwise = args["pads_clockwise"]
 
-    desc = str(pkgWidth) + "mm x " + str(pkgHeight) + "mm PLCC4 LED, "
+    desc = str(pkgWidth) + "mm x " + str(pkgHeight) + "mm PLCC4 RGB LED, "
 
     lib_name = "LED_SMD"
 
     f = Footprint(footprint_name, FootprintType.SMD)
     f.setDescription(desc + args["datasheet"])
-    f.setTags("LED Cree PLCC-4")
+    f.setTags("LED Cree PLCC-4 "+args["tags"])
     f.append(Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl",
                    at=[0.0, 0.0, 0.0],
                    scale=[1.0, 1.0, 1.0],
@@ -122,6 +122,7 @@ if __name__ == '__main__':
     # the root node of .yml files is parsed as name
     parser.add_parameter("name", type=str, required=True)
     parser.add_parameter("datasheet", type=str, required=True)
+    parser.add_parameter("tags", type=str, required=True)
     parser.add_parameter("pkg_width", type=float, required=False, default=2.0)
     parser.add_parameter("pkg_height", type=float, required=False, default=2.0)
     parser.add_parameter("pad_x_spacing", type=float, required=False, default=1.5)
