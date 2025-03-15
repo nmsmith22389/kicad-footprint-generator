@@ -23,7 +23,7 @@ backPadSpacing = 4.5
 
 
 f = Footprint(footprint_name, FootprintType.THT)
-f.setDescription(datasheet)
+f.setDescription("3.5mm horizontal headphones jack, "+datasheet)
 f.setTags("Connector Audio Switronic ST-005-G")
 f.append(Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl",
                at=[0.0, 0.0, 0.0],
