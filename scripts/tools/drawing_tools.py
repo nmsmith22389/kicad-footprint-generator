@@ -71,8 +71,7 @@ def frangei(x, y, jump):
 
 # returns a list with a single rectangle around x,y with width and height w and h
 def addKeepoutRect(x, y, w, h):
-    return [KeepoutRect([x, y], [w, h])]
-    # return [[x - w / 2, x + w / 2, y - h / 2, y + h / 2]]
+    return [KeepoutRect(Vector2D(x, y), Vector2D(w, h))]
 
 
 # returns a series of rectangle that lie around the circular pad around (x,y) with radius w=h
@@ -80,9 +79,9 @@ def addKeepoutRect(x, y, w, h):
 def addKeepoutRound(x, y, w, h):
     if w != h:
         # Could do two circles and a rect if we cared enough
-        return [KeepoutRect((x, y), (w, h))]
+        return [KeepoutRect(Vector2D(x, y), Vector2D(w, h))]
 
-    return [KeepoutRound((x, y), w / 2)]
+    return [KeepoutRound(Vector2D(x, y), w / 2)]
 
 
 # internal method for keepout-processing

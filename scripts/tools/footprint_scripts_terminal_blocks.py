@@ -18,7 +18,7 @@ from KicadModTree import (
     Text,
     Translation,
 )
-from kilibs.geom import Direction, Vector2D, keepout
+from kilibs.geom import BoundingBox, Direction, Vector2D, keepout
 from scripts.tools.footprint_global_properties import *
 from scripts.tools.global_config_files import global_config as GC
 from scripts.tools.nodes import pin1_arrow
@@ -34,7 +34,8 @@ def make_silk_outline_with_pin1_arrow(
     silk_size: Vector2D,
     arrow_x: float,
     line_width: float,
-    keepouts: list,
+    keepouts: list[keepout.Keepout],
+    pin1_keepouts: list[keepout.Keepout],
 ):
     """
 
@@ -43,6 +44,10 @@ def make_silk_outline_with_pin1_arrow(
     +---  --------------------+
         /\
         --
+
+    :pin1_keepouts: subset of the keepouts that relate to pin 1.
+                    This is used to bump the arrow out of the way of the pads
+                    if needed.
     """
 
     # Terminal blocks are big items, so we use a bigger arrow
@@ -51,7 +56,17 @@ def make_silk_outline_with_pin1_arrow(
         DT.SilkArrowSize.HUGE, lw_slk
     )
 
-    pin1_arrow_apex = Vector2D(arrow_x, silk_tl.y + silk_size.y)
+    max_arrow_y = silk_tl.y + silk_size.y
+
+    # Bump arrow out of the way of the pads if needed
+    if pin1_keepouts:
+        pin1_bbox = BoundingBox()
+        for ko in pin1_keepouts:
+            pin1_bbox.include_bbox(ko.bounding_box)
+
+        max_arrow_y = max(max_arrow_y, pin1_bbox.bottom)
+
+    pin1_arrow_apex = Vector2D(arrow_x, max_arrow_y)
     pin1_arrow_keepout = keepout.KeepoutRect(
         pin1_arrow_apex, Vector2D(0.6, 0.6)
     )
@@ -78,7 +93,6 @@ def make_silk_outline_with_pin1_arrow(
             line_width_mm=line_width,
         )
     )
-
 
 #
 #  +----------------------------------------+                      ^
@@ -268,6 +282,7 @@ def makeTerminalBlockStd(
 
     pad_layers = Pad.LAYERS_THT
     keepouts: list[keepout.Keepout] = []
+    pin1_keepouts: list[keepout.Keepout] = []
 
     for p in range(1, pins + 1):
         pextra = 0
@@ -287,7 +302,7 @@ def makeTerminalBlockStd(
                     maximum_radius=0.25,
                 )
             )
-            keepouts = keepouts +  DT.addKeepoutRect(
+            pin1_keepouts += DT.addKeepoutRect(
                 x1, y1, pad[0] + 8 * slk_offset, pad[1] + 8 * slk_offset
             )
             if secondDrillDiameter > 0:
@@ -308,12 +323,14 @@ def makeTerminalBlockStd(
                         layers=pad_layers,
                     )
                 )
-                keepouts = keepouts +  DT.addKeepoutRect(
+                pin1_keepouts += DT.addKeepoutRect(
                     x1 + secondDrillOffset[0],
                     y1 + secondDrillOffset[1],
                     max(secondDrillPad[0], secondDrillDiameter) + 8 * slk_offset,
                     max(secondDrillPad[0], secondDrillDiameter) + 8 * slk_offset,
                 )
+
+            keepouts += pin1_keepouts
         else:
             kicad_modg.append(
                 Pad(
@@ -387,7 +404,8 @@ def makeTerminalBlockStd(
         )
 
     make_silk_outline_with_pin1_arrow(
-        kicad_modg, Vector2D(l_slk, t_slk), Vector2D(w_slk, h_slk), 0, lw_slk, keepouts
+        kicad_modg, Vector2D(l_slk, t_slk), Vector2D(w_slk, h_slk), 0, lw_slk,
+        keepouts, pin1_keepouts,
     )
 
     # screws + other repeated features
@@ -845,6 +863,9 @@ def makeTerminalBlockVertical(
     pad_layers = Pad.LAYERS_THT
     keepouts: list[keepout.Keepout]=[]
 
+    # Used to track the keepouts for pin 1 to move the arrow if needed
+    pin1_keepouts: list[keepout.Keepout] = []
+
     for p in range(1, pins + 1):
 
         if p == 1:
@@ -861,9 +882,10 @@ def makeTerminalBlockVertical(
                     maximum_radius=0.25,
                 )
             )
-            keepouts = keepouts +  DT.addKeepoutRect(
+            pin1_keepouts += DT.addKeepoutRect(
                 x1, y1, pad[0] + 8 * slk_offset, pad[1] + 8 * slk_offset
             )
+
             if secondDrillDiameter > 0:
                 if extradrill1_type == Pad.TYPE_NPTH:
                     num = ""
@@ -882,12 +904,14 @@ def makeTerminalBlockVertical(
                         layers=pad_layers,
                     )
                 )
-                keepouts = keepouts +  DT.addKeepoutRect(
+                pin1_keepouts += DT.addKeepoutRect(
                     x1 + secondDrillOffset[0],
                     y1 + secondDrillOffset[1],
                     max(secondDrillPad[0], secondDrillDiameter) + 8 * slk_offset,
                     max(secondDrillPad[0], secondDrillDiameter) + 8 * slk_offset,
                 )
+
+            keepouts += pin1_keepouts
         else:
             kicad_modg.append(
                 Pad(
@@ -969,7 +993,8 @@ def makeTerminalBlockVertical(
         )
 
     make_silk_outline_with_pin1_arrow(
-        kicad_modg, Vector2D(l_slk, t_slk), Vector2D(w_slk, h_slk), 0, lw_slk, keepouts
+        kicad_modg, Vector2D(l_slk, t_slk), Vector2D(w_slk, h_slk), 0, lw_slk,
+        keepouts, pin1_keepouts
     )
 
     # opening + other repeated features
@@ -1400,6 +1425,7 @@ def makeTerminalBlock45Degree(
 
     pad_layers = Pad.LAYERS_THT
     keepouts: list[keepout.Keepout] = []
+    pin1_keepouts: list[keepout.Keepout] = []
 
     for p in range(1, pins + 1):
         pextra = 0
@@ -1419,7 +1445,7 @@ def makeTerminalBlock45Degree(
                     maximum_radius=0.25,
                 )
             )
-            keepouts = keepouts +  DT.addKeepoutRect(
+            pin1_keepouts += DT.addKeepoutRect(
                 x1, y1, pad[0] + 8 * slk_offset, pad[1] + 8 * slk_offset
             )
             if secondDrillDiameter > 0:
@@ -1440,12 +1466,14 @@ def makeTerminalBlock45Degree(
                         layers=pad_layers,
                     )
                 )
-                keepouts = keepouts +  DT.addKeepoutRect(
+                pin1_keepouts += DT.addKeepoutRect(
                     x1 + secondDrillOffset[0],
                     y1 + secondDrillOffset[1],
                     max(secondDrillPad[0], secondDrillDiameter) + 8 * slk_offset,
                     max(secondDrillPad[1], secondDrillDiameter) + 8 * slk_offset,
                 )
+
+            keepouts += pin1_keepouts
         else:
             kicad_modg.append(
                 Pad(
@@ -1519,7 +1547,8 @@ def makeTerminalBlock45Degree(
         )
 
     make_silk_outline_with_pin1_arrow(
-        kicad_modg, Vector2D(l_slk, t_slk), Vector2D(w_slk, h_slk), 0, lw_slk, keepouts
+        kicad_modg, Vector2D(l_slk, t_slk), Vector2D(w_slk, h_slk), 0, lw_slk,
+        keepouts, pin1_keepouts,
     )
 
     # opening + other repeated features

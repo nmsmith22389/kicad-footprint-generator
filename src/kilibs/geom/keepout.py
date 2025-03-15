@@ -7,7 +7,7 @@ from kilibs.geom.geometric_util import (
     geometricArc,
     BaseNodeIntersection,
 )
-from kilibs.geom import Vector2D
+from kilibs.geom import Vector2D, BoundingBox
 
 
 class Keepout(ABC):
@@ -68,6 +68,12 @@ class Keepout(ABC):
 
     @abstractmethod
     def contains(self, pt: Vector2D) -> bool:
+        raise NotImplementedError()
+
+
+    @property
+    @abstractmethod
+    def bounding_box(self) -> BoundingBox:
         raise NotImplementedError()
 
     @staticmethod
@@ -185,6 +191,7 @@ class KeepoutRect(Keepout):
         self.w = size.x
         self.h = size.y
 
+        # Pre-calculate useful values we will use a lot
         self.left = center.x - size.x / 2
         self.right = center.x + size.x / 2
         self.top = center.y - size.y / 2
@@ -195,11 +202,17 @@ class KeepoutRect(Keepout):
         self.left_side = geometricLine(start=[self.left, self.top], end=[self.left, self.bottom])
         self.right_side = geometricLine(start=[self.right, self.top], end=[self.right, self.bottom])
 
+        self._bbox = BoundingBox(Vector2D(self.left, self.top), Vector2D(self.right, self.bottom))
+
     def __str__(self):
         return f"KeepoutRect(center=({self.x}, {self.y}), size=({self.w}, {self.h}))"
 
     def contains(self, pt: Vector2D) -> bool:
         return self.left <= pt.x <= self.right and self.top <= pt.y <= self.bottom
+
+    @property
+    def bounding_box(self):
+        return self._bbox
 
     def _circle_inside(self, circle: geometricCircle) -> bool:
         return (self.left <= circle.center_pos.x - circle.radius and
@@ -295,11 +308,20 @@ class KeepoutRound(Keepout):
 
         self._circle = geometricCircle(center=self.center, radius=self.radius)
 
+        self._bbox = BoundingBox(
+            Vector2D(center.x - radius, center.y - radius),
+            Vector2D(center.x + radius, center.y + radius),
+        )
+
     def __str__(self):
         return f"KeepoutRound(center=({self.center.x}, {self.center.y}), radius={self.radius})"
 
     def contains(self, pt) -> bool:
         return (pt - self.center).norm() <= self.radius
+
+    @property
+    def bounding_box(self):
+        return self._bbox
 
     def keepout_line(self, seg: geometricLine):
 
