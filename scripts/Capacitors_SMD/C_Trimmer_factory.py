@@ -201,7 +201,7 @@ class CapacitorTrimmer:
             print(kicad_mod.getRenderTree())
 
         # write file
-        lib_name = "Capacitors_SMD"
+        lib_name = "Capacitor_SMD"
         lib = KicadPrettyLibrary(lib_name, None)
         lib.save(kicad_mod)
 
