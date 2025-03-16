@@ -747,16 +747,32 @@ def makePinHeadAngled(rows, cols, rm, coldist, pack_width, pack_offset, pin_leng
                     if body_lines_y != False:
                         kicad_modg.append(Line(start=[l_slkb, (r-1)*rm+body_lines_y], end=[l_slkb, (r)*rm-body_lines_y], layer='F.SilkS',width=lw_slk))
 
+        # pin outline
+        if r != 0:
+            kicad_modg.append(
+                PolygonLine(
+                    nodes=[
+                        [l_slkp, r * rm - pin_width / 2 - slk_offset],
+                        [l_slkp + pin_length, r * rm - pin_width / 2 - slk_offset],
+                        [l_slkp + pin_length, r * rm + pin_width / 2 + slk_offset],
+                        [l_slkp, r * rm + pin_width / 2 + slk_offset],
+                    ],
+                    layer="F.SilkS",
+                    width=lw_slk,
+                )
+            )
+        else:
+            # color the first pin
+            kicad_modg.append(
+                Rect(
+                    start=Vector2D(l_slkp, -pin_width / 2 - slk_offset),
+                    end=Vector2D(l_slkp + pin_length, pin_width / 2 + slk_offset),
+                    layer="F.SilkS",
+                    width=lw_slk,
+                    fill=True,
+                )
+            )
 
-        # pin
-        kicad_modg.append(PolygonLine(polygon=[[l_slkp, r * rm - pin_width / 2 - slk_offset], [l_slkp + pin_length, r * rm - pin_width / 2 - slk_offset],
-                                                [l_slkp + pin_length, r*rm+pin_width/2+slk_offset], [l_slkp, r*rm+pin_width/2+slk_offset]], layer='F.SilkS', width=lw_slk))
-        # color the first pin
-        if r == 0:
-            y = -(pin_width/2)
-            while y < pin_width/2:
-                kicad_modg.append(Line(start=[l_slkp, y], end=[l_slkp + pin_length, y], layer='F.SilkS', width=lw_slk))
-                y += lw_slk
         # if body is starting at the pads
         if l_slkb-slk_offset > pad[0]/2 + min_pad_distance + (cols-1)*coldist:
             if r == 0 and cols == 1:
