@@ -291,12 +291,20 @@ Converter_DCDC_TRACO_TMR4-xxxxWI_THT:
 
 Converter_DCDC_TRACO_THB10-xxxx_Single_THT:
   library_name: 'Converter_DCDC'
-  description: "DCDC-Converter, TRACO, THB10-xxxx, Single, 10W, Rev. December 07. 2023"
+  description: "DCDC-Converter, TRACO, THB10-xxxx, Single, 10W, Rev. March 12. 2025"
   datasheet: "https://www.tracopower.com/products/thb10.pdf"
   tags: "DCDC-Converter TRACO THB10 THT 2\"x1\" 10W"
+  #compatible_mpns:
+    # https://www.tracopower.com/products/tri15.pdf
+    #- TRI 15
+    # https://www.tracopower.com/products/tri20.pdf
+    #- TRI 20
   extratexts: []
   at: [-5.08, 2.54]
   size: [25.4, 50.8]
+  body_position_tolerance: [0.5, 0.5]
+  # For future use
+  height: 12.1
   pins: [
     ["thtr", "1", 0, 0, 2.3, 2.3, 1.3],
     ["tht", "2", 5.08, 0, 2.3, 2.3, 1.3],
@@ -306,12 +314,20 @@ Converter_DCDC_TRACO_THB10-xxxx_Single_THT:
 
 Converter_DCDC_TRACO_THB10-xxxx_Dual_THT:
   library_name: 'Converter_DCDC'
-  description: "DCDC-Converter, TRACO, THB10-xxxx, Dual, 10W, Rev. December 07. 2023"
+  description: "DCDC-Converter, TRACO, THB10-xxxx, Dual, 10W, Rev. March 12. 2025"
   datasheet: "https://www.tracopower.com/products/thb10.pdf"
   tags: "DCDC-Converter TRACO THB10 THT 2\"x1\" 10W"
+  #compatible_mpns:
+    # https://www.tracopower.com/products/tri15.pdf
+    #- TRI 15
+    # https://www.tracopower.com/products/tri20.pdf
+    #- TRI 20
   extratexts: []
   at: [-5.08, 2.54]
   size: [25.4, 50.8]
+  body_position_tolerance: [0.5, 0.5]
+  # For future use
+  height: 12.1
   pins: [
     ["thtr", "1", 0, 0, 2.3, 2.3, 1.3],
     ["tht", "2", 5.08, 0, 2.3, 2.3, 1.3],
