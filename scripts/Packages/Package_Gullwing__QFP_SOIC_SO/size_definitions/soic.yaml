@@ -31,7 +31,7 @@
 
 FileHeader:
   library_Suffix: 'SO'
-  device_type: 'SOIC'
+  device_type: 'SOIC' # Use this in each new footprint definition for now, until refactor is completely
 
 
 # Packages with PITCH = 2.54 mm:
@@ -103,6 +103,7 @@ OnSemi_SOIC-4_751EP:
     - OnSemi_SOIC4W
 
 SOIC-4_4.55x3.7mm_P2.54mm:
+  device_type: 'SOIC' # temporary
   custom_name_format: 'SOIC-4_4.55x3.7mm_P2.54mm' #does not take into account the excluded pins
   size_source: 'https://toshiba.semicon-storage.com/info/docget.jsp?did=11791&prodName=TLP185'
   body_size_x:
@@ -355,6 +356,7 @@ SSOP-4_4.4x2.6mm_P1.27mm:
   num_pins_y: 2
 
 SOIC-4_4.55x2.6mm_P1.27mm:
+  device_type: 'SOIC' # temporary
   size_source: 'https://toshiba.semicon-storage.com/info/docget.jsp?did=12884&prodName=TLP291'
   body_size_x:
     minimum: 4.4
@@ -424,6 +426,7 @@ SOP-8_3.76x4.96mm_P1.27mm:
   num_pins_y: 4
 
 SOIC-8_3.9x4.9mm_P1.27mm:
+  device_type: 'SOIC' # temporary
   size_source: 'JEDEC MS-012AA, https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/soic_narrow-r/r_8.pdf'
   body_size_x: # from JEDEC
     nominal: 3.9
@@ -500,6 +503,7 @@ SSOP-8_3.9x5.05mm_P1.27mm:
   num_pins_y: 4
 
 SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.29x3.0mm:
+  device_type: 'SOIC' # temporary
   size_source: 'https://www.analog.com/media/en/technical-documentation/data-sheets/ada4898-1_4898-2.pdf#page=29'
   body_size_x:
     minimum: 3.8
@@ -599,6 +603,7 @@ HSOP-8-1EP_3.9x4.9mm_P1.27mm_EP2.3x2.3mm_ThermalVias:
     paste_avoid_via: False
 
 SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.41x3.81mm:
+  device_type: 'SOIC' # temporary
   size_source: 'https://www.analog.com/media/en/technical-documentation/data-sheets/ada4898-1_4898-2.pdf#page=29'
   body_size_x:
     minimum: 3.8
@@ -656,6 +661,7 @@ SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.41x3.81mm:
     paste_avoid_via: False
 
 SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.41x3.1mm:
+  device_type: 'SOIC' # temporary
   size_source: 'http://www.ti.com/lit/ds/symlink/lm5017.pdf#page=31'
   body_size_x:
     minimum: 3.8
@@ -757,6 +763,7 @@ HSOP-8-1EP_3.9x4.9mm_P1.27mm_EP2.41x3.1mm_ThermalVias:
     paste_avoid_via: False
 
 SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.41x3.3mm:
+  device_type: 'SOIC' # temporary
   size_source: 'http://www.allegromicro.com/~/media/Files/Datasheets/A4950-Datasheet.ashx#page=8'
   body_size_x:
     nominal: 3.9
@@ -810,6 +817,7 @@ SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.41x3.3mm:
     paste_avoid_via: False
 
 SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.514x3.2mm:
+  device_type: 'SOIC' # temporary
   size_source: 'https://www.renesas.com/eu/en/www/doc/datasheet/hip2100.pdf#page=13'
   body_size_x:
     minimum: 3.8 # rounded from 3.811
@@ -864,6 +872,7 @@ SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.514x3.2mm:
     paste_avoid_via: False
 
 SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.62x3.51mm:
+  device_type: 'SOIC' # temporary
   size_source: 'https://www.monolithicpower.com/en/documentview/productdocument/index/version/2/document_type/Datasheet/lang/en/sku/MP2303A/document_id/494#page=14'
   body_size_x:
     minimum: 3.8
@@ -1112,6 +1121,7 @@ SOP-8-1EP_4.57x4.57mm_P1.27mm_EP4.57x4.45mm:
     paste_avoid_via: False
 
 SOIC-8_5.3x5.3mm_P1.27mm:
+  device_type: 'SOIC' # temporary
   # formerly SOIC-8W_5.3x5.3mm_P1.27mm, 208 mils width, we are removing 'W' since it does not make sense in this package width
   # it replaces:
   # - SOP-8_5.28x5.23mm_P1.27mm
@@ -1214,6 +1224,7 @@ SSOP-8_5.25x5.24mm_P1.27mm:
   num_pins_y: 4
 
 SOIC-8_5.3x6.2mm_P1.27mm:
+  device_type: 'SOIC' # temporary
   # formerly SO-8_5.3x6.2mm_P1.27mm
   # similar to JEITA/EIAJ 08-001-BBA, which is E=5.30mm, D=6.10mm, A=2.15mm
   # see https://www.ti.com/packaging/docs/searchtipackages.tsp?packageName=SO, they call this package SOP
@@ -1233,6 +1244,7 @@ SOIC-8_5.3x6.2mm_P1.27mm:
   num_pins_y: 4
 
 SOIC-8_7.5x5.85mm_P1.27mm:
+  device_type: 'SOIC' # temporary
   size_source: 'http://www.ti.com/lit/ml/mpds382b/mpds382b.pdf'
   body_size_x:
     minimum: 7.4
@@ -1301,6 +1313,7 @@ SO-14_3.9x8.65mm_P1.27mm:
   num_pins_y: 7
 
 SOIC-14_3.9x8.7mm_P1.27mm:
+  device_type: 'SOIC' # temporary
   #round to two significant digits to comply with old name
   custom_name_format: SOIC-{pincount}_{size_x:.2g}x{size_y:.2g}mm_P{pitch:g}mm
   size_source: 'JEDEC MS-012AB, https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/soic_narrow-r/r_14.pdf'
@@ -1342,6 +1355,7 @@ SO-14_5.3x10.2mm_P1.27mm:
   num_pins_y: 7
 
 SOIC-14W_7.5x9.0mm_P1.27mm:
+  device_type: 'SOIC' # temporary
   custom_name_format: SOIC-{pincount}W_{size_x:g}x{size_y:g}mm_P{pitch:g}mm
   size_source: 'JEDEC MS-013AF, https://www.analog.com/media/en/package-pcb-resources/package/54614177245586rw_14.pdf'
   body_size_x: # from JEDEC (agrees with linked datasheet)
@@ -1369,6 +1383,7 @@ SOIC-14W_7.5x9.0mm_P1.27mm:
   num_pins_y: 7
 
 SOIC-16_3.9x9.9mm_P1.27mm:
+  device_type: 'SOIC' # temporary
   size_source: 'JEDEC MS-012, variation AC, https://www.jedec.org/document_search?search_api_views_fulltext=MS-012, https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/soic_narrow-r/r_16.pdf'
   compatible_mpns:
     - '16-pin-NSOP'   # https://www.holtek.com/webapi/116711/HT42B534-xv120.pdf#page=15
@@ -1533,6 +1548,7 @@ SOP-16_4.55x10.3mm_P1.27mm:
   num_pins_y: 8
 
 SOIC-16_4.55x10.3mm_P1.27mm:
+  device_type: 'SOIC' # temporary
   size_source: 'https://toshiba.semicon-storage.com/info/docget.jsp?did=12858&prodName=TLP291-4'
   body_size_x:
     minimum: 4.4
@@ -1556,6 +1572,7 @@ SOIC-16_4.55x10.3mm_P1.27mm:
   num_pins_y: 8
 
 SOIC-16W_5.3x10.2mm_P1.27mm:
+  device_type: 'SOIC' # temporary
   custom_name_format: SOIC-{pincount}W_{size_x:g}x{size_y:g}mm_P{pitch:g}mm
   # NOTE: Part: AM26LV32INS: https://www.ti.com/lit/ds/symlink/am26lv32.pdf
   # (same drawing as size_source)
@@ -1602,6 +1619,7 @@ SO-16_5.3x10.2mm_P1.27mm:
   num_pins_y: 8
 
 SOIC-16W_7.5x10.3mm_P1.27mm:
+  device_type: 'SOIC' # temporary
   custom_name_format: SOIC-{pincount}W_{size_x:g}x{size_y:g}mm_P{pitch:g}mm
   size_source: 'JEDEC MS-013AA, https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/soic_wide-rw/rw_16.pdf'
   body_size_x: # from JEDEC (agrees with linked datasheet)
@@ -1629,6 +1647,7 @@ SOIC-16W_7.5x10.3mm_P1.27mm:
   num_pins_y: 8
 
 SOIC-16W_7.5x12.8mm_P1.27mm:
+  device_type: 'SOIC' # temporary
   #round to two significant digits to comply with old name
   custom_name_format: SOIC-{pincount}W_{size_x:.2g}x{size_y:.3g}mm_P{pitch:g}mm
   size_source: 'https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/ri_soic_ic/ri_16_1.pdf'
@@ -1712,6 +1731,7 @@ SOP-18_7.495x11.515mm_P1.27mm:
   num_pins_y: 9
 
 SOIC-18W_7.5x11.6mm_P1.27mm:
+  device_type: 'SOIC' # temporary
   #round to two significant digits to comply with old name
   custom_name_format: SOIC-{pincount}W_{size_x:.2g}x{size_y:.3g}mm_P{pitch:g}mm
   size_source: 'JEDEC MS-013AB, https://www.analog.com/media/en/package-pcb-resources/package/33254132129439rw_18.pdf'
@@ -1754,6 +1774,7 @@ SO-20_5.3x12.6mm_P1.27mm:
   num_pins_y: 10
 
 SOIC-20W_7.5x12.8mm_P1.27mm:
+  device_type: 'SOIC' # temporary
   #round to two significant digits to comply with old name
   custom_name_format: SOIC-{pincount}W_{size_x:.2g}x{size_y:.3g}mm_P{pitch:g}mm
   size_source: 'JEDEC MS-013AC, https://www.analog.com/media/en/package-pcb-resources/package/233848rw_20.pdf'
@@ -1807,6 +1828,7 @@ SOP-20_7.5x12.8mm_P1.27mm:
   num_pins_y: 10
 
 Infineon_SOIC-20W_7.6x12.8mm_P1.27mm:
+  device_type: 'SOIC' # temporary
   # similar to JEDEC MS-013G / variation AC, but body_size_x (E1 dimension) close to 300 mil
   # inherit: SOIC-20W_7.5x12.8mm_P1.27mm
   custom_name_format: '{man}_SOIC-{pincount}W_{size_x:.2g}x{size_y:.3g}mm_P{pitch:g}mm'
@@ -1898,6 +1920,7 @@ Texas_PowerPAD_SO-20-1EP_7.52x12.83mm_P1.27mm:
     EP_num_paste_pads: [2, 2]
 
 SOIC-20W_7.5x15.4mm_P1.27mm:
+  device_type: 'SOIC' # temporary
   #round to two significant digits to comply with old name
   custom_name_format: SOIC-{pincount}W_{size_x:.2g}x{size_y:.3g}mm_P{pitch:g}mm
   size_source: 'JEDEC MS-013AD, https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/soic_wide-rw/RI_20_1.pdf'
@@ -1940,6 +1963,7 @@ SO-24_5.3x15mm_P1.27mm:
   num_pins_y: 12
 
 SOIC-24W_7.5x15.4mm_P1.27mm:
+  device_type: 'SOIC' # temporary
   #round to two significant digits to comply with old name
   custom_name_format: SOIC-{pincount}W_{size_x:.2g}x{size_y:.3g}mm_P{pitch:g}mm
   size_source: 'JEDEC MS-013AD, https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/soic_wide-rw/RW_24.pdf'
@@ -1999,6 +2023,7 @@ SOP-24_7.5x15.4mm_P1.27mm:
   num_pins_y: 12
 
 SOIC-28W_7.5x17.9mm_P1.27mm:
+  device_type: 'SOIC' # temporary
   #round to two significant digits to comply with old name
   custom_name_format: SOIC-{pincount}W_{size_x:.2g}x{size_y:.3g}mm_P{pitch:g}mm
   size_source: 'JEDEC MS-013AE, https://www.analog.com/media/en/package-pcb-resources/package/35833120341221rw_28.pdf'
@@ -2027,6 +2052,7 @@ SOIC-28W_7.5x17.9mm_P1.27mm:
   num_pins_y: 14
 
 SOIC-28W_7.5x18.7mm_P1.27mm:
+  device_type: 'SOIC' # temporary
   #round to two significant digits to comply with old name
   custom_name_format: SOIC-{pincount}W_{size_x:.2g}x{size_y:.3g}mm_P{pitch:g}mm
   size_source: 'https://www.akm.com/akm/en/file/datasheet/AK5394AVS.pdf#page=23'
@@ -2085,6 +2111,7 @@ SOP-28_8.4x18.16mm_P1.27mm:
   num_pins_y: 14
 
 SOIC-32_7.518x20.777mm_P1.27mm:
+  device_type: 'SOIC' # temporary
   # .300" width body, .818" lenght, .050" pitch
   size_source: 'JEDEC MO-119-B, 300 mils width, variation AC, https://www.jedec.org/system/files/docs/Mo-119b.pdf'
   # second source: https://www.mouser.com/ds/2/100/STK14C88-3_001-50592-356490.pdf
