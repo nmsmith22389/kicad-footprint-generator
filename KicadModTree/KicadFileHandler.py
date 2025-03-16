@@ -393,6 +393,9 @@ class KicadFileHandler(FileHandler):
         if (footprint_type_str is not None):
             attributes.append(footprint_type_str)
 
+        if self.kicad_mod.not_in_schematic:
+            attributes.append(SexprSerializer.Symbol('board_only'))
+
         if self.kicad_mod.excludeFromPositionFiles:
             attributes.append(SexprSerializer.Symbol('exclude_from_pos_files'))
 
@@ -401,6 +404,12 @@ class KicadFileHandler(FileHandler):
 
         if self.kicad_mod.allow_soldermask_bridges:
             attributes.append(SexprSerializer.Symbol('allow_soldermask_bridges'))
+
+        if self.kicad_mod.allow_missing_courtyard:
+            attributes.append(SexprSerializer.Symbol('allow_missing_courtyard'))
+
+        if self.kicad_mod.dnp:
+            attributes.append(SexprSerializer.Symbol('dnp'))
 
         return attributes
 

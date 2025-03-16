@@ -69,9 +69,12 @@ class Footprint(Node):
         # These are attrs in the s-exp, but we can be type-safe here
         # and convert to strings in the file output layer
         self._footprintType = footprintType
+        self.not_in_schematic = False
         self.excludeFromBOM = False
         self.excludeFromPositionFiles = False
         self.allow_soldermask_bridges = False
+        self.allow_missing_courtyard = False
+        self.dnp = False
 
         self.maskMargin = None
         self.pasteMargin = None
