@@ -3,7 +3,6 @@
 set -ex
 
 run_generate() {
-    ./bourns-srn.py -v
     ./Choke_Schaffner_RNXXX.py -v
     ./Murata_DEM35xxC.py -v
     ./vishay_IHSM.py -v
