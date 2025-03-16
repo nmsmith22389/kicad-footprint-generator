@@ -252,8 +252,13 @@ class StandardBox(Node):
     def _initTagNode(self, **kwargs):
         if 'tags' not in kwargs:
             raise KeyError('tags not declared (like "tags: "Bulgin Battery Holder, BX0033, Battery Type 1xPP3")')
-        self.tags = str(kwargs.get('tags'))
-        self.footprint.setTags(self.tags)
+
+        tags = kwargs.get('tags')
+
+        if compatible_mpns := kwargs.get('compatible_mpns'):
+            tags += " " + " ".join(compatible_mpns)
+
+        self.footprint.tags = tags
 
     def _initFile3DNameNode(self, **kwargs):
         if 'file3Dname' not in kwargs:

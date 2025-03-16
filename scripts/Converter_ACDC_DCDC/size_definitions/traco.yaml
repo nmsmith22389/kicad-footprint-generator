@@ -294,11 +294,11 @@ Converter_DCDC_TRACO_THB10-xxxx_Single_THT:
   description: "DCDC-Converter, TRACO, THB10-xxxx, Single, 10W, Rev. March 12. 2025"
   datasheet: "https://www.tracopower.com/products/thb10.pdf"
   tags: "DCDC-Converter TRACO THB10 THT 2\"x1\" 10W"
-  #compatible_mpns:
+  compatible_mpns:
     # https://www.tracopower.com/products/tri15.pdf
-    #- TRI 15
+    - TRI15
     # https://www.tracopower.com/products/tri20.pdf
-    #- TRI 20
+    - TRI20
   extratexts: []
   at: [-5.08, 2.54]
   size: [25.4, 50.8]
@@ -317,11 +317,11 @@ Converter_DCDC_TRACO_THB10-xxxx_Dual_THT:
   description: "DCDC-Converter, TRACO, THB10-xxxx, Dual, 10W, Rev. March 12. 2025"
   datasheet: "https://www.tracopower.com/products/thb10.pdf"
   tags: "DCDC-Converter TRACO THB10 THT 2\"x1\" 10W"
-  #compatible_mpns:
+  compatible_mpns:
     # https://www.tracopower.com/products/tri15.pdf
-    #- TRI 15
+    - TRI15
     # https://www.tracopower.com/products/tri20.pdf
-    #- TRI 20
+    - TRI20
   extratexts: []
   at: [-5.08, 2.54]
   size: [25.4, 50.8]
@@ -536,12 +536,13 @@ Converter_DCDC_TRACO_TEN10-110xxWIRH_THT:
   library_name: 'Converter_DCDC'
   description: "DCDC-Converter, TRACO, TEN 10-110xxWIRH, 10W, Rev. December 16. 2024"
   datasheet: "https://www.tracopower.com/products/ten10wirh.pdf"
-  tags: "DCDC-Converter TRACO TEN10WIRH THT DIP-24 COMPATIBLE_MPNS TEN3WIRH TEN6WIRH"
-  #compatible_mpns:
+  tags: "DCDC-Converter TRACO TEN10WIRH THT DIP-24"
+  compatible_mpns:
     # https://www.tracopower.com/products/ten3wirh.pdf
-    #- TEN 3WIRH
+    - TEN3WIRH
     # https://www.tracopower.com/products/ten6wirh.pdf
-    #- TEN 6WIRH
+    - TEN6WIRH
+
   extratexts: []
   at: [-2.53, 2]
   size: [20.3, 31.8]
@@ -564,10 +565,10 @@ Converter_DCDC_TRACO_TSR2-24xxN_TSR2-24xxxN_THT:
   library_name: 'Converter_DCDC'
   description: "DCDC-Converter, TRACO, TSR2-24xxN, TSR2-24xxxN, 2A, Rev. December 19. 2024"
   datasheet: "https://www.tracopower.com/products/tsr2n.pdf"
-  tags: "DCDC-Converter SWITCHING-REGULATOR STEP-DOWN TRACO TSR2N 2.54MM THT SIP-3 2A COMPATIBLE_MPNS TSR3N"
-  #compatible_mpns:
+  tags: "DCDC-Converter SWITCHING-REGULATOR STEP-DOWN TRACO TSR2N 2.54MM THT SIP-3 2A"
+  compatible_mpns:
     # https://www.tracopower.com/products/tsr3n.pdf
-    #- TSR 3N
+    - TSR3N
   extratexts: []
   at: [-6.16, 4.46]
   size: [7.6, 14]

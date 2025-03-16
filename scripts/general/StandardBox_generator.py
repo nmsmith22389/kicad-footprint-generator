@@ -17,6 +17,7 @@ def converter(args):
     description = args["description"]
     datasheet = args["datasheet"]
     fptag = args["tags"]
+    compatible_mpns = args["compatible_mpns"]
     SmdTht = args["smd_tht"]
     at = args["at"]
     size = args["size"]
@@ -55,7 +56,8 @@ def converter(args):
 
     f.append(StandardBox(global_config=global_cfg,
                          footprint=f, description=description, datasheet=datasheet,
-                         at=at, size=size, tags=fptag, extratexts=extratexts, pins=pins,
+                         at=at, size=size, tags=fptag, compatible_mpns=compatible_mpns,
+                         extratexts=extratexts, pins=pins,
                          file3Dname=file3Dname, courtyard_clearance=courtyard_clearance,
                          fab_to_silk_clearance=fab_to_silk_clearance))
 
@@ -74,6 +76,7 @@ def main(args):
     parser.add_parameter("description", type=str, required=True)
     parser.add_parameter("datasheet", type=str, required=True)
     parser.add_parameter("tags", type=str, required=True)
+    parser.add_parameter("compatible_mpns", type=list, required=False)
     parser.add_parameter("smd_tht", type=str, required=False, default='tht')
     parser.add_parameter("at", type=list, required=True)
     parser.add_parameter("size", type=list, required=False)
