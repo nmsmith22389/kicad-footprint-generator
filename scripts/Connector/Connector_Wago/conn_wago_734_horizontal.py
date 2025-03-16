@@ -67,6 +67,7 @@ if pad_size[1] == pad_size[0]:
 mpn_format = '734-1{n_plus_60:02d}'
 
 def generate_one_footprint(pincount, configuration):
+
     pad_silk_off = configuration['silk_pad_clearance'] + configuration['silk_line_width']/2
 
     mpn = mpn_format.format(n_plus_60=pincount+60)

@@ -12,8 +12,9 @@ txt_offset = 1
 slk_offset = 0.11
 
 def makePinHeadStraight(rows, cols, rm, coldist, package_width, overlen_top, overlen_bottom, ddrill, pad,
-                        tags_additional=[], lib_name="Pin_Headers", classname="Pin_Header", classname_description="pin header", offset3d=[0, 0, 0], scale3d=[1, 1, 1],
-                        rotate3d=[0, 0, 0], model3d_path_prefix="${KICAD9_3DMODEL_DIR}", isSocket=False):
+                        tags_additional=[], lib_name="Pin_Headers", class_name="PinHeader", classname_description="pin header", offset3d=[0, 0, 0], scale3d=[1, 1, 1],
+                        rotate3d=[0, 0, 0], model3d_path_prefix="${KICAD9_3DMODEL_DIR}", isSocket=False,
+                        name_format=None):
     h_fab = (rows - 1) * rm + overlen_top + overlen_bottom
     w_fab = package_width
     l_fab = (coldist * (cols - 1) - w_fab) / 2
@@ -39,13 +40,15 @@ def makePinHeadStraight(rows, cols, rm, coldist, package_width, overlen_top, ove
     text_size = [text_size,text_size]
     text_t = text_size[0] * 0.15
 
-    # if rm == 2.54:
-    #    footprint_name = "Pin_Header_Straight_{0}x{1:02}".format(cols, rows)
-    # else:
-    footprint_name = "{3}_Straight_{0}x{1:02}_Pitch{2:03.2f}mm".format(cols, rows, rm,classname)
+    # Samtec HPM have a different name format for...reasons
+    # This is the default
+    if name_format is None:
+        name_format = "{class_name}_{cols}x{rows:02}_P{pitch:03.2f}mm_Vertical"
 
-    description = "Through hole straight {3}, {0}x{1:02}, {2:03.2f}mm pitch".format(cols, rows, rm,classname_description)
-    tags = "Through hole {3} THT {0}x{1:02} {2:03.2f}mm".format(cols, rows, rm,classname_description)
+    footprint_name = name_format.format(class_name=class_name, cols=cols, rows=rows, pitch=rm)
+
+    description = "Through hole straight {3}, {0}x{1:02}, {2:03.2f}mm pitch".format(cols, rows, rm, classname_description)
+    tags = "Through hole {3} THT {0}x{1:02} {2:03.2f}mm".format(cols, rows, rm, classname_description)
     if (cols == 1):
         description = description + ", single row"
         tags = tags + " single row"
@@ -100,7 +103,7 @@ def makePinHeadStraight(rows, cols, rm, coldist, package_width, overlen_top, ove
     # Silkscreen body
     body_min_x_square = pad[0]/2+min_pad_distance+slk_offset
     body_min_y_square = pad[1]/2+min_pad_distance+slk_offset
-    #drawin bottom line
+    # drawin bottom line
 
     if (rows-1)*rm + body_min_y_square < t_slk + h_slk:
         kicad_modg.append(Line(start=[l_slk, t_slk + h_slk], end=[l_slk + w_slk, t_slk + h_slk], layer='F.SilkS', width=lw_slk))
@@ -113,8 +116,8 @@ def makePinHeadStraight(rows, cols, rm, coldist, package_width, overlen_top, ove
             kicad_modg.append(Line(start=[(cols-1)*coldist+body_min_x_round, t_slk + h_slk], end=[l_slk + w_slk, t_slk + h_slk], layer='F.SilkS', width=lw_slk))
             for x in range(0, (cols-1)):
                 kicad_modg.append(Line(start=[x*coldist+body_min_x_round, t_slk + h_slk], end=[(x+1)*coldist-body_min_x_round, t_slk + h_slk], layer='F.SilkS', width=lw_slk))
-    #drawin sidelines
-    #calculate top Y position
+    # drawin sidelines
+    # calculate top Y position
     if rm < body_min_y_square*2:
         shoulder_y_pos = body_min_y_square
         shoulder_y_lines = 2
@@ -145,7 +148,7 @@ def makePinHeadStraight(rows, cols, rm, coldist, package_width, overlen_top, ove
         for x in range(1, (rows-1)):
             kicad_modg.append(Line(start=[l_slk, x*rm+body_min_y_round], end=[l_slk, (x+1)*rm-body_min_y_round], layer='F.SilkS', width=lw_slk))
             kicad_modg.append(Line(start=[l_slk + w_slk, x*rm+body_min_y_round], end=[l_slk + w_slk, (x+1)*rm-body_min_y_round], layer='F.SilkS', width=lw_slk))
-    #drawin top
+    # drawin top
 
     if cols == 1:
         if shoulder_y_lines == 1:
@@ -175,7 +178,7 @@ def makePinHeadStraight(rows, cols, rm, coldist, package_width, overlen_top, ove
             if shoulder_y_round*2 + lw_slk*2 < pad[1]:
                 kicad_modg.append(Line(start=[top_x_pos, shoulder_y_pos], end=[top_x_pos, shoulder_y_round], layer='F.SilkS', width=lw_slk))
                 kicad_modg.append(Line(start=[top_x_pos, -shoulder_y_round], end=[top_x_pos, t_slk], layer='F.SilkS', width=lw_slk))
-        #highest horizontal line
+        # highest horizontal line
         if abs(t_slk) > body_min_y_square:
             kicad_modg.append(Line(start=[top_x_pos, t_slk], end=[l_slk + w_slk, t_slk], layer='F.SilkS', width=lw_slk))
         else:
@@ -183,7 +186,6 @@ def makePinHeadStraight(rows, cols, rm, coldist, package_width, overlen_top, ove
             if top_x_pos > coldist-top_x_round + 2*lw_slk:
                 kicad_modg.append(Line(start=[top_x_pos, t_slk], end=[coldist-top_x_round, t_slk], layer='F.SilkS', width=lw_slk))
             kicad_modg.append(Line(start=[coldist+top_x_round, t_slk], end=[l_slk + w_slk, t_slk], layer='F.SilkS', width=lw_slk))
-
 
     '''
     if cols == 1:
@@ -199,7 +201,7 @@ def makePinHeadStraight(rows, cols, rm, coldist, package_width, overlen_top, ove
                 polygon=[[l_slk, 0.5 * rm], [l_slk, t_slk + h_slk], [l_slk + w_slk, t_slk + h_slk], [l_slk + w_slk, t_slk],
                           [0.5 * rm, t_slk], [0.5 * rm, 0.5 * rm], [l_slk, 0.5 * rm]], layer='F.SilkS', width=lw_slk))
     '''
-    #pin 1 marker
+    # pin 1 marker
     pin1_min = -(pad[0]/2+slk_offset+min_pad_distance)
     if pin1_min < l_slk:
         pin1_x = pin1_min
@@ -618,7 +620,7 @@ def makePinHeadAngled(rows, cols, rm, coldist, pack_width, pack_offset, pin_leng
     # if rm == 2.54:
     #    footprint_name = "Pin_Header_Angled_{0}x{1:02}".format(cols, rows)
     # else:
-    footprint_name = "{3}_Angled_{0}x{1:02}_Pitch{2:03.2f}mm".format(cols, rows, rm, classname)
+    footprint_name = "{3}_{0}x{1:02}_P{2:03.2f}mm_Horizontal".format(cols, rows, rm, classname)
 
     description = "Through hole angled {4}, {0}x{1:02}, {2:03.2f}mm pitch, {3}mm pin length".format(cols, rows,
                                                                                                     rm,
@@ -1035,7 +1037,7 @@ def makePinHeadStraightSMD(rows, cols, rm, coldist, rmx_pad_offset,rmx_pin_lengt
     # if rm == 2.54:
     #    footprint_name = "Pin_Header_Straight_{0}x{1:02}".format(cols, rows)
     # else:
-    footprint_name = "{3}_Straight_{0}x{1:02}_Pitch{2:03.2f}mm_SMD".format(cols, rows, rm,classname)
+    footprint_name = "{3}_{0}x{1:02}_P{2:03.2f}mm_Vertical_SMD".format(cols, rows, rm,classname)
 
     description = "surface-mounted straight {3}, {0}x{1:02}, {2:03.2f}mm pitch".format(cols, rows, rm,classname_description)
     tags = "Surface mounted {3} SMD {0}x{1:02} {2:03.2f}mm".format(cols, rows, rm,classname_description)
