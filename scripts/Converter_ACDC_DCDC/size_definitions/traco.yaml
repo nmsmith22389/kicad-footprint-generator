@@ -615,3 +615,42 @@ Converter_DCDC_TRACO_TSR2-xxxx_THT:
     ["tht", "2", 0, -2.54, 1.7, 1.7, 1.1],
     ["tht", "3", 0, -5.08, 1.7, 1.7, 1.1]
   ]
+
+Converter_DCDC_TRACO_TRI10_Single_THT:
+  library_name: 'Converter_DCDC'
+  description: "DCDC-Converter, TRACO, TRI 10, Single, 10W, Rev. March 11. 2025"
+  datasheet: "https://www.tracopower.com/products/tri10.pdf"
+  tags: "DCDC-Converter TRACO TRI10 THT DIP-24"
+  extratexts: []
+  at: [-2.54, 1.86]
+  size: [20.3, 31.8]
+  body_position_tolerance: [0.5, 0.5]
+  # For future use
+  height: 12
+  pins: [
+    ["thtr", "1", 0, 0, 1.9, 1.9, 1.1],
+    ["tht", "12", 0, -27.94, 1.9, 1.9, 1.1],
+    ["tht", "13", 15.22, -27.94, 1.9, 1.9, 1.1],
+    ["tht", "23", 15.22, -2.54, 1.9, 1.9, 1.1],
+    ["tht", "24", 15.22, 0, 1.9, 1.9, 1.1]
+  ]
+
+Converter_DCDC_TRACO_TRI10_Dual_THT:
+  library_name: 'Converter_DCDC'
+  description: "DCDC-Converter, TRACO, TRI 10, Dual, 10W, Rev. March 11. 2025"
+  datasheet: "https://www.tracopower.com/products/tri10.pdf"
+  tags: "DCDC-Converter TRACO TRI10 THT DIP-24"
+  extratexts: []
+  at: [-2.54, 1.86]
+  size: [20.3, 31.8]
+  body_position_tolerance: [0.5, 0.5]
+  # For future use
+  height: 12
+  pins: [
+    ["thtr", "1", 0, 0, 1.9, 1.9, 1.1],
+    ["tht", "11", 0, -25.4, 1.9, 1.9, 1.1],
+    ["tht", "13", 15.22, -27.94, 1.9, 1.9, 1.1],
+    ["tht", "15", 15.22, -22.86, 1.9, 1.9, 1.1],
+    ["tht", "23", 15.22, -2.54, 1.9, 1.9, 1.1],
+    ["tht", "24", 15.22, 0, 1.9, 1.9, 1.1]
+  ]
