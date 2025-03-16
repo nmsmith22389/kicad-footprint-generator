@@ -29,8 +29,12 @@ from scripts.tools.nodes import pin1_arrow
 from scripts.tools import drawing_tools
 from scripts.tools.drawing_tools import courtyardFromBoundingBox
 from scripts.tools.drawing_tools_fab import draw_chamfer_rect_fab
-from scripts.tools.declarative_def_tools import tags_properties, pad_overrides, \
-        rule_area_properties, ast_evaluator
+from scripts.tools.declarative_def_tools import (
+    ast_evaluator,
+    common_metadata,
+    pad_overrides,
+    rule_area_properties,
+)
 
 from scripts.Packages.utils.ep_handling_utils import getEpRoundRadiusParams
 
@@ -142,22 +146,13 @@ class NoLeadConfiguration:
     use of the raw dictionary.
     """
     _spec_dictionary: dict
-    compatible_mpns: tags_properties.TagsProperties
-    additional_tags: tags_properties.TagsProperties
+    metadata: common_metadata.CommonMetadata
     pad_overrides: pad_overrides.PadOverrides
     rule_areas: List[rule_area_properties.RuleAreaProperties] = []
 
     def __init__(self, spec: dict):
         self._spec_dictionary = spec
-
-        self.compatible_mpns = tags_properties.TagsProperties(
-                spec.get('compatible_mpns', [])
-        )
-
-        # Generic addtional tags
-        self.additional_tags = tags_properties.TagsProperties(
-            spec.get(tags_properties.ADDITIONAL_TAGS_KEY, [])
-        )
+        self.metadata = common_metadata.CommonMetadata(spec)
 
         self.pad_overrides = pad_overrides.PadOverrides(
             spec.get(pad_overrides.PAD_OVERRIDES_KEY, [])
@@ -445,8 +440,8 @@ class NoLeadGenerator(FootprintGenerator):
 
             EP_size = Vector2D(0, 0)
 
-        if 'custom_name_format' in device_params:
-            name_format = device_params['custom_name_format']
+        if device_config.metadata.custom_name_format:
+            name_format = device_config.metadata.custom_name_format
 
         pad_details = self.calcPadDetails(device_dimensions, EP_size, ipc_data_set, ipc_round_base)
 
@@ -464,8 +459,8 @@ class NoLeadGenerator(FootprintGenerator):
         fp_ast_evaluator = ast_evaluator.ASTevaluator()
 
         fp_name = name_format.format(
-            man=device_params.get('manufacturer', ''),
-            mpn=device_params.get('part_number', ''),
+            man=device_config.metadata.manufacturer or "",
+            mpn=device_config.metadata.part_number or "",
             pkg=device_params['device_type'],
             pincount=pincount_text,
             size_y=size_y,
@@ -480,8 +475,8 @@ class NoLeadGenerator(FootprintGenerator):
         ).replace('__', '_').lstrip('_')
 
         fp_name_2 = name_format.format(
-            man=device_params.get('manufacturer', ''),
-            mpn=device_params.get('part_number', ''),
+            man=device_config.metadata.manufacturer or "",
+            mpn=device_config.metadata.part_number or "",
             pkg=device_params['device_type'],
             pincount=pincount_text,
             size_y=size_y,
@@ -517,22 +512,22 @@ class NoLeadGenerator(FootprintGenerator):
             "{manufacturer} {mpn} {package}, {pincount} Pin ({datasheet}), "
             "generated with kicad-footprint-generator {scriptname}"
             .format(
-                manufacturer=device_params.get('manufacturer', ''),
+                manufacturer=device_config.metadata.manufacturer or "",
                 package=device_params['device_type'],
-                mpn=device_params.get('part_number', ''),
+                mpn=device_config.metadata.part_number or "",
                 pincount=pincount,
-                datasheet=device_params['size_source'],
+                datasheet=device_config.metadata.datasheet,
                 scriptname=os.path.basename(__file__).replace("  ", " ")
             ).lstrip())
 
         kicad_mod.tags = self.configuration['keyword_fp_string'].format(
-            man=device_params.get('manufacturer', ''),
+            man=device_config.metadata.manufacturer or "",
             package=device_params['device_type'],
             category=category
         ).lstrip().split()
 
-        kicad_mod.tags += device_config.compatible_mpns.tags
-        kicad_mod.tags += device_config.additional_tags.tags
+        kicad_mod.tags += device_config.metadata.compatible_mpns
+        kicad_mod.tags += device_config.metadata.additional_tags
 
         pad_arrays = create_dual_or_quad_pad_border(self.configuration, pad_details, device_params,
                                                     pad_overrides=device_config.pad_overrides)

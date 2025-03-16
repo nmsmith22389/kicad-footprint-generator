@@ -29,7 +29,7 @@ from scripts.tools.nodes import pin1_arrow
 from scripts.tools.declarative_def_tools import (
     additional_drawing,
     ast_evaluator,
-    tags_properties,
+    common_metadata,
 )
 
 from scripts.Packages.utils.ep_handling_utils import getEpRoundRadiusParams
@@ -122,8 +122,7 @@ class GullwingConfiguration:
     """
 
     _spec_dictionary: dict
-    compatible_mpns: Optional[tags_properties.TagsProperties]
-    additional_tags: Optional[tags_properties.TagsProperties]
+    metadata: common_metadata.CommonMetadata
 
     lead_type: Union[Literal['gullwing', 'flat_lead']]
     pitch: float
@@ -136,14 +135,7 @@ class GullwingConfiguration:
     def __init__(self, spec: dict):
         self._spec_dictionary = spec
 
-        self.compatible_mpns = tags_properties.TagsProperties(
-                spec.get('compatible_mpns', [])
-        )
-
-        # Generic addtional tags
-        self.additional_tags = tags_properties.TagsProperties(
-            spec.get(tags_properties.ADDITIONAL_TAGS_KEY, [])
-        )
+        self.metadata = common_metadata.CommonMetadata(spec)
 
         self.top_slug = None
         if 'top_slug' in spec:
@@ -448,8 +440,8 @@ class GullwingGenerator(FootprintGenerator):
 
         pad_details = self.calcPadDetails(dimensions, overrides, ipc_data_set, ipc_round_base)
 
-        if 'custom_name_format' in device_params:
-            name_format = device_params['custom_name_format']
+        if gullwing_config.metadata.custom_name_format:
+            name_format = gullwing_config.metadata.custom_name_format
 
         # This suffix is always added to the footprint name, as it is important for the 3D model
         always_suffix = ""
@@ -466,8 +458,8 @@ class GullwingGenerator(FootprintGenerator):
         suffix_3d = suffix if device_params.get('include_suffix_in_3dpath', 'True') == 'True' else always_suffix
 
         fp_name = name_format.format(
-            man=device_params.get('manufacturer', ''),
-            mpn=device_params.get('part_number', ''),
+            man=gullwing_config.metadata.manufacturer or "",
+            mpn=gullwing_config.metadata.part_number or "",
             pkg=device_type,
             pincount=pincount_text,
             size_y=size_y,
@@ -483,8 +475,8 @@ class GullwingGenerator(FootprintGenerator):
         ).replace('__', '_').lstrip('_')
 
         fp_name_2 = name_format.format(
-            man=device_params.get('manufacturer', ''),
-            mpn=device_params.get('part_number', ''),
+            man=gullwing_config.metadata.manufacturer or "",
+            mpn=gullwing_config.metadata.part_number or "",
             pkg=device_type,
             pincount=pincount_text,
             size_y=size_y,
@@ -503,26 +495,34 @@ class GullwingGenerator(FootprintGenerator):
 
         kicad_mod = Footprint(fp_name, FootprintType.SMD)
 
-        # init kicad footprint
-        kicad_mod.setDescription(
-            "{manufacturer} {mpn} {package}, {pincount} Pin ({datasheet}), generated with kicad-footprint-generator {scriptname}"
-            .format(
-                manufacturer=device_params.get('manufacturer', ''),
+        if gullwing_config.metadata.description:
+            # The part has a custom description
+            description = gullwing_config.metadata.description
+        else:
+            description = "{manufacturer} {mpn} {package}, {pincount} Pin".format(
+                manufacturer=gullwing_config.metadata.manufacturer or "",
                 package=device_type,
-                mpn=device_params.get('part_number', ''),
+                mpn=gullwing_config.metadata.part_number or "",
                 pincount=pincount,
-                datasheet=device_params['size_source'],
-                scriptname=os.path.basename(__file__).replace("  ", " ")
-            ).lstrip())
+            ).lstrip()
+
+        if gullwing_config.metadata.datasheet:
+            description += f" ({gullwing_config.metadata.datasheet})"
+
+        description += ", generated with kicad-footprint-generator {scriptname}".format(
+            scriptname=os.path.basename(__file__)
+        )
+
+        kicad_mod.description = description
 
         kicad_mod.tags = self.configuration['keyword_fp_string'].format(
-            man=device_params.get('manufacturer', ''),
+            man=gullwing_config.metadata.manufacturer or "",
             package=device_type,
             category=header['override_lib_name'] if 'override_lib_name' in header else header['library_Suffix']
         ).lstrip().split()
 
-        kicad_mod.tags += gullwing_config.compatible_mpns.tags
-        kicad_mod.tags += gullwing_config.additional_tags.tags
+        kicad_mod.tags += gullwing_config.metadata.compatible_mpns
+        kicad_mod.tags += gullwing_config.metadata.additional_tags
 
         pad_arrays = create_dual_or_quad_pad_border(configuration, pad_details, device_params)
 

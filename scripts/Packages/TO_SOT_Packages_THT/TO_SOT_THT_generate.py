@@ -34,6 +34,7 @@ from KicadModTree import (
     Translation,
 )
 from scripts.tools.footprint_generator import FootprintGenerator
+from scripts.tools.declarative_def_tools import common_metadata
 
 
 class ConfigurationConstants:
@@ -56,6 +57,8 @@ class ConfigurationConstants:
 class CommonToPackage:
     """Class for properties common to both types of TO packages"""
 
+    metadata: common_metadata.CommonMetadata
+
     def __init__(self, device_params: dict, pkg_id: str):
         try:
             self.pins: int = device_params["number_of_pins"]
@@ -67,14 +70,11 @@ class CommonToPackage:
             raise KeyError(msg)
 
         self.name_base: str = ""
-        self.additional_tags: list[str] = device_params.get("additional_tags", [])
+        self.metadata = common_metadata.CommonMetadata(device_params)
         self.fpnametags = []
-        self.webpage: str = device_params.get("size_source", "")
         self.additional_package_names: list[str] = device_params.get(
             "additional_package_names", []
         )
-        self.manufacturer = device_params.get("manufacturer", "")
-        self.part_number = device_params.get("part_number", "")
         self.device_type = device_params.get("device_type", "")
 
         if "device_type" in device_params:
@@ -84,7 +84,7 @@ class CommonToPackage:
 
     def init_footprint(self, description: str, tags: list[str], name: str):
         fp = Footprint(name, FootprintType.THT)
-        fp.setDescription(description)
+        fp.description = description
         fp.tags = tags
         return fp
 
@@ -162,7 +162,7 @@ class RectangularToPackage(CommonToPackage):
             self.name_base,
             orientation,
             f"RM {self.pitch}mm",
-        ] + self.additional_tags
+        ] + self.metadata.additional_tags
         fpnametags = self.fpnametags
         if staggered_type == 1:
             tags.append("staggered type-1")
@@ -175,8 +175,8 @@ class RectangularToPackage(CommonToPackage):
         description = self.name_base
         for tag in tags[1:]:
             description += ", " + tag
-        if self.webpage:
-            description += ", see " + self.webpage
+        if self.metadata.datasheet:
+            description += ", see " + self.metadata.datasheet
 
         # Footprint name
         if staggered_type > 0:
@@ -188,8 +188,8 @@ class RectangularToPackage(CommonToPackage):
                 pitch_y = self.staggered_pitch[1]
                 lead = pitch_y + self.pin_min_length_before_90deg_bend
             footprint_name = name_format.format(
-                man = self.manufacturer,
-                mpn = self.part_number,
+                man = self.metadata.manufacturer or "",
+                mpn = self.metadata.part_number or "",
                 pkg = self.device_type,
                 pincount = self.pins,
                 pitch_x = 2*self.pitch,
@@ -260,13 +260,13 @@ class RoundToPackage(CommonToPackage):
 
         # Description
         tags = (
-            [name] + tags + self.additional_tags
+            [name] + tags + self.metadata.additional_tags
         )  # XYZ TODO: change back to: self.name_base
         description = name  # XYZ TODO: change back to: self.name_base
         for t in tags[1:]:
             description += ", " + t
-        if self.webpage:
-            description += ", see " + self.webpage
+        if self.metadata.datasheet:
+            description += ", see " + self.metadata.datasheet
 
         return description, tags, name
 

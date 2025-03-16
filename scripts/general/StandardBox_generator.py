@@ -8,16 +8,14 @@ from KicadModTree import Footprint, FootprintType, KicadPrettyLibrary, ModArgpar
 from kilibs.geom import Vector2D
 from scripts.general.StandardBox import StandardBox
 from scripts.tools.global_config_files import global_config
+from scripts.tools.declarative_def_tools import common_metadata
 
 
 def converter(args):
 
-    library_name = args["library_name"]
+    metadata = common_metadata.CommonMetadata(args)
     footprint_name = args["name"]
-    description = args["description"]
-    datasheet = args["datasheet"]
     fptag = args["tags"]
-    compatible_mpns = args["compatible_mpns"]
     SmdTht = args["smd_tht"]
     at = args["at"]
     size = args["size"]
@@ -40,7 +38,7 @@ def converter(args):
     # Clearance from the _nominal_ body to the _inside_ of the silk line
     fab_to_silk_clearance = total_body_tolerance
 
-    dir3D = library_name + '.3dshapes'
+    dir3D = metadata.library_name + '.3dshapes'
 
     footprint_type = FootprintType.SMD if SmdTht == "smd" else FootprintType.THT
     f = Footprint(footprint_name, footprint_type)
@@ -55,13 +53,18 @@ def converter(args):
         file3Dname = global_cfg.model_3d_prefix + dir3D + "/" + ff + ".wrl"
 
     f.append(StandardBox(global_config=global_cfg,
-                         footprint=f, description=description, datasheet=datasheet,
-                         at=at, size=size, tags=fptag, compatible_mpns=compatible_mpns,
+                         footprint=f,
+                         description=metadata.description,
+                         datasheet=metadata.datasheet,
+                         at=at,
+                         size=size,
+                         tags=fptag,
+                         compatible_mpns=metadata.compatible_mpns,
                          extratexts=extratexts, pins=pins,
                          file3Dname=file3Dname, courtyard_clearance=courtyard_clearance,
                          fab_to_silk_clearance=fab_to_silk_clearance))
 
-    lib = KicadPrettyLibrary(library_name, None)
+    lib = KicadPrettyLibrary(metadata.library_name, None)
     lib.save(f)
 
 

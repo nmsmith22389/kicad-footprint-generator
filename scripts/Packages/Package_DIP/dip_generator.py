@@ -6,7 +6,7 @@ from copy import deepcopy
 from typing import List, Union
 
 from kilibs.geom import Vector2D
-from scripts.tools.declarative_def_tools import tags_properties
+from scripts.tools.declarative_def_tools import common_metadata
 from scripts.tools.footprint_generator import FootprintGenerator
 from scripts.tools.footprint_scripts_DIP import makeDIP
 from scripts.tools.global_config_files.global_config import GlobalConfig
@@ -25,8 +25,7 @@ class DIPConfiguration:
     package_type: str
     package_tags: list
     standard: Union[str, None]
-    description: str
-    additional_tags: tags_properties.TagsProperties
+    metadata: common_metadata.CommonMetadata
     socket_size_outset: Union[Vector2D, None]
 
     def __init__(self, spec):
@@ -43,13 +42,8 @@ class DIPConfiguration:
         self.package_type = spec['package_type']
         self.package_tags = spec['package_tags']
         self.standard = spec.get('standard', None)
-        self.description = spec['description']
-        self.datasheet = spec.get('datasheet', None)
-        self.additional_tags = tags_properties.TagsProperties(
-            spec.get(tags_properties.ADDITIONAL_TAGS_KEY, []))
-        self.compatible_mpns = tags_properties.TagsProperties(
-            spec.get('compatible_mpns', [])
-        )
+        self.metadata = common_metadata.CommonMetadata(spec)
+
         self.socket_size_outset = self._get_socket_size_outset(spec)
 
         assert self.pins % 2 == 0
@@ -69,7 +63,7 @@ def adjust_config_for_longpads(config: DIPConfiguration, longpad_size_delta: Vec
         longpad_size_delta (Vector2D): how much bigger longpads are than base pads
     """
     config.pad_size += longpad_size_delta
-    config.additional_tags.tags.append('LongPads')
+    config.metadata.additional_tags.append('LongPads')
 
 
 def adjust_config_for_socket(config: DIPConfiguration, socket_size_outset: Vector2D) -> None:
@@ -81,7 +75,7 @@ def adjust_config_for_socket(config: DIPConfiguration, socket_size_outset: Vecto
         socket_size_outset (Vector2D): how much bigger the socket is than the base footprint
     """
     config.socket_size_outset = socket_size_outset
-    config.additional_tags.tags.append('Socket')
+    config.metadata.additional_tags.append('Socket')
 
 class DIPGenerator(FootprintGenerator):
     def __init__(self, configuration, **kwargs):
@@ -126,14 +120,14 @@ class DIPGenerator(FootprintGenerator):
             'socket_width': socket_width,
             'socket_height': socket_height,
             'socket_pinrow_distance_offset': 0,
-            'datasheet': config.datasheet,
-            'tags_additional': config.additional_tags.tags,
+            'datasheet': config.metadata.datasheet,
+            'tags_additional': config.metadata.additional_tags,
             'DIPName': config.package_type,
             'DIPTags': ' '.join(config.package_tags),
             'global_config': self.global_config,
         }
 
-        desc = [config.description]
+        desc = [config.metadata.description]
 
         if config.standard:
             desc.append(config.standard)

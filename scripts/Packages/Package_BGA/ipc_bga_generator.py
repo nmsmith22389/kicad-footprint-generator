@@ -18,7 +18,7 @@ from KicadModTree import (
 )
 from kilibs.geom import Direction, Vector2D
 from scripts.tools.nodes import pin1_arrow
-from scripts.tools.declarative_def_tools import tags_properties
+from scripts.tools.declarative_def_tools import common_metadata
 from scripts.tools.footprint_generator import FootprintGenerator
 
 from string import ascii_uppercase
@@ -34,20 +34,12 @@ class BGAConfiguration:
     """
 
     _spec_dictionary: dict
-    compatible_mpns: tags_properties.TagsProperties
-    additional_tags: tags_properties.TagsProperties
+    metadata: common_metadata.CommonMetadata
 
     def __init__(self, spec: dict):
         self._spec_dictionary = spec
 
-        self.compatible_mpns = tags_properties.TagsProperties(
-                spec.get('compatible_mpns', [])
-        )
-
-        # Generic addtional tags
-        self.additional_tags = tags_properties.TagsProperties(
-            spec.get(tags_properties.ADDITIONAL_TAGS_KEY, [])
-        )
+        self.metadata = common_metadata.CommonMetadata(spec)
 
     @property
     def spec_dictionary(self) -> dict:
@@ -167,8 +159,8 @@ class BGAGenerator(FootprintGenerator):
             if "offset_x" in layout or "offset_y" in layout:
                 offcenter_text = "_Offcenter"
 
-        if "custom_name_format" in device_params:
-            name_format = device_params["custom_name_format"]
+        if device_config.metadata.custom_name_format:
+            name_format = device_config.metadata.custom_name_format
         else:
             name_format = config["fp_name_bga_format_string_no_trailing_zero"]
 
@@ -187,8 +179,8 @@ class BGAGenerator(FootprintGenerator):
         suffix = device_params.get("suffix", "")
 
         fp_name = name_format.format(
-            man=device_params.get("manufacturer", header_info.get("manufacturer", "")),
-            mpn=device_params.get("part_number", ""),
+            man=device_config.metadata.manufacturer or header_info.get("manufacturer", ""),
+            mpn=device_config.metadata.part_number or "",
             pkg=device_params.get("device_type", header_info["package_type"]),
             pincount=balls,
             size_x=device_params["body_size_x"],
@@ -371,11 +363,22 @@ class BGAGenerator(FootprintGenerator):
             pdesc = str(pitchX) if pitchX == pitchY else f'{pitchX}x{pitchY}'
             sdesc = ''
 
-        f.setDescription(f'{fpParams["description"]}, {pkgX}x{pkgY}mm, {balls} Ball, {sdesc}{layoutX}x{layoutY} Layout, {pdesc}mm Pitch, {fpParams["size_source"]}')  # NOQA
+        description_parts = [
+            device_config.metadata.description,
+            f"{pkgX}x{pkgY}mm",
+            f"{balls} Ball",
+            f"{sdesc}{layoutX}x{layoutY} Layout",
+            f"{pdesc}mm Pitch",
+        ]
+
+        if device_config.metadata.datasheet:
+            description_parts.append(device_config.metadata.datasheet)
+
+        f.description = ", ".join(description_parts)
 
         f.tags = [packageType, str(balls), pdesc]
-        f.tags += device_config.compatible_mpns.tags
-        f.tags += device_config.additional_tags.tags
+        f.tags += device_config.metadata.compatible_mpns
+        f.tags += device_config.metadata.additional_tags
 
         lib_name = f'Package_{packageType}'
 

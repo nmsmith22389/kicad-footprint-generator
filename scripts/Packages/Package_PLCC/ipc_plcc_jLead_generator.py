@@ -10,7 +10,7 @@ from scripts.tools.footprint_text_fields import addTextFields
 from KicadModTree import Footprint, FootprintType, \
     PolygonLine, Pad
 from KicadModTree.nodes.specialized.PadArray import PadArray
-from scripts.tools.declarative_def_tools import tags_properties
+from scripts.tools.declarative_def_tools import common_metadata
 
 ipc_density = 'nominal'
 ipc_doc_file = '../ipc_definitions.yaml'
@@ -37,20 +37,11 @@ class PLCCConfiguration:
     """
 
     _spec_dictionary: dict
-    compatible_mpns: tags_properties.TagsProperties
-    additional_tags: tags_properties.TagsProperties
+    metadata: common_metadata.CommonMetadata
 
     def __init__(self, spec: dict):
         self._spec_dictionary = spec
-
-        self.compatible_mpns = tags_properties.TagsProperties(
-                spec.get('compatible_mpns', [])
-        )
-
-        # Generic addtional tags
-        self.additional_tags = tags_properties.TagsProperties(
-            spec.get(tags_properties.ADDITIONAL_TAGS_KEY, [])
-        )
+        self.metadata = common_metadata.CommonMetadata(spec)
 
     @property
     def spec_dictionary(self) -> dict:
@@ -232,8 +223,8 @@ class PLCCGenerator(FootprintGenerator):
         name_format = self.configuration['fp_name_format_string']
 
         fp_name = name_format.format(
-            man=device_params.get('manufacturer', ''),
-            mpn=device_params.get('part_number', ''),
+            man=device_config.metadata.manufacturer or "",
+            mpn=device_config.metadata.part_number or "",
             pkg=device_params['device_type'],
             pincount=pincount,
             size_y=size_y,
@@ -243,8 +234,8 @@ class PLCCGenerator(FootprintGenerator):
         ).replace('__', '_').lstrip('_')
 
         fp_name_2 = name_format.format(
-            man=device_params.get('manufacturer', ''),
-            mpn=device_params.get('part_number', ''),
+            man=device_config.metadata.manufacturer or "",
+            mpn=device_config.metadata.part_number or "",
             pkg=device_params['device_type'],
             pincount=pincount,
             size_y=size_y,
@@ -254,30 +245,34 @@ class PLCCGenerator(FootprintGenerator):
         ).replace('__', '_').lstrip('_')
 
         model_name = fp_name_2
-        # print(fp_name)
-        # print(pad_details)
 
-        # init kicad footprint
         kicad_mod = Footprint(fp_name, FootprintType.SMD)
 
-        kicad_mod.setDescription(
-            "{manufacturer} {mpn} {package}, {pincount} Pin ({datasheet}), "
-            "generated with kicad-footprint-generator {scriptname}"
-            .format(
-                manufacturer=device_params.get('manufacturer', ''),
-                package=device_params['device_type'],
-                mpn=device_params.get('part_number', ''),
-                pincount=pincount,
-                datasheet=device_params['size_source'],
-                scriptname=os.path.basename(__file__).replace("  ", " ")
-            ).lstrip())
+        description = "{manufacturer} {mpn} {package}, {pincount} Pin".format(
+            manufacturer=device_config.metadata.manufacturer or "",
+            package=device_params["device_type"],
+            mpn=device_config.metadata.part_number or "",
+            pincount=pincount,
+        ).lstrip()
 
-        kicad_mod.setTags(self.configuration['keyword_fp_string']
-                          .format(
-            man=device_params.get('manufacturer', ''),
-            package=device_params['device_type'],
-            category=category
-        ).lstrip())
+        if device_config.metadata.datasheet:
+            description += f" ({device_config.metadata.datasheet})"
+
+        description += ", generated with kicad-footprint-generator {scriptname}".format(
+            scriptname=os.path.basename(__file__)
+        )
+
+        kicad_mod.description = description
+
+        kicad_mod.tags = (
+            self.configuration["keyword_fp_string"]
+            .format(
+                man=device_config.metadata.manufacturer or "",
+                package=device_params["device_type"],
+                category=category,
+            )
+            .lstrip()
+        )
 
         pad_shape_details = {}
         pad_shape_details['shape'] = Pad.SHAPE_ROUNDRECT
