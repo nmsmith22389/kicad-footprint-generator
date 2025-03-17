@@ -20,8 +20,8 @@ along with kicad-footprint-generator. If not, see < http://www.gnu.org/licenses/
 #sizes,shapes,etc]
 #prefix, serie, Type, W, L, H, PDiam, pin1x, pin1y, pin2x, pin2y, pin3x, pin3y, pin4x, pin4y
 converters = [
-    ["ACDC-Conv_Vigortronix", "VTX-214-010-XXX",            0,   56.0, 36.0, 25.5,   1.5,   0, 0,   12, 0,    0, 48,    5, 48 ],
-    ["ACDC-Conv_Vigortronix", "VTX-214-010-XXX_Miniature",  0,   45.5, 30.0, 24.0,   1.5,   0, 0,   12, 0,   12, 39,    5, 39,],
+    ["Converter_ACDC_Vigortronix", "VTX-214-010-xxx",            0,   56.0, 36.0, 25.5,   1.5,   0, 0,   12, 0,    0, 48,    5, 48 ],
+    ["Converter_ACDC_Vigortronix", "VTX-214-010-xxx_Miniature",  0,   45.5, 30.0, 24.0,   1.5,   0, 0,   12, 0,   12, 39,    5, 39,],
 ]
 
 import sys
@@ -59,11 +59,11 @@ for converter in converters:
 
         desc = "Vigortronix " + Serie + " serie of ACDC converter"
         tags = "Vigortronix " + Serie + " serie of ACDC converter"
-        lib_name = "Converters_DCDC_ACDC"
+        lib_name = "Converter_ACDC"
         Datasheet = "http://www.vigortronix.com/10WattACDCPCBPowerModule.aspx"
         PadSize = 2.0 * PDiam
 
-        fp_name = prefix + "_" + Serie
+        fp_name = prefix + "_" + Serie + "_THT"
         fp = Footprint(fp_name, FootprintType.THT)
         description = desc + ", " + Datasheet
 
