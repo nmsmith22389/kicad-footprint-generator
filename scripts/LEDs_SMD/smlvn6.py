@@ -4,7 +4,8 @@ from KicadModTree import *
 
 
 lib_name = "LED_SMD"
-datasheet = "https://www.rohm.com/datasheet/SMLVN6RGB1U"
+datasheet = "https://fscdn.rohm.com/en/products/databook/datasheet/opto/led/chip_multi/smlvn6rgb1u1-e.pdf"
+description = "RGB LED, 3.1x2.8mm"
 footprint_name = "LED_ROHM_SMLVN6"
 pkgWidth = 3.1
 pkgHeight = 2.8
@@ -15,7 +16,7 @@ padHeight = 0.6
 padCornerHeight = 0.8
 
 f = Footprint(footprint_name, FootprintType.SMD)
-f.setDescription(datasheet)
+f.setDescription(f"{description}, {datasheet}")
 f.setTags("LED ROHM SMLVN6")
 f.append(Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl",
                at=[0.0, 0.0, 0.0],
