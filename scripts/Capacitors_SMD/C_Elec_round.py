@@ -49,19 +49,24 @@ def create_footprint(name, configuration, **kwargs):
     text_offset_y = body_size['width'] / 2.0 + configuration['courtyard_offset']['default'] + 0.8
 
     # silkscreen REF**
-    silk_text_size = configuration['references'][0]['size']
-    silk_text_thickness = silk_text_size[0]*configuration['references'][0]['fontwidth']
-    kicad_mod.append(Property(name=Property.REFERENCE, text='REF**', at=[0, -text_offset_y], layer='F.SilkS', size=[silk_text_size[0], silk_text_size[1]], thickness= silk_text_thickness))
+    silk_text_config = global_config.get_text_properties_for_layer("F.SilkS")
+    silk_text_size = silk_text_config.size_nom
+    silk_text_thickness = silk_text_size * silk_text_config.thickness_ratio
+    kicad_mod.append(Property(name=Property.REFERENCE, text='REF**', at=[0, -text_offset_y], layer='F.SilkS', size=[
+                     silk_text_size, silk_text_size], thickness=silk_text_thickness))
     # fab value
-    fab_text_size = configuration['values'][0]['size']
-    fab_text_thickness = fab_text_size[0]*configuration['values'][0]['fontwidth']
-    kicad_mod.append(Property(name=Property.VALUE, text=name, at=[0, text_offset_y], layer='F.Fab', size=[fab_text_size[0], fab_text_size[1]], thickness= fab_text_thickness))
+    fab_text_config = global_config.get_text_properties_for_layer("F.Fab")
+    fab_text_size = fab_text_config.size_nom
+    fab_text_thickness = fab_text_size * fab_text_config.thickness_ratio
+    kicad_mod.append(Property(name=Property.VALUE, text=name, at=[0, text_offset_y], layer='F.Fab', size=[
+                     fab_text_size, fab_text_size], thickness=fab_text_thickness))
     # fab REF**
-    fab_text_size = body_size['diameter']/5.0
-    fab_text_size = min(fab_text_size, configuration['references'][1]['size_max'][0])
-    fab_text_size = max(fab_text_size, configuration['references'][1]['size_min'][0])
-    fab_text_thickness = fab_text_size*configuration['references'][1]['thickness_factor']
-    kicad_mod.append(Text(text='${REFERENCE}', at=[0, 0], layer='F.Fab', size=[fab_text_size, fab_text_size], thickness= fab_text_thickness))
+    fab_text_size = device_dimensions["body_diameter"].nominal / 5.0
+    fab_text_size = min(fab_text_size, fab_text_config.size_max)
+    fab_text_size = max(fab_text_size, fab_text_config.size_min)
+    fab_text_thickness = fab_text_size * fab_text_config.thickness_ratio
+    kicad_mod.append(Text(text='${REFERENCE}', at=[0, 0], layer='F.Fab', size=[
+                     fab_text_size, fab_text_size], thickness=fab_text_thickness))
 
     # create pads
     # all pads have these properties

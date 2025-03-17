@@ -4,11 +4,60 @@ from importlib import resources
 
 from pathlib import Path
 
+from kilibs.geom import Vector2D
 from KicadModTree.util.corner_handling import RoundRadiusHandler, ChamferSizeHandler
 
 class PadName(Enum):
     MECHANICAL = "mechanical"
     SHIELD = "shield"
+
+
+class FieldPosition(Enum):
+    INSIDE = "inside"
+    OUTSIDE_TOP = "outside_top"
+    OUTSIDE_BOTTOM = "outside_bottom"
+
+class LayerTextProperties:
+    """
+    This describes the properties of text on a given layer.
+
+    Generally it will be the allowed size range, and the thickness ratio
+    for the font.
+    """
+
+    def __init__(
+        self,
+        size_nom: float,
+        size_max: float,
+        size_min: float,
+        thickness_ratio: float, # usually 0.15
+        width_ratio: float,  # usually 1.0 for "square" text
+    ):
+        self.size_nom = size_nom
+        self.size_max = size_max
+        self.size_min = size_min
+        self.thickness_ratio = thickness_ratio
+        self.width_ratio = width_ratio
+
+    def clamp_size(self, height) -> tuple[Vector2D, float]:
+        size = min(self.size_max, max(self.size_min, height))
+
+        size = round(size, 2)
+        thickness = round(self.thickness_ratio * size, 2)
+
+        return Vector2D(self.width_ratio * size, size), thickness
+
+class FieldProperties:
+
+    def __init__(
+        self,
+        layer: str,
+        position_y: FieldPosition | str,
+        autosize: bool,
+    ):
+        self.layer = layer
+        self.position_y = FieldPosition(position_y)
+        self.autosize = autosize
 
 
 class GlobalConfig:
@@ -52,6 +101,11 @@ class GlobalConfig:
 
     _pad_names: dict
 
+    _layer_text_properties: dict
+
+    reference_fields: list[FieldProperties]
+    value_fields: list[FieldProperties]
+
     def __init__(self, data: dict):
         """
         Initialise from some dictonary of data (likely a
@@ -89,6 +143,14 @@ class GlobalConfig:
         self._layer_functions = data["layer_functions"]
 
         self._pad_names = data["pad_names"]
+
+        self._layer_text_properties = {
+            layer: LayerTextProperties(**props)
+            for layer, props in data["text_properties"].items()
+        }
+
+        self.reference_fields = [FieldProperties(**field) for field in data["references"]]  # fmt: skip
+        self.value_fields = [FieldProperties(**field) for field in data["values"]]
 
     def get_courtyard_offset(self, courtyard_type: CourtyardType) -> float:
         return self._cy_offs[courtyard_type]
@@ -182,6 +244,19 @@ class GlobalConfig:
         Get a predefined pad name from the global config. E.g. MP or SH.
         """
         return self._pad_names[name.value]
+
+    def get_text_properties_for_layer(self, layer: str) -> LayerTextProperties:
+        """
+        Get the text properties for a given layer.
+        """
+        if layer in ["F.Fab", "B.Fab"]:
+            layer_key = "fab"
+        elif layer in ["F.SilkS", "B.SilkS"]:
+            layer_key = "silk"
+        else:
+            raise ValueError(f"Unknown layer {layer} for layer properties (did you mean a Fab or Silk layer?)")
+
+        return self._layer_text_properties[layer_key]
 
     @classmethod
     def load_from_file(self, path: Path):

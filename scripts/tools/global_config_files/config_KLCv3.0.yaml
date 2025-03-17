@@ -52,23 +52,35 @@ layer_functions:
     # Mechanical drawings (e.g. physical object outlines)
     mechanical: Cmts.User
 
+pad_names:
+    mechanical: MP
+    shield: SH
+
+# Global settings for text properties on given layers
+text_properties:
+    fab:
+        size_min: 0.25
+        size_max: 1.0
+        size_nom: 1.0
+        width_ratio: 1.0
+        thickness_ratio: 0.15
+    silk:
+        size_min: 0.7
+        size_max: 1.0
+        size_nom: 1.0
+        width_ratio: 1.0
+        thickness_ratio: 0.15
+
 references:
-    -
-          layer: 'F.SilkS'
-          position_y: 'outside_top' # outside_top | inside | outside_bottom
-          size: [1,1]
-          fontwidth: 0.15
-    -
-          layer: 'F.Fab'
-          position_y: 'inside' # outside_top | inside | outside_bottom
-          size_max: [1,1]
-          size_min: [0.25, 0.25]
-          thickness_factor: 0.15
-          # size: [1,1]
-          # fontwidth: 0.15
+    -   layer: 'F.SilkS'
+        position_y: 'outside_top' # outside_top | inside | outside_bottom
+        autosize: False
+
+    -   layer: 'F.Fab'
+        position_y: 'inside' # outside_top | inside | outside_bottom
+        autosize: True
+
 values:
-    -
-          layer: 'F.Fab'
-          position_y: 'outside_bottom' # outside_top | inside | outside_bottom
-          size: [1,1]
-          fontwidth: 0.15
+    -   layer: 'F.Fab'
+        position_y: 'outside_bottom' # outside_top | inside | outside_bottom
+        autosize: False
