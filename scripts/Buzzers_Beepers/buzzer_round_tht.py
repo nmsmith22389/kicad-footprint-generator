@@ -39,7 +39,7 @@ def buzzer_round_tht(args):
                          at=[args['pad_spacing'], 0], size=args['pad_size'], drill=args['hole_size'], layers=Pad.LAYERS_THT))
 
     # write file
-    lib_name = "Buzzers_Beepers"
+    lib_name = "Buzzer_Beeper"
     lib = KicadPrettyLibrary(lib_name, args["output_dir"])
     lib.save(kicad_mod)
 
