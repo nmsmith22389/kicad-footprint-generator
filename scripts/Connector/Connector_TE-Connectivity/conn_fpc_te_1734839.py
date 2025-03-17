@@ -173,7 +173,7 @@ def generate_one_footprint(partnumber, pincount, configuration):
     addTextFields(kicad_mod=kicad_mod, configuration=configuration, body_edges=body_edge,
         courtyard={'top':courtyard_y1, 'bottom':courtyard_y2}, fp_name=footprint_name, text_y_inside_position=[0, tab_y])
 
-    kicad_mod.append(Property(name=Property.VALUE, text='PCB Edge',
+    kicad_mod.append(Text(text='PCB Edge',
         at=[0,actuator_y1-(ear_height-pcb_edge_gap)/2.0], size=[0.5,0.5], layer='Dwgs.User', thickness=0.08, rotation=0))
 
     ##################### Output and 3d model ############################
