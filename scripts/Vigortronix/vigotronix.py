@@ -20,8 +20,8 @@ along with kicad-footprint-generator. If not, see < http://www.gnu.org/licenses/
 #sizes,shapes,etc]
 #prefix, serie, Type, W, L, H, PDiam, pin1x, pin1y, pin2x, pin2y, pin3x, pin3y, pin4x, pin4y
 converters = [
-    ["Converter_ACDC_Vigortronix", "VTX-214-010-xxx",            0,   56.0, 36.0, 25.5,   1.5,   0, 0,   12, 0,    0, 48,    5, 48 ],
-    ["Converter_ACDC_Vigortronix", "VTX-214-010-xxx_Miniature",  0,   45.5, 30.0, 24.0,   1.5,   0, 0,   12, 0,   12, 39,    5, 39,],
+    ["Converter_ACDC_Vigortronix", "VTX-214-010-1xx",            0,   56.0, 36.0, 25.5,   1.5,   0, 0,   12, 0,    0, 48,    5, 48, "https://www.vigortronix.com/wp-content/uploads/2022/01/VTX-214-010-1-Series-D0034-1.pdf" ],
+    ["Converter_ACDC_Vigortronix", "VTX-214-010-2xx",  0,   45.5, 30.0, 24.0,   1.5,   0, 0,   12, 0,   12, 39,    5, 39, "https://www.vigortronix.com/wp-content/uploads/2024/03/VTX-214-010-2xx-10W-Mini-AC-DC-Converter-Range-D0066.pdf"],
 ]
 
 import sys
@@ -53,14 +53,14 @@ from KicadModTree.nodes.specialized.PadArray import PadArray
 
 
 for converter in converters:
-    prefix,Serie,Type,W,L,H,PDiam,pin1x, pin1y, pin2x, pin2y, pin3x, pin3y, pin4x, pin4y=converter
+    prefix,Serie,Type,W,L,H,PDiam,pin1x, pin1y, pin2x, pin2y, pin3x, pin3y, pin4x, pin4y, ds=converter
 
     if Type == 0:
 
         desc = "Vigortronix " + Serie + " serie of ACDC converter"
         tags = "Vigortronix " + Serie + " serie of ACDC converter"
         lib_name = "Converter_ACDC"
-        Datasheet = "http://www.vigortronix.com/10WattACDCPCBPowerModule.aspx"
+        Datasheet = ds
         PadSize = 2.0 * PDiam
 
         fp_name = prefix + "_" + Serie + "_THT"
