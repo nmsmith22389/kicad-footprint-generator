@@ -18,10 +18,15 @@ from multiprocessing import Pool
 from pathlib import Path
 
 try:
+    # These are the dependencies of the generators, but check them here to allow
+    # us to warn the user if they are missing before running the generators.
+    import yaml  # NOQA
+
+    import asteval  # NOQA
     import tabulate
 except ImportError:
     print(
-        "Import failed. Use 'pip install -e' to install dependencies. See the README.md file."
+        "Import failed. Use 'pip install -e .' to install dependencies. See the README.md file."
     )
     sys.exit(1)
 
