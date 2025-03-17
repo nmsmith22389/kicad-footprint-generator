@@ -34,7 +34,10 @@ wCrtYd = 0.05
 wFab = 0.1
 wSilkS = 0.12
 crtYd = 0.3
-silkClearance = 0.2
+silkClearance = 0.15
+
+pin1MarkerHeight = 0.33
+pin1MarkerWidth = 0.48
 
 xCenter = 0.0
 xPadRight = padXSpacing / 2
@@ -46,8 +49,7 @@ xLeftCrtYd = - xRightCrtYd
 xPadLeft = -xPadRight
 xFabLeft = -xFabRight
 xChamfer = xFabLeft + 1.0
-xSilkTopLeft = -xSilkRight - (padWidth / 2) + (wSilkS / 2)
-xSilkBottomLeft = -xSilkRight
+xSilkLeft = -xSilkRight
 
 yCenter = 0.0
 yPadBottom = padYSpacing
@@ -64,6 +66,12 @@ yChamfer = yFabTop + 1
 
 yValue = yFabBottom + 1.25
 yRef = yFabTop - 1.25
+
+yPin1Bot = ySilkTop
+yPin1Top = yPin1Bot - pin1MarkerHeight
+xPin1Mid = xFabLeft - 0.4
+xPin1Left = xPin1Mid - pin1MarkerWidth / 2
+xPin1Right = xPin1Mid + pin1MarkerWidth / 2
 
 f.append(Property(name=Property.REFERENCE, text="REF**", at=[xCenter, yRef],
               layer="F.SilkS", size=s, thickness=t2))
@@ -84,12 +92,18 @@ f.append(PolygonLine(polygon=[[xFabLeft, yChamfer],
                                [xFabLeft, yChamfer]],
                      layer="F.Fab", width=wFab))
 
-f.append(Line(start=[xSilkTopLeft, ySilkTop],
+f.append(Line(start=[xSilkLeft, ySilkTop],
               end=[xSilkRight, ySilkTop],
               layer="F.SilkS", width=wSilkS))
-f.append(Line(start=[xSilkBottomLeft, ySilkBottom],
+f.append(Line(start=[xSilkLeft, ySilkBottom],
               end=[xSilkRight, ySilkBottom],
               layer="F.SilkS", width=wSilkS))
+# pin 1 marker
+f.append(Polygon(nodes=[[xPin1Mid, yPin1Bot],
+                        [xPin1Left, yPin1Top],
+                        [xPin1Right, yPin1Top]],
+                 fill=True,
+                 layer="F.SilkS", width=wSilkS))
 
 pads = ["1", "6", "2", "5", "3", "4"]
 padShape = Pad.SHAPE_ROUNDRECT
