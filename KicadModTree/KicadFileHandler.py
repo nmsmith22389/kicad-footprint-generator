@@ -153,9 +153,11 @@ def graphic_key_func(item) -> List[int]:
     # be compared amongst themselves
 
     if isinstance(item, (Line, Rect)):
+        start_pos = item.getRealPosition(item.start_pos)
+        end_pos = item.getRealPosition(item.end_pos)
         keys += [
-            item.start_pos.x, item.start_pos.y,
-            item.end_pos.x, item.end_pos.y
+            start_pos.x, start_pos.y,
+            end_pos.x, end_pos.y
         ]
     elif isinstance(item, Arc):
         start_pos = item.getStartPoint()
@@ -170,14 +172,15 @@ def graphic_key_func(item) -> List[int]:
             item.center_pos.x, item.center_pos.y,
         ]
     elif isinstance(item, Circle):
+        center_pos = item.getRealPosition(item.center_pos)
         keys += [
-            item.center_pos.x, item.center_pos.y,
-            item.center_pos.x + item.radius, item.center_pos.y,
+            center_pos.x, center_pos.y,
+            center_pos.x + item.radius, center_pos.y,
         ]
 
     if isinstance(item, Polygon):
         keys += [len(item.nodes)]
-        keys += [[pt.x, pt.y] for pt in item.nodes]
+        keys += [[item.getRealPosition(pt).x, item.getRealPosition(pt).y] for pt in item.nodes]
 
     if isinstance(item, Text):
         keys += [item.thickness]
