@@ -32,7 +32,7 @@ class FileHandler(abc.ABC):
         """
 
         fp = None
-        with io.open(filename, "w") as f:
+        with io.open(filename, "w", encoding="utf-8") as f:
             output = self.serialize()
 
             if not output.endswith("\n"):
