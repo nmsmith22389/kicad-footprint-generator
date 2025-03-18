@@ -19,6 +19,8 @@ from scripts.tools.drawing_tools import (
     addKeepoutRound,
     addRectWithKeepout,
 )
+from scripts.tools.global_config_files import global_config as GC
+
 
 def slide_pot(args):
     footprint_name = args["name"]
@@ -29,6 +31,7 @@ def slide_pot(args):
     dimE = args["dimE"]
     travel = args["travel"]
 
+    global_config = GC.DefaultGlobalConfig()
     lib_name = "Potentiometer_THT"
 
     f = Footprint(footprint_name, FootprintType.THT)
@@ -114,8 +117,9 @@ def slide_pot(args):
         else:
             keepouts = keepouts + addKeepoutRound(x, y, d, d)
 
+    mounting_pin_name = global_config.get_pad_name(GC.PadName.MECHANICAL)
     for mp in mountingPins:
-        f.append(Pad(number="MP", type=Pad.TYPE_THT, shape=Pad.SHAPE_CIRCLE,
+        f.append(Pad(number=mounting_pin_name, type=Pad.TYPE_THT, shape=Pad.SHAPE_CIRCLE,
                      at=mp, size=pMP, layers=Pad.LAYERS_THT, drill=dMP))
         d = pMP[0] + 2 * silk_ko
         keepouts = keepouts + addKeepoutRound(mp[0], mp[1], d, d)

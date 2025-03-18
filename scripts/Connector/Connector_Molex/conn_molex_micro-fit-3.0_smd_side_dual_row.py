@@ -22,6 +22,8 @@ import yaml
 from KicadModTree import *
 from scripts.tools.drawing_tools import round_to_grid
 from scripts.tools.footprint_text_fields import addTextFields
+from scripts.tools.global_config_files import global_config as GC
+
 
 series = "Micro-Fit_3.0"
 series_long = 'Micro-Fit 3.0 Connector System'
@@ -52,7 +54,7 @@ pitch_y = 1.71 + pad_size[1]
 
 mount_pad_size = [3.43, 1.65]
 
-def generate_one_footprint(pins, configuration):
+def generate_one_footprint(global_config: GC.GlobalConfig, pins, configuration):
     pins_per_row = pins//2
 
     mpn = part_code.format(n=pins)
@@ -97,10 +99,11 @@ def generate_one_footprint(pins, configuration):
     #
     # Add solder nails
     #
-    kicad_mod.append(Pad(at=[-mount_pad_x, mount_pad_y], number=configuration['mounting_pad_number'],
+    mounting_pad_name = global_config.get_pad_name(GC.PadName.MECHANICAL)
+    kicad_mod.append(Pad(at=[-mount_pad_x, mount_pad_y], number=mounting_pad_name,
         type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT, size=mount_pad_size,
         layers=Pad.LAYERS_SMT))
-    kicad_mod.append(Pad(at=[mount_pad_x, mount_pad_y], number=configuration['mounting_pad_number'],
+    kicad_mod.append(Pad(at=[mount_pad_x, mount_pad_y], number=mounting_pad_name,
         type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT, size=mount_pad_size,
         layers=Pad.LAYERS_SMT))
 
@@ -270,6 +273,7 @@ if __name__ == "__main__":
     with open(args.global_config, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
+            global_config = GC.GlobalConfig(configuration)
         except yaml.YAMLError as exc:
             print(exc)
 
@@ -280,4 +284,4 @@ if __name__ == "__main__":
             print(exc)
 
     for pincount in pincount_range:
-        generate_one_footprint(pincount, configuration)
+        generate_one_footprint(global_config, pincount, configuration)

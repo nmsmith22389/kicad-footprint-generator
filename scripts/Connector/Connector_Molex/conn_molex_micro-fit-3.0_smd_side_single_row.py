@@ -21,6 +21,7 @@ import yaml
 from KicadModTree import *
 from scripts.tools.drawing_tools import round_to_grid
 from scripts.tools.footprint_text_fields import addTextFields
+from scripts.tools.global_config_files import global_config as GC
 
 
 series = "Micro-Fit_3.0"
@@ -58,7 +59,7 @@ row = 5.5
 pad_size = [1.27, 2.92]
 
 
-def generate_one_footprint(pins, variant, configuration):
+def generate_one_footprint(global_config: GC.GlobalConfig, pins, variant, configuration):
     mpn = part_code.format(n=pins)
     alt_mpn = [code.format(n=pins) for code in alternative_codes]
 
@@ -112,10 +113,11 @@ def generate_one_footprint(pins, variant, configuration):
     # Add solder nails
     #
     mount_hole_pad_diameter = mount_hole_diameter + 0.3
+    mounting_pad_name = global_config.get_pad_name(GC.PadName.MECHANICAL)
     kicad_mod.append(
         Pad(
             at=[-mount_pad_x, mount_pad_y],
-            number=configuration["mounting_pad_number"],
+            number=mounting_pad_name,
             type=Pad.TYPE_THT,
             shape=Pad.SHAPE_CIRCLE,
             size=mount_hole_pad_diameter,
@@ -127,7 +129,7 @@ def generate_one_footprint(pins, variant, configuration):
     kicad_mod.append(
         Pad(
             at=[mount_pad_x, mount_pad_y],
-            number=configuration["mounting_pad_number"],
+            number=mounting_pad_name,
             type=Pad.TYPE_THT,
             shape=Pad.SHAPE_CIRCLE,
             size=mount_hole_pad_diameter,
@@ -336,6 +338,7 @@ if __name__ == "__main__":
     with open(args.global_config, "r") as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
+            global_config = GC.GlobalConfig(configuration)
         except yaml.YAMLError as exc:
             print(exc)
 
@@ -347,4 +350,4 @@ if __name__ == "__main__":
 
     for variant in variant_params:
         for pincount in pincount_range:
-            generate_one_footprint(pincount, variant, configuration)
+            generate_one_footprint(global_config, pincount, variant, configuration)

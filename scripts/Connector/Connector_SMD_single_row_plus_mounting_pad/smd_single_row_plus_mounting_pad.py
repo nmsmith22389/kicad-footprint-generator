@@ -10,9 +10,11 @@ from helpers import *
 from KicadModTree import *
 from scripts.tools.drawing_tools import round_to_grid
 from scripts.tools.footprint_text_fields import addTextFields
+from scripts.tools.global_config_files import global_config as GC
 
 
-def generate_one_footprint(idx, pincount, series_definition, configuration, group_definition):
+def generate_one_footprint(global_config: GC.GlobalConfig, idx, pincount,
+                           series_definition, configuration, group_definition):
     if 'mpn_param_1' in series_definition:
         mpn_param_1 = series_definition['mpn_param_1']
         mpn = series_definition['mpn_format_string'].format(pincount=pincount, param_1=mpn_param_1[idx])
@@ -79,13 +81,15 @@ def generate_one_footprint(idx, pincount, series_definition, configuration, grou
         **optional_pad_params))
 
     mount_pad_left_x_pos = -dimension_A/2 - mount_pad_center_x_to_pin
+    mounting_pad_name = global_config.get_pad_name(GC.PadName.MECHANICAL)
+
     kicad_mod.append(Pad(
-        number = configuration['mounting_pad_number'], type=Pad.TYPE_SMT,
+        number = mounting_pad_name, type=Pad.TYPE_SMT,
         shape=pad_shape, at=[mount_pad_left_x_pos, mount_pad_y_pos],
         size=mounting_pad_size, layers=Pad.LAYERS_SMT,
         **optional_pad_params))
     kicad_mod.append(Pad(
-        number = configuration['mounting_pad_number'], type=Pad.TYPE_SMT,
+        number = mounting_pad_name, type=Pad.TYPE_SMT,
         shape=pad_shape, at=[-mount_pad_left_x_pos, mount_pad_y_pos],
         size=mounting_pad_size, layers=Pad.LAYERS_SMT,
         **optional_pad_params))
@@ -359,19 +363,18 @@ def generate_one_footprint(idx, pincount, series_definition, configuration, grou
         courtyard={'top':cy1, 'bottom':cy2}, fp_name=footprint_name, text_y_inside_position=text_center)
 
     ########################### file names ###############################
-    model3d_path_prefix = configuration.get('3d_model_prefix','${KICAD9_3DMODEL_DIR}/')
-
     lib_name = configuration['lib_name_format_string'].format(man=group_definition['manufacturer'],
         series=series_definition['series'])
     model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}.wrl'.format(
-        model3d_path_prefix=model3d_path_prefix, lib_name=lib_name, fp_name=footprint_name)
+        model3d_path_prefix=global_config.model_3d_prefix, lib_name=lib_name, fp_name=footprint_name)
     kicad_mod.append(Model(filename=model_name))
 
     lib = KicadPrettyLibrary(lib_name, None)
     lib.save(kicad_mod)
 
 
-def generate_series(configuration, series_definition, id, group_definition):
+def generate_series(global_config: GC.GlobalConfig, configuration,
+                    series_definition, id, group_definition):
     idx = 0
     pinrange_def_type, pinrange_def = series_definition['pinrange']
     if pinrange_def_type == 'range':
@@ -383,7 +386,8 @@ def generate_series(configuration, series_definition, id, group_definition):
         return
 
     for pincount in pinrange:
-        generate_one_footprint(idx, pincount, series_definition, configuration, group_definition)
+        generate_one_footprint(global_config, idx, pincount,
+                               series_definition, configuration, group_definition)
         idx += 1
 
 if __name__ == "__main__":
@@ -403,6 +407,7 @@ if __name__ == "__main__":
     with open(args.series_config, 'r') as config_stream:
         try:
             configuration.update(yaml.safe_load(config_stream))
+            global_config = GC.GlobalConfig(configuration)
         except yaml.YAMLError as exc:
             print(exc)
     for filepath in args.files:
@@ -413,6 +418,6 @@ if __name__ == "__main__":
                 print(exc)
         series_definitions = yaml_file['device_definition']
         for series_definition_id in series_definitions:
-            generate_series(configuration,
+            generate_series(global_config, configuration,
                 series_definitions[series_definition_id], series_definition_id,
                 yaml_file['group_definitions'])

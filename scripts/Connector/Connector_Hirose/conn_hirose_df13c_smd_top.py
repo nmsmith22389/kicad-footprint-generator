@@ -9,6 +9,8 @@ from KicadModTree import *
 from scripts.tools.drawing_tools import round_to_grid
 from scripts.tools.footprint_text_fields import addTextFields
 from scripts.tools.footprint_keepout_area import addRectangularKeepout
+from scripts.tools.global_config_files import global_config as GC
+
 
 series = 'DF13C'
 series_long = 'DF13C SMD'
@@ -42,7 +44,7 @@ pitch = 1.25
 pad_size = [pad_size_x, rel_pad_y_outside_edge - rel_pad_y_inside_edge]
 mp_size = [1.6, 2.2]
 
-def generate_one_footprint(idx, pins, configuration):
+def generate_one_footprint(global_config: GC.GlobalConfig, idx, pins, configuration):
     mpn = part_code.format(n=pins, param_1=mpn_param_1[idx])
     pad_silk_off = configuration['silk_line_width']/2 + configuration['silk_pad_clearance']
     off = configuration['silk_fab_offset']
@@ -67,9 +69,10 @@ def generate_one_footprint(idx, pins, configuration):
     mpad_y = rel_pad_y_outside_edge/2 - mp_size[1]/2
     mpad_x = A/2 + center_pad_to_mounting_pad_edge + mp_size[0]/2
 
-    kicad_mod.append(Pad(number = configuration['mounting_pad_number'], type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT,
+    mounting_pad_name = global_config.get_pad_name(GC.PadName.MECHANICAL)
+    kicad_mod.append(Pad(number=mounting_pad_name, type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT,
                         at=[mpad_x, mpad_y], size=mp_size, layers=Pad.LAYERS_SMT))
-    kicad_mod.append(Pad(number = configuration['mounting_pad_number'], type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT,
+    kicad_mod.append(Pad(number=mounting_pad_name, type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT,
                         at=[-mpad_x, mpad_y], size=mp_size, layers=Pad.LAYERS_SMT))
 
     # create pads
@@ -200,6 +203,7 @@ if __name__ == "__main__":
     with open(args.global_config, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
+            global_config = GC.GlobalConfig(configuration)
         except yaml.YAMLError as exc:
             print(exc)
 
@@ -210,5 +214,5 @@ if __name__ == "__main__":
             print(exc)
     idx = 0
     for pins_per_row in pins_per_row_range:
-        generate_one_footprint(idx, pins_per_row, configuration)
+        generate_one_footprint(global_config, idx, pins_per_row, configuration)
         idx += 1

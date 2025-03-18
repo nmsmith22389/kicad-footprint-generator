@@ -21,6 +21,7 @@ import yaml
 
 from KicadModTree import *
 from scripts.tools.drawing_tools import round_to_grid
+from scripts.tools.global_config_files import global_config as GC
 from scripts.tools.footprint_text_fields import addTextFields
 
 series = ""
@@ -38,7 +39,7 @@ pins_per_row_range = [5,10,20,30,40,50]
 part_code = "LSHM-1{n:02d}-xx.x-x-DV-{shield:s}"
 
 variant_params = {
-    'shileded': {
+    'shielded': {
         'mpn_option': 'S',
         'shield_pad': True,
     },
@@ -56,9 +57,8 @@ boss_drill = 1.45
 shield_pad_drill = 1
 shield_pad_size = 1.5
 
-pin_number_shield = "SH"
+def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row, params, configuration):
 
-def generate_one_footprint(pins_per_row, params, configuration):
     mpn = part_code.format(n=pins_per_row, shield=params['mpn_option'])
 
     CrtYd_off = configuration['courtyard_offset']['connector']
@@ -137,6 +137,8 @@ def generate_one_footprint(pins_per_row, params, configuration):
                         layers=Pad.LAYERS_NPTH))
 
     if params['shield_pad']:
+        pin_number_shield = global_config.get_pad_name(GC.PadName.SHIELD)
+
         kicad_mod.append(Pad(number = pin_number_shield,
                             type=Pad.TYPE_THT, shape=Pad.SHAPE_CIRCLE,
                             at=[shield_pad_x, shield_pad_y],
@@ -262,6 +264,8 @@ if __name__ == "__main__":
     with open(args.global_config, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
+            global_config = GC.GlobalConfig(configuration)
+
         except yaml.YAMLError as exc:
             print(exc)
 
@@ -272,4 +276,4 @@ if __name__ == "__main__":
             print(exc)
     for variant in variant_params:
         for pins_per_row in pins_per_row_range:
-            generate_one_footprint(pins_per_row, variant_params[variant], configuration)
+            generate_one_footprint(global_config, pins_per_row, variant_params[variant], configuration)

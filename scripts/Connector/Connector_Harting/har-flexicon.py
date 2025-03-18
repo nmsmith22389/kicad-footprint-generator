@@ -1,7 +1,9 @@
 #! /usr/bin/env python3
 
-from KicadModTree import *
 import csv
+
+from KicadModTree import *
+from scripts.tools.global_config_files import global_config as GC
 
 data = csv.DictReader(open("har-flexicon.csv"))
 
@@ -9,6 +11,7 @@ data = csv.DictReader(open("har-flexicon.csv"))
 max_configurations = 12
 
 lib_name = "Connector_Harting"
+global_config = GC.DefaultGlobalConfig()
 
 for series in data:
     for configuration in range(2, max_configurations + 1):
@@ -44,7 +47,7 @@ for series in data:
         )
         kicad_mod.append(
             Model(
-                filename="${KICAD9_3DMODEL_DIR}/" + lib_name + ".3dshapes/"
+                filename=global_config.model_3d_prefix + lib_name + ".3dshapes/"
                 + footprint_name
                 + ".wrl"
             )
@@ -85,10 +88,12 @@ for series in data:
             )
         )
 
+        mounting_pad_name = global_config.get_pad_name(GC.PadName.MECHANICAL)
+
         # Mounting pads
         kicad_modt.append(
             Pad(
-                number="MP",
+                number=mounting_pad_name,
                 type=Pad.TYPE_SMT,
                 shape=Pad.SHAPE_RECT,
                 at=[-b - 2.54, 0],
@@ -98,7 +103,7 @@ for series in data:
         )
         kicad_modt.append(
             Pad(
-                number="MP",
+                number=mounting_pad_name,
                 type=Pad.TYPE_SMT,
                 shape=Pad.SHAPE_RECT,
                 at=[b + 2.54, 0],
@@ -117,6 +122,8 @@ for series in data:
                         (2.54 * (pins - (configuration - 1) / 2)) + 0.762 + 1.016,
                         fab_up-0.11,
                     ],
+                    layer="F.SilkS",
+                    width=global_config.silk_line_width,
                 )
             )
 
@@ -126,6 +133,7 @@ for series in data:
                 start=[-a / 2-0.11, fab_up-0.11],
                 end=[-a / 2-0.11, fab_down+0.11],
                 layer="F.SilkS",
+                width=global_config.silk_line_width,
             )
         )
         kicad_modt.append(
@@ -133,6 +141,7 @@ for series in data:
                 start=[+a / 2+0.11, fab_up-0.11],
                 end=[+a / 2+0.11, fab_down+0.11],
                 layer="F.SilkS",
+                width=global_config.silk_line_width,
             )
         )
 
@@ -149,6 +158,8 @@ for series in data:
                             (2.54 * (pins - (configuration - 1) / 2)) + 0.762 + 1.016,
                             fab_down+0.11,
                         ],
+                        layer="F.SilkS",
+                        width=global_config.silk_line_width,
                     )
                 )
         else:
@@ -157,6 +168,7 @@ for series in data:
                     start=[+a / 2+0.11, fab_down+0.11],
                     end=[-a / 2-0.11, fab_down+0.11],
                     layer="F.SilkS",
+                    width=global_config.silk_line_width,
                 )
             )
 
@@ -166,6 +178,7 @@ for series in data:
                 start=[-b - 0.55, courtyard_y_up],
                 end=[-b + 0.55, courtyard_y_up],
                 layer="F.SilkS",
+                width=global_config.silk_line_width,
             )
         )
 
@@ -224,6 +237,7 @@ for series in data:
                 start=[-c, courtyard_y_up],
                 end=[+c, courtyard_y_down],
                 layer="F.CrtYd",
+                width=global_config.courtyard_line_width
             )
         )
 
@@ -233,6 +247,7 @@ for series in data:
                 start=[-a / 2, fab_up],
                 end=[+a / 2, fab_down],
                 layer="F.Fab",
+                width=global_config.fab_line_width,
             )
         )
         # Pin 1 arrow
@@ -244,6 +259,7 @@ for series in data:
                     [-b + 0.5, fab_down],
                 ],
                 layer="F.Fab",
+                width=global_config.fab_line_width,
             )
         )
 

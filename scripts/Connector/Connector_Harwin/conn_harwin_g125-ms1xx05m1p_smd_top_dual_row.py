@@ -16,6 +16,7 @@ import argparse
 import yaml
 
 from KicadModTree import Pad, PadArray, Footprint, FootprintType, PolygonLine, KicadPrettyLibrary
+from scripts.tools.global_config_files import global_config as GC
 from scripts.tools.footprint_text_fields import addTextFields
 from scripts.tools.drawing_tools import addArcByAngles
 
@@ -40,7 +41,7 @@ def roundToBase(value, base):
         return value
     return round(value/base) * base
 
-def generate_footprint(pins, configuration):
+def generate_footprint(global_config: GC.GlobalConfig, pins, configuration):
 
     mpn = pn.format(n=pins)
     pins_per_row = int(pins / 2)
@@ -78,10 +79,12 @@ def generate_footprint(pins, configuration):
     #
     # Mounting holes
     #
-    kicad_mod.append(Pad(at=[-mount_spacing/2, 0], number="MP",
+    mounting_pad_name = global_config.get_pad_name(GC.PadName.MECHANICAL)
+
+    kicad_mod.append(Pad(at=[-mount_spacing/2, 0], number=mounting_pad_name,
         type=Pad.TYPE_THT, shape=Pad.SHAPE_CIRCLE, size=mount_pad,
         drill=mount_drill, layers=Pad.LAYERS_THT))
-    kicad_mod.append(Pad(at=[mount_spacing/2, 0], number="MP",
+    kicad_mod.append(Pad(at=[mount_spacing/2, 0], number=mounting_pad_name,
         type=Pad.TYPE_THT, shape=Pad.SHAPE_CIRCLE, size=mount_pad,
         drill=mount_drill, layers=Pad.LAYERS_THT))
 
@@ -167,6 +170,7 @@ if __name__ == "__main__":
     with open(args.global_config, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
+            global_config = GC.GlobalConfig(configuration)
         except yaml.YAMLError as exc:
             print(exc)
 
@@ -177,4 +181,4 @@ if __name__ == "__main__":
             print(exc)
 
     for pincount in pincount_range:
-        generate_footprint(pincount, configuration)
+        generate_footprint(global_config, pincount, configuration)

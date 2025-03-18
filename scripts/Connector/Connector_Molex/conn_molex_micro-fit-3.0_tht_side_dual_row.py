@@ -21,6 +21,7 @@ import yaml
 
 from KicadModTree import *
 from scripts.tools.drawing_tools import round_to_grid
+from scripts.tools.global_config_files import global_config as GC
 from scripts.tools.footprint_text_fields import addTextFields
 
 series = "Micro-Fit_3.0"
@@ -45,7 +46,7 @@ pad_to_pad_clearance = 1.5 # Voltage rating is up to 600V (http://www.molex.com/
 
 pad_size = [pitch - pad_to_pad_clearance, pitch - pad_to_pad_clearance]
 
-def generate_one_footprint(pins, configuration, variant):
+def generate_one_footprint(global_config: GC.GlobalConfig, pins, configuration, variant):
     pins_per_row = pins
 
     mpn = part_code.format(n=pins*2,s=variants[variant],finish=max(int(variants[variant]) - 1, 0))
@@ -113,10 +114,13 @@ def generate_one_footprint(pins, configuration, variant):
                 type=Pad.TYPE_NPTH, shape=Pad.SHAPE_CIRCLE, size=peg_drill,
                 drill=peg_drill, layers=Pad.LAYERS_NPTH))
     elif variant == 'clip':
-        kicad_mod.append(Pad(at=[pad1_x + clip_x_offset, pad_row_1_y - peg_clip_y_offset], number="MP",
+        mounting_pad_name = global_config.get_pad_name(GC.PadName.MECHANICAL)
+        kicad_mod.append(Pad(at=[pad1_x + clip_x_offset, pad_row_1_y - peg_clip_y_offset],
+            number=mounting_pad_name,
             type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, size=clip_pad,
             drill=clip_drill, layers=Pad.LAYERS_THT))
-        kicad_mod.append(Pad(at=[pad1_x + clip_x_offset + clip_C, pad_row_1_y - peg_clip_y_offset], number="MP",
+        kicad_mod.append(Pad(at=[pad1_x + clip_x_offset + clip_C, pad_row_1_y - peg_clip_y_offset],
+            number=mounting_pad_name,
             type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, size=clip_pad,
             drill=clip_drill, layers=Pad.LAYERS_THT))
 
@@ -273,6 +277,7 @@ if __name__ == "__main__":
     with open(args.global_config, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
+            global_config = GC.GlobalConfig(configuration)
         except yaml.YAMLError as exc:
             print(exc)
 
@@ -284,4 +289,4 @@ if __name__ == "__main__":
 
     for pincount in pins_per_row_range:
         for variant in variants:
-            generate_one_footprint(pincount, configuration, variant)
+            generate_one_footprint(global_config, pincount, configuration, variant)

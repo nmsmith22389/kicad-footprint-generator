@@ -34,6 +34,8 @@ import yaml
 from KicadModTree import *
 from scripts.tools.drawing_tools import round_to_grid
 from scripts.tools.footprint_text_fields import addTextFields
+from scripts.tools.global_config_files import global_config as GC
+
 
 manufacturer = "TE-Connectivity"
 conn_category = "FFC-FPC"
@@ -43,7 +45,8 @@ lib_by_conn_category = True
 partnumbers = ["84952","84953"]
 pincounts = range(4, 31)
 
-def generate_one_footprint(partnumber, pincount, configuration):
+def generate_one_footprint(global_config: GC.GlobalConfig,
+                           partnumber, pincount, configuration):
     # only double digit pincount parts have leading chars on the PN
     if pincount >= 10:
         pn_prefix = str(pincount)[0] + "-"
@@ -112,10 +115,11 @@ def generate_one_footprint(partnumber, pincount, configuration):
         size=[pad_width, pad_height], layers=Pad.LAYERS_SMT))
 
     # create tab (smt mounting) pads
-    kicad_mod.append(Pad(number=configuration['mounting_pad_number'],
+    mounting_pad_name = global_config.get_pad_name(GC.PadName.MECHANICAL)
+    kicad_mod.append(Pad(number=mounting_pad_name,
         at=[-tab_x, tab_y], type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT,
         size=[tab_width, tab_height], layers=Pad.LAYERS_SMT))
-    kicad_mod.append(Pad(number=configuration['mounting_pad_number'],
+    kicad_mod.append(Pad(number=mounting_pad_name,
         at=[tab_x, tab_y], type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT,
         size=[tab_width, tab_height], layers=Pad.LAYERS_SMT))
 
@@ -190,15 +194,13 @@ def generate_one_footprint(partnumber, pincount, configuration):
         courtyard={'top':courtyard_y1, 'bottom':courtyard_y2}, fp_name=footprint_name, text_y_inside_position=[0, tab_y])
 
     ##################### Output and 3d model ############################
-    model3d_path_prefix = configuration.get('3d_model_prefix','${KICAD9_3DMODEL_DIR}/')
-
     if lib_by_conn_category:
         lib_name = configuration['lib_name_specific_function_format_string'].format(category=conn_category)
     else:
         lib_name = configuration['lib_name_format_string'].format(man=manufacturer)
 
     model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}.wrl'.format(
-        model3d_path_prefix=model3d_path_prefix, lib_name=lib_name, fp_name=footprint_name)
+        model3d_path_prefix=global_config.model_3d_prefix, lib_name=lib_name, fp_name=footprint_name)
     kicad_mod.append(Model(filename=model_name))
 
     lib = KicadPrettyLibrary(lib_name, None)
@@ -214,6 +216,7 @@ if __name__ == '__main__':
     with open(args.global_config, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
+            global_config = GC.GlobalConfig(configuration)
         except yaml.YAMLError as exc:
             print(exc)
 
@@ -226,4 +229,4 @@ if __name__ == '__main__':
     # with pincount(s) and partnumber(s) to be generated, build them all in a nested loop
     for partnumber in partnumbers:
         for pincount in pincounts:
-            generate_one_footprint(partnumber, pincount, configuration)
+            generate_one_footprint(global_config, partnumber, pincount, configuration)

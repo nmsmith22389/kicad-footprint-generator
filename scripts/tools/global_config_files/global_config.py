@@ -6,6 +6,11 @@ from pathlib import Path
 
 from KicadModTree.util.corner_handling import RoundRadiusHandler, ChamferSizeHandler
 
+class PadName(Enum):
+    MECHANICAL = "mechanical"
+    SHIELD = "shield"
+
+
 class GlobalConfig:
     """
     Class that provides global footprint generation parameters.
@@ -45,6 +50,8 @@ class GlobalConfig:
 
     _layer_functions: dict
 
+    _pad_names: dict
+
     def __init__(self, data: dict):
         """
         Initialise from some dictonary of data (likely a
@@ -80,6 +87,8 @@ class GlobalConfig:
         }
 
         self._layer_functions = data["layer_functions"]
+
+        self._pad_names = data["pad_names"]
 
     def get_courtyard_offset(self, courtyard_type: CourtyardType) -> float:
         return self._cy_offs[courtyard_type]
@@ -167,6 +176,12 @@ class GlobalConfig:
             return self.courtyard_line_width
 
         return self.default_line_width
+
+    def get_pad_name(self, name: PadName) -> str:
+        """
+        Get a predefined pad name from the global config. E.g. MP or SH.
+        """
+        return self._pad_names[name.value]
 
     @classmethod
     def load_from_file(self, path: Path):

@@ -7,6 +7,7 @@ from math import sqrt
 from KicadModTree import *
 from scripts.tools.drawing_tools import round_to_grid
 from scripts.tools.footprint_text_fields import addTextFields
+from scripts.tools.global_config_files import global_config as GC
 
 
 pinrange = [17, 21, 23, 27, 33, 35, 39, 41, 51]
@@ -31,7 +32,7 @@ odd_pad_size = (0.80, 0.26) # bottom
 even_pad_size = (0.65, 0.3) # top
 anchor_pad_size = (0.85, 0.4)
 
-def make_module(pin_count, configuration):
+def make_module(global_config: GC.GlobalConfig, pin_count, configuration):
     pad_silk_off = configuration['silk_line_width']/2 + configuration['silk_pad_clearance']
     off = configuration['silk_fab_offset']
 
@@ -159,13 +160,8 @@ def make_module(pin_count, configuration):
 
 
     def anchor_pad(direction):
-        # f.write("  (pad \"\" smd rect (at {x:1.5g} {y:1.5g}) "
-        #     "(size {pad_size[0]} {pad_size[1]}) "
-        #     "(layers F.Cu F.Paste F.Mask))\n".format(
-        #             x=anchor_pad_spacing / 2 * direction,
-        #             y=0.325 - row_spacing/2 + y_offset,
-        #             pad_size=anchor_pad_size))
-        kicad_mod.append(Pad(number=configuration['mounting_pad_number'], type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT,
+        mounting_pad_name = global_config.get_pad_name(GC.PadName.MECHANICAL)
+        kicad_mod.append(Pad(number=mounting_pad_name, type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT,
                         at=[anchor_pad_x, anchor_pad_spacing / 2 * direction],
                         size=anchor_pad_size, layers=Pad.LAYERS_SMT))
     anchor_pad(-1)
@@ -232,6 +228,7 @@ if __name__ == "__main__":
     with open(args.global_config, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
+            global_config = GC.GlobalConfig(configuration)
         except yaml.YAMLError as exc:
             print(exc)
 
@@ -242,4 +239,4 @@ if __name__ == "__main__":
             print(exc)
 
     for pincount in pinrange:
-        make_module(pincount, configuration)
+        make_module(global_config, pincount, configuration)

@@ -21,6 +21,7 @@ from KicadModTree import (
     KicadPrettyLibrary,
 )
 from scripts.tools.drawing_tools import round_to_grid
+from scripts.tools.global_config_files import global_config as GC
 from scripts.tools.footprint_text_fields import addTextFields
 
 pinrange = [13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 41, 45, 51, 55, 57, 61, 71]
@@ -42,7 +43,7 @@ odd_pad_size = (0.80, 0.3) # bottom	OK!
 even_pad_size = (0.65, 0.3) # top	OK!
 anchor_pad_size = (0.95, 0.4)	# MP size OK!
 
-def make_module(pin_count, configuration):
+def make_module(global_config: GC.GlobalConfig, pin_count, configuration):
     pad_silk_off = configuration['silk_line_width']/2 + configuration['silk_pad_clearance']
     off_sf = configuration['silk_fab_offset']
 
@@ -194,7 +195,8 @@ def make_module(pin_count, configuration):
             size=even_pad_size, layers=Pad.LAYERS_SMT))
 
     def anchor_pad(direction):
-        kicad_mod.append(Pad(number=configuration['mounting_pad_number'], type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT,
+        pad_number = global_config.get_pad_name(GC.PadName.MECHANICAL)
+        kicad_mod.append(Pad(number=pad_number, type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT,
                         at=[anchor_pad_x, anchor_pad_spacing / 2 * direction],
                         size=anchor_pad_size, layers=Pad.LAYERS_SMT))
     anchor_pad(-1)
@@ -242,15 +244,13 @@ def make_module(pin_count, configuration):
         courtyard={'top':cy1, 'bottom':cy2}, fp_name=footprint_name, text_y_inside_position='right')
 
     ##################### Output and 3d model ############################
-    model3d_path_prefix = configuration.get('3d_model_prefix','${KICAD9_3DMODEL_DIR}/')
-
     if lib_by_conn_category:
         lib_name = configuration['lib_name_specific_function_format_string'].format(category=conn_category)
     else:
         lib_name = configuration['lib_name_format_string'].format(series=series, man=manufacturer)
 
     model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}.wrl'.format(
-        model3d_path_prefix=model3d_path_prefix, lib_name=lib_name, fp_name=footprint_name)
+        model3d_path_prefix=global_config.model_3d_prefix, lib_name=lib_name, fp_name=footprint_name)
     kicad_mod.append(Model(filename=model_name))
 
     lib = KicadPrettyLibrary(lib_name, None)
@@ -266,6 +266,7 @@ if __name__ == "__main__":
     with open(args.global_config, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
+            global_config = GC.GlobalConfig(configuration)
         except yaml.YAMLError as exc:
             print(exc)
 
@@ -276,4 +277,4 @@ if __name__ == "__main__":
             print(exc)
 
     for pincount in pinrange:
-        make_module(pincount, configuration)
+        make_module(global_config, pincount, configuration)

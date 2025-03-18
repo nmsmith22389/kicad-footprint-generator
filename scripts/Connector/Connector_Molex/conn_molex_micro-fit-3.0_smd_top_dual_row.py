@@ -22,6 +22,8 @@ import yaml
 from KicadModTree import *
 from scripts.tools.drawing_tools import round_to_grid
 from scripts.tools.footprint_text_fields import addTextFields
+from scripts.tools.global_config_files import global_config as GC
+
 
 series = "Micro-Fit_3.0"
 series_long = 'Micro-Fit 3.0 Connector System'
@@ -62,7 +64,8 @@ pitch_y = 6.86 + pad_size[1]
 mount_pad_size = [3.43, 1.65]
 mount_drill = 2.41
 
-def generate_one_footprint(pins_per_row, variant, configuration):
+def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row,
+                           variant, configuration):
     is_solder_mp = variant_params[variant]['mount_pins'] == 'solder'
 
     mpn = variant_params[variant]['part_code'].format(n=pins_per_row*2)
@@ -121,10 +124,11 @@ def generate_one_footprint(pins_per_row, variant, configuration):
         #
         # Add solder nails
         #
-        kicad_mod.append(Pad(at=[-mount_pad_x, mount_pad_y], number=configuration['mounting_pad_number'],
+        mounting_pad_name = global_config.get_pad_name(GC.PadName.MECHANICAL)
+        kicad_mod.append(Pad(at=[-mount_pad_x, mount_pad_y], number=mounting_pad_name,
             type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT, size=mount_pad_size,
             layers=Pad.LAYERS_SMT))
-        kicad_mod.append(Pad(at=[mount_pad_x, mount_pad_y], number=configuration['mounting_pad_number'],
+        kicad_mod.append(Pad(at=[mount_pad_x, mount_pad_y], number=mounting_pad_name,
             type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT, size=mount_pad_size,
             layers=Pad.LAYERS_SMT))
     else:
@@ -306,11 +310,9 @@ def generate_one_footprint(pins_per_row, variant, configuration):
         courtyard={'top':cy_top, 'bottom':cy_bottom}, fp_name=footprint_name, text_y_inside_position='bottom')
 
     ##################### Output and 3d model ############################
-    model3d_path_prefix = configuration.get('3d_model_prefix','${KICAD9_3DMODEL_DIR}/')
-
     lib_name = configuration['lib_name_format_string'].format(series=series, man=manufacturer)
     model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}.wrl'.format(
-        model3d_path_prefix=model3d_path_prefix, lib_name=lib_name, fp_name=footprint_name)
+        model3d_path_prefix=global_config.model_3d_prefix, lib_name=lib_name, fp_name=footprint_name)
     kicad_mod.append(Model(filename=model_name))
 
     lib = KicadPrettyLibrary(lib_name, None)
@@ -326,6 +328,7 @@ if __name__ == "__main__":
     with open(args.global_config, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
+            global_config = GC.GlobalConfig(configuration)
         except yaml.YAMLError as exc:
             print(exc)
 
@@ -336,4 +339,4 @@ if __name__ == "__main__":
             print(exc)
     for variant in variant_params:
         for pins_per_row in pins_per_row_range:
-            generate_one_footprint(pins_per_row, variant, configuration)
+            generate_one_footprint(global_config, pins_per_row, variant, configuration)

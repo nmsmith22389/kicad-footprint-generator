@@ -16,4 +16,3 @@ keyword_fp_string: 'connector {man:s} {series:s} {entry:s}'
 lib_name_format_string_full: 'Connector_{man:s}_{series:s}{suffix:s}'
 lib_name_format_string: 'Connector_{man:s}'
 lib_name_specific_function_format_string: 'Connector_{category:s}'
-mounting_pad_number: "MP"
