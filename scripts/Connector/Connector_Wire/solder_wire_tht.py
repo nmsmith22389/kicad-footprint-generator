@@ -92,7 +92,7 @@ def make_fp(wire_def, fp_type, pincount, configuration):
 
     fp_name = fp_name_gen(wire_def, fp_type['name'], pincount, pitch)
 
-    kicad_mod = Footprint(fp_name, FootprintType.THT)
+    kicad_mod = Footprint(fp_name, FootprintType.UNSPECIFIED)
     kicad_mod.setDescription(description_gen(wire_def, fp_type['description'], pincount, pitch))
 
     kicad_mod.setTags(tag_gen(wire_def, fp_type['tag'], pincount, pitch))
