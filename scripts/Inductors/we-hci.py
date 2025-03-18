@@ -42,11 +42,11 @@ if len(sys.argv) > 1:
 if output_dir and not output_dir.endswith(os.sep):
     output_dir += os.sep
 
-prefix = "Inductor_"
-part = "Wurth_HCI-{pn}"
+prefix = "L_"
+part = "Wuerth_HCI-{pn}"
 dims = "{l:0.1f}mmx{w:0.1f}mm"
 
-desc = "Inductor, Wurth Elektronik, {pn}"
+desc = "Inductor, Wuerth Elektronik, {pn}"
 tags = "inductor wurth hci smd"
 
 for inductor in inductors:
@@ -66,7 +66,7 @@ for inductor in inductors:
     fp.append(Property(name=Property.VALUE, text=fp_name, at=[0,w/2 + 1.5], layer='F.Fab'))
 
     #add inductor outline
-    fp.append(RectLine(start=[-l/2,-w/2],end=[l/2,w/2],layer='F.Fab',width=0.15))
+    fp.append(RectLine(start=[-l/2,-w/2],end=[l/2,w/2],layer='F.Fab',width=0.1))
 
     #calculate pad center
     #pad-width pw
@@ -104,7 +104,7 @@ for inductor in inductors:
 
     #Add a model
     lib_name = "Inductor_SMD"
-    fp.append(Model(filename=lib_name + ".3dshapes/" + fp_name + ".wrl"))
+    fp.append(Model(filename="${KICAD9_3DMODEL_DIR}/"+lib_name + ".3dshapes/" + fp_name + ".wrl"))
 
     lib = KicadPrettyLibrary(lib_name, None)
     lib.save(fp)

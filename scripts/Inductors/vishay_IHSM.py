@@ -40,7 +40,7 @@ if output_dir and not output_dir.endswith(os.sep):
     output_dir += os.sep
 
 lib_name = "Inductor_SMD"
-prefix = "Inductor_"
+prefix = "L_"
 part = "Vishay_IHSM-{pn}"
 dims = "{l:0.1f}mmx{w:0.1f}mm"
 
@@ -78,7 +78,7 @@ for inductor in inductors:
     pw = x
 
     #add the component outline
-    fp.append(RectLine(start=[-l/2,-w/2],end=[l/2,w/2],layer='F.Fab',width=0.15))
+    fp.append(RectLine(start=[-l/2,-w/2],end=[l/2,w/2],layer='F.Fab',width=0.1))
 
     layers = Pad.LAYERS_SMT
 
@@ -98,7 +98,7 @@ for inductor in inductors:
     fp.append(PolygonLine(polygon=poly, x_mirror=0))
 
     #Add a model
-    fp.append(Model(filename=lib_name + ".3dshapes/" + fp_name + ".wrl"))
+    fp.append(Model(filename="${KICAD9_3DMODEL_DIR}/"+lib_name + ".3dshapes/" + fp_name + ".wrl"))
 
     lib = KicadPrettyLibrary(lib_name, None)
     lib.save(fp)
