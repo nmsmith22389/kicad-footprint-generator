@@ -1,3 +1,23 @@
+# KLC Global Configuration v3.0
+#
+# These are the global configuration defintitions for the KiCad libraries,
+# encoding default parameters for things like line thicknesses, clearances and
+# text sizes. Some values are defined by the KiCad Library Conventions (KLC)
+# guidelines, some are just convenient defaults to have in a central, configurable
+# location.
+#
+# To use these values, new code should use the GlobalConfig class, which parses
+# this file, or an alternative file of the users choosing. Old code sometimes reads
+# it directly as a dictionary, but that method is deprecated.
+#
+# This file is named v3.0 because it represents the third major version of the
+# KLC definitions. Older and alternative definitions can be found in the Git
+# history of this directory. The KiCad libraries currently do not officially
+# maintain alternative configs (as then we'd have to test all generated parts
+# in all configurations). This interface is provided to allow users to adjust
+# then on their own (and also for internal technical happiness to avoid spamming
+# hardcoded values into hundreds of scripts).
+
 3d_model_prefix: '${KICAD9_3DMODEL_DIR}/'
 
 silk_line_width: 0.12
