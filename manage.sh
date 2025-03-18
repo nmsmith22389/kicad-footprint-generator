@@ -19,6 +19,10 @@ update_dev_packages() {
     pip3 install --upgrade -e '.[dev]'
 }
 
+update_3d_packages() {
+    pip3 install --upgrade -e '.[3d]'
+}
+
 fp_format_check() {
     echo ''
     echo '[!] Running footprint formatting check'
@@ -97,6 +101,7 @@ Commands
     tests                - Run all tests
     update_packages      - Check & update production dependency changes
     update_dev_packages  - Check & update development and production dependency changes
+    update_3d_packages  - Check & update 3d model generator dependency changes
 "
 }
 
