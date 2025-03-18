@@ -196,7 +196,7 @@ def makeResistorSIP(pins, footprint_name, description):
     l_crt = min(l_slk, -padx / 2) - crt_offset
     t_crt = min(t_slk, -pady / 2) - crt_offset
 
-    lib_name = "Resistors_ThroughHole"
+    lib_name = "Resistor_THT"
 
     print(footprint_name)
 
@@ -231,7 +231,7 @@ def makeResistorSIP(pins, footprint_name, description):
 
     # add model
     kicad_mod.append(Model(filename="${KICAD9_3DMODEL_DIR}/"+lib_name + ".3dshapes/" + footprint_name + ".wrl",
-                           at=[0, 0, 0], scale=[1 / 2.54, 1 / 2.54, 1 / 2.54], rotate=[0, 0, 0]))
+                           at=[0, 0, 0], scale=[1, 1, 1], rotate=[0, 0, 0]))
 
     lib = KicadPrettyLibrary(lib_name, None)
     lib.save(kicad_mod)
