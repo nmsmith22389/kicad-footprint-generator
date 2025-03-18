@@ -70,14 +70,15 @@ class Keepout(ABC):
     def contains(self, pt: Vector2D) -> bool:
         raise NotImplementedError()
 
-
     @property
     @abstractmethod
     def bounding_box(self) -> BoundingBox:
         raise NotImplementedError()
 
     @staticmethod
-    def _cutSegmentByIntersections(seg: geometricLine, intersections, point_inside_func: PointPredicate):
+    def _cutSegmentByIntersections(
+        seg: geometricLine, intersections, point_inside_func: PointPredicate
+    ):
         """
         Cut a line segment by the given intersections
 
@@ -108,12 +109,16 @@ class Keepout(ABC):
             # Exploit the convex shape to determine if the midpoint is inside
             midpoint = (intersections[i] + intersections[i + 1]) / 2
             if not point_inside_func(midpoint):
-                segs.append(geometricLine(start=intersections[i], end=intersections[i + 1]))
+                segs.append(
+                    geometricLine(start=intersections[i], end=intersections[i + 1])
+                )
 
         return segs
 
     @staticmethod
-    def _arcsFromIntersections(center: Vector2D, intersections: list, point_inside_func: PointPredicate):
+    def _arcsFromIntersections(
+        center: Vector2D, intersections: list, point_inside_func: PointPredicate
+    ):
         segments = []
         for i in range(len(intersections) - 1):
             start = intersections[i]
@@ -197,12 +202,22 @@ class KeepoutRect(Keepout):
         self.top = center.y - size.y / 2
         self.bottom = center.y + size.y / 2
 
-        self.top_side = geometricLine(start=[self.left, self.top], end=[self.right, self.top])
-        self.bottom_side = geometricLine(start=[self.left, self.bottom], end=[self.right, self.bottom])
-        self.left_side = geometricLine(start=[self.left, self.top], end=[self.left, self.bottom])
-        self.right_side = geometricLine(start=[self.right, self.top], end=[self.right, self.bottom])
+        self.top_side = geometricLine(
+            start=[self.left, self.top], end=[self.right, self.top]
+        )
+        self.bottom_side = geometricLine(
+            start=[self.left, self.bottom], end=[self.right, self.bottom]
+        )
+        self.left_side = geometricLine(
+            start=[self.left, self.top], end=[self.left, self.bottom]
+        )
+        self.right_side = geometricLine(
+            start=[self.right, self.top], end=[self.right, self.bottom]
+        )
 
-        self._bbox = BoundingBox(Vector2D(self.left, self.top), Vector2D(self.right, self.bottom))
+        self._bbox = BoundingBox(
+            Vector2D(self.left, self.top), Vector2D(self.right, self.bottom)
+        )
 
     def __str__(self):
         return f"KeepoutRect(center=({self.x}, {self.y}), size=({self.w}, {self.h}))"
@@ -215,10 +230,12 @@ class KeepoutRect(Keepout):
         return self._bbox
 
     def _circle_inside(self, circle: geometricCircle) -> bool:
-        return (self.left <= circle.center_pos.x - circle.radius and
-                self.right >= circle.center_pos.x + circle.radius and
-                self.top <= circle.center_pos.y - circle.radius and
-                self.bottom >= circle.center_pos.y + circle.radius)
+        return (
+            self.left <= circle.center_pos.x - circle.radius
+            and self.right >= circle.center_pos.x + circle.radius
+            and self.top <= circle.center_pos.y - circle.radius
+            and self.bottom >= circle.center_pos.y + circle.radius
+        )
 
     def keepout_line(self, seg: geometricLine):
 
@@ -260,7 +277,9 @@ class KeepoutRect(Keepout):
 
         # Check for intersections with each side of the rectangle
         for side in [self.top_side, self.bottom_side, self.left_side, self.right_side]:
-            side_intersections = BaseNodeIntersection.intersectSegmentWithCircle(side, circle)
+            side_intersections = BaseNodeIntersection.intersectSegmentWithCircle(
+                side, circle
+            )
 
             if side_intersections:
                 intersections += side_intersections
@@ -270,7 +289,9 @@ class KeepoutRect(Keepout):
         if not intersections:
             return None
 
-        arcs = Keepout._arcsFromCircleIntersections(circle.center_pos, intersections, self.contains)
+        arcs = Keepout._arcsFromCircleIntersections(
+            circle.center_pos, intersections, self.contains
+        )
         return arcs
 
     def keepout_arc(self, arc: geometricArc):
@@ -360,7 +381,9 @@ class KeepoutRound(Keepout):
         if not intersections:
             return None
 
-        return Keepout._arcsFromCircleIntersections(circle.center_pos, intersections, self.contains)
+        return Keepout._arcsFromCircleIntersections(
+            circle.center_pos, intersections, self.contains
+        )
 
     def keepout_arc(self, arc: geometricArc):
         tol = 1e-7

@@ -10,7 +10,9 @@ class BoundingBox:
     min: Optional[Vector2D]
     max: Optional[Vector2D]
 
-    def __init__(self, min_pt: Optional[Vector2D] = None, max_pt: Optional[Vector2D] = None):
+    def __init__(
+        self, min_pt: Optional[Vector2D] = None, max_pt: Optional[Vector2D] = None
+    ):
 
         if (min_pt is None) != (max_pt is None):
             raise ValueError("Must provide both min and max or neither")
@@ -67,7 +69,9 @@ class BoundingBox:
         if self.min is None:
             return False
 
-        return self.min.x <= point.x <= self.max.x and self.min.y <= point.y <= self.max.y
+        return (
+            self.min.x <= point.x <= self.max.x and self.min.y <= point.y <= self.max.y
+        )
 
     def contains_bbox(self, bbox: Self) -> bool:
         """
@@ -76,8 +80,12 @@ class BoundingBox:
         if self.min is None or bbox.min is None:
             return False
 
-        return self.min.x <= bbox.min.x and self.min.y <= bbox.min.y and \
-               self.max.x >= bbox.max.x and self.max.y >= bbox.max.y
+        return (
+            self.min.x <= bbox.min.x
+            and self.min.y <= bbox.min.y
+            and self.max.x >= bbox.max.x
+            and self.max.y >= bbox.max.y
+        )
 
     def contains_seg(self, line: geometricLine) -> bool:
         """
