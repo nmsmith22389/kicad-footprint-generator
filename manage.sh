@@ -24,6 +24,7 @@ update_3d_packages() {
 }
 
 fp_format_check() {
+    set -e
     echo ''
     echo '[!] Running footprint formatting check'
     pycodestyle --max-line-length=120 \
@@ -42,19 +43,24 @@ fp_format_check() {
         "${clean_files[@]}"
     isort --check-only \
         "${clean_files[@]}"
+    set +e
 }
 
 flake8_check() {
+    set -e
     echo ''
     echo '[!] Running flake8 check'
     flake8 "$KICADMODTREE_DIR/" \
         "src/kilibs/geom"
+    set +e
 }
 
 unit_tests() {
+    set -e
     echo ''
     echo '[!] Running footprint unit tests'
     python3 -m pytest
+    set +e
 }
 
 py_test_coverage() {
@@ -63,25 +69,27 @@ py_test_coverage() {
 }
 
 3d_format_check() {
+    set -e
     echo ''
     echo '[!] Running 3D formatting check'
     cd '3d-model-generators'
     python -m isort --check .
     black --check .
+    set +e
 }
 
 run_shellcheck() {
+    set -e
     echo ''
     echo '[!] Running shellcheck'
     shellcheck gitlabci/*.sh
+    set +e
 }
 
 tests() {
-    set -e
     unit_tests
     fp_format_check
     # 3d_format_check
-    set +e
 }
 
 
