@@ -211,6 +211,7 @@ def makeResistorSIP(pins, footprint_name, description):
 
     # create FAB-layer
     kicad_mod.append(RectLine(start=[left, top], end=[left + w, top + h], layer='F.Fab', width=lw_fab))
+    kicad_mod.append(Text(text='${REFERENCE}', at=[(pins) / 2 * rm, top + h / 2], layer='F.Fab'))
     kicad_mod.append(Line(start=[0.5 * rm, top], end=[0.5 * rm, top + h], layer='F.Fab', width=lw_fab))
 
     # create SILKSCREEN-layer
