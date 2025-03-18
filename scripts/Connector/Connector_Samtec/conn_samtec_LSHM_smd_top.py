@@ -61,10 +61,8 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row, params,
 
     mpn = part_code.format(n=pins_per_row, shield=params['mpn_option'])
 
-    CrtYd_off = configuration['courtyard_offset']['connector']
-    CrtYd_grid = configuration['courtyard_grid']
-    off = configuration['silk_fab_offset']
-    pad_silk_off = configuration['silk_pad_clearance'] + configuration['silk_line_width']/2
+    off = global_config.silk_fab_offset
+    pad_silk_off = global_config.silk_pad_offset
     body_edge = {}
     bounding_box = {}
 
@@ -160,9 +158,9 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row, params,
         {'x': 0, 'y': body_edge['bottom']}
     ]
     kicad_mod.append(PolygonLine(polygon=poly_fab,
-                                 layer='F.Fab', width=configuration['fab_line_width']))
+                                 layer='F.Fab', width=global_config.fab_line_width))
     kicad_mod.append(PolygonLine(polygon=poly_fab, x_mirror=0,
-                                 layer='F.Fab', width=configuration['fab_line_width']))
+                                 layer='F.Fab', width=global_config.fab_line_width))
 
     pad_x_outside_edge = A/2 + pad_size[0]/2 + pad_silk_off
     if not params['shield_pad']:
@@ -175,9 +173,9 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row, params,
             {'x': -pad_x_outside_edge, 'y': body_edge['bottom']+off}
         ]
         kicad_mod.append(PolygonLine(polygon=poly_silk,
-                                     layer='F.SilkS', width=configuration['silk_line_width']))
+                                     layer='F.SilkS', width=global_config.silk_line_width))
         kicad_mod.append(PolygonLine(polygon=poly_silk, x_mirror=0,
-                                     layer='F.SilkS', width=configuration['silk_line_width']))
+                                     layer='F.SilkS', width=global_config.silk_line_width))
 
     else:
         r = (shield_pad_size/2 + pad_silk_off)
@@ -190,9 +188,9 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row, params,
             {'x': body_edge['left']-off, 'y': shield_pad_y-dy},
         ]
         kicad_mod.append(PolygonLine(polygon=poly_silk_top,
-                                     layer='F.SilkS', width=configuration['silk_line_width']))
+                                     layer='F.SilkS', width=global_config.silk_line_width))
         kicad_mod.append(PolygonLine(polygon=poly_silk_top, x_mirror=0,
-                                     layer='F.SilkS', width=configuration['silk_line_width']))
+                                     layer='F.SilkS', width=global_config.silk_line_width))
 
         poly_silk_bottom = [
             {'x': body_edge['left']-off, 'y': shield_pad_y+dy},
@@ -201,9 +199,9 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row, params,
             {'x': -pad_x_outside_edge, 'y': body_edge['bottom']+off}
         ]
         kicad_mod.append(PolygonLine(polygon=poly_silk_bottom,
-                                     layer='F.SilkS', width=configuration['silk_line_width']))
+                                     layer='F.SilkS', width=global_config.silk_line_width))
         kicad_mod.append(PolygonLine(polygon=poly_silk_bottom, x_mirror=0,
-                                     layer='F.SilkS', width=configuration['silk_line_width']))
+                                     layer='F.SilkS', width=global_config.silk_line_width))
 
     ########################### Pin 1 #################################
     p1s_sl = 0.4
@@ -216,7 +214,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row, params,
         {'x': p1_x, 'y':p1s_y}
     ]
     kicad_mod.append(PolygonLine(polygon=p1s_poly,
-                                 layer='F.SilkS', width=configuration['silk_line_width']))
+                                 layer='F.SilkS', width=global_config.silk_line_width))
 
     p1f_sl = 2*pitch
     p1f_poly = [
@@ -225,30 +223,33 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row, params,
         {'x': p1_x+p1f_sl/2, 'y':body_edge['top']}
     ]
     kicad_mod.append(PolygonLine(polygon=p1f_poly,
-                                 layer='F.Fab', width=configuration['fab_line_width']))
+                                 layer='F.Fab', width=global_config.fab_line_width))
 
     ########################### CrtYd #################################
-    cx1 = round_to_grid(bounding_box['left']-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
-    cy1 = round_to_grid(bounding_box['top']-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
 
-    cx2 = round_to_grid(bounding_box['right']+configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
-    cy2 = round_to_grid(bounding_box['bottom'] + configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
+    courtyard_offset = global_config.get_courtyard_offset(GC.GlobalConfig.CourtyardType.CONNECTOR)
+    courtyard_grid = global_config.courtyard_grid
+
+    cx1 = round_to_grid(bounding_box['left'] - courtyard_offset, courtyard_grid)
+    cy1 = round_to_grid(bounding_box['top'] - courtyard_offset, courtyard_grid)
+
+    cx2 = round_to_grid(bounding_box['right'] + courtyard_offset, courtyard_grid)
+    cy2 = round_to_grid(bounding_box['bottom'] + courtyard_offset, courtyard_grid)
 
     kicad_mod.append(RectLine(
         start=[cx1, cy1], end=[cx2, cy2],
-        layer='F.CrtYd', width=configuration['courtyard_line_width']))
+        layer='F.CrtYd', width=global_config.courtyard_line_width))
 
     ######################### Text Fields ###############################
-    addTextFields(kicad_mod=kicad_mod, configuration=configuration, body_edges=body_edge,
+    addTextFields(kicad_mod=kicad_mod, configuration=global_config, body_edges=body_edge,
         courtyard={'top':cy1, 'bottom':cy2},
         fp_name=footprint_name, text_y_inside_position='center')
 
     ##################### Output and 3d model ############################
-    model3d_path_prefix = configuration.get('3d_model_prefix','${KICAD9_3DMODEL_DIR}/')
 
     lib_name = configuration['lib_name_format_string'].format(series=series, man=manufacturer)
     model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}.wrl'.format(
-        model3d_path_prefix=model3d_path_prefix, lib_name=lib_name, fp_name=footprint_name)
+        model3d_path_prefix=global_config.model_3d_prefix, lib_name=lib_name, fp_name=footprint_name)
     kicad_mod.append(Model(filename=model_name))
 
     lib = KicadPrettyLibrary(lib_name, None)
@@ -261,17 +262,11 @@ if __name__ == "__main__":
     parser.add_argument('--series_config', type=str, nargs='?', help='the config file defining series parameters.', default='../conn_config_KLCv3.yaml')
     args = parser.parse_args()
 
-    with open(args.global_config, 'r') as config_stream:
-        try:
-            configuration = yaml.safe_load(config_stream)
-            global_config = GC.GlobalConfig(configuration)
-
-        except yaml.YAMLError as exc:
-            print(exc)
+    global_config = GC.GlobalConfig.load_from_file(args.global_config)
 
     with open(args.series_config, 'r') as config_stream:
         try:
-            configuration.update(yaml.safe_load(config_stream))
+            configuration = yaml.safe_load(config_stream)
         except yaml.YAMLError as exc:
             print(exc)
     for variant in variant_params:
