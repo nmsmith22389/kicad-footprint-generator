@@ -5,8 +5,20 @@ import yaml
 
 from KicadModTree import *  # NOQA
 from KicadModTree.nodes.base.Pad import Pad  # NOQA
+from scripts.tools.declarative_def_tools import common_metadata
 from scripts.tools.drawing_tools import round_to_grid
 from scripts.tools.global_config_files import global_config as GC
+
+
+class SmdShieldProperties:
+    """
+    Class that represents a consistent view of the properties of a SMD shielding
+    can. Probably initialized from a YAML file.
+    """
+
+    def __init__(self, name: str, spec: dict):
+        self.name = name
+        self.metadata = common_metadata.CommonMetadata(spec)
 
 
 def calculate_pad_spacer(pad_spacer, mirror_spacer):
@@ -21,12 +33,15 @@ def calculate_pad_spacer(pad_spacer, mirror_spacer):
     return pad_spacer_pos
 
 
-def create_smd_shielding(global_config: GC.GlobalConfig, name, **kwargs):
+def create_smd_shielding(global_config: GC.GlobalConfig, shield_properties: SmdShieldProperties, **kwargs):
     lib_name = "RF_Shielding"
-    kicad_mod = Footprint(name, FootprintType.SMD)
+    kicad_mod = Footprint(shield_properties.name, FootprintType.SMD)
 
-    # init kicad footprint
-    kicad_mod.description = kwargs['description']
+    description = shield_properties.metadata.description
+    if shield_properties.metadata.datasheet:
+        description += ", " + shield_properties.metadata.datasheet
+
+    kicad_mod.description = description
     kicad_mod.tags = 'Shielding Cabinet'
 
     # do some pre calculations
@@ -51,7 +66,7 @@ def create_smd_shielding(global_config: GC.GlobalConfig, name, **kwargs):
 
     # set general values
     kicad_mod.append(Property(name=Property.REFERENCE, text='REF**', at=[0, y_pad_min - kwargs['courtjard'] - 0.75], layer='F.SilkS'))
-    kicad_mod.append(Property(name=Property.VALUE, text=name, at=[0, y_pad_max + kwargs['courtjard'] + 0.75], layer='F.Fab'))
+    kicad_mod.append(Property(name=Property.VALUE, text=shield_properties.name, at=[0, y_pad_max + kwargs['courtjard'] + 0.75], layer='F.Fab'))
     kicad_mod.append(Text(text='${REFERENCE}', at=[0, 0], layer='F.Fab'))
 
     # create courtyard
@@ -161,7 +176,7 @@ def create_smd_shielding(global_config: GC.GlobalConfig, name, **kwargs):
                                   end=[x_part_max + 0.15, pad_end], layer='F.SilkS',
                                   width=global_config.silk_line_width))
 
-    kicad_mod.append(Model(filename=global_config.model_3d_prefix + lib_name + ".3dshapes/" + name + ".wrl"))
+    kicad_mod.append(Model(filename=global_config.model_3d_prefix + lib_name + ".3dshapes/" + shield_properties.name + ".wrl"))
 
     # write file
     lib = KicadPrettyLibrary(lib_name, None)
@@ -172,9 +187,11 @@ def parse_and_execute_yml_file(global_config, filepath):
     with open(filepath, 'r') as stream:
         try:
             yaml_parsed = yaml.safe_load(stream)
-            for footprint in yaml_parsed:
-                print("generate {name}.kicad_mod".format(name=footprint))
-                create_smd_shielding(global_config, footprint, **yaml_parsed.get(footprint))
+            for footprint_name, spec_data in yaml_parsed.items():
+                print(footprint_name)
+
+                part_props = SmdShieldProperties(footprint_name, spec_data)
+                create_smd_shielding(global_config, part_props, **spec_data)
         except yaml.YAMLError as exc:
             print(exc)
 
