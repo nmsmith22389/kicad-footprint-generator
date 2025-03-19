@@ -60,10 +60,14 @@ def create_smd_shielding(global_config: GC.GlobalConfig, name, **kwargs):
     y_courtjard_min = round_to_grid(y_pad_min - kwargs['courtjard'], 0.05)
     y_courtjard_max = round_to_grid(y_pad_max + kwargs['courtjard'], 0.05)
 
-    kicad_mod.append(RectLine(start=[x_courtjard_min, y_courtjard_min],
-                              end=[x_courtjard_max, y_courtjard_max],
-                              layer='F.CrtYd',
-                              width=global_config.courtyard_line_width))
+    kicad_mod.append(
+        Rect(
+            start=[x_courtjard_min, y_courtjard_min],
+            end=[x_courtjard_max, y_courtjard_max],
+            layer="F.CrtYd",
+            width=global_config.courtyard_line_width,
+        )
+    )
 
     # create inner courtyard
     pad_width = kwargs['pads_width']
@@ -71,16 +75,24 @@ def create_smd_shielding(global_config: GC.GlobalConfig, name, **kwargs):
     x_courtjard_max = round_to_grid(x_pad_max - pad_width - kwargs['courtjard'], 0.05)
     y_courtjard_min = round_to_grid(y_pad_min + pad_width + kwargs['courtjard'], 0.05)
     y_courtjard_max = round_to_grid(y_pad_max - pad_width - kwargs['courtjard'], 0.05)
-    kicad_mod.append(RectLine(start=[x_courtjard_min, y_courtjard_min],
-                              end=[x_courtjard_max, y_courtjard_max],
-                              layer='F.CrtYd',
-                              width=global_config.courtyard_line_width))
+    kicad_mod.append(
+        Rect(
+            start=[x_courtjard_min, y_courtjard_min],
+            end=[x_courtjard_max, y_courtjard_max],
+            layer="F.CrtYd",
+            width=global_config.courtyard_line_width,
+        )
+    )
 
     # create Fabrication Layer
-    kicad_mod.append(RectLine(start=[x_part_min, y_part_min],
-                              end=[x_part_max, y_part_max],
-                              layer='F.Fab',
-                              width=global_config.fab_line_width))
+    kicad_mod.append(
+        Rect(
+            start=[x_part_min, y_part_min],
+            end=[x_part_max, y_part_max],
+            layer="F.Fab",
+            width=global_config.fab_line_width,
+        )
+    )
 
     # all pads have this kwargs, so we only write them one
     general_kwargs = {'number': 1,
