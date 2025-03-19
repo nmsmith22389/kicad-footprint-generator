@@ -61,6 +61,16 @@ class BoundingBox:
         self._expect_nonempty()
         return self.max.x
 
+    @property
+    def size(self) -> Vector2D:
+        self._expect_nonempty()
+        return self.max - self.min
+
+    @property
+    def center(self) -> Vector2D:
+        self._expect_nonempty()
+        return (self.min + self.max) / 2
+
     def contains_point(self, point: Vector2D) -> bool:
         """
         Test if a point is inside the bounding box

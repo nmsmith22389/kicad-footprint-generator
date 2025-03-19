@@ -29,6 +29,12 @@ class Rectangle:
         center = corner + size / 2
         return cls(center, size)
 
+    def __str__(self):
+        return f"Rectangle(center={self.center}, size={self.size})"
+
+    def __repr__(self):
+        return str(self)
+
     def get_corners(self) -> List[Vector2D]:
         """
         Return the four corners of the rectangle
@@ -108,6 +114,28 @@ class Rectangle:
     @property
     def bounding_box(self) -> BoundingBox:
         return BoundingBox(
-            Vector2D(self.left, self.bottom),
-            Vector2D(self.right, self.top)
+            Vector2D(self.left, self.top),
+            Vector2D(self.right, self.bottom)
         )
+
+    def outset(self, outset: float):
+        """
+        Outset this rectangle by the given amounts. Negatve is an inset
+        """
+
+        if outset < 0:
+            if abs(outset) > self.min_dimension / 2:
+                raise ValueError(
+                    f"Cannot inset by more than half the size (asked for {outset}), "
+                    "min dimension is {self.min_dimension})"
+                )
+
+        self.size = self.size + 2 * Vector2D(outset, outset)
+
+    def with_outset(self, outset: float) -> "Rectangle":
+        """
+        Return a new rectangle that is this rectangle outset by the given amounts
+        """
+        new_rect = Rectangle(self.center, self.size)
+        new_rect.outset(outset)
+        return new_rect
