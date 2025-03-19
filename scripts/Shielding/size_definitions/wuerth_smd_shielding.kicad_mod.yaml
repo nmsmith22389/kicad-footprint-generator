@@ -1,7 +1,6 @@
 Wuerth_36103205_20x20mm:
     description: "WE-SHC Shielding Cabinet SMD 20x20mm"
     datasheet: "http://katalog.we-online.com/pbs/datasheet/36103205.pdf"
-    courtjard: 0.25
     pads_width: 1
     x_part_size: 20
     y_part_size: 20
@@ -12,7 +11,6 @@ Wuerth_36103205_20x20mm:
 Wuerth_36103255_25x25mm:
     description: "WE-SHC Shielding Cabinet SMD 25x25mm"
     datasheet: "http://katalog.we-online.com/pbs/datasheet/36103255.pdf"
-    courtjard: 0.25
     pads_width: 1
     x_part_size: 25
     y_part_size: 25
@@ -23,7 +21,6 @@ Wuerth_36103255_25x25mm:
 Wuerth_36103305_30x30mm:
     description: "WE-SHC Shielding Cabinet SMD 30x30mm"
     datasheet: "http://katalog.we-online.com/pbs/datasheet/36103305.pdf"
-    courtjard: 0.25
     pads_width: 1
     x_part_size: 30
     y_part_size: 30
@@ -34,7 +31,6 @@ Wuerth_36103305_30x30mm:
 Wuerth_36103505_50x50mm:
     description: "WE-SHC Shielding Cabinet SMD 50x50mm"
     datasheet: "http://katalog.we-online.com/pbs/datasheet/36103505.pdf"
-    courtjard: 0.25
     pads_width: 1
     x_part_size: 50
     y_part_size: 50
@@ -45,7 +41,6 @@ Wuerth_36103505_50x50mm:
 Wuerth_36103605_60x60mm:
     description: "WE-SHC Shielding Cabinet SMD 60x60mm"
     datasheet: "http://katalog.we-online.com/pbs/datasheet/36103605.pdf"
-    courtjard: 0.25
     pads_width: 1
     x_part_size: 60
     y_part_size: 60

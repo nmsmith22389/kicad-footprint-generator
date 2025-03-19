@@ -3,11 +3,13 @@
 import argparse
 import yaml
 
+from kilibs.geom import BoundingBox, Rectangle
 from KicadModTree import *  # NOQA
 from KicadModTree.nodes.base.Pad import Pad  # NOQA
 from scripts.tools.declarative_def_tools import common_metadata
 from scripts.tools.drawing_tools import round_to_grid
 from scripts.tools.global_config_files import global_config as GC
+from scripts.tools.footprint_text_fields import addTextFields
 
 
 class SmdShieldProperties:
@@ -16,21 +18,58 @@ class SmdShieldProperties:
     can. Probably initialized from a YAML file.
     """
 
+    name: str
+    metadata: common_metadata.CommonMetadata
+    part_size: Vector2D
+    pad_width: float
+
+    x_pad_positions: list[float]
+    """List of x coordinates of the pads edges"""
+    y_pad_positions: list[float]
+    """List of y coordinates of the pads edges"""
+
     def __init__(self, name: str, spec: dict):
         self.name = name
         self.metadata = common_metadata.CommonMetadata(spec)
 
+        self.part_size = Vector2D(
+            spec['x_part_size'],
+            spec['y_part_size']
+        )
 
-def calculate_pad_spacer(pad_spacer, mirror_spacer):
-    pad_spacer_pos = []
+        self.pad_width = spec['pads_width']
 
-    if mirror_spacer:
-        for spacer in reversed(pad_spacer):
-            pad_spacer_pos.append(spacer * -1)
+        # do some pre calculations
+        # TODO: when mirror=False, array has to have even number of array elements
+        self.x_pad_positions = self._calculate_pad_spacer(
+            spec["x_pad_spacer"], spec.get("x_pad_mirror", True)
+        )
+        self.y_pad_positions = self._calculate_pad_spacer(
+            spec["y_pad_spacer"], spec.get("y_pad_mirror", True)
+        )
 
-    pad_spacer_pos += pad_spacer
 
-    return pad_spacer_pos
+    def _calculate_pad_spacer(self, pad_spacer: list[float], mirror_spacer: bool):
+        """
+        The pad spaces are the coordinates of the pads edges in
+        the x or y direction. The mirror_spacer parameter is used
+        to mirror the pad spacers to the other side of the part.
+
+        E.g. everything on the left is from the mirroring:
+
+        |  |      |  |     |   o   |     |  |      |  |
+        XXXX      XXXX     XXXXXXXXX     XXXX      XXXX
+        X                                             X
+        """
+        pad_spacer_pos = []
+
+        if mirror_spacer:
+            for spacer in reversed(pad_spacer):
+                pad_spacer_pos.append(spacer * -1)
+
+        pad_spacer_pos += pad_spacer
+
+        return pad_spacer_pos
 
 
 def create_smd_shielding(global_config: GC.GlobalConfig, shield_properties: SmdShieldProperties, **kwargs):
@@ -44,41 +83,39 @@ def create_smd_shielding(global_config: GC.GlobalConfig, shield_properties: SmdS
     kicad_mod.description = description
     kicad_mod.tags = 'Shielding Cabinet'
 
-    # do some pre calculations
-    # TODO: when mirror=False, array has to have even number of array elements
-    x_pad_positions = calculate_pad_spacer(kwargs['x_pad_spacer'], kwargs.get('x_pad_mirror', True))
-    y_pad_positions = calculate_pad_spacer(kwargs['y_pad_spacer'], kwargs.get('y_pad_mirror', True))
+    # The outer edges of the pads
+    pad_outer_rect = Rectangle.by_corners(
+        Vector2D(min(shield_properties.x_pad_positions), min(shield_properties.y_pad_positions)),
+        Vector2D(max(shield_properties.x_pad_positions), max(shield_properties.y_pad_positions))
+    )
 
-    x_pad_min = min(x_pad_positions)
-    x_pad_max = max(x_pad_positions)
-    y_pad_min = min(y_pad_positions)
-    y_pad_max = max(y_pad_positions)
+    # Centerline of the pads
+    pad_center_rect = pad_outer_rect.with_outset(-shield_properties.pad_width / 2.0)
 
-    x_pad_min_center = x_pad_min + kwargs['pads_width'] / 2.0
-    x_pad_max_center = x_pad_max - kwargs['pads_width'] / 2.0
-    y_pad_min_center = y_pad_min + kwargs['pads_width'] / 2.0
-    y_pad_max_center = y_pad_max - kwargs['pads_width'] / 2.0
+    courtyard_offset = global_config.get_courtyard_offset(
+        GC.GlobalConfig.CourtyardType.DEFAULT
+    )
 
-    x_part_min = -kwargs['x_part_size'] / 2.0
-    x_part_max = kwargs['x_part_size'] / 2.0
-    y_part_min = -kwargs['y_part_size'] / 2.0
-    y_part_max = kwargs['y_part_size'] / 2.0
+    body_rect = Rectangle(center=Vector2D(0, 0), size=shield_properties.part_size)
+
+    courtyard_rect = pad_outer_rect.with_outset(courtyard_offset).rounded(
+        outwards=True, grid=global_config.courtyard_grid
+    )
 
     # set general values
-    kicad_mod.append(Property(name=Property.REFERENCE, text='REF**', at=[0, y_pad_min - kwargs['courtjard'] - 0.75], layer='F.SilkS'))
-    kicad_mod.append(Property(name=Property.VALUE, text=shield_properties.name, at=[0, y_pad_max + kwargs['courtjard'] + 0.75], layer='F.Fab'))
-    kicad_mod.append(Text(text='${REFERENCE}', at=[0, 0], layer='F.Fab'))
-
-    # create courtyard
-    x_courtjard_min = round_to_grid(x_pad_min - kwargs['courtjard'], 0.05)
-    x_courtjard_max = round_to_grid(x_pad_max + kwargs['courtjard'], 0.05)
-    y_courtjard_min = round_to_grid(y_pad_min - kwargs['courtjard'], 0.05)
-    y_courtjard_max = round_to_grid(y_pad_max + kwargs['courtjard'], 0.05)
+    addTextFields(
+        kicad_mod,
+        global_config,
+        body_rect.bounding_box,
+        courtyard_rect.bounding_box,
+        kicad_mod.name,
+        text_y_inside_position="center",
+    )
 
     kicad_mod.append(
         Rect(
-            start=[x_courtjard_min, y_courtjard_min],
-            end=[x_courtjard_max, y_courtjard_max],
+            start=courtyard_rect.top_left,
+            end=courtyard_rect.bottom_right,
             layer="F.CrtYd",
             width=global_config.courtyard_line_width,
         )
@@ -86,14 +123,15 @@ def create_smd_shielding(global_config: GC.GlobalConfig, shield_properties: SmdS
 
     # create inner courtyard
     pad_width = kwargs['pads_width']
-    x_courtjard_min = round_to_grid(x_pad_min + pad_width + kwargs['courtjard'], 0.05)
-    x_courtjard_max = round_to_grid(x_pad_max - pad_width - kwargs['courtjard'], 0.05)
-    y_courtjard_min = round_to_grid(y_pad_min + pad_width + kwargs['courtjard'], 0.05)
-    y_courtjard_max = round_to_grid(y_pad_max - pad_width - kwargs['courtjard'], 0.05)
+
+    inner_courtyard = pad_outer_rect.with_outset(-pad_width - courtyard_offset).rounded(
+        outwards=False, grid=global_config.courtyard_grid
+    )
+
     kicad_mod.append(
         Rect(
-            start=[x_courtjard_min, y_courtjard_min],
-            end=[x_courtjard_max, y_courtjard_max],
+            start=inner_courtyard.top_left,
+            end=inner_courtyard.bottom_right,
             layer="F.CrtYd",
             width=global_config.courtyard_line_width,
         )
@@ -102,8 +140,8 @@ def create_smd_shielding(global_config: GC.GlobalConfig, shield_properties: SmdS
     # create Fabrication Layer
     kicad_mod.append(
         Rect(
-            start=[x_part_min, y_part_min],
-            end=[x_part_max, y_part_max],
+            start=body_rect.top_left,
+            end=body_rect.bottom_right,
             layer="F.Fab",
             width=global_config.fab_line_width,
         )
@@ -115,65 +153,74 @@ def create_smd_shielding(global_config: GC.GlobalConfig, shield_properties: SmdS
                       'shape': Pad.SHAPE_RECT,
                       'layers': Pad.LAYERS_SMT,
     }
+    pad_width = shield_properties.pad_width
 
     # create edge pads
-    kicad_mod.append(Pad(at=[x_pad_min_center, y_pad_min_center],
-                         size=[kwargs['pads_width'], kwargs['pads_width']], **general_kwargs))
-    kicad_mod.append(Pad(at=[x_pad_max_center, y_pad_min_center],
-                         size=[kwargs['pads_width'], kwargs['pads_width']], **general_kwargs))
-    kicad_mod.append(Pad(at=[x_pad_max_center, y_pad_max_center],
-                         size=[kwargs['pads_width'], kwargs['pads_width']], **general_kwargs))
-    kicad_mod.append(Pad(at=[x_pad_min_center, y_pad_max_center],
-                         size=[kwargs['pads_width'], kwargs['pads_width']], **general_kwargs))
+    corner_pad_size = Vector2D(pad_width, pad_width)
+    kicad_mod.append(Pad(at=pad_center_rect.top_left,
+                         size=corner_pad_size, **general_kwargs))
+    kicad_mod.append(Pad(at=pad_center_rect.top_right,
+                         size=corner_pad_size, **general_kwargs))
+    kicad_mod.append(Pad(at=pad_center_rect.bottom_left,
+                         size=corner_pad_size, **general_kwargs))
+    kicad_mod.append(Pad(at=pad_center_rect.bottom_right,
+                         size=corner_pad_size, **general_kwargs))
 
     # iterate pairwise over pads
-    for pad_start, pad_end in zip(x_pad_positions[0::2], x_pad_positions[1::2]):
-        if pad_start == x_pad_min:
-            pad_start += kwargs['pads_width']
-        if pad_end == x_pad_max:
-            pad_end -= kwargs['pads_width']
+    for pad_start, pad_end in zip(shield_properties.x_pad_positions[0::2], shield_properties.x_pad_positions[1::2]):
+        if pad_start == pad_outer_rect.left:
+            pad_start += pad_width
+        if pad_end == pad_outer_rect.right:
+            pad_end -= pad_width
 
-        kicad_mod.append(Pad(at=[(pad_start+pad_end)/2., y_pad_min_center],
-                         size=[abs(pad_start-pad_end), kwargs['pads_width']], **general_kwargs))
-        kicad_mod.append(Pad(at=[(pad_start+pad_end)/2., y_pad_max_center],
-                         size=[abs(pad_start-pad_end), kwargs['pads_width']], **general_kwargs))
+        kicad_mod.append(Pad(at=[(pad_start+pad_end)/2., pad_center_rect.top],
+                         size=[abs(pad_start-pad_end), pad_width], **general_kwargs))
+        kicad_mod.append(Pad(at=[(pad_start+pad_end)/2., pad_center_rect.bottom],
+                         size=[abs(pad_start-pad_end), pad_width], **general_kwargs))
 
-    for pad_start, pad_end in zip(y_pad_positions[0::2], y_pad_positions[1::2]):
-        if pad_start == y_pad_min:
-            pad_start += kwargs['pads_width']
-        if pad_end == y_pad_max:
-            pad_end -= kwargs['pads_width']
+    for pad_start, pad_end in zip(shield_properties.y_pad_positions[0::2], shield_properties.y_pad_positions[1::2]):
+        if pad_start == pad_outer_rect.top:
+            pad_start += pad_width
+        if pad_end == pad_outer_rect.bottom:
+            pad_end -= pad_width
 
-        kicad_mod.append(Pad(at=[x_pad_min_center, (pad_start+pad_end)/2.],
-                         size=[kwargs['pads_width'], abs(pad_start-pad_end)], **general_kwargs))
-        kicad_mod.append(Pad(at=[x_pad_max_center, (pad_start+pad_end)/2.],
-                         size=[kwargs['pads_width'], abs(pad_start-pad_end)], **general_kwargs))
+        kicad_mod.append(Pad(at=[pad_center_rect.left, (pad_start+pad_end)/2.],
+                         size=[pad_width, abs(pad_start-pad_end)], **general_kwargs))
+        kicad_mod.append(Pad(at=[pad_center_rect.right, (pad_start+pad_end)/2.],
+                         size=[pad_width, abs(pad_start-pad_end)], **general_kwargs))
+
+    fab_silk_offset = global_config.silk_fab_offset
+    pad_silk_offset = global_config.silk_pad_offset
 
     # iterate pairwise over pads for silk screen
-    for pad_start, pad_end in zip(x_pad_positions[1::2], x_pad_positions[2::2]):
-        pad_start += 0.3
-        pad_end -= 0.3
+    for pad_start, pad_end in zip(shield_properties.x_pad_positions[1::2], shield_properties.x_pad_positions[2::2]):
+        pad_start += pad_silk_offset
+        pad_end -= pad_silk_offset
 
-        kicad_mod.append(Line(start=[pad_start, y_part_min - 0.15],
-                                  end=[pad_end, y_part_min - 0.15], layer='F.SilkS',
+        kicad_mod.append(Line(start=[pad_start, body_rect.top - fab_silk_offset],
+                                  end=[pad_end, body_rect.top - fab_silk_offset],
+                                  layer='F.SilkS',
                                   width=global_config.silk_line_width))
-        kicad_mod.append(Line(start=[pad_start, y_part_max + 0.15],
-                                  end=[pad_end, y_part_max + 0.15], layer='F.SilkS',
+        kicad_mod.append(Line(start=[pad_start, body_rect.bottom + fab_silk_offset],
+                                  end=[pad_end, body_rect.bottom + fab_silk_offset],
+                                  layer='F.SilkS',
                                   width=global_config.silk_line_width))
 
-    for pad_start, pad_end in zip(y_pad_positions[1::2], y_pad_positions[2::2]):
-        pad_start += 0.3
-        pad_end -= 0.3
+    for pad_start, pad_end in zip(shield_properties.y_pad_positions[1::2], shield_properties.y_pad_positions[2::2]):
+        pad_start += pad_silk_offset
+        pad_end -= pad_silk_offset
 
         # check if line has relevant length
         if pad_end - pad_start < 0.5:
             continue
 
-        kicad_mod.append(Line(start=[x_part_min - 0.15, pad_start],
-                                  end=[x_part_min - 0.15, pad_end], layer='F.SilkS',
+        kicad_mod.append(Line(start=[body_rect.left - fab_silk_offset, pad_start],
+                                  end=[body_rect.left - fab_silk_offset, pad_end],
+                                  layer='F.SilkS',
                                   width=global_config.silk_line_width))
-        kicad_mod.append(Line(start=[x_part_max + 0.15, pad_start],
-                                  end=[x_part_max + 0.15, pad_end], layer='F.SilkS',
+        kicad_mod.append(Line(start=[body_rect.right + fab_silk_offset, pad_start],
+                                  end=[body_rect.right + fab_silk_offset, pad_end],
+                                  layer='F.SilkS',
                                   width=global_config.silk_line_width))
 
     kicad_mod.append(Model(filename=global_config.model_3d_prefix + lib_name + ".3dshapes/" + shield_properties.name + ".wrl"))

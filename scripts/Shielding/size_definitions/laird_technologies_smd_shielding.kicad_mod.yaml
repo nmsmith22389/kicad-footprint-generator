@@ -2,7 +2,6 @@
 Laird_Technologies_BMI-S-101_13.66x12.70mm:
     description: "Laird Technologies BMI-S-101 Shielding Cabinet One Piece SMD 13.66x12.70mm"
     datasheet: "http://cdn.lairdtech.com/home/brandworld/files/Board%20Level%20Shields%20Catalog%20Download.pdf"
-    courtjard: 0.25
     pads_width: 1
     x_part_size: 12.70
     y_part_size: 13.66
@@ -14,7 +13,6 @@ Laird_Technologies_BMI-S-101_13.66x12.70mm:
 Laird_Technologies_BMI-S-201-F_13.66x12.70mm:
     description: "Laird Technologies BMI-S-201-F Shielding Cabinet Two Piece SMD 13.66x12.70mm"
     datasheet: "http://cdn.lairdtech.com/home/brandworld/files/Board%20Level%20Shields%20Catalog%20Download.pdf"
-    courtjard: 0.25
     pads_width: 1
     x_part_size: 12.70
     y_part_size: 13.66
@@ -27,7 +25,6 @@ Laird_Technologies_BMI-S-201-F_13.66x12.70mm:
 Laird_Technologies_BMI-S-102_16.50x16.50mm:
     description: "Laird Technologies BMI-S-102 Shielding Cabinet One Piece SMD 16.50x16.50mm"
     datasheet: "http://cdn.lairdtech.com/home/brandworld/files/Board%20Level%20Shields%20Catalog%20Download.pdf"
-    courtjard: 0.25
     pads_width: 1
     x_part_size: 16.50
     y_part_size: 16.50
@@ -39,7 +36,6 @@ Laird_Technologies_BMI-S-102_16.50x16.50mm:
 Laird_Technologies_BMI-S-202-F_16.50x16.50mm:
     description: "Laird Technologies BMI-S-202-F Shielding Cabinet Two Piece SMD 16.50x16.50mm"
     datasheet: "http://cdn.lairdtech.com/home/brandworld/files/Board%20Level%20Shields%20Catalog%20Download.pdf"
-    courtjard: 0.25
     pads_width: 1
     x_part_size: 16.50
     y_part_size: 16.50
@@ -52,7 +48,6 @@ Laird_Technologies_BMI-S-202-F_16.50x16.50mm:
 Laird_Technologies_BMI-S-103_26.21x26.21mm:
     description: "Laird Technologies BMI-S-103 Shielding Cabinet One Piece SMD 26.21x26.21mm"
     datasheet: "http://cdn.lairdtech.com/home/brandworld/files/Board%20Level%20Shields%20Catalog%20Download.pdf"
-    courtjard: 0.25
     pads_width: 1
     x_part_size: 26.21
     y_part_size: 26.21
@@ -64,7 +59,6 @@ Laird_Technologies_BMI-S-103_26.21x26.21mm:
 Laird_Technologies_BMI-S-203-F_26.21x26.21mm:
     description: "Laird Technologies BMI-S-203-F Shielding Cabinet Two Piece SMD 26.21x26.21mm"
     datasheet: "http://cdn.lairdtech.com/home/brandworld/files/Board%20Level%20Shields%20Catalog%20Download.pdf"
-    courtjard: 0.25
     pads_width: 1
     x_part_size: 26.21
     y_part_size: 26.21
@@ -77,7 +71,6 @@ Laird_Technologies_BMI-S-203-F_26.21x26.21mm:
 Laird_Technologies_BMI-S-104_32.00x32.00mm:
     description: "Laird Technologies BMI-S-104 Shielding Cabinet One Piece SMD 32.00x32.00mm"
     datasheet: "http://cdn.lairdtech.com/home/brandworld/files/Board%20Level%20Shields%20Catalog%20Download.pdf"
-    courtjard: 0.25
     pads_width: 1
     x_part_size: 32.00
     y_part_size: 32.00
@@ -89,7 +82,6 @@ Laird_Technologies_BMI-S-104_32.00x32.00mm:
 Laird_Technologies_BMI-S-204-F_32.00x32.00mm:
     description: "Laird Technologies BMI-S-204-F Shielding Cabinet Two Piece SMD 32.00x32.00mm"
     datasheet: "http://cdn.lairdtech.com/home/brandworld/files/Board%20Level%20Shields%20Catalog%20Download.pdf"
-    courtjard: 0.25
     pads_width: 1
     x_part_size: 32.00
     y_part_size: 32.00
@@ -102,7 +94,6 @@ Laird_Technologies_BMI-S-204-F_32.00x32.00mm:
 Laird_Technologies_BMI-S-105_38.10x25.40mm:
     description: "Laird Technologies BMI-S-105 Shielding Cabinet One Piece SMD 38.10x25.40mm"
     datasheet: "http://cdn.lairdtech.com/home/brandworld/files/Board%20Level%20Shields%20Catalog%20Download.pdf"
-    courtjard: 0.25
     pads_width: 1
     x_part_size: 38.10
     y_part_size: 25.40
@@ -114,7 +105,6 @@ Laird_Technologies_BMI-S-105_38.10x25.40mm:
 Laird_Technologies_BMI-S-205-F_38.10x25.40mm:
     description: "Laird Technologies BMI-S-205-F Shielding Cabinet Two Piece SMD 38.10x25.40mm"
     datasheet: "http://cdn.lairdtech.com/home/brandworld/files/Board%20Level%20Shields%20Catalog%20Download.pdf"
-    courtjard: 0.25
     pads_width: 1
     x_part_size: 38.10
     y_part_size: 25.40
@@ -127,7 +117,6 @@ Laird_Technologies_BMI-S-205-F_38.10x25.40mm:
 Laird_Technologies_BMI-S-106_36.83x33.68mm:
     description: "Laird Technologies BMI-S-106 Shielding Cabinet One Piece SMD 36.83x33.68mm"
     datasheet: "http://cdn.lairdtech.com/home/brandworld/files/Board%20Level%20Shields%20Catalog%20Download.pdf"
-    courtjard: 0.25
     pads_width: 1
     x_part_size: 36.83
     y_part_size: 33.68
@@ -139,7 +128,6 @@ Laird_Technologies_BMI-S-106_36.83x33.68mm:
 Laird_Technologies_BMI-S-206-F_36.83x33.68mm:
     description: "Laird Technologies BMI-S-206-F Shielding Cabinet Two Piece SMD 36.83x33.68mm"
     datasheet: "http://cdn.lairdtech.com/home/brandworld/files/Board%20Level%20Shields%20Catalog%20Download.pdf"
-    courtjard: 0.25
     pads_width: 1
     x_part_size: 36.83
     y_part_size: 33.68
@@ -152,7 +140,6 @@ Laird_Technologies_BMI-S-206-F_36.83x33.68mm:
 Laird_Technologies_BMI-S-107_44.37x44.37mm:
     description: "Laird Technologies BMI-S-107 Shielding Cabinet One Piece SMD 44.37x44.37mm"
     datasheet: "http://cdn.lairdtech.com/home/brandworld/files/Board%20Level%20Shields%20Catalog%20Download.pdf"
-    courtjard: 0.25
     pads_width: 1
     x_part_size: 44.37
     y_part_size: 44.37 # 2.3 3.8 2.2 3.8 2.2 3.8 2.2
@@ -164,7 +151,6 @@ Laird_Technologies_BMI-S-107_44.37x44.37mm:
 Laird_Technologies_BMI-S-207-F_44.37x44.37mm:
     description: "Laird Technologies BMI-S-207-F Shielding Cabinet Two Piece SMD 44.37x44.37mm"
     datasheet: "http://cdn.lairdtech.com/home/brandworld/files/Board%20Level%20Shields%20Catalog%20Download.pdf"
-    courtjard: 0.25
     pads_width: 1
     x_part_size: 44.37
     y_part_size: 44.37
@@ -177,7 +163,6 @@ Laird_Technologies_BMI-S-207-F_44.37x44.37mm:
 Laird_Technologies_BMI-S-208-F_39.60x39.60mm:
     description: "Laird Technologies BMI-S-208-F Shielding Cabinet Two Piece SMD 39.60x39.60mm"
     datasheet: "http://cdn.lairdtech.com/home/brandworld/files/Board%20Level%20Shields%20Catalog%20Download.pdf"
-    courtjard: 0.25
     pads_width: 1
     x_part_size: 39.6
     y_part_size: 39.6
@@ -189,7 +174,6 @@ Laird_Technologies_BMI-S-208-F_39.60x39.60mm:
 Laird_Technologies_BMI-S-209-F_29.36x18.50mm:
     description: "Laird Technologies BMI-S-209-F Shielding Cabinet Two Piece SMD 29.36x18.50mm"
     datasheet: "http://cdn.lairdtech.com/home/brandworld/files/Board%20Level%20Shields%20Catalog%20Download.pdf"
-    courtjard: 0.25
     pads_width: 1
     x_part_size: 29.36
     y_part_size: 18.50
@@ -202,7 +186,6 @@ Laird_Technologies_BMI-S-209-F_29.36x18.50mm:
 Laird_Technologies_BMI-S-210-F_44.00x30.50mm:
     description: "Laird Technologies BMI-S-210-F Shielding Cabinet Two Piece SMD 44.00x30.50mm"
     datasheet: "http://cdn.lairdtech.com/home/brandworld/files/Board%20Level%20Shields%20Catalog%20Download.pdf"
-    courtjard: 0.25
     pads_width: 1
     x_part_size: 44.0
     y_part_size: 30.5
@@ -214,7 +197,6 @@ Laird_Technologies_BMI-S-210-F_44.00x30.50mm:
 Laird_Technologies_BMI-S-230-F_50.8x38.1mm:
     description: "Laird Technologies BMI-S-230-F Shielding Cabinet Two Piece SMD 50.8x38.1mm"
     datasheet: "https://media.digikey.com/pdf/Data%20Sheets/Laird%20Technologies/BMI-S-230-F_Dwg.pdf"
-    courtjard: 0.25
     pads_width: 1
     x_part_size: 50.8
     y_part_size: 38.1
@@ -227,7 +209,6 @@ Laird_Technologies_BMI-S-230-F_50.8x38.1mm:
 Laird_Technologies_97-2002_25.40x25.40mm:
     description: "Laird Technologies 97-2002 EZ PEEL Shielding Cabinet One Piece SMD 25.40x25.40mm"
     datasheet: "http://cdn.lairdtech.com/home/brandworld/files/Board%20Level%20Shields%20Catalog%20Download.pdf"
-    courtjard: 0.25
     pads_width: 0.38 # TODO: add solder mask?
     x_part_size: 25.40
     y_part_size: 25.40
@@ -239,7 +220,6 @@ Laird_Technologies_97-2002_25.40x25.40mm:
 Laird_Technologies_97-2003_12.70x13.37mm:
     description: "Laird Technologies 97-2003 EZ PEEL Shielding Cabinet One Piece SMD 12.70x13.37mm"
     datasheet: "http://cdn.lairdtech.com/home/brandworld/files/Board%20Level%20Shields%20Catalog%20Download.pdf"
-    courtjard: 0.25
     pads_width: 0.38 # TODO: add solder mask?
     x_part_size: 12.70
     y_part_size: 13.37
