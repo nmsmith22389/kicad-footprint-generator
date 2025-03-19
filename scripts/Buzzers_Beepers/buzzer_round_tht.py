@@ -4,6 +4,7 @@ from KicadModTree import *  # NOQA
 from KicadModTree import KicadPrettyLibrary
 from KicadModTree.nodes.base.Pad import Pad
 
+lib_name = "Buzzer_Beeper"
 
 def buzzer_round_tht(args):
     # some variables
@@ -38,8 +39,13 @@ def buzzer_round_tht(args):
     kicad_mod.append(Pad(number=2, type=Pad.TYPE_THT, shape=Pad.SHAPE_CIRCLE,
                          at=[args['pad_spacing'], 0], size=args['pad_size'], drill=args['hole_size'], layers=Pad.LAYERS_THT))
 
+    # add model
+    kicad_mod.append(Model(
+		filename="{prefix}{lib_name}.3dshapes/{fp_name}.wrl".format(prefix = '${KICAD9_3DMODEL_DIR}/', lib_name=lib_name, fp_name=args["name"]),
+		at=[0, 0, 0], scale=[1, 1, 1], rotate=[0, 0, 0]))
+
+
     # write file
-    lib_name = "Buzzer_Beeper"
     lib = KicadPrettyLibrary(lib_name, args["output_dir"])
     lib.save(kicad_mod)
 
