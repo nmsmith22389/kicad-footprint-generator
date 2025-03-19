@@ -213,20 +213,26 @@ def pad_shape_key_func(shape: str) -> int:
 
 def pad_key_func(pad: Pad) -> List[int]:
     """
-    Approximate sorting order from FOOTPRINT::cmp_pad in KiCad's
+    Approximate sorting order from FOOTPRINT::cmp_pads in KiCad's
     pcbnew/footprint.cpp.
     """
     def pad_num_key(n: str) -> list:
-        # empty pads first
-        if not n:
-            return [0]
+        # We want to sort pads with multiple name components such that A2 comes after A1 and before A10,
+        # and all the Ax come before all Bx.
+        # Example sort order: "", "0", "1", "2", "10", "A", "A1", "A2", "A10", "A100", "B", "B1"...
+        # To achieve this, we split by name components such that digit sequences stay as individual tokens.
+        # We will later compare lists of tuples, with the list length being the component count.
 
-        # numeric strings sort first, and by integer
-        if n.isnumeric():
-            return [100, int(n)]
-
-        # lexicographic sort, after numerics
-        return [200, n]
+        # Split the strings into substrings containing digits and those containing everything else.
+        # For example: 'a10.2' => ['a', '10', '.', '2']
+        substrings = re.findall(r'\d+|[^\d]+', n)
+        # To avoid comparing ints to strings, we create tuples with each item and its category number.
+        # Ints sort before strings, so they are category 1, and strings get category 2.
+        # For example: ['a', '10', '.', '2'] => [(2, 'a'), (1, 10), (2, '.'), (1, 2)]
+        return [
+            (1, int(substr)) if substr.isdigit() else (2, substr)
+            for substr in substrings
+        ]
 
     keys = [pad_num_key(str(pad.number)),
             pad.at.x, pad.at.y,
