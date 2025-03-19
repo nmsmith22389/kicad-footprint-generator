@@ -408,8 +408,18 @@ class GeneratorRunner:
         for result in results:
             if not result.success:
 
+                print(result)
+                print(result.exception)
+
                 if result.exception:
-                    traceback.print_exception(result.exception, colorize=True)
+
+                    # This only works on Python 3.13+ but it does help readability
+                    # if it works.
+                    print_kwargs = {}
+                    if sys.version_info >= (3, 13):
+                        print_kwargs["colorize"] = True
+
+                    traceback.print_exception(result.exception, **print_kwargs)
 
                 failed_gens.append(result.generator)
 
