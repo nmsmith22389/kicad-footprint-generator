@@ -654,3 +654,22 @@ Converter_DCDC_TRACO_TRI10_Dual_THT:
     ["tht", "23", 15.22, -2.54, 1.9, 1.9, 1.1],
     ["tht", "24", 15.22, 0, 1.9, 1.9, 1.1]
   ]
+
+Converter_ACDC_TRACO_TMPW5-1xx_THT:
+  library_name: 'Converter_ACDC'
+  description: "ACDC-Converter, TRACO, TMPW5-xxx, 5W, Rev. March 19. 2025"
+  datasheet: "https://www.tracopower.com/products/tmpw5.pdf"
+  tags: "ACDC-Converter TRACO TMPW5 THT 1.46\"x1.08\""
+  extratexts: []
+  at: [-4, 3.25]
+  size: [37, 27.5]
+  body_position_tolerance: [0.5, 0.5]
+  # For future use
+  height: 17.5
+  pins: [
+    ["thtr", "1", 0, 0, 1.9, 1.9, 1.1],
+    ["tht", "2", 21.5, 0, 1.9, 1.9, 1.1],
+    ["tht", "3", 29, 0, 1.9, 1.9, 1.1],
+    ["tht", "4", 21.5, -21, 1.9, 1.9, 1.1],
+    ["tht", "5", 29, -21, 1.9, 1.9, 1.1]
+  ]
