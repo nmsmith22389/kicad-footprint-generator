@@ -102,14 +102,16 @@ help() {
 Commands
 ========
     help                 - This text
-    pep8_check           - pep8 validation
+    fp_format_check      - pycodestyle/black/isort validation
+    3d_format_check      - black/isort validation for 3D generators
     flake8_check         - flake8 validation
+    run_shellcheck       - Run CI checks for footprint generators
     unit_tests           - Run unit tests
     py_test_coverage     - Unit test coverage
     tests                - Run all tests
     update_packages      - Check & update production dependency changes
     update_dev_packages  - Check & update development and production dependency changes
-    update_3d_packages  - Check & update 3d model generator dependency changes
+    update_3d_packages   - Check & update 3d model generator dependency changes
 "
 }
 
