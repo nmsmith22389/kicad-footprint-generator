@@ -6,6 +6,7 @@ import yaml
 from pathlib import Path
 import itertools
 import logging
+import os
 
 from KicadModTree import (
     Footprint,
@@ -369,6 +370,7 @@ class BGAGenerator(FootprintGenerator):
             f"{balls} Ball",
             f"{sdesc}{layoutX}x{layoutY} Layout",
             f"{pdesc}mm Pitch",
+            f"generated with kicad-footprint-generator {os.path.basename(__file__)}",
         ]
 
         if device_config.metadata.datasheet:
