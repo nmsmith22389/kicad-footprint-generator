@@ -20,6 +20,8 @@ includes information on how to run the generators and how to contribute new gene
 * [Footprint Generators](https://gitlab.com/groups/kicad/libraries/-/wikis/Footprint-Generators)
 * [3D Model Generators](https://gitlab.com/groups/kicad/libraries/-/wikis/3D-Generators)
 
+**Do not use Footprint Editor to import the generated output**. When you save a footprint with the Footprint Editor, it sets the `generator` tag to `pcbnew` and not the wanted `kicad-footprint-generator`. Instead, move the generated output files into the local footprint repository before creating the merge request, without modifying or re-saving them.
+
 ## Development
 
 ### Install development dependencies
