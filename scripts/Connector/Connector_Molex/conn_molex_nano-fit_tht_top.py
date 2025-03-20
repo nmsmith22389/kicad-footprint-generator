@@ -22,6 +22,8 @@ import yaml
 from KicadModTree import *
 from scripts.tools.drawing_tools import round_to_grid
 from scripts.tools.footprint_text_fields import addTextFields
+from scripts.tools.global_config_files import global_config as GC
+
 
 series = "Nano-Fit"
 series_long = 'Nano-Fit Power Connectors'
@@ -57,7 +59,8 @@ version_params = {
     }
 }
 
-def generate_one_footprint(pins, params, configuration):
+
+def generate_one_footprint(global_config: GC.GlobalConfig, pins, params, configuration):
     pad_silk_off = configuration['silk_pad_clearance'] + configuration['silk_line_width']/2
     mpn = params['mpn'].format(n=pins*params['number_of_rows'])
 
@@ -134,13 +137,16 @@ def generate_one_footprint(pins, params, configuration):
 
     pad_silk_off = configuration['silk_pad_clearance'] + configuration['silk_line_width']/2
 
-    #generate the pads
+    # generate the pads
+
     if pins <= 3:
         kicad_mod.append(ChamferedPad(number=1, at=[0, 0],
             size=pad_size, drill=drill,
             type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, layers=Pad.LAYERS_THT,
-            chamfer_size=0.4, radius_ratio=0.25, maximum_radius=0.25,
-            corner_selection=CornerSelection({CornerSelection.BOTTOM_LEFT:True})))
+            chamfer_size=0.4,
+            round_radius_handler=global_config.roundrect_radius_handler,
+            corner_selection=CornerSelection({CornerSelection.BOTTOM_LEFT:True})
+        ))
 
     optional_pad_params = {}
     optional_pad_params['tht_pad1_shape'] = Pad.SHAPE_ROUNDRECT
@@ -243,11 +249,9 @@ def generate_one_footprint(pins, params, configuration):
         courtyard={'top':bounding_box['top'] - CrtYd_off, 'bottom':bounding_box['bottom'] + CrtYd_off}, fp_name=footprint_name, text_y_inside_position='right')
 
     ##################### Output and 3d model ############################
-    model3d_path_prefix = configuration.get('3d_model_prefix','${KICAD9_3DMODEL_DIR}/')
-
     lib_name = configuration['lib_name_format_string'].format(series=series, man=manufacturer)
     model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}.wrl'.format(
-        model3d_path_prefix=model3d_path_prefix, lib_name=lib_name, fp_name=footprint_name)
+        model3d_path_prefix=global_config.model_3d_prefix, lib_name=lib_name, fp_name=footprint_name)
     kicad_mod.append(Model(filename=model_name))
 
     lib = KicadPrettyLibrary(lib_name, None)
@@ -263,6 +267,7 @@ if __name__ == "__main__":
     with open(args.global_config, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
+            global_config = GC.GlobalConfig(configuration)
         except yaml.YAMLError as exc:
             print(exc)
 
@@ -274,4 +279,6 @@ if __name__ == "__main__":
 
     for version in version_params:
         for pins_per_row in pins_per_row_range:
-            generate_one_footprint(pins_per_row, version_params[version], configuration)
+            generate_one_footprint(
+                global_config, pins_per_row, version_params[version], configuration
+            )

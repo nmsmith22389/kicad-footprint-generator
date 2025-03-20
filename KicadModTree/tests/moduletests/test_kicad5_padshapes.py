@@ -132,28 +132,32 @@ class TestKicad5Pads(SerialisationTest):
     def testChamferedPad(self):
         kicad_mod = Footprint("chamfered_pad", FootprintType.SMD)
 
+        radius_handler = RoundRadiusHandler(radius_ratio=0)
+
         kicad_mod.append(
             ChamferedPad(number=1, type=Pad.TYPE_SMT,
                          at=[0, 0], size=[1, 1], layers=Pad.LAYERS_SMT, chamfer_size=[1/3, 1/3],
-                         corner_selection=[1, 1, 1, 1]
-                         ))
+                         corner_selection=[1, 1, 1, 1],
+                         round_radius_handler=radius_handler))
 
         kicad_mod.append(
             ChamferedPad(number=1, type=Pad.TYPE_SMT,
                          at=[2, 2], size=[2.1, 3.1], layers=Pad.LAYERS_SMT, chamfer_size=[0.5, 1.05],
-                         corner_selection=[1, 1, 1, 1]
-                         ))
+                         corner_selection=[1, 1, 1, 1],
+                         round_radius_handler=radius_handler))
 
         self.assert_serialises_as(kicad_mod, 'padshape_chamfered.kicad_mod')
 
     def testChamferedPadAvoidCircle(self):
         kicad_mod = Footprint("avoid_circle", FootprintType.SMD)
 
+        radius_handler = RoundRadiusHandler(radius_ratio=0)
+
         pad = ChamferedPad(
                     number=1, type=Pad.TYPE_SMT, at=[2, 2.5],
                     size=[1.75, 2.25], layers=Pad.LAYERS_SMT, chamfer_size=[0.25, 0.25],
-                    corner_selection=[1, 1, 1, 1]
-                    )
+                    corner_selection=[1, 1, 1, 1],
+                    round_radius_handler=radius_handler)
 
         c = [3, 3.5]
         d = 0.6
@@ -167,18 +171,22 @@ class TestKicad5Pads(SerialisationTest):
     def testChamferedPadGrid(self):
         kicad_mod = Footprint("chamfered_grid", FootprintType.SMD)
 
+        radius_handler = RoundRadiusHandler(radius_ratio=0)
+
         kicad_mod.append(
             ChamferedPadGrid(
                         number=1, type=Pad.TYPE_SMT,
                         center=[1.5, 2.5], size=[1, 2], layers=Pad.LAYERS_SMT,
                         chamfer_size=[0.25, 0.25], chamfer_selection=1,
-                        pincount=[3, 4], grid=[1.5, 2.5]
-                        ))
+                        pincount=[3, 4], grid=[1.5, 2.5],
+                        round_radius_handler=radius_handler))
 
         self.assert_serialises_as(kicad_mod, 'padshape_chamfered_grid.kicad_mod')
 
     def testChamferedPadGridCornerOnly(self):
         kicad_mod = Footprint("chamfered_grid_corner_only", FootprintType.SMD)
+
+        radius_handler = RoundRadiusHandler(radius_ratio=0)
 
         chamfer_select = ChamferSelPadGrid(0)
         chamfer_select.setCorners()
@@ -187,8 +195,8 @@ class TestKicad5Pads(SerialisationTest):
                         number=1, type=Pad.TYPE_SMT,
                         center=[0, 0], size=[1, 1], layers=Pad.LAYERS_SMT,
                         chamfer_size=[0.25, 0.25], chamfer_selection=chamfer_select,
-                        pincount=[3, 4], grid=[1.4, 1.4]
-                        )
+                        pincount=[3, 4], grid=[1.4, 1.4],
+                        round_radius_handler=radius_handler)
 
         c = [2.0, 2.5]
         d = 0.4
@@ -202,40 +210,43 @@ class TestKicad5Pads(SerialisationTest):
     def testChamferedRoundedPad(self):
         kicad_mod = Footprint("chamfered_round_pad", FootprintType.SMD)
 
+        radius_handler0 = RoundRadiusHandler(radius_ratio=0)
+        radius_handler25 = RoundRadiusHandler(radius_ratio=0.25)
+
         kicad_mod.append(
             ChamferedPad(number=1, type=Pad.TYPE_SMT,
                          at=[0, 0], size=[4, 4], layers=Pad.LAYERS_SMT, chamfer_size=[0.5, 0.5],
-                         corner_selection=[1, 1, 1, 1]
-                         ))
+                         corner_selection=[1, 1, 1, 1],
+                         round_radius_handler=radius_handler0))
 
         kicad_mod.append(
             ChamferedPad(number=1, type=Pad.TYPE_SMT,
                          at=[0, 0], size=[4, 4], layers=["B.Cu"], chamfer_size=[0.5, 0.5],
-                         corner_selection=[1, 1, 1, 1], radius_ratio=0.25
-                         ))
+                         corner_selection=[1, 1, 1, 1],
+                         round_radius_handler=radius_handler25))
 
         kicad_mod.append(
             ChamferedPad(number=1, type=Pad.TYPE_SMT,
                          at=[0, 5], size=[4, 3], layers=Pad.LAYERS_SMT, chamfer_size=[1, 1],
-                         corner_selection=[1, 1, 1, 1]
-                         ))
+                         corner_selection=[1, 1, 1, 1],
+                         round_radius_handler=radius_handler0))
 
         kicad_mod.append(
             ChamferedPad(number=1, type=Pad.TYPE_SMT,
                          at=[0, 5], size=[4, 3], layers=["B.Cu"], chamfer_size=[1, 1],
-                         corner_selection=[1, 1, 1, 1], radius_ratio=0.25
-                         ))
+                         corner_selection=[1, 1, 1, 1],
+                         round_radius_handler=radius_handler25))
 
         kicad_mod.append(
             ChamferedPad(number=1, type=Pad.TYPE_SMT,
                          at=[5, 0], size=[4, 3], layers=Pad.LAYERS_SMT, chamfer_size=[1, 1],
-                         corner_selection=[1, 0, 1, 0]
-                         ))
+                         corner_selection=[1, 0, 1, 0],
+                         round_radius_handler=radius_handler0))
 
         kicad_mod.append(
             ChamferedPad(number=1, type=Pad.TYPE_SMT,
                          at=[5, 0], size=[4, 3], layers=["B.Cu"], chamfer_size=[1, 1],
-                         corner_selection=[1, 0, 1, 0], radius_ratio=0.25
-                         ))
+                         corner_selection=[1, 0, 1, 0],
+                         round_radius_handler=radius_handler25))
 
         self.assert_serialises_as(kicad_mod, 'padshape_chamfered_rounded.kicad_mod')

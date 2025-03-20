@@ -263,7 +263,7 @@ class ExposedPad(Node):
             center=self.at, size=paste_size, layers=['F.Paste'],
             chamfer_size=0, chamfer_selection=0,
             pincount=self.paste_layout, grid=paste_grid,
-            round_radius_handler=self.paste_round_radius_handler
+            round_radius_handler=self.paste_round_radius_handler,
         )]
 
     @staticmethod

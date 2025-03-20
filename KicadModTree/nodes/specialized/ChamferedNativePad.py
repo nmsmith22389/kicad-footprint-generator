@@ -71,20 +71,15 @@ class ChamferedNativePad(Node):
         * *y_mirror* (``[int, float](mirror offset)``) --
           mirror y direction around offset "point"
 
-        * *radius_ratio* (``float``) --
-          The radius ratio of the rounded rectangle.
-          (default 0 for backwards compatibility)
-        * *maximum_radius* (``float``) --
-          The maximum radius for the rounded rectangle.
-          If the radius produced by the radius_ratio parameter for the pad would
-          exceed the maximum radius, the ratio is reduced to limit the radius.
-          (This is useful for IPC-7351C compliance as it suggests 25% ratio with limit 0.25mm)
-        * *round_radius_exact* (``float``) --
-          Set an exact round radius for a pad.
         * *round_radius_handler* (``RoundRadiusHandler``) --
           An instance of the RoundRadiusHandler class
-          If this is given then all other round radius specifiers are ignored
+
+        * *chamfer_size_handler* (``ChamferSizeHandler``) --
+          An instance of the ChamferSizeHandler class
     """
+
+    round_radius_handler: RoundRadiusHandler
+    chamfer_size_handler: ChamferSizeHandler
 
     def __init__(self, **kwargs):
         Node.__init__(self)
@@ -126,24 +121,8 @@ class ChamferedNativePad(Node):
             self.chamfer_size = toVectorUseCopyIfNumber(
                 kwargs.get('chamfer_size'), low_limit=0, must_be_larger=False)
 
-        if 'round_radius_handler' in kwargs:
-            self.round_radius_handler = kwargs['round_radius_handler']
-        else:
-            # default radius ration 0 for backwards compatibility
-            self.round_radius_handler = RoundRadiusHandler(
-                default_radius_ratio=0, **kwargs)
-
-        if 'chamfer_size_handler' in kwargs:
-            self.chamfer_size_handler = kwargs['chamfer_size_handler']
-        else:
-            # default radius ration 0 for backwards compatibility
-            if (min(self.size) > 0):
-                default_chamfer_ratio = self.chamfer_size[0]/min(self.size)
-                # default_chamfer_ratio = self.chamfer_size_handler.getChamferRatio(min(self.size))
-            else:
-                default_chamfer_ratio = 0
-            self.chamfer_size_handler = ChamferSizeHandler(
-                default_chamfer_ratio=default_chamfer_ratio, **kwargs)
+        self.round_radius_handler = kwargs['round_radius_handler']
+        self.chamfer_size_handler = kwargs['chamfer_size_handler']
 
         self.padargs = copy(kwargs)
         self.padargs.pop('size', None)

@@ -5,8 +5,9 @@ import yaml
 from math import floor, ceil
 
 from KicadModTree import *
-from scripts.tools.footprint_text_fields import addTextFields
 from scripts.tools.drawing_tools import round_to_grid
+from scripts.tools.footprint_text_fields import addTextFields
+from scripts.tools.global_config_files import global_config as GC
 
 
 series = "ZE"
@@ -15,7 +16,7 @@ orientation = 'V'
 number_of_rows = 1
 datasheet = 'http://www.jst-mfg.com/product/pdf/eng/eZE.pdf'
 
-#ZE connector, top-entry THT, NO BOSS
+# ZE connector, top-entry THT, NO BOSS
 
 pitch = 1.5
 y_spacing = 2.0
@@ -37,7 +38,9 @@ variant_parameters = {
         'descr_str':''
         }
 }
-def generate_one_footprint(pincount, variant, configuration):
+def generate_one_footprint(
+    global_config: GC.GlobalConfig, pincount, variant, configuration
+):
     mpn = "B{pincount:02}B-ZESK-{suff}".format(pincount=pincount,suff=variant)
     boss = variant_parameters[variant]['boss']
 
@@ -93,15 +96,16 @@ def generate_one_footprint(pincount, variant, configuration):
         start=[cx1, cy1], end=[cx2, cy2],
         layer='F.CrtYd', width=configuration['courtyard_line_width']))
 
-
     # create odd numbered pads
     # createNumberedPadsTHT(kicad_mod, ceil(pincount/2), pitch * 2, drill, {'x':dia, 'y':dia},  increment=2)
-    #special treatment for pin 1 (rectangular pad alone would reduce the clearance too much)
+    # special treatment for pin 1 (rectangular pad alone would reduce the clearance too much)
     kicad_mod.append(ChamferedPad(number=1, at=[0, 0],
         size=pad_size, drill=drill,
         type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, layers=Pad.LAYERS_THT,
-        chamfer_size=0.4, radius_ratio=0.25, maximum_radius=0.25,
-        corner_selection=CornerSelection({CornerSelection.TOP_RIGHT:True})))
+        chamfer_size=0.4,
+        round_radius_handler=global_config.roundrect_radius_handler,
+        corner_selection=CornerSelection({CornerSelection.TOP_RIGHT:True})
+    ))
 
     if pincount > 2:
         kicad_mod.append(PadArray(initial=3, start=[2*pitch, 0],
@@ -262,11 +266,9 @@ def generate_one_footprint(pincount, variant, configuration):
         courtyard={'top':cy1, 'bottom':cy2}, fp_name=footprint_name, text_y_inside_position='top')
 
     ##################### Output and 3d model ############################
-    model3d_path_prefix = configuration.get('3d_model_prefix','${KICAD9_3DMODEL_DIR}/')
-
     lib_name = configuration['lib_name_format_string'].format(series=series, man=manufacturer)
     model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}.wrl'.format(
-        model3d_path_prefix=model3d_path_prefix, lib_name=lib_name, fp_name=footprint_name)
+        model3d_path_prefix=global_config.model_3d_prefix, lib_name=lib_name, fp_name=footprint_name)
     kicad_mod.append(Model(filename=model_name))
 
     lib = KicadPrettyLibrary(lib_name, None)
@@ -282,6 +284,7 @@ if __name__ == "__main__":
     with open(args.global_config, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
+            global_config = GC.GlobalConfig(configuration)
         except yaml.YAMLError as exc:
             print(exc)
 
@@ -293,4 +296,4 @@ if __name__ == "__main__":
 
     for variant in variant_parameters:
         for pincount in variant_parameters[variant]['pin_range']:
-            generate_one_footprint(pincount, variant, configuration)
+            generate_one_footprint(global_config, pincount, variant, configuration)

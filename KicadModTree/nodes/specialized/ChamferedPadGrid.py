@@ -20,6 +20,7 @@ from kilibs.geom import Vector2D
 from kilibs.util.param_util import toVectorUseCopyIfNumber, toIntArray
 from KicadModTree.nodes.base.Polygon import *
 from KicadModTree.nodes.specialized.ChamferedPad import *
+from KicadModTree.util import corner_handling
 
 
 class ChamferSelPadGrid(CornerSelection):
@@ -179,20 +180,11 @@ class ChamferedPadGrid(Node):
         * *y_mirror* (``[int, float](mirror offset)``) --
           mirror y direction around offset "point"
 
-        * *radius_ratio* (``float``) --
-          The radius ratio of the rounded rectangle.
-          (default 0 for backwards compatibility)
-        * *maximum_radius* (``float``) --
-          The maximum radius for the rounded rectangle.
-          If the radius produced by the radius_ratio parameter for the pad would
-          exceed the maximum radius, the ratio is reduced to limit the radius.
-          (This is useful for IPC-7351C compliance as it suggests 25% ratio with limit 0.25mm)
-        * *round_radius_exact* (``float``) --
-          Set an exact round radius for a pad.
         * *round_radius_handler* (``RoundRadiusHandler``) --
           An instance of the RoundRadiusHandler class
-          If this is given then all other round radius specifiers are ignored
     """
+
+    round_radius_handler = corner_handling.RoundRadiusHandler
 
     def __init__(self, **kwargs):
         Node.__init__(self)
@@ -240,11 +232,7 @@ class ChamferedPadGrid(Node):
             self.chamfer_size = toVectorUseCopyIfNumber(
                 kwargs.get('chamfer_size'), low_limit=0, must_be_larger=False)
 
-        if 'round_radius_handler' in kwargs:
-            self.round_radius_handler = kwargs['round_radius_handler']
-        else:
-            # default radius ration 0 for backwards compatibility
-            self.round_radius_handler = RoundRadiusHandler(default_radius_ratio=0, **kwargs)
+        self.round_radius_handler = kwargs['round_radius_handler']
 
         self.padargs = copy(kwargs)
         self.padargs.pop('size', None)
@@ -290,7 +278,8 @@ class ChamferedPadGrid(Node):
 
         temp_pad = ChamferedPad(
             at=[nearest_x, nearest_y], size=self.size,
-            type=Pad.TYPE_SMT, layers=['F.Cu'], corner_selection=1
+            type=Pad.TYPE_SMT, layers=['F.Cu'], corner_selection=1,
+            round_radius_handler=RoundRadiusHandler(round_radius=0),
         )
         self.chamfer_size = temp_pad.chamferAvoidCircle(
             center=relative_center, diameter=diameter, clearance=clearance)
