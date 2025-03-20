@@ -15,9 +15,7 @@ class TestSmallValueSerialisation(SerialisationTest):
         kicad_mod = Footprint("test_sort_small_values", FootprintType.SMD)
 
         center = Vector2D(0, 0)
-        kicad_mod.append(
-            Line(start=Vector2D(1e-15, 1), end=center))
-        kicad_mod.append(
-            Line(start=Vector2D(-1e-15, 2), end=center))
+        kicad_mod.append(Line(start=Vector2D(1e-15, 1), end=center))
+        kicad_mod.append(Line(start=Vector2D(-1e-15, 2), end=center))
 
-        self.assert_serialises_as(kicad_mod, 'test_sort_small_values.kicad_mod')
+        self.assert_serialises_as(kicad_mod, "test_sort_small_values.kicad_mod")
