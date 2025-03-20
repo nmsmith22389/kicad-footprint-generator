@@ -692,3 +692,40 @@ Converter_ACDC_TRACO_TMPW5-1xx_THT:
     ["tht", "4", 29, -21, 1.9, 1.9, 1.1],
     ["tht", "5", 21.5, -21, 1.9, 1.9, 1.1]
   ]
+
+Converter_DCDC_TRACO_TRN3-xx1x_Single_THT:
+  library_name: 'Converter_DCDC'
+  description: "DCDC-Converter, TRACO, TRN3-xx1x, 3W, Rev. February 3. 2025"
+  datasheet: "https://www.tracopower.com/products/trn3.pdf"
+  tags: "DCDC-Converter TRACO TRN3 THT SIP-5 3W"
+  extratexts: []
+  at: [-3.7, 1.5]
+  size: [7.7, 11.9]
+  body_position_tolerance: [0.5, 0.5]
+  # For future use
+  height: 11
+  pins: [
+    ["thtr", "1", 0, 0, 1.6, 1.6, 1],
+    ["tht", "2", 0, -2, 1.6, 1.6, 1],
+    ["tht", "3", 0, -4.8, 1.6, 1.6, 1],
+    ["tht", "5", 0, -8.8, 1.6, 1.6, 1]
+  ]
+
+Converter_DCDC_TRACO_TRN3-xx2x_Dual_THT:
+  library_name: 'Converter_DCDC'
+  description: "DCDC-Converter, TRACO, TRN3-xx2x, 3W, Rev. February 3. 2025"
+  datasheet: "https://www.tracopower.com/products/trn3.pdf"
+  tags: "DCDC-Converter TRACO TRN3 THT SIP-5 3W"
+  extratexts: []
+  at: [-3.7, 1.5]
+  size: [7.7, 11.9]
+  body_position_tolerance: [0.5, 0.5]
+  # For future use
+  height: 11
+  pins: [
+    ["thtr", "1", 0, 0, 1.6, 1.6, 1],
+    ["tht", "2", 0, -2, 1.6, 1.6, 1],
+    ["tht", "3", 0, -4.8, 1.6, 1.6, 1],
+    ["tht", "4", 0, -6.8, 1.6, 1.6, 1],
+    ["tht", "5", 0, -8.8, 1.6, 1.6, 1]
+  ]
