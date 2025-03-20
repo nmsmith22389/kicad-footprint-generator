@@ -525,7 +525,7 @@ class NoLeadGenerator(FootprintGenerator):
         kicad_mod.tags += device_config.metadata.compatible_mpns
         kicad_mod.tags += device_config.metadata.additional_tags
 
-        pad_arrays = create_dual_or_quad_pad_border(self.configuration, pad_details, device_params,
+        pad_arrays = create_dual_or_quad_pad_border(self.global_config, pad_details, device_params,
                                                     pad_overrides=device_config.pad_overrides)
         pad_radius = get_pad_radius_from_arrays(pad_arrays)
 
@@ -831,8 +831,6 @@ if __name__ == "__main__":
     parser.add_argument('--density', type=str, nargs='?', help='IPC density level (L,N,M)', default='N')
     parser.add_argument('--ipc_doc', type=str, nargs='?', help='IPC definition document',
                         default='../ipc_definitions.yaml')
-    parser.add_argument('--force_rectangle_pads', action='store_true',
-                        help='Force the generation of rectangle pads instead of rounded rectangle')
 
     args = FootprintGenerator.add_standard_arguments(parser)
 
@@ -854,10 +852,6 @@ if __name__ == "__main__":
             configuration.update(yaml.safe_load(config_stream))
         except yaml.YAMLError as exc:
             print(exc)
-
-    if args.force_rectangle_pads:
-        configuration['round_rect_max_radius'] = None
-        configuration['round_rect_radius_ratio'] = 0
 
     FootprintGenerator.run_on_files(
         NoLeadGenerator,
