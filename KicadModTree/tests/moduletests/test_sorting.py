@@ -1,8 +1,16 @@
-from KicadModTree import Footprint, Line, FootprintType, Pad
-from kilibs.geom import Vector2D
+from copy import deepcopy
 
-
+from KicadModTree import (
+    Circle,
+    Footprint,
+    FootprintType,
+    Line,
+    Pad,
+    RectLine,
+    Translation,
+)
 from KicadModTree.tests.test_utils.fp_file_test import SerialisationTest
+from kilibs.geom import Vector2D
 
 
 class TestSmallValueSerialisation(SerialisationTest):
@@ -20,6 +28,53 @@ class TestSmallValueSerialisation(SerialisationTest):
         kicad_mod.append(Line(start=Vector2D(-1e-15, 2), end=center))
 
         self.assert_serialises_as(kicad_mod, "test_sort_small_values.kicad_mod")
+
+    def testSortCopiedElements(self):
+        """
+        Test that global coordinates are used when sorting copied elements
+        """
+        kicad_mod = Footprint("test_sort_copied_elements", FootprintType.SMD)
+
+        prototype = Translation(0, 0)
+        # RectLine
+        prototype.append(
+            RectLine(
+                start=Vector2D(-1.1, -1.1),
+                end=Vector2D(1.1, 1.1),
+                layer="F.SilkS",
+            )
+        )
+        # Circle
+        prototype.append(
+            Circle(
+                center=Vector2D(-3, 1),
+                radius=0.7,
+                layer="F.SilkS",
+                fill=True,
+            )
+        )
+        prototype.append(
+            Circle(
+                center=Vector2D(-3, 1),
+                radius=1.0,
+                layer="F.SilkS",
+                fill=False,
+            )
+        )
+        prototype.append(
+            Circle(
+                center=Vector2D(-3, 1),
+                radius=1.0,
+                layer="F.SilkS",
+                fill=True,
+            )
+        )
+
+        for i in range(4):
+            prototype.offset_x = 0.5 * i
+            kicad_mod.append(deepcopy(prototype))
+
+        self.assert_serialises_as(kicad_mod, "test_sort_copied_elements.kicad_mod")
 
     def testSortPadNumbers(self):
         """
