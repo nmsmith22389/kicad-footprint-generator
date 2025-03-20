@@ -17,6 +17,15 @@
 from KicadModTree import *
 
 from KicadModTree.tests.test_utils.fp_file_test import SerialisationTest
+from KicadModTree.util import corner_handling
+
+
+DEFAULT_CU_RAD_HANDLER = corner_handling.RoundRadiusHandler(
+    default_radius_ratio=0, maximum_radius=0.25
+)
+DEFAULT_PASTE_RAD_HANDLER = corner_handling.RoundRadiusHandler(
+    default_radius_ratio=0, maximum_radius=0.25
+)
 
 
 class TestExposedPads(SerialisationTest):
@@ -26,8 +35,10 @@ class TestExposedPads(SerialisationTest):
 
         kicad_mod.append(ExposedPad(
             number=3, at=[0, 1], size=[2.1, 3],
-            mask_size=[2.1, 2.1], paste_layout=[2, 3], via_layout=[3, 2]
-            ))
+            mask_size=[2.1, 2.1], paste_layout=[2, 3], via_layout=[3, 2],
+            round_radius_handler=DEFAULT_CU_RAD_HANDLER,
+            paste_radius_handler=DEFAULT_PASTE_RAD_HANDLER,
+        ))
 
         self.assert_serialises_as(kicad_mod, 'exposedpad_simple.kicad_mod')
 
@@ -37,8 +48,10 @@ class TestExposedPads(SerialisationTest):
         kicad_mod.append(ExposedPad(
             number=3, at=[0, 1], size=[2.1, 3],
             mask_size=[2.1, 2.1], paste_layout=[2, 3], via_layout=[3, 2],
-            grid_round_base=None, size_round_base=0
-            ))
+            grid_round_base=None, size_round_base=0,
+            round_radius_handler=DEFAULT_CU_RAD_HANDLER,
+            paste_radius_handler=DEFAULT_PASTE_RAD_HANDLER,
+        ))
 
         self.assert_serialises_as(kicad_mod, 'exposedpad_no_rounding.kicad_mod')
 
@@ -46,8 +59,10 @@ class TestExposedPads(SerialisationTest):
         kicad_mod = Footprint("exposedpad_minimal", FootprintType.SMD)
 
         kicad_mod.append(ExposedPad(
-            number=3, size=[2.1, 3], paste_layout=2, via_layout=3
-            ))
+            number=3, size=[2.1, 3], paste_layout=2, via_layout=3,
+            round_radius_handler=DEFAULT_CU_RAD_HANDLER,
+            paste_radius_handler=DEFAULT_PASTE_RAD_HANDLER,
+        ))
 
         self.assert_serialises_as(kicad_mod, 'exposedpad_minimal.kicad_mod')
 
@@ -56,8 +71,10 @@ class TestExposedPads(SerialisationTest):
 
         kicad_mod.append(ExposedPad(
             number=3, size=[5, 5], paste_layout=3, via_layout=2,
-            paste_avoid_via=True
-            ))
+            paste_avoid_via=True,
+            round_radius_handler=DEFAULT_CU_RAD_HANDLER,
+            paste_radius_handler=DEFAULT_PASTE_RAD_HANDLER,
+        ))
 
         self.assert_serialises_as(kicad_mod, 'exposedpad_autogen_inner.kicad_mod')
 
@@ -66,8 +83,10 @@ class TestExposedPads(SerialisationTest):
 
         kicad_mod.append(ExposedPad(
             number=3, size=[5, 5], paste_layout=6, via_layout=4,
-            paste_avoid_via=True, paste_coverage=0.5
-            ))
+            paste_avoid_via=True, paste_coverage=0.5,
+            round_radius_handler=DEFAULT_CU_RAD_HANDLER,
+            paste_radius_handler=DEFAULT_PASTE_RAD_HANDLER,
+        ))
 
         self.assert_serialises_as(kicad_mod, 'exposedpad_autogen_inner2.kicad_mod')
 
@@ -78,8 +97,10 @@ class TestExposedPads(SerialisationTest):
             number=3, size=[12, 8], paste_between_vias=2,
             paste_rings_outside=2, via_layout=3,
             paste_avoid_via=True, paste_coverage=0.7, via_grid=[3, 2],
-            via_paste_clarance=0.25, min_annular_ring=0.25, at=[7, 5]
-            ))
+            via_paste_clarance=0.25, min_annular_ring=0.25, at=[7, 5],
+            round_radius_handler=DEFAULT_CU_RAD_HANDLER,
+            paste_radius_handler=DEFAULT_PASTE_RAD_HANDLER,
+        ))
 
         self.assert_serialises_as(kicad_mod, 'exposedpad_autogen_inner_outer.kicad_mod')
 
@@ -88,8 +109,10 @@ class TestExposedPads(SerialisationTest):
 
         kicad_mod.append(ExposedPad(
             number=3, size=[3, 5], paste_between_vias=2, paste_rings_outside=[2, 1], via_layout=[1, 3],
-            paste_avoid_via=True, paste_coverage=0.65, via_grid=2, via_paste_clarance=0.15
-            ))
+            paste_avoid_via=True, paste_coverage=0.65, via_grid=2, via_paste_clarance=0.15,
+            round_radius_handler=DEFAULT_CU_RAD_HANDLER,
+            paste_radius_handler=DEFAULT_PASTE_RAD_HANDLER,
+        ))
 
         self.assert_serialises_as(kicad_mod, "exposedpad_autogen_inner_y_and_outer.kicad_mod")
 
@@ -98,8 +121,10 @@ class TestExposedPads(SerialisationTest):
 
         kicad_mod.append(ExposedPad(
             number=3, size=[4, 3], paste_between_vias=2, paste_rings_outside=[1, 2], via_layout=[3, 1],
-            paste_avoid_via=True, paste_coverage=0.65, via_grid=1, via_paste_clarance=0.0
-            ))
+            paste_avoid_via=True, paste_coverage=0.65, via_grid=1, via_paste_clarance=0.0,
+            round_radius_handler=DEFAULT_CU_RAD_HANDLER,
+            paste_radius_handler=DEFAULT_PASTE_RAD_HANDLER,
+        ))
 
         self.assert_serialises_as(kicad_mod, "exposedpad_autogen_inner_x_and_outer.kicad_mod")
 
@@ -108,8 +133,10 @@ class TestExposedPads(SerialisationTest):
 
         kicad_mod.append(ExposedPad(
             number=3, size=[2, 2], paste_between_vias=0, paste_rings_outside=[1, 1], via_layout=[1, 1],
-            paste_avoid_via=True, paste_coverage=0.65, via_grid=1.5
-            ))
+            paste_avoid_via=True, paste_coverage=0.65, via_grid=1.5,
+            round_radius_handler=DEFAULT_CU_RAD_HANDLER,
+            paste_radius_handler=DEFAULT_PASTE_RAD_HANDLER,
+        ))
 
         self.assert_serialises_as(kicad_mod, "exposedpad_autogen_only_outer.kicad_mod")
 
@@ -118,14 +145,18 @@ class TestExposedPads(SerialisationTest):
 
         kicad_mod.append(ExposedPad(
             number=3, size=[2, 2], via_layout=[1, 1], at=[-2, -2],
-            paste_coverage=0.65, via_grid=1, bottom_pad_Layers=None
-            ))
+            paste_coverage=0.65, via_grid=1, bottom_pad_Layers=None,
+            round_radius_handler=DEFAULT_CU_RAD_HANDLER,
+            paste_radius_handler=DEFAULT_PASTE_RAD_HANDLER,
+        ))
 
         kicad_mod.append(ExposedPad(
             number=3, size=[2, 2], via_layout=[1, 1], at=[2, -2],
             paste_coverage=0.65, via_grid=1, bottom_pad_Layers=['B.Cu', 'B.Mask'],
-            bottom_pad_min_size=[3, 3]
-            ))
+            bottom_pad_min_size=[3, 3],
+            round_radius_handler=DEFAULT_CU_RAD_HANDLER,
+            paste_radius_handler=DEFAULT_PASTE_RAD_HANDLER,
+        ))
 
         self.assert_serialises_as(kicad_mod, "exposedpad_autogen_bottom_pad.kicad_mod")
 
@@ -144,8 +175,10 @@ class TestExposedPads(SerialisationTest):
             paste_avoid_via=True,
             via_paste_clarance=0.1,
             min_annular_ring=0.15,
-            bottom_pad_min_size=[0, 0]
-            ))
+            bottom_pad_min_size=[0, 0],
+            round_radius_handler=DEFAULT_CU_RAD_HANDLER,
+            paste_radius_handler=DEFAULT_PASTE_RAD_HANDLER,
+        ))
 
         self.assert_serialises_as(kicad_mod, "exposedpad_autogen_4x4.kicad_mod")
 
@@ -155,20 +188,26 @@ class TestExposedPads(SerialisationTest):
         kicad_mod.append(ExposedPad(
             number=3, size=[2, 2], via_layout=[2, 1], at=[-2, -2],
             paste_coverage=0.65, paste_layout=[1, 2],
-            paste_avoid_via=True
-            ))
+            paste_avoid_via=True,
+            round_radius_handler=DEFAULT_CU_RAD_HANDLER,
+            paste_radius_handler=DEFAULT_PASTE_RAD_HANDLER,
+        ))
 
         kicad_mod.append(ExposedPad(
             number=3, size=[2, 2], via_layout=[2, 1], at=[2, -2],
             paste_coverage=0.65, paste_layout=[1, 2],
-            paste_avoid_via=True
-            ))
+            paste_avoid_via=True,
+            round_radius_handler=DEFAULT_CU_RAD_HANDLER,
+            paste_radius_handler=DEFAULT_PASTE_RAD_HANDLER,
+        ))
 
         kicad_mod.append(ExposedPad(
             number=3, size=[3, 3], via_layout=[2, 1], at=[0, 3],
             paste_coverage=0.65, paste_layout=[1, 2], mask_size=[2, 2],
-            paste_avoid_via=True
-            ))
+            paste_avoid_via=True,
+            round_radius_handler=DEFAULT_CU_RAD_HANDLER,
+            paste_radius_handler=DEFAULT_PASTE_RAD_HANDLER,
+        ))
 
         self.assert_serialises_as(kicad_mod, "exposedpad_autogen_edgecase1.kicad_mod")
 
@@ -178,25 +217,33 @@ class TestExposedPads(SerialisationTest):
         kicad_mod.append(ExposedPad(
             number=3, size=[3, 3], via_layout=[2, 1], at=[-2, -2],
             paste_coverage=0.65, paste_layout=[1, 2], mask_size=[2, 2],
-            paste_avoid_via=True, via_tented=ExposedPad.VIA_NOT_TENTED
-            ))
+            paste_avoid_via=True, via_tented=ExposedPad.VIA_NOT_TENTED,
+            round_radius_handler=DEFAULT_CU_RAD_HANDLER,
+            paste_radius_handler=DEFAULT_PASTE_RAD_HANDLER,
+        ))
 
         kicad_mod.append(ExposedPad(
             number=3, size=[3, 3], via_layout=[2, 1], at=[2, -2],
             paste_coverage=0.65, paste_layout=[1, 2], mask_size=[2, 2],
-            paste_avoid_via=True, via_tented=ExposedPad.VIA_TENTED_BOTTOM_ONLY
-            ))
+            paste_avoid_via=True, via_tented=ExposedPad.VIA_TENTED_BOTTOM_ONLY,
+            round_radius_handler=DEFAULT_CU_RAD_HANDLER,
+            paste_radius_handler=DEFAULT_PASTE_RAD_HANDLER,
+        ))
 
         kicad_mod.append(ExposedPad(
             number=3, size=[3, 3], via_layout=[2, 1], at=[-2, 2],
             paste_coverage=0.65, paste_layout=[1, 2], mask_size=[2, 2],
-            paste_avoid_via=True, via_tented=ExposedPad.VIA_TENTED_TOP_ONLY
-            ))
+            paste_avoid_via=True, via_tented=ExposedPad.VIA_TENTED_TOP_ONLY,
+            round_radius_handler=DEFAULT_CU_RAD_HANDLER,
+            paste_radius_handler=DEFAULT_PASTE_RAD_HANDLER,
+        ))
 
         kicad_mod.append(ExposedPad(
             number=3, size=[3, 3], via_layout=[2, 1], at=[2, 2],
             paste_coverage=0.65, paste_layout=[1, 2], mask_size=[2, 2],
-            paste_avoid_via=True, via_tented=ExposedPad.VIA_TENTED
-            ))
+            paste_avoid_via=True, via_tented=ExposedPad.VIA_TENTED,
+            round_radius_handler=DEFAULT_CU_RAD_HANDLER,
+            paste_radius_handler=DEFAULT_PASTE_RAD_HANDLER,
+        ))
 
         self.assert_serialises_as(kicad_mod, "exposedpad_via_tented.kicad_mod")

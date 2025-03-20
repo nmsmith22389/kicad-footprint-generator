@@ -137,6 +137,12 @@ class GlobalConfig:
         self.round_rect_default_radius = data["round_rect_radius_ratio"]
         self.round_rect_max_radius = data["round_rect_max_radius"]
 
+        self._ep_round_rect_default_radius = data["ep_round_rect_radius_ratio"]
+        self._ep_round_rect_max_radius = data["ep_round_rect_max_radius"]
+
+        self._paste_round_rect_default_radius = data["paste_round_rect_radius_ratio"]
+        self._paste_round_rect_max_radius = data["paste_round_rect_max_radius"]
+
         # Map the string keys into the typed enum
         self._cy_offs = {
             self.CourtyardType.DEFAULT: float(data["courtyard_offset"]['default']),
@@ -156,6 +162,7 @@ class GlobalConfig:
         self.reference_fields = [FieldProperties(**field) for field in data["references"]]  # fmt: skip
         self.value_fields = [FieldProperties(**field) for field in data["values"]]
 
+
     def get_courtyard_offset(self, courtyard_type: CourtyardType) -> float:
         return self._cy_offs[courtyard_type]
 
@@ -165,8 +172,28 @@ class GlobalConfig:
         Get the default pad radius handler for roundrects
         """
         return RoundRadiusHandler(
-            default_redius_ratio=self.round_rect_default_radius,
+            default_radius_ratio=self.round_rect_default_radius,
             maximum_radius=self.round_rect_max_radius,
+        )
+
+    @property
+    def ep_roundrect_radius_handler(self) -> RoundRadiusHandler:
+        """
+        Get the default pad radius handler for roundrect exposed/thermal pads
+        """
+        return RoundRadiusHandler(
+            default_radius_ratio=self._ep_round_rect_default_radius,
+            maximum_radius=self._ep_round_rect_max_radius
+        )
+
+    @property
+    def paste_roundrect_radius_handler(self) -> RoundRadiusHandler:
+        """
+        Get the default pad radius handler for roundrect paste pads
+        """
+        return RoundRadiusHandler(
+            default_radius_ratio=self._paste_round_rect_default_radius,
+            maximum_radius=self._paste_round_rect_max_radius
         )
 
     def get_fab_bevel_size(self, overall_size: float) -> float:

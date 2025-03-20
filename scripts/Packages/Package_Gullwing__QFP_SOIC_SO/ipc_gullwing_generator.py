@@ -194,10 +194,6 @@ class GullwingGenerator(FootprintGenerator):
 
                 self.configuration['min_ep_to_pad_clearance'] = 0.2
 
-                # ToDo: find a settings file that can contain these.
-                self.configuration['paste_radius_ratio'] = 0.25
-                self.configuration['paste_maximum_radius'] = 0.25
-
                 if 'ipc_generic_rules' in self.ipc_defintions:
                     self.configuration['min_ep_to_pad_clearance'] = self.ipc_defintions['ipc_generic_rules'].get(
                         'min_ep_to_pad_clearance', 0.2)
@@ -534,7 +530,7 @@ class GullwingGenerator(FootprintGenerator):
 
         EP_round_radius = 0
         if dimensions['has_EP']:
-            pad_shape_details = getEpRoundRadiusParams(device_params, self.configuration, pad_radius)
+            pad_shape_details = getEpRoundRadiusParams(device_params, self.global_config, pad_radius)
             EP_mask_size = EP_mask_size if EP_mask_size['x'] > 0 else None
 
             device_paste_pads = device_params.get('EP_num_paste_pads', 1)

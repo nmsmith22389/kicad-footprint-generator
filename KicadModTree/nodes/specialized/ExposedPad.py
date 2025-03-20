@@ -105,23 +105,11 @@ class ExposedPad(Node):
           Base used for rounding calculated sizes (default: 0.01)
           0 means no rounding
 
-        * *radius_ratio* (``float``) --
-          The radius ratio of the main pads.
-        * *maximum_radius* (``float``) --
-          The maximum radius for the main pads.
-          If the radius produced by the radius_ratio parameter for the pad would
-          exceed the maximum radius, the ratio is reduced to limit the radius.
-        * *round_radius_exact* (``float``) --
-          Set an exact round radius for the main pads.
+        * *round_radius_handler* (``RoundRadiusHandler``) --
+          The radius handler for the copper pads.
 
-        * *paste_radius_ratio* (``float``) --
-          The radius ratio of the paste pads.
-        * *paste_maximum_radius* (``float``) --
-          The maximum radius for the paste pads.
-          If the radius produced by the paste_radius_ratio parameter for the paste pad would
-          exceed the maximum radius, the ratio is reduced to limit the radius.
-        * *paste_round_radius_exact* (``float``) --
-          Set an exact round radius for the paste pads.
+        * *paste_radius_handler* (``RoundRadiusHandler``) --
+          The radius handler for the paste pads.
     """
 
     VIA_TENTED = 'all'
@@ -129,19 +117,17 @@ class ExposedPad(Node):
     VIA_TENTED_BOTTOM_ONLY = 'bottom'
     VIA_NOT_TENTED = 'none'
 
+    round_radius_handler: RoundRadiusHandler
+    paste_round_radius_handler: RoundRadiusHandler
+
     def __init__(self, **kwargs):
         Node.__init__(self)
         self.at = Vector2D(kwargs.get('at', [0, 0]))
         self.size_round_base = kwargs.get('size_round_base', 0.01)
         self.grid_round_base = kwargs.get('grid_round_base', 0.01)
 
-        self.round_radius_handler = RoundRadiusHandler(default_radius_ratio=0, **kwargs)
-
-        self.paste_round_radius_handler = RoundRadiusHandler(
-            radius_ratio=kwargs.get('paste_radius_ratio', 0),
-            maximum_radius=kwargs.get('paste_maximum_radius', None),
-            round_radius_exact=kwargs.get('paste_round_radius_exact', None),
-        )
+        self.round_radius_handler = kwargs['round_radius_handler']
+        self.paste_round_radius_handler = kwargs['paste_radius_handler']
 
         self._initNumber(**kwargs)
         self._initSize(**kwargs)

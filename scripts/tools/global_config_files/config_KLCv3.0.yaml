@@ -48,6 +48,14 @@ default_line_width: 0.1
 round_rect_max_radius: 0.25
 round_rect_radius_ratio: 0.25
 
+# If exposed pads have different parameters, they can be set here.
+ep_round_rect_max_radius: 0.25
+ep_round_rect_radius_ratio: 0
+
+# If paste pads have different parameters, they can be set here.
+paste_round_rect_max_radius: 0.25
+paste_round_rect_radius_ratio: 0.25
+
 # Mapping of functional layers to board layers
 layer_functions:
     # Mechanical drawings (e.g. physical object outlines)
