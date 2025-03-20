@@ -68,19 +68,21 @@ class FpGenerator(abc.ABC):
 
     @property
     @abc.abstractmethod
-    def name(self):
+    def name(self) -> str:
         """
         The name of the generator - this is used to filter generators to run.
         """
         pass
 
-    def matches(self, lib_filter: str) -> bool:
+    @property
+    def base_path(self) -> Path | None:
         """
-        Check if the generator matches the given library filter.
+        If this generator is usefully and uniquely mappable to a filesystem path, return it.
+        (this mostly if to allow to filter libraries using shell path completion).
 
-        By default just a glob match on the name.
+        Return None if the generator doesn't map to a filesystem path for some reason.
         """
-        return fnmatch.fnmatch(self.name, lib_filter)
+        return None
 
     class GenerationError(Exception):
         """
@@ -186,24 +188,6 @@ class FpGenerateShGenerator(FpGenerator):
         res.num_series = None
         return res
 
-    def matches(self, lib_filter: str) -> bool:
-        """
-        generate.sh generators match on the directory name they are in
-        as well as the path to the directory
-        """
-
-        # Try a relative glob first
-        if fnmatch.fnmatch(
-            self.base_path.relative_to(self.root_path).as_posix(), Path(lib_filter)
-        ):
-            return True
-
-        # Try a match on just the name
-        if fnmatch.fnmatch(self.base_path.name, lib_filter):
-            return True
-
-        return super().matches(lib_filter)
-
     @property
     def name(self):
         rel = self.generate_sh.parent.relative_to(self.root_path)
@@ -238,6 +222,62 @@ class FpGenerateShGenerator(FpGenerator):
                 for filename in filenames:
                     if filename == self.SH_NAME:
                         yield Path(dirpath) / self.SH_NAME
+
+
+class GenerationFilter:
+    """
+    A filter that can be used to include or exclude libraries from generation.
+
+    Eventually this will be an object that also handles series and footprints,
+    but for now it's just libraries.
+    """
+
+    def __init__(self, lib_include: list[str], lib_exclude: list[str]):
+        self.lib_include = lib_include
+        self.lib_exclude = lib_exclude
+
+    def matching_generators(self, lib: str, generators):
+        """
+        Yield all generators that match the filter.
+        """
+
+        # Resolve the current directory to a Path
+        cwd = Path(os.curdir).absolute()
+
+        def _gen_matches(gen: FpGenerator, pat: str):
+
+            # Try a relative glob first
+            if gen.base_path is not None:
+                rel_base = gen.base_path.relative_to(cwd)
+
+                if fnmatch.fnmatch(rel_base, Path(pat)):
+                    return True
+
+            # Try a match on just the name
+            if fnmatch.fnmatch(gen.name, pat):
+                return True
+
+        def _matches_lib(gen: FpGenerator):
+
+            included = True
+
+            # No includes -> include all
+            if self.lib_include:
+                included = any(_gen_matches(gen, pat) for pat in self.lib_include)
+
+            if included and self.lib_exclude:
+                included = not any(_gen_matches(gen, pat) for pat in self.lib_exclude)
+
+            return included
+
+        if not self.lib_include and not self.lib_exclude:
+            logging.info("No library filters specified, including all generators")
+            yield from generators
+            return
+
+        for gen in generators:
+            if _matches_lib(gen):
+                yield gen
 
 
 class GeneratorRunner:
@@ -287,28 +327,12 @@ class GeneratorRunner:
 
         self._generators.sort(key=_generator_sort_key)
 
-    def generate(self, libraries: list[str], jobs: int):
+    def generate(self, filter: GenerationFilter, jobs: int) -> bool:
         """
-        Generate footprints for the given libraries
+        Generate footprints included by the filter.
         """
 
-        gens = []
-
-        # strip lib names of path bits
-        def strip_lib_name(l):
-            l = l.strip().rstrip(os.sep)
-            return l
-
-        libraries = [strip_lib_name(l) for l in libraries]
-
-        if not libraries:
-            print("Generating footprints for all libraries")
-            gens = self._generators
-        else:
-            logging.debug("Generating footprints for libraries: %s" % libraries)
-
-            for lib_filter in libraries:
-                gens += [g for g in self._generators if g.matches(lib_filter)]
+        gens = list(filter.matching_generators(filter, self._generators))
 
         logging.info("Generating footprints for %d libraries:" % len(gens))
 
@@ -446,8 +470,16 @@ if __name__ == "__main__":
         "--library",
         type=str,
         nargs="*",
-        default=None,
+        default=[],
         help="Generator library name or globs (default: all)",
+    )
+    parser.add_argument(
+        "-x",
+        "--library-exclude",
+        type=str,
+        nargs="*",
+        default=[],
+        help="Exclude generator library name or globs (default: none)",
     )
     parser.add_argument(
         "-L",
@@ -487,14 +519,16 @@ if __name__ == "__main__":
 
     generator.separate_outputs = args.separate_outputs
 
+    filter = GenerationFilter(args.library, args.library_exclude)
+
     if args.list:
-        for g in generator._generators:
-            if args.library and not any(g.matches(l) for l in args.library):
-                continue
+        matching = list(filter.matching_generators(filter, generator._generators))
+        matching.sort(key=lambda g: g.name)
+        for g in matching:
             print(g.name)
         sys.exit(0)
 
-    success = generator.generate(args.library if args.library else [], jobs=args.jobs)
+    success = generator.generate(filter, jobs=args.jobs)
 
     ret_code = 0 if success else 2
 
