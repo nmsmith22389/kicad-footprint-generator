@@ -198,6 +198,7 @@ def makePotentiometerHorizontal(class_name="", wbody=0, hbody=0, dscrew=0, style
     if len(pow_rat) > 0:
         tgs.append(pow_rat)
 
+    name_prefix = "Potentiometer"
     description = "Potentiometer, horizontal"
     tags = "Potentiometer horizontal"
     for t in tgs:
@@ -207,7 +208,7 @@ def makePotentiometerHorizontal(class_name="", wbody=0, hbody=0, dscrew=0, style
 
     footprint_name = ""
     for n in name_additions: footprint_name = footprint_name + "_" + n
-    footprint_name = lib_name + "_" + "_".join(class_name.split()) + "_Horizontal"
+    footprint_name = name_prefix + "_" + "_".join(class_name.split()) + "_Horizontal"
 
     print(footprint_name)
 
@@ -478,6 +479,7 @@ def makePotentiometerVertical(class_name, wbody, hbody, screwstyle="none", style
     if len(pow_rat) > 0:
         tgs.append(pow_rat)
 
+    name_prefix = "Potentiometer"
     description = "Potentiometer, vertical"
     tags = "Potentiometer vertical"
     if shaft_hole:
@@ -489,7 +491,7 @@ def makePotentiometerVertical(class_name, wbody, hbody, screwstyle="none", style
     description = description + ", " + add_description
 
     for n in name_additions: footprint_name = footprint_name + "_" + n
-    footprint_name = lib_name + "_" + "_".join(class_name.split()) + "_Vertical"
+    footprint_name = name_prefix + "_" + "_".join(class_name.split()) + "_Vertical"
     if shaft_hole: footprint_name = footprint_name + "_Hole"
 
     print(footprint_name)
@@ -762,6 +764,7 @@ def makeSpindleTrimmer(class_name, wbody, hbody, pinxoffset, pinyoffset, rmx2, r
     if len(pow_rat) > 0:
         tgs.append(pow_rat)
 
+    name_prefix = "Potentiometer"
     description = "Potentiometer, " + orientation
     tags = "Potentiometer " + orientation
     if shaft_hole:
@@ -773,7 +776,7 @@ def makeSpindleTrimmer(class_name, wbody, hbody, pinxoffset, pinyoffset, rmx2, r
     description = description + ", " + add_description
 
     for n in name_additions: footprint_name = footprint_name + "_" + n
-    footprint_name = lib_name + "_" + "_".join(class_name.split()) + "_" + orientation.capitalize()
+    footprint_name = name_prefix + "_" + "_".join(class_name.split()) + "_" + orientation.capitalize()
     if shaft_hole: footprint_name = footprint_name + "_Hole"
 
     print(footprint_name)
