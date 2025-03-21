@@ -3552,6 +3552,38 @@ TSSOP-16-1EP_4.4x5mm_Pitch0.65mm_EP3.4x5mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.ti.com/lit/ds/symlink/drv8833.pdf'
 
+HTSSOP-16-1EP_4.4x5mm_P0.65mm_EP3.4x5mm_Mask2.66x2.46mm:
+  the: 9.0
+  tb_s: 0.15
+  c: 0.15
+  R1: 0.1
+  R2: 0.1
+  L: 0.625
+  fp_s: 1
+  fp_r: 0.4
+  fp_d: 0.5
+  fp_z: 0.05
+  ef: 0.0
+  cc1: 0
+  D1: 5
+  E1: 4.4
+  E: 6.4
+  A1: 0.1
+  A2: 1.1
+  b: 0.245
+  e: 0.65
+  npx: 8
+  npy: 0
+  epad: [2.41, 2.51]
+  excluded_pins: null
+  model_name: HTSSOP-16-1EP_4.4x5mm_P0.65mm_EP3.4x5mm_Mask2.66x2.46mm
+  rotation: -90
+  body_color_key: 'black body'
+  pin_color_key: 'metal grey pins'
+  mark_color_key: 'light brown label'
+  destination_dir: 'Package_SO.3dshapes'
+  source: 'http://www.ti.com/lit/ds/symlink/tlc2660.pdf#page=48'
+
 HTSSOP-20-1EP_4.4x6.5mm_P0.65mm_EP3.4x6.5mm_Mask2.75x3.43mm:
   the: 9.0
   tb_s: 0.15
