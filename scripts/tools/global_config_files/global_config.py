@@ -97,6 +97,9 @@ class GlobalConfig:
     # Includes trailing '/'
     model_3d_prefix: str
 
+    # Includes leading '.'
+    model_3d_suffix: str
+
     _layer_functions: dict
 
     _pad_names: dict
@@ -129,6 +132,7 @@ class GlobalConfig:
         self.default_line_width = float(data["default_line_width"])
 
         self.model_3d_prefix = data["3d_model_prefix"]
+        self.model_3d_suffix = data["3d_model_suffix"]
 
         self.round_rect_default_radius = data["round_rect_radius_ratio"]
         self.round_rect_max_radius = data["round_rect_max_radius"]
