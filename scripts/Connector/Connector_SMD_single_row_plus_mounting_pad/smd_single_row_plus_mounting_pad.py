@@ -1,87 +1,254 @@
 #!/usr/bin/env python3
 
-# Generator for jst smd connectors (single row with two mounting pads)
+"""
+Generator for SMD connectors (single row with two mounting pads)
+
+       _X__X__X__X_
+    XX| X  X  X  X |XX
+    XX|            |XX
+      |____________|
+"""
 
 import argparse
 import yaml
 from math import sqrt
 
+from kilibs.geom import Rectangle
 from helpers import *
 from KicadModTree import *
+from scripts.tools.declarative_def_tools.connectors_config import (
+    ConnectorsConfiguration,
+    ConnectorOrientation,
+)
 from scripts.tools.drawing_tools import round_to_grid
 from scripts.tools.footprint_text_fields import addTextFields
 from scripts.tools.global_config_files import global_config as GC
 
 
-def generate_one_footprint(global_config: GC.GlobalConfig, idx, pincount,
-                           series_definition, configuration, group_definition):
-    if 'mpn_param_1' in series_definition:
-        mpn_param_1 = series_definition['mpn_param_1']
-        mpn = series_definition['mpn_format_string'].format(pincount=pincount, param_1=mpn_param_1[idx])
-    else:
-        mpn = series_definition['mpn_format_string'].format(pincount=pincount)
+class SMDSingleRowPlusMPProperties:
+    """
+    A complete description of a single-row SMD connector series with two mounting pads
+    and a row of pads.
+    """
 
-    pins_toward_bottom = series_definition['pad1_position'] == 'bottom-left'
+    # The original dict
+    _series_def: dict
+
+    manufacturer: str
+    mpm_format_string: str
+    mpn_param_1: list | None
+    """List of parameters, indexed by pincount"""
+    datasheet: str | None
+
+    pitch: float
+    orientation: ConnectorOrientation
+    """Orientation of the connector, 'H' or 'V'"""
+
+    pins_toward_bottom: bool
+    """Main row of pins is toward the bottom of the footprint"""
+
+    pad_size: Vector2D
+    mounting_pad_size: Vector2D
+
+    mount_pad_center_x_to_pin: float
+    """Position of the mounting pad in x, relative to the center of end pin
+    in the main row"""
+
+    pad_pos_y: float
+    """Main pad row position in y, relative to the origin"""
+    mounting_pad_pos_y: float
+    """Position of the mounting pad in y, relative to the origin"""
+
+    rel_body_edge_y: float
+    """Body edge in y, relative to the center of the mouting pad outside edge"""
+    rel_body_edge_x: float
+    """Body edge in x, relative to the center of the main pad row"""
+    body_size_y: float
+    """Total body size in y"""
+
+    # Compatibile with addTextFields
+    text_inside_pos: str | float
+
+    pin_range: list[int]
+    """The list of pin counts that this series supports"""
+
+    automatic_silk_outline: bool
+
+    def __init__(self, series_def: dict, group_def: dict, id: str):
+        self._series_def = series_def
+
+        # We could make the group definition a separate class, but it's literally
+        # just one field, so we'll just store it in here.
+        self.manufacturer = group_def["manufacturer"]
+
+        self.series = series_def["series"]
+        self.datasheet = series_def.get("datasheet", None)
+        self.orientation = ConnectorOrientation.from_str(series_def["orientation"])
+        self.pitch = series_def["pitch"]
+
+        # We might want to make this a generic YAML def, but maybe the syntax would be better as
+        #  pins:            pins:
+        #    from: 2          list: [4, 6, 10]
+        #    to: 15
+        # But that affects many defs and it's "OK" now
+        pin_range_def_type, pin_range_def = series_def["pinrange"]
+        if pin_range_def_type == "range":
+            self.pin_range = range(*pin_range_def)
+        elif pin_range_def_type == "list":
+            self.pin_range = pin_range_def
+        else:
+            raise ("Pin range definition error in part {:s}".format(id))
+
+        self.mpn_param_1 = series_def.get("mpn_param_1", None)
+        self.mpm_format_string = series_def["mpn_format_string"]
+
+        pad1_pos = series_def["pad1_position"]
+        if pad1_pos == "bottom-left":
+            self.pins_toward_bottom = True
+        elif pad1_pos == "top-left":
+            self.pins_toward_bottom = False
+        else:
+            raise ValueError(
+                f"pad1_position must be 'bottom-left' or 'top-left', not '{pad1_pos}'"
+            )
+
+        rel_pad_y_outside_edge: float = series_def["rel_pad_y_outside_edge"]
+        rel_pad_y_inside_edge: float = series_def["rel_pad_y_inside_edge"]
+
+        pad_size_x = series_def["pad_size_x"]
+        pad_size_y = rel_pad_y_outside_edge - rel_pad_y_inside_edge
+        self.pad_size = Vector2D(pad_size_x, pad_size_y)
+
+        self.pad_pos_y = -rel_pad_y_outside_edge / 2 + pad_size_y / 2
+
+        self.mounting_pad_size = Vector2D(
+            series_def["mounting_pad_size"][0], series_def["mounting_pad_size"][1]
+        )
+
+        self.mounting_pad_pos_y = (
+            rel_pad_y_outside_edge / 2 - self.mounting_pad_size.y / 2
+        )
+
+        if "center_shift_y" in series_def:
+            center_shift_y: float = series_def["center_shift_y"]
+            self.mounting_pad_pos_y -= center_shift_y
+            self.pad_pos_y -= center_shift_y
+
+        # Body sizes
+        self.rel_body_edge_y = series_def["rel_body_edge_y"]
+        self.rel_body_edge_x = series_def["rel_body_edge_x"]
+        self.body_size_y = series_def["body_size_y"]
+
+        self.mount_pad_center_x_to_pin = (
+            series_def["center_pad_to_mounting_pad_edge"]
+            + self.mounting_pad_size.x / 2.0
+        )
+
+        self.text_inside_pos = series_def.get("text_inside_pos", "center")
+
+        self.automatic_silk_outline = series_def.get("automatic_silk_outline", True)
+
+    def pin_row_length_c_to_c(self, pincount: int) -> float:
+        """
+        Center-to-center distance of the main pin row
+        """
+        return (pincount - 1) * self.pitch
+
+    def get_mpn_param(self, idx: int):
+        """If the series has a parameter that varies with pincount, return it for the given pincount"""
+        if self.mpn_param_1 is not None:
+            return self.mpn_param_1[idx]
+        else:
+            return None
+
+
+def generate_one_footprint(
+    global_config: GC.GlobalConfig,
+    idx: int,
+    pincount: int,
+    series_props: SMDSingleRowPlusMPProperties,
+    conn_config: ConnectorsConfiguration,
+):
+
+    # Get the series definition for old dict-based access
+    series_definition = series_props._series_def
+
+    mpn_format_params = {"pincount": pincount}
+    # Look up index-specific parameters
+    if mpn_param := series_props.get_mpn_param(idx):
+        mpn_format_params["mpn_param_1"] = mpn_param
+
+    mpn = series_props.mpm_format_string.format(**mpn_format_params)
+
+    pins_toward_bottom = series_props.pins_toward_bottom
     needs_additional_silk_pin1_marker = False
 
-    pad_size = [series_definition['pad_size_x'],
-        series_definition['rel_pad_y_outside_edge'] - series_definition['rel_pad_y_inside_edge']]
-    pad_pos_y = -series_definition['rel_pad_y_outside_edge']/2 + pad_size[1]/2
+    pad_size = series_props.pad_size
+    pad_pos_y = series_props.pad_pos_y
 
-    mounting_pad_size = series_definition['mounting_pad_size']
-    mount_pad_y_pos = series_definition['rel_pad_y_outside_edge']/2 - mounting_pad_size[1]/2
-
-    if 'center_shift_y' in series_definition:
-        mount_pad_y_pos -= series_definition['center_shift_y']
-        pad_pos_y -= series_definition['center_shift_y']
-
-    mount_pad_center_x_to_pin = series_definition['center_pad_to_mounting_pad_edge'] + mounting_pad_size[0]/2.0
+    mounting_pad_size = series_props.mounting_pad_size
+    mount_pad_y_pos = series_props.mounting_pad_pos_y
 
     # center pin 1 to center pin n
-    dimension_A = (pincount-1)*series_definition['pitch']
+    dimension_A = series_props.pin_row_length_c_to_c(pincount)
 
-    body_edge = {}
+    body_br = Vector2D(dimension_A / 2 + series_props.rel_body_edge_x, 0)
+    body_tl = Vector2D(-body_br.x, 0)
+
     if pins_toward_bottom:
         pad_pos_y *= -1
         mount_pad_y_pos *= -1
-        mount_pad_edge_y_outside = mount_pad_y_pos - mounting_pad_size[1]/2
-        body_edge['top'] = mount_pad_edge_y_outside - series_definition['rel_body_edge_y']
-        body_edge['bottom'] = body_edge['top'] + series_definition['body_size_y']
+        mount_pad_edge_y_outside = mount_pad_y_pos - mounting_pad_size.y / 2
+        body_tl.y = mount_pad_edge_y_outside - series_props.rel_body_edge_y
+        body_br.y = body_tl.y + series_props.body_size_y
     else:
-        mount_pad_edge_y_outside = mount_pad_y_pos + mounting_pad_size[1]/2
-        body_edge['bottom'] = mount_pad_edge_y_outside + series_definition['rel_body_edge_y']
-        body_edge['top'] = body_edge['bottom'] - series_definition['body_size_y']
+        mount_pad_edge_y_outside = mount_pad_y_pos + mounting_pad_size.y / 2
+        body_br.y = mount_pad_edge_y_outside + series_props.rel_body_edge_y
+        body_tl.y = body_br.y - series_props.body_size_y
 
-    body_edge['right'] = dimension_A/2 + series_definition['rel_body_edge_x']
-    body_edge['left'] = -body_edge['right']
+    body_rect = Rectangle.by_corners(body_tl, body_br)
 
-    orientation = configuration['orientation_options'][series_definition['orientation']]
-    footprint_name = configuration['fp_name_format_string'].format(man=group_definition['manufacturer'],
-        series=series_definition['series'],
-        mpn=mpn, num_rows=1, pins_per_row=pincount, mounting_pad = "-1MP",
-        pitch=series_definition['pitch'], orientation=orientation)
-    footprint_name = footprint_name.replace('__', '_')
+    orientation = conn_config.get_orientation_name(series_props.orientation)
+    footprint_name = conn_config.fp_name_format_string.format(
+        man=series_props.manufacturer,
+        series=series_props.series,
+        mpn=mpn,
+        num_rows=1,
+        pins_per_row=pincount,
+        mounting_pad="-1MP",
+        pitch=series_props.pitch,
+        orientation=orientation,
+    )
+    footprint_name = footprint_name.replace("__", "_")
 
     kicad_mod = Footprint(footprint_name, FootprintType.SMD)
-    kicad_mod.description = "{:s} {:s} series connector, {:s} ({:s}), generated with kicad-footprint-generator".format(group_definition['manufacturer'],
-        series_definition['series'], mpn, series_definition['datasheet'])
-    kicad_mod.tags = configuration['keyword_fp_string'].format(series=series_definition['series'],
-        orientation=orientation, man=group_definition['manufacturer'],
-        entry=configuration['entry_direction'][series_definition['orientation']])
-
+    kicad_mod.description = "{:s} {:s} series connector, {:s} ({:s}), {:s}".format(
+        series_props.manufacturer,
+        series_props.series,
+        mpn,
+        series_props.datasheet or "",
+        global_config.get_generated_by_description(),
+    )
+    kicad_mod.tags = conn_config.keyword_fp_string.format(
+        series=series_props.series,
+        orientation=orientation,
+        man=series_props.manufacturer,
+        entry=conn_config.get_orientation_description(series_props.orientation),
+    )
 
     ############################# Pads ##################################
-    optional_pad_params = {}
+    optional_pad_params = {
+        "round_radius_handler": global_config.roundrect_radius_handler
+    }
 
     pad_shape = Pad.SHAPE_ROUNDRECT
-    optional_pad_params['round_radius_handler'] = global_config.roundrect_radius_handler
 
     kicad_mod.append(PadArray(
-        center=[0, pad_pos_y], x_spacing=series_definition['pitch'], pincount=pincount,
+        center=[0, pad_pos_y], x_spacing=series_props.pitch, pincount=pincount,
         size=pad_size, type=Pad.TYPE_SMT, shape=pad_shape, layers=Pad.LAYERS_SMT,
         **optional_pad_params))
 
-    mount_pad_left_x_pos = -dimension_A/2 - mount_pad_center_x_to_pin
+    mount_pad_left_x_pos = -dimension_A/2 - series_props.mount_pad_center_x_to_pin
     mounting_pad_name = global_config.get_pad_name(GC.PadName.MECHANICAL)
 
     kicad_mod.append(Pad(
@@ -97,34 +264,36 @@ def generate_one_footprint(global_config: GC.GlobalConfig, idx, pincount,
 
     ######################### Body outline ###############################
     pad_edge_silk_center_offset = global_config.silk_pad_offset
-    pad_1_x_outside_edge = -dimension_A/2 - pad_size[0]/2
+    pad_1_x_outside_edge = -dimension_A/2 - pad_size.x/2
 
     if pins_toward_bottom: #Man i wish there where a rotate footprint function available.
-        body_edge_pin = body_edge['bottom']
-        body_edge_mount_pad = body_edge['top']
-        silk_y_mp_pin_side = mount_pad_y_pos + mounting_pad_size[1]/2 + pad_edge_silk_center_offset
-        mp_edge_outside = mount_pad_y_pos - mounting_pad_size[1]/2
+        body_edge_pin = body_rect.bottom
+        body_edge_mount_pad = body_rect.top
+        silk_y_mp_pin_side = mount_pad_y_pos + mounting_pad_size.y / 2 + pad_edge_silk_center_offset
+        mp_edge_outside = mount_pad_y_pos - mounting_pad_size.y / 2
         silk_y_mp_outside = mp_edge_outside - pad_edge_silk_center_offset
-        pin_edge_outside = pad_pos_y + pad_size[1]/2
+        pin_edge_outside = pad_pos_y + pad_size.y / 2
         silk_y_offset_pin_side = global_config.silk_fab_offset
     else:
-        body_edge_pin = body_edge['top']
-        body_edge_mount_pad = body_edge['bottom']
-        silk_y_mp_pin_side = mount_pad_y_pos - mounting_pad_size[1]/2 - pad_edge_silk_center_offset
-        mp_edge_outside = mount_pad_y_pos + mounting_pad_size[1]/2
+        body_edge_pin = body_rect.top
+        body_edge_mount_pad = body_rect.bottom
+        silk_y_mp_pin_side = mount_pad_y_pos - mounting_pad_size.y / 2 - pad_edge_silk_center_offset
+        mp_edge_outside = mount_pad_y_pos + mounting_pad_size.y / 2
         silk_y_mp_outside = mp_edge_outside + pad_edge_silk_center_offset
-        pin_edge_outside = pad_pos_y - pad_size[1]/2
+        pin_edge_outside = pad_pos_y - pad_size.y / 2
         silk_y_offset_pin_side = -global_config.silk_fab_offset
 
-
     # Pin side
-    bounding_box_y_pin_side = pad_pos_y + (pad_size[1]/2 if pins_toward_bottom else -pad_size[1]/2)
+    bounding_box_y_pin_side = pad_pos_y + (
+        pad_size.y / 2 * (1 if pins_toward_bottom else -1)
+    )
     side_line_y_pin_side = body_edge_pin
-    mp_inner_edge_x_left_silk = mount_pad_left_x_pos + mounting_pad_size[0]/2 + pad_edge_silk_center_offset
-    modified_pinside_x_inner = body_edge['left']
+    mp_inner_edge_x_left_silk = mount_pad_left_x_pos + mounting_pad_size.x / 2 + pad_edge_silk_center_offset
+    modified_pinside_x_inner = body_rect.left
+
     if 'edge_modifier_pin_side' in series_definition:
         modifier = series_definition['edge_modifier_pin_side']
-        modified_pinside_x_inner = body_edge['left'] + modifier['width']
+        modified_pinside_x_inner = body_rect.left + modifier['width']
 
         if pins_toward_bottom:
             side_line_y_pin_side += modifier['length']
@@ -136,12 +305,12 @@ def generate_one_footprint(global_config: GC.GlobalConfig, idx, pincount,
                 bounding_box_y_pin_side = side_line_y_pin_side
 
         poly_fab_pin_side=[
-            {'x': body_edge['left'], 'y': side_line_y_pin_side},
+            {'x': body_rect.left, 'y': side_line_y_pin_side},
             {'x': modified_pinside_x_inner, 'y': side_line_y_pin_side},
             {'x': modified_pinside_x_inner, 'y': body_edge_pin},
             {'x': -modified_pinside_x_inner, 'y': body_edge_pin},
             {'x': -modified_pinside_x_inner, 'y': side_line_y_pin_side},
-            {'x': body_edge['right'], 'y': side_line_y_pin_side}
+            {'x': body_rect.right, 'y': side_line_y_pin_side}
         ]
 
         if modifier['length'] < 0:
@@ -151,8 +320,8 @@ def generate_one_footprint(global_config: GC.GlobalConfig, idx, pincount,
 
         if modified_pinside_x_inner + silk_x_offset > pad_1_x_outside_edge - pad_edge_silk_center_offset:
             poly_silk_edge_left = [
-                {'x': body_edge['left'] - global_config.silk_fab_offset, 'y': silk_y_mp_pin_side},
-                {'x': body_edge['left'] - global_config.silk_fab_offset, 'y': side_line_y_pin_side + silk_y_offset_pin_side},
+                {'x': body_rect.left - global_config.silk_fab_offset, 'y': silk_y_mp_pin_side},
+                {'x': body_rect.left - global_config.silk_fab_offset, 'y': side_line_y_pin_side + silk_y_offset_pin_side},
                 {'x': pad_1_x_outside_edge - pad_edge_silk_center_offset, 'y': side_line_y_pin_side + silk_y_offset_pin_side},
                 {'x': pad_1_x_outside_edge - pad_edge_silk_center_offset, 'y': pin_edge_outside}
             ]
@@ -160,15 +329,15 @@ def generate_one_footprint(global_config: GC.GlobalConfig, idx, pincount,
                 needs_additional_silk_pin1_marker = True
 
             poly_silk_edge_right = [
-                {'x': body_edge['right'] + global_config.silk_fab_offset, 'y': silk_y_mp_pin_side},
-                {'x': body_edge['right'] + global_config.silk_fab_offset, 'y': side_line_y_pin_side + silk_y_offset_pin_side},
+                {'x': body_rect.right + global_config.silk_fab_offset, 'y': silk_y_mp_pin_side},
+                {'x': body_rect.right + global_config.silk_fab_offset, 'y': side_line_y_pin_side + silk_y_offset_pin_side},
                 {'x': -pad_1_x_outside_edge + pad_edge_silk_center_offset, 'y': side_line_y_pin_side + silk_y_offset_pin_side}
             ]
 
         else:
             poly_silk_edge_left = [
-                {'x': body_edge['left'] - global_config.silk_fab_offset, 'y': silk_y_mp_pin_side},
-                {'x': body_edge['left'] - global_config.silk_fab_offset, 'y': side_line_y_pin_side + silk_y_offset_pin_side},
+                {'x': body_rect.left - global_config.silk_fab_offset, 'y': silk_y_mp_pin_side},
+                {'x': body_rect.left - global_config.silk_fab_offset, 'y': side_line_y_pin_side + silk_y_offset_pin_side},
                 {'x': modified_pinside_x_inner + silk_x_offset, 'y': side_line_y_pin_side + silk_y_offset_pin_side},
                 {'x': modified_pinside_x_inner + silk_x_offset, 'y': body_edge_pin + silk_y_offset_pin_side},
                 {'x': pad_1_x_outside_edge - pad_edge_silk_center_offset, 'y': body_edge_pin + silk_y_offset_pin_side},
@@ -178,20 +347,20 @@ def generate_one_footprint(global_config: GC.GlobalConfig, idx, pincount,
                 needs_additional_silk_pin1_marker = True
 
             poly_silk_edge_right = [
-                {'x': body_edge['right'] + global_config.silk_fab_offset, 'y': silk_y_mp_pin_side},
-                {'x': body_edge['right'] + global_config.silk_fab_offset, 'y': side_line_y_pin_side + silk_y_offset_pin_side},
+                {'x': body_rect.right + global_config.silk_fab_offset, 'y': silk_y_mp_pin_side},
+                {'x': body_rect.right + global_config.silk_fab_offset, 'y': side_line_y_pin_side + silk_y_offset_pin_side},
                 {'x': -modified_pinside_x_inner - silk_x_offset, 'y': side_line_y_pin_side + silk_y_offset_pin_side},
                 {'x': -modified_pinside_x_inner - silk_x_offset, 'y': body_edge_pin + silk_y_offset_pin_side},
                 {'x': -pad_1_x_outside_edge + pad_edge_silk_center_offset, 'y': body_edge_pin + silk_y_offset_pin_side}
             ]
     else:
         poly_fab_pin_side=[
-            {'x': body_edge['left'], 'y': body_edge_pin},
-            {'x': body_edge['right'], 'y': body_edge_pin}
+            {'x': body_rect.left, 'y': body_edge_pin},
+            {'x': body_rect.right, 'y': body_edge_pin}
         ]
         poly_silk_edge_left = [
-            {'x': body_edge['left'] - global_config.silk_fab_offset, 'y': silk_y_mp_pin_side},
-            {'x': body_edge['left'] - global_config.silk_fab_offset, 'y': side_line_y_pin_side + silk_y_offset_pin_side},
+            {'x': body_rect.left - global_config.silk_fab_offset, 'y': silk_y_mp_pin_side},
+            {'x': body_rect.left - global_config.silk_fab_offset, 'y': side_line_y_pin_side + silk_y_offset_pin_side},
             {'x': pad_1_x_outside_edge - pad_edge_silk_center_offset, 'y': body_edge_pin + silk_y_offset_pin_side},
             {'x': pad_1_x_outside_edge - pad_edge_silk_center_offset, 'y': pin_edge_outside}
         ]
@@ -199,32 +368,34 @@ def generate_one_footprint(global_config: GC.GlobalConfig, idx, pincount,
             needs_additional_silk_pin1_marker = True
 
         poly_silk_edge_right = [
-            {'x': body_edge['right'] + global_config.silk_fab_offset, 'y': silk_y_mp_pin_side},
-            {'x': body_edge['right'] + global_config.silk_fab_offset, 'y': side_line_y_pin_side + silk_y_offset_pin_side},
+            {'x': body_rect.right + global_config.silk_fab_offset, 'y': silk_y_mp_pin_side},
+            {'x': body_rect.right + global_config.silk_fab_offset, 'y': side_line_y_pin_side + silk_y_offset_pin_side},
             {'x': -pad_1_x_outside_edge + pad_edge_silk_center_offset, 'y': body_edge_pin + silk_y_offset_pin_side}
         ]
     kicad_mod.append(PolygonLine(polygon=poly_fab_pin_side, layer='F.Fab', width=global_config.fab_line_width))
-    if series_definition.get('no_automatic_silk_autline','False') != 'True':
+
+    if series_props.automatic_silk_outline:
         kicad_mod.append(PolygonLine(polygon=poly_silk_edge_left, layer='F.SilkS', width=global_config.silk_line_width))
         kicad_mod.append(PolygonLine(polygon=poly_silk_edge_right, layer='F.SilkS', width=global_config.silk_line_width))
 
     # Mount pad side
-    bounding_box_y_mount_pad_side = mount_pad_y_pos + (-mounting_pad_size[1]/2 if pins_toward_bottom else mounting_pad_size[1]/2)
+    bounding_box_y_mount_pad_side = mount_pad_y_pos + (-mounting_pad_size.y / 2 if pins_toward_bottom else mounting_pad_size.y / 2)
     if abs(bounding_box_y_mount_pad_side) < abs(body_edge_mount_pad):
         bounding_box_y_mount_pad_side = body_edge_mount_pad
     mid_line_y_mount_pad_side = body_edge_mount_pad
+
     if 'edge_modifier_mount_pad_side' in series_definition:
         modifier = series_definition['edge_modifier_mount_pad_side']
 
         if 'width_start' in modifier:
             modified_mp_start_x_inner = - modifier['width_start']/2 # We assume centered body!
         if 'start_from_body_side' in modifier:
-            modified_mp_start_x_inner = body_edge['left'] + modifier['start_from_body_side']
+            modified_mp_start_x_inner = body_rect.left + modifier['start_from_body_side']
         modified_mp_end_x_inner = modified_mp_start_x_inner
         if 'width_end' in modifier:
             modified_mp_end_x_inner = - modifier['width_end']/2 # We assume centered body!
         if 'end_from_body_side' in modifier:
-            modified_mp_end_x_inner = body_edge['left'] + modifier['end_from_body_side']
+            modified_mp_end_x_inner = body_rect.left + modifier['end_from_body_side']
 
         if pins_toward_bottom:
             mid_line_y_mount_pad_side += modifier['depth']
@@ -241,12 +412,12 @@ def generate_one_footprint(global_config: GC.GlobalConfig, idx, pincount,
             silk_x_offset = global_config.silk_fab_offset
 
         poly_fab_mp_side=[
-            {'x': body_edge['left'], 'y': body_edge_mount_pad},
+            {'x': body_rect.left, 'y': body_edge_mount_pad},
             {'x': modified_mp_start_x_inner, 'y': body_edge_mount_pad},
             {'x': modified_mp_end_x_inner, 'y': mid_line_y_mount_pad_side},
             {'x': -modified_mp_end_x_inner, 'y': mid_line_y_mount_pad_side},
             {'x': -modified_mp_start_x_inner, 'y': body_edge_mount_pad},
-            {'x': body_edge['right'], 'y': body_edge_mount_pad}
+            {'x': body_rect.right, 'y': body_edge_mount_pad}
         ]
 
         poly_silk_mp_side=[
@@ -264,44 +435,47 @@ def generate_one_footprint(global_config: GC.GlobalConfig, idx, pincount,
             ]
     else:
         poly_fab_mp_side=[
-            {'x': body_edge['left'], 'y': body_edge_mount_pad},
-            {'x': body_edge['right'], 'y': body_edge_mount_pad}
+            {'x': body_rect.left, 'y': body_edge_mount_pad},
+            {'x': body_rect.right, 'y': body_edge_mount_pad}
         ]
         poly_silk_mp_side=[
             {'x': mp_inner_edge_x_left_silk, 'y': body_edge_mount_pad - silk_y_offset_pin_side},
             {'x': -mp_inner_edge_x_left_silk, 'y': body_edge_mount_pad - silk_y_offset_pin_side}
         ]
 
-    if series_definition['rel_body_edge_y'] > pad_edge_silk_center_offset:
-        poly_silk_mp_side[0]['x'] = body_edge['left']
-        poly_silk_mp_side[len(poly_silk_mp_side)-1]['x'] = body_edge['right']
+    if series_props.rel_body_edge_y > pad_edge_silk_center_offset:
+        poly_silk_mp_side[0]['x'] = body_rect.left
+        poly_silk_mp_side[len(poly_silk_mp_side)-1]['x'] = body_rect.right
 
-    if series_definition['rel_body_edge_y'] > pad_edge_silk_center_offset + global_config.silk_line_length_min:
-        poly_silk_mp_side[0]['x'] = body_edge['left'] - global_config.silk_fab_offset
-        poly_silk_mp_side[len(poly_silk_mp_side)-1]['x'] = body_edge['right'] + global_config.silk_fab_offset
+    if series_props.rel_body_edge_y > pad_edge_silk_center_offset + global_config.silk_line_length_min:
+        poly_silk_mp_side[0]['x'] = body_rect.left - global_config.silk_fab_offset
+        poly_silk_mp_side[len(poly_silk_mp_side)-1]['x'] = body_rect.right + global_config.silk_fab_offset
 
-        poly_silk_mp_side.insert(0,{'x': body_edge['left'] - global_config.silk_fab_offset, 'y': silk_y_mp_outside})
-        poly_silk_mp_side.append({'x': body_edge['right'] + global_config.silk_fab_offset, 'y': silk_y_mp_outside})
+        poly_silk_mp_side.insert(0,{'x': body_rect.left - global_config.silk_fab_offset, 'y': silk_y_mp_outside})
+        poly_silk_mp_side.append({'x': body_rect.right + global_config.silk_fab_offset, 'y': silk_y_mp_outside})
 
-    if series_definition.get('no_automatic_silk_autline','False') != 'True':
+    if series_props.automatic_silk_outline:
         kicad_mod.append(PolygonLine(polygon=poly_silk_mp_side, layer='F.SilkS', width=global_config.silk_line_width))
 
     kicad_mod.append(PolygonLine(polygon=poly_fab_mp_side, layer='F.Fab', width=global_config.fab_line_width))
 
-    kicad_mod.append(Line(start=[body_edge['left'], side_line_y_pin_side], end=[body_edge['left'], body_edge_mount_pad],
+    kicad_mod.append(Line(start=[body_rect.left, side_line_y_pin_side], end=[body_rect.left, body_edge_mount_pad],
                             layer='F.Fab', width=global_config.fab_line_width))
 
-    kicad_mod.append(Line(start=[body_edge['right'], side_line_y_pin_side], end=[body_edge['right'], body_edge_mount_pad],
+    kicad_mod.append(Line(start=[body_rect.right, side_line_y_pin_side], end=[body_rect.right, body_edge_mount_pad],
                             layer='F.Fab', width=global_config.fab_line_width))
 
     ###################### Additional Drawing ###########################
     if 'additional_drawing' in series_definition:
         for drawing in series_definition['additional_drawing']:
-            parseAdditionalDrawing(kicad_mod, drawing, global_config, series_definition, body_edge, pincount)
+            parseAdditionalDrawing(kicad_mod, drawing, global_config, series_definition,
+                                   # Temporary reconstruction of the dict-rect values util we replace this function entirely.
+                                   {'left': body_rect.left, 'right': body_rect.right, 'top': body_rect.top, 'bottom': body_rect.bottom},
+                                   pincount)
 
     ############################# CrtYd ##################################
-    mp_left_edge = mount_pad_left_x_pos - mounting_pad_size[0]/2
-    bounding_box_x1 = body_edge['left'] if body_edge['left'] < mp_left_edge else mp_left_edge
+    mp_left_edge = mount_pad_left_x_pos - mounting_pad_size.x / 2
+    bounding_box_x1 = body_rect.left if body_rect.left < mp_left_edge else mp_left_edge
     bounding_box_x2 = -bounding_box_x1
     if pins_toward_bottom:
         bounding_box_y1 = bounding_box_y_mount_pad_side
@@ -327,11 +501,11 @@ def generate_one_footprint(global_config: GC.GlobalConfig, idx, pincount,
 
     marker_len = global_config.fab_pin1_marker_length
 
-    if series_definition['pad1_position'] == 'bottom-left':
+    if series_props.pins_toward_bottom:
         poly_pin1_marker = [
-            {'x':-dimension_A/2 - marker_len/2,'y': body_edge['bottom']},
-            {'x':-dimension_A/2,'y': body_edge['bottom'] - marker_len/sqrt(2)},
-            {'x':-dimension_A/2 + marker_len/2,'y': body_edge['bottom']}
+            {'x':-dimension_A/2 - marker_len/2,'y': body_rect.bottom},
+            {'x':-dimension_A/2,'y': body_rect.bottom - marker_len/sqrt(2)},
+            {'x':-dimension_A/2 + marker_len/2,'y': body_rect.bottom}
         ]
         poly_pin1_marker_small = [
             {'x':-dimension_A/2-marker_len/4,'y': cy2 + marker_len/sqrt(8)},
@@ -341,9 +515,9 @@ def generate_one_footprint(global_config: GC.GlobalConfig, idx, pincount,
         ]
     else:
         poly_pin1_marker = [
-            {'x':-dimension_A/2 - marker_len/2,'y': body_edge['top']},
-            {'x':-dimension_A/2,'y': body_edge['top'] + marker_len/sqrt(2)},
-            {'x':-dimension_A/2 + marker_len/2,'y': body_edge['top']}
+            {'x':-dimension_A/2 - marker_len/2,'y': body_rect.top},
+            {'x':-dimension_A/2,'y': body_rect.top + marker_len/sqrt(2)},
+            {'x':-dimension_A/2 + marker_len/2,'y': body_rect.top}
         ]
         poly_pin1_marker_small = [
             {'x':-dimension_A/2-marker_len/4,'y': cy1 - marker_len/sqrt(8)},
@@ -360,15 +534,16 @@ def generate_one_footprint(global_config: GC.GlobalConfig, idx, pincount,
     if needs_additional_silk_pin1_marker:
         kicad_mod.append(PolygonLine(polygon=poly_pin1_marker_small, layer='F.SilkS', width=global_config.silk_line_width))
 
-
     ######################### Text Fields ###############################
-    text_center = series_definition.get('text_inside_pos', 'center')
-    addTextFields(kicad_mod=kicad_mod, configuration=global_config, body_edges=body_edge,
-        courtyard={'top':cy1, 'bottom':cy2}, fp_name=footprint_name, text_y_inside_position=text_center)
+    addTextFields(kicad_mod=kicad_mod, configuration=global_config, body_edges=body_rect.bounding_box,
+        courtyard={'top':cy1, 'bottom':cy2}, fp_name=footprint_name,
+        text_y_inside_position=series_props.text_inside_pos)
 
     ########################### file names ###############################
-    lib_name = configuration['lib_name_format_string'].format(man=group_definition['manufacturer'],
-        series=series_definition['series'])
+    lib_name = conn_config.lib_name_format_string.format(
+        man=series_props.manufacturer,
+        series=series_props.series,
+    )
     model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}{model3d_path_suffix:s}'.format(
         model3d_path_prefix=global_config.model_3d_prefix, lib_name=lib_name, fp_name=footprint_name,
         model3d_path_suffix=global_config.model_3d_suffix)
@@ -377,22 +552,6 @@ def generate_one_footprint(global_config: GC.GlobalConfig, idx, pincount,
     lib = KicadPrettyLibrary(lib_name, None)
     lib.save(kicad_mod)
 
-
-def generate_series(global_config: GC.GlobalConfig, configuration,
-                    series_definition, id, group_definition):
-    idx = 0
-    pinrange_def_type, pinrange_def = series_definition['pinrange']
-    if pinrange_def_type == 'range':
-        pinrange = range(*pinrange_def)
-    elif pinrange_def_type == 'list':
-        pinrange = pinrange_def
-    else:
-        raise("Pinrange definition error in part {:s}".format(id))
-
-    for pincount in pinrange:
-        generate_one_footprint(global_config, idx, pincount,
-                               series_definition, configuration, group_definition)
-        idx += 1
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='use confing .yaml files to create footprints.')
@@ -403,20 +562,24 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     global_config = GC.GlobalConfig.load_from_file(args.global_config)
+    conn_config = ConnectorsConfiguration.load_from_file(args.series_config)
 
-    with open(args.series_config, 'r') as config_stream:
-        try:
-            configuration = yaml.safe_load(config_stream)
-        except yaml.YAMLError as exc:
-            print(exc)
     for filepath in args.files:
-        with open(filepath, 'r') as stream:
+        with open(filepath, "r") as stream:
             try:
                 yaml_file = yaml.safe_load(stream)
             except yaml.YAMLError as exc:
                 print(exc)
-        series_definitions = yaml_file['device_definition']
-        for series_definition_id in series_definitions:
-            generate_series(global_config, configuration,
-                series_definitions[series_definition_id], series_definition_id,
-                yaml_file['group_definitions'])
+        series_definitions = yaml_file["device_definition"]
+
+        for series_id, series_definition in series_definitions.items():
+            group_definition = yaml_file["group_definitions"]
+
+            series_props = SMDSingleRowPlusMPProperties(
+                series_definition, group_definition, series_id
+            )
+
+            for idx, pincount in enumerate(series_props.pin_range):
+                generate_one_footprint(
+                    global_config, idx, pincount, series_props, conn_config
+                )

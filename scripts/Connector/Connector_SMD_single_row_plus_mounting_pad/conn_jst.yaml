@@ -311,7 +311,7 @@ device_definition:
         # body_fin_width: 0.8
         # x body edge relative to nearest pin
         rel_body_edge_x: 0.5
-        no_automatic_silk_autline: 'True'
+        automatic_silk_outline: False
         additional_drawing:
             -
                 layer: 'F.SilkS'
