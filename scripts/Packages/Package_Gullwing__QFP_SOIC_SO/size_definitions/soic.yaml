@@ -1,6 +1,6 @@
 # SOIC - small outline integrated circuit
 #
-# This file cointains JEDEC SOIC and JEITA/EIAJ P-SOP (or simplifying SOP) packages with lead space / pitch 1.27 mm
+# This file cointains JEDEC SOIC and JEITA/EIAJ P-SOP (or simplifying SOP) packages with lead space / pitch 1.27 mm (and some 2.54 mm), and maximum height greater than 1.70 mm
 #
 # Here some definitions of a JEDEC SOIC package (see JEP95 from JEDEC JC-11 committee for more info):
 #
@@ -21,7 +21,8 @@
 #
 # [1] there are other packages with pitch different from 1.27 mm, please do not add them to this file
 #
-# For more info about JEITA/EIAJ SOP packages, see ED-7311-19 and EDR-7320 standards
+# For more info about JEITA/EIAJ SOP packages, see ED-7311-19, ED-7311-21**, EDR-7320 and EDR-7326A** standards
+# ** packages with top / bottom heat sink (HSOP), but there are also other packages with a pitch smaller than 1.00 mm (HSSOP)
 #
 # If you are making a new SOP package (from JEITA), do this:
 # - name it as 'SOIC-...' for example
@@ -34,7 +35,9 @@ FileHeader:
   device_type: 'SOIC' # Use this in each new footprint definition for now, until refactor is completely
 
 
-# Packages with PITCH = 2.54 mm:
+##############################################################################
+# 2.54 PITCH
+##############################################################################
 
 SOP-4_3.8x4.1mm_P2.54mm:
   # it was previously in sop.yaml file
@@ -311,7 +314,9 @@ SOP-8_6.605x9.655mm_P2.54mm:
   num_pins_y: 4
 
 
-# Packages with PITCH = 1.27 mm:
+##############################################################################
+# 1.27 PITCH
+##############################################################################
 
 SOP-4_4.4x2.6mm_P1.27mm:
   # it was previously in sop.yaml file

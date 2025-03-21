@@ -1,6 +1,6 @@
 # SSOP - shrink small outline package
 #
-# This file cointains JEDEC SSOP and JEITA/EIAJ P-SSOP packages with lead space / pitch equal or less than 1.00 mm, and height greater than 1.70 mm
+# This file cointains JEDEC SSOP and JEITA/EIAJ P-SSOP packages with lead space / pitch equal or less than 1.00 mm, and maximum height greater than 1.70 mm
 #
 # Here some definitions of a JEDEC SOIC package (see JEP95 from JEDEC JC-11 committee for more info):
 #
@@ -13,10 +13,11 @@
 # MO-154    | 0.40 / 0.50 mm          | 3.9 mm               | 2.00 mm           | 32, 40, 48, 80, 96                                                          |
 # MO-164    | 0.50 / 1.00 mm          | 9.90 mm              | 2.90 mm           | 36, 70                                                                      |
 #
-# Other JEDEC standards: MO-166 *, MO-180 *, MO-184 *, MO-226, MO-230 *, MO-271, MO-272, MO-286
+# Other JEDEC standards: MO-166*, MO-180*, MO-184*, MO-226, MO-230*, MO-271, MO-286
 #                        * just for some variations, these standards overlaps SOIC
 #
-# JEITA standards: ED-7311-20 and EDR-7314A
+# JEITA standards: ED-7311-20, ED-7311-21**, EDR-7314A and EDR-7326A**
+#                  ** packages with top / bottom heat sink (HSSOP), but there are also packages with a 1.27 mm pitch (HSOP), as well as some with maximum height smaller than 1.70 mm (such as TSSOP)
 
 FileHeader:
   library_Suffix: 'SO'
