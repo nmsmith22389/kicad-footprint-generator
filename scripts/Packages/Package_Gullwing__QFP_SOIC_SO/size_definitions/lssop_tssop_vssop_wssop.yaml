@@ -1,12 +1,35 @@
-# TSSOP - thin shrink small outline package
-# HTSSOP - heat sink TSSOP (thermally enhanced variation)
+# SSOP subgroup (shrink small outline package)
 #
-# This file cointains JEDEC TSSOP and HTSSOP, which has:
+# This file cointains JEDEC SSOP and JEITA/EIAJ P-SSOP packages with lead space / pitch equal or less than 1.00 mm,
+# and maximum height SMALLER than 1.70 mm
+#
+# classification according to JEITA EDR-7314A (height A2 does not include the leads):
+#
+#         height A (max)   A2 (nominal)    meaning
+# LSSOP |    1.70 mm    |    1.40 mm    |  Low SSOP
+# TSSOP |    1.20 mm    |    1.00 mm    |  Thin SSOP
+# VSSOP |    1.00 mm    |    0.80 mm    |  Very Thin SSOP
+# WSSOP |    0.80 mm    |    0.60 mm    |  Very Very Thin SSOP
+#
+# Packages with heat sink will have the letter 'H', such as HTSSOP (thermally enhanced variation of TSSOP).
+#
+# Relevant JEDEC / JEITA standards:
+#
+# Standard               | package(s)
+# JEDEC MO-272           | LSSOP
+# JEDEC MO-153, MO-194   | TSSOP / HTSSOP
+# JEDEC MO-187           | LSSOP / VSSOP / TSSOP, some manufacturers call packages from this standard as MSOP (3x3mm packages)
+# JEITA ED-7311-20       | LSSOP / TSSOP / VSSOP, with SSOP definitions included as well
+# JEITA ED-7311-21       | some HTSSOP / HVSSOP (packages with top / bottom heat sink), it overlaps HSSOP and HSOP
+#
+# Others: JEDEC MO-351
+#
+##############################################################################
+#
+# JEDEC TSSOP and HTSSOP has:
 # - lead space / pitch 0.40 / 0.50 / 0.635 / 0.65 mm
 # - width 2.80 / 4.40 / 6.10 / 8.00
 # - height equal or smaller than 1.20 mm
-#
-# Relevant JEDEC standards: MO-153, MO-194
 
 FileHeader:
   library_Suffix: 'SO'
