@@ -34,6 +34,7 @@ import yaml
 from KicadModTree import *
 from scripts.tools.drawing_tools import round_to_grid
 from scripts.tools.footprint_text_fields import addTextFields
+from scripts.tools.global_config_files import global_config as GC
 
 series = "SlimStack"
 series_long = 'SlimStack Fine-Pitch SMT Board-to-Board Connectors'
@@ -53,7 +54,7 @@ part_code = "502426-{pn:s}"
 
 pitch = 0.4
 
-def generate_one_footprint(partnumber, configuration):
+def generate_one_footprint(global_config: GC.GlobalConfig, partnumber, configuration):
     pincount = int(partnumber[:2])
     if partnumber[2:3] == "1":
         datasheet = "http://www.molex.com/pdm_docs/sd/5024260810_sd.pdf"
@@ -164,6 +165,7 @@ if __name__ == "__main__":
     with open(args.global_config, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
+            global_config = GC.GlobalConfig(configuration)
         except yaml.YAMLError as exc:
             print(exc)
 
@@ -174,4 +176,4 @@ if __name__ == "__main__":
             print(exc)
 
     for partnumber in valid_pns:
-        generate_one_footprint(partnumber, configuration)
+        generate_one_footprint(global_config, partnumber, configuration)

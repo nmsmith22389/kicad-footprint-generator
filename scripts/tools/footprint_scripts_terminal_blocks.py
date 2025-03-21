@@ -298,8 +298,7 @@ def makeTerminalBlockStd(
                     size=pad,
                     drill=ddrill,
                     layers=pad_layers,
-                    radius_ratio=0.25,
-                    maximum_radius=0.25,
+                    round_radius_handler=global_config.roundrect_radius_handler,
                 )
             )
             pin1_keepouts += DT.addKeepoutRect(
@@ -878,8 +877,7 @@ def makeTerminalBlockVertical(
                     size=pad,
                     drill=ddrill,
                     layers=pad_layers,
-                    radius_ratio=0.25,
-                    maximum_radius=0.25,
+                    round_radius_handler=global_config.roundrect_radius_handler,
                 )
             )
             pin1_keepouts += DT.addKeepoutRect(
@@ -1441,8 +1439,7 @@ def makeTerminalBlock45Degree(
                     size=pad,
                     drill=ddrill,
                     layers=pad_layers,
-                    radius_ratio=0.25,
-                    maximum_radius=0.25,
+                    round_radius_handler=global_config.roundrect_radius_handler,
                 )
             )
             pin1_keepouts += DT.addKeepoutRect(

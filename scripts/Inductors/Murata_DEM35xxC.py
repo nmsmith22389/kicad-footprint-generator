@@ -83,14 +83,16 @@ f.append(Line(start=[xSilkBottomLeft, ySilkBottom],
               layer="F.SilkS", width=wSilkS))
 
 padShape = Pad.SHAPE_ROUNDRECT
-radiusRatio = 0.2
+radius_handler  = RoundRadiusHandler(
+    radius_ratio=0.2,
+)
 
 f.append(Pad(number=1, type=Pad.TYPE_SMT, shape=padShape,
              at=[xPadLeft, yCenter], size=padSize, layers=Pad.LAYERS_SMT,
-             radius_ratio=radiusRatio))
+             round_radius_handler=radius_handler))
 f.append(Pad(number=2, type=Pad.TYPE_SMT, shape=padShape,
              at=[xPadRight, yCenter], size=padSize, layers=Pad.LAYERS_SMT,
-             radius_ratio=radiusRatio))
+             round_radius_handler=radius_handler))
 
 lib = KicadPrettyLibrary(lib_name, None)
 lib.save(f)

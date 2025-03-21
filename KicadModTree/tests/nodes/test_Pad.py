@@ -1,4 +1,4 @@
-from KicadModTree.nodes import Footprint, FootprintType
+from KicadModTree.nodes import Footprint, FootprintType, RoundRadiusHandler
 from KicadModTree.nodes.base.Pad import Pad
 from KicadModTree.util.corner_selection import CornerSelection
 from kilibs.geom import Vector2D
@@ -26,6 +26,9 @@ PAD_CHAMFER_KWARGS = {
     "layers": ["F.Cu"],
     "chamfer_corners": CornerSelection(
         corner_selection={CornerSelection.BOTTOM_LEFT: True}
+    ),
+    "round_radius_handler": RoundRadiusHandler(
+        radius_ratio=0.25,
     ),
 }
 

@@ -22,6 +22,7 @@ from math import sqrt
 from KicadModTree import *
 from scripts.tools.drawing_tools import round_to_grid
 from scripts.tools.footprint_text_fields import addTextFields
+from scripts.tools.global_config_files import global_config as GC
 
 series = "J2100"
 manufacturer = 'JST'
@@ -52,7 +53,7 @@ def incrementPadNumber(old_number):
 
 #FP description and tags
 
-def generate_one_footprint(pins, configuration, keying):
+def generate_one_footprint(global_config: GC.GlobalConfig, pins, configuration, keying):
     #calculate fp dimensions
     pins_per_row = int(pins / number_of_rows)
     A = (pins_per_row - 1) * pitch
@@ -101,7 +102,9 @@ def generate_one_footprint(pins, configuration, keying):
             initial=row_idx*pins_per_row+1, start=[0, position_y],
             x_spacing=pitch, pincount=pins_per_row, increment=1,
             size=pad_size, drill=drill, type=Pad.TYPE_THT,
-            shape=pad_shape, layers=Pad.LAYERS_THT, **optional_pad_params))
+            shape=pad_shape, layers=Pad.LAYERS_THT,
+            round_radius_handler=global_config.roundrect_radius_handler,
+            **optional_pad_params))
 
     #draw the component outline
     x1 = A/2 - B/2
@@ -231,6 +234,7 @@ if __name__ == "__main__":
     with open(args.global_config, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
+            global_config = GC.GlobalConfig(configuration)
         except yaml.YAMLError as exc:
             print(exc)
 
@@ -241,7 +245,7 @@ if __name__ == "__main__":
             print(exc)
 
     #for pins_per_row in pin_range:
-        #generate_one_footprint(pins_per_row, configuration)
+        #generate_one_footprint(global_config, pins_per_row, configuration)
     for pin_count in pin_range:
-        generate_one_footprint(pin_count, configuration, 'X')
-        #generate_one_footprint(pin_count, configuration, 'Y')
+        generate_one_footprint(global_config, pin_count, configuration, 'X')
+        #generate_one_footprint(global_config, pin_count, configuration, 'Y')

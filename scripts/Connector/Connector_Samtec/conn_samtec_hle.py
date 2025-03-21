@@ -22,6 +22,8 @@ import yaml
 from KicadModTree import *
 from scripts.tools.drawing_tools import round_to_grid
 from scripts.tools.footprint_text_fields import addTextFields
+from scripts.tools.global_config_files import global_config as GC
+
 
 series = 'HLE'
 series_long = 'HLE .100" Tiger Beam Cost-effective Single Beam Socket Strip'
@@ -139,7 +141,7 @@ variant_params = {
         },
 }
 
-def generate_one_footprint(pins_per_row, variant, configuration):
+def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row, variant, configuration):
     is_smd = variant_params[variant].get('smd', False)
 
     mpn = variant_params[variant]['part_code'].format(n=pins_per_row)
@@ -278,10 +280,12 @@ def generate_one_footprint(pins_per_row, variant, configuration):
     kicad_mod.append(PadArray(start=[pad1_x, pad_row1_y], initial=1,
         pincount=pins_per_row, increment=2,  x_spacing=pitch, size=pad_size,
         type=pad_type, shape=pad_shape, layers=pad_layer, drill=pad_drill,
+        round_radius_handler=global_config.roundrect_radius_handler,
         **optional_pad_params))
     kicad_mod.append(PadArray(start=[pad1_x, pad_row2_y], initial=2,
         pincount=pins_per_row, increment=2, x_spacing=pitch, size=pad_size,
         type=pad_type, shape=pad_shape, layers=pad_layer, drill=pad_drill,
+        round_radius_handler=global_config.roundrect_radius_handler,
         **optional_pad_params))
 
     # ######################## Fabrication Layer ###########################
@@ -415,6 +419,7 @@ if __name__ == "__main__":
     with open(args.global_config, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
+            global_config = GC.GlobalConfig(configuration)
         except yaml.YAMLError as exc:
             print(exc)
 
@@ -426,4 +431,4 @@ if __name__ == "__main__":
 
     for variant in variant_params:
         for pins_per_row in variant_params[variant]['pins_per_row_range']:
-            generate_one_footprint(pins_per_row, variant, configuration)
+            generate_one_footprint(global_config, pins_per_row, variant, configuration)

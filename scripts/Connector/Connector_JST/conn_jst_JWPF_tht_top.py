@@ -6,6 +6,7 @@ import yaml
 from KicadModTree import *
 from scripts.tools.drawing_tools import round_to_grid
 from scripts.tools.footprint_text_fields import addTextFields
+from scripts.tools.global_config_files import global_config as GC
 
 series = "JWPF"
 manufacturer = 'JST'
@@ -50,7 +51,7 @@ jwpf_lengths = {
 pin_range = [2, 3, 4, 6, 8]
 
 
-def generate_one_footprint(pincount, configuration):
+def generate_one_footprint(global_config: GC.GlobalConfig, pincount, configuration):
     if pincount in [6, 8]:
         number_of_rows = 2
         pin_per_row = int(pincount / 2)
@@ -117,6 +118,7 @@ def generate_one_footprint(pincount, configuration):
             pincount=pin_per_row, y_spacing=pitch,
             type=Pad.TYPE_THT, shape=pad_shape,
             size=pad_size, drill=pad_drill, layers=Pad.LAYERS_THT,
+            round_radius_handler=global_config.roundrect_radius_handler,
             **optional_pad_params))
 
     # Add mounting hole
@@ -237,6 +239,7 @@ if __name__ == "__main__":
     with open(args.global_config, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
+            global_config = GC.GlobalConfig(configuration)
         except yaml.YAMLError as exc:
             print(exc)
 
@@ -247,4 +250,4 @@ if __name__ == "__main__":
             print(exc)
 
     for pincount in pin_range:
-        generate_one_footprint(pincount, configuration)
+        generate_one_footprint(global_config, pincount, configuration)

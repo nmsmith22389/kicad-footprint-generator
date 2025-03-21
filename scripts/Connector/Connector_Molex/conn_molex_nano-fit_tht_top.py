@@ -164,6 +164,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, params, configu
             pincount=pincount, initial=initial, start=start,
             y_spacing=pitch, type=Pad.TYPE_THT, shape=pad_shape,
             size=pad_size, drill=drill, layers=Pad.LAYERS_THT,
+            round_radius_handler=global_config.roundrect_radius_handler,
             **optional_pad_params))
 
     #add the locating pin

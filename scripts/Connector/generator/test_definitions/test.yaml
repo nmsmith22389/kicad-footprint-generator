@@ -134,7 +134,7 @@ Polygon_Test1:
   pad_pitch: 1.0
   pads:
     size: [0.75, 2.25]
-    rratio: 0.5
+    radius_ratio: 0.5
   body_size:
     x_offset: 5.0
     y: 5.0
@@ -148,7 +148,7 @@ Polygon_Test1:
     pad:
       shape: 'rect'
       size: [0.85, 2.5]
-      rratio: 0.5
+      radius_ratio: 0.5
 
 Polygon_Test:
   inherit: 'defaults'

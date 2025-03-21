@@ -5,7 +5,10 @@ from math import sqrt
 
 from KicadModTree import *  # NOQA
 from scripts.tools.drawing_tools import *  # NOQA
+from scripts.tools.global_config_files import global_config as GC
 
+
+global_config = GC.DefaultGlobalConfig()
 
 crt_offset = 0.5 # different for connectors
 txt_offset = 1
@@ -548,11 +551,13 @@ def makeIdcHeader(rows, cols, rm, coldist, body_width, overlen_top, overlen_bott
         # For SMD footprints, pad 1 location is not (0,0)
         for start_pos, initial in zip([-coldist/2, coldist/2], range(1, cols + 1)):
             kicad_modg.append(PadArray(pincount=rows, spacing=[0,rm], start=[start_pos,-(rows-1)*rm/2], initial=initial, increment=cols,
-                type=pad_type, shape=pad_shape, size=pad, drill=ddrill, layers=pad_layers))
+                type=pad_type, shape=pad_shape, size=pad, drill=ddrill, layers=pad_layers,
+                round_radius_handler=global_config.roundrect_radius_handler))
     else:
         for start_pos, initial in zip([0, coldist], range(1, cols + 1)):
             kicad_modg.append(PadArray(pincount=rows, spacing=[0,rm], start=[start_pos,0], initial=initial, increment=cols,
-                type=pad_type, shape=pad_shape, size=pad, drill=ddrill, layers=pad_layers))
+                type=pad_type, shape=pad_shape, size=pad, drill=ddrill, layers=pad_layers,
+                round_radius_handler=global_config.roundrect_radius_handler))
 
     # create mounting hole pads
     if mh_present:

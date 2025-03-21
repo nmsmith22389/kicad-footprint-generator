@@ -22,6 +22,8 @@ import yaml
 from KicadModTree import *
 from scripts.tools.drawing_tools import round_to_grid
 from scripts.tools.footprint_text_fields import addTextFields
+from scripts.tools.global_config_files import global_config as GC
+
 
 draw_inner_details = False
 
@@ -100,7 +102,9 @@ peg_drill = 3.18
 peg_to_nearest_pin = 4.44
 
 
-def generate_one_footprint(pins_per_row, variant_param, configuration):
+def generate_one_footprint(
+    global_config: GC.GlobalConfig, pins_per_row, variant_param, configuration
+):
     silk_pad_off = configuration['silk_pad_clearance']+configuration['silk_line_width']/2
     off = configuration['silk_fab_offset']
 
@@ -198,6 +202,7 @@ def generate_one_footprint(pins_per_row, variant_param, configuration):
             pincount=pins_per_row, initial=initial, start=[row_idx*row, 0],
             y_spacing=pitch, type=Pad.TYPE_THT, shape=pad_shape,
             size=pad_size, drill=drill, layers=Pad.LAYERS_THT,
+            round_radius_handler=global_config.roundrect_radius_handler,
             **optional_pad_params))
 
     for peg in peg_pos:
@@ -484,6 +489,7 @@ if __name__ == "__main__":
     with open(args.global_config, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
+            global_config = GC.GlobalConfig(configuration)
         except yaml.YAMLError as exc:
             print(exc)
 
@@ -497,4 +503,4 @@ if __name__ == "__main__":
         variant_param = variant_params[variant]
 
         for pins_per_row in variant_param['pins_per_row_range']:
-            generate_one_footprint(pins_per_row, variant_param, configuration)
+            generate_one_footprint(global_config, pins_per_row, variant_param, configuration)

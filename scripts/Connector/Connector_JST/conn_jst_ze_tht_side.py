@@ -2,11 +2,13 @@
 
 import argparse
 import yaml
+from math import floor, ceil
 
 from KicadModTree import *
 from scripts.tools.drawing_tools import round_to_grid
 from scripts.tools.footprint_text_fields import addTextFields
-from math import floor,ceil
+from scripts.tools.global_config_files import global_config as GC
+
 
 series = "ZE"
 manufacturer = 'JST'
@@ -22,7 +24,7 @@ pad_size = [1.4, 1.75] # Using same pad size as top entry
 
 mh_drill = 1.15
 
-def generate_one_footprint(pincount, configuration):
+def generate_one_footprint(global_config: GC.GlobalConfig, pincount, configuration):
     mpn = "S{pincount:02}B-ZESK-2D".format(pincount=pincount)
     orientation_str = configuration['orientation_options'][orientation]
     footprint_name = configuration['fp_name_format_string'].format(man=manufacturer,
@@ -112,7 +114,8 @@ def generate_one_footprint(pincount, configuration):
             x_spacing=pitch*2,
             pincount=ceil(pincount/2) if row_idx == 0 else floor(pincount/2),
             size=pad_size, drill=drill, increment=2,
-            type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, layers=Pad.LAYERS_THT,
+            type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL,  layers=Pad.LAYERS_THT,
+            round_radius_handler=global_config.roundrect_radius_handler,
             **optional_pad_params))
     #create even numbered pads
     #createNumberedPadsTHT(kicad_mod, floor(pincount/2), pitch * 2, drill, pad_size, starting=2, increment=2, y_off=y_spacing, x_off=pitch)
@@ -183,6 +186,7 @@ if __name__ == "__main__":
     with open(args.global_config, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
+            global_config = GC.GlobalConfig(configuration)
         except yaml.YAMLError as exc:
             print(exc)
 
@@ -193,4 +197,4 @@ if __name__ == "__main__":
             print(exc)
 
     for pincount in range(2, 17):
-        generate_one_footprint(pincount, configuration)
+        generate_one_footprint(global_config, pincount, configuration)

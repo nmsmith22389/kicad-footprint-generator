@@ -276,9 +276,7 @@ class PLCCGenerator(FootprintGenerator):
 
         pad_shape_details = {}
         pad_shape_details['shape'] = Pad.SHAPE_ROUNDRECT
-        pad_shape_details['radius_ratio'] = configuration.get('round_rect_radius_ratio', 0)
-        if 'round_rect_max_radius' in configuration:
-            pad_shape_details['maximum_radius'] = configuration['round_rect_max_radius']
+        pad_shape_details['round_radius_handler'] = self.global_config.roundrect_radius_handler
 
         init = 1
         kicad_mod.append(PadArray(
@@ -477,8 +475,6 @@ if __name__ == "__main__":
     parser.add_argument('--density', type=str, nargs='?', help='Density level (L,N,M)', default='N')
     parser.add_argument('--ipc_doc', type=str, nargs='?', help='IPC definition document',
                         default='../ipc_definitions.yaml')
-    parser.add_argument('--force_rectangle_pads', action='store_true',
-                        help='Force the generation of rectangle pads instead of rounded rectangle')
 
     args = FootprintGenerator.add_standard_arguments(parser)
 
@@ -500,10 +496,6 @@ if __name__ == "__main__":
             configuration.update(yaml.safe_load(config_stream))
         except yaml.YAMLError as exc:
             print(exc)
-
-    if args.force_rectangle_pads:
-        configuration['round_rect_max_radius'] = None
-        configuration['round_rect_radius_ratio'] = 0
 
     FootprintGenerator.run_on_files(
         PLCCGenerator,

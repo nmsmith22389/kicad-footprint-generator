@@ -7,6 +7,7 @@ import yaml
 from KicadModTree import *
 from scripts.tools.drawing_tools import round_to_grid
 from scripts.tools.footprint_text_fields import addTextFields
+from scripts.tools.global_config_files import global_config as GC
 
 series = "EH"
 manufacturer = 'JST'
@@ -19,7 +20,7 @@ pad_to_pad_clearance = 0.8
 pad_copper_y_solder_length = 0.5 #How much copper should be in y direction?
 min_annular_ring = 0.15
 
-def generate_one_footprint(pincount, configuration):
+def generate_one_footprint(global_config: GC.GlobalConfig, pincount, configuration):
     mpn = "B{pincount}B-EH-A".format(pincount=pincount)
     orientation_str = configuration['orientation_options'][orientation]
     footprint_name = configuration['fp_name_format_string'].format(man=manufacturer,
@@ -61,6 +62,7 @@ def generate_one_footprint(pincount, configuration):
         x_spacing=pitch, pincount=pincount,
         size=pad_size, drill=drill,
         type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, layers=Pad.LAYERS_THT,
+        round_radius_handler=global_config.roundrect_radius_handler,
         **optional_pad_params))
 
 
@@ -153,6 +155,7 @@ if __name__ == "__main__":
     with open(args.global_config, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
+            global_config = GC.GlobalConfig(configuration)
         except yaml.YAMLError as exc:
             print(exc)
 
@@ -163,4 +166,4 @@ if __name__ == "__main__":
             print(exc)
 
     for pincount in range(2, 16):
-        generate_one_footprint(pincount, configuration)
+        generate_one_footprint(global_config, pincount, configuration)

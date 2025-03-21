@@ -7,6 +7,7 @@ from math import sqrt
 from KicadModTree import *
 from scripts.tools.drawing_tools import round_to_grid
 from scripts.tools.footprint_text_fields import addTextFields
+from scripts.tools.global_config_files import global_config as GC
 
 
 pins_per_row_range = range(2,23)
@@ -53,7 +54,7 @@ if pad_size[0] == pad_size[1]:
 else:
     pad_shape = Pad.SHAPE_OVAL
 
-def make_module(pins_per_row, configuration):
+def make_module(global_config: GC.GlobalConfig, pins_per_row, configuration):
     pad_silk_off = configuration['silk_line_width']/2 + configuration['silk_pad_clearance']
     off = configuration['silk_fab_offset']
 
@@ -104,6 +105,7 @@ def make_module(pins_per_row, configuration):
             size=pad_size, drill=drill,
             type=Pad.TYPE_THT, shape=pad_shape, layers=Pad.LAYERS_THT,
             tht_pad1_id=ROW_NAMES[0]+'1',
+            round_radius_handler=global_config.roundrect_radius_handler,
             **optional_pad_params))
 
     ############################ Outline ##############################
@@ -265,6 +267,7 @@ if __name__ == "__main__":
     with open(args.global_config, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
+            global_config = GC.GlobalConfig(configuration)
         except yaml.YAMLError as exc:
             print(exc)
 
@@ -275,4 +278,4 @@ if __name__ == "__main__":
             print(exc)
 
     for pins_per_row in pins_per_row_range:
-        make_module(pins_per_row, configuration)
+        make_module(global_config, pins_per_row, configuration)

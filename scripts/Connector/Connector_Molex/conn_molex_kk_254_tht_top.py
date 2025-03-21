@@ -23,6 +23,8 @@ import yaml
 from KicadModTree import *
 from scripts.tools.drawing_tools import round_to_grid
 from scripts.tools.footprint_text_fields import addTextFields
+from scripts.tools.global_config_files import global_config as GC
+
 
 series = "KK-254"
 series_long = 'KK-254 Interconnect System'
@@ -51,7 +53,7 @@ if pad_size[1] == pad_size[0]:
 eng_mpn = 'AE-6410-{n:02d}A'
 new_mpn_example = '22-27-2{n:02d}1'
 
-def generate_one_footprint(pincount, configuration):
+def generate_one_footprint(global_config: GC.GlobalConfig, pincount, configuration):
 
     mpn = eng_mpn.format(n=pincount)
     new_mpn = new_mpn_example.format(n=pincount)
@@ -97,6 +99,7 @@ def generate_one_footprint(pincount, configuration):
         x_spacing=pitch, pincount=pincount,
         size=pad_size, drill=drill,
         type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, layers=Pad.LAYERS_THT,
+        round_radius_handler=global_config.roundrect_radius_handler,
         **optional_pad_params))
 
     # create fab outline
@@ -205,6 +208,7 @@ if __name__ == "__main__":
     with open(args.global_config, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
+            global_config = GC.GlobalConfig(configuration)
         except yaml.YAMLError as exc:
             print(exc)
 
@@ -215,4 +219,4 @@ if __name__ == "__main__":
             print(exc)
 
     for pincount in range(2, 17):
-        generate_one_footprint(pincount, configuration)
+        generate_one_footprint(global_config, pincount, configuration)

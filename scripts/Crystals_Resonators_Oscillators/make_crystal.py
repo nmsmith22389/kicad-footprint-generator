@@ -6,7 +6,7 @@ import argparse
 from KicadModTree import *  # NOQA
 from scripts.tools.drawing_tools import *
 from scripts.tools.footprint_generator import FootprintGenerator
-from scripts.tools.global_config_files.global_config import GlobalConfig
+from scripts.tools.global_config_files import global_config as GC
 
 
 slk_clearance = 0.2
@@ -621,6 +621,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
                         pad_layers + ".Mask",
                         pad_layers + ".Paste",
                     ],
+                    round_radius_handler=self.global_config.roundrect_radius_handler,
                 )
             )
             kicad_modg.append(
@@ -636,6 +637,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
                         pad_layers + ".Mask",
                         pad_layers + ".Paste",
                     ],
+                    round_radius_handler=self.global_config.roundrect_radius_handler,
                 )
             )
         elif pins == 3:
@@ -652,6 +654,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
                         pad_layers + ".Mask",
                         pad_layers + ".Paste",
                     ],
+                    round_radius_handler=self.global_config.roundrect_radius_handler,
                 )
             )
             kicad_modg.append(
@@ -667,6 +670,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
                         pad_layers + ".Mask",
                         pad_layers + ".Paste",
                     ],
+                    round_radius_handler=self.global_config.roundrect_radius_handler,
                 )
             )
             kicad_modg.append(
@@ -682,6 +686,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
                         pad_layers + ".Mask",
                         pad_layers + ".Paste",
                     ],
+                    round_radius_handler=self.global_config.roundrect_radius_handler,
                 )
             )
         elif pins == 4:
@@ -698,6 +703,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
                         pad_layers + ".Mask",
                         pad_layers + ".Paste",
                     ],
+                    round_radius_handler=self.global_config.roundrect_radius_handler,
                 )
             )
             kicad_modg.append(
@@ -713,6 +719,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
                         pad_layers + ".Mask",
                         pad_layers + ".Paste",
                     ],
+                    round_radius_handler=self.global_config.roundrect_radius_handler,
                 )
             )
             kicad_modg.append(
@@ -728,6 +735,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
                         pad_layers + ".Mask",
                         pad_layers + ".Paste",
                     ],
+                    round_radius_handler=self.global_config.roundrect_radius_handler,
                 )
             )
             kicad_modg.append(
@@ -743,6 +751,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
                         pad_layers + ".Mask",
                         pad_layers + ".Paste",
                     ],
+                    round_radius_handler=self.global_config.roundrect_radius_handler,
                 )
             )
 
@@ -760,6 +769,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
                         pad_layers + ".Mask",
                         pad_layers + ".Paste",
                     ],
+                    round_radius_handler=self.global_config.roundrect_radius_handler,
                 )
             )
             kicad_modg.append(
@@ -775,6 +785,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
                         pad_layers + ".Mask",
                         pad_layers + ".Paste",
                     ],
+                    round_radius_handler=self.global_config.roundrect_radius_handler,
                 )
             )
             kicad_modg.append(
@@ -790,6 +801,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
                         pad_layers + ".Mask",
                         pad_layers + ".Paste",
                     ],
+                    round_radius_handler=self.global_config.roundrect_radius_handler,
                 )
             )
             kicad_modg.append(
@@ -805,6 +817,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
                         pad_layers + ".Mask",
                         pad_layers + ".Paste",
                     ],
+                    round_radius_handler=self.global_config.roundrect_radius_handler,
                 )
             )
             kicad_modg.append(
@@ -820,6 +833,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
                         pad_layers + ".Mask",
                         pad_layers + ".Paste",
                     ],
+                    round_radius_handler=self.global_config.roundrect_radius_handler,
                 )
             )
             kicad_modg.append(
@@ -835,6 +849,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
                         pad_layers + ".Mask",
                         pad_layers + ".Paste",
                     ],
+                    round_radius_handler=self.global_config.roundrect_radius_handler,
                 )
             )
 
@@ -1329,6 +1344,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
                     size=pad,
                     drill=0,
                     layers=["F.Cu", "F.Mask", "F.Paste"],
+                    round_radius_handler=self.global_config.roundrect_radius_handler,
                 )
             )
             kicad_modg.append(
@@ -1340,6 +1356,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
                     size=pad,
                     drill=0,
                     layers=["F.Cu", "F.Mask", "F.Paste"],
+                    round_radius_handler=self.global_config.roundrect_radius_handler,
                 )
             )
         else:
@@ -1352,6 +1369,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
                     size=pad,
                     drill=ddrill,
                     layers=[pad_layers + ".Cu", pad_layers + ".Mask"],
+                    round_radius_handler=self.global_config.roundrect_radius_handler,
                 )
             )
             kicad_modg.append(
@@ -1363,6 +1381,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
                     size=pad,
                     drill=ddrill,
                     layers=[pad_layers + ".Cu", pad_layers + ".Mask"],
+                    round_radius_handler=self.global_config.roundrect_radius_handler,
                 )
             )
 
@@ -1376,6 +1395,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
                     size=[package_pad_size[1], package_pad_size[0]],
                     drill=0,
                     layers=["F.Cu", "F.Mask", "F.Paste"],
+                    round_radius_handler=self.global_config.roundrect_radius_handler,
                 )
             )
             if package_pad_add_holes:
@@ -1388,6 +1408,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
                         size=package_pad_drill_size,
                         drill=package_pad_ddrill,
                         layers=[pad_layers + ".Cu", pad_layers + ".Mask"],
+                        round_radius_handler=self.global_config.roundrect_radius_handler,
                     )
                 )
                 kicad_modg.append(
@@ -1399,6 +1420,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
                         size=package_pad_drill_size,
                         drill=package_pad_ddrill,
                         layers=[pad_layers + ".Cu", pad_layers + ".Mask"],
+                        round_radius_handler=self.global_config.roundrect_radius_handler,
                     )
                 )
 

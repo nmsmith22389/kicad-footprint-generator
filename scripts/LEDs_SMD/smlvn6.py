@@ -108,26 +108,29 @@ f.append(Polygon(nodes=[[xPin1Mid, yPin1Bot],
 
 pads = ["1", "6", "2", "5", "3", "4"]
 padShape = Pad.SHAPE_ROUNDRECT
-radiusRatio = 0.2
+
+radius_handler  = RoundRadiusHandler(
+    radius_ratio=0.2,
+)
 
 f.append(Pad(number=pads[0], type=Pad.TYPE_SMT, shape=padShape,
              at=[xPadLeft, yPadTop], size=pCorner, layers=Pad.LAYERS_SMT,
-             radius_ratio=radiusRatio))
+             round_radius_handler=radius_handler))
 f.append(Pad(number=pads[1], type=Pad.TYPE_SMT, shape=padShape,
              at=[xPadRight, yPadTop], size=pCorner, layers=Pad.LAYERS_SMT,
-             radius_ratio=radiusRatio))
+             round_radius_handler=radius_handler))
 f.append(Pad(number=pads[2], type=Pad.TYPE_SMT, shape=padShape,
              at=[xPadLeft, yCenter], size=p, layers=Pad.LAYERS_SMT,
-             radius_ratio=radiusRatio))
+             round_radius_handler=radius_handler))
 f.append(Pad(number=pads[3], type=Pad.TYPE_SMT, shape=padShape,
              at=[xPadRight, yCenter], size=p, layers=Pad.LAYERS_SMT,
-             radius_ratio=radiusRatio))
+             round_radius_handler=radius_handler))
 f.append(Pad(number=pads[4], type=Pad.TYPE_SMT, shape=padShape,
              at=[xPadLeft, yPadBottom], size=pCorner, layers=Pad.LAYERS_SMT,
-             radius_ratio=radiusRatio))
+             round_radius_handler=radius_handler))
 f.append(Pad(number=pads[5], type=Pad.TYPE_SMT, shape=padShape,
              at=[xPadRight, yPadBottom], size=pCorner, layers=Pad.LAYERS_SMT,
-             radius_ratio=radiusRatio))
+             round_radius_handler=radius_handler))
 
 file_handler = KicadPrettyLibrary(lib_name, None)
 file_handler.save(f)

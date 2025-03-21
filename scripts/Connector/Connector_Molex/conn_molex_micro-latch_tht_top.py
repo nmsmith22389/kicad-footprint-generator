@@ -22,6 +22,8 @@ import yaml
 from KicadModTree import *
 from scripts.tools.drawing_tools import round_to_grid
 from scripts.tools.footprint_text_fields import addTextFields
+from scripts.tools.global_config_files import global_config as GC
+
 
 series = "Micro-Latch"
 series_long = 'Micro-Latch Wire-to-Board Connector System'
@@ -62,7 +64,7 @@ if pad_size[1] == pad_size[0]:
 
 
 
-def generate_one_footprint(pins_per_row, configuration):
+def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row, configuration):
     mpn = part_code.format(n=pins_per_row*number_of_rows)
     alt_mpn = [code.format(n=pins_per_row*number_of_rows) for code in alternative_codes]
 
@@ -127,6 +129,7 @@ def generate_one_footprint(pins_per_row, configuration):
     kicad_mod.append(PadArray(
         pincount=pins_per_row, x_spacing=pitch, type=Pad.TYPE_THT,
         shape=pad_shape, size=pad_size, drill=drill, layers=Pad.LAYERS_THT,
+        round_radius_handler=global_config.roundrect_radius_handler,
         **optional_pad_params))
 
     #draw the courtyard
@@ -216,6 +219,7 @@ if __name__ == "__main__":
     with open(args.global_config, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
+            global_config = GC.GlobalConfig(configuration)
         except yaml.YAMLError as exc:
             print(exc)
 
@@ -226,4 +230,4 @@ if __name__ == "__main__":
             print(exc)
 
     for pins_per_row in pins_per_row_range:
-        generate_one_footprint(pins_per_row, configuration)
+        generate_one_footprint(global_config, pins_per_row, configuration)

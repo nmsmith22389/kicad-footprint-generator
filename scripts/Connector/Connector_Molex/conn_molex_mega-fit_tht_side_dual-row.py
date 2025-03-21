@@ -22,6 +22,8 @@ import yaml
 from KicadModTree import *
 from scripts.tools.drawing_tools import round_to_grid
 from scripts.tools.footprint_text_fields import addTextFields
+from scripts.tools.global_config_files import global_config as GC
+
 
 series = "Mega-Fit"
 series_long = 'Mega-Fit Power Connectors'
@@ -60,7 +62,7 @@ if size - drill > max_annular_ring:
 
 
 
-def generate_one_footprint(pins_per_row, configuration):
+def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row, configuration):
     mpn = part_code.format(n=pins_per_row*2)
     alt_mpn = [code.format(n=pins_per_row*2) for code in alternative_codes]
 
@@ -118,6 +120,7 @@ def generate_one_footprint(pins_per_row, configuration):
             pincount=pins_per_row, initial=row_idx*pins_per_row+1,
             start=[0, row_idx*row], x_spacing=pitch, type=Pad.TYPE_THT,
             shape=Pad.SHAPE_CIRCLE, size=size, drill=drill, layers=Pad.LAYERS_THT,
+            round_radius_handler=global_config.roundrect_radius_handler,
             **optional_pad_params))
 
     off = configuration['silk_fab_offset']
@@ -231,6 +234,7 @@ if __name__ == "__main__":
     with open(args.global_config, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
+            global_config = GC.GlobalConfig(configuration)
         except yaml.YAMLError as exc:
             print(exc)
 
@@ -241,4 +245,4 @@ if __name__ == "__main__":
             print(exc)
 
     for pins_per_row in pins_per_row_range:
-        generate_one_footprint(pins_per_row, configuration)
+        generate_one_footprint(global_config, pins_per_row, configuration)

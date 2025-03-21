@@ -174,6 +174,8 @@ datasheets = [
     "https://b2b.harting.com/files/livebooks/en/PRD0200000100063/downloads/livebook.pdf",
 ]
 
+global_config = GC.DefaultGlobalConfig()
+
 mounting_args = dict(
     type=Pad.TYPE_NPTH,
     shape=Pad.SHAPE_CIRCLE,
@@ -244,13 +246,13 @@ def build_positions(config, pins_per_row, row, row_direction, column_direction):
 
 
 def build_pins(mod, config, pins, rows, row_direction, column_direction):
+
     pin_args = dict(
         type=Pad.TYPE_THT,
         size=config["pin_plating_diameter"],
         drill=config["pin_hole_diameter"],
         layers=Pad.LAYERS_THT,
-        radius_ratio=0.25,
-        maximum_radius=0.25,
+        round_radius_handler=global_config.roundrect_radius_handler,
     )
 
     first = None

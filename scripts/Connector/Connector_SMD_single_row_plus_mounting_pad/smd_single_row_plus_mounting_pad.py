@@ -72,8 +72,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, idx, pincount,
     optional_pad_params = {}
 
     pad_shape = Pad.SHAPE_ROUNDRECT
-    optional_pad_params['radius_ratio'] = configuration.get('radius_ratio', 0.25)
-    optional_pad_params['maximum_radius'] = configuration.get('maximum_radius', 0.25)
+    optional_pad_params['round_radius_handler'] = global_config.roundrect_radius_handler
 
     kicad_mod.append(PadArray(
         center=[0, pad_pos_y], x_spacing=series_definition['pitch'], pincount=pincount,

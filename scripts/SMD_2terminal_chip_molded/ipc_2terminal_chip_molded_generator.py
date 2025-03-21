@@ -8,6 +8,7 @@ from KicadModTree.nodes.base.Pad import Pad  # NOQA
 from scripts.tools.footprint_text_fields import addTextFields
 from scripts.tools.ipc_pad_size_calculators import *
 from scripts.tools.drawing_tools import nearestSilkPointOnOrthogonalLineSmallClerance
+from scripts.tools.global_config_files import global_config as GC
 
 
 size_definition_path = "size_definitions/"
@@ -28,7 +29,8 @@ def merge_dicts(*dict_args):
     return result
 
 class TwoTerminalSMD():
-    def __init__(self, command_file, configuration):
+    def __init__(self, global_config: GC.GlobalConfig, command_file, configuration):
+        self.global_config = global_config
         self.configuration = configuration
         with open(command_file, 'r') as command_stream:
             try:
@@ -192,9 +194,7 @@ class TwoTerminalSMD():
 
         pad_shape_details = {}
         pad_shape_details['shape'] = Pad.SHAPE_ROUNDRECT
-        pad_shape_details['radius_ratio'] = configuration.get('round_rect_radius_ratio', 0)
-        if 'round_rect_max_radius' in configuration:
-            pad_shape_details['maximum_radius'] = configuration['round_rect_max_radius']
+        pad_shape_details['round_radius_handler'] = self.global_config.roundrect_radius_handler
 
         if paste_details is not None:
             layers_main = ['F.Cu', 'F.Mask']
@@ -344,13 +344,12 @@ if __name__ == "__main__":
                         help='the config file defining series parameters.', default='package_config_KLCv3.0.yaml')
     parser.add_argument('--ipc_definition', type=str, nargs='?', help='the ipc definition file',
                         default='ipc7351B_2terminal.yaml')
-    parser.add_argument('--force_rectangle_pads', action='store_true',
-                        help='Force the generation of rectangle pads instead of rounded rectangle (KiCad 4.x compatibility.)')
     args = parser.parse_args()
 
     with open(args.global_config, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
+            global_config = GC.GlobalConfig(configuration)
         except yaml.YAMLError as exc:
             print(exc)
 
@@ -361,10 +360,7 @@ if __name__ == "__main__":
             print(exc)
     args = parser.parse_args()
     configuration['ipc_definition'] = args.ipc_definition
-    if args.force_rectangle_pads:
-        configuration['round_rect_max_radius'] = None
-        configuration['round_rect_radius_ratio'] = 0
 
     for filepath in args.files:
-        two_terminal_smd = TwoTerminalSMD(filepath, configuration)
+        two_terminal_smd = TwoTerminalSMD(global_config, filepath, configuration)
         two_terminal_smd.generateFootprints()

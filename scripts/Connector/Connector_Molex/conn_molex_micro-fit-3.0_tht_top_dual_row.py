@@ -22,6 +22,8 @@ import yaml
 from KicadModTree import *
 from scripts.tools.drawing_tools import round_to_grid
 from scripts.tools.footprint_text_fields import addTextFields
+from scripts.tools.global_config_files import global_config as GC
+
 
 series = "Micro-Fit_3.0"
 series_long = 'Micro-Fit 3.0 Connector System'
@@ -66,7 +68,7 @@ pad_shape=Pad.SHAPE_OVAL
 if pad_size[1] == pad_size[0]:
     pad_shape=Pad.SHAPE_CIRCLE
 
-def generate_one_footprint(pins_per_row, variant, configuration):
+def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row, variant, configuration):
     mpn = variant_params[variant]['part_code'].format(n=pins_per_row*number_of_rows)
     alt_mpn = [code.format(n=pins_per_row*number_of_rows) for code in variant_params[variant]['alternative_codes']]
 
@@ -131,6 +133,7 @@ def generate_one_footprint(pins_per_row, variant, configuration):
             start=[pad1_x, pad_row_1_y+pitch*row_idx], initial=row_idx*pins_per_row+1,
             pincount=pins_per_row, increment=1,  x_spacing=pitch, size=pad_size,
             type=Pad.TYPE_THT, shape=pad_shape, layers=Pad.LAYERS_THT, drill=drill,
+            round_radius_handler=global_config.roundrect_radius_handler,
             **optional_pad_params))
 
     ######################## Fabrication Layer ###########################
@@ -268,6 +271,7 @@ if __name__ == "__main__":
     with open(args.global_config, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
+            global_config = GC.GlobalConfig(configuration)
         except yaml.YAMLError as exc:
             print(exc)
 
@@ -279,4 +283,4 @@ if __name__ == "__main__":
 
     for variant in variant_params:
         for pins_per_row in pins_per_row_range:
-            generate_one_footprint(pins_per_row, variant, configuration)
+            generate_one_footprint(global_config, pins_per_row, variant, configuration)

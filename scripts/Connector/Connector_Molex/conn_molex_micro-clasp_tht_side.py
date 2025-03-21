@@ -22,6 +22,7 @@ from math import sqrt
 from KicadModTree import *
 from scripts.tools.footprint_text_fields import addTextFields
 from scripts.tools.drawing_tools import round_to_grid
+from scripts.tools.global_config_files import global_config as GC
 
 
 draw_inner_details = False
@@ -73,7 +74,7 @@ if pad_size[1] == pad_size[0]:
 
 
 
-def generate_one_footprint(pins, variant, configuration):
+def generate_one_footprint(global_config: GC.GlobalConfig, pins, variant, configuration):
     boss = variant_params[variant]['boss']
     mpn = variant_params[variant]['part_code'].format(n=pins)
 
@@ -187,6 +188,7 @@ def generate_one_footprint(pins, variant, configuration):
     kicad_mod.append(PadArray(
         pincount=pins, x_spacing=pitch, type=Pad.TYPE_THT,
         shape=pad_shape, size=pad_size, drill=drill, layers=Pad.LAYERS_THT,
+        round_radius_handler=global_config.roundrect_radius_handler,
         **optional_pad_params))
 
     #add PCB locator if needed
@@ -261,6 +263,7 @@ if __name__ == "__main__":
     with open(args.global_config, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
+            global_config = GC.GlobalConfig(configuration)
         except yaml.YAMLError as exc:
             print(exc)
 
@@ -272,4 +275,4 @@ if __name__ == "__main__":
 
     for variant in variant_params:
         for pins_per_row in pins_per_row_range:
-            generate_one_footprint(pins_per_row, variant, configuration)
+            generate_one_footprint(global_config, pins_per_row, variant, configuration)

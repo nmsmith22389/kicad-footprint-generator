@@ -141,9 +141,11 @@ class InductorGenerator(FootprintGenerator):
 
         self.write_footprint(kicad_mod, series_data.library_name)
 
-    @staticmethod
     def create_pad_elements(
-        landing_pad_dimension: Vector2D, landing_pad_spacing: float, pad_shape: str
+        self,
+        landing_pad_dimension: Vector2D,
+        landing_pad_spacing: float,
+        pad_shape: str,
     ):
         return (
             Pad(
@@ -153,8 +155,7 @@ class InductorGenerator(FootprintGenerator):
                 at=[position * (landing_pad_spacing + landing_pad_dimension.x) / 2, 0],
                 size=landing_pad_dimension,
                 layers=Pad.LAYERS_SMT,
-                radius_ratio=0.25,
-                maximum_radius=0.25,
+                round_radius_handler=self.global_config.roundrect_radius_handler,
             )
             for pin_number, position in enumerate((-1, 1), start=1)
         )

@@ -22,6 +22,8 @@ import yaml
 from KicadModTree import *
 from scripts.tools.drawing_tools import round_to_grid
 from scripts.tools.footprint_text_fields import addTextFields
+from scripts.tools.global_config_files import global_config as GC
+
 
 draw_inner_details = False
 
@@ -32,8 +34,8 @@ man_short_fp_name = 'TE'
 orientation = 'H'
 datasheet = "http://www.te.com/commerce/DocumentDelivery/DDEController?Action=srchrtrv&DocNm=82181_SOFTSHELL_HIGH_DENSITY&DocType=CS&DocLang=EN"
 
-#Molex part number
-#n = number of circuits per row
+# Molex part number
+# n = number of circuits per row
 variant_params = {
     'in_line':{
         'pins_per_row_range': [1,2,3],
@@ -108,7 +110,10 @@ width = 12.7
 
 peg_to_body_right = 6.86
 
-def generate_one_footprint(pins_per_row, variant_param, configuration):
+
+def generate_one_footprint(
+    global_config: GC.GlobalConfig, pins_per_row, variant_param, configuration
+):
     number_of_rows = variant_param['number_of_rows']
 
     mpn = variant_param['part_code'][pins_per_row*number_of_rows].format(n=pins_per_row*2)
@@ -215,6 +220,7 @@ def generate_one_footprint(pins_per_row, variant_param, configuration):
             size=pad_size,
             drill=drill,
             layers=Pad.LAYERS_THT,
+            round_radius_handler=global_config.roundrect_radius_handler,
             **optional_pad_params,
         ))
 
@@ -359,6 +365,7 @@ if __name__ == "__main__":
     with open(args.series_config, 'r') as config_stream:
         try:
             configuration.update(yaml.safe_load(config_stream))
+            global_config = GC.GlobalConfig(configuration)
         except yaml.YAMLError as exc:
             print(exc)
 
@@ -366,4 +373,4 @@ if __name__ == "__main__":
         variant_param = variant_params[variant]
 
         for pins_per_row in variant_param['pins_per_row_range']:
-            generate_one_footprint(pins_per_row, variant_param, configuration)
+            generate_one_footprint(global_config, pins_per_row, variant_param, configuration)

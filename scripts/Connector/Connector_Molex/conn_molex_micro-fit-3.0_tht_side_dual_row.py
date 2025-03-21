@@ -23,6 +23,7 @@ from KicadModTree import *
 from scripts.tools.drawing_tools import round_to_grid
 from scripts.tools.global_config_files import global_config as GC
 from scripts.tools.footprint_text_fields import addTextFields
+from scripts.tools.global_config_files import global_config as GC
 
 series = "Micro-Fit_3.0"
 series_long = 'Micro-Fit 3.0 Connector System'
@@ -133,11 +134,13 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, configuration, 
     kicad_mod.append(PadArray(start=[pad1_x, pad_row_1_y], initial=1,
         pincount=pins_per_row, increment=1,  x_spacing=pitch, size=pad_size,
         type=Pad.TYPE_THT, shape=Pad.SHAPE_CIRCLE, layers=Pad.LAYERS_THT, drill=drill,
+        round_radius_handler=global_config.roundrect_radius_handler,
         **optional_pad_params))
 
     kicad_mod.append(PadArray(start=[pad1_x, pad_row_2_y], initial=pins_per_row+1,
         pincount=pins_per_row, increment=1, x_spacing=pitch, size=pad_size,
         type=Pad.TYPE_THT, shape=Pad.SHAPE_CIRCLE, layers=Pad.LAYERS_THT, drill=drill,
+        round_radius_handler=global_config.roundrect_radius_handler,
         **optional_pad_params))
 
     ######################## Clip copper keepout ###########################

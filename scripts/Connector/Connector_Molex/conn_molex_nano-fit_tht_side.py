@@ -22,6 +22,7 @@ import yaml
 from KicadModTree import *
 from scripts.tools.drawing_tools import round_to_grid
 from scripts.tools.footprint_text_fields import addTextFields
+from scripts.tools.global_config_files import global_config as GC
 
 series = "Nano-Fit"
 series_long = 'Nano-Fit Power Connectors'
@@ -57,7 +58,7 @@ version_params = {
     }
 }
 
-def generate_one_footprint(pins, params, configuration):
+def generate_one_footprint(global_config: GC.GlobalConfig, pins, params, configuration):
     pad_silk_off = configuration['silk_pad_clearance'] + configuration['silk_line_width']/2
     mpn = params['mpn'].format(n=pins*params['number_of_rows'])
 
@@ -137,6 +138,7 @@ def generate_one_footprint(pins, params, configuration):
             pincount=pins, initial=r*pins+1, start=[r*pitch_row,0],
             y_spacing=pitch, type=Pad.TYPE_THT, shape=pad_shape,
             size=pad_size, drill=drill, layers=Pad.LAYERS_THT,
+            round_radius_handler=global_config.roundrect_radius_handler,
             **optional_pad_params))
 
     #add the locating pins
@@ -209,6 +211,7 @@ if __name__ == "__main__":
     with open(args.global_config, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
+            global_config = GC.GlobalConfig(configuration)
         except yaml.YAMLError as exc:
             print(exc)
 
@@ -220,4 +223,4 @@ if __name__ == "__main__":
 
     for version in version_params:
         for pins_per_row in pins_per_row_range:
-            generate_one_footprint(pins_per_row, version_params[version], configuration)
+            generate_one_footprint(global_config, pins_per_row, version_params[version], configuration)

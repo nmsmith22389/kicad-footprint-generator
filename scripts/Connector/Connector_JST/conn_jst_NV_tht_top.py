@@ -21,6 +21,7 @@ import yaml
 from KicadModTree import *
 from scripts.tools.drawing_tools import round_to_grid
 from scripts.tools.footprint_text_fields import addTextFields
+from scripts.tools.global_config_files import global_config as GC
 
 series = "NV"
 manufacturer = 'JST'
@@ -39,7 +40,7 @@ pin_range = range(2, 5) #number of pins in each row
 #FP name strings
 part_base = "B{n:02}P-NV" #JST part number format string
 
-def generate_one_footprint(pins, configuration):
+def generate_one_footprint(global_config: GC.GlobalConfig, pins, configuration):
     mpn = part_base.format(n=pins)
     orientation_str = configuration['orientation_options'][orientation]
     footprint_name = configuration['fp_name_format_string'].format(man=manufacturer,
@@ -121,6 +122,7 @@ def generate_one_footprint(pins, configuration):
         pincount=pins, x_spacing=pitch,
         type=Pad.TYPE_THT, shape=shape,
         size=pad_size, drill=drill, layers=Pad.LAYERS_THT,
+        round_radius_handler=global_config.roundrect_radius_handler,
         **optional_pad_params))
 
     ######################### Text Fields ###############################
@@ -148,6 +150,7 @@ if __name__ == "__main__":
     with open(args.global_config, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
+            global_config = GC.GlobalConfig(configuration)
         except yaml.YAMLError as exc:
             print(exc)
 
@@ -158,4 +161,4 @@ if __name__ == "__main__":
             print(exc)
 
     for pincount in range(2, 4):
-        generate_one_footprint(pincount, configuration)
+        generate_one_footprint(global_config, pincount, configuration)

@@ -12,6 +12,7 @@ import math
 import yaml
 from KicadModTree import *
 from scripts.tools.footprint_text_fields import addTextFields
+from scripts.tools.global_config_files import global_config as GC
 
 
 man_lib = 'TE-Connectivity'
@@ -54,7 +55,7 @@ def make_part_number(pincount):
     return f'2-{series_no}-0', f'9-{series_no}-{pincount}'
 
 
-def generate_one_footprint(pincount, configuration):
+def generate_one_footprint(global_config: GC.GlobalConfig, pincount, configuration):
     partno, alt_partno = make_part_number(pincount)
     body_length = body_lengths[pincount]
 
@@ -220,6 +221,7 @@ if __name__ == '__main__':
     with open(args.global_config, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
+            global_config = GC.GlobalConfig(configuration)
         except yaml.YAMLError as exc:
             print(exc)
 
@@ -230,4 +232,4 @@ if __name__ == '__main__':
             print(exc)
 
     for pins_per_row in pins_per_row_range:
-        generate_one_footprint(pins_per_row, configuration)
+        generate_one_footprint(global_config, pins_per_row, configuration)

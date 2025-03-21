@@ -29,32 +29,42 @@ class TestKicad5Pads(SerialisationTest):
 
         kicad_mod.append(Pad(number=3, type=Pad.TYPE_SMT, shape=Pad.SHAPE_ROUNDRECT,
                              at=[5, 0], rotation=45, size=[1, 1], layers=Pad.LAYERS_SMT,
-                             radius_ratio=0.1))
+                             round_radius_handler=RoundRadiusHandler(
+                                 radius_ratio=0.1,
+                             )))
 
         kicad_mod.append(Pad(number=2, type=Pad.TYPE_SMT, shape=Pad.SHAPE_ROUNDRECT,
                              at=[-5, 0], size=[1, 1], layers=Pad.LAYERS_SMT,
-                             radius_ratio=0.5))
+                             round_radius_handler=RoundRadiusHandler(
+                                 radius_ratio=0.5,
+                             )))
 
         kicad_mod.append(Pad(number=1, type=Pad.TYPE_SMT, shape=Pad.SHAPE_ROUNDRECT,
                              at=[0, 0], size=[1, 1], layers=Pad.LAYERS_SMT,
-                             radius_ratio=0))
+                             round_radius_handler=RoundRadiusHandler(
+                                 radius_ratio=0,
+                             )))
 
         self.assert_serialises_as(kicad_mod, 'padshape_roundrect.kicad_mod')
 
     def testRoundRectPad2(self):
         kicad_mod = Footprint("roundrect_pad2", FootprintType.SMD)
 
+        round_radius_handler = RoundRadiusHandler(
+            radius_ratio=0.25, maximum_radius=0.25
+        )
+
         kicad_mod.append(Pad(number=3, type=Pad.TYPE_SMT, shape=Pad.SHAPE_ROUNDRECT,
                              at=[5, 0], rotation=45, size=[1, 1], layers=Pad.LAYERS_SMT,
-                             radius_ratio=0.25, maximum_radius=0.25))
+                             round_radius_handler=round_radius_handler))
 
         kicad_mod.append(Pad(number=2, type=Pad.TYPE_SMT, shape=Pad.SHAPE_ROUNDRECT,
                              at=[-5, 0], size=[1, 2], layers=Pad.LAYERS_SMT,
-                             radius_ratio=0.25, maximum_radius=0.25))
+                             round_radius_handler=round_radius_handler))
 
         kicad_mod.append(Pad(number=1, type=Pad.TYPE_SMT, shape=Pad.SHAPE_ROUNDRECT,
                              at=[0, 0], size=[2, 4], layers=Pad.LAYERS_SMT,
-                             radius_ratio=0.25, maximum_radius=0.25))
+                             round_radius_handler=round_radius_handler))
 
         self.assert_serialises_as(kicad_mod, 'padshape_roundrect2.kicad_mod')
 

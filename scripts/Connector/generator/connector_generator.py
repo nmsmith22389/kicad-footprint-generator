@@ -40,11 +40,11 @@ from scripts.tools.declarative_def_tools import utils, rule_area_properties, sha
 from scripts.tools.declarative_def_tools.utils import DotDict
 from scripts.tools.declarative_def_tools.ast_evaluator import ASTevaluator, ASTexprEvaluator
 from scripts.tools.drawing_tools import point_is_on_segment
+from scripts.tools.global_config_files import global_config as GC
+
 
 DEFAULT_SMT_PAD_SHAPE = 'roundrect'
 DEFAULT_THT_PAD_SHAPE = 'circ'
-DEFAULT_ROUNDRECT_RRATIO = 0.25
-DEFAULT_ROUNDRECT_RMAX = 0.25
 
 KICAD_3DMODEL_DIR = "${KICAD9_3DMODEL_DIR}"
 
@@ -97,19 +97,17 @@ def _round_to(val, base, direction: str=None):
 class PadProperties():
     size: Vector2D
     shape: str
-    radius_ratio: float
-    max_radius: float
+    round_radius_handler: RoundRadiusHandler
     drill: float
     paste: bool
     type: str
     layers: list
     rotation: float
 
-    def __init__(self, pad_spec, *, default_paste: bool = None):
+    def __init__(self, pad_spec: dict, global_config: GC.GlobalConfig, default_paste: bool = None):
         self.size = self._get_pad_size(pad_spec)
         self.shape = self._get_pad_shape(pad_spec)
-        self.radius_ratio = self._get_pad_rratio(pad_spec)
-        self.max_radius = self._get_pad_rmax(pad_spec)
+        self.round_radius_handler = self._get_radius_handler(pad_spec, global_config)
         self.drill = self._get_pad_drill(pad_spec)
         self.paste = self._get_pad_paste(pad_spec, default_paste)
         self.type = self._get_pad_type(pad_spec)
@@ -136,11 +134,10 @@ class PadProperties():
                 "oval": Pad.SHAPE_OVAL,
                 }[shape]
 
-    def _get_pad_rratio(self, pad_spec):
-        return pad_spec.get("rratio", DEFAULT_ROUNDRECT_RRATIO)
-
-    def _get_pad_rmax(self, pad_spec):
-        return pad_spec.get("rratio", DEFAULT_ROUNDRECT_RMAX)
+    def _get_radius_handler(self, pad_spec, global_config: GC.GlobalConfig):
+        ratio = pad_spec.get("radius_ratio", global_config.round_rect_default_radius)
+        rmax = pad_spec.get("max_radius", global_config.round_rect_max_radius)
+        return RoundRadiusHandler(radius_ratio=ratio, maximum_radius=rmax)
 
     def _get_pad_drill(self, pad_spec):
         return pad_spec.get("drill", None)
@@ -211,7 +208,14 @@ class FPconfiguration():
     parameters: dict = None
     expr_eval: Callable = None
 
-    def __init__(self, spec: dict, *, positions: int, idx: int, configuration: dict):
+    def __init__(
+        self,
+        spec: dict,
+        global_config: GC.GlobalConfig,
+        positions: int,
+        idx: int,
+        configuration: dict,
+    ):
         self.library_name = spec["library"]
         self.num_pos = positions
         # create the evaluator
@@ -250,7 +254,7 @@ class FPconfiguration():
 
         ## get pad positions and size
         pad_spec = self.spec.get("pads")
-        self.pad_properties = PadProperties(pad_spec)
+        self.pad_properties = PadProperties(pad_spec, global_config)
         self.pad_size = self.pad_properties.size
         self.is_smt_footprint = (self.pad_properties.type == Pad.TYPE_SMT)
 
@@ -289,7 +293,7 @@ class FPconfiguration():
         if (self.pin1_pos not in ["top", "bottom"]):
             raise ValueError("'first_pin.position' must be one of 'top', 'bottom'")
         if (pad1_spec := first_pin_spec.get("pad", None)):
-            self.pad1_properties = PadProperties(pad1_spec)
+            self.pad1_properties = PadProperties(pad1_spec, global_config)
 
         ## body chamfer at pin1 corner
         self.pin1_body_chamfer = first_pin_spec.get("body_chamfer", 0.0)
@@ -356,7 +360,7 @@ def parse_body_shape(spec, *, side: str, eval_expr: Callable):
     return [_ for _ in reversed(nodes)] if reverse else nodes
 
 
-def generate_one_footprint(positions: int, *, spec, configuration: dict, idx=0):
+def generate_one_footprint(global_config: GC.GlobalConfig, positions: int, *, spec, configuration: dict, idx=0):
     # deprecate doc_parameters
     if ("doc_parameters" in spec):
         if ("parameters" in spec):
@@ -368,7 +372,13 @@ def generate_one_footprint(positions: int, *, spec, configuration: dict, idx=0):
         if (f not in spec):
             raise ValueError(f"missing mandatory field '{f}' in footprint specification")
 
-    fp_config = FPconfiguration(spec, positions=positions, idx=idx, configuration=configuration)
+    fp_config = FPconfiguration(
+        spec,
+        global_config=global_config,
+        positions=positions,
+        idx=idx,
+        configuration=configuration,
+    )
 
     # for format strings both, all fields of the spec and all fields of spec.parameters are accessible
     format_dict = DotDict(**fp_config.spec, **fp_config.parameters)
@@ -415,6 +425,7 @@ def generate_one_footprint(positions: int, *, spec, configuration: dict, idx=0):
     ## create extra pads/drills
     for mp_name, pad_spec in fp_config.spec.get("mount_pads", DotDict()).items():
         add_mount_pad(kicad_mod,
+                      global_config=global_config,
                       pad_pos_range=fp_config.pad_pos_range,
                       pad_spec=pad_spec,
                       pad_center_offset=fp_config.pad_center_offset,
@@ -678,10 +689,10 @@ def build_body_shape(body_spec: dict, *, fp_config: FPconfiguration):
     return body_shape_nodes
 
 
-def add_mount_pad(kicad_mod, *, pad_pos_range, pad_spec, pad_center_offset, default_paste, row_x_offset):
+def add_mount_pad(kicad_mod, global_config, pad_pos_range, pad_spec, pad_center_offset, default_paste, row_x_offset):
     center_to_center = _get_dim("center", spec=pad_spec, dim="x", base=pad_pos_range.x, mult=2) + row_x_offset
     pad_pos_y = utils.as_list(_get_dim("center", spec=pad_spec, dim="y"))
-    pad_props = PadProperties(pad_spec, default_paste=default_paste)
+    pad_props = PadProperties(pad_spec, global_config, default_paste=default_paste)
     pad_nums = utils.as_list(pad_spec.get('name', [""]))
     if isinstance(pad_nums, (str, int)):
         pad_nums = [pad_nums]
@@ -708,6 +719,7 @@ if __name__ == "__main__":
     with open(args.global_config, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
+            global_config = GC.GlobalConfig(configuration)
         except yaml.YAMLError as exc:
             print(exc)
 
@@ -733,5 +745,5 @@ if __name__ == "__main__":
         if (isinstance(list_of_positions, str) and (match := re.match(r"^\s*\$\((.+)\)\s*$", list_of_positions))):
             list_of_positions = ASTexprEvaluator().eval(match[1])
         for idx, positions in enumerate(utils.as_list(list_of_positions)):
-            generate_one_footprint(positions, idx=idx, spec=spec, configuration=configuration)
+            generate_one_footprint(global_config, positions, idx=idx, spec=spec, configuration=configuration)
         print("")

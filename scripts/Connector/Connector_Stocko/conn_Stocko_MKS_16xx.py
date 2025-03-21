@@ -15,17 +15,14 @@ You should have received a copy of the GNU General Public License
 along with kicad-footprint-generator. If not, see < http://www.gnu.org/licenses/ >.
 '''
 
-import os
-
 from KicadModTree import *
+from scripts.tools.global_config_files import global_config as GC
 
 
-output_dir = "Connector_Stocko.pretty"
+global_config = GC.DefaultGlobalConfig()
+lib_name = "Connector_Stocko"
 
-if not os.path.isdir(output_dir): #returns false if path does not yet exist!! (Does not check path validity)
-    os.makedirs(output_dir)
-
-#connector constraints
+# connector constraints
 pad_span = 2.5
 pad_size_x = 1.5
 pad_size_y = 2
@@ -59,90 +56,95 @@ for itr in range (1, 20 + 1):
         fab_outline_x = 3.6
         silks_outline_x = fab_outline_x + 0.11
 
-    #init kicad footprint
+    # init kicad footprint
     footprint_name = "Stocko_MKS_16{}-6-0-{}{:02d}_1x{}_P2.50mm_Vertical".format(50 + itr, pin_count, pin_count, pin_count)
     kicad_mod = Footprint(footprint_name, FootprintType.THT)
     kicad_mod.setDescription("Stocko MKS 16xx series connector, (https://www.stocko-contact.com/downloads/steckverbindersystem-raster-2,5-mm.pdf#page=15), generated with kicad-footprint-generator")
     kicad_mod.setTags("Stocko RFK MKS 16xx")
 
-    #CREATE PIN
+    # CREATE PIN
 
-    #first rectangle pin
+    # TODO: this doesn't use the standard rounding: should be
+    # global_config.roundrect_radius_handler, but that makes diffs
+    radius_handler = RoundRadiusHandler(radius_ratio=0.25)
+
+    # first rectangle pin
     kicad_mod.append(Pad(number = 1, type = Pad.TYPE_THT, shape = Pad.SHAPE_ROUNDRECT,
-                        at=[0, 0], size=[pad_size_x, pad_size_y], drill=drill, layers=Pad.LAYERS_THT,
-                        radius_ratio=0.25))
-    #circle pin
+                        at=[0, 0], size=[pad_size_x, pad_size_y], drill=drill,
+                        layers=Pad.LAYERS_THT,
+                        round_radius_handler=radius_handler,
+                        ))
+    # circle pin
     for pin_cnt in range (2, pin_count + 1):
         kicad_mod.append(Pad(number = pin_cnt, type = Pad.TYPE_THT, shape = Pad.SHAPE_OVAL,
                         at=[(pin_cnt - 1) * pad_span, 0], size=[pad_size_x, pad_size_y], drill=drill, layers = Pad.LAYERS_THT))
 
-    #CREATE SILKSCREEN
-    #name
+    # CREATE SILKSCREEN
+    # name
     kicad_mod.append(Property(name = Property.REFERENCE, text='REF**', at=[(pin_count - 1) * (pad_span / 2), -4.5], layer='F.SilkS'))
-    #top
+    # top
     kicad_mod.append(Line(start = [-silks_outline_x + silks_arc_r, -silks_outline_y],
                           end = [(pin_cnt - 1) * pad_span + silks_outline_x - silks_arc_r, -silks_outline_y], layer = 'F.SilkS'))
-    #left
+    # left
     kicad_mod.append(Line(start = [-silks_outline_x, -silks_outline_y + silks_arc_r],
                           end = [-silks_outline_x, silks_outline_y - silks_arc_r], layer = 'F.SilkS'))
-    #right
+    # right
     kicad_mod.append(Line(start = [(pin_cnt - 1) * pad_span + silks_outline_x, -silks_outline_y + silks_arc_r],
                           end = [(pin_cnt - 1) * pad_span + silks_outline_x, silks_outline_y - silks_arc_r], layer = 'F.SilkS'))
-    #bottom left
+    # bottom left
     kicad_mod.append(Line(start = [-silks_outline_x + silks_arc_r, silks_outline_y],
                           end = [-silks_outline_x + silks_cut_width, silks_outline_y], layer = 'F.SilkS'))
     kicad_mod.append(Line(start = [-silks_outline_x + silks_cut_width, silks_outline_y],
                           end = [-silks_outline_x + silks_cut_width, silks_outline_y - silks_cut_depth], layer = 'F.SilkS'))
-    #bottom right
+    # bottom right
     kicad_mod.append(Line(start = [(pin_cnt - 1) * pad_span + silks_outline_x - silks_arc_r, silks_outline_y],
                           end = [(pin_cnt - 1) * pad_span + silks_outline_x - silks_cut_width, silks_outline_y], layer = 'F.SilkS'))
     kicad_mod.append(Line(start = [(pin_cnt - 1) * pad_span + silks_outline_x - silks_cut_width, silks_outline_y],
                           end = [(pin_cnt - 1) * pad_span + silks_outline_x - silks_cut_width, silks_outline_y - silks_cut_depth], layer = 'F.SilkS'))
-    #bottom center
+    # bottom center
     kicad_mod.append(Line(start = [-silks_outline_x + silks_cut_width, silks_outline_y - silks_cut_depth],
                           end = [(pin_cnt - 1) * pad_span + silks_outline_x - silks_cut_width, silks_outline_y - silks_cut_depth], layer = 'F.SilkS'))
-    #arc left top
+    # arc left top
     kicad_mod.append(Arc(center = [-silks_outline_x + silks_arc_r, -silks_outline_y + silks_arc_r],
                          start = [-silks_outline_x, -silks_outline_y + silks_arc_r], angle = 90, layer = 'F.SilkS'))
-    #arc right top
+    # arc right top
     kicad_mod.append(Arc(center = [(pin_cnt - 1) * pad_span + silks_outline_x - silks_arc_r, -silks_outline_y + silks_arc_r],
                          start = [(pin_cnt - 1) * pad_span + silks_outline_x - silks_arc_r, -silks_outline_y], angle = 90, layer = 'F.SilkS'))
-    #arc left bottom
+    # arc left bottom
     kicad_mod.append(Arc(center = [-silks_outline_x + silks_arc_r, silks_outline_y - silks_arc_r],
                          start = [-silks_outline_x + silks_arc_r, silks_outline_y], angle = 90, layer = 'F.SilkS'))
-    #arc right bottom
+    # arc right bottom
     kicad_mod.append(Arc(center = [(pin_cnt - 1) * pad_span + silks_outline_x - silks_arc_r, silks_outline_y - silks_arc_r],
                          start = [(pin_cnt - 1) * pad_span + silks_outline_x, silks_outline_y - silks_arc_r], angle = 90, layer = 'F.SilkS'))
-    #first pin indicator
+    # first pin indicator
     kicad_mod.append(Line(start = [0.3, 2.9], end = [0, 2.4], layer = 'F.SilkS'))
     kicad_mod.append(Line(start = [0, 2.4], end = [-0.3, 2.9], layer = 'F.SilkS'))
     kicad_mod.append(Line(start = [-0.3, 2.9], end = [0.3, 2.9], layer = 'F.SilkS'))
 
-
-    #CREATE FABRICATION
-    #name
+    # CREATE FABRICATION
+    # name
     kicad_mod.append(Text(text = '${REFERENCE}', at = [(pin_count - 1) * (pad_span / 2), -2], layer = 'F.Fab'))
     kicad_mod.append(Property(name = Property.VALUE, text = footprint_name, at = [(pin_count - 1) * (pad_span / 2), silks_outline_y + 2], layer = 'F.Fab'))
-    #top
+    # top
     kicad_mod.append(Line(start = [-fab_outline_x + fab_arc_r, -fab_outline_y],
                           end = [(pin_cnt - 1) * pad_span + fab_outline_x - fab_arc_r, -fab_outline_y], layer = 'F.Fab'))
-    #left
+    # left
     kicad_mod.append(Line(start = [-fab_outline_x, -fab_outline_y + fab_arc_r],
                           end = [-fab_outline_x, fab_outline_y - fab_arc_r], layer = 'F.Fab'))
-    #right
+    # right
     kicad_mod.append(Line(start = [(pin_cnt - 1) * pad_span + fab_outline_x, -fab_outline_y + fab_arc_r],
                           end = [(pin_cnt - 1) * pad_span + fab_outline_x, fab_outline_y - fab_arc_r], layer = 'F.Fab'))
-    #bottom left
+    # bottom left
     kicad_mod.append(Line(start = [-fab_outline_x + fab_arc_r, fab_outline_y],
                           end = [-fab_outline_x + fab_cut_width, fab_outline_y], layer = 'F.Fab'))
     kicad_mod.append(Line(start = [-fab_outline_x + fab_cut_width, fab_outline_y],
                           end = [-fab_outline_x + fab_cut_width, fab_outline_y - fab_cut_depth], layer = 'F.Fab'))
-    #bottom right
+    # bottom right
     kicad_mod.append(Line(start = [(pin_cnt - 1) * pad_span + fab_outline_x - fab_arc_r, fab_outline_y],
                           end = [(pin_cnt - 1) * pad_span + fab_outline_x - fab_cut_width, fab_outline_y], layer = 'F.Fab'))
     kicad_mod.append(Line(start = [(pin_cnt - 1) * pad_span + fab_outline_x - fab_cut_width, fab_outline_y],
                           end = [(pin_cnt - 1) * pad_span + fab_outline_x - fab_cut_width, fab_outline_y - fab_cut_depth], layer = 'F.Fab'))
-    #bottom center and first pin indicator
+    # bottom center and first pin indicator
     kicad_mod.append(Line(start = [-fab_outline_x + fab_cut_width, fab_outline_y - fab_cut_depth],
                           end = [-fab_first_pin, fab_outline_y - fab_cut_depth], layer = 'F.Fab'))
 
@@ -155,28 +157,35 @@ for itr in range (1, 20 + 1):
     kicad_mod.append(Line(start = [0, fab_outline_y - fab_cut_depth - fab_first_pin],
                           end = [fab_first_pin, fab_outline_y - fab_cut_depth], layer = 'F.Fab'))
 
-    #arc left top
+    # arc left top
     kicad_mod.append(Arc(center = [-fab_outline_x + fab_arc_r, -fab_outline_y + fab_arc_r],
                          start = [-fab_outline_x, -fab_outline_y + fab_arc_r], angle = 90, layer = 'F.Fab'))
-    #arc right top
+    # arc right top
     kicad_mod.append(Arc(center = [(pin_cnt - 1) * pad_span + fab_outline_x - fab_arc_r, -fab_outline_y + fab_arc_r],
                          start = [(pin_cnt - 1) * pad_span + fab_outline_x - fab_arc_r, -fab_outline_y], angle = 90, layer = 'F.Fab'))
-    #arc left bottom
+    # arc left bottom
     kicad_mod.append(Arc(center = [-fab_outline_x + fab_arc_r, fab_outline_y - fab_arc_r],
                          start = [-fab_outline_x + fab_arc_r, fab_outline_y], angle = 90, layer = 'F.Fab'))
-    #arc right bottom
+    # arc right bottom
     kicad_mod.append(Arc(center = [(pin_cnt - 1) * pad_span + fab_outline_x - fab_arc_r, fab_outline_y - fab_arc_r],
                          start = [(pin_cnt - 1) * pad_span + fab_outline_x, fab_outline_y - fab_arc_r], angle = 90, layer = 'F.Fab'))
 
-    #CREATE COURTYARD
+    # CREATE COURTYARD
     kicad_mod.append(RectLine(start = [-fab_outline_x - courtyard_outline, -fab_outline_y - courtyard_outline],
                               end = [(pin_cnt - 1) * pad_span + fab_outline_x + courtyard_outline, fab_outline_y + courtyard_outline],
                               layer = 'F.CrtYd'))
-    #add 3D model
-    lib_name = "Connector_Stocko"
-    kicad_mod.append(Model(filename="${{KICAD9_3DMODEL_DIR}}/{}.3dshapes/{}.wrl".format(lib_name, footprint_name),
-                        at=[0, 0, 0], scale=[1, 1, 1], rotate=[0, 0, 0]))
-    #output kicad model
+    # add 3D model
+    kicad_mod.append(
+        Model(
+            filename="{}{}.3dshapes/{}.wrl".format(
+                global_config.model_3d_prefix, lib_name, footprint_name
+            ),
+            at=[0, 0, 0],
+            scale=[1, 1, 1],
+            rotate=[0, 0, 0],
+        )
+    )
+    # output kicad model
 
     lib = KicadPrettyLibrary(lib_name, None)
     lib.save(kicad_mod)

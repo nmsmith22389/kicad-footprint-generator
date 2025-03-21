@@ -6,6 +6,7 @@ import yaml
 from KicadModTree import *
 from scripts.tools.drawing_tools import round_to_grid
 from scripts.tools.footprint_text_fields import addTextFields
+from scripts.tools.global_config_files import global_config as GC
 
 
 series = "ZH"
@@ -46,7 +47,7 @@ x_min = -1.5 #housing length past pin 1 on each side (always negative)
 y_max = 2.2
 y_min = (y_max - housing_width)
 
-def generate_one_footprint(pincount, configuration):
+def generate_one_footprint(global_config: GC.GlobalConfig, pincount, configuration):
     silk_x_min = x_min - configuration['silk_fab_offset']
     silk_y_min = y_min - configuration['silk_fab_offset']
     silk_y_max = y_max + configuration['silk_fab_offset']
@@ -193,6 +194,7 @@ def generate_one_footprint(pincount, configuration):
         x_spacing=pitch, pincount=pincount,
         size=pad_size, drill=drill_size,
         type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, layers=Pad.LAYERS_THT,
+        round_radius_handler=global_config.roundrect_radius_handler,
         **optional_pad_params))
 
     ######################### Text Fields ###############################
@@ -221,6 +223,7 @@ if __name__ == "__main__":
     with open(args.global_config, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
+            global_config = GC.GlobalConfig(configuration)
         except yaml.YAMLError as exc:
             print(exc)
 
@@ -231,4 +234,4 @@ if __name__ == "__main__":
             print(exc)
 
     for pincount in pin_range:
-        generate_one_footprint(pincount, configuration)
+        generate_one_footprint(global_config, pincount, configuration)

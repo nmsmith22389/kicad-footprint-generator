@@ -22,6 +22,7 @@ import yaml
 from KicadModTree import *
 from scripts.tools.drawing_tools import round_to_grid
 from scripts.tools.footprint_text_fields import addTextFields
+from scripts.tools.global_config_files import global_config as GC
 
 series = "Sabre"
 series_long = 'Sabre Power Connector'
@@ -96,7 +97,7 @@ version_params = {
 
 
 
-def generate_one_footprint(pins, params, configuration):
+def generate_one_footprint(global_config: GC.GlobalConfig, pins, params, configuration):
     pad_silk_off = configuration['silk_pad_clearance'] + configuration['silk_line_width']/2
     off = configuration['silk_fab_offset']
 
@@ -136,10 +137,12 @@ def generate_one_footprint(pins, params, configuration):
     ##################################  Pins ##################################
     kicad_mod.append(PadArray(pincount=pins, start=[0,0],
         x_spacing=pitch, size=pad_size, drill=drill,
-        type=Pad.TYPE_THT, shape=Pad.SHAPE_RECT, layers=Pad.LAYERS_THT))
+        type=Pad.TYPE_THT, shape=Pad.SHAPE_RECT, layers=Pad.LAYERS_THT,
+        round_radius_handler=global_config.roundrect_radius_handler))
     kicad_mod.append(PadArray(pincount=pins, start=[0, -offset_second_pad],
         x_spacing=pitch, size=pad_size, drill=drill,
-        shape=Pad.SHAPE_RECT, type=Pad.TYPE_THT, layers=Pad.LAYERS_THT))
+        shape=Pad.SHAPE_RECT, type=Pad.TYPE_THT, layers=Pad.LAYERS_THT,
+        round_radius_handler=global_config.roundrect_radius_handler))
 
     d_small = 0.3
     s_small = d_small + 2*min_annular_ring
@@ -164,15 +167,18 @@ def generate_one_footprint(pins, params, configuration):
             kicad_mod.append(PadArray(center=[pad_center_x, pad_center_y],
                 pincount=3, y_spacing=dy*2,
                 drill=d_small, size=s_small, initial=n, increment=0,
-                shape=Pad.SHAPE_CIRCLE, type=Pad.TYPE_THT, layers=Pad.LAYERS_THT))
+                shape=Pad.SHAPE_CIRCLE, type=Pad.TYPE_THT, layers=Pad.LAYERS_THT,
+                round_radius_handler=global_config.roundrect_radius_handler))
             kicad_mod.append(PadArray(center=[pad_center_x - dx, pad_center_y],
                 pincount=5, y_spacing=dy,
                 drill=d_small, size=s_small, initial=n, increment=0,
-                type=Pad.TYPE_THT, shape=Pad.SHAPE_CIRCLE, layers=Pad.LAYERS_THT))
+                type=Pad.TYPE_THT, shape=Pad.SHAPE_CIRCLE, layers=Pad.LAYERS_THT,
+                round_radius_handler=global_config.roundrect_radius_handler))
             kicad_mod.append(PadArray(center=[pad_center_x + dx, pad_center_y],
                 pincount=5, y_spacing=dy,
                 drill=d_small, size=s_small, initial=n, increment=0,
-                type=Pad.TYPE_THT, shape=Pad.SHAPE_CIRCLE, layers=Pad.LAYERS_THT))
+                type=Pad.TYPE_THT, shape=Pad.SHAPE_CIRCLE, layers=Pad.LAYERS_THT,
+                round_radius_handler=global_config.roundrect_radius_handler))
 
     if params['lock']:
         kicad_mod.append(Pad(at=[-ret_dx, ret_dy], type=Pad.TYPE_THT,
@@ -288,6 +294,7 @@ if __name__ == "__main__":
     with open(args.global_config, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
+            global_config = GC.GlobalConfig(configuration)
         except yaml.YAMLError as exc:
             print(exc)
 
@@ -298,4 +305,4 @@ if __name__ == "__main__":
             print(exc)
     for version in version_params:
         for pins_per_row in pins_per_row_range:
-            generate_one_footprint(pins_per_row, version_params[version], configuration)
+            generate_one_footprint(global_config, pins_per_row, version_params[version], configuration)

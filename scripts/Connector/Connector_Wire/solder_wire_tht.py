@@ -9,6 +9,7 @@ from KicadModTree import *  # NOQA
 from kilibs.geom.geometric_util import geometricLine, geometricCircle
 from scripts.tools.drawing_tools import round_to_grid
 from scripts.tools.footprint_text_fields import addTextFields
+from scripts.tools.global_config_files import global_config as GC
 
 
 DEFAULT_MIN_PAD_DRILL_INC = 0.2
@@ -76,7 +77,8 @@ def tag_gen(wire_def, fp_type, pincount, pitch):
 
     return 'connector wire {}{}'.format(size_code, fp_type)
 
-def make_fp(wire_def, fp_type, pincount, configuration):
+
+def make_fp(global_config: GC.GlobalConfig, wire_def, fp_type, pincount, configuration):
     crtyd_off= configuration['courtyard_offset']['connector']
     silk_pad_off = configuration['silk_pad_clearance'] + configuration['silk_line_width']/2
 
@@ -106,7 +108,7 @@ def make_fp(wire_def, fp_type, pincount, configuration):
             type=Pad.TYPE_THT, shape=Pad.SHAPE_CIRCLE,
             start=(0, 0), spacing=(pitch, 0),
             drill=pad_drill, size=pad_size,
-            radius_ratio=0.25, maximum_radius=0.25,
+            round_radius_handler=global_config.roundrect_radius_handler,
             layers=Pad.LAYERS_THT
         ))
 
@@ -246,7 +248,6 @@ def make_fp(wire_def, fp_type, pincount, configuration):
                     layer=layer, width=configuration['courtyard_line_width']
                 ))
 
-
     ######################### Text Fields ###############################
     center_x = (pincount-1)*pitch/2
 
@@ -286,17 +287,17 @@ def make_fp(wire_def, fp_type, pincount, configuration):
     lib.save(kicad_mod)
 
 
-def make_for_wire(wire_def, configuration):
+def make_for_wire(global_config, wire_def, configuration):
     for fp_type in FOOTPRINT_TYPES:
         for i in range(6):
-            make_fp(wire_def, FOOTPRINT_TYPES[fp_type], i+1, configuration)
+            make_fp(global_config, wire_def, FOOTPRINT_TYPES[fp_type], i+1, configuration)
 
-def make_for_file(filepath, configuration):
+def make_for_file(global_config, filepath, configuration):
     with open(filepath, 'r') as wire_definition:
         try:
             wires = yaml.safe_load(wire_definition)
             for w in wires:
-                make_for_wire(wires[w], configuration)
+                make_for_wire(global_config, wires[w], configuration)
         except yaml.YAMLError as exc:
             print(exc)
 
@@ -331,6 +332,7 @@ if __name__ == "__main__":
     with open(args.global_config, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
+            global_config = GC.GlobalConfig(configuration)
         except yaml.YAMLError as exc:
             print(exc)
 
@@ -339,4 +341,4 @@ if __name__ == "__main__":
     configuration['relief_drill_inc'] = args.relief_drill_oversize
 
     for filepath in args.wire_def:
-        make_for_file(filepath, configuration)
+        make_for_file(global_config, filepath, configuration)

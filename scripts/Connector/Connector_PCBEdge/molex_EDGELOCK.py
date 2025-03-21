@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
 from KicadModTree import *
+from scripts.tools.global_config_files import global_config as GC
 
-
+global_config = GC.DefaultGlobalConfig()
 lib_name = "Connector_PCBEdge"
 padNums = [2, 4, 6, 8]
 datasheet = "https://www.molex.com/pdm_docs/sd/2008900106_sd.pdf"
@@ -47,7 +48,7 @@ for padNum in padNums:
     f.excludeFromBOM = True
     f.excludeFromPositionFiles = True
 
-    f.append(Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl",
+    f.append(Model(filename=global_config.model_3d_prefix + lib_name + ".3dshapes/" + footprint_name + ".wrl",
                    at=[0.0, 0.0, 0.0],
                    scale=[1.0, 1.0, 1.0],
                    rotate=[0.0, 0.0, 0.0]))
@@ -58,9 +59,9 @@ for padNum in padNums:
     t1 = 0.1
     t2 = 0.15
 
-    wCrtYd = 0.05
-    wFab = 0.1
-    wSilkS = 0.12
+    wCrtYd = global_config.courtyard_line_width
+    wFab = global_config.fab_line_width
+    wSilkS = global_config.silk_line_width
     wCut = wSilkS
     crtYd = 0.3
     silkClearance = 0.2
@@ -135,10 +136,13 @@ for padNum in padNums:
                          layer="F.SilkS", width=wSilkS))
 
     padShape = Pad.SHAPE_ROUNDRECT
-    radiusRatio = 0.2
     padSize = [padWidth, padHeight]
     yPad = yEdge - edgeToPadBottom - padHeight / 2
     xPadLeft = xFabLeft + datasheetBtoHousingLeft + padCenterToSpaceSide + datasheetCDiffB / 2
+
+    radius_handler = RoundRadiusHandler(
+        radius_ratio=0.2,
+    )
 
     for i in range(0, padNum):
         x = xPadLeft + padToPad * i
@@ -146,7 +150,8 @@ for padNum in padNums:
             x += centerCardWidth + centerSpaceWidth * 2 + padCenterToSpaceSide * 2 - padToPad
         f.append(Pad(number=i+1, type=Pad.TYPE_CONNECT, shape=padShape,
                      at=[x, yPad], size=padSize, layers=Pad.LAYERS_CONNECT_FRONT,
-                     radius_ratio=radiusRatio))
+                     round_radius_handler=radius_handler
+        ))
 
     padCardWidth = padToPad * (padNum / 2 - 1) + padCenterToSpaceSide * 2
     xSpaceLeftRight = xFabLeft + datasheetBtoHousingLeft + datasheetCDiffB / 2

@@ -34,6 +34,8 @@ import yaml
 from KicadModTree import *
 from scripts.tools.drawing_tools import round_to_grid
 from scripts.tools.footprint_text_fields import addTextFields
+from scripts.tools.global_config_files import global_config as GC
+
 
 series = 'DF63'
 series_long = 'DF63 through hole'
@@ -73,7 +75,7 @@ if pad_size[1] == pad_size[0]:
 
 
 
-def generate_one_footprint(pins, form_type, configuration):
+def generate_one_footprint(global_config: GC.GlobalConfig, pins, form_type, configuration):
     mpn = part_code.format(n=pins, f=form_type)
     off = configuration['silk_fab_offset']
     pad_silk_off = configuration['silk_line_width']/2 + configuration['silk_pad_clearance']
@@ -131,6 +133,7 @@ def generate_one_footprint(pins, form_type, configuration):
                 shape = pad_shape,
                 size = pad_size,
                 drill = drill,
+                round_radius_handler=global_config.roundrect_radius_handler,
                 **optional_pad_params
                 )
     )
@@ -224,6 +227,7 @@ if __name__ == "__main__":
     with open(args.global_config, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
+            global_config = GC.GlobalConfig(configuration)
         except yaml.YAMLError as exc:
             print(exc)
 
@@ -239,4 +243,4 @@ if __name__ == "__main__":
                 continue
             if form_type == 'M' and pins_per_row in [5,6]:
                 form_type = ''
-            generate_one_footprint(pins_per_row, form_type, configuration)
+            generate_one_footprint(global_config, pins_per_row, form_type, configuration)

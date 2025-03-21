@@ -572,6 +572,10 @@ class StandardBox(Node):
         #
         self.pad = []
 
+        # TODO: this doesn't use the standard rounding: should be
+        # global_config.roundrect_radius_handler, but that makes diffs
+        radius_handler = RoundRadiusHandler(radius_ratio=0.25)
+
         c = 1
         for n in self.pins:
             c = n[1]
@@ -596,8 +600,9 @@ class StandardBox(Node):
                     new_pad = Pad(number=c, type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL,
                                   at=[x, 0.0 - y], size=[sx, sy], drill=dh, layers=Pad.LAYERS_THT)
             elif n[0] == 'smd':
-                new_pad = Pad(number=c, type=Pad.TYPE_SMT, shape=Pad.SHAPE_ROUNDRECT, radius_ratio=0.25,
-                                  at=[x, 0.0 - y], size=[sx, sy], drill=dh, layers=Pad.LAYERS_SMT)
+                new_pad = Pad(number=c, type=Pad.TYPE_SMT, shape=Pad.SHAPE_ROUNDRECT,
+                                 round_radius_handler=radius_handler,
+                                 at=[x, 0.0 - y], size=[sx, sy], drill=dh, layers=Pad.LAYERS_SMT)
             elif n[0] == 'npth':
                 if sy == 0:
                     new_pad = Pad(type=Pad.TYPE_NPTH, shape=Pad.SHAPE_CIRCLE,
@@ -608,4 +613,3 @@ class StandardBox(Node):
             if new_pad != False:
                 self.footprint.append(new_pad)
                 self.pad.append(new_pad)
-            #

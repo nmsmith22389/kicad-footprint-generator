@@ -21,6 +21,8 @@ from KicadModTree import *
 
 from scripts.tools.drawing_tools import round_to_grid
 from scripts.tools.footprint_text_fields import addTextFields
+from scripts.tools.global_config_files import global_config as GC
+
 
 series = "VH"
 manufacturer = 'JST'
@@ -39,8 +41,11 @@ min_annular_ring = 0.15
 
 part_base = "B{n:d}P{n_total:s}-{suffix:s}"
 
-def generate_one_footprint(pins, series_params, configuration):
-    #calculate dimensions
+
+def generate_one_footprint(
+    global_config: GC.GlobalConfig, pins, series_params, configuration
+):
+    # calculate dimensions
     A = (pins - 1) * pitch
     B = A + 3.9
 
@@ -150,8 +155,7 @@ def generate_one_footprint(pins, series_params, configuration):
 
     optional_pad_params = {}
     optional_pad_params['tht_pad1_shape'] = Pad.SHAPE_ROUNDRECT
-    optional_pad_params['radius_ratio'] = 0.25
-    optional_pad_params['maximum_radius'] = 0.25
+    optional_pad_params["round_radius_handler"] = global_config.roundrect_radius_handler
 
     exclude_pin_list = series_params[3] if post_omitted else []
     if post_omitted:
@@ -185,11 +189,9 @@ def generate_one_footprint(pins, series_params, configuration):
         courtyard={'top':cy1, 'bottom':cy2}, fp_name=footprint_name, text_y_inside_position='bottom')
 
     ##################### Output and 3d model ############################
-    model3d_path_prefix = configuration.get('3d_model_prefix','${KICAD9_3DMODEL_DIR}/')
-
     lib_name = configuration['lib_name_format_string'].format(series=series, man=manufacturer)
     model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}.wrl'.format(
-        model3d_path_prefix=model3d_path_prefix, lib_name=lib_name, fp_name=footprint_name)
+        model3d_path_prefix=global_config.model_3d_prefix, lib_name=lib_name, fp_name=footprint_name)
     kicad_mod.append(Model(filename=model_name))
 
     lib = KicadPrettyLibrary(lib_name, None)
@@ -205,6 +207,7 @@ if __name__ == "__main__":
     with open(args.global_config, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
+            global_config = GC.GlobalConfig(configuration)
         except yaml.YAMLError as exc:
             print(exc)
 
@@ -225,4 +228,4 @@ if __name__ == "__main__":
     #for series_params in [([7,8], series, series, [6]), ([7,8], series + "-L", series, [2]), ([7,8], series, series, [2,4,6]), ([7,8], series, series, [2,3,5,6]), ([9,10], series, series, [2,3,4,6,7,8])]:
     for series_params in [([2,11], series, series), ([2,12], series + "-B", series + " PBT"), ([3,4], series, series, [2])]:
         for pincount in range(series_params[0][0], series_params[0][1]):
-            generate_one_footprint(pincount, series_params, configuration)
+            generate_one_footprint(global_config, pincount, series_params, configuration)

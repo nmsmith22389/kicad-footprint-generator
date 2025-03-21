@@ -6,10 +6,11 @@ import yaml
 
 from KicadModTree import *
 from scripts.tools.footprint_text_fields import addTextFields
+from scripts.tools.global_config_files import global_config as GC
 
 
 # Function used to generate footprint
-def generate_footprint(params, part_params, mpn, configuration):
+def generate_footprint(global_config: GC.GlobalConfig, params, part_params, mpn, configuration):
 
     # Build footprint name
     fp_name = "PhoenixContact_{series_prefix}{pins}-{orientation_short}-{pitch}{series_sufix}_{rows}x{pins:02d}_P{pitch}mm_{orientation}".format(
@@ -28,9 +29,11 @@ def generate_footprint(params, part_params, mpn, configuration):
 
     # Pads
     kicad_mod.append(PadArray(initial=1, start=[0, 0], x_spacing=params['pitch']['x']*params['pads']['increment'], pincount=(part_params['pins']+params['pads']['increment']-1)//params['pads']['increment'], increment=params['pads']['increment'],
-        size=[params['pads']['size']['x'], params['pads']['size']['y']], drill=params['pads']['drill'], type=Pad.TYPE_THT, tht_pad1_shape=Pad.SHAPE_ROUNDRECT, shape=Pad.SHAPE_OVAL, layers=Pad.LAYERS_THT))
+        size=[params['pads']['size']['x'], params['pads']['size']['y']], drill=params['pads']['drill'], type=Pad.TYPE_THT, tht_pad1_shape=Pad.SHAPE_ROUNDRECT, shape=Pad.SHAPE_OVAL, layers=Pad.LAYERS_THT,
+        round_radius_handler=global_config.roundrect_radius_handler))
     kicad_mod.append(PadArray(initial=params['pads']['increment'], start=[(params['pads']['increment']-1)*params['pitch']['x'], params['pitch']['y']], x_spacing=params['pitch']['x']*params['pads']['increment'], pincount=part_params['pins']//params['pads']['increment'], increment=params['pads']['increment'],
-        size=[params['pads']['size']['x'], params['pads']['size']['y']], drill=params['pads']['drill'], type=Pad.TYPE_THT, tht_pad1_shape=Pad.SHAPE_ROUNDRECT, shape=Pad.SHAPE_OVAL, layers=Pad.LAYERS_THT))
+        size=[params['pads']['size']['x'], params['pads']['size']['y']], drill=params['pads']['drill'], type=Pad.TYPE_THT, tht_pad1_shape=Pad.SHAPE_ROUNDRECT, shape=Pad.SHAPE_OVAL, layers=Pad.LAYERS_THT,
+        round_radius_handler=global_config.roundrect_radius_handler))
 
     # Add fab layer
     body_top_left = [params['fab']['left'], params['fab']['top']]
@@ -144,6 +147,7 @@ if __name__ == "__main__":
     with open(args.global_config, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
+            global_config = GC.GlobalConfig(configuration)
         except yaml.YAMLError as exc:
             print(exc)
 
@@ -157,4 +161,6 @@ if __name__ == "__main__":
     # Create each part
     for series in params:
         for mpn in params[series]['parts']:
-            generate_footprint(params[series], params[series]['parts'][mpn], mpn, configuration)
+            generate_footprint(
+                global_config, params[series], params[series]['parts'][mpn], mpn, configuration
+            )

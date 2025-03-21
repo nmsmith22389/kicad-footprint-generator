@@ -21,6 +21,7 @@ import yaml
 from KicadModTree import *
 from scripts.tools.drawing_tools import round_to_grid
 from scripts.tools.footprint_text_fields import addTextFields
+from scripts.tools.global_config_files import global_config as GC
 
 series = "XH"
 manufacturer = 'JST'
@@ -54,7 +55,7 @@ variant_params = {
         }
     }
 
-def generate_one_footprint(pins, variant, configuration):
+def generate_one_footprint(global_config: GC.GlobalConfig, pins, variant, configuration):
     V=variant_params[variant]['V']
     #calculate fp dimensions
     A = (pins - 1) * pitch
@@ -114,6 +115,7 @@ def generate_one_footprint(pins, variant, configuration):
         x_spacing=pitch, pincount=pincount,
         size=pad_size, drill=drill,
         type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, layers=Pad.LAYERS_THT,
+        round_radius_handler=global_config.roundrect_radius_handler,
         **optional_pad_params))
 
     #draw the courtyard
@@ -230,6 +232,7 @@ if __name__ == "__main__":
     with open(args.global_config, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
+            global_config = GC.GlobalConfig(configuration)
         except yaml.YAMLError as exc:
             print(exc)
 
@@ -241,4 +244,4 @@ if __name__ == "__main__":
 
     for variant in variant_params:
         for pincount in variant_params[variant]['pin_range']:
-            generate_one_footprint(pincount, variant, configuration)
+            generate_one_footprint(global_config, pincount, variant, configuration)

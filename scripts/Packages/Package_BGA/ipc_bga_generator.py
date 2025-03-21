@@ -15,6 +15,7 @@ from KicadModTree import (
     PolygonLine,
     Property,
     RectLine,
+    RoundRadiusHandler,
     Text,
 )
 from kilibs.geom import Direction, Vector2D
@@ -450,7 +451,7 @@ class BGAGenerator(FootprintGenerator):
                     at=[xPadLeft + (col-1) * pitchX, yPadTop + rowNum * pitchY],
                     size=lParams.get('pad_size') or fpParams['pad_size'],
                     layers=layers,
-                    radius_ratio=config['round_rect_radius_ratio']
+                    radius_ratio=self.global_config.roundrect_radius_handler
                 ))
 
                 if pasteShape and pasteShape != padShape:
@@ -463,7 +464,7 @@ class BGAGenerator(FootprintGenerator):
 
                     pasteMargin = lParams.get('paste_margin', fpParams.get('paste_margin', 0))
                     size = list(lParams.get('pad_size') or fpParams['pad_size'])
-                    corner_ratio = config['round_rect_radius_ratio']
+                    corner_ratio = self.global_config.roundrect_radius_handler.radius_ratio
 
                     if pasteShape == 'circle':
                         size[0] += 2*pasteMargin
@@ -491,13 +492,17 @@ class BGAGenerator(FootprintGenerator):
                         else:
                             corner_ratio = corner_radius / min(size)
 
+                    paste_radius_handler = RoundRadiusHandler(
+                        radius_ratio=corner_ratio,
+                    )
+
                     f.append(Pad(
                         number="", type=Pad.TYPE_SMT,
                         shape=pasteShape,
                         at=[xPadLeft + (col-1) * pitchX, yPadTop + rowNum * pitchY],
                         size=size,
                         layers=['F.Paste'],
-                        radius_ratio=corner_ratio
+                        round_radius_handler=paste_radius_handler
                     ))
 
         return layoutX * layoutY - len(padSkips)

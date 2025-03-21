@@ -22,6 +22,7 @@ import yaml
 from KicadModTree import *
 from scripts.tools.drawing_tools import round_to_grid
 from scripts.tools.footprint_text_fields import addTextFields
+from scripts.tools.global_config_files import global_config as GC
 
 series = "Picoflex"
 series_long = 'Picoflex Ribbon-Cable Connectors'
@@ -40,7 +41,7 @@ part_code = "90814-00{n:02}"
 pitch = 1.27
 pitch_row = 2.54
 
-def generate_one_footprint(pins, configuration):
+def generate_one_footprint(global_config: GC.GlobalConfig, pins, configuration):
     mpn = part_code.format(n=pins)
 
     CrtYd_off = configuration['courtyard_offset']['connector']
@@ -394,6 +395,7 @@ if __name__ == "__main__":
     with open(args.global_config, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
+            global_config = GC.GlobalConfig(configuration)
         except yaml.YAMLError as exc:
             print(exc)
 
@@ -404,4 +406,4 @@ if __name__ == "__main__":
             print(exc)
 
     for pins in pins_range:
-        generate_one_footprint(pins, configuration)
+        generate_one_footprint(global_config, pins, configuration)

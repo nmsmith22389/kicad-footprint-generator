@@ -129,16 +129,19 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pincount, configurati
     # Create pads (1..n)
     kicad_mod.append(PadArray(pincount=pincount, x_spacing=pitch, center=[0,pad_y],
         type=Pad.TYPE_SMT, shape=Pad.SHAPE_ROUNDRECT,
-        size=[pad_width, pad_height], layers=Pad.LAYERS_SMT))
+        size=[pad_width, pad_height], layers=Pad.LAYERS_SMT,
+        round_radius_handler=global_config.roundrect_radius_handler))
 
     # Create tab (smt mounting) pads
     mounting_pad_name = global_config.get_pad_name(GC.PadName.MECHANICAL)
     kicad_mod.append(Pad(number=mounting_pad_name,
         at=[-tab_x, tab_y], type=Pad.TYPE_SMT, shape=Pad.SHAPE_ROUNDRECT,
-        size=[mounting_pad_width, mounting_pad_height], layers=Pad.LAYERS_SMT))
+        size=[mounting_pad_width, mounting_pad_height], layers=Pad.LAYERS_SMT,
+        round_radius_handler=global_config.roundrect_radius_handler))
     kicad_mod.append(Pad(number=mounting_pad_name,
         at=[tab_x, tab_y], type=Pad.TYPE_SMT, shape=Pad.SHAPE_ROUNDRECT,
-        size=[mounting_pad_width, mounting_pad_height], layers=Pad.LAYERS_SMT))
+        size=[mounting_pad_width, mounting_pad_height], layers=Pad.LAYERS_SMT,
+        round_radius_handler=global_config.roundrect_radius_handler))
 
     # Start of the angled side section of the actuator
     actuator_angle_start_y = actuator_y1-acutator_height - 1.5 # 1.5mm measured from EasyEDA model
