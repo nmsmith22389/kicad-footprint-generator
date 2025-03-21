@@ -5,6 +5,7 @@ import string
 import sys
 from KicadModTree import *
 from scripts.tools.drawing_tools import *
+from scripts.tools.global_config_files import global_config as GC
 from math import ceil
 
 # According to IEC 60603-2 §3 and DIN 41612-1 §2 connector names should be like
@@ -39,6 +40,7 @@ from math import ceil
 # https://github.com/KiCad/kicad-footprints/pull/1076
 
 lib_name = "Connector_DIN"
+global_config = GC.DefaultGlobalConfig()
 
 large_holes = {
     "pin_hole_diameter": 1.6,
@@ -821,9 +823,10 @@ def build_din41612_connector(series, direction, pins, rows, extra_args={}):
         f"{' '.join(datasheets)}"
     )
     mod.setTags(f"DIN 41612 IEC 60603 {series}")
-    model3d_path_prefix = "${KICAD9_3DMODEL_DIR}/"
+    model3d_path_prefix = global_config.model_3d_prefix
+    model3d_suffix = global_config.model_3d_suffix
     mod.append(
-        Model(filename=f"{model3d_path_prefix}{lib_name}.3dshapes/{footprint_name}.wrl")
+        Model(filename=f"{model3d_path_prefix}{lib_name}.3dshapes/{footprint_name}{model3d_suffix}")
     )
 
     if direction == "Horizontal":
