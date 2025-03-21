@@ -357,6 +357,31 @@ TSSOP-68_8x14mm_P0.4mm:
   num_pins_y: 34
 
 ##############################################################################
+# 0.50 PITCH
+# BODY WIDTH (E1) = 2.30 NOM
+##############################################################################
+
+VSSOP-8_2.3x2mm_P0.5:
+# it was previously in vssop.yaml file, height A = 1.00mm max (from JEDEC)
+  device_type: 'VSSOP'
+  size_source: 'https://www.jedec.org/standards-documents/docs/mo-187-f'
+  compatible_mpns:
+    - JEDEC-MO-187-CA
+    - TI-DCU0008A # https://www.ti.com/lit/ml/mpds050e/mpds050e.pdf, height 0.9mm max here
+  # Tolerance aaa = 0.2 applies to each side separately
+  body_size_x: 2.3 +/- 0.2
+  body_size_y: 2.0 +/- 0.2
+  # Tolerance bbb = 0.25 applies to each side separately
+  overall_size_x: 3.1 +/- 0.25
+  # TI DCU min is 0.17 .. 0.25
+  lead_width: 0.17 .. 0.33
+  # TI DCU is 0.2 .. 0.35
+  lead_len: 0.15 .. 0.28 .. 0.40
+  pitch: 0.5
+  num_pins_y: 4
+  num_pins_x: 0
+
+##############################################################################
 # TSSOP Variations - 0.50 PITCH
 # BODY WIDTH (E1) = 3.00 NOM
 ##############################################################################
@@ -374,6 +399,29 @@ MSOP-10_3x3mm_P0.5mm:
   pitch: 0.5 # value "e" in MO-187F variant BA
   num_pins_x: 0
   num_pins_y: 5
+
+VSSOP-10_3x3mm_P0.5mm:
+# this is TSSOP actually (height = 1.1mm max), it was previously in vssop.yaml file
+  device_type: 'VSSOP'
+  size_source: 'http://www.ti.com/lit/ds/symlink/ads1115.pdf'
+  body_size_x:
+    minimum: 2.90
+    maximum: 3.10
+  body_size_y:
+    minimum: 2.90
+    maximum: 3.10
+  overall_size_y:
+    minimum: 4.85 #Datasheet value is 4.75 and 5.05 but this generate a 4.3 pin separation
+    maximum: 5.15 #by adding 0.1 in both pin separation is correct.
+  lead_width:
+    minimum: 0.17
+    maximum: 0.27
+  lead_len:
+    minimum: 0.4
+    maximum: 0.7
+  pitch: 0.5
+  num_pins_y: 5
+  num_pins_x: 0
 
 HVSSOP-10-1EP_3x3mm_P0.5mm_EP1.57x1.88mm:
 # this is HTSSOP actually, it was previously in hvssop.yaml file
@@ -1098,6 +1146,26 @@ MSOP-8_3x3mm_P0.65mm:
   num_pins_x: 0
   num_pins_y: 4
 
+VSSOP-8_3x3mm_P0.65:
+# this is TSSOP actually (height = 1.1mm max), it was previously in vssop.yaml file
+  device_type: 'VSSOP'
+  size_source: 'https://www.jedec.org/standards-documents/docs/mo-187-f'
+  compatible_mpns:
+    - JEDEC-MO-187-AA
+    - TI-DGK0008A # https://www.ti.com/lit/ds/symlink/opa2340.pdf#page=33, https://www.ti.com/lit/ml/mpds028e/mpds028e.pdf
+  # Tolerance aaa = 0.2 applies to each side separately
+  body_size_x: 3.0 +/- 0.2
+  body_size_y: 3.0 +/- 0.2
+  # Tolerance bbb = 0.25 applies to each side separately
+  overall_size_x: 4.9 +/- 0.25
+  # TI DGK min is 0.25
+  lead_width: 0.22 .. 0.38
+  # TI DGK max is 0.7
+  lead_len: 0.4 .. 0.6 .. 0.8
+  pitch: 0.65
+  num_pins_y: 4
+  num_pins_x: 0
+
 MSOP-8-1EP_3x3mm_P0.65mm_EP1.5x1.8mm:
 # it was previously in msop.yaml file
   device_type: 'MSOP'
@@ -1337,6 +1405,168 @@ MSOP-8-1EP_3x3mm_P0.65mm_EP1.95x2.15mm:
     grid: [1.1, 1.3]
     # bottom_pad_size:
     paste_avoid_via: False
+
+Texas_DGN0008D_VSSOP-8-1EP_3x3mm_P0.65mm_EP2x2.94mm_Mask1.57x1.89mm:
+# this is TSSOP actually (height = 1.1mm max), it was previously in vssop.yaml file
+  device_type: 'VSSOP'
+  manufacturer: 'Texas'
+  part_number: 'DGN0008D'
+  size_source: 'https://www.ti.com/lit/ds/symlink/tpa711.pdf'
+  body_size_x:
+    minimum: 2.90
+    maximum: 3.10
+  body_size_y:
+    minimum: 2.90
+    maximum: 3.10
+  overall_size_x:
+    minimum: 4.85 # Datasheet value is 4.75 and 5.05 but this generate a 4.3 pin separation
+    maximum: 5.15 # by adding 0.1 in both pin separation is correct.
+  overall_height:
+    maximum: 1.1
+  lead_width:
+    minimum: 0.25
+    maximum: 0.38
+  lead_len:
+    minimum: 0.4
+    maximum: 0.7
+  pitch: 0.65
+  num_pins_y: 4
+  num_pins_x: 0
+
+  EP_size_x:
+    minimum: 1.28
+    maximum: 1.57
+  EP_size_y:
+    minimum: 1.63
+    maximum: 1.89
+  EP_size_x_overwrite: 2.00
+  EP_size_y_overwrite: 2.94
+  EP_mask_x: 1.57
+  EP_mask_y: 1.89
+
+  # EP_paste_coverage: 0.65
+  # EP_num_paste_pads: [1, 2]
+
+  thermal_vias:
+    count: [2, 3]
+    drill: 0.2
+    grid: [1.10, 1.22]
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    EP_num_paste_pads: [1, 2]
+    # paste_between_vias: 1
+    # paste_rings_outside: 1
+    EP_paste_coverage: 0.75
+    # bottom_pad_size:
+    paste_avoid_via: True
+
+Texas_DGN0008G_VSSOP-8-1EP_3x3mm_P0.65mm_EP2x2.94mm_Mask1.846x2.15mm:
+# this is TSSOP actually (height = 1.1mm max), it was previously in vssop.yaml file
+  device_type: 'VSSOP'
+  manufacturer: 'Texas'
+  part_number: 'DGN0008G'
+  size_source: 'https://www.ti.com/lit/ds/symlink/tpa711.pdf'
+  body_size_x:
+    minimum: 2.90
+    maximum: 3.10
+  body_size_y:
+    minimum: 2.90
+    maximum: 3.10
+  overall_size_x:
+    minimum: 4.85 # Datasheet value is 4.75 and 5.05 but this generate a 4.3 pin separation
+    maximum: 5.15 # by adding 0.1 in both pin separation is correct.
+  overall_height:
+    maximum: 1.1
+  lead_width:
+    minimum: 0.25
+    maximum: 0.38
+  lead_len:
+    minimum: 0.4
+    maximum: 0.7
+  pitch: 0.65
+  num_pins_y: 4
+  num_pins_x: 0
+
+  EP_size_x:
+    minimum: 1.646
+    maximum: 1.846
+  EP_size_y:
+    minimum: 1.95
+    maximum: 2.15
+  EP_size_x_overwrite: 2.00
+  EP_size_y_overwrite: 2.94
+  EP_mask_x: 1.846
+  EP_mask_y: 2.15
+
+  # EP_paste_coverage: 0.65
+  # EP_num_paste_pads: [1, 2]
+
+  thermal_vias:
+    count: [2, 3]
+    drill: 0.2
+    grid: [1.10, 1.22]
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    EP_num_paste_pads: [2, 2]
+    paste_between_vias: 1
+    paste_rings_outside: 1
+    EP_paste_coverage: 0.75
+    # bottom_pad_size:
+    paste_avoid_via: True
+
+Texas_DGN0008B_VSSOP-8-1EP_3x3mm_P0.65mm_EP2x3mm_Mask1.88x1.98mm:
+# this is TSSOP actually (height = 1.1mm max), it was previously in vssop.yaml file,
+  device_type: 'VSSOP'
+  manufacturer: 'Texas'
+  part_number: 'DGN0008B'
+  size_source: 'https://www.ti.com/lit/ds/symlink/tps7a4101.pdf'
+  body_size_x:
+    minimum: 2.90
+    maximum: 3.10
+  body_size_y:
+    minimum: 2.90
+    maximum: 3.10
+  overall_size_x:
+    minimum: 4.85 # Datasheet value is 4.75 and 5.05 but this generate a 4.3 pin separation
+    maximum: 5.15 # by adding 0.1 in both pin separation is correct.
+  overall_height:
+    maximum: 1.1
+  lead_width:
+    minimum: 0.25
+    maximum: 0.38
+  lead_len:
+    minimum: 0.4
+    maximum: 0.7
+  pitch: 0.65
+  num_pins_y: 4
+  num_pins_x: 0
+
+  EP_size_x:
+    minimum: 1.646
+    maximum: 1.846
+  EP_size_y:
+    minimum: 1.95
+    maximum: 2.15
+  EP_size_x_overwrite: 2.00
+  EP_size_y_overwrite: 3.00
+  EP_mask_x: 1.88
+  EP_mask_y: 1.98
+
+  # EP_paste_coverage: 0.65
+  # EP_num_paste_pads: [1, 2]
+
+  thermal_vias:
+    count: [2, 3]
+    drill: 0.2
+    grid: [1.10, 1.22]
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    EP_num_paste_pads: [2, 2]
+    paste_between_vias: 1
+    paste_rings_outside: 1
+    EP_paste_coverage: 0.75
+    # bottom_pad_size:
+    paste_avoid_via: True
 
 MSOP-8-1EP_3x3mm_P0.65mm_EP2.5x3mm_Mask1.73x2.36mm:
 # it was previously in msop.yaml file
