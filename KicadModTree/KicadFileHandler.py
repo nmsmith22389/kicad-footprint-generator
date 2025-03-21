@@ -803,11 +803,39 @@ class KicadFileHandler(FileHandler):
             return []
 
     def _serialize_Pad(self, node):
+
+        def _map_shape_type(shape: str) -> SexprSerializer.Symbol:
+            mapping = {
+                Pad.SHAPE_CIRCLE: 'circle',
+                Pad.SHAPE_RECT: 'rect',
+                Pad.SHAPE_OVAL: 'oval',
+                Pad.SHAPE_TRAPEZE: 'trapezoid',
+                Pad.SHAPE_ROUNDRECT: 'roundrect',
+                Pad.SHAPE_CUSTOM: 'custom',
+            }
+            return SexprSerializer.Symbol(mapping[shape])
+
+        def _map_pad_type(pad_type: str) -> SexprSerializer.Symbol:
+            mapping = {
+                Pad.TYPE_THT: 'thru_hole',
+                Pad.TYPE_SMT: 'smd',
+                Pad.TYPE_NPTH: 'np_thru_hole',
+                Pad.TYPE_CONNECT: 'connect',
+            }
+            return SexprSerializer.Symbol(mapping[pad_type])
+
+        shape = node.shape
+
+        # Round rects decay to rectangles if the radius ratio is 0
+        if shape == Pad.SHAPE_ROUNDRECT:
+            if node.radius_ratio == 0:
+                shape = Pad.SHAPE_RECT
+
         sexpr = [
             SexprSerializer.Symbol('pad'),
             str(node.number),
-            SexprSerializer.Symbol(node.type),
-            SexprSerializer.Symbol(node.shape)
+            _map_pad_type(node.type),
+            _map_shape_type(shape)
         ]
 
         position, rotation = node.getRealPosition(node.at, node.rotation)
@@ -844,7 +872,7 @@ class KicadFileHandler(FileHandler):
         if node.type == Pad.TYPE_THT:
             sexpr.append(self._serialise_Boolean("remove_unused_layers", False))
 
-        if node.shape == Pad.SHAPE_ROUNDRECT:
+        if shape == Pad.SHAPE_ROUNDRECT:
             sexpr.append([SexprSerializer.Symbol('roundrect_rratio'), node.radius_ratio])
 
             if node.chamfer_ratio is not None and node.chamfer_corners.isAnySelected():
@@ -854,7 +882,7 @@ class KicadFileHandler(FileHandler):
                 if (sval is not None) and sval:
                     sexpr.append(sval)
 
-        if node.shape == Pad.SHAPE_CUSTOM:
+        if shape == Pad.SHAPE_CUSTOM:
             # gr_line, gr_arc, gr_circle or gr_poly
             sexpr.append(
                 [SexprSerializer.Symbol('options'),

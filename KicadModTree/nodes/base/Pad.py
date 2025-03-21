@@ -60,21 +60,8 @@ class Pad(Node):
         * *drill* (``float``, ``Vector2D``) --
           drill-size of the pad
 
-        * *radius_ratio* (``float``) --
-          The radius ratio of the rounded rectangle.
-          Ignored for every shape except round rect.
-        * *maximum_radius* (``float``) --
-          The maximum radius for the rounded rectangle.
-          If the radius produced by the radius_ratio parameter for the pad would
-          exceed the maximum radius, the ratio is reduced to limit the radius.
-          (This is useful for IPC-7351C compliance as it suggests 25% ratio with limit 0.25mm)
-          Ignored for every shape except round rect.
-        * *round_radius_exact* (``float``) --
-          Set an exact round radius for a pad.
-          Ignored for every shape except round rect
         * *round_radius_handler* (``RoundRadiusHandler``) --
           An instance of the RoundRadiusHandler class
-          If this is given then all other round radius specifiers are ignored
           Ignored for every shape except round rect
 
         * *solder_paste_margin_ratio* (``float``) --
@@ -159,9 +146,10 @@ class Pad(Node):
     _zone_connection: ZoneConnection
     _chamfer_corners: CornerSelection
 
+    _round_radius_handler: RoundRadiusHandler | None
+
     def __init__(self, **kwargs):
         Node.__init__(self)
-        self.radius_ratio = 0
 
         self._initNumber(**kwargs)
         self._initType(**kwargs)
@@ -178,15 +166,17 @@ class Pad(Node):
         self._initLayers(**kwargs)
         self._initMirror(**kwargs)
 
+        self._round_radius_handler = None
+
         if self.shape == self.SHAPE_OVAL and self.size[0] == self.size[1]:
             self.shape = self.SHAPE_CIRCLE
 
-        if self.shape == Pad.SHAPE_OVAL or self.shape == Pad.SHAPE_CIRCLE:
-            self.radius_ratio = 0.5
         if self.shape == Pad.SHAPE_ROUNDRECT:
-            self._initRadiusRatio(**kwargs)
+
             self._initChamferRatio(**kwargs)
             self._initChamferCorners(**kwargs)
+
+            self._round_radius_handler = kwargs["round_radius_handler"]
 
         if self.shape == Pad.SHAPE_CUSTOM:
             self._initAnchorShape(**kwargs)
@@ -280,17 +270,6 @@ class Pad(Node):
             raise KeyError('layers not declared (like "layers=[\'*.Cu\', \'*.Mask\', \'F.SilkS\']")')
         self.layers = kwargs.get('layers')
 
-    def _initRadiusRatio(self, **kwargs):
-        if 'round_radius_handler' in kwargs:
-            self.round_radius_handler = kwargs['round_radius_handler']
-        else:
-            self.round_radius_handler = RoundRadiusHandler(**kwargs)
-
-        self.radius_ratio = self.round_radius_handler.getRadiusRatio(min(self.size))
-
-        if self.radius_ratio == 0:
-            self.shape = Pad.SHAPE_RECT
-
     def _initChamferRatio(self, **kwargs):
 
         if kwargs.get('chamfer_size_handler', None) is not None:
@@ -299,10 +278,6 @@ class Pad(Node):
             self.chamfer_size_handler = ChamferSizeHandler(must_be_square=True, **kwargs)
 
         self.chamfer_ratio = self.chamfer_size_handler.getChamferRatio(min(self.size))
-
-        if self.chamfer_ratio == 0 and self.radius_ratio == 0:
-            self.shape = Pad.SHAPE_RECT
-
         return self.chamfer_ratio
 
     def _initChamferCorners(self, **kwargs):
@@ -393,7 +368,7 @@ class Pad(Node):
                 if r > r_max:
                     r_max = r
             return r_max
-        return self.round_radius_handler.getRoundRadius(min(self.size))
+        return self._round_radius_handler.getRoundRadius(min(self.size))
 
     @property
     def fab_property(self) -> Union[FabProperty, None]:
@@ -416,6 +391,14 @@ class Pad(Node):
     @property
     def roundRadius(self):
         return self.getRoundRadius()
+
+    @property
+    def radius_ratio(self) -> float:
+        # A pad shape that doesn't support round radii will return 0.0
+        if not self._round_radius_handler:
+            return 0.0
+
+        return self._round_radius_handler.getRadiusRatio(min(self.size.x, self.size.y))
 
     @property
     def chamfer_corners(self) -> CornerSelection:

@@ -24,10 +24,19 @@ def gen_footprint():
         # add a polygon line
         kicad_mod.append(RectLine(start=[-5.2, -2.2], end=[5.2, 2.2], layer=layer, width=width))
     # add some SMT pads
+    round_radius_handler = RoundRadiusHandler(radius_ratio=0.25)
     for x in range(-3, 4):
         for y in range(-1, 2, 2):
-            kicad_mod.append(Pad(at=[x, y], shape=Pad.SHAPE_ROUNDRECT,
-                                 type=Pad.TYPE_SMT, size=[0.5, 1.0], layers=Pad.LAYERS_SMT))
+            pad = Pad(
+                at=[x, y],
+                shape=Pad.SHAPE_ROUNDRECT,
+                type=Pad.TYPE_SMT,
+                size=[0.5, 1.0],
+                layers=Pad.LAYERS_SMT,
+                round_radius_handler=round_radius_handler,
+            )
+            kicad_mod.append(pad)
+
     # add some THT Pads
     for x in [-4.75, -1.0, 1.0, 3.75]:
         kicad_mod.append(Pad(at=[x, 0], shape=Pad.SHAPE_CIRCLE, type=Pad.TYPE_THT,

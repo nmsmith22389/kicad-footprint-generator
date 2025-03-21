@@ -142,7 +142,7 @@ def _collectNodesAsGeometricShapes(node: Node,
                                            end=c.at + 0.5 * c.size + silk_pad_clearance,
                                            layer=layer, width=0.01).rotate(angle=-c.rotation, origin=c.at))
                 elif (c.shape == Pad.SHAPE_CIRCLE):
-                    shapes.append(Circle(center=c.at, radius=c.size[0] * c.radius_ratio + silk_pad_clearance))
+                    shapes.append(Circle(center=c.at, radius=c.size[0] / 2 + silk_pad_clearance))
                 else:
                     sys.stderr.write("cleaning silk over pad is not implemented for pad shape '%s'\n" % c.shape)
             elif (select_drill and c.drill):
