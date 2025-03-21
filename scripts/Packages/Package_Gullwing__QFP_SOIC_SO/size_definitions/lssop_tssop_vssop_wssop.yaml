@@ -36,40 +36,7 @@ FileHeader:
   device_type: 'TSSOP'
 
 ##############################################################################
-# LSSOP Variations - 0.50 PITCH
-##############################################################################
-
-PowerSSO-16-1EP_3.9x4.9mm_P0.5mm_EP2.5x3.61mm:
-# This is LSSOP package, it was previously in powersso.yaml file
-# Similar to JEDEC MO-272, variation DA (but custom Exposed Pad)
-  device_type: 'PowerSSO'
-  size_source: 'https://www.st.com/resource/en/datasheet/vnd7020aj.pdf' # page 39
-  body_size_x: 3.9
-  body_size_y: 4.9
-  overall_size_x: 6.0
-  lead_width: 0.20 .. 0.30
-  lead_len: 0.40 .. 0.60 .. 0.85
-  pitch: 0.5
-  num_pins_x: 0
-  num_pins_y: 8
-  EP_size_x:
-     minimum: 2.20
-     nominal: 2.50 # JEDEC is 2.00 .. 3.00mm
-  EP_size_y:
-     minimum: 3.31
-     nominal: 3.61 # JEDEC is 3.00 .. 4.00mm
-
-  overall_height:
-    maximum: 1.70
-  thermal_vias:
-    count: [2, 4]
-    drill: 0.3
-    grid: [1.2, 1.2]
-    paste_avoid_via: False
-    EP_num_paste_pads: [1, 1]
-
-##############################################################################
-# TSSOP Variations - 0.40 PITCH
+# 0.40 PITCH
 # BODY WIDTH (E1) = 4.40 NOM
 ##############################################################################
 
@@ -178,7 +145,7 @@ TSSOP-56_4.4x11.3mm_P0.4mm:
   num_pins_y: 28
 
 ##############################################################################
-# TSSOP Variations - 0.40 PITCH
+# 0.40 PITCH
 # BODY WIDTH (E1) = 6.10 NOM
 ##############################################################################
 
@@ -274,7 +241,7 @@ TSSOP-100_6.1x20.8mm_P0.4mm:
   num_pins_y: 50
 
 ##############################################################################
-# TSSOP Variations - 0.40 PITCH
+# 0.40 PITCH
 # BODY WIDTH (E1) = 8.00 NOM
 ##############################################################################
 
@@ -382,7 +349,7 @@ VSSOP-8_2.3x2mm_P0.5:
   num_pins_x: 0
 
 ##############################################################################
-# TSSOP Variations - 0.50 PITCH
+# 0.50 PITCH
 # BODY WIDTH (E1) = 3.00 NOM
 ##############################################################################
 
@@ -718,7 +685,41 @@ Analog_MSOP-12-16-1EP_3x4.039mm_P0.5mm_EP1.651x2.845mm:
   pad_to_pad_max_x_overwrite: 5.10
 
 ##############################################################################
-# TSSOP Variations - 0.50 PITCH
+# 0.50 PITCH
+# BODY WIDTH (E1) = 3.90 NOM
+##############################################################################
+
+PowerSSO-16-1EP_3.9x4.9mm_P0.5mm_EP2.5x3.61mm:
+# This is LSSOP package, it was previously in powersso.yaml file
+# Similar to JEDEC MO-272, variation DA (but custom Exposed Pad)
+  device_type: 'PowerSSO'
+  size_source: 'https://www.st.com/resource/en/datasheet/vnd7020aj.pdf' # page 39
+  body_size_x: 3.9
+  body_size_y: 4.9
+  overall_size_x: 6.0
+  lead_width: 0.20 .. 0.30
+  lead_len: 0.40 .. 0.60 .. 0.85
+  pitch: 0.5
+  num_pins_x: 0
+  num_pins_y: 8
+  EP_size_x:
+     minimum: 2.20
+     nominal: 2.50 # JEDEC is 2.00 .. 3.00mm
+  EP_size_y:
+     minimum: 3.31
+     nominal: 3.61 # JEDEC is 3.00 .. 4.00mm
+
+  overall_height:
+    maximum: 1.70
+  thermal_vias:
+    count: [2, 4]
+    drill: 0.3
+    grid: [1.2, 1.2]
+    paste_avoid_via: False
+    EP_num_paste_pads: [1, 1]
+
+##############################################################################
+# 0.50 PITCH
 # BODY WIDTH (E1) = 4.40 NOM
 ##############################################################################
 
@@ -902,7 +903,7 @@ TSSOP-50_4.4x12.5mm_P0.5mm:
   num_pins_y: 25
 
 ##############################################################################
-# TSSOP Variations - 0.50 PITCH
+# 0.50 PITCH
 # BODY WIDTH (E1) = 6.10 NOM
 ##############################################################################
 
@@ -998,7 +999,7 @@ TSSOP-64_6.1x17mm_P0.5mm:
   num_pins_y: 32
 
 ##############################################################################
-# TSSOP Variations - 0.50 PITCH
+# 0.50 PITCH
 # BODY WIDTH (E1) = 8.00 NOM
 ##############################################################################
 
@@ -1055,7 +1056,7 @@ TSSOP-56_8x14mm_P0.5mm:
   num_pins_y: 28
 
 ##############################################################################
-# TSSOP Variations - 0.635 PITCH
+# 0.635 PITCH
 # BODY WIDTH (E1) = 6.10 NOM
 ##############################################################################
 
@@ -1128,7 +1129,7 @@ HTSSOP-44-1EP_6.1x14mm_P0.635mm_EP5.2x14mm_Mask4.31x8.26mm:
     paste_avoid_via: False
 
 ##############################################################################
-# TSSOP Variations - 0.65 PITCH
+# 0.65 PITCH
 # BODY WIDTH (E1) = 3.00 NOM
 ##############################################################################
 
@@ -1697,7 +1698,7 @@ MSOP-12-1EP_3x4.039mm_P0.65mm_EP1.651x2.845mm:
     paste_avoid_via: False
 
 ##############################################################################
-# TSSOP Variations - 0.65 PITCH
+# 0.65 PITCH
 # BODY WIDTH (E1) = 4.40 NOM
 ##############################################################################
 
@@ -2666,7 +2667,7 @@ Texas_PWP0028V:
     paste_avoid_via: false
 
 ##############################################################################
-# TSSOP Variations - 0.65 PITCH
+# 0.65 PITCH
 # BODY WIDTH (E1) = 6.10 NOM
 ##############################################################################
 
@@ -2835,7 +2836,7 @@ TSSOP-40_6.1x14mm_P0.65mm:
   num_pins_y: 20
 
 ##############################################################################
-# TSSOP Variations - 0.65 PITCH
+# 0.65 PITCH
 # BODY WIDTH (E1) = 8.0 NOM
 ##############################################################################
 
@@ -2892,7 +2893,7 @@ TSSOP-40_8x14mm_P0.65mm:
   num_pins_y: 20
 
 ##############################################################################
-# TSSOP Variations - 4.0 PITCH
+# 4.0 PITCH
 # BODY WIDTH (E1) = 4.4 NOM
 ##############################################################################
 
@@ -2911,15 +2912,15 @@ TSSOP-4_4.4x5mm_P4mm:
   num_pins_y: 2
 
 ##############################################################################
-# TSSOP Variations - 0.5 PITCH
-# BODY WIDTH (E1) = 4.2 NOM
+# 0.5 PITCH
+# BODY WIDTH (E1) = 2.00 NOM
 ##############################################################################
 
 Texas_DYY0016A_TSOT-23-16:
 # Texas_DYY0016A_TSOT-23-16_4.2x2.0mm_P0.5mm
 # JEDEC MO-345, this package seems not to be TSOT (manufacturer states it's SOT)
   device_type: 'TSSOP'
-  size_source: 'https://www.ti.com/lit/ds/symlink/tmux1574.pdf'
+  size_source: 'https://www.ti.com/lit/ds/symlink/tmux1574.pdf' # page 42
   custom_name_format: 'Texas_DYY0016A_TSOT-23-16_4.2x2.0mm_P0.5mm'
   body_size_x: 1.9 .. 2.1
   body_size_y: 4.1 .. 4.3
