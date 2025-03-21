@@ -279,7 +279,7 @@ class ChamferedPadGrid(Node):
         temp_pad = ChamferedPad(
             at=[nearest_x, nearest_y], size=self.size,
             type=Pad.TYPE_SMT, layers=['F.Cu'], corner_selection=1,
-            round_radius_handler=RoundRadiusHandler(round_radius=0),
+            round_radius_handler=RoundRadiusHandler(radius_ratio=0),
         )
         self.chamfer_size = temp_pad.chamferAvoidCircle(
             center=relative_center, diameter=diameter, clearance=clearance)

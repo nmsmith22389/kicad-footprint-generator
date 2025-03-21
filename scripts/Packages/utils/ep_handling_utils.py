@@ -33,7 +33,7 @@ def getEpRoundRadiusParams(
     elif 'EP_round_radius_ratio' in device_params:
         round_radius_params['radius_ratio'] = device_params['EP_round_radius_ratio']
     else:
-        round_radius_params['default_radius_ratio'] = global_config.ep_roundrect_radius_handler.radius_ratio
+        round_radius_params['radius_ratio'] = global_config.ep_roundrect_radius_handler.radius_ratio
 
     if 'radius_ratio' in round_radius_params and round_radius_params['radius_ratio'] > 0:
         if 'EP_maximum_radius' in device_params:

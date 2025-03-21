@@ -172,7 +172,7 @@ class GlobalConfig:
         Get the default pad radius handler for roundrects
         """
         return RoundRadiusHandler(
-            default_radius_ratio=self.round_rect_default_radius,
+            radius_ratio=self.round_rect_default_radius,
             maximum_radius=self.round_rect_max_radius,
         )
 
@@ -182,7 +182,7 @@ class GlobalConfig:
         Get the default pad radius handler for roundrect exposed/thermal pads
         """
         return RoundRadiusHandler(
-            default_radius_ratio=self._ep_round_rect_default_radius,
+            radius_ratio=self._ep_round_rect_default_radius,
             maximum_radius=self._ep_round_rect_max_radius
         )
 
@@ -192,7 +192,7 @@ class GlobalConfig:
         Get the default pad radius handler for roundrect paste pads
         """
         return RoundRadiusHandler(
-            default_radius_ratio=self._paste_round_rect_default_radius,
+            radius_ratio=self._paste_round_rect_default_radius,
             maximum_radius=self._paste_round_rect_max_radius
         )
 

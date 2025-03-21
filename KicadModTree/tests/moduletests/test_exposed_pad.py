@@ -21,10 +21,10 @@ from KicadModTree.util import corner_handling
 
 
 DEFAULT_CU_RAD_HANDLER = corner_handling.RoundRadiusHandler(
-    default_radius_ratio=0, maximum_radius=0.25
+    radius_ratio=0, maximum_radius=0.25
 )
 DEFAULT_PASTE_RAD_HANDLER = corner_handling.RoundRadiusHandler(
-    default_radius_ratio=0, maximum_radius=0.25
+    radius_ratio=0, maximum_radius=0.25
 )
 
 

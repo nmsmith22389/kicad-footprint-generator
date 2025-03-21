@@ -4,12 +4,9 @@ from kilibs.util.param_util import getOptionalNumberTypeParam, toVectorUseCopyIf
 class RoundRadiusHandler(object):
     r"""Handles round radius setting of a corner
 
-    :param \**kwargs:
-        See below
-
     :Keyword Arguments:
     * *radius_ratio* (``float [0 <= r <= 0.5]``) --
-      The radius ratio of the rounded rectangle. (default set by default_radius_ratio)
+      The radius ratio of the rounded rectangle.
     * *maximum_radius* (``float``) --
       The maximum radius for the rounded rectangle.
       If the radius produced by the radius_ratio parameter for the pad would
@@ -17,20 +14,25 @@ class RoundRadiusHandler(object):
       (This is useful for IPC-7351C compliance as it suggests 25% ratio with limit 0.25mm)
     * *round_radius_exact* (``float``) --
       Set an exact round radius for a pad.
-    * *default_radius_ratio* (``float [0 <= r <= 0.5]``) --
-      This parameter allows to set the default radius ratio
-      (backwards compatibility option for chamfered pads)
     """
-    def __init__(self, **kwargs):
-        default_radius_ratio = getOptionalNumberTypeParam(
-                            kwargs, 'default_radius_ratio', default_value=0.25,
-                            low_limit=0, high_limit=0.5)
-        self.radius_ratio = getOptionalNumberTypeParam(
-                            kwargs, 'radius_ratio', default_value=default_radius_ratio,
-                            low_limit=0, high_limit=0.5)
 
-        self.maximum_radius = getOptionalNumberTypeParam(kwargs, 'maximum_radius')
-        self.round_radius_exact = getOptionalNumberTypeParam(kwargs, 'round_radius_exact')
+    radius_ratio: float
+    # Maxiumum radius for the rounded rectangle, if any
+    maximum_radius: float | None
+    round_radius_exact: bool
+
+    def __init__(
+        self,
+        radius_ratio: float,
+        maximum_radius: float | None = None,
+        round_radius_exact: float | None = None
+    ):
+        if radius_ratio < 0 or radius_ratio > 0.5:
+            raise ValueError("radius_ratio must be in range [0, 0.5]")
+
+        self.radius_ratio = radius_ratio
+        self.maximum_radius = maximum_radius
+        self.round_radius_exact = round_radius_exact
 
     def getRadiusRatio(self, shortest_sidelength):
         r"""get the resulting round radius ratio
@@ -42,12 +44,13 @@ class RoundRadiusHandler(object):
             if self.round_radius_exact > shortest_sidelength/2:
                 raise ValueError(
                     "requested round radius of {} is too large for pad size of {}"
-                    .format(self.round_radius_exact, pad_size)
+                    .format(self.round_radius_exact, shortest_sidelength)
                     )
             if self.maximum_radius is not None:
                 return min(self.round_radius_exact, self.maximum_radius)/shortest_sidelength
             else:
                 return self.round_radius_exact/shortest_sidelength
+
         if self.maximum_radius is not None:
             if self.radius_ratio*shortest_sidelength > self.maximum_radius:
                 return self.maximum_radius/shortest_sidelength
