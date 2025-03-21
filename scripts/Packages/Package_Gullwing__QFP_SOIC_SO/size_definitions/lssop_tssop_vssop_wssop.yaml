@@ -358,6 +358,50 @@ TSSOP-68_8x14mm_P0.4mm:
 
 ##############################################################################
 # TSSOP Variations - 0.50 PITCH
+# BODY WIDTH (E1) = 3.00 NOM
+##############################################################################
+
+HVSSOP-10-1EP_3x3mm_P0.5mm_EP1.57x1.88mm:
+# this is HTSSOP actually, it was previously in hvssop.yaml file
+  device_type: 'HVSSOP'
+  size_source: 'https://www.ti.com/lit/ds/symlink/bq24090.pdf'
+
+  body_size_x:
+    nominal: 3
+    tolerance: 0.100
+  body_size_y:
+    nominal: 3
+    tolerance: 0.100
+  overall_height:
+    maximum: 1.1
+
+  overall_size_x:
+    minimum: 4.75
+    maximum: 5.05
+  lead_width:
+    minimum: 0.17
+    maximum: 0.27
+  lead_len:
+    minimum: 0.4
+    maximum: 0.7
+
+  pitch: 0.5
+  num_pins_x: 0
+  num_pins_y: 5
+
+  EP_size_x:
+    nominal: 1.57
+  EP_size_y:
+    nominal: 1.88
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [2, 2]
+    EP_num_paste_pads: [2, 2]
+    paste_avoid_via: False
+
+##############################################################################
+# TSSOP Variations - 0.50 PITCH
 # BODY WIDTH (E1) = 4.40 NOM
 ##############################################################################
 
@@ -764,6 +808,50 @@ HTSSOP-44-1EP_6.1x14mm_P0.635mm_EP5.2x14mm_Mask4.31x8.26mm:
     paste_via_clearance: 0.1
     EP_num_paste_pads: [2, 3]
     EP_paste_coverage: 0.65
+    paste_avoid_via: False
+
+##############################################################################
+# TSSOP Variations - 0.65 PITCH
+# BODY WIDTH (E1) = 3.00 NOM
+##############################################################################
+
+HVSSOP-8-1EP_3x3mm_P0.65mm_EP1.57x1.89mm:
+# this is HTSSOP actually, it was previously in hvssop.yaml file
+  device_type: 'HVSSOP'
+  size_source: 'https://www.ti.com/lit/ds/symlink/tpa6110a2.pdf'
+
+  body_size_x:
+    nominal: 3
+    tolerance: 0.100
+  body_size_y:
+    nominal: 3
+    tolerance: 0.100
+  overall_height:
+    maximum: 1.1
+
+  overall_size_x:
+    minimum: 4.75
+    maximum: 5.05
+  lead_width:
+    minimum: 0.25
+    maximum: 0.38
+  lead_len:
+    minimum: 0.4
+    maximum: 0.7
+
+  pitch: 0.65
+  num_pins_x: 0
+  num_pins_y: 4
+
+  EP_size_x:
+    nominal: 1.57
+  EP_size_y:
+    nominal: 1.89
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [2, 2]
+    EP_num_paste_pads: [2, 2]
     paste_avoid_via: False
 
 ##############################################################################
