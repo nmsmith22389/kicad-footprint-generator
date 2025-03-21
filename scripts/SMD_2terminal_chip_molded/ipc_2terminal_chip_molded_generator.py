@@ -123,7 +123,7 @@ class TwoTerminalSMD():
                 except Exception as exc:
                     print("Failed to generate {size_name} (group: {group_name}):".format(
                         size_name=size_name, group_name=group_name))
-                    print(exc)
+                    raise(exc)
 
     def generateFootprint(self, device_size_data, footprint_group_data):
         fab_line_width = self.configuration.get('fab_line_width', 0.1)
