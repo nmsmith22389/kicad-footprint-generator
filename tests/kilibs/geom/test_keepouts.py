@@ -8,8 +8,8 @@ Exhaustive tests are high maintenance, and regressions will normally be much mor
 visual diffs of the generated graphics than by delicate stacks of numerical tests.
 """
 
-from kilibs.geom.geometric_util import geometricLine
-from kilibs.geom.keepout import KeepoutRect
+from kilibs.geom.geometric_util import geometricLine,geometricCircle
+from kilibs.geom.keepout import KeepoutRect, KeepoutRound
 from scripts.tools.drawing_tools import applyKeepouts
 
 import kilibs.test_utils.geom_test as GeomTest
@@ -64,3 +64,21 @@ def test_apply_keepout_1():
 
     new_items = applyKeepouts(items, [ko])
     assert len(new_items) == 3
+
+
+def test_apply_circles_to_circle():
+
+    # Two circular keeouts, at 0 and 180
+    # Should split the circle into two arcs
+
+    items = [
+        geometricCircle(center=(0, 0), radius=1000),
+    ]
+
+    kos = [
+        KeepoutRound(center=(-1000, 0), radius=100),
+        KeepoutRound(center=(1000, 0), radius=100),
+    ]
+
+    new_items = applyKeepouts(items, kos)
+    assert len(new_items) == 2

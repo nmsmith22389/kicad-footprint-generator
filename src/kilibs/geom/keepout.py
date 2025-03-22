@@ -166,6 +166,8 @@ class Keepout(ABC):
             return a
 
         # Sort intersections by angle around the arc, from the start
+        intersections.append(arc.start_pos)
+        intersections.append(arc.getEndPoint())
         intersections.sort(key=_get_pt_angle_from_start)
 
         return Keepout._arcsFromIntersections(c, intersections, point_inside_func)
@@ -324,14 +326,14 @@ class KeepoutRound(Keepout):
     """
 
     def __init__(self, center: Vector2D, radius: float):
-        self.center = center
+        self.center = Vector2D(center)
         self.radius = radius
 
         self._circle = geometricCircle(center=self.center, radius=self.radius)
 
         self._bbox = BoundingBox(
-            Vector2D(center.x - radius, center.y - radius),
-            Vector2D(center.x + radius, center.y + radius),
+            Vector2D(self.center.x - radius, self.center.y - radius),
+            Vector2D(self.center.x + radius, self.center.y + radius),
         )
 
     def __str__(self):
@@ -381,9 +383,10 @@ class KeepoutRound(Keepout):
         if not intersections:
             return None
 
-        return Keepout._arcsFromCircleIntersections(
+        arcs = Keepout._arcsFromCircleIntersections(
             circle.center_pos, intersections, self.contains
         )
+        return arcs
 
     def keepout_arc(self, arc: geometricArc):
         tol = 1e-7
@@ -408,4 +411,5 @@ class KeepoutRound(Keepout):
             # none of the arc is inside, so it must be entirely outside
             return None
 
-        return Keepout._arcsFromArcIntersections(arc, intersections, self.contains)
+        arcs = Keepout._arcsFromArcIntersections(arc, intersections, self.contains)
+        return arcs
