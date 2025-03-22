@@ -123,9 +123,11 @@ def generate_footprint(global_config: GC.GlobalConfig, params, part_params, mpn,
 
     # 3D model definition
     lib_name = 'Connector_Phoenix_SPT'
-    model3d_path_prefix = configuration.get('3d_model_prefix', '${KISYS3DMOD}/')
-    model_name = "{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}.wrl".format(
-        model3d_path_prefix=model3d_path_prefix, fp_name=fp_name, lib_name=lib_name)
+    model3d_path_prefix = configuration.get('3d_model_prefix', global_config.model_3d_prefix)
+    model3d_path_suffix = configuration.get('3d_model_suffix', global_config.model_3d_suffix)
+    model_name = "{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}{model3d_path_suffix:s}".format(
+        model3d_path_prefix=model3d_path_prefix, fp_name=fp_name, lib_name=lib_name,
+        model3d_path_suffix=model3d_path_suffix)
     kicad_mod.append(Model(filename=model_name))
 
     # Create output directory

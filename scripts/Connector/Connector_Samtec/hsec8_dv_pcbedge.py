@@ -22,6 +22,7 @@ import yaml
 from KicadModTree import Footprint, FootprintType, Line, Text, Arc, Pad, RectLine, KicadPrettyLibrary
 from scripts.tools.drawing_tools import round_to_grid
 from scripts.tools.footprint_text_fields import addTextFields
+from scripts.tools.global_config_files import global_config as GC
 
 
 lib_name_category = 'Samtec_HSEC8'
@@ -88,7 +89,7 @@ pad_size = [0.55,2.80]
 pinrange = sorted(V.keys())
 
 
-def generate_one_footprint(positions: int, variant: str, configuration):
+def generate_one_footprint(global_config: GC.GlobalConfig, positions: int, variant: str, configuration):
     CrtYd_offset = configuration['courtyard_offset']['default']
     option = '-BL' if (variant == 'lock') else ''
     fp_name = 'Samtec_HSEC8-1%02d-X-X-DV%s_2x%02d_P0.8mm' % (positions, option, positions)
@@ -214,6 +215,7 @@ def generate_one_footprint(positions: int, variant: str, configuration):
 
     lib_name = configuration['lib_name_specific_function_format_string'].format(category=lib_name_category)
 
+
     lib = KicadPrettyLibrary(lib_name, None)
     lib.save(kicad_mod)
 
@@ -262,6 +264,7 @@ if __name__ == "__main__":
     with open(args.global_config, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
+            global_config = GC.GlobalConfig(configuration)
         except yaml.YAMLError as exc:
             print(exc)
 
@@ -273,4 +276,4 @@ if __name__ == "__main__":
 
     for variant in ['', 'wing', 'lock']:
         for positions in pinrange:
-            generate_one_footprint(positions, variant, configuration)
+            generate_one_footprint(global_config, positions, variant, configuration)

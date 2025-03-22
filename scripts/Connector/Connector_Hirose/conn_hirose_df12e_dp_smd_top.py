@@ -21,7 +21,7 @@ import yaml
 from KicadModTree import *
 from scripts.tools.drawing_tools import round_to_grid
 from scripts.tools.footprint_text_fields import addTextFields
-
+from scripts.tools.global_config_files import global_config as GC
 
 series = 'DF12'
 series_long = 'DF12E SMD'
@@ -39,7 +39,7 @@ pad_size_paste = [0.28,1.2]
 
 pins_per_row_range = [10,20,30,40,50,60,80,14,32,36]
 
-def generate_one_footprint(idx, pins, configuration):
+def generate_one_footprint(global_config: GC.GlobalConfig, idx, pins, configuration):
 
     mpn = part_code.format(n=pins)
 
@@ -189,11 +189,13 @@ def generate_one_footprint(idx, pins, configuration):
         courtyard={'top':cy1, 'bottom':cy2}, fp_name=footprint_name, text_y_inside_position='top')
 
     ##################### Write to File and 3D ############################
-    model3d_path_prefix = configuration.get('3d_model_prefix','${KICAD9_3DMODEL_DIR}/')
+    model3d_path_prefix = configuration.get('3d_model_prefix',global_config.model_3d_prefix)
+    model3d_path_suffix = configuration.get('3d_model_suffix',global_config.model_3d_suffix)
 
     lib_name = configuration['lib_name_format_string'].format(series=series, man=manufacturer)
-    model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}.wrl'.format(
-        model3d_path_prefix=model3d_path_prefix, lib_name=lib_name, fp_name=footprint_name)
+    model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}{model3d_path_suffix:s}'.format(
+        model3d_path_prefix=model3d_path_prefix, lib_name=lib_name, fp_name=footprint_name,
+        model3d_path_suffix=model3d_path_suffix)
     kicad_mod.append(Model(filename=model_name))
 
     lib = KicadPrettyLibrary(lib_name, None)
@@ -209,6 +211,7 @@ if __name__ == "__main__":
     with open(args.global_config, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
+            global_config = GC.GlobalConfig(configuration)
         except yaml.YAMLError as exc:
             print(exc)
 
@@ -220,5 +223,5 @@ if __name__ == "__main__":
 
     idx = 0
     for pincount in pins_per_row_range:
-        generate_one_footprint(idx, pincount, configuration)
+        generate_one_footprint(global_config, idx, pincount, configuration)
         idx += 1

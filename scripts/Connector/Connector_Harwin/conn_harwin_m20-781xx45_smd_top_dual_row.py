@@ -16,7 +16,7 @@ import argparse
 import yaml
 from KicadModTree import *
 from scripts.tools.footprint_text_fields import addTextFields
-
+from scripts.tools.global_config_files import global_config as GC
 
 series = 'M20'
 series_long = 'Female Vertical Surface Mount Double Row 2.54mm (0.1 inch) Pitch PCB Connector'
@@ -34,7 +34,7 @@ pad_size = [1.78, 1.02]
 
 pincount_range = [2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 15, 20]
 
-def generate_footprint(pins, configuration):
+def generate_footprint(global_config: GC.GlobalConfig, pins, configuration):
 
     mpn = pn.format(n=pins)
     pins_per_row = pins
@@ -159,11 +159,13 @@ def generate_footprint(pins, configuration):
         courtyard={'top':cy1, 'bottom':cy2}, fp_name=footprint_name, text_y_inside_position='top')
 
     ##################### Write to File and 3D ############################
-    model3d_path_prefix = configuration.get('3d_model_prefix','${KICAD9_3DMODEL_DIR}/')
+    model3d_path_prefix = configuration.get('3d_model_prefix',global_config.model_3d_prefix)
+    model3d_path_suffix = configuration.get('3d_model_suffix',global_config.model_3d_suffix)
 
     lib_name = configuration['lib_name_format_string'].format(series=series, man=manufacturer)
-    model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}.wrl'.format(
-        model3d_path_prefix=model3d_path_prefix, lib_name=lib_name, fp_name=footprint_name)
+    model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}{model3d_path_suffix:s}'.format(
+        model3d_path_prefix=model3d_path_prefix, lib_name=lib_name, fp_name=footprint_name,
+        model3d_path_suffix=model3d_path_suffix)
     kicad_mod.append(Model(filename=model_name))
 
     lib = KicadPrettyLibrary(lib_name, None)
@@ -179,6 +181,7 @@ if __name__ == "__main__":
     with open(args.global_config, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
+            global_config = GC.GlobalConfig(configuration)
         except yaml.YAMLError as exc:
             print(exc)
 
@@ -189,4 +192,4 @@ if __name__ == "__main__":
             print(exc)
 
     for pincount in pincount_range:
-        generate_footprint(pincount, configuration)
+        generate_footprint(global_config, pincount, configuration)

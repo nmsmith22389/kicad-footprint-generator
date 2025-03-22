@@ -3,6 +3,9 @@
 from KicadModTree import *  # NOQA
 from KicadModTree import KicadPrettyLibrary
 from KicadModTree.nodes.base.Pad import Pad
+from scripts.tools.global_config_files import global_config as GC
+
+global_config = GC.DefaultGlobalConfig()
 
 lib_name = "Buzzer_Beeper"
 
@@ -41,8 +44,8 @@ def buzzer_round_tht(args):
 
     # add model
     kicad_mod.append(Model(
-		filename="{prefix}{lib_name}.3dshapes/{fp_name}.wrl".format(prefix = '${KICAD9_3DMODEL_DIR}/', lib_name=lib_name, fp_name=args["name"]),
-		at=[0, 0, 0], scale=[1, 1, 1], rotate=[0, 0, 0]))
+        filename="{prefix}{lib_name}.3dshapes/{fp_name}{suffix}".format(prefix = global_config.model_3d_prefix, suffix=global_config.model_3d_suffix, lib_name=lib_name, fp_name=args["name"]),
+        at=[0, 0, 0], scale=[1, 1, 1], rotate=[0, 0, 0]))
 
 
     # write file

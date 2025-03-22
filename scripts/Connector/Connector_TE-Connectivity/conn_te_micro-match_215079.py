@@ -203,9 +203,10 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pincount, configurati
         courtyard={'top': cy1, 'bottom': cy2}, fp_name=footprint_name)
 
     # Output
-    model3d_path_prefix = configuration.get('3d_model_prefix','${KICAD9_3DMODEL_DIR}/')
+    model3d_path_prefix = configuration.get('3d_model_prefix',global_config.model_3d_prefix)
+    model3d_path_suffix = configuration.get('3d_model_suffix',global_config.model_3d_suffix)
     lib_name = configuration['lib_name_format_string'].format(man=man_lib)
-    model_name = f'{model3d_path_prefix}{lib_name}.3dshapes/{footprint_name}.wrl'
+    model_name = f'{model3d_path_prefix}{lib_name}.3dshapes/{footprint_name}{model3d_path_suffix}'
     kicad_mod.append(Model(filename=model_name))
 
     lib = KicadPrettyLibrary(lib_name, None)

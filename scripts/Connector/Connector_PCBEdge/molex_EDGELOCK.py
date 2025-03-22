@@ -48,7 +48,7 @@ for padNum in padNums:
     f.excludeFromBOM = True
     f.excludeFromPositionFiles = True
 
-    f.append(Model(filename=global_config.model_3d_prefix + lib_name + ".3dshapes/" + footprint_name + ".wrl",
+    f.append(Model(filename=global_config.model_3d_prefix + lib_name + ".3dshapes/" + footprint_name + global_config.model_3d_suffix,
                    at=[0.0, 0.0, 0.0],
                    scale=[1.0, 1.0, 1.0],
                    rotate=[0.0, 0.0, 0.0]))

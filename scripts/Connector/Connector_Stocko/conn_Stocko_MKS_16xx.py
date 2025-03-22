@@ -177,8 +177,8 @@ for itr in range (1, 20 + 1):
     # add 3D model
     kicad_mod.append(
         Model(
-            filename="{}{}.3dshapes/{}.wrl".format(
-                global_config.model_3d_prefix, lib_name, footprint_name
+            filename="{}{}.3dshapes/{}{}".format(
+                global_config.model_3d_prefix, lib_name, footprint_name, global_config.model_3d_suffix
             ),
             at=[0, 0, 0],
             scale=[1, 1, 1],

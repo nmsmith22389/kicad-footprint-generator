@@ -7,7 +7,7 @@ from math import sqrt
 from KicadModTree import *
 from scripts.tools.drawing_tools import round_to_grid
 from scripts.tools.footprint_text_fields import addTextFields
-
+from scripts.tools.global_config_files import global_config as GC
 
 pinrange = [25, 29, 41, 51, 71, 81]
 
@@ -31,7 +31,7 @@ cable_pitch = 0.2
 odd_pad_size = (0.55, 0.18) # bottom
 even_pad_size = (0.7, 0.18) # top
 
-def make_module(pin_count, configuration):
+def make_module(global_config: GC.GlobalConfig, pin_count, configuration):
     pad_silk_off = configuration['silk_line_width']/2 + configuration['silk_pad_clearance']
     off = configuration['silk_fab_offset']
 
@@ -170,17 +170,19 @@ def make_module(pin_count, configuration):
         courtyard={'top':cy1, 'bottom':cy2}, fp_name=footprint_name, text_y_inside_position='right')
 
     ##################### Output and 3d model ############################
-    model3d_path_prefix = configuration.get('3d_model_prefix','${KICAD9_3DMODEL_DIR}/')
+    model3d_path_prefix = configuration.get('3d_model_prefix',global_config.model_3d_prefix)
+    model3d_path_suffix = configuration.get('3d_model_suffix',global_config.model_3d_suffix)
 
     if lib_by_conn_category:
         lib_name = configuration['lib_name_specific_function_format_string'].format(category=conn_category)
     else:
         lib_name = configuration['lib_name_format_string'].format(series=series, man=manufacturer)
 
-    model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}.wrl'.format(
-        model3d_path_prefix=model3d_path_prefix, lib_name=lib_name, fp_name=footprint_name)
+    model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}{model3d_path_suffix:s}'.format(
+        model3d_path_prefix=model3d_path_prefix, lib_name=lib_name, fp_name=footprint_name,
+        model3d_path_suffix=model3d_path_suffix)
     kicad_mod.append(Model(filename=model_name))
-
+    
     lib = KicadPrettyLibrary(lib_name, None)
     lib.save(kicad_mod)
 
@@ -194,6 +196,7 @@ if __name__ == "__main__":
     with open(args.global_config, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
+            global_config = GC.GlobalConfig(configuration)
         except yaml.YAMLError as exc:
             print(exc)
 
@@ -204,4 +207,4 @@ if __name__ == "__main__":
             print(exc)
 
     for pincount in pinrange:
-        make_module(pincount, configuration)
+        make_module(global_config, pincount, configuration)

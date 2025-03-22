@@ -49,7 +49,7 @@ for series in data:
             Model(
                 filename=global_config.model_3d_prefix + lib_name + ".3dshapes/"
                 + footprint_name
-                + ".wrl"
+                + global_config.model_3d_suffix
             )
         )
 

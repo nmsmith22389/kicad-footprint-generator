@@ -223,7 +223,12 @@ def create_smd_shielding(global_config: GC.GlobalConfig, shield_properties: SmdS
                                   layer='F.SilkS',
                                   width=global_config.silk_line_width))
 
-    kicad_mod.append(Model(filename=global_config.model_3d_prefix + lib_name + ".3dshapes/" + shield_properties.name + ".wrl"))
+    kicad_mod.append(Model(
+        filename=global_config.model_3d_prefix
+                + lib_name
+                + ".3dshapes/"
+                + shield_properties.name
+                + global_config.model_3d_suffix))
 
     # write file
     lib = KicadPrettyLibrary(lib_name, None)

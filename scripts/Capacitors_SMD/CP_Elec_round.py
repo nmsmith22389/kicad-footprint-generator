@@ -218,7 +218,8 @@ def create_footprint(name, configuration, **kwargs):
     lib_name = 'Capacitor_SMD'
     # add model
     modelname = name.replace("_HandSoldering", "")
-    kicad_mod.append(Model(filename="{model_prefix:s}{lib_name:s}.3dshapes/{name:s}.wrl".format(model_prefix=configuration['3d_model_prefix'], lib_name=lib_name, name=modelname),
+    kicad_mod.append(Model(filename="{model_prefix:s}{lib_name:s}.3dshapes/{name:s}{suffix:s}".format(
+                                model_prefix=configuration['3d_model_prefix'], lib_name=lib_name, name=modelname, suffix=global_config.model_3d_suffix),
                            at=[0, 0, 0], scale=[1, 1, 1], rotate=[0, 0, 0]))
 
     # write file

@@ -6,12 +6,13 @@ import yaml
 
 from KicadModTree import *
 from scripts.tools.footprint_text_fields import addTextFields
+from scripts.tools.global_config_files import global_config as GC
 
 
 def roundToBase(value, base):
     return round(value/base) * base
 
-def generate_footprint(params, mpn, configuration):
+def generate_footprint(global_config: GC.GlobalConfig, params, mpn, configuration):
     fp_params = params['footprint']
     mech_params = params['mechanical']
     part_params = params['parts'][mpn]
@@ -100,11 +101,13 @@ def generate_footprint(params, mpn, configuration):
         courtyard={'top':-rc, 'bottom':rc}, fp_name=fp_name, text_y_inside_position='center')
 
     ##################### Output and 3d model ############################
-    model3d_path_prefix = configuration.get('3d_model_prefix','${KICAD9_3DMODEL_DIR}/')
+    model3d_path_prefix = configuration.get('3d_model_prefix',global_config.model_3d_prefix)
+    model3d_path_suffix = configuration.get('3d_model_suffix',global_config.model_3d_suffix)
 
     lib_name = "Mounting_Wuerth"
-    model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}.wrl'.format(
-        model3d_path_prefix=model3d_path_prefix, lib_name=lib_name, fp_name=fp_name)
+    model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}{model3d_path_suffix:s}'.format(
+        model3d_path_prefix=model3d_path_prefix, lib_name=lib_name, fp_name=fp_name,
+        model3d_path_suffix=model3d_path_suffix)
     kicad_mod.append(Model(filename=model_name))
 
     lib = KicadPrettyLibrary(lib_name, None)
@@ -122,6 +125,7 @@ if __name__ == "__main__":
     with open(args.global_config, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
+            global_config = GC.GlobalConfig(configuration)
         except yaml.YAMLError as exc:
             print(exc)
 
@@ -133,4 +137,4 @@ if __name__ == "__main__":
 
     for series in params:
         for mpn in params[series]['parts']:
-            generate_footprint(params[series], mpn, configuration)
+            generate_footprint(global_config, params[series], mpn, configuration)

@@ -37,30 +37,26 @@ if __name__ == '__main__':
         for rows in range(1,41):
             makePinHeadStraight(rows, cols, rm, rm, cols * singlecol_packwidth + singlecol_packoffset,
                                 singlecol_packwidth / 2 + singlecol_packoffset,
-                                singlecol_packwidth / 2 + singlecol_packoffset, ddrill, pad, [], lib_name, class_name, "pin header",
-                                [0, 0, 0], [1, 1, 1], [0, 0, 0], "${KICAD9_3DMODEL_DIR}")
+                                singlecol_packwidth / 2 + singlecol_packoffset, ddrill, pad, [], lib_name, class_name, "pin header")
             makePinHeadAngled(rows, cols, rm, rm, angled_pack_width, angled_pack_offset, angled_pin_length, angled_pin_width, ddrill, pad,
-                              [], lib_name, class_name, "pin header", [0, 0, 0], [1, 1, 1], [0, 0, 0], "${KICAD9_3DMODEL_DIR}")
+                              [], lib_name, class_name, "pin header")
             if rows != 1 or cols == 2:
               if cols == 2:
                   makePinHeadStraightSMD(rows, cols, rm, rm, rmx_pad_offset[cols-1], rmx_pin_length[cols-1], pin_width, cols * singlecol_packwidth + singlecol_packoffset,
                                       singlecol_packwidth / 2 + singlecol_packoffset,
                                       singlecol_packwidth / 2 + singlecol_packoffset, dual_pad_smd,
-                                         True, [], lib_name, class_name, "pin header",
-                                         [0, 0, 0], [1, 1, 1], [0, 0, 0], "${KICAD9_3DMODEL_DIR}")
+                                         True, [], lib_name, class_name, "pin header")
               if cols==1:
                   makePinHeadStraightSMD(rows, cols, rm, rm, rmx_pad_offset[cols-1], rmx_pin_length[cols-1], pin_width,
                                      cols * singlecol_packwidth + singlecol_packoffset,
                                      singlecol_packwidth / 2 + singlecol_packoffset,
                                      singlecol_packwidth / 2 + singlecol_packoffset, single_pad_smd,
-                                     True, [], lib_name, class_name, "pin header",
-                                     [0, 0, 0], [1, 1, 1], [0, 0, 0], "${KICAD9_3DMODEL_DIR}")
+                                     True, [], lib_name, class_name, "pin header")
                   makePinHeadStraightSMD(rows, cols, rm, rm, rmx_pad_offset[cols-1], rmx_pin_length[cols-1], pin_width,
                                      cols * singlecol_packwidth + singlecol_packoffset,
                                      singlecol_packwidth / 2 + singlecol_packoffset,
                                      singlecol_packwidth / 2 + singlecol_packoffset, single_pad_smd,
-                                     False, [], lib_name, class_name, "pin header",
-                                     [0, 0, 0], [1, 1, 1], [0, 0, 0], "${KICAD9_3DMODEL_DIR}")
+                                     False, [], lib_name, class_name, "pin header")
 
     rm=2.00
     ddrill=0.8
@@ -83,32 +79,28 @@ if __name__ == '__main__':
         for rows in range(1, 41):
             makePinHeadStraight(rows, cols, rm, rm, cols * singlecol_packwidth + singlecol_packoffset,
                                 singlecol_packwidth / 2 + singlecol_packoffset,
-                                singlecol_packwidth / 2 + singlecol_packoffset, ddrill, pad, [], lib_name, class_name, "pin header",
-                                [0, 0, 0], [1, 1, 1], [0, 0, 0], "${KICAD9_3DMODEL_DIR}")
+                                singlecol_packwidth / 2 + singlecol_packoffset, ddrill, pad, [], lib_name, class_name, "pin header")
             makePinHeadAngled(rows, cols, rm, rm, angled_pack_width, angled_pack_offset, angled_pin_length,
                               angled_pin_width, ddrill, pad,
-                              [], lib_name, class_name, "pin header", [0, 0, 0], [1, 1, 1], [0, 0, 0], "${KICAD9_3DMODEL_DIR}")
+                              [], lib_name, class_name, "pin header")
             if rows != 1 or cols == 2:
               if cols == 2:
                   makePinHeadStraightSMD(rows, cols, rm, rm, rmx_pad_offset[cols-1], rmx_pin_length[cols-1], pin_width,
                                          cols * singlecol_packwidth + singlecol_packoffset,
                                          singlecol_packwidth / 2 + singlecol_packoffset,
                                          singlecol_packwidth / 2 + singlecol_packoffset, dual_pad_smd,
-                                         True, [], lib_name, class_name, "pin header",
-                                         [0, 0, 0], [1, 1, 1], [0, 0, 0], "${KICAD9_3DMODEL_DIR}")
+                                         True, [], lib_name, class_name, "pin header")
               if cols == 1:
                   makePinHeadStraightSMD(rows, cols, rm, rm, rmx_pad_offset[cols-1], rmx_pin_length[cols-1], pin_width,
                                          cols * singlecol_packwidth + singlecol_packoffset,
                                          singlecol_packwidth / 2 + singlecol_packoffset,
                                          singlecol_packwidth / 2 + singlecol_packoffset, single_pad_smd,
-                                         True, [], lib_name, class_name, "pin header",
-                                         [0, 0, 0], [1, 1, 1], [0, 0, 0], "${KICAD9_3DMODEL_DIR}")
+                                         True, [], lib_name, class_name, "pin header")
                   makePinHeadStraightSMD(rows, cols, rm, rm, rmx_pad_offset[cols-1], rmx_pin_length[cols-1], pin_width,
                                          cols * singlecol_packwidth + singlecol_packoffset,
                                          singlecol_packwidth / 2 + singlecol_packoffset,
                                          singlecol_packwidth / 2 + singlecol_packoffset, single_pad_smd,
-                                         False, [], lib_name, class_name, "pin header",
-                                         [0, 0, 0], [1, 1, 1], [0, 0, 0], "${KICAD9_3DMODEL_DIR}")
+                                         False, [], lib_name, class_name, "pin header")
 
     # From https://cdn.harwin.com/pdfs/M50-393.pdf
     # https://cdn.harwin.com/pdfs/M50-363.pdf
@@ -136,32 +128,28 @@ if __name__ == '__main__':
         for rows in range(1, 41):
             makePinHeadStraight(rows, cols, rm, rm, package_width[cols-1],
                                 singlecol_packwidth / 2 ,
-                                singlecol_packwidth / 2 , ddrill, pad, [], lib_name, class_name, "pin header",
-                                [0, 0, 0], [1, 1, 1], [0, 0, 0], "${KICAD9_3DMODEL_DIR}")
+                                singlecol_packwidth / 2 , ddrill, pad, [], lib_name, class_name, "pin header")
             makePinHeadAngled(rows, cols, rm, rm, angled_pack_width, angled_pack_offset, angled_pin_length,
                               angled_pin_width, ddrill, pad,
-                              [], lib_name, class_name, "pin header", [0, 0, 0], [1, 1, 1], [0, 0, 0], "${KICAD9_3DMODEL_DIR}")
+                              [], lib_name, class_name, "pin header")
             if rows != 1 or cols == 2:
                 if cols == 2:
                     makePinHeadStraightSMD(rows, cols, rm, rm, rmx_pad_offset[cols-1], rmx_pin_length[cols-1], pin_width,
                                            package_width[cols-1],
                                            singlecol_packwidth / 2 + singlecol_packoffset,
                                            singlecol_packwidth / 2 + singlecol_packoffset, dual_pad_smd,
-                                           True, [], lib_name, class_name, "pin header",
-                                           [0, 0, 0], [1, 1, 1], [0, 0, 0], "${KICAD9_3DMODEL_DIR}")
+                                           True, [], lib_name, class_name, "pin header")
                 if cols == 1:
                     makePinHeadStraightSMD(rows, cols, rm, rm, rmx_pad_offset[cols-1], rmx_pin_length[cols-1], pin_width,
                                            package_width[cols-1],
                                            singlecol_packwidth / 2 + singlecol_packoffset,
                                            singlecol_packwidth / 2 + singlecol_packoffset, single_pad_smd,
-                                           True, [], lib_name, class_name, "pin header",
-                                           [0, 0, 0], [1, 1, 1], [0, 0, 0], "${KICAD9_3DMODEL_DIR}")
+                                           True, [], lib_name, class_name, "pin header")
                     makePinHeadStraightSMD(rows, cols, rm, rm, rmx_pad_offset[cols-1], rmx_pin_length[cols-1], pin_width,
                                            package_width[cols-1],
                                            singlecol_packwidth / 2 + singlecol_packoffset,
                                            singlecol_packwidth / 2 + singlecol_packoffset, single_pad_smd,
-                                           False, [], lib_name, class_name, "pin header",
-                                           [0, 0, 0], [1, 1, 1], [0, 0, 0], "${KICAD9_3DMODEL_DIR}")
+                                           False, [], lib_name, class_name, "pin header")
     #single row THT Straight headers https://gct.co/pdfjs/web/viewer.html?file=/Files/Drawings/BC020.pdf&t=1502019369628
     #dual row THT Straight headers https://gct.co/files/drawings/bc035.pdf
     #single row THT Angled headers https://gct.co/pdfjs/web/viewer.html?file=/Files/Drawings/BC030.pdf&t=1502031327147
@@ -189,11 +177,10 @@ if __name__ == '__main__':
         for rows in range(1, 41):
             makePinHeadStraight(rows, cols, rm, rm, package_width[cols-1],
                                 singlecol_packwidth / 2 ,
-                                singlecol_packwidth / 2 , ddrill, pad, [], lib_name, class_name, "pin header",
-                                [0, 0, 0], [1, 1, 1], [0, 0, 0], "${KICAD9_3DMODEL_DIR}")
+                                singlecol_packwidth / 2 , ddrill, pad, [], lib_name, class_name, "pin header")
             makePinHeadAngled(rows, cols, rm, rm, angled_pack_width[cols-1], angled_pack_offset[cols-1], angled_pin_length,
                               angled_pin_width, ddrill, pad,
-                              [], lib_name, class_name, "pin header", [0, 0, 0], [1, 1, 1], [0, 0, 0], "${KICAD9_3DMODEL_DIR}")
+                              [], lib_name, class_name, "pin header")
 
             if rows != 1 or cols == 2:
                 if cols == 2:
@@ -201,22 +188,19 @@ if __name__ == '__main__':
                                            package_width[cols-1],
                                            singlecol_packwidth / 2 + singlecol_packoffset,
                                            singlecol_packwidth / 2 + singlecol_packoffset, dual_pad_smd,
-                                           True, [], lib_name, class_name, "pin header",
-                                           [0, 0, 0], [1, 1, 1], [0, 0, 0], "${KICAD9_3DMODEL_DIR}")
+                                           True, [], lib_name, class_name, "pin header")
 
                 if cols == 1:
                     makePinHeadStraightSMD(rows, cols, rm, rm, rmx_pad_offset[cols-1], rmx_pin_length[cols-1], pin_width,
                                            package_width[cols-1],
                                            singlecol_packwidth / 2 + singlecol_packoffset,
                                            singlecol_packwidth / 2 + singlecol_packoffset, single_pad_smd,
-                                           True, [], lib_name, class_name, "pin header",
-                                           [0, 0, 0], [1, 1, 1], [0, 0, 0], "${KICAD9_3DMODEL_DIR}")
+                                           True, [], lib_name, class_name, "pin header")
                     makePinHeadStraightSMD(rows, cols, rm, rm, rmx_pad_offset[cols-1], rmx_pin_length[cols-1], pin_width,
                                            package_width[cols-1],
                                            singlecol_packwidth / 2 + singlecol_packoffset,
                                            singlecol_packwidth / 2 + singlecol_packoffset, single_pad_smd,
-                                           False, [], lib_name, class_name, "pin header",
-                                           [0, 0, 0], [1, 1, 1], [0, 0, 0], "${KICAD9_3DMODEL_DIR}")
+                                           False, [], lib_name, class_name, "pin header")
 
     # Samtec HPM series:
     #   datasheet: https://suddendocs.samtec.com/catalog_english/hpm.pdf
@@ -251,11 +235,9 @@ if __name__ == '__main__':
                                 2.54,
                                 2.54, ddrill, pad, [],
                                 lib_name, class_name, "Samtec HPM power header series 11.94mm post length",
-                                [0, 0, 0], [1, 1, 1], [0, 0, 0], "${KICAD9_3DMODEL_DIR}",
                                 name_format=format_01)
             makePinHeadStraight(rows, cols, rm, rm, cols * singlecol_packwidth + singlecol_packoffset,
                                 2.54,
                                 2.54, ddrill, pad, [],
                                 lib_name, class_name, "Samtec HPM power header series 3.81mm post length",
-                                [0, 0, 0], [1, 1, 1], [0, 0, 0], "${KICAD9_3DMODEL_DIR}",
                                 name_format=format_05)

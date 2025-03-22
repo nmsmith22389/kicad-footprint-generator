@@ -3,6 +3,8 @@
 from KicadModTree import *  # NOQA
 from scripts.tools.drawing_tools import *
 from scripts.tools.footprint_scripts_resistorlike import *
+from scripts.tools.global_config_files import global_config as GC
+global_config = GC.DefaultGlobalConfig()
 
 
 if __name__ == '__main__':
@@ -12,7 +14,7 @@ if __name__ == '__main__':
     d2=0
     R_POW = 0
     clname="D"
-    lbname="${KICAD9_3DMODEL_DIR}/Diode_THT"
+    lbname=global_config.model_3d_prefix + "Diode_THT"
     deco="diode"
     deco_kup="diode_KUP"
 

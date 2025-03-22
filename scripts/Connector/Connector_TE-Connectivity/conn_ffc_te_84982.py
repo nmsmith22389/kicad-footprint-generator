@@ -23,6 +23,7 @@ from math import  ceil, floor
 from KicadModTree import *
 from scripts.tools.drawing_tools import round_to_grid
 from scripts.tools.footprint_text_fields import addTextFields
+from scripts.tools.global_config_files import global_config as GC
 
 
 lib_by_conn_category = True
@@ -45,7 +46,7 @@ housing_width_4pin = 6.0    # [mm]
 pins_width_4pin = 3.0       # [mm]
 pin1_marker_l = 0.566       # [mm]
 
-def generate_one_footprint(pincount, configuration):
+def generate_one_footprint(global_config: GC.GlobalConfig, pincount, configuration):
     prefix = "" if (pincount < 10) else "{:d}-".format(floor(pincount / 10))
     partnumber = "{0:s}{1:s}-{2:s}".format(prefix, series, str(pincount)[-1])
 
@@ -152,15 +153,17 @@ def generate_one_footprint(pincount, configuration):
 
 
     ##################### Output and 3d model ############################
-    model3d_path_prefix = configuration.get('3d_model_prefix','${KICAD9_3DMODEL_DIR}/')
+    model3d_path_prefix = configuration.get('3d_model_prefix',global_config.model_3d_prefix)
+    model3d_path_suffix = configuration.get('3d_model_suffix',global_config.model_3d_suffix)
 
     if lib_by_conn_category:
         lib_name = configuration['lib_name_specific_function_format_string'].format(category=conn_category)
     else:
         lib_name = configuration['lib_name_format_string'].format(man=manufacturer)
 
-    model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}.wrl'.format(
-        model3d_path_prefix=model3d_path_prefix, lib_name=lib_name, fp_name=footprint_name)
+    model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}{model3d_path_suffix:s}'.format(
+        model3d_path_prefix=model3d_path_prefix, lib_name=lib_name, fp_name=footprint_name,
+        model3d_path_suffix=model3d_path_suffix)
     kicad_mod.append(Model(filename=model_name))
 
     lib = KicadPrettyLibrary(lib_name, None)
@@ -176,6 +179,7 @@ if __name__ == '__main__':
     with open(args.global_config, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
+            global_config = GC.GlobalConfig(configuration)
         except yaml.YAMLError as exc:
             print(exc)
 
@@ -186,4 +190,4 @@ if __name__ == '__main__':
             print(exc)
 
     for pincount in pincounts:
-        generate_one_footprint(pincount, configuration)
+        generate_one_footprint(global_config, pincount, configuration)

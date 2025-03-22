@@ -4,6 +4,7 @@ import argparse
 import yaml
 from KicadModTree import *
 from scripts.tools.footprint_text_fields import addTextFields
+from scripts.tools.global_config_files import global_config as GC
 
 series = 'M20-890'
 series_long = 'Male Horizontal Surface Mount Single Row 2.54mm (0.1 inch) Pitch PCB Connector'
@@ -62,7 +63,7 @@ def gen_silk_pins(origx, origy, kicad_mod, configuration, fill):
     if fill:
         kicad_mod.append(Pad(type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT, at=[origx+configuration['silk_line_width']+(6.3+12.3)/2, origy], size=[6, 0.64+configuration['silk_line_width']], layers=["F.SilkS"]))
 
-def gen_footprint(pinnum, manpart, configuration):
+def gen_footprint(global_config: GC.GlobalConfig, pinnum, manpart, configuration):
     orientation_str = configuration['orientation_options']['H']
     footprint_name = configuration['fp_name_format_string'].format(
         man=manufacturer,
@@ -163,10 +164,13 @@ def gen_footprint(pinnum, manpart, configuration):
         courtyard={'top':cy_top, 'bottom':cy_bottom}, fp_name=footprint_name, text_y_inside_position='center', allow_rotation=True)
 
     # 3D model
-    model3d_path_prefix = configuration.get('3d_model_prefix','${KICAD9_3DMODEL_DIR}/')
+    model3d_path_prefix = configuration.get('3d_model_prefix',global_config.model_3d_prefix)
+    model3d_path_suffix = configuration.get('3d_model_suffix',global_config.model_3d_suffix)
+
     lib_name = configuration['lib_name_format_string'].format(series=series, man=manufacturer)
-    model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}.wrl'.format(
-        model3d_path_prefix=model3d_path_prefix, lib_name=lib_name, fp_name=footprint_name)
+    model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}{model3d_path_suffix:s}'.format(
+        model3d_path_prefix=model3d_path_prefix, lib_name=lib_name, fp_name=footprint_name,
+        model3d_path_suffix=model3d_path_suffix)
     kicad_mod.append(Model(filename=model_name))
 
     # Output
@@ -174,26 +178,28 @@ def gen_footprint(pinnum, manpart, configuration):
     lib.save(kicad_mod)
 
 
-def gen_family(configuration):
+def gen_family(global_config: GC.GlobalConfig, configuration):
     for x in range(pin_min, pin_max+1):
-        gen_footprint(x, mpn.format(pincount=x), configuration)
+        gen_footprint(global_config, x, mpn.format(pincount=x), configuration)
 
 if __name__ == "__main__":
-	parser = argparse.ArgumentParser(description='use confing .yaml files to create footprints.')
-	parser.add_argument('--global_config', type=str, nargs='?', help='the config file defining how the footprint will look like. (KLC)', default='../../tools/global_config_files/config_KLCv3.0.yaml')
-	parser.add_argument('--series_config', type=str, nargs='?', help='the config file defining series parameters.', default='../conn_config_KLCv3.yaml')
-	args = parser.parse_args()
+    parser = argparse.ArgumentParser(description='use confing .yaml files to create footprints.')
+    parser.add_argument('--global_config', type=str, nargs='?', help='the config file defining how the footprint will look like. (KLC)', default='../../tools/global_config_files/config_KLCv3.0.yaml')
+    parser.add_argument('--series_config', type=str, nargs='?', help='the config file defining series parameters.', default='../conn_config_KLCv3.yaml')
+    args = parser.parse_args()
 
-	with open(args.global_config, 'r') as config_stream:
-		try:
-			configuration = yaml.safe_load(config_stream)
-		except yaml.YAMLError as exc:
-			print(exc)
+    with open(args.global_config, 'r') as config_stream:
+        try:
+            configuration = yaml.safe_load(config_stream)
+            global_config = GC.GlobalConfig(configuration)
+        except yaml.YAMLError as exc:
+            print(exc)
 
-	with open(args.series_config, 'r') as config_stream:
-		try:
-			configuration.update(yaml.safe_load(config_stream))
-		except yaml.YAMLError as exc:
-			print(exc)
+    with open(args.series_config, 'r') as config_stream:
+        try:
+            configuration.update(yaml.safe_load(config_stream))
+        except yaml.YAMLError as exc:
+            print(exc)
 
-	gen_family(configuration)
+    gen_family(global_config, configuration)
+    

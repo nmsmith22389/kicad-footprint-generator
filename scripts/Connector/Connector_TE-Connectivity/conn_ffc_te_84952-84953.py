@@ -199,8 +199,9 @@ def generate_one_footprint(global_config: GC.GlobalConfig,
     else:
         lib_name = configuration['lib_name_format_string'].format(man=manufacturer)
 
-    model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}.wrl'.format(
-        model3d_path_prefix=global_config.model_3d_prefix, lib_name=lib_name, fp_name=footprint_name)
+    model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}{model3d_path_suffix:s}'.format(
+        model3d_path_prefix=global_config.model_3d_prefix, lib_name=lib_name, fp_name=footprint_name,
+        model3d_path_suffix=global_config.model_3d_suffix)
     kicad_mod.append(Model(filename=model_name))
 
     lib = KicadPrettyLibrary(lib_name, None)

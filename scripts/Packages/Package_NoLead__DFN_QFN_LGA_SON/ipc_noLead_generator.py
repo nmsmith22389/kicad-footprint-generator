@@ -493,13 +493,7 @@ class NoLeadGenerator(FootprintGenerator):
             fp_name = prefix + fp_name
             fp_name_2 = prefix + fp_name_2
 
-        # model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}.wrl'\
-        #    .format(
-        #        model3d_path_prefix=model3d_path_prefix, lib_name=lib_name,
-        #        fp_name=fp_name_2)
         model_name = fp_name_2
-        # print(fp_name)
-        # print(pad_details)
 
         kicad_mod = Footprint(fp_name, FootprintType.SMD)
 

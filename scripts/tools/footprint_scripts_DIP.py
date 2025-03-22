@@ -222,7 +222,7 @@ def makeDIP(pins, rm, pinrow_distance_in, package_width, overlen_top, overlen_bo
 
     # add model
     kicad_modg.append(
-        Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl", at=offset3d, scale=scale3d, rotate=rotate3d))
+        Model(filename=global_config.model_3d_prefix + lib_name + ".3dshapes/" + footprint_name + global_config.model_3d_suffix, at=offset3d, scale=scale3d, rotate=rotate3d))
 
     # write file
     lib = KicadPrettyLibrary(lib_name, outdir)
@@ -474,7 +474,7 @@ def makeDIPSwitch(pins, rm, pinrow_distance, package_width, overlen_top, overlen
 
     # add model
     kicad_modg.append(
-        Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl", at=offset3d, scale=scale3d, rotate=rotate3d))
+        Model(filename=global_config.model_3d_prefix + lib_name + ".3dshapes/" + footprint_name + global_config.model_3d_suffix, at=offset3d, scale=scale3d, rotate=rotate3d))
 
     lib = KicadPrettyLibrary(lib_name, outdir)
     lib.save(kicad_mod)

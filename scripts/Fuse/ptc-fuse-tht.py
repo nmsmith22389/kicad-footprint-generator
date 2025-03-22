@@ -3,6 +3,8 @@
 from KicadModTree import *
 from kilibs.geom import keepout
 from scripts.tools.drawing_tools import *
+from scripts.tools.global_config_files import global_config as GC
+global_config = GC.DefaultGlobalConfig()
 
 
 def ptc_fuse_tht(args):
@@ -21,8 +23,8 @@ def ptc_fuse_tht(args):
     f.setDescription("PTC Resettable Fuse, Ihold = " + ihold +
                      ", Itrip=" + itrip + ", " + datasheet)
     f.setTags("ptc resettable fuse polyfuse THT")
-    f.append(Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + ".3dshapes/" +
-                   footprint_name + ".wrl",
+    f.append(Model(filename=global_config.model_3d_prefix + lib_name + ".3dshapes/" +
+                   footprint_name + global_config.model_3d_suffix,
                    at=[0.0, 0.0, 0.0],
                    scale=[1.0, 1.0, 1.0],
                    rotate=[0.0, 0.0, 0.0]))

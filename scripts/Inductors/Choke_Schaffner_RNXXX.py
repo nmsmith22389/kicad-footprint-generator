@@ -5,9 +5,8 @@ import os
 import math
 
 from KicadModTree import *
-
-#!/usr/bin/env python3
-#http://katalog.we-online.com/en/pbs/WE-MAPI]
+from scripts.tools.global_config_files import global_config as GC
+global_config = GC.DefaultGlobalConfig()
 
 #sizes,shapes,etc]
 #name, Type, #pins, A, B, H, L, W, , P, PDiam, PadSize
@@ -805,7 +804,7 @@ for inductor in inductors:
     #
     # Add 3D model
     #
-    fp.append(Model(filename="${KICAD9_3DMODEL_DIR}/" + TargetDir + "/" + fp_name + ".wrl", at=[0, 0, 0], scale=[1, 1, 1], rotate=[0, 0, 0]))
+    fp.append(Model(filename=global_config.model_3d_prefix + TargetDir + "/" + fp_name + global_config.model_3d_suffix, at=[0, 0, 0], scale=[1, 1, 1], rotate=[0, 0, 0]))
 
     #
     # Add pads

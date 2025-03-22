@@ -642,7 +642,7 @@ def makeTerminalBlockStd(
 
     # If no lib_name is given, the caller handles this
     if lib_name is not None:
-        model_filename = global_config.model_3d_prefix + lib_name + ".3dshapes/" + footprint_name + ".wrl"
+        model_filename = global_config.model_3d_prefix + lib_name + ".3dshapes/" + footprint_name + global_config.model_3d_suffix
         kicad_modg.append(
             Model(
                 filename=model_filename,
@@ -1196,7 +1196,7 @@ def makeTerminalBlockVertical(
 
     # None means the caller will deal with this
     if lib_name is not None:
-        model_filename = global_config.model_3d_prefix + lib_name + ".3dshapes/" + footprint_name + ".wrl"
+        model_filename = global_config.model_3d_prefix + lib_name + ".3dshapes/" + footprint_name + global_config.model_3d_suffix
         kicad_modg.append(
             Model(
                 filename=model_filename,
@@ -1861,7 +1861,7 @@ def makeTerminalBlock45Degree(
     )
 
     if lib_name is not None:
-        model_filename = global_config.model_3d_prefix + lib_name + ".3dshapes/" + footprint_name + ".wrl"
+        model_filename = global_config.model_3d_prefix + lib_name + ".3dshapes/" + footprint_name + global_config.model_3d_suffix
 
         kicad_modg.append(
             Model(
@@ -2077,7 +2077,7 @@ def makeScrewTerminalSingleStd(
     )
 
     if lib_name is not None:
-        model_filename = global_config.model_3d_prefix + lib_name + ".3dshapes/" + footprint_name + ".wrl"
+        model_filename = global_config.model_3d_prefix + lib_name + ".3dshapes/" + footprint_name + global_config.model_3d_suffix
 
         kicad_modg.append(
             Model(

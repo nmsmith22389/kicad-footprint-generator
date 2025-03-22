@@ -43,14 +43,14 @@ def converter(args):
     footprint_type = FootprintType.SMD if SmdTht == "smd" else FootprintType.THT
     f = Footprint(footprint_name, footprint_type)
 
-    file3Dname = global_cfg.model_3d_prefix + dir3D + "/" + footprint_name + ".wrl"
+    file3Dname = global_cfg.model_3d_prefix + dir3D + "/" + footprint_name + global_cfg.model_3d_suffix
 
     words = footprint_name.split("_")
 
     if words[-1].lower().startswith('handsolder'):
         words[-1] = ''
         ff = '_'.join(words)
-        file3Dname = global_cfg.model_3d_prefix + dir3D + "/" + ff + ".wrl"
+        file3Dname = global_cfg.model_3d_prefix + dir3D + "/" + ff + global_cfg.model_3d_suffix
 
     f.append(StandardBox(global_config=global_cfg,
                          footprint=f,

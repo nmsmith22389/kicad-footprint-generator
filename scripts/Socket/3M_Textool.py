@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
 from KicadModTree import *
+from scripts.tools.global_config_files import global_config as GC
+global_config = GC.DefaultGlobalConfig()
 
 def roundCrtYd(x):
     sign = x / abs(x)
@@ -30,7 +32,7 @@ def textool(args):
     f = Footprint(footprint_name, FootprintType.THT)
     f.setDescription("3M " + str(nPads) + "-pin zero insertion force socket, through-hole, row spacing " + str(dimC) + " mm (" + str(mils) + " mils), http://multimedia.3m.com/mws/media/494546O/3mtm-dip-sockets-100-2-54-mm-ts0365.pdf")
     f.setTags("THT DIP DIL ZIF " + str(dimC) + "mm " + str(mils) + "mil Socket")
-    f.append(Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl", at=[0.0, 0.0, 0.0], scale=[1.0, 1.0, 1.0], rotate=[0.0, 0.0, 0.0]))
+    f.append(Model(filename=global_config.model_3d_prefix + lib_name + ".3dshapes/" + footprint_name + global_config.model_3d_suffix, at=[0.0, 0.0, 0.0], scale=[1.0, 1.0, 1.0], rotate=[0.0, 0.0, 0.0]))
 
     pitch = 2.54
 

@@ -35,13 +35,13 @@ class FootprintGenerator:
         Get the path of the the "usual" 3D model (with the global config path)
         for the given footprint
         """
-        assert ".wrl" not in model_name, f"model_name should not contain the .wrl extension: {model_name}"
+        assert self.global_config.model_3d_suffix not in model_name, f"model_name should not contain the {self.global_config.model_3d_suffix} extension: {model_name}"
         assert "/" not in model_name, f"model_name should be only the model name, not a path: {model_name}"
 
         prefix = self.global_config.model_3d_prefix.rstrip("/")
         lib3d_dir = f"{library_name}.3dshapes"
 
-        return f"{prefix}/{lib3d_dir}/{model_name}.wrl"
+        return f"{prefix}/{lib3d_dir}/{model_name}{self.global_config.model_3d_suffix}"
 
     def add_standard_3d_model_to_footprint(self, kicad_mod: Footprint, library_name: str,
                                            model_name: str):

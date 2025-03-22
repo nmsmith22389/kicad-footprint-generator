@@ -395,13 +395,15 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row, variant
 
     ##################### Output and 3d model ############################
 
-    model3d_path_prefix = configuration.get('3d_model_prefix','${KICAD9_3DMODEL_DIR}/')
+    model3d_path_prefix = configuration.get('3d_model_prefix',global_config.model_3d_prefix)
+    model3d_path_suffix = configuration.get('3d_model_suffix',global_config.model_3d_suffix)
     lib_name_suffix = '_SMD' if is_smd else '_THT'
 
     lib_name = configuration['lib_name_format_string_full'].format(series=series, man=manufacturer, suffix=lib_name_suffix)
 
-    model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}.wrl'.format(
-        model3d_path_prefix=model3d_path_prefix, lib_name=lib_name, fp_name=footprint_name)
+    model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}{model3d_path_suffix:s}'.format(
+        model3d_path_prefix=model3d_path_prefix, lib_name=lib_name, fp_name=footprint_name,
+        model3d_path_suffix=model3d_path_suffix)
     # 3D models with option BE (Bottom Entry) are equivalent to the ones without BE option.
     # To save disk space the link to the 3D model of footprints with BE option will be set to the 3D model without BE option.
     kicad_mod.append(Model(filename=model_name.replace ("DV-BE", "DV")))

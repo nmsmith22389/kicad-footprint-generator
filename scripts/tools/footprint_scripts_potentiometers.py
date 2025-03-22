@@ -5,6 +5,9 @@ import math
 from KicadModTree import *  # NOQA
 from scripts.tools.drawing_tools import *
 from scripts.tools.footprint_global_properties import *
+from scripts.tools.global_config_files import global_config as GC
+
+global_config = GC.DefaultGlobalConfig()
 
 
 '''
@@ -263,7 +266,7 @@ def makePotentiometerHorizontal(class_name="", wbody=0, hbody=0, dscrew=0, style
 
     # add model
     if (has3d != 0):
-        kicad_modg.append(Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl", at=x_3d, scale=s_3d, rotate=r_3d))
+        kicad_modg.append(Model(filename=global_config.model_3d_prefix + lib_name + ".3dshapes/" + footprint_name + global_config.model_3d_suffix, at=x_3d, scale=s_3d, rotate=r_3d))
 
     lib = KicadPrettyLibrary(lib_name, None)
     lib.save(kicad_mod)
@@ -606,9 +609,9 @@ def makePotentiometerVertical(class_name, wbody, hbody, screwstyle="none", style
     # add model
     if (has3d != 0):
         if SMD_pads:
-            kicad_modg.append(Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl", at=x_3d, scale=s_3d, rotate=r_3d))
+            kicad_modg.append(Model(filename=global_config.model_3d_prefix + lib_name + ".3dshapes/" + footprint_name + global_config.model_3d_suffix, at=x_3d, scale=s_3d, rotate=r_3d))
         else:
-            kicad_modg.append(Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl", at=x_3d, scale=s_3d, rotate=r_3d))
+            kicad_modg.append(Model(filename=global_config.model_3d_prefix + lib_name + ".3dshapes/" + footprint_name + global_config.model_3d_suffix, at=x_3d, scale=s_3d, rotate=r_3d))
 
     lib = KicadPrettyLibrary(lib_name, None)
     lib.save(kicad_mod)
@@ -866,10 +869,7 @@ def makeSpindleTrimmer(class_name, wbody, hbody, pinxoffset, pinyoffset, rmx2, r
 
     # add model
     if (has3d != 0):
-        if SMD_pads:
-            kicad_modg.append(Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl", at=x_3d, scale=s_3d, rotate=r_3d))
-        else:
-            kicad_modg.append(Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl", at=x_3d, scale=s_3d, rotate=r_3d))
+        kicad_modg.append(Model(filename=global_config.model_3d_prefix + lib_name + ".3dshapes/" + footprint_name + global_config.model_3d_suffix, at=x_3d, scale=s_3d, rotate=r_3d))
 
     lib = KicadPrettyLibrary(lib_name, None)
     lib.save(kicad_mod)

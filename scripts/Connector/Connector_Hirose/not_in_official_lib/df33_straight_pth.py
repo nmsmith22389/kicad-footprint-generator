@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 
-import sys
-import os
-sys.path.append(os.path.join(sys.path[0],"..","..","kicad_mod"))
+from KicadModTree import KicadMod, createNumberedPadsTHT
+from scripts.tools.global_config_files import global_config as GC
 
-from kicad_mod import KicadMod, createNumberedPadsTHT
+global_config = GC.DefaultGlobalConfig()
 
 # http://www.jst-mfg.com/product/pdf/eng/ePH.pdf
 
@@ -24,7 +23,7 @@ for pincount in range(2,16):
 
     footprint_name = "{0}_{1}_{2:02}x{3:.2f}mm_{4}".format(manu,part,pincount,pitch,suffix)
 
-    kicad_mod = KicadMod(footprint_name)
+    kicad_mod = Footprint(footprint_name, FootprintType.THT)
     kicad_mod.setDescription(desc)
     kicad_mod.setTags(tags)
 
@@ -145,7 +144,7 @@ for pincount in range(2,16):
 
     kicad_mod.addRectLine({'x':x1-cy,'y':y1-cy},{'x':x2+cy,'y':y2+cy},"F.CrtYd",0.05)
 
-    kicad_mod.model = lib_name + ".3dshapes/" + footprint_name + ".wrl"
+    kicad_mod.model = global_config.model_3d_prefix + lib_name + ".3dshapes/" + footprint_name + global_config.model_3d_suffix
 
     #shift the model along
 

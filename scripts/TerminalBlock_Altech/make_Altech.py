@@ -4,7 +4,7 @@ import os
 
 from KicadModTree import *
 from scripts.general.StandardBox import StandardBox
-from scripts.tools.global_config_files import global_config
+from scripts.tools.global_config_files import global_config as GC
 
 def qfn(args):
 
@@ -34,7 +34,7 @@ def qfn(args):
     out_dir = args["output_dir"]
 
     # Until this can be passed in properly, use the default global config
-    global_cfg = global_config.DefaultGlobalConfig()
+    global_config = GC.DefaultGlobalConfig()
 
     for pinnumber in pinnumbers:
         footprint_name = ''
@@ -46,12 +46,12 @@ def qfn(args):
         f = Footprint(footprint_name, FootprintType.THT)
 
 
-        file3Dname = "${KICAD9_3DMODEL_DIR}/" + dest_dir_3D_prefix + "/" + footprint_name + ".wrl"
+        file3Dname = global_config.model_3d_prefix + dest_dir_3D_prefix + "/" + footprint_name + global_config.model_3d_suffix
         words = footprint_name.split("_")
         if words[-1].lower().startswith('handsolder'):
             words[-1] = ''
             ff = '_'.join(words)
-            file3Dname = "${KICAD9_3DMODEL_DIR}/" + dest_dir_3D_prefix + "/" + ff + ".wrl"
+            file3Dname = global_config.model_3d_prefix + dest_dir_3D_prefix + "/" + ff + global_config.model_3d_suffix
 
         lw = ((2.0 * PE) + ((pinnumber - 1) * PS))
         at = [0.0 - PE, W - WD]
@@ -63,7 +63,7 @@ def qfn(args):
         for ii in range(1, pinnumber + 1):
             pins.append(["tht", str(ii), dx, 0.0, PD, PD, DD])
             dx = dx + PS
-        f.append(StandardBox(global_config=global_cfg,
+        f.append(StandardBox(global_config=global_config,
                              footprint=f, description=description, datasheet=datasheet, at=at,
                              size=size, tags=tags, extratexts=extratexts, pins=pins,
                              file3Dname=file3Dname))

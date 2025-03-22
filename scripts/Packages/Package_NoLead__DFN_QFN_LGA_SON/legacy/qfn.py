@@ -4,9 +4,10 @@ import os
 import re
 
 from KicadModTree import *
-
+from scripts.tools.global_config_files import global_config as GC
 
 lib_name = "Package_DFN_QFN"
+global_config = GC.DefaultGlobalConfig()
 
 def qfn(args):
     footprint_name = args["name"]
@@ -44,7 +45,7 @@ def qfn(args):
     f = Footprint(footprint_name, FootprintType.SMD)
     f.setDescription(desc)
     f.setTags("QFN " + str(pitch))
-    f.append(Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + model + ".wrl",
+    f.append(Model(filename=global_config.model_3d_prefix + lib_name + ".3dshapes/" + model + global_config.model_3d_suffix,
                    at=[0.0, 0.0, 0.0],
                    scale=[1.0, 1.0, 1.0],
                    rotate=[0.0, 0.0, 0.0]))

@@ -50,6 +50,8 @@ sys.path.append(os.path.join(sys.path[0], "..", ".."))
 from KicadModTree import *
 from KicadModTree.nodes.specialized.PadArray import PadArray
 
+from scripts.tools.global_config_files import global_config as GC
+global_config = GC.DefaultGlobalConfig()
 
 
 for converter in converters:
@@ -169,7 +171,7 @@ for converter in converters:
     #
     # Add 3D model
     #
-    fp.append(Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + fp_name + ".wrl", at=[0, 0, 0], scale=[1, 1, 1], rotate=[0, 0, 0]))
+    fp.append(Model(filename=global_config.model_3d_prefix + lib_name + ".3dshapes/" + fp_name + global_config.model_3d_suffix, at=[0, 0, 0], scale=[1, 1, 1], rotate=[0, 0, 0]))
 
     lib = KicadPrettyLibrary(lib_name, None)
     lib.save(fp)

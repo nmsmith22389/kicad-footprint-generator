@@ -4,6 +4,8 @@ import sys
 import os
 
 from KicadModTree import *
+from scripts.tools.global_config_files import global_config as GC
+global_config = GC.DefaultGlobalConfig()
 
 
 #http://katalog.we-online.com/en/pbs/WE-MAPI]
@@ -104,7 +106,7 @@ for inductor in inductors:
 
     #Add a model
     lib_name = "Inductor_SMD"
-    fp.append(Model(filename="${KICAD9_3DMODEL_DIR}/"+lib_name + ".3dshapes/" + fp_name + ".wrl"))
+    fp.append(Model(filename=global_config.model_3d_prefix + lib_name + ".3dshapes/" + fp_name + global_config.model_3d_suffix))
 
     lib = KicadPrettyLibrary(lib_name, None)
     lib.save(fp)

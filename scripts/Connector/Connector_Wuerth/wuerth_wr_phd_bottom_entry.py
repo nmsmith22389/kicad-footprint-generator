@@ -5,10 +5,11 @@ import yaml
 
 from KicadModTree import *
 from scripts.tools.footprint_text_fields import addTextFields
+from scripts.tools.global_config_files import global_config as GC
 
 
 # Function used to generate footprint
-def generate_footprint(params, part_params, mpn, configuration):
+def generate_footprint(global_config: GC.GlobalConfig, params, part_params, mpn, configuration):
 
     # Build footprint name
     fp_name = "Wuerth_{series_prefix}_{mpn}_{type}_{rows}x{pins:02d}_P{pitch}mm_{orientation}".format(
@@ -106,9 +107,11 @@ def generate_footprint(params, part_params, mpn, configuration):
 
     # 3D model definition
     lib_name = "Connector_Wuerth"
-    model3d_path_prefix = configuration.get('3d_model_prefix', '${KISYS3DMOD}/')
-    model_name = "{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}.wrl".format(
-        model3d_path_prefix=model3d_path_prefix, fp_name=fp_name, lib_name=lib_name)
+    model3d_path_prefix = configuration.get('3d_model_prefix', global_config.model_3d_prefix)
+    model3d_path_suffix = configuration.get('3d_model_suffix', global_config.model_3d_suffix)
+    model_name = "{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}{model3d_path_suffix:s}".format(
+        model3d_path_prefix=model3d_path_prefix, fp_name=fp_name, lib_name=lib_name,
+        model3d_path_suffix=model3d_path_suffix)
     kicad_mod.append(Model(filename=model_name))
 
     # Create output directory
@@ -129,6 +132,7 @@ if __name__ == "__main__":
     with open(args.global_config, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
+            global_config = GC.GlobalConfig(configuration)
         except yaml.YAMLError as exc:
             print(exc)
 
@@ -142,4 +146,4 @@ if __name__ == "__main__":
     # Create each part
     for series in params:
         for mpn in params[series]['parts']:
-            generate_footprint(params[series], params[series]['parts'][mpn], mpn, configuration)
+            generate_footprint(global_config, params[series], params[series]['parts'][mpn], mpn, configuration)

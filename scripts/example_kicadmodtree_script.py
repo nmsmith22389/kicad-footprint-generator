@@ -17,6 +17,10 @@ along with kicad-footprint-generator. If not, see < http://www.gnu.org/licenses/
 
 from KicadModTree import *
 from KicadModTree.nodes.specialized.PadArray import PadArray
+from scripts.tools.global_config_files import global_config as GC
+
+global_config = GC.DefaultGlobalConfig()
+
 
 if __name__ == '__main__':
     footprint_name = "example_footprint"
@@ -44,7 +48,7 @@ if __name__ == '__main__':
 
     # add model
     lib_name = "example"
-    kicad_mod.append(Model(filename=lib_name + ".3dshapes/example_footprint.wrl"
+    kicad_mod.append(Model(filename=global_config.model_3d_prefix + lib_name + ".3dshapes/" + footprint_name + global_config.model_3d_suffix
                           ,at=[0,0,0]
                           ,scale=[1,1,1]
                           ,rotate=[0,0,0]))

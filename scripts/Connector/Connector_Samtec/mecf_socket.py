@@ -6,6 +6,7 @@ import yaml
 from KicadModTree import *  # NOQA
 from scripts.tools.drawing_tools import round_to_grid
 from scripts.tools.footprint_text_fields import addTextFields
+from scripts.tools.global_config_files import global_config as GC
 
 
 lib_name_category = 'PCBEdge'
@@ -84,7 +85,7 @@ POL = { '05': [ 3],
 
 pad_size = [0.66,1.35]
 
-def generate_one_footprint(weld, pol, pcb_thickness, n, configuration):
+def generate_one_footprint(global_config: GC.GlobalConfig, weld, pol, pcb_thickness, n, configuration):
     off = configuration['silk_fab_offset']
     CrtYd_offset = configuration['courtyard_offset']['connector']
 
@@ -243,12 +244,14 @@ def generate_one_footprint(weld, pol, pcb_thickness, n, configuration):
         courtyard={'top':cy1, 'bottom':cy2}, fp_name=fp_name, text_y_inside_position='center')
 
     ##################### Output and 3d model ############################
-    model3d_path_prefix = configuration.get('3d_model_prefix','${KICAD9_3DMODEL_DIR}/')
+    model3d_path_prefix = configuration.get('3d_model_prefix',global_config.model_3d_prefix)
+    model3d_path_suffix = configuration.get('3d_model_suffix',global_config.model_3d_suffix)
 
     #lib_name = configuration['lib_name_format_string'].format(series=series, man=manufacturer)
     lib_name = configuration['lib_name_specific_function_format_string'].format(category=lib_name_category)
-    model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}.wrl'.format(
-        model3d_path_prefix=model3d_path_prefix, lib_name=lib_name, fp_name=fp_name)
+    model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}{model3d_path_suffix:s}'.format(
+        model3d_path_prefix=model3d_path_prefix, lib_name=lib_name, fp_name=fp_name,
+        model3d_path_suffix=model3d_path_suffix)
     kicad_mod.append(Model(filename=model_name))
 
     lib = KicadPrettyLibrary(lib_name, None)
@@ -264,6 +267,7 @@ if __name__ == '__main__':
     with open(args.global_config, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
+            global_config = GC.GlobalConfig(configuration)
         except yaml.YAMLError as exc:
             print(exc)
 
@@ -277,4 +281,4 @@ if __name__ == '__main__':
         for pol in [True, False]:
             for pcb_thickness in ['01', '02']:
                 for n in ['05', '08', '20', '30', '40', '50', '60', '70']:
-                    generate_one_footprint(weld, pol, pcb_thickness, n, configuration)
+                    generate_one_footprint(global_config, weld, pol, pcb_thickness, n, configuration)

@@ -36,6 +36,9 @@ if output_dir and not output_dir.endswith(os.sep):
 
 from KicadModTree import *
 from KicadModTree.nodes.specialized.PadArray import PadArray
+from scripts.tools.global_config_files import global_config as GC
+
+global_config = GC.DefaultGlobalConfig()
 
 """
 footprint specific details to go here
@@ -229,6 +232,6 @@ for pincount in pins:
     #add a 3D model reference
     lib_name = "Connector_Hirose"
 
-    fp.append(Model(filename=lib_name + ".3dshapes/" + footprint_name + ".wrl"))
+    fp.append(Model(filename=global_config.model_3d_prefix + lib_name + ".3dshapes/" + footprint_name + global_config.model_3d_suffix))
     lib = KicadPrettyLibrary(lib_name, None)
     lib.save(fp)

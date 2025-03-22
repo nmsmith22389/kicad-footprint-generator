@@ -163,7 +163,7 @@ class CapacitorTrimmer:
             + base["3d_libname"]
             + ".3dshapes/"
             + dim.name
-            + ".wrl"
+            + self.global_config.model_3d_suffix
         )
         m.append(
             Model(filename=model_filename, at=[0, 0, 0], scale=[1, 1, 1],

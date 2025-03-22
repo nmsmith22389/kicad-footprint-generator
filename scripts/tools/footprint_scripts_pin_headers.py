@@ -16,7 +16,7 @@ slk_offset = 0.11
 
 def makePinHeadStraight(rows, cols, rm, coldist, package_width, overlen_top, overlen_bottom, ddrill, pad,
                         tags_additional=[], lib_name="Pin_Headers", class_name="PinHeader", classname_description="pin header", offset3d=[0, 0, 0], scale3d=[1, 1, 1],
-                        rotate3d=[0, 0, 0], model3d_path_prefix="${KICAD9_3DMODEL_DIR}", isSocket=False,
+                        rotate3d=[0, 0, 0], model3d_path_prefix=global_config.model_3d_prefix, isSocket=False,
                         name_format=None):
     h_fab = (rows - 1) * rm + overlen_top + overlen_bottom
     w_fab = package_width
@@ -261,7 +261,7 @@ def makePinHeadStraight(rows, cols, rm, coldist, package_width, overlen_top, ove
 
     # add model
     kicad_modg.append(
-        Model(filename=model3d_path_prefix + "/" + lib_name + ".3dshapes/" + footprint_name + ".wrl", at=offset3d, scale=scale3d, rotate=rotate3d))
+        Model(filename=model3d_path_prefix + lib_name + ".3dshapes/" + footprint_name + global_config.model_3d_suffix, at=offset3d, scale=scale3d, rotate=rotate3d))
 
     # print render tree
     # print(kicad_mod.getRenderTree())
@@ -278,7 +278,7 @@ def makeIdcHeader(rows, cols, rm, coldist, body_width, overlen_top, overlen_bott
                         latch_len=0, latch_width=0,
                         mh_ddrill=0, mh_pad=[0,0], mh_overlen=0, mh_offset=0, mh_number='MP',
                         tags_additional=[], extra_description=False, lib_name="Connector_IDC", classname="IDC-Header", classname_description="IDC box header", offset3d=[0, 0, 0], scale3d=[1, 1, 1],
-                        rotate3d=[0, 0, 0], model3d_path_prefix="${KICAD9_3DMODEL_DIR}"):
+                        rotate3d=[0, 0, 0], model3d_path_prefix=global_config.model_3d_prefix):
     # If ddrill is zero, then create a SMD footprint:
     #     SMT pads are created.
     #     rm is row pitch
@@ -566,7 +566,7 @@ def makeIdcHeader(rows, cols, rm, coldist, body_width, overlen_top, overlen_bott
                 drill=mh_ddrill, layers=Pad.LAYERS_THT))
 
     # add model (even if there are mounting holes on the footprint do not include that in the 3D model)
-    kicad_modg.append(Model(filename="{0}/{1}.3dshapes/{2}.wrl".format(model3d_path_prefix, lib_name, footprint_name), at=offset3d, scale=scale3d, rotate=rotate3d))
+    kicad_modg.append(Model(filename="{0}{1}.3dshapes/{2}{3}".format(model3d_path_prefix, lib_name, footprint_name,global_config.model_3d_suffix), at=offset3d, scale=scale3d, rotate=rotate3d))
 
     lib = KicadPrettyLibrary(lib_name, None)
     lib.save(kicad_mod)
@@ -590,7 +590,7 @@ def makeIdcHeader(rows, cols, rm, coldist, body_width, overlen_top, overlen_bott
 def makePinHeadAngled(rows, cols, rm, coldist, pack_width, pack_offset, pin_length, pin_width, ddrill, pad,
                       tags_additional=[], lib_name="Pin_Headers", classname="Pin_Header",
                       classname_description="pin header", offset3d=[0, 0, 0], scale3d=[1, 1, 1],
-                      rotate3d=[0, 0, 0], model3d_path_prefix="${KICAD9_3DMODEL_DIR}"):
+                      rotate3d=[0, 0, 0], model3d_path_prefix=global_config.model_3d_prefix):
     h_fabb = (rows - 1) * rm + rm / 2 + rm / 2
     w_fabb = pack_width
     l_fabb = coldist * (cols - 1) + pack_offset
@@ -858,7 +858,7 @@ def makePinHeadAngled(rows, cols, rm, coldist, pack_width, pack_offset, pin_leng
 
     # add model
     kicad_modg.append(
-        Model(filename=model3d_path_prefix + "/" + lib_name + ".3dshapes/" + footprint_name + ".wrl", at=offset3d, scale=scale3d, rotate=rotate3d))
+        Model(filename=model3d_path_prefix + lib_name + ".3dshapes/" + footprint_name + global_config.model_3d_suffix, at=offset3d, scale=scale3d, rotate=rotate3d))
 
     lib = KicadPrettyLibrary(lib_name, None)
     lib.save(kicad_mod)
@@ -881,7 +881,7 @@ def makePinHeadAngled(rows, cols, rm, coldist, pack_width, pack_offset, pin_leng
 def makeSocketStripAngled(rows, cols, rm, coldist, pack_width, pack_offset, pin_width, ddrill, pad,
                       tags_additional=[], lib_name="$Socket_Strips", classname="Socket_Strip",
                       classname_description="socket strip", offset3d=[0, 0, 0], scale3d=[1, 1, 1],
-                      rotate3d=[0, 0, 0], model3d_path_prefix="${KICAD9_3DMODEL_DIR}"):
+                      rotate3d=[0, 0, 0], model3d_path_prefix=global_config.model_3d_prefix):
     h_fabb = (rows - 1) * rm + rm / 2 + rm / 2
     w_fabb = -pack_width
     l_fabb = -1*(coldist * (cols - 1) + pack_offset)
@@ -1030,7 +1030,7 @@ def makeSocketStripAngled(rows, cols, rm, coldist, pack_width, pack_offset, pin_
 
     # add model
     kicad_modg.append(
-        Model(filename=model3d_path_prefix + "/" + lib_name + ".3dshapes/" + footprint_name + ".wrl", at=offset3d, scale=scale3d, rotate=rotate3d))
+        Model(filename=model3d_path_prefix + lib_name + ".3dshapes/" + footprint_name + global_config.model_3d_suffix, at=offset3d, scale=scale3d, rotate=rotate3d))
 
     lib = KicadPrettyLibrary(lib_name, None)
     lib.save(kicad_mod)
@@ -1038,7 +1038,7 @@ def makeSocketStripAngled(rows, cols, rm, coldist, pack_width, pack_offset, pin_
 
 def makePinHeadStraightSMD(rows, cols, rm, coldist, rmx_pad_offset,rmx_pin_length, pin_width, package_width, overlen_top, overlen_bottom, pad,
                         start_left=True, tags_additional=[], lib_name="$Pin_Headers", classname="Pin_Header", classname_description="pin header", offset3d=[0, 0, 0], scale3d=[1, 1, 1],
-                        rotate3d=[0, 0, 0], model3d_path_prefix="${KICAD9_3DMODEL_DIR}", isSocket=False):
+                        rotate3d=[0, 0, 0], model3d_path_prefix=global_config.model_3d_prefix, isSocket=False):
     ddrill=0.5
     h_fab = (rows - 1) * rm + overlen_top + overlen_bottom
     w_fab = package_width
@@ -1219,7 +1219,7 @@ def makePinHeadStraightSMD(rows, cols, rm, coldist, rmx_pad_offset,rmx_pin_lengt
 
     # add model
     kicad_modg.append(
-        Model(filename=model3d_path_prefix + "/" + lib_name + ".3dshapes/" + footprint_name + ".wrl", at=offset3d, scale=scale3d, rotate=rotate3d))
+        Model(filename=model3d_path_prefix + lib_name + ".3dshapes/" + footprint_name + global_config.model_3d_suffix, at=offset3d, scale=scale3d, rotate=rotate3d))
 
     lib = KicadPrettyLibrary(lib_name, None)
     lib.save(kicad_mod)

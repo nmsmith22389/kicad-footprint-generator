@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
 from KicadModTree import *
+from scripts.tools.global_config_files import global_config as GC
+global_config = GC.DefaultGlobalConfig()
 
 
 lib_name = "LED_SMD"
@@ -18,7 +20,7 @@ padCornerHeight = 0.8
 f = Footprint(footprint_name, FootprintType.SMD)
 f.setDescription(f"{description}, {datasheet}")
 f.setTags("LED ROHM SMLVN6")
-f.append(Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl",
+f.append(Model(filename=global_config.model_3d_prefix + lib_name + ".3dshapes/" + footprint_name + global_config.model_3d_suffix,
                at=[0.0, 0.0, 0.0],
                scale=[1.0, 1.0, 1.0],
                rotate=[0.0, 0.0, 0.0]))

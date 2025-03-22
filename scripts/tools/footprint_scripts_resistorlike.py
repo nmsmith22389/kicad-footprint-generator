@@ -235,7 +235,7 @@ def makeResistorAxialHorizontal(seriesname, rm, rmdisp, w, d, ddrill, R_POW, typ
 
     # add model
     if (has3d!=0):
-        model_filename = global_config.model_3d_prefix + lib_name + ".3dshapes/" + footprint_name + ".wrl"
+        model_filename = global_config.model_3d_prefix + lib_name + ".3dshapes/" + footprint_name + global_config.model_3d_suffix
         kicad_mod.append(Model(filename=model_filename, at=x_3d, scale=s_3d, rotate=[0, 0, 0]))
 
     lib = KicadPrettyLibrary(lib_name, None)
@@ -457,7 +457,7 @@ def makeResistorAxialVertical(seriesname,rm, rmdisp, l, d, ddrill, R_POW, type="
 
     # add model
     if (has3d != 0):
-        model_filename = global_config.model_3d_prefix + lib_name + ".3dshapes/" + footprint_name + ".wrl"
+        model_filename = global_config.model_3d_prefix + lib_name + ".3dshapes/" + footprint_name + global_config.model_3d_suffix
         kicad_mod.append(
             Model(filename=model_filename, at=x_3d, scale=s_3d, rotate=[0, 0, 0]))
 
@@ -890,7 +890,7 @@ def makeResistorRadial(seriesname, rm, w, h, ddrill, R_POW, innerw=0,innerh=0,rm
 
     # add model
     if (has3d != 0):
-        model_filename = global_config.model_3d_prefix + lib_name + ".3dshapes/" + footprint_name + ".wrl"
+        model_filename = global_config.model_3d_prefix + lib_name + ".3dshapes/" + footprint_name + global_config.model_3d_suffix
         kicad_modg.append(Model(filename=model_filename, at=x_3d, scale=s_3d, rotate=[0, 0, 0]))
 
     lib = KicadPrettyLibrary(lib_name, None)

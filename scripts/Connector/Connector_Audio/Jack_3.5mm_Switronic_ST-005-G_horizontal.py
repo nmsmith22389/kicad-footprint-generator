@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 
 from KicadModTree import *
+from scripts.tools.global_config_files import global_config as GC
 
 datasheet = "http://akizukidenshi.com/download/ds/switronic/ST-005-G.pdf"
 footprint_name = "Jack_3.5mm_Switronic_ST-005-G_horizontal"
 lib_name = "Connector_Audio"
+global_config = GC.DefaultGlobalConfig()
+
 
 baseWidth = 11.5
 baseHeight = 6.5
@@ -25,7 +28,7 @@ backPadSpacing = 4.5
 f = Footprint(footprint_name, FootprintType.THT)
 f.setDescription("3.5mm horizontal headphones jack, "+datasheet)
 f.setTags("Connector Audio Switronic ST-005-G")
-f.append(Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl",
+f.append(Model(filename=f"{global_config.model_3d_prefix}{lib_name}.3dshapes/{footprint_name}{global_config.model_3d_suffix}",
                at=[0.0, 0.0, 0.0],
                scale=[1.0, 1.0, 1.0],
                rotate=[0.0, 0.0, 0.0]))

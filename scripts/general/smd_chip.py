@@ -2,6 +2,8 @@
 
 from KicadModTree import *  # NOQA
 from KicadModTree.nodes.base.Pad import Pad  # NOQA
+from scripts.tools.global_config_files import global_config as GC
+global_config = GC.DefaultGlobalConfig()
 
 
 def smd_chip(args):
@@ -49,8 +51,11 @@ def smd_chip(args):
     kicad_mod.append(Pad(number=1, at=[-pad_x_center, 0], **pad_settings))
     kicad_mod.append(Pad(number=2, at=[pad_x_center, 0], **pad_settings))
 
+    if "model_suffix" not in args:
+        args['model_suffix']=global_config.model_3d_suffix
+
     # add model
-    kicad_mod.append(Model(filename="{model_dir}.3dshapes/{name}.wrl".format(**args),
+    kicad_mod.append(Model(filename="{model_dir}.3dshapes/{name}{model_suffix}".format(**args),
                            at=[0, 0, 0], scale=[1, 1, 1], rotate=[0, 0, 0]))
 
     # write file

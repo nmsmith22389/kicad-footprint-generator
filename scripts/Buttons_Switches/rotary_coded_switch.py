@@ -2,6 +2,8 @@
 
 from KicadModTree import *
 from KicadModTree import KicadPrettyLibrary
+from scripts.tools.global_config_files import global_config as GC
+global_config = GC.DefaultGlobalConfig()
 
 
 def rotary_coded_switch(args):
@@ -31,7 +33,8 @@ def rotary_coded_switch(args):
     f.setDescription("4-bit rotary coded switch, " + style + ", " + datasheet)
     f.setTags("rotary switch bcd")
 
-    f.append(Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl", at=[0, 0, 0], scale=[1, 1, 1], rotate=[0.0, 0.0, 0.0]))
+    f.append(Model(filename=global_config.model_3d_prefix + lib_name + ".3dshapes/" + footprint_name + global_config.model_3d_suffix,
+                    at=[0, 0, 0], scale=[1, 1, 1], rotate=[0.0, 0.0, 0.0]))
 
     wCrtYd = 0.05
     wFab = 0.1

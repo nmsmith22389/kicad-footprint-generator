@@ -46,8 +46,6 @@ from scripts.tools.global_config_files import global_config as GC
 DEFAULT_SMT_PAD_SHAPE = 'roundrect'
 DEFAULT_THT_PAD_SHAPE = 'circ'
 
-KICAD_3DMODEL_DIR = "${KICAD9_3DMODEL_DIR}"
-
 
 def _get_dims(name: str, spec: dict, base: Vector2D = None, mult: float=1):
     if (base is None):
@@ -522,7 +520,8 @@ def generate_one_footprint(global_config: GC.GlobalConfig, positions: int, *, sp
     lib_name = configuration['lib_name_specific_function_format_string'].format(category=fp_config.library_name)
 
     ## 3D model
-    kicad_mod.append(Model(filename=f"{KICAD_3DMODEL_DIR}/{lib_name}.3dshapes/{fp_name}.wrl", at=[0, 0, 0], scale=[1, 1, 1], rotate=[0, 0, 0]))
+    kicad_mod.append(Model(filename=f"{global_config.model_3d_prefix}{lib_name}.3dshapes/{fp_name}{global_config.model_3d_suffix}",
+                            at=[0, 0, 0], scale=[1, 1, 1], rotate=[0, 0, 0]))
 
     lib = KicadPrettyLibrary(lib_name, None)
     lib.save(kicad_mod)

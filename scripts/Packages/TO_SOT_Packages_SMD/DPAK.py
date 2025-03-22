@@ -466,7 +466,7 @@ class DPAK(object):
             + self.base["libname"]
             + ".3dshapes/"
             + self.dim.name
-            + ".wrl"
+            + self.global_config.model_3d_suffix
         )
         print(model_filename)
         self.m.append(

@@ -28,6 +28,9 @@
 from KicadModTree import Footprint, FootprintType, Translation, Pad, Model, KicadPrettyLibrary, Property
 from canvas import Layer, PadLayer, Keepout, OutDir
 from cq_base_parameters import PinStyle, CaseType
+from scripts.tools.global_config_files import global_config as GC
+global_config = GC.DefaultGlobalConfig()
+
 
 txt_descr = ["", ", single row", ", double cols", ", double cols", ", triple cols", ", quadruple cols"]
 txt_tag = ["", " single row", " double row", ", triple cols", " quadruple row"]
@@ -189,7 +192,7 @@ class pinSocketVerticalTHT (object):
            .rect(w_crt, h_crt, origin="topLeft")
 
         # add model
-        kicad_modg.append(Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl"))
+        kicad_modg.append(Model(filename=global_config.model_3d_prefix + lib_name + ".3dshapes/" + footprint_name + global_config.model_3d_suffix))
 
         # write file
         lib = KicadPrettyLibrary(lib_name, None)
@@ -353,7 +356,7 @@ class pinSocketHorizontalTHT (object):
            .rect(w_crt, h_crt)
 
         # add model
-        kicad_modg.append(Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl"))
+        kicad_modg.append(Model(filename=global_config.model_3d_prefix + lib_name + ".3dshapes/" + footprint_name + global_config.model_3d_suffix))
 
         # write file
         lib = KicadPrettyLibrary(lib_name, None)
@@ -521,7 +524,7 @@ class pinSocketVerticalSMD (object):
         crt.rect(w_crt, h_crt)
 
         # add model
-        kicad_modg.append(Model(filename="${KICAD9_3DMODEL_DIR}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl"))
+        kicad_modg.append(Model(filename=global_config.model_3d_prefix + lib_name + ".3dshapes/" + footprint_name + global_config.model_3d_suffix))
 
         # write file
         lib = KicadPrettyLibrary(lib_name, None)

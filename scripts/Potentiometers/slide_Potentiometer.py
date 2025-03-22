@@ -37,7 +37,7 @@ def slide_pot(args):
     f = Footprint(footprint_name, FootprintType.THT)
     f.setDescription("Bourns single-gang slide potentiometer, " + str(travel) + "mm travel, https://www.bourns.com/docs/Product-Datasheets/pta.pdf")
     f.setTags("Bourns single-gang slide potentiometer " + str(travel) + "mm")
-    f.append(Model(filename="${KISYS3DMOD}/" + lib_name + ".3dshapes/" + footprint_name + ".wrl", at=[0.0, 0.0, 0.0], scale=[1.0, 1.0, 1.0], rotate=[0.0, 0.0, 0.0]))
+    f.append(Model(filename=global_config.model_3d_prefix + lib_name + ".3dshapes/" + footprint_name + global_config.model_3d_suffix, at=[0.0, 0.0, 0.0], scale=[1.0, 1.0, 1.0], rotate=[0.0, 0.0, 0.0]))
 
     dPin = [1.2, 1.2]
     dMP = [1.7, 1.7]
