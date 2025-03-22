@@ -88,11 +88,12 @@ def makePotentiometerHorizontal(class_name="", wbody=0, hbody=0, dscrew=0, style
     Returns:
         None
     """
+
     padx = 1.8 * ddrill
     pady = padx
     txt_offset = 1
-    slk_offset = 0.12
-    grid_crt = 0.01
+    slk_offset = global_config.silk_fab_offset
+    grid_crt = global_config.courtyard_grid
 
     pad1style = Pad.SHAPE_CIRCLE
 
@@ -230,15 +231,17 @@ def makePotentiometerHorizontal(class_name="", wbody=0, hbody=0, dscrew=0, style
     # create FAB-layer
     # horizontal pot: place refdes on F.Fab in center of body and shrink size if body is small
     text_size = min(1, abs(round(wbody_fab / 4.5, 2)))
-    kicad_modg.append(Text(text='${REFERENCE}', at=[lbody_fab+wbody_fab/2.0, tbody_fab+hbody_fab/2.0], size=[text_size, text_size], layer='F.Fab'))
+    kicad_modg.append(Text(text='${REFERENCE}', at=[lbody_fab+wbody_fab/2.0, tbody_fab+hbody_fab/2.0],
+                           size=[text_size, text_size], thickness=round(text_size * 0.15, 2),
+                           layer='F.Fab'))
 
-    kicad_modg.append(RectLine(start=[lbody_fab, tbody_fab], end=[lbody_fab + wbody_fab, tbody_fab + hbody_fab], layer='F.Fab',width=lw_fab))
+    kicad_modg.append(Rect(start=[lbody_fab, tbody_fab], end=[lbody_fab + wbody_fab, tbody_fab + hbody_fab], layer='F.Fab',width=lw_fab))
     if wscrew_fab * hscrew_fab != 0:
         kicad_modg.append(
-            RectLine(start=[lscrew_fab, tscrew_fab], end=[lscrew_fab + wscrew_fab, tscrew_fab + hscrew_fab],layer='F.Fab', width=lw_fab))
+            Rect(start=[lscrew_fab, tscrew_fab], end=[lscrew_fab + wscrew_fab, tscrew_fab + hscrew_fab],layer='F.Fab', width=lw_fab))
     if wshaft_fab * hshaft_fab != 0:
         kicad_modg.append(
-            RectLine(start=[lshaft_fab, tshaft_fab], end=[lshaft_fab + wshaft_fab, tshaft_fab + hshaft_fab],layer='F.Fab', width=lw_fab))
+            Rect(start=[lshaft_fab, tshaft_fab], end=[lshaft_fab + wshaft_fab, tshaft_fab + hshaft_fab],layer='F.Fab', width=lw_fab))
 
     # build keepout for silkscreen
     keepouts = []
@@ -253,7 +256,7 @@ def makePotentiometerHorizontal(class_name="", wbody=0, hbody=0, dscrew=0, style
         addRectWithKeepout(kicad_modg, lshaft_slk, tshaft_slk, wshaft_slk, hshaft_slk, 'F.SilkS', lw_slk, keepouts,0.001)
 
     # create courtyard
-    kicad_mod.append(RectLine(start=[round_to_grid(l_crt + offset[0], grid_crt), round_to_grid(t_crt + offset[1], grid_crt)],
+    kicad_mod.append(Rect(start=[round_to_grid(l_crt + offset[0], grid_crt), round_to_grid(t_crt + offset[1], grid_crt)],
                               end=[round_to_grid(l_crt + w_crt + offset[0], grid_crt), round_to_grid(t_crt + h_crt + offset[1], grid_crt)],layer='F.CrtYd', width=lw_crt))
 
     # create pads
@@ -351,6 +354,7 @@ def makePotentiometerVertical(class_name, wbody, hbody, screwstyle="none", style
     Returns:
         None
     """
+
     padx = 1.8 * ddrill
     pady = padx
     if SMD_pads and len(SMD_padsize) >= 2:
@@ -358,8 +362,8 @@ def makePotentiometerVertical(class_name, wbody, hbody, screwstyle="none", style
         pady = SMD_padsize[1]
 
     txt_offset = 1
-    slk_offset = 0.12
-    grid_crt = 0.01
+    slk_offset = global_config.silk_fab_offset
+    grid_crt = global_config.courtyard_grid
 
     pad1style = Pad.SHAPE_CIRCLE
 
@@ -373,12 +377,12 @@ def makePotentiometerVertical(class_name, wbody, hbody, screwstyle="none", style
     padstyle = Pad.SHAPE_CIRCLE
     if SMD_pads:
         padtype = Pad.TYPE_SMT
-        padstyle = Pad.SHAPE_RECT
+        padstyle = Pad.SHAPE_ROUNDRECT
     mhtype = Pad.TYPE_NPTH
     mhstyle = Pad.SHAPE_CIRCLE
     if mh_smd:
         mhtype = Pad.TYPE_SMT
-        mhstyle = Pad.SHAPE_RECT
+        mhstyle = Pad.SHAPE_ROUNDRECT
     if pins >= 3:
         if style == "trimmer":
             padpos.append([3, 0, 0, ddrill, padx, pady, padtype, padstyle])
@@ -531,10 +535,11 @@ def makePotentiometerVertical(class_name, wbody, hbody, screwstyle="none", style
                 # calculate text size (also used for offset distance inside outer circle)
                 text_size = min(1, round((cdbody_fab - dscrew) / 4.0, 2))
                 kicad_modg.append(Text(text='${REFERENCE}', at=[clbody_fab - cdbody_fab / 2.0 + text_size * 1.2, ctbody_fab],
-                                 size=[text_size, text_size], layer='F.Fab', rotation = 90))
+                                 size=[text_size, text_size], thickness=round(text_size * 0.15, 2),
+                                 layer='F.Fab', rotation = 90))
 
                 if drawbody:
-                    kicad_modg.append(RectLine(start=[lbody_fab, tbody_fab], end=[lbody_fab + wbody_fab, tbody_fab + hbody_fab],
+                    kicad_modg.append(Rect(start=[lbody_fab, tbody_fab], end=[lbody_fab + wbody_fab, tbody_fab + hbody_fab],
                                  layer='F.Fab', width=lw_fab))
         else:
             cdradius = cdbody_fab / 2.0
@@ -552,13 +557,13 @@ def makePotentiometerVertical(class_name, wbody, hbody, screwstyle="none", style
                 kicad_modg.append(PolygonLine(polygon=[[clbody_fab - dx, ctbody_fab - dy], [lbody_fab, ctbody_fab - dy],
                                                         [lbody_fab, ctbody_fab + dy], [clbody_fab - dx, ctbody_fab + dy]], layer='F.Fab', width=lw_fab))
             elif drawbody:
-                kicad_modg.append(RectLine(start=[lbody_fab, tbody_fab], end=[lbody_fab + wbody_fab, tbody_fab + hbody_fab],
+                kicad_modg.append(Rect(start=[lbody_fab, tbody_fab], end=[lbody_fab + wbody_fab, tbody_fab + hbody_fab],
                              layer='F.Fab', width=lw_fab))
     elif drawbody:
         # vertical pot with square body: place refdes on F.Fab inside left edge of body
         kicad_modg.append(Text(text='${REFERENCE}', at=[lbody_fab + 1, ctbody_fab], layer='F.Fab', rotation = 90))
 
-        kicad_modg.append(RectLine(start=[lbody_fab, tbody_fab], end=[lbody_fab + wbody_fab, tbody_fab + hbody_fab],
+        kicad_modg.append(Rect(start=[lbody_fab, tbody_fab], end=[lbody_fab + wbody_fab, tbody_fab + hbody_fab],
                                    layer='F.Fab', width=lw_fab))
 
     if dscrew > 0:
@@ -596,15 +601,19 @@ def makePotentiometerVertical(class_name, wbody, hbody, screwstyle="none", style
         addRectWithKeepout(kicad_modg, lbody_slk, tbody_slk, wbody_slk, hbody_slk, 'F.SilkS', lw_slk, keepouts,0.001)
 
     # create courtyard
-    kicad_mod.append(RectLine(start=[round_to_grid(l_crt + offset[0], grid_crt), round_to_grid(t_crt + offset[1], grid_crt)],
+    kicad_mod.append(Rect(start=[round_to_grid(l_crt + offset[0], grid_crt), round_to_grid(t_crt + offset[1], grid_crt)],
                               end=[round_to_grid(l_crt + w_crt + offset[0], grid_crt), round_to_grid(t_crt + h_crt + offset[1], grid_crt)],
                               layer='F.CrtYd', width=lw_crt))
     # create pads
     for p in padpos:
         if p[6] == Pad.TYPE_SMT:
-            kicad_modg.append(Pad(number=p[0], type=p[6], shape=p[7], at=[p[1], p[2]], size=[p[4], p[5]], drill=p[3], layers=Pad.LAYERS_SMT))
+            kicad_modg.append(Pad(number=p[0], type=p[6], shape=p[7], at=[p[1], p[2]], size=[p[4], p[5]], drill=p[3],
+                                  round_radius_handler=global_config.roundrect_radius_handler,
+                                  layers=Pad.LAYERS_SMT))
         else:
-            kicad_modg.append(Pad(number=p[0], type=p[6], shape=p[7], at=[p[1], p[2]], size=[p[4], p[5]], drill=p[3], layers=Pad.LAYERS_THT))
+            kicad_modg.append(Pad(number=p[0], type=p[6], shape=p[7], at=[p[1], p[2]], size=[p[4], p[5]], drill=p[3],
+                                  round_radius_handler=global_config.roundrect_radius_handler,
+                                  layers=Pad.LAYERS_THT))
 
     # add model
     if (has3d != 0):
@@ -669,6 +678,7 @@ def makeSpindleTrimmer(class_name, wbody, hbody, pinxoffset, pinyoffset, rmx2, r
     Returns:
         None
     """
+
     padx = 1.8 * ddrill
     pady = padx
     if SMD_pads and len(SMD_padsize) >= 2:
@@ -676,15 +686,15 @@ def makeSpindleTrimmer(class_name, wbody, hbody, pinxoffset, pinyoffset, rmx2, r
         pady = SMD_padsize[1]
 
     txt_offset = 1
-    slk_offset = 0.12
-    grid_crt = 0.01
+    slk_offset = global_config.silk_fab_offset
+    grid_crt = global_config.courtyard_grid
 
     padpos = []
     padtype = Pad.TYPE_THT
     padstyle = Pad.SHAPE_CIRCLE
     if SMD_pads:
         padtype = Pad.TYPE_SMT
-        padstyle = Pad.SHAPE_RECT
+        padstyle = Pad.SHAPE_ROUNDRECT
     padpos.append([1, pinxoffset, pinyoffset, ddrill, padx, pady, padtype, padstyle])
     if SMD_pads and len(SMD_padsize) >= 4:
         padpos.append([2, pinxoffset+rmx2, pinyoffset+rmy2, ddrill, SMD_padsize[2], SMD_padsize[3], padtype, padstyle])
@@ -799,15 +809,17 @@ def makeSpindleTrimmer(class_name, wbody, hbody, pinxoffset, pinyoffset, rmx2, r
     kicad_modg.append(Property(name=Property.VALUE, text=footprint_name, at=[l_crt + w_crt / 2.0, t_crt + h_crt + txt_offset], layer='F.Fab'))
 
     # create FAB-layer
-    kicad_modg.append(RectLine(start=[lbody_fab, tbody_fab], end=[lbody_fab + wbody_fab, tbody_fab + hbody_fab], layer='F.Fab', width=lw_fab))
+    kicad_modg.append(Rect(start=[lbody_fab, tbody_fab], end=[lbody_fab + wbody_fab, tbody_fab + hbody_fab], layer='F.Fab', width=lw_fab))
     if style == "screwleft":
         if wscrew > 0:
-            kicad_modg.append(RectLine(start=[lscrew_fab, tscrew_fab], end=[lscrew_fab + wscrew_fab, tscrew_fab + hscrew_fab], layer='F.Fab',width=lw_fab))
+            kicad_modg.append(Rect(start=[lscrew_fab, tscrew_fab], end=[lscrew_fab + wscrew_fab, tscrew_fab + hscrew_fab], layer='F.Fab',width=lw_fab))
             kicad_modg.append(Line(start=[lscrew_fab, tscrew_fab+hscrew_fab/2.0], end=[lscrew_fab + wscrew_fab/2.0, tscrew_fab + hscrew_fab/2.0], layer='F.Fab', width=lw_fab))
 
         # trimmer pot with rectangular body: place refdes on F.Fab centered in body
         text_size = round(min(1, lbody_fab + wbody_fab, tbody_fab + hbody_fab), 2)
-        kicad_modg.append(Text(text='${REFERENCE}', at=[lbody_fab+wbody_fab/2.0, tbody_fab+hbody_fab/2.0], size=[text_size, text_size], layer='F.Fab'))
+        kicad_modg.append(Text(text='${REFERENCE}', at=[lbody_fab+wbody_fab/2.0, tbody_fab+hbody_fab/2.0],
+                               size=[text_size, text_size], thickness=round(text_size * 0.15, 2),
+                               layer='F.Fab'))
     elif style == "screwtop":
         # screw graphics are inside body somewhere, so determine where to place F.Fab ref des text
         if (hbody_fab / 2.0 == tscrew_fab):
@@ -826,7 +838,9 @@ def makeSpindleTrimmer(class_name, wbody, hbody, pinxoffset, pinyoffset, rmx2, r
                 text_size = round(min(1, lscrew_fab / 6.0), 2)
 
         # trimmer pot top-mount with rectangular body: place refdes on F.Fab at location found above
-        kicad_modg.append(Text(text='${REFERENCE}', at=[text_x, text_y], size=[text_size, text_size], layer='F.Fab'))
+        kicad_modg.append(Text(text='${REFERENCE}', at=[text_x, text_y],
+                               size=[text_size, text_size], thickness=round(text_size * 0.15, 2),
+                               layer='F.Fab'))
 
         if shaft_hole == False:
             if screwstyle=="slit":
@@ -855,16 +869,18 @@ def makeSpindleTrimmer(class_name, wbody, hbody, pinxoffset, pinyoffset, rmx2, r
             addCrossScrewWithKeepouts(kicad_modg, lscrew_slk, tscrew_slk, wscrew_slk / 2.0, 'F.SilkS', lw_slk, keepouts)'''
 
     # create courtyard
-    kicad_mod.append(RectLine(start=[round_to_grid(l_crt + offset[0], grid_crt), round_to_grid(t_crt + offset[1], grid_crt)],
+    kicad_mod.append(Rect(start=[round_to_grid(l_crt + offset[0], grid_crt), round_to_grid(t_crt + offset[1], grid_crt)],
                              end=[round_to_grid(l_crt + w_crt + offset[0], grid_crt), round_to_grid(t_crt + h_crt + offset[1], grid_crt)], layer='F.CrtYd', width=lw_crt))
 
     # create pads
     for p in padpos:
         if p[6] == Pad.TYPE_SMT:
             kicad_modg.append(Pad(number=p[0], type=p[6], shape=p[7], at=[p[1], p[2]], size=[p[4], p[5]], drill=p[3],
+                                  round_radius_handler=global_config.roundrect_radius_handler,
                                   layers=Pad.LAYERS_SMT))
         else:
             kicad_modg.append(Pad(number=p[0], type=p[6], shape=p[7], at=[p[1], p[2]], size=[p[4], p[5]], drill=p[3],
+                                  round_radius_handler=global_config.roundrect_radius_handler,
                                   layers=Pad.LAYERS_THT))
 
     # add model
