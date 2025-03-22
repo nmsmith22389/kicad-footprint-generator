@@ -137,7 +137,8 @@ class TwoTerminalSMD():
             ipc_reference = device_size_data['ipc_reference']
         else:
             ipc_reference = footprint_group_data['ipc_reference']
-        ipc_density = footprint_group_data['ipc_density']
+        ipc_density = self.configuration.get('ipc_density')[0]
+        density_suffix = self.configuration.get('ipc_density')[1]
         ipc_data_set = self.ipc_defintions[ipc_reference][ipc_density]
         ipc_round_base = self.ipc_defintions[ipc_reference]['round_base']
 
@@ -153,6 +154,13 @@ class TwoTerminalSMD():
         model3d_path_prefix = self.configuration.get('3d_model_prefix', global_config.model_3d_prefix)
         model3d_path_suffix = self.configuration.get('3d_model_suffix', global_config.model_3d_suffix)
         suffix_3d = suffix if footprint_group_data.get('include_suffix_in_3dpath', 'True') == 'True' else ""
+        
+        if density_suffix != '' and 'handsolder' not in footprint_group_data['keywords']:
+            density_description = ', IPC-7351 {density:s}'.format(density=ipc_density)
+            suffix = suffix + density_suffix
+            suffix_3d = suffix_3d + density_suffix
+        else:
+            density_description = ', IPC-7351 nominal'
 
         code_metric = device_size_data.get('code_metric')
         code_letter = device_size_data.get('code_letter')
@@ -191,6 +199,7 @@ class TwoTerminalSMD():
         else:
           kicad_mod.setDescription(footprint_group_data['description'].format(code_imperial=code_imperial,
                                                                               code_metric=code_metric, code_letter=code_letter,
+                                                                              density=density_description,
                                                                               size_info=device_size_data.get('size_info')))
         kicad_mod.setTags(footprint_group_data['keywords'])
 
@@ -337,7 +346,7 @@ class TwoTerminalSMD():
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='use confing .yaml files to create footprints.')
+    parser = argparse.ArgumentParser(description='use config .yaml files to create footprints.')
     parser.add_argument('files', metavar='file', type=str, nargs='+',
                         help='list of files holding information about what devices should be created.')
     parser.add_argument('--global_config', type=str, nargs='?', help='the config file defining how the footprint will look like. (KLC)',
@@ -346,7 +355,22 @@ if __name__ == "__main__":
                         help='the config file defining series parameters.', default='package_config_KLCv3.0.yaml')
     parser.add_argument('--ipc_definition', type=str, nargs='?', help='the ipc definition file',
                         default='ipc7351B_2terminal.yaml')
+    parser.add_argument('--ipc_density', type=str, nargs='?', help='IPC density level (L,N,M)')
     args = parser.parse_args()
+
+    # if the user requests an IPC density, put that and footprint suffix in a list
+    # nominal density with no suffix if no argument is provided
+    if args.ipc_density is None:
+        ipc_density = ['nominal', '']
+    elif args.ipc_density.upper() == 'L':
+        ipc_density = ['least', '_L']
+    elif args.ipc_density.upper() == 'N':
+        ipc_density = ['nominal', '_N']
+    elif args.ipc_density.upper() == 'M':
+        ipc_density = ['most', '_M']
+    else:
+        raise ValueError("If IPC density is specified, it must be 'L', 'N', or 'M.'")
+        sys.exit()
 
     with open(args.global_config, 'r') as config_stream:
         try:
@@ -362,6 +386,7 @@ if __name__ == "__main__":
             print(exc)
     args = parser.parse_args()
     configuration['ipc_definition'] = args.ipc_definition
+    configuration['ipc_density'] = ipc_density
 
     for filepath in args.files:
         two_terminal_smd = TwoTerminalSMD(global_config, filepath, configuration)
