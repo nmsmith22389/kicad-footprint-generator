@@ -11,7 +11,7 @@ if __name__ == '__main__':
     lib_name = "Potentiometer_SMD"
 
     # 2018 comment: this footprint is not generated on-center due to design limitations of footprint_scripts_potentiometers.py
-    # 202% comment: this seems completely broken and problem isn't work solving without just rewriting most of the generator anyway.
+    # 2025 comment: this seems completely broken and problem isn't worth solving without just rewriting most of the generator anyway.
     # class_name="Bourns PRS11S"; add_description="http://www.bourns.com/docs/Product-Datasheets/PRS11S.pdf"
     # pins = 5; rmx=16.5; rmy=2.5; ddrill=1; wbody=13; hbody=11.7; height3d = 7.2; wscrew=4.3; dscrew=6.8
     # wshaft=20-wbody-wscrew; dshaft=6; pinxoffset=1.75; pinyoffset=(hbody-2*rmy)/2.0; dbody=0; vpinyoffset=(hbody-2*rmy)/2.0; c_offsetx=6.5; c_offsety=hbody/2.0; mh_rmy=11.3
