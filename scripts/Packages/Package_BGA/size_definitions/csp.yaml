@@ -1247,3 +1247,18 @@ OnSemi_ODCSP8_BGA-8_3.16x3.16mm_Layout3x3_P1.26mm_ManualAssembly:
   description: "OnSemi ODCSP8 (Case 570CS), 0.46mm pad, manual assembly variant (larger pads)"
   pad_diameter: 0.47 # Pads at the size recommended for the solder mask
   mask_margin: 0.0 # Pads are already at MFR recommended mask opening size (0.47mm)
+NXP_SOT1450-2_WLCSP-100_5.07x5.07mm_Layout10x10_P0.5mm:
+  manufacturer: "NXP"
+  part_number: "SOT1450-2"
+  device_type: "WLCSP"
+  description: "NXP WLCSP100 (Case SOT1450-2), 0.28mm pad"
+  size_source: "https://www.nxp.com/docs/en/package-information/SOT1450-2.pdf"
+  body_size_x: 5.07
+  body_size_y: 5.07
+  overall_height: 0.53 # Dim A
+  pitch: 0.5
+  pad_diameter: 0.28
+  mask_margin: 0.05
+  paste_margin: 0.03
+  layout_x: 10
+  layout_y: 10
