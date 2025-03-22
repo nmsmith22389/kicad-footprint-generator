@@ -64,9 +64,11 @@ if __name__ == '__main__':
     class_name="Bourns 3314R-GM5"
     rmx2=-1.155; rmy2 = 6.25; rmx3=-2.31; pinxoffset=(wbody+rmx3)/2.0-rmx3; pinyoffset=(hbody-rmy2)/2.0; ddrill = 3.2
     makeSpindleTrimmer(lib_name=lib_name, shaft_hole=True, class_name=class_name, ddrill=ddrill, wbody=wbody, hbody=hbody, pinxoffset=pinxoffset, pinyoffset=pinyoffset, rmx2=rmx2, rmy2=rmy2, rmx3=rmx3, rmy3=rmy3, dscrew=dscrew, wscrew=wscrew, screwxoffset=screwxoffset, screwyoffset=screwyoffset, style=style, SMD_pads=SMD_pads, SMD_padsize=SMD_padsize, specialtags=["extended leadframe"], add_description=add_description, name_additions=[], height3d=height3d)
+
+    # Disable this, it has a manual orientaion mark added in the output library
     class_name="Bourns 3314S"
-    wbody = 5.01; rmx2=-1.15; rmy2 = 4.05; rmx3=-2.3; pinxoffset=(wbody+rmx3)/2.0-rmx3; pinyoffset=(hbody-rmy2)/2.0;  height3d = 5.61; screwxoffset = wbody/2.0; style = "screwleft"; SMD_padsize = [1.2,1.75,1.6,1.75,1.2,1.75]
-    makeSpindleTrimmer(lib_name=lib_name, shaft_hole=False, class_name=class_name, ddrill=ddrill, wbody=wbody, hbody=hbody, pinxoffset=pinxoffset, pinyoffset=pinyoffset, rmx2=rmx2, rmy2=rmy2, rmx3=rmx3, rmy3=rmy3, dscrew=dscrew, wscrew=wscrew, screwxoffset=screwxoffset, screwyoffset=screwyoffset, style=style, SMD_pads=SMD_pads, SMD_padsize=SMD_padsize, specialtags=[], add_description=add_description, name_additions=[], height3d=height3d)
+    # wbody = 5.01; rmx2=-1.15; rmy2 = 4.05; rmx3=-2.3; pinxoffset=(wbody+rmx3)/2.0-rmx3; pinyoffset=(hbody-rmy2)/2.0;  height3d = 5.61; screwxoffset = wbody/2.0; style = "screwleft"; SMD_padsize = [1.2,1.75,1.6,1.75,1.2,1.75]
+    # makeSpindleTrimmer(lib_name=lib_name, shaft_hole=False, class_name=class_name, ddrill=ddrill, wbody=wbody, hbody=hbody, pinxoffset=pinxoffset, pinyoffset=pinyoffset, rmx2=rmx2, rmy2=rmy2, rmx3=rmx3, rmy3=rmy3, dscrew=dscrew, wscrew=wscrew, screwxoffset=screwxoffset, screwyoffset=screwyoffset, style=style, SMD_pads=SMD_pads, SMD_padsize=SMD_padsize, specialtags=[], add_description=add_description, name_additions=[], height3d=height3d)
 
     class_name="Bourns 3224W"; add_description = "https://www.bourns.com/docs/Product-Datasheets/3224.pdf"
     wbody=4.8; hbody=3.5; pinxoffset=(wbody-2.5)/2.0+2.5; pinyoffset=0.3; height3d = 5.1; rmx2=-1.25; rmy2=2.9; rmx3=-2.5; rmy3=0; ddrill=0.8; dscrew=1.5; wscrew = dscrew; screwxoffset = 1.2; screwyoffset = hbody-1.1
