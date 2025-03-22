@@ -102,8 +102,8 @@ if __name__ == '__main__':
     wshaft=15-wbody-wscrew; dshaft=6; pinxoffset=3.5; pinyoffset=(hbody-2*rmy)/2.0
     makePotentiometerHorizontal(lib_name=lib_name, mh_ddrill=2.3, mh_count=2, mh_rmx=0, mh_rmy=10, mh_xoffset=-3.3, mh_yoffset=(10-2*rmy)/2.0, class_name=class_name, wbody=wbody, hbody=hbody, wscrew=wscrew, dscrew=dscrew, wshaft=wshaft, dshaft=dshaft, pinxoffset=pinxoffset,pinyoffset=pinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, R_POW=R_POW, specialtags=[], add_description=add_description, name_additions=[], screwzpos=screwzpos)
     class_name="Bourns PTV09A-1 Single"
-    voffsetx=1; dbody=0; vwbody=12; vpinyoffset=(hbody-2*rmy)/2.0; c_offsetx=6.5; c_offsety=hbody/2.0
-    makePotentiometerVertical(lib_name=lib_name, mh_ddrill=2, mh_count=2, mh_rmx=0, mh_rmy=8.8, mh_xoffset=7, mh_yoffset=(8.8-2*rmy)/2.0, shaft_hole=False, class_name=class_name, wbody=vwbody, hbody=hbody, d_body=dbody, dshaft=dshaft, dscrew=dscrew, c_ddrill=dscrew+0.5,c_offsetx=c_offsetx, c_offsety=c_offsety, pinxoffset=voffsetx,pinyoffset=pinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, specialtags=[], add_description=add_description, name_additions=[], height3d=height3d)
+    voffsetx=1; dbody=0; vwbody=12; vpinyoffset=(hbody-2*rmy)/2.0; c_offsetx=6; c_offsety=hbody/2.0
+    makePotentiometerVertical(lib_name=lib_name, mh_ddrill=2.2, mh_count=2, mh_rmx=0, mh_rmy=8.8, mh_xoffset=7, mh_yoffset=(8.8-2*rmy)/2.0, shaft_hole=False, class_name=class_name, wbody=vwbody, hbody=hbody, d_body=dbody, dshaft=dshaft, dscrew=dscrew, c_ddrill=dscrew+0.5,c_offsetx=c_offsetx, c_offsety=c_offsety, pinxoffset=voffsetx,pinyoffset=pinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, specialtags=[], add_description=add_description, name_additions=[], height3d=height3d)
 
     # See above for RKs being disabled.
     # class_name="Alps RK09K Single"; add_description="http://www.alps.com/prod/info/E/HTML/Potentiometer/RotaryPotentiometers/RK09K/RK09K_list.html"
