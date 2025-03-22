@@ -10,11 +10,12 @@ if __name__ == '__main__':
 
     lib_name = "Potentiometer_SMD"
 
-    # this footprint is not generated on-center due to design limitations of footprint_scripts_potentiometers.py
-    class_name="Bourns PRS11S"; add_description="http://www.bourns.com/docs/Product-Datasheets/PRS11S.pdf"
-    pins = 5; rmx=16.5; rmy=2.5; ddrill=1; wbody=13; hbody=11.7; height3d = 7.2; wscrew=4.3; dscrew=6.8
-    wshaft=20-wbody-wscrew; dshaft=6; pinxoffset=1.75; pinyoffset=(hbody-2*rmy)/2.0; dbody=0; vpinyoffset=(hbody-2*rmy)/2.0; c_offsetx=6.5; c_offsety=hbody/2.0; mh_rmy=11.3
-    makePotentiometerVertical(lib_name=lib_name, SMD_pads=True, SMD_padsize=[4,2], mh_ddrill=1.5, mh_count=2, mh_rmx=0, mh_rmy=mh_rmy, mh_xoffset=8.25, mh_yoffset=(mh_rmy-2*rmy)/2.0, mh_nopads=True, shaft_hole=False, class_name=class_name, wbody=wbody, hbody=hbody, d_body=dbody, dshaft=dshaft, dscrew=dscrew, c_ddrill=dscrew+0.5,c_offsetx=c_offsetx, c_offsety=c_offsety, pinxoffset=pinxoffset,pinyoffset=pinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, specialtags=[], add_description=add_description, name_additions=[], height3d=height3d)
+    # 2018 comment: this footprint is not generated on-center due to design limitations of footprint_scripts_potentiometers.py
+    # 202% comment: this seems completely broken and problem isn't work solving without just rewriting most of the generator anyway.
+    # class_name="Bourns PRS11S"; add_description="http://www.bourns.com/docs/Product-Datasheets/PRS11S.pdf"
+    # pins = 5; rmx=16.5; rmy=2.5; ddrill=1; wbody=13; hbody=11.7; height3d = 7.2; wscrew=4.3; dscrew=6.8
+    # wshaft=20-wbody-wscrew; dshaft=6; pinxoffset=1.75; pinyoffset=(hbody-2*rmy)/2.0; dbody=0; vpinyoffset=(hbody-2*rmy)/2.0; c_offsetx=6.5; c_offsety=hbody/2.0; mh_rmy=11.3
+    # makePotentiometerVertical(lib_name=lib_name, SMD_pads=True, SMD_padsize=[4,2], mh_ddrill=1.5, mh_count=2, mh_rmx=0, mh_rmy=mh_rmy, mh_xoffset=8.25, mh_yoffset=(mh_rmy-2*rmy)/2.0, mh_nopads=True, shaft_hole=False, class_name=class_name, wbody=wbody, hbody=hbody, d_body=dbody, dshaft=dshaft, dscrew=dscrew, c_ddrill=dscrew+0.5,c_offsetx=c_offsetx, c_offsety=c_offsety, pinxoffset=pinxoffset,pinyoffset=pinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, specialtags=[], add_description=add_description, name_additions=[], height3d=height3d)
 
     class_name="ACP CA6-VSMD"; add_description="http://www.acptechnologies.com/wp-content/uploads/2017/06/01-ACP-CA6.pdf"
     pins = 3; rmx=8.65; rmy=4.3/2.0; ddrill=0.9; wbody=6.5; hbody=6.5; dbody=0; height3d = 4.5+hbody/2.0; screwzpos = 4.5; wscrew=-wbody; dscrew=2
