@@ -411,40 +411,25 @@ def makeTerminalBlockStd(
     if screw_diameter > 0:
         for p in range(1, pins + 1):
             if screw_diameter > 0:
+                screw_pos = Vector2D(
+                    (p - 1) * rm + screw_pin_offset[0], screw_pin_offset[1]
+                )
                 if slit_screw:
                     DT.addSlitScrew(
                         kicad_modg,
-                        [(p - 1) * rm + screw_pin_offset[0], 0 + screw_pin_offset[1]],
+                        screw_pos,
                         screw_diameter / 2,
                         "F.Fab",
                         lw_fab,
-                        roun=0.001,
-                    )
-                    DT.addSlitScrew(
-                        kicad_modg,
-                        [(p - 1) * rm + screw_pin_offset[0], 0 + screw_pin_offset[1]],
-                        screw_diameter / 2 + 3 * slk_offset,
-                        "F.SilkS",
-                        lw_slk,
-                        keepouts=keepouts,
                         roun=0.001,
                     )
                 else:
                     DT.addCrossScrew(
                         kicad_modg,
-                        [(p - 1) * rm + screw_pin_offset[0], 0 + screw_pin_offset[1]],
+                        screw_pos,
                         screw_diameter / 2,
                         "F.Fab",
                         lw_fab,
-                        roun=0.001,
-                    )
-                    DT.addCrossScrew(
-                        kicad_modg,
-                        [(p - 1) * rm + screw_pin_offset[0], 0 + screw_pin_offset[1]],
-                        screw_diameter / 2 + 3 * slk_offset,
-                        "F.SilkS",
-                        lw_slk,
-                        keepouts=keepouts,
                         roun=0.001,
                     )
 
@@ -2042,34 +2027,18 @@ def makeScrewTerminalSingleStd(
         if slit_screw:
             DT.addSlitScrew(
                 kicad_modg,
-                [screw_offset[0], screw_offset[1]],
+                screw_offset,
                 screw_diameter / 2,
                 "F.Fab",
                 lw_fab,
-            )
-            DT.addSlitScrew(
-                kicad_modg,
-                [screw_offset[0], screw_offset[1]],
-                screw_diameter / 2 + 1 * slk_offset,
-                "F.SilkS",
-                lw_slk,
-                keepouts=keepouts,
             )
         else:
             DT.addCrossScrew(
                 kicad_modg,
-                [screw_offset[0], screw_offset[1]],
+                screw_offset,
                 screw_diameter / 2,
                 "F.Fab",
                 lw_fab,
-            )
-            DT.addCrossScrew(
-                kicad_modg,
-                [screw_offset[0], screw_offset[1]],
-                screw_diameter / 2 + 1 * slk_offset,
-                "F.SilkS",
-                lw_slk,
-                keepouts=keepouts,
             )
 
     # create Body
