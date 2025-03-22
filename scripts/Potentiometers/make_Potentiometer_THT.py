@@ -79,21 +79,23 @@ if __name__ == '__main__':
     pins = 6; wbody=15
     makePotentiometerHorizontal(lib_name=lib_name, class_name=class_name, wbody=wbody, hbody=hbody, wscrew=wscrew, dscrew=dscrew, wshaft=wshaft, dshaft=dshaft, pinxoffset=pinxoffset,pinyoffset=pinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, R_POW=R_POW, specialtags=[], add_description=add_description, name_additions=[], screwzpos=screwzpos)
 
-    class_name="Alps RK163 Single"; add_description="http://www.alps.com/prod/info/E/HTML/Potentiometer/RotaryPotentiometers/RK16/RK16_list.html"
-    pins = 3; rmx=5.0; rmy=5.0; ddrill=1.3; wbody=10.5; hbody=17.9; height3d = 21; screwzpos = 12.5; wscrew=5; dscrew=7
-    wshaft=15-wscrew; dshaft=6; pinxoffset=3.8; pinyoffset=(hbody-2*rmy)/2.0
-    makePotentiometerHorizontal(lib_name=lib_name, class_name=class_name, wbody=wbody, hbody=hbody, wscrew=wscrew, dscrew=dscrew, wshaft=wshaft, dshaft=dshaft, pinxoffset=pinxoffset,pinyoffset=pinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, R_POW=R_POW, specialtags=[], add_description=add_description, name_additions=[], screwzpos=screwzpos)
-    class_name="Alps RK163 Dual"
-    pins = 6; wbody=12.1; wscrew=7
-    makePotentiometerHorizontal(lib_name=lib_name, class_name=class_name, wbody=wbody, hbody=hbody, wscrew=wscrew, dscrew=dscrew, wshaft=wshaft, dshaft=dshaft, pinxoffset=pinxoffset,pinyoffset=pinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, R_POW=R_POW, specialtags=[], add_description=add_description, name_additions=[], screwzpos=screwzpos)
+    # Alps RKs have been manually rotated and some have extra keeouts added in the library
+    # Disable here to avoid regressions on regeneration
+    # class_name="Alps RK163 Single"; add_description="http://www.alps.com/prod/info/E/HTML/Potentiometer/RotaryPotentiometers/RK16/RK16_list.html"
+    # pins = 3; rmx=5.0; rmy=5.0; ddrill=1.3; wbody=10.5; hbody=17.9; height3d = 21; screwzpos = 12.5; wscrew=5; dscrew=7
+    # wshaft=15-wscrew; dshaft=6; pinxoffset=3.8; pinyoffset=(hbody-2*rmy)/2.0
+    # makePotentiometerHorizontal(lib_name=lib_name, class_name=class_name, wbody=wbody, hbody=hbody, wscrew=wscrew, dscrew=dscrew, wshaft=wshaft, dshaft=dshaft, pinxoffset=pinxoffset,pinyoffset=pinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, R_POW=R_POW, specialtags=[], add_description=add_description, name_additions=[], screwzpos=screwzpos)
+    # class_name="Alps RK163 Dual"
+    # pins = 6; wbody=12.1; wscrew=7
+    # makePotentiometerHorizontal(lib_name=lib_name, class_name=class_name, wbody=wbody, hbody=hbody, wscrew=wscrew, dscrew=dscrew, wshaft=wshaft, dshaft=dshaft, pinxoffset=pinxoffset,pinyoffset=pinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, R_POW=R_POW, specialtags=[], add_description=add_description, name_additions=[], screwzpos=screwzpos)
 
-    class_name="Alps RK097 Single"; add_description="http://www.alps.com/prod/info/E/HTML/Potentiometer/RotaryPotentiometers/RK097/RK097_list.html"
-    pins = 3; rmx=2.5; rmy=2.5; ddrill=1; wbody=7.05; hbody=9.5; height3d = 6.5+0.25+4.85; screwzpos = 6.5+0.25; wscrew=5; dscrew=7
-    wshaft=15-wscrew; dshaft=6; pinxoffset=5; pinyoffset=(hbody-2*rmy)/2.0
-    makePotentiometerHorizontal(lib_name=lib_name, class_name=class_name, wbody=wbody, hbody=hbody, wscrew=wscrew, dscrew=dscrew, wshaft=wshaft, dshaft=dshaft, pinxoffset=pinxoffset,pinyoffset=pinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, R_POW=R_POW, specialtags=[], add_description=add_description, name_additions=[], screwzpos=screwzpos)
-    class_name="Alps RK097 Dual"
-    pins = 6; wbody=9.55
-    makePotentiometerHorizontal(lib_name=lib_name, class_name=class_name, wbody=wbody, hbody=hbody, wscrew=wscrew, dscrew=dscrew, wshaft=wshaft, dshaft=dshaft, pinxoffset=pinxoffset,pinyoffset=pinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, R_POW=R_POW, specialtags=[], add_description=add_description, name_additions=[], screwzpos=screwzpos)
+    # class_name="Alps RK097 Single"; add_description="http://www.alps.com/prod/info/E/HTML/Potentiometer/RotaryPotentiometers/RK097/RK097_list.html"
+    # pins = 3; rmx=2.5; rmy=2.5; ddrill=1; wbody=7.05; hbody=9.5; height3d = 6.5+0.25+4.85; screwzpos = 6.5+0.25; wscrew=5; dscrew=7
+    # wshaft=15-wscrew; dshaft=6; pinxoffset=5; pinyoffset=(hbody-2*rmy)/2.0
+    # makePotentiometerHorizontal(lib_name=lib_name, class_name=class_name, wbody=wbody, hbody=hbody, wscrew=wscrew, dscrew=dscrew, wshaft=wshaft, dshaft=dshaft, pinxoffset=pinxoffset,pinyoffset=pinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, R_POW=R_POW, specialtags=[], add_description=add_description, name_additions=[], screwzpos=screwzpos)
+    # class_name="Alps RK097 Dual"
+    # pins = 6; wbody=9.55
+    # makePotentiometerHorizontal(lib_name=lib_name, class_name=class_name, wbody=wbody, hbody=hbody, wscrew=wscrew, dscrew=dscrew, wshaft=wshaft, dshaft=dshaft, pinxoffset=pinxoffset,pinyoffset=pinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, R_POW=R_POW, specialtags=[], add_description=add_description, name_additions=[], screwzpos=screwzpos)
 
     class_name="Bourns PTV09A-2 Single"; add_description="http://www.bourns.com/docs/Product-Datasheets/ptv09.pdf"
     pins = 3; rmx=2.5; rmy=2.5; ddrill=1; wbody=5; hbody=9.7; height3d = 10+5.5; screwzpos = 10; wscrew=0.8; dscrew=6.8
@@ -103,32 +105,33 @@ if __name__ == '__main__':
     voffsetx=1; dbody=0; vwbody=12; vpinyoffset=(hbody-2*rmy)/2.0; c_offsetx=6.5; c_offsety=hbody/2.0
     makePotentiometerVertical(lib_name=lib_name, mh_ddrill=2, mh_count=2, mh_rmx=0, mh_rmy=8.8, mh_xoffset=7, mh_yoffset=(8.8-2*rmy)/2.0, shaft_hole=False, class_name=class_name, wbody=vwbody, hbody=hbody, d_body=dbody, dshaft=dshaft, dscrew=dscrew, c_ddrill=dscrew+0.5,c_offsetx=c_offsetx, c_offsety=c_offsety, pinxoffset=voffsetx,pinyoffset=pinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, specialtags=[], add_description=add_description, name_additions=[], height3d=height3d)
 
-    class_name="Alps RK09K Single"; add_description="http://www.alps.com/prod/info/E/HTML/Potentiometer/RotaryPotentiometers/RK09K/RK09K_list.html"
-    pins = 3; rmx=2.5; rmy=2.5; ddrill=1; wbody=6.8; hbody=9.8; height3d = 6.5+5.5; screwzpos = 6.5; wscrew=0.8; dscrew=6.5
-    wshaft=15-6.8-wscrew; dshaft=6; pinxoffset=3.4; pinyoffset=(hbody-2*rmy)/2.0
-    makePotentiometerHorizontal(lib_name=lib_name, mh_ddrill=2.3, mh_count=2, mh_rmx=0, mh_rmy=10, mh_xoffset=-3.3, mh_yoffset=(10-2*rmy)/2.0, class_name=class_name, wbody=wbody, hbody=hbody, wscrew=wscrew, dscrew=dscrew, wshaft=wshaft, dshaft=dshaft, pinxoffset=pinxoffset,pinyoffset=pinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, R_POW=R_POW, specialtags=[], add_description=add_description, name_additions=[], screwzpos=screwzpos)
-    class_name="Alps RK09K Single"
-    voffsetx=1; dbody=0; vwbody=12; vpinyoffset=(hbody-2*rmy)/2.0; c_offsetx=6.5; c_offsety=hbody/2.0
-    makePotentiometerVertical(lib_name=lib_name, mh_ddrill=2, mh_count=2, mh_rmx=0, mh_rmy=8.8, mh_xoffset=7, mh_yoffset=(8.8-2*rmy)/2.0, shaft_hole=False, class_name=class_name, wbody=vwbody, hbody=hbody, d_body=dbody, dshaft=dshaft, dscrew=dscrew, c_ddrill=dscrew+0.5,c_offsetx=c_offsetx, c_offsety=c_offsety, pinxoffset=voffsetx,pinyoffset=pinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, specialtags=[], add_description=add_description, name_additions=[], height3d=height3d)
+    # See above for RKs being disabled.
+    # class_name="Alps RK09K Single"; add_description="http://www.alps.com/prod/info/E/HTML/Potentiometer/RotaryPotentiometers/RK09K/RK09K_list.html"
+    # pins = 3; rmx=2.5; rmy=2.5; ddrill=1; wbody=6.8; hbody=9.8; height3d = 6.5+5.5; screwzpos = 6.5; wscrew=0.8; dscrew=6.5
+    # wshaft=15-6.8-wscrew; dshaft=6; pinxoffset=3.4; pinyoffset=(hbody-2*rmy)/2.0
+    # makePotentiometerHorizontal(lib_name=lib_name, mh_ddrill=2.3, mh_count=2, mh_rmx=0, mh_rmy=10, mh_xoffset=-3.3, mh_yoffset=(10-2*rmy)/2.0, class_name=class_name, wbody=wbody, hbody=hbody, wscrew=wscrew, dscrew=dscrew, wshaft=wshaft, dshaft=dshaft, pinxoffset=pinxoffset,pinyoffset=pinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, R_POW=R_POW, specialtags=[], add_description=add_description, name_additions=[], screwzpos=screwzpos)
+    # class_name="Alps RK09K Single"
+    # voffsetx=1; dbody=0; vwbody=12; vpinyoffset=(hbody-2*rmy)/2.0; c_offsetx=6.5; c_offsety=hbody/2.0
+    # makePotentiometerVertical(lib_name=lib_name, mh_ddrill=2, mh_count=2, mh_rmx=0, mh_rmy=8.8, mh_xoffset=7, mh_yoffset=(8.8-2*rmy)/2.0, shaft_hole=False, class_name=class_name, wbody=vwbody, hbody=hbody, d_body=dbody, dshaft=dshaft, dscrew=dscrew, c_ddrill=dscrew+0.5,c_offsetx=c_offsetx, c_offsety=c_offsety, pinxoffset=voffsetx,pinyoffset=pinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, specialtags=[], add_description=add_description, name_additions=[], height3d=height3d)
 
-    class_name="Alps RK09L Single"; add_description="http://www.alps.com/prod/info/E/HTML/Potentiometer/RotaryPotentiometers/RK09L/RK09L_list.html"
-    pins = 3; rmx=2.5; rmy=2.5; ddrill=1; wbody=7.45; hbody=12.1; height3d = 6.5+0.25+4.85; screwzpos = 6.5+0.25; wscrew=5; dscrew=9
-    wshaft=15-wscrew; dshaft=6; pinxoffset=5; pinyoffset=(hbody-2*rmy)/2.0
-    makePotentiometerHorizontal(lib_name=lib_name, mh_ddrill=2.1, mh_count=2, mh_rmx=0, mh_rmy=9.5, mh_xoffset=-4.1, mh_yoffset=(9.5-2*rmy)/2.0, class_name=class_name, wbody=wbody, hbody=hbody, wscrew=wscrew, dscrew=dscrew, wshaft=wshaft, dshaft=dshaft, pinxoffset=pinxoffset,pinyoffset=pinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, R_POW=R_POW, specialtags=[], add_description=add_description, name_additions=[], screwzpos=screwzpos)
-    class_name="Alps RK09L Single"
-    voffsetx=1; dbody=0; vwbody=11.35; vpinyoffset=(hbody-2*rmy)/2.0; c_offsetx=6.5; c_offsety=hbody/2.0
-    makePotentiometerVertical(lib_name=lib_name, mh_ddrill=2, mh_count=2, mh_rmx=0, mh_rmy=9.5, mh_xoffset=7.5, mh_yoffset=(9.5-2*rmy)/2.0, shaft_hole=False, class_name=class_name, wbody=vwbody, hbody=hbody, d_body=dbody, dshaft=dshaft, dscrew=dscrew, c_ddrill=dscrew+0.5,c_offsetx=c_offsetx, c_offsety=c_offsety, pinxoffset=voffsetx,pinyoffset=pinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, specialtags=[], add_description=add_description, name_additions=[], height3d=height3d)
-    class_name="Alps RK09L Double"
-    pins = 6; wbody=9.14
-    makePotentiometerHorizontal(lib_name=lib_name, mh_ddrill=2.1, mh_count=2, mh_rmx=0, mh_rmy=9.5, mh_xoffset=-5.8, mh_yoffset=(9.5-2*rmy)/2.0, class_name=class_name, wbody=wbody, hbody=hbody, wscrew=wscrew, dscrew=dscrew, wshaft=wshaft, dshaft=dshaft, pinxoffset=pinxoffset,pinyoffset=pinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, R_POW=R_POW, specialtags=[], add_description=add_description, name_additions=[], screwzpos=screwzpos)
-    class_name="Alps RK09L Double"
-    voffsetx=1; dbody=0; vwbody=11.35; vpinyoffset=(hbody-2*rmy)/2.0; c_offsetx=6.5; c_offsety=hbody/2.0
-    makePotentiometerVertical(lib_name=lib_name, mh_ddrill=2, mh_count=2, mh_rmx=0, mh_rmy=9.5, mh_xoffset=7.5, mh_yoffset=(9.5-2*rmy)/2.0, shaft_hole=False, class_name=class_name, wbody=vwbody, hbody=hbody, d_body=dbody, dshaft=dshaft, dscrew=dscrew, c_ddrill=dscrew+0.5,c_offsetx=c_offsetx, c_offsety=c_offsety, pinxoffset=voffsetx,pinyoffset=pinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, specialtags=[], add_description=add_description, name_additions=[], height3d=height3d)
+    # class_name="Alps RK09L Single"; add_description="http://www.alps.com/prod/info/E/HTML/Potentiometer/RotaryPotentiometers/RK09L/RK09L_list.html"
+    # pins = 3; rmx=2.5; rmy=2.5; ddrill=1; wbody=7.45; hbody=12.1; height3d = 6.5+0.25+4.85; screwzpos = 6.5+0.25; wscrew=5; dscrew=9
+    # wshaft=15-wscrew; dshaft=6; pinxoffset=5; pinyoffset=(hbody-2*rmy)/2.0
+    # makePotentiometerHorizontal(lib_name=lib_name, mh_ddrill=2.1, mh_count=2, mh_rmx=0, mh_rmy=9.5, mh_xoffset=-4.1, mh_yoffset=(9.5-2*rmy)/2.0, class_name=class_name, wbody=wbody, hbody=hbody, wscrew=wscrew, dscrew=dscrew, wshaft=wshaft, dshaft=dshaft, pinxoffset=pinxoffset,pinyoffset=pinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, R_POW=R_POW, specialtags=[], add_description=add_description, name_additions=[], screwzpos=screwzpos)
+    # class_name="Alps RK09L Single"
+    # voffsetx=1; dbody=0; vwbody=11.35; vpinyoffset=(hbody-2*rmy)/2.0; c_offsetx=6.5; c_offsety=hbody/2.0
+    # makePotentiometerVertical(lib_name=lib_name, mh_ddrill=2, mh_count=2, mh_rmx=0, mh_rmy=9.5, mh_xoffset=7.5, mh_yoffset=(9.5-2*rmy)/2.0, shaft_hole=False, class_name=class_name, wbody=vwbody, hbody=hbody, d_body=dbody, dshaft=dshaft, dscrew=dscrew, c_ddrill=dscrew+0.5,c_offsetx=c_offsetx, c_offsety=c_offsety, pinxoffset=voffsetx,pinyoffset=pinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, specialtags=[], add_description=add_description, name_additions=[], height3d=height3d)
+    # class_name="Alps RK09L Double"
+    # pins = 6; wbody=9.14
+    # makePotentiometerHorizontal(lib_name=lib_name, mh_ddrill=2.1, mh_count=2, mh_rmx=0, mh_rmy=9.5, mh_xoffset=-5.8, mh_yoffset=(9.5-2*rmy)/2.0, class_name=class_name, wbody=wbody, hbody=hbody, wscrew=wscrew, dscrew=dscrew, wshaft=wshaft, dshaft=dshaft, pinxoffset=pinxoffset,pinyoffset=pinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, R_POW=R_POW, specialtags=[], add_description=add_description, name_additions=[], screwzpos=screwzpos)
+    # class_name="Alps RK09L Double"
+    # voffsetx=1; dbody=0; vwbody=11.35; vpinyoffset=(hbody-2*rmy)/2.0; c_offsetx=6.5; c_offsety=hbody/2.0
+    # makePotentiometerVertical(lib_name=lib_name, mh_ddrill=2, mh_count=2, mh_rmx=0, mh_rmy=9.5, mh_xoffset=7.5, mh_yoffset=(9.5-2*rmy)/2.0, shaft_hole=False, class_name=class_name, wbody=vwbody, hbody=hbody, d_body=dbody, dshaft=dshaft, dscrew=dscrew, c_ddrill=dscrew+0.5,c_offsetx=c_offsetx, c_offsety=c_offsety, pinxoffset=voffsetx,pinyoffset=pinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, specialtags=[], add_description=add_description, name_additions=[], height3d=height3d)
 
-    class_name="Alps RK09Y11 Single"; add_description="http://www.alps.com/prod/info/E/HTML/Potentiometer/RotaryPotentiometers/RK09Y11/RK09Y11_list.html"
-    pins = 3; rmx=5.0; rmy=2.5; ddrill=1.0; wbody=5.4; hbody=9.5; height3d = 6.25+0.25+4.85; screwzpos = 6.25+0.25; wscrew=5; dscrew=7
-    wshaft=12-wscrew; dshaft=5; pinxoffset=3.45; pinyoffset=(hbody-2*rmy)/2.0
-    makePotentiometerHorizontal(lib_name=lib_name, class_name=class_name, wbody=wbody, hbody=hbody, wscrew=wscrew, dscrew=dscrew, wshaft=wshaft, dshaft=dshaft, pinxoffset=pinxoffset,pinyoffset=pinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, R_POW=R_POW, specialtags=[], add_description=add_description, name_additions=[], screwzpos=screwzpos)
+    # class_name="Alps RK09Y11 Single"; add_description="http://www.alps.com/prod/info/E/HTML/Potentiometer/RotaryPotentiometers/RK09Y11/RK09Y11_list.html"
+    # pins = 3; rmx=5.0; rmy=2.5; ddrill=1.0; wbody=5.4; hbody=9.5; height3d = 6.25+0.25+4.85; screwzpos = 6.25+0.25; wscrew=5; dscrew=7
+    # wshaft=12-wscrew; dshaft=5; pinxoffset=3.45; pinyoffset=(hbody-2*rmy)/2.0
+    # makePotentiometerHorizontal(lib_name=lib_name, class_name=class_name, wbody=wbody, hbody=hbody, wscrew=wscrew, dscrew=dscrew, wshaft=wshaft, dshaft=dshaft, pinxoffset=pinxoffset,pinyoffset=pinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, R_POW=R_POW, specialtags=[], add_description=add_description, name_additions=[], screwzpos=screwzpos)
 
     class_name="Bourns 3339S"; add_description='http://www.bourns.com/docs/Product-Datasheets/3339.pdf'
     pins = 3; rmx=-2.54; rmy=2.54; ddrill=0.8; wbody=5.97; hbody=8.13; dbody=0; height3d = 9.53; screwzpos = 5.54; wscrew=8-5.97; dscrew=7.62
