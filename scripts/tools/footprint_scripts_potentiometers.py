@@ -125,17 +125,19 @@ def makePotentiometerHorizontal(class_name="", wbody=0, hbody=0, dscrew=0, style
         padpos.append([8, -2*rmx, rmy, ddrill, padx, pady])
         padpos.append([7, -2*rmx, 2 * rmy, ddrill, padx, pady])
 
+    mp_name = global_config.get_pad_name(GC.PadName.MECHANICAL)
+
     # add mounting holes to list of pads
     if mh_count == 1:
-        padpos.append(['', mh_xoffset, -mh_yoffset, mh_ddrill, 2 * mh_ddrill, 2 * mh_ddrill])
+        padpos.append([mp_name, mh_xoffset, -mh_yoffset, mh_ddrill, 2 * mh_ddrill, 2 * mh_ddrill])
     if mh_count == 2:
-        padpos.append(['', mh_xoffset, -mh_yoffset, mh_ddrill, 2 * mh_ddrill, 2 * mh_ddrill])
-        padpos.append(['', mh_xoffset - mh_rmx, -mh_yoffset + mh_rmy, mh_ddrill, 2 * mh_ddrill, 2 * mh_ddrill])
+        padpos.append([mp_name, mh_xoffset, -mh_yoffset, mh_ddrill, 2 * mh_ddrill, 2 * mh_ddrill])
+        padpos.append([mp_name, mh_xoffset - mh_rmx, -mh_yoffset + mh_rmy, mh_ddrill, 2 * mh_ddrill, 2 * mh_ddrill])
     if mh_count == 4:
-        padpos.append(['', mh_xoffset, -mh_yoffset, mh_ddrill, 2 * mh_ddrill, 2 * mh_ddrill])
-        padpos.append(['', mh_xoffset - mh_rmx, -mh_yoffset + mh_rmy, mh_ddrill, 2 * mh_ddrill, 2 * mh_ddrill])
-        padpos.append(['', mh_xoffset - mh_rmx, -mh_yoffset, mh_ddrill, 2 * mh_ddrill, 2 * mh_ddrill])
-        padpos.append(['', mh_xoffset, -mh_yoffset + mh_rmy, mh_ddrill, 2 * mh_ddrill, 2 * mh_ddrill])
+        padpos.append([mp_name, mh_xoffset, -mh_yoffset, mh_ddrill, 2 * mh_ddrill, 2 * mh_ddrill])
+        padpos.append([mp_name, mh_xoffset - mh_rmx, -mh_yoffset + mh_rmy, mh_ddrill, 2 * mh_ddrill, 2 * mh_ddrill])
+        padpos.append([mp_name, mh_xoffset - mh_rmx, -mh_yoffset, mh_ddrill, 2 * mh_ddrill, 2 * mh_ddrill])
+        padpos.append([mp_name, mh_xoffset, -mh_yoffset + mh_rmy, mh_ddrill, 2 * mh_ddrill, 2 * mh_ddrill])
 
     lbody_fab = -(wbody - pinxoffset) # left side of body
     tbody_fab = -pinyoffset # top of body
@@ -378,7 +380,7 @@ def makePotentiometerVertical(class_name, wbody, hbody, screwstyle="none", style
     if SMD_pads:
         padtype = Pad.TYPE_SMT
         padstyle = Pad.SHAPE_ROUNDRECT
-    mhtype = Pad.TYPE_NPTH
+    mhtype = Pad.TYPE_THT
     mhstyle = Pad.SHAPE_CIRCLE
     if mh_smd:
         mhtype = Pad.TYPE_SMT
@@ -427,16 +429,18 @@ def makePotentiometerVertical(class_name, wbody, hbody, screwstyle="none", style
         mhpadsizex = mh_padsize[0]
         mhpadsizey = mh_padsize[1]
 
+    mp_name = global_config.get_pad_name(GC.PadName.MECHANICAL)
+
     if mh_count == 1:
-        padpos.append(['', mh_xoffset, -mh_yoffset, mh_ddrill, mhpadsizex, mhpadsizey, mhtype, mhstyle])
+        padpos.append(["", mh_xoffset, -mh_yoffset, mh_ddrill, mhpadsizex, mhpadsizey, mhtype, mhstyle])
     if mh_count == 2:
-        padpos.append(['', mh_xoffset, -mh_yoffset, mh_ddrill, mhpadsizex, mhpadsizey, mhtype, mhstyle])
-        padpos.append(['', mh_xoffset - mh_rmx, -mh_yoffset + mh_rmy, mh_ddrill, mhpadsizex, mhpadsizey, mhtype, mhstyle])
+        padpos.append([mp_name, mh_xoffset, -mh_yoffset, mh_ddrill, mhpadsizex, mhpadsizey, mhtype, mhstyle])
+        padpos.append([mp_name, mh_xoffset - mh_rmx, -mh_yoffset + mh_rmy, mh_ddrill, mhpadsizex, mhpadsizey, mhtype, mhstyle])
     if mh_count == 4:
-        padpos.append(['', mh_xoffset, -mh_yoffset, mh_ddrill, mhpadsizex, mhpadsizey, mhtype, mhstyle])
-        padpos.append(['', mh_xoffset - mh_rmx, -mh_yoffset + mh_rmy, mh_ddrill, mhpadsizex, mhpadsizey, mhtype, mhstyle])
-        padpos.append(['', mh_xoffset - mh_rmx, -mh_yoffset, mh_ddrill, mhpadsizex, mhpadsizey, mhtype, mhstyle])
-        padpos.append(['', mh_xoffset, -mh_yoffset + mh_rmy, mh_ddrill, mhpadsizex, mhpadsizey, mhtype, mhstyle])
+        padpos.append([mp_name, mh_xoffset, -mh_yoffset, mh_ddrill, mhpadsizex, mhpadsizey, mhtype, mhstyle])
+        padpos.append([mp_name, mh_xoffset - mh_rmx, -mh_yoffset + mh_rmy, mh_ddrill, mhpadsizex, mhpadsizey, mhtype, mhstyle])
+        padpos.append([mp_name, mh_xoffset - mh_rmx, -mh_yoffset, mh_ddrill, mhpadsizex, mhpadsizey, mhtype, mhstyle])
+        padpos.append([mp_name, mh_xoffset, -mh_yoffset + mh_rmy, mh_ddrill, mhpadsizex, mhpadsizey, mhtype, mhstyle])
 
     lbody_fab = pinxoffset # why does the X offset of the pin set the body's left side location?!?!?!
     tbody_fab = -pinyoffset
@@ -447,7 +451,7 @@ def makePotentiometerVertical(class_name, wbody, hbody, screwstyle="none", style
     ctbody_fab = tbody_fab + c_offsety
 
     if c_ddrill > 0 and shaft_hole == True:
-        padpos.append(['', clbody_fab, ctbody_fab, c_ddrill, c_ddrill, c_ddrill, mhtype, mhstyle])
+        padpos.append(['', clbody_fab, ctbody_fab, c_ddrill, c_ddrill, c_ddrill, Pad.TYPE_NPTH, mhstyle])
 
     lbody_slk = lbody_fab - slk_offset
     tbody_slk = tbody_fab - slk_offset
