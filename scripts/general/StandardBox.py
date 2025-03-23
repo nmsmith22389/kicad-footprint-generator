@@ -17,11 +17,10 @@
 # This module Create a standard box in various layers including a pin 1 marker tap or chamfer
 #
 from KicadModTree import *
-from KicadModTree.PolygonPoints import *
 from KicadModTree.nodes.Node import Node
 from KicadModTree.nodes.base.Line import Line
 from KicadModTree.nodes.base.Text import Text
-from kilibs.geom import Vector2D
+from kilibs.geom import PolygonPoints, Vector2D
 
 from scripts.tools.drawing_tools import *
 from scripts.tools.drawing_tools_fab import draw_chamfer_rect_fab

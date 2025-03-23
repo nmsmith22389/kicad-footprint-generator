@@ -15,7 +15,7 @@
 
 import pytest
 
-from kilibs.geom.geometric_util import geometricArc, geometricLine
+from kilibs.geom import geometricArc, geometricLine
 from kilibs.test_utils.geom_test import vector_approx_equal
 
 # Useful arcs for tests (don't have to use these)

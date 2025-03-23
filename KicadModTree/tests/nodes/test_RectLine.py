@@ -1,8 +1,8 @@
 import pytest
 
-from KicadModTree import Line, RectLine, Vector2D
+from KicadModTree import Line, RectLine
 from KicadModTree.tests.test_utils import custom_assertions as CA
-from kilibs.geom.geometric_util import geometricLine
+from kilibs.geom import geometricLine, Vector2D
 
 
 @pytest.mark.parametrize(

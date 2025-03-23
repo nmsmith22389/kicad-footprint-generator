@@ -18,14 +18,12 @@
 # from KicadModTree.nodes.base import *
 from __future__ import annotations
 
-from KicadModTree.PolygonPoints import *
-from kilibs.geom import Vector2D
+from kilibs.geom import Vector2D, geometricArc, geometricLine, PolygonPoints
 from KicadModTree.nodes.Node import Node
 from KicadModTree.nodes.base.Arc import Arc
 from KicadModTree.nodes.base.PolygonArc import PolygonArc
-from KicadModTree.nodes.base.Line import Line, geometricLine
+from KicadModTree.nodes.base.Line import Line
 from KicadModTree.nodes.base.Group import Group
-from kilibs.geom.geometric_util import geometricArc
 
 from collections import deque
 from enum import Enum

@@ -16,7 +16,7 @@
 import typing
 
 from KicadModTree.nodes.Node import Node
-from KicadModTree.PolygonPoints import PolygonPoints
+from kilibs.geom import PolygonPoints
 
 
 class PadConnection(Node):

@@ -4,8 +4,7 @@ from dataclasses import dataclass
 from typing import Union, Callable, Any
 from .ast_evaluator import ASTevaluator
 
-from kilibs.geom import Vector2D, Rectangle
-from kilibs.geom.geometric_util import geometricCircle
+from kilibs.geom import geometricCircle, Rectangle, Vector2D
 
 
 RECT = 'rect'

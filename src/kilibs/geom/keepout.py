@@ -1,13 +1,14 @@
 from typing import List, Optional, Callable, TypeAlias
 from abc import ABC, abstractmethod
 
-from kilibs.geom.geometric_util import (
+from kilibs.geom import (
+    BoundingBox,
     geometricLine,
     geometricCircle,
     geometricArc,
-    BaseNodeIntersection,
+    Vector2D,
 )
-from kilibs.geom import Vector2D, BoundingBox
+from kilibs.geom.geometric_util import BaseNodeIntersection
 
 
 class Keepout(ABC):

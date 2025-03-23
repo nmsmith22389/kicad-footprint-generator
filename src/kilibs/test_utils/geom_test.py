@@ -1,5 +1,4 @@
-from kilibs.geom.geometric_util import geometricLine, geometricCircle, geometricArc
-from kilibs.geom import Vector2D
+from kilibs.geom import geometricLine, geometricCircle, geometricArc, Vector2D
 import pytest
 
 

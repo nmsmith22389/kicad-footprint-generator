@@ -14,9 +14,13 @@
 # (C) 2016-2018 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 
 import math
-from typing import List
+from typing import List, TYPE_CHECKING
 
-from kilibs.geom import Vector2D
+from kilibs.geom.vector import Vector2D
+
+# Break circular import between BBox and geometric primitives
+if TYPE_CHECKING:
+    from kilibs.geom.bounding_box import BoundingBox
 
 
 def isGeometricPrimitive(obj):
@@ -305,6 +309,14 @@ class geometricCircle():
         # and start point set to 0 deg (polar)
         arc = geometricArc(center=self.center_pos, start=self.center_pos + Vector2D(0, self.radius), angle=360)
         return arc.cut(*other)
+
+    @property
+    def bounding_box(self) -> "BoundingBox":
+        from kilibs.geom import BoundingBox
+        return BoundingBox(
+            Vector2D(self.center_pos.x - self.radius, self.center_pos.y - self.radius),
+            Vector2D(self.center_pos.x + self.radius, self.center_pos.y + self.radius),
+        )
 
     def __iter__(self):
         yield self.center_pos

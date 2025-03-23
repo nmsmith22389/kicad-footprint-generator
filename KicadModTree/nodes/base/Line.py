@@ -15,7 +15,7 @@
 
 from kilibs.geom import Vector2D
 from KicadModTree.nodes.Node import Node
-from kilibs.geom.geometric_util import geometricLine, BaseNodeIntersection
+from kilibs.geom.geometric_util import geometricLine
 
 
 class Line(Node, geometricLine):

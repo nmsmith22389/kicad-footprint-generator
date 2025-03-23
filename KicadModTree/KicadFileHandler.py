@@ -18,12 +18,12 @@ import re
 from pathlib import Path
 from typing import Optional, List
 
+from kilibs.geom import PolygonPoints
 from KicadModTree.FileHandler import FileHandler
 from KicadModTree.util.kicad_util import SexprSerializer
 from KicadModTree.util.kicad_util import *
 from KicadModTree.util.corner_selection import CornerSelection
 # TODO: why .KicadModTree is not enough?
-from KicadModTree.PolygonPoints import PolygonPoints
 from KicadModTree.nodes.base.EmbeddedFonts import EmbeddedFonts
 from KicadModTree.nodes.base.Group import Group
 from KicadModTree.nodes.base.Rect import Rect

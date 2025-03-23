@@ -10,4 +10,8 @@ from .direction import Direction
 
 from .rectangle import Rectangle
 
+from .geometric_util import geometricLine, geometricCircle, geometricArc
+
 from .bounding_box import BoundingBox
+
+from .polygon_points import PolygonPoints

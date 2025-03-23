@@ -8,7 +8,7 @@ Exhaustive tests are high maintenance, and regressions will normally be much mor
 visual diffs of the generated graphics than by delicate stacks of numerical tests.
 """
 
-from kilibs.geom.geometric_util import geometricLine,geometricCircle
+from kilibs.geom import geometricLine, geometricCircle
 from kilibs.geom.keepout import KeepoutRect, KeepoutRound
 from scripts.tools.drawing_tools import applyKeepouts
 

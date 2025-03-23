@@ -13,8 +13,7 @@
 #
 # (C) 2018 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 
-from KicadModTree.PolygonPoints import *
-from kilibs.geom import Vector2D
+from kilibs.geom import PolygonPoints
 from KicadModTree.nodes.Node import Node
 
 from typing import Optional

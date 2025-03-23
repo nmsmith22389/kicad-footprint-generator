@@ -6,7 +6,7 @@ import yaml
 from copy import deepcopy
 
 from KicadModTree import *  # NOQA
-from kilibs.geom.geometric_util import geometricLine, geometricCircle
+from kilibs.geom import geometricLine, geometricCircle
 from scripts.tools.drawing_tools import round_to_grid
 from scripts.tools.footprint_text_fields import addTextFields
 from scripts.tools.global_config_files import global_config as GC

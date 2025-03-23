@@ -1,5 +1,4 @@
-from KicadModTree import Vector2D
-from kilibs.geom.geometric_util import geometricLine
+from kilibs.geom.geometric_util import geometricLine, Vector2D
 
 """
 Collection of useful testing predicates for the KicadModTree library.

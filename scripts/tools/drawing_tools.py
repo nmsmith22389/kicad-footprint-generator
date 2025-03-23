@@ -13,7 +13,14 @@ from KicadModTree import (
     PolygonLine,
     RectLine,
 )
-from kilibs.geom import Direction, Vector2D, BoundingBox
+from kilibs.geom import (
+    Direction,
+    Vector2D,
+    BoundingBox,
+    geometricCircle,
+    geometricArc,
+    geometricLine,
+)
 from kilibs.geom.rounding import (
     round_to_grid,
     round_to_grid_down,
@@ -21,11 +28,6 @@ from kilibs.geom.rounding import (
     round_to_grid_nearest,
 )
 from kilibs.geom.keepout import Keepout, KeepoutRect, KeepoutRound
-from kilibs.geom.geometric_util import (
-    geometricCircle,
-    geometricArc,
-    geometricLine,
-)
 from scripts.tools.footprint_global_properties import *
 from scripts.tools.nodes import pin1_arrow
 

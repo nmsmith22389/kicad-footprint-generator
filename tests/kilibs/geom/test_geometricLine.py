@@ -4,7 +4,7 @@ of geom_test utility functions.
 """
 
 import kilibs.test_utils.geom_test as geom_test
-from kilibs.geom.geometric_util import geometricLine
+from kilibs.geom import geometricLine
 
 
 def test_geom_line():

@@ -13,9 +13,8 @@
 #
 # (C) 2016 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 
-from kilibs.geom import Vector2D
+from kilibs.geom import Vector2D, geometricArc
 from KicadModTree.nodes.Node import Node
-from kilibs.geom.geometric_util import geometricArc
 
 
 class Arc(Node, geometricArc):

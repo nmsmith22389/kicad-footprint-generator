@@ -17,8 +17,7 @@ from __future__ import division
 
 from copy import copy
 from KicadModTree.nodes.Node import Node
-from kilibs.geom.geometric_util import geometricArc, geometricLine
-from kilibs.geom import Vector2D
+from kilibs.geom import geometricArc, geometricLine, Vector2D
 from KicadModTree.nodes.base.Pad import Pad
 from KicadModTree.nodes.base.Circle import Circle
 from KicadModTree.nodes.base.Arc import Arc
