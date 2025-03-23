@@ -266,23 +266,3 @@ TQFP_176:
   pitch: 0.5
   num_pins_x: 44
   num_pins_y: 44
-
-TQFP_176:
-  size_source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
-  body_size_x:
-    nominal: 24
-  body_size_y:
-    nominal: 24
-  overall_size_x:
-    nominal: 26
-  overall_size_y:
-    nominal: 26
-  lead_width:
-    minimum: 0.17
-    maximum: 0.27
-  lead_len:
-    minimum: 0.45
-    maximum: 0.75
-  pitch: 0.5
-  num_pins_x: 44
-  num_pins_y: 44
