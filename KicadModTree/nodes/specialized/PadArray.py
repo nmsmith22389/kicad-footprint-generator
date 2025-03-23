@@ -390,6 +390,12 @@ class PadArray(Node):
     def getVirtualChilds(self):
         return self.virtual_childs
 
+    def get_pad_with_name(self, number: str | int):
+        for pad in self.virtual_childs:
+            if pad.number == number:
+                return pad
+        return None
+
 
 def get_pad_radius_from_arrays(pad_arrays: List[PadArray]) -> float:
     pad_radius = 0.0

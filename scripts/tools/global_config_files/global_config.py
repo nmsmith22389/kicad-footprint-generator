@@ -204,7 +204,7 @@ class GlobalConfig:
         return min(self.fab_bevel_size_absolute, overall_size * self.fab_bevel_size_relative)
 
     @property
-    def get_fab_bevel(self) -> ChamferSizeHandler:
+    def fab_bevel(self) -> ChamferSizeHandler:
         """
         Get the default fab bevel size handler
         """

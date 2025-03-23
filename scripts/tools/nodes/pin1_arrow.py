@@ -34,8 +34,8 @@ class Pin1SilkscreenArrow(Node):
 
         :param pos: The position of the arrow
         :param angle: The angle of the arrow - this is the direction the arrow points in - 0 is rightwards
-        :param size: size of the triangle
-        :param length: length of the triangle
+        :param size: size of the triangle (node to node, line width is not included)
+        :param length: length of the triangle (node to node)
         :param layer: layer of the arrow
         :param line_width_mm: line width of the arrow (can be 0)
         """
