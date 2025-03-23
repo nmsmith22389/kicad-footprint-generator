@@ -517,7 +517,7 @@ if __name__ == "__main__":
 
     # This has to be an absolute path because we run the generate.sh scripts
     # from their own directories.
-    output_dir = Path(args.output_dir).absolute()
+    output_dir = Path(args.output_dir).absolute() if args.output_dir else None
 
     generator = GeneratorRunner(root_dir, output_dir)
 
