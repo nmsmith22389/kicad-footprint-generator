@@ -1464,3 +1464,16 @@ LFBGA-153_11.5x13mm_Layout14x14_P0.5mm:
   layout_x: 14
   layout_y: 14
   row_skips: [[], [], [], [5, 6, 7, 8, 9, 10, 11], [4, 11], [4, 6, 7, 8, 9, 11], [4, 6, 7, 8, 9, 11], [4, 6, 7, 8, 9, 11], [4, 6, 7, 8, 9, 11], [4, 11], [4, 5, 6, 7, 8, 9, 10, 11], [], [], []]
+
+BGA-24_6x8mm_Layout_5x5_P1.0mm:
+  description: "BGA-24"
+  size_source: "https://www.issi.com/WW/pdf/66-67WVO32M8DALL-BLL.pdf#page=32"
+  body_size_x: 6
+  body_size_y: 8
+  overall_height: 1.2
+  pitch: 1.0
+  ball_type: 'collapsible'
+  ball_diameter: 0.4
+  layout_x: 5
+  layout_y: 5
+  row_skips: [[1], [], [], [], []]
