@@ -515,7 +515,11 @@ if __name__ == "__main__":
 
     root_dir = os.path.dirname(os.path.abspath(__file__))
 
-    generator = GeneratorRunner(root_dir, args.output_dir)
+    # This has to be an absolute path because we run the generate.sh scripts
+    # from their own directories.
+    output_dir = Path(args.output_dir).absolute()
+
+    generator = GeneratorRunner(root_dir, output_dir)
 
     generator.separate_outputs = args.separate_outputs
 
