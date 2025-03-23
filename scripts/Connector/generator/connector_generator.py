@@ -81,7 +81,7 @@ def _get_dim(name: str, spec: dict, dim: str, base: float=0.0, mult: float=1):
 
 def _round_to(val, base, direction: str=None):
     if (isinstance(val, Iterable)):
-        return [round_to(v, base, direction) for v in val]
+        return [_round_to(v, base, direction) for v in val]
     if (direction in ['+', 1]):
         return math.ceil(val / base) * base
     elif (direction in ['-', -1]):
