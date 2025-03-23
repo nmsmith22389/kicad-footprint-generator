@@ -1,7 +1,6 @@
 defaults:
   library: 'Test'
   clean_silk: True
-  #silk_pad_clearance: 0 #0.075
   parameters:
     num_pos_div_10: $(num_pos // 10) # comment after eval statement is ignored
     num_pos_mod_10: $(num_pos % 10)
@@ -129,12 +128,10 @@ Polygon_Test1:
   fp_suffix: '_Test_Circle'     # optional: defaults to ''
   source: '~'
   tags: 'test'
-  silk_pad_clearance: 0.1 #0.075
   positions: 5
   pad_pitch: 1.0
   pads:
     size: [0.75, 2.25]
-    radius_ratio: 0.5
   body_size:
     x_offset: 5.0
     y: 5.0
@@ -148,7 +145,6 @@ Polygon_Test1:
     pad:
       shape: 'rect'
       size: [0.85, 2.5]
-      radius_ratio: 0.5
 
 Polygon_Test:
   inherit: 'defaults'
@@ -159,8 +155,6 @@ Polygon_Test:
   tags: 'test'
   parameters:
     point5: 0.5
-  silk_fab_offset: 0.25
-  silk_pad_clearance: 0.1 #0.075
   positions: 5
   pad_pitch: 1.0
   pads:

@@ -21,8 +21,6 @@ Authors:
     - ... (not complete)
 """
 
-import sys
-import os
 import warnings
 import re
 
@@ -30,11 +28,12 @@ import argparse
 import yaml
 import math
 from fnmatch import fnmatch
-from typing import Iterable, Callable
+from typing import Any, Iterable, Callable
 from dataclasses import dataclass, asdict
 
 from KicadModTree import *  # NOQA
 from kilibs.util import dict_tools
+from kilibs.geom import BoundingBox
 from scripts.tools.footprint_text_fields import addTextFields
 from scripts.tools.declarative_def_tools import utils, rule_area_properties, shape_properties
 from scripts.tools.declarative_def_tools.utils import DotDict
@@ -111,8 +110,10 @@ class PadProperties():
         self.type = self._get_pad_type(pad_spec)
         self.layers = self._get_pad_layers(pad_spec, default_paste)
         self.rotation = self._get_pad_rotation(pad_spec)
+
         if (not self.size or self.size.is_nullvec()):
             self.size = Vector2D(self.drill, self.drill)
+
         if (self.paste and self.type != Pad.TYPE_NPTH and 'F.Paste' not in self.layers):
             self.layers.append('F.Paste')
 
@@ -197,6 +198,7 @@ class FPconfiguration():
     rule_areas: list = None
     silk_fab_offset : float = 0.0
     silk_line_width : float = 0.0
+    clean_silk: bool = True
     pin1_pos: str = 'top'
     pin1_body_chamfer: float = 0.0
     pin1_marker_shape: str = None
@@ -212,14 +214,13 @@ class FPconfiguration():
         global_config: GC.GlobalConfig,
         positions: int,
         idx: int,
-        configuration: dict,
     ):
         self.library_name = spec["library"]
         self.num_pos = positions
         # create the evaluator
         self.asteval = ASTevaluator(protected=True)
         # parse parameters first
-        params = spec.get('parameters', {})
+        params: dict[str, Any] = spec.get('parameters', {})
         params.update(num_pos=positions, idx=idx)
         self.parameters = self.asteval.eval(params, allow_self_ref=True, symbols=spec, allow_nested=True) # TODO: allow_nested should allow arbitrary eorder evaluations
         # parse spec but skip back the following sections as they may need t, b, l, r, etc.
@@ -228,8 +229,10 @@ class FPconfiguration():
         self.pad_pitch = self.spec["pad_pitch"]
         ## row pitch defines if it is a single or dual row connector
         self.row_pitch = self.spec.get("row_pitch", None)
+
         if (self.row_pitch is None):
             self.row_pitch = 0.0
+
         self.num_rows = 2 if self.row_pitch else 1
 
         ## row_x_offset defines if it has staggered pins or not
@@ -237,11 +240,14 @@ class FPconfiguration():
 
         ## collection information about an eventual gap in the pin layout
         gap = self.spec.get("gap", {}).get(positions, [0, 0])
+
         if (isinstance(gap, dict)):
             gap = [ gap.get("position", 0), gap.get("size", 1) ]
         elif (isinstance(gap, int)):
             gap = [gap, 1]
+
         self.gap_pos, self.gap_size = gap
+
         if (self.gap_pos and self.gap_size):
             self.skipped_positions = [self.gap_pos + n for n in range(self.gap_size)]
         else:
@@ -281,16 +287,16 @@ class FPconfiguration():
         ## Get rule areas
         self.rule_areas = rule_area_properties.RuleAreaProperties.from_standard_yaml(self.spec)
 
-        ## get silk-fab-offset (may be overriden in the YAML)
-        self.silk_fab_offset = self.spec.get('silk_fab_offset', configuration['silk_fab_offset'])
-        self.silk_line_width = configuration['silk_line_width']
+        self.clean_silk = self.spec.get('clean_silk', True)
 
         ## get information about 1st pin
         first_pin_spec = self.spec.get("first_pin", {})
         self.pin1_pos = first_pin_spec.get("position", "top")
-        if (self.pin1_pos not in ["top", "bottom"]):
+
+        if self.pin1_pos not in ["top", "bottom"]:
             raise ValueError("'first_pin.position' must be one of 'top', 'bottom'")
-        if (pad1_spec := first_pin_spec.get("pad", None)):
+
+        if pad1_spec := first_pin_spec.get("pad", None):
             self.pad1_properties = PadProperties(pad1_spec, global_config)
 
         ## body chamfer at pin1 corner
@@ -314,7 +320,6 @@ class FPconfiguration():
                                         self.body_edges[self.pin1_pos]) + pin1_offset * Vector2D(1, self.scale_y)
         self.draw_pin1_marker_on_fab = first_pin_spec.get("marker", { }).get("fab", True)
 
-        ## exclude_from_bom and exclude_from_pos
         self.exclude_from_bom = self.spec.get("exclude_from_bom", False)
         self.exclude_from_pos = self.spec.get("exclude_from_pos", False)
 
@@ -358,7 +363,13 @@ def parse_body_shape(spec, *, side: str, eval_expr: Callable):
     return [_ for _ in reversed(nodes)] if reverse else nodes
 
 
-def generate_one_footprint(global_config: GC.GlobalConfig, positions: int, *, spec, configuration: dict, idx=0):
+def generate_one_footprint(
+    global_config: GC.GlobalConfig,
+    positions: int,
+    spec: dict,
+    configuration: dict,
+    idx=0,
+):
     # deprecate doc_parameters
     if ("doc_parameters" in spec):
         if ("parameters" in spec):
@@ -375,7 +386,6 @@ def generate_one_footprint(global_config: GC.GlobalConfig, positions: int, *, sp
         global_config=global_config,
         positions=positions,
         idx=idx,
-        configuration=configuration,
     )
 
     # for format strings both, all fields of the spec and all fields of spec.parameters are accessible
@@ -414,11 +424,11 @@ def generate_one_footprint(global_config: GC.GlobalConfig, positions: int, *, sp
     description = fp_config.spec.description.format(**format_dict)
     if (src := fp_config.spec.get("source", None)):
         description += " (source: " + src + ")"
-    kicad_mod.setDescription(description)
+    kicad_mod.description = description
 
     ## set the FP tags
     tags = fp_config.spec.tags.format(**format_dict)
-    kicad_mod.setTags(tags)
+    kicad_mod.tags = tags
 
     ## create extra pads/drills
     for mp_name, pad_spec in fp_config.spec.get("mount_pads", DotDict()).items():
@@ -437,7 +447,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, positions: int, *, sp
     ## draw body outline on F.Fab
     fab_outline = PolygonLine(nodes=body_shape_nodes,
                               layer="F.Fab",
-                              width=configuration['fab_line_width'])
+                              width=global_config.fab_line_width)
     kicad_mod.append(fab_outline)
 
     ## draw additional shapes onto F.Fab
@@ -445,7 +455,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, positions: int, *, sp
         if (name in ["left", "right", "top", "bottom"]):
             continue
         poly_nodes = parse_body_shape(fp_config.spec.get("body_shape", {}), side=name, eval_expr=fp_config.expr_eval)
-        kicad_mod.append(PolygonLine(nodes=poly_nodes, layer="F.Fab", width=configuration["fab_line_width"]))
+        kicad_mod.append(PolygonLine(nodes=poly_nodes, layer="F.Fab", width=global_config.fab_line_width))
 
     ## create Pads
     start_pos_x = -0.5 * (fp_config.pad_pos_range.x + fp_config.row_x_offset) + fp_config.pad_center_offset.x
@@ -477,8 +487,8 @@ def generate_one_footprint(global_config: GC.GlobalConfig, positions: int, *, sp
     ## draw silk
     ## duplicate the body shape contour onto F.SilkS with the silk_fab_offset
     silk_outline = fab_outline.duplicate(layer="F.SilkS",
-                                         offset=fp_config.silk_fab_offset,
-                                         width=fp_config.silk_line_width)
+                                         offset=global_config.silk_fab_offset,
+                                         width=global_config.silk_line_width)
     kicad_mod.append(silk_outline)
 
     ## pin 1 indicator on Silk
@@ -486,36 +496,41 @@ def generate_one_footprint(global_config: GC.GlobalConfig, positions: int, *, sp
                                  radius=fp_config.pin1_marker_size,
                                  shape=fp_config.pin1_marker_shape,
                                  flip_marker=fp_config.scale_y < 0,
-                                 width=fp_config.silk_line_width,
-                                 offset=fp_config.silk_fab_offset + 2 * fp_config.silk_line_width)
+                                 width=global_config.silk_line_width,
+                                 offset=global_config.silk_fab_offset + 2 * global_config.silk_line_width)
     if (pin1_silk is not None):
         kicad_mod.append(pin1_silk)
 
     if (fp_config.draw_pin1_marker_on_fab):
-        pin1_fab_pnts = make_pin1_fab_marker_points(fp_config, configuration)
+        pin1_fab_pnts = make_pin1_fab_marker_points(fp_config)
         # close polygon only if the closing line is not contained in the F.Fab outline
         if (not check_if_points_on_lines(kicad_mod, [pin1_fab_pnts[n] for n in [0, -1]], layer='F.Fab')):
             pin1_fab_pnts.append(pin1_fab_pnts[0])
-        pin1_fab = PolygonLine(nodes=pin1_fab_pnts, layer='F.Fab', width=configuration['fab_line_width'])
+        pin1_fab = PolygonLine(nodes=pin1_fab_pnts, layer='F.Fab', width=global_config.fab_line_width)
         kicad_mod.append(pin1_fab)
 
     # calculate CourtYard
-    cy_offset = fp_config.spec.get("courtyard_offset", configuration["courtyard_offset"]["connector"])
-    courtyard = calculate_courtyard(bbox, offsets= cy_offset, configuration=configuration)
+    cy_offset = global_config.get_courtyard_offset(GC.GlobalConfig.CourtyardType.CONNECTOR)
+    courtyard = calculate_courtyard(bbox, offsets= cy_offset, global_config=global_config)
     # append CourtYard rectangle
-    kicad_mod.append(RectLine(**courtyard, layer='F.CrtYd', width=configuration['courtyard_line_width']))
+    kicad_mod.append(RectLine(**courtyard, layer='F.CrtYd', width=global_config.courtyard_line_width))
 
     ## clean silk
-    if (fp_config.spec.get("clean_silk", True)):
-        silk_pad_clearance = fp_config.spec.get("silk_pad_clearance", configuration["silk_pad_clearance"])
-        kicad_mod.cleanSilkMaskOverlap(side="F", silk_pad_clearance=silk_pad_clearance, silk_line_width=fp_config.silk_line_width)
+    if fp_config.clean_silk:
+        kicad_mod.cleanSilkMaskOverlap(
+            side="F",
+            silk_pad_clearance=global_config.silk_pad_clearance,
+            silk_line_width=global_config.silk_line_width,
+        )
 
     ######################### Text Fields ###############################
-    addTextFields(kicad_mod=kicad_mod, configuration=configuration, body_edges=fp_config.body_edges,
-                  courtyard={
-                      "left": courtyard["start"].x, "right": courtyard["end"].x,
-                      "top": courtyard["start"].y, "bottom": courtyard["end"].y,
-                  }, fp_name=fp_name, text_y_inside_position=0)
+    courtyard_box = BoundingBox(courtyard["start"], courtyard["end"])
+    body_box = BoundingBox(
+        Vector2D(fp_config.body_edges["left"], fp_config.body_edges["top"]),
+        Vector2D(fp_config.body_edges["right"], fp_config.body_edges["bottom"]),
+    )
+    addTextFields(kicad_mod=kicad_mod, configuration=global_config, body_edges=body_box,
+                  courtyard=courtyard_box, fp_name=fp_name, text_y_inside_position=0)
 
     lib_name = configuration['lib_name_specific_function_format_string'].format(category=fp_config.library_name)
 
@@ -527,7 +542,11 @@ def generate_one_footprint(global_config: GC.GlobalConfig, positions: int, *, sp
     lib.save(kicad_mod)
 
 
-def calculate_courtyard(bbox, offsets, configuration):
+def calculate_courtyard(bbox, offsets, global_config: GC.GlobalConfig):
+
+    offset = global_config.get_courtyard_offset(GC.GlobalConfig.CourtyardType.CONNECTOR)
+    grid = global_config.courtyard_grid
+
     # TODO: calculate courtyard from all nodes on specific layers
     courtyard = {"start": bbox["min"], "end": bbox["max"]}
     ## get CourtYard offset specification
@@ -536,17 +555,17 @@ def calculate_courtyard(bbox, offsets, configuration):
     elif isinstance(offsets, dict):
         cy_off = { k: Vector2D(0, 0) for k in ["start", "end"] }
         for e in ["start", "end"]:
-            cy_off[e].x = offsets.get('x', configuration["courtyard_offset"]["connector"])
-            cy_off[e].y = offsets.get('y', configuration["courtyard_offset"]["connector"])
+            cy_off[e].x = offsets.get('x', offset)
+            cy_off[e].y = offsets.get('y', offset)
         cy_off["start"].x = offsets.get("left", cy_off["start"].x)
         cy_off["start"].y = offsets.get("top", cy_off["start"].y)
         cy_off["end"].x = offsets.get("right", cy_off["end"].x)
         cy_off["end"].y = offsets.get("bottom", cy_off["end"].y)
     else:
         raise ValueError("invalid courtyard specification, must be a float or a dictionary")
-    courtyard["start"] = Vector2D(*[_round_to(v - off, configuration["courtyard_grid"], '-')
+    courtyard["start"] = Vector2D(*[_round_to(v - off, grid, '-')
                                     for v, off in zip(courtyard["start"], cy_off["start"])])
-    courtyard["end"] = Vector2D(*[_round_to(v + off, configuration["courtyard_grid"], '+')
+    courtyard["end"] = Vector2D(*[_round_to(v + off, grid, '+')
                                   for v, off in zip(courtyard["end"], cy_off["end"])])
     return courtyard
 
@@ -584,14 +603,14 @@ def check_if_points_on_lines(kicad_mod, points, layer):
     return False
 
 
-def make_pin1_fab_marker_points(fp_config: FPconfiguration, configuration: dict) -> list:
+def make_pin1_fab_marker_points(fp_config: FPconfiguration) -> list:
     # pin 1 on Fab is a triangle
 
     # location of the tip in x
     tip_x = -0.5 * (fp_config.pad_pos_range.x + fp_config.row_x_offset) + fp_config.pad_center_offset.x
 
     # width and height of the triangle
-    dx = min(fp_config.pad_pitch, configuration['fab_pin1_marker_length'])
+    dx = min(fp_config.pad_pitch, global_config.fab_pin1_marker_length)
     dy = 0.8 * fp_config.scale_y * dx
 
     base_y = fp_config.body_edges[fp_config.pin1_pos]
@@ -715,16 +734,11 @@ if __name__ == "__main__":
     parser.add_argument('yaml_file', type=str, help='name of the configuration parameter file')
     args = parser.parse_args()
 
-    with open(args.global_config, 'r') as config_stream:
-        try:
-            configuration = yaml.safe_load(config_stream)
-            global_config = GC.GlobalConfig(configuration)
-        except yaml.YAMLError as exc:
-            print(exc)
+    global_config = GC.GlobalConfig.load_from_file(args.global_config)
 
     with open(args.series_config, 'r') as config_stream:
         try:
-            configuration.update(yaml.safe_load(config_stream))
+            configuration = yaml.safe_load(config_stream)
         except yaml.YAMLError as exc:
             print(exc)
 

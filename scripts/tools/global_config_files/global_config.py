@@ -87,6 +87,8 @@ class GlobalConfig:
     fab_line_width: float
     fab_bevel_size_absolute: float
     fab_bevel_size_relative: float
+    fab_pin1_marker_length: float
+    """The length of a fab-layer pin1 chevron marker (in mm)"""
 
     edge_cuts_line_width: float
 
@@ -126,6 +128,7 @@ class GlobalConfig:
         self.fab_line_width = float(data["fab_line_width"])
         self.fab_bevel_size_absolute = float(data["fab_bevel_size_absolute"])
         self.fab_bevel_size_relative = float(data["fab_bevel_size_relative"])
+        self.fab_pin1_marker_length = float(data["fab_pin1_marker_length"])
 
         self.edge_cuts_line_width = float(data["edge_cuts_line_width"])
 
