@@ -22,7 +22,7 @@ Efinix_WLCSP-64_3.5353x3.3753mm_Layout8x8_P0.4mm:
   manufacturer: "Efinix"
   device_type: "WLCSP"
   description: "Efinix WLCSP, NSMD pad definition Page 60"
-  size_source: "https://www.efinixinc.com/docs/titanium-packaging-ug-v5.2.pdf"
+  size_source: "https://www.efinixinc.com/docs/titanium-packaging-ug-v5.2.pdf#page=9"
   additional_tags:
      - "64-ball"
      - "WLCSP"

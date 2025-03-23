@@ -66,42 +66,34 @@ class BGAGenerator(FootprintGenerator):
         self.generateBGAFootprint(self.configuration, device_params, pkg_id, header_info)
 
     def generateBGAFootprint(self, config, fpParams, fpId, header_info):
-        createFp = False
-
         device_config = BGAConfiguration(fpParams)
-
-        # use IPC-derived pad size if possible, then fall back to user-defined pads
-        if "ball_type" in fpParams and "ball_diameter" in fpParams:
-            try:
-                padSize = configuration[fpParams["ball_type"]]
-                try:
-                    padSize = configuration[fpParams["ball_type"]][fpParams["ball_diameter"]]["max"]
-                    fpParams["pad_size"] = [padSize, padSize]
-                    createFp = True
-                except KeyError as e:
-                    print(f"{e}mm is an invalid ball diameter. See ipc_7351b_bga_land_patterns.yaml for valid values. "
-                          "No footprint generated.")
-            except KeyError as e:
-                print(f"{e} is an invalid ball type. See ipc_7351b_bga_land_patterns.yaml for valid values. "
-                      "No footprint generated.")
-
-            if "pad_diameter" in fpParams:
-                print("Pad size is being derived using IPC rules even though pad diameter is defined.")
-        elif "ball_type" in fpParams and "ball_diameter" not in fpParams:
-            raise KeyError("Ball diameter is missing. No footprint generated.")
-        elif "ball_diameter" in fpParams and "ball_type" not in fpParams:
-            raise KeyError("Ball type is missing. No footprint generated.")
-        elif "pad_diameter" in fpParams:
-            fpParams["pad_size"] = [fpParams["pad_diameter"], fpParams["pad_diameter"]]
+ 
+        if "pad_diameter" in fpParams:
+            pad_diameter = fpParams["pad_diameter"]
             logging.info(f"Pad size of {fpId} is set by the footprint definition. "
                   "This should only be done for manufacturer-specific footprints.")
-            createFp = True
+        elif "ball_type" in fpParams and "ball_diameter" in fpParams:
+            ball_diameter = fpParams["ball_diameter"]
+            ball_type = fpParams["ball_type"]
+            # IPC-7352 Table 3-11 Median (Nominal) Material Level B
+            if ball_type == "collapsible":
+                pad_diameter = round(0.8*ball_diameter, 2)
+            elif ball_type == "non-collapsible":
+                pad_diameter = round(1.1*ball_diameter, 2)
+            else:
+                raise KeyError(f"{fpId}: '{ball_type}' is an invalid ball type. Only "
+                      "'collapsible' and 'non-collapsible' are accepted values. "
+                      "Aborting.")
+        elif "ball_type" in fpParams and "ball_diameter" not in fpParams:
+            raise KeyError(f"{fpId}: Ball diameter is missing. Aborting.")
+        elif "ball_diameter" in fpParams and "ball_type" not in fpParams:
+            raise KeyError(f"{fpId}: Ball type is missing. Aborting.")
         else:
-            print("The config file must include 'ball_type' and 'ball_diameter' or 'pad_diameter'. "
-                  "No footprint generated.")
+            raise KeyError(f"{fpId}: The config file must include 'ball_type' and "
+                           "'ball_diameter' or 'pad_diameter'. Aborting.")
 
-        if createFp:
-            self._createFootprintVariant(config, device_config, fpId, header_info)
+        fpParams["pad_size"] = [pad_diameter, pad_diameter]
+        self._createFootprintVariant(config, device_config, fpId, header_info)
 
     def compute_stagger(self, lParams):
         staggered = lParams.get('staggered')
@@ -523,8 +515,6 @@ if __name__ == '__main__':
                         default='../../tools/global_config_files/config_KLCv3.0.yaml')
     parser.add_argument('--naming_config', type=str, nargs='?',
                          help='the config file defining footprint naming.', default='../package_config_KLCv3.yaml')
-    parser.add_argument('--ipc_doc', type=str, nargs='?', help='IPC definition document',
-                        default='ipc_7351b_bga_land_patterns.yaml')
 
     args = FootprintGenerator.add_standard_arguments(parser)
 
@@ -535,12 +525,6 @@ if __name__ == '__main__':
             print(exc)
 
     with open(args.naming_config, 'r') as config_stream:
-        try:
-            configuration.update(yaml.safe_load(config_stream))
-        except yaml.YAMLError as exc:
-            print(exc)
-
-    with open(args.ipc_doc, 'r') as config_stream:
         try:
             configuration.update(yaml.safe_load(config_stream))
         except yaml.YAMLError as exc:
