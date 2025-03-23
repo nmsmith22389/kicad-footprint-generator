@@ -6,28 +6,18 @@ Fiducial marking generator
 @author Bence Csókás
 """
 
-import sys
-import os
-
 import argparse
 from dataclasses import dataclass, asdict
-from fnmatch import fnmatch
-import yaml
 
-sys.path.append(os.path.join(sys.path[0], "..", "..")) # load kicad_mod path
-sys.path.append(os.path.join(sys.path[0], "..", "..", "src")) # load kilibs path
-
+from kilibs.geom import geometricCircle
 from KicadModTree import *  # NOQA
-from scripts.tools.declarative_def_tools.utils import DotDict
 from scripts.tools.footprint_generator import FootprintGenerator
 from scripts.tools.footprint_text_fields import addTextFields
 from scripts.tools.global_config_files.global_config import GlobalConfig
 
 class FiducialGenerator(FootprintGenerator):
-    def __init__(self, configuration: dict, **kwargs):
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
-
-        self.configuration = configuration
 
     @dataclass
     class FPconfiguration():
@@ -99,25 +89,22 @@ class FiducialGenerator(FootprintGenerator):
 
         # set the FP description
         description = fp_config.getDescription()
-        kicad_mod.setDescription(description)
-        kicad_mod.setTags("fiducial")
+        kicad_mod.description = description
+        kicad_mod.tags = ["fiducial"]
+
+        center = Vector2D(0, 0)
 
         # draw body outline on F.Fab
         radius = fp_config.mask_diameter / 2
-        fab_outline = Circle(center=[0, 0], radius=radius, layer='F.Fab',
+        fab_outline = Circle(center=center, radius=radius, layer='F.Fab',
                      width=self.global_config.fab_line_width)
         kicad_mod.append(fab_outline)
-        body_edges = DotDict({
-            "left":   -radius,
-            "right":   radius,
-            "top":    -radius,
-            "bottom":  radius,
-        })
+        body_edges = geometricCircle(center=center, radius=radius).bounding_box
 
         # create Pad
         pad_radius = fp_config.marking_width / 2
         pad_clearance = radius - pad_radius
-        pad = Pad(type=Pad.TYPE_SMT, shape=Pad.SHAPE_CIRCLE, at=[0,0],
+        pad = Pad(type=Pad.TYPE_SMT, shape=Pad.SHAPE_CIRCLE, at=center,
               layers=['F.Cu', 'F.Mask'],
               size=fp_config.marking_width, solder_mask_margin=pad_clearance)
         kicad_mod.append(pad)
@@ -137,19 +124,14 @@ class FiducialGenerator(FootprintGenerator):
             kicad_mod.append(r)
 
         # calculate CourtYard
-        radius += fp_config.courtyard_offset
-        cy_outline = Circle(center=[0, 0], radius=radius, layer='F.CrtYd',
+        cy_radius = radius + fp_config.courtyard_offset
+        cy_outline = Circle(center=[0, 0], radius=cy_radius, layer='F.CrtYd',
                     width=self.global_config.courtyard_line_width)
         kicad_mod.append(cy_outline)
-        courtyard = DotDict({
-            "left":   -radius,
-            "right":   radius,
-            "top":    -radius,
-            "bottom":  radius,
-        })
+        courtyard = geometricCircle(center=center, radius=cy_radius).bounding_box
 
         # text fields
-        addTextFields(kicad_mod, self.configuration, body_edges, courtyard, fp_name)
+        addTextFields(kicad_mod, self.global_config, body_edges, courtyard, fp_name)
 
         lib_name = fp_config.library_name
         self.write_footprint(kicad_mod, lib_name)
@@ -166,11 +148,4 @@ if __name__ == "__main__":
     )
     args = FootprintGenerator.add_standard_arguments(parser)
 
-    with open(args.global_config_file, 'r') as config_stream:
-        try:
-            configuration = yaml.safe_load(config_stream)
-        except yaml.YAMLError as exc:
-            print(exc)
-
-
-    FootprintGenerator.run_on_files(FiducialGenerator, args, configuration=configuration)
+    FootprintGenerator.run_on_files(FiducialGenerator, args)
