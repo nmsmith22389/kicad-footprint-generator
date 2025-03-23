@@ -370,13 +370,6 @@ def generate_one_footprint(
     configuration: dict,
     idx=0,
 ):
-    # deprecate doc_parameters
-    if ("doc_parameters" in spec):
-        if ("parameters" in spec):
-            raise KeyError("key 'parameters' replaces deprecated key 'doc_parameters' im YAML specification; your specification contains both")
-        warnings.warn("\nUsage of 'doc_parameters' in YAML specification is deprecated; use 'parameters' instead.\nAlso replace 'eval(...)' in all YAMLs by '$(...)'", category=DeprecationWarning)
-        spec["parameters"] = spec.pop("doc_parameters")
-
     for f in ["description", "tags", "fp_name", ]:
         if (f not in spec):
             raise ValueError(f"missing mandatory field '{f}' in footprint specification")
