@@ -13,12 +13,23 @@ class BoundingBox:
     def __init__(
         self, min_pt: Optional[Vector2D] = None, max_pt: Optional[Vector2D] = None
     ):
+        """
+        Initialize a bounding box with the given min and max points. These don't have
+        to be in any particular order.
+
+        Passing None for both min and max will create a "null" bounding box that
+        can't be used for much until more points are included.
+        """
 
         if (min_pt is None) != (max_pt is None):
             raise ValueError("Must provide both min and max or neither")
 
-        self.min = min_pt
-        self.max = max_pt
+        if min_pt is not None and max_pt is not None:
+            self.min = Vector2D(min(min_pt.x, max_pt.x), min(min_pt.y, max_pt.y))
+            self.max = Vector2D(max(min_pt.x, max_pt.x), max(min_pt.y, max_pt.y))
+        else:
+            self.min = None
+            self.max = None
 
     def include_point(self, point: Vector2D):
 
