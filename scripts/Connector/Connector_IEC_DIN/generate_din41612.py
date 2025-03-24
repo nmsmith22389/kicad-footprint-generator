@@ -818,9 +818,10 @@ def build_din41612_connector(series, direction, pins, rows, extra_args={}):
     )
     config["footprint_name"] = footprint_name
     mod = Footprint(footprint_name, FootprintType.THT)
+    description_rows = f"{len(rows)} rows" if len(rows) > 1 else "1 row"
     mod.setDescription(
         f"DIN41612 connector, type {series}, {direction}, "
-        f"{len(config['series_rows'])} rows "
+        f"{description_rows} "
         f"{config['row_pins']} pins wide, "
         f"{' '.join(datasheets)}"
     )
