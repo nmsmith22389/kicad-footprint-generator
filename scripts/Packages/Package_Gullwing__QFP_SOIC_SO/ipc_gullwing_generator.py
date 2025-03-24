@@ -945,8 +945,8 @@ class GullwingGenerator(FootprintGenerator):
 
         # ######################### Text Fields ###############################
 
-        addTextFields(kicad_mod=kicad_mod, configuration=configuration, body_edges=body_edge,
-                      courtyard={'top': courtyard_bbox.top, 'bottom': courtyard_bbox.bottom},
+        addTextFields(kicad_mod=kicad_mod, configuration=self.global_config,
+                      body_edges=body_edge, courtyard=courtyard_bbox,
                       fp_name=fp_name, text_y_inside_position='center')
 
         # ######################### Additional drawings #######################
@@ -985,16 +985,9 @@ if __name__ == "__main__":
 
     ipc_doc_file = args.ipc_doc
 
-    # still need this for now (for the references)
-    with open(args.global_config_file, 'r') as config_stream:
-        try:
-            configuration = yaml.safe_load(config_stream)
-        except yaml.YAMLError as exc:
-            print(exc)
-
     with open(args.series_config, 'r') as config_stream:
         try:
-            configuration.update(yaml.safe_load(config_stream))
+            configuration = yaml.safe_load(config_stream)
         except yaml.YAMLError as exc:
             print(exc)
 
