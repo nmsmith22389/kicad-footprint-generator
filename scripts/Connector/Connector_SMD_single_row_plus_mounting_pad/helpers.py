@@ -1,7 +1,7 @@
 
 from KicadModTree import *
 
-def parseAdditionalDrawing(footprint, drawing_definition, configuration, series_definition, body_edges, pincount):
+def parseAdditionalDrawing(footprint, drawing_definition, global_config, series_definition, body_edges, pincount):
     ref = drawing_definition.get('reference_point', ['center','center']).copy()
 
     if ref[0] == 'left':
@@ -45,12 +45,11 @@ def parseAdditionalDrawing(footprint, drawing_definition, configuration, series_
     if 'thickness' in drawing_definition:
         thickness = drawing_definition['thickness']
     elif 'Fab' in layer:
-        thickness = configuration['fab_line_width']
+        thickness = global_config.fab_line_width
     elif 'SilkS' in layer:
-        thickness = configuration['silk_line_width']
+        thickness = global_config.silk_line_width
     else:
-        print('drawing not on silk or fab but no line thickness given.')
-        return
+        raise ValueError(f"Drawing not on silk or fab but no line thickness given (got: {layer}).")
 
     if 'repeat' in drawing_definition:
         repeat_def = drawing_definition['repeat']
