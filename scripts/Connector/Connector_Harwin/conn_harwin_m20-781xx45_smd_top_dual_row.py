@@ -17,6 +17,9 @@ import yaml
 from KicadModTree import *
 from scripts.tools.footprint_text_fields import addTextFields
 from scripts.tools.global_config_files import global_config as GC
+from scripts.tools.drawing_tools import getStandardSilkArrowSize, SilkArrowSize
+from scripts.tools.nodes import pin1_arrow
+
 
 series = 'M20'
 series_long = 'Female Vertical Surface Mount Double Row 2.54mm (0.1 inch) Pitch PCB Connector'
@@ -42,9 +45,10 @@ def generate_footprint(global_config: GC.GlobalConfig, pins, configuration):
     # handle arguments
     orientation_str = configuration['orientation_options'][orientation]
     footprint_name = configuration['fp_name_format_string'].format(man=manufacturer,
-        series=series,
+        series="",
         mpn=mpn, num_rows=number_of_rows, pins_per_row=pins_per_row, mounting_pad = "",
         pitch=pitch, orientation=orientation_str)
+    footprint_name = footprint_name.replace("__", "_")
 
     print(footprint_name)
     kicad_mod = Footprint(footprint_name, FootprintType.SMD)
@@ -91,14 +95,17 @@ def generate_footprint(global_config: GC.GlobalConfig, pins, configuration):
     #
     # Add pads
     #
-    kicad_mod.append(PadArray(start=[-2.91, -B/2], initial=1,
+    left_pads = PadArray(start=[-2.91, -B/2], initial=1,
         pincount=pins, increment=1,  y_spacing=pitch, size=pad_size,
         type=Pad.TYPE_SMT, shape=Pad.SHAPE_ROUNDRECT, layers=Pad.LAYERS_SMT,
-        round_radius_handler=global_config.roundrect_radius_handler))
-    kicad_mod.append(PadArray(start=[2.91, -B/2], initial=pins+1,
+        round_radius_handler=global_config.roundrect_radius_handler)
+    right_pads = PadArray(start=[2.91, -B/2], initial=pins+1,
         pincount=pins, increment=1,  y_spacing=pitch, size=pad_size,
         type=Pad.TYPE_SMT, shape=Pad.SHAPE_ROUNDRECT, layers=Pad.LAYERS_SMT,
-        round_radius_handler=global_config.roundrect_radius_handler))
+        round_radius_handler=global_config.roundrect_radius_handler)
+
+    kicad_mod.append(left_pads)
+    kicad_mod.append(right_pads)
 
     ######################## Fabrication Layer ###########################
     main_body_poly= [
@@ -138,6 +145,25 @@ def generate_footprint(global_config: GC.GlobalConfig, pins, configuration):
     kicad_mod.append(PolygonLine(polygon=poly_s_bot,
                                  width=configuration['silk_line_width'], layer="F.SilkS"))
 
+
+    silk_arrow_size, silk_arrow_length = getStandardSilkArrowSize(
+        SilkArrowSize.LARGE, global_config.silk_line_width
+    )
+    apex_pos = Vector2D(
+        body_edge['left'] - global_config.silk_fab_offset - silk_arrow_size,
+        left_pads.get_pad_with_name(1).at[1] - pad_size[1] / 2 - global_config.silk_pad_offset
+    )
+
+    arrow = pin1_arrow.Pin1SilkscreenArrow(
+        apex_position=apex_pos,
+        angle=pin1_arrow.Direction.SOUTH,
+        size=silk_arrow_size,
+        length=silk_arrow_length,
+        layer="F.SilkS",
+        line_width_mm=global_config.silk_line_width,
+    )
+    kicad_mod.append(arrow)
+
     ######################## CrtYd Layer ###########################
     CrtYd_offset = configuration['courtyard_offset']['connector']
     CrtYd_grid = configuration['courtyard_grid']
@@ -158,7 +184,8 @@ def generate_footprint(global_config: GC.GlobalConfig, pins, configuration):
     cy2 = body_edge['bottom'] + configuration['courtyard_offset']['connector'] + 0.2
 
     addTextFields(kicad_mod=kicad_mod, configuration=configuration, body_edges=body_edge,
-        courtyard={'top':cy1, 'bottom':cy2}, fp_name=footprint_name, text_y_inside_position='top')
+        courtyard={'top':cy1, 'bottom':cy2}, fp_name=footprint_name, text_y_inside_position='center',
+        allow_rotation=True)
 
     ##################### Write to File and 3D ############################
     model3d_path_prefix = configuration.get('3d_model_prefix',global_config.model_3d_prefix)
