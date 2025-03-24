@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 
 from KicadModTree import *
+from KicadModTree.nodes.specialized.ChamferedRect import (
+    ChamferRect,
+    ChamferSizeHandler,
+    CornerSelection,
+)
 from scripts.tools.global_config_files import global_config as GC
 
 global_config = GC.DefaultGlobalConfig()
@@ -50,30 +55,36 @@ def plcc4(args):
 
     wCrtYd = 0.05
     wFab = 0.1
-    wSilkS = 0.12
-    crtYd = 0.25
-    silkClearance = 0.2
 
     xCenter = 0.0
     xPadRight = padXSpacing / 2
     xFabRight = pkgWidth / 2
-    xSilkRight = xPadRight + padWidth / 2 + silkClearance
-    xRightCrtYd = xSilkRight + crtYd
+    xPadRightCorner = xPadRight + padWidth / 2
+    xSilkRight = xPadRightCorner + global_config.silk_pad_offset
+    xSilkWidth = 2 * xSilkRight
+    xRightCrtYd = xPadRightCorner + global_config.get_courtyard_offset(
+        global_config.CourtyardType.DEFAULT
+    )
 
     xLeftCrtYd = -xRightCrtYd
-    xSilkLeft = -xSilkRight
     xPadLeft = -xPadRight
     xFabLeft = -xFabRight
     xChamfer = xFabLeft + 1.0
 
     yCenter = 0.0
     yPadBottom = padYSpacing / 2
+    yPadBotomCorner = yPadBottom + padHeight / 2
     yFabBottom = pkgHeight / 2
-    ySilkBottom = max(yFabBottom + 0.1, yPadBottom + padHeight / 2 + silkClearance)
-    yBottomCrtYd = ySilkBottom + crtYd
+    ySilkBottom = max(
+        yFabBottom + global_config.silk_fab_offset,
+        yPadBotomCorner + global_config.silk_pad_offset,
+    )
+    ySilkHeight = 2 * ySilkBottom
+    yBottomCrtYd = yFabBottom + global_config.get_courtyard_offset(
+        global_config.CourtyardType.DEFAULT
+    )
 
     yTopCrtYd = -yBottomCrtYd
-    ySilkTop = -ySilkBottom
     yFabTop = -yFabBottom
     yPadTop = -yPadBottom
     yChamfer = yFabTop + 1
@@ -139,22 +150,13 @@ def plcc4(args):
     f.append(Circle(center=[xCenter, yCenter], radius=r, layer="F.Fab", width=wFab))
 
     f.append(
-        PolygonLine(
-            polygon=[
-                [xSilkLeft, yPadTop],
-                [xSilkLeft, ySilkTop],
-                [xSilkRight, ySilkTop],
-            ],
+        ChamferRect(
+            size=Vector2D(xSilkWidth, ySilkHeight),
+            chamfer=ChamferSizeHandler(chamfer_exact=0.3),
+            corners=CornerSelection({CornerSelection.TOP_LEFT: True}),
             layer="F.SilkS",
-            width=wSilkS,
-        )
-    )
-    f.append(
-        Line(
-            start=[xSilkLeft, ySilkBottom],
-            end=[xSilkRight, ySilkBottom],
-            layer="F.SilkS",
-            width=wSilkS,
+            width=global_config.silk_line_width,
+            fill=False,
         )
     )
 
