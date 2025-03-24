@@ -192,8 +192,8 @@ class PLCCGenerator(FootprintGenerator):
         # Pull out the old-style raw data
         device_params = device_config.spec_dictionary
 
-        fab_line_width = self.configuration.get('fab_line_width', 0.1)
-        silk_line_width = self.configuration.get('silk_line_width', 0.12)
+        fab_line_width = self.global_config.fab_line_width
+        silk_line_width = self.global_config.silk_line_width
 
         lib_name = self.configuration['lib_name_format_string'].format(category=category)
 
@@ -342,14 +342,13 @@ class PLCCGenerator(FootprintGenerator):
 
         # ############################ SilkS ##################################
 
-        silk_pad_offset = configuration['silk_pad_clearance'] + silk_line_width / 2
-        silk_offset = configuration['silk_fab_offset']
+        silk_offset = self.global_config.silk_fab_offset
 
         sx1 = -(device_params['pitch']*(device_params['num_pins_x']-1)/2.0
-                + pad_width/2.0 + silk_pad_offset)
+                + pad_width/2.0 + self.global_config.silk_pad_offset)
 
         sy1 = -(device_params['pitch']*(device_params['num_pins_y']-1)/2.0
-                + pad_width/2.0 + silk_pad_offset)
+                + pad_width/2.0 + self.global_config.silk_pad_offset)
 
         poly_silk = [
             {'x': sx1, 'y': body_edge['top']-silk_offset},
@@ -383,8 +382,9 @@ class PLCCGenerator(FootprintGenerator):
 
         # # ######################## Fabrication Layer ###########################
 
-        fab_bevel_size = min(configuration['fab_bevel_size_absolute'],
-                             configuration['fab_bevel_size_relative']*min(size_x, size_y))
+        fab_bevel_size = self.global_config.fab_bevel.getChamferSize(
+            min(size_x, size_y)
+        )
         fab_bevel_y = fab_bevel_size / math.sqrt(2)
         poly_fab = [
             {'x': p1_x, 'y': body_edge['top']+fab_bevel_y},
@@ -407,7 +407,7 @@ class PLCCGenerator(FootprintGenerator):
         # # ############################ CrtYd ##################################
 
         off = ipc_data_set['courtyard']
-        grid = configuration['courtyard_grid']
+        grid = self.global_config.courtyard_grid
         off_45 = off*math.tan(math.radians(45.0/2))
 
         cy1 = roundToBase(bounding_box['top']-off, grid)
@@ -435,13 +435,13 @@ class PLCCGenerator(FootprintGenerator):
         ]
 
         kicad_mod.append(PolygonLine(polygon=crty_poly_tl,
-                                     layer='F.CrtYd', width=configuration['courtyard_line_width'],
+                                     layer='F.CrtYd', width=self.global_config.courtyard_line_width,
                                      x_mirror=0))
         kicad_mod.append(PolygonLine(polygon=crty_poly_tl,
-                                     layer='F.CrtYd', width=configuration['courtyard_line_width'],
+                                     layer='F.CrtYd', width=self.global_config.courtyard_line_width,
                                      y_mirror=0))
         kicad_mod.append(PolygonLine(polygon=crty_poly_tl,
-                                     layer='F.CrtYd', width=configuration['courtyard_line_width'],
+                                     layer='F.CrtYd', width=self.global_config.courtyard_line_width,
                                      x_mirror=0, y_mirror=0))
 
         crty_poly_tl_ch = [
@@ -455,11 +455,11 @@ class PLCCGenerator(FootprintGenerator):
             {'x': cx3, 'y': 0}
         ]
         kicad_mod.append(PolygonLine(polygon=crty_poly_tl_ch,
-                                     layer='F.CrtYd', width=configuration['courtyard_line_width']))
+                                     layer='F.CrtYd', width=self.global_config.courtyard_line_width))
 
         # ######################### Text Fields ###############################
 
-        addTextFields(kicad_mod=kicad_mod, configuration=configuration, body_edges=body_edge,
+        addTextFields(kicad_mod=kicad_mod, configuration=self.global_config, body_edges=body_edge,
                       courtyard={'top': cy1, 'bottom': -cy1}, fp_name=fp_name, text_y_inside_position='center')
 
         # #################### Output and 3d model ############################
@@ -485,15 +485,9 @@ if __name__ == "__main__":
 
     ipc_doc_file = args.ipc_doc
 
-    with open(args.global_config_file, 'r') as config_stream:
-        try:
-            configuration = yaml.safe_load(config_stream)
-        except yaml.YAMLError as exc:
-            print(exc)
-
     with open(args.series_config, 'r') as config_stream:
         try:
-            configuration.update(yaml.safe_load(config_stream))
+            configuration = yaml.safe_load(config_stream)
         except yaml.YAMLError as exc:
             print(exc)
 
