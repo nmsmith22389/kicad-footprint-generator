@@ -19,6 +19,7 @@ def draw_chamfer_rect_fab(size: Vector2D, global_config: GlobalConfig) -> Chamfe
     """
 
     return ChamferRect(
+        at=Vector2D(0, 0),
         size=size,
         chamfer=global_config.fab_bevel,
         corners=CornerSelection({CornerSelection.TOP_LEFT: True}),

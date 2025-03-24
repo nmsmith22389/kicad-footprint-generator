@@ -33,6 +33,7 @@ def test_ChamferRect(size, layer, width, chamfer, corners, fill, exp_points):
     chamfer_handler = ChamferSizeHandler(chamfer_exact=chamfer)
 
     r = ChamferRect(
+        at=Vector2D(0, 0),
         size=size,
         layer=layer,
         width=width,

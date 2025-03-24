@@ -2,9 +2,14 @@
 
 import argparse
 import yaml
+
+from kilibs.geom import Direction
 from KicadModTree import *
+from KicadModTree.nodes.specialized import ChamferedRect
 from scripts.tools.footprint_text_fields import addTextFields
 from scripts.tools.global_config_files import global_config as GC
+from scripts.tools.drawing_tools_silk import draw_silk_triangle_for_pad, SilkArrowSize
+
 
 series = 'M20-890'
 series_long = 'Male Horizontal Surface Mount Single Row 2.54mm (0.1 inch) Pitch PCB Connector'
@@ -21,7 +26,7 @@ def roundToBase(value, base):
         return value
     return round(value/base) * base
 
-def gen_fab_pins(origx, origy, kicad_mod, configuration):
+def gen_fab_pins(origx, origy, kicad_mod, global_config: GC.GlobalConfig):
     poly_f_back = [
         {'x': origx+3.8, 'y': origy-0.64/2},
         {'x': origx-0.9, 'y': origy-0.64/2},
@@ -35,33 +40,51 @@ def gen_fab_pins(origx, origy, kicad_mod, configuration):
         {'x': origx+6.3, 'y': origy+0.64/2},
     ]
     kicad_mod.append(PolygonLine(polygon=poly_f_back,
-                                 width=configuration['fab_line_width'], layer="F.Fab"))
+                                 width=global_config.fab_line_width, layer="F.Fab"))
     kicad_mod.append(PolygonLine(polygon=poly_f_front,
-                                 width=configuration['fab_line_width'], layer="F.Fab"))
+                                 width=global_config.fab_line_width, layer="F.Fab"))
 
-def gen_silk_pins(origx, origy, kicad_mod, configuration, fill):
+def gen_silk_pins(origx, origy, kicad_mod, global_config: GC.GlobalConfig, fill: bool):
+
     poly_s_back1 = [
-        {'x': origx+2.5/2+configuration['silk_pad_clearance']+configuration['silk_line_width'], 'y': origy-0.64/2-configuration['silk_line_width']},
-        {'x': origx+3.8-configuration['silk_line_width'], 'y': origy-0.64/2-configuration['silk_line_width']},
+        {'x': origx+2.5/2+global_config.silk_pad_clearance+global_config.silk_line_width, 'y': origy-0.64/2-global_config.silk_line_width},
+        {'x': origx+3.8-global_config.silk_line_width, 'y': origy-0.64/2-global_config.silk_line_width},
     ]
     poly_s_back2 = [
-        {'x': origx+2.5/2+configuration['silk_pad_clearance']+configuration['silk_line_width'], 'y': origy+0.64/2+configuration['silk_line_width']},
-        {'x': origx+3.8-configuration['silk_line_width'], 'y': origy+0.64/2+configuration['silk_line_width']},
+        {'x': origx+2.5/2+global_config.silk_pad_clearance+global_config.silk_line_width, 'y': origy+0.64/2+global_config.silk_line_width},
+        {'x': origx+3.8-global_config.silk_line_width, 'y': origy+0.64/2+global_config.silk_line_width},
     ]
     poly_s_front = [
-        {'x': origx+6.3+configuration['silk_line_width'], 'y': origy-0.64/2-configuration['silk_line_width']},
-        {'x': origx+12.3+configuration['silk_line_width'], 'y': origy-0.64/2-configuration['silk_line_width']},
-        {'x': origx+12.3+configuration['silk_line_width'], 'y': origy+0.64/2+configuration['silk_line_width']},
-        {'x': origx+6.3+configuration['silk_line_width'], 'y': origy+0.64/2+configuration['silk_line_width']},
+        {'x': origx+6.3+global_config.silk_line_width, 'y': origy-0.64/2-global_config.silk_line_width},
+        {'x': origx+12.3+global_config.silk_line_width, 'y': origy-0.64/2-global_config.silk_line_width},
+        {'x': origx+12.3+global_config.silk_line_width, 'y': origy+0.64/2+global_config.silk_line_width},
+        {'x': origx+6.3+global_config.silk_line_width, 'y': origy+0.64/2+global_config.silk_line_width},
     ]
     kicad_mod.append(PolygonLine(polygon=poly_s_back1,
-                                 width=configuration['silk_line_width'], layer="F.SilkS"))
+                                 width=global_config.silk_line_width, layer="F.SilkS"))
     kicad_mod.append(PolygonLine(polygon=poly_s_back2,
-                                 width=configuration['silk_line_width'], layer="F.SilkS"))
-    kicad_mod.append(PolygonLine(polygon=poly_s_front,
-                                 width=configuration['silk_line_width'], layer="F.SilkS"))
-    if fill:
-        kicad_mod.append(Pad(type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT, at=[origx+configuration['silk_line_width']+(6.3+12.3)/2, origy], size=[6, 0.64+configuration['silk_line_width']], layers=["F.SilkS"]))
+                                 width=global_config.silk_line_width, layer="F.SilkS"))
+
+    if not fill:
+        kicad_mod.append(
+            PolygonLine(
+                polygon=poly_s_front,
+                width=global_config.silk_line_width,
+                layer="F.SilkS",
+            )
+        )
+    else:
+        rect_c = Vector2D(origx+global_config.silk_line_width+(6.3+12.3)/2, origy)
+        rect_size = Vector2D(6, 0.64+global_config.silk_line_width  *2 )
+        kicad_mod.append(
+            Rect(
+                start=rect_c - rect_size / 2,
+                end=rect_c + rect_size / 2,
+                layer="F.SilkS",
+                width=global_config.silk_line_width,
+                fill=True,
+            )
+        )
 
 def gen_footprint(global_config: GC.GlobalConfig, pinnum, manpart, configuration):
     orientation_str = configuration['orientation_options']['H']
@@ -91,26 +114,34 @@ def gen_footprint(global_config: GC.GlobalConfig, pinnum, manpart, configuration
         entry='horizontal'))
 
     # Pads
-    kicad_mod.append(PadArray(start=[-6.775+padsize[0]/2, -(pitch*(pinnum-1))/2], initial=1,
+    pads = PadArray(start=[-6.775+padsize[0]/2, -(pitch*(pinnum-1))/2], initial=1,
         pincount=pinnum, increment=1,  y_spacing=pitch, size=padsize,
-        type=Pad.TYPE_SMT, shape=Pad.SHAPE_ROUNDRECT, layers=Pad.LAYERS_SMT, drill=None, round_radius_handler=global_config.roundrect_radius_handler))
+        type=Pad.TYPE_SMT, shape=Pad.SHAPE_ROUNDRECT, layers=Pad.LAYERS_SMT, drill=None,
+        round_radius_handler=global_config.roundrect_radius_handler)
+    kicad_mod.append(pads)
 
     # Fab
     for y in range(0, pinnum):
-        gen_fab_pins(-6.775+padsize[0]/2, -(pitch*(pinnum-1))/2+pitch+(y-1)*2.54, kicad_mod, configuration)
-    poly_f_body = [
-        {'x': -6.775+padsize[0]/2+3.8, 'y': -(pitch*(pinnum-1))/2-pitch-2.54/2+0.4+2.54},
-        {'x': -6.775+padsize[0]/2+3.8+0.4, 'y': -(pitch*(pinnum-1))/2-pitch-2.54/2+2.54},
-        {'x': -6.775+padsize[0]/2+6.3, 'y': -(pitch*(pinnum-1))/2-pitch-2.54/2+2.54},
-        {'x': -6.775+padsize[0]/2+6.3, 'y': -(pitch*(pinnum-1))/2-pitch-2.54/2+2.54*pinnum+2.54},
-        {'x': -6.775+padsize[0]/2+3.8, 'y': -(pitch*(pinnum-1))/2-pitch-2.54/2+2.54*pinnum+2.54},
-        {'x': -6.775+padsize[0]/2+3.8, 'y': -(pitch*(pinnum-1))/2-pitch-2.54/2+0.4+2.54},
-    ]
-    kicad_mod.append(PolygonLine(polygon=poly_f_body,
-                                 width=configuration['fab_line_width'], layer="F.Fab"))
+        gen_fab_pins(-6.775+padsize[0]/2, -(pitch*(pinnum-1))/2+pitch+(y-1)*2.54, kicad_mod, global_config)
+
+    body_c = Vector2D(-6.775 + padsize[0] / 2 + (3.8 + 6.3) / 2, 0)
+    body_size = Vector2D(6.3 - 3.8, pitch * (pinnum - 1) + 2.54)
+
+    body_rect = ChamferedRect.ChamferRect(
+        at=body_c,
+        size=body_size,
+        layer="F.Fab",
+        width=global_config.fab_line_width,
+        chamfer=global_config.fab_bevel,
+        corners=ChamferedRect.CornerSelection(
+            {ChamferedRect.CornerSelection.TOP_LEFT: True}
+        ),
+        fill=False,
+    )
+    kicad_mod.append(body_rect)
 
     # SilkS
-    silkslw = configuration['silk_line_width']
+    silkslw = global_config.silk_line_width
     s_body = [
         {'x': -6.775+padsize[0]/2+3.8-silkslw, 'y': -(pitch*(pinnum-1))/2-pitch-2.54/2-silkslw+2.54},
         {'x': -6.775+padsize[0]/2+6.3+silkslw, 'y': -(pitch*(pinnum-1))/2-pitch-2.54/2-silkslw+2.54},
@@ -119,20 +150,22 @@ def gen_footprint(global_config: GC.GlobalConfig, pinnum, manpart, configuration
         {'x': -6.775+padsize[0]/2+3.8-silkslw, 'y': -(pitch*(pinnum-1))/2-pitch-2.54/2-silkslw+2.54},
     ]
     kicad_mod.append(PolygonLine(polygon=s_body,
-                                 width=configuration['silk_line_width'], layer="F.SilkS"))
+                                 width=global_config.silk_line_width, layer="F.SilkS"))
     for y in range(0, pinnum):
-        gen_silk_pins(-6.775+padsize[0]/2, -(pitch*(pinnum-1))/2+pitch+(y-1)*2.54, kicad_mod, configuration, y==0)
-    s_pin1 = [
-        {'x': -6.775+padsize[0]/2-(2.5/2+configuration['silk_pad_clearance']+configuration['silk_line_width']), 'y': -(pitch*(pinnum-1))/2},
-        {'x': -6.775+padsize[0]/2-(2.5/2+configuration['silk_pad_clearance']+configuration['silk_line_width']), 'y': -(pitch*(pinnum-1))/2-1/2-configuration['silk_line_width']-configuration['silk_pad_clearance']},
-        {'x': -6.775+padsize[0]/2, 'y': -(pitch*(pinnum-1))/2-1/2-configuration['silk_line_width']-configuration['silk_pad_clearance']},
-    ]
-    kicad_mod.append(PolygonLine(polygon=s_pin1,
-                                 width=configuration['silk_line_width'], layer="F.SilkS"))
+        gen_silk_pins(-6.775+padsize[0]/2, -(pitch*(pinnum-1))/2+pitch+(y-1)*2.54, kicad_mod, global_config, y==0)
+
+    pin1_arrow = draw_silk_triangle_for_pad(
+        arrow_direction=Direction.SOUTH,
+        pad=pads.get_pad_with_name(1),
+        stroke_width=global_config.silk_line_width,
+        pad_silk_offset=global_config.silk_pad_offset,
+        arrow_size=SilkArrowSize.LARGE,
+    )
+    kicad_mod.append(pin1_arrow)
 
     # CrtYd
-    cy_offset = configuration['courtyard_offset']['connector']
-    cy_grid = configuration['courtyard_grid']
+    cy_offset = global_config.get_courtyard_offset(GC.GlobalConfig.CourtyardType.CONNECTOR)
+    cy_grid = global_config.courtyard_grid
     bounding_box={
         'left': -6.775+padsize[0]/2-2.5/2,
         'right': -6.775+padsize[0]/2+12.3,
@@ -151,7 +184,7 @@ def gen_footprint(global_config: GC.GlobalConfig, pinnum, manpart, configuration
         {'x': cy_left, 'y': cy_top},
     ]
     kicad_mod.append(PolygonLine(polygon=poly_cy,
-                                 layer='F.CrtYd', width=configuration['courtyard_line_width']))
+                                 layer='F.CrtYd', width=global_config.courtyard_line_width))
 
     # Text Fields
     body_edge={
@@ -160,17 +193,15 @@ def gen_footprint(global_config: GC.GlobalConfig, pinnum, manpart, configuration
         'top': -(pitch*(pinnum-1))/2-pitch-2.54/2-silkslw+2.54,
         'bottom': -(pitch*(pinnum-1))/2-pitch-2.54/2+2.54*pinnum+silkslw+2.54,
     }
-    addTextFields(kicad_mod=kicad_mod, configuration=configuration, body_edges=body_edge,
-        courtyard={'top':cy_top, 'bottom':cy_bottom}, fp_name=footprint_name, text_y_inside_position='center', allow_rotation=True)
+    addTextFields(kicad_mod=kicad_mod, configuration=global_config, body_edges=body_edge,
+        courtyard={'top':cy_top, 'bottom':cy_bottom}, fp_name=footprint_name,
+        text_y_inside_position='center', allow_rotation=True)
 
     # 3D model
-    model3d_path_prefix = configuration.get('3d_model_prefix',global_config.model_3d_prefix)
-    model3d_path_suffix = configuration.get('3d_model_suffix',global_config.model_3d_suffix)
-
     lib_name = configuration['lib_name_format_string'].format(series=series, man=manufacturer)
     model_name = '{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}{model3d_path_suffix:s}'.format(
-        model3d_path_prefix=model3d_path_prefix, lib_name=lib_name, fp_name=footprint_name,
-        model3d_path_suffix=model3d_path_suffix)
+        model3d_path_prefix=global_config.model_3d_prefix, lib_name=lib_name, fp_name=footprint_name,
+        model3d_path_suffix=global_config.model_3d_suffix)
     kicad_mod.append(Model(filename=model_name))
 
     # Output
@@ -188,18 +219,12 @@ if __name__ == "__main__":
     parser.add_argument('--series_config', type=str, nargs='?', help='the config file defining series parameters.', default='../conn_config_KLCv3.yaml')
     args = parser.parse_args()
 
-    with open(args.global_config, 'r') as config_stream:
-        try:
-            configuration = yaml.safe_load(config_stream)
-            global_config = GC.GlobalConfig(configuration)
-        except yaml.YAMLError as exc:
-            print(exc)
+    global_config = GC.GlobalConfig.load_from_file(args.global_config)
 
     with open(args.series_config, 'r') as config_stream:
         try:
-            configuration.update(yaml.safe_load(config_stream))
+            configuration = yaml.safe_load(config_stream)
         except yaml.YAMLError as exc:
             print(exc)
 
     gen_family(global_config, configuration)
-    

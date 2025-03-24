@@ -151,6 +151,7 @@ def plcc4(args):
 
     f.append(
         ChamferRect(
+            at=Vector2D(xCenter, yCenter),
             size=Vector2D(xSilkWidth, ySilkHeight),
             chamfer=ChamferSizeHandler(chamfer_exact=0.3),
             corners=CornerSelection({CornerSelection.TOP_LEFT: True}),

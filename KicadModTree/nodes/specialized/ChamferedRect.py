@@ -5,11 +5,13 @@ from KicadModTree.util.corner_selection import CornerSelection
 
 class ChamferRect(Node):
     """
-    Draws a rectangle with some number of chamfered, centered on the origin.
+    Draws a rectangle with some number of chamfered, centered on the origin by
+    default.
     """
 
     def __init__(
         self,
+        at: Vector2D,
         size: Vector2D,
         chamfer: ChamferSizeHandler,
         corners: CornerSelection,
@@ -25,6 +27,7 @@ class ChamferRect(Node):
         self.layer = layer
         self.width = width
         self.fill = fill
+        self.at = at
 
     def getVirtualChilds(self):
 
@@ -32,8 +35,8 @@ class ChamferRect(Node):
 
         pts: list[Vector2D] = []
 
-        tl = Vector2D(0, 0) - self.size / 2
-        br = Vector2D(0, 0) + self.size / 2
+        tl = Vector2D(0, 0) - self.size / 2 + self.at
+        br = Vector2D(0, 0) + self.size / 2 + self.at
 
         if self.corners.isAnySelected():
             chamfer_size: float = self.chamfer.getChamferSize(
