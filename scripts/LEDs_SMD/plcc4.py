@@ -167,40 +167,44 @@ def plcc4(args):
         Pad(
             number=pads[0],
             type=Pad.TYPE_SMT,
-            shape=Pad.SHAPE_RECT,
+            shape=Pad.SHAPE_ROUNDRECT,
             at=[xPadLeft, yPadTop],
             size=p,
             layers=Pad.LAYERS_SMT,
+            round_radius_handler=global_config.roundrect_radius_handler,
         )
     )
     f.append(
         Pad(
             number=pads[1],
             type=Pad.TYPE_SMT,
-            shape=Pad.SHAPE_RECT,
+            shape=Pad.SHAPE_ROUNDRECT,
             at=[xPadRight, yPadTop],
             size=p,
             layers=Pad.LAYERS_SMT,
+            round_radius_handler=global_config.roundrect_radius_handler,
         )
     )
     f.append(
         Pad(
             number=pads[2],
             type=Pad.TYPE_SMT,
-            shape=Pad.SHAPE_RECT,
+            shape=Pad.SHAPE_ROUNDRECT,
             at=[xPadRight, yPadBottom],
             size=p,
             layers=Pad.LAYERS_SMT,
+            round_radius_handler=global_config.roundrect_radius_handler,
         )
     )
     f.append(
         Pad(
             number=pads[3],
             type=Pad.TYPE_SMT,
-            shape=Pad.SHAPE_RECT,
+            shape=Pad.SHAPE_ROUNDRECT,
             at=[xPadLeft, yPadBottom],
             size=p,
             layers=Pad.LAYERS_SMT,
+            round_radius_handler=global_config.roundrect_radius_handler,
         )
     )
 
