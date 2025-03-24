@@ -2,6 +2,7 @@
 
 from KicadModTree import *
 from scripts.tools.global_config_files import global_config as GC
+
 global_config = GC.DefaultGlobalConfig()
 
 
@@ -25,11 +26,19 @@ def plcc4(args):
 
     f = Footprint(footprint_name, FootprintType.SMD)
     f.setDescription(desc + args["datasheet"])
-    f.setTags("LED Cree PLCC-4 "+args["tags"])
-    f.append(Model(filename=global_config.model_3d_prefix + lib_name + ".3dshapes/" + footprint_name + global_config.model_3d_suffix,
-                   at=[0.0, 0.0, 0.0],
-                   scale=[1.0, 1.0, 1.0],
-                   rotate=[0.0, 0.0, 0.0]))
+    f.setTags("LED Cree PLCC-4 " + args["tags"])
+    f.append(
+        Model(
+            filename=global_config.model_3d_prefix
+            + lib_name
+            + ".3dshapes/"
+            + footprint_name
+            + global_config.model_3d_suffix,
+            at=[0.0, 0.0, 0.0],
+            scale=[1.0, 1.0, 1.0],
+            rotate=[0.0, 0.0, 0.0],
+        )
+    )
 
     p = [padWidth, padHeight]
     r = pkgHeight * 0.4
@@ -60,8 +69,7 @@ def plcc4(args):
     yCenter = 0.0
     yPadBottom = padYSpacing / 2
     yFabBottom = pkgHeight / 2
-    ySilkBottom = max(yFabBottom + 0.1,
-                      yPadBottom + padHeight / 2 + silkClearance)
+    ySilkBottom = max(yFabBottom + 0.1, yPadBottom + padHeight / 2 + silkClearance)
     yBottomCrtYd = ySilkBottom + crtYd
 
     yTopCrtYd = -yBottomCrtYd
@@ -73,53 +81,134 @@ def plcc4(args):
     yValue = yFabBottom + 1.25
     yRef = yFabTop - 1.25
 
-    f.append(Property(name=Property.REFERENCE, text="REF**", at=[xCenter, yRef],
-                  layer="F.SilkS", size=s, thickness=t2))
-    f.append(Property(name=Property.VALUE, text=footprint_name, at=[xCenter, yValue],
-                  layer="F.Fab", size=s, thickness=t2))
-    f.append(Text(text='${REFERENCE}', at=[xCenter, yCenter],
-                  layer="F.Fab", size=sFabRef, thickness=t1))
+    f.append(
+        Property(
+            name=Property.REFERENCE,
+            text="REF**",
+            at=[xCenter, yRef],
+            layer="F.SilkS",
+            size=s,
+            thickness=t2,
+        )
+    )
+    f.append(
+        Property(
+            name=Property.VALUE,
+            text=footprint_name,
+            at=[xCenter, yValue],
+            layer="F.Fab",
+            size=s,
+            thickness=t2,
+        )
+    )
+    f.append(
+        Text(
+            text="${REFERENCE}",
+            at=[xCenter, yCenter],
+            layer="F.Fab",
+            size=sFabRef,
+            thickness=t1,
+        )
+    )
 
-    f.append(RectLine(start=[xLeftCrtYd, yTopCrtYd],
-                      end=[xRightCrtYd, yBottomCrtYd],
-                      layer="F.CrtYd", width=wCrtYd))
+    f.append(
+        RectLine(
+            start=[xLeftCrtYd, yTopCrtYd],
+            end=[xRightCrtYd, yBottomCrtYd],
+            layer="F.CrtYd",
+            width=wCrtYd,
+        )
+    )
 
-    f.append(Line(start=[xChamfer, yFabTop],
-                  end=[xFabLeft, yChamfer],
-                  layer="F.Fab", width=wFab))
-    f.append(RectLine(start=[xFabLeft, yFabTop],
-                      end=[xFabRight, yFabBottom],
-                      layer="F.Fab", width=wFab))
-    f.append(Circle(center=[xCenter, yCenter], radius=r,
-                    layer="F.Fab", width=wFab))
+    f.append(
+        Line(
+            start=[xChamfer, yFabTop],
+            end=[xFabLeft, yChamfer],
+            layer="F.Fab",
+            width=wFab,
+        )
+    )
+    f.append(
+        RectLine(
+            start=[xFabLeft, yFabTop],
+            end=[xFabRight, yFabBottom],
+            layer="F.Fab",
+            width=wFab,
+        )
+    )
+    f.append(Circle(center=[xCenter, yCenter], radius=r, layer="F.Fab", width=wFab))
 
-    f.append(PolygonLine(polygon=[[xSilkLeft, yPadTop],
-                                   [xSilkLeft, ySilkTop],
-                                   [xSilkRight, ySilkTop]],
-                         layer="F.SilkS", width=wSilkS))
-    f.append(Line(start=[xSilkLeft, ySilkBottom],
-                  end=[xSilkRight, ySilkBottom],
-                  layer="F.SilkS", width=wSilkS))
+    f.append(
+        PolygonLine(
+            polygon=[
+                [xSilkLeft, yPadTop],
+                [xSilkLeft, ySilkTop],
+                [xSilkRight, ySilkTop],
+            ],
+            layer="F.SilkS",
+            width=wSilkS,
+        )
+    )
+    f.append(
+        Line(
+            start=[xSilkLeft, ySilkBottom],
+            end=[xSilkRight, ySilkBottom],
+            layer="F.SilkS",
+            width=wSilkS,
+        )
+    )
 
     if pads_clockwise:
         pads = ["1", "2", "3", "4"]
     else:
         pads = ["1", "4", "3", "2"]
 
-    f.append(Pad(number=pads[0], type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT,
-                 at=[xPadLeft, yPadTop], size=p, layers=Pad.LAYERS_SMT))
-    f.append(Pad(number=pads[1], type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT,
-                 at=[xPadRight, yPadTop], size=p, layers=Pad.LAYERS_SMT))
-    f.append(Pad(number=pads[2], type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT,
-                 at=[xPadRight, yPadBottom], size=p, layers=Pad.LAYERS_SMT))
-    f.append(Pad(number=pads[3], type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT,
-                 at=[xPadLeft, yPadBottom], size=p, layers=Pad.LAYERS_SMT))
+    f.append(
+        Pad(
+            number=pads[0],
+            type=Pad.TYPE_SMT,
+            shape=Pad.SHAPE_RECT,
+            at=[xPadLeft, yPadTop],
+            size=p,
+            layers=Pad.LAYERS_SMT,
+        )
+    )
+    f.append(
+        Pad(
+            number=pads[1],
+            type=Pad.TYPE_SMT,
+            shape=Pad.SHAPE_RECT,
+            at=[xPadRight, yPadTop],
+            size=p,
+            layers=Pad.LAYERS_SMT,
+        )
+    )
+    f.append(
+        Pad(
+            number=pads[2],
+            type=Pad.TYPE_SMT,
+            shape=Pad.SHAPE_RECT,
+            at=[xPadRight, yPadBottom],
+            size=p,
+            layers=Pad.LAYERS_SMT,
+        )
+    )
+    f.append(
+        Pad(
+            number=pads[3],
+            type=Pad.TYPE_SMT,
+            shape=Pad.SHAPE_RECT,
+            at=[xPadLeft, yPadBottom],
+            size=p,
+            layers=Pad.LAYERS_SMT,
+        )
+    )
 
     lib = KicadPrettyLibrary(lib_name, None)
     lib.save(f)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     parser = ModArgparser(plcc4)
     # the root node of .yml files is parsed as name
     parser.add_parameter("name", type=str, required=True)

@@ -37,6 +37,7 @@ fp_format_check() {
         "$KICADMODTREE_DIR/nodes/specialized/Trapezoid.py"
         "scripts/generator.py"
         "scripts/Connector_Dsub"
+        "scripts/LEDs_SMD"
     )
 
     black --check \
