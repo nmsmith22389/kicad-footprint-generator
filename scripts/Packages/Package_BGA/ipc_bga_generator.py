@@ -22,6 +22,7 @@ from kilibs.geom import Direction, Vector2D
 from scripts.tools.nodes import pin1_arrow
 from scripts.tools.declarative_def_tools import common_metadata
 from scripts.tools.footprint_generator import FootprintGenerator
+from scripts.tools.global_config_files import global_config as GC
 
 from string import ascii_uppercase
 
@@ -67,7 +68,7 @@ class BGAGenerator(FootprintGenerator):
 
     def generateBGAFootprint(self, config, fpParams, fpId, header_info):
         device_config = BGAConfiguration(fpParams)
- 
+
         if "pad_diameter" in fpParams:
             pad_diameter = fpParams["pad_diameter"]
             logging.info(f"Pad size of {fpId} is set by the footprint definition. "
@@ -220,10 +221,9 @@ class BGAGenerator(FootprintGenerator):
         t1 = 0.15 * s1[0]
         t2 = 0.15 * s2[0]
 
-        chamfer = min(config['fab_bevel_size_absolute'], min(pkgX, pkgY) * config['fab_bevel_size_relative'])
+        chamfer = self.global_config.fab_bevel.getChamferSize(min(pkgX, pkgY))
 
-        silkOffset = config['silk_fab_offset']
-        crtYdOffset = config['courtyard_offset']['bga']
+        crtYdOffset = self.global_config.get_courtyard_offset(GC.GlobalConfig.CourtyardType.BGA)
 
         def crtYdRound(x):
             # Round away from zero for proper courtyard calculation
@@ -255,25 +255,25 @@ class BGAGenerator(FootprintGenerator):
         yRef = yTopFab - 1.0
         yValue = yBottomFab + 1.0
 
-        wFab = configuration['fab_line_width']
-        wCrtYd = configuration['courtyard_line_width']
-        wSilkS = configuration['silk_line_width']
+        wFab = self.global_config.fab_line_width
+        wCrtYd = self.global_config.courtyard_line_width
+        wSilkS = self.global_config.silk_line_width
 
         # silkOffset should comply with pad clearance as well
-        silkPadClearanceToSilkCentreline = config['silk_pad_clearance'] + wSilkS / 2.0
         yPadTopEdge = yPadTop - fpParams["pad_size"][1] / 2.0
         xPadLeftEdge = xPadLeft - fpParams["pad_size"][0] / 2.0
 
-        xSilkOffset = max(silkOffset,
-                          xLeftFab + silkPadClearanceToSilkCentreline - xPadLeftEdge)
-        ySilkOffset = max(silkOffset,
-                          yTopFab + silkPadClearanceToSilkCentreline - yPadTopEdge)
+        xSilkOffset = max(self.global_config.silk_fab_offset,
+                          xLeftFab + self.global_config.silk_pad_offset - xPadLeftEdge)
+        ySilkOffset = max(self.global_config.silk_fab_offset,
+                          yTopFab + self.global_config.silk_pad_offset - yPadTopEdge)
 
-        silkSizeX = pkgX + 2 * (xSilkOffset - silkOffset)
-        silkSizeY = pkgY + 2 * (ySilkOffset - silkOffset)
+        silkSizeX = pkgX + 2 * (xSilkOffset - self.global_config.silk_fab_offset)
+        silkSizeY = pkgY + 2 * (ySilkOffset - self.global_config.silk_fab_offset)
 
-        silkChamfer = min(config['fab_bevel_size_absolute'],
-                          min(silkSizeX, silkSizeY) * config['fab_bevel_size_relative'])
+        silkChamfer = self.global_config.fab_bevel.getChamferSize(
+            min(silkSizeX, silkSizeY)
+        )
 
         xLeftSilk = xLeftFab - xSilkOffset
         xRightSilk = xRightFab + xSilkOffset
@@ -518,15 +518,9 @@ if __name__ == '__main__':
 
     args = FootprintGenerator.add_standard_arguments(parser)
 
-    with open(args.global_config_file, 'r') as config_stream:
-        try:
-            configuration = yaml.safe_load(config_stream)
-        except yaml.YAMLError as exc:
-            print(exc)
-
     with open(args.naming_config, 'r') as config_stream:
         try:
-            configuration.update(yaml.safe_load(config_stream))
+            configuration = yaml.safe_load(config_stream)
         except yaml.YAMLError as exc:
             print(exc)
 
