@@ -760,17 +760,17 @@ class NoLeadGenerator(FootprintGenerator):
                 # top right
                 kicad_mod.append(PolygonLine(
                     polygon=poly_silk,
-                    width=configuration['silk_line_width'],
+                    width=silk_line_width_mm,
                     layer="F.SilkS", x_mirror=0))
                 # bottom left
                 kicad_mod.append(PolygonLine(
                     polygon=poly_silk,
-                    width=configuration['silk_line_width'],
+                    width=silk_line_width_mm,
                     layer="F.SilkS", y_mirror=0))
                 # bottom right
                 kicad_mod.append(PolygonLine(
                     polygon=poly_silk,
-                    width=configuration['silk_line_width'],
+                    width=silk_line_width_mm,
                     layer="F.SilkS", x_mirror=0, y_mirror=0))
 
         # # ######################## Fabrication Layer ###########################
@@ -782,7 +782,7 @@ class NoLeadGenerator(FootprintGenerator):
         # # ############################ CrtYd ##################################
 
         off = ipc_data_set['courtyard']
-        grid = configuration['courtyard_grid']
+        grid = self.global_config.courtyard_grid
 
         cy_box = courtyardFromBoundingBox(bounding_box, off, grid)
 
@@ -795,7 +795,7 @@ class NoLeadGenerator(FootprintGenerator):
                 'x': cy_box['right'],
                 'y': cy_box['bottom']
             },
-            width=configuration['courtyard_line_width'],
+            width=self.global_config.courtyard_line_width,
             layer='F.CrtYd')
         )
 
@@ -808,7 +808,8 @@ class NoLeadGenerator(FootprintGenerator):
 
         # ######################### Text Fields ###############################
 
-        addTextFields(kicad_mod=kicad_mod, configuration=configuration, body_edges=body_edge,
+        addTextFields(kicad_mod=kicad_mod, configuration=self.global_config,
+                      body_edges=body_edge,
                       courtyard={'top': cy_box['top'], 'bottom': cy_box['bottom']},
                       fp_name=fp_name, text_y_inside_position='center', allow_rotation=True)
 
@@ -835,15 +836,9 @@ if __name__ == "__main__":
 
     ipc_doc_file = args.ipc_doc
 
-    with open(args.global_config_file, 'r') as config_stream:
-        try:
-            configuration = yaml.safe_load(config_stream)
-        except yaml.YAMLError as exc:
-            print(exc)
-
     with open(args.series_config, 'r') as config_stream:
         try:
-            configuration.update(yaml.safe_load(config_stream))
+            configuration = yaml.safe_load(config_stream)
         except yaml.YAMLError as exc:
             print(exc)
 
