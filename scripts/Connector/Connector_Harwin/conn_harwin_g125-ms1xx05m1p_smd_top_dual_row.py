@@ -15,10 +15,25 @@ along with kicad-footprint-generator. If not, see < http://www.gnu.org/licenses/
 import argparse
 import yaml
 
-from KicadModTree import Pad, PadArray, Footprint, FootprintType, PolygonLine, KicadPrettyLibrary, Model
+from kilibs.geom import Direction, Vector2D
+from KicadModTree import (
+    Model,
+    Pad,
+    PadArray,
+    Footprint,
+    FootprintType,
+    PolygonLine,
+    Line,
+    KicadPrettyLibrary,
+)
 from scripts.tools.global_config_files import global_config as GC
 from scripts.tools.footprint_text_fields import addTextFields
 from scripts.tools.drawing_tools import addArcByAngles
+from scripts.tools.drawing_tools_fab import draw_pin1_chevron_on_hline
+from scripts.tools.drawing_tools_silk import (
+    draw_silk_triangle45_clear_of_fab_hline_and_pad,
+    SilkArrowSize,
+)
 
 
 series = 'Gecko'
@@ -32,7 +47,7 @@ orientation = 'V'
 pitch = 1.25
 mount_drill = 2.25
 mount_pad = 4.4
-pad_size = [0.7,2.5]
+pad_size = Vector2D(0.7,2.5)
 
 pincount_range = [6, 10, 12, 16, 20, 26, 34, 50]
 
@@ -55,10 +70,12 @@ def generate_footprint(global_config: GC.GlobalConfig, pins, configuration):
 
     print(footprint_name)
     kicad_mod = Footprint(footprint_name, FootprintType.SMD)
-    kicad_mod.setDescription("Harwin {:s}, {:s}, {:d} Pins per row ({:s}), generated with kicad-footprint-generator".format(series_long, mpn, pins_per_row, datasheet))
-    kicad_mod.setTags(configuration['keyword_fp_string'].format(series=series,
+    kicad_mod.description = "Harwin {:s}, {:s}, {:d} Pins per row ({:s}), generated with kicad-footprint-generator".format(
+        series_long, mpn, pins_per_row, datasheet
+    )
+    kicad_mod.tags = configuration['keyword_fp_string'].format(series=series,
         orientation=orientation_str, man=manufacturer,
-        entry=configuration['entry_direction'][orientation]))
+        entry=configuration['entry_direction'][orientation])
 
     ########################## Dimensions ##############################
 
@@ -91,52 +108,84 @@ def generate_footprint(global_config: GC.GlobalConfig, pins, configuration):
     #
     # Add pads
     #
-    kicad_mod.append(PadArray(start=[-x_pins/2, 1.85], initial=1,
+    odd_pads = PadArray(start=[-x_pins/2, 1.85], initial=1,
         pincount=pins_per_row, increment=1,  x_spacing=pitch, size=pad_size,
         type=Pad.TYPE_SMT, shape=Pad.SHAPE_ROUNDRECT, layers=Pad.LAYERS_SMT,
-        round_radius_handler=global_config.roundrect_radius_handler))
-    kicad_mod.append(PadArray(start=[-x_pins/2, -1.85], initial=pins_per_row+1,
+        round_radius_handler=global_config.roundrect_radius_handler)
+    even_pads = PadArray(start=[-x_pins/2, -1.85], initial=pins_per_row+1,
         pincount=pins_per_row, increment=1,  x_spacing=pitch, size=pad_size,
         type=Pad.TYPE_SMT, shape=Pad.SHAPE_ROUNDRECT, layers=Pad.LAYERS_SMT,
-        round_radius_handler=global_config.roundrect_radius_handler))
+        round_radius_handler=global_config.roundrect_radius_handler)
+
+    kicad_mod.append(odd_pads)
+    kicad_mod.append(even_pads)
 
     ######################## Fabrication Layer ###########################
-    addArcByAngles(kicad_mod, -mount_spacing/2, 0, y_body/2, -180, 0,"F.Fab",configuration['fab_line_width'])
-    addArcByAngles(kicad_mod, mount_spacing/2, 0, y_body/2, 180, 0,"F.Fab",configuration['fab_line_width'])
+    addArcByAngles(kicad_mod, -mount_spacing/2, 0, y_body/2, -180, 0,"F.Fab", width=global_config.fab_line_width)
+    addArcByAngles(kicad_mod, mount_spacing/2, 0, y_body/2, 180, 0,"F.Fab", width=global_config.fab_line_width)
 
     for y in [-1, 1]:
-        kicad_mod.append(PolygonLine(polygon=[
-            {'y': y * (y_body / 2), 'x': mount_spacing/2},
-            {'y': y * (y_body / 2), 'x': -mount_spacing/2},
-        ],width=configuration['fab_line_width'], layer="F.Fab"))
+        kicad_mod.append(
+            Line(
+                start=(-mount_spacing / 2, y * (y_body / 2)),
+                end=(mount_spacing / 2, y * (y_body / 2)),
+                width=global_config.fab_line_width,
+                layer="F.Fab",
+            )
+        )
 
-    main_arrow_poly= [
-        {'y': 2.54, 'x': -(x_pins/2) - .4},
-        {'y': 1.9, 'x': -(x_pins/2)},
-        {'y': 2.54, 'x': -(x_pins/2) + .4},
-    ]
-    kicad_mod.append(PolygonLine(polygon=main_arrow_poly,
-        width=configuration['fab_line_width'], layer="F.Fab"))
+    kicad_mod.append(
+        draw_pin1_chevron_on_hline(
+            line_y=y_body / 2,
+            apex_x=-x_pins / 2,
+            global_config=global_config,
+            direction=Direction.NORTH,
+        )
+    )
 
     ######################## SilkS Layer ###########################
-    addArcByAngles(kicad_mod, -mount_spacing/2, 0, y_body/2 + configuration['silk_fab_offset'], -180, 0,"F.SilkS",configuration['silk_line_width'])
-    addArcByAngles(kicad_mod, mount_spacing/2, 0, y_body/2 + configuration['silk_fab_offset'], 180, 0,"F.SilkS",configuration['silk_line_width'])
+    addArcByAngles(kicad_mod, -mount_spacing/2, 0, y_body/2 + global_config.silk_fab_offset,
+                   -180, 0, "F.SilkS", global_config.silk_line_width)
+    addArcByAngles(kicad_mod, mount_spacing/2, 0, y_body/2 + global_config.silk_fab_offset,
+                   180, 0, "F.SilkS", global_config.silk_line_width)
 
     for y in [-1, 1]:
         for x in [-1, 1]:
-            kicad_mod.append(PolygonLine(polygon=[
-                {'y': y * (y_body / 2) + configuration['silk_fab_offset'] * y, 'x': x * mount_spacing/2},
-                {'y': y * (y_body / 2) + configuration['silk_fab_offset'] * y, 'x': x * (x_pins/2) + x},
-            ],width=configuration['silk_line_width'], layer="F.SilkS"))
 
-    kicad_mod.append(PolygonLine(polygon=[
-        {'y': (y_body / 2) + configuration['silk_fab_offset'], 'x': -(x_pins/2) - 1},
-        {'y': (y_body / 2) + configuration['silk_fab_offset'] + .5, 'x': -(x_pins/2) - 1},
-    ],width=configuration['silk_line_width'], layer="F.SilkS"))
+            inner_x = x * (x_pins / 2 + pad_size.x / 2 + global_config.silk_pad_offset)
+
+            if y == 1 and x == -1:
+                inner_x -= 1.3
+
+            kicad_mod.append(
+                Line(
+                    start=(
+                        inner_x,
+                        y * (y_body / 2) + global_config.silk_fab_offset * y,
+                    ),
+                    end=(
+                        x * mount_spacing / 2,
+                        y * (y_body / 2) + global_config.silk_fab_offset * y,
+                    ),
+                    width=global_config.silk_line_width,
+                    layer="F.SilkS",
+                )
+            )
+
+    kicad_mod.append(
+        draw_silk_triangle45_clear_of_fab_hline_and_pad(
+            global_config=global_config,
+            pad=odd_pads.get_pad_with_name(1),
+            arrow_direction=Direction.NORTHEAST,
+            line_y=y_body / 2,
+            line_clearance_y=global_config.silk_fab_offset,
+            arrow_size=SilkArrowSize.LARGE,
+        )
+    )
 
     ######################## CrtYd Layer ###########################
-    CrtYd_offset = configuration['courtyard_offset']['connector']
-    CrtYd_grid = configuration['courtyard_grid']
+    CrtYd_offset = global_config.get_courtyard_offset(GC.GlobalConfig.CourtyardType.CONNECTOR)
+    CrtYd_grid = global_config.courtyard_grid
 
     poly_yd = [
         {'y': roundToBase(-(y_max_pin_extent/2) - CrtYd_offset, CrtYd_grid), 'x': roundToBase(body_edge['left'] - CrtYd_offset, CrtYd_grid)},
@@ -147,13 +196,13 @@ def generate_footprint(global_config: GC.GlobalConfig, pins, configuration):
     ]
 
     kicad_mod.append(PolygonLine(polygon=poly_yd,
-        layer='F.CrtYd', width=configuration['courtyard_line_width']))
+        layer='F.CrtYd', width=global_config.courtyard_line_width))
 
     ######################### Text Fields ###############################
-    cy1 = body_edge['top'] - configuration['courtyard_offset']['connector'] - 0.4
-    cy2 = body_edge['bottom'] + configuration['courtyard_offset']['connector'] + 0.4
+    cy1 = body_edge['top'] - CrtYd_offset - 0.4
+    cy2 = body_edge['bottom'] + CrtYd_offset + 0.4
 
-    addTextFields(kicad_mod=kicad_mod, configuration=configuration, body_edges=body_edge,
+    addTextFields(kicad_mod=kicad_mod, configuration=global_config, body_edges=body_edge,
         courtyard={'top':cy1, 'bottom':cy2}, fp_name=footprint_name, text_y_inside_position='center')
 
     ##################### Write to File ############################
@@ -171,16 +220,11 @@ if __name__ == "__main__":
     parser.add_argument('--series_config', type=str, nargs='?', help='the config file defining series parameters.', default='../conn_config_KLCv3.yaml')
     args = parser.parse_args()
 
-    with open(args.global_config, 'r') as config_stream:
-        try:
-            configuration = yaml.safe_load(config_stream)
-            global_config = GC.GlobalConfig(configuration)
-        except yaml.YAMLError as exc:
-            print(exc)
+    global_config = GC.GlobalConfig.load_from_file(args.global_config)
 
     with open(args.series_config, 'r') as config_stream:
         try:
-            configuration.update(yaml.safe_load(config_stream))
+            configuration = yaml.safe_load(config_stream)
         except yaml.YAMLError as exc:
             print(exc)
 

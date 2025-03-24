@@ -31,9 +31,9 @@ def draw_chamfer_rect_fab(size: Vector2D, global_config: GlobalConfig) -> Chamfe
 def draw_pin1_chevron_on_hline(
     line_y: float,
     apex_x: float,
-    chevron_length: float,
     direction: Direction,
     global_config: GlobalConfig,
+    chevron_length: float | None = None,
 ) -> PolygonLine:
     """
     Draw a v-shaped chevron on the Fab layer, pointing in the given direction, from
@@ -45,13 +45,17 @@ def draw_pin1_chevron_on_hline(
 
     : param line_y: The y-coordinate of the horizontal line
     : param apex_x: The x-coordinate of the apex of the chevron
-    : param chevron_length: The length of the chevron (top to bottom)
     : param direction: The direction of the chevron (NORTH or SOUTH - i.e. above
                        or below the line.
     : param global_config: The global configuration object (drives line width)
+    : param chevron_length: The length of the chevron (top to bottom). None for default
+                       from global config.
 
     : return: A PolygonLine object representing the chevron
     """
+
+    if chevron_length is None:
+        chevron_length = global_config.fab_pin1_marker_length
 
     # Seems about right
     chevron_width = round(chevron_length * 1.3)
