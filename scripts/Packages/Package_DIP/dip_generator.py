@@ -78,7 +78,7 @@ def adjust_config_for_socket(config: DIPConfiguration, socket_size_outset: Vecto
     config.metadata.additional_tags.append('Socket')
 
 class DIPGenerator(FootprintGenerator):
-    def __init__(self, configuration, **kwargs):
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
         # "standard" value for larger pads -> 1.6mm to 2.4mm
@@ -182,5 +182,4 @@ if __name__ == '__main__':
         DIPGenerator,
         args,
         file_autofind_dir='size_definitions',
-        configuration=args.global_config,
     )
