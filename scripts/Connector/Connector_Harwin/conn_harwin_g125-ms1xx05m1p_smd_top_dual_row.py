@@ -15,7 +15,7 @@ along with kicad-footprint-generator. If not, see < http://www.gnu.org/licenses/
 import argparse
 import yaml
 
-from KicadModTree import Pad, PadArray, Footprint, FootprintType, PolygonLine, KicadPrettyLibrary
+from KicadModTree import Pad, PadArray, Footprint, FootprintType, PolygonLine, KicadPrettyLibrary, Model
 from scripts.tools.global_config_files import global_config as GC
 from scripts.tools.footprint_text_fields import addTextFields
 from scripts.tools.drawing_tools import addArcByAngles
@@ -93,10 +93,12 @@ def generate_footprint(global_config: GC.GlobalConfig, pins, configuration):
     #
     kicad_mod.append(PadArray(start=[-x_pins/2, 1.85], initial=1,
         pincount=pins_per_row, increment=1,  x_spacing=pitch, size=pad_size,
-        type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT, layers=Pad.LAYERS_SMT))
+        type=Pad.TYPE_SMT, shape=Pad.SHAPE_ROUNDRECT, layers=Pad.LAYERS_SMT,
+        round_radius_handler=global_config.roundrect_radius_handler))
     kicad_mod.append(PadArray(start=[-x_pins/2, -1.85], initial=pins_per_row+1,
         pincount=pins_per_row, increment=1,  x_spacing=pitch, size=pad_size,
-        type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT, layers=Pad.LAYERS_SMT))
+        type=Pad.TYPE_SMT, shape=Pad.SHAPE_ROUNDRECT, layers=Pad.LAYERS_SMT,
+        round_radius_handler=global_config.roundrect_radius_handler))
 
     ######################## Fabrication Layer ###########################
     addArcByAngles(kicad_mod, -mount_spacing/2, 0, y_body/2, -180, 0,"F.Fab",configuration['fab_line_width'])
@@ -157,6 +159,8 @@ def generate_footprint(global_config: GC.GlobalConfig, pins, configuration):
     ##################### Write to File ############################
 
     lib_name = configuration['lib_name_format_string'].format(series=series, man=manufacturer)
+
+    kicad_mod.append(Model(filename=f"{global_config.model_3d_prefix}{lib_name}.3dshapes/{footprint_name}{global_config.model_3d_suffix}"))
 
     lib = KicadPrettyLibrary(lib_name, None)
     lib.save(kicad_mod)

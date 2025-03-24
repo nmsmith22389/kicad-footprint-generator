@@ -93,7 +93,7 @@ def gen_footprint(global_config: GC.GlobalConfig, pinnum, manpart, configuration
     # Pads
     kicad_mod.append(PadArray(start=[-6.775+padsize[0]/2, -(pitch*(pinnum-1))/2], initial=1,
         pincount=pinnum, increment=1,  y_spacing=pitch, size=padsize,
-        type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT, layers=Pad.LAYERS_SMT, drill=None))
+        type=Pad.TYPE_SMT, shape=Pad.SHAPE_ROUNDRECT, layers=Pad.LAYERS_SMT, drill=None, round_radius_handler=global_config.roundrect_radius_handler))
 
     # Fab
     for y in range(0, pinnum):

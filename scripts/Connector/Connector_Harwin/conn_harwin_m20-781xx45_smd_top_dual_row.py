@@ -93,10 +93,12 @@ def generate_footprint(global_config: GC.GlobalConfig, pins, configuration):
     #
     kicad_mod.append(PadArray(start=[-2.91, -B/2], initial=1,
         pincount=pins, increment=1,  y_spacing=pitch, size=pad_size,
-        type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT, layers=Pad.LAYERS_SMT))
+        type=Pad.TYPE_SMT, shape=Pad.SHAPE_ROUNDRECT, layers=Pad.LAYERS_SMT,
+        round_radius_handler=global_config.roundrect_radius_handler))
     kicad_mod.append(PadArray(start=[2.91, -B/2], initial=pins+1,
         pincount=pins, increment=1,  y_spacing=pitch, size=pad_size,
-        type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT, layers=Pad.LAYERS_SMT))
+        type=Pad.TYPE_SMT, shape=Pad.SHAPE_ROUNDRECT, layers=Pad.LAYERS_SMT,
+        round_radius_handler=global_config.roundrect_radius_handler))
 
     ######################## Fabrication Layer ###########################
     main_body_poly= [
