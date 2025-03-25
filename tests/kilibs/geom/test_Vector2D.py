@@ -197,12 +197,12 @@ def test_inner():
     v1 = Vector2D(2, 3)
     v2 = Vector2D(4, 5)
 
-    assert v1.inner(v2) == 23
-    assert v2.inner(v1) == 23
+    assert v1.dot_product(v2) == 23
+    assert v2.dot_product(v1) == 23
 
     v2 = v1.orthogonal()
-    assert v1.inner(v2) == 0
-    assert v1.inner(-v2) == 0
+    assert v1.dot_product(v2) == 0
+    assert v1.dot_product(-v2) == 0
 
 def test_normalize():
     v = Vector2D(0, 0)

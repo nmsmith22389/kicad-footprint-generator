@@ -92,7 +92,7 @@ def calculateOffsetPolygonNodes(nodes: Sequence[Vector2D], offset: float, split_
             if (bisec.is_nullvec(tol) or (norm_vec1.is_nullvec(tol) and norm_vec2.is_nullvec(tol))):
                 cos_phi = 1
             else:
-                cos_phi = bisec.inner(norm_vec1 if not norm_vec1.is_nullvec(tol) else norm_vec2)
+                cos_phi = bisec.dot_product(norm_vec1 if not norm_vec1.is_nullvec(tol) else norm_vec2)
             offset_polygon.append(node + (offset / cos_phi) * bisec)
 
     # TODO: check if we get self-intersections and eliminate them

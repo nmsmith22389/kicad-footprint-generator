@@ -266,19 +266,19 @@ class Vector2D(object):
             phi = degrees(phi)
         return phi
 
-    def inner(self, other):
+    def dot_product(self, other):
         """
         Calculate the inner product of a vector with ``other``
         """
-        return sum(s * o for s, o in zip(self, other))
+        return self.x * other.x + self.y * other.y
 
-    def orthogonal(self):
+    def orthogonal(self) -> "Vector2D":
         """
         Calculate the orthogonal onto a vector
         """
         return Vector2D(-self.y, self.x)
 
-    def is_nullvec(self, tol: float = 1e-7):
+    def is_nullvec(self, tol: float = 1e-7) -> bool:
         """
         Check if a vector is the null-vector (up to tol)
 
@@ -287,7 +287,7 @@ class Vector2D(object):
         """
         return Vector2D.norm(self) < tol
 
-    def normalize(self, tol: float = 1e-7):
+    def normalize(self, tol: float = 1e-7) -> "Vector2D":
         """
         Normalize a vector (scale it to unit length)
 
@@ -297,6 +297,19 @@ class Vector2D(object):
         norm = self.norm()
         if norm > tol:
             self /= norm
+        return self
+
+    def resize(self, new_len: float, tol: float = 1e-7) -> "Vector2D":
+        """
+        Resize the vector to a new length, but same angle
+
+        Raises if the vector is the null vector.
+        """
+        norm = self.norm()
+        if norm < tol:
+            raise ValueError("Cannot resize null vector")
+        ratio = new_len / self.norm()
+        self *= ratio
         return self
 
     @staticmethod
