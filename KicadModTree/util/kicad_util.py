@@ -29,12 +29,12 @@ def formatFloat(val):
 
 def lispString(string):
     '''
-    add quotation marks to string, when it include a white space or is empty
+    add quotation marks to string, when it includes a white space, a newline or is empty
     '''
     if type(string) is not str:
         string = str(string)
 
-    if len(string) == 0 or re.match(r".*\s.*", string):
+    if len(string) == 0 or re.match(r".*\s.*", string) or '\\n' in string:
         return '"{}"'.format(string.replace('"', '\\"'))  # escape text
 
     return string
