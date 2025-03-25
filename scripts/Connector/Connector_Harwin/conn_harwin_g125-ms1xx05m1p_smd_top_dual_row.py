@@ -17,6 +17,7 @@ import yaml
 
 from kilibs.geom import Direction, Vector2D
 from KicadModTree import (
+    Arc,
     Model,
     Pad,
     PadArray,
@@ -26,15 +27,14 @@ from KicadModTree import (
     Line,
     KicadPrettyLibrary,
 )
+from KicadModTree.nodes.specialized import Stadium
 from scripts.tools.global_config_files import global_config as GC
 from scripts.tools.footprint_text_fields import addTextFields
-from scripts.tools.drawing_tools import addArcByAngles
 from scripts.tools.drawing_tools_fab import draw_pin1_chevron_on_hline
 from scripts.tools.drawing_tools_silk import (
     draw_silk_triangle45_clear_of_fab_hline_and_pad,
     SilkArrowSize,
 )
-
 
 series = 'Gecko'
 series_long = 'Male Vertical Surface Mount Double Row 1.25mm (0.049 inch) Pitch PCB Connector'
@@ -121,18 +121,15 @@ def generate_footprint(global_config: GC.GlobalConfig, pins, configuration):
     kicad_mod.append(even_pads)
 
     ######################## Fabrication Layer ###########################
-    addArcByAngles(kicad_mod, -mount_spacing/2, 0, y_body/2, -180, 0,"F.Fab", width=global_config.fab_line_width)
-    addArcByAngles(kicad_mod, mount_spacing/2, 0, y_body/2, 180, 0,"F.Fab", width=global_config.fab_line_width)
 
-    for y in [-1, 1]:
-        kicad_mod.append(
-            Line(
-                start=(-mount_spacing / 2, y * (y_body / 2)),
-                end=(mount_spacing / 2, y * (y_body / 2)),
-                width=global_config.fab_line_width,
-                layer="F.Fab",
-            )
-        )
+    fab_body = Stadium.Stadium(
+        center_1=Vector2D(-mount_spacing / 2, 0),
+        center_2=Vector2D(mount_spacing / 2, 0),
+        radius=y_body / 2,
+        width=global_config.fab_line_width,
+        layer="F.Fab",
+    )
+    kicad_mod.append(fab_body)
 
     kicad_mod.append(
         draw_pin1_chevron_on_hline(
@@ -144,10 +141,28 @@ def generate_footprint(global_config: GC.GlobalConfig, pins, configuration):
     )
 
     ######################## SilkS Layer ###########################
-    addArcByAngles(kicad_mod, -mount_spacing/2, 0, y_body/2 + global_config.silk_fab_offset,
-                   -180, 0, "F.SilkS", global_config.silk_line_width)
-    addArcByAngles(kicad_mod, mount_spacing/2, 0, y_body/2 + global_config.silk_fab_offset,
-                   180, 0, "F.SilkS", global_config.silk_line_width)
+
+    # Endcaps
+    silk_rad = y_body / 2 + global_config.silk_fab_offset
+    kicad_mod.append(
+        Arc(
+            start=Vector2D(-mount_spacing / 2, silk_rad),
+            end=Vector2D(-mount_spacing / 2, -silk_rad),
+            midpoint=Vector2D(-mount_spacing / 2 - silk_rad, 0),
+            width=global_config.silk_line_width,
+            layer="F.SilkS",
+        )
+    )
+
+    kicad_mod.append(
+        Arc(
+            start=Vector2D(mount_spacing / 2, silk_rad),
+            end=Vector2D(mount_spacing / 2, -silk_rad),
+            midpoint=Vector2D(mount_spacing / 2 + silk_rad, 0),
+            width=global_config.silk_line_width,
+            layer="F.SilkS",
+        )
+    )
 
     for y in [-1, 1]:
         for x in [-1, 1]:

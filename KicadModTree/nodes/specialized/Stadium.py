@@ -1,0 +1,88 @@
+from KicadModTree import Arc, Line, Node
+from kilibs.geom import Vector2D
+
+
+class Stadium(Node):
+    """
+    Draws a stadium shape, which is a rectangle with semi-circular ends.
+    Sometimes called a racetrack shape, or oblong (that's also
+    the name of a non-square rectangle), or obround, or oval.
+
+    Stadium is about the only unambiguous name for this shape!
+    """
+
+    def __init__(
+        self,
+        center_1: Vector2D,
+        center_2: Vector2D,
+        radius: float,
+        layer: str,
+        width: float,
+    ):
+        """
+        :param center_1: The center of the first semi-circle
+        :param center_2: The center of the second semi-circle
+        :param radius: The radius of the semi-circles
+        :param layer: The layer to draw on
+        :param width: The width of the lines
+        """
+        super().__init__()
+
+        self.center_1 = Vector2D(center_1)
+        self.center_2 = Vector2D(center_2)
+        self.radius = radius
+        self.layer = layer
+        self.width = width
+
+        self._children = self._rebuild()
+
+    def _rebuild(self) -> list[Node]:
+
+        # centre 1 to centre 2 vector
+        c_vec = self.center_2 - self.center_1
+
+        perp_vec = c_vec.orthogonal().resize(self.radius)
+
+        # Vector from centre 2 to arc mid point
+        c_to_arc_mid = c_vec.resize(self.radius)
+
+        arc1 = Arc(
+            start=self.center_1 + perp_vec,
+            end=self.center_1 - perp_vec,
+            midpoint=self.center_1 - c_to_arc_mid,
+            layer=self.layer,
+            width=self.width,
+        )
+
+        arc2 = Arc(
+            start=self.center_2 + perp_vec,
+            end=self.center_2 - perp_vec,
+            midpoint=self.center_2 + c_to_arc_mid,
+            layer=self.layer,
+            width=self.width,
+        )
+
+        line1 = Line(
+            start=self.center_1 + perp_vec,
+            end=self.center_2 + perp_vec,
+            layer=self.layer,
+            width=self.width,
+        )
+
+        line2 = Line(
+            start=self.center_1 - perp_vec,
+            end=self.center_2 - perp_vec,
+            layer=self.layer,
+            width=self.width,
+        )
+
+        return [arc1, arc2, line1, line2]
+
+    def getVirtualChilds(self):
+        return self._children
+
+    def __repr__(self):
+        return f"Stadium(c1={self.center_1}, c2={self.center_2}, r={self.radius}, {self.layer}, {self.width})"
+
+    def __str__(self):
+        return repr(self)

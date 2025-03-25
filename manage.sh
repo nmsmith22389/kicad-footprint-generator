@@ -34,6 +34,7 @@ fp_format_check() {
     # Include "clean" scripts (one day this will be all of them)
     local clean_files=(
         "$KICADMODTREE_DIR/nodes/specialized/RoundRect.py"
+        "$KICADMODTREE_DIR/nodes/specialized/Stadium.py"
         "$KICADMODTREE_DIR/nodes/specialized/Trapezoid.py"
         "scripts/generator.py"
         "scripts/Connector_Dsub"
