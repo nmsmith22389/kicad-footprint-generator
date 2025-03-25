@@ -306,7 +306,7 @@ class RingPad(Node):
         if type(_id) not in [int, float] or type(_od) not in [int, float]:
             raise ValueError('ring pad size and inner_diameter only support int or float')
         if _id >= _od:
-            raise ValueError('inner diameter must be larger than size')
+            raise ValueError('inner diameter must be smaller than size')
 
         self.radius = (_id+_od)/4
         self.width = (_od-_id)/2
