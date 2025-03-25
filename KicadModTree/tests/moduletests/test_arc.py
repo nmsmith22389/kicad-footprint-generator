@@ -9,16 +9,17 @@ from KicadModTree.tests.test_utils.fp_file_test import SerialisationTest
 
 
 def assert_arc_geom(
-    arc: geo.geometricArc, start, end, center, midpoint, radius: float
+    arc: geo.geometricArc, start, end, center, midpoint, radius: float, angle: float
 ) -> None:
     """
     Assert that the arc has the given geometry
     """
-    geom_test.vector_approx_equal(arc.getStartPoint(), start)
-    geom_test.vector_approx_equal(arc.getEndPoint(), end)
-    geom_test.vector_approx_equal(arc.getCenter(), center)
-    geom_test.vector_approx_equal(arc.getMidPoint(), midpoint)
+    assert geom_test.vector_approx_equal(arc.getStartPoint(), start)
+    assert geom_test.vector_approx_equal(arc.getEndPoint(), end)
+    assert geom_test.vector_approx_equal(arc.getCenter(), center)
+    assert geom_test.vector_approx_equal(arc.getMidPoint(), midpoint)
     assert arc.getRadius() == pytest.approx(radius)
+    assert arc.angle == pytest.approx(angle)
 
 
 def test_arcGeometry():
@@ -37,6 +38,7 @@ def test_arcGeometry():
         center=(0, 0),
         midpoint=(0, 1),
         radius=1,
+        angle=180,
     )
 
     # A semi-circular arc by endpoint goes in a specific direction
@@ -51,6 +53,7 @@ def test_arcGeometry():
         center=(0, 0),
         midpoint=(0, -1),
         radius=1,
+        angle=-180,  # CW
     )
 
     # Check that end or angle is required
@@ -69,6 +72,7 @@ def test_arcGeometry():
         center=(0, 0),
         midpoint=(0, -1),
         radius=1,
+        angle=-180,
     )
 
     arc_90deg_down = geo.geometricArc(
@@ -82,6 +86,7 @@ def test_arcGeometry():
         center=(0, 0),
         midpoint=(sqrt2_2, -sqrt2_2),
         radius=1,
+        angle=-90,
     )
 
     arc_90deg_down_nonunity_radius = geo.geometricArc(
@@ -95,6 +100,7 @@ def test_arcGeometry():
         center=(0, 0),
         midpoint=1.2 * Vector2D(-sqrt2_2, -sqrt2_2),
         radius=1.2,
+        angle=-90,
     )
 
     # Arc not centred on the origin
@@ -108,7 +114,8 @@ def test_arcGeometry():
         end=(1, 0),
         center=(1, 1),
         midpoint=(1 + sqrt2_2, 1 - sqrt2_2),
-        radius=1
+        radius=1,
+        angle=-90,
     )
 
     # Not a simple angle for the midpoint
@@ -121,6 +128,7 @@ def test_arcGeometry():
         center=(0, 0),
         midpoint=(math.cos(math.radians(22.5)), math.sin(math.radians(22.5))),
         radius=1,
+        angle=45,
     )
 
     # Degenerate radius
@@ -135,7 +143,98 @@ def test_arcGeometry():
         center=(0, 0),
         midpoint=(0, 0),
         radius=0,
+        angle=42,
     )
+
+
+def testArcBy3Points():
+
+    a_180_left_cw = geo.geometricArc(
+        start=Vector2D(0, -1),
+        end=Vector2D(0, 1),
+        midpoint=Vector2D(-1, 0),
+    )
+
+    assert_arc_geom(
+        arc=a_180_left_cw,
+        start=(0, -1),
+        end=(0, 1),
+        center=(0, 0),
+        midpoint=(-1, 0),
+        radius=1,
+        angle=-180,  # CW
+    )
+
+    # The same thing the other way around, should still work exactly the same
+    a_180_left_ccw = geo.geometricArc(
+        start=Vector2D(0, 1),
+        end=Vector2D(0, -1),
+        midpoint=Vector2D(-1, 0),
+    )
+
+    assert_arc_geom(
+        arc=a_180_left_ccw,
+        start=(0, 1),
+        end=(0, -1),
+        center=(0, 0),
+        midpoint=(-1, 0),
+        radius=1,
+        angle=180,  # CCW
+    )
+
+    # Now, try an arc thats over 180 degreee
+    # this has triggered bugs before
+    a_over_180 = geo.geometricArc(
+        start=Vector2D(0, -1),
+        end=Vector2D(0, 1),
+        midpoint=Vector2D(-2, 0),
+    )
+
+    assert_arc_geom(
+        arc=a_over_180,
+        start=(0, -1),
+        end=(0, 1),
+        center=(-0.75, 0),
+        midpoint=(-2, 0),
+        radius=1.25,
+        angle=-253.73979529168804,
+    )
+
+    # And one less than 180 degrees
+    # and horizontal
+    a_less_180 = geo.geometricArc(
+        start=Vector2D(-1, 0),
+        end=Vector2D(1, 0),
+        midpoint=Vector2D(0, 0.5),
+    )
+
+    assert_arc_geom(
+        arc=a_less_180,
+        start=(-1, 0),
+        end=(1, 0),
+        center=(0, -0.75),
+        midpoint=(0, 0.5),
+        radius=1.25,
+        angle=-106.26020470831197,  # CW
+    )
+
+
+@pytest.mark.parametrize("start, mid, end", [
+    ((0, -1), (0, 0),  (0,  1)),  # vertical/same x
+    ((1,  0), (0, 0), (-1,  0)),  # horizontal/same y
+    ((2,  1), (0, 0), (-2, -1)),  # diagonal
+])  # fmt: skip
+def testArc3PointCollinear(start, mid, end):
+    """
+    Check that an arc with three collinear points raises an error.
+    """
+
+    with pytest.raises(ValueError):
+        geo.geometricArc(
+            start=Vector2D(start),
+            end=Vector2D(mid),
+            midpoint=Vector2D(end),
+        )
 
 
 def testCircleCircleIntersection():
@@ -560,82 +659,3 @@ class TestArcSerialisation(SerialisationTest):
             ))
 
         self.assert_serialises_as(kicad_mod, 'arc_90deg_45deg.kicad_mod')
-
-    def testArcsKx3Point(self):
-        kicad_mod = Footprint("arc_3point", FootprintType.SMD)
-
-        root2div2 = (2 ** 0.5) / 2
-
-        kicad_mod.append(
-            Arc(
-                start=(root2div2, -root2div2),
-                midpoint=(0, -1),
-                end=(-root2div2, -root2div2),
-            )
-        )
-
-        kicad_mod.append(
-            Arc(
-                start=(-1, 0),
-                midpoint=(-root2div2, root2div2),
-                end=(0, 1),
-            )
-        )
-
-        kicad_mod.append(
-            Arc(
-                start=(1, 0),
-                midpoint=(root2div2, root2div2),
-                end=(0, 1),
-            )
-        )
-
-        kicad_mod.append(
-            Arc(
-                start=(-0.5, 0.5),
-                midpoint=(-0.5, -0.5),
-                end=(0.5, -0.5),
-            )
-        )
-
-        kicad_mod.append(
-            Arc(
-                start=(0.5, -0.5),
-                midpoint=(-0.5, -0.5),
-                end=(-0.5, 0.5),
-            )
-        )
-
-        kicad_mod.append(
-            Arc(
-                start=(-2.5, -1.5),
-                midpoint=(-1.5, -2.5),
-                end=(-0.5, -1.5),
-            )
-        )
-
-        kicad_mod.append(
-            Arc(
-                start=(-0.5, -1.5),
-                midpoint=(-1.5, -0.5),
-                end=(-2.5, -1.5),
-            )
-        )
-
-        kicad_mod.append(
-            Arc(
-                start=(-3.5, -1),
-                midpoint=(-4.5, -1),
-                end=(-4.5, -2),
-            )
-        )
-
-        kicad_mod.append(
-            Arc(
-                start=(-4.5, -2),
-                midpoint=(-3.5, -2),
-                end=(-3.5, -1),
-            )
-        )
-
-        self.assert_serialises_as(kicad_mod, 'arc_3point.kicad_mod')

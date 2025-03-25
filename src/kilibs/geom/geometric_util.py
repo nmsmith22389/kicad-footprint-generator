@@ -376,7 +376,7 @@ class geometricArc():
             else:
                 raise KeyError('Arcs defined with center point must define either an angle or endpoint')
         else:
-            self._initFrom3PointArc(**kwargs)
+            self._initFrom3PointArc(kwargs['start'], kwargs['midpoint'], kwargs['end'])
 
     @staticmethod
     def normalizeAngle(angle):
@@ -417,7 +417,7 @@ class geometricArc():
             origin=self.center_pos, use_degrees=True)
 
         if abs(sp_r - ep_r) > 1e-7:
-            warnings.warn(
+            raise ValueError(
                 """Start and end point are not an same arc.
                 Extended line from center to end point used to determine angle."""
             )
@@ -434,60 +434,75 @@ class geometricArc():
             if self.angle == 180:
                 self.angle = -180
 
-    def _initFrom3PointArc(self, **kwargs):
-
-        if not all(arg in kwargs for arg in ['start', 'midpoint', 'end']):
-            raise KeyError('Arcs defined by 3 points must define start, midpoint, and end points')
-
-        p1 = kwargs['start']
-        p2 = kwargs['midpoint']
-        p3 = kwargs['end']
+    def _initFrom3PointArc(self, start: Vector2D, midpoint: Vector2D, end: Vector2D):
+        p1 = start
+        p2 = midpoint
+        p3 = end
+        tol = 1e-7
 
         # prevent divide by zero
-        if (p2[0] - p1[0]) == 0:
+        if abs(p2.x - p1.x) < tol:
             # rotate points
-            p_temp = p1
-            p1 = p2
-            p2 = p3
-            p3 = p_temp
+            p1, p2, p3 = p2, p3, p1
 
-            kwargs['start'] = p2
-            kwargs['end'] = p3
-
-            # Or this, but I don't think the direction is import to maintain here.
-            # probably would be preferable to not rely on `_initFromCenterAndEnd`
-            # and handle the entire creation for this case here.
-            # kwargs['start'] = p3
-            # kwargs['end'] = p2
-            # kwargs['long_way'] = True
-
-        elif (p3[0] - p2[0]) == 0:
+        elif abs(p3.x - p2.x) < tol:
             # rotate point other direction
-            p_temp = p3
-            p3 = p2
-            p2 = p1
-            p1 = p_temp
+            p1, p2, p3 = p3, p1, p2
 
-            kwargs['start'] = p2
-            kwargs['end'] = p1
+        # all Points are collinear in x
+        if abs(p2.x - p1.x) < tol or abs(p3.x - p2.x) < tol:
+            raise ValueError("This is not an arc")
 
-        ma = (p2[1] - p1[1]) / (p2[0] - p1[0])
-        mb = (p3[1] - p2[1]) / (p3[0] - p2[0])
+        ma = (p2.y - p1.y) / (p2.x - p1.x)
+        mb = (p3.y - p2.y) / (p3.x - p2.x)
 
-        if (mb - ma) == 0:
-            raise RuntimeError("this is not an arc")
+        if abs(mb - ma) < 1e-7:
+            raise ValueError("This is not an arc")
 
         center_x = ((ma*mb*(p1[1] - p3[1]) + mb*(p1[0] + p2[0]) - ma * (p2[0] + p3[0])) / (2*(mb - ma)))
 
         # prevent divide by zero
-        if ma == 0:
+        if abs(ma) < tol:
             center_y = ((-1 / mb) * (center_x - (p2[0] + p3[0]) / 2) + (p2[1] + p3[1]) / 2)
         else:
             center_y = ((-1 / ma) * (center_x - (p1[0] + p2[0]) / 2) + (p1[1] + p2[1]) / 2)
 
-        kwargs['center'] = (center_x, center_y)
+        center = Vector2D(center_x, center_y)
 
-        self._initFromCenterAndEnd(**kwargs)
+        # Compute radius
+        radius = (p1 - center).norm()
+
+        # Compute start and end angles
+        def _angle_from_center(pt):
+            return math.atan2(pt.y - center.y, pt.x - center.x)
+
+        start_angle = _angle_from_center(p1)
+        end_angle = _angle_from_center(p3)
+
+        def _midpoint_is_cw_from(center: Vector2D, start: Vector2D, mid: Vector2D):
+            v1 = start - center
+            v2 = mid - center
+            cross = v1.x * v2.y - v1.y * v2.x
+            return cross < 0
+
+        # Determine if the arc is clockwise
+        cw = _midpoint_is_cw_from(center, p1, p2)
+
+        # Compute sweep angle
+        if cw:
+            if end_angle > start_angle:
+                end_angle -= 2 * math.pi
+        else:
+            if end_angle < start_angle:
+                end_angle += 2 * math.pi
+
+        sweep_angle = end_angle - start_angle
+
+        # Store arc properties
+        self.center_pos = center
+        self.start_pos = p1
+        self.radius = radius
+        self._initAngle(math.degrees(sweep_angle))
 
     def rotate(self, angle, origin=(0, 0), use_degrees=True):
         r""" Rotate around given origin
