@@ -38,6 +38,8 @@ class _TextBase(Node):
           size of the text (default: [1, 1])
         * *thickness* (``float``) --
           thickness of the text (default: 0.15)
+        * *justify* (``str``) --
+          justify text (default: 'center')
         * *hide* (``bool``) --
           hide text (default: False)
 
