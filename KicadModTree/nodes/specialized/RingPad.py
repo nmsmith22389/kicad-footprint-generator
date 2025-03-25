@@ -413,7 +413,7 @@ class RingPad(Node):
             RingPadPrimitive(
                 number="",
                 at=self.at,
-                width=self.width+2*self.solder_mask_margin,
+                width=w,
                 layers=['F.Mask'],
                 radius=self.radius
                 ))
