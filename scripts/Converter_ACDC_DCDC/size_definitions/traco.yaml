@@ -746,3 +746,22 @@ Converter_DCDC_TRACO_TSR0.5-24xx_TSR0.5-24xxx_THT:
     ["tht", "2", 0, -2.54, 1.8, 1.8, 1.2],
     ["tht", "3", 0, -5.08, 1.8, 1.8, 1.2]
   ]
+
+Converter_ACDC_TRACO_TMG_071xx_THT:
+  library_name: 'Converter_ACDC'
+  description: "ACDC-Converter, TRACO, TMG 071xx, 7W, Rev. March 24. 2025"
+  datasheet: "https://www.tracopower.com/products/tmg07.pdf"
+  tags: "ACDC-Converter TRACO TMG07 THT 1.08\"x1.08\" 7W"
+  extratexts: []
+  at: [-3.3, 3]
+  size: [27.4, 27.4]
+  body_position_tolerance: [0.5, 0.5]
+  # For future use
+  height: 18.7
+  pins: [
+    ["thtr", "1", 0, 0, 1.9, 1.9, 1.1],
+    ["tht", "2", 0, -5, 1.9, 1.9, 1.1],
+    ["tht", "3", 20.8, 0.3, 1.9, 1.9, 1.1],
+    ["tht", "4", 20.8, -9.9, 1.9, 1.9, 1.1]
+  ]
+  
