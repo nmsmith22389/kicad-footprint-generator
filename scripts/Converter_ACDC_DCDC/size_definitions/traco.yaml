@@ -764,4 +764,22 @@ Converter_ACDC_TRACO_TMG_071xx_THT:
     ["tht", "3", 20.8, 0.3, 1.9, 1.9, 1.1],
     ["tht", "4", 20.8, -9.9, 1.9, 1.9, 1.1]
   ]
-  
+
+Converter_ACDC_TRACO_TMG_151xx_THT:
+  library_name: 'Converter_ACDC'
+  description: "ACDC-Converter, TRACO, TMG 151xx, 15W, Rev. March 26. 2025"
+  datasheet: "https://www.tracopower.com/products/tmg15.pdf"
+  tags: "ACDC-Converter TRACO TMG15 THT 1.62\"x1.07\" 15W"
+  extratexts: []
+  at: [-4.1, 3.4]
+  size: [41.2, 27.2]
+  body_position_tolerance: [0.5, 0.5]
+  # For future use
+  height: 19.1
+  pins: [
+    ["thtr", "1", 0, 0, 2.3, 2.3, 1.5],
+    ["tht", "2", 0, -19, 2.3, 2.3, 1.5],
+    ["tht", "3", 33, 0, 2.3, 2.3, 1.5],
+    ["tht", "4", 33, -12.7, 2.3, 2.3, 1.5]
+  ]
+
