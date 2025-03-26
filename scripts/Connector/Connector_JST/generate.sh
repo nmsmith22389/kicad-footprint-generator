@@ -33,3 +33,6 @@ set -ex
 ./conn_jst_ze_tht_top.py
 
 ./conn_jst_zh_tht_top.py
+
+./conn_jst_XA_horizontal.py
+./conn_jst_XA_vertical.py
