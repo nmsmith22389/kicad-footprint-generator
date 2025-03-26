@@ -76,13 +76,13 @@ def generate_one_footprint(
     y_max = 3.2
     y_min = y_max - 6.4
 
-    silk_x_min = x_min - configuration["silk_fab_offset"]
-    silk_y_min = y_min - configuration["silk_fab_offset"]
-    silk_y_max = y_max + configuration["silk_fab_offset"]
+    silk_x_min = x_min - global_config.silk_fab_offset
+    silk_y_min = y_min - global_config.silk_fab_offset
+    silk_y_max = y_max + global_config.silk_fab_offset
 
     x_mid = A / 2
     x_max = (A + B) / 2
-    silk_x_max = x_max + configuration["silk_fab_offset"]
+    silk_x_max = x_max + global_config.silk_fab_offset
 
     # Through-hole type shrouded header, Top entry type
     orientation_str = configuration["orientation_options"][orientation]
@@ -160,7 +160,7 @@ def generate_one_footprint(
         PolygonLine(
             polygon=silk_ext_outline,
             layer="F.SilkS",
-            width=configuration["silk_line_width"],
+            width=global_config.silk_line_width,
         )
     )
 
@@ -183,7 +183,7 @@ def generate_one_footprint(
                 PolygonLine(
                     polygon=poly_silk_inner_outline,
                     layer="F.SilkS",
-                    width=configuration["silk_line_width"],
+                    width=global_config.silk_line_width,
                 )
             )
         else:
@@ -198,7 +198,7 @@ def generate_one_footprint(
                 PolygonLine(
                     polygon=poly_silk_inner_outline,
                     layer="F.SilkS",
-                    width=configuration["silk_line_width"],
+                    width=global_config.silk_line_width,
                 )
             )
 
@@ -208,7 +208,7 @@ def generate_one_footprint(
                 start=[silk_x_min, y_max - 3.2],
                 end=[silk_inner_left, y_max - 3.2],
                 layer="F.SilkS",
-                width=configuration["silk_line_width"],
+                width=global_config.silk_line_width,
             )
         )
         kicad_mod.append(
@@ -216,7 +216,7 @@ def generate_one_footprint(
                 start=[silk_x_max, y_max - 3.2],
                 end=[silk_inner_right, y_max - 3.2],
                 layer="F.SilkS",
-                width=configuration["silk_line_width"],
+                width=global_config.silk_line_width,
             )
         )
 
@@ -236,7 +236,7 @@ def generate_one_footprint(
         PolygonLine(
             polygon=poly_pin1_marker,
             layer="F.SilkS",
-            width=configuration["silk_line_width"],
+            width=global_config.silk_line_width,
         )
     )
     if fab_pin1_marker_type == 1:
@@ -244,7 +244,7 @@ def generate_one_footprint(
             PolygonLine(
                 polygon=poly_pin1_marker,
                 layer="F.Fab",
-                width=configuration["fab_line_width"],
+                width=global_config.fab_line_width,
             )
         )
 
@@ -258,7 +258,7 @@ def generate_one_footprint(
             PolygonLine(
                 polygon=poly_pin1_marker_type2,
                 layer="F.Fab",
-                width=configuration["fab_line_width"],
+                width=global_config.fab_line_width,
             )
         )
 
@@ -268,7 +268,7 @@ def generate_one_footprint(
             start=[x_min, y_min],
             end=[x_max, y_max],
             layer="F.Fab",
-            width=configuration["fab_line_width"],
+            width=global_config.fab_line_width,
         )
     )
     ############################# CrtYd ##################################
@@ -278,21 +278,25 @@ def generate_one_footprint(
     part_y_max = y_max
 
     cx1 = round_to_grid(
-        part_x_min - configuration["courtyard_offset"]["connector"],
-        configuration["courtyard_grid"],
+        part_x_min
+        - global_config.get_courtyard_offset(GC.GlobalConfig.CourtyardType.CONNECTOR),
+        global_config.courtyard_grid,
     )
     cy1 = round_to_grid(
-        part_y_min - configuration["courtyard_offset"]["connector"],
-        configuration["courtyard_grid"],
+        part_y_min
+        - global_config.get_courtyard_offset(GC.GlobalConfig.CourtyardType.CONNECTOR),
+        global_config.courtyard_grid,
     )
 
     cx2 = round_to_grid(
-        part_x_max + configuration["courtyard_offset"]["connector"],
-        configuration["courtyard_grid"],
+        part_x_max
+        + global_config.get_courtyard_offset(GC.GlobalConfig.CourtyardType.CONNECTOR),
+        global_config.courtyard_grid,
     )
     cy2 = round_to_grid(
-        part_y_max + configuration["courtyard_offset"]["connector"],
-        configuration["courtyard_grid"],
+        part_y_max
+        + global_config.get_courtyard_offset(GC.GlobalConfig.CourtyardType.CONNECTOR),
+        global_config.courtyard_grid,
     )
 
     kicad_mod.append(
@@ -300,7 +304,7 @@ def generate_one_footprint(
             start=[cx1, cy1],
             end=[cx2, cy2],
             layer="F.CrtYd",
-            width=configuration["courtyard_line_width"],
+            width=global_config.courtyard_line_width,
         )
     )
 
@@ -327,7 +331,7 @@ def generate_one_footprint(
             shape=Pad.SHAPE_OVAL,
             layers=Pad.LAYERS_THT,
             round_radius_handler=global_config.roundrect_radius_handler,
-            **optional_pad_params
+            **optional_pad_params,
         )
     )
 
@@ -371,12 +375,7 @@ def generate_one_footprint(
     lib_name = configuration["lib_name_format_string"].format(
         series=series, man=manufacturer
     )
-    model_name = "{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}{model3d_path_suffix:s}".format(
-        model3d_path_prefix=model3d_path_prefix,
-        lib_name=lib_name,
-        fp_name=footprint_name,
-        model3d_path_suffix=model3d_path_suffix,
-    )
+    model_name = f"{model3d_path_prefix}{lib_name}.3dshapes/{footprint_name}{model3d_path_suffix}"
     kicad_mod.append(Model(filename=model_name))
 
     lib = KicadPrettyLibrary(lib_name, None)

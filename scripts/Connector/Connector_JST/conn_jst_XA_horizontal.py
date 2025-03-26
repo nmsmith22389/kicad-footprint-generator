@@ -67,11 +67,11 @@ def generate_one_footprint(
     x_mid = A / 2
     x_max = x_min + B
 
-    silk_x_min = x_min - configuration["silk_fab_offset"]
-    silk_y_min = y_min - configuration["silk_fab_offset"]
-    silk_y_main_min = y_main_min - configuration["silk_fab_offset"]
-    silk_y_max = y_max + configuration["silk_fab_offset"]
-    silk_x_max = x_max + configuration["silk_fab_offset"]
+    silk_x_min = x_min - global_config.silk_fab_offset
+    silk_y_min = y_min - global_config.silk_fab_offset
+    silk_y_main_min = y_main_min - global_config.silk_fab_offset
+    silk_y_max = y_max + global_config.silk_fab_offset
+    silk_x_max = x_max + global_config.silk_fab_offset
 
     pad_size = [
         pitch - pad_to_pad_clearance,
@@ -113,10 +113,10 @@ def generate_one_footprint(
     kicad_mod.setTags(tags)
 
     ########################### Silkscreen ################################
-    tmp_x1 = x_min + body_back_protrusion_width + configuration["silk_fab_offset"]
-    tmp_x2 = x_max - body_back_protrusion_width - configuration["silk_fab_offset"]
+    tmp_x1 = x_min + body_back_protrusion_width + global_config.silk_fab_offset
+    tmp_x2 = x_max - body_back_protrusion_width - global_config.silk_fab_offset
     pad_silk_offset = (
-        configuration["silk_pad_clearance"] + configuration["silk_line_width"] / 2
+        global_config.silk_pad_clearance + global_config.silk_line_width / 2
     )
     poly_silk_outline = [
         {"x": -pad_size[0] / 2.0 - pad_silk_offset, "y": silk_y_main_min},
@@ -137,7 +137,7 @@ def generate_one_footprint(
         PolygonLine(
             polygon=poly_silk_outline,
             layer="F.SilkS",
-            width=configuration["silk_line_width"],
+            width=global_config.silk_line_width,
         )
     )
 
@@ -155,7 +155,7 @@ def generate_one_footprint(
                 PolygonLine(
                     polygon=poly_big_cutout,
                     layer="F.SilkS",
-                    width=configuration["silk_line_width"],
+                    width=global_config.silk_line_width,
                 )
             )
             poly_big_cutout = [
@@ -174,7 +174,7 @@ def generate_one_footprint(
             PolygonLine(
                 polygon=poly_big_cutout,
                 layer="F.SilkS",
-                width=configuration["silk_line_width"],
+                width=global_config.silk_line_width,
             )
         )
 
@@ -190,7 +190,7 @@ def generate_one_footprint(
                 start=[(A - dimple_w) / 2, dimple_y + dimple_h / 2],
                 end=[(A + dimple_w) / 2, dimple_y - dimple_h / 2],
                 layer="F.SilkS",
-                width=configuration["silk_line_width"],
+                width=global_config.silk_line_width,
             )
         )
 
@@ -253,7 +253,7 @@ def generate_one_footprint(
                 PolygonLine(
                     polygon=poly,
                     layer="F.SilkS",
-                    width=configuration["silk_line_width"],
+                    width=global_config.silk_line_width,
                 )
             )
 
@@ -262,8 +262,8 @@ def generate_one_footprint(
     part_x_max = x_max
     part_y_min = y_min
     part_y_max = y_max
-    offset = configuration["courtyard_offset"]["connector"]
-    grid = configuration["courtyard_grid"]
+    offset = global_config.get_courtyard_offset(GC.GlobalConfig.CourtyardType.CONNECTOR)
+    grid = global_config.courtyard_grid
 
     cx1 = round_to_grid(part_x_min - offset, grid)
     cy1 = round_to_grid(part_y_min - offset, grid)
@@ -290,7 +290,7 @@ def generate_one_footprint(
                 {"x": cx1, "y": cy1},
             ],
             layer="F.CrtYd",
-            width=configuration["courtyard_line_width"],
+            width=global_config.courtyard_line_width,
         )
     )
 
@@ -312,7 +312,7 @@ def generate_one_footprint(
         PolygonLine(
             polygon=poly_fab_outline,
             layer="F.Fab",
-            width=configuration["fab_line_width"],
+            width=global_config.fab_line_width,
         )
     )
 
@@ -332,7 +332,7 @@ def generate_one_footprint(
             shape=Pad.SHAPE_OVAL,
             layers=Pad.LAYERS_THT,
             round_radius_handler=global_config.roundrect_radius_handler,
-            **optional_pad_params
+            **optional_pad_params,
         )
     )
 
@@ -361,7 +361,7 @@ def generate_one_footprint(
             PolygonLine(
                 polygon=poly_pin1_marker,
                 layer="F.SilkS",
-                width=configuration["silk_line_width"],
+                width=global_config.silk_line_width,
             )
         )
     if silk_pin1_marker_type == 2:
@@ -372,10 +372,10 @@ def generate_one_footprint(
                 start=[silk_pin1_marker_t2_x, silk_y_main_min],
                 end=[
                     silk_pin1_marker_t2_x,
-                    -pad_size[1] / 2.0 - configuration["silk_pad_clearance"],
+                    -pad_size[1] / 2.0 - global_config.silk_pad_clearance,
                 ],
                 layer="F.SilkS",
-                width=configuration["silk_line_width"],
+                width=global_config.silk_line_width,
             )
         )
 
@@ -384,7 +384,7 @@ def generate_one_footprint(
             PolygonLine(
                 polygon=poly_pin1_marker,
                 layer="F.Fab",
-                width=configuration["fab_line_width"],
+                width=global_config.fab_line_width,
             )
         )
 
@@ -398,7 +398,7 @@ def generate_one_footprint(
             PolygonLine(
                 polygon=poly_pin1_marker_type2,
                 layer="F.Fab",
-                width=configuration["fab_line_width"],
+                width=global_config.fab_line_width,
             )
         )
 
@@ -414,7 +414,7 @@ def generate_one_footprint(
             PolygonLine(
                 polygon=poly_pin1_marker_type2,
                 layer="F.Fab",
-                width=configuration["fab_line_width"],
+                width=global_config.fab_line_width,
             )
         )
 
@@ -445,12 +445,7 @@ def generate_one_footprint(
     lib_name = configuration["lib_name_format_string"].format(
         series=series, man=manufacturer
     )
-    model_name = "{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}{model3d_path_suffix:s}".format(
-        model3d_path_prefix=model3d_path_prefix,
-        lib_name=lib_name,
-        fp_name=footprint_name,
-        model3d_path_suffix=model3d_path_suffix,
-    )
+    model_name = f"{model3d_path_prefix}{lib_name}.3dshapes/{footprint_name}{model3d_path_suffix}"
     kicad_mod.append(Model(filename=model_name))
 
     lib = KicadPrettyLibrary(lib_name, None)
