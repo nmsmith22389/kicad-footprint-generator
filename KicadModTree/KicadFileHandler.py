@@ -237,8 +237,9 @@ def pad_key_func(pad: Pad) -> List[int]:
             for substr in substrings
         ]
 
+    at = pad.getRealPosition(pad.at)
     keys = [pad_num_key(str(pad.number)),
-            pad.at.x, pad.at.y,
+            at.x, at.y,
             pad.size.x, pad.size.y,
             pad_shape_key_func(pad.shape)
             ]
