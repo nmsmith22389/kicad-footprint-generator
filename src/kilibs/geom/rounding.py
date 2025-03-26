@@ -2,16 +2,18 @@
 import math
 
 
-def round_to_grid_up(x: float, g: float) -> float:
-    return math.ceil(x / g) * g
+# TODO: change the epsilon to 1e-7 once we are ready to review the affected changes
+def round_to_grid_up(x: float, g: float, epsilon: float = 0) -> float:
+    # epsilon should prevent values like 0.4 (aka 0.40000000000000002) being rounded up to 0.6
+    return math.ceil(x / g - epsilon) * g
 
 
-def round_to_grid_down(x: float, g: float) -> float:
-    return math.floor(x / g) * g
+def round_to_grid_down(x: float, g: float, epsilon: float = 0) -> float:
+    return math.floor(x / g + epsilon) * g
 
 
 # round for grid g
-def round_to_grid(x: float, g: float) -> float:
+def round_to_grid(x: float, g: float, epsilon: float = 0) -> float:
     """
     Round a number to a multiple of the grid size, _always_ rounding away
     from zero.
@@ -24,12 +26,12 @@ def round_to_grid(x: float, g: float) -> float:
     if isinstance(x, list):
         return_list = []
         for value in x:
-            return_list.append(round_to_grid(value, g))
+            return_list.append(round_to_grid(value, g, epsilon))
         return return_list
     return (
-        round(round_to_grid_up(x, g), 6)
+        round(round_to_grid_up(x, g, epsilon), 6)
         if x > 0
-        else round(round_to_grid_down(x, g), 6)
+        else round(round_to_grid_down(x, g, epsilon), 6)
     )
 
 
