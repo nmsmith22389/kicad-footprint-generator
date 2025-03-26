@@ -7,7 +7,7 @@ from copy import deepcopy
 
 from KicadModTree import *  # NOQA
 from kilibs.geom import geometricLine, geometricCircle
-from scripts.tools.drawing_tools import round_to_grid
+from scripts.tools.drawing_tools import round_to_grid_up
 from scripts.tools.footprint_text_fields import addTextFields
 from scripts.tools.global_config_files import global_config as GC
 
@@ -84,7 +84,7 @@ def make_fp(global_config: GC.GlobalConfig, wire_def, fp_type, pincount, configu
 
     pad_drill = max(wire_def['diameter'] + configuration['min_pad_drill_inc'],
                     wire_def['diameter'] * configuration['pad_drill_factor'])
-    pad_drill = round_to_grid(pad_drill, 0.05)
+    pad_drill = round_to_grid_up(pad_drill, 0.05, epsilon=1e-7)
     pad_size = max(pad_drill + 1, wire_def['outer_diameter'])
 
     npth_drill = wire_def['outer_diameter'] + configuration['relief_drill_inc']
