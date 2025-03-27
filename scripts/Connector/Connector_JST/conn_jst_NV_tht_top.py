@@ -162,5 +162,5 @@ if __name__ == "__main__":
         except yaml.YAMLError as exc:
             print(exc)
 
-    for pincount in range(2, 4):
+    for pincount in pin_range:
         generate_one_footprint(global_config, pincount, configuration)
