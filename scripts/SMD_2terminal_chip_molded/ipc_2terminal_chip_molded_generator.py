@@ -8,7 +8,7 @@ from KicadModTree import *  # NOQA
 from KicadModTree.nodes.base.Pad import Pad  # NOQA
 from scripts.tools.drawing_tools import (
     nearestSilkPointOnOrthogonalLineSmallClerance,
-    round_to_grid_nearest,
+    round_to_grid_up,
 )
 from scripts.tools.footprint_text_fields import addTextFields
 from scripts.tools.global_config_files import global_config as GC
@@ -483,17 +483,19 @@ class TwoTerminalSMD:
 
         CrtYd_rect = [None, None]
         # Half width of the courtyard
-        CrtYd_rect[0] = round_to_grid_nearest(
+        CrtYd_rect[0] = round_to_grid_up(
             abs(pad_details["at"][0])
             + pad_details["size"][0] / 2
             + ipc_data_set["courtyard"],
-            global_config.courtyard_grid
+            global_config.courtyard_grid,
+            1e-7,
         )
         # Half height of the courtyard
-        CrtYd_rect[1] = round_to_grid_nearest(
+        CrtYd_rect[1] = round_to_grid_up(
             max(pad_details["size"][1], outline_size[1]) / 2
             + ipc_data_set["courtyard"],
-            global_config.courtyard_grid
+            global_config.courtyard_grid,
+            1e-7,
         )
         kicad_mod.append(
             RectLine(
