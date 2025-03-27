@@ -9,8 +9,6 @@ fp_name_non_metric_format_string: '{prefix:s}_{code_imperial:s}{suffix:s}'
 
 fp_name_tantal_format_string: '{prefix:s}_EIA-{code_metric:s}_{code_letter:s}{suffix:s}'
 
-3d_model_prefix: '${KICAD9_3DMODEL_DIR}/'
-
 
 fab_outline: 'typical' # typical | max | min
 fab_polarity_min_size: 0.3

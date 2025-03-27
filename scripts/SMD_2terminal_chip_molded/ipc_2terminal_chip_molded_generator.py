@@ -141,6 +141,12 @@ class TwoTerminalSMD():
         density_suffix = self.configuration.get('ipc_density')[1]
         ipc_data_set = self.ipc_defintions[ipc_reference][ipc_density]
         ipc_round_base = self.ipc_defintions[ipc_reference]['round_base']
+        if 'ipc_string' in device_size_data:
+            ipc_string = device_size_data['ipc_string']
+        elif 'ipc_string' in footprint_group_data:
+            ipc_string = footprint_group_data['ipc_string']
+        else:
+            ipc_string = "IPC-7351"
 
         pad_details, paste_details = self.calcPadDetails(
             device_dimensions, ipc_data_set, ipc_round_base, footprint_group_data)
@@ -156,11 +162,11 @@ class TwoTerminalSMD():
         suffix_3d = suffix if footprint_group_data.get('include_suffix_in_3dpath', 'True') == 'True' else ""
         
         if density_suffix != '' and 'handsolder' not in footprint_group_data['keywords']:
-            density_description = ', IPC-7351 {density:s}'.format(density=ipc_density)
+            density_description = f', {ipc_string} {ipc_density}'
             suffix = suffix + density_suffix
             suffix_3d = suffix_3d + density_suffix
         else:
-            density_description = ', IPC-7351 nominal'
+            density_description = f', {ipc_string} nominal'
 
         code_metric = device_size_data.get('code_metric')
         code_letter = device_size_data.get('code_letter')
