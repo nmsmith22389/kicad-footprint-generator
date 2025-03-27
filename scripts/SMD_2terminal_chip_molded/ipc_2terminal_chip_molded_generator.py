@@ -6,16 +6,15 @@ import yaml
 
 from KicadModTree import *  # NOQA
 from KicadModTree.nodes.base.Pad import Pad  # NOQA
-from scripts.tools.drawing_tools import nearestSilkPointOnOrthogonalLineSmallClerance
+from scripts.tools.drawing_tools import (
+    nearestSilkPointOnOrthogonalLineSmallClerance,
+    round_to_grid_nearest,
+)
 from scripts.tools.footprint_text_fields import addTextFields
 from scripts.tools.global_config_files import global_config as GC
 from scripts.tools.ipc_pad_size_calculators import *
 
 size_definition_path = "size_definitions/"
-
-
-def roundToBase(value, base):
-    return round(value / base) * base
 
 
 def merge_dicts(*dict_args):
@@ -166,9 +165,6 @@ class TwoTerminalSMD:
                     raise (exc)
 
     def generateFootprint(self, device_size_data, footprint_group_data):
-        fab_line_width = self.configuration.get("fab_line_width", 0.1)
-        silk_line_width = self.configuration.get("silk_line_width", 0.12)
-
         device_dimensions = TwoTerminalSMD.deviceDimensions(device_size_data)
 
         if "ipc_reference" in device_size_data:
@@ -250,14 +246,7 @@ class TwoTerminalSMD:
                 suffix=suffix_3d,
             )
 
-        model_name = "{model3d_path_prefix:s}{lib_name:s}.3dshapes/{fp_name:s}{model3d_path_suffix:s}".format(
-            model3d_path_prefix=model3d_path_prefix,
-            lib_name=footprint_group_data["fp_lib_name"],
-            fp_name=fp_name_2,
-            model3d_path_suffix=model3d_path_suffix,
-        )
-        # print(fp_name)
-        # print(pad_details)
+        model_name = f"{model3d_path_prefix}{footprint_group_data['fp_lib_name']}.3dshapes/{fp_name_2}{model3d_path_suffix}"
 
         kicad_mod = Footprint(fp_name, FootprintType.SMD)
 
@@ -363,15 +352,12 @@ class TwoTerminalSMD:
             silk_x_left = (
                 -abs(pad_details["at"][0])
                 - pad_details["size"][0] / 2
-                - self.configuration["silk_pad_clearance"]
-                - silk_line_width / 2
+                - global_config.silk_pad_offset
             )
 
             silk_y_bottom = max(
-                self.configuration["silk_pad_clearance"]
-                + silk_line_width / 2
-                + pad_details["size"][1] / 2,
-                outline_size[1] / 2 + self.configuration["silk_fab_offset"],
+                global_config.silk_pad_offset + pad_details["size"][1] / 2,
+                outline_size[1] / 2 + global_config.silk_fab_offset,
             )
 
             if polarity_marker_thick_line:
@@ -380,26 +366,26 @@ class TwoTerminalSMD:
                         start=[-outline_size[0] / 2, outline_size[1] / 2],
                         end=[outline_size[0] / 2, -outline_size[1] / 2],
                         layer="F.Fab",
-                        width=fab_line_width,
+                        width=global_config.fab_line_width,
                     )
                 )
-                x = -outline_size[0] / 2 + fab_line_width
+                x = -outline_size[0] / 2 + global_config.fab_line_width
                 kicad_mod.append(
                     Line(
                         start=[x, outline_size[1] / 2],
                         end=[x, -outline_size[1] / 2],
                         layer="F.Fab",
-                        width=fab_line_width,
+                        width=global_config.fab_line_width,
                     )
                 )
-                x += fab_line_width
-                if x < -fab_line_width / 2:
+                x += global_config.fab_line_width
+                if x < -global_config.fab_line_width / 2:
                     kicad_mod.append(
                         Line(
                             start=[x, outline_size[1] / 2],
                             end=[x, -outline_size[1] / 2],
                             layer="F.Fab",
-                            width=fab_line_width,
+                            width=global_config.fab_line_width,
                         )
                     )
 
@@ -427,7 +413,11 @@ class TwoTerminalSMD:
                     {"x": outline_size[0] / 2, "y": -outline_size[1] / 2},
                 ]
                 kicad_mod.append(
-                    PolygonLine(polygon=poly_fab, layer="F.Fab", width=fab_line_width)
+                    PolygonLine(
+                        polygon=poly_fab,
+                        layer="F.Fab",
+                        width=global_config.fab_line_width,
+                    )
                 )
 
                 poly_silk = [
@@ -438,7 +428,9 @@ class TwoTerminalSMD:
                 ]
                 kicad_mod.append(
                     PolygonLine(
-                        polygon=poly_silk, layer="F.SilkS", width=silk_line_width
+                        polygon=poly_silk,
+                        layer="F.SilkS",
+                        width=global_config.silk_line_width,
                     )
                 )
         else:
@@ -447,21 +439,23 @@ class TwoTerminalSMD:
                     start=[-outline_size[0] / 2, outline_size[1] / 2],
                     end=[outline_size[0] / 2, -outline_size[1] / 2],
                     layer="F.Fab",
-                    width=fab_line_width,
+                    width=global_config.fab_line_width,
                 )
             )
 
-            silk_outline_y = outline_size[1] / 2 + self.configuration["silk_fab_offset"]
-            default_clearance = self.configuration.get("silk_pad_clearance", 0.2)
+            silk_outline_y = outline_size[1] / 2 + global_config.silk_fab_offset
+            default_clearance = global_config.silk_pad_clearance
             silk_point_top_right = nearestSilkPointOnOrthogonalLineSmallClerance(
                 pad_size=pad_details["size"],
                 pad_position=pad_details["at"],
                 pad_radius=pad_radius,
                 fixed_point=Vector2D(0, silk_outline_y),
                 moving_point=Vector2D(outline_size[0] / 2, silk_outline_y),
-                silk_pad_offset_default=(silk_line_width / 2 + default_clearance),
+                silk_pad_offset_default=(
+                    global_config.silk_line_width / 2 + default_clearance
+                ),
                 silk_pad_offset_reduced=(
-                    silk_line_width / 2
+                    global_config.silk_line_width / 2
                     + self.configuration.get(
                         "silk_clearance_small_parts", default_clearance
                     )
@@ -475,7 +469,7 @@ class TwoTerminalSMD:
                         start=[-silk_point_top_right.x, -silk_point_top_right.y],
                         end=[silk_point_top_right.x, -silk_point_top_right.y],
                         layer="F.SilkS",
-                        width=silk_line_width,
+                        width=global_config.silk_line_width,
                     )
                 )
                 kicad_mod.append(
@@ -483,30 +477,30 @@ class TwoTerminalSMD:
                         start=[-silk_point_top_right.x, silk_point_top_right.y],
                         end=silk_point_top_right,
                         layer="F.SilkS",
-                        width=silk_line_width,
+                        width=global_config.silk_line_width,
                     )
                 )
 
         CrtYd_rect = [None, None]
-        CrtYd_rect[0] = roundToBase(
-            2 * abs(pad_details["at"][0])
-            + pad_details["size"][0]
-            + 2 * ipc_data_set["courtyard"],
-            0.02,
+        # Half width of the courtyard
+        CrtYd_rect[0] = round_to_grid_nearest(
+            abs(pad_details["at"][0])
+            + pad_details["size"][0] / 2
+            + ipc_data_set["courtyard"],
+            global_config.courtyard_grid
         )
-        if pad_details["size"][1] > outline_size[1]:
-            CrtYd_rect[1] = pad_details["size"][1] + 2 * ipc_data_set["courtyard"]
-        else:
-            CrtYd_rect[1] = outline_size[1] + 2 * ipc_data_set["courtyard"]
-
-        CrtYd_rect[1] = roundToBase(CrtYd_rect[1], 0.02)
-
+        # Half height of the courtyard
+        CrtYd_rect[1] = round_to_grid_nearest(
+            max(pad_details["size"][1], outline_size[1]) / 2
+            + ipc_data_set["courtyard"],
+            global_config.courtyard_grid
+        )
         kicad_mod.append(
             RectLine(
-                start=[-CrtYd_rect[0] / 2, CrtYd_rect[1] / 2],
-                end=[CrtYd_rect[0] / 2, -CrtYd_rect[1] / 2],
+                start=[-CrtYd_rect[0], CrtYd_rect[1]],
+                end=[CrtYd_rect[0], -CrtYd_rect[1]],
                 layer="F.CrtYd",
-                width=self.configuration["courtyard_line_width"],
+                width=global_config.courtyard_line_width,
             )
         )
 
@@ -521,7 +515,7 @@ class TwoTerminalSMD:
                 "top": -outline_size[1] / 2,
                 "bottom": outline_size[1] / 2,
             },
-            courtyard={"top": -CrtYd_rect[1] / 2, "bottom": CrtYd_rect[1] / 2},
+            courtyard={"top": -CrtYd_rect[1], "bottom": CrtYd_rect[1]},
             fp_name=fp_name,
             text_y_inside_position="center",
         )
