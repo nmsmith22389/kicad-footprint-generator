@@ -18,7 +18,7 @@ if __name__ == '__main__':
     screw_offset=[0,0]
     slit_screw=True
     name="360272"
-    webpage="https://www.metz-connect.com/externalfiles/360272/863850.PDF"
+    webpage="https://media.metz-connect.com/files/171/Data_sheet_360272.PDF "
     footprint_name="TerminalBlock_MetzConnect_{0}_1x01_Horizontal_ScrewM2.6".format(name)
     classname_description="single screw terminal block Metz Connect {0}".format(name)
     makeScrewTerminalSingleStd(footprint_name, block_size=block_size, block_offset=block_offset, pins=pins, ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, screw_offset=screw_offset, slit_screw=slit_screw,
@@ -27,7 +27,7 @@ if __name__ == '__main__':
     block_size=[5,4]
     block_offset=[0.5,0]
     name="360273"
-    webpage="https://www.metz-connect.com/externalfiles/360273/863857.PDF"
+    webpage="https://media.metz-connect.com/files/171/Data_sheet_360273.PDF "
     footprint_name="TerminalBlock_MetzConnect_{0}_1x01_Horizontal_ScrewM2.6_WireProtection".format(name)
     classname_description="single screw terminal block Metz Connect {0}".format(name)
     makeScrewTerminalSingleStd(footprint_name, block_size=block_size, block_offset=block_offset, pins=pins, ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, screw_offset=screw_offset, slit_screw=slit_screw,
@@ -42,13 +42,13 @@ if __name__ == '__main__':
     screw_offset=[0,0]
     slit_screw=True
     name="360410"
-    webpage="https://www.metz-connect.com/externalfiles/360410/863875.PDF"
+    webpage="https://media.metz-connect.com/files/171/Data_sheet_360410.PDF "
     footprint_name="TerminalBlock_MetzConnect_{0}_1x01_Horizontal_ScrewM3.0".format(name)
     classname_description="single screw terminal block Metz Connect {0}".format(name)
     makeScrewTerminalSingleStd(footprint_name, block_size=block_size, block_offset=block_offset, pins=pins, ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, screw_offset=screw_offset, slit_screw=slit_screw,
                         tags_additional=[], lib_name=classname, classname=classname, classname_description=classname_description, webpage=webpage, script_generated_note=script_generated_note)
     name="360381"
-    webpage="https://www.metz-connect.com/externalfiles/360381/863870.PDF"
+    webpage="https://media.metz-connect.com/files/171/Data_sheet_360381.PDF "
     footprint_name="TerminalBlock_MetzConnect_{0}_1x01_Horizontal_ScrewM3.0".format(name)
     classname_description="single screw terminal block Metz Connect {0}".format(name)
     makeScrewTerminalSingleStd(footprint_name, block_size=block_size, block_offset=block_offset, pins=pins, ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, screw_offset=screw_offset, slit_screw=slit_screw,
@@ -57,7 +57,7 @@ if __name__ == '__main__':
     block_size=[6,4]
     block_offset=[1,0]
     name="360322"
-    webpage="https://www.metz-connect.com/externalfiles/360322/863879.PDF"
+    webpage="https://media.metz-connect.com/files/171/Data_sheet_360322.PDF "
     footprint_name="TerminalBlock_MetzConnect_{0}_1x01_Horizontal_ScrewM3.0_WireProtection".format(name)
     classname_description="single screw terminal block Metz Connect {0}".format(name)
     makeScrewTerminalSingleStd(footprint_name, block_size=block_size, block_offset=block_offset, pins=pins, ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, screw_offset=screw_offset, slit_screw=slit_screw,
@@ -72,7 +72,7 @@ if __name__ == '__main__':
     screw_offset=[0,0]
     slit_screw=True
     name="360291"
-    webpage="https://www.metz-connect.com/externalfiles/360291/863863.PDF"
+    webpage="https://media.metz-connect.com/files/171/Data_sheet_360291.PDF "
     footprint_name="TerminalBlock_MetzConnect_{0}_1x01_Horizontal_ScrewM3.0_Boxed".format(name)
     classname_description="single screw terminal block Metz Connect {0}".format(name)
     makeScrewTerminalSingleStd(footprint_name, block_size=block_size, block_offset=block_offset, pins=pins, ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, screw_offset=screw_offset, slit_screw=slit_screw,
@@ -87,7 +87,7 @@ if __name__ == '__main__':
     screw_offset=[0,0]
     slit_screw=True
     name="360271"
-    webpage="https://www.metz-connect.com/externalfiles/360271/863846.PDF"
+    webpage="https://www.metz-connect.com/media/file/8a8a80ea6e17c2e6016e3b8ef7cd2d65.de.0/product_summary_u_contact_de_en_fr.pdf "
     footprint_name="TerminalBlock_MetzConnect_{0}_1x01_Horizontal_ScrewM3.0_Boxed".format(name)
     classname_description="single screw terminal block Metz Connect {0}".format(name)
     makeScrewTerminalSingleStd(footprint_name, block_size=block_size, block_offset=block_offset, pins=pins, ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, screw_offset=screw_offset, slit_screw=slit_screw,
@@ -102,7 +102,7 @@ if __name__ == '__main__':
     screw_offset=[0,0]
     slit_screw=True
     name="360425"
-    webpage="https://www.metz-connect.com/externalfiles/360425/863882.PDF"
+    webpage="https://www.metz-connect.com/media/file/8a8a80ea6e17c2e6016e3b8ef7cd2d65.de.0/product_summary_u_contact_de_en_fr.pdf "
     footprint_name="TerminalBlock_MetzConnect_{0}_1x01_Horizontal_ScrewM4.0_Boxed".format(name)
     classname_description="single screw terminal block Metz Connect {0}".format(name)
     makeScrewTerminalSingleStd(footprint_name, block_size=block_size, block_offset=block_offset, pins=pins, ddrill=ddrill, pad=pad, screw_diameter=screw_diameter, screw_offset=screw_offset, slit_screw=slit_screw,
