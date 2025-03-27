@@ -136,9 +136,9 @@ def generate_one_footprint(fpid, rows, datasheet, configuration):
         x_min = x_max - casewidth
         y_min = -(caselength - 17.78)/2
         y_max = y_min + caselength
-        pins = [1, 2, 3, 6, 7]
-        xpos = [1, 1, 1, 1, 1]
-        ypos = [1, 2, 3, 6, 7]
+        pins = [1, 2, 3, 5, 6, 7, 8]
+        xpos = [1, 1, 1, 1, 1, 1, 1]
+        ypos = [1, 2, 3, 5, 6, 7, 8]
     elif fpid == "ITXxxxxSA" and rows == "SIP" :
         casetolerance = 0.5
         casewidth = 9.20
@@ -248,7 +248,7 @@ def generate_one_footprint(fpid, rows, datasheet, configuration):
     lib = KicadPrettyLibrary(lib_name, None)
     lib.save(kicad_mod)
 
-    print(filename)
+    print(footprint_name)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='use confing .yaml files to create footprints.')

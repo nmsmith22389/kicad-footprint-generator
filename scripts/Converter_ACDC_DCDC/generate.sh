@@ -9,3 +9,5 @@ run_generate() {
 for file in size_definitions/*.yaml; do
     run_generate "$file"
 done
+
+./XP_Power_SF_THT.py
