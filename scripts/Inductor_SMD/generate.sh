@@ -9,3 +9,7 @@ run_generate() {
 for file in ../../data/Inductor_SMD/*.yaml; do
     run_generate "$file"
 done
+
+
+# The old StandardBox-based def (port me!)
+./Inductor_SMD.py -v Inductor_SMD.yaml
