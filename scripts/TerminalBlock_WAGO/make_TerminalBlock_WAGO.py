@@ -273,3 +273,92 @@ if __name__ == '__main__':
                                   secondDrillDiameter=secondDrillDiameter,secondDrillOffset=secondDrillOffset,secondDrillPad=secondDrillPad,
                                   nibbleSize=nibbleSize, nibblePos=nibblePos, fabref_offset=fabref_offset,
                                   tags_additional=[], lib_name=classname, classname=classname, classname_description=classname_description, webpage=webpage, script_generated_note=script_generated_note)
+
+
+    # WAGO 2601
+
+    pins=[2,3,4,5,6,8,9,10,11,12]
+    rm=3.5
+    package_height=14.5
+    leftbottom_offset=[2.44, 5.35, 2.56]
+    ddrill=1.2
+    pad=[1.5,2.3]
+    secondDrillOffset=[0,-5]
+
+    for p in pins:
+        name="2601-11{0:02}".format(p);
+        webpage="https://www.wago.com/global/pcb-terminal-blocks-and-pluggable-connectors/pcb-terminal-block/p/{0}".format(name);
+        classname_description="Terminal Block WAGO {0}".format(name);
+        footprint_name="TerminalBlock_WAGO_{0}_1x{2:02}_P{1:3.2f}mm_Horizontal".format(name, rm, p)
+
+        makeTerminalBlockStd(footprint_name=footprint_name,
+            pins=p,
+            rm=rm,
+            package_height=package_height,
+            leftbottom_offset=leftbottom_offset,
+            ddrill=ddrill,
+            pad=pad,
+            screw_diameter=0,
+            bevel_height=[],
+            slit_screw=False,
+            screw_pin_offset=[0,0],
+            secondHoleDiameter=0,
+            secondHoleOffset=[0,0],
+            thirdHoleDiameter=0,
+            thirdHoleOffset=[0,0],
+            fourthHoleDiameter=0,
+            fourthHoleOffset=[0,0],
+            secondDrillDiameter=ddrill,
+            secondDrillOffset=secondDrillOffset,
+            secondDrillPad=pad,
+            fabref_offset=[0,0],
+            stackable=False,
+            tags_additional=[],
+            lib_name=classname,
+            classname=classname,
+            classname_description="Terminal Block WAGO {0}".format(name),
+            webpage=webpage,
+            script_generated_note=script_generated_note)
+
+    pins=[2,3,4,5,6,7,8,9,10,11,12,14,24]
+    rm=3.5
+    package_height=12.75
+    leftbottom_offset=[2.56, 5.45, 2.44]
+    ddrill=1.2
+    pad=[1.5,2.3]
+    secondDrillOffset=[0,-5]
+
+    for p in pins:
+        name="2601-31{0:02}".format(p);
+        webpage="https://www.wago.com/global/pcb-terminal-blocks-and-pluggable-connectors/pcb-terminal-block/p/{0}".format(name);
+        classname_description="Terminal Block WAGO {0}".format(name);
+        footprint_name="TerminalBlock_WAGO_{0}_1x{2:02}_P{1:3.2f}mm_Vertical".format(name, rm, p)
+
+        makeTerminalBlockStd(footprint_name=footprint_name,
+            pins=p,
+            rm=rm,
+            package_height=package_height,
+            leftbottom_offset=leftbottom_offset,
+            ddrill=ddrill,
+            pad=pad,
+            screw_diameter=0,
+            bevel_height=[],
+            slit_screw=False,
+            screw_pin_offset=[0,0],
+            secondHoleDiameter=0,
+            secondHoleOffset=[0,0],
+            thirdHoleDiameter=0,
+            thirdHoleOffset=[0,0],
+            fourthHoleDiameter=0,
+            fourthHoleOffset=[0,0],
+            secondDrillDiameter=ddrill,
+            secondDrillOffset=secondDrillOffset,
+            secondDrillPad=pad,
+            fabref_offset=[0,0],
+            stackable=False,
+            tags_additional=[],
+            lib_name=classname,
+            classname=classname,
+            classname_description="Terminal Block WAGO {0}".format(name),
+            webpage=webpage,
+            script_generated_note=script_generated_note)
