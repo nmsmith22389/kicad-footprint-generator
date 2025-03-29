@@ -1,13 +1,20 @@
 BatteryHolder_Bulgin_BX0123_1xCR123:
   library_name: "Battery"
-  description: "Bulgin Battery Holder, BX0123, Battery Type 1xCR123"
-  datasheet: "https://www.bulgin.com/products/pub/media/import/attachments/Battery_holders.pdf"
-  tags: "Bulgin Battery Holder, BX0123, Battery Type 1xCR123"
-  extratexts: [[-4.5, -0.05, "+", "F.SilkS", 3.0, 3.0]]
+  description: "Battery holder, Bulgin BX0123, battery type 1xCR123"
+  datasheet: "https://www.bulgin.com/products/pub/media/import/attachments/Battery_holders.pdf#page=7"
+  tags: "horizontal single"
+  extratexts:
+    - [-4.0, 0.2, "+", "F.SilkS", 3.0, 3.0]
+    - [ 4.0, 0.2, "+", "F.Fab", 3.0, 3.0]
   at: [-1.75, 10.0]
   size: [41.3, 20.0]
   automatic_pin1_mark: False
-  pins: [["tht", "1", 0, 0, 3.0, 3.0, 1.6], ["tht", "2", 37.8, 0, 3.0, 3.0, 1.6], ["npth", "", 10.425, 0, 3.2, 0, 3.2], ["npth", "", 27.375, 0, 3.2, 0, 3.2]]
+  body_size_tolerance: [0.25, 0.25]
+  pins:
+    - ["tht", "1", 0, 0, 3.0, 3.0, 1.6]
+    - ["tht", "2", 37.8, 0, 3.0, 3.0, 1.6]
+    - ["npth", "", 10.425, 0, 3.2, 0, 3.2]
+    - ["npth", "", 27.375, 0, 3.2, 0, 3.2]
 
 BatteryHolder_Keystone_1042_1x18650:
   library_name: "Battery"
