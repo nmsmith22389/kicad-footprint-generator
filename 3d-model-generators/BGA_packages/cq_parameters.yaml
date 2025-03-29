@@ -2071,3 +2071,43 @@ NXP_SOT1450-2_WLCSP-100_5.07x5.07mm_Layout10x10_P0.5mm:
   pins_color_key: "metal grey pins"
   marking_color_key: "light brown label"
   library_name: "Package_CSP"
+
+NXP_SOT2162-1_VFBGA-59_4x4mm_Layout9x9_P0.4mm:
+  # from https://www.nxp.com/docs/en/package-information/SOT2162-1.pdf
+  fp_r: 0.4       # first pin indicator radius
+  fp_d: 0.08      # first pin indicator distance from edge
+  fp_z: 0.01      # first pin indicator depth
+  ef: 0.0         # fillet of edges  Note: bigger bytes model with fillet
+  cf: null        # chamfer of the others corner
+  cff: null       # chamfer of the 1st pin corner
+  D1: null        # top body overall length
+  D: 4            # body overall length
+  E1: null        # body overall length
+  E: 4            # body overall width
+  A1: 0.09        # body-board separation
+  A2: null        # body height or body bottom height optional, needed for molded
+  A: 0.77         # body overall height
+  b: 0.25         # ball pin width diameter
+  e: 0.4          # pin (center-to-center) distance
+  ex: null        # pin (center-to-center) distance
+  sp: 0.0         # seating plane (pcb penetration)
+  npx: 9          # number of pins along X axis (width)
+  npy: 9          # number of pins along y axis (length)
+  excluded_pins: [         3,      5,      7,         #A1...J1
+                                  14,                 #A2...J2
+                  19,     21,             25,     27,
+                                  32,
+                  37, 38,                     44, 45,
+                                  50,
+                  55,     57,             61,     63,
+                                  68,                 #A8...J8
+                          75,     77,     79        ] #pins to exclude
+  molded: null    # molded = True, omitted -> None
+  old_modelName: "NXP_SOT2162-1_VFBGA-59_4x4mm_Layout9x9_P0.4mm" # old_modelName
+  modelName: "NXP_SOT2162-1_VFBGA-59_4x4mm_Layout9x9_P0.4mm" # modelName
+  rotation: -90   # rotation if required
+  body_bot_color_key: "dark green body"
+  body_color_key: "black body"
+  pins_color_key: "metal grey pins"
+  marking_color_key: "light brown label"
+  library_name: "Package_BGA"
