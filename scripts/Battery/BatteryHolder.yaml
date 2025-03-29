@@ -1,57 +1,7 @@
-BatteryHolder_Bulgin_BX0033_1xPP3:
-  library_name: "Battery"
-  description: "Bulgin Battery Holder, BX0033, Battery Type 1xPP3"
-  datasheet: "http://www.bulgin.com/media/bulgin/data/Battery_holders.pdf"
-  tags: "Bulgin Battery Holder, BX0033, Battery Type 1xPP3"
-  extratexts: [[-3.0, 0, "-", "F.SilkS", 1.0, 1.0]]
-  at: [-1.7, 8.55]
-  size: [58.7, 29.8]
-  pins: [["tht", "1", 0, 0, 3.0, 3.0, 1.6], ["tht", "2", 0, -12.7, 3.0, 3.0, 1.6], ["npth", "", 10.7, -6.35, 3.0, 0, 3.0], ["npth", "", 24.7, -6.35, 3.0, 0, 3.0]]
-
-BatteryHolder_Bulgin_BX0034_1xAAA:
-  library_name: "Battery"
-  description: "Bulgin Battery Holder, BX0034, Battery Type 1xAAA"
-  datasheet: "http://www.bulgin.com/media/bulgin/data/Battery_holders.pdf"
-  tags: "Bulgin Battery Holder, BX0034, Battery Type 1xAAA"
-  extratexts: [[-4.5, -0.05, "+", "F.SilkS", 3.0, 3.0]]
-  at: [-1.7, 8.65]
-  size: [52.3, 17.3]
-  pins: [["tht", "1", 0, 0, 3.0, 3.0, 1.6], ["tht", "2", 48.9, 0, 3.0, 3.0, 1.6], ["npth", "", 10.5, 0, 3.2, 0, 3.2], ["npth", "", 38.4, 0, 3.2, 0, 3.2]]
-  
-BatteryHolder_Bulgin_BX0035_1xAA:
-  library_name: "Battery"
-  description: "Bulgin Battery Holder, BX0035, Battery Type 1xAA (http://www.bulgin.com/media/bulgin/data/Battery_holders.pdf)"
-  datasheet: "Bulgin Battery Holder, BX0035, Battery Type 1xAA (http://www.bulgin.com/media/bulgin/data/Battery_holders.pdf)"
-  tags: "Bulgin Battery Holder, BX0035, Battery Type 1xAA"
-  extratexts: [[-4.5, -0.05, "+", "F.SilkS", 3.0, 3.0]]
-  at: [-1.75, 10.80]
-  size: [60.3, 21.6]
-  pins: [["tht", "1", 0, 0, 3.0, 3.0, 1.6], ["tht", "2", 56.8, 0, 3.0, 3.0, 1.6], ["npth", "", 11.9, 0, 3.8, 0, 3.8], ["npth", "", 44.9, 0, 3.8, 0, 3.8]]
-  
-BatteryHolder_Bulgin_BX0036_1xC:
-  library_name: "Battery"
-  description: "Bulgin Battery Holder, BX0036, Battery Type 1xC"
-  datasheet: "http://www.bulgin.com/media/bulgin/data/Battery_holders.pdf"
-  tags: "Bulgin Battery Holder, BX0036, Battery Type 1xC"
-  extratexts: [[-4.5, -0.05, "+", "F.SilkS", 3.0, 3.0]]
-  at: [-1.75, 17.0]
-  size: [59.1, 34.0]
-  pins: [["tht", "1", 0, 0, 3.0, 3.0, 1.6], ["tht", "2", 55.6, 0, 3.0, 3.0, 1.6], ["npth", "", 11.9, 0, 3.8, 0, 3.8], ["npth", "", 43.7, 0, 3.8, 0, 3.8]]
-  
-BatteryHolder_Bulgin_BX0037_1xD:
-  library_name: "Battery"
-  description: "Bulgin Battery Holder, BX0037, Battery Type 1xD"
-  datasheet: "http://www.bulgin.com/media/bulgin/data/Battery_holders.pdf"
-  tags: "Bulgin Battery Holder, BX0037, Battery Type 1xD"
-  extratexts: [[-4.5, -0.05, "+", "F.SilkS", 3.0, 3.0]]
-  at: [-1.75, 20.95]
-  size: [71.0, 41.9]
-  pins: [["tht", "1", 0, 0, 3.0, 3.0, 1.6], ["tht", "2", 67.5, 0, 3.0, 3.0, 1.6], ["npth", "", 15.95, 0, 3.8, 0, 3.8], ["npth", "", 51.55, 0, 3.8, 0, 3.8]]
-
 BatteryHolder_Bulgin_BX0123_1xCR123:
   library_name: "Battery"
   description: "Bulgin Battery Holder, BX0123, Battery Type 1xCR123"
-  datasheet: "http://www.bulgin.com/media/bulgin/data/Battery_holders.pdf"
+  datasheet: "https://www.bulgin.com/products/pub/media/import/attachments/Battery_holders.pdf"
   tags: "Bulgin Battery Holder, BX0123, Battery Type 1xCR123"
   extratexts: [[-4.5, -0.05, "+", "F.SilkS", 3.0, 3.0]]
   at: [-1.75, 10.0]
@@ -78,7 +28,7 @@ BatteryHolder_Keystone_2466_1xAAA:
   at: [-2.645, 6.50]
   size: [49.99, 13.00]
   pins: [["tht", "1", 0, 0, 3.0, 3.0, 1.1], ["tht", "2", 44.70, 0, 3.0, 3.0, 1.1]]
-  
+
 BatteryHolder_Keystone_2468_2xAAA:
   library_name: "Battery"
   description: "Keystone Battery Holder, 2468, Battery Type 2xAAA"
