@@ -584,9 +584,7 @@ class StandardBox(Node):
         #
         self.pad = []
 
-        # TODO: this doesn't use the standard rounding: should be
-        # global_config.roundrect_radius_handler, but that makes diffs
-        radius_handler = RoundRadiusHandler(radius_ratio=0.25)
+        radius_handler = self.global_config.roundrect_radius_handler
 
         c = 1
         for n in self.pins:
