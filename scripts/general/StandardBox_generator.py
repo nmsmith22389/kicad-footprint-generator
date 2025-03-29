@@ -24,7 +24,7 @@ def converter(args):
     body_position_tolerance = Vector2D(args["body_position_tolerance"])
     body_size_tolerance = Vector2D(args["body_size_tolerance"])
     courtyard = args["courtyard"]
-    out_dir: Path = args["output_dir"]
+    automatic_pin1_mark = bool(args["automatic_pin1_mark"])
 
     # Until this can be passed in properly, use the default global config
     global_cfg = global_config.DefaultGlobalConfig()
@@ -62,7 +62,8 @@ def converter(args):
                          compatible_mpns=metadata.compatible_mpns,
                          extratexts=extratexts, pins=pins,
                          file3Dname=file3Dname, courtyard_clearance=courtyard_clearance,
-                         fab_to_silk_clearance=fab_to_silk_clearance))
+                         fab_to_silk_clearance=fab_to_silk_clearance,
+                         automatic_pin1_mark=automatic_pin1_mark))
 
     lib = KicadPrettyLibrary(metadata.library_name, None)
     lib.save(f)
@@ -91,6 +92,7 @@ def main(args):
     # Courtyard outside the maximum body extent (i.e. not including the body tolerance)
     parser.add_parameter("courtyard", type=float, required=False, default=ipc_default_courtyard_clearance)
     parser.add_parameter("extratexts", type=list, required=False, default=[])
+    parser.add_parameter("automatic_pin1_mark", type=bool, required=False, default=True)
 
     # now run our script which handles the whole part of parsing the files
     parser.run()

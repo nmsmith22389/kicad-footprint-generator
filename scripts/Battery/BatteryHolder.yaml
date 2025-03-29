@@ -6,6 +6,7 @@ BatteryHolder_Bulgin_BX0123_1xCR123:
   extratexts: [[-4.5, -0.05, "+", "F.SilkS", 3.0, 3.0]]
   at: [-1.75, 10.0]
   size: [41.3, 20.0]
+  automatic_pin1_mark: False
   pins: [["tht", "1", 0, 0, 3.0, 3.0, 1.6], ["tht", "2", 37.8, 0, 3.0, 3.0, 1.6], ["npth", "", 10.425, 0, 3.2, 0, 3.2], ["npth", "", 27.375, 0, 3.2, 0, 3.2]]
 
 BatteryHolder_Keystone_1042_1x18650:
@@ -17,6 +18,7 @@ BatteryHolder_Keystone_1042_1x18650:
   at: [-43.205, 10.325]
   size: [86.41, 20.65]
   smd_tht: "smd"
+  automatic_pin1_mark: False
   pins: [["smd", "1", -43.205, 0, 6.47, 6.47, 0.0], ["smd", "2", 43.205, 0, 6.47, 6.47, 0.0]]
 
 BatteryHolder_Keystone_2466_1xAAA:
@@ -27,6 +29,7 @@ BatteryHolder_Keystone_2466_1xAAA:
   extratexts: [[-4.5, -0.05, "+", "F.SilkS", 3.0, 3.0]]
   at: [-2.645, 6.50]
   size: [49.99, 13.00]
+  automatic_pin1_mark: False
   pins: [["tht", "1", 0, 0, 3.0, 3.0, 1.1], ["tht", "2", 44.70, 0, 3.0, 3.0, 1.1]]
 
 BatteryHolder_Keystone_2468_2xAAA:
@@ -37,6 +40,7 @@ BatteryHolder_Keystone_2468_2xAAA:
   extratexts: [[-4.5, -0.05, "+", "F.SilkS", 3.0, 3.0]]
   at: [-2.865, 5.945]
   size: [52.98, 24.59]
+  automatic_pin1_mark: False
   pins: [["tht", "1", 0, 0, 3.0, 3.0, 1.1], ["tht", "2", 0, -12.70, 3.0, 3.0, 1.1], ["npth", "", 8.64, -4, 3.45, 0, 3.45], ["npth", "", 38.61, -8, 3.45, 0, 3.45]]
 
 BatteryHolder_Keystone_2479_3xAAA:
@@ -47,6 +51,7 @@ BatteryHolder_Keystone_2479_3xAAA:
   extratexts: [[-4.5, -0.05, "+", "F.SilkS", 3.0, 3.0]]
   at: [-2.59, 6.995]
   size: [52.63, 37.49]
+  automatic_pin1_mark: False
   pins: [["tht", "1", 0, 0, 3.0, 3.0, 1.1], ["tht", "2", 0, -12.70, 3.0, 3.0, 1.1], ["npth", "", 23.72, 0, 3.45, 0, 3.45], ["npth", "", 23.72, -23.50, 3.45, 0, 3.45]]
 
 BatteryHolder_MPD_BC2AAPC_2xAA:
@@ -57,6 +62,7 @@ BatteryHolder_MPD_BC2AAPC_2xAA:
   extratexts: [[-4.5, -0.05, "+", "F.SilkS", 3.0, 3.0]]
   at: [-2.84, 8.445]
   size: [58.00, 30.50]
+  automatic_pin1_mark: False
   pins: [["tht", "1", 0, 0, 3.0, 3.0, 1.1], ["tht", "2", 0, -13.59, 3.0, 3.0, 1.1], ["npth", "", 26.16, -6.63, 3.56, 0, 3.56]]
 
 BatteryHolder_MPD_BC12AAPC_2xAA:
@@ -67,6 +73,7 @@ BatteryHolder_MPD_BC12AAPC_2xAA:
   extratexts: [[-4.5, -0.05, "+", "F.SilkS", 3.0, 3.0]]
   at: [-2.9, 8.1]
   size: [107.8, 16.20]
+  automatic_pin1_mark: False
   pins: [["tht", "1", 0, 0, 3.0, 3.0, 1.1], ["tht", "2", 102.0, 0, 3.0, 3.0, 1.1],  ["npth", "", 26.15, 4.75, 2.5, 0, 1.1], ["npth", "", 26.15, -4.75, 2.5, 0, 1.1], ["npth", "", 75.85, 4.75, 2.5, 0, 1.1], ["npth", "", 75.85, -4.75, 2.5, 0, 1.1]]
 
 BatteryHolder_MPD_BH-18650-PC:
@@ -77,6 +84,7 @@ BatteryHolder_MPD_BH-18650-PC:
   extratexts: [[-4.5, -0.05, "+", "F.SilkS", 3.0, 3.0]]
   at: [-2.4, 10.45]
   size: [77.7, 20.9]
+  automatic_pin1_mark: False
   pins: [["tht", "1", 0, 0,  3.0, 3.0, 1.57], ["tht", "2", 72.90, 0,  3.0, 3.0, 1.57], ["npth", "", 8.445, 0.0, 3.2, 0, 3.2], ["npth", "", 64.055, 0.0, 3.2, 0, 3.2]]
 
 BatteryHolder_MPD_BK-18650-PC2:
@@ -87,6 +95,7 @@ BatteryHolder_MPD_BK-18650-PC2:
   extratexts: [[-4.5, -0.05, "+", "F.SilkS", 3.0, 3.0]]
   at: [-2.23, 10.49]
   size: [76.96, 20.98]
+  automatic_pin1_mark: False
   pins: [["tht", "1", 0, 0, 3.0, 3.0, 1.57], ["tht", "2", 72.90, 0, 3.0, 3.0, 1.57], ["npth", "", 8.445, 0.0, 3.2, 0, 3.2], ["npth", "", 64.055, 0.0, 3.2, 0, 3.2]]
 
 BatteryHolder_TruPower_BH-331P_3xAA:
@@ -97,6 +106,7 @@ BatteryHolder_TruPower_BH-331P_3xAA:
   extratexts: [[-4.5, 0.0, "+", "F.SilkS", 3.0, 3.0]]
   at: [-2.3, 9.15]
   size: [58.0, 48.3]
+  automatic_pin1_mark: False
   pins: [["tht", "1", 0, 0, 3.0, 3.0, 1.2], ["tht", "2", 0, -12.8, 3.0, 3.0, 1.2], ["npth", "", 26.7, 0.0, 3.5, 0, 3.5], ["npth", "", 26.7, -30.0, 3.5, 0, 3.5]]
 
 

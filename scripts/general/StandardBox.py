@@ -88,6 +88,8 @@ class StandardBox(Node):
           Clearance between nominal body rectangle and courtyard outline in each axis (default (0.25, 0.25))
         * *fab_to_silk_clearance* (``Vector2D``) --
           Clearance between the edge of the fab line and edge of the silk line in each axis (default: (0, 0))
+        * *automatic_pin1_mark* (``bool``) --
+          Add a pin 1 marker to the footprint. If False, the pin 1 marker is not added (default: True)
         * *file3Dname* (``str``) --
           The path to the 3D model name
 
@@ -141,10 +143,15 @@ class StandardBox(Node):
         self._initFile3DNameNode(**kwargs)
         self._initExtraTextNode(**kwargs)
 
+        self.automatic_pin1_mark = kwargs.get('automatic_pin1_mark', True)
+
         # Create footprint parts
         self._createPinsNode()
         self._createFFabLine()
-        self._createPin1MarkerLine()
+
+        if self.automatic_pin1_mark:
+            self._createPin1MarkerLine()
+
         self._createFSilkSLine()
         self._createFCrtYdLine()
 
@@ -296,7 +303,13 @@ class StandardBox(Node):
         self.boxffabline.append(koaLine(x + w, y + h, x, y + h, 'F.Fab', self.FFabWidth))
         self.boxffabline.append(koaLine(x, y + h, x, y, 'F.Fab', self.FFabWidth))
 
-        self._box_transform.append(draw_chamfer_rect_fab(self.size, self.global_config))
+        # Also drive the fab chamfer from this parameter
+        # If needed, a separate parameter could be added to control this independently
+        self._box_transform.append(
+            draw_chamfer_rect_fab(
+                self.size, self.global_config, has_chamfer=self.automatic_pin1_mark
+            )
+        )
 
     def _getPin1ChevronCorner(self) -> Vector2D:
         main_silk_outset = self._getMainFSilkOutsetFromFabLineCentre()

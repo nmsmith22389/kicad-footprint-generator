@@ -4,29 +4,45 @@ from KicadModTree.nodes.specialized.ChamferedRect import (
     ChamferRect,
     CornerSelection,
 )
-from KicadModTree import PolygonLine
+from KicadModTree import PolygonLine, Rect
 from kilibs.geom import Vector2D, Direction
 
 from scripts.tools.global_config_files.global_config import GlobalConfig
 
 
-def draw_chamfer_rect_fab(size: Vector2D, global_config: GlobalConfig) -> ChamferRect:
+def draw_chamfer_rect_fab(
+    size: Vector2D, global_config: GlobalConfig, has_chamfer: bool = True
+) -> ChamferRect | Rect:
     """
-    Constructor for a chamfered Fab-layer rectangle with a chamfer on the top-left corner,
-    centered on the origin.
+    Constructor for a optionally-chamfered Fab-layer rectangle with a chamfer on
+    the top-left corner, centered on the origin.
 
     Mostly just glue between the ChamferRect constructor and the global config.
-    """
 
-    return ChamferRect(
-        at=Vector2D(0, 0),
-        size=size,
-        chamfer=global_config.fab_bevel,
-        corners=CornerSelection({CornerSelection.TOP_LEFT: True}),
-        layer="F.Fab",
-        width=global_config.fab_line_width,
-        fill=False,
-    )
+    :param size: The size of the rectangle
+    :param global_config: The global configuration object (drives line width)
+    :param has_chamfer: Whether to draw the chamfer or not (default: True)
+
+    :return: The drawing node
+    """
+    if has_chamfer:
+        return ChamferRect(
+            at=Vector2D(0, 0),
+            size=size,
+            chamfer=global_config.fab_bevel,
+            corners=CornerSelection({CornerSelection.TOP_LEFT: True}),
+            layer="F.Fab",
+            width=global_config.fab_line_width,
+            fill=False,
+        )
+    else:
+        return Rect(
+            start=-size / 2,
+            end=size / 2,
+            width=global_config.fab_line_width,
+            layer="F.Fab",
+            fill=False,
+        )
 
 
 def draw_pin1_chevron_on_hline(
