@@ -95,25 +95,39 @@ BatteryHolder_Keystone_2479_3xAAA:
 
 BatteryHolder_MPD_BH-18650-PC:
   library_name: "Battery"
-  description: "Keystone Battery Holder, BH-18650, Battery Type 1x18650"
-  datasheet: "http://www.memoryprotectiondevices.com/datasheets/BH-18650-PC-datasheet.pdf"
-  tags: "MPD Battery Holder, BH-18650, Battery Type 1x18650"
-  extratexts: [[-4.5, -0.05, "+", "F.SilkS", 3.0, 3.0]]
+  description: "Battery holder, MPD BH-18650, battery type 1x18650"
+  datasheet: "https://www.batteryholders.com/uploads/parts/BH-18650-PC/datasheets/BH-18650-PC-datasheet.pdf"
+  tags: "horizontal single"
+  extratexts:
+    - [-4.5, -0.05, "+", "F.SilkS", 3.0, 3.0]
+    - [ 4.0, 0.2, "+", "F.Fab", 3.0, 3.0]
   at: [-2.4, 10.45]
   size: [77.7, 20.9]
   automatic_pin1_mark: False
-  pins: [["tht", "1", 0, 0,  3.0, 3.0, 1.57], ["tht", "2", 72.90, 0,  3.0, 3.0, 1.57], ["npth", "", 8.445, 0.0, 3.2, 0, 3.2], ["npth", "", 64.055, 0.0, 3.2, 0, 3.2]]
+  body_size_tolerance: [0.5, 0.5]
+  pins:
+    - ["tht", "1", 0, 0,  3.0, 3.0, 1.57]
+    - ["tht", "2", 72.90, 0,  3.0, 3.0, 1.57]
+    - ["npth", "", 8.445, 0.0, 3.2, 0, 3.2]
+    - ["npth", "", 64.055, 0.0, 3.2, 0, 3.2]
 
 BatteryHolder_MPD_BK-18650-PC2:
   library_name: "Battery"
-  description: "Keystone Battery Holder, BH-18650, Battery Type 1x18650"
-  datasheet: "http://www.memoryprotectiondevices.com/datasheets/BK-18650-PC2-datasheet.pdf"
-  tags: "MPD Battery Holder, BK-18650, Battery Type 1x18650"
-  extratexts: [[-4.5, -0.05, "+", "F.SilkS", 3.0, 3.0]]
+  description: "Battery holder, MPD BK-18650, battery type 1x18650"
+  datasheet: "https://www.batteryholders.com/uploads/parts/BK-18650-PC2/datasheets/BK-18650-PC2-datasheet.pdf"
+  tags: "horizontal single"
+  extratexts:
+    - [-4.5, -0.05, "+", "F.SilkS", 3.0, 3.0]
+    - [ 4.0, 0.2, "+", "F.Fab", 3.0, 3.0]
   at: [-2.23, 10.49]
   size: [76.96, 20.98]
   automatic_pin1_mark: False
-  pins: [["tht", "1", 0, 0, 3.0, 3.0, 1.57], ["tht", "2", 72.90, 0, 3.0, 3.0, 1.57], ["npth", "", 8.445, 0.0, 3.2, 0, 3.2], ["npth", "", 64.055, 0.0, 3.2, 0, 3.2]]
+  body_size_tolerance: [0.5, 0.5]
+  pins:
+    - ["tht", "1", 0, 0, 3.0, 3.0, 1.57]
+    - ["tht", "2", 72.90, 0, 3.0, 3.0, 1.57]
+    - ["npth", "", 8.445, 0.0, 3.2, 0, 3.2]
+    - ["npth", "", 64.055, 0.0, 3.2, 0, 3.2]
 
 BatteryHolder_TruPower_BH-331P_3xAA:
   library_name: "Battery"
