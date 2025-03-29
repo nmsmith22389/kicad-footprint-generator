@@ -21,27 +21,29 @@ BatteryHolder_Keystone_1042_1x18650:
   automatic_pin1_mark: False
   pins: [["smd", "1", -43.205, 0, 6.47, 6.47, 0.0], ["smd", "2", 43.205, 0, 6.47, 6.47, 0.0]]
 
-BatteryHolder_Keystone_2466_1xAAA:
-  library_name: "Battery"
-  description: "Keystone Battery Holder, 2466, Battery Type 1xAAA"
-  datasheet: "http://www.keyelco.com/product-pdf.cfm?p=1031"
-  tags: "Keystone Battery Holder, 2466, Battery Type 1xAAA"
-  extratexts: [[-4.5, -0.05, "+", "F.SilkS", 3.0, 3.0]]
-  at: [-2.645, 6.50]
-  size: [49.99, 13.00]
-  automatic_pin1_mark: False
-  pins: [["tht", "1", 0, 0, 3.0, 3.0, 1.1], ["tht", "2", 44.70, 0, 3.0, 3.0, 1.1]]
+# This has had drawings added in the library
+# BatteryHolder_Keystone_2466_1xAAA:
+#   library_name: "Battery"
+#   description: "Keystone Battery Holder, 2466, Battery Type 1xAAA"
+#   datasheet: "http://www.keyelco.com/product-pdf.cfm?p=1031"
+#   tags: "Keystone Battery Holder, 2466, Battery Type 1xAAA"
+#   extratexts: [[-4.5, -0.05, "+", "F.SilkS", 3.0, 3.0]]
+#   at: [-2.645, 6.50]
+#   size: [49.99, 13.00]
+#   automatic_pin1_mark: False
+#   pins: [["tht", "1", 0, 0, 3.0, 3.0, 1.1], ["tht", "2", 44.70, 0, 3.0, 3.0, 1.1]]
 
-BatteryHolder_Keystone_2468_2xAAA:
-  library_name: "Battery"
-  description: "Keystone Battery Holder, 2468, Battery Type 2xAAA"
-  datasheet: "http://www.keyelco.com/product-pdf.cfm?p=1033"
-  tags: "Keystone Battery Holder, 2468, Battery Type 2xAAA"
-  extratexts: [[-4.5, -0.05, "+", "F.SilkS", 3.0, 3.0]]
-  at: [-2.865, 5.945]
-  size: [52.98, 24.59]
-  automatic_pin1_mark: False
-  pins: [["tht", "1", 0, 0, 3.0, 3.0, 1.1], ["tht", "2", 0, -12.70, 3.0, 3.0, 1.1], ["npth", "", 8.64, -4, 3.45, 0, 3.45], ["npth", "", 38.61, -8, 3.45, 0, 3.45]]
+# This has had drawings added in the library
+# BatteryHolder_Keystone_2468_2xAAA:
+#   library_name: "Battery"
+#   description: "Keystone Battery Holder, 2468, Battery Type 2xAAA"
+#   datasheet: "http://www.keyelco.com/product-pdf.cfm?p=1033"
+#   tags: "Keystone Battery Holder, 2468, Battery Type 2xAAA"
+#   extratexts: [[-4.5, -0.05, "+", "F.SilkS", 3.0, 3.0]]
+#   at: [-2.865, 5.945]
+#   size: [52.98, 24.59]
+#   automatic_pin1_mark: False
+#   pins: [["tht", "1", 0, 0, 3.0, 3.0, 1.1], ["tht", "2", 0, -12.70, 3.0, 3.0, 1.1], ["npth", "", 8.64, -4, 3.45, 0, 3.45], ["npth", "", 38.61, -8, 3.45, 0, 3.45]]
 
 BatteryHolder_Keystone_2479_3xAAA:
   library_name: "Battery"
@@ -54,27 +56,29 @@ BatteryHolder_Keystone_2479_3xAAA:
   automatic_pin1_mark: False
   pins: [["tht", "1", 0, 0, 3.0, 3.0, 1.1], ["tht", "2", 0, -12.70, 3.0, 3.0, 1.1], ["npth", "", 23.72, 0, 3.45, 0, 3.45], ["npth", "", 23.72, -23.50, 3.45, 0, 3.45]]
 
-BatteryHolder_MPD_BC2AAPC_2xAA:
-  library_name: "Battery"
-  description: "Keystone Battery Holder, BC2AAPC, Battery Type 2xAA"
-  datasheet: "http://www.memoryprotectiondevices.com/datasheets/BC2AAPC-datasheet.pdf"
-  tags: "MPD Battery Holder, BC2AAPC, Battery Type 2xAA"
-  extratexts: [[-4.5, -0.05, "+", "F.SilkS", 3.0, 3.0]]
-  at: [-2.84, 8.445]
-  size: [58.00, 30.50]
-  automatic_pin1_mark: False
-  pins: [["tht", "1", 0, 0, 3.0, 3.0, 1.1], ["tht", "2", 0, -13.59, 3.0, 3.0, 1.1], ["npth", "", 26.16, -6.63, 3.56, 0, 3.56]]
+# This has had drawings added in the library
+# BatteryHolder_MPD_BC2AAPC_2xAA:
+#   library_name: "Battery"
+#   description: "Keystone Battery Holder, BC2AAPC, Battery Type 2xAA"
+#   datasheet: "http://www.memoryprotectiondevices.com/datasheets/BC2AAPC-datasheet.pdf"
+#   tags: "MPD Battery Holder, BC2AAPC, Battery Type 2xAA"
+#   extratexts: [[-4.5, -0.05, "+", "F.SilkS", 3.0, 3.0]]
+#   at: [-2.84, 8.445]
+#   size: [58.00, 30.50]
+#   automatic_pin1_mark: False
+#   pins: [["tht", "1", 0, 0, 3.0, 3.0, 1.1], ["tht", "2", 0, -13.59, 3.0, 3.0, 1.1], ["npth", "", 26.16, -6.63, 3.56, 0, 3.56]]
 
-BatteryHolder_MPD_BC12AAPC_2xAA:
-  library_name: "Battery"
-  description: "Keystone Battery Holder, BC12AAPC, Battery Type 2xAA"
-  datasheet: "http://www.memoryprotectiondevices.com/datasheets/BC12AAPC-datasheet.pdf"
-  tags: "MPD Battery Holder, BC12AAPC, Battery Type 2xAA"
-  extratexts: [[-4.5, -0.05, "+", "F.SilkS", 3.0, 3.0]]
-  at: [-2.9, 8.1]
-  size: [107.8, 16.20]
-  automatic_pin1_mark: False
-  pins: [["tht", "1", 0, 0, 3.0, 3.0, 1.1], ["tht", "2", 102.0, 0, 3.0, 3.0, 1.1],  ["npth", "", 26.15, 4.75, 2.5, 0, 1.1], ["npth", "", 26.15, -4.75, 2.5, 0, 1.1], ["npth", "", 75.85, 4.75, 2.5, 0, 1.1], ["npth", "", 75.85, -4.75, 2.5, 0, 1.1]]
+# This has had drawings added in the library
+# BatteryHolder_MPD_BC12AAPC_2xAA:
+#   library_name: "Battery"
+#   description: "Keystone Battery Holder, BC12AAPC, Battery Type 2xAA"
+#   datasheet: "http://www.memoryprotectiondevices.com/datasheets/BC12AAPC-datasheet.pdf"
+#   tags: "MPD Battery Holder, BC12AAPC, Battery Type 2xAA"
+#   extratexts: [[-4.5, -0.05, "+", "F.SilkS", 3.0, 3.0]]
+#   at: [-2.9, 8.1]
+#   size: [107.8, 16.20]
+#   automatic_pin1_mark: False
+#   pins: [["tht", "1", 0, 0, 3.0, 3.0, 1.1], ["tht", "2", 102.0, 0, 3.0, 3.0, 1.1],  ["npth", "", 26.15, 4.75, 2.5, 0, 1.1], ["npth", "", 26.15, -4.75, 2.5, 0, 1.1], ["npth", "", 75.85, 4.75, 2.5, 0, 1.1], ["npth", "", 75.85, -4.75, 2.5, 0, 1.1]]
 
 BatteryHolder_MPD_BH-18650-PC:
   library_name: "Battery"
