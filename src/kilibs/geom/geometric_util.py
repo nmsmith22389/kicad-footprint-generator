@@ -852,7 +852,14 @@ class BaseNodeIntersection():
                 raise ValueError("the two circles you are trying to intersect are identical")
         else:
             x = (d**2 - r**2 + R**2) / (2 * d)
-            y = math.sqrt(4 * d**2 * R**2 - (d**2 - r**2 + R**2)**2) / d
+
+            numerator = 4 * d**2 * R**2 - (d**2 - r**2 + R**2)**2
+
+            if abs(numerator) < tol:
+                # circles are tangent to each other
+                y = 0
+            else:
+                y = math.sqrt(numerator) / d
 
         signs = [0.0] if (y < tol) else [0.5, -0.5]
         return [Vector2D(x, s * y).rotate(angle=phi) + circle1.center_pos for s in signs]

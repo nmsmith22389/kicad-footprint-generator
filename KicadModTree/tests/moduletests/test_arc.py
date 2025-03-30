@@ -280,6 +280,18 @@ def testCircleCircleIntersection():
     assert len(ip) == 1
     assert (ip[0] - Vector2D(2, 0)).is_nullvec(tol=1e-7)
 
+    # check intersection point of circles touching inside
+    # with some tolerance (this can cause a sqrt bounds error,
+    # false duplicates or false negatives if not caught)
+
+    # this case is 1.11 and 1.36, as both are numbers that have FP error
+    # and this case caused a domain error
+    c1 = geo.geometricCircle(center=[0.25, 0], radius=1.11)
+    c2 = geo.geometricCircle(center=[0, 0], radius=1.36)
+    ip = geo.BaseNodeIntersection.intersectTwoNodes(c1, c2)
+    assert len(ip) == 1
+    assert (ip[0] - Vector2D(1.36, 0)).is_nullvec(tol=1e-7)
+
     # vary position on x and y axis
     c1 = geo.geometricCircle(center=[0, 0], radius=math.sqrt(2))
     c2 = geo.geometricCircle(center=[0, 2], radius=math.sqrt(2))
