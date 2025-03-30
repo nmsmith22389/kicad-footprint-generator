@@ -68,9 +68,6 @@ from exportVRML.export_part_to_VRML import export_VRML
 
 dest_dir_prefix = "Package_BGA.3dshapes"
 
-# all_params= all_params_qfn
-# all_params= kicad_naming_params_qfn
-
 
 def make_plg(wp, rw, rh, cv1, cv):
     """
@@ -90,18 +87,12 @@ def make_plg(wp, rw, rh, cv1, cv):
         (rw / 2.0, -rh / 2.0 + cv),
         (rw / 2.0 - cv, -rh / 2.0),
         (-rw / 2.0 + cv1, -rh / 2.0),  # ,
-        # (-rw/2., -rh/2.+cv1)
     ]
-    # return wp.polyline(points)
     sp = points.pop()
     wp = wp.moveTo(sp[0], sp[1])
     wp = wp.polyline(points, includeCurrent=True).close().wire()
 
     return wp
-    # return wp.polyline(points).wire() #, forConstruction=True)
-
-
-##
 
 
 def make_case(params):
@@ -126,7 +117,6 @@ def make_case(params):
     sp = params["sp"]
     npx = params["npx"]
     npy = params["npy"]
-    # mN  = params['modelName']
     rot = params["rotation"]
 
     if ex == None:
@@ -136,15 +126,12 @@ def make_case(params):
 
     if params["excluded_pins"] is not None:
         epl = list(params["excluded_pins"])
-        # expVRML.say(epl)
         i = 0
         for i in range(0, len(epl)):
             if isinstance(epl[i], int):  # long is not supported in python 3
                 epl[i] = str(int(epl[i]))
                 i = i + 1
         excluded_pins = tuple(epl)
-        # expVRML.say(excluded_pins)
-        # stop
     else:
         excluded_pins = ()  ##no pin excluded
 
@@ -171,9 +158,7 @@ def make_case(params):
                     (first_pos_x - i * e, (npy * ex / 2 - ex / 2) - j * ex, 0)
                 ).rotate((0, 0, 0), (0, 0, 1), 180)
                 pins.append(pin)
-                # expVRML.say(j)
             pincounter += 1
-    # expVRML.say(pincounter-1)
 
     # merge all pins to a single object
     merged_pins = pins[0]
@@ -198,12 +183,9 @@ def make_case(params):
         case_bot = make_plg(case_bot, cw, cl, cff, cf)
         case_bot = case_bot.extrude(A2 - 0.01)
         case_bot = case_bot.translate((0, 0, A1))
-        # show(case_bot)
 
         case = cq.Workplane("XY").workplane(offset=A1)
-        # case = make_plg(case, cw, cl, cce, cce)
         case = make_plg(case, D1, E1, 3 * cf, 3 * cf)
-        # case = case.extrude(c-A1)
         case = case.extrude(0.01)
         case = case.faces(">Z").workplane()
         case = make_plg(case, D1, E1, 3 * cf, 3 * cf).workplane(offset=A - A2 - A1)
@@ -217,10 +199,7 @@ def make_case(params):
             case = case.edges(
                 BS((-D1 / 2, -E1 / 2, A2 + 0.001), (D1 / 2, E1 / 2, A + 0.001))
             ).fillet(ef)
-            # case = case.edges(BS((-D1/2, -E1/2, c+0.001), (D1/2, E1/2, A+0.001+A1/2))).fillet(ef)
         case = case.translate((0, 0, A2 - 0.01))
-        # show(case)
-        # stop
         pinmark = (
             cq.Workplane("XZ", (-D / 2 + fp_d + fp_r, -E / 2 + fp_d + fp_r, fp_z))
             .rect(fp_r / 2, -2 * fp_z, False)
@@ -230,7 +209,6 @@ def make_case(params):
         pinmark = pinmark.translate(
             ((D - D1_t) / 2 + fp_d + cff, (E - E1_t) / 2 + fp_d + cff, -sp)
         )
-        # stop
         case = case.cut(pinmark)
         # extract pins from case
         case_bot = case_bot.cut(pins)
@@ -238,9 +216,6 @@ def make_case(params):
 
     else:
         A2 = A - A1  # body height
-        # if m == 0:
-        #    case = cq.Workplane("XY").box(D-A1, E-A1, A2)  #margin to see fused pins
-        # else:
         case = cq.Workplane("XY").box(D, E, A2)  # NO margin, pins don't emerge
         if ef != 0:
             case.edges("|X").fillet(ef)
@@ -248,17 +223,12 @@ def make_case(params):
         # translate the object
         case = case.translate((0, 0, A2 / 2 + A1 - sp)).rotate((0, 0, 0), (0, 0, 1), 0)
 
-        # sphere_r = (fp_r*fp_r/2 + fp_z*fp_z) / (2*fp_z)
-        # sphere_z = A + sphere_r * 2 - fp_z - sphere_r
-
         pinmark = (
             cq.Workplane("XZ", (-D / 2 + fp_d + fp_r, -E / 2 + fp_d + fp_r, fp_z))
             .rect(fp_r / 2, -2 * fp_z, False)
             .revolve()
             .translate((0, 0, A2 + A1 - sp - fp_z + 0.002))
         )
-        # pinmark=pinmark.translate((0,0,A1-sp))
-        # stop
         case = case.cut(pinmark)
         # extract pins from case
         case = case.cut(pins)
@@ -266,8 +236,6 @@ def make_case(params):
 
     # See if rotation has been requested
     if params["rotation"] != 0:
-        # if case_bot != None:
-        #     case_bot = case_bot.rotateAboutCenter((0, 1, 0), rot)
         case = case.rotate((0, 0, 0), (0, 0, 1), rot)
         pins = pins.rotate((0, 0, 0), (0, 0, 1), rot)
         pinmark = pinmark.rotate((0, 0, 0), (0, 0, 1), rot)
