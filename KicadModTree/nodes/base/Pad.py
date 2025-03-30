@@ -14,6 +14,7 @@
 # (C) 2016 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 # (C) 2018 by Rene Poeschl, github @poeschlr
 
+import copy
 import enum
 from typing import Union
 
@@ -352,6 +353,30 @@ class Pad(Node):
         render_text += ' ({})'.format(' '.join(render_strings))
 
         return render_text
+
+    def copy_with(
+        self,
+        at: Vector2D | None = None,
+        shape: str | None = None,
+        number: str | int | None = None,
+    ):
+        """
+        Helper functon for a very common operation: copying a pad
+        with a new position, shape or number.
+
+        You can add more parameters if you want to, but at some
+        point it might be better to create a whole new pad yourself.
+        """
+        new = copy.deepcopy(self)
+
+        if at is not None:
+            new.at = at
+        if shape is not None:
+            new.shape = shape
+        if number is not None:
+            new.number = number
+
+        return new
 
     def addPrimitive(self, p):
         r""" add a primitive to a custom pad

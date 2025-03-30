@@ -1,5 +1,5 @@
 from KicadModTree import Arc, Line, Node
-from kilibs.geom import Vector2D
+from kilibs.geom import Rectangle, Vector2D
 
 
 class Stadium(Node):
@@ -35,6 +35,24 @@ class Stadium(Node):
         self.width = width
 
         self._children = self._rebuild()
+
+    def by_inscription(rect: Rectangle, layer: str, width: float) -> "Stadium":
+        """
+        Build a stadium inscribed into the given rectangle. The rounded ends will
+        be at the short edge of the rectangle.
+        """
+
+        if rect.size.x > rect.size.y:
+            radius = rect.size.y / 2
+            c1 = Vector2D(rect.left + radius, rect.center.y)
+            c2 = Vector2D(rect.right - radius, rect.center.y)
+        else:
+            radius = rect.size.x / 2
+            c1 = Vector2D(rect.center.x, rect.top + radius)
+            c2 = Vector2D(rect.center.x, rect.bottom - radius)
+        return Stadium(
+            center_1=c1, center_2=c2, radius=radius, width=width, layer=layer
+        )
 
     def _rebuild(self) -> list[Node]:
 

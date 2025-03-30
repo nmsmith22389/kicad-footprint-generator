@@ -1,4 +1,4 @@
-from kilibs.geom import BoundingBox
+from kilibs.geom import BoundingBox, Rectangle
 from KicadModTree import Text, Property, Vector2D
 
 from scripts.tools.global_config_files.global_config import GlobalConfig, FieldProperties, FieldPosition
@@ -112,8 +112,8 @@ def _getTextFieldDetails(
 
 def addTextFields(kicad_mod,
                   configuration: dict | GlobalConfig,
-                  body_edges: dict | BoundingBox,
-                  courtyard: dict | BoundingBox,
+                  body_edges: dict | BoundingBox | Rectangle,
+                  courtyard: dict | BoundingBox | Rectangle,
                   fp_name: str,
                   text_y_inside_position: float | str = 'center',
                   allow_rotation = False):
@@ -146,6 +146,9 @@ def addTextFields(kicad_mod,
     def _make_bbox(obj):
         if isinstance(obj, BoundingBox):
             return obj
+
+        if isinstance(obj, Rectangle):
+            return obj.bounding_box
 
         if not ("left" in obj and "right" in obj):
             # Some callers don't provide a full BoundingBox, but only the top and bottom

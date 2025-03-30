@@ -12,6 +12,7 @@ from KicadModTree import (
     Node,
     PolygonLine,
     RectLine,
+    Pad,
 )
 from kilibs.geom import (
     Direction,
@@ -84,6 +85,65 @@ def addKeepoutRound(x, y, w, h):
         return [KeepoutRect(Vector2D(x, y), Vector2D(w, h))]
 
     return [KeepoutRound(Vector2D(x, y), w / 2)]
+
+
+def getKeepoutsForPads(pads: Pad | list[Pad], clearance: float) -> list[Keepout]:
+    """
+    Return suitable keepouts for the given pads.
+
+    For the clearance, a common value may be 0.26 for the
+    standard silk-pad clearance, for example.
+
+    :param pads: Pad or list of pads
+    :param clearance: clearance around pads
+    :param keepout: keepout around pads
+    :return: list of Keepout objects
+    """
+
+    kos = []
+    pads = pads if isinstance(pads, list) else [pads]
+
+    def get_shape_center(pad: Pad) -> Vector2D:
+
+        center = Vector2D(pad.at)
+
+        if pad.rotation == 0 or pad.rotation == 180:
+            center += pad.offset
+        elif pad.rotation == 90:
+            center += Vector2D(pad.offset.y, pad.offset.x)
+        elif pad.rotation == 270:
+            center += Vector2D(-pad.offset.y, -pad.offset.x)
+        else:
+            raise ValueError(
+                f"Pad rotation {pad.rotation} not supported for non-square pads"
+            )
+
+        return center
+
+    for pad in pads:
+        center = get_shape_center(pad)
+        if pad.shape == Pad.SHAPE_CIRCLE:
+            kos.append(KeepoutRound(center, pad.size.x / 2 + clearance))
+        else:
+            # Everything else.
+            # ovals and roundrects can be more accurate if needed
+            # by handling them as a circles + rects
+
+            size = Vector2D(pad.size) + 2 * Vector2D(clearance, clearance)
+
+            if pad.rotation == 0 or pad.rotation == 180:
+                pass
+            elif pad.rotation == 90 or pad.rotation == 270:
+                size = Vector2D(pad.size.y, pad.size.x)
+            else:
+                # We'll need a polygonal keepout here
+                raise ValueError(
+                    f"Pad rotation {pad.rotation} not supported for non-square pads"
+                )
+
+            kos.append(KeepoutRect(center=pad.at, size=size))
+
+    return kos
 
 
 # internal method for keepout-processing

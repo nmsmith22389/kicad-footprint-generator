@@ -3,8 +3,13 @@
 import math
 import argparse
 
+from kilibs.geom import Rectangle
 from KicadModTree import *  # NOQA
+from KicadModTree.nodes.specialized import Stadium
 from scripts.tools.drawing_tools import *
+from scripts.tools import drawing_tools as DT
+from scripts.tools import drawing_tools_courtyard
+from scripts.tools import footprint_text_fields
 from scripts.tools.footprint_generator import FootprintGenerator
 from scripts.tools.global_config_files import global_config as GC
 
@@ -1666,183 +1671,114 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
 
     def makeCrystalRoundVert(
         self,
-        footprint_name,
-        rm,
-        pad_size,
-        ddrill,
-        pack_diameter,
-        description="Crystal THT",
-        lib_name="Crystal",
-        tags="",
-        offset3d=[0, 0, 0],
-        scale3d=[1, 1, 1],
-        rotate3d=[0, 0, 0],
+        footprint_name: str,
+        rm: float,
+        pad_size: Vector2D | float,
+        ddrill: float,
+        pack_diameter: float,
+        description: str,
+        lib_name:str,
+        tags: str,
+        datasheet: str | None = None
     ):
-        fpname = footprint_name
+        pad = toVectorUseCopyIfNumber(pad_size)
 
-        if type(pad_size) is list:
-            pad = [pad_size[1], pad_size[0]]
-        else:
-            pad = [pad_size, pad_size]
+        center_pos = Vector2D(rm / 2, 0)
+        pin1_pos = Vector2D(0, 0)
 
-        centerpos = [rm / 2, 0]
-        pin1pos = [0, 0]
-        pin2pos = [rm, 0]
+        if datasheet is not None:
+            description += ", " + datasheet
 
-        d_fab = pack_diameter
-        cl_fab = rm / 2
-        ct_fab = 0
+        kicad_mod = Footprint(footprint_name, FootprintType.THT)
+        kicad_mod.description = description
+        kicad_mod.tags = tags
 
-        d_slk = d_fab + 2 * slk_offset
-        cl_slk = cl_fab
-        ct_slk = ct_fab
-        sl_slk = 0
-        if d_fab >= rm + pad[0]:
-            st_slk = 0
-            sl_slk = min(-(d_fab - rm) / 2, -pad[0] / 2) - slk_offset
-            alpha_slk = 180
-        elif d_slk * d_slk / 4 >= rm * rm / 4:
-            st_slk = -max(
-                math.sqrt(d_slk * d_slk / 4 - rm * rm / 4), pad[1] / 2 + slk_offset
-            )
-            alpha_slk = 2 * (
-                90
-                - math.fabs(
-                    180
-                    / 3.1415
-                    * math.atan(
-                        math.fabs(st_slk - centerpos[1])
-                        / math.fabs(sl_slk - centerpos[0])
-                    )
-                )
-            )
-        else:
-            st_slk = -pad[1] / 2 - slk_offset
-            alpha_slk = 2 * (
-                90
-                - math.fabs(
-                    180
-                    / 3.1415
-                    * math.atan(
-                        math.fabs(st_slk - centerpos[1])
-                        / math.fabs(sl_slk - centerpos[0])
-                    )
-                )
-            )
-
-        d_crt = max(rm + pad[0], d_slk) + 2 * crt_offset
-        cl_crt = cl_fab
-        ct_crt = ct_fab
-
-        desc = description
-        tag_s = tags
-
-        # init kicad footprint
-        kicad_mod = Footprint(fpname, FootprintType.THT)
-        kicad_mod.setDescription(desc)
-        kicad_mod.setTags(tags)
-
-        offset = [0, 0]
         kicad_modg = kicad_mod
 
-        # set general values
-        kicad_modg.append(
-            Property(
-                name=Property.REFERENCE,
-                text="REF**",
-                at=[centerpos[0], ct_slk - d_slk / 2 - txt_offset],
-                layer="F.SilkS",
-            )
-        )
-        kicad_modg.append(
-            Text(type="user", text="${REFERENCE}", at=[0, 0], layer="F.Fab")
-        )
-        kicad_modg.append(
-            Property(
-                name=Property.VALUE,
-                text=fpname,
-                at=[centerpos[0], ct_slk + d_slk / 2 + txt_offset],
+        silk_dia = pack_diameter + 2 * self.global_config.silk_fab_offset
+
+        kicad_mod.append(
+            Circle(
+                center=center_pos,
+                radius=pack_diameter / 2,
                 layer="F.Fab",
+                width=self.global_config.fab_line_width,
             )
         )
 
-        # create FAB-layer
-        kicad_mod.append(
-            Circle(
-                center=[cl_fab, ct_fab], radius=d_fab / 2, layer="F.Fab", width=lw_fab
-            )
-        )
-
-        # create SILKSCREEN-layer
-        kicad_mod.append(
-            Arc(
-                center=[cl_slk, ct_slk],
-                start=[sl_slk, st_slk],
-                angle=alpha_slk,
-                layer="F.SilkS",
-                width=lw_slk,
-            )
-        )
-        kicad_mod.append(
-            Arc(
-                center=[cl_slk, ct_slk],
-                start=[sl_slk, -st_slk],
-                angle=-alpha_slk,
-                layer="F.SilkS",
-                width=lw_slk,
-            )
-        )
-
-        # create courtyard
-        kicad_mod.append(
-            Circle(
-                center=[cl_crt, ct_crt], radius=d_crt / 2, layer="F.CrtYd", width=lw_crt
-            )
-        )
-
-        # create pads
-        pad_type = Pad.TYPE_THT
-        pad_shape1 = Pad.SHAPE_CIRCLE
-        pad_layers = "*"
-
-        kicad_modg.append(
-            Pad(
+        pad1 = Pad(
                 number=1,
-                type=pad_type,
-                shape=pad_shape1,
-                at=pin1pos,
+                type=Pad.TYPE_THT,
+                shape=Pad.SHAPE_CIRCLE,
+                at=pin1_pos,
                 size=pad,
                 drill=ddrill,
-                layers=[pad_layers + ".Cu", pad_layers + ".Mask"],
+                layers=Pad.LAYERS_THT,
             )
+        pad2 = pad1.copy_with(
+            number=2,
+            at=pin1_pos + Vector2D(rm, 0),
         )
-        kicad_modg.append(
-            Pad(
-                number=2,
-                type=pad_type,
-                shape=pad_shape1,
-                at=pin2pos,
-                size=pad,
-                drill=ddrill,
-                layers=[pad_layers + ".Cu", pad_layers + ".Mask"],
+        kicad_modg.extend([pad1, pad2])
+
+        keepouts = DT.getKeepoutsForPads(
+            [pad1, pad2],
+            self.global_config.silk_pad_offset,
+        )
+
+        DT.addCircleWithKeepout(
+            kicad_modg,
+            center_pos.x,
+            center_pos.y,
+            radius=silk_dia / 2,
+            layer="F.SilkS",
+            width=self.global_config.silk_line_width,
+            keepouts=keepouts,
+        )
+
+        courtyard_offset_body = self.global_config.get_courtyard_offset(
+            GC.GlobalConfig.CourtyardType.CRYSTAL
+        )
+        courtyard_offset_pad = self.global_config.get_courtyard_offset(
+            GC.GlobalConfig.CourtyardType.DEFAULT
+        )
+
+        # The total width of the courtyard
+        cy_width_x = max(
+            pack_diameter + 2 * courtyard_offset_body,
+            rm + pad.x + 2 * courtyard_offset_pad
+        )
+        cy_height_y = pack_diameter + 2 * courtyard_offset_body
+
+        courtyard_rect = Rectangle(
+            center=center_pos, size=Vector2D(cy_width_x, cy_height_y)
+        )
+
+        kicad_mod.extend(
+            drawing_tools_courtyard.make_round_or_stadium_courtyard(
+                self.global_config, courtyard_rect
             )
         )
 
-        # add model
+        body_rect = Rectangle(center=center_pos, size=Vector2D(pack_diameter, pack_diameter))
+
+        footprint_text_fields.addTextFields(
+            kicad_modg,
+            self.global_config,
+            body_edges=body_rect,
+            courtyard=courtyard_rect,
+            fp_name=kicad_mod.name,
+            text_y_inside_position="center",
+            allow_rotation=True,
+        )
+
         kicad_modg.append(
             Model(
-                filename=self.get_standard_3d_model_path(lib_name, fpname),
-                at=offset3d,
-                scale=scale3d,
-                rotate=rotate3d,
+                filename=self.get_standard_3d_model_path(lib_name,
+                                                         footprint_name),
             )
         )
 
-        # print render tree
-        # print(kicad_mod.getRenderTree())
-        # print(kicad_mod.getCompleteRenderTree())
-
-        # write file
         self.write_footprint(kicad_mod, lib_name)
 
 

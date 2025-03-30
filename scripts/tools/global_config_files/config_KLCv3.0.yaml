@@ -38,6 +38,7 @@ courtyard_offset:
     default: 0.25
     connector: 0.5
     bga: 1
+    crystal: 0.5
 
 edge_cuts_line_width: 0.12
 

@@ -75,6 +75,7 @@ class GlobalConfig:
         DEFAULT = auto()
         BGA = auto()
         CONNECTOR = auto()
+        CRYSTAL = auto()
 
     courtyard_line_width: float
     courtyard_grid: float
@@ -151,6 +152,7 @@ class GlobalConfig:
             self.CourtyardType.DEFAULT: float(data["courtyard_offset"]['default']),
             self.CourtyardType.CONNECTOR: float(data["courtyard_offset"]['connector']),
             self.CourtyardType.BGA: float(data["courtyard_offset"]['bga']),
+            self.CourtyardType.CRYSTAL: float(data["courtyard_offset"]['crystal']),
         }
 
         self._layer_functions = data["layer_functions"]
