@@ -684,6 +684,33 @@ Analog_MSOP-12-16-1EP_3x4.039mm_P0.5mm_EP1.651x2.845mm:
   pad_to_pad_min_x_overwrite: 3.322 # 5.10 - 2*0.889
   pad_to_pad_max_x_overwrite: 5.10
 
+Texas_DGS0020A_VSSOP-20_3.0x5.1mm_P0.50mm:
+  manufacturer: 'Texas'
+  part_number: 'DGS0020A'
+  size_source: 'https://www.ti.com/lit/ds/symlink/mspm0c1104.pdf'
+  body_size_x:
+    minimum: 2.90
+    maximum: 3.10
+  body_size_y:
+    minimum: 5.00
+    maximum: 5.20
+  overall_size_x:
+    minimum: 4.70
+    maximum: 5.10
+  lead_width:
+    minimum: 0.165
+    maximum: 0.275
+  lead_len:
+    minimum: 0.40
+    maximum: 0.70
+  pitch: 0.50
+  num_pins_x: 0
+  num_pins_y: 10
+#non IPC parameters
+  pad_to_pad_min_x_overwrite: 2.95
+  pad_to_pad_max_x_overwrite: 5.85
+  pad_size_y_overwrite: 0.30
+
 ##############################################################################
 # 0.50 PITCH
 # BODY WIDTH (E1) = 3.90 NOM

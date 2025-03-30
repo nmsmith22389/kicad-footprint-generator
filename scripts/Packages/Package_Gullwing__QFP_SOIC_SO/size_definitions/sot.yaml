@@ -70,3 +70,31 @@ SOT-23-8:
   pitch: 0.65
   num_pins_x: 0
   num_pins_y: 4
+
+Texas_DDF0008A_SOT-23-8_1.6x2.9mm_P0.65mm:
+  manufacturer: 'Texas'
+  part_number: 'DDF0008A'
+  size_source: 'https://www.ti.com/lit/ds/symlink/mspm0c1104.pdf'
+  body_size_x:
+    minimum: 1.55
+    maximum: 1.65
+  body_size_y:
+    minimum: 2.85
+    maximum: 2.95
+  overall_size_x:
+    minimum: 2.65
+    maximum: 2.95
+  lead_width:
+    minimum: 0.20
+    maximum: 0.40
+  lead_len:
+    minimum: 0.30
+    maximum: 0.60
+  pitch: 0.65
+  num_pins_x: 0
+  num_pins_y: 4
+#non IPC parameters
+  pad_to_pad_min_x_overwrite: 1.55
+  pad_to_pad_max_x_overwrite: 3.65
+  pad_size_y_overwrite: 0.45
+

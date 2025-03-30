@@ -295,6 +295,43 @@ Texas_VQFN-20_RGP0020H:
   num_pins_x: 5
   num_pins_y: 5
 
+Texas_RUK0020B_WQFN-20-1EP_3x3mm_P0.4mm_EP1.7x1.7mm_ThermalVias:
+  manufacturer: 'Texas'
+  part_number: 'RUK0020B'
+  device_type: 'WQFN'
+  ipc_class: 'qfn'
+  size_source: 'https://www.ti.com/lit/ds/symlink/mspm0c1104.pdf'
+  body_size_x:
+    minimum: 2.90
+    maximum: 3.10
+  body_size_y:
+    minimum: 2.90
+    maximum: 3.10
+  overall_height: 0.80
+  lead_width:
+    minimum: 0.15
+    maximum: 0.25
+  lead_len:
+    minimum: 0.30
+    maximum: 0.50
+  EP_size_x: 
+    nominal: 1.70
+    tolerance: 0.05
+  EP_size_y:
+    nominal: 1.70
+    tolerance: 0.05
+  EP_num_paste_pads: [2, 2]
+  thermal_vias:
+    count: [3, 3]               # script not currently support the cross pattern
+    drill: 0.2
+    EP_paste_coverage: 0.78
+    paste_avoid_via: False
+  pitch: 0.40
+  num_pins_x: 5
+  num_pins_y: 5
+#non IPC parameters
+  lead_center_to_center_x: 2.35 # horizontal pad lenght overwrited to 0.70mm for keep space center to center X to 2.80mm  
+  lead_center_to_center_y: 2.35 # vertical pad lenght overwrited to 0.70mm for keep space center to center Y to 2.80mm 
 
 Texas_VQFN-24_RGE0024C:
   device_type: 'VQFN'

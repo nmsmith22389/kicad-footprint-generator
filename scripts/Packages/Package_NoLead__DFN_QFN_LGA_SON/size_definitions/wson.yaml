@@ -93,6 +93,47 @@ SON-8-1EP_3.0x2.0mm_P0.5mm_EP1.4x1.6mm:
   #include_suffix_in_3dpath: 'False'
   #include_pad_size: 'fp_name_only' # 'both' | 'none' (default)
 
+Texas_DSG0008A_WSON-8-1EP_2x2mm_P0.5mm_EP0.9x1.6mm_ThermalVias:
+  device_type: 'WSON'
+#  ipc_class: 'qfn_pull_back'
+  library: Package_SON
+  manufacturer: 'Texas'
+  part_number: 'DSG0008A'
+  size_source: 'https://www.ti.com/lit/ds/symlink/mspm0c1104.pdf'
+  body_size_x:
+    minimum: 1.90
+    maximum: 2.10
+  body_size_y:
+    minimum: 1.90
+    maximum: 2.10
+  overall_height: 0.80
+  lead_width:
+    minimum: 0.20
+    maximum: 0.30
+  lead_len:
+    minimum: 0.20
+    maximum: 0.40
+  EP_size_x: 
+    nominal: 0.90
+    tolerance: 0.10
+  EP_size_y:
+    nominal: 1.60
+    tolerance: 0.10
+  EP_num_paste_pads: [1, 2]
+  thermal_vias:
+    grid: [1.1, 1.1]
+    count: [1, 2]
+    drill: 0.2
+    min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    EP_paste_coverage: 0.85
+    paste_avoid_via: False
+  pitch: 0.50
+  num_pins_x: 0
+  num_pins_y: 4
+  #non IPC parameters
+  lead_center_to_center_x: 1.45 # pad lenght overwrited to 1.60mm for keep space center to center X to 1.90mm
+
 Texas_S-PWSON-N8_EP1.2x2mm:
   device_type: 'WSON'
   library: Package_SON
