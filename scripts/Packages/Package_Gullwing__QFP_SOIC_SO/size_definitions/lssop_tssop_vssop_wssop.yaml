@@ -2952,12 +2952,15 @@ TSSOP-4_4.4x5mm_P4mm:
 # BODY WIDTH (E1) = 2.00 NOM
 ##############################################################################
 
-Texas_DYY0016A_TSOT-23-16:
-# Texas_DYY0016A_TSOT-23-16_4.2x2.0mm_P0.5mm
+Texas_DYY0016A_TSOT-23-16_2x4.2mm_P0.5mm:
 # JEDEC MO-345, this package seems not to be TSOT (manufacturer states it's SOT)
+  manufacturer: 'Texas'
+  part_number: 'DYY0016A'
   device_type: 'TSSOP'
-  size_source: 'https://www.ti.com/lit/ds/symlink/tmux1574.pdf' # page 42
-  custom_name_format: 'Texas_DYY0016A_TSOT-23-16_4.2x2.0mm_P0.5mm'
+  compatible_mpns:
+    - SOT-23-THIN
+  size_source: 'https://www.ti.com/lit/ds/symlink/tmux1574.pdf#page=42'
+  custom_name_format: 'Texas_DYY0016A_TSOT-23-16_2x4.2mm_P0.5mm'
   body_size_x: 1.9 .. 2.1
   body_size_y: 4.1 .. 4.3
   overall_size_x: 3.16 .. 3.36
