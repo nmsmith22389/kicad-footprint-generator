@@ -21,8 +21,6 @@ Fujitsu_WLP-15_2.28x3.092mm_Layout3x5_P0.4mm:
   npy: 3          # number of pins along y axis (length)
   excluded_pins: [2, 4, 6, 8, 10, 12, 14] #pins to exclude -> None or "internals"
   molded: null
-  old_modelName: "Fujitsu_WLP-15_2.28x3.092mm_Layout3x5_P0.4mm" #old_modelName
-  modelName: "Fujitsu_WLP-15_2.28x3.092mm_Layout3x5_P0.4mm"
   rotation: -90 # rotation if required
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -52,8 +50,6 @@ BGA-9_1.6x1.6mm_Layout3x3_P0.5mm:
   npy: 3           # number of pins along y axis (length)
   excluded_pins: ["internals"] # pins to exclude -> None or "internals"
   molded: null
-  old_modelName: "BGA-9_3x3_1.6x1.6mm_Pitch0.5mm" # old_modelName
-  modelName: "BGA-9_1.6x1.6mm_Layout3x3_P0.5mm"
   rotation: -90    # rotation if required
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -83,8 +79,6 @@ Maxim_WLP-12:
   npy: 4          # number of pins along y axis (length)
   excluded_pins: ['None'] # pins to exclude -> None or "internals"
   molded: null
-  old_modelName: 'Maxim_WLP-12' #old_modelName
-  modelName: 'Maxim_WLP-12' #old_modelName
   rotation: -90   # rotation if required
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -114,8 +108,6 @@ BGA-16_1.92x1.92mm_Layout4x4_P0.5mm:
   npy: 4         # number of pins along y axis (length)
   excluded_pins: ["internals"] # pins to exclude -> None or "internals"
   molded: null
-  old_modelName: 'BGA-16_4x4_1.92x1.92mm_Pitch0.5mm' #old_modelName
-  modelName: 'BGA-16_1.92x1.92mm_Layout4x4_P0.5mm'
   rotation: -90 # rotation if required
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -145,8 +137,6 @@ BGA-25_6.35x6.35mm_Layout5x5_P1.27mm:
   npy: 5         # number of pins along y axis (length)
   excluded_pins: ["internals"] # pins to exclude -> None or "internals"
   molded: null
-  old_modelName: 'BGA-25_5x5_6.35x6.35mm_Pitch1.27mm' # old_modelName
-  modelName: 'BGA-25_6.35x6.35mm_Layout5x5_P1.27mm'
   rotation: -90  # rotation if required
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -176,8 +166,6 @@ BGA-48_8.0x9.0mm_Layout6x8_P0.8mm:
   npy: 6         # number of pins along y axis (length)
   excluded_pins: ["internals"] # pins to exclude -> None or "internals"
   molded: null
-  old_modelName: "BGA-48_6x8_8.0x9.0mm_Pitch0.8mm" # old_modelName
-  modelName: "BGA-48_8.0x9.0mm_Layout6x8_P0.8mm"
   rotation: -90  # rotation if required
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -207,8 +195,6 @@ BGA-64_9.0x9.0mm_Layout10x10_P0.8mm:
   npy: 10        # number of pins along y axis (length)
   excluded_pins: ["internals"] # pins to exclude -> None or "internals"
   molded: null
-  old_modelName: "BGA-64_10x10_9.0x9.0mm_Pitch0.8mm" # old_modelName
-  modelName: "BGA-64_9.0x9.0mm_Layout10x10_P0.8mm"
   rotation: -90  # rotation if required
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -238,8 +224,6 @@ BGA-68_5.0x5.0mm_Layout9x9_P0.5mm_Ball0.3mm_Pad0.25mm_NSMD:
   npy: 9         # number of pins along y axis (length)
   excluded_pins: ["internals"] # pins to exclude -> None or "internals"
   molded: null
-  old_modelName: "BGA-68_5.0x5.0mm_Layout9x9_P0.5mm_Ball0.3mm_Pad0.25mm_NSMD" # old_modelName
-  modelName: "BGA-68_5.0x5.0mm_Layout9x9_P0.5mm_Ball0.3mm_Pad0.25mm_NSMD"
   rotation: -90  # rotation if required
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -269,8 +253,6 @@ BGA-81_4.496x4.377mm_Layout9x9_P0.4mm_Ball0.25mm_Pad0.2mm_NSMD:
   npy: 9         # number of pins along y axis (length)
   excluded_pins: ["internals"] # pins to exclude -> None or "internals"
   molded: null
-  old_modelName: "BGA-81_4.496x4.377mm_Layout9x9_P0.4mm_Ball0.25mm_Pad0.2mm_NSMD" # old_modelName
-  modelName: "BGA-81_4.496x4.377mm_Layout9x9_P0.4mm_Ball0.25mm_Pad0.2mm_NSMD"
   rotation: -90 # rotation if required
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -300,8 +282,6 @@ BGA-90_8.0x13.0mm_Layout2x3x15_P0.8mm:
   npy: 9         # number of pins along y axis (length)
   excluded_pins: ["internals", 46, 60, 61, 75, 76, 90] # pins to exclude -> None or "internals"
   molded: null
-  old_modelName: "BGA-90_2x3x15_8.0x13.0mm_Pitch0.8mm" # old_modelName
-  modelName: "BGA-90_8.0x13.0mm_Layout2x3x15_P0.8mm"
   rotation: -90  # rotation if required
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -331,8 +311,6 @@ BGA-96_9.0x13.0mm_Layout2x3x16_P0.8mm:
   npy: 9         # number of pins along y axis (length)
   excluded_pins: ["internals", 49, 64, 65, 80, 81, 96] # pins to exclude -> None or "internals"
   molded: null
-  old_modelName: "BGA-96_2x3x16_9.0x13.0mm_Pitch0.8mm" # old_modelName
-  modelName: "BGA-96_9.0x13.0mm_Layout2x3x16_P0.8mm"
   rotation: -90  # rotation if required
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -362,8 +340,6 @@ BGA-100_6.0x6.0mm_Layout11x11_P0.5mm_Ball0.3mm_Pad0.25mm_NSMD:
   npy: 11        # number of pins along y axis (length)
   excluded_pins: ["internals"] # pins to exclude -> None or "internals"
   molded: null
-  old_modelName: "BGA-100_6.0x6.0mm_Layout11x11_P0.5mm_Ball0.3mm_Pad0.25mm_NSMD" # old_modelName
-  modelName: "BGA-100_6.0x6.0mm_Layout11x11_P0.5mm_Ball0.3mm_Pad0.25mm_NSMD"
   rotation: -90  # rotation if required
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -393,8 +369,6 @@ BGA-100_9.0x9.0mm_Layout10x10_P0.8mm:
   npy: 10        # number of pins along y axis (length)
   excluded_pins: ["internals"] # pins to exclude -> None or "internals"
   molded: null
-  old_modelName: "BGA-100_10x10_9.0x9.0mm_Pitch0.8mm" # old_modelName
-  modelName: "BGA-100_9.0x9.0mm_Layout10x10_P0.8mm"
   rotation: -90  # rotation if required
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -424,8 +398,6 @@ BGA-100_11.0x11.0mm_Layout10x10_P1.0mm_Ball0.5mm_Pad0.4mm_NSMD:
   npy: 10        # number of pins along y axis (length)
   excluded_pins: ["internals"] # pins to exclude -> None or "internals"
   molded: null
-  old_modelName: "BGA-100_11.0x11.0mm_Layout10x10_P1.0mm_Ball0.5mm_Pad0.4mm_NSMDm" # old_modelName
-  modelName: "BGA-100_11.0x11.0mm_Layout10x10_P1.0mm_Ball0.5mm_Pad0.4mm_NSMD"
   rotation: -90  # rotation if required
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -455,8 +427,6 @@ BGA-121_9.0x9.0mm_Layout11x11_P0.8mm:
   npy: 11
   excluded_pins: ['internals']
   molded: null
-  old_modelName: "BGA-121_9.0x9.0mm_Layout11x11_P0.8mm"
-  modelName: "BGA-121_9.0x9.0mm_Layout11x11_P0.8mm"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -486,8 +456,6 @@ BGA-144_7.0x7.0mm_Layout13x13_P0.5mm_Ball0.3mm_Pad0.25mm_NSMD:
   npy: 13
   excluded_pins: ['internals']
   molded: null
-  old_modelName: "BGA-144_7.0x7.0mm_Layout13x13_P0.5mm_Ball0.3mm_Pad0.25mm_NSMD"
-  modelName: "BGA-144_7.0x7.0mm_Layout13x13_P0.5mm_Ball0.3mm_Pad0.25mm_NSMD"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -517,8 +485,6 @@ BGA-144_12x12_13.0x13.0mm_Pitch1.0mm:
   npy: 12
   excluded_pins: ['internals']
   molded: null
-  old_modelName: "BGA-144_12x12_13.0x13.0mm_Pitch1.0mm"
-  modelName: "BGA-144_13.0x13.0mm_Layout12x12_P1.0mm"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -548,8 +514,6 @@ BGA-169_11.0x11.0mm_Layout13x13_P0.8mm_Ball0.5mm_Pad0.4mm_NSMD:
   npy: 13
   excluded_pins: ['internals']
   molded: null
-  old_modelName: "BGA-169_11.0x11.0mm_Layout13x13_P0.8mm_Ball0.5mm_Pad0.4mm_NSMD"
-  modelName: "BGA-169_11.0x11.0mm_Layout13x13_P0.8mm_Ball0.5mm_Pad0.4mm_NSMD"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -579,8 +543,6 @@ BGA-256_11.0x11.0mm_Layout20x20_P0.5mm_Ball0.3mm_Pad0.25mm_NSMD:
   npy: 20
   excluded_pins: ['internals']
   molded: null
-  old_modelName: "BGA-256_11.0x11.0mm_Layout20x20_P0.5mm_Ball0.3mm_Pad0.25mm_NSMD"
-  modelName: "BGA-256_11.0x11.0mm_Layout20x20_P0.5mm_Ball0.3mm_Pad0.25mm_NSMD"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -610,8 +572,6 @@ BGA-256_14.0x14.0mm_Layout16x16_P0.8mm_Ball0.45mm_Pad0.32mm_NSMD:
   npy: 16
   excluded_pins: ['internals']
   molded: null
-  old_modelName: "BGA-256_14.0x14.0mm_Layout16x16_P0.8mm_Ball0.45mm_Pad0.32mm_NSMD"
-  modelName: "BGA-256_14.0x14.0mm_Layout16x16_P0.8mm_Ball0.45mm_Pad0.32mm_NSMD"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -641,8 +601,6 @@ BGA-256_17.0x17.0mm_Layout16x16_P1.0mm_Ball0.5mm_Pad0.4mm_NSMD:
   npy: 16
   excluded_pins: ['internals']
   molded: null
-  old_modelName: "BGA-256_16x16_17.0x17.0mm_Pitch1.0mm"
-  modelName: "BGA-256_17.0x17.0mm_Layout16x16_P1.0mm_Ball0.5mm_Pad0.4mm_NSMD"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -672,7 +630,6 @@ Texas_BGA-289_15x15mm_Layout17x17_P0.8mm:
   npy: 17         # number of pins along y axis (length)
   molded: null
   excluded_pins: null
-  modelName: "Texas_BGA-289-15.0x15.0mm_Layout17x17_P0.8mm_Ball0.5mm_Pad0.4mm"
   rotation: -90 # rotation if required
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -703,8 +660,6 @@ BGA-324_15.0x15.0mm_Layout18x18_P0.8mm_Ball0.5mm_Pad0.4mm_NSMD:
   npy: 18
   excluded_pins: ['internals']
   molded: null
-  old_modelName: "BGA-324_15.0x15.0mm_Layout18x18_P0.8mm_Ball0.5mm_Pad0.4mm_NSMD"
-  modelName: "BGA-324_15.0x15.0mm_Layout18x18_P0.8mm_Ball0.5mm_Pad0.4mm_NSMD"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -734,8 +689,6 @@ BGA-324_19.0x19.0mm_Layout18x18_P1.0mm_Ball0.5mm_Pad0.4mm_NSMD:
   npy: 18
   excluded_pins: ['internals']
   molded: null
-  old_modelName: "BGA-324_19.0x19.0mm_Layout18x18_P1.0mm_Ball0.5mm_Pad0.4mm_NSMD"
-  modelName: "BGA-324_19.0x19.0mm_Layout18x18_P1.0mm_Ball0.5mm_Pad0.4mm_NSMD"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -765,8 +718,6 @@ BGA-352_35.0x35.0mm_Layout26x26_P1.27mm:
   npy: 26
   excluded_pins: ['internals']
   molded: True
-  old_modelName: "BGA-352_26x26_35.0x35.0mm_Pitch1.27mm"
-  modelName: "BGA-352_35.0x35.0mm_Layout26x26_P1.27mm"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -796,8 +747,6 @@ BGA-400_17.0x17.0mm_Layout20x20_P0.8mm:
   npy: 20
   excluded_pins: ['internals']
   molded: null
-  old_modelName: "BGA-400_20x20_17.0x17.0mm_Pitch0.8mm"
-  modelName: "BGA-400_17.0x17.0mm_Layout20x20_P0.8mm"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -827,8 +776,6 @@ BGA-400_21.0x21.0mm_Layout20x20_P1.0mm:
   npy: 20
   excluded_pins: ['internals']
   molded: True
-  old_modelName: "BGA-400_20x20_21.0x21.0mm_Pitch1.0mm"
-  modelName: "BGA-400_21.0x21.0mm_Layout20x20_P1.0mm"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -858,8 +805,6 @@ BGA-484_23.0x23.0mm_Layout22x22_P1.0mm:
   npy: 22
   excluded_pins: ['internals']
   molded: True
-  old_modelName: "BGA-484_22x22_23.0x23.0mm_Pitch1.0mm"
-  modelName: "BGA-484_23.0x23.0mm_Layout22x22_P1.0mm"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -889,8 +834,6 @@ BGA-624_21x21mm_Layout25x25_P0.8mm:
   npy: 25
   excluded_pins: ['internals', 1]
   molded: null
-  old_modelName: "BGA-624_25x25_21.0x21.0mm_Pitch0.8mm"
-  modelName: "BGA-624_21x21mm_Layout25x25_P0.8mm"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -920,8 +863,6 @@ BGA-625_21.0x21.0mm_Layout25x25_P0.8mm:
   npy: 25
   excluded_pins: ['internals']
   molded: True
-  old_modelName: "BGA-625_25x25_21.0x21.0mm_Pitch0.8mm"
-  modelName: "BGA-625_21.0x21.0mm_Layout25x25_P0.8mm"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -951,8 +892,6 @@ BGA-1023_33.0x33.0mm_Layout32x32_P1.0mm:
   npy: 32
   excluded_pins: ['internals', 1]
   molded: True
-  old_modelName: "BGA-1023_32x32_33.0x33.0mm_Pitch1.0mm"
-  modelName: "BGA-1023_33.0x33.0mm_Layout32x32_P1.0mm"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -982,8 +921,6 @@ BGA-1156_34x34_35.0x35.0mm_Pitch1.0mm:
   npy: 34
   excluded_pins: ['internals']
   molded: True
-  old_modelName: "BGA-1156_34x34_35.0x35.0mm_Pitch1.0mm"
-  modelName: "BGA-1156_35.0x35.0mm_Layout34x34_P1.0mm"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -1013,8 +950,6 @@ BGA-1295_36x36_37.5x37.5mm_Pitch1.0mm:
   npy: 36
   excluded_pins: ['internals']
   molded: True
-  old_modelName: "BGA-1295_36x36_37.5x37.5mm_Pitch1.0mm"
-  modelName: "BGA-1295_37.5x37.5mm_Layout36x36_P1.0mm"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -1044,8 +979,6 @@ Analog_BGA-49_6.25x6.25mm_Layout7x7_P0.8mm:
   npy: 7
   excluded_pins: null
   molded: null
-  old_modelName: "Analog_BGA-49_7x7_6.25x6.25mm_Pitch0.8mm"
-  modelName: "Analog_BGA-49_6.25x6.25mm_Layout7x7_P0.8mm"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -1075,7 +1008,6 @@ Analog_BGA-77_9x15mm_Layout7x11_P1.27mm:
   npy: 7         # number of pins along y axis (length)
   excluded_pins: null # pins to exclude -> None or "internals"
   molded: null
-  modelName: "Analog_BGA-77_9x15mm_Layout7x11_P1.27mm"
   rotation: -90  # rotation if required
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -1105,7 +1037,6 @@ Analog_BGA-165_11.9x16mm_Layout11x15_P1.0mm:
   npy: 11        # number of pins along y axis (length)
   excluded_pins: null # pins to exclude -> None or "internals"
   molded: null
-  modelName: "Analog_BGA-165_11.9x16mm_Layout11x15_P1.0mm" # old_modelName
   rotation: -90  # rotation if required
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -1135,7 +1066,6 @@ Analog_BGA-209_9.5x16mm_Layout11x19_P0.8mm:
   npy: 11
   excluded_pins: null
   molded: null
-  modelName: "Analog_BGA-209_9.5x16mm_Layout11x19_P0.8mm"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -1165,8 +1095,6 @@ NXP_VFBGA-42_2.6x3mm_Layout6x7_P0.4mm:
   npy: 6      # number of pins along y axis (length)
   excluded_pins: null
   molded: null
-  old_modelName: "NXP_VFBGA-42_6x7_2.6x3mm_Pitch0.4mm"
-  modelName: "NXP_VFBGA-42_2.6x3mm_Layout6x7_P0.4mm"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -1196,7 +1124,6 @@ Texas_DSBGA-6_0.757x1.01mm_Layout2x3_P0.35mm:
   npy: 2
   excluded_pins: ['internals']
   molded: null
-  modelName: "Texas_DSBGA-6_0.757x1.01mm_Layout2x3_P0.35mm"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -1226,8 +1153,6 @@ Texas_DSBGA-8_0.705x1.468mm_Layout2x4_P0.4mm:
   npy: 2
   excluded_pins: ['internals']
   molded: null
-  old_modelName: "DSBGA-8_2x4_0.9x1.9mm_Pitch0.5mm_Dia0.25mm"
-  modelName: "Texas_DSBGA-8_0.705x1.468mm_Layout2x4_P0.4mm"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -1257,8 +1182,6 @@ Texas_DSBGA-8_0.9x1.9mm_Layout2x4_P0.5mm:
   npy: 2
   excluded_pins: ['internals']
   molded: null
-  old_modelName: "DSBGA-8_2x4_0.9x1.9mm_Pitch0.5mm_Dia0.25mm"
-  modelName: "Texas_DSBGA-8_0.9x1.9mm_Layout2x4_P0.5mm"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -1288,8 +1211,6 @@ Texas_DSBGA-12_1.36x1.86mm_Layout3x4_P0.5mm:
   npy: 4
   excluded_pins: ['None']
   molded: null
-  old_modelName: "DSBGA-12_3x4_1.36x1.86mm_Pitch0.5mm"
-  modelName: "Texas_DSBGA-12_1.36x1.86mm_Layout3x4_P0.5mm"
   rotation: 180
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -1319,8 +1240,6 @@ LFBGA-100_10x10mm_Layout10x10_P0.8mm:
   npy: 10
   excluded_pins: ['internals']
   molded: null
-  old_modelName: "LFBGA-100_10x10mm_Layout10x10_P0.8mm"
-  modelName: "LFBGA-100_10x10mm_Layout10x10_P0.8mm"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -1350,8 +1269,6 @@ LFBGA-144_10x10mm_Layout12x12_P0.8mm:
   npy: 12
   excluded_pins: ['internals']
   molded: null
-  old_modelName: "LFBGA-144_10x10mm_Layout12x12_P0.8mm"
-  modelName: "LFBGA-144_10x10mm_Layout12x12_P0.8mm"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -1381,8 +1298,6 @@ Linear_BGA-133_15.0x15.0_Layout12x12_P1.27mm:
   npy: 12
   excluded_pins: ['internals']
   molded: null
-  old_modelName: "Linear_BGA-133_15.0x15.0_Layout12x12_P1.27mm"
-  modelName: "Linear_BGA-133_15.0x15.0_Layout12x12_P1.27mm"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -1412,8 +1327,6 @@ Texas_DSBGA-10_1.36x1.86mm_Layout3x4_P0.5mm:
   npy: 3
   excluded_pins: ['None']
   molded: null
-  old_modelName: "Texas_DSBGA-10_1.36x1.86mm_Layout3x4_P0.5mm"
-  modelName: "Texas_DSBGA-10_1.36x1.86mm_Layout3x4_P0.5mm"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -1443,8 +1356,6 @@ Texas_DSBGA-49_3.33x3.488mm_Layout7x7_P0.4mm:
   npy: 7
   excluded_pins: ['internals']
   molded: null
-  old_modelName: "Texas_DSBGA-49_3.33x3.488mm_Layout7x7_P0.4mm"
-  modelName: "Texas_DSBGA-49_3.33x3.488mm_Layout7x7_P0.4mm"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -1474,8 +1385,6 @@ Texas_MicroStar_Junior_BGA-12_2.0x2.5mm_Layout4x3_P0.5mm:
   npy: 4
   excluded_pins: ['None']
   molded: null
-  old_modelName: "Texas_MicroStar_Junior_BGA-12_4x3_2.0x2.5mm_Pitch0.5mm"
-  modelName: "Texas_MicroStar_Junior_BGA-12_2.0x2.5mm_Layout4x3_P0.5mm"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -1505,8 +1414,6 @@ Texas_MicroStar_Junior_BGA-80_5.0x5.0mm_Layout9x9_P0.5mm:
   npy: 9
   excluded_pins: ['internals']
   molded: null
-  old_modelName: "Texas_MicroStar_Junior_BGA-80_5.0x5.0mm_Layout9x9_P0.5mm"
-  modelName: "Texas_MicroStar_Junior_BGA-80_5.0x5.0mm_Layout9x9_P0.5mm"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -1536,8 +1443,6 @@ Texas_MicroStar_Junior_BGA-113_7x7mm_Layout12x12_P0.5mm:
   npy: 12
   excluded_pins: ['internals']
   molded: null
-  old_modelName: "Texas_MicroStar_Junior_BGA-113_7x7mm_Layout12x12_P0.5mm"
-  modelName: "Texas_MicroStar_Junior_BGA-113_7x7mm_Layout12x12_P0.5mm"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -1567,8 +1472,6 @@ Texas_Junior_DSBGA-48_4.0x4.0mm_Layout7x7_P0.5mm:
   npy: 7
   excluded_pins: ['none', 17]
   molded: null
-  old_modelName: "Texas_Junior_DSBGA-48"
-  modelName: "Texas_Junior_DSBGA-48_4.0x4.0mm_Layout7x7_P0.5mm"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -1598,8 +1501,6 @@ TFBGA-64_5x5mm_Layout8x8_P0.5mm:
   npy: 8
   excluded_pins: ['internals']
   molded: null
-  old_modelName: "TFBGA-64_5x5mm_Layout8x8_P0.5mm"
-  modelName: "TFBGA-64_5x5mm_Layout8x8_P0.5mm"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -1629,8 +1530,6 @@ TFBGA-100_8x8mm_Layout10x10_P0.8mm:
   npy: 10
   excluded_pins: ['internals']
   molded: null
-  old_modelName: "TFBGA-100_8x8mm_Layout10x10_P0.8mm"
-  modelName: "TFBGA-100_8x8mm_Layout10x10_P0.8mm"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -1659,8 +1558,6 @@ TFBGA-100_9.0x9.0mm_Layout10x10_P0.8mm:
   npy: 10
   excluded_pins: ['internals']
   molded: null
-  old_modelName: "TFBGA-100_9.0x9.0mm_Layout10x10_P0.8mm"
-  modelName: "TFBGA-100_9.0x9.0mm_Layout10x10_P0.8mm"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -1690,8 +1587,6 @@ TFBGA-121_10x10mm_Layout11x11_P0.8mm:
   npy: 11
   excluded_pins: ['internals']
   molded: null
-  old_modelName: "TFBGA-121_10x10mm_Layout11x11_P0.8mm"
-  modelName: "TFBGA-121_10x10mm_Layout11x11_P0.8mm"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -1721,8 +1616,6 @@ TFBGA-216_13x13mm_Layout15x15_P0.8mm:
   npy: 15
   excluded_pins: ['internals']
   molded: null
-  old_modelName: "TFBGA-216_13x13mm_Layout15x15_P0.8mm"
-  modelName: "TFBGA-216_13x13mm_Layout15x15_P0.8mm"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -1751,8 +1644,6 @@ TFBGA-265_14x14mm_Layout17x17_P0.8mm:
   npy: 17
   excluded_pins: ['internals']
   molded: null
-  old_modelName: "TFBGA-265_14x14mm_Layout17x17_P0.8mm"
-  modelName: "TFBGA-265_14x14mm_Layout17x17_P0.8mm"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -1781,8 +1672,6 @@ TFBGA-644_19x19mm_Layout28x28_P0.65mm:
   npy: 28
   excluded_pins: ['internals']
   molded: null
-  old_modelName: "TFBGA-644_19x19mm_Layout28x28_P0.65mm"
-  modelName: "TFBGA-644_19x19mm_Layout28x28_P0.65mm"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -1812,8 +1701,6 @@ FBGA-78_7.5x11mm_Layout2x3x13_P0.8mm:
   npy: 9
   excluded_pins: ['none', 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78]
   molded: null
-  old_modelName: "FBGA-78_2x3x13_7.5x11.0mm_Pitch0.8mm"
-  modelName: "FBGA-78_7.5x11mm_Layout2x3x13_P0.8mm"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -1843,8 +1730,6 @@ ucBGA-49_3x3mm_Layout7x7_P0.4mm:
   npy: 7
   excluded_pins: null
   molded: null
-  old_modelName: "ucBGA-49_3x3mm_Layout7x7_P0.4mm"
-  modelName: "ucBGA-49_3x3mm_Layout7x7_P0.4mm"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -1874,8 +1759,6 @@ ucBGA-36_2.5x2.5mm_Layout6x6_P0.4mm:
   npy: 6
   excluded_pins: null
   molded: null
-  old_modelName: "ucBGA-36_2.5x2.5mm_Layout6x6_P0.4mm"
-  modelName: "ucBGA-36_2.5x2.5mm_Layout6x6_P0.4mm"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -1905,8 +1788,6 @@ WLP-4_0.83x0.83mm_P0.4mm:
   npy: 2
   excluded_pins: null
   molded: null
-  old_modelName: "WLP-4_0.83x0.83mm_P0.4mm"
-  modelName: "WLP-4_0.83x0.83mm_P0.4mm"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -1936,8 +1817,6 @@ WLP-4_0.86x0.86mm_P0.4mm:
   npy: 2
   excluded_pins: null
   molded: null
-  old_modelName: "WLP-4_0.86x0.86mm_P0.4mm"
-  modelName: "WLP-4_0.86x0.86mm_P0.4mm"
   rotation: -90
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -1967,8 +1846,6 @@ DiodesInc_GEA20_WLCSP-20_1.7x2.1mm_Layout4x5_P0.4mm:
   npy: 4          # number of pins along y axis (length)
   excluded_pins: null # pins to exclude
   molded: null    # molded = True, omitted -> None
-  old_modelName: "DiodesInc_GEA20_WLCSP-20_1.7x2.1mm_Layout4x5_P0.4mm" # old_modelName
-  modelName: "DiodesInc_GEA20_WLCSP-20_1.7x2.1mm_Layout4x5_P0.4mm" # modelName
   rotation: -90   # rotation if required
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -1999,8 +1876,6 @@ WLCSP-9_1.21x1.22mm_Layout3x3_P0.4mm:
   npy: 3          # number of pins along y axis (length)
   excluded_pins: null # pins to exclude
   molded: null    # molded = True, omitted -> None
-  old_modelName: "WLCSP-9_1.21x1.22mm_Layout3x3_P0.4mm" # old_modelName
-  modelName: "WLCSP-9_1.21x1.22mm_Layout3x3_P0.4mm" # modelName
   rotation: -90   # rotation if required
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -2031,8 +1906,6 @@ NXP_SOT1444-5_WLCSP-49_3.44x3.44mm_Layout7x7_P0.4mm:
   npy: 7          # number of pins along y axis (length)
   excluded_pins: null # pins to exclude
   molded: null    # molded = True, omitted -> None
-  old_modelName: "NXP_WLCSP-49_3.44x3.44mm_Layout7x7_P0.4mm" # old_modelName
-  modelName: "NXP_WLCSP-49_3.44x3.44mm_Layout7x7_P0.4mm" # modelName
   rotation: -90   # rotation if required
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -2063,8 +1936,6 @@ NXP_SOT1450-2_WLCSP-100_5.07x5.07mm_Layout10x10_P0.5mm:
   npy: 10         # number of pins along y axis (length)
   excluded_pins: null # pins to exclude
   molded: null    # molded = True, omitted -> None
-  old_modelName: "NXP_WLCSP-100_5.07x5.07mm_Layout10x10_P0.5mm" # old_modelName
-  modelName: "NXP_WLCSP-100_5.07x5.07mm_Layout10x10_P0.5mm" # modelName
   rotation: -90   # rotation if required
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -2107,8 +1978,6 @@ NXP_SOT1982-1_VFBGA-98_7x7mm_Layout13x13_P0.5mm:
                                  147,                          153,                #A12...N12
                                  160,                          166               ] #A13...N13
   molded: null    # molded = True, omitted -> None
-  old_modelName: "NXP_SOT1982-1_VFBGA-98_7x7mm_Layout13x13_P0.5mm" # old_modelName
-  modelName: "NXP_SOT1982-1_VFBGA-98_7x7mm_Layout13x13_P0.5mm" # modelName
   rotation: -90   # rotation if required
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
@@ -2147,8 +2016,6 @@ NXP_SOT2162-1_VFBGA-59_4x4mm_Layout9x9_P0.4mm:
                                   68,                 #A8...J8
                           75,     77,     79        ] #pins to exclude
   molded: null    # molded = True, omitted -> None
-  old_modelName: "NXP_SOT2162-1_VFBGA-59_4x4mm_Layout9x9_P0.4mm" # old_modelName
-  modelName: "NXP_SOT2162-1_VFBGA-59_4x4mm_Layout9x9_P0.4mm" # modelName
   rotation: -90   # rotation if required
   body_bot_color_key: "dark green body"
   body_color_key: "black body"
