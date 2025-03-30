@@ -16,7 +16,7 @@
 # (C) 2017 by @SchrodingersGat
 # (C) 2017 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 
-from typing import List
+from typing import Generator
 
 from types import GeneratorType
 from collections import namedtuple
@@ -368,6 +368,14 @@ class PadArray(Node):
     def getVirtualChilds(self):
         return self.virtual_childs
 
+    def get_pads(self) -> Generator[Pad, None, None]:
+        """
+        Yields all pads in the array, one by one.
+        """
+        for pad in self.virtual_childs:
+            if isinstance(pad, Pad):
+                yield pad
+
     def get_pad_with_name(self, number: str | int):
         for pad in self.virtual_childs:
             if pad.number == number:
@@ -375,7 +383,7 @@ class PadArray(Node):
         return None
 
 
-def get_pad_radius_from_arrays(pad_arrays: List[PadArray]) -> float:
+def get_pad_radius_from_arrays(pad_arrays: list[PadArray]) -> float:
     pad_radius = 0.0
     for pa in pad_arrays:
         if (pad_radius == 0.0):

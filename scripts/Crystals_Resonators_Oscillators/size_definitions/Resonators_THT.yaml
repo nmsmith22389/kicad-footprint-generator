@@ -1,7 +1,8 @@
 Resonator-2Pin_W10.0mm_H5.0mm:
   addSizeFootprintName: true
   ddrill: 0.8
-  description: Ceramic Resomator/Filter 10.0x5.0 RedFrequency MG/MT/MX series, http://www.red-frequency.com/download/datenblatt/redfrequency-datenblatt-ir-zta.pdf
+  description: Ceramic Resomator/Filter 10.0x5.0 RedFrequency MG/MT/MX series
+  datasheet: http://www.red-frequency.com/download/datenblatt/redfrequency-datenblatt-ir-zta.pdf
   footprint_name: Resonator
   func: makeCrystalHC49Vert
   height3d: 10
@@ -65,8 +66,8 @@ Resonator-2Pin_w8.0mm_h3.5mm:
 Resonator-3Pin_w10.0mm_h5.0mm:
   addSizeFootprintName: true
   ddrill: 0.8
-  description: Ceramic Resomator/Filter 10.0x5.0mm^2 RedFrequency MG/MT/MX series,
-    http://www.red-frequency.com/download/datenblatt/redfrequency-datenblatt-ir-zta.pdf
+  description: Ceramic Resomator/Filter 10.0x5.0mm^2 RedFrequency MG/MT/MX series
+  datasheet: http://www.red-frequency.com/download/datenblatt/redfrequency-datenblatt-ir-zta.pdf
   footprint_name: Resonator
   func: makeCrystalHC49Vert
   height3d: 10
@@ -77,7 +78,7 @@ Resonator-3Pin_w10.0mm_h5.0mm:
   pack_width: 10
   pad_size: 1.5
   pins: 3
-  rm: 5
+  rm: 2.5
   tags: THT ceramic resonator filter
 Resonator-3Pin_w6.0mm_h3.0mm:
   addSizeFootprintName: true
@@ -93,7 +94,7 @@ Resonator-3Pin_w6.0mm_h3.0mm:
   pack_width: 6
   pad_size: 1.7
   pins: 3
-  rm: 5
+  rm: 2.5
   tags: THT ceramic resonator filter
 Resonator-3Pin_w7.0mm_h2.5mm:
   addSizeFootprintName: true
@@ -109,7 +110,7 @@ Resonator-3Pin_w7.0mm_h2.5mm:
   pack_width: 7
   pad_size: 1.7
   pins: 3
-  rm: 5
+  rm: 2.5
   tags: THT ceramic resonator filter
 Resonator-3Pin_w8.0mm_h3.5mm:
   addSizeFootprintName: true
@@ -125,12 +126,13 @@ Resonator-3Pin_w8.0mm_h3.5mm:
   pack_width: 8
   pad_size: 1.7
   pins: 3
-  rm: 5
+  rm: 2.5
   tags: THT ceramic resonator filter
 Resonator_Murata_CSTLSxxxG-3Pin_w8.0mm_h3.0mm:
   addSizeFootprintName: true
   ddrill: 1
-  description: Ceramic Resomator/Filter Murata CSTLSxxxG, http://www.murata.com/~/media/webrenewal/support/library/catalog/products/timingdevice/ceralock/p17e.ashx
+  description: Ceramic Resomator/Filter Murata CSTLSxxxG
+  datasheet: http://www.murata.com/~/media/webrenewal/support/library/catalog/products/timingdevice/ceralock/p17e.ashx
   footprint_name: Resonator_Murata_CSTLSxxxG
   func: makeCrystalHC49Vert
   height3d: 5.5
@@ -141,12 +143,13 @@ Resonator_Murata_CSTLSxxxG-3Pin_w8.0mm_h3.0mm:
   pack_width: 8
   pad_size: 1.7
   pins: 3
-  rm: 5
+  rm: 2.5
   tags: THT ceramic resonator filter CSTLSxxxG
 Resonator_Murata_CSTLSxxxX-3Pin_w5.5mm_h3.0mm:
   addSizeFootprintName: true
   ddrill: 1
-  description: Ceramic Resomator/Filter Murata CSTLSxxxX, http://www.murata.com/~/media/webrenewal/support/library/catalog/products/timingdevice/ceralock/p17e.ashx
+  description: Ceramic Resomator/Filter Murata CSTLSxxxX
+  datasheet: http://www.murata.com/~/media/webrenewal/support/library/catalog/products/timingdevice/ceralock/p17e.ashx
   footprint_name: Resonator_Murata_CSTLSxxxX
   func: makeCrystalHC49Vert
   height3d: 5.5
@@ -157,12 +160,13 @@ Resonator_Murata_CSTLSxxxX-3Pin_w5.5mm_h3.0mm:
   pack_width: 5.5
   pad_size: 1.7
   pins: 3
-  rm: 5
+  rm: 2.5
   tags: THT ceramic resonator filter CSTLSxxxX
 Resonator_Murata_DSN6-3Pin_W7.0mm_H2.5mm:
   addSizeFootprintName: true
   ddrill: 1
-  description: Ceramic Resomator/Filter Murata DSN6, http://cdn-reichelt.de/documents/datenblatt/B400/DSN6NC51H.pdf
+  description: Ceramic Resomator/Filter Murata DSN6
+  datasheet: http://cdn-reichelt.de/documents/datenblatt/B400/DSN6NC51H.pdf
   footprint_name: Resonator_Murata_DSN6
   func: makeCrystalHC49Vert
   height3d: 8
@@ -173,12 +177,13 @@ Resonator_Murata_DSN6-3Pin_W7.0mm_H2.5mm:
   pack_width: 7
   pad_size: 1.7
   pins: 3
-  rm: 5
+  rm: 2.5
   tags: THT ceramic resonator filter DSN6
 Resonator_Murata_DSS6-3Pin_W7.0mm_H2.5mm:
   addSizeFootprintName: true
   ddrill: 1
-  description: Ceramic Resomator/Filter Murata DSS6, http://cdn-reichelt.de/documents/datenblatt/B400/DSN6NC51H.pdf
+  description: Ceramic Resomator/Filter Murata DSS6
+  datasheet: http://cdn-reichelt.de/documents/datenblatt/B400/DSN6NC51H.pdf
   footprint_name: Resonator_Murata_DSS6
   func: makeCrystalHC49Vert
   height3d: 7
@@ -189,5 +194,5 @@ Resonator_Murata_DSS6-3Pin_W7.0mm_H2.5mm:
   pack_width: 7
   pad_size: 1.7
   pins: 3
-  rm: 5
+  rm: 2.5
   tags: THT ceramic resonator filter DSS6

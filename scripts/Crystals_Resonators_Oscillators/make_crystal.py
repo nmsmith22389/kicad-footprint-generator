@@ -1473,11 +1473,9 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
         description="Crystal THT",
         lib_name="Crystal",
         tags="",
-        offset3d=[0, 0, 0],
-        scale3d=[1, 1, 1],
-        rotate3d=[0, 0, 0],
         addSizeFootprintName=False,
-        height3d=10,
+        height3d: float = None,
+        datasheet: str | None = None,
     ):
         fpname = footprint_name
         desc = description
@@ -1500,156 +1498,101 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
                 )
             )
 
-        if type(pad_size) is list:
-            pad = [pad_size[1], pad_size[0]]
-        else:
-            pad = [pad_size, pad_size]
+        if datasheet:
+            desc += ", " + datasheet
 
-        centerpos = [rm / 2, 0]
-        pin1pos = [0, 0]
-        pin2pos = [rm, 0]
-        pin3pos = [rm / 2, 0]
-        if pins == 3:
-            pin2pos = [rm / 2, 0]
-            pin3pos = [rm, 0]
+        pad_size = toVectorUseCopyIfNumber(pad_size)
 
-        w_fab = pack_width
-        h_fab = pack_height
-        l_fab = -(w_fab - rm) / 2
-        t_fab = -h_fab / 2
-        iw_fab = innerpack_width
-        ih_fab = innerpack_height
-        il_fab = -(iw_fab - rm) / 2
-        it_fab = -ih_fab / 2
+        centerpos = Vector2D(rm * (pins - 1) / 2, 0)
+        pin1pos = Vector2D(0, 0)
 
-        incomplete_slk = False
-        h_slk = h_fab + 2 * slk_offset + 2 * slk_clearance
-        w_slk = w_fab + 2 * slk_offset + 2 * slk_clearance
-        l_slk = l_fab - slk_offset - slk_clearance
-        t_slk = t_fab - slk_offset - slk_clearance
-
-        l_crt = l_slk - crt_offset
-        t_crt = t_slk - crt_offset
-        w_crt = w_slk + 2 * crt_offset
-        h_crt = h_slk + 2 * crt_offset
-
-        if pack_width < rm + pad[0]:
-            l_crt = min(-pad[0] / 2, l_fab) - crt_offset
-            w_crt = max(rm + pad[0], w_fab) + 2 * slk_offset
-            incomplete_slk = True
-            angle_slk = (
-                math.acos((pad[1] / 2 + slk_offset) / (h_slk / 2)) / 3.1415 * 180
-            )
+        body_bounds = Rectangle(
+            center=centerpos,
+            size=Vector2D(pack_width, pack_height),
+        )
 
         # init kicad footprint
         kicad_mod = Footprint(fpname, FootprintType.THT)
-        kicad_mod.setDescription(desc)
-        kicad_mod.setTags(tags)
+        kicad_mod.description = desc
+        kicad_mod.tags = tags
 
-        offset = [0, 0]
         kicad_modg = kicad_mod
 
-        # set general values
-        kicad_modg.append(
-            Property(
-                name=Property.REFERENCE,
-                text="REF**",
-                at=[centerpos[0], t_slk - txt_offset],
-                layer="F.SilkS",
-            )
+        pad_array = PadArray(
+            start=pin1pos,
+            initial=1,
+            pincount=pins,
+            increment=1,
+            x_spacing=rm,
+            size=pad_size,
+            drill=ddrill,
+            type=Pad.TYPE_THT,
+            shape=Pad.SHAPE_CIRCLE,
+            tht_pad1_shape=Pad.SHAPE_CIRCLE,
+            layers=Pad.LAYERS_THT,
         )
-        kicad_modg.append(
-            Text(type="user", text="${REFERENCE}", at=[0, 0], layer="F.Fab")
-        )
-        kicad_modg.append(
-            Property(
-                name=Property.VALUE,
-                text=fpname,
-                at=[centerpos[0], t_slk + h_slk + txt_offset],
-                layer="F.Fab",
-            )
+        kicad_modg += pad_array
+
+        keepouts = DT.getKeepoutsForPads(
+            list(pad_array.get_pads()), self.global_config.silk_pad_offset
         )
 
-        # create FAB-layer
-        THTQuartz(kicad_modg, [l_fab, t_fab], [w_fab, h_fab], "F.Fab", lw_fab)
-        THTQuartz(kicad_modg, [il_fab, it_fab], [iw_fab, ih_fab], "F.Fab", lw_fab)
-
-        # create SILKSCREEN-layer
-        if incomplete_slk:
-            THTQuartzIncomplete(
-                kicad_modg, [l_slk, t_slk], [w_slk, h_slk], angle_slk, "F.SilkS", lw_slk
-            )
-        else:
-            THTQuartz(kicad_modg, [l_slk, t_slk], [w_slk, h_slk], "F.SilkS", lw_slk)
-
-        # create courtyard
-        kicad_mod.append(
-            RectLine(
-                start=[roundCrt(l_crt + offset[0]), roundCrt(t_crt + offset[1])],
-                end=[
-                    roundCrt(l_crt + w_crt + offset[0]),
-                    roundCrt(t_crt + h_crt + offset[1]),
-                ],
-                layer="F.CrtYd",
-                width=lw_crt,
-            )
+        kicad_modg += Stadium.Stadium.by_inscription(
+            body_bounds, "F.Fab", self.global_config.fab_line_width
         )
 
-        # create pads
-        pad_type = Pad.TYPE_THT
-        pad_shape1 = Pad.SHAPE_CIRCLE
-        pad_layers = "*"
+        # This would be easier with a KeepoutNode to append to that handles this,
+        # Then we could just add a Stadium
+        # But to get this to generate now, we just steal the primitives
+        # and apply keepouts ourselves.
 
-        kicad_modg.append(
-            Pad(
-                number=1,
-                type=pad_type,
-                shape=pad_shape1,
-                at=pin1pos,
-                size=pad,
-                drill=ddrill,
-                layers=[pad_layers + ".Cu", pad_layers + ".Mask"],
-            )
-        )
-        kicad_modg.append(
-            Pad(
-                number=2,
-                type=pad_type,
-                shape=pad_shape1,
-                at=pin2pos,
-                size=pad,
-                drill=ddrill,
-                layers=[pad_layers + ".Cu", pad_layers + ".Mask"],
-            )
-        )
-        if pins == 3:
-            kicad_modg.append(
-                Pad(
-                    number=3,
-                    type=pad_type,
-                    shape=pad_shape1,
-                    at=pin3pos,
-                    size=pad,
-                    drill=ddrill,
-                    layers=[pad_layers + ".Cu", pad_layers + ".Mask"],
-                )
-            )
-
-        # add model
-        kicad_modg.append(
-            Model(
-                filename=self.get_standard_3d_model_path(lib_name, fpname),
-                at=offset3d,
-                scale=scale3d,
-                rotate=rotate3d,
-            )
+        silk_stadium = Stadium.Stadium.by_inscription(
+            body_bounds.with_outset(self.global_config.silk_fab_offset),
+            "F.SilkS",  # not actually used
+            self.global_config.silk_line_width,
         )
 
-        # print render tree
-        # print(kicad_mod.getRenderTree())
-        # print(kicad_mod.getCompleteRenderTree())
+        kicad_modg += makePrimitivesWithKeepout(
+            list(silk_stadium.get_primitives()),
+            layer="F.SilkS",
+            width=self.global_config.silk_line_width,
+            keepouts=keepouts,
+        )
 
-        # write file
+        body_courtyard_offset = self.global_config.get_courtyard_offset(
+            GC.GlobalConfig.CourtyardType.CRYSTAL
+        )
+        pad_courtyard_offset = self.global_config.get_courtyard_offset(
+            GC.GlobalConfig.CourtyardType.DEFAULT
+        )
+
+        cy_height = max(
+            body_bounds.size.y + 2 * body_courtyard_offset,
+            pad_size.y + 2 * pad_courtyard_offset,
+        )
+        cy_width = max(
+            body_bounds.size.x + 2 * body_courtyard_offset,
+            rm * (pins - 1) + pad_size.x + 2 * pad_courtyard_offset,
+        )
+
+        courtyard_rect = Rectangle(center=centerpos, size=Vector2D(cy_width, cy_height))
+
+        kicad_mod += drawing_tools_courtyard.make_round_or_stadium_courtyard(
+            self.global_config, courtyard_rect
+        )
+
+        footprint_text_fields.addTextFields(
+            kicad_modg,
+            self.global_config,
+            body_edges=body_bounds,
+            courtyard=courtyard_rect,
+            fp_name=kicad_mod.name,
+            text_y_inside_position="center",
+            allow_rotation=True,
+        )
+
+        kicad_modg += Model(filename=self.get_standard_3d_model_path(lib_name, fpname))
+
         self.write_footprint(kicad_mod, lib_name)
 
     #       +---------------------------------------+
@@ -1754,10 +1697,8 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
             center=center_pos, size=Vector2D(cy_width_x, cy_height_y)
         )
 
-        kicad_mod.extend(
-            drawing_tools_courtyard.make_round_or_stadium_courtyard(
-                self.global_config, courtyard_rect
-            )
+        kicad_mod += drawing_tools_courtyard.make_round_or_stadium_courtyard(
+            self.global_config, courtyard_rect
         )
 
         body_rect = Rectangle(center=center_pos, size=Vector2D(pack_diameter, pack_diameter))

@@ -44,7 +44,7 @@ class Line(Node, geometricLine):
         Node.__init__(self)
         if 'geometry' in kwargs:
             geometry = kwargs['geometry']
-            geometricLine.__init__(self, geometry.start_pos, geometry.end_pos)
+            geometricLine.__init__(self, start=geometry.start_pos, end=geometry.end_pos)
         else:
             geometricLine.__init__(
                 self,

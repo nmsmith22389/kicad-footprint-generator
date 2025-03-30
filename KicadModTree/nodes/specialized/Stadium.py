@@ -1,5 +1,11 @@
 from KicadModTree import Arc, Line, Node
-from kilibs.geom import Rectangle, Vector2D
+from kilibs.geom import (
+    Rectangle,
+    Vector2D,
+    geometricArc,
+    geometricLine,
+    geometricPrimitive,
+)
 
 
 class Stadium(Node):
@@ -54,7 +60,10 @@ class Stadium(Node):
             center_1=c1, center_2=c2, radius=radius, width=width, layer=layer
         )
 
-    def _rebuild(self) -> list[Node]:
+    def get_primitives(self):
+        """
+        Yield the geometric primitives that make up this stadium.
+        """
 
         # centre 1 to centre 2 vector
         c_vec = self.center_2 - self.center_1
@@ -64,37 +73,43 @@ class Stadium(Node):
         # Vector from centre 2 to arc mid point
         c_to_arc_mid = c_vec.resize(self.radius)
 
-        arc1 = Arc(
+        yield geometricArc(
             start=self.center_1 + perp_vec,
             end=self.center_1 - perp_vec,
             midpoint=self.center_1 - c_to_arc_mid,
-            layer=self.layer,
-            width=self.width,
         )
 
-        arc2 = Arc(
+        yield geometricArc(
             start=self.center_2 + perp_vec,
             end=self.center_2 - perp_vec,
             midpoint=self.center_2 + c_to_arc_mid,
-            layer=self.layer,
-            width=self.width,
         )
 
-        line1 = Line(
+        yield geometricLine(
             start=self.center_1 + perp_vec,
             end=self.center_2 + perp_vec,
-            layer=self.layer,
-            width=self.width,
         )
 
-        line2 = Line(
+        yield geometricLine(
             start=self.center_1 - perp_vec,
             end=self.center_2 - perp_vec,
-            layer=self.layer,
-            width=self.width,
         )
 
-        return [arc1, arc2, line1, line2]
+    def _rebuild(self) -> list[Node]:
+
+        nodes = []
+
+        for primitive in self.get_primitives():
+            if isinstance(primitive, geometricArc):
+                nodes.append(
+                    Arc(geometry=primitive, layer=self.layer, width=self.width)
+                )
+            elif isinstance(primitive, geometricLine):
+                nodes.append(
+                    Line(geometry=primitive, layer=self.layer, width=self.width)
+                )
+
+        return nodes
 
     def getVirtualChilds(self):
         return self._children

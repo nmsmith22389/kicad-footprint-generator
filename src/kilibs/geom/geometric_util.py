@@ -14,7 +14,7 @@
 # (C) 2016-2018 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 
 import math
-from typing import List, TYPE_CHECKING
+from typing import List, TypeAlias, TYPE_CHECKING
 
 from kilibs.geom.vector import Vector2D
 
@@ -23,11 +23,14 @@ if TYPE_CHECKING:
     from kilibs.geom.bounding_box import BoundingBox
 
 
+geometricPrimitive: TypeAlias = "geometricLine | geometricCircle | geometricArc"
+
+
 def isGeometricPrimitive(obj):
     """
-    Check if an object's (sub)class is a gemoetric object defined in here
+    Check if an object's (sub)class is a geometric object defined in here
     """
-    return issubclass(type(obj), (geometricArc, geometricCircle, geometricLine))
+    return isinstance(obj, (geometricLine, geometricCircle, geometricArc))
 
 
 def normalizeAngle(angle, use_degrees=True):
