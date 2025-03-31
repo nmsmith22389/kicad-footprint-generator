@@ -165,7 +165,7 @@ class FpGenerateShGenerator(FpGenerator):
     def generate(self, output_dir: Path | None) -> "FpGenerationResult":
         logging.info("Running generate.sh: %s" % self.generate_sh)
 
-        cmd = [self.generate_sh.absolute()]
+        cmd = ["sh", "-c", self.generate_sh.absolute().as_posix()]
         cwd = self.base_path
 
         env = os.environ.copy()
