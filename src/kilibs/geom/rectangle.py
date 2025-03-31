@@ -111,6 +111,22 @@ class Rectangle:
         return self.center + Vector2D(self.size.x / 2, -self.size.y / 2)
 
     @property
+    def right_midpoint(self) -> Vector2D:
+        return Vector2D(self.right, self.center.y)
+
+    @property
+    def left_midpoint(self) -> Vector2D:
+        return Vector2D(self.left, self.center.y)
+
+    @property
+    def top_midpoint(self) -> Vector2D:
+        return Vector2D(self.center.x, self.top)
+
+    @property
+    def bottom_midpoint(self) -> Vector2D:
+        return Vector2D(self.center.x, self.bottom)
+
+    @property
     def bounding_box(self) -> BoundingBox:
         return BoundingBox(
             Vector2D(self.left, self.top),
