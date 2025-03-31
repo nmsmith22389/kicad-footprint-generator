@@ -813,10 +813,15 @@ class BaseNodeIntersection():
 
     @staticmethod
     def intersectSegmentWithCircle(
-        line: geometricLine, circle: geometricCircle, tol: float = 1e-7
+        line: geometricLine, circle: geometricCircle,
+        reject_tangents: bool = False,
+        tol: float = 1e-7
     ) -> List[Vector2D]:
 
         line_intersections = BaseNodeIntersection.intersectLineWithCircle(line, circle, tol)
+
+        if reject_tangents and len(line_intersections) == 1:
+            return []
 
         ret = []
 
@@ -853,12 +858,13 @@ class BaseNodeIntersection():
         else:
             x = (d**2 - r**2 + R**2) / (2 * d)
 
-            numerator = 4 * d**2 * R**2 - (d**2 - r**2 + R**2)**2
-
-            if abs(numerator) < tol:
-                # circles are tangent to each other
+            # The circles are tangent - the point lies R from the center of circle1
+            # This defends against sqrt(negative), as well as returning two almost identical
+            # points when the circles are tangent.
+            if abs(abs(x) - R) < tol:
                 y = 0
             else:
+                numerator = 4 * d**2 * R**2 - (d**2 - r**2 + R**2)**2
                 y = math.sqrt(numerator) / d
 
         signs = [0.0] if (y < tol) else [0.5, -0.5]
@@ -883,11 +889,16 @@ class BaseNodeIntersection():
 
     @staticmethod
     def intersectCircleWithArc(
-        circle: geometricCircle, arc: geometricArc, tol: float = 1e-7
+        circle: geometricCircle, arc: geometricArc,
+        reject_tangents: bool = False,
+        tol: float = 1e-7
     ) -> List[Vector2D]:
 
         arc_circle = geometricCircle(center=arc.center_pos, radius=arc.getRadius())
         circle_intersections = BaseNodeIntersection.intersectTwoCircles(circle, arc_circle, tol)
+
+        if reject_tangents and len(circle_intersections) == 1:
+            return []
 
         ret = []
 

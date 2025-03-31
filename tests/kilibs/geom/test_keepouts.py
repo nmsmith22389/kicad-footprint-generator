@@ -8,13 +8,14 @@ Exhaustive tests are high maintenance, and regressions will normally be much mor
 visual diffs of the generated graphics than by delicate stacks of numerical tests.
 """
 
-from kilibs.geom import geometricLine, geometricCircle
+from kilibs.geom import geometricArc, geometricLine, geometricCircle
 from kilibs.geom.keepout import KeepoutRect, KeepoutRound
 from scripts.tools.drawing_tools import applyKeepouts
 
 import kilibs.test_utils.geom_test as GeomTest
 
 import pytest
+from itertools import product
 
 
 @pytest.mark.parametrize("center, size, line_start, line_end, expected_segs", [
@@ -82,3 +83,84 @@ def test_apply_circles_to_circle():
 
     new_items = applyKeepouts(items, kos)
     assert len(new_items) == 2
+
+
+@pytest.mark.parametrize("fp_fudge_r, fp_fudge_x",
+    product([0, 0.1, -0.1], repeat=2),
+)
+def test_arc_tangent_to_circle(fp_fudge_r, fp_fudge_x):
+
+    # If an arc just touches the circle, it's one intersection,
+    # which can upset the odd/even splitting if not handled
+
+    items = [
+        geometricArc(
+            start=(fp_fudge_x, 200 + fp_fudge_r),
+            midpoint=(200 + fp_fudge_x + fp_fudge_r, 0),
+            end=(fp_fudge_x, -200 - fp_fudge_r),
+        ),
+    ]
+
+    kos = [
+        KeepoutRound(
+            center=(100 + fp_fudge_x, 0),
+            radius=100 + fp_fudge_r,
+        ),
+    ]
+
+    new_items = applyKeepouts(items, kos)
+
+    assert len(new_items) == 1
+    # The arc should be untouched
+    assert new_items[0] == items[0]
+
+
+@pytest.mark.parametrize("fp_fudge_r, fp_fudge_cx",
+    product([0, 0.1, -0.1], repeat=2),
+)
+def test_circle_tangent_to_circle(fp_fudge_r, fp_fudge_cx):
+
+    # As for arc-circle, one circle just touching shouldn't clip.
+
+    items = [
+        geometricCircle(center=(fp_fudge_cx, 0), radius=200 + fp_fudge_r),
+    ]
+
+    kos = [
+        KeepoutRound(center=(100 + fp_fudge_cx, 0), radius=100 + fp_fudge_r),
+    ]
+
+    new_items = applyKeepouts(items, kos)
+
+    assert len(new_items) == 1
+    # The arc should be untouched
+    assert new_items[0] == items[0]
+
+
+@pytest.mark.parametrize("fp_fudge_r, fp_fudge_cx",
+    product([0, 0.1, -0.1], repeat=2),
+)
+def test_circle_tangent_to_rect(fp_fudge_r, fp_fudge_cx):
+
+    # If a circle just touches the rectangle, it's one intersection,
+    # and we reject it as a clip point
+
+    items = [
+        geometricCircle(
+            center=(200 + fp_fudge_cx, 0),
+            radius=100 + fp_fudge_r,
+        ),
+    ]
+
+    kos = [
+        KeepoutRect(
+            center=(0 + fp_fudge_cx, 0),
+            size=(100 + fp_fudge_r, 100 + fp_fudge_r),
+        ),
+    ]
+
+    new_items = applyKeepouts(items, kos)
+
+    assert len(new_items) == 1
+    # The arc should be untouched
+    assert new_items[0] == items[0]

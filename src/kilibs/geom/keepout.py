@@ -281,7 +281,7 @@ class KeepoutRect(Keepout):
         # Check for intersections with each side of the rectangle
         for side in [self.top_side, self.bottom_side, self.left_side, self.right_side]:
             side_intersections = BaseNodeIntersection.intersectSegmentWithCircle(
-                side, circle
+                side, circle, reject_tangents=True,
             )
 
             if side_intersections:
@@ -350,7 +350,7 @@ class KeepoutRound(Keepout):
     def keepout_line(self, seg: geometricLine):
 
         intersections = BaseNodeIntersection.intersectSegmentWithCircle(
-            seg, self._circle
+            seg, self._circle, reject_tangents=True
         )
 
         # TODO: Optimisation opportunity to find obvious bypasses
@@ -384,6 +384,11 @@ class KeepoutRound(Keepout):
         if not intersections:
             return None
 
+        if len(intersections) == 1:
+            # The circle is tangent to the keepout circle, so we can treat is as not clipping
+            # out a section of the kept-out circle
+            return None
+
         arcs = Keepout._arcsFromCircleIntersections(
             circle.center_pos, intersections, self.contains
         )
@@ -400,7 +405,9 @@ class KeepoutRound(Keepout):
             # Arc inside
             return []
 
-        intersections = BaseNodeIntersection.intersectCircleWithArc(self._circle, arc)
+        intersections = BaseNodeIntersection.intersectCircleWithArc(
+            self._circle, arc, reject_tangents=True, tol=tol
+        )
 
         if not intersections:
             # The arc is entirely inside the circle or entirely outside
