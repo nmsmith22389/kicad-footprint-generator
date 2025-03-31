@@ -376,7 +376,11 @@ class geometricArc():
             else:
                 raise KeyError('Arcs defined with center point must define either an angle or endpoint')
         else:
-            self._initFrom3PointArc(kwargs['start'], kwargs['midpoint'], kwargs['end'])
+            self._initFrom3PointArc(
+                Vector2D(kwargs["start"]),
+                Vector2D(kwargs["midpoint"]),
+                Vector2D(kwargs["end"]),
+            )
 
     @staticmethod
     def normalizeAngle(angle):

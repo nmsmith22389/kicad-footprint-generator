@@ -94,6 +94,9 @@ class PadArray(Node):
     ...          type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT, size=[1,2], layers=Pad.LAYERS_SMT)
     """
 
+    startingPosition: Vector2D
+    spacing: Vector2D
+
     def __init__(self, **kwargs):
         Node.__init__(self)
         self._initPincount(**kwargs)
@@ -132,26 +135,17 @@ class PadArray(Node):
         OR
         can use the 'center' argument to center the array around the given position
         """
-        self.startingPosition = [0, 0]
+        self.startingPosition = Vector2D(0, 0)
 
         # Start takes priority
         if kwargs.get('start'):
-            self.startingPosition = kwargs.get('start')
-            if type(self.startingPosition) not in [list, tuple] or not len(self.startingPosition) == 2:
-                raise ValueError('array starting position "start" must be given as an list of length two')
-            if any([type(i) not in [int, float] for i in self.startingPosition]):
-                raise ValueError('array starting coordinates must be numerical')
+            self.startingPosition = Vector2D(kwargs.get('start'))
         elif kwargs.get('center'):
-            center = kwargs.get('center')
-
-            if type(center) not in [list, tuple] or not len(center) == 2:
-                raise ValueError('array center position "center" must be given as a list of length two')
-            if any([type(i) not in [int, float] for i in center]):
-                raise ValueError('array center coordinates must be numerical')
+            center = Vector2D(kwargs.get('center'))
 
             # Now calculate the desired starting position of the array
-            self.startingPosition[0] = center[0] - (self.pincount - 1) * self.spacing[0] / 2.
-            self.startingPosition[1] = center[1] - (self.pincount - 1) * self.spacing[1] / 2.
+            self.startingPosition.x = center.x - (self.pincount - 1) * self.spacing.x / 2.
+            self.startingPosition.y = center.y - (self.pincount - 1) * self.spacing.y / 2.
 
     # What number to start with?
     def _initInitialNumber(self, **kwargs):
@@ -175,32 +169,20 @@ class PadArray(Node):
         x_spacing = 1
         y_spacing = 2
         """
-
-        self.spacing = [0, 0]  # [x, y]
+        self.spacing = Vector2D(0, 0)
 
         if kwargs.get('spacing'):
-            self.spacing = kwargs.get('spacing')
-            if type(self.spacing) not in [list, tuple]:
-                raise TypeError('spacing must be specified like "spacing=[0,1]"')
-            elif len(self.spacing) != 2:
-                raise ValueError('spacing must be supplied as x,y pair')
-            elif any([type(i) not in [int, float] for i in self.spacing]):
-                raise ValueError('spacing must be numerical value')
-            # if 'spacing' is specified, ignore x_spacing and y_spacing
+            self.spacing = Vector2D(kwargs.get('spacing'))
             return
 
         if kwargs.get('x_spacing'):
-            self.spacing[0] = kwargs.get('x_spacing')
-            if type(self.spacing[0]) not in [int, float]:
-                raise ValueError('x_spacing must be supplied as numerical value')
+            self.spacing.x = kwargs.get('x_spacing')
 
         if kwargs.get('y_spacing'):
-            self.spacing[1] = kwargs.get('y_spacing')
-            if type(self.spacing[1]) not in [int, float]:
-                raise ValueError('y_spacing must be supplied as numerical value')
+            self.spacing.y = kwargs.get('y_spacing')
 
-        if all([i == 0 for i in self.spacing]):
-            raise ValueError('pad spacing ({sp}) must be non-zero'.format(sp=self.spacing))
+        if self.spacing.x == 0 and self.spacing.y == 0:
+            raise ValueError('pad spacing ({self.spacing}) must be non-zero')
 
     def _applyOverrides(self,
                         pad_number: int,
@@ -277,10 +259,6 @@ class PadArray(Node):
     def _createPads(self, **kwargs):
 
         pads = []
-
-        x_start, y_start = self.startingPosition
-        x_spacing, y_spacing = self.spacing
-
         padShape = kwargs.get('shape')
 
         # Special case, increment = 0
@@ -333,8 +311,8 @@ class PadArray(Node):
 
             if includePad:
                 current_pad_pos = Vector2D(
-                    x_start + i * x_spacing,
-                    y_start + i * y_spacing
+                    self.startingPosition.x + i * self.spacing.x,
+                    self.startingPosition.y + i * self.spacing.y,
                     )
                 current_pad_params = copy(kwargs)
                 if i == 0 or i == len(pad_numbers)-1:

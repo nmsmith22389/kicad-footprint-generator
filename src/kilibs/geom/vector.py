@@ -31,6 +31,10 @@ class Vector2D(object):
     >>> Vector2D({'x': 0, 'y':0})
     >>> Vector2D(Vector2D(0, 0))
     """
+
+    _x: float
+    _y: float
+
     def __init__(self, coordinates=None, y=None):
         # parse constructor
         if coordinates is None:
@@ -53,13 +57,35 @@ class Vector2D(object):
         # parse vectors with format: Vector2D([0, 0]) or Vector2D((0, 0))
         if type(coordinates) in [list, tuple]:
             if len(coordinates) == 2:
-                self.x = float(coordinates[0])
-                self.y = float(coordinates[1])
+                self._x = float(coordinates[0])
+                self._y = float(coordinates[1])
                 return
             else:
                 raise TypeError('invalid list size (2 elements expected)')
 
         raise TypeError(f'invalid parameters given: {coordinates}')
+
+    @property
+    def x(self):
+        return self._x
+
+    @x.setter
+    def x(self, value):
+        if isinstance(value, (float, int)):
+            self._x = float(value)
+        else:
+            raise TypeError('invalid type for x coordinate')
+
+    @property
+    def y(self):
+        return self._y
+
+    @y.setter
+    def y(self, value):
+        if isinstance(value, (float, int)):
+            self._y = float(value)
+        else:
+            raise TypeError('invalid type for y coordinate')
 
     def round_to(self, base):
         r"""Round to a specific base (like it's required for a grid)
