@@ -115,6 +115,45 @@ TQFP-48-1EP_7x7mm_P0.5mm_EP5.0x5.0mm:
     # bottom_pad_size:
     # paste_avoid_via: True
 
+TQFP-52-1EP_10x10mm_P0.65mm_EP6.5x6.5mm:
+  device_type: 'TQFP'
+  size_source: 'http://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/tqfp_edsv/sv_52_1.pdf'
+  body_size_x:
+    nominal: 10
+    tolerance: 0
+  body_size_y:
+    nominal: 10
+    tolerance: 0
+  overall_size_x:
+    nominal: 12
+    tolerance: 0
+  overall_size_y:
+    nominal: 12
+    tolerance: 0
+  lead_width_min: 0.22
+  lead_width_max: 0.38
+  lead_len_min: 0.45
+  lead_len_max: 0.75
+  pitch: 0.65
+  num_pins_x: 13
+  num_pins_y: 13
+
+  EP_size_x:
+    minimum: 6.4
+    nominal: 6.5
+    maximum: 6.6
+  EP_size_y:
+    minimum: 6.4
+    nominal: 6.5
+    maximum: 6.6
+  EP_paste_coverage: 0.65
+  EP_num_paste_pads: [5, 5]
+
+  thermal_vias:
+    count: [4, 4]
+    drill: 0.2
+    paste_via_clearance: 0.1
+
 TQFP_64:
   size_source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
   body_size_x:
