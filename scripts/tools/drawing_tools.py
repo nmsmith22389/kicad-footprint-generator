@@ -318,11 +318,17 @@ def _add_kept_out(
     return nodes
 
 
-# split an arbitrary line so it does not interfere with keepout areas defined as [[x0,x1,y0,y1], ...]
-def addLineWithKeepout(kicad_mod, line: geometricLine, layer, width, keepouts=[], roun=0.001):
+def makeLineWithKeepout(line: geometricLine, layer, width, keepouts=[], roun=0.001):
+    """
+    Split an arbitrary line so it does not interfere with keepout areas
+    """
     kept_out = applyKeepouts([line], keepouts)
+    return _add_kept_out(kept_out, layer, width, roun)
 
-    nodes = _add_kept_out(kept_out, layer, width, roun)
+
+def addLineWithKeepout(kicad_mod, line: geometricLine, layer, width, keepouts=[], roun=0.001):
+    """Compatibility shim, prefer makeLineWithKeepout in new code"""
+    nodes = makeLineWithKeepout(line, layer, width, keepouts, roun)
     for node in nodes:
         kicad_mod.append(node)
 
@@ -336,6 +342,7 @@ def addHLineWithKeepout(kicad_mod, x0, x1, y, layer, width, keepouts=[], roun=0.
         line = geometricLine(start=[x0, y], end=[x1, y])
         addLineWithKeepout(kicad_mod, line, layer, width, keepouts, roun)
 
+
 # split a vertical line so it does not interfere with keepout areas
 def addVLineWithKeepout(kicad_mod, x, y0, y1, layer, width, keepouts=[], roun=0.001, dashed=False):
     if dashed:
@@ -345,25 +352,37 @@ def addVLineWithKeepout(kicad_mod, x, y0, y1, layer, width, keepouts=[], roun=0.
         line = geometricLine(start=[x, y0], end=[x, y1])
         addLineWithKeepout(kicad_mod, line, layer, width, keepouts, roun)
 
-# draw a circle minding the keepouts
+
+def makeCircleWithKeepout(circle: geometricCircle, layer, width, keepouts=[], roun=0.001):
+    """
+    Draw a circle minding the keepouts
+    """
+    parts_out = applyKeepouts([circle], keepouts)
+    return _add_kept_out(parts_out, layer, width, roun)
+
+
 def addCircleWithKeepout(kicad_mod, x, y, radius, layer, width, keepouts=[], roun=0.001):
-
+    """Compatibility shim, prefer makeCircleWithKeepout in new code"""
     c = geometricCircle(center=[x, y], radius=radius)
-
-    parts_out = applyKeepouts([c], keepouts)
-
-    nodes = _add_kept_out(parts_out, layer, width, roun)
+    nodes = makeCircleWithKeepout(c, layer, width, keepouts, roun)
     for node in nodes:
         kicad_mod.append(node)
 
-# draw an arc minding the keepouts
-def addArcWithKeepout(kicad_mod, arc: geometricArc, layer, width, keepouts, roun):
 
+def makeArcWithKeepout(arc: geometricArc, layer, width, keepouts=[], roun=0.001):
+    """
+    Draw an arc minding the keepouts
+    """
     parts_out = applyKeepouts([arc], keepouts)
+    return _add_kept_out(parts_out, layer, width, roun)
 
-    nodes = _add_kept_out(parts_out, layer, width, roun)
+
+def addArcWithKeepout(kicad_mod, arc: geometricArc, layer, width, keepouts, roun):
+    """Compatibility shim, prefer makeArcWithKeepout in new code"""
+    nodes = makeArcWithKeepout(arc, layer, width, keepouts, roun)
     for node in nodes:
         kicad_mod.append(node)
+
 
 # draw an arc
 def addArcByAngles(kicad_mod, x, y, radius, angle_start, angle_end, layer, width, roun=0.001):
@@ -400,6 +419,18 @@ def addPolyLineWithKeepout(kicad_mod, poly, layer, width, keepouts=[], roun=0.00
         for p in range(0, len(poly) - 1):
             line = geometricLine(start=poly[p], end=poly[p+1])
             addLineWithKeepout(kicad_mod, line, layer, width, keepouts, roun)
+
+
+def makePrimitivesWithKeepout(primitives: list[geometricLine | geometricArc | geometricCircle],
+                                layer: str, width: float, keepouts: list[Keepout], roun=0.001) -> list[Node]:
+    """
+    Turn a list of primitives into a list of nodes, keeping the keepouts in mind.
+
+    Eventually we should do this with a transparent Keepout Node, as that will handle Translations, say,
+    but for now this centralises logic.
+    """
+    kept_out_prims = applyKeepouts(primitives, keepouts)
+    return _add_kept_out(kept_out_prims, layer, width, roun)
 
 
 # draw a circle with a screw slit under 45 degrees

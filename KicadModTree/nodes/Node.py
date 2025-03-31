@@ -17,10 +17,10 @@ from __future__ import annotations
 import math
 import uuid
 from copy import copy, deepcopy
-from traceback import print_tb, print_stack
+from traceback import print_stack
 from hashlib import sha1
-# from json import dumps
 from enum import Enum
+from typing import Iterable
 
 from kilibs.geom import Vector2D, Vector3D
 
@@ -284,6 +284,17 @@ class Node(object):
                 node.setTStampSeedFromNode(self)
 
         self._childs.extend(new_nodes)
+
+    def __add__(self, nodes: Node | Iterable[Node]) -> Node:
+        """
+        Convenience function to allow simple append/extend to a Node
+        """
+        if isinstance(nodes, Node):
+            self.append(nodes)
+        else:
+            self.extend(nodes)
+
+        return self
 
     @staticmethod
     def _removeNode(*, parent, node, virtual: bool = False):
