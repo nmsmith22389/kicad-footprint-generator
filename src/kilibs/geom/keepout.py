@@ -323,8 +323,9 @@ class KeepoutRect(Keepout):
         if not intersections:
             # The arc is entirely inside the rectangle or entirely outside
 
-            # If any part of it is inside, it is entirely inside
-            if self.contains(arc.start_pos):
+            # If the midpoint is inside, it is entirely inside
+            # Don't check the start/end: they could be on the boundary
+            if self.contains(arc.getMidPoint()):
                 return []
 
             # none of the arc is inside, so it must be entirely outside

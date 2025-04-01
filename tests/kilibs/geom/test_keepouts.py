@@ -201,3 +201,47 @@ def test_arc_to_circle_ko_reverse_angle():
 
     new_items = applyKeepouts([arc_r], [ko_r])
     check_results(new_items)
+
+
+@pytest.mark.parametrize(
+    "fp_fudge_x",
+    [
+        (0),
+        (0.1),
+        (-0.1),
+    ],
+)
+def test_arc_with_endpoint_on_ko_bound(fp_fudge_x):
+    """
+    Make sure we don't flub the case where the end/startpoint of the arc is also
+    an intersection with the keepout.
+
+    Add some fudge to the x coordinate to make sure we test with +/- FP roundoffs.
+    """
+
+    arc = geometricArc(
+        start=(fp_fudge_x, 100),
+        end=(fp_fudge_x, -100),
+        midpoint=(100 + fp_fudge_x, 0),
+    )
+    ko_outside = KeepoutRect(
+        center=(-100 + fp_fudge_x, 0),
+        size=(200, 200),
+    )
+
+    print(arc.getMidPoint())
+
+    new_items = applyKeepouts([arc], [ko_outside])
+
+    assert len(new_items) == 1
+    assert abs(new_items[0].angle) == pytest.approx(180)
+
+    # and the other case where the arc is inside and touches
+    # the keepout rectangle at the start/end points
+    ko_inside = KeepoutRect(
+        center=(fp_fudge_x, 0),
+        size=(200, 200),
+    )
+
+    new_items = applyKeepouts([arc], [ko_inside])
+    assert len(new_items) == 0
