@@ -118,7 +118,9 @@ class Keepout(ABC):
 
     @staticmethod
     def _arcsFromIntersections(
-        center: Vector2D, intersections: list, point_inside_func: PointPredicate
+        center: Vector2D,
+        intersections: list,
+        point_inside_func: PointPredicate,
     ):
         segments = []
         for i in range(len(intersections) - 1):
@@ -150,6 +152,8 @@ class Keepout(ABC):
 
         # Include the last intersection to first intersection to close the circle
         intersections.append(intersections[0])
+
+        # It doesn't matter which way round we go, we cover the whole circle
         return Keepout._arcsFromIntersections(center, intersections, point_inside_func)
 
     @staticmethod
@@ -162,11 +166,19 @@ class Keepout(ABC):
         def _get_pt_angle_from_start(pt):
             a = (pt - arc.center_pos).arg() - arc_start_angle
 
-            if a < 0:
-                a += 360
+            # Make sure the angle difference matches the arc's winding direction
+            if arc.angle > 0:
+                if a < 0:
+                    a += 360
+            else:
+                if a > 0:
+                    a -= 360
+
             return a
 
         # Sort intersections by angle around the arc, from the start
+        # It doesn't actually matter which direction the list is in, as long as it
+        # is monotonic in angle from start to end.
         intersections.append(arc.start_pos)
         intersections.append(arc.getEndPoint())
         intersections.sort(key=_get_pt_angle_from_start)

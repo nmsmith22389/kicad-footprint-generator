@@ -164,3 +164,40 @@ def test_circle_tangent_to_rect(fp_fudge_r, fp_fudge_cx):
     assert len(new_items) == 1
     # The arc should be untouched
     assert new_items[0] == items[0]
+
+
+def test_arc_to_circle_ko_reverse_angle():
+
+    # Test a 180 arc with positive and negative angle
+    # (in PCB land: 6-oclock to 12-oclock, mdpoint at 3-oclock)
+    #
+    # Cut it with a keepout circle such that the intersections are +-60 degrees
+    # from the horizontal. Check that we do get two 30-degree chunks in both directions
+    #
+    # This exposes problems with angle ordering if not properly handled.
+
+    def check_results(new_items: list):
+        assert len(new_items) == 2
+
+        for item in new_items:
+            assert isinstance(item, geometricArc)
+            assert abs(item.angle) == pytest.approx(30)
+
+    # Left side
+    arc_l = geometricArc(start=(0, 100), end=(0, -100), midpoint=(-100, 0))
+
+    ko_l = KeepoutRound(center=(-100, 0), radius=100)
+
+    new_items = applyKeepouts([arc_l], [ko_l])
+    check_results(new_items)
+
+    # Right side (opposite angle)
+    arc_r = geometricArc(start=(0, 100), end=(0, -100), midpoint=(100, 0))
+
+    ko_r = KeepoutRound(center=(100, 0), radius=100)
+
+    # check that the angles are indeed opposite, or this test is bogus
+    assert arc_l.angle == pytest.approx(-arc_r.angle)
+
+    new_items = applyKeepouts([arc_r], [ko_r])
+    check_results(new_items)
