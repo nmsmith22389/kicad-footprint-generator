@@ -290,27 +290,9 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
                 size=Vector2D(w_fab, h_fab),
                 layer="F.Fab",
                 width=lw_fab,
-                corners=CornerSelection(1),
+                corners=CornerSelection({CornerSelection.BOTTOM_LEFT: 1}),
                 chamfer=self.global_config.fab_bevel,
             )
-            if upright_mark:
-                kicad_modg.append(
-                    Line(
-                        start=[l_fab + max(mark_size, pack_bevel), t_fab],
-                        end=[l_fab + max(mark_size, pack_bevel), t_fab + h_fab],
-                        layer="F.Fab",
-                        width=lw_fab,
-                    )
-                )
-            else:
-                kicad_modg.append(
-                    Line(
-                        start=[l_fab, t_fab + h_fab - mark_size],
-                        end=[l_fab + mark_size, t_fab + h_fab],
-                        layer="F.Fab",
-                        width=lw_fab,
-                    )
-                )
 
         # create SILKSCREEN-layer
         if pins == 2:
