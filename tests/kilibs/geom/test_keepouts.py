@@ -18,6 +18,11 @@ import pytest
 from itertools import product
 
 
+# Some numbers to use for adding to integers to make sure you try round and non-round
+# values in floating point values (0.1 can't be expressed exactly in FP).
+FLOATING_POINT_OFFSETS = [0.0, 0.1, -0.1]
+
+
 @pytest.mark.parametrize("center, size, line_start, line_end, expected_segs", [
 
     # Centred square, line from origin
@@ -86,7 +91,7 @@ def test_apply_circles_to_circle():
 
 
 @pytest.mark.parametrize("fp_fudge_r, fp_fudge_x",
-    product([0, 0.1, -0.1], repeat=2),
+    product(FLOATING_POINT_OFFSETS, repeat=2),
 )
 def test_arc_tangent_to_circle(fp_fudge_r, fp_fudge_x):
 
@@ -116,7 +121,7 @@ def test_arc_tangent_to_circle(fp_fudge_r, fp_fudge_x):
 
 
 @pytest.mark.parametrize("fp_fudge_r, fp_fudge_cx",
-    product([0, 0.1, -0.1], repeat=2),
+    product(FLOATING_POINT_OFFSETS, repeat=2),
 )
 def test_circle_tangent_to_circle(fp_fudge_r, fp_fudge_cx):
 
@@ -138,7 +143,7 @@ def test_circle_tangent_to_circle(fp_fudge_r, fp_fudge_cx):
 
 
 @pytest.mark.parametrize("fp_fudge_r, fp_fudge_cx",
-    product([0, 0.1, -0.1], repeat=2),
+    product(FLOATING_POINT_OFFSETS, repeat=2),
 )
 def test_circle_tangent_to_rect(fp_fudge_r, fp_fudge_cx):
 
@@ -205,11 +210,7 @@ def test_arc_to_circle_ko_reverse_angle():
 
 @pytest.mark.parametrize(
     "fp_fudge_x",
-    [
-        (0),
-        (0.1),
-        (-0.1),
-    ],
+    FLOATING_POINT_OFFSETS,
 )
 def test_arc_with_endpoint_on_ko_bound(fp_fudge_x):
     """
