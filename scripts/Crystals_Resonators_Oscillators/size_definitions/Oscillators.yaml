@@ -78,25 +78,30 @@ Oscillator_SMD_Abracon_ASV-4Pin_7.0x5.1mm_HandSoldering:
   pins: 4
   style: rect
   tags: SMD SMT crystal oscillator hand-soldering
-Oscillator_SMD_EuroQuartz_XO32-4Pin_3.2x2.5mm:
-  addSizeFootprintName: true
-  adhesiveSize: 0.5
-  description: Miniature Crystal Clock Oscillator EuroQuartz XO32 series, http://cdn-reichelt.de/documents/datenblatt/B400/XO32.pdf
-  footprint_name: Oscillator_SMD_EuroQuartz_XO32
-  func: makeSMDCrystal
-  hasAdhesive: true
-  lib_name: Oscillator
-  pack_bevel: 0.1
-  pack_height: 2.5
-  pack_width: 3.2
-  pad:
-  - 1
-  - 0.9
-  pad_sep_x: 2.15
-  pad_sep_y: 1.55
-  pins: 4
-  style: rect
-  tags: SMD SMT crystal oscillator
+# This has been manually rotated in the library. Regenerating it needs a proper
+# plan as the model is also rotated, and technically it's now correct (and
+# unrotating is dangerous as these parts are easy to install sideways).
+# Comment it to allow regeneration of everything else, until we can think
+# of a better plan.
+# Oscillator_SMD_EuroQuartz_XO32-4Pin_3.2x2.5mm:
+#   addSizeFootprintName: true
+#   adhesiveSize: 0.5
+#   description: Miniature Crystal Clock Oscillator EuroQuartz XO32 series, http://cdn-reichelt.de/documents/datenblatt/B400/XO32.pdf
+#   footprint_name: Oscillator_SMD_EuroQuartz_XO32
+#   func: makeSMDCrystal
+#   hasAdhesive: true
+#   lib_name: Oscillator
+#   pack_bevel: 0.1
+#   pack_height: 2.5
+#   pack_width: 3.2
+#   pad:
+#   - 1
+#   - 0.9
+#   pad_sep_x: 2.15
+#   pad_sep_y: 1.55
+#   pins: 4
+#   style: rect
+#   tags: SMD SMT crystal oscillator
 Oscillator_SMD_EuroQuartz_XO32-4Pin_3.2x2.5mm_HandSoldering:
   addSizeFootprintName: true
   adhesiveSize: 0.5
