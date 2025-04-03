@@ -1,20 +1,18 @@
+# QFP - Quad Flat Package (Gullwing leads)
+#
+# This file cointains JEDEC QFP and JEITA/EIAJ P-QFP packages
+#
+# JEDEC standards: MS-022, MS-026, MS-029, MO-069, MO-071, MO-082, MO-084, MO-086, MO-089, MO-108, MO-112, MO-188, MO-189, MO-204, and others
+# JEITA standards: ED-7311A, ED-7311-12, EDR-7311A
+
 FileHeader:
   library_Suffix: 'QFP'
   device_type: 'PQFP'
 
-PQFP-32_5x5mm_P0.5mm:
-# similar to JEDEC MS-026, variation AAA, it's TQFP (height 1.20 mm max)
-  device_type: 'PQFP'
-  size_source: 'https://www.ti.com/lit/ds/symlink/ads127l01.pdf#page=87'
-  body_size_x: 4.95 .. 5.05
-  body_size_y: 4.95 .. 5.05
-  overall_size_x: 6.9 .. 7.1
-  overall_size_y: 6.9 .. 7.1
-  lead_width: 0.17 .. 0.23
-  lead_len: 0.4 .. 0.7
-  pitch: 0.5
-  num_pins_x: 8
-  num_pins_y: 8
+
+##############################################################################
+# QFP, height > 1.70 mm
+##############################################################################
 
 PQFP-44_10x10mm_P0.8mm:
 # Similar to JEDEC MS-022, variation AB
@@ -259,3 +257,35 @@ PQFP-240_32.1x32.1mm_P0.5mm:
   pitch: 0.5
   num_pins_x: 60
   num_pins_y: 60
+
+##############################################################################
+# LQFP, height A = 1.20 .. 1.70 mm
+##############################################################################
+
+
+##############################################################################
+# TQFP, height A = 1.00 .. 1.20 mm
+##############################################################################
+
+PQFP-32_5x5mm_P0.5mm:
+# similar to JEDEC MS-026, variation AAA, it's TQFP (height 1.20 mm max)
+  device_type: 'PQFP'
+  size_source: 'https://www.ti.com/lit/ds/symlink/ads127l01.pdf#page=87'
+  body_size_x: 4.95 .. 5.05
+  body_size_y: 4.95 .. 5.05
+  overall_size_x: 6.9 .. 7.1
+  overall_size_y: 6.9 .. 7.1
+  lead_width: 0.17 .. 0.23
+  lead_len: 0.4 .. 0.7
+  pitch: 0.5
+  num_pins_x: 8
+  num_pins_y: 8
+
+##############################################################################
+# VQFP, height A = 0.80 .. 1.00 mm
+##############################################################################
+
+
+##############################################################################
+# WQFP, height A = 0.65 .. 0.80 mm
+##############################################################################
