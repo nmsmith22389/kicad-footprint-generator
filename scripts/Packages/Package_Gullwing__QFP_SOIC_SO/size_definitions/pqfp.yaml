@@ -490,6 +490,108 @@ PQFP-32_5x5mm_P0.5mm:
   num_pins_x: 8
   num_pins_y: 8
 
+VQFP-80_14x14mm_P0.65mm:
+# Microsemi calls it VQ80, but with height A = 1.20 mm max it is actually a TQFP from JEDEC MS-026 variation AEC,
+# 3D Model is wrong using height = 1.60 mm, and there's no symbol using it. 
+# There are already LQFP and TQFP with same lead count and similar sizes, we should MERGE it with TQFP-80 since it is not script generated yet
+# https://web.archive.org/web/20220119120813/https://www.microsemi.com/document-portal/doc_download/131095-pd3068-package-mechanical-drawings
+  device_type: 'VQFP'
+  size_source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
+  body_size_x:
+    nominal: 14
+    tolerance: 0
+    # minimum:
+    # maximum:
+  body_size_y:
+    nominal: 14
+  overall_size_x:
+    nominal: 16
+  overall_size_y:
+    nominal: 16
+  lead_width:
+    minimum: 0.22
+    maximum: 0.379
+  lead_len:
+    minimum: 0.45
+    maximum: 0.75
+  pitch: 0.65
+  num_pins_x: 20
+  num_pins_y: 20
+  #pad_length_addition: 0.5
+  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
+  #include_suffix_in_3dpath: 'False'
+
+VQFP-100_14x14mm_P0.5mm:
+# JEDEC MS-026 variation AED, this is actually TQFP (height A = 1.20 mm max),
+# 3D model has height = 1.60 mm, and there's already a generated TQFP in the library, we should DELETE this footprint
+  device_type: 'VQFP'
+  size_source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
+  body_size_x:
+    nominal: 14
+  body_size_y:
+    nominal: 14
+  overall_size_x:
+    nominal: 16
+  overall_size_y:
+    nominal: 16
+  lead_width:
+    minimum: 0.17
+    maximum: 0.27
+  lead_len:
+    minimum: 0.45
+    maximum: 0.75
+  pitch: 0.5
+  num_pins_x: 25
+  num_pins_y: 25
+
+VQFP-128_14x14mm_P0.4mm:
+# JEDEC MS-026 variation AEE, this is actually TQFP (height A = 1.20 mm max),
+# 3D model has height = 1.60 mm, and there's already a LQFP and TQFP in the library,
+# we should MERGE it with TQFP-128 since it is not script generated yet. There's no symbol using it
+  device_type: 'VQFP'
+  size_source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
+  body_size_x:
+    nominal: 14
+  body_size_y:
+    nominal: 14
+  overall_size_x:
+    nominal: 16
+  overall_size_y:
+    nominal: 16
+  lead_width:
+    minimum: 0.13
+    maximum: 0.23
+  lead_len:
+    minimum: 0.45
+    maximum: 0.75
+  pitch: 0.4
+  num_pins_x: 32
+  num_pins_y: 32
+
+VQFP-176_20x20mm_P0.4mm:
+# JEDEC MS-026 variation BFC, this is actually TQFP (height A = 1.20 mm max),
+# 3D model has height = 1.60 mm, and there's already a LQFP in the library,
+# we should RENAME it to TQFP-176. There's no symbol using it yet
+  device_type: 'VQFP'
+  size_source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
+  body_size_x:
+    nominal: 20
+  body_size_y:
+    nominal: 20
+  overall_size_x:
+    nominal: 22
+  overall_size_y:
+    nominal: 22
+  lead_width:
+    minimum: 0.13
+    maximum: 0.23
+  lead_len:
+    minimum: 0.45
+    maximum: 0.75
+  pitch: 0.4
+  num_pins_x: 44
+  num_pins_y: 44
+
 ##############################################################################
 # VQFP, height A = 0.80 .. 1.00 mm
 ##############################################################################
