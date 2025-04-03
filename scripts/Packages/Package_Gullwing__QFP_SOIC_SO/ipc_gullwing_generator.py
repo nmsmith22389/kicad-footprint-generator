@@ -14,6 +14,7 @@ from KicadModTree import (
 )
 
 from kilibs.geom import Rectangle
+from kilibs.ipc_tools import ipc_rules
 from KicadModTree.util.courtyard_builder import CourtyardBuilder
 from kilibs.geom import Direction, Vector2D, BoundingBox
 from KicadModTree.nodes.specialized.PadArray import PadArray, get_pad_radius_from_arrays
@@ -36,8 +37,6 @@ from scripts.tools.declarative_def_tools import (
 
 from scripts.Packages.utils.ep_handling_utils import getEpRoundRadiusParams
 
-
-ipc_doc_file = '../ipc_definitions.yaml'
 
 DEFAULT_PASTE_COVERAGE = 0.65
 DEFAULT_VIA_PASTE_CLEARANCE = 0.15
@@ -185,23 +184,16 @@ class GullwingConfiguration:
 
 
 class GullwingGenerator(FootprintGenerator):
-    def __init__(self, configuration, **kwargs):
+    def __init__(self, configuration, ipc_defs: ipc_rules.IpcRules, **kwargs):
 
         super().__init__(**kwargs)
 
         self.configuration = configuration
-        with open(ipc_doc_file, 'r') as ipc_stream:
-            try:
-                self.ipc_defintions = yaml.safe_load(ipc_stream)
 
-                self.configuration['min_ep_to_pad_clearance'] = 0.2
+        # For now, use the dict-base data
+        self.ipc_defintions = ipc_defs.raw_data
 
-                if 'ipc_generic_rules' in self.ipc_defintions:
-                    self.configuration['min_ep_to_pad_clearance'] = self.ipc_defintions['ipc_generic_rules'].get(
-                        'min_ep_to_pad_clearance', 0.2)
-
-            except yaml.YAMLError as exc:
-                print(exc)
+        self.configuration['min_ep_to_pad_clearance'] = ipc_defs.min_ep_to_pad_clearance
 
     def calcPadDetails(self, device_dimensions, overrides, ipc_data, ipc_round_base):
         # Z - Length (overall) of the land pattern
@@ -895,7 +887,7 @@ if __name__ == "__main__":
                         help='the config file defining series parameters.', default='../package_config_KLCv3.yaml')
     parser.add_argument('--density', type=str, nargs='?', help='IPC density level (L,N,M)', default='N')
     parser.add_argument('--ipc_doc', type=str, nargs='?', help='IPC definition document',
-                        default='../ipc_definitions.yaml')
+                        default='ipc_7351b')
 
     args = FootprintGenerator.add_standard_arguments(parser, file_autofind=True)
 
@@ -904,17 +896,18 @@ if __name__ == "__main__":
     elif args.density == 'M':
         ipc_density = 'most'
 
-    ipc_doc_file = args.ipc_doc
-
     with open(args.series_config, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
         except yaml.YAMLError as exc:
             print(exc)
 
+    ipc_rule_defs = ipc_rules.IpcRules.from_file(args.ipc_doc)
+
     FootprintGenerator.run_on_files(
         GullwingGenerator,
         args,
         file_autofind_dir='size_definitions',
         configuration=configuration,
+        ipc_defs=ipc_rule_defs,
     )

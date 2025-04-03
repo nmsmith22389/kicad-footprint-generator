@@ -68,6 +68,9 @@ include = [
 "scripts.tools" = [
     "global_config_files/*.yaml",
 ]
+"kilibs.ipc_tools" = [
+    "data/*.yaml",
+]
 
 [tool.isort]
 profile = "black"

@@ -5,6 +5,7 @@ import argparse
 import yaml
 import math
 
+from kilibs.ipc_tools import ipc_rules
 from KicadModTree import *  # NOQA
 from KicadModTree.nodes.base.Pad import Pad  # NOQA
 from scripts.tools.ipc_pad_size_calculators import *
@@ -224,7 +225,7 @@ if __name__ == "__main__":
     parser.add_argument('files', metavar='file', type=str, nargs='+', help='yml-files to parse')
     parser.add_argument('--global_config', type=str, nargs='?', help='the config file defining how the footprint will look like. (KLC)', default='../tools/global_config_files/config_KLCv3.0.yaml')
     parser.add_argument('--series_config', type=str, nargs='?', help='the config file defining series parameters.', default='../SMD_2terminal_chip_molded/package_config_KLCv3.0.yaml')
-    parser.add_argument('--ipc_definition', type=str, nargs='?', help='the IPC definition file', default='ipc7351B_capae_crystal.yaml')
+    parser.add_argument('--ipc_definition', type=str, nargs='?', help='the IPC definition file', default='ipc7351B_capae_crystal')
     parser.add_argument('--ipc_density', type=str, nargs='?', help='the IPC desnity', default='nominal')
     parser.add_argument('--force_rectangle_pads', action='store_true', help='Force the generation of rectangle pads instead of rounded rectangle (KiCad 4.x compatibility.)')
     #parser.add_argument('-v', '--verbose', help='show more information when creating footprint', action='store_true')
@@ -243,12 +244,8 @@ if __name__ == "__main__":
         except yaml.YAMLError as exc:
             print(exc)
 
-    ipc_doc = args.ipc_definition
-    with open(ipc_doc, 'r') as ipc_stream:
-        try:
-            ipc_defintions = yaml.safe_load(ipc_stream)
-        except yaml.YAMLError as exc:
-            print(exc)
+    ipc_defs = ipc_rules.IpcRules.from_file(args.ipc_definition)
+    ipc_defintions = ipc_defs.raw_data
 
     configuration['ipc_density'] = args.ipc_density
     configuration['force_rectangle_pads'] = args.force_rectangle_pads

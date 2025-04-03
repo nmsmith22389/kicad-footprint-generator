@@ -17,7 +17,7 @@ The script requires python 3.4 or newer. Run it with:
 * --series_config: the config file defining series parameters (footprint naming). (default=`../package_config_KLCv3.yaml`)
 
 * --density: IPC density level (L,N,M) (default=`N`)
-* --ipc_doc: IPC definition document (default=`../ipc_definitions.yaml`)
+* --ipc_doc: IPC definition document (default=`ipc_7351b`, which loads from the package data)
 
 * --force_rectangle_pads: Force the generation of rectangle pads instead of rounded rectangle
 

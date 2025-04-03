@@ -18,6 +18,7 @@ from KicadModTree import (
 
 from KicadModTree.util.courtyard_builder import CourtyardBuilder
 from kilibs.geom import Direction, Vector2D, BoundingBox, Rectangle, rounding
+from kilibs.ipc_tools import ipc_rules
 from KicadModTree.nodes.specialized.PadArray import PadArray, get_pad_radius_from_arrays
 
 from scripts.tools.footprint_generator import FootprintGenerator
@@ -41,7 +42,6 @@ from scripts.Packages.utils.ep_handling_utils import getEpRoundRadiusParams
 
 
 ipc_density = 'nominal'
-ipc_doc_file = '../ipc_definitions.yaml'
 category = 'NoLead'
 default_library = 'Package_DFN_QFN'
 
@@ -167,22 +167,16 @@ class NoLeadConfiguration:
 
 
 class NoLeadGenerator(FootprintGenerator):
-    def __init__(self, configuration, **kwargs):
+    def __init__(self, configuration, ipc_defs: ipc_rules.IpcRules, **kwargs):
         super().__init__(**kwargs)
 
         self.configuration = configuration
-        with open(ipc_doc_file, 'r') as ipc_stream:
-            try:
-                self.ipc_defintions = yaml.safe_load(ipc_stream)
 
-                self.configuration['min_ep_to_pad_clearance'] = 0.2
+        # for nwow, just use the dict-base data
+        self.ipc_defintions = ipc_defs.raw_data
 
-                if 'ipc_generic_rules' in self.ipc_defintions:
-                    self.configuration['min_ep_to_pad_clearance'] = self.ipc_defintions['ipc_generic_rules'].get(
-                        'min_ep_to_pad_clearance', 0.2)
+        self.configuration['min_ep_to_pad_clearance'] = ipc_defs.min_ep_to_pad_clearance
 
-            except yaml.YAMLError as exc:
-                print(exc)
 
     def calcPadDetails(self, device_dimensions, EP_size, ipc_data, ipc_round_base):
         # Zmax = Lmin + 2JT + √(CL^2 + F^2 + P^2)
@@ -816,7 +810,7 @@ if __name__ == "__main__":
                         help='the config file defining series parameters.', default='../package_config_KLCv3.yaml')
     parser.add_argument('--density', type=str, nargs='?', help='IPC density level (L,N,M)', default='N')
     parser.add_argument('--ipc_doc', type=str, nargs='?', help='IPC definition document',
-                        default='../ipc_definitions.yaml')
+                        default='ipc_7351b')
 
     args = FootprintGenerator.add_standard_arguments(parser)
 
@@ -825,17 +819,18 @@ if __name__ == "__main__":
     elif args.density == 'M':
         ipc_density = 'most'
 
-    ipc_doc_file = args.ipc_doc
-
     with open(args.series_config, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
         except yaml.YAMLError as exc:
             print(exc)
 
+    ipc_rule_defs = ipc_rules.IpcRules.from_file(args.ipc_doc)
+
     FootprintGenerator.run_on_files(
         NoLeadGenerator,
         args,
         file_autofind_dir='size_definitions',
         configuration=configuration,
+        ipc_defs=ipc_rule_defs,
     )

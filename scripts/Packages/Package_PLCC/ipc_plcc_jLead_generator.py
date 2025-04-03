@@ -6,6 +6,7 @@ import yaml
 import math
 
 from kilibs.geom import Vector2D, Rectangle
+from kilibs.ipc_tools import ipc_rules
 from KicadModTree import Footprint, FootprintType, \
     PolygonLine, Pad
 from KicadModTree.nodes.specialized.PadArray import PadArray
@@ -16,7 +17,6 @@ from scripts.tools.ipc_pad_size_calculators import TolerancedSize
 
 
 ipc_density = 'nominal'
-ipc_doc_file = '../ipc_definitions.yaml'
 category = 'LCC'
 
 
@@ -84,15 +84,13 @@ class PLCCConfiguration:
 
 
 class PLCCGenerator(FootprintGenerator):
-    def __init__(self, configuration, **kwargs):
+    def __init__(self, configuration, ipc_rules: ipc_rules.IpcRules, **kwargs):
         super().__init__(**kwargs)
 
         self.configuration = configuration
-        with open(ipc_doc_file, 'r') as ipc_stream:
-            try:
-                self.ipc_definitions = yaml.safe_load(ipc_stream)
-            except yaml.YAMLError as exc:
-                print(exc)
+
+        # For now, just use the legacy dict data
+        self.ipc_definitions = ipc_rules.raw_data
 
     def calcPadDetails(self, device_config: PLCCConfiguration, ipc_data, ipc_round_base):
         # Zmax = Lmin + 2JT + √(CL^2 + F^2 + P^2)
@@ -469,7 +467,7 @@ if __name__ == "__main__":
                         help='the config file defining series parameters.', default='../package_config_KLCv3.yaml')
     parser.add_argument('--density', type=str, nargs='?', help='Density level (L,N,M)', default='N')
     parser.add_argument('--ipc_doc', type=str, nargs='?', help='IPC definition document',
-                        default='../ipc_definitions.yaml')
+                        default='ipc_7351b')
 
     args = FootprintGenerator.add_standard_arguments(parser)
 
@@ -478,17 +476,18 @@ if __name__ == "__main__":
     elif args.density == 'M':
         ipc_density = 'most'
 
-    ipc_doc_file = args.ipc_doc
-
     with open(args.series_config, 'r') as config_stream:
         try:
             configuration = yaml.safe_load(config_stream)
         except yaml.YAMLError as exc:
             print(exc)
 
+    ipc_rule_defs = ipc_rules.IpcRules.from_file(args.ipc_doc)
+
     FootprintGenerator.run_on_files(
         PLCCGenerator,
         args,
         file_autofind_dir='size_definitions',
         configuration=configuration,
+        ipc_rules=ipc_rule_defs,
     )

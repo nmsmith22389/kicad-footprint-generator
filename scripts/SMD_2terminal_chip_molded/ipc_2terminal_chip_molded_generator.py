@@ -4,6 +4,7 @@ import argparse
 
 import yaml
 
+from kilibs.ipc_tools import ipc_rules
 from KicadModTree import *  # NOQA
 from KicadModTree.nodes.base.Pad import Pad  # NOQA
 from scripts.tools.drawing_tools import (
@@ -29,7 +30,14 @@ def merge_dicts(*dict_args):
 
 
 class TwoTerminalSMD:
-    def __init__(self, global_config: GC.GlobalConfig, command_file, configuration):
+
+    def __init__(
+        self,
+        global_config: GC.GlobalConfig,
+        ipc_defs: ipc_rules.IpcRules,
+        command_file,
+        configuration,
+    ):
         self.global_config = global_config
         self.configuration = configuration
         with open(command_file, "r") as command_stream:
@@ -37,12 +45,8 @@ class TwoTerminalSMD:
                 self.footprint_group_definitions = yaml.safe_load(command_stream)
             except yaml.YAMLError as exc:
                 print(exc)
-        ipc_doc = configuration["ipc_definition"]
-        with open(ipc_doc, "r") as ipc_stream:
-            try:
-                self.ipc_defintions = yaml.safe_load(ipc_stream)
-            except yaml.YAMLError as exc:
-                print(exc)
+
+        self.ipc_defintions = ipc_defs.raw_data
 
     def calcPadDetails(
         self, device_dimensions, ipc_data, ipc_round_base, footprint_group_data
@@ -558,7 +562,7 @@ if __name__ == "__main__":
         type=str,
         nargs="?",
         help="the ipc definition file",
-        default="ipc7351B_2terminal.yaml",
+        default="ipc7351B_2terminal",
     )
     parser.add_argument(
         "--ipc_density", type=str, nargs="?", help="IPC density level (L,N,M)"
@@ -592,9 +596,13 @@ if __name__ == "__main__":
         except yaml.YAMLError as exc:
             print(exc)
     args = parser.parse_args()
-    configuration["ipc_definition"] = args.ipc_definition
+
+    ipc_defs = ipc_rules.IpcRules.from_file(args.ipc_definition)
+
     configuration["ipc_density"] = ipc_density
 
     for filepath in args.files:
-        two_terminal_smd = TwoTerminalSMD(global_config, filepath, configuration)
+        two_terminal_smd = TwoTerminalSMD(
+            global_config, ipc_defs, filepath, configuration
+        )
         two_terminal_smd.generateFootprints()
