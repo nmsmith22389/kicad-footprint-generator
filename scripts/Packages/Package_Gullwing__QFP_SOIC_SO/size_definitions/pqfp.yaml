@@ -3,6 +3,8 @@ FileHeader:
   device_type: 'PQFP'
 
 PQFP-32_5x5mm_P0.5mm:
+# similar to JEDEC MS-026, variation AAA, it's TQFP (height 1.20 mm max)
+  device_type: 'PQFP'
   size_source: 'https://www.ti.com/lit/ds/symlink/ads127l01.pdf#page=87'
   body_size_x: 4.95 .. 5.05
   body_size_y: 4.95 .. 5.05
@@ -15,6 +17,8 @@ PQFP-32_5x5mm_P0.5mm:
   num_pins_y: 8
 
 PQFP-44_10x10mm_P0.8mm:
+# Similar to JEDEC MS-022, variation AB
+  device_type: 'PQFP'
   manufacturer: 'Microchip'
   size_source: 'https://ww1.microchip.com/downloads/aemDocuments/documents/OTH/ProductDocuments/DataSheets/20005418B.pdf#page=10'
   body_size_x:
@@ -42,7 +46,40 @@ PQFP-44_10x10mm_P0.8mm:
   num_pins_x: 11
   num_pins_y: 11
 
+MQFP-44_10x10mm_P0.8mm:
+# Similar to JEDEC MS-022, variation AB, it's PQFP (height 2.45 mm max)
+  device_type: 'MQFP'
+  size_source: 'https://www.analog.com/media/en/technical-documentation/data-sheets/ad7722.pdf'
+  body_size_x:
+    minimum: 9.8
+    nominal: 10
+    maximum: 10.2
+  body_size_y:
+    minimum: 9.8
+    nominal: 10
+    maximum: 10.2
+  overall_size_x:
+    minimum: 13.65
+    nominal: 13.9
+    maximum: 14.15
+  overall_size_y:
+    minimum: 13.65
+    nominal: 13.9
+    maximum: 14.15
+  lead_width:
+    minimum: 0.3
+    maximum: 0.45
+  lead_len:
+    minimum: 0.73
+    nominal: 0.88
+    maximum: 1.03
+  pitch: 0.8
+  num_pins_x: 11
+  num_pins_y: 11
+
 PQFP-64_14x14mm_P0.5mm:
+# Similar to JEITA 64-001-EB, as well JEDEC MS-022 variation BE
+  device_type: 'PQFP'
   size_source: 'https://www.renesas.com/us/en/document/psc/package-drawing-qfp-64pin-prqp0064gb'
   body_size_x:
     nominal: 14
@@ -57,12 +94,12 @@ PQFP-64_14x14mm_P0.5mm:
     nominal: 17.2
     maximum: 17.5
   overall_height:
-    maximum: 3.05
+    maximum: 3.05 # JEITA has A = 3.15 mm max
   lead_width:
     minimum: 0.29
     nominal: 0.37
     maximum: 0.45
-  lead_len:
+  lead_len: # JEITA has Lp = 0.73 .. 1.03 mm
     minimum: 0.5
     nominal: 0.8
     maximum: 1.1
@@ -71,6 +108,9 @@ PQFP-64_14x14mm_P0.5mm:
   num_pins_y: 16
 
 PQFP-100_14x20mm_P0.65mm:
+# Microsemi calls it 'PQ100', height = 3.40 mm max, similar to JEDEC MS-022 variation GC-1
+# body_size_x and body_size_y are swapped so pin 1 and numbering get right
+  device_type: 'PQFP'
   size_source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
   force_small_pitch_ipc_definition: True
   body_size_x:
@@ -98,6 +138,8 @@ PQFP-100_14x20mm_P0.65mm:
   num_pins_y: 30
 
 PQFP-144_28x28mm_P0.65mm:
+# JEDEC MS-022, variation DC-1, height A = 4.10 mm max
+  device_type: 'PQFP'
   size_source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
   force_small_pitch_ipc_definition: True
   body_size_x:
@@ -119,6 +161,8 @@ PQFP-144_28x28mm_P0.65mm:
   num_pins_y: 36
 
 PQFP-160_28x28mm_P0.65mm:
+# JEDEC MS-022, variation DD-1, height A = 4.10 mm max
+  device_type: 'PQFP'
   size_source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
   force_small_pitch_ipc_definition: True
   body_size_x:
@@ -140,6 +184,9 @@ PQFP-160_28x28mm_P0.65mm:
   num_pins_y: 40
 
 PQFP-168_28x28mm_P0.65mm:
+# Renesas says it's JEITA, but there's no such variation there (closest one is 160-001-LKA, but it's LQFP, N = 160 and lead_len = 0.45 .. 0.75 mm);
+# JEDEC MS-022 has lead_len = 0.73 .. 0.88 .. 1.03 mm which is close to this footprint (but there's no variation there)
+  device_type: 'PQFP'
   size_source: 'https://www.renesas.cn/cn/zh/document/psc/package-drawing-qfp-168pin-prqp0168jb'
   force_small_pitch_ipc_definition: True
   body_size_x:
@@ -168,7 +215,9 @@ PQFP-168_28x28mm_P0.65mm:
   num_pins_x: 42
   num_pins_y: 42
 
-PQFP_208:
+PQFP-208_28x28mm_P0.5mm:
+# Microsemi calls it 'PQ208', height 4.10 mm max, it's similar to JEDEC MS-029 variation FA-1
+  device_type: 'PQFP'
   size_source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
   body_size_x:
     nominal: 28
@@ -188,7 +237,10 @@ PQFP_208:
   num_pins_x: 52
   num_pins_y: 52
 
-PQFP_240:
+PQFP-240_32.1x32.1mm_P0.5mm:
+# Similar to MS-029, variation GA, height A = 4.10 mm max
+# 3D model height has 1.60 mm
+  device_type: 'PQFP'
   size_source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
   body_size_x:
     nominal: 32.1
