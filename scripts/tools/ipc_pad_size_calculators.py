@@ -190,7 +190,7 @@ class TolerancedSize():
         )
 
     @staticmethod
-    def fromYaml(yaml, base_name=None, unit=None):
+    def fromYaml(yaml, base_name=None, unit=None) -> "TolerancedSize":
         if base_name is not None:
             if base_name + "_min" in yaml or base_name + "_max" in yaml or base_name + "_tol" in yaml:
                 return TolerancedSize(

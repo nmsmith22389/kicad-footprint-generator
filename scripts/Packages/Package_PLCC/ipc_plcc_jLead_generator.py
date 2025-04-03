@@ -5,12 +5,15 @@ import argparse
 import yaml
 import math
 
-from scripts.tools.footprint_generator import FootprintGenerator
-from scripts.tools.footprint_text_fields import addTextFields
+from kilibs.geom import Vector2D, Rectangle
 from KicadModTree import Footprint, FootprintType, \
     PolygonLine, Pad
 from KicadModTree.nodes.specialized.PadArray import PadArray
 from scripts.tools.declarative_def_tools import common_metadata
+from scripts.tools.footprint_generator import FootprintGenerator
+from scripts.tools.footprint_text_fields import addTextFields
+from scripts.tools.ipc_pad_size_calculators import TolerancedSize
+
 
 ipc_density = 'nominal'
 ipc_doc_file = '../ipc_definitions.yaml'
@@ -40,18 +43,44 @@ class PLCCConfiguration:
     metadata: common_metadata.CommonMetadata
 
     def __init__(self, spec: dict):
-        self._spec_dictionary = spec
         self.metadata = common_metadata.CommonMetadata(spec)
+        self.device_type = str(spec["device_type"])
 
-    @property
-    def spec_dictionary(self) -> dict:
-        """
-        Get the raw spec dictionary.
+        self.num_pins_x = int(spec["num_pins_x"])
+        self.num_pins_y = int(spec["num_pins_y"])
+        self.pitch = float(spec["pitch"])
 
-        This is only temporary, and can be piecewise replaced by
-        type-safe declarative definitions, but that requires deep changes
-        """
-        return self._spec_dictionary
+        unit = spec.get("units", "mm")
+
+        self.lead_width = TolerancedSize.fromYaml(spec, base_name='lead_width', unit=unit)
+
+        self.pad_length_addition = float(spec.get("pad_length_addition", 0))
+
+        self.overall_x = TolerancedSize.fromYaml(spec, base_name='overall_size_x', unit=unit)
+        self.overall_y = TolerancedSize.fromYaml(spec, base_name='overall_size_y', unit=unit)
+
+        self.body_x = TolerancedSize.fromYaml(spec, base_name='body_size_x', unit=unit)
+        self.body_y = TolerancedSize.fromYaml(spec, base_name='body_size_y', unit=unit)
+
+        self.lead_inside_x = None
+        self.lead_inside_y = None
+        self.lead_center_distance_x = None
+        self.lead_center_distance_y = None
+        self.lead_length = None
+
+        if "lead_inside_x" in spec:
+            self.lead_inside_x = TolerancedSize.fromYaml(spec, base_name='lead_inside_x', unit=unit)
+            self.lead_inside_y = TolerancedSize.fromYaml(spec, base_name='lead_inside_y', unit=unit)
+        elif "lead_center_distance_x" in spec:
+            self.lead_center_distance_x = TolerancedSize.fromYaml(spec, base_name='lead_center_distance_x', unit=unit)
+            self.lead_center_distance_y = TolerancedSize.fromYaml(spec, base_name='lead_center_distance_y', unit=unit)
+        else:
+            self.lead_length = TolerancedSize.fromYaml(spec, base_name="lead_len", unit=unit)
+
+        self.body_chamfer = float(spec["body_chamfer"])
+
+        self.suffix = spec.get("suffix", None)
+        self.include_suffix_in_3dpath = spec.get("include_suffix_in_3dpath", True)
 
 
 class PLCCGenerator(FootprintGenerator):
@@ -61,11 +90,11 @@ class PLCCGenerator(FootprintGenerator):
         self.configuration = configuration
         with open(ipc_doc_file, 'r') as ipc_stream:
             try:
-                self.ipc_defintions = yaml.safe_load(ipc_stream)
+                self.ipc_definitions = yaml.safe_load(ipc_stream)
             except yaml.YAMLError as exc:
                 print(exc)
 
-    def calcPadDetails(self, device_params, ipc_data, ipc_round_base):
+    def calcPadDetails(self, device_config: PLCCConfiguration, ipc_data, ipc_round_base):
         # Zmax = Lmin + 2JT + √(CL^2 + F^2 + P^2)
         # Gmin = Smax − 2JH − √(CS^2 + F^2 + P^2)
         # Xmax = Wmin + 2JS + √(CW^2 + F^2 + P^2)
@@ -79,168 +108,136 @@ class PLCCGenerator(FootprintGenerator):
         F = self.configuration.get('manufacturing_tolerance', 0.1)
         P = self.configuration.get('placement_tolerance', 0.05)
 
-        lead_width_tol = device_params['lead_width_max'] - device_params['lead_width_min']
+        lead_width_tol = device_config.lead_width.ipc_tol
 
-        def calcPadLength(overall, body, lead_inside=None, lead_center=None):
-            overall_tol = overall['max']-overall['min']
+        def calcPadLength(
+            overall: TolerancedSize,
+            body: TolerancedSize,
+            lead_inside: TolerancedSize | None = None,
+            lead_center: TolerancedSize | None = None,
+        ):
+            overall_tol = overall.ipc_tol
             if lead_inside:
-                Tmin = (overall['max'] - lead_inside['max'])/2
-                inside_tol = lead_inside['max'] - lead_inside['min']
-                Stol_RMS = math.sqrt(overall_tol**2+inside_tol**2)
-                Smax_RMS = lead_inside['min'] + Stol_RMS
+                Tmin = (overall.maximum - lead_inside.maximum)/2
+                Stol_RMS = math.sqrt(overall_tol**2+lead_inside.ipc_tol**2)
+                Smax_RMS = lead_inside.minimum + Stol_RMS
             elif lead_center:
-                body_tol = body['max']-body['min']
-                Tmin = (body['max'] - lead_center['max'])
-                center_tol = lead_center['max'] - lead_center['min']
-                Stol_RMS = math.sqrt(body_tol**2+center_tol**2)
-                Smax_RMS = body['max'] - 2*Tmin + Stol_RMS
+                Tmin = (body.maximum - lead_center.maximum)
+                Stol_RMS = math.sqrt(body.ipc_tol**2+lead_center.ipc_tol**2)
+                Smax_RMS = body.maximum - 2*Tmin + Stol_RMS
             else:
-                lead_len_tol = device_params['lead_len_max'] - device_params['lead_len_min']
+                lead_len_tol = device_config.lead_length.ipc_tol
                 Stol_RMS = math.sqrt(overall_tol**2+2*(lead_len_tol**2))
-                Smin = overall['min'] - 2*device_params['lead_len_max']
+                Smin = overall.minimum - 2 * device_config.lead_length.maximum
                 Smax_RMS = Smin + Stol_RMS
 
             Gmin = Smax_RMS - 2*ipc_data['heel'] - math.sqrt(Stol_RMS**2 + F**2 + P**2)
 
-            Zmax = overall['min'] + 2*ipc_data['toe'] + math.sqrt(overall_tol**2 + F**2 + P**2)
+            Zmax = overall.minimum + 2*ipc_data['toe'] + math.sqrt(overall_tol**2 + F**2 + P**2)
 
             Zmax = roundToBase(Zmax, ipc_round_base['toe'])
             Gmin = roundToBase(Gmin, ipc_round_base['heel'])
 
-            Zmax += device_params.get('pad_length_addition', 0)
+            Zmax += device_config.pad_length_addition
 
             return Gmin, Zmax
-        overall_x = {
-            'min': device_params.get('overall_size_x_min', device_params.get('overall_size_x')),
-            'max': device_params.get('overall_size_x_max', device_params.get('overall_size_x'))
-        }
-        overall_y = {
-            'min': device_params.get('overall_size_y_min', device_params.get('overall_size_y')),
-            'max': device_params.get('overall_size_y_max', device_params.get('overall_size_y'))
-        }
 
-        body_x = {
-            'min': device_params.get('body_size_x_min', device_params.get('body_size_x')),
-            'max': device_params.get('body_size_x_max', device_params.get('body_size_x'))
-        }
-        body_y = {
-            'min': device_params.get('body_size_y_min', device_params.get('body_size_y')),
-            'max': device_params.get('body_size_y_max', device_params.get('body_size_y'))
-        }
-
-        if 'lead_inside_x_min' in device_params:
+        if device_config.lead_inside_x:
             Gmin_x, Zmax_x = calcPadLength(
-                overall=overall_x,
-                body=body_x,
-                lead_inside={
-                    'min': device_params['lead_inside_x_min'],
-                    'max': device_params['lead_inside_x_max']}
+                overall=device_config.overall_x,
+                body=device_config.body_x,
+                lead_inside=device_config.lead_inside_x,
             )
             Gmin_y, Zmax_y = calcPadLength(
-                overall=overall_y,
-                body=body_y,
-                lead_inside={
-                    'min': device_params['lead_inside_y_min'],
-                    'max': device_params['lead_inside_y_max']}
+                overall=device_config.overall_y,
+                body=device_config.body_y,
+                lead_inside=device_config.lead_inside_y,
             )
-        elif 'lead_center_distance_x_min' in device_params:
+        elif device_config.lead_center_distance_x:
             Gmin_x, Zmax_x = calcPadLength(
-                overall=overall_x,
-                body=body_x,
-                lead_center={
-                    'min': device_params['lead_center_distance_x_min'],
-                    'max': device_params['lead_center_distance_x_max']}
+                overall=device_config.overall_x,
+                body=device_config.body_x,
+                lead_center=device_config.lead_center_distance_x,
             )
             Gmin_y, Zmax_y = calcPadLength(
-                overall=overall_y,
-                body=body_y,
-                lead_center={
-                    'min': device_params['lead_center_distance_y_min'],
-                    'max': device_params['lead_center_distance_y_max']}
+                overall=device_config.overall_y,
+                body=device_config.body_y,
+                lead_center=device_config.lead_center_distance_y,
             )
         else:
             Gmin_x, Zmax_x = calcPadLength(
-                overall=overall_x,
-                body=body_x
+                overall=device_config.overall_x,
+                body=device_config.body_x
             )
 
             Gmin_y, Zmax_y = calcPadLength(
-                overall=overall_y,
-                body=body_y
+                overall=device_config.overall_y,
+                body=device_config.body_y
             )
 
-        Xmax = device_params['lead_width_min'] + 2*ipc_data['side'] + math.sqrt(lead_width_tol**2 + F**2 + P**2)
+        Xmax = device_config.lead_width.minimum + 2*ipc_data['side'] + math.sqrt(lead_width_tol**2 + F**2 + P**2)
         Xmax = roundToBase(Xmax, ipc_round_base['side'])
 
         Pad = {}
-        Pad['first'] = {'start': [-((device_params['num_pins_x']-1) % 2)/2 *
-                                  device_params['pitch'], -(Zmax_y+Gmin_y)/4], 'size': [Xmax, (Zmax_y-Gmin_y)/2]}
+        Pad['first'] = {'start': [-((device_config.num_pins_x-1) % 2)/2 *
+                                  device_config.pitch, -(Zmax_y+Gmin_y)/4], 'size': [Xmax, (Zmax_y-Gmin_y)/2]}
 
         Pad['left'] = {'center': [-(Zmax_x+Gmin_x)/4, 0], 'size': [(Zmax_x-Gmin_x)/2, Xmax]}
         Pad['right'] = {'center': [(Zmax_x+Gmin_x)/4, 0], 'size': [(Zmax_x-Gmin_x)/2, Xmax]}
-        Pad['top'] = {'start': [(device_params['num_pins_x']-1)/2*device_params['pitch'], -
+        Pad['top'] = {'start': [(device_config.num_pins_x-1)/2*device_config.pitch, -
                                 (Zmax_y+Gmin_y)/4], 'size': [Xmax, (Zmax_y-Gmin_y)/2]}
         Pad['bottom'] = {'center': [0, (Zmax_y+Gmin_y)/4], 'size': [Xmax, (Zmax_y-Gmin_y)/2]}
 
         return Pad
 
     def generateFootprint(self, device_params: dict, pkg_id: str, header_info: dict = None):
-        if device_params.get('units', 'mm') == 'inches':
+        if device_params.get('units', 'mm') == 'inch':
             params_inch_to_metric(device_params)
 
         device_config = PLCCConfiguration(device_params)
-        # Pull out the old-style raw data
-        device_params = device_config.spec_dictionary
 
         fab_line_width = self.global_config.fab_line_width
         silk_line_width = self.global_config.silk_line_width
 
         lib_name = self.configuration['lib_name_format_string'].format(category=category)
 
-        if 'body_size_x' in device_params:
-            size_x = device_params['body_size_x']
-        else:
-            size_x = (device_params['body_size_x_max'] + device_params['body_size_x_min'])/2
+        size_y = device_config.body_y.nominal
+        size_x = device_config.body_x.nominal
 
-        if 'body_size_y' in device_params:
-            size_y = device_params['body_size_y']
-        else:
-            size_y = (device_params['body_size_y_max'] + device_params['body_size_y_min'])/2
-
-        pincount = device_params['num_pins_x']*2 + device_params['num_pins_y']*2
+        pincount = device_config.num_pins_x*2 + device_config.num_pins_y*2
 
         ipc_reference = 'ipc_spec_j_lead'
 
-        ipc_data_set = self.ipc_defintions[ipc_reference][ipc_density]
-        ipc_round_base = self.ipc_defintions[ipc_reference]['round_base']
+        ipc_data_set = self.ipc_definitions[ipc_reference][ipc_density]
+        ipc_round_base = self.ipc_definitions[ipc_reference]['round_base']
 
-        pad_details = self.calcPadDetails(device_params, ipc_data_set, ipc_round_base)
+        pad_details = self.calcPadDetails(device_config, ipc_data_set, ipc_round_base)
 
-        suffix = device_params.get('suffix', '').format(pad_x=pad_details['left']['size'][0],
+        suffix = (device_config.suffix or "").format(pad_x=pad_details['left']['size'][0],
                                                         pad_y=pad_details['left']['size'][1])
-        suffix_3d = suffix if device_params.get('include_suffix_in_3dpath', 'True') == 'True' else ""
+        suffix_3d = suffix if device_config.include_suffix_in_3dpath else ""
 
         name_format = self.configuration['fp_name_format_string']
 
         fp_name = name_format.format(
             man=device_config.metadata.manufacturer or "",
             mpn=device_config.metadata.part_number or "",
-            pkg=device_params['device_type'],
+            pkg=device_config.device_type,
             pincount=pincount,
             size_y=size_y,
             size_x=size_x,
-            pitch=device_params['pitch'],
+            pitch=device_config.pitch,
             suffix=suffix
         ).replace('__', '_').lstrip('_')
 
         fp_name_2 = name_format.format(
             man=device_config.metadata.manufacturer or "",
             mpn=device_config.metadata.part_number or "",
-            pkg=device_params['device_type'],
+            pkg=device_config.device_type,
             pincount=pincount,
             size_y=size_y,
             size_x=size_x,
-            pitch=device_params['pitch'],
+            pitch=device_config.pitch,
             suffix=suffix_3d
         ).replace('__', '_').lstrip('_')
 
@@ -250,7 +247,7 @@ class PLCCGenerator(FootprintGenerator):
 
         description = "{manufacturer} {mpn} {package}, {pincount} Pin".format(
             manufacturer=device_config.metadata.manufacturer or "",
-            package=device_params["device_type"],
+            package=device_config.device_type,
             mpn=device_config.metadata.part_number or "",
             pincount=pincount,
         ).lstrip()
@@ -258,8 +255,8 @@ class PLCCGenerator(FootprintGenerator):
         if device_config.metadata.datasheet:
             description += f" ({device_config.metadata.datasheet})"
 
-        description += ", generated with kicad-footprint-generator {scriptname}".format(
-            scriptname=os.path.basename(__file__)
+        description += ", " + self.global_config.get_generated_by_description(
+            generator_name=os.path.basename(__file__)
         )
 
         kicad_mod.description = description
@@ -268,7 +265,7 @@ class PLCCGenerator(FootprintGenerator):
             self.configuration["keyword_fp_string"]
             .format(
                 man=device_config.metadata.manufacturer or "",
-                package=device_params["device_type"],
+                package=device_config.device_type,
                 category=category,
             )
             .lstrip()
@@ -283,52 +280,47 @@ class PLCCGenerator(FootprintGenerator):
             initial=init,
             type=Pad.TYPE_SMT,
             layers=Pad.LAYERS_SMT,
-            pincount=int(math.ceil(device_params['num_pins_x']/2)),
-            x_spacing=-device_params['pitch'], y_spacing=0,
+            pincount=int(math.ceil(device_config.num_pins_x/2)),
+            x_spacing=-device_config.pitch, y_spacing=0,
             **pad_details['first'], **pad_shape_details))
 
-        init += int(math.ceil(device_params['num_pins_x']/2))
+        init += int(math.ceil(device_config.num_pins_x/2))
         kicad_mod.append(PadArray(
             initial=init,
             type=Pad.TYPE_SMT,
             layers=Pad.LAYERS_SMT,
-            pincount=device_params['num_pins_y'],
-            x_spacing=0, y_spacing=device_params['pitch'],
+            pincount=device_config.num_pins_y,
+            x_spacing=0, y_spacing=device_config.pitch,
             **pad_details['left'], **pad_shape_details))
 
-        init += device_params['num_pins_y']
+        init += device_config.num_pins_y
         kicad_mod.append(PadArray(
             initial=init,
             type=Pad.TYPE_SMT,
             layers=Pad.LAYERS_SMT,
-            pincount=device_params['num_pins_x'],
-            y_spacing=0, x_spacing=device_params['pitch'],
+            pincount=device_config.num_pins_x,
+            y_spacing=0, x_spacing=device_config.pitch,
             **pad_details['bottom'], **pad_shape_details))
 
-        init += device_params['num_pins_x']
+        init += device_config.num_pins_x
         kicad_mod.append(PadArray(
             initial=init,
             type=Pad.TYPE_SMT,
             layers=Pad.LAYERS_SMT,
-            pincount=device_params['num_pins_y'],
-            x_spacing=0, y_spacing=-device_params['pitch'],
+            pincount=device_config.num_pins_y,
+            x_spacing=0, y_spacing=-device_config.pitch,
             **pad_details['right'], **pad_shape_details))
 
-        init += device_params['num_pins_y']
+        init += device_config.num_pins_y
         kicad_mod.append(PadArray(
             initial=init,
             type=Pad.TYPE_SMT,
             layers=Pad.LAYERS_SMT,
-            pincount=int(math.floor(device_params['num_pins_x']/2)),
-            y_spacing=0, x_spacing=-device_params['pitch'],
+            pincount=int(math.floor(device_config.num_pins_x/2)),
+            y_spacing=0, x_spacing=-device_config.pitch,
             **pad_details['top'], **pad_shape_details))
 
-        body_edge = {
-            'left': -size_x/2,
-            'right': size_x/2,
-            'top': -size_y/2,
-            'bottom': size_y/2
-        }
+        body_rect = Rectangle(center=Vector2D(0,0), size=Vector2D(size_x, size_y))
 
         bounding_box = {
             'left': pad_details['left']['center'][0] - pad_details['left']['size'][0]/2,
@@ -344,39 +336,40 @@ class PLCCGenerator(FootprintGenerator):
 
         silk_offset = self.global_config.silk_fab_offset
 
-        sx1 = -(device_params['pitch']*(device_params['num_pins_x']-1)/2.0
+        sx1 = -(device_config.pitch*(device_config.num_pins_x-1)/2.0
                 + pad_width/2.0 + self.global_config.silk_pad_offset)
 
-        sy1 = -(device_params['pitch']*(device_params['num_pins_y']-1)/2.0
+        sy1 = -(device_config.pitch*(device_config.num_pins_y-1)/2.0
                 + pad_width/2.0 + self.global_config.silk_pad_offset)
 
         poly_silk = [
-            {'x': sx1, 'y': body_edge['top']-silk_offset},
-            {'x': body_edge['left']-silk_offset, 'y': body_edge['top']-silk_offset},
-            {'x': body_edge['left']-silk_offset, 'y': sy1}
+            [sx1, body_rect.top-silk_offset],
+            [body_rect.left-silk_offset, body_rect.top-silk_offset],
+            [body_rect.left-silk_offset, sy1]
         ]
         kicad_mod.append(PolygonLine(
-            polygon=poly_silk,
+            nodes=poly_silk,
             width=silk_line_width,
             layer="F.SilkS", x_mirror=0))
         kicad_mod.append(PolygonLine(
-            polygon=poly_silk,
+            nodes=poly_silk,
             width=silk_line_width,
             layer="F.SilkS", y_mirror=0))
         kicad_mod.append(PolygonLine(
-            polygon=poly_silk,
+            nodes=poly_silk,
             width=silk_line_width,
             layer="F.SilkS", x_mirror=0, y_mirror=0))
 
         silk_off_45 = silk_offset / math.sqrt(2)
         poly_silk_tl = [
-            {'x': sx1, 'y': body_edge['top']-silk_offset},
-            {'x': body_edge['left']+device_params['body_chamfer']-silk_off_45, 'y': body_edge['top']-silk_offset},
-            {'x': body_edge['left']-silk_offset, 'y': body_edge['top']+device_params['body_chamfer']-silk_off_45},
-            {'x': body_edge['left']-silk_offset, 'y': sy1}
+            [sx1, body_rect.top-silk_offset],
+            [body_rect.left+device_config.body_chamfer-silk_off_45, body_rect.top-silk_offset],
+            [body_rect.left-silk_offset, body_rect.top+device_config.body_chamfer-silk_off_45],
+            [body_rect.left-silk_offset, sy1]
         ]
+
         kicad_mod.append(PolygonLine(
-            polygon=poly_silk_tl,
+            nodes=poly_silk_tl,
             width=silk_line_width,
             layer="F.SilkS"))
 
@@ -387,19 +380,19 @@ class PLCCGenerator(FootprintGenerator):
         )
         fab_bevel_y = fab_bevel_size / math.sqrt(2)
         poly_fab = [
-            {'x': p1_x, 'y': body_edge['top']+fab_bevel_y},
-            {'x': p1_x+fab_bevel_size/2, 'y': body_edge['top']},
-            {'x': body_edge['right'], 'y': body_edge['top']},
-            {'x': body_edge['right'], 'y': body_edge['bottom']},
-            {'x': body_edge['left'], 'y': body_edge['bottom']},
-            {'x': body_edge['left'], 'y': body_edge['top']+device_params['body_chamfer']},
-            {'x': body_edge['left']+device_params['body_chamfer'], 'y': body_edge['top']},
-            {'x': p1_x-fab_bevel_size/2, 'y': body_edge['top']},
-            {'x': p1_x, 'y': body_edge['top']+fab_bevel_y}
+            [p1_x, body_rect.top+fab_bevel_y],
+            [p1_x+fab_bevel_size/2, body_rect.top],
+            [body_rect.right, body_rect.top],
+            [body_rect.right, body_rect.bottom],
+            [body_rect.left, body_rect.bottom],
+            [body_rect.left, body_rect.top+device_config.body_chamfer],
+            [body_rect.left+device_config.body_chamfer, body_rect.top],
+            [p1_x-fab_bevel_size/2, body_rect.top],
+            [p1_x, body_rect.top+fab_bevel_y]
         ]
 
         kicad_mod.append(PolygonLine(
-            polygon=poly_fab,
+            nodes=poly_fab,
             width=fab_line_width,
             layer="F.Fab")
         )
@@ -411,56 +404,58 @@ class PLCCGenerator(FootprintGenerator):
         off_45 = off*math.tan(math.radians(45.0/2))
 
         cy1 = roundToBase(bounding_box['top']-off, grid)
-        cy2 = roundToBase(body_edge['top']-off, grid)
+        cy2 = roundToBase(body_rect.top-off, grid)
         cy3 = -roundToBase(
-            device_params['pitch']*(device_params['num_pins_y']-1)/2.0
+            device_config.pitch*(device_config.num_pins_y-1)/2.0
             + pad_width/2.0 + off, grid)
-        cy4 = roundToBase(body_edge['top']+device_params['body_chamfer']-off_45, grid)
+        cy4 = roundToBase(body_rect.top+device_config.body_chamfer-off_45, grid)
 
         cx1 = -roundToBase(
-            device_params['pitch']*(device_params['num_pins_x']-1)/2.0
+            device_config.pitch*(device_config.num_pins_x-1)/2.0
             + pad_width/2.0 + off, grid)
-        cx2 = roundToBase(body_edge['left']-off, grid)
+        cx2 = roundToBase(body_rect.left-off, grid)
         cx3 = roundToBase(bounding_box['left']-off, grid)
-        cx4 = roundToBase(body_edge['left']+device_params['body_chamfer']-off_45, grid)
+        cx4 = roundToBase(body_rect.left+device_config.body_chamfer-off_45, grid)
 
         crty_poly_tl = [
-            {'x': 0, 'y': cy1},
-            {'x': cx1, 'y': cy1},
-            {'x': cx1, 'y': cy2},
-            {'x': cx2, 'y': cy2},
-            {'x': cx2, 'y': cy3},
-            {'x': cx3, 'y': cy3},
-            {'x': cx3, 'y': 0}
+            [0, cy1],
+            [cx1, cy1],
+            [cx1, cy2],
+            [cx2, cy2],
+            [cx2, cy3],
+            [cx3, cy3],
+            [cx3, 0]
         ]
 
-        kicad_mod.append(PolygonLine(polygon=crty_poly_tl,
+        kicad_mod.append(PolygonLine(nodes=crty_poly_tl,
                                      layer='F.CrtYd', width=self.global_config.courtyard_line_width,
                                      x_mirror=0))
-        kicad_mod.append(PolygonLine(polygon=crty_poly_tl,
+        kicad_mod.append(PolygonLine(nodes=crty_poly_tl,
                                      layer='F.CrtYd', width=self.global_config.courtyard_line_width,
                                      y_mirror=0))
-        kicad_mod.append(PolygonLine(polygon=crty_poly_tl,
+        kicad_mod.append(PolygonLine(nodes=crty_poly_tl,
                                      layer='F.CrtYd', width=self.global_config.courtyard_line_width,
                                      x_mirror=0, y_mirror=0))
 
         crty_poly_tl_ch = [
-            {'x': 0, 'y': cy1},
-            {'x': cx1, 'y': cy1},
-            {'x': cx1, 'y': cy2},
-            {'x': cx4, 'y': cy2},
-            {'x': cx2, 'y': cy4},
-            {'x': cx2, 'y': cy3},
-            {'x': cx3, 'y': cy3},
-            {'x': cx3, 'y': 0}
+            [0, cy1],
+            [cx1, cy1],
+            [cx1, cy2],
+            [cx4, cy2],
+            [cx2, cy4],
+            [cx2, cy3],
+            [cx3, cy3],
+            [cx3, 0]
         ]
-        kicad_mod.append(PolygonLine(polygon=crty_poly_tl_ch,
+        kicad_mod.append(PolygonLine(nodes=crty_poly_tl_ch,
                                      layer='F.CrtYd', width=self.global_config.courtyard_line_width))
 
         # ######################### Text Fields ###############################
 
-        addTextFields(kicad_mod=kicad_mod, configuration=self.global_config, body_edges=body_edge,
-                      courtyard={'top': cy1, 'bottom': -cy1}, fp_name=fp_name, text_y_inside_position='center')
+        cy_bbox = Rectangle(center=Vector2D(0, 0), size=Vector2D(cx3 * 2, cy1 * 2))
+
+        addTextFields(kicad_mod=kicad_mod, configuration=self.global_config, body_edges=body_rect,
+                      courtyard=cy_bbox, fp_name=fp_name, text_y_inside_position='center')
 
         # #################### Output and 3d model ############################
         self.add_standard_3d_model_to_footprint(kicad_mod, lib_name, model_name)
