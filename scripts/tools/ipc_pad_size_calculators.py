@@ -3,6 +3,8 @@ import math
 import re
 import enum
 
+from kilibs.ipc_tools.ipc_rules import IpcDensity
+
 
 def roundToBase(value, base):
     return round(value / base) * base
@@ -214,29 +216,6 @@ class TolerancedSize():
 
     def __str__(self):
         return 'nom: {}, min: {}, max: {}  | min_rms: {}, max_rms: {}'.format(self.nominal, self.minimum, self.maximum, self.minimum_RMS, self.maximum_RMS)
-
-
-class IpcDensity(enum.Enum):
-
-    # The values are the values used in ipc_defintions.yaml
-    # as the keys for the density values in the IPC tables.
-    LOW_DENSITY_MOST_MATERIAL = 'most'
-    NOMINAL = 'nominal'
-    HIGH_DENSITY_LEAST_MATERIAL = 'least'
-
-    @classmethod
-    def from_str(cls, string: str):
-        """
-        Convert a string 'least/nominal/most' to an IPC density specifier.
-        """
-        if string == 'least':
-            return cls.HIGH_DENSITY_LEAST_MATERIAL
-        elif string == 'nominal':
-            return cls.NOMINAL
-        elif string == 'most':
-            return cls.LOW_DENSITY_MOST_MATERIAL
-
-        raise ValueError("Unknown IPC density specifier: {}".format(string))
 
 
 def ipc_body_edge_inside(ipc_data, ipc_round_base, manf_tol, body_size, lead_width,

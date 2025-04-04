@@ -86,10 +86,10 @@ def create_footprint(name, configuration, **kwargs):
     # fall back to using pad sizes directly if necessary
     if ('lead_length' in kwargs) and ('lead_width' in kwargs) and ('lead_spacing' in kwargs):
         # gather IPC data (unique parameters for >= 10mm tall caps)
-        ipc_density_suffix = '' if body_size['height'] < 10 else '_10mm'
+        ipc_density_suffix = '' if body_size['height'] < 10 else '_ge_10mm'
         ipc_density = configuration['ipc_density']
-        ipc_data = ipc_defintions['ipc_spec_capae_crystal'][ipc_density + ipc_density_suffix]
-        ipc_round_base = ipc_defintions['ipc_spec_capae_crystal']['round_base']
+        ipc_data = ipc_defintions['ipc_spec_capae_crystal' + ipc_density_suffix][ipc_density]
+        ipc_round_base = ipc_defintions['ipc_spec_capae_crystal' + ipc_density_suffix]['round_base']
 
         manf_tol = {
             'F': configuration.get('manufacturing_tolerance', 0.1),

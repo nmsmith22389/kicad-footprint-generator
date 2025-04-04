@@ -20,27 +20,34 @@ ipc_spec_capae_crystal:
         heel: 0
         side: 0.5
         courtyard: 1.0
-    most_10mm:
-        toe: 1.0
-        heel: 0.0
-        side: 0.6
-        courtyard: 1.0
     nominal:
         toe: 0.5
         heel: -0.1
         side: 0.4
-        courtyard: 0.5
-    nominal_10mm:
-        toe: 0.7
-        heel: -0.05
-        side: 0.5
         courtyard: 0.5
     least:
         toe: 0.3
         heel: -0.2
         side: 0.03
         courtyard: 0.25
-    least_10mm:
+    round_base:
+        toe: 0.05
+        heel: 0.05
+        side: 0.05
+
+
+ipc_spec_capae_crystal_ge_10mm:
+    most:
+        toe: 1.0
+        heel: 0.0
+        side: 0.6
+        courtyard: 1.0
+    nominal:
+        toe: 0.7
+        heel: -0.05
+        side: 0.5
+        courtyard: 0.5
+    least:
         toe: 0.4
         heel: -0.1
         side: 0.4
