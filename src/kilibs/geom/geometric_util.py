@@ -879,7 +879,10 @@ class BaseNodeIntersection():
 
     @staticmethod
     def intersectSegmentWithArc(
-        line: geometricLine, arc: geometricArc, tol: float = 1e-7
+        line: geometricLine,
+        arc: geometricArc,
+        include_arc_endpoints=False,
+        tol: float = 1e-7,
     ) -> List[Vector2D]:
 
         arc_circle = geometricCircle(center=arc.center_pos, radius=arc.getRadius())
@@ -889,6 +892,11 @@ class BaseNodeIntersection():
 
         # Discard points that are not on the arc itself
         for p in line_intersections:
+
+            if not include_arc_endpoints:
+                if (p - arc.start_pos).is_nullvec() or (p - arc.getEndPoint()).is_nullvec():
+                    continue
+
             if arc.isPointOnSelf(p):
                 ret.append(p)
 

@@ -50,6 +50,32 @@ def test_keepout_rect_vs_line(center, size, line_start, line_end, expected_segs)
         assert GeomTest.seg_same_endpoints(new_items[i], gseg)
 
 
+@pytest.mark.parametrize(
+    "fp_fudge_x",
+    FLOATING_POINT_OFFSETS,
+)
+def test_keepout_rect_coincident_line(fp_fudge_x):
+    """
+    Simple test for keepout rectangle vs line that lies on the keepout.
+
+    These lines should NOT be trimmed, as they're common when computing
+    offsets exactly on the keepout line.
+    """
+    ko = KeepoutRect(center=(0 + fp_fudge_x, 0), size=(100, 100))
+
+    lines = [
+        geometricLine(start=(-50 + fp_fudge_x, 50), end=(50 + fp_fudge_x, 50)),
+        geometricLine(start=(-50 + fp_fudge_x, -50), end=(50 + fp_fudge_x, -50)),
+        geometricLine(start=(50 + fp_fudge_x, -50), end=(50 + fp_fudge_x, 50)),
+        geometricLine(start=(-50 + fp_fudge_x, -50), end=(-50 + fp_fudge_x, 50)),
+    ]
+
+    for line in lines:
+        new_items = ko.keepout_line(line)
+
+        assert new_items is None
+
+
 def test_apply_keepout_1():
 
     # Four lines:
@@ -230,7 +256,8 @@ def test_arc_with_endpoint_on_ko_bound(fp_fudge_x):
         size=(200, 200),
     )
 
-    print(arc.getMidPoint())
+    # Check that the start point is indeed on the keepout edge
+    assert ko_outside.right == pytest.approx(arc.getStartPoint().x)
 
     new_items = applyKeepouts([arc], [ko_outside])
 
@@ -240,9 +267,12 @@ def test_arc_with_endpoint_on_ko_bound(fp_fudge_x):
     # and the other case where the arc is inside and touches
     # the keepout rectangle at the start/end points
     ko_inside = KeepoutRect(
-        center=(fp_fudge_x, 0),
+        center=(100 + fp_fudge_x, 0),
         size=(200, 200),
     )
+
+    # Check that the start point is indeed on the keepout edge
+    assert ko_inside.left == pytest.approx(arc.getStartPoint().x)
 
     new_items = applyKeepouts([arc], [ko_inside])
     assert len(new_items) == 0

@@ -237,8 +237,17 @@ class KeepoutRect(Keepout):
     def __str__(self):
         return f"KeepoutRect(center=({self.x}, {self.y}), size=({self.w}, {self.h}))"
 
-    def contains(self, pt: Vector2D) -> bool:
-        return self.left <= pt.x <= self.right and self.top <= pt.y <= self.bottom
+    def contains(self, pt: Vector2D, tol=1e-7) -> bool:
+        """
+        Does the rectangle contain a point?
+
+        This excludes points on, or within tol of, the rectangle edges, as a keepout
+        can have a line running excatly along the edge.
+        """
+        return (
+            (self.left + tol < pt.x < self.right - tol)
+            and (self.top + tol < pt.y < self.bottom - tol)
+        )
 
     @property
     def bounding_box(self):
@@ -254,8 +263,10 @@ class KeepoutRect(Keepout):
 
     def keepout_line(self, seg: geometricLine):
 
-        l1_inside = self.contains(seg.start_pos)
-        l2_inside = self.contains(seg.end_pos)
+        tol = 1e-7
+
+        l1_inside = self.contains(seg.start_pos, tol=tol)
+        l2_inside = self.contains(seg.end_pos, tol=tol)
 
         # if both points are inside the keepout, the line is completely inside
         # as this is a convex shape
@@ -267,10 +278,10 @@ class KeepoutRect(Keepout):
         # Optimisation opportunity to find obvious bypasses when both points are
         # all to one side of the rectangle
         if (
-            (seg.start_pos.x < self.left and seg.end_pos.x < self.left)
-            or (seg.start_pos.x > self.right and seg.end_pos.x > self.right)
-            or (seg.start_pos.y < self.top and seg.end_pos.y < self.top)
-            or (seg.start_pos.y > self.bottom and seg.end_pos.y > self.bottom)
+            (seg.start_pos.x <= self.left + tol and seg.end_pos.x <= self.left + tol)
+            or (seg.start_pos.x >= self.right - tol and seg.end_pos.x >= self.right - tol)
+            or (seg.start_pos.y <= self.top + tol and seg.end_pos.y <= self.top + tol)
+            or (seg.start_pos.y >= self.bottom - tol and seg.end_pos.y >= self.bottom - tol)
         ):
             return None
 
@@ -311,11 +322,13 @@ class KeepoutRect(Keepout):
 
     def keepout_arc(self, arc: geometricArc):
 
-        intersections = []
+        intersections: list[Vector2D] = []
 
         # Check for intersections with each side of the rectangle
         for side in [self.top_side, self.bottom_side, self.left_side, self.right_side]:
-            side_intersections = BaseNodeIntersection.intersectSegmentWithArc(side, arc)
+            side_intersections = BaseNodeIntersection.intersectSegmentWithArc(
+                side, arc, include_arc_endpoints=False
+            )
 
             if side_intersections:
                 intersections += side_intersections
