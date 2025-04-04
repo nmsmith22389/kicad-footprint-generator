@@ -363,6 +363,9 @@ class PadArray(Node):
                                 at=pad_params_with_override.position,
                                 **pad_params_with_override.parameters))
 
+        for pad in pads:
+            pad._parent = self
+
         return pads
 
     def getVirtualChilds(self):
@@ -376,7 +379,7 @@ class PadArray(Node):
             if isinstance(pad, Pad):
                 yield pad
 
-    def get_pad_with_name(self, number: str | int):
+    def get_pad_with_name(self, number: str | int) -> Pad | None:
         for pad in self.virtual_childs:
             if pad.number == number:
                 return pad

@@ -77,7 +77,7 @@ for series in data:
         # Connector pads
         kicad_modt.append(
             PadArray(
-                start=[-b, y_offset],
+                start=[-b, 0],
                 pincount=configuration,
                 x_spacing=2.54,
                 initial=1,
