@@ -13,10 +13,8 @@
 #
 # (C) 2016 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 
-from kilibs.geom import Vector2D
+from kilibs.geom import Rectangle, Vector2D
 from KicadModTree.nodes.Node import Node
-
-from typing import Union, Literal
 
 
 class Rect(Node):
@@ -30,6 +28,8 @@ class Rect(Node):
           start corner of the rect
         * *end* (``Vector2D``) --
           end corner of the rect
+        * *rect* (``Rectangle``) --
+          rectangle to use instead of start and end
         * *layer* (``str``) --
           layer on which the rect is drawn
         * *width* (``float``) --
@@ -51,15 +51,25 @@ class Rect(Node):
 
     def __init__(
         self,
-        start: Vector2D,
-        end: Vector2D,
         width: float,
         layer: str,
+        start: Vector2D | None = None,
+        end: Vector2D | None = None,
+        rect: Rectangle | None = None,
         fill: bool = False,
     ):
         Node.__init__(self)
-        self.start_pos = Vector2D(start)
-        self.end_pos = Vector2D(end)
+
+        if rect is not None:
+            self.start_pos = rect.top_left
+            self.end_pos = rect.bottom_right
+        else:
+            if start is None or end is None:
+                raise ValueError(
+                    "Either start and end or rect must be provided."
+                )
+            self.start_pos = Vector2D(start)
+            self.end_pos = Vector2D(end)
 
         self.layer = layer
         self.width = width
