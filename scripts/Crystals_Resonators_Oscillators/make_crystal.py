@@ -181,6 +181,11 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
         rotate3d=[0, 0, 0],
         name_addition="",
         rotation_in_name=False,
+        handsoldering: bool=False,
+        datasheet: str=None,
+        manufacturer: str=None,
+        part_number: str=None,
+        frequency: str=None,
     ):
         fpname = footprint_name
         if addSizeFootprintName:
@@ -198,6 +203,9 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
             modelname += "_" + rot_suffix
 
         fpname = fpname + name_addition
+
+        if handsoldering:
+            fpname += "_" + self.global_config.handsoldering_suffix
 
         overpad_height = pad_sep_y + pad[1]
         overpad_width = pad_sep_x + pad[0]
@@ -247,15 +255,35 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
         if math.fabs(t_slk + h_slk - mark_b_slk) < 2 * lw_slk:
             mark_b_slk = overpads_y_slk / 2 + lw_slk * 2.5
 
-        desc = description + ", {0:2.1f}x{1:2.1f}mm package, {2}".format(
-            pack_width,
-            pack_height,
-            self.global_config.get_generated_by_description("make_crystal.py"),
-        )
+        desc = []
+
+        if manufacturer or part_number:
+            man_desc = []
+            if manufacturer:
+                man_desc.append(manufacturer)
+            if part_number:
+                man_desc.append(part_number)
+            desc.append(" ".join(man_desc))
+
+        desc.append(description)
+
+        if frequency:
+            desc.append(frequency)
+
+        desc.append("{0:2.1f}x{1:2.1f}mm package".format(pack_width, pack_height))
+        desc.append("SMD")
+
+        if handsoldering:
+            desc.append("hand-soldering")
+
+        desc.append(self.global_config.get_generated_by_description("make_crystal.py"))
+
+        if datasheet:
+            desc.append(datasheet)
 
         # init kicad footprint
         kicad_mod = Footprint(fpname, FootprintType.SMD)
-        kicad_mod.description = desc
+        kicad_mod.description = ", ".join(desc)
         kicad_mod.tags = tags
 
         # anchor for SMD-symbols is in the center, for THT-sybols at pin1
@@ -850,6 +878,8 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
         package_pad_size=[0, 0],
         package_pad_drill_size=[1.2, 1.2],
         package_pad_ddrill=0.8,
+        manufacturer=None,
+        part_number=None,
         description="Crystal THT",
         lib_name="Crystal",
         tags="",
@@ -860,6 +890,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
         pad_style="tht",
         height3d=4.65,
         iheight3d=4,
+        datasheet: str=None,
     ):
         fpname = footprint_name
         fpname = fpname + name_addition
@@ -960,15 +991,28 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
                 - l_crt,
             )
 
-        desc = description
-        tag_s = tags
-
         footprint_type = FootprintType.SMD if pad_style == "smd" else FootprintType.THT
+
+        desc = []
+
+        if manufacturer or part_number:
+            desc.append(" ".join([x for x in [manufacturer, part_number] if x]))
+
+        desc.append(description)
+
+        # Yes these are backwards
+        desc.append(f"length {pack_width:.1f}mm")
+        desc.append(f"width {pack_height:.1f}mm")
+
+        desc.append("SMD" if pad_style == "smd" else "THT")
+
+        if datasheet:
+            desc.append(datasheet)
 
         # init kicad footprint
         kicad_mod = Footprint(fpname, footprint_type)
-        kicad_mod.setDescription(desc)
-        kicad_mod.setTags(tags)
+        kicad_mod.description = ", ".join(desc)
+        kicad_mod.tags = tags
 
         offset = [0, 0]
         if pad_style == "smd":
@@ -1294,30 +1338,27 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
         addSizeFootprintName=False,
         height3d: float = None,
         datasheet: str | None = None,
+        manufacturer: str | None = None,
+        part_number: str | None = None,
     ):
         fpname = footprint_name
-        desc = description
-        tag_s = tags
+        desc = []
+
+        if manufacturer or part_number:
+            desc.append(" ".join([x for x in [manufacturer, part_number] if x]))
+
+        desc.append(description)
 
         if addSizeFootprintName:
             fpname += "-{2}Pin_W{0:2.1f}mm_H{1:2.1f}mm".format(
                 pack_width, pack_height, pins
             )
-            desc = (
-                description
-                + ", length*width={0:2.1f}x{1:2.1f}mm^2 package, package length={0:2.1f}mm, package width={1:2.1f}mm, {2} pins".format(
-                    pack_width, pack_height, pins
-                )
-            )
-            tag_s = (
-                tags
-                + " {0:2.1f}x{1:2.1f}mm^2 package length {0:2.1f}mm width {1:2.1f}mm {2} pins".format(
-                    pack_width, pack_height, pins
-                )
-            )
+            desc.append(f"length {pack_height:2.1f}mm")
+            desc.append(f"width {pack_width:2.1f}mm")
+            desc.append(f"{pins} pins")
 
         if datasheet:
-            desc += ", " + datasheet
+            desc.append(datasheet)
 
         pad_size = toVectorUseCopyIfNumber(pad_size)
 
@@ -1331,7 +1372,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
 
         # init kicad footprint
         kicad_mod = Footprint(fpname, FootprintType.THT)
-        kicad_mod.description = desc
+        kicad_mod.description = ", ".join(desc)
         kicad_mod.tags = tags
 
         kicad_modg = kicad_mod
@@ -1437,21 +1478,34 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
         pad_size: Vector2D | float,
         ddrill: float,
         pack_diameter: float,
+        pack_length: float,
         description: str,
         lib_name:str,
-        tags: str,
-        datasheet: str | None = None
+        tags: str = "",
+        datasheet: str | None = None,
+        manufacturer: str | None = None,
+        part_number: str | None = None,
     ):
         pad = toVectorUseCopyIfNumber(pad_size)
 
         center_pos = Vector2D(rm / 2, 0)
         pin1_pos = Vector2D(0, 0)
 
+        desc = []
+
+        if manufacturer or part_number:
+            desc.append(" ".join([x for x in [manufacturer, part_number] if x]))
+
+        desc.append(description)
+
+        desc.append(f"length {pack_length}mm")
+        desc.append(f"width {pack_diameter}mm")
+
         if datasheet is not None:
-            description += ", " + datasheet
+            desc.append(datasheet)
 
         kicad_mod = Footprint(footprint_name, FootprintType.THT)
-        kicad_mod.description = description
+        kicad_mod.description = ", ".join(desc)
         kicad_mod.tags = tags
 
         kicad_modg = kicad_mod

@@ -117,6 +117,8 @@ class GlobalConfig:
     reference_fields: list[FieldProperties]
     value_fields: list[FieldProperties]
 
+    handsoldering_suffix: str
+
     def __init__(self, data: dict):
         """
         Initialise from some dictonary of data (likely a
@@ -173,6 +175,8 @@ class GlobalConfig:
         self.value_fields = [FieldProperties(**field) for field in data["values"]]
 
         self._rotation_suffix_pattern = data["rotation_suffix_pattern"]
+
+        self.handsoldering_suffix = data["handsoldering_suffix"]
 
     def get_courtyard_offset(self, courtyard_type: CourtyardType) -> float:
         return self._cy_offs[courtyard_type]
