@@ -21,6 +21,10 @@
 3d_model_prefix: '${KICAD9_3DMODEL_DIR}/'
 3d_model_suffix: '.wrl'
 
+# When a rotation "Level" (A or B) is defined in the name,
+# this is how to format it
+rotation_suffix_pattern: "Rot{rotation}"
+
 silk_line_width: 0.12
 silk_pad_clearance: 0.2
 silk_fab_offset: 0.11

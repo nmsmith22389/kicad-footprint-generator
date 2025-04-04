@@ -7,6 +7,11 @@ from pathlib import Path
 from kilibs.geom import Vector2D
 from KicadModTree.util.corner_handling import RoundRadiusHandler, ChamferSizeHandler
 
+
+class IpcRotation(Enum):
+    A = "A"
+    B = "B"
+
 class PadName(Enum):
     MECHANICAL = "mechanical"
     SHIELD = "shield"
@@ -167,6 +172,8 @@ class GlobalConfig:
         self.reference_fields = [FieldProperties(**field) for field in data["references"]]  # fmt: skip
         self.value_fields = [FieldProperties(**field) for field in data["values"]]
 
+        self._rotation_suffix_pattern = data["rotation_suffix_pattern"]
+
     def get_courtyard_offset(self, courtyard_type: CourtyardType) -> float:
         return self._cy_offs[courtyard_type]
 
@@ -302,6 +309,14 @@ class GlobalConfig:
         if generator_name is not None:
             s += f" {generator_name}"
         return s
+
+    def get_rotation_suffix(self, rotation_level=IpcRotation):
+        """
+        Get the name suffix for the given IPC rotation leve
+        """
+        return self._rotation_suffix_pattern.format(
+            rotation=rotation_level.value
+        )
 
     @classmethod
     def load_from_file(self, path: Path):

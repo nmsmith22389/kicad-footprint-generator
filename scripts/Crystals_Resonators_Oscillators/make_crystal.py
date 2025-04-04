@@ -180,6 +180,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
         scale3d=[1, 1, 1],
         rotate3d=[0, 0, 0],
         name_addition="",
+        rotation_in_name=False,
     ):
         fpname = footprint_name
         if addSizeFootprintName:
@@ -188,6 +189,14 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
             )
 
         modelname = fpname
+
+        # This generator currently only does "B". Some parts need to make
+        # that clear as there were rotated in the library manually.
+        if rotation_in_name:
+            rot_suffix = self.global_config.get_rotation_suffix(GC.IpcRotation.B)
+            fpname += "_" + rot_suffix
+            modelname += "_" + rot_suffix
+
         fpname = fpname + name_addition
 
         overpad_height = pad_sep_y + pad[1]

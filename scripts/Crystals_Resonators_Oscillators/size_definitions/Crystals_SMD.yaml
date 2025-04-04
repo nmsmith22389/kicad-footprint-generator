@@ -78,26 +78,24 @@ Crystal_SMD_0603-4Pin_6.0x3.5mm_HandSoldering:
   pins: 4
   style: rect
   tags: SMD SMT crystal hand-soldering
-# This has been manually rotated in the library. Regenerating it needs a proper
-# plan as the model is also rotated, and technically it's now correct (and
-# unrotating is dangerous as these parts are easy to install sideways)
-# Comment it to allow regeneration of everything else, until we can think
-# of a better plan.
-# Crystal_SMD_1210-4Pin_1.2x1.0mm:
-#   addSizeFootprintName: true
-#   description: SMD Crystal SERIES SMD1210/4 https://ecsxtal.com/store/pdf/ECX-1048.pdf
-#   footprint_name: Crystal_SMD_1210
-#   func: makeSMDCrystal
-#   pack_bevel: 0.1
-#   pack_height: 1.0
-#   pack_width: 1.2
-#   pad:
-#   - 0.52
-#   - 0.47
-#   pad_sep_x: 0.82
-#   pad_sep_y: 0.67
-#   pins: 4
-#   tags: SMD SMT crystal
+Crystal_SMD_1210-4Pin_1.2x1.0mm:
+  addSizeFootprintName: true
+  description: SMD Crystal SERIES SMD1210/4 https://ecsxtal.com/store/pdf/ECX-1048.pdf
+  footprint_name: Crystal_SMD_1210
+  # This mas manually rotated in the library, to avoid breaking designs
+  # we now apply a suffix to make it clear(er) to designers and PnP operators.
+  rotation_in_name: true
+  func: makeSMDCrystal
+  pack_bevel: 0.1
+  pack_height: 1.0
+  pack_width: 1.2
+  pad:
+  - 0.52
+  - 0.47
+  pad_sep_x: 0.82
+  pad_sep_y: 0.67
+  pins: 4
+  tags: SMD SMT crystal
 Crystal_SMD_2012-2Pin_2.0x1.2mm:
   addSizeFootprintName: true
   adhesiveSize: 0.4
