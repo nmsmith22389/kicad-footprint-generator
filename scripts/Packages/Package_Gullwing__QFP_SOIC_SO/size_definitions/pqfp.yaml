@@ -490,6 +490,218 @@ PQFP-32_5x5mm_P0.5mm:
   num_pins_x: 8
   num_pins_y: 8
 
+Texas_PHP0048E_HTQFP-48_7x7mm_P0.5mm:
+# Generates Texas_PHP0048E_HTQFP-48-1EP_7x7mm_P0.5mm_EP6.5x6.5mm_Mask3.62x3.62mm
+# height 1.2 mm max, similar to JEDEC MS-026 variation ABC (but custom exposed pad from TI)
+  device_type: 'HTQFP'
+  manufacturer: "Texas"
+  part_number: "PHP0048E"
+  size_source: 'https://www.ti.com/lit/ds/symlink/tusb4020bi.pdf#page=42'
+  body_size_x: 6.8 .. 7.2
+  body_size_y: 6.8 .. 7.2
+  overall_size_x: 8.8 .. 9.2
+  overall_size_y: 8.8 .. 9.2
+  lead_width: 0.17 .. 0.27
+  lead_len: 0.45 .. 0.75
+  pitch: 0.5
+  num_pins_x: 12
+  num_pins_y: 12
+
+  EP_size_x: 3.15 .. 3.62
+  EP_size_y: 3.15 .. 3.62
+  EP_size_x_overwrite: 6.5
+  EP_size_y_overwrite: 6.5
+  EP_mask_x: 3.62
+  EP_mask_y: 3.62
+  EP_num_paste_pads: 1
+  EP_paste_coverage: 1
+
+  thermal_vias:
+    count: [6, 6]
+    drill: 0.2
+    EP_num_paste_pads: 1
+    EP_paste_coverage: 1
+    paste_avoid_via: False
+
+TQFP-48_7x7mm_P0.5mm:
+# height 1.2 mm max, similar to JEDEC MS-026 variation ABC
+  device_type: 'TQFP'
+  size_source: 'http://ww1.microchip.com/downloads/en/DeviceDoc/48L_TQFP_7x7x1_0mm_PT_C04-00300d.pdf'
+  body_size_x: 7.00 # basic
+  body_size_y: 7.00 # basic
+  overall_height: 1.00 .. 1.20 # min calculated from A1_min + A2_min
+  overall_size_x: 9.00 # basic
+  overall_size_y: 9.00 # basic
+  lead_width: 0.17 .. 0.22 .. 0.27
+  lead_len: 0.45 .. 0.60 .. 0.75
+  pitch: 0.50
+  num_pins_x: 12
+  num_pins_y: 12
+
+TQFP-48-1EP_7x7mm_P0.5mm_EP4.11x4.11mm:
+# height 1.2 mm max
+  device_type: 'TQFP'
+  size_source: 'https://www.lumissil.com/assets/pdf/core/IS31FL3236_DS.pdf'
+  body_size_x: 7.0
+  body_size_y: 7.0
+  overall_size_x: 9.0
+  overall_size_y: 9.0
+  lead_width: 0.17 .. 0.22 .. 0.27
+  lead_len: 0.45 .. 0.60 .. 0.75
+  pitch: 0.5
+  num_pins_x: 12
+  num_pins_y: 12
+
+  EP_size_x: 4.0 .. 4.21
+  EP_size_y: 4.0 .. 4.21
+  EP_size_x_overwrite: 4.11
+  EP_size_y_overwrite: 4.11
+  EP_num_paste_pads: [4, 4]
+
+TQFP-48-1EP_7x7mm_P0.5mm_EP5.0x5.0mm:
+# height A = 1.20 mm max
+# https://www.analog.com/media/en/technical-documentation/data-sheets/TMC2100_datasheet_rev1.13.pdf#page=45
+  device_type: 'TQFP'
+  size_source: 'https://www.trinamic.com/fileadmin/assets/Products/ICs_Documents/TMC2100_datasheet_Rev1.08.pdf (page 45)'
+  body_size_x:
+    nominal: 7
+    tolerance: 0
+  body_size_y:
+    nominal: 7
+    tolerance: 0
+  overall_size_x:
+    nominal: 9
+    tolerance: 0
+  overall_size_y:
+    nominal: 9
+    tolerance: 0
+  lead_width:
+    minimum: 0.17
+    maximum: 0.27
+  lead_len:
+    minimum: 0.45
+    maximum: 0.75
+  pitch: 0.5
+  num_pins_x: 12
+  num_pins_y: 12
+
+  EP_size_x:
+    minimum: 4.9
+    nominal: 5.0
+    maximum: 5.1
+  EP_size_y:
+    minimum: 4.9
+    nominal: 5.0
+    maximum: 5.1
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [4, 4]
+  #heel_reduction: 0.1 #for relatively large EP pads (increase clearance)
+  # EP_size_limit_x: 3.6  #for relatively large EP pads (increase clearance)
+  # EP_size_limit_y: 3.6  #for relatively large EP pads (increase clearance)
+
+  thermal_vias:
+    count: [5, 5]
+    drill: 0.2
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    # EP_num_paste_pads: [2, 2]
+    #paste_between_vias: 1
+    #paste_rings_outside: 1
+    #EP_paste_coverage: 0.65
+    #grid: [1, 1]
+    # bottom_pad_size:
+    # paste_avoid_via: True
+
+TQFP-52-1EP_10x10mm_P0.65mm_EP6.5x6.5mm:
+# height = 1.20 mm max, similar to JEDEC MS-026 variation ACC
+  device_type: 'TQFP'
+  size_source: 'http://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/tqfp_edsv/sv_52_1.pdf'
+  body_size_x:
+    nominal: 10
+    tolerance: 0
+  body_size_y:
+    nominal: 10
+    tolerance: 0
+  overall_size_x:
+    nominal: 12
+    tolerance: 0
+  overall_size_y:
+    nominal: 12
+    tolerance: 0
+  lead_width_min: 0.22
+  lead_width_max: 0.38
+  lead_len_min: 0.45
+  lead_len_max: 0.75
+  pitch: 0.65
+  num_pins_x: 13
+  num_pins_y: 13
+
+  EP_size_x:
+    minimum: 6.4
+    nominal: 6.5
+    maximum: 6.6
+  EP_size_y:
+    minimum: 6.4
+    nominal: 6.5
+    maximum: 6.6
+  EP_paste_coverage: 0.65
+  EP_num_paste_pads: [5, 5]
+
+  thermal_vias:
+    count: [4, 4]
+    drill: 0.2
+    paste_via_clearance: 0.1
+
+TQFP-64_10x10mm_P0.5mm:
+# Manufacturer calls it 'TQ64' and says it's based on MS-026 VAR BCD, but with height A = 1.60 mm max it's actually LQFP
+# 3D Model has height = 1.20 mm, some symbols using it like ADS1298xPAG asks for TQFP (height A = 1.20 mm max),
+# others symbols like EX64-TQ64 and CY8C4245AZI-M445 asks for height A = 1.60 mm...
+# we already have a LQFP with same sizes, we should base this footprint on variation ACD instead (which is TQFP), and fix properly some symbols
+  device_type: 'TQFP'
+  size_source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
+  body_size_x:
+    nominal: 10
+  body_size_y:
+    nominal: 10
+  overall_size_x:
+    nominal: 12
+  overall_size_y:
+    nominal: 12
+  lead_width:
+    minimum: 0.17
+    maximum: 0.27
+  lead_len:
+    minimum: 0.45
+    maximum: 0.75
+  pitch: 0.5
+  num_pins_x: 16
+  num_pins_y: 16
+
+TQFP-64-1EP_10x10mm_P0.5mm_EP5.305x5.305mm:
+# height A = 1.20mm max, similar to JEDEC MS-026 variation ACD (but custom Exposed Pad)
+  device_type: 'TQFP'
+  size_source: 'https://www.esstech.com/wp-content/uploads/2022/09/ES9028PRO-Datasheet-v3.7.pdf#page=54'
+  body_size_x: 9.9 .. 10 .. 10.10
+  body_size_y: 9.9 .. 10 .. 10.10
+  overall_size_x: 11.75 .. 12.00 .. 12.25
+  overall_size_y: 11.75 .. 12.00 .. 12.25
+  EP_size_x: 5.13 .. 5.48
+  EP_size_y: 5.13 .. 5.48
+  lead_width: 0.17 .. 0.22 .. 0.27
+  lead_len: 0.45 .. 0.75
+  pitch: 0.5
+  num_pins_x: 16
+  num_pins_y: 16
+  overall_height:
+    maximum: 1.20
+  EP_num_paste_pads: [ 4, 4 ]
+  thermal_vias:
+    count: [ 5, 5 ]
+    drill: 0.2
+    paste_via_clearance: 0.1
+  compatible_mpns:
+    - ESS-eTQFP-64
+
 VQFP-80_14x14mm_P0.65mm:
 # Microsemi calls it VQ80, but with height A = 1.20 mm max it is actually a TQFP from JEDEC MS-026 variation AEC,
 # 3D Model is wrong using height = 1.60 mm, and there's no symbol using it. 
@@ -521,6 +733,30 @@ VQFP-80_14x14mm_P0.65mm:
   #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
   #include_suffix_in_3dpath: 'False'
 
+TQFP-100_14x14mm_P0.5mm:
+# Similar to JEDEC MS-026 variation AED (TQFP, height A = 1.20 mm max), we should change 'size_source'
+# since this manufacturer call this footprint as 'TQ100' which has height 1.60 mm max (see symbols EX64-TQ100 or EX128-TQ100)
+# 3D Model has height = 1.10 mm, and there's already a LQFP with same sizes in the lib
+  device_type: 'TQFP'
+  size_source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
+  body_size_x:
+    nominal: 14
+  body_size_y:
+    nominal: 14
+  overall_size_x:
+    nominal: 16
+  overall_size_y:
+    nominal: 16
+  lead_width:
+    minimum: 0.17
+    maximum: 0.27
+  lead_len:
+    minimum: 0.45
+    maximum: 0.75
+  pitch: 0.5
+  num_pins_x: 25
+  num_pins_y: 25
+
 VQFP-100_14x14mm_P0.5mm:
 # JEDEC MS-026 variation AED, this is actually TQFP (height A = 1.20 mm max),
 # 3D model has height = 1.60 mm, and there's already a generated TQFP in the library, we should DELETE this footprint
@@ -543,6 +779,56 @@ VQFP-100_14x14mm_P0.5mm:
   pitch: 0.5
   num_pins_x: 25
   num_pins_y: 25
+
+TQFP-100-1EP_14x14mm_P0.5mm_EP5.0x5.0mm:
+# height = 1.20 mm max, similar to JEDEC MS-026 variation AED (but custom Exposed Pad)
+  device_type: 'TQFP'
+  size_source: 'https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/tqfp_edsv/sv_100_4.pdf'
+  body_size_x:
+    nominal: 14
+  body_size_y:
+    nominal: 14
+  overall_size_x:
+    nominal: 16
+  overall_size_y:
+    nominal: 16
+  overall_height:
+    minimum: 1
+    maximum: 1.2
+  lead_width:
+    minimum: 0.17
+    nominal: 0.22
+    maximum: 0.27
+  lead_len:
+    minimum: 0.45
+    nominal: 0.60
+    maximum: 0.75
+  pitch: 0.5
+  num_pins_x: 25
+  num_pins_y: 25
+
+  EP_size_x:
+    nominal: 5.0
+  EP_size_y:
+    nominal: 5.0
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [4, 4]
+  #heel_reduction: 0.1 #for relatively large EP pads (increase clearance)
+  # EP_size_limit_x: 3.6  #for relatively large EP pads (increase clearance)
+  # EP_size_limit_y: 3.6  #for relatively large EP pads (increase clearance)
+
+  thermal_vias:
+    count: [5, 5]
+    drill: 0.2
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    # EP_num_paste_pads: [2, 2]
+    #paste_between_vias: 1
+    #paste_rings_outside: 1
+    #EP_paste_coverage: 0.65
+    #grid: [1, 1]
+    # bottom_pad_size:
+    # paste_avoid_via: True
 
 VQFP-128_14x14mm_P0.4mm:
 # JEDEC MS-026 variation AEE, this is actually TQFP (height A = 1.20 mm max),
@@ -567,6 +853,55 @@ VQFP-128_14x14mm_P0.4mm:
   pitch: 0.4
   num_pins_x: 32
   num_pins_y: 32
+
+TQFP-144_20x20mm_P0.5mm:
+# Microsemi calls it TQ144, but height A = 1.60 mm (which is actually LQFP),
+# 3D Model has height = 1.10 mm, and there's already a LQFP in the lib,
+# we should change 'size_source' to match JEDEC MS-026 variation AFB (TQFP, height A = 1.20 mm max)
+  device_type: 'TQFP'
+  size_source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
+  body_size_x:
+    nominal: 20
+  body_size_y:
+    nominal: 20
+  overall_size_x:
+    nominal: 22
+  overall_size_y:
+    nominal: 22
+  lead_width:
+    minimum: 0.17
+    maximum: 0.27
+  lead_len:
+    minimum: 0.45
+    maximum: 0.75
+  pitch: 0.5
+  num_pins_x: 36
+  num_pins_y: 36
+
+TQFP-176_24x24mm_P0.5mm:
+# Manufacturer calls it 'TQ176' and says it's based on MS-026 VAR BCA ('C' here is probably a typo),
+# but take a look at JEDEC MS-026 variation BGA (E1 and D1 sizes), this is actually LQFP (height A = 1.60 mm max)
+# 3D model has height = 1.60mm, and there's already a LQFP with these sizes,
+# we should change 'size_source' to match MS-026 variation AGA (TQFP, height A = 1.20mm) and fix the 3D model
+  device_type: 'TQFP'
+  size_source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
+  body_size_x:
+    nominal: 24
+  body_size_y:
+    nominal: 24
+  overall_size_x:
+    nominal: 26
+  overall_size_y:
+    nominal: 26
+  lead_width:
+    minimum: 0.17
+    maximum: 0.27
+  lead_len:
+    minimum: 0.45
+    maximum: 0.75
+  pitch: 0.5
+  num_pins_x: 44
+  num_pins_y: 44
 
 VQFP-176_20x20mm_P0.4mm:
 # JEDEC MS-026 variation BFC, this is actually TQFP (height A = 1.20 mm max),
