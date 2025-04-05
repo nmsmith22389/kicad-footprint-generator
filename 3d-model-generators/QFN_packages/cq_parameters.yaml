@@ -6950,7 +6950,8 @@ Micrel_MLF-8-1EP_2x2mm_P0.5mm_EP0.6x1.2mm:
   mark_color_key: light brown label
   source: 'http://ww1.microchip.com/downloads/en/DeviceDoc/mic23050.pdf'
 
-OnSemi_SIP-38-6EP-9x7mm_P0.65mm_EP0.95x0.95mm:
+# EP size is determined by pad size on PCB
+OnSemi_SIP-38-6EP-9x7mm_P0.65mm_EP1.2x1.2mm:
   c: 0.2
   L: 0.6
   fp_s: True
@@ -6977,14 +6978,14 @@ OnSemi_SIP-38-6EP-9x7mm_P0.65mm_EP0.95x0.95mm:
   epad_n: [2, 3]
   epad_pitch: [2, 2]
   excluded_pins: null
-  model_name: OnSemi_SIP-38-6EP-9x7mm_P0.65mm_EP0.95x0.95mm
+  model_name: OnSemi_SIP-38-6EP-9x7mm_P0.65mm_EP1.2x1.2mm
   rotation: -90
-  destination_dir: null
+  destination_dir: Package_DFN_QFN.3dshapes
   body_color_key: black body
   pin_shapes: null
   pin_color_key: metal grey pins
   mark_color_key: light brown label
-  source: 'https://web.archive.org/web/20210125183534if_/https://www.onsemi.com/pub/Collateral/AX-SIP-SFEU-D.PDF#page=19'
+  source: 'https://www.onsemi.cn/download/data-sheet/pdf/ax-sip-sfeu-d.pdf#page=19'
 
 Vishay_PowerPAK_1212-8_Single:
   c: 0.2
