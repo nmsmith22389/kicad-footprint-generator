@@ -41,7 +41,7 @@ def draw_silk_triangle_for_pad(
         )
     elif arrow_direction == Direction.EAST:
         apex = Vector2D(
-            pad.at.x - pad.size.x / 2 + pad_silk_offset + stroke_width / 2, pad.at.y
+            pad.at.x - pad.size.x / 2 - pad_silk_offset - stroke_width / 2, pad.at.y
         )
     elif arrow_direction == Direction.WEST:
         apex = Vector2D(
@@ -73,7 +73,7 @@ def draw_silk_triangle_clear_of_fab_hline_and_pad(
     line_clearance_y: float,
     arrow_size: SilkArrowSize,
 ):
-    """
+    r"""
     Draw an arrow pointing towards a pad, but clear of some horizontal line.
 
     This is quite common for SMT parts with quite long gullwings, where putting
@@ -128,7 +128,7 @@ def draw_silk_triangle45_clear_of_fab_hline_and_pad(
     line_clearance_y: float,
     arrow_size: SilkArrowSize,
 ):
-    """
+    r"""
     Draw an arrow pointing towards a pad, but clear of some horizontal line.
 
     This is quite common for SMT parts with quite short gullwings, where putting
