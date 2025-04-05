@@ -14,7 +14,7 @@ if __name__ == '__main__':
     d2=0
     R_POW = 0
     clname="D"
-    lbname=global_config.model_3d_prefix + "Diode_THT"
+    lbname="Diode_THT"
     deco="diode"
     deco_kup="diode_KUP"
 
