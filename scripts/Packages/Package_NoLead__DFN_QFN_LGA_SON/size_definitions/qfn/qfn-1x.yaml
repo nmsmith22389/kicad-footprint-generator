@@ -73,6 +73,7 @@ UQFN-10_1.4x1.8mm_P0.4mm:
     - 'ONSemi-UQFN10-488AT-01' # e.g. NL3S22S
 
 Texas_RSW0010A_UQFN-10_1.4x1.8mm_P0.4mm:
+# height = 0.45 .. 0.55 mm, similar to JEDEC MO-288 variation UDEE
   device_type: 'UQFN'
   manufacturer: 'Texas'
   part_number: 'RSW0010A'
@@ -89,7 +90,7 @@ Texas_RSW0010A_UQFN-10_1.4x1.8mm_P0.4mm:
   lead_width:
     minimum: 0.15
     maximum: 0.25
-  lead_len:
+  lead_len: # JEDEC is 0.30 .. 0.50 mm
     minimum: 0.35
     maximum: 0.45
 
@@ -704,6 +705,50 @@ Renesas_UQFN-16_2x2mm_P0.4mm:
   num_pins_x: 3
   num_pins_y: 5
 
+Texas_WQFN-16_RTE0016D:
+# Texas_RTE0016D_WQFN-16-1EP_3x3mm_P0.5mm_EP0.8x0.8mm
+  device_type: 'WQFN'
+  manufacturer: 'Texas'
+  part_number: 'RTE0016D'
+  size_source: 'https://www.ti.com/lit/ds/symlink/dac80504.pdf#page=47'
+  ipc_class: 'qfn'
+  body_size_x:
+    minimum: 2.85
+    maximum: 3.15
+  body_size_y:
+    minimum: 2.85
+    maximum: 3.15
+  overall_height:
+    minimum: 0.7
+    maximum: 0.8
+
+  lead_width:
+    minimum: 0.18
+    maximum: 0.3
+  lead_len:
+    minimum: 0.3
+    maximum: 0.5
+
+  EP_size_x:
+    nominal: 0.8
+    tolerance: 0.1
+  EP_size_y:
+    nominal: 0.8
+    tolerance: 0.1
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [1, 1]
+    drill: 0.2
+    paste_via_clearance: 0.1
+    EP_num_paste_pads: [1, 1]
+    EP_paste_coverage: 0.90
+    paste_avoid_via: false
+
+  pitch: 0.5
+  num_pins_x: 4
+  num_pins_y: 4
+
 VQFN-16-1EP_3x3mm_P0.5mm_EP1.1x1.1mm:
   device_type: 'VQFN'
   size_source: 'https://ww1.microchip.com/downloads/en/DeviceDoc/16L_VQFN-WFS_3x3mm_4MX_C04-00508a.pdf'
@@ -739,6 +784,50 @@ VQFN-16-1EP_3x3mm_P0.5mm_EP1.1x1.1mm:
     paste_avoid_via: True
     paste_between_vias: 1
     paste_rings_outside: 1
+
+  pitch: 0.5
+  num_pins_x: 4
+  num_pins_y: 4
+
+Texas_WQFN-16_RTE:
+# Texas_RTE_WQFN-16-1EP_3x3mm_P0.5mm_EP1.2x0.8mm
+  device_type: 'WQFN'
+  manufacturer: 'Texas'
+  part_number: 'RTE'
+  size_source: 'https://www.ti.com/lit/ds/symlink/tps43060.pdf#page=40'
+  ipc_class: 'qfn'
+  body_size_x:
+    minimum: 2.85
+    maximum: 3.15
+  body_size_y:
+    minimum: 2.85
+    maximum: 3.15
+  overall_height:
+    minimum: 0.7
+    maximum: 0.8
+
+  lead_width:
+    minimum: 0.18
+    maximum: 0.3
+  lead_len:
+    minimum: 0.3
+    maximum: 0.5
+
+  EP_size_x:
+    nominal: 1.2
+    tolerance: 0.1
+  EP_size_y:
+    nominal: 0.8
+    tolerance: 0.1
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [1, 1]
+    drill: 0.3
+    paste_via_clearance: 0.1
+    EP_num_paste_pads: [2, 2]
+    EP_paste_coverage: 0.70
+    paste_avoid_via: false
 
   pitch: 0.5
   num_pins_x: 4
@@ -1626,6 +1715,51 @@ QFN-16-1EP_3x3mm_P0.5mm_EP1.9x1.9mm:
   num_pins_x: 4
   num_pins_y: 4
 
+Texas_VQFN-16_RVA:
+# Texas_RVA_VQFN-16-1EP_3.5x3.5mm_P0.5mm_EP2.14x2.14mm
+  device_type: 'VQFN'
+  manufacturer: 'Texas'
+  part_number: 'RVA'
+  size_source: 'https://www.ti.com/lit/pdf/MPQF232'
+  ipc_class: 'qfn'
+  body_size_x:
+    minimum: 3.40
+    maximum: 3.60
+  body_size_y:
+    minimum: 3.40
+    maximum: 3.60
+  overall_height:
+    minimum: 0.8
+    maximum: 1.0
+
+  lead_width:
+    minimum: 0.18
+    maximum: 0.30
+  lead_len:
+    minimum: 0.30
+    maximum: 0.50
+
+  EP_size_x:
+    nominal: 2.14
+    tolerance: 0.1
+  EP_size_y:
+    nominal: 2.14
+    tolerance: 0.1
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    # Manufacturer recommendations for thermal vias
+    # See size_source above
+    count: [2, 2]
+    drill: 0.3
+    grid: [1.0, 1.0]
+    paste_avoid_via: false
+    EP_paste_coverage: 0.63
+
+  pitch: 0.50
+  num_pins_x: 4
+  num_pins_y: 4
+
 QFN-16-1EP_4x4mm_P0.5mm_EP2.45x2.45mm:
   device_type: 'QFN'
   #manufacturer: 'man'
@@ -1740,6 +1874,7 @@ WQFN-16-1EP_4x4mm_P0.5mm_EP2.6x2.6mm:
   #include_suffix_in_3dpath: 'False'
 
 QFN-16-1EP_4x4mm_P0.65mm_EP2.1x2.1mm:
+# this is actually VQFN
   device_type: 'QFN'
   #manufacturer: 'man'
   #part_number: 'mpn'
@@ -1793,6 +1928,92 @@ QFN-16-1EP_4x4mm_P0.65mm_EP2.1x2.1mm:
   #pad_length_addition: 0.5
   #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
   #include_suffix_in_3dpath: 'False'
+
+Texas_VQFN-16_RGV0016A:
+# Texas_RGV0016A_VQFN-16-1EP_4x4mm_P0.65mm_EP2.1x2.1mm
+  device_type: 'VQFN'
+  manufacturer: 'Texas'
+  part_number: 'RGV0016A'
+  size_source: 'http://www.ti.com/lit/ds/symlink/ina3221.pdf#page=44'
+  ipc_class: 'qfn'
+  body_size_x:
+    minimum: 3.85
+    maximum: 4.15
+  body_size_y:
+    minimum: 3.85
+    maximum: 4.15
+  overall_height:
+    minimum: 0.8
+    maximum: 1.0
+
+  lead_width:
+    minimum: 0.23
+    maximum: 0.38
+  lead_len:
+    minimum: 0.45
+    maximum: 0.65
+
+  EP_size_x:
+    nominal: 2.1
+    tolerance: 0.1
+  EP_size_y:
+    nominal: 2.1
+    tolerance: 0.1
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [3, 3]
+    drill: 0.2
+    paste_via_clearance: 0.1
+    EP_paste_coverage: 0.75
+    paste_avoid_via: False
+
+  pitch: 0.65
+  num_pins_x: 4
+  num_pins_y: 4
+
+Texas_WQFN-16_RTY:
+# Texas_RTY_WQFN-16-1EP_4x4mm_P0.65mm_EP2.1x2.1mm
+  device_type: 'WQFN'
+  manufacturer: 'Texas'
+  part_number: 'RTY'
+  size_source: 'http://www.ti.com/lit/ds/symlink/drv8801.pdf#page=36 MO-220 variation VGGC'
+  ipc_class: 'qfn'
+  body_size_x:
+    minimum: 3.85
+    maximum: 4.15
+  body_size_y:
+    minimum: 3.85
+    maximum: 4.15
+  overall_height:
+    minimum: 0.7
+    maximum: 0.8
+
+  lead_width:
+    minimum: 0.23
+    maximum: 0.38
+  lead_len:
+    minimum: 0.45
+    maximum: 0.65
+
+  EP_size_x:
+    nominal: 2.1
+    tolerance: 0.1
+  EP_size_y:
+    nominal: 2.1
+    tolerance: 0.1
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [3, 3]
+    drill: 0.2
+    paste_via_clearance: 0.1
+    EP_paste_coverage: 0.7
+    paste_avoid_via: False
+
+  pitch: 0.65
+  num_pins_x: 4
+  num_pins_y: 4
 
 TQFN-16-1EP_4x4mm_P0.65mm_EP2.1x2.1mm:
 # This is a WQFN
@@ -1952,6 +2173,49 @@ QFN-16-1EP_4x4mm_P0.65mm_EP2.5x2.5mm:
   #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
   #include_suffix_in_3dpath: 'False'
 
+Texas_WQFN-16_RUM0016A:
+# Texas_RUM0016A_WQFN-16-1EP_4x4mm_P0.65mm_EP2.6x2.6mm
+  device_type: 'WQFN'
+  manufacturer: 'Texas'
+  part_number: 'RUM0016A'
+  size_source: 'http://www.ti.com/lit/ds/symlink/lmh0074.pdf#page=13'
+  ipc_class: 'qfn'
+  body_size_x:
+    minimum: 3.9
+    maximum: 4.1
+  body_size_y:
+    minimum: 3.9
+    maximum: 4.1
+  overall_height:
+    minimum: 0.7
+    maximum: 0.8
+
+  lead_width:
+    minimum: 0.25
+    maximum: 0.35
+  lead_len:
+    minimum: 0.3
+    maximum: 0.5
+
+  EP_size_x:
+    nominal: 2.6
+    tolerance: 0.1
+  EP_size_y:
+    nominal: 2.6
+    tolerance: 0.1
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [3, 3]
+    drill: 0.2
+    paste_via_clearance: 0.1
+    EP_paste_coverage: 0.743
+    paste_avoid_via: False
+
+  pitch: 0.65
+  num_pins_x: 4
+  num_pins_y: 4
+
 UQFN-16-1EP_4x4mm_P0.65mm_EP2.6x2.6mm:
   device_type: 'UQFN'
   #manufacturer: 'man'
@@ -2008,6 +2272,7 @@ UQFN-16-1EP_4x4mm_P0.65mm_EP2.6x2.6mm:
   #include_suffix_in_3dpath: 'False'
 
 QFN-16-1EP_4x4mm_P0.65mm_EP2.7x2.7mm:
+# this is actually WQFN
   device_type: 'QFN'
   #manufacturer: 'man'
   #part_number: 'mpn'
@@ -2061,6 +2326,48 @@ QFN-16-1EP_4x4mm_P0.65mm_EP2.7x2.7mm:
   #pad_length_addition: 0.5
   #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
   #include_suffix_in_3dpath: 'False'
+
+Texas_VQFN-16_RSA:
+# Texas_RSA_VQFN-16-1EP_4x4mm_P0.65mm_EP2.7x2.7mm
+  device_type: 'VQFN'
+  manufacturer: 'Texas'
+  part_number: 'RSA'
+  size_source: 'http://www.ti.com/lit/ds/symlink/msp430g2001.pdf#page=44'
+  ipc_class: 'qfn'
+  body_size_x:
+    minimum: 3.9
+    maximum: 4.1
+  body_size_y:
+    minimum: 3.9
+    maximum: 4.1
+  overall_height:
+    minimum: 0.8
+    maximum: 1.0
+
+  lead_width:
+    minimum: 0.23
+    maximum: 0.38
+  lead_len:
+    minimum: 0.3
+    maximum: 0.5
+
+  EP_size_x:
+    nominal: 2.7
+    tolerance: 0.1
+  EP_size_y:
+    nominal: 2.7
+    tolerance: 0.1
+  EP_num_paste_pads: [3, 3]
+
+  thermal_vias:
+    count: [3, 3]
+    drill: 0.2
+    paste_via_clearance: 0.1
+    EP_paste_coverage: 0.5
+
+  pitch: 0.65
+  num_pins_x: 4
+  num_pins_y: 4
 
 QFN-16-1EP_4x4mm_P0.65mm_EP2.7x2.7mm_PullBack:
   device_type: 'QFN'
