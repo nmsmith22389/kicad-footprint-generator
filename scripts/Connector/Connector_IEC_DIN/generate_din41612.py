@@ -69,18 +69,56 @@ dimensions = {
             "connector_width": 87.5,
             "mounting_width": 88.9,
             "row_pins": 32,
+            "pin_nr_offset": 0
         },
         "half": {
             "housing_width": 53.9,
             "connector_width": 47,
             "mounting_width": 48.26,
             "row_pins": 16,
+            "pin_nr_offset": 0
         },
         "third": {
             "housing_width": 38.1,
             "connector_width": 31.7,
             "mounting_width": 33.02,
             "row_pins": 10,
+            "pin_nr_offset": 0
+        },
+        "m1": {
+            "housing_width": 94,
+            "connector_width": 87.5,
+            "mounting_width": 88.9,
+            "row_pins": 26,
+            "pin_nr_offset": 3 # pin_nr_offset * 2 + row_pins = 32
+        },
+        "m2": {
+            "housing_width": 94,
+            "connector_width": 87.5,
+            "mounting_width": 88.9,
+            "row_pins": 20,
+            "pin_nr_offset": 6
+        },
+        "m3": {
+            "housing_width": 94,
+            "connector_width": 87.5,
+            "mounting_width": 88.9,
+            "row_pins": 14,
+            "pin_nr_offset": 9
+        },
+        "m4": { # None standard
+            "housing_width": 94,
+            "connector_width": 87.5,
+            "mounting_width": 88.9,
+            "row_pins": 8,
+            "pin_nr_offset": 12
+        },
+        "m5": { # None standard
+            "housing_width": 94,
+            "connector_width": 87.5,
+            "mounting_width": 88.9,
+            "row_pins": 2,
+            "pin_nr_offset": 15
         },
     },
     "Vertical": {
@@ -99,6 +137,7 @@ dimensions = {
             "connector_outer_width": 88,
             "mounting_width": 90,
             "row_pins": 32,
+            "pin_nr_offset": 0
         },
         "half": {
             "housing_width": 55,
@@ -106,6 +145,7 @@ dimensions = {
             "connector_outer_width": 47.4,
             "mounting_width": 50,
             "row_pins": 16,
+            "pin_nr_offset": 0
         },
         "third": {
             "housing_width": 39.76,
@@ -113,6 +153,47 @@ dimensions = {
             "connector_outer_width": 32.1,
             "mounting_width": 34.76,
             "row_pins": 10,
+            "pin_nr_offset": 0
+        },
+        "m1": {
+            "housing_width": 95,
+            "connector_width": 85,
+            "connector_outer_width": 88,
+            "mounting_width": 90,
+            "row_pins": 26,
+            "pin_nr_offset": 3 # pin_nr_offset * 2 + row_pins = 32
+        },
+        "m2": {
+            "housing_width": 95,
+            "connector_width": 85,
+            "connector_outer_width": 88,
+            "mounting_width": 90,
+            "row_pins": 20,
+            "pin_nr_offset": 6
+        },
+        "m3": {
+            "housing_width": 95,
+            "connector_width": 85,
+            "connector_outer_width": 88,
+            "mounting_width": 90,
+            "row_pins": 14,
+            "pin_nr_offset": 9
+        },
+        "m4": { # None standard
+            "housing_width": 95,
+            "connector_width": 85,
+            "connector_outer_width": 88,
+            "mounting_width": 90,
+            "row_pins": 8,
+            "pin_nr_offset": 12
+        },
+        "m5": { # None standard
+            "housing_width": 95,
+            "connector_width": 85,
+            "connector_outer_width": 88,
+            "mounting_width": 90,
+            "row_pins": 2,
+            "pin_nr_offset": 15
         },
     },
     "series": {
@@ -120,20 +201,26 @@ dimensions = {
             series_rows="ab",
             housing_height=8.1,
             connector_height=6,
+            directions = {"Horizontal", "Vertical"},
         ),
         "C": dict(
             series_rows="abc",
             housing_height=10.6,
             connector_height=8.5,
+            directions = {"Horizontal", "Vertical"},
         ),
         #            'CD': { 'series_rows': 'abcd' },
         "D": dict(
-            series_rows="abc", housing_height=10.6, connector_height=8.5, **large_holes
+            series_rows="abc",
+            housing_height=10.6,
+            connector_height=8.5,
+            directions = {"Horizontal", "Vertical"}, **large_holes
         ),
         "E": dict(
             series_rows="abcde",
             housing_height=15.7,
             connector_height=13.6,
+            directions = {"Horizontal", "Vertical"},
             **large_holes,
         ),
         #            'E160': { 'series_rows': 'abcde', },
@@ -142,6 +229,7 @@ dimensions = {
             housing_height=14.8,
             connector_height=12.4,
             Vertical=large_holes,
+            directions = {"Horizontal", "Vertical"},
         ),
         #            'F_flat': { 'series_rows': 'zbd', },
         # TODO H11 vertical and horizontal use different rows (e, vs. ac)
@@ -151,6 +239,25 @@ dimensions = {
         #                'a1_mounting': 12.7,
         #                'a1_edge': 12.7 + 2.3,
         #                },
+        "M": dict(
+            series_rows="abc",
+            housing_height=10.6,
+            connector_height=8.5,
+            directions = {"Horizontal", "Vertical"},
+        ),
+        "M-flat": dict( # None standard
+            series_rows="abc",
+            housing_height=10.6,
+            connector_height=8.5,
+            directions = {"Vertical"},
+        ),
+        "M-invers": dict( # None standard
+            series_rows="abc",
+            housing_height=10.6,
+            connector_height=8.5,
+            gender_reverse=True,
+            directions = {"Horizontal", "Vertical"},
+        ),
         "Q": dict(
             series_rows="ab",
             mounting_housing_back=10.2 - 12.6,
@@ -158,6 +265,7 @@ dimensions = {
             connector_height=6.2,
             nodge_height=2.5,
             gender_reverse=True,
+            directions = {"Horizontal", "Vertical"},
         ),
         "R": dict(
             series_rows="abc",
@@ -165,6 +273,7 @@ dimensions = {
             connector_height=8.7,
             nodge_height=2.5,
             gender_reverse=True,
+            directions = {"Horizontal", "Vertical"},
         ),
     },
 }
@@ -224,13 +333,13 @@ def build_positions(config, pins_per_row, row, row_direction, column_direction):
         offset = (rows.index(row) - 1) * config["pin_row_offset"]
     pin_one = Vector2D(row_direction.x * offset, row_direction.y * offset)
     if pins_per_row == config["row_pins"]:
-        positions = range(1, config["row_pins"] + 1)
+        positions = range(1 + config["pin_nr_offset"], config["row_pins"] + 1 + config["pin_nr_offset"])
     elif pins_per_row == config["row_pins"] // 2:
-        positions = range(2, config["row_pins"] + 1, 2)
+        positions = range(2 + config["pin_nr_offset"], config["row_pins"] + 1 + config["pin_nr_offset"], 2)
     elif pins_per_row == config["row_pins"] // 4:
-        positions = range(2, config["row_pins"] + 1, 4)
+        positions = range(2 + config["pin_nr_offset"], config["row_pins"] + 1 + config["pin_nr_offset"], 4)
     elif pins_per_row == 11:
-        positions = range(2, config["row_pins"] + 1, 3)
+        positions = range(2 + config["pin_nr_offset"], config["row_pins"] + 1 + config["pin_nr_offset"], 3)
     else:
         raise Exception(
             f"weird pins per row: {pins_per_row} (row_pins: "
@@ -278,7 +387,7 @@ def build_pins(mod, config, pins, rows, row_direction, column_direction):
 
 def build_din41612_connector_horizontal(mod, series, direction, pins, rows, config):
 
-    center = Vector2D(config["pin_column_offset"] * (config["row_pins"] / 2 - 0.5), 0)
+    center = Vector2D(config["pin_column_offset"] * ((config["row_pins"] + config["pin_nr_offset"] * 2) / 2 - 0.5), 0)
     mounting = Vector2D(center.x - config["mounting_width"] / 2, -config["a1_mounting"])
     # place mounting holes
     mod.append(Pad(at=mounting, **mounting_args))
@@ -574,6 +683,31 @@ def build_din41612_connector_horizontal(mod, series, direction, pins, rows, conf
             **arrow_args,
         )
     )
+    # draw line for special contacts marking
+    if series in {"M", "M-invers"}:
+        special_contacts_nr_half = int(((32 - config["row_pins"]) / 3) / 2)
+        for sc in range(special_contacts_nr_half):
+            # left
+            mod.append(
+                PolygonLine(
+                    polygon=[
+                        Vector2D(center.x - 36.83 + 7.62 * sc, 0),
+                        Vector2D(center.x - 36.83 + 7.62 * sc, -1),
+                    ],
+                    **arrow_args,
+                )
+            )
+            # right
+            mod.append(
+                PolygonLine(
+                    polygon=[
+                        Vector2D(center.x + 36.83 - 7.62 * sc, 0),
+                        Vector2D(center.x + 36.83 - 7.62 * sc, -1),
+                    ],
+                    **arrow_args,
+                )
+            )
+        
 
 
 def build_din41612_connector_vertical(mod, series, direction, pins, rows, config):
@@ -586,7 +720,7 @@ def build_din41612_connector_vertical(mod, series, direction, pins, rows, config
     if "z" in config["series_rows"]:
         center_x -= config["pin_column_offset"]
     center = Vector2D(
-        center_x, config["pin_column_offset"] * (config["row_pins"] / 2 - 0.5)
+        center_x, config["pin_column_offset"] * ((config["row_pins"] + config["pin_nr_offset"] * 2) / 2 - 0.5)
     )
     pos1 = build_pins(
         mod,
@@ -752,6 +886,69 @@ def build_din41612_connector_vertical(mod, series, direction, pins, rows, config
         )
         for pos in positions.values():
             keepouts += addKeepoutRound(pos.x, pos.y, keepout_radius, keepout_radius)
+    # Draw Special contacts hole
+    if series in {"M", "M-invers"}:
+        special_contacts_nr_half = int(((32 - config["row_pins"]) / 3) / 2)
+        for sc in range(special_contacts_nr_half):
+            sc_pos = Vector2D(center.x, center.y + 36.83 - 7.62 * sc)
+            sc_args = dict(
+                type=Pad.TYPE_NPTH,
+                shape=Pad.SHAPE_CIRCLE,
+                size=6,
+                drill=6,
+                layers=Pad.LAYERS_NPTH,
+            )
+            mod.append(Pad(at=sc_pos, **sc_args))
+            mod.append(Pad(at=mirror_y(sc_pos, center), **sc_args))
+    # Draw Special contacts markings
+    if series == "M-flat":
+        markingLine_args = dict(
+            width=0.1,
+            layer="Cmts.User",
+        )
+        special_contacts_nr_half = int(((32 - config["row_pins"]) / 3) / 2)
+        for sc in range(special_contacts_nr_half):
+            # ToDo: Makrings
+
+            
+            # top
+            mod.append(
+                PolygonLine(
+                    polygon=[
+                        Vector2D(center.x + .5, center.y - 36.83 + 7.62 * sc),
+                        Vector2D(center.x - .5, center.y - 36.83 + 7.62 * sc),
+                    ],
+                    **markingLine_args,
+                )
+            )
+            mod.append(
+                PolygonLine(
+                    polygon=[
+                        Vector2D(center.x, center.y - 36.83 + 7.62 * sc + .5),
+                        Vector2D(center.x, center.y - 36.83 + 7.62 * sc - .5),
+                    ],
+                    **markingLine_args,
+                )
+            )
+            # bottom
+            mod.append(
+                PolygonLine(
+                    polygon=[
+                        Vector2D(center.x + .5, center.y + 36.83 - 7.62 * sc),
+                        Vector2D(center.x - .5, center.y + 36.83 - 7.62 * sc),
+                    ],
+                    **markingLine_args,
+                )
+            )
+            mod.append(
+                PolygonLine(
+                    polygon=[
+                        Vector2D(center.x, center.y + 36.83 - 7.62 * sc + .5),
+                        Vector2D(center.x, center.y + 36.83 - 7.62 * sc - .5),
+                    ],
+                    **markingLine_args,
+                )
+            )
     # highlight connector shape on silk
     highlight_expand = 0
     he = highlight_expand
@@ -780,7 +977,22 @@ def build_din41612_connector_vertical(mod, series, direction, pins, rows, config
 def build_din41612_connector(series, direction, pins, rows, extra_args={}):
     width = "full"
     try:
-        if series.split("/")[1] == "2":
+        if series in {"M", "M-flat", "M-invers"} and pins == 78:
+            width = "m1"
+            safe_series = series
+        elif series in {"M", "M-flat", "M-invers"} and pins == 60:
+            width = "m2"
+            safe_series = series
+        elif series in {"M", "M-flat", "M-invers"} and pins == 42:
+            width = "m3"
+            safe_series = series
+        elif series in {"M", "M-flat", "M-invers"} and pins == 24:
+            width = "m4"
+            safe_series = series
+        elif series in {"M", "M-flat", "M-invers"} and pins == 6:
+            width = "m5"
+            safe_series = series
+        elif series.split("/")[1] == "2":
             width = "half"
             safe_series = series.split("/")[0] + "2"
         elif series.split("/")[1] == "3":
@@ -806,6 +1018,8 @@ def build_din41612_connector(series, direction, pins, rows, extra_args={}):
     extra_fp_name = ""
     if config.get("extra_desc") == "rows":
         extra_fp_name += f"_Rows{rows.upper()}"
+    elif config.get("extra_desc") != None:
+        extra_fp_name = config.get("extra_desc")
     if config.get("gender_reverse") == True:
         if config["gender"] == "male":
             config["gender"] = "female"
@@ -855,33 +1069,44 @@ connectors = {
     #        'E160': [ (160, 'abcde') ],
     #        'F_flat': [ (32, 'zb') (32, 'zd'), (48, 'zbd') ],
     "F": [(32, "zd", dict(extra_desc="rows")), (32, "zb"), (48, "zbd")],
+    # "G": [(64, "?ac")],
     #        'H11': [ (11, 'e') ],
+    # "H": [(15, "?ac")],
+    "M": [(78, "abc", dict(extra_desc="+2")), (60, "abc", dict(extra_desc="+4")), (42, "abc", dict(extra_desc="+6")), (24, "abc", dict(extra_desc="+8"))],
+    "M-flat": [(78, "abc", dict(extra_desc="+2")), (60, "abc", dict(extra_desc="+4")), (42, "abc", dict(extra_desc="+6")), (24, "abc", dict(extra_desc="+8"))],
+    "M-invers": [(78, "abc", dict(extra_desc="+2")), (60, "abc", dict(extra_desc="+4")), (42, "abc", dict(extra_desc="+6")), (24, "abc", dict(extra_desc="+8")), (6, "abc", dict(extra_desc="+10"))],
     "Q": [(64, "ab")],
     "Q/2": [(32, "ab")],
     "Q/3": [(20, "ab")],
     "R": [(64, "ac"), (96, "abc"), (48, "abc"), (32, "ac"), (32, "a")],
     "R/2": [(48, "abc"), (32, "ac")],
     "R/3": [(30, "abc"), (20, "ac")],
+    # "S": [(32, "?ac")],
+    # "T": [(32, "?ac"), (48, "?ac")],
+    # "U": [(32, "?ac"), (48, "?ac")],
+    # "V": [(64, "?ac")],
+    # "W": [(96, "?abc")],
 }
 
-# TODO: Q R RD TE M H11 H15 H7/F24
+# TODO: G RD T TE H11 H15 H7/F24 U V W
 # TODO: check all manufacturer special variants
 # make fab shape depend on mounting position not on front of connector
 
 for direction in ("Horizontal", "Vertical"):
     for series, variants in connectors.items():
-        for v in variants:
-            pins = v[0]
-            rows = v[1]
-            if len(v) > 2:
-                args = v[2]
-            else:
-                args = {}
-            print(f"building {series} {v} {direction}")
-            build_din41612_connector(
-                series=series,
-                direction=direction,
-                pins=pins,
-                rows=rows,
-                extra_args=args,
-            )
+        if direction in (dimensions["series"])[series.split("/")[0]]["directions"]:
+            for v in variants:
+                pins = v[0]
+                rows = v[1]
+                if len(v) > 2:
+                    args = v[2]
+                else:
+                    args = {}
+                print(f"building {series} {v} {direction}")
+                build_din41612_connector(
+                    series=series,
+                    direction=direction,
+                    pins=pins,
+                    rows=rows,
+                    extra_args=args,
+                )
