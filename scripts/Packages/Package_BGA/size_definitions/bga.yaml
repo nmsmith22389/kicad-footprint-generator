@@ -445,7 +445,7 @@ Texas_YFP0020_DSBGA-20_1.588x1.988mm_Layout4x5_P0.4mm:
   # with 0.05mm radial solder mask expansion, which is
   # the "preferred" variant according to the datasheet.
   # NOTE: Ball diameter is 0.21..0.25mm
-  pad_diameter: 0.23 # 0.23mm is DS recommended pad size. 
+  pad_diameter: 0.23 # 0.23mm is DS recommended pad size.
   mask_margin: 0.05
   layout_x: 4
   layout_y: 5

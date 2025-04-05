@@ -861,7 +861,7 @@ QFN-68-1EP_7x7mm_P0.35mm_EP5.49x5.49mm:
     minimum: 0.10
     nominal: 0.15
     maximum: 0.20
-  
+
   lead_len:
     minimum: 0.35
     nominal: 0.40
@@ -903,7 +903,7 @@ QFN-68-1EP_7x7mm_P0.35mm_EP5.49x5.49mm:
   #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
   #include_suffix_in_3dpath: 'False'
 
-  
+
 QFN-68-1EP_8x8mm_P0.4mm_EP5.2x5.2mm:
   device_type: 'QFN'
   #manufacturer: 'man'

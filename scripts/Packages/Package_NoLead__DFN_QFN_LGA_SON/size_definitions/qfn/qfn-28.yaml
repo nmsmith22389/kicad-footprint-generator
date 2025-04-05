@@ -217,7 +217,7 @@ QFN-28-1EP_4x4mm_P0.4mm_EP2.4x2.4mm:
   #include_suffix_in_3dpath: 'False'
 
 WQFN-28-1EP_4x4mm_P0.4mm_EP2.7x2.7mm:
-  device_type: 'WQFN'    
+  device_type: 'WQFN'
   size_source: 'Based on JEDEC MO-220-K.01 variation WGGE and exposed pad from Maxim / Analog Devices, https://www.jedec.org/system/files/docs/MO-220K01.pdf, https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/tqfn/21-0139.pdf, https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/tqfn/21-0139.pdf'
   compatible_mpns:
     - 'T2844-1 T2844-1C T2844Y-1C' # Maxim

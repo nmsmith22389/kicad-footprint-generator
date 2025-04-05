@@ -395,7 +395,7 @@ ST_HLGA-10_2x2mm_P0.5mm_LayoutBorder3x2y:
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
   source: 'https://www.st.com/resource/en/datasheet/lps22hh.pdf'
-  
+
 LGA-12_2x2mm_P0.5mm:
   c: 0.2
   L: 0.25
@@ -4764,7 +4764,7 @@ QFN-68-1EP_7x7mm_P0.35mm_EP5.49x5.49mm:
   fp_dx: null
   fp_dy: null
   fp_z: 0.01
-  ef: 0.0 
+  ef: 0.0
   cce: 0.35
   D: 7.0
   E: 7.0
@@ -4772,23 +4772,23 @@ QFN-68-1EP_7x7mm_P0.35mm_EP5.49x5.49mm:
   A2: 0.88
   b: 0.15
   e: 0.35
-  m: 0.0 
-  ps: rounded 
+  m: 0.0
+  ps: rounded
   npx: 17
   npy: 17
   epad: [5.49, 5.49]
-  epad_offsetX: null 
-  epad_offsetY: null 
-  epad_n: null  
+  epad_offsetX: null
+  epad_offsetY: null
+  epad_n: null
   epad_pitch: null
-  excluded_pins: null 
+  excluded_pins: null
   model_name: 'ArtInChip_QFN-68-1EP_7x7mm_P0.35mm_EP5.49x5.49mm'
   rotation: -90
   destination_dir: Package_DFN_QFN.3dshapes
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
-  pin_shapes: null 
+  pin_shapes: null
   source: 'https://artinchip.com/upload/files/product/20240112/17050529177725663.pdf/#page=42'
 
 QFN-68-1EP_8x8mm_P0.4mm_EP5.2x5.2mm:
@@ -9267,5 +9267,3 @@ HXQFN-16-1EP_3x3mm_P0.5mm_EP1.85x1.85mm:
   pin_color_key: metal grey pins
   mark_color_key: light brown label
   source: 'https://www.nxp.com/docs/en/data-sheet/NX3L4051.pdf (page 17)'
-
-

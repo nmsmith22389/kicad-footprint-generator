@@ -272,7 +272,7 @@ TO-262-3:
   metal_dimensions_xyz: [10, 10.4, 1.3]
   number_of_pins: 3
   pitch: 2.54
-  pad_dimensions_xy: [2, 2] 
+  pad_dimensions_xy: [2, 2]
   pad_hole_diameter: 1.1
   mounting_hole_position: [5, 5.3]  # [plastic_dimensions_x / 2, plastic_dimensions_y - 3.9]
   pin_min_length_before_90deg_bend: 3.25    # for horizontal mount

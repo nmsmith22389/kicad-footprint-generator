@@ -232,7 +232,7 @@ QFN-24-1EP_4x4mm_P0.5mm_EP2.15x2.15mm:
     nominal: 2.15
     maximum: 2.25
   EP_num_paste_pads: [2, 2]
-  
+
   thermal_vias:
     count: [3, 3]
     drill: 0.3

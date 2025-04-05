@@ -21,7 +21,7 @@ QFN-100-1EP_12x12mm_P0.4mm_EP7.4x7.4mm:
     minimum: 0.15
     nominal: 0.20
     maximum: 0.25
-  
+
   lead_len:
     minimum: 0.35
     nominal: 0.40

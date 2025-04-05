@@ -676,7 +676,7 @@ QFN-16-1EP_1.8x2.6mm_P0.4mm_EP0.7x1.5mm:
 
 Renesas_UQFN-16_2x2mm_P0.4mm:
 # This package is very small, so lead length matters. The closest package in
-# JEDEC MO-248-E appears to be variation UCCE (which is not listed in the 
+# JEDEC MO-248-E appears to be variation UCCE (which is not listed in the
 # tables / combinations).
 # in JEITA there is 12-001-UAAEA (but it has 12 leads). The smallest 16-leads
 # packages in both standards seems to be 3.00x3.00mm, so we are using

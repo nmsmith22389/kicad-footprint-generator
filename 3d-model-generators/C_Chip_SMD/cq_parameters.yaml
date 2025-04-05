@@ -117,7 +117,7 @@ C_1806_4516Metric:
   pins_color_key: 'metal grey pins'
   destination_dir : 'Capacitor_SMD.3dshapes'
   source: 'http://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GA342DR7GF102KW02-01.pdf'
-  
+
 C_1808_4520Metric:
   modelName: 'C_1808_4520Metric'
   model_class: 'c_chip_smd'

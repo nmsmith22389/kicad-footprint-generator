@@ -10,7 +10,7 @@ DHVQFN-14-1EP_2.5x3mm_P0.5mm:
     minimal: 2.9
     nominal: 3.0
     maximal: 3.1
-  overall_height: 
+  overall_height:
     minimum: 0.8
     nominal: 0.9
     maximum: 1.0
@@ -50,12 +50,12 @@ DHVQFN-16-1EP_2.5x3.5mm_P0.5mm:
   body_size_x:
     minimal: 2.4
     nominal: 2.5
-    maximal: 2.6  
+    maximal: 2.6
   body_size_y:
     minimal: 3.4
     nominal: 3.5
     maximal: 3.6
-  overall_height: 
+  overall_height:
     minimum: 0.8
     nominal: 0.9
     maximum: 1.0
@@ -100,7 +100,7 @@ DHVQFN-20-1EP_2.5x4.5mm_P0.5mm:
     minimal: 4.4
     nominal: 4.5
     maximal: 4.6
-  overall_height: 
+  overall_height:
     minimum: 0.8
     nominal: 0.9
     maximum: 1.0

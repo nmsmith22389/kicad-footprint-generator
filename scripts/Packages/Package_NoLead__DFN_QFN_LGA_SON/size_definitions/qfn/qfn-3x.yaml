@@ -931,7 +931,7 @@ QFN-32-1EP_5x5mm_P0.5mm_EP3.7x3.7mm:
     minimum: 3.65
     nominal: 3.70
     maximum: 3.75
-    
+
   # EP_paste_coverage: 0.65
   EP_num_paste_pads: [2, 2]
 

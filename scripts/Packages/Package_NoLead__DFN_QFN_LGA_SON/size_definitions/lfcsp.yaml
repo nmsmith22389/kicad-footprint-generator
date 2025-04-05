@@ -245,7 +245,7 @@ Analog_LFCSP-UQ-10_1.3x1.6mm_P0.4mm:
   pitch: 0.4
   num_pins_x: 3
   num_pins_y: 2
-  pad_numbers: 
+  pad_numbers:
     generator: 'increment'
     offset: 1 # non-standard numbering 2, 3, ..., 10, 1
 

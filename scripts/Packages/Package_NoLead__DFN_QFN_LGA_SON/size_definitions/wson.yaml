@@ -113,7 +113,7 @@ Texas_DSG0008A_WSON-8-1EP_2x2mm_P0.5mm_EP0.9x1.6mm_ThermalVias:
   lead_len:
     minimum: 0.20
     maximum: 0.40
-  EP_size_x: 
+  EP_size_x:
     nominal: 0.90
     tolerance: 0.10
   EP_size_y:
@@ -515,7 +515,7 @@ WSON-8-1EP_3x3mm_P0.5mm_EP1.2x2mm:
   pitch: 0.5
   num_pins_x: 0
   num_pins_y: 4
-  
+
 WSON-8-1EP_3x3mm_P0.5mm_EP1.45x2.4mm:
   device_type: 'WSON'
   library: Package_SON
@@ -556,7 +556,7 @@ WSON-8-1EP_3x3mm_P0.5mm_EP1.45x2.4mm:
   pitch: 0.5
   num_pins_x: 0
   num_pins_y: 4
-    
+
 WSON-10-1EP_2x3mm_P0.5mm_EP0.84x2.4mm:
   device_type: 'WSON'
   library: Package_SON

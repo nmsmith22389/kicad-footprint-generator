@@ -182,7 +182,7 @@ Xilinx_FFG1156:
   layout_x: 34
   layout_y: 34
   name_equal_to_key: True
-  
+
 # Spartan-7 FPGA Packages
 # Notes:
 Xilinx_CPGA196:
@@ -257,12 +257,12 @@ Xilinx_FGGA676:
   layout_x: 26
   layout_y: 26
   name_equal_to_key: True
-  
+
 # Virtex-7 FPGA Packages
-# Notes: 
+# Notes:
 #  - FFG1157 and FFG1158 have same footprint and same 3D package and are therefore in one footprint
 #  - FFG1926, FFG1927, FFG1928 and FFG1930 have same footprint and same 3D package and are therefore in one footprint
-#  - FLG1925, FLG1926, FLG1928 and FLG1930 have same footprint and same 3D package and are therefore in one footprint 
+#  - FLG1925, FLG1926, FLG1928 and FLG1930 have same footprint and same 3D package and are therefore in one footprint
 #  - RF1157 and RF1158 have same footprint and same 3D package and are therefore in one footprint
 Xilinx_FFG1157_FFG1158:
   description: "Virtex-7 BGA, NSMD pad definition Appendix A"
@@ -287,7 +287,7 @@ Xilinx_FFG1761:
   mask_margin: 0.05
   layout_x: 42
   layout_y: 42
-  row_skips: [[1,42], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [1,42]] 
+  row_skips: [[1,42], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [1,42]]
   name_equal_to_key: True
 Xilinx_FFV1761:
   description: "Virtex-7 BGA, NSMD pad definition Appendix A"
@@ -300,7 +300,7 @@ Xilinx_FFV1761:
   mask_margin: 0.05
   layout_x: 42
   layout_y: 42
-  row_skips: [[1,42], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [1,42]] 
+  row_skips: [[1,42], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [1,42]]
   name_equal_to_key: True
 Xilinx_FHG1761:
   description: "Virtex-7 BGA, NSMD pad definition Appendix A"
@@ -313,7 +313,7 @@ Xilinx_FHG1761:
   mask_margin: 0.05
   layout_x: 42
   layout_y: 42
-  row_skips: [[1,42], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [1,42]] 
+  row_skips: [[1,42], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [1,42]]
   name_equal_to_key: True
 Xilinx_FFG1926_FFG1927_FFG1928_FFG1930:
   description: "Virtex-7 BGA, NSMD pad definition Appendix A"
@@ -326,7 +326,7 @@ Xilinx_FFG1926_FFG1927_FFG1928_FFG1930:
   mask_margin: 0.05
   layout_x: 44
   layout_y: 44
-  row_skips: [[1,2,43,44], [1,44], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [1,44], [1,2,43,44]] 
+  row_skips: [[1,2,43,44], [1,44], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [1,44], [1,2,43,44]]
   name_equal_to_key: True
 Xilinx_FLG1925_FLG1926_FLG1928_FLG1930:
   description: "Virtex-7 BGA, NSMD pad definition Appendix A"
@@ -339,7 +339,7 @@ Xilinx_FLG1925_FLG1926_FLG1928_FLG1930:
   mask_margin: 0.05
   layout_x: 44
   layout_y: 44
-  row_skips: [[1,2,43,44], [1,44], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [1,44], [1,2,43,44]] 
+  row_skips: [[1,2,43,44], [1,44], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [1,44], [1,2,43,44]]
   name_equal_to_key: True
 Xilinx_RF1157_RF1158:
   description: "Virtex-7 BGA, NSMD pad definition Appendix A"
@@ -377,11 +377,11 @@ Xilinx_RF1930:
   mask_margin: 0.05
   layout_x: 44
   layout_y: 44
-  row_skips: [[1,2,43,44], [1,44], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [1,44], [1,2,43,44]] 
+  row_skips: [[1,2,43,44], [1,44], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [1,44], [1,2,43,44]]
   name_equal_to_key: True
 
 # Kintex-7 FPGA Packages
-# Notes: 
+# Notes:
 #  - FBG484 has the same name for Artix and Kintex devices, although the 3d model is slightly different
 #  - FBG676 has the same name for Artix and Kintex devices, although the 3d model is slightly different
 #  - FF900, FFG900, FFV900, FF901, FFG901 and FFV901 have same footprint and same 3D package and are therefore in one footprint
@@ -425,7 +425,7 @@ Xilinx_FFG900_FFG901:
   layout_x: 30
   layout_y: 30
   name_equal_to_key: True
-# For Xilinx_FFG1156 refer to Artix-7 
+# For Xilinx_FFG1156 refer to Artix-7
 Xilinx_RF676:
   description: "Kintex-7 BGA, NSMD pad definition Appendix A"
   size_source: "https://www.xilinx.com/support/documentation/user_guides/ug475_7Series_Pkg_Pinout.pdf#page=297"
@@ -452,7 +452,7 @@ Xilinx_RF900:
   name_equal_to_key: True
 
 # Zynq-7000 FPGA Packages
-# Notes: 
+# Notes:
 #  - Xilinx_FBG484 has the same name for Artix and Zynq devices
 #  - Xilinx_FBG676 has the same name for Artix and Zynq devices
 #  - Xilinx_FFG676 has the same name for Kintex and Zynq devices

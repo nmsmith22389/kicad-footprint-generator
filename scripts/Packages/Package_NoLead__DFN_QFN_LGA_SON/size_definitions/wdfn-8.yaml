@@ -52,7 +52,7 @@ WDFN-8-1EP_8x6mm_P1.27mm_EP6x4.8mm_ThermalVias:
   lead_len: 0.45 .. 0.50 .. 0.55
 
   overall_height: 0.7 .. 0.75 .. 0.8
-  
+
   EP_size_x: 6
   EP_size_y: 4.8
   EP_num_paste_pads: [4, 3]
@@ -60,7 +60,7 @@ WDFN-8-1EP_8x6mm_P1.27mm_EP6x4.8mm_ThermalVias:
   pitch: 1.27
 
   num_pins_x: 0
-  num_pins_y: 4 
+  num_pins_y: 4
 
   # Thermal vias based on datasheet (see size_source above),
   # paste so it fits the thermal vias with avoidance
@@ -91,4 +91,3 @@ WFDFPN-8-1EP_3x2mm_P0.5mm_EP1.2x1.3mm:
   pitch: 0.5
   num_pins_x: 0
   num_pins_y: 4
-  
