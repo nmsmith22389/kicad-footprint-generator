@@ -1,3 +1,82 @@
+Texas_WQFN-30_RNP0030B:
+# Texas_RNP0030B_WQFN-30-1EP_4x6mm_P0.5mm_EP1.8x4.5mm
+  device_type: 'WQFN'
+  manufacturer: 'Texas'
+  part_number: 'RNP0030B'
+  size_source: 'https://www.ti.com/lit/ds/symlink/lm76003-q1.pdf#page=53'
+  ipc_class: 'qfn'
+  body_size_x:
+    minimum: 3.9
+    maximum: 4.1
+  body_size_y:
+    minimum: 5.9
+    maximum: 6.1
+  overall_height:
+    maximum: 0.8
+
+  lead_width:
+    minimum: 0.2
+    maximum: 0.3
+  lead_len:
+    minimum: 0.45
+    maximum: 0.65
+
+  EP_size_x:
+    nominal: 1.8
+    tolerance: 0.1
+  EP_size_y:
+    nominal: 4.5
+    tolerance: 0.1
+  EP_num_paste_pads: [2,4]
+
+  # Note: The generator does not support non-rect-grid vias as spec'd in the DS,
+  # and "paste avoid via" fails to compute as of 2024-08-25,
+  # so this is best-effort to get as little paste via overlap as possible
+  thermal_vias:
+    count: [3, 5]
+    drill: 0.2
+    paste_via_clearance: 0.1
+    EP_paste_coverage: 0.743 # Datasheet specifies 74.3% coverage
+    paste_avoid_via: False
+
+  pad_overrides:
+    12:
+      lead_len: 0.3 .. 0.5
+      size_increase: [null, -0.15] # 0.15mm narrower than horizontal pins
+      move: [null, 0.075] # Move inside (half of size increase)
+    13:
+      lead_len: 0.3 .. 0.5
+      size_increase: [null, -0.15] # 0.15mm narrower than horizontal pins
+      move: [null, 0.075] # Move inside (half of size increase)
+    14:
+      lead_len: 0.3 .. 0.5
+      size_increase: [null, -0.15] # 0.15mm narrower than horizontal pins
+      move: [null, 0.075] # Move inside (half of size increase)
+    15:
+      lead_len: 0.3 .. 0.5
+      size_increase: [null, -0.15] # 0.15mm narrower than horizontal pins
+      move: [null, 0.075] # Move inside (half of size increase)
+    27:
+      lead_len: 0.3 .. 0.5
+      size_increase: [null, -0.15] # 0.15mm narrower than horizontal pins
+      move: [null, -0.075] # Move inside (half of size increase)
+    28:
+      lead_len: 0.3 .. 0.5
+      size_increase: [null, -0.15] # 0.15mm narrower than horizontal pins
+      move: [null, -0.075] # Move inside (half of size increase)
+    29:
+      lead_len: 0.3 .. 0.5
+      size_increase: [null, -0.15] # 0.15mm narrower than horizontal pins
+      move: [null, -0.075] # Move inside (half of size increase)
+    30:
+      lead_len: 0.3 .. 0.5
+      size_increase: [null, -0.15] # 0.15mm narrower than horizontal pins
+      move: [null, -0.075] # Move inside (half of size increase)
+
+  pitch: 0.5
+  num_pins_x: 4
+  num_pins_y: 11
+
 QFN-32-1EP_4x4mm_P0.4mm_EP2.65x2.65mm:
   device_type: 'QFN'
   #manufacturer: 'man'
@@ -117,6 +196,49 @@ VQFN-32-1EP_4x4mm_P0.4mm_EP2.8x2.8mm:
   #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
   #include_suffix_in_3dpath: 'False'
 
+Texas_WQFN-32_RSN:
+# Texas_RSN_WQFN-32-1EP_4x4mm_P0.4mm_EP2.8x2.8mm
+  device_type: 'WQFN'
+  manufacturer: 'Texas'
+  part_number: 'RSN'
+  size_source: 'https://www.ti.com/lit/ds/symlink/bq25703a.pdf#page=90'
+  ipc_class: 'qfn'
+  body_size_x:
+    minimum: 3.85
+    maximum: 4.15
+  body_size_y:
+    minimum: 3.85
+    maximum: 4.15
+  overall_height:
+    minimum: 0.7
+    maximum: 0.8
+
+  lead_width:
+    minimum: 0.15
+    maximum: 0.25
+  lead_len:
+    minimum: 0.25
+    maximum: 0.45
+
+  EP_size_x:
+    nominal: 2.8
+    tolerance: 0.1
+  EP_size_y:
+    nominal: 2.8
+    tolerance: 0.1
+  EP_num_paste_pads: [2, 2]
+
+  pitch: 0.4
+  num_pins_x: 8
+  num_pins_y: 8
+
+  thermal_vias:
+    count: [3, 3]
+    drill: 0.3
+    paste_via_clearance: 0.05
+    EP_paste_coverage: 0.7
+    paste_avoid_via: False
+
 QFN-32-1EP_4x4mm_P0.4mm_EP2.9x2.9mm:
   device_type: 'QFN'
   #manufacturer: 'man'
@@ -173,6 +295,64 @@ QFN-32-1EP_4x4mm_P0.4mm_EP2.9x2.9mm:
   num_pins_x: 8
   num_pins_y: 8
   #chamfer_edge_pins: 0.25
+  #pin_count_grid:
+  #pad_length_addition: 0.5
+  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
+  #include_suffix_in_3dpath: 'False'
+
+Texas_QFN-32-1EP_5x5mm_P0.50mm_EP2.1x2.1mm:
+# Texas_RHB0032M_VQFN-32-1EP_5x5mm_P0.5mm_EP2.1x2.1mm
+  device_type: 'VQFN'
+  manufacturer: 'Texas'
+  part_number: 'RHB0032M'
+  size_source: 'https://www.ti.com/lit/ds/symlink/dp83td510e.pdf#page=91'
+  ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  # custom_name_format:
+  body_size_x:
+    nominal: 5
+  body_size_y:
+    nominal: 5
+  overall_height:
+    maximum: 1.0 # maximum
+
+  lead_width:
+    minimum: 0.20
+    nominal: 0.25
+    maximum: 0.30
+  lead_len:
+    minimum: 0.30
+    nominal: 0.40
+    maximum: 0.50
+
+  EP_size_x:
+    minimum: 2.00
+    nominal: 2.10
+    maximum: 2.20
+  EP_size_y:
+    minimum: 2.00
+    nominal: 2.10
+    maximum: 2.20
+  # EP_paste_coverage: 0.65
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [3, 3]
+    drill: 0.2
+    # min_annular_ring: 0.15
+    paste_via_clearance: 0.1
+    # EP_num_paste_pads: [2, 2]
+    paste_between_vias: 1
+    #paste_rings_outside: 1
+    EP_paste_coverage: 0.80 # From datasheet
+    #grid: [1, 1]
+    # bottom_pad_size:
+    paste_avoid_via: False
+
+  pitch: 0.50
+  num_pins_x: 8
+  num_pins_y: 8
+  chamfer_edge_pins: 0.09
   #pin_count_grid:
   #pad_length_addition: 0.5
   #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
@@ -612,7 +792,52 @@ TQFN-32-1EP_5x5mm_P0.50mm_EP3.40x3.40mm:
   #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
   #include_suffix_in_3dpath: 'False'
 
+Texas_VQFN-32_RHB0032E:
+# Texas_RHB0032E_VQFN-32-1EP_5x5mm_P0.5mm_EP3.45x3.45mm
+  device_type: 'VQFN'
+  manufacturer: 'Texas'
+  part_number: 'RHB0032E'
+  size_source: 'http://www.ti.com/lit/ds/symlink/msp430f1122.pdf#page=54'
+  ipc_class: 'qfn'
+  body_size_x:
+    minimum: 4.9
+    maximum: 5.1
+  body_size_y:
+    minimum: 4.9
+    maximum: 5.1
+  overall_height:
+    maximum: 1.0
+
+  lead_width:
+    minimum: 0.2
+    maximum: 0.3
+  lead_len:
+    minimum: 0.3
+    maximum: 0.5
+
+  EP_size_x:
+    nominal: 3.45
+    tolerance: 0.1
+  EP_size_y:
+    nominal: 3.45
+    tolerance: 0.1
+  EP_num_paste_pads: [3, 3]
+
+  thermal_vias:
+    count: [3, 3]
+    drill: 0.2
+    paste_via_clearance: 0.1
+    paste_between_vias: 1
+    paste_rings_outside: 1
+    EP_paste_coverage: 0.65
+    grid: [1, 1]
+
+  pitch: 0.5
+  num_pins_x: 8
+  num_pins_y: 8
+
 QFN-32-1EP_5x5mm_P0.5mm_EP3.45x3.45mm:
+# This is actually WQFN
   device_type: 'QFN'
   #manufacturer: 'man'
   #part_number: 'mpn'
@@ -1390,6 +1615,51 @@ QFN-36-1EP_6x6mm_P0.5mm_EP4.1x4.1mm:
   #pad_length_addition: 0.5
   #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
   #include_suffix_in_3dpath: 'False'
+
+Texas_VQFN-36_RHH0036C:
+# Texas_RHH0036C_VQFN-36-1EP_6x6mm_P0.5mm_EP4.4x4.4mm
+  device_type: 'VQFN'
+  manufacturer: 'Texas'
+  part_number: 'RHH0036C'
+  size_source: 'http://www.ti.com/lit/ds/slvsba5d/slvsba5d.pdf#page=37'
+  ipc_class: 'qfn'
+  body_size_x:
+    minimum: 5.9
+    maximum: 6.1
+  body_size_y:
+    minimum: 5.9
+    maximum: 6.1
+  overall_height:
+    minimum: 0.8
+    maximum: 1.0
+
+  lead_width:
+    minimum: 0.18
+    maximum: 0.3
+  lead_len:
+    minimum: 0.45
+    maximum: 0.65
+
+  EP_size_x:
+    nominal: 4.4
+    tolerance: 0.1
+  EP_size_y:
+    nominal: 4.4
+    tolerance: 0.1
+  EP_num_paste_pads: [3, 3]
+
+  thermal_vias:
+    count: [4, 4]
+    drill: 0.2
+    paste_via_clearance: 0.1
+    paste_between_vias: 1
+    paste_rings_outside: 1
+    EP_paste_coverage: 0.65
+    grid: [1.05, 1.05]
+
+  pitch: 0.5
+  num_pins_x: 9
+  num_pins_y: 9
 
 QFN-38-1EP_4x6mm_P0.4mm_EP2.65x4.65mm:
   device_type: 'QFN'
