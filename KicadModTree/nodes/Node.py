@@ -22,7 +22,7 @@ from hashlib import sha1
 from enum import Enum
 from typing import Iterable
 
-from kilibs.geom import Vector2D, Vector3D
+from kilibs.geom import BoundingBox, Vector2D, Vector3D
 
 
 class MultipleParentsError(RuntimeError):
@@ -445,24 +445,26 @@ class Node(object):
         return self._parent.getRealPosition(coordinate, rotation)
 
     def calculateBoundingBox(self, outline=None):
-        min_x, min_y = math.inf, math.inf
-        max_x, max_y = -math.inf, -math.inf
+        """
+        Get the bounding box of the node. This is in its own context,
+        so it it is independent of the parent nodes's transformation,
+        but does incldue any transformation it applies itself.
+
+         - Translation(offset)  has box = (a + offset -> b + offset)
+           - Line(a -> b)       has box = (a -> b)
+        """
+
+        bbox = BoundingBox()
 
         if outline:
-            min_x = outline['min']['x']
-            min_y = outline['min']['y']
-            max_x = outline['max']['x']
-            max_y = outline['max']['y']
+            bbox.include_point(Vector2D(outline['min']['x'], outline['min']['y']))
+            bbox.include_point(Vector2D(outline['max']['x'], outline['max']['y']))
 
         for child in self.getAllChilds():
-            child_outline = child.calculateBoundingBox()
+            child_bbox = child.calculateBoundingBox()
+            bbox.include_bbox(child_bbox)
 
-            min_x = min([min_x, child_outline['min']['x']])
-            min_y = min([min_y, child_outline['min']['y']])
-            max_x = max([max_x, child_outline['max']['x']])
-            max_y = max([max_y, child_outline['max']['y']])
-
-        return {'min': Vector2D(min_x, min_y), 'max': Vector2D(max_x, max_y)}
+        return bbox
 
     def _getRenderTreeText(self):
         '''

@@ -20,7 +20,7 @@ from KicadModTree import *
 from KicadModTree.nodes.Node import Node
 from KicadModTree.nodes.base.Line import Line
 from KicadModTree.nodes.base.Text import Text
-from kilibs.geom import PolygonPoints, Vector2D
+from kilibs.geom import BoundingBox, Vector2D
 
 from scripts.tools.drawing_tools import *
 from scripts.tools.drawing_tools_fab import draw_chamfer_rect_fab
@@ -568,15 +568,16 @@ class StandardBox(Node):
         max_x = min_x + self.size.x
         max_y = min_y + self.size.y
 
+        bbox = BoundingBox(
+            min_pt=Vector2D(min_x, min_y),
+            max_pt=Vector2D(max_x, max_y),
+        )
+
         for child in self.virtual_childs():
-            child_outline = child.calculateBoundingBox()
+            child_bbox = child.calculateBoundingBox()
+            bbox.include_bbox(child_bbox)
 
-            min_x = min([min_x, child_outline['min']['x']])
-            min_y = min([min_y, child_outline['min']['y']])
-            max_x = max([max_x, child_outline['max']['x']])
-            max_y = max([max_y, child_outline['max']['y']])
-
-        return {'min': Vector2D(min_x, min_y), 'max': Vector2D(max_x, max_y)}
+        return bbox
 
     def _createPinsNode(self):
         #

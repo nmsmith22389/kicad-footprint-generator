@@ -13,7 +13,7 @@
 #
 # (C) 2016 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 
-from kilibs.geom import Vector2D
+from kilibs.geom import BoundingBox, Vector2D
 from KicadModTree.nodes.Node import Node
 from kilibs.geom.geometric_util import geometricLine
 
@@ -95,12 +95,7 @@ class Line(Node, geometricLine):
         return render_text
 
     def calculateBoundingBox(self):
-        render_start_pos = self.getRealPosition(self.start_pos)
-        render_end_pos = self.getRealPosition(self.end_pos)
-
-        min_x = min([render_start_pos.x, render_end_pos.x])
-        min_y = min([render_start_pos.y, render_end_pos.y])
-        max_x = max([render_start_pos.x, render_end_pos.x])
-        max_y = max([render_start_pos.y, render_end_pos.y])
-
-        return {'min': Vector2D(min_x, min_y), 'max': Vector2D(max_x, max_y)}
+        return BoundingBox(
+            min_pt=self.start_pos,
+            max_pt=self.end_pos,
+        )

@@ -13,7 +13,7 @@
 #
 # (C) 2016 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 
-from kilibs.geom import Vector2D
+from kilibs.geom import BoundingBox, Vector2D
 from KicadModTree.nodes.Node import Node
 
 
@@ -99,15 +99,18 @@ class _TextBase(Node):
         return self
 
     def calculateBoundingBox(self):
-        width = len(self.text)*self.size['x']
-        height = self.size['y']
+        width = len(self.text) * self.size["x"]
+        height = self.size["y"]
 
-        min_x = self.at['x']-width/2.
-        min_y = self.at['y']-height/2.
-        max_x = self.at['x']+width/2.
-        max_y = self.at['y']+height/2.
+        min_x = self.at["x"] - width / 2
+        min_y = self.at["y"] - height / 2
+        max_x = self.at["x"] + width / 2.0
+        max_y = self.at["y"] + height / 2.0
 
-        return {'min': Vector2D(min_x, min_y), 'max': Vector2D(max_x, max_y)}
+        return BoundingBox(
+            min_pt=Vector2D(min_x, min_y),
+            max_pt=Vector2D(max_x, max_y),
+        )
 
     def _getRenderTreeText(self):
         render_text = Node._getRenderTreeText(self)

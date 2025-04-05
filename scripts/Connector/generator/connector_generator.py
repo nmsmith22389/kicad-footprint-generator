@@ -535,13 +535,13 @@ def generate_one_footprint(
     lib.save(kicad_mod)
 
 
-def calculate_courtyard(bbox, offsets, global_config: GC.GlobalConfig):
+def calculate_courtyard(bbox: BoundingBox, offsets, global_config: GC.GlobalConfig):
 
     offset = global_config.get_courtyard_offset(GC.GlobalConfig.CourtyardType.CONNECTOR)
     grid = global_config.courtyard_grid
 
     # TODO: calculate courtyard from all nodes on specific layers
-    courtyard = {"start": bbox["min"], "end": bbox["max"]}
+    courtyard = {"start": bbox.min, "end": bbox.max}
     ## get CourtYard offset specification
     if (isinstance(offsets, (int, float))):
         cy_off = { k: Vector2D(offsets, offsets) for k in ["start", "end"] }

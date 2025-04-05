@@ -13,7 +13,7 @@
 #
 # (C) 2016 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 
-from kilibs.geom import Vector2D
+from kilibs.geom import BoundingBox, Vector2D
 from KicadModTree.nodes.Node import Node
 
 
@@ -62,3 +62,18 @@ class Translation(Node):
                                                   y=self.offset_y)
 
         return render_text
+
+    def calculateBoundingBox(self):
+
+        bbox = BoundingBox()
+
+        for child in self.getAllChilds():
+            child_bbox = child.calculateBoundingBox()
+            bbox.include_bbox(child_bbox)
+
+        offset = Vector2D(self.offset_x, self.offset_y)
+
+        # translate the bounding box
+        return BoundingBox(
+            bbox.min + offset, bbox.max + offset
+        )

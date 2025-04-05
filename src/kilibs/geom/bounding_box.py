@@ -48,6 +48,16 @@ class BoundingBox:
             self.include_point(bbox.min)
             self.include_point(bbox.max)
 
+    def inflate(self, amount: float):
+        """
+        Expand the bounding box by the given amount in all directions
+        """
+        self._expect_nonempty()
+        self.min.x -= amount
+        self.min.y -= amount
+        self.max.x += amount
+        self.max.y += amount
+
     def _expect_nonempty(self):
         if self.min is None or self.max is None:
             raise RuntimeError("Cannot access empty bounding box")

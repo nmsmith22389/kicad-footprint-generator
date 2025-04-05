@@ -13,7 +13,7 @@
 #
 # (C) 2016 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 
-from kilibs.geom import geometricCircle, Vector2D
+from kilibs.geom import BoundingBox, geometricCircle, Vector2D
 from KicadModTree.nodes.Node import Node
 
 from .Arc import Arc
@@ -103,12 +103,15 @@ class Circle(Node, geometricCircle):
         return self.radius
 
     def calculateBoundingBox(self):
-        min_x = self.center_pos.x-self.radius
-        min_y = self.center_pos.y-self.radius
-        max_x = self.center_pos.x+self.radius
-        max_y = self.center_pos.y+self.radius
+        min_x = self.center_pos.x - self.radius
+        min_y = self.center_pos.y - self.radius
+        max_x = self.center_pos.x + self.radius
+        max_y = self.center_pos.y + self.radius
 
-        return {'min': Vector2D(min_x, min_y), 'max': Vector2D(max_x, max_y)}
+        return BoundingBox(
+            min_pt=Vector2D(min_x, min_y),
+            max_pt=Vector2D(max_x, max_y),
+        )
 
     def _getRenderTreeText(self):
         render_strings = ['fp_circle']

@@ -20,7 +20,7 @@ from typing import Union
 
 from KicadModTree.util.corner_selection import CornerSelection
 from KicadModTree.util.corner_handling import RoundRadiusHandler, ChamferSizeHandler
-from kilibs.geom import Vector2D
+from kilibs.geom import BoundingBox, Vector2D
 from kilibs.util.param_util import toVectorUseCopyIfNumber
 from KicadModTree.nodes.Node import Node
 from KicadModTree.util.kicad_util import lispString
@@ -329,7 +329,10 @@ class Pad(Node):
     # calculate the outline of a pad
     def calculateBoundingBox(self):
         if (self.shape in [Pad.SHAPE_CIRCLE]):
-            return {"min": self.at - self.size / 2, "max": self.at + self.size / 2}
+            return BoundingBox(
+                min_pt=self.at - self.size / 2,
+                max_pt=self.at + self.size / 2,
+            )
         elif (self.shape in [Pad.SHAPE_RECT, Pad.SHAPE_ROUNDRECT, Pad.SHAPE_OVAL]):
             from ..specialized import RectLine
             rect = RectLine(start=- self.size / 2,

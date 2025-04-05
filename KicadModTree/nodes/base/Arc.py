@@ -13,7 +13,7 @@
 #
 # (C) 2016 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 
-from kilibs.geom import Vector2D, geometricArc
+from kilibs.geom import BoundingBox, Vector2D, geometricArc
 from KicadModTree.nodes.Node import Node
 
 
@@ -104,7 +104,10 @@ class Arc(Node, geometricArc):
             print("TODO: add angle side: {1}".format(float_angle))
         '''
 
-        return {'min': Vector2D((min_x, min_y)), 'max': Vector2D((max_x, max_y))}
+        return BoundingBox(
+            min_pt=Vector2D(min_x, min_y),
+            max_pt=Vector2D(max_x, max_y),
+        )
 
     def _getRenderTreeText(self):
         render_strings = ['fp_arc']
