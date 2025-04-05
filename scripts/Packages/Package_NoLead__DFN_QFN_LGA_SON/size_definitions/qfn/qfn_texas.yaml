@@ -1384,3 +1384,43 @@ Texas_QFN-32-1EP_5x5mm_P0.50mm_EP2.1x2.1mm:
   #pad_length_addition: 0.5
   #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
   #include_suffix_in_3dpath: 'False'
+
+Texas_RNQ0040A_WQFN-40-1EP_6x4mm_P0.4mm_EP4.7x2.7mm:
+  device_type: 'WQFN'
+  manufacturer: 'Texas'
+  part_number: 'RNQ0040A'
+  size_source: 'https://www.ti.com/lit/ds/symlink/tusb1046-dci.pdf#page=45'
+  ipc_class: 'qfn'
+  body_size_x:
+    minimum: 5.9
+    maximum: 6.1
+  body_size_y:
+    minimum: 3.9
+    maximum: 4.1
+  overall_height:
+    maximum: 0.8
+
+  lead_width:
+    minimum: 0.15
+    maximum: 0.25
+  lead_len:
+    minimum: 0.3
+    maximum: 0.5
+
+  EP_size_x:
+    nominal: 4.7
+    tolerance: 0.1
+  EP_size_y:
+    nominal: 2.7
+    tolerance: 0.1
+  EP_num_paste_pads: [3, 2]
+  EP_paste_coverage: 0.73
+
+  pitch: 0.4
+  num_pins_x: 12
+  num_pins_y: 8
+
+  thermal_vias:
+    count: [4, 3]
+    drill: 0.2
+    
