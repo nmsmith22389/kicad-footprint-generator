@@ -182,7 +182,7 @@ if __name__ == '__main__':
 
     # radial resistors, simple
     rm2=0; w2=0
-    type = "simple"; seriesname = "Radial_Power"; add_description = "http://www.vishay.com/docs/30218/cpcx.pdf"; name_additions=[]
+    type = "simple"; seriesname = "Radial_Power"; add_description = "https://www.vishay.com/docs/30218/cpcp-cpcf.pdf"; name_additions=[]
     w = 11.0; w2=w-2.0; h = 7.0; ddrill = 1.2; rm=5.0; rm2=0; R_POW=2
     makeResistorRadial(seriesname=seriesname, rm=rm, w=w, h=h, ddrill=ddrill, R_POW=R_POW, rm2=rm2, vlines=True, w2=w2, type=type, x_3d=[0, 0, 0], s_3d=[1,1,1], has3d=1, specialfpname="", name_additions=name_additions, specialtags=[], add_description=add_description,height3d=20.5, lib_name=lib_name)
     w = 12.0; w2=w-2.0; h = 8.0; ddrill = 1.2; rm=5.0; rm2=0; R_POW=3
