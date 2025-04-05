@@ -1,47 +1,4 @@
 
-Texas_VQFN-28_RVE0028A:
-  device_type: 'VQFN'
-  manufacturer: 'Texas'
-  part_number: 'RVE0028A'
-  size_source: 'http://www.ti.com/lit/ds/symlink/tps51363.pdf#page=29'
-  ipc_class: 'qfn'
-  body_size_x:
-    minimum: 3.4
-    maximum: 3.6
-  body_size_y:
-    minimum: 4.4
-    maximum: 4.6
-  overall_height:
-    minimum: 0.8
-    maximum: 1.0
-
-  lead_width:
-    minimum: 0.15
-    maximum: 0.25
-  lead_len:
-    minimum: 0.3
-    maximum: 0.5
-
-  EP_size_x:
-    nominal: 2.1
-    tolerance: 0.1
-  EP_size_y:
-    nominal: 3.1
-    tolerance: 0.1
-  EP_num_paste_pads: [2, 2]
-
-  pitch: 0.4
-  num_pins_x: 5
-  num_pins_y: 9
-
-  thermal_vias:
-    count: [3, 3]
-    drill: 0.2
-    paste_via_clearance: 0.05
-    EP_paste_coverage: 0.7
-    paste_avoid_via: False
-
-
 Texas_VQFN-32_RHB0032E:
   device_type: 'VQFN'
   manufacturer: 'Texas'
