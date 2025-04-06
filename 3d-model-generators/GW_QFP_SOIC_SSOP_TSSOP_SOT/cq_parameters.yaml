@@ -610,7 +610,7 @@ LQFP-36_7x7mm_Pitch0.65mm:
   destination_dir: 'Package_QFP.3dshapes'
   source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
 
-LQFP-44_10x10mm_Pitch0.8mm:
+LQFP-44_10x10mm_P0.8mm:
   the: 12.0
   tb_s: 0.15
   c: 0.1
@@ -1379,7 +1379,7 @@ TQFP-32_7x7mm_Pitch0.8mm:
   destination_dir: 'Package_QFP.3dshapes'
   source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
 
-TQFP-44_10x10mm_Pitch0.8mm:
+TQFP-44_10x10mm_P0.8mm:
   the: 12.0
   tb_s: 0.15
   c: 0.1
@@ -2372,8 +2372,8 @@ PQFP-240_32.1x32.1mm_P0.5mm:
   destination_dir: 'Package_QFP.3dshapes'
   source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
 
-QFP-44_10x10mm_P0.8mm:
-  the: 12.0
+PQFP-44_10x10mm_P0.8mm:
+  the: 10.5 # (5+16)/2 = 10.5, from JEDEC
   tb_s: 0.15
   c: 0.17 # (0.11 + 0.23)/2
   R1: 0.1
@@ -2388,21 +2388,53 @@ QFP-44_10x10mm_P0.8mm:
   D1: 10.00
   E1: 10.00
   E: 13.20
-  A1: 0.25
-  A2: 2.20
+  A1: 0.125 # 0.00 .. 0.25, getting nominal value
+  A2: 2.00 # nominal
   b: 0.37 # (0.29 + 0.45) / 2
   e: 0.80
   npx: 11
   npy: 11
   epad: null
   excluded_pins: null
-  model_name: QFP-44_10x10mm_P0.8mm
+  model_name: PQFP-44_10x10mm_P0.8mm
   rotation: -90
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
   destination_dir: 'Package_QFP.3dshapes'
-  source: 'https://www.jedec.org/document_search?search_api_views_fulltext=MS-022, https://ww1.microchip.com/downloads/aemDocuments/documents/package-outline-drawings/c04-21291a.pdf'
+  source: 'JEDEC MS-022 variation AB, https://www.jedec.org/document_search?search_api_views_fulltext=MS-022, https://ww1.microchip.com/downloads/aemDocuments/documents/package-outline-drawings/c04-21291a.pdf'
+
+Microchip_PQFP-44_10x10mm_P0.8mm:
+  the: 10.5 # θ2 or θ3, (5+16)/2 = 10.5, from JEDEC
+  tb_s: 0.15
+  c: 0.17 # (0.11 + 0.23)/2
+  R1: 0.1
+  R2: 0.1
+  L: 0.88
+  fp_s: 1
+  fp_r: 0.4
+  fp_d: 0.5
+  fp_z: 0.1
+  ef: 0.0
+  cc1: 0.25
+  D1: 10.00
+  E1: 10.00
+  E: 13.90
+  A1: 0.125 # 0.00 .. 0.25, getting nominal value
+  A2: 2.00 # nominal
+  b: 0.375 # (0.30 + 0.45) / 2
+  e: 0.80
+  npx: 11
+  npy: 11
+  epad: null
+  excluded_pins: null
+  model_name: Microchip_PQFP-44_10x10mm_P0.8mm
+  rotation: -90
+  body_color_key: 'black body'
+  pin_color_key: 'metal grey pins'
+  mark_color_key: 'light brown label'
+  destination_dir: 'Package_QFP.3dshapes'
+  source: 'JEDEC MO-112 variation AA-2, Microchip and Analog Devices, https://www.jedec.org/document_search?search_api_views_fulltext=MO-112, https://ww1.microchip.com/downloads/aemDocuments/documents/OTH/ProductDocuments/DataSheets/20005418B.pdf#page=10, https://www.analog.com/media/en/technical-documentation/data-sheets/ad7722.pdf#page=23'
 
 TQFP-100_14x14mm_P0.5mm_EP5x5mm:
   the: 12.0
