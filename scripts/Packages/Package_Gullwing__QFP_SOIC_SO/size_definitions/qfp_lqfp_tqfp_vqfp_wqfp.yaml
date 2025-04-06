@@ -1301,8 +1301,8 @@ TQFP-44_10x10mm_P0.8mm:
   lead_width: 0.30 .. 0.37 .. 0.45
   lead_len: 0.45 .. 0.60 .. 0.75
   pitch: 0.80
-  num_pins_x: 8
-  num_pins_y: 8
+  num_pins_x: 11
+  num_pins_y: 11
 
 Texas_PHP0048E_HTQFP-48_7x7mm_P0.5mm:
 # Generates Texas_PHP0048E_HTQFP-48-1EP_7x7mm_P0.5mm_EP6.5x6.5mm_Mask3.62x3.62mm
