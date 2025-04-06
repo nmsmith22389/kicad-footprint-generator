@@ -1,49 +1,4 @@
 
-Texas_VQFN-64_RGC0064B:
-  device_type: 'VQFN'
-  manufacturer: 'Texas'
-  part_number: 'RGC0064B'
-  size_source: 'http://www.ti.com/lit/ds/symlink/msp430f5217.pdf#page=122'
-  ipc_class: 'qfn'
-  body_size_x:
-    minimum: 8.9
-    maximum: 9.1
-  body_size_y:
-    minimum: 8.9
-    maximum: 9.1
-  overall_height:
-    minimum: 0.8
-    maximum: 1.0
-
-  lead_width:
-    minimum: 0.18
-    maximum: 0.3
-  lead_len:
-    minimum: 0.3
-    maximum: 0.5
-
-  EP_size_x:
-    nominal: 4.25
-    tolerance: 0.1
-  EP_size_y:
-    nominal: 4.25
-    tolerance: 0.1
-  EP_num_paste_pads: [2, 2]
-
-  thermal_vias:
-    count: [5, 5]
-    drill: 0.2
-    paste_via_clearance: 0.1
-    paste_between_vias: 1
-    paste_rings_outside: 1
-    EP_paste_coverage: 0.65
-    grid: [0.8, 0.8]
-
-  pitch: 0.5
-  num_pins_x: 16
-  num_pins_y: 16
-
-
 Texas_WQFN-10_RUN0010A:
   device_type: 'WQFN'
   manufacturer: 'Texas'
