@@ -1450,6 +1450,24 @@ TQFP-52-1EP_10x10mm_P0.65mm_EP6.5x6.5mm:
     drill: 0.2
     paste_via_clearance: 0.1
 
+TQFP-64_7x7mm_P0.4mm:
+  device_type: 'TQFP'
+  size_source: 'JEDEC MS-026 variation ABD, https://www.jedec.org/document_search?search_api_views_fulltext=MS-026, https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/tqfpsu/su_64_1.pdf'
+  compatible_mpns:
+    - 'SU-64-1' # Analog Devices
+    - 'CASE-932BH' # Onsemi, https://www.onsemi.com/pub/Collateral/932BH.PDF
+  body_size_x: 7.00
+  body_size_y: 7.00
+  overall_size_x: 9.00
+  overall_size_y: 9.00
+  overall_height:
+    maximum: 1.20
+  lead_width: 0.13 .. 0.18 .. 0.23
+  lead_len: 0.45 .. 0.60 .. 0.75
+  pitch: 0.40
+  num_pins_x: 16
+  num_pins_y: 16
+
 TQFP-64_10x10mm_P0.5mm:
 # Manufacturer calls it 'TQ64' and says it's based on MS-026 VAR BCD, but with height A = 1.60 mm max it's actually LQFP
 # 3D Model has height = 1.20 mm, some symbols using it like ADS1298xPAG asks for TQFP (height A = 1.20 mm max),
@@ -1499,6 +1517,22 @@ TQFP-64-1EP_10x10mm_P0.5mm_EP5.305x5.305mm:
     paste_via_clearance: 0.1
   compatible_mpns:
     - ESS-eTQFP-64
+
+TQFP-64_14x14mm_P0.8mm:
+  device_type: 'TQFP'
+  size_source: 'JEDEC MS-026 variation AEB, https://www.jedec.org/document_search?search_api_views_fulltext=MS-026, https://ww1.microchip.com/downloads/en/PackagingSpec/00000049BZ.pdf#page=672'
+  # one more source: https://ww1.microchip.com/downloads/en/DeviceDoc/atmel-2490-8-bit-avr-microcontroller-atmega64-l_datasheet.pdf#page=399
+  body_size_x: 14.00
+  body_size_y: 14.00
+  overall_size_x: 16.00
+  overall_size_y: 16.00
+  overall_height:
+    maximum: 1.20
+  lead_width: 0.30 .. 0.37 .. 0.45
+  lead_len: 0.45 .. 0.60 .. 0.75
+  pitch: 0.80
+  num_pins_x: 16
+  num_pins_y: 16
 
 VQFP-80_14x14mm_P0.65mm:
 # Microsemi calls it VQ80, but with height A = 1.20 mm max it is actually a TQFP from JEDEC MS-026 variation AEC,
