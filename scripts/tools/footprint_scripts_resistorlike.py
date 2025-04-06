@@ -206,13 +206,7 @@ def makeResistorAxialHorizontal(seriesname, rm, rmdisp, w, d, ddrill, R_POW, typ
         else:
             kicad_mod.append(Rect(start=[l_slk, t_slk], end=[l_slk + w_slk, t_slk + h_slk], layer='F.SilkS', width=lw_slk))
         if type == "bridge":
-            y=-d2/2; y0=y; y1=y
-            while y<d2/2:
-                y1=y
-                kicad_mod.append(Line(start=[padx/2+2*lw_slk+slk_offset, y], end=[rm-2*lw_slk-padx/2-slk_offset,y], layer='F.SilkS', width=lw_slk))
-                y=y+lw_slk
-            kicad_mod.append(Line(start=[padx / 2 + 2 * lw_slk + slk_offset, y0], end=[padx / 2 + 2 * lw_slk + slk_offset, y1], layer='F.SilkS', width=lw_slk))
-            kicad_mod.append(Line(start=[rm - 2 * lw_slk - padx / 2 - slk_offset, y0], end=[rm - 2 * lw_slk - padx / 2 - slk_offset, y1], layer='F.SilkS', width=lw_slk))
+            kicad_mod.append(Rect(start=[padx / 2 + 2 * lw_slk + slk_offset, -d2 / 2], end=[rm - 2 * lw_slk - padx / 2 - slk_offset, d2 / 2], layer="F.SilkS", width=lw_slk, fill=True))
     if padx/2+lw_slk+slk_offset<l_slk:
         kicad_mod.append(Line(start=[padx/2+lw_slk+slk_offset, 0], end=[l_slk, 0], layer='F.SilkS', width=lw_slk))
         kicad_mod.append(Line(start=[rm-padx/2-lw_slk-slk_offset, 0], end=[l_slk+w_slk, 0], layer='F.SilkS', width=lw_slk))
