@@ -14,7 +14,7 @@ FileHeader:
 # QFP, height > 1.70 mm
 ##############################################################################
 
-PQFP-44_10x10mm_P0.8mm:
+Microchip_PQFP-44_10x10mm_P0.8mm:
 # Similar to JEDEC MS-022, variation AB
   device_type: 'PQFP'
   manufacturer: 'Microchip'
@@ -292,24 +292,12 @@ LQFP-32_7x7mm_P0.8mm:
 # Similar to JEDEC MS-026 variation BBA, height A = 1.60 mm max
   device_type: 'LQFP'
   size_source: 'https://www.nxp.com/docs/en/package-information/SOT358-1.pdf'
-  body_size_x:
-    minimum: 6.9
-    maximum: 7.1
-  body_size_y:
-    minimum: 6.9
-    maximum: 7.1
-  overall_size_x:
-    minimum: 8.85
-    maximum: 9.15
-  overall_size_y:
-    minimum: 8.85
-    maximum: 9.15
-  lead_width:
-    minimum: 0.3
-    maximum: 0.4
-  lead_len:
-    minimum: 0.45
-    maximum: 0.75
+  body_size_x: 6.9 .. 7.1
+  body_size_y: 6.9 .. 7.1
+  overall_size_x: 8.85 .. 9.15
+  overall_size_y: 8.85 .. 9.15
+  lead_width: 0.3 .. 0.4
+  lead_len: 0.45 .. 0.75
   pitch: 0.8
   num_pins_x: 8
   num_pins_y: 8
@@ -347,20 +335,12 @@ LQFP-44_10x10mm_P0.8mm:
 # https://www.nxp.com/docs/en/package-information/98ASS23225W.pdf
   device_type: 'LQFP'
   size_source: 'https://www.nxp.com/files-static/shared/doc/package_info/98ASS23225W.pdf?&fsrch=1'
-  body_size_x:
-    nominal: 10
-  body_size_y:
-    nominal: 10
-  overall_size_x:
-    nominal: 12
-  overall_size_y:
-    nominal: 12
-  lead_width:
-    minimum: 0.3
-    maximum: 0.45
-  lead_len:
-    minimum: 0.45
-    maximum: 0.75
+  body_size_x: 10
+  body_size_y: 10
+  overall_size_x:  12
+  overall_size_y: 12
+  lead_width: 0.3 .. 0.45
+  lead_len: 0.45 .. 0.75
   pitch: 0.8
   num_pins_x: 11
   num_pins_y: 11
@@ -1291,6 +1271,36 @@ PQFP-32_5x5mm_P0.5mm:
   lead_width: 0.17 .. 0.23
   lead_len: 0.4 .. 0.7
   pitch: 0.5
+  num_pins_x: 8
+  num_pins_y: 8
+
+TQFP-32_7x7mm_P0.8mm:
+  device_type: 'TQFP'
+  size_source: 'JEDEC MS-026 variation ABA, https://www.jedec.org/document_search?search_api_views_fulltext=MS-026, https://ww1.microchip.com/downloads/en/PackagingSpec/00000049BZ.pdf#page=656'
+  body_size_x: 7.0
+  body_size_y: 7.0
+  overall_size_x: 9.0
+  overall_size_y: 9.0
+  overall_height:
+    maximum: 1.20
+  lead_width: 0.30 .. 0.37 .. 0.45
+  lead_len: 0.45 .. 0.60 .. 0.75
+  pitch: 0.80
+  num_pins_x: 8
+  num_pins_y: 8
+
+TQFP-44_10x10mm_P0.8mm:
+  device_type: 'TQFP'
+  size_source: 'JEDEC MS-026 variation ACB, https://www.jedec.org/document_search?search_api_views_fulltext=MS-026, https://ww1.microchip.com/downloads/en/PackagingSpec/00000049BZ.pdf#page=658'
+  body_size_x: 10.0
+  body_size_y: 10.0
+  overall_size_x: 12.0
+  overall_size_y: 12.0
+  overall_height:
+    maximum: 1.20
+  lead_width: 0.30 .. 0.37 .. 0.45
+  lead_len: 0.45 .. 0.60 .. 0.75
+  pitch: 0.80
   num_pins_x: 8
   num_pins_y: 8
 
