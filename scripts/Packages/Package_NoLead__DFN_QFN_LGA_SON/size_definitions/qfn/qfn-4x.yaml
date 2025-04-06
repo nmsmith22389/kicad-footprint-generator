@@ -282,6 +282,130 @@ UQFN-40-1EP_5x5mm_P0.4mm_EP3.8x3.8mm:
   #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
   #include_suffix_in_3dpath: 'False'
 
+Texas_RNQ0040A_WQFN-40-1EP_6x4mm_P0.4mm_EP4.7x2.7mm:
+  device_type: 'WQFN'
+  manufacturer: 'Texas'
+  part_number: 'RNQ0040A'
+  size_source: 'https://www.ti.com/lit/ds/symlink/tusb1046-dci.pdf#page=45'
+  ipc_class: 'qfn'
+  body_size_x:
+    minimum: 5.9
+    maximum: 6.1
+  body_size_y:
+    minimum: 3.9
+    maximum: 4.1
+  overall_height:
+    maximum: 0.8
+
+  lead_width:
+    minimum: 0.15
+    maximum: 0.25
+  lead_len:
+    minimum: 0.3
+    maximum: 0.5
+
+  EP_size_x:
+    nominal: 4.7
+    tolerance: 0.1
+  EP_size_y:
+    nominal: 2.7
+    tolerance: 0.1
+  EP_num_paste_pads: [3, 2]
+  EP_paste_coverage: 0.73
+
+  pitch: 0.4
+  num_pins_x: 12
+  num_pins_y: 8
+
+  thermal_vias:
+    count: [4, 3]
+    drill: 0.2
+
+Texas_VQFN-40_RHA0040D:
+# Texas_RHA0040D_VQFN-40-1EP_6x6mm_P0.5mm_EP2.9x2.9mm
+  device_type: 'VQFN'
+  manufacturer: 'Texas'
+  part_number: 'RHA0040D'
+  size_source: 'http://www.ti.com/lit/ds/symlink/msp430fr5731.pdf#page=111 JEDEC MO-220 variation VJJD-2'
+  ipc_class: 'qfn'
+  body_size_x:
+    minimum: 5.9
+    maximum: 6.1
+  body_size_y:
+    minimum: 5.9
+    maximum: 6.1
+  overall_height:
+    maximum: 1.0
+
+  lead_width:
+    minimum: 0.20
+    maximum: 0.30
+  lead_len:
+    minimum: 0.3
+    maximum: 0.5
+
+  EP_size_x:
+    nominal: 2.9
+    tolerance: 0.1
+  EP_size_y:
+    nominal: 2.9
+    tolerance: 0.1
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [3, 3]
+    drill: 0.2
+    paste_via_clearance: 0.1
+    EP_paste_coverage: 0.7
+    paste_avoid_via: False
+
+  pitch: 0.5
+  num_pins_x: 10
+  num_pins_y: 10
+
+Texas_VQFN-40_RHA0040E:
+# Texas_RHA0040E_VQFN-40-1EP_6x6mm_P0.5mm_EP3.52x2.62mm
+  device_type: 'VQFN'
+  manufacturer: 'Texas'
+  part_number: 'RHA0040E'
+  size_source: 'http://www.ti.com/lit/ds/symlink/drv8308.pdf#page=57 JEDEC MO-220 variation VJJD-2'
+  ipc_class: 'qfn'
+  body_size_x:
+    minimum: 5.85
+    maximum: 6.15
+  body_size_y:
+    minimum: 5.85
+    maximum: 6.15
+  overall_height:
+    minimum: 0.8
+    maximum: 1.0
+
+  lead_width:
+    minimum: 0.18
+    maximum: 0.30
+  lead_len:
+    minimum: 0.3
+    maximum: 0.5
+
+  EP_size_x:
+    nominal: 3.52
+    tolerance: 0.1
+  EP_size_y:
+    nominal: 2.62
+    tolerance: 0.1
+  EP_num_paste_pads: [3, 2]
+
+  thermal_vias:
+    count: [4, 3]
+    drill: 0.2
+    paste_via_clearance: 0.1
+    EP_paste_coverage: 0.7
+    paste_avoid_via: False
+
+  pitch: 0.5
+  num_pins_x: 10
+  num_pins_y: 10
+
 HVQFN-40-1EP_6x6mm_P0.5mm_EP4.1x4.1mm:
   device_type: 'HVQFN'
   size_source: 'https://www.nxp.com/docs/en/package-information/SOT618-1.pdf'
@@ -324,7 +448,51 @@ HVQFN-40-1EP_6x6mm_P0.5mm_EP4.1x4.1mm:
   num_pins_x: 10
   num_pins_y: 10
 
+Texas_VQFN-40_RHA0040B:
+# Texas_RHA0040B_VQFN-40-1EP_6x6mm_P0.5mm_EP4.15x4.15mm
+  device_type: 'VQFN'
+  manufacturer: 'Texas'
+  part_number: 'RHA0040B'
+  size_source: 'http://www.ti.com/lit/ds/symlink/msp430g2755.pdf#page=72 JEDEC MO-220 variation VJJD-2'
+  ipc_class: 'qfn'
+  body_size_x:
+    minimum: 5.9
+    maximum: 6.1
+  body_size_y:
+    minimum: 5.9
+    maximum: 6.1
+  overall_height:
+    maximum: 1.0
+
+  lead_width:
+    minimum: 0.17
+    maximum: 0.27
+  lead_len:
+    minimum: 0.3
+    maximum: 0.5
+
+  EP_size_x:
+    nominal: 4.15
+    tolerance: 0.1
+  EP_size_y:
+    nominal: 4.15
+    tolerance: 0.1
+  EP_num_paste_pads: [3, 3]
+
+  thermal_vias:
+    count: [4, 4]
+    drill: 0.2
+    paste_via_clearance: 0.1
+    paste_between_vias: 1
+    paste_rings_outside: 1
+    grid: [1.0, 1.0]
+
+  pitch: 0.5
+  num_pins_x: 10
+  num_pins_y: 10
+
 QFN-40-1EP_6x6mm_P0.5mm_EP4.6x4.6mm:
+# this is actually VQFN, height A = 0.80 .. 0.90 .. 1.00 mm
   device_type: 'QFN'
   #manufacturer: 'man'
   #part_number: 'mpn'
@@ -382,6 +550,50 @@ QFN-40-1EP_6x6mm_P0.5mm_EP4.6x4.6mm:
   #pad_length_addition: 0.5
   #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
   #include_suffix_in_3dpath: 'False'
+
+Texas_VQFN-40_RHA:
+# Texas_RHA_VQFN-40-1EP_6x6mm_P0.5mm_EP4.6x4.6mm
+  device_type: 'VQFN'
+  manufacturer: 'Texas'
+  part_number: 'RHA'
+  size_source: 'http://www.ti.com/lit/ds/symlink/dac7750.pdf#page=49'
+  ipc_class: 'qfn'
+  body_size_x:
+    minimum: 5.85
+    maximum: 6.15
+  body_size_y:
+    minimum: 5.85
+    maximum: 6.15
+  overall_height:
+    minimum: 0.8
+    maximum: 1.0
+
+  lead_width:
+    nominal: 0.23
+    tolerance: [-0.05, 0.07]
+  lead_len:
+    minimum: 0.3
+    maximum: 0.5
+
+  EP_size_x:
+    nominal: 4.6
+    tolerance: 0.1
+  EP_size_y:
+    nominal: 4.6
+    tolerance: 0.1
+  EP_num_paste_pads: [3, 3]
+
+  thermal_vias:
+    count: [4, 4]
+    drill: 0.2
+    paste_via_clearance: 0.1
+    paste_between_vias: 1
+    paste_rings_outside: 1
+    grid: [1.15, 1.15]
+
+  pitch: 0.5
+  num_pins_x: 10
+  num_pins_y: 10
 
 QFN-42-1EP_5x6mm_P0.4mm_EP3.7x4.7mm:
   device_type: 'QFN'
@@ -1523,6 +1735,50 @@ VQFN-48-1EP_7x7mm_P0.5mm_EP5.15x5.15mm:
   #pad_length_addition: 0.5
   #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
   #include_suffix_in_3dpath: 'False'
+
+Texas_VQFN-48_RGZ0048A:
+# Texas_RGZ0048A_VQFN-48-1EP_7x7mm_P0.5mm_EP5.15x5.15mm
+  device_type: 'VQFN'
+  manufacturer: 'Texas'
+  part_number: 'RGZ0048A'
+  size_source: 'http://www.ti.com/lit/ds/symlink/msp430f5232.pdf#page=113'
+  ipc_class: 'qfn'
+  body_size_x:
+    minimum: 6.9
+    maximum: 7.1
+  body_size_y:
+    minimum: 6.9
+    maximum: 7.1
+  overall_height:
+    maximum: 1.0
+
+  lead_width:
+    minimum: 0.18
+    maximum: 0.3
+  lead_len:
+    minimum: 0.3
+    maximum: 0.5
+
+  EP_size_x:
+    nominal: 5.15
+    tolerance: 0.1
+  EP_size_y:
+    nominal: 5.15
+    tolerance: 0.1
+  EP_num_paste_pads: [4, 4]
+
+  thermal_vias:
+    count: [5, 5]
+    drill: 0.2
+    paste_via_clearance: 0.1
+    paste_between_vias: 1
+    paste_rings_outside: 1
+    EP_paste_coverage: 0.65
+    grid: [1, 1]
+
+  pitch: 0.5
+  num_pins_x: 12
+  num_pins_y: 12
 
 QFN-48-1EP_7x7mm_P0.5mm_EP5.30x5.30mm:
   device_type: 'QFN'
