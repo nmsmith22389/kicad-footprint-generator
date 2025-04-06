@@ -1,3 +1,9 @@
+# QFN - Quad Flat No-lead
+#
+# Some standards:
+# - JEDEC MO-220, MO-248
+# - JEITA ED-7311-22, ED-7324
+
 OnSemi_VCT-28_3.5x3.5mm_P0.4mm:
   device_type: 'VCT' # this should be QFN
   manufacturer: 'OnSemi'

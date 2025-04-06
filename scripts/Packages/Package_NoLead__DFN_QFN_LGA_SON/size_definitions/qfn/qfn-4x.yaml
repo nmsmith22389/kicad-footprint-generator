@@ -1,3 +1,9 @@
+# QFN - Quad Flat No-lead
+#
+# Some standards:
+# - JEDEC MO-220, MO-248
+# - JEITA ED-7311-22, ED-7324
+
 VQFN-40-1EP_5x5mm_P0.4mm_EP3.6x3.6mm:
   device_type: 'VQFN'
   size_source: 'JEDEC MO-220-K.01, variation VHHE-1, https://www.jedec.org/system/files/docs/MO-220K01.pdf'

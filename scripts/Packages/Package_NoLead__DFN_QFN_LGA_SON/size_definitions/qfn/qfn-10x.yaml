@@ -1,3 +1,9 @@
+# QFN - Quad Flat No-lead
+#
+# Some standards:
+# - JEDEC MO-220, MO-248
+# - JEITA ED-7311-22, ED-7324
+
 QFN-100-1EP_12x12mm_P0.4mm_EP7.4x7.4mm:
   device_type: 'QFN'
   manufacturer: 'ArtInChip'

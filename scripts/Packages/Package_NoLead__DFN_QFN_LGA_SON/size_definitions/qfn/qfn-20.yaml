@@ -1,3 +1,9 @@
+# QFN - Quad Flat No-lead
+#
+# Some standards:
+# - JEDEC MO-220, MO-248
+# - JEITA ED-7311-22, ED-7324
+
 Renesas_UQFN-20_2x3mm_P0.4mm_LayoutBorder4x6y:
   device_type: 'UQFN'
   manufacturer: 'Renesas'

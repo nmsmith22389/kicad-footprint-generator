@@ -1,3 +1,9 @@
+# QFN - Quad Flat No-lead
+#
+# Some standards:
+# - JEDEC MO-220, MO-248
+# - JEITA ED-7311-22, ED-7324
+
 QFN-80-1EP_10x10mm_P0.4mm_EP3.4x3.4mm:
   device_type: "QFN"
   #manufacturer: 'man'
