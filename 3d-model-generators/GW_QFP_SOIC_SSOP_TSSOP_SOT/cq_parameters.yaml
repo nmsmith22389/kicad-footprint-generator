@@ -2372,37 +2372,37 @@ PQFP-240_32.1x32.1mm_P0.5mm:
   destination_dir: 'Package_QFP.3dshapes'
   source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
 
-PQFP-44_10x10mm_P0.8mm:
+QFP-44_10x10mm_P0.8mm:
   the: 12.0
   tb_s: 0.15
-  c: 0.1
+  c: 0.17 # (0.11 + 0.23)/2
   R1: 0.1
   R2: 0.1
-  S: 0.1
+  L: 0.88
   fp_s: 1
   fp_r: 0.4
   fp_d: 0.5
   fp_z: 0.1
   ef: 0.0
   cc1: 0.25
-  D1: 10.0
-  E1: 10.0
-  E: 13.1
-  A1: 0.1
-  A2: 1.5
-  b: 0.32
-  e: 0.8
+  D1: 10.00
+  E1: 10.00
+  E: 13.20
+  A1: 0.25
+  A2: 2.20
+  b: 0.37 # (0.29 + 0.45) / 2
+  e: 0.80
   npx: 11
   npy: 11
   epad: null
   excluded_pins: null
-  model_name: PQFP-44_10x10mm_P0.8mm
+  model_name: QFP-44_10x10mm_P0.8mm
   rotation: -90
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
   destination_dir: 'Package_QFP.3dshapes'
-  source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
+  source: 'https://www.jedec.org/document_search?search_api_views_fulltext=MS-022, https://ww1.microchip.com/downloads/aemDocuments/documents/package-outline-drawings/c04-21291a.pdf'
 
 TQFP-100_14x14mm_P0.5mm_EP5x5mm:
   the: 12.0

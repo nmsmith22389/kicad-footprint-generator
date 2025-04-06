@@ -14,63 +14,58 @@ FileHeader:
 # QFP, height > 1.70 mm
 ##############################################################################
 
+QFP-44_10x10mm_P0.8mm:
+# replaces handmade PQFP-44_10x10mm_P0.8mm
+  device_type: 'QFP'
+  size_source: 'JEDEC MS-022 variation AB, https://www.jedec.org/document_search?search_api_views_fulltext=MS-022, https://ww1.microchip.com/downloads/aemDocuments/documents/package-outline-drawings/c04-21291a.pdf'
+  # handmade footprint was using http://www.onsemi.com/pub/Collateral/122BK.PDF, but it has height = 2.8 mm max (out of standard)
+  # one more source: https://datasheet.octopart.com/AT86RF233-ZU-Atmel-datasheet-22122754.pdf#page=22
+  compatible_mpns:
+    - 'P-QFP PQFP'
+    - 'QQZ' # Microchip
+    - 'M44-2 44L-MQFP-10x10x2mm' # Maxim / Analog Devices, # https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/mqfp/21-0826.pdf
+  body_size_x: 10.00
+  body_size_y: 10.00
+  overall_size_x: 13.20
+  overall_size_y: 13.20
+  overall_height:
+    maximum: 2.45
+  lead_width: 0.29 .. 0.45
+  lead_len: 0.73 .. 0.88 .. 1.03
+  pitch: 0.80
+  num_pins_x: 11
+  num_pins_y: 11
+
 Microchip_PQFP-44_10x10mm_P0.8mm:
-# Similar to JEDEC MS-022, variation AB
+# Similar to JEDEC MO-112, variation AA-2
+# There's no symbol using it, we should merge it with MQFP-44_10x10mm_P0.8mm, they are the same!
   device_type: 'PQFP'
   manufacturer: 'Microchip'
   size_source: 'https://ww1.microchip.com/downloads/aemDocuments/documents/OTH/ProductDocuments/DataSheets/20005418B.pdf#page=10'
-  body_size_x:
-    nominal: 10
-  body_size_y:
-    nominal: 10
-  overall_size_x:
-    minimum: 13.65
-    nominal: 13.90
-    maximum: 14.15
-  overall_size_y:
-    minimum: 13.65
-    nominal: 13.90
-    maximum: 14.15
+  # similar sizes: https://ww1.microchip.com/downloads/aemDocuments/documents/package-outline-drawings/c04-00119a.pdf
+  body_size_x: 10
+  body_size_y: 10
+  overall_size_x: 13.65 .. 13.90 .. 14.15
+  overall_size_y: 13.65 .. 13.90 .. 14.15
   overall_height:
     maximum: 2.35
-  lead_width:
-    minimum: 0.30
-    maximum: 0.45
-  lead_len:
-    minimum: 0.73
-    nominal: 0.88
-    maximum: 1.03
+  lead_width: 0.30 .. 0.45
+  lead_len: 0.73 .. 0.88 .. 1.03
   pitch: 0.8
   num_pins_x: 11
   num_pins_y: 11
 
 MQFP-44_10x10mm_P0.8mm:
-# Similar to JEDEC MS-022, variation AB, it's PQFP (height 2.45 mm max)
+# Similar to JEDEC MO-112, variation AA-2 (but height 2.45 mm), it's actually QFP
+# Used only by symbol AD7722
   device_type: 'MQFP'
   size_source: 'https://www.analog.com/media/en/technical-documentation/data-sheets/ad7722.pdf'
-  body_size_x:
-    minimum: 9.8
-    nominal: 10
-    maximum: 10.2
-  body_size_y:
-    minimum: 9.8
-    nominal: 10
-    maximum: 10.2
-  overall_size_x:
-    minimum: 13.65
-    nominal: 13.9
-    maximum: 14.15
-  overall_size_y:
-    minimum: 13.65
-    nominal: 13.9
-    maximum: 14.15
-  lead_width:
-    minimum: 0.3
-    maximum: 0.45
-  lead_len:
-    minimum: 0.73
-    nominal: 0.88
-    maximum: 1.03
+  body_size_x: 9.8 .. 10 .. 10.2
+  body_size_y: 9.8 .. 10 .. 10.2
+  overall_size_x: 13.65 .. 13.9 .. 14.15
+  overall_size_y: 13.65 .. 13.9 .. 14.15
+  lead_width: 0.3 .. 0.45
+  lead_len: 0.73 .. 0.88 .. 1.03
   pitch: 0.8
   num_pins_x: 11
   num_pins_y: 11
