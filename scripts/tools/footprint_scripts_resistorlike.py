@@ -436,8 +436,9 @@ def makeResistorAxialVertical(seriesname,rm, rmdisp, l, d, ddrill, R_POW, type="
             kicad_mod.append(PolygonLine(polygon=[[d_slk / 2, -yy],
                                                    [d_slk / 2, -d2_slk / 2],
                                                    [-d_slk / 2, -d2_slk / 2],
-                                                   [d_slk / 2, -d2_slk / 2],
-                                                   [d_slk / 2, +yy]], layer='F.SilkS', width=lw_slk))
+                                                   [-d_slk / 2, d2_slk / 2],
+                                                   [d_slk / 2, d2_slk / 2],
+                                                   [d_slk / 2, yy]], layer='F.SilkS', width=lw_slk))
 #    if deco=="diode" or deco=="diode_KUP":
 #        kicad_mod.append(Line(start=[d_x-d_size/3, d_y-0.5*d_size], end=[d_x-d_size/3, d_y+0.5*d_size], layer='F.SilkS', width=lw_slk))
 #        kicad_mod.append(PolygonLine(polygon=[[d_x-d_size/3, d_y],
