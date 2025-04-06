@@ -47,11 +47,15 @@ def makeResistorAxialHorizontal(seriesname, rm, rmdisp, w, d, ddrill, R_POW, typ
     padx=2*ddrill
     pady=padx
 
-    pad1style=Pad.SHAPE_CIRCLE
+    pad1_opts = {
+        "shape": Pad.SHAPE_CIRCLE,
+        "round_radius_handler": global_config.roundrect_radius_handler,
+    }
+
     polsign_slk=[]
 
     if deco=="elco" or deco=="cp" or deco=="tantal" or deco=="diode":
-        pad1style=Pad.SHAPE_RECT
+        pad1_opts["shape"]=Pad.SHAPE_ROUNDRECT
 
     l_fab=(rm-w)/2
     l_dbar_fab=l_fab
@@ -167,7 +171,7 @@ def makeResistorAxialHorizontal(seriesname, rm, rmdisp, w, d, ddrill, R_POW, typ
         kicad_mod.append(PolygonLine(polygon=[[l_fab, t_fab], [polsign_slk[0], t_fab], [polsign_slk[0] + polsign_slk[2] / 2, t_fab + polsign_slk[3] / 2], [polsign_slk[0] + polsign_slk[2], t_fab], [l_fab + w, t_fab]], layer='F.Fab', width=lw_fab))
         kicad_mod.append(PolygonLine(polygon=[[l_fab, t_fab + d], [polsign_slk[0], t_fab + h_fab], [polsign_slk[0] + polsign_slk[2] / 2, t_fab + h_fab - polsign_slk[3] / 2], [polsign_slk[0] + polsign_slk[2], t_fab + h_fab], [l_fab + w, t_fab + d]], layer='F.Fab', width=lw_fab))
     else:
-        kicad_mod.append(RectLine(start=[l_fab, t_fab], end=[l_fab+w, t_fab+d], layer='F.Fab', width=lw_fab))
+        kicad_mod.append(Rect(start=[l_fab, t_fab], end=[l_fab+w, t_fab+d], layer='F.Fab', width=lw_fab))
     if type != "bridge":
         kicad_mod.append(Line(start=[0, 0], end=[l_fab, 0], layer='F.Fab', width=lw_fab))
         kicad_mod.append(Line(start=[rm, 0], end=[l_fab+w, 0], layer='F.Fab', width=lw_fab))
@@ -200,7 +204,7 @@ def makeResistorAxialHorizontal(seriesname, rm, rmdisp, w, d, ddrill, R_POW, typ
                 kicad_mod.append(Line(start=[l_slk, t_slk], end=[l_slk + w_slk, t_slk], layer='F.SilkS', width=lw_slk))
                 kicad_mod.append(Line(start=[l_slk, t_slk + h_slk], end=[l_slk + w_slk, t_slk + h_slk], layer='F.SilkS', width=lw_slk))
         else:
-            kicad_mod.append(RectLine(start=[l_slk, t_slk], end=[l_slk + w_slk, t_slk + h_slk], layer='F.SilkS', width=lw_slk))
+            kicad_mod.append(Rect(start=[l_slk, t_slk], end=[l_slk + w_slk, t_slk + h_slk], layer='F.SilkS', width=lw_slk))
         if type == "bridge":
             y=-d2/2; y0=y; y1=y
             while y<d2/2:
@@ -221,16 +225,16 @@ def makeResistorAxialHorizontal(seriesname, rm, rmdisp, w, d, ddrill, R_POW, typ
         kicad_mod.append(Text(text="K", at=[0,-pady/2-1], layer='F.SilkS'))
 
     # create courtyard
-    kicad_mod.append(RectLine(start=[roundCrt(l_crt), roundCrt(t_crt)], end=[roundCrt(l_crt+w_crt), roundCrt(t_crt+h_crt)], layer='F.CrtYd', width=lw_crt))
+    kicad_mod.append(Rect(start=[roundCrt(l_crt), roundCrt(t_crt)], end=[roundCrt(l_crt+w_crt), roundCrt(t_crt+h_crt)], layer='F.CrtYd', width=lw_crt))
 
     # create pads
     if hasShuntPins:
-        kicad_mod.append(Pad(number=1, type=Pad.TYPE_THT, shape=pad1style, at=[0, 0], size=[padx, pady], drill=ddrill,layers=Pad.LAYERS_THT))
+        kicad_mod.append(Pad(number=1, type=Pad.TYPE_THT, at=[0, 0], size=[padx, pady], drill=ddrill,layers=Pad.LAYERS_THT, **pad1_opts))
         kicad_mod.append(Pad(number=2, type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, at=[(rm-shuntPinsRM)/2, 0], size=[padx, pady], drill=ddrill,layers=Pad.LAYERS_THT))
         kicad_mod.append(Pad(number=3, type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, at=[(rm-shuntPinsRM)/2+shuntPinsRM, 0], size=[padx, pady], drill=ddrill,layers=Pad.LAYERS_THT))
         kicad_mod.append(Pad(number=4, type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, at=[rm, 0], size=[padx, pady], drill=ddrill,layers=Pad.LAYERS_THT))
     else:
-        kicad_mod.append(Pad(number=1, type=Pad.TYPE_THT, shape=pad1style, at=[0, 0], size=[padx, pady], drill=ddrill, layers=Pad.LAYERS_THT))
+        kicad_mod.append(Pad(number=1, type=Pad.TYPE_THT, at=[0, 0], size=[padx, pady], drill=ddrill, layers=Pad.LAYERS_THT, **pad1_opts))
         kicad_mod.append(Pad(number=2, type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, at=[rm, 0], size=[padx, pady], drill=ddrill, layers=Pad.LAYERS_THT))
 
     # add model
@@ -258,18 +262,22 @@ def makeResistorAxialVertical(seriesname,rm, rmdisp, l, d, ddrill, R_POW, type="
     if (largepadsy):
         pady = max(pady, largepadsy)
 
-    pad1style=Pad.SHAPE_CIRCLE
+    pad1_opts = {
+        "shape": Pad.SHAPE_CIRCLE,
+        "round_radius_handler": global_config.roundrect_radius_handler,
+    }
+
     polsign_slk=[]
 
     if deco=="elco" or deco=="cp" or deco=="tantal" or deco=="diode" or deco=="diode_KUP":
-        pad1style=Pad.SHAPE_RECT
+        pad1_opts["shape"] = Pad.SHAPE_ROUNDRECT
 
     l_fab = -d / 2
     if deco=="diode_KUP":
         l_fab=-padx/2
     t_fab = -d / 2
     d_slk = max(max(padx, pady) + 0.15, d + 2 * slk_offset)
-    if pad1style==Pad.SHAPE_RECT:
+    if pad1_opts["shape"] == Pad.SHAPE_ROUNDRECT:
         d_slk = max(max(padx, pady)*math.sqrt(2) + 0.15, d )+ 2 * slk_offset
     d2_slk = max(max(padx, pady) + 0.15, d2 + 2 * slk_offset)
     w_slk = rm + d / 2 + padx / 2 + 2 * slk_offset
@@ -376,7 +384,7 @@ def makeResistorAxialVertical(seriesname,rm, rmdisp, l, d, ddrill, R_POW, type="
         else:
             kicad_mod.append(Circle(center=[0, 0], radius=d / 2, layer='F.Fab', width=lw_fab))
     else:
-        kicad_mod.append(RectLine(start=[-d/2, -d2/2], end=[d/2,d2/2], layer='F.Fab', width=lw_fab))
+        kicad_mod.append(Rect(start=[-d/2, -d2/2], end=[d/2,d2/2], layer='F.Fab', width=lw_fab))
     kicad_mod.append(Line(start=[0, 0], end=[rm,0], layer='F.Fab', width=lw_fab))
     if deco=="diode":
         if rm>d/2*1.2 and d/2-pady/2<1:
@@ -414,7 +422,7 @@ def makeResistorAxialVertical(seriesname,rm, rmdisp, l, d, ddrill, R_POW, type="
             else:
                 kicad_mod.append(Circle(center=[0, 0], radius=d_slk / 2, layer='F.SilkS', width=lw_slk))
         else:
-            kicad_mod.append(RectLine(start=[-d_slk/2, -d2_slk/2], end=[d_slk/2,d2_slk/2], layer='F.SilkS', width=lw_slk))
+            kicad_mod.append(Rect(start=[-d_slk/2, -d2_slk/2], end=[d_slk/2,d2_slk/2], layer='F.SilkS', width=lw_slk))
         kicad_mod.append(Line(start=[xs1, 0], end=[xs2, 0], layer='F.SilkS', width=lw_slk))
     else:
         yy = (pady+slk_offset+lw_slk)/2
@@ -446,12 +454,12 @@ def makeResistorAxialVertical(seriesname,rm, rmdisp, l, d, ddrill, R_POW, type="
 
     # create courtyard
     kicad_mod.append(
-        RectLine(start=[roundCrt(l_crt), roundCrt(t_crt)], end=[roundCrt(l_crt + w_crt), roundCrt(t_crt + h_crt)],
+        Rect(start=[roundCrt(l_crt), roundCrt(t_crt)], end=[roundCrt(l_crt + w_crt), roundCrt(t_crt + h_crt)],
                  layer='F.CrtYd', width=lw_crt))
 
     # create pads
-    kicad_mod.append(Pad(number=1, type=Pad.TYPE_THT, shape=pad1style, at=[0, 0], size=[padx, pady], drill=ddrill,
-                         layers=Pad.LAYERS_THT))
+    kicad_mod.append(Pad(number=1, type=Pad.TYPE_THT, at=[0, 0], size=[padx, pady], drill=ddrill,
+                         layers=Pad.LAYERS_THT, **pad1_opts))
     kicad_mod.append(Pad(number=2, type=Pad.TYPE_THT, shape=Pad.SHAPE_OVAL, at=[rm, 0], size=[padx, pady], drill=ddrill,
                          layers=Pad.LAYERS_THT))
 
@@ -551,11 +559,14 @@ def makeResistorRadial(seriesname, rm, w, h, ddrill, R_POW, innerw=0,innerh=0,rm
     pady = padx
     txtoffset=txt_offset
     add_pol_sign = False
-    pad1style=Pad.SHAPE_CIRCLE
+
+    pad1_opts = {
+        "shape": Pad.SHAPE_CIRCLE,
+        "round_radius_handler": global_config.roundrect_radius_handler,
+    }
 
     if deco=="elco" or deco=="cp" or deco=="tantal":
-        pad1style=Pad.SHAPE_RECT
-
+        pad1_opts["shape"] = Pad.SHAPE_ROUNDRECT
 
     padpos=[]
     offset=[0,0]
@@ -769,9 +780,9 @@ def makeResistorRadial(seriesname, rm, w, h, ddrill, R_POW, innerw=0,innerh=0,rm
                     alpha1=alpha1+30
                     alpha2=alpha2+30
     else:
-        kicad_modg.append(RectLine(start=[l_fab, t_fab], end=[l_fab + w_fab, t_fab + h_fab], layer='F.Fab', width=lw_fab))
+        kicad_modg.append(Rect(start=[l_fab, t_fab], end=[l_fab + w_fab, t_fab + h_fab], layer='F.Fab', width=lw_fab))
         if innerw!=w or innerh!=h:
-            kicad_modg.append(RectLine(start=[il_fab, it_fab], end=[il_fab + iw_fab, it_fab + ih_fab], layer='F.Fab', width=lw_fab))
+            kicad_modg.append(Rect(start=[il_fab, it_fab], end=[il_fab + iw_fab, it_fab + ih_fab], layer='F.Fab', width=lw_fab))
         if vlines:
             kicad_modg.append(Line(start=[lvl1_fab, t_fab], end=[lvl1_fab,t_fab+h_fab], layer='F.Fab', width=lw_fab))
             kicad_modg.append(Line(start=[lvl2_fab, t_fab], end=[lvl2_fab, t_fab + h_fab], layer='F.Fab', width=lw_fab))
@@ -878,15 +889,14 @@ def makeResistorRadial(seriesname, rm, w, h, ddrill, R_POW, innerw=0,innerh=0,rm
         r_crt = max(r_fab+crt_offset, math.sqrt(sq_pad_x_max * sq_pad_x_max + sq_pad_y_min * sq_pad_y_min)+crt_offset)
         kicad_mod.append(Circle(center=[rm/2.,0], radius=roundCrt(r_crt),layer='F.CrtYd', width=lw_crt))
     else:
-        kicad_mod.append(RectLine(start=[roundCrt(l_crt+offset[0]), roundCrt(t_crt+offset[1])], end=[roundCrt(l_crt + w_crt+offset[0]), roundCrt(t_crt + h_crt+offset[1])],layer='F.CrtYd', width=lw_crt))
+        kicad_mod.append(Rect(start=[roundCrt(l_crt+offset[0]), roundCrt(t_crt+offset[1])], end=[roundCrt(l_crt + w_crt+offset[0]), roundCrt(t_crt + h_crt+offset[1])],layer='F.CrtYd', width=lw_crt))
 
     # create pads
-    pn=1
     for p in padpos:
-        ps=Pad.SHAPE_CIRCLE
         if p[0]==1:
-            ps=pad1style
-        kicad_modg.append(Pad(number=p[0], type=Pad.TYPE_THT, shape=ps, at=[p[1], p[2]], size=[p[4],p[5]], drill=p[3], layers=Pad.LAYERS_THT))
+            kicad_modg.append(Pad(number=p[0], type=Pad.TYPE_THT, at=[p[1], p[2]], size=[p[4],p[5]], drill=p[3], layers=Pad.LAYERS_THT, **pad1_opts))
+        else:
+            kicad_modg.append(Pad(number=p[0], type=Pad.TYPE_THT, shape=Pad.SHAPE_CIRCLE, at=[p[1], p[2]], size=[p[4],p[5]], drill=p[3], layers=Pad.LAYERS_THT))
 
     # add model
     if (has3d != 0):
