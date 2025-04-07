@@ -100,8 +100,6 @@ Texas_RSW0010A_UQFN-10_1.4x1.8mm_P0.4mm:
     minimum: 0.35
     maximum: 0.45
 
-  #heel_reduction: 0.05 # necessary to reach 0.15mm clearance between vertical and horizontal pads
-
   pad_overrides:
     1:
       lead_len: 0.45..0.55
@@ -135,8 +133,6 @@ UQFN-10_1.6x2.1mm_P0.5mm:
   lead_len_H:
     minimum: 0.6
     maximum: 0.7
-
-  # heel_reduction: 0.05 #for relatively large EP pads (increase clearance)
 
   pitch: 0.5
   num_pins_x: 3
@@ -202,8 +198,6 @@ WQFN-12_1.8x1.8mm_P0.4mm:
   part_number: 'RMG0012A'
   size_source: 'https://www.ti.com/lit/ds/symlink/tmux131.pdf#page=18'
   ipc_class: 'qfn' # 'qfn_pull_back'
-  #ipc_density: 'least' #overwrite global value for this device.
-  # custom_name_format:
   body_size_x:
     nominal: 1.8
     tolerance: 0.1
@@ -227,6 +221,13 @@ WQFN-12_1.8x1.8mm_P0.4mm:
   pitch: 0.4
   num_pins_x: 4
   num_pins_y: 2
+  # Without heel_reduction the pads only have 0.1mm clearance which will
+  # violate DRC for most boards.
+  # With the reduction, the resulting pad geometry is quite similar to the datasheet
+  # and we have 0.2mm clearance which is also the IPC default minimum clearance.
+  # This also means that in MaximumMaterialCondition the leads are bigger than
+  # the pads. But that is something the user has to live with
+  heel_reduction: 0.1
 
 MPS_QFN-12-1EP_2x2mm_P0.4mm:
   device_type: 'QFN'
@@ -570,7 +571,6 @@ WQFN-14-1EP_2.5x2.5mm_P0.5mm_EP1.45x1.45mm:
     tolerance: 0.05
   # EP_paste_coverage: 0.65
   EP_num_paste_pads: [2, 2]
-  #heel_reduction: 0.05 #for relatively large EP pads (increase clearance)
 
   thermal_vias:
     count: [2, 2]
@@ -869,7 +869,6 @@ TQFN-16-1EP_3x3mm_P0.5mm_EP1.23x1.23mm:
   EP_size_y: 1.23
   # EP_paste_coverage: 0.65
   EP_num_paste_pads: [2, 2]
-  #heel_reduction: 0.05 #for relatively large EP pads (increase clearance)
 
   thermal_vias:
     count: [2, 2]
@@ -922,7 +921,6 @@ QFN-16-1EP_3x3mm_P0.5mm_EP1.45x1.45mm:
   EP_size_y: 1.45
   # EP_paste_coverage: 0.65
   EP_num_paste_pads: [2, 2]
-  #heel_reduction: 0.05 #for relatively large EP pads (increase clearance)
 
   thermal_vias:
     count: [2, 2]
@@ -977,7 +975,6 @@ VQFN-16-1EP_3x3mm_P0.5mm_EP1.45x1.45mm:
     tolerance: 0.1
   # EP_paste_coverage: 0.65
   EP_num_paste_pads: [2, 2]
-  # heel_reduction: 0.05 #for relatively large EP pads (increase clearance)
 
   thermal_vias:
     count: [2, 2]
@@ -1069,7 +1066,6 @@ VQFN-16-1EP_3x3mm_P0.5mm_EP1.6x1.6mm:
     tolerance: 0.05
   # EP_paste_coverage: 0.65
   EP_num_paste_pads: [2, 2]
-  # heel_reduction: 0.05 #for relatively large EP pads (increase clearance)
 
   thermal_vias:
     count: [2, 2]
@@ -1171,7 +1167,6 @@ WQFN-16-1EP_3x3mm_P0.5mm_EP1.6x1.6mm:
     tolerance: 0.1
   # EP_paste_coverage: 0.65
   EP_num_paste_pads: [2, 2]
-  #heel_reduction: 0.05 #for relatively large EP pads (increase clearance)
 
   thermal_vias:
     count: [2, 2]
@@ -1316,7 +1311,6 @@ WQFN-16-1EP_3x3mm_P0.5mm_EP1.68x1.68mm:
     tolerance: 0.07
   # EP_paste_coverage: 0.65
   EP_num_paste_pads: [2, 2]
-  #heel_reduction: 0.05 #for relatively large EP pads (increase clearance)
 
   thermal_vias:
     count: [2, 2]
@@ -1458,7 +1452,6 @@ QFN-16-1EP_3x3mm_P0.5mm_EP1.75x1.75mm:
   #EP_size_y_overwrite: 1.75
   # EP_paste_coverage: 0.65
   EP_num_paste_pads: [2, 2]
-  #heel_reduction: 0.05 #for relatively large EP pads (increase clearance)
 
   thermal_vias:
     count: [2, 2]
@@ -1516,7 +1509,6 @@ WQFN-16-1EP_3x3mm_P0.5mm_EP1.75x1.75mm:
   EP_size_y_overwrite: 1.75
   # EP_paste_coverage: 0.65
   EP_num_paste_pads: [2, 2]
-  #heel_reduction: 0.05 #for relatively large EP pads (increase clearance)
 
   thermal_vias:
     count: [2, 2]
@@ -1626,7 +1618,6 @@ WCH_QFN-16-1EP_3x3mm_P0.5mm_EP1.8x1.8mm:
   EP_size_y: 1.8+/-0.2
   # EP_paste_coverage: 0.65
   EP_num_paste_pads: [2, 2]
-  #heel_reduction: 0.2 #for relatively large EP pads (increase clearance)
 
 
 HXQFN-16-1EP_3x3mm_P0.5mm_EP1.85x1.85mm:
@@ -1799,7 +1790,6 @@ QFN-16-1EP_4x4mm_P0.5mm_EP2.45x2.45mm:
     tolerance: [-0.15, 0.1]
   # EP_paste_coverage: 0.65
   EP_num_paste_pads: [2, 2]
-  #heel_reduction: 0.05 #for relatively large EP pads (increase clearance)
 
   thermal_vias:
     count: [3, 3]
@@ -1855,7 +1845,6 @@ WQFN-16-1EP_4x4mm_P0.5mm_EP2.6x2.6mm:
     tolerance: 0.1
   # EP_paste_coverage: 0.65
   EP_num_paste_pads: [2, 2]
-  #heel_reduction: 0.05 #for relatively large EP pads (increase clearance)
 
   thermal_vias:
     count: [3, 3]
@@ -1911,7 +1900,6 @@ QFN-16-1EP_4x4mm_P0.65mm_EP2.1x2.1mm:
   EP_size_y: 2.1
   # EP_paste_coverage: 0.65
   EP_num_paste_pads: [2, 2]
-  #heel_reduction: 0.05 #for relatively large EP pads (increase clearance)
 
   thermal_vias:
     count: [3, 3]
@@ -2092,7 +2080,6 @@ QFN-16-1EP_4x4mm_P0.65mm_EP2.15x2.15mm:
     tolerance: 0.1
   # EP_paste_coverage: 0.65
   EP_num_paste_pads: [2, 2]
-  #heel_reduction: 0.05 #for relatively large EP pads (increase clearance)
 
   thermal_vias:
     count: [3, 3]
@@ -2155,7 +2142,6 @@ QFN-16-1EP_4x4mm_P0.65mm_EP2.5x2.5mm:
   EP_size_y_overwrite: 2.5
   # EP_paste_coverage: 0.65
   EP_num_paste_pads: [2, 2]
-  #heel_reduction: 0.05 #for relatively large EP pads (increase clearance)
 
   thermal_vias:
     count: [3, 3]
@@ -2253,7 +2239,6 @@ UQFN-16-1EP_4x4mm_P0.65mm_EP2.6x2.6mm:
     maximum: 2.7
   # EP_paste_coverage: 0.65
   EP_num_paste_pads: [2, 2]
-  #heel_reduction: 0.05 #for relatively large EP pads (increase clearance)
 
   thermal_vias:
     count: [3, 3]
@@ -2532,7 +2517,6 @@ QFN-16-1EP_5x5mm_P0.8mm_EP2.7x2.7mm:
     maximum: 2.85
   # EP_paste_coverage: 0.65
   EP_num_paste_pads: [2, 2]
-  # heel_reduction: 0.05 #for relatively large EP pads (increase clearance)
 
   thermal_vias:
     count: [3, 3]
