@@ -187,7 +187,12 @@ class PolyProperties(ShapeProperties):
             evaled_pt = pt.evaluate(expr_evaluator)
             nodes.append(evaled_pt + offset)
 
-        return GeomPolygon(shape=nodes)
+        # We say a polygon as closed if the first and last points are equal
+        closed = False
+        if len(nodes) > 2 and nodes[0].is_equal(nodes[-1]):
+            closed = True
+
+        return GeomPolygon(shape=nodes, close=closed)
 
 
 def construct_shape(shape_spec: dict) -> ShapeProperties | None:

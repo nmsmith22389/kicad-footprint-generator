@@ -37,7 +37,7 @@ from KicadModTree import *  # NOQA
 from kilibs.util import dict_tools
 from kilibs.geom import BoundingBox
 from scripts.tools.footprint_text_fields import addTextFields
-from scripts.tools.declarative_def_tools import utils, rule_area_properties, shape_properties
+from scripts.tools.declarative_def_tools import utils, rule_area_properties, fp_additional_drawing
 from scripts.tools.declarative_def_tools.utils import DotDict
 from scripts.tools.declarative_def_tools.ast_evaluator import ASTevaluator, ASTexprEvaluator
 from scripts.tools.drawing_tools import point_is_on_segment
@@ -429,6 +429,8 @@ class FPconfiguration():
         self.parameters.pt = -0.5 * self.pad_pos_range.y + self.pad_center_offset.y
         self.parameters.pb = 0.5 * self.pad_pos_range.y + self.pad_center_offset.y
 
+        self.parameters.body_center = body_center_offset
+
         self.expr_eval = ASTexprEvaluator(symbols=self.parameters)
 
         ## Get rule areas
@@ -480,6 +482,9 @@ class FPconfiguration():
         else:
             self.type = FootprintType.THT
 
+        self.additional_drawings = (
+            fp_additional_drawing.FPAdditionalDrawing.from_standard_yaml(self.spec)
+        )
 
     def eval_coordinate(self, coord):
         return self.asteval.parse_float(coord, symbols=self.parameters)
@@ -599,12 +604,10 @@ def generate_one_footprint(
                               width=global_config.fab_line_width)
     kicad_mod.append(fab_outline)
 
-    ## draw additional shapes onto F.Fab
-    for name, shape in body_spec.items():
-        if (name in ["left", "right", "top", "bottom"]):
-            continue
-        poly_nodes = parse_body_shape(fp_config.spec.get("body_shape", {}), side=name, eval_expr=fp_config.expr_eval)
-        kicad_mod.append(PolygonLine(shape=poly_nodes, layer="F.Fab", width=global_config.fab_line_width))
+    ## Any additional drawings?
+    kicad_mod += fp_additional_drawing.create_additional_drawings(
+        fp_config.additional_drawings, global_config, fp_config.expr_eval
+    )
 
     ## create Pads
     for pad_index in range(fp_config.num_rows * positions):

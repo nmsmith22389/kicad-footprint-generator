@@ -39,15 +39,44 @@ defaults:
   fp_suffix: '_Header_Vertical'
   option: ""
   positions: [2, 3, 4, 5, 6]
-  body_shape:
-    top_shape:
-      polyline: [ [l, sy], [l + dx, sy], [l + dx, t + dy], [r - dx, t + dy], [r - dx, -ey], [r, -ey] ]
-    bot_shape_l:
-      polyline: [ [l, ey], [l + dx, ey], [l + dx, b - dy], [l + dx1, b - dy], [l + dx1, b - dy1], [-cx, b - dy1] ]
-    bot_shape_r:
-      polyline: [ [cx, b - dy1], [r - dx1, b - dy1], [r - dx1, b - dy], [r - dx, b - dy], [r - dy, -sy], [r, -sy] ]
+  additional_drawings:
+    top_cavity:
+      type: poly
+      layer: F.Fab
+      points:
+        - [l, sy]
+        - [l + dx, sy]
+        - [l + dx, t + dy]
+        - [r - dx, t + dy]
+        - [r - dx, -ey]
+        - [r, -ey]
+    bottom_cavity_l:
+      type: poly
+      layer: F.Fab
+      points:
+        - [l, ey]
+        - [l + dx, ey]
+        - [l + dx, b - dy]
+        - [l + dx1, b - dy]
+        - [l + dx1, b - dy1]
+        - [-cx, b - dy1]
+    bottom_cavity_r:
+        type: poly
+        layer: F.Fab
+        points:
+        - [cx, b - dy1]
+        - [r - dx1, b - dy1]
+        - [r - dx1, b - dy]
+        - [r - dx, b - dy]
+        - [r - dy, -sy]
+        - [r, -sy]
     marker:
-      polyline: [ [pl - 0.5 * dy1, b], [pl, b - dy1], [pl + 0.5 * dy1, b] ]
+      type: poly
+      layer: F.Fab
+      points:
+        - [pl - 0.5 * dy1, b]
+        - [pl, b - dy1]
+        - [pl + 0.5 * dy1, b]
 
 8783206xx_MP:
   inherit: '8783204xx'
@@ -64,11 +93,15 @@ defaults:
   option: ", Center Polarization"
   parameters:
     cx: 1.25
-  body_shape:
+  additional_drawings:
     bot_slot_l:
-      polyline: [ [-cx, b - dy1], [-cx, b]]
-    bot_slot_r:
-      polyline: [ [cx, b - dy1], [cx, b] ]
+      type: poly
+      layer: F.Fab
+      points:
+       - [-cx, b - dy1]
+       - [-cx, b]
+      mirror:
+        x: 0
 
 8783206xx_Pol_MP:
   inherit: '8783206xx_Pol'

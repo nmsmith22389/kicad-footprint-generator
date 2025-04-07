@@ -178,8 +178,16 @@ Polygon_Test:
       polyline: [[r - 1, b - 0.5], [r - 1, b],]
 #    left:
 #      polyline: [[l, t + 1], [l + 0.5, t + 1.5], [l, t + 0.25],]
+  additional_drawings:
     inner:
-      polyline: [[l + 0.2, t + 0.2], [r - 0.2, t + 0.2], [r - 0.2, b - 0.2], [l + 0.2, b - 0.2], [l + 0.2, t + 0.2], ]
+      type: poly
+      layer: F.Fab
+      points:
+        - [l + 0.2, t + 0.2]
+        - [r - 0.2, t + 0.2]
+        - [r - 0.2, b - 0.2]
+        - [l + 0.2, b - 0.2]
+        - [l + 0.2, t + 0.2]
   mount_pads: # odd mount pad positions
     NPTHl:
       drill: 1.0

@@ -124,6 +124,11 @@ class PolyDrawingProvider(FPDrawingProvider):
     def make_nodes(self, context: FPDrawingProvider.Context) -> list[Node]:
         poly = self.poly_def.evaluate(context.evaluator)
         nodes = [self._modify_point(pt, context.transforms) for pt in poly.points]
+
+        # if the polygon is closed, ensure the first point is repeated at the end
+        if poly.close:
+            nodes.append(nodes[0])
+
         return [
             PolygonLine(
                 shape=nodes,
