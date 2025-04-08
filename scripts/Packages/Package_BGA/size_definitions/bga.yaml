@@ -316,6 +316,19 @@ Texas_DSBGA-64_3.415x3.535mm_Layout8x8_P0.4mm:
   layout_x: 8
   layout_y: 8
   mask_margin: 0.05
+Texas_DSBGA-6_0.76x1.16mm_Layout2x3_P0.4mm:
+  device_type: "DSBGA"
+  manufacturer: "Texas"
+  description: "Texas Instruments YFP0006, DSBGA-6"
+  size_source: "https://www.ti.com/lit/ds/symlink/ts5a12301e.pdf#page=23"
+  body_size_x: 0.76 # 0.73 .. 0.79
+  body_size_y: 1.16 # 1.13 .. 1.19
+  overall_height: 0.5 # max
+  pitch: 0.4
+  pad_diameter: 0.23 # from https://www.ti.com/lit/ds/symlink/ts5a12301e.pdf#page=24
+  layout_x: 2
+  layout_y: 3
+  mask_margin: 0.05 # from https://www.ti.com/lit/ds/symlink/ts5a12301e.pdf#page=24
 Texas_DSBGA-8_1.5195x1.5195mm_Layout3x3_P0.5mm:
   device_type: "DSBGA"
   manufacturer: "Texas"
