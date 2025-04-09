@@ -1733,6 +1733,24 @@ TQFP-64_7x7mm_P0.4mm:
   num_pins_x: 16
   num_pins_y: 16
 
+TQFP-100_12x12mm_P0.4mm:
+# inherit JEDEC MS-026 BDE (LQFP) from here
+  device_type: 'TQFP'
+  size_source: 'JEDEC MS-026 variation ADE, 1.00mm body thickness, https://www.jedec.org/document_search?search_api_views_fulltext=MS-026, https://ww1.microchip.com/downloads/en/PackagingSpec/00000049BZ.pdf#page=685'
+  compatible_mpns:
+    - 'S100GK-40-9EV-1 pkg_8212 PTQP0100LD-A' # Intersil / Renesas, https://www.renesas.com/en/package/pkg8212, https://www.renesas.com/ja/document/psc/package-drawing-tfqfp-100pin-ptqp0100ld
+  body_size_x: 12.00
+  body_size_y: 12.00
+  overall_size_x: 14.00
+  overall_size_y: 14.00
+  overall_height: 1.00 .. 1.20 # minimum = A1_min + A2_min
+  lead_width: 0.13 .. 0.18 .. 0.23
+  pad_size_y_overwrite: 0.20 # keep same pad width from old handmade and Microchip land pattern, this way it generates with gap between pads of 0.20 mm
+  lead_len: 0.45 .. 0.60 .. 0.75 # Intersil / Renesas is L = 0.50 +/- 0.20 mm
+  pitch: 0.40
+  num_pins_x: 25
+  num_pins_y: 25
+
 VQFP-128_14x14mm_P0.4mm:
 # JEDEC MS-026 variation AEE, this is actually TQFP (height A = 1.20 mm max),
 # 3D model has height = 1.60 mm, and there's already a LQFP and TQFP in the library,
