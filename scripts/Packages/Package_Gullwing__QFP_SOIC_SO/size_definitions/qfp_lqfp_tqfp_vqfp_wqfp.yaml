@@ -59,7 +59,7 @@ Microchip_PQFP-44_10x10mm_P0.8mm:
   num_pins_x: 11
   num_pins_y: 11
 
-PQFP-64_14x14mm_P0.5mm:
+PQFP-64_14x14mm_P0.8mm:
 # Similar to JEITA 64-001-EB, as well JEDEC MS-022 variation BE
   device_type: 'PQFP'
   size_source: 'https://www.renesas.com/us/en/document/psc/package-drawing-qfp-64pin-prqp0064gb'
@@ -88,6 +88,28 @@ PQFP-64_14x14mm_P0.5mm:
   pitch: 0.8
   num_pins_x: 16
   num_pins_y: 16
+
+MO112AC1_PQFP-52_10x10mm_P0.65mm:
+  device_type: 'PQFP'
+  size_source: 'JEDEC MO-112 variation AC-1, https://www.jedec.org/document_search?search_api_views_fulltext=MO-112, https://www.analog.com/media/en/package-pcb-resources/package/32717196300961s_52_2.pdf'
+  # other source (it's just for reference, there are errors regarding height and JEDEC variant!): https://www.analog.com/media/en/technical-documentation/data-sheets/aduc816.pdf#page=68
+  part_number: 'MO112AC1' # using this because JEDEC MS-022 variation AC has the same body_size_x/y and the generated name will be the same!
+  compatible_mpns:
+    - 'MQFP S-52-2' # Analog Devices
+  additional_tags:
+    - 'high-standoff' # see A1
+  body_size_x: 10.00
+  body_size_y: 10.00
+  overall_size_x: 13.90
+  overall_size_y: 13.90
+  overall_height:
+    maximum: 2.45
+  lead_width: 0.22 .. 0.38
+  lead_len: 0.73 .. 0.88 .. 1.03
+  pitch: 0.65
+  force_small_pitch_ipc_definition: True # if not using it, distance between pads is just 0.15mm
+  num_pins_x: 13
+  num_pins_y: 13
 
 PQFP-100_14x20mm_P0.65mm:
 # Microsemi calls it 'PQ100', height = 3.40 mm max, similar to JEDEC MS-022 variation GC-1

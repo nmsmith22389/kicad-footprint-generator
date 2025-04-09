@@ -2436,6 +2436,38 @@ Microchip_PQFP-44_10x10mm_P0.8mm:
   destination_dir: 'Package_QFP.3dshapes'
   source: 'JEDEC MO-112 variation AA-2, Microchip and Analog Devices, https://www.jedec.org/document_search?search_api_views_fulltext=MO-112, https://ww1.microchip.com/downloads/aemDocuments/documents/OTH/ProductDocuments/DataSheets/20005418B.pdf#page=10, https://www.analog.com/media/en/technical-documentation/data-sheets/ad7722.pdf#page=23'
 
+MO112AC1_PQFP-52_10x10mm_P0.65mm:
+  the: 10.5 # θ2 or θ3, (5+16)/2 = 10.5, from JEDEC
+  tb_s: 0.15
+  c: 0.17 # (0.11 + 0.23)/2
+  R1: 0.13 # lead upper corner/radius, there's only minimum value in JEDEC (R1 there)
+  R2: 0.215 # lead lower corner, (0.13 + 0.30)/2, this is R in JEDEC
+  L: 0.88 # nominal lead length
+  fp_s: 1
+  fp_r: 0.4
+  fp_d: 0.5
+  fp_z: 0.1
+  ef: 0.0
+  cc1: 0.25
+  D1: 10.00
+  E1: 10.00
+  E: 13.90
+  A1: 0.30 # minimum + 0.05 (or any value!), there's no nominal or maximum in AC-1
+  A2: 2.00 # nominal
+  b: 0.30 # (0.22 + 0.38) / 2
+  e: 0.65
+  npx: 13
+  npy: 13
+  epad: null
+  excluded_pins: null
+  model_name: MO112AC1_PQFP-52_10x10mm_P0.65mm # there's other footprint from MS-022 with same E1xD1 which is generated with same name, this is why we are using 'MO112AC1'
+  rotation: -90
+  body_color_key: 'black body'
+  pin_color_key: 'metal grey pins'
+  mark_color_key: 'light brown label'
+  destination_dir: 'Package_QFP.3dshapes'
+  source: 'JEDEC MO-112 variation AC-1 (high standoff), https://www.jedec.org/document_search?search_api_views_fulltext=MO-112, https://www.analog.com/media/en/package-pcb-resources/package/32717196300961s_52_2.pdf'
+
 TQFP-100_14x14mm_P0.5mm_EP5x5mm:
   the: 12.0
   tb_s: 0.15
