@@ -22,6 +22,7 @@ from kilibs.geom import (
     geometricCircle,
     geometricArc,
     geometricLine,
+    Rectangle,
 )
 from kilibs.geom.rounding import (
     round_to_grid,
@@ -492,6 +493,12 @@ def addVDLineWithKeepout(kicad_mod, x, y0, y1, layer, width, keepouts=[], roun=0
         y = y + dy * 2
 
 
+def makeRectWithKeepout(rect: Rectangle, layer, width, keepouts=[], roun=0.001):
+    """Get the lines of a rectangle, minding the keepouts"""
+    lines = rect.get_lines()
+    return makePrimitivesWithKeepout(lines, layer, width, keepouts, roun)
+
+
 # split a rectangle
 def addRectWith(kicad_mod, x, y, w, h, layer, width, roun=0.001):
 	kicad_mod.append(RectLine(start=[round_to_grid(x, roun),round_to_grid(y, roun)], end=[round_to_grid(x+w, roun),round_to_grid(y+h, roun)], layer=layer, width=width))
@@ -499,10 +506,12 @@ def addRectWith(kicad_mod, x, y, w, h, layer, width, roun=0.001):
 
 # split a rectangle so it does not interfere with keepout areas defined as [[x0,x1,y0,y1], ...]
 def addRectWithKeepout(kicad_mod, x, y, w, h, layer, width, keepouts=[], roun=0.001):
-    addHLineWithKeepout(kicad_mod, x, x+w, y, layer,width,keepouts,roun)
-    addHLineWithKeepout(kicad_mod, x, x + w, y+h, layer, width, keepouts, roun)
-    addVLineWithKeepout(kicad_mod, x, y, y+h, layer, width, keepouts, roun)
-    addVLineWithKeepout(kicad_mod, x+w, y, y + h, layer, width, keepouts, roun)
+    rect = Rectangle.by_corner_and_size(
+        Vector2D(x, y), Vector2D(w, h)
+    )
+    kept_out = makeRectWithKeepout(rect, layer, width, keepouts, roun)
+    kicad_mod += kept_out
+
 
 # split a rectangle so it does not interfere with keepout areas defined as [[x0,x1,y0,y1], ...]
 def addRectAndTLMarkWithKeepout(kicad_mod, x, y, w, h, mark_len, layer, width, keepouts=[], roun=0.001):

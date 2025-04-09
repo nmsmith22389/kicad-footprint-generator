@@ -3,6 +3,7 @@ from typing_extensions import Self  # After 3.11 -> typing.Self
 
 from kilibs.geom.vector import Vector2D
 from kilibs.geom.polygon_points import PolygonPoints
+from kilibs.geom.geometric_util import geometricLine
 
 from .rounding import round_to_grid_up, round_to_grid_down
 from .bounding_box import BoundingBox
@@ -154,3 +155,19 @@ class Rectangle:
         new_rect = Rectangle(self.center, self.size)
         new_rect.outset(outset)
         return new_rect
+
+    def get_lines(self):
+
+        """
+        Return the four lines of the rectangle
+        """
+
+        # These are in a slightly wierd order, only because it avoided
+        # some diffs. Feel free to change if you want, it should make no
+        # difference to the graphical outcome.
+        return [
+            geometricLine(start=self.top_left, end=self.top_right),
+            geometricLine(start=self.top_right, end=self.bottom_right),
+            geometricLine(start=self.bottom_left, end=self.bottom_right),
+            geometricLine(start=self.top_left, end=self.bottom_left)
+        ]
