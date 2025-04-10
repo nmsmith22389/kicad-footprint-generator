@@ -2,10 +2,7 @@
 
 set -ex
 
-run_generate() {
-    ./wuerth_smt_spacer.py --params "$1"
-}
+./wuerth_smt_spacer.py --params size_definitions/wuerth_smt_spacer.yaml
+./mountinghole.py size_definitions/hole_sizes.yaml
 
-for file in size_definitions/*.yaml; do
-    run_generate "$file"
-done
+
