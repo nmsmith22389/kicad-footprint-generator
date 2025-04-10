@@ -167,7 +167,9 @@ class Pad(Node):
         self._initLayers(**kwargs)
         self._initMirror(**kwargs)
 
-        self._round_radius_handler = None
+        self._round_radius_handler = kwargs.get("round_radius_handler", None)
+        self.chamfer_size_handler = None
+        self.chamfer_ratio = None
 
         if self.shape == self.SHAPE_OVAL and self.size[0] == self.size[1]:
             self.shape = self.SHAPE_CIRCLE
@@ -177,7 +179,8 @@ class Pad(Node):
             self._initChamferRatio(**kwargs)
             self._initChamferCorners(**kwargs)
 
-            self._round_radius_handler = kwargs["round_radius_handler"]
+            if not self._round_radius_handler:
+                raise KeyError('round_radius_handler not declared for roundrect pads')
 
         if self.shape == Pad.SHAPE_CUSTOM:
             self._initAnchorShape(**kwargs)
