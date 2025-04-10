@@ -24,6 +24,7 @@ try:
     import yaml  # NOQA
 
     import asteval  # NOQA
+    import pyclipper
     import tabulate
 except ImportError:
     print(

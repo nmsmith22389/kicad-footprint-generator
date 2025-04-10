@@ -21,6 +21,7 @@ dependencies = [
     "pyyaml",
     "future",
     "tabulate",
+    "pyclipper"
 ]
 
 # Optional: development dependencies
