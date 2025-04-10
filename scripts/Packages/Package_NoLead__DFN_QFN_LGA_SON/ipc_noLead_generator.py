@@ -16,6 +16,8 @@ from KicadModTree import (
     PolygonLine,
     Rect,
 )
+
+from KicadModTree.util.courtyard_util import add_courtyard
 from kilibs.geom import Direction, Vector2D, BoundingBox, rounding
 from KicadModTree.nodes.specialized.PadArray import PadArray, get_pad_radius_from_arrays
 
@@ -781,23 +783,11 @@ class NoLeadGenerator(FootprintGenerator):
 
         # # ############################ CrtYd ##################################
 
-        off = ipc_data_set['courtyard']
+        offset = ipc_data_set['courtyard']
         grid = self.global_config.courtyard_grid
-
-        cy_box = courtyardFromBoundingBox(bounding_box, off, grid)
-
-        kicad_mod.append(Rect(
-            start={
-                'x': cy_box['left'],
-                'y': cy_box['top']
-            },
-            end={
-                'x': cy_box['right'],
-                'y': cy_box['bottom']
-            },
-            width=self.global_config.courtyard_line_width,
-            layer='F.CrtYd')
-        )
+        width = self.global_config.courtyard_line_width
+        outline = Rect(width=0, layer="F.Fab", start=[-size_x/2, -size_y/2], end=[size_x/2, size_y/2])
+        crt_bounding_box = add_courtyard(kicad_mod, width, grid, offset, outline=outline)
 
         # ######################### Rule Areas ################################
 
@@ -810,7 +800,7 @@ class NoLeadGenerator(FootprintGenerator):
 
         addTextFields(kicad_mod=kicad_mod, configuration=self.global_config,
                       body_edges=body_edge,
-                      courtyard={'top': cy_box['top'], 'bottom': cy_box['bottom']},
+                      courtyard=crt_bounding_box,
                       fp_name=fp_name, text_y_inside_position='center', allow_rotation=True)
 
         # #################### Output and 3d model ############################

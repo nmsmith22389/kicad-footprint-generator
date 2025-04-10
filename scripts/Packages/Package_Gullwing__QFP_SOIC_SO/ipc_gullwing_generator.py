@@ -13,6 +13,7 @@ from KicadModTree import (
     PolygonLine,
     Rect,
 )
+from KicadModTree.util.courtyard_util import add_courtyard
 from kilibs.geom import Direction, Vector2D, BoundingBox
 from KicadModTree.nodes.specialized.PadArray import PadArray, get_pad_radius_from_arrays
 from KicadModTree.nodes.specialized.Cruciform import Cruciform
@@ -578,97 +579,13 @@ class GullwingGenerator(FootprintGenerator):
             kicad_mod.append(EP)
             EP_round_radius = EP.getRoundRadius()
 
-        body_edge = {
-            'left': -dimensions['body_size_x'].nominal / 2,
-            'right': dimensions['body_size_x'].nominal / 2,
-            'top': -dimensions['body_size_y'].nominal / 2,
-            'bottom': dimensions['body_size_y'].nominal / 2
-        }
-
-        bounding_box = {
-            'left': pad_details['left']['center'][0] - pad_details['left']['size'][0] / 2,
-            'right': pad_details['right']['center'][0] + pad_details['right']['size'][0] / 2,
-            'top': pad_details['top']['center'][1] - pad_details['top']['size'][1] / 2,
-            'bottom': pad_details['bottom']['center'][1] + pad_details['bottom']['size'][1] / 2
-        }
-
-        if device_params['num_pins_x'] == 0:
-            bounding_box['top'] = body_edge['top']
-            bounding_box['bottom'] = body_edge['bottom']
-            if EP_size['y'] > dimensions['body_size_y'].nominal:
-                bounding_box['top'] = -EP_size['y'] / 2
-                bounding_box['bottom'] = EP_size['y'] / 2
-
-        if device_params['num_pins_y'] == 0:
-            bounding_box['left'] = body_edge['left']
-            bounding_box['right'] = body_edge['right']
-            if EP_size['x'] > dimensions['body_size_x'].nominal:
-                bounding_box['left'] = -EP_size['x'] / 2
-                bounding_box['right'] = EP_size['x'] / 2
-
-        pad_width = pad_details['top']['size'][0]
-
         # # ############################ CrtYd ##################################
-
         courtyard_offset = ipc_data_set['courtyard']
-        courtyard_grid = self.global_config.courtyard_grid
-        courtyard_line_width = self.global_config.courtyard_line_width
+        grid = self.global_config.courtyard_grid
 
-        def make_courtyard_bbox():
-            cy_t = roundToBase(bounding_box['top'] - courtyard_offset, courtyard_grid)
-            cy_l = roundToBase(bounding_box['left'] - courtyard_offset, courtyard_grid)
-            cy_r = roundToBase(bounding_box['right'] + courtyard_offset, courtyard_grid)
-            cy_b = roundToBase(bounding_box['bottom'] + courtyard_offset, courtyard_grid)
-
-            return BoundingBox(
-                min_pt=Vector2D(cy_l, cy_t),
-                max_pt=Vector2D(cy_r, cy_b)
-            )
-
-        courtyard_bbox = make_courtyard_bbox()
-
-        if device_params['num_pins_y'] == 0 or device_params['num_pins_x'] == 0:
-            # Dual pin-row devices - simple rectangle at the bounding box
-
-            kicad_mod.append(Rect(
-                start=courtyard_bbox.min,
-                end=courtyard_bbox.max,
-                width=courtyard_line_width,
-                layer='F.CrtYd'))
-        else:
-            # QFP
-            cy1 = courtyard_bbox.top
-            cy2 = roundToBase(body_edge['top'] - courtyard_offset, courtyard_grid)
-            cy3 = -roundToBase(
-                device_params['pitch'] * (device_params['num_pins_y'] - 1) / 2.0 +
-                pad_width / 2.0 + courtyard_offset, courtyard_grid)
-
-            cx1 = -roundToBase(
-                device_params['pitch'] * (device_params['num_pins_x'] - 1) / 2.0 +
-                pad_width / 2.0 + courtyard_offset, courtyard_grid)
-            cx2 = roundToBase(body_edge['left'] - courtyard_offset, courtyard_grid)
-            cx3 = courtyard_bbox.left
-
-            crty_poly_tl = [
-                {'x': 0, 'y': cy1},
-                {'x': cx1, 'y': cy1},
-                {'x': cx1, 'y': cy2},
-                {'x': cx2, 'y': cy2},
-                {'x': cx2, 'y': cy3},
-                {'x': cx3, 'y': cy3},
-                {'x': cx3, 'y': 0}
-            ]
-            kicad_mod.append(PolygonLine(polygon=crty_poly_tl,
-                                         layer='F.CrtYd', width=courtyard_line_width))
-            kicad_mod.append(PolygonLine(polygon=crty_poly_tl,
-                                         layer='F.CrtYd', width=courtyard_line_width,
-                                         x_mirror=0))
-            kicad_mod.append(PolygonLine(polygon=crty_poly_tl,
-                                         layer='F.CrtYd', width=courtyard_line_width,
-                                         y_mirror=0))
-            kicad_mod.append(PolygonLine(polygon=crty_poly_tl,
-                                         layer='F.CrtYd', width=courtyard_line_width,
-                                         x_mirror=0, y_mirror=0))
+        outline = Rect(width=0, layer="F.Fab", start=[-size_x/2, -size_y/2], end=[size_x/2, size_y/2])
+        body_edge = {"top": -size_y/2, "bottom": size_y/2, "left": -size_x/2, "right": size_x/2}
+        courtyard_bbox = add_courtyard(kicad_mod, self.global_config.courtyard_line_width, grid, courtyard_offset, outline=outline)
 
         # ############################ SilkS ##################################
         silk_pad_clearance = self.global_config.silk_pad_clearance
@@ -826,7 +743,7 @@ class GullwingGenerator(FootprintGenerator):
             if device_params['num_pins_y'] > 0:
                 # Pins on the left and right side
 
-                pad_to_courtyard_corner_gap = tl_pad_with_clearance_top - courtyard_bbox.top
+                pad_to_courtyard_corner_gap = tl_pad_with_clearance_top - courtyard_bbox["top"]
                 tl_pad_left = tl_pad.at.x - tl_pad.size.x / 2
 
                 # For parts like J-lead/SOJ, there may be no pad extending out past the body
@@ -864,7 +781,7 @@ class GullwingGenerator(FootprintGenerator):
             else:
                 # Pins on the top and bottom side
 
-                pad_to_courtyard_corner_gap = tl_pad_with_clearance_left - courtyard_bbox.left
+                pad_to_courtyard_corner_gap = tl_pad_with_clearance_left - courtyard_bbox["left"]
 
                 # J-lead type parts
                 tl_pad_top = tl_pad.at.y - tl_pad.size.y / 2

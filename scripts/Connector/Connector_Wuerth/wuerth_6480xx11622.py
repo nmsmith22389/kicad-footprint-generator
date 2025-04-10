@@ -6,7 +6,7 @@ import yaml
 from KicadModTree import *
 from scripts.tools.footprint_text_fields import addTextFields
 from scripts.tools.global_config_files import global_config as GC
-
+from KicadModTree.util.courtyard_util import add_courtyard
 
 series = "WR-WTB"
 manufacturer = 'Wuerth'
@@ -115,24 +115,6 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pincount, configurati
     ]
     kicad_mod.append(PolygonLine(polygon=poly_pin1_marker, layer='F.SilkS', width=configuration['silk_line_width']))
 
-
-    ############################# CrtYd ##################################
-    part_x_min = x_min
-    part_x_max = x_max
-    part_y_min = y_min
-    part_y_max = y_max
-
-    cx1 = roundToBase(part_x_min-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
-    cy1 = roundToBase(part_y_min-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
-
-    cx2 = roundToBase(part_x_max+configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
-    cy2 = roundToBase(part_y_max+configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
-
-    kicad_mod.append(RectLine(
-        start=[cx1, cy1], end=[cx2, cy2],
-        layer='F.CrtYd', width=configuration['courtyard_line_width']))
-
-
     ############################# Pads ##################################
     pad_size = [pitch - pad_to_pad_clearance, drill_size + 2*pad_copper_y_solder_length]
     if pad_size[0] - drill_size < 2*min_annular_ring:
@@ -152,11 +134,17 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pincount, configurati
         round_radius_handler=global_config.roundrect_radius_handler,
         **optional_pad_params))
 
+    ############################# CrtYd ##################################
+    crt_offset = configuration['courtyard_offset']['connector']
+    crt_grid = configuration['courtyard_grid']
+    crt_line_width = configuration['courtyard_line_width']
+    crt_bbox = add_courtyard(kicad_mod, crt_line_width, crt_grid, crt_offset)
+
     ######################### Text Fields ###############################
     text_center_y = 1.5
-    body_edge={'left':part_x_min, 'right':part_x_max, 'top':part_y_min, 'bottom':part_y_max}
+    body_edge={'left':x_min, 'right':x_max, 'top':y_min, 'bottom':y_max}
     addTextFields(kicad_mod=kicad_mod, configuration=configuration, body_edges=body_edge,
-        courtyard={'top':cy1, 'bottom':cy2}, fp_name=footprint_name, text_y_inside_position=text_center_y)
+        courtyard=crt_bbox, fp_name=footprint_name, text_y_inside_position=text_center_y)
 
     model3d_path_prefix = configuration.get('3d_model_prefix',global_config.model_3d_prefix)
     model3d_path_suffix = configuration.get('3d_model_suffix',global_config.model_3d_suffix)

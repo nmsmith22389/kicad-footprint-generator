@@ -6,6 +6,7 @@ import yaml
 from KicadModTree import *
 from scripts.tools.footprint_text_fields import addTextFields
 from scripts.tools.global_config_files import global_config as GC
+from KicadModTree.util.courtyard_util import add_courtyard
 
 
 # Function used to generate footprint
@@ -84,21 +85,10 @@ def generate_footprint(global_config: GC.GlobalConfig, params, part_params, mpn,
     kicad_mod.append(Line(start=[silk_top_left[0], silk_bottom_right[1]], end=[silk_bottom_right[0], silk_bottom_right[1]], layer='F.SilkS', width=configuration['silk_line_width']))
 
     # Add courtyard layer
-    courtyard_top_left = [body_top_left[0] - configuration['courtyard_offset']['connector'], body_top_left[1] - configuration['courtyard_offset']['connector']]
-    if params['type'] == 'SMD':
-        if courtyard_top_left[0] > 0 - params['pitch']/2 - params['holes']['offset'] - params['pads']['x']/2 - configuration['courtyard_offset']['connector']:
-            courtyard_top_left[0] = 0 - params['pitch']/2 - params['holes']['offset'] - params['pads']['x']/2 - configuration['courtyard_offset']['connector']
-    else:
-        if courtyard_top_left[0] > 0 - params['pads']['diameter']/2 - configuration['courtyard_offset']['connector']:
-            courtyard_top_left[0] = 0 - params['pads']['diameter']/2 - configuration['courtyard_offset']['connector']
-    courtyard_bottom_right = [body_bottom_right[0] + configuration['courtyard_offset']['connector'], body_bottom_right[1] + configuration['courtyard_offset']['connector']]
-    if params['type'] == 'SMD':
-        if courtyard_bottom_right[0] < params['pitch']/2 + params['holes']['offset'] + params['pads']['x']/2 + configuration['courtyard_offset']['connector']:
-            courtyard_bottom_right[0] = params['pitch']/2 + params['holes']['offset'] + params['pads']['x']/2 + configuration['courtyard_offset']['connector']
-    else:
-        if courtyard_bottom_right[0] < params['pitch'] + 2*params['holes']['offset'] + params['pads']['diameter']/2 + configuration['courtyard_offset']['connector']:
-            courtyard_bottom_right[0] = params['pitch'] + 2*params['holes']['offset'] + params['pads']['diameter']/2 + configuration['courtyard_offset']['connector']
-    kicad_mod.append(RectLine(start=courtyard_top_left, end=courtyard_bottom_right, layer='F.CrtYd', width=configuration['courtyard_line_width']))
+    courtyard_offset = configuration['courtyard_offset']['connector']
+    courtyard_grid = configuration['courtyard_grid']
+    courtyard_line_width = configuration['courtyard_line_width']
+    add_courtyard(kicad_mod, courtyard_line_width, courtyard_grid, courtyard_offset)
 
     # Add texts
     body_edge={'left': body_top_left[0], 'right': body_bottom_right[0], 'top': body_top_left[1], 'bottom': body_bottom_right[1]}

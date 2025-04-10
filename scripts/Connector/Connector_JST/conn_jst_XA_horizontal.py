@@ -25,6 +25,7 @@ from KicadModTree import *
 from scripts.tools.drawing_tools import round_to_grid
 from scripts.tools.footprint_text_fields import addTextFields
 from scripts.tools.global_config_files import global_config as GC
+from KicadModTree.util.courtyard_util import add_courtyard
 
 series = "XA"
 manufacturer = "JST"
@@ -257,43 +258,6 @@ def generate_one_footprint(
                 )
             )
 
-    ########################### CrtYd ################################
-    part_x_min = x_min
-    part_x_max = x_max
-    part_y_min = y_min
-    part_y_max = y_max
-    offset = global_config.get_courtyard_offset(GC.GlobalConfig.CourtyardType.CONNECTOR)
-    grid = global_config.courtyard_grid
-
-    cx1 = round_to_grid(part_x_min - offset, grid)
-    cy1 = round_to_grid(part_y_min - offset, grid)
-
-    cx2 = round_to_grid(part_x_max + offset, grid)
-    cy2 = round_to_grid(part_y_max + offset, grid)
-
-    cx3 = round_to_grid(part_x_max - body_back_protrusion_width - offset, grid)
-    cy3 = round_to_grid(-pad_size[1] / 2 - offset, grid)
-
-    cx4 = round_to_grid(part_x_min + body_back_protrusion_width + offset, grid)
-
-    kicad_mod.append(
-        PolygonLine(
-            polygon=[
-                {"x": cx1, "y": cy1},
-                {"x": cx1, "y": cy2},
-                {"x": cx2, "y": cy2},
-                {"x": cx2, "y": cy1},
-                {"x": cx3, "y": cy1},
-                {"x": cx3, "y": cy3},
-                {"x": cx4, "y": cy3},
-                {"x": cx4, "y": cy1},
-                {"x": cx1, "y": cy1},
-            ],
-            layer="F.CrtYd",
-            width=global_config.courtyard_line_width,
-        )
-    )
-
     ########################### Fab Outline ################################
     tmp_x1 = x_min + body_back_protrusion_width
     tmp_x2 = x_max - body_back_protrusion_width
@@ -348,6 +312,12 @@ def generate_one_footprint(
                 size=hook_size,
             )
         )
+
+    ########################### CrtYd ################################
+    crt_offset = global_config.get_courtyard_offset(GC.GlobalConfig.CourtyardType.CONNECTOR)
+    crt_grid = global_config.courtyard_grid
+    crt_line_width = global_config.courtyard_line_width
+    crt_bbox = add_courtyard(kicad_mod, crt_line_width, crt_grid, crt_offset)
 
     ########################### Pin 1 marker ################################
     poly_pin1_marker = [
@@ -421,16 +391,16 @@ def generate_one_footprint(
     ######################### Text Fields ###############################
     text_center_y = 2.5
     body_edge = {
-        "left": part_x_min,
-        "right": part_x_max,
-        "top": part_y_min,
-        "bottom": part_y_max,
+        "left": x_min,
+        "right": x_max,
+        "top": y_min,
+        "bottom": y_max,
     }
     addTextFields(
         kicad_mod=kicad_mod,
         configuration=configuration,
         body_edges=body_edge,
-        courtyard={"top": cy1, "bottom": cy2},
+        courtyard=crt_bbox,
         fp_name=footprint_name,
         text_y_inside_position=text_center_y,
     )
