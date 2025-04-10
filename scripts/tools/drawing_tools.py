@@ -423,15 +423,61 @@ def addPolyLineWithKeepout(kicad_mod, poly, layer, width, keepouts=[], roun=0.00
             addLineWithKeepout(kicad_mod, line, layer, width, keepouts, roun)
 
 
-def makePrimitivesWithKeepout(primitives: list[geometricLine | geometricArc | geometricCircle],
-                                layer: str, width: float, keepouts: list[Keepout], roun=0.001) -> list[Node]:
+def makeNodesWithKeepout(
+    geom_items: list[geometricLine | geometricArc | geometricCircle | Rectangle],
+    layer: str,
+    width: float,
+    keepouts: list[Keepout],
+    roun=0.001,
+    transform: Vector2D = Vector2D(0, 0),
+) -> list[Node]:
     """
-    Turn a list of primitives into a list of nodes, keeping the keepouts in mind.
+    Turn a list of geometric items into a list of nodes, keeping the keepouts in mind.
 
     Eventually we should do this with a transparent Keepout Node, as that will handle Translations, say,
     but for now this centralises logic.
+
+    Transform is a translation vector to apply to the primitives before applying the keepouts. Which is
+    a mediocre substitute for a proper Translation, but it does work quite well for most practical cases
+    and again centralises logic here for later refactoring.
     """
-    kept_out_prims = applyKeepouts(primitives, keepouts)
+
+    def get_kept_out(p):
+        xfrmed = None
+        if isinstance(p, geometricLine):
+            xfrmed = geometricLine(
+                start=p.start_pos + transform,
+                end=p.end_pos + transform,
+            )
+        elif isinstance(p, geometricCircle):
+            xfrmed = geometricCircle(
+                center=p.center_pos + transform,
+                radius=p.radius,
+            )
+        elif isinstance(p, geometricArc):
+            xfrmed = geometricArc(
+                center=p.center_pos + transform,
+                start=p.start_pos + transform,
+                angle=p.angle,
+            )
+        else:
+            raise ValueError(f"Unknown primitive type for transform: {type(p)}")
+
+        return applyKeepouts([xfrmed], keepouts)
+
+    if not isinstance(geom_items, list):
+        geom_items = [geom_items]
+
+    decomposed = []
+    for item in geom_items:
+        if isinstance(item, Rectangle):
+            decomposed += item.get_lines()
+        else:
+            decomposed.append(item)
+
+    kept_out_prims = []
+    for item in decomposed:
+        kept_out_prims += get_kept_out(item)
     return _add_kept_out(kept_out_prims, layer, width, roun)
 
 
@@ -493,12 +539,6 @@ def addVDLineWithKeepout(kicad_mod, x, y0, y1, layer, width, keepouts=[], roun=0
         y = y + dy * 2
 
 
-def makeRectWithKeepout(rect: Rectangle, layer, width, keepouts=[], roun=0.001):
-    """Get the lines of a rectangle, minding the keepouts"""
-    lines = rect.get_lines()
-    return makePrimitivesWithKeepout(lines, layer, width, keepouts, roun)
-
-
 # split a rectangle
 def addRectWith(kicad_mod, x, y, w, h, layer, width, roun=0.001):
 	kicad_mod.append(RectLine(start=[round_to_grid(x, roun),round_to_grid(y, roun)], end=[round_to_grid(x+w, roun),round_to_grid(y+h, roun)], layer=layer, width=width))
@@ -509,7 +549,7 @@ def addRectWithKeepout(kicad_mod, x, y, w, h, layer, width, keepouts=[], roun=0.
     rect = Rectangle.by_corner_and_size(
         Vector2D(x, y), Vector2D(w, h)
     )
-    kept_out = makeRectWithKeepout(rect, layer, width, keepouts, roun)
+    kept_out = makeNodesWithKeepout(rect, layer, width, keepouts, roun)
     kicad_mod += kept_out
 
 
