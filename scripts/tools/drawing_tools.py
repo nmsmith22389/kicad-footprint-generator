@@ -23,6 +23,7 @@ from kilibs.geom import (
     geometricArc,
     geometricLine,
     Rectangle,
+    PolygonPoints,
 )
 from kilibs.geom.rounding import (
     round_to_grid,
@@ -415,16 +416,9 @@ def addEllipseWithKeepout(kicad_mod, x, y, w, h, layer, width, keepouts=[], roun
     addArcByAnglesWithKeepout(kicad_mod=kicad_mod, x=x, y=y+radius*math.cos(alpha), radius=radius, angle_start=180-alpha/3.1415*180, angle_end=180+alpha/3.1415*180, keepouts=keepouts, layer=layer, width=width, roun=roun);
     addArcByAnglesWithKeepout(kicad_mod=kicad_mod, x=x, y=y-radius*math.cos(alpha), radius=radius, angle_start=alpha/3.1415*180, angle_end=-alpha/3.1415*180, keepouts=keepouts, layer=layer, width=width, roun=roun);
 
-# split an arbitrary line so it does not interfere with keepout areas defined as [[x0,x1,y0,y1], ...]
-def addPolyLineWithKeepout(kicad_mod, poly, layer, width, keepouts=[], roun=0.001):
-    if len(poly) > 1:
-        for p in range(0, len(poly) - 1):
-            line = geometricLine(start=poly[p], end=poly[p+1])
-            addLineWithKeepout(kicad_mod, line, layer, width, keepouts, roun)
-
 
 def makeNodesWithKeepout(
-    geom_items: list[geometricLine | geometricArc | geometricCircle | Rectangle],
+    geom_items: list[geometricLine | geometricArc | geometricCircle | Rectangle | PolygonPoints],
     layer: str,
     width: float,
     keepouts: list[Keepout],
@@ -472,6 +466,9 @@ def makeNodesWithKeepout(
     for item in geom_items:
         if isinstance(item, Rectangle):
             decomposed += item.get_lines()
+        elif isinstance(item, PolygonPoints):
+            for i, pt in enumerate(item.nodes[:-1]):
+                decomposed.append(geometricLine(start=pt, end=item.nodes[i + 1]))
         else:
             decomposed.append(item)
 
@@ -551,6 +548,15 @@ def addRectWithKeepout(kicad_mod, x, y, w, h, layer, width, keepouts=[], roun=0.
     )
     kept_out = makeNodesWithKeepout(rect, layer, width, keepouts, roun)
     kicad_mod += kept_out
+
+
+def makeRectWithKeepout(rect: Rectangle, layer, width, keepouts=[], roun=0.001):
+    """
+    Draw a rectangle minding the keepouts
+    """
+    lines = rect.get_lines()
+    parts_out = applyKeepouts(lines, keepouts)
+    return _add_kept_out(parts_out, layer, width, roun)
 
 
 # split a rectangle so it does not interfere with keepout areas defined as [[x0,x1,y0,y1], ...]

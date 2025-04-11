@@ -707,7 +707,6 @@ def build_din41612_connector_horizontal(mod, series, direction, pins, rows, conf
                     **arrow_args,
                 )
             )
-        
 
 
 def build_din41612_connector_vertical(mod, series, direction, pins, rows, config):
@@ -910,7 +909,6 @@ def build_din41612_connector_vertical(mod, series, direction, pins, rows, config
         for sc in range(special_contacts_nr_half):
             # ToDo: Makrings
 
-            
             # top
             mod.append(
                 PolygonLine(
@@ -952,25 +950,28 @@ def build_din41612_connector_vertical(mod, series, direction, pins, rows, config
     # highlight connector shape on silk
     highlight_expand = 0
     he = highlight_expand
-    conn_highlight = [
-        Vector2D(conn_left - he, conn_top - he),
-        Vector2D(conn_right - config["nodge_height"] + he, conn_top - he),
-        Vector2D(
-            conn_right - config["nodge_height"] + he,
-            conn_top + config["nodge_width"] - he,
-        ),
-        Vector2D(conn_right + he, conn_top + config["nodge_width"] - he),
-        Vector2D(conn_right + he, conn_bottom - config["nodge_width"] + he),
-        Vector2D(
-            conn_right - config["nodge_height"] + he,
-            conn_bottom - config["nodge_width"] + he,
-        ),
-        Vector2D(conn_right - config["nodge_height"] + he, conn_bottom + he),
-        Vector2D(conn_left - he, conn_bottom + he),
-        Vector2D(conn_left - he, conn_top - he),
-    ]
-    addPolyLineWithKeepout(
-        mod, poly=conn_highlight, layer="F.SilkS", width=0.12, keepouts=keepouts
+    conn_highlight = PolygonPoints(
+        nodes=[
+            Vector2D(conn_left - he, conn_top - he),
+            Vector2D(conn_right - config["nodge_height"] + he, conn_top - he),
+            Vector2D(
+                conn_right - config["nodge_height"] + he,
+                conn_top + config["nodge_width"] - he,
+            ),
+            Vector2D(conn_right + he, conn_top + config["nodge_width"] - he),
+            Vector2D(conn_right + he, conn_bottom - config["nodge_width"] + he),
+            Vector2D(
+                conn_right - config["nodge_height"] + he,
+                conn_bottom - config["nodge_width"] + he,
+            ),
+            Vector2D(conn_right - config["nodge_height"] + he, conn_bottom + he),
+            Vector2D(conn_left - he, conn_bottom + he),
+            Vector2D(conn_left - he, conn_top - he),
+        ]
+    )
+
+    mod += makeNodesWithKeepout(
+        conn_highlight, layer="F.SilkS", width=0.12, keepouts=keepouts
     )
 
 

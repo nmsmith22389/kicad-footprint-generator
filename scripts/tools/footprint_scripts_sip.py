@@ -73,17 +73,17 @@ def makeSIPVertical(pins, rm, ddrill, pad, package_size, left_offset, top_offset
     # create SILKSCREEN-layer
     addRectWithKeepout(kicad_mod, l_slk, t_slk, w_slk, h_slk, keepouts=keepout, layer='F.SilkS', width=lw_slk)
     if pin1TL:
-        addPolyLineWithKeepout(kicad_mod, [
+        kicad_mod += makeNodesWithKeepout(PolygonPoints(nodes=[
                                             [l_slk-2*lw_slk, t_slk+pin1size],
                                             [l_slk-2*lw_slk, t_slk-2*lw_slk],
                                             [l_slk+pin1size, t_slk-2*lw_slk],
-                                            ], keepouts=keepout, layer='F.SilkS', width=lw_slk)
+                                            ]), keepouts=keepout, layer='F.SilkS', width=lw_slk)
     else:
-        addPolyLineWithKeepout(kicad_mod, [
+        kicad_mod += makeNodesWithKeepout(PolygonPoints(nodes=[
                                             [l_slk-2*lw_slk, t_slk+h_slk-pin1size],
                                             [l_slk-2*lw_slk, t_slk+h_slk+2*lw_slk],
                                             [l_slk+pin1size, t_slk+h_slk+2*lw_slk],
-                                            ], keepouts=keepout, layer='F.SilkS', width=lw_slk)
+                                            ]), keepouts=keepout, layer='F.SilkS', width=lw_slk)
 
     # create courtyard
     kicad_mod.append(
@@ -119,7 +119,7 @@ def makeSIPHorizontal(pins, rm, ddrill, pad, package_size, left_offset, pin_bott
     t_crt = t_fab  - crt_offset
 
     # Pin 1 maker
-    l_pin1 = l_slk + left_offset - padx / 2 - 2 * lw_slk
+    l_pin1 = l_slk + left_offset - padx / 2 - global_config.silk_pad_offset
     h_pin1 = pin_bottom_offset + pady / 2 - lw_slk
 
     print(footprint_name)
@@ -158,10 +158,17 @@ def makeSIPHorizontal(pins, rm, ddrill, pad, package_size, left_offset, pin_bott
 
     # create SILKSCREEN-layer
     addRectWithKeepout(kicad_mod, l_slk, t_slk, w_slk, h_slk, keepouts=keepout, layer='F.SilkS', width=lw_slk)
-    addPolyLineWithKeepout(kicad_mod, [
-                                        [l_pin1, t_slk + h_slk],
-                                        [l_pin1, t_slk + h_slk + h_pin1]
-                                        ], layer='F.SilkS', width=lw_slk)
+    kicad_mod += makeNodesWithKeepout(
+        PolygonPoints(
+            nodes=[
+                [l_pin1, t_slk + h_slk],
+                [l_pin1, t_slk + h_slk + h_pin1],
+            ]
+        ),
+        layer="F.SilkS",
+        width=lw_slk,
+        keepouts=keepout,
+    )
 
     # create courtyard
     kicad_mod.append(
