@@ -23,7 +23,7 @@ from scripts.tools.global_config_files import global_config as GC
 #
 #       <----RM---->
 def makeDIP(pins, rm, pinrow_distance_in, package_width, overlen_top, overlen_bottom, ddrill, pad, smd_pads=False,
-            socket_width=0, socket_height=0, socket_pinrow_distance_offset=0, tags_additional=[],
+            socket_width=0, socket_height=0, socket_pinrow_distance_offset=0, tags_additional=[], tags_additional_non3d=[],
             lib_name="Package_DIP", offset3d=[0, 0, 0], scale3d=[1, 1, 1], rotate3d=[0, 0, 0], DIPName='DIP', DIPDescription='though-hole mounted DIP', DIPTags='THT DIP DIL PDIP',
             prefix_name = "", skip_pin = [], skip_count = False, right_cnt_start = -1,
             datasheet=None,
@@ -92,6 +92,12 @@ def makeDIP(pins, rm, pinrow_distance_in, package_width, overlen_top, overlen_bo
     tags = DIPTags+" {0}mm {1}mm {2}mil".format(rm, pinrow_distance, int(pinrow_distance / 2.54 * 100))
     if (len(tags_additional) > 0):
         for t in tags_additional:
+            footprint_name = footprint_name + "_" + t
+            description = description + ", " + t
+            tags = tags + " " + t
+    model_name=footprint_name
+    if (len(tags_additional_non3d) > 0):
+        for t in tags_additional_non3d:
             footprint_name = footprint_name + "_" + t
             description = description + ", " + t
             tags = tags + " " + t
@@ -222,7 +228,7 @@ def makeDIP(pins, rm, pinrow_distance_in, package_width, overlen_top, overlen_bo
 
     # add model
     kicad_modg.append(
-        Model(filename=global_config.model_3d_prefix + lib_name + ".3dshapes/" + footprint_name + global_config.model_3d_suffix, at=offset3d, scale=scale3d, rotate=rotate3d))
+        Model(filename=global_config.model_3d_prefix + lib_name + ".3dshapes/" + model_name + global_config.model_3d_suffix, at=offset3d, scale=scale3d, rotate=rotate3d))
 
     # write file
     lib = KicadPrettyLibrary(lib_name, outdir)

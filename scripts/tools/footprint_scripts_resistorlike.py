@@ -541,7 +541,7 @@ def makeResistorAxialVertical(seriesname,rm, rmdisp, l, d, ddrill, R_POW, type="
 #
 # deco="none","elco" (round),"tantal" (simple),"chokewire" (concentric)
 
-def makeResistorRadial(seriesname, rm, w, h, ddrill, R_POW, innerw=0,innerh=0,rm2=0, pins=2, vlines=False,w2=0, type="simple", x_3d=[0, 0, 0], s_3d=[1,1,1], has3d=1, specialfpname="", specialtags=[], add_description="", classname="R", lib_name="Resistor_THT", name_additions=[], deco="none",height3d=10, additionalPins=[]):
+def makeResistorRadial(seriesname, rm, w, h, ddrill, R_POW, innerw=0,innerh=0,rm2=0, pins=2, vlines=False,w2=0, type="simple", x_3d=[0, 0, 0], s_3d=[1,1,1], has3d=1, specialfpname="", specialtags=[], add_description="", classname="R", lib_name="Resistor_THT", name_additions=[], deco="none",height3d=10, additionalPins=[], name_additions_non3d=[]):
 
     global_config = GC.DefaultGlobalConfig()
 
@@ -745,6 +745,10 @@ def makeResistorRadial(seriesname, rm, w, h, ddrill, R_POW, innerw=0,innerh=0,rm
     for n in name_additions:
         if len(n)>0:
             footprint_name=footprint_name+"_"+n
+    model_name=footprint_name
+    for n in name_additions_non3d:
+        if len(n)>0:
+            footprint_name=footprint_name+"_"+n
 
     print(footprint_name)
 
@@ -895,7 +899,7 @@ def makeResistorRadial(seriesname, rm, w, h, ddrill, R_POW, innerw=0,innerh=0,rm
 
     # add model
     if (has3d != 0):
-        model_filename = global_config.model_3d_prefix + lib_name + ".3dshapes/" + footprint_name + global_config.model_3d_suffix
+        model_filename = global_config.model_3d_prefix + lib_name + ".3dshapes/" + model_name + global_config.model_3d_suffix
         kicad_modg.append(Model(filename=model_filename, at=x_3d, scale=s_3d, rotate=[0, 0, 0]))
 
     lib = KicadPrettyLibrary(lib_name, None)
