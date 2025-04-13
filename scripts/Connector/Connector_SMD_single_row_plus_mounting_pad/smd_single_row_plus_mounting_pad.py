@@ -13,7 +13,8 @@ import argparse
 import yaml
 from math import sqrt
 
-from kilibs.geom import Rectangle
+from kilibs.geom import Rectangle, Direction
+from kilibs.declarative_defs import evaluable_defs as EDs
 from KicadModTree import *
 from scripts.tools.declarative_def_tools.connectors_config import (
     ConnectorsConfiguration,
@@ -71,6 +72,9 @@ class SMDSingleRowPlusMPProperties:
 
     pin_range: list[int]
     """The list of pin counts that this series supports"""
+
+    pin1_fab_marker_y: EDs.EvaluableScalar | None
+    """Manual override for where to place the "root" of the pin1 fab marker"""
 
     automatic_silk_outline: bool
 
@@ -147,6 +151,12 @@ class SMDSingleRowPlusMPProperties:
         )
 
         self.text_inside_pos = series_def.get("text_inside_pos", "center")
+
+        self.pin1_fab_marker_y = (
+            EDs.EvaluableScalar(series_def["pin1_fab_marker_y"])
+            if "pin1_fab_marker_y" in series_def
+            else None
+        )
 
         self.automatic_silk_outline = series_def.get("automatic_silk_outline", True)
 
@@ -522,38 +532,69 @@ def generate_one_footprint(
 
     marker_len = global_config.fab_pin1_marker_length
 
-    if series_props.pins_toward_bottom:
-        poly_pin1_marker = [
-            {'x':-dimension_A/2 - marker_len/2,'y': body_rect.bottom},
-            {'x':-dimension_A/2,'y': body_rect.bottom - marker_len/sqrt(2)},
-            {'x':-dimension_A/2 + marker_len/2,'y': body_rect.bottom}
-        ]
-        poly_pin1_marker_small = [
-            {'x':-dimension_A/2-marker_len/4,'y': cy2 + marker_len/sqrt(8)},
-            {'x':-dimension_A/2,'y': cy2},
-            {'x':-dimension_A/2+marker_len/4,'y': cy2 + marker_len/sqrt(8)},
-            {'x':-dimension_A/2-marker_len/4,'y': cy2 + marker_len/sqrt(8)}
-        ]
+    if series_props.pin1_fab_marker_y is not None:
+        pin1_fab_marker_y = series_props.pin1_fab_marker_y.evaluate(fp_evaluator)
     else:
-        poly_pin1_marker = [
-            {'x':-dimension_A/2 - marker_len/2,'y': body_rect.top},
-            {'x':-dimension_A/2,'y': body_rect.top + marker_len/sqrt(2)},
-            {'x':-dimension_A/2 + marker_len/2,'y': body_rect.top}
-        ]
-        poly_pin1_marker_small = [
-            {'x':-dimension_A/2-marker_len/4,'y': cy1 - marker_len/sqrt(8)},
-            {'x':-dimension_A/2,'y': cy1},
-            {'x':-dimension_A/2+marker_len/4,'y': cy1 - marker_len/sqrt(8)},
-            {'x':-dimension_A/2-marker_len/4,'y': cy1 - marker_len/sqrt(8)}
-        ]
+        # Auto position
+        if series_props.pins_toward_bottom:
+            pin1_fab_marker_y = body_rect.bottom
+        else:
+            pin1_fab_marker_y = body_rect.top
 
-    if modified_pinside_x_inner < -dimension_A/2 - marker_len/2:
-        kicad_mod.append(PolygonLine(polygon=poly_pin1_marker, layer='F.Fab', width=global_config.fab_line_width))
+        # And also autosize
+
+        # How far is the pin 1 centre from the nearest kink in the line?
+        distance_to_edge = abs(modified_pinside_x_inner - (-dimension_A / 2))
+        marker_len = min(distance_to_edge * 2, marker_len)
+
+    if marker_len < 0.5:
+        raise ValueError(
+            "The automatic pin 1 fab marker is too small. "
+            "You should use 'pin1_fab_marker_y' to put it in the right place"
+        )
+
+    # Work out which way it points
+    if pin1_fab_marker_y > body_rect.center.y:
+        pin1_fab_marker_dir = Direction.NORTH
     else:
-        kicad_mod.append(PolygonLine(polygon=poly_pin1_marker_small, layer='F.Fab', width=global_config.fab_line_width))
+        pin1_fab_marker_dir = Direction.SOUTH
+
+    # draw_pin1_chevron_on_hline is what we really need but it's a lot of diffs
+    # and we should change the silk arrow at the same time.
+    pin1_chevron_pts = [
+        [-dimension_A / 2 - marker_len / 2, pin1_fab_marker_y],
+        # apex: point it the right way
+        [
+            -dimension_A / 2,
+            (
+                pin1_fab_marker_y
+                + (marker_len / sqrt(2))
+                * (1 if (pin1_fab_marker_dir == Direction.SOUTH) else -1)
+            ),
+        ],
+        [-dimension_A / 2 + marker_len / 2, pin1_fab_marker_y],
+    ]
+    kicad_mod += PolygonLine(
+        nodes=pin1_chevron_pts, layer="F.Fab", width=global_config.fab_line_width
+    )
+
+    if series_props.pins_toward_bottom:
+        poly_pin1_marker_silk = [
+            [-dimension_A/2-marker_len/4, cy2 + marker_len/sqrt(8)],
+            [-dimension_A/2, cy2],
+            [-dimension_A/2+marker_len/4, cy2 + marker_len/sqrt(8)],
+            [-dimension_A/2-marker_len/4, cy2 + marker_len/sqrt(8)],
+        ]
+    else:
+        poly_pin1_marker_silk = [
+            [-dimension_A/2-marker_len/4, cy1 - marker_len/sqrt(8)],
+            [-dimension_A/2, cy1],
+            [-dimension_A/2+marker_len/4, cy1 - marker_len/sqrt(8)],
+            [-dimension_A/2-marker_len/4, cy1 - marker_len/sqrt(8)]
+        ]
 
     if needs_additional_silk_pin1_marker:
-        kicad_mod.append(PolygonLine(polygon=poly_pin1_marker_small, layer='F.SilkS', width=global_config.silk_line_width))
+        kicad_mod.append(PolygonLine(polygon=poly_pin1_marker_silk, layer='F.SilkS', width=global_config.silk_line_width))
 
     ######################### Text Fields ###############################
     addTextFields(kicad_mod=kicad_mod, configuration=global_config, body_edges=body_rect.bounding_box,
