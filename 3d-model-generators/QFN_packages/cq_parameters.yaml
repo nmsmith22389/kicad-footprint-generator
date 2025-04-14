@@ -6051,6 +6051,44 @@ WSON-10-1EP_4x4mm_P0.8mm_EP2.6x3mm:
   mark_color_key: light brown label
   source: 'https://www.ti.com/lit/ml/mpss046b/mpss046b.pdf?ts=1728800628041&ref_url=https%253A%252F%252Fwww.ti.com%252Fpackaging%252Fdocs%252Fsearchtipackages.tsp%253FpackageName%253DSON'
 
+
+Texas_DLH0010A_WSON-10-1EP_2.2x2mm_P0.4mm_EP0.9x1.5mm:
+  c: 0.1
+  L: 0.3
+  fp_s: True
+  fp_r: 0.25
+  fp_d: 0.1
+  fp_dx: null
+  fp_dy: null
+  fp_z: 0.01
+  ef: 0.0
+  cce: 0.0
+  D: 2
+  E: 2.2
+  A1: 0.025
+  A2: 0.775 # 0.8-A1
+  b: 0.2
+  e: 0.4
+  m: 0.0
+  ps: square
+  npx: 5
+  npy: 0
+  epad: [1.5, 0.9]
+  epad_offsetX: null
+  epad_offsetY: null
+  epad_n: null
+  epad_pitch: null
+  excluded_pins: null
+  model_name: Texas_DLH0010A_WSON-10-1EP_2.2x2mm_P0.4mm_EP0.9x1.5mm
+  rotation: -90
+  destination_dir: Package_DFN_QFN.3dshapes
+  body_color_key: black body
+  pin_shapes: null
+  pin_color_key: metal grey pins
+  mark_color_key: light brown label
+  source: 'https://www.ti.com/lit/gpn/BQ25185'
+
+
 WSON-12-1EP_1.35x2.5mm_P0.4mm_EP0.4x2mm:
   c: 0.2
   L: 0.25

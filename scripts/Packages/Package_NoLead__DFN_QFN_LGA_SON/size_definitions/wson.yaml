@@ -731,6 +731,28 @@ WSON-10-1EP_4x4mm_P0.8mm_EP2.6x3mm:
   #include_suffix_in_3dpath: 'False'
   #include_pad_size: 'fp_name_only' # 'both' | 'none' (default)
 
+Texas_DLH0010A_WSON-10-1EP_2.2x2mm_P0.4mm_EP0.9x1.5mm:
+  device_type: 'WSON'
+  manufacturer: 'Texas'
+  part_number: 'DLH0010A'
+  size_source: 'https://www.ti.com/lit/gpn/BQ25185'
+  body_size_x: 2.1 .. 2.3
+  body_size_y: 1.9 .. 2.1
+  overall_height: 0.8 #max
+  lead_width: 0.15 .. 0.25
+  lead_len: 0.25 .. 0.35
+  EP_size_x: 0.8 .. 1.0
+  EP_size_y: 1.4 .. 1.6
+
+  EP_paste_coverage: 0.88
+
+  pitch: 0.4
+  num_pins_x: 0
+  num_pins_y: 5
+  thermal_vias:
+    count: [1,2]
+    drill: 0.2
+
 WSON-12-1EP_4x4mm_P0.5mm_EP2.6x3mm:
   device_type: 'WSON'
   library: Package_SON
