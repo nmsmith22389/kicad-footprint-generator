@@ -6,7 +6,7 @@ import yaml
 from KicadModTree import *
 from scripts.tools.footprint_text_fields import addTextFields
 from scripts.tools.global_config_files import global_config as GC
-from KicadModTree.util.courtyard_util import add_courtyard
+from KicadModTree.util.courtyard_builder import CourtyardBuilder
 
 
 # Function used to generate footprint
@@ -85,15 +85,18 @@ def generate_footprint(global_config: GC.GlobalConfig, params, part_params, mpn,
     kicad_mod.append(Line(start=[silk_top_left[0], silk_bottom_right[1]], end=[silk_bottom_right[0], silk_bottom_right[1]], layer='F.SilkS', width=configuration['silk_line_width']))
 
     # Add courtyard layer
-    courtyard_offset = configuration['courtyard_offset']['connector']
-    courtyard_grid = configuration['courtyard_grid']
-    courtyard_line_width = configuration['courtyard_line_width']
-    add_courtyard(kicad_mod, courtyard_line_width, courtyard_grid, courtyard_offset)
+    crt_offset = global_config.get_courtyard_offset(GC.GlobalConfig.CourtyardType.CONNECTOR)
+    cb = CourtyardBuilder.from_node(
+        node=kicad_mod,
+        global_config=global_config,
+        offset_fab=crt_offset
+        )
+    kicad_mod += cb.node
 
     # Add texts
     body_edge={'left': body_top_left[0], 'right': body_bottom_right[0], 'top': body_top_left[1], 'bottom': body_bottom_right[1]}
     addTextFields(kicad_mod=kicad_mod, configuration=configuration, body_edges=body_edge, fp_name=fp_name, text_y_inside_position='top',
-        courtyard={'top': body_edge['top'] - configuration['courtyard_offset']['connector'], 'bottom': body_edge['bottom'] + configuration['courtyard_offset']['connector'] + 0.2})
+        courtyard={'top': body_edge['top'] - crt_offset, 'bottom': body_edge['bottom'] + crt_offset + 0.2})
 
     # 3D model definition
     lib_name = "Connector_Wuerth"

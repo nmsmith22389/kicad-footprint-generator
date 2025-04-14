@@ -6,7 +6,7 @@ import yaml
 from KicadModTree import *
 from scripts.tools.footprint_text_fields import addTextFields
 from scripts.tools.global_config_files import global_config as GC
-from KicadModTree.util.courtyard_util import add_courtyard
+from KicadModTree.util.courtyard_builder import CourtyardBuilder
 
 series = "WR-WTB"
 manufacturer = 'Wuerth'
@@ -135,16 +135,19 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pincount, configurati
         **optional_pad_params))
 
     ############################# CrtYd ##################################
-    crt_offset = configuration['courtyard_offset']['connector']
-    crt_grid = configuration['courtyard_grid']
-    crt_line_width = configuration['courtyard_line_width']
-    crt_bbox = add_courtyard(kicad_mod, crt_line_width, crt_grid, crt_offset)
+    crt_offset = global_config.get_courtyard_offset(GC.GlobalConfig.CourtyardType.CONNECTOR)
+    cb = CourtyardBuilder.from_node(
+        node=kicad_mod,
+        global_config=global_config,
+        offset_fab=crt_offset
+        )
+    kicad_mod += cb.node
 
     ######################### Text Fields ###############################
     text_center_y = 1.5
     body_edge={'left':x_min, 'right':x_max, 'top':y_min, 'bottom':y_max}
     addTextFields(kicad_mod=kicad_mod, configuration=configuration, body_edges=body_edge,
-        courtyard=crt_bbox, fp_name=footprint_name, text_y_inside_position=text_center_y)
+        courtyard=cb.bbox, fp_name=footprint_name, text_y_inside_position=text_center_y)
 
     model3d_path_prefix = configuration.get('3d_model_prefix',global_config.model_3d_prefix)
     model3d_path_suffix = configuration.get('3d_model_suffix',global_config.model_3d_suffix)

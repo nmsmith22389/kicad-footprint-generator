@@ -14,11 +14,10 @@ from KicadModTree import (
     Line,
     Pad,
     PolygonLine,
-    Rect,
 )
 
-from KicadModTree.util.courtyard_util import add_courtyard
-from kilibs.geom import Direction, Vector2D, BoundingBox, rounding
+from KicadModTree.util.courtyard_builder import CourtyardBuilder
+from kilibs.geom import Direction, Vector2D, BoundingBox, Rectangle, rounding
 from KicadModTree.nodes.specialized.PadArray import PadArray, get_pad_radius_from_arrays
 
 from scripts.tools.footprint_generator import FootprintGenerator
@@ -783,11 +782,13 @@ class NoLeadGenerator(FootprintGenerator):
 
         # # ############################ CrtYd ##################################
 
-        offset = ipc_data_set['courtyard']
-        grid = self.global_config.courtyard_grid
-        width = self.global_config.courtyard_line_width
-        outline = Rect(width=0, layer="F.Fab", start=[-size_x/2, -size_y/2], end=[size_x/2, size_y/2])
-        crt_bounding_box = add_courtyard(kicad_mod, width, grid, offset, outline=outline)
+        body_rect = Rectangle(center=Vector2D(0,0), size=Vector2D(size_x, size_y))
+        cb = CourtyardBuilder.from_node(
+            node=kicad_mod,
+            global_config=self.global_config,
+            offset_fab=ipc_data_set['courtyard'],
+            outline=body_rect)
+        kicad_mod += cb.node
 
         # ######################### Rule Areas ################################
 
@@ -800,7 +801,7 @@ class NoLeadGenerator(FootprintGenerator):
 
         addTextFields(kicad_mod=kicad_mod, configuration=self.global_config,
                       body_edges=body_edge,
-                      courtyard=crt_bounding_box,
+                      courtyard=cb.bbox,
                       fp_name=fp_name, text_y_inside_position='center', allow_rotation=True)
 
         # #################### Output and 3d model ############################

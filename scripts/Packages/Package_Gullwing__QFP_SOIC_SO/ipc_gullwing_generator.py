@@ -11,9 +11,10 @@ from KicadModTree import (
     FootprintType,
     Pad,
     PolygonLine,
-    Rect,
 )
-from KicadModTree.util.courtyard_util import add_courtyard
+
+from kilibs.geom import Rectangle
+from KicadModTree.util.courtyard_builder import CourtyardBuilder
 from kilibs.geom import Direction, Vector2D, BoundingBox
 from KicadModTree.nodes.specialized.PadArray import PadArray, get_pad_radius_from_arrays
 from KicadModTree.nodes.specialized.Cruciform import Cruciform
@@ -581,11 +582,14 @@ class GullwingGenerator(FootprintGenerator):
 
         # # ############################ CrtYd ##################################
         courtyard_offset = ipc_data_set['courtyard']
-        grid = self.global_config.courtyard_grid
-
-        outline = Rect(width=0, layer="F.Fab", start=[-size_x/2, -size_y/2], end=[size_x/2, size_y/2])
-        body_edge = {"top": -size_y/2, "bottom": size_y/2, "left": -size_x/2, "right": size_x/2}
-        courtyard_bbox = add_courtyard(kicad_mod, self.global_config.courtyard_line_width, grid, courtyard_offset, outline=outline)
+        body_rect = Rectangle(center=Vector2D(0,0), size=Vector2D(size_x, size_y))
+        cb = CourtyardBuilder.from_node(
+            node=kicad_mod,
+            global_config=self.global_config,
+            offset_fab=courtyard_offset,
+            outline=body_rect)
+        kicad_mod += cb.node
+        courtyard_bbox = cb.bbox
 
         # ############################ SilkS ##################################
         silk_pad_clearance = self.global_config.silk_pad_clearance
@@ -595,20 +599,20 @@ class GullwingGenerator(FootprintGenerator):
 
         right_pads_silk_bottom = (device_params['num_pins_y'] - 1) * device_params['pitch'] / 2\
             + pad_details['right']['size'][1] / 2 + silk_pad_offset
-        silk_bottom = body_edge['bottom'] + silk_offset
-        if EP_size['y'] / 2 <= body_edge['bottom'] and right_pads_silk_bottom >= silk_bottom:
+        silk_bottom = body_rect.bottom + silk_offset
+        if EP_size['y'] / 2 <= body_rect.bottom and right_pads_silk_bottom >= silk_bottom:
             silk_bottom = max(silk_bottom, EP_size['y'] / 2 + silk_pad_offset)
 
         silk_bottom = max(silk_bottom, right_pads_silk_bottom)
-        silk_bottom = min(body_edge['bottom'] + silk_pad_offset, silk_bottom)
+        silk_bottom = min(body_rect.bottom + silk_pad_offset, silk_bottom)
 
         bottom_pads_silk_right = (device_params['num_pins_x'] - 1) * device_params['pitch'] / 2\
             + pad_details['bottom']['size'][0] / 2 + silk_pad_offset
-        silk_right = body_edge['right'] + silk_offset
-        if EP_size['x'] / 2 <= body_edge['right'] and bottom_pads_silk_right >= silk_right:
+        silk_right = body_rect.right + silk_offset
+        if EP_size['x'] / 2 <= body_rect.right and bottom_pads_silk_right >= silk_right:
             silk_right = max(silk_right, EP_size['x'] / 2 + silk_pad_offset)
         silk_right = max(silk_right, bottom_pads_silk_right)
-        silk_right = min(body_edge['right'] + silk_pad_offset, silk_right)
+        silk_right = min(body_rect.right + silk_pad_offset, silk_right)
 
         min_length = self.global_config.silk_line_length_min
         silk_corner_bottom_right = Vector2D(silk_right, silk_bottom)
@@ -655,7 +659,7 @@ class GullwingGenerator(FootprintGenerator):
                 min_length=min_length)
 
         if silk_point_bottom_inside is None and silk_point_right_inside is not None:
-            silk_corner_bottom_right['y'] = body_edge['bottom']
+            silk_corner_bottom_right['y'] = body_rect.bottom
             silk_corner_bottom_right = nearestSilkPointOnOrthogonalLine(
                 pad_size=pad_details['bottom']['size'],
                 pad_position=[
@@ -668,7 +672,7 @@ class GullwingGenerator(FootprintGenerator):
                 min_length=min_length)
 
         elif silk_point_right_inside is None and silk_point_bottom_inside is not None:
-            silk_corner_bottom_right['x'] = body_edge['right']
+            silk_corner_bottom_right['x'] = body_rect.right
             silk_corner_bottom_right = nearestSilkPointOnOrthogonalLine(
                 pad_size=pad_details['right']['size'],
                 pad_position=[
@@ -743,19 +747,19 @@ class GullwingGenerator(FootprintGenerator):
             if device_params['num_pins_y'] > 0:
                 # Pins on the left and right side
 
-                pad_to_courtyard_corner_gap = tl_pad_with_clearance_top - courtyard_bbox["top"]
+                pad_to_courtyard_corner_gap = tl_pad_with_clearance_top - courtyard_bbox.top
                 tl_pad_left = tl_pad.at.x - tl_pad.size.x / 2
 
                 # For parts like J-lead/SOJ, there may be no pad extending out past the body
                 # so no left-right space to fit an arrow
-                left_right_space = body_edge['left'] - tl_pad_left
+                left_right_space = body_rect.left - tl_pad_left
                 south_arrow_fits = left_right_space >= arrow_size
 
                 if (south_arrow_fits and
                         (is_qfp or (pad_to_courtyard_corner_gap >= minimum_space_to_fit_arrow))):
                     # We can fit an arrow in the courtyard, or it's a QFN
 
-                    pad_left_body_left_midpoint = (tl_pad_left + body_edge['left']) / 2
+                    pad_left_body_left_midpoint = (tl_pad_left + body_rect.left) / 2
 
                     # put a down arrow top of pin1
                     arrow_apex = Vector2D(pad_left_body_left_midpoint,
@@ -781,15 +785,15 @@ class GullwingGenerator(FootprintGenerator):
             else:
                 # Pins on the top and bottom side
 
-                pad_to_courtyard_corner_gap = tl_pad_with_clearance_left - courtyard_bbox["left"]
+                pad_to_courtyard_corner_gap = tl_pad_with_clearance_left - courtyard_bbox.left
 
                 # J-lead type parts
                 tl_pad_top = tl_pad.at.y - tl_pad.size.y / 2
-                top_bottom_space = body_edge['top'] - tl_pad_top
+                top_bottom_space = body_rect.top - tl_pad_top
                 east_arrow_fits = top_bottom_space >= arrow_size
 
                 if east_arrow_fits and pad_to_courtyard_corner_gap >= minimum_space_to_fit_arrow:
-                    pad_top_body_top_midpoint = (tl_pad_top + body_edge['top']) / 2
+                    pad_top_body_top_midpoint = (tl_pad_top + body_rect.top) / 2
 
                     arrow_apex = Vector2D(tl_pad_with_clearance_left - silk_line_width / 2,
                                           pad_top_body_top_midpoint)
@@ -816,12 +820,12 @@ class GullwingGenerator(FootprintGenerator):
         fab_bevel_size = self.global_config.get_fab_bevel_size(min(size_x, size_y))
 
         poly_fab = [
-            {'x': body_edge['left'] + fab_bevel_size, 'y': body_edge['top']},
-            {'x': body_edge['right'], 'y': body_edge['top']},
-            {'x': body_edge['right'], 'y': body_edge['bottom']},
-            {'x': body_edge['left'], 'y': body_edge['bottom']},
-            {'x': body_edge['left'], 'y': body_edge['top'] + fab_bevel_size},
-            {'x': body_edge['left'] + fab_bevel_size, 'y': body_edge['top']},
+            {'x': body_rect.left + fab_bevel_size, 'y': body_rect.top},
+            {'x': body_rect.right, 'y': body_rect.top},
+            {'x': body_rect.right, 'y': body_rect.bottom},
+            {'x': body_rect.left, 'y': body_rect.bottom},
+            {'x': body_rect.left, 'y': body_rect.top + fab_bevel_size},
+            {'x': body_rect.left + fab_bevel_size, 'y': body_rect.top},
         ]
 
         kicad_mod.append(PolygonLine(
@@ -844,7 +848,7 @@ class GullwingGenerator(FootprintGenerator):
                 if gullwing_config.top_slug.shape == 'cruciform':
                     cruciform_tail_w = gullwing_config.top_slug.tail_x.nominal
                     # Tail to the top and bottom of the package
-                    cruciform_h = body_edge['bottom'] - body_edge['top']
+                    cruciform_h = body_rect.bottom - body_rect.top
 
                 topslug_rect = Cruciform(
                     overall_w=cruciform_w,
@@ -863,7 +867,7 @@ class GullwingGenerator(FootprintGenerator):
         # ######################### Text Fields ###############################
 
         addTextFields(kicad_mod=kicad_mod, configuration=self.global_config,
-                      body_edges=body_edge, courtyard=courtyard_bbox,
+                      body_edges=body_rect, courtyard=courtyard_bbox,
                       fp_name=fp_name, text_y_inside_position='center')
 
         # ######################### Additional drawings #######################

@@ -25,7 +25,7 @@ from KicadModTree import *
 from scripts.tools.drawing_tools import round_to_grid
 from scripts.tools.footprint_text_fields import addTextFields
 from scripts.tools.global_config_files import global_config as GC
-from KicadModTree.util.courtyard_util import add_courtyard
+from KicadModTree.util.courtyard_builder import CourtyardBuilder
 
 series = "XA"
 manufacturer = "JST"
@@ -315,9 +315,12 @@ def generate_one_footprint(
 
     ########################### CrtYd ################################
     crt_offset = global_config.get_courtyard_offset(GC.GlobalConfig.CourtyardType.CONNECTOR)
-    crt_grid = global_config.courtyard_grid
-    crt_line_width = global_config.courtyard_line_width
-    crt_bbox = add_courtyard(kicad_mod, crt_line_width, crt_grid, crt_offset)
+    cb = CourtyardBuilder.from_node(
+        node=kicad_mod,
+        global_config=global_config,
+        offset_fab=crt_offset
+        )
+    kicad_mod += cb.node
 
     ########################### Pin 1 marker ################################
     poly_pin1_marker = [
@@ -400,7 +403,7 @@ def generate_one_footprint(
         kicad_mod=kicad_mod,
         configuration=configuration,
         body_edges=body_edge,
-        courtyard=crt_bbox,
+        courtyard=cb.bbox,
         fp_name=footprint_name,
         text_y_inside_position=text_center_y,
     )
