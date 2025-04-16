@@ -454,6 +454,55 @@ HVQFN-40-1EP_6x6mm_P0.5mm_EP4.1x4.1mm:
   num_pins_x: 10
   num_pins_y: 10
 
+VQFN-40-1EP_6x6mm_P0.5mm_EP3.5x3.5mm:
+  device_type: 'VQFN'
+  # manufacturer: 'Analog'
+  size_source: 'https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/lfcspcp/cp-40/cp-40-29.pdf'
+  ipc_class: 'qfn' # 'qfn_pull_back'
+  body_size_x:
+    minimum: 5.9
+    nominal: 6.0
+    maximum: 6.1
+  body_size_y:
+    minimum: 5.9
+    nominal: 6.0
+    maximum: 6.1
+  overall_height:
+    minimum: 0.70
+    nominal: 0.75
+    maximum: 0.80
+  lead_width:
+    minimum: 0.20
+    nominal: 0.25
+    maximum: 0.30
+  lead_len:
+    minimum: 0.35
+    nominal: 0.4
+    maximum: 0.45
+
+  EP_size_x:
+    minimum: 3.40
+    nominal: 3.50
+    maximum: 3.60
+  EP_size_y:
+    minimum: 3.40
+    nominal: 3.50
+    maximum: 3.60
+  EP_num_paste_pads: [3, 3]
+
+  thermal_vias:
+    count: [4, 4]
+    drill: 0.2
+  
+  # NOTE: Listed as MO-220-WJJD-5 in the ADIN1100 datasheet,
+  # but this is wrong: WJJD-5 EP is 4.65mm sq nom.
+  compatible_mpns:
+    - Analog_CP-40-29 # ADIN1100 datasheet
+
+  pitch: 0.5
+  num_pins_x: 10
+  num_pins_y: 10
+
 Texas_VQFN-40_RHA0040B:
 # Texas_RHA0040B_VQFN-40-1EP_6x6mm_P0.5mm_EP4.15x4.15mm
   device_type: 'VQFN'
