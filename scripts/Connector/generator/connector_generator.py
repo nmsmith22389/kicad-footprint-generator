@@ -58,6 +58,7 @@ from scripts.tools.global_config_files import global_config as GC
 
 DEFAULT_SMT_PAD_SHAPE = 'roundrect'
 DEFAULT_THT_PAD_SHAPE = 'oval'
+DEFAULT_THT_PIN1_PAD_SHAPE = 'roundrect'
 
 
 def _get_dims(name: str, spec: dict, base: Vector2D = None, mult: float=1):
@@ -450,12 +451,20 @@ class FPconfiguration():
 
         self.clean_silk = self.spec.get('clean_silk', True)
 
-        if pad1_spec := first_pin_spec.get("pad", None):
-            # The pad1 spec is the normal pad spec, updated with the pin 1 spec
-            merged_spec = copy.deepcopy(pad_spec)
-            dict_tools.dictMerge(merged_spec, pad1_spec)
+        pad1_defaults = {}
 
-            self.pad1_properties = PadProperties(merged_spec, global_config)
+        # Apply defaults based on the basic pad type
+        if self.pad_properties.type == Pad.TYPE_THT:
+            pad1_defaults["shape"] = DEFAULT_THT_PIN1_PAD_SHAPE
+
+        pad1_spec = first_pin_spec.get("pad", {})
+
+        # The pad1 spec is the normal pad spec, updated with the pin 1 defaults, then the pin 1 spec
+        merged_spec = copy.deepcopy(pad_spec)
+        dict_tools.dictMerge(merged_spec, pad1_defaults)
+        dict_tools.dictMerge(merged_spec, pad1_spec)
+
+        self.pad1_properties = PadProperties(merged_spec, global_config)
 
         ## body chamfer at pin1 corner
         self.pin1_body_chamfer = first_pin_spec.get("body_chamfer", 0.0)
