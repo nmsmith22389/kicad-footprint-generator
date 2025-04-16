@@ -97,8 +97,8 @@ class geometricLine():
         self.end_pos += distance_vector
         return self
 
-    def isPointOnSelf(self, point, tolerance=1e-7):
-        r""" is the given point on this line
+    def isPointOnSelf(self, point, tolerance_angle=1e-7, tolerance_radius=1e-15):
+        r"""is the given point on this line
 
         :params:
             * *point* (``Vector2D``)
@@ -110,7 +110,10 @@ class geometricLine():
 
         ll, la = (self.end_pos - self.start_pos).to_polar()
         pl, pa = (point - self.start_pos).to_polar()
-        return abs(normalizeAngle(la - pa)) < tolerance and pl <= ll
+        return (
+            abs(normalizeAngle(la - pa)) < tolerance_angle
+            and pl <= ll + tolerance_radius
+        )
 
     def sortPointsRelativeToStart(self, points):
         r""" sort given points relative to start point

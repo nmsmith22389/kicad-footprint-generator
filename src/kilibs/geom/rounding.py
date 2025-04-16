@@ -34,6 +34,11 @@ def round_to_grid(x: float, g: float, epsilon: float = 0) -> float:
     )
 
 
+# round to grid with epsilon = 1e-7
+def round_to_grid_e(x: float, g: float) -> float:
+    return round_to_grid(x, g, 1e-7)
+
+
 def round_to_grid_nearest(x: float, g: float) -> float:
     """
     Round a number to a multiple of the grid size, rounding to the nearest

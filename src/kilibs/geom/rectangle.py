@@ -15,17 +15,21 @@ class Rectangle:
     """
 
     def __init__(self, center: Vector2D, size: Vector2D):
-        self.center = center
+        self.center = Vector2D(center)
         self.size = Vector2D(abs(size.x), abs(size.y))
 
     @classmethod
     def by_corners(cls, corner1: Vector2D, corner2: Vector2D) -> Self:
+        corner1 = Vector2D(corner1)
+        corner2 = Vector2D(corner2)
         size = corner2 - corner1
         center = corner1 + size / 2
         return cls(center, size)
 
     @classmethod
     def by_corner_and_size(cls, corner: Vector2D, size: Vector2D) -> Self:
+        corner = Vector2D(corner)
+        size = Vector2D(size)
         center = corner + size / 2
         return cls(center, size)
 

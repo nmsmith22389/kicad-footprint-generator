@@ -28,6 +28,7 @@ from kilibs.geom import (
 from kilibs.geom.rounding import (
     round_to_grid,
     round_to_grid_down,
+    round_to_grid_e,
     round_to_grid_up,
     round_to_grid_nearest,
 )
@@ -621,6 +622,176 @@ def bevelRectBL(model, x, size, layer, width, bevel_size=1):
     model.append(PolygonLine(polygon=[[x[0], x[1]], [x[0] + size[0], x[1]], [x[0] + size[0], x[1] + size[1]],
                                        [x[0] + bevel_size, x[1] + size[1]], [x[0], x[1] + size[1] - bevel_size],
                                        [x[0], x[1]]], layer=layer, width=width))
+
+
+#     +----+
+#    /      \
+#   /        \
+#   |        |
+#   |        |
+#   |        |
+#   |        |
+#   +--------+
+#
+#
+# add a rectangle that has two angled corners at the top
+def addRectAngledTop(kicad_mod, x1, x2, angled_delta, layer, width, roun=0.001):
+    xmi = min(x1[0], x2[0])
+    xma = max(x1[0], x2[0])
+    xa = xma - angled_delta[0]
+    xl = xmi + angled_delta[0]
+    ymi = max(x1[1], x2[1])
+    yma = min(x1[1], x2[1])
+    ya = yma + angled_delta[1]
+    nodes = [
+        Vector2D(round_to_grid_e(xmi, roun), round_to_grid_e(ymi, roun)),
+        Vector2D(round_to_grid_e(xmi, roun), round_to_grid_e(ya, roun)),
+        Vector2D(round_to_grid_e(xl, roun), round_to_grid_e(yma, roun)),
+        Vector2D(round_to_grid_e(xa, roun), round_to_grid_e(yma, roun)),
+        Vector2D(round_to_grid_e(xma, roun), round_to_grid_e(ya, roun)),
+        Vector2D(round_to_grid_e(xma, roun), round_to_grid_e(ymi, roun)),
+        Vector2D(round_to_grid_e(xmi, roun), round_to_grid_e(ymi, roun)),
+    ]
+    kicad_mod.append(PolygonLine(nodes=nodes, layer=layer, width=width))
+
+
+#     +----+
+#    /      \
+#   /        \
+#   |        |
+#   |        |
+#   |        |
+#   |        |
+#   |        |
+#
+#
+# add a rectangle that has two angled corners at the top
+def addRectAngledTopNoBottom(kicad_mod, x1, x2, angled_delta, layer, width, roun=0.001):
+    xmi = min(x1[0], x2[0])
+    xma = max(x1[0], x2[0])
+    xa = xma - angled_delta[0]
+    xl = xmi + angled_delta[0]
+    ymi = max(x1[1], x2[1])
+    yma = min(x1[1], x2[1])
+    ya = yma + angled_delta[1]
+    nodes = [
+        Vector2D(round_to_grid_e(xmi, roun), round_to_grid_e(ymi, roun)),
+        Vector2D(round_to_grid_e(xmi, roun), round_to_grid_e(ya, roun)),
+        Vector2D(round_to_grid_e(xl, roun), round_to_grid_e(yma, roun)),
+        Vector2D(round_to_grid_e(xa, roun), round_to_grid_e(yma, roun)),
+        Vector2D(round_to_grid_e(xma, roun), round_to_grid_e(ya, roun)),
+        Vector2D(round_to_grid_e(xma, roun), round_to_grid_e(ymi, roun)),
+    ]
+    kicad_mod.append(PolygonLine(nodes=nodes, layer=layer, width=width))
+
+
+#   +--------+
+#   |        |
+#   |        |
+#   |        |
+#   |        |
+#   \        /
+#    \      /
+#     +----+
+#
+#
+# add a rectangle that has two angled corners at the bottom
+def addRectAngledBottom(kicad_mod, x1, x2, angled_delta, layer, width, roun=0.001):
+    xmi = min(x1[0], x2[0])
+    xma = max(x1[0], x2[0])
+    xa = xma - angled_delta[0]
+    xl = xmi + angled_delta[0]
+    ymi = min(x1[1], x2[1])
+    yma = max(x1[1], x2[1])
+    ya = yma - angled_delta[1]
+    nodes = [
+        Vector2D(round_to_grid_e(xmi, roun), round_to_grid_e(ymi, roun)),
+        Vector2D(round_to_grid_e(xmi, roun), round_to_grid_e(ya, roun)),
+        Vector2D(round_to_grid_e(xl, roun), round_to_grid_e(yma, roun)),
+        Vector2D(round_to_grid_e(xa, roun), round_to_grid_e(yma, roun)),
+        Vector2D(round_to_grid_e(xma, roun), round_to_grid_e(ya, roun)),
+        Vector2D(round_to_grid_e(xma, roun), round_to_grid_e(ymi, roun)),
+        Vector2D(round_to_grid_e(xmi, roun), round_to_grid_e(ymi, roun)),
+    ]
+    kicad_mod.append(PolygonLine(nodes=nodes, layer=layer, width=width))
+
+
+#   |        |
+#   |        |
+#   |        |
+#   |        |
+#   |        |
+#   \        /
+#    \      /
+#     +----+
+#
+#
+# add a rectangle that has two angled corners at the bottom and no top
+def addRectAngledBottomNoTop(kicad_mod, x1, x2, angled_delta, layer, width, roun=0.001):
+    xmi = min(x1[0], x2[0])
+    xma = max(x1[0], x2[0])
+    xa = xma - angled_delta[0]
+    xl = xmi + angled_delta[0]
+    ymi = min(x1[1], x2[1])
+    yma = max(x1[1], x2[1])
+    ya = yma - angled_delta[1]
+    nodes = [
+        Vector2D(round_to_grid_e(xmi, roun), round_to_grid_e(ymi, roun)),
+        Vector2D(round_to_grid_e(xmi, roun), round_to_grid_e(ya, roun)),
+        Vector2D(round_to_grid_e(xl, roun), round_to_grid_e(yma, roun)),
+        Vector2D(round_to_grid_e(xa, roun), round_to_grid_e(yma, roun)),
+        Vector2D(round_to_grid_e(xma, roun), round_to_grid_e(ya, roun)),
+        Vector2D(round_to_grid_e(xma, roun), round_to_grid_e(ymi, roun)),
+    ]
+    kicad_mod.append(PolygonLine(nodes=nodes, layer=layer, width=width))
+
+
+#        ..---..
+#      /    /    \    
+#    //    /    /  \
+#   |/    /    /    |
+#  |/    /    /    / |
+#   |   /    /    / |
+#    \ /    /    / /
+#      \   /    //
+#        ``---``
+#
+#
+# add a circle which is filled with 45° lines
+def addCircleLF(kicad_mod, center, radius, layer, width, linedist=0.3, roun=0.001):
+    rend = round_to_grid_e(radius, linedist) + linedist
+    M11 = math.cos(45 / 180 * math.pi)
+    M12 = -math.sin(45 / 180 * math.pi)
+    M21 = math.sin(45 / 180 * math.pi)
+    M22 = math.cos(45 / 180 * math.pi)
+    for y in frangei(-rend, rend, linedist):
+        if y * y <= radius * radius:
+            x1 = -math.sqrt(radius * radius - y * y)
+            x2 = -x1
+            if x1 != x2:
+                 kicad_mod.append(
+                    Line(
+                        start=[
+                            round_to_grid_e(M11 * x1 + M12 * y + center[0], roun),
+                            round_to_grid_e(M21 * x1 + M22 * y + center[1], roun),
+                        ],
+                        end=[
+                            round_to_grid_e(M11 * x2 + M12 * y + center[0], roun),
+                            round_to_grid_e(M21 * x2 + M22 * y + center[1], roun),
+                        ],
+                        layer=layer,
+                        width=width,
+                    )
+                )
+
+    kicad_mod.append(
+        Circle(
+            center=[round_to_grid_e(center[0], roun), round_to_grid_e(center[1], roun)],
+            radius=round_to_grid_e(radius, roun),
+            layer=layer,
+            width=width,
+        )
+    )
 
 # draws a DIP-package with half-circle at the top
 #

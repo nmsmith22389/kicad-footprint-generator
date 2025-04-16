@@ -29,6 +29,8 @@ class RectLine(PolygonLine):
           start edge of the rect
         * *end* (``Vector2D``) --
           end edge of the rect
+        * *rect* (``Rectangle``) --
+          rectangle to use instead of start and end
         * *layer* (``str``) --
           layer on which the rect is drawn
         * *width* (``float``) --
@@ -43,8 +45,16 @@ class RectLine(PolygonLine):
     """
 
     def __init__(self, **kwargs):
-        self.start_pos = Vector2D(kwargs['start'])
-        self.end_pos = Vector2D(kwargs['end'])
+        if "rect" in kwargs:
+            self.start_pos = kwargs["rect"].top_left
+            self.end_pos = kwargs["rect"].bottom_right
+        else:
+            if "start" not in kwargs or "end" not in kwargs:
+                raise ValueError(
+                    "Either start and end or rect must be provided."
+                )
+            self.start_pos = Vector2D(kwargs['start'])
+            self.end_pos = Vector2D(kwargs['end'])
 
         # If specified, an 'offset' can be applied to the RectLine.
         # For example, creating a border around a given Rect of a specified size

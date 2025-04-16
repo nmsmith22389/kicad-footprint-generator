@@ -11,7 +11,7 @@ TO-264-2:
   mounting_hole_diameter_on_pcb: 3.3
   pin_min_length_before_90deg_bend: 5.08    # for horizontal mount
   pin_width_height: [1, 0.6]
-  pin_offset_z: 1.9000000000000004             # plastic[2] - (2.8 + 0.3)
+  pin_offset_z: 1.9  # plastic[2] - (2.8 + 0.3)
   generate_footprint_type: vertical, horizontal
 
 TO-264-3:
@@ -39,7 +39,7 @@ TO-247-2:
   mounting_hole_diameter_on_pcb: 3.6
   pin_min_length_before_90deg_bend: 5.08    # for horizontal mount
   pin_width_height: [1.2, 0.6]
-  pin_offset_z: 2.3300000000000005            # plastic_dimensions_z - (2.4 + 0.3)
+  pin_offset_z: 2.33  # plastic_dimensions_z - (2.4 + 0.3)
   generate_footprint_type: vertical, horizontal
 
 TO-247-3:
@@ -96,9 +96,8 @@ TO-251-2:
   pin_width_height: [0.75, 0.5]
   additional_tags: ["IPAK"]
   pin_offset_z: 1.27
-  additional_pin_pad_position_size: [5.7, 6.2]  # size of additional SMD pad
+  additional_pin_pad_size: [5.7, 6.2]  # size of additional SMD pad
   metal_offset_x: 0.62  # (plastic_dimensions_x - metal_dimensions_x) / 2
-  additional_pin_pad_position: [3.29, 4.9333333333333333333]  # [plastic_dimensions_x / 2, metal_dimensions_y - additional_pin_pad_position_size_y / 3]
   generate_footprint_type: vertical, horizontal
 
 TO-251-3:
@@ -200,7 +199,7 @@ TO-220-7_Staggered_Vertical:
   pin_width_height: [0.7, 0.45]  # [(0.6+0.8)/2, (0.35+0.55)/2]  # F, E
   staggered_pitch: [5.08, 5.10]  # M1 in Heptawatt V, L3 in Heptawatt H
   pin_offset_z: 2.8  # dimension: M in Heptawatt V
-  pin_min_length_before_90deg_bend: 2.925000000000002  # 15.8-((15.1+15.8)/2-(2.6+3)/2)-((0.35+0.55)/2)/2 --> L2-(L6-L5)-E/2 in Heptawatt H, will be used only in Horizontal footprints
+  pin_min_length_before_90deg_bend: 2.925  # 15.8-((15.1+15.8)/2-(2.6+3)/2)-((0.35+0.55)/2)/2 --> L2-(L6-L5)-E/2 in Heptawatt H, will be used only in Horizontal footprints
   # pin_min_length_before_90deg_bend: 5.975  # 18.4-((15.1+15.8)/2-(2.6+3)/2)-((0.35+0.55)/2)/2 if using this source: https://www.st.com/resource/en/datasheet/cd00000208.pdf#page=12
   generate_footprint_type: vertical-odd
 
@@ -262,7 +261,6 @@ TO-3P-3:
   pin_offset_z: 3.0
   metal_angled: [1.15, 2]
   plastic_angled: [2.19, 3.5]
-  additional_tags: [""]  # XYZ TODO: remove this line
   generate_footprint_type: vertical, horizontal
 
 
@@ -278,9 +276,8 @@ TO-262-3:
   pin_min_length_before_90deg_bend: 3.25    # for horizontal mount
   pin_width_height: [0.8, 0.5]
   pin_offset_z: 2.65
-  additional_pin_pad_position_size: [10, 8]
+  additional_pin_pad_size: [10, 8]
   metal_offset_x: 0  # (plastic_dimensions_x - metal_dimensions_x) / 2
-  additional_pin_pad_position: [5, 7.73333333333333333333]  # [plastic_dimensions_x / 2, metal_dimensions_y - additional_pin_pad_position_size_y / 3]
   additional_tags: ["IIPAK", "I2PAK"]
   generate_footprint_type: vertical, horizontal
 
@@ -299,13 +296,12 @@ SIPAK:
   pitch: 2.286
   pad_dimensions_xy: [1.8, 1.8]
   pad_hole_diameter: 1.1
-  mounting_hole_position: [3.3, 2.5000000000000004]  # [plastic_dimensions_x / 2, plastic_dimensions_y - 3.9]
+  mounting_hole_position: [3.3, 2.5]  # [plastic_dimensions_x / 2, plastic_dimensions_y - 3.9]
   pin_min_length_before_90deg_bend: 1.02    # for horizontal mount
   pin_width_height: [0.9, 0.5]
   pin_offset_z: 1.42
-  additional_pin_pad_position_size: [5.5, 6.2]
-  metal_offset_x: 0.6349999999999998  # (plastic_dimensions_x - metal_dimensions_x) / 2
-  additional_pin_pad_position: [3.3, 5.053333333333333]  # [plastic_dimensions_x / 2, metal_dimensions_y - additional_pin_pad_position_size_y / 3]
+  additional_pin_pad_size: [5.5, 6.2]
+  metal_offset_x: 0.635  # (plastic_dimensions_x - metal_dimensions_x) / 2
   generate_footprint_type: vertical, horizontal
 
 
@@ -324,7 +320,6 @@ TO-3PB-3:
   pin_width_height: [1.0, 0.6]
   metal_angled: [1.3, 2.3]
   plastic_angled: [2.7, 4.7]
-  additional_tags: [""]  # XYZ TODO: remove this line
   pin_offset_z: 1.7
   generate_footprint_type: vertical, horizontal
 

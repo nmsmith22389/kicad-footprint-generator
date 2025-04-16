@@ -29,7 +29,7 @@ from KicadModTree import (
     RectLine,
     Vector2D,
 )
-from kilibs.geom import PolygonPoints, Rectangle, BoundingBox
+from kilibs.geom import BoundingBox, PolygonPoints, Rectangle
 from kilibs.geom.rounding import is_polygon_clockwise, round_to_grid_increasing_area
 from scripts.tools.global_config_files.global_config import GlobalConfig
 
@@ -117,10 +117,14 @@ class CourtyardBuilder:
             pyclipper.CT_UNION, pyclipper.PFT_NONZERO, pyclipper.PFT_NONZERO
         )
         if len(result) != 1:
+            result = CourtyardBuilder._remove_holes(result)
+        if len(result) != 1:
             result = CourtyardBuilder._unite_disjunct_courtyards(result)
+        round_to_grid_increasing_area(
+            result[0], int(self.global_config.courtyard_grid * 1e6)
+        )
+        result = CourtyardBuilder._simplify(result)
         crt_pts = pyclipper.scale_from_clipper(result, 1e6)[0]
-
-        round_to_grid_increasing_area(crt_pts, self.global_config.courtyard_grid)
         self.crt_pts = crt_pts
 
         width = self.global_config.courtyard_line_width
@@ -168,12 +172,14 @@ class CourtyardBuilder:
         """
         Add a Rectangle or BoundingBox to the list of courtyard points
         """
-        self.pts.append([
-            [rectangle.right + offset, rectangle.top - offset],
-            [rectangle.right + offset, rectangle.bottom + offset],
-            [rectangle.left - offset, rectangle.bottom + offset],
-            [rectangle.left - offset, rectangle.top - offset],
-        ])
+        self.pts.append(
+            [
+                [rectangle.right + offset, rectangle.top - offset],
+                [rectangle.right + offset, rectangle.bottom + offset],
+                [rectangle.left - offset, rectangle.bottom + offset],
+                [rectangle.left - offset, rectangle.top - offset],
+            ]
+        )
 
     def add_rect(self, rect: Rect | RectLine, offset: float):
         """
@@ -228,9 +234,9 @@ class CourtyardBuilder:
         bottom = max(first_pad.at.y, last_pad.at.y) + first_pad.size.y / 2 + offset
         self.pts.append([[right, top], [right, bottom], [left, bottom], [left, top]])
 
-    @classmethod
+    @staticmethod
     def _unite_disjunct_courtyards(
-        cls, crts: list[list[list[float]]]
+        crts: list[list[list[float]]],
     ) -> list[list[list[float]]]:
         # increase offset around polygons, unite them, decrease offset around resulting polygon
         offset = 2e5  # 0.2 mm
@@ -251,3 +257,16 @@ class CourtyardBuilder:
             # If this error is thrown, try increasing the value of 'offset'.
 
         return crts
+
+    @staticmethod
+    def _remove_holes(crts: list[list[list[float]]]) -> list[list[list[float]]]:
+        crts_without_holes = []
+        for crt in crts:
+            if is_polygon_clockwise(crt):
+                crts_without_holes.append(crt)
+        return crts_without_holes
+
+    @staticmethod
+    def _simplify(crts: list[list[list[float]]]) -> list[list[list[float]]]:
+        pc = pyclipper.Pyclipper()
+        return pyclipper.SimplifyPolygons(crts, pyclipper.PFT_NONZERO)
