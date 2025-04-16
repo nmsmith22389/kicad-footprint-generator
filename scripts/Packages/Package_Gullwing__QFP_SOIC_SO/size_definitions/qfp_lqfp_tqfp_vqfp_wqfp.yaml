@@ -338,6 +338,7 @@ LQFP-36_7x7mm_P0.65mm:
   num_pins_y: 9
 
 LQFP-44_10x10mm_P0.8mm:
+# CASE-561AA, https://www.mouser.com/datasheet/2/308/1/AMIS_492X0_D-1801898.pdf#page=17
 # height = 1.60 mm max, similar to JEDEC MS-026 variation BCB
 # https://www.nxp.com/docs/en/package-information/98ASS23225W.pdf
   device_type: 'LQFP'
@@ -729,7 +730,7 @@ LQFP-80_14x14mm_P0.65mm:
   num_pins_y: 20
 
 LQFP-100_14x14mm_P0.5mm:
-# height = 1.6 mm nominal
+# height = 1.6 mm nominal, we should inherit it from TQFP-100_14x14mm_P0.5mm
   device_type: 'LQFP'
   size_source: 'https://www.nxp.com/docs/en/package-information/SOT407-1.pdf'
   body_size_x:
@@ -1564,54 +1565,27 @@ TQFP-64-1EP_10x10mm_P0.5mm_EP5.305x5.305mm:
     - ESS-eTQFP-64
 
 TQFP-100_14x14mm_P0.5mm:
-# Similar to JEDEC MS-026 variation AED (TQFP, height A = 1.20 mm max), we should change 'size_source'
-# since this manufacturer call this footprint as 'TQ100' which has height 1.60 mm max (see symbols EX64-TQ100 or EX128-TQ100)
-# 3D Model has height = 1.10 mm, and there's already a LQFP with same sizes in the lib
   device_type: 'TQFP'
-  size_source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
-  body_size_x:
-    nominal: 14
-  body_size_y:
-    nominal: 14
-  overall_size_x:
-    nominal: 16
-  overall_size_y:
-    nominal: 16
-  lead_width:
-    minimum: 0.17
-    maximum: 0.27
-  lead_len:
-    minimum: 0.45
-    maximum: 0.75
-  pitch: 0.5
+  size_source: 'JEDEC MS-026 variation AED, 1.00mm body thickness, https://www.jedec.org/document_search?search_api_views_fulltext=MS-026, https://ww1.microchip.com/downloads/en/PackagingSpec/00000049BZ.pdf#page=683'
+  compatible_mpns:
+    - 'VQ100'      # Microsemi, https://web.archive.org/web/20220119120813/https://www.microsemi.com/document-portal/doc_download/131095-pd3068-package-mechanical-drawings#page=64
+    - 'CASE-932AN' # Onsemi, https://www.onsemi.jp/download/package-drawing/pdf/932an.pdf, https://www.onsemi.com/download/data-sheet/pdf/lc88fc2f0b-d.pdf#page=7
+    - '983B-01'    # Freescale / NXP, https://www.nxp.com/docs/en/package-information/98ASS23821W.pdf
+    - 'SOT386-1'   # NXP, https://www.nxp.com/docs/en/package-information/SOT386-1.pdf
+    - 'C100-1'     # Maxim / Analog Devices, https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/tqfp/21-0085.pdf
+  body_size_x: 14.00
+  body_size_y: 14.00
+  overall_size_x: 16.00
+  overall_size_y: 16.00
+  overall_height: 1.00 .. 1.20
+  lead_width: 0.17 .. 0.22 .. 0.27
+  lead_len: 0.45 .. 0.60 .. 0.75
+  pitch: 0.50
   num_pins_x: 25
   num_pins_y: 25
 
-VQFP-100_14x14mm_P0.5mm:
-# JEDEC MS-026 variation AED, this is actually TQFP (height A = 1.20 mm max),
-# 3D model has height = 1.60 mm, and there's already a generated TQFP in the library, we should DELETE this footprint
-  device_type: 'VQFP'
-  size_source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
-  body_size_x:
-    nominal: 14
-  body_size_y:
-    nominal: 14
-  overall_size_x:
-    nominal: 16
-  overall_size_y:
-    nominal: 16
-  lead_width:
-    minimum: 0.17
-    maximum: 0.27
-  lead_len:
-    minimum: 0.45
-    maximum: 0.75
-  pitch: 0.5
-  num_pins_x: 25
-  num_pins_y: 25
-
-TQFP-100-1EP_14x14mm_P0.5mm_EP5.0x5.0mm:
-# height = 1.20 mm max, similar to JEDEC MS-026 variation AED (but custom Exposed Pad)
+TQFP-100-1EP_14x14mm_P0.5mm_EP5x5mm:
+# height = 1.20 mm max, similar to JEDEC MS-026 variation AED (but custom Exposed Pad), we should inherit from TQFP-100_14x14mm_P0.5mm
   device_type: 'TQFP'
   size_source: 'https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/tqfp_edsv/sv_100_4.pdf'
   body_size_x:
