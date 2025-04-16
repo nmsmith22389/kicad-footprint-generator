@@ -23,7 +23,7 @@ from KicadModTree.nodes.specialized.Cruciform import Cruciform
 from scripts.tools.footprint_generator import FootprintGenerator
 from scripts.tools.footprint_text_fields import addTextFields
 from scripts.tools.global_config_files.global_config import GlobalConfig
-from scripts.tools.ipc_pad_size_calculators import TolerancedSize, IpcDensity, ipc_gull_wing
+from scripts.tools.ipc_pad_size_calculators import TolerancedSize, ipc_gull_wing
 from scripts.tools.quad_dual_pad_border import create_dual_or_quad_pad_border
 from scripts.tools import drawing_tools
 from scripts.tools.drawing_tools import nearestSilkPointOnOrthogonalLine
@@ -128,7 +128,7 @@ class GullwingConfiguration:
     lead_type: Union[Literal['gullwing', 'flat_lead']]
     pitch: float
     force_small_pitch_ipc_definition: bool
-    ipc_density: IpcDensity
+    ipc_density: ipc_rules.IpcDensity
 
     top_slug: Optional[TopSlugConfiguration]
     additional_drawings: list[fp_additional_drawing.FPAdditionalDrawing]
@@ -162,7 +162,7 @@ class GullwingConfiguration:
                 f"force_small_pitch_ipc_definition is not supported for lead type: {self.lead_type}"
             )
 
-        self.ipc_density = IpcDensity.from_str(spec.get('ipc_density', 'nominal'))
+        self.ipc_density = ipc_rules.IpcDensity.from_str(spec.get('ipc_density', 'nominal'))
 
         self.additional_drawings = (
             fp_additional_drawing.FPAdditionalDrawing.from_standard_yaml(spec)
@@ -191,11 +191,11 @@ class GullwingGenerator(FootprintGenerator):
         self.configuration = configuration
 
         # For now, use the dict-base data
-        self.ipc_defintions = ipc_defs.raw_data
+        self.ipc_definitions = ipc_defs
 
         self.configuration['min_ep_to_pad_clearance'] = ipc_defs.min_ep_to_pad_clearance
 
-    def calcPadDetails(self, device_dimensions, overrides, ipc_data, ipc_round_base):
+    def calcPadDetails(self, device_dimensions, overrides, ipc_offsets, ipc_round_base):
         # Z - Length (overall) of the land pattern
         # G - Inside length distance between lands of the pattern
         # L - Component Length (edge to edge of the gullwings)
@@ -225,7 +225,7 @@ class GullwingGenerator(FootprintGenerator):
         }
 
         Gmin_x, Zmax_x, Xmax = ipc_gull_wing(
-            ipc_data, ipc_round_base, manf_tol,
+            ipc_offsets, ipc_round_base, manf_tol,
             device_dimensions['lead_width'],
             device_dimensions['overall_size_x'],
             lead_len=device_dimensions.get('lead_len'),
@@ -233,7 +233,7 @@ class GullwingGenerator(FootprintGenerator):
         )
 
         Gmin_y, Zmax_y, Xmax_y_ignored = ipc_gull_wing(
-            ipc_data, ipc_round_base, manf_tol,
+            ipc_offsets, ipc_round_base, manf_tol,
             device_dimensions['lead_width'],
             device_dimensions['overall_size_y'],
             lead_len=device_dimensions.get('lead_len'),
@@ -377,8 +377,8 @@ class GullwingGenerator(FootprintGenerator):
             else:
                 ipc_reference = 'ipc_spec_gw_large_pitch'
 
-        ipc_data_set = self.ipc_defintions[ipc_reference][gullwing_config.ipc_density.value]
-        ipc_round_base = self.ipc_defintions[ipc_reference]['round_base']
+        ipc_offsets = self.ipc_definitions.get_class(ipc_reference).get_offsets(gullwing_config.ipc_density)
+        ipc_round_base = self.ipc_definitions.get_class(ipc_reference).roundoff
 
         pitch = gullwing_config.pitch
 
@@ -428,7 +428,7 @@ class GullwingGenerator(FootprintGenerator):
 
         EP_size = Vector2D(EP_size)
 
-        pad_details = self.calcPadDetails(dimensions, overrides, ipc_data_set, ipc_round_base)
+        pad_details = self.calcPadDetails(dimensions, overrides, ipc_offsets, ipc_round_base)
 
         if gullwing_config.metadata.custom_name_format:
             name_format = gullwing_config.metadata.custom_name_format
@@ -573,7 +573,7 @@ class GullwingGenerator(FootprintGenerator):
             EP_round_radius = EP.getRoundRadius()
 
         # # ############################ CrtYd ##################################
-        courtyard_offset = ipc_data_set['courtyard']
+        courtyard_offset = ipc_offsets.courtyard
         body_rect = Rectangle(center=Vector2D(0,0), size=Vector2D(size_x, size_y))
         cb = CourtyardBuilder.from_node(
             node=kicad_mod,

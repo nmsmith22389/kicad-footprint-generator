@@ -54,6 +54,11 @@ class DeviceClass:
     offsets: dict[IpcDensity, Offsets]
     roundoff: Roundoff
 
+    def get_offsets(self, density: IpcDensity) -> Offsets:
+        """
+        Get the offsets for the given density.
+        """
+        return self.offsets[density]
 
 class IpcRules:
 
@@ -147,6 +152,12 @@ class IpcRules:
             offsets=offsets,
             roundoff=roundoff,
         )
+
+    def get_class(self, class_name: str) -> DeviceClass:
+        """
+        Get the DeviceClass instance for the given class name.
+        """
+        return self.classes[class_name]
 
     @property
     def raw_data(self):

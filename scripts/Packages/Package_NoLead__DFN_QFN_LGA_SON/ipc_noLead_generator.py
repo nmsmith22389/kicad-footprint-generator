@@ -173,12 +173,17 @@ class NoLeadGenerator(FootprintGenerator):
         self.configuration = configuration
 
         # for nwow, just use the dict-base data
-        self.ipc_defintions = ipc_defs.raw_data
+        self.ipc_definitions = ipc_defs
 
         self.configuration['min_ep_to_pad_clearance'] = ipc_defs.min_ep_to_pad_clearance
 
-
-    def calcPadDetails(self, device_dimensions, EP_size, ipc_data, ipc_round_base):
+    def calcPadDetails(
+        self,
+        device_dimensions,
+        EP_size,
+        ipc_offsets: ipc_rules.Offsets,
+        ipc_round_base: ipc_rules.Roundoff,
+    ):
         # Zmax = Lmin + 2JT + √(CL^2 + F^2 + P^2)
         # Gmin = Smax − 2JH − √(CS^2 + F^2 + P^2)
         # Xmax = Wmin + 2JS + √(CW^2 + F^2 + P^2)
@@ -198,20 +203,20 @@ class NoLeadGenerator(FootprintGenerator):
         pull_back = device_dimensions.get('lead_to_edge', pull_back_0)
 
         if 'lead_center_pos_x' in device_dimensions or 'lead_center_pos_y' in device_dimensions:
-            Gmin_x, Zmax_x, Xmax_x = ipc_pad_center_plus_size(ipc_data, ipc_round_base, manf_tol,
+            Gmin_x, Zmax_x, Xmax_x = ipc_pad_center_plus_size(ipc_offsets, ipc_round_base, manf_tol,
                                                               center_position=device_dimensions.get(
                                                                 'lead_center_pos_x', TolerancedSize(nominal=0)),
                                                               lead_length=device_dimensions.get('lead_len_H'),
                                                               lead_width=device_dimensions['lead_width_H'])
 
-            Gmin_y, Zmax_y, Xmax_y = ipc_pad_center_plus_size(ipc_data, ipc_round_base, manf_tol,
+            Gmin_y, Zmax_y, Xmax_y = ipc_pad_center_plus_size(ipc_offsets, ipc_round_base, manf_tol,
                                                               center_position=device_dimensions.get(
                                                                 'lead_center_pos_y', TolerancedSize(nominal=0)),
                                                               lead_length=device_dimensions.get('lead_len_V'),
                                                               lead_width=device_dimensions['lead_width_V'])
         else:
             Gmin_x, Zmax_x, Xmax_x = ipc_body_edge_inside_pull_back(
-                ipc_data, ipc_round_base, manf_tol,
+                ipc_offsets, ipc_round_base, manf_tol,
                 body_size=device_dimensions['body_size_x'],
                 lead_width=device_dimensions['lead_width_H'],
                 lead_len=device_dimensions.get('lead_len_H'),
@@ -221,7 +226,7 @@ class NoLeadGenerator(FootprintGenerator):
             )
 
             Gmin_y, Zmax_y, Xmax_y = ipc_body_edge_inside_pull_back(
-                ipc_data, ipc_round_base, manf_tol,
+                ipc_offsets, ipc_round_base, manf_tol,
                 body_size=device_dimensions['body_size_y'],
                 lead_width=device_dimensions['lead_width_V'],
                 lead_len=device_dimensions.get('lead_len_V'),
@@ -394,9 +399,9 @@ class NoLeadGenerator(FootprintGenerator):
         else:
             ipc_reference = 'ipc_spec_flat_no_lead'
 
-        used_density = device_params.get('ipc_density', ipc_density)
-        ipc_data_set = self.ipc_defintions[ipc_reference][used_density]
-        ipc_round_base = self.ipc_defintions[ipc_reference]['round_base']
+        used_density = ipc_rules.IpcDensity(device_params.get('ipc_density', ipc_density))
+        ipc_offsets = self.ipc_definitions.get_class(ipc_reference).get_offsets(used_density)
+        ipc_round_base = self.ipc_definitions.get_class(ipc_reference).roundoff
 
         layout = ''
         if device_dimensions['has_EP']:
@@ -434,7 +439,7 @@ class NoLeadGenerator(FootprintGenerator):
         if device_config.metadata.custom_name_format:
             name_format = device_config.metadata.custom_name_format
 
-        pad_details = self.calcPadDetails(device_dimensions, EP_size, ipc_data_set, ipc_round_base)
+        pad_details = self.calcPadDetails(device_dimensions, EP_size, ipc_offsets, ipc_round_base)
 
         pad_suffix = '_Pad{pad_x:.2f}x{pad_y:.2f}mm'.format(pad_x=pad_details['left']['size'][0],
                                                             pad_y=pad_details['left']['size'][1])
@@ -780,7 +785,7 @@ class NoLeadGenerator(FootprintGenerator):
         cb = CourtyardBuilder.from_node(
             node=kicad_mod,
             global_config=self.global_config,
-            offset_fab=ipc_data_set['courtyard'],
+            offset_fab=ipc_offsets.courtyard,
             outline=body_rect)
         kicad_mod += cb.node
 

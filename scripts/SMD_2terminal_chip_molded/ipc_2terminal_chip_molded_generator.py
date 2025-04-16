@@ -46,10 +46,10 @@ class TwoTerminalSMD:
             except yaml.YAMLError as exc:
                 print(exc)
 
-        self.ipc_defintions = ipc_defs.raw_data
+        self.ipc_definitions = ipc_defs
 
     def calcPadDetails(
-        self, device_dimensions, ipc_data, ipc_round_base, footprint_group_data
+        self, device_dimensions, ipc_offsets, ipc_round_base, footprint_group_data
     ):
         # Zmax = Lmin + 2JT + √(CL^2 + F^2 + P^2)
         # Gmin = Smax − 2JH − √(CS^2 + F^2 + P^2)
@@ -72,7 +72,7 @@ class TwoTerminalSMD:
             lead_width = device_dimensions["body_width"]
 
         Gmin, Zmax, Xmax = ipc_body_edge_inside(
-            ipc_data,
+            ipc_offsets,
             ipc_round_base,
             manf_tol,
             device_dimensions["body_length"],
@@ -177,8 +177,11 @@ class TwoTerminalSMD:
             ipc_reference = footprint_group_data["ipc_reference"]
         ipc_density = self.configuration.get("ipc_density")[0]
         density_suffix = self.configuration.get("ipc_density")[1]
-        ipc_data_set = self.ipc_defintions[ipc_reference][ipc_density]
-        ipc_round_base = self.ipc_defintions[ipc_reference]["round_base"]
+
+        used_density = ipc_rules.IpcDensity(self.configuration.get('ipc_density', ipc_density)[0])
+        ipc_offsets = self.ipc_definitions.get_class(ipc_reference).get_offsets(used_density)
+        ipc_round_base = self.ipc_definitions.get_class(ipc_reference).roundoff
+
         if "ipc_string" in device_size_data:
             ipc_string = device_size_data["ipc_string"]
         elif "ipc_string" in footprint_group_data:
@@ -187,7 +190,7 @@ class TwoTerminalSMD:
             ipc_string = "IPC-7351"
 
         pad_details, paste_details = self.calcPadDetails(
-            device_dimensions, ipc_data_set, ipc_round_base, footprint_group_data
+            device_dimensions, ipc_offsets, ipc_round_base, footprint_group_data
         )
         # print(calc_pad_details())
         # print("generate {name}.kicad_mod".format(name=footprint))
@@ -490,14 +493,14 @@ class TwoTerminalSMD:
         CrtYd_rect[0] = round_to_grid_up(
             abs(pad_details["at"][0])
             + pad_details["size"][0] / 2
-            + ipc_data_set["courtyard"],
+            + ipc_offsets.courtyard,
             global_config.courtyard_grid,
             1e-7,
         )
         # Half height of the courtyard
         CrtYd_rect[1] = round_to_grid_up(
             max(pad_details["size"][1], outline_size[1]) / 2
-            + ipc_data_set["courtyard"],
+            + ipc_offsets.courtyard,
             global_config.courtyard_grid,
             1e-7,
         )

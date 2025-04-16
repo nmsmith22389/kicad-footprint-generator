@@ -8,7 +8,7 @@ import math
 from kilibs.ipc_tools import ipc_rules
 from KicadModTree import *  # NOQA
 from KicadModTree.nodes.base.Pad import Pad  # NOQA
-from scripts.tools.ipc_pad_size_calculators import *
+from scripts.tools.ipc_pad_size_calculators import ipc_gull_wing, TolerancedSize
 from scripts.tools.global_config_files.global_config import DefaultGlobalConfig
 
 
@@ -87,9 +87,9 @@ def create_footprint(name, configuration, **kwargs):
     if ('lead_length' in kwargs) and ('lead_width' in kwargs) and ('lead_spacing' in kwargs):
         # gather IPC data (unique parameters for >= 10mm tall caps)
         ipc_density_suffix = '' if body_size['height'] < 10 else '_ge_10mm'
-        ipc_density = configuration['ipc_density']
-        ipc_data = ipc_defintions['ipc_spec_capae_crystal' + ipc_density_suffix][ipc_density]
-        ipc_round_base = ipc_defintions['ipc_spec_capae_crystal' + ipc_density_suffix]['round_base']
+        ipc_device_class = 'ipc_spec_capae_crystal' + ipc_density_suffix
+        ipc_offsets = ipc_definitions.get_class(ipc_device_class).get_offsets(configuration['ipc_density'])
+        ipc_round_base = ipc_definitions.get_class(ipc_device_class).roundoff
 
         manf_tol = {
             'F': configuration.get('manufacturing_tolerance', 0.1),
@@ -106,7 +106,7 @@ def create_footprint(name, configuration, **kwargs):
             minimum = device_dimensions['lead_spacing'].minimum +
             device_dimensions.get('lead_length').minimum * 2)
 
-        Gmin, Zmax, Xmax = ipc_gull_wing(ipc_data, ipc_round_base, manf_tol,
+        Gmin, Zmax, Xmax = ipc_gull_wing(ipc_offsets, ipc_round_base, manf_tol,
                 device_dimensions['lead_width'], device_dimensions['lead_outside'],
                 lead_len=device_dimensions.get('lead_length'))
 
@@ -226,7 +226,7 @@ if __name__ == "__main__":
     parser.add_argument('--global_config', type=str, nargs='?', help='the config file defining how the footprint will look like. (KLC)', default='../tools/global_config_files/config_KLCv3.0.yaml')
     parser.add_argument('--series_config', type=str, nargs='?', help='the config file defining series parameters.', default='../SMD_2terminal_chip_molded/package_config_KLCv3.0.yaml')
     parser.add_argument('--ipc_definition', type=str, nargs='?', help='the IPC definition file', default='ipc7351B_capae_crystal')
-    parser.add_argument('--ipc_density', type=str, nargs='?', help='the IPC desnity', default='nominal')
+    parser.add_argument('--ipc_density', type=str, nargs='?', help='the IPC density', default='nominal')
     parser.add_argument('--force_rectangle_pads', action='store_true', help='Force the generation of rectangle pads instead of rounded rectangle (KiCad 4.x compatibility.)')
     #parser.add_argument('-v', '--verbose', help='show more information when creating footprint', action='store_true')
     # TODO: allow writing into sub file
@@ -245,9 +245,9 @@ if __name__ == "__main__":
             print(exc)
 
     ipc_defs = ipc_rules.IpcRules.from_file(args.ipc_definition)
-    ipc_defintions = ipc_defs.raw_data
+    ipc_definitions = ipc_defs
 
-    configuration['ipc_density'] = args.ipc_density
+    configuration['ipc_density'] = ipc_rules.IpcDensity(args.ipc_density)
     configuration['force_rectangle_pads'] = args.force_rectangle_pads
 
     for filepath in args.files:
