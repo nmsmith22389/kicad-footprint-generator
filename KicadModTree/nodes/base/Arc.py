@@ -15,6 +15,7 @@
 
 from kilibs.geom import BoundingBox, Vector2D, geometricArc
 from KicadModTree.nodes.Node import Node
+from KicadModTree.nodes.base.LineStyle import LineStyle
 
 
 class Arc(Node, geometricArc):
@@ -50,12 +51,17 @@ class Arc(Node, geometricArc):
     >>> Arc(center=[0, 0], start=[-1, 0], angle=180, layer='F.SilkS')
     """
 
+    layer: str
+    width: float
+    style: LineStyle
+
     def __init__(self, **kwargs):
         Node.__init__(self)
         geometricArc.__init__(self, **kwargs)
 
         self.layer = kwargs.get('layer', 'F.SilkS')
         self.width = kwargs.get('width')
+        self.style = kwargs.get('style', LineStyle.SOLID)
 
     def copyReplaceGeometry(self, geometry):
         return Arc(geometry=geometry, layer=self.layer, width=self.width)

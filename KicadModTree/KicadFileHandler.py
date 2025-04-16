@@ -32,6 +32,7 @@ from KicadModTree.nodes.base.Pad import Pad
 from KicadModTree.nodes.base.Arc import Arc
 from KicadModTree.nodes.base.Circle import Circle
 from KicadModTree.nodes.base.Line import Line
+from KicadModTree.nodes.base.LineStyle import LineStyle
 from KicadModTree.nodes.base.Polygon import Polygon
 from KicadModTree.nodes.base.PolygonArc import PolygonArc
 from KicadModTree.nodes.base.CompoundPolygon import CompoundPolygon
@@ -499,10 +500,18 @@ class KicadFileHandler(FileHandler):
 
     def _serialize_Stroke(self, node):
         width = _get_layer_width(node.layer, node.width)
-        if hasattr(node, 'stroke_type'):
-            stype = node.stroke_type
+
+        if hasattr(node, 'style'):
+            stype = {
+                LineStyle.SOLID: "solid",
+                LineStyle.DASH: "dash",
+                LineStyle.DOT: "dot",
+                LineStyle.DASH_DOT: "dash_dot",
+                LineStyle.DASH_DOT_DOT: "dash_dot_dot",
+            }[node.style]
         else:
             stype = 'solid'
+
         return [
             [SexprSerializer.Symbol('width'), width],
             [SexprSerializer.Symbol('type'), SexprSerializer.Symbol(stype)],

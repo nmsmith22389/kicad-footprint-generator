@@ -15,6 +15,7 @@
 
 from kilibs.geom import Rectangle, Vector2D
 from KicadModTree.nodes.Node import Node
+from KicadModTree.nodes.base.LineStyle import LineStyle
 
 
 class Rect(Node):
@@ -48,6 +49,7 @@ class Rect(Node):
     layer: str
     width: float
     fill: bool
+    style: LineStyle
 
     def __init__(
         self,
@@ -57,6 +59,7 @@ class Rect(Node):
         end: Vector2D | None = None,
         rect: Rectangle | None = None,
         fill: bool = False,
+        style: LineStyle = LineStyle.SOLID,
     ):
         Node.__init__(self)
 
@@ -75,6 +78,7 @@ class Rect(Node):
         self.width = width
 
         self.fill = fill
+        self.style = style
 
     def _getRenderTreeText(self):
         render_text = Node._getRenderTreeText(self)

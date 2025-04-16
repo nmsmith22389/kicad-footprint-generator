@@ -15,6 +15,7 @@
 
 from kilibs.geom import BoundingBox, geometricCircle, Vector2D
 from KicadModTree.nodes.Node import Node
+from KicadModTree.nodes.base.LineStyle import LineStyle
 
 from .Arc import Arc
 
@@ -46,6 +47,7 @@ class Circle(Node, geometricCircle):
     layer: str
     width: float
     fill: bool
+    style: LineStyle
 
     def __init__(self, **kwargs):
         Node.__init__(self)
@@ -55,6 +57,7 @@ class Circle(Node, geometricCircle):
         self.layer = kwargs.get('layer', 'F.SilkS')
         self.width = kwargs.get('width')
         self.fill = kwargs.get('fill', False)
+        self.style = kwargs.get('style', LineStyle.SOLID)
 
     def rotate(self, angle, origin=(0, 0), use_degrees=True):
         r""" Rotate circle around given origin

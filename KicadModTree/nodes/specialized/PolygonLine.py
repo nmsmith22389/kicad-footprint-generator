@@ -17,7 +17,7 @@ from typing import Optional
 
 from kilibs.geom import Vector2D, PolygonPoints
 from KicadModTree.nodes.Node import Node
-from KicadModTree.nodes.base.Line import Line
+from KicadModTree.nodes import Line, LineStyle
 
 
 class PolygonLine(Node):
@@ -47,6 +47,7 @@ class PolygonLine(Node):
 
     layer: str
     width: Optional[float]
+    style: LineStyle
 
     def __init__(self, **kwargs):
         Node.__init__(self)
@@ -56,6 +57,8 @@ class PolygonLine(Node):
 
         if self.width is not None:
             self.width = float(self.width)
+
+        self.style = kwargs.get('style', LineStyle.SOLID)
 
         self._initPolyPoint(**kwargs)
 
@@ -68,7 +71,13 @@ class PolygonLine(Node):
         nodes = []
 
         for line_start, line_end in zip(polygon_line, polygon_line[1:]):
-            new_node = Line(start=line_start, end=line_end, layer=self.layer, width=self.width)
+            new_node = Line(
+                start=line_start,
+                end=line_end,
+                layer=self.layer,
+                width=self.width,
+                style=self.style,
+            )
             new_node._parent = self
             nodes.append(new_node)
 

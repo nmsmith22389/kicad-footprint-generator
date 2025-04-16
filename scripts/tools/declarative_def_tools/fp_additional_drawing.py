@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import Callable
 
-from KicadModTree import Circle, Node, Line, Rect, PolygonLine
+from KicadModTree import Circle, Node, LineStyle, Rect, PolygonLine
 from KicadModTree.nodes.specialized import Cross
 from kilibs.geom import Vector2D
 from kilibs.declarative_defs import additional_drawings as ADs
@@ -30,6 +30,7 @@ class FPDrawingProvider(ADs.DrawingProvider):
     """Line width of the drawing. If None, the default width for the layer is used."""
     fill: bool
     """Whether the drawing should be filled or not. Default is False"""
+    line_style: LineStyle
 
     @dataclass
     class Context:
@@ -52,6 +53,13 @@ class FPDrawingProvider(ADs.DrawingProvider):
         self.layer = spec["layer"]
         self.width = spec.get("width", None)
         self.fill = spec.get("fill", False)
+
+        self.line_style = spec.get("style", None)
+
+        if self.line_style is None:
+            self.line_style = LineStyle.SOLID
+        else:
+            self.line_style = LineStyle(self.line_style)
 
     def make_nodes(self, context: Context) -> list[Node]:
         """
@@ -78,6 +86,7 @@ class RectDrawingProvider(FPDrawingProvider):
                 layer=context.layer,
                 width=context.width,
                 fill=self.fill,
+                style=self.line_style,
             )
         ]
 
@@ -99,6 +108,7 @@ class CircleDrawingProvider(FPDrawingProvider):
                 layer=context.layer,
                 width=context.width,
                 fill=self.fill,
+                style=self.line_style,
             )
         ]
 
@@ -120,6 +130,7 @@ class PolyDrawingProvider(FPDrawingProvider):
                 layer=context.layer,
                 width=context.width,
                 fill=self.fill,
+                style=self.line_style,
             )
         ]
 

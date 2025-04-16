@@ -15,6 +15,7 @@
 
 from kilibs.geom import BoundingBox, Vector2D
 from KicadModTree.nodes.Node import Node
+from KicadModTree.nodes.base.LineStyle import LineStyle
 from kilibs.geom.geometric_util import geometricLine
 
 
@@ -40,6 +41,12 @@ class Line(Node, geometricLine):
     >>> Line(start=[1, 0], end=[-1, 0], layer='F.SilkS')
     """
 
+    start_pos: Vector2D
+    end_pos: Vector2D
+    layer: str
+    width: float
+    style: LineStyle
+
     def __init__(self, **kwargs):
         Node.__init__(self)
         if 'geometry' in kwargs:
@@ -54,6 +61,7 @@ class Line(Node, geometricLine):
 
         self.layer = kwargs.get('layer', 'F.SilkS')
         self.width = kwargs.get('width')
+        self.style = kwargs.get('style', LineStyle.SOLID)
 
     def copyReplaceGeometry(self, geometry):
         return Line(

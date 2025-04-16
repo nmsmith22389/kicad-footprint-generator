@@ -23,6 +23,7 @@ from KicadModTree.nodes.Node import Node
 from KicadModTree.nodes.base.Arc import Arc
 from KicadModTree.nodes.base.PolygonArc import PolygonArc
 from KicadModTree.nodes.base.Line import Line
+from KicadModTree.nodes.base.LineStyle import LineStyle
 from KicadModTree.nodes.base.Group import Group
 
 from collections import deque
@@ -43,7 +44,7 @@ class NativePolygonArgs(TypedDict):
     polygon: list
     layer: str
     width: float
-    stroke_type: str
+    style: LineStyle
     fill: str
     enforce_continuous: bool
     enforce_closed: bool
@@ -68,8 +69,7 @@ class CompoundPolygon(Node):
           layer on which the line is drawn (default: 'F.Cu')
         * *width* (``float``) --
           width of the line (default: None, which means auto detection)
-        * *stroke_type* (``str``),
-            'solid', 'dash', 'dash_dot', 'dash_dot_dot', 'dot'
+        * *style* (``LineStyle``)
         * *fill* (``str``)
             'solid', 'none'
 
@@ -442,7 +442,7 @@ class CompoundPolygon(Node):
 
         self.layer = kwargs.get('layer', 'F.Cu')
         self.width = kwargs.get('width', None)
-        self.stroke_type = kwargs.get('stroke_type', 'solid')
+        self.style = kwargs.get('style', LineStyle.SOLID)
         self.fill = kwargs.get('fill', 'solid')
 
     def get_tstamp_from_sexpr(self, sexpr: list):

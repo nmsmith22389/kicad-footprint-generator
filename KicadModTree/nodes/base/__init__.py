@@ -36,3 +36,5 @@ from .PolygonArc import PolygonArc
 from .Text import Text, Property
 
 from .Zone import Zone, ZoneFill, Keepouts, PadConnection, Hatch
+
+from .LineStyle import LineStyle  # Applies to Lines, Arcs, etc.
