@@ -316,6 +316,7 @@ class FPconfiguration():
     pin1_marker_size: float = 0.0
     pin1_marker_pos: Vector2D = None
     pin1_on_fab: bool = True
+    pin1_fab_y_inset: float = 0.0
     parameters: dict = None
     expr_eval: Callable = None
 
@@ -486,6 +487,9 @@ class FPconfiguration():
         self.pin1_marker_pos = Vector2D(-0.5 * (self.pad_pos_range.x + self.row_x_offset) + self.pad_center_offset.x,
                                         self.body_edges[self.pin1_pos]) + pin1_offset * Vector2D(1, self.scale_y)
         self.draw_pin1_marker_on_fab = first_pin_spec.get("marker", { }).get("fab", True)
+
+        # Sometimes, the fab marker needs to be set manually
+        self.pin1_fab_y_inset = first_pin_spec.get("marker", {}).get("fab_y_inset", 0.0)
 
         self.exclude_from_bom = self.spec.get("exclude_from_bom", False)
         self.exclude_from_pos = self.spec.get("exclude_from_pos", False)
@@ -792,7 +796,7 @@ def make_pin1_fab_marker_points(fp_config: FPconfiguration) -> list:
     dx = min(fp_config.pad_pitch, global_config.fab_pin1_marker_length)
     dy = 0.8 * fp_config.scale_y * dx
 
-    base_y = fp_config.body_edges[fp_config.pin1_pos]
+    base_y = fp_config.body_edges[fp_config.pin1_pos] - fp_config.pin1_fab_y_inset * fp_config.scale_y
 
     pnts = [
         Vector2D(tip_x - 0.5 * dx, base_y),
