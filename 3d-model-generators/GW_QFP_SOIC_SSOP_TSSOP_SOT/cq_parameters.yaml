@@ -930,7 +930,7 @@ LQFP-80_12x12mm_Pitch0.5mm:
   destination_dir: 'Package_QFP.3dshapes'
   source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
 
-LQFP-100_14x14mm_Pitch0.5mm:
+LQFP-100_14x14mm_P0.5mm:
   the: 12.0
   tb_s: 0.15
   c: 0.1
@@ -1796,7 +1796,7 @@ TQFP-100_12x12mm_Pitch0.4mm:
   destination_dir: 'Package_QFP.3dshapes'
   source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
 
-TQFP-100_14x14mm_Pitch0.5mm:
+TQFP-100_14x14mm_P0.5mm:
   the: 12.0
   tb_s: 0.15
   c: 0.1
@@ -2653,38 +2653,6 @@ TQFP-80-1EP_14x14mm_P0.65mm_EP9.5x9.5mm:
   epad: [9.5, 9.5]
   excluded_pins: null
   model_name: TQFP-80-1EP_14x14mm_P0.65mm_EP9.5x9.5mm
-  rotation: -90
-  body_color_key: 'black body'
-  pin_color_key: 'metal grey pins'
-  mark_color_key: 'light brown label'
-  destination_dir: 'Package_QFP.3dshapes'
-  source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
-
-VQFP-100_14x14mm_P0.5mm:
-  the: 12.0
-  tb_s: 0.15
-  c: 0.1
-  R1: 0.1
-  R2: 0.1
-  S: 0.1
-  fp_s: 1
-  fp_r: 0.4
-  fp_d: 0.5
-  fp_z: 0.1
-  ef: 0.0
-  cc1: 0.25
-  D1: 14.0
-  E1: 14.0
-  E: 16.32
-  A1: 0.1
-  A2: 1.5
-  b: 0.2
-  e: 0.5
-  npx: 25
-  npy: 25
-  epad: null
-  excluded_pins: null
-  model_name: VQFP-100_14x14mm_P0.5mm
   rotation: -90
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
