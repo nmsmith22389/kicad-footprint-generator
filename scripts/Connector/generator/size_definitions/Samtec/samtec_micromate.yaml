@@ -11,6 +11,7 @@ defaults:
       shape: 'triangle' # shape of pin 1 marker on Silk and Fab (circle or triangle)
       offset: 0.325     # offset from the body edge (default: size)
       fab: False        # don't draw a pin1 indicator on Fab (body is asymmetric anyway)
+  text_inside_pos: 0
   clean_silk: True
   description: 'Samtec Micro Mate Discrete Wire Terminal Strip, 1.00 mm Pitch, Single Row, {options}'
   tags: 'conn samtec discrete wire terminal'

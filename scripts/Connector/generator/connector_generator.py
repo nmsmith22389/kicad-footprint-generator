@@ -309,6 +309,7 @@ class FPconfiguration():
     rule_areas: list = None
     silk_fab_offset : float = 0.0
     silk_line_width : float = 0.0
+    text_inside_pos: float | str = "center"
     clean_silk: bool = True
     pin1_pos: str = 'top'
     pin1_body_chamfer: float = 0.0
@@ -449,6 +450,8 @@ class FPconfiguration():
 
         ## Get rule areas
         self.rule_areas = rule_area_properties.RuleAreaProperties.from_standard_yaml(self.spec)
+
+        self.text_inside_pos = self.spec.get("text_inside_pos", "center")
 
         self.clean_silk = self.spec.get('clean_silk', True)
 
@@ -713,7 +716,7 @@ def generate_one_footprint(
         Vector2D(fp_config.body_edges["right"], fp_config.body_edges["bottom"]),
     )
     addTextFields(kicad_mod=kicad_mod, configuration=global_config, body_edges=body_box,
-                  courtyard=courtyard_box, fp_name=fp_name, text_y_inside_position=0)
+                  courtyard=courtyard_box, fp_name=fp_name, text_y_inside_position=fp_config.text_inside_pos)
 
     lib_name = configuration['lib_name_specific_function_format_string'].format(category=fp_config.library_name)
 
