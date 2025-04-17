@@ -22,6 +22,7 @@ Authors:
 """
 
 import abc
+import copy
 import enum
 import warnings
 import re
@@ -33,9 +34,20 @@ from fnmatch import fnmatch
 from typing import Any, Iterable, Callable
 from dataclasses import dataclass, asdict
 
-from KicadModTree import *  # NOQA
+from KicadModTree import (
+    Pad,
+    RoundRadiusHandler,
+    Footprint,
+    FootprintType,
+    Translation,
+    PolygonLine,
+    Circle,
+    RectLine,
+    KicadPrettyLibrary,
+    Model,
+)
 from kilibs.util import dict_tools
-from kilibs.geom import BoundingBox
+from kilibs.geom import BoundingBox, Vector2D
 from scripts.tools.footprint_text_fields import addTextFields
 from scripts.tools.declarative_def_tools import utils, rule_area_properties, fp_additional_drawing
 from scripts.tools.declarative_def_tools.utils import DotDict
@@ -439,7 +451,11 @@ class FPconfiguration():
         self.clean_silk = self.spec.get('clean_silk', True)
 
         if pad1_spec := first_pin_spec.get("pad", None):
-            self.pad1_properties = PadProperties(pad1_spec, global_config)
+            # The pad1 spec is the normal pad spec, updated with the pin 1 spec
+            merged_spec = copy.deepcopy(pad_spec)
+            dict_tools.dictMerge(merged_spec, pad1_spec)
+
+            self.pad1_properties = PadProperties(merged_spec, global_config)
 
         ## body chamfer at pin1 corner
         self.pin1_body_chamfer = first_pin_spec.get("body_chamfer", 0.0)
