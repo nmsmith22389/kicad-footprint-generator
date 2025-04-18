@@ -1151,6 +1151,38 @@ LQFP-176_24x24mm_P0.5mm:
   num_pins_x: 44
   num_pins_y: 44
 
+LQFP-176-1EP_24x24mm_P0.5mm_EP6.6x6.6mm:
+  # Most similar JEDEC MS-026 variation BGA https://www.jedec.org/document_search?search_api_views_fulltext=MS-026
+  # Manufacturer doesn't declare a JEDEC variant.
+  # Tolerances / height / custom Exposed Pad from Infineon https://www.infineon.com/cms/en/product/packages/PG-TQFP/PG-TQFP-176-801/
+  # Height = 1.70 mm max, so LQFP, but manufacturer calls it TQFP
+  device_type: 'LQFP'
+  compatible_mpns:
+    - Infineon-PG-TQFP-176-801
+  # Footprint drawing: https://www.infineon.com/dgdl/Infineon-PG-TQFP-176-801_FPD_PDF-Footprint-v00_00-EN.pdf?fileId=8ac78c8c8b6555fe018c34a477e2186a
+  # Package drawing: https://www.infineon.com/dgdl/Infineon-PG-TQFP-176-801_SPO_PDF-Package-v00_00-EN.pdf?fileId=8ac78c8c8b6555fe018c34a4bb1e1870
+  size_source: 'https://www.infineon.com/cms/en/product/packages/PG-TQFP/PG-TQFP-176-801/'
+  body_size_x: 24 +/- 0.2  # ISO 2768-1mK
+  body_size_y: 24 +/- 0.2
+  overall_size_x: 26 +/- 0.2
+  overall_size_y: 26 +/- 0.2
+  overall_height:
+    maximum: 1.70
+  lead_width: 0.17 .. 0.22 .. 0.27
+  lead_len: 0.45 .. 0.6 .. 0.75
+  pitch: 0.5
+  num_pins_x: 44
+  num_pins_y: 44
+
+  EP_size_x: 6.6 +/- 0.2
+  EP_size_y: 6.6 +/- 0.2
+  EP_paste_coverage: 0.65
+  EP_num_paste_pads: [5, 5]
+
+  thermal_vias:
+    count: [6, 6]
+    drill: 0.2
+
 LQFP-208_28x28mm_P0.5mm:
 # height = 1.60 mm max
   device_type: 'LQFP'
@@ -1291,7 +1323,7 @@ TQFP-52-1EP_10x10mm_P0.65mm_EP6.5x6.5mm:
 
 VQFP-80_14x14mm_P0.65mm:
 # Microsemi calls it VQ80, but with height A = 1.20 mm max it is actually a TQFP from JEDEC MS-026 variation AEC,
-# 3D Model is wrong using height = 1.60 mm, and there's no symbol using it. 
+# 3D Model is wrong using height = 1.60 mm, and there's no symbol using it.
 # There are already LQFP and TQFP with same lead count and similar sizes, we should MERGE it with TQFP-80 since it is not script generated yet
 # https://web.archive.org/web/20220119120813/https://www.microsemi.com/document-portal/doc_download/131095-pd3068-package-mechanical-drawings
   device_type: 'VQFP'
