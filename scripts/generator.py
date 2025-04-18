@@ -28,7 +28,7 @@ try:
     import tabulate
 except ImportError:
     print(
-        "Import failed. Use 'pip install -e .' to install dependencies. See the README.md file."
+        "Import failed. Use 'pip install -e .' in the repository root to install dependencies. See the README.md file."
     )
     sys.exit(1)
 
