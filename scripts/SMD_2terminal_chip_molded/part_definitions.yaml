@@ -260,7 +260,7 @@ led:
 
 led_smaller_0402:
     fp_lib_name: 'LED_SMD'
-    size_definitions: ['led_chip_smaller_0402.yaml']
+    size_definitions: ['default_chip_smaller_0402.yaml']
     ipc_reference: "ipc_spec_smaller_0603"
     prefix: 'LED'
     description: 'LED SMD {code_imperial:s} ({code_metric:s} Metric), square (rectangular) end terminal{density:s}, {size_info:s}, generated with kicad-footprint-generator'
@@ -288,7 +288,7 @@ led_handsolder:
 
 led_handsolder_smaller_0402:
     fp_lib_name: 'LED_SMD'
-    size_definitions: ['led_chip_smaller_0402.yaml']
+    size_definitions: ['default_chip_smaller_0402.yaml']
     ipc_reference: "ipc_spec_smaller_0603"
     prefix: 'LED'
     description: 'LED SMD {code_imperial:s} ({code_metric:s} Metric), square (rectangular) end terminal{density:s}, {size_info:s}, generated with kicad-footprint-generator'
