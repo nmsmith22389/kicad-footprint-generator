@@ -128,6 +128,10 @@ Texas_WQFN-30_RNP0030B:
   num_pins_x: 4
   num_pins_y: 11
 
+  compatible_mpns:
+    - Texas_RNP0030E # Identical drawings to RNP0030B, https://www.ti.com/lit/ds/symlink/lm76005-q1.pdf
+
+
 Diodes_ZL32_TQFN-32-1EP_3x6mm_P0.4mm_EP1.25x3.5mm:
   device_type: 'TQFN'
   manufacturer: 'Diodes'
