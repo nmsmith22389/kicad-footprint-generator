@@ -772,12 +772,10 @@ def makeResistorRadial(seriesname, rm, w, h, ddrill, R_POW, innerw=0,innerh=0,rm
         if w2>0 and type=="concentric":
             kicad_modg.append(Circle(center=[l_fab+w_fab/2, t_fab+h_fab/2], radius=d2_fab/2, layer='F.Fab', width=lw_fab))
             if deco=="chokewire":
-                alpha1=0
-                alpha2=15
-                while alpha1<=360:
+                for i in range(12):
+                    alpha1 = 30 * i
+                    alpha2 = alpha1 + 15
                     kicad_modg.append(Line(start=[d_slk*0.49*math.cos(alpha1/180*math.pi),d_slk*0.49*math.sin(alpha1/180*math.pi)], end=[d2_slk*0.51*math.cos(alpha2/180*math.pi),d2_slk*0.51*math.sin(alpha2/180*math.pi)], layer='F.Fab', width=lw_fab))
-                    alpha1=alpha1+30
-                    alpha2=alpha2+30
     else:
         kicad_modg.append(Rect(start=[l_fab, t_fab], end=[l_fab + w_fab, t_fab + h_fab], layer='F.Fab', width=lw_fab))
         if innerw!=w or innerh!=h:
