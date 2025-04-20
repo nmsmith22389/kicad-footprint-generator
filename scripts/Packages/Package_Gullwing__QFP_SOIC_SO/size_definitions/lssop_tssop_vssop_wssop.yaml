@@ -367,6 +367,9 @@ MSOP-10_3x3mm_P0.5mm:
   num_pins_x: 0
   num_pins_y: 5
 
+  compatible_mpns:
+    - Texas_DGS0010A # https://www.ti.com/lit/ml/mpds035c/mpds035c.pdf
+
 VSSOP-10_3x3mm_P0.5mm:
 # this is TSSOP actually (height = 1.1mm max), it was previously in vssop.yaml file
   device_type: 'VSSOP'
