@@ -19,7 +19,7 @@
 # hardcoded values into hundreds of scripts).
 
 3d_model_prefix: '${KICAD9_3DMODEL_DIR}/'
-3d_model_suffix: '.wrl'
+3d_model_suffix: '.step'
 
 # When a rotation "Level" (A or B) is defined in the name,
 # this is how to format it
