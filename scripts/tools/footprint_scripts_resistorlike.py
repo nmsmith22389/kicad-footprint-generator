@@ -775,7 +775,7 @@ def makeResistorRadial(seriesname, rm, w, h, ddrill, R_POW, innerw=0,innerh=0,rm
                 alpha1=0
                 alpha2=15
                 while alpha1<=360:
-                    kicad_modg.append(Line(start=[d_slk*0.49*math.cos(alpha1/180*3.1415),d_slk*0.49*math.sin(alpha1/180*3.1415)], end=[d2_slk*0.51*math.cos(alpha2/180*3.1415),d2_slk*0.51*math.sin(alpha2/180*3.1415)], layer='F.Fab', width=lw_fab))
+                    kicad_modg.append(Line(start=[d_slk*0.49*math.cos(alpha1/180*math.pi),d_slk*0.49*math.sin(alpha1/180*math.pi)], end=[d2_slk*0.51*math.cos(alpha2/180*math.pi),d2_slk*0.51*math.sin(alpha2/180*math.pi)], layer='F.Fab', width=lw_fab))
                     alpha1=alpha1+30
                     alpha2=alpha2+30
     else:

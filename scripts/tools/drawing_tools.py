@@ -390,14 +390,14 @@ def addArcWithKeepout(kicad_mod, arc: geometricArc, layer, width, keepouts, roun
 
 # draw an arc
 def addArcByAngles(kicad_mod, x, y, radius, angle_start, angle_end, layer, width, roun=0.001):
-    startx = x + radius * math.sin(angle_start/180*3.1415)
-    starty = y + radius * math.cos(angle_start/180*3.1415)
+    startx = x + radius * math.sin(angle_start/180*math.pi)
+    starty = y + radius * math.cos(angle_start/180*math.pi)
     kicad_mod.append( Arc(center=[round_to_grid(x, roun), round_to_grid(y, roun)], start=[round_to_grid(startx, roun), round_to_grid(starty, roun)], angle=-(angle_end-angle_start), layer=layer, width=width))
 
 # draw an arc minding the keepouts
 def addArcByAnglesWithKeepout(kicad_mod, x, y, radius, angle_start, angle_end, layer, width, keepouts=[], roun=0.001):
-    startx = x + radius * math.sin(angle_start/180*3.1415)
-    starty = y + radius * math.cos(angle_start/180*3.1415)
+    startx = x + radius * math.sin(angle_start/180*math.pi)
+    starty = y + radius * math.cos(angle_start/180*math.pi)
     arc = geometricArc(center=[x, y], start=[startx, starty], angle=-(angle_end-angle_start))
     addArcWithKeepout(kicad_mod, arc, layer, width, keepouts, roun)
 
@@ -406,16 +406,16 @@ def addEllipse(kicad_mod, x, y, w, h, layer, width, roun=0.001):
     factor=h/w
     alpha=math.atan(h/w)*2
     radius=w/2/math.sin(alpha)
-    addArcByAngles(kicad_mod=kicad_mod, x=x, y=y+radius*math.cos(alpha), radius=radius, angle_start=180-alpha/3.1415*180, angle_end=180+alpha/3.1415*180, layer=layer, width=width, roun=roun);
-    addArcByAngles(kicad_mod=kicad_mod, x=x, y=y-radius*math.cos(alpha), radius=radius, angle_start=alpha/3.1415*180, angle_end=-alpha/3.1415*180, layer=layer, width=width, roun=roun);
+    addArcByAngles(kicad_mod=kicad_mod, x=x, y=y+radius*math.cos(alpha), radius=radius, angle_start=180-alpha/math.pi*180, angle_end=180+alpha/math.pi*180, layer=layer, width=width, roun=roun);
+    addArcByAngles(kicad_mod=kicad_mod, x=x, y=y-radius*math.cos(alpha), radius=radius, angle_start=alpha/math.pi*180, angle_end=-alpha/math.pi*180, layer=layer, width=width, roun=roun);
 
 # draw an ellipse with one axis along x-axis and one axis along y-axis and given width/height
 def addEllipseWithKeepout(kicad_mod, x, y, w, h, layer, width, keepouts=[], roun=0.001):
     factor=h/w
     alpha=math.atan(h/w)*2
     radius=w/2/math.sin(alpha)
-    addArcByAnglesWithKeepout(kicad_mod=kicad_mod, x=x, y=y+radius*math.cos(alpha), radius=radius, angle_start=180-alpha/3.1415*180, angle_end=180+alpha/3.1415*180, keepouts=keepouts, layer=layer, width=width, roun=roun);
-    addArcByAnglesWithKeepout(kicad_mod=kicad_mod, x=x, y=y-radius*math.cos(alpha), radius=radius, angle_start=alpha/3.1415*180, angle_end=-alpha/3.1415*180, keepouts=keepouts, layer=layer, width=width, roun=roun);
+    addArcByAnglesWithKeepout(kicad_mod=kicad_mod, x=x, y=y+radius*math.cos(alpha), radius=radius, angle_start=180-alpha/math.pi*180, angle_end=180+alpha/math.pi*180, keepouts=keepouts, layer=layer, width=width, roun=roun);
+    addArcByAnglesWithKeepout(kicad_mod=kicad_mod, x=x, y=y-radius*math.cos(alpha), radius=radius, angle_start=alpha/math.pi*180, angle_end=-alpha/math.pi*180, keepouts=keepouts, layer=layer, width=width, roun=roun);
 
 
 def makeNodesWithKeepout(
@@ -491,14 +491,14 @@ def addSlitScrew(kicad_mod, c, radius, layer, width, keepouts=[], roun=0.001):
     addCircleWithKeepout(kicad_mod, c.x, c.y, radius, layer, width, keepouts, roun)
 
     da = 5
-    dx1 = 0.99 * radius * math.sin((135 - da) / 180 * 3.1415)
-    dy1 = 0.99 * radius * math.cos((135 - da) / 180 * 3.1415)
-    dx2 = 0.99 * radius * math.sin((135 + da) / 180 * 3.1415)
-    dy2 = 0.99 * radius * math.cos((135 + da) / 180 * 3.1415)
-    dx3 = 0.99 * radius * math.sin((315 - da) / 180 * 3.1415)
-    dy3 = 0.99 * radius * math.cos((315 - da) / 180 * 3.1415)
-    dx4 = 0.99 * radius * math.sin((315 + da) / 180 * 3.1415)
-    dy4 = 0.99 * radius * math.cos((315 + da) / 180 * 3.1415)
+    dx1 = 0.99 * radius * math.sin((135 - da) / 180 * math.pi)
+    dy1 = 0.99 * radius * math.cos((135 - da) / 180 * math.pi)
+    dx2 = 0.99 * radius * math.sin((135 + da) / 180 * math.pi)
+    dy2 = 0.99 * radius * math.cos((135 + da) / 180 * math.pi)
+    dx3 = 0.99 * radius * math.sin((315 - da) / 180 * math.pi)
+    dy3 = 0.99 * radius * math.cos((315 - da) / 180 * math.pi)
+    dx4 = 0.99 * radius * math.sin((315 + da) / 180 * math.pi)
+    dy4 = 0.99 * radius * math.cos((315 + da) / 180 * math.pi)
 
     line1 = geometricLine(start=c + [dx1, dy1], end=c + [dx4, dy4])
     line2 = geometricLine(start=c + [dx2, dy2], end=c + [dx3, dy3])
