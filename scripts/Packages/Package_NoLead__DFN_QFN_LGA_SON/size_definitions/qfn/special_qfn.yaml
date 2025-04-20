@@ -192,6 +192,10 @@ DHVQFN-16-1EP_2.5x3.5mm_P0.5mm:
   num_pins_x: 2
   num_pins_y: 6
 
+  compatible_mpns:
+    - Nexperia_SOT763-1 # https://assets.nexperia.com/documents/package-information/SOT763-1.pdf
+    - Texas_BQB0016A # https://www.ti.com/lit/ml/pptd364/pptd364.pdf
+
   pad_numbers:
     generator: 'increment'
     init: 1
