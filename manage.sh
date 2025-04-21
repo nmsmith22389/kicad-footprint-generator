@@ -38,6 +38,7 @@ fp_format_check() {
         "$KICADMODTREE_DIR/nodes/specialized/Trapezoid.py"
         "src/kilibs/declarative_defs"
         "scripts/tests/test_utils"
+        "scripts/tools/drawing_tools.py"
         "scripts/generator.py"
         "scripts/Connector_Dsub"
         "scripts/LEDs_SMD"

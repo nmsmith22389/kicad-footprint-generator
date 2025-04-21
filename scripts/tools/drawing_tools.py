@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
-import math
 import enum
-from typing import Tuple, List, Union, Optional, Any
+import math
+from typing import Any, List, Optional, Tuple, Union
 
 from KicadModTree import (
     Arc,
@@ -10,36 +10,36 @@ from KicadModTree import (
     Footprint,
     Line,
     Node,
+    Pad,
     PolygonLine,
     Rect,
     RectLine,
-    Pad,
 )
 from kilibs.geom import (
-    Direction,
-    Vector2D,
     BoundingBox,
-    geometricCircle,
-    geometricArc,
-    geometricLine,
-    Rectangle,
+    Direction,
     PolygonPoints,
+    Rectangle,
+    Vector2D,
+    geometricArc,
+    geometricCircle,
+    geometricLine,
 )
+from kilibs.geom.keepout import Keepout, KeepoutRect, KeepoutRound
 from kilibs.geom.rounding import (
     round_to_grid,
     round_to_grid_down,
     round_to_grid_e,
-    round_to_grid_up,
     round_to_grid_nearest,
+    round_to_grid_up,
 )
-from kilibs.geom.keepout import Keepout, KeepoutRect, KeepoutRound
 from scripts.tools.footprint_global_properties import *
 from scripts.tools.nodes import pin1_arrow
 
 
 # round for grid g
 def sqr(x):
-    return x*x
+    return x * x
 
 
 # round for courtyard grid
@@ -56,11 +56,12 @@ def courtyardFromBoundingBox(bbox: BoundingBox, off: float, grid: float) -> dict
     :param grid: grid size to round to
     """
     return {
-        'left': round_to_grid_down(bbox.left - off, grid),
-        'right': round_to_grid_up(bbox.right + off, grid),
-        'top': round_to_grid_down(bbox.top - off, grid),
-        'bottom': round_to_grid_up(bbox.bottom + off, grid)
+        "left": round_to_grid_down(bbox.left - off, grid),
+        "right": round_to_grid_up(bbox.right + off, grid),
+        "top": round_to_grid_down(bbox.top - off, grid),
+        "bottom": round_to_grid_up(bbox.bottom + off, grid),
     }
+
 
 # float-variant of range()
 def frange(x, y, jump):
@@ -260,9 +261,7 @@ def _add_kept_out(
         if isinstance(item, geometricLine):
             tiny = item.length < tiny_threshold
         elif isinstance(item, geometricArc):
-            tiny = (
-                item.start_pos - item.getMidPoint()
-            ).norm() < tiny_threshold / 2
+            tiny = (item.start_pos - item.getMidPoint()).norm() < tiny_threshold / 2
 
         if tiny:
             items.remove(item)
@@ -333,7 +332,9 @@ def makeLineWithKeepout(line: geometricLine, layer, width, keepouts=[], roun=0.0
     return _add_kept_out(kept_out, layer, width, roun)
 
 
-def addLineWithKeepout(kicad_mod, line: geometricLine, layer, width, keepouts=[], roun=0.001):
+def addLineWithKeepout(
+    kicad_mod, line: geometricLine, layer, width, keepouts=[], roun=0.001
+):
     """Compatibility shim, prefer makeLineWithKeepout in new code"""
     nodes = makeLineWithKeepout(line, layer, width, keepouts, roun)
     for node in nodes:
@@ -341,7 +342,9 @@ def addLineWithKeepout(kicad_mod, line: geometricLine, layer, width, keepouts=[]
 
 
 # split a horizontal line so it does not interfere with keepout areas defined as [[x0,x1,y0,y1], ...]
-def addHLineWithKeepout(kicad_mod, x0, x1, y, layer, width, keepouts=[], roun=0.001, dashed=False):
+def addHLineWithKeepout(
+    kicad_mod, x0, x1, y, layer, width, keepouts=[], roun=0.001, dashed=False
+):
     if dashed:
         addHDLineWithKeepout(kicad_mod, x0, x1, y, layer, width, keepouts, roun)
     else:
@@ -351,7 +354,9 @@ def addHLineWithKeepout(kicad_mod, x0, x1, y, layer, width, keepouts=[], roun=0.
 
 
 # split a vertical line so it does not interfere with keepout areas
-def addVLineWithKeepout(kicad_mod, x, y0, y1, layer, width, keepouts=[], roun=0.001, dashed=False):
+def addVLineWithKeepout(
+    kicad_mod, x, y0, y1, layer, width, keepouts=[], roun=0.001, dashed=False
+):
     if dashed:
         addVDLineWithKeepout(kicad_mod, x, y0, y1, layer, width, keepouts, roun)
     else:
@@ -360,7 +365,9 @@ def addVLineWithKeepout(kicad_mod, x, y0, y1, layer, width, keepouts=[], roun=0.
         addLineWithKeepout(kicad_mod, line, layer, width, keepouts, roun)
 
 
-def makeCircleWithKeepout(circle: geometricCircle, layer, width, keepouts=[], roun=0.001):
+def makeCircleWithKeepout(
+    circle: geometricCircle, layer, width, keepouts=[], roun=0.001
+):
     """
     Draw a circle minding the keepouts
     """
@@ -368,7 +375,9 @@ def makeCircleWithKeepout(circle: geometricCircle, layer, width, keepouts=[], ro
     return _add_kept_out(parts_out, layer, width, roun)
 
 
-def addCircleWithKeepout(kicad_mod, x, y, radius, layer, width, keepouts=[], roun=0.001):
+def addCircleWithKeepout(
+    kicad_mod, x, y, radius, layer, width, keepouts=[], roun=0.001
+):
     """Compatibility shim, prefer makeCircleWithKeepout in new code"""
     c = geometricCircle(center=[x, y], radius=radius)
     nodes = makeCircleWithKeepout(c, layer, width, keepouts, roun)
@@ -393,29 +402,76 @@ def addArcWithKeepout(kicad_mod, arc: geometricArc, layer, width, keepouts, roun
 
 # draw an arc
 def addArc(kicad_mod, arc: geometricArc, layer, width, roun=0.001):
-    kicad_mod.append(Arc(
-        start=[round_to_grid_nearest(arc.getStartPoint().x, roun), round_to_grid_nearest(arc.getStartPoint().y, roun)],
-        midpoint=[round_to_grid_nearest(arc.getMidPoint().x, roun), round_to_grid_nearest(arc.getMidPoint().y, roun)],
-        end=[round_to_grid_nearest(arc.getEndPoint().x, roun), round_to_grid_nearest(arc.getEndPoint().y, roun)],
-        layer=layer,
-        width=width,
-    ))
+    kicad_mod.append(
+        Arc(
+            start=[
+                round_to_grid_nearest(arc.getStartPoint().x, roun),
+                round_to_grid_nearest(arc.getStartPoint().y, roun),
+            ],
+            midpoint=[
+                round_to_grid_nearest(arc.getMidPoint().x, roun),
+                round_to_grid_nearest(arc.getMidPoint().y, roun),
+            ],
+            end=[
+                round_to_grid_nearest(arc.getEndPoint().x, roun),
+                round_to_grid_nearest(arc.getEndPoint().y, roun),
+            ],
+            layer=layer,
+            width=width,
+        )
+    )
 
 
 # draw an ellipse with one axis along x-axis and one axis along y-axis and given width/height
 def addEllipse(kicad_mod, x, y, w, h, layer, width, roun=0.001):
-    addArc(kicad_mod=kicad_mod, arc=geometricArc(start=[x - w/2, y], midpoint=[x, y - h/2], end=[x + w/2, y]), layer=layer, width=width, roun=roun)
-    addArc(kicad_mod=kicad_mod, arc=geometricArc(start=[x - w/2, y], midpoint=[x, y + h/2], end=[x + w/2, y]), layer=layer, width=width, roun=roun)
+    addArc(
+        kicad_mod=kicad_mod,
+        arc=geometricArc(
+            start=[x - w / 2, y], midpoint=[x, y - h / 2], end=[x + w / 2, y]
+        ),
+        layer=layer,
+        width=width,
+        roun=roun,
+    )
+    addArc(
+        kicad_mod=kicad_mod,
+        arc=geometricArc(
+            start=[x - w / 2, y], midpoint=[x, y + h / 2], end=[x + w / 2, y]
+        ),
+        layer=layer,
+        width=width,
+        roun=roun,
+    )
 
 
 # draw an ellipse with one axis along x-axis and one axis along y-axis and given width/height
 def addEllipseWithKeepout(kicad_mod, x, y, w, h, layer, width, keepouts=[], roun=0.001):
-    addArcWithKeepout(kicad_mod=kicad_mod, arc=geometricArc(start=[x - w/2, y], midpoint=[x, y - h/2], end=[x + w/2, y]), keepouts=keepouts, layer=layer, width=width, roun=roun)
-    addArcWithKeepout(kicad_mod=kicad_mod, arc=geometricArc(start=[x - w/2, y], midpoint=[x, y + h/2], end=[x + w/2, y]), keepouts=keepouts, layer=layer, width=width, roun=roun)
+    addArcWithKeepout(
+        kicad_mod=kicad_mod,
+        arc=geometricArc(
+            start=[x - w / 2, y], midpoint=[x, y - h / 2], end=[x + w / 2, y]
+        ),
+        keepouts=keepouts,
+        layer=layer,
+        width=width,
+        roun=roun,
+    )
+    addArcWithKeepout(
+        kicad_mod=kicad_mod,
+        arc=geometricArc(
+            start=[x - w / 2, y], midpoint=[x, y + h / 2], end=[x + w / 2, y]
+        ),
+        keepouts=keepouts,
+        layer=layer,
+        width=width,
+        roun=roun,
+    )
 
 
 def makeNodesWithKeepout(
-    geom_items: list[geometricLine | geometricArc | geometricCircle | Rectangle | PolygonPoints],
+    geom_items: list[
+        geometricLine | geometricArc | geometricCircle | Rectangle | PolygonPoints
+    ],
     layer: str,
     width: float,
     keepouts: list[Keepout],
@@ -513,36 +569,51 @@ def addCrossScrew(kicad_mod, c, radius, layer, width, keepouts=[], roun=0.001):
     dw = 0.75 * radius
 
     addCircleWithKeepout(kicad_mod, c.x, c.y, radius, layer, width, keepouts, roun)
-    addHLineWithKeepout(kicad_mod, c.x - dw, c.x + dw, c.y, layer, width, keepouts, roun)
-    addVLineWithKeepout(kicad_mod, c.x, c.y - dw, c.y + dw, layer, width, keepouts, roun)
+    addHLineWithKeepout(
+        kicad_mod, c.x - dw, c.x + dw, c.y, layer, width, keepouts, roun
+    )
+    addVLineWithKeepout(
+        kicad_mod, c.x, c.y - dw, c.y + dw, layer, width, keepouts, roun
+    )
+
 
 # split a dashed horizontal line so it does not interfere with keepout areas defined as [[x0,x1,y0,y1], ...]
 def addHDLineWithKeepout(kicad_mod, x0, x1, y, layer, width, keepouts=[], roun=0.001):
-    dx=3*width
-    x=min(x0,x1)
-    while x<max(x0,x1):
-        addHLineWithKeepout(kicad_mod, x,min(x+dx,x1), y, layer, width, keepouts, roun)
-        x=x+dx*2
+    dx = 3 * width
+    x = min(x0, x1)
+    while x < max(x0, x1):
+        addHLineWithKeepout(
+            kicad_mod, x, min(x + dx, x1), y, layer, width, keepouts, roun
+        )
+        x = x + dx * 2
+
 
 # split a dashed vertical line so it does not interfere with keepout areas defined as [[x0,x1,y0,y1], ...]
 def addVDLineWithKeepout(kicad_mod, x, y0, y1, layer, width, keepouts=[], roun=0.001):
     dy = 3 * width
     y = min(y0, y1)
     while y < max(y0, y1):
-        addVLineWithKeepout(kicad_mod, x, y, min(y1,y+dy), layer, width, keepouts, roun)
+        addVLineWithKeepout(
+            kicad_mod, x, y, min(y1, y + dy), layer, width, keepouts, roun
+        )
         y = y + dy * 2
 
 
 # split a rectangle
 def addRectWith(kicad_mod, x, y, w, h, layer, width, roun=0.001):
-	kicad_mod.append(RectLine(start=[round_to_grid(x, roun),round_to_grid(y, roun)], end=[round_to_grid(x+w, roun),round_to_grid(y+h, roun)], layer=layer, width=width))
+    kicad_mod.append(
+        RectLine(
+            start=[round_to_grid(x, roun), round_to_grid(y, roun)],
+            end=[round_to_grid(x + w, roun), round_to_grid(y + h, roun)],
+            layer=layer,
+            width=width,
+        )
+    )
 
 
 # split a rectangle so it does not interfere with keepout areas defined as [[x0,x1,y0,y1], ...]
 def addRectWithKeepout(kicad_mod, x, y, w, h, layer, width, keepouts=[], roun=0.001):
-    rect = Rectangle.by_corner_and_size(
-        Vector2D(x, y), Vector2D(w, h)
-    )
+    rect = Rectangle.by_corner_and_size(Vector2D(x, y), Vector2D(w, h))
     kept_out = makeNodesWithKeepout(rect, layer, width, keepouts, roun)
     kicad_mod += kept_out
 
@@ -557,35 +628,65 @@ def makeRectWithKeepout(rect: Rectangle, layer, width, keepouts=[], roun=0.001):
 
 
 # split a rectangle so it does not interfere with keepout areas defined as [[x0,x1,y0,y1], ...]
-def addRectAndTLMarkWithKeepout(kicad_mod, x, y, w, h, mark_len, layer, width, keepouts=[], roun=0.001):
-    addHLineWithKeepout(kicad_mod, x, x+w, y, layer,width,keepouts,roun)
-    addHLineWithKeepout(kicad_mod, x, x + w, y+h, layer, width, keepouts, roun)
-    addVLineWithKeepout(kicad_mod, x, y, y+h, layer, width, keepouts, roun)
-    addVLineWithKeepout(kicad_mod, x+w, y, y + h, layer, width, keepouts, roun)
-    addHLineWithKeepout(kicad_mod, x-2*width, x+mark_len, y-2*width, layer,width,keepouts,roun)
-    addVLineWithKeepout(kicad_mod, x-2*width, y-2*width, y+mark_len, layer,width,keepouts,roun)
+def addRectAndTLMarkWithKeepout(
+    kicad_mod, x, y, w, h, mark_len, layer, width, keepouts=[], roun=0.001
+):
+    addHLineWithKeepout(kicad_mod, x, x + w, y, layer, width, keepouts, roun)
+    addHLineWithKeepout(kicad_mod, x, x + w, y + h, layer, width, keepouts, roun)
+    addVLineWithKeepout(kicad_mod, x, y, y + h, layer, width, keepouts, roun)
+    addVLineWithKeepout(kicad_mod, x + w, y, y + h, layer, width, keepouts, roun)
+    addHLineWithKeepout(
+        kicad_mod,
+        x - 2 * width,
+        x + mark_len,
+        y - 2 * width,
+        layer,
+        width,
+        keepouts,
+        roun,
+    )
+    addVLineWithKeepout(
+        kicad_mod,
+        x - 2 * width,
+        y - 2 * width,
+        y + mark_len,
+        layer,
+        width,
+        keepouts,
+        roun,
+    )
 
 
 # split a dashed rectangle so it does not interfere with keepout areas defined as [[x0,x1,y0,y1], ...]
 def addDRectWithKeepout(kicad_mod, x, y, w, h, layer, width, keepouts=[], roun=0.001):
-    addHDLineWithKeepout(kicad_mod, x, x+w, y, layer,width,keepouts,roun)
-    addHDLineWithKeepout(kicad_mod, x, x + w, y+h, layer, width, keepouts, roun)
-    addVDLineWithKeepout(kicad_mod, x, y, y+h, layer, width, keepouts, roun)
-    addVDLineWithKeepout(kicad_mod, x+w, y, y + h, layer, width, keepouts, roun)
+    addHDLineWithKeepout(kicad_mod, x, x + w, y, layer, width, keepouts, roun)
+    addHDLineWithKeepout(kicad_mod, x, x + w, y + h, layer, width, keepouts, roun)
+    addVDLineWithKeepout(kicad_mod, x, y, y + h, layer, width, keepouts, roun)
+    addVDLineWithKeepout(kicad_mod, x + w, y, y + h, layer, width, keepouts, roun)
+
 
 # split a plus sign so it does not interfere with keepout areas defined as [[x0,x1,y0,y1], ...]
 def addPlusWithKeepout(km, x, y, w, h, layer, width, keepouts=[], roun=0.001):
-    addHLineWithKeepout(km, x, x+w, y+h/2, layer,width,keepouts,roun)
-    addVLineWithKeepout(km, x+w/2, y, y+h, layer, width, keepouts, roun)
+    addHLineWithKeepout(km, x, x + w, y + h / 2, layer, width, keepouts, roun)
+    addVLineWithKeepout(km, x + w / 2, y, y + h, layer, width, keepouts, roun)
+
 
 # draw a downward equal-sided triangle
 def allEqualSidedDownTriangle(model, xcenter, side_length, layer, width):
-    h=math.sqrt(3)/6*side_length
-    model.append(PolygonLine(polygon=[[xcenter[0] - side_length / 2, xcenter[1] - h],
-                                       [xcenter[0]+side_length/2, xcenter[1]-h],
-                                       [xcenter[0], xcenter[1]+2*h],
-                                       [xcenter[0]-side_length/2, xcenter[1]-h],
-                                       ], layer=layer, width=width))
+    h = math.sqrt(3) / 6 * side_length
+    model.append(
+        PolygonLine(
+            polygon=[
+                [xcenter[0] - side_length / 2, xcenter[1] - h],
+                [xcenter[0] + side_length / 2, xcenter[1] - h],
+                [xcenter[0], xcenter[1] + 2 * h],
+                [xcenter[0] - side_length / 2, xcenter[1] - h],
+            ],
+            layer=layer,
+            width=width,
+        )
+    )
+
 
 #     +------+
 #    /       |
@@ -598,10 +699,20 @@ def allEqualSidedDownTriangle(model, xcenter, side_length, layer, width):
 #
 #
 def bevelRectTL(model, x, size, layer, width, bevel_size=1):
-    model.append(PolygonLine(
-        polygon=[[x[0] + bevel_size, x[1]], [x[0] + size[0], x[1]], [x[0] + size[0], x[1] + size[1]],
-                  [x[0], x[1] + size[1]], [x[0], x[1] + bevel_size], [x[0] + bevel_size, x[1]]], layer=layer,
-        width=width))
+    model.append(
+        PolygonLine(
+            polygon=[
+                [x[0] + bevel_size, x[1]],
+                [x[0] + size[0], x[1]],
+                [x[0] + size[0], x[1] + size[1]],
+                [x[0], x[1] + size[1]],
+                [x[0], x[1] + bevel_size],
+                [x[0] + bevel_size, x[1]],
+            ],
+            layer=layer,
+            width=width,
+        )
+    )
 
 
 #   +--------+
@@ -615,9 +726,20 @@ def bevelRectTL(model, x, size, layer, width, bevel_size=1):
 #
 #
 def bevelRectBL(model, x, size, layer, width, bevel_size=1):
-    model.append(PolygonLine(polygon=[[x[0], x[1]], [x[0] + size[0], x[1]], [x[0] + size[0], x[1] + size[1]],
-                                       [x[0] + bevel_size, x[1] + size[1]], [x[0], x[1] + size[1] - bevel_size],
-                                       [x[0], x[1]]], layer=layer, width=width))
+    model.append(
+        PolygonLine(
+            polygon=[
+                [x[0], x[1]],
+                [x[0] + size[0], x[1]],
+                [x[0] + size[0], x[1] + size[1]],
+                [x[0] + bevel_size, x[1] + size[1]],
+                [x[0], x[1] + size[1] - bevel_size],
+                [x[0], x[1]],
+            ],
+            layer=layer,
+            width=width,
+        )
+    )
 
 
 #     +----+
@@ -743,7 +865,7 @@ def addRectAngledBottomNoTop(kicad_mod, x1, x2, angled_delta, layer, width, roun
 
 
 #        ..---..
-#      /    /    \    
+#      /    /    \
 #    //    /    /  \
 #   |/    /    /    |
 #  |/    /    /    / |
@@ -765,7 +887,7 @@ def addCircleLF(kicad_mod, center, radius, layer, width, linedist=0.3, roun=0.00
             x1 = -math.sqrt(radius * radius - y * y)
             x2 = -x1
             if x1 != x2:
-                 kicad_mod.append(
+                kicad_mod.append(
                     Line(
                         start=[
                             round_to_grid_e(M11 * x1 + M12 * y + center[0], roun),
@@ -789,6 +911,7 @@ def addCircleLF(kicad_mod, center, radius, layer, width, linedist=0.3, roun=0.00
         )
     )
 
+
 # draws a DIP-package with half-circle at the top
 #
 # +----------+
@@ -800,12 +923,29 @@ def addCircleLF(kicad_mod, center, radius, layer, width, linedist=0.3, roun=0.00
 # |          |
 # +----------+
 def DIPRectT(model, x, size, layer, width, marker_size=2):
-    model.append(PolygonLine(
-        polygon=[[x[0] + size[0] / 2 - marker_size / 2, x[1]], [x[0], x[1]], [x[0], x[1] + size[1]],
-                  [x[0] + size[0], x[1] + size[1]], [x[0] + size[0], x[1]],
-                  [x[0] + size[0] / 2 + marker_size / 2, x[1]]], layer=layer, width=width))
-    model.append(Arc(center=[x[0] + size[0] / 2, x[1]], start=[x[0] + size[0] / 2 - marker_size / 2, x[1]], angle=-180,
-                     layer=layer, width=width))
+    model.append(
+        PolygonLine(
+            polygon=[
+                [x[0] + size[0] / 2 - marker_size / 2, x[1]],
+                [x[0], x[1]],
+                [x[0], x[1] + size[1]],
+                [x[0] + size[0], x[1] + size[1]],
+                [x[0] + size[0], x[1]],
+                [x[0] + size[0] / 2 + marker_size / 2, x[1]],
+            ],
+            layer=layer,
+            width=width,
+        )
+    )
+    model.append(
+        Arc(
+            center=[x[0] + size[0] / 2, x[1]],
+            start=[x[0] + size[0] / 2 - marker_size / 2, x[1]],
+            angle=-180,
+            layer=layer,
+            width=width,
+        )
+    )
 
 
 # draws a DIP-package with half-circle at the left
@@ -816,24 +956,42 @@ def DIPRectT(model, x, size, layer, width, marker_size=2):
 # |-/             |
 # +---------------+
 def DIPRectL(model, x, size, layer, width, marker_size=2):
-    model.append(PolygonLine(polygon=[[x[0], x[1] + size[1] / 2 - marker_size / 2],
-                                       [x[0], x[1]],
-                                       [x[0] + size[0], x[1]],
-                                       [x[0] + size[0], x[1] + size[1]],
-                                       [x[0], x[1] + size[1]],
-                                       [x[0], x[1] + size[1] / 2 + marker_size / 2]], layer=layer, width=width))
-    model.append(Arc(center=[x[0], x[1] + size[1] / 2], start=[x[0], x[1] + size[1] / 2 - marker_size / 2], angle=180,
-                     layer=layer, width=width))
+    model.append(
+        PolygonLine(
+            polygon=[
+                [x[0], x[1] + size[1] / 2 - marker_size / 2],
+                [x[0], x[1]],
+                [x[0] + size[0], x[1]],
+                [x[0] + size[0], x[1] + size[1]],
+                [x[0], x[1] + size[1]],
+                [x[0], x[1] + size[1] / 2 + marker_size / 2],
+            ],
+            layer=layer,
+            width=width,
+        )
+    )
+    model.append(
+        Arc(
+            center=[x[0], x[1] + size[1] / 2],
+            start=[x[0], x[1] + size[1] / 2 - marker_size / 2],
+            angle=180,
+            layer=layer,
+            width=width,
+        )
+    )
 
 
-def CornerBracketWithArrowPointingSouthEast(model: Footprint, apex: Vector2D,
-                                            arrow_size: float,
-                                            arrow_length: float,
-                                            bracket_max_x: float,
-                                            bracket_max_y: float,
-                                            layer: str,
-                                            line_width_mm: float,
-                                            silk_min_len: float):
+def CornerBracketWithArrowPointingSouthEast(
+    model: Footprint,
+    apex: Vector2D,
+    arrow_size: float,
+    arrow_length: float,
+    bracket_max_x: float,
+    bracket_max_y: float,
+    layer: str,
+    line_width_mm: float,
+    silk_min_len: float,
+):
     """Create an south-east triangular arrow and 90-degree bracket lines
 
       +
@@ -849,8 +1007,9 @@ def CornerBracketWithArrowPointingSouthEast(model: Footprint, apex: Vector2D,
 
     model.append(
         pin1_arrow.Pin1SilkScreenArrow45Deg(
-            apex, Direction.SOUTHEAST, arrow_size, layer, line_width_mm)
+            apex, Direction.SOUTHEAST, arrow_size, layer, line_width_mm
         )
+    )
 
     pin_1_silk_line_len_x = bracket_max_x - (apex.x + silk_silk_node_clearance)
     pin_1_silk_line_len_y = bracket_max_y - (apex.y + silk_silk_node_clearance)
@@ -862,25 +1021,30 @@ def CornerBracketWithArrowPointingSouthEast(model: Footprint, apex: Vector2D,
         tl_horz_line = Line(
             start=Vector2D(apex.x + 2 * line_width_mm, apex.y),
             end=Vector2D(bracket_max_x, apex.y),
-            width=line_width_mm)
+            width=line_width_mm,
+        )
         model.append(tl_horz_line)
 
     if pin_1_silk_line_len_y > silk_min_len:
         tl_vert_line = Line(
             start=Vector2D(apex.x, apex.y + 2 * line_width_mm),
             end=Vector2D(apex.x, bracket_max_y),
-            width=line_width_mm)
+            width=line_width_mm,
+        )
         model.append(tl_vert_line)
 
 
-def CornerBracketWithArrowPointingSouth(model: Footprint, apex: Vector2D,
-                                        arrow_size: float,
-                                        arrow_length: float,
-                                        bracket_max_x: float,
-                                        bracket_max_y: float,
-                                        layer: str,
-                                        line_width_mm: float,
-                                        silk_min_len: float):
+def CornerBracketWithArrowPointingSouth(
+    model: Footprint,
+    apex: Vector2D,
+    arrow_size: float,
+    arrow_length: float,
+    bracket_max_x: float,
+    bracket_max_y: float,
+    layer: str,
+    line_width_mm: float,
+    silk_min_len: float,
+):
     r"""Create an south-east triangular arrow and 90-degree bracket lines
 
     Move the whole triangle left if it will hit the pad on the right.
@@ -911,7 +1075,9 @@ def CornerBracketWithArrowPointingSouth(model: Footprint, apex: Vector2D,
     )
 
     # a little extra clearance on the side of the arrow
-    pin_1_silk_line_len_x = bracket_max_x - (apex.x + silk_silk_node_clearance + line_width_mm / 2)
+    pin_1_silk_line_len_x = bracket_max_x - (
+        apex.x + silk_silk_node_clearance + line_width_mm / 2
+    )
     pin_1_silk_line_len_y = bracket_max_y - (apex.y + silk_silk_node_clearance)
 
     # There's a gap to avoid merging with the arrow
@@ -921,14 +1087,16 @@ def CornerBracketWithArrowPointingSouth(model: Footprint, apex: Vector2D,
         tl_horz_line = Line(
             start=Vector2D(bracket_max_x, apex.y),
             end=Vector2D(bracket_max_x - pin_1_silk_line_len_x, apex.y),
-            width=line_width_mm)
+            width=line_width_mm,
+        )
         model.append(tl_horz_line)
 
     if pin_1_silk_line_len_y > silk_min_len:
         tl_vert_line = Line(
             start=Vector2D(apex.x, bracket_max_y),
             end=Vector2D(apex.x, bracket_max_y - pin_1_silk_line_len_y),
-            width=line_width_mm)
+            width=line_width_mm,
+        )
         model.append(tl_vert_line)
 
 
@@ -936,14 +1104,16 @@ class SilkArrowSize(enum.Enum):
     """
     Silkscreen arrow edge length in mm.
     """
+
     SMALL = 0.4
     MEDIUM = 0.6
     LARGE = 0.8
     HUGE = 1.0  # IPC maximum
 
 
-def getStandardSilkArrowSize(size: SilkArrowSize,
-                             silk_line_width: float) -> Tuple[float, float]:
+def getStandardSilkArrowSize(
+    size: SilkArrowSize, silk_line_width: float
+) -> Tuple[float, float]:
     """
     Get the normal size of the arrow for a given enum value.
 
@@ -978,20 +1148,35 @@ def getStandardSilkArrowSize(size: SilkArrowSize,
 #
 # Returns a new point along the line or None if no valid point could be found
 #
-def nearestSilkPointOnOrthogonalLineSmallClerance(pad_size, pad_position, pad_radius, fixed_point, moving_point,
-        silk_pad_offset_default, silk_pad_offset_reduced, min_length):
+def nearestSilkPointOnOrthogonalLineSmallClerance(
+    pad_size,
+    pad_position,
+    pad_radius,
+    fixed_point,
+    moving_point,
+    silk_pad_offset_default,
+    silk_pad_offset_reduced,
+    min_length,
+):
     if silk_pad_offset_reduced < silk_pad_offset_default:
         offset = (silk_pad_offset_default, silk_pad_offset_reduced)
     else:
-        offset = (silk_pad_offset_default)
+        offset = silk_pad_offset_default
 
     for silk_pad_offset in (silk_pad_offset_default, silk_pad_offset_reduced):
         point = nearestSilkPointOnOrthogonalLine(
-                pad_size, pad_position, pad_radius, fixed_point, moving_point,
-                silk_pad_offset, min_length)
+            pad_size,
+            pad_position,
+            pad_radius,
+            fixed_point,
+            moving_point,
+            silk_pad_offset,
+            min_length,
+        )
         if point is not None:
             return point
     return None
+
 
 #
 # This is an alternative to using silk keepout areas for simple cases.
@@ -1009,21 +1194,30 @@ def nearestSilkPointOnOrthogonalLineSmallClerance(pad_size, pad_position, pad_ra
 #
 # Returns a new point along the line or None if no valid point could be found
 #
-def nearestSilkPointOnOrthogonalLine(pad_size, pad_position, pad_radius, fixed_point, moving_point,
-        silk_pad_offset, min_length):
+def nearestSilkPointOnOrthogonalLine(
+    pad_size,
+    pad_position,
+    pad_radius,
+    fixed_point,
+    moving_point,
+    silk_pad_offset,
+    min_length,
+):
     if fixed_point[0] == moving_point[0]:
         normal_dir_idx = 0
     elif fixed_point[1] == moving_point[1]:
         normal_dir_idx = 1
     else:
-        raise ValueError("nearestSilkPointOnOrthogonalLine only works for horizontal or vertical lines. \n"
-                        "(Either x or y coordinate of the two reference points must be equal)")
+        raise ValueError(
+            "nearestSilkPointOnOrthogonalLine only works for horizontal or vertical lines. \n"
+            "(Either x or y coordinate of the two reference points must be equal)"
+        )
 
-    inline_dir_idx = (normal_dir_idx+1)%2
+    inline_dir_idx = (normal_dir_idx + 1) % 2
 
     line_pad_offset = fixed_point[normal_dir_idx] - pad_position[normal_dir_idx]
 
-    rc_normal_dir = pad_size[normal_dir_idx]/2-pad_radius
+    rc_normal_dir = pad_size[normal_dir_idx] / 2 - pad_radius
 
     sign = 1 if pad_position[inline_dir_idx] - fixed_point[inline_dir_idx] > 0 else -1
     ep_new = Vector2D(moving_point)
@@ -1041,19 +1235,24 @@ def nearestSilkPointOnOrthogonalLine(pad_size, pad_position, pad_radius, fixed_p
 
         dr_inline = math.sqrt(r**2 - dr_normal_dir**2)
 
-        ep_new[inline_dir_idx] =  pad_position[inline_dir_idx] -\
-            sign*(pad_size[inline_dir_idx]/2 - (pad_radius-dr_inline))
+        ep_new[inline_dir_idx] = pad_position[inline_dir_idx] - sign * (
+            pad_size[inline_dir_idx] / 2 - (pad_radius - dr_inline)
+        )
     else:
-        ep_new[inline_dir_idx] =  pad_position[inline_dir_idx] -\
-            sign*(pad_size[inline_dir_idx]/2 + silk_pad_offset)
+        ep_new[inline_dir_idx] = pad_position[inline_dir_idx] - sign * (
+            pad_size[inline_dir_idx] / 2 + silk_pad_offset
+        )
 
-    if sign*(ep_new[inline_dir_idx] - fixed_point[inline_dir_idx]) <  min_length:
+    if sign * (ep_new[inline_dir_idx] - fixed_point[inline_dir_idx]) < min_length:
         return None
 
-    if abs(ep_new[inline_dir_idx] - fixed_point[inline_dir_idx]) > math.fabs(moving_point[inline_dir_idx] - fixed_point[inline_dir_idx]):
+    if abs(ep_new[inline_dir_idx] - fixed_point[inline_dir_idx]) > math.fabs(
+        moving_point[inline_dir_idx] - fixed_point[inline_dir_idx]
+    ):
         return moving_point
 
     return ep_new
+
 
 #
 # Check if c point intersects the line segment from a to b points
@@ -1073,9 +1272,10 @@ def nearestSilkPointOnOrthogonalLine(pad_size, pad_position, pad_radius, fixed_p
 def point_is_on_segment(a, b, c):
     "Return true iff point c intersects the line segment from a to b."
     # (or the degenerate case that all 3 points are coincident)
-    return (collinear_points(a, b, c)
-            and (point_within(a.x, c.x, b.x) if a.x != b.x else
-                 point_within(a.y, c.y, b.y)))
+    return collinear_points(a, b, c) and (
+        point_within(a.x, c.x, b.x) if a.x != b.x else point_within(a.y, c.y, b.y)
+    )
+
 
 #
 # Check if a,b,c points all lie on the same line.
@@ -1094,10 +1294,11 @@ def point_is_on_segment(a, b, c):
 #
 def collinear_points(a, b, c):
     "Return true iff a, b, and c all lie on the same line."
-    if  ( abs(((b.x - a.x) * (c.y - a.y)) - ((c.x - a.x) * (b.y - a.y)) )) <= 0.000001:
+    if (abs(((b.x - a.x) * (c.y - a.y)) - ((c.x - a.x) * (b.y - a.y)))) <= 0.000001:
         return True
     else:
         return False
+
 
 #
 # Check if q point is between p and r points
