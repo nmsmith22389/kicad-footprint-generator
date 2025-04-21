@@ -148,7 +148,7 @@ class cq_parameters_socket_generic:
         # Calculate center
         # pin 1 always in origo
         #
-        alpha_delta = 0 - ((pin_arc * math.pi) / 180.0)
+        alpha_delta = 0 - math.radians(pin_arc)
         h = pin_diameter / 2.0
         origo_x = h * math.sin(alpha_delta / 2.0)
         origo_y = h * math.cos(alpha_delta / 2.0)
@@ -186,7 +186,7 @@ class cq_parameters_socket_generic:
         # Calculate center
         # pin 1 always in origo
         #
-        alpha_delta = 0 - ((pin_arc * math.pi) / 180.0)
+        alpha_delta = 0 - math.radians(pin_arc)
         h = pin_diameter / 2.0
         origo_dx = h * math.sin(alpha_delta)
         origo_dy = h * math.cos(alpha_delta)
@@ -343,7 +343,7 @@ class cq_parameters_socket_generic:
         # Calculate center
         # pin 1 always in origo
         #
-        alpha_delta = 0 - ((pin_arc * math.pi) / 180.0)
+        alpha_delta = 0 - math.radians(pin_arc)
         h = pin_diameter / 2.0
         origo_dx = h * math.sin(alpha_delta)
         origo_dy = h * math.cos(alpha_delta)
@@ -415,7 +415,7 @@ class cq_parameters_socket_generic:
         # Calculate center
         # pin 1 always in origo
         #
-        alpha_delta = 0 - ((pin_arc * math.pi) / 180.0)
+        alpha_delta = 0 - math.radians(pin_arc)
         h = pin_diameter / 2.0
         origo_x = h * math.sin(alpha_delta / 2.0)
         origo_y = h * math.cos(alpha_delta / 2.0)

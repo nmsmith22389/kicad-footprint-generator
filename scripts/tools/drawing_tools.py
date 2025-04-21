@@ -487,14 +487,14 @@ def addSlitScrew(kicad_mod, c, radius, layer, width, keepouts=[], roun=0.001):
     addCircleWithKeepout(kicad_mod, c.x, c.y, radius, layer, width, keepouts, roun)
 
     da = 5
-    dx1 = 0.99 * radius * math.sin((135 - da) / 180 * math.pi)
-    dy1 = 0.99 * radius * math.cos((135 - da) / 180 * math.pi)
-    dx2 = 0.99 * radius * math.sin((135 + da) / 180 * math.pi)
-    dy2 = 0.99 * radius * math.cos((135 + da) / 180 * math.pi)
-    dx3 = 0.99 * radius * math.sin((315 - da) / 180 * math.pi)
-    dy3 = 0.99 * radius * math.cos((315 - da) / 180 * math.pi)
-    dx4 = 0.99 * radius * math.sin((315 + da) / 180 * math.pi)
-    dy4 = 0.99 * radius * math.cos((315 + da) / 180 * math.pi)
+    dx1 = 0.99 * radius * math.sin(math.radians(135 - da))
+    dy1 = 0.99 * radius * math.cos(math.radians(135 - da))
+    dx2 = 0.99 * radius * math.sin(math.radians(135 + da))
+    dy2 = 0.99 * radius * math.cos(math.radians(135 + da))
+    dx3 = 0.99 * radius * math.sin(math.radians(315 - da))
+    dy3 = 0.99 * radius * math.cos(math.radians(315 - da))
+    dx4 = 0.99 * radius * math.sin(math.radians(315 + da))
+    dy4 = 0.99 * radius * math.cos(math.radians(315 + da))
 
     line1 = geometricLine(start=c + [dx1, dy1], end=c + [dx4, dy4])
     line2 = geometricLine(start=c + [dx2, dy2], end=c + [dx3, dy3])
@@ -756,10 +756,10 @@ def addRectAngledBottomNoTop(kicad_mod, x1, x2, angled_delta, layer, width, roun
 # add a circle which is filled with 45° lines
 def addCircleLF(kicad_mod, center, radius, layer, width, linedist=0.3, roun=0.001):
     rend = round_to_grid_e(radius, linedist) + linedist
-    M11 = math.cos(45 / 180 * math.pi)
-    M12 = -math.sin(45 / 180 * math.pi)
-    M21 = math.sin(45 / 180 * math.pi)
-    M22 = math.cos(45 / 180 * math.pi)
+    M11 = math.cos(math.radians(45))
+    M12 = -math.sin(math.radians(45))
+    M21 = math.sin(math.radians(45))
+    M22 = math.cos(math.radians(45))
     for y in frangei(-rend, rend, linedist):
         if y * y <= radius * radius:
             x1 = -math.sqrt(radius * radius - y * y)

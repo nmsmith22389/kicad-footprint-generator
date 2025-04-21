@@ -51,7 +51,7 @@ class Trapezoid(Node):
         at = self._start
         size = self.size
 
-        dx = self.size.y * math.tan(math.fabs(self.angle) / 180 * math.pi)
+        dx = self.size.y * math.tan(math.radians(math.fabs(self.angle)))
         cr = self.corner_radius
 
         if cr == 0:
@@ -95,11 +95,11 @@ class Trapezoid(Node):
                 )
 
         else:
-            dx = size[1] * math.tan(math.fabs(self.angle) / 180 * math.pi)
-            dx2 = cr * math.tan((90 - math.fabs(self.angle)) / 2 / 180 * math.pi)
-            dx3 = cr / math.tan((90 - math.fabs(self.angle)) / 2 / 180 * math.pi)
-            ds2 = cr * math.sin(math.fabs(self.angle) / 180 * math.pi)
-            dc2 = cr * math.cos(math.fabs(self.angle) / 180 * math.pi)
+            dx = size[1] * math.tan(math.radians(math.fabs(self.angle)))
+            dx2 = cr * math.tan(math.radians((90 - math.fabs(self.angle)) / 2))
+            dx3 = cr / math.tan(math.radians((90 - math.fabs(self.angle)) / 2))
+            ds2 = cr * math.sin(math.radians(math.fabs(self.angle)))
+            dc2 = cr * math.cos(math.radians(math.fabs(self.angle)))
 
             # fmt: off
             if self.angle == 0:

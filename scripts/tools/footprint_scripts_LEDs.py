@@ -194,7 +194,7 @@ def makeLEDRadial(
         kicad_modg.append(Circle(center=[0, 0], radius=d2_fab / 2, layer='F.Fab', width=lw_fab))
         xmark = d2_fab / 2
         ymark = math.sqrt(d_fab * d_fab / 4 - xmark * xmark)
-        alpha = 360 - 2 * math.atan(ymark / xmark) / math.pi * 180
+        alpha = 360 - 2 * math.degrees(math.atan(ymark / xmark))
         kicad_modg.append(Arc(center=[0, 0], start=[-xmark, -ymark], angle=alpha, layer='F.Fab', width=lw_fab))
         kicad_modg.append(Line(start=[-xmark, -ymark], end=[-xmark, ymark], angle=alpha, layer='F.Fab', width=lw_fab))
     if led_type == "round_simple":
@@ -213,7 +213,7 @@ def makeLEDRadial(
         ystart = 0
         xstart = math.sqrt(r * r - ystart * ystart)
         ycenter = h / 2 - r
-        alpha = 180 - 2 * math.atan(math.fabs(ycenter) / xstart) / math.pi * 180
+        alpha = 180 - 2 * math.degrees(math.atan(math.fabs(ycenter) / xstart))
         kicad_modg.append(Arc(center=[0, -ycenter], start=[-xstart, ystart], angle=alpha, layer='F.Fab', width=lw_fab))
         kicad_modg.append(Arc(center=[0, ycenter], start=[-xstart, -ystart], angle=-alpha, layer='F.Fab', width=lw_fab))
 
@@ -240,8 +240,8 @@ def makeLEDRadial(
         ymark = math.sqrt(d_slk * d_slk / 4 - xmark * xmark)
         ypad = pady / 2 + slk_offset + lw_slk
         xpad = math.sqrt(d_slk * d_slk / 4 - ypad * ypad)
-        alphamark = math.atan(ymark / xmark) / math.pi * 180
-        alphapad = math.atan(ypad / xpad) / math.pi * 180
+        alphamark = math.degrees(math.atan(ymark / xmark))
+        alphapad = math.degrees(math.atan(ypad / xpad))
         alpha = 180 - alphamark
         if containedInAnyKeepout(Vector2D(xmark, 0.1), keepouts) or containedInAnyKeepout(Vector2D(d_fab / 2, 0.1), keepouts):
             alpha = alpha - alphapad
@@ -251,7 +251,7 @@ def makeLEDRadial(
 
         ypad = pady / 2 + slk_offset + lw_slk
         xpad = math.sqrt(d2_fab * d2_fab / 4 - ypad * ypad)
-        alphapad = math.atan(ypad / xpad) / math.pi * 180
+        alphapad = math.degrees(math.atan(ypad / xpad))
 
         alpha = 180
         if containedInAnyKeepout(Vector2D(d2_fab / 2, 0.1), keepouts) or containedInAnyKeepout(Vector2D(-d2_fab / 2, 0.1), keepouts):
@@ -271,7 +271,7 @@ def makeLEDRadial(
             xpad = math.sqrt(r * r / 4 - ypad * ypad)
             xpads.append(xpad)
             ypads.append(ypad)
-            alphapad = math.atan(ypad / xpad) / math.pi * 180
+            alphapad = math.degrees(math.atan(ypad / xpad))
 
             alpha = 180
             if containedInAnyKeepout(Vector2D(r / 2, 0.1), keepouts) or containedInAnyKeepout(-r / 2, 0.1, keepouts):
@@ -296,7 +296,7 @@ def makeLEDRadial(
         ystart = 0
         xstart = math.sqrt(r * r - ystart * ystart)
         ycenter = h_slk / 2 - r
-        alpha = 180 - 2 * math.atan(math.fabs(ycenter) / xstart) / math.pi * 180
+        alpha = 180 - 2 * math.degrees(math.atan(math.fabs(ycenter) / xstart))
         kicad_modg.append(
             Arc(center=[0, -ycenter], start=[-xstart, ystart], angle=alpha, layer='F.SilkS', width=lw_slk))
         kicad_modg.append(

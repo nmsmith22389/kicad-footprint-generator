@@ -157,7 +157,7 @@ class cq_parameters_help:
             )
             pint = pint.faces(">Y").edges(">Z").fillet(pin_type[2] / 1.5)
             pins = pins.union(pint)
-            pins = pins.rotate((0, 0, 0), (0, 0, 1), 360 - (alpha * (180.0 / math.pi)))
+            pins = pins.rotate((0, 0, 0), (0, 0, 1), 360 - math.degrees(alpha))
             pins = pins.translate((xx, yy, 0))
 
             alpha = alpha + alpha_delta
@@ -185,9 +185,7 @@ class cq_parameters_help:
                 )
                 pinr = pinr.faces(">Y").edges(">Z").fillet(pin_type[2] / 1.5)
                 pine = pine.union(pint)
-                pine = pine.rotate(
-                    (0, 0, 0), (0, 0, 1), 360 - (alpha * (180.0 / math.pi))
-                )
+                pine = pine.rotate((0, 0, 0), (0, 0, 1), 360 - math.degrees(alpha))
                 pine = pine.translate((xx, yy, 0))
 
                 pins = pins.union(pine)
@@ -581,7 +579,7 @@ class cq_parameters_help:
         #
         tv = 20
         ti = ((D - TT) / 2.0) + 0.2
-        ta = 0 - ((tv * math.pi) / 180.0)
+        ta = 0 - math.radians(tv)
         th = (TT / 2.0) + (ti / 2.0)
         tdx = th * math.sin(ta)
         tdy = th * math.cos(ta)
@@ -602,7 +600,7 @@ class cq_parameters_help:
         #
         tv = tv + 180
         ti = ((D - TT) / 2.0) + 0.2
-        ta = 0 - ((tv * math.pi) / 180.0)
+        ta = 0 - math.radians(tv)
         th = (TT / 2.0) + (ti / 2.0)
         tdx = th * math.sin(ta)
         tdy = th * math.cos(ta)

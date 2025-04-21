@@ -390,7 +390,7 @@ for inductor in inductors:
         #
         ty = ((W - B) / 2)
         alpha = 30.0    # 70 degree
-        alphar = ((2 * math.pi) / 360.0) * alpha
+        alphar = math.radians(alpha)
         tx = ty * (math.sin(alphar) / math.cos(alphar))
         x1 = 0 - ((L - A) / 2)
         y1 = 0

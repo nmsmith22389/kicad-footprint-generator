@@ -775,7 +775,7 @@ def makeResistorRadial(seriesname, rm, w, h, ddrill, R_POW, innerw=0,innerh=0,rm
                 for i in range(12):
                     alpha1 = 30 * i
                     alpha2 = alpha1 + 15
-                    kicad_modg.append(Line(start=[d_slk*0.49*math.cos(alpha1/180*math.pi),d_slk*0.49*math.sin(alpha1/180*math.pi)], end=[d2_slk*0.51*math.cos(alpha2/180*math.pi),d2_slk*0.51*math.sin(alpha2/180*math.pi)], layer='F.Fab', width=lw_fab))
+                    kicad_modg.append(Line(start=[d_slk*0.49*math.cos(math.radians(alpha1)),d_slk*0.49*math.sin(math.radians(alpha1))], end=[d2_slk*0.51*math.cos(math.radians(alpha2)),d2_slk*0.51*math.sin(math.radians(alpha2))], layer='F.Fab', width=lw_fab))
     else:
         kicad_modg.append(Rect(start=[l_fab, t_fab], end=[l_fab + w_fab, t_fab + h_fab], layer='F.Fab', width=lw_fab))
         if innerw!=w or innerh!=h:

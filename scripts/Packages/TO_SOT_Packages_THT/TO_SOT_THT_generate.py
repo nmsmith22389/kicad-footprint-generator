@@ -1238,7 +1238,7 @@ class TOGenerator(FootprintGenerator):
                 mark_length = pkg.mark_length + dr
 
         if pkg.mark_width > 0 and pkg.mark_length > 0:
-            a = pkg.mark_angle / 180 * math.pi
+            a = math.radians(pkg.mark_angle)
             da = math.asin(mark_width / diameter)
             a1 = a + da
             a2 = a - da
@@ -1258,7 +1258,7 @@ class TOGenerator(FootprintGenerator):
                 Arc(
                     center=[0, 0],
                     start=x1,
-                    angle=(360 - da * 360 / math.pi),
+                    angle=(360 - 2 * math.degrees(da)),
                     layer=layer,
                     width=line_width,
                 )
@@ -1292,8 +1292,8 @@ class TOGenerator(FootprintGenerator):
         a = pkg.pin1_angle
         firstPin = True
         for p in range(1, pkg.pins + 1):
-            x = pkg.pin_circle_diameter / 2 * math.cos(a / 180 * math.pi)
-            y = pkg.pin_circle_diameter / 2 * math.sin(a / 180 * math.pi)
+            x = pkg.pin_circle_diameter / 2 * math.cos(math.radians(a))
+            y = pkg.pin_circle_diameter / 2 * math.sin(math.radians(a))
             a += pkg.angle_between_pins
             if p in pkg.deleted_pins:
                 continue

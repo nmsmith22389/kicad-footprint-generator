@@ -528,7 +528,7 @@ def makePotentiometerVertical(class_name, wbody, hbody, screwstyle="none", style
             dy = hbody_fab / 2.0
             if drawbody and dy <= cdbody_fab / 2:
                 dx = math.sqrt(cdbody_fab * cdbody_fab / 4 - dy * dy)
-                alpha = 360 - 2 * math.atan(dy / dy) / math.pi * 180
+                alpha = 360 - 2 * math.degrees(math.atan(dy / dy))
                 kicad_modg.append(PolygonLine(polygon=[[clbody_fab - dx, ctbody_fab - dy], [lbody_fab, ctbody_fab - dy],
                                                         [lbody_fab, ctbody_fab + dy], [clbody_fab - dx, ctbody_fab + dy]], layer='F.Fab', width=lw_fab))
                 kicad_modg.append(Arc(center=[clbody_fab, ctbody_fab], start=[clbody_fab-dx, ctbody_fab-dy], angle=alpha,layer='F.Fab', width=lw_fab))

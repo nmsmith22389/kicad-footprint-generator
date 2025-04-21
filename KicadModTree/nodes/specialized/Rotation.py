@@ -41,7 +41,7 @@ class Rotation(Node):
 
         parsed_coordinate = Vector2D(coordinate)
 
-        phi = self.rotation*math.pi/180
+        phi = math.radians(self.rotation)
         rotation_coordinate = {'x': parsed_coordinate.x*math.cos(phi) + parsed_coordinate.y*math.sin(phi),
                                'y': -parsed_coordinate.x*math.sin(phi) + parsed_coordinate.y*math.cos(phi)}
 
