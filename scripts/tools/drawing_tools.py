@@ -304,15 +304,18 @@ def _add_kept_out(
         elif isinstance(item, geometricArc):
             nodes.append(
                 Arc(
-                    center=[
-                        round_to_grid_nearest(item.center_pos.x, roun),
-                        round_to_grid_nearest(item.center_pos.y, roun),
-                    ],
                     start=[
-                        round_to_grid_nearest(item.start_pos.x, roun),
-                        round_to_grid_nearest(item.start_pos.y, roun),
+                        round_to_grid_nearest(item.getStartPoint().x, roun),
+                        round_to_grid_nearest(item.getStartPoint().y, roun),
                     ],
-                    angle=item.angle,
+                    midpoint=[
+                        round_to_grid_nearest(item.getMidPoint().x, roun),
+                        round_to_grid_nearest(item.getMidPoint().y, roun),
+                    ],
+                    end=[
+                        round_to_grid_nearest(item.getEndPoint().x, roun),
+                        round_to_grid_nearest(item.getEndPoint().y, roun),
+                    ],
                     layer=layer,
                     width=width,
                 )
@@ -389,33 +392,26 @@ def addArcWithKeepout(kicad_mod, arc: geometricArc, layer, width, keepouts, roun
 
 
 # draw an arc
-def addArcByAngles(kicad_mod, x, y, radius, angle_start, angle_end, layer, width, roun=0.001):
-    startx = x + radius * math.sin(angle_start/180*math.pi)
-    starty = y + radius * math.cos(angle_start/180*math.pi)
-    kicad_mod.append( Arc(center=[round_to_grid(x, roun), round_to_grid(y, roun)], start=[round_to_grid(startx, roun), round_to_grid(starty, roun)], angle=-(angle_end-angle_start), layer=layer, width=width))
+def addArc(kicad_mod, arc: geometricArc, layer, width, roun=0.001):
+    kicad_mod.append(Arc(
+        start=[round_to_grid_nearest(arc.getStartPoint().x, roun), round_to_grid_nearest(arc.getStartPoint().y, roun)],
+        midpoint=[round_to_grid_nearest(arc.getMidPoint().x, roun), round_to_grid_nearest(arc.getMidPoint().y, roun)],
+        end=[round_to_grid_nearest(arc.getEndPoint().x, roun), round_to_grid_nearest(arc.getEndPoint().y, roun)],
+        layer=layer,
+        width=width,
+    ))
 
-# draw an arc minding the keepouts
-def addArcByAnglesWithKeepout(kicad_mod, x, y, radius, angle_start, angle_end, layer, width, keepouts=[], roun=0.001):
-    startx = x + radius * math.sin(angle_start/180*math.pi)
-    starty = y + radius * math.cos(angle_start/180*math.pi)
-    arc = geometricArc(center=[x, y], start=[startx, starty], angle=-(angle_end-angle_start))
-    addArcWithKeepout(kicad_mod, arc, layer, width, keepouts, roun)
 
 # draw an ellipse with one axis along x-axis and one axis along y-axis and given width/height
 def addEllipse(kicad_mod, x, y, w, h, layer, width, roun=0.001):
-    factor=h/w
-    alpha=math.atan(h/w)*2
-    radius=w/2/math.sin(alpha)
-    addArcByAngles(kicad_mod=kicad_mod, x=x, y=y+radius*math.cos(alpha), radius=radius, angle_start=180-alpha/math.pi*180, angle_end=180+alpha/math.pi*180, layer=layer, width=width, roun=roun);
-    addArcByAngles(kicad_mod=kicad_mod, x=x, y=y-radius*math.cos(alpha), radius=radius, angle_start=alpha/math.pi*180, angle_end=-alpha/math.pi*180, layer=layer, width=width, roun=roun);
+    addArc(kicad_mod=kicad_mod, arc=geometricArc(start=[x - w/2, y], midpoint=[x, y - h/2], end=[x + w/2, y]), layer=layer, width=width, roun=roun)
+    addArc(kicad_mod=kicad_mod, arc=geometricArc(start=[x - w/2, y], midpoint=[x, y + h/2], end=[x + w/2, y]), layer=layer, width=width, roun=roun)
+
 
 # draw an ellipse with one axis along x-axis and one axis along y-axis and given width/height
 def addEllipseWithKeepout(kicad_mod, x, y, w, h, layer, width, keepouts=[], roun=0.001):
-    factor=h/w
-    alpha=math.atan(h/w)*2
-    radius=w/2/math.sin(alpha)
-    addArcByAnglesWithKeepout(kicad_mod=kicad_mod, x=x, y=y+radius*math.cos(alpha), radius=radius, angle_start=180-alpha/math.pi*180, angle_end=180+alpha/math.pi*180, keepouts=keepouts, layer=layer, width=width, roun=roun);
-    addArcByAnglesWithKeepout(kicad_mod=kicad_mod, x=x, y=y-radius*math.cos(alpha), radius=radius, angle_start=alpha/math.pi*180, angle_end=-alpha/math.pi*180, keepouts=keepouts, layer=layer, width=width, roun=roun);
+    addArcWithKeepout(kicad_mod=kicad_mod, arc=geometricArc(start=[x - w/2, y], midpoint=[x, y - h/2], end=[x + w/2, y]), keepouts=keepouts, layer=layer, width=width, roun=roun)
+    addArcWithKeepout(kicad_mod=kicad_mod, arc=geometricArc(start=[x - w/2, y], midpoint=[x, y + h/2], end=[x + w/2, y]), keepouts=keepouts, layer=layer, width=width, roun=roun)
 
 
 def makeNodesWithKeepout(
