@@ -21,7 +21,7 @@ from typing import Union
 from KicadModTree.util.corner_selection import CornerSelection
 from KicadModTree.util.corner_handling import RoundRadiusHandler, ChamferSizeHandler
 from kilibs.geom import BoundingBox, Vector2D
-from kilibs.util.param_util import toVectorUseCopyIfNumber
+from kilibs.util.param_util import toVectorUseCopyIfNumber, getOptionalBoolTypeParam, getOptionalNumberTypeParam
 from KicadModTree.nodes.Node import Node
 from KicadModTree.util.kicad_util import lispString
 from KicadModTree.nodes.base.Arc import Arc
@@ -64,6 +64,12 @@ class Pad(Node):
         * *round_radius_handler* (``RoundRadiusHandler``) --
           An instance of the RoundRadiusHandler class
           Ignored for every shape except round rect
+        * *clearance* (``float``) --
+          The optional clearance token attribute defines the clearance from all copper to the pad. If not set,
+          the footprint clearance is used. (default:None = use footprint clearance)
+        * *die_length* (``float``) --
+          The optional die_length token attribute defines the die length between the component pad and the physical
+          chip bond pad inside the component package.
 
         * *solder_paste_margin_ratio* (``float``) --
           solder paste margin ratio of the pad (default: 0)
@@ -74,6 +80,21 @@ class Pad(Node):
 
         * *zone_connection* (``Pad.ZoneConnection``) --
           zone connection of the pad (default: Pad.ZoneConnection.INHERIT_FROM_FOOTPRINT)
+        * *thermal_width* (``float, None``) --
+          The optional thermal_width token attribute defines the thermal relief spoke width used for zone connection
+          for the pad. This only affects a pad connected to a zone with a thermal relief. If not set,
+          the footprint thermal_width setting is used.
+        * *thermal_gap* (``float, None``) --
+          The optional thermal_gap token attribute defines the distance from the pad to the zone of the thermal
+          relief connection for the pad. This only affects a pad connected to a zone with a thermal relief.
+          If not set, the footprint thermal_gap setting is used.
+
+        * *remove_unused_layer* (``bool``) --
+          The optional remove_unused_layer token specifies that the copper should be removed from any layers
+          the pad is not connected to. (default: False)
+        * *keep_end_layers* (``bool``) --
+          The optional keep_end_layers token specifies that the top and bottom layers should be retained when
+          removing the copper from unused layers.
 
         * *x_mirror* (``[int, float](mirror offset)``) --
           mirror x direction around offset "point"
@@ -146,6 +167,13 @@ class Pad(Node):
     _fab_property: Union[FabProperty, None]
     _zone_connection: ZoneConnection
     _chamfer_corners: CornerSelection
+    thermal_bridge_width: Union[float, None]
+    thermal_gap: Union[float, None]
+    thermal_bridge_angle: Union[float, None]
+    remove_unused_layer: Union[bool, None]
+    keep_end_layers: Union[bool, None]
+    clearance: Union[float, None]
+    die_length: Union[float, None]
 
     _round_radius_handler: RoundRadiusHandler | None
 
@@ -164,6 +192,17 @@ class Pad(Node):
         self._initSolderPasteMarginRatio(**kwargs)
         self._initSolderMaskMargin(**kwargs)
         self._initZoneConnection(**kwargs)
+
+        self._initClearance(**kwargs)
+        self._initDieLength(**kwargs)
+
+        self._initThermalBridgeWidth(**kwargs)
+        self._initThermalGap(**kwargs)
+        self._initThermalBridgeAngle(**kwargs)
+
+        self._initRemoveUnusedLayer(**kwargs)
+        self._initKeepEndLayers(**kwargs)
+
         self._initLayers(**kwargs)
         self._initMirror(**kwargs)
 
@@ -268,6 +307,36 @@ class Pad(Node):
 
     def _initZoneConnection(self, **kwargs):
         self._zone_connection = kwargs.get('zone_connection', Pad.ZoneConnection.INHERIT_FROM_FOOTPRINT)
+
+    def _initThermalBridgeWidth(self, **kwargs):
+        param_name = 'thermal_bridge_width'
+        self.thermal_bridge_width = getOptionalNumberTypeParam(kwargs, param_name, default_value=None)
+
+    def _initThermalGap(self, **kwargs):
+        param_name = 'thermal_gap'
+        self.thermal_gap = getOptionalNumberTypeParam(kwargs, param_name, default_value=None)
+
+    def _initThermalBridgeAngle(self, **kwargs):
+        param_name = 'thermal_bridge_angle'
+        self.thermal_bridge_angle = getOptionalNumberTypeParam(kwargs,
+                                                               param_name,
+                                                               default_value=None)  # TODO: use default_value=90
+
+    def _initRemoveUnusedLayer(self, **kwargs):
+        param_name = 'remove_unused_layer'
+        self.remove_unused_layer = getOptionalBoolTypeParam(kwargs, param_name, default_value=None)
+
+    def _initKeepEndLayers(self, **kwargs):
+        param_name = 'keep_end_layers'
+        self.keep_end_layers = getOptionalBoolTypeParam(kwargs, param_name, default_value=None)
+
+    def _initClearance(self, **kwargs):
+        param_name = 'clearance'
+        self.clearance = getOptionalNumberTypeParam(kwargs, param_name, default_value=None)
+
+    def _initDieLength(self, **kwargs):
+        param_name = 'die_length'
+        self.die_length = getOptionalNumberTypeParam(kwargs, param_name, default_value=None)
 
     def _initLayers(self, **kwargs):
         if not kwargs.get('layers'):

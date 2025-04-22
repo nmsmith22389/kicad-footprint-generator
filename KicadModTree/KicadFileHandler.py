@@ -122,6 +122,18 @@ def layer_key_func(layer: str) -> int:
     raise ValueError(f"Unhandled layer for sorting: {layer}")
 
 
+def group_key_func(item) -> List[int]:
+    keys = []
+
+    if item.hasValidTStamp():
+        keys += [item.getTStamp()]
+
+    if item.getGroupMemberNodes() is not None:
+        keys += [len(item.getGroupMemberNodes())]
+
+    return keys
+
+
 def graphic_key_func(item) -> List[int]:
     """
     Approximate sorting order from FOOTPRINT::cmp_drawings in KiCad's
@@ -141,6 +153,8 @@ def graphic_key_func(item) -> List[int]:
         elif isinstance(item, Circle):
             return 3
         elif isinstance(item, Polygon):
+            return 4
+        elif isinstance(item, CompoundPolygon):
             return 4
         # Not yet implements
         # elif isinstance(item, Bezier):
@@ -185,7 +199,7 @@ def graphic_key_func(item) -> List[int]:
 
     if isinstance(item, Text):
         keys += [item.thickness]
-    else:
+    elif item.width is not None:
         keys += [item.width]
 
     if item.hasValidTStamp():
@@ -280,6 +294,8 @@ def node_key_func(node) -> List:
         return [300] + round_numbers_in_key_func(pad_key_func(node))
     elif isinstance(node, Zone):
         return [400] + round_numbers_in_key_func(zone_key_func(node))
+    elif isinstance(node, Group):
+        return [600] + round_numbers_in_key_func(group_key_func(node))
     elif isinstance(node, EmbeddedFonts):
         return [1000]
     elif isinstance(node, Model):
@@ -782,7 +798,7 @@ class KicadFileHandler(FileHandler):
 
     def _serialize_PadZoneConnection(self, node):
         # Inherited zone connection is implicit in the s-exp by a missing zone_connection node
-        if node.zone_connection == Pad.ZoneConnection.INHERIT_FROM_FOOTPRINT:
+        if node.zone_connection is None or node.zone_connection == Pad.ZoneConnection.INHERIT_FROM_FOOTPRINT:
             return None
 
         mapping = {
@@ -856,9 +872,9 @@ class KicadFileHandler(FileHandler):
 
         sexpr.append([SexprSerializer.Symbol('size'), node.size.x, node.size.y])
 
-        if node.type in [Pad.TYPE_THT, Pad.TYPE_NPTH]:
+        if node.type in [Pad.TYPE_THT, Pad.TYPE_NPTH] and (node.drill is not None):
 
-            if node.drill.x == node.drill.y:
+            if abs(node.drill.x - node.drill.y) < self.size_tolerance_mm:
                 drill_config = [SexprSerializer.Symbol('drill'), node.drill.x]
             else:
                 drill_config = [SexprSerializer.Symbol('drill'),
@@ -866,7 +882,9 @@ class KicadFileHandler(FileHandler):
                                 node.drill.x, node.drill.y]
 
             # append offset only if necessary
-            if node.offset.x != 0 or node.offset.y != 0:
+            if ((node.offset is not None)
+                    and ((abs(node.offset.x) > self.size_tolerance_mm)
+                         or (abs(node.offset.y) > self.size_tolerance_mm))):
                 drill_config.append([SexprSerializer.Symbol('offset'), node.offset.x,  node.offset.y])
 
             sexpr.append(drill_config)
@@ -881,6 +899,9 @@ class KicadFileHandler(FileHandler):
         # The generator pads don't support this, but KiCad always writes it for PTH pads
         if node.type == Pad.TYPE_THT:
             sexpr.append(self._serialise_Boolean("remove_unused_layers", False))
+
+            if hasattr(node, 'keep_end_layers') and node.keep_end_layers is not None:
+                sexpr.append(self._serialise_Boolean("keep_end_layers", False))
 
         if shape == Pad.SHAPE_ROUNDRECT:
             sexpr.append([SexprSerializer.Symbol('roundrect_rratio'), node.radius_ratio])
@@ -906,20 +927,40 @@ class KicadFileHandler(FileHandler):
         if node.hasValidTStamp():
             sexpr.append(self._serialize_TStamp(node))
 
+        if (hasattr(node, 'die_length') and node.die_length is not None
+                and abs(node.die_length) > self.size_tolerance_mm):
+            sexpr.append([SexprSerializer.Symbol('die_length'), node.die_length])
+
         if node.solder_paste_margin_ratio != 0 or node.solder_mask_margin != 0 or node.solder_paste_margin != 0:
-            if node.solder_mask_margin != 0:
+            if (node.solder_mask_margin is not None) and node.solder_mask_margin != 0:
                 sexpr.append([SexprSerializer.Symbol('solder_mask_margin'),
                               node.solder_mask_margin])
-            if node.solder_paste_margin_ratio != 0:
+            if (node.solder_paste_margin_ratio is not None) and node.solder_paste_margin_ratio != 0:
                 sexpr.append([SexprSerializer.Symbol('solder_paste_margin_ratio'),
                               node.solder_paste_margin_ratio])
-            if node.solder_paste_margin != 0:
+            if (node.solder_paste_margin is not None) and node.solder_paste_margin != 0:
                 sexpr.append([SexprSerializer.Symbol('solder_paste_margin'),
                               node.solder_paste_margin])
 
         zone_connection_value = self._serialize_PadZoneConnection(node)
         if zone_connection_value is not None:
             sexpr.append([SexprSerializer.Symbol('zone_connect'), zone_connection_value])
+
+        if (hasattr(node, 'clearance') and node.clearance is not None
+                and abs(node.clearance) > self.size_tolerance_mm):
+            sexpr.append([SexprSerializer.Symbol('clearance'), node.clearance])
+
+        if (hasattr(node, 'thermal_bridge_width') and node.thermal_bridge_width is not None
+                and node.thermal_bridge_width > self.size_tolerance_mm):
+            sexpr.append([SexprSerializer.Symbol('thermal_bridge_width'), node.thermal_bridge_width])
+
+        if (hasattr(node, 'thermal_bridge_angle') and node.thermal_bridge_angle is not None
+                and abs(node.thermal_bridge_angle - 90) > self.angle_tolerance_deg):
+            sexpr.append([SexprSerializer.Symbol('thermal_bridge_angle'), node.thermal_bridge_angle])
+
+        if (hasattr(node, 'thermal_gap') and node.thermal_gap is not None
+                and abs(node.thermal_gap) > self.size_tolerance_mm):
+            sexpr.append([SexprSerializer.Symbol('thermal_gap'), node.thermal_gap])
 
         return sexpr
 
@@ -1010,7 +1051,11 @@ class KicadFileHandler(FileHandler):
 
         sexpr.append([SexprSerializer.Symbol('id'), SexprSerializer.Symbol(tstamp_uuid)])
         grp_members = [SexprSerializer.Symbol('members')]
+        grp_member_ids = []
         for gid in node.getSortedGroupMemberTStamps():
+            grp_member_ids.append(gid)
+        grp_member_ids.sort()  # sort IDs, this is what KiCad does. ToDo: check order
+        for gid in grp_member_ids:
             grp_members.append(SexprSerializer.Symbol(gid))
         sexpr.append(grp_members)
 
