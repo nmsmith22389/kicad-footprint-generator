@@ -24,6 +24,7 @@ from KicadModTree.util.kicad_util import SexprSerializer
 from KicadModTree.util.kicad_util import *
 from KicadModTree.util.corner_selection import CornerSelection
 # TODO: why .KicadModTree is not enough?
+from KicadModTree.nodes.Node import Node
 from KicadModTree.nodes.base.EmbeddedFonts import EmbeddedFonts
 from KicadModTree.nodes.base.Group import Group
 from KicadModTree.nodes.base.Rect import Rect
@@ -544,7 +545,7 @@ class KicadFileHandler(FileHandler):
 
         return self._serialise_Boolean('fill', fill)
 
-    def _serialize_ArcPoints(self, node):
+    def _serialize_ArcPoints(self, node: Arc):
         start_pos = node.getRealPosition(node.getStartPoint())
         end_pos = node.getRealPosition(node.getEndPoint())
         mid_pos = node.getRealPosition(node.getMidPoint())
@@ -564,7 +565,7 @@ class KicadFileHandler(FileHandler):
 
         return sexpr
 
-    def _serialize_Arc(self, node):
+    def _serialize_Arc(self, node: Arc):
         sexpr = [SexprSerializer.Symbol('fp_arc')]
         sexpr += self._serialize_ArcPoints(node)
         sexpr += [
@@ -576,7 +577,7 @@ class KicadFileHandler(FileHandler):
 
         return sexpr
 
-    def _serialize_CirclePoints(self, node):
+    def _serialize_CirclePoints(self, node: Circle):
         center_pos = node.getRealPosition(node.center_pos)
         end_pos = node.getRealPosition(node.center_pos + (node.radius, 0))
 
@@ -585,7 +586,7 @@ class KicadFileHandler(FileHandler):
             [SexprSerializer.Symbol('end'), end_pos.x, end_pos.y]
         ]
 
-    def _serialize_Circle(self, node):
+    def _serialize_Circle(self, node: Circle):
         sexpr = [SexprSerializer.Symbol('fp_circle')]
         sexpr += self._serialize_CirclePoints(node)
         sexpr += [
@@ -622,7 +623,7 @@ class KicadFileHandler(FileHandler):
         layers = sorted(node.layers, key=layer_key_func)
         return [SexprSerializer.Symbol('layers')] + layers
 
-    def _serialize_LinePoints(self, node):
+    def _serialize_LinePoints(self, node: Line | Rect):
         start_pos = node.getRealPosition(node.start_pos)
         end_pos = node.getRealPosition(node.end_pos)
         return [
@@ -630,11 +631,11 @@ class KicadFileHandler(FileHandler):
             [SexprSerializer.Symbol('end'), end_pos.x, end_pos.y]
         ]
 
-    def _serialize_RectPoints(self, node):
+    def _serialize_RectPoints(self, node: Rect):
         # identical for current kicad format
         return self._serialize_LinePoints(node)
 
-    def _serialize_Line(self, node):
+    def _serialize_Line(self, node: Line):
         sexpr = [SexprSerializer.Symbol('fp_line')]
         sexpr += self._serialize_LinePoints(node)
         sexpr += [
@@ -691,7 +692,7 @@ class KicadFileHandler(FileHandler):
 
         return sexpr
 
-    def _serialize_Text(self, node):
+    def _serialize_Text(self, node: Text):
         """Serialise a normal text node
         """
         sexpr = [
@@ -702,7 +703,7 @@ class KicadFileHandler(FileHandler):
         sexpr += self._serialize_TextBaseNode(node)
         return sexpr
 
-    def _serialize_Property(self, node):
+    def _serialize_Property(self, node: Property):
         """Serialise a property node
         """
         sexpr = [
@@ -712,7 +713,7 @@ class KicadFileHandler(FileHandler):
         sexpr += self._serialize_TextBaseNode(node)
         return sexpr
 
-    def _serialize_Model(self, node):
+    def _serialize_Model(self, node: Model):
         sexpr = [
             SexprSerializer.Symbol('model'), node.filename,
             [
@@ -731,7 +732,7 @@ class KicadFileHandler(FileHandler):
 
         return sexpr
 
-    def _serialize_CustomPadPrimitives(self, pad):
+    def _serialize_CustomPadPrimitives(self, pad: Pad):
         all_primitives = []
         for p in pad.primitives:
             all_primitives.extend(p.serialize())
@@ -785,7 +786,7 @@ class KicadFileHandler(FileHandler):
 
         return sexpr_primitives
 
-    def _serialize_PadFabProperty(self, node) -> SexprSerializer.Symbol:
+    def _serialize_PadFabProperty(self, node: Pad) -> SexprSerializer.Symbol:
         mapping = {
             Pad.FabProperty.BGA: 'pad_prop_bga',
             Pad.FabProperty.FIDUCIAL_GLOBAL: 'pad_prop_pad_prop_heatsink',
@@ -796,7 +797,7 @@ class KicadFileHandler(FileHandler):
         }
         return SexprSerializer.Symbol(mapping[node.fab_property])
 
-    def _serialize_PadZoneConnection(self, node):
+    def _serialize_PadZoneConnection(self, node: Pad):
         # Inherited zone connection is implicit in the s-exp by a missing zone_connection node
         if node.zone_connection == Pad.ZoneConnection.INHERIT_FROM_FOOTPRINT:
             return None
@@ -992,7 +993,7 @@ class KicadFileHandler(FileHandler):
 
         return sexpr
 
-    def _serialize_PolygonPoints(self, node):
+    def _serialize_PolygonPoints(self, node: PolygonPoints):
         node_points = [SexprSerializer.Symbol('pts')]
 
         for n in node.nodes:
@@ -1001,7 +1002,7 @@ class KicadFileHandler(FileHandler):
 
         return node_points
 
-    def _serialize_Polygon(self, node):
+    def _serialize_Polygon(self, node: Polygon):
         node_points = self._serialize_PolygonPoints(node)
 
         sexpr = [SexprSerializer.Symbol('fp_poly'),
@@ -1089,12 +1090,12 @@ class KicadFileHandler(FileHandler):
 
         return sexpr
 
-    def _serialize_Zone(self, node):
+    def _serialize_Zone(self, node: Zone):
 
         def _allow_or_not(allow: bool) -> SexprSerializer.Symbol:
             return SexprSerializer.Symbol('allowed') if allow else SexprSerializer.Symbol('not_allowed')
 
-        def _serialise_Keepout(keepouts):
+        def _serialise_Keepout(keepouts: Keepouts):
 
             sexpr = [SexprSerializer.Symbol('keepout')]
 
@@ -1139,7 +1140,7 @@ class KicadFileHandler(FileHandler):
             sexpr.append([SexprSerializer.Symbol('clearance'), node.clearance])
             return sexpr
 
-        def _serialise_ZoneFill(node):
+        def _serialise_ZoneFill(node: Zone):
             sexpr = [SexprSerializer.Symbol('fill')]
 
             # we do have a fill
@@ -1259,9 +1260,7 @@ class KicadFileHandler(FileHandler):
 
         return sexpr
 
-    def _serialize_TStamp(self, node):
-        # from KicadModTree.nodes import Node
-        # node:Node = node
+    def _serialize_TStamp(self, node: Node):
         sexpr = []
         if hasattr(node, 'getTStamp') and hasattr(node, 'hasValidTStamp'):
             if (node.hasValidTStamp()):
