@@ -17,6 +17,7 @@
 import copy
 import dataclasses
 import enum
+import math
 from typing import Union
 
 from KicadModTree.util.corner_selection import CornerSelection
