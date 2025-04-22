@@ -935,9 +935,10 @@ class KicadFileHandler(FileHandler):
         if node.hasValidTStamp():
             sexpr.append(self._serialize_TStamp(node))
 
-        if (hasattr(node, 'die_length') and node.die_length is not None
-                and abs(node.die_length) > self.size_tolerance_mm):
-            sexpr.append([SexprSerializer.Symbol('die_length'), node.die_length])
+        if node.tuning_properties is not None:
+            if node.tuning_properties.die_length > self.size_tolerance_mm:
+                sexpr.append([SexprSerializer.Symbol('die_length'),
+                              node.tuning_properties.die_length])
 
         if node.solder_paste_margin_ratio != 0 or node.solder_mask_margin != 0 or node.solder_paste_margin != 0:
             if (node.solder_mask_margin is not None) and node.solder_mask_margin != 0:

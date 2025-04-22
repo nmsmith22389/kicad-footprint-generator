@@ -15,6 +15,7 @@
 # (C) 2018 by Rene Poeschl, github @poeschlr
 
 import copy
+import dataclasses
 import enum
 from typing import Union
 
@@ -67,9 +68,9 @@ class Pad(Node):
         * *clearance* (``float``) --
           The optional clearance token attribute defines the clearance from all copper to the pad. If not set,
           the footprint clearance is used. (default:None = use footprint clearance)
-        * *die_length* (``float``) --
-          The optional die_length token attribute defines the die length between the component pad and the physical
-          chip bond pad inside the component package.
+        * *tuning_properties* (``PadTuningProperties``, ``None`) --
+          Pad tuning properties. None for "undefined", which is the KiCad
+          default state (default None)
 
         * *solder_paste_margin_ratio* (``float``) --
           solder paste margin ratio of the pad (default: 0)
@@ -169,6 +170,20 @@ class Pad(Node):
         REMOVE_ALL = 1
         REMOVE_EXCEPT_START_AND_END = 2
 
+    @dataclasses.dataclass
+    class TuningProperties:
+        """
+        Complete decription of a pad's die/tuning properties
+        """
+
+        die_length: float = 0
+        """
+        The die length between the component pad and the physical
+        chip bond pad inside the component package (in mm).
+        KiCad uses 0 to mean not specfied.
+        """
+        # die_delay: float // Will be in v10 (units?)
+
     at: Vector2D
     size: Vector2D
     _fab_property: FabProperty | None
@@ -181,8 +196,8 @@ class Pad(Node):
     thermal_bridge_angle: float | None
     unconnected_layer_mode: UnconnectedLayerMode
     clearance: float | None
-    """Local pad clearance (none = inherit from FP)"""
-    die_length: float | None
+
+    tuning_properties: TuningProperties | None
 
     _round_radius_handler: RoundRadiusHandler | None
 
@@ -203,13 +218,14 @@ class Pad(Node):
         self._initZoneConnection(**kwargs)
 
         self._initClearance(**kwargs)
-        self._initDieLength(**kwargs)
 
         self._initThermalBridgeWidth(**kwargs)
         self._initThermalGap(**kwargs)
         self._initThermalBridgeAngle(**kwargs)
 
         self._initUnconnectedLayerMode(**kwargs)
+
+        self.tuning_properties = kwargs.get("tuning_properties", None)
 
         self._initLayers(**kwargs)
         self._initMirror(**kwargs)
@@ -340,10 +356,6 @@ class Pad(Node):
     def _initClearance(self, **kwargs):
         param_name = 'clearance'
         self.clearance = getOptionalNumberTypeParam(kwargs, param_name, default_value=None)
-
-    def _initDieLength(self, **kwargs):
-        param_name = 'die_length'
-        self.die_length = getOptionalNumberTypeParam(kwargs, param_name, default_value=None)
 
     def _initLayers(self, **kwargs):
         if not kwargs.get('layers'):
