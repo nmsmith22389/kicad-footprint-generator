@@ -89,12 +89,9 @@ class Pad(Node):
           relief connection for the pad. This only affects a pad connected to a zone with a thermal relief.
           If not set, the footprint thermal_gap setting is used.
 
-        * *remove_unused_layer* (``bool``) --
-          The optional remove_unused_layer token specifies that the copper should be removed from any layers
-          the pad is not connected to. (default: False)
-        * *keep_end_layers* (``bool``) --
-          The optional keep_end_layers token specifies that the top and bottom layers should be retained when
-          removing the copper from unused layers.
+        * *unconnected_layer_mode* (``UnconnectedLayerMode``) --
+          Define how the pad behaves on layers where it is not connected
+          (default: KEEP_ALL)
 
         * *x_mirror* (``[int, float](mirror offset)``) --
           mirror x direction around offset "point"
@@ -162,6 +159,16 @@ class Pad(Node):
         THERMAL_RELIEF = 2
         SOLID = 3
 
+    class UnconnectedLayerMode(enum.Enum):
+        """
+        Behaviour of a Padstack on layers without connection.
+
+        (Should move to Padstack when implemented)
+        """
+        KEEP_ALL = 0
+        REMOVE_ALL = 1
+        REMOVE_EXCEPT_START_AND_END = 2
+
     at: Vector2D
     size: Vector2D
     _fab_property: Union[FabProperty, None]
@@ -170,8 +177,7 @@ class Pad(Node):
     thermal_bridge_width: Union[float, None]
     thermal_gap: Union[float, None]
     thermal_bridge_angle: Union[float, None]
-    remove_unused_layer: Union[bool, None]
-    keep_end_layers: Union[bool, None]
+    unconnected_layer_mode: UnconnectedLayerMode
     clearance: Union[float, None]
     die_length: Union[float, None]
 
@@ -200,8 +206,7 @@ class Pad(Node):
         self._initThermalGap(**kwargs)
         self._initThermalBridgeAngle(**kwargs)
 
-        self._initRemoveUnusedLayer(**kwargs)
-        self._initKeepEndLayers(**kwargs)
+        self._initUnconnectedLayerMode(**kwargs)
 
         self._initLayers(**kwargs)
         self._initMirror(**kwargs)
@@ -322,13 +327,10 @@ class Pad(Node):
                                                                param_name,
                                                                default_value=None)  # TODO: use default_value=90
 
-    def _initRemoveUnusedLayer(self, **kwargs):
-        param_name = 'remove_unused_layer'
-        self.remove_unused_layer = getOptionalBoolTypeParam(kwargs, param_name, default_value=None)
-
-    def _initKeepEndLayers(self, **kwargs):
-        param_name = 'keep_end_layers'
-        self.keep_end_layers = getOptionalBoolTypeParam(kwargs, param_name, default_value=None)
+    def _initUnconnectedLayerMode(self, **kwargs):
+        self.unconnected_layer_mode = kwargs.get(
+            "unconnected_layer_mode", Pad.UnconnectedLayerMode.KEEP_ALL
+        )
 
     def _initClearance(self, **kwargs):
         param_name = 'clearance'

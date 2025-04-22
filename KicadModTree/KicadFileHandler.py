@@ -828,7 +828,7 @@ class KicadFileHandler(FileHandler):
         else:
             return []
 
-    def _serialize_Pad(self, node):
+    def _serialize_Pad(self, node: Pad):
 
         def _map_shape_type(shape: str) -> SexprSerializer.Symbol:
             mapping = {
@@ -896,12 +896,20 @@ class KicadFileHandler(FileHandler):
 
         sexpr.append(self._serialise_Layers(node))
 
-        # The generator pads don't support this, but KiCad always writes it for PTH pads
         if node.type == Pad.TYPE_THT:
-            sexpr.append(self._serialise_Boolean("remove_unused_layers", False))
+            unconn_mode = node.unconnected_layer_mode
+            remove_unconn = unconn_mode != Pad.UnconnectedLayerMode.KEEP_ALL
 
-            if hasattr(node, 'keep_end_layers') and node.keep_end_layers is not None:
-                sexpr.append(self._serialise_Boolean("keep_end_layers", False))
+            sexpr.append(self._serialise_Boolean("remove_unused_layers", remove_unconn))
+
+            if remove_unconn:
+                sexpr.append(
+                    self._serialise_Boolean(
+                        "keep_end_layers",
+                        unconn_mode
+                        == Pad.UnconnectedLayerMode.REMOVE_EXCEPT_START_AND_END,
+                    )
+                )
 
         if shape == Pad.SHAPE_ROUNDRECT:
             sexpr.append([SexprSerializer.Symbol('roundrect_rratio'), node.radius_ratio])

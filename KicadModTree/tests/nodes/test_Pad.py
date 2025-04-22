@@ -11,8 +11,9 @@ DEFAULT_FCU_KWARGS = {
     "number": "42",
     "at": Vector2D(0, 0),
     "size": Vector2D(1, 1),
+    "drill": 0.5,
     "shape": Pad.SHAPE_RECT,
-    "type": Pad.TYPE_SMT,
+    "type": Pad.TYPE_THT,
     "layers": ["F.Cu"],
 }
 
@@ -45,7 +46,7 @@ class TestPadSerialisation(SerialisationTest):
         assert pad.at == Vector2D(0, 0)
         assert pad.size == Vector2D(1, 1)
         assert pad.shape == Pad.SHAPE_RECT
-        assert pad.type == Pad.TYPE_SMT
+        assert pad.type == Pad.TYPE_THT
         assert pad.layers == ["F.Cu"]
 
         # Check defaults
@@ -72,6 +73,7 @@ class TestPadSerialisation(SerialisationTest):
         pad = Pad(
             **DEFAULT_FCU_KWARGS,
             zone_connection=Pad.ZoneConnection.SOLID,
+            unconnected_layer_mode=Pad.UnconnectedLayerMode.REMOVE_EXCEPT_START_AND_END,
         )
 
         assert pad._zone_connection == Pad.ZoneConnection.SOLID
