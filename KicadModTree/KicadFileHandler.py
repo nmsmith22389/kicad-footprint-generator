@@ -465,6 +465,11 @@ class KicadFileHandler(FileHandler):
         for property_node in property_nodes:
             sexpr.append(self._serialize_Property(property_node))
 
+        if self.kicad_mod.clearance is not None:
+            sexpr.append([SexprSerializer.Symbol('clearance'), self.kicad_mod.clearance])
+
+        sexpr += self._serialize_ZoneConnection(self.kicad_mod.zone_connection)
+
         # Kicad 8 puts the attributes at the end of the properties
         attributes = self._serialize_attributes()
         # There might be no attributes
@@ -797,17 +802,18 @@ class KicadFileHandler(FileHandler):
         }
         return SexprSerializer.Symbol(mapping[node.fab_property])
 
-    def _serialize_PadZoneConnection(self, node: Pad):
+    def _serialize_ZoneConnection(self, zone_connection: Pad.ZoneConnection):
         # Inherited zone connection is implicit in the s-exp by a missing zone_connection node
-        if node.zone_connection == Pad.ZoneConnection.INHERIT_FROM_FOOTPRINT:
-            return None
+        if zone_connection == Pad.ZoneConnection.INHERIT:
+            return []
 
         mapping = {
             Pad.ZoneConnection.NONE: 0,
             Pad.ZoneConnection.THERMAL_RELIEF: 1,
             Pad.ZoneConnection.SOLID: 2,
         }
-        return mapping[node.zone_connection]
+
+        return [[SexprSerializer.Symbol("zone_connect"), mapping[zone_connection]]]
 
     @staticmethod
     def _serializeChamferCorner(name: str, corner: CornerSelection):
@@ -976,9 +982,7 @@ class KicadFileHandler(FileHandler):
                 sexpr.append([SexprSerializer.Symbol('solder_paste_margin'),
                               node.solder_paste_margin])
 
-        zone_connection_value = self._serialize_PadZoneConnection(node)
-        if zone_connection_value is not None:
-            sexpr.append([SexprSerializer.Symbol('zone_connect'), zone_connection_value])
+        sexpr += self._serialize_ZoneConnection(node.zone_connection)
 
         if node.clearance is not None and abs(node.clearance) > self.size_tolerance_mm:
             sexpr.append([SexprSerializer.Symbol('clearance'), node.clearance])

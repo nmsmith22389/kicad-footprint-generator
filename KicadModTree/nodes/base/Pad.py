@@ -81,7 +81,7 @@ class Pad(Node):
           solder mask margin of the pad (default: 0)
 
         * *zone_connection* (``Pad.ZoneConnection``) --
-          zone connection of the pad (default: Pad.ZoneConnection.INHERIT_FROM_FOOTPRINT)
+          zone connection of the pad (default: Pad.ZoneConnection.INHERIT)
         * *thermal_width* (``float, None``) --
           The optional thermal_width token attribute defines the thermal relief spoke width used for zone connection
           for the pad. This only affects a pad connected to a zone with a thermal relief. If not set,
@@ -159,7 +159,8 @@ class Pad(Node):
 
         # Note that these constants do not necessarily correspond to the
         # values used in the KiCad file format, thay can be anything
-        INHERIT_FROM_FOOTPRINT = 0
+        INHERIT = 0
+        """For a pad, inherits from footprint, for a footprint, inherits from board."""
         NONE = 1
         THERMAL_RELIEF = 2
         SOLID = 3
@@ -335,7 +336,7 @@ class Pad(Node):
 
     def _initZoneConnection(self, **kwargs):
         self.zone_connection = kwargs.get(
-            "zone_connection", Pad.ZoneConnection.INHERIT_FROM_FOOTPRINT
+            "zone_connection", Pad.ZoneConnection.INHERIT
         )
 
     def _initThermalBridgeWidth(self, **kwargs):

@@ -51,7 +51,7 @@ class TestPadSerialisation(SerialisationTest):
 
         # Check defaults
         assert pad.fab_property is None
-        assert pad.zone_connection == Pad.ZoneConnection.INHERIT_FROM_FOOTPRINT
+        assert pad.zone_connection == Pad.ZoneConnection.INHERIT
 
         kicad_mod = Footprint("padtest", FootprintType.SMD)
         kicad_mod.append(pad)
@@ -78,7 +78,7 @@ class TestPadSerialisation(SerialisationTest):
             clearance=1,
         )
 
-        assert pad._zone_connection == Pad.ZoneConnection.SOLID
+        assert pad.zone_connection == Pad.ZoneConnection.SOLID
 
         kicad_mod = Footprint("padtest", FootprintType.SMD)
         kicad_mod.append(pad)

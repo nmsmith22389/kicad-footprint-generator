@@ -17,6 +17,7 @@
 from kilibs.geom import Vector2D
 from KicadModTree.nodes.Node import Node
 from KicadModTree.nodes.base.EmbeddedFonts import EmbeddedFonts
+from KicadModTree.nodes.base.Pad import Pad
 
 from enum import Enum
 import uuid
@@ -55,6 +56,9 @@ class Footprint(Node):
     _tags: list[str]
     _embedded_fonts: EmbeddedFonts
 
+    zone_connection: Pad.ZoneConnection
+    clearance: float | None
+
     def __init__(self, name: str, footprintType: FootprintType, tstamp_seed: uuid.UUID | None = None):
         """
         :param name: Name of the footprint
@@ -79,6 +83,9 @@ class Footprint(Node):
         self.maskMargin = None
         self.pasteMargin = None
         self.pasteMarginRatio = None
+
+        self.clearance = None
+        self.zone_connection = Pad.ZoneConnection.INHERIT
 
         if tstamp_seed is not None:
             self.getTStampCls().setTStampSeed(tstamp_seed=tstamp_seed)
