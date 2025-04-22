@@ -798,7 +798,7 @@ class KicadFileHandler(FileHandler):
 
     def _serialize_PadZoneConnection(self, node):
         # Inherited zone connection is implicit in the s-exp by a missing zone_connection node
-        if node.zone_connection is None or node.zone_connection == Pad.ZoneConnection.INHERIT_FROM_FOOTPRINT:
+        if node.zone_connection == Pad.ZoneConnection.INHERIT_FROM_FOOTPRINT:
             return None
 
         mapping = {

@@ -171,15 +171,18 @@ class Pad(Node):
 
     at: Vector2D
     size: Vector2D
-    _fab_property: Union[FabProperty, None]
-    _zone_connection: ZoneConnection
+    _fab_property: FabProperty | None
+    zone_connection: ZoneConnection
     _chamfer_corners: CornerSelection
-    thermal_bridge_width: Union[float, None]
-    thermal_gap: Union[float, None]
-    thermal_bridge_angle: Union[float, None]
+    thermal_bridge_width: float | None
+    """None means inherit from the footprint (like KiCad)"""
+    thermal_gap: float | None
+    """None means inherit from the footprint (like KiCad)"""
+    thermal_bridge_angle: float | None
     unconnected_layer_mode: UnconnectedLayerMode
-    clearance: Union[float, None]
-    die_length: Union[float, None]
+    clearance: float | None
+    """Local pad clearance (none = inherit from FP)"""
+    die_length: float | None
 
     _round_radius_handler: RoundRadiusHandler | None
 
@@ -311,7 +314,9 @@ class Pad(Node):
         self.solder_mask_margin = kwargs.get('solder_mask_margin', 0)
 
     def _initZoneConnection(self, **kwargs):
-        self._zone_connection = kwargs.get('zone_connection', Pad.ZoneConnection.INHERIT_FROM_FOOTPRINT)
+        self.zone_connection = kwargs.get(
+            "zone_connection", Pad.ZoneConnection.INHERIT_FROM_FOOTPRINT
+        )
 
     def _initThermalBridgeWidth(self, **kwargs):
         param_name = 'thermal_bridge_width'
@@ -480,15 +485,6 @@ class Pad(Node):
         :return: one of the Pad.PROPERTY_* constants, or None
         """
         return self._fab_property
-
-    @property
-    def zone_connection(self) -> ZoneConnection:
-        """
-        The zone connection of the pad.
-
-        :return: one of the Pad.ZoneConnection constants
-        """
-        return self._zone_connection
 
     @property
     def roundRadius(self):
