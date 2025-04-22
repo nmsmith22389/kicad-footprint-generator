@@ -979,18 +979,15 @@ class KicadFileHandler(FileHandler):
         if zone_connection_value is not None:
             sexpr.append([SexprSerializer.Symbol('zone_connect'), zone_connection_value])
 
-        if (hasattr(node, 'clearance') and node.clearance is not None
-                and abs(node.clearance) > self.size_tolerance_mm):
+        if node.clearance is not None and abs(node.clearance) > self.size_tolerance_mm:
             sexpr.append([SexprSerializer.Symbol('clearance'), node.clearance])
 
-        if (hasattr(node, 'thermal_bridge_width') and node.thermal_bridge_width is not None
-                and node.thermal_bridge_width > self.size_tolerance_mm):
+        if node.thermal_bridge_width is not None and node.thermal_bridge_width > self.size_tolerance_mm:
             sexpr.append([SexprSerializer.Symbol('thermal_bridge_width'), node.thermal_bridge_width])
 
         sexpr += _serialise_thermalBridgeAngle(node)
 
-        if (hasattr(node, 'thermal_gap') and node.thermal_gap is not None
-                and abs(node.thermal_gap) > self.size_tolerance_mm):
+        if node.thermal_gap is not None and abs(node.thermal_gap) > self.size_tolerance_mm:
             sexpr.append([SexprSerializer.Symbol('thermal_gap'), node.thermal_gap])
 
         return sexpr
