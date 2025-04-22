@@ -850,6 +850,30 @@ class KicadFileHandler(FileHandler):
             }
             return SexprSerializer.Symbol(mapping[pad_type])
 
+        def _serialise_thermalBridgeAngle(pad: Pad):
+            # KiCad (9, at least) doesn't output this in the s-expr in it's slightly esoteric default state
+            # But Pads do always have a valid angle.
+
+            tba_default = (
+                45
+                if pad.shape == Pad.SHAPE_CIRCLE
+                or (
+                    pad.shape == Pad.SHAPE_CUSTOM
+                    and pad.anchor_shape == Pad.SHAPE_CIRCLE
+                )
+                else 90
+            )
+
+            if abs(pad.thermal_bridge_angle - tba_default):
+                return [
+                    [
+                        SexprSerializer.Symbol("thermal_bridge_angle"),
+                        pad.thermal_bridge_angle,
+                    ]
+                ]
+
+            return []
+
         shape = node.shape
 
         # Round rects decay to rectangles if the radius ratio is 0
@@ -963,9 +987,7 @@ class KicadFileHandler(FileHandler):
                 and node.thermal_bridge_width > self.size_tolerance_mm):
             sexpr.append([SexprSerializer.Symbol('thermal_bridge_width'), node.thermal_bridge_width])
 
-        if (hasattr(node, 'thermal_bridge_angle') and node.thermal_bridge_angle is not None
-                and abs(node.thermal_bridge_angle - 90) > self.angle_tolerance_deg):
-            sexpr.append([SexprSerializer.Symbol('thermal_bridge_angle'), node.thermal_bridge_angle])
+        sexpr += _serialise_thermalBridgeAngle(node)
 
         if (hasattr(node, 'thermal_gap') and node.thermal_gap is not None
                 and abs(node.thermal_gap) > self.size_tolerance_mm):

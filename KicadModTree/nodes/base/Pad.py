@@ -89,6 +89,9 @@ class Pad(Node):
           The optional thermal_gap token attribute defines the distance from the pad to the zone of the thermal
           relief connection for the pad. This only affects a pad connected to a zone with a thermal relief.
           If not set, the footprint thermal_gap setting is used.
+        * *thermal_bridge_angle*  (``float, None``) --
+          The optional thermal bridge angle. If not given this defaults to the same default as KiCad
+          (45 for circular pads, 90 for everything else)
 
         * *unconnected_layer_mode* (``UnconnectedLayerMode``) --
           Define how the pad behaves on layers where it is not connected
@@ -193,7 +196,7 @@ class Pad(Node):
     """None means inherit from the footprint (like KiCad)"""
     thermal_gap: float | None
     """None means inherit from the footprint (like KiCad)"""
-    thermal_bridge_angle: float | None
+    _thermal_bridge_angle: float | None
     unconnected_layer_mode: UnconnectedLayerMode
     clearance: float | None
 
@@ -497,6 +500,32 @@ class Pad(Node):
         :return: one of the Pad.PROPERTY_* constants, or None
         """
         return self._fab_property
+
+    @property
+    def thermal_bridge_angle(self) -> float:
+        """
+        KiCad has a slightly weird default system here. Rather than trying to update the default
+        when the pad shape changes, internally we store a None and return the default value as needed.
+
+        But the Pad always does actually have an angle to report.
+        """
+
+        if self._thermal_bridge_angle is not None:
+            return self._thermal_bridge_angle
+
+        if self.shape == Pad.SHAPE_CIRCLE or (
+            self.shape == Pad.SHAPE_CUSTOM and self.anchor_shape == Pad.SHAPE_CIRCLE
+        ):
+            return 45
+
+        return 90
+
+    @thermal_bridge_angle.setter
+    def thermal_bridge_angle(self, angle: float | None):
+        """
+        None means the default for the pad shape.
+        """
+        self._thermal_bridge_angle = angle
 
     @property
     def roundRadius(self):

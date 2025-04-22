@@ -74,6 +74,8 @@ class TestPadSerialisation(SerialisationTest):
             **DEFAULT_FCU_KWARGS,
             zone_connection=Pad.ZoneConnection.SOLID,
             unconnected_layer_mode=Pad.UnconnectedLayerMode.REMOVE_EXCEPT_START_AND_END,
+            thermal_bridge_angle=10,
+            clearance=1,
         )
 
         assert pad._zone_connection == Pad.ZoneConnection.SOLID

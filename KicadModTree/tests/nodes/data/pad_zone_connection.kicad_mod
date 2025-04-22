@@ -11,6 +11,8 @@
 		(remove_unused_layers yes)
 		(keep_end_layers yes)
 		(zone_connect 2)
+		(clearance 1)
+		(thermal_bridge_angle 10)
 	)
 	(embedded_fonts no)
 )
