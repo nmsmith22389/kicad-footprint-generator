@@ -16,13 +16,13 @@
 # (C) 2017 by @SchrodingersGat
 # (C) 2017 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 
+from collections import namedtuple
+from types import GeneratorType
 from typing import Generator
 
-from types import GeneratorType
-from collections import namedtuple
 from KicadModTree.nodes.base.Pad import *
-from KicadModTree.nodes.specialized.ChamferedPad import *
 from KicadModTree.nodes.Node import Node
+from KicadModTree.nodes.specialized.ChamferedPad import *
 
 ApplyOverrideResult = namedtuple('ApplyOverrideResult', ['number', 'position', 'parameters'])
 
