@@ -81,7 +81,7 @@ class PadArray(Node):
           shape for marking pad 1 for through hole components. (default: ``Pad.SHAPE_ROUNDRECT``)
         * *tht_pad1_id* (``int, string``) --
           pad number used for "pin 1" (default: 1)
-        * *hidden_pins* (``int, Vector1D``) --
+        * *hidden_pins* (``Iterable[int]``) --
           pin number(s) to be skipped; a footprint with hidden pins has missing pads and matching pin numbers
         * *deleted_pins* (``int, Vector1D``) --
           pin locations(s) to be skipped; a footprint with deleted pins has pads missing but no missing pin numbers"
@@ -303,11 +303,8 @@ class PadArray(Node):
                 includePad = False
 
             # hidden pins are filtered out by pad number (index of pad_numbers list)
-            if not kwargs.get('deleted_pins'):
-                if isinstance(self.initialPin, int):
-                    includePad = (self.initialPin + i) not in self.exclude_pin_list
-                else:
-                    includePad = number is not None and number not in self.exclude_pin_list
+            if kwargs.get('hidden_pins'):
+                includePad = number is not None and number not in self.exclude_pin_list
 
             if includePad:
                 current_pad_pos = Vector2D(
