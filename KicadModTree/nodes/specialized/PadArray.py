@@ -261,21 +261,6 @@ class PadArray(Node):
         pads = []
         padShape = kwargs.get('shape')
 
-        # Special case, increment = 0
-        # this can be used for creating an array with all the same pad number
-        if self.increment == 0:
-            pad_numbers = [self.initialPin] * self.pincount
-        elif isinstance(self.increment, int):
-            pad_numbers = range(self.initialPin, self.initialPin + (self.pincount * self.increment), self.increment)
-        elif callable(self.increment):
-            pad_numbers = [self.initialPin]
-            for idx in range(1, self.pincount):
-                pad_numbers.append(self.increment(pad_numbers[-1]))
-        elif isinstance(self.increment, GeneratorType):
-            pad_numbers = [next(self.increment) for i in range(self.pincount)]
-        else:
-            raise TypeError("Wrong type for increment. It must be either an int, callable or generator.")
-
         end_pad_params = copy(kwargs)
         if kwargs.get('end_pads_size_reduction'):
             size_reduction = kwargs['end_pads_size_reduction']
@@ -294,6 +279,21 @@ class PadArray(Node):
                 )/2
         else:
             delta_pos = Vector2D(0, 0)
+
+        # Special case, increment = 0
+        # this can be used for creating an array with all the same pad number
+        if self.increment == 0:
+            pad_numbers = [self.initialPin] * self.pincount
+        elif isinstance(self.increment, int):
+            pad_numbers = range(self.initialPin, self.initialPin + (self.pincount * self.increment), self.increment)
+        elif callable(self.increment):
+            pad_numbers = [self.initialPin]
+            for idx in range(1, self.pincount):
+                pad_numbers.append(self.increment(pad_numbers[-1]))
+        elif isinstance(self.increment, GeneratorType):
+            pad_numbers = [next(self.increment) for i in range(self.pincount)]
+        else:
+            raise TypeError("Wrong type for increment. It must be either an int, callable or generator.")
 
         for i, number in enumerate(pad_numbers):
             includePad = True
