@@ -162,7 +162,7 @@ def get_generator(device_params):
     Fallback to plain increment.
 
     Args:
-        device_params: Device parameters dictionary 
+        device_params: Device parameters dictionary
 
     Returns:
         Pad number iterator
