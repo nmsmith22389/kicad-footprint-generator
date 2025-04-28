@@ -8750,7 +8750,7 @@ VSO-56_11.1x21.5mm_Pitch0.75mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.nxp.com/documents/outline_drawing/SOT190-1.pdf'
 
-VSSOP-8_3.0x3.0mm_Pitch0.65mm:
+VSSOP-8_3x3mm_Pitch0.65mm:
   the: 12.0
   tb_s: 0.1
   c: 0.18
@@ -8774,7 +8774,7 @@ VSSOP-8_3.0x3.0mm_Pitch0.65mm:
   npy: 0
   epad: null
   excluded_pins: null
-  model_name: VSSOP-8_3.0x3.0mm_P0.65mm
+  model_name: VSSOP-8_3x3mm_P0.65mm
   rotation: -90
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
