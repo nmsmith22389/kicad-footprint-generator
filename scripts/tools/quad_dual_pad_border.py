@@ -44,23 +44,24 @@ def add_dual_pad_border_y(pad_details, device_params, pad_shape_details, pad_ove
 
     _, pitch_y = get_pitches(device_params)
 
+    pincount_y = device_params['num_pins_y']
     pad_arrays = []
     pad_arrays.append(PadArray(
         initial=init,
         type=Pad.TYPE_SMT,
         layers=Pad.LAYERS_SMT,
-        pincount=device_params['num_pins_y'],
+        pincount=pincount_y,
         x_spacing=0, y_spacing=pitch_y,
         increment=increment,
         pad_overrides=pad_overrides,
         **pad_details['left'], **pad_shape_details,
     ))
-    init += device_params['num_pins_y']
+    init += pincount_y
     pad_arrays.append(PadArray(
         initial=init,
         type=Pad.TYPE_SMT,
         layers=Pad.LAYERS_SMT,
-        pincount=device_params['num_pins_y'],
+        pincount=pincount_y,
         x_spacing=0, y_spacing=-pitch_y,
         increment=increment,
         pad_overrides=pad_overrides,
@@ -92,23 +93,24 @@ def add_dual_pad_border_x(pad_details, device_params, pad_shape_details, pad_ove
 
     pitch_x, _ = get_pitches(device_params)
 
+    pincount_x = device_params['num_pins_x']
     pad_arrays = []
     pad_arrays.append(PadArray(
         initial=init,
         type=Pad.TYPE_SMT,
         layers=Pad.LAYERS_SMT,
-        pincount=device_params['num_pins_x'],
+        pincount=pincount_x,
         y_spacing=0, x_spacing=pitch_x,
         increment=increment,
         pad_overrides=pad_overrides,
         **pad_details['top'], **pad_shape_details,
     ))
-    init += device_params['num_pins_x']
+    init += pincount_x
     pad_arrays.append(PadArray(
         initial=init,
         type=Pad.TYPE_SMT,
         layers=Pad.LAYERS_SMT,
-        pincount=device_params['num_pins_x'],
+        pincount=pincount_x,
         y_spacing=0, x_spacing=-pitch_x,
         increment=increment,
         pad_overrides=pad_overrides,
@@ -131,12 +133,14 @@ def add_quad_pad_border(pad_details, device_params, pad_shape_details, pad_overr
     pad_size_reduction = {'x+': pad_size_red} if pad_size_red > 0 else None
     increment = get_generator(device_params)
 
+    pincount_x = device_params['num_pins_x']
+    pincount_y = device_params['num_pins_y']
     pad_arrays = []
     pad_arrays.append(PadArray(
         initial=init,
         type=Pad.TYPE_SMT,
         layers=Pad.LAYERS_SMT,
-        pincount=device_params['num_pins_y'],
+        pincount=pincount_y,
         x_spacing=0, y_spacing=pitch_y,
         chamfer_size=chamfer_size,
         chamfer_corner_selection_first=corner_first,
@@ -146,7 +150,7 @@ def add_quad_pad_border(pad_details, device_params, pad_shape_details, pad_overr
         pad_overrides=pad_overrides,
         **pad_details['left'], **pad_shape_details,
         ))
-    init += device_params['num_pins_y']
+    init += pincount_y
     corner_first = copy(corner_first).rotateCCW()
     corner_last = copy(corner_last).rotateCCW()
     pad_size_reduction = {'y-': pad_size_red} if pad_size_red > 0 else None
@@ -155,7 +159,7 @@ def add_quad_pad_border(pad_details, device_params, pad_shape_details, pad_overr
         initial=init,
         type=Pad.TYPE_SMT,
         layers=Pad.LAYERS_SMT,
-        pincount=device_params['num_pins_x'],
+        pincount=pincount_x,
         y_spacing=0, x_spacing=pitch_x,
         chamfer_size=chamfer_size,
         chamfer_corner_selection_first=corner_first,
@@ -166,7 +170,7 @@ def add_quad_pad_border(pad_details, device_params, pad_shape_details, pad_overr
         **pad_details['bottom'], **pad_shape_details,
     ))
 
-    init += device_params['num_pins_x']
+    init += pincount_x
     corner_first = copy(corner_first).rotateCCW()
     corner_last = copy(corner_last).rotateCCW()
     pad_size_reduction = {'x-': pad_size_red} if pad_size_red > 0 else None
@@ -175,7 +179,7 @@ def add_quad_pad_border(pad_details, device_params, pad_shape_details, pad_overr
         initial=init,
         type=Pad.TYPE_SMT,
         layers=Pad.LAYERS_SMT,
-        pincount=device_params['num_pins_y'],
+        pincount=pincount_y,
         x_spacing=0, y_spacing=-pitch_y,
         chamfer_size=chamfer_size,
         chamfer_corner_selection_first=corner_first,
@@ -186,7 +190,7 @@ def add_quad_pad_border(pad_details, device_params, pad_shape_details, pad_overr
         **pad_details['right'], **pad_shape_details,
     ))
 
-    init += device_params['num_pins_y']
+    init += pincount_y
     corner_first = copy(corner_first).rotateCCW()
     corner_last = copy(corner_last).rotateCCW()
     pad_size_reduction = {'y+': pad_size_red} if pad_size_red > 0 else None
@@ -195,7 +199,7 @@ def add_quad_pad_border(pad_details, device_params, pad_shape_details, pad_overr
         initial=init,
         type=Pad.TYPE_SMT,
         layers=Pad.LAYERS_SMT,
-        pincount=device_params['num_pins_x'],
+        pincount=pincount_x,
         y_spacing=0, x_spacing=-pitch_x,
         chamfer_size=chamfer_size,
         chamfer_corner_selection_first=corner_first,
