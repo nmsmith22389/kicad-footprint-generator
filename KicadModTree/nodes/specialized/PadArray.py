@@ -124,9 +124,9 @@ class PadArray(Node):
             self.exclude_pin_list = kwargs.get('hidden_pins')
 
             if type(self.exclude_pin_list) not in [list, tuple]:
-                raise TypeError('exclude pin list must be specified like "exclude_pin_list=[0,1]"')
+                raise TypeError('hidden pin list must be specified like "hidden_pins=[0,1]"')
             elif any([type(i) not in [int] for i in self.exclude_pin_list]):
-                raise ValueError('exclude pin list must be integer value')
+                raise ValueError('hidden pin list must contain integer values')
 
     # Where to start the array
     def _initStartingPosition(self, **kwargs):
