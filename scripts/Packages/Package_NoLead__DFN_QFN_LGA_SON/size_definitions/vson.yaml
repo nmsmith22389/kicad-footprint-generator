@@ -194,3 +194,29 @@ VSON-14-1EP_3x4.5mm_P0.65mm_EP1.6x4.2mm:
     grid: [0.75, 1.5]
     paste_rings_outside: [1, 1]
 
+
+MPS_VSON-6_1x1.5mm_P0.5mm:
+  device_type: 'VSON'
+  library: Package_SON
+  manufacturer: 'MPS' # manufacturer prefix is needed due to non-standard lead count (if you compare to JEDEC MO-229 variant V1510D)
+  size_source: 'https://www.monolithicpower.com/en/documentview/productdocument/index/version/2/document_type/Datasheet/lang/en/sku/MP21148/document_id/1006/#page=14'
+  ipc_class: 'qfn'
+  body_size_x: 0.90 .. 1.10 # nominal 1.00
+  body_size_y: 1.40 .. 1.60 # nominal 1.50
+  overall_height:
+    minimum: 0.80
+    maximum: 1.00
+  lead_width:
+    minimum: 0.20
+    maximum: 0.30
+  lead_len:
+    minimum: 0.20 #Hack to get a footprint similar to manufacturer's recommended land pattern. Real value is 0.30.
+    maximum: 0.35 #Hack to get a footprint similar to manufacturer's recommended land pattern. Real value is 0.40.
+  pad_overrides:
+    1:
+      size_increase: [0.05, null]
+      move: [0.025, null] # moving to the right, exactly 0.05/2
+  pitch: 0.50
+  num_pins_x: 0
+  num_pins_y: 3
+

@@ -254,3 +254,30 @@ MicroCrystal_C7_SON-8_1.5x3.2mm_P0.9mm:
 #   pitch: 0.8
 #   num_pins_x: 0
 #   num_pins_y: 4
+
+MPS_USON-6_1.2x1.6mm_P0.5mm:
+  device_type: 'USON'
+  library: Package_SON
+  manufacturer: 'MPS' # manufacturer prefix is needed due to non-standard D/E size (if you compare to JEDEC MO-229)
+  size_source: 'https://www.monolithicpower.com/en/documentview/productdocument/index/version/2/document_type/Datasheet/lang/en/sku/MP2151/document_id/4678/#page=21'
+  ipc_class: 'qfn'
+  body_size_x: 1.10 .. 1.30 # nominal 1.20
+  body_size_y: 1.50 .. 1.70 # nominal 1.60
+  overall_height:
+    minimum: 0.50
+    maximum: 0.60
+  lead_width:
+    minimum: 0.20
+    maximum: 0.30
+  lead_len:
+    minimum: 0.20 #Hack to get a footprint similar to manufacturer's recommended land pattern. Real value is 0.30.
+    maximum: 0.35 #Hack to get a footprint similar to manufacturer's recommended land pattern. Real value is 0.40.
+  pad_overrides:
+    1:
+      #lead_len: 0.40 .. 0.50 # IT'S NOT WORKING
+      size_increase: [0.10, null]
+      move: [0.05, null] # moving to the right, exactly 0.10/2
+  pitch: 0.50
+  num_pins_x: 0
+  num_pins_y: 3
+
