@@ -783,3 +783,24 @@ Converter_ACDC_TRACO_TMG_151xx_THT:
     ["tht", "4", 33, -12.7, 2.3, 2.3, 1.5]
   ]
 
+Converter_DCDC_TRACO_TMR10-24xxWIR_48xxWIR_72xxWIR_THT:
+  library_name: 'Converter_DCDC'
+  description: "DCDC-Converter, TRACO, TMR 10-24xxWIR, TMR 10-48xxWIR, TMR 10-72xxWIR, 10W, Rev. April 29. 2025"
+  datasheet: "https://www.tracopower.com/products/tmr10wir.pdf"
+  tags: "DCDC-Converter TRACO TMR10WIR THT SIP-8 10W"
+  extratexts: []
+  at: [-5.9, 2.1]
+  size: [9.6, 22]
+  body_position_tolerance: [0.5, 0.5]
+  # For future use
+  height: 12
+  pins: [
+    ["thtr", "1", 0, 0, 1.9, 1.9, 1.1],
+    ["tht", "2", 0, -2.54, 1.9, 1.9, 1.1],
+    ["tht", "3", 0, -5.08, 1.9, 1.9, 1.1],
+    ["tht", "6", 0, -12.7, 1.9, 1.9, 1.1],
+    ["tht", "7", 0, -15.24, 1.9, 1.9, 1.1],
+    ["tht", "8", 0, -17.78, 1.9, 1.9, 1.1],
+    ["tht", "9", -5.8, -3.6, 2.7, 2.7, 1.5],
+    ["tht", "10", 3.6, -14.2, 2.7, 2.7, 1.5]
+  ]
