@@ -16,13 +16,15 @@ from KicadModTree import (
 from kilibs.geom import Rectangle
 from kilibs.ipc_tools import ipc_rules
 from KicadModTree.util.courtyard_builder import CourtyardBuilder
-from kilibs.geom import Direction, Vector2D, BoundingBox
-from KicadModTree.nodes.specialized.PadArray import PadArray, get_pad_radius_from_arrays
+from kilibs.geom import Direction, Vector2D
+from KicadModTree.nodes.specialized.PadArray import (
+    find_lowest_numbered_pad,
+    get_pad_radius_from_arrays,
+)
 from KicadModTree.nodes.specialized.Cruciform import Cruciform
 
 from scripts.tools.footprint_generator import FootprintGenerator
 from scripts.tools.footprint_text_fields import addTextFields
-from scripts.tools.global_config_files.global_config import GlobalConfig
 from scripts.tools.ipc_pad_size_calculators import TolerancedSize, ipc_gull_wing
 from scripts.tools.quad_dual_pad_border import create_dual_or_quad_pad_border
 from scripts.tools import drawing_tools
@@ -45,32 +47,6 @@ DEFAULT_MIN_ANNULAR_RING = 0.15
 
 def roundToBase(value, base):
     return round(value / base) * base
-
-
-def find_top_left_pad(pad_arrays: List[PadArray]) -> Pad:
-    """
-    From a list of pad arrays, find the top-left pad.
-    """
-
-    def point_is_left_and_then_above(point: Vector2D, other_point: Vector2D) -> bool:
-
-        # left-most wins if not the same
-        if point.x == other_point.x:
-            return point.y < other_point.y
-
-        # in the same col, top wins
-        return point.x < other_point.x
-
-    tl_pad = None
-    for pad_array in pad_arrays:
-        for pad in pad_array:
-            if tl_pad is None or point_is_left_and_then_above(pad.at, tl_pad.at):
-                tl_pad = pad
-
-    if tl_pad is None:
-        raise ValueError("No pad found in pad array")
-
-    return tl_pad
 
 
 class TopSlugConfiguration:
@@ -519,7 +495,7 @@ class GullwingGenerator(FootprintGenerator):
         for pad_array in pad_arrays:
             kicad_mod.append(pad_array)
 
-        tl_pad = find_top_left_pad(pad_arrays)
+        tl_pad = find_lowest_numbered_pad(pad_arrays)
         pad_radius = get_pad_radius_from_arrays(pad_arrays)
 
         EP_round_radius = 0

@@ -391,3 +391,24 @@ def get_pad_radius_from_arrays(pad_arrays: list[PadArray]) -> float:
             if (len(pads)):
                 pad_radius = pads[0].getRoundRadius()
     return pad_radius
+
+
+def find_lowest_numbered_pad(pad_arrays: list[PadArray]) -> Pad | None:
+    """
+    From a list of pad arrays, find the lowest-integer-numbered pad.
+    """
+
+    lowest_pad: Pad | None = None
+
+    for pad_array in pad_arrays:
+        for pad in pad_array:
+            try:
+                int_num = int(pad.number)
+            except ValueError:
+                # If the pad number is not an int, skip it
+                continue
+
+            if lowest_pad is None or int_num < int(lowest_pad.number):
+                lowest_pad = pad
+
+    return lowest_pad

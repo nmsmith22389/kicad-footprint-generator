@@ -19,7 +19,11 @@ from KicadModTree import (
 from KicadModTree.util.courtyard_builder import CourtyardBuilder
 from kilibs.geom import Direction, Vector2D, BoundingBox, Rectangle, rounding
 from kilibs.ipc_tools import ipc_rules
-from KicadModTree.nodes.specialized.PadArray import PadArray, get_pad_radius_from_arrays
+from KicadModTree.nodes.specialized.PadArray import (
+    PadArray,
+    find_lowest_numbered_pad,
+    get_pad_radius_from_arrays,
+)
 
 from scripts.tools.footprint_generator import FootprintGenerator
 from scripts.tools.global_config_files.global_config import GlobalConfig
@@ -50,32 +54,6 @@ DEFAULT_VIA_PASTE_CLEARANCE = 0.15
 DEFAULT_MIN_ANNULAR_RING = 0.15
 
 SILK_MIN_LEN = 0.1
-
-
-def find_top_left_pad(pad_arrays: List[PadArray]) -> Pad:
-    """
-    From a list of pad arrays, find the top-left pad.
-    """
-
-    def point_is_left_and_then_above(point: Vector2D, other_point: Vector2D) -> bool:
-
-        # left-most wins if not the same
-        if point.x == other_point.x:
-            return point.y < other_point.y
-
-        # in the same col, top wins
-        return point.x < other_point.x
-
-    tl_pad = None
-    for pad_array in pad_arrays:
-        for pad in pad_array:
-            if tl_pad is None or point_is_left_and_then_above(pad.at, tl_pad.at):
-                tl_pad = pad
-
-    if tl_pad is None:
-        raise ValueError("No pad found in pad array")
-
-    return tl_pad
 
 
 def get_pad_top_left_corner_midpoint(pad: Pad) -> Vector2D:
@@ -637,7 +615,6 @@ class NoLeadGenerator(FootprintGenerator):
         )
 
         if is_dfn:
-
             # DFN-style - 45-degree arrow in corner
 
             #     For num_pins_x == 0, the lines are horizontal:
@@ -657,7 +634,7 @@ class NoLeadGenerator(FootprintGenerator):
             vertical_lines = device_params['num_pins_y'] == 0
 
             pads_bbox = get_bounding_box_of_pad_arrays(pad_arrays)
-            top_left_pad = find_top_left_pad(pad_arrays)
+            top_left_pad = find_lowest_numbered_pad(pad_arrays)
 
             # Top corner of the top-left pad (inset to be exactly on rounded corners)
             top_left_pad_top_left_corner = get_pad_top_left_corner_midpoint(top_left_pad)
