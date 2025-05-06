@@ -109,14 +109,21 @@ class FootprintGenerator:
     @classmethod
     def run_on_files(self, generator, args: argparse.Namespace,
                      file_autofind_dir: str='.', **kwargs):
+        target_files = []
 
         # If no files are given, find all YAML files in the current
         # directory recursively
         if not args.files:
             logging.info(f"No files given, searching for .yaml files in {file_autofind_dir}")
-            args.files = list(Path(file_autofind_dir).rglob('*.yaml'))
+            target_files = list(Path(file_autofind_dir).rglob('*.yaml'))
 
         for filepath in args.files:
+            if os.path.isdir(filepath):
+                target_files += list(Path(filepath).rglob('*.yaml'))
+            else:
+                target_files += [filepath]
+
+        for filepath in target_files:
             generator_instance = generator(output_dir=args.output_dir,
                                            global_config=args.global_config,
                                            **kwargs)
