@@ -122,8 +122,6 @@ class CircleProperties(ShapeProperties):
         if 'diameter' in circle and 'radius' in circle:
             raise ValueError('Circle shape must have either "diameter" or "radius" key, not both')
 
-        print(circle)
-
         rad_diam_expr = circle.get('diameter', circle.get('radius'))
         is_diam = 'diameter' in circle
 
