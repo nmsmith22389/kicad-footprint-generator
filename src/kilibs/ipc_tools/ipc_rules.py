@@ -99,15 +99,19 @@ class IpcRules:
         If the filename is a path (with a YAML extension), use it directly,
         otherwise use the package data with that name
         """
-        if file_name.endswith(".yaml"):
-            data_path = file_name
-        else:
-            with resources.path("kilibs.ipc_tools.data", file_name + ".yaml") as res_path:
-                data_path = res_path
 
-        with open(data_path, 'r') as file:
-            data = yaml.safe_load(file)
-            return cls(data)
+        def get_data(path):
+            with open(path, 'r') as file:
+                data = yaml.safe_load(file)
+                return cls(data)
+
+
+        if file_name.endswith(".yaml"):
+            return get_data(file_name)
+        else:
+            resource = resources.files("kilibs.ipc_tools.data").joinpath(file_name + ".yaml")
+            with resources.as_file(resource) as res_path:
+                return get_data(res_path)
 
     @staticmethod
     def _roundoff_from_dict(data: dict) -> Roundoff:

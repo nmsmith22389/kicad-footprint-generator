@@ -2,7 +2,7 @@
 
 import argparse
 
-from scripts.tools.footprint_generator import FootprintGenerator, GlobalConfig
+from scripts.tools.footprint_generator import FootprintGenerator
 from scripts.tools.footprint_scripts_terminal_blocks import makeTerminalBlockStd
 
 class MaiXu_MX126_Generator(FootprintGenerator):

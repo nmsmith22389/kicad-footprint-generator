@@ -7,7 +7,7 @@ from importlib import resources
 from typing import Optional
 
 from KicadModTree import Footprint, KicadPrettyLibrary, Model
-from scripts.tools.global_config_files.global_config import GlobalConfig
+from scripts.tools.global_config_files import global_config as GC
 from kilibs.util import dict_tools
 
 
@@ -17,9 +17,9 @@ class FootprintGenerator:
     output_path: Path | None
 
     # The global config (e.g. KLC settings)
-    global_config: GlobalConfig
+    global_config: GC.GlobalConfig
 
-    def __init__(self, output_dir: Path | None, global_config: GlobalConfig):
+    def __init__(self, output_dir: Path | None, global_config: GC.GlobalConfig):
         self.output_path = output_dir
         self.global_config = global_config
 
@@ -89,20 +89,9 @@ class FootprintGenerator:
         if args.global_config is None:
             # If the user doesn't provide a global config file, use the default one
             # provided in the package data
-            default_global_config_name = "config_KLCv3.0.yaml"
-
-            with resources.path(
-                "scripts.tools.global_config_files", default_global_config_name
-            ) as default_global_config:
-                args.global_config_file = default_global_config
+            args.global_config = GC.DefaultGlobalConfig()
         else:
-            args.global_config_file = args.global_config
-
-        # Some generators still load the global config themselves as a dict and then
-        # extend it, which isn't very type-safe. But for now, allow access to both
-        # the filename (so they can do that themselves) as well as the GlobalConfig
-        # object which provides validation, type-checking, utility functions, etc.
-        args.global_config = GlobalConfig.load_from_file(args.global_config_file)
+            args.global_config = GC.GlobalConfig.load_from_file(args.global_config)
 
         return args
 

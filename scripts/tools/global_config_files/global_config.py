@@ -348,9 +348,8 @@ def DefaultGlobalConfig() -> GlobalConfig:
 
     default_global_config_name = "config_KLCv3.0.yaml"
 
-    with resources.path(
-        "scripts.tools.global_config_files", default_global_config_name
-    ) as default_global_config:
-        global_config = GlobalConfig.load_from_file(default_global_config)
-
-    return global_config
+    resource = resources.files("scripts.tools.global_config_files").joinpath(
+        default_global_config_name
+    )
+    with resources.as_file(resource) as default_global_config:
+        return GlobalConfig.load_from_file(default_global_config)
