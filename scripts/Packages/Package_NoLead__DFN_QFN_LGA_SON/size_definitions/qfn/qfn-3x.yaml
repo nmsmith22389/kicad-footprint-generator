@@ -1866,4 +1866,3 @@ WQFN-38-1EP_5x7mm_P0.5mm_EP3.65x5.65mm:
   thermal_vias:
     count: [4, 6]
     EP_paste_coverage: 0.75 # compensating for the vias
-
