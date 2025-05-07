@@ -493,7 +493,7 @@ VQFN-40-1EP_6x6mm_P0.5mm_EP3.5x3.5mm:
   thermal_vias:
     count: [4, 4]
     drill: 0.2
-  
+
   # NOTE: Listed as MO-220-WJJD-5 in the ADIN1100 datasheet,
   # but this is wrong: WJJD-5 EP is 4.65mm sq nom.
   compatible_mpns:
