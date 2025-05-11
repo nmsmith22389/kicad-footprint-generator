@@ -3,7 +3,7 @@
 **License:** GNU GPLv3+
 
 The repository contains code and libraries that are used to generate some of the footprints and
-3D models in the [KiCad](https://kicad-pcb.org/) official libraries.
+3D models in the [KiCad](https://kicad.org/) official libraries.
 
 The code is written in Python. The footprint generators are based on the KicadModTree library, originally
 developed by Thomas Pointhuber. The 3D model generators are mostly based on the
