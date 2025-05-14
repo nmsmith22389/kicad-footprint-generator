@@ -724,6 +724,10 @@ WSON-10-1EP_4x4mm_P0.8mm_EP2.6x3mm:
   pitch: 0.8
   num_pins_x: 0
   num_pins_y: 5
+
+  compatible_mpns:
+    - Texas_DPR0010A # https://www.ti.com/lit/ml/qfnd434a/qfnd434a.pdf
+
   #chamfer_edge_pins: 0.25
   #pin_count_grid:
   #pad_length_addition: 0.5
