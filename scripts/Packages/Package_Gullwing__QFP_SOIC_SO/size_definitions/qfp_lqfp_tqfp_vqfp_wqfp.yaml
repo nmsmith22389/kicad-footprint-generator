@@ -698,6 +698,7 @@ LQFP-80_12x12mm_P0.5mm:
 
 LQFP-80_14x14mm_P0.65mm:
 # height 1.60 mm max
+# PZA0080A is compatible, see https://www.ti.com/lit/ml/mpqf099b/mpqf099b.pdf
   device_type: 'LQFP'
   size_source: 'https://www.analog.com/media/en/technical-documentation/data-sheets/AD9852.pdf'
   force_small_pitch_ipc_definition: True
@@ -1321,36 +1322,44 @@ TQFP-52-1EP_10x10mm_P0.65mm_EP6.5x6.5mm:
     drill: 0.2
     paste_via_clearance: 0.1
 
-VQFP-80_14x14mm_P0.65mm:
-# Microsemi calls it VQ80, but with height A = 1.20 mm max it is actually a TQFP from JEDEC MS-026 variation AEC,
-# 3D Model is wrong using height = 1.60 mm, and there's no symbol using it.
-# There are already LQFP and TQFP with same lead count and similar sizes, we should MERGE it with TQFP-80 since it is not script generated yet
-# https://web.archive.org/web/20220119120813/https://www.microsemi.com/document-portal/doc_download/131095-pd3068-package-mechanical-drawings
-  device_type: 'VQFP'
-  size_source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
-  body_size_x:
-    nominal: 14
-    tolerance: 0
-    # minimum:
-    # maximum:
-  body_size_y:
-    nominal: 14
-  overall_size_x:
-    nominal: 16
-  overall_size_y:
-    nominal: 16
-  lead_width:
-    minimum: 0.22
-    maximum: 0.379
-  lead_len:
-    minimum: 0.45
-    maximum: 0.75
+TQFP-80_14x14mm_P0.65mm:
+# previously it was VQFP-80_14x14mm_P0.65mm, renamed properly
+  device_type: 'TQFP'
+  size_source: 'JEDEC MS-026 variation AEC, 1.00mm body thickness, https://www.jedec.org/document_search?search_api_views_fulltext=MS-026, https://ww1.microchip.com/downloads/en/PackagingSpec/00000049BZ.pdf#page=679'
+  compatible_mpns:
+    - 'Microsemi_VQ80' # Microsemi, https://web.archive.org/web/20220119120813/https://www.microsemi.com/document-portal/doc_download/131095-pd3068-package-mechanical-drawings#page=64
+    - 'NXP_TQFP80 NXP_SOT1093-1' # NXP (compatible, D / E sizes have tolerances), https://www.nxp.com/docs/en/package-information/SOT1093-1.pdf
+  body_size_x: 14.00
+  body_size_y: 14.00
+  overall_size_x: 16.00
+  overall_size_y: 16.00
+  overall_height: 1.00 .. 1.20 # JEDEC, minimum calculated from A1_min + A2_min
+  lead_width: 0.22 .. 0.32 .. 0.38
+  lead_len: 0.45 .. 0.60 .. 0.75
   pitch: 0.65
   num_pins_x: 20
   num_pins_y: 20
-  #pad_length_addition: 0.5
-  #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
-  #include_suffix_in_3dpath: 'False'
+  force_small_pitch_ipc_definition: True # True: generates 0.40mm pad with 0.25mm clearance; False: generates 0.50mm pad with just 0.15mm clearance
+
+TQFP-80-1EP_14x14mm_P0.65mm_EP9.5x9.5mm:
+  inherit: TQFP-80_14x14mm_P0.65mm
+  size_source: 'Based on JEDEC MS-026 variation AEC, 1.00mm body thickness, lead width / tolerances / custom Exposed Pad from Analog Devices, https://www.jedec.org/document_search?search_api_views_fulltext=MS-026, https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/tqfp_edsv/sv_80_4.pdf'
+  compatible_mpns:
+    - 'Analog-Devices_SV-80-4' # https://www.analog.com/media/en/technical-documentation/data-sheets/AD9852.pdf#page=41
+  body_size_x: 13.80 .. 14.00 .. 14.20 # nominal size matches JEDEC, minimum / maximum from Analog Devices
+  body_size_y: 13.80 .. 14.00 .. 14.20
+  overall_size_x: 15.80 .. 16.00 .. 16.20
+  overall_size_y: 15.80 .. 16.00 .. 16.20
+  lead_width: 0.17 .. 0.22 .. 0.27 # from Analog Devices
+  force_small_pitch_ipc_definition: False # generates 0.40mm pad with 0.25mm clearance
+  EP_size_x: 9.50
+  EP_size_y: 9.50
+  EP_num_paste_pads: [6, 6]
+  thermal_vias:
+    count: [9, 9]
+    grid: [1.05, 1.05] # some vias will be completely out of paste pad this way
+    drill: 0.2
+    EP_num_paste_pads: [6, 6]
 
 PQFP-32_5x5mm_P0.5mm:
 # similar to JEDEC MS-026, variation AAA, it's TQFP (height 1.20 mm max)
