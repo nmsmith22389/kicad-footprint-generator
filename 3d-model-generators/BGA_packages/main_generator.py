@@ -125,13 +125,10 @@ def make_case(params):
         ex = e
 
     if params["excluded_pins"] is not None:
-        epl = list(params["excluded_pins"])
-        i = 0
-        for i in range(0, len(epl)):
-            if isinstance(epl[i], int):  # long is not supported in python 3
-                epl[i] = str(int(epl[i]))
-                i = i + 1
-        excluded_pins = tuple(epl)
+        excluded_pins = tuple(
+            ep if isinstance(ep, str) else str(int(ep))
+            for ep in params["excluded_pins"]
+        )
     else:
         excluded_pins = ()  ##no pin excluded
 
