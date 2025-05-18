@@ -2602,3 +2602,56 @@ TQFN-16-1EP_5x5mm_P0.8mm_EP3.1x3.1mm:
   #pin_count_grid:
   #pad_length_addition: 0.5
   #include_suffix_in_3dpath: 'False'
+
+MPS_QFN-16_3x3mm_P0.5mm:
+  device_type: 'QFN'
+  manufacturer: 'MPS'
+  size_source: 'https://www.monolithicpower.com/en/documentview/productdocument/index/version/2/document_type/Datasheet/lang/en/sku/MP8859/document_id/4033/'
+  ipc_class: 'qfn'
+  body_size_x:
+    minimum: 2.9
+    nominal: 3.0
+    maximum: 3.1
+  body_size_y:
+    minimum: 2.9
+    nominal: 3.0
+    maximum: 3.1
+  overall_height:
+    minimum: 0.8
+    maximum: 1.0
+
+  lead_width: 0.2 .. 0.3
+  lead_len: 0.35 .. 0.45
+
+  pitch: 0.5
+  num_pins_x: 4
+  num_pins_y: 4
+  # The reccomended footprint only has a chamfer on pin 1.
+  #
+  # However the footprint generator does not support per pin chamfers.
+  #
+  # Adding the chamfer on all the edge pins is no big issue and it increases
+  # the distance from the corner pins 1 (slightly longer) and 16 to 0.2mm.
+  chamfer_edge_pins: 0.05
+
+  pad_overrides:
+    # Slightly larger pin 1: 0.5mm length
+    1:
+      size_increase: [0.1, null]
+      move: [0.05, null]
+
+    # Bottom pad extensions
+    6:
+      size_increase: [null, 0.5]
+      move: [null, -0.25]
+    7:
+      size_increase: [null, 0.5]
+      move: [null, -0.25]
+
+    # Top pad extensions
+    14:
+      size_increase: [null, 0.5]
+      move: [null, 0.25]
+    15:
+      size_increase: [null, 0.5]
+      move: [null, 0.25]
