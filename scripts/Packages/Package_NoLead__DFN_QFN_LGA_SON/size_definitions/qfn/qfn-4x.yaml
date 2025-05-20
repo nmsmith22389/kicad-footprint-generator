@@ -39,6 +39,17 @@ VQFN-40-1EP_5x5mm_P0.4mm_EP3.5x3.5mm:
   EP_size_x: 3.20 .. 3.50 .. 3.50 # see land pattern in datasheet
   EP_size_y: 3.20 .. 3.50 .. 3.50
 
+VQFN-40-1EP_5x5mm_P0.4mm_EP3.3x3.3mm:
+  # Like JEDEC MO-220-K.01 VHHE-1, however EP is smaller (3.3x3.3mm instead of 3.6x3.6mm)
+  inherit: VQFN-40-1EP_5x5mm_P0.4mm_EP3.6x3.6mm
+  size_source: 'Based on JEDEC MO-220-K.01, variation VHHE-1, https://tridentiot.com/wp-content/uploads/2024/11/DS-ZW-0001-01-T32CZ20-Datasheet.pdf#page=36'
+
+  overall_height: 0.80 .. 0.85 .. 0.90
+  lead_len: 0.35 .. 0.4 .. 0.45
+
+  EP_size_x: 3.25 .. 3.30 .. 3.35
+  EP_size_y: 3.25 .. 3.30 .. 3.35
+
 TQFN-40-1EP_5x5mm_P0.40mm_EP3.50x3.50mm:
 # This is a WQFN, similar to JEDEC MO-220-K.01, variation WHHE-1, standard has EP = 3.45..3.60..3.75
 # We should merge this footprint with QFN-40-1EP_5x5mm_P0.4mm_EP3.6x3.6mm below,
