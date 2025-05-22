@@ -831,3 +831,21 @@ Converter_DCDC_TRACO_TEC2-12xxWI_24xxWI_48xxWI_THT:
     ["tht", "7", 0, -15.24, 1.9, 1.9, 1],
     ["tht", "8", 0, -17.78, 1.9, 1.9, 1]
   ]
+
+Converter_DCDC_TRACO_TBA1-xxxx_THT:
+  library_name: 'Converter_DCDC'
+  description: "DCDC-Converter, TRACO, TBA1-xxxx, 1W, Rev. May 21. 2025"
+  datasheet: "https://www.tracopower.com/products/tba1.pdf"
+  tags: "DCDC-Converter TRACO TBA1 THT SIP-4 1W"
+  extratexts: []
+  at: [-1.35, 2.03]
+  size: [6, 11.68]
+  body_size_tolerance: [0.5, 0.5]
+  # For future use
+  height: 10.15
+  pins: [
+    ["thtr", "1", 0, 0, 1.8, 1.8, 1],
+    ["tht", "2", 0, -2.54, 1.8, 1.8, 1],
+    ["tht", "3", 0, -5.08, 1.8, 1.8, 1],
+    ["tht", "4", 0, -7.62, 1.8, 1.8, 1]
+  ]
