@@ -869,6 +869,35 @@ BGA-625_21.0x21.0mm_Layout25x25_P0.8mm:
   pins_color_key: "metal grey pins"
   marking_color_key: "light brown label"
 
+FCPBGA-780_23x23mm_Layout28x28_P0.8mm:
+  # from https://www.nxp.com/docs/en/package-information/98ASA00854D.pdf
+  fp_r: 1.0
+  fp_d: 1.25
+  fp_z: 0.01
+  ef: 0.5
+  cff: null
+  cf: null
+  D: 23.0
+  E: 23.0
+  D1: null
+  E1: null
+  A1: 0.3
+  A2: 0.77
+  A: 2.46
+  b: 0.45
+  e: 0.8
+  ex: null
+  sp: 0.0
+  npx: 28
+  npy: 28
+  excluded_pins: [1, 28, 757, 784]
+  molded: True
+  rotation: -90
+  body_bot_color_key: "dark green body"
+  body_color_key: "black body"
+  pins_color_key: "metal grey pins"
+  marking_color_key: "light brown label"
+
 BGA-1023_33.0x33.0mm_Layout32x32_P1.0mm:
   # from https://www.idt.com/document/psc/hmrm-1023-package-outline-33-x-33-mm-body-100-mm-pitch-fcbga IDT_PSC-4260.pdf
   fp_r: 1.0

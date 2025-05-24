@@ -12,6 +12,24 @@ BGA-624_21x21mm_Layout25x25_P0.8mm:
   layout_x: 25
   layout_y: 25
   row_skips: [[1], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []]
+
+FCPBGA-780_23x23mm_Layout28x28_P0.8mm:
+  device_type: "FCPBGA"
+  description: "FCPBGA-780"
+  compatible_mpns:
+    - "NXP_SOT1653-1"
+  size_source: "https://www.nxp.com/docs/en/package-information/98ASA00854D.pdf"
+  body_size_x: 23.0
+  body_size_y: 23.0
+  pitch: 0.8
+  ball_diameter: 0.45
+  ball_type: "collapsible"
+  layout_x: 28
+  layout_y: 28
+  pad_skips: [
+    A1, A28, AH1, AH28
+  ]
+
 LFBGA-100_10x10mm_Layout10x10_P0.8mm:
   device_type: "LFBGA"
   description: "LFBGA-100"
