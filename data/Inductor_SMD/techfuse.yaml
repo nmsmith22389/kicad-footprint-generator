@@ -1,0 +1,17 @@
+- series: SL
+  # Note: LCSC calls the company TechFuse, but the 
+  # company calls itself Sea & Land Technology Corp.
+  # AlphaTop is the resettable fuse branch!
+  manufacturer: TechFuse
+  # Manufacturer page link: http://www.sealand-pptc.com/product_view.php?r=77
+  # Datasheet link: http://www.sealand-pptc.com/download1/tsl51420240912181127.pdf
+  # NOTE: PadY = (F-G/2), LandInsideX = B-2E
+  # CSV row: MPN,B,A,C,D,E,(B-2E),G,(F-G)/2,H
+  csv: techfuse_sl.csv
+  3d:
+    type: 2
+  tags:
+    - high-current
+    - power
+    - shielded
+  library_name: Inductor_SMD
