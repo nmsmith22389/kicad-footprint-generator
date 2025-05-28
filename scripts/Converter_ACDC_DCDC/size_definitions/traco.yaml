@@ -849,3 +849,21 @@ Converter_DCDC_TRACO_TBA1-xxxx_THT:
     ["tht", "3", 0, -5.08, 1.8, 1.8, 1],
     ["tht", "4", 0, -7.62, 1.8, 1.8, 1]
   ]
+
+Converter_DCDC_TRACO_TSR1.5-24xxE_24120E_THT:
+  library_name: 'Converter_DCDC'
+  description: "DCDC-Converter, TRACO, TSR1.5-24xxE, TSR1.5-24120E, 1.5A, Rev. April 2. 2025"
+  datasheet: "https://www.tracopower.com/products/tsr1.5e.pdf"
+  tags: "DCDC-Converter SWITCHING-REGULATOR STEP-DOWN TRACO TSR1.5E 2.54MM THT SIP-3 1.5A"
+  extratexts: []
+  at: [-0.93, 2.46]
+  size: [6.45, 10]
+  body_position_tolerance: [0.5, 0.5]
+  # For future use
+  height: 14.87
+  pins: [
+    ["thtr", "1", 0, 0, 2.2, 2.2, 1.4],
+    ["tht", "2", 0, -2.54, 2.2, 2.2, 1.4],
+    ["tht", "3", 0, -5.08, 2.2, 2.2, 1.4]
+  ]
+
