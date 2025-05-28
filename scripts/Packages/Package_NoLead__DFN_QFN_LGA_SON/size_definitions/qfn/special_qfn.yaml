@@ -105,6 +105,37 @@ Texas_X2QFN-12_1.6x1.6mm_P0.4mm:
   #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
   #include_suffix_in_3dpath: 'False'
 
+Texas_S-PX2QFN-N14:
+# Generates 'Texas_S-PX2QFN-14' for now, we should rename it to 'Texas_X2QFN-14_2x2mm_P0.4mm' in future
+  device_type: 'X2QFN' # JEDEC MO-288 and some other documents use 'X2' for package height = 0.40mm max
+  manufacturer: 'Texas'
+  part_number: 'RUC0014A'
+  size_source: 'https://www.ti.com/lit/ml/qfnd283a/qfnd283a.pdf'
+  compatible_mpns:
+    - Texas_X2QFN-14_2x2mm_P0.4mm
+  ipc_class: 'qfn' # 'qfn_pull_back'
+  #ipc_density: 'least' #overwrite global value for this device.
+  custom_name_format: 'Texas_S-PX2QFN-{pincount}' # Temporary
+  body_size_x:
+    minimum: 1.9
+    maximum: 2.1
+  body_size_y:
+    minimum: 1.9
+    maximum: 2.1
+  overall_height:
+    maximum: 0.4
+
+  lead_width:
+    minimum: 0.15
+    maximum: 0.25
+  lead_len:
+    minimum: 0.3
+    maximum: 0.5
+
+  pitch: 0.4
+  num_pins_x: 2
+  num_pins_y: 5
+
 DHVQFN-14-1EP_2.5x3mm_P0.5mm:
 # Resembles a SON / DFN package, but with 2 leads on top / bottom
   device_type: 'DHVQFN'
