@@ -1042,6 +1042,30 @@ UFQFPN-32-1EP_5x5mm_P0.5mm_EP3.5x3.5mm:
   num_pins_x: 8
   num_pins_y: 8
 
+UQFN-32_5x5mm_P0.5mm:
+  # No thermal pad
+  device_type: 'UQFN'
+  size_source: 'JEDEC MO-248 variation UHHD, 0.65mm maximum overall height, https://www.jedec.org/document_search?search_api_views_fulltext=MO-248'
+  body_size_x: 5.0
+  body_size_y: 5.0
+  overall_height:
+    minimum: 0.50
+    nominal: 0.60
+    maximum: 0.65
+  lead_width:
+    minimum: 0.18
+    nominal: 0.25
+    maximum: 0.3
+  lead_len:
+    minimum: 0.3
+    nominal: 0.4
+    maximum: 0.5
+  pitch: 0.5
+  num_pins_x: 8
+  num_pins_y: 8
+  compatible_mpns:
+    - 'STMicroelectronics-UFQFPN32-A09E' # ST, https://www.st.com/resource/en/datasheet/stm32g491ke.pdf#page=166
+
 VQFN-32-1EP_5x5mm_P0.5mm_EP3.5x3.5mm:
   device_type: 'VQFN'
   #manufacturer: 'man'

@@ -3999,6 +3999,42 @@ QFN-32-1EP_4x4mm_Pitch0.4mm:
   mark_color_key: 'light brown label'
   source: 'http://www.onsemi.com/pub/Collateral/485CD.PDF'
 
+UQFN-32_5x5mm_P0.5mm:
+  c: 0.22 # Pin thickness = A3 in MO-248
+  L: 0.4
+  fp_s: True
+  fp_r: 0.5
+  fp_d: 0.1
+  fp_dx: null
+  fp_dy: null
+  fp_z: 0.01
+  ef: 0.0
+  cce: null
+  D: 5.0
+  E: 5.0
+  A1: 0.02 # Body-board separation = A1 in MO-248
+  A2: 0.58 # Body height = A - A1 in MO-248
+  b: 0.25
+  e: 0.5
+  m: 0.0
+  ps: square
+  npx: 8
+  npy: 8
+  epad: null
+  epad_offsetX: null
+  epad_offsetY: null
+  epad_n: null
+  epad_pitch: null
+  excluded_pins: null
+  model_name: UQFN-32_5x5mm_P0.5mm
+  rotation: -90
+  destination_dir: Package_DFN_QFN.3dshapes
+  pin_shapes: null
+  body_color_key: 'black body'
+  pin_color_key: 'metal grey pins'
+  mark_color_key: 'light brown label'
+  source: 'JEDEC MO-248 variation UHHD, 0.65mm maximum overall height, https://www.jedec.org/document_search?search_api_views_fulltext=MO-248'
+
 QFN-32-1EP_5x5mm_Pitch0.5mm:
   c: 0.2
   L: 0.4
