@@ -9450,3 +9450,94 @@ MPS_QFN-16_3x3mm_P0.5mm:
   pin_color_key: metal grey pins
   mark_color_key: light brown label
   source: 'https://www.monolithicpower.com/en/documentview/productdocument/index/version/2/document_type/Datasheet/lang/en/sku/MP8859/document_id/4033/ (page 32)'
+
+Texas_UFQFN-8_1.5x1.5mm_P0.5mm:
+  c: 0.2
+  L: 0.375
+  fp_s: True
+  fp_r: 0.25
+  fp_d: 0.15
+  fp_dx: null
+  fp_dy: null
+  fp_z: 0.01
+  ef: 0.0
+  cce: 0.5
+  D: 1.5
+  E: 1.5
+  # Pin thickness from drawing: minimum 0, maximum 0.05 mm
+  A1: 0.025
+  # Total height from board to top of package from drawing: minimum 0.5 mm, maximum 0.6 mm
+  # Use the middle of the range and subtract the pin thickness to get this value
+  A2: 0.525
+  b: 0.25
+  e: 0.5
+  m: 0.0
+  ps: custom
+  npx: 3
+  npy: 1
+  epad: null
+  epad_offsetX: null
+  epad_offsetY: null
+  epad_n: null
+  epad_pitch: null
+  excluded_pins: null
+  model_name: 'Texas_UFQFN-8_1.5x1.5mm_P0.5mm'
+  rotation: -90
+  destination_dir: Package_DFN_QFN.3dshapes
+  body_color_key: 'black body'
+  pin_color_key: 'metal grey pins'
+  mark_color_key: 'light brown label'
+  pin_shapes: [
+    [
+      # Pin 1 with chamfer
+      [-0.625, -0.75],
+      [-0.375, -0.75],
+      [-0.375, -0.4],
+      [-0.525, -0.4],
+      [-0.625, -0.5],
+    ],
+    [
+      [-0.1, -0.75],
+      [0.1, -0.75],
+      [0.1, -0.4],
+      [-0.1, -0.4],
+    ],
+    [
+      [0.625, -0.75],
+      [0.375, -0.75],
+      [0.375, -0.4],
+      [0.625, -0.4],
+    ],
+    [
+      [-0.75, -0.15],
+      [-0.75, 0.15],
+      [-0.35, 0.15],
+      [-0.35, -0.15],
+    ],
+    [
+      [0.625, 0.75],
+      [0.375, 0.75],
+      [0.375, 0.4],
+      [0.625, 0.4],
+    ],
+    [
+      [-0.1, 0.75],
+      [0.1, 0.75],
+      [0.1, 0.4],
+      [-0.1, 0.4],
+    ],
+    [
+      [-0.625, 0.75],
+      [-0.375, 0.75],
+      [-0.375, 0.4],
+      [-0.625, 0.4],
+    ],
+    [
+      [0.75, -0.15],
+      [0.75, 0.15],
+      [0.35, 0.15],
+      [0.35, -0.15],
+    ],
+  ]
+  source: 'https://www.ti.com/lit/ml/mpqf207e/mpqf207e.pdf'
+
