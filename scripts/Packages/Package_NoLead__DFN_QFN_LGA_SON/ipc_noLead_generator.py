@@ -19,6 +19,7 @@ from KicadModTree import (
 from KicadModTree.util.courtyard_builder import CourtyardBuilder
 from kilibs.geom import Direction, Vector2D, BoundingBox, Rectangle, rounding
 from kilibs.ipc_tools import ipc_rules
+from kilibs.util.toleranced_size import TolerancedSize
 from KicadModTree.nodes.specialized.PadArray import (
     PadArray,
     find_lowest_numbered_pad,
@@ -28,8 +29,10 @@ from KicadModTree.nodes.specialized.PadArray import (
 from scripts.tools.footprint_generator import FootprintGenerator
 from scripts.tools.global_config_files.global_config import GlobalConfig
 from scripts.tools.footprint_text_fields import addTextFields
-from scripts.tools.ipc_pad_size_calculators import TolerancedSize, \
-        ipc_body_edge_inside_pull_back, ipc_pad_center_plus_size
+from scripts.tools.ipc_pad_size_calculators import (
+    ipc_body_edge_inside_pull_back,
+    ipc_pad_center_plus_size,
+)
 from scripts.tools.quad_dual_pad_border import create_dual_or_quad_pad_border
 from scripts.tools.nodes import pin1_arrow
 from scripts.tools import drawing_tools

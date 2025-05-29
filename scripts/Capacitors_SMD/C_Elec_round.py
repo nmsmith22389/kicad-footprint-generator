@@ -6,9 +6,10 @@ import yaml
 import math
 
 from kilibs.ipc_tools import ipc_rules
+from kilibs.util.toleranced_size import TolerancedSize
 from KicadModTree import *  # NOQA
 from KicadModTree.nodes.base.Pad import Pad  # NOQA
-from scripts.tools.ipc_pad_size_calculators import ipc_gull_wing, TolerancedSize
+from scripts.tools.ipc_pad_size_calculators import ipc_gull_wing
 from scripts.tools.global_config_files.global_config import DefaultGlobalConfig
 
 

@@ -15,6 +15,7 @@ from KicadModTree import (
 
 from kilibs.geom import Rectangle
 from kilibs.ipc_tools import ipc_rules
+from kilibs.util.toleranced_size import TolerancedSize
 from KicadModTree.util.courtyard_builder import CourtyardBuilder
 from kilibs.geom import Direction, Vector2D
 from KicadModTree.nodes.specialized.PadArray import (
@@ -25,7 +26,7 @@ from KicadModTree.nodes.specialized.Cruciform import Cruciform
 
 from scripts.tools.footprint_generator import FootprintGenerator
 from scripts.tools.footprint_text_fields import addTextFields
-from scripts.tools.ipc_pad_size_calculators import TolerancedSize, ipc_gull_wing
+from scripts.tools.ipc_pad_size_calculators import ipc_gull_wing
 from scripts.tools.quad_dual_pad_border import create_dual_or_quad_pad_border
 from scripts.tools import drawing_tools
 from scripts.tools.drawing_tools import nearestSilkPointOnOrthogonalLine

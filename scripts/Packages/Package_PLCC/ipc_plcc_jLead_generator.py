@@ -7,13 +7,13 @@ import math
 
 from kilibs.geom import Vector2D, Rectangle
 from kilibs.ipc_tools import ipc_rules
+from kilibs.util.toleranced_size import TolerancedSize
 from KicadModTree import Footprint, FootprintType, \
     PolygonLine, Pad
 from KicadModTree.nodes.specialized.PadArray import PadArray
 from scripts.tools.declarative_def_tools import common_metadata
 from scripts.tools.footprint_generator import FootprintGenerator
 from scripts.tools.footprint_text_fields import addTextFields
-from scripts.tools.ipc_pad_size_calculators import TolerancedSize
 
 
 ipc_density = 'nominal'

@@ -5,6 +5,7 @@ import argparse
 import yaml
 
 from kilibs.ipc_tools import ipc_rules
+from kilibs.util.toleranced_size import TolerancedSize
 from KicadModTree import *  # NOQA
 from KicadModTree.nodes.base.Pad import Pad  # NOQA
 from scripts.tools.drawing_tools import (
@@ -13,7 +14,8 @@ from scripts.tools.drawing_tools import (
 )
 from scripts.tools.footprint_text_fields import addTextFields
 from scripts.tools.global_config_files import global_config as GC
-from scripts.tools.ipc_pad_size_calculators import *
+from scripts.tools.ipc_pad_size_calculators import ipc_body_edge_inside
+
 
 size_definition_path = "size_definitions/"
 
