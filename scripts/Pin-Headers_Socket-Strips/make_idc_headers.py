@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
 from KicadModTree import *  # NOQA
-from scripts.tools.footprint_scripts_pin_headers import *  # NOQA
+from scripts.tools.global_config_files import global_config as GC
+from scripts.tools.footprint_scripts_pin_headers import *  # NOQAA
 
 
 if __name__ == '__main__':
@@ -11,6 +12,8 @@ if __name__ == '__main__':
     # and  http://www.oupiin.com/product_iii.html?c1=10&c2=54
     # and  http://www.assmann-wsw.com/fileadmin/catalogue/04_Multiflex_rev4-0.pdf
     # and  https://docs.google.com/spreadsheets/d/16SsEcesNF15N3Lb4niX7dcUr-NY5_MFPQhobNuNppn4/edit#gid=0
+
+    global_config = GC.DefaultGlobalConfig()
 
     tags_additional = []
     extra_description = 'https://docs.google.com/spreadsheets/d/16SsEcesNF15N3Lb4niX7dcUr-NY5_MFPQhobNuNppn4/edit#gid=0'
@@ -34,13 +37,14 @@ if __name__ == '__main__':
     mh_pad=[8,8] # 3M 3000 datasheet says 5/16" screw head which is ~8mm; existing KiCad footprint is 5.46mm
     mh_overlen=8.94 # existing KiCad footprint is 8.89
     mh_offset=1.02 # existing KiCad footprint is 1.02
-    mh_number='MP'
+    mh_number=global_config.get_pad_name(GC.PadName.MECHANICAL)
 
     for rows in [5,6,7,8,10,12,13,15,17,20,25,30,32]:
         for latch_len in latch_lengths:
             for mh_ddrill, mh_pad, mh_overlen in zip([0, mh_ddrill], [[0,0], mh_pad], [0, mh_overlen]):
             #for mh_ddrill, mh_pad, mh_overlen in zip([0], [[0,0]], [0]):
-                makeIdcHeader(rows, cols, rm, rm, body_width,
+                makeIdcHeader(global_config,
+                                    rows, cols, rm, rm, body_width,
                                     body_overlen, body_overlen, body_offset,
                                     ddrill, pad,
                                     mating_overlen, wall_thickness, notch_width,
@@ -63,7 +67,8 @@ if __name__ == '__main__':
 
     for rows in [5,6,7,8,10,12,13,15,17,20,25,30,32]:
         for mh_ddrill, mh_pad, mh_overlen in zip([0, mh_ddrill], [[0,0], mh_pad], [0, mh_overlen]):
-            makeIdcHeader(rows, cols, rm, rm, body_width,
+            makeIdcHeader(global_config,
+                                    rows, cols, rm, rm, body_width,
                                 body_overlen, body_overlen, body_offset,
                                 ddrill, pad,
                                 mating_overlen, wall_thickness, notch_width,
@@ -88,7 +93,8 @@ if __name__ == '__main__':
     mating_overlen=3.91
 
     for rows in [3,4,5,6,7,8,9,10,11,12,13,15,17,20,22,25,30,32]:
-        makeIdcHeader(rows, cols, rm, rm, body_width,
+        makeIdcHeader(global_config,
+                            rows, cols, rm, rm, body_width,
                             body_overlen, body_overlen, body_offset,
                             ddrill, pad,
                             mating_overlen, wall_thickness, notch_width,
@@ -108,7 +114,8 @@ if __name__ == '__main__':
     body_offset=4.38 # distance from pin 1 row to the closest edge of the plastic body
 
     for rows in [3,4,5,6,7,8,9,10,11,12,13,15,17,20,22,25,30,32]:
-        makeIdcHeader(rows, cols, rm, rm, body_width,
+        makeIdcHeader(global_config,
+                            rows, cols, rm, rm, body_width,
                             body_overlen, body_overlen, body_offset,
                             ddrill, pad,
                             mating_overlen, wall_thickness, notch_width,
@@ -142,7 +149,8 @@ if __name__ == '__main__':
     extra_description = 'https://www.tme.eu/Document/4baa0e952ce73e37bc68cf730b541507/T821M114A1S100CEU-B.pdf'
 
     for rows in [3,4,5,6,7,8,9,10,11,12,13,20,22,25,30]:
-        makeIdcHeader(rows, cols, rm, 7.60, body_width,
+        makeIdcHeader(global_config,
+                            rows, cols, rm, 7.60, body_width,
                             body_overlen, body_overlen, body_offset,
                             ddrill, pad,
                             mating_overlen, wall_thickness, notch_width,

@@ -44,7 +44,7 @@ def sqr(x):
 
 
 # round for courtyard grid
-def roundCrt(x):
+def roundCrt(x: float):
     return round_to_grid(x, grid_crt)
 
 
