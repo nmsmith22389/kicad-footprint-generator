@@ -105,7 +105,7 @@ class FiducialGenerator(FootprintGenerator):
         pad_radius = fp_config.marking_width / 2
         pad_clearance = radius - pad_radius
         pad = Pad(type=Pad.TYPE_SMT, shape=Pad.SHAPE_CIRCLE, at=center,
-              layers=['F.Cu', 'F.Mask'],
+              layers=['F.Cu', 'F.Mask'], clearance=pad_clearance,
               size=fp_config.marking_width, solder_mask_margin=pad_clearance)
         kicad_mod.append(pad)
 
