@@ -29,26 +29,38 @@ series_long = "Micro-Fit 3.0 Connector System"
 manufacturer = "Molex"
 orientation = "H"
 number_of_rows = 1
-datasheet = "https://www.molex.com/pdm_docs/sd/436500210_sd.pdf"
 
-# Molex part number
-# n = number of circuits per row
-part_code = "43650-{n:02}10"
-
-alternative_codes = [
-    "43650-{n:02}11",
-    "43650-{n:02}09",
-]
+retention_clip_params = {
+    "mount_pins": "npth",
+    "datasheet": "https://www.molex.com/pdm_docs/sd/436500210_sd.pdf",
+    "C_minus_B": 4.3,
+    "part_code": "43650-{n:02}10",
+    "alternative_codes": [
+        "43650-{n:02}11",
+        "43650-{n:02}09",
+    ],
+}
 
 variant_params = {
-    "hand": {
+    "retention_clip_hand": retention_clip_params | {
         "mount_hole_diameter": 2.41,
         "suffix": ""
     },
-    "pnp": {
+    "retention_clip_pnp": retention_clip_params | {
         "mount_hole_diameter": 2.54,
         "suffix": "_PnP"
     },
+    "solder_tab": {
+        "mount_pins": "solder",
+        "datasheet": "https://www.molex.com/pdm_docs/sd/436500212_sd.pdf",
+        "C_minus_B": 11.2,
+        "part_code": "43650-{n:02}12",
+        "alternative_codes": [
+            "43650-{n:02}13",
+            "43650-{n:02}14",
+        ],
+        "suffix": "",
+    }
 }
 
 pitch = 3.0
@@ -57,11 +69,13 @@ pincount_range = list(range(2, 13))
 row = 5.5
 
 pad_size = [1.27, 2.92]
+mount_pad_size = [3.43, 1.65]
 
 
 def generate_one_footprint(global_config: GC.GlobalConfig, pins, variant, configuration):
-    mpn = part_code.format(n=pins)
-    alt_mpn = [code.format(n=pins) for code in alternative_codes]
+    is_solder_mp = variant_params[variant]["mount_pins"] == "solder"
+    mpn = variant_params[variant]["part_code"].format(n=pins)
+    alt_mpn = [code.format(n=pins) for code in variant_params[variant]["alternative_codes"]]
 
     # handle arguments
     orientation_str = configuration["orientation_options"][orientation]
@@ -80,7 +94,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, variant, config
     kicad_mod = Footprint(footprint_name, FootprintType.SMD)
     kicad_mod.setDescription(
         "Molex {:s}, {:s} (compatible alternatives: {:s}), {:d} Pins per row ({:s}), generated with kicad-footprint-generator".format(
-            series_long, mpn, ", ".join(alt_mpn), pins, datasheet
+            series_long, mpn, ", ".join(alt_mpn), pins, variant_params[variant]["datasheet"]
         )
     )
     kicad_mod.setTags(
@@ -96,48 +110,74 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, variant, config
     B = (pins - 1) * pitch
 
     A = B + 6.65
-    C = B + 4.3
-    # D = pitch_y + PadSiseY
+    C = B + variant_params[variant]["C_minus_B"]
+    # D = pitch_y + PadSizeY
     pad_row_1_y = 9.90 / 2 + 0.17
     pad1_x = -B / 2
 
-    mount_pad_x = C / 2
+    mount_pad_x = C / 2 - (mount_pad_size[0] / 2 if is_solder_mp else 0)
     mount_pad_y = pad_row_1_y - (6.93 - pad_size[1] / 2)
 
     body_edge = {"left": -A / 2, "right": A / 2, "top": mount_pad_y - 4.6}
     body_edge["bottom"] = body_edge["top"] + 9.90
 
-    mount_hole_diameter = variant_params[variant]["mount_hole_diameter"]
 
-    #
-    # Add solder nails
-    #
-    mount_hole_pad_diameter = mount_hole_diameter + 0.3
-    mounting_pad_name = global_config.get_pad_name(GC.PadName.MECHANICAL)
-    kicad_mod.append(
-        Pad(
-            at=[-mount_pad_x, mount_pad_y],
-            number=mounting_pad_name,
-            type=Pad.TYPE_THT,
-            shape=Pad.SHAPE_CIRCLE,
-            size=mount_hole_pad_diameter,
-            fab_property=Pad.FabProperty.HEATSINK,
-            drill=mount_hole_diameter,
-            layers=Pad.LAYERS_THT,
+    if is_solder_mp:
+        #
+        # Add solder nails
+        #
+        mount_size_y = mount_pad_size[1]
+        mount_pad_size_y = mount_pad_size[1]
+
+        mounting_pad_name = global_config.get_pad_name(GC.PadName.MECHANICAL)
+        kicad_mod.append(
+            Pad(
+                at=[-mount_pad_x, mount_pad_y],
+                number=mounting_pad_name,
+                type=Pad.TYPE_SMT,
+                shape=Pad.SHAPE_RECT,
+                size=mount_pad_size,
+                layers=Pad.LAYERS_SMT,
+            )
         )
-    )
-    kicad_mod.append(
-        Pad(
-            at=[mount_pad_x, mount_pad_y],
-            number=mounting_pad_name,
-            type=Pad.TYPE_THT,
-            shape=Pad.SHAPE_CIRCLE,
-            size=mount_hole_pad_diameter,
-            fab_property=Pad.FabProperty.HEATSINK,
-            drill=mount_hole_diameter,
-            layers=Pad.LAYERS_THT,
+        kicad_mod.append(
+            Pad(
+                at=[mount_pad_x, mount_pad_y],
+                number=mounting_pad_name,
+                type=Pad.TYPE_SMT,
+                shape=Pad.SHAPE_RECT,
+                size=mount_pad_size,
+                layers=Pad.LAYERS_SMT,
+            )
         )
-    )
+    else:
+        mount_size_y = variant_params[variant]["mount_hole_diameter"]
+        mount_pad_size_y = mount_size_y + 0.3
+        mounting_pad_name = global_config.get_pad_name(GC.PadName.MECHANICAL)
+        kicad_mod.append(
+            Pad(
+                at=[-mount_pad_x, mount_pad_y],
+                number=mounting_pad_name,
+                type=Pad.TYPE_THT,
+                shape=Pad.SHAPE_CIRCLE,
+                size=mount_pad_size_y,
+                fab_property=Pad.FabProperty.HEATSINK,
+                drill=mount_size_y,
+                layers=Pad.LAYERS_THT,
+            )
+        )
+        kicad_mod.append(
+            Pad(
+                at=[mount_pad_x, mount_pad_y],
+                number=mounting_pad_name,
+                type=Pad.TYPE_THT,
+                shape=Pad.SHAPE_CIRCLE,
+                size=mount_pad_size_y,
+                fab_property=Pad.FabProperty.HEATSINK,
+                drill=mount_size_y,
+                layers=Pad.LAYERS_THT,
+            )
+        )
 
     #
     # Add pads
@@ -197,8 +237,22 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, variant, config
         points.append([round_to_grid(x1, grid), round_to_grid(y1, grid)])
         #
         x1 = x1
-        y1 = mount_pad_y - ((mount_hole_pad_diameter / 2) + LineDX + LineDelta)
+        y1 = mount_pad_y - ((mount_pad_size_y / 2) + LineDX + LineDelta)
         points.append([round_to_grid(x1, grid), round_to_grid(y1, grid)])
+        #
+        if Layer == "F.CrtYd" and is_solder_mp:
+            # Courtyard space around mounting pads
+            x1 = mount_pad_x + (mount_pad_size[0] / 2 + LineDX)
+            y1 = y1
+            points.append([round_to_grid(x1, grid), round_to_grid(y1, grid)])
+            #
+            x1 = x1
+            y1 = mount_pad_y + (mount_pad_size[1] / 2 + LineDX)
+            points.append([round_to_grid(x1, grid), round_to_grid(y1, grid)])
+            #
+            x1 = (A / 2) + LineDX
+            y1 = y1
+            points.append([round_to_grid(x1, grid), round_to_grid(y1, grid)])
         #
         if Layer == "F.SilkS":  # SilkS
             kicad_mod.append(
@@ -218,7 +272,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, variant, config
             #
             points = []
             x1 = x1
-            y1 = mount_pad_y + ((mount_hole_diameter / 2) + LineDX + LineDelta)
+            y1 = mount_pad_y + ((mount_size_y / 2) + LineDX + LineDelta)
             points.append([round_to_grid(x1, grid), round_to_grid(y1, grid)])
         #
         x1 = x1
