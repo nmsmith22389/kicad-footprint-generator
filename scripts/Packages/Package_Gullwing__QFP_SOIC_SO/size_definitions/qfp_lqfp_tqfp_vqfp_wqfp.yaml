@@ -1361,19 +1361,36 @@ TQFP-80-1EP_14x14mm_P0.65mm_EP9.5x9.5mm:
     drill: 0.2
     EP_num_paste_pads: [6, 6]
 
-PQFP-32_5x5mm_P0.5mm:
-# similar to JEDEC MS-026, variation AAA, it's TQFP (height 1.20 mm max)
-  device_type: 'PQFP'
-  size_source: 'https://www.ti.com/lit/ds/symlink/ads127l01.pdf#page=87'
-  body_size_x: 4.95 .. 5.05
-  body_size_y: 4.95 .. 5.05
-  overall_size_x: 6.9 .. 7.1
-  overall_size_y: 6.9 .. 7.1
-  lead_width: 0.17 .. 0.23
-  lead_len: 0.4 .. 0.7
-  pitch: 0.5
+TQFP-32_5x5mm_P0.5mm:
+# this is compatible with Texas_TQFP-32_5x5mm_P0.5mm (below), replacing 'PQFP-32_5x5mm_P0.5mm' (it was actually a TQFP!)
+  device_type: 'TQFP'
+  size_source: 'JEDEC MS-026 variation AAA, 1.00mm body thickness, https://www.jedec.org/document_search?search_api_views_fulltext=MS-026'
+  # other sources: https://www.renesas.com/en/document/psc/package-drawing-tqfp-32pin-q325x5
+  body_size_x: 5.00
+  body_size_y: 5.00
+  overall_height: 1.00 .. 1.20 # JEDEC, minimum calculated from A1_min + A2_min
+  overall_size_x: 7.00
+  overall_size_y: 7.00
+  lead_width: 0.17 .. 0.22 .. 0.27
+  lead_len: 0.45 .. 0.60 .. 0.75
+  pitch: 0.50
   num_pins_x: 8
   num_pins_y: 8
+
+#Texas_TQFP-32_5x5mm_P0.5mm:
+# there's only 1 symbol using either 'TQFP-32_5x5mm_P0.5mm' or 'Texas_TQFP-32_5x5mm_P0.5mm', let's comment this entry for now
+# previously 'PQFP-32_5x5mm_P0.5mm', original source: https://www.ti.com/lit/ds/symlink/ads127l01.pdf#page=87
+#  inherit: TQFP-32_5x5mm_P0.5mm
+#  manufacturer: 'Texas'
+#  size_source: 'Based on JEDEC MS-026 variation AAA and Texas Instruments, 1.00mm body thickness, https://www.jedec.org/document_search?search_api_views_fulltext=MS-026, https://www.ti.com/lit/ml/mpqf027a/mpqf027a.pdf'
+#  compatible_mpns:
+#    - 'Texas-Instruments-PBS-(S-PQFP-G32)'
+#  body_size_x: 4.95 .. 5.05
+#  body_size_y: 4.95 .. 5.05
+#  overall_size_x: 6.90 .. 7.10
+#  overall_size_y: 6.90 .. 7.10
+#  lead_width: 0.17 .. 0.23
+#  lead_len: 0.40 .. 0.70
 
 TQFP-48_7x7mm_P0.5mm:
 # compatible with JEITA 48-001-TBA
