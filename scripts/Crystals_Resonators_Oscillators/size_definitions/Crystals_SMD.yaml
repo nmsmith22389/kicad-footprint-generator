@@ -372,6 +372,27 @@ Crystal_SMD_Abracon_ABM8G-4Pin_3.2x2.5mm:
   pad_sep_y: 1.7
   pins: 4
 
+Crystal_SMD_Citizen_CS325S-4Pin_3.2x2.5mm:
+  addSizeFootprintName: true
+  adhesiveSize: 1
+  manufacturer: Citizen
+  part_number: CS325S
+  description: Ultra-lightweight microminiature AT Crystal units
+  datasheet: https://cfd.citizen.co.jp/cms/cfd/pdf/english/CS325S_E.pdf
+  footprint_name: Crystal_SMD_Citizen_CS325S
+  func: makeSMDCrystal
+  hasAdhesive: false
+  lib_name: Crystal
+  pack_bevel: 0.1
+  pack_height: 2.5
+  pack_width: 3.2
+  pad:
+  - 1.3
+  - 1.1
+  pad_sep_x: 2.3
+  pad_sep_y: 1.9
+  pins: 4
+
 Crystal_SMD_EuroQuartz_EQ161-2Pin_3.2x1.5mm:
   addSizeFootprintName: true
   adhesiveSize: 0.5
