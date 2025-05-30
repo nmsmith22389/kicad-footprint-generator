@@ -1532,3 +1532,51 @@ QFN-20-1EP_5x5mm_P0.65mm_EP3.35x3.35mm:
   #pad_length_addition: 0.5
   #suffix: '_Pad{pad_x:.2f}x{pad_y:.2f}mm_HandSolder'
   #include_suffix_in_3dpath: 'False'
+
+
+##############################################################################
+# 'CSP' / 'LFCSP' packages, these packages are actually QFN under
+# manufacturers own names, this section is temporary
+##############################################################################
+
+LFCSP-20-1EP_4x4mm_P0.5mm_EP2.5x2.5mm:
+# MO-220, variation WGGD-11 (Exposed Pad is within JEDEC range, 2.10 .. 2.60 mm), it's a WQFN
+  device_type: 'LFCSP'
+  library: 'Package_CSP'
+  #manufacturer: 'Analog'
+  size_source: 'https://www.analog.com/media/en/technical-documentation/data-sheets/AD7682_7689.pdf'
+  ipc_class: 'qfn' # 'qfn_pull_back'
+  body_size_x:
+    minimum: 3.9
+    nominal: 4
+    maximum: 4.1
+  body_size_y:
+    minimum: 3.9
+    nominal: 4
+    maximum: 4.1
+  lead_width:
+    minimum: 0.2
+    nominal: 0.25
+    maximum: 0.3
+  lead_len:
+    minimum: 0.3
+    nominal: 0.4
+    maximum: 0.5
+
+  EP_size_x: 2.5
+  EP_size_y: 2.5
+  EP_num_paste_pads: [2, 2]
+
+  thermal_vias:
+    count: [3, 3]
+    drill: 0.2
+    paste_between_vias: 2
+    EP_paste_coverage: 0.75
+
+  pitch: 0.5
+  num_pins_x: 5
+  num_pins_y: 5
+
+##############################################################################
+# Please do not place other QFN packages below here, temporary section
+##############################################################################
