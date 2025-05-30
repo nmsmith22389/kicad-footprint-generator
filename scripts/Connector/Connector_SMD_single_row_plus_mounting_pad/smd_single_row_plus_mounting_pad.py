@@ -16,6 +16,7 @@ from math import sqrt
 from kilibs.geom import Rectangle, Direction
 from kilibs.declarative_defs import evaluable_defs as EDs
 from KicadModTree import *
+from KicadModTree.util.courtyard_builder import CourtyardBuilder
 from scripts.tools.declarative_def_tools.connectors_config import (
     ConnectorsConfiguration,
     ConnectorOrientation,
@@ -505,28 +506,10 @@ def generate_one_footprint(
     kicad_mod.extend(dwg_nodes)
 
     ############################# CrtYd ##################################
-    mp_left_edge = mount_pad_left_x_pos - mounting_pad_size.x / 2
-    bounding_box_x1 = body_rect.left if body_rect.left < mp_left_edge else mp_left_edge
-    bounding_box_x2 = -bounding_box_x1
-    if pins_toward_bottom:
-        bounding_box_y1 = bounding_box_y_mount_pad_side
-        bounding_box_y2 = bounding_box_y_pin_side
-
-    else:
-        bounding_box_y1 = bounding_box_y_pin_side
-        bounding_box_y2 = bounding_box_y_mount_pad_side
 
     courtyard_offset = global_config.get_courtyard_offset(GC.GlobalConfig.CourtyardType.CONNECTOR)
-
-    cx1 = round_to_grid(bounding_box_x1 - courtyard_offset, global_config.courtyard_grid)
-    cx2 = round_to_grid(bounding_box_x2 + courtyard_offset, global_config.courtyard_grid)
-
-    cy1 = round_to_grid(bounding_box_y1 - courtyard_offset, global_config.courtyard_grid)
-    cy2 = round_to_grid(bounding_box_y2 + courtyard_offset, global_config.courtyard_grid)
-
-    kicad_mod.append(RectLine(
-        start=[cx1, cy1], end=[cx2, cy2],
-        layer='F.CrtYd', width=global_config.courtyard_line_width))
+    cb = CourtyardBuilder.from_node(node=kicad_mod, global_config=global_config, offset_fab=courtyard_offset)
+    kicad_mod += cb.node
 
     ######################### Pin 1 marker ##############################
 
@@ -579,6 +562,7 @@ def generate_one_footprint(
     )
 
     if series_props.pins_toward_bottom:
+        cy2 = cb.bbox.bottom
         poly_pin1_marker_silk = [
             [-dimension_A/2-marker_len/4, cy2 + marker_len/sqrt(8)],
             [-dimension_A/2, cy2],
@@ -586,6 +570,7 @@ def generate_one_footprint(
             [-dimension_A/2-marker_len/4, cy2 + marker_len/sqrt(8)],
         ]
     else:
+        cy1 = cb.bbox.top
         poly_pin1_marker_silk = [
             [-dimension_A/2-marker_len/4, cy1 - marker_len/sqrt(8)],
             [-dimension_A/2, cy1],
@@ -598,7 +583,7 @@ def generate_one_footprint(
 
     ######################### Text Fields ###############################
     addTextFields(kicad_mod=kicad_mod, configuration=global_config, body_edges=body_rect.bounding_box,
-        courtyard={'top':cy1, 'bottom':cy2}, fp_name=footprint_name,
+        courtyard=cb.bbox, fp_name=footprint_name,
         text_y_inside_position=series_props.text_inside_pos)
 
     ########################### file names ###############################
