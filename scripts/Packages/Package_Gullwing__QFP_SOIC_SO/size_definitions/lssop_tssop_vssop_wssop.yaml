@@ -334,7 +334,7 @@ VSSOP-8_2.3x2mm_P0.5:
   size_source: 'https://www.jedec.org/standards-documents/docs/mo-187-f'
   compatible_mpns:
     - JEDEC-MO-187-CA
-    - TI-DCU0008A # https://www.ti.com/lit/ml/mpds050e/mpds050e.pdf, height 0.9mm max here
+    - Texas_DCU0008A # https://www.ti.com/lit/ml/mpds050e/mpds050e.pdf, height 0.9mm max here
   # Tolerance aaa = 0.2 applies to each side separately
   body_size_x: 2.3 +/- 0.2
   body_size_y: 2.0 +/- 0.2
@@ -1097,7 +1097,7 @@ HTSSOP-44_6.1x14mm_P0.635mm_TopEP4.14x7.01mm:
   size_source: 'http://www.ti.com/lit/ds/symlink/tpa3251.pdf#page=38'
   custom_name_format: 'HTSSOP-{pincount}_{size_x:g}x{size_y:g}mm_P{pitch}mm_TopEP4.14x7.01mm'
   compatible_mpns:
-    - TI-DDV0044D
+    - Texas_DDV0044D
   body_size_x:
     minimum: 6.0
     maximum: 6.2
@@ -1126,7 +1126,7 @@ HTSSOP-44-1EP_6.1x14mm_P0.635mm_EP5.2x14mm_Mask4.31x8.26mm:
   device_type: 'HTSSOP'
   size_source: 'http://www.ti.com/lit/pdf/pptd165'
   compatible_mpns:
-    - TI-DDW0044B
+    - Texas_DDW0044B
   body_size_x:
     minimum: 6.0
     maximum: 6.2
@@ -1183,7 +1183,7 @@ VSSOP-8_3x3mm_P0.65:
   size_source: 'https://www.jedec.org/standards-documents/docs/mo-187-f'
   compatible_mpns:
     - JEDEC-MO-187-AA
-    - TI-DGK0008A # https://www.ti.com/lit/ds/symlink/opa2340.pdf#page=33, https://www.ti.com/lit/ml/mpds028e/mpds028e.pdf
+    - Texas_DGK0008A # https://www.ti.com/lit/ds/symlink/opa2340.pdf#page=33, https://www.ti.com/lit/ml/mpds028e/mpds028e.pdf
   # Tolerance aaa = 0.2 applies to each side separately
   body_size_x: 3.0 +/- 0.2
   body_size_y: 3.0 +/- 0.2
@@ -1765,7 +1765,7 @@ Texas_PWP0014A:
   device_type: 'HTSSOP'
   size_source: 'http://www.ti.com/lit/ds/symlink/lm5161.pdf#page=34'
   compatible_mpns:
-    - TI-PWP0014A
+    - Texas_PWP0014A
   body_size_x:
     minimum: 4.3
     nominal: 4.4
@@ -1817,7 +1817,7 @@ TSSOP-16_4.4x5mm_P0.65mm:
   compatible_mpns:
     - JEDEC-MO-153-AB
     # https://www.ti.com/lit/pdf/MPDS361
-    - TI-PW0016A
+    - Texas_PW0016A
     # https://ww1.microchip.com/downloads/en/DeviceDoc/16L_TSSOP_4_4_ST_C04-0068A.pdf
     - Microchip-ST
     # https://toshiba.semicon-storage.com/us/semiconductor/design-development/package/detail.TSSOP16.html
@@ -1950,7 +1950,7 @@ HTSSOP-16-1EP_4.4x5mm_P0.65mm_EP3.4x5mm_Mask2.66x2.46mm:
   device_type: 'HTSSOP'
   size_source: 'http://www.ti.com/lit/ds/symlink/tps2660.pdf#page=48'
   compatible_mpns:
-    - TI-PWP0016H
+    - Texas_PWP0016H
   body_size_x:
     minimum: 4.3
     maximum: 4.5
@@ -2137,7 +2137,7 @@ HTSSOP-20-1EP_4.4x6.5mm_P0.65mm_EP3.4x6.5mm_Mask2.4x3.7mm:
   device_type: 'HTSSOP'
   size_source: 'http://www.ti.com/lit/ds/symlink/bq24006.pdf'
   compatible_mpns:
-    - TI-PWP/R-PDSO-G20
+    - Texas_PWP/R-PDSO-G20
   body_size_x:
     minimum: 4.3
     maximum: 4.5
@@ -2172,7 +2172,7 @@ Texas_PWP0020U:
   device_type: 'HTSSOP'
   size_source: 'http://www.ti.com/lit/ds/symlink/tlc5971.pdf#page=37&zoom=160,-90,3'
   compatible_mpns:
-    - TI-PWP0020U
+    - Texas_PWP0020U
   body_size_x:
     minimum: 4.3
     maximum: 4.5
@@ -2222,7 +2222,7 @@ Texas_PWP0020T:
   device_type: 'HTSSOP'
   size_source: 'https://www.ti.com/lit/ds/symlink/tps2663.pdf#page=49'
   compatible_mpns:
-    - TI-PWP0020T
+    - Texas_PWP0020T
   body_size_x:
     minimum: 4.3
     maximum: 4.5
@@ -2368,7 +2368,7 @@ Texas_PWP0024P:
   device_type: 'HTSSOP'
   size_source: 'https://www.ti.com/lit/ds/symlink/tlc5949.pdf#page=49'
   compatible_mpns:
-    - TI-PWP0024P
+    - Texas_PWP0024P
   body_size_x:
     minimum: 4.3
     maximum: 4.5
@@ -2407,7 +2407,7 @@ HTSSOP-24-1EP_4.4x7.8mm_P0.65mm_EP3.4x7.8mm_Mask2.4x4.68mm_ThermalVias:
   device_type: 'HTSSOP'
   size_source: 'http://www.ti.com/lit/ds/symlink/tps703.pdf'
   compatible_mpns:
-    - TI-PWP/R-PDSO-G24
+    - Texas_PWP/R-PDSO-G24
   body_size_x:
     minimum: 4.3
     maximum: 4.5
@@ -2845,7 +2845,7 @@ Texas_DAP_R-PDSO-G38:
   device_type: 'HTSSOP'
   size_source: 'http://www.ti.com/lit/ds/symlink/tlc5951.pdf#page=46'
   compatible_mpns:
-    - TI-DAP/R-PDSO-G38
+    - Texas_DAP/R-PDSO-G38
   body_size_x:
     minimum: 6.0
     maximum: 6.2

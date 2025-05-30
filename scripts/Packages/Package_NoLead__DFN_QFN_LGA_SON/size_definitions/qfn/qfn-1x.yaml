@@ -599,7 +599,7 @@ UQFN-16_1.8x2.6mm_P0.4mm:
   #manufacturer: 'man'
   #part_number: 'mpn'
   compatible_mpns:
-    - TI-RSV0016A
+    - Texas_RSV0016A
   size_source: 'https://www.ti.com/lit/ml/qfnd836/qfnd836.pdf' #RSV0016A datasheet
   ipc_class: 'qfn' # 'qfn_pull_back'
   #ipc_density: 'least' #overwrite global value for this device.

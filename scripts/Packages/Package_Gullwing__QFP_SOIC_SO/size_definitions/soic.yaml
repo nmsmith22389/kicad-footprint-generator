@@ -1640,8 +1640,8 @@ SOIC-16W_5.3x10.2mm_P1.27mm:
   num_pins_y: 8
 
   compatible_mpns:
-    - TI-NS
-    - TI-NS0016A
+    - Texas_NS
+    - Texas_NS0016A
 
 SO-16_5.3x10.2mm_P1.27mm:
   # it was previously in so.yaml file

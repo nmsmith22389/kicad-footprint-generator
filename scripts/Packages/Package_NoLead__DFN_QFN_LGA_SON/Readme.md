@@ -45,7 +45,7 @@ internal_package_name:
   - `additional_tags` {[string]}: Additional freeform tags to be added to the footprint metadata
   - `compatible_mpns` {[string]}: List of compatible part numbers. These will be added to the footprint metadata as tags.
 
-_Note: Contributions intended for the official library shall not include the manufacturer or part number unless the footprint is specific to that manufacturer or part. Similarly avoid custom naming for official library contributions unless required to achieve the requested name (Example TI-specific naming)._
+_Note: Contributions intended for the official library shall not include the manufacturer or part number unless the footprint is specific to that manufacturer or part. Similarly avoid custom naming for official library contributions unless required to achieve the requested name (Example Texas_specific naming)._
 
 ### Package Dimensions
 ![dimension example](./documentation/dimension_system.svg)
