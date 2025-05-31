@@ -2843,9 +2843,10 @@ Texas_DAP_R-PDSO-G38:
 # It was previously in httsop.yaml
 # overall_height: 1.20 # maximum
   device_type: 'HTSSOP'
-  size_source: 'http://www.ti.com/lit/ds/symlink/tlc5951.pdf#page=46'
+  size_source: 'https://www.ti.com/jp/lit/ml/pptd158c/pptd158c.pdf'
   compatible_mpns:
-    - Texas_DAP/R-PDSO-G38
+    - Texas_DAP
+    - Texas_R-PDSO-G38
   body_size_x:
     minimum: 6.0
     maximum: 6.2
