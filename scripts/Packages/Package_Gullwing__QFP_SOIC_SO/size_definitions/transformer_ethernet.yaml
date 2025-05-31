@@ -87,3 +87,25 @@ YDS_30F-51NL_SO-24:
   pad_to_pad_min_x_overwrite: 7.4
   pad_to_pad_max_x_overwrite: 11.4
   pad_size_y_overwrite: 0.78
+
+Transformer_Ethernet_Bourns_PT61017PEL:
+  size_source: 'https://www.bourns.com/docs/Product-Datasheets/PT61017PEL.pdf'
+  manufacturer: Bourns
+  part_number: PT61017PEL
+  # Custom name to match existing footprint
+  custom_name_format: 'Transformer_Ethernet_{man}_{mpn:s}'
+  # Intended name after a future rename
+  #custom_name_format: 'Transformer_Ethernet_{man}_{mpn:s}_SO-{pincount}_{size_x:g}x{size_y:g}mm{vias:s}'
+
+  body_size_x: 6.9
+  body_size_y: 12.8 +/-0.25
+  overall_height:
+    maximum: 5.65
+
+  overall_size_x: 9.3
+  lead_width: 0.46
+  lead_len: 0.7 +/-0.15
+
+  pitch: 1.27
+  num_pins_x: 0
+  num_pins_y: 8
