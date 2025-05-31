@@ -156,6 +156,10 @@ if __name__ == '__main__':
     voffsetx=-rmx; vwbody=0; vpinyoffset=(hbody-2*rmy)/2.0; c_offsetx=2.5; c_offsety=hbody/2.0; c_ddrill=2
     makePotentiometerVertical(lib_name=lib_name, screwstyle='slit', style="trimmer", shaft_hole=False, class_name=class_name, wbody=vwbody, hbody=hbody, d_body=dbody, dshaft=dshaft, dscrew=dscrew, c_ddrill=c_ddrill,c_offsetx=c_offsetx, c_offsety=c_offsety, pinxoffset=voffsetx,pinyoffset=pinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, specialtags=[], add_description=add_description, name_additions=[], height3d=height3d)
 
+    class_name="Bourns 3386H"; add_description="https://www.bourns.com/pdfs/3386.pdf"
+    pins = 3; rmx=-2.54; rmy=2.54; ddrill=0.8; wbody=-4.83; hbody=9.53; dbody=0; height3d = 9.53; screwzpos = 5.64; wscrew=0; dscrew=3.15
+    wshaft=0; dshaft=0; pinxoffset=(-4.83-2.54)/2.0; pinyoffset=(hbody-2*rmy)/2.0
+    makePotentiometerHorizontal(lib_name=lib_name, style="trimmer", class_name=class_name, wbody=wbody, hbody=hbody, wscrew=wscrew, dscrew=dscrew, wshaft=wshaft, dshaft=dshaft, pinxoffset=pinxoffset,pinyoffset=pinyoffset, pins=pins, rmx=rmx, rmy=rmy, ddrill=ddrill, R_POW=R_POW, specialtags=[], add_description=add_description, name_additions=[], screwzpos=screwzpos)
     class_name="Bourns 3386X"; add_description="https://www.bourns.com/pdfs/3386.pdf"
     pins = 3; rmx=2.54; rmy=2.54; ddrill=0.8; wbody=-4.83; hbody=9.53; dbody=0; height3d = 9.53; screwzpos = 5.33; wscrew=0; dscrew=3.15
     wshaft=0; dshaft=0; pinxoffset=-(4.83-2.54)/2.0; pinyoffset=(hbody-2*rmy)/2.0
