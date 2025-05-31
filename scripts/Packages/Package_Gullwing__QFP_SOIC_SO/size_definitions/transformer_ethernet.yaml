@@ -109,3 +109,25 @@ Transformer_Ethernet_Bourns_PT61017PEL:
   pitch: 1.27
   num_pins_x: 0
   num_pins_y: 8
+
+Transformer_Ethernet_Bourns_SM13126PEL:
+  size_source: 'https://www.bourns.com/docs/Product-Datasheets/SM13126PEL.pdf'
+  manufacturer: Bourns
+  part_number: SM13126PEL
+  # Custom name to match existing footprint
+  custom_name_format: 'Transformer_Ethernet_{man}_{mpn:s}'
+  # Intended name after a future rename
+  #custom_name_format: 'Transformer_Ethernet_{man}_{mpn:s}_SO-{pincount}_{size_x:g}x{size_y:g}mm{vias:s}'
+
+  body_size_x: 6.9 +/-0.5
+  body_size_y: 12.8 +/-0.5
+  overall_height:
+    maximum: 6.15
+
+  overall_size_x: 9.3 +/-0.5
+  lead_width: 0.46 +/-0.1
+  lead_len: 0.7 +/-0.15
+
+  pitch: 1.27 #+/-0.10
+  num_pins_x: 0
+  num_pins_y: 8
