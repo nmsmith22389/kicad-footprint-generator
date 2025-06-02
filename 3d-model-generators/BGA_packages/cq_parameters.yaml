@@ -874,9 +874,9 @@ FCPBGA-780_23x23mm_Layout28x28_P0.8mm:
   fp_r: 1.0
   fp_d: 1.25
   fp_z: 0.01
-  ef: 0.5
-  cff: null
-  cf: null
+  ef: 0.0
+  cff: 0.01
+  cf: 0.01
   D: 23.0
   E: 23.0
   D1: null
@@ -890,7 +890,7 @@ FCPBGA-780_23x23mm_Layout28x28_P0.8mm:
   sp: 0.0
   npx: 28
   npy: 28
-  excluded_pins: [1, 28, 757, 784]
+  excluded_pins: ['internals', 1, 28, 757, 784]
   molded: True
   rotation: -90
   body_bot_color_key: "dark green body"
