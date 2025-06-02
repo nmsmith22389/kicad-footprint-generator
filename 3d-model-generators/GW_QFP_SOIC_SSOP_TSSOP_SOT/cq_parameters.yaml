@@ -1,5 +1,6 @@
 D_SOD-123:
   the: 8.0  # body angle in degrees
+  #the_p: 0.0 # pin angle in degrees
   tb_s: 0.05  # top part of body is that much smaller
   c: 0.2  # pin thickness, body center part height
   R1: 0.12  # pin upper corner, inner radius
@@ -1224,7 +1225,6 @@ Infineon_PG-DSO-20-U03_7.5x12.8mm:
   c: 0.25
   R1: 0.2
   R2: 0.2
-  S: 0.5
   L: 0.81
   fp_s: True
   fp_r: 0.7
@@ -8884,7 +8884,6 @@ SOP-8_6.605x9.655mm_P2.54mm:
   c: 0.3
   R1: 0.15
   R2: 0.15
-  S: 0.25
   L: 1.15
   fp_s: True
   fp_r: 1

@@ -48,7 +48,7 @@
 # *                                                                          *
 # ****************************************************************************
 
-from math import radians, sqrt, tan
+from math import atan, cos, degrees, pi, radians, sin, sqrt, tan
 
 import cadquery as cq
 
@@ -57,11 +57,13 @@ from _tools.cq_helpers import union_all
 max_cc1 = 1
 color_pin_mark = False
 place_pinMark = True
+default_pin_slope = 0
 
 
 def make_gw(params):
     c = params["c"]
     the = params["the"]
+    the_p = params["the_p"] if "the_p" in params else None
     tb_s = params["tb_s"]
     ef = params["ef"]
     cc1 = params["cc1"]
@@ -88,22 +90,75 @@ def make_gw(params):
     else:
         excluded_pins = ()  ##no pin excluded
 
-    missingparam = [S, L, R1].count(None)
+    missingparam = [S, L, R1, the_p].count(None)
     if missingparam == 0:
         print(
-            "Warning: All of S, L, and R1 are provided. The system is overconstrained. Ignoring the value of S."
+            "Warning: All of S, L, R1, and the_p are provided. The system is overconstrained. Ignoring the value of the_p."
         )
         S = None
-    if missingparam > 1:
-        raise Exception("At least two of S, L, and R1 must be provided")
+    if missingparam > 2:
+        raise Exception("At least two of S, L, R1, and the_p must be provided")
+
+    elif missingparam > 1:
+        # if more than one param is missing, we can't calculate a pin angle, so just set it to the default
+        if the_p is None:
+            the_p = default_pin_slope
+
+    else:
+        if the_p is None:
+            the_p = degrees(
+                atan(
+                    (((E - E1) / 2) - (S + L + R1))
+                    / (A1 + ((A2 - c) / 2) - (R1 + R2 + c))
+                )
+            )
+            if the_p < 0:
+                print(
+                    "The provided values of S, L, and R1 will result in inward-sloping pins.  If this is not what you intended, confirm those values and reduce one or more of them."
+                )
 
     if L is None:
-        L = (E - E1) / 2 - (S + R1)
+        L = (
+            (E - E1) / 2
+            - (S + R1)
+            - ((A1 + ((A2 - c) / 2) - (R1 + R2 + c)) * tan(radians(the_p)))
+        )
+        if the_p > 0 and L < (c + R2):
+            raise Exception("the_p is too large")
     if S is None:
-        S = (E - E1) / 2 - (R1 + L)
+        S = (
+            (E - E1) / 2
+            - (R1 + L)
+            - ((A1 + ((A2 - c) / 2) - (R1 + R2 + c)) * tan(radians(the_p)))
+        )
+        if the_p > 0 and S < 0:
+            raise Exception("the_p is too large")
     if R1 is None:
-        R1 = (E - E1) / 2 - (S + L)
+        R1 = (
+            (E - E1) / 2
+            - (S + L)
+            - ((A1 + ((A2 - c) / 2) - (R1 + R2 + c)) * tan(radians(the_p)))
+        )
+        if the_p > 0 and R1 < 0:
+            raise Exception("the_p is too large")
 
+    # uncomment to constrain pin angles to positive or vertical, i.e. no "Z" shaped pins
+    # the_p = max(the_p, 0)
+
+    if abs(the_p) >= 90:
+        raise Exception("the_p must be between +/- 90 degrees")
+    if (
+        the_p < 0
+        and ((A1 + ((A2 - c) / 2) - (R1 + R2 + c)) * abs(tan(radians(the_p))))
+        - (R1 + R2 + c)
+        + R2
+        + c
+        > S
+    ):
+        # doesn't account for bottom chamfer, that would be more trouble than it's worth to check, better safe than sorry
+        raise Exception(
+            "the_p is too negative, the resulting pin will intersect with the component body"
+        )
     if L < 0:
         raise Exception("L cannot be negative")
     if S < 0:
@@ -111,7 +166,7 @@ def make_gw(params):
     if R1 < 0:
         raise Exception("R1 cannot be negative")
     if L < (c + R2):
-        raise Exception("L must be greater than c + R1")
+        raise Exception("L must be greater than c + R2")
 
     if tb_s == 0:
         tb_s = 0.001  # if tb_s is is zero, the solver cannot converge as we have an object with zero volume, so enforce a minimum size here
@@ -352,27 +407,33 @@ def make_gw(params):
         )
         .moveTo(-tb_s, A1 + A2_b)
         .line(S + tb_s, 0)
-        .threePointArc(
-            (S + R1 / sqrt(2), A1 + A2_b - R1 * (1 - 1 / sqrt(2))),
-            (S + R1, A1 + A2_b - R1),
+        .radiusArc(
+            (
+                S + (R1 * cos(radians(the_p))),
+                A1 + A2_b - R1 + (R1 * sin(radians(the_p))),
+            ),
+            R1,
         )
-        .line(0, -(A1 + A2_b - R1 - R2_o))
-        .threePointArc(
-            (S + R1 + R2_o * (1 - 1 / sqrt(2)), R2_o * (1 - 1 / sqrt(2))),
-            (S + R1 + R2_o, 0),
+        .lineTo(
+            ((E - E1) / 2) - L + R2_o - (R2_o * cos(radians(the_p))),
+            R2 + c - (R2_o * sin(radians(the_p))),
         )
+        .radiusArc((((E - E1) / 2) - L + R2_o, 0), -R2_o)
         .line(L - R2_o, 0)
         .line(0, c)
-        .line(-(L - R2_o), 0)
-        .threePointArc(
-            (S + R1 + R2_o - R2 / sqrt(2), c + R2 * (1 - 1 / sqrt(2))),
-            (S + R1 + R2_o - R1, c + R2),
+        .line(-L + R2_o, 0)
+        .radiusArc(
+            (
+                ((E - E1) / 2) - L + R2_o - (R2 * cos(radians(the_p))),
+                R2 + c - (R2 * sin(radians(the_p))),
+            ),
+            R2,
         )
-        .lineTo(S + R1 + c, A1 + A2_b - R1)
-        .threePointArc(
-            (S + R1_o / sqrt(2), A1 + A2_b + c - R1_o * (1 - 1 / sqrt(2))),
-            (S, A1 + A2_b + c),
+        .lineTo(
+            S + (R1_o * cos(radians(the_p))),
+            A1 + A2_b - R1 + (R1_o * sin(radians(the_p))),
         )
+        .radiusArc((S, A1 + A2_b + c), -R1_o)
         .line(-S - tb_s, 0)
         .close()
         .extrude(b)
