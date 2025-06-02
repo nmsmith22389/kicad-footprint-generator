@@ -10352,3 +10352,36 @@ IXYS_Flatpak-8_6.3x9.7mm_P2.54mm:
   mark_color_key: 'light brown label'
   destination_dir: 'Package_DIP.3dshapes'
   source: 'https://www.littelfuse.com/media?resourcetype=datasheets&itemid=996c6e8f-cc1b-44f6-811e-251c6e004c56&filename=littelfuse-integrated-circuits-loc112-datasheet'
+
+SOIC-8_3.81x9.35mm_Pitch2.54mm:
+  the: 12.0  # body angle in degrees
+  tb_s: 0.1  # top part of body is that much smaller
+  c: 0.203  # pin thickness, body center part height
+  R1: 0.15  # pin upper corner, inner radius
+  R2: 0.15  # pin lower corner, inner radius
+  S: 0.25  # pin top flat part length (excluding corner arc) - you can specify either S or L, the other will be calculated
+  L: 0.432  #  pin bottom flat part length (including corner arc)
+  fp_s: False  # True for circular pinmark, False for square pinmark (useful for diodes)
+  fp_r: 0.5  # first pin indicator radius
+  fp_d: 0.1  # first pin indicator distance from edge
+  fp_z: 0.05  # first pin indicator depth
+  ef: 0  # fillet of edges  Note: bigger bytes model with fillet
+  cc1: 0.25  # chamfer of the 1st pin corner
+  D1: 3.81  # body length
+  E1: 9.347  # body width
+  E: 11.633   # needs to be faked due to generator limitations: 6.096 - 3.81 + 9.347
+  A1: 0.0637  # body-board separation   Calculated: (0.102 + 0.0254)/2
+  A2: 2.1203  # body height   Calculated: Max overall hight 2.184 - body-board seperation 0.0637
+  b: 0.381  # pin width
+  e: 2.54  # pin (center-to-center) distance
+  npx: 0  # number of pins along X axis (width)
+  npy: 4  # number of pins along y axis (length)
+  epad: null
+  excluded_pins: null
+  model_name: SOIC-8_3.81x9.35mm_P2.54mm
+  rotation: 0
+  body_color_key: 'black body'
+  pin_color_key: 'metal grey pins'
+  mark_color_key: 'light brown label'
+  destination_dir: 'Package_SO.3dshapes'
+  source: 'https://www.littelfuse.com/assetdocs/littelfuse-integrated-circuits-cpc2014n-datasheet?assetguid=6e3baf84-de75-4ea7-97ce-3a5e05a007c9'

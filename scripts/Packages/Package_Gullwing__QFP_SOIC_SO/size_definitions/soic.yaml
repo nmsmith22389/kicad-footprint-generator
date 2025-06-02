@@ -313,6 +313,29 @@ SOP-8_6.605x9.655mm_P2.54mm:
   num_pins_x: 0
   num_pins_y: 4
 
+SOIC-8_3.81x9.35mm_P2.54mm:
+  device_type: 'SOIC' # temporary
+  size_source: 'https://www.littelfuse.com/assetdocs/littelfuse-integrated-circuits-cpc2014n-datasheet?assetguid=6e3baf84-de75-4ea7-97ce-3a5e05a007c9'
+  body_size_x:
+    nominal: 3.810 
+    tolerance: 0.051
+  body_size_y:
+    nominal: 9.347 
+    tolerance: 0.203
+  overall_height:
+    maximum: 2.184
+  overall_size_x:
+    nominal: 6.096
+    tolerance: 0.102
+  lead_width:
+    nominal: 0.381
+    tolerance: 0.051
+  lead_len:
+    nominal: 0.432
+    tolerance: 0.127
+  pitch: 2.54
+  num_pins_x: 0
+  num_pins_y: 4
 
 ##############################################################################
 # 1.27 PITCH
