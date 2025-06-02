@@ -36,6 +36,7 @@ from scripts.tools.declarative_def_tools import (
     ast_evaluator,
     common_metadata,
     fp_additional_drawing,
+    rule_area_properties,
 )
 
 from scripts.Packages.utils.ep_handling_utils import getEpRoundRadiusParams
@@ -101,6 +102,7 @@ class GullwingConfiguration:
 
     _spec_dictionary: dict
     metadata: common_metadata.CommonMetadata
+    rule_areas: List[rule_area_properties.RuleAreaProperties] = []
 
     lead_type: Union[Literal['gullwing', 'flat_lead']]
     pitch: float
@@ -144,6 +146,8 @@ class GullwingConfiguration:
         self.additional_drawings = (
             fp_additional_drawing.FPAdditionalDrawing.from_standard_yaml(spec)
         )
+
+        self.rule_areas = rule_area_properties.RuleAreaProperties.from_standard_yaml(spec)
 
     @property
     def spec_dictionary(self) -> dict:
@@ -832,6 +836,13 @@ class GullwingGenerator(FootprintGenerator):
                 kicad_mod.append(topslug_rect)
             else:
                 raise ValueError("Unsupported top slug shape: {}".format(gullwing_config.top_slug.shape))
+
+        # ######################### Rule Areas ################################
+
+        zones = rule_area_properties.create_rule_area_zones(gullwing_config.rule_areas,
+                                                            fp_ast_evaluator)
+        for zone in zones:
+            kicad_mod.append(zone)
 
         # ######################### Text Fields ###############################
 
