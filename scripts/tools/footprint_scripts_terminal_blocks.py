@@ -1239,6 +1239,7 @@ def makeTerminalBlock45Degree(
     opening_xoffset,
     opening_yoffset,
     opening_elliptic=False,
+    even_pin_offset=0, # Y-axis offset for even pins, relative to pin 1
     bevel_height=[],
     vsegment_lines_offset=[],
     secondHoleDiameter=0,
@@ -1414,6 +1415,10 @@ def makeTerminalBlock45Degree(
         pextra = 0
         if secondDrillPad[0] > 0:
             pextra = p
+        if p % 2 == 0:
+            y1 = even_pin_offset
+        else:
+            y1 = 0
         if p == 1:
             kicad_modg.append(
                 Pad(
