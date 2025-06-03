@@ -1692,6 +1692,44 @@ TQFP-100-1EP_14x14mm_P0.5mm_EP5x5mm:
     # bottom_pad_size:
     # paste_avoid_via: True
 
+LQFP-100-1EP_14x14mm_P0.5mm_EP6.9x.96mm:
+  device_type: 'LQFP'
+  compatible_mpns:
+    - '98ASA02131D'  # NXP: https://www.nxp.com/docs/en/package-information/SOT2229-1.pdf
+    - 'SOT2229-1'  # NXP: https://www.nxp.com/docs/en/package-information/SOT2229-1.pdf
+  size_source: 'JEDEC MS-026 variation BED with exposed pad, 1.60mm max body thickness, https://www.jedec.org/system/files/docs/MS-026D.pdf, https://www.nxp.com/docs/en/package-information/SOT2229-1.pdf'
+  body_size_x:
+    nominal: 14
+  body_size_y:
+    nominal: 14
+  overall_size_x:
+    nominal: 16
+  overall_size_y:
+    nominal: 16
+  overall_height:
+    minimum: 1.5
+    maximum: 1.6
+  lead_width:
+    minimum: 0.17
+    nominal: 0.22
+    maximum: 0.27
+  lead_len:
+    minimum: 0.45
+    nominal: 0.60
+    maximum: 0.75
+  pitch: 0.5
+  num_pins_x: 25
+  num_pins_y: 25
+  EP_size_x:
+    nominal: 6.9
+  EP_size_y:
+    nominal: 6.9
+  EP_num_paste_pads: [3, 3] # Per NXP reccomended footprint
+  thermal_vias:
+    count: [4, 4]
+    drill: 0.2
+    paste_via_clearance: 0.1
+
 TQFP-144_20x20mm_P0.5mm:
 # Microsemi calls it TQ144, but height A = 1.60 mm (which is actually LQFP),
 # 3D Model has height = 1.10 mm, and there's already a LQFP in the lib,
