@@ -162,3 +162,24 @@ Transformer_Ethernet_Bourns_SM13126PEL:
   pitch: 1.27 #+/-0.10
   num_pins_x: 0
   num_pins_y: 8
+
+Transformer_Ethernet_CNDtek_H1102N:
+  size_source: 'https://www.lcsc.com/datasheet/lcsc_datasheet_2412231915_CND-tek-H1102N_C42418465.pdf'
+  manufacturer: CNDtek
+  part_number: H1102N
+  # Custom name to match existing footprint
+  custom_name_format: 'Transformer_Ethernet_{man}_{mpn:s}'
+  # Intended name after a future rename
+  #custom_name_format: 'Transformer_Ethernet_{man}_{mpn:s}_SO-{pincount}_{size_x:g}x{size_y:g}mm{vias:s}'
+
+  body_size_x: 7.0 +/-0.2
+  body_size_y: 12.7 +/-0.25
+  overall_height: 5.7 +/-0.3
+
+  overall_size_x: 9.5 +/-0.25
+  lead_width: 0.50
+  lead_len: 0.65
+
+  pitch: 1.27
+  num_pins_x: 0
+  num_pins_y: 8
