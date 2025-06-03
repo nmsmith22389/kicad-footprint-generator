@@ -115,7 +115,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, configuration):
 
     #draw the main outline around the footprint
     kicad_mod.append(PolygonLine(
-        polygon=[
+        shape=[
             {'x':-0.2*pitch,'y':pad_size[1]/2+pad_silk_off},
             {'x':-0.2*pitch,'y':y2},
             {'x':x1,'y':y2},
@@ -150,7 +150,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, configuration):
         px = p * pitch
 
         kicad_mod.append(PolygonLine(
-            polygon=[
+            shape=[
                 {'x': px-w,'y': py},
                 {'x': px-w,'y': py-l+0.25*w},
                 {'x': px,'y': py-l},
@@ -162,7 +162,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, configuration):
 
         if p > 0:
             kicad_mod.append(PolygonLine(
-                polygon=[
+                shape=[
                     {'x':px-0.8*pitch,'y':pad_size[1]/2+pad_silk_off},
                    {'x':px-0.8*pitch,'y':y2},
                    {'x':px-0.2*pitch,'y':y2},
@@ -177,7 +177,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, configuration):
     m = 0.3
 
     kicad_mod.append(PolygonLine(
-            polygon=[
+            shape=[
                 {'x':xm,'y':ym},
                 {'x':xm - m,'y':ym + 2 * m},
                 {'x':xm + m,'y':ym + 2 * m},
@@ -190,7 +190,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, configuration):
         {'y': body_edge['bottom'] - sl/sqrt(2), 'x': 0},
         {'y': body_edge['bottom'], 'x': sl/2}
     ]
-    kicad_mod.append(PolygonLine(polygon=pin,
+    kicad_mod.append(PolygonLine(shape=pin,
                                  width=configuration['fab_line_width'], layer='F.Fab'))
 
     ########################### CrtYd #################################

@@ -1,5 +1,5 @@
 from KicadModTree import *  # NOQA
-from KicadModTree.nodes.specialized import Trapezoid
+from KicadModTree.nodes.specialized import Trapezoid, RoundRectangle
 from scripts.tools.drawing_tools import (
     addKeepoutRect,
     addKeepoutRound,
@@ -422,7 +422,7 @@ def makeDSubStraight(
 
     # outline
     kicad_modg.append(
-        Trapezoid.RoundRect(
+        RoundRectangle.RoundRectangle(
             size=Vector2D(w_fab, h_fab),
             start=Vector2D(l_fab, t_fab),
             corner_radius=outline_cornerradius,
@@ -431,7 +431,7 @@ def makeDSubStraight(
         )
     )
     kicad_modg.append(
-        Trapezoid.RoundRect(
+        RoundRectangle.RoundRectangle(
             size=Vector2D(w_slk, h_slk),
             start=Vector2D(l_slk, t_slk),
             corner_radius=outline_cornerradius + slk_offset,
@@ -454,7 +454,7 @@ def makeDSubStraight(
         Trapezoid.Trapezoid(
             center=Vector2D(0, 0),
             size=Vector2D(wi_fab, hi_fab),
-            angle=side_angle_degree,
+            side_angle=side_angle_degree,
             corner_radius=conn_cornerradius,
             layer="F.Fab",
             width=lw_fab,
@@ -464,7 +464,7 @@ def makeDSubStraight(
         Trapezoid.Trapezoid(
             size=Vector2D(wi_slk, hi_slk),
             start=Vector2D(li_slk, ti_slk),
-            angle=side_angle_degree,
+            side_angle=side_angle_degree,
             corner_radius=conn_cornerradius + slk_offset,
             layer="F.SilkS",
             width=lw_slk,
@@ -765,7 +765,7 @@ def makeDSubEdge(
     # create courtyard
     kicad_mod.append(
         PolygonLine(
-            polygon=[
+            shape=[
                 [roundCrt(leftmost - crt_offset), roundCrt(-pad[1] / 2 - crt_offset)],
                 [roundCrt(rightmost + crt_offset), roundCrt(-pad[1] / 2 - crt_offset)],
                 [roundCrt(rightmost + crt_offset), roundCrt(ypcb_edge - crt_offset)],
@@ -890,7 +890,7 @@ def makeDSubEdge(
     # silkscreen + PDB-edge
     kicad_mod.append(
         PolygonLine(
-            polygon=[
+            shape=[
                 [-x10 + topoffset + pad[0] / 2 + slk_pad_offset, y1 + pad[1] / 2],
                 [
                     -x10 + topoffset + pad[0] / 2 + slk_pad_offset,
@@ -909,7 +909,7 @@ def makeDSubEdge(
     if isMale:
         kicad_mod.append(
             PolygonLine(
-                polygon=[
+                shape=[
                     [
                         x_pin1 - topoffset - pad[0] / 2 - (slk_pad_offset + 2 * lw_slk),
                         y1,
@@ -930,7 +930,7 @@ def makeDSubEdge(
     else:
         kicad_mod.append(
             PolygonLine(
-                polygon=[
+                shape=[
                     [
                         x_pin1 + topoffset + pad[0] / 2 + (slk_pad_offset + 2 * lw_slk),
                         y1,
@@ -1616,7 +1616,7 @@ def makeDSubAngled(
     if not hasNoBackBox:
         kicad_modg.append(
             PolygonLine(
-                polygon=[
+                shape=[
                     [-backbox_width / 2 - slk_offset, ypcb_edge - lw_slk / 2],
                     [
                         -backbox_width / 2 - slk_offset,
@@ -1645,7 +1645,7 @@ def makeDSubAngled(
     else:
         kicad_modg.append(
             PolygonLine(
-                polygon=[
+                shape=[
                     [-backcan_width / 2 - slk_offset, ypcb_edge - lw_slk / 2],
                     [
                         -backcan_width / 2 - slk_offset,
@@ -1701,7 +1701,7 @@ def makeDSubAngled(
     else:
         kicad_mod.append(
             PolygonLine(
-                polygon=[
+                shape=[
                     [
                         roundCrt(offset[0] - can_width / 2 - crt_offset),
                         roundCrt(

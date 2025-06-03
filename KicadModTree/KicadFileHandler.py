@@ -18,7 +18,6 @@ import re
 from pathlib import Path
 from typing import Optional, List
 
-from kilibs.geom import PolygonPoints
 from KicadModTree.FileHandler import FileHandler
 from KicadModTree.util.kicad_util import SexprSerializer
 from KicadModTree.util.kicad_util import *
@@ -27,19 +26,20 @@ from KicadModTree.util.corner_selection import CornerSelection
 from KicadModTree.nodes.Node import Node
 from KicadModTree.nodes.base.EmbeddedFonts import EmbeddedFonts
 from KicadModTree.nodes.base.Group import Group
-from KicadModTree.nodes.base.Rect import Rect
+from KicadModTree.nodes.base.Rectangle import Rectangle
 from KicadModTree.nodes.base.Text import Text, Property
 from KicadModTree.nodes.base.Pad import Pad
 from KicadModTree.nodes.base.Arc import Arc
 from KicadModTree.nodes.base.Circle import Circle
 from KicadModTree.nodes.base.Line import Line
-from KicadModTree.nodes.base.LineStyle import LineStyle
+from KicadModTree.util.line_style import LineStyle
 from KicadModTree.nodes.base.Polygon import Polygon
-from KicadModTree.nodes.base.PolygonArc import PolygonArc
 from KicadModTree.nodes.base.CompoundPolygon import CompoundPolygon
 from KicadModTree.nodes.base.Model import Model
+from KicadModTree.nodes.base.Zone import Zone, PadConnection, ZoneFill
 from KicadModTree.nodes.Footprint import Footprint, FootprintType
-from KicadModTree.nodes.base.Zone import Zone, PadConnection, ZoneFill, Keepouts
+from KicadModTree import Keepouts
+from kilibs.geom import Vector2D, Vector3D
 
 
 DEFAULT_LAYER_WIDTH = {'F.SilkS': 0.12,
@@ -147,7 +147,7 @@ def graphic_key_func(item) -> List[int]:
     def graphic_shape_key(item):
         if isinstance(item, Line):
             return 0
-        elif isinstance(item, Rect):
+        elif isinstance(item, Rectangle):
             return 1
         elif isinstance(item, Arc):
             return 2
@@ -168,35 +168,35 @@ def graphic_key_func(item) -> List[int]:
     # after this point, the different shape types will only
     # be compared amongst themselves
 
-    if isinstance(item, (Line, Rect)):
-        start_pos = item.getRealPosition(item.start_pos)
-        end_pos = item.getRealPosition(item.end_pos)
+    if isinstance(item, (Line, Rectangle)):
+        start_pos = item.getRealPosition(item.start)
+        end_pos = item.getRealPosition(item.end)
         keys += [
             start_pos.x, start_pos.y,
             end_pos.x, end_pos.y
         ]
     elif isinstance(item, Arc):
-        start_pos = item.getStartPoint()
-        end_pos = item.getEndPoint()
+        start = item.start
+        end = item.end
         # Match KiCad normalisation of negative arc angles
         # (and the one in _serialize_ArcPoints).
         if item.angle < 0:
-            start_pos, end_pos = end_pos, start_pos
+            start, end = end, start
         keys += [
-            start_pos.x, start_pos.y,
-            end_pos.x, end_pos.y,
-            item.center_pos.x, item.center_pos.y,
+            start.x, start.y,
+            end.x, end.y,
+            item.center.x, item.center.y,
         ]
     elif isinstance(item, Circle):
-        center_pos = item.getRealPosition(item.center_pos)
+        center = item.getRealPosition(item.center)
         keys += [
-            center_pos.x, center_pos.y,
-            center_pos.x + item.radius, center_pos.y,
+            center.x, center.y,
+            center.x + item.radius, center.y,
         ]
 
     if isinstance(item, Polygon):
-        keys += [len(item.nodes)]
-        keys += [[item.getRealPosition(pt).x, item.getRealPosition(pt).y] for pt in item.nodes]
+        keys += [len(item.points)]
+        keys += [[item.getRealPosition(pt).x, item.getRealPosition(pt).y] for pt in item.points]
 
     if isinstance(item, Text):
         keys += [item.thickness]
@@ -269,8 +269,8 @@ def zone_key_func(zone: Zone) -> List:
     """
     keys = [zone.priority if zone.priority else 0,
             [layer_key_func(layer) for layer in zone.layers],
-            len(zone.nodes),
-            [[pt.x, pt.y] for pt in zone.nodes]
+            len(zone.nodes.points),
+            [[pt.x, pt.y] for pt in zone.nodes.points]
             ]
 
     if zone.hasValidTStamp():
@@ -286,8 +286,7 @@ def node_key_func(node) -> List:
     """
 
     # This is all graphics, but not the text
-    if isinstance(node, (Arc, Circle, Line, Polygon, CompoundPolygon,
-                         PolygonArc, Rect)):
+    if isinstance(node, (Arc, Circle, Line, Polygon, CompoundPolygon, Rectangle)):
         return [100] + round_numbers_in_key_func(graphic_key_func(node))
     elif isinstance(node, Text):
         return [200] + round_numbers_in_key_func(text_key_func(node))
@@ -454,10 +453,16 @@ class KicadFileHandler(FileHandler):
 
             # add all the 'base' nodes that we know how to serialise
             elif isinstance(single_node, (Arc, Circle, Line, Pad,
-                                          Polygon, CompoundPolygon,
-                                          PolygonArc, Rect, Group, Text, Zone,
+                                          CompoundPolygon,
+                                          Rectangle, Group, Text, Zone,
                                           EmbeddedFonts, Model)):
                 ordered_nodes.append(single_node)
+            elif isinstance(single_node, Polygon):
+                # Only append the polygon if it is closed. If the polygon is open, then
+                # the line nodes have been added in `serialize()` together with the
+                # polygon - which we need to remove from the list in that case:
+                if single_node.close:
+                    ordered_nodes.append(single_node)
 
         sexpr = []
 
@@ -551,23 +556,31 @@ class KicadFileHandler(FileHandler):
         return self._serialise_Boolean('fill', fill)
 
     def _serialize_ArcPoints(self, node: Arc):
-        start_pos = node.getRealPosition(node.getStartPoint())
-        end_pos = node.getRealPosition(node.getEndPoint())
-        mid_pos = node.getRealPosition(node.getMidPoint())
+        start = node.getRealPosition(node.start)
+        end = node.getRealPosition(node.end)
+        mid = node.getRealPosition(node.mid)
         # Match KiCad normalisation of negative arc angles.
         # Swap start and end for negative angles to overcome a bug in KiCAD v6 and some v7 versions.
         if node.angle < 0:
-            start_pos, end_pos = end_pos, start_pos
+            start, end = end, start
         return [
-            [SexprSerializer.Symbol('start'), start_pos.x, start_pos.y],
-            [SexprSerializer.Symbol('mid'), mid_pos.x, mid_pos.y],
-            [SexprSerializer.Symbol('end'), end_pos.x, end_pos.y],
+            [SexprSerializer.Symbol('start'), start.x, start.y],
+            [SexprSerializer.Symbol('mid'), mid.x, mid.y],
+            [SexprSerializer.Symbol('end'), end.x, end.y],
         ]
 
     def _serialize_PolygonArc(self, node):
         sexpr = [SexprSerializer.Symbol('arc')]
-        sexpr += self._serialize_ArcPoints(node)
-
+        # Note: we explicitely don't use `_serialize_ArcPoints()` because we don't want
+        # to swap start and end on arcs with negative angles.
+        start = node.getRealPosition(node.start)
+        end = node.getRealPosition(node.end)
+        mid = node.getRealPosition(node.mid)
+        sexpr += [
+            [SexprSerializer.Symbol('start'), start.x, start.y],
+            [SexprSerializer.Symbol('mid'), mid.x, mid.y],
+            [SexprSerializer.Symbol('end'), end.x, end.y],
+        ]
         return sexpr
 
     def _serialize_Arc(self, node: Arc):
@@ -583,12 +596,12 @@ class KicadFileHandler(FileHandler):
         return sexpr
 
     def _serialize_CirclePoints(self, node: Circle):
-        center_pos = node.getRealPosition(node.center_pos)
-        end_pos = node.getRealPosition(node.center_pos + (node.radius, 0))
+        center = node.getRealPosition(node.center)
+        end = node.getRealPosition(node.center + (node.radius, 0))
 
         return [
-            [SexprSerializer.Symbol('center'), center_pos.x, center_pos.y],
-            [SexprSerializer.Symbol('end'), end_pos.x, end_pos.y]
+            [SexprSerializer.Symbol('center'), center.x, center.y],
+            [SexprSerializer.Symbol('end'), end.x, end.y]
         ]
 
     def _serialize_Circle(self, node: Circle):
@@ -608,19 +621,22 @@ class KicadFileHandler(FileHandler):
 
         return sexpr
 
-    def _serialize_Rect(self, node: Rect):
-        sexpr: list = [SexprSerializer.Symbol('fp_rect')]
-        sexpr += self._serialize_RectPoints(node)
-        sexpr += [
-                  [SexprSerializer.Symbol('stroke')] + self._serialize_Stroke(node),
-                 ]  # NOQA
-        if hasattr(node, 'fill'):
-            sexpr += [self._serialize_Fill(node)]
-        sexpr += [
-            [SexprSerializer.Symbol('layer'), node.layer],
-        ]
-        if node.hasValidTStamp():
-            sexpr.append(self._serialize_TStamp(node))
+    def _serialize_Rectangle(self, node: Rectangle):
+        if node.angle:
+            return self._serialize_Polygon(node)
+        else:
+            sexpr: list = [SexprSerializer.Symbol('fp_rect')]
+            sexpr += self._serialize_RectPoints(node)
+            sexpr += [
+                    [SexprSerializer.Symbol('stroke')] + self._serialize_Stroke(node),
+                    ]  # NOQA
+            if hasattr(node, 'fill'):
+                sexpr += [self._serialize_Fill(node)]
+            sexpr += [
+                [SexprSerializer.Symbol('layer'), node.layer],
+            ]
+            if node.hasValidTStamp():
+                sexpr.append(self._serialize_TStamp(node))
 
         return sexpr
 
@@ -628,15 +644,15 @@ class KicadFileHandler(FileHandler):
         layers = sorted(node.layers, key=layer_key_func)
         return [SexprSerializer.Symbol('layers')] + layers
 
-    def _serialize_LinePoints(self, node: Line | Rect):
-        start_pos = node.getRealPosition(node.start_pos)
-        end_pos = node.getRealPosition(node.end_pos)
+    def _serialize_LinePoints(self, node: Line | Rectangle):
+        start_pos = node.getRealPosition(node.start)
+        end_pos = node.getRealPosition(node.end)
         return [
             [SexprSerializer.Symbol('start'), start_pos.x, start_pos.y],
             [SexprSerializer.Symbol('end'), end_pos.x, end_pos.y]
         ]
 
-    def _serialize_RectPoints(self, node: Rect):
+    def _serialize_RectPoints(self, node: Rectangle):
         # identical for current kicad format
         return self._serialize_LinePoints(node)
 
@@ -767,7 +783,7 @@ class KicadFileHandler(FileHandler):
 
                     sp = [
                         SexprSerializer.Symbol("gr_poly"),
-                        self._serialize_PolygonPoints(p),
+                        self._serialize_GeomPolygon(p),
                     ]
                     filled = p.fill
 
@@ -997,17 +1013,20 @@ class KicadFileHandler(FileHandler):
 
         return sexpr
 
-    def _serialize_PolygonPoints(self, node: PolygonPoints):
+    def _serialize_GeomPolygon(self, node: Polygon | Zone | Rectangle):
         node_points = [SexprSerializer.Symbol('pts')]
-
-        for n in node.nodes:
+        if isinstance(node, Zone):
+            poly_points = node.nodes.points
+        else:
+            poly_points = node.points
+        for n in poly_points:
             n_pos = node.getRealPosition(n)
             node_points.append([SexprSerializer.Symbol('xy'), n_pos.x, n_pos.y])
 
         return node_points
 
-    def _serialize_Polygon(self, node: Polygon):
-        node_points = self._serialize_PolygonPoints(node)
+    def _serialize_Polygon(self, node: Polygon | Zone | Rectangle):
+        node_points = self._serialize_GeomPolygon(node)
 
         sexpr = [SexprSerializer.Symbol('fp_poly'),
                  node_points,
@@ -1024,29 +1043,15 @@ class KicadFileHandler(FileHandler):
         return sexpr
 
     def _serialize_CompoundPolygon(self, node: CompoundPolygon):
-
-        def _serialize_PolygonPointsSegment(polygonpoints: PolygonPoints):
-            node_points = []
-
-            for n in polygonpoints:
-                n_pos = node.getRealPosition(n)
-                node_points.append([SexprSerializer.Symbol('xy'), n_pos.x, n_pos.y])
-
-            return node_points
-
-        if node.isSerializedAsFPPoly():
-
+        if node.serialize_as_fp_poly and node.close:
             node_points_sexpr = [SexprSerializer.Symbol('pts')]
-
-            for geom in node.polygon_geometries:
-                if isinstance(geom, PolygonPoints):
-                    node_points_sexpr.extend(_serialize_PolygonPointsSegment(polygonpoints=geom))
-                elif isinstance(geom, PolygonArc):
-                    node_points_sexpr.append(
-                        self._serialize_PolygonArc(geom))
+            for geom in node.get_fp_poly_elements():
+                if isinstance(geom, Vector2D):
+                    pt: Vector3D = node.getRealPosition(geom)
+                    node_points_sexpr.append([SexprSerializer.Symbol('xy'), pt.x, pt.y])
                 else:
                     node_points_sexpr.append(
-                        self._callSerialize(geom))
+                        self._serialize_PolygonArc(geom))
             sexpr = [
                 SexprSerializer.Symbol("fp_poly"),
                 node_points_sexpr,
@@ -1056,11 +1061,9 @@ class KicadFileHandler(FileHandler):
             ]
             if node.hasValidTStamp():
                 sexpr.append(self._serialize_TStamp(node))
-
             return sexpr
 
-        else:  # kicad 7 does not (yet) support open polygons or polylines, therefore convert to virtual nodes
-            # for all primitives (see getVirtualChilds, serialize_get_virtual_nodes )
+        else:  # Kicad 9 does not (yet) support open compound polygons:
             sexpr = []  # no serialization here, see childs
             return None
 
@@ -1258,7 +1261,7 @@ class KicadFileHandler(FileHandler):
             _serialise_ZoneFill(node.fill),
             [
                 SexprSerializer.Symbol('polygon'),
-                self._serialize_PolygonPoints(node)
+                self._serialize_GeomPolygon(node)
             ]
         ]
 

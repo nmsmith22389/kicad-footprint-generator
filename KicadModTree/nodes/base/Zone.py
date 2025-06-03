@@ -16,7 +16,7 @@
 import typing
 
 from KicadModTree.nodes.Node import Node
-from kilibs.geom import PolygonPoints
+from kilibs.geom import BoundingBox, GeomPolygon, GeomRectangle, Vec2DCompatible
 
 
 class PadConnection(Node):
@@ -249,8 +249,8 @@ class ZoneFill:
 class Zone(Node):
     r"""Add a Zone to the render tree
 
-    :param list polygon_pts:
-        list of points defining the polygon of the zone
+    :param shape:
+        shape element defining the polygon of the zone
     :param Hatch hatch:
         hatch parameters of the zone
     :param Keepouts keepouts:
@@ -279,7 +279,7 @@ class Zone(Node):
 
     def __init__(
         self,
-        polygon_pts: PolygonPoints,
+        shape: GeomPolygon | list[Vec2DCompatible] | GeomRectangle | BoundingBox,
         hatch: Hatch,
         keepouts: typing.Optional[Keepouts] = None,
         fill: typing.Optional[ZoneFill] = None,
@@ -292,7 +292,7 @@ class Zone(Node):
             raise ValueError("Zone must have a Hatch set to be well-formed")
 
         self.layers = kwargs.get("layers", [])
-        self.nodes = polygon_pts
+        self.nodes = GeomPolygon(shape=shape)
         self.net = kwargs.get("net", 0)
         self.net_name = kwargs.get("net_name", "")
         self.name = kwargs.get("name", "")

@@ -20,16 +20,16 @@ import enum
 import math
 from typing import Union
 
-from KicadModTree.util.corner_selection import CornerSelection
-from KicadModTree.util.corner_handling import RoundRadiusHandler, ChamferSizeHandler
-from kilibs.geom import BoundingBox, Vector2D
-from kilibs.util.param_util import toVectorUseCopyIfNumber, getOptionalBoolTypeParam, getOptionalNumberTypeParam
 from KicadModTree.nodes.Node import Node
+from KicadModTree.util.corner_handling import ChamferSizeHandler, RoundRadiusHandler
+from KicadModTree.util.corner_selection import CornerSelection
 from KicadModTree.util.kicad_util import lispString
-from KicadModTree.nodes.base.Arc import Arc
-from KicadModTree.nodes.base.Circle import Circle
-from KicadModTree.nodes.base.Line import Line
-from KicadModTree.nodes.base.Polygon import Polygon
+from kilibs.geom import BoundingBox, Vector2D, GeomRectangle
+from kilibs.util.param_util import (
+    getOptionalBoolTypeParam,
+    getOptionalNumberTypeParam,
+    toVectorUseCopyIfNumber,
+)
 
 
 class Pad(Node):
@@ -69,7 +69,7 @@ class Pad(Node):
         * *clearance* (``float``) --
           The optional clearance token attribute defines the clearance from all copper to the pad. If not set,
           the footprint clearance is used. (default:None = use footprint clearance)
-        * *tuning_properties* (``PadTuningProperties``, ``None`) --
+        * *tuning_properties* (``PadTuningProperties``, ``None``) --
           Pad tuning properties. None for "undefined", which is the KiCad
           default state (default None)
 
@@ -411,32 +411,29 @@ class Pad(Node):
         self.rotation -= a
         return self
 
-    def translate(self, distance_vector):
+    def translate(self, vector):
         r""" Translate pad
 
         :params:
-            * *distance_vector* (``Vector2D``)
+            * *vector* (``Vector2D``)
                 2D vector defining by how much and in what direction to translate.
         """
 
-        self.at += distance_vector
+        self.at += vector
         return self
 
     # calculate the outline of a pad
-    def calculateBoundingBox(self):
+    def bbox(self):
         if (self.shape in [Pad.SHAPE_CIRCLE]):
             return BoundingBox(
-                min_pt=self.at - self.size / 2,
-                max_pt=self.at + self.size / 2,
+                self.at - self.size / 2,
+                self.at + self.size / 2,
             )
         elif (self.shape in [Pad.SHAPE_RECT, Pad.SHAPE_ROUNDRECT, Pad.SHAPE_OVAL]):
-            from ..specialized import RectLine
-            rect = RectLine(start=- self.size / 2,
-                            end=self.size / 2,
-                            layer=None, width=0).rotate(self.rotation).translate(self.at)
-            return rect.calculateBoundingBox()
+            rect = GeomRectangle(center=self.at, size=self.size, angle=self.rotation)
+            return rect.bbox()
         else:
-            raise NotImplementedError("calculateBoundingBox is not implemented for pad shape '%s'" % self.shape)
+            raise NotImplementedError("bbox is not implemented for pad shape '%s'" % self.shape)
 
     def _getRenderTreeText(self):
         render_strings = ['pad']

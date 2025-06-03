@@ -15,8 +15,7 @@
 
 from __future__ import annotations
 
-from KicadModTree.nodes.Node import Node
-from KicadModTree.nodes.Node import TStamp
+from KicadModTree.nodes.Node import Node, TStamp
 
 
 class Group(Node):

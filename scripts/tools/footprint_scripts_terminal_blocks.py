@@ -18,7 +18,7 @@ from KicadModTree import (
     Text,
     Translation,
 )
-from kilibs.geom import BoundingBox, Direction, Vector2D, keepout
+from kilibs.geom import BoundingBox, Direction, Vector2D, GeomRectangle, GeomShapeClosed
 from scripts.tools.footprint_global_properties import *
 from scripts.tools.global_config_files import global_config as GC
 from scripts.tools.nodes import pin1_arrow
@@ -34,8 +34,8 @@ def make_silk_outline_with_pin1_arrow(
     silk_size: Vector2D,
     arrow_x: float,
     line_width: float,
-    keepouts: list[keepout.Keepout],
-    pin1_keepouts: list[keepout.Keepout],
+    keepouts: list[GeomShapeClosed],
+    pin1_keepouts: list[GeomShapeClosed],
 ):
     """
 
@@ -62,13 +62,13 @@ def make_silk_outline_with_pin1_arrow(
     if pin1_keepouts:
         pin1_bbox = BoundingBox()
         for ko in pin1_keepouts:
-            pin1_bbox.include_bbox(ko.bounding_box)
+            pin1_bbox.include_bbox(ko.bbox())
 
         max_arrow_y = max(max_arrow_y, pin1_bbox.bottom)
 
     pin1_arrow_apex = Vector2D(arrow_x, max_arrow_y)
-    pin1_arrow_keepout = keepout.KeepoutRect(
-        pin1_arrow_apex, Vector2D(0.6, 0.6)
+    pin1_arrow_keepout = GeomRectangle(
+        center=pin1_arrow_apex, size=Vector2D(0.6, 0.6)
     )
 
     DT.addRectWithKeepout(
@@ -281,8 +281,8 @@ def makeTerminalBlockStd(
         pad_shape_extra = Pad.SHAPE_OVAL
 
     pad_layers = Pad.LAYERS_THT
-    keepouts: list[keepout.Keepout] = []
-    pin1_keepouts: list[keepout.Keepout] = []
+    keepouts: list[GeomShapeClosed] = []
+    pin1_keepouts: list[GeomShapeClosed] = []
 
     for p in range(1, pins + 1):
         pextra = 0
@@ -845,10 +845,10 @@ def makeTerminalBlockVertical(
         pad_shape_extra = Pad.SHAPE_OVAL
 
     pad_layers = Pad.LAYERS_THT
-    keepouts: list[keepout.Keepout]=[]
+    keepouts: list[GeomShapeClosed]=[]
 
     # Used to track the keepouts for pin 1 to move the arrow if needed
-    pin1_keepouts: list[keepout.Keepout] = []
+    pin1_keepouts: list[GeomShapeClosed] = []
 
     for p in range(1, pins + 1):
 
@@ -1408,8 +1408,8 @@ def makeTerminalBlock45Degree(
         pad_shape_extra = Pad.SHAPE_OVAL
 
     pad_layers = Pad.LAYERS_THT
-    keepouts: list[keepout.Keepout] = []
-    pin1_keepouts: list[keepout.Keepout] = []
+    keepouts: list[GeomShapeClosed] = []
+    pin1_keepouts: list[GeomShapeClosed] = []
 
     for p in range(1, pins + 1):
         pextra = 0
@@ -2005,7 +2005,7 @@ def makeScrewTerminalSingleStd(
     pad_type = Pad.TYPE_THT
     pad_shapeother = Pad.SHAPE_CIRCLE
     pad_layers = Pad.LAYERS_THT
-    keepouts: list[keepout.Keepout] = []
+    keepouts: list[GeomShapeClosed] = []
 
     for p in pins:
         kicad_modg.append(
@@ -2024,7 +2024,7 @@ def makeScrewTerminalSingleStd(
         )
 
     # screw
-    keepouts_screw: list[keepout.Keepout] = []
+    keepouts_screw: list[GeomShapeClosed] = []
     if screw_diameter > 0:
         keepouts_screw = keepouts_screw +  DT.addKeepoutRound(
             screw_offset[0], screw_offset[1], screw_diameter, screw_diameter

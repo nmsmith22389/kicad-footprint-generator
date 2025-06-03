@@ -9,7 +9,7 @@ Fiducial marking generator
 import argparse
 from dataclasses import dataclass, asdict
 
-from kilibs.geom import geometricCircle
+from kilibs.geom import GeomCircle
 from KicadModTree import *  # NOQA
 from scripts.tools.footprint_generator import FootprintGenerator
 from scripts.tools.footprint_text_fields import addTextFields
@@ -99,7 +99,7 @@ class FiducialGenerator(FootprintGenerator):
         fab_outline = Circle(center=center, radius=radius, layer='F.Fab',
                      width=self.global_config.fab_line_width)
         kicad_mod.append(fab_outline)
-        body_edges = geometricCircle(center=center, radius=radius).bounding_box
+        body_edges = GeomCircle(center=center, radius=radius).bbox()
 
         # create Pad
         pad_radius = fp_config.marking_width / 2
@@ -114,12 +114,12 @@ class FiducialGenerator(FootprintGenerator):
             # cross in the middle
 
             # vertical: marking_width x mask_diameter
-            r = Rect(start=[-pad_radius, -radius], end=[pad_radius, radius],
+            r = Rectangle(start=[-pad_radius, -radius], end=[pad_radius, radius],
                  layer='F.Cu', width=0, fill=True)
             kicad_mod.append(r)
 
             # horizontal: mask_diameter x marking_width
-            r = Rect(start=[-radius, -pad_radius], end=[radius, pad_radius],
+            r = Rectangle(start=[-radius, -pad_radius], end=[radius, pad_radius],
                  layer='F.Cu', width=0, fill=True)
             kicad_mod.append(r)
 
@@ -128,7 +128,7 @@ class FiducialGenerator(FootprintGenerator):
         cy_outline = Circle(center=[0, 0], radius=cy_radius, layer='F.CrtYd',
                     width=self.global_config.courtyard_line_width)
         kicad_mod.append(cy_outline)
-        courtyard = geometricCircle(center=center, radius=cy_radius).bounding_box
+        courtyard = GeomCircle(center=center, radius=cy_radius).bbox()
 
         # text fields
         addTextFields(kicad_mod, self.global_config, body_edges, courtyard, fp_name)

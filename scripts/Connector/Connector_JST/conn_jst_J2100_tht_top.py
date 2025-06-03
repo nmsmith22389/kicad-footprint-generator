@@ -168,7 +168,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, configuration, 
     {'x': px,'y': 0},
     ]
 
-    kicad_mod.append(PolygonLine(polygon=marker, layer="F.SilkS", width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(shape=marker, layer="F.SilkS", width=configuration['silk_line_width']))
 
     sl = 1
     marker = [
@@ -176,7 +176,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, configuration, 
         {'x': body_edge['left'] +sl/sqrt(2),'y': 0},
         {'x': body_edge['left'],'y': -sl/2}
     ]
-    kicad_mod.append(PolygonLine(polygon=marker, layer='F.Fab', width=configuration['fab_line_width']))
+    kicad_mod.append(PolygonLine(shape=marker, layer='F.Fab', width=configuration['fab_line_width']))
 
     #line offset o
     o = 1
@@ -206,8 +206,8 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, configuration, 
     {'x': A/2,'y': y2 - 2 * t}
     ]
 
-    kicad_mod.append(PolygonLine(polygon = inside, layer="F.SilkS", width=configuration['silk_line_width']))
-    kicad_mod.append(PolygonLine(polygon = inside, x_mirror=A / 2, layer="F.SilkS", width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(shape=inside, layer="F.SilkS", width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(shape=inside, x_mirror=A / 2, layer="F.SilkS", width=configuration['silk_line_width']))
 
     ######################### Text Fields ###############################
     addTextFields(kicad_mod=kicad_mod, configuration=configuration, body_edges=body_edge,

@@ -253,7 +253,7 @@ for series in data:
         # Pin 1 arrow
         kicad_modt.append(
             PolygonLine(
-                polygon=[
+                shape=[
                     [-b - 0.5, fab_down],
                     [-b, fab_down - 0.5],
                     [-b + 0.5, fab_down],

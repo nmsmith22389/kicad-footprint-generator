@@ -20,8 +20,9 @@ from copy import copy
 from kilibs.geom import Vector2D
 from kilibs.util.param_util import toVectorUseCopyIfNumber
 from KicadModTree.util.corner_selection import CornerSelection
-from KicadModTree.nodes.base.Polygon import *
+from KicadModTree.nodes.base.Polygon import Polygon
 from KicadModTree.nodes.base.Pad import Pad, RoundRadiusHandler
+from KicadModTree.nodes.Node import Node
 from math import sqrt
 
 
@@ -168,7 +169,7 @@ class ChamferedPad(Node):
                 else:
                     points.append(corner_vectors[i]*outside)
 
-            primitives = [Polygon(nodes=points, width=polygon_width, fill=True, **self.mirror)]
+            primitives = [Polygon(shape=points, width=polygon_width, fill=True, **self.mirror)]
             # TODO make size calculation more resilient
             size = min(self.size.x, self.size.y)-max(self.chamfer_size[0], self.chamfer_size[1])/sqrt(2)
             if size <= 0:

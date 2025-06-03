@@ -4,7 +4,7 @@ from KicadModTree.nodes.specialized.ChamferedRect import (
     ChamferRect,
     CornerSelection,
 )
-from KicadModTree import PolygonLine, Rect
+from KicadModTree import PolygonLine, Rectangle
 from kilibs.geom import Vector2D, Direction
 
 from scripts.tools.global_config_files.global_config import GlobalConfig
@@ -12,7 +12,7 @@ from scripts.tools.global_config_files.global_config import GlobalConfig
 
 def draw_chamfer_rect_fab(
     size: Vector2D, global_config: GlobalConfig, has_chamfer: bool = True
-) -> ChamferRect | Rect:
+) -> ChamferRect | Rectangle:
     """
     Constructor for a optionally-chamfered Fab-layer rectangle with a chamfer on
     the top-left corner, centered on the origin.
@@ -36,7 +36,7 @@ def draw_chamfer_rect_fab(
             fill=False,
         )
     else:
-        return Rect(
+        return Rectangle(
             start=-size / 2,
             end=size / 2,
             width=global_config.fab_line_width,
@@ -85,7 +85,7 @@ def draw_pin1_chevron_on_hline(
         raise ValueError(f"Invalid direction {direction}")
 
     return PolygonLine(
-        nodes=[
+        shape=[
             [apex_x - chevron_width / 2, line_y],
             [apex_x, line_y - chevron_length],
             [apex_x + chevron_width / 2, line_y],

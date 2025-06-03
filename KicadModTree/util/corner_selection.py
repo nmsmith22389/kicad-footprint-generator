@@ -14,19 +14,23 @@
 # (C) 2024 KiCad Library Team
 
 class CornerSelection():
-    r"""Class for handling corner selection
-        :param corner_selection:
-            * A list of bools do directly set the corners
-              (top left, top right, bottom right, bottom left)
-            * A dict with keys (constants see below)
-            * The integer 1 means all corners
-            * The integer 0 means no corners
+    """Class for handling corner selection.
 
-        :constants:
-            * CornerSelection.TOP_LEFT
-            * CornerSelection.TOP_RIGHT
-            * CornerSelection.BOTTOM_RIGHT
-            * CornerSelection.BOTTOM_LEFT
+    Args:
+        corner_selection: Can be a `list` of 4 `bools`, a `dict` or an `int` with the
+            following interpretation:
+
+            * A list of bools do directly set the corners (top left,
+              top right, bottom right, bottom left);
+            * A dict with keys (constants see below);
+            * The integer 1 means all corners;
+            * The integer 0 means no corners.
+
+    :constants:
+        * CornerSelection.TOP_LEFT
+        * CornerSelection.TOP_RIGHT
+        * CornerSelection.BOTTOM_RIGHT
+        * CornerSelection.BOTTOM_LEFT
     """
 
     TOP_LEFT = 'tl'
@@ -34,7 +38,7 @@ class CornerSelection():
     BOTTOM_RIGHT = 'br'
     BOTTOM_LEFT = 'bl'
 
-    def __init__(self, corner_selection):
+    def __init__(self, corner_selection: list[bool] | dict | int):
         self.top_left = False
         self.top_right = False
         self.bottom_right = False

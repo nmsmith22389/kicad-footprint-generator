@@ -3,7 +3,7 @@
 import math
 import argparse
 
-from kilibs.geom import Rectangle
+from kilibs.geom import GeomRectangle
 from KicadModTree import *  # NOQA
 from KicadModTree.nodes.specialized import Stadium, ChamferedRect, CornerSelection
 from scripts.tools.drawing_tools import *
@@ -290,22 +290,22 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
         offset = Vector2D(0, 0)
         kicad_modg = kicad_mod
 
-        body_rect = Rectangle(center=offset, size=Vector2D(pack_width, pack_height))
+        body_rect = GeomRectangle(center=offset, size=Vector2D(pack_width, pack_height))
 
         # create FAB-layer
         if style == "hc49":
             kicad_mod.append(
-                Rect(
+                Rectangle(
                     start=body_rect.top_left,
                     end=body_rect.bottom_right,
                     layer="F.Fab",
                     width=self.global_config.fab_line_width,
                 )
             )
-            stadium_rect = body_rect.with_outset(-body_rect.size.y * 0.1)
+            stadium_rect = body_rect.inflated(-body_rect.size.y * 0.1)
             kicad_mod.append(
-                Stadium.Stadium.by_inscription(
-                    stadium_rect, layer="F.Fab", width=self.global_config.fab_line_width
+                Stadium.Stadium(
+                    shape=stadium_rect, layer="F.Fab", width=self.global_config.fab_line_width
                 )
             )
         elif style == "dip":
@@ -362,7 +362,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
             else:
                 kicad_modg.append(
                     PolygonLine(
-                        polygon=[
+                        shape=[
                             [l_slk + w_slk, t_slk],
                             [-overpads_x_slk / 2, t_slk],
                             [-overpads_x_slk / 2, t_slk + h_slk],
@@ -376,7 +376,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
             if pack_height < overpad_height and pack_width > overpad_width:
                 kicad_modg.append(
                     PolygonLine(
-                        polygon=[
+                        shape=[
                             [overpads_x_slk / 2, t_slk],
                             [l_slk + w_slk, t_slk],
                             [l_slk + w_slk, t_slk + h_slk],
@@ -397,7 +397,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
 
                 kicad_modg.append(
                     PolygonLine(
-                        polygon=[
+                        shape=[
                             [-overpads_x_slk / 2, mark_b_slk],
                             [-overpads_x_slk / 2, t_slk + h_slk],
                             [l_slk, t_slk + h_slk],
@@ -412,7 +412,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
             else:
                 kicad_modg.append(
                     PolygonLine(
-                        polygon=[
+                        shape=[
                             [-overpads_x_slk / 2, -overpads_y_slk / 2],
                             [-overpads_x_slk / 2, overpads_y_slk / 2],
                             [overpads_x_slk / 2, overpads_y_slk / 2],
@@ -427,7 +427,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
             ):
                 kicad_modg.append(
                     PolygonLine(
-                        polygon=[
+                        shape=[
                             [-overpads_x_slk / 2, -overpads_y_slk / 2],
                             [-overpads_x_slk / 2, overpads_y_slk / 2],
                             [overpads_x_slk / 2, overpads_y_slk / 2],
@@ -441,7 +441,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
 
                     kicad_modg.append(
                         PolygonLine(
-                            polygon=[
+                            shape=[
                                 [mark_l_slk, betweenpads_y_slk / 2],
                                 [l_slk, betweenpads_y_slk / 2],
                                 [l_slk, -betweenpads_y_slk / 2],
@@ -452,7 +452,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
                     )
                     kicad_modg.append(
                         PolygonLine(
-                            polygon=[
+                            shape=[
                                 [l_slk + w_slk, -betweenpads_y_slk / 2],
                                 [l_slk + w_slk, betweenpads_y_slk / 2],
                             ],
@@ -463,7 +463,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
                     if pins == 4:
                         kicad_modg.append(
                             PolygonLine(
-                                polygon=[
+                                shape=[
                                     [-betweenpads_x_slk / 2, t_slk],
                                     [betweenpads_x_slk / 2, t_slk],
                                 ],
@@ -473,7 +473,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
                         )
                         kicad_modg.append(
                             PolygonLine(
-                                polygon=[
+                                shape=[
                                     [betweenpads_x_slk / 2, t_slk + h_slk],
                                     [-betweenpads_x_slk / 2, t_slk + h_slk],
                                     [-betweenpads_x_slk / 2, mark_b_slk],
@@ -485,7 +485,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
                 elif pack_height < overpad_height and pack_width > overpad_width:
                     kicad_modg.append(
                         PolygonLine(
-                            polygon=[
+                            shape=[
                                 [overpads_x_slk / 2, t_slk],
                                 [l_slk + w_slk, t_slk],
                                 [l_slk + w_slk, t_slk + h_slk],
@@ -498,7 +498,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
                     if pins == 4:
                         kicad_modg.append(
                             PolygonLine(
-                                polygon=[
+                                shape=[
                                     [-betweenpads_x_slk / 2, t_slk],
                                     [betweenpads_x_slk / 2, t_slk],
                                 ],
@@ -527,7 +527,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
 
                         kicad_modg.append(
                             PolygonLine(
-                                polygon=[
+                                shape=[
                                     [-overpads_x_slk / 2, mark_b_slk],
                                     [-overpads_x_slk / 2, t_slk + h_slk],
                                     [l_slk, t_slk + h_slk],
@@ -550,7 +550,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
                     else:
                         kicad_modg.append(
                             PolygonLine(
-                                polygon=[
+                                shape=[
                                     [-overpads_x_slk / 2, mark_b_slk],
                                     [-overpads_x_slk / 2, t_slk + h_slk],
                                     [l_slk, t_slk + h_slk],
@@ -564,7 +564,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
                         if pins == 4:
                             kicad_modg.append(
                                 PolygonLine(
-                                    polygon=[
+                                    shape=[
                                         [betweenpads_x_slk / 2, t_slk + h_slk],
                                         [-betweenpads_x_slk / 2, t_slk + h_slk],
                                         [-betweenpads_x_slk / 2, mark_b_slk],
@@ -577,7 +577,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
                 elif pack_height > overpad_height and pack_width < overpad_width:
                     kicad_modg.append(
                         PolygonLine(
-                            polygon=[
+                            shape=[
                                 [l_slk, -overpads_y_slk / 2],
                                 [l_slk, t_slk],
                                 [l_slk + w_slk, t_slk],
@@ -589,7 +589,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
                     )
                     kicad_modg.append(
                         PolygonLine(
-                            polygon=[
+                            shape=[
                                 [mark_l_slk, overpads_y_slk / 2],
                                 [l_slk, overpads_y_slk / 2],
                                 [l_slk, t_slk + h_slk],
@@ -603,7 +603,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
                     if pins == 4:
                         kicad_modg.append(
                             PolygonLine(
-                                polygon=[
+                                shape=[
                                     [mark_l_slk, betweenpads_y_slk / 2],
                                     [l_slk, betweenpads_y_slk / 2],
                                     [l_slk, -betweenpads_y_slk / 2],
@@ -614,7 +614,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
                         )
                         kicad_modg.append(
                             PolygonLine(
-                                polygon=[
+                                shape=[
                                     [l_slk + w_slk, -betweenpads_y_slk / 2],
                                     [l_slk + w_slk, betweenpads_y_slk / 2],
                                 ],
@@ -639,13 +639,13 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
             pack_height + 2 * courtyard_offset_body,
         )
 
-        court_rect = Rectangle(center=offset, size=Vector2D(w_crt, h_crt)).rounded(
-            outwards=True, grid=self.global_config.courtyard_grid
+        court_rect = GeomRectangle(center=offset, size=Vector2D(w_crt, h_crt)).round_to_grid(
+            grid=self.global_config.courtyard_grid, outwards=True
         )
 
         # create courtyard
         kicad_mod.append(
-            Rect(
+            Rectangle(
                 start=court_rect.top_left,
                 end=court_rect.bottom_right,
                 layer="F.CrtYd",
@@ -1056,7 +1056,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
 
         # create FAB-layer
         kicad_modg.append(
-            Rect(
+            Rectangle(
                 start=[l_fab, t_fab],
                 end=[l_fab + w_fab, t_fab + h_fab],
                 layer="F.Fab",
@@ -1065,7 +1065,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
         )
         kicad_modg.append(
             PolygonLine(
-                polygon=[
+                shape=[
                     [l_fab + w_fab / 2 - pack_rm / 2, t_fab],
                     [0, t_fab / 2],
                     [0, 0],
@@ -1076,7 +1076,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
         )
         kicad_modg.append(
             PolygonLine(
-                polygon=[
+                shape=[
                     [l_fab + w_fab / 2 + pack_rm / 2, t_fab],
                     [rm, t_fab / 2],
                     [rm, 0],
@@ -1096,7 +1096,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
             )
         if style == "hc49":
             kicad_modg.append(
-                Rect(
+                Rectangle(
                     start=[l_fab - bev, t_fab],
                     end=[l_fab + w_fab + bev, t_fab - lw_fab],
                     layer="F.Fab",
@@ -1107,7 +1107,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
         if package_pad and package_pad_add_holes:
             kicad_modg.append(
                 PolygonLine(
-                    polygon=[
+                    shape=[
                         [
                             l_slk,
                             pad3pos[1]
@@ -1133,7 +1133,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
             if slk_u_line:
                 kicad_modg.append(
                     PolygonLine(
-                        polygon=[
+                        shape=[
                             [l_slk, t_slk + h_slk],
                             [l_slk, t_slk],
                             [l_slk + w_slk, t_slk],
@@ -1145,7 +1145,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
                 )
             else:
                 kicad_modg.append(
-                    Rect(
+                    Rectangle(
                         start=[l_slk, t_slk],
                         end=[l_slk + w_slk, t_slk + h_slk],
                         layer="F.SilkS",
@@ -1154,7 +1154,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
                 )
         kicad_modg.append(
             PolygonLine(
-                polygon=[
+                shape=[
                     [l_slk + w_slk / 2 - pack_rm / 2, t_slk],
                     [0, max(t_slk / 2, pad[1] / 2 + slk_offset)],
                     [0, pad[1] / 2 + slk_offset],
@@ -1165,7 +1165,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
         )
         kicad_modg.append(
             PolygonLine(
-                polygon=[
+                shape=[
                     [l_slk + w_slk / 2 + pack_rm / 2, t_slk],
                     [rm, max(t_slk / 2, pad[1] / 2 + slk_offset)],
                     [rm, pad[1] / 2 + slk_offset],
@@ -1176,7 +1176,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
         )
         if style == "hc49":
             kicad_modg.append(
-                Rect(
+                Rectangle(
                     start=[l_slk - bev, t_slk],
                     end=[l_slk + w_slk + bev, t_slk - lw_slk],
                     layer="F.SilkS",
@@ -1186,7 +1186,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
 
         # create courtyard
         kicad_mod.append(
-            Rect(
+            Rectangle(
                 start=[roundCrt(l_crt + offset[0]), roundCrt(t_crt + offset[1])],
                 end=[
                     roundCrt(l_crt + w_crt + offset[0]),
@@ -1365,7 +1365,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
         centerpos = Vector2D(rm * (pins - 1) / 2, 0)
         pin1pos = Vector2D(0, 0)
 
-        body_bounds = Rectangle(
+        body_bounds = GeomRectangle(
             center=centerpos,
             size=Vector2D(pack_width, pack_height),
         )
@@ -1395,24 +1395,21 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
         keepouts = DT.getKeepoutsForPads(
             list(pad_array.get_pads()), self.global_config.silk_pad_offset
         )
-
-        kicad_modg += Stadium.Stadium.by_inscription(
-            body_bounds, "F.Fab", self.global_config.fab_line_width
+        fab_stadium = Stadium.Stadium(
+            shape=body_bounds, layer="F.Fab", width=self.global_config.fab_line_width
         )
-
+        kicad_modg += fab_stadium
         # This would be easier with a KeepoutNode to append to that handles this,
         # Then we could just add a Stadium
         # But to get this to generate now, we just steal the primitives
         # and apply keepouts ourselves.
 
-        silk_stadium = Stadium.Stadium.by_inscription(
-            body_bounds.with_outset(self.global_config.silk_fab_offset),
-            "F.SilkS",  # not actually used
-            self.global_config.silk_line_width,
-        )
+        silk_stadium = fab_stadium.inflated(self.global_config.silk_fab_offset)
+        silk_stadium.layer = "F.SilkS"
+        silk_stadium.width = self.global_config.silk_line_width
 
         kicad_modg += makeNodesWithKeepout(
-            list(silk_stadium.get_primitives()),
+            list(silk_stadium.get_shapes_back_compatible()),
             layer="F.SilkS",
             width=self.global_config.silk_line_width,
             keepouts=keepouts,
@@ -1434,7 +1431,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
             rm * (pins - 1) + pad_size.x + 2 * pad_courtyard_offset,
         )
 
-        courtyard_rect = Rectangle(center=centerpos, size=Vector2D(cy_width, cy_height))
+        courtyard_rect = GeomRectangle(center=centerpos, size=Vector2D(cy_width, cy_height))
 
         kicad_mod += drawing_tools_courtyard.make_round_or_stadium_courtyard(
             self.global_config, courtyard_rect
@@ -1565,7 +1562,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
         )
         cy_height_y = pack_diameter + 2 * courtyard_offset_body
 
-        courtyard_rect = Rectangle(
+        courtyard_rect = GeomRectangle(
             center=center_pos, size=Vector2D(cy_width_x, cy_height_y)
         )
 
@@ -1573,7 +1570,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
             self.global_config, courtyard_rect
         )
 
-        body_rect = Rectangle(center=center_pos, size=Vector2D(pack_diameter, pack_diameter))
+        body_rect = GeomRectangle(center=center_pos, size=Vector2D(pack_diameter, pack_diameter))
 
         footprint_text_fields.addTextFields(
             kicad_modg,

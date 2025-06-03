@@ -33,10 +33,11 @@ fp_format_check() {
 
     # Include "clean" scripts (one day this will be all of them)
     local clean_files=(
-        "$KICADMODTREE_DIR/nodes/specialized/RoundRect.py"
+        "$KICADMODTREE_DIR/nodes/specialized/RoundRectangle.py"
         "$KICADMODTREE_DIR/nodes/specialized/Stadium.py"
         "$KICADMODTREE_DIR/nodes/specialized/Trapezoid.py"
-        "src/kilibs/declarative_defs"
+        "src"
+        "tests"
         "scripts/tests/test_utils"
         "scripts/tools/drawing_tools.py"
         "scripts/generator.py"

@@ -663,15 +663,6 @@
 		(layer "F.Fab")
 	)
 	(fp_line
-		(start 5 3)
-		(end 5 3)
-		(stroke
-			(width 0.1)
-			(type solid)
-		)
-		(layer "F.Fab")
-	)
-	(fp_line
 		(start 6 -2)
 		(end 6 -1.8)
 		(stroke

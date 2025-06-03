@@ -1,121 +1,68 @@
-from KicadModTree import Arc, Line, Node
+# kilibs is free software: you can redistribute it and/or modify it under the terms of
+# the GNU General Public License as published by the Free Software Foundation, either
+# version 3 of the License, or (at your option) any later version.
+#
+# kilibs is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+# without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+# PURPOSE. See the GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along with kilibs.
+# If not, see < http://www.gnu.org/licenses/ >.
+#
+# (C) The KiCad Librarian Team
+
+from __future__ import annotations
+
+from KicadModTree import LineStyle, NodeShape
 from kilibs.geom import (
-    Rectangle,
-    Vector2D,
-    geometricArc,
-    geometricLine,
-    geometricPrimitive,
+    GeomRectangle,
+    GeomStadium,
+    Vec2DCompatible,
 )
 
 
-class Stadium(Node):
-    """
-    Draws a stadium shape, which is a rectangle with semi-circular ends.
-    Sometimes called a racetrack shape, or oblong (that's also
-    the name of a non-square rectangle), or obround, or oval.
-
-    Stadium is about the only unambiguous name for this shape!
-    """
-
+class Stadium(NodeShape, GeomStadium):
     def __init__(
         self,
-        center_1: Vector2D,
-        center_2: Vector2D,
-        radius: float,
-        layer: str,
-        width: float,
+        layer: str = "F.SilkS",
+        width: float | None = None,
+        style: LineStyle = LineStyle.SOLID,
+        fill: bool = False,
+        offset: float = 0,
+        shape: Stadium | GeomStadium | GeomRectangle | None = None,
+        center_1: Vec2DCompatible | None = None,
+        center_2: Vec2DCompatible | None = None,
+        radius: float | None = None,
     ):
+        """Create a stadium shape, which is a rectangle with semi-circular ends.
+
+        Sometimes called a racetrack shape, or oblong (that's also the name of a
+        non-square rectangle), or obround, or oval. Stadium is about the only
+        unambiguous name for this shape!
+
+        Args:
+            layer: Layer.
+            width: Line width in mm. If `None`, then the standard width for the given
+                layer will be used when the serializing the node.
+            style: Line style.
+            fill: `True` if the stadium is filled, `False` if only the outline is
+                visible.
+            offset: Amount by which the stadium is inflated or deflated (if offset is
+                negative).
+            shape: Shape from which to derive the parameters of the stadium. When a
+                `GeomRectangle` is passed, then the stadium is inscribed in that
+                rectangle.
+            center_1: Coordinates (in mm) of the center of the first semi-circle.
+            center_2: Coordinates (in mm) of the center of the second semi-circle.
+            radius: The radius of the semi-circles in mm.
+
+        Example:
+            The following 3 stadiums are identical:
+
+            .. code-block::
+
+            >>> stadium1 = Stadium(center_1=(-1, 0), center_2=(+1, 0), radius = 1.0)
+            >>> stadium2 = Stadium(shape=stadium1)
+            >>> stadium3 = Stadium(shape=GeomRectangle(center=(0, 0), size=(4, 2)))
         """
-        :param center_1: The center of the first semi-circle
-        :param center_2: The center of the second semi-circle
-        :param radius: The radius of the semi-circles
-        :param layer: The layer to draw on
-        :param width: The width of the lines
-        """
-        super().__init__()
-
-        self.center_1 = Vector2D(center_1)
-        self.center_2 = Vector2D(center_2)
-        self.radius = radius
-        self.layer = layer
-        self.width = width
-
-        self._children = self._rebuild()
-
-    def by_inscription(rect: Rectangle, layer: str, width: float) -> "Stadium":
-        """
-        Build a stadium inscribed into the given rectangle. The rounded ends will
-        be at the short edge of the rectangle.
-        """
-
-        if rect.size.x > rect.size.y:
-            radius = rect.size.y / 2
-            c1 = Vector2D(rect.left + radius, rect.center.y)
-            c2 = Vector2D(rect.right - radius, rect.center.y)
-        else:
-            radius = rect.size.x / 2
-            c1 = Vector2D(rect.center.x, rect.top + radius)
-            c2 = Vector2D(rect.center.x, rect.bottom - radius)
-        return Stadium(
-            center_1=c1, center_2=c2, radius=radius, width=width, layer=layer
-        )
-
-    def get_primitives(self):
-        """
-        Yield the geometric primitives that make up this stadium.
-        """
-
-        # centre 1 to centre 2 vector
-        c_vec = self.center_2 - self.center_1
-
-        perp_vec = c_vec.orthogonal().resize(self.radius)
-
-        # Vector from centre 2 to arc mid point
-        c_to_arc_mid = c_vec.resize(self.radius)
-
-        yield geometricArc(
-            start=self.center_1 + perp_vec,
-            end=self.center_1 - perp_vec,
-            midpoint=self.center_1 - c_to_arc_mid,
-        )
-
-        yield geometricArc(
-            start=self.center_2 + perp_vec,
-            end=self.center_2 - perp_vec,
-            midpoint=self.center_2 + c_to_arc_mid,
-        )
-
-        yield geometricLine(
-            start=self.center_1 + perp_vec,
-            end=self.center_2 + perp_vec,
-        )
-
-        yield geometricLine(
-            start=self.center_1 - perp_vec,
-            end=self.center_2 - perp_vec,
-        )
-
-    def _rebuild(self) -> list[Node]:
-
-        nodes = []
-
-        for primitive in self.get_primitives():
-            if isinstance(primitive, geometricArc):
-                nodes.append(
-                    Arc(geometry=primitive, layer=self.layer, width=self.width)
-                )
-            elif isinstance(primitive, geometricLine):
-                nodes.append(
-                    Line(geometry=primitive, layer=self.layer, width=self.width)
-                )
-
-        return nodes
-
-    def getVirtualChilds(self):
-        return self._children
-
-    def __repr__(self):
-        return f"Stadium(c1={self.center_1}, c2={self.center_2}, r={self.radius}, {self.layer}, {self.width})"
-
-    def __str__(self):
-        return repr(self)
+        self.init_super(kwargs=locals())

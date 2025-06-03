@@ -1,6 +1,6 @@
 import pytest
 
-from KicadModTree import Rect, Vector2D
+from KicadModTree import Rectangle, Vector2D
 from KicadModTree.tests.test_utils import custom_assertions as CA
 
 
@@ -16,18 +16,18 @@ def test_Rect(start, end, layer, width):
     s = Vector2D(start)
     e = Vector2D(end)
 
-    r = Rect(start=s, end=e, layer=layer, width=width)
+    r = Rectangle(start=s, end=e, layer=layer, width=width)
 
     # Check that the properties are set correctly
-    assert r.start_pos == s
-    assert r.end_pos == e
+    assert r.start == s
+    assert r.end == e
     assert r.layer == layer
     assert r.width == width
 
     # Flatten the object and check the output
     #
-    # Rect is a base object, so it should flatten to itself
+    # Rectangle is a base object, so it should flatten to itself
     serialised = r.serialize()
 
-    rects = CA.assert_contains_n_of_type(serialised, 1, Rect)
+    rects = CA.assert_contains_n_of_type(serialised, 1, Rectangle)
     assert rects[0] == r

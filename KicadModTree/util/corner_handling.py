@@ -5,15 +5,15 @@ class RoundRadiusHandler(object):
     r"""Handles round radius setting of a corner
 
     :Keyword Arguments:
-    * *radius_ratio* (``float [0 <= r <= 0.5]``) --
-      The radius ratio of the rounded rectangle.
-    * *maximum_radius* (``float``) --
-      The maximum radius for the rounded rectangle.
-      If the radius produced by the radius_ratio parameter for the pad would
-      exceed the maximum radius, the ratio is reduced to limit the radius.
-      (This is useful for IPC-7351C compliance as it suggests 25% ratio with limit 0.25mm)
-    * *round_radius_exact* (``float``) --
-      Set an exact round radius for a pad.
+        * *radius_ratio* (``float`` [0 <= r <= 0.5]``) --
+          The radius ratio of the rounded rectangle.
+        * *maximum_radius* (``float``) --
+          The maximum radius for the rounded rectangle.
+          If the radius produced by the radius_ratio parameter for the pad would
+          exceed the maximum radius, the ratio is reduced to limit the radius.
+          (This is useful for IPC-7351C compliance as it suggests 25% ratio with limit 0.25mm)
+        * *round_radius_exact* (``float``) --
+          Set an exact round radius for a pad.
     """
 
     radius_ratio: float
@@ -108,17 +108,17 @@ class ChamferSizeHandler(object):
         See below
 
     :Keyword Arguments:
-    * *chamfer_ratio* (``float [0 <= r <= 0.5]``) --
-      The chamfer ratio of the rounded rectangle. (default set by default_chamfer_ratio)
-    * *maximum_chamfer* (``float``) --
-      The maximum chamfer size.
-      If the chamfer produced by the chamfer_ratio parameter for the pad would
-      exceed the maximum size, the ratio is reduced to limit the size.
-      (This is useful for IPC-7351C compliance as it suggests 25% ratio with limit 0.25mm)
-    * *chamfer_exact* (``float``) --
-      Set an exact round chamfer size for a pad.
-    * *default_chamfer_ratio* (``float [0 <= r <= 0.5]``) --
-      This parameter allows to set the default chamfer ratio
+        * *chamfer_ratio* (``float [0 <= r <= 0.5]``) --
+          The chamfer ratio of the rounded rectangle. (default set by default_chamfer_ratio)
+        * *maximum_chamfer* (``float``) --
+          The maximum chamfer size.
+          If the chamfer produced by the chamfer_ratio parameter for the pad would
+          exceed the maximum size, the ratio is reduced to limit the size.
+          (This is useful for IPC-7351C compliance as it suggests 25% ratio with limit 0.25mm)
+        * *chamfer_exact* (``float``) --
+          Set an exact round chamfer size for a pad.
+        * *default_chamfer_ratio* (``float [0 <= r <= 0.5]``) --
+          This parameter allows to set the default chamfer ratio
     """
 
     def __init__(self, **kwargs):

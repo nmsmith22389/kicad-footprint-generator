@@ -13,8 +13,8 @@
 #
 # (C) 2016 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 
-from kilibs.geom import Vector3D
 from KicadModTree.nodes.Node import Node
+from kilibs.geom import Vector3D
 
 
 class Model(Node):

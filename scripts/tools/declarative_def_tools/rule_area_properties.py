@@ -144,7 +144,7 @@ def create_rule_area_zones(rule_areas: Union[RuleAreaProperties, List[RuleAreaPr
                     footprints=rule_area.keepouts.footprints,
                 )
 
-                zone = Zone(polygon_pts=rect.get_polygon_points(),
+                zone = Zone(shape=rect,
                             layers=layers,
                             hatch=Hatch(Hatch.EDGE, 0.5),
                             net=0,

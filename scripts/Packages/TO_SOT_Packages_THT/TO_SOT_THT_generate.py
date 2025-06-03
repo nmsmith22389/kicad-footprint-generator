@@ -17,13 +17,13 @@ from KicadModTree import (
     Node,
     Pad,
     Property,
-    Rect,
+    Rectangle,
     Text,
     Translation,
 )
 from KicadModTree.util.courtyard_builder import CourtyardBuilder
-from kilibs.geom import Rectangle
-from kilibs.geom.rounding import round_to_grid_e
+from kilibs.geom import GeomRectangle
+from kilibs.geom.tools.rounding import round_to_grid_e
 from scripts.tools.declarative_def_tools import common_metadata
 from scripts.tools.drawing_tools import (
     addCircleLF,
@@ -38,7 +38,6 @@ from scripts.tools.drawing_tools import (
     addVDLineWithKeepout,
     addVLineWithKeepout,
     makeRectWithKeepout,
-    roundCrt,
 )
 from scripts.tools.footprint_generator import FootprintGenerator
 from scripts.tools.footprint_text_fields import addTextFields
@@ -378,11 +377,12 @@ class TOGenerator(FootprintGenerator):
 
         ###  FAB LAYER   ######################################################
 
-        outline = Rectangle.by_corners(
-            [left_fab_plastic, top_fab_plastic], [right_fab_plastic, bottom_fab_plastic]
+        outline = GeomRectangle(
+            start=[left_fab_plastic, top_fab_plastic],
+            end=[right_fab_plastic, bottom_fab_plastic],
         )
-        fab_outline = Rect(
-            rect=outline,
+        fab_outline = Rectangle(
+            shape=outline,
             layer="F.Fab",
             width=c.fab_line_width,
         )
@@ -393,7 +393,7 @@ class TOGenerator(FootprintGenerator):
             yl2 = pad[1]
             if yl2 > yl1:
                 fpt.append(
-                    Rect(
+                    Rectangle(
                         start=[pad[0] - pkg.pin_width_height[0] / 2, yl1],
                         end=[pad[0] + pkg.pin_width_height[0] / 2, yl2],
                         layer="F.Fab",
@@ -454,7 +454,7 @@ class TOGenerator(FootprintGenerator):
                 pkg.pad_dimensions[1] + 2 * c.silk_pad_clearance + c.silk_line_width,
             )
 
-        silk_rect = outline.with_outset(self.global_config.silk_fab_offset)
+        silk_rect = outline.inflated(self.global_config.silk_fab_offset)
         silk_nodes = makeRectWithKeepout(
             rect=silk_rect,
             layer="F.SilkS",
@@ -672,7 +672,7 @@ class TOGenerator(FootprintGenerator):
                     )
                 else:
                     fpt.append(
-                        Rect(
+                        Rectangle(
                             start=[
                                 left_fab_metal,
                                 top_fab_metal,
@@ -703,7 +703,7 @@ class TOGenerator(FootprintGenerator):
                     )
                 else:
                     fpt.append(
-                        Rect(
+                        Rectangle(
                             start=[
                                 left_fab_metal,
                                 top_fab_metal,
@@ -732,7 +732,7 @@ class TOGenerator(FootprintGenerator):
             )
         else:
             fpt.append(
-                Rect(
+                Rectangle(
                     start=[left_fab_plastic, bottom_fab_plastic],
                     end=[
                         right_fab_plastic,
@@ -757,7 +757,7 @@ class TOGenerator(FootprintGenerator):
         # Pins
         for p in range(len(pads)):
             fpt.append(
-                Rect(
+                Rectangle(
                     start=[
                         pads[p][0] - pkg.pin_width_height[0] / 2,
                         bottom_fab_plastic,
@@ -999,7 +999,7 @@ class TOGenerator(FootprintGenerator):
                 )
             else:
                 fp.append(
-                    Rect(
+                    Rectangle(
                         start=[
                             left_fab_metal,
                             bottom_fab_plastic,
@@ -1028,7 +1028,7 @@ class TOGenerator(FootprintGenerator):
             )
         else:
             fp.append(
-                Rect(
+                Rectangle(
                     start=[left_fab_plastic, top_fab_plastic],
                     end=[
                         right_fab_plastic,
@@ -1054,7 +1054,7 @@ class TOGenerator(FootprintGenerator):
         # Pads
         for p in range(1, pkg.pins + 1):
             fp.append(
-                Rect(
+                Rectangle(
                     start=[x - pkg.pin_width_height[0] / 2, top_fab_plastic],
                     end=[x + pkg.pin_width_height[0] / 2, 0],
                     layer="F.Fab",
@@ -1263,9 +1263,9 @@ class TOGenerator(FootprintGenerator):
                     width=line_width,
                 )
             )
-            node.append(Line(start=x1, end=x2, angle=0, layer=layer, width=line_width))
-            node.append(Line(start=x2, end=x4, angle=0, layer=layer, width=line_width))
-            node.append(Line(start=x4, end=x3, angle=0, layer=layer, width=line_width))
+            node.append(Line(start=x1, end=x2, layer=layer, width=line_width))
+            node.append(Line(start=x2, end=x4, layer=layer, width=line_width))
+            node.append(Line(start=x4, end=x3, layer=layer, width=line_width))
         else:
             node.append(
                 Circle(

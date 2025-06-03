@@ -151,7 +151,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pincount, configurati
 
     # create fab outline and pin 1 marker
     kicad_mod.append(PolygonLine(
-        polygon=[
+        shape=[
             # Left upper corner
             [-half_body_width, body_y1],
             # Right upper corner
@@ -184,7 +184,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pincount, configurati
         layer='F.Fab', width=configuration['fab_line_width']))
 
     kicad_mod.append(PolygonLine(
-        polygon=[
+        shape=[
             [-pad1_x-0.5, body_y1],
             [-pad1_x, body_y1+1],
             [-pad1_x+0.5, body_y1]],
@@ -192,7 +192,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pincount, configurati
 
     # create open actuator outline, only on F.Fab
     kicad_mod.append(PolygonLine(
-        polygon=[
+        shape=[
             [half_body_width, actuator_y1],
             [half_body_width, actuator_y2-acutator_height],
             [half_actuator_width, actuator_y2-acutator_height],
@@ -209,7 +209,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pincount, configurati
 
     # Silkscreen outline
     kicad_mod.append(PolygonLine(
-        polygon=[
+        shape=[
             # This line was disabled due to copper/silkscreen clearance
             #[actuator_rectangular_section_half_width+nudge,actuator_rectangular_section_start_y-nudge],
             [actuator_rectangular_section_half_width+nudge, actuator_angle_start_y],
@@ -227,7 +227,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pincount, configurati
 
     # Pin 1 marker
     # kicad_mod.append(PolygonLine(
-    #     polygon=[
+    #     shape=[
     #         [-tab_x+mounting_pad_width/2.0+silk_clearance, body_y1-nudge],
     #         [-pad1_x-pad_width/2.0-silk_clearance, body_y1-nudge],
     #         [-pad1_x-pad_width/2.0-silk_clearance, body_y1-nudge-marker_y]],

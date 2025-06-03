@@ -39,9 +39,9 @@ def gen_fab_pins(origx, origy, kicad_mod, global_config: GC.GlobalConfig):
         {'x': origx+12.3, 'y': origy+0.64/2},
         {'x': origx+6.3, 'y': origy+0.64/2},
     ]
-    kicad_mod.append(PolygonLine(polygon=poly_f_back,
+    kicad_mod.append(PolygonLine(shape=poly_f_back,
                                  width=global_config.fab_line_width, layer="F.Fab"))
-    kicad_mod.append(PolygonLine(polygon=poly_f_front,
+    kicad_mod.append(PolygonLine(shape=poly_f_front,
                                  width=global_config.fab_line_width, layer="F.Fab"))
 
 def gen_silk_pins(origx, origy, kicad_mod, global_config: GC.GlobalConfig, fill: bool):
@@ -60,15 +60,15 @@ def gen_silk_pins(origx, origy, kicad_mod, global_config: GC.GlobalConfig, fill:
         {'x': origx+12.3+global_config.silk_line_width, 'y': origy+0.64/2+global_config.silk_line_width},
         {'x': origx+6.3+global_config.silk_line_width, 'y': origy+0.64/2+global_config.silk_line_width},
     ]
-    kicad_mod.append(PolygonLine(polygon=poly_s_back1,
+    kicad_mod.append(PolygonLine(shape=poly_s_back1,
                                  width=global_config.silk_line_width, layer="F.SilkS"))
-    kicad_mod.append(PolygonLine(polygon=poly_s_back2,
+    kicad_mod.append(PolygonLine(shape=poly_s_back2,
                                  width=global_config.silk_line_width, layer="F.SilkS"))
 
     if not fill:
         kicad_mod.append(
             PolygonLine(
-                polygon=poly_s_front,
+                shape=poly_s_front,
                 width=global_config.silk_line_width,
                 layer="F.SilkS",
             )
@@ -77,7 +77,7 @@ def gen_silk_pins(origx, origy, kicad_mod, global_config: GC.GlobalConfig, fill:
         rect_c = Vector2D(origx+global_config.silk_line_width+(6.3+12.3)/2, origy)
         rect_size = Vector2D(6, 0.64+global_config.silk_line_width  *2 )
         kicad_mod.append(
-            Rect(
+            Rectangle(
                 start=rect_c - rect_size / 2,
                 end=rect_c + rect_size / 2,
                 layer="F.SilkS",
@@ -149,7 +149,7 @@ def gen_footprint(global_config: GC.GlobalConfig, pinnum, manpart, configuration
         {'x': -6.775+padsize[0]/2+3.8-silkslw, 'y': -(pitch*(pinnum-1))/2-pitch-2.54/2+2.54*pinnum+silkslw+2.54},
         {'x': -6.775+padsize[0]/2+3.8-silkslw, 'y': -(pitch*(pinnum-1))/2-pitch-2.54/2-silkslw+2.54},
     ]
-    kicad_mod.append(PolygonLine(polygon=s_body,
+    kicad_mod.append(PolygonLine(shape=s_body,
                                  width=global_config.silk_line_width, layer="F.SilkS"))
     for y in range(0, pinnum):
         gen_silk_pins(-6.775+padsize[0]/2, -(pitch*(pinnum-1))/2+pitch+(y-1)*2.54, kicad_mod, global_config, y==0)
@@ -183,7 +183,7 @@ def gen_footprint(global_config: GC.GlobalConfig, pinnum, manpart, configuration
         {'x': cy_left, 'y': cy_bottom},
         {'x': cy_left, 'y': cy_top},
     ]
-    kicad_mod.append(PolygonLine(polygon=poly_cy,
+    kicad_mod.append(PolygonLine(shape=poly_cy,
                                  layer='F.CrtYd', width=global_config.courtyard_line_width))
 
     # Text Fields

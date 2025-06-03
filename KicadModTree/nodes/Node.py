@@ -14,13 +14,13 @@
 # (C) 2016 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 # modifications 2022 by Armin Schoisswohl (@armin.sch)
 from __future__ import annotations
-import math
 import uuid
 from copy import copy, deepcopy
 from traceback import print_stack
 from hashlib import sha1
 from enum import Enum
-from typing import Iterable
+from typing import Iterable, Self
+from collections.abc import Sequence
 
 from kilibs.geom import BoundingBox, Vector2D, Vector3D
 
@@ -180,7 +180,7 @@ class TStamp(object):
 
 class Node(object):
     def __init__(self):
-        self._parent = None
+        self._parent: Node | None = None
         self._childs = []
 
         self._tstamp = TStamp(parent=self)
@@ -263,11 +263,11 @@ class Node(object):
         if (node.getTStampCls().getTStampSeed() is None) and (self.getTStampCls().getTStampSeed() is not None):
             node.setTStampSeedFromNode(self)
 
-    def extend(self, nodes):
+    def extend(self, nodes: Sequence[Node]) -> None:
         '''
         add list of nodes to child nodes
         '''
-        new_nodes = []
+        new_nodes: list[Node] = []
         for node in nodes:
             if not isinstance(node, Node):
                 raise TypeError('invalid object, has to be based on Node')
@@ -353,8 +353,15 @@ class Node(object):
 
         self.append(node)
 
-    def copy(self):
-        copy = deepcopy(self)
+    def copy(self) -> Self:
+        """ Creates a copy of itself """
+        # Deepcopy is slow. Use it only for nodes that have no copy constructor
+        # implemented yet:
+        from KicadModTree.nodes.NodeShape import NodeShape
+        if isinstance(self, NodeShape):
+            copy = NodeShape.copy(self)
+        else:
+            copy = deepcopy(self)
         copy._parent = None
         return copy
 
@@ -444,7 +451,7 @@ class Node(object):
 
         return self._parent.getRealPosition(coordinate, rotation)
 
-    def calculateBoundingBox(self, outline=None):
+    def bbox(self) -> BoundingBox:
         """
         Get the bounding box of the node. This is in its own context,
         so it it is independent of the parent nodes's transformation,
@@ -453,15 +460,10 @@ class Node(object):
          - Translation(offset)  has box = (a + offset -> b + offset)
            - Line(a -> b)       has box = (a -> b)
         """
-
         bbox = BoundingBox()
 
-        if outline:
-            bbox.include_point(Vector2D(outline['min']['x'], outline['min']['y']))
-            bbox.include_point(Vector2D(outline['max']['x'], outline['max']['y']))
-
         for child in self.getAllChilds():
-            child_bbox = child.calculateBoundingBox()
+            child_bbox = child.bbox()
             bbox.include_bbox(child_bbox)
 
         return bbox

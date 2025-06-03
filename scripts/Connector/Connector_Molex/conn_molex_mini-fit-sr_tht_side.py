@@ -190,15 +190,15 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, params, configu
         {'y': yt2-off, 'x': xl1-off},
         {'y': yt2-off, 'x': ret_dx-ret_size/2},
     ]
-    kicad_mod.append(PolygonLine(polygon=silk1, layer='F.SilkS', width=configuration['silk_line_width']))
-    kicad_mod.append(PolygonLine(polygon=silk1, layer='F.SilkS', width=configuration['silk_line_width'], y_mirror=P / 2))
+    kicad_mod.append(PolygonLine(shape=silk1, layer='F.SilkS', width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(shape=silk1, layer='F.SilkS', width=configuration['silk_line_width'], y_mirror=P / 2))
     silk2 = [
         {'y': yt2-off, 'x': ret_dx+ret_size/2},
         {'y': yt2-off, 'x': xr1+off},
         {'y': P/2, 'x': xr1+off},
     ]
-    kicad_mod.append(PolygonLine(polygon=silk2, layer='F.SilkS', width=configuration['silk_line_width']))
-    kicad_mod.append(PolygonLine(polygon=silk2, layer='F.SilkS', width=configuration['silk_line_width'], y_mirror=P / 2))
+    kicad_mod.append(PolygonLine(shape=silk2, layer='F.SilkS', width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(shape=silk2, layer='F.SilkS', width=configuration['silk_line_width'], y_mirror=P / 2))
 
     for i in range(pins - 1):
         kicad_mod.append(Line(start=[xl1-off, i*pitch+pad_size[1]/2+pad_silk_off],
@@ -218,15 +218,15 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, params, configu
         {'x': body_edge['left'] - pin1_sl/sqrt(2), 'y': 0},
         {'x': body_edge['left'], 'y': pin1_sl/2}
     ]
-    kicad_mod.append(PolygonLine(polygon=pin1, layer='F.Fab', width=configuration['fab_line_width']))
-    kicad_mod.append(PolygonLine(polygon=pin1, layer='F.Fab', width=configuration['fab_line_width'],
+    kicad_mod.append(PolygonLine(shape=pin1, layer='F.Fab', width=configuration['fab_line_width']))
+    kicad_mod.append(PolygonLine(shape=pin1, layer='F.Fab', width=configuration['fab_line_width'],
                                  x_mirror=(body_edge['left']+xl2)/2))
 
     pin1 = [
         {'y': -pad_size[1]/2 - pad_silk_off, 'x': xl1-off},
         {'y': -pad_size[1]/2 - pad_silk_off, 'x': -pad_size[0]/2}
     ]
-    kicad_mod.append(PolygonLine(polygon=pin1, layer='F.SilkS', width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(shape=pin1, layer='F.SilkS', width=configuration['silk_line_width']))
 
     # pin1 = [
     #     {'x': 0, 'y': 8},
@@ -234,7 +234,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, params, configu
     #     {'x': -0.5, 'y': 9},
     #     {'x': 0, 'y': 8},
     # ]
-    # kicad_mod.append(PolygonLine(polygon=pin1, layer='F.SilkS', width=configuration['silk_line_width']))
+    # kicad_mod.append(PolygonLine(shape=pin1, layer='F.SilkS', width=configuration['silk_line_width']))
 
     ########################### CrtYd #################################
     cx1 = round_to_grid(bounding_box['left']-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])

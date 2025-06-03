@@ -237,7 +237,7 @@ class LayerMarkerGenerator(FootprintGenerator):
 		top_rght = [top_left[0]+bbox["w"], top_left[1]]
 		bottom_l = [top_left[0], top_left[1]+bbox["h"]]
 		bottom_r = [top_rght[0], bottom_l[1]]
-		pts = PolygonPoints(nodes=[top_left, top_rght, bottom_r, bottom_l])
+		pts = GeomPolygon(shape=[top_left, top_rght, bottom_r, bottom_l])
 		zone = Zone(pts, Hatch(Hatch.EDGE, 0.5), keepouts=deny_cu, layers=["*.Cu"])
 		kicad_mod.append(zone)
 

@@ -86,7 +86,7 @@ def rotary_coded_switch(args):
                   layer="F.Fab", size=s, thickness=t))
 
     # Fab
-    f.append(PolygonLine(polygon=[[xLeft + chamfer, yTop],
+    f.append(PolygonLine(shape=[[xLeft + chamfer, yTop],
                                    [xRight, yTop],
                                    [xRight, yBottom],
                                    [xLeft, yBottom],
@@ -96,7 +96,7 @@ def rotary_coded_switch(args):
                          width=wFab))
 
     def tb_silkscreen(yOuter, yInner):
-        f.append(PolygonLine(polygon=[[xLeft - wSilkS, yInner],
+        f.append(PolygonLine(shape=[[xLeft - wSilkS, yInner],
                                        [xLeft - wSilkS, yOuter],
                                        [xRight + wSilkS, yOuter],
                                        [xRight + wSilkS, yInner]],
@@ -128,7 +128,7 @@ def rotary_coded_switch(args):
     lr_silkscreen(xRight + wSilkS, gray)
 
     margin = crtYd + wSilkS
-    f.append(PolygonLine(polygon=[[boundLeft - margin, yTop + chamfer],
+    f.append(PolygonLine(shape=[[boundLeft - margin, yTop + chamfer],
                                    [boundLeft - margin, yTop - margin],
                                    [boundLeft + chamfer, yTop - margin]],
                          layer="F.SilkS",
@@ -143,7 +143,7 @@ def rotary_coded_switch(args):
                       end=[xCenter, yCenter + r * 0.75],
                       layer="F.SilkS",
                       width=wSilkS))
-        f.append(PolygonLine(polygon=[[xCenter - r * 0.5, yCenter - r * 0.25],
+        f.append(PolygonLine(shape=[[xCenter - r * 0.5, yCenter - r * 0.25],
                                        [xCenter, yCenter - r * 0.75],
                                        [xCenter + r * 0.5, yCenter - r * 0.25]],
                              layer="F.SilkS",

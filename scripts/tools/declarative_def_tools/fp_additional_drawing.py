@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import Callable
 
-from KicadModTree import Circle, Node, LineStyle, Rect, PolygonLine
+from KicadModTree import Circle, Node, LineStyle, Rectangle, PolygonLine
 from KicadModTree.nodes.specialized import Cross
 from kilibs.geom import Vector2D
 from kilibs.declarative_defs import additional_drawings as ADs
@@ -79,7 +79,7 @@ class RectDrawingProvider(FPDrawingProvider):
     def make_nodes(self, context: FPDrawingProvider.Context) -> list[Node]:
         rect = self.rect_def.evaluate(context.evaluator)
         return [
-            Rect(
+            Rectangle(
                 # For now, this will handle 90 degree rotations, but not others
                 start=self._modify_point(rect.top_left, context.transforms),
                 end=self._modify_point(rect.bottom_right, context.transforms),
@@ -103,7 +103,7 @@ class CircleDrawingProvider(FPDrawingProvider):
         circ = self.circle_def.evaluate(context.evaluator)
         return [
             Circle(
-                center=self._modify_point(circ.center_pos, context.transforms),
+                center=self._modify_point(circ.center, context.transforms),
                 radius=circ.radius,
                 layer=context.layer,
                 width=context.width,
@@ -123,10 +123,10 @@ class PolyDrawingProvider(FPDrawingProvider):
 
     def make_nodes(self, context: FPDrawingProvider.Context) -> list[Node]:
         poly = self.poly_def.evaluate(context.evaluator)
-        nodes = [self._modify_point(pt, context.transforms) for pt in poly.nodes]
+        nodes = [self._modify_point(pt, context.transforms) for pt in poly.points]
         return [
             PolygonLine(
-                nodes=nodes,
+                shape=nodes,
                 layer=context.layer,
                 width=context.width,
                 fill=self.fill,

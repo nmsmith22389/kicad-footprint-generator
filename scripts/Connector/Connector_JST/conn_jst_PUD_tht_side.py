@@ -134,8 +134,8 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, configuration):
     {'x': A/2,'y': y2},
     ]
 
-    kicad_mod.append(PolygonLine(polygon=side, width=configuration['silk_line_width'], layer='F.SilkS'))
-    kicad_mod.append(PolygonLine(polygon=side, x_mirror=A / 2, width=configuration['silk_line_width'], layer='F.SilkS'))
+    kicad_mod.append(PolygonLine(shape=side, width=configuration['silk_line_width'], layer='F.SilkS'))
+    kicad_mod.append(PolygonLine(shape=side, x_mirror=A / 2, width=configuration['silk_line_width'], layer='F.SilkS'))
 
     #add mounting holes
     m1 = Pad(at=[-0.9,mh_y],layers=Pad.LAYERS_NPTH,shape=Pad.SHAPE_CIRCLE,type=Pad.TYPE_NPTH,size=mh_drill, drill=mh_drill)
@@ -155,14 +155,14 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, configuration):
         {'x': x1-D,'y': y1-D+L}
     ]
 
-    kicad_mod.append(PolygonLine(polygon=marker, width=configuration['silk_line_width'], layer='F.SilkS'))
+    kicad_mod.append(PolygonLine(shape=marker, width=configuration['silk_line_width'], layer='F.SilkS'))
     sl = 1
     marker =[
         {'x': sl/2 , 'y': body_edge['top']},
         {'x': 0 , 'y': body_edge['top']+sl/sqrt(2)},
         {'x': -sl/2 , 'y': body_edge['top']}
     ]
-    kicad_mod.append(PolygonLine(polygon=marker, layer='F.Fab', width=configuration['fab_line_width']))
+    kicad_mod.append(PolygonLine(shape=marker, layer='F.Fab', width=configuration['fab_line_width']))
 
     ######################### Text Fields ###############################
     addTextFields(kicad_mod=kicad_mod, configuration=configuration, body_edges=body_edge,

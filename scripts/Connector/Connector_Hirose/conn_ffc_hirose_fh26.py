@@ -135,11 +135,11 @@ def make_module(global_config: GC.GlobalConfig, pin_count, configuration):
     ]
 
     kicad_mod.append(PolygonLine(
-        nodes=fab_outline,
+        shape=fab_outline,
         layer="F.Fab", width=configuration['fab_line_width']
     ))
     kicad_mod.append(PolygonLine(
-        nodes=fab_outline, y_mirror=0,
+        shape=fab_outline, y_mirror=0,
         layer="F.Fab", width=configuration['fab_line_width']
     ))
 
@@ -151,11 +151,11 @@ def make_module(global_config: GC.GlobalConfig, pin_count, configuration):
     ]
 
     kicad_mod.append(PolygonLine(
-        nodes=bar_fab_outline,
+        shape=bar_fab_outline,
         layer="F.Fab", width=configuration['fab_line_width']
     ))
     kicad_mod.append(PolygonLine(
-        nodes=bar_fab_outline, y_mirror=0,
+        shape=bar_fab_outline, y_mirror=0,
         layer="F.Fab", width=configuration['fab_line_width']
     ))
 
@@ -173,11 +173,11 @@ def make_module(global_config: GC.GlobalConfig, pin_count, configuration):
     ]
 
     kicad_mod.append(PolygonLine(
-        nodes=silk_outline,
+        shape=silk_outline,
         layer="F.SilkS", width=configuration['silk_line_width']
     ))
     kicad_mod.append(PolygonLine(
-        nodes=silk_outline, y_mirror=0,
+        shape=silk_outline, y_mirror=0,
         layer="F.SilkS", width=configuration['silk_line_width']
     ))
 
@@ -212,7 +212,7 @@ def make_module(global_config: GC.GlobalConfig, pin_count, configuration):
         {'x': p1s_x -  ps1_m/sqrt(2), 'y': pin1_y-ps1_m/2}
     ]
     kicad_mod.append(
-        PolygonLine(nodes=pin, layer="F.SilkS", width=configuration["silk_line_width"])
+        PolygonLine(shape=pin, layer="F.SilkS", width=configuration["silk_line_width"])
     )
 
     sl=0.4
@@ -225,7 +225,7 @@ def make_module(global_config: GC.GlobalConfig, pin_count, configuration):
 
     ]
     kicad_mod.append(
-        PolygonLine(nodes=pin, width=configuration["fab_line_width"], layer="F.Fab")
+        PolygonLine(shape=pin, width=configuration["fab_line_width"], layer="F.Fab")
     )
 
     ########################### CrtYd #################################

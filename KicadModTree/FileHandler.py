@@ -13,6 +13,8 @@
 #
 # (C) 2016-2018 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 
+from __future__ import annotations
+
 import io
 import os
 import abc
@@ -23,7 +25,7 @@ class FileHandler(abc.ABC):
     of footprint (and perhaps later, symbol) direct-file writer implementations
     """
 
-    def writeFile(self, filename):
+    def writeFile(self, filename: str) -> FileHandler:
         r"""Write the output of FileHandler.serialize to a file
 
         :param filename:

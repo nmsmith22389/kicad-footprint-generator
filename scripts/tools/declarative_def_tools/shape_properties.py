@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import Callable
 
-from kilibs.geom import geometricCircle, Rectangle, Vector2D, PolygonPoints
+from kilibs.geom import GeomCircle, GeomRectangle, Vector2D, GeomPolygon
 from kilibs.declarative_defs import evaluable_defs as EDs
 
 
@@ -70,19 +70,19 @@ class RectProperties(ShapeProperties):
         else:
             raise ValueError('Rectangular shape must have either "center/size" or "corners" definition')
 
-    def evaluate(self, expr_evaluator: Callable) -> Rectangle:
+    def evaluate(self, expr_evaluator: Callable) -> GeomRectangle:
 
         offset = self._evaluate_offset(expr_evaluator)
 
         if isinstance(self.exprs, RectProperties.CornerExprs):
             corner1 = self.exprs.corner1.evaluate(expr_evaluator)
             corner2 = self.exprs.corner2.evaluate(expr_evaluator)
-            return Rectangle.by_corners(corner1 + offset, corner2 + offset)
+            return GeomRectangle(start=corner1 + offset, end=corner2 + offset)
 
         elif isinstance(self.exprs, RectProperties.CenterSizeExprs):
             center = self.exprs.center.evaluate(expr_evaluator)
             size = self.exprs.size.evaluate(expr_evaluator)
-            return Rectangle(center + offset, size)
+            return GeomRectangle(center=center + offset, size=size)
 
         raise RuntimeError(f"Invalid rectangle expression type: {self.exprs}")
 
@@ -131,7 +131,7 @@ class CircleProperties(ShapeProperties):
             is_diam=is_diam
         )
 
-    def evaluate(self, expr_evaluator: Callable) -> geometricCircle:
+    def evaluate(self, expr_evaluator: Callable) -> GeomCircle:
         offset = self._evaluate_offset(expr_evaluator)
         center = self.exprs.center.evaluate(expr_evaluator)
         radius = self.exprs.rad_diam.evaluate(expr_evaluator)
@@ -139,7 +139,7 @@ class CircleProperties(ShapeProperties):
         if self.exprs.is_diam:
             radius /= 2.0
 
-        return geometricCircle(center=center + offset, radius=radius)
+        return GeomCircle(center=center + offset, radius=radius)
 
 
 class PolyProperties(ShapeProperties):
@@ -179,7 +179,7 @@ class PolyProperties(ShapeProperties):
         if len(self.pts) < 2:
             raise ValueError('Polygon/polyline shape must have at least two points')
 
-    def evaluate(self, expr_evaluator: Callable) -> PolygonPoints:
+    def evaluate(self, expr_evaluator: Callable) -> GeomPolygon:
         offset = self._evaluate_offset(expr_evaluator)
         nodes: list[Vector2D] = []
 
@@ -187,7 +187,7 @@ class PolyProperties(ShapeProperties):
             evaled_pt = pt.evaluate(expr_evaluator)
             nodes.append(evaled_pt + offset)
 
-        return PolygonPoints(nodes=nodes)
+        return GeomPolygon(shape=nodes)
 
 
 def construct_shape(shape_spec: dict) -> ShapeProperties | None:

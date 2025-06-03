@@ -15,14 +15,14 @@
 
 import pytest
 
-from kilibs.util import param_util as PU
 from kilibs.geom import Vector2D, Vector3D
+from kilibs.util import param_util as PU
 
 
 def test_toVectorUseCopyIfNumber():
 
-    assert (PU.toVectorUseCopyIfNumber(1) == Vector2D(1, 1))
-    assert (PU.toVectorUseCopyIfNumber((1, 2)) == Vector2D(1, 2))
+    assert PU.toVectorUseCopyIfNumber(1) == Vector2D(1, 1)
+    assert PU.toVectorUseCopyIfNumber((1, 2)) == Vector2D(1, 2)
 
     # Test that low_limit is enforced when must_be_larger=True
     with pytest.raises(ValueError):
@@ -33,8 +33,9 @@ def test_toVectorUseCopyIfNumber():
         PU.toVectorUseCopyIfNumber((2, 2), low_limit=2)
 
     # Equal is OK with must_be_larger=False
-    assert (PU.toVectorUseCopyIfNumber(
-        (2, 2), low_limit=2, must_be_larger=False) == Vector2D(2, 2))
+    assert PU.toVectorUseCopyIfNumber(
+        (2, 2), low_limit=2, must_be_larger=False
+    ) == Vector2D(2, 2)
 
     # 3D mode
-    assert (PU.toVectorUseCopyIfNumber(1, length=3) == Vector3D(1, 1, 1))
+    assert PU.toVectorUseCopyIfNumber(1, length=3) == Vector3D(1, 1, 1)

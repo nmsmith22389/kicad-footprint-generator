@@ -7,7 +7,7 @@ def gen_footprint(offsets: list):
 
     # add a shape on Silk and Fab
     poly = PolygonLine(
-        nodes=[
+        shape=[
             # left contour
             (-3, 2), (-5, -2),
             # top contour
@@ -20,7 +20,10 @@ def gen_footprint(offsets: list):
         ], layer="F.Fab", width=0.1)
     kicad_mod.append(poly)
     for offset in offsets:
-        kicad_mod.append(poly.duplicate(offset=offset, layer="F.SilkS", width=0.1))
+        poly_copy = poly.copy_with(layer="F.SilkS", width=0.1)
+        poly_copy.inflate(amount=offset)
+        poly_copy.simplify()
+        kicad_mod.append(poly_copy)
 
     kicad_mod.append(Property(name=Property.REFERENCE, text='REF**', at=[0, -5], layer='F.SilkS'))
     kicad_mod.append(Text(text='${REFERENCE}', at=[0, -5], layer='F.Fab'))

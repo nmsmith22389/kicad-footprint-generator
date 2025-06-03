@@ -168,10 +168,10 @@ def makeResistorAxialHorizontal(seriesname, rm, rmdisp, w, d, ddrill, R_POW, typ
     if deco=="elco" or deco=="cp" or deco=="tantal":
         kicad_mod.append(Line(start=[l_fab, t_fab], end=[l_fab, t_fab+d], layer='F.Fab', width=lw_fab))
         kicad_mod.append(Line(start=[l_fab+w, t_fab], end=[l_fab+w, t_fab+d], layer='F.Fab', width=lw_fab))
-        kicad_mod.append(PolygonLine(polygon=[[l_fab, t_fab], [polsign_slk[0], t_fab], [polsign_slk[0] + polsign_slk[2] / 2, t_fab + polsign_slk[3] / 2], [polsign_slk[0] + polsign_slk[2], t_fab], [l_fab + w, t_fab]], layer='F.Fab', width=lw_fab))
-        kicad_mod.append(PolygonLine(polygon=[[l_fab, t_fab + d], [polsign_slk[0], t_fab + h_fab], [polsign_slk[0] + polsign_slk[2] / 2, t_fab + h_fab - polsign_slk[3] / 2], [polsign_slk[0] + polsign_slk[2], t_fab + h_fab], [l_fab + w, t_fab + d]], layer='F.Fab', width=lw_fab))
+        kicad_mod.append(PolygonLine(shape=[[l_fab, t_fab], [polsign_slk[0], t_fab], [polsign_slk[0] + polsign_slk[2] / 2, t_fab + polsign_slk[3] / 2], [polsign_slk[0] + polsign_slk[2], t_fab], [l_fab + w, t_fab]], layer='F.Fab', width=lw_fab))
+        kicad_mod.append(PolygonLine(shape=[[l_fab, t_fab + d], [polsign_slk[0], t_fab + h_fab], [polsign_slk[0] + polsign_slk[2] / 2, t_fab + h_fab - polsign_slk[3] / 2], [polsign_slk[0] + polsign_slk[2], t_fab + h_fab], [l_fab + w, t_fab + d]], layer='F.Fab', width=lw_fab))
     else:
-        kicad_mod.append(Rect(start=[l_fab, t_fab], end=[l_fab+w, t_fab+d], layer='F.Fab', width=lw_fab))
+        kicad_mod.append(Rectangle(start=[l_fab, t_fab], end=[l_fab+w, t_fab+d], layer='F.Fab', width=lw_fab))
     if type != "bridge":
         kicad_mod.append(Line(start=[0, 0], end=[l_fab, 0], layer='F.Fab', width=lw_fab))
         kicad_mod.append(Line(start=[rm, 0], end=[l_fab+w, 0], layer='F.Fab', width=lw_fab))
@@ -193,20 +193,20 @@ def makeResistorAxialHorizontal(seriesname, rm, rmdisp, w, d, ddrill, R_POW, typ
     if deco=="elco" or deco=="cp" or deco=="tantal":
         kicad_mod.append(Line(start=[l_slk, t_slk], end=[l_slk, t_slk+h_slk], layer='F.SilkS', width=lw_slk))
         kicad_mod.append(Line(start=[l_slk+w_slk, t_slk], end=[l_slk+w_slk, t_slk+h_slk], layer='F.SilkS', width=lw_slk))
-        kicad_mod.append(PolygonLine(polygon=[[l_slk, t_slk], [polsign_slk[0], t_slk], [polsign_slk[0] + polsign_slk[2] / 2, t_slk + polsign_slk[3] / 2], [polsign_slk[0] + polsign_slk[2], t_slk], [l_slk + w_slk, t_slk]], layer='F.SilkS', width=lw_slk))
-        kicad_mod.append(PolygonLine(polygon=[[l_slk, t_slk + h_slk], [polsign_slk[0], t_slk + h_slk], [polsign_slk[0] + polsign_slk[2] / 2, t_slk + h_slk - polsign_slk[3] / 2], [polsign_slk[0] + polsign_slk[2], t_slk + h_slk], [l_slk + w_slk, t_slk + h_slk]], layer='F.SilkS', width=lw_slk))
+        kicad_mod.append(PolygonLine(shape=[[l_slk, t_slk], [polsign_slk[0], t_slk], [polsign_slk[0] + polsign_slk[2] / 2, t_slk + polsign_slk[3] / 2], [polsign_slk[0] + polsign_slk[2], t_slk], [l_slk + w_slk, t_slk]], layer='F.SilkS', width=lw_slk))
+        kicad_mod.append(PolygonLine(shape=[[l_slk, t_slk + h_slk], [polsign_slk[0], t_slk + h_slk], [polsign_slk[0] + polsign_slk[2] / 2, t_slk + h_slk - polsign_slk[3] / 2], [polsign_slk[0] + polsign_slk[2], t_slk + h_slk], [l_slk + w_slk, t_slk + h_slk]], layer='F.SilkS', width=lw_slk))
     else:
         if l_slk<padx/2+lw_slk+slk_offset:
             if t_slk<-(pady/2+lw_slk+slk_offset):
-                kicad_mod.append(PolygonLine(polygon=[[l_slk, -pady / 2 - lw_slk - slk_offset], [l_slk, t_slk], [l_slk + w_slk, t_slk], [l_slk + w_slk, -pady / 2 - lw_slk - slk_offset]], layer='F.SilkS', width=lw_slk))
-                kicad_mod.append(PolygonLine(polygon=[[l_slk, pady / 2 + lw_slk + slk_offset], [l_slk, t_slk + h_slk], [l_slk + w_slk, t_slk + h_slk], [l_slk + w_slk, pady / 2 + lw_slk + slk_offset]], layer='F.SilkS', width=lw_slk))
+                kicad_mod.append(PolygonLine(shape=[[l_slk, -pady / 2 - lw_slk - slk_offset], [l_slk, t_slk], [l_slk + w_slk, t_slk], [l_slk + w_slk, -pady / 2 - lw_slk - slk_offset]], layer='F.SilkS', width=lw_slk))
+                kicad_mod.append(PolygonLine(shape=[[l_slk, pady / 2 + lw_slk + slk_offset], [l_slk, t_slk + h_slk], [l_slk + w_slk, t_slk + h_slk], [l_slk + w_slk, pady / 2 + lw_slk + slk_offset]], layer='F.SilkS', width=lw_slk))
             else:
                 kicad_mod.append(Line(start=[l_slk, t_slk], end=[l_slk + w_slk, t_slk], layer='F.SilkS', width=lw_slk))
                 kicad_mod.append(Line(start=[l_slk, t_slk + h_slk], end=[l_slk + w_slk, t_slk + h_slk], layer='F.SilkS', width=lw_slk))
         else:
-            kicad_mod.append(Rect(start=[l_slk, t_slk], end=[l_slk + w_slk, t_slk + h_slk], layer='F.SilkS', width=lw_slk))
+            kicad_mod.append(Rectangle(start=[l_slk, t_slk], end=[l_slk + w_slk, t_slk + h_slk], layer='F.SilkS', width=lw_slk))
         if type == "bridge":
-            kicad_mod.append(Rect(start=[padx / 2 + 2 * lw_slk + slk_offset, -d2 / 2], end=[rm - 2 * lw_slk - padx / 2 - slk_offset, d2 / 2], layer="F.SilkS", width=lw_slk, fill=True))
+            kicad_mod.append(Rectangle(start=[padx / 2 + 2 * lw_slk + slk_offset, -d2 / 2], end=[rm - 2 * lw_slk - padx / 2 - slk_offset, d2 / 2], layer="F.SilkS", width=lw_slk, fill=True))
     if padx/2+lw_slk+slk_offset<l_slk:
         kicad_mod.append(Line(start=[padx/2+lw_slk+slk_offset, 0], end=[l_slk, 0], layer='F.SilkS', width=lw_slk))
         kicad_mod.append(Line(start=[rm-padx/2-lw_slk-slk_offset, 0], end=[l_slk+w_slk, 0], layer='F.SilkS', width=lw_slk))
@@ -219,7 +219,7 @@ def makeResistorAxialHorizontal(seriesname, rm, rmdisp, w, d, ddrill, R_POW, typ
         kicad_mod.append(Text(text="K", at=[0,-pady/2-1], layer='F.SilkS'))
 
     # create courtyard
-    kicad_mod.append(Rect(start=[roundCrt(l_crt), roundCrt(t_crt)], end=[roundCrt(l_crt+w_crt), roundCrt(t_crt+h_crt)], layer='F.CrtYd', width=lw_crt))
+    kicad_mod.append(Rectangle(start=[roundCrt(l_crt), roundCrt(t_crt)], end=[roundCrt(l_crt+w_crt), roundCrt(t_crt+h_crt)], layer='F.CrtYd', width=lw_crt))
 
     # create pads
     if hasShuntPins:
@@ -378,7 +378,7 @@ def makeResistorAxialVertical(seriesname,rm, rmdisp, l, d, ddrill, R_POW, type="
         else:
             kicad_mod.append(Circle(center=[0, 0], radius=d / 2, layer='F.Fab', width=lw_fab))
     else:
-        kicad_mod.append(Rect(start=[-d/2, -d2/2], end=[d/2,d2/2], layer='F.Fab', width=lw_fab))
+        kicad_mod.append(Rectangle(start=[-d/2, -d2/2], end=[d/2,d2/2], layer='F.Fab', width=lw_fab))
     kicad_mod.append(Line(start=[0, 0], end=[rm,0], layer='F.Fab', width=lw_fab))
     if deco=="diode":
         if rm>d/2*1.2 and d/2-pady/2<1:
@@ -416,7 +416,7 @@ def makeResistorAxialVertical(seriesname,rm, rmdisp, l, d, ddrill, R_POW, type="
             else:
                 kicad_mod.append(Circle(center=[0, 0], radius=d_slk / 2, layer='F.SilkS', width=lw_slk))
         else:
-            kicad_mod.append(Rect(start=[-d_slk/2, -d2_slk/2], end=[d_slk/2,d2_slk/2], layer='F.SilkS', width=lw_slk))
+            kicad_mod.append(Rectangle(start=[-d_slk/2, -d2_slk/2], end=[d_slk/2,d2_slk/2], layer='F.SilkS', width=lw_slk))
         kicad_mod.append(Line(start=[xs1, 0], end=[xs2, 0], layer='F.SilkS', width=lw_slk))
     else:
         yy = (pady+slk_offset+lw_slk)/2
@@ -433,7 +433,7 @@ def makeResistorAxialVertical(seriesname,rm, rmdisp, l, d, ddrill, R_POW, type="
             else:
                 kicad_mod.append(Arc(center=[0, 0], start=[xx, -yy], angle=-alpha, layer='F.SilkS', width=lw_slk))
         else:
-            kicad_mod.append(PolygonLine(polygon=[[d_slk / 2, -yy],
+            kicad_mod.append(PolygonLine(shape=[[d_slk / 2, -yy],
                                                    [d_slk / 2, -d2_slk / 2],
                                                    [-d_slk / 2, -d2_slk / 2],
                                                    [-d_slk / 2, d2_slk / 2],
@@ -441,7 +441,7 @@ def makeResistorAxialVertical(seriesname,rm, rmdisp, l, d, ddrill, R_POW, type="
                                                    [d_slk / 2, yy]], layer='F.SilkS', width=lw_slk))
 #    if deco=="diode" or deco=="diode_KUP":
 #        kicad_mod.append(Line(start=[d_x-d_size/3, d_y-0.5*d_size], end=[d_x-d_size/3, d_y+0.5*d_size], layer='F.SilkS', width=lw_slk))
-#        kicad_mod.append(PolygonLine(polygon=[[d_x-d_size/3, d_y],
+#        kicad_mod.append(PolygonLine(shape=[[d_x-d_size/3, d_y],
 #                                                [d_x+d_size/3, d_y-0.5*d_size],
 #                                                [d_x+d_size/3, d_y+0.5*d_size],
 #                                                [d_x-d_size/3, d_y]], layer='F.SilkS', width=lw_slk))
@@ -449,7 +449,7 @@ def makeResistorAxialVertical(seriesname,rm, rmdisp, l, d, ddrill, R_POW, type="
 
     # create courtyard
     kicad_mod.append(
-        Rect(start=[roundCrt(l_crt), roundCrt(t_crt)], end=[roundCrt(l_crt + w_crt), roundCrt(t_crt + h_crt)],
+        Rectangle(start=[roundCrt(l_crt), roundCrt(t_crt)], end=[roundCrt(l_crt + w_crt), roundCrt(t_crt + h_crt)],
                  layer='F.CrtYd', width=lw_crt))
 
     # create pads
@@ -777,9 +777,9 @@ def makeResistorRadial(seriesname, rm, w, h, ddrill, R_POW, innerw=0,innerh=0,rm
                     alpha2 = alpha1 + 15
                     kicad_modg.append(Line(start=[d_slk*0.49*math.cos(math.radians(alpha1)),d_slk*0.49*math.sin(math.radians(alpha1))], end=[d2_slk*0.51*math.cos(math.radians(alpha2)),d2_slk*0.51*math.sin(math.radians(alpha2))], layer='F.Fab', width=lw_fab))
     else:
-        kicad_modg.append(Rect(start=[l_fab, t_fab], end=[l_fab + w_fab, t_fab + h_fab], layer='F.Fab', width=lw_fab))
+        kicad_modg.append(Rectangle(start=[l_fab, t_fab], end=[l_fab + w_fab, t_fab + h_fab], layer='F.Fab', width=lw_fab))
         if innerw!=w or innerh!=h:
-            kicad_modg.append(Rect(start=[il_fab, it_fab], end=[il_fab + iw_fab, it_fab + ih_fab], layer='F.Fab', width=lw_fab))
+            kicad_modg.append(Rectangle(start=[il_fab, it_fab], end=[il_fab + iw_fab, it_fab + ih_fab], layer='F.Fab', width=lw_fab))
         if vlines:
             kicad_modg.append(Line(start=[lvl1_fab, t_fab], end=[lvl1_fab,t_fab+h_fab], layer='F.Fab', width=lw_fab))
             kicad_modg.append(Line(start=[lvl2_fab, t_fab], end=[lvl2_fab, t_fab + h_fab], layer='F.Fab', width=lw_fab))
@@ -886,7 +886,7 @@ def makeResistorRadial(seriesname, rm, w, h, ddrill, R_POW, innerw=0,innerh=0,rm
         r_crt = max(r_fab+crt_offset, math.sqrt(sq_pad_x_max * sq_pad_x_max + sq_pad_y_min * sq_pad_y_min)+crt_offset)
         kicad_mod.append(Circle(center=[rm/2.,0], radius=roundCrt(r_crt),layer='F.CrtYd', width=lw_crt))
     else:
-        kicad_mod.append(Rect(start=[roundCrt(l_crt+offset[0]), roundCrt(t_crt+offset[1])], end=[roundCrt(l_crt + w_crt+offset[0]), roundCrt(t_crt + h_crt+offset[1])],layer='F.CrtYd', width=lw_crt))
+        kicad_mod.append(Rectangle(start=[roundCrt(l_crt+offset[0]), roundCrt(t_crt+offset[1])], end=[roundCrt(l_crt + w_crt+offset[0]), roundCrt(t_crt + h_crt+offset[1])],layer='F.CrtYd', width=lw_crt))
 
     # create pads
     for p in padpos:

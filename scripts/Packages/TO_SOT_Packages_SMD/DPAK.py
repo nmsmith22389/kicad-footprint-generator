@@ -224,7 +224,7 @@ class DPAK(object):
                 tab_outline += tab_outline[:1]
             self.m.append(
                 PolygonLine(
-                    polygon=tab_outline, layer="F.Fab", width=self.dim.fab_line_width_mm
+                    shape=tab_outline, layer="F.Fab", width=self.dim.fab_line_width_mm
                 )
             )
 
@@ -248,7 +248,7 @@ class DPAK(object):
         ]
         self.m.append(
             Polygon(
-                nodes=body_outline,
+                shape=body_outline,
                 layer="F.Fab",
                 width=self.dim.fab_line_width_mm,
                 fill=False,
@@ -291,7 +291,7 @@ class DPAK(object):
                 ]
                 self.m.append(
                     PolygonLine(
-                        polygon=pin_outline,
+                        shape=pin_outline,
                         layer="F.Fab",
                         width=self.dim.fab_line_width_mm,
                     )
@@ -343,7 +343,7 @@ class DPAK(object):
         ]
         self.m.append(
             PolygonLine(
-                polygon=top_marker, layer="F.SilkS", width=self.dim.silk_line_width_mm
+                shape=top_marker, layer="F.SilkS", width=self.dim.silk_line_width_mm
             )
         )
 
@@ -357,7 +357,7 @@ class DPAK(object):
         ]
         self.m.append(
             PolygonLine(
-                polygon=bottom_marker,
+                shape=bottom_marker,
                 layer="F.SilkS",
                 width=self.dim.silk_line_width_mm,
             )
@@ -496,7 +496,7 @@ class DPAK(object):
             self.dim.courtyard_offset_y_mm, self.dim.courtyard_precision_mm, "+"
         )
         self.m.append(
-            Rect(
+            Rectangle(
                 start=[left, top],
                 end=[right, bottom],
                 layer="F.CrtYd",

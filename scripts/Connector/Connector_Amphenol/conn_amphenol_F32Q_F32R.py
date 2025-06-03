@@ -18,14 +18,14 @@
 import argparse
 import yaml
 
-from kilibs.geom import Direction, Rectangle, Vector2D
+from kilibs.geom import Direction, GeomRectangle, Vector2D
 from KicadModTree import (
     Pad,
     PadArray,
     Footprint,
     FootprintType,
     Polygon,
-    Rect,
+    Rectangle,
     Model,
     PolygonLine,
     KicadPrettyLibrary,
@@ -91,9 +91,9 @@ def generate_one_footprint(global_config: GC.GlobalConfig, family, pincount, con
     half_actuator_width = half_body_width + 1.25
     ear_height = 1.5  # Measured on STEP model
 
-    body_edge = Rectangle.by_corners(
-        Vector2D(-half_body_width, body_y1),
-        Vector2D(half_body_width, actuator_y1)
+    body_edge = GeomRectangle(
+        start=Vector2D(-half_body_width, body_y1),
+        end=Vector2D(half_body_width, actuator_y1)
     )
 
     courtyard_clearance = global_config.get_courtyard_offset(
@@ -103,9 +103,9 @@ def generate_one_footprint(global_config: GC.GlobalConfig, family, pincount, con
     courtyard_y1 = round_to_grid(pad_y - pad_height/2 - courtyard_clearance, global_config.courtyard_grid)
     courtyard_y2 = round_to_grid(actuator_y1 + courtyard_clearance, global_config.courtyard_grid)
 
-    courtyard_rect = Rectangle.by_corners(
-        Vector2D(-courtyard_x, courtyard_y1),
-        Vector2D(courtyard_x, courtyard_y2)
+    courtyard_rect = GeomRectangle(
+        start=Vector2D(-courtyard_x, courtyard_y1),
+        end=Vector2D(courtyard_x, courtyard_y2)
     )
 
     desc = "{mfg} {familiy_name} FPC connector, {pc:g} {side}-side contacts, 0.5mm pitch, SMT, {ds}".format(
@@ -150,7 +150,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, family, pincount, con
         layers=Pad.LAYERS_SMT,
         primitives=[
             Polygon(
-                nodes=[
+                shape=[
                     (-tab_width / 2, -tab_height / 2),
                     (-tab_width / 2, tab_height / 2),
                     (tab_width / 2 - 0.8, tab_height / 2),
@@ -174,7 +174,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, family, pincount, con
         layers=Pad.LAYERS_SMT,
         primitives=[
             Polygon(
-                nodes=[
+                shape=[
                     (-tab_width / 2, -tab_height / 2),
                     (-tab_width / 2, tab_height / 2),
                     (tab_width / 2 - 0.8, tab_height / 2),
@@ -183,7 +183,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, family, pincount, con
                     (tab_width / 2, -tab_height / 2),
                     (-tab_width / 2, -tab_height / 2),
                 ],
-                mirror_x=0,
+                x_mirror=0,
                 width=0,
                 fill=True,
             )
@@ -192,7 +192,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, family, pincount, con
 
     # create fab outline
     kicad_mod += PolygonLine(
-        nodes=[
+        shape=[
             (-half_body_width, body_y1),
             (half_body_width, body_y1),
             (half_body_width, actuator_y1 - ear_height),
@@ -221,7 +221,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, family, pincount, con
 
     # create silkscreen outline
     kicad_mod += PolygonLine(
-        nodes=[
+        shape=[
             (pad1_x + pad_x_span + pad_width/2 + silk_offset, tab_y - tab_height/2 - silk_offset),
             (tab_x + tab_width/2 + silk_offset, tab_y - tab_height/2 - silk_offset),
             (tab_x + tab_width/2 + silk_offset, actuator_y1 - ear_height - silk_fab_offset),
@@ -246,7 +246,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, family, pincount, con
     )
 
     # create courtyard
-    kicad_mod += Rect(
+    kicad_mod += Rectangle(
         start=courtyard_rect.top_left,
         end=courtyard_rect.bottom_right,
         layer="F.CrtYd",

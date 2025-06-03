@@ -276,7 +276,7 @@ def generate_one_footprint(
             {'x': body_edge['left'] - silk_fab_offset,'y': bottom_silk_pad},
         ]
 
-    kicad_mod.append(PolygonLine(polygon=silk_poly,
+    kicad_mod.append(PolygonLine(shape=silk_poly,
                                 layer='F.SilkS', width=configuration['silk_line_width']))
 
     # Draw lines across top, between pads
@@ -309,9 +309,9 @@ def generate_one_footprint(
         {'x': -pad_size[0]/2 - O,'y': 0},
     ]
 
-    kicad_mod.append(PolygonLine(polygon=pin,
+    kicad_mod.append(PolygonLine(shape=pin,
                                  layer="F.SilkS", width=configuration['silk_line_width']))
-    kicad_mod.append(PolygonLine(polygon=pin,
+    kicad_mod.append(PolygonLine(shape=pin,
                                  width=configuration['fab_line_width'], layer='F.Fab'))
 
     ########################### CrtYd #################################

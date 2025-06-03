@@ -1,66 +1,64 @@
-from KicadModTree import Line, Node
-from kilibs.geom import Vector2D
+# kilibs is free software: you can redistribute it and/or modify it under the terms of
+# the GNU General Public License as published by the Free Software Foundation, either
+# version 3 of the License, or (at your option) any later version.
+#
+# kilibs is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+# without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+# PURPOSE. See the GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along with kilibs.
+# If not, see < http://www.gnu.org/licenses/ >.
+#
+# (C) The KiCad Librarian Team
+
+from __future__ import annotations
+
+from KicadModTree.nodes.NodeShape import NodeShape
+from KicadModTree.util.line_style import LineStyle
+from kilibs.geom import GeomCross, Vec2DCompatible
 
 
-class Cross(Node):
+class Cross(NodeShape, GeomCross):
     """
     Represents a simple cross, centred at a points.
 
     Crosses are drawn with a lot, and using text is fiddly because the
-    KiCad fon't doesn't put the centre of "+" on the baseline. Also a real
-    cross, positioned exactly, allows users to snap to the centrepoint.
+    KiCad font doesn't put the centre of "+" on the baseline. Also a real
+    cross, positioned exactly, allows users to snap to the center point.
     """
 
     def __init__(
         self,
-        center: Vector2D,
-        size: Vector2D | float,
-        angle: float,
-        layer: str,
-        width: float,
+        layer: str = "F.SilkS",
+        width: float | None = None,
+        style: LineStyle = LineStyle.SOLID,
+        shape: Cross | GeomCross | None = None,
+        center: Vec2DCompatible | None = None,
+        size: Vec2DCompatible | float | None = None,
+        angle: float = 0,
+        use_degrees: bool = True,
     ):
+        """Create a cross node.
+
+        Args:
+            layer: Layer.
+            width: Line width in mm. If `None`, then the standard width for the given
+                layer will be used when the serializing the node.
+            style: Line style.
+            shape: Shape from which to derive the parameters of the cross.
+            center: Coordinates (in mm) of the center point of the cross.
+            size: Size in mm of the cross. If a vector is given, the two lines of the
+                cross have the length of the respective vector coordinates.
+            angle: Angle of the cross.
+            use_degrees: `True` if rotation angle is given in degrees, `False` if given
+                in radians.
+
+        Example:
+            The constructor either takes a `shape` argument or `center` and `size`.
+
+            .. code-block::
+
+            >>> cross1 = Cross(center=(0, 0), size=1)
+            >>> cross2 = Cross(shape=cross1)
         """
-        :param center the center of the cross
-        :param the size of the cross in each dimension (or both)
-        :param the angle of the cross
-        """
-        super().__init__()
-
-        if isinstance(size, Vector2D):
-            self.size = size
-        else:
-            self.size = Vector2D(size, size)
-
-        self.center = center
-        self.angle = angle
-        self.layer = layer
-        self.width = width
-
-        self._children = self._rebuild()
-
-    def _rebuild(self) -> list[Node]:
-
-        pts = [
-            Vector2D(-self.size.x / 2, 0),
-            Vector2D(self.size.x / 2, 0),
-            Vector2D(0, -self.size.y / 2),
-            Vector2D(0, self.size.y / 2),
-        ]
-
-        pts = [p.with_rotation(self.angle) + self.center for p in pts]
-
-        line_params = {
-            "layer": self.layer,
-            "width": self.width,
-        }
-
-        return [
-            Line(start=pts[0], end=pts[1], **line_params),
-            Line(start=pts[2], end=pts[3], **line_params),
-        ]
-
-    def getVirtualChilds(self):
-        return self._rebuild()
-
-    def __repr__(self):
-        return f"Cross(c={self.center}, size={self.size}, angle={self.angle})"
+        self.init_super(kwargs=locals())

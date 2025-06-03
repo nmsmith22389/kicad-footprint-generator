@@ -3,7 +3,7 @@ from KicadModTree import *  # NOQA
 def add_corners(m, start_pos, end_pos, size_x, size_y, layer, width, offset=(0, 0), chamfers=[]):
 
     # If specified, an 'offset' can be applied to the corners.
-    # For example, creating corners around a given Rect of a specified size
+    # For example, creating corners around a given Rectangle of a specified size
     # offset for the rect line
 
     # For the offset to work properly, start-pos must be top-left, and end-pos must be bottom-right

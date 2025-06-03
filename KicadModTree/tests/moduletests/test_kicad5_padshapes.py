@@ -72,7 +72,7 @@ class TestKicad5Pads(SerialisationTest):
         kicad_mod = Footprint("polygon_pad", FootprintType.SMD)
 
         polygon = Polygon(
-            nodes=[(-1, -1), (2, -1), (1, 1), (-1, 2)],
+            shape=[(-1, -1), (2, -1), (1, 1), (-1, 2)],
             fill=True,
             width=0,
         )
@@ -110,7 +110,7 @@ class TestKicad5Pads(SerialisationTest):
                 at=[0, 3], size=[1, 1], layers=Pad.LAYERS_SMT,
                 primitives=[
                      Arc(center=(-1, 0), start=(-1, -0.5), angle=-180, width=0.15),
-                     PolygonLine(nodes=[(-1, -0.5), (1.25, -0.5), (1.25, 0.5), (-1, 0.5)], width=0.15)
+                     PolygonLine(shape=[(-1, -0.5), (1.25, -0.5), (1.25, 0.5), (-1, 0.5)], width=0.15)
                      ]
                 ))
 
@@ -128,9 +128,9 @@ class TestKicad5Pads(SerialisationTest):
     def testCutPolygon(self):
         kicad_mod = Footprint("cut_polygon", FootprintType.SMD)
 
-        p1 = Polygon(nodes=[(0, 0), (1, 0), (1, 1), (0, 1)], fill=True, width=0, layer=None)
-        p2 = Polygon(nodes=[(-2, -2), (2, -2), (2, 2), (-2, 2)], fill=True, width=0, layer=None)
-        p2.cut(p1)
+        p1 = Polygon(shape=[(0, 0), (1, 0), (1, 1), (0, 1)], fill=True, width=0, layer=None)
+        p2 = Polygon(shape=[(-2, -2), (2, -2), (2, 2), (-2, 2)], fill=True, width=0, layer=None)
+        p2.cut_with_polygon(p1)
 
         kicad_mod.append(Pad(number=1, type=Pad.TYPE_SMT, shape=Pad.SHAPE_CUSTOM,
                              at=[0, 0], size=[0.5, 0.5], layers=Pad.LAYERS_SMT,

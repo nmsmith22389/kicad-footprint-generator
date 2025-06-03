@@ -12,3 +12,5 @@
 # along with kicad-footprint-generator. If not, see < http://www.gnu.org/licenses/ >.
 #
 # (C) 2016 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
+
+from .line_style import LineStyle

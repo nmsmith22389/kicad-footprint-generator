@@ -172,8 +172,8 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, params, configu
     {'x': 0,'y': y},
     ]
 
-    kicad_mod.append(PolygonLine(polygon=pin, width=configuration['silk_line_width'], layer="F.SilkS"))
-    kicad_mod.append(PolygonLine(polygon=pin, width=configuration['fab_line_width'], layer='F.Fab'))
+    kicad_mod.append(PolygonLine(shape=pin, width=configuration['silk_line_width'], layer="F.SilkS"))
+    kicad_mod.append(PolygonLine(shape=pin, width=configuration['fab_line_width'], layer='F.Fab'))
 
     ########################### CrtYd #################################
     cx1 = round_to_grid(bounding_box['left']-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])

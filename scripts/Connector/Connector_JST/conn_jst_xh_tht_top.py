@@ -154,7 +154,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, variant, config
         x_boss = x_boss_fab_off
         if x_boss_pad_off > x_boss:
             x_boss=x_boss_pad_off
-        out_silk = PolygonLine(polygon=[
+        out_silk = PolygonLine(shape=[
             {'x': -x_boss, 'y':boss_y},
             {'x': -x_boss, 'y':y2+off},
             {'x': x1-off, 'y':y2+off},
@@ -168,7 +168,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, variant, config
         kicad_mod.append(Arc(center=[0,boss_y], start=[-x_boss, boss_y], angle=-180,
             layer="F.SilkS", width=configuration['silk_line_width']))
 
-        out_fab = PolygonLine(polygon=[
+        out_fab = PolygonLine(shape=[
             {'x': -boss_size_1pin/2, 'y':boss_y},
             {'x': -boss_size_1pin/2, 'y':y2},
             {'x': x1, 'y':y2},
@@ -213,7 +213,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, variant, config
             {'x':0, 'y':fab_marker_bottom},
             {'x':fab_marker_left + fab_first_marker_w, 'y':y1}
         ]
-        kicad_mod.append(PolygonLine(polygon=poly_fab_marker, layer='F.Fab', width=configuration['fab_line_width']))
+        kicad_mod.append(PolygonLine(shape=poly_fab_marker, layer='F.Fab', width=configuration['fab_line_width']))
 
     #wall thickness w
     w = 0.75
@@ -247,14 +247,14 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, variant, config
     if boss and pins > 1:
         line2 = line[:2]
         line2.append({'x': x1+w,'y': boss_y - boss_drill/2 - configuration['silk_line_width']/2 - configuration['silk_pad_clearance']})
-        kicad_mod.append(PolygonLine(polygon=line2, layer='F.SilkS', width=configuration['silk_line_width']))
+        kicad_mod.append(PolygonLine(shape=line2, layer='F.SilkS', width=configuration['silk_line_width']))
 
         kicad_mod.append(Line(start=[A/2, y2-w],
             end=[boss_x+boss_drill/2+ configuration['silk_line_width']/2 + configuration['silk_pad_clearance'], y2-w],
             layer='F.SilkS', width=configuration['silk_line_width']))
     else:
-        kicad_mod.append(PolygonLine(polygon=line, layer='F.SilkS', width=configuration['silk_line_width']))
-    kicad_mod.append(PolygonLine(polygon=line, x_mirror=A / 2, layer='F.SilkS', width=configuration['silk_line_width']))
+        kicad_mod.append(PolygonLine(shape=line, layer='F.SilkS', width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(shape=line, x_mirror=A / 2, layer='F.SilkS', width=configuration['silk_line_width']))
 
     #pin-1 marker
     y =  -2.75
@@ -266,10 +266,10 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, variant, config
         {'x':x1-pin1_marker_offset, 'y':y1-pin1_marker_offset+pin1_marker_linelen}
     ]
     if fab_pin1_marker_type == 2:
-        kicad_mod.append(PolygonLine(polygon=poly_pin1_marker, layer='F.SilkS', width=configuration['silk_line_width']))
+        kicad_mod.append(PolygonLine(shape=poly_pin1_marker, layer='F.SilkS', width=configuration['silk_line_width']))
     if fab_pin1_marker_type == 3:
-        kicad_mod.append(PolygonLine(polygon=poly_pin1_marker, layer='F.SilkS', width=configuration['silk_line_width']))
-        kicad_mod.append(PolygonLine(polygon=poly_pin1_marker, layer='F.Fab', width=configuration['fab_line_width']))
+        kicad_mod.append(PolygonLine(shape=poly_pin1_marker, layer='F.SilkS', width=configuration['silk_line_width']))
+        kicad_mod.append(PolygonLine(shape=poly_pin1_marker, layer='F.Fab', width=configuration['fab_line_width']))
 
     pin = [
     {'x': 0,'y': y},
@@ -280,8 +280,8 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, variant, config
 
 
     if fab_pin1_marker_type == 1:
-        kicad_mod.append(PolygonLine(polygon=pin, layer='F.SilkS', width=configuration['silk_line_width']))
-        kicad_mod.append(PolygonLine(polygon=pin, layer='F.Fab', width=configuration['fab_line_width']))
+        kicad_mod.append(PolygonLine(shape=pin, layer='F.SilkS', width=configuration['silk_line_width']))
+        kicad_mod.append(PolygonLine(shape=pin, layer='F.Fab', width=configuration['fab_line_width']))
 
     ######################### Text Fields ###############################
     text_center_y = 'bottom'

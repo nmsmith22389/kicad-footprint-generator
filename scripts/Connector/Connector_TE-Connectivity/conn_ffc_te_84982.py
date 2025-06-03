@@ -131,7 +131,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pincount, configurati
 
     # Left silk end bracket
     kicad_mod.append(PolygonLine(
-        nodes=[
+        shape=[
             [pin_edge_offset + pad_pitch - pad_width / 2 - silk_pad_offset, -housing_y_silk_offset],
             [-housing_x_silk_offset + pin1_marker_l + silk_offset, -housing_y_silk_offset],
             [-housing_x_silk_offset, -housing_y_silk_offset + pin1_marker_l + silk_offset],
@@ -143,7 +143,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pincount, configurati
 
     # Right silk end bracket
     kicad_mod.append(PolygonLine(
-        nodes=[
+        shape=[
             [pin_edge_offset + ((bottom_pincount - 1) * 2) * pad_pitch + pad_width / 2 + silk_pad_offset, housing_y_silk_offset],
             [housing_x_silk_offset, housing_y_silk_offset],
             [housing_x_silk_offset, -housing_y_silk_offset],
@@ -173,7 +173,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pincount, configurati
     courtyard_y_south = round_to_grid(row_offset_odd + pad_height_odd / 2.0 + courtyard_clearance, courtyard_precision)
     courtyard_y_north = round_to_grid(row_offset_even - pad_height_even / 2.0 - courtyard_clearance, courtyard_precision)
 
-    kicad_mod.append(Rect(start=[-courtyard_x, courtyard_y_south], end=[courtyard_x, courtyard_y_north],
+    kicad_mod.append(Rectangle(start=[-courtyard_x, courtyard_y_south], end=[courtyard_x, courtyard_y_north],
         layer='F.CrtYd', width=global_config.courtyard_line_width))
 
     courtyard_box = BoundingBox(

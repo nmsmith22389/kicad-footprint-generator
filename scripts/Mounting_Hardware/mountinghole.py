@@ -13,7 +13,7 @@ import math
 from dataclasses import asdict, dataclass
 
 from KicadModTree import *  # NOQA
-from kilibs.geom import geometricCircle
+from kilibs.geom import GeomCircle
 from scripts.tools.footprint_generator import FootprintGenerator
 from scripts.tools.footprint_text_fields import addTextFields
 from scripts.tools.global_config_files.global_config import GlobalConfig
@@ -217,7 +217,7 @@ class MountingHoleGenerator(FootprintGenerator):
         # fab_outline = Circle(center=center, radius=fp_config.mech/2, layer='F.Fab',
         #             width=self.global_config.fab_line_width)
         # kicad_mod.append(fab_outline)
-        body_edges = geometricCircle(center=center, radius=pad_radius).bounding_box
+        body_edges = GeomCircle(center=center, radius=pad_radius).bbox()
 
         # draw mechanical line
         fab_outline = Circle(
@@ -325,7 +325,7 @@ class MountingHoleGenerator(FootprintGenerator):
             width=self.global_config.courtyard_line_width,
         )
         kicad_mod.append(cy_outline)
-        courtyard = geometricCircle(center=center, radius=cy_radius).bounding_box
+        courtyard = GeomCircle(center=center, radius=cy_radius).bbox()
 
         # text fields
         addTextFields(kicad_mod, self.global_config, body_edges, courtyard, fp_name)

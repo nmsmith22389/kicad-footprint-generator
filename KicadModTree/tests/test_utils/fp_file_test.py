@@ -1,8 +1,8 @@
 
-import pytest
-
-from pathlib import Path
 import os
+from pathlib import Path
+
+import pytest
 
 from KicadModTree.KicadFileHandler import KicadFileHandler
 

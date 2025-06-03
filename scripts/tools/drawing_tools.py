@@ -2,7 +2,7 @@
 
 import enum
 import math
-from typing import Any, List, Optional, Tuple, Union
+from typing import List, Tuple, Union
 
 from KicadModTree import (
     Arc,
@@ -12,21 +12,22 @@ from KicadModTree import (
     Node,
     Pad,
     PolygonLine,
-    Rect,
+    Rectangle,
     RectLine,
 )
 from kilibs.geom import (
     BoundingBox,
     Direction,
-    PolygonPoints,
-    Rectangle,
+    GeomArc,
+    GeomCircle,
+    GeomLine,
+    GeomPolygon,
+    GeomRectangle,
+    GeomShape,
+    GeomShapeClosed,
     Vector2D,
-    geometricArc,
-    geometricCircle,
-    geometricLine,
 )
-from kilibs.geom.keepout import Keepout, KeepoutRect, KeepoutRound
-from kilibs.geom.rounding import (
+from kilibs.geom.tools import (
     round_to_grid,
     round_to_grid_down,
     round_to_grid_e,
@@ -79,7 +80,7 @@ def frangei(x, y, jump):
 
 # returns a list with a single rectangle around x,y with width and height w and h
 def addKeepoutRect(x, y, w, h):
-    return [KeepoutRect(Vector2D(x, y), Vector2D(w, h))]
+    return [GeomRectangle(center=(x, y), size=(w, h))]
 
 
 # returns a series of rectangle that lie around the circular pad around (x,y) with radius w=h
@@ -87,12 +88,12 @@ def addKeepoutRect(x, y, w, h):
 def addKeepoutRound(x, y, w, h):
     if w != h:
         # Could do two circles and a rect if we cared enough
-        return [KeepoutRect(Vector2D(x, y), Vector2D(w, h))]
+        return [GeomRectangle(center=(x, y), size=(w, h))]
 
-    return [KeepoutRound(Vector2D(x, y), w / 2)]
+    return [GeomCircle(center=(x, y), radius=w / 2)]
 
 
-def getKeepoutsForPads(pads: Pad | list[Pad], clearance: float) -> list[Keepout]:
+def getKeepoutsForPads(pads: Pad | list[Pad], clearance: float) -> list[GeomShape]:
     """
     Return suitable keepouts for the given pads.
 
@@ -128,7 +129,7 @@ def getKeepoutsForPads(pads: Pad | list[Pad], clearance: float) -> list[Keepout]
     for pad in pads:
         center = get_shape_center(pad)
         if pad.shape == Pad.SHAPE_CIRCLE:
-            kos.append(KeepoutRound(center, pad.size.x / 2 + clearance))
+            kos.append(GeomCircle(center=center, radius=pad.size.x / 2 + clearance))
         else:
             # Everything else.
             # ovals and roundrects can be more accurate if needed
@@ -146,71 +147,49 @@ def getKeepoutsForPads(pads: Pad | list[Pad], clearance: float) -> list[Keepout]
                     f"Pad rotation {pad.rotation} not supported for non-square pads"
                 )
 
-            kos.append(KeepoutRect(center=pad.at, size=size))
+            kos.append(GeomRectangle(center=pad.at, size=size))
 
     return kos
 
 
 # internal method for keepout-processing
 def applyKeepouts(
-    items: List[Union[geometricLine, geometricCircle, geometricArc]],
-    keepouts: List[Keepout],
-) -> List[Union[geometricLine, geometricArc, geometricCircle]]:
-
+    items: list[GeomShape],
+    keepouts: list[GeomShapeClosed],
+) -> list[GeomShape]:
     if len(keepouts) == 0:
         return items
 
     # Apply all the keepouts to a single line
-    def applyKeepoutsToOneItem(item, kos: List[Keepout]):
+    def applyKeepoutsToOneItem(item, kos: list[GeomShapeClosed]):
         items = [item]
-
         for ko in kos:
-
             # Items left after applying this keepout
             new_items = []
-
             for i in items:
-                kept_out: Optional[list[Any]] = []
-
-                if isinstance(i, geometricLine):
-                    kept_out = ko.keepout_line(i)
-                elif isinstance(i, geometricCircle):
-                    kept_out = ko.keepout_circle(i)
-                elif isinstance(i, geometricArc):
-                    kept_out = ko.keepout_arc(i)
-
-                if kept_out is None:
-                    # This keepout does not affect this item
-                    new_items.append(i)
-                else:
-                    # Whatever is left after applying the keepout
-                    new_items += kept_out
-
+                new_items += ko.keepout(i)
             # Once one Keepout has been applied, we need to apply the next one(s)
             # to the new items
             items = new_items
-
         return items
 
     new_parts = []
-
     for item in items:
         this_part_kept_out = applyKeepoutsToOneItem(item, keepouts)
         new_parts += this_part_kept_out
-
     return new_parts
 
 
 # gives True if the given point (x,y) is contained in any keepout
-def containedInAnyKeepout(p: Vector2D, keepouts: List[Keepout]) -> bool:
+def containedInAnyKeepout(p: Vector2D, keepouts: List[GeomShapeClosed]) -> bool:
     for ko in keepouts:
-        if ko.contains(p):
+        if ko.is_point_inside_self(p):
             return True
     return False
 
 
 def renderKeepouts(
-    keeouts: list[Keepout], layer: str = "Cmts.User", width: float = 0.1
+    keeouts: list[GeomShapeClosed], layer: str = "Cmts.User", width: float = 0.1
 ) -> list[Node]:
     """
     Debugging function to render keepouts.
@@ -221,19 +200,19 @@ def renderKeepouts(
 
     nodes: list[Node] = []
     for ko in keeouts:
-        if isinstance(ko, KeepoutRect):
+        if isinstance(ko, GeomRectangle):
             nodes.append(
-                Rect(
-                    start=Vector2D(ko.left, ko.top),
-                    end=Vector2D(ko.right, ko.bottom),
+                Rectangle(
+                    start=ko.top_left,
+                    end=ko.bottom_right,
                     layer=layer,
                     width=width,
                 )
             )
-        elif isinstance(ko, KeepoutRound):
+        elif isinstance(ko, GeomCircle):
             nodes.append(
                 Circle(
-                    center=Vector2D(ko.center[0], ko.center[1]),
+                    center=ko.center,
                     radius=ko.radius,
                     layer=layer,
                     width=width,
@@ -246,7 +225,7 @@ def renderKeepouts(
 
 
 def _add_kept_out(
-    items: List[Union[geometricArc, geometricCircle, geometricLine]], layer, width, roun
+    items: List[Union[GeomArc, GeomCircle, GeomLine]], layer, width, roun
 ) -> List[Node]:
     """
     Internal method to add the kept out items to the kicad_mod
@@ -255,16 +234,21 @@ def _add_kept_out(
     tiny_threshold = width / 2
 
     # Prune tiny lines and arcs left over from keepout trims
-    for item in items:
+    # TODO: uncomment the 3 comments with items-to_remove
+    # items_to_remove = []
+    for i, item in enumerate(items):
 
         tiny = False
-        if isinstance(item, geometricLine):
+        if isinstance(item, GeomLine):
             tiny = item.length < tiny_threshold
-        elif isinstance(item, geometricArc):
-            tiny = (item.start_pos - item.getMidPoint()).norm() < tiny_threshold / 2
+        elif isinstance(item, GeomArc):
+            tiny = (item.start - item.mid).norm() < tiny_threshold / 2
 
         if tiny:
-            items.remove(item)
+            items.remove(item)  # TODO: delete this line
+            # items_to_remove.append(i)
+
+    # items = [items[i] for i in range(len(items)) if i not in items_to_remove]
 
     nodes: list[Node] = []
     for item in items:
@@ -273,47 +257,47 @@ def _add_kept_out(
         # grid point, not necessarily rounding away from zero (so 1.000003 should be
         # rounded to 1, not 1.01, say).
 
-        if isinstance(item, geometricLine):
+        if isinstance(item, GeomLine):
             nodes.append(
                 Line(
                     start=[
-                        round_to_grid_nearest(item.start_pos.x, roun),
-                        round_to_grid_nearest(item.start_pos.y, roun),
+                        round_to_grid_nearest(item.start.x, roun),
+                        round_to_grid_nearest(item.start.y, roun),
                     ],
                     end=[
-                        round_to_grid_nearest(item.end_pos.x, roun),
-                        round_to_grid_nearest(item.end_pos.y, roun),
+                        round_to_grid_nearest(item.end.x, roun),
+                        round_to_grid_nearest(item.end.y, roun),
                     ],
                     layer=layer,
                     width=width,
                 )
             )
-        elif isinstance(item, geometricCircle):
+        elif isinstance(item, GeomCircle):
             nodes.append(
                 Circle(
                     center=[
-                        round_to_grid_nearest(item.center_pos.x, roun),
-                        round_to_grid_nearest(item.center_pos.y, roun),
+                        round_to_grid_nearest(item.center.x, roun),
+                        round_to_grid_nearest(item.center.y, roun),
                     ],
                     radius=round_to_grid_nearest(item.radius, roun),
                     layer=layer,
                     width=width,
                 )
             )
-        elif isinstance(item, geometricArc):
+        elif isinstance(item, GeomArc):
             nodes.append(
                 Arc(
                     start=[
-                        round_to_grid_nearest(item.getStartPoint().x, roun),
-                        round_to_grid_nearest(item.getStartPoint().y, roun),
+                        round_to_grid_nearest(item.start.x, roun),
+                        round_to_grid_nearest(item.start.y, roun),
                     ],
-                    midpoint=[
-                        round_to_grid_nearest(item.getMidPoint().x, roun),
-                        round_to_grid_nearest(item.getMidPoint().y, roun),
+                    mid=[
+                        round_to_grid_nearest(item.mid.x, roun),
+                        round_to_grid_nearest(item.mid.y, roun),
                     ],
                     end=[
-                        round_to_grid_nearest(item.getEndPoint().x, roun),
-                        round_to_grid_nearest(item.getEndPoint().y, roun),
+                        round_to_grid_nearest(item.end.x, roun),
+                        round_to_grid_nearest(item.end.y, roun),
                     ],
                     layer=layer,
                     width=width,
@@ -324,7 +308,7 @@ def _add_kept_out(
     return nodes
 
 
-def makeLineWithKeepout(line: geometricLine, layer, width, keepouts=[], roun=0.001):
+def makeLineWithKeepout(line: GeomLine, layer, width, keepouts=[], roun=0.001):
     """
     Split an arbitrary line so it does not interfere with keepout areas
     """
@@ -333,7 +317,7 @@ def makeLineWithKeepout(line: geometricLine, layer, width, keepouts=[], roun=0.0
 
 
 def addLineWithKeepout(
-    kicad_mod, line: geometricLine, layer, width, keepouts=[], roun=0.001
+    kicad_mod, line: GeomLine, layer, width, keepouts=[], roun=0.001
 ):
     """Compatibility shim, prefer makeLineWithKeepout in new code"""
     nodes = makeLineWithKeepout(line, layer, width, keepouts, roun)
@@ -349,7 +333,7 @@ def addHLineWithKeepout(
         addHDLineWithKeepout(kicad_mod, x0, x1, y, layer, width, keepouts, roun)
     else:
         # print("addHLineWithKeepout",y)
-        line = geometricLine(start=[x0, y], end=[x1, y])
+        line = GeomLine(start=[x0, y], end=[x1, y])
         addLineWithKeepout(kicad_mod, line, layer, width, keepouts, roun)
 
 
@@ -361,13 +345,11 @@ def addVLineWithKeepout(
         addVDLineWithKeepout(kicad_mod, x, y0, y1, layer, width, keepouts, roun)
     else:
         # print("addVLineWithKeepout",x)
-        line = geometricLine(start=[x, y0], end=[x, y1])
+        line = GeomLine(start=[x, y0], end=[x, y1])
         addLineWithKeepout(kicad_mod, line, layer, width, keepouts, roun)
 
 
-def makeCircleWithKeepout(
-    circle: geometricCircle, layer, width, keepouts=[], roun=0.001
-):
+def makeCircleWithKeepout(circle: GeomCircle, layer, width, keepouts=[], roun=0.001):
     """
     Draw a circle minding the keepouts
     """
@@ -379,13 +361,13 @@ def addCircleWithKeepout(
     kicad_mod, x, y, radius, layer, width, keepouts=[], roun=0.001
 ):
     """Compatibility shim, prefer makeCircleWithKeepout in new code"""
-    c = geometricCircle(center=[x, y], radius=radius)
+    c = GeomCircle(center=[x, y], radius=radius)
     nodes = makeCircleWithKeepout(c, layer, width, keepouts, roun)
     for node in nodes:
         kicad_mod.append(node)
 
 
-def makeArcWithKeepout(arc: geometricArc, layer, width, keepouts=[], roun=0.001):
+def makeArcWithKeepout(arc: GeomArc, layer, width, keepouts=[], roun=0.001):
     """
     Draw an arc minding the keepouts
     """
@@ -393,7 +375,7 @@ def makeArcWithKeepout(arc: geometricArc, layer, width, keepouts=[], roun=0.001)
     return _add_kept_out(parts_out, layer, width, roun)
 
 
-def addArcWithKeepout(kicad_mod, arc: geometricArc, layer, width, keepouts, roun):
+def addArcWithKeepout(kicad_mod, arc: GeomArc, layer, width, keepouts, roun):
     """Compatibility shim, prefer makeArcWithKeepout in new code"""
     nodes = makeArcWithKeepout(arc, layer, width, keepouts, roun)
     for node in nodes:
@@ -401,20 +383,20 @@ def addArcWithKeepout(kicad_mod, arc: geometricArc, layer, width, keepouts, roun
 
 
 # draw an arc
-def addArc(kicad_mod, arc: geometricArc, layer, width, roun=0.001):
+def addArc(kicad_mod, arc: GeomArc, layer, width, roun=0.001):
     kicad_mod.append(
         Arc(
             start=[
-                round_to_grid_nearest(arc.getStartPoint().x, roun),
-                round_to_grid_nearest(arc.getStartPoint().y, roun),
+                round_to_grid_nearest(arc.start.x, roun),
+                round_to_grid_nearest(arc.start.y, roun),
             ],
-            midpoint=[
-                round_to_grid_nearest(arc.getMidPoint().x, roun),
-                round_to_grid_nearest(arc.getMidPoint().y, roun),
+            mid=[
+                round_to_grid_nearest(arc.mid.x, roun),
+                round_to_grid_nearest(arc.mid.y, roun),
             ],
             end=[
-                round_to_grid_nearest(arc.getEndPoint().x, roun),
-                round_to_grid_nearest(arc.getEndPoint().y, roun),
+                round_to_grid_nearest(arc.end.x, roun),
+                round_to_grid_nearest(arc.end.y, roun),
             ],
             layer=layer,
             width=width,
@@ -426,18 +408,14 @@ def addArc(kicad_mod, arc: geometricArc, layer, width, roun=0.001):
 def addEllipse(kicad_mod, x, y, w, h, layer, width, roun=0.001):
     addArc(
         kicad_mod=kicad_mod,
-        arc=geometricArc(
-            start=[x - w / 2, y], midpoint=[x, y - h / 2], end=[x + w / 2, y]
-        ),
+        arc=GeomArc(start=[x - w / 2, y], mid=[x, y - h / 2], end=[x + w / 2, y]),
         layer=layer,
         width=width,
         roun=roun,
     )
     addArc(
         kicad_mod=kicad_mod,
-        arc=geometricArc(
-            start=[x - w / 2, y], midpoint=[x, y + h / 2], end=[x + w / 2, y]
-        ),
+        arc=GeomArc(start=[x - w / 2, y], mid=[x, y + h / 2], end=[x + w / 2, y]),
         layer=layer,
         width=width,
         roun=roun,
@@ -448,9 +426,7 @@ def addEllipse(kicad_mod, x, y, w, h, layer, width, roun=0.001):
 def addEllipseWithKeepout(kicad_mod, x, y, w, h, layer, width, keepouts=[], roun=0.001):
     addArcWithKeepout(
         kicad_mod=kicad_mod,
-        arc=geometricArc(
-            start=[x - w / 2, y], midpoint=[x, y - h / 2], end=[x + w / 2, y]
-        ),
+        arc=GeomArc(start=[x - w / 2, y], mid=[x, y - h / 2], end=[x + w / 2, y]),
         keepouts=keepouts,
         layer=layer,
         width=width,
@@ -458,9 +434,7 @@ def addEllipseWithKeepout(kicad_mod, x, y, w, h, layer, width, keepouts=[], roun
     )
     addArcWithKeepout(
         kicad_mod=kicad_mod,
-        arc=geometricArc(
-            start=[x - w / 2, y], midpoint=[x, y + h / 2], end=[x + w / 2, y]
-        ),
+        arc=GeomArc(start=[x - w / 2, y], mid=[x, y + h / 2], end=[x + w / 2, y]),
         keepouts=keepouts,
         layer=layer,
         width=width,
@@ -469,12 +443,10 @@ def addEllipseWithKeepout(kicad_mod, x, y, w, h, layer, width, keepouts=[], roun
 
 
 def makeNodesWithKeepout(
-    geom_items: list[
-        geometricLine | geometricArc | geometricCircle | Rectangle | PolygonPoints
-    ],
+    geom_items: list[GeomLine | GeomArc | GeomCircle | GeomRectangle | GeomPolygon],
     layer: str,
     width: float,
-    keepouts: list[Keepout],
+    keepouts: list[GeomShapeClosed],
     roun=0.001,
     transform: Vector2D = Vector2D(0, 0),
 ) -> list[Node]:
@@ -491,20 +463,20 @@ def makeNodesWithKeepout(
 
     def get_kept_out(p):
         xfrmed = None
-        if isinstance(p, geometricLine):
-            xfrmed = geometricLine(
-                start=p.start_pos + transform,
-                end=p.end_pos + transform,
+        if isinstance(p, GeomLine):
+            xfrmed = GeomLine(
+                start=p.start + transform,
+                end=p.end + transform,
             )
-        elif isinstance(p, geometricCircle):
-            xfrmed = geometricCircle(
-                center=p.center_pos + transform,
+        elif isinstance(p, GeomCircle):
+            xfrmed = GeomCircle(
+                center=p.center + transform,
                 radius=p.radius,
             )
-        elif isinstance(p, geometricArc):
-            xfrmed = geometricArc(
-                center=p.center_pos + transform,
-                start=p.start_pos + transform,
+        elif isinstance(p, GeomArc):
+            xfrmed = GeomArc(
+                center=p.center + transform,
+                start=p.start + transform,
                 angle=p.angle,
             )
         else:
@@ -517,11 +489,13 @@ def makeNodesWithKeepout(
 
     decomposed = []
     for item in geom_items:
-        if isinstance(item, Rectangle):
-            decomposed += item.get_lines()
-        elif isinstance(item, PolygonPoints):
-            for i, pt in enumerate(item.nodes[:-1]):
-                decomposed.append(geometricLine(start=pt, end=item.nodes[i + 1]))
+        if isinstance(item, GeomRectangle):
+            decomposed += item.get_atomic_shapes_back_compatible()
+        elif isinstance(item, GeomPolygon):
+            for i, pt in enumerate(item.points[:-1]):
+                decomposed.append(GeomLine(start=pt, end=item.points[i + 1]))
+            if item.close:
+                decomposed.append(GeomLine(start=item.points[-1], end=item.points[0]))
         else:
             decomposed.append(item)
 
@@ -552,8 +526,8 @@ def addSlitScrew(kicad_mod, c, radius, layer, width, keepouts=[], roun=0.001):
     dx4 = 0.99 * radius * math.sin(math.radians(315 + da))
     dy4 = 0.99 * radius * math.cos(math.radians(315 + da))
 
-    line1 = geometricLine(start=c + [dx1, dy1], end=c + [dx4, dy4])
-    line2 = geometricLine(start=c + [dx2, dy2], end=c + [dx3, dy3])
+    line1 = GeomLine(start=c + [dx1, dy1], end=c + [dx4, dy4])
+    line2 = GeomLine(start=c + [dx2, dy2], end=c + [dx3, dy3])
 
     addLineWithKeepout(kicad_mod, line1, layer, width, keepouts)
     addLineWithKeepout(kicad_mod, line2, layer, width, keepouts)
@@ -613,16 +587,16 @@ def addRectWith(kicad_mod, x, y, w, h, layer, width, roun=0.001):
 
 # split a rectangle so it does not interfere with keepout areas defined as [[x0,x1,y0,y1], ...]
 def addRectWithKeepout(kicad_mod, x, y, w, h, layer, width, keepouts=[], roun=0.001):
-    rect = Rectangle.by_corner_and_size(Vector2D(x, y), Vector2D(w, h))
+    rect = GeomRectangle(start=Vector2D(x, y), size=Vector2D(w, h))
     kept_out = makeNodesWithKeepout(rect, layer, width, keepouts, roun)
     kicad_mod += kept_out
 
 
-def makeRectWithKeepout(rect: Rectangle, layer, width, keepouts=[], roun=0.001):
+def makeRectWithKeepout(rect: GeomRectangle, layer, width, keepouts=[], roun=0.001):
     """
     Draw a rectangle minding the keepouts
     """
-    lines = rect.get_lines()
+    lines = rect.get_atomic_shapes_back_compatible()
     parts_out = applyKeepouts(lines, keepouts)
     return _add_kept_out(parts_out, layer, width, roun)
 
@@ -676,7 +650,7 @@ def allEqualSidedDownTriangle(model, xcenter, side_length, layer, width):
     h = math.sqrt(3) / 6 * side_length
     model.append(
         PolygonLine(
-            polygon=[
+            shape=[
                 [xcenter[0] - side_length / 2, xcenter[1] - h],
                 [xcenter[0] + side_length / 2, xcenter[1] - h],
                 [xcenter[0], xcenter[1] + 2 * h],
@@ -701,7 +675,7 @@ def allEqualSidedDownTriangle(model, xcenter, side_length, layer, width):
 def bevelRectTL(model, x, size, layer, width, bevel_size=1):
     model.append(
         PolygonLine(
-            polygon=[
+            shape=[
                 [x[0] + bevel_size, x[1]],
                 [x[0] + size[0], x[1]],
                 [x[0] + size[0], x[1] + size[1]],
@@ -728,7 +702,7 @@ def bevelRectTL(model, x, size, layer, width, bevel_size=1):
 def bevelRectBL(model, x, size, layer, width, bevel_size=1):
     model.append(
         PolygonLine(
-            polygon=[
+            shape=[
                 [x[0], x[1]],
                 [x[0] + size[0], x[1]],
                 [x[0] + size[0], x[1] + size[1]],
@@ -770,7 +744,7 @@ def addRectAngledTop(kicad_mod, x1, x2, angled_delta, layer, width, roun=0.001):
         Vector2D(round_to_grid_e(xma, roun), round_to_grid_e(ymi, roun)),
         Vector2D(round_to_grid_e(xmi, roun), round_to_grid_e(ymi, roun)),
     ]
-    kicad_mod.append(PolygonLine(nodes=nodes, layer=layer, width=width))
+    kicad_mod.append(PolygonLine(shape=nodes, layer=layer, width=width))
 
 
 #     +----+
@@ -800,7 +774,7 @@ def addRectAngledTopNoBottom(kicad_mod, x1, x2, angled_delta, layer, width, roun
         Vector2D(round_to_grid_e(xma, roun), round_to_grid_e(ya, roun)),
         Vector2D(round_to_grid_e(xma, roun), round_to_grid_e(ymi, roun)),
     ]
-    kicad_mod.append(PolygonLine(nodes=nodes, layer=layer, width=width))
+    kicad_mod.append(PolygonLine(shape=nodes, layer=layer, width=width))
 
 
 #   +--------+
@@ -831,7 +805,7 @@ def addRectAngledBottom(kicad_mod, x1, x2, angled_delta, layer, width, roun=0.00
         Vector2D(round_to_grid_e(xma, roun), round_to_grid_e(ymi, roun)),
         Vector2D(round_to_grid_e(xmi, roun), round_to_grid_e(ymi, roun)),
     ]
-    kicad_mod.append(PolygonLine(nodes=nodes, layer=layer, width=width))
+    kicad_mod.append(PolygonLine(shape=nodes, layer=layer, width=width))
 
 
 #   |        |
@@ -861,7 +835,7 @@ def addRectAngledBottomNoTop(kicad_mod, x1, x2, angled_delta, layer, width, roun
         Vector2D(round_to_grid_e(xma, roun), round_to_grid_e(ya, roun)),
         Vector2D(round_to_grid_e(xma, roun), round_to_grid_e(ymi, roun)),
     ]
-    kicad_mod.append(PolygonLine(nodes=nodes, layer=layer, width=width))
+    kicad_mod.append(PolygonLine(shape=nodes, layer=layer, width=width))
 
 
 #        ..---..
@@ -925,7 +899,7 @@ def addCircleLF(kicad_mod, center, radius, layer, width, linedist=0.3, roun=0.00
 def DIPRectT(model, x, size, layer, width, marker_size=2):
     model.append(
         PolygonLine(
-            polygon=[
+            shape=[
                 [x[0] + size[0] / 2 - marker_size / 2, x[1]],
                 [x[0], x[1]],
                 [x[0], x[1] + size[1]],
@@ -958,7 +932,7 @@ def DIPRectT(model, x, size, layer, width, marker_size=2):
 def DIPRectL(model, x, size, layer, width, marker_size=2):
     model.append(
         PolygonLine(
-            polygon=[
+            shape=[
                 [x[0], x[1] + size[1] / 2 - marker_size / 2],
                 [x[0], x[1]],
                 [x[0] + size[0], x[1]],

@@ -110,7 +110,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pincount, configurati
         **optional_pad_params))
 
     # create fab outline
-    kicad_mod.append(PolygonLine(polygon=[
+    kicad_mod.append(PolygonLine(shape=[
         [body_edge['left'], body_edge['top']],\
         [body_edge['right'], body_edge['top']],\
         [body_edge['right'], body_edge['bottom']],\
@@ -120,7 +120,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pincount, configurati
 
     # create main silk rectangle
     offset_ramp_y = 1
-    kicad_mod.append(PolygonLine(polygon=[
+    kicad_mod.append(PolygonLine(shape=[
         [body_edge['left'] - nudge, body_edge['top'] - nudge],\
         [body_edge['right'] + nudge, body_edge['top'] - nudge],\
         [body_edge['right'] + nudge, body_edge['bottom_silk'] + nudge],\
@@ -138,7 +138,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pincount, configurati
         {'x': body_edge['left'] + sl/sqrt(2), 'y': 0},
         {'x': body_edge['left'], 'y': sl/2}
     ]
-    kicad_mod.append(PolygonLine(polygon=poly_pin1_marker, layer='F.Fab', width=fab_w))
+    kicad_mod.append(PolygonLine(shape=poly_pin1_marker, layer='F.Fab', width=fab_w))
 
 
     for i in range(0, pincount):
@@ -147,7 +147,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pincount, configurati
         end_x = middle_x + 1.6/2
         y1 = body_edge['top'] - nudge
         y2 = y1 + 0.6
-        kicad_mod.append(PolygonLine(polygon=[[start_x, y1], [start_x, y2], \
+        kicad_mod.append(PolygonLine(shape=[[start_x, y1], [start_x, y2], \
                                                [end_x, y2], [end_x, y1]], layer='F.SilkS', width=silk_w))
 
     ########################### CrtYd #################################

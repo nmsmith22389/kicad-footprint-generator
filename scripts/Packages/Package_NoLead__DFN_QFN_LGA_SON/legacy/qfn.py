@@ -123,7 +123,7 @@ def qfn(args):
                   layer="F.Fab", size=s1, thickness=t1))
 
     # Fab
-    f.append(PolygonLine(polygon=[[xRightFab, yBottomFab],
+    f.append(PolygonLine(shape=[[xRightFab, yBottomFab],
                                    [xLeftFab, yBottomFab],
                                    [xLeftFab, yChamferFab],
                                    [xChamferFab, yTopFab],
@@ -137,15 +137,15 @@ def qfn(args):
                       layer="F.CrtYd", width=wCrtYd))
 
     # Silk
-    f.append(PolygonLine(polygon=[[xRight2Silk, yTopSilk],
+    f.append(PolygonLine(shape=[[xRight2Silk, yTopSilk],
                                    [xRightSilk, yTopSilk],
                                    [xRightSilk, yTop2Silk]],
                          layer="F.SilkS", width=wSilkS))
-    f.append(PolygonLine(polygon=[[xLeft2Silk, yBottomSilk],
+    f.append(PolygonLine(shape=[[xLeft2Silk, yBottomSilk],
                                    [xLeftSilk, yBottomSilk],
                                    [xLeftSilk, yBottom2Silk]],
                          layer="F.SilkS", width=wSilkS))
-    f.append(PolygonLine(polygon=[[xRight2Silk, yBottomSilk],
+    f.append(PolygonLine(shape=[[xRight2Silk, yBottomSilk],
                                    [xRightSilk, yBottomSilk],
                                    [xRightSilk, yBottom2Silk]],
                          layer="F.SilkS", width=wSilkS))

@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 from KicadModTree import *
-from kilibs.geom import keepout
 from scripts.tools.drawing_tools import *
 from scripts.tools.global_config_files import global_config as GC
 global_config = GC.DefaultGlobalConfig()
@@ -66,7 +65,7 @@ def ptc_fuse_tht(args):
     yTopCrtYd = yTop - crtYd
     yBottomCrtYd = yBottom + crtYd
 
-    keepouts: list[keepout.Keepout] = []
+    keepouts: list[GeomShapeClosed] = []
     ko_diameter = p[0] + 2 * clearance
 
     # Pads

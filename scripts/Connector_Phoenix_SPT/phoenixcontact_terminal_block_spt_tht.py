@@ -38,7 +38,7 @@ def generate_footprint(global_config: GC.GlobalConfig, params, part_params, mpn,
     # Add fab layer
     body_top_left = [params['fab']['left'], params['fab']['top']]
     body_bottom_right = [params['fab']['left']+params['pitch']['x']*part_params['pins']+params['fab']['right'], params['fab']['bottom']]
-    # -> Rectangle
+    # -> GeomRectangle
     kicad_mod.append(RectLine(start=body_top_left, end=body_bottom_right, layer='F.Fab', width=configuration['fab_line_width']))
     # -> Marker of pin 1
     kicad_mod.append(Line(start=[-0.95, params['fab']['top']],
@@ -49,7 +49,7 @@ def generate_footprint(global_config: GC.GlobalConfig, params, part_params, mpn,
     # Add silkscreen layer
     silk_top_left = [body_top_left[0] - configuration['silk_fab_offset'], body_top_left[1] - configuration['silk_fab_offset']]
     silk_bottom_right = [body_bottom_right[0] + configuration['silk_fab_offset'], body_bottom_right[1] + configuration['silk_fab_offset']]
-    # -> Rectangle
+    # -> GeomRectangle
     if silk_top_left[1] > -params['pads']['size']['y']/2 - configuration['silk_pad_clearance']:
         # Handle case with large pin which overlap the silkscreen
         kicad_mod.append(Line(start=[silk_top_left[0], silk_top_left[1]],
@@ -91,7 +91,7 @@ def generate_footprint(global_config: GC.GlobalConfig, params, part_params, mpn,
             kicad_mod.append(RectLine(start=[params['fab']['left'] + 0.75 + params['pitch']['x'] * x, params['pitch']['y'] - 1.25 - (params['pitch']['x'] - 1.5) / 2 - 2.0],
                 end=[params['fab']['left'] + 0.75 + params['pitch']['x'] * x + params['pitch']['x'] - 1.5, params['pitch']['y'] - 1.25 - (params['pitch']['x'] - 1.5) / 2 - 0.5], layer='F.SilkS', width=configuration['silk_line_width']))
             kicad_mod.append(Arc(center=[params['fab']['left'] + params['pitch']['x']/2 + params['pitch']['x'] * x, params['pitch']['y'] - 1.0],
-                midpoint=[params['fab']['left'] + params['pitch']['x']/2 + params['pitch']['x'] * x, params['pitch']['y'] - 1.0 - (params['pitch']['x'] - 1.5) / 2],
+                mid=[params['fab']['left'] + params['pitch']['x']/2 + params['pitch']['x'] * x, params['pitch']['y'] - 1.0 - (params['pitch']['x'] - 1.5) / 2],
                 angle=90, layer='F.SilkS', width=configuration['silk_line_width']))
     # -> Marker of pin 1
     if silk_top_left[1] > -params['pads']['size']['y']/2 - configuration['silk_pad_clearance']:

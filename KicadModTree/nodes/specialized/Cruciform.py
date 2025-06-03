@@ -1,103 +1,77 @@
-from KicadModTree.nodes.Node import Node
-from KicadModTree.nodes.base import Rect
-from KicadModTree.nodes.specialized import Polygon
-from kilibs.geom import Vector2D
+# kilibs is free software: you can redistribute it and/or modify it under the terms of
+# the GNU General Public License as published by the Free Software Foundation, either
+# version 3 of the License, or (at your option) any later version.
+#
+# kilibs is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+# without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+# PURPOSE. See the GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along with kilibs.
+# If not, see < http://www.gnu.org/licenses/ >.
+#
+# (C) The KiCad Librarian Team
+
+from __future__ import annotations
+
+from KicadModTree import LineStyle, NodeShape
+from kilibs.geom import GeomCruciform, Vec2DCompatible
 
 
-class Cruciform(Node):
-    """
-    A cruciform is a cross-shaped object that is basically two rectangles
-    that intersect at their centers.
-
-    It looks like this:
-
-            +-------+   -------------
-            |       |               ^
-        +---+       +---+ ---       |
-        |       o       |  | t_h    | overall_h
-        +---+       +---+ ---       |
-            |       |               v
-        |   +-------+   +------------
-        |   |<-t_w->|   |
-        |               |
-        |<--overall_w-->|
-
-    It is centred at the origin - you can use a Translate or Rotation transform
-    node to move it to the desired location.
-    """
-
-    overall_w: float
-    overall_h: float
-    tail_w: float
-    tail_h: float
-
+class Cruciform(NodeShape, GeomCruciform):
     def __init__(
         self,
-        overall_w: float,
-        overall_h: float,
-        tail_w: float,
-        tail_h: float,
-        layer: str,
-        width: float,
-        fill: bool,
+        layer: str = "F.SilkS",
+        width: float | None = None,
+        style: LineStyle = LineStyle.SOLID,
+        fill: bool = False,
+        offset: float = 0,
+        shape: Cruciform | GeomCruciform | None = None,
+        overall_w: float | None = None,
+        overall_h: float | None = None,
+        tail_w: float | None = None,
+        tail_h: float | None = None,
+        center: Vec2DCompatible = (0, 0),
+        angle: float = 0,
+        use_degrees: bool = True,
     ):
-        Node.__init__(self)
+        """Create a geometric cruciform.
 
-        self.overall_w = overall_w
-        self.overall_h = overall_h
-        self.tail_w = tail_w
-        self.tail_h = tail_h
+        A cruciform is a cross-shaped object that is basically two rectangles
+        that intersect at their centers.
 
-        if overall_w < tail_w:
-            raise ValueError("overall_w must be greater than tail_w")
+        It looks like this:
 
-        if overall_h < tail_h:
-            raise ValueError("overall_h must be greater than tail_h")
+        .. aafig::
+                +-------+   -------------
+                |       |               ^
+            +---+       +---+ ----      |
+            |               |    ^      |
+            |       o       |    | t h  | overall h
+            |               |    v      |
+            +---+       +---+ ----      |
+                |       |               v
+            |   +-------+   +------------
+            |   |<-t w->|   |
+            |               |
+            |<- overall w ->|
 
-        self.layer = layer
-        self.width = width
-        self.fill = fill
-
-    def getVirtualChilds(self):
-
-        c = Vector2D(0, 0)
-
-        if self.overall_w == self.tail_w or self.overall_h == self.tail_h:
-            size = Vector2D(self.overall_w, self.overall_h)
-            return [
-                Rect(  # type: ignore
-                    start=c - size / 2,
-                    end=c + size / 2,
-                    layer=self.layer,
-                    width=self.width,
-                    fill='solid' if self.fill else 'none',
-                ),
-            ]
-
-        r1_size_2 = Vector2D(self.overall_w, self.tail_h) / 2
-        r2_size_2 = Vector2D(self.tail_w, self.overall_h) / 2
-
-        poly_pts = [
-            Vector2D(-r1_size_2.x, -r1_size_2.y),
-            Vector2D(-r1_size_2.x, r1_size_2.y),
-            Vector2D(-r2_size_2.x, r1_size_2.y),
-            Vector2D(-r2_size_2.x, r2_size_2.y),
-            Vector2D(r2_size_2.x, r2_size_2.y),
-            Vector2D(r2_size_2.x, r1_size_2.y),
-            Vector2D(r1_size_2.x, r1_size_2.y),
-            Vector2D(r1_size_2.x, -r1_size_2.y),
-            Vector2D(r2_size_2.x, -r1_size_2.y),
-            Vector2D(r2_size_2.x, -r2_size_2.y),
-            Vector2D(-r2_size_2.x, -r2_size_2.y),
-            Vector2D(-r2_size_2.x, -r1_size_2.y),
-            Vector2D(-r1_size_2.x, -r1_size_2.y),
-        ]
-
-        poly = Polygon(
-            nodes=poly_pts,
-            layer=self.layer,
-            width=self.width,
-            fill=self.fill,
-        )
-
-        return [poly]
+        Args:
+            layer: Layer.
+            width: Line width in mm. If `None`, then the standard width for the given
+                layer will be used when the serializing the node.
+            style: Line style.
+            fill: `True` if the cruciform is filled, `False` if only the outline is
+                visible.
+            offset: Amount by which the cruciform is inflated or deflated (if offset is
+                negative).
+            shape: Shape from which to derive the parameters of the cruciform.
+            overall_w: Overall width of the cruciform in mm.
+            overall_h: Overall height of the cruciform in mm.
+            tail_w: Width of the tail of the cruciform in mm.
+            tail_h: Height of the tail of the cruciform in mm.
+            center: Coordinates of the center point of the cruciform in mm.
+            angle: Rotation angle of the cruciform in mm.
+            use_degrees: `True` if the rotation angle is given in degrees, `False` if
+                given in radians.
+        """
+        self.init_super(kwargs=locals())

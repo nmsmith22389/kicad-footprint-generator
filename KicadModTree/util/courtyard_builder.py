@@ -26,12 +26,12 @@ from KicadModTree import (
     Pad,
     PadArray,
     PolygonLine,
-    Rect,
+    Rectangle,
     RectLine,
     Vector2D,
 )
-from kilibs.geom import BoundingBox, PolygonPoints, Rectangle
-from kilibs.geom.rounding import is_polygon_clockwise, round_to_grid_increasing_area
+from kilibs.geom import BoundingBox, GeomPolygon, GeomRectangle
+from kilibs.geom.tools import is_polygon_clockwise, round_to_grid_increasing_area
 from scripts.tools.global_config_files.global_config import GlobalConfig
 
 
@@ -52,7 +52,7 @@ class CourtyardBuilder:
         global_config: GlobalConfig,
         offset_fab: float,
         offset_pads: float | None = None,
-        outline: Node | Rectangle | BoundingBox | PolygonPoints | None = None,
+        outline: Node | GeomRectangle | BoundingBox | GeomPolygon | None = None,
     ) -> Self:
         """
         Derives a courtyard with minimal area from the pads and primitives on the
@@ -68,7 +68,7 @@ class CourtyardBuilder:
             outline: optional outline of the component body.
 
         Returns:
-            the bounding box of the courtyard.
+            The bounding box of the courtyard.
         """
         cb = cls(global_config)
         if outline is None:
@@ -93,7 +93,7 @@ class CourtyardBuilder:
             right = max(self.crt_pts, key=itemgetter(0))[0]
             p1 = Vector2D(left, top)
             p2 = Vector2D(right, bottom)
-            self._bbox = BoundingBox(min_pt=p1, max_pt=p2)
+            self._bbox = BoundingBox(p1, p2)
             return self._bbox
         else:
             return self._bbox
@@ -139,15 +139,15 @@ class CourtyardBuilder:
         if len(crt_pts) == 4:
             p1 = crt_pts[0]
             p2 = crt_pts[2]
-            self._node = Rect(width=width, layer="F.CrtYd", start=p1, end=p2)
+            self._node = Rectangle(width=width, layer="F.CrtYd", start=p1, end=p2)
         else:
             crt_pts.append(crt_pts[0])  # close the courtyard
-            self._node = PolygonLine(polygon=crt_pts, width=width, layer="F.CrtYd")
+            self._node = PolygonLine(shape=crt_pts, width=width, layer="F.CrtYd")
         return self._node
 
     def add_element(
         self,
-        node: Node | Rectangle | BoundingBox | PolygonPoints,
+        node: Node | GeomRectangle | BoundingBox | GeomPolygon,
         offset_fab: float,
         offset_pads: float | None = None,
         use_fab_layer: bool = True,
@@ -157,16 +157,16 @@ class CourtyardBuilder:
         """
         if offset_pads is None:
             offset_pads = offset_fab
-        if isinstance(node, Rectangle | BoundingBox):
-            self.add_rectangle(node, offset_fab)
         if (
-            isinstance(node, Rect | RectLine)
+            isinstance(node, Rectangle | RectLine)
             and node.layer == "F.Fab"
             and use_fab_layer
         ):
             self.add_rect(node, offset_fab)
+        elif isinstance(node, GeomRectangle | BoundingBox):
+            self.add_rectangle(node, offset_fab)
         elif (
-            isinstance(node, PolygonLine | PolygonPoints)
+            isinstance(node, PolygonLine | GeomPolygon)
             and node.layer == "F.Fab"
             and use_fab_layer
         ):
@@ -178,9 +178,9 @@ class CourtyardBuilder:
         elif isinstance(node, PadArray):
             self.add_pad_array(node, offset_pads)
 
-    def add_rectangle(self, rectangle: Rectangle | BoundingBox, offset: float):
+    def add_rectangle(self, rectangle: GeomRectangle | BoundingBox, offset: float):
         """
-        Add a Rectangle or BoundingBox to the list of courtyard points
+        Add a GeomRectangle or BoundingBox to the list of courtyard points
         """
         self.src_pts.append(
             [
@@ -192,27 +192,27 @@ class CourtyardBuilder:
         )
         self._node = None  # invalidate previous node calculations
 
-    def add_rect(self, rect: Rect | RectLine, offset: float):
+    def add_rect(self, rect: Rectangle | RectLine, offset: float):
         """
-        Add a Rect or RectLine to the list of courtyard points
+        Add a Rectangle or RectLine to the list of courtyard points
         """
-        left = min(rect.start_pos.x, rect.end_pos.x) - offset
-        right = max(rect.start_pos.x, rect.end_pos.x) + offset
-        top = min(rect.start_pos.y, rect.end_pos.y) - offset
-        bottom = max(rect.start_pos.y, rect.end_pos.y) + offset
+        left = min(rect.start.x, rect.end.x) - offset
+        right = max(rect.start.x, rect.end.x) + offset
+        top = min(rect.start.y, rect.end.y) - offset
+        bottom = max(rect.start.y, rect.end.y) + offset
         self.src_pts.append(
             [[right, top], [right, bottom], [left, bottom], [left, top]]
         )
         self._node = None  # invalidate previous node calculations
 
-    def add_polygon(self, pl: PolygonLine | PolygonPoints, offset: float):
+    def add_polygon(self, pl: PolygonLine | GeomPolygon, offset: float):
         """
         Add a Polygon to the list of courtyard points
         """
         polygon = []
-        for node in pl.nodes:
-            if isinstance(node, Vector2D):
-                polygon.append([node.x, node.y])
+        for point in pl.points:
+            if isinstance(point, Vector2D):
+                polygon.append([point.x, point.y])
 
         if len(polygon) < 2:
             # ignore polygons with less than 2 vertices
@@ -240,13 +240,13 @@ class CourtyardBuilder:
         """
         Add a Line to the list of courtyard points
         """
-        delta_parallel = (line.end_pos - line.start_pos).normalize() * offset
+        delta_parallel = (line.end - line.start).normalize() * offset
         delta_orthogonal = delta_parallel.orthogonal().normalize() * offset
         pts: list[Vector2D] = []
-        pts.append(line.start_pos - delta_parallel - delta_orthogonal)
-        pts.append(line.end_pos + delta_parallel - delta_orthogonal)
-        pts.append(line.end_pos + delta_parallel + delta_orthogonal)
-        pts.append(line.start_pos - delta_parallel + delta_orthogonal)
+        pts.append(line.start - delta_parallel - delta_orthogonal)
+        pts.append(line.end + delta_parallel - delta_orthogonal)
+        pts.append(line.end + delta_parallel + delta_orthogonal)
+        pts.append(line.start - delta_parallel + delta_orthogonal)
         self.src_pts.append([[pt.x, pt.y] for pt in pts])
         self._node = None  # invalidate previous node calculations
 

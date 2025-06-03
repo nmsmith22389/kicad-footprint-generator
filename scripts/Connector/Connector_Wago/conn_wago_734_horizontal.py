@@ -124,7 +124,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pincount, configurati
     x1 = start_pos_x -pad_size[0]/2 - pad_silk_off
     xn = end_pos_x + pad_size[0]/2 + pad_silk_off
     kicad_mod.append(PolygonLine(
-        polygon=[
+        shape=[
             {'x': x1, 'y': body_edge['top']-nudge},
             {'x': body_edge['left']-nudge, 'y': body_edge['top']-nudge},
             {'x': body_edge['left']-nudge, 'y': body_edge['bottom']+nudge},
@@ -146,7 +146,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pincount, configurati
     p1s_L = 2
     # pin 1 markers
     kicad_mod.append(PolygonLine(
-        polygon=[
+        shape=[
             {'x': body_edge['left'] - p1s_off, 'y': body_edge['top'] + p1s_L},
             {'x': body_edge['left'] - p1s_off, 'y': body_edge['top'] - p1s_off},
             {'x': x1, 'y': body_edge['top'] - p1s_off}
@@ -159,7 +159,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pincount, configurati
         {'y': body_edge['top'] + sl/sqrt(2), 'x': 0},
         {'y': body_edge['top'], 'x': sl/2}
     ]
-    kicad_mod.append(PolygonLine(polygon=poly_pin1_marker, layer='F.Fab', width=fab_w))
+    kicad_mod.append(PolygonLine(shape=poly_pin1_marker, layer='F.Fab', width=fab_w))
 
     ########################### CrtYd #################################
     cx1 = round_to_grid(body_edge['left']-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])

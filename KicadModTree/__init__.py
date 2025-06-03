@@ -21,3 +21,5 @@ from KicadModTree.KicadFileHandler import KicadFileHandler, KicadPrettyLibrary
 
 # Argparser
 from KicadModTree.ModArgparser import ModArgparser
+
+from KicadModTree.util import LineStyle

@@ -196,7 +196,7 @@ def makeLEDRadial(
         ymark = math.sqrt(d_fab * d_fab / 4 - xmark * xmark)
         alpha = 360 - 2 * math.degrees(math.atan(ymark / xmark))
         kicad_modg.append(Arc(center=[0, 0], start=[-xmark, -ymark], angle=alpha, layer='F.Fab', width=lw_fab))
-        kicad_modg.append(Line(start=[-xmark, -ymark], end=[-xmark, ymark], angle=alpha, layer='F.Fab', width=lw_fab))
+        kicad_modg.append(Line(start=[-xmark, -ymark], end=[-xmark, ymark], layer='F.Fab', width=lw_fab))
     if led_type == "round_simple":
         kicad_modg.append(Circle(center=[0, 0], radius=d2_fab / 2, layer='F.Fab', width=lw_fab))
         kicad_modg.append(Circle(center=[0, 0], radius=d_fab / 2, layer='F.Fab', width=lw_fab))

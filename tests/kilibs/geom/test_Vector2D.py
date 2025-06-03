@@ -1,22 +1,22 @@
-# KicadModTree is free software: you can redistribute it and/or
-# modify it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
+# kilibs is free software: you can redistribute it and/or modify it under the terms of
+# the GNU General Public License as published by the Free Software Foundation, either
+# version 3 of the License, or (at your option) any later version.
 #
-# KicadModTree is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
+# kilibs is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+# without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+# PURPOSE. See the GNU General Public License for more details.
 #
-# You should have received a copy of the GNU General Public License
-# along with kicad-footprint-generator. If not, see < http://www.gnu.org/licenses/ >.
+# You should have received a copy of the GNU General Public License along with kilibs.
+# If not, see < http://www.gnu.org/licenses/ >.
 #
 # (C) 2018 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
+# (C) The KiCad Librarian Team
+
+import math
 
 import pytest
-import math
+
 from kilibs.geom import Vector2D
-from kilibs.test_utils.geom_test import vector_approx_equal
 
 
 def test_init():
@@ -28,7 +28,7 @@ def test_init():
     assert p2.x == 4
     assert p2.y == 5
 
-    p3 = Vector2D({'x': 7, 'y': 8})
+    p3 = Vector2D({"x": 7, "y": 8})
     assert p3.x == 7
     assert p3.y == 8
 
@@ -44,26 +44,50 @@ def test_init():
     assert p5.x == 1
     assert p5.y == 2
 
-    # TODO: test float datatype
-    # TODO: invalid type tests
-    # TODO: tests if int is always converted to float
+    # Test float datatype
+    p6 = Vector2D(1.2, 2.2)
+    assert p6.x == 1.2
+    assert p6.y == 2.2
+    p7 = Vector2D((1.2, 2.2))
+    assert p7.x == 1.2
+    assert p7.y == 2.2
+    p8 = Vector2D([1.2, 2.2])
+    assert p8.x == 1.2
+    assert p8.y == 2.2
+    p9 = Vector2D({"x": 1.2, "y": 2.2})
+    assert p9.x == 1.2
+    assert p9.y == 2.2
+
+    # Tests if int is always converted to float
+    vectors = [
+        Vector2D([1, 2]),
+        Vector2D((4, 5)),
+        Vector2D({"x": 7, "y": 8}),
+        Vector2D({}),
+        Vector2D(p1),
+        Vector2D(1, 2),
+    ]
+    for vector in vectors:
+        assert isinstance(vector.x, float)
+        assert isinstance(vector.y, float)
+
 
 def test_round_to():
     p1 = Vector2D([1.234, 5.678]).round_to(0)
-    print(p1)
-    assert vector_approx_equal(p1, (1.234, 5.678))
+    assert p1.is_equal((1.234, 5.678))
 
     p2 = Vector2D([1.234, 5.678]).round_to(0.1)
-    assert vector_approx_equal(p2, (1.2, 5.7))
+    assert p2.is_equal((1.2, 5.7))
 
     p3 = Vector2D([1.234, 5.678]).round_to(0.01)
-    assert vector_approx_equal(p3, (1.23, 5.68))
+    assert p3.is_equal((1.23, 5.68))
 
     p4 = Vector2D([1.234, 5.678]).round_to(0.001)
-    assert vector_approx_equal(p4, (1.234, 5.678))
+    assert p4.is_equal((1.234, 5.678))
 
     p5 = Vector2D([1.234, 5.678]).round_to(0.0001)
-    assert vector_approx_equal(p5, (1.234, 5.678))
+    assert p5.is_equal((1.234, 5.678))
+
 
 def test_add():
     p1 = Vector2D([1, 2])
@@ -86,7 +110,6 @@ def test_add():
     assert p5.x == -4
     assert p5.y == -1
 
-    # TODO: invalid type tests
 
 def test_sub():
     p1 = Vector2D([1, 2])
@@ -109,7 +132,6 @@ def test_sub():
     assert p5.x == 6
     assert p5.y == 5
 
-    # TODO: invalid type tests
 
 def test_mul():
     p1 = Vector2D([1, 2])
@@ -132,7 +154,6 @@ def test_mul():
     assert p5.x == -5
     assert p5.y == -6
 
-    # TODO: invalid type tests
 
 def test_div():
     p1 = Vector2D([1, 2])
@@ -155,45 +176,56 @@ def test_div():
     assert p5.x == -0.2
     assert p5.y == -1
 
-    # TODO: division by zero tests
-    # TODO: invalid type tests
+    # Division by zero tests:
+    with pytest.raises(ZeroDivisionError):
+        p1 / 0.0
+    with pytest.raises(ZeroDivisionError):
+        p1 / 0
+    with pytest.raises(ZeroDivisionError):
+        p1 / [0, 0]
+    with pytest.raises(ZeroDivisionError):
+        p1 / (0, 0)
+
 
 def test_polar():
     p1 = Vector2D.from_polar(math.sqrt(2), 45, use_degrees=True)
-    assert vector_approx_equal(p1, (1, 1))
+    assert p1.is_equal((1, 1))
 
     p1 = Vector2D.from_polar(2, -90, use_degrees=True, origin=(6, 1))
-    assert vector_approx_equal(p1, (6, -1))
+    assert p1.is_equal((6, -1))
 
     r, a = p1.to_polar(use_degrees=True, origin=(6, 1))
     assert r == pytest.approx(2)
     assert a == pytest.approx(-90)
 
-    p1.rotate(90, use_degrees=True, origin=(6, 1))
-    assert vector_approx_equal(p1, (8, 1))
+    p1.rotate(90, use_degrees=True, origin=Vector2D(6, 1))
+    assert p1.is_equal((8, 1))
 
     p1 = Vector2D.from_polar(math.sqrt(2), 135, use_degrees=True)
-    assert vector_approx_equal(p1, (-1, 1))
+    assert p1.is_equal((-1, 1))
 
-    p1.rotate(90, use_degrees=True)
-    assert vector_approx_equal(p1, (-1, -1))
+    p1.rotate(90, origin=Vector2D(0, 0), use_degrees=True)
+    assert p1.is_equal((-1, -1))
 
     r, a = p1.to_polar(use_degrees=True)
     assert r == pytest.approx(math.sqrt(2))
     assert a == pytest.approx(-135)
 
+
 def test_right_mul():
     p = 3 * Vector2D(1, 2)
-    assert vector_approx_equal(p, (3, 6))
+    assert p.is_equal((3, 6))
+
 
 def test_norm_arg():
     assert Vector2D(1, 1).norm() == pytest.approx(math.sqrt(2))
     assert Vector2D(1, 1).arg() == pytest.approx(45)
-    assert Vector2D(1, 1).arg(use_degrees=False) == pytest.approx(math.pi/4)
+    assert Vector2D(1, 1).arg(use_degrees=False) == pytest.approx(math.pi / 4)
     assert Vector2D(-1, -1).arg() == pytest.approx(-135)
-    assert Vector2D(-1, -1).arg(use_degrees=False) == pytest.approx(-3*math.pi/4)
+    assert Vector2D(-1, -1).arg(use_degrees=False) == pytest.approx(-3 * math.pi / 4)
 
-def test_inner():
+
+def test_inner_product():
     v1 = Vector2D(2, 3)
     v2 = Vector2D(4, 5)
 
@@ -204,12 +236,13 @@ def test_inner():
     assert v1.dot_product(v2) == 0
     assert v1.dot_product(-v2) == 0
 
+
 def test_normalize():
     v = Vector2D(0, 0)
-    n = Vector2D.normalize(v)
-    assert n.norm() == 0
+    with pytest.raises(ZeroDivisionError):
+        n = Vector2D.normalize(v)
 
-    v = Vector2D(math.sin(math.pi/6), math.cos(math.pi/6))
+    v = Vector2D(math.sin(math.pi / 6), math.cos(math.pi / 6))
     n = Vector2D.normalize(v)
     assert n.norm() == 1
 
@@ -218,6 +251,7 @@ def test_normalize():
     assert n1.norm() == 1
     assert n2.norm() == 1
     assert (n1 - n2).norm() == pytest.approx(0)
+
 
 def test_min_max():
     v1 = Vector2D(3, 2)
@@ -266,11 +300,13 @@ def test_distance(v1, v2, exp):
     [
         ((0, 0),           (0, 0), True),
         ((0, 0.000000001), (0, 0), True),
+        ((0, 0.1),         (0, 0), False),
+        ((0.1, 0),         (0, 0), False),
     ],
 )  # fmt: skip
-def test_is_close(v1, v2, exp):
+def test_is_equal(v1, v2, exp):
     v1 = Vector2D(v1)
     v2 = Vector2D(v2)
 
-    assert v1.is_close(v2) == exp
-    assert v2.is_close(v1) == exp
+    assert v1.is_equal(v2) == exp
+    assert v2.is_equal(v1) == exp

@@ -53,10 +53,10 @@ def test_basic(testing_global_config):
 
     assert c1.layer == "Cmts.User"
     assert c1.width == 0.1
-    assert c1.center_pos.x == 0
-    assert c1.center_pos.y == 0
+    assert c1.center.x == 0
+    assert c1.center.y == 0
 
     assert c2.layer == "Cmts.User"
     assert c2.width == 0.1
-    assert c2.center_pos.x == pytest.approx(43)  # FooVar + 1
-    assert c2.center_pos.y == 0
+    assert c2.center.x == pytest.approx(43)  # FooVar + 1
+    assert c2.center.y == 0

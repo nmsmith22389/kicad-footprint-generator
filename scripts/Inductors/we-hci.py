@@ -85,7 +85,7 @@ for inductor in inductors:
     cx = c + pw/2
     cy = w / 2
 
-    fp.append(RectLine(start=[-cx,-cy],end=[cx,cy],offset=0.3,width=0.05,grid=0.05,layer="F.CrtYd"))
+    fp.append(RectLine(start=[-cx,-cy],end=[cx,cy],offset=0.3,width=0.05,layer="F.CrtYd"))
 
     offset = 0.1
     ly = y/2 + 4 * offset
@@ -101,8 +101,8 @@ for inductor in inductors:
     ]
 
 
-    fp.append(PolygonLine(polygon=top))
-    fp.append(PolygonLine(polygon=top, y_mirror=0))
+    fp.append(PolygonLine(shape=top))
+    fp.append(PolygonLine(shape=top, y_mirror=0))
 
     #Add a model
     lib_name = "Inductor_SMD"

@@ -1,5 +1,4 @@
 from KicadModTree import *
-
 from KicadModTree.tests.test_utils.fp_file_test import SerialisationTest
 
 
@@ -40,7 +39,7 @@ class TestRotation(SerialisationTest):
 
         for t in range(0, 360, 15):
             kicad_mod.append(
-                Arc(center=center, midpoint=mid, angle=angle)
+                Arc(center=center, mid=mid, angle=angle)
                 .rotate(angle/3, origin=center)
                 .rotate(t, origin=rot_center))
 
@@ -64,11 +63,11 @@ class TestRotation(SerialisationTest):
 
         rot_center = Vector2D(2.1, -1.3)
 
-        nodes = [(-1, 0), (-1.2, 0.5), (0, 0), (-1.2, -0.5)]
+        points = [(-1, 0), (-1.2, 0.5), (0, 0), (-1.2, -0.5)]
 
         for t in range(0, 360, 60):
             kicad_mod.append(
-                Polygon(nodes=nodes, fill=True, width=None, layer="F.SilkS").rotate(t, origin=rot_center))
+                Polygon(shape=points, fill=True, width=None, layer="F.SilkS").rotate(t, origin=rot_center))
 
         self.assert_serialises_as(kicad_mod, 'rotation_polygon.kicad_mod')
 
@@ -76,8 +75,8 @@ class TestRotation(SerialisationTest):
         kicad_mod = Footprint("test_rotate_pad", FootprintType.SMD)
 
         rot_center = Vector2D(0.35, 0)
-        nodes = [(-1, 0), (-1.2, 0.5), (0, 0), (-1.2, -0.5)]
-        prim = Polygon(nodes=nodes, fill=True, width=None, layer=None)
+        points = [(-1, 0), (-1.2, 0.5), (0, 0), (-1.2, -0.5)]
+        prim = Polygon(shape=points, fill=True, width=None, layer=None)
         i = 1
         for t in range(0, 300, 60):
             kicad_mod.append(

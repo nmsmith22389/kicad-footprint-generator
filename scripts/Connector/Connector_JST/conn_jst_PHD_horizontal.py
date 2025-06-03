@@ -109,7 +109,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, configuration):
     {'x': x1,'y': y1}
     ]
 
-    kicad_mod.append(PolygonLine(polygon=side, width=configuration['fab_line_width'], layer='F.Fab'))
+    kicad_mod.append(PolygonLine(shape=side, width=configuration['fab_line_width'], layer='F.Fab'))
 
     ########################### CrtYd #################################
     cx1 = round_to_grid(x1-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
@@ -144,8 +144,8 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, configuration):
     {'x': A/2.0,'y': y2},
     ]
 
-    kicad_mod.append(PolygonLine(polygon=side, width=configuration['silk_line_width'], layer='F.SilkS'))
-    kicad_mod.append(PolygonLine(polygon=side, x_mirror=A / 2.0, width=configuration['silk_line_width'], layer='F.SilkS'))
+    kicad_mod.append(PolygonLine(shape=side, width=configuration['silk_line_width'], layer='F.SilkS'))
+    kicad_mod.append(PolygonLine(shape=side, x_mirror=A / 2.0, width=configuration['silk_line_width'], layer='F.SilkS'))
 
     D = 0.3
     L = 2.5
@@ -158,14 +158,14 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, configuration):
         {'x': x1-D,'y': y1-D+L}
     ]
 
-    kicad_mod.append(PolygonLine(polygon=marker, width=configuration['silk_line_width'], layer='F.SilkS'))
+    kicad_mod.append(PolygonLine(shape=marker, width=configuration['silk_line_width'], layer='F.SilkS'))
     sl = 0.5
     marker =[
         {'x': body_edge['left']+1 , 'y': -sl},
         {'x': body_edge['left']+1+(2*sl)/sqrt(2) , 'y': 0},
         {'x': body_edge['left']+1 , 'y': sl}
     ]
-    kicad_mod.append(PolygonLine(polygon=marker, layer='F.Fab', width=configuration['fab_line_width']))
+    kicad_mod.append(PolygonLine(shape=marker, layer='F.Fab', width=configuration['fab_line_width']))
 
     ######################### Text Fields ###############################
     addTextFields(kicad_mod=kicad_mod, configuration=configuration, body_edges=body_edge,

@@ -66,7 +66,7 @@ for inductor in inductors:
     cx = max(l/2, (c+x/2))
     cy = max(w/2, y/2)
 
-    fp.append(RectLine(start=[-cx,-cy],end=[cx,cy],offset=0.35,width=0.05,grid=0.05,layer="F.CrtYd"))
+    fp.append(RectLine(start=[-cx,-cy],end=[cx,cy],offset=0.35,width=0.05,layer="F.CrtYd"))
 
     # set general values
     fp.append(Property(name=Property.REFERENCE, text='REF**', at=[0,-cy - 1], layer='F.SilkS'))
@@ -92,10 +92,10 @@ for inductor in inductors:
         {'x': 0,'y': -w/2-0.1},
     ]
 
-    fp.append(PolygonLine(polygon=poly))
-    fp.append(PolygonLine(polygon=poly, x_mirror=0))
-    fp.append(PolygonLine(polygon=poly, y_mirror=0))
-    fp.append(PolygonLine(polygon=poly, x_mirror=0))
+    fp.append(PolygonLine(shape=poly))
+    fp.append(PolygonLine(shape=poly, x_mirror=0))
+    fp.append(PolygonLine(shape=poly, y_mirror=0))
+    fp.append(PolygonLine(shape=poly, x_mirror=0))
 
     #Add a model
     lib_name = "Inductor_SMD"

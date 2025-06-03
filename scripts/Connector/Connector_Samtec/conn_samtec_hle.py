@@ -297,7 +297,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row, variant
         {'x': body_edge['left'], 'y': body_edge['bottom']},
         {'x': body_edge['left'], 'y': body_edge['top']},
     ]
-    kicad_mod.append(PolygonLine(polygon=poly_f,
+    kicad_mod.append(PolygonLine(shape=poly_f,
                                  width=configuration['fab_line_width'], layer="F.Fab"))
 
     # Pin 1 marking
@@ -307,7 +307,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row, variant
         {'x': pad1_x, 'y': body_edge['top'] + p1m_sl/sqrt(2)},
         {'x': pad1_x + p1m_sl/2, 'y': body_edge['top']}
     ]
-    kicad_mod.append(PolygonLine(polygon=p1m_poly,
+    kicad_mod.append(PolygonLine(shape=p1m_poly,
                                  width=configuration['fab_line_width'], layer="F.Fab"))
 
     ############################ SilkS ##################################
@@ -327,7 +327,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row, variant
             {'x': body_edge['left'] - s_offset, 'y': body_edge['bottom'] + s_offset},
             {'x': s_xp1_left, 'y': body_edge['bottom'] + s_offset},
         ]
-        kicad_mod.append(PolygonLine(polygon=poly_s_l,
+        kicad_mod.append(PolygonLine(shape=poly_s_l,
                                      width=configuration['silk_line_width'], layer="F.SilkS"))
 
         poly_s_r = [
@@ -336,7 +336,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row, variant
             {'x': body_edge['right'] + s_offset, 'y': body_edge['bottom'] + s_offset},
             {'x': s_xpn_right, 'y': body_edge['bottom'] + s_offset},
         ]
-        kicad_mod.append(PolygonLine(polygon=poly_s_r,
+        kicad_mod.append(PolygonLine(shape=poly_s_r,
                                      width=configuration['silk_line_width'], layer="F.SilkS"))
 
         for i in range(0, pins_per_row-1):
@@ -347,14 +347,14 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row, variant
                 {'x': s_xpi_left, 'y': body_edge['top'] - s_offset},
                 {'x': s_xpi_right, 'y': body_edge['top'] - s_offset},
             ]
-            kicad_mod.append(PolygonLine(polygon=poly_s_t,
+            kicad_mod.append(PolygonLine(shape=poly_s_t,
                                          width=configuration['silk_line_width'], layer="F.SilkS"))
 
             poly_s_b = [
                 {'x': s_xpi_left, 'y': body_edge['bottom'] + s_offset},
                 {'x': s_xpi_right, 'y': body_edge['bottom'] + s_offset},
             ]
-            kicad_mod.append(PolygonLine(polygon=poly_s_b,
+            kicad_mod.append(PolygonLine(shape=poly_s_b,
                                          width=configuration['silk_line_width'], layer="F.SilkS"))
 
     else:
@@ -365,7 +365,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row, variant
             {'x': body_edge['left'] - s_offset, 'y': body_edge['bottom'] + s_offset},
             {'x': body_edge['left'] - s_offset, 'y': body_edge['top'] - s_offset},
         ]
-        kicad_mod.append(PolygonLine(polygon=poly_s,
+        kicad_mod.append(PolygonLine(shape=poly_s,
                                      width=configuration['silk_line_width'], layer="F.SilkS"))
 
     # ############################ CrtYd ##################################
@@ -385,7 +385,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row, variant
         {'x': cy_left, 'y': cy_bottom},
         {'x': cy_left, 'y': cy_top},
     ]
-    kicad_mod.append(PolygonLine(polygon=poly_cy,
+    kicad_mod.append(PolygonLine(shape=poly_cy,
                                  layer='F.CrtYd', width=configuration['courtyard_line_width']))
 
     ######################### Text Fields ###############################

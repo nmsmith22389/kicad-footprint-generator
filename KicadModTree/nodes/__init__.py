@@ -15,6 +15,7 @@
 
 # generic node
 from .Node import Node, MultipleParentsError, RecursionDetectedError
+from .NodeShape import NodeShape
 
 # root node
 from .Footprint import Footprint, FootprintType

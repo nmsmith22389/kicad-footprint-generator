@@ -1,4 +1,4 @@
-from KicadModTree import Node, Vector2D, Polygon, Rect
+from KicadModTree import Node, Vector2D, Polygon, Rectangle
 from KicadModTree.util.corner_handling import ChamferSizeHandler
 from KicadModTree.util.corner_selection import CornerSelection
 
@@ -75,11 +75,11 @@ class ChamferRect(Node):
             # For a Polygon (not PolygonLine), the last point is automatically connected
             # to the first
             children.append(
-                Polygon(nodes=pts, layer=self.layer, width=self.width, fill=self.fill)
+                Polygon(shape=pts, layer=self.layer, width=self.width, fill=self.fill)
             )
         else:
             children.append(
-                Rect(
+                Rectangle(
                     start=tl, end=br, layer=self.layer, width=self.width, fill=self.fill
                 )
             )

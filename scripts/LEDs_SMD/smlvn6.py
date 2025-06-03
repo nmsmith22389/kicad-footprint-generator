@@ -126,7 +126,7 @@ f.append(
 
 f.append(
     PolygonLine(
-        polygon=[
+        shape=[
             [xFabLeft, yChamfer],
             [xChamfer, yFabTop],
             [xFabRight, yFabTop],
@@ -158,7 +158,7 @@ f.append(
 # pin 1 marker
 f.append(
     Polygon(
-        nodes=[[xPin1Mid, yPin1Bot], [xPin1Left, yPin1Top], [xPin1Right, yPin1Top]],
+        shape=[[xPin1Mid, yPin1Bot], [xPin1Left, yPin1Top], [xPin1Right, yPin1Top]],
         fill=True,
         layer="F.SilkS",
         width=wSilkS,

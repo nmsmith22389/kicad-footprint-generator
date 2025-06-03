@@ -1,125 +1,318 @@
-from typing import Optional
-from typing_extensions import Self  # After 3.11 -> typing.Self
+# kilibs is free software: you can redistribute it and/or modify it under the terms of
+# the GNU General Public License as published by the Free Software Foundation, either
+# version 3 of the License, or (at your option) any later version.
+#
+# kilibs is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+# without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+# PURPOSE. See the GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along with kilibs.
+# If not, see < http://www.gnu.org/licenses/ >.
+#
+# (C) The KiCad Librarian Team
 
-from kilibs.geom.vector import Vector2D
-from kilibs.geom.geometric_util import geometricLine
+"""Class for a bounding box."""
+from __future__ import annotations
+
+from kilibs.geom.vector import Vec2DCompatible, Vector2D
 
 
 class BoundingBox:
+    """A bounding box."""
 
-    min: Optional[Vector2D]
-    max: Optional[Vector2D]
+    min: Vector2D | None
+    """The top left corner of the bounding box or `None` if uninitialized."""
+    max: Vector2D | None
+    """The bottom right corner of the bounding box or `None` if uninitialized."""
 
     def __init__(
-        self, min_pt: Optional[Vector2D] = None, max_pt: Optional[Vector2D] = None
+        self,
+        corner1: Vec2DCompatible | None = None,
+        corner2: Vec2DCompatible | None = None,
     ):
-        """
-        Initialize a bounding box with the given min and max points. These don't have
-        to be in any particular order.
-
+        """Initialize a bounding box with the given corner points.
         Passing None for both min and max will create a "null" bounding box that
         can't be used for much until more points are included.
+
+        Args:
+            corner1: Corner of the bounding box.
+            corner2: Other corner of the bounding box.
         """
+        if (corner1 is None) != (corner2 is None):
+            raise ValueError("Must provide both corner1 and corner2 or neither")
 
-        if (min_pt is None) != (max_pt is None):
-            raise ValueError("Must provide both min and max or neither")
-
-        if min_pt is not None and max_pt is not None:
-            self.min = Vector2D(min(min_pt.x, max_pt.x), min(min_pt.y, max_pt.y))
-            self.max = Vector2D(max(min_pt.x, max_pt.x), max(min_pt.y, max_pt.y))
+        if corner1 is not None and corner2 is not None:
+            corner1 = Vector2D(corner1)
+            corner2 = Vector2D(corner2)
+            self.min = Vector2D.from_floats(
+                min(corner1.x, corner2.x), min(corner1.y, corner2.y)
+            )
+            self.max = Vector2D.from_floats(
+                max(corner1.x, corner2.x), max(corner1.y, corner2.y)
+            )
         else:
             self.min = None
             self.max = None
 
-    def include_point(self, point: Vector2D):
+    def copy(self) -> BoundingBox:
+        """Create a copy of the bounding box."""
+        bbox = BoundingBox()
+        if self.min and self.max:
+            bbox.min = self.min.copy()
+            bbox.max = self.max.copy()
+        return bbox
 
+    def include_point(self, point: Vec2DCompatible) -> BoundingBox:
+        """Increase the bounding box to include the given point.
+
+        Args:
+            point: Point to include in the bounding box.
+
+        Returns:
+            The bounding box after including the point.
+        """
+        point = Vector2D(point)
         if self.min is None:
             self.min = point
             self.max = point
         else:
             assert self.max is not None
-            self.min = Vector2D(min(self.min.x, point.x), min(self.min.y, point.y))
-            self.max = Vector2D(max(self.max.x, point.x), max(self.max.y, point.y))
+            self.min = Vector2D.from_floats(
+                min(self.min.x, point.x), min(self.min.y, point.y)
+            )
+            self.max = Vector2D.from_floats(
+                max(self.max.x, point.x), max(self.max.y, point.y)
+            )
+        return self
 
-    def include_bbox(self, bbox: Self):
+    def include_bbox(self, bbox: BoundingBox) -> BoundingBox:
+        """Increase the bounding box to include the given bounding box.
 
+        Args:
+            bbox: Bounding box to include in the bounding box.
+
+        Returns:
+            The bounding box after including the other bounding box.
+        """
         if bbox.min is not None:
             assert bbox.max is not None
             self.include_point(bbox.min)
             self.include_point(bbox.max)
+        return self
 
-    def inflate(self, amount: float):
+    def inflate(self, amount: float) -> BoundingBox:
+        """Expand the bounding box by the given amount in all directions.
+
+        Args:
+            amount: Amount by which to inflate the bounding box.
+
+        Raises:
+            RuntimeError: If the bounding box is not initialized.
+
+        Returns:
+            The bounding box after inflation.
         """
-        Expand the bounding box by the given amount in all directions
-        """
-        self._expect_nonempty()
-        self.min.x -= amount
-        self.min.y -= amount
-        self.max.x += amount
-        self.max.y += amount
-
-    def _expect_nonempty(self):
-        if self.min is None or self.max is None:
-            raise RuntimeError("Cannot access empty bounding box")
-
-    @property
-    def top(self):
-        self._expect_nonempty()
-        return self.min.y
-
-    @property
-    def bottom(self):
-        self._expect_nonempty()
-        return self.max.y
-
-    @property
-    def left(self):
-        self._expect_nonempty()
-        return self.min.x
-
-    @property
-    def right(self):
-        self._expect_nonempty()
-        return self.max.x
-
-    @property
-    def size(self) -> Vector2D:
-        self._expect_nonempty()
-        return self.max - self.min
-
-    @property
-    def center(self) -> Vector2D:
-        self._expect_nonempty()
-        return (self.min + self.max) / 2
+        if self.min is not None and self.max is not None:
+            self.min.x -= amount
+            self.min.y -= amount
+            self.max.x += amount
+            self.max.y += amount
+            return self
+        else:
+            raise RuntimeError("Cannot access empty bounding box.")
 
     def contains_point(self, point: Vector2D) -> bool:
-        """
-        Test if a point is inside the bounding box
-        """
+        """Test if a point is inside the bounding box."""
         # A null bbox won't contain any point
-        if self.min is None:
+        if self.min is None or self.max is None:
             return False
-
         return (
             self.min.x <= point.x <= self.max.x and self.min.y <= point.y <= self.max.y
         )
 
-    def contains_bbox(self, bbox: Self) -> bool:
-        """
-        Test if another bounding box is completely inside this one
-        """
-        if self.min is None or bbox.min is None:
+    def contains_bbox(self, bbox: BoundingBox) -> bool:
+        """Test if another bounding box is completely inside this one."""
+        if self.min is not None and self.max is not None:
+            if bbox.min is not None and bbox.max is not None:
+                return (
+                    self.min.x <= bbox.min.x
+                    and self.min.y <= bbox.min.y
+                    and self.max.x >= bbox.max.x
+                    and self.max.y >= bbox.max.y
+                )
+            else:
+                return True
+        else:
             return False
 
-        return (
-            self.min.x <= bbox.min.x
-            and self.min.y <= bbox.min.y
-            and self.max.x >= bbox.max.x
-            and self.max.y >= bbox.max.y
-        )
+    @property
+    def top(self):
+        """Return the left-most coordinate of the bounding box.
 
-    def contains_seg(self, line: geometricLine) -> bool:
+        Raises:
+            RuntimeError: If the bounding box is not initialized.
         """
-        Test if a line segment is completely inside this bounding box
+        if self.min is not None and self.max is not None:
+            return self.min.y
+        else:
+            raise RuntimeError("Cannot access empty bounding box.")
+
+    @property
+    def bottom(self):
+        """Return the bottom-most coordinate of the bounding box.
+
+        Raises:
+            RuntimeError: If the bounding box is not initialized.
         """
-        return self.contains_point(line.start) and self.contains_point(line.end)
+        if self.min is not None and self.max is not None:
+            return self.max.y
+        else:
+            raise RuntimeError("Cannot access empty bounding box.")
+
+    @property
+    def left(self):
+        """Return the left-most coordinate of the bounding box.
+
+        Raises:
+            RuntimeError: If the bounding box is not initialized.
+        """
+        if self.min is not None and self.max is not None:
+            return self.min.x
+        else:
+            raise RuntimeError("Cannot access empty bounding box.")
+
+    @property
+    def right(self):
+        """Return the right-most coordinate of the bounding box.
+
+        Raises:
+            RuntimeError: If the bounding box is not initialized.
+        """
+        if self.min is not None and self.max is not None:
+            return self.max.x
+        else:
+            raise RuntimeError("Cannot access empty bounding box.")
+
+    @property
+    def top_left(self) -> Vector2D:
+        """Return the top-left coordinate of the bounding box.
+
+        Raises:
+            RuntimeError: If the bounding box is not initialized.
+        """
+        if self.min is not None and self.max is not None:
+            return self.min
+        else:
+            raise RuntimeError("Cannot access empty bounding box.")
+
+    @property
+    def top_right(self) -> Vector2D:
+        """Return the top-right coordinate of the bounding box.
+
+        Raises:
+            RuntimeError: If the bounding box is not initialized.
+        """
+        if self.min is not None and self.max is not None:
+            return Vector2D.from_floats(self.max.x, self.min.y)
+        else:
+            raise RuntimeError("Cannot access empty bounding box.")
+
+    @property
+    def bottom_right(self) -> Vector2D:
+        """Return the bottom-right coordinate of the bounding box.
+
+        Raises:
+            RuntimeError: If the bounding box is not initialized.
+        """
+        if self.min is not None and self.max is not None:
+            return self.max
+        else:
+            raise RuntimeError("Cannot access empty bounding box.")
+
+    @property
+    def bottom_left(self) -> Vector2D:
+        """Return the bottom-left coordinate of the bounding box.
+
+        Raises:
+            RuntimeError: If the bounding box is not initialized.
+        """
+        if self.min is not None and self.max is not None:
+            return Vector2D.from_floats(self.min.x, self.max.y)
+        else:
+            raise RuntimeError("Cannot access empty bounding box.")
+
+    @property
+    def right_midpoint(self) -> Vector2D:
+        """Return the right mid-point of the bounding box.
+
+        Raises:
+            RuntimeError: If the bounding box is not initialized.
+        """
+        if self.min is not None and self.max is not None:
+            return Vector2D.from_floats(self.right, self.center.y)
+        else:
+            raise RuntimeError("Cannot access empty bounding box.")
+
+    @property
+    def left_midpoint(self) -> Vector2D:
+        """Return the left mid-point of the bounding box.
+
+        Raises:
+            RuntimeError: If the bounding box is not initialized.
+        """
+        if self.min is not None and self.max is not None:
+            return Vector2D.from_floats(self.left, self.center.y)
+        else:
+            raise RuntimeError("Cannot access empty bounding box.")
+
+    @property
+    def top_midpoint(self) -> Vector2D:
+        """Return the top mid-point of the bounding box.
+
+        Raises:
+            RuntimeError: If the bounding box is not initialized.
+        """
+        if self.min is not None and self.max is not None:
+            return Vector2D.from_floats(self.center.x, self.top)
+        else:
+            raise RuntimeError("Cannot access empty bounding box.")
+
+    @property
+    def bottom_midpoint(self) -> Vector2D:
+        """Return the bottom mid-point of the bounding box.
+
+        Raises:
+            RuntimeError: If the bounding box is not initialized.
+        """
+        if self.min is not None and self.max is not None:
+            return Vector2D.from_floats(self.center.x, self.bottom)
+        else:
+            raise RuntimeError("Cannot access empty bounding box.")
+
+    @property
+    def size(self) -> Vector2D:
+        """Return the size of the bounding box.
+
+        Raises:
+            RuntimeError: If the bounding box is not initialized.
+        """
+        if self.min is not None and self.max is not None:
+            return self.max - self.min
+        else:
+            raise RuntimeError("Cannot access empty bounding box.")
+
+    @property
+    def center(self) -> Vector2D:
+        """Return the center point of the bounding box.
+
+        Raises:
+            RuntimeError: If the bounding box is not initialized.
+        """
+        if self.min is not None and self.max is not None:
+            return (self.min + self.max) / 2
+        else:
+            raise RuntimeError("Cannot access empty bounding box.")
+
+    def __repr__(self) -> str:
+        """Return the string representation of the arc."""
+        return f"BoundingBox(min={self.min}, max={self.max})"

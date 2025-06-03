@@ -13,8 +13,8 @@
 #
 # (C) 2016 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 
-from kilibs.geom import BoundingBox, Vector2D
 from KicadModTree.nodes.Node import Node
+from kilibs.geom import BoundingBox, Vector2D
 
 
 class _TextBase(Node):
@@ -87,18 +87,18 @@ class _TextBase(Node):
         self.rotation -= a
         return self
 
-    def translate(self, distance_vector):
+    def translate(self, vector):
         r""" Translate text
 
         :params:
-            * *distance_vector* (``Vector2D``)
+            * *vector* (``Vector2D``)
                 2D vector defining by how much and in what direction to translate.
         """
 
-        self.at += distance_vector
+        self.at += vector
         return self
 
-    def calculateBoundingBox(self):
+    def bbox(self):
         width = len(self.text) * self.size["x"]
         height = self.size["y"]
 

@@ -312,7 +312,7 @@ class BGAGenerator(FootprintGenerator):
                       layer="F.Fab", size=s2, thickness=t2, rotation=fFabRefRot))
 
         # Fab
-        f.append(PolygonLine(polygon=[[xRightFab, yBottomFab],
+        f.append(PolygonLine(shape=[[xRightFab, yBottomFab],
                                       [xLeftFab, yBottomFab],
                                       [xLeftFab, yChamferFab],
                                       [xChamferFab, yTopFab],
@@ -338,7 +338,7 @@ class BGAGenerator(FootprintGenerator):
         )
 
         f.append(PolygonLine(
-            polygon=[
+            shape=[
                 [xChamferSilk, yTopSilk],
                 [xRightSilk, yTopSilk],
                 [xRightSilk, yBottomSilk],

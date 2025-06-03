@@ -18,7 +18,8 @@ from KicadModTree import (
     RectLine,
     Property,
 )
-from kilibs.geom import Direction, Vector2D, rounding
+from kilibs.geom import Direction, Vector2D
+from kilibs.geom.tools import rounding
 from scripts.tools.drawing_tools import (
     getStandardSilkArrowSize,
     SilkArrowSize,

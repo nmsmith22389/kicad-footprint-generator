@@ -106,21 +106,21 @@ def generate_one_footprint(global_config: GC.GlobalConfig, model, params, config
                 layer='F.Fab', width=configuration['fab_line_width']))
         if params.flanged:
             lock_translation = Translation(mount_hole_left[0], silk_bottom_right[1])
-            lock_translation.append(PolygonLine(polygon=lock_poly, layer='F.SilkS', width=configuration['silk_line_width']))
+            lock_translation.append(PolygonLine(shape=lock_poly, layer='F.SilkS', width=configuration['silk_line_width']))
             if configuration['inner_details_on_fab']:
-                lock_translation.append(PolygonLine(polygon=lock_poly_fab, layer='F.Fab', width=configuration['fab_line_width']))
+                lock_translation.append(PolygonLine(shape=lock_poly_fab, layer='F.Fab', width=configuration['fab_line_width']))
             kicad_mod.append(lock_translation)
             lock_translation = Translation(mount_hole_right[0], silk_bottom_right[1])
-            lock_translation.append(PolygonLine(polygon=lock_poly, layer='F.SilkS', width=configuration['silk_line_width']))
+            lock_translation.append(PolygonLine(shape=lock_poly, layer='F.SilkS', width=configuration['silk_line_width']))
             if configuration['inner_details_on_fab']:
-                lock_translation.append(PolygonLine(polygon=lock_poly_fab, layer='F.Fab', width=configuration['fab_line_width']))
+                lock_translation.append(PolygonLine(shape=lock_poly_fab, layer='F.Fab', width=configuration['fab_line_width']))
             kicad_mod.append(lock_translation)
 
         for i in range(params.num_pins):
             lock_translation = Translation(i*params.pin_pitch, silk_bottom_right[1])
-            lock_translation.append(PolygonLine(polygon=lock_poly, layer='F.SilkS', width=configuration['silk_line_width']))
+            lock_translation.append(PolygonLine(shape=lock_poly, layer='F.SilkS', width=configuration['silk_line_width']))
             if configuration['inner_details_on_fab']:
-                lock_translation.append(PolygonLine(polygon=lock_poly_fab, layer='F.Fab', width=configuration['fab_line_width']))
+                lock_translation.append(PolygonLine(shape=lock_poly_fab, layer='F.Fab', width=configuration['fab_line_width']))
             kicad_mod.append(lock_translation)
     else:
         inner_width = 5.3 #measured
@@ -218,9 +218,9 @@ def generate_one_footprint(global_config: GC.GlobalConfig, model, params, config
             {'x':pi2[0], 'y':pi2[1]},
             {'x':pi2[0]+arc_to_side, 'y':pi2[1]}
         ]
-        kicad_mod.append(PolygonLine(polygon=poly))
+        kicad_mod.append(PolygonLine(shape=poly, layer='F.SilkS', width=configuration['silk_line_width']))
         if configuration['inner_details_on_fab']:
-            kicad_mod.append(PolygonLine(polygon=poly, layer='F.Fab', width=configuration['fab_line_width']))
+            kicad_mod.append(PolygonLine(shape=poly, layer='F.Fab', width=configuration['fab_line_width']))
 
 
     if params.mount_hole:
@@ -247,20 +247,20 @@ def generate_one_footprint(global_config: GC.GlobalConfig, model, params, config
 
     ################################################# Pin 1 Marker #################################################
     if not params.angled:
-        kicad_mod.append(PolygonLine(polygon=create_pin1_marker_triangle(silk_top_left[1] - 0.2),
+        kicad_mod.append(PolygonLine(shape=create_pin1_marker_triangle(silk_top_left[1] - 0.2),
                                      layer='F.SilkS', width=configuration['silk_line_width']))
         if configuration['with_fab_layer']:
             kicad_mod.append(PolygonLine(
-                polygon=create_pin1_marker_triangle(bottom_y = -params.pin_Sy/2- 0.75,
+                shape=create_pin1_marker_triangle(bottom_y = -params.pin_Sy/2- 0.75,
                     dimensions = [1, 1], with_top_line = True),
                 layer='F.Fab', width=configuration['fab_line_width']))
     else:
         y_bottom_silk_marker = (silk_top_left[1] if silk_top_left[1] < -params.pin_Sy/2 else -params.pin_Sy/2) - 0.2
-        kicad_mod.append(PolygonLine(polygon=create_pin1_marker_triangle(y_bottom_silk_marker),
+        kicad_mod.append(PolygonLine(shape=create_pin1_marker_triangle(y_bottom_silk_marker),
                                      layer='F.SilkS', width=configuration['silk_line_width']))
         if configuration['with_fab_layer']:
             kicad_mod.append(PolygonLine(
-                polygon=create_pin1_marker_triangle(bottom_y = -0.5,
+                shape=create_pin1_marker_triangle(bottom_y = -0.5,
                     dimensions = [1.9, -body_top_left[1]-0.5], with_top_line = False),
                 layer='F.Fab', width=configuration['fab_line_width']))
 

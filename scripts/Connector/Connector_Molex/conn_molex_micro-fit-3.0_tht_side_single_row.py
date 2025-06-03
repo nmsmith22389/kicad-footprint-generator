@@ -144,7 +144,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, configuration):
         {'x': body_edge['right'], 'y': body_edge['bottom']},
         {'x': body_edge['left'], 'y': body_edge['bottom']}
     ]
-    kicad_mod.append(PolygonLine(polygon=main_body_poly,
+    kicad_mod.append(PolygonLine(shape=main_body_poly,
                                  width=configuration['fab_line_width'], layer="F.Fab"))
 
     main_arrow_poly= [
@@ -152,7 +152,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, configuration):
         {'x': 0, 'y': 0},
         {'x': 0.75, 'y': body_edge['bottom']}
     ]
-    kicad_mod.append(PolygonLine(polygon=main_arrow_poly,
+    kicad_mod.append(PolygonLine(shape=main_arrow_poly,
                                  width=configuration['fab_line_width'], layer="F.Fab"))
 
     ######################## SilkS Layer ###########################
@@ -173,7 +173,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, configuration):
         {'x': body_edge['right'] + off, 'y': body_edge['top'] + 1 - off},
         {'x': body_edge['right'] + off, 'y': body_edge['bottom'] + off}
     ]
-    kicad_mod.append(PolygonLine(polygon=poly_s_t,
+    kicad_mod.append(PolygonLine(shape=poly_s_t,
                                  width=configuration['silk_line_width'], layer="F.SilkS"))
 
     if pin_center_silk_x == 0:
@@ -219,7 +219,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, configuration):
         {'x': round_to_grid(body_edge['left'] - CrtYd_offset, CrtYd_grid), 'y': round_to_grid(body_edge['bottom'] + CrtYd_offset, CrtYd_grid)}
     ]
 
-    kicad_mod.append(PolygonLine(polygon=poly_yd,
+    kicad_mod.append(PolygonLine(shape=poly_yd,
                                  layer='F.CrtYd', width=configuration['courtyard_line_width']))
 
     ######################### Text Fields ###############################

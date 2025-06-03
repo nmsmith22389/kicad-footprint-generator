@@ -3,11 +3,10 @@
 import argparse
 import yaml
 
-from kilibs.geom import BoundingBox, Rectangle
+from kilibs.geom import GeomRectangle
 from KicadModTree import *  # NOQA
 from KicadModTree.nodes.base.Pad import Pad  # NOQA
 from scripts.tools.declarative_def_tools import common_metadata
-from scripts.tools.drawing_tools import round_to_grid
 from scripts.tools.global_config_files import global_config as GC
 from scripts.tools.footprint_text_fields import addTextFields
 
@@ -84,36 +83,36 @@ def create_smd_shielding(global_config: GC.GlobalConfig, shield_properties: SmdS
     kicad_mod.tags = 'Shielding Cabinet'
 
     # The outer edges of the pads
-    pad_outer_rect = Rectangle.by_corners(
-        Vector2D(min(shield_properties.x_pad_positions), min(shield_properties.y_pad_positions)),
-        Vector2D(max(shield_properties.x_pad_positions), max(shield_properties.y_pad_positions))
+    pad_outer_rect = GeomRectangle(
+        start=Vector2D(min(shield_properties.x_pad_positions), min(shield_properties.y_pad_positions)),
+        end=Vector2D(max(shield_properties.x_pad_positions), max(shield_properties.y_pad_positions)),
     )
 
     # Centerline of the pads
-    pad_center_rect = pad_outer_rect.with_outset(-shield_properties.pad_width / 2.0)
+    pad_center_rect = pad_outer_rect.inflated(-shield_properties.pad_width / 2.0)
 
     courtyard_offset = global_config.get_courtyard_offset(
         GC.GlobalConfig.CourtyardType.DEFAULT
     )
 
-    body_rect = Rectangle(center=Vector2D(0, 0), size=shield_properties.part_size)
+    body_rect = GeomRectangle(center=Vector2D(0, 0), size=shield_properties.part_size)
 
-    courtyard_rect = pad_outer_rect.with_outset(courtyard_offset).rounded(
-        outwards=True, grid=global_config.courtyard_grid
+    courtyard_rect = pad_outer_rect.inflated(courtyard_offset).round_to_grid(
+        grid=global_config.courtyard_grid, outwards=True
     )
 
     # set general values
     addTextFields(
         kicad_mod,
         global_config,
-        body_rect.bounding_box,
-        courtyard_rect.bounding_box,
+        body_rect.bbox(),
+        courtyard_rect.bbox(),
         kicad_mod.name,
         text_y_inside_position="center",
     )
 
     kicad_mod.append(
-        Rect(
+        Rectangle(
             start=courtyard_rect.top_left,
             end=courtyard_rect.bottom_right,
             layer="F.CrtYd",
@@ -124,12 +123,12 @@ def create_smd_shielding(global_config: GC.GlobalConfig, shield_properties: SmdS
     # create inner courtyard
     pad_width = kwargs['pads_width']
 
-    inner_courtyard = pad_outer_rect.with_outset(-pad_width - courtyard_offset).rounded(
-        outwards=False, grid=global_config.courtyard_grid
+    inner_courtyard = pad_outer_rect.inflated(-pad_width - courtyard_offset).round_to_grid(
+        grid=global_config.courtyard_grid, outwards=False
     )
 
     kicad_mod.append(
-        Rect(
+        Rectangle(
             start=inner_courtyard.top_left,
             end=inner_courtyard.bottom_right,
             layer="F.CrtYd",
@@ -139,7 +138,7 @@ def create_smd_shielding(global_config: GC.GlobalConfig, shield_properties: SmdS
 
     # create Fabrication Layer
     kicad_mod.append(
-        Rect(
+        Rectangle(
             start=body_rect.top_left,
             end=body_rect.bottom_right,
             layer="F.Fab",

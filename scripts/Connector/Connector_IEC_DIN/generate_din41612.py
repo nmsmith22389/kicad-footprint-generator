@@ -434,7 +434,7 @@ def build_din41612_connector_horizontal(mod, series, direction, pins, rows, conf
     # draw outline
     mod.append(
         PolygonLine(
-            polygon=[
+            shape=[
                 Vector2D(
                     center.x - config["connector_width"] / 2,
                     -config["a1_housing_front"],
@@ -531,10 +531,10 @@ def build_din41612_connector_horizontal(mod, series, direction, pins, rows, conf
     for pos in positions[1:]:
         keepouts += addKeepoutRound(pos.x, pos.y, keepout_radius, keepout_radius)
 
-    mod.append(PolygonLine(polygon=silk_points, layer="F.SilkS", width=0.12))
+    mod.append(PolygonLine(shape=silk_points, layer="F.SilkS", width=0.12))
     mod.append(
         PolygonLine(
-            polygon=list(map(lambda x: mirror_x(x, center), silk_points)),
+            shape=list(map(lambda x: mirror_x(x, center), silk_points)),
             layer="F.SilkS",
             width=0.12,
         )
@@ -559,7 +559,7 @@ def build_din41612_connector_horizontal(mod, series, direction, pins, rows, conf
             Vector2D(-0.2 - 0.12 - config["pin_plating_diameter"] / 2, 0),
         ),
     )
-    mod.append(PolygonLine(polygon=arrow_points, layer="F.SilkS", width=0.12))
+    mod.append(PolygonLine(shape=list(arrow_points), layer="F.SilkS", width=0.12))
     # add a1 marker on fab layer
     marker_points = map(
         lambda x: pos1 + x,
@@ -570,13 +570,13 @@ def build_din41612_connector_horizontal(mod, series, direction, pins, rows, conf
             Vector2D(0, -config["a1_housing_back"] - hole_part_inset - 0.2),
         ),
     )
-    mod.append(PolygonLine(polygon=marker_points, layer="F.Fab", width=0.1))
+    mod.append(PolygonLine(shape=list(marker_points), layer="F.Fab", width=0.1))
 
     # add courtyard
     cy = 0.5
     mod.append(
         PolygonLine(
-            polygon=list(
+            shape=list(
                 map(
                     round_courtyard,
                     [
@@ -642,7 +642,7 @@ def build_din41612_connector_horizontal(mod, series, direction, pins, rows, conf
     # mark board edge
     mod.append(
         PolygonLine(
-            polygon=[
+            shape=[
                 Vector2D(center.x - config["housing_width"] / 2, -config["a1_edge"]),
                 Vector2D(center.x + config["housing_width"] / 2, -config["a1_edge"]),
             ],
@@ -666,7 +666,7 @@ def build_din41612_connector_horizontal(mod, series, direction, pins, rows, conf
     )
     mod.append(
         PolygonLine(
-            polygon=[
+            shape=[
                 Vector2D(center.x - 0.2, -config["a1_edge"] - 0.6),
                 Vector2D(center.x, -config["a1_edge"] - 0.1),
                 Vector2D(center.x + 0.2, -config["a1_edge"] - 0.6),
@@ -676,7 +676,7 @@ def build_din41612_connector_horizontal(mod, series, direction, pins, rows, conf
     )
     mod.append(
         PolygonLine(
-            polygon=[
+            shape=[
                 Vector2D(center.x, -config["a1_edge"] - 0.1),
                 Vector2D(center.x, -config["a1_edge"] - 1.4),
             ],
@@ -690,7 +690,7 @@ def build_din41612_connector_horizontal(mod, series, direction, pins, rows, conf
             # left
             mod.append(
                 PolygonLine(
-                    polygon=[
+                    shape=[
                         Vector2D(center.x - 36.83 + 7.62 * sc, 0),
                         Vector2D(center.x - 36.83 + 7.62 * sc, -1),
                     ],
@@ -700,7 +700,7 @@ def build_din41612_connector_horizontal(mod, series, direction, pins, rows, conf
             # right
             mod.append(
                 PolygonLine(
-                    polygon=[
+                    shape=[
                         Vector2D(center.x + 36.83 - 7.62 * sc, 0),
                         Vector2D(center.x + 36.83 - 7.62 * sc, -1),
                     ],
@@ -773,14 +773,14 @@ def build_din41612_connector_vertical(mod, series, direction, pins, rows, config
         Vector2D(conn_left, conn_bottom),
         Vector2D(conn_left, conn_top),
     ]
-    mod.append(PolygonLine(polygon=conn_outline, layer="F.Fab", width=0.1))
+    mod.append(PolygonLine(shape=conn_outline, layer="F.Fab", width=0.1))
     if config["gender"] == "male":
         for mul in (1, -1):
             height = center.y + mul * config["connector_outer_width"] / 2
             inner_height = center.y + mul * config["connector_width"] / 2
             mod.append(
                 PolygonLine(
-                    polygon=(
+                    shape=(
                         Vector2D(center.x - config["housing_height"] / 2, height),
                         Vector2D(mounting.x - 3, height),
                         Vector2D(mounting.x - 3, inner_height),
@@ -791,7 +791,7 @@ def build_din41612_connector_vertical(mod, series, direction, pins, rows, config
             )
             mod.append(
                 PolygonLine(
-                    polygon=(
+                    shape=(
                         Vector2D(conn_right - config["nodge_height"], inner_height),
                         Vector2D(mounting.x + 3, inner_height),
                         Vector2D(mounting.x + 3, height),
@@ -827,11 +827,11 @@ def build_din41612_connector_vertical(mod, series, direction, pins, rows, config
             ),
         ]
 
-    mod.append(PolygonLine(polygon=housing(0), layer="F.Fab", width=0.1))
-    mod.append(PolygonLine(polygon=housing(0.11), layer="F.SilkS", width=0.12))
+    mod.append(PolygonLine(shape=housing(0), layer="F.Fab", width=0.1))
+    mod.append(PolygonLine(shape=housing(0.11), layer="F.SilkS", width=0.12))
     mod.append(
         PolygonLine(
-            polygon=list(map(round_courtyard, housing(0.5))),
+            shape=list(map(round_courtyard, housing(0.5))),
             layer="F.CrtYd",
             width=0.05,
         )
@@ -848,7 +848,7 @@ def build_din41612_connector_vertical(mod, series, direction, pins, rows, config
             Vector2D(-0.3, 0),
         ),
     )
-    mod.append(PolygonLine(polygon=arrow_points, layer="F.SilkS", width=0.12))
+    mod.append(PolygonLine(shape=list(arrow_points), layer="F.SilkS", width=0.12))
     # do similar on the fab layer
     arrow_points = map(
         lambda x: edge_position + x,
@@ -858,7 +858,7 @@ def build_din41612_connector_vertical(mod, series, direction, pins, rows, config
             Vector2D(0, 0.5),
         ),
     )
-    mod.append(PolygonLine(polygon=arrow_points, layer="F.Fab", width=0.1))
+    mod.append(PolygonLine(shape=list(arrow_points), layer="F.Fab", width=0.1))
 
     keepout_radius = config["pin_plating_diameter"] + 0.4
     positions = list(
@@ -912,7 +912,7 @@ def build_din41612_connector_vertical(mod, series, direction, pins, rows, config
             # top
             mod.append(
                 PolygonLine(
-                    polygon=[
+                    shape=[
                         Vector2D(center.x + .5, center.y - 36.83 + 7.62 * sc),
                         Vector2D(center.x - .5, center.y - 36.83 + 7.62 * sc),
                     ],
@@ -921,7 +921,7 @@ def build_din41612_connector_vertical(mod, series, direction, pins, rows, config
             )
             mod.append(
                 PolygonLine(
-                    polygon=[
+                    shape=[
                         Vector2D(center.x, center.y - 36.83 + 7.62 * sc + .5),
                         Vector2D(center.x, center.y - 36.83 + 7.62 * sc - .5),
                     ],
@@ -931,7 +931,7 @@ def build_din41612_connector_vertical(mod, series, direction, pins, rows, config
             # bottom
             mod.append(
                 PolygonLine(
-                    polygon=[
+                    shape=[
                         Vector2D(center.x + .5, center.y + 36.83 - 7.62 * sc),
                         Vector2D(center.x - .5, center.y + 36.83 - 7.62 * sc),
                     ],
@@ -940,7 +940,7 @@ def build_din41612_connector_vertical(mod, series, direction, pins, rows, config
             )
             mod.append(
                 PolygonLine(
-                    polygon=[
+                    shape=[
                         Vector2D(center.x, center.y + 36.83 - 7.62 * sc + .5),
                         Vector2D(center.x, center.y + 36.83 - 7.62 * sc - .5),
                     ],
@@ -950,8 +950,8 @@ def build_din41612_connector_vertical(mod, series, direction, pins, rows, config
     # highlight connector shape on silk
     highlight_expand = 0
     he = highlight_expand
-    conn_highlight = PolygonPoints(
-        nodes=[
+    conn_highlight = GeomPolygon(
+        shape=[
             Vector2D(conn_left - he, conn_top - he),
             Vector2D(conn_right - config["nodge_height"] + he, conn_top - he),
             Vector2D(

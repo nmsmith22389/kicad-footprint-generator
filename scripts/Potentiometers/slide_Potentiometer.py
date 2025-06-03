@@ -130,7 +130,7 @@ def slide_pot(args):
     f.append(Text(text='${REFERENCE}', at=[xCenter, yFabRef], layer="F.Fab", size=s, thickness=t))
 
     # Fab
-    f.append(PolygonLine(polygon=[[xLeftFab + 1, yTopFab],
+    f.append(PolygonLine(shape=[[xLeftFab + 1, yTopFab],
                                    [xRightFab, yTopFab],
                                    [xRightFab, yBottomFab],
                                    [xLeftFab, yBottomFab],
@@ -151,7 +151,7 @@ def slide_pot(args):
     # Silk pin 1 indicator
     xp1 = -(pPin[0] / 2 + silk_ko)
     yp1 = 0.0
-    f.append(PolygonLine(polygon=[[xp1, yp1],
+    f.append(PolygonLine(shape=[[xp1, yp1],
                                    [xp1 - 0.5, yp1 - 0.5],
                                    [xp1 - 0.5, yp1 + 0.5],
                                    [xp1, yp1]],
@@ -167,7 +167,7 @@ def slide_pot(args):
         f.append(Line(start=[xTravel, yCenter - 1.5],
                       end=[xTravel, yCenter + 1.5],
                       layer="F.SilkS", width=wSilkS))
-        f.append(PolygonLine(polygon=[[xArrow, yCenter - 0.75],
+        f.append(PolygonLine(shape=[[xArrow, yCenter - 0.75],
                                        [xTravel, yCenter],
                                        [xArrow, yCenter + 0.75]],
                              layer="F.SilkS", width=wSilkS))

@@ -1,6 +1,22 @@
+# kilibs is free software: you can redistribute it and/or modify it under the terms of
+# the GNU General Public License as published by the Free Software Foundation, either
+# version 3 of the License, or (at your option) any later version.
+#
+# kilibs is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+# without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+# PURPOSE. See the GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along with kilibs.
+# If not, see < http://www.gnu.org/licenses/ >.
+#
+# (C) The KiCad Librarian Team
+"""Classes for working with additional drawings in YAML files."""
+
+
 from abc import ABC, abstractmethod
+from collections.abc import Callable, Generator
 from itertools import product
-from typing import Callable, Generator
+from typing import Any
 
 from kilibs.declarative_defs import repeat_defs
 from kilibs.geom import Vector2D
@@ -8,24 +24,30 @@ from kilibs.util import dict_tools
 
 
 class DrawingProvider:
+    """A class for a drawing provider."""
 
     @staticmethod
     def _modify_point(
-        pt: Vector2D, transforms: list[repeat_defs.Transformation]
+        pt: Vector2D, transforms: list[repeat_defs.Transformer]
     ) -> Vector2D:
-        """
-        Apply the repeat transforms (grid. mirror, etc) to a point in order.
+        """Apply the repeat transforms (grid. mirror, etc) to a point in order.
 
-        Points are easy, because they can't be rotated, and a flip is just a
-        matter of negating the x or y coordinate.
+        Points are easy, because they can't be rotated, and a flip is just a  matter of
+        negating the x or y coordinate.
 
-        But it won't work for things like rectangles when they are rotated by a
-        non-90 degree angle.
+        But it won't work for things like rectangles when they are rotated by a non-90
+        degree angle.
 
-        It also won't cover things like rotating polygons while keeping them
-        upright, but that requires quite some thought, as the result you
-        get depends on what you call the "origin" of the polygon. And probably
-        isn't really useful.
+        It also won't cover things like rotating polygons while keeping them upright,
+        but that requires quite some thought, as the result you get depends on what you
+        call the "origin" of the polygon. And probably isn't really useful.
+
+        Args:
+            pt: Point that shall be transformed.
+            transforms: List of transformations to perform on the given point.
+
+        Returns:
+            The transformed point.
         """
         for transformer in transforms:
             transformation = transformer.apply(pt)
@@ -42,55 +64,57 @@ class DrawingProvider:
 
 
 class AdditionalDrawing(ABC):
-    """
-    Additional drawings are free-form drawings that can be added to the
-    footprint in addition to the main shape. They can be used to add
-    unique features to the footprint that are not covered by a main
-    generator.
+    """Additional drawings are free-form drawings that can be added to the footprint in
+    addition to the main shape. They can be used to add unique features to the footprint
+    that are not covered by a main generator.
 
-    For example, adding circle to denote a pressure port or similar:
+    Example:
+        For example, adding circle to denote a pressure port or similar:
 
-    additional_drawing:
-        inner_circle:
-            type: circle
-            center: [0, 0]
-            radius: 1
-            layer: Cmts.User
-            width: 0.1
-        outer_circle:
-            inherit: key1
-            radius: 2
+        .. code-block::
+
+            additional_drawing:
+                inner_circle:
+                    type: circle
+                    center: [0, 0]
+                    radius: 1
+                    layer: Cmts.User
+                    width: 0.1
+                outer_circle:
+                    inherit: key1
+                    radius: 2
 
     Inheritance is possible between additional drawings.
 
-    Complex shapes can be implemented as their own drawing types, or,
-    perhaps, as a full-blown declarative definition class.
+    Complex shapes can be implemented as their own drawing types, or, perhaps, as a
+    full-blown declarative definition class.
 
-    This class could is agnostic to whether it's in a footprint
-    or symbol or something else.
+    This class could is agnostic to whether it's in a footprint or symbol or something
+    else.
 
-    See more detail at https://gitlab.com/groups/kicad/libraries/-/wikis/Footprint-Generators/Common-YAML-data
+    See more detail at:
+    https://gitlab.com/groups/kicad/libraries/-/wikis/Footprint-Generators/Common-YAML-data
     """
 
     STANDARD_KEY = "additional_drawings"
+    """The standard key for additional drawings."""
 
     type: str
-    """
-    The type key. Mostly useful for debugging/logging
-    """
+    """The type key. Mostly useful for debugging/logging."""
 
     shape_provider: DrawingProvider
-
-    """
-    The constructed shape object for the drawing. Note that this
-    may contain un-evaluated expressions.
+    """The constructed shape object for the drawing. Note that this may contain
+    un-evaluated expressions.
     """
     _repeat: repeat_defs.RepeatDef | None
     _mirror: repeat_defs.MirrorRepeatDef | None
 
-    def __init__(self, spec_dict: dict, key_name: str):
-        """
-        Initialize the additional drawing object from a single specification.
+    def __init__(self, spec_dict: dict[str, Any], key_name: str):
+        """Initialize the additional drawing object from a single specification.
+
+        Args:
+            spec_dict: The dictionary containnig the specs of the additional drawing.
+            key_name: The name of the key that to the additional drawing data.
         """
         # Mostly for debugging/logging purposes
         self.key_name = key_name
@@ -132,22 +156,28 @@ class AdditionalDrawing(ABC):
 
     @abstractmethod
     def _get_default_providers(self) -> dict[str, DrawingProvider]:
-        """
-        Implement this to provide providers that make sense in your application.
+        """Implement this to provide providers that make sense in your application.
+
+        Returns:
+            A dictionary containing the key and the `DrawingProvider`.
         """
         pass
 
     @classmethod
     def from_standard_yaml(
-        cls, parent_spec: dict, key: str = STANDARD_KEY
+        cls, parent_spec: dict[str, Any], key: str = STANDARD_KEY
     ) -> list["AdditionalDrawing"]:
-        """
-        Create a list of additional drawings from the standard YAML format.
-        This also handles any inheritance of the additional drawings amongst
-        the keys.
-        """
+        """Create a list of additional drawings from the standard YAML format. This also
+        handles any inheritance of the additional drawings amongst the keys.
 
-        add_dwgs = []
+        Args:
+            parent_spec: The parent specification.
+            key: The key of the additional drawing.
+
+        Returns:
+            A list of additional drawings.
+        """
+        add_dwgs: list[AdditionalDrawing] = []
         specs = parent_spec.get(key, None)
         if specs is not None:
 
@@ -161,10 +191,15 @@ class AdditionalDrawing(ABC):
         return add_dwgs
 
     def get_transforms(
-        self, expr_evaluator: Callable
+        self, expr_evaluator: Callable[[float | int | str], float | int]
     ) -> Generator[list[repeat_defs.Transformation], None, None]:
-        """
-        Yield the repeat instances for the additional drawing.
+        """Yield the repeat instances for the additional drawing.
+
+        Args:
+            expr_evaluator: The expression evaluator.
+
+        Returns:
+            The list of transformations.
         """
 
         # If there is no repeat, we still need to yield something, so we

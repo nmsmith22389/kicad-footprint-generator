@@ -73,17 +73,17 @@ def makeSIPVertical(pins, rm, ddrill, pad, package_size, left_offset, top_offset
     # create SILKSCREEN-layer
     addRectWithKeepout(kicad_mod, l_slk, t_slk, w_slk, h_slk, keepouts=keepout, layer='F.SilkS', width=lw_slk)
     if pin1TL:
-        kicad_mod += makeNodesWithKeepout(PolygonPoints(nodes=[
+        kicad_mod += makeNodesWithKeepout(GeomPolygon(shape=[
                                             [l_slk-2*lw_slk, t_slk+pin1size],
                                             [l_slk-2*lw_slk, t_slk-2*lw_slk],
                                             [l_slk+pin1size, t_slk-2*lw_slk],
-                                            ]), keepouts=keepout, layer='F.SilkS', width=lw_slk)
+                                            ], close=False), keepouts=keepout, layer='F.SilkS', width=lw_slk)
     else:
-        kicad_mod += makeNodesWithKeepout(PolygonPoints(nodes=[
+        kicad_mod += makeNodesWithKeepout(GeomPolygon(shape=[
                                             [l_slk-2*lw_slk, t_slk+h_slk-pin1size],
                                             [l_slk-2*lw_slk, t_slk+h_slk+2*lw_slk],
                                             [l_slk+pin1size, t_slk+h_slk+2*lw_slk],
-                                            ]), keepouts=keepout, layer='F.SilkS', width=lw_slk)
+                                            ], close=False), keepouts=keepout, layer='F.SilkS', width=lw_slk)
 
     # create courtyard
     kicad_mod.append(
@@ -159,11 +159,12 @@ def makeSIPHorizontal(pins, rm, ddrill, pad, package_size, left_offset, pin_bott
     # create SILKSCREEN-layer
     addRectWithKeepout(kicad_mod, l_slk, t_slk, w_slk, h_slk, keepouts=keepout, layer='F.SilkS', width=lw_slk)
     kicad_mod += makeNodesWithKeepout(
-        PolygonPoints(
-            nodes=[
+        GeomPolygon(
+            shape=[
                 [l_pin1, t_slk + h_slk],
                 [l_pin1, t_slk + h_slk + h_pin1],
-            ]
+            ],
+            close=False
         ),
         layer="F.SilkS",
         width=lw_slk,

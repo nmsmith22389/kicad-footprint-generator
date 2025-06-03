@@ -148,7 +148,7 @@ def generate_footprint(global_config: GC.GlobalConfig, pins, configuration):
         Arc(
             start=Vector2D(-mount_spacing / 2, silk_rad),
             end=Vector2D(-mount_spacing / 2, -silk_rad),
-            midpoint=Vector2D(-mount_spacing / 2 - silk_rad, 0),
+            mid=Vector2D(-mount_spacing / 2 - silk_rad, 0),
             width=global_config.silk_line_width,
             layer="F.SilkS",
         )
@@ -158,7 +158,7 @@ def generate_footprint(global_config: GC.GlobalConfig, pins, configuration):
         Arc(
             start=Vector2D(mount_spacing / 2, silk_rad),
             end=Vector2D(mount_spacing / 2, -silk_rad),
-            midpoint=Vector2D(mount_spacing / 2 + silk_rad, 0),
+            mid=Vector2D(mount_spacing / 2 + silk_rad, 0),
             width=global_config.silk_line_width,
             layer="F.SilkS",
         )
@@ -210,7 +210,7 @@ def generate_footprint(global_config: GC.GlobalConfig, pins, configuration):
         {'y': roundToBase(-(y_max_pin_extent/2) - CrtYd_offset, CrtYd_grid), 'x': roundToBase(body_edge['left'] - CrtYd_offset, CrtYd_grid)}
     ]
 
-    kicad_mod.append(PolygonLine(polygon=poly_yd,
+    kicad_mod.append(PolygonLine(shape=poly_yd,
         layer='F.CrtYd', width=global_config.courtyard_line_width))
 
     ######################### Text Fields ###############################

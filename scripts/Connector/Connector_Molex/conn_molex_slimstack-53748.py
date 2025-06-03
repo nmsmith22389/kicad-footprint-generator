@@ -110,7 +110,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pincount, configurati
                         [h_body_width, h_body_length - tab_height], [h_body_width, -h_body_length + tab_height], \
                         [h_body_width + tab_width, -h_body_length + tab_height], [h_body_width + tab_width, -h_body_length], \
                         [-h_body_width - tab_width, -h_body_length]]
-    kicad_mod.append(PolygonLine(polygon=fab_outline, layer='F.Fab', width=fab_width))
+    kicad_mod.append(PolygonLine(shape=fab_outline, layer='F.Fab', width=fab_width))
 
 
     body_edge={
@@ -138,8 +138,8 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pincount, configurati
                     [-h_body_width-nudge-tab_width, h_body_length-nudge-tab_height], [-h_body_width - nudge, h_body_length-nudge-tab_height], \
                     [-h_body_width-nudge, outline_y]]
 
-    kicad_mod.append(PolygonLine(polygon=top_outline, layer='F.SilkS', width=silk_width))
-    kicad_mod.append(PolygonLine(polygon=bottom_outline, layer='F.SilkS', width=silk_width))
+    kicad_mod.append(PolygonLine(shape=top_outline, layer='F.SilkS', width=silk_width))
+    kicad_mod.append(PolygonLine(shape=bottom_outline, layer='F.SilkS', width=silk_width))
 
     # create courtyard
     kicad_mod.append(RectLine(start=[-courtyard_x, -courtyard_y], end=[courtyard_x, courtyard_y], layer='F.CrtYd', width=courtyard_width))

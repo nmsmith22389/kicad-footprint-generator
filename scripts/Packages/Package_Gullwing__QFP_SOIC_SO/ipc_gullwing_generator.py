@@ -13,7 +13,7 @@ from KicadModTree import (
     PolygonLine,
 )
 
-from kilibs.geom import Rectangle
+from kilibs.geom import GeomRectangle
 from kilibs.ipc_tools import ipc_rules
 from kilibs.util.toleranced_size import TolerancedSize
 from KicadModTree.util.courtyard_builder import CourtyardBuilder
@@ -555,7 +555,7 @@ class GullwingGenerator(FootprintGenerator):
 
         # # ############################ CrtYd ##################################
         courtyard_offset = ipc_offsets.courtyard
-        body_rect = Rectangle(center=Vector2D(0,0), size=Vector2D(size_x, size_y))
+        body_rect = GeomRectangle(center=Vector2D(0,0), size=Vector2D(size_x, size_y))
         cb = CourtyardBuilder.from_node(
             node=kicad_mod,
             global_config=self.global_config,
@@ -688,19 +688,19 @@ class GullwingGenerator(FootprintGenerator):
         # poly_bottom_right is used 4 times in all mirror configurations
         if len(poly_bottom_right) > 1 and silk_corner_bottom_right is not None:
             kicad_mod.append(PolygonLine(
-                polygon=poly_bottom_right,
+                shape=poly_bottom_right,
                 width=silk_line_width,
                 layer="F.SilkS"))
             kicad_mod.append(PolygonLine(
-                polygon=poly_bottom_right,
+                shape=poly_bottom_right,
                 width=silk_line_width,
                 layer="F.SilkS", x_mirror=0))
             kicad_mod.append(PolygonLine(
-                polygon=poly_bottom_right,
+                shape=poly_bottom_right,
                 width=silk_line_width,
                 layer="F.SilkS", y_mirror=0))
             kicad_mod.append(PolygonLine(
-                polygon=poly_bottom_right,
+                shape=poly_bottom_right,
                 width=silk_line_width,
                 layer="F.SilkS", y_mirror=0, x_mirror=0))
 
@@ -802,7 +802,7 @@ class GullwingGenerator(FootprintGenerator):
         ]
 
         kicad_mod.append(PolygonLine(
-            polygon=poly_fab,
+            shape=poly_fab,
             width=fab_line_width,
             layer="F.Fab"))
 

@@ -1,10 +1,9 @@
-from KicadModTree.nodes import Footprint, FootprintType
-from KicadModTree.nodes.base.Zone import Zone, Keepouts, PadConnection, Hatch, ZoneFill
-from kilibs.geom import Vector2D
-
-from KicadModTree.tests.test_utils.fp_file_test import SerialisationTest
-
 import pytest
+
+from KicadModTree.nodes import Footprint, FootprintType
+from KicadModTree.nodes.base.Zone import Hatch, Keepouts, PadConnection, Zone, ZoneFill
+from KicadModTree.tests.test_utils.fp_file_test import SerialisationTest
+from kilibs.geom import Vector2D
 
 DEFAULT_TEST_POLYGON = [
         Vector2D(0, 0),
@@ -30,7 +29,7 @@ class TestZoneSerialisation(SerialisationTest):
             net=1,
             net_name="GND",
             hatch=DEFAULT_HATCH,
-            polygon_pts=DEFAULT_TEST_POLYGON,
+            shape=DEFAULT_TEST_POLYGON,
             priority=1,
             keepouts=ko,
             fill=None,  # test that no fill is OK
@@ -71,7 +70,7 @@ class TestZoneSerialisation(SerialisationTest):
 
         z = Zone(
             hatch=DEFAULT_HATCH,
-            polygon_pts=DEFAULT_TEST_POLYGON,
+            shape=DEFAULT_TEST_POLYGON,
             fill=zf,
         )
 
@@ -106,7 +105,7 @@ class TestZoneSerialisation(SerialisationTest):
 
         z = Zone(
             hatch=DEFAULT_HATCH,
-            polygon_pts=DEFAULT_TEST_POLYGON,
+            shape=DEFAULT_TEST_POLYGON,
             fill=zf,
         )
 

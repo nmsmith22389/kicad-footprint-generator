@@ -84,7 +84,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pincount, configurati
         {'x': x21, 'y': y21},
         {'x': x11, 'y': y21}
     ]
-    kicad_mod.append(PolygonLine(polygon=fab_outline,
+    kicad_mod.append(PolygonLine(shape=fab_outline,
                                  layer='F.Fab', width=configuration['fab_line_width']))
     ########################### CrtYd #################################
     cx1 = round_to_grid(x1-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])
@@ -113,7 +113,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pincount, configurati
 
     y3 = y21 + off
 
-    kicad_mod.append(PolygonLine(polygon=[{ 'x': x1 + T, 'y':y3 },
+    kicad_mod.append(PolygonLine(shape=[{ 'x': x1 + T, 'y':y3 },
                                            {'x':x1+T,'y':y2},
                                            {'x':x1,'y':y2},
                                            {'x':x1,'y':y1},
@@ -122,12 +122,12 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pincount, configurati
                                            {'x':x2-T,'y':y2},
                                            {'x':x2-T,'y':y3}], layer='F.SilkS', width=configuration['silk_line_width']))
 
-    kicad_mod.append(PolygonLine(polygon=[{ 'x':x1, 'y': y1 + T },
+    kicad_mod.append(PolygonLine(shape=[{ 'x':x1, 'y': y1 + T },
                                            {'x':x1+T,'y':y1+T},
                                            {'x':x1+T,'y':y3},
                                            {'x':x1,'y':y3}], layer='F.SilkS', width=configuration['silk_line_width']))
 
-    kicad_mod.append(PolygonLine(polygon=[{ 'x':x2, 'y': y1 + T },
+    kicad_mod.append(PolygonLine(shape=[{ 'x':x2, 'y': y1 + T },
                                            {'x':x2-T,'y':y1+T},
                                            {'x':x2-T,'y':y3},
                                            {'x':x2,'y':y3}], layer='F.SilkS', width=configuration['silk_line_width']))
@@ -150,7 +150,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pincount, configurati
 
         px = p * pitch
 
-        kicad_mod.append(PolygonLine(polygon=[{ 'x': px, 'y': py },
+        kicad_mod.append(PolygonLine(shape=[{ 'x': px, 'y': py },
                                                {'x': px-w,'y': py},
                                                {'x': px-w,'y': py-l+0.25*w},
                                                {'x': px,'y': py-l},
@@ -173,7 +173,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pincount, configurati
            {'x':xm - m,'y':ym + 2 * m},
            {'x':xm + m,'y':ym + 2 * m},
            {'x':xm,'y':ym}]
-    kicad_mod.append(PolygonLine(polygon=pin, layer='F.SilkS', width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(shape=pin, layer='F.SilkS', width=configuration['silk_line_width']))
 
     sl = 1
     pin = [
@@ -181,7 +181,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pincount, configurati
         {'x':xm,'y':y21-sl/sqrt(2)},
         {'x':xm+sl/2,'y':y21}
     ]
-    kicad_mod.append(PolygonLine(polygon=pin, layer='F.Fab', width=configuration['fab_line_width']))
+    kicad_mod.append(PolygonLine(shape=pin, layer='F.Fab', width=configuration['fab_line_width']))
 
     ######################### Text Fields ###############################
     addTextFields(kicad_mod=kicad_mod, configuration=configuration, body_edges=body_edge,

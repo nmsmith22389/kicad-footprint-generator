@@ -135,7 +135,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row, variant
     silk_pad_off = configuration['silk_pad_clearance'] + configuration['silk_line_width'] / 2
 
     #draw the outline of the shape
-    kicad_mod.append(PolygonLine(polygon = [
+    kicad_mod.append(PolygonLine(shape=[
             { 'x': body_edge['left'], 'y': body_edge['top'] },
             { 'x': body_edge['left'], 'y': body_edge['top'] + 2.31 },
             { 'x': body_edge['left'] + 0.13, 'y': body_edge['top'] + 2.31 },
@@ -153,7 +153,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row, variant
         layer = 'F.Fab', width = configuration['fab_line_width']))
 
     #draw the outline of the tab
-    kicad_mod.append(PolygonLine(polygon = [
+    kicad_mod.append(PolygonLine(shape=[
             { 'x': P / 2 - tab_l / 2,'y': y2} ,
             { 'x': P / 2 - tab_l / 2,'y': y2 + tab_w },
             { 'x': P / 2 + tab_l / 2,'y': y2 + tab_w },
@@ -161,7 +161,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row, variant
         ], layer = 'F.Fab', width = configuration['fab_line_width']))
 
     #draw the outline of the connector on the silkscreen
-    kicad_mod.append(PolygonLine(polygon = [
+    kicad_mod.append(PolygonLine(shape=[
             { 'x': body_edge['left'] - off, 'y': body_edge['top'] - off },
             { 'x': body_edge['left'] - off, 'y': body_edge['top'] + 2.31 + off },
             { 'x': body_edge['left'] + 0.13 - off, 'y': body_edge['top'] + 2.31 + off },
@@ -189,7 +189,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row, variant
         { 'x': body_edge['left'] - p1m_off, 'y': body_edge['top'] - p1m_off },
         { 'x': body_edge['left'] + p1m_sl, 'y': body_edge['top'] - p1m_off },
     ]
-    kicad_mod.append(PolygonLine(polygon = pin, layer ='F.SilkS', width = configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(shape=pin, layer ='F.SilkS', width = configuration['silk_line_width']))
 
     sl = 1
     pin = [
@@ -197,7 +197,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row, variant
         {'y': body_edge['top'] + sl / sqrt(2), 'x': 0 },
         {'y': body_edge['top'], 'x':  -sl / 2 }
     ]
-    kicad_mod.append(PolygonLine(polygon = pin, width = configuration['fab_line_width'], layer ='F.Fab'))
+    kicad_mod.append(PolygonLine(shape=pin, width = configuration['fab_line_width'], layer ='F.Fab'))
 
     ########################### CrtYd #################################
     cx1 = round_to_grid(bounding_box['left'] - configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])

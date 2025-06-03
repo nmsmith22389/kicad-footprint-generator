@@ -144,9 +144,9 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row, configu
     {'x': A/2,'y': y1},
     ]
 
-    kicad_mod.append(PolygonLine(polygon=out,
+    kicad_mod.append(PolygonLine(shape=out,
                                  width=configuration['silk_line_width'], layer="F.SilkS"))
-    kicad_mod.append(PolygonLine(polygon=out, x_mirror=A / 2,
+    kicad_mod.append(PolygonLine(shape=out, x_mirror=A / 2,
                                  width=configuration['silk_line_width'], layer="F.SilkS"))
 
     #draw the pin tab bits
@@ -160,7 +160,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row, configu
         {'x': x+pitch-0.3,'y': pad_size[1]/2+pso},
         ]
 
-        kicad_mod.append(PolygonLine(polygon=tab,
+        kicad_mod.append(PolygonLine(shape=tab,
                                      width=configuration['silk_line_width'], layer="F.SilkS"))
 
     #add the final tab line
@@ -180,7 +180,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row, configu
     {'x': x1 - O, 'y': y2 - L},
     ]
 
-    kicad_mod.append(PolygonLine(polygon=pin,
+    kicad_mod.append(PolygonLine(shape=pin,
                                  width=configuration['silk_line_width'], layer="F.SilkS"))
 
     p1m_sl = 1
@@ -189,7 +189,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row, configu
         {'x': 0, 'y': body_edge['bottom'] - p1m_sl/sqrt(2)},
         {'x': p1m_sl/2, 'y': body_edge['bottom']}
     ]
-    kicad_mod.append(PolygonLine(polygon=pin,
+    kicad_mod.append(PolygonLine(shape=pin,
                                  width=configuration['fab_line_width'], layer='F.Fab'))
 
     #wall
@@ -200,7 +200,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row, configu
     {'x': x2-w,'y': y1},
     ]
 
-    kicad_mod.append(PolygonLine(polygon=wall,
+    kicad_mod.append(PolygonLine(shape=wall,
                                  width=configuration['silk_line_width'], layer="F.SilkS"))
 
     #draw each pin
@@ -217,7 +217,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row, configu
         {'x': x+0.25,'y': ya},
         ]
 
-        kicad_mod.append(PolygonLine(polygon=pin,
+        kicad_mod.append(PolygonLine(shape=pin,
                                      width=configuration['silk_line_width'], layer="F.SilkS"))
 
     ########################### CrtYd #################################

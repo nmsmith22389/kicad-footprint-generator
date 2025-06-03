@@ -562,7 +562,7 @@ class StandardBox(Node):
         new_node._parent = self
         self.virtual_childs.append(new_node)
 
-    def calculateBoundingBox(self):
+    def bbox(self):
         min_x = self.at.x
         min_y = self.at.y
         max_x = min_x + self.size.x
@@ -574,7 +574,7 @@ class StandardBox(Node):
         )
 
         for child in self.virtual_childs():
-            child_bbox = child.calculateBoundingBox()
+            child_bbox = child.bbox()
             bbox.include_bbox(child_bbox)
 
         return bbox

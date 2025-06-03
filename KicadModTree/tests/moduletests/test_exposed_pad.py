@@ -15,10 +15,8 @@
 # (C) 2018 by Rene Poeschl, github @poeschlr
 
 from KicadModTree import *
-
 from KicadModTree.tests.test_utils.fp_file_test import SerialisationTest
 from KicadModTree.util import corner_handling
-
 
 DEFAULT_CU_RAD_HANDLER = corner_handling.RoundRadiusHandler(
     radius_ratio=0, maximum_radius=0.25

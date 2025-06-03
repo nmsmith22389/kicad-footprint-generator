@@ -423,7 +423,7 @@ class TwoTerminalSMD:
                 ]
                 kicad_mod.append(
                     PolygonLine(
-                        polygon=poly_fab,
+                        shape=poly_fab,
                         layer="F.Fab",
                         width=global_config.fab_line_width,
                     )
@@ -437,7 +437,7 @@ class TwoTerminalSMD:
                 ]
                 kicad_mod.append(
                     PolygonLine(
-                        polygon=poly_silk,
+                        shape=poly_silk,
                         layer="F.SilkS",
                         width=global_config.silk_line_width,
                     )

@@ -13,64 +13,113 @@
 #
 # (C) 2016 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 
-from typing import Optional
+from typing import Optional, Self
 
-from kilibs.geom import Vector2D, PolygonPoints
 from KicadModTree.nodes.Node import Node
-from KicadModTree.nodes import Line, LineStyle
+from KicadModTree.nodes.NodeShape import NodeShape
+from KicadModTree.util.line_style import LineStyle
+from kilibs.geom import BoundingBox, GeomPolygon, GeomRectangle, Vec2DCompatible
 
 
-class PolygonLine(Node):
-    r"""Add a Polygon Line to the render tree
+class PolygonLine(NodeShape, GeomPolygon):
+    """Add a Polygon Line to the render tree.
 
     A "polygon line" is a "polyline" - a chain of line segments.
 
     As of v9, KiCad doesn't support a specific node type like this, but rather we
     will represent it as a chain of (n_pts - 1) line segments.
 
-    :param \**kwargs:
-        See below
-
-    :Keyword Arguments:
-        * *polygon* (``list(Point)``) --
-          edges of the polygon
-        * *layer* (``str``) --
-          layer on which the polygon is drawn (default: 'F.SilkS')
-        * *width* (``float``) --
-          width of the line (default: None, which means auto detection)
-
     :Example:
 
     >>> from KicadModTree import *
-    >>> PolygonLine(polygon=[[0, 0], [0, 1], [1, 1], [0, 0]], layer='F.SilkS')
+    >>> PolygonLine(shape=[[0, 0], [0, 1], [1, 1], [0, 0]], layer='F.SilkS')
     """
 
     layer: str
     width: Optional[float]
     style: LineStyle
 
-    def __init__(self, **kwargs):
+    def __init__(
+        self,
+        shape: (
+            Self
+            | GeomPolygon
+            | GeomRectangle
+            | BoundingBox
+            | list[Vec2DCompatible]
+            | tuple[Vec2DCompatible]
+        ),
+        layer: str = "F.SilkS",
+        width: Optional[float] = None,
+        style: LineStyle = LineStyle.SOLID,
+        fill: bool = False,
+        offset: float = 0,
+        x_mirror: Optional[float] = None,
+        y_mirror: Optional[float] = None,
+    ):
+        """Create a polygon.
+
+        Args:
+            shape: Polygon, rectangle, bounding box or list of points from which to derive the polygon.
+            layer: Layer.
+            width: Line width in mm. If `None`, then the standard width for the given
+                layer will be used when the serializing the node.
+            style: Line style.
+            fill: If the shape is filled or only the outline is visible.
+            offset: amount by which the shape is inflated or deflated (if offset negative).
+            x_mirror: Mirror x direction around offset axis.
+            y_mirror: Mirror y direction around offset axis.
+        """
         Node.__init__(self)
-
-        self.layer = kwargs.get('layer', 'F.SilkS')
-        self.width = kwargs.get('width', None)
-
+        close = True
+        if isinstance(shape, list | tuple):
+            if shape[-1] != shape[0]:
+                close = False
+        GeomPolygon.__init__(
+            self, shape=shape, x_mirror=x_mirror, y_mirror=y_mirror, close=close
+        )
+        self.layer = layer
+        self.width = width
+        self.fill = fill
         if self.width is not None:
             self.width = float(self.width)
+        self.style = style
+        self._virtual_children = None
+        if offset:
+            self.inflate(amount=offset)
 
-        self.style = kwargs.get('style', LineStyle.SOLID)
+    def getVirtualChilds(self):
+        if self._virtual_children is None:
+            self._update_virtual_children()
+        return self._virtual_children
 
-        self._initPolyPoint(**kwargs)
+    def lineItems(self):
+        return iter(self.virtual_children)
 
-        self.updateVirtualChilds()
+    def pointItems(self):
+        return iter(self.points)
 
-    def _initPolyPoint(self, **kwargs):
-        self.nodes = PolygonPoints(**kwargs)
+    def isPointOnSelf(self, point: Vec2DCompatible) -> bool:
+        return self.is_point_on_self(point)
 
-    def _createChildNodes(self, polygon_line):
+    def isPointInsideSelf(self, point: Vec2DCompatible, include_corners=True) -> bool:
+        return self.is_point_inside_self(point, include_corners=include_corners)
+
+    def rotate(self, *args, **kwargs):
+        super().rotate(*args, **kwargs)
+        self._virtual_children = None
+        return self
+
+    def translate(self, *args, **kwargs):
+        super().translate(*args, **kwargs)
+        self._virtual_children = None
+        return self
+
+    def _update_virtual_children(self):
+        from KicadModTree.nodes.base.Line import Line
+
         nodes = []
-
-        for line_start, line_end in zip(polygon_line, polygon_line[1:]):
+        for line_start, line_end in zip(self.points, self.points[1:]):
             new_node = Line(
                 start=line_start,
                 end=line_end,
@@ -80,25 +129,24 @@ class PolygonLine(Node):
             )
             new_node._parent = self
             nodes.append(new_node)
-
-        return nodes
-
-    def updateVirtualChilds(self):
-        self.virtual_childs = self._createChildNodes(self.nodes)
-
-    def getVirtualChilds(self):
-        return self.virtual_childs
+        if self.close:
+            new_node = Line(
+                start=self.points[-1],
+                end=self.points[0],
+                layer=self.layer,
+                width=self.width,
+                style=self.style,
+            )
+            new_node._parent = self
+            nodes.append(new_node)
+        self._virtual_children = nodes
 
     def _getRenderTreeText(self):
         render_text = Node._getRenderTreeText(self)
         render_text += " ["
-
         node_strings = []
-        for node in self.nodes:
-            node_position = Vector2D(node)
-            node_strings.append("[x: {x}, y: {y}]".format(x=node_position.x,
-                                                          y=node_position.y))
-
+        for point in self.points:
+            node_strings.append(f"[x: {point.x}, y: {point.y}]")
         if len(node_strings) <= 6:
             render_text += " ,".join(node_strings)
         else:
@@ -106,82 +154,9 @@ class PolygonLine(Node):
             render_text += " ,".join(node_strings[:3])
             render_text += " ,... ,"
             render_text += " ,".join(node_strings[-3:])
-
         render_text += "]"
-
         return render_text
 
-    def lineItems(self):
-        return iter(self.virtual_childs)
-
-    def pointItems(self):
-        return iter(self.nodes.getPoints())
-
-    def isPointOnSelf(self, point):
-        return any(p.isPointOnSelf(point) for p in self.lineItems())
-
-    def isPointInsideSelf(self, point, corner=True):
-        # see, e.g. https://www.inf.usi.ch/hormann/papers/Hormann.2001.TPI.pdf
-        point = Vector2D(point)
-        poly_points = [Vector2D(p) for p in self.nodes.getPoints()]
-        if (len(poly_points) == 0):
-            return False
-        # close the contour if not already closed
-        if (poly_points[-1] != poly_points[0]):
-            poly_points.append(poly_points[0])
-        # calculate the winding number: if 0 the point is outside, otherwise inside
-        p1 = poly_points[0] - point
-        if p1.is_nullvec():
-            return corner
-        a1 = p1.arg()
-        angle = 0
-        for p in poly_points:
-            p0, p1 = p1, p - point
-            if p1.is_nullvec():
-                return corner
-            a0, a1 = a1, p1.arg()
-            angle += (a0 - a1 + 180) % 360 - 180
-        winding = round(angle / 360)
-        return winding
-
-    def cut(self, *other):
-        lines = []
-        for line in self.lineItems():
-            lines += line.cut(*other)
-        return lines
-
-    def rotate(self, *args, **kwargs):
-        self.nodes.rotate(*args, **kwargs)
-        self.updateVirtualChilds()
-        return self
-
-    def translate(self, *args, **kwargs):
-        self.nodes.translate(*args, **kwargs)
-        self.updateVirtualChilds()
-        return self
-
-    def duplicate(self, *, offset: float = 0.0, layer: str | None = None, width: float | None = None,
-                  split_angle: float = 90):
-        """
-        Create a duplicate of the polygon.
-
-        Args:
-            offset: specifies an optional offset (in mm); if the polygon is sorted clockwise, the
-                duplicate will be a polygon with parallel edges with the specific offset
-            layer: defines the duplication layer (default is to keep the same layer)
-            width: defines the line width of the duplicate (default: same as original)
-            split_angle: defines the limit to maintain convex corners; any turn with an angle bigger than
-                split_angle will be split into two corners (default 90 degree)
-
-        Returns:
-            an independent copy of the polygon with the specific modifications
-        """
-        points = self.nodes.getPoints()
-        if layer is None:
-            layer = self.layer
-        if width is None:
-            width = self.width
-        if (offset):
-            from KicadModTree.util.silkmask_util import calculateOffsetPolygonNodes
-            points = calculateOffsetPolygonNodes(points, offset=offset, split_angle=max(0, min(150, split_angle)))
-        return PolygonLine(nodes=points, layer=layer, width=width)
+    @property
+    def virtual_children(self):
+        return self.getVirtualChilds()

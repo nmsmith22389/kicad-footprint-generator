@@ -1,145 +1,77 @@
-import math
+# kilibs is free software: you can redistribute it and/or modify it under the terms of
+# the GNU General Public License as published by the Free Software Foundation, either
+# version 3 of the License, or (at your option) any later version.
+#
+# kilibs is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+# without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+# PURPOSE. See the GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along with kilibs.
+# If not, see < http://www.gnu.org/licenses/ >.
+#
+# (C) The KiCad Librarian Team
 
-from KicadModTree import Arc, Line, PolygonLine, Rect
-from KicadModTree.nodes.Node import Node
-from KicadModTree.nodes.specialized.RoundRect import RoundRect
-from kilibs.geom import Vector2D
+from __future__ import annotations
+
+from KicadModTree import LineStyle, NodeShape
+from kilibs.geom import GeomTrapezoid, Vec2DCompatible
 
 # pep8: noqa
 # flake8: noqa: E501
 
 
-class Trapezoid(Node):
-    # draw a trapezoid with a given angle of the vertical lines
-    #
-    # angle<0
-    #      /---------------------\     ^
-    #     /                       \    |
-    #    /            o            \  size.y
-    #   /                           \  |
-    #  /-----------------------------\ v
-    #  <------------size.x---------->
+class Trapezoid(NodeShape, GeomTrapezoid):
     def __init__(
         self,
-        size: Vector2D,
-        angle: float,
-        layer: str,
-        width: float,
-        corner_radius: float = 0,
-        start: Vector2D | None = None,
-        center: Vector2D | None = None,
+        layer: str = "F.SilkS",
+        width: float | None = None,
+        style: LineStyle = LineStyle.SOLID,
+        fill: bool = False,
+        offset: float = 0,
+        shape: Trapezoid | GeomTrapezoid | None = None,
+        size: Vec2DCompatible | None = None,
+        center: Vec2DCompatible | None = None,
+        start: Vec2DCompatible | None = None,
+        corner_radius: float | None = None,
+        side_angle: float | None = None,
+        rotation_angle: float = 0,
+        use_degrees: bool = True,
     ):
-        Node.__init__(self)
+        r"""Create a geometric isosceles trapezoid. That is a trapezoid with a symmetry
+        axis. It has the option to round its corners.
 
-        if center is not None:
-            assert start is None, "start and center cannot be used together"
-            self._start = center - size / 2
-        else:
-            assert start is not None, "start or center must be provided"
-            self._start = start
+        .. aafig::
+            :rounded:
 
-        self.corner_radius = corner_radius
-        self.angle = angle
-        self.size = size
-        self.layer = layer
-        self.width = width
+            angle<0
+                  +---------------------+     ^
+                 /                       \    |
+                /            o            \  size.y
+               /                           \  |
+              +-----------------------------+ v
+              <------------size.x----------->
 
-    def getVirtualChilds(self):
-
-        childs: list[Node] = []
-
-        at = self._start
-        size = self.size
-
-        dx = self.size.y * math.tan(math.radians(math.fabs(self.angle)))
-        cr = self.corner_radius
-
-        if cr == 0:
-            if self.angle == 0:
-                childs.append(
-                    Rect(
-                        fill=False,
-                        start=0,
-                        end=[at.x + size.x, at.y + size.y],
-                        layer=self.layer,
-                        width=self.width,
-                    )
-                )
-            elif self.angle < 0:
-                childs.append(
-                    PolygonLine(
-                        polygon=[
-                            [at.x + dx, at.y],
-                            [at.x + size.x - dx, at.y],
-                            [at.x + size.x, at.y + size.y],
-                            [at.x, at.y + size.y],
-                            [at.x + dx, at.y],
-                        ],
-                        layer=self.layer,
-                        width=self.width,
-                    )
-                )
-            elif self.angle > 0:
-                childs.append(
-                    PolygonLine(
-                        polygon=[
-                            [at.x, at.y],
-                            [at.x + size.x, at.y],
-                            [at.x + size.x - dx, at.y + size.y],
-                            [at.x + dx, at.y + size.y],
-                            [at.x, at.y],
-                        ],
-                        layer=self.layer,
-                        width=self.width,
-                    )
-                )
-
-        else:
-            dx = size[1] * math.tan(math.radians(math.fabs(self.angle)))
-            dx2 = cr * math.tan(math.radians((90 - math.fabs(self.angle)) / 2))
-            dx3 = cr / math.tan(math.radians((90 - math.fabs(self.angle)) / 2))
-            ds2 = cr * math.sin(math.radians(math.fabs(self.angle)))
-            dc2 = cr * math.cos(math.radians(math.fabs(self.angle)))
-
-            # fmt: off
-            if self.angle == 0:
-                rr = RoundRect(size, cr, self.layer, self.width, start=at)
-                childs.extend(rr.getVirtualChilds())
-
-            elif self.angle < 0:
-                ctl = [at.x + dx + dx2,          at.y + cr]
-                ctr = [at.x + size.x - dx - dx2, at.y+cr]
-                cbl = [at.x + dx3,               at.y + size.y - cr]
-                cbr = [at.x + size.x - dx3,      at.y + size.y - cr]
-
-                childs.append(Arc(center=ctl, start=[ctl[0], at.y],          angle=-(90 - math.fabs(self.angle)), layer=self.layer, width=self.width))  # NOQA
-                childs.append(Arc(center=ctr, start=[ctr[0], at.y],          angle=(90 - math.fabs(self.angle)),  layer=self.layer, width=self.width))  # NOQA
-                childs.append(Arc(center=cbl, start=[cbl[0], at.y + size.y], angle=(90 + math.fabs(self.angle)),  layer=self.layer, width=self.width))  # NOQA
-                childs.append(Arc(center=cbr, start=[cbr[0], at.y + size.y], angle=-(90 + math.fabs(self.angle)), layer=self.layer, width=self.width))   # NOQA
-
-                childs.append(Line(start=[ctl[0], at.y],               end=[ctr[0], at.y],               layer=self.layer, width=self.width))  # NOQA
-                childs.append(Line(start=[cbl[0], at.y + size.y],      end=[cbr[0], at.y+size.y],        layer=self.layer, width=self.width))  # NOQA
-                childs.append(Line(start=[ctr[0] + dc2, ctr[1] - ds2], end=[cbr[0] + dc2, cbr[1] - ds2], layer=self.layer, width=self.width))  # NOQA
-                childs.append(Line(start=[ctl[0] - dc2, ctl[1] - ds2], end=[cbl[0] - dc2, cbl[1] - ds2], layer=self.layer, width=self.width))  # NOQA
-
-            else:
-                cbl = [at.x + dx + dx2,          at.y + size.y - cr]
-                cbr = [at.x + size.x - dx - dx2, at.y + size.y - cr]
-                ctl = [at.x + dx3,               at.y + cr]
-                ctr = [at.x + size.x - dx3,      at.y + cr]
-
-                childs.append(Arc(center=ctl, start=[ctl[0], at.y],          angle=-(90 + math.fabs(self.angle)), layer=self.layer, width=self.width))  # NOQA
-                childs.append(Arc(center=ctr, start=[ctr[0], at.y],          angle=(90 + math.fabs(self.angle)),  layer=self.layer, width=self.width))  # NOQA
-                childs.append(Arc(center=cbl, start=[cbl[0], at.y + size.y], angle=(90 - math.fabs(self.angle)),  layer=self.layer, width=self.width))  # NOQA
-                childs.append(Arc(center=cbr, start=[cbr[0], at.y + size.y], angle=-(90 - math.fabs(self.angle)), layer=self.layer, width=self.width))  # NOQA
-
-                childs.append(Line(start=[ctl[0], at.y],               end=[ctr[0], at.y],               layer=self.layer, width=self.width))  # NOQA
-                childs.append(Line(start=[cbl[0], at.y + size.y],      end=[cbr[0], at.y + size.y],      layer=self.layer, width=self.width))  # NOQA
-                childs.append(Line(start=[ctr[0] + dc2, ctr[1] + ds2], end=[cbr[0] + dc2, cbr[1] + ds2], layer=self.layer, width=self.width))  # NOQA
-                childs.append(Line(start=[ctl[0] - dc2, ctl[1] + ds2], end=[cbl[0] - dc2, cbl[1] + ds2], layer=self.layer, width=self.width))  # NOQA
-            # fmt: on
-
-        for c in childs:
-            c._parent = self
-
-        return childs
+        Args:
+            layer: Layer.
+            width: Line width in mm. If `None`, then the standard width for the given
+                layer will be used when the serializing the node.
+            style: Line style.
+            fill: `True` if the trapezoid is filled, `False` if only the outline is
+                visible.
+            offset: Amount by which the trapezoid is inflated or deflated (if offset is
+                negative).
+            shape: Shape from which to derive the parameters of the trapezoid.
+            size: Width and height of the trapezoid in mm.
+            center: Coordinates of the center point of the trapezoid in mm.
+            start: Coordinates of the top left corner of the trapezoid in mm.
+            corner_radius: Radius of the rounding of the corners in mm. Defaults to zero
+                if `None`.
+            side_angle: Angle as depicted in the figure above (internally stored in
+                degrees).
+            rotation_angle: Rotation angle of the trapezoid (internally stored in
+                degrees).
+            use_degrees: `True` if the rotation angle is given in degrees, `False` if
+                given in radians.
+            use_degrees: bool = True,
+        """
+        self.init_super(kwargs=locals())

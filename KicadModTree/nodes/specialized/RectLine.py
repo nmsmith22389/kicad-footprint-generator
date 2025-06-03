@@ -13,91 +13,109 @@
 #
 # (C) 2016 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 
-from kilibs.geom import Vector2D
+from typing import Optional, Self
+
 from KicadModTree.nodes.Node import Node
+from KicadModTree.util.line_style import LineStyle
+from kilibs.geom import BoundingBox, GeomRectangle, Vec2DCompatible, Vector2D
+
 from .PolygonLine import PolygonLine
 
 
 class RectLine(PolygonLine):
-    r"""Add a Rect to the render tree
+    def __init__(
+        self,
+        layer: str = "F.SilkS",
+        width: Optional[float] = None,
+        style: LineStyle = LineStyle.SOLID,
+        fill: bool = False,
+        offset: float | list[float] | tuple[float] = None,
+        shape: Optional[Self | GeomRectangle | BoundingBox] = None,
+        center: Optional[Vec2DCompatible] = None,
+        size: Optional[Vec2DCompatible] = None,
+        start: Optional[Vec2DCompatible] = None,
+        end: Optional[Vec2DCompatible] = None,
+        angle: float = 0,
+        use_degrees: bool = True,
+    ):
+        """Create a rectangle.
 
-    :param \**kwargs:
-        See below
-
-    :Keyword Arguments:
-        * *start* (``Vector2D``) --
-          start edge of the rect
-        * *end* (``Vector2D``) --
-          end edge of the rect
-        * *rect* (``Rectangle``) --
-          rectangle to use instead of start and end
-        * *layer* (``str``) --
-          layer on which the rect is drawn
-        * *width* (``float``) --
-          width of the outer line (default: None, which means auto detection)
-        * *offset* (``Vector2D``, ``float``) --
-          offset of the rect line to the specified one
-
-    :Example:
-
-    >>> from KicadModTree import *
-    >>> RectLine(start=[-3, -2], end=[3, 2], layer='F.SilkS')
-    """
-
-    def __init__(self, **kwargs):
-        if "rect" in kwargs:
-            self.start_pos = kwargs["rect"].top_left
-            self.end_pos = kwargs["rect"].bottom_right
+        Args:
+            layer: Layer.
+            width: Line width in mm. If `None`, then the standard width for the given
+                layer will be used when the serializing the node.
+            style: Line style.
+            fill: If the shape is filled or only the outline is visible.
+            offset: amount by which the shape is inflated or deflated (if offset negative).
+            shape: Rectangle or bounding box from which to derive the parameters.
+            center: Center point of the rectangle.
+            size: Size of the rectangle.
+            start: Top left corner of the rectangle
+            end: Bottom right corner of the rectangle
+            angle: angle of the rectangle.
+            use_degrees: Whether the angle is given in degrees or radians.
+        """
+        # New code. Currently commented out and the old code is used for backwards compatibility.
+        # Node.__init__(self)
+        # if offset:
+        #     if isinstance(offset, float):
+        #         offset = Vector2D(offset, offset)
+        #     else:
+        #         offset = Vector2D(offset.x, offset.y)
+        # else:
+        #     offset = Vector2D(0, 0)
+        # GeomRectangle.__init__(
+        #     self,
+        #     shape=shape,
+        #     center=center,
+        #     size=size,
+        #     start=start,
+        #     end=end,
+        #     angle=angle,
+        #     use_degrees=use_degrees)
+        # self.size += 2* offset
+        if shape is not None:
+            self.start = shape.top_left
+            self.end = shape.bottom_right
         else:
-            if "start" not in kwargs or "end" not in kwargs:
-                raise ValueError(
-                    "Either start and end or rect must be provided."
-                )
-            self.start_pos = Vector2D(kwargs['start'])
-            self.end_pos = Vector2D(kwargs['end'])
-
+            self.start = Vector2D(start)
+            self.end = Vector2D(end)
         # If specified, an 'offset' can be applied to the RectLine.
-        # For example, creating a border around a given Rect of a specified size
-        if kwargs.get('offset'):
-            # offset for the rect line
-            # e.g. for creating a rectLine 0.5mm LARGER than the given rect, or similar
-            offset = [0, 0]
-
+        # For example, creating a border around a given Rectangle of a specified size
+        if offset is not None:
             # Has an offset / inset been specified?
-            if type(kwargs['offset']) in [int, float]:
-                offset[0] = offset[1] = kwargs['offset']
-            elif type(kwargs['offset']) in [list, tuple] and len(kwargs['offset']) == 2:
+            if type(offset) in [int, float]:
+                offset = Vector2D(offset, offset)
+            elif type(offset) in [list, tuple] and len(offset) == 2:
                 # Ensure that all offset params are numerical
-                if all([type(i) in [int, float] for i in kwargs['offset']]):
-                    offset = kwargs['offset']
-
+                if all([type(i) in [int, float] for i in offset]):
+                    offset = Vector2D(offset)
+            else:
+                offset = Vector2D(0, 0)
             # For the offset to work properly, start-pos must be top-left, and end-pos must be bottom-right
-            x1 = min(self.start_pos.x, self.end_pos.x)
-            x2 = max(self.start_pos.x, self.end_pos.x)
-
-            y1 = min(self.start_pos.y, self.end_pos.y)
-            y2 = max(self.start_pos.y, self.end_pos.y)
-
+            s = Vector2D(min(self.start.x, self.end.x), min(self.start.y, self.end.y))
+            e = Vector2D(max(self.start.x, self.end.x), max(self.start.y, self.end.y))
             # Put the offset back in
-            self.start_pos.x = x1 - offset[0]
-            self.start_pos.y = y1 - offset[1]
-
-            self.end_pos.x = x2 + offset[0]
-            self.end_pos.y = y2 + offset[1]
-
-        polygon_line = [Vector2D(self.start_pos.x, self.start_pos.y),
-                        Vector2D(self.start_pos.x, self.end_pos.y),
-                        Vector2D(self.end_pos.x, self.end_pos.y),
-                        Vector2D(self.end_pos.x, self.start_pos.y),
-                        Vector2D(self.start_pos.x, self.start_pos.y)]
-
-        PolygonLine.__init__(self, nodes=polygon_line, layer=kwargs['layer'], width=kwargs.get('width'))
+            self.start = s - offset
+            self.end = e + offset
+        polygon_line = [
+            Vector2D(self.start.x, self.start.y),
+            Vector2D(self.start.x, self.end.y),
+            Vector2D(self.end.x, self.end.y),
+            Vector2D(self.end.x, self.start.y),
+            Vector2D(self.start.x, self.start.y),
+        ]
+        # Add center and size properties for the courtyard function
+        self.center = (self.start + self.end) / 2
+        self.size = (self.start - self.end).positive()
+        PolygonLine.__init__(
+            self, shape=polygon_line, layer=layer, width=width, style=style, fill=fill
+        )
 
     def _getRenderTreeText(self):
         render_text = Node._getRenderTreeText(self)
-        render_text += " [start: [x: {sx}, y: {sy}] end: [x: {ex}, y: {ey}]]".format(sx=self.start_pos.x,
-                                                                                     sy=self.start_pos.y,
-                                                                                     ex=self.end_pos.x,
-                                                                                     ey=self.end_pos.y)
+        render_text += " [start: [x: {sx}, y: {sy}] end: [x: {ex}, y: {ey}]]".format(
+            sx=self.start.x, sy=self.start.y, ex=self.end.x, ey=self.end.y
+        )
 
         return render_text

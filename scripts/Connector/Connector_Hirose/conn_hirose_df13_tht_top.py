@@ -118,7 +118,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, configuration):
         {'y': body_edge['bottom'] + p1_off, 'x': body_edge['left'] - p1_off},
         {'y': body_edge['bottom'] + p1_off, 'x': body_edge['left'] + L}
     ]
-    kicad_mod.append(PolygonLine(polygon=pin,
+    kicad_mod.append(PolygonLine(shape=pin,
                                  layer='F.SilkS', width=configuration['silk_line_width']))
 
     sl=1
@@ -127,7 +127,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, configuration):
         {'y': body_edge['bottom'] - sl/sqrt(2), 'x': 0},
         {'y': body_edge['bottom'], 'x': sl/2}
     ]
-    kicad_mod.append(PolygonLine(polygon=pin,
+    kicad_mod.append(PolygonLine(shape=pin,
                                  width=configuration['fab_line_width'], layer='F.Fab'))
 
     #side-wall thickness S
@@ -136,7 +136,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, configuration):
 
     #bottom line
     kicad_mod.append(PolygonLine(
-        polygon=[
+        shape=[
             {'x':x1,'y':0},
             {'x':x1+S,'y':0},
             {'x':x1+S,'y':y2-S},
@@ -151,7 +151,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, configuration):
     g = 0.75
 
     kicad_mod.append(PolygonLine(
-        polygon=[
+        shape=[
             {'x':x1,'y':-g},
             {'x':x1+S,'y':-g},
             {'x':x1+S,'y':y1+S*1.5},
@@ -160,7 +160,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, configuration):
         layer='F.SilkS', width=configuration['silk_line_width']))
 
     kicad_mod.append(PolygonLine(
-        polygon=[
+        shape=[
             {'x':x2,'y':-g},
             {'x':x2-S,'y':-g},
             {'x':x2-S,'y':y1+S*1.5},
@@ -188,7 +188,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, configuration):
             {'x':A-0.2*pitch,'y':y1+0.5*S},
             {'x':A-0.2*pitch,'y':y1+1.5*S},
             {'x':x2-2*S,'y':y1+1.5*S}]
-    kicad_mod.append(PolygonLine(polygon=polygon, layer='F.SilkS', width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(shape=polygon, layer='F.SilkS', width=configuration['silk_line_width']))
 
     ########################### CrtYd #################################
     cx1 = round_to_grid(bounding_box['left']-configuration['courtyard_offset']['connector'], configuration['courtyard_grid'])

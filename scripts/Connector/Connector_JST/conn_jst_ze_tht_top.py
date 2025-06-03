@@ -142,7 +142,7 @@ def generate_one_footprint(
             {'x': x2, 'y': y2},
             {'x': pos_last_odd_pad + (pad_size[0]/2 + silk_pad_offset), 'y': y2},
         ]
-        kicad_mod.append(PolygonLine(polygon=poly_silk,
+        kicad_mod.append(PolygonLine(shape=poly_silk,
                                      width=configuration['silk_line_width'], layer="F.SilkS"))
         for i in range(num_odd_pins-1):
             kicad_mod.append(Line(start=[i * 2*pitch + (pad_size[0]/2 + silk_pad_offset), y2],
@@ -183,7 +183,7 @@ def generate_one_footprint(
 
     #left side
     if not boss:
-        kicad_mod.append(PolygonLine(polygon=[
+        kicad_mod.append(PolygonLine(shape=[
             {'x': xa,'y': y3},
             {'x': x1+t,'y':y3},
             {'x': x1+t,'y':y2-t},
@@ -196,7 +196,7 @@ def generate_one_footprint(
             width=configuration['silk_line_width'], layer="F.SilkS"
             ))
 
-        kicad_mod.append(PolygonLine(polygon=[
+        kicad_mod.append(PolygonLine(shape=[
             {'x': x1+t,'y': -3},
             {'x': x1+t,'y': y2-t},
             {'x': -1,'y': y2-t},
@@ -208,7 +208,7 @@ def generate_one_footprint(
     else:
         xEnd = floor(pincount / 2) * (2 * pitch) + 1
 
-    kicad_mod.append(PolygonLine(polygon=[
+    kicad_mod.append(PolygonLine(shape=[
         {'x': xb,'y': y3},
         {'x': x2-t,'y': y3},
         {'x': x2-t,'y': y2-t},
@@ -258,8 +258,8 @@ def generate_one_footprint(
         {'x': xp2,'y': yp2},
     ]
 
-    kicad_mod.append(PolygonLine(polygon=pin1, width=configuration['silk_line_width'], layer='F.SilkS'))
-    kicad_mod.append(PolygonLine(polygon=pin1, layer='F.Fab', width=configuration['fab_line_width']))
+    kicad_mod.append(PolygonLine(shape=pin1, width=configuration['silk_line_width'], layer='F.SilkS'))
+    kicad_mod.append(PolygonLine(shape=pin1, layer='F.Fab', width=configuration['fab_line_width']))
 
     ######################### Text Fields ###############################
     addTextFields(kicad_mod=kicad_mod, configuration=configuration, body_edges=body_edge,

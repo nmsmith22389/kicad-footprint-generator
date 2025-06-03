@@ -63,12 +63,12 @@ class Translation(Node):
 
         return render_text
 
-    def calculateBoundingBox(self):
+    def bbox(self):
 
         bbox = BoundingBox()
 
         for child in self.getAllChilds():
-            child_bbox = child.calculateBoundingBox()
+            child_bbox = child.bbox()
             bbox.include_bbox(child_bbox)
 
         offset = Vector2D(self.offset_x, self.offset_y)

@@ -119,11 +119,11 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row, configu
             return [{'x':round_to_grid(p['x'], grid), 'y':round_to_grid(p['y'], grid)} for p in poly]
 
     # outline on Fab
-    kicad_mod.append(PolygonLine(polygon=generateOutline(),
+    kicad_mod.append(PolygonLine(shape=generateOutline(),
                                  layer='F.Fab', width=configuration['fab_line_width']))
 
     # outline on SilkScreen
-    kicad_mod.append(PolygonLine(polygon=generateOutline(off=off),
+    kicad_mod.append(PolygonLine(shape=generateOutline(off=off),
                                  layer='F.SilkS', width=configuration['silk_line_width']))
 
     #pin-1 mark
@@ -134,7 +134,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row, configu
         {'y': body_edge['bottom'] + o, 'x': body_edge['left'] - o},
         {'y': body_edge['bottom'] + o, 'x': body_edge['left'] + sl}
     ]
-    kicad_mod.append(PolygonLine(polygon=pin,
+    kicad_mod.append(PolygonLine(shape=pin,
                                  layer='F.SilkS', width=configuration['silk_line_width']))
 
     sl=1
@@ -143,7 +143,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row, configu
         {'y': body_edge['bottom'] - sl/sqrt(2), 'x': 0},
         {'y': body_edge['bottom'], 'x': sl/2}
     ]
-    kicad_mod.append(PolygonLine(polygon=pin,
+    kicad_mod.append(PolygonLine(shape=pin,
                                  width=configuration['fab_line_width'], layer='F.Fab'))
 
     ########################### CrtYd #################################
@@ -151,7 +151,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row, configu
     cy1 = poly_crtyd[0]['y']
     cy2 = poly_crtyd[1]['y']
     kicad_mod.append(PolygonLine(
-        polygon=poly_crtyd,
+        shape=poly_crtyd,
         layer='F.CrtYd', width=configuration['courtyard_line_width']))
 
     ######################### Text Fields ###############################

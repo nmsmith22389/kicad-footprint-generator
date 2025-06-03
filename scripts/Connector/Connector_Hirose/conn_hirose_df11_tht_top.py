@@ -100,7 +100,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, configuration):
         {'y': body_edge['top'] + sl/sqrt(2), 'x': 0},
         {'y': body_edge['top'], 'x': sl/2}
     ]
-    kicad_mod.append(PolygonLine(polygon=pin,
+    kicad_mod.append(PolygonLine(shape=pin,
                                  width=configuration['fab_line_width'], layer='F.Fab'))
 
     #line offset
@@ -124,7 +124,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, configuration):
         {'y': body_edge['top'] - p1_off, 'x': body_edge['left'] - p1_off},
         {'y': body_edge['top'] - p1_off, 'x': body_edge['left'] + L}
     ]
-    kicad_mod.append(PolygonLine(polygon=pin,
+    kicad_mod.append(PolygonLine(shape=pin,
                                  layer='F.SilkS', width=configuration['silk_line_width']))
 
     #side-wall thickness S
@@ -132,7 +132,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, configuration):
 
     #bottom line
     kicad_mod.append(PolygonLine(
-        polygon=[
+        shape=[
             {'x':x1,'y':2},
             {'x':x1+S,'y':2},
             {'x':x1+S,'y':y2-S},
@@ -143,7 +143,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, configuration):
 
     #left mark
     kicad_mod.append(PolygonLine(
-        polygon=[
+        shape=[
             {'x':x1,'y':1},
             {'x':x1+S,'y':1},
             {'x':x1+S,'y':y1+S},
@@ -153,7 +153,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, configuration):
 
     #right mark
     kicad_mod.append(PolygonLine(
-        polygon=[
+        shape=[
             {'x':x2,'y':1},
             {'x':x2-S,'y':1},
             {'x':x2-S,'y':y1+S},
@@ -164,7 +164,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, configuration):
     #middle line
     if pins > 2:
         kicad_mod.append(PolygonLine(
-            polygon=[
+            shape=[
                 {'x':1.5,'y':y1},
                 {'x':1.5,'y':y1+S},
                 {'x':x2-3.5-off,'y':y1+S},

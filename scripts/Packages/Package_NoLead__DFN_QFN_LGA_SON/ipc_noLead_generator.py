@@ -17,7 +17,8 @@ from KicadModTree import (
 )
 
 from KicadModTree.util.courtyard_builder import CourtyardBuilder
-from kilibs.geom import Direction, Vector2D, BoundingBox, Rectangle, rounding
+from kilibs.geom import Direction, Vector2D, BoundingBox, GeomRectangle
+from kilibs.geom.tools import rounding
 from kilibs.ipc_tools import ipc_rules
 from kilibs.util.toleranced_size import TolerancedSize
 from KicadModTree.nodes.specialized.PadArray import (
@@ -36,7 +37,6 @@ from scripts.tools.ipc_pad_size_calculators import (
 from scripts.tools.quad_dual_pad_border import create_dual_or_quad_pad_border
 from scripts.tools.nodes import pin1_arrow
 from scripts.tools import drawing_tools
-from scripts.tools.drawing_tools import courtyardFromBoundingBox
 from scripts.tools.drawing_tools_fab import draw_chamfer_rect_fab
 from scripts.tools.declarative_def_tools import (
     ast_evaluator,
@@ -93,8 +93,8 @@ def get_pad_bounding_box(pad: Pad) -> BoundingBox:
             raise ValueError("Rotation of pad is not a multiple of 180 degrees")
 
         return BoundingBox(
-            min_pt=pad.at - (pad.size / 2),
-            max_pt=pad.at + (pad.size / 2)
+            pad.at - (pad.size / 2),
+            pad.at + (pad.size / 2)
         )
     else:
         raise ValueError("Unsupported pad shape: {}".format(pad.shape))
@@ -554,8 +554,8 @@ class NoLeadGenerator(FootprintGenerator):
         }
 
         bounding_box = BoundingBox(
-            min_pt=Vector2D(body_edge['left'], body_edge['top']),
-            max_pt=Vector2D(body_edge['right'], body_edge['bottom'])
+            corner1=Vector2D(body_edge['left'], body_edge['top']),
+            corner2=Vector2D(body_edge['right'], body_edge['bottom'])
         )
 
         if device_dimensions['has_EP']:
@@ -739,17 +739,17 @@ class NoLeadGenerator(FootprintGenerator):
             if len(poly_silk) > 1:
                 # top right
                 kicad_mod.append(PolygonLine(
-                    polygon=poly_silk,
+                    shape=poly_silk,
                     width=silk_line_width_mm,
                     layer="F.SilkS", x_mirror=0))
                 # bottom left
                 kicad_mod.append(PolygonLine(
-                    polygon=poly_silk,
+                    shape=poly_silk,
                     width=silk_line_width_mm,
                     layer="F.SilkS", y_mirror=0))
                 # bottom right
                 kicad_mod.append(PolygonLine(
-                    polygon=poly_silk,
+                    shape=poly_silk,
                     width=silk_line_width_mm,
                     layer="F.SilkS", x_mirror=0, y_mirror=0))
 
@@ -761,7 +761,7 @@ class NoLeadGenerator(FootprintGenerator):
 
         # # ############################ CrtYd ##################################
 
-        body_rect = Rectangle(center=Vector2D(0,0), size=Vector2D(size_x, size_y))
+        body_rect = GeomRectangle(center=(0,0), size=(size_x, size_y))
         cb = CourtyardBuilder.from_node(
             node=kicad_mod,
             global_config=self.global_config,

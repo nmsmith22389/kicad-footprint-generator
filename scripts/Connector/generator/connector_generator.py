@@ -438,7 +438,7 @@ def generate_one_footprint(
     body_shape_nodes = build_body_shape(body_spec, fp_config=fp_config)
 
     ## draw body outline on F.Fab
-    fab_outline = PolygonLine(nodes=body_shape_nodes,
+    fab_outline = PolygonLine(shape=body_shape_nodes,
                               layer="F.Fab",
                               width=global_config.fab_line_width)
     kicad_mod.append(fab_outline)
@@ -448,7 +448,7 @@ def generate_one_footprint(
         if (name in ["left", "right", "top", "bottom"]):
             continue
         poly_nodes = parse_body_shape(fp_config.spec.get("body_shape", {}), side=name, eval_expr=fp_config.expr_eval)
-        kicad_mod.append(PolygonLine(nodes=poly_nodes, layer="F.Fab", width=global_config.fab_line_width))
+        kicad_mod.append(PolygonLine(shape=poly_nodes, layer="F.Fab", width=global_config.fab_line_width))
 
     ## create Pads
     start_pos_x = -0.5 * (fp_config.pad_pos_range.x + fp_config.row_x_offset) + fp_config.pad_center_offset.x
@@ -475,11 +475,11 @@ def generate_one_footprint(
         kicad_mod.append(rule_area_zone)
 
     ## calculate the bounding box of the whole footprint (excluding silk)
-    bbox = kicad_mod.calculateBoundingBox()
+    bbox = kicad_mod.bbox()
 
     ## draw silk
     ## duplicate the body shape contour onto F.SilkS with the silk_fab_offset
-    silk_outline = fab_outline.duplicate(layer="F.SilkS",
+    silk_outline = fab_outline.copy_with(layer="F.SilkS",
                                          offset=global_config.silk_fab_offset,
                                          width=global_config.silk_line_width)
     kicad_mod.append(silk_outline)
@@ -499,7 +499,7 @@ def generate_one_footprint(
         # close polygon only if the closing line is not contained in the F.Fab outline
         if (not check_if_points_on_lines(kicad_mod, [pin1_fab_pnts[n] for n in [0, -1]], layer='F.Fab')):
             pin1_fab_pnts.append(pin1_fab_pnts[0])
-        pin1_fab = PolygonLine(nodes=pin1_fab_pnts, layer='F.Fab', width=global_config.fab_line_width)
+        pin1_fab = PolygonLine(shape=pin1_fab_pnts, layer='F.Fab', width=global_config.fab_line_width)
         kicad_mod.append(pin1_fab)
 
     # calculate CourtYard
@@ -570,7 +570,7 @@ def make_pin1_marker(*, pos, radius, shape, flip_marker, width, offset):
     elif (shape == 'line'):
         line_midlength = Vector2D(radius, 0)
         pnts = [pos-offset_vec-line_midlength, pos-offset_vec+line_midlength]
-        pin1_silk = PolygonLine(nodes=pnts, layer='F.SilkS', width=width)
+        pin1_silk = PolygonLine(shape=pnts, layer='F.SilkS', width=width)
     elif (shape == "triangle"):
         pnts = []
         for n in range(3):
@@ -579,7 +579,7 @@ def make_pin1_marker(*, pos, radius, shape, flip_marker, width, offset):
                 math.cos(2 * n * math.pi / 3) * (1 if flip_marker else -1)
             )
             pnts.append(pos - offset_vec + radius * vertex)
-        pin1_silk = PolygonLine(nodes=pnts + pnts[:1], layer='F.SilkS', width=width)
+        pin1_silk = PolygonLine(shape=pnts + pnts[:1], layer='F.SilkS', width=width)
     elif (shape):
         raise ValueError("invalid pin 1 marker shape '%s'" % shape)
     else:
@@ -591,7 +591,7 @@ def check_if_points_on_lines(kicad_mod, points, layer):
     for node in kicad_mod:
         if (isinstance(node, PolygonLine) and node.layer == layer):
             for l in node.lineItems():
-                if all(l.isPointOnSelf(p) for p in points):
+                if all(l.is_point_on_self(p) for p in points):
                     return True
     return False
 

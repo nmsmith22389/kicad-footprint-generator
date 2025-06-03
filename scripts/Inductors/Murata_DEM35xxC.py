@@ -70,7 +70,7 @@ f.append(RectLine(start=[xLeftCrtYd, yTopCrtYd],
                   end=[xRightCrtYd, yBottomCrtYd],
                   layer="F.CrtYd", width=wCrtYd))
 
-f.append(PolygonLine(polygon=[[xFabLeft, yFabTop],
+f.append(PolygonLine(shape=[[xFabLeft, yFabTop],
                                [xFabRight, yFabTop],
                                [xFabRight, yFabBottom],
                                [xFabLeft, yFabBottom],

@@ -202,17 +202,17 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, params, configu
         {'y': y1 - off, 'x': x_loc-r_loc/2-0.5},
     ]
 
-    # kicad_mod.append(PolygonLine(polygon=corner,
+    # kicad_mod.append(PolygonLine(shape=corner,
     #     width=configuration['silk_line_width'], layer='F.SilkS'))
     kicad_mod.append(Line(start=[x_loc-r_loc/2-0.5, y1 - off],
         end=[x_loc-TW/2-off, y1 - off],
         width=configuration['silk_line_width'], layer='F.SilkS'))
 
-    kicad_mod.append(PolygonLine(polygon=corner, y_mirror=B / 2,
+    kicad_mod.append(PolygonLine(shape=corner, y_mirror=B / 2,
                                  width=configuration['silk_line_width'], layer='F.SilkS'))
-    kicad_mod.append(PolygonLine(polygon=corner, x_mirror=x_loc,
+    kicad_mod.append(PolygonLine(shape=corner, x_mirror=x_loc,
                                  width=configuration['silk_line_width'], layer='F.SilkS'))
-    kicad_mod.append(PolygonLine(polygon=corner, y_mirror=B / 2, x_mirror=x_loc,
+    kicad_mod.append(PolygonLine(shape=corner, y_mirror=B / 2, x_mirror=x_loc,
                                  width=configuration['silk_line_width'], layer='F.SilkS'))
 
     #silk-screen between each pad
@@ -245,15 +245,15 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, params, configu
         {'y': y1,'x': x_loc+TW/2},
     ]
 
-    kicad_mod.append(PolygonLine(polygon=tab,
+    kicad_mod.append(PolygonLine(shape=tab,
                                  width=configuration['fab_line_width'], layer='F.Fab'))
-    kicad_mod.append(PolygonLine(polygon=tab, y_mirror=B / 2,
+    kicad_mod.append(PolygonLine(shape=tab, y_mirror=B / 2,
                                  width=configuration['fab_line_width'], layer='F.Fab'))
 
     tap_off = offsetPoly(tab, off, x_loc, B/2)
-    kicad_mod.append(PolygonLine(polygon=tap_off,
+    kicad_mod.append(PolygonLine(shape=tap_off,
                                  width=configuration['silk_line_width'], layer='F.SilkS'))
-    kicad_mod.append(PolygonLine(polygon=tap_off, y_mirror=B / 2,
+    kicad_mod.append(PolygonLine(shape=tap_off, y_mirror=B / 2,
                                  width=configuration['silk_line_width'], layer='F.SilkS'))
 
     bounding_box['top'] = y1 - TL
@@ -268,9 +268,9 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, params, configu
         {'y': y1-off,'x': x_loc+TW/2+off-T},
     ]
 
-    kicad_mod.append(PolygonLine(polygon=tab,
+    kicad_mod.append(PolygonLine(shape=tab,
                                  width=configuration['silk_line_width'], layer='F.SilkS'))
-    kicad_mod.append(PolygonLine(polygon=tab, y_mirror=B / 2,
+    kicad_mod.append(PolygonLine(shape=tab, y_mirror=B / 2,
                                  width=configuration['silk_line_width'], layer='F.SilkS'))
 
     #pin-1 marker
@@ -284,7 +284,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, params, configu
     {'x': x,'y': 0},
     ]
 
-    kicad_mod.append(PolygonLine(polygon=pin,
+    kicad_mod.append(PolygonLine(shape=pin,
                                  width=configuration['silk_line_width'], layer='F.SilkS'))
 
     sl=3
@@ -293,7 +293,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, params, configu
         {'x': body_edge['left'] + sl/sqrt(2), 'y': 0},
         {'x': body_edge['left'], 'y': sl/2}
     ]
-    kicad_mod.append(PolygonLine(polygon=pin,
+    kicad_mod.append(PolygonLine(shape=pin,
                                  width=configuration['fab_line_width'], layer='F.Fab'))
 
     ########################### CrtYd #################################

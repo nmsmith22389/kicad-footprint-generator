@@ -1,24 +1,25 @@
 import math
-import pytest
-from kilibs.geom import Vector2D
-from KicadModTree import *
-from kilibs.geom import geometric_util as geo
-from kilibs.test_utils import geom_test
 
+import pytest
+
+from KicadModTree import *
 from KicadModTree.tests.test_utils.fp_file_test import SerialisationTest
+from kilibs.geom import GeomArc, GeomCircle, Vector2D
+from tests.kilibs.geom.is_equal import is_equal_val, is_equal_vectors
 
 
 def assert_arc_geom(
-    arc: geo.geometricArc, start, end, center, midpoint, radius: float, angle: float
+    arc: GeomArc, start, end, center, mid, radius: float, angle: float
 ) -> None:
     """
     Assert that the arc has the given geometry
     """
-    assert geom_test.vector_approx_equal(arc.getStartPoint(), start)
-    assert geom_test.vector_approx_equal(arc.getEndPoint(), end)
-    assert geom_test.vector_approx_equal(arc.getCenter(), center)
-    assert geom_test.vector_approx_equal(arc.getMidPoint(), midpoint)
-    assert arc.getRadius() == pytest.approx(radius)
+    assert is_equal_vectors(arc.start, start)
+    assert is_equal_vectors(arc.end, end)
+    assert is_equal_vectors(arc.center, center)
+    assert is_equal_vectors(arc.mid, mid)
+    assert is_equal_val(arc.radius, radius)
+    assert is_equal_val(arc.angle, angle)
     assert arc.angle == pytest.approx(angle)
 
 
@@ -27,7 +28,7 @@ def test_arcGeometry():
     sqrt2_2 = math.sqrt(2) / 2
 
     # A semi-circular arc
-    semicircle = geo.geometricArc(
+    semicircle = GeomArc(
         center=Vector2D(0, 0), start=Vector2D(1, 0), angle=180
     )
 
@@ -36,13 +37,13 @@ def test_arcGeometry():
         start=(1, 0),
         end=(-1, 0),
         center=(0, 0),
-        midpoint=(0, 1),
+        mid=(0, 1),
         radius=1,
         angle=180,
     )
 
     # A semi-circular arc by endpoint goes in a specific direction
-    semicircle_by_endpoint = geo.geometricArc(
+    semicircle_by_endpoint = GeomArc(
         center=Vector2D(0, 0), start=Vector2D(1, 0), end=Vector2D(-1, 0)
     )
 
@@ -51,17 +52,17 @@ def test_arcGeometry():
         start=(1, 0),
         end=(-1, 0),
         center=(0, 0),
-        midpoint=(0, -1),
+        mid=(0, -1),
         radius=1,
         angle=-180,  # CW
     )
 
     # Check that end or angle is required
     with pytest.raises(KeyError):
-        geo.geometricArc(center=Vector2D(0, 0), start=Vector2D(1, 0))
+        GeomArc(center=Vector2D(0, 0), start=Vector2D(1, 0))
 
     # Test that the negative angle goes the other way
-    negative_semicircle = geo.geometricArc(
+    negative_semicircle = GeomArc(
         center=Vector2D(0, 0), start=Vector2D(1, 0), angle=-180
     )
 
@@ -70,12 +71,12 @@ def test_arcGeometry():
         start=(1, 0),
         end=(-1, 0),
         center=(0, 0),
-        midpoint=(0, -1),
+        mid=(0, -1),
         radius=1,
         angle=-180,
     )
 
-    arc_90deg_down = geo.geometricArc(
+    arc_90deg_down = GeomArc(
         center=Vector2D(0, 0), start=Vector2D(1, 0), angle=-90
     )
 
@@ -84,12 +85,12 @@ def test_arcGeometry():
         start=(1, 0),
         end=(0, -1),
         center=(0, 0),
-        midpoint=(sqrt2_2, -sqrt2_2),
+        mid=(sqrt2_2, -sqrt2_2),
         radius=1,
         angle=-90,
     )
 
-    arc_90deg_down_nonunity_radius = geo.geometricArc(
+    arc_90deg_down_nonunity_radius = GeomArc(
         center=Vector2D(0, 0), start=Vector2D(0, -1.2), angle=-90
     )
 
@@ -98,13 +99,13 @@ def test_arcGeometry():
         start=(0, -1.2),
         end=(-1.2, 0),
         center=(0, 0),
-        midpoint=1.2 * Vector2D(-sqrt2_2, -sqrt2_2),
+        mid=1.2 * Vector2D(-sqrt2_2, -sqrt2_2),
         radius=1.2,
         angle=-90,
     )
 
     # Arc not centred on the origin
-    arc_not_on_origin = geo.geometricArc(
+    arc_not_on_origin = GeomArc(
         center=Vector2D(1, 1), start=Vector2D(2, 1), angle=-90
     )
 
@@ -113,26 +114,26 @@ def test_arcGeometry():
         start=(2, 1),
         end=(1, 0),
         center=(1, 1),
-        midpoint=(1 + sqrt2_2, 1 - sqrt2_2),
+        mid=(1 + sqrt2_2, 1 - sqrt2_2),
         radius=1,
         angle=-90,
     )
 
-    # Not a simple angle for the midpoint
-    arc_45_deg = geo.geometricArc(center=Vector2D(0, 0), start=Vector2D(1, 0), angle=45)
+    # Not a simple angle for the mid
+    arc_45_deg = GeomArc(center=Vector2D(0, 0), start=Vector2D(1, 0), angle=45)
 
     assert_arc_geom(
         arc=arc_45_deg,
         start=(1, 0),
         end=(sqrt2_2, sqrt2_2),
         center=(0, 0),
-        midpoint=(math.cos(math.radians(22.5)), math.sin(math.radians(22.5))),
+        mid=(math.cos(math.radians(22.5)), math.sin(math.radians(22.5))),
         radius=1,
         angle=45,
     )
 
     # Degenerate radius
-    a_zero_radius = geo.geometricArc(
+    a_zero_radius = GeomArc(
         center=Vector2D(0, 0), start=Vector2D(0, 0), angle=42
     )
 
@@ -141,7 +142,7 @@ def test_arcGeometry():
         start=(0, 0),
         end=(0, 0),
         center=(0, 0),
-        midpoint=(0, 0),
+        mid=(0, 0),
         radius=0,
         angle=42,
     )
@@ -149,10 +150,10 @@ def test_arcGeometry():
 
 def testArcBy3Points():
 
-    a_180_left_cw = geo.geometricArc(
+    a_180_left_cw = GeomArc(
         start=Vector2D(0, -1),
         end=Vector2D(0, 1),
-        midpoint=Vector2D(-1, 0),
+        mid=Vector2D(-1, 0),
     )
 
     assert_arc_geom(
@@ -160,16 +161,16 @@ def testArcBy3Points():
         start=(0, -1),
         end=(0, 1),
         center=(0, 0),
-        midpoint=(-1, 0),
+        mid=(-1, 0),
         radius=1,
         angle=-180,  # CW
     )
 
     # The same thing the other way around, should still work exactly the same
-    a_180_left_ccw = geo.geometricArc(
+    a_180_left_ccw = GeomArc(
         start=Vector2D(0, 1),
         end=Vector2D(0, -1),
-        midpoint=Vector2D(-1, 0),
+        mid=Vector2D(-1, 0),
     )
 
     assert_arc_geom(
@@ -177,17 +178,17 @@ def testArcBy3Points():
         start=(0, 1),
         end=(0, -1),
         center=(0, 0),
-        midpoint=(-1, 0),
+        mid=(-1, 0),
         radius=1,
         angle=180,  # CCW
     )
 
     # Now, try an arc thats over 180 degreee
     # this has triggered bugs before
-    a_over_180 = geo.geometricArc(
+    a_over_180 = GeomArc(
         start=Vector2D(0, -1),
         end=Vector2D(0, 1),
-        midpoint=Vector2D(-2, 0),
+        mid=Vector2D(-2, 0),
     )
 
     assert_arc_geom(
@@ -195,17 +196,17 @@ def testArcBy3Points():
         start=(0, -1),
         end=(0, 1),
         center=(-0.75, 0),
-        midpoint=(-2, 0),
+        mid=(-2, 0),
         radius=1.25,
         angle=-253.73979529168804,
     )
 
     # And one less than 180 degrees
     # and horizontal
-    a_less_180 = geo.geometricArc(
+    a_less_180 = GeomArc(
         start=Vector2D(-1, 0),
         end=Vector2D(1, 0),
-        midpoint=Vector2D(0, 0.5),
+        mid=Vector2D(0, 0.5),
     )
 
     assert_arc_geom(
@@ -213,7 +214,7 @@ def testArcBy3Points():
         start=(-1, 0),
         end=(1, 0),
         center=(0, -0.75),
-        midpoint=(0, 0.5),
+        mid=(0, 0.5),
         radius=1.25,
         angle=-106.26020470831197,  # CW
     )
@@ -230,55 +231,53 @@ def testArc3PointCollinear(start, mid, end):
     """
 
     with pytest.raises(ValueError):
-        geo.geometricArc(
+        GeomArc(
             start=Vector2D(start),
             end=Vector2D(mid),
-            midpoint=Vector2D(end),
+            mid=Vector2D(end),
         )
 
 
 def testCircleCircleIntersection():
     # check intersection of two circles with identical radii
-    c1 = geo.geometricCircle(center=[0, 0], radius=math.sqrt(2))
-    c2 = geo.geometricCircle(center=[2, 0], radius=math.sqrt(2))
-    ip = geo.BaseNodeIntersection.intersectTwoNodes(c1, c2)
+    c1 = GeomCircle(center=[0, 0], radius=math.sqrt(2))
+    c2 = GeomCircle(center=[2, 0], radius=math.sqrt(2))
+    ip = c1.intersect(c2)
     assert len(ip) == 2
     for p in ip:
         assert any((p - Vector2D(1, y)).is_nullvec(tol=1e-7) for y in [1, -1])
 
     # check intersection of two circles with different radii
-    c1 = geo.geometricCircle(center=[0, 0], radius=2)
-    c2 = geo.geometricCircle(center=[2 * math.sqrt(3/4), 0], radius=1)
-    ip = geo.BaseNodeIntersection.intersectTwoNodes(c1, c2)
+    c1 = GeomCircle(center=[0, 0], radius=2)
+    c2 = GeomCircle(center=[2 * math.sqrt(3/4), 0], radius=1)
+    ip = c1.intersect(c2)
     assert len(ip) == 2
     for p in ip:
         assert any((p - Vector2D(2 * math.sqrt(3/4), y)).is_nullvec(tol=1e-7) for y in [1, -1])
 
     # check intersection of two circles with different radii, too far apart
-    c1 = geo.geometricCircle(center=[0, 0], radius=2)
-    c2 = geo.geometricCircle(center=[4, 0], radius=1)
-    ip = geo.BaseNodeIntersection.intersectTwoNodes(c1, c2)
+    c1 = GeomCircle(center=[0, 0], radius=2)
+    c2 = GeomCircle(center=[4, 0], radius=1)
+    ip = c1.intersect(c2)
     assert len(ip) == 0
 
     # check intersection of two circles with different radii, contained in each other
-    c1 = geo.geometricCircle(center=[0, 0], radius=2)
-    c2 = geo.geometricCircle(center=[0.5, 0], radius=1)
-    ip = geo.BaseNodeIntersection.intersectTwoNodes(c1, c2)
+    c1 = GeomCircle(center=[0, 0], radius=2)
+    c2 = GeomCircle(center=[0.5, 0], radius=1)
+    ip = c1.intersect(c2)
     assert len(ip) == 0
 
     # check intersection point of circles touching outside
-    c1 = geo.geometricCircle(center=[0, 0], radius=1)
-    c2 = geo.geometricCircle(center=[2, 0], radius=1)
-    ip = geo.BaseNodeIntersection.intersectTwoNodes(c1, c2)
-    assert len(ip) == 1
-    assert (ip[0] - Vector2D(1, 0)).is_nullvec(tol=1e-7)
+    c1 = GeomCircle(center=[0, 0], radius=1)
+    c2 = GeomCircle(center=[2, 0], radius=1)
+    ip = c1.intersect(c2)
+    assert len(ip) == 0
 
     # check intersection point of circles touching inside
-    c1 = geo.geometricCircle(center=[0, 0], radius=2)
-    c2 = geo.geometricCircle(center=[1, 0], radius=1)
-    ip = geo.BaseNodeIntersection.intersectTwoNodes(c1, c2)
-    assert len(ip) == 1
-    assert (ip[0] - Vector2D(2, 0)).is_nullvec(tol=1e-7)
+    c1 = GeomCircle(center=[0, 0], radius=2)
+    c2 = GeomCircle(center=[1, 0], radius=1)
+    ip = c1.intersect(c2)
+    assert len(ip) == 0
 
     # check intersection point of circles touching inside
     # with some tolerance (this can cause a sqrt bounds error,
@@ -286,40 +285,39 @@ def testCircleCircleIntersection():
 
     # this case is 1.11 and 1.36, as both are numbers that have FP error
     # and this case caused a domain error
-    c1 = geo.geometricCircle(center=[0.25, 0], radius=1.11)
-    c2 = geo.geometricCircle(center=[0, 0], radius=1.36)
-    ip = geo.BaseNodeIntersection.intersectTwoNodes(c1, c2)
-    assert len(ip) == 1
-    assert (ip[0] - Vector2D(1.36, 0)).is_nullvec(tol=1e-7)
+    c1 = GeomCircle(center=[0.25, 0], radius=1.11)
+    c2 = GeomCircle(center=[0, 0], radius=1.36)
+    ip = c1.intersect(c2)
+    assert len(ip) == 0
 
     # vary position on x and y axis
-    c1 = geo.geometricCircle(center=[0, 0], radius=math.sqrt(2))
-    c2 = geo.geometricCircle(center=[0, 2], radius=math.sqrt(2))
-    ip = geo.BaseNodeIntersection.intersectTwoNodes(c1, c2)
+    c1 = GeomCircle(center=[0, 0], radius=math.sqrt(2))
+    c2 = GeomCircle(center=[0, 2], radius=math.sqrt(2))
+    ip = c1.intersect(c2)
     assert len(ip) == 2
     for p in ip:
         assert any((p - Vector2D(x, 1)).is_nullvec(tol=1e-7) for x in [1, -1])
-    c2 = geo.geometricCircle(center=[-2, 0], radius=math.sqrt(2))
-    ip = geo.BaseNodeIntersection.intersectTwoNodes(c1, c2)
+    c2 = GeomCircle(center=[-2, 0], radius=math.sqrt(2))
+    ip = c1.intersect(c2)
     assert len(ip) == 2
     for p in ip:
         assert any((p - Vector2D(-1, y)).is_nullvec(tol=1e-7) for y in [1, -1])
-    c2 = geo.geometricCircle(center=[0, -2], radius=math.sqrt(2))
-    for p in geo.BaseNodeIntersection.intersectTwoNodes(c1, c2):
+    c2 = GeomCircle(center=[0, -2], radius=math.sqrt(2))
+    for p in c1.intersect(c2):
         assert any((p - Vector2D(x, -1)).is_nullvec(tol=1e-7) for x in [1, -1])
 
     # circle 2 on the first median
-    c1 = geo.geometricCircle(center=[0, 0], radius=1)
-    c2 = geo.geometricCircle(center=[1, 1], radius=1)
-    ip = geo.BaseNodeIntersection.intersectTwoNodes(c1, c2)
+    c1 = GeomCircle(center=[0, 0], radius=1)
+    c2 = GeomCircle(center=[1, 1], radius=1)
+    ip = c1.intersect(c2)
     assert len(ip) == 2
     for p in ip:
         assert any((p - Vector2D(x, y)).is_nullvec(tol=1e-7) for x, y in [(1, 0), (0, 1)])
 
     # circle 2 on the fourth median
-    c1 = geo.geometricCircle(center=[0, 0], radius=1)
-    c2 = geo.geometricCircle(center=[1, -1], radius=1)
-    ip = geo.BaseNodeIntersection.intersectTwoNodes(c1, c2)
+    c1 = GeomCircle(center=[0, 0], radius=1)
+    c2 = GeomCircle(center=[1, -1], radius=1)
+    ip = c1.intersect(c2)
     assert len(ip) == 2
     for p in ip:
         assert any((p - Vector2D(x, y)).is_nullvec(tol=1e-7) for x, y in [(1, 0), (0, -1)])
@@ -328,30 +326,27 @@ def testCircleCircleIntersection():
     center = Vector2D(3, -2)
     for angle in [0, 30, -30, 180, -180, 72, 143]:
         offset = Vector2D(math.sin(math.radians(angle)), math.cos(math.radians(angle)))
-        c1 = geo.geometricCircle(center=center, radius=math.sqrt(2))
-        c2 = geo.geometricCircle(center=center + 2 * offset, radius=math.sqrt(2))
-        ip = geo.BaseNodeIntersection.intersectTwoNodes(c1, c2)
+        c1 = GeomCircle(center=center, radius=math.sqrt(2))
+        c2 = GeomCircle(center=center + 2 * offset, radius=math.sqrt(2))
+        ip = c1.intersect(c2)
         assert len(ip) == 2
         for p in ip:
             assert any(
-                (p - (center + offset + s * copy(offset).rotate(90))).is_nullvec(tol=1e-7)
+                (p - (center + offset + s * offset.rotated(90, origin=Vector2D(0, 0)))).is_nullvec(tol=1e-7)
                 for s in [-1, 1])
 
     # two degenerated circles with the same center
     center = Vector2D(3, -2)
-    c1 = geo.geometricCircle(center=center, radius=0)
-    c2 = geo.geometricCircle(center=center, radius=0)
-    ip = geo.BaseNodeIntersection.intersectTwoNodes(c1, c2)
-    assert len(ip) == 1
-    assert (ip[0] - center).is_nullvec(tol=1e-7)
+    c1 = GeomCircle(center=center, radius=0)
+    c2 = GeomCircle(center=center, radius=0)
+    ip = c1.intersect(c2)
+    assert len(ip) == 0
 
     # two identical circles with the same center
     center = Vector2D(3, -2)
-    c1 = geo.geometricCircle(center=center, radius=1)
-    c2 = geo.geometricCircle(center=center, radius=1)
-
-    with pytest.raises(ValueError):
-        geo.BaseNodeIntersection.intersectTwoNodes(c1, c2)
+    c1 = GeomCircle(center=center, radius=1)
+    c2 = GeomCircle(center=center, radius=1)
+    assert c1.intersect(c2) == []
 
 
 class TestArcSerialisation(SerialisationTest):
@@ -435,22 +430,22 @@ class TestArcSerialisation(SerialisationTest):
                 long_way=True))
 
         kicad_mod.append(
-            Arc(center=center, midpoint=Vector2D(7, 0), angle=90))
+            Arc(center=center, mid=Vector2D(7, 0), angle=90))
         kicad_mod.append(
-            Arc(center=center, midpoint=Vector2D(0, -7.2), angle=90))
+            Arc(center=center, mid=Vector2D(0, -7.2), angle=90))
         kicad_mod.append(
-            Arc(center=center, midpoint=Vector2D(-7.4, 0), angle=90))
+            Arc(center=center, mid=Vector2D(-7.4, 0), angle=90))
         kicad_mod.append(
-            Arc(center=center, midpoint=Vector2D(0, 7.6), angle=90))
+            Arc(center=center, mid=Vector2D(0, 7.6), angle=90))
 
         kicad_mod.append(
-            Arc(center=center, midpoint=Vector2D(8, 0), angle=-90))
+            Arc(center=center, mid=Vector2D(8, 0), angle=-90))
         kicad_mod.append(
-            Arc(center=center, midpoint=Vector2D(0, -8.2), angle=-90))
+            Arc(center=center, mid=Vector2D(0, -8.2), angle=-90))
         kicad_mod.append(
-            Arc(center=center, midpoint=Vector2D(-8.4, 0), angle=-90))
+            Arc(center=center, mid=Vector2D(-8.4, 0), angle=-90))
         kicad_mod.append(
-            Arc(center=center, midpoint=Vector2D(0, 8.6), angle=-90))
+            Arc(center=center, mid=Vector2D(0, 8.6), angle=-90))
 
         self.assert_serialises_as(kicad_mod, 'arc_90deg.kicad_mod')
 
@@ -623,50 +618,50 @@ class TestArcSerialisation(SerialisationTest):
         kicad_mod.append(
             Arc(
                 center=center,
-                midpoint=(Vector2D(7, 0)+center).rotate(45, origin=center),
+                mid=(Vector2D(7, 0)+center).rotate(45, origin=center),
                 angle=90
             ))
         kicad_mod.append(
             Arc(
                 center=center,
-                midpoint=(Vector2D(0, -7.2)+center).rotate(45, origin=center),
+                mid=(Vector2D(0, -7.2)+center).rotate(45, origin=center),
                 angle=90
             ))
         kicad_mod.append(
             Arc(
                 center=center,
-                midpoint=(Vector2D(-7.4, 0)+center).rotate(45, origin=center),
+                mid=(Vector2D(-7.4, 0)+center).rotate(45, origin=center),
                 angle=90
             ))
         kicad_mod.append(
             Arc(
                 center=center,
-                midpoint=(Vector2D(0, 7.6)+center).rotate(45, origin=center),
+                mid=(Vector2D(0, 7.6)+center).rotate(45, origin=center),
                 angle=90
             ))
 
         kicad_mod.append(
             Arc(
                 center=center,
-                midpoint=(Vector2D(8, 0)+center).rotate(45, origin=center),
+                mid=(Vector2D(8, 0)+center).rotate(45, origin=center),
                 angle=-90
             ))
         kicad_mod.append(
             Arc(
                 center=center,
-                midpoint=(Vector2D(0, -8.2)+center).rotate(45, origin=center),
+                mid=(Vector2D(0, -8.2)+center).rotate(45, origin=center),
                 angle=-90
             ))
         kicad_mod.append(
             Arc(
                 center=center,
-                midpoint=(Vector2D(-8.4, 0)+center).rotate(45, origin=center),
+                mid=(Vector2D(-8.4, 0)+center).rotate(45, origin=center),
                 angle=-90
             ))
         kicad_mod.append(
             Arc(
                 center=center,
-                midpoint=(Vector2D(0, 8.6)+center).rotate(45, origin=center),
+                mid=(Vector2D(0, 8.6)+center).rotate(45, origin=center),
                 angle=-90
             ))
 

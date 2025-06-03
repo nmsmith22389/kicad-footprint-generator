@@ -145,7 +145,7 @@ def makeDIP(pins, rm, pinrow_distance_in, package_width, overlen_top, overlen_bo
     bevelRectTL(kicad_modg, [l_fab, t_fab], [w_fab, h_fab], 'F.Fab', lw_fab)
     if hasSocket:
         kicad_modg.append(
-            Rect(start=[l_fabs, t_fabs], end=[l_fabs + w_fabs, t_fabs + h_fabs], layer='F.Fab', width=lw_fab))
+            Rectangle(start=[l_fabs, t_fabs], end=[l_fabs + w_fabs, t_fabs + h_fabs], layer='F.Fab', width=lw_fab))
 
     # create SILKSCREEN-layer
     DIPRectT(kicad_modg, [l_slk, t_slk], [w_slk, h_slk], 'F.SilkS', lw_slk)
@@ -154,12 +154,12 @@ def makeDIP(pins, rm, pinrow_distance_in, package_width, overlen_top, overlen_bo
         #    kicad_modg.append(Line(start=[l_slks, t_slks], end=[l_slks + w_slks, t_slks], layer='F.SilkS',width=lw_slk))
         #    kicad_modg.append(Line(start=[l_slks, t_slks+h_slks], end=[l_slks + w_slks, t_slks+h_slks], layer='F.SilkS',width=lw_slk))
         # else:
-        #    kicad_modg.append(Rect(start=[l_slks, t_slks], end=[l_slks+w_slks, t_slks+h_slks], layer='F.SilkS', width=lw_slk))
+        #    kicad_modg.append(Rectangle(start=[l_slks, t_slks], end=[l_slks+w_slks, t_slks+h_slks], layer='F.SilkS', width=lw_slk))
         kicad_modg.append(
-            Rect(start=[l_slks, t_slks], end=[l_slks + w_slks, t_slks + h_slks], layer='F.SilkS', width=lw_slk))
+            Rectangle(start=[l_slks, t_slks], end=[l_slks + w_slks, t_slks + h_slks], layer='F.SilkS', width=lw_slk))
 
     # create courtyard
-    kicad_mod.append(Rect(start=[roundCrt(l_crt + offset[0]), roundCrt(t_crt + offset[1])],
+    kicad_mod.append(Rectangle(start=[roundCrt(l_crt + offset[0]), roundCrt(t_crt + offset[1])],
                               end=[roundCrt(l_crt + offset[0] + w_crt), roundCrt(t_crt + offset[1] + h_crt)],
                               layer='F.CrtYd', width=lw_crt))
 
@@ -431,12 +431,12 @@ def makeDIPSwitch(pins, rm, pinrow_distance, package_width, overlen_top, overlen
         y = sw * rm
         if (mode == 'Piano'):
             kicad_modg.append(
-                Rect(start=[l_fab, y - switch_height / 2], end=[l_fab - switch_width, y + switch_height / 2],
+                Rectangle(start=[l_fab, y - switch_height / 2], end=[l_fab - switch_width, y + switch_height / 2],
                          layer='F.Fab', width=lw_fab))
         else:
-            kicad_modg.append(Rect(start=[x - switch_width / 2, y - switch_height / 2],
+            kicad_modg.append(Rectangle(start=[x - switch_width / 2, y - switch_height / 2],
                                        end=[x + switch_width / 2, y + switch_height / 2], layer='F.Fab', width=lw_fab))
-            kicad_modg.append(Rect(start=[x - switch_width / 2, y - switch_height / 2], end=[x - switch_width / 6, y + switch_height / 2], fill=True, layer='F.Fab', width=lw_fab))
+            kicad_modg.append(Rectangle(start=[x - switch_width / 2, y - switch_height / 2], end=[x - switch_width / 6, y + switch_height / 2], fill=True, layer='F.Fab', width=lw_fab))
             kicad_modg.append(Line(start=[x - switch_width / 6, y - switch_height / 2], end=[x - switch_width / 6, y + switch_height / 2], layer='F.Fab', width=lw_fab))
 
     # create SILKSCREEN-layer
@@ -462,18 +462,18 @@ def makeDIPSwitch(pins, rm, pinrow_distance, package_width, overlen_top, overlen
             if (mode == 'Piano'):
                 addRectWithKeepout(kicad_modg, l_slk - switch_width - slk_offset, y - switch_height / 2 - slk_offset, switch_width + slk_offset, switch_height+2*slk_offset, layer='F.SilkS', width=lw_slk)
             else:
-                kicad_modg.append(Rect(start=[x - switch_width / 2, y - switch_height / 2],
+                kicad_modg.append(Rectangle(start=[x - switch_width / 2, y - switch_height / 2],
                                            end=[x + switch_width / 2, y + switch_height / 2], layer='F.SilkS',
                                            width=lw_slk))
                 kicad_modg.append(
-                    Rect(start=[x - switch_width / 2, y - switch_height / 2], end=[x - switch_width / 6, y + switch_height / 2], fill=True, layer='F.SilkS',
+                    Rectangle(start=[x - switch_width / 2, y - switch_height / 2], end=[x - switch_width / 6, y + switch_height / 2], fill=True, layer='F.SilkS',
                          width=lw_slk))
                 kicad_modg.append(
                     Line(start=[x - switch_width / 6, y - switch_height / 2], end=[x - switch_width / 6, y + switch_height / 2], layer='F.SilkS',
                          width=lw_slk))
 
     # create courtyard
-    kicad_mod.append(Rect(start=[roundCrt(l_crt + offset[0]), roundCrt(t_crt + offset[1])],
+    kicad_mod.append(Rectangle(start=[roundCrt(l_crt + offset[0]), roundCrt(t_crt + offset[1])],
                               end=[roundCrt(l_crt + offset[0] + w_crt), roundCrt(t_crt + offset[1] + h_crt)],
                               layer='F.CrtYd', width=lw_crt))
 

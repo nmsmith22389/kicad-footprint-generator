@@ -1,17 +1,16 @@
-# KicadModTree is free software: you can redistribute it and/or
-# modify it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
+# kilibs is free software: you can redistribute it and/or modify it under the terms of
+# the GNU General Public License as published by the Free Software Foundation, either
+# version 3 of the License, or (at your option) any later version.
 #
-# KicadModTree is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
+# kilibs is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+# without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+# PURPOSE. See the GNU General Public License for more details.
 #
-# You should have received a copy of the GNU General Public License
-# along with kicad-footprint-generator. If not, see < http://www.gnu.org/licenses/ >.
+# You should have received a copy of the GNU General Public License along with kilibs.
+# If not, see < http://www.gnu.org/licenses/ >.
 #
 # (C) 2016-2018 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
+# (C) The KiCad Librarian Team
 
 import pytest
 
@@ -39,12 +38,12 @@ def test_init():
     assert p2_xy.y == 5
     assert p2_xy.z == 0
 
-    p3 = Vector3D({'x': 7, 'y': 8, 'z': 9})
+    p3 = Vector3D({"x": 7, "y": 8, "z": 9})
     assert p3.x == 7
     assert p3.y == 8
     assert p3.z == 9
 
-    p3_xy = Vector3D({'x': 7, 'y': 8})
+    p3_xy = Vector3D({"x": 7, "y": 8})
     assert p3_xy.x == 7
     assert p3_xy.y == 8
     assert p3_xy.z == 0
@@ -73,6 +72,7 @@ def test_init():
     # TODO: invalid type tests
     # TODO: tests if int is always converted to float
 
+
 def test_round_to():
     p1 = Vector3D([1.234, 5.678, 9.012]).round_to(0)
     assert p1.x == pytest.approx(1.234)
@@ -98,6 +98,7 @@ def test_round_to():
     assert p5.x == pytest.approx(1.234)
     assert p5.y == pytest.approx(5.678)
     assert p5.z == pytest.approx(9.012)
+
 
 def test_add():
     p1 = Vector3D([1, 2, 3])
@@ -127,6 +128,7 @@ def test_add():
 
     # TODO: invalid type tests
 
+
 def test_sub():
     p1 = Vector3D([1, 2, 3])
     assert p1.x == 1
@@ -155,6 +157,7 @@ def test_sub():
 
     # TODO: invalid type tests
 
+
 def test_mul():
     p1 = Vector3D([1, 2, 3])
     assert p1.x == 1
@@ -182,6 +185,7 @@ def test_mul():
     assert p5.z == 0
 
     # TODO: invalid type tests
+
 
 def test_div():
     p1 = Vector3D([1, 2, 3])

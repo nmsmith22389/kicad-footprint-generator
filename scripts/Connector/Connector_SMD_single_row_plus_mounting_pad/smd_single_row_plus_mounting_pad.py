@@ -13,7 +13,7 @@ import argparse
 import yaml
 from math import sqrt
 
-from kilibs.geom import Rectangle, Direction
+from kilibs.geom import GeomRectangle, Direction
 from kilibs.declarative_defs import evaluable_defs as EDs
 from KicadModTree import *
 from KicadModTree.util.courtyard_builder import CourtyardBuilder
@@ -225,7 +225,7 @@ def generate_one_footprint(
         body_br.y = mount_pad_edge_y_outside + series_props.rel_body_edge_y
         body_tl.y = body_br.y - series_props.body_size_y
 
-    body_rect = Rectangle.by_corners(body_tl, body_br)
+    body_rect = GeomRectangle(start=body_tl, end=body_br)
 
     orientation = conn_config.get_orientation_name(series_props.orientation)
     footprint_name = conn_config.fp_name_format_string.format(
@@ -405,11 +405,11 @@ def generate_one_footprint(
             {'x': body_rect.right + global_config.silk_fab_offset, 'y': side_line_y_pin_side + silk_y_offset_pin_side},
             {'x': -pad_1_x_outside_edge + pad_edge_silk_center_offset, 'y': body_edge_pin + silk_y_offset_pin_side}
         ]
-    kicad_mod.append(PolygonLine(polygon=poly_fab_pin_side, layer='F.Fab', width=global_config.fab_line_width))
+    kicad_mod.append(PolygonLine(shape=poly_fab_pin_side, layer='F.Fab', width=global_config.fab_line_width))
 
     if series_props.automatic_silk_outline:
-        kicad_mod.append(PolygonLine(polygon=poly_silk_edge_left, layer='F.SilkS', width=global_config.silk_line_width))
-        kicad_mod.append(PolygonLine(polygon=poly_silk_edge_right, layer='F.SilkS', width=global_config.silk_line_width))
+        kicad_mod.append(PolygonLine(shape=poly_silk_edge_left, layer='F.SilkS', width=global_config.silk_line_width))
+        kicad_mod.append(PolygonLine(shape=poly_silk_edge_right, layer='F.SilkS', width=global_config.silk_line_width))
 
     # Mount pad side
     bounding_box_y_mount_pad_side = mount_pad_y_pos + (-mounting_pad_size.y / 2 if pins_toward_bottom else mounting_pad_size.y / 2)
@@ -488,9 +488,9 @@ def generate_one_footprint(
         poly_silk_mp_side.append({'x': body_rect.right + global_config.silk_fab_offset, 'y': silk_y_mp_outside})
 
     if series_props.automatic_silk_outline:
-        kicad_mod.append(PolygonLine(polygon=poly_silk_mp_side, layer='F.SilkS', width=global_config.silk_line_width))
+        kicad_mod.append(PolygonLine(shape=poly_silk_mp_side, layer='F.SilkS', width=global_config.silk_line_width))
 
-    kicad_mod.append(PolygonLine(polygon=poly_fab_mp_side, layer='F.Fab', width=global_config.fab_line_width))
+    kicad_mod.append(PolygonLine(shape=poly_fab_mp_side, layer='F.Fab', width=global_config.fab_line_width))
 
     kicad_mod.append(Line(start=[body_rect.left, side_line_y_pin_side], end=[body_rect.left, body_edge_mount_pad],
                             layer='F.Fab', width=global_config.fab_line_width))
@@ -558,7 +558,7 @@ def generate_one_footprint(
         [-dimension_A / 2 + marker_len / 2, pin1_fab_marker_y],
     ]
     kicad_mod += PolygonLine(
-        nodes=pin1_chevron_pts, layer="F.Fab", width=global_config.fab_line_width
+        shape=pin1_chevron_pts, layer="F.Fab", width=global_config.fab_line_width
     )
 
     if series_props.pins_toward_bottom:
@@ -579,10 +579,10 @@ def generate_one_footprint(
         ]
 
     if needs_additional_silk_pin1_marker:
-        kicad_mod.append(PolygonLine(polygon=poly_pin1_marker_silk, layer='F.SilkS', width=global_config.silk_line_width))
+        kicad_mod.append(PolygonLine(shape=poly_pin1_marker_silk, layer='F.SilkS', width=global_config.silk_line_width))
 
     ######################### Text Fields ###############################
-    addTextFields(kicad_mod=kicad_mod, configuration=global_config, body_edges=body_rect.bounding_box,
+    addTextFields(kicad_mod=kicad_mod, configuration=global_config, body_edges=body_rect.bbox(),
         courtyard=cb.bbox, fp_name=footprint_name,
         text_y_inside_position=series_props.text_inside_pos)
 

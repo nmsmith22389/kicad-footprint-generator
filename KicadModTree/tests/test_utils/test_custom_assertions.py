@@ -2,7 +2,6 @@ import pytest
 
 from KicadModTree.tests.test_utils import custom_assertions as CA
 
-
 """
 Simple tests on the predicates in fp_predicates.
 

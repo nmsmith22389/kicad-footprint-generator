@@ -136,7 +136,7 @@ def generate_one_footprint(
     ]
     kicad_mod.append(
         PolygonLine(
-            polygon=poly_silk_outline,
+            shape=poly_silk_outline,
             layer="F.SilkS",
             width=global_config.silk_line_width,
         )
@@ -154,7 +154,7 @@ def generate_one_footprint(
             ]
             kicad_mod.append(
                 PolygonLine(
-                    polygon=poly_big_cutout,
+                    shape=poly_big_cutout,
                     layer="F.SilkS",
                     width=global_config.silk_line_width,
                 )
@@ -173,7 +173,7 @@ def generate_one_footprint(
             ]
         kicad_mod.append(
             PolygonLine(
-                polygon=poly_big_cutout,
+                shape=poly_big_cutout,
                 layer="F.SilkS",
                 width=global_config.silk_line_width,
             )
@@ -252,7 +252,7 @@ def generate_one_footprint(
         for poly in polygons:
             kicad_mod.append(
                 PolygonLine(
-                    polygon=poly,
+                    shape=poly,
                     layer="F.SilkS",
                     width=global_config.silk_line_width,
                 )
@@ -274,7 +274,7 @@ def generate_one_footprint(
     ]
     kicad_mod.append(
         PolygonLine(
-            polygon=poly_fab_outline,
+            shape=poly_fab_outline,
             layer="F.Fab",
             width=global_config.fab_line_width,
         )
@@ -332,7 +332,7 @@ def generate_one_footprint(
     if silk_pin1_marker_type == 1:
         kicad_mod.append(
             PolygonLine(
-                polygon=poly_pin1_marker,
+                shape=poly_pin1_marker,
                 layer="F.SilkS",
                 width=global_config.silk_line_width,
             )
@@ -355,7 +355,7 @@ def generate_one_footprint(
     if fab_pin1_marker_type == 1:
         kicad_mod.append(
             PolygonLine(
-                polygon=poly_pin1_marker,
+                shape=poly_pin1_marker,
                 layer="F.Fab",
                 width=global_config.fab_line_width,
             )
@@ -369,7 +369,7 @@ def generate_one_footprint(
         ]
         kicad_mod.append(
             PolygonLine(
-                polygon=poly_pin1_marker_type2,
+                shape=poly_pin1_marker_type2,
                 layer="F.Fab",
                 width=global_config.fab_line_width,
             )
@@ -385,7 +385,7 @@ def generate_one_footprint(
         ]
         kicad_mod.append(
             PolygonLine(
-                polygon=poly_pin1_marker_type2,
+                shape=poly_pin1_marker_type2,
                 layer="F.Fab",
                 width=global_config.fab_line_width,
             )

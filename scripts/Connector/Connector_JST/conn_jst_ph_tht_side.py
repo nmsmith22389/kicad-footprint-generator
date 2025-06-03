@@ -79,14 +79,14 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pincount, configurati
                     {'x':tmp_x2, 'y':silk_y_main_min},
                     {'x':(pincount-1)*pitch+pad_size[0]/2.0+pad_silk_offset, 'y':silk_y_main_min}
     ]
-    kicad_mod.append(PolygonLine(polygon=poly_silk_outline, layer='F.SilkS', width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(shape=poly_silk_outline, layer='F.SilkS', width=configuration['silk_line_width']))
 
     if configuration['allow_silk_below_part'] == 'tht' or configuration['allow_silk_below_part'] == 'both':
         poly_big_cutout=[{'x':0.5, 'y':silk_y_max}
                                   ,{'x':0.5, 'y':2}
                                   ,{'x':x_max-2.45, 'y':2}
                                   ,{'x':x_max-2.45, 'y':silk_y_max}]
-        kicad_mod.append(PolygonLine(polygon=poly_big_cutout, layer='F.SilkS', width=configuration['silk_line_width']))
+        kicad_mod.append(PolygonLine(shape=poly_big_cutout, layer='F.SilkS', width=configuration['silk_line_width']))
 
         kicad_mod.append(Line(start=[silk_x_min, silk_y_main_min], end=[tmp_x1, silk_y_main_min], layer='F.SilkS', width=configuration['silk_line_width']))
         kicad_mod.append(Line(start=[silk_x_max, silk_y_main_min], end=[tmp_x2, silk_y_main_min], layer='F.SilkS', width=configuration['silk_line_width']))
@@ -131,7 +131,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pincount, configurati
                     {'x':tmp_x2, 'y':y_main_min},
                     {'x':tmp_x1, 'y':y_main_min}
     ]
-    kicad_mod.append(PolygonLine(polygon=poly_fab_outline, layer='F.Fab', width=configuration['fab_line_width']))
+    kicad_mod.append(PolygonLine(shape=poly_fab_outline, layer='F.Fab', width=configuration['fab_line_width']))
 
     ############################# Pads ##################################
     # kicad_mod.append(Pad(number=1, type=Pad.TYPE_THT, shape=Pad.SHAPE_RECT,
@@ -157,7 +157,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pincount, configurati
         {'x':0, 'y':-1.2}
     ]
     if silk_pin1_marker_type == 1:
-        kicad_mod.append(PolygonLine(polygon=poly_pin1_marker, layer='F.SilkS', width=configuration['silk_line_width']))
+        kicad_mod.append(PolygonLine(shape=poly_pin1_marker, layer='F.SilkS', width=configuration['silk_line_width']))
     if silk_pin1_marker_type == 2:
         silk_pin1_marker_t2_x = -pad_size[0]/2.0-pad_silk_offset
 
@@ -165,7 +165,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pincount, configurati
             end=[silk_pin1_marker_t2_x, -pad_size[1]/2.0-configuration['silk_pad_clearance']],layer='F.SilkS', width=configuration['silk_line_width']))
 
     if fab_pin1_marker_type == 1:
-        kicad_mod.append(PolygonLine(polygon=poly_pin1_marker, layer='F.Fab', width=configuration['fab_line_width']))
+        kicad_mod.append(PolygonLine(shape=poly_pin1_marker, layer='F.Fab', width=configuration['fab_line_width']))
 
     if fab_pin1_marker_type == 2:
         poly_pin1_marker_type2 = [
@@ -173,7 +173,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pincount, configurati
             {'x':0, 'y':y_main_min+0.75},
             {'x':0.75, 'y':y_main_min}
         ]
-        kicad_mod.append(PolygonLine(polygon=poly_pin1_marker_type2, layer='F.Fab', width=configuration['fab_line_width']))
+        kicad_mod.append(PolygonLine(shape=poly_pin1_marker_type2, layer='F.Fab', width=configuration['fab_line_width']))
 
     if fab_pin1_marker_type == 3:
         fab_pin1_marker_t3_y = pad_size[1]/2.0
@@ -183,7 +183,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pincount, configurati
             {'x':0.5, 'y':fab_pin1_marker_t3_y+0.5},
             {'x':0, 'y':fab_pin1_marker_t3_y}
         ]
-        kicad_mod.append(PolygonLine(polygon=poly_pin1_marker_type2, layer='F.Fab', width=configuration['fab_line_width']))
+        kicad_mod.append(PolygonLine(shape=poly_pin1_marker_type2, layer='F.Fab', width=configuration['fab_line_width']))
 
     ######################### Text Fields ###############################
     text_center_y = 2.5

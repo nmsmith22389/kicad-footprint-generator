@@ -120,7 +120,7 @@ for padNum in padNums:
                       end=[xRightCrtYd, yBottomCrtYd],
                       layer="F.CrtYd", width=wCrtYd))
 
-    f.append(PolygonLine(polygon=[[xFabRight, yFabTop],
+    f.append(PolygonLine(shape=[[xFabRight, yFabTop],
                                    [xFabRight, yFabBottom],
                                    [xFabLeft, yFabBottom],
                                    [xFabLeft, yFabTop + bevelLength],
@@ -128,7 +128,7 @@ for padNum in padNums:
                                    [xFabRight, yFabTop]],
                          layer="F.Fab", width=wFab))
 
-    f.append(PolygonLine(polygon=[[xSilkLeft, ySilkBottom],
+    f.append(PolygonLine(shape=[[xSilkLeft, ySilkBottom],
                                    [xSilkLeft, ySilkTop + bevelLength],
                                    [xSilkLeft + bevelLength, ySilkTop],
                                    [xSilkRight, ySilkTop],
@@ -158,19 +158,19 @@ for padNum in padNums:
     xSpaceCneterLeftLeft = xSpaceLeftRight + padCardWidth
     xSpaceCneterRightLeft = xSpaceCneterLeftLeft + centerSpaceWidth + centerCardWidth
     xSpaceRightLeft = xSpaceCneterRightLeft + centerSpaceWidth + padCardWidth
-    f.append(PolygonLine(polygon=[[xSpaceLeftRight - leftSpaceWidth, yEdge],
+    f.append(PolygonLine(shape=[[xSpaceLeftRight - leftSpaceWidth, yEdge],
                                    [xSpaceLeftRight - leftSpaceWidth, yEdge - spaceHeight + largerR]],
                          layer="Edge.Cuts", width=wCut))
     f.append(Arc(center=[xSpaceLeftRight - leftSpaceWidth + largerR, yEdge - spaceHeight + largerR],
                  start=[xSpaceLeftRight - leftSpaceWidth, yEdge - spaceHeight + largerR],
                  angle=90.0, layer="Edge.Cuts", width=wCut))
-    f.append(PolygonLine(polygon=[[xSpaceLeftRight - leftSpaceWidth + largerR, yEdge - spaceHeight],
+    f.append(PolygonLine(shape=[[xSpaceLeftRight - leftSpaceWidth + largerR, yEdge - spaceHeight],
                                    [xSpaceLeftRight - largerR, yEdge - spaceHeight]],
                          layer="Edge.Cuts", width=wCut))
     f.append(Arc(center=[xSpaceLeftRight - largerR, yEdge - spaceHeight + largerR],
                  start=[xSpaceLeftRight - largerR, yEdge - spaceHeight],
                  angle=90.0, layer="Edge.Cuts", width=wCut))
-    f.append(PolygonLine(polygon=[[xSpaceLeftRight, yEdge - spaceHeight + largerR],
+    f.append(PolygonLine(shape=[[xSpaceLeftRight, yEdge - spaceHeight + largerR],
                                    [xSpaceLeftRight, yEdge],
                                    [xSpaceCneterLeftLeft, yEdge],
                                    [xSpaceCneterLeftLeft, yEdge - centerSpaceHeight + smallerR]],
@@ -178,13 +178,13 @@ for padNum in padNums:
     f.append(Arc(center=[xSpaceCneterLeftLeft + smallerR, yEdge - centerSpaceHeight + smallerR],
                  start=[xSpaceCneterLeftLeft, yEdge - centerSpaceHeight + smallerR],
                  angle=90.0, layer="Edge.Cuts", width=wCut))
-    f.append(PolygonLine(polygon=[[xSpaceCneterLeftLeft + smallerR, yEdge - centerSpaceHeight],
+    f.append(PolygonLine(shape=[[xSpaceCneterLeftLeft + smallerR, yEdge - centerSpaceHeight],
                                    [xSpaceCneterLeftLeft + centerSpaceWidth - smallerR, yEdge - centerSpaceHeight]],
                          layer="Edge.Cuts", width=wCut))
     f.append(Arc(center=[xSpaceCneterLeftLeft + centerSpaceWidth - smallerR, yEdge - centerSpaceHeight + smallerR],
                  start=[xSpaceCneterLeftLeft + centerSpaceWidth - smallerR, yEdge - centerSpaceHeight],
                  angle=90.0, layer="Edge.Cuts", width=wCut))
-    f.append(PolygonLine(polygon=[[xSpaceCneterLeftLeft + centerSpaceWidth, yEdge - centerSpaceHeight + smallerR],
+    f.append(PolygonLine(shape=[[xSpaceCneterLeftLeft + centerSpaceWidth, yEdge - centerSpaceHeight + smallerR],
                                    [xSpaceCneterLeftLeft + centerSpaceWidth, yEdge],
                                    [xSpaceCneterRightLeft, yEdge],
                                    [xSpaceCneterRightLeft, yEdge - centerSpaceHeight + smallerR]],
@@ -192,13 +192,13 @@ for padNum in padNums:
     f.append(Arc(center=[xSpaceCneterRightLeft + smallerR, yEdge - centerSpaceHeight + smallerR],
                  start=[xSpaceCneterRightLeft, yEdge - centerSpaceHeight + smallerR],
                  angle=90.0, layer="Edge.Cuts", width=wCut))
-    f.append(PolygonLine(polygon=[[xSpaceCneterRightLeft + smallerR, yEdge - centerSpaceHeight],
+    f.append(PolygonLine(shape=[[xSpaceCneterRightLeft + smallerR, yEdge - centerSpaceHeight],
                                    [xSpaceCneterRightLeft + centerSpaceWidth - smallerR, yEdge - centerSpaceHeight]],
                          layer="Edge.Cuts", width=wCut))
     f.append(Arc(center=[xSpaceCneterRightLeft + centerSpaceWidth - smallerR, yEdge - centerSpaceHeight + smallerR],
                  start=[xSpaceCneterRightLeft + centerSpaceWidth - smallerR, yEdge - centerSpaceHeight],
                  angle=90.0, layer="Edge.Cuts", width=wCut))
-    f.append(PolygonLine(polygon=[[xSpaceCneterRightLeft + centerSpaceWidth, yEdge - centerSpaceHeight + smallerR],
+    f.append(PolygonLine(shape=[[xSpaceCneterRightLeft + centerSpaceWidth, yEdge - centerSpaceHeight + smallerR],
                                    [xSpaceCneterRightLeft + centerSpaceWidth, yEdge],
                                    [xSpaceRightLeft, yEdge],
                                    [xSpaceRightLeft, yEdge - spaceHeight + largerR]],
@@ -206,13 +206,13 @@ for padNum in padNums:
     f.append(Arc(center=[xSpaceRightLeft + largerR, yEdge - spaceHeight + largerR],
                  start=[xSpaceRightLeft, yEdge - spaceHeight + largerR],
                  angle=90.0, layer="Edge.Cuts", width=wCut))
-    f.append(PolygonLine(polygon=[[xSpaceRightLeft + largerR, yEdge - spaceHeight],
+    f.append(PolygonLine(shape=[[xSpaceRightLeft + largerR, yEdge - spaceHeight],
                                    [xSpaceRightLeft + rightSpaceWidth - largerR, yEdge - spaceHeight]],
                          layer="Edge.Cuts", width=wCut))
     f.append(Arc(center=[xSpaceRightLeft + rightSpaceWidth - largerR, yEdge - spaceHeight + largerR],
                  start=[xSpaceRightLeft + rightSpaceWidth - largerR, yEdge - spaceHeight],
                  angle=90.0, layer="Edge.Cuts", width=wCut))
-    f.append(PolygonLine(polygon=[[xSpaceRightLeft + rightSpaceWidth, yEdge - spaceHeight + largerR],
+    f.append(PolygonLine(shape=[[xSpaceRightLeft + rightSpaceWidth, yEdge - spaceHeight + largerR],
                                    [xSpaceRightLeft + rightSpaceWidth, yEdge]],
                          layer="Edge.Cuts", width=wCut))
 
@@ -221,35 +221,35 @@ for padNum in padNums:
     f.append(Arc(center=[xHoleLeft + largerR, yHoleBottom - largerR],
                  start=[xHoleLeft, yHoleBottom - largerR],
                  angle=-90.0, layer="Edge.Cuts", width=wCut))
-    f.append(PolygonLine(polygon=[[xHoleLeft + largerR, yHoleBottom],
+    f.append(PolygonLine(shape=[[xHoleLeft + largerR, yHoleBottom],
                                    [xHoleLeft + holeWidth - largerR, yHoleBottom]],
                          layer="Edge.Cuts", width=wCut))
     f.append(Arc(center=[xHoleLeft + holeWidth - largerR, yHoleBottom - largerR],
                  start=[xHoleLeft + holeWidth - largerR, yHoleBottom],
                  angle=-90.0, layer="Edge.Cuts", width=wCut))
-    f.append(PolygonLine(polygon=[[xHoleLeft + holeWidth, yHoleBottom - largerR],
+    f.append(PolygonLine(shape=[[xHoleLeft + holeWidth, yHoleBottom - largerR],
                                    [xHoleLeft + holeWidth, yHoleBottom - holeHeight + largerR]],
                          layer="Edge.Cuts", width=wCut))
     f.append(Arc(center=[xHoleLeft + holeWidth - largerR, yHoleBottom - holeHeight + largerR],
                  start=[xHoleLeft + holeWidth, yHoleBottom - holeHeight + largerR],
                  angle=-90.0, layer="Edge.Cuts", width=wCut))
-    f.append(PolygonLine(polygon=[[xHoleLeft + holeWidth - largerR, yHoleBottom - holeHeight],
+    f.append(PolygonLine(shape=[[xHoleLeft + holeWidth - largerR, yHoleBottom - holeHeight],
                                    [xHoleLeft + largerR, yHoleBottom - holeHeight]],
                          layer="Edge.Cuts", width=wCut))
     f.append(Arc(center=[xHoleLeft + largerR, yHoleBottom - holeHeight + largerR],
                  start=[xHoleLeft + largerR, yHoleBottom - holeHeight],
                  angle=-90.0, layer="Edge.Cuts", width=wCut))
-    f.append(PolygonLine(polygon=[[xHoleLeft, yHoleBottom - holeHeight + largerR],
+    f.append(PolygonLine(shape=[[xHoleLeft, yHoleBottom - holeHeight + largerR],
                                    [xHoleLeft, yHoleBottom - largerR]],
                          layer="Edge.Cuts", width=wCut))
 
-    f.append(PolygonLine(polygon=[[xSpaceLeftRight, yEdge - chamferLength],
+    f.append(PolygonLine(shape=[[xSpaceLeftRight, yEdge - chamferLength],
                                    [xSpaceCneterLeftLeft, yEdge - chamferLength]],
                          layer="Dwgs.User", width=wCut))
-    f.append(PolygonLine(polygon=[[xSpaceCneterLeftLeft + centerSpaceWidth, yEdge - chamferLength],
+    f.append(PolygonLine(shape=[[xSpaceCneterLeftLeft + centerSpaceWidth, yEdge - chamferLength],
                                    [xSpaceCneterRightLeft, yEdge - chamferLength]],
                          layer="Dwgs.User", width=wCut))
-    f.append(PolygonLine(polygon=[[xSpaceCneterRightLeft + centerSpaceWidth, yEdge - chamferLength],
+    f.append(PolygonLine(shape=[[xSpaceCneterRightLeft + centerSpaceWidth, yEdge - chamferLength],
                                    [xSpaceRightLeft, yEdge - chamferLength]],
                          layer="Dwgs.User", width=wCut))
     f.append(Text(text=chamferComment, at=[xCenter, yEdge + sFabRef[0]],

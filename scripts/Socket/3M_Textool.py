@@ -120,7 +120,7 @@ def textool(args):
                   layer="F.Fab", size=s2, thickness=t2))
 
     # Courtyard
-    f.append(PolygonLine(polygon=[[xLeftLeverCrtYd, yTopLeverCrtYd],
+    f.append(PolygonLine(shape=[[xLeftLeverCrtYd, yTopLeverCrtYd],
                                    [xRightLeverCrtYd, yTopLeverCrtYd],
                                    [xRightLeverCrtYd, yTopCrtYd],
                                    [xRightCrtYd, yTopCrtYd],
@@ -132,7 +132,7 @@ def textool(args):
                          layer="F.CrtYd", width=wCrtYd))
 
     # Fab Lever
-    f.append(PolygonLine(polygon=[[xLeftLever, y02],
+    f.append(PolygonLine(shape=[[xLeftLever, y02],
                                    [x06, yTopLever],
                                    [x11, yTopLever],
                                    [xRightLever, y02],
@@ -143,14 +143,14 @@ def textool(args):
                          layer="F.Fab", width=wFab))
     f.append(Line(start=[xLeftLever, y03], end=[x07, y04], layer="F.Fab", width=wFab))
     f.append(Line(start=[xRightLever, y03], end=[x10, y04], layer="F.Fab", width=wFab))
-    f.append(PolygonLine(polygon=[[x07, y09],
+    f.append(PolygonLine(shape=[[x07, y09],
                                    [x07, y04],
                                    [x10, y04],
                                    [x10, yTopFab]],
                          layer="F.Fab", width=wFab))
 
     # Fab Outline
-    f.append(PolygonLine(polygon=[[xRightFab, yBottomFab],
+    f.append(PolygonLine(shape=[[xRightFab, yBottomFab],
                                    [xLeftFab, yBottomFab],
                                    [xLeftFab, y10],
                                    [x09, yTopFab],
@@ -159,7 +159,7 @@ def textool(args):
                          layer="F.Fab", width=wFab))
 
     # Silk Outline
-    f.append(PolygonLine(polygon=[[xLeftSilk, yBottomLever],
+    f.append(PolygonLine(shape=[[xLeftSilk, yBottomLever],
                                    [xLeftSilk, yBottomSilk],
                                    [xRightSilk, yBottomSilk],
                                    [xRightSilk, yTopSilk],

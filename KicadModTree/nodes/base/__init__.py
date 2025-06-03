@@ -14,27 +14,13 @@
 # (C) 2016-2018 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 
 from .Arc import Arc
-
 from .Circle import Circle
-
 from .CompoundPolygon import CompoundPolygon
-
 from .Group import Group
-
-from .Rect import Rect
-
 from .Line import Line
-
 from .Model import Model
-
 from .Pad import Pad
-
 from .Polygon import Polygon
-
-from .PolygonArc import PolygonArc
-
-from .Text import Text, Property
-
-from .Zone import Zone, ZoneFill, Keepouts, PadConnection, Hatch
-
-from .LineStyle import LineStyle  # Applies to Lines, Arcs, etc.
+from .Rectangle import Rectangle
+from .Text import Property, Text
+from .Zone import Hatch, Keepouts, PadConnection, Zone, ZoneFill

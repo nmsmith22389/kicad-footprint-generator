@@ -140,9 +140,9 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, variant, config
     {'x': x1, 'y': y2},
     {'x': B/2, 'y': y2},
     ]
-    kicad_mod.append(PolygonLine(polygon=out,
+    kicad_mod.append(PolygonLine(shape=out,
                                  layer="F.Fab", width=configuration['fab_line_width']))
-    kicad_mod.append(PolygonLine(polygon=out, x_mirror=B / 2,
+    kicad_mod.append(PolygonLine(shape=out, x_mirror=B / 2,
                                  layer="F.Fab", width=configuration['fab_line_width']))
 
     #offset
@@ -163,9 +163,9 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, variant, config
     {'x': x1, 'y': y2},
     {'x': B/2, 'y': y2},
     ]
-    kicad_mod.append(PolygonLine(polygon=out,
+    kicad_mod.append(PolygonLine(shape=out,
                                  layer="F.SilkS", width=configuration['silk_line_width']))
-    kicad_mod.append(PolygonLine(polygon=out, x_mirror=B / 2,
+    kicad_mod.append(PolygonLine(shape=out, x_mirror=B / 2,
                                  layer="F.SilkS", width=configuration['silk_line_width']))
 
     optional_pad_params = {}
@@ -204,9 +204,9 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, variant, config
     # {'x': B/2, 'y': y2 - w},
     # ]
     #
-    # kicad_mod.append(PolygonLine(polygon=wall,
+    # kicad_mod.append(PolygonLine(shape=wall,
     #     layer="F.SilkS", width=configuration['silk_line_width']))
-    # kicad_mod.append(PolygonLine(polygon=wall, x_mirror=B/2,
+    # kicad_mod.append(PolygonLine(shape=wall, x_mirror=B/2,
     #     layer="F.SilkS", width=configuration['silk_line_width']))
 
     #pin-1 marker
@@ -221,7 +221,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, variant, config
         {'x': body_edge['left'] + p1m_sl,'y': body_edge['bottom']+p1m_off},
     ]
 
-    kicad_mod.append(PolygonLine(polygon=pin,
+    kicad_mod.append(PolygonLine(shape=pin,
                                  layer="F.SilkS", width=configuration['silk_line_width']))
 
     p1m_sl = 1
@@ -231,7 +231,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, variant, config
         {'x': 0,'y': body_edge['bottom'] - p1m_sl/sqrt(2)},
         {'x': p1m_sl/2,'y': body_edge['bottom']},
     ]
-    kicad_mod.append(PolygonLine(polygon=pin,
+    kicad_mod.append(PolygonLine(shape=pin,
                                  layer="F.Fab", width=configuration['fab_line_width']))
 
     ########################### CrtYd #################################

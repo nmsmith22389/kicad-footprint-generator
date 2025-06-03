@@ -223,7 +223,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row, variant
     kicad_mod.append(RectLine(start=[x1,y1],end=[x2,y2],layer='F.Fab',width=configuration['fab_line_width']))
 
     #draw the outline of the tab
-    kicad_mod.append(PolygonLine(polygon=[
+    kicad_mod.append(PolygonLine(shape=[
         {'x': B/2 - tab_l/2,'y': y2},
         {'x': B/2 - tab_l/2,'y': y2 + tab_w},
         {'x': B/2 + tab_l/2,'y': y2 + tab_w},
@@ -239,7 +239,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row, variant
             layer='F.Fab', width=configuration['fab_line_width']))
 
     def notch_slot(x,y):
-        kicad_mod.append(PolygonLine(polygon=[
+        kicad_mod.append(PolygonLine(shape=[
         {'x': x-S/2, 'y': y+S/2},
         {'x': x-S/2, 'y': y-S/4},
         {'x': x-S/4, 'y': y-S/2},
@@ -279,8 +279,8 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row, variant
     {'x': B/2, 'y': y2 + off + tab_w},
     ]
 
-    kicad_mod.append(PolygonLine(polygon=outline, layer="F.SilkS", width=configuration['silk_line_width']))
-    kicad_mod.append(PolygonLine(polygon=outline, x_mirror=B / 2, layer="F.SilkS", width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(shape=outline, layer="F.SilkS", width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(shape=outline, x_mirror=B / 2, layer="F.SilkS", width=configuration['silk_line_width']))
 
     #pin-1 marker
 
@@ -293,8 +293,8 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row, variant
         {'x': x1 - O,'y': y1 + L},
     ]
 
-    kicad_mod.append(PolygonLine(polygon=pin, layer="F.SilkS", width=configuration['silk_line_width']))
-    kicad_mod.append(PolygonLine(polygon=pin, width=configuration['fab_line_width'], layer='F.Fab'))
+    kicad_mod.append(PolygonLine(shape=pin, layer="F.SilkS", width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(shape=pin, width=configuration['fab_line_width'], layer='F.Fab'))
 
     ########################### CrtYd #################################
     CrtYd_offset = configuration['courtyard_offset']['connector']
@@ -324,7 +324,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row, variant
             {'x': cx4, 'y': cy1},
             {'x': cx3, 'y': cy1}
         ]
-        kicad_mod.append(PolygonLine(polygon=poly_crtyd,
+        kicad_mod.append(PolygonLine(shape=poly_crtyd,
                                      layer='F.CrtYd', width=configuration['courtyard_line_width']))
     else:
         kicad_mod.append(RectLine(

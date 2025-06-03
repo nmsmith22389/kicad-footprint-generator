@@ -58,4 +58,4 @@ def test_ChamferRect(size, layer, width, chamfer, corners, fill, exp_points):
 
     # Check the points are in the expected order
     exp_points = [Vector2D(p) for p in exp_points]
-    CA.assert_contains_only_points_cyclic(polygons[0].nodes.nodes, exp_points)
+    CA.assert_contains_only_points_cyclic(polygons[0].points, exp_points)

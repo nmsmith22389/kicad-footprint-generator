@@ -135,9 +135,9 @@ def make_module(global_config: GC.GlobalConfig, pins_per_row, configuration):
             {'x': body_edge['right']-T, 'y': YCb},
             {'x': body_edge['right']-T, 'y': A/2},
         ])
-    kicad_mod.append(PolygonLine(polygon=poly_silk_b,
+    kicad_mod.append(PolygonLine(shape=poly_silk_b,
                                  layer="F.SilkS", width=configuration['silk_line_width']))
-    kicad_mod.append(PolygonLine(polygon=poly_silk_b, y_mirror=A / 2,
+    kicad_mod.append(PolygonLine(shape=poly_silk_b, y_mirror=A / 2,
                                  layer="F.SilkS", width=configuration['silk_line_width']))
 
 
@@ -185,9 +185,9 @@ def make_module(global_config: GC.GlobalConfig, pins_per_row, configuration):
             {'x': x2, 'y':YCb},
             {'x': x2, 'y':YBb+pin_w/2}
         ]
-        kicad_mod.append(PolygonLine(polygon=poly,
+        kicad_mod.append(PolygonLine(shape=poly,
                                      layer="F.SilkS", width=configuration['silk_line_width']))
-        kicad_mod.append(PolygonLine(polygon=poly, y_mirror=A / 2,
+        kicad_mod.append(PolygonLine(shape=poly, y_mirror=A / 2,
                                      layer="F.SilkS", width=configuration['silk_line_width']))
 
 
@@ -207,7 +207,7 @@ def make_module(global_config: GC.GlobalConfig, pins_per_row, configuration):
                     {'x': x2, 'y': ypc+pin_w/2},
                     {'x': x1, 'y': ypc+pin_w/2}
                 ]
-                kicad_mod.append(PolygonLine(polygon=pin_poly,
+                kicad_mod.append(PolygonLine(shape=pin_poly,
                                              layer="F.SilkS", width=configuration['silk_line_width']))
 
     ########################### Pin 1 #################################
@@ -215,7 +215,7 @@ def make_module(global_config: GC.GlobalConfig, pins_per_row, configuration):
     p1s_sl = 2
     p1s_off = off + 0.3
     kicad_mod.append(PolygonLine(
-        polygon=[
+        shape=[
             {'x': body_edge['left'] + p1s_sl, 'y': body_edge['top'] - p1s_off},
             {'x': body_edge['left'] - p1s_off, 'y': body_edge['top'] - p1s_off},
             {'x': body_edge['left'] - p1s_off, 'y': body_edge['top'] + p1s_sl}
@@ -223,7 +223,7 @@ def make_module(global_config: GC.GlobalConfig, pins_per_row, configuration):
 
     p1f_sl = 1
     kicad_mod.append(PolygonLine(
-        polygon=[
+        shape=[
             {'x': body_edge['left'], 'y': p1f_sl/2},
             {'x': body_edge['left'] + p1f_sl/sqrt(2), 'y': 0},
             {'x': body_edge['left'], 'y': -p1f_sl/2}

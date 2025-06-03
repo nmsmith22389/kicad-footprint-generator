@@ -90,3 +90,11 @@ mypy_path = [
     "src",
     ".",
 ]
+
+[tool.pydocstringformatter]
+write = true
+exclude = ["**/3d-model-generators/**", "**/data/**", "**/docs/**", "**/gitlabci/**", "**/KicadModTree/**", "**/scripts/**"]
+split-summary-body = false
+numpydoc-section-hyphen-length = false
+summary-quotes-same-line = true
+linewrap-full-docstring = true

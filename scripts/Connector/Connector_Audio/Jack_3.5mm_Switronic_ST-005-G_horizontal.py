@@ -102,7 +102,7 @@ f.append(RectLine(start=[xLeftCrtYd, yTopCrtYd],
                   layer="F.CrtYd", width=wCrtYd))
 
 f.append(Circle(center=[xBackPad, ySilkBackPadTop], radius=0.3, layer="F.Fab"))
-f.append(PolygonLine(polygon=[[xFabLeft, yFabOutletTop],
+f.append(PolygonLine(shape=[[xFabLeft, yFabOutletTop],
                                [xFabBaseLeft, yFabOutletTop],
                                [xFabBaseLeft, yFabTop],
                                [xFabRight, yFabTop],
@@ -113,11 +113,11 @@ f.append(PolygonLine(polygon=[[xFabLeft, yFabOutletTop],
                                [xFabLeft, yFabOutletTop]],
                      layer="F.Fab", width=wFab))
 
-f.append(PolygonLine(polygon=[[xSilkFrontPadLeft, ySilkBottom],
+f.append(PolygonLine(shape=[[xSilkFrontPadLeft, ySilkBottom],
                                [xSilkBaseLeft, ySilkBottom],
                                [xSilkBaseLeft, ySilkOutletBottom]],
                      layer="F.SilkS", width=wSilkS))
-f.append(PolygonLine(polygon=[[xSilkBaseLeft, ySilkOutletTop],
+f.append(PolygonLine(shape=[[xSilkBaseLeft, ySilkOutletTop],
                                [xSilkBaseLeft, ySilkTop],
                                [xSilkFrontPadLeft, ySilkTop]],
                      layer="F.SilkS", width=wSilkS))

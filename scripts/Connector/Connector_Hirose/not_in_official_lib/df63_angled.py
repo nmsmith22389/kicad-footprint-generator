@@ -144,11 +144,11 @@ for pincount in pins:
 
         return outline
 
-    fp.append(PolygonLine(polygon=outline(), layer='F.Fab'))
-    fp.append(PolygonLine(polygon=outline(), layer='F.Fab', x_mirror=B / 2))
+    fp.append(PolygonLine(shape=outline(), layer='F.Fab'))
+    fp.append(PolygonLine(shape=outline(), layer='F.Fab', x_mirror=B / 2))
 
-    fp.append(PolygonLine(polygon=outline(offset=0.15)))
-    fp.append(PolygonLine(polygon=outline(offset=0.15), x_mirror=B / 2))
+    fp.append(PolygonLine(shape=outline(offset=0.15)))
+    fp.append(PolygonLine(shape=outline(offset=0.15), x_mirror=B / 2))
 
     #draw lines between pads on F.Fab
     for i in range(pincount - 1):
@@ -176,13 +176,13 @@ for pincount in pins:
     {'x': 0,'y': yb},
     ]
 
-    fp.append(PolygonLine(polygon=outline,layer='F.Fab'))
-    fp.append(PolygonLine(polygon=outline,layer='F.Fab',x_mirror=0))
+    fp.append(PolygonLine(shape=outline,layer='F.Fab'))
+    fp.append(PolygonLine(shape=outline,layer='F.Fab',x_mirror=0))
 
     #draw pin-1 indicator on F.Fab
     #size of arrow a
     a = 0.6
-    fp.append(PolygonLine(polygon=[
+    fp.append(PolygonLine(shape=[
         {'x': -B/2, 'y': yt + a},
         {'x': -B/2 - a/2, 'y': yt},
         {'x': -B/2 + a/2, 'y': yt},
@@ -190,7 +190,7 @@ for pincount in pins:
 
     #draw pin-1 indicator on Silk.S
     ya = -2
-    fp.append(PolygonLine(polygon=[
+    fp.append(PolygonLine(shape=[
         {'x': -B/2, 'y': ya},
         {'x': -B/2 - a/2, 'y': ya - a},
         {'x': -B/2 + a/2, 'y': ya - a},
@@ -212,8 +212,8 @@ for pincount in pins:
     {'x': -A/2 - of, 'y': ym - mh / 2 - op},
     ]
 
-    fp.append(PolygonLine(polygon = silk))
-    fp.append(PolygonLine(polygon = silk, x_mirror = 0))
+    fp.append(PolygonLineshape=silk))
+    fp.append(PolygonLineshape=silk, x_mirror = 0))
 
     #bottom line
     fp.append(Line(

@@ -5,7 +5,7 @@ import argparse
 import yaml
 import math
 
-from kilibs.geom import Vector2D, Rectangle
+from kilibs.geom import Vector2D, GeomRectangle
 from kilibs.ipc_tools import ipc_rules
 from kilibs.util.toleranced_size import TolerancedSize
 from KicadModTree import Footprint, FootprintType, \
@@ -318,7 +318,7 @@ class PLCCGenerator(FootprintGenerator):
             y_spacing=0, x_spacing=-device_config.pitch,
             **pad_details['top'], **pad_shape_details))
 
-        body_rect = Rectangle(center=Vector2D(0,0), size=Vector2D(size_x, size_y))
+        body_rect = GeomRectangle(center=Vector2D(0,0), size=Vector2D(size_x, size_y))
 
         bounding_box = {
             'left': pad_details['left']['center'][0] - pad_details['left']['size'][0]/2,
@@ -346,15 +346,15 @@ class PLCCGenerator(FootprintGenerator):
             [body_rect.left-silk_offset, sy1]
         ]
         kicad_mod.append(PolygonLine(
-            nodes=poly_silk,
+            shape=poly_silk,
             width=silk_line_width,
             layer="F.SilkS", x_mirror=0))
         kicad_mod.append(PolygonLine(
-            nodes=poly_silk,
+            shape=poly_silk,
             width=silk_line_width,
             layer="F.SilkS", y_mirror=0))
         kicad_mod.append(PolygonLine(
-            nodes=poly_silk,
+            shape=poly_silk,
             width=silk_line_width,
             layer="F.SilkS", x_mirror=0, y_mirror=0))
 
@@ -367,7 +367,7 @@ class PLCCGenerator(FootprintGenerator):
         ]
 
         kicad_mod.append(PolygonLine(
-            nodes=poly_silk_tl,
+            shape=poly_silk_tl,
             width=silk_line_width,
             layer="F.SilkS"))
 
@@ -390,7 +390,7 @@ class PLCCGenerator(FootprintGenerator):
         ]
 
         kicad_mod.append(PolygonLine(
-            nodes=poly_fab,
+            shape=poly_fab,
             width=fab_line_width,
             layer="F.Fab")
         )
@@ -425,13 +425,13 @@ class PLCCGenerator(FootprintGenerator):
             [cx3, 0]
         ]
 
-        kicad_mod.append(PolygonLine(nodes=crty_poly_tl,
+        kicad_mod.append(PolygonLine(shape=crty_poly_tl,
                                      layer='F.CrtYd', width=self.global_config.courtyard_line_width,
                                      x_mirror=0))
-        kicad_mod.append(PolygonLine(nodes=crty_poly_tl,
+        kicad_mod.append(PolygonLine(shape=crty_poly_tl,
                                      layer='F.CrtYd', width=self.global_config.courtyard_line_width,
                                      y_mirror=0))
-        kicad_mod.append(PolygonLine(nodes=crty_poly_tl,
+        kicad_mod.append(PolygonLine(shape=crty_poly_tl,
                                      layer='F.CrtYd', width=self.global_config.courtyard_line_width,
                                      x_mirror=0, y_mirror=0))
 
@@ -445,12 +445,12 @@ class PLCCGenerator(FootprintGenerator):
             [cx3, cy3],
             [cx3, 0]
         ]
-        kicad_mod.append(PolygonLine(nodes=crty_poly_tl_ch,
+        kicad_mod.append(PolygonLine(shape=crty_poly_tl_ch,
                                      layer='F.CrtYd', width=self.global_config.courtyard_line_width))
 
         # ######################### Text Fields ###############################
 
-        cy_bbox = Rectangle(center=Vector2D(0, 0), size=Vector2D(cx3 * 2, cy1 * 2))
+        cy_bbox = GeomRectangle(center=Vector2D(0, 0), size=Vector2D(cx3 * 2, cy1 * 2))
 
         addTextFields(kicad_mod=kicad_mod, configuration=self.global_config, body_edges=body_rect,
                       courtyard=cy_bbox, fp_name=fp_name, text_y_inside_position='center')

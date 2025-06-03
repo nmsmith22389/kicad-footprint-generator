@@ -53,7 +53,7 @@ class Pin1SilkscreenArrow(Node):
             pos
         ]
 
-        self._poly = Polygon(nodes=arrow_pts, layer=layer, width=line_width_mm, fill=True)
+        self._poly = Polygon(shape=arrow_pts, layer=layer, width=line_width_mm, fill=True)
         # Rotate the arrow backwards (so it points in the right direction)
         self._poly.rotate(angle=-angle, origin=pos)
 
@@ -89,7 +89,7 @@ class Pin1SilkScreenArrow45Deg(Node):
         ]
 
         self._poly = Polygon(
-            nodes=arrow_pts, layer=layer, width=line_width_mm, fill=True
+            shape=arrow_pts, layer=layer, width=line_width_mm, fill=True
         )
 
         if isinstance(angle, Direction):

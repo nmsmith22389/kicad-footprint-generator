@@ -1,4 +1,5 @@
-from kilibs.geom.geometric_util import geometricLine, Vector2D
+from kilibs.geom import GeomLine, Vector2D
+from kilibs.geom.tolerances import TOL_MM
 
 """
 Collection of useful testing predicates for the KicadModTree library.
@@ -74,7 +75,7 @@ def assert_contains_only_cyclic(to_check: list, should_contain: list, cmp=_defau
 
 
 def assert_contains_only_points_cyclic(
-    to_check: list[Vector2D], expected: list[Vector2D], tol: float = 1e-6
+    to_check: list[Vector2D], expected: list[Vector2D], tol: float = TOL_MM
 ):
     """
     Predicate to check if all points in a list are in another list, and
@@ -85,21 +86,25 @@ def assert_contains_only_points_cyclic(
     """
 
     def cmp(a, b):
-        return a.is_close(b, tol)
+        return a.is_equal(b, tol)
 
     return assert_contains_only_cyclic(to_check, expected, cmp)
 
 
 def assert_contains_lines(
-    to_check: list[geometricLine], expected: list[geometricLine], tol: float = 1e-6
+    to_check: list[GeomLine], expected: list[GeomLine], tol: float = TOL_MM
 ):
     """
     Predicate to check if all lines in a list are in another list, and
     no others, in any order, with a tolerance. They can each be in either direction
     """
 
-    def cmp(a: geometricLine, b: geometricLine):
-        return a.is_approx(b, False, tol)
+    def cmp(a: GeomLine, b: GeomLine):
+        if a.is_equal(other=b, tol=tol):
+            return True
+        elif a.copy().reverse().is_equal(other=b, tol=tol):
+            return True
+        return False
 
     assert_contains_only(to_check, expected, cmp)
 

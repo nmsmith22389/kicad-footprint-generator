@@ -15,14 +15,13 @@
 # (C) 2018 by Rene Poeschl, github @poeschlr
 from __future__ import division
 
-from copy import copy
 from KicadModTree.nodes.Node import Node
-from kilibs.geom import geometricArc, geometricLine, Vector2D
+from kilibs.geom import GeomArc, GeomLine, Vector2D
 from KicadModTree.nodes.base.Pad import Pad
 from KicadModTree.nodes.base.Circle import Circle
 from KicadModTree.nodes.base.Arc import Arc
 from KicadModTree.nodes.base.Line import Line
-from math import sqrt, sin, cos, pi, ceil
+from math import ceil
 
 
 class RingPadPrimitive(Node):
@@ -91,11 +90,11 @@ class ArcPadPrimitive(Node):
         * *max_round_radius* (``float``) --
           maximum round radius, default: 0.25
           Use none to ignore
-        * *reference_arc* (``geometricArc``) --
+        * *reference_arc* (``GeomArc``) --
           the reference arc used for this pad
-        * *start_line* (``geometricLine``) --
+        * *start_line* (``GeomLine``) --
           line confining the side near the reference points start point
-        * *end_line* (``geometricLine``) --
+        * *end_line* (``GeomLine``) --
           line confining the side near the reference points end point
         * *minimum_overlap* (``float``)
           minimum overlap. default 0.1
@@ -103,7 +102,7 @@ class ArcPadPrimitive(Node):
 
     def __init__(self, **kwargs):
         Node.__init__(self)
-        self.reference_arc = geometricArc(geometry=kwargs['reference_arc'])
+        self.reference_arc = GeomArc(shape=kwargs['reference_arc'])
         self.width = float(kwargs['width'])
 
         self.number = kwargs.get('number', "")
@@ -126,11 +125,11 @@ class ArcPadPrimitive(Node):
 
     def setLimitingLines(self, **kwargs):
         if kwargs.get('start_line') is not None:
-            self.start_line = geometricLine(geometry=kwargs.get('start_line'))
+            self.start_line = GeomLine(shape=kwargs.get('start_line'))
         else:
             self.start_line = None
         if kwargs.get('end_line') is not None:
-            self.end_line = geometricLine(geometry=kwargs.get('end_line'))
+            self.end_line = GeomLine(shape=kwargs.get('end_line'))
         else:
             self.end_line = None
 
@@ -157,7 +156,7 @@ class ArcPadPrimitive(Node):
             * *use_degrees* (``boolean``)
                 rotation angle is given in degrees. default:True
         """
-
+        origin = Vector2D(origin)
         self.reference_arc.rotate(angle=angle, origin=origin, use_degrees=use_degrees)
         if self.start_line is not None:
             self.start_line.rotate(angle=angle, origin=origin, use_degrees=use_degrees)
@@ -165,19 +164,19 @@ class ArcPadPrimitive(Node):
             self.end_line.rotate(angle=angle, origin=origin, use_degrees=use_degrees)
         return self
 
-    def translate(self, distance_vector):
+    def translate(self, vector):
         r""" Translate
 
         :params:
-            * *distance_vector* (``Vector2D``)
+            * *vector* (``Vector2D``)
                 2D vector defining by how much and in what direction to translate.
         """
 
-        self.reference_arc.translate(distance_vector)
+        self.reference_arc.translate(vector)
         if self.start_line is not None:
-            self.start_line.translate(distance_vector)
+            self.start_line.translate(vector)
         if self.end_line is not None:
-            self.end_line.translate(distance_vector)
+            self.end_line.translate(vector)
         return self
 
     def _getStep(self):
@@ -192,15 +191,18 @@ class ArcPadPrimitive(Node):
         line_width = self.round_radius*2
         step = self._getStep()
 
-        r_inner = self.reference_arc.getRadius()-self.width/2+line_width/2
-        r_outer = self.reference_arc.getRadius()+self.width/2-line_width/2
+        r_inner = self.reference_arc.radius-self.width/2+line_width/2
+        r_outer = self.reference_arc.radius+self.width/2-line_width/2
 
-        ref_arc = Arc(geometry=self.reference_arc, width=line_width).setRadius(r_outer)
+        ref_arc = Arc(shape=self.reference_arc, width=line_width)
+        ref_arc.radius = r_outer
 
         nodes = []
         r = r_inner
         while r < r_outer:
-            nodes.append(ref_arc.copy().setRadius(r))
+            new_arc = ref_arc.copy()
+            new_arc.radius = r
+            nodes.append(new_arc)
             r += step
         nodes.append(ref_arc)
 
@@ -208,8 +210,8 @@ class ArcPadPrimitive(Node):
             nodes = self.__cutArcs(nodes, self.start_line, 1)
         if self.end_line is not None:
             nodes = self.__cutArcs(nodes, self.end_line, 0)
-        nodes.append(Line(start=nodes[0].getEndPoint(), end=nodes[-1].getEndPoint(), width=line_width))
-        nodes.append(Line(start=nodes[0].getStartPoint(), end=nodes[-2].getStartPoint(), width=line_width))
+        nodes.append(Line(start=nodes[0].end, end=nodes[-1].end, width=line_width))
+        nodes.append(Line(start=nodes[0].start, end=nodes[-2].start, width=line_width))
 
         return nodes
 
@@ -217,9 +219,10 @@ class ArcPadPrimitive(Node):
         if line is None:
             return arcs
         result = []
+        fp_line = Line(shape=line)
         for current_arc in arcs:
             try:
-                cut_arcs = current_arc.cut(line)
+                cut_arcs = fp_line.cut(current_arc)
                 result.append(cut_arcs[index_to_keep])
             except IndexError as e:
                 raise ValueError("Cutting the arc primitive with one of its endlines " +
@@ -227,7 +230,7 @@ class ArcPadPrimitive(Node):
         return result
 
     def getVirtualChilds(self):
-        at = self.reference_arc.getMidPoint()
+        at = self.reference_arc.mid
         primitives = self._getArcPrimitives()
         for p in primitives:
             p.translate(-at)
@@ -379,7 +382,7 @@ class RingPad(Node):
     def _generatePastePads(self):
         ref_angle = 360/self.num_paste_zones
 
-        ref_arc = geometricArc(
+        ref_arc = GeomArc(
                     center=self.at,
                     start=self.at+(self.paste_center, 0),
                     angle=ref_angle)
@@ -395,8 +398,8 @@ class RingPad(Node):
         w = pad.round_radius*2
         y = (self.paste_to_paste_clearance + w)/2
 
-        start_line = geometricLine(start=self.at+(0, y), end=self.at+(self.size, y))
-        end_line = geometricLine(start=self.at+(0, -y), end=self.at+(self.size, -y)).rotate(ref_angle, origin=self.at)
+        start_line = GeomLine(start=self.at+(0, y), end=self.at+(self.size, y))
+        end_line = GeomLine(start=self.at+(0, -y), end=self.at+(self.size, -y)).rotate(ref_angle, origin=self.at)
 
         if self.num_paste_zones == 2:
             end_line = None
@@ -450,9 +453,10 @@ class RingPad(Node):
         if self.width - 2 * self.anchor_to_edge_clearance < 0:
             raise ValueError('Anchor pad width must be > 0')
         a = 360/self.num_anchor
-        pos = Vector2D(self.radius, 0)
+        pos = Vector2D.from_floats(self.radius, 0.0)
+        origin = Vector2D.from_floats(0.0, 0.0)
         for i in range(1, self.num_anchor):
-            pos.rotate(a)
+            pos.rotate(a, origin=origin)
             self.pads.append(Pad(number=self.number,
                                  type=Pad.TYPE_SMT, shape=Pad.SHAPE_CIRCLE,
                                  at=(self.at+pos),

@@ -156,8 +156,8 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, variant, config
     ]
     if variant == 'A-1':
         outline = outline[:-1]
-    kicad_mod.append(PolygonLine(polygon=outline, layer='F.SilkS', width=configuration['silk_line_width']))
-    kicad_mod.append(PolygonLine(polygon=outline, x_mirror=x_mid, layer='F.SilkS', width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(shape=outline, layer='F.SilkS', width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(shape=outline, x_mirror=x_mid, layer='F.SilkS', width=configuration['silk_line_width']))
 
     outline = [
     {'x': x_mid,'y': y2},
@@ -168,8 +168,8 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, variant, config
     {'x': A/2,'y': y3},
     #{'x': -1.1,'y': y3 + off}
     ]
-    kicad_mod.append(PolygonLine(polygon=outline, layer='F.Fab', width=configuration['fab_line_width']))
-    kicad_mod.append(PolygonLine(polygon=outline, x_mirror=x_mid, layer='F.Fab', width=configuration['fab_line_width']))
+    kicad_mod.append(PolygonLine(shape=outline, layer='F.Fab', width=configuration['fab_line_width']))
+    kicad_mod.append(PolygonLine(shape=outline, x_mirror=x_mid, layer='F.Fab', width=configuration['fab_line_width']))
 
 
     #draw the pinsss
@@ -191,9 +191,9 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, variant, config
     {'x': px,'y': py},
     ]
 
-    kicad_mod.append(PolygonLine(polygon=pin1, layer='F.SilkS', width=configuration['silk_line_width']))
+    kicad_mod.append(PolygonLine(shape=pin1, layer='F.SilkS', width=configuration['silk_line_width']))
     if fab_pin1_marker_type == 1:
-        kicad_mod.append(PolygonLine(polygon=pin1, layer='F.Fab', width=configuration['fab_line_width']))
+        kicad_mod.append(PolygonLine(shape=pin1, layer='F.Fab', width=configuration['fab_line_width']))
 
     if fab_pin1_marker_type == 2:
         fab_marker_left = -fab_first_marker_w/2.0
@@ -203,7 +203,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, variant, config
             {'x':0, 'y':fab_marker_bottom},
             {'x':fab_marker_left + fab_first_marker_w, 'y':y3}
         ]
-        kicad_mod.append(PolygonLine(polygon=poly_fab_marker, layer='F.Fab', width=configuration['fab_line_width']))
+        kicad_mod.append(PolygonLine(shape=poly_fab_marker, layer='F.Fab', width=configuration['fab_line_width']))
 
     ######################### Text Fields ###############################
     text_center_y = 'center'

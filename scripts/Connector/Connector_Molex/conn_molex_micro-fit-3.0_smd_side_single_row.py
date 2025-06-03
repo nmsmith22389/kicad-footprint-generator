@@ -256,7 +256,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, variant, config
         #
         if Layer == "F.SilkS":  # SilkS
             kicad_mod.append(
-                PolygonLine(polygon=points, layer=Layer, width=LineWidth)
+                PolygonLine(shape=points, layer=Layer, width=LineWidth)
             )
             #
             # Need to do something ugly here, because we will do points = []
@@ -266,7 +266,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, variant, config
             for pp in points:
                 points2.append([-pp[0], pp[1]])
             kicad_mod.append(
-                PolygonLine(polygon=points2, layer=Layer, width=LineWidth)
+                PolygonLine(shape=points2, layer=Layer, width=LineWidth)
             )
             #
             #
@@ -328,9 +328,9 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins, variant, config
 
         #
         #
-        kicad_mod.append(PolygonLine(polygon=points, layer=Layer, width=LineWidth))
+        kicad_mod.append(PolygonLine(shape=points, layer=Layer, width=LineWidth))
         #
-        kicad_mod.append(PolygonLine(polygon=points2, layer=Layer, width=LineWidth))
+        kicad_mod.append(PolygonLine(shape=points2, layer=Layer, width=LineWidth))
 
     ######################### Text Fields ###############################
     cy_top = round_to_grid(

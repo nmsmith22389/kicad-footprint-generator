@@ -162,7 +162,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row,
         {'x': body_edge['right'] - chamfer['x'], 'y': body_edge['top']},
         {'x': body_edge['left'] + chamfer['x'], 'y': body_edge['top']}
     ]
-    kicad_mod.append(PolygonLine(polygon=main_body_poly,
+    kicad_mod.append(PolygonLine(shape=main_body_poly,
                                  width=configuration['fab_line_width'], layer="F.Fab"))
 
     kicad_mod.append(Line(
@@ -196,7 +196,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row,
         {'x': tab_l/2, 'y': body_edge['bottom'] + tab_w},
         {'x': tab_l/2, 'y': body_edge['bottom']},
     ]
-    kicad_mod.append(PolygonLine(polygon=tab_poly,
+    kicad_mod.append(PolygonLine(shape=tab_poly,
                                  width=configuration['fab_line_width'], layer="F.Fab"))
 
     p1m_sl = 1
@@ -205,7 +205,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row,
         {'x': pad1_x, 'y': body_edge['top'] + p1m_sl/sqrt(2)},
         {'x': pad1_x + p1m_sl/2, 'y': body_edge['top']}
     ]
-    kicad_mod.append(PolygonLine(polygon=tab_poly,
+    kicad_mod.append(PolygonLine(shape=tab_poly,
                                  width=configuration['fab_line_width'], layer="F.Fab"))
 
     ############################ SilkS ##################################
@@ -224,7 +224,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row,
         {'x': body_edge['left'] - off, 'y': body_edge['bottom'] + off},
         {'x': xp1_left, 'y': body_edge['bottom'] + off}
     ]
-    kicad_mod.append(PolygonLine(polygon=poly_s_bl,
+    kicad_mod.append(PolygonLine(shape=poly_s_bl,
                                  width=configuration['silk_line_width'], layer="F.SilkS"))
 
     poly_s_br = [
@@ -232,7 +232,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row,
         {'x': body_edge['right'] + off, 'y': body_edge['bottom'] + off},
         {'x': xpn_right, 'y': body_edge['bottom'] + off}
     ]
-    kicad_mod.append(PolygonLine(polygon=poly_s_br,
+    kicad_mod.append(PolygonLine(shape=poly_s_br,
                                  width=configuration['silk_line_width'], layer="F.SilkS"))
 
     poly_s_tl = [
@@ -243,7 +243,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row,
         {'x': xp1_left, 'y': body_edge['top'] - off},
         {'x': xp1_left, 'y': bounding_box['top']}
     ]
-    kicad_mod.append(PolygonLine(polygon=poly_s_tl,
+    kicad_mod.append(PolygonLine(shape=poly_s_tl,
                                  width=configuration['silk_line_width'], layer="F.SilkS"))
 
     poly_s_br = [
@@ -253,7 +253,7 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row,
         {'x': body_edge['right'] - chamfer['x'] - off, 'y': body_edge['top'] - off},
         {'x': xpn_right, 'y': body_edge['top'] - off}
     ]
-    kicad_mod.append(PolygonLine(polygon=poly_s_br,
+    kicad_mod.append(PolygonLine(shape=poly_s_br,
                                  width=configuration['silk_line_width'], layer="F.SilkS"))
 
     ############################ CrtYd ##################################
@@ -297,10 +297,10 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row,
         CrtYd_poly.extend(CrtYd_poly_m)
     CrtYd_poly.extend(CrtYd_poly_b)
 
-    kicad_mod.append(PolygonLine(polygon=CrtYd_poly,
+    kicad_mod.append(PolygonLine(shape=CrtYd_poly,
                                  layer='F.CrtYd', width=configuration['courtyard_line_width']))
 
-    kicad_mod.append(PolygonLine(polygon=CrtYd_poly,
+    kicad_mod.append(PolygonLine(shape=CrtYd_poly,
                                  layer='F.CrtYd', width=configuration['courtyard_line_width'],
                                  x_mirror= 0.00000001 if pad1_x+B/2 == 0 else pad1_x+B/2))
     ######################### Text Fields ###############################
