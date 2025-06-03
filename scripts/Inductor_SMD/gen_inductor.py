@@ -28,7 +28,7 @@ from scripts.tools.footprint_generator import FootprintGenerator
 from scripts.tools.global_config_files.global_config import GlobalConfig
 from scripts.tools.nodes import pin1_arrow
 
-from smd_inductor_properties import InductorSeriesProperties, SmdInductorProperties
+from kilibs.declarative_defs.packages.smd_inductor_properties import InductorSeriesProperties, SmdInductorProperties
 
 
 def clamp(n, minn, maxn):

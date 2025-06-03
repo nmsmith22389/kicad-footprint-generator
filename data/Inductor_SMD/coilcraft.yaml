@@ -10,6 +10,17 @@
     - xal
   library_name: Inductor_SMD
 
+- series: HQ
+  manufacturer: Coilcraft
+  csv: coilcraft_hq.csv
+  # This is a kind of 3D model which isn't supported yet:
+  # Square U-shaped coilform with an expoxy PnP cap
+  # 3d:
+  tags:
+    - hq
+  has_orientation: true
+  library_name: Inductor_SMD
+
 - series: MSS
   manufacturer: Coilcraft
   csv: coilcraft_mss_rounded_rectangular_base.csv

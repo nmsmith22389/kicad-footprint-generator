@@ -63,7 +63,11 @@ import yaml
 from _tools import add_license, cq_color_correct, export_tools, shaderColors
 from exportVRML.export_part_to_VRML import export_VRML
 
-from .smd_inductor_properties import InductorSeriesProperties, SmdInductorProperties
+from kilibs.declarative_defs.packages.smd_inductor_properties import (
+    InductorSeriesProperties,
+    SmdInductorProperties,
+)
+
 from .src.make_coil_model import DSectionFootAirCoreCoil
 
 
@@ -169,9 +173,14 @@ class SmdInductorGenerator:
     def generate_series(self, series_block: dict, csv_dir: Path):
         series_data = InductorSeriesProperties(series_block, csv_dir)
 
+        if "3d" not in series_block:
+            # This series does not have 3D properties
+            # (presumably a footprint-only definition)
+            return
+
         # Construct an 3D properties object, which will use defaults
         # if not given
-        series_3d_props = Inductor3DProperties(series_block.get("3d", {}))
+        series_3d_props = Inductor3DProperties(series_block["3d"])
 
         for part_data in series_data.parts:
             self._generate_model(series_data, series_3d_props, part_data)
