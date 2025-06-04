@@ -164,6 +164,68 @@ ST_LFBGA-448_18x18mm_Layout22x22_P0.8mm:
     T8,T10,T12,T14,T16
   ]
 
+BGA-63_9.0x11.0mm_Layout10x12_P0.8mm:
+  description: "BGA-63"
+  tags:
+    - "JEDEC MO-207N DH-z"
+  size_source: "https://www.jedec.org/system/files/docs/MO-207N.pdf"
+  body_size_x: 9.0
+  body_size_y: 11.0
+  pitch: 0.8
+  ball_type: 'collapsible'
+  ball_diameter: 0.45
+  layout_x: 10
+  layout_y: 12
+  row_skips: [[3,4,5,6,7,8], [2,3,4,5,6,7,8], [1,2,9,10], [1,2,9,10], [1,2,9,10], [1,2,9,10], [1,2,9,10], [1,2,9,10], [1,2,9,10], [1,2,9,10], [3,4,5,6,7,8], [3,4,5,6,7,8]]
+
+BGA-132_12.0x18.0mm_Layout13x17_P1.0mm:
+  description: "BGA-132"
+  tags:
+    - "JEDEC MO-304D P18.0x12.0-EJ-132B"
+  size_source: "https://www.jedec.org/system/files/docs/MO-304D.pdf"
+  body_size_x: 12
+  body_size_y: 18
+  pitch: 1
+  ball_type: 'collapsible'
+  ball_diameter: 0.45
+  layout_x: 11
+  layout_y: 17
+  row_skips: [[4,5,6,7,8], [4,5,6,7,8], [4,5,6,7,8], [6], [6], [1,6,11], [1,6,11], [1,6,11], [1,6,11], [1,6,11], [1,6,11], [1,6,11], [6], [6], [4,5,6,7,8], [4,5,6,7,8], [4,5,6,7,8]]
+
+BGA-152_14.0x18.0mm_Layout13x17_P1.0mm:
+  description: "BGA-152"
+  tags:
+    - "JEDEC MO-304D P18.0x14.0-EJ-152D"
+  size_source: "https://www.jedec.org/system/files/docs/MO-304D.pdf"
+  body_size_x: 14
+  body_size_y: 18
+  pitch: 1
+  ball_type: 'collapsible'
+  ball_diameter: 0.45
+  layout_x: 13
+  layout_y: 17
+  row_skips: [[5,6,7,8,9], [5,6,7,8,9], [5,6,7,8,9], [7], [7], [1,2,7,12,13], [1,2,7,12,13], [1,2,7,12,13], [1,2,7,12,13], [1,2,7,12,13], [1,2,7,12,13], [1,2,7,12,13], [7], [7], [5,6,7,8,9], [5,6,7,8,9], [5,6,7,8,9]]
+
+BGA-100_12.0x18.0mm_Layout10x17_P1.0mm:
+  description: "BGA-100"
+  tags:
+    - "JEDEC MO-304D P18.0x12.0-EJ-100A"
+  size_source: "https://www.jedec.org/system/files/docs/MO-304D.pdf"
+  body_size_x: 12
+  body_size_y: 18
+  pitch: 1
+  ball_type: 'collapsible'
+  ball_diameter: 0.45
+  layout_x: 10
+  layout_y: 17
+  row_skips: [[3,4,5,6,7,8], [2,3,4,5,6,7,8,9], [1,2,3,4,5,6,7,8,9,10], [1,10], [1,10], [1,10], [1,10], [1,10], [1,10], [1,10], [1,10], [1,10], [1,10], [1,10], [1,2,3,4,5,6,7,8,9,10], [2,3,4,5,6,7,8,9], [3,4,5,6,7,8]]
+
+BGA-100_14.0x18.0mm_Layout10x17_P1.0mm:
+  inherit: BGA-100_12.0x18.0mm_Layout10x17_P1.0mm
+  tags:
+    - "JEDEC MO-304D P18.0x14.0-EJ-100A"
+  body_size_x: 14
+
 FBGA-78_7.5x10.5mm_Layout9x13_P0.8mm:
   device_type: "FBGA"
   description: "FBGA-78"
