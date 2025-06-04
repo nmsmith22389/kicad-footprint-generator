@@ -37,7 +37,7 @@ class GeomCircle(GeomShapeClosed):
         shape: GeomCircle | GeomArc | None = None,
         center: Vec2DCompatible | None = None,
         radius: float | None = None,
-    ):
+    ) -> None:
         """Create a geometric circle.
 
         Args:
@@ -61,6 +61,68 @@ class GeomCircle(GeomShapeClosed):
     def get_native_shapes(self) -> list[GeomCircle]:
         """Return a list with itself in it since a line is a basic shape."""
         return [self]
+
+    def translate(
+        self,
+        vector: Vec2DCompatible | None = None,
+        x: float | None = None,
+        y: float | None = None,
+    ) -> GeomCircle:
+        """Move the circle.
+
+        Args:
+            vector: The direction and distance in mm.
+            x: The distance in mm in the x-direction.
+            y: The distance in mm in the y-direction.
+
+        Returns:
+            The translated circle.
+        """
+        self.center.translate(vector=vector, x=x, y=y)
+        return self
+
+    def rotate(
+        self,
+        angle: float | int,
+        origin: Vec2DCompatible = [0, 0],
+        use_degrees: bool = True,
+    ) -> GeomCircle:
+        """Rotate the circle around a given point.
+
+        Args:
+            angle: Rotation angle.
+            origin: Coordinates (in mm) of the point around which to rotate.
+            use_degrees: `True` if rotation angle is given in degrees, `False` if given
+                in radians.
+
+        Returns:
+            The rotated circle.
+        """
+        if angle:
+            origin = Vector2D(origin)
+            self.center.rotate(angle=angle, origin=origin, use_degrees=use_degrees)
+        return self
+
+    def inflate(self, amount: float, tol: float = TOL_MM) -> GeomCircle:
+        """Inflate (or deflate) the circle by 'amount'.
+
+        Args:
+            amount: The amount in mm by which the circle is inflated (when amount is
+                positive) or deflated (when amount is negative).
+            tol: Minimum radius that a circle is allowed to have without raising a
+                `ValueError`.
+
+        Raises:
+            ValueError: If the deflation operation would result in a radius with
+                negative value a `ValueError` is raised.
+
+        Returns:
+            The circle after the inflation/deflation.
+        """
+        if amount < 0 and -amount > self.radius - tol:
+            raise ValueError(f"Cannot deflate this circle by {amount}.")
+        self.radius += amount
+        return self
 
     def is_point_on_self(
         self, point: Vector2D, exclude_segment_ends: bool = False, tol: float = TOL_MM
@@ -112,7 +174,7 @@ class GeomCircle(GeomShapeClosed):
             Vector2D.from_floats(center.x + radius, center.y + radius),
         )
 
-    def is_equal(self, other: GeomCircle, tol: float = TOL_MM):
+    def is_equal(self, other: GeomCircle, tol: float = TOL_MM) -> bool:
         """Return wheather two circles are identical or not.
 
         Args:

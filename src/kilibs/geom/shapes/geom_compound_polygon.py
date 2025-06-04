@@ -52,7 +52,7 @@ class GeomCompoundPolygon(GeomShapeClosed):
         ),
         serialize_as_fp_poly: bool = True,
         close: bool = True,
-    ):
+    ) -> None:
         """Create a geometric compound polygon.
 
         Args:
@@ -205,12 +205,12 @@ class GeomCompoundPolygon(GeomShapeClosed):
         Args:
             amount: The amount in mm by which the compound polygon is inflated (when
                 amount is positive) or deflated (when amount is negative).
-            tol: Maximum negative dimension in mm that a segment of the shape is allowed
-                to have after the deflation without causing a `ValueError`.
+            tol: Tolerance used to determine if a segment has zero length or if two
+                points are equal.
 
         Raises:
-            ValueError: If the deflation operation would result in segments with
-                negative dimensions a `ValueError` is raised.
+            ValueError: If the deflation operation would result in an invalid shape a
+            `ValueError` is raised.
 
         Warning:
             When deflating too much (when a segment length would become zero or
@@ -224,7 +224,7 @@ class GeomCompoundPolygon(GeomShapeClosed):
         import kilibs.geom.tools.intersect_atomic_shapes as intersect_atomic_shapes
         import kilibs.geom.tools.segment_util as segment_util
 
-        def remove_segment(index: int):
+        def remove_segment(index: int) -> None:
             del segments[index]
             del directions[index]
             del orthogonals[index]
@@ -637,7 +637,7 @@ class GeomCompoundPolygon(GeomShapeClosed):
     def is_clockwise(self) -> bool:
         """Return whether the compound polygon points are given in clockwise order or
         not."""
-        sum = 0
+        sum = 0.0
         segments = self._segments
         points: list[Vector2D] = []
         for segment in segments:

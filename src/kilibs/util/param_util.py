@@ -193,6 +193,11 @@ def isAnyLarger(
             return True
     else:
         limits = toFloatArray(low_limits, len(values), min_value=None)
+        if isinstance(values, dict):
+            val_list: list[float] = []
+            for _, val in values.items():
+                val_list.append(float(val))
+            values = val_list
         for v, l in zip(values, limits):
             if float(v) < float(l) or (float(v) <= float(l) and must_be_larger):
                 return True
@@ -228,6 +233,9 @@ def toVectorUseCopyIfNumber(
     Returns:
         A vector of `value` with the given dimension.
     """
+    result: (
+        Sequence[float | int | str] | dict[str, float | int | str] | Vector2D | Vector3D
+    )
     if isinstance(value, int | float):
         result = [float(value) for _ in range(length)]
     else:
@@ -294,7 +302,7 @@ def getOptionalNumberTypeParam(
     low_limit: float | int | None = None,
     high_limit: float | int | None = None,
     allow_equal_limit: bool = True,
-):
+) -> float | int | None:
     """Get a named parameter from a packed `dict` and guarantee it is a number (`float`
     or `int`).
 

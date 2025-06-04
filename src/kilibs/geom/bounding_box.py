@@ -146,7 +146,7 @@ class BoundingBox:
             return False
 
     @property
-    def top(self):
+    def top(self) -> float:
         """Return the left-most coordinate of the bounding box.
 
         Raises:
@@ -158,7 +158,7 @@ class BoundingBox:
             raise RuntimeError("Cannot access empty bounding box.")
 
     @property
-    def bottom(self):
+    def bottom(self) -> float:
         """Return the bottom-most coordinate of the bounding box.
 
         Raises:
@@ -170,7 +170,7 @@ class BoundingBox:
             raise RuntimeError("Cannot access empty bounding box.")
 
     @property
-    def left(self):
+    def left(self) -> float:
         """Return the left-most coordinate of the bounding box.
 
         Raises:
@@ -182,7 +182,7 @@ class BoundingBox:
             raise RuntimeError("Cannot access empty bounding box.")
 
     @property
-    def right(self):
+    def right(self) -> float:
         """Return the right-most coordinate of the bounding box.
 
         Raises:

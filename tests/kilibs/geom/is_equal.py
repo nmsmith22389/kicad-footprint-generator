@@ -412,10 +412,10 @@ def is_equal_geom_compound_polygon(
         return False
     if compound_polygon.close != close:
         return False
-    if len(segments) != len(compound_polygon._segments):
+    if len(segments) != len(compound_polygon.get_atomic_shapes()):
         return False
-    for i, shape in enumerate(segments):
-        if not is_equal_geom_shapes(compound_polygon._segments[i], shape, rel=rel):
+    for i, segment in enumerate(compound_polygon.get_atomic_shapes()):
+        if not is_equal_geom_shapes(segments[i], segment, rel=rel):
             return False
     return True
 
@@ -427,20 +427,20 @@ def is_equal_geom_compound_polygons(
         compound_polygon=a,
         serialize_as_fp_poly=b.serialize_as_fp_poly,
         close=b.close,
-        segments=b._segments,
+        segments=b.get_atomic_shapes(),
         rel=rel,
     )
 
 
 def is_equal_geom_stadium(
     stadium: GeomStadium,
-    points: list[Vector2D],
+    centers: list[Vector2D],
     radius: float,
     rel: float = TOL_MM,
 ) -> bool:
-    if not is_equal_vectors(stadium.points[0], points[0], rel):
+    if not is_equal_vectors(stadium.centers[0], centers[0], rel):
         return False
-    if not is_equal_vectors(stadium.points[1], points[1], rel):
+    if not is_equal_vectors(stadium.centers[1], centers[1], rel):
         return False
     if not is_equal_val(stadium.radius, radius, rel):
         return False
@@ -450,7 +450,7 @@ def is_equal_geom_stadium(
 def is_equal_geom_stadiums(a: GeomStadium, b: GeomStadium, rel: float = TOL_MM) -> bool:
     return is_equal_geom_stadium(
         stadium=a,
-        points=b.points,
+        centers=b.centers,
         radius=b.radius,
         rel=rel,
     )

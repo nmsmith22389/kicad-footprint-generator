@@ -53,7 +53,7 @@ class GeomCruciform(GeomShapeClosed):
         center: Vec2DCompatible = (0, 0),
         angle: float = 0,
         use_degrees: bool = True,
-    ):
+    ) -> None:
         """Create a geometric cruciform.
 
         A cruciform is a cross-shaped object that is basically two rectangles
@@ -74,9 +74,6 @@ class GeomCruciform(GeomShapeClosed):
             |   |<-t w->|   |
             |               |
             |<- overall w ->|
-
-        It is centred at the origin - you can use a Translate or Rotation transform
-        node to move it to the desired location.
 
         Args:
             shape: Shape from which to derive the parameters of the cruciform.
@@ -155,9 +152,48 @@ class GeomCruciform(GeomShapeClosed):
                 self._shape.rotate(angle=self.angle, origin=(0, 0))
         return [self._shape]
 
-    def invalidate_shapes(self) -> None:
-        """Invalidate the computed shapes."""
+    def translate(
+        self,
+        vector: Vec2DCompatible | None = None,
+        x: float | None = None,
+        y: float | None = None,
+    ) -> GeomCruciform:
+        """Move the cruciform.
+
+        Args:
+            vector: The direction and distance in mm.
+            x: The distance in mm in the x-direction.
+            y: The distance in mm in the y-direction.
+
+        Returns:
+            The translated cruciform.
+        """
+        self.center.translate(vector=vector, x=x, y=y)
         self._shape = None
+        return self
+
+    def rotate(
+        self,
+        angle: float | int,
+        origin: Vec2DCompatible = [0, 0],
+        use_degrees: bool = True,
+    ) -> GeomCruciform:
+        """Rotate the cruciform around a given point.
+
+        Args:
+            angle: Rotation angle.
+            origin: Coordinates (in mm) of the point around which to rotate.
+            use_degrees: `True` if rotation angle is given in degrees, `False` if given
+                in radians.
+
+        Returns:
+            The rotated cruciform.
+        """
+        if angle:
+            origin = Vector2D(origin)
+            self.center.rotate(angle=angle, origin=origin, use_degrees=use_degrees)
+            self._shape = None
+        return self
 
     def inflate(self, amount: float, tol: float = TOL_MM) -> GeomCruciform:
         """Increase or decrease the radius of the cruciform by 'amount'.
@@ -231,9 +267,6 @@ class GeomCruciform(GeomShapeClosed):
         """Return the bounding box of the cruciform."""
         # Reimplementing stock `bbox()` method for performance gain.
         return self.get_shapes()[0].bbox()
-
-    def clear(self):
-        self._shape = None
 
     def __repr__(self) -> str:
         """Return the string representation of the cruciform."""

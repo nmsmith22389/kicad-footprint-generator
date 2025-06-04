@@ -36,7 +36,7 @@ class GeomLine(GeomShapeOpen):
         shape: GeomLine | None = None,
         start: Vec2DCompatible | None = None,
         end: Vec2DCompatible | None = None,
-    ):
+    ) -> None:
         """Create a geometric line.
 
         Args:
@@ -244,7 +244,7 @@ class GeomLine(GeomShapeOpen):
         """Return the bounding box of the line."""
         return BoundingBox(self.start, self.end)
 
-    def is_equal(self, other: GeomLine, tol: float = TOL_MM):
+    def is_equal(self, other: GeomLine, tol: float = TOL_MM) -> bool:
         """Return wheather two lines are identical or not.
 
         Args:

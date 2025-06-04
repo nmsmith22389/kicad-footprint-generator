@@ -178,8 +178,8 @@ def _unite_segments_from_both_shapes(
                 segments = _remove_doubles(segments)
             break
     segments = _merge_colinear_segments(segments)
+    shape: GeomCompoundPolygon | GeomPolygon
     if _list_contains_arc_segments(segments):
-        # We deactive the type check because we know don't deal with arc segments yet:
         shape = GeomCompoundPolygon(shape=segments)
     else:
         shape = GeomPolygon(shape=cast(list[GeomLine], segments))

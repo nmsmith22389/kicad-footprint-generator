@@ -18,7 +18,7 @@ import dataclasses
 import enum
 from importlib import resources
 from pathlib import Path
-from typing import Any, Self
+from typing import Any
 
 import yaml
 
@@ -107,7 +107,7 @@ class IpcRules:
     classes: dict[str, DeviceClass]
     _data: dict[str, Any]
 
-    def __init__(self, data: dict[str, Any]):
+    def __init__(self, data: dict[str, Any]) -> None:
         """Initialize the IpcRules class with the given data.
 
         Args:
@@ -137,7 +137,7 @@ class IpcRules:
             self.classes[key] = self._construct_class(class_data)
 
     @classmethod
-    def from_file(cls, file_name: str = "ipc_7351b") -> Self:
+    def from_file(cls, file_name: str = "ipc_7351b") -> IpcRules:
         """Load the rules from the package data.
 
         Args:
@@ -147,7 +147,7 @@ class IpcRules:
         otherwise use the package data with that name.
         """
 
-        def get_data(path: Path | str):
+        def get_data(path: Path | str) -> IpcRules:
             with open(path, "r") as file:
                 data = yaml.safe_load(file)
                 return cls(data)
@@ -229,7 +229,7 @@ class IpcRules:
         return self.classes[class_name]
 
     @property
-    def raw_data(self):
+    def raw_data(self) -> dict[str, Any]:
         """Legacy accessor for dict-based data.
 
         Over time, reduce the use of this property in favour of typed

@@ -47,7 +47,7 @@ from tests.kilibs.geom.is_equal import are_equal
 @pytest.mark.parametrize("strict_intersection", [True, False])
 def test_intersect_shape_fully_inside(
     shape: GeomShape, strict_intersection: bool, rel: float = TOL_MM
-):
+) -> None:
     inflate_amount = (shape.bbox().size / 2).norm()
     for other_shape in TEST_SHAPES_CLOSED:
         inflated_shape = other_shape.inflated(amount=inflate_amount, tol=rel)
@@ -61,7 +61,7 @@ def test_intersect_shape_fully_inside(
 @pytest.mark.parametrize("strict_intersection", [True, False])
 def test_intersect_shape_fully_outside(
     shape: GeomShape, strict_intersection: bool, rel: float = TOL_MM
-):
+) -> None:
     bbox = shape.bbox()
     for other_shape in TEST_SHAPES:
         translate_amount = bbox.left - other_shape.bbox().right - 1
@@ -76,7 +76,7 @@ def test_intersect_shape_fully_outside(
 @pytest.mark.parametrize("strict_intersection", [True, False])
 def test_intersect_shape_touching_outline_in_two_points(
     shape: GeomShape, strict_intersection: bool, rel: float = TOL_MM
-):
+) -> None:
     # We know that all test shapes must have an outline going through the points
     # (-1, -1) and (+1, +1). Let's create some shapes that are basically just dots in
     # these two points:
@@ -114,7 +114,7 @@ def test_intersect_shape_touching_outline_in_two_points(
 @pytest.mark.parametrize("shape", TEST_SHAPES)
 def test_intersect_shape_touching_outline_on_all_sides(
     shape: GeomShape, rel: float = TOL_MM
-):
+) -> None:
     # Test that a tangent horizontal line along the top of the shape creates no
     # intersections:
     top = shape.bbox().top + rel / 2
@@ -241,7 +241,7 @@ def test_intersect_shape_touching_outline_on_all_sides(
         (TEST_SHAPE_TRAPEZOID,          [(0, -1), (0, 1)]),
     ],
 )  # fmt: on
-def test_intersect_with_line(shape: GeomShape, expected_intersections: list[tuple[float, float]], rel: float = TOL_MM):
+def test_intersect_with_line(shape: GeomShape, expected_intersections: list[tuple[float, float]], rel: float = TOL_MM) -> None:
     # Test that a vertical line along the y-axis creates the correct intersections:
     line_vertical = GeomLine(start=(0, -100), end=(0, +100))
     intersections = shape.intersect(other=line_vertical, tol=rel)
@@ -265,7 +265,7 @@ def test_intersect_with_line(shape: GeomShape, expected_intersections: list[tupl
         (TEST_SHAPE_TRAPEZOID,          [(2 * sqrt(2) - 3, -1), (2 * sqrt(2) - 3, +1)]),
     ],
 )  # fmt: on
-def test_intersect_with_circle(shape: GeomShape, expected_intersections: list[tuple[float, float]], rel: float = TOL_MM):
+def test_intersect_with_circle(shape: GeomShape, expected_intersections: list[tuple[float, float]], rel: float = TOL_MM) -> None:
     # Test that a circle (whose center coincides with the center-left point of the
     # shape's bounding box and intersects the origin) intesects as expected:
     left = shape.bbox().left
@@ -291,7 +291,7 @@ def test_intersect_with_circle(shape: GeomShape, expected_intersections: list[tu
         (TEST_SHAPE_TRAPEZOID,          [(2 * sqrt(2) - 3, +1)]),
     ],
 )  # fmt: on
-def test_intersect_with_arc(shape: GeomShape, expected_intersections: list[tuple[float, float]], rel: float = TOL_MM):
+def test_intersect_with_arc(shape: GeomShape, expected_intersections: list[tuple[float, float]], rel: float = TOL_MM) -> None:
     # Test that an arc of 180° (whose center coincides with the center-left point of the
     # shape's bounding box and intersects the origin) intesects as expected:
     left = shape.bbox().left
@@ -317,7 +317,7 @@ def test_intersect_with_arc(shape: GeomShape, expected_intersections: list[tuple
         (TEST_SHAPE_TRAPEZOID,          [(0, -1), (0, 1)]),
     ],
 )  # fmt: on
-def test_intersect_with_rectangle(shape: GeomShape, expected_intersections: list[tuple[float, float]], rel: float = TOL_MM):
+def test_intersect_with_rectangle(shape: GeomShape, expected_intersections: list[tuple[float, float]], rel: float = TOL_MM) -> None:
     # Test that a rectangle (whose center coincides with the center-left point of the
     # shape's bounding box and intersects the origin) intesects as expected:
     left = shape.bbox().left
@@ -342,8 +342,13 @@ def test_intersect_with_rectangle(shape: GeomShape, expected_intersections: list
         (TEST_SHAPE_ROUND_RECTANGLE,    [(0.26776695296636893, 1.5-sqrt(2)/4), (0.26776695296636893, sqrt(2)/4-1.5), (-0.26776695296636893, 1.5-sqrt(2)/4), (-0.26776695296636893, sqrt(2)/4-1.5), (1.5-sqrt(2)/4, 0.26776695296636893), (1.5-sqrt(2)/4, -0.26776695296636893), (sqrt(2)/4-1.5, 0.26776695296636893), (sqrt(2)/4-1.5, -0.26776695296636893)]),  # NOQA
         (TEST_SHAPE_TRAPEZOID,          [(sqrt(2) - 1, 1), (sqrt(2) - 1, -1), (1-sqrt(2), 1), (1-sqrt(2), -1)]),  # NOQA
     ],
-)  # fmt: on
-def test_intersect_with_rotated_rectangle(shape: GeomShape, expected_intersections: list[tuple[float, float]], rel: float = TOL_MM):
+)
+# fmt: on
+def test_intersect_with_rotated_rectangle(
+    shape: GeomShape,
+    expected_intersections: list[tuple[float, float]],
+    rel: float = TOL_MM,
+) -> None:
     # Test that a centered unit rectangle rotated by 45° intesects as expected:
     rectangle_45 = GeomRectangle(center=(0, 0), size=(2, 2), angle=45)
     intersections = shape.intersect(other=rectangle_45, tol=rel)
@@ -366,8 +371,13 @@ def test_intersect_with_rotated_rectangle(shape: GeomShape, expected_intersectio
         (TEST_SHAPE_ROUND_RECTANGLE,    [(0.8179861669824924, 1.1160998646777938), (-0.8179861669824924, 1.1160998646777938), (-1.1160998646777938, 0.8179861669824924), (-1.1160998646777938, -0.8179861669824924), (-0.8179861669824924, -1.1160998646777938), (0.8179861669824924, -1.1160998646777938), (1.1160998646777938, -0.8179861669824924), (1.1160998646777938, 0.8179861669824924)]),  # NOQA
         (TEST_SHAPE_TRAPEZOID,          [(-0.5857864376269047, -1.0), (0.5857864376269047, -1.0), (1.2071067811865477, -1.0), (-1.2071067811865477, -1.0), (1.1380711874576983, 0.8619288125423017), (0.5857864376269046, 1.0), (-0.5857864376269046, 1.0), (-1.1380711874576983, 0.8619288125423017)]),  # NOQA
     ],
-)  # fmt: on
-def test_intersect_with_conave_polygon(shape: GeomShape, expected_intersections: list[tuple[float, float]], rel: float = TOL_MM):
+)
+# fmt: on
+def test_intersect_with_conave_polygon(
+    shape: GeomShape,
+    expected_intersections: list[tuple[float, float]],
+    rel: float = TOL_MM,
+) -> None:
     # Test that a centered star-like polygon with circumradius of 2 intesects as
     # expected:
     pts: list[list[float]] = [[-1, -1], [0, -0.5], [1, -1], [0.5, 0], [1, 1], [0, 0.5], [-1, 1], [-0.5, 0]]  # fmt: skip  # NOQA

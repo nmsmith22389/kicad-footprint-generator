@@ -197,7 +197,7 @@ def round_to_grid_decreasing_area(pts: list[list[float]], grid: float) -> None:
 def is_polygon_clockwise(pts: list[list[float]]) -> bool:
     """Returns True if the polygon points are given in clockwise order, False otherwise."""
     # TODO: remove this function
-    sum = 0
+    sum = 0.0
     num = len(pts)
     for i, pt1 in enumerate(pts):
         pt2 = pts[(i + 1) % num]

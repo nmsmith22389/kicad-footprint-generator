@@ -104,7 +104,7 @@ class Vector2D:
         angle: float,
         origin: Vec2DCompatible = (0, 0),
         use_degrees: bool = True,
-    ):
+    ) -> Vector2D:
         """Generate a vector from a polar representation.
 
         Args:
@@ -126,7 +126,7 @@ class Vector2D:
         vec.y = self.y
         return vec
 
-    def round_to(self, base: float):
+    def round_to(self, base: float) -> Vector2D:
         """Round to a specific base (like it's required for a grid).
 
         Args:
@@ -298,7 +298,7 @@ class Vector2D:
         """Calculate the length (cartesian norm) of the vector."""
         return hypot(*self)
 
-    def arg(self, use_degrees: bool = True):
+    def arg(self, use_degrees: bool = True) -> float:
         """Calculate the angle of the vector with respect to the origin (0, 0).
 
         Args:
@@ -531,7 +531,7 @@ class Vector2D:
             return self.y
         raise IndexError("Index {} is out of range".format(key))
 
-    def __setitem__(self, key: str | int, item: float | int):
+    def __setitem__(self, key: str | int, item: float | int) -> None:
         """Set the value of the given coordinate."""
         if key == 0 or key == "x":
             self.x = float(item)
@@ -653,7 +653,7 @@ class Vector3D:
         other = Vector3D.__arithmetic_parse(other)
         return self.x * other.x + self.y * other.y + self.z * other.z
 
-    def round_to(self, base: float):
+    def round_to(self, base: float) -> Vector3D:
         """Round to a specific base (like it's required for a grid).
 
         Args:

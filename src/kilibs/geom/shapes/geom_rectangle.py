@@ -36,6 +36,10 @@ class GeomRectangle(GeomShapeClosed):
     """The radius of the round corners in mm."""
     _angle: float
     """The rotation angle of the shape."""
+    _corner_pts: list[Vector2D] | None
+    """The corners of the rectangle."""
+    _bbox: BoundingBox | None
+    """The bounding box of the rectangle."""
 
     def __init__(
         self,
@@ -46,7 +50,7 @@ class GeomRectangle(GeomShapeClosed):
         end: Vec2DCompatible | None = None,
         angle: float = 0,
         use_degrees: bool = True,
-    ):
+    ) -> None:
         """Create a geometric rectangle.
 
         Args:
@@ -58,8 +62,8 @@ class GeomRectangle(GeomShapeClosed):
             angle: Rotation angle of the rectangle.
             use_degrees: Whether the rotation angle is given in degrees or radians.
         """
-        self._corner_pts: list[Vector2D] | None = None
-        self._bbox: BoundingBox | None = None
+        self._corner_pts = None
+        self._bbox = None
         self._update_angle(angle, use_degrees)
         if center is not None and size is not None:
             self.center = Vector2D(center)
@@ -113,10 +117,26 @@ class GeomRectangle(GeomShapeClosed):
         """Return a list with itself in it."""
         return [self]
 
-    def invalidate_shapes(self) -> None:
-        """Invalidates the computed shapes."""
+    def translate(
+        self,
+        vector: Vec2DCompatible | None = None,
+        x: float | None = None,
+        y: float | None = None,
+    ) -> GeomRectangle:
+        """Move the rectangle.
+
+        Args:
+            vector: The direction and distance in mm.
+            x: The distance in mm in the x-direction.
+            y: The distance in mm in the y-direction.
+
+        Returns:
+            The translated rectangle.
+        """
+        self.center.translate(vector=vector, x=x, y=y)
         self._corner_pts = None
         self._bbox = None
+        return self
 
     def rotate(
         self,
@@ -143,6 +163,30 @@ class GeomRectangle(GeomShapeClosed):
             self._update_angle(angle + self.angle, use_degrees=True)
             self._corner_pts = None
             self._bbox = None
+        return self
+
+    def inflate(self, amount: float, tol: float = TOL_MM) -> GeomRectangle:
+        """Inflate (or deflate) the rectangle by 'amount'.
+
+        Args:
+            amount: The amount in mm by which the rectangle is inflated (when amount is
+                positive) or deflated (when amount is negative).
+            tol: Minimum dimension that a rectangle is allowed to have without raising a
+                `ValueError`.
+
+        Raises:
+            ValueError: If the deflation operation would result in a radius with
+                negative value a `ValueError` is raised.
+
+        Returns:
+            The rectangle after the inflation/deflation.
+        """
+        min_dimension = min(self.size.x, self.size.y)
+        if amount < 0 and -amount > min_dimension / 2 - tol:
+            raise ValueError(f"Cannot deflate this rectangle by {amount}.")
+        self.size += 2 * amount
+        self._corner_pts = None
+        self._bbox = None
         return self
 
     def is_point_on_self(
@@ -282,7 +326,7 @@ class GeomRectangle(GeomShapeClosed):
         return self
 
     @property
-    def points(self) -> list[Vector2D]:  # type: ignore
+    def points(self) -> list[Vector2D]:
         """The four corners of the rectangle."""
         if not self._corner_pts:
             self._corner_pts = self._get_corner_points()
@@ -404,14 +448,13 @@ class GeomRectangle(GeomShapeClosed):
         return self._angle
 
     @angle.setter
-    def angle(self, angle: float) -> float:
+    def angle(self, angle: float) -> None:
         """The angle of the rectangle in degrees."""
         self._update_angle(angle)
         self._corner_pts = None
         self._bbox = None
-        return self._angle
 
-    def _update_angle(self, angle: float, use_degrees: bool = True):
+    def _update_angle(self, angle: float, use_degrees: bool = True) -> None:
         """Update the angle property of the rectangle. May affect also its size
         property.
         """
@@ -425,7 +468,7 @@ class GeomRectangle(GeomShapeClosed):
                 self.size.x = self.size.y
                 self.size.y = temp
 
-    def _get_corner_points(self):
+    def _get_corner_points(self) -> list[Vector2D]:
         """Update the corner points of the rectangle."""
         vector_to_pt1 = -self.size / 2
         vector_to_pt2 = Vector2D.from_floats(-vector_to_pt1.x, vector_to_pt1.y)

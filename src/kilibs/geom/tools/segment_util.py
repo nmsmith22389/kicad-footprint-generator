@@ -152,15 +152,15 @@ def keep_only_outer_outline(
                 tol=tol,
             )
             if pt:
-                pt = pt[0]
+                point = pt[0]
                 # There are two ways that we could cut and remove the segments:
                 # - either we remove all segments between j+1 (incl) and i (excl),
                 # - or we remove all segments between i+1 (incl) and j (excl).
                 # To know which way to cut and remove, we just have to make sure that
                 # the outermost segment is part of the solution:
                 if j < left_most_segment_idx and left_most_segment_idx < i:
-                    segments[j].start = pt
-                    segments[i].end = pt
+                    segments[j].start = point
+                    segments[i].end = point
                     if not strict_intersection:
                         # Only remove segments if we are currently analyzing
                         # non-neighbouring segments:
@@ -170,8 +170,8 @@ def keep_only_outer_outline(
                     i -= j
                     j = 1
                 else:
-                    segments[j].end = pt
-                    segments[i].start = pt
+                    segments[j].end = point
+                    segments[i].start = point
                     if not strict_intersection:
                         # Only remove segments if we are currently analyzing
                         # non-neighbouring segments:
@@ -229,13 +229,14 @@ def merge_segments(
 
 def is_segment_flipped_or_zero(
     seg: GeomLine | GeomArc, dir: Vector2D | int, tol: float
-):
+) -> bool:
     """Return whether a segment is flipped with respect to a given direction (Vector2D
     for `GeomLine` and `float` for `GeomArc`).
 
     Args:
         seg: The segment.
         dir: The direction.
+        tol: The tolerance in mm used to determine if a segment has a zero length.
 
     Returns:
         `True` if the the segment is flipped or of zero length, `False` otherwise.

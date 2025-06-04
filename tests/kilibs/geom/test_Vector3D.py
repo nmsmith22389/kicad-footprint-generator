@@ -17,7 +17,7 @@ import pytest
 from kilibs.geom import Vector3D
 
 
-def test_init():
+def test_init() -> None:
     p1 = Vector3D([1, 2, 3])
     assert p1.x == 1
     assert p1.y == 2
@@ -73,7 +73,7 @@ def test_init():
     # TODO: tests if int is always converted to float
 
 
-def test_round_to():
+def test_round_to() -> None:
     p1 = Vector3D([1.234, 5.678, 9.012]).round_to(0)
     assert p1.x == pytest.approx(1.234)
     assert p1.y == pytest.approx(5.678)
@@ -100,7 +100,7 @@ def test_round_to():
     assert p5.z == pytest.approx(9.012)
 
 
-def test_add():
+def test_add() -> None:
     p1 = Vector3D([1, 2, 3])
     assert p1.x == 1
     assert p1.y == 2
@@ -129,7 +129,7 @@ def test_add():
     # TODO: invalid type tests
 
 
-def test_sub():
+def test_sub() -> None:
     p1 = Vector3D([1, 2, 3])
     assert p1.x == 1
     assert p1.y == 2
@@ -158,7 +158,7 @@ def test_sub():
     # TODO: invalid type tests
 
 
-def test_mul():
+def test_mul() -> None:
     p1 = Vector3D([1, 2, 3])
     assert p1.x == 1
     assert p1.y == 2
@@ -187,7 +187,7 @@ def test_mul():
     # TODO: invalid type tests
 
 
-def test_div():
+def test_div() -> None:
     p1 = Vector3D([1, 2, 3])
     assert p1.x == 1
     assert p1.y == 2

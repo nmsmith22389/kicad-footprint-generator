@@ -19,7 +19,7 @@ import pytest
 from kilibs.geom import Vector2D
 
 
-def test_init():
+def test_init() -> None:
     p1 = Vector2D([1, 2])
     assert p1.x == 1
     assert p1.y == 2
@@ -72,7 +72,7 @@ def test_init():
         assert isinstance(vector.y, float)
 
 
-def test_round_to():
+def test_round_to() -> None:
     p1 = Vector2D([1.234, 5.678]).round_to(0)
     assert p1.is_equal((1.234, 5.678))
 
@@ -89,7 +89,7 @@ def test_round_to():
     assert p5.is_equal((1.234, 5.678))
 
 
-def test_add():
+def test_add() -> None:
     p1 = Vector2D([1, 2])
     assert p1.x == 1
     assert p1.y == 2
@@ -111,7 +111,7 @@ def test_add():
     assert p5.y == -1
 
 
-def test_sub():
+def test_sub() -> None:
     p1 = Vector2D([1, 2])
     assert p1.x == 1
     assert p1.y == 2
@@ -133,7 +133,7 @@ def test_sub():
     assert p5.y == 5
 
 
-def test_mul():
+def test_mul() -> None:
     p1 = Vector2D([1, 2])
     assert p1.x == 1
     assert p1.y == 2
@@ -155,7 +155,7 @@ def test_mul():
     assert p5.y == -6
 
 
-def test_div():
+def test_div() -> None:
     p1 = Vector2D([1, 2])
     assert p1.x == 1
     assert p1.y == 2
@@ -187,7 +187,7 @@ def test_div():
         p1 / (0, 0)
 
 
-def test_polar():
+def test_polar() -> None:
     p1 = Vector2D.from_polar(math.sqrt(2), 45, use_degrees=True)
     assert p1.is_equal((1, 1))
 
@@ -212,12 +212,12 @@ def test_polar():
     assert a == pytest.approx(-135)
 
 
-def test_right_mul():
+def test_right_mul() -> None:
     p = 3 * Vector2D(1, 2)
     assert p.is_equal((3, 6))
 
 
-def test_norm_arg():
+def test_norm_arg() -> None:
     assert Vector2D(1, 1).norm() == pytest.approx(math.sqrt(2))
     assert Vector2D(1, 1).arg() == pytest.approx(45)
     assert Vector2D(1, 1).arg(use_degrees=False) == pytest.approx(math.pi / 4)
@@ -225,7 +225,7 @@ def test_norm_arg():
     assert Vector2D(-1, -1).arg(use_degrees=False) == pytest.approx(-3 * math.pi / 4)
 
 
-def test_inner_product():
+def test_inner_product() -> None:
     v1 = Vector2D(2, 3)
     v2 = Vector2D(4, 5)
 
@@ -237,7 +237,7 @@ def test_inner_product():
     assert v1.dot_product(-v2) == 0
 
 
-def test_normalize():
+def test_normalize() -> None:
     v = Vector2D(0, 0)
     with pytest.raises(ZeroDivisionError):
         n = Vector2D.normalize(v)
@@ -253,7 +253,7 @@ def test_normalize():
     assert (n1 - n2).norm() == pytest.approx(0)
 
 
-def test_min_max():
+def test_min_max() -> None:
     v1 = Vector2D(3, 2)
     v2 = Vector2D(1, 4)
 

@@ -25,3 +25,16 @@ from .rounding import (
     round_to_grid_nearest,
     round_to_grid_up,
 )
+
+__all__ = [
+    "GeomOperationHandle",
+    "is_polygon_clockwise",
+    "round_polygon_to_grid",
+    "round_to_grid",
+    "round_to_grid_decreasing_area",
+    "round_to_grid_down",
+    "round_to_grid_e",
+    "round_to_grid_increasing_area",
+    "round_to_grid_nearest",
+    "round_to_grid_up",
+]

@@ -12,7 +12,6 @@
 # (C) The KiCad Librarian Team
 
 """Geometric shapes."""
-
 from .geom_arc import GeomArc
 from .geom_circle import GeomCircle
 from .geom_compound_polygon import GeomCompoundPolygon
@@ -27,3 +26,22 @@ from .geom_shape_atomic import GeomShapeAtomic
 from .geom_shape_native import GeomShapeNative
 from .geom_stadium import GeomStadium
 from .geom_trapezoid import GeomTrapezoid
+
+__all__ = [
+    "GeomArc",
+    "GeomCircle",
+    "GeomCompoundPolygon",
+    "GeomCross",
+    "GeomCruciform",
+    "GeomLine",
+    "GeomPolygon",
+    "GeomRectangle",
+    "GeomRoundRectangle",
+    "GeomShape",
+    "GeomShapeClosed",
+    "GeomShapeOpen",
+    "GeomShapeAtomic",
+    "GeomShapeNative",
+    "GeomStadium",
+    "GeomTrapezoid",
+]

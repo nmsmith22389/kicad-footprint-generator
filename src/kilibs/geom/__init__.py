@@ -41,3 +41,31 @@ from .shapes import (
 )
 from .tolerances import MIN_SEGMENT_LENGTH, TOL_MM, tol_deg
 from .vector import Vec2DCompatible, Vec3DCompatible, Vector2D, Vector3D
+
+__all__ = [
+    "BoundingBox",
+    "Direction",
+    "GeomArc",
+    "GeomCircle",
+    "GeomCompoundPolygon",
+    "GeomCross",
+    "GeomCruciform",
+    "GeomLine",
+    "GeomPolygon",
+    "GeomRectangle",
+    "GeomRoundRectangle",
+    "GeomShape",
+    "GeomShapeClosed",
+    "GeomShapeOpen",
+    "GeomShapeAtomic",
+    "GeomShapeNative",
+    "GeomStadium",
+    "GeomTrapezoid",
+    "MIN_SEGMENT_LENGTH",
+    "TOL_MM",
+    "tol_deg",
+    "Vec2DCompatible",
+    "Vec3DCompatible",
+    "Vector2D",
+    "Vector3D",
+]

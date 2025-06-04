@@ -142,7 +142,7 @@ class GeomOperationHandle:
 
     def add_intersections(
         self, intersections: list[Vector2D], idx_shape1: int, idx_shape2: int
-    ):
+    ) -> None:
         """Add intersection points to the internal lists of intersections.
 
         Args:
@@ -163,7 +163,7 @@ class GeomOperationHandle:
 
     def _add_intersection(
         self, new_intersection: Vector2D, intersection_list: list[Vector2D]
-    ):
+    ) -> None:
         """Add a single intersection point to the given list of intersections. If the
         point already exists in the list, the existing point is updated with the average
         value between the existing point and the new point instead of adding the new
@@ -181,7 +181,7 @@ class GeomOperationHandle:
         if not new_intersection_added:
             intersection_list.append(new_intersection)
 
-    def remove_intersection(self, point: Vector2D):
+    def remove_intersection(self, point: Vector2D) -> None:
         """Remove an intersection point from the internal list of intersections.
 
         Args:

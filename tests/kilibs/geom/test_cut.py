@@ -82,8 +82,11 @@ def check_segments(
         (TEST_SHAPE_ROUND_RECTANGLE,    10),
         (TEST_SHAPE_TRAPEZOID,          6),
     ],
-)  # fmt: on
-def test_line_cuts(shape: GeomShape, expected_number_of_shapes: int, rel: float = TOL_MM):
+)
+# fmt: on
+def test_line_cuts(
+    shape: GeomShape, expected_number_of_shapes: int, rel: float = TOL_MM
+) -> None:
     # Cutting with a vertical line along the y-axis:
     cutting_line = GeomLine(start=(0, -100), end=(0, +100))
     cuts = cutting_line.cut(shape_to_cut=shape, tol=rel)
@@ -106,8 +109,11 @@ def test_line_cuts(shape: GeomShape, expected_number_of_shapes: int, rel: float 
         (TEST_SHAPE_ROUND_RECTANGLE,    9),
         (TEST_SHAPE_TRAPEZOID,          5),
     ],
-)  # fmt: on
-def test_arc_cuts(shape: GeomShape, expected_number_of_shapes: int, rel: float = TOL_MM):
+)
+# fmt: on
+def test_arc_cuts(
+    shape: GeomShape, expected_number_of_shapes: int, rel: float = TOL_MM
+) -> None:
     # Cutting with an arc of 180° whose center coincides with the center-left point of
     # the shape's bounding box and intersects the origin:
     left = shape.bbox().left
@@ -132,8 +138,11 @@ def test_arc_cuts(shape: GeomShape, expected_number_of_shapes: int, rel: float =
         (TEST_SHAPE_ROUND_RECTANGLE,    16),
         (TEST_SHAPE_TRAPEZOID,          8),
     ],
-)  # fmt: on
-def test_circle_cuts(shape: GeomShape, expected_number_of_shapes: int, rel: float = TOL_MM):
+)
+# fmt: on
+def test_circle_cuts(
+    shape: GeomShape, expected_number_of_shapes: int, rel: float = TOL_MM
+) -> None:
     # Cutting with a centered circle of radius of (1+sqrt(2))/2:
     cutting_circle = GeomCircle(center=(0, 0), radius=(1 + sqrt(2)) / 2)
     cuts = cutting_circle.cut(shape_to_cut=shape, tol=rel)
@@ -156,8 +165,11 @@ def test_circle_cuts(shape: GeomShape, expected_number_of_shapes: int, rel: floa
         (TEST_SHAPE_ROUND_RECTANGLE,    16),
         (TEST_SHAPE_TRAPEZOID,          8),
     ],
-)  # fmt: on
-def test_rotated_rectangle_cuts(shape: GeomShape, expected_number_of_shapes: int, rel: float = TOL_MM):
+)
+# fmt: on
+def test_rotated_rectangle_cuts(
+    shape: GeomShape, expected_number_of_shapes: int, rel: float = TOL_MM
+) -> None:
     # Cutting with a unit rectangle rotated by 45 degrees:
     cutting_rect = GeomRectangle(start=[-1, -1], end=[1, 1], angle=45)
     cuts = cutting_rect.cut(shape_to_cut=shape, tol=rel)
@@ -180,10 +192,22 @@ def test_rotated_rectangle_cuts(shape: GeomShape, expected_number_of_shapes: int
         (TEST_SHAPE_ROUND_RECTANGLE,    16),
         (TEST_SHAPE_TRAPEZOID,          12),
     ],
-)  # fmt: on
-def test_concave_polygon_cuts(shape: GeomShape, expected_number_of_shapes: int, rel: float = TOL_MM):
+)
+# fmt: on
+def test_concave_polygon_cuts(
+    shape: GeomShape, expected_number_of_shapes: int, rel: float = TOL_MM
+) -> None:
     # Cutting with a centered star-like polygon with circumradius of 2:
-    pts: list[list[float]] = [[-1, -1], [0, -0.5], [1, -1], [0.5, 0], [1, 1], [0, 0.5], [-1, 1], [-0.5, 0]]
+    pts: list[list[float]] = [
+        [-1, -1],
+        [0, -0.5],
+        [1, -1],
+        [0.5, 0],
+        [1, 1],
+        [0, 0.5],
+        [-1, 1],
+        [-0.5, 0],
+    ]
     pts2: list[list[float]] = []
     for pt in pts:
         pts2.append([sqrt(2) * pt[0], sqrt(2) * pt[1]])

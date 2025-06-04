@@ -12,11 +12,13 @@
 # (C) The KiCad Librarian Team
 """Tests for the graphical keepout classes.
 
-These are not intended to be exhaustive, but mostly for a demonstration of how to use the classes,
-as well as a place to put some simple tests to catch fiddly edge cases if needed.
+These are not intended to be exhaustive, but mostly for a demonstration of how to use
+the classes, as well as a place to put some simple tests to catch fiddly edge cases if
+needed.
 
-Exhaustive tests are high maintenance, and regressions will normally be much more obvious by the
-visual diffs of the generated graphics than by delicate stacks of numerical tests.
+Exhaustive tests are high maintenance, and regressions will normally be much more
+obvious by the visual diffs of the generated graphics than by delicate stacks of
+numerical tests.
 """
 
 from itertools import product
@@ -60,7 +62,7 @@ def test_keepout_rect_vs_line(
     line_start: Vec2DCompatible,
     line_end: Vec2DCompatible,
     expected_segs: list[list[tuple[float, float]]],
-):
+) -> None:
     """Simple test for keepout rectangle vs line."""
     ko = GeomRectangle(center=center, size=size)
     line = GeomLine(start=line_start, end=line_end)
@@ -75,7 +77,7 @@ def test_keepout_rect_vs_line(
     "fp_fudge_x",
     FLOATING_POINT_OFFSETS,
 )
-def test_keepout_rect_coincident_line(fp_fudge_x: float):
+def test_keepout_rect_coincident_line(fp_fudge_x: float) -> None:
     """Simple test for keepout rectangle vs line that lies on the keepout.
 
     These lines should NOT be trimmed, as they're common when computing
@@ -93,7 +95,7 @@ def test_keepout_rect_coincident_line(fp_fudge_x: float):
         assert is_equal(line, new_items[0])
 
 
-def test_apply_keepout_1():
+def test_apply_keepout_1() -> None:
     # Four lines:
     # - Two cut by the keepout
     # - One fully inside - deleted
@@ -111,7 +113,7 @@ def test_apply_keepout_1():
     assert len(new_items) == 3
 
 
-def test_apply_circles_to_circle():
+def test_apply_circles_to_circle() -> None:
     # Two circular keeouts, at 0 and 180
     # Should split the circle into two arcs
     items: list[GeomShape] = [
@@ -129,7 +131,7 @@ def test_apply_circles_to_circle():
     "fp_fudge_r, fp_fudge_x",
     product(FLOATING_POINT_OFFSETS, repeat=2),
 )
-def test_arc_tangent_to_circle(fp_fudge_r: float, fp_fudge_x: float):
+def test_arc_tangent_to_circle(fp_fudge_r: float, fp_fudge_x: float) -> None:
     # If an arc just touches the circle, it's one intersection,
     # which can upset the odd/even splitting if not handled
     items: list[GeomShape] = [
@@ -155,7 +157,7 @@ def test_arc_tangent_to_circle(fp_fudge_r: float, fp_fudge_x: float):
     "fp_fudge_r, fp_fudge_cx",
     product(FLOATING_POINT_OFFSETS, repeat=2),
 )
-def test_circle_tangent_to_circle(fp_fudge_r: float, fp_fudge_cx: float):
+def test_circle_tangent_to_circle(fp_fudge_r: float, fp_fudge_cx: float) -> None:
     # As for arc-circle, one circle just touching shouldn't clip.
     items: list[GeomShape] = [
         GeomCircle(center=(fp_fudge_cx, 0), radius=200 + fp_fudge_r),
@@ -173,7 +175,7 @@ def test_circle_tangent_to_circle(fp_fudge_r: float, fp_fudge_cx: float):
     "fp_fudge_r, fp_fudge_cx",
     product(FLOATING_POINT_OFFSETS, repeat=2),
 )
-def test_circle_tangent_to_rect(fp_fudge_r: float, fp_fudge_cx: float):
+def test_circle_tangent_to_rect(fp_fudge_r: float, fp_fudge_cx: float) -> None:
     # If a circle just touches the rectangle, it's one intersection,
     # and we reject it as a clip point
     items: list[GeomShape] = [
@@ -194,7 +196,7 @@ def test_circle_tangent_to_rect(fp_fudge_r: float, fp_fudge_cx: float):
     assert new_items[0] == items[0]
 
 
-def test_arc_to_circle_ko_reverse_angle():
+def test_arc_to_circle_ko_reverse_angle() -> None:
     # Test a 180 arc with positive and negative angle
     # (in PCB land: 6-oclock to 12-oclock, mdpoint at 3-oclock)
     #
@@ -202,7 +204,7 @@ def test_arc_to_circle_ko_reverse_angle():
     # from the horizontal. Check that we do get two 30-degree chunks in both directions
     #
     # This exposes problems with angle ordering if not properly handled.
-    def check_results(new_items: list[GeomShape]):
+    def check_results(new_items: list[GeomShape]) -> None:
         assert len(new_items) == 2
         for item in new_items:
             assert isinstance(item, GeomArc)
@@ -228,7 +230,7 @@ def test_arc_to_circle_ko_reverse_angle():
     "fp_fudge_x",
     FLOATING_POINT_OFFSETS,
 )
-def test_arc_with_endpoint_on_ko_bound(fp_fudge_x: float):
+def test_arc_with_endpoint_on_ko_bound(fp_fudge_x: float) -> None:
     """Make sure we don't flub the case where the end/startpoint of the arc is also
     an intersection with the keepout.
 
@@ -263,7 +265,7 @@ def test_arc_with_endpoint_on_ko_bound(fp_fudge_x: float):
 
 
 @pytest.mark.parametrize("shape", TEST_SHAPES)
-def test_keepout_with_rectangle(shape: GeomShape, rel: float = TOL_MM):
+def test_keepout_with_rectangle(shape: GeomShape, rel: float = TOL_MM) -> None:
     # Keepout with a rectangle (whose center coincides with the center-left point of the
     # shape's bounding box and intersects the origin):
     left = shape.bbox().left

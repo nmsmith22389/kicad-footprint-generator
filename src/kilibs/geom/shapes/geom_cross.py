@@ -31,6 +31,8 @@ class GeomCross(GeomShapeOpen):
     """The size in mm."""
     angle: float
     """The rotation angle."""
+    _shapes: list[GeomLine]
+    """KiCad native shape that describes this cross."""
 
     def __init__(
         self,
@@ -39,7 +41,7 @@ class GeomCross(GeomShapeOpen):
         size: Vec2DCompatible | float | None = None,
         angle: float = 0,
         use_degrees: bool = True,
-    ):
+    ) -> None:
         """Create a geometric cross.
 
         Args:
@@ -65,7 +67,7 @@ class GeomCross(GeomShapeOpen):
             self.angle = angle
         else:
             raise KeyError("Either 'shape' or 'center' and 'size' must be provided.")
-        self._shapes = None
+        self._shapes = []
 
     def get_shapes(self) -> list[GeomLine]:
         """Return a list containing the two lines of the cross."""
@@ -86,9 +88,48 @@ class GeomCross(GeomShapeOpen):
         ]
         return self._shapes
 
-    def invalidate_shapes(self):
-        """Invalidates the computed shapes that this shape is composed of."""
-        self._shapes = None
+    def translate(
+        self,
+        vector: Vec2DCompatible | None = None,
+        x: float | None = None,
+        y: float | None = None,
+    ) -> GeomCross:
+        """Move the cross.
+
+        Args:
+            vector: The direction and distance in mm.
+            x: The distance in mm in the x-direction.
+            y: The distance in mm in the y-direction.
+
+        Returns:
+            The translated cross.
+        """
+        self.center.translate(vector=vector, x=x, y=y)
+        self._shapes = []
+        return self
+
+    def rotate(
+        self,
+        angle: float | int,
+        origin: Vec2DCompatible = [0, 0],
+        use_degrees: bool = True,
+    ) -> GeomCross:
+        """Rotate the cross around a given point.
+
+        Args:
+            angle: Rotation angle.
+            origin: Coordinates (in mm) of the point around which to rotate.
+            use_degrees: `True` if rotation angle is given in degrees, `False` if given
+                in radians.
+
+        Returns:
+            The rotated cross.
+        """
+        if angle:
+            origin = Vector2D(origin)
+            self.center.rotate(angle=angle, origin=origin, use_degrees=use_degrees)
+            self._shapes = []
+        return self
 
     def __repr__(self) -> str:
         return f"GeomCross(center={self.center}, size={self.size}, angle={self.angle})"

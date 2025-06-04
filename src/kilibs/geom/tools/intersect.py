@@ -112,7 +112,7 @@ def intersect(
     return handle
 
 
-def _replace_segments_with_cuts(handle: GeomOperationHandle, shape_idx: int):
+def _replace_segments_with_cuts(handle: GeomOperationHandle, shape_idx: int) -> None:
     """Split the segments that have intersection points at their intersection
     points.
 
@@ -157,6 +157,7 @@ def _replace_segment_with_cuts(
     """
     segment = handle.atoms[shape_idx][segment_idx]
     points = handle.atoms_intersections[shape_idx][idx_atoms_intersections]
+    cut_segments: list[GeomArc] | list[GeomLine]
     if isinstance(segment, GeomArc):
         cut_segments, intersections = _create_arcs_from_arc_and_points(
             arc=segment,
@@ -199,7 +200,9 @@ def _replace_segment_with_cuts(
     return num_cut_segments
 
 
-def _test_if_segments_inside_other_shape(handle: GeomOperationHandle, shape_idx: int):
+def _test_if_segments_inside_other_shape(
+    handle: GeomOperationHandle, shape_idx: int
+) -> None:
     """Go through all segments of the given shape and check if they are inside or
     outside of the other shape.
 
@@ -246,7 +249,9 @@ def _test_if_segments_inside_other_shape(handle: GeomOperationHandle, shape_idx:
             )
 
 
-def _keep_only_strict_intersections(handle: GeomOperationHandle, shape_idx: int):
+def _keep_only_strict_intersections(
+    handle: GeomOperationHandle, shape_idx: int
+) -> None:
     """Go through all segments and merge those segments that were split by an
     intersection that turns out to be not a strict intersection. These are segments
     that lie on the same side of the other shape.
@@ -425,23 +430,23 @@ def _create_arcs_from_arc_and_points(
     radius = arc.radius
     insert_start = False if start.is_equal_accelerated(sorted_pts[0][2]) else True
     insert_end = False if end.is_equal_accelerated(sorted_pts[-1][2]) else True
-    sorted_pts = cast(list[tuple[float, float, Vector2D | None]], sorted_pts)
+    pts_or_none = cast(list[tuple[float, float, Vector2D | None]], sorted_pts)
     if insert_start:
-        sorted_pts.insert(0, (radius, 0, None))
+        pts_or_none.insert(0, (radius, 0, None))
     if insert_end:
-        sorted_pts.append((radius, arc.angle, None))
+        pts_or_none.append((radius, arc.angle, None))
     arcs: list[GeomArc] = []
-    intersections: list[list[Vector2D | None]] = [[None, None]] * (len(sorted_pts) - 1)
-    for i in range(len(sorted_pts) - 1):
+    intersections: list[list[Vector2D | None]] = [[None, None]] * (len(pts_or_none) - 1)
+    for i in range(len(pts_or_none) - 1):
         new_arc = GeomArc(
             center=arc.center,
-            start=arc.start.rotated(sorted_pts[i][1], origin=arc.center),
-            angle=sorted_pts[i + 1][1] - sorted_pts[i][1],
+            start=arc.start.rotated(pts_or_none[i][1], origin=arc.center),
+            angle=pts_or_none[i + 1][1] - pts_or_none[i][1],
         )
         # Only add arc segments that are equal or larger than `min_segment_length`.
         if arc.radius * abs(math.radians(new_arc.angle)) >= min_segment_length:
             arcs.append(new_arc)
-            intersections[i] = [sorted_pts[i][2], sorted_pts[i + 1][2]]
+            intersections[i] = [pts_or_none[i][2], pts_or_none[i + 1][2]]
     return (arcs, intersections)
 
 
@@ -473,6 +478,7 @@ def _create_arcs_from_circle_and_points(
     arc = GeomArc(center=circle.center, start=points[0], angle=360)
     point = points[0]
     del points[0]
+    intersections: list[list[Vector2D | None]]
     if len(points):
         arcs, intersections = _create_arcs_from_arc_and_points(
             arc=arc, points=points, min_segment_length=min_segment_length, tol=tol
@@ -481,7 +487,7 @@ def _create_arcs_from_circle_and_points(
         intersections[-1][1] = point
     else:
         arcs = [arc]
-        intersections: list[list[Vector2D | None]] = [[point, point]]
+        intersections = [[point, point]]
     return (arcs, intersections)
 
 

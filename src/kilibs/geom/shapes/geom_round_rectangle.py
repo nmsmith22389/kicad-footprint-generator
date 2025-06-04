@@ -48,7 +48,7 @@ class GeomRoundRectangle(GeomShapeClosed):
         corner_radius: float | None = None,
         angle: float = 0,
         use_degrees: bool = True,
-    ):
+    ) -> None:
         r"""Create a geometric round rectangle. That is a rectangle with all four
         corners rounded:
 
@@ -62,9 +62,6 @@ class GeomRoundRectangle(GeomShapeClosed):
               |        |
               |        |
               \--------/
-
-        It is centred at the origin - you can use a Translate or Rotation transform
-        node to move it to the desired location.
 
         Args:
             shape: Shape from which to derive the parameters of the round rectangle.
@@ -157,11 +154,50 @@ class GeomRoundRectangle(GeomShapeClosed):
                     child.rotate(angle=self.angle, origin=self.center, use_degrees=True)
         return self._shapes
 
-    def invalidate_shapes(self) -> None:
-        """Invalidate the computed shapes that this shape is composed of."""
-        self._shapes = []
+    def translate(
+        self,
+        vector: Vec2DCompatible | None = None,
+        x: float | None = None,
+        y: float | None = None,
+    ) -> GeomRoundRectangle:
+        """Move the round rectangle.
 
-    def inflate(self, amount: float, tol: float = TOL_MM) -> GeomShapeClosed:
+        Args:
+            vector: The direction and distance in mm.
+            x: The distance in mm in the x-direction.
+            y: The distance in mm in the y-direction.
+
+        Returns:
+            The translated round rectangle.
+        """
+        self.center.translate(vector=vector, x=x, y=y)
+        self._shapes = []
+        return self
+
+    def rotate(
+        self,
+        angle: float | int,
+        origin: Vec2DCompatible = [0, 0],
+        use_degrees: bool = True,
+    ) -> GeomRoundRectangle:
+        """Rotate the round rectangle around a given point.
+
+        Args:
+            angle: Rotation angle.
+            origin: Coordinates (in mm) of the point around which to rotate.
+            use_degrees: `True` if rotation angle is given in degrees, `False` if given
+                in radians.
+
+        Returns:
+            The rotated round rectangle.
+        """
+        if angle:
+            origin = Vector2D(origin)
+            self.center.rotate(angle=angle, origin=origin, use_degrees=use_degrees)
+            self._shapes = []
+        return self
+
+    def inflate(self, amount: float, tol: float = TOL_MM) -> GeomRoundRectangle:
         """Inflate or deflate the round rectangle by 'amount'.
 
         Args:

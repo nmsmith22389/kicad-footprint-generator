@@ -27,7 +27,7 @@ from kilibs.geom.vector import Vec2DCompatible, Vector2D
 class GeomStadium(GeomShapeClosed):
     """A geometric stadium."""
 
-    points: list[Vector2D]
+    centers: list[Vector2D]
     """The coordinates of the two arc centers in mm."""
     radius: float
     """The radius of the two arcs in mm."""
@@ -40,7 +40,7 @@ class GeomStadium(GeomShapeClosed):
         center_1: Vec2DCompatible | None = None,
         center_2: Vec2DCompatible | None = None,
         radius: float | None = None,
-    ):
+    ) -> None:
         """Create a geometric stadium.
 
         Args:
@@ -53,24 +53,24 @@ class GeomStadium(GeomShapeClosed):
         """
         if shape is not None:
             if isinstance(shape, GeomStadium):
-                self.points = [shape.points[0].copy(), shape.points[1].copy()]
+                self.centers = [shape.centers[0].copy(), shape.centers[1].copy()]
                 self.radius = shape.radius
             else:  # isinstance(shape, GeomRectangle):
                 # The stadium is inscribed in a rectangle.
                 if shape.size.x > shape.size.y:
                     self.radius = shape.size.y / 2
-                    self.points = [
+                    self.centers = [
                         Vector2D(shape.left + self.radius, shape.center.y),
                         Vector2D(shape.right - self.radius, shape.center.y),
                     ]
                 else:
                     self.radius = shape.size.x / 2
-                    self.points = [
+                    self.centers = [
                         Vector2D(shape.center.x, shape.top + self.radius),
                         Vector2D(shape.center.x, shape.bottom - self.radius),
                     ]
         elif center_1 is not None and center_2 is not None and radius is not None:
-            self.points = [Vector2D(center_1), Vector2D(center_2)]
+            self.centers = [Vector2D(center_1), Vector2D(center_2)]
             self.radius = radius
         else:
             raise KeyError(
@@ -80,8 +80,8 @@ class GeomStadium(GeomShapeClosed):
 
     def get_shapes_back_compatible(self) -> list[GeomLine | GeomArc]:
         """Return a list containing the shapes that this shape is composed of."""
-        c1 = self.points[0]
-        c2 = self.points[1]
+        c1 = self.centers[0]
+        c2 = self.centers[1]
         # centre 1 to centre 2 vector
         c_vec = c2 - c1
         perp_vec = c_vec.orthogonal().resize(self.radius)
@@ -99,8 +99,8 @@ class GeomStadium(GeomShapeClosed):
         clockwise order."""
         if self._shapes:
             return self._shapes
-        c1 = self.points[0]
-        c2 = self.points[1]
+        c1 = self.centers[0]
+        c2 = self.centers[1]
         # centre 1 to centre 2 vector
         c_vec = c2 - c1
         perp_vec = c_vec.orthogonal().resize(self.radius)
@@ -114,9 +114,78 @@ class GeomStadium(GeomShapeClosed):
         ]
         return self._shapes
 
-    def invalidate_shapes(self) -> None:
-        """Invalidate the computed shapes that this shape is composed of."""
+    def translate(
+        self,
+        vector: Vec2DCompatible | None = None,
+        x: float | None = None,
+        y: float | None = None,
+    ) -> GeomStadium:
+        """Move the stadium.
+
+        Args:
+            vector: The direction and distance in mm.
+            x: The distance in mm in the x-direction.
+            y: The distance in mm in the y-direction.
+
+        Returns:
+            The translated stadium.
+        """
+        if vector is not None:
+            vector = Vector2D(vector)
+        elif x is not None or y is not None:
+            vector = Vector2D(x if x else 0, y if y else 0)
+        else:
+            raise KeyError("Either 'x', 'y', or 'vector' must be provided.")
+        self.centers[0] += vector
+        self.centers[1] += vector
         self._shapes = []
+        return self
+
+    def rotate(
+        self,
+        angle: float | int,
+        origin: Vec2DCompatible = [0, 0],
+        use_degrees: bool = True,
+    ) -> GeomStadium:
+        """Rotate the stadium around a given point.
+
+        Args:
+            angle: Rotation angle.
+            origin: Coordinates (in mm) of the point around which to rotate.
+            use_degrees: `True` if rotation angle is given in degrees, `False` if given
+                in radians.
+
+        Returns:
+            The rotated stadium.
+        """
+        if angle:
+            origin = Vector2D(origin)
+            self.centers[0].rotate(angle=angle, origin=origin, use_degrees=use_degrees)
+            self.centers[1].rotate(angle=angle, origin=origin, use_degrees=use_degrees)
+            self._shapes = []
+        return self
+
+    def inflate(self, amount: float, tol: float = TOL_MM) -> GeomStadium:
+        """Inflate or deflate the stadium by 'amount'.
+
+        Args:
+            amount: The amount in mm by which the stadium is inflated (when
+                amount is positive) or deflated (when amount is negative).
+            tol: Maximum negative dimension in mm that a segment of the stadium
+                is allowed to have after the deflation without raising a `ValueError`.
+
+        Raises:
+            ValueError: If the deflation operation would result in segments with
+                negative dimensions a `ValueError` is raised.
+
+        Returns:
+            The stadium after the inflation/deflation.
+        """
+        if amount < 0 and -amount > self.radius - tol:
+            raise ValueError(f"Cannot deflate this circle by {amount}.")
+        self.radius += amount
+        self._shapes = []
+        return self
 
     def is_point_inside_self(
         self, point: Vector2D, strictly_inside: bool = True, tol: float = TOL_MM
@@ -137,20 +206,20 @@ class GeomStadium(GeomShapeClosed):
         if self.is_point_on_self(point=point, tol=tol):
             return not strictly_inside
         # Check if the point is inside the two circles of the stadium:
-        if (point - self.points[0]).norm() <= (self.radius + tol) or (
-            point - self.points[1]
+        if (point - self.centers[0]).norm() <= (self.radius + tol) or (
+            point - self.centers[1]
         ).norm() <= (self.radius + tol):
             return True
         # Check if the point is inside the rectangular area of the stadium:
         # Check if the given point is always on the right side of its lines when the
         # lines are defining the rectangle in clockwise direction:
-        c_vec = self.points[1] - self.points[0]
+        c_vec = self.centers[1] - self.centers[0]
         perp_vec = c_vec.orthogonal().resize(self.radius)
         c = [
-            self.points[0] - perp_vec,
-            self.points[1] - perp_vec,
-            self.points[1] + perp_vec,
-            self.points[0] + perp_vec,
+            self.centers[0] - perp_vec,
+            self.centers[1] - perp_vec,
+            self.centers[1] + perp_vec,
+            self.centers[0] + perp_vec,
         ]
         lines = [GeomLine(start=c[i], end=c[(i + 1) % 4]) for i in range(len(c))]
         for line in lines:
@@ -161,13 +230,13 @@ class GeomStadium(GeomShapeClosed):
 
     def bbox(self) -> BoundingBox:
         """Return the bounding box of the stadium."""
-        return BoundingBox(self.points[0] - self.radius, self.points[1] + self.radius)
+        return BoundingBox(self.centers[0] - self.radius, self.centers[1] + self.radius)
 
     def __repr__(self) -> str:
         """Return the string representation of the stadium."""
         return (
             f"GeomStadium("
-            f"center1={self.points[0]}, "
-            f"center2={self.points[1]}, "
+            f"center1={self.centers[0]}, "
+            f"center2={self.centers[1]}, "
             f"radius={self.radius})"
         )

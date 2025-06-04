@@ -418,7 +418,7 @@ def intersect_circles(
         # circles have the same center
         if abs(r2) < tol and abs(r1) < tol:
             # circles have both radius zero --> return common center
-            x = y = 0
+            x = y = 0.0
         else:
             return []  # the two circles are identical
     else:
@@ -491,7 +491,7 @@ def intersect_circle_with_line(
     dr2 = dr**2
     sqrt_discriminant_div_r2 = math.sqrt(discriminant) / dr2
 
-    def calc_point(sign: int):
+    def calc_point(sign: int) -> Vector2D:
         return (
             Vector2D.from_floats(
                 (

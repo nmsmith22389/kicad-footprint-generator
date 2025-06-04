@@ -48,7 +48,7 @@ class GeomPolygon(GeomShapeClosed):
         x_mirror: float | None = None,
         y_mirror: float | None = None,
         close: bool = True,
-    ):
+    ) -> None:
         """Create a geometric polygon.
 
         Args:
@@ -103,9 +103,56 @@ class GeomPolygon(GeomShapeClosed):
         """Return a list with itself in it since a line is a basic shape."""
         return [self]
 
-    def invalidate_shapes(self) -> None:
-        """Invalidate the computed lines that this polygon is composed of."""
+    def translate(
+        self,
+        vector: Vec2DCompatible | None = None,
+        x: float | None = None,
+        y: float | None = None,
+    ) -> GeomPolygon:
+        """Move the polygon.
+
+        Args:
+            vector: The direction and distance in mm.
+            x: The distance in mm in the x-direction.
+            y: The distance in mm in the y-direction.
+
+        Returns:
+            The translated polygon.
+        """
+        if vector is not None:
+            vector = Vector2D(vector)
+        elif x is not None or y is not None:
+            vector = Vector2D(x if x else 0, y if y else 0)
+        else:
+            raise KeyError("Either 'x', 'y', or 'vector' must be provided.")
+        for point in self.points:
+            point += vector
         self._segments = []
+        return self
+
+    def rotate(
+        self,
+        angle: float | int,
+        origin: Vec2DCompatible = [0, 0],
+        use_degrees: bool = True,
+    ) -> GeomPolygon:
+        """Rotate the cross around a given point.
+
+        Args:
+            angle: Rotation angle.
+            origin: Coordinates (in mm) of the point around which to rotate.
+            use_degrees: `True` if rotation angle is given in degrees, `False` if given
+                in radians.
+
+        Returns:
+            The rotated cross.
+        """
+        if angle:
+            origin = Vector2D(origin)
+            for point in self.points:
+                point.rotate(angle=angle, origin=origin, use_degrees=use_degrees)
+        self._segments = []
+        return self
 
     def inflate(
         self,
@@ -135,7 +182,7 @@ class GeomPolygon(GeomShapeClosed):
         """
         import kilibs.geom.tools.intersect_atomic_shapes as intersect_atomic_shapes
 
-        def remove_segment(index: int):
+        def remove_segment(index: int) -> None:
             del segments[index]
             del directions[index]
             del orthogonals[index]
@@ -465,7 +512,7 @@ class GeomPolygon(GeomShapeClosed):
 
     def cut_with_polygon(
         self, other_polygon: GeomPolygon
-    ):  # Currently only used in old unit tests.
+    ) -> None:  # Currently only used in old unit tests.
         """Cut other polygon points from self.
 
         As kicad has no native support for cutting one polygon from the other,
@@ -487,7 +534,7 @@ class GeomPolygon(GeomShapeClosed):
             Warning,
         )
 
-        def find_nearest_points(other: GeomPolygon):
+        def find_nearest_points(other: GeomPolygon) -> tuple[int, int]:
             """Find the two points for both polygons that are nearest to each other.
 
             Args:
@@ -521,7 +568,7 @@ class GeomPolygon(GeomShapeClosed):
 
     def is_clockwise(self) -> bool:
         """Return whether the polygon points are given in clockwise order or not."""
-        sum = 0
+        sum = 0.0
         num = len(self.points)
         for i, pt1 in enumerate(self.points):
             pt2 = self.points[(i + 1) % num]
@@ -556,7 +603,7 @@ class GeomPolygon(GeomShapeClosed):
                 )
         return self._segments
 
-    def _remove_zero_length_segments(self, tol: float = TOL_MM):
+    def _remove_zero_length_segments(self, tol: float = TOL_MM) -> None:
         """Remove points from the list that would otherwise create segments of zero
         length.
         """
@@ -567,7 +614,7 @@ class GeomPolygon(GeomShapeClosed):
             else:
                 i += 1
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """Return the string representation of the polygon."""
         string = "GeomPolygon("
         for point in self.points:

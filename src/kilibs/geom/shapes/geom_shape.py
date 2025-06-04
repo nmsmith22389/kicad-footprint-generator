@@ -15,7 +15,6 @@
 
 from __future__ import annotations
 
-import math
 from abc import ABC, abstractmethod
 from collections.abc import Sequence
 from typing import TYPE_CHECKING, Self
@@ -43,6 +42,10 @@ class GeomShape(ABC):
         raise NotImplementedError(
             f"`__init__()` not implemented for {self.__class__.__name__}."
         )
+
+    def copy(self) -> Self:
+        """Create a deep copy of itself."""
+        return self.__class__(shape=self)
 
     def get_atomic_shapes(self) -> Sequence[GeomShapeAtomic]:
         """Decompose this shape to its atomic shapes (of type `GeomArc`, `GeomCircle`
@@ -78,52 +81,6 @@ class GeomShape(ABC):
         # Note: non-basic shapes must redefine this function.
         return [self]
 
-    def invalidate_shapes(self) -> None:
-        """Invalidates the computed shapes that this shape is composed of. Typically,
-        this is called after a `translation()` or `rotation()` operation to signalize
-        that the previously calculated shapes (if any) are not valid anymore.
-        """
-        # Note: non-basic shapes must redefine this function.
-        pass
-
-    def copy(self) -> Self:
-        """Create a deep copy of itself."""
-        return self.__class__(shape=self)
-
-    def translate(
-        self,
-        vector: Vec2DCompatible | None = None,
-        x: float | None = None,
-        y: float | None = None,
-    ) -> Self:
-        """Move the shape.
-
-        Args:
-            vector: The direction and distance in mm.
-            x: The distance in mm in the x-direction.
-            y: The distance in mm in the y-direction.
-
-        Returns:
-            The translated shape.
-        """
-        # Note: this is a generic implementation for any shape whose position is fully
-        # defined by a center point.
-        if vector is not None:
-            vector = Vector2D(vector)
-        elif x is not None or y is not None:
-            vector = Vector2D(x if x else 0, y if y else 0)
-        else:
-            raise KeyError("Either 'x', 'y', or 'vector' must be provided.")
-        if hasattr(self, "center"):
-            self.center: Vector2D
-            self.center += vector
-        elif hasattr(self, "points"):
-            self.points: list[Vector2D]
-            for point in self.points:
-                point += vector
-        self.invalidate_shapes()
-        return self
-
     def translated(
         self,
         vector: Vec2DCompatible | None = None,
@@ -141,44 +98,6 @@ class GeomShape(ABC):
             The translated copy.
         """
         return self.copy().translate(vector=vector, x=x, y=y)
-
-    def rotate(
-        self,
-        angle: float | int,
-        origin: Vec2DCompatible = [0, 0],
-        use_degrees: bool = True,
-    ) -> Self:
-        """Rotate the shape around a given point.
-
-        Args:
-            angle: Rotation angle.
-            origin: Coordinates (in mm) of the point around which to rotate.
-            use_degrees: `True` if rotation angle is given in degrees, `False` if given
-                in radians.
-
-        Returns:
-            The rotated shape.
-        """
-        # Note: this is a generic implementation for any shape whose position and
-        # orientation are fully defined by one `center` or several `points` and
-        # optionally an `angle`.
-        if angle:
-            origin = Vector2D(origin)
-            if hasattr(self, "center"):
-                self.center.rotate(angle=angle, origin=origin, use_degrees=use_degrees)
-            elif hasattr(self, "points"):
-                for point in self.points:
-                    point.rotate(angle=angle, origin=origin, use_degrees=use_degrees)
-            else:
-                raise NotImplementedError(
-                    f"`rotate()` not implemented for {self.__class__.__name__}."
-                )
-            if hasattr(self, "angle"):
-                if not use_degrees:
-                    angle = math.degrees(angle)
-                self.angle = (self.angle + angle + 180.0) % 360 - 180
-            self.invalidate_shapes()
-        return self
 
     def rotated(
         self,
@@ -302,6 +221,45 @@ class GeomShape(ABC):
         return self.__repr__()
 
     @abstractmethod
+    def translate(
+        self,
+        vector: Vec2DCompatible | None = None,
+        x: float | None = None,
+        y: float | None = None,
+    ) -> Self:
+        """Move the shape.
+
+        Args:
+            vector: The direction and distance in mm.
+            x: The distance in mm in the x-direction.
+            y: The distance in mm in the y-direction.
+
+        Returns:
+            The translated shape.
+        """
+        ...
+
+    @abstractmethod
+    def rotate(
+        self,
+        angle: float | int,
+        origin: Vec2DCompatible = [0, 0],
+        use_degrees: bool = True,
+    ) -> Self:
+        """Rotate the shape around a given point.
+
+        Args:
+            angle: Rotation angle.
+            origin: Coordinates (in mm) of the point around which to rotate.
+            use_degrees: `True` if rotation angle is given in degrees, `False` if given
+                in radians.
+
+        Returns:
+            The rotated shape.
+        """
+        ...
+
+    @abstractmethod
     def __repr__(self) -> str:
         """Return the string representation.
 
@@ -310,49 +268,11 @@ class GeomShape(ABC):
             example in the debugger when displaying the value of a shape class in a
             single line.
         """
-        raise NotImplementedError(
-            f"`__repr__()` not implemented for {self.__class__.__name__}."
-        )
+        ...
 
 
 class GeomShapeClosed(GeomShape):
     """The base class for all closed shapes."""
-
-    def inflate(self, amount: float, tol: float = TOL_MM) -> Self:
-        """Inflate or deflate the shape by 'amount'.
-
-        Args:
-            amount: The amount in mm by which the shape is inflated (when amount is
-                positive) or deflated (when amount is negative).
-            tol: Maximum negative dimension in mm that a segment of the shape is allowed
-                to have after the deflation without raising a `ValueError`.
-
-        Raises:
-            ValueError: If the deflation operation would result in segments with
-                negative dimensions a `ValueError` is raised.
-
-        Returns:
-            The shape after the inflation/deflation.
-        """
-        # Note: this is a generic implementation for all shapes whose thickness is fully
-        # described by the property `size` or `radius`.
-        if hasattr(self, "size"):
-            self.size: Vector2D
-            min_dimension = min(self.size.x, self.size.y)
-            if amount < 0 and -amount > min_dimension / 2 - tol:
-                raise ValueError(f"Cannot deflate this shape by {amount}.")
-            self.size += 2 * amount
-        elif hasattr(self, "radius"):
-            self.radius: float
-            if amount < 0 and -amount > self.radius - tol:
-                raise ValueError(f"Cannot deflate this shape by {amount}.")
-            self.radius += amount
-        else:
-            raise NotImplementedError(
-                f"`inflate()` not implemented for {self.__class__.__name__}."
-            )
-        self.invalidate_shapes()
-        return self
 
     def inflated(self, amount: float, tol: float = TOL_MM) -> Self:
         """Create a copy of itself and inflate or deflate it.
@@ -430,6 +350,25 @@ class GeomShapeClosed(GeomShape):
             min_segment_length=min_segment_length,
             tol=tol,
         )
+
+    @abstractmethod
+    def inflate(self, amount: float, tol: float = TOL_MM) -> Self:
+        """Inflate or deflate the shape by 'amount'.
+
+        Args:
+            amount: The amount in mm by which the shape is inflated (when amount is
+                positive) or deflated (when amount is negative).
+            tol: Maximum negative dimension in mm that a segment of the shape is allowed
+                to have after the deflation without raising a `ValueError`.
+
+        Raises:
+            ValueError: If the deflation operation would result in segments with
+                negative dimensions a `ValueError` is raised.
+
+        Returns:
+            The shape after the inflation/deflation.
+        """
+        ...
 
     @abstractmethod
     def is_point_inside_self(

@@ -18,7 +18,7 @@ from tests.kilibs.geom.geom_test_shapes import POINTS
 from tests.kilibs.geom.is_equal import is_equal_bboxes
 
 
-def test_constructor(rel: float = 1e-10):
+def test_constructor(rel: float = 1e-10) -> None:
     bboxs: list[BoundingBox] = []
     # Test the constructor with no argument:
     bboxs.append(BoundingBox())
@@ -36,7 +36,7 @@ def test_constructor(rel: float = 1e-10):
         assert is_equal_bboxes(bboxs[0], bbox, rel)
 
 
-def test_failures():
+def test_failures() -> None:
     bb = BoundingBox()
     with pytest.raises(RuntimeError):
         bb.top
@@ -49,7 +49,7 @@ def test_failures():
         BoundingBox(corner2=Vector2D(10, 20))
 
 
-def test_bbox_include_pts():
+def test_bbox_include_pts() -> None:
     bb = BoundingBox(corner1=Vector2D(10, 20), corner2=Vector2D(30, 40))
     assert bb.top == 20
     assert bb.bottom == 40
@@ -92,7 +92,7 @@ def test_bbox_include_pts():
     assert bb.right == 45
 
 
-def test_bbox_include_bbox():
+def test_bbox_include_bbox() -> None:
     bb = BoundingBox(corner1=Vector2D(10, 20), corner2=Vector2D(30, 40))
     bb2 = BoundingBox(corner1=Vector2D(100, 100), corner2=Vector2D(110, 110))
     bb.include_bbox(bb2)

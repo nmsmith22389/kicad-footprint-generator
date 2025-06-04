@@ -45,7 +45,7 @@ class GeomArc(GeomShapeOpen):
         angle: float | None = None,
         use_degrees: bool = True,
         long_way: bool = False,
-    ):
+    ) -> None:
         """Create a geometric arc.
 
         Args:
@@ -172,17 +172,17 @@ class GeomArc(GeomShapeOpen):
         """Return the bounding box of the arc."""
         start = self._start
         end = self.end
-        top = self.center - Vector2D.from_floats(0.0, self.radius)
-        left = self.center - Vector2D.from_floats(self.radius, 0.0)
-        bottom = self.center + Vector2D.from_floats(0.0, self.radius)
-        right = self.center + Vector2D.from_floats(self.radius, 0.0)
-        top = top.y if self.is_point_on_self(top) else min(start.y, end.y)
-        left = left.x if self.is_point_on_self(left) else min(start.x, end.x)
-        bottom = bottom.y if self.is_point_on_self(bottom) else max(start.y, end.y)
-        right = right.x if self.is_point_on_self(right) else max(start.x, end.x)
+        t_pt = self.center - Vector2D.from_floats(0.0, self.radius)
+        l_pt = self.center - Vector2D.from_floats(self.radius, 0.0)
+        b_pt = self.center + Vector2D.from_floats(0.0, self.radius)
+        r_pt = self.center + Vector2D.from_floats(self.radius, 0.0)
+        top = t_pt.y if self.is_point_on_self(t_pt) else min(start.y, end.y)
+        left = l_pt.x if self.is_point_on_self(l_pt) else min(start.x, end.x)
+        bottom = b_pt.y if self.is_point_on_self(b_pt) else max(start.y, end.y)
+        right = r_pt.x if self.is_point_on_self(r_pt) else max(start.x, end.x)
         return BoundingBox([left, top], [right, bottom])
 
-    def is_equal(self, other: GeomArc, tol: float = TOL_MM):
+    def is_equal(self, other: GeomArc, tol: float = TOL_MM) -> bool:
         """Return wheather two arcs are identical or not.
 
         Args:
@@ -386,8 +386,8 @@ class GeomArc(GeomShapeOpen):
             r, phi = self.point_to_local_polar_form(point=p, tol=tol)
             local_points.append((phi, (r, phi, p)))
         ps: list[tuple[float, float, Vector2D]] = []
-        for _, p in sorted(local_points, reverse=(self._angle < 0)):
-            ps.append(p)
+        for _, pt in sorted(local_points, reverse=(self._angle < 0)):
+            ps.append(pt)
         return ps
 
     def reverse(self) -> GeomArc:
@@ -408,7 +408,7 @@ class GeomArc(GeomShapeOpen):
         return (self._start - self.center).norm()
 
     @radius.setter
-    def radius(self, radius: float):
+    def radius(self, radius: float) -> None:
         """The radius of the arc."""
         _, ang_s = self._start.to_polar(origin=self.center)
         self._start = Vector2D.from_polar(
@@ -429,7 +429,7 @@ class GeomArc(GeomShapeOpen):
         return self._end
 
     @end.setter
-    def end(self, end: Vector2D):
+    def end(self, end: Vector2D) -> None:
         """Set the end point while keeping the start point and the direction the
         same.
         """
@@ -448,7 +448,7 @@ class GeomArc(GeomShapeOpen):
         return self._start
 
     @start.setter
-    def start(self, start: Vector2D):
+    def start(self, start: Vector2D) -> None:
         """Set the start point while keeping the end point and the direction the
         same.
         """
@@ -458,7 +458,7 @@ class GeomArc(GeomShapeOpen):
         self._init_angle(self._angle + angle, True)
         self._start = start
 
-    def set_start(self, start: Vector2D):
+    def set_start(self, start: Vector2D) -> None:
         """Set the start point while keeping the angle constant. This rotates the end
         point.
         """
@@ -471,7 +471,7 @@ class GeomArc(GeomShapeOpen):
         return self._angle
 
     @angle.setter
-    def angle(self, angle: float):
+    def angle(self, angle: float) -> None:
         """Set the angle of the arc and invalidate the end point."""
         self._angle = angle
         self._end = None
@@ -517,7 +517,7 @@ class GeomArc(GeomShapeOpen):
         mid: Vec2DCompatible | None = None,
         end: Vec2DCompatible | None = None,
         use_degrees: bool = True,
-    ):
+    ) -> None:
         """Create an arc by using the center, the angle and a point.
 
         Args:
@@ -563,7 +563,7 @@ class GeomArc(GeomShapeOpen):
         start: Vec2DCompatible,
         end: Vec2DCompatible,
         long_way: bool = False,
-    ):
+    ) -> None:
         """Create an arc by using the center, start and end point.
 
         Args:
@@ -605,7 +605,7 @@ class GeomArc(GeomShapeOpen):
         start: Vec2DCompatible,
         mid: Vec2DCompatible,
         end: Vec2DCompatible,
-    ):
+    ) -> None:
         """Create an arc by using the start, mid and end point.
 
         Args:
@@ -664,13 +664,15 @@ class GeomArc(GeomShapeOpen):
         center = Vector2D.from_floats(center_x, center_y)
 
         # Compute start and end angles
-        def _angle_from_center(pt: Vector2D):
+        def _angle_from_center(pt: Vector2D) -> float:
             return atan2(pt.y - center.y, pt.x - center.x)
 
         start_angle = _angle_from_center(self._start)
         end_angle = _angle_from_center(self._end)
 
-        def _midpoint_is_cw_from(center: Vector2D, start: Vector2D, mid: Vector2D):
+        def _midpoint_is_cw_from(
+            center: Vector2D, start: Vector2D, mid: Vector2D
+        ) -> bool:
             v1 = start - center
             v2 = mid - center
             cross = v1.x * v2.y - v1.y * v2.x

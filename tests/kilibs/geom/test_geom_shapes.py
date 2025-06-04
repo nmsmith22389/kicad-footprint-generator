@@ -55,7 +55,7 @@ from tests.kilibs.geom.geom_test_shapes import (
 from tests.kilibs.geom.is_equal import is_equal_bboxes, is_equal_geom_shapes
 
 
-def test_constructors(rel: float = TOL_MM):
+def test_constructors(rel: float = TOL_MM) -> None:
     centers: list[Vec2DCompatible] = []
     centers.append([0, 0])
     centers.append((0, 0))
@@ -220,7 +220,7 @@ def test_constructors(rel: float = TOL_MM):
 
 
 @pytest.mark.parametrize("shape", TEST_SHAPES)
-def test_copy(shape: GeomShape, rel: float = TOL_MM):
+def test_copy(shape: GeomShape, rel: float = TOL_MM) -> None:
     copied_shape = shape.copy()
     translated_copy = copied_shape.copy().translate(x=1.2345)
     # Test that when modifying a copied shape, the original remains the same.
@@ -232,7 +232,7 @@ def test_copy(shape: GeomShape, rel: float = TOL_MM):
 
 
 @pytest.mark.parametrize("shape", TEST_SHAPES)
-def test_translate(shape: GeomShape, rel: float = TOL_MM):
+def test_translate(shape: GeomShape, rel: float = TOL_MM) -> None:
     translated_shape = shape.copy()
 
     vectors: list[Vec2DCompatible] = []
@@ -272,7 +272,7 @@ def test_translate(shape: GeomShape, rel: float = TOL_MM):
 
 
 @pytest.mark.parametrize("shape", TEST_SHAPES)
-def test_rotate(shape: GeomShape, rel: float = TOL_MM):
+def test_rotate(shape: GeomShape, rel: float = TOL_MM) -> None:
     rotated_shape = shape.copy()
     origin = (1, -1)
     angle_degs = [90, 120, 160, -10]
@@ -298,7 +298,7 @@ def test_rotate(shape: GeomShape, rel: float = TOL_MM):
 
 
 @pytest.mark.parametrize("shape", TEST_SHAPES_CLOSED)
-def test_inflate(shape: GeomShapeClosed, rel: float = TOL_MM):
+def test_inflate(shape: GeomShapeClosed, rel: float = TOL_MM) -> None:
     amounts = [0.2, 0.3, -0.5]
     inflated_shape = shape.copy()
 
@@ -320,7 +320,9 @@ def test_inflate(shape: GeomShapeClosed, rel: float = TOL_MM):
 
 
 @pytest.mark.parametrize("shape", TEST_SHAPES)
-def test_is_point_on_self(shape: GeomShapeClosed | GeomShapeOpen, rel: float = TOL_MM):
+def test_is_point_on_self(
+    shape: GeomShapeClosed | GeomShapeOpen, rel: float = TOL_MM
+) -> None:
     points = [Vector2D(1, 1), Vector2D(-1, -1)]
 
     # Test if the points are on the shapes:
@@ -366,15 +368,18 @@ def test_is_point_on_self(shape: GeomShapeClosed | GeomShapeOpen, rel: float = T
         (TEST_SHAPE_ROUND_RECTANGLE,BoundingBox([1.5 - sqrt(2) / 4, 1.5 - sqrt(2) / 4], (sqrt(2) / 4 - 1.5, sqrt(2) / 4 - 1.5))),  # NOQA
         (TEST_SHAPE_TRAPEZOID, BoundingBox([-3, -1], (3, 1))),
     ],
-)  # fmt: on
-def test_bbox(shape: GeomShape, expected_bbox: BoundingBox, rel: float = TOL_MM):
+)
+# fmt: on
+def test_bbox(
+    shape: GeomShape, expected_bbox: BoundingBox, rel: float = TOL_MM
+) -> None:
     print(shape)
     # Test if the returned bounding boxes are equal to the expected ones:
     assert is_equal_bboxes(shape.bbox(), expected_bbox, rel)
 
 
 @pytest.mark.parametrize("shape", TEST_SHAPES_CLOSED)
-def test_is_point_inside_self(shape: GeomShapeClosed, rel: float = TOL_MM):
+def test_is_point_inside_self(shape: GeomShapeClosed, rel: float = TOL_MM) -> None:
     points = [
         Vector2D(0, 0),
         Vector2D(1, 1),
