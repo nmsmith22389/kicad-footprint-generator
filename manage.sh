@@ -52,6 +52,15 @@ fp_format_check() {
     set +e
 }
 
+
+static_type_check() {
+    set -e
+    echo ''
+    echo '[!] Running static typing check'
+    pyright
+    set +e
+}
+
 flake8_check() {
     set -e
     echo ''
@@ -95,6 +104,7 @@ run_shellcheck() {
 tests() {
     unit_tests
     fp_format_check
+    static_type_check
     # 3d_format_check
 }
 
@@ -118,6 +128,7 @@ Commands
     update_packages      - Check & update production dependency changes
     update_dev_packages  - Check & update development and production dependency changes
     update_3d_packages   - Check & update 3d model generator dependency changes
+    static_type_check    - Run a static type check
 "
 }
 

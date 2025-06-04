@@ -1,5 +1,6 @@
 pep8
 flake8
+pyright
 unittest2
 nose2
 nose2-cov
