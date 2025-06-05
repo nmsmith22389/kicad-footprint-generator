@@ -7076,7 +7076,7 @@ Toshiba_SOIC-5-6_4.4x3.6mm_P1.27mm:
   npx: 3
   npy: 0
   epad: null
-  excluded_pins: [0, 2]
+  excluded_pins: [2]
   model_name: Toshiba_SOIC-5-6_4.4x3.6mm_P1.27mm
   rotation: -90
   body_color_key: 'black body'
