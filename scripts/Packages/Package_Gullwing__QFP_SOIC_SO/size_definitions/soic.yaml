@@ -341,6 +341,52 @@ SOIC-8_3.81x9.35mm_P2.54mm:
 # 1.27 PITCH
 ##############################################################################
 
+SOIC-5-6_4.4x3.6mm_P1.27mm:
+  size_source: "JEDEC MO-155, variation AA, 2.50mm nominal body thickness, https://www.jedec.org/system/files/docs/Mo-155a.pdf"
+  body_size_x: 4.30 .. 4.40 .. 4.50
+  body_size_y: 3.50 .. 3.60 .. 3.70
+  overall_size_x: 6.80 .. 7.00 .. 7.20
+  overall_height: 2.25 .. 2.60 .. 3.00 # minimum & nominal from A1 / A2, maximum from A
+  lead_width: 0.35 .. 0.50
+  lead_len: 0.50 .. 0.70 .. 0.90
+  pitch: 1.27
+  num_pins_x: 0
+  num_pins_y: 3
+  hidden_pins: [2]
+
+Toshiba_SOIC-5-6_4.4x3.6mm_P1.27mm:
+  manufacturer: "Toshiba"
+  compatible_mpns:
+    - "Toshiba_11-4C2"
+    - "Toshiba_MFSOP-5-6"
+  size_source: "https://toshiba.semicon-storage.com/eu/semiconductor/design-development/package/detail.5pin%20MFSOP6.html"
+  body_size_x:
+    nominal: 4.40
+  body_size_y:
+    nominal: 3.60
+  overall_size_x:
+    nominal: 7.00
+  overall_height:
+    nominal: 2.6 # 2.5 + 0.1
+  pitch: 1.27
+  num_pins_x: 0
+  num_pins_y: 3
+  lead_width:
+    nominal: 0.4  # Needed by the generator but overwritten anyway
+  lead_len:
+    nominal: 0.5  # Needed by the generator but overwritten anyway
+  pad_to_pad_min_x_overwrite: 5.1
+  pad_to_pad_max_x_overwrite: 7.5
+  pad_size_y_overwrite: 0.8
+
+Toshiba_SOIC-4-6_4.4x3.6mm_P1.27mm:
+  inherit: "Toshiba_SOIC-5-6_4.4x3.6mm_P1.27mm"
+  compatible_mpns:
+    - 'Toshiba_11-4C1'
+    - "Toshiba_MFSOP-4-6"
+  size_source: "https://toshiba.semicon-storage.com/eu/semiconductor/design-development/package/detail.4pin%20MFSOP6.html"
+  hidden_pins: [2, 5]
+
 SOP-4_4.4x2.6mm_P1.27mm:
   # it was previously in sop.yaml file
   device_type: 'SOP' # temporary

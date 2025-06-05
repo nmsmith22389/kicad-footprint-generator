@@ -4164,37 +4164,37 @@ SO-4_7.6x3.6mm_P2.54mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.everlight.com/file/ProductFile/201407061745083848.pdf'
 
-SO-5_4.4x3.6mm_P1.27mm:
-  the: 9.0
-  tb_s: 0.15
-  c: 0.1
-  R1: 0.1
-  R2: 0.1
-  S: 0.1
+SOIC-5-6_4.4x3.6mm_P1.27mm:
+  the: 9.0 # made-up, similar to others SOIC
+  tb_s: 0.15 # made-up
+  c: 0.165 # (0.13 + 0.20) / 2
+  R1: 0.08 # document only give us minimum
+  R2: 0.14 # (0.08 + 0.20) / 2
+  L: 0.70 # nominal
   fp_s: 1
   fp_r: 0.2
   fp_d: 0.3
   fp_z: 0.05
   ef: 0.0
-  cc1: 0.25
-  D1: 3.6
-  E1: 4.4
-  E: 6.3
-  A1: 0.1
-  A2: 1.0
-  b: 0.5
+  cc1: 0.25 # made-up
+  D1: 3.60
+  E1: 4.40
+  E: 7.00 # overall width, 'H' in JEDEC document
+  A1: 0.20 # maximum
+  A2: 2.80 # maximum
+  b: 0.425 # (0.35 + 0.50) / 2
   e: 1.27
   npx: 3
   npy: 0
   epad: null
   excluded_pins: [2]
-  model_name: SO-5_4.4x3.6mm_P1.27mm
+  model_name: SOIC-5-6_4.4x3.6mm_P1.27mm
   rotation: -90
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
   destination_dir: 'Package_SO.3dshapes'
-  source: 'https://docs.broadcom.com/cs/Satellite?blobcol=urldata&blobheader=application%2Fpdf&blobheadername1=Content-Disposition&blobheadername2=Content-Type&blobheadername3=MDT-Type&blobheadervalue1=attachment%3Bfilename%3DIPD-Selection-Guide_AV00-0254EN_030617.pdf&blobheadervalue2=application%2Fx-download&blobheadervalue3=abinary%253B%2Bcharset%253DUTF-8&blobkey=id&blobnocache=true&blobtable=MungoBlobs&blobwhere=1430884105675&ssbinary=true'
+  source: 'JEDEC MO-155, variation AA, 2.50mm nominal body thickness, https://www.jedec.org/system/files/docs/Mo-155a.pdf'
 
 SO-6_4.4x3.6mm_P1.27mm:
   the: 9.0
@@ -7021,13 +7021,13 @@ HTSSOP-28_4.4x9.7mm_Pitch0.65mm_ThermalPad:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.ti.com/lit/ml/mpds033b/mpds033b.pdf'
 
-MFSOP6-4_4.4x3.6mm_Pitch1.27mm:
+Toshiba_SOIC-4-6_4.4x3.6mm_P1.27mm:
   the: 12.0
   tb_s: 0.15
   c: 0.15
   R1: 0.05
   R2: 0.05
-  S: 0.25
+  L: 0.7  # Minimum is 0.5 mm; the nominal value is taken from JEDEC MO-155 variant AA.
   fp_s: True
   fp_r: 0.5
   fp_d: 0.15
@@ -7037,15 +7037,15 @@ MFSOP6-4_4.4x3.6mm_Pitch1.27mm:
   D1: 3.6
   E1: 4.4
   E: 7.0
-  A1: 0.1
-  A2: 2.5
+  A1: 0.1  # nominal value (no maximum indicated in datasheet)
+  A2: 2.5  # nominal value (no maximum indicated in datasheet)
   b: 0.4
   e: 1.27
   npx: 3
   npy: 0
   epad: null
   excluded_pins: [2, 5]
-  model_name: MFSOP6-4_4.4x3.6mm_P1.27mm
+  model_name: Toshiba_SOIC-4-6_4.4x3.6mm_P1.27mm
   rotation: -90
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -7053,13 +7053,13 @@ MFSOP6-4_4.4x3.6mm_Pitch1.27mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'https://toshiba.semicon-storage.com/ap-en/design-support/package/detail.4pin%20MFSOP6.html'
 
-MFSOP6-5_4.4x3.6mm_Pitch1.27mm:
+Toshiba_SOIC-5-6_4.4x3.6mm_P1.27mm:
   the: 12.0
   tb_s: 0.15
   c: 0.15
   R1: 0.05
   R2: 0.05
-  S: 0.25
+  L: 0.7  # Minimum is 0.5 mm; the nominal value is taken from JEDEC MO-155 variant AA.
   fp_s: True
   fp_r: 0.5
   fp_d: 0.15
@@ -7069,15 +7069,15 @@ MFSOP6-5_4.4x3.6mm_Pitch1.27mm:
   D1: 3.6
   E1: 4.4
   E: 7.0
-  A1: 0.1
-  A2: 2.5
+  A1: 0.1  # nominal value (no maximum indicated in datasheet)
+  A2: 2.5  # nominal value (no maximum indicated in datasheet)
   b: 0.4
   e: 1.27
   npx: 3
   npy: 0
   epad: null
   excluded_pins: [0, 2]
-  model_name: MFSOP6-5_4.4x3.6mm_P1.27mm
+  model_name: Toshiba_SOIC-5-6_4.4x3.6mm_P1.27mm
   rotation: -90
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
