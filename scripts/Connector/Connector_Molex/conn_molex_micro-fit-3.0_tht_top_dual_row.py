@@ -33,13 +33,12 @@ number_of_rows = 2
 
 variant_params = {
     'solder_mounting':{
-        'mount_pins': 'solder', # remove this
         'datasheet': 'http://www.molex.com/pdm_docs/sd/430450212_sd.pdf',
         'C_minus_B': 6,
         'part_code': "43045-{n:02}12",
         'alternative_codes': [
             "43045-{n:02}13",
-            "43045-{n:02}24"
+            "43045-{n:02}14",
             ]
         },
 }
@@ -124,7 +123,6 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row, variant
     #
     # Add pads
     #
-
     optional_pad_params = {}
     optional_pad_params['tht_pad1_shape'] = Pad.SHAPE_ROUNDRECT
 
@@ -175,7 +173,6 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row, variant
         width=configuration['fab_line_width'], layer="F.Fab"
         ))
 
-
     tab_poly = [
         {'x': B/2-tab_l/2, 'y': body_edge['bottom']},
         {'x': B/2-tab_l/2, 'y': body_edge['bottom'] + tab_w},
@@ -196,7 +193,6 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row, variant
 
     ############################ SilkS ##################################
     # Top left corner
-
     silk_pad_off = configuration['silk_pad_clearance'] + configuration['silk_line_width']/2
 
     ymp_top = peg_y - peg_drill/2 - silk_pad_off
@@ -246,7 +242,6 @@ def generate_one_footprint(global_config: GC.GlobalConfig, pins_per_row, variant
                                  layer='F.CrtYd', width=configuration['courtyard_line_width']))
 
     ######################### Text Fields ###############################
-
     addTextFields(kicad_mod=kicad_mod, configuration=configuration, body_edges=body_edge,
         courtyard={'top':cy_top, 'bottom':cy_bottom}, fp_name=footprint_name, text_y_inside_position='bottom')
 
