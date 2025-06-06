@@ -179,6 +179,7 @@ class PadProperties():
 @dataclass
 class FPconfiguration():
     library_name: str
+    type: FootprintType
     pad_pitch: float
     num_pos: int
     pad_size: Vector2D
@@ -191,7 +192,6 @@ class FPconfiguration():
     gap_size: int = 0
     pad_properties: PadProperties = None
     pad1_properties: PadProperties = None
-    is_smt_footprint: bool = True
     skipped_positions: list = None
     num_mount_pads: int = 0
     body_edges: dict = None
@@ -260,7 +260,6 @@ class FPconfiguration():
         pad_spec = self.spec.get("pads")
         self.pad_properties = PadProperties(pad_spec, global_config)
         self.pad_size = self.pad_properties.size
-        self.is_smt_footprint = (self.pad_properties.type == Pad.TYPE_SMT)
 
         self.pad_center_offset = _get_dims("pads", spec=self.spec.get("offset", {}))
         self.pad_pos_range = Vector2D((positions + self.gap_size - 1) * self.pad_pitch, self.row_pitch)
@@ -322,6 +321,24 @@ class FPconfiguration():
 
         self.exclude_from_bom = self.spec.get("exclude_from_bom", False)
         self.exclude_from_pos = self.spec.get("exclude_from_pos", False)
+
+        if "footprint_type" in self.spec:
+            match self.spec["footprint_type"]:
+                case "SMD":
+                    self.type = FootprintType.SMD
+                case "THT":
+                    self.type = FootprintType.THT
+                case "unspecified":
+                    self.type = FootprintType.UNSPECIFIED
+                case _:
+                    raise ValueError(
+                        "Footprint type must be either 'SMD', 'THT' or 'unspecified'."
+                    )
+        elif self.pad_properties.type == Pad.TYPE_SMT:
+            self.type = FootprintType.SMD
+        else:
+            self.type = FootprintType.THT
+
 
     def eval_coordinate(self, coord):
         return self.asteval.parse_float(coord, symbols=self.parameters)
@@ -406,9 +423,7 @@ def generate_one_footprint(
     print("  - %s" % fp_name)
 
     ## create the footprint
-    footprint_type = FootprintType.SMD if fp_config.is_smt_footprint else FootprintType.THT
-
-    kicad_mod = Footprint(fp_name, footprint_type)
+    kicad_mod = Footprint(fp_name, fp_config.type)
 
     kicad_mod.excludeFromBOM = fp_config.exclude_from_bom
     kicad_mod.excludeFromPositionFiles = fp_config.exclude_from_pos
