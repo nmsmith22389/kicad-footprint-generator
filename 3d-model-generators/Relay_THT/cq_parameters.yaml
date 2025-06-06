@@ -475,3 +475,32 @@ Relay_DPDT_Kemet_UA2-NE_NU_NJ:
   pin_color_key: metal grey pins
   destination_dir: Relay_THT.3dshapes
   source: 'https://content.kemet.com/datasheets/KEM_R7004_UA2_UB2.pdf'
+
+Relay_SPDT_CUI_SR5:
+  model_name: Relay_SPDT_CUI_SR5
+  roundbelly: 0
+  L: 15.6
+  W: 10.6
+  H: 11.8
+  rim: [0.5, 0.5, 0.38]
+  pinpadsize: 1
+  pinpadh: 3.4
+  pintype: tht
+  rotation: -90
+  pin1corner: [-4.14, -9.12]
+  pin: [
+    [ 0, 0, 'rect', 0.5, 0.4 ],
+    [ 0, -7.62, 'rect', 0.5, 0.4 ],
+    [-2.54, 0.0, 'rect', 0.5, 0.4],
+    [-2.54, -7.62, 'rect', 0.5, 0.4],
+    [10.16, 0, 'rect', 0.3, 0.6 ],
+    [10.16, -7.62, 'rect', 0.3, 0.6 ],
+  ]
+  A1: 0.02
+  corner: none
+  show_top: 0
+  body_color_key: orange body
+  body_top_color_key: orange body
+  pin_color_key: metal grey pins
+  destination_dir: Relay_THT.3dshapes
+  source: 'https://www.sameskydevices.com/product/resource/sr5.pdf#page=3'
