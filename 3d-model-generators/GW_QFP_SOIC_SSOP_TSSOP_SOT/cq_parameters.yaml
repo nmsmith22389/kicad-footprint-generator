@@ -99,294 +99,6 @@ D_SOT-23:
   destination_dir: 'Diode_SMD.3dshapes'
   source: '# http://www.ti.com/lit/ml/mpds026k/mpds026k.pdf'
 
-AKA:
-  the: 12.0
-  tb_s: 0.15
-  c: 0.1
-  R1: 0.1
-  R2: 0.1
-  S: 0.2
-  fp_s: True
-  fp_r: 0.5
-  fp_d: 0.2
-  fp_z: 0.1
-  ef: 0
-  cc1: 0.25
-  D1: 4.0
-  E1: 4.0
-  E: 5.8
-  A1: 0.1
-  A2: 1.0
-  b: 0.32
-  e: 0.65
-  npx: 5
-  npy: 5
-  epad: null
-  excluded_pins: null
-  model_name: qfp20_4x4_p032
-  rotation: 0
-  type: 'diode'
-  body_color_key: 'black body'
-  pin_color_key: 'metal grey pins'
-  mark_color_key: 'light brown label'
-  destination_dir: 'Package_QFP.3dshapes'
-
-ABD:
-  the: 12.0
-  tb_s: 0.15
-  c: 0.1
-  R1: 0.1
-  R2: 0.1
-  S: 0.2
-  fp_s: True
-  fp_r: 0.5
-  fp_d: 0.2
-  fp_z: 0.1
-  ef: 0.05
-  cc1: 0.25
-  D1: 7.0
-  E1: 7.0
-  E: 8.8
-  A1: 0.1
-  A2: 1.0
-  b: 0.18
-  e: 0.4
-  npx: 16
-  npy: 16
-  epad: null
-  excluded_pins: null
-  model_name: qfp32_7x7_p04
-  rotation: 0
-  type: 'diode'
-  body_color_key: 'black body'
-  pin_color_key: 'metal grey pins'
-  mark_color_key: 'light brown label'
-  destination_dir: 'Package_QFP.3dshapes'
-
-AFB:
-  the: 12.0
-  tb_s: 0.15
-  c: 0.1
-  R1: 0.1
-  R2: 0.1
-  S: 0.2
-  fp_s: True
-  fp_r: 0.5
-  fp_d: 0.2
-  fp_z: 0.1
-  ef: 0.05
-  cc1: 0.25
-  D1: 20.0
-  E1: 20.0
-  E: 21.8
-  A1: 0.1
-  A2: 1.0
-  b: 0.22
-  e: 0.5
-  npx: 36
-  npy: 36
-  epad: null
-  excluded_pins: null
-  model_name: qfp64_20x20_p05
-  rotation: 0
-  type: 'diode'
-  body_color_key: 'black body'
-  pin_color_key: 'metal grey pins'
-  mark_color_key: 'light brown label'
-  destination_dir: 'Package_QFP.3dshapes'
-
-ACB:
-  the: 12.0
-  tb_s: 0.15
-  c: 0.1
-  R1: 0.1
-  R2: 0.1
-  S: 0.2
-  fp_s: True
-  fp_r: 0.5
-  fp_d: 0.2
-  fp_z: 0.1
-  ef: 0.05
-  cc1: 0.25
-  D1: 10.0
-  E1: 10.0
-  E: 11.8
-  A1: 0.1
-  A2: 1.0
-  b: 0.37
-  e: 0.8
-  npx: 11
-  npy: 11
-  epad: null
-  excluded_pins: null
-  model_name: qfp44_10x10_p08
-  rotation: 0
-  type: 'diode'
-  body_color_key: 'black body'
-  pin_color_key: 'metal grey pins'
-  mark_color_key: 'light brown label'
-  destination_dir: 'Package_QFP.3dshapes'
-
-ACC:
-  the: 12.0
-  tb_s: 0.15
-  c: 0.1
-  R1: 0.1
-  R2: 0.1
-  S: 0.2
-  fp_s: True
-  fp_r: 0.5
-  fp_d: 0.2
-  fp_z: 0.1
-  ef: 0.05
-  cc1: 0.25
-  D1: 10.0
-  E1: 10.0
-  E: 11.8
-  A1: 0.1
-  A2: 1.0
-  b: 0.32
-  e: 0.65
-  npx: 13
-  npy: 13
-  epad: null
-  excluded_pins: null
-  model_name: qfp52_10x10_p065
-  rotation: 0
-  type: 'diode'
-  body_color_key: 'black body'
-  pin_color_key: 'metal grey pins'
-  mark_color_key: 'light brown label'
-  destination_dir: 'Package_QFP.3dshapes'
-
-ACE:
-  the: 12.0
-  tb_s: 0.15
-  c: 0.1
-  R1: 0.1
-  R2: 0.1
-  S: 0.2
-  fp_s: True
-  fp_r: 0.5
-  fp_d: 0.2
-  fp_z: 0.1
-  ef: 0.05
-  cc1: 0.25
-  D1: 10.0
-  E1: 10.0
-  E: 11.8
-  A1: 0.1
-  A2: 1.0
-  b: 0.18
-  e: 0.4
-  npx: 20
-  npy: 20
-  epad: null
-  excluded_pins: null
-  model_name: qfp80_10x10_p04
-  rotation: 0
-  type: 'diode'
-  body_color_key: 'black body'
-  pin_color_key: 'metal grey pins'
-  mark_color_key: 'light brown label'
-  destination_dir: 'Package_QFP.3dshapes'
-
-ADC:
-  the: 12.0
-  tb_s: 0.15
-  c: 0.1
-  R1: 0.1
-  R2: 0.1
-  S: 0.2
-  fp_s: True
-  fp_r: 0.5
-  fp_d: 0.2
-  fp_z: 0.1
-  ef: 0.05
-  cc1: 0.25
-  D1: 12.0
-  E1: 12.0
-  E: 13.8
-  A1: 0.1
-  A2: 1.0
-  b: 0.32
-  e: 0.65
-  npx: 13
-  npy: 13
-  epad: null
-  excluded_pins: null
-  model_name: qfp64_12x12_p065
-  rotation: 0
-  type: 'diode'
-  body_color_key: 'black body'
-  pin_color_key: 'metal grey pins'
-  mark_color_key: 'light brown label'
-  destination_dir: 'Package_QFP.3dshapes'
-
-ADD:
-  the: 12.0
-  tb_s: 0.15
-  c: 0.1
-  R1: 0.1
-  R2: 0.1
-  S: 0.2
-  fp_s: True
-  fp_r: 0.5
-  fp_d: 0.2
-  fp_z: 0.1
-  ef: 0.05
-  cc1: 0.25
-  D1: 12.0
-  E1: 12.0
-  E: 13.8
-  A1: 0.1
-  A2: 1.0
-  b: 0.18
-  e: 0.5
-  npx: 20
-  npy: 20
-  epad: null
-  excluded_pins: null
-  model_name: qfp80_12x12_p05
-  rotation: 0
-  type: 'diode'
-  body_color_key: 'black body'
-  pin_color_key: 'metal grey pins'
-  mark_color_key: 'light brown label'
-  destination_dir: 'Package_QFP.3dshapes'
-
-AEC:
-  the: 12.0
-  tb_s: 0.15
-  c: 0.1
-  R1: 0.1
-  R2: 0.1
-  S: 0.2
-  fp_s: True
-  fp_r: 0.5
-  fp_d: 0.2
-  fp_z: 0.1
-  ef: 0.05
-  cc1: 0.25
-  D1: 14.0
-  E1: 14.0
-  E: 15.8
-  A1: 0.1
-  A2: 1.0
-  b: 0.32
-  e: 0.65
-  npx: 20
-  npy: 20
-  epad: null
-  excluded_pins: null
-  model_name: qfp80_14x14_p065
-  rotation: 0
-  type: 'diode'
-  body_color_key: 'black body'
-  pin_color_key: 'metal grey pins'
-  mark_color_key: 'light brown label'
-  destination_dir: 'Package_QFP.3dshapes'
-
 Diode_Bridge_OnSemi_SDIP-4L:
   the: 0.0
   tb_s: 0.15
@@ -418,70 +130,6 @@ Diode_Bridge_OnSemi_SDIP-4L:
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
   destination_dir: 'Diode_SMD.3dshapes'
-
-MCP100:
-  the: 12.0
-  tb_s: 0.15
-  c: 0.1
-  R1: 0.1
-  R2: 0.1
-  S: 0.2
-  fp_s: True
-  fp_r: 0.5
-  fp_d: 0.2
-  fp_z: 0.1
-  ef: 0
-  cc1: 0.45
-  D1: 14.0
-  E1: 14.0
-  E: 16.0
-  A1: 0.1
-  A2: 0.9
-  b: 0.2
-  e: 0.5
-  npx: 25
-  npy: 25
-  epad: null
-  excluded_pins: null
-  model_name: qfp100_14x14_p05
-  rotation: -90
-  type: 'diode'
-  body_color_key: 'black body'
-  pin_color_key: 'metal grey pins'
-  mark_color_key: 'light brown label'
-  destination_dir: 'Package_QFP.3dshapes'
-
-MCP64:
-  the: 12.0
-  tb_s: 0.15
-  c: 0.1
-  R1: 0.1
-  R2: 0.1
-  S: 0.2
-  fp_s: True
-  fp_r: 0.5
-  fp_d: 0.2
-  fp_z: 0.1
-  ef: 0
-  cc1: 0.45
-  D1: 10.0
-  E1: 10.0
-  E: 12.0
-  A1: 0.1
-  A2: 1.1
-  b: 0.2
-  e: 0.5
-  npx: 16
-  npy: 16
-  epad: null
-  excluded_pins: null
-  model_name: qfp64_10x10_p05
-  rotation: 0
-  type: 'diode'
-  body_color_key: 'black body'
-  pin_color_key: 'metal grey pins'
-  mark_color_key: 'light brown label'
-  destination_dir: 'Package_QFP.3dshapes'
 
 LQFP-32_5x5mm_Pitch0.5mm:
   the: 12.0
@@ -515,39 +163,7 @@ LQFP-32_5x5mm_Pitch0.5mm:
   destination_dir: 'Package_QFP.3dshapes'
   source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
 
-LQFP-32-1EP_5x5mm_Pitch0.5mm:
-  the: 12.0
-  tb_s: 0.15
-  c: 0.15
-  R1: 0.1
-  R2: 0.1
-  S: 0.2
-  fp_s: True
-  fp_r: 0.5
-  fp_d: 0.2
-  fp_z: 0.1
-  ef: 0
-  cc1: 0.25
-  D1: 5.0
-  E1: 5.0
-  E: 7.0
-  A1: 0.1
-  A2: 1.4
-  b: 0.22
-  e: 0.5
-  npx: 8
-  npy: 8
-  epad: [3.45, 3.45]
-  excluded_pins: null
-  model_name: LQFP-32-1EP_5x5mm_P0.5mm
-  rotation: -90
-  body_color_key: 'black body'
-  pin_color_key: 'metal grey pins'
-  mark_color_key: 'light brown label'
-  destination_dir: 'Package_QFP.3dshapes'
-  source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
-
-LQFP-32_7x7mm_Pitch0.8mm:
+LQFP-32_7x7mm_P0.8mm:
   the: 12.0
   tb_s: 0.15
   c: 0.1
@@ -675,7 +291,7 @@ LQFP-48_7x7mm_P0.5mm:
   destination_dir: 'Package_QFP.3dshapes'
   source: 'JEDEC MS-026 variation BBC, 1.40mm body thickness, https://www.jedec.org/document_search?search_api_views_fulltext=MS-026, https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/ltc-legacy-lqfp/05081760_a_lx48.pdf'
 
-LQFP-52_10x10mm_Pitch0.65mm:
+LQFP-52_10x10mm_P0.65mm:
   the: 12.0
   tb_s: 0.15
   c: 0.1
@@ -739,7 +355,7 @@ LQFP-52_14x14mm_Pitch1mm:
   destination_dir: 'Package_QFP.3dshapes'
   source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
 
-LQFP-52-1EP_10x10mm_Pitch0.65mm:
+LQFP-52-1EP_10x10mm_P0.65mm_EP4.8x4.8mm:
   the: 12.0
   tb_s: 0.15
   c: 0.1
@@ -763,7 +379,7 @@ LQFP-52-1EP_10x10mm_Pitch0.65mm:
   npy: 13
   epad: [4.8, 4.8]
   excluded_pins: null
-  model_name: LQFP-52-1EP_10x10mm_P0.65mm
+  model_name: "LQFP-52-1EP_10x10mm_P0.65mm_EP4.8x4.8mm"
   rotation: -90
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -803,7 +419,7 @@ LQFP-64_7x7mm_Pitch0.4mm:
   destination_dir: 'Package_QFP.3dshapes'
   source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
 
-LQFP-64_10x10mm_Pitch0.5mm:
+LQFP-64_10x10mm_P0.5mm:
   the: 12.0
   tb_s: 0.15
   c: 0.1
@@ -835,7 +451,7 @@ LQFP-64_10x10mm_Pitch0.5mm:
   destination_dir: 'Package_QFP.3dshapes'
   source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
 
-LQFP-64-1EP_10x10mm_Pitch0.5mm:
+LQFP-64-1EP_10x10mm_P0.5mm_EP6.5x6.5mm:
   the: 12.0
   tb_s: 0.15
   c: 0.1
@@ -859,7 +475,7 @@ LQFP-64-1EP_10x10mm_Pitch0.5mm:
   npy: 16
   epad: [6.5, 6.5]
   excluded_pins: null
-  model_name: LQFP-64-1EP_10x10mm_P0.5mm
+  model_name: LQFP-64-1EP_10x10mm_P0.5mm_EP6.5x6.5mm
   rotation: -90
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -899,7 +515,7 @@ LQFP-64_14x14mm_Pitch0.8mm:
   destination_dir: 'Package_QFP.3dshapes'
   source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
 
-LQFP-80_12x12mm_Pitch0.5mm:
+LQFP-80_12x12mm_P0.5mm:
   the: 12.0
   tb_s: 0.15
   c: 0.1
@@ -1027,7 +643,7 @@ LQFP-128_14x20mm_Pitch0.5mm:
   destination_dir: 'Package_QFP.3dshapes'
   source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
 
-LQFP-144_20x20mm_Pitch0.5mm:
+LQFP-144_20x20mm_P0.5mm:
   the: 12.0
   tb_s: 0.15
   c: 0.1
@@ -1411,7 +1027,7 @@ TQFP-44_10x10mm_P0.8mm:
   destination_dir: 'Package_QFP.3dshapes'
   source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
 
-TQFP-44-1EP_10x10mm_Pitch0.8mm:
+TQFP-44-1EP_10x10mm_P0.8mm_EP4.5x4.5mm:
   the: 12.0
   tb_s: 0.15
   c: 0.1
@@ -1435,7 +1051,7 @@ TQFP-44-1EP_10x10mm_Pitch0.8mm:
   npy: 11
   epad: [4.5, 4.5]
   excluded_pins: null
-  model_name: TQFP-44-1EP_10x10mm_P0.8mm
+  model_name: TQFP-44-1EP_10x10mm_P0.8mm_EP4.5x4.5mm
   rotation: -90
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -1539,7 +1155,7 @@ TQFP-64_7x7mm_Pitch0.4mm:
   destination_dir: 'Package_QFP.3dshapes'
   source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
 
-TQFP-64_10x10mm_Pitch0.5mm:
+TQFP-64_10x10mm_P0.5mm:
   the: 12.0
   tb_s: 0.15
   c: 0.1
@@ -1571,7 +1187,7 @@ TQFP-64_10x10mm_Pitch0.5mm:
   destination_dir: 'Package_QFP.3dshapes'
   source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
 
-TQFP-64_1EP_10x10mm_Pitch0.5mm:
+TQFP-64-1EP_10x10mm_P0.5mm_EP8x8mm:
   the: 12.0
   tb_s: 0.15
   c: 0.1
@@ -1593,9 +1209,9 @@ TQFP-64_1EP_10x10mm_Pitch0.5mm:
   e: 0.5
   npx: 16
   npy: 16
-  epad: [4.5, 4.5]
+  epad: [8, 8]
   excluded_pins: null
-  model_name: TQFP-64-1EP_10x10mm_P0.5mm
+  model_name: TQFP-64-1EP_10x10mm_P0.5mm_EP8x8mm
   rotation: -90
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -1603,7 +1219,7 @@ TQFP-64_1EP_10x10mm_Pitch0.5mm:
   destination_dir: 'Package_QFP.3dshapes'
   source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
 
-TQFP-64_1EP_10x10mm_P0.5mm_EP5.305x5.305mm:
+TQFP-64-1EP_10x10mm_P0.5mm_EP5.305x5.305mm:
   the: 12.0
   tb_s: 0.15
   c: 0.1
@@ -1636,7 +1252,7 @@ TQFP-64_1EP_10x10mm_P0.5mm_EP5.305x5.305mm:
   destination_dir: 'Package_QFP.3dshapes'
   source: 'https://www.esstech.com/wp-content/uploads/2022/09/ES9028PRO-Datasheet-v3.7.pdf#page=54'
 
-HTQFP-64_1EP_10x10mm_Pitch0.5mm_ThermalPad:
+HTQFP-64-1EP_10x10mm_P0.5mm_EP8x8mm:
   the: 12.0
   tb_s: 0.15
   c: 0.1
@@ -1658,9 +1274,9 @@ HTQFP-64_1EP_10x10mm_Pitch0.5mm_ThermalPad:
   e: 0.5
   npx: 16
   npy: 16
-  epad: [7.5, 7.5]
+  epad: [8, 8]
   excluded_pins: null
-  model_name: HTQFP-64-1EP_10x10mm_P0.5mm
+  model_name: HTQFP-64-1EP_10x10mm_P0.5mm_EP8x8mm
   rotation: -90
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -1700,7 +1316,7 @@ TQFP-64_14x14mm_Pitch0.8mm:
   destination_dir: 'Package_QFP.3dshapes'
   source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
 
-TQFP-80_12x12mm_Pitch0.5mm:
+TQFP-80_12x12mm_P0.5mm:
   the: 12.0
   tb_s: 0.15
   c: 0.1
@@ -1732,7 +1348,7 @@ TQFP-80_12x12mm_Pitch0.5mm:
   destination_dir: 'Package_QFP.3dshapes'
   source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
 
-TQFP-80_14x14mm_Pitch0.65mm:
+TQFP-80_14x14mm_P0.65mm:
   the: 12.0
   tb_s: 0.15
   c: 0.1
@@ -1828,7 +1444,7 @@ TQFP-100_14x14mm_P0.5mm:
   destination_dir: 'Package_QFP.3dshapes'
   source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
 
-TQFP-100_1EP_14x14mm_Pitch0.5mm:
+TQFP-100-1EP_14x14mm_P0.5mm_EP5x5mm:
   the: 12.0
   tb_s: 0.15
   c: 0.1
@@ -1850,9 +1466,9 @@ TQFP-100_1EP_14x14mm_Pitch0.5mm:
   e: 0.5
   npx: 25
   npy: 25
-  epad: [7.5, 7.5]
+  epad: [5, 5]
   excluded_pins: null
-  model_name: TQFP-100-1EP_14x14mm_P0.5mm
+  model_name: TQFP-100-1EP_14x14mm_P0.5mm_EP5x5mm
   rotation: -90
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -2724,130 +2340,6 @@ VQFP-176_20x20mm_P0.4mm:
   destination_dir: 'Package_QFP.3dshapes'
   source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
 
-SOIC_8:
-  the: 9.0
-  tb_s: 0.15
-  c: 0.2
-  R1: 0.1
-  R2: 0.1
-  S: 0.3
-  fp_s: True
-  fp_r: 0.6
-  fp_d: 0.05
-  fp_z: 0.05
-  ef: 0.0
-  cc1: 0.25
-  D1: 4.9
-  E1: 3.9
-  E: 6.0
-  A1: 0.1
-  A2: 1.65
-  b: 0.45
-  e: 1.27
-  npx: 4
-  npy: 0
-  epad: null
-  excluded_pins: null
-  model_name: soic_8_39x49_p127
-  rotation: 0
-  body_color_key: 'black body'
-  pin_color_key: 'metal grey pins'
-  mark_color_key: 'light brown label'
-  destination_dir: 'Package_SO.3dshapes'
-
-SOIC_16:
-  the: 9.0
-  tb_s: 0.15
-  c: 0.2
-  R1: 0.1
-  R2: 0.1
-  S: 0.25
-  fp_s: True
-  fp_r: 0.5
-  fp_d: 0.2
-  fp_z: 0.1
-  ef: 0.0
-  cc1: 0.25
-  D1: 9.9
-  E1: 3.9
-  E: 6.0
-  A1: 0.1
-  A2: 1.65
-  b: 0.45
-  e: 1.27
-  npx: 8
-  npy: 0
-  epad: null
-  excluded_pins: null
-  model_name: soic_16_39x99_p127
-  rotation: 0
-  body_color_key: 'black body'
-  pin_color_key: 'metal grey pins'
-  mark_color_key: 'light brown label'
-  destination_dir: 'Package_SO.3dshapes'
-
-SOIC_16_W:
-  the: 9.0
-  tb_s: 0.15
-  c: 0.2
-  R1: 0.1
-  R2: 0.1
-  S: 0.35
-  fp_s: True
-  fp_r: 0.5
-  fp_d: 0.2
-  fp_z: 0.1
-  ef: 0.0
-  cc1: 0.25
-  D1: 10.3
-  E1: 7.5
-  E: 10.3
-  A1: 0.1
-  A2: 1.65
-  b: 0.45
-  e: 1.27
-  npx: 8
-  npy: 0
-  epad: null
-  excluded_pins: null
-  model_name: soic_16_75x103_p127
-  rotation: 0
-  body_color_key: 'black body'
-  pin_color_key: 'metal grey pins'
-  mark_color_key: 'light brown label'
-  destination_dir: 'Package_SO.3dshapes'
-
-SOIC_20:
-  the: 9.0
-  tb_s: 0.15
-  c: 0.2
-  R1: 0.1
-  R2: 0.1
-  S: 0.25
-  fp_s: True
-  fp_r: 0.5
-  fp_d: 0.2
-  fp_z: 0.1
-  ef: 0.0
-  cc1: 0.25
-  D1: 12.8
-  E1: 7.5
-  E: 10.3
-  A1: 0.1
-  A2: 2.55
-  b: 0.45
-  e: 1.27
-  npx: 10
-  npy: 0
-  epad: null
-  excluded_pins: null
-  model_name: soic_20_75x103_p127
-  rotation: 0
-  body_color_key: 'black body'
-  pin_color_key: 'metal grey pins'
-  mark_color_key: 'light brown label'
-  destination_dir: 'Package_SO.3dshapes'
-
 SO-6L_10x3.84mm_Pitch1.27mm:
   the: 9.0
   tb_s: 0.15
@@ -2944,7 +2436,7 @@ SO-20_12.8x7.5mm_Pitch1.27mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'https://www.nxp.com/docs/en/data-sheet/SA605.pdf'
 
-SOIC-8_3.9x4.9mm_Pitch1.27mm:
+SOIC-8_3.9x4.9mm_P1.27mm:
   the: 9.0
   tb_s: 0.15
   c: 0.2
@@ -3679,38 +3171,6 @@ HTSSOP-38-1EP_6.1x12.5mm_P0.65mm_EP5.2x12.5mm_Mask3.39x6.35mm:
   mark_color_key: 'light brown label'
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.ti.com/lit/ds/symlink/tlc5951.pdf#page=47&zoom=140,-67,15'
-
-MSOP-16-1EP_3x4mm_Pitch0.5mm_EP1.65x2.85mm:
-  the: 9.0
-  tb_s: 0.15
-  c: 0.1
-  R1: 0.1
-  R2: 0.1
-  S: 0.1
-  fp_s: 1
-  fp_r: 0.2
-  fp_d: 0.3
-  fp_z: 0.05
-  ef: 0.0
-  cc1: 0.25
-  D1: 4.0
-  E1: 3.0
-  E: 4.4
-  A1: 0.1
-  A2: 1.0
-  b: 0.2
-  e: 0.5
-  npx: 8
-  npy: 0
-  epad: null
-  excluded_pins: null
-  model_name: MSOP-16-1EP_3x4mm_Pitch0.5mm_EP1.65x2.85mm
-  rotation: -90
-  body_color_key: 'black body'
-  pin_color_key: 'metal grey pins'
-  mark_color_key: 'light brown label'
-  destination_dir: 'Package_SO.3dshapes'
-  source: 'N/A'
 
 MSOP-8-1EP_3x3mm_P0.65mm_EP1.5x1.8mm:
   the: 10.0
@@ -5463,8 +4923,8 @@ TSOP-I-32_18.4x8mm_P0.5mm:
   D1: 8.0
   E1: 18.4
   E: 20.5
-  A1: 0.1
-  A2: 1.5
+  A1: 0.15
+  A2: 1.05
   b: 0.17
   e: 0.5
   npx: 16
@@ -5495,8 +4955,8 @@ TSOP-I-48_18.4x12mm_P0.5mm:
   D1: 12.0
   E1: 18.4
   E: 20.5
-  A1: 0.1
-  A2: 1.5
+  A1: 0.15
+  A2: 1.05
   b: 0.17
   e: 0.5
   npx: 24
@@ -5527,8 +4987,8 @@ TSOP-I-56_18.4x14mm_P0.5mm:
   D1: 14.0
   E1: 18.4
   E: 20.5
-  A1: 0.1
-  A2: 1.5
+  A1: 0.15
+  A2: 1.05
   b: 0.17
   e: 0.5
   npx: 28
@@ -5801,134 +5261,6 @@ SO-16_3.9x9.9mm_P1.27mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'https://www.nxp.com/docs/en/package-information/SOT109-1.pdf'
 
-SOT23_6:
-  the: 8.0
-  tb_s: 0.05
-  c: 0.15
-  R1: 0.1
-  R2: 0.1
-  S: 0.05
-  fp_s: True
-  fp_r: 0.25
-  fp_d: 0.1
-  fp_z: 0.03
-  ef: 0.0
-  cc1: 0.12
-  D1: 3.1
-  E1: 1.8
-  E: 2.9
-  A1: 0.1
-  A2: 1.35
-  b: 0.4
-  e: 0.95
-  npx: 3
-  npy: 0
-  epad: null
-  excluded_pins: null
-  model_name: sot23_6_18x29_p095
-  rotation: 0
-  body_color_key: 'black body'
-  pin_color_key: 'metal grey pins'
-  mark_color_key: 'light brown label'
-  destination_dir: 'TO_SOT_Packages_SMD.3dshapes'
-  source: 'N/A'
-
-SOT23_3:
-  the: 8.0
-  tb_s: 0.05
-  c: 0.15
-  R1: 0.1
-  R2: 0.1
-  S: 0.0
-  fp_s: True
-  fp_r: 0.0
-  fp_d: 0.08
-  fp_z: 0.03
-  ef: 0.0
-  cc1: 0.12
-  D1: 3.0
-  E1: 1.4
-  E: 2.5
-  A1: 0.1
-  A2: 1.1
-  b: 0.4
-  e: 0.95
-  npx: 3
-  npy: 0
-  epad: null
-  excluded_pins: [2, 4, 6]
-  model_name: sot23_3_25x30_p095
-  rotation: 0
-  body_color_key: 'black body'
-  pin_color_key: 'metal grey pins'
-  mark_color_key: 'light brown label'
-  destination_dir: 'TO_SOT_Packages_SMD.3dshapes'
-  source: 'N/A'
-
-SOT23_5:
-  the: 8.0
-  tb_s: 0.05
-  c: 0.15
-  R1: 0.1
-  R2: 0.1
-  S: 0.05
-  fp_s: True
-  fp_r: 0.0
-  fp_d: 0.1
-  fp_z: 0.03
-  ef: 0.0
-  cc1: 0.12
-  D1: 3.1
-  E1: 1.8
-  E: 2.9
-  A1: 0.1
-  A2: 1.35
-  b: 0.4
-  e: 0.95
-  npx: 3
-  npy: 0
-  epad: null
-  excluded_pins: [5,]
-  model_name: sot23_5_18x29_p095
-  rotation: 0
-  body_color_key: 'black body'
-  pin_color_key: 'metal grey pins'
-  mark_color_key: 'light brown label'
-  destination_dir: 'TO_SOT_Packages_SMD.3dshapes'
-  source: 'N/A'
-
-SC70_3:
-  the: 8.0
-  tb_s: 0.05
-  c: 0.15
-  R1: 0.1
-  R2: 0.1
-  S: 0.0
-  fp_s: True
-  fp_r: 0.0
-  fp_d: 0.08
-  fp_z: 0.03
-  ef: 0.0
-  cc1: 0.12
-  D1: 2.2
-  E1: 1.35
-  E: 2.2
-  A1: 0.1
-  A2: 1.1
-  b: 0.35
-  e: 0.65
-  npx: 3
-  npy: 0
-  epad: null
-  excluded_pins: [2, 4, 6]
-  model_name: sc70_3_22x22_p065
-  rotation: 0
-  body_color_key: 'black body'
-  pin_color_key: 'metal grey pins'
-  mark_color_key: 'light brown label'
-  destination_dir: 'TO_SOT_Packages_SMD.3dshapes'
-  source: 'N/A'
-
 Analog_KS-4:
   the: 8.0
   tb_s: 0.05
@@ -5958,7 +5290,7 @@ Analog_KS-4:
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
-  destination_dir: 'TO_SOT_Packages_SMD.3dshapes'
+  destination_dir: 'Package_TO_SOT_SMD.3dshapes'
   source: 'http://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/sc70ks/ks_4.pdf'
 
 SC-59:
@@ -5990,7 +5322,7 @@ SC-59:
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
-  destination_dir: 'TO_SOT_Packages_SMD.3dshapes'
+  destination_dir: 'Package_TO_SOT_SMD.3dshapes'
   source: 'http://www.infineon.com/dgdl/SC59-Package_Overview.pdf?fileId=5546d462580663ef0158069ca21703c1'
 
 SC-70-8:
@@ -6022,7 +5354,7 @@ SC-70-8:
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
-  destination_dir: 'TO_SOT_Packages_SMD.3dshapes'
+  destination_dir: 'Package_TO_SOT_SMD.3dshapes'
   source: 'http://cds.linear.com/docs/en/packaging/SOT_8_05-08-1639.pdf'
 
 SC-74:
@@ -6120,7 +5452,7 @@ SOT-23:
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
-  destination_dir: 'TO_SOT_Packages_SMD.3dshapes'
+  destination_dir: 'Package_TO_SOT_SMD.3dshapes'
   source: 'http://www.ti.com/lit/ml/mpds026k/mpds026k.pdf'
 
 SOT-23-3:
@@ -6153,7 +5485,7 @@ SOT-23-3:
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
-  destination_dir: 'TO_SOT_Packages_SMD.3dshapes'
+  destination_dir: 'Package_TO_SOT_SMD.3dshapes'
   source: 'http://www.ti.com/lit/ml/mpds026k/mpds026k.pdf'
 
 
@@ -6186,7 +5518,7 @@ SOT-23W:
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
-  destination_dir: 'TO_SOT_Packages_SMD.3dshapes'
+  destination_dir: 'Package_TO_SOT_SMD.3dshapes'
   source: 'http://www.allegromicro.com/~/media/Files/Datasheets/A112x-Datasheet.ashx?la=en&hash=7BC461E058CC246E0BAB62433B2F1ECA104CA9D3'
 
 SOT-23-5:
@@ -6218,7 +5550,7 @@ SOT-23-5:
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
-  destination_dir: 'TO_SOT_Packages_SMD.3dshapes'
+  destination_dir: 'Package_TO_SOT_SMD.3dshapes'
   source: 'http://www.ti.com/lit/ml/mpds026k/mpds026k.pdf'
 
 SOT-23-6:
@@ -6250,7 +5582,7 @@ SOT-23-6:
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
-  destination_dir: 'TO_SOT_Packages_SMD.3dshapes'
+  destination_dir: 'Package_TO_SOT_SMD.3dshapes'
   source: 'http://www.ti.com/lit/ml/mpds026k/mpds026k.pdf'
 
 SOT-23-8:
@@ -6282,7 +5614,7 @@ SOT-23-8:
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
-  destination_dir: 'TO_SOT_Packages_SMD.3dshapes'
+  destination_dir: 'Package_TO_SOT_SMD.3dshapes'
   source: 'http://www.ti.com/lit/ml/mpds099c/mpds099c.pdf'
 
 SOT-143:
@@ -6314,7 +5646,7 @@ SOT-143:
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
-  destination_dir: 'TO_SOT_Packages_SMD.3dshapes'
+  destination_dir: 'Package_TO_SOT_SMD.3dshapes'
   source: 'http://www.nxp.com/documents/outline_drawing/SOT143B.pdf'
 
 SOT-143R:
@@ -6346,7 +5678,7 @@ SOT-143R:
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
-  destination_dir: 'TO_SOT_Packages_SMD.3dshapes'
+  destination_dir: 'Package_TO_SOT_SMD.3dshapes'
   source: 'http://www.nxp.com/documents/outline_drawing/SOT143R.pdf'
 
 SOT-223:
@@ -6378,7 +5710,7 @@ SOT-223:
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
-  destination_dir: 'TO_SOT_Packages_SMD.3dshapes'
+  destination_dir: 'Package_TO_SOT_SMD.3dshapes'
   source: 'http://www.nxp.com/documents/outline_drawing/SOT223.pdf'
 
 SOT-323_SC-70:
@@ -6410,7 +5742,7 @@ SOT-323_SC-70:
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
-  destination_dir: 'TO_SOT_Packages_SMD.3dshapes'
+  destination_dir: 'Package_TO_SOT_SMD.3dshapes'
   source: 'http://www.ti.com/lit/ml/mpds114c/mpds114c.pdf'
 
 SOT-343_SC-70-4:
@@ -6442,7 +5774,7 @@ SOT-343_SC-70-4:
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
-  destination_dir: 'TO_SOT_Packages_SMD.3dshapes'
+  destination_dir: 'Package_TO_SOT_SMD.3dshapes'
   source: 'http://www.ti.com/lit/ml/mpds114c/mpds114c.pdf'
 
 SOT-353_SC-70-5:
@@ -6474,7 +5806,7 @@ SOT-353_SC-70-5:
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
-  destination_dir: 'TO_SOT_Packages_SMD.3dshapes'
+  destination_dir: 'Package_TO_SOT_SMD.3dshapes'
   source: 'http://www.ti.com/lit/ml/mpds114c/mpds114c.pdf'
 
 SOT-363_SC-70-6:
@@ -6506,7 +5838,7 @@ SOT-363_SC-70-6:
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
-  destination_dir: 'TO_SOT_Packages_SMD.3dshapes'
+  destination_dir: 'Package_TO_SOT_SMD.3dshapes'
   source: 'http://www.ti.com/lit/ml/mpds114c/mpds114c.pdf'
 
 TSOT-23:
@@ -6538,7 +5870,7 @@ TSOT-23:
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
-  destination_dir: 'TO_SOT_Packages_SMD.3dshapes'
+  destination_dir: 'Package_TO_SOT_SMD.3dshapes'
   source: 'http://cds.linear.com/docs/en/packaging/SOT_6_05-08-1636.pdf'
 
 TSOT-23-5:
@@ -6570,7 +5902,7 @@ TSOT-23-5:
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
-  destination_dir: 'TO_SOT_Packages_SMD.3dshapes'
+  destination_dir: 'Package_TO_SOT_SMD.3dshapes'
   source: 'http://cds.linear.com/docs/en/packaging/SOT_6_05-08-1636.pdf'
 
 TSOT-23-6:
@@ -6602,7 +5934,7 @@ TSOT-23-6:
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
-  destination_dir: 'TO_SOT_Packages_SMD.3dshapes'
+  destination_dir: 'Package_TO_SOT_SMD.3dshapes'
   source: 'http://cds.linear.com/docs/en/packaging/SOT_6_05-08-1636.pdf'
 
 TSOT-23-8:
@@ -6634,7 +5966,7 @@ TSOT-23-8:
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
-  destination_dir: 'TO_SOT_Packages_SMD.3dshapes'
+  destination_dir: 'Package_TO_SOT_SMD.3dshapes'
   source: 'http://cds.linear.com/docs/en/packaging/SOT_8_05-08-1637.pdf'
 
 SC-82AA:
@@ -6666,7 +5998,7 @@ SC-82AA:
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
-  destination_dir: 'TO_SOT_Packages_SMD.3dshapes'
+  destination_dir: 'Package_TO_SOT_SMD.3dshapes'
   source: 'http://media.digikey.com/pdf/Data%20Sheets/Rohm%20PDFs/da227.pdf'
 
 SC-82AB:
@@ -6698,7 +6030,7 @@ SC-82AB:
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
-  destination_dir: 'TO_SOT_Packages_SMD.3dshapes'
+  destination_dir: 'Package_TO_SOT_SMD.3dshapes'
   source: 'http://www.infineon.com/dgdl/SOT343-Package_Overview.pdf?fileId=5546d462580663ef015806a5338d04ef'
 
 SuperSOT-3:
@@ -6730,7 +6062,7 @@ SuperSOT-3:
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
-  destination_dir: 'TO_SOT_Packages_SMD.3dshapes'
+  destination_dir: 'Package_TO_SOT_SMD.3dshapes'
   source: 'https://www.fairchildsemi.com/package-drawings/MA/MA03B.pdf'
 
 SuperSOT-6:
@@ -6762,7 +6094,7 @@ SuperSOT-6:
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
-  destination_dir: 'TO_SOT_Packages_SMD.3dshapes'
+  destination_dir: 'Package_TO_SOT_SMD.3dshapes'
   source: 'http://www.mouser.com/ds/2/149/FMB5551-889214.pdf'
 
 SuperSOT-8:
@@ -6794,7 +6126,7 @@ SuperSOT-8:
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
-  destination_dir: 'TO_SOT_Packages_SMD.3dshapes'
+  destination_dir: 'Package_TO_SOT_SMD.3dshapes'
   source: 'http://www.icbank.com/icbank_data/semi_package/ssot8_dim.pdf'
 
 SOT-223-8:
@@ -6826,74 +6158,10 @@ SOT-223-8:
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
-  destination_dir: 'TO_SOT_Packages_SMD.3dshapes'
+  destination_dir: 'Package_TO_SOT_SMD.3dshapes'
   source: 'https://www.diodes.com/assets/Datasheets/ZXSBMR16PT8.pdf'
 
-SSOP_20:
-  the: 12.0
-  tb_s: 0.15
-  c: 0.1
-  R1: 0.1
-  R2: 0.1
-  S: 0.2
-  fp_s: True
-  fp_r: 0.5
-  fp_d: 0.2
-  fp_z: 0.1
-  ef: 0
-  cc1: 0.25
-  D1: 7.2
-  E1: 5.3
-  E: 7.8
-  A1: 0.1
-  A2: 1.9
-  b: 0.35
-  e: 0.65
-  npx: 10
-  npy: 0
-  epad: null
-  excluded_pins: null
-  model_name: ssop_20_53x72_p065
-  rotation: 0
-  body_color_key: 'black body'
-  pin_color_key: 'metal grey pins'
-  mark_color_key: 'light brown label'
-  destination_dir: 'Package_SO.3dshapes'
-  source: 'N/A'
-
-SSOP_20_Pad:
-  the: 12.0
-  tb_s: 0.15
-  c: 0.1
-  R1: 0.1
-  R2: 0.1
-  S: 0.2
-  fp_s: True
-  fp_r: 0.5
-  fp_d: 0.2
-  fp_z: 0.1
-  ef: 0
-  cc1: 0.25
-  D1: 7.2
-  E1: 5.3
-  E: 7.8
-  A1: 0.001
-  A2: 1.999
-  b: 0.35
-  e: 0.65
-  npx: 10
-  npy: 0
-  epad: [5.0, 3.0]
-  excluded_pins: null
-  model_name: ssop_20_53x72_pad_p065
-  rotation: 0
-  body_color_key: 'black body'
-  pin_color_key: 'metal grey pins'
-  mark_color_key: 'light brown label'
-  destination_dir: 'Package_SO.3dshapes'
-  source: 'N/A'
-
-ETSSOP-20-1EP_4.4x6.5mm_Pitch0.65mm:
+ETSSOP-20-1EP_4.4x6.5mm_P0.65mm_EP3x4.2mm:
   the: 12.0
   tb_s: 0.15
   c: 0.1
@@ -6917,7 +6185,7 @@ ETSSOP-20-1EP_4.4x6.5mm_Pitch0.65mm:
   npy: 0
   epad: [4.2, 3.0]
   excluded_pins: null
-  model_name: ETSSOP-20-1EP_4.4x6.5mm_P0.65mm
+  model_name: ETSSOP-20-1EP_4.4x6.5mm_P0.65mm_EP3x4.2mm
   rotation: -90
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -6957,7 +6225,7 @@ HTSSOP-14-1EP_4.4x5mm_P0.65mm_EP3.4x5mm_Mask3x3.1mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.ti.com/lit/ds/symlink/lm5161.pdf#page=34'
 
-HTSSOP-20-1EP_4.4x6.5mm_Pitch0.65mm_ThermalPad:
+HTSSOP-20-1EP_4.4x6.5mm_P0.65mm_EP3.4x6.5mm:
   the: 12.0
   tb_s: 0.15
   c: 0.15
@@ -6979,9 +6247,9 @@ HTSSOP-20-1EP_4.4x6.5mm_Pitch0.65mm_ThermalPad:
   e: 0.65
   npx: 10
   npy: 0
-  epad: [6.0, 3.5]
+  epad: [6.6, 3.4]
   excluded_pins: null
-  model_name: HTSSOP-20-1EP_4.4x6.5mm_P0.65mm
+  model_name: HTSSOP-20-1EP_4.4x6.5mm_P0.65mm_EP3.4x6.5mm
   rotation: -90
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -6989,7 +6257,7 @@ HTSSOP-20-1EP_4.4x6.5mm_Pitch0.65mm_ThermalPad:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.ti.com/lit/ml/mhts001g/mhts001g.pdf'
 
-HTSSOP-28_4.4x9.7mm_Pitch0.65mm_ThermalPad:
+HTSSOP-28-1EP_4.4x9.7mm_P0.65mm_EP3.4x9.5mm:
   the: 12.0
   tb_s: 0.15
   c: 0.15
@@ -7011,9 +6279,9 @@ HTSSOP-28_4.4x9.7mm_Pitch0.65mm_ThermalPad:
   e: 0.65
   npx: 14
   npy: 0
-  epad: [9.0, 3.5]
+  epad: [9.5, 3.4]
   excluded_pins: null
-  model_name: HTSSOP-28-1EP_4.4x9.7mm_P0.65mm
+  model_name: HTSSOP-28-1EP_4.4x9.7mm_P0.65mm_EP3.4x9.5mm
   rotation: -90
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -7182,7 +6450,7 @@ MSOP-10_3x3mm_Pitch0.5mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://cds.linear.com/docs/en/packaging/05081661_F_MS.pdf'
 
-MSOP-10-1EP_3x3mm_Pitch0.5mm:
+MSOP-10-1EP_3x3mm_P0.5mm_EP1.68x1.88mm:
   the: 12.0
   tb_s: 0.15
   c: 0.18
@@ -7206,7 +6474,7 @@ MSOP-10-1EP_3x3mm_Pitch0.5mm:
   npy: 0
   epad: [1.88, 1.68]
   excluded_pins: null
-  model_name: MSOP-10-1EP_3x3mm_P0.5mm
+  model_name: MSOP-10-1EP_3x3mm_P0.5mm_EP1.68x1.88mm
   rotation: -90
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -7678,8 +6946,8 @@ SSOP-8_3.9x5.05mm_P1.27mm:
   D1: 5.05
   E1: 3.9
   E: 6.0
-  A1: 0.01
-  A2: 1.55
+  A1: 0.1
+  A2: 1.65
   b: 0.44
   e: 1.27
   npx: 4
@@ -7694,39 +6962,7 @@ SSOP-8_3.9x5.05mm_P1.27mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.fujitsu.com/downloads/MICRO/fsa/pdf/products/memory/fram/MB85RS16-DS501-00014-6v0-E.pdf'
 
-SSOP-8_5.30x5.24mm_P1.27mm:
-  the: 12.0
-  tb_s: 0.1
-  c: 0.15
-  R1: 0.1
-  R2: 0.1
-  S: 0.18
-  fp_s: True
-  fp_r: 0.5
-  fp_d: 0.2
-  fp_z: 0.1
-  ef: 0
-  cc1: 0.25
-  D1: 5.3
-  E1: 5.24
-  E: 7.8
-  A1: 0.01
-  A2: 2.1
-  b: 0.43
-  e: 1.27
-  npx: 4
-  npy: 0
-  epad: null
-  excluded_pins: null
-  model_name: SSOP-8_5.30x5.24mm_P1.27mm
-  rotation: -90
-  body_color_key: 'black body'
-  pin_color_key: 'metal grey pins'
-  mark_color_key: 'light brown label'
-  destination_dir: 'Package_SO.3dshapes'
-  source: 'http://www.fujitsu.com/ca/en/Images/MB85RS2MT-DS501-00023-1v0-E.pdf'
-
-SSOP-8_3.95x5.21x3.27mm_Pitch1.27mm:
+SSOP-8_3.95x5.21x3.27mm_P1.27mm:
   the: 12.0
   tb_s: 0.1
   c: 0.15
@@ -7750,7 +6986,7 @@ SSOP-8_3.95x5.21x3.27mm_Pitch1.27mm:
   npy: 0
   epad: null
   excluded_pins: null
-  model_name: SSOP-8_3.95x5.21x3.27mm_Pitch1.27mm
+  model_name: SSOP-8_3.95x5.21x3.27mm_P1.27mm
   rotation: -90
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -8462,7 +7698,7 @@ TSSOP-24_4.4x7.8mm_Pitch0.65mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.nxp.com/documents/outline_drawing/SOT355-1.pdf'
 
-TSSOP-28_4.4x9.7mm_Pitch0.65mm:
+TSSOP-28_4.4x9.7mm_P0.65mm:
   the: 12.0
   tb_s: 0.1
   c: 0.15
@@ -8910,7 +8146,7 @@ SOP-8_6.605x9.655mm_P2.54mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'https://www.onsemi.com/pdf/datasheet/hcpl2631m-d.pdf'
 
-HTSSOP-56-1EP_6.1x14mm_Pitch0.5mm:
+HTSSOP-56-1EP_6.1x14mm_P0.5mm_EP3.61x6.35mm:
   the: 12.0
   tb_s: 0.1
   c: 0.15
@@ -8932,79 +8168,15 @@ HTSSOP-56-1EP_6.1x14mm_Pitch0.5mm:
   e: 0.5
   npx: 28
   npy: 0
-  epad: [5.825, 3.23]
+  epad: [6.35, 3.61]
   excluded_pins: null
-  model_name: HTSSOP-56-1EP_6.1x14mm_P0.5mm
+  model_name: HTSSOP-56-1EP_6.1x14mm_P0.5mm_EP3.61x6.35mm
   rotation: -90
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.ti.com/lit/ds/symlink/drv8301.pdf'
-
-TSSOP_14:
-  the: 12.0
-  tb_s: 0.15
-  c: 0.1
-  R1: 0.1
-  R2: 0.1
-  S: 0.3
-  fp_s: True
-  fp_r: 0.65
-  fp_d: 0.25
-  fp_z: 0.15
-  ef: 0
-  cc1: 0.25
-  D1: 5.0
-  E1: 4.4
-  E: 6.4
-  A1: 0.1
-  A2: 1.1
-  b: 0.25
-  e: 0.65
-  npx: 7
-  npy: 0
-  epad: null
-  excluded_pins: null
-  model_name: tssop_14_50x44_p065
-  rotation: 0
-  body_color_key: 'black body'
-  pin_color_key: 'metal grey pins'
-  mark_color_key: 'light brown label'
-  destination_dir: 'Package_SO.3dshapes'
-  source: 'N/A'
-
-TSOP2-50:
-  the: 12.0
-  tb_s: 0.15
-  c: 0.12
-  R1: 0.2
-  R2: 0.2
-  S: 0.15
-  fp_s: True
-  fp_r: 1.2
-  fp_d: 0.3
-  fp_z: 0.15
-  ef: 0
-  cc1: 0.25
-  D1: 20.95
-  E1: 10.16
-  E: 11.76
-  A1: 0.1
-  A2: 1.0
-  b: 0.36
-  e: 0.8
-  npx: 25
-  npy: 0
-  epad: null
-  excluded_pins: null
-  model_name: TSOP2-50
-  rotation: -90
-  body_color_key: 'black body'
-  pin_color_key: 'metal grey pins'
-  mark_color_key: 'light brown label'
-  destination_dir: 'Package_SO.3dshapes'
-  source: 'N/A'
 
 TSSOP-30_6.1x9.7mm_P0.65mm:
   the: 9.0
