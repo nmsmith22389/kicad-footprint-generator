@@ -57,7 +57,7 @@ from _tools.cq_helpers import union_all
 max_cc1 = 1
 color_pin_mark = False
 place_pinMark = True
-default_pin_slope = 0
+default_pin_slope = 10
 
 
 def make_gw(params):
