@@ -66,39 +66,6 @@ D_SOD-323:
   destination_dir: 'Diode_SMD.3dshapes'
   source: 'https://assets.nexperia.com/documents/package-information/SOD323.pdf#page=2'
 
-D_SOT-23:
-  the: 8.0
-  tb_s: 0.05
-  c: 0.15
-  R1: 0.1
-  R2: 0.1
-  S: 0.0
-  fp_s: True
-  fp_r: 0.0
-  fp_d: 0.08
-  fp_z: 0.03
-  ef: 0.0
-  cc1: 0.12
-  D1: 3.0
-  E1: 1.4
-  E: 2.5
-  A1: 0.1
-  A2: 1.1
-  b: 0.4
-  e: 0.95
-  npx: 3
-  npy: 0
-  epad: null
-  excluded_pins: [2, 4, 6]
-  model_name: D_SOT-23
-  rotation: -90
-  type: 'diode'
-  body_color_key: 'black body'
-  pin_color_key: 'metal grey pins'
-  mark_color_key: 'light brown label'
-  destination_dir: 'Diode_SMD.3dshapes'
-  source: '# http://www.ti.com/lit/ml/mpds026k/mpds026k.pdf'
-
 Diode_Bridge_OnSemi_SDIP-4L:
   the: 0.0
   tb_s: 0.15
@@ -131,7 +98,7 @@ Diode_Bridge_OnSemi_SDIP-4L:
   mark_color_key: 'light brown label'
   destination_dir: 'Diode_SMD.3dshapes'
 
-LQFP-32_5x5mm_Pitch0.5mm:
+LQFP-32_5x5mm_P0.5mm:
   the: 12.0
   tb_s: 0.15
   c: 0.15
@@ -195,7 +162,7 @@ LQFP-32_7x7mm_P0.8mm:
   destination_dir: 'Package_QFP.3dshapes'
   source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
 
-LQFP-36_7x7mm_Pitch0.65mm:
+LQFP-36_7x7mm_P0.65mm:
   the: 12.0
   tb_s: 0.15
   c: 0.1
@@ -323,7 +290,7 @@ LQFP-52_10x10mm_P0.65mm:
   destination_dir: 'Package_QFP.3dshapes'
   source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
 
-LQFP-52_14x14mm_Pitch1mm:
+LQFP-52_14x14mm_P1mm:
   the: 12.0
   tb_s: 0.15
   c: 0.1
@@ -387,7 +354,7 @@ LQFP-52-1EP_10x10mm_P0.65mm_EP4.8x4.8mm:
   destination_dir: 'Package_QFP.3dshapes'
   source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
 
-LQFP-64_7x7mm_Pitch0.4mm:
+LQFP-64_7x7mm_P0.4mm:
   the: 12.0
   tb_s: 0.15
   c: 0.1
@@ -483,7 +450,7 @@ LQFP-64-1EP_10x10mm_P0.5mm_EP6.5x6.5mm:
   destination_dir: 'Package_QFP.3dshapes'
   source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
 
-LQFP-64_14x14mm_Pitch0.8mm:
+LQFP-64_14x14mm_P0.8mm:
   the: 12.0
   tb_s: 0.15
   c: 0.1
@@ -579,7 +546,7 @@ LQFP-100_14x14mm_P0.5mm:
   destination_dir: 'Package_QFP.3dshapes'
   source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
 
-LQFP-128_14x14mm_Pitch0.4mm:
+LQFP-128_14x14mm_P0.4mm:
   the: 12.0
   tb_s: 0.15
   c: 0.1
@@ -611,7 +578,7 @@ LQFP-128_14x14mm_Pitch0.4mm:
   destination_dir: 'Package_QFP.3dshapes'
   source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
 
-LQFP-128_14x20mm_Pitch0.5mm:
+LQFP-128_14x20mm_P0.5mm:
   the: 12.0
   tb_s: 0.15
   c: 0.1
@@ -675,7 +642,7 @@ LQFP-144_20x20mm_P0.5mm:
   destination_dir: 'Package_QFP.3dshapes'
   source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
 
-LQFP-160_24x24mm_Pitch0.5mm:
+LQFP-160_24x24mm_P0.5mm:
   the: 12.0
   tb_s: 0.15
   c: 0.1
@@ -707,7 +674,7 @@ LQFP-160_24x24mm_Pitch0.5mm:
   destination_dir: 'Package_QFP.3dshapes'
   source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
 
-LQFP-176_20x20mm_Pitch0.4mm:
+LQFP-176_20x20mm_P0.4mm:
   the: 12.0
   tb_s: 0.15
   c: 0.1
@@ -739,7 +706,7 @@ LQFP-176_20x20mm_Pitch0.4mm:
   destination_dir: 'Package_QFP.3dshapes'
   source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
 
-LQFP-176_24x24mm_Pitch0.5mm:
+LQFP-176_24x24mm_P0.5mm:
   the: 12.0
   tb_s: 0.15
   c: 0.1
@@ -771,7 +738,7 @@ LQFP-176_24x24mm_Pitch0.5mm:
   destination_dir: 'Package_QFP.3dshapes'
   source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
 
-LQFP-208_28x28mm_Pitch0.5mm:
+LQFP-208_28x28mm_P0.5mm:
   the: 12.0
   tb_s: 0.15
   c: 0.1
@@ -803,7 +770,7 @@ LQFP-208_28x28mm_Pitch0.5mm:
   destination_dir: 'Package_QFP.3dshapes'
   source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
 
-LQFP-216_24x24mm_Pitch0.4mm:
+LQFP-216_24x24mm_P0.4mm:
   the: 12.0
   tb_s: 0.15
   c: 0.1
@@ -867,7 +834,7 @@ Infineon_PG-DSO-20-U03_7.5x12.8mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'https://www.infineon.com/dgdl/Infineon-2ED1323S12P_2ED1324S12P-DataSheet-v01_01-EN.pdf?fileId=8ac78c8c869190210186e92f0f506d0c'
 
-PQFP-80_14x20mm_Pitch0.8mm:
+PQFP-80_14x20mm_P0.8mm:
   the: 8.0
   tb_s: 0.15
   c: 0.15
@@ -899,7 +866,7 @@ PQFP-80_14x20mm_Pitch0.8mm:
   destination_dir: 'Package_QFP.3dshapes'
   source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
 
-PQFP-100_14x20mm_Pitch0.65mm:
+PQFP-100_14x20mm_P0.65mm:
   the: 8.0
   tb_s: 0.15
   c: 0.15
@@ -931,7 +898,7 @@ PQFP-100_14x20mm_Pitch0.65mm:
   destination_dir: 'Package_QFP.3dshapes'
   source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
 
-PQFP-256_28x28mm_Pitch0.4mm:
+PQFP-256_28x28mm_P0.4mm:
   the: 8.0
   tb_s: 0.15
   c: 0.17
@@ -963,7 +930,7 @@ PQFP-256_28x28mm_Pitch0.4mm:
   destination_dir: 'Package_QFP.3dshapes'
   source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
 
-TQFP-32_7x7mm_Pitch0.8mm:
+TQFP-32_7x7mm_P0.8mm:
   the: 12.0
   tb_s: 0.15
   c: 0.1
@@ -1123,7 +1090,7 @@ TQFP-48-1EP_7x7mm_P0.5mm_EP3.5x3.5mm:
   destination_dir: 'Package_QFP.3dshapes'
   source: 'JEDEC MS-026 variation ABC, 1.00mm body thickness, custom Exposed Pad from Microchip and Analog Devices, https://www.jedec.org/document_search?search_api_views_fulltext=MS-026, https://ww1.microchip.com/downloads/en/PackagingSpec/00000049BZ.pdf#page=664, https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/tqfp_edsv/sv_48_4.pdf'
 
-TQFP-64_7x7mm_Pitch0.4mm:
+TQFP-64_7x7mm_P0.4mm:
   the: 12.0
   tb_s: 0.15
   c: 0.1
@@ -1284,7 +1251,7 @@ HTQFP-64-1EP_10x10mm_P0.5mm_EP8x8mm:
   destination_dir: 'Package_QFP.3dshapes'
   source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
 
-TQFP-64_14x14mm_Pitch0.8mm:
+TQFP-64_14x14mm_P0.8mm:
   the: 12.0
   tb_s: 0.15
   c: 0.1
@@ -1380,7 +1347,7 @@ TQFP-80_14x14mm_P0.65mm:
   destination_dir: 'Package_QFP.3dshapes'
   source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
 
-TQFP-100_12x12mm_Pitch0.4mm:
+TQFP-100_12x12mm_P0.4mm:
   the: 12.0
   tb_s: 0.15
   c: 0.1
@@ -1476,7 +1443,7 @@ TQFP-100-1EP_14x14mm_P0.5mm_EP5x5mm:
   destination_dir: 'Package_QFP.3dshapes'
   source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
 
-TQFP-120_14x14mm_Pitch0.4mm:
+TQFP-120_14x14mm_P0.4mm:
   the: 12.0
   tb_s: 0.15
   c: 0.1
@@ -1508,7 +1475,7 @@ TQFP-120_14x14mm_Pitch0.4mm:
   destination_dir: 'Package_QFP.3dshapes'
   source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
 
-TQFP-128_14x14mm_Pitch0.4mm:
+TQFP-128_14x14mm_P0.4mm:
   the: 12.0
   tb_s: 0.15
   c: 0.1
@@ -1540,7 +1507,7 @@ TQFP-128_14x14mm_Pitch0.4mm:
   destination_dir: 'Package_QFP.3dshapes'
   source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
 
-TQFP-144_16x16mm_Pitch0.4mm:
+TQFP-144_16x16mm_P0.4mm:
   the: 12.0
   tb_s: 0.15
   c: 0.1
@@ -1572,7 +1539,7 @@ TQFP-144_16x16mm_Pitch0.4mm:
   destination_dir: 'Package_QFP.3dshapes'
   source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
 
-TQFP-144_20x20mm_Pitch0.5mm:
+TQFP-144_20x20mm_P0.5mm:
   the: 12.0
   tb_s: 0.15
   c: 0.1
@@ -1604,7 +1571,7 @@ TQFP-144_20x20mm_Pitch0.5mm:
   destination_dir: 'Package_QFP.3dshapes'
   source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
 
-TQFP-64_10x10mm_Pitch0.5mm_EP8x8mm:
+TQFP-64-1EP_10x10mm_P0.5mm_EP8x8mm:
   the: 12.0
   tb_s: 0.15
   c: 0.1
@@ -1628,39 +1595,7 @@ TQFP-64_10x10mm_Pitch0.5mm_EP8x8mm:
   npy: 16
   epad: [8.0, 8.0]
   excluded_pins: null
-  model_name: TQFP-64_10x10mm_Pitch0.5mm_EP8x8mm
-  rotation: -90
-  body_color_key: 'black body'
-  pin_color_key: 'metal grey pins'
-  mark_color_key: 'light brown label'
-  destination_dir: 'Package_QFP.3dshapes'
-  source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
-
-LQFP-32-1EP_5x5mm_P0.5mm_EP3.45x3.45mm_EP3.45x3.45mm:
-  the: 12.0
-  tb_s: 0.15
-  c: 0.1
-  R1: 0.1
-  R2: 0.1
-  S: 0.1
-  fp_s: 1
-  fp_r: 0.4
-  fp_d: 0.5
-  fp_z: 0.1
-  ef: 0.0
-  cc1: 0.25
-  D1: 5.0
-  E1: 5.0
-  E: 7.5
-  A1: 0.1
-  A2: 1.5
-  b: 0.2
-  e: 0.5
-  npx: 8
-  npy: 8
-  epad: [3.45, 3.45]
-  excluded_pins: null
-  model_name: LQFP-32-1EP_5x5mm_P0.5mm_EP3.45x3.45mm_EP3.45x3.45mm
+  model_name: TQFP-64-1EP_10x10mm_P0.5mm_EP8x8mm
   rotation: -90
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -2084,38 +2019,6 @@ MO112AC1_PQFP-52_10x10mm_P0.65mm:
   destination_dir: 'Package_QFP.3dshapes'
   source: 'JEDEC MO-112 variation AC-1 (high standoff), https://www.jedec.org/document_search?search_api_views_fulltext=MO-112, https://www.analog.com/media/en/package-pcb-resources/package/32717196300961s_52_2.pdf'
 
-TQFP-100_14x14mm_P0.5mm_EP5x5mm:
-  the: 12.0
-  tb_s: 0.15
-  c: 0.1
-  R1: 0.1
-  R2: 0.1
-  S: 0.1
-  fp_s: 1
-  fp_r: 0.4
-  fp_d: 0.5
-  fp_z: 0.1
-  ef: 0.0
-  cc1: 0.25
-  D1: 14.0
-  E1: 14.0
-  E: 16.4
-  A1: 0.1
-  A2: 1.5
-  b: 0.2
-  e: 0.5
-  npx: 25
-  npy: 25
-  epad: [5.0, 5.0]
-  excluded_pins: null
-  model_name: TQFP-100_14x14mm_P0.5mm_EP5x5mm
-  rotation: -90
-  body_color_key: 'black body'
-  pin_color_key: 'metal grey pins'
-  mark_color_key: 'light brown label'
-  destination_dir: 'Package_QFP.3dshapes'
-  source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
-
 TQFP-176_24x24mm_P0.5mm:
   the: 12.0
   tb_s: 0.15
@@ -2205,38 +2108,6 @@ TQFP-52-1EP_10x10mm_P0.65mm_EP6.5x6.5mm:
   epad: [6.5, 6.5]
   excluded_pins: null
   model_name: TQFP-52-1EP_10x10mm_P0.65mm_EP6.5x6.5mm
-  rotation: -90
-  body_color_key: 'black body'
-  pin_color_key: 'metal grey pins'
-  mark_color_key: 'light brown label'
-  destination_dir: 'Package_QFP.3dshapes'
-  source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
-
-TQFP-64_10x10mm_P0.5mm_EP8x8mm:
-  the: 12.0
-  tb_s: 0.15
-  c: 0.1
-  R1: 0.1
-  R2: 0.1
-  S: 0.1
-  fp_s: 1
-  fp_r: 0.4
-  fp_d: 0.5
-  fp_z: 0.1
-  ef: 0.0
-  cc1: 0.25
-  D1: 10.0
-  E1: 10.0
-  E: 12.4
-  A1: 0.1
-  A2: 1.5
-  b: 0.2
-  e: 0.5
-  npx: 16
-  npy: 16
-  epad: [8.0, 8.0]
-  excluded_pins: null
-  model_name: TQFP-64_10x10mm_P0.5mm_EP8x8mm
   rotation: -90
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -2340,7 +2211,7 @@ VQFP-176_20x20mm_P0.4mm:
   destination_dir: 'Package_QFP.3dshapes'
   source: 'http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095'
 
-SO-6L_10x3.84mm_Pitch1.27mm:
+SO-6L_10x3.84mm_P1.27mm:
   the: 9.0
   tb_s: 0.15
   c: 0.1
@@ -2404,7 +2275,7 @@ SO-5-6_4.55x3.7mm_P1.27mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'https://toshiba.semicon-storage.com/us/semiconductor/design-development/package/detail.5pin%20SO6.html'
 
-SO-20_12.8x7.5mm_Pitch1.27mm:
+SO-20_12.8x7.5mm_P1.27mm:
   the: 9.0
   tb_s: 0.15
   c: 0.1
@@ -2564,7 +2435,7 @@ SOIC-8_7.5x5.85mm_P1.27mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'https://www.ti.com/lit/ml/mpds382b/mpds382b.pdf'
 
-SOIC-14_3.9x8.7mm_Pitch1.27mm:
+SOIC-14_3.9x8.7mm_P1.27mm:
   the: 9.0
   tb_s: 0.15
   c: 0.2
@@ -2628,7 +2499,7 @@ SOIC-14W_7.5x9mm_P1.27mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.ti.com/lit/ml/mpds386/mpds386.pdf'
 
-SOIC-16_3.9x9.9mm_Pitch1.27mm:
+SOIC-16_3.9x9.9mm_P1.27mm:
   the: 9.0
   tb_s: 0.15
   c: 0.2
@@ -2660,7 +2531,7 @@ SOIC-16_3.9x9.9mm_Pitch1.27mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.ti.com/lit/ml/mpds178g/mpds178g.pdf'
 
-SOIC-16W_7.5x10.3mm_Pitch1.27mm:
+SOIC-16W_7.5x10.3mm_P1.27mm:
   the: 9.0
   tb_s: 0.15
   c: 0.2
@@ -2692,7 +2563,7 @@ SOIC-16W_7.5x10.3mm_Pitch1.27mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.ti.com/lit/ml/msoi003g/msoi003g.pdf'
 
-SOIC-18W_7.5x11.6mm_Pitch1.27mm:
+SOIC-18W_7.5x11.6mm_P1.27mm:
   the: 9.0
   tb_s: 0.15
   c: 0.2
@@ -2724,7 +2595,7 @@ SOIC-18W_7.5x11.6mm_Pitch1.27mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.ti.com/lit/ml/mpds172a/mpds172a.pdf'
 
-SOIC-20W_7.5x12.8mm_Pitch1.27mm:
+SOIC-20W_7.5x12.8mm_P1.27mm:
   the: 9.0
   tb_s: 0.15
   c: 0.2
@@ -2788,7 +2659,7 @@ SOIC-20W_7.5x15.4mm_P1.27mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/soic_wide-rw/RI_20_1.pdf'
 
-SOIC-24W_7.5x15.4mm_Pitch1.27mm:
+SOIC-24W_7.5x15.4mm_P1.27mm:
   the: 9.0
   tb_s: 0.15
   c: 0.2
@@ -2820,7 +2691,7 @@ SOIC-24W_7.5x15.4mm_Pitch1.27mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.ti.com/lit/ml/mpds173b/mpds173b.pdf'
 
-SOIC-28W_7.5x17.9mm_Pitch1.27mm:
+SOIC-28W_7.5x17.9mm_P1.27mm:
   the: 9.0
   tb_s: 0.15
   c: 0.2
@@ -2980,40 +2851,7 @@ HTSOP-8-1EP_3.9x4.9mm_P1.27mm_EP2.4x3.2mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'https://media.digikey.com/pdf/Data%20Sheets/Rohm%20PDFs/BD9G341EFJ.pdf'
 
-TSSOP-16-1EP_4.4x5mm_Pitch0.65mm_EP3.4x5mm:
-  the: 9.0
-  tb_s: 0.15
-  c: 0.1
-  R1: 0.1
-  R2: 0.1
-  S: 0.1
-  L: 0.625
-  fp_s: 1
-  fp_r: 0.4
-  fp_d: 0.5
-  fp_z: 0.05
-  ef: 0.0
-  cc1: 0.25
-  D1: 5.3
-  E1: 4.4
-  E: 6.4
-  A1: 0.1
-  A2: 1.1
-  b: 0.245
-  e: 0.65
-  npx: 8
-  npy: 0
-  epad: null
-  excluded_pins: null
-  model_name: TSSOP-16-1EP_4.4x5mm_Pitch0.65mm_EP3.4x5mm
-  rotation: -90
-  body_color_key: 'black body'
-  pin_color_key: 'metal grey pins'
-  mark_color_key: 'light brown label'
-  destination_dir: 'Package_SO.3dshapes'
-  source: 'http://www.ti.com/lit/ds/symlink/drv8833.pdf'
-
-HTSSOP-16-1EP_4.4x5mm_P0.65mm_EP3.4x5mm_Mask2.66x2.46mm:
+HTSSOP-16-1EP_4.4x5mm_P0.65mm_EP3.4x5mm:
   the: 9.0
   tb_s: 0.15
   c: 0.15
@@ -3037,7 +2875,7 @@ HTSSOP-16-1EP_4.4x5mm_P0.65mm_EP3.4x5mm_Mask2.66x2.46mm:
   npy: 0
   epad: [2.41, 2.51]
   excluded_pins: null
-  model_name: HTSSOP-16-1EP_4.4x5mm_P0.65mm_EP3.4x5mm_Mask2.66x2.46mm
+  model_name: HTSSOP-16-1EP_4.4x5mm_P0.65mm_EP3.4x5mm
   rotation: -90
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -3304,38 +3142,6 @@ MSOP-8-1EP_3x3mm_P0.65mm_EP1.95x2.15mm:
   mark_color_key: 'light brown label'
   destination_dir: 'Package_SO.3dshapes'
   source: 'https://www.st.com/resource/en/datasheet/pm8834.pdf#page=18'
-
-MSOP-8-1EP_3x3mm_P0.65mm_EP2.54x2.8mm:
-  the: 9.0
-  tb_s: 0.15
-  c: 0.1
-  R1: 0.1
-  R2: 0.1
-  S: 0.1
-  fp_s: 1
-  fp_r: 0.2
-  fp_d: 0.3
-  fp_z: 0.05
-  ef: 0.0
-  cc1: 0.25
-  D1: 3.0
-  E1: 3.0
-  E: 5.8
-  A1: 0.1
-  A2: 1.0
-  b: 0.26
-  e: 0.65
-  npx: 4
-  npy: 0
-  epad: [2.5, 2.54]
-  excluded_pins: null
-  model_name: MSOP-8-1EP_3x3mm_P0.65mm_EP2.54x2.8mm
-  rotation: -90
-  body_color_key: 'black body'
-  pin_color_key: 'metal grey pins'
-  mark_color_key: 'light brown label'
-  destination_dir: 'Package_SO.3dshapes'
-  source: 'http://ww1.microchip.com/downloads/en/DeviceDoc/mic5355_6.pdf'
 
 PowerIntegrations_eSOP-12B:
   the: 9.0
@@ -3947,7 +3753,7 @@ SOIC-8-N7_3.9x4.9mm_P1.27mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.onsemi.com/pub/Collateral/NCP1207B.PDF'
 
-SOJ-36_10.16x23.49mm_P1.27mm:
+SOJ-36_10.16x23.495mm_P1.27mm:
   the: 9.0
   tb_s: 0.15
   c: 0.1
@@ -3960,7 +3766,7 @@ SOJ-36_10.16x23.49mm_P1.27mm:
   fp_z: 0.05
   ef: 0.0
   cc1: 0.25
-  D1: 23.49
+  D1: 23.495
   E1: 10.16
   E: 11.66
   A1: 0.1
@@ -3971,77 +3777,13 @@ SOJ-36_10.16x23.49mm_P1.27mm:
   npy: 0
   epad: null
   excluded_pins: null
-  model_name: SOJ-36_10.16x23.49mm_P1.27mm
+  model_name: SOJ-36_10.16x23.495mm_P1.27mm
   rotation: -90
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
   destination_dir: 'Package_SO.3dshapes'
-  source: 'http://www.issi.com/WW/pdf/61-64C5128AL.pdf'
-
-SOP-16_7.5x10.4mm_P1.27mm:
-  the: 9.0
-  tb_s: 0.15
-  c: 0.1
-  R1: 0.1
-  R2: 0.1
-  S: 0.1
-  fp_s: 1
-  fp_r: 0.4
-  fp_d: 0.5
-  fp_z: 0.05
-  ef: 0.0
-  cc1: 0.25
-  D1: 10.4
-  E1: 7.5
-  E: 10.4
-  A1: 0.1
-  A2: 1.5
-  b: 0.51
-  e: 1.27
-  npx: 8
-  npy: 0
-  epad: null
-  excluded_pins: null
-  model_name: SOP-16_7.5x10.4mm_P1.27mm
-  rotation: -90
-  body_color_key: 'black body'
-  pin_color_key: 'metal grey pins'
-  mark_color_key: 'light brown label'
-  destination_dir: 'Package_SO.3dshapes'
-  source: 'http://www.vishay.com/docs/49633/sg2098.pdf'
-
-SOP-18_7.0x12.5mm_P1.27mm:
-  the: 9.0
-  tb_s: 0.15
-  c: 0.1
-  R1: 0.1
-  R2: 0.1
-  S: 0.1
-  fp_s: 1
-  fp_r: 0.4
-  fp_d: 0.5
-  fp_z: 0.05
-  ef: 0.0
-  cc1: 0.25
-  D1: 12.5
-  E1: 7.0
-  E: 9.72
-  A1: 0.1
-  A2: 1.5
-  b: 0.42
-  e: 1.27
-  npx: 9
-  npy: 0
-  epad: null
-  excluded_pins: null
-  model_name: SOP-18_7.0x12.5mm_P1.27mm
-  rotation: -90
-  body_color_key: 'black body'
-  pin_color_key: 'metal grey pins'
-  mark_color_key: 'light brown label'
-  destination_dir: 'Package_SO.3dshapes'
-  source: 'https://toshiba.semicon-storage.com/info/docget.jsp?did=30523'
+  source: 'https://www.infineon.com/cms/en/product/packages/P-SOJ/P-SOJ-36-801/'
 
 SSO-6_6.8x4.6mm_P1.27mm_Clearance7mm:
   the: 9.0
@@ -4300,7 +4042,7 @@ SSOP-10_3.9x4.9mm_P1.00mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.st.com/resource/en/datasheet/viper01.pdf'
 
-SSOP-10-1EP_3.9x4.9mm_P1.0mm_EP2.1x3.3mm:
+SSOP-10-1EP_3.9x4.9mm_P1mm_EP2.1x3.3mm:
   the: 9.0
   tb_s: 0.15
   c: 0.1
@@ -4324,7 +4066,7 @@ SSOP-10-1EP_3.9x4.9mm_P1.0mm_EP2.1x3.3mm:
   npy: 0
   epad: [3.3, 2.1]
   excluded_pins: null
-  model_name: SSOP-10-1EP_3.9x4.9mm_P1.0mm_EP2.1x3.3mm
+  model_name: SSOP-10-1EP_3.9x4.9mm_P1mm_EP2.1x3.3mm
   rotation: -90
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -4395,38 +4137,6 @@ SSOP-28_3.9x9.9mm_P0.635mm:
   mark_color_key: 'light brown label'
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://cds.linear.com/docs/en/datasheet/38901fb.pdf'
-
-SSOP-32_11.305x20.495mm_P1.27mm:
-  the: 9.0
-  tb_s: 0.15
-  c: 0.1
-  R1: 0.1
-  R2: 0.1
-  S: 0.1
-  fp_s: 1
-  fp_r: 0.4
-  fp_d: 0.5
-  fp_z: 0.05
-  ef: 0.0
-  cc1: 0.25
-  D1: 20.5
-  E1: 11.3
-  E: 14.1
-  A1: 0.1
-  A2: 1.5
-  b: 0.42
-  e: 1.27
-  npx: 16
-  npy: 0
-  epad: null
-  excluded_pins: null
-  model_name: SSOP-32_11.305x20.495mm_P1.27mm
-  rotation: -90
-  body_color_key: 'black body'
-  pin_color_key: 'metal grey pins'
-  mark_color_key: 'light brown label'
-  destination_dir: 'Package_SO.3dshapes'
-  source: 'http://www.issi.com/WW/pdf/61-64C5128AL.pdf'
 
 SSOP-44_5.3x12.8mm_P0.5mm:
   the: 9.0
@@ -4652,7 +4362,7 @@ ST_PowerSSO-36_SlugUp:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.st.com/resource/en/datasheet/tda7492p.pdf, http://freedatasheets.com/downloads/Technical%20Note%20Powersso24%20TN0054.pdf'
 
-HTSOP-8-1EP_3.9x4.9mm_Pitch1.27mm:
+HTSOP-8-1EP_3.9x4.9mm_P1.27mm:
   the: 9.0
   tb_s: 0.15
   c: 0.1
@@ -4676,7 +4386,7 @@ HTSOP-8-1EP_3.9x4.9mm_Pitch1.27mm:
   npy: 0
   epad: null
   excluded_pins: null
-  model_name: HTSOP-8-1EP_3.9x4.9mm_Pitch1.27mm
+  model_name: HTSOP-8-1EP_3.9x4.9mm_P1.27mm
   rotation: -90
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -4684,7 +4394,7 @@ HTSOP-8-1EP_3.9x4.9mm_Pitch1.27mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.st.com/resource/en/datasheet/tda7492p.pdf, http://freedatasheets.com/downloads/Technical%20Note%20Powersso24%20TN0054.pdf'
 
-Texas_HTSOP-8-1EP_3.9x4.9mm_P1.27mm_EP2.85x4.9mm_Mask2.4x3.1mm_ThermalVias:
+Texas_HTSOP-8-1EP_3.9x4.9mm_P1.27mm_EP2.95x4.9mm_Mask2.4x3.1mm_ThermalVias:
   the: 9.0
   tb_s: 0.15
   c: 0.1
@@ -4708,7 +4418,7 @@ Texas_HTSOP-8-1EP_3.9x4.9mm_P1.27mm_EP2.85x4.9mm_Mask2.4x3.1mm_ThermalVias:
   npy: 0
   epad: null
   excluded_pins: null
-  model_name: Texas_HTSOP-8-1EP_3.9x4.9mm_P1.27mm_EP2.85x4.9mm_Mask2.4x3.1mm_ThermalVias
+  model_name: Texas_HTSOP-8-1EP_3.9x4.9mm_P1.27mm_EP2.95x4.9mm_Mask2.4x3.1mm_ThermalVias
   rotation: -90
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -5100,7 +4810,7 @@ TSSOP-14-1EP_4.4x5mm_P0.65mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'N/A'
 
-TSSOP-28_4.4x9.7mm_Pitch0.65mm:
+TSSOP-28_4.4x9.7mm_P0.65mm:
   the: 9.0
   tb_s: 0.15
   c: 0.1
@@ -5124,7 +4834,7 @@ TSSOP-28_4.4x9.7mm_Pitch0.65mm:
   npy: 0
   epad: null
   excluded_pins: null
-  model_name: TSSOP-28_4.4x9.7mm_Pitch0.65mm
+  model_name: TSSOP-28_4.4x9.7mm_P0.65mm
   rotation: -90
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -5632,11 +5342,11 @@ SOT-143:
   ef: 0.0
   cc1: 0.12
   D1: 2.9
-  E1: 1.6
-  E: 2.8
+  E1: 1.3
+  E: 2.3
   A1: 0.1
-  A2: 1.1
-  b: 0.38
+  A2: 1.0
+  b: 0.43
   e: 0.38
   npx: 6
   npy: 0
@@ -5648,7 +5358,7 @@ SOT-143:
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
   destination_dir: 'Package_TO_SOT_SMD.3dshapes'
-  source: 'http://www.nxp.com/documents/outline_drawing/SOT143B.pdf'
+  source: 'https://www.nxp.com/docs/en/data-sheet/BFU530.pdf'
 
 SOT-143R:
   the: 8.0
@@ -5657,30 +5367,30 @@ SOT-143R:
   R1: 0.1
   R2: 0.1
   S: 0.05
-  fp_s: True
-  fp_r: 0.0
-  fp_d: 0.1
-  fp_z: 0.03
+  fp_s: False
+  fp_r: 0.2
+  fp_d: 0.2
+  fp_z: 0.01
   ef: 0.0
   cc1: 0.12
   D1: 2.9
-  E1: 1.6
-  E: 2.8
+  E1: 1.3
+  E: 2.3
   A1: 0.1
-  A2: 1.1
-  b: 0.38
+  A2: 1.0
+  b: 0.43
   e: 0.38
   npx: 6
   npy: 0
   epad: null
-  excluded_pins: [2, 3, 4, 8, 9, 10, 11]
+  excluded_pins: [2, 3, 4, 5, 8, 9, 10]
   model_name: SOT-143R
-  rotation: -90
+  rotation: 0
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
   destination_dir: 'Package_TO_SOT_SMD.3dshapes'
-  source: 'http://www.nxp.com/documents/outline_drawing/SOT143R.pdf'
+  source: 'https://www.nxp.com/docs/en/package-information/SOT143R.pdf'
 
 SOT-223:
   the: 8.0
@@ -6358,7 +6068,7 @@ Toshiba_SOIC-5-6_4.4x3.6mm_P1.27mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'https://toshiba.semicon-storage.com/ap-en/design-support/package/detail.5pin%20MFSOP6.html'
 
-MSOP-8_3x3mm_Pitch0.65mm:
+MSOP-8_3x3mm_P0.65mm:
   the: 12.0
   tb_s: 0.15
   c: 0.15
@@ -6423,7 +6133,7 @@ MSOP-8-1EP_3x3mm_P0.65mm_EP1.68x1.88mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/ltc-legacy-msop/05081662_k_ms8e.pdf'
 
-MSOP-10_3x3mm_Pitch0.5mm:
+MSOP-10_3x3mm_P0.5mm:
   the: 12.0
   tb_s: 0.15
   c: 0.18
@@ -6711,7 +6421,7 @@ OnSemi_Micro8:
   destination_dir: 'Package_SO.3dshapes'
   source: 'https://www.onsemi.com/pub/Collateral/846A-02.PDF'
 
-PSOP-44_16.9x27.17mm_Pitch1.27mm:
+PSOP-44_16.9x27.17mm_P1.27mm:
   the: 12.0
   tb_s: 0.15
   c: 0.2
@@ -6743,7 +6453,7 @@ PSOP-44_16.9x27.17mm_Pitch1.27mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://pdf.datasheetcatalog.com/datasheet/macronix/MX29F800TMI-90.pdf'
 
-QSOP-16_3.9x4.9mm_Pitch0.635mm:
+QSOP-16_3.9x4.9mm_P0.635mm:
   the: 12.0
   tb_s: 0.1
   c: 0.22
@@ -6775,7 +6485,7 @@ QSOP-16_3.9x4.9mm_Pitch0.635mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.onsemi.com/pub/Collateral/492-01.PDF'
 
-QSOP-24_3.9x8.7mm_Pitch0.635mm:
+QSOP-24_3.9x8.7mm_P0.635mm:
   the: 12.0
   tb_s: 0.15
   c: 0.22
@@ -6807,7 +6517,7 @@ QSOP-24_3.9x8.7mm_Pitch0.635mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.onsemi.com/pub/Collateral/492B-01.PDF'
 
-SOP-4_4.4x2.6mm_Pitch1.27mm:
+SOP-4_4.4x2.6mm_P1.27mm:
   the: 12.0
   tb_s: 0.15
   c: 0.2
@@ -6839,7 +6549,7 @@ SOP-4_4.4x2.6mm_Pitch1.27mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.vishay.com/docs/83510/tcmt1100.pdf#page=7'
 
-SOP-16_3.9x9.9mm_Pitch1.27mm:
+SOP-16_3.9x9.9mm_P1.27mm:
   the: 12.0
   tb_s: 0.15
   c: 0.2
@@ -6871,7 +6581,7 @@ SOP-16_3.9x9.9mm_Pitch1.27mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'https://www.diodes.com/assets/Package-Files/SO-16.pdf'
 
-SOP-16_4.4x10.4mm_Pitch1.27mm:
+SOP-16_4.4x10.4mm_P1.27mm:
   the: 12.0
   tb_s: 0.15
   c: 0.2
@@ -6903,7 +6613,7 @@ SOP-16_4.4x10.4mm_Pitch1.27mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.vishay.com/docs/49447/49447.pdf'
 
-SSOP-8_2.95x2.8mm_Pitch0.65mm:
+SSOP-8_2.95x2.8mm_P0.65mm:
   the: 12.0
   tb_s: 0.15
   c: 0.15
@@ -6999,7 +6709,7 @@ SSOP-8_3.95x5.21x3.27mm_P1.27mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.ti.com/lit/ml/mpds049b/mpds049b.pdf'
 
-SSOP-14_5.3x6.2mm_Pitch0.65mm:
+SSOP-14_5.3x6.2mm_P0.65mm:
   the: 12.0
   tb_s: 0.15
   c: 0.17
@@ -7031,7 +6741,7 @@ SSOP-14_5.3x6.2mm_Pitch0.65mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.ti.com/lit/ml/msso002e/msso002e.pdf'
 
-SSOP-16_3.9x4.9mm_Pitch0.635mm:
+SSOP-16_3.9x4.9mm_P0.635mm:
   the: 12.0
   tb_s: 0.1
   c: 0.2
@@ -7063,7 +6773,7 @@ SSOP-16_3.9x4.9mm_Pitch0.635mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://docs-asia.electrocomponents.com/webdocs/0156/0900766b80156779.pdf'
 
-SSOP-16_4.4x5.2mm_Pitch0.65mm:
+SSOP-16_4.4x5.2mm_P0.65mm:
   the: 12.0
   tb_s: 0.15
   c: 0.15
@@ -7095,7 +6805,7 @@ SSOP-16_4.4x5.2mm_Pitch0.65mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.onsemi.com/pub/Collateral/565AM.PDF'
 
-SSOP-16_5.3x6.2mm_Pitch0.65mm:
+SSOP-16_5.3x6.2mm_P0.65mm:
   the: 12.0
   tb_s: 0.15
   c: 0.17
@@ -7127,7 +6837,7 @@ SSOP-16_5.3x6.2mm_Pitch0.65mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.ti.com/lit/ml/mpds507/mpds507.pdf'
 
-SSOP-18_4.4x6.5mm_Pitch0.65mm:
+SSOP-18_4.4x6.5mm_P0.65mm:
   the: 12.0
   tb_s: 0.15
   c: 0.15
@@ -7159,7 +6869,7 @@ SSOP-18_4.4x6.5mm_Pitch0.65mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'https://toshiba.semicon-storage.com/us/design-support/package/detail.SSOP18-P-225-0.65.html'
 
-SSOP-20_4.4x6.5mm_Pitch0.65mm:
+SSOP-20_4.4x6.5mm_P0.65mm:
   the: 12.0
   tb_s: 0.15
   c: 0.15
@@ -7191,7 +6901,7 @@ SSOP-20_4.4x6.5mm_Pitch0.65mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.onsemi.com/pub/Collateral/565AM.PDF'
 
-SSOP-20_5.3x7.2mm_Pitch0.65mm:
+SSOP-20_5.3x7.2mm_P0.65mm:
   the: 12.0
   tb_s: 0.15
   c: 0.15
@@ -7223,7 +6933,7 @@ SSOP-20_5.3x7.2mm_Pitch0.65mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.ti.com/lit/ml/mpds508/mpds508.pdf'
 
-SSOP-24_3.9x8.7mm_Pitch0.635mm:
+SSOP-24_3.9x8.7mm_P0.635mm:
   the: 12.0
   tb_s: 0.15
   c: 0.22
@@ -7255,7 +6965,7 @@ SSOP-24_3.9x8.7mm_Pitch0.635mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://cds.linear.com/docs/en/packaging/05081641_B_GN24.pdf'
 
-SSOP-24_5.3x8.2mm_Pitch0.65mm:
+SSOP-24_5.3x8.2mm_P0.65mm:
   the: 12.0
   tb_s: 0.1
   c: 0.15
@@ -7287,7 +6997,7 @@ SSOP-24_5.3x8.2mm_Pitch0.65mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.ti.com/lit/ml/mpds509/mpds509.pdf'
 
-SSOP-28_5.3x10.2mm_Pitch0.65mm:
+SSOP-28_5.3x10.2mm_P0.65mm:
   the: 12.0
   tb_s: 0.1
   c: 0.18
@@ -7319,7 +7029,7 @@ SSOP-28_5.3x10.2mm_Pitch0.65mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.ti.com/lit/ml/mpds509/mpds509.pdf'
 
-SSOP-48_7.5x15.9mm_Pitch0.635mm:
+SSOP-48_7.5x15.9mm_P0.635mm:
   the: 12.0
   tb_s: 0.1
   c: 0.18
@@ -7351,7 +7061,7 @@ SSOP-48_7.5x15.9mm_Pitch0.635mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.ti.com/lit/ml/mpds490/mpds490.pdf'
 
-SSOP-56_7.5x18.5mm_Pitch0.635mm:
+SSOP-56_7.5x18.5mm_P0.635mm:
   the: 12.0
   tb_s: 0.1
   c: 0.15
@@ -7383,39 +7093,7 @@ SSOP-56_7.5x18.5mm_Pitch0.635mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.ti.com/lit/ml/mpds491/mpds491.pdf'
 
-TSOP-I-48_12x18.4mm_Pitch0.5mm:
-  the: 12.0
-  tb_s: 0.1
-  c: 0.15
-  R1: 0.1
-  R2: 0.1
-  S: 0.2
-  fp_s: True
-  fp_r: 0.8
-  fp_d: 0.4
-  fp_z: 0.1
-  ef: 0
-  cc1: 0.25
-  D1: 12.0
-  E1: 18.4
-  E: 20.0
-  A1: 0.1
-  A2: 1.2
-  b: 0.22
-  e: 0.5
-  npx: 24
-  npy: 0
-  epad: null
-  excluded_pins: null
-  model_name: TSOP-I-48_12x18.4mm_P0.5mm
-  rotation: -90
-  body_color_key: 'black body'
-  pin_color_key: 'metal grey pins'
-  mark_color_key: 'light brown label'
-  destination_dir: 'Package_SO.3dshapes'
-  source: 'http://www.onsemi.com/pub/Collateral/950AD.PDF'
-
-TSOP-II-32_21.0x10.2mm_Pitch1.27mm:
+TSOP-II-32_21.0x10.2mm_P1.27mm:
   the: 12.0
   tb_s: 0.1
   c: 0.15
@@ -7447,7 +7125,7 @@ TSOP-II-32_21.0x10.2mm_Pitch1.27mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.topline.tv/drawings/pdf/TSOP-T2/TSOP32T50-T2.pdf'
 
-TSSOP-8_3x3mm_Pitch0.65mm:
+TSSOP-8_3x3mm_P0.65mm:
   the: 12.0
   tb_s: 0.1
   c: 0.15
@@ -7479,7 +7157,7 @@ TSSOP-8_3x3mm_Pitch0.65mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.nxp.com/documents/outline_drawing/SOT505-1.pdf'
 
-TSSOP-8_4.4x3mm_Pitch0.65mm:
+TSSOP-8_4.4x3mm_P0.65mm:
   the: 12.0
   tb_s: 0.1
   c: 0.15
@@ -7511,7 +7189,7 @@ TSSOP-8_4.4x3mm_Pitch0.65mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.nxp.com/documents/outline_drawing/SOT530-1.pdf'
 
-TSSOP-10_3x3mm_Pitch0.5mm:
+TSSOP-10_3x3mm_P0.5mm:
   the: 12.0
   tb_s: 0.1
   c: 0.15
@@ -7543,7 +7221,7 @@ TSSOP-10_3x3mm_Pitch0.5mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.nxp.com/documents/outline_drawing/SOT552-1.pdf'
 
-TSSOP-14_4.4x5mm_Pitch0.65mm:
+TSSOP-14_4.4x5mm_P0.65mm:
   the: 12.0
   tb_s: 0.1
   c: 0.15
@@ -7575,7 +7253,7 @@ TSSOP-14_4.4x5mm_Pitch0.65mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.nxp.com/documents/outline_drawing/SOT402-1.pdf'
 
-TSSOP-16_4.4x5mm_Pitch0.65mm:
+TSSOP-16_4.4x5mm_P0.65mm:
   the: 10.0
   tb_s: 0.1
   c: 0.15
@@ -7607,7 +7285,7 @@ TSSOP-16_4.4x5mm_Pitch0.65mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.nxp.com/documents/outline_drawing/SOT403-3.pdf'
 
-TSSOP-16-1EP_4.4x5mm_Pitch0.65mm:
+TSSOP-16-1EP_4.4x5mm_P0.65mm:
   the: 10.0
   tb_s: 0.1
   c: 0.15
@@ -7639,7 +7317,7 @@ TSSOP-16-1EP_4.4x5mm_Pitch0.65mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.onsemi.com/pub/Collateral/948AP.PDF'
 
-TSSOP-20_4.4x6.5mm_Pitch0.65mm:
+TSSOP-20_4.4x6.5mm_P0.65mm:
   the: 12.0
   tb_s: 0.1
   c: 0.15
@@ -7671,7 +7349,7 @@ TSSOP-20_4.4x6.5mm_Pitch0.65mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.onsemi.com/pub/Collateral/948AP.PDF'
 
-TSSOP-24_4.4x7.8mm_Pitch0.65mm:
+TSSOP-24_4.4x7.8mm_P0.65mm:
   the: 12.0
   tb_s: 0.1
   c: 0.15
@@ -7735,7 +7413,7 @@ TSSOP-28_4.4x9.7mm_P0.65mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.nxp.com/documents/outline_drawing/SOT361-2.pdf'
 
-TSSOP-32_6.1x11mm_Pitch0.65mm:
+TSSOP-32_6.1x11mm_P0.65mm:
   the: 12.0
   tb_s: 0.1
   c: 0.15
@@ -7767,7 +7445,7 @@ TSSOP-32_6.1x11mm_Pitch0.65mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.nxp.com/documents/outline_drawing/SOT361-2.pdf'
 
-TSSOP-38_4.4x9.7mm_Pitch0.5mm:
+TSSOP-38_4.4x9.7mm_P0.5mm:
   the: 12.0
   tb_s: 0.1
   c: 0.15
@@ -7799,7 +7477,7 @@ TSSOP-38_4.4x9.7mm_Pitch0.5mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.nxp.com/documents/outline_drawing/SOT510-1.pdf'
 
-TSSOP-44_4.4x11.2mm_Pitch0.5mm:
+TSSOP-44_4.4x11.2mm_P0.5mm:
   the: 12.0
   tb_s: 0.1
   c: 0.15
@@ -7831,7 +7509,7 @@ TSSOP-44_4.4x11.2mm_Pitch0.5mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.ti.com/lit/ml/mpds350b/mpds350b.pdf'
 
-TSSOP-48_6.1x12.5mm_Pitch0.5mm:
+TSSOP-48_6.1x12.5mm_P0.5mm:
   the: 12.0
   tb_s: 0.1
   c: 0.15
@@ -7863,7 +7541,7 @@ TSSOP-48_6.1x12.5mm_Pitch0.5mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.ti.com/lit/ml/mpds350b/mpds350b.pdf'
 
-TSSOP-56_6.1x14mm_Pitch0.5mm:
+TSSOP-56_6.1x14mm_P0.5mm:
   the: 12.0
   tb_s: 0.1
   c: 0.15
@@ -7895,7 +7573,7 @@ TSSOP-56_6.1x14mm_Pitch0.5mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.nxp.com/documents/outline_drawing/SOT364-1.pdf'
 
-VSO-40_7.6x15.4mm_Pitch0.762mm:
+VSO-40_7.6x15.4mm_P0.762mm:
   the: 12.0
   tb_s: 0.1
   c: 0.18
@@ -7927,7 +7605,7 @@ VSO-40_7.6x15.4mm_Pitch0.762mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.nxp.com/documents/outline_drawing/SOT158-1.pdf'
 
-VSO-56_11.1x21.5mm_Pitch0.75mm:
+VSO-56_11.1x21.5mm_P0.75mm:
   the: 12.0
   tb_s: 0.1
   c: 0.18
@@ -7959,7 +7637,7 @@ VSO-56_11.1x21.5mm_Pitch0.75mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.nxp.com/documents/outline_drawing/SOT190-1.pdf'
 
-VSSOP-8_3x3mm_Pitch0.65mm:
+VSSOP-8_3x3mm_P0.65mm:
   the: 12.0
   tb_s: 0.1
   c: 0.18
@@ -7991,7 +7669,7 @@ VSSOP-8_3x3mm_Pitch0.65mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.ti.com/lit/ds/symlink/lm75b.pdf'
 
-VSSOP-8_2.3x2mm_Pitch0.5mm:
+VSSOP-8_2.3x2mm_P0.5mm:
   the: 12.0
   tb_s: 0.1
   c: 0.15
@@ -8016,38 +7694,6 @@ VSSOP-8_2.3x2mm_Pitch0.5mm:
   epad: null
   excluded_pins: null
   model_name: VSSOP-8_2.3x2mm_P0.5mm
-  rotation: -90
-  body_color_key: 'black body'
-  pin_color_key: 'metal grey pins'
-  mark_color_key: 'light brown label'
-  destination_dir: 'Package_SO.3dshapes'
-  source: 'http://www.nxp.com/documents/outline_drawing/SOT765-1.pdf'
-
-VSSOP-8_2.4x2.1mm_Pitch0.5mm:
-  the: 12.0
-  tb_s: 0.1
-  c: 0.15
-  R1: 0.05
-  R2: 0.05
-  S: 0.05
-  fp_s: True
-  fp_r: 0.25
-  fp_d: 0.05
-  fp_z: 0.05
-  ef: 0
-  cc1: 0.25
-  D1: 2.1
-  E1: 2.4
-  E: 3.2
-  A1: 0.1
-  A2: 0.75
-  b: 0.22
-  e: 0.5
-  npx: 4
-  npy: 0
-  epad: null
-  excluded_pins: null
-  model_name: VSSOP-8_2.4x2.1mm_P0.5mm
   rotation: -90
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
@@ -8087,7 +7733,7 @@ VSSOP-10_3x3mm_P0.5mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.ti.com/lit/ds/symlink/ads1115.pdf'
 
-SOP-4_3.8x4.1mm_Pitch2.54mm:
+SOP-4_3.8x4.1mm_P2.54mm:
   the: 12.0
   tb_s: 0.1
   c: 0.2
@@ -9529,7 +9175,7 @@ IXYS_Flatpak-8_6.3x9.7mm_P2.54mm:
   destination_dir: 'Package_DIP.3dshapes'
   source: 'https://www.littelfuse.com/media?resourcetype=datasheets&itemid=996c6e8f-cc1b-44f6-811e-251c6e004c56&filename=littelfuse-integrated-circuits-loc112-datasheet'
 
-SOIC-8_3.81x9.35mm_Pitch2.54mm:
+SOIC-8_3.81x9.347mm_P2.54mm:
   the: 12.0  # body angle in degrees
   tb_s: 0.1  # top part of body is that much smaller
   c: 0.203  # pin thickness, body center part height
@@ -9554,7 +9200,7 @@ SOIC-8_3.81x9.35mm_Pitch2.54mm:
   npy: 4  # number of pins along y axis (length)
   epad: null
   excluded_pins: null
-  model_name: SOIC-8_3.81x9.35mm_P2.54mm
+  model_name: SOIC-8_3.81x9.347mm_P2.54mm
   rotation: 0
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
