@@ -477,6 +477,12 @@ class NoLeadGenerator(FootprintGenerator):
         model_name = fp_name_2
 
         kicad_mod = Footprint(fp_name, FootprintType.SMD)
+        if "mask_margin" in device_params:
+            kicad_mod.setMaskMargin(device_params["mask_margin"])
+        if "paste_margin" in device_params:
+            kicad_mod.setPasteMargin(device_params["paste_margin"])
+        if "paste_ratio" in device_params:
+            kicad_mod.setPasteMarginRatio(device_params["paste_ratio"])
 
         # init kicad footprint
         kicad_mod.setDescription(
