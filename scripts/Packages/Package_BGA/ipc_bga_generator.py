@@ -112,25 +112,30 @@ class BGAGenerator(FootprintGenerator):
         self._createFootprintVariant(config, device_config, fpId, header_info)
 
     def compute_stagger(self, lParams):
-        staggered = lParams.get('staggered')
+        staggered = lParams.get('staggered', '').lower() or None
         pitch = lParams.get('pitch')
+        pitchX = lParams.get('pitch_x')
+        pitchY = lParams.get('pitch_y')
 
-        if staggered and pitch is not None:
+        if staggered not in [None, 'x', 'y']:
+            raise ValueError('staggered must be either "x" or "y"')
+
+        if staggered and pitch:
             height = pitch * math.sin(math.radians(60))
-            if staggered.lower() == 'x':
-                return pitch/2, height, 'x'
-            elif staggered.lower() == 'y':
-                return height, pitch/2, 'y'
-            else:
-                raise ValueError('staggered must be either "x" or "y"')
-
-        pitchX = lParams.get('pitch_x', pitch)
-        pitchY = lParams.get('pitch_y', pitch)
+            if staggered == 'x':
+                pitchX = pitchX or pitch/2
+                pitchY = pitchY or height
+            elif staggered == 'y':
+                pitchX = pitchX or height
+                pitchY = pitchY or pitch/2
+        else:
+            pitchX = pitchX or pitch
+            pitchY = pitchY or pitch
 
         if not (pitchX and pitchY):
             raise KeyError('Either pitch or both pitch_x and pitch_y must be given.')
 
-        return pitchX, pitchY, None
+        return pitchX, pitchY, staggered
 
     def _compose_fp_name(self, config: dict, device_config: BGAConfiguration,
                         fpId: str, header_info: dict) -> str:
@@ -398,7 +403,13 @@ class BGAGenerator(FootprintGenerator):
     def makePadGrid(self, f, lParams, config, fpParams={}, xCenter=0.0, yCenter=0.0):
         layoutX = lParams["layout_x"]
         layoutY = lParams["layout_y"]
-        rowNames = lParams.get('row_names', fpParams.get('row_names', config['row_names']))[:layoutY]
+        rowNames = lParams.get('row_names', fpParams.get('row_names', config['row_names']))
+        if (row_prefix := lParams.get('row_name_prefix')):
+            rowNames = [str(row_prefix) + n for n in rowNames]
+        if (first_row := lParams.get('first_row')) is not None:
+            rowNames = rowNames[rowNames.index(first_row):]
+        rowNames = rowNames[:layoutY]
+        first_col = lParams.get('first_column', 1)
         rowSkips = lParams.get('row_skips', [])
         areaSkips = lParams.get('area_skips', [])
         padSkips = {skip.upper() for skip in lParams.get('pad_skips', [])}
@@ -423,13 +434,17 @@ class BGAGenerator(FootprintGenerator):
             if first_ball not in ('A1', 'B1', 'A2'):
                 raise ValueError('first_ball must be "A1" or "A2".')
 
-            skip_even = (first_ball != 'A1')
+        if staggered:
+            if not first_ball:
+                first_ball = 'A1'
 
-            for row_num, row in enumerate(rowNames):
-                for col in range(layoutX):
-                    is_even = (row_num + col) % 2 == 0
+            skip_even = (first_ball == 'A1')
+
+            for row_num, row in enumerate(rowNames, start=1):
+                for col in range(first_col, first_col + layoutX):
+                    is_even = (row_num + col - first_col) % 2 == 0
                     if is_even == skip_even:
-                        padSkips.add(f'{row}{col+1}')
+                        padSkips.add(f'{row}{col}')
 
         if f is None:
             return layoutX * layoutY - len(padSkips)
@@ -448,13 +463,13 @@ class BGAGenerator(FootprintGenerator):
         yPadTop = yCenter - pitchY * ((layoutY - 1) / 2.0) + yOffset
 
         for rowNum, row in enumerate(rowNames):
-            rowSet = {col for col in range(1, layoutX+1) if f'{row}{col}' not in padSkips}
+            rowSet = {col for col in range(first_col, layoutX+first_col) if f'{row}{col}' not in padSkips}
             for col in rowSet:
                 f.append(Pad(
                     number="{}{}".format(row, col), type=Pad.TYPE_SMT,
                     fab_property=Pad.FabProperty.BGA,
                     shape=padShape,
-                    at=[xPadLeft + (col-1) * pitchX, yPadTop + rowNum * pitchY],
+                    at=[xPadLeft + (col-first_col) * pitchX, yPadTop + rowNum * pitchY],
                     size=lParams.get('pad_size') or fpParams['pad_size'],
                     layers=layers,
                     radius_ratio=self.global_config.roundrect_radius_handler

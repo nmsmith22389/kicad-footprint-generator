@@ -164,6 +164,55 @@ ST_LFBGA-448_18x18mm_Layout22x22_P0.8mm:
     T8,T10,T12,T14,T16
   ]
 
+ST_VFBGA-424_14x14mm_Layout27x27_P0.5mmP0.5x0.5mm_Stagger:
+  # Caution: This package has a second ball grid in the middle. Even though that grid could fit the outer grid's 0.5mm
+  # pitch, it is offset!
+  # We further specify another secondary layout for the "checkerboard pattern" ball ring in between the center grid and
+  # the outer pins to avoid having to type out a very large number of pad_skips.
+  device_type: "VFBGA"
+  manufacturer: "ST"
+  description: "ST VFBGA-424"
+  size_source: "https://www.st.com/resource/en/datasheet/stm32mp255c.pdf"
+  body_size_x: 14.0
+  body_size_y: 14.0
+  pitch: 0.5
+  ball_diameter: 0.31
+  ball_type: 'collapsible'
+  mask_margin: 0.050
+  paste_margin: 0.000001
+  layout_x: 27
+  layout_y: 27
+  pad_skips: [
+    # bottom cutouts
+    A4, B4, A5, A8, B8, A9, A12, B12, A13, A16, B16, A17, A20, B20, A21, A24, B24, A25,
+    # top cutouts
+    AG3, AG4, AF4, AG7, AG8, AF8, AG11, AG12, AF12, AG15, AG16, AF16, AG19, AG20, AF20, AG23, AG24, AF24,
+    # left cutouts
+    C1, D1, D2, G1, H1, H2, L1, M1, M2, R1, T1, T2, W1, Y1, Y2, AC1, AD1, AD2,
+    # right cutouts
+    D26, D27, E27, H26, H27, J27, M26, M27, N27, T26, T27, U27, Y26, Y27, AA27, AD26, AD27, AE27
+  ]
+  area_skips:
+    - [d,4,ad,24]
+  secondary_layouts:
+      - staggered: x
+        pitch_x: 0.5
+        pitch_y: 0.5
+        layout_x: 21
+        layout_y: 21
+        first_row: D
+        first_column: 4
+        first_ball: A1
+        area_skips:
+          - [h,8,y,20]
+      - staggered: x
+        row_name_prefix: "1"
+        first_ball: A1
+        pitch_x: 0.5
+        pitch_y: 0.5
+        layout_x: 12
+        layout_y: 12
+
 BGA-63_9.0x11.0mm_Layout10x12_P0.8mm:
   description: "BGA-63"
   tags:
