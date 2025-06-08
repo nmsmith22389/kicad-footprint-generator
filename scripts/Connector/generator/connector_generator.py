@@ -21,6 +21,8 @@ Authors:
     - ... (not complete)
 """
 
+import abc
+import enum
 import warnings
 import re
 
@@ -89,6 +91,102 @@ def _round_to(val, base, direction: str=None):
     else:
         return round(val / base) * base
 
+
+class PadLayout(abc.ABC):
+
+    @abc.abstractmethod
+    def get_pad_pos(self, index) -> Vector2D:
+        """
+        Returns the position of the pad with the given index
+        """
+        pass
+
+    @abc.abstractmethod
+    def get_pad_name(self, index) -> str:
+        """
+        Returns the name of the pad with the given index
+        """
+        pass
+
+class PadGridLayout(PadLayout):
+    """
+    Pad layout for a grid of pads
+    """
+
+    class NumberingAxis(enum.Enum):
+        ROW_FIRST = 0
+        COL_FIRST = 1
+
+
+    def __init__(self, pad_pitch: float, row_pitch: float, pads_per_row: int, num_rows: int, pin1_at_top: bool,
+                 y_stagger_length: int, y_stagger_offset: float,
+                 numbering_axis: NumberingAxis, gap_pos: int, gap_size: int):
+        self.pad_pitch = pad_pitch
+        self.row_pitch = row_pitch
+        self.pads_per_row = pads_per_row
+        self.num_rows = num_rows
+        self.pin1_at_top = pin1_at_top
+
+        self.y_stagger_length = y_stagger_length
+        self.y_stagger_offset = y_stagger_offset
+
+        # how far does y-stagger move in a complete cycle
+        self._y_stagger_span = (self.y_stagger_length - 1) * self.y_stagger_offset
+
+        self.numbering_axis = numbering_axis
+
+        self.gap_pos = gap_pos
+        self.gap_size = gap_size
+
+        # The span of the nominal rows - pad pos
+        self.y_span = self.row_pitch * (self.num_rows - 1)
+        self.x_span = self.pad_pitch * (self.pads_per_row + self.gap_size - 1)
+
+    def _row_col(self, index) -> tuple[int, int]:
+        """
+        Returns the row and column of the pad with the given index
+        """
+        row = index // self.pads_per_row
+        col = index % self.pads_per_row
+        return row, col
+
+    def get_pad_pos(self, index) -> Vector2D:
+        """"
+        Get the pad position relative to the center of the grid
+        """
+        row, col = self._row_col(index)
+
+        # Step over the gap
+        if self.gap_size and col >= self.gap_pos:
+            col += self.gap_size
+
+        # # reverse row position if pin1 is at the bottom
+        if not self.pin1_at_top:
+            row = self.num_rows - 1 - row
+
+        if self.y_stagger_length == 1:
+            y_off = 0
+        else:
+            y_off = (col % self.y_stagger_length) * -self.y_stagger_offset + (
+                self._y_stagger_span / 2
+            )
+
+        pos = Vector2D(col * self.pad_pitch, row * self.row_pitch + y_off)
+
+        return pos + Vector2D(
+            -0.5 * self.x_span,
+            -0.5 * self.y_span,
+        )
+
+    def get_pad_name(self, index) -> str:
+        row, col = self._row_col(index)
+
+        if self.numbering_axis == self.NumberingAxis.COL_FIRST:
+            number = col * self.num_rows + row + 1
+        else:
+            number = row * self.pads_per_row + col + 1
+
+        return str(number)
 
 @dataclass
 class PadProperties():
@@ -233,10 +331,33 @@ class FPconfiguration():
         if (self.row_pitch is None):
             self.row_pitch = 0.0
 
-        self.num_rows = 2 if self.row_pitch else 1
+        if "num_rows" in self.spec:
+            self.num_rows = self.spec["num_rows"]
+        else:
+            self.num_rows = 2 if self.row_pitch else 1
+
+        if self.num_rows > 1 and not self.row_pitch:
+            raise ValueError("num_rows > 1 but row_pitch not specified")
+
+        self.numbering_axis = self.spec.get("numbering_axis", "col_first")
+
+        # We will need 'grid' for SEARAYs
+        if self.numbering_axis not in ["row_first", "col_first"]:
+            raise ValueError("numbering must be 'row_first' or 'col_first'")
+
+        # Stagger of pins in y along a single row
+        pin_y_stagger_cycle = self.spec.get("pin_y_stagger_cycle", 1)
+        pin_y_stagger_offset = self.spec.get("pin_y_stagger_offset", 0.0)
 
         ## row_x_offset defines if it has staggered pins or not
         self.row_x_offset = self.spec.get("row_x_offset", 0.0)
+
+        ## get information about 1st pin
+        first_pin_spec = self.spec.get("first_pin", {})
+        self.pin1_pos = first_pin_spec.get("position", "top")
+
+        if self.pin1_pos not in ["top", "bottom"]:
+            raise ValueError("'first_pin.position' must be one of 'top', 'bottom'")
 
         ## collection information about an eventual gap in the pin layout
         gap = self.spec.get("gap", {}).get(positions, [0, 0])
@@ -253,6 +374,23 @@ class FPconfiguration():
         else:
             self.skipped_positions = []
 
+        self.pad_layout = PadGridLayout(
+            self.pad_pitch,
+            self.row_pitch,
+            self.num_pos,
+            self.num_rows,
+            y_stagger_length=pin_y_stagger_cycle,
+            y_stagger_offset=pin_y_stagger_offset,
+            pin1_at_top=self.pin1_pos == "top",
+            numbering_axis=(
+                PadGridLayout.NumberingAxis.COL_FIRST
+                if self.numbering_axis == "col_first"
+                else PadGridLayout.NumberingAxis.ROW_FIRST
+            ),
+            gap_pos = self.gap_pos,
+            gap_size = self.gap_size,
+        )
+
         ## check if there are mount pads
         self.num_mount_pads = len({ep["name"] for ep in self.spec.get("mount_pads", {}).values() if "name" in ep})
 
@@ -262,7 +400,10 @@ class FPconfiguration():
         self.pad_size = self.pad_properties.size
 
         self.pad_center_offset = _get_dims("pads", spec=self.spec.get("offset", {}))
-        self.pad_pos_range = Vector2D((positions + self.gap_size - 1) * self.pad_pitch, self.row_pitch)
+        self.pad_pos_range = Vector2D(
+            (positions + self.gap_size - 1) * self.pad_pitch,
+            self.row_pitch * (self.num_rows - 1),
+        )
 
         ## calculate body size
         body_size = _get_dims("body_size", spec=self.spec, base=self.pad_pos_range, mult=2)
@@ -287,13 +428,6 @@ class FPconfiguration():
         self.rule_areas = rule_area_properties.RuleAreaProperties.from_standard_yaml(self.spec)
 
         self.clean_silk = self.spec.get('clean_silk', True)
-
-        ## get information about 1st pin
-        first_pin_spec = self.spec.get("first_pin", {})
-        self.pin1_pos = first_pin_spec.get("position", "top")
-
-        if self.pin1_pos not in ["top", "bottom"]:
-            raise ValueError("'first_pin.position' must be one of 'top', 'bottom'")
 
         if pad1_spec := first_pin_spec.get("pad", None):
             self.pad1_properties = PadProperties(pad1_spec, global_config)
@@ -466,22 +600,24 @@ def generate_one_footprint(
         kicad_mod.append(PolygonLine(shape=poly_nodes, layer="F.Fab", width=global_config.fab_line_width))
 
     ## create Pads
-    start_pos_x = -0.5 * (fp_config.pad_pos_range.x + fp_config.row_x_offset) + fp_config.pad_center_offset.x
-    for row in range(fp_config.num_rows):
-        pos_y = (0.5 if row == 0 else -0.5) * fp_config.pad_pos_range.y * fp_config.scale_y + fp_config.pad_center_offset.y
-        row_x_offset = 0 if (row % 2)== 0 else fp_config.row_x_offset
-        col_num = 0
-        for col in range(math.ceil(positions) + fp_config.gap_size):
-            if (col not in fp_config.skipped_positions):
-                pad_number = fp_config.num_rows * col_num + row + 1
-                if (pad_number > fp_config.num_rows * positions):
-                    continue
-                pad_props = fp_config.pad1_properties if (pad_number == 1 and fp_config.pad1_properties) else fp_config.pad_properties
-                kicad_mod.append(Pad(number=pad_number,
-                                     at=[start_pos_x + col * fp_config.pad_pitch, pos_y],
-                                     **pad_props.as_args()))
-                col_num += 1
-        pos_y *= -1 # switch to opposite row
+    for pad_index in range(fp_config.num_rows * positions):
+
+        pad_pos = fp_config.pad_layout.get_pad_pos(pad_index)
+        pad_name = fp_config.pad_layout.get_pad_name(pad_index)
+
+        pad_props = (
+            fp_config.pad1_properties
+            if (pad_index == 0 and fp_config.pad1_properties)
+            else fp_config.pad_properties
+        )
+
+        kicad_mod.append(
+            Pad(
+                number=pad_name,
+                at=pad_pos + fp_config.pad_center_offset,
+                **pad_props.as_args(),
+            )
+        )
 
     ## Create rule areas (keepouts)
     rule_area_zones = rule_area_properties.create_rule_area_zones(fp_config.rule_areas,
