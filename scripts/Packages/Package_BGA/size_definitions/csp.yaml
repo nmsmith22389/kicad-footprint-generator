@@ -114,6 +114,26 @@ ST_WLCSP-18_1.86x2.14mm_Layout7x5_P0.4mm_Stagger:
   paste_margin: 0.0125
   layout_x: 7
   layout_y: 5
+ST_WLCSP-19_1.643x2.492mm_Layout4x11_P0.35mm_Stagger:
+  manufacturer: "ST"
+  device_type: "WLCSP"
+  description: "ST WLCSP-19, ST Die ID 493"
+  compatible_mpns:
+    - "ST-Die-493"
+    - "ST-Package-B0MQ"
+  size_source: "https://www.st.com/resource/en/datasheet/stm32c071kb.pdf#page=100"
+  body_size_x: 1.643
+  body_size_y: 2.492
+  pitch: 0.35
+  staggered: y
+  first_ball: A2
+  # Not in datasheet, copied from ST_WLCSP-72_3.38x3.38mm_P0.35m_Stagger
+  pad_diameter: 0.200
+  mask_margin: 0.0375
+  paste_margin: 0.0375
+  layout_x: 4
+  layout_y: 11
+  pad_skips: [E2,G2,F3]
 ST_WLCSP-20_1.94x2.4mm_Layout4x5_P0.4mm:
   manufacturer: "ST"
   device_type: "WLCSP"
@@ -265,6 +285,80 @@ ST_WLCSP-36_Die458:
   paste_margin: 0.0125
   layout_x: 6
   layout_y: 6
+ST_WLCSP-36_2.652x2.592mm_Layout7x12_P0.4mm_Stagger_Offcenter:
+  manufacturer: "ST"
+  device_type: "WLCSP"
+  description: "ST WLCSP-36, ST Die ID 028"
+  compatible_mpns:
+    - "ST-Die-028"
+    - "ST-Package-01C1"
+  size_source: "https://www.st.com/resource/en/datasheet/stm32wb05tz.pdf#page=55"
+  body_size_x: 2.652
+  body_size_y: 2.592
+  pitch: 0.4
+  staggered: y
+  first_ball: A2
+  pad_diameter: 0.225
+  mask_margin: 0.0325
+  paste_margin: 0.0125
+  layout_x: 7
+  layout_y: 12
+  offset_x: 0.0483  # offset_x = (fG + fE) / 2‎ - fG
+  pad_skips: [F1,G2,H3,J2,K3,M3]
+ST_WLCSP-36_2.83x2.99mm_Layout7x13_P0.4mm_Stagger_Offcenter:
+  # Caution! This chip has TWO ball grids with the same pitch, but offset checkerboard patterns that meet in the middle.
+  # At this point, I'm pretty sure ST are just trolling.
+  manufacturer: "ST"
+  device_type: "WLCSP"
+  description: "ST WLCSP-36, ST Die ID 032"
+  compatible_mpns:
+    - "ST-Die-032"
+    - "ST-Package-B0LY"
+  size_source: "https://www.st.com/resource/en/datasheet/stm32wb09te.pdf#page=59"
+  body_size_x: 2.83
+  body_size_y: 2.99
+  pitch: 0.4
+  staggered: y
+  first_ball: A2
+  pad_diameter: 0.225
+  mask_margin: 0.0325
+  paste_margin: 0.0125
+  offset_y: +0.005
+  offset_y: -0.025
+  layout_x: 7
+  layout_y: 13
+  pad_skips: [C2,E2,G4,H1,H3,H7]
+  area_skips:
+    - [j,1,n,7]
+  secondary_layouts:
+    - pitch: 0.4  # replace 2nd row by 3 balls @ 0.8mm pitch
+      staggered: y
+      first_ball: A1
+      layout_x: 7
+      layout_y: 13
+      offset_x: -0.043
+      offset_y: -0.010
+      area_skips:
+        - [a,1,h,7]
+      pad_skips: [J5,K2,L3,N3]
+ST_WLCSP-39_2.76x2.78mm_Layout11x7_P0.4mm_Stagger:
+  manufacturer: "ST"
+  device_type: "WLCSP"
+  description: "ST WLCSP-39, ST Die ID 478"
+  compatible_mpns:
+    - "ST-Package-B0MM"
+  size_source: "https://www.st.com/resource/en/datasheet/stm32h523he.pdf#page=197"
+  body_size_x: 2.76
+  body_size_y: 2.78
+  pitch: 0.4
+  staggered: x
+  first_ball: A1
+  # Not in datasheet, copied from ST_WLCSP-42_2.93mmx2.82_P0.40mm_Stagger
+  pad_diameter: 0.250
+  mask_margin: 0.0375
+  paste_margin: 0.0375
+  layout_x: 11
+  layout_y: 7
 ST_WLCSP-41_2.98x2.76mm_Layout13x7_P0.4mm_Stagger:
   manufacturer: "ST"
   device_type: "WLCSP"
@@ -408,6 +502,24 @@ ST_WLCSP-49_Die448:
   paste_margin: 0.000001
   layout_x: 7
   layout_y: 7
+ST_WLCSP-49_3.14x3.14mm_Layout7x7_P0.4mm_Offcenter:
+  manufacturer: "ST"
+  device_type: "WLCSP"
+  description: "ST WLCSP-49, ST Die ID 01E"
+  compatible_mpns:
+    - "ST-Die-01E"
+    - "ST-Package-01C1"
+  size_source: "https://www.st.com/resource/en/datasheet/stm32wb07cc.pdf#page=62"
+  body_size_x: 3.14
+  body_size_y: 3.14
+  pitch: 0.40
+  pad_diameter: 0.225
+  mask_margin: 0.0325
+  paste_margin: 0.0125
+  layout_x: 7
+  layout_y: 7
+  offset_x: -0.046
+  offset_y: -0.107
 ST_WLCSP-52_3.09x3.15mm_Layout13x8_P0.4mm_Stagger:
   manufacturer: "ST"
   device_type: "WLCSP"
