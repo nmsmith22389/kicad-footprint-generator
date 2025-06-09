@@ -84,38 +84,13 @@ def get_pad_top_left_corner_midpoint(pad: Pad) -> Vector2D:
     return tl_corner
 
 
-def get_pad_bounding_box(pad: Pad) -> BoundingBox:
-
-    if pad.shape in [Pad.SHAPE_RECT, Pad.SHAPE_ROUNDRECT, Pad.SHAPE_CIRCLE, Pad.SHAPE_OVAL]:
-
-        # This code doesn't handle this yet
-        if (pad.rotation % 180) > 1e-6:
-            raise ValueError("Rotation of pad is not a multiple of 180 degrees")
-
-        return BoundingBox(
-            pad.at - (pad.size / 2),
-            pad.at + (pad.size / 2)
-        )
-    else:
-        raise ValueError("Unsupported pad shape: {}".format(pad.shape))
-
-
 def get_bounding_box_of_pad_arrays(pad_arrays: List[PadArray]) -> BoundingBox:
     """Get the bounding box of a list of pad arrays"""
 
-    bb = None
+    bb = BoundingBox()
     for pad_array in pad_arrays:
         for pad in pad_array:
-            pad_bb = get_pad_bounding_box(pad)
-
-            if bb is None:
-                bb = pad_bb
-            else:
-                bb.include_bbox(pad_bb)
-
-    if bb is None:
-        raise ValueError("No pad found in pad array")
-
+            bb.include_bbox(pad.bbox())
     return bb
 
 
@@ -683,7 +658,6 @@ class NoLeadGenerator(FootprintGenerator):
                 kicad_mod.append(right_line)
 
             else:
-
                 # stay outside the body _and_ the pad clearance
                 silk_top_y = min(pads_bbox.top - silk_pad_offset, body_edge['top'] - silk_offset)
                 silk_bottom_y = max(pads_bbox.bottom + silk_pad_offset, body_edge['bottom'] + silk_offset)
@@ -714,17 +688,25 @@ class NoLeadGenerator(FootprintGenerator):
             #
             #   x2x  <- pad
 
-            # where the lines have to end to avoid crashing into the pad
-            sx1 = -(device_dimensions['pitch_x'] * (device_params['num_pins_x'] - 1) / 2.0 +
-                    pad_details['top']['size'][0] / 2.0 + silk_pad_offset)
+            if kicad_mod.name == "OnSemi_VCT-28_3.5x3.5mm_P0.4mm":
+                pass
 
-            sy1 = -(device_dimensions['pitch_y'] * (device_params['num_pins_y'] - 1) / 2.0 +
-                    pad_details['left']['size'][1] / 2.0 + silk_pad_offset)
+            # stay outside the body _and_ the pad clearance
+            bbox_left = pad_arrays[0].bbox()  # pad_arrays[0] is the lef array
+            y_above_side_pads = bbox_left.top - silk_pad_offset
+            silk_top_y = min(y_above_side_pads, body_edge['top'] - silk_offset)
+            bbox_top = pad_arrays[-1].bbox()  # pad_arrays[-1] is the top array
+            x_left_of_top_pads = bbox_top.left - silk_pad_offset
+            silk_left_x = min(x_left_of_top_pads, body_edge['left'] - silk_offset)
+
+            # where the lines have to end to avoid crashing into the pad
+            sx1 = bbox_top.left - silk_pad_offset
+            sy1 = bbox_left.top - silk_pad_offset
 
             # arrow always in top-left of body
             arrow_apex = Vector2D(
-                body_edge['left'] - silk_offset,
-                body_edge['top'] - silk_offset
+                silk_left_x,
+                silk_top_y
             )
 
             drawing_tools.CornerBracketWithArrowPointingSouth(
@@ -732,14 +714,14 @@ class NoLeadGenerator(FootprintGenerator):
                 sx1, sy1, "F.SilkS", silk_line_width_mm, SILK_MIN_LEN)
 
             poly_silk = [
-                {'x': sx1, 'y': body_edge['top'] - silk_offset},
-                {'x': body_edge['left'] - silk_offset, 'y': body_edge['top'] - silk_offset},
-                {'x': body_edge['left'] - silk_offset, 'y': sy1}
+                {'x': sx1, 'y': silk_top_y},
+                {'x': silk_left_x, 'y': silk_top_y},
+                {'x': silk_left_x, 'y': sy1}
             ]
 
-            if sx1 - SILK_MIN_LEN < body_edge['left'] - silk_offset:
+            if sx1 - SILK_MIN_LEN < silk_left_x:
                 poly_silk = poly_silk[1:]
-            if sy1 - SILK_MIN_LEN < body_edge['top'] - silk_offset:
+            if sy1 - SILK_MIN_LEN < silk_top_y:
                 poly_silk = poly_silk[:-1]
 
             if len(poly_silk) > 1:
