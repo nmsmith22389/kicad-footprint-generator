@@ -24,7 +24,7 @@ def test_constructor(rel: float = 1e-10) -> None:
     bboxs.append(BoundingBox())
     # Test the include_points() function on an empty bounding box:
     for point in POINTS:
-        bboxs[0].include_point(point)
+        bboxs[0].include_point(Vector2D(point))
     # Test the constructor with two corner points:
     bboxs.append(BoundingBox(POINTS[0], POINTS[2]))
     # Test the constructor with two corner points but in inverted order:
