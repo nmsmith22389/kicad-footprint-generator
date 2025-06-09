@@ -54,6 +54,23 @@ class BoundingBox:
             self.min = None
             self.max = None
 
+    @classmethod
+    def from_vector2d(
+        cls,
+        min: Vector2D,
+        max: Vector2D,
+    ) -> None:
+        """Initialize a bounding box from the given minimum and maximum points.
+
+        Args:
+            min: Top left corner of the bounding box.
+            max: Bottom right corner of the bounding box.
+        """
+        bbox = BoundingBox.__new__(BoundingBox)
+        bbox.min = min
+        bbox.max = max
+        return bbox
+
     def copy(self) -> BoundingBox:
         """Create a copy of the bounding box."""
         bbox = BoundingBox()
@@ -62,7 +79,7 @@ class BoundingBox:
             bbox.max = self.max.copy()
         return bbox
 
-    def include_point(self, point: Vec2DCompatible) -> BoundingBox:
+    def include_point(self, point: Vector2D) -> BoundingBox:
         """Increase the bounding box to include the given point.
 
         Args:
@@ -71,18 +88,21 @@ class BoundingBox:
         Returns:
             The bounding box after including the point.
         """
-        point = Vector2D(point)
         if self.min is None:
-            self.min = point
-            self.max = point
+            self.min = point.copy()
+            self.max = point.copy()
         else:
             assert self.max is not None
-            self.min = Vector2D.from_floats(
-                min(self.min.x, point.x), min(self.min.y, point.y)
-            )
-            self.max = Vector2D.from_floats(
-                max(self.max.x, point.x), max(self.max.y, point.y)
-            )
+            if self.min.x <= point.x:
+                if self.max.x < point.x:
+                    self.max.x = point.x
+            else:
+                self.min.x = point.x
+            if self.min.y <= point.y:
+                if self.max.y < point.y:
+                    self.max.y = point.y
+            else:
+                self.min.y = point.y
         return self
 
     def include_bbox(self, bbox: BoundingBox) -> BoundingBox:
