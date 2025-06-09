@@ -44,7 +44,7 @@ class LayerTextProperties:
         self.thickness_ratio = thickness_ratio
         self.width_ratio = width_ratio
 
-    def clamp_size(self, height) -> tuple[Vector2D, float]:
+    def clamp_size(self, height: float) -> tuple[Vector2D, float]:
         size = min(self.size_max, max(self.size_min, height))
 
         size = round(size, 2)

@@ -99,7 +99,10 @@ exclude = [
 
 # Configure pyright static type checker
 [tool.pyright]
-include = ["src"]
+include = [
+    "src",
+    "scripts/tools/footprint_scripts_pin_headers.py",
+]
 exclude = ["**/__pycache__"]
 ignore = ["src/kilibs/declarative_defs", "src/kilibs/util/toleranced_size.py"]
 typeCheckingMode = "strict"

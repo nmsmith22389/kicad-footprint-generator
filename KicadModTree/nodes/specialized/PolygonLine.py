@@ -13,7 +13,7 @@
 #
 # (C) 2016 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 
-from typing import Optional, Self
+from typing import Optional, Self, Sequence
 
 from KicadModTree.nodes.Node import Node
 from KicadModTree.nodes.NodeShape import NodeShape
@@ -46,8 +46,7 @@ class PolygonLine(NodeShape, GeomPolygon):
             | GeomPolygon
             | GeomRectangle
             | BoundingBox
-            | list[Vec2DCompatible]
-            | tuple[Vec2DCompatible]
+            | Sequence[Vec2DCompatible]
         ),
         layer: str = "F.SilkS",
         width: Optional[float] = None,
