@@ -100,9 +100,9 @@ def generate(series_params, part):  # **kwargs):
     od = series_params["mechanical"]["od"]
     od1 = series_params["mechanical"]["od1"]
     h1 = (
-        series_params["mechanical"]["h1"]
-        if "h1" in series_params["mechanical"]
-        else series_params["parts"][part]["h1"]
+        series_params["parts"][part]["h1"]
+        if "h1" in series_params["parts"][part]
+        else series_params["mechanical"]["h1"]
     )
     td = (
         series_params["parts"][part]["thread_depth"]
