@@ -180,6 +180,9 @@
     9774150960:
       datasheet: https://www.we-online.com/components/products/datasheet/9774150960R.pdf
       h: 15
+    9774160960:
+      datasheet: https://www.we-online.com/components/products/datasheet/9774160960R.pdf
+      h: 16
 
 4.5mm:
   series_prefix: WA-SMST
@@ -409,6 +412,10 @@ M2:
     od1: 2.8
     h1: 1.4
   parts:
+    9774005243:
+      datasheet: https://www.we-online.com/components/products/datasheet/9774005243R.pdf
+      h: 0.5
+      h1: 0.9
     9774010243:
       datasheet: https://www.we-online.com/components/products/datasheet/9774010243R.pdf
       h: 1
@@ -564,6 +571,9 @@ M3:
     od1: 4.2
     h1: 1.4
   parts:
+    9774005360:
+      datasheet: https://www.we-online.com/components/products/datasheet/9774005360R.pdf
+      h: 0.5
     9774010360:
       datasheet: https://www.we-online.com/components/products/datasheet/9774010360R.pdf
       h: 1
@@ -615,6 +625,9 @@ M3:
     9774150360:
       datasheet: https://www.we-online.com/components/products/datasheet/9774150360R.pdf
       h: 15
+    9774160360:
+      datasheet: https://www.we-online.com/components/products/datasheet/9774160360R.pdf
+      h: 16
 
 M4:
   series_prefix: WA-SMSI

@@ -202,6 +202,9 @@
     9774150960:
       datasheet: https://www.we-online.com/components/products/datasheet/9774150960R.pdf
       h: 15
+    9774160960:
+      datasheet: https://www.we-online.com/components/products/datasheet/9774160960R.pdf
+      h: 16
   body_color_key: 'metal grey pins'
   destination_dir: 'Mounting_Wuerth.3dshapes'
 
@@ -473,6 +476,10 @@ M2:
     t1: 0
     ext_thread: null
   parts:
+    9774005243:
+      datasheet: https://www.we-online.com/components/products/datasheet/9774005243R.pdf
+      h: 0.5
+      h1: 0.9
     9774010243:
       datasheet: https://www.we-online.com/components/products/datasheet/9774010243R.pdf
       h: 1
@@ -535,6 +542,10 @@ M2.5:
     t1: 0
     ext_thread: null
   parts:
+    9774005151:
+      datasheet: https://www.we-online.com/components/products/datasheet/9774005151R.pdf
+      h: 0.5
+      h1: 0.9
     9774010151:
       datasheet: https://www.we-online.com/components/products/datasheet/9774010151R.pdf
       h: 1
@@ -621,6 +632,9 @@ M3:
     t1: 0
     ext_thread: null
   parts:
+    9774005360:
+      datasheet: https://www.we-online.com/components/products/datasheet/9774005360R.pdf
+      h: 0.5
     9774010360:
       datasheet: https://www.we-online.com/components/products/datasheet/9774010360R.pdf
       h: 1
@@ -672,6 +686,9 @@ M3:
     9774150360:
       datasheet: https://www.we-online.com/components/products/datasheet/9774150360R.pdf
       h: 15
+    9774160360:
+      datasheet: https://www.we-online.com/components/products/datasheet/9774160360R.pdf
+      h: 16
   body_color_key: 'metal grey pins'
   destination_dir: 'Mounting_Wuerth.3dshapes'
 
