@@ -59,7 +59,7 @@ class BoundingBox:
         cls,
         min: Vector2D,
         max: Vector2D,
-    ) -> None:
+    ) -> BoundingBox:
         """Initialize a bounding box from the given minimum and maximum points.
 
         Args:
