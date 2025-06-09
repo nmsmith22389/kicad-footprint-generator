@@ -800,9 +800,6 @@ snap:
     od1: 4.2
     h1: 1.4
   parts:
-    9776100960:
-      datasheet: https://www.we-online.com/components/products/datasheet/9776100960R.pdf
-      h: 10
     9776020960:
       datasheet: https://www.we-online.com/components/products/datasheet/9776020960R.pdf
       h: 2
@@ -830,6 +827,9 @@ snap:
     9776090960:
       datasheet: https://www.we-online.com/components/products/datasheet/9776090960R.pdf
       h: 9
+    9776100960:
+      datasheet: https://www.we-online.com/components/products/datasheet/9776100960R.pdf
+      h: 10
 
 external_m3:
   series_prefix: WA-SMSE

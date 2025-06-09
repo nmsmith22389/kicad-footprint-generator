@@ -887,9 +887,6 @@ snap:
     dd: 2.5
     ext_thread: null
   parts:
-    9776100960:
-      datasheet: https://www.we-online.com/components/products/datasheet/9776100960R.pdf
-      h: 10
     9776020960:
       datasheet: https://www.we-online.com/components/products/datasheet/9776020960R.pdf
       h: 2
@@ -917,6 +914,9 @@ snap:
     9776090960:
       datasheet: https://www.we-online.com/components/products/datasheet/9776090960R.pdf
       h: 9
+    9776100960:
+      datasheet: https://www.we-online.com/components/products/datasheet/9776100960R.pdf
+      h: 10
   body_color_key: 'metal grey pins'
   destination_dir: 'Mounting_Wuerth.3dshapes'
 
