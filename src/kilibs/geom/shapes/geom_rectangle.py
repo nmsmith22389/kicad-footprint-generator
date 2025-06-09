@@ -268,7 +268,7 @@ class GeomRectangle(GeomShapeClosed):
     def bbox(self) -> BoundingBox:
         """Return the bounding box of the rectangle."""
         if not self._bbox:
-            self._bbox = self._bbox = self._get_bbox()
+            self._bbox = self._get_bbox()
         return self._bbox
 
     def round_to_grid(self, grid: float, outwards: bool = True) -> GeomRectangle:
@@ -486,7 +486,11 @@ class GeomRectangle(GeomShapeClosed):
     def _get_bbox(self) -> BoundingBox:
         """Update the bounding box of the rectangle."""
         if not self._angle:
-            return BoundingBox(self.center - self.size / 2, self.center + self.size / 2)
+            dx = self.size.x / 2.0
+            dy = self.size.y / 2.0
+            min = Vector2D.from_floats(self.center.x - dx, self.center.y - dy)
+            max = Vector2D.from_floats(self.center.x + dx, self.center.y + dy)
+            return BoundingBox.from_vector2d(min, max)
         else:
             pts = self.points
             bbox = BoundingBox()
