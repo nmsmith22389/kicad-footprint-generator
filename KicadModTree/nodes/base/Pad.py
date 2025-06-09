@@ -433,7 +433,11 @@ class Pad(Node):
             rect = GeomRectangle(center=self.at, size=self.size, angle=self.rotation)
             return rect.bbox()
         else:
-            raise NotImplementedError("bbox is not implemented for pad shape '%s'" % self.shape)
+            bounding_box = BoundingBox()
+            for point in self.primitives[0].points:
+                bounding_box.include_point(point + self.at)
+            bounding_box.inflate(self.primitives[0].width/2.0)
+            return bounding_box
 
     def _getRenderTreeText(self):
         render_strings = ['pad']
