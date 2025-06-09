@@ -154,6 +154,7 @@ def _unite_segments_from_both_shapes(
             handle,
             idx_shape=idx_current_shape,
             point=point,
+            first_point=first_point,
         )
         # If no new segments are returned, we have all the segments that there were to
         # get. Wee can end the while loop.
@@ -340,7 +341,7 @@ def _find_first_point_outside_other_shape(
 
 
 def _get_all_outside_segments_after_point(
-    handle: GeomOperationHandle, idx_shape: int, point: Vector2D
+    handle: GeomOperationHandle, idx_shape: int, point: Vector2D, first_point: Vector2D
 ) -> list[GeomArc | GeomLine] | None:
     """Return the sequence of the segments that start on `point` and are outside of the
     other shape.
@@ -349,6 +350,7 @@ def _get_all_outside_segments_after_point(
         handle: The handle to the intersection data.
         idx_shape: The index (0 or 1) of the shape from which the segments are returned.
         point: The point.
+        first_point: The starting point of the union. Currently not used.
 
     Returns:
         The list of segments, or `None` if the point is not part of the selected shape.
@@ -377,7 +379,7 @@ def _get_all_outside_segments_after_point(
 
 
 def _get_all_outside_segments_till_next_intersection(
-    handle: GeomOperationHandle, idx_shape: int, point: Vector2D
+    handle: GeomOperationHandle, idx_shape: int, point: Vector2D, first_point: Vector2D
 ) -> list[GeomArc | GeomLine] | None:
     """Return the sequence of the segments that start on `point` until an intersection
     point is reached.
@@ -387,6 +389,7 @@ def _get_all_outside_segments_till_next_intersection(
         idx_shape: The index (0 or 1) of the shape from which the segments are
             returned.
         point: The starting point.
+        first_point: The starting point of the union.
 
     Returns:
         The list of segments or `None` if the point is not part of the selected
@@ -414,6 +417,8 @@ def _get_all_outside_segments_till_next_intersection(
             i = 0
             segment = handle.segs[idx_shape][i]
         if not handle.segs[idx_shape]:
+            return segments
+        if segment.end.is_equal_accelerated(first_point, tol=handle.tol):
             return segments
         for point in handle.intersections:
             if segment.end.is_equal_accelerated(point, tol=handle.tol):
