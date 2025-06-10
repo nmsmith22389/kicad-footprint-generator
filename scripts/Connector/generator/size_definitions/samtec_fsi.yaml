@@ -14,7 +14,7 @@ defaults:
 FSI-1XX-03-X-D:
   inherit: 'defaults'
   first_pin:
-    position: 'top'     # top (default) or bottom
+    position: 'top'
   description: 'Samtec FSI One-Piece Interface, 1.00 mm Pitch, {options}'
   tags: 'conn samtec one piece interface'
   pads:
@@ -172,7 +172,7 @@ FSI-1XX-XX-X-D-MATE:
   exclude_from_bom: True
   exclude_from_pos: True
   first_pin:
-    position: 'bottom'     # top (default) or bottom
+    position: 'bottom'
     offset: 1.48
   pads:
     size: [0.61, 3.55]
@@ -188,7 +188,7 @@ FSI-1XX-XX-X-D-AD-MATE:
   exclude_from_bom: True
   exclude_from_pos: True
   first_pin:
-    position: 'bottom'     # top (default) or bottom
+    position: 'bottom'
     offset: 1.48
   pads:
     size: [0.61, 3.55]
@@ -204,7 +204,7 @@ FSI-1XX-XX-X-D-M-MATE:
   exclude_from_bom: True
   exclude_from_pos: True
   first_pin:
-    position: 'bottom'     # top (default) or bottom
+    position: 'bottom'
     offset: 1.48
   pads:
     size: [0.61, 3.55]
@@ -220,7 +220,7 @@ FSI-1XX-XX-X-D-M-AD-MATE:
   exclude_from_bom: True
   exclude_from_pos: True
   first_pin:
-    position: 'bottom'     # top (default) or bottom
+    position: 'bottom'
     offset: 1.48
   pads:
     size: [0.61, 3.55]
@@ -236,7 +236,7 @@ FSI-1XX-XX-X-D-M-MATE-40:
   exclude_from_bom: True
   exclude_from_pos: True
   first_pin:
-    position: 'bottom'     # top (default) or bottom
+    position: 'bottom'
     offset: 1.48
   pads:
     size: [0.61, 3.55]
@@ -252,13 +252,13 @@ FSI-1XX-XX-X-D-M-AD-MATE-40:
   exclude_from_bom: True
   exclude_from_pos: True
   first_pin:
-    position: 'bottom'     # top (default) or bottom
+    position: 'bottom'
     offset: 1.48
   pads:
     size: [0.61, 3.55]
     paste: False
   row_pitch: 7.11
   options: 'Double Row, PCB Mate, Threaded, Alignment Pin'
-  footprint_type: 'unspecified' 
+  footprint_type: 'unspecified'
   fp_suffix: '_Mate_Threaded_AlignmentPin'
   source: 'https://suddendocs.samtec.com/prints/fsi-mating%20board.pdf'

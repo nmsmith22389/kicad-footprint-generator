@@ -3,7 +3,7 @@ defaults:
   pad_pitch: 1.0
   row_pitch: null # only one row
   first_pin:
-    position: 'top'     # top (default) or bottom
+    position: 'top'
     marker:
       shape: 'triangle' # shape of pin 1 marker on Silk and Fab (circle or triangle)
       offset: 0.325     # offset from the body edge (default: size)
@@ -80,7 +80,7 @@ T1M-XX-S-V:
   first_pin:
     marker:
       offset: 1.135
-    position: 'bottom'     # top (default) or bottom
+    position: 'bottom'
   offset:
     pads: [0, 1.925]
     body: [0, 0.075]

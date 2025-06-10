@@ -35,7 +35,7 @@ UMPT-XX-V: # define connector family target 'UMPT-XX-V'
     x_offset: 4.65
     y: 7.6
   first_pin:  # add some specs to first_pin (marker is preserved)
-    position: 'top'     # top (default) or bottom
+    position: 'top'     # top or bottom
     body_chamfer: 0.7   # chamfer on pin 1 edge (default: 0)
 
 UMPT-XX-V-W:

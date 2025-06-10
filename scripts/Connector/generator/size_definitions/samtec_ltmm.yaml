@@ -13,7 +13,7 @@ defaults:
 LTMM-1XX-02-X-D-SM:
   inherit: 'defaults'
   first_pin:
-    position: 'bottom'     # top (default) or bottom
+    position: 'bottom'
   tags: 'conn samtec terminal strip pin header'
   pads:
     size: [1.02, 3.39]

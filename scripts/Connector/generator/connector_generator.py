@@ -352,9 +352,16 @@ class FPconfiguration():
         ## row_x_offset defines if it has staggered pins or not
         self.row_x_offset = self.spec.get("row_x_offset", 0.0)
 
-        ## get information about 1st pin
-        first_pin_spec = self.spec.get("first_pin", {})
-        self.pin1_pos = first_pin_spec.get("position", "top")
+        # Get information about 1st pin.
+        # This is required even if num_rows is 1, becasue we still need to know
+        # which side the pin 1 marker goes on.
+        try:
+            first_pin_spec = self.spec["first_pin"]
+            self.pin1_pos = first_pin_spec["position"]
+        except KeyError:
+            raise ValueError(
+                "Missing mandatory field 'first_pin.position' in footprint specification"
+            )
 
         if self.pin1_pos not in ["top", "bottom"]:
             raise ValueError("'first_pin.position' must be one of 'top', 'bottom'")
