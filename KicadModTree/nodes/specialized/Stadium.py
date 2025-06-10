@@ -14,11 +14,7 @@
 from __future__ import annotations
 
 from KicadModTree import LineStyle, NodeShape
-from kilibs.geom import (
-    GeomRectangle,
-    GeomStadium,
-    Vec2DCompatible,
-)
+from kilibs.geom import GeomRectangle, GeomStadium, Vec2DCompatible
 
 
 class Stadium(NodeShape, GeomStadium):
