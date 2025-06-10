@@ -688,9 +688,6 @@ class NoLeadGenerator(FootprintGenerator):
             #
             #   x2x  <- pad
 
-            if kicad_mod.name == "OnSemi_VCT-28_3.5x3.5mm_P0.4mm":
-                pass
-
             # stay outside the body _and_ the pad clearance
             bbox_left = pad_arrays[0].bbox()  # pad_arrays[0] is the lef array
             y_above_side_pads = bbox_left.top - silk_pad_offset
