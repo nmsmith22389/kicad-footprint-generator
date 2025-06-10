@@ -76,6 +76,17 @@ To ignore formatting-only commits:
 git config blame.ignoreRevsFile .git-blame-ignore-revs
 ```
 
+To perform pre-push checks, enable the git hooks, and the checks that you want:
+
+```sh
+git config core.hooksPath .githooks
+
+# Run the QA checks before pushing
+git config kicad.pre-push-checks true
+```
+
+Even if you enable these, you can skip by adding `--no-verify` to the `git push` command.
+
 ### Development workflow
 
 See fuller instructions at the wiki: https://gitlab.com/groups/kicad/libraries/-/wikis/Footprint-Generators
