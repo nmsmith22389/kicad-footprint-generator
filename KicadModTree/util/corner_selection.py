@@ -38,7 +38,7 @@ class CornerSelection():
     BOTTOM_RIGHT = 'br'
     BOTTOM_LEFT = 'bl'
 
-    def __init__(self, corner_selection: list[bool] | dict | int):
+    def __init__(self, corner_selection: list[bool] | dict | int | None):
         self.top_left = False
         self.top_right = False
         self.bottom_right = False

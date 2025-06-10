@@ -34,7 +34,7 @@ class RoundRadiusHandler(object):
         self.maximum_radius = maximum_radius
         self.round_radius_exact = round_radius_exact
 
-    def getRadiusRatio(self, shortest_sidelength):
+    def getRadiusRatio(self, shortest_sidelength: float) -> float:
         r"""get the resulting round radius ratio
 
         :param shortest_sidelength: shortest sidelength of a pad
@@ -57,7 +57,7 @@ class RoundRadiusHandler(object):
 
         return self.radius_ratio
 
-    def getRoundRadius(self, shortest_sidelength):
+    def getRoundRadius(self, shortest_sidelength: float) -> float:
         r"""get the resulting round radius
 
         :param shortest_sidelength: shortest sidelength of a pad
@@ -151,7 +151,7 @@ class ChamferSizeHandler(object):
         self.chamfer_exact = getOptionalNumberTypeParam(
             kwargs, 'chamfer_exact', default_value=chamfer_size)
 
-    def getChamferRatio(self, shortest_sidelength):
+    def getChamferRatio(self, shortest_sidelength: float) -> float:
         r"""get the resulting chamfer ratio
 
         :param shortest_sidelength: shortest sidelength of a pad

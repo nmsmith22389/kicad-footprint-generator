@@ -1,219 +1,364 @@
-#!/usr/bin/env python
-
-# KicadModTree is free software: you can redistribute it and/or
-# modify it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
+# kilibs is free software: you can redistribute it and/or modify it under the terms of
+# the GNU General Public License as published by the Free Software Foundation, either
+# version 3 of the License, or (at your option) any later version.
 #
-# KicadModTree is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
+# kilibs is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+# without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+# PURPOSE. See the GNU General Public License for more details.
 #
-# You should have received a copy of the GNU General Public License
-# along with kicad-footprint-generator. If not, see < http://www.gnu.org/licenses/ >.
+# You should have received a copy of the GNU General Public License along with kilibs.
+# If not, see < http://www.gnu.org/licenses/ >.
 #
 # (C) 2017 by @SchrodingersGat
 # (C) 2017 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
+# (C) The KiCad Librarian Team
 
-from collections import namedtuple
-from types import GeneratorType
-from typing import Generator
+from collections.abc import Callable, Generator, Sequence
+from typing import NamedTuple, cast
 
-from KicadModTree.nodes.base.Pad import *
+from KicadModTree.nodes.base.Pad import Pad
 from KicadModTree.nodes.Node import Node
-from KicadModTree.nodes.specialized.ChamferedPad import *
+from KicadModTree.nodes.specialized.ChamferedPad import ChamferedPad
+from KicadModTree.util.corner_handling import RoundRadiusHandler
+from kilibs.geom import Vec2DCompatible, Vector2D
+from kilibs.util.param_util import toVectorUseCopyIfNumber
+from scripts.tools.declarative_def_tools.pad_overrides import PadOverrides
 
-ApplyOverrideResult = namedtuple('ApplyOverrideResult', ['number', 'position', 'parameters'])
+
+class ApplyOverrideResult(NamedTuple):
+    number: int | str
+    position: Vector2D
+    size: Vector2D
 
 
 class PadArray(Node):
-    r"""Add a row of Pads
+    """Add a row (1D array) of pads.
 
-    Simplifies the handling of pads which are rendered in a specific form
+    Simplifies the handling of pads which are rendered in a specific form.
 
-    :param \**kwargs:
-        See below
+    Args:
+        type: Type of the pad (e.g., Pad.TYPE_THT, Pad.TYPE_SMT, Pad.TYPE_CONNECT,
+            Pad.TYPE_NPTH).
+        shape: Shape of the pad (e.g., Pad.SHAPE_CIRCLE, Pad.SHAPE_OVAL, Pad.SHAPE_RECT,
+            Pad.SHAPE_TRAPEZE, ...).
+        layers: Layers which are used for the pad (e.g., [Pad.LAYERS_SMT,
+            Pad.LAYERS_THT, Pad.LAYERS_NPTH]).
+        pincount: Number of pads to create.
+        size: Size of each pad.
+        start: Start point of the pad array.
+        center: Center point of the pad array.
+        drill: Drill-size of the pad.
+        tht_pad1_shape: Shape for marking pad 1 for through hole components.
+        fab_property: Fabrication property of the pad (e.g. FabProperty.BGA).
+        hidden_pins: Pin number(s) to be skipped; a footprint with hidden pins has
+            missing pads and matching pin numbers.
+        deleted_pins: Pin locations(s) to be skipped; a footprint with deleted pins has
+            pads missing but no missing pin numbers.
+        increment: Declare how the name of the follow up is calculated.
+        initial: Name of the first pad.
+        tht_pad1_id: Pad number used for "pin 1".
+        spacing: Distance in mm between the centers of the pads in the array.
+        x_spacing: Distance in mm along the x-axis between the centers of the pads.
+        y_spacing: Distance in mm along the y-axis between the centers of the pads
+        round_radius_handler: Handler for the rounded radius of the pad corners.
+        radius_ratio: ratio between the minimum pad dimension and the radius of the
+            rounded radius.
+        maximum_radius: Maximum value for the corner radius in mm.
+        chamfer_size: Size in mm for the chamfer used for the end pads.
+        chamfer_corner_selection_first: Select which corners should be chamfered on the
+            first pad of the array.
+        chamfer_corner_selection_last: Select which corners should be chamfered on the
+            last pad  of the array.
+        pad_overrides: An optional dict defining the pad overrides.
+        end_pads_size_reduction: Size is reduced on the given side (size reduced plus
+            center moved).
 
-    :Keyword Arguments:
-        * *start* (``Vector2D``) --
-          start edge of the pad array
-        * *center* (``Vector2D``) --
-          center pad array around specific point
-        * *pincount* (``int``) --
-          number of pads to render
-        * *spacing* (``Vector2D``, ``float``) --
-          offset between rendered pads
-        * *x_spacing* (``float``) --
-          x offset between rendered pads
-        * *y_spacing* (``float``) --
-          y offset between rendered pads
-        * *initial* (``int``) --
-          name of the first pad
-        * *increment* (``int, function(previous_number)``) --
-          declare how the name of the follow up is calculated
-        * *type* (``Pad.TYPE_THT``, ``Pad.TYPE_SMT``, ``Pad.TYPE_CONNECT``, ``Pad.TYPE_NPTH``) --
-          type of the pad
-        * *shape* (``Pad.SHAPE_CIRCLE``, ``Pad.SHAPE_OVAL``, ``Pad.SHAPE_RECT``, ``Pad.SHAPE_TRAPEZE``, ...) --
-          shape of the pad
-        * *rotation* (``float``) --
-          rotation of the pad
-        * *size* (``float``, ``Vector2D``) --
-          size of the pad
-        * *offset* (``Vector2D``) --
-          offset of the pad
-        * *drill* (``float``, ``Vector2D``) --
-          drill-size of the pad
-        * *solder_paste_margin_ratio* (``float``) --
-          solder paste margin ratio of the pad
-        * *layers* (``Pad.LAYERS_SMT``, ``Pad.LAYERS_THT``, ``Pad.LAYERS_NPTH``) --
-          layers on which are used for the pad
-        * *chamfer_corner_selection_first* (``[bool, bool, bool, bool]``)
-          Select which corner should be chamfered for the first pad. (default: None)
-        * *chamfer_corner_selection_last* (``[bool, bool, bool, bool]``)
-          Select which corner should be chamfered for the last pad. (default: None)
-        * *chamfer_size* (``float``, ``Vector2D``) --
-          size for the chamfer used for the end pads. (default: None)
-
-        * *end_pads_size_reduction* (``dict with keys x-,x+,y-,y+``) --
-          size is reduced on the given side. (size reduced plus center moved.)
-        * *tht_pad1_shape* (``Pad.SHAPE_RECT``, ``Pad.SHAPE_ROUNDRECT``, ...) --
-          shape for marking pad 1 for through hole components. (default: ``Pad.SHAPE_ROUNDRECT``)
-        * *tht_pad1_id* (``int, string``) --
-          pad number used for "pin 1" (default: 1)
-        * *hidden_pins* (``Iterable[int]``) --
-          pin number(s) to be skipped; a footprint with hidden pins has missing pads and matching pin numbers
-        * *deleted_pins* (``int, Vector1D``) --
-          pin locations(s) to be skipped; a footprint with deleted pins has pads missing but no missing pin numbers"
-
-
-    :Example:
-
-    >>> from KicadModTree import *
-    >>> PadArray(pincount=10, spacing=[1,-1], center=[0,0], initial=5, increment=2,
-    ...          type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT, size=[1,2], layers=Pad.LAYERS_SMT)
+    Example:
+        >>> from KicadModTree import *
+        >>> PadArray(pincount=10, spacing=[1,-1], center=[0,0], initial=5, increment=2,
+        ...          type=Pad.TYPE_SMT, shape=Pad.SHAPE_RECT, size=[1,2],
+        ...          layers=Pad.LAYERS_SMT)
     """
 
-    startingPosition: Vector2D
+    starting_position: Vector2D
     spacing: Vector2D
+    size: Vector2D
+    virtual_childs: list[Pad | ChamferedPad]
+    pincount: int
+    initial_pin: int | str
+    increment: (
+        int
+        | Callable[[int | str], int | str | None]
+        | Generator[int | str | None, None, None]
+    )
+    starting_position: Vector2D
+    exclude_pin_list: list[int]
 
-    def __init__(self, **kwargs):
+    def __init__(
+        self,
+        type: str,
+        shape: str,
+        layers: list[str],
+        pincount: int,
+        size: Vec2DCompatible,
+        start: Vector2D | None = None,
+        center: Vector2D | None = None,
+        drill: float | Vector2D | None = None,
+        tht_pad1_shape: str = Pad.SHAPE_ROUNDRECT,
+        fab_property: Pad.FabProperty | None = None,
+        hidden_pins: Sequence[int] = [],
+        deleted_pins: Sequence[int] = [],
+        increment: (
+            int
+            | Callable[[int | str], int | str | None]
+            | Generator[int | str | None, None, None]
+        ) = 1,
+        initial: int | str = 1,
+        tht_pad1_id: int = 1,
+        spacing: Vector2D | None = None,
+        x_spacing: float | None = None,
+        y_spacing: float | None = None,
+        round_radius_handler: RoundRadiusHandler | None = None,
+        radius_ratio: float = 0.25,
+        maximum_radius: float = 0.25,
+        chamfer_size: float = 0.0,
+        chamfer_corner_selection_first: Sequence[bool] | None = None,
+        chamfer_corner_selection_last: Sequence[bool] | None = None,
+        pad_overrides: PadOverrides | None = None,
+        end_pads_size_reduction: dict[str, float] | None = None,
+    ) -> None:
         Node.__init__(self)
-        self._initPincount(**kwargs)
-        self._initIncrement(**kwargs)
-        self._initInitialNumber(**kwargs)
-        self._initSpacing(**kwargs)
-        self._initStartingPosition(**kwargs)
-        self.virtual_childs = self._createPads(**kwargs)
+        self.increment = increment
+        self._init_pincount(pincount, hidden_pins, deleted_pins)
+        self._init_initial_number(initial)
+        self._init_spacing(spacing, x_spacing, y_spacing)
+        self._init_starting_position(start, center)
+
+        # Create pads:
+        self.size = cast(Vector2D, toVectorUseCopyIfNumber(size, low_limit=0))
+        self.virtual_childs = []
+        end_pad_size = None
+        if end_pads_size_reduction:
+            size_reduction = end_pads_size_reduction
+            end_pad_size = self.size.copy()
+
+            delta_size = Vector2D(
+                size_reduction.get("x+", 0) + size_reduction.get("x-", 0),
+                size_reduction.get("y+", 0) + size_reduction.get("y-", 0),
+            )
+
+            end_pad_size -= delta_size
+
+            delta_pos = (
+                Vector2D(
+                    -size_reduction.get("x+", 0) + size_reduction.get("x-", 0),
+                    -size_reduction.get("y+", 0) + size_reduction.get("y-", 0),
+                )
+                / 2
+            )
+        else:
+            delta_pos = Vector2D.from_floats(0.0, 0.0)
+
+        # Special case, increment = 0
+        # this can be used for creating an array with all the same pad number
+        pad_numbers: Sequence[str | int | None]
+        if self.increment == 0:
+            pad_numbers = [self.initial_pin] * self.pincount
+        elif isinstance(self.increment, int):
+            pad_numbers = range(
+                cast(int, self.initial_pin),
+                cast(int, self.initial_pin) + (self.pincount * self.increment),
+                self.increment,
+            )
+        elif callable(self.increment):
+            pad_numbers = [self.initial_pin]
+            for _ in range(1, self.pincount):
+                pad_numbers.append(self.increment(pad_numbers[-1]))
+        else:  # if isinstance(self.increment, Generator):
+            pad_numbers = [next(self.increment) for _ in range(self.pincount)]
+
+        for i, number in enumerate(pad_numbers):
+            includePad = True
+
+            # deleted pins are filtered by pad/pin position (they are 'None' in pad_numbers list)
+            if not isinstance(number, int | str):
+                includePad = False
+
+            # hidden pins are filtered out by pad number (index of pad_numbers list)
+            if self.hidden_pins:
+                includePad = number is not None and number not in self.exclude_pin_list
+
+            if includePad:
+                current_pad_pos = Vector2D(
+                    self.starting_position.x + i * self.spacing.x,
+                    self.starting_position.y + i * self.spacing.y,
+                )
+
+                current_pad_size = self.size
+                current_shape = shape
+                if i == 0 or i == len(pad_numbers) - 1:
+                    current_pad_pos += delta_pos
+                    if end_pad_size:
+                        current_pad_size = end_pad_size
+                if type == Pad.TYPE_THT and number == tht_pad1_id:
+                    current_shape = tht_pad1_shape
+
+                pad_params_with_override = self._apply_overrides(
+                    number, current_pad_pos, current_pad_size, pad_overrides
+                )
+
+                if chamfer_size:
+                    chamfer_corner_selection = None
+                    if i == 0 and chamfer_corner_selection_first:
+                        chamfer_corner_selection = chamfer_corner_selection_first
+                    elif i == len(pad_numbers) - 1 and chamfer_corner_selection_last:
+                        chamfer_corner_selection = chamfer_corner_selection_last
+                    if chamfer_corner_selection:
+                        self.virtual_childs.append(
+                            ChamferedPad(
+                                number=pad_params_with_override.number,
+                                at=pad_params_with_override.position,
+                                size=pad_params_with_override.size,
+                                shape=current_shape,
+                                corner_selection=chamfer_corner_selection,
+                                chamfer_size=chamfer_size,
+                                layers=layers,
+                                round_radius_handler=round_radius_handler,
+                                radius_ratio=radius_ratio,
+                                maximum_radius=maximum_radius,
+                                type=type,
+                                fab_property=fab_property,
+                                drill=drill,
+                            )
+                        )
+                        continue
+
+                # A normal unchamfered pad
+                self.virtual_childs.append(
+                    Pad(
+                        number=pad_params_with_override.number,
+                        at=pad_params_with_override.position,
+                        size=pad_params_with_override.size,
+                        shape=current_shape,
+                        layers=layers,
+                        round_radius_handler=round_radius_handler,
+                        type=type,
+                        fab_property=fab_property,
+                        drill=drill,
+                    )
+                )
+
+        for pad in self.virtual_childs:
+            pad._parent = self
 
     # How many pads in the array
-    def _initPincount(self, **kwargs):
-        if not kwargs.get('pincount'):
-            raise KeyError('pincount not declared (like "pincount=10")')
-        self.pincount = kwargs.get('pincount')
-        if type(self.pincount) is not int or self.pincount <= 0:
-            raise ValueError('{pc} is an invalid value for pincount'.format(pc=self.pincount))
-
-        if kwargs.get('hidden_pins') and kwargs.get('deleted_pins'):
-            raise KeyError('hidden pins and deleted pins cannot be used together')
-
+    def _init_pincount(
+        self, pincount: int, hidden_pins: Sequence[int], deleted_pins: Sequence[int]
+    ) -> None:
+        self.pincount = pincount
+        self.hidden_pins = hidden_pins
+        if pincount <= 0:
+            raise ValueError(f"{pincount} is an invalid value for pincount.")
         self.exclude_pin_list = []
-        if kwargs.get('hidden_pins'):
+        if hidden_pins:
+            if deleted_pins:
+                raise KeyError("hidden pins and deleted pins cannot be used together")
             # exclude_pin_list is for pads being removed based on pad number
             # deleted pins are filtered out later by pad location (not number)
-            self.exclude_pin_list = kwargs.get('hidden_pins')
-
+            self.exclude_pin_list = list(hidden_pins)
             if type(self.exclude_pin_list) not in [list, tuple]:
-                raise TypeError('hidden pin list must be specified like "hidden_pins=[0,1]"')
+                raise TypeError(
+                    'hidden pin list must be specified like "hidden_pins=[0,1]"'
+                )
             elif any([type(i) not in [int] for i in self.exclude_pin_list]):
-                raise ValueError('hidden pin list must contain integer values')
+                raise ValueError("hidden pin list must contain integer values")
 
     # Where to start the array
-    def _initStartingPosition(self, **kwargs):
+    def _init_starting_position(
+        self,
+        start: Vec2DCompatible | None = None,
+        center: Vec2DCompatible | None = None,
+    ) -> None:
         """
         can use the 'start' argument to start a pad array at a given position
         OR
         can use the 'center' argument to center the array around the given position
         """
-        self.startingPosition = Vector2D(0, 0)
+        self.starting_position = Vector2D.from_floats(0.0, 0.0)
 
         # Start takes priority
-        if kwargs.get('start'):
-            self.startingPosition = Vector2D(kwargs.get('start'))
-        elif kwargs.get('center'):
-            center = Vector2D(kwargs.get('center'))
-
+        if start:
+            self.starting_position = Vector2D(start)
+        elif center:
             # Now calculate the desired starting position of the array
-            self.startingPosition.x = center.x - (self.pincount - 1) * self.spacing.x / 2.
-            self.startingPosition.y = center.y - (self.pincount - 1) * self.spacing.y / 2.
+            center = Vector2D(center)
+            self.starting_position.x = (
+                center.x - (self.pincount - 1) * self.spacing.x / 2.0
+            )
+            self.starting_position.y = (
+                center.y - (self.pincount - 1) * self.spacing.y / 2.0
+            )
 
     # What number to start with?
-    def _initInitialNumber(self, **kwargs):
-        self.initialPin = kwargs.get('initial', 1)
-        if self.initialPin == "":
+    def _init_initial_number(self, initial: int | str = 1) -> None:
+        self.initial_pin = initial
+        if self.initial_pin == "":
             self.increment = 0
-        elif type(self.initialPin) is not int or self.initialPin < 1:
+        elif not isinstance(self.initial_pin, int) or self.initial_pin < 1:
             if not callable(self.increment):
-                raise ValueError('{pn} is not a valid starting pin number if increment is not a function'
-                                 .format(pn=self.initialPin))
-
-    # Pin incrementing
-    def _initIncrement(self, **kwargs):
-        self.increment = kwargs.get('increment', 1)
+                raise ValueError(
+                    "{pn} is not a valid starting pin number if increment is not a function".format(
+                        pn=self.initial_pin
+                    )
+                )
 
     # Pad spacing
-    def _initSpacing(self, **kwargs):
-        """
-        spacing can be given as:
-        spacing = [1,2] # high priority
+    def _init_spacing(
+        self,
+        spacing: Vec2DCompatible | None,
+        x_spacing: float | None = None,
+        y_spacing: float | None = None,
+    ) -> None:
+        """Spacing can be given as:
+        spacing = Vector2D(1,2) # high priority
         x_spacing = 1
         y_spacing = 2
         """
-        self.spacing = Vector2D(0, 0)
-
-        if kwargs.get('spacing'):
-            self.spacing = Vector2D(kwargs.get('spacing'))
-            return
-
-        if kwargs.get('x_spacing'):
-            self.spacing.x = kwargs.get('x_spacing')
-
-        if kwargs.get('y_spacing'):
-            self.spacing.y = kwargs.get('y_spacing')
-
+        if spacing:
+            self.spacing = Vector2D(spacing)
+        else:
+            self.spacing = Vector2D(0, 0)
+            if x_spacing:
+                self.spacing.x = x_spacing
+            if y_spacing:
+                self.spacing.y = y_spacing
         if self.spacing.x == 0 and self.spacing.y == 0:
-            raise ValueError('pad spacing ({self.spacing}) must be non-zero')
+            raise ValueError("pad spacing ({self.spacing}) must be non-zero")
 
-    def _applyOverrides(self,
-                        pad_number: int,
-                        pad_position,
-                        pad_parameters,
-                        pad_overrides) -> ApplyOverrideResult:
+    def _apply_overrides(
+        self,
+        pad_number: int | str,
+        pad_position: Vector2D,
+        pad_size: Vector2D,
+        pad_overrides: PadOverrides | None,
+    ) -> ApplyOverrideResult:
         """
         Apply pad overrides to the current pad position and parameters.
         """
         # No overrides? Just return input
         if pad_overrides is None:
-            return ApplyOverrideResult(pad_number, pad_position, pad_parameters)
+            return ApplyOverrideResult(pad_number, pad_position, pad_size)
 
         # Check if pad number is in dictionary
         this_pad_override = pad_overrides.overrides.get(pad_number)
 
         # No overrides for this pad? Just return input
         if this_pad_override is None:
-            return ApplyOverrideResult(pad_number, pad_position, pad_parameters)
+            return ApplyOverrideResult(pad_number, pad_position, pad_size)
 
-        #
-        # Copy input variables
-        # (to avoid changing the outer state)
-        #
-        pad_position = list(pad_position)  # copy
-        pad_parameters = dict(pad_parameters)
-        # Not all parameters are deep copyable,
-        # so we only copy what might change
-        if isinstance(pad_parameters["size"], list):
-            pad_parameters["size"] = \
-                list(pad_parameters["size"])
+        # Copy input variables (to avoid changing the outer state)
+        pad_position = pad_position.copy()
+        pad_size = pad_size.copy()
 
         # Apply relative move:
         # {'pad_override': {1: {"move": [0.1, 0.0]}}}
@@ -236,136 +381,27 @@ class PadArray(Node):
         # {'pad_override': {1: {"size_increase": [0.1, -0.5]}}}
         if this_pad_override.size_increase:
             if this_pad_override.size_increase[0] is not None:
-                pad_parameters['size'][0] += this_pad_override.size_increase[0]
+                pad_size[0] += this_pad_override.size_increase[0]
             if this_pad_override.size_increase[1] is not None:
-                pad_parameters['size'][1] += this_pad_override.size_increase[1]
+                pad_size[1] += this_pad_override.size_increase[1]
 
         # Apply "size" absolute override
         # {'pad_override': {1: {"size": [1.5, 0.7]}}}
         # Any of the coordinates can be set to None to ignore that coordinate.
         if this_pad_override.size:
             if this_pad_override.size[0] is not None:
-                pad_parameters['size'][0] = this_pad_override.size[0]
+                pad_size[0] = this_pad_override.size[0]
             if this_pad_override.size[1] is not None:
-                pad_parameters['size'][1] = this_pad_override.size[1]
+                pad_size[1] = this_pad_override.size[1]
 
         # Apply "number" override
         # {'pad_override': {1: {"override_numbers": "B6"}}}
         # Pleeease use this only as a way of last resort :-)
         pad_number = this_pad_override.override_number or pad_number
 
-        return ApplyOverrideResult(pad_number, pad_position, pad_parameters)
+        return ApplyOverrideResult(pad_number, pad_position, pad_size)
 
-    def _createPads(self, **kwargs):
-
-        pads = []
-        padShape = kwargs.get('shape')
-
-        end_pad_params = copy(kwargs)
-        if kwargs.get('end_pads_size_reduction'):
-            size_reduction = kwargs['end_pads_size_reduction']
-            end_pad_params['size'] = toVectorUseCopyIfNumber(kwargs.get('size'), low_limit=0)
-
-            delta_size = Vector2D(
-                size_reduction.get('x+', 0) + size_reduction.get('x-', 0),
-                size_reduction.get('y+', 0) + size_reduction.get('y-', 0)
-                )
-
-            end_pad_params['size'] -= delta_size
-
-            delta_pos = Vector2D(
-                -size_reduction.get('x+', 0) + size_reduction.get('x-', 0),
-                -size_reduction.get('y+', 0) + size_reduction.get('y-', 0)
-                )/2
-        else:
-            delta_pos = Vector2D(0, 0)
-
-        # Special case, increment = 0
-        # this can be used for creating an array with all the same pad number
-        if self.increment == 0:
-            pad_numbers = [self.initialPin] * self.pincount
-        elif isinstance(self.increment, int):
-            pad_numbers = range(self.initialPin, self.initialPin + (self.pincount * self.increment), self.increment)
-        elif callable(self.increment):
-            pad_numbers = [self.initialPin]
-            for idx in range(1, self.pincount):
-                pad_numbers.append(self.increment(pad_numbers[-1]))
-        elif isinstance(self.increment, GeneratorType):
-            pad_numbers = [next(self.increment) for i in range(self.pincount)]
-        else:
-            raise TypeError("Wrong type for increment. It must be either an int, callable or generator.")
-
-        for i, number in enumerate(pad_numbers):
-            includePad = True
-
-            # deleted pins are filtered by pad/pin position (they are 'None' in pad_numbers list)
-            if not isinstance(number, (int, str)):
-                includePad = False
-
-            # hidden pins are filtered out by pad number (index of pad_numbers list)
-            if kwargs.get('hidden_pins'):
-                includePad = number is not None and number not in self.exclude_pin_list
-
-            if includePad:
-                current_pad_pos = Vector2D(
-                    self.startingPosition.x + i * self.spacing.x,
-                    self.startingPosition.y + i * self.spacing.y,
-                    )
-                current_pad_params = copy(kwargs)
-                if i == 0 or i == len(pad_numbers)-1:
-                    current_pad_pos += delta_pos
-                    current_pad_params = end_pad_params
-                if kwargs.get('type') == Pad.TYPE_THT and number == kwargs.get('tht_pad1_id', 1):
-                    current_pad_params['shape'] = kwargs.get('tht_pad1_shape', Pad.SHAPE_ROUNDRECT)
-                    if 'radius_ratio' not in current_pad_params:
-                        current_pad_params['radius_ratio'] = 0.25
-                    if 'maximum_radius' not in current_pad_params:
-                        current_pad_params['maximum_radius'] = 0.25
-                else:
-                    current_pad_params['shape'] = padShape
-
-                pad_params_with_override = self._applyOverrides(
-                    number, current_pad_pos, current_pad_params,
-                    kwargs.get("pad_overrides")
-                )
-
-                if kwargs.get('chamfer_size'):
-                    if i == 0 and 'chamfer_corner_selection_first' in kwargs:
-                        pads.append(
-                            ChamferedPad(
-                                number=pad_params_with_override.number,
-                                at=pad_params_with_override.position,
-                                corner_selection=kwargs.get('chamfer_corner_selection_first'),
-                                **pad_params_with_override.parameters
-                                ))
-                        continue
-                    if i == len(pad_numbers)-1 and 'chamfer_corner_selection_last' in kwargs:
-                        pads.append(
-                            ChamferedPad(
-                                number=pad_params_with_override.number,
-                                at=pad_params_with_override.position,
-                                corner_selection=kwargs.get('chamfer_corner_selection_last'),
-                                **pad_params_with_override.parameters
-                                ))
-                        continue
-
-                # A normal unchamfered pad
-
-                # TODO: This is a hack - assuming the PadArray kwargs must be valid for
-                # all the pads, chamfered or not, seems dangerously implicit.
-                if "chamfer_size" in pad_params_with_override.parameters:
-                    pad_params_with_override.parameters.pop("chamfer_size")
-
-                pads.append(Pad(number=pad_params_with_override.number,
-                                at=pad_params_with_override.position,
-                                **pad_params_with_override.parameters))
-
-        for pad in pads:
-            pad._parent = self
-
-        return pads
-
-    def getVirtualChilds(self):
+    def getVirtualChilds(self) -> list[Pad | ChamferedPad]:
         return self.virtual_childs
 
     def get_pads(self) -> Generator[Pad, None, None]:
@@ -376,7 +412,7 @@ class PadArray(Node):
             if isinstance(pad, Pad):
                 yield pad
 
-    def get_pad_with_name(self, number: str | int) -> Pad | None:
+    def get_pad_with_name(self, number: str | int) -> Pad | ChamferedPad | None:
         for pad in self.virtual_childs:
             if pad.number == number:
                 return pad
@@ -386,22 +422,22 @@ class PadArray(Node):
 def get_pad_radius_from_arrays(pad_arrays: list[PadArray]) -> float:
     pad_radius = 0.0
     for pa in pad_arrays:
-        if (pad_radius == 0.0):
+        if pad_radius == 0.0:
             pads = pa.getVirtualChilds()
-            if (len(pads)):
+            if len(pads):
                 pad_radius = pads[0].getRoundRadius()
     return pad_radius
 
 
-def find_lowest_numbered_pad(pad_arrays: list[PadArray]) -> Pad | None:
+def find_lowest_numbered_pad(pad_arrays: list[PadArray]) -> Pad | ChamferedPad | None:
     """
     From a list of pad arrays, find the lowest-integer-numbered pad.
     """
 
-    lowest_pad: Pad | None = None
+    lowest_pad: Pad | ChamferedPad | None = None
 
     for pad_array in pad_arrays:
-        for pad in pad_array:
+        for pad in pad_array.getVirtualChilds():
             try:
                 int_num = int(pad.number)
             except ValueError:

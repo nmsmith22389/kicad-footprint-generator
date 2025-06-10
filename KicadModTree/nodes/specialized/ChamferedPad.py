@@ -69,6 +69,7 @@ class ChamferedPad(Node):
     """
 
     round_radius_handler: RoundRadiusHandler
+    number: str | int
 
     def __init__(self, **kwargs):
         Node.__init__(self)

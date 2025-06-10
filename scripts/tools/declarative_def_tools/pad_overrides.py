@@ -42,9 +42,9 @@ class PadOverrides:
     Class that reads "pad_overrides" out of standard
     YAML spec files.
     """
-    _overrides: Dict[int, SinglePadOverride]
+    _overrides: Dict[int | str, SinglePadOverride]
 
-    def __init__(self, overrides: Dict[int, SinglePadOverride] = None):
+    def __init__(self, overrides: Dict[int, SinglePadOverride] | None = None) -> None:
         self._overrides = {}
 
         for number, override in (overrides or {}).items():
@@ -59,5 +59,5 @@ class PadOverrides:
             )
 
     @property
-    def overrides(self):
+    def overrides(self) -> Dict[int | str, SinglePadOverride]:
         return self._overrides
