@@ -287,6 +287,9 @@ M1.6:
     t1: 0
     ext_thread: null
   parts:
+    9774005633:
+      datasheet: https://www.we-online.com/components/products/datasheet/9774005633R.pdf
+      h: 0.5
     9774010633:
       datasheet: https://www.we-online.com/components/products/datasheet/9774010633R.pdf
       h: 1
