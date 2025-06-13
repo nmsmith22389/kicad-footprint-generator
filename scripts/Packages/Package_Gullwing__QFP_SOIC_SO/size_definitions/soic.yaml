@@ -42,12 +42,12 @@ FileHeader:
 SOP-4_3.8x4.1mm_P2.54mm:
   # it was previously in sop.yaml file
   device_type: 'SOP' # temporary
-  size_source: 'http://www.ixysic.com/home/pdfs.nsf/www/CPC1017N.pdf/$file/CPC1017N.pdf'
+  size_source: 'https://www.littelfuse.com/assetdocs/littelfuse-integrated-circuits-cpc1017n-datasheet?assetguid=b4f177f1-629f-4104-97a5-8b8d709e83de'
   body_size_x:
     nominal: 3.8 #rounded to avoid changing the symbol (given as 3.81)
     tolerance: 0.025
   body_size_y:
-    nominal: 4.1 #rounded to avoid changing the symbol (givne as 4.089)
+    nominal: 4.1 #rounded to avoid changing the symbol (given as 4.089)
     tolerance: 0.025
   overall_height:
     # calculated from (2.03 +/-0.025) + (0.64 +/-0.04)
@@ -59,7 +59,7 @@ SOP-4_3.8x4.1mm_P2.54mm:
     tolerance: 0.102
   lead_width:
     nominal: 0.381
-    tolerance: 0 # not given
+    tolerance: 0.025
   lead_len:
     nominal: 0.559
     tolerance: 0.127

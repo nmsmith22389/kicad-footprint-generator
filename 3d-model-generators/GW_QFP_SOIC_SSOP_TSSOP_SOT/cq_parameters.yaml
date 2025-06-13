@@ -7763,7 +7763,7 @@ SOP-4_3.8x4.1mm_P2.54mm:
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
   destination_dir: 'Package_SO.3dshapes'
-  source: 'http://www.ixysic.com/home/pdfs.nsf/www/CPC1017N.pdf/$file/CPC1017N.pdf'
+  source: 'https://www.littelfuse.com/assetdocs/littelfuse-integrated-circuits-cpc1017n-datasheet?assetguid=b4f177f1-629f-4104-97a5-8b8d709e83de'
 
 SOP-8_6.605x9.655mm_P2.54mm:
   the: 8.0
