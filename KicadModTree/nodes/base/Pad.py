@@ -201,7 +201,7 @@ class Pad(Node):
         offset: Vec2DCompatible = [0, 0],
         rotation: float = 0.0,
         fab_property: FabProperty | None = None,
-        drill: float | Vector2D | None = None,
+        drill: float | Vec2DCompatible | None = None,
         solder_paste_margin_ratio: float = 0,
         solder_paste_margin: float = 0,
         solder_mask_margin: float = 0,
@@ -302,7 +302,7 @@ class Pad(Node):
             self.at.y = 2 * self.mirror[1] - self.at.y
             self.offset.y *= -1
 
-    def _init_drill(self, drill: float | Vector2D | None) -> None:
+    def _init_drill(self, drill: float | Vec2DCompatible | None) -> None:
         if self.type in [Pad.TYPE_THT, Pad.TYPE_NPTH]:
             if not drill:
                 raise KeyError('drill size required (like "drill=1")')
