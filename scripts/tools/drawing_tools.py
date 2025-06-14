@@ -490,7 +490,7 @@ def makeNodesWithKeepout(
     decomposed = []
     for item in geom_items:
         if isinstance(item, GeomRectangle):
-            decomposed += item.get_atomic_shapes_back_compatible()
+            decomposed += item.get_atomic_shapes()
         elif isinstance(item, GeomPolygon):
             for i, pt in enumerate(item.points[:-1]):
                 decomposed.append(GeomLine(start=pt, end=item.points[i + 1]))
@@ -596,7 +596,7 @@ def makeRectWithKeepout(rect: GeomRectangle, layer, width, keepouts=[], roun=0.0
     """
     Draw a rectangle minding the keepouts
     """
-    lines = rect.get_atomic_shapes_back_compatible()
+    lines = rect.get_atomic_shapes()
     parts_out = applyKeepouts(lines, keepouts)
     return _add_kept_out(parts_out, layer, width, roun)
 

@@ -54,12 +54,3 @@ class Rectangle(NodeShape, GeomRectangle):
             use_degrees: Whether the rotation angle is given in degrees or radians.
         """
         self.init_super(kwargs=locals())
-        # for backwards compatibility:
-        if start is not None:
-            self.start = Vector2D(start)
-        elif shape is not None:
-            self.start = self.top_left
-        if end is not None:
-            self.end = Vector2D(end)
-        elif shape is not None:
-            self.end = self.bottom_right

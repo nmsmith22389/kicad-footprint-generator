@@ -196,10 +196,16 @@ class CourtyardBuilder:
         """
         Add a Rectangle or RectLine to the list of courtyard points
         """
-        left = min(rect.start.x, rect.end.x) - offset
-        right = max(rect.start.x, rect.end.x) + offset
-        top = min(rect.start.y, rect.end.y) - offset
-        bottom = max(rect.start.y, rect.end.y) + offset
+        if isinstance(rect, Rectangle):
+            left = rect.left - offset
+            right = rect.right + offset
+            top = rect.top - offset
+            bottom = rect.bottom + offset
+        else:
+            left = min(rect.start.x, rect.end.x) - offset
+            right = max(rect.start.x, rect.end.x) + offset
+            top = min(rect.start.y, rect.end.y) - offset
+            bottom = max(rect.start.y, rect.end.y) + offset
         self.src_pts.append(
             [[right, top], [right, bottom], [left, bottom], [left, top]]
         )

@@ -87,7 +87,7 @@ class GeomRectangle(GeomShapeClosed):
             if size is not None:
                 self.size = Vector2D(size)
                 self.center = start + self.size / 2
-                self.size = self.size.positive()  # for backward compatibility
+                self.size = self.size.positive()
         else:
             raise KeyError(
                 "Either 'center' and 'size', 'shape', 'start' and 'end',"
@@ -100,17 +100,6 @@ class GeomRectangle(GeomShapeClosed):
         return [
             GeomLine.from_vector2d(start=c[i], end=c[(i + 1) % 4])
             for i in range(len(c))
-        ]
-
-    def get_atomic_shapes_back_compatible(self) -> list[GeomLine]:
-        """Return the four lines of the rectangle in random order for backward
-        compatibility."""
-        c = self.points
-        return [
-            GeomLine(start=c[0], end=c[1]),
-            GeomLine(start=c[1], end=c[2]),
-            GeomLine(start=c[3], end=c[2]),  # for backwards compatibility swapped
-            GeomLine(start=c[0], end=c[3]),  # for backwards compatibility swapped
         ]
 
     def get_native_shapes(self) -> list[GeomRectangle]:

@@ -19,8 +19,8 @@ def test_Rect(start, end, layer, width):
     r = Rectangle(start=s, end=e, layer=layer, width=width)
 
     # Check that the properties are set correctly
-    assert r.start == s
-    assert r.end == e
+    assert r.center == (s + e)/2
+    assert r.size == (e - s).positive()
     assert r.layer == layer
     assert r.width == width
 

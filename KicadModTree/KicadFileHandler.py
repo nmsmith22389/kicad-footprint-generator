@@ -167,10 +167,16 @@ def graphic_key_func(item) -> List[int]:
 
     # after this point, the different shape types will only
     # be compared amongst themselves
-
-    if isinstance(item, (Line, Rectangle)):
+    if isinstance(item, Line):
         start_pos = item.getRealPosition(item.start)
         end_pos = item.getRealPosition(item.end)
+        keys += [
+            start_pos.x, start_pos.y,
+            end_pos.x, end_pos.y
+        ]
+    elif isinstance(item, Rectangle):
+        start_pos = item.getRealPosition(item.top_left)
+        end_pos = item.getRealPosition(item.bottom_right)
         keys += [
             start_pos.x, start_pos.y,
             end_pos.x, end_pos.y
@@ -653,8 +659,12 @@ class KicadFileHandler(FileHandler):
         ]
 
     def _serialize_RectPoints(self, node: Rectangle):
-        # identical for current kicad format
-        return self._serialize_LinePoints(node)
+        start_pos = node.getRealPosition(node.top_left)
+        end_pos = node.getRealPosition(node.bottom_right)
+        return [
+            [SexprSerializer.Symbol('start'), start_pos.x, start_pos.y],
+            [SexprSerializer.Symbol('end'), end_pos.x, end_pos.y]
+        ]
 
     def _serialize_Line(self, node: Line):
         sexpr = [SexprSerializer.Symbol('fp_line')]
