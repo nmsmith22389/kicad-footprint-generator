@@ -1,5 +1,8 @@
 defaults:
   library: 'Samtec_MicroMate'
+  # parameters:
+  #  option_code: e.g. S-RA, S-V, SH-L
+  fp_name: 'Samtec_T1M-{num_pos:02d}-X-{option_code}'
   pad_pitch: 1.0
   row_pitch: null # only one row
   first_pin:
@@ -17,8 +20,9 @@ defaults:
 
 T1M-XX-S-RA:
   inherit: 'defaults'
+  parameters:
+    option_code: 'S-RA'
   options: 'Horizontal (Right Angle)'
-  fp_name: 'Samtec_T1M-{num_pos:02d}-X-S-RA'
   fp_suffix: '_Terminal_Horizontal'     # optional: defaults to ''
   positions: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
   offset:
@@ -41,8 +45,9 @@ T1M-XX-S-RA:
 
 T1M-XX-SH-L:
   inherit: 'T1M-XX-S-RA'
+  parameters:
+    option_code: 'SH-L'
   options: 'Horizontal, Latch'
-  fp_name: 'Samtec_T1M-{num_pos:02d}-X-SH-L'
   fp_suffix: '_Terminal_Horizontal_Latch'     # optional: defaults to ''
   positions: [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
   offset:
@@ -74,7 +79,8 @@ T1M-02-SH-L:
 T1M-XX-S-V:
   inherit: 'defaults'
   options: 'Vertical'
-  fp_name: 'Samtec_T1M-{num_pos:02d}-X-S-V'
+  parameters:
+    option_code: 'S-V'
   fp_suffix: '_Terminal_Vertical'     # optional: defaults to ''
   positions: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
   first_pin:
@@ -102,8 +108,9 @@ T1M-XX-S-V:
 
 T1M-XX-SV-L:
   inherit: 'T1M-XX-S-V'
+  parameters:
+    option_code: 'SV-L'
   options: 'Vertical, Latch'
-  fp_name: 'Samtec_T1M-{num_pos:02d}-X-SV-L'
   fp_suffix: '_Terminal_Vertical_Latch'     # optional: defaults to ''
   positions: [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
   offset:

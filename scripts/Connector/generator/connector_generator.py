@@ -902,8 +902,13 @@ if __name__ == "__main__":
     dict_tools.dictInherit(yaml_spec)
 
     for variant, spec in yaml_spec.items():
-        if variant == "defaults" or "fp_name" not in spec or not fnmatch(variant, args.filter):
+        if (
+            variant.startswith("base")
+            or variant.startswith("defaults")
+            or not fnmatch(variant, args.filter)
+        ):
             continue
+
         print("- %s:" % variant)
         list_of_positions = spec["positions"]
         if (isinstance(list_of_positions, str) and (match := re.match(r"^\s*\$\((.+)\)\s*$", list_of_positions))):
