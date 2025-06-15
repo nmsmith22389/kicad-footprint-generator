@@ -527,28 +527,30 @@ SOIC-8_3.9x4.9mm_P1.27mm:
   num_pins_x: 0
   num_pins_y: 4
 
-SOP-8_3.9x4.9mm_P1.27mm:
-  # it was previously in sop.yaml file
-  device_type: 'SOP' # temporary
-  size_source: 'http://www.macronix.com/Lists/Datasheet/Attachments/7534/MX25R3235F,%20Wide%20Range,%2032Mb,%20v1.6.pdf#page=79'
+JEITA_SOIC-8_3.9x4.9mm_P1.27mm:
+  # it was previously in sop.yaml file as SOP-8
+  manufacturer: 'JEITA'  # Using 'manufacturer' to generate the file name prefix 'JEITA_'
+  device_type: 'SOIC'
+  compatible_mpns:
+    - 'P-SOP-8'  # some manufacturers use 'SOP-8'
+    - 'P-SOP08-03.90x04.90-1.27'  # JEITA external type
+    - 'P-SOP08-0225-1.27'  # JEITA old nominal dimensions
+  additional_tags:
+    - 'narrow'
+  size_source: 'JEITA/EIAJ ED-7311-19, variation 08-001-ADB, https://www.jeita.or.jp/japanese/standard/book/ED-7311-19/#target/page_no=20'
   body_size_x:
-    minimum: 3.80
-    maximum: 4.00
+    nominal: 3.90
   body_size_y:
-    minimum: 4.77
-    maximum: 5.03
-  overall_height:
+    nominal: 4.90
+  overall_height: 
     minimum: 1.45 # not specified, min.A1(0.10) + min.A2(1.35) gives this value
-    maximum: 1.75
+    maximum: 1.75 # max.A
   overall_size_x:
-    minimum: 5.80
-    maximum: 6.20
-  lead_width:
-    minimum: 0.36
-    maximum: 0.51
+    nominal: 6.00
+  lead_width: 0.30 .. 0.45
   lead_len:
-    minimum: 0.46
-    maximum: 0.86
+    minimum: 0.40 
+    maximum: 0.80 # JEITA Lp, min/max values
   pitch: 1.27
   num_pins_x: 0
   num_pins_y: 4
