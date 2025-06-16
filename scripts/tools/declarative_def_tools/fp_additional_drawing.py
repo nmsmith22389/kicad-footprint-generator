@@ -123,16 +123,15 @@ class PolyDrawingProvider(FPDrawingProvider):
 
     def make_nodes(self, context: FPDrawingProvider.Context) -> list[Node]:
         poly = self.poly_def.evaluate(context.evaluator)
-        nodes = [self._modify_point(pt, context.transforms) for pt in poly.points]
 
-        # if the polygon is closed, ensure the first point is repeated at the end
-        # (becasue we are passing a list of points to PolygonLine, not the GeomPolygon)
-        if poly.close:
-            nodes.append(nodes[0])
+        def _point_modifier(pt: Vector2D) -> Vector2D:
+            return self._modify_point(pt, context.transforms)
+
+        poly.transform_points(_point_modifier)
 
         return [
             PolygonLine(
-                shape=nodes,
+                shape=poly,
                 layer=context.layer,
                 width=context.width,
                 fill=self.fill,

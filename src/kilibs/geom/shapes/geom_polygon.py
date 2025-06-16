@@ -16,7 +16,8 @@
 from __future__ import annotations
 
 import warnings
-from collections.abc import Sequence
+from collections.abc import Callable, Sequence
+from typing import TypeAlias
 
 from kilibs.geom.bounding_box import BoundingBox
 from kilibs.geom.shapes.geom_line import GeomLine
@@ -589,6 +590,22 @@ class GeomPolygon(GeomShapeClosed):
         if not self.is_clockwise():
             self.points.reverse()
             self._segments = []
+
+    PointTransformFunc: TypeAlias = Callable[[Vec2DCompatible], Vector2D]
+    """
+    A callable that takes a Vector2D and returns a transformed Vector2D.
+    This is used to apply transformations to the polygon points.
+    """
+
+    def transform_points(self, transform: PointTransformFunc) -> None:
+        """Apply a transformation to the polygon points in place.
+
+        Args:
+            transform: The transformation function to apply to each point in turn
+        """
+        for i, point in enumerate(self.points):
+            self.points[i] = transform(point)
+        self._segments = []
 
     @property
     def segments(self) -> list[GeomLine]:
