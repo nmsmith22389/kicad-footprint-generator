@@ -13,7 +13,8 @@
 #
 # (C) 2016 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 
-from typing import Optional, Self, Sequence
+from collections.abc import Sequence
+from typing import Self
 
 from KicadModTree.nodes.Node import Node
 from KicadModTree.nodes.NodeShape import NodeShape
@@ -36,7 +37,7 @@ class PolygonLine(NodeShape, GeomPolygon):
     """
 
     layer: str
-    width: Optional[float]
+    width: float | None
     style: LineStyle
 
     def __init__(
@@ -49,12 +50,12 @@ class PolygonLine(NodeShape, GeomPolygon):
             | Sequence[Vec2DCompatible]
         ),
         layer: str = "F.SilkS",
-        width: Optional[float] = None,
+        width: float | None = None,
         style: LineStyle = LineStyle.SOLID,
         fill: bool = False,
         offset: float = 0,
-        x_mirror: Optional[float] = None,
-        y_mirror: Optional[float] = None,
+        x_mirror: float | None = None,
+        y_mirror: float | None = None,
     ):
         """Create a polygon.
 
