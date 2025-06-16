@@ -126,6 +126,7 @@ class PolyDrawingProvider(FPDrawingProvider):
         nodes = [self._modify_point(pt, context.transforms) for pt in poly.points]
 
         # if the polygon is closed, ensure the first point is repeated at the end
+        # (becasue we are passing a list of points to PolygonLine, not the GeomPolygon)
         if poly.close:
             nodes.append(nodes[0])
 

@@ -145,6 +145,7 @@ class CircleProperties(ShapeProperties):
 class PolyProperties(ShapeProperties):
 
     pts: list[EDs.EvaluableVector2D]
+    close: bool
 
     def __init__(self, poly: dict):
         """
@@ -153,9 +154,9 @@ class PolyProperties(ShapeProperties):
         Polygon or polyline shapes are defined by a list of points, each of which
         can be an expression that will be evaluated in the context of each footprint.
 
-        It is up to the caller to figure out if it makes a distinction between
-        polygons and polylines, or if it treats them the same (it can use the first
-        and last points to determine if it's a closed shape or not after evaluation).
+        The 'close' key can be used to indicate whether the polygon should be closed
+        (the first and last points are connected). If not specified, it defaults to False
+        (the polygon is a polyline).
 
         Looks something like this:
 
@@ -179,6 +180,8 @@ class PolyProperties(ShapeProperties):
         if len(self.pts) < 2:
             raise ValueError('Polygon/polyline shape must have at least two points')
 
+        self.close = bool(poly.get('close', False))
+
     def evaluate(self, expr_evaluator: Callable) -> GeomPolygon:
         offset = self._evaluate_offset(expr_evaluator)
         nodes: list[Vector2D] = []
@@ -187,12 +190,7 @@ class PolyProperties(ShapeProperties):
             evaled_pt = pt.evaluate(expr_evaluator)
             nodes.append(evaled_pt + offset)
 
-        # We say a polygon as closed if the first and last points are equal
-        closed = False
-        if len(nodes) > 2 and nodes[0].is_equal(nodes[-1]):
-            closed = True
-
-        return GeomPolygon(shape=nodes, close=closed)
+        return GeomPolygon(shape=nodes, close=self.close)
 
 
 def construct_shape(shape_spec: dict) -> ShapeProperties | None:
