@@ -58,6 +58,8 @@ class GeomPolygon(GeomShapeClosed):
             y_mirror: Mirror the points on the x-axis offset by `y_mirror` mm.
             close: If `True` the polygon will form a closed shape. If `False` there
                 won't be any connecting line between the last and the first point.
+                This argument is ignored when constructing from a `BoundingBox` or a
+                `GeomRectangle`.
         """
         self.close = close
         self.points = []
@@ -75,6 +77,7 @@ class GeomPolygon(GeomShapeClosed):
         elif isinstance(shape, GeomRectangle):
             for point in shape.points:
                 self.points.append(point.copy())
+            self.close = True
             self._remove_zero_length_segments()
         elif isinstance(shape, BoundingBox):
             self.points = [
@@ -83,6 +86,7 @@ class GeomPolygon(GeomShapeClosed):
                 Vector2D.from_floats(shape.right, shape.bottom),
                 Vector2D.from_floats(shape.left, shape.bottom),
             ]
+            self.close = True
             self._remove_zero_length_segments()
         else:
             raise TypeError("Type for 'source' not supported.")
@@ -607,7 +611,8 @@ class GeomPolygon(GeomShapeClosed):
         """Remove points from the list that would otherwise create segments of zero
         length.
         """
-        i = 0
+        # Open polygons don't have the line from the last point to the first point
+        i = 0 if self.close else 1
         while i < len(self.points) and len(self.points) > 1:
             if self.points[i].is_equal_accelerated(self.points[i - 1], tol=tol):
                 del self.points[i - 1]
