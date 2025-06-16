@@ -7797,6 +7797,39 @@ SOP-8_6.605x9.655mm_P2.54mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'https://www.onsemi.com/pdf/datasheet/hcpl2631m-d.pdf'
 
+JEITA_SOIC-8_3.9x4.9mm_P1.27mm:
+  the: 8.0 # body angle in degrees
+  tb_s: 0.1 # top part of body is that much smaller
+  c: 0.22 # JEITA c, (0.17+0.27)/2; pin thickness, body center part height
+  R1: 0.15 # made-up value (JEITA does not have it);pin upper corner, inner radius
+  R2: 0.15 # made-up value; pin lower corner, inner radius
+  S: null # pin top flat part length (excluding corner arc) - you can specify either S or L, the other will be calculated
+  L: 0.60 #  JEITA Lp, (0.40+0.80)/2; pin bottom flat part length (including corner arc)
+  fp_s: True  # True for circular pinmark, False for square pinmark (useful for diodes)
+  fp_r: 0.60 # first pin indicator radius
+  fp_d: 0.14 # first pin indicator distance from edge
+  fp_z: 0.05 # first pin indicator depth
+  ef: 0 # fillet of edges  Note: bigger bytes model with fillet
+  cc1: 0.25 # chamfer of the 1st pin corner
+  D1: 4.90 # body length
+  E1: 3.90 # body width
+  E: 6.00 # body overall width, JEITA He
+  A1: 0.15 # body-board separation
+  A2: 1.45 # body height
+  b: 0.375 # pin width, JEITA bp, (0.30+0.45)/2
+  e: 1.27 # pin (center-to-center) distance
+  npx: 4 # number of pins along X axis (width)
+  npy: 0 # number of pins along y axis (length)
+  epad: null  # e Pad
+  excluded_pins: null # no pin excluded
+  model_name: JEITA_SOIC-8_3.9x4.9mm_P1.27mm
+  rotation: -90 # rotation if required
+  body_color_key: 'black body'
+  pin_color_key: 'metal grey pins'
+  mark_color_key: 'light brown label'
+  destination_dir: 'Package_SO.3dshapes'
+  source: 'https://www.jeita.or.jp/japanese/standard/book/ED-7311-19/#target/page_no=21, 08-001-ADB, https://www.macronix.com/Lists/Datasheet/Attachments/8755/MX25R3235F,%20Wide%20Range,%2032Mb,%20v1.8.pdf'
+
 HTSSOP-56-1EP_6.1x14mm_P0.5mm_EP3.61x6.35mm:
   the: 12.0
   tb_s: 0.1
