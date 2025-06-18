@@ -45,7 +45,7 @@ from scripts.tools.global_config_files import global_config as GC
 
 
 DEFAULT_SMT_PAD_SHAPE = 'roundrect'
-DEFAULT_THT_PAD_SHAPE = 'circ'
+DEFAULT_THT_PAD_SHAPE = 'oval'
 
 
 def _get_dims(name: str, spec: dict, base: Vector2D = None, mult: float=1):
