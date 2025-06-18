@@ -171,7 +171,7 @@ class FpGenerateShGenerator(FpGenerator):
 
         env = os.environ.copy()
         if output_dir is not None:
-            env.update({"KICAD_FP_GENERATOR_OUTPUT_DIR": output_dir})
+            env.update({"KICAD_FP_GENERATOR_OUTPUT_DIR": output_dir.as_posix()})
 
         res = FpGenerationResult(self)
 
