@@ -67,10 +67,10 @@ def generate_one_footprint(global_config: GC.GlobalConfig, params, configuration
         **optional_pad_params))
 
     if params.mount_hole:
-        kicad_mod.append(Pad(number='""', type=Pad.TYPE_NPTH, shape=Pad.SHAPE_CIRCLE,
+        kicad_mod.append(Pad(type=Pad.TYPE_NPTH, shape=Pad.SHAPE_CIRCLE,
                             at=calc_dim.mount_hole_left, size=[seriesParams.mount_drill, seriesParams.mount_drill], \
                             drill=seriesParams.mount_drill, layers=configuration['mount_hole_layers']))
-        kicad_mod.append(Pad(number='""', type=Pad.TYPE_NPTH, shape=Pad.SHAPE_CIRCLE,
+        kicad_mod.append(Pad(type=Pad.TYPE_NPTH, shape=Pad.SHAPE_CIRCLE,
                             at=calc_dim.mount_hole_right, size=[seriesParams.mount_drill, seriesParams.mount_drill], \
                             drill=seriesParams.mount_drill, layers=configuration['mount_hole_layers']))
     #add an outline around the pins
