@@ -52,10 +52,8 @@ def make_body(params):
     body = make_z_chamfer(body, params.get("body_corner_chamfer"))
     body = make_z_fillet(body, params.get("body_corner_fillet"))
     body = _make_body_dial_pocket(body, params)
-    body = bodygen.make_body_side_pads(body, params)
     body = bodygen.make_body_shell_sides(body, params)
-    body = bodygen.make_body_top_pockets(body, params)
-    body = bodygen.make_body_bottom_pockets(body, params)
+    body = bodygen.make_body_features(body, params)
 
     return body
 

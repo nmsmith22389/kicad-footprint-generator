@@ -28,7 +28,111 @@
 import math
 
 import cadquery as cq
-from cadquery import Vector
+
+
+def make_body_features(body, params):
+    features = params.get("body_features", [])
+
+    for feature_index, feature in enumerate(features):
+        op = feature[0]
+        feature_type = feature[1]
+        pos = feature[2]
+        dim = feature[3]
+        extra = feature[4:]
+
+        feature_body = cq.Workplane("XY", origin=pos)
+
+        if feature_type == "box":
+            feature_body = feature_body.box(*dim)
+        elif feature_type == "cylinder":
+            r = dim[0] / 2
+            h = dim[1]
+            feature_body = feature_body.cylinder(h, r)
+        elif feature_type == "poly":
+            dim = dim.copy()
+            h = dim.pop(0)
+            x = dim.pop(0)
+            y = dim.pop(0)
+            feature_body = feature_body.moveTo(x, y)
+            while dim:
+                x = dim.pop(0)
+                y = dim.pop(0)
+                feature_body = feature_body.lineTo(x, y)
+            feature_body = feature_body.close()
+            feature_body = feature_body.extrude(h / 2, both=True)
+        else:
+            raise ValueError(
+                f"body_features[{feature_index}]: Unrecognized feature type: {feature_type}"
+            )
+
+        while extra:
+            extra_name = extra.pop(0)
+            if extra_name == "chamfer":
+                edges, chamfer = extra.pop(0)
+                feature_body = feature_body.edges(edges).chamfer(chamfer)
+            elif extra_name == "fillet":
+                edges, fillet = extra.pop(0)
+                feature_body = feature_body.edges(edges).fillet(fillet)
+            else:
+                raise ValueError(
+                    f"body_features[{feature_index}]: Unrecognized extra parameter: {extra_name}"
+                )
+
+        if op == "add":
+            body = body.union(feature_body)
+        elif op == "cut":
+            body = body.cut(feature_body)
+        else:
+            raise ValueError(
+                f"body_features[{feature_index}]: Unrecognized feature operation: {op}"
+            )
+
+    return body
+
+
+def make_body_top_clip_pocket(body, params):
+    if "top_clip_direction" not in params:
+        return body
+
+    d = params["top_clip_pocket_depth"]
+    z = params["shell_height"] - d
+    w = params["top_clip_pocket_width"]
+    l = params["top_clip_pocket_length"]
+
+    pocket = cq.Workplane("XY", origin=(params["top_clip_x"], params["top_clip_y"], z))
+    pocket = pocket.rect(w, l)
+    pocket = pocket.extrude(d)
+
+    body = body.cut(pocket)
+
+    return body
+
+
+def make_body_pin_pockets(body, params):
+    if params["pin_type"] in ["top-jbend", "bottom-jbend"]:
+        pl = params["pin_bottom_length"]
+    elif params["pin_type"] == "flat":
+        pl = params["pin_length"]
+    elif params["pin_type"] in ["gullwing", "through-hole"]:
+        return body
+    else:
+        raise ValueError(f"Unknown pin_type: {params['pin_type']}")
+
+    pw = params["pin_width"]
+    ph = params["pin_thickness"] + params.get("pin_board_distance", 0)
+
+    for pin in params["pins"]:
+        px, py, ori = pin[0:3]
+
+        pocket_body = cq.Workplane("XY", origin=(-pl / 2, 0, 0))
+        pocket_body = pocket_body.rect(pl, pw)
+        pocket_body = pocket_body.extrude(ph)
+        pocket_body = pocket_body.rotate((0, 0, 0), (0, 0, 1), ori)
+        pocket_body = pocket_body.translate((px, py, 0))
+
+        body = body.cut(pocket_body)
+
+    return body
 
 
 def make_body_pegs(body, params):
@@ -59,284 +163,6 @@ def make_body_pegs(body, params):
                 )
 
         body = body.union(peg_body)
-
-    return body
-
-
-def _make_body_z_pockets(body, params, params_name, z):
-    pockets = params.get(params_name, [])
-
-    for pocket_index, args in enumerate(pockets):
-        pocket_body = None
-        pocket_type = args.pop(0)
-
-        if pocket_type == "rect":
-            h = args.pop(0)
-            x = args.pop(0)
-            y = args.pop(0)
-            w = args.pop(0)
-            l = args.pop(0)
-            pocket_body = cq.Workplane("XY", origin=(x, y, z))
-            pocket_body = pocket_body.rect(w, l)
-            pocket_body = pocket_body.extrude(h)
-        elif pocket_type == "circle":
-            h = args.pop(0)
-            x = args.pop(0)
-            y = args.pop(0)
-            d = args.pop(0)
-            pocket_body = cq.Workplane("XY", origin=(x, y, z))
-            pocket_body = pocket_body.circle(d / 2)
-            pocket_body = pocket_body.extrude(h)
-        elif pocket_type == "poly":
-            h = args.pop(0)
-
-            if len(args) < 6:
-                raise ValueError(
-                    f"{params_name}[{pocket_index + 1}]: pocket type 'poly' requires at least 3 coordinate pairs"
-                )
-
-            if len(args) % 2:
-                raise ValueError(
-                    f"{params_name}[{pocket_index + 1}]: pocket type 'poly' must have even number of coordinate numbers"
-                )
-
-            pocket_body = cq.Workplane("XY", origin=(0, 0, z))
-            pocket_body = pocket_body.moveTo(args.pop(0), args.pop(0))
-            while args:
-                pocket_body = pocket_body.lineTo(args.pop(0), args.pop(0))
-            pocket_body = pocket_body.close()
-            pocket_body = pocket_body.extrude(h)
-        else:
-            raise ValueError(
-                f"{pockets_name}[{pocket_index + 1}]: Unknown pocket type: {pocket_type}"
-            )
-
-        body = body.cut(pocket_body)
-
-    return body
-
-
-def make_body_top_pockets(body, params):
-    return _make_body_z_pockets(body, params, "body_top_pockets", params["body_height"])
-
-
-def make_body_bottom_pockets(body, params):
-    return _make_body_z_pockets(body, params, "body_bottom_pockets", 0)
-
-
-def make_body_bottom_pin_pockets(body, params):
-    if params["pin_type"] in ["top-jbend", "bottom-jbend"]:
-        pl = params["pin_bottom_length"]
-    elif params["pin_type"] == "flat":
-        pl = params["pin_length"]
-    elif params["pin_type"] in ["gullwing", "through-hole"]:
-        return body
-    else:
-        raise ValueError(f"Unknown pin_type: {params['pin_type']}")
-
-    pw = params["pin_width"]
-    ph = params["pin_thickness"] + params.get("pin_board_distance", 0)
-
-    for pin in params["pins"]:
-        px, py, ori = pin[0:3]
-
-        pocket_body = cq.Workplane("XY", origin=(-pl / 2, 0, 0))
-        pocket_body = pocket_body.rect(pl, pw)
-        pocket_body = pocket_body.extrude(ph)
-        pocket_body = pocket_body.rotate((0, 0, 0), (0, 0, 1), ori)
-        pocket_body = pocket_body.translate((px, py, 0))
-
-        body = body.cut(pocket_body)
-
-    return body
-
-
-def _make_body_shell_side_pocket(params, side_params, body_dim):
-    st = params["shell_thickness"]
-
-    w = side_params["width"]
-    h = params["shell_height"] - side_params["bottom_height"]
-
-    x = side_params["distance"] - st
-    y = 0
-    z = params["shell_height"] - h / 2
-
-    if x < body_dim[0] / 2:
-        depth = body_dim[0] / 2 - x
-        body = cq.Workplane("YZ", origin=(x, y, z))
-        body = body.rect(w, h)
-        body = body.extrude(depth)
-    else:
-        body = None
-
-    return body
-
-
-def make_body_side_pads(body, params):
-    side_pads = params.get("body_side_pads", [])
-
-    for pad_index, pad_params in enumerate(side_pads):
-        pad_params = pad_params.copy()
-
-        directions = pad_params.pop(0)
-        if type(directions) is not list:
-            directions = [directions]
-
-        d = pad_params.pop(0)
-        offs = pad_params.pop(0)
-        z = pad_params.pop(0)
-        w = pad_params.pop(0)
-        h = pad_params.pop(0)
-
-        negative_d = 0
-        z_fillet_list = None
-
-        while pad_params:
-            param = pad_params.pop(0)
-            if param == "negative_d":
-                negative_d = pad_params.pop(0)
-            elif param == "z_fillet":
-                z_fillet_list = pad_params.pop(0)
-            else:
-                raise ValueError(
-                    f"body_side_pads[{pad_index}]: Invalid extra parameter: {param}"
-                )
-
-        for direction in directions:
-            if direction in [0, 180]:
-                body_dim = (params["body_width"], params["body_length"])
-            elif direction in [90, 270]:
-                body_dim = (params["body_length"], params["body_width"])
-            else:
-                raise ValueError(
-                    f"body_side_pads[{pad_index}]: Direction can only in steps of 90 degrees"
-                )
-
-            if d <= body_dim[0] / 2:
-                raise ValueError(
-                    f"body_side_pads[{pad_index}]: Distance should be greater than body width or length"
-                )
-
-            x = body_dim[0] / 2 - negative_d
-            y = -offs
-            pad_body = cq.Workplane("YZ", origin=(x, y, z))
-            pad_body = pad_body.rect(w, h)
-            pad_body = pad_body.extrude(d - x)
-
-            if direction in [90, 270]:
-                pad_body = pad_body.rotate((0, 0, 0), (0, 0, 1), 90)
-
-            if z_fillet_list:
-                corners = [">X and >Y", "<X and >Y", "<X and <Y", ">X and <Y"]
-                for corner, z_fillet in zip(corners, z_fillet_list):
-                    if z_fillet:
-                        pad_body = pad_body.edges(f"|Z and {corner}").fillet(z_fillet)
-
-            if direction == 180:
-                pad_body = pad_body.mirror("YZ")
-            elif direction == 270:
-                pad_body = pad_body.mirror("XZ")
-
-            body = body.union(pad_body)
-
-    return body
-
-
-def _make_top_clip_cylinders(body, params):
-    r = params["top_clip_diameter"] / 2
-    h = params["top_clip_height"]
-    chamfer = params.get("top_clip_chamfer")
-    fillet = params.get("top_clip_fillet")
-
-    cylinder = cq.Workplane("XZ")
-    cylinder = cylinder.moveTo(0, params["body_height"])
-    cylinder = cylinder.lineTo(r, params["body_height"])
-
-    if chamfer:
-        cylinder = cylinder.lineTo(r, h - chamfer[1])
-        cylinder = cylinder.lineTo(r - chamfer[0], h)
-        if chamfer[0] < r:
-            cylinder = cylinder.lineTo(0, h)
-    elif fillet:
-        cylinder = cylinder.lineTo(r, h - fillet)
-        cylinder = cylinder.radiusArc((r - fillet, h), -fillet)
-        if fillet < r:
-            cylinder = cylinder.lineTo(0, h)
-    else:
-        cylinder = cylinder.lineTo(r, h)
-        cylinder = cylinder.lineTo(0, h)
-
-    cylinder = cylinder.close()
-    cylinder = cylinder.revolve()
-
-    x = params["top_clip_distance"] / 2
-    y = params["top_clip_distance"] / 2
-    cylinder = cylinder.translate((x, y, 0))
-
-    body = body.union(cylinder)
-    body = body.union(cylinder.mirror("XZ"))
-    body = body.union(cylinder.mirror("YZ"))
-    body = body.union(cylinder.mirror("XZ").mirror("YZ"))
-
-    return body
-
-
-def _make_top_clip_corners(body, params):
-    bw = params["body_width"] / 2
-    bl = params["body_length"] / 2
-
-    cw = params["top_clip_width"]
-    cl = params["top_clip_length"]
-
-    corner = cq.Workplane("XY", origin=(0, 0, params["body_height"]))
-    corner = corner.moveTo(bw - cw, bl)
-    corner = corner.lineTo(bw, bl)
-    corner = corner.lineTo(bw, bl - cl)
-    corner = corner.close()
-
-    corner = corner.extrude(params["top_clip_height"] - params["body_height"])
-
-    if params.get("body_corner_chamfer"):
-        corner = corner.edges("|Z and >X and >Y").chamfer(
-            *params["body_corner_chamfer"]
-        )
-    if params.get("body_corner_fillet"):
-        corner = corner.edges("|Z and >X and >Y").fillet(params["body_corner_fillet"])
-
-    body = body.union(corner)
-    body = body.union(corner.mirror("XZ"))
-    body = body.union(corner.mirror("YZ"))
-    body = body.union(corner.mirror("XZ").mirror("YZ"))
-
-    return body
-
-
-def _make_body_top_clip_pocket(body, params):
-    d = params["top_clip_pocket_depth"]
-    z = params["shell_height"] - d
-
-    pocket = cq.Workplane("XY", origin=(params["top_clip_x"], params["top_clip_y"], z))
-    pocket = pocket.rect(
-        params["top_clip_pocket_width"], params["top_clip_pocket_length"]
-    )
-    pocket = pocket.extrude(d)
-
-    body = body.cut(pocket)
-
-    return body
-
-
-def make_body_top_clips(body, params):
-    top_clip_type = params.get("top_clip_type")
-
-    if top_clip_type == "cylinders":
-        body = _make_top_clip_cylinders(body, params)
-    elif top_clip_type == "corners":
-        body = _make_top_clip_corners(body, params)
-    elif top_clip_type == "shell-clip":
-        body = _make_body_top_clip_pocket(body, params)
-    elif top_clip_type:
-        raise ValueError(f"Unknown top clips type: {top_clip_type}")
 
     return body
 
@@ -384,6 +210,27 @@ def _make_body_shell_side_holder(dim, chamfer, fillet):
 
     body = body.close()
     body = body.extrude(l)
+
+    return body
+
+
+def _make_body_shell_side_pocket(params, side_params, body_dim):
+    st = params["shell_thickness"]
+
+    w = side_params["width"]
+    h = params["shell_height"] - side_params["bottom_height"]
+
+    x = side_params["distance"] - st
+    y = 0
+    z = params["shell_height"] - h / 2
+
+    if x < body_dim[0] / 2:
+        depth = body_dim[0] / 2 - x
+        body = cq.Workplane("YZ", origin=(x, y, z))
+        body = body.rect(w, h)
+        body = body.extrude(depth)
+    else:
+        body = None
 
     return body
 

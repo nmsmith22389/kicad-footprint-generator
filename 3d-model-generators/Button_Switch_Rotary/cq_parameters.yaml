@@ -1,7 +1,6 @@
 # See the Button_Switch_Tactile generator for additional documentation.
 #
 # Dial parameters:
-#
 #   dial_diameter:           dial diameter
 #   dial_height:             dial top
 #   dial_bottom_height:      dial bottom
@@ -23,21 +22,18 @@ Nidec_Copal_SH-7010A: &Nidec_Copal_SH-7010A
   body_height: 3.6
   body_board_distance: 0.05
   body_corner_fillet: 0.1
-  body_side_pads: [
-    [[90, 270], 3.65, -3.025, 2.3, 1.05, 2.6, negative_d, 0.1, z_fillet, [0.1, 0.1, 0.0, 0.0]],  # direction, d, offs, z, w, h, extra
-  ]
-  body_top_pockets: [
-    [rect, -0.5, -3.45, 0, 0.2, 7.3],  # type, h, x, y, w, l
-    [rect, -0.5,  3.45, 0, 0.2, 7.3],
-  ]
-  body_bottom_pockets: [
-    [rect, 0.20, -2.675,  2.575, 1.75, 1.35],  # type, h, x, y, w, l
-    [rect, 0.20, -2.675,  0.000, 1.75, 1.20],
-    [rect, 0.20, -2.675, -2.575, 1.75, 1.35],
-    [rect, 0.20,  2.675,  2.575, 1.75, 1.35],
-    [rect, 0.20,  2.675,  0.000, 1.75, 1.20],
-    [rect, 0.20,  2.675, -2.575, 1.75, 1.35],
-    [circle, 0.20, 0, 0, 1.20],  # h, type, x, y, d
+  body_features: [
+    [add, box, [-3.025, -3.4, 2.3], [1.05, 0.5, 2.6], fillet, ["|Z and <Y", 0.1]], # op, type, pos, dim, extra
+    [add, box, [-3.025,  3.4, 2.3], [1.05, 0.5, 2.6], fillet, ["|Z and >Y", 0.1]],
+    [cut, box, [-3.45, 0, 3.35], [0.2, 7.3, 0.5]],
+    [cut, box, [ 3.45, 0, 3.35], [0.2, 7.3, 0.5]],
+    [cut, box, [-2.675, -2.575, 0.1], [1.75, 1.35, 0.2]],
+    [cut, box, [-2.675,  2.575, 0.1], [1.75, 1.35, 0.2]],
+    [cut, box, [ 2.675, -2.575, 0.1], [1.75, 1.35, 0.2]],
+    [cut, box, [ 2.675,  2.575, 0.1], [1.75, 1.35, 0.2]],
+    [cut, box, [-2.675,  0.000, 0.1], [1.75, 1.20, 0.2]],
+    [cut, box, [ 2.675,  0.000, 0.1], [1.75, 1.20, 0.2]],
+    [cut, cylinder, [0, 0, 0.1], [1.2, 0.2]],
   ]
 
   shell_width: 6.1
@@ -46,7 +42,7 @@ Nidec_Copal_SH-7010A: &Nidec_Copal_SH-7010A
   shell_thickness: 0.15
   shell_corner_chamfer: 0.2
   shell_top_lips: [
-    [add, [90, 270], 0, 0.55, 2.7, 2.7],  # op, direction, offs, len, base_w, tip_w
+    [add, [90, 270], 0, 0.55, 2.7, 2.7], # op, direction, offs, len, base_w, tip_w
     [add, [90, 270], 0, 0.15, 3.1, 3.1],
   ]
 
@@ -147,21 +143,18 @@ Nidec_Copal_SH-7010C:
 
   body_height: 3.55
   body_board_distance: 0.0
-  body_side_pads: [
-    [[90, 270], 3.65, -3.025, 2.25, 1.05, 2.6, negative_d, 0.1, z_fillet, [0.1, 0.1, 0.0, 0.0]],  # direction, d, offs, z, w, h, extra
-  ]
-  body_top_pockets: [
-    [rect, -0.5, -3.45, 0, 0.2, 7.3],  # type, h, x, y, w, l
-    [rect, -0.5,  3.45, 0, 0.2, 7.3],
-  ]
-  body_bottom_pockets: [
-    [rect, 0.15, -2.675,  2.575, 1.75, 1.35],  # type, h, x, y, w, l
-    [rect, 0.15, -2.675,  0.000, 1.75, 1.20],
-    [rect, 0.15, -2.675, -2.575, 1.75, 1.35],
-    [rect, 0.15,  2.675,  2.575, 1.75, 1.35],
-    [rect, 0.15,  2.675,  0.000, 1.75, 1.20],
-    [rect, 0.15,  2.675, -2.575, 1.75, 1.35],
-    [circle, 0.15, 0, 0, 1.20],
+  body_features: [
+    [add, box, [-3.025, -3.4, 2.25], [1.05, 0.5, 2.6], fillet, ["|Z and <Y", 0.1]], # op, type, pos, dim, extra
+    [add, box, [-3.025,  3.4, 2.25], [1.05, 0.5, 2.6], fillet, ["|Z and >Y", 0.1]],
+    [cut, box, [-3.45, 0, 3.30], [0.2, 7.3, 0.5]],
+    [cut, box, [ 3.45, 0, 3.30], [0.2, 7.3, 0.5]],
+    [cut, box, [-2.675, -2.575, 0.075], [1.75, 1.35, 0.15]],
+    [cut, box, [-2.675,  2.575, 0.075], [1.75, 1.35, 0.15]],
+    [cut, box, [ 2.675, -2.575, 0.075], [1.75, 1.35, 0.15]],
+    [cut, box, [ 2.675,  2.575, 0.075], [1.75, 1.35, 0.15]],
+    [cut, box, [-2.675,  0.000, 0.075], [1.75, 1.20, 0.15]],
+    [cut, box, [ 2.675,  0.000, 0.075], [1.75, 1.20, 0.15]],
+    [cut, cylinder, [0, 0, 0.075], [0.15, 1.2]],
   ]
 
   shell_height: 3.7
@@ -190,9 +183,12 @@ Nidec_Copal_SH-7010C:
   pin_width: 0.6
   pin_thickness: 0.15
   pin_base_offset: -0.26
-  pin_top_height: 1.05
-  pin_top_radius: 0.25
+  pin_base_height: 1.05
   pin_bottom_height: -3.5
+  pin_corners: [
+    [0.075, 1.05],
+  ]
+  pin_corner_radius: 0.25
   pins: [
     [-3.81,  2.54, 180],
     [-3.81,  0.00, 180],

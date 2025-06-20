@@ -28,7 +28,6 @@
 import math
 
 import cadquery as cq
-from cadquery import Vector
 
 from _tools.utils import pingen
 
@@ -37,7 +36,7 @@ def make_shell_top_lips(body, params):
     lips = params.get("shell_top_lips", [])
 
     for lip_index, lip_params in enumerate(lips):
-        lip_params = lip_params[:]
+        lip_params = lip_params.copy()
         operation = lip_params.pop(0)
         directions = lip_params.pop(0)
         offset = lip_params.pop(0)
@@ -92,11 +91,15 @@ def make_shell_top_lips(body, params):
     return body
 
 
-def _make_shell_top_shell_clip(body, params):
+def make_shell_top_clip(body, params):
+    if "top_clip_direction" not in params:
+        return body
+
+    pocket_w = params["top_clip_pocket_width"]
+    pocket_l = params["top_clip_pocket_length"]
+
     pocket = cq.Workplane("XY", origin=(params["top_clip_x"], params["top_clip_y"]))
-    pocket = pocket.rect(
-        params["top_clip_pocket_width"], params["top_clip_pocket_length"]
-    )
+    pocket = pocket.rect(pocket_w, pocket_l)
     pocket = pocket.extrude(params["shell_height"])
     body = body.cut(pocket)
 
@@ -140,17 +143,6 @@ def _make_shell_top_shell_clip(body, params):
 
     clip = clip.translate((x, y, z - params["top_clip_depth"]))
     body = body.union(clip)
-
-    return body
-
-
-def make_shell_top_clip(body, params):
-    top_clip_type = params.get("top_clip_type")
-
-    if top_clip_type == "shell-clip":
-        body = _make_shell_top_shell_clip(body, params)
-    elif top_clip_type not in [None, "cylinders", "corners"]:
-        raise ValueError(f"Unknown top clips type: {top_clip_type}")
 
     return body
 
