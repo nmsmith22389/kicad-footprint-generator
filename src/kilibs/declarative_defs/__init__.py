@@ -12,3 +12,7 @@
 # (C) The KiCad Librarian Team
 
 """Declarative definitions."""
+
+from typing import Any, TypeAlias
+
+SpecDict: TypeAlias = dict[str, Any]
