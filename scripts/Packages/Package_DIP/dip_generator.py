@@ -165,8 +165,8 @@ class DIPGenerator(FootprintGenerator):
             self.make_from_config(variant_config)
 
     def generateFootprint(self, device_params: dict, pkg_id: str, header_info: dict = None):
-        # Ignore defaults and base packages
-        if pkg_id.startswith('base') or pkg_id.startswith('defaults'):
+        # Ignore "virtual" inherited-only definitions
+        if pkg_id.startswith('defaults'):
             return
 
         self.make_all_variants_from_device_params(device_params)

@@ -938,8 +938,7 @@ if __name__ == "__main__":
 
     for variant, spec in yaml_spec.items():
         if (
-            variant.startswith("base")
-            or variant.startswith("defaults")
+            variant.startswith("defaults")
             or not fnmatch(variant, args.filter)
         ):
             continue

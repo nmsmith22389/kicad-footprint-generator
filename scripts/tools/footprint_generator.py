@@ -136,6 +136,11 @@ class FootprintGenerator:
                 header = None
 
             for pkg in cmd_file:
+                # Skip "virtual" definitions that are only used as bases for
+                # "concrete" definitions
+                if pkg.startswith("defaults"):
+                    continue
+
                 logging.info("Generating part for parameter set {}".format(pkg))
                 generator_instance.generateFootprint(cmd_file[pkg],
                                                      pkg_id=pkg,
