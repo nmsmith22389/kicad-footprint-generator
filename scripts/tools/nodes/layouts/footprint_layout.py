@@ -207,7 +207,7 @@ class FootprintLayoutNode(Node, abc.ABC):
         if self.automatic_silk_rect:
             kos = self._get_silk_keepouts()
 
-            silk_shape = body_shape.inflate(self.global_config.silk_fab_offset)
+            silk_shape = body_shape.inflated(self.global_config.silk_fab_offset)
 
             silk_nodes = DT.makeNodesWithKeepout(
                 silk_shape,
