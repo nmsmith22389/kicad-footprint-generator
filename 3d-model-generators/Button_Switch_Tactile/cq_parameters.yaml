@@ -292,9 +292,10 @@ SW_SPST_Omron_B3FS-100xP: &SW_SPST_Omron_B3FS-100xP
   body_width: 6.0
   body_length: 5.8
   body_height: 2.45
+  body_board_distance: 0.1
   body_corner_chamfer: 0.25
   body_features: [
-    [cut, box, [0, 0, 0.05], [6, 2, 0.1]], # op, type, pos, dim, extra
+    [cut, box, [0, 0, 0.1], [6, 2, 0.2]], # op, type, pos, dim, extra
     [cut, box, [-2.75, -2.2, 0.3], [0.5, 1.4, 0.6]],
     [cut, box, [-2.75,  2.2, 0.3], [0.5, 1.4, 0.6]],
     [cut, box, [ 2.75, -2.2, 0.3], [0.5, 1.4, 0.6]],
