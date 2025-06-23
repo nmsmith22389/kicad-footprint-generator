@@ -500,7 +500,7 @@ SW_SPST_B3SL-1002P: &SW_SPST_B3SL-1002P
   pin_width: 0.7
   pin_thickness: 0.3
   pin_top_height: 1.2
-  pin_top_length: 0.4
+  pin_top_length: 0
   pin_bottom_length: 1.3
   pin_corner_radius: 0.4
   pin_start_radius: 0.3
