@@ -2269,97 +2269,28 @@ Texas_PWP0020T:
 
 TSSOP-24_4.4x7.8mm_P0.65mm:
   device_type: 'TSSOP'
-  size_source: 'JEDEC MO-153 Var AD https://www.jedec.org/document_search?search_api_views_fulltext=MO-153'
-  body_size_x: 4.4 +/-0.1
-  body_size_y: 7.8 +/-0.1
-  overall_size_x: 6.4
-  body_height: 1.2
-  lead_width: 0.17 .. 0.30
-  lead_len: 0.6 +/-0.15
-  pitch: 0.65
-  num_pins_x: 0
-  num_pins_y: 12
-
-TSSOP-24-1EP_4.4x7.8mm_P0.65mm_EP3.2x5mm:
-  device_type: 'TSSOP' # actually it's HTSSOP
-  size_source: 'https://www.st.com/resource/en/datasheet/led1642gw.pdf#page=37'
-
-  body_size_x:
-    minimum: 4.30
-    nominal: 4.40
-    maximum: 4.50
-  body_size_y:
-    minimum: 7.70
-    nominal: 7.80
-    maximum: 7.90
-
-  overall_size_x:
-    minimum: 6.30
-    nominal: 6.40
-    maximum: 6.50
-
+  size_source: 'JEDEC MO-153 variation AD, 1.00mm body thickness, https://www.jedec.org/document_search?search_api_views_fulltext=MO-153'
+  body_size_x: 4.30 .. 4.40 .. 4.50
+  body_size_y: 7.70 .. 7.80 .. 7.90
+  overall_size_x: 6.40
   body_height: 1.20
-
-  lead_width: 0.19 .. 0.30
-
-  lead_len:
-    minimum: 0.45
-    nominal: 0.60
-    maximum: 0.75
-
+  lead_width: 0.17 .. 0.30
+  lead_len: 0.60 +/- 0.15
   pitch: 0.65
-
   num_pins_x: 0
   num_pins_y: 12
-
-  EP_size_x:
-    minimum: 3.00
-    nominal: 3.20
-    maximum: 3.40
-  EP_size_y:
-    minimum: 4.80
-    nominal: 5.00
-    maximum: 5.20
-  EP_num_paste_pads: [2, 3]
 
 HTSSOP-24-1EP_4.4x7.8mm_P0.65mm_EP3.2x5mm:
-# It was previously in httsop.yaml
-# same as 'TSSOP-24-1EP_4.4x7.8mm_P0.65mm_EP3.2x5mm', we should merge both
+# It was previously in htssop.yaml; merged with TSSOP-24-1EP_4.4x7.8mm_P0.65mm_EP3.2x5mm
+# JEDEC has exposed pad size E2xD1 = 1.50x2.70mm minimum
+  inherit: TSSOP-24_4.4x7.8mm_P0.65mm
   device_type: 'HTSSOP'
-  size_source: 'https://www.st.com/resource/en/datasheet/stp16cp05.pdf#page=25'
-  body_size_x:
-    minimum: 4.3
-    nominal: 4.4
-    maximum: 4.5
-  body_size_y:
-    minimum: 7.7
-    nominal: 7.8
-    maximum: 7.9
-  body_height:
-    maximum: 1.2
-  overall_size_x:
-    minimum: 6.2
-    nominal: 6.4
-    maximum: 6.6
-  lead_width:
-    minimum: 0.19
-    maximum: 0.30
-  lead_len:
-    minimum: 0.45
-    nominal: 0.6
-    maximum: 0.75
-  pitch: 0.65
-  num_pins_x: 0
-  num_pins_y: 12
+  size_source: 'JEDEC MO-153 variation ADT, 1.00mm body thickness, custom Exposed Pad size from STMicroelectronics, https://www.jedec.org/document_search?search_api_views_fulltext=MO-153, https://www.st.com/resource/en/datasheet/stp16cp05.pdf#page=25, https://www.st.com/resource/en/datasheet/led1642gw.pdf#page=37'
+  overall_size_x: 6.20 .. 6.40 .. 6.60 # JEDEC E, nominal agrees with JEDEC, minimum / maximum are from ST
+  lead_width: 0.19 .. 0.30 # ST's b, differs a little from JEDEC
 
-  EP_size_x:
-    minimum: 3
-    nominal: 3.2
-    maximum: 3.4
-  EP_size_y:
-    minimum: 4.8
-    nominal: 5
-    maximum: 5.2
+  EP_size_x: 3.00 .. 3.20 .. 3.40 # STMicroelectronics E2
+  EP_size_y: 4.80 .. 5.00 .. 5.20 # ST's D1
   EP_num_paste_pads: [2, 3]
 
 Texas_PWP0024P:
