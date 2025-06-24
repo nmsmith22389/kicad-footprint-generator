@@ -195,12 +195,25 @@ class InductorSeriesProperties:
         self.has_orientation = series_block.get("has_orientation")
         self.library_name = series_block["library_name"]
 
+        def csv_line_filter(line: str) -> bool:
+            """Filter function to remove lines that are comments or empty."""
+            if line.startswith("#"):
+                return False
+            if not line.strip():
+                return False
+            return True
+
         if "csv" in series_block:
             csv_file = series_block["csv"]
             if csv_dir is not None:
                 csv_file = csv_dir / csv_file
             with open(csv_file, encoding="utf-8-sig") as f:
-                self.parts = [SmdInductorProperties(x) for x in csv.DictReader(f)]
+                # Filter out rows that start with "#"
+                filtered_rows = filter(csv_line_filter, f)
+                # Read the CSV file and create SmdInductorProperties instances from each row
+                self.parts = [
+                    SmdInductorProperties(x) for x in csv.DictReader(filtered_rows)
+                ]
         elif "parts" in series_block:
             # Load directly from the YAML (for a single-size series, for example)
             self.parts = [SmdInductorProperties(x) for x in series_block["parts"]]
