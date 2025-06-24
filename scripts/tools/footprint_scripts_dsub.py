@@ -170,7 +170,6 @@ def makeDSubStraight(
     )
     kicad_modg.append(
         Text(
-            type="user",
             text="${REFERENCE}",
             at=[0, 0],
             layer="F.Fab",
@@ -959,7 +958,6 @@ def makeDSubEdge(
     )
     kicad_mod.append(
         Text(
-            type="user",
             text="PCB edge",
             at=[-shield_width / 2 + 5 * text_size[0], ypcb_edge - text_size[1] * 2 / 3],
             layer="Dwgs.User",

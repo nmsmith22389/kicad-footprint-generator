@@ -413,7 +413,15 @@ def build_din41612_connector_horizontal(mod, series, direction, pins, rows, conf
             layer="F.SilkS",
         )
     )
-    mod.append(Text(at=Vector2D(center.x, mounting.y), **fab_reference_args))
+    mod.append(
+        Text(
+            at=Vector2D(center.x, mounting.y),
+            text=fab_reference_args["text"],
+            layer=fab_reference_args["layer"],
+            thickness=fab_reference_args["thickness"],
+            size=fab_reference_args["size"],
+        )
+    )
     mod.append(
         Property(
             name=Property.VALUE,
@@ -657,7 +665,6 @@ def build_din41612_connector_horizontal(mod, series, direction, pins, rows, conf
             layer="Cmts.User",
             size=(0.7, 0.7),
             thickness=0.1,
-            type="user",
         )
     )
     arrow_args = dict(
@@ -744,7 +751,15 @@ def build_din41612_connector_vertical(mod, series, direction, pins, rows, config
             layer="F.SilkS",
         )
     )
-    mod.append(Text(at=center, **fab_reference_args))
+    mod.append(
+        Text(
+            at=center,
+            text=fab_reference_args["text"],
+            layer=fab_reference_args["layer"],
+            thickness=fab_reference_args["thickness"],
+            size=fab_reference_args["size"],
+        )
+    )
     mod.append(
         Property(
             name=Property.VALUE,

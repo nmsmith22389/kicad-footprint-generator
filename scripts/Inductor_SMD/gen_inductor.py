@@ -355,7 +355,6 @@ class InductorGenerator(FootprintGenerator):
         fab_rect = part_dimension / 2 + fabOffset
         elements = [
             Text(
-                type="user",
                 text="${REFERENCE}",
                 at=[0, 0],
                 rotation=rot,

@@ -224,7 +224,6 @@ for series in data:
         )
         kicad_modt.append(
             Text(
-                type="user",
                 text="${REFERENCE}",
                 at=[0, 0],
                 layer="F.Fab",

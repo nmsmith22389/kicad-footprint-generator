@@ -1034,7 +1034,6 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
         )
         kicad_modg.append(
             Text(
-                type="user",
                 text="${REFERENCE}",
                 at=[l_crt + w_crt / 2, t_crt + 3 * h_crt / 5],
                 layer="F.Fab",

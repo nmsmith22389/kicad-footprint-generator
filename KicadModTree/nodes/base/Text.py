@@ -1,168 +1,277 @@
-# KicadModTree is free software: you can redistribute it and/or
-# modify it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
+# kilibs is free software: you can redistribute it and/or modify it under the terms of
+# the GNU General Public License as published by the Free Software Foundation, either
+# version 3 of the License, or (at your option) any later version.
 #
-# KicadModTree is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
+# kilibs is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+# without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+# PURPOSE. See the GNU General Public License for more details.
 #
-# You should have received a copy of the GNU General Public License
-# along with kicad-footprint-generator. If not, see < http://www.gnu.org/licenses/ >.
+# You should have received a copy of the GNU General Public License along with kilibs.
+# If not, see < http://www.gnu.org/licenses/ >.
 #
 # (C) 2016 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
+# (C) The KiCad Librarian Team
+
+"""Class definition for Text nodes."""
+
+from __future__ import annotations
+
+import math
+from typing import Self
 
 from KicadModTree.nodes.Node import Node
-from kilibs.geom import BoundingBox, Vector2D
+from kilibs.geom import BoundingBox, Vec2DCompatible, Vector2D
 
 
 class _TextBase(Node):
-    r"""Add a Line to the render tree
-
-    :param \**kwargs:
-        See below
-
-    :Keyword Arguments:
-        * *text* (``str``) --
-          text which is been visualized
-        * *at* (``Vector2D``) --
-          position of text
-        * *rotation* (``float``) --
-          rotation of text (default: 0)
-        * *mirror* (``bool``) --
-          mirror text (default: False)
-        * *layer* (``str``) --
-          layer on which the text is drawn (default: 'F.SilkS')
-        * *size* (``Vector2D``) --
-          size of the text (default: [1, 1])
-        * *thickness* (``float``) --
-          thickness of the text (default: 0.15)
-        * *justify* (``str``) --
-          justify text (default: 'center')
-        * *hide* (``bool``) --
-          hide text (default: False)
-
-    :Example:
-
-    >>> from KicadModTree import *
-    >>> Text(text='REF**', at=[0, -3], layer='F.SilkS')
-    >>> Property(name='Value', text="footprint name", at=[0, 3], layer='F.Fab')
-    >>> Text(text='test', at=[0, 0], layer='Cmts.User')
-    """
+    """The base node of Text and Property."""
 
     text: str
+    """Content that is shown."""
+    at: Vector2D
+    """Coordinates of the text."""
+    rotation: float
+    """Rotation in degrees of the text field."""
+    mirror: bool
+    """Whether the text is mirrored or not."""
+    layer: str
+    """On which layer the text is drawn."""
+    size: Vector2D
+    """Size of the text."""
+    thickness: float
+    """Thickness of the text."""
+    justify: str | None
+    """Justification of the text (default: 'center')."""
+    hide: bool
+    """`True` if the text shall be hidden."""
 
-    def __init__(self, **kwargs):
-        Node.__init__(self)
+    def __init__(
+        self,
+        text: str,
+        at: Vec2DCompatible,
+        rotation: float = 0.0,
+        mirror: bool = False,
+        layer: str = "F.SilkS",
+        size: Vec2DCompatible = [1, 1],
+        thickness: float = 0.15,
+        justify: str | None = None,
+        hide: bool = False,
+    ) -> None:
+        """Initialize a text base node.
 
-        self.text = kwargs['text']
-        self.at = Vector2D(kwargs['at'])
-        self.rotation = kwargs.get('rotation', 0)
-        self.mirror = kwargs.get('mirror', False)
+        Args:
+            text: Content that is shown.
+            at: Coordinates of the text.
+            rotation: Rotation in degrees of the text field.
+            mirror: Whether the text is mirrored or not.
+            layer: On which layer the text is drawn.
+            size: Size of the text.
+            thickness: Thickness of the text.
+            justify: Justification of the text (default: 'center').
+            hide: `True` if the text shall be hidden.
 
-        self.layer = kwargs.get('layer', 'F.SilkS')
-        self.size = Vector2D(kwargs.get('size', [1, 1]))
-        self.thickness = kwargs.get('thickness', 0.15)
-        self.justify = kwargs.get('justify', None)
-
-        self.hide = kwargs.get('hide', False)
-
-    def rotate(self, angle, origin=(0, 0), use_degrees=True):
-        r""" Rotate text around given origin
-
-        :params:
-            * *angle* (``float``)
-                rotation angle
-            * *origin* (``Vector2D``)
-                origin point for the rotation. default: (0, 0)
-            * *use_degrees* (``boolean``)
-                rotation angle is given in degrees. default:True
+        Example:
+            >>> from KicadModTree import *
+            >>> Text(text='REF**', at=[0, -3], layer='F.SilkS')
+            >>> Property(name='Value', text="footprint name", at=[0, 3], layer='F.Fab')
+            >>> Text(text='test', at=[0, 0], layer='Cmts.User')
         """
+        Node.__init__(self)
+        self.text = text
+        self.at = Vector2D(at)
+        self.rotation = rotation
+        self.mirror = mirror
+        self.layer = layer
+        self.size = Vector2D(size)
+        self.thickness = thickness
+        self.justify = justify
+        self.hide = hide
 
-        self.at.rotate(angle=angle, origin=origin, use_degrees=use_degrees)
+    def rotate(
+        self, angle: float, origin: Vec2DCompatible = (0, 0), use_degrees: bool = True
+    ) -> Self:
+        """Rotate text around a given origin.
+
+        Args:
+            angle: The rotation angle.
+            origin: The origin point for the rotation.
+            use_degrees: `True` if the angle shall be interpreted in degrees, `False` if
+                the angle is given in radians.
+        """
+        self.at.rotate(angle=angle, origin=Vector2D(origin), use_degrees=use_degrees)
         a = angle if use_degrees else math.degrees(angle)
-
         # subtraction because kicad text field rotation is the wrong way round
         self.rotation -= a
         return self
 
-    def translate(self, vector):
-        r""" Translate text
+    def translate(self, x: float = 0.0, y: float = 0.0) -> Self:
+        """Move the text base.
 
-        :params:
-            * *vector* (``Vector2D``)
-                2D vector defining by how much and in what direction to translate.
+        Args:
+            x: The distance in mm in the x-direction.
+            y: The distance in mm in the y-direction.
+
+        Returns:
+            The translated text base.
         """
-
-        self.at += vector
+        self.at.x += x
+        self.at.y += y
         return self
 
-    def bbox(self):
-        width = len(self.text) * self.size["x"]
-        height = self.size["y"]
+    def bbox(self) -> BoundingBox:
+        """Return the bounding box of the text base."""
+        width = len(self.text) * self.size.x
+        height = self.size.x
 
-        min_x = self.at["x"] - width / 2
-        min_y = self.at["y"] - height / 2
-        max_x = self.at["x"] + width / 2.0
-        max_y = self.at["y"] + height / 2.0
+        min_x = self.at.x - width / 2.0
+        min_y = self.at.y - height / 2.0
+        max_x = self.at.x + width / 2.0
+        max_y = self.at.y + height / 2.0
 
-        return BoundingBox(
-            min_pt=Vector2D(min_x, min_y),
-            max_pt=Vector2D(max_x, max_y),
+        return BoundingBox.from_vector2d(
+            min=Vector2D(min_x, min_y),
+            max=Vector2D(max_x, max_y),
         )
 
-    def _getRenderTreeText(self):
-        render_text = Node._getRenderTreeText(self)
+    def get_flattened_nodes(self) -> list[Node]:
+        """Return the nodes to serialize."""
+        return [self]
 
-        render_string = ['text: "{}"'.format(self.text),
-                         'at: (at {x} {y})'.format(**self.at.to_dict()),
-                         'layer: {}'.format(self.layer),
-                         'size: (size {x} {y})'.format(**self.size.to_dict()),
-                         'thickness: {}'.format(self.thickness)]
-        if (self.justify):
-            render_string.append('justify: {}'.format(self.justify))
-
-        render_text += " [{}]".format(", ".join(render_string))
-
-        return render_text
+    def __repr__(self) -> str:
+        """A string representation of the text base node."""
+        if self.justify:
+            justify = f"justify={self.justify}"
+        else:
+            justify = ""
+        return (
+            f'text="{self.text}", '
+            f"at={self.at}, "
+            f"layer={self.layer}, "
+            f"size={self.size}, "
+            f"thickness={self.thickness}, "
+            f"{justify}"
+        )
 
 
 class Text(_TextBase):
-    """
-    A non-field PCB_TEXT in the KiCad code, or gr_text etc in the s-exp
-    """
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    """A text node.
 
+    A non-field PCB_TEXT in the KiCad code, or gr_text etc in the s-exp."""
+
+    def __init__(
+        self,
+        text: str,
+        at: Vec2DCompatible,
+        rotation: float = 0.0,
+        mirror: bool = False,
+        layer: str = "F.SilkS",
+        size: Vec2DCompatible = [1, 1],
+        thickness: float = 0.15,
+        justify: str | None = None,
+        hide: bool = False,
+    ) -> None:
+        """Initialize a text node.
+
+        Args:
+            text: Content that is shown.
+            at: Coordinates of the text.
+            rotation: Rotation in degrees of the text field.
+            mirror: Whether the text is mirrored or not.
+            layer: On which layer the text is drawn.
+            size: Size of the text.
+            thickness: Thickness of the text.
+            justify: Justification of the text (default: 'center').
+            hide: `True` if the text shall be hidden.
+        """
+        super().__init__(
+            text=text,
+            at=at,
+            rotation=rotation,
+            mirror=mirror,
+            layer=layer,
+            size=size,
+            thickness=thickness,
+            justify=justify,
+            hide=hide,
+        )
         # Other gr_text/fp_text-specific members here
         # locked (as in can't be selected status) could go here, except
         # that it applies only to gr_text, not fp_text so we don't need it now.
 
+    def __repr__(self) -> str:
+        """A string representation of the text."""
+        return f"Text({_TextBase.__repr__(self)})"
+
 
 class Property(_TextBase):
-    """
-    A PCB_FIELD in the KiCad code, which is a subclass of
-    PCB_TEXT. 'property' in the s-expr format.
+    """A property node.
+
+    A PCB_FIELD in the KiCad code, which is a subclass of PCB_TEXT. 'property' in the
+    s-expr format.
 
     Note: this is not a derived class of Text, as Text could have members
     that don't apply to Property instances.
     """
 
-    REFERENCE = 'Reference'
-    VALUE = 'Value'
-    DATASHEET = 'Datasheet'
-    DESCRIPTION = 'Description'
-    FOOTPRINT = 'Footprint'
+    REFERENCE = "Reference"
+    """Standard designator for references."""
+    VALUE = "Value"
+    """Standard designator for values."""
+    DATASHEET = "Datasheet"
+    """Standard designator for datasheets."""
+    DESCRIPTION = "Description"
+    """Standard designator for descriptions."""
+    FOOTPRINT = "Footprint"
+    """Standard designator for footprints."""
 
     _name: str
+    """The name of the property."""
 
-    def __init__(self, name: str, **kwargs):
-        super().__init__(**kwargs)
+    def __init__(
+        self,
+        name: str,
+        text: str,
+        at: Vec2DCompatible,
+        rotation: float = 0.0,
+        mirror: bool = False,
+        layer: str = "F.SilkS",
+        size: Vec2DCompatible = [1, 1],
+        thickness: float = 0.15,
+        justify: str | None = None,
+        hide: bool = False,
+    ) -> None:
+        """Initialize a property node.
 
+        Args:
+            text: Content that is shown.
+            at: Coordinates of the text.
+            rotation: Rotation in degrees of the text field.
+            mirror: Whether the text is mirrored or not.
+            layer: On which layer the text is drawn.
+            size: Size of the text.
+            thickness: Thickness of the text.
+            justify: Justification of the text (default: 'center').
+            hide: `True` if the text shall be hidden.
+        """
+        super().__init__(
+            text=text,
+            at=at,
+            rotation=rotation,
+            mirror=mirror,
+            layer=layer,
+            size=size,
+            thickness=thickness,
+            justify=justify,
+            hide=hide,
+        )
         # fields have canonical names
         self._name = name
 
     @property
     def name(self) -> str:
+        """The name of the property."""
         return self._name
+
+    def __repr__(self) -> str:
+        """A string representation of the property."""
+        return f"Property({_TextBase.__repr__(self)})"
