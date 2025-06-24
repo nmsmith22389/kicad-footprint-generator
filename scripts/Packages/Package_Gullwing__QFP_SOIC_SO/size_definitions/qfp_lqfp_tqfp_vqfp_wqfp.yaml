@@ -89,6 +89,24 @@ PQFP-64_14x14mm_P0.8mm:
   num_pins_x: 16
   num_pins_y: 16
 
+PQFP-128_28x28mm_P0.8mm:
+  device_type: 'PQFP'
+  size_source: 'JEITA/EIAJ ED-7311A (variation 128-001-KD) / JEDEC MS-022 (variation DB-2), 3.40mm body thickness, https://www.jeita.or.jp/japanese/standard/book/ED-7311A/#target/page_no=78, https://www.jedec.org/document_search?search_api_views_fulltext=MS-022'
+  compatible_mpns:
+    - 'P-QFP128-28.00x28.00-0.80' # JEITA external type
+    - 'P-QFP128-2828-0.80' # EIAJ old description
+    - 'MQFP-128' # JEDEC 'metric'
+  body_size_x: 28.00 # JEITA D / JEDEC D1
+  body_size_y: 28.00 # JEITA E / JEDEC E1
+  overall_size_x: 31.20 # JEITA HD / JEDEC D
+  overall_size_y: 31.20 # JEITA HE / JEDEC E
+  overall_height: 3.20 .. 3.50 .. 3.85 # minimum: JEITA A1_min + A2_min; nominal: JEITA A1_nom + A2_nom; maximum: JEITA A_max
+  lead_width: 0.29 .. 0.45 # JEITA bp / JEDEC b
+  lead_len: 0.73 .. 0.88 .. 1.03 # JEITA Lp; nominal value from JEDEC L
+  pitch: 0.80 # e
+  num_pins_x: 32
+  num_pins_y: 32
+
 MO112AC1_PQFP-52_10x10mm_P0.65mm:
   device_type: 'PQFP'
   size_source: 'JEDEC MO-112 variation AC-1, https://www.jedec.org/document_search?search_api_views_fulltext=MO-112, https://www.analog.com/media/en/package-pcb-resources/package/32717196300961s_52_2.pdf'
