@@ -117,9 +117,14 @@ class FootprintGenerator:
                                            global_config=args.global_config,
                                            **kwargs)
 
+            cmd_file = None
             with open(filepath, 'r', encoding="utf-8") as command_stream:
                 try:
-                    cmd_file = yaml.safe_load(command_stream)
+                    if yaml.__with_libyaml__:
+                        loader = yaml.CSafeLoader
+                    else:
+                        loader = yaml.SafeLoader
+                    cmd_file = yaml.load(command_stream, Loader=loader)
                 except yaml.YAMLError as exc:
                     print(exc)
 
