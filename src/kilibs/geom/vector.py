@@ -39,7 +39,8 @@ class Vector2D:
 
         Args:
             coordinates: Either x- and y-coordinates of the point, if the second
-                parameter is also used, just the x-coordinate.
+                parameter is also used, just the x-coordinate. If x is a float and y is
+                `None`, then the vector is constructed with y equal to x.
             y: y-coordinate of the point.
 
         Example:
@@ -52,11 +53,11 @@ class Vector2D:
         """
         # parse constructor
         if isinstance(coordinates, float | int):
+            self.x = float(coordinates)
             if y is not None:
-                self.x = float(coordinates)
                 self.y = float(y)
             else:
-                raise TypeError("You have to give 'x' and 'y' coordinates.")
+                self.y = self.x
         elif isinstance(coordinates, Vector2D):
             self.x = coordinates.x
             self.y = coordinates.y
@@ -84,6 +85,14 @@ class Vector2D:
         vec = Vector2D.__new__(Vector2D)
         vec.x = x
         vec.y = y
+        return vec
+
+    @classmethod
+    def zero(cls) -> Vector2D:
+        """Create a zero-vector."""
+        vec = Vector2D.__new__(Vector2D)
+        vec.x = 0.0
+        vec.y = 0.0
         return vec
 
     @classmethod
