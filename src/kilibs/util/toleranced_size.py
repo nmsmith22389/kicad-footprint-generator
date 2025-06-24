@@ -1,11 +1,16 @@
+from __future__ import annotations
+
 import math
 import re
+from typing import Any
 
 from kilibs.geom.tools.rounding import round_to_grid_nearest
 
 
 class TolerancedSize:
-    def to_metric(value, unit):
+
+    @staticmethod
+    def to_metric(value: float, unit: str | None = None) -> float:
         if unit == "inch":
             factor = 25.4
         elif unit == "mil":
@@ -15,8 +20,13 @@ class TolerancedSize:
         return value * factor
 
     def __init__(
-        self, minimum=None, nominal=None, maximum=None, tolerance=None, unit=None
-    ):
+        self,
+        minimum: float | None = None,
+        nominal: float | None = None,
+        maximum: float | None = None,
+        tolerance: float | list[float] | None = None,
+        unit: str | None = None,
+    ) -> None:
 
         if nominal is not None:
             self.nominal = nominal
@@ -29,7 +39,7 @@ class TolerancedSize:
             self.minimum = minimum
             self.maximum = maximum
         elif tolerance is not None:
-            if type(tolerance) in [int, float]:
+            if isinstance(tolerance, int | float):
                 self.minimum = self.nominal - tolerance
                 self.maximum = self.nominal + tolerance
             elif len(tolerance) == 2:
@@ -60,8 +70,8 @@ class TolerancedSize:
         self.maximum_RMS = self.maximum
         self.minimum_RMS = self.minimum
 
-    def updateRMS(self, tolerances):
-        ipc_tol_RMS = 0
+    def updateRMS(self, tolerances: list[float]) -> None:
+        ipc_tol_RMS = 0.0
         for t in tolerances:
             ipc_tol_RMS += t**2
 
@@ -81,8 +91,8 @@ class TolerancedSize:
         self.maximum_RMS = self.maximum - (self.ipc_tol - self.ipc_tol_RMS) / 2
         self.minimum_RMS = self.minimum + (self.ipc_tol - self.ipc_tol_RMS) / 2
 
-    def __add__(self, other):
-        if type(other) in [int, float]:
+    def __add__(self, other: int | float | TolerancedSize) -> TolerancedSize:
+        if isinstance(other, int | float):
             result = TolerancedSize(
                 minimum=self.minimum + other, maximum=self.maximum + other
             )
@@ -94,8 +104,8 @@ class TolerancedSize:
         result.updateRMS([self.ipc_tol_RMS, other.ipc_tol_RMS])
         return result
 
-    def __sub__(self, other):
-        if type(other) in [int, float]:
+    def __sub__(self, other: int | float | TolerancedSize) -> TolerancedSize:
+        if isinstance(other, int | float):
             result = TolerancedSize(
                 minimum=self.minimum - other, maximum=self.maximum - other
             )
@@ -107,7 +117,7 @@ class TolerancedSize:
         result.updateRMS([self.ipc_tol_RMS, other.ipc_tol_RMS])
         return result
 
-    def __mul__(self, other):
+    def __mul__(self, other: int | float) -> TolerancedSize:
         if type(other) not in [int, float]:
             raise NotImplementedError(
                 "Only multiplication with int and float is implemented right now."
@@ -118,10 +128,10 @@ class TolerancedSize:
         result.updateRMS([self.ipc_tol_RMS * math.sqrt(other)])
         return result
 
-    def __div__(self, other):
+    def __div__(self, other: int | float) -> TolerancedSize:
         return self.__truediv__(other)
 
-    def __truediv__(self, other):
+    def __truediv__(self, other: int | float) -> TolerancedSize:
         if type(other) not in [int, float]:
             raise NotImplementedError(
                 "Only multiplication with int and float is implemented right now."
@@ -132,7 +142,7 @@ class TolerancedSize:
         result.updateRMS([self.ipc_tol_RMS / math.sqrt(other)])
         return result
 
-    def __floordiv__(self, other):
+    def __floordiv__(self, other: int | float) -> TolerancedSize:
         if type(other) not in [int, float]:
             raise NotImplementedError(
                 "Only multiplication with int and float is implemented right now."
@@ -144,14 +154,14 @@ class TolerancedSize:
         return result
 
     @staticmethod
-    def fromString(input, unit=None):
+    def fromString(input: str | int | float, unit: str | None = None) -> TolerancedSize:
         minimum = None
         nominal = None
         maximum = None
-        tolerance = None
+        tolerance: float | list[float] | None = None
 
         s = re.sub(r"\s+", "", str(input))
-        if type(input) in [int, float]:
+        if isinstance(input, int | float):
             nominal = input
         elif "+/-" in s:
             tokens = s.split("+/-")
@@ -204,8 +214,12 @@ class TolerancedSize:
         )
 
     @staticmethod
-    def fromYaml(yaml, base_name=None, unit=None) -> "TolerancedSize":
-        if base_name is not None:
+    def fromYaml(
+        yaml: dict[str, Any] | str,
+        base_name: str | None = None,
+        unit: str | None = None,
+    ) -> TolerancedSize:
+        if base_name is not None and isinstance(yaml, dict):
             if (
                 base_name + "_min" in yaml
                 or base_name + "_max" in yaml
@@ -217,9 +231,12 @@ class TolerancedSize:
                     maximum=yaml.get(base_name + "_max"),
                     tolerance=yaml.get(base_name + "_tol"),
                 )
-            return TolerancedSize.fromYaml(yaml.get(base_name), unit=unit)
+            elif (yaml_base := yaml.get(base_name)) is not None:
+                return TolerancedSize.fromYaml(yaml_base, unit=unit)
+            else:
+                raise ValueError(f"Could not find {base_name} in the YAML file.")
 
-        elif type(yaml) is dict:
+        elif isinstance(yaml, dict):
             return TolerancedSize(
                 minimum=yaml.get("minimum"),
                 nominal=yaml.get("nominal"),
@@ -230,7 +247,10 @@ class TolerancedSize:
         else:
             return TolerancedSize.fromString(yaml, unit)
 
-    def __str__(self):
+    def __str__(self) -> str:
+        return self.__repr__()
+
+    def __repr__(self) -> str:
         return "nom: {}, min: {}, max: {}  | min_rms: {}, max_rms: {}".format(
             self.nominal, self.minimum, self.maximum, self.minimum_RMS, self.maximum_RMS
         )

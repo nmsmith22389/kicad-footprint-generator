@@ -93,7 +93,6 @@ exclude = [
     "KicadModTree",
     "scripts",
     "src/kilibs/declarative_defs",
-    "src/kilibs/util/toleranced_size.py",
     "tests",
 ]
 
@@ -104,7 +103,7 @@ include = [
     "scripts/tools/footprint_scripts_pin_headers.py",
 ]
 exclude = ["**/__pycache__"]
-ignore = ["src/kilibs/declarative_defs", "src/kilibs/util/toleranced_size.py"]
+ignore = ["src/kilibs/declarative_defs"]
 typeCheckingMode = "strict"
 reportIncompatibleMethodOverride = false
 
