@@ -625,7 +625,7 @@ M4:
         od: 9.27
     npth: 5.4
   mechanical:
-    id: 4.5
+    id: M4
     od: 8.2
     od1: 5.2
     h1: 1.4
