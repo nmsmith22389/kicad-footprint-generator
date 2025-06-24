@@ -1,63 +1,46 @@
-# KicadModTree is free software: you can redistribute it and/or
-# modify it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
+# kilibs is free software: you can redistribute it and/or modify it under the terms of
+# the GNU General Public License as published by the Free Software Foundation, either
+# version 3 of the License, or (at your option) any later version.
 #
-# KicadModTree is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
+# kilibs is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+# without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+# PURPOSE. See the GNU General Public License for more details.
 #
-# You should have received a copy of the GNU General Public License
-# along with kicad-footprint-generator. If not, see < http://www.gnu.org/licenses/ >.
+# You should have received a copy of the GNU General Public License along with kilibs.
+# If not, see < http://www.gnu.org/licenses/ >.
 #
 # (C) 2016-2018 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
+# (C) The KiCad Librarian Team
+
+"""Class definitions for an abstract file handler."""
 
 from __future__ import annotations
 
-import io
-import os
 import abc
+import io
+from pathlib import Path
 
 
 class FileHandler(abc.ABC):
-    r"""some basic methods to write KiCad library files, the base class
-    of footprint (and perhaps later, symbol) direct-file writer implementations
+    """An abstract implementation of a file handler.
+
+    Implements some basic methods to serialize an object (e.g. a footprint) and save it
+    into a file.
     """
 
-    def writeFile(self, filename: str) -> FileHandler:
-        r"""Write the output of FileHandler.serialize to a file
+    def writeFile(self, filename: Path) -> None:
+        """Write the output of FileHandler.serialize to a file.
 
-        :param filename:
-            path of the output file
-        :type filename: ``str``
+        Args:
+            filename: The path of the output file.
         """
-
-        fp = None
         with io.open(filename, "w", encoding="utf-8") as f:
             output = self.serialize()
-
-            if not output.endswith("\n"):
-                output += "\n"
-
             f.write(output)
-
-            fp = os.path.realpath(f.name)
-
             f.close()
-        return fp
 
     @abc.abstractmethod
-    def serialize(self):
-        r"""Get a valid string representation of the footprint in the specified format
-
-        :Example:
-
-        >>> from KicadModTree import *
-        >>> kicad_mod = Footprint("example_footprint", FootprintType.THT)
-        >>> file_handler = KicadFileHandler(kicad_mod)  # KicadFileHandler is a implementation of FileHandler
-        >>> print(file_handler.serialize())
+    def serialize(self) -> str:
+        """Serialize the object (e.g. footprint) to a string (to be saved into a file).
         """
-
-        raise NotImplementedError(
-            "serialize has to be implemented by child class")
+        raise NotImplementedError("serialize has to be implemented by child class")
