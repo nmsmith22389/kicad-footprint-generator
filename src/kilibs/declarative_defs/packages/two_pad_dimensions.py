@@ -36,6 +36,18 @@ class TwoPadDimensions:
         |<--------->|<------------->|
          size inline  spacing inside
 
+    The offset_crosswise is an optional offset in the crosswise direction, which
+    defaults to 0:
+
+    .. aafig::
+
+        +---------+
+        |    o    | ------
+        +---------+     ^
+                        | offset_crosswise
+                        v                       +---------+
+                    --------------------------- |    o    |
+                                                +---------+
     """
 
     size_crosswise: float
@@ -44,6 +56,8 @@ class TwoPadDimensions:
     """Height of the pads in mm."""
     spacing_inside: float
     """Distance in mm between the two inner edges of the pads."""
+    offset_crosswise: float = 0.0
+    """Offset between pads in mm in the crosswise direction, defaults to 0."""
 
     def __init__(
         self,
