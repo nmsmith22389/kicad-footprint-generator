@@ -81,9 +81,9 @@ def gen_footprint():
     return kicad_mod
 
 
-class TestCleanSilkByMask(SerialisationTest):
+class TestUnite(SerialisationTest):
 
-    def test_clean_over_smd_rect(self):
+    def test_unite(self):
 
         kicad_mod = gen_footprint()
         self.assert_serialises_as(kicad_mod, "test_unite.kicad_mod")
