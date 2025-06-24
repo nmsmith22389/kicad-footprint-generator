@@ -243,8 +243,10 @@ class GDTGenerator(FootprintGenerator):
             f"{fp_config.body_properties.num_pads}-electrode",
             "THT" if fp_config.layout_properties.is_tht else "SMD",
             fp_config.layout_properties.body_size_description,
-            fp_config.metadata.datasheet,
         ]
+
+        if fp_config.metadata.datasheet:
+            desc.append(fp_config.metadata.datasheet)
 
         kicad_mod.description = ", ".join(desc)
 
@@ -316,7 +318,7 @@ class GDTGenerator(FootprintGenerator):
                 body_size=layout_props.body_size,
                 polarization_style=ThtAxialLayout.PolarizationStyle.NONE,
                 total_length=layout_props.body_properties.total_length.nominal,
-                lead_diameter=fp_config.body_properties.lead_diameter.nominal,
+                lead_diameter=layout_props.body_properties.lead_diameter.nominal,
                 shrink_fit_lead_courtyard=False,
             )
             kicad_mod += layout
