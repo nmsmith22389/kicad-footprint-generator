@@ -1,29 +1,111 @@
 #!/usr/bin/env python3
 
 import sys
-import os
-from pathlib import Path
+from typing import Any, Generator
 
-from KicadModTree import Footprint, FootprintType, KicadPrettyLibrary, ModArgparser
+from KicadModTree import Footprint, FootprintType, KicadPrettyLibrary, ModArgparser, Pad, Model, Node, Text
 from kilibs.geom import Vector2D
-from scripts.general.StandardBox import StandardBox
+from scripts.tools.drawing_tools_silk import SilkArrowSize
 from scripts.tools.global_config_files import global_config
 from scripts.tools.declarative_def_tools import common_metadata
 
+from scripts.tools.nodes.layouts.n_pad_box_layout import NPadBoxLayout
 
-def converter(args):
+
+def make_pad_from_data(
+    global_config: global_config.GlobalConfig, n: list[str | float]
+) -> Pad:
+    """
+    Convert a list of pad data into a Pad object.
+
+    Data format:
+    [pad_type, number, x, y, width, height, drill]
+
+    e.g. ['tht', '1', 0.0, 0.0, 1.0, 1.0, 0.5]
+    """
+
+    pad_type = str(n[0])
+    number = str(n[1])
+    dh = n[6]
+
+    at = Vector2D.from_floats(float(n[2]), -float(n[3]))
+
+    if float(n[5]) == 0.0:
+        size = Vector2D.from_floats(float(n[4]), float(n[4]))  # Square/round pad
+    else:
+        size = Vector2D.from_floats(float(n[4]), float(n[5]))
+
+    if pad_type == "smd":
+        pad_type = Pad.TYPE_SMT
+        shape = Pad.SHAPE_ROUNDRECT
+        layers = Pad.LAYERS_SMT
+    elif pad_type in ["tht", "thtr"]:
+        pad_type = Pad.TYPE_THT
+        shape = Pad.SHAPE_ROUNDRECT if number == "1" else Pad.SHAPE_OVAL
+        layers = Pad.LAYERS_THT
+    elif pad_type == "npth":
+        pad_type = Pad.TYPE_NPTH
+        shape = Pad.SHAPE_OVAL
+        layers = Pad.LAYERS_NPTH
+    else:
+        raise ValueError(f"Unknown pad type: {pad_type}")
+
+    return Pad(
+        drill=dh,
+        at=at,
+        size=size,
+        layers=layers,
+        number=number,
+        type=pad_type,
+        shape=shape,
+        round_radius_handler=global_config.roundrect_radius_handler,
+    )
+
+
+def build_extra_texts(text_data: list[list[str | float]]) -> list[Node]:
+    """
+    Convert a list of text data into a list of Nodes (probably, but not
+    necessarily, Text nodes).
+
+    Data format: [x, y, text, layer, size_x, size_y]
+    """
+
+    nodes: list[Node] = []
+
+    for n in text_data:
+        at = Vector2D.from_floats(float(n[0]), -float(n[1]))
+        stss = str(n[2])
+
+        if len(n) > 3:
+            layer = str(n[3])
+        else:
+            layer = "F.SilkS"
+
+        if len(n) > 5:
+            size = Vector2D.from_floats(float(n[4]), float(n[5]))
+        else:
+            size = Vector2D.from_floats(1.0, 1.0)
+
+        new_node = Text(text=stss, at=at, layer=layer, size=size)
+
+        nodes.append(new_node)
+
+    return nodes
+
+
+def converter(args: dict[str, Any]) -> None:
 
     metadata = common_metadata.CommonMetadata(args)
     footprint_name = args["name"]
     fptag = args["tags"]
-    SmdTht = args["smd_tht"]
-    at = args["at"]
-    size = args["size"]
+    SmdTht = str(args["smd_tht"])
+    at = Vector2D(args["at"])
+    size = Vector2D(args["size"])
     pins = args["pins"]
     extratexts = args["extratexts"]
     body_position_tolerance = Vector2D(args["body_position_tolerance"])
     body_size_tolerance = Vector2D(args["body_size_tolerance"])
-    courtyard = args["courtyard"]
+    courtyard = float(args["courtyard"])
     automatic_pin1_mark = bool(args["automatic_pin1_mark"])
 
     # Until this can be passed in properly, use the default global config
@@ -38,32 +120,75 @@ def converter(args):
     # Clearance from the _nominal_ body to the _inside_ of the silk line
     fab_to_silk_clearance = total_body_tolerance
 
+    if not metadata.library_name:
+        raise ValueError("Library name is required in the metadata.")
+
+    if not metadata.description:
+        raise ValueError("Description is required in the metadata.")
+
     dir3D = metadata.library_name + '.3dshapes'
 
     footprint_type = FootprintType.SMD if SmdTht == "smd" else FootprintType.THT
     f = Footprint(footprint_name, footprint_type)
 
-    file3Dname = global_cfg.model_3d_prefix + dir3D + "/" + footprint_name + global_cfg.model_3d_suffix
+    model_filename = global_cfg.model_3d_prefix + dir3D + "/" + footprint_name + global_cfg.model_3d_suffix
 
     words = footprint_name.split("_")
 
     if words[-1].lower().startswith('handsolder'):
         words[-1] = ''
         ff = '_'.join(words)
-        file3Dname = global_cfg.model_3d_prefix + dir3D + "/" + ff + global_cfg.model_3d_suffix
+        model_filename = global_cfg.model_3d_prefix + dir3D + "/" + ff + global_cfg.model_3d_suffix
 
-    f.append(StandardBox(global_config=global_cfg,
-                         footprint=f,
-                         description=metadata.description,
-                         datasheet=metadata.datasheet,
-                         at=at,
-                         size=size,
-                         tags=fptag,
-                         compatible_mpns=metadata.compatible_mpns,
-                         extratexts=extratexts, pins=pins,
-                         file3Dname=file3Dname, courtyard_clearance=courtyard_clearance,
-                         fab_to_silk_clearance=fab_to_silk_clearance,
-                         automatic_pin1_mark=automatic_pin1_mark))
+    descr: list[str] = [
+        metadata.description,
+    ]
+    if metadata.datasheet:
+        descr.append(metadata.datasheet)
+
+    descr.append(global_cfg.get_generated_by_description("StandardBox_generator.py"))
+
+    f.description = ", ".join(descr)
+
+    f.tags = fptag.split() + metadata.compatible_mpns
+
+    def pad_factory() -> Generator[Pad, Any, None]:
+        """A factory function that returns an iterator of pads, using the "standard box"
+        pad data format provided in the `pins` argument."""
+        for pin in pins:
+            pad = make_pad_from_data(global_cfg, pin)
+            yield pad
+
+    offset = size / 2 + Vector2D(at.x, -at.y)
+
+    layout = NPadBoxLayout(
+        global_config=global_cfg,
+        body_size=size,
+        body_offset=offset,
+        pad_factory=pad_factory,
+        silk_style=NPadBoxLayout.SilkStyle.BODY_RECT,
+        is_polarized=automatic_pin1_mark,
+    )
+
+    layout.silk_clearance = NPadBoxLayout.SilkClearance.TIGHT_TO_BODY
+    layout.fab_to_silk_clearance = fab_to_silk_clearance
+    layout.body_to_courtyard_clearance = courtyard_clearance
+
+    min_body_size = size.min_val
+
+    # Basic heuristic to determine the silk arrow size based on the body size
+    if min_body_size < 4:
+        layout.silk_arrow_size = SilkArrowSize.MEDIUM
+    elif min_body_size < 10:
+        layout.silk_arrow_size = SilkArrowSize.LARGE
+    else:
+        layout.silk_arrow_size = SilkArrowSize.HUGE
+
+    f += layout
+
+    f += build_extra_texts(extratexts)
+
+    f += Model(filename=model_filename)
 
     lib = KicadPrettyLibrary(metadata.library_name, None)
     lib.save(f)
@@ -100,4 +225,3 @@ def main(args):
 if __name__ == '__main__':
     import sys
     main(sys.argv[1:])
-
