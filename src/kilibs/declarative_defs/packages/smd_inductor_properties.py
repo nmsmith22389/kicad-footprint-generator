@@ -169,7 +169,7 @@ class InductorSeriesProperties:
     datasheet."""
     tags: list[str]
     """The tags."""
-    has_orientation: bool | None
+    has_orientation: bool
     """`True` if the inductors have an orientation and require a pin 1 marker."""
     library_name: str
     """The name of the library to store the output in."""
@@ -192,7 +192,7 @@ class InductorSeriesProperties:
         self.datasheet = series_block.get("datasheet", "")
         # space delimited list of the tags
         self.tags = series_block.get("tags", [])
-        self.has_orientation = series_block.get("has_orientation")
+        self.has_orientation = series_block.get("has_orientation", False)
         self.library_name = series_block["library_name"]
 
         def csv_line_filter(line: str) -> bool:
