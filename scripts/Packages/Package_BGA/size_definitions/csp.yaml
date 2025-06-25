@@ -1389,3 +1389,21 @@ NXP_SOT1450-2_WLCSP-100_5.07x5.07mm_Layout10x10_P0.5mm:
   paste_margin: 0.03
   layout_x: 10
   layout_y: 10
+# Xilinx CS BGA48 Package
+# Notes:
+#  - Additional sizes taken from: https://docs.amd.com/v/u/en-US/ug112#page=87
+Xilinx_CSG48_7.0x7.0mm_Layout7x7_P0.8mm:
+  description: "XC9572XL CS BGA"
+  size_source: "https://www.xilinx.com/content/dam/xilinx/support/documents/package_specs/cs48.pdf"
+  additional_tags:
+    - "CS48"
+    - "CSG48"
+  body_size_x: 7
+  body_size_y: 7
+  pitch: 0.8
+  pad_diameter: 0.33
+  mask_margin: 0.055
+  layout_x: 7
+  layout_y: 7
+  pad_skips: [D5]
+  name_equal_to_key: True
