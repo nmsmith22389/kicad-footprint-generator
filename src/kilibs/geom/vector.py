@@ -428,6 +428,29 @@ class Vector2D:
         """
         return Vector3D(self.x, self.y, 1)
 
+    @property
+    def min_val(self) -> float:
+        """Get the value of the smallest coordinate."""
+        return min(self.x, self.y)
+
+    @property
+    def max_val(self) -> float:
+        """Get the value of the largest coordinate."""
+        return max(self.x, self.y)
+
+    @property
+    def x_y_equal(self, tol: float = TOL_MM) -> bool:
+        """Check if the x- and y-coordinates are equal within a tolerance.
+
+        Args:
+            tol: The maximum distance between the coordinates that is tolerated to still
+                qualify them as being equal.
+
+        Returns:
+            `True` if the coordinates are equal, `False` otherwise.
+        """
+        return abs(self.x - self.y) <= tol
+
     @staticmethod
     def __arithmetic_parse(
         value: Vec2DCompatible | float | int,

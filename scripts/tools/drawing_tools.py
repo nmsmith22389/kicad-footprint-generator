@@ -2,6 +2,7 @@
 
 import enum
 import math
+from collections.abc import Sequence
 from typing import List, Tuple, Union
 
 from KicadModTree import (
@@ -93,7 +94,9 @@ def addKeepoutRound(x, y, w, h):
     return [GeomCircle(center=(x, y), radius=w / 2)]
 
 
-def getKeepoutsForPads(pads: Pad | list[Pad], clearance: float) -> list[GeomShape]:
+def getKeepoutsForPads(
+    pads: Pad | list[Pad], clearance: float
+) -> list[GeomShapeClosed]:
     """
     Return suitable keepouts for the given pads.
 
@@ -443,7 +446,7 @@ def addEllipseWithKeepout(kicad_mod, x, y, w, h, layer, width, keepouts=[], roun
 
 
 def makeNodesWithKeepout(
-    geom_items: list[GeomLine | GeomArc | GeomCircle | GeomRectangle | GeomPolygon],
+    geom_items: Sequence[GeomLine | GeomArc | GeomCircle | GeomRectangle | GeomPolygon],
     layer: str,
     width: float,
     keepouts: list[GeomShapeClosed],
