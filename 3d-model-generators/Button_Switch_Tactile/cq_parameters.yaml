@@ -176,9 +176,9 @@
 #   pin_corner_radius:  (optional) bottom corner radius
 #
 # Parameters for 'pin_type: bottom-jbend':
+#   pin_length:         horizontal length
 #   pin_top_height:     highest part
 #   pin_top_length:     horizontal length of the top part, where the pin tip is
-#   pin_bottom_length:  horizontal length of the bottom part, where the pin base is
 #   pin_start_radius:   (optional) corner radius at the base of the pin
 #   pin_corner_radius:  (optional) bottom corner radius, where the pin curves up
 #
@@ -499,9 +499,9 @@ SW_SPST_B3SL-1002P: &SW_SPST_B3SL-1002P
   pin_type: bottom-jbend
   pin_width: 0.7
   pin_thickness: 0.3
+  pin_length: 1.3
   pin_top_height: 1.2
   pin_top_length: 0
-  pin_bottom_length: 1.3
   pin_corner_radius: 0.4
   pin_start_radius: 0.3
   pins: [
@@ -771,9 +771,9 @@ SW_SPST_EVPBF:
   pin_type: bottom-jbend
   pin_width: 0.8
   pin_thickness: 0.2
+  pin_length: 1.3
   pin_top_height: 0.8
   pin_top_length: 0.3
-  pin_bottom_length: 1.0
   pin_corner_radius: 0.2
   pins: [
     [-3.3,  2.0, 180],
@@ -839,9 +839,9 @@ SW_SPST_EVQP0:
   pin_type: bottom-jbend
   pin_width: 0.8
   pin_thickness: 0.2
+  pin_length: 1.3
   pin_top_height: 0.8
   pin_top_length: 0.3
-  pin_bottom_length: 1.3
   pin_corner_radius: 0.2
   pins: [
     [-3.3,  2.0, 180],
@@ -910,9 +910,9 @@ SW_SPST_EVQP2_MiddlePushTravel_H2.5mm: &SW_SPST_EVQP2_MiddlePushTravel
   pin_type: bottom-jbend
   pin_width: 0.6
   pin_thickness: 0.2
+  pin_length: 0.9
   pin_top_height: 0.6
   pin_top_length: 0.4
-  pin_bottom_length: 0.9
   pin_corner_radius: 0.2
   pins: [
     [-2.75,  0.85, 180],
@@ -1107,9 +1107,9 @@ SW_SPST_Panasonic_EVQPL_3PL_5PL_PT_A08: &SW_SPST_Panasonic_EVQPL_3PL_5PL_PT_A08
   pin_type: bottom-jbend
   pin_width: 0.5
   pin_thickness: 0.1
+  pin_length: 0.75
   pin_top_height: 0.4
   pin_top_length: 0.2
-  pin_bottom_length: 0.75
   pin_corner_radius: 0.1
   pins: [
     [-2.5,  1.85, 180],
@@ -1251,9 +1251,9 @@ Panasonic_EVQPUK_EVQPUB: &Panasonic_EVQPUK_EVQPUB
   pin_type: bottom-jbend
   pin_width: 0.6
   pin_thickness: 0.2
+  pin_length: 0.9
   pin_top_height: 0.55
   pin_top_length: 0.4
-  pin_bottom_length: 0.9
   pin_corner_radius: 0.2
   pins: [
     [-2.75,  0.85, 180],
@@ -1890,9 +1890,9 @@ SW_SPST_PTS810:
   pin_type: bottom-jbend
   pin_width: 0.55
   pin_thickness: 0.1
+  pin_length: 0.8
   pin_top_height: 0.5
   pin_top_length: 0.2
-  pin_bottom_length: 0.8
   pin_corner_radius: 0.1
   pins: [
     [-2.3,  1.075, 180],

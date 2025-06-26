@@ -136,7 +136,7 @@ def make_bottom_jbend_pin(params):
     sr = params.get("pin_start_radius", 0)
     cr = params.get("pin_corner_radius", 0)
 
-    start_f = V2(-params["pin_bottom_length"], 0)
+    start_f = V2(-params["pin_length"], 0)
     mid_f = V2(-params["pin_top_length"], 0)
     tip_f = V2(0, params["pin_top_height"])
     tip_b = tip_f + V2(mid_f.y - tip_f.y, tip_f.x - mid_f.x).normalized() * pt

@@ -109,8 +109,10 @@ def make_body_top_clip_pocket(body, params):
 
 
 def make_body_pin_pockets(body, params):
-    if params["pin_type"] in ["top-jbend", "bottom-jbend"]:
+    if params["pin_type"] in "top-jbend":
         pl = params["pin_bottom_length"]
+    elif params["pin_type"] == "bottom-jbend":
+        pl = params["pin_length"]
     elif params["pin_type"] == "flat":
         pl = params["pin_length"]
     elif params["pin_type"] in ["gullwing", "through-hole"]:
