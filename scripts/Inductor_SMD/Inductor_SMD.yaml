@@ -10,6 +10,7 @@ L_AVX_LMLP07A7:
     ["smd", "1",  -2.775, 0, 1.85, 3.5, 0],
     ["smd", "2",  +2.775, 0, 1.85, 3.5, 0],
   ]
+  automatic_pin1_mark: False
 
 L_TDK_SLF6025:
   library_name: "Inductor_SMD"
