@@ -43,6 +43,7 @@ fp_format_check() {
         "scripts/tools/nodes/layouts"
         "scripts/generator.py"
         "scripts/Connector_Dsub"
+        "scripts/Connector_PinSocket/pin_sockets.py"
         "scripts/LEDs_SMD"
     )
 

@@ -26,16 +26,13 @@
 #
 
 from KicadModTree import Footprint, FootprintType, Translation, Pad, Model, KicadPrettyLibrary, Property
-from canvas import Layer, PadLayer, Keepout, OutDir
-from cq_base_parameters import PinStyle, CaseType
+from canvas import Layer, PadLayer, Keepout
 from scripts.tools.global_config_files import global_config as GC
 global_config = GC.DefaultGlobalConfig()
 
 
 txt_descr = ["", ", single row", ", double cols", ", double cols", ", triple cols", ", quadruple cols"]
 txt_tag = ["", " single row", " double row", ", triple cols", " quadruple row"]
-
-root_dir = OutDir("./")
 
 #Keepout.DEBUG = 1
 
@@ -47,7 +44,6 @@ def getPinLength(overall_width, packwidth):
 
 class pinSocketVerticalTHT (object):
     def __init__(self, params):
-        self.make_me = params.type == CaseType.THT and params.pin_style == PinStyle.STRAIGHT and params.pad_width > 0
         self.params = params
 
     def makeModelName(self, genericName):
@@ -216,7 +212,6 @@ class pinSocketVerticalTHT (object):
 #
 class pinSocketHorizontalTHT (object):
     def __init__(self, params):
-        self.make_me =  params.type == CaseType.THT and params.pin_style == PinStyle.ANGLED and params.pad_width > 0
         self.params = params
 
     def makeModelName(self, genericName):
@@ -365,7 +360,6 @@ class pinSocketHorizontalTHT (object):
 
 class pinSocketVerticalSMD (object):
     def __init__(self, params):
-        self.make_me = params.type == 'SMD' and params.pad_width > 0
         self.params = params
 
     def makeModelName(self, genericName):
