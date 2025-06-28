@@ -1640,6 +1640,23 @@ TQFP-64-1EP_10x10mm_P0.5mm_EP5.305x5.305mm:
   compatible_mpns:
     - ESS-eTQFP-64
 
+TQFP-80_12x12mm_P0.5mm:
+  device_type: 'TQFP'
+  size_source: 'JEDEC MS-026 variation ADD, 1.00mm body thickness, https://www.jedec.org/document_search?search_api_views_fulltext=MS-026, https://ww1.microchip.com/downloads/aemDocuments/documents/package-outline-drawings/c04-00092c.pdf'
+  # other sources: https://ww1.microchip.com/downloads/en/PackagingSpec/00000049BZ.pdf#page=681
+  compatible_mpns:
+    - 'Microchip_X2X'
+  body_size_x: 12.00 # basic / BSC
+  body_size_y: 12.00
+  overall_size_x: 14.00 # basic / BSC
+  overall_size_y: 14.00
+  overall_height: 1.00 .. 1.20 # JEDEC, minimum calculated from A1_min + A2_min
+  lead_width: 0.17 .. 0.22 .. 0.27
+  lead_len: 0.45 .. 0.60 .. 0.75
+  pitch: 0.50
+  num_pins_x: 20
+  num_pins_y: 20
+
 TQFP-100_14x14mm_P0.5mm:
   device_type: 'TQFP'
   size_source: 'JEDEC MS-026 variation AED, 1.00mm body thickness, https://www.jedec.org/document_search?search_api_views_fulltext=MS-026, https://ww1.microchip.com/downloads/en/PackagingSpec/00000049BZ.pdf#page=683'
