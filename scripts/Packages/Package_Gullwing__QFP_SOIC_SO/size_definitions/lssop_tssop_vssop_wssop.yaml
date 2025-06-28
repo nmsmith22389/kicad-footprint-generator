@@ -1747,69 +1747,47 @@ TSSOP-8_4.4x3mm_P0.65mm:
 
 TSSOP-14_4.4x5mm_P0.65mm:
   device_type: 'TSSOP'
-  size_source: 'JEDEC MO-153 Var AB-1 https://www.jedec.org/document_search?search_api_views_fulltext=MO-153'
-  body_size_x: 4.4 +/-0.1
-  body_size_y: 5.0 +/-0.1
-  overall_size_x: 6.4
-  body_height: 1.2
+  size_source: 'JEDEC MO-153 variation AB-1, 1.00mm body thickness, https://www.jedec.org/document_search?search_api_views_fulltext=MO-153'
+  body_size_x: 4.30 .. 4.40 .. 4.50
+  body_size_y: 4.90 .. 5.00 .. 5.10
+  overall_size_x: 6.40
+  body_height:
+    maximum: 1.20
   lead_width: 0.17 .. 0.30
-  lead_len: 0.6 +/-0.15
+  lead_len: 0.60 +/- 0.15
   pitch: 0.65
   num_pins_x: 0
   num_pins_y: 7
 
-Texas_PWP0014A:
-# HTSSOP-14-1EP_4.4x5mm_P0.65mm_EP3.4x5mm_Mask3x3.1mm:
-# It was previously in httsop.yaml
-# overall_height: 1.2 # maximum
+Texas_HTSSOP-14-1EP_4.4x5mm_P0.65mm_EP3.4x5mm_Mask3.155x3.255mm:
+# previously 'HTSSOP-14-1EP_4.4x5mm_P0.65mm_EP3.4x5mm_Mask3x3.1mm' (as 'Texas_PWP0014A' in htssop.yaml)
+  inherit: TSSOP-14_4.4x5mm_P0.65mm
   device_type: 'HTSSOP'
-  size_source: 'http://www.ti.com/lit/ds/symlink/lm5161.pdf#page=34'
+  manufacturer: 'Texas'
+  size_source: 'Texas Instruments PWP0014A, based on JEDEC MO-153 variation ABT-1, 1.00mm body thickness, https://www.ti.com/lit/ml/pptd287a/pptd287a.pdf, https://www.ti.com/lit/ds/symlink/lm5161.pdf#page=34, https://www.jedec.org/document_search?search_api_views_fulltext=MO-153'
   compatible_mpns:
-    - Texas_PWP0014A
-  body_size_x:
-    minimum: 4.3
-    nominal: 4.4
-    maximum: 4.5
-  body_size_y:
-    minimum: 4.9
-    nominal: 5.0
-    maximum: 5.1
-  overall_size_x:
-    minimum: 6.2
-    nominal: 6.4
-    maximum: 6.6
-  lead_width:
-    minimum: 0.19
-    maximum: 0.30
-  lead_len:
-    minimum: 0.5
-    maximum: 0.75
-  pitch: 0.65
-  num_pins_x: 0
-  num_pins_y: 7
+    - 'Texas_PowerPAD-TSSOP'
+  overall_size_x: 6.20 .. 6.40 .. 6.60 # nominal agrees with JEDEC, minimum / maximum from Texas
 
-  EP_size_x: 3.4
-  EP_size_y: 5.0
-  EP_mask_x: 3.0
-  EP_mask_y: 3.1
-  # EP_paste_coverage: 0.65
-  EP_num_paste_pads: [2, 2]
-  #heel_reduction: 0.1 #for relatively large EP pads (increase clearance)
-  # EP_size_limit_x: 3.6  #for relatively large EP pads (increase clearance)
-  # EP_size_limit_y: 3.6  #for relatively large EP pads (increase clearance)
+  lead_width: 0.19 .. 0.30 # Texas
+  lead_len: 0.50 .. 0.75 # Texas
+
+  EP_size_x: 3.105 .. 3.155 # Exposed Pad from Texas package
+  EP_size_y: 3.205 .. 3.255
+
+  # from now on, sizes based on Texas Land Pattern example
+  EP_size_x_overwrite: 3.4
+  EP_size_y_overwrite: 5.0
+  EP_mask_x: 3.155
+  EP_mask_y: 3.255
+  EP_num_paste_pads: [2, 2] # https://www.ti.com/lit/an/sloa122/sloa122.pdf#page=5
 
   thermal_vias:
     count: [3, 5]
-    drill: 0.3
-    # min_annular_ring: 0.15
-    paste_via_clearance: 0.1
+    grid: [1.1, 1.1]
+    drill: 0.2
     EP_num_paste_pads: [2, 2]
     paste_between_vias: 1
-    paste_rings_outside: 1
-    EP_paste_coverage: 0.65
-    grid: [1.3, 1.3]
-    # bottom_pad_size:
-    paste_avoid_via: False
 
 TSSOP-16_4.4x5mm_P0.65mm:
   device_type: 'TSSOP'

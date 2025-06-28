@@ -5908,13 +5908,13 @@ ETSSOP-20-1EP_4.4x6.5mm_P0.65mm_EP3x4.2mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.ti.com/lit/ds/symlink/lm5005.pdf'
 
-HTSSOP-14-1EP_4.4x5mm_P0.65mm_EP3.4x5mm_Mask3x3.1mm:
+Texas_HTSSOP-14-1EP_4.4x5mm_P0.65mm_EP3.4x5mm_Mask3.155x3.255mm:
   the: 14.0
   tb_s: 0.15
   c: 0.15
   R1: 0.09
   R2: 0.09
-  S: 0.25
+  S: 0.25 # L: 0.625
   fp_s: True
   fp_r: 0.5
   fp_d: 0.2
@@ -5926,19 +5926,19 @@ HTSSOP-14-1EP_4.4x5mm_P0.65mm_EP3.4x5mm_Mask3x3.1mm:
   E: 6.4
   A1: 0.1
   A2: 1.1
-  b: 0.25
+  b: 0.25 # 0.245, needs update
   e: 0.65
   npx: 7
   npy: 0
-  epad: [3.0, 3.1]
+  epad: [3.0, 3.1] # needs update, [3.13, 3.23]
   excluded_pins: null
-  model_name: HTSSOP-14-1EP_4.4x5mm_P0.65mm_EP3.4x5mm_Mask3x3.1mm
+  model_name: Texas_HTSSOP-14-1EP_4.4x5mm_P0.65mm_EP3.4x5mm_Mask3.155x3.255mm
   rotation: -90
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
   destination_dir: 'Package_SO.3dshapes'
-  source: 'http://www.ti.com/lit/ds/symlink/lm5161.pdf#page=34'
+  source: 'http://www.ti.com/lit/ds/symlink/lm5161.pdf#page=34' # https://www.ti.com/lit/ml/pptd287a/pptd287a.pdf
 
 HTSSOP-20-1EP_4.4x6.5mm_P0.65mm_EP3.4x6.5mm:
   the: 12.0
