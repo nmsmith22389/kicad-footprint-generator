@@ -76,23 +76,28 @@ class RingPadPrimitive(Node):
             number=self.number,
         )
 
-    def get_flattened_nodes(self) -> list[Pad]:
+    def get_flattened_nodes(self) -> list[Node]:
         """Return the nodes to serialize."""
-        return [
-            Pad(
-                number=self.number,
-                type=Pad.TYPE_SMT,
-                shape=Pad.SHAPE_CUSTOM,
-                at=(self.at + Vector2D(self.radius, 0)),
-                size=self.width,
-                layers=self.layers,
-                primitives=[
-                    Circle(
-                        center=(-self.radius, 0), radius=self.radius, width=self.width
-                    )
-                ],
-            )
-        ]
+        return cast(
+            list[Node],
+            [
+                Pad(
+                    number=self.number,
+                    type=Pad.TYPE_SMT,
+                    shape=Pad.SHAPE_CUSTOM,
+                    at=(self.at + Vector2D(self.radius, 0)),
+                    size=self.width,
+                    layers=self.layers,
+                    primitives=[
+                        Circle(
+                            center=(-self.radius, 0),
+                            radius=self.radius,
+                            width=self.width,
+                        )
+                    ],
+                )
+            ],
+        )
 
 
 class ArcPadPrimitive(Node):
@@ -188,7 +193,10 @@ class ArcPadPrimitive(Node):
         )
 
     def rotate(
-        self, angle: float, origin: Vector2D = Vector2D.zero(), use_degrees: bool = True
+        self,
+        angle: float,
+        origin: Vector2D = Vector2D.zero(),
+        use_degrees: bool = True,
     ) -> ArcPadPrimitive:
         """Rotate around given origin.
 
@@ -197,7 +205,6 @@ class ArcPadPrimitive(Node):
             origin: Origin point for the rotation.
             use_degrees: Rotation angle is given in degrees.
         """
-        origin = Vector2D(origin)
         self.reference_arc.rotate(angle=angle, origin=origin, use_degrees=use_degrees)
         if self.start_line is not None:
             self.start_line.rotate(angle=angle, origin=origin, use_degrees=use_degrees)
@@ -509,7 +516,7 @@ class RingPad(Node):
         y = (self.paste_to_paste_clearance + w) / 2
 
         start_line = GeomLine(start=self.at + (0, y), end=self.at + (self.size, y))
-        end_line = GeomLine(
+        end_line: GeomLine | None = GeomLine(
             start=self.at + (0, -y), end=self.at + (self.size, -y)
         ).rotate(ref_angle, origin=self.at)
 
@@ -566,7 +573,7 @@ class RingPad(Node):
         a = 360 / self.num_anchor
         pos = Vector2D.from_floats(self.radius, 0.0)
         origin = Vector2D.from_floats(0.0, 0.0)
-        for i in range(1, self.num_anchor):
+        for _ in range(1, self.num_anchor):
             pos.rotate(a, origin=origin)
             self.pads.append(
                 Pad(

@@ -117,28 +117,15 @@ class GeomArc(GeomShapeOpen):
         """Return a list with itself in it since an arc is a basic shape."""
         return [self]
 
-    def translate(
-        self,
-        vector: Vec2DCompatible | None = None,
-        x: float | None = None,
-        y: float | None = None,
-    ) -> GeomArc:
+    def translate(self, vector: Vector2D) -> GeomArc:
         """Move the arc.
 
         Args:
             vector: The direction and distance in mm.
-            x: The distance in mm in the x-direction.
-            y: The distance in mm in the y-direction.
 
         Returns:
             The translated arc.
         """
-        if vector is not None:
-            vector = Vector2D(vector)
-        elif x is not None or y is not None:
-            vector = Vector2D(x if x else 0, y if y else 0)
-        else:
-            raise KeyError("Either 'x', 'y', or 'vector' must be provided.")
         self.center += vector
         self._start += vector
         if self._end:
@@ -147,8 +134,8 @@ class GeomArc(GeomShapeOpen):
 
     def rotate(
         self,
-        angle: float | int,
-        origin: Vec2DCompatible = [0, 0],
+        angle: float,
+        origin: Vector2D = Vector2D.zero(),
         use_degrees: bool = True,
     ) -> GeomArc:
         """Rotate the arc around a given point.
@@ -162,7 +149,6 @@ class GeomArc(GeomShapeOpen):
         Returns:
             The rotated arc.
         """
-        origin = Vector2D(origin)
         self.center.rotate(angle=angle, origin=origin, use_degrees=use_degrees)
         self._start.rotate(angle=angle, origin=origin, use_degrees=use_degrees)
         self._end = None

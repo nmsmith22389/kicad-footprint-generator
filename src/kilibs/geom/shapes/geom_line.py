@@ -83,36 +83,23 @@ class GeomLine(GeomShapeOpen):
         """Return a list with itself in it since a line is a basic shape."""
         return [self]
 
-    def translate(
-        self,
-        vector: Vec2DCompatible | None = None,
-        x: float | None = None,
-        y: float | None = None,
-    ) -> GeomLine:
+    def translate(self, vector: Vector2D) -> GeomLine:
         """Move the line.
 
         Args:
             vector: The direction and distance in mm.
-            x: The distance in mm in the x-direction.
-            y: The distance in mm in the y-direction.
 
         Returns:
             The translated line.
         """
-        if vector is not None:
-            vector = Vector2D(vector)
-        elif x is not None or y is not None:
-            vector = Vector2D(x if x else 0, y if y else 0)
-        else:
-            raise KeyError("Either 'x', 'y', or 'vector' must be provided.")
         self.start += vector
         self.end += vector
         return self
 
     def rotate(
         self,
-        angle: float | int,
-        origin: Vec2DCompatible = [0, 0],
+        angle: float,
+        origin: Vector2D = Vector2D.zero(),
         use_degrees: bool = True,
     ) -> GeomLine:
         """Rotate the line around a given point.
@@ -126,7 +113,6 @@ class GeomLine(GeomShapeOpen):
         Returns:
             The rotated line.
         """
-        origin = Vector2D(origin)
         self.start.rotate(angle=angle, origin=origin, use_degrees=use_degrees)
         self.end.rotate(angle=angle, origin=origin, use_degrees=use_degrees)
         return self

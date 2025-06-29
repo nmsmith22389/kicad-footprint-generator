@@ -16,7 +16,7 @@
 
 from __future__ import annotations
 
-from typing import Literal
+from typing import Literal, cast
 
 from KicadModTree.nodes.Node import Node
 from kilibs.geom import BoundingBox, GeomPolygon, GeomRectangle, Vec2DCompatible
@@ -381,6 +381,6 @@ class Zone(Node):
         else:
             self.fill = ZoneFill(fill=ZoneFill.FILL_NONE)
 
-    def get_flattened_nodes(self) -> list[Zone]:
+    def get_flattened_nodes(self) -> list[Node]:
         """Return the nodes to serialize."""
-        return [self]
+        return cast(list[Node], [self])

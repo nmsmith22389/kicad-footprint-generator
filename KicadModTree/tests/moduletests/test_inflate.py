@@ -15,12 +15,13 @@ from math import sqrt
 
 from KicadModTree import Footprint, FootprintType, NodeShape
 from KicadModTree.tests.test_utils.fp_file_test import SerialisationTest
-from kilibs.geom.shapes import (
+from kilibs.geom import (
     GeomArc,
     GeomCompoundPolygon,
     GeomLine,
     GeomPolygon,
     GeomShapeClosed,
+    Vector2D,
 )
 from tests.kilibs.geom.geom_test_shapes import TEST_SHAPES_CLOSED
 
@@ -69,7 +70,7 @@ SHAPES_FOR_COMPOUND_POLYGON: list[list[GeomLine | GeomArc] | list[GeomPolygon]] 
 # fmt: on
 
 
-def gen_footprint():
+def gen_footprint() -> Footprint:
     kicad_mod = Footprint("test", FootprintType.SMD)
     shapes: list[GeomShapeClosed] = []
     for shape in SHAPES_FOR_COMPOUND_POLYGON:
@@ -84,7 +85,7 @@ def gen_footprint():
     for j in range(len(inflate_amount)):
         x_translate = -5 * (len(shapes) - 1)
         for i in range(0, len(shapes)):
-            translated_shape = shapes[i].translated(x=x_translate, y=y_translate)
+            translated_shape = shapes[i].translated(Vector2D(x_translate, y=y_translate))
             kicad_mod.append(NodeShape.to_node(translated_shape, layer="F.Fab"))
             try:
                 inflated_shape = translated_shape.inflated(
@@ -108,7 +109,7 @@ def gen_footprint():
 
 class TestInflate(SerialisationTest):
 
-    def test_inflate(self):
+    def test_inflate(self) -> None:
 
         kicad_mod = gen_footprint()
         self.assert_serialises_as(kicad_mod, "test_inflate.kicad_mod")

@@ -66,7 +66,7 @@ def test_keepout_rect_vs_line(
     """Simple test for keepout rectangle vs line."""
     ko = GeomRectangle(center=center, size=size)
     line = GeomLine(start=line_start, end=line_end)
-    new_items = ko.keepout(line)
+    new_items = ko.subtract(line)
     assert len(new_items) == len(expected_segs)
     for i, seg in enumerate(expected_segs):
         gseg = GeomLine(start=seg[0], end=seg[1])
@@ -91,7 +91,7 @@ def test_keepout_rect_coincident_line(fp_fudge_x: float) -> None:
         GeomLine(start=(-50 + fp_fudge_x, -50), end=(-50 + fp_fudge_x, 50)),
     ]
     for line in lines:
-        new_items = ko.keepout(line)
+        new_items = ko.subtract(line)
         assert is_equal(line, new_items[0])
 
 
@@ -270,7 +270,7 @@ def test_keepout_with_rectangle(shape: GeomShape, rel: float = TOL_MM) -> None:
     # shape's bounding box and intersects the origin):
     left = shape.bbox().left
     rectangle_left = GeomRectangle(center=(left, 0), size=(left, left))
-    kept_out = rectangle_left.keepout(shape_to_keep_out=shape, tol=rel)
+    kept_out = rectangle_left.subtract(shape_to_keep_out=shape, tol=rel)
     if isinstance(shape, GeomLine):
         assert is_equal(shape, kept_out[0], rel)
     elif isinstance(shape, GeomArc):

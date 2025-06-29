@@ -43,8 +43,5 @@ class Line(NodeShape, GeomLine):
             start: Coordinates (in mm) of the start point of the line.
             end: Coordinates (in mm) of the end point of the line.
         """
-        self.init_super(kwargs=locals())
-
-    def get_flattened_nodes(self) -> list[Line]:
-        """Return the nodes to serialize."""
-        return [self]
+        NodeShape.__init__(self, layer=layer, width=width, style=style)
+        GeomLine.__init__(self, shape=shape, start=start, end=end)

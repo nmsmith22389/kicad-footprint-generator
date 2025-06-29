@@ -15,8 +15,6 @@
 
 from __future__ import annotations
 
-from typing import Any
-
 from KicadModTree.nodes.Node import Node, TStamp
 
 
@@ -89,7 +87,7 @@ class Group(Node):
         if ts not in self._gathered_member_tstamp_str_set:
             self._gathered_member_tstamp_str_set.add(ts)
 
-    def remove(self, node_or_tstamp: Node | TStamp | str) -> None:
+    def remove_group_item(self, node_or_tstamp: Node | TStamp | str) -> None:
         if isinstance(node_or_tstamp, Node):
             ts = str(node_or_tstamp.getTStamp())
             while node_or_tstamp in self._member_nodes:
@@ -100,10 +98,6 @@ class Group(Node):
             ts = str(node_or_tstamp)
         if ts in self._gathered_member_tstamp_str_set:
             self._gathered_member_tstamp_str_set.remove(ts)
-
-    def get_flattened_nodes(self) -> list[Group]:
-        """Return the nodes to serialize."""
-        return [self]
 
     def __repr__(self) -> str:
         """The string representation of the group."""

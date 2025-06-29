@@ -284,6 +284,8 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
 
         # init kicad footprint
         kicad_mod = Footprint(fpname, FootprintType.SMD)
+        if fpname == "Oscillator_SMD_SiT_PQFN-4Pin_2.5x2.0mm":
+            pass
         kicad_mod.description = ", ".join(desc)
         kicad_mod.tags = tags
 

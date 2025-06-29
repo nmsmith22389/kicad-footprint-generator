@@ -33,6 +33,10 @@ class FootprintType(Enum):
 class Footprint(Node):
     """The root node."""
 
+    _COMMA_FIXER_RE = re.compile(r",(\s*,)+")
+    """A regular expression to fix a technical debt with comma-separated empty
+    values."""
+
     name: str
     """Name of the footprint."""
     _description: str | None
@@ -121,10 +125,6 @@ class Footprint(Node):
         """The optional description of the footprint."""
         return self._description
 
-    _COMMA_FIXER_RE = re.compile(r",(\s*,)+")
-    """A regular expression to fix a technical debt with comma-separated empty
-    values."""
-
     @description.setter
     def description(self, description: str) -> None:
         """The optional description of the footprint."""
@@ -135,13 +135,13 @@ class Footprint(Node):
         # Tidy this up here, but one day, this should be an exception and
         # callers should just get it right, becaue magical "helpful" fixes
         # are technical debt with a wig on.
-
         description = self._COMMA_FIXER_RE.sub(",", description)
         self._description = description
 
     def setDescription(self, description: str) -> None:
         """Legacy setter for the footprint description."""
-        self.description = description
+        description = self._COMMA_FIXER_RE.sub(",", description)
+        self._description = description
 
     @property
     def tags(self) -> list[str]:

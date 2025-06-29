@@ -83,16 +83,22 @@ known_common = ['cadquery', 'yaml', 'OCP']
 # Configure MyPy static type checker
 [tool.mypy]
 strict = true
-packages = ["kilibs"]
+packages = ["kilibs", "KicadModTree"]
 mypy_path = ["src"]
 exclude = [
     "3d-model-generators",
     "data",
     "docs",
     "gitalbci",
-    "KicadModTree",
     "scripts",
     "src/kilibs/declarative_defs",
+    "KicadModTree/util",
+    "KicadModTree/ModArgparser.py",
+    "KicadModTree/nodes/specialized/RectLine.py",
+    "KicadModTree/nodes/specialized/PolygonLine.py",
+    "KicadModTree/nodes/specialized/ChamferedNativePad.py",
+    "KicadModTree/nodes/specialized/ChamferedRect.py",
+    "KicadModTree/examples",
     "tests",
 ]
 
@@ -100,10 +106,21 @@ exclude = [
 [tool.pyright]
 include = [
     "src",
+    "KicadModTree",
     "scripts/tools/footprint_scripts_pin_headers.py",
 ]
 exclude = ["**/__pycache__"]
-ignore = ["src/kilibs/declarative_defs"]
+ignore = [
+    "src/kilibs/declarative_defs",
+    "KicadModTree/util",
+    "KicadModTree/ModArgparser.py",
+    "KicadModTree/nodes/specialized/RectLine.py",
+    "KicadModTree/nodes/specialized/PolygonLine.py",
+    "KicadModTree/nodes/specialized/ChamferedNativePad.py",
+    "KicadModTree/nodes/specialized/ChamferedRect.py",
+    "KicadModTree/examples",
+    "KicadModTree/tests",
+]
 typeCheckingMode = "strict"
 reportIncompatibleMethodOverride = false
 

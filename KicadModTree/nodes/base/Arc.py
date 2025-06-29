@@ -34,8 +34,8 @@ class Arc(NodeShape, GeomArc):
         mid: Vec2DCompatible | None = None,
         end: Vec2DCompatible | None = None,
         angle: float | None = None,
-        use_degrees: float = True,
-        long_way: float = False,
+        use_degrees: bool = True,
+        long_way: bool = False,
     ) -> None:
         """Create an arc.
 
@@ -56,8 +56,15 @@ class Arc(NodeShape, GeomArc):
                 point to specify if the longer of the 2 possible resulting arcs or the
                 shorter one shall be constructed.
         """
-        self.init_super(kwargs=locals())
-
-    def get_flattened_nodes(self) -> list[Arc]:
-        """Return the nodes to serialize."""
-        return [self]
+        NodeShape.__init__(self, layer=layer, width=width, style=style)
+        GeomArc.__init__(
+            self,
+            shape=shape,
+            center=center,
+            start=start,
+            mid=mid,
+            end=end,
+            angle=angle,
+            use_degrees=use_degrees,
+            long_way=long_way,
+        )

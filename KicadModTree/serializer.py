@@ -345,7 +345,7 @@ class SerializerPriority:
     @staticmethod
     def get_sort_key_group(group: Group) -> list[Any]:
         """Return the sort key of the group."""
-        keys = [SerializerPriority.NodePriority.GROUP.value]
+        keys: list[Any] = [SerializerPriority.NodePriority.GROUP.value]
         if group.hasValidTStamp():
             keys += [group.getTStamp()]
         if member_nodes := group.getGroupMemberNodes():
@@ -557,11 +557,7 @@ class Serializer:
         Args:
             node: The node whose fill type is to be serialized.
         """
-        if hasattr(node, "fill"):
-            fill = node.fill if isinstance(node.fill, bool) else node.fill == "solid"
-        else:
-            fill = False
-        self.add_symbol("fill", "yes" if fill else "no")
+        self.add_symbol("fill", "yes" if node.fill else "no")
 
     def _add_text_base(self, text_base: Text | Property) -> None:
         """Serialize a text base.
@@ -631,19 +627,6 @@ class Serializer:
         """
         self.add_2_floats("start", line.start.x, line.start.y)
         self.add_2_floats("end", line.end.x, line.end.y)
-
-    def add_line(self, line: Line) -> None:
-        """Serialize a line.
-
-        Args:
-            line: The line.
-        """
-        self.start_block("fp_line")
-        self.add_2_floats("start", line.start.x, line.start.y)
-        self.add_2_floats("end", line.end.x, line.end.y)
-        self._add_stroke(line)
-        self._add_layer(line)
-        self.end_block()
 
     def add_line(self, line: Line) -> None:
         """Serialize a line.
@@ -967,9 +950,14 @@ class Serializer:
         """
         from KicadModTree.nodes.base import Arc, Circle, Line, Polygon
 
+        SUPPORTED_TYPES = ["Arc", "Circle", "Line", "Pad", "Polygon", "Text"]
+
         all_primitives: list[NodeShape] = []
         for p in pad.primitives:
-            all_primitives.extend(p.get_flattened_nodes())
+            if p.__class__.__name__ in SUPPORTED_TYPES:
+                all_primitives.append(p)
+            else:
+                all_primitives.extend(p.to_child_nodes(p.get_atomic_shapes()))
 
         grouped_nodes: dict[str, list[NodeShape]] = {}
 
@@ -983,7 +971,7 @@ class Serializer:
 
         for key, value in sorted(grouped_nodes.items()):
             # check if key is a base node, except Model
-            if key not in {"Arc", "Circle", "Line", "Pad", "Polygon", "Text"}:
+            if key not in SUPPORTED_TYPES:
                 continue
             # render base nodes
             for p in value:
@@ -1018,16 +1006,18 @@ class Serializer:
             pad: The pad.
         """
         lst: list[str] = []
-        if pad.chamfer_corners.top_left:
-            lst += ["top_left"]
-        if pad.chamfer_corners.top_right:
-            lst += ["top_right"]
-        if pad.chamfer_corners.bottom_left:
-            lst += ["bottom_left"]
-        if pad.chamfer_corners.bottom_right:
-            lst += ["bottom_right"]
-        if len(lst) > 0:
-            self.add_symbols("chamfer", lst)
+        chamfer_corners = pad.chamfer_corners
+        if chamfer_corners is not None:
+            if chamfer_corners.top_left:
+                lst += ["top_left"]
+            if chamfer_corners.top_right:
+                lst += ["top_right"]
+            if chamfer_corners.bottom_left:
+                lst += ["bottom_left"]
+            if chamfer_corners.bottom_right:
+                lst += ["bottom_right"]
+            if len(lst) > 0:
+                self.add_symbols("chamfer", lst)
 
     def _add_pad_string(
         self, number: str | int, at: Vector2D, rotation: float, pad: Pad
@@ -1084,9 +1074,7 @@ class Serializer:
                 ser.add_2_floats("drill oval", pad.drill.x, pad.drill.y)
 
             # append offset only if necessary
-            if (pad.offset is not None) and (
-                (abs(pad.offset.x) > TOL_MM) or (abs(pad.offset.y) > TOL_MM)
-            ):
+            if abs(pad.offset.x) > TOL_MM or abs(pad.offset.y) > TOL_MM:
                 ser.add_2_floats("offset", pad.offset.x, pad.offset.y)
 
         # As of format 20231231, 'property' contains only the fab value.
@@ -1107,7 +1095,11 @@ class Serializer:
         if shape == Pad.SHAPE_ROUNDRECT:
             ser.add_float("roundrect_rratio", pad.radius_ratio)
 
-            if pad.chamfer_ratio is not None and pad.chamfer_corners.is_any_selected():
+            if (
+                pad.chamfer_ratio is not None
+                and pad.chamfer_corners is not None
+                and pad.chamfer_corners.is_any_selected()
+            ):
                 ser.add_float("chamfer_ratio", pad.chamfer_ratio)
                 ser._add_pad_chamfer_corner(pad)
 
@@ -1124,21 +1116,12 @@ class Serializer:
             if pad.tuning_properties.die_length > TOL_MM:
                 ser.add_float("die_length", pad.tuning_properties.die_length)
 
-        if (
-            pad.solder_paste_margin_ratio != 0
-            or pad.solder_mask_margin != 0
-            or pad.solder_paste_margin != 0
-        ):
-            if (pad.solder_mask_margin is not None) and pad.solder_mask_margin != 0:
-                ser.add_float("solder_mask_margin", pad.solder_mask_margin)
-            if (
-                pad.solder_paste_margin_ratio is not None
-            ) and pad.solder_paste_margin_ratio != 0:
-                ser.add_float(
-                    "solder_paste_margin_ratio", pad.solder_paste_margin_ratio
-                )
-            if (pad.solder_paste_margin is not None) and pad.solder_paste_margin != 0:
-                ser.add_float("solder_paste_margin", pad.solder_paste_margin)
+        if pad.solder_mask_margin:
+            ser.add_float("solder_mask_margin", pad.solder_mask_margin)
+        if pad.solder_paste_margin_ratio:
+            ser.add_float("solder_paste_margin_ratio", pad.solder_paste_margin_ratio)
+        if pad.solder_paste_margin:
+            ser.add_float("solder_paste_margin", pad.solder_paste_margin)
 
         ser.add_pad_zone_connection(pad.zone_connection)
 
@@ -1229,7 +1212,7 @@ class Serializer:
         self.add_3_floats("xyz", model.scale.x, model.scale.y, model.scale.z)
         self.end_block()
         self.start_block("rotate")
-        self.add_3_floats("xyz", model.rotate.x, model.rotate.y, model.rotate.z)
+        self.add_3_floats("xyz", model.rotation.x, model.rotation.y, model.rotation.z)
         self.end_block()
         self.end_block()
 

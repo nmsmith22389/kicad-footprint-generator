@@ -15,6 +15,8 @@
 
 from __future__ import annotations
 
+from typing import cast
+
 from KicadModTree.nodes.Node import Node
 from kilibs.geom import Vec3DCompatible, Vector3D
 
@@ -28,7 +30,7 @@ class Model(Node):
     """The coordinates of the center of the model in mm."""
     scale: Vector3D
     """The scale of the model in x-, y-, and z-direction."""
-    rotate: Vector3D
+    rotation: Vector3D
     """The rotation of the model around the x-, y-, and z-axis in degrees."""
 
     def __init__(
@@ -44,7 +46,7 @@ class Model(Node):
             filename: Name of the 3D model file (including path).
             at: Offset position of the model in mm.
             scale: Scale of the model.
-            rotation: Rotation of the model in degrees.
+            rotate: Rotation of the model in degrees.
 
         Example:
             >>> from KicadModTree import *
@@ -55,16 +57,16 @@ class Model(Node):
         self.filename = filename
         self.at = Vector3D(at)
         self.scale = Vector3D(scale)
-        self.rotate = Vector3D(rotate)
+        self.rotation = Vector3D(rotate)
 
-    def get_flattened_nodes(self) -> list[Model]:
+    def get_flattened_nodes(self) -> list[Node]:
         """Return the nodes to serialize."""
-        return [self]
+        return cast(list[Node], [self])
 
     def __repr__(self) -> str:
         return (
             f'Model(filename: "{self.filename}"'
             f"at={self.at}, "
             f"scale={self.scale}, "
-            f"rotate={self.rotate}, "
+            f"rotate={self.rotation}, "
         )

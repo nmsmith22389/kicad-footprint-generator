@@ -236,7 +236,7 @@ class Vector2D:
 
     def rotate(
         self,
-        angle: float | int,
+        angle: float,
         origin: Vector2D,
         use_degrees: bool = True,
     ) -> Vector2D:
@@ -263,7 +263,7 @@ class Vector2D:
 
     def rotated(
         self,
-        angle: float | int,
+        angle: float,
         origin: Vector2D,
         use_degrees: bool = True,
     ) -> Vector2D:

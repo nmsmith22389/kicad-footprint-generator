@@ -15,6 +15,9 @@
 
 from __future__ import annotations
 
+from typing import cast
+
+from KicadModTree.nodes.Node import Node
 from KicadModTree.nodes.NodeShape import NodeShape
 from KicadModTree.util.line_style import LineStyle
 from kilibs.geom import GeomRectangle, GeomStadium, Vec2DCompatible
@@ -66,4 +69,15 @@ class Stadium(NodeShape, GeomStadium):
             >>> stadium2 = Stadium(shape=stadium1)
             >>> stadium3 = Stadium(shape=GeomRectangle(center=(0, 0), size=(4, 2)))
         """
-        self.init_super(kwargs=locals())
+        NodeShape.__init__(self, layer=layer, width=width, style=style, fill=fill)
+        GeomStadium.__init__(
+            self, shape=shape, center_1=center_1, center_2=center_2, radius=radius
+        )
+        if offset:
+            self.inflate(amount=offset)
+
+    def get_flattened_nodes(self) -> list[Node]:
+        """Return the nodes to serialize."""
+        return cast(
+            list[Node], self.to_child_nodes(list(self.get_shapes_back_compatible()))
+        )

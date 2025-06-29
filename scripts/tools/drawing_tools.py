@@ -170,7 +170,7 @@ def applyKeepouts(
             # Items left after applying this keepout
             new_items = []
             for i in items:
-                new_items += ko.keepout(i)
+                new_items += ko.subtract(i)
             # Once one Keepout has been applied, we need to apply the next one(s)
             # to the new items
             items = new_items

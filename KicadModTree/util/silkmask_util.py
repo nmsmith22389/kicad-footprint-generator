@@ -96,7 +96,7 @@ def _collectNodesAsGeometricShapes(
 
 
 def _cleanSilkByMask(
-    silk_shapes: list[GeomShape], mask_shapes: list[GeomShapeClosed]
+    silk_shapes: list[NodeShape], mask_shapes: list[NodeShape]
 ) -> list[NodeShape]:
     """Applies the mask as a keepout to the silk screen shapes.
 

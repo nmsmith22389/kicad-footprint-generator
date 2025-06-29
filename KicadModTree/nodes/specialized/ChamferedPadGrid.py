@@ -18,7 +18,7 @@
 from __future__ import annotations, division
 
 from collections.abc import Sequence
-from typing import Generator, Literal, cast
+from typing import Generator, cast
 
 from KicadModTree.nodes.base.Pad import Pad
 from KicadModTree.nodes.Node import Node
@@ -123,7 +123,7 @@ class ChamferSelPadGrid(CornerSelection):
         self.bottom_edge = bool(value)
         self.left_edge = bool(value)
 
-    def __len__(self) -> Literal[8]:
+    def __len__(self) -> int:
         """Number of items."""
         return 8
 

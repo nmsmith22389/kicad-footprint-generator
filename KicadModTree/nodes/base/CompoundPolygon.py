@@ -15,10 +15,22 @@
 
 from __future__ import annotations
 
-from KicadModTree.nodes.base import Arc
+from collections.abc import Sequence
+from typing import cast
+
+from KicadModTree.nodes.base.Arc import Arc
+from KicadModTree.nodes.Node import Node
 from KicadModTree.nodes.NodeShape import NodeShape
 from KicadModTree.util.line_style import LineStyle
-from kilibs.geom import GeomArc, GeomCompoundPolygon, GeomLine, GeomPolygon, Vector2D
+from kilibs.geom import (
+    GeomArc,
+    GeomCompoundPolygon,
+    GeomLine,
+    GeomPolygon,
+    GeomShape,
+    Vec2DCompatible,
+    Vector2D,
+)
 
 
 class CompoundPolygon(NodeShape, GeomCompoundPolygon):
@@ -30,10 +42,10 @@ class CompoundPolygon(NodeShape, GeomCompoundPolygon):
         self,
         shape: (
             CompoundPolygon
-            | GeomCompoundPolygon
-            | list[Vector2D | GeomPolygon | GeomLine | GeomArc]
-            | None
-        ) = None,
+            | GeomShape
+            | Sequence[Vec2DCompatible]
+            | Sequence[GeomPolygon | GeomLine | GeomArc]
+        ),
         layer: str = "F.SilkS",
         width: float | None = None,
         style: LineStyle = LineStyle.SOLID,
@@ -65,14 +77,19 @@ class CompoundPolygon(NodeShape, GeomCompoundPolygon):
                 won't be any connecting line between the last and the first point.
         """
         self._fp_poly_elements = []
-        self.init_super(kwargs=locals())
+        NodeShape.__init__(self, layer=layer, width=width, style=style, fill=fill)
+        GeomCompoundPolygon.__init__(
+            self, shape=shape, serialize_as_fp_poly=serialize_as_fp_poly, close=close
+        )
+        if offset:
+            self.inflate(amount=offset)
 
-    def get_flattened_nodes(self) -> list[NodeShape]:
+    def get_flattened_nodes(self) -> list[Node]:
         """Return the nodes to serialize."""
         if self.serialize_as_fp_poly and self.close:
-            return [self]
+            return cast(list[Node], [self])
         else:
-            return self.to_child_nodes(list(self.get_atomic_shapes()))
+            return cast(list[Node], self.to_child_nodes(list(self.get_atomic_shapes())))
 
     def get_fp_poly_elements(self) -> list[Vector2D | Arc]:
         if not self._fp_poly_elements:

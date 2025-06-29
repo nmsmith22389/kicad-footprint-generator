@@ -24,7 +24,6 @@ from KicadModTree.nodes import (
     ChamferSelPadGrid,
     Circle,
     CompoundPolygon,
-    CornerSelection,
     Cross,
     Cruciform,
     EmbeddedFonts,
@@ -59,7 +58,7 @@ from KicadModTree.nodes import (
     Zone,
     ZoneFill,
 )
-from KicadModTree.util import ChamferSizeHandler, LineStyle, RoundRadiusHandler
+from KicadModTree.util import ChamferSizeHandler, LineStyle, RoundRadiusHandler, CornerSelection
 from kilibs.geom.vector import Vector2D  # TODO remove this import.
 
 __all__ = [

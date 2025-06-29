@@ -14,7 +14,7 @@
 """Specialized nodes."""
 
 from .ChamferedNativePad import ChamferedNativePad
-from .ChamferedPad import ChamferedPad, CornerSelection
+from .ChamferedPad import ChamferedPad
 from .ChamferedPadGrid import ChamferedPadGrid, ChamferSelPadGrid
 from .ChamferedRect import ChamferRect
 from .Cross import Cross
@@ -36,7 +36,6 @@ __all__ = [
     "ChamferedPadGrid",
     "ChamferRect",
     "ChamferSelPadGrid",
-    "CornerSelection",
     "Cross",
     "Cruciform",
     "ExposedPad",

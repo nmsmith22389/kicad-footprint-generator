@@ -15,6 +15,9 @@
 
 from __future__ import annotations
 
+from typing import cast
+
+from KicadModTree.nodes.Node import Node
 from KicadModTree.nodes.NodeShape import NodeShape
 from KicadModTree.util.line_style import LineStyle
 from kilibs.geom import BoundingBox, GeomRectangle, Vec2DCompatible
@@ -29,13 +32,13 @@ class Rectangle(NodeShape, GeomRectangle):
         width: float | None = None,
         style: LineStyle = LineStyle.SOLID,
         fill: bool = False,
-        offset: float = 0,
+        offset: float = 0.0,
         shape: Rectangle | GeomRectangle | BoundingBox | None = None,
         start: Vec2DCompatible | None = None,
         end: Vec2DCompatible | None = None,
         center: Vec2DCompatible | None = None,
         size: Vec2DCompatible | None = None,
-        angle: float = 0,
+        angle: float = 0.0,
         use_degrees: bool = True,
     ) -> None:
         """Create a rectangle.
@@ -57,21 +60,34 @@ class Rectangle(NodeShape, GeomRectangle):
             angle: Rotation angle of the rectangle.
             use_degrees: Whether the rotation angle is given in degrees or radians.
         """
-        self.init_super(kwargs=locals())
+        NodeShape.__init__(self, layer=layer, width=width, style=style, fill=fill)
+        GeomRectangle.__init__(
+            self,
+            shape=shape,
+            start=start,
+            end=end,
+            center=center,
+            size=size,
+            angle=angle,
+            use_degrees=use_degrees,
+        )
+        if offset:
+            self.inflate(amount=offset)
 
-    def get_flattened_nodes(self) -> list[NodeShape]:
+    def get_flattened_nodes(self) -> list[Node]:
         """Return the nodes to serialize."""
         if self.angle:
             from .Polygon import Polygon
 
-            return [
+            return cast(
+                list[Node],
                 Polygon(
                     shape=self,
                     layer=self.layer,
                     width=self.width,
                     style=self.style,
                     fill=self.fill,
-                )
-            ]
+                ),
+            )
         else:
             return [self]

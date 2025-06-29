@@ -21,7 +21,7 @@ from typing import TYPE_CHECKING, Self
 
 from kilibs.geom.bounding_box import BoundingBox
 from kilibs.geom.tolerances import MIN_SEGMENT_LENGTH, TOL_MM
-from kilibs.geom.vector import Vec2DCompatible, Vector2D
+from kilibs.geom.vector import Vector2D
 
 # Using TYPE_CHECKING to only import these for type checking, but not at runtime:
 if TYPE_CHECKING:
@@ -44,7 +44,7 @@ class GeomShape(ABC):
         )
 
     def copy(self) -> Self:
-        """Create a deep copy of itself."""
+        """Create a copy of itself."""
         return self.__class__(shape=self)
 
     def get_atomic_shapes(self) -> Sequence[GeomShapeAtomic]:
@@ -81,28 +81,51 @@ class GeomShape(ABC):
         # Note: non-basic shapes must redefine this function.
         return [self]
 
-    def translated(
-        self,
-        vector: Vec2DCompatible | None = None,
-        x: float | None = None,
-        y: float | None = None,
-    ) -> Self:
+    def translate(self, vector: Vector2D) -> Self:
+        """Move the shape.
+
+        Args:
+            vector: The direction and distance in mm.
+
+        Returns:
+            The translated shape.
+        """
+        raise NotImplementedError("Method translate() not implemented.")
+
+    def translated(self, vector: Vector2D) -> Self:
         """Create a copy of itself and move it.
 
         Args:
             vector: The direction and distance in mm.
-            x: The distance in mm in the x-direction.
-            y: The distance in mm in the y-direction.
 
         Returns:
             The translated copy.
         """
-        return self.copy().translate(vector=vector, x=x, y=y)
+        return self.copy().translate(vector=vector)
+
+    def rotate(
+        self,
+        angle: float,
+        origin: Vector2D = Vector2D.zero(),
+        use_degrees: bool = True,
+    ) -> Self:
+        """Rotate the shape around a given point.
+
+        Args:
+            angle: Rotation angle.
+            origin: Coordinates (in mm) of the point around which to rotate.
+            use_degrees: `True` if rotation angle is given in degrees, `False` if given
+                in radians.
+
+        Returns:
+            The rotated shape.
+        """
+        raise NotImplementedError("Method rotate() not implemented.")
 
     def rotated(
         self,
-        angle: float | int,
-        origin: Vec2DCompatible = [0, 0],
+        angle: float,
+        origin: Vector2D = Vector2D.zero(),
         use_degrees: bool = True,
     ) -> Self:
         """Create a copy of itself and rotate it.
@@ -221,45 +244,6 @@ class GeomShape(ABC):
         return self.__repr__()
 
     @abstractmethod
-    def translate(
-        self,
-        vector: Vec2DCompatible | None = None,
-        x: float | None = None,
-        y: float | None = None,
-    ) -> Self:
-        """Move the shape.
-
-        Args:
-            vector: The direction and distance in mm.
-            x: The distance in mm in the x-direction.
-            y: The distance in mm in the y-direction.
-
-        Returns:
-            The translated shape.
-        """
-        ...
-
-    @abstractmethod
-    def rotate(
-        self,
-        angle: float | int,
-        origin: Vec2DCompatible = [0, 0],
-        use_degrees: bool = True,
-    ) -> Self:
-        """Rotate the shape around a given point.
-
-        Args:
-            angle: Rotation angle.
-            origin: Coordinates (in mm) of the point around which to rotate.
-            use_degrees: `True` if rotation angle is given in degrees, `False` if given
-                in radians.
-
-        Returns:
-            The rotated shape.
-        """
-        ...
-
-    @abstractmethod
     def __repr__(self) -> str:
         """Return the string representation.
 
@@ -292,7 +276,7 @@ class GeomShapeClosed(GeomShape):
         """
         return self.copy().inflate(amount=amount, tol=tol)
 
-    def keepout(
+    def subtract(
         self,
         shape_to_keep_out: GeomShape,
         min_segment_length: float = MIN_SEGMENT_LENGTH,

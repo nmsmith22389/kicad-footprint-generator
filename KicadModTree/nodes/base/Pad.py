@@ -111,7 +111,10 @@ class ReferencedPad(Node):
         return self
 
     def rotate(
-        self, angle: float, origin: Vec2DCompatible = (0, 0), use_degrees: bool = True
+        self,
+        angle: float,
+        origin: Vector2D = Vector2D.zero(),
+        use_degrees: bool = True,
     ) -> ReferencedPad:
         """Rotate the pad around the given origin.
 
@@ -121,17 +124,13 @@ class ReferencedPad(Node):
             use_degrees: `True` if the angle is given in degrees, `False` if given in
                 radians.
         """
-        self.at.rotate(angle=angle, origin=Vector2D(origin), use_degrees=use_degrees)
+        self.at.rotate(angle=angle, origin=origin, use_degrees=use_degrees)
         self.rotation += angle if use_degrees else math.degrees(angle)
         return self
 
     def getRoundRadius(self) -> float:
         """Get the round radius of the pad."""
         return self.reference_pad.getRoundRadius()
-
-    def get_flattened_nodes(self) -> list[ReferencedPad]:
-        """Return the nodes to serialize."""
-        return [self]
 
     def __repr__(self) -> str:
         """The string representation of the referenced pad."""
@@ -264,7 +263,7 @@ class Pad(Node):
     """Round radius handler."""
     zone_connection: ZoneConnection
     """Zone connection."""
-    shape_in_zone: str | None
+    shape_in_zone: str
     """Shape in zone."""
     unconnected_layer_mode: UnconnectedLayerMode
     """Unconnected layer mode."""
@@ -302,9 +301,9 @@ class Pad(Node):
         rotation: float = 0.0,
         fab_property: FabProperty | None = None,
         drill: float | Vec2DCompatible | None = None,
-        solder_paste_margin_ratio: float = 0,
-        solder_paste_margin: float = 0,
-        solder_mask_margin: float = 0,
+        solder_paste_margin_ratio: float = 0.0,
+        solder_paste_margin: float = 0.0,
+        solder_mask_margin: float = 0.0,
         tuning_properties: TuningProperties | None = None,
         round_radius_handler: RoundRadiusHandler | None = None,
         zone_connection: ZoneConnection = ZoneConnection.INHERIT,
@@ -460,11 +459,11 @@ class Pad(Node):
         self.mirror = [None, None]
         if x_mirror is not None:
             self.mirror[0] = x_mirror
-            self.at.x = 2 * self.mirror[0] - self.at.x
+            self.at.x = 2 * x_mirror - self.at.x
             self.offset.x *= -1
         if y_mirror is not None:
             self.mirror[1] = y_mirror
-            self.at.y = 2 * self.mirror[1] - self.at.y
+            self.at.y = 2 * y_mirror - self.at.y
             self.offset.y *= -1
 
     def _init_drill(self, drill: float | Vec2DCompatible | None) -> None:
@@ -483,7 +482,10 @@ class Pad(Node):
                 pass  # TODO: throw warning because drill is not supported
 
     def rotate(
-        self, angle: float, origin: Vec2DCompatible = (0, 0), use_degrees: bool = True
+        self,
+        angle: float,
+        origin: Vector2D = Vector2D.zero(),
+        use_degrees: bool = True,
     ) -> Pad:
         """Rotate the pad around the given origin.
 
@@ -493,7 +495,7 @@ class Pad(Node):
             use_degrees: `True` if the angle is given in degrees, `False` if given in
                 radians.
         """
-        self.at.rotate(angle=angle, origin=Vector2D(origin), use_degrees=use_degrees)
+        self.at.rotate(angle=angle, origin=origin, use_degrees=use_degrees)
         # The sign of the rotation is historically negative. Why? No idea.
         self.rotation -= angle if use_degrees else math.degrees(angle)
         return self
@@ -565,7 +567,7 @@ class Pad(Node):
     def getRoundRadius(self) -> float:
         """Get the round radius of the pad."""
         if self.shape == Pad.SHAPE_CUSTOM:
-            r_max = 0
+            r_max = 0.0
             for p in self.primitives:
                 width = p.width if p.width is not None else 0.0
                 r = width / 2
@@ -578,10 +580,6 @@ class Pad(Node):
             raise RuntimeError(
                 "getRoundRadius() called but _round_radius_handler is None."
             )
-
-    def get_flattened_nodes(self) -> list[Pad]:
-        """Return the nodes to serialize."""
-        return [self]
 
     @property
     def fab_property(self) -> FabProperty | None:

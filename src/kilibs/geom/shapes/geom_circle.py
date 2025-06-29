@@ -62,29 +62,22 @@ class GeomCircle(GeomShapeClosed):
         """Return a list with itself in it since a line is a basic shape."""
         return [self]
 
-    def translate(
-        self,
-        vector: Vec2DCompatible | None = None,
-        x: float | None = None,
-        y: float | None = None,
-    ) -> GeomCircle:
+    def translate(self, vector: Vector2D) -> GeomCircle:
         """Move the circle.
 
         Args:
             vector: The direction and distance in mm.
-            x: The distance in mm in the x-direction.
-            y: The distance in mm in the y-direction.
 
         Returns:
             The translated circle.
         """
-        self.center.translate(vector=vector, x=x, y=y)
+        self.center += vector
         return self
 
     def rotate(
         self,
-        angle: float | int,
-        origin: Vec2DCompatible = [0, 0],
+        angle: float,
+        origin: Vector2D = Vector2D.zero(),
         use_degrees: bool = True,
     ) -> GeomCircle:
         """Rotate the circle around a given point.
@@ -99,7 +92,6 @@ class GeomCircle(GeomShapeClosed):
             The rotated circle.
         """
         if angle:
-            origin = Vector2D(origin)
             self.center.rotate(angle=angle, origin=origin, use_degrees=use_degrees)
         return self
 

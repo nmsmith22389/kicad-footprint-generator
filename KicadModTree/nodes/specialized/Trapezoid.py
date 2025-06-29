@@ -15,6 +15,9 @@
 
 from __future__ import annotations
 
+from typing import cast
+
+from KicadModTree.nodes.Node import Node
 from KicadModTree.nodes.NodeShape import NodeShape
 from KicadModTree.util.line_style import LineStyle
 from kilibs.geom import GeomTrapezoid, Vec2DCompatible
@@ -76,4 +79,23 @@ class Trapezoid(NodeShape, GeomTrapezoid):
                 given in radians.
             use_degrees: bool = True,
         """
-        self.init_super(kwargs=locals())
+        NodeShape.__init__(self, layer=layer, width=width, style=style, fill=fill)
+        GeomTrapezoid.__init__(
+            self,
+            shape=shape,
+            size=size,
+            center=center,
+            start=start,
+            corner_radius=corner_radius,
+            side_angle=side_angle,
+            rotation_angle=rotation_angle,
+            use_degrees=use_degrees,
+        )
+        if offset:
+            self.inflate(amount=offset)
+
+    def get_flattened_nodes(self) -> list[Node]:
+        """Return the nodes to serialize."""
+        return cast(
+            list[Node], self.to_child_nodes(list(self.get_shapes_back_compatible()))
+        )

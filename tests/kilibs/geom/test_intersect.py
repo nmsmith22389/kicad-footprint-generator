@@ -65,7 +65,7 @@ def test_intersect_shape_fully_outside(
     bbox = shape.bbox()
     for other_shape in TEST_SHAPES:
         translate_amount = bbox.left - other_shape.bbox().right - 1
-        translated_shape = other_shape.translated(x=translate_amount)
+        translated_shape = other_shape.translated(Vector2D(translate_amount, 0))
         intersections = translated_shape.intersect(
             other=shape, strict_intersection=strict_intersection, tol=rel
         )

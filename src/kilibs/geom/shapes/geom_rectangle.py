@@ -106,31 +106,24 @@ class GeomRectangle(GeomShapeClosed):
         """Return a list with itself in it."""
         return [self]
 
-    def translate(
-        self,
-        vector: Vec2DCompatible | None = None,
-        x: float | None = None,
-        y: float | None = None,
-    ) -> GeomRectangle:
+    def translate(self, vector: Vector2D) -> GeomRectangle:
         """Move the rectangle.
 
         Args:
             vector: The direction and distance in mm.
-            x: The distance in mm in the x-direction.
-            y: The distance in mm in the y-direction.
 
         Returns:
             The translated rectangle.
         """
-        self.center.translate(vector=vector, x=x, y=y)
+        self.center += vector
         self._corner_pts = None
         self._bbox = None
         return self
 
     def rotate(
         self,
-        angle: float | int,
-        origin: Vec2DCompatible = [0, 0],
+        angle: float,
+        origin: Vector2D = Vector2D.zero(),
         use_degrees: bool = True,
     ) -> GeomRectangle:
         """Rotate the rectangle around a given point.
@@ -145,7 +138,6 @@ class GeomRectangle(GeomShapeClosed):
             The rotated rectangle.
         """
         if angle:
-            origin = Vector2D(origin)
             self.center.rotate(angle=angle, origin=origin, use_degrees=use_degrees)
             if not use_degrees:
                 angle = math.degrees(angle)

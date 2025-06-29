@@ -223,8 +223,5 @@ class ChamferedNativePad(Node):
         chamfer_size = Vector2D([x if x > 0 else 0 for x in chamfer_size])
         return chamfer_size
 
-    def get_flattened_nodes(self):
-        return [self.pad]
-
     def getRoundRadius(self):
         return self.pad.getRoundRadius()

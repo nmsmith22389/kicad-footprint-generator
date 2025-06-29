@@ -15,7 +15,7 @@
 
 from __future__ import annotations
 
-from KicadModTree.nodes import Node
+from KicadModTree.nodes.Node import Node
 
 
 class EmbeddedFonts(Node):
@@ -38,10 +38,6 @@ class EmbeddedFonts(Node):
     def enabled(self) -> bool:
         """Return whether the embedded font is enabled or not."""
         return False
-
-    def get_flattened_nodes(self) -> list[EmbeddedFonts]:
-        """Return the nodes to serialize."""
-        return [self]
 
     def __repr__(self) -> str:
         """The string representation of the embedded fonts."""

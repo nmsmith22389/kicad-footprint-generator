@@ -152,31 +152,24 @@ class GeomCompoundPolygon(GeomShapeClosed):
             del points_and_arcs[-1]
         return points_and_arcs
 
-    def translate(
-        self,
-        vector: Vec2DCompatible | None = None,
-        x: float | None = None,
-        y: float | None = None,
-    ) -> GeomCompoundPolygon:
+    def translate(self, vector: Vector2D) -> GeomCompoundPolygon:
         """Move the compound polygon.
 
         Args:
             vector: The direction and distance in mm.
-            x: The distance in mm in the x-direction.
-            y: The distance in mm in the y-direction.
 
         Returns:
             The translated compound polygon.
         """
         for segment in self._segments:
-            segment.translate(vector=vector, x=x, y=y)
+            segment.translate(vector=vector)
         self._bbox = None
         return self
 
     def rotate(
         self,
-        angle: float | int,
-        origin: Vec2DCompatible = [0, 0],
+        angle: float,
+        origin: Vector2D = Vector2D.zero(),
         use_degrees: bool = True,
     ) -> GeomCompoundPolygon:
         """Rotate the compound polygon around a given point.

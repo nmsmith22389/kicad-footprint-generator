@@ -154,30 +154,23 @@ class GeomRoundRectangle(GeomShapeClosed):
                     child.rotate(angle=self.angle, origin=self.center, use_degrees=True)
         return self._shapes
 
-    def translate(
-        self,
-        vector: Vec2DCompatible | None = None,
-        x: float | None = None,
-        y: float | None = None,
-    ) -> GeomRoundRectangle:
+    def translate(self, vector: Vector2D) -> GeomRoundRectangle:
         """Move the round rectangle.
 
         Args:
             vector: The direction and distance in mm.
-            x: The distance in mm in the x-direction.
-            y: The distance in mm in the y-direction.
 
         Returns:
             The translated round rectangle.
         """
-        self.center.translate(vector=vector, x=x, y=y)
+        self.center += vector
         self._shapes = []
         return self
 
     def rotate(
         self,
-        angle: float | int,
-        origin: Vec2DCompatible = [0, 0],
+        angle: float,
+        origin: Vector2D = Vector2D.zero(),
         use_degrees: bool = True,
     ) -> GeomRoundRectangle:
         """Rotate the round rectangle around a given point.
@@ -192,7 +185,6 @@ class GeomRoundRectangle(GeomShapeClosed):
             The rotated round rectangle.
         """
         if angle:
-            origin = Vector2D(origin)
             self.center.rotate(angle=angle, origin=origin, use_degrees=use_degrees)
             self._shapes = []
         return self

@@ -14,10 +14,12 @@
 # (C) 2016 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 
 from .corner_handling import ChamferSizeHandler, RoundRadiusHandler
+from .corner_selection import CornerSelection
 from .line_style import LineStyle
 
 __all__ = [
-    "LineStyle",
     "ChamferSizeHandler",
+    "CornerSelection",
+    "LineStyle",
     "RoundRadiusHandler",
 ]

@@ -114,28 +114,15 @@ class GeomStadium(GeomShapeClosed):
         ]
         return self._shapes
 
-    def translate(
-        self,
-        vector: Vec2DCompatible | None = None,
-        x: float | None = None,
-        y: float | None = None,
-    ) -> GeomStadium:
+    def translate(self, vector: Vector2D) -> GeomStadium:
         """Move the stadium.
 
         Args:
             vector: The direction and distance in mm.
-            x: The distance in mm in the x-direction.
-            y: The distance in mm in the y-direction.
 
         Returns:
             The translated stadium.
         """
-        if vector is not None:
-            vector = Vector2D(vector)
-        elif x is not None or y is not None:
-            vector = Vector2D(x if x else 0, y if y else 0)
-        else:
-            raise KeyError("Either 'x', 'y', or 'vector' must be provided.")
         self.centers[0] += vector
         self.centers[1] += vector
         self._shapes = []
@@ -143,8 +130,8 @@ class GeomStadium(GeomShapeClosed):
 
     def rotate(
         self,
-        angle: float | int,
-        origin: Vec2DCompatible = [0, 0],
+        angle: float,
+        origin: Vector2D = Vector2D.zero(),
         use_degrees: bool = True,
     ) -> GeomStadium:
         """Rotate the stadium around a given point.
@@ -159,7 +146,6 @@ class GeomStadium(GeomShapeClosed):
             The rotated stadium.
         """
         if angle:
-            origin = Vector2D(origin)
             self.centers[0].rotate(angle=angle, origin=origin, use_degrees=use_degrees)
             self.centers[1].rotate(angle=angle, origin=origin, use_degrees=use_degrees)
             self._shapes = []

@@ -149,33 +149,26 @@ class GeomCruciform(GeomShapeClosed):
             ]
             self._shape = GeomPolygon(shape=poly_pts)
             if self.angle:
-                self._shape.rotate(angle=self.angle, origin=(0, 0))
+                self._shape.rotate(angle=self.angle)
         return [self._shape]
 
-    def translate(
-        self,
-        vector: Vec2DCompatible | None = None,
-        x: float | None = None,
-        y: float | None = None,
-    ) -> GeomCruciform:
+    def translate(self, vector: Vector2D) -> GeomCruciform:
         """Move the cruciform.
 
         Args:
             vector: The direction and distance in mm.
-            x: The distance in mm in the x-direction.
-            y: The distance in mm in the y-direction.
 
         Returns:
             The translated cruciform.
         """
-        self.center.translate(vector=vector, x=x, y=y)
+        self.center.translate(vector=vector)
         self._shape = None
         return self
 
     def rotate(
         self,
-        angle: float | int,
-        origin: Vec2DCompatible = [0, 0],
+        angle: float,
+        origin: Vector2D = Vector2D.zero(),
         use_degrees: bool = True,
     ) -> GeomCruciform:
         """Rotate the cruciform around a given point.
@@ -190,7 +183,6 @@ class GeomCruciform(GeomShapeClosed):
             The rotated cruciform.
         """
         if angle:
-            origin = Vector2D(origin)
             self.center.rotate(angle=angle, origin=origin, use_degrees=use_degrees)
             self._shape = None
         return self

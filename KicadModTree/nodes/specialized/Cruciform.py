@@ -15,6 +15,9 @@
 
 from __future__ import annotations
 
+from typing import cast
+
+from KicadModTree.nodes.Node import Node
 from KicadModTree.nodes.NodeShape import NodeShape
 from KicadModTree.util.line_style import LineStyle
 from kilibs.geom import GeomCruciform, Vec2DCompatible
@@ -79,4 +82,21 @@ class Cruciform(NodeShape, GeomCruciform):
             use_degrees: `True` if the rotation angle is given in degrees, `False` if
                 given in radians.
         """
-        self.init_super(kwargs=locals())
+        NodeShape.__init__(self, layer=layer, width=width, style=style, fill=fill)
+        GeomCruciform.__init__(
+            self,
+            shape=shape,
+            overall_w=overall_w,
+            overall_h=overall_h,
+            tail_w=tail_w,
+            tail_h=tail_h,
+            center=center,
+            angle=angle,
+            use_degrees=use_degrees,
+        )
+        if offset:
+            self.inflate(amount=offset)
+
+    def get_flattened_nodes(self) -> list[Node]:
+        """Return the nodes to serialize."""
+        return cast(list[Node], self.to_child_nodes(list(self.get_shapes())))

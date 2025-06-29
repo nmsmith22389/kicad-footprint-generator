@@ -283,30 +283,23 @@ class GeomTrapezoid(GeomShapeClosed):
                 )
         return self._shapes
 
-    def translate(
-        self,
-        vector: Vec2DCompatible | None = None,
-        x: float | None = None,
-        y: float | None = None,
-    ) -> GeomTrapezoid:
-        """Move the round rectangle.
+    def translate(self, vector: Vector2D) -> GeomTrapezoid:
+        """Move the trapezoid.
 
         Args:
             vector: The direction and distance in mm.
-            x: The distance in mm in the x-direction.
-            y: The distance in mm in the y-direction.
 
         Returns:
-            The translated round rectangle.
+            The translated trapezoid.
         """
-        self.center.translate(vector=vector, x=x, y=y)
+        self.center += vector
         self._shapes = []
         return self
 
     def rotate(
         self,
-        angle: float | int,
-        origin: Vec2DCompatible = [0, 0],
+        angle: float,
+        origin: Vector2D = Vector2D.zero(),
         use_degrees: bool = True,
     ) -> GeomTrapezoid:
         """Rotate the trapezoid around a given point.
@@ -321,7 +314,6 @@ class GeomTrapezoid(GeomShapeClosed):
             The rotated trapezoid.
         """
         if angle:
-            origin = Vector2D(origin)
             self.center.rotate(angle=angle, origin=origin, use_degrees=use_degrees)
             self._shapes = []
         return self

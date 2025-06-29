@@ -65,7 +65,7 @@ class KicadFileHandler(FileHandler):
         CompoundPolygon: SerializerPriority.get_sort_key_compound_polygon,
         Zone: SerializerPriority.get_sort_key_zone,
         Pad: SerializerPriority.get_sort_key_pad,
-        ChamferedPad:  SerializerPriority.get_sort_key_pad,
+        ChamferedPad: SerializerPriority.get_sort_key_pad,
         ReferencedPad: SerializerPriority.get_sort_key_referenced_pad,
         EmbeddedFonts: SerializerPriority.get_sort_key_embedded_fonts,
         Model: SerializerPriority.get_sort_key_model,

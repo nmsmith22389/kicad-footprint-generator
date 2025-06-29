@@ -183,7 +183,7 @@ class PadArray(Node):
                 self.increment,
             )
         elif callable(self.increment):
-            pad_numbers = [self.initial_pin]
+            pad_numbers = cast(list[str | int | None], [self.initial_pin])
             for _ in range(1, self.pincount):
                 pad_numbers.append(self.increment(pad_numbers[-1]))
         else:  # if isinstance(self.increment, Generator):

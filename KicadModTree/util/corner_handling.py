@@ -65,7 +65,7 @@ class RoundRadiusHandler(object):
         """
         return self.getRadiusRatio(shortest_sidelength)*shortest_sidelength
 
-    def roundingRequested(self):
+    def roundingRequested(self) -> bool:
         r"""Check if the pad has a rounded corner
 
         :return: True if rounded corners are required
@@ -121,7 +121,7 @@ class ChamferSizeHandler(object):
           This parameter allows to set the default chamfer ratio
     """
 
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         default_chamfer_ratio = getOptionalNumberTypeParam(
             kwargs, 'default_chamfer_ratio', default_value=0.25,
             low_limit=0, high_limit=0.5)
@@ -199,7 +199,7 @@ class ChamferSizeHandler(object):
 
         return True
 
-    def limitMaxChamfer(self, limit):
+    def limitMaxChamfer(self, limit) -> None:
         r"""Set a new maximum limit
 
         :param limit: the new limit.
@@ -211,7 +211,7 @@ class ChamferSizeHandler(object):
         else:
             self.maximum_chamfer = limit
 
-    def __str__(self):
+    def __str__(self) -> str:
         return "ratio {}, max {}, exact {}".format(
             self.chamfer_ratio, self.maximum_chamfer,
             self.chamfer_exact

@@ -30,7 +30,7 @@ class Circle(NodeShape, GeomCircle):
         width: float | None = None,
         style: LineStyle = LineStyle.SOLID,
         fill: bool = False,
-        offset: float = 0,
+        offset: float = 0.0,
         shape: Circle | GeomCircle | Arc | GeomArc | None = None,
         center: Vec2DCompatible | None = None,
         radius: float | None = None,
@@ -50,8 +50,7 @@ class Circle(NodeShape, GeomCircle):
             center: Coordinates (in mm) of the center of the circle.
             radius: Radius of the circle in mm.
         """
-        self.init_super(kwargs=locals())
-
-    def get_flattened_nodes(self) -> list[Circle]:
-        """Return the nodes to serialize."""
-        return [self]
+        NodeShape.__init__(self, layer=layer, width=width, style=style, fill=fill)
+        GeomCircle.__init__(self, shape=shape, center=center, radius=radius)
+        if offset:
+            self.inflate(amount=offset)

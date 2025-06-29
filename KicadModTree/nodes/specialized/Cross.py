@@ -15,6 +15,9 @@
 
 from __future__ import annotations
 
+from typing import cast
+
+from KicadModTree.nodes.Node import Node
 from KicadModTree.nodes.NodeShape import NodeShape
 from KicadModTree.util.line_style import LineStyle
 from kilibs.geom import GeomCross, Vec2DCompatible
@@ -62,4 +65,16 @@ class Cross(NodeShape, GeomCross):
             >>> cross1 = Cross(center=(0, 0), size=1)
             >>> cross2 = Cross(shape=cross1)
         """
-        self.init_super(kwargs=locals())
+        NodeShape.__init__(self, layer=layer, width=width, style=style)
+        GeomCross.__init__(
+            self,
+            shape=shape,
+            center=center,
+            size=size,
+            angle=angle,
+            use_degrees=use_degrees,
+        )
+
+    def get_flattened_nodes(self) -> list[Node]:
+        """Return the nodes to serialize."""
+        return cast(list[Node], self.to_child_nodes(list(self.get_shapes())))

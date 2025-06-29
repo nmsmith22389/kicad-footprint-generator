@@ -28,7 +28,7 @@ from typing import Any, Protocol, Self, runtime_checkable
 
 from _hashlib import HASH
 
-from kilibs.geom import BoundingBox, Vec2DCompatible, Vector2D, Vector3D
+from kilibs.geom import BoundingBox, Vector2D, Vector3D
 
 
 class MultipleParentsError(RuntimeError):
@@ -172,6 +172,7 @@ class TStamp(object):
         """
         if use_obj_hash:
             if obj is not None:
+                d: str | dict[str, Any]
                 if isinstance(obj, HasCallableHashDict):
                     d = obj.hashdict()
                 else:
@@ -210,7 +211,8 @@ class TStamp(object):
                 use_obj_hash=True,
             )
         else:
-            print(f"WARNING: TStamp is fixed at {print_stack()}")
+            print("WARNING: TStamp is fixed at:")
+            print_stack()
         return self.getTStamp()
 
     def getTStampSeed(self) -> uuid.UUID | None:
@@ -222,7 +224,7 @@ class TStamp(object):
         self.setTStampSeed(
             uuid.uuid5(
                 namespace=uuid.uuid1(),
-                name=f"KicadModTree.Node.{str(__class__.__name__)}.{str(self._unique_id)}",
+                name=f"KicadModTree.Node.{str(self.__class__.__name__)}.{str(self._unique_id)}",
             )
         )
         return self.getTStampSeed()
@@ -508,10 +510,10 @@ class Node(ABC):
 
     def rotate(
         self,
-        angle: float | int,
-        origin: Vec2DCompatible = [0, 0],
+        angle: float,
+        origin: Vector2D = Vector2D.zero(),
         use_degrees: bool = True,
-    ) -> Node:
+    ) -> Self:
         """Rotate the node around a given point.
 
         Args:
@@ -528,10 +530,10 @@ class Node(ABC):
 
     def rotated(
         self,
-        angle: float | int,
-        origin: Vec2DCompatible = [0, 0],
+        angle: float,
+        origin: Vector2D = Vector2D.zero(),
         use_degrees: bool = True,
-    ) -> Node:
+    ) -> Self:
         """Create a copy of the node and rotate it around a given point.
 
         Args:

@@ -88,7 +88,10 @@ class _TextBase(Node):
         self.hide = hide
 
     def rotate(
-        self, angle: float, origin: Vec2DCompatible = (0, 0), use_degrees: bool = True
+        self,
+        angle: float,
+        origin: Vector2D = Vector2D.zero(),
+        use_degrees: bool = True,
     ) -> Self:
         """Rotate text around a given origin.
 
@@ -98,7 +101,7 @@ class _TextBase(Node):
             use_degrees: `True` if the angle shall be interpreted in degrees, `False` if
                 the angle is given in radians.
         """
-        self.at.rotate(angle=angle, origin=Vector2D(origin), use_degrees=use_degrees)
+        self.at.rotate(angle=angle, origin=origin, use_degrees=use_degrees)
         a = angle if use_degrees else math.degrees(angle)
         # subtraction because kicad text field rotation is the wrong way round
         self.rotation -= a
@@ -130,10 +133,6 @@ class _TextBase(Node):
             min=Vector2D(min_x, min_y),
             max=Vector2D(max_x, max_y),
         )
-
-    def get_flattened_nodes(self) -> list[Node]:
-        """Return the nodes to serialize."""
-        return [self]
 
     def __repr__(self) -> str:
         """A string representation of the text base node."""

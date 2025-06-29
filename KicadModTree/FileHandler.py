@@ -41,6 +41,5 @@ class FileHandler(abc.ABC):
 
     @abc.abstractmethod
     def serialize(self) -> str:
-        """Serialize the object (e.g. footprint) to a string (to be saved into a file).
-        """
+        """Serialize the object (e.g. footprint) to a string (to be saved into a file)."""
         raise NotImplementedError("serialize has to be implemented by child class")

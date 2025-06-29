@@ -15,7 +15,7 @@
 
 from __future__ import annotations
 from collections.abc import Sequence
-from typing import Generator, Literal, Self
+from typing import Generator, Self
 
 
 class CornerSelection():
@@ -152,7 +152,7 @@ class CornerSelection():
             self[i] &= other[i]
         return self
 
-    def __len__(self) -> Literal[4]:
+    def __len__(self) -> int:
         """Number of items."""
         return 4
 

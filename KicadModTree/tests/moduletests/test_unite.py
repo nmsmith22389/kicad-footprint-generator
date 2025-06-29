@@ -17,12 +17,13 @@ from typing import cast
 
 from KicadModTree import Footprint, FootprintType, NodeShape
 from KicadModTree.tests.test_utils.fp_file_test import SerialisationTest
-from kilibs.geom.shapes import (
+from kilibs.geom import (
     GeomCircle,
     GeomPolygon,
     GeomRectangle,
     GeomShape,
     GeomShapeClosed,
+    Vector2D,
 )
 
 
@@ -30,12 +31,12 @@ def center_shape(shape: GeomShapeClosed) -> GeomShapeClosed:
     bbox = shape.bbox()
     x_center = -(bbox.left + bbox.right) / 2
     y_center = -(bbox.top + bbox.bottom) / 2
-    return shape.translated(x=x_center, y=y_center)
+    return shape.translated(Vector2D(x_center, y=y_center))
 
 
 def merge_and_add_to_footprint(
     shape1: GeomShapeClosed, shape2: GeomShapeClosed, fp: Footprint, y: float
-):
+) -> float:
     bbox1 = shape1.bbox()
     bbox2 = shape2.bbox()
     width1 = bbox1.size.x
@@ -46,17 +47,17 @@ def merge_and_add_to_footprint(
     bbox = bbox1.copy().include_bbox(bbox2)
     for i in range(3):
         shape1 = center_shape(shape1).translated(
-            x=x[i] - dist_x1[i], y=y + bbox.size.y / 2
+            Vector2D(x[i] - dist_x1[i], y + bbox.size.y / 2)
         )
         shape2 = center_shape(shape2).translated(
-            x=x[i] + dist_x2[i], y=y + bbox.size.y / 2
+            Vector2D(x[i] + dist_x2[i], y + bbox.size.y / 2)
         )
         result = cast(list[GeomShape], shape1.unite(shape2))
         fp.extend(NodeShape.to_nodes(result))
     return bbox.size.y + 1
 
 
-def gen_footprint():
+def gen_footprint() -> Footprint:
     kicad_mod = Footprint("test", FootprintType.SMD)
     # Triangle
     shape1 = [(-sqrt(3), 0.0), (0.0, -1.0), (0.0, 1.0)]
@@ -83,7 +84,7 @@ def gen_footprint():
 
 class TestUnite(SerialisationTest):
 
-    def test_unite(self):
+    def test_unite(self) -> None:
 
         kicad_mod = gen_footprint()
         self.assert_serialises_as(kicad_mod, "test_unite.kicad_mod")

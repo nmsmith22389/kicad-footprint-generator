@@ -146,7 +146,7 @@ class ChamferedPad(Pad):
                 Vector2D(outside.x - self.chamfer_size.x, outside.y),
             ]
 
-            polygon_width = 0
+            polygon_width = 0.0
             if round_radius_handler.roundingRequested():
                 if (
                     abs(self.chamfer_size[0] - self.chamfer_size[1]) > TOL_MM

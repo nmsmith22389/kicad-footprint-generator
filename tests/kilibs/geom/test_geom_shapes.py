@@ -222,7 +222,7 @@ def test_constructors(rel: float = TOL_MM) -> None:
 @pytest.mark.parametrize("shape", TEST_SHAPES)
 def test_copy(shape: GeomShape, rel: float = TOL_MM) -> None:
     copied_shape = shape.copy()
-    translated_copy = copied_shape.copy().translate(x=1.2345)
+    translated_copy = copied_shape.copy().translate(Vector2D(1.2345, 0))
     # Test that when modifying a copied shape, the original remains the same.
     # (We are testing that the deep copy works correctly). To do so, we modify
     # one of the copies, test that it is different, and that the original is equal
@@ -237,8 +237,8 @@ def test_translate(shape: GeomShape, rel: float = TOL_MM) -> None:
 
     vectors: list[Vec2DCompatible] = []
     vectors.append(Vector2D(1, 0))
-    vectors.append((0, 1))
-    vectors.append([-1, 0])
+    vectors.append(Vector2D(0, 1))
+    vectors.append(Vector2D(-1, 0))
     vectors.append(Vector2D(0, -1))
 
     # Perform vector translations and test that the shapes are not equal anymore:
@@ -254,7 +254,7 @@ def test_translate(shape: GeomShape, rel: float = TOL_MM) -> None:
     # until the last translation is performed which undoes the previous ones:
     values: list[float] = [-1, -2.5, 3.5]
     for i, value in enumerate(values):
-        translated_shape.translate(x=value)
+        translated_shape.translate(Vector2D(value, 0))
         if i < len(values) - 1:
             assert not is_equal_geom_shapes(shape, translated_shape, rel)
         else:
@@ -264,7 +264,7 @@ def test_translate(shape: GeomShape, rel: float = TOL_MM) -> None:
     # until the last translation is performed which undoes the previous ones:
     values = [-1, -2.5, 3.5]
     for i, value in enumerate(values):
-        translated_shape.translate(y=value)
+        translated_shape.translate(Vector2D(0, value))
         if i < len(values) - 1:
             assert not is_equal_geom_shapes(shape, translated_shape, rel)
         else:
@@ -274,7 +274,7 @@ def test_translate(shape: GeomShape, rel: float = TOL_MM) -> None:
 @pytest.mark.parametrize("shape", TEST_SHAPES)
 def test_rotate(shape: GeomShape, rel: float = TOL_MM) -> None:
     rotated_shape = shape.copy()
-    origin = (1, -1)
+    origin = Vector2D(1, -1)
     angle_degs = [90, 120, 160, -10]
     angle_rads = [radians(angle_deg) for angle_deg in angle_degs]
 
