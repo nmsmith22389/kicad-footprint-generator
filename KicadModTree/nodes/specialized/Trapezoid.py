@@ -11,16 +11,18 @@
 #
 # (C) The KiCad Librarian Team
 
+"""Class definition for a trapezoid."""
+
 from __future__ import annotations
 
-from KicadModTree import LineStyle, NodeShape
+from KicadModTree.nodes.NodeShape import NodeShape
+from KicadModTree.util.line_style import LineStyle
 from kilibs.geom import GeomTrapezoid, Vec2DCompatible
-
-# pep8: noqa
-# flake8: noqa: E501
 
 
 class Trapezoid(NodeShape, GeomTrapezoid):
+    """A trapezoid."""
+
     def __init__(
         self,
         layer: str = "F.SilkS",
@@ -36,7 +38,7 @@ class Trapezoid(NodeShape, GeomTrapezoid):
         side_angle: float | None = None,
         rotation_angle: float = 0,
         use_degrees: bool = True,
-    ):
+    ) -> None:
         r"""Create a geometric isosceles trapezoid. That is a trapezoid with a symmetry
         axis. It has the option to round its corners.
 

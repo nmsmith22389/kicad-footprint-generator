@@ -1,8 +1,7 @@
 from dataclasses import dataclass
 from typing import Callable
 
-from KicadModTree import Circle, Node, LineStyle, Rectangle, PolygonLine
-from KicadModTree.nodes.specialized import Cross
+from KicadModTree import Circle, Node, LineStyle, Rectangle, PolygonLine, Cross
 from kilibs.geom import Vector2D
 from kilibs.declarative_defs import additional_drawings as ADs
 from kilibs.declarative_defs import repeat_defs, evaluable_defs as EDs
@@ -166,7 +165,7 @@ class CrossDrawingProvider(FPDrawingProvider):
         size = self.size.evaluate(context.evaluator)
 
         return [
-            Cross.Cross(
+            Cross(
                 center=center,
                 size=size,
                 angle=self.angle,

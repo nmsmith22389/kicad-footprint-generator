@@ -1,5 +1,5 @@
 from KicadModTree import *  # NOQA
-from KicadModTree.nodes.specialized import Trapezoid, RoundRectangle
+from KicadModTree import Trapezoid, RoundRectangle
 from scripts.tools.drawing_tools import (
     addKeepoutRect,
     addKeepoutRound,
@@ -421,7 +421,7 @@ def makeDSubStraight(
 
     # outline
     kicad_modg.append(
-        RoundRectangle.RoundRectangle(
+        RoundRectangle(
             size=Vector2D(w_fab, h_fab),
             start=Vector2D(l_fab, t_fab),
             corner_radius=outline_cornerradius,
@@ -430,7 +430,7 @@ def makeDSubStraight(
         )
     )
     kicad_modg.append(
-        RoundRectangle.RoundRectangle(
+        RoundRectangle(
             size=Vector2D(w_slk, h_slk),
             start=Vector2D(l_slk, t_slk),
             corner_radius=outline_cornerradius + slk_offset,
@@ -450,7 +450,7 @@ def makeDSubStraight(
 
     # connector_inside
     kicad_modg.append(
-        Trapezoid.Trapezoid(
+        Trapezoid(
             center=Vector2D(0, 0),
             size=Vector2D(wi_fab, hi_fab),
             side_angle=side_angle_degree,
@@ -460,7 +460,7 @@ def makeDSubStraight(
         )
     )
     kicad_modg.append(
-        Trapezoid.Trapezoid(
+        Trapezoid(
             size=Vector2D(wi_slk, hi_slk),
             start=Vector2D(li_slk, ti_slk),
             side_angle=side_angle_degree,

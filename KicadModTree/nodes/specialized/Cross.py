@@ -11,6 +11,8 @@
 #
 # (C) The KiCad Librarian Team
 
+"""Class definition for a cross."""
+
 from __future__ import annotations
 
 from KicadModTree.nodes.NodeShape import NodeShape
@@ -19,12 +21,11 @@ from kilibs.geom import GeomCross, Vec2DCompatible
 
 
 class Cross(NodeShape, GeomCross):
-    """
-    Represents a simple cross, centred at a points.
+    """A cross.
 
-    Crosses are drawn with a lot, and using text is fiddly because the
-    KiCad font doesn't put the centre of "+" on the baseline. Also a real
-    cross, positioned exactly, allows users to snap to the center point.
+    Crosses are drawn with a lot, and using text is fiddly because the KiCad font does
+    not put the centre of "+" on the baseline. Also, a real cross, positioned exactly,
+    allows users to snap to the center point.
     """
 
     def __init__(
@@ -37,7 +38,7 @@ class Cross(NodeShape, GeomCross):
         size: Vec2DCompatible | float | None = None,
         angle: float = 0,
         use_degrees: bool = True,
-    ):
+    ) -> None:
         """Create a cross node.
 
         Args:

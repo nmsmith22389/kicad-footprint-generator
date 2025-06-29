@@ -11,13 +11,18 @@
 #
 # (C) The KiCad Librarian Team
 
+"""Class definition for a cruciform."""
+
 from __future__ import annotations
 
-from KicadModTree import LineStyle, NodeShape
+from KicadModTree.nodes.NodeShape import NodeShape
+from KicadModTree.util.line_style import LineStyle
 from kilibs.geom import GeomCruciform, Vec2DCompatible
 
 
 class Cruciform(NodeShape, GeomCruciform):
+    """A cruciform."""
+
     def __init__(
         self,
         layer: str = "F.SilkS",
@@ -33,7 +38,7 @@ class Cruciform(NodeShape, GeomCruciform):
         center: Vec2DCompatible = (0, 0),
         angle: float = 0,
         use_degrees: bool = True,
-    ):
+    ) -> None:
         """Create a geometric cruciform.
 
         A cruciform is a cross-shaped object that is basically two rectangles

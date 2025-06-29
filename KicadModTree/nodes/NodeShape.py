@@ -11,6 +11,7 @@
 #
 # (C) The KiCad Librarian Team
 
+"""Class definition for the shape node."""
 
 from __future__ import annotations
 
@@ -39,13 +40,22 @@ from kilibs.geom import (
     GeomShapeNative,
     GeomStadium,
     GeomTrapezoid,
+    Vec2DCompatible,
+    Vector2D,
 )
 
 
 class NodeShape(Node, GeomShape):
-    """A node class providing generic functions to geometric shapes."""
+    """A node class for shapes."""
 
-    def init_super(self, kwargs: dict[str, Any]):
+    layer: str
+    """The layer on which the node is drawn."""
+    width: float | None
+    """The width of the outline of the shape."""
+    style: LineStyle
+    """The line style used to draw the outline of the shape."""
+
+    def init_super(self, kwargs: dict[str, Any]) -> None:
         """Initialize the parent classes. To be used from classes inheriting from
         `NodeShape` in form of `self.init_super(kwargs=locals())` in their `__init__()`
         function.
@@ -54,9 +64,9 @@ class NodeShape(Node, GeomShape):
             kwargs: A dictionary containing all parameters relevant for both the
                 `NodeShape` class and their parent that inherits fromm `GeomShape`.
         """
-        self.layer: str = kwargs.pop("layer")
-        self.width: float = kwargs.pop("width")
-        self.style: LineStyle = kwargs.pop("style")
+        self.layer = kwargs.pop("layer")
+        self.width = kwargs.pop("width")
+        self.style = kwargs.pop("style")
         kwargs.pop("self")
         if "fill" in kwargs:
             self.fill: bool = kwargs.pop("fill")
@@ -73,12 +83,21 @@ class NodeShape(Node, GeomShape):
 
     def copy(self) -> Self:
         """Creates a copy of itself."""
-        copy = self.__class__(
-            shape=self,
-            layer=self.layer,
-            width=self.width,
-            style=self.style,
-        )
+        if hasattr(self, "fill"):
+            copy = self.__class__(
+                shape=self,
+                layer=self.layer,
+                width=self.width,
+                style=self.style,
+                fill=self.fill,
+            )
+        else:
+            copy = self.__class__(
+                shape=self,
+                layer=self.layer,
+                width=self.width,
+                style=self.style,
+            )
         copy._parent = self._parent
         return copy
 
@@ -115,19 +134,48 @@ class NodeShape(Node, GeomShape):
             params.update({"offset": offset})
         return self.__class__(shape=shape, **params)
 
-    def getVirtualChilds(self) -> list[NodeShape]:
-        """Return a list containing the child nodes."""
-        # If we are called from within a basic node, we have no children:
-        if isinstance(self, GeomShapeNative):
-            return []
-        # Otherwise create Nodes corresponding to the types of geometry that the complex
-        # shape is composed of:
+    def get_flattened_nodes(self) -> list[NodeShape]:
+        """Return the nodes to serialize."""
+        # Create Nodes corresponding to the types of geometry that the shape is composed
+        # of:
         if isinstance(self, _ShapeImplementingGetShapesBackCompatible):
             return self.to_child_nodes(list(self.get_shapes_back_compatible()))
         elif isinstance(self, _ShapeImplementingGetAtomicShapesBackCompatible):
             return self.to_child_nodes(list(self.get_atomic_shapes_back_compatible()))
         else:
             return self.to_child_nodes(list(self.get_native_shapes()))
+
+    def translate(self, vector: Vector2D) -> NodeShape:
+        """Move the node.
+
+        Args:
+            vector: The direction and distance in mm.
+
+        Returns:
+            The translated node.
+        """
+        return super(Node, self).translate(vector=vector)
+
+    def rotate(
+        self,
+        angle: float | int,
+        origin: Vec2DCompatible = [0, 0],
+        use_degrees: bool = True,
+    ) -> NodeShape:
+        """Rotate the node around a given point.
+
+        Args:
+            angle: Rotation angle.
+            origin: Coordinates (in mm) of the point around which to rotate.
+            use_degrees: `True` if rotation angle is given in degrees, `False` if given
+                in radians.
+
+        Returns:
+            The rotated node.
+        """
+        return super(Node, self).rotate(
+            angle=angle, origin=origin, use_degrees=use_degrees
+        )
 
     def cut(  # type: ignore
         self,
@@ -327,7 +375,7 @@ class NodeShape(Node, GeomShape):
         """Get the bounding box of the node."""
         return super(Node, self).bbox()
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """The string representation of the NodeShape."""
         class_name = self.__class__.__name__
         # Start looking for a __repr__ method in the classes that appear after
@@ -343,7 +391,7 @@ class NodeShape(Node, GeomShape):
         repr += ")"
         return repr
 
-    def __str__(self):
+    def __str__(self) -> str:
         """The string representation of the NodeShape."""
         return self.__repr__()
 
@@ -354,7 +402,7 @@ class NodeShape(Node, GeomShape):
         width: float | None = None,
         style: LineStyle = LineStyle.SOLID,
         shape: Self | None = None,
-    ):
+    ) -> None:
         """Create an instance of a node shape."""
         raise NotImplementedError(
             f"`__init__()` not implemented for {self.__class__.__name__}."

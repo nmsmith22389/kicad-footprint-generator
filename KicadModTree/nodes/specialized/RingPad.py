@@ -1,160 +1,201 @@
-# KicadModTree is free software: you can redistribute it and/or
-# modify it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
+# kilibs is free software: you can redistribute it and/or modify it under the terms of
+# the GNU General Public License as published by the Free Software Foundation, either
+# version 3 of the License, or (at your option) any later version.
 #
-# KicadModTree is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
+# kilibs is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+# without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+# PURPOSE. See the GNU General Public License for more details.
 #
-# You should have received a copy of the GNU General Public License
-# along with kicad-footprint-generator. If not, see < http://www.gnu.org/licenses/ >.
+# You should have received a copy of the GNU General Public License along with kilibs.
+# If not, see < http://www.gnu.org/licenses/ >.
 #
 # (C) 2016 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 # (C) 2018 by Rene Poeschl, github @poeschlr
-from __future__ import division
+# (C) The KiCad Librarian Team
 
-from KicadModTree.nodes.Node import Node
-from kilibs.geom import GeomArc, GeomLine, Vector2D
-from KicadModTree.nodes.base.Pad import Pad
-from KicadModTree.nodes.base.Circle import Circle
-from KicadModTree.nodes.base.Arc import Arc
-from KicadModTree.nodes.base.Line import Line
+"""Class definitions for a ring pad."""
+
+from __future__ import annotations, division
+
 from math import ceil
+from typing import cast
+
+from KicadModTree.nodes.base.Arc import Arc
+from KicadModTree.nodes.base.Circle import Circle
+from KicadModTree.nodes.base.Line import Line
+from KicadModTree.nodes.base.Pad import Pad
+from KicadModTree.nodes.Node import Node
+from KicadModTree.nodes.NodeShape import NodeShape
+from kilibs.geom import GeomArc, GeomLine, Vec2DCompatible, Vector2D
 
 
 class RingPadPrimitive(Node):
-    r"""Add a RingPad to the render tree
+    """A ring pad primitive."""
 
-    :param \**kwargs:
-        See below
+    at: Vector2D
+    """Position of the center of the ring pad."""
+    radius: float
+    """Middle radius of the ring."""
+    width: float
+    """Width of the ring (outer radius - inner radius)."""
+    layers: list[str]
+    """Layers used for creating the pad."""
+    number: str | int
+    """Number/name of the pad."""
 
-    :Keyword Arguments:
-      * *radius*: (``float``) --
-        middle radius of the ring
-      * *width*: (``float``) --
-        width of the ring (outer radius - inner radius)
-      * *at*: (``Vector2D``) --
-        position of the center
-      * *layers*: (``Pad.Layers``) --
-        layers used for creating the pad
-      * *number* (``int``, ``str``) --
-        number/name of the pad (default: \"\")
-    """
+    def __init__(
+        self,
+        radius: float,
+        width: float,
+        layers: list[str],
+        at: Vector2D = Vector2D.zero(),
+        number: str | int = "",
+    ) -> None:
+        """Create a ring pad primitive.
 
-    def __init__(self, **kwargs):
+        Args:
+            radius: Middle radius of the ring.
+            width: Width of the ring (outer radius - inner radius).
+            at: Position of the center.
+            layers: Layers used for creating the pad.
+            number: Number/name of the pad.
+        """
         Node.__init__(self)
-        self.at = Vector2D(kwargs.get('at', (0, 0)))
-        self.radius = float(kwargs['radius'])
-        self.width = float(kwargs['width'])
-        self.layers = kwargs['layers']
-        self.number = kwargs.get('number', "")
+        self.at = Vector2D(at)
+        self.radius = radius
+        self.width = width
+        self.layers = layers
+        self.number = number
 
-    def copy(self):
+    def copy(self) -> RingPadPrimitive:
         return RingPadPrimitive(
-                    at=self.at, radius=self.radius,
-                    width=self.width, layers=self.layers,
-                    number=self.number
-                    )
+            at=self.at,
+            radius=self.radius,
+            width=self.width,
+            layers=self.layers,
+            number=self.number,
+        )
 
-    def getVirtualChilds(self):
-        return [Pad(number=self.number,
-                    type=Pad.TYPE_SMT, shape=Pad.SHAPE_CUSTOM,
-                    at=(self.at+Vector2D(self.radius, 0)),
-                    size=self.width, layers=self.layers,
-                    primitives=[Circle(
-                        center=(-self.radius, 0),
-                        radius=self.radius,
-                        width=self.width
-                        )]
-                    )]
+    def get_flattened_nodes(self) -> list[Pad]:
+        """Return the nodes to serialize."""
+        return [
+            Pad(
+                number=self.number,
+                type=Pad.TYPE_SMT,
+                shape=Pad.SHAPE_CUSTOM,
+                at=(self.at + Vector2D(self.radius, 0)),
+                size=self.width,
+                layers=self.layers,
+                primitives=[
+                    Circle(
+                        center=(-self.radius, 0), radius=self.radius, width=self.width
+                    )
+                ],
+            )
+        ]
 
 
 class ArcPadPrimitive(Node):
-    r"""Add a RingPad to the render tree
+    """An arc pad primitive."""
 
-    :param \**kwargs:
-        See below
+    reference_arc: GeomArc
+    """The reference arc used for this pad."""
+    width: float
+    """Width of the pad."""
+    number: str | int
+    """Number/name of the pad."""
+    layers: list[str]
+    """Layers on which are used for the pad."""
+    minimum_overlap: float
+    """Minimum overlap."""
+    round_radius: float
+    """The calculated round radius for the pad corners."""
+    start_line: GeomLine | None
+    """Line confining the side near the reference arc's start point."""
+    end_line: GeomLine | None
+    """Line confining the side near the reference arc's end point."""
 
-    :Keyword Arguments:
-        * *number* (``int``, ``str``) --
-          number/name of the pad (default: \"\")
-        * *width* (``float``) --
-          width of the pad
-        * *layers* (``Pad.Layers``) --
-          layers on which are used for the pad
-        * *round_radius_ratio* (``float``) --
-          round radius.
-          default: 25\% of ring width
-        * *max_round_radius* (``float``) --
-          maximum round radius, default: 0.25
-          Use none to ignore
-        * *reference_arc* (``GeomArc``) --
-          the reference arc used for this pad
-        * *start_line* (``GeomLine``) --
-          line confining the side near the reference points start point
-        * *end_line* (``GeomLine``) --
-          line confining the side near the reference points end point
-        * *minimum_overlap* (``float``)
-          minimum overlap. default 0.1
-    """
+    def __init__(
+        self,
+        reference_arc: GeomArc,
+        width: float,
+        layers: list[str],
+        start_line: GeomLine | None = None,
+        end_line: GeomLine | None = None,
+        number: str | int = "",
+        minimum_overlap: float = 0.1,
+        round_radius: float | None = None,
+        round_radius_ratio: float = 0.25,
+        max_round_radius: float | None = 0.25,
+    ) -> None:
+        """Create an arc pad primitive.
 
-    def __init__(self, **kwargs):
+        Args:
+            number: Number/name of the pad.
+            width: Width of the pad.
+            layers: Layers on which are used for the pad.
+            round_radius_ratio: Round radius.
+            max_round_radius: Maximum round radius. Use `None` to ignore.
+            reference_arc: The reference arc used for this pad.
+            start_line: Line confining the side near the reference points start point.
+            end_line: Line confining the side near the reference points end point.
+            minimum_overlap: Minimum overlap.
+        """
         Node.__init__(self)
-        self.reference_arc = GeomArc(shape=kwargs['reference_arc'])
-        self.width = float(kwargs['width'])
+        self.reference_arc = GeomArc(shape=reference_arc)
+        self.width = width
+        self.number = number
+        self.layers = layers
+        self.minimum_overlap = minimum_overlap
+        self._set_round_radius(round_radius, round_radius_ratio, max_round_radius)
+        self.set_limiting_lines(start_line, end_line)
 
-        self.number = kwargs.get('number', "")
-        self.layers = kwargs['layers']
-        self.minimum_overlap = kwargs.get('minimum_overlap', 0.1)
-
-        self.setRoundRadius(**kwargs)
-        self.setLimitingLines(**kwargs)
-
-    def setRoundRadius(self, **kwargs):
-        if 'round_radius' in kwargs:
-            self.round_radius = kwargs['round_radius']
+    def _set_round_radius(
+        self,
+        round_radius: float | None,
+        round_radius_ratio: float,
+        max_round_radius: float | None,
+    ) -> None:
+        if round_radius is not None:
+            self.round_radius = round_radius
             return
-
-        round_radius_ratio = kwargs.get('round_radius_ratio', 0.25)
-        max_round_radius = kwargs.get('max_round_radius', 0.25)
-        r = self.width*round_radius_ratio
+        r = self.width * round_radius_ratio
         if max_round_radius is not None and max_round_radius > 0:
             self.round_radius = min(r, max_round_radius)
 
-    def setLimitingLines(self, **kwargs):
-        if kwargs.get('start_line') is not None:
-            self.start_line = GeomLine(shape=kwargs.get('start_line'))
+    def set_limiting_lines(
+        self, start_line: GeomLine | None, end_line: GeomLine | None
+    ) -> None:
+        if start_line is not None:
+            self.start_line = start_line.copy()
         else:
             self.start_line = None
-        if kwargs.get('end_line') is not None:
-            self.end_line = GeomLine(shape=kwargs.get('end_line'))
+        if end_line is not None:
+            self.end_line = end_line.copy()
         else:
             self.end_line = None
 
-    def copy(self):
+    def copy(self) -> ArcPadPrimitive:
         return ArcPadPrimitive(
-                    reference_arc=self.reference_arc,
-                    width=self.width,
-                    round_radius=self.round_radius,
-                    number=self.number,
-                    layers=self.layers,
-                    start_line=self.start_line,
-                    end_line=self.end_line,
-                    minimum_overlap=self.minimum_overlap
-                    )
+            reference_arc=self.reference_arc,
+            width=self.width,
+            round_radius=self.round_radius,
+            number=self.number,
+            layers=self.layers,
+            start_line=self.start_line,
+            end_line=self.end_line,
+            minimum_overlap=self.minimum_overlap,
+        )
 
-    def rotate(self, angle, origin=(0, 0), use_degrees=True):
-        r""" Rotate around given origin
+    def rotate(
+        self, angle: float, origin: Vector2D = Vector2D.zero(), use_degrees: bool = True
+    ) -> ArcPadPrimitive:
+        """Rotate around given origin.
 
-        :params:
-            * *angle* (``float``)
-                rotation angle
-            * *origin* (``Vector2D``)
-                origin point for the rotation. default: (0, 0)
-            * *use_degrees* (``boolean``)
-                rotation angle is given in degrees. default:True
+        Args:
+            angle: Rotation angle.
+            origin: Origin point for the rotation.
+            use_degrees: Rotation angle is given in degrees.
         """
         origin = Vector2D(origin)
         self.reference_arc.rotate(angle=angle, origin=origin, use_degrees=use_degrees)
@@ -164,12 +205,14 @@ class ArcPadPrimitive(Node):
             self.end_line.rotate(angle=angle, origin=origin, use_degrees=use_degrees)
         return self
 
-    def translate(self, vector):
-        r""" Translate
+    def translate(self, vector: Vector2D) -> ArcPadPrimitive:
+        """Move the arc pad primitive.
 
-        :params:
-            * *vector* (``Vector2D``)
-                2D vector defining by how much and in what direction to translate.
+        Args:
+            vector: The direction and distance in mm.
+
+        Returns:
+            The translated arc pad primitive.
         """
 
         self.reference_arc.translate(vector)
@@ -179,25 +222,29 @@ class ArcPadPrimitive(Node):
             self.end_line.translate(vector)
         return self
 
-    def _getStep(self):
-        line_width = self.round_radius*2
+    def _get_step(self) -> float:
+        line_width = self.round_radius * 2
         if self.minimum_overlap >= line_width:
-            raise ValueError('arc line width (round radius) too small for requested overlap')
+            raise ValueError(
+                "arc line width (round radius) too small for requested overlap"
+            )
 
-        required_arcs = ceil((self.width-self.minimum_overlap) / (line_width-self.minimum_overlap))
-        return (self.width-line_width)/(required_arcs-1)
+        required_arcs = ceil(
+            (self.width - self.minimum_overlap) / (line_width - self.minimum_overlap)
+        )
+        return (self.width - line_width) / (required_arcs - 1)
 
-    def _getArcPrimitives(self):
-        line_width = self.round_radius*2
-        step = self._getStep()
+    def _getArcPrimitives(self) -> list[Arc | Line]:
+        line_width = self.round_radius * 2
+        step = self._get_step()
 
-        r_inner = self.reference_arc.radius-self.width/2+line_width/2
-        r_outer = self.reference_arc.radius+self.width/2-line_width/2
+        r_inner = self.reference_arc.radius - self.width / 2 + line_width / 2
+        r_outer = self.reference_arc.radius + self.width / 2 - line_width / 2
 
         ref_arc = Arc(shape=self.reference_arc, width=line_width)
         ref_arc.radius = r_outer
 
-        nodes = []
+        nodes: list[Arc] = []
         r = r_inner
         while r < r_outer:
             new_arc = ref_arc.copy()
@@ -210,236 +257,299 @@ class ArcPadPrimitive(Node):
             nodes = self.__cutArcs(nodes, self.start_line, 1)
         if self.end_line is not None:
             nodes = self.__cutArcs(nodes, self.end_line, 0)
-        nodes.append(Line(start=nodes[0].end, end=nodes[-1].end, width=line_width))
-        nodes.append(Line(start=nodes[0].start, end=nodes[-2].start, width=line_width))
+        arcs_and_lines: list[Arc | Line] = cast(list[Arc | Line], nodes)
+        arcs_and_lines.append(
+            Line(start=nodes[0].end, end=nodes[-1].end, width=line_width)
+        )
+        arcs_and_lines.append(
+            Line(start=nodes[0].start, end=nodes[-2].start, width=line_width)
+        )
 
-        return nodes
+        return arcs_and_lines
 
-    def __cutArcs(self, arcs, line, index_to_keep):
+    def __cutArcs(
+        self, arcs: list[Arc], line: GeomLine | None, index_to_keep: int
+    ) -> list[Arc]:
         if line is None:
             return arcs
-        result = []
+        result: list[Arc] = []
         fp_line = Line(shape=line)
         for current_arc in arcs:
             try:
-                cut_arcs = fp_line.cut(current_arc)
+                cut_arcs = cast(list[Arc], fp_line.cut(current_arc))
                 result.append(cut_arcs[index_to_keep])
-            except IndexError as e:
-                raise ValueError("Cutting the arc primitive with one of its endlines " +
-                                 "did not result in the expected number of arcs.")
+            except IndexError:
+                raise ValueError(
+                    "Cutting the arc primitive with one of its endlines "
+                    "did not result in the expected number of arcs."
+                )
         return result
 
-    def getVirtualChilds(self):
+    def get_flattened_nodes(self) -> list[Node]:
+        """Return the nodes to serialize."""
         at = self.reference_arc.mid
         primitives = self._getArcPrimitives()
         for p in primitives:
             p.translate(-at)
-        return [Pad(
+        return cast(
+            list[Node],
+            [
+                Pad(
                     number=self.number,
-                    type=Pad.TYPE_SMT, shape=Pad.SHAPE_CUSTOM,
-                    at=at, size=self.width/2, layers=self.layers,
-                    primitives=primitives
-                    )]
+                    type=Pad.TYPE_SMT,
+                    shape=Pad.SHAPE_CUSTOM,
+                    at=at,
+                    size=self.width / 2,
+                    layers=self.layers,
+                    primitives=cast(list[NodeShape], primitives),
+                )
+            ],
+        )
 
 
 class RingPad(Node):
-    r"""Add a RingPad to the render tree
+    """A ring pad."""
 
-    :param \**kwargs:
-        See below
+    solder_mask_margin: float
+    """Solder mask margin of the pad."""
+    minimum_overlap: float
+    """Minimum arc overlap for paste zones."""
+    at: Vector2D
+    """Center position of the pad."""
+    radius: float
+    """Middle radius of the ring."""
+    width: float
+    """Width of the ring (outer radius - inner radius)."""
+    size: float
+    """Outside diameter of the pad."""
+    is_circle: bool
+    """True if the inner diameter is zero, indicating a solid circle pad."""
+    number: str | int
+    """Number/name of the pad."""
+    paste_width: float
+    """Width of the solder paste area."""
+    paste_center: float
+    """Center radius of the solder paste area."""
+    num_paste_zones: int
+    """Number of paste zones."""
+    paste_max_round_radius: float | None
+    """Maximum round radius for paste zones. `None` to ignore."""
+    paste_round_radius_radio: float
+    """Round over radius ratio for paste zones."""
+    paste_to_paste_clearance: float
+    """Clearance between two paste zones."""
+    num_anchor: int
+    """Number of anchor pads around the circle."""
+    anchor_to_edge_clearance: float
+    """Clearance from anchor pad to edge of the ring pad, needed for NPTH center pads."""
+    pads: list[Pad | ArcPadPrimitive | RingPadPrimitive]
+    """List of generated pad primitives."""
+    solder_paste_margin: float
+    """Solder paste margin of the pad."""
 
-    :Keyword Arguments:
-        * *number* (``int``, ``str``) --
-          number/name of the pad (default: \"\")
-        * *at* (``Vector2D``) --
-          center position of the pad
-        * *rotation* (``float``) --
-          rotation of the pad
-        * *inner_diameter* (``float``) --
-          diameter of the copper free inner zone
-        * *size* (``float``) --
-          outside diameter of the pad
-        * *num_anchors* (``int``) --
-          number of anchor pads around the circle
-        * *anchor_to_edge_clearance* (``float``) --
-          clearance from anchorpad to edge of the ringpad,
-          needed for NPTH center pads
-        * *num_paste_zones* (``int``) --
-          number of paste zones
-        * *paste_to_paste_clearance* (``float``) --
-          clearance between two paste zones,
-          needed only if number of paste zones > 1
-          default: 2*abs(solder_paste_margin)
-        * *paste_round_radius_radio* (``float``) --
-          round over radius ratio. default 0.25
-          resulting radius must be larger than minimum overlap
-        * *paste_max_round_radius* (``float``) --
-          maximum round radius.
-          Only used if number of paste zones > 1
-          default: 0.25
-          set to None to ignore
-        * *solder_paste_margin* (``float``) --
-          solder paste margin of the pad (default: 0)
-        * *paste_outer_diameter* (``float``) --
-          together with paste inner diameter an alternative for defining the paste area
-        * *paste_inner_diameter* (``float``) --
-          together with paste outer diameter an alternative for defining the paste area
-        * *solder_mask_margin* (``float``) --
-          solder mask margin of the pad (default: 0)
-        * *minimum_overlap* (``float``) --
-          minimum arc overlap. default 0.1
-    """
+    def __init__(
+        self,
+        at: Vec2DCompatible,
+        size: float,
+        inner_diameter: float,
+        number: str | int = "",
+        num_anchor: int = 1,
+        anchor_to_edge_clearance: float = 0.0,
+        num_paste_zones: int = 1,
+        paste_to_paste_clearance: float | None = None,
+        paste_round_radius_radio: float = 0.25,
+        paste_max_round_radius: float | None = 0.25,
+        solder_paste_margin: float = 0.0,
+        paste_outer_diameter: float | None = None,
+        paste_inner_diameter: float | None = None,
+        solder_mask_margin: float = 0.0,
+        minimum_overlap: float = 0.1,
+    ) -> None:
+        """Create a ring pad.
 
-    def __init__(self, **kwargs):
+        Args:
+            number: Number/name of the pad.
+            at: Center position of the pad.
+            inner_diameter: Diameter of the copper free inner zone.
+            size: Outside diameter of the pad.
+            num_anchor: Number of anchor pads around the circle.
+            anchor_to_edge_clearance: Clearance from anchorpad to edge of the ringpad,
+                needed for NPTH center pads.
+            num_paste_zones: Number of paste zones.
+            paste_to_paste_clearance: Clearance between two paste zones,
+                needed only if number of paste zones > 1.
+                default: 2*abs(solder_paste_margin).
+            paste_round_radius_radio: Round over radius ratio.
+                resulting radius must be larger than minimum overlap.
+            paste_max_round_radius: Maximum round radius.
+                Only used if number of paste zones > 1.
+                default: 0.25. Set to None to ignore.
+            solder_paste_margin: Solder paste margin of the pad.
+            paste_outer_diameter: Together with paste inner diameter an alternative for defining the paste area.
+            paste_inner_diameter: Together with paste outer diameter an alternative for defining the paste area.
+            solder_mask_margin: Solder mask margin of the pad.
+            minimum_overlap: Minimum arc overlap.
+        """
         Node.__init__(self)
-        self.solder_mask_margin = kwargs.get('solder_mask_margin', 0)
-        self.minimum_overlap = kwargs.get('minimum_overlap', 0.1)
-        self._initPosition(**kwargs)
-        self._initSize(**kwargs)
-        self._initNumber(**kwargs)
-        self._initPasteSettings(**kwargs)
-        self._initNumAnchor(**kwargs)
-        self._generatePads()
+        self.solder_mask_margin = solder_mask_margin
+        self.minimum_overlap = minimum_overlap
+        self.at = Vector2D(at)
+        self._init_size(inner_diameter=inner_diameter, size=size)
+        self.number = number
+        self._init_paste_settings(
+            solder_paste_margin=solder_paste_margin,
+            paste_outer_diameter=paste_outer_diameter,
+            paste_inner_diameter=paste_inner_diameter,
+            num_paste_zones=num_paste_zones,
+            paste_max_round_radius=paste_max_round_radius,
+            paste_round_radius_radio=paste_round_radius_radio,
+            paste_to_paste_clearance=paste_to_paste_clearance,
+        )
+        self._init_num_anchor(
+            num_anchor=num_anchor, anchor_to_edge_clearance=anchor_to_edge_clearance
+        )
+        self._generate_pads()
 
-    def _initSize(self, **kwargs):
-        _id = kwargs.get('inner_diameter')
-        _od = kwargs.get('size')
-        if _od is None or _id is None:
-            raise KeyError('pad size or inside diameter not declared (like "size=1, inner_diameter=0.5")')
-        if type(_id) not in [int, float] or type(_od) not in [int, float]:
-            raise ValueError('ring pad size and inner_diameter only support int or float')
-        if _id >= _od:
-            raise ValueError('inner diameter must be smaller than size')
+    def _init_size(self, inner_diameter: float, size: float) -> None:
+        id = inner_diameter
+        od = size
+        if id >= od:
+            raise ValueError("Inner diameter must be smaller than size.")
+        self.radius = (id + od) / 4
+        self.width = (od - id) / 2
+        self.size = od
+        self.is_circle = id == 0
 
-        self.radius = (_id+_od)/4
-        self.width = (_od-_id)/2
-        self.size = _od
-        self.is_circle = _id == 0
-
-    def _initNumber(self, **kwargs):
-        self.number = kwargs.get('number', "")  # default to an unnumbered pad
-
-    def _initNumAnchor(self, **kwargs):
-        self.num_anchor = int(kwargs.get('num_anchor', 1))
+    def _init_num_anchor(
+        self, num_anchor: int, anchor_to_edge_clearance: float
+    ) -> None:
+        self.num_anchor = int(num_anchor)
         if self.num_anchor < 1:
-            raise ValueError('num_anchor must be a positive integer')
+            raise ValueError("num_anchor must be a positive integer")
+        self.anchor_to_edge_clearance = anchor_to_edge_clearance
 
-        self.anchor_to_edge_clearance = kwargs.get('anchor_to_edge_clearance', 0)
-
-    def _initPosition(self, **kwargs):
-        if 'at' not in kwargs:
-            raise KeyError('center position not declared (like "at=[0,0]")')
-        self.at = Vector2D(kwargs.get('at'))
-
-    def _initPasteSettings(self, **kwargs):
-        self.solder_paste_margin = kwargs.get('solder_paste_margin', 0)
-        if 'paste_outer_diameter' in kwargs and 'paste_inner_diameter' in kwargs:
-            self.paste_width = (kwargs['paste_outer_diameter'] - kwargs['paste_inner_diameter'])/2
-            self.paste_center = (kwargs['paste_outer_diameter'] + kwargs['paste_inner_diameter'])/4
+    def _init_paste_settings(
+        self,
+        solder_paste_margin: float,
+        paste_outer_diameter: float | None,
+        paste_inner_diameter: float | None,
+        num_paste_zones: int,
+        paste_max_round_radius: float | None,
+        paste_round_radius_radio: float,
+        paste_to_paste_clearance: float | None,
+    ) -> None:
+        self.solder_paste_margin = solder_paste_margin
+        if paste_outer_diameter is not None and paste_inner_diameter is not None:
+            self.paste_width = (paste_outer_diameter - paste_inner_diameter) / 2
+            self.paste_center = (paste_outer_diameter + paste_inner_diameter) / 4
         else:
-            self.paste_width = self.width + 2*self.solder_paste_margin
+            self.paste_width = self.width + 2 * self.solder_paste_margin
             self.paste_center = self.radius
 
-        self.num_paste_zones = int(kwargs.get('num_paste_zones', 1))
+        self.num_paste_zones = int(num_paste_zones)
         if self.num_paste_zones < 1:
-            raise ValueError('num_paste_zones must be a positive integer')
-
-        if self.num_paste_zones > 1:
-            self.paste_max_round_radius = float(kwargs.get('paste_max_round_radius', 0.25))
-            self.paste_round_radius_radio = float(
-                kwargs.get('paste_round_radius_radio', 0.25))
-
-            self.paste_to_paste_clearance = kwargs.get('paste_to_paste_clearance')
-            if self.paste_to_paste_clearance is None:
+            raise ValueError("num_paste_zones must be a positive integer")
+        elif self.num_paste_zones > 1:
+            self.paste_max_round_radius = paste_max_round_radius
+            self.paste_round_radius_radio = paste_round_radius_radio
+            if paste_to_paste_clearance is None:
                 self.paste_to_paste_clearance = -self.solder_paste_margin
-
-            if self.paste_round_radius_radio <= 0:
-                raise ValueError('paste_round_radius_radio must be > 0')
-            if self.paste_max_round_radius is not None and self.paste_max_round_radius <= 0:
-                raise ValueError('paste_max_round_radius must be > 0')
-
+            else:
+                self.paste_to_paste_clearance = paste_to_paste_clearance
+            if self.paste_round_radius_radio <= 0.0:
+                raise ValueError("Paste_round_radius_radio must be > 0.")
+            if (
+                self.paste_max_round_radius is not None
+                and self.paste_max_round_radius <= 0
+            ):
+                raise ValueError("Paste_max_round_radius must be > 0.")
             if self.paste_to_paste_clearance <= 0:
-                raise ValueError('paste_to_paste_clearance must be > 0')
+                raise ValueError("paste_to_paste_clearance must be > 0")
 
-    def _generatePads(self):
+    def _generate_pads(self) -> None:
         self.pads = []
         if self.num_paste_zones > 1:
-            layers = ['F.Cu', 'F.Mask']
-            self._generatePastePads()
+            layers = ["F.Cu", "F.Mask"]
+            self._generate_paste_pads()
         else:
             layers = Pad.LAYERS_SMT
 
         if not self.is_circle:
-            self._generateCopperPads()
+            self._generate_copper_pads()
         else:
             self.pads.append(
-                Pad(number=self.number,
-                    type=Pad.TYPE_SMT, shape=Pad.SHAPE_CIRCLE,
-                    at=(self.at), size=self.size,
-                    layers=layers
-                    ))
+                Pad(
+                    number=self.number,
+                    type=Pad.TYPE_SMT,
+                    shape=Pad.SHAPE_CIRCLE,
+                    at=(self.at),
+                    size=self.size,
+                    layers=layers,
+                )
+            )
 
-    def _generatePastePads(self):
-        ref_angle = 360/self.num_paste_zones
+    def _generate_paste_pads(self) -> None:
+        ref_angle = 360.0 / self.num_paste_zones
 
         ref_arc = GeomArc(
-                    center=self.at,
-                    start=self.at+(self.paste_center, 0),
-                    angle=ref_angle)
+            center=self.at, start=self.at + (self.paste_center, 0), angle=ref_angle
+        )
 
         pad = ArcPadPrimitive(
-                            number="", width=self.paste_width,
-                            round_radius_ratio=self.paste_round_radius_radio,
-                            max_round_radius=self.paste_max_round_radius,
-                            layers=['F.Paste'], reference_arc=ref_arc,
-                            minimum_overlap=self.minimum_overlap
-                            )
+            number="",
+            width=self.paste_width,
+            round_radius_ratio=self.paste_round_radius_radio,
+            max_round_radius=self.paste_max_round_radius,
+            layers=["F.Paste"],
+            reference_arc=ref_arc,
+            minimum_overlap=self.minimum_overlap,
+        )
 
-        w = pad.round_radius*2
-        y = (self.paste_to_paste_clearance + w)/2
+        w = pad.round_radius * 2
+        y = (self.paste_to_paste_clearance + w) / 2
 
-        start_line = GeomLine(start=self.at+(0, y), end=self.at+(self.size, y))
-        end_line = GeomLine(start=self.at+(0, -y), end=self.at+(self.size, -y)).rotate(ref_angle, origin=self.at)
+        start_line = GeomLine(start=self.at + (0, y), end=self.at + (self.size, y))
+        end_line = GeomLine(
+            start=self.at + (0, -y), end=self.at + (self.size, -y)
+        ).rotate(ref_angle, origin=self.at)
 
         if self.num_paste_zones == 2:
             end_line = None
 
-        pad.setLimitingLines(start_line=start_line, end_line=end_line)
+        pad.set_limiting_lines(start_line=start_line, end_line=end_line)
 
         self.pads.append(pad)
         for i in range(1, self.num_paste_zones):
-            self.pads.append(pad.copy().rotate(i*ref_angle, origin=self.at))
+            self.pads.append(pad.copy().rotate(i * ref_angle, origin=self.at))
 
-    def _generateMaskPads(self):
-        w = self.width+2*self.solder_mask_margin
+    def _generateMaskPads(self) -> None:
+        w = self.width + 2 * self.solder_mask_margin
         self.pads.append(
             RingPadPrimitive(
-                number="",
-                at=self.at,
-                width=w,
-                layers=['F.Mask'],
-                radius=self.radius
-                ))
+                number="", at=self.at, width=w, layers=["F.Mask"], radius=self.radius
+            )
+        )
 
-    def _generateCopperPads(self):
+    def _generate_copper_pads(self) -> None:
         # kicad_mod.append(c)
-        layers = ['F.Cu']
+        layers = ["F.Cu"]
         if self.num_paste_zones == 1:
             if self.solder_paste_margin == 0:
-                layers.append('F.Paste')
+                layers.append("F.Paste")
             else:
                 self.pads.append(
                     RingPadPrimitive(
                         number="",
                         at=self.at,
-                        width=self.width+2*self.solder_paste_margin,
-                        layers=['F.Paste'],
-                        radius=self.radius
-                        ))
+                        width=self.width + 2 * self.solder_paste_margin,
+                        layers=["F.Paste"],
+                        radius=self.radius,
+                    )
+                )
 
         if self.solder_mask_margin == 0:
             # bug in kicad so any clearance other than 0 needs a workaround
-            layers.append('F.Mask')
+            layers.append("F.Mask")
         else:
             self._generateMaskPads()
         self.pads.append(
@@ -448,21 +558,30 @@ class RingPad(Node):
                 at=self.at,
                 width=self.width,
                 layers=layers,
-                radius=self.radius
-                ))
+                radius=self.radius,
+            )
+        )
         if self.width - 2 * self.anchor_to_edge_clearance < 0:
-            raise ValueError('Anchor pad width must be > 0')
-        a = 360/self.num_anchor
+            raise ValueError("Anchor pad width must be > 0")
+        a = 360 / self.num_anchor
         pos = Vector2D.from_floats(self.radius, 0.0)
         origin = Vector2D.from_floats(0.0, 0.0)
         for i in range(1, self.num_anchor):
             pos.rotate(a, origin=origin)
-            self.pads.append(Pad(number=self.number,
-                                 type=Pad.TYPE_SMT, shape=Pad.SHAPE_CIRCLE,
-                                 at=(self.at+pos),
-                                 size=self.width-(2*self.anchor_to_edge_clearance),
-                                 layers=['F.Cu'],
-                                 ))
+            self.pads.append(
+                Pad(
+                    number=self.number,
+                    type=Pad.TYPE_SMT,
+                    shape=Pad.SHAPE_CIRCLE,
+                    at=(self.at + pos),
+                    size=self.width - (2 * self.anchor_to_edge_clearance),
+                    layers=["F.Cu"],
+                )
+            )
 
-    def getVirtualChilds(self):
-        return self.pads
+    def get_flattened_nodes(self) -> list[Node]:
+        """Return the nodes to serialize."""
+        nodes: list[Node] = []
+        for child in self.pads:
+            nodes.extend(child.get_flattened_nodes())
+        return nodes

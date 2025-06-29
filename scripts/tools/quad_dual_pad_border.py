@@ -1,6 +1,6 @@
 from __future__ import division
-
-from KicadModTree import CornerSelection, Pad, PadArray, copy
+from copy import copy
+from KicadModTree import CornerSelection, Pad, PadArray
 from scripts.tools.declarative_def_tools import pad_overrides
 from scripts.tools.global_config_files import global_config as GC
 
@@ -151,8 +151,8 @@ def add_quad_pad_border(pad_details, device_params, pad_shape_details, pad_overr
         **pad_details['left'], **pad_shape_details,
         ))
     init += pincount_y
-    corner_first = copy(corner_first).rotateCCW()
-    corner_last = copy(corner_last).rotateCCW()
+    corner_first = copy(corner_first).rotate_counter_clockwise()
+    corner_last = copy(corner_last).rotate_counter_clockwise()
     pad_size_reduction = {'y-': pad_size_red} if pad_size_red > 0 else None
 
     pad_arrays.append(PadArray(
@@ -171,8 +171,8 @@ def add_quad_pad_border(pad_details, device_params, pad_shape_details, pad_overr
     ))
 
     init += pincount_x
-    corner_first = copy(corner_first).rotateCCW()
-    corner_last = copy(corner_last).rotateCCW()
+    corner_first = copy(corner_first).rotate_counter_clockwise()
+    corner_last = copy(corner_last).rotate_counter_clockwise()
     pad_size_reduction = {'x-': pad_size_red} if pad_size_red > 0 else None
 
     pad_arrays.append(PadArray(
@@ -191,8 +191,8 @@ def add_quad_pad_border(pad_details, device_params, pad_shape_details, pad_overr
     ))
 
     init += pincount_y
-    corner_first = copy(corner_first).rotateCCW()
-    corner_last = copy(corner_last).rotateCCW()
+    corner_first = copy(corner_first).rotate_counter_clockwise()
+    corner_last = copy(corner_last).rotate_counter_clockwise()
     pad_size_reduction = {'y+': pad_size_red} if pad_size_red > 0 else None
 
     pad_arrays.append(PadArray(

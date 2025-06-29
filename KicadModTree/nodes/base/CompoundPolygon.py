@@ -11,6 +11,8 @@
 #
 # (C) The KiCad Librarian Team
 
+"""Class definition for a compound polygon."""
+
 from __future__ import annotations
 
 from KicadModTree.nodes.base import Arc
@@ -20,6 +22,10 @@ from kilibs.geom import GeomArc, GeomCompoundPolygon, GeomLine, GeomPolygon, Vec
 
 
 class CompoundPolygon(NodeShape, GeomCompoundPolygon):
+    """A compound polygon."""
+
+    _fp_poly_elements: list[Vector2D | Arc]
+
     def __init__(
         self,
         shape: (
@@ -35,7 +41,7 @@ class CompoundPolygon(NodeShape, GeomCompoundPolygon):
         offset: float = 0,
         serialize_as_fp_poly: bool = True,
         close: bool = True,
-    ):
+    ) -> None:
         """Create a geometric compound polygon.
 
         Args:
@@ -58,24 +64,26 @@ class CompoundPolygon(NodeShape, GeomCompoundPolygon):
             close: If `True` the polygon will form a closed shape. If `False` there
                 won't be any connecting line between the last and the first point.
         """
+        self._fp_poly_elements = []
         self.init_super(kwargs=locals())
 
-    def getVirtualChilds(self) -> list[NodeShape]:
-        """Return a list containing the child nodes."""
+    def get_flattened_nodes(self) -> list[NodeShape]:
+        """Return the nodes to serialize."""
         if self.serialize_as_fp_poly and self.close:
-            return []
+            return [self]
         else:
             return self.to_child_nodes(list(self.get_atomic_shapes()))
 
     def get_fp_poly_elements(self) -> list[Vector2D | Arc]:
-        points_and_arcs: list[Vector2D | Arc] = []
-        for geom in self.get_points_and_arcs():
-            if isinstance(geom, Vector2D):
-                points_and_arcs.append(geom)
-            else:
-                arc = Arc(
-                    shape=geom, layer=self.layer, width=self.width, style=self.style
-                )
-                arc._parent = self._parent
-                points_and_arcs.append(arc)
-        return points_and_arcs
+        if not self._fp_poly_elements:
+            self._fp_poly_elements: list[Vector2D | Arc] = []
+            for geom in self.get_points_and_arcs():
+                if isinstance(geom, Vector2D):
+                    self._fp_poly_elements.append(geom)
+                else:
+                    arc = Arc(
+                        shape=geom, layer=self.layer, width=self.width, style=self.style
+                    )
+                    arc._parent = self._parent
+                    self._fp_poly_elements.append(arc)
+        return self._fp_poly_elements

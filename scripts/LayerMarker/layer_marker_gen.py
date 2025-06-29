@@ -21,6 +21,7 @@ sys.path.append(os.path.join(sys.path[0], "..", "..", "src")) # load kilibs path
 from KicadModTree import *  # NOQA
 from scripts.tools.footprint_generator import FootprintGenerator
 from scripts.tools.global_config_files.global_config import GlobalConfig
+from kilibs.geom.shapes.geom_polygon import GeomPolygon
 
 def getLayerNames(layer_nr: int) -> list:
 	return ["F.Cu"] + \

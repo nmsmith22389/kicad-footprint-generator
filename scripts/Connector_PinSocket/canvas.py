@@ -49,7 +49,6 @@ from collections import namedtuple
 
 from KicadModTree import Property
 from KicadModTree.nodes.base import Line, Arc, Circle, Text, Pad
-from KicadModTree.util.kicad_util import formatFloat
 from kilibs.geom import Vector2D
 
 class Layer:
@@ -450,7 +449,7 @@ class _Point:
         self.y = y
 
     def __repr__(self):
-        return "(x={x}, y={y})".format(x=formatFloat(self.x), y=formatFloat(self.y))
+        return f"(x={self.x:.6g}, y={self.y:.6g})"
 
 class _Line:
     def __init__(self, a, b, x1=None, y1=None, normalize=False):
@@ -477,8 +476,7 @@ class _Line:
             self.y1 = a.y
 
     def __repr__(self):
-        return "(x0={x0}, y0={y0}, x1={x1}, y1={y1})".format(x0=formatFloat(self.x0), y0=formatFloat(self.y0),
-                                                             x1=formatFloat(self.x1), y1=formatFloat(self.y1))
+        return f"(x0={self.x0:.6g}, y0={self.y0:.6g}, x1={self.x1:.6g}, y1={self.y1:.6g})"
 
 class _Keepout:
     def __init__(self, a, b, x1=None, y1=None, radius=0.0):
@@ -626,9 +624,7 @@ class _Keepout:
         return False if len(segments) == 0 else segments
 
     def __repr__(self):
-        return "(x0={x0}, y0={y0}, x1={x1}, y1={y1}, r={r})".format(x0=formatFloat(self.x0), y0=formatFloat(self.y0),
-                                                             x1=formatFloat(self.x1), y1=formatFloat(self.y1),
-                                                             r=formatFloat(self.radius))
+        return f"(x0={self.x0:.6g}, y0={self.y0:.6g}, x1={self.x1:.6g}, y1={self.y1:.6g}, r={self.radius:.6g})"
 
 
 class Keepout():
@@ -683,7 +679,7 @@ class Keepout():
         return self
 
     def addPads(self):
-        nodes = self.layer.footprint.getNormalChilds()
+        nodes = self.layer.footprint.get_child_nodes()
         offset = self.offset
         for node in nodes:
             if isinstance(node, Pad):
@@ -694,7 +690,7 @@ class Keepout():
 
     def getPadBB(self, number):
         # TODO: use node.calculateBoundingBox when implemented, this is a simple version that does not honor any rotation
-        nodes = self.layer.footprint.getNormalChilds()
+        nodes = self.layer.footprint.get_child_nodes()
         offset = self.offset * 2.0
         bb = None
         for node in nodes:

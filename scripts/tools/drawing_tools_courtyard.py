@@ -1,6 +1,5 @@
 from kilibs.geom import GeomRectangle
-from KicadModTree import Circle, Node
-from KicadModTree.nodes.specialized import Stadium
+from KicadModTree import Circle, Node, Stadium
 from scripts.tools.global_config_files import global_config as GC
 
 
@@ -24,7 +23,7 @@ def make_round_or_stadium_courtyard(
 
     # create courtyard
     if abs(courtyard_rect.size.x - courtyard_rect.size.y) > tolerance:
-        courtyard = Stadium.Stadium(
+        courtyard = Stadium(
                 shape=courtyard_rect,
                 layer=layer,
                 width=width,

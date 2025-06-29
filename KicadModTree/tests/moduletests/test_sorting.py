@@ -71,7 +71,7 @@ class TestSmallValueSerialisation(SerialisationTest):
         )
 
         for i in range(4):
-            prototype.offset_x = 0.5 * i
+            prototype.offset.x = 0.5 * i
             kicad_mod.append(deepcopy(prototype))
 
         self.assert_serialises_as(kicad_mod, "test_sort_copied_elements.kicad_mod")

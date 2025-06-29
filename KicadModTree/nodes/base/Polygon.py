@@ -11,6 +11,8 @@
 #
 # (C) The KiCad Librarian Team
 
+"""Class definition for a polygon."""
+
 from __future__ import annotations
 
 from KicadModTree.nodes.NodeShape import NodeShape
@@ -19,6 +21,8 @@ from kilibs.geom import BoundingBox, GeomPolygon, GeomRectangle, Vec2DCompatible
 
 
 class Polygon(NodeShape, GeomPolygon):
+    """A polygon."""
+
     def __init__(
         self,
         shape: (
@@ -32,7 +36,7 @@ class Polygon(NodeShape, GeomPolygon):
         x_mirror: float | None = None,
         y_mirror: float | None = None,
         close: bool = True,
-    ):
+    ) -> None:
         """Create a polygon.
 
         Args:
@@ -53,10 +57,9 @@ class Polygon(NodeShape, GeomPolygon):
         """
         self.init_super(kwargs=locals())
 
-    def getVirtualChilds(self) -> list[NodeShape]:
-        """If the polygon is open, return a list contining the lines. If the polygon is
-        closed, return an empty list."""
+    def get_flattened_nodes(self) -> list[NodeShape]:
+        """Return the nodes to serialize."""
         if self.close:
-            return []
+            return [self]
         else:
             return self.to_child_nodes(self.get_atomic_shapes())

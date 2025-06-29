@@ -11,6 +11,8 @@
 #
 # (C) The KiCad Librarian Team
 
+"""Class definition for an arc."""
+
 from __future__ import annotations
 
 from KicadModTree.nodes.NodeShape import NodeShape
@@ -19,6 +21,8 @@ from kilibs.geom import GeomArc, Vec2DCompatible
 
 
 class Arc(NodeShape, GeomArc):
+    """An arc."""
+
     def __init__(
         self,
         layer: str = "F.SilkS",
@@ -32,7 +36,7 @@ class Arc(NodeShape, GeomArc):
         angle: float | None = None,
         use_degrees: float = True,
         long_way: float = False,
-    ):
+    ) -> None:
         """Create an arc.
 
         Args:
@@ -53,3 +57,7 @@ class Arc(NodeShape, GeomArc):
                 shorter one shall be constructed.
         """
         self.init_super(kwargs=locals())
+
+    def get_flattened_nodes(self) -> list[Arc]:
+        """Return the nodes to serialize."""
+        return [self]

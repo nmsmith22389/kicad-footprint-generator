@@ -4,8 +4,9 @@ import math
 import argparse
 
 from kilibs.geom import GeomRectangle
+from kilibs.util.param_util import toVectorUseCopyIfNumber
 from KicadModTree import *  # NOQA
-from KicadModTree.nodes.specialized import Stadium, ChamferedRect, CornerSelection
+from KicadModTree import Stadium, ChamferRect, CornerSelection, ReferencedPad
 from scripts.tools.drawing_tools import *
 from scripts.tools import drawing_tools as DT
 from scripts.tools import (
@@ -304,7 +305,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
             )
             stadium_rect = body_rect.inflated(-body_rect.size.y * 0.1)
             kicad_mod.append(
-                Stadium.Stadium(
+                Stadium(
                     shape=stadium_rect, layer="F.Fab", width=self.global_config.fab_line_width
                 )
             )
@@ -313,7 +314,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
                 kicad_modg, [l_fab, t_fab], [w_fab, h_fab], "F.Fab", lw_fab, dip_size
             )
         elif style == "rect1bevel":
-            kicad_modg += ChamferedRect.ChamferRect(
+            kicad_modg += ChamferRect(
                 at=offset,
                 size=Vector2D(w_fab, h_fab),
                 layer="F.Fab",
@@ -322,7 +323,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
                 chamfer=self.global_config.fab_bevel,
             )
         else:
-            kicad_modg += ChamferedRect.ChamferRect(
+            kicad_modg += ChamferRect(
                 at=offset,
                 size=Vector2D(w_fab, h_fab),
                 layer="F.Fab",
@@ -1394,7 +1395,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
         keepouts = DT.getKeepoutsForPads(
             list(pad_array.get_pads()), self.global_config.silk_pad_offset
         )
-        fab_stadium = Stadium.Stadium(
+        fab_stadium = Stadium(
             shape=body_bounds, layer="F.Fab", width=self.global_config.fab_line_width
         )
         kicad_modg += fab_stadium
@@ -1526,8 +1527,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
                 drill=ddrill,
                 layers=Pad.LAYERS_THT,
             )
-        pad2 = pad1.copy_with(
-            number=2,
+        pad2 = ReferencedPad(reference_pad=pad1, number=2,
             at=pin1_pos + Vector2D(rm, 0),
         )
         kicad_modg.extend([pad1, pad2])

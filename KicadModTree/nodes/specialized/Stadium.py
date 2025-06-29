@@ -11,13 +11,18 @@
 #
 # (C) The KiCad Librarian Team
 
+"""Class definition for a stadium."""
+
 from __future__ import annotations
 
-from KicadModTree import LineStyle, NodeShape
+from KicadModTree.nodes.NodeShape import NodeShape
+from KicadModTree.util.line_style import LineStyle
 from kilibs.geom import GeomRectangle, GeomStadium, Vec2DCompatible
 
 
 class Stadium(NodeShape, GeomStadium):
+    """A stadium."""
+
     def __init__(
         self,
         layer: str = "F.SilkS",
@@ -29,7 +34,7 @@ class Stadium(NodeShape, GeomStadium):
         center_1: Vec2DCompatible | None = None,
         center_2: Vec2DCompatible | None = None,
         radius: float | None = None,
-    ):
+    ) -> None:
         """Create a stadium shape, which is a rectangle with semi-circular ends.
 
         Sometimes called a racetrack shape, or oblong (that's also the name of a

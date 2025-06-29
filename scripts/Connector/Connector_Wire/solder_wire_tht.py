@@ -274,7 +274,7 @@ def make_fp(global_config: GC.GlobalConfig, wire_def, fp_type, pincount, configu
 
     ##################### Output and 3d model ############################
     for i in range(pincount):
-        prototype.offset_x = i*pitch
+        prototype.offset.x = i*pitch
         kicad_mod.append(deepcopy(prototype))
 
     model3d_path_prefix = configuration.get('3d_model_prefix',global_config.model_3d_prefix)

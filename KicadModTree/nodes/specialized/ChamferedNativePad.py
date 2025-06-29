@@ -18,13 +18,15 @@
 from __future__ import division
 
 from copy import copy
-from kilibs.util.param_util import toVectorUseCopyIfNumber
-from kilibs.geom import Vector2D
-from KicadModTree import Node, Pad
-from KicadModTree.util.corner_handling import ChamferSizeHandler, RoundRadiusHandler
-from KicadModTree.util.corner_selection import CornerSelection
 from math import sqrt
 from sys import float_info
+
+from KicadModTree.nodes.base.Pad import Pad
+from KicadModTree.nodes.Node import Node
+from KicadModTree.util.corner_handling import ChamferSizeHandler, RoundRadiusHandler
+from KicadModTree.util.corner_selection import CornerSelection
+from kilibs.geom import Vector2D
+from kilibs.util.param_util import toVectorUseCopyIfNumber
 
 
 class ChamferedNativePad(Node):
@@ -91,113 +93,137 @@ class ChamferedNativePad(Node):
         self.pad = self._generatePad()
 
     def _initSize(self, **kwargs):
-        if not kwargs.get('size'):
+        if not kwargs.get("size"):
             raise KeyError('pad size not declared (like "size=[1,1]")')
-        self.size = toVectorUseCopyIfNumber(kwargs.get('size'), low_limit=0)
+        self.size = toVectorUseCopyIfNumber(kwargs.get("size"), low_limit=0)
 
     def _initPosition(self, **kwargs):
-        if 'at' not in kwargs:
+        if "at" not in kwargs:
             raise KeyError('center position not declared (like "at=[0,0]")')
-        self.at = Vector2D(kwargs.get('at'))
+        self.at = Vector2D(kwargs.get("at"))
 
     def _initMirror(self, **kwargs):
         self.mirror = {}
-        if 'x_mirror' in kwargs and type(kwargs['x_mirror']) in [float, int]:
-            self.mirror['x_mirror'] = kwargs['x_mirror']
-        if 'y_mirror' in kwargs and type(kwargs['y_mirror']) in [float, int]:
-            self.mirror['y_mirror'] = kwargs['y_mirror']
+        if "x_mirror" in kwargs and type(kwargs["x_mirror"]) in [float, int]:
+            self.mirror["x_mirror"] = kwargs["x_mirror"]
+        if "y_mirror" in kwargs and type(kwargs["y_mirror"]) in [float, int]:
+            self.mirror["y_mirror"] = kwargs["y_mirror"]
 
     def _initPadSettings(self, **kwargs):
-        if 'corner_selection' not in kwargs:
+        if "corner_selection" not in kwargs:
             raise KeyError(
-                'corner selection is required for chamfered pads (like "corner_selection=[1,0,0,0]")')
+                'corner selection is required for chamfered pads (like "corner_selection=[1,0,0,0]")'
+            )
 
-        self.corner_selection = CornerSelection(
-            kwargs.get('corner_selection'))
+        self.corner_selection = CornerSelection(kwargs.get("corner_selection"))
 
-        if 'chamfer_size' not in kwargs:
+        if "chamfer_size" not in kwargs:
             self.chamfer_size = Vector2D(0, 0)
         else:
             self.chamfer_size = toVectorUseCopyIfNumber(
-                kwargs.get('chamfer_size'), low_limit=0, must_be_larger=False)
+                kwargs.get("chamfer_size"), low_limit=0, must_be_larger=False
+            )
 
-        self.round_radius_handler = kwargs['round_radius_handler']
-        self.chamfer_size_handler = kwargs['chamfer_size_handler']
+        self.round_radius_handler = kwargs["round_radius_handler"]
+        self.chamfer_size_handler = kwargs["chamfer_size_handler"]
 
         self.padargs = copy(kwargs)
-        self.padargs.pop('size', None)
-        self.padargs.pop('shape', None)
-        self.padargs.pop('at', None)
-        self.padargs.pop('round_radius_handler', None)
-        self.padargs.pop('chamfer_size_handler', None)
+        self.padargs.pop("size", None)
+        self.padargs.pop("shape", None)
+        self.padargs.pop("at", None)
+        self.padargs.pop("round_radius_handler", None)
+        self.padargs.pop("chamfer_size_handler", None)
 
     def _generatePad(self):
         if self.chamfer_size[0] >= self.size[0] or self.chamfer_size[1] >= self.size[1]:
-            raise ValueError('Chamfer size ({}) too large for given pad size ({})'.format(
-                self.chamfer_size, self.size))
+            raise ValueError(
+                "Chamfer size ({}) too large for given pad size ({})".format(
+                    self.chamfer_size, self.size
+                )
+            )
 
         is_chamfered = False
-        if self.corner_selection.isAnySelected() and self.chamfer_size[0] > 0 and self.chamfer_size[1] > 0:
+        if (
+            self.corner_selection.is_any_selected()
+            and self.chamfer_size[0] > 0
+            and self.chamfer_size[1] > 0
+        ):
             is_chamfered = True
 
         radius = self.round_radius_handler.getRoundRadius(min(self.size))
         chamfer = self.chamfer_size_handler.getChamferSize(min(self.size))
 
         if is_chamfered:
-            if abs(self.chamfer_size[0] - self.chamfer_size[1]) < 8*float_info.epsilon:
+            if (
+                abs(self.chamfer_size[0] - self.chamfer_size[1])
+                < 8 * float_info.epsilon
+            ):
                 pass
             else:
                 raise ValueError(
                     "Native KiCad pads do not support non-45-degree chamfers yet. "
                     + f"Use KicadModTree.nodes.specialized.ChamferedPad to generate a "
-                    + f"chamfered pad with custom primitives instead.")
+                    + f"chamfered pad with custom primitives instead."
+                )
 
             return Pad(
-                at=self.at, shape=Pad.SHAPE_ROUNDRECT, size=self.size,
-                chamfer_size_handler=self.chamfer_size_handler, chamfer_exact=chamfer,
-                round_radius_handler=self.round_radius_handler, **self.padargs
+                at=self.at,
+                shape=Pad.SHAPE_ROUNDRECT,
+                size=self.size,
+                chamfer_size_handler=self.chamfer_size_handler,
+                chamfer_exact=chamfer,
+                round_radius_handler=self.round_radius_handler,
+                **self.padargs,
             )
 
         else:
             return Pad(
-                at=self.at, shape=Pad.SHAPE_ROUNDRECT, size=self.size,
-                round_radius_handler=self.round_radius_handler, **self.padargs
+                at=self.at,
+                shape=Pad.SHAPE_ROUNDRECT,
+                size=self.size,
+                round_radius_handler=self.round_radius_handler,
+                **self.padargs,
             )
 
-    def chamferAvoidCircle(self, center, diameter, clearance=0):
-        r""" set the chamfer such that the pad avoids a cricle located at near corner.
+    @staticmethod
+    def get_chamfer_to_avoid_circle(
+        center: Vector2D,
+        at: Vector2D,
+        size: Vector2D,
+        diameter: float | Vector2D,
+        clearance: float = 0.0,
+    ) -> Vector2D:
+        """Set the chamfer such that the pad avoids a circle located at near corner.
 
-        :param center: (``Vector2D``) --
-           The center of the circle to avoid
-        :param diameter: (``float``, ``Vector2D``) --
-           The diameter of the circle. If Vector2D given only x direction is used.
-        :param clearance: (``float``) --
-           Additional clearance around circle. default:0
+        Args:
+            center: The center of the circle to avoid.
+            diameter: The diameter of the circle. If Vector2D given only the x-direction
+                is used.
+            clearance: Additional clearance around the circle.
+
+        Returns:
+            The chamfer dimensions such that the pad avoids the given circle.
         """
-
-        relative_center = Vector2D(center) - self.at
+        relative_center = center - at
         # pad and circle are symmetric so we do not care which corner the
         # reference circle is located at.
         #  -> move it to bottom right to get only positive relative coordinates.
-        relative_center = Vector2D([abs(v) for v in relative_center])
-        d = diameter if type(diameter) in [float, int] else diameter.x
+        relative_center.positive()
+        d = diameter if isinstance(diameter, float | int) else diameter.x
 
         # Where should the chamfer be if the center of the reference circle
         # would be in line with the pad edges
         # (meaning exactly at the bottom right corner)
-        reference_point = relative_center - sqrt(2)*(clearance+d/2)
-        self.chamfer_size = self.size/2 - reference_point
+        reference_point = relative_center - sqrt(2) * (clearance + d / 2)
+        chamfer_size = size / 2 - reference_point
 
         # compensate for reference circles not placed exactly at the corner
-        edge_to_center = relative_center - self.size/2
-        self.chamfer_size -= [edge_to_center.y, edge_to_center.x]
-        self.chamfer_size = Vector2D(
-            [x if x > 0 else 0 for x in self.chamfer_size])
+        edge_to_center = relative_center - size / 2
+        chamfer_size -= [edge_to_center.y, edge_to_center.x]
+        chamfer_size = Vector2D([x if x > 0 else 0 for x in chamfer_size])
+        return chamfer_size
 
-        self.pad = self._generatePad()
-        return self.chamfer_size
-
-    def getVirtualChilds(self):
+    def get_flattened_nodes(self):
         return [self.pad]
 
     def getRoundRadius(self):

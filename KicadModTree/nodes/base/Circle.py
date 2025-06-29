@@ -11,6 +11,8 @@
 #
 # (C) The KiCad Librarian Team
 
+"""Class definition for a circle."""
+
 from __future__ import annotations
 
 from KicadModTree.nodes.base.Arc import Arc
@@ -20,6 +22,8 @@ from kilibs.geom import GeomArc, GeomCircle, Vec2DCompatible
 
 
 class Circle(NodeShape, GeomCircle):
+    """A circle."""
+
     def __init__(
         self,
         layer: str = "F.SilkS",
@@ -30,7 +34,7 @@ class Circle(NodeShape, GeomCircle):
         shape: Circle | GeomCircle | Arc | GeomArc | None = None,
         center: Vec2DCompatible | None = None,
         radius: float | None = None,
-    ):
+    ) -> None:
         """Create a circle.
 
         Args:
@@ -47,3 +51,7 @@ class Circle(NodeShape, GeomCircle):
             radius: Radius of the circle in mm.
         """
         self.init_super(kwargs=locals())
+
+    def get_flattened_nodes(self) -> list[Circle]:
+        """Return the nodes to serialize."""
+        return [self]

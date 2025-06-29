@@ -13,22 +13,28 @@
 # (C) 2017 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 # (C) The KiCad Librarian Team
 
+"""Class definition for a (1D) pad array."""
+
 from collections.abc import Callable, Generator, Sequence
 from typing import NamedTuple, cast
 
-from KicadModTree.nodes.base.Pad import Pad
+from KicadModTree.nodes.base.Pad import Pad, ReferencedPad
 from KicadModTree.nodes.Node import Node
 from KicadModTree.nodes.specialized.ChamferedPad import ChamferedPad
 from KicadModTree.util.corner_handling import RoundRadiusHandler
 from kilibs.geom import Vec2DCompatible, Vector2D
-from kilibs.util.param_util import toVectorUseCopyIfNumber
 from scripts.tools.declarative_def_tools.pad_overrides import PadOverrides
 
 
 class ApplyOverrideResult(NamedTuple):
+    """A named tuple containing the result of the pad override."""
+
     number: int | str
+    """The number of the pad."""
     position: Vector2D
+    """The position of the pad."""
     size: Vector2D
+    """The size of the pad."""
 
 
 class PadArray(Node):
@@ -81,18 +87,27 @@ class PadArray(Node):
     """
 
     starting_position: Vector2D
+    """Coordinates of the first pad of the array in mm."""
     spacing: Vector2D
+    """Distance between two adjacent pads."""
     size: Vector2D
-    virtual_childs: list[Pad | ChamferedPad]
+    """Size of the pads."""
     pincount: int
+    """Number of pads in the array."""
     initial_pin: int | str
+    """Number of the first pin of the array."""
     increment: (
         int
-        | Callable[[int | str], int | str | None]
+        | Callable[[int | str | None], int | str | None]
         | Generator[int | str | None, None, None]
     )
-    starting_position: Vector2D
+    """Pad number increment."""
     exclude_pin_list: list[int]
+    """List of pins to exclude."""
+    hidden_pins: Sequence[int]
+    """List of pins that are hidden."""
+    _pads: list[Pad | ReferencedPad]
+    """The pads of the array."""
 
     def __init__(
         self,
@@ -100,7 +115,7 @@ class PadArray(Node):
         shape: str,
         layers: list[str],
         pincount: int,
-        size: Vec2DCompatible,
+        size: Vec2DCompatible | float,
         start: Vec2DCompatible | None = None,
         center: Vec2DCompatible | None = None,
         drill: float | Vec2DCompatible | None = None,
@@ -110,7 +125,7 @@ class PadArray(Node):
         deleted_pins: Sequence[int] = [],
         increment: (
             int
-            | Callable[[int | str], int | str | None]
+            | Callable[[int | str | None], int | str | None]
             | Generator[int | str | None, None, None]
         ) = 1,
         initial: int | str = 1,
@@ -119,8 +134,8 @@ class PadArray(Node):
         x_spacing: float | None = None,
         y_spacing: float | None = None,
         round_radius_handler: RoundRadiusHandler | None = None,
-        radius_ratio: float = 0.25,
-        maximum_radius: float = 0.25,
+        # radius_ratio: float = 0.25,
+        # maximum_radius: float = 0.25,
         chamfer_size: float = 0.0,
         chamfer_corner_selection_first: Sequence[bool] | None = None,
         chamfer_corner_selection_last: Sequence[bool] | None = None,
@@ -135,33 +150,30 @@ class PadArray(Node):
         self._init_starting_position(start, center)
 
         # Create pads:
-        self.size = cast(Vector2D, toVectorUseCopyIfNumber(size, low_limit=0))
-        self.virtual_childs = []
+        self.size = Vector2D(size)
+        self._pads = []
         end_pad_size = None
         if end_pads_size_reduction:
             size_reduction = end_pads_size_reduction
             end_pad_size = self.size.copy()
 
-            delta_size = Vector2D(
-                size_reduction.get("x+", 0) + size_reduction.get("x-", 0),
-                size_reduction.get("y+", 0) + size_reduction.get("y-", 0),
+            delta_size = Vector2D.from_floats(
+                size_reduction.get("x+", 0.0) + size_reduction.get("x-", 0.0),
+                size_reduction.get("y+", 0.0) + size_reduction.get("y-", 0.0),
             )
 
             end_pad_size -= delta_size
 
-            delta_pos = (
-                Vector2D(
-                    -size_reduction.get("x+", 0) + size_reduction.get("x-", 0),
-                    -size_reduction.get("y+", 0) + size_reduction.get("y-", 0),
-                )
-                / 2
+            delta_pos = Vector2D.from_floats(
+                (size_reduction.get("x-", 0.0) - size_reduction.get("x+", 0.0)) / 2.0,
+                (size_reduction.get("y-", 0.0) - size_reduction.get("y+", 0.0)) / 2.0,
             )
         else:
-            delta_pos = Vector2D.from_floats(0.0, 0.0)
+            delta_pos = Vector2D.zero()
 
+        pad_numbers: list[str | int | None] | list[str | int] | range
         # Special case, increment = 0
-        # this can be used for creating an array with all the same pad number
-        pad_numbers: Sequence[str | int | None]
+        # This can be used for creating an array with all the same pad number:
         if self.increment == 0:
             pad_numbers = [self.initial_pin] * self.pincount
         elif isinstance(self.increment, int):
@@ -177,18 +189,14 @@ class PadArray(Node):
         else:  # if isinstance(self.increment, Generator):
             pad_numbers = [next(self.increment) for _ in range(self.pincount)]
 
+        reference_pad: Pad | None = None
+
         for i, number in enumerate(pad_numbers):
-            includePad = True
-
             # deleted pins are filtered by pad/pin position (they are 'None' in pad_numbers list)
-            if not isinstance(number, int | str):
-                includePad = False
-
             # hidden pins are filtered out by pad number (index of pad_numbers list)
-            if self.hidden_pins:
-                includePad = number is not None and number not in self.exclude_pin_list
-
-            if includePad:
+            if number is not None and not (
+                self.hidden_pins and number in self.exclude_pin_list
+            ):
                 current_pad_pos = Vector2D(
                     self.starting_position.x + i * self.spacing.x,
                     self.starting_position.y + i * self.spacing.y,
@@ -213,19 +221,16 @@ class PadArray(Node):
                         chamfer_corner_selection = chamfer_corner_selection_first
                     elif i == len(pad_numbers) - 1 and chamfer_corner_selection_last:
                         chamfer_corner_selection = chamfer_corner_selection_last
-                    if chamfer_corner_selection:
-                        self.virtual_childs.append(
+                    if chamfer_corner_selection and round_radius_handler:
+                        self._pads.append(
                             ChamferedPad(
                                 number=pad_params_with_override.number,
                                 at=pad_params_with_override.position,
                                 size=pad_params_with_override.size,
-                                shape=current_shape,
                                 corner_selection=chamfer_corner_selection,
                                 chamfer_size=chamfer_size,
                                 layers=layers,
                                 round_radius_handler=round_radius_handler,
-                                radius_ratio=radius_ratio,
-                                maximum_radius=maximum_radius,
                                 type=type,
                                 fab_property=fab_property,
                                 drill=drill,
@@ -233,9 +238,21 @@ class PadArray(Node):
                         )
                         continue
 
-                # A normal unchamfered pad
-                self.virtual_childs.append(
-                    Pad(
+                # Copying a pad and changing a few properties is faster than creating
+                # a new one.
+                if (
+                    isinstance(reference_pad, Pad)
+                    and pad_params_with_override.size == reference_pad.size
+                    and reference_pad.shape == current_shape
+                ):
+                    referenced_pad = ReferencedPad(
+                        reference_pad=reference_pad,
+                        number=pad_params_with_override.number,
+                        at=pad_params_with_override.position,
+                    )
+                    self._pads.append(referenced_pad)
+                else:
+                    reference_pad = Pad(
                         number=pad_params_with_override.number,
                         at=pad_params_with_override.position,
                         size=pad_params_with_override.size,
@@ -246,15 +263,22 @@ class PadArray(Node):
                         fab_property=fab_property,
                         drill=drill,
                     )
-                )
+                    self._pads.append(reference_pad)
 
-        for pad in self.virtual_childs:
+        for pad in self._pads:
             pad._parent = self
 
     # How many pads in the array
     def _init_pincount(
         self, pincount: int, hidden_pins: Sequence[int], deleted_pins: Sequence[int]
     ) -> None:
+        """Initialize the pin count.
+
+        Args:
+            pincount: The number of pins in the array.
+            hidden_pins: The list of pins to hide.
+            delted_pins: The list of pins to delete.
+        """
         self.pincount = pincount
         self.hidden_pins = hidden_pins
         if pincount <= 0:
@@ -279,10 +303,14 @@ class PadArray(Node):
         start: Vec2DCompatible | None = None,
         center: Vec2DCompatible | None = None,
     ) -> None:
-        """
-        can use the 'start' argument to start a pad array at a given position
-        OR
-        can use the 'center' argument to center the array around the given position
+        """Initialize the starting position of the pad array.
+
+        Args:
+            start: The optional starting position of the pad array.
+            center: The optional center position of the pad array.
+
+        Note:
+            Either `start` or `center` have to be defined.
         """
         self.starting_position = Vector2D.from_floats(0.0, 0.0)
 
@@ -299,8 +327,12 @@ class PadArray(Node):
                 center.y - (self.pincount - 1) * self.spacing.y / 2.0
             )
 
-    # What number to start with?
     def _init_initial_number(self, initial: int | str = 1) -> None:
+        """Initialize the number of the first pad.
+
+        Args:
+            initial: The number of the first pad.
+        """
         self.initial_pin = initial
         if self.initial_pin == "":
             self.increment = 0
@@ -312,17 +344,24 @@ class PadArray(Node):
                     )
                 )
 
-    # Pad spacing
     def _init_spacing(
         self,
         spacing: Vec2DCompatible | None,
         x_spacing: float | None = None,
         y_spacing: float | None = None,
     ) -> None:
-        """Spacing can be given as:
-        spacing = Vector2D(1,2) # high priority
-        x_spacing = 1
-        y_spacing = 2
+        """Initialize the pad spacing.
+
+        Note:
+            Spacing can be given as:
+            spacing = Vector2D(1,2) # high priority
+            x_spacing = 1
+            y_spacing = 2
+
+        Args:
+            spacing: Optional spacing in both x- and y-direction.
+            x_spacing: Optional parameter for the spacing on the x-axis.
+            y_spacing: Optional parameter for the spacing on the y-axis.
         """
         if spacing:
             self.spacing = Vector2D(spacing)
@@ -342,8 +381,17 @@ class PadArray(Node):
         pad_size: Vector2D,
         pad_overrides: PadOverrides | None,
     ) -> ApplyOverrideResult:
-        """
-        Apply pad overrides to the current pad position and parameters.
+        """Apply pad overrides to the current pad position and parameters.
+
+        Args:
+            pad_number: The original number of the pad (before potential override).
+            pad_position: The original position of the pad (before potential override).
+            pad_size: The original size of the pad (before potential override).
+            pad_overrides: The pad overrides.
+
+        Returns:
+            A named tuple containing the number, position and size of the pad after the
+            override.
         """
         # No overrides? Just return input
         if pad_overrides is None:
@@ -401,43 +449,68 @@ class PadArray(Node):
 
         return ApplyOverrideResult(pad_number, pad_position, pad_size)
 
-    def getVirtualChilds(self) -> list[Pad | ChamferedPad]:
-        return self.virtual_childs
+    def get_flattened_nodes(self) -> list[Node]:
+        """Return the nodes to serialize."""
+        return cast(list[Node], self._pads)
 
-    def get_pads(self) -> Generator[Pad, None, None]:
-        """
-        Yields all pads in the array, one by one.
-        """
-        for pad in self.virtual_childs:
-            if isinstance(pad, Pad):
-                yield pad
+    def get_child_nodes(self) -> list[Node]:
+        """Return the direct child nodes."""
+        return cast(list[Node], self._pads)
 
-    def get_pad_with_name(self, number: str | int) -> Pad | ChamferedPad | None:
-        for pad in self.virtual_childs:
+    def get_pads(self) -> list[Pad | ReferencedPad]:
+        """Return the list of pads in the array."""
+        return self._pads
+
+    def get_pad_with_name(self, number: str | int) -> Pad | ReferencedPad | None:
+        """Return the pad with the given name.
+
+        Args:
+            number: The number or name of the pad.
+
+        Returns:
+            The pad with the given name, or `None` if no pad with such a name could be
+            found."""
+        for pad in self._pads:
             if pad.number == number:
                 return pad
         return None
 
+    def __repr__(self) -> str:
+        """The string representation of the pad array."""
+        return (
+            f"PadArray("
+            f'initial_pin="{self.initial_pin}", '
+            f"pincount={self.pincount}, "
+            f"size={self.size}, "
+            f"spacing={self.spacing}, "
+            f"starting_position={self.starting_position})"
+        )
+
 
 def get_pad_radius_from_arrays(pad_arrays: list[PadArray]) -> float:
+    """Return the radius of the pads in the array.
+
+    Note: As soon as the first pad with a radius different from zero is found, that
+        radius is returned.
+    """
     pad_radius = 0.0
     for pa in pad_arrays:
         if pad_radius == 0.0:
-            pads = pa.getVirtualChilds()
+            pads = pa.get_pads()
             if len(pads):
                 pad_radius = pads[0].getRoundRadius()
     return pad_radius
 
 
-def find_lowest_numbered_pad(pad_arrays: list[PadArray]) -> Pad | ChamferedPad | None:
-    """
-    From a list of pad arrays, find the lowest-integer-numbered pad.
-    """
+def find_lowest_numbered_pad(
+    pad_arrays: list[PadArray],
+) -> Pad | ReferencedPad | None:
+    """From a list of pad arrays, find the lowest-integer-numbered pad."""
 
-    lowest_pad: Pad | ChamferedPad | None = None
+    lowest_pad: Pad | ReferencedPad | None = None
 
     for pad_array in pad_arrays:
-        for pad in pad_array.getVirtualChilds():
+        for pad in pad_array.get_pads():
             try:
                 int_num = int(pad.number)
             except ValueError:

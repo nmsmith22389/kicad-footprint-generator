@@ -56,8 +56,9 @@ class Pin1SilkscreenArrow(Node):
         self._poly = Polygon(shape=arrow_pts, layer=layer, width=line_width_mm, fill=True)
         # Rotate the arrow backwards (so it points in the right direction)
         self._poly.rotate(angle=-angle, origin=pos)
-
-    def getVirtualChilds(self):
+    
+    def get_flattened_nodes(self) -> list[Polygon]:
+        """Return the nodes to serialize."""
         return [self._poly]
 
 
@@ -101,5 +102,6 @@ class Pin1SilkScreenArrow45Deg(Node):
         if angle != 0:
             self._poly.rotate(-angle, origin=apex_position)
 
-    def getVirtualChilds(self):
+    def get_flattened_nodes(self) -> list[Polygon]:
+        """Return the nodes to serialize."""
         return [self._poly]

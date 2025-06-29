@@ -552,7 +552,22 @@
 			(type solid)
 		)
 		(fill no)
-		(layer F.SilkS)
+		(layer "F.SilkS")
+	)
+	(fp_poly
+		(pts
+			(arc
+				(start -96 1)
+				(mid -95 -1.414214)
+				(end -94 1)
+			)
+		)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.SilkS")
 	)
 	(fp_poly
 		(pts
@@ -572,7 +587,7 @@
 			(type solid)
 		)
 		(fill no)
-		(layer F.SilkS)
+		(layer "F.SilkS")
 	)
 	(fp_poly
 		(pts
@@ -592,7 +607,7 @@
 			(type solid)
 		)
 		(fill no)
-		(layer F.SilkS)
+		(layer "F.SilkS")
 	)
 	(fp_poly
 		(pts
@@ -612,7 +627,7 @@
 			(type solid)
 		)
 		(fill no)
-		(layer F.SilkS)
+		(layer "F.SilkS")
 	)
 	(fp_poly
 		(pts
@@ -632,7 +647,369 @@
 			(type solid)
 		)
 		(fill no)
-		(layer F.SilkS)
+		(layer "F.SilkS")
+	)
+	(fp_poly
+		(pts
+			(arc
+				(start -86 1)
+				(mid -87 0)
+				(end -86 -1)
+			)
+			(arc
+				(start -84 -1)
+				(mid -83 0)
+				(end -84 1)
+			)
+		)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.SilkS")
+	)
+	(fp_poly
+		(pts
+			(arc
+				(start -77 1)
+				(mid -76 0)
+				(end -77 -1)
+			)
+			(arc
+				(start -73 -1)
+				(mid -74 0)
+				(end -73 1)
+			)
+		)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.SilkS")
+	)
+	(fp_poly
+		(pts
+			(arc
+				(start -65 0.866025)
+				(mid -66.5 0)
+				(end -65 -0.866025)
+			)
+			(arc
+				(start -65 -0.866025)
+				(mid -63.5 0)
+				(end -65 0.866025)
+			)
+		)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.SilkS")
+	)
+	(fp_poly
+		(pts
+			(arc
+				(start -54.25 0.866025)
+				(mid -56.75 0)
+				(end -54.25 -0.866025)
+			)
+			(arc
+				(start -54.25 -0.866025)
+				(mid -55.75 0)
+				(end -54.25 0.866025)
+			)
+		)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.SilkS")
+	)
+	(fp_poly
+		(pts
+			(arc
+				(start -86 11.2)
+				(mid -87.2 10)
+				(end -86 8.8)
+			)
+			(arc
+				(start -84 8.8)
+				(mid -82.8 10)
+				(end -84 11.2)
+			)
+		)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.SilkS")
+	)
+	(fp_poly
+		(pts
+			(arc
+				(start -65 11.090871)
+				(mid -66.7 10)
+				(end -65 8.909129)
+			)
+			(arc
+				(start -65 8.909129)
+				(mid -63.3 10)
+				(end -65 11.090871)
+			)
+		)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.SilkS")
+	)
+	(fp_poly
+		(pts
+			(arc
+				(start -86 22.5)
+				(mid -88.5 20)
+				(end -86 17.5)
+			)
+			(arc
+				(start -84 17.5)
+				(mid -81.5 20)
+				(end -84 22.5)
+			)
+		)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.SilkS")
+	)
+	(fp_poly
+		(pts
+			(arc
+				(start -65 22.44949)
+				(mid -68 20)
+				(end -65 17.55051)
+			)
+			(arc
+				(start -65 17.55051)
+				(mid -62 20)
+				(end -65 22.44949)
+			)
+		)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.SilkS")
+	)
+	(fp_poly
+		(pts
+			(arc
+				(start -96 11.2)
+				(mid -96.076537 11.184776)
+				(end -96.141421 11.141421)
+			)
+			(arc
+				(start -96.141421 11.141421)
+				(mid -95 8.385786)
+				(end -93.858579 11.141421)
+			)
+			(arc
+				(start -93.858579 11.141421)
+				(mid -93.923463 11.184776)
+				(end -94 11.2)
+			)
+		)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.SilkS")
+	)
+	(fp_poly
+		(pts
+			(arc
+				(start -36 10.95)
+				(mid -36.176335 10.844372)
+				(end -36.16641 10.63906)
+			)
+			(arc
+				(start -35.16641 9.13906)
+				(mid -35 9.05)
+				(end -34.83359 9.13906)
+			)
+			(arc
+				(start -33.83359 10.63906)
+				(mid -33.823665 10.844372)
+				(end -34 10.95)
+			)
+		)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.SilkS")
+	)
+	(fp_poly
+		(pts
+			(arc
+				(start -96 22.5)
+				(mid -96.574025 22.385819)
+				(end -97.06066 22.06066)
+			)
+			(arc
+				(start -97.06066 22.06066)
+				(mid -95 17.085786)
+				(end -92.93934 22.06066)
+			)
+			(arc
+				(start -92.93934 22.06066)
+				(mid -93.425975 22.385819)
+				(end -94 22.5)
+			)
+		)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.SilkS")
+	)
+	(fp_poly
+		(pts
+			(arc
+				(start -53.025255 20)
+				(mid -52.750497 20.904621)
+				(end -53.071429 21.79391)
+			)
+			(arc
+				(start -53.071429 21.79391)
+				(mid -58.25 20)
+				(end -53.071429 18.20609)
+			)
+			(arc
+				(start -53.071429 18.20609)
+				(mid -52.750497 19.095379)
+				(end -53.025255 20)
+			)
+		)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.SilkS")
+	)
+	(fp_poly
+		(pts
+			(arc
+				(start -48.5 20.75)
+				(mid -45 17.25)
+				(end -41.5 20.75)
+			)
+			(arc
+				(start -41.5 20.75)
+				(mid -42.792893 22.620829)
+				(end -45 22.072876)
+			)
+			(arc
+				(start -45 22.072876)
+				(mid -47.207107 22.620829)
+				(end -48.5 20.75)
+			)
+		)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.SilkS")
+	)
+	(fp_poly
+		(pts
+			(arc
+				(start -36 22.25)
+				(mid -37.322512 21.457787)
+				(end -37.248075 19.91795)
+			)
+			(arc
+				(start -36.248075 18.41795)
+				(mid -35 17.75)
+				(end -33.751925 18.41795)
+			)
+			(arc
+				(start -32.751925 19.91795)
+				(mid -32.677488 21.457787)
+				(end -34 22.25)
+			)
+		)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.SilkS")
+	)
+	(fp_poly
+		(pts
+			(xy -36 0.75)
+			(xy -35 -0.75)
+			(xy -34 0.75)
+		)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.SilkS")
+	)
+	(fp_poly
+		(pts
+			(xy -35.626297 -9.45)
+			(xy -35 -10.389445)
+			(xy -34.373703 -9.45)
+		)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.SilkS")
+	)
+	(fp_poly
+		(pts
+			(xy -26 0.75)
+			(xy -25 -0.75)
+			(xy -24 0.75)
+		)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.SilkS")
+	)
+	(fp_poly
+		(pts
+			(xy -25.626297 -9.45)
+			(xy -25 -10.389445)
+			(xy -24.373703 -9.45)
+		)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.SilkS")
 	)
 	(fp_poly
 		(pts
@@ -662,166 +1039,7 @@
 			(type solid)
 		)
 		(fill no)
-		(layer F.SilkS)
-	)
-	(fp_poly
-		(pts
-			(xy -35.626297 -9.45)
-			(xy -35 -10.389445)
-			(xy -34.373703 -9.45)
-		)
-		(stroke
-			(width 0.12)
-			(type solid)
-		)
-		(fill no)
-		(layer F.SilkS)
-	)
-	(fp_poly
-		(pts
-			(xy -15.850929 -10.850929)
-			(xy -15 -11.276393)
-			(xy -14.149071 -10.850929)
-			(xy -13.723607 -10)
-			(xy -14.149071 -9.149071)
-			(xy -15 -8.723607)
-			(xy -15.850929 -9.149071)
-			(xy -16.276393 -10)
-		)
-		(stroke
-			(width 0.12)
-			(type solid)
-		)
-		(fill no)
-		(layer F.SilkS)
-	)
-	(fp_poly
-		(pts
-			(xy 5.2 -12.8)
-			(xy 7.517157 -12.8)
-			(xy 6.917157 -12.2)
-			(xy 5.8 -12.2)
-			(xy 5.8 -9.8)
-			(xy 7.082843 -9.8)
-			(xy 10.082843 -12.8)
-			(xy 10.517157 -12.8)
-			(xy 5.2 -7.482843)
-		)
-		(stroke
-			(width 0.12)
-			(type solid)
-		)
-		(fill no)
-		(layer F.SilkS)
-	)
-	(fp_poly
-		(pts
-			(xy 54.2 -10.8)
-			(xy 55.8 -10.8)
-			(xy 55.8 -9.2)
-			(xy 54.2 -9.2)
-		)
-		(stroke
-			(width 0.12)
-			(type solid)
-		)
-		(fill no)
-		(layer F.SilkS)
-	)
-	(fp_poly
-		(pts
-			(arc
-				(start -96 1)
-				(mid -95 -1.414214)
-				(end -94 1)
-			)
-		)
-		(stroke
-			(width 0.12)
-			(type solid)
-		)
-		(fill no)
-		(layer F.SilkS)
-	)
-	(fp_poly
-		(pts
-			(arc
-				(start -86 1)
-				(mid -87 0)
-				(end -86 -1)
-			)
-			(arc
-				(start -84 -1)
-				(mid -83 0)
-				(end -84 1)
-			)
-		)
-		(stroke
-			(width 0.12)
-			(type solid)
-		)
-		(fill no)
-		(layer F.SilkS)
-	)
-	(fp_poly
-		(pts
-			(arc
-				(start -77 1)
-				(mid -76 0)
-				(end -77 -1)
-			)
-			(arc
-				(start -73 -1)
-				(mid -74 0)
-				(end -73 1)
-			)
-		)
-		(stroke
-			(width 0.12)
-			(type solid)
-		)
-		(fill no)
-		(layer F.SilkS)
-	)
-	(fp_poly
-		(pts
-			(arc
-				(start -65 0.866025)
-				(mid -66.5 0)
-				(end -65 -0.866025)
-			)
-			(arc
-				(start -65 -0.866025)
-				(mid -63.5 0)
-				(end -65 0.866025)
-			)
-		)
-		(stroke
-			(width 0.12)
-			(type solid)
-		)
-		(fill no)
-		(layer F.SilkS)
-	)
-	(fp_poly
-		(pts
-			(arc
-				(start -54.25 0.866025)
-				(mid -56.75 0)
-				(end -54.25 -0.866025)
-			)
-			(arc
-				(start -54.25 -0.866025)
-				(mid -55.75 0)
-				(end -54.25 0.866025)
-			)
-		)
-		(stroke
-			(width 0.12)
-			(type solid)
-		)
-		(fill no)
-		(layer F.SilkS)
+		(layer "F.SilkS")
 	)
 	(fp_poly
 		(pts
@@ -851,176 +1069,7 @@
 			(type solid)
 		)
 		(fill no)
-		(layer F.SilkS)
-	)
-	(fp_poly
-		(pts
-			(xy -36 0.75)
-			(xy -35 -0.75)
-			(xy -34 0.75)
-		)
-		(stroke
-			(width 0.12)
-			(type solid)
-		)
-		(fill no)
-		(layer F.SilkS)
-	)
-	(fp_poly
-		(pts
-			(xy -16 -1)
-			(xy -15 -1.5)
-			(xy -14 -1)
-			(xy -13.5 0)
-			(xy -14 1)
-			(xy -15 1.5)
-			(xy -16 1)
-			(xy -16.5 0)
-		)
-		(stroke
-			(width 0.12)
-			(type solid)
-		)
-		(fill no)
-		(layer F.SilkS)
-	)
-	(fp_poly
-		(pts
-			(xy 5 -3)
-			(xy 8 -3)
-			(xy 7 -2)
-			(xy 6 -2)
-			(xy 6 0)
-			(xy 7 0)
-			(xy 10 -3)
-			(xy 11 -3)
-			(xy 5 3)
-		)
-		(stroke
-			(width 0.12)
-			(type solid)
-		)
-		(fill no)
-		(layer F.SilkS)
-	)
-	(fp_poly
-		(pts
-			(xy 54 -1)
-			(xy 56 -1)
-			(xy 56 1)
-			(xy 54 1)
-		)
-		(stroke
-			(width 0.12)
-			(type solid)
-		)
-		(fill no)
-		(layer F.SilkS)
-	)
-	(fp_poly
-		(pts
-			(arc
-				(start -96 11.2)
-				(mid -96.076537 11.184776)
-				(end -96.141421 11.141421)
-			)
-			(arc
-				(start -96.141421 11.141421)
-				(mid -95 8.385786)
-				(end -93.858579 11.141421)
-			)
-			(arc
-				(start -93.858579 11.141421)
-				(mid -93.923463 11.184776)
-				(end -94 11.2)
-			)
-		)
-		(stroke
-			(width 0.12)
-			(type solid)
-		)
-		(fill no)
-		(layer F.SilkS)
-	)
-	(fp_poly
-		(pts
-			(arc
-				(start -86 11.2)
-				(mid -87.2 10)
-				(end -86 8.8)
-			)
-			(arc
-				(start -84 8.8)
-				(mid -82.8 10)
-				(end -84 11.2)
-			)
-		)
-		(stroke
-			(width 0.12)
-			(type solid)
-		)
-		(fill no)
-		(layer F.SilkS)
-	)
-	(fp_poly
-		(pts
-			(arc
-				(start -77 11.2)
-				(mid -77.2 11)
-				(end -77 10.8)
-			)
-			(arc
-				(start -77 10.8)
-				(mid -76.2 10)
-				(end -77 9.2)
-			)
-			(arc
-				(start -77 9.2)
-				(mid -77.2 9)
-				(end -77 8.8)
-			)
-			(arc
-				(start -73 8.8)
-				(mid -72.8 9)
-				(end -73 9.2)
-			)
-			(arc
-				(start -73 9.2)
-				(mid -73.8 10)
-				(end -73 10.8)
-			)
-			(arc
-				(start -73 10.8)
-				(mid -72.8 11)
-				(end -73 11.2)
-			)
-		)
-		(stroke
-			(width 0.12)
-			(type solid)
-		)
-		(fill no)
-		(layer F.SilkS)
-	)
-	(fp_poly
-		(pts
-			(arc
-				(start -65 11.090871)
-				(mid -66.7 10)
-				(end -65 8.909129)
-			)
-			(arc
-				(start -65 8.909129)
-				(mid -63.3 10)
-				(end -65 11.090871)
-			)
-		)
-		(stroke
-			(width 0.12)
-			(type solid)
-		)
-		(fill no)
-		(layer F.SilkS)
+		(layer "F.SilkS")
 	)
 	(fp_poly
 		(pts
@@ -1050,7 +1099,7 @@
 			(type solid)
 		)
 		(fill no)
-		(layer F.SilkS)
+		(layer "F.SilkS")
 	)
 	(fp_poly
 		(pts
@@ -1080,125 +1129,7 @@
 			(type solid)
 		)
 		(fill no)
-		(layer F.SilkS)
-	)
-	(fp_poly
-		(pts
-			(arc
-				(start -36 10.95)
-				(mid -36.176335 10.844372)
-				(end -36.16641 10.63906)
-			)
-			(arc
-				(start -35.16641 9.13906)
-				(mid -35 9.05)
-				(end -34.83359 9.13906)
-			)
-			(arc
-				(start -33.83359 10.63906)
-				(mid -33.823665 10.844372)
-				(end -34 10.95)
-			)
-		)
-		(stroke
-			(width 0.12)
-			(type solid)
-		)
-		(fill no)
-		(layer F.SilkS)
-	)
-	(fp_poly
-		(pts
-			(arc
-				(start -16.178885 8.910557)
-				(mid -16.141421 8.858579)
-				(end -16.089443 8.821115)
-			)
-			(arc
-				(start -15.089443 8.321115)
-				(mid -15 8.3)
-				(end -14.910557 8.321115)
-			)
-			(arc
-				(start -13.910557 8.821115)
-				(mid -13.858579 8.858579)
-				(end -13.821115 8.910557)
-			)
-			(arc
-				(start -13.321115 9.910557)
-				(mid -13.3 10)
-				(end -13.321115 10.089443)
-			)
-			(arc
-				(start -13.821115 11.089443)
-				(mid -13.858579 11.141421)
-				(end -13.910557 11.178885)
-			)
-			(arc
-				(start -14.910557 11.678885)
-				(mid -15 11.7)
-				(end -15.089443 11.678885)
-			)
-			(arc
-				(start -16.089443 11.178885)
-				(mid -16.141421 11.141421)
-				(end -16.178885 11.089443)
-			)
-			(arc
-				(start -16.678885 10.089443)
-				(mid -16.7 10)
-				(end -16.678885 9.910557)
-			)
-		)
-		(stroke
-			(width 0.12)
-			(type solid)
-		)
-		(fill no)
-		(layer F.SilkS)
-	)
-	(fp_poly
-		(pts
-			(arc
-				(start 4.8 7)
-				(mid 4.858579 6.858579)
-				(end 5 6.8)
-			)
-			(arc
-				(start 8 6.8)
-				(mid 8.184776 6.923463)
-				(end 8.141421 7.141421)
-			)
-			(arc
-				(start 7.141421 8.141421)
-				(mid 7.076537 8.184776)
-				(end 7 8.2)
-			)
-			(xy 6.2 8.2)
-			(xy 6.2 9.8)
-			(xy 6.917157 9.8)
-			(arc
-				(start 9.858579 6.858579)
-				(mid 9.923463 6.815224)
-				(end 10 6.8)
-			)
-			(arc
-				(start 11 6.8)
-				(mid 11.184776 6.923463)
-				(end 11.141421 7.141421)
-			)
-			(arc
-				(start 5.141421 13.141421)
-				(mid 4.923463 13.184776)
-				(end 4.8 13)
-			)
-		)
-		(stroke
-			(width 0.12)
-			(type solid)
-		)
-		(fill no)
-		(layer F.SilkS)
+		(layer "F.SilkS")
 	)
 	(fp_poly
 		(pts
@@ -1228,52 +1159,7 @@
 			(type solid)
 		)
 		(fill no)
-		(layer F.SilkS)
-	)
-	(fp_poly
-		(pts
-			(arc
-				(start -96 22.5)
-				(mid -96.574025 22.385819)
-				(end -97.06066 22.06066)
-			)
-			(arc
-				(start -97.06066 22.06066)
-				(mid -95 17.085786)
-				(end -92.93934 22.06066)
-			)
-			(arc
-				(start -92.93934 22.06066)
-				(mid -93.425975 22.385819)
-				(end -94 22.5)
-			)
-		)
-		(stroke
-			(width 0.12)
-			(type solid)
-		)
-		(fill no)
-		(layer F.SilkS)
-	)
-	(fp_poly
-		(pts
-			(arc
-				(start -86 22.5)
-				(mid -88.5 20)
-				(end -86 17.5)
-			)
-			(arc
-				(start -84 17.5)
-				(mid -81.5 20)
-				(end -84 22.5)
-			)
-		)
-		(stroke
-			(width 0.12)
-			(type solid)
-		)
-		(fill no)
-		(layer F.SilkS)
+		(layer "F.SilkS")
 	)
 	(fp_poly
 		(pts
@@ -1303,187 +1189,7 @@
 			(type solid)
 		)
 		(fill no)
-		(layer F.SilkS)
-	)
-	(fp_poly
-		(pts
-			(arc
-				(start -65 22.44949)
-				(mid -68 20)
-				(end -65 17.55051)
-			)
-			(arc
-				(start -65 17.55051)
-				(mid -62 20)
-				(end -65 22.44949)
-			)
-		)
-		(stroke
-			(width 0.12)
-			(type solid)
-		)
-		(fill no)
-		(layer F.SilkS)
-	)
-	(fp_poly
-		(pts
-			(arc
-				(start -53.025255 20)
-				(mid -52.750497 20.904621)
-				(end -53.071429 21.79391)
-			)
-			(arc
-				(start -53.071429 21.79391)
-				(mid -58.25 20)
-				(end -53.071429 18.20609)
-			)
-			(arc
-				(start -53.071429 18.20609)
-				(mid -52.750497 19.095379)
-				(end -53.025255 20)
-			)
-		)
-		(stroke
-			(width 0.12)
-			(type solid)
-		)
-		(fill no)
-		(layer F.SilkS)
-	)
-	(fp_poly
-		(pts
-			(arc
-				(start -48.5 20.75)
-				(mid -45 17.25)
-				(end -41.5 20.75)
-			)
-			(arc
-				(start -41.5 20.75)
-				(mid -42.792893 22.620829)
-				(end -45 22.072876)
-			)
-			(arc
-				(start -45 22.072876)
-				(mid -47.207107 22.620829)
-				(end -48.5 20.75)
-			)
-		)
-		(stroke
-			(width 0.12)
-			(type solid)
-		)
-		(fill no)
-		(layer F.SilkS)
-	)
-	(fp_poly
-		(pts
-			(arc
-				(start -36 22.25)
-				(mid -37.322512 21.457787)
-				(end -37.248075 19.91795)
-			)
-			(arc
-				(start -36.248075 18.41795)
-				(mid -35 17.75)
-				(end -33.751925 18.41795)
-			)
-			(arc
-				(start -32.751925 19.91795)
-				(mid -32.677488 21.457787)
-				(end -34 22.25)
-			)
-		)
-		(stroke
-			(width 0.12)
-			(type solid)
-		)
-		(fill no)
-		(layer F.SilkS)
-	)
-	(fp_poly
-		(pts
-			(arc
-				(start -17.341641 18.32918)
-				(mid -17.06066 17.93934)
-				(end -16.67082 17.658359)
-			)
-			(arc
-				(start -15.67082 17.158359)
-				(mid -15 17)
-				(end -14.32918 17.158359)
-			)
-			(arc
-				(start -13.32918 17.658359)
-				(mid -12.93934 17.93934)
-				(end -12.658359 18.32918)
-			)
-			(arc
-				(start -12.158359 19.32918)
-				(mid -12 20)
-				(end -12.158359 20.67082)
-			)
-			(arc
-				(start -12.658359 21.67082)
-				(mid -12.93934 22.06066)
-				(end -13.32918 22.341641)
-			)
-			(arc
-				(start -14.32918 22.841641)
-				(mid -15 23)
-				(end -15.67082 22.841641)
-			)
-			(arc
-				(start -16.67082 22.341641)
-				(mid -17.06066 22.06066)
-				(end -17.341641 21.67082)
-			)
-			(arc
-				(start -17.841641 20.67082)
-				(mid -18 20)
-				(end -17.841641 19.32918)
-			)
-		)
-		(stroke
-			(width 0.12)
-			(type solid)
-		)
-		(fill no)
-		(layer F.SilkS)
-	)
-	(fp_poly
-		(pts
-			(arc
-				(start 3.5 17)
-				(mid 3.93934 15.93934)
-				(end 5 15.5)
-			)
-			(arc
-				(start 8 15.5)
-				(mid 8.535233 15.598741)
-				(end 9 15.881966)
-			)
-			(arc
-				(start 9 15.881966)
-				(mid 9.464767 15.598741)
-				(end 10 15.5)
-			)
-			(arc
-				(start 11 15.5)
-				(mid 12.385819 16.425975)
-				(end 12.06066 18.06066)
-			)
-			(arc
-				(start 6.06066 24.06066)
-				(mid 4.425975 24.385819)
-				(end 3.5 23)
-			)
-		)
-		(stroke
-			(width 0.12)
-			(type solid)
-		)
-		(fill no)
-		(layer F.SilkS)
+		(layer "F.SilkS")
 	)
 	(fp_poly
 		(pts
@@ -1507,32 +1213,6 @@
 				(mid 52.93934 22.06066)
 				(end 52.5 21)
 			)
-		)
-		(stroke
-			(width 0.12)
-			(type solid)
-		)
-		(fill no)
-		(layer F.SilkS)
-	)
-	(fp_poly
-		(pts
-			(xy -26 0.75)
-			(xy -25 -0.75)
-			(xy -24 0.75)
-		)
-		(stroke
-			(width 0.12)
-			(type solid)
-		)
-		(fill no)
-		(layer "F.SilkS")
-	)
-	(fp_poly
-		(pts
-			(xy -25.626297 -9.45)
-			(xy -25 -10.389445)
-			(xy -24.373703 -9.45)
 		)
 		(stroke
 			(width 0.12)
@@ -1599,6 +1279,34 @@
 	)
 	(fp_poly
 		(pts
+			(xy 54 -1)
+			(xy 56 -1)
+			(xy 56 1)
+			(xy 54 1)
+		)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.SilkS")
+	)
+	(fp_poly
+		(pts
+			(xy 54.2 -10.8)
+			(xy 55.8 -10.8)
+			(xy 55.8 -9.2)
+			(xy 54.2 -9.2)
+		)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.SilkS")
+	)
+	(fp_poly
+		(pts
 			(xy 88.37868 17.5)
 			(xy 101.62132 17.5)
 			(xy 96.62132 22.5)
@@ -1655,6 +1363,81 @@
 	)
 	(fp_poly
 		(pts
+			(arc
+				(start 3.5 17)
+				(mid 3.93934 15.93934)
+				(end 5 15.5)
+			)
+			(arc
+				(start 8 15.5)
+				(mid 8.535233 15.598741)
+				(end 9 15.881966)
+			)
+			(arc
+				(start 9 15.881966)
+				(mid 9.464767 15.598741)
+				(end 10 15.5)
+			)
+			(arc
+				(start 11 15.5)
+				(mid 12.385819 16.425975)
+				(end 12.06066 18.06066)
+			)
+			(arc
+				(start 6.06066 24.06066)
+				(mid 4.425975 24.385819)
+				(end 3.5 23)
+			)
+		)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.SilkS")
+	)
+	(fp_poly
+		(pts
+			(arc
+				(start -77 11.2)
+				(mid -77.2 11)
+				(end -77 10.8)
+			)
+			(arc
+				(start -77 10.8)
+				(mid -76.2 10)
+				(end -77 9.2)
+			)
+			(arc
+				(start -77 9.2)
+				(mid -77.2 9)
+				(end -77 8.8)
+			)
+			(arc
+				(start -73 8.8)
+				(mid -72.8 9)
+				(end -73 9.2)
+			)
+			(arc
+				(start -73 9.2)
+				(mid -73.8 10)
+				(end -73 10.8)
+			)
+			(arc
+				(start -73 10.8)
+				(mid -72.8 11)
+				(end -73 11.2)
+			)
+		)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.SilkS")
+	)
+	(fp_poly
+		(pts
 			(xy -26.898532 22.25)
 			(xy -27.746491 20.665574)
 			(xy -25.802776 17.75)
@@ -1677,6 +1460,142 @@
 			(xy -24.892963 9.05)
 			(xy -23.767134 10.738743)
 			(xy -23.880196 10.95)
+		)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.SilkS")
+	)
+	(fp_poly
+		(pts
+			(arc
+				(start -16.178885 8.910557)
+				(mid -16.141421 8.858579)
+				(end -16.089443 8.821115)
+			)
+			(arc
+				(start -15.089443 8.321115)
+				(mid -15 8.3)
+				(end -14.910557 8.321115)
+			)
+			(arc
+				(start -13.910557 8.821115)
+				(mid -13.858579 8.858579)
+				(end -13.821115 8.910557)
+			)
+			(arc
+				(start -13.321115 9.910557)
+				(mid -13.3 10)
+				(end -13.321115 10.089443)
+			)
+			(arc
+				(start -13.821115 11.089443)
+				(mid -13.858579 11.141421)
+				(end -13.910557 11.178885)
+			)
+			(arc
+				(start -14.910557 11.678885)
+				(mid -15 11.7)
+				(end -15.089443 11.678885)
+			)
+			(arc
+				(start -16.089443 11.178885)
+				(mid -16.141421 11.141421)
+				(end -16.178885 11.089443)
+			)
+			(arc
+				(start -16.678885 10.089443)
+				(mid -16.7 10)
+				(end -16.678885 9.910557)
+			)
+		)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.SilkS")
+	)
+	(fp_poly
+		(pts
+			(arc
+				(start -17.341641 18.32918)
+				(mid -17.06066 17.93934)
+				(end -16.67082 17.658359)
+			)
+			(arc
+				(start -15.67082 17.158359)
+				(mid -15 17)
+				(end -14.32918 17.158359)
+			)
+			(arc
+				(start -13.32918 17.658359)
+				(mid -12.93934 17.93934)
+				(end -12.658359 18.32918)
+			)
+			(arc
+				(start -12.158359 19.32918)
+				(mid -12 20)
+				(end -12.158359 20.67082)
+			)
+			(arc
+				(start -12.658359 21.67082)
+				(mid -12.93934 22.06066)
+				(end -13.32918 22.341641)
+			)
+			(arc
+				(start -14.32918 22.841641)
+				(mid -15 23)
+				(end -15.67082 22.841641)
+			)
+			(arc
+				(start -16.67082 22.341641)
+				(mid -17.06066 22.06066)
+				(end -17.341641 21.67082)
+			)
+			(arc
+				(start -17.841641 20.67082)
+				(mid -18 20)
+				(end -17.841641 19.32918)
+			)
+		)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.SilkS")
+	)
+	(fp_poly
+		(pts
+			(xy -16 -1)
+			(xy -15 -1.5)
+			(xy -14 -1)
+			(xy -13.5 0)
+			(xy -14 1)
+			(xy -15 1.5)
+			(xy -16 1)
+			(xy -16.5 0)
+		)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.SilkS")
+	)
+	(fp_poly
+		(pts
+			(xy -15.850929 -10.850929)
+			(xy -15 -11.276393)
+			(xy -14.149071 -10.850929)
+			(xy -13.723607 -10)
+			(xy -14.149071 -9.149071)
+			(xy -15 -8.723607)
+			(xy -15.850929 -9.149071)
+			(xy -16.276393 -10)
 		)
 		(stroke
 			(width 0.12)
@@ -1767,6 +1686,87 @@
 			(xy 22.769371 17.35195)
 			(xy 15.35195 24.769371)
 			(xy 13.5 24.002268)
+		)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.SilkS")
+	)
+	(fp_poly
+		(pts
+			(xy 5 -3)
+			(xy 8 -3)
+			(xy 7 -2)
+			(xy 6 -2)
+			(xy 6 0)
+			(xy 7 0)
+			(xy 10 -3)
+			(xy 11 -3)
+			(xy 5 3)
+		)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.SilkS")
+	)
+	(fp_poly
+		(pts
+			(xy 5.2 -12.8)
+			(xy 7.517157 -12.8)
+			(xy 6.917157 -12.2)
+			(xy 5.8 -12.2)
+			(xy 5.8 -9.8)
+			(xy 7.082843 -9.8)
+			(xy 10.082843 -12.8)
+			(xy 10.517157 -12.8)
+			(xy 5.2 -7.482843)
+		)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.SilkS")
+	)
+	(fp_poly
+		(pts
+			(arc
+				(start 4.8 7)
+				(mid 4.858579 6.858579)
+				(end 5 6.8)
+			)
+			(arc
+				(start 8 6.8)
+				(mid 8.184776 6.923463)
+				(end 8.141421 7.141421)
+			)
+			(arc
+				(start 7.141421 8.141421)
+				(mid 7.076537 8.184776)
+				(end 7 8.2)
+			)
+			(xy 6.2 8.2)
+			(xy 6.2 9.8)
+			(xy 6.917157 9.8)
+			(arc
+				(start 9.858579 6.858579)
+				(mid 9.923463 6.815224)
+				(end 10 6.8)
+			)
+			(arc
+				(start 11 6.8)
+				(mid 11.184776 6.923463)
+				(end 11.141421 7.141421)
+			)
+			(arc
+				(start 5.141421 13.141421)
+				(mid 4.923463 13.184776)
+				(end 4.8 13)
+			)
 		)
 		(stroke
 			(width 0.12)
@@ -2606,7 +2606,67 @@
 			(type solid)
 		)
 		(fill no)
-		(layer F.Fab)
+		(layer "F.Fab")
+	)
+	(fp_poly
+		(pts
+			(arc
+				(start -96 -9)
+				(mid -95 -11.414214)
+				(end -94 -9)
+			)
+		)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+	)
+	(fp_poly
+		(pts
+			(arc
+				(start -96 1)
+				(mid -95 -1.414214)
+				(end -94 1)
+			)
+		)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+	)
+	(fp_poly
+		(pts
+			(arc
+				(start -96 11)
+				(mid -95 8.585786)
+				(end -94 11)
+			)
+		)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+	)
+	(fp_poly
+		(pts
+			(arc
+				(start -96 21)
+				(mid -95 18.585786)
+				(end -94 21)
+			)
+		)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
 	)
 	(fp_poly
 		(pts
@@ -2626,7 +2686,7 @@
 			(type solid)
 		)
 		(fill no)
-		(layer F.Fab)
+		(layer "F.Fab")
 	)
 	(fp_poly
 		(pts
@@ -2646,7 +2706,7 @@
 			(type solid)
 		)
 		(fill no)
-		(layer F.Fab)
+		(layer "F.Fab")
 	)
 	(fp_poly
 		(pts
@@ -2666,7 +2726,7 @@
 			(type solid)
 		)
 		(fill no)
-		(layer F.Fab)
+		(layer "F.Fab")
 	)
 	(fp_poly
 		(pts
@@ -2686,116 +2746,7 @@
 			(type solid)
 		)
 		(fill no)
-		(layer F.Fab)
-	)
-	(fp_poly
-		(pts
-			(arc
-				(start -47 -19.25)
-				(mid -45 -21.25)
-				(end -43 -19.25)
-			)
-			(arc
-				(start -43 -19.25)
-				(mid -43.5 -18.75)
-				(end -44 -19.25)
-			)
-			(arc
-				(start -44 -19.25)
-				(mid -45 -20.25)
-				(end -46 -19.25)
-			)
-			(arc
-				(start -46 -19.25)
-				(mid -46.5 -18.75)
-				(end -47 -19.25)
-			)
-		)
-		(stroke
-			(width 0.1)
-			(type solid)
-		)
-		(fill no)
-		(layer F.Fab)
-	)
-	(fp_poly
-		(pts
-			(xy -36 -19.25)
-			(xy -35 -20.75)
-			(xy -34 -19.25)
-		)
-		(stroke
-			(width 0.1)
-			(type solid)
-		)
-		(fill no)
-		(layer F.Fab)
-	)
-	(fp_poly
-		(pts
-			(xy -16 -21)
-			(xy -15 -21.5)
-			(xy -14 -21)
-			(xy -13.5 -20)
-			(xy -14 -19)
-			(xy -15 -18.5)
-			(xy -16 -19)
-			(xy -16.5 -20)
-		)
-		(stroke
-			(width 0.1)
-			(type solid)
-		)
-		(fill no)
-		(layer F.Fab)
-	)
-	(fp_poly
-		(pts
-			(xy 5 -23)
-			(xy 8 -23)
-			(xy 7 -22)
-			(xy 6 -22)
-			(xy 6 -20)
-			(xy 7 -20)
-			(xy 10 -23)
-			(xy 11 -23)
-			(xy 5 -17)
-		)
-		(stroke
-			(width 0.1)
-			(type solid)
-		)
-		(fill no)
-		(layer F.Fab)
-	)
-	(fp_poly
-		(pts
-			(xy 54 -21)
-			(xy 56 -21)
-			(xy 56 -19)
-			(xy 54 -19)
-		)
-		(stroke
-			(width 0.1)
-			(type solid)
-		)
-		(fill no)
-		(layer F.Fab)
-	)
-	(fp_poly
-		(pts
-			(arc
-				(start -96 -9)
-				(mid -95 -11.414214)
-				(end -94 -9)
-			)
-		)
-		(stroke
-			(width 0.1)
-			(type solid)
-		)
-		(fill no)
-		(layer F.Fab)
+		(layer "F.Fab")
 	)
 	(fp_poly
 		(pts
@@ -2815,7 +2766,7 @@
 			(type solid)
 		)
 		(fill no)
-		(layer F.Fab)
+		(layer "F.Fab")
 	)
 	(fp_poly
 		(pts
@@ -2835,7 +2786,7 @@
 			(type solid)
 		)
 		(fill no)
-		(layer F.Fab)
+		(layer "F.Fab")
 	)
 	(fp_poly
 		(pts
@@ -2855,7 +2806,7 @@
 			(type solid)
 		)
 		(fill no)
-		(layer F.Fab)
+		(layer "F.Fab")
 	)
 	(fp_poly
 		(pts
@@ -2875,116 +2826,7 @@
 			(type solid)
 		)
 		(fill no)
-		(layer F.Fab)
-	)
-	(fp_poly
-		(pts
-			(arc
-				(start -47 -9.25)
-				(mid -45 -11.25)
-				(end -43 -9.25)
-			)
-			(arc
-				(start -43 -9.25)
-				(mid -43.5 -8.75)
-				(end -44 -9.25)
-			)
-			(arc
-				(start -44 -9.25)
-				(mid -45 -10.25)
-				(end -46 -9.25)
-			)
-			(arc
-				(start -46 -9.25)
-				(mid -46.5 -8.75)
-				(end -47 -9.25)
-			)
-		)
-		(stroke
-			(width 0.1)
-			(type solid)
-		)
-		(fill no)
-		(layer F.Fab)
-	)
-	(fp_poly
-		(pts
-			(xy -36 -9.25)
-			(xy -35 -10.75)
-			(xy -34 -9.25)
-		)
-		(stroke
-			(width 0.1)
-			(type solid)
-		)
-		(fill no)
-		(layer F.Fab)
-	)
-	(fp_poly
-		(pts
-			(xy -16 -11)
-			(xy -15 -11.5)
-			(xy -14 -11)
-			(xy -13.5 -10)
-			(xy -14 -9)
-			(xy -15 -8.5)
-			(xy -16 -9)
-			(xy -16.5 -10)
-		)
-		(stroke
-			(width 0.1)
-			(type solid)
-		)
-		(fill no)
-		(layer F.Fab)
-	)
-	(fp_poly
-		(pts
-			(xy 5 -13)
-			(xy 8 -13)
-			(xy 7 -12)
-			(xy 6 -12)
-			(xy 6 -10)
-			(xy 7 -10)
-			(xy 10 -13)
-			(xy 11 -13)
-			(xy 5 -7)
-		)
-		(stroke
-			(width 0.1)
-			(type solid)
-		)
-		(fill no)
-		(layer F.Fab)
-	)
-	(fp_poly
-		(pts
-			(xy 54 -11)
-			(xy 56 -11)
-			(xy 56 -9)
-			(xy 54 -9)
-		)
-		(stroke
-			(width 0.1)
-			(type solid)
-		)
-		(fill no)
-		(layer F.Fab)
-	)
-	(fp_poly
-		(pts
-			(arc
-				(start -96 1)
-				(mid -95 -1.414214)
-				(end -94 1)
-			)
-		)
-		(stroke
-			(width 0.1)
-			(type solid)
-		)
-		(fill no)
-		(layer F.Fab)
+		(layer "F.Fab")
 	)
 	(fp_poly
 		(pts
@@ -3004,7 +2846,7 @@
 			(type solid)
 		)
 		(fill no)
-		(layer F.Fab)
+		(layer "F.Fab")
 	)
 	(fp_poly
 		(pts
@@ -3024,7 +2866,7 @@
 			(type solid)
 		)
 		(fill no)
-		(layer F.Fab)
+		(layer "F.Fab")
 	)
 	(fp_poly
 		(pts
@@ -3044,7 +2886,7 @@
 			(type solid)
 		)
 		(fill no)
-		(layer F.Fab)
+		(layer "F.Fab")
 	)
 	(fp_poly
 		(pts
@@ -3064,116 +2906,7 @@
 			(type solid)
 		)
 		(fill no)
-		(layer F.Fab)
-	)
-	(fp_poly
-		(pts
-			(arc
-				(start -47 0.75)
-				(mid -45 -1.25)
-				(end -43 0.75)
-			)
-			(arc
-				(start -43 0.75)
-				(mid -43.5 1.25)
-				(end -44 0.75)
-			)
-			(arc
-				(start -44 0.75)
-				(mid -45 -0.25)
-				(end -46 0.75)
-			)
-			(arc
-				(start -46 0.75)
-				(mid -46.5 1.25)
-				(end -47 0.75)
-			)
-		)
-		(stroke
-			(width 0.1)
-			(type solid)
-		)
-		(fill no)
-		(layer F.Fab)
-	)
-	(fp_poly
-		(pts
-			(xy -36 0.75)
-			(xy -35 -0.75)
-			(xy -34 0.75)
-		)
-		(stroke
-			(width 0.1)
-			(type solid)
-		)
-		(fill no)
-		(layer F.Fab)
-	)
-	(fp_poly
-		(pts
-			(xy -16 -1)
-			(xy -15 -1.5)
-			(xy -14 -1)
-			(xy -13.5 0)
-			(xy -14 1)
-			(xy -15 1.5)
-			(xy -16 1)
-			(xy -16.5 0)
-		)
-		(stroke
-			(width 0.1)
-			(type solid)
-		)
-		(fill no)
-		(layer F.Fab)
-	)
-	(fp_poly
-		(pts
-			(xy 5 -3)
-			(xy 8 -3)
-			(xy 7 -2)
-			(xy 6 -2)
-			(xy 6 0)
-			(xy 7 0)
-			(xy 10 -3)
-			(xy 11 -3)
-			(xy 5 3)
-		)
-		(stroke
-			(width 0.1)
-			(type solid)
-		)
-		(fill no)
-		(layer F.Fab)
-	)
-	(fp_poly
-		(pts
-			(xy 54 -1)
-			(xy 56 -1)
-			(xy 56 1)
-			(xy 54 1)
-		)
-		(stroke
-			(width 0.1)
-			(type solid)
-		)
-		(fill no)
-		(layer F.Fab)
-	)
-	(fp_poly
-		(pts
-			(arc
-				(start -96 11)
-				(mid -95 8.585786)
-				(end -94 11)
-			)
-		)
-		(stroke
-			(width 0.1)
-			(type solid)
-		)
-		(fill no)
-		(layer F.Fab)
+		(layer "F.Fab")
 	)
 	(fp_poly
 		(pts
@@ -3193,7 +2926,7 @@
 			(type solid)
 		)
 		(fill no)
-		(layer F.Fab)
+		(layer "F.Fab")
 	)
 	(fp_poly
 		(pts
@@ -3213,7 +2946,7 @@
 			(type solid)
 		)
 		(fill no)
-		(layer F.Fab)
+		(layer "F.Fab")
 	)
 	(fp_poly
 		(pts
@@ -3233,7 +2966,7 @@
 			(type solid)
 		)
 		(fill no)
-		(layer F.Fab)
+		(layer "F.Fab")
 	)
 	(fp_poly
 		(pts
@@ -3253,116 +2986,7 @@
 			(type solid)
 		)
 		(fill no)
-		(layer F.Fab)
-	)
-	(fp_poly
-		(pts
-			(arc
-				(start -47 10.75)
-				(mid -45 8.75)
-				(end -43 10.75)
-			)
-			(arc
-				(start -43 10.75)
-				(mid -43.5 11.25)
-				(end -44 10.75)
-			)
-			(arc
-				(start -44 10.75)
-				(mid -45 9.75)
-				(end -46 10.75)
-			)
-			(arc
-				(start -46 10.75)
-				(mid -46.5 11.25)
-				(end -47 10.75)
-			)
-		)
-		(stroke
-			(width 0.1)
-			(type solid)
-		)
-		(fill no)
-		(layer F.Fab)
-	)
-	(fp_poly
-		(pts
-			(xy -36 10.75)
-			(xy -35 9.25)
-			(xy -34 10.75)
-		)
-		(stroke
-			(width 0.1)
-			(type solid)
-		)
-		(fill no)
-		(layer F.Fab)
-	)
-	(fp_poly
-		(pts
-			(xy -16 9)
-			(xy -15 8.5)
-			(xy -14 9)
-			(xy -13.5 10)
-			(xy -14 11)
-			(xy -15 11.5)
-			(xy -16 11)
-			(xy -16.5 10)
-		)
-		(stroke
-			(width 0.1)
-			(type solid)
-		)
-		(fill no)
-		(layer F.Fab)
-	)
-	(fp_poly
-		(pts
-			(xy 5 7)
-			(xy 8 7)
-			(xy 7 8)
-			(xy 6 8)
-			(xy 6 10)
-			(xy 7 10)
-			(xy 10 7)
-			(xy 11 7)
-			(xy 5 13)
-		)
-		(stroke
-			(width 0.1)
-			(type solid)
-		)
-		(fill no)
-		(layer F.Fab)
-	)
-	(fp_poly
-		(pts
-			(xy 54 9)
-			(xy 56 9)
-			(xy 56 11)
-			(xy 54 11)
-		)
-		(stroke
-			(width 0.1)
-			(type solid)
-		)
-		(fill no)
-		(layer F.Fab)
-	)
-	(fp_poly
-		(pts
-			(arc
-				(start -96 21)
-				(mid -95 18.585786)
-				(end -94 21)
-			)
-		)
-		(stroke
-			(width 0.1)
-			(type solid)
-		)
-		(fill no)
-		(layer F.Fab)
+		(layer "F.Fab")
 	)
 	(fp_poly
 		(pts
@@ -3382,7 +3006,7 @@
 			(type solid)
 		)
 		(fill no)
-		(layer F.Fab)
+		(layer "F.Fab")
 	)
 	(fp_poly
 		(pts
@@ -3402,7 +3026,7 @@
 			(type solid)
 		)
 		(fill no)
-		(layer F.Fab)
+		(layer "F.Fab")
 	)
 	(fp_poly
 		(pts
@@ -3422,7 +3046,7 @@
 			(type solid)
 		)
 		(fill no)
-		(layer F.Fab)
+		(layer "F.Fab")
 	)
 	(fp_poly
 		(pts
@@ -3442,37 +3066,59 @@
 			(type solid)
 		)
 		(fill no)
-		(layer F.Fab)
+		(layer "F.Fab")
 	)
 	(fp_poly
 		(pts
-			(arc
-				(start -47 20.75)
-				(mid -45 18.75)
-				(end -43 20.75)
-			)
-			(arc
-				(start -43 20.75)
-				(mid -43.5 21.25)
-				(end -44 20.75)
-			)
-			(arc
-				(start -44 20.75)
-				(mid -45 19.75)
-				(end -46 20.75)
-			)
-			(arc
-				(start -46 20.75)
-				(mid -46.5 21.25)
-				(end -47 20.75)
-			)
+			(xy -36 -19.25)
+			(xy -35 -20.75)
+			(xy -34 -19.25)
 		)
 		(stroke
 			(width 0.1)
 			(type solid)
 		)
 		(fill no)
-		(layer F.Fab)
+		(layer "F.Fab")
+	)
+	(fp_poly
+		(pts
+			(xy -36 -9.25)
+			(xy -35 -10.75)
+			(xy -34 -9.25)
+		)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+	)
+	(fp_poly
+		(pts
+			(xy -36 0.75)
+			(xy -35 -0.75)
+			(xy -34 0.75)
+		)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+	)
+	(fp_poly
+		(pts
+			(xy -36 10.75)
+			(xy -35 9.25)
+			(xy -34 10.75)
+		)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
 	)
 	(fp_poly
 		(pts
@@ -3485,58 +3131,7 @@
 			(type solid)
 		)
 		(fill no)
-		(layer F.Fab)
-	)
-	(fp_poly
-		(pts
-			(xy -16 19)
-			(xy -15 18.5)
-			(xy -14 19)
-			(xy -13.5 20)
-			(xy -14 21)
-			(xy -15 21.5)
-			(xy -16 21)
-			(xy -16.5 20)
-		)
-		(stroke
-			(width 0.1)
-			(type solid)
-		)
-		(fill no)
-		(layer F.Fab)
-	)
-	(fp_poly
-		(pts
-			(xy 5 17)
-			(xy 8 17)
-			(xy 7 18)
-			(xy 6 18)
-			(xy 6 20)
-			(xy 7 20)
-			(xy 10 17)
-			(xy 11 17)
-			(xy 5 23)
-		)
-		(stroke
-			(width 0.1)
-			(type solid)
-		)
-		(fill no)
-		(layer F.Fab)
-	)
-	(fp_poly
-		(pts
-			(xy 54 19)
-			(xy 56 19)
-			(xy 56 21)
-			(xy 54 21)
-		)
-		(stroke
-			(width 0.1)
-			(type solid)
-		)
-		(fill no)
-		(layer F.Fab)
+		(layer "F.Fab")
 	)
 	(fp_poly
 		(pts
@@ -3595,6 +3190,156 @@
 			(xy -26 20.75)
 			(xy -25 19.25)
 			(xy -24 20.75)
+		)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+	)
+	(fp_poly
+		(pts
+			(arc
+				(start -47 -19.25)
+				(mid -45 -21.25)
+				(end -43 -19.25)
+			)
+			(arc
+				(start -43 -19.25)
+				(mid -43.5 -18.75)
+				(end -44 -19.25)
+			)
+			(arc
+				(start -44 -19.25)
+				(mid -45 -20.25)
+				(end -46 -19.25)
+			)
+			(arc
+				(start -46 -19.25)
+				(mid -46.5 -18.75)
+				(end -47 -19.25)
+			)
+		)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+	)
+	(fp_poly
+		(pts
+			(arc
+				(start -47 -9.25)
+				(mid -45 -11.25)
+				(end -43 -9.25)
+			)
+			(arc
+				(start -43 -9.25)
+				(mid -43.5 -8.75)
+				(end -44 -9.25)
+			)
+			(arc
+				(start -44 -9.25)
+				(mid -45 -10.25)
+				(end -46 -9.25)
+			)
+			(arc
+				(start -46 -9.25)
+				(mid -46.5 -8.75)
+				(end -47 -9.25)
+			)
+		)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+	)
+	(fp_poly
+		(pts
+			(arc
+				(start -47 0.75)
+				(mid -45 -1.25)
+				(end -43 0.75)
+			)
+			(arc
+				(start -43 0.75)
+				(mid -43.5 1.25)
+				(end -44 0.75)
+			)
+			(arc
+				(start -44 0.75)
+				(mid -45 -0.25)
+				(end -46 0.75)
+			)
+			(arc
+				(start -46 0.75)
+				(mid -46.5 1.25)
+				(end -47 0.75)
+			)
+		)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+	)
+	(fp_poly
+		(pts
+			(arc
+				(start -47 10.75)
+				(mid -45 8.75)
+				(end -43 10.75)
+			)
+			(arc
+				(start -43 10.75)
+				(mid -43.5 11.25)
+				(end -44 10.75)
+			)
+			(arc
+				(start -44 10.75)
+				(mid -45 9.75)
+				(end -46 10.75)
+			)
+			(arc
+				(start -46 10.75)
+				(mid -46.5 11.25)
+				(end -47 10.75)
+			)
+		)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+	)
+	(fp_poly
+		(pts
+			(arc
+				(start -47 20.75)
+				(mid -45 18.75)
+				(end -43 20.75)
+			)
+			(arc
+				(start -43 20.75)
+				(mid -43.5 21.25)
+				(end -44 20.75)
+			)
+			(arc
+				(start -44 20.75)
+				(mid -45 19.75)
+				(end -46 20.75)
+			)
+			(arc
+				(start -46 20.75)
+				(mid -46.5 21.25)
+				(end -47 20.75)
+			)
 		)
 		(stroke
 			(width 0.1)
@@ -3675,6 +3420,76 @@
 	)
 	(fp_poly
 		(pts
+			(xy 54 -21)
+			(xy 56 -21)
+			(xy 56 -19)
+			(xy 54 -19)
+		)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+	)
+	(fp_poly
+		(pts
+			(xy 54 -11)
+			(xy 56 -11)
+			(xy 56 -9)
+			(xy 54 -9)
+		)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+	)
+	(fp_poly
+		(pts
+			(xy 54 -1)
+			(xy 56 -1)
+			(xy 56 1)
+			(xy 54 1)
+		)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+	)
+	(fp_poly
+		(pts
+			(xy 54 9)
+			(xy 56 9)
+			(xy 56 11)
+			(xy 54 11)
+		)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+	)
+	(fp_poly
+		(pts
+			(xy 54 19)
+			(xy 56 19)
+			(xy 56 21)
+			(xy 54 21)
+		)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+	)
+	(fp_poly
+		(pts
 			(xy 92 -21)
 			(xy 98 -21)
 			(xy 96 -19)
@@ -3735,6 +3550,96 @@
 			(xy 98 19)
 			(xy 96 21)
 			(xy 94 21)
+		)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+	)
+	(fp_poly
+		(pts
+			(xy -16 -21)
+			(xy -15 -21.5)
+			(xy -14 -21)
+			(xy -13.5 -20)
+			(xy -14 -19)
+			(xy -15 -18.5)
+			(xy -16 -19)
+			(xy -16.5 -20)
+		)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+	)
+	(fp_poly
+		(pts
+			(xy -16 -11)
+			(xy -15 -11.5)
+			(xy -14 -11)
+			(xy -13.5 -10)
+			(xy -14 -9)
+			(xy -15 -8.5)
+			(xy -16 -9)
+			(xy -16.5 -10)
+		)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+	)
+	(fp_poly
+		(pts
+			(xy -16 -1)
+			(xy -15 -1.5)
+			(xy -14 -1)
+			(xy -13.5 0)
+			(xy -14 1)
+			(xy -15 1.5)
+			(xy -16 1)
+			(xy -16.5 0)
+		)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+	)
+	(fp_poly
+		(pts
+			(xy -16 9)
+			(xy -15 8.5)
+			(xy -14 9)
+			(xy -13.5 10)
+			(xy -14 11)
+			(xy -15 11.5)
+			(xy -16 11)
+			(xy -16.5 10)
+		)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+	)
+	(fp_poly
+		(pts
+			(xy -16 19)
+			(xy -15 18.5)
+			(xy -14 19)
+			(xy -13.5 20)
+			(xy -14 21)
+			(xy -15 21.5)
+			(xy -16 21)
+			(xy -16.5 20)
 		)
 		(stroke
 			(width 0.1)
@@ -3825,6 +3730,101 @@
 			(xy -5 21.5)
 			(xy -6 21)
 			(xy -6.5 20)
+		)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+	)
+	(fp_poly
+		(pts
+			(xy 5 -23)
+			(xy 8 -23)
+			(xy 7 -22)
+			(xy 6 -22)
+			(xy 6 -20)
+			(xy 7 -20)
+			(xy 10 -23)
+			(xy 11 -23)
+			(xy 5 -17)
+		)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+	)
+	(fp_poly
+		(pts
+			(xy 5 -13)
+			(xy 8 -13)
+			(xy 7 -12)
+			(xy 6 -12)
+			(xy 6 -10)
+			(xy 7 -10)
+			(xy 10 -13)
+			(xy 11 -13)
+			(xy 5 -7)
+		)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+	)
+	(fp_poly
+		(pts
+			(xy 5 -3)
+			(xy 8 -3)
+			(xy 7 -2)
+			(xy 6 -2)
+			(xy 6 0)
+			(xy 7 0)
+			(xy 10 -3)
+			(xy 11 -3)
+			(xy 5 3)
+		)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+	)
+	(fp_poly
+		(pts
+			(xy 5 7)
+			(xy 8 7)
+			(xy 7 8)
+			(xy 6 8)
+			(xy 6 10)
+			(xy 7 10)
+			(xy 10 7)
+			(xy 11 7)
+			(xy 5 13)
+		)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+	)
+	(fp_poly
+		(pts
+			(xy 5 17)
+			(xy 8 17)
+			(xy 7 18)
+			(xy 6 18)
+			(xy 6 20)
+			(xy 7 20)
+			(xy 10 17)
+			(xy 11 17)
+			(xy 5 23)
 		)
 		(stroke
 			(width 0.1)

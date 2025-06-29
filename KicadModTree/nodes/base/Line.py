@@ -11,6 +11,8 @@
 #
 # (C) The KiCad Librarian Team
 
+"""Class definition for a line."""
+
 from __future__ import annotations
 
 from KicadModTree.nodes.NodeShape import NodeShape
@@ -19,6 +21,8 @@ from kilibs.geom import GeomLine, Vec2DCompatible
 
 
 class Line(NodeShape, GeomLine):
+    """A line."""
+
     def __init__(
         self,
         layer: str = "F.SilkS",
@@ -27,7 +31,7 @@ class Line(NodeShape, GeomLine):
         shape: Line | GeomLine | None = None,
         start: Vec2DCompatible | None = None,
         end: Vec2DCompatible | None = None,
-    ):
+    ) -> None:
         """Create a Line.
 
         Args:
@@ -40,3 +44,7 @@ class Line(NodeShape, GeomLine):
             end: Coordinates (in mm) of the end point of the line.
         """
         self.init_super(kwargs=locals())
+
+    def get_flattened_nodes(self) -> list[Line]:
+        """Return the nodes to serialize."""
+        return [self]

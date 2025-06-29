@@ -81,7 +81,7 @@ class RoundRadiusHandler(object):
 
         return True
 
-    def limitMaxRadius(self, limit):
+    def limitMaxRadius(self, limit: float) -> None:
         r"""Set a new maximum limit
 
         :param limit: the new limit.

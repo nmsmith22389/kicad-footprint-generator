@@ -11,13 +11,18 @@
 #
 # (C) The KiCad Librarian Team
 
+"""Class definition for a round rectangle."""
+
 from __future__ import annotations
 
-from KicadModTree import LineStyle, NodeShape
+from KicadModTree.nodes.NodeShape import NodeShape
+from KicadModTree.util.line_style import LineStyle
 from kilibs.geom import GeomRoundRectangle, Vec2DCompatible
 
 
 class RoundRectangle(NodeShape, GeomRoundRectangle):
+    """A round rectangle."""
+
     def __init__(
         self,
         layer: str = "F.SilkS",
@@ -32,7 +37,7 @@ class RoundRectangle(NodeShape, GeomRoundRectangle):
         corner_radius: float | None = None,
         angle: float = 0,
         use_degrees: bool = True,
-    ):
+    ) -> None:
         r"""Create a geometric round rectangle. That is a rectangle with all four
         corners rounded:
 

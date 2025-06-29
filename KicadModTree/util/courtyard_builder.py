@@ -29,6 +29,7 @@ from KicadModTree import (
     Rectangle,
     RectLine,
     Vector2D,
+    ReferencedPad,
 )
 from kilibs.geom import BoundingBox, GeomPolygon, GeomRectangle
 from kilibs.geom.tools import is_polygon_clockwise, round_to_grid_increasing_area
@@ -76,7 +77,7 @@ class CourtyardBuilder:
         else:
             cb.add_element(outline, offset_fab, offset_pads, True)
             use_fab_layer = False
-        for n in node.normalChildItems():
+        for n in node.get_child_nodes():
             cb.add_element(n, offset_fab, offset_pads, use_fab_layer)
         cb._build()
         return cb
@@ -173,7 +174,7 @@ class CourtyardBuilder:
             self.add_polygon(node, offset_fab)
         elif isinstance(node, Line) and node.layer == "F.Fab" and use_fab_layer:
             self.add_line(node, offset_fab)
-        elif isinstance(node, Pad | ExposedPad):
+        elif isinstance(node, Pad | ReferencedPad | ExposedPad):
             self.add_pad(node, offset_pads)
         elif isinstance(node, PadArray):
             self.add_pad_array(node, offset_pads)
@@ -273,15 +274,15 @@ class CourtyardBuilder:
         """
         Add a PadArray to the list of courtyard points
         """
-        children = padarray.getVirtualChilds()
+        children = padarray.get_pads()
         if not children:
             return
-        first_pad = children[0]
-        last_pad = children[-1]
-        left = min(first_pad.at.x, last_pad.at.x) - first_pad.size.x / 2 - offset
-        right = max(first_pad.at.x, last_pad.at.x) + first_pad.size.x / 2 + offset
-        top = min(first_pad.at.y, last_pad.at.y) - first_pad.size.y / 2 - offset
-        bottom = max(first_pad.at.y, last_pad.at.y) + first_pad.size.y / 2 + offset
+        bbox_first = children[0].bbox()
+        bbox_last = children[-1].bbox()
+        left = min(bbox_first.left, bbox_last.left) - offset
+        right = max(bbox_first.right, bbox_last.right) + offset
+        top = min(bbox_first.top, bbox_last.top) - offset
+        bottom = max(bbox_first.bottom, bbox_last.bottom) + offset
         self.src_pts.append(
             [[right, top], [right, bottom], [left, bottom], [left, top]]
         )

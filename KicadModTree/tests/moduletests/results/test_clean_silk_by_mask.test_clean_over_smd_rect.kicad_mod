@@ -819,7 +819,7 @@
 		(remove_unused_layers no)
 	)
 	(pad "" thru_hole rect
-		(at -4.5 -1.5 -20)
+		(at -4.5 -1.5 340)
 		(size 1 1)
 		(drill 0.4)
 		(layers "*.Cu" "*.Mask")

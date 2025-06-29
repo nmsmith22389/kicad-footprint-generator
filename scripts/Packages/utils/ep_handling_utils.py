@@ -14,7 +14,6 @@ def getEpRoundRadiusParams(
     """
 
     pad_shape_details = {}
-    pad_shape_details['shape'] = Pad.SHAPE_ROUNDRECT
 
     pad_shape_details['paste_radius_handler'] = global_config.paste_roundrect_radius_handler
 

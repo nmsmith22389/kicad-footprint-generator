@@ -104,18 +104,16 @@ class _TextBase(Node):
         self.rotation -= a
         return self
 
-    def translate(self, x: float = 0.0, y: float = 0.0) -> Self:
+    def translate(self, vector: Vector2D) -> Self:
         """Move the text base.
 
         Args:
-            x: The distance in mm in the x-direction.
-            y: The distance in mm in the y-direction.
+            vector: The direction and distance in mm.
 
         Returns:
             The translated text base.
         """
-        self.at.x += x
-        self.at.y += y
+        self.at += vector
         return self
 
     def bbox(self) -> BoundingBox:

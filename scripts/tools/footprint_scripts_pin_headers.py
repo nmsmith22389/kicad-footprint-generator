@@ -114,7 +114,7 @@ def makePinHeadStraight(
     offset = Vector2D(0, 0)
     if isSocket and cols>1:
         offset.x = -coldist
-    kicad_modg = Translation(offset)
+    kicad_modg = Translation(offset[0], offset[1])
     kicad_mod.append(kicad_modg)
 
     # set general values
@@ -448,7 +448,8 @@ def makeIdcHeader(
     kicad_mod.tags = tags
 
     # instantiate footprint (SMD origin at center, THT at pin 1)
-    kicad_modg = Footprint(footprint_name, FootprintType.THT)
+    offset = Vector2D(0, 0)
+    kicad_modg = Translation(offset[0], offset[1])
     kicad_mod.append(kicad_modg)
 
     # set general values
@@ -748,7 +749,7 @@ def makePinHeadAngled(
 
     # anchor for SMD-symbols is in the center, for THT-sybols at pin1
     offset = Vector2D(0, 0)
-    kicad_modg = Translation(offset)
+    kicad_modg = Translation(offset[0], offset[1])
     kicad_mod.append(kicad_modg)
 
     # set general values
@@ -1046,7 +1047,7 @@ def makeSocketStripAngled(
 
     # anchor for SMD-symbols is in the center, for THT-sybols at pin1
     offset = Vector2D(0, 0)
-    kicad_modg = Translation(offset)
+    kicad_modg = Translation(offset[0], offset[1])
     kicad_mod.append(kicad_modg)
 
     # set general values
@@ -1232,7 +1233,7 @@ def makePinHeadStraightSMD(
     # anchor for SMD-symbols is in the center, for THT-sybols at pin1
     offset = Vector2D(-(cols-1)*coldist/2, -(rows-1)*rm/2.0)
 
-    kicad_modg = Translation(offset)
+    kicad_modg = Translation(offset[0], offset[1])
     kicad_mod.append(kicad_modg)
 
     # set general values

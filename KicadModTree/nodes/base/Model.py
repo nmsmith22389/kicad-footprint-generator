@@ -1,65 +1,70 @@
-# KicadModTree is free software: you can redistribute it and/or
-# modify it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
+# kilibs is free software: you can redistribute it and/or modify it under the terms of
+# the GNU General Public License as published by the Free Software Foundation, either
+# version 3 of the License, or (at your option) any later version.
 #
-# KicadModTree is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
+# kilibs is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+# without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+# PURPOSE. See the GNU General Public License for more details.
 #
-# You should have received a copy of the GNU General Public License
-# along with kicad-footprint-generator. If not, see < http://www.gnu.org/licenses/ >.
+# You should have received a copy of the GNU General Public License along with kilibs.
+# If not, see < http://www.gnu.org/licenses/ >.
 #
 # (C) 2016 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 
+"""Class definition a 3D model."""
+
+from __future__ import annotations
+
 from KicadModTree.nodes.Node import Node
-from kilibs.geom import Vector3D
+from kilibs.geom import Vec3DCompatible, Vector3D
 
 
 class Model(Node):
-    r"""Add a 3D-Model to the render tree
-
-    :param \**kwargs:
-        See below
-
-    :Keyword Arguments:
-        * *filename* (``str``) --
-          name of the 3d-model file
-        * *at* (``Vector3D``) --
-          position of the model (default: [0, 0, 0])
-        * *scale* (``Vector3D``) --
-          scale of the model (default: [1, 1, 1])
-        * *rotate* (``Vector3D``) --
-          rotation of the model (default: [0, 0, 0])
-
-    :Example:
-
-    >>> from KicadModTree import *
-    >>> Model(filename="example.3dshapes/example_footprint.wrl",
-    ...       at=[0, 0, 0], scale=[1, 1, 1], rotate=[0, 0, 0])
-    """
+    """A model."""
 
     filename: str
+    """The filename of the model."""
     at: Vector3D
+    """The coordinates of the center of the model in mm."""
     scale: Vector3D
+    """The scale of the model in x-, y-, and z-direction."""
     rotate: Vector3D
+    """The rotation of the model around the x-, y-, and z-axis in degrees."""
 
-    def __init__(self, **kwargs):
+    def __init__(
+        self,
+        filename: str,
+        at: Vec3DCompatible = [0, 0, 0],
+        scale: Vec3DCompatible = [1, 1, 1],
+        rotate: Vec3DCompatible = [0, 0, 0],
+    ) -> None:
+        """Create a 3D model node.
+
+        Args:
+            filename: Name of the 3D model file (including path).
+            at: Offset position of the model in mm.
+            scale: Scale of the model.
+            rotation: Rotation of the model in degrees.
+
+        Example:
+            >>> from KicadModTree import *
+            >>> Model(filename="example.3dshapes/example_footprint.wrl",
+            ...       at=[0, 0, 0], scale=[1, 1, 1], rotate=[0, 0, 0])
+        """
         Node.__init__(self)
-        self.filename = kwargs['filename']
-        self.at = Vector3D(kwargs.get('at', [0, 0, 0]))
-        self.scale = Vector3D(kwargs.get('scale', [1, 1, 1]))
-        self.rotate = Vector3D(kwargs.get('rotate', [0, 0, 0]))
+        self.filename = filename
+        self.at = Vector3D(at)
+        self.scale = Vector3D(scale)
+        self.rotate = Vector3D(rotate)
 
-    def _getRenderTreeText(self):
-        render_text = Node._getRenderTreeText(self)
+    def get_flattened_nodes(self) -> list[Model]:
+        """Return the nodes to serialize."""
+        return [self]
 
-        render_string = ['filename: {filename}'.format(filename=self.filename),
-                         'at: (xyz {x} {y} {z})'.format(**self.at.to_dict()),
-                         'scale: (xyz {x} {y} {z})'.format(**self.scale.to_dict()),
-                         'rotate: (xyz {x} {y} {z})'.format(**self.rotate.to_dict())]
-
-        render_text += " [{}]".format(", ".join(render_string))
-
-        return render_text
+    def __repr__(self) -> str:
+        return (
+            f'Model(filename: "{self.filename}"'
+            f"at={self.at}, "
+            f"scale={self.scale}, "
+            f"rotate={self.rotate}, "
+        )

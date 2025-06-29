@@ -162,18 +162,19 @@ class TestKicad5Pads(SerialisationTest):
         kicad_mod = Footprint("avoid_circle", FootprintType.SMD)
 
         radius_handler = RoundRadiusHandler(radius_ratio=0)
-
+        at = Vector2D(2, 2.5)
+        size = Vector2D(1.75, 2.25)
+        c = Vector2D(3, 3.5)
+        d = 0.6
+        kicad_mod.append(Circle(center=c, radius=d/2, width=0.01))
+        chamfer_size = ChamferedPad.get_chamfer_to_avoid_circle(
+            center=c, at=at, size=size, diameter=d, clearance=0.005
+        )
         pad = ChamferedPad(
-                    number=1, type=Pad.TYPE_SMT, at=[2, 2.5],
-                    size=[1.75, 2.25], layers=Pad.LAYERS_SMT, chamfer_size=[0.25, 0.25],
+                    number=1, type=Pad.TYPE_SMT, at=at,
+                    size=size, layers=Pad.LAYERS_SMT, chamfer_size=chamfer_size,
                     corner_selection=[1, 1, 1, 1],
                     round_radius_handler=radius_handler)
-
-        c = [3, 3.5]
-        d = 0.6
-
-        kicad_mod.append(Circle(center=c, radius=d/2, width=0.01))
-        pad.chamferAvoidCircle(center=c, diameter=d, clearance=0.005)
         kicad_mod.append(pad)
 
         self.assert_serialises_as(kicad_mod, 'padshape_chamfered_avoid_circle.kicad_mod')
@@ -186,9 +187,9 @@ class TestKicad5Pads(SerialisationTest):
         kicad_mod.append(
             ChamferedPadGrid(
                         number=1, type=Pad.TYPE_SMT,
-                        center=[1.5, 2.5], size=[1, 2], layers=Pad.LAYERS_SMT,
-                        chamfer_size=[0.25, 0.25], chamfer_selection=1,
-                        pincount=[3, 4], grid=[1.5, 2.5],
+                        center=Vector2D(1.5, 2.5), size=Vector2D(1, 2), layers=Pad.LAYERS_SMT,
+                        chamfer_size=Vector2D(0.25, 0.25), chamfer_selection=1,
+                        pincount=[3, 4], grid=Vector2D(1.5, 2.5),
                         round_radius_handler=radius_handler))
 
         self.assert_serialises_as(kicad_mod, 'padshape_chamfered_grid.kicad_mod')
@@ -199,20 +200,20 @@ class TestKicad5Pads(SerialisationTest):
         radius_handler = RoundRadiusHandler(radius_ratio=0)
 
         chamfer_select = ChamferSelPadGrid(0)
-        chamfer_select.setCorners()
+        chamfer_select.set_corners()
 
         pad = ChamferedPadGrid(
                         number=1, type=Pad.TYPE_SMT,
-                        center=[0, 0], size=[1, 1], layers=Pad.LAYERS_SMT,
-                        chamfer_size=[0.25, 0.25], chamfer_selection=chamfer_select,
-                        pincount=[3, 4], grid=[1.4, 1.4],
+                        center=Vector2D(0, 0), size=Vector2D(1, 1), layers=Pad.LAYERS_SMT,
+                        chamfer_size=Vector2D(0.25, 0.25), chamfer_selection=chamfer_select,
+                        pincount=[3, 4], grid=Vector2D(1.4, 1.4),
                         round_radius_handler=radius_handler)
 
         c = [2.0, 2.5]
         d = 0.4
 
         kicad_mod.append(Circle(center=c, radius=d/2, width=0.01))
-        pad.chamferAvoidCircle(center=c, diameter=d, clearance=0.005)
+        pad.get_chamfer_to_avoid_circle(center=c, diameter=d, clearance=0.005)
         kicad_mod.append(pad)
 
         self.assert_serialises_as(kicad_mod, 'padshape_chamfered_grid_avoid_circle.kicad_mod')

@@ -11,14 +11,18 @@
 #
 # (C) The KiCad Librarian Team
 
+"""Class definition for a rectangle."""
+
 from __future__ import annotations
 
 from KicadModTree.nodes.NodeShape import NodeShape
 from KicadModTree.util.line_style import LineStyle
-from kilibs.geom import BoundingBox, GeomRectangle, Vec2DCompatible, Vector2D
+from kilibs.geom import BoundingBox, GeomRectangle, Vec2DCompatible
 
 
 class Rectangle(NodeShape, GeomRectangle):
+    """A rectangle."""
+
     def __init__(
         self,
         layer: str = "F.SilkS",
@@ -33,7 +37,7 @@ class Rectangle(NodeShape, GeomRectangle):
         size: Vec2DCompatible | None = None,
         angle: float = 0,
         use_degrees: bool = True,
-    ):
+    ) -> None:
         """Create a rectangle.
 
         Args:
@@ -54,3 +58,20 @@ class Rectangle(NodeShape, GeomRectangle):
             use_degrees: Whether the rotation angle is given in degrees or radians.
         """
         self.init_super(kwargs=locals())
+
+    def get_flattened_nodes(self) -> list[NodeShape]:
+        """Return the nodes to serialize."""
+        if self.angle:
+            from .Polygon import Polygon
+
+            return [
+                Polygon(
+                    shape=self,
+                    layer=self.layer,
+                    width=self.width,
+                    style=self.style,
+                    fill=self.fill,
+                )
+            ]
+        else:
+            return [self]

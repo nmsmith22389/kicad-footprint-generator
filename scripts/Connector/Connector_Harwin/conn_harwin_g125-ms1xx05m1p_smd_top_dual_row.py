@@ -24,10 +24,10 @@ from KicadModTree import (
     Footprint,
     FootprintType,
     PolygonLine,
+    Stadium,
     Line,
     KicadPrettyLibrary,
 )
-from KicadModTree.nodes.specialized import Stadium
 from scripts.tools.global_config_files import global_config as GC
 from scripts.tools.footprint_text_fields import addTextFields
 from scripts.tools.drawing_tools_fab import draw_pin1_chevron_on_hline
@@ -122,7 +122,7 @@ def generate_footprint(global_config: GC.GlobalConfig, pins, configuration):
 
     ######################## Fabrication Layer ###########################
 
-    fab_body = Stadium.Stadium(
+    fab_body = Stadium(
         center_1=Vector2D(-mount_spacing / 2, 0),
         center_2=Vector2D(mount_spacing / 2, 0),
         radius=y_body / 2,

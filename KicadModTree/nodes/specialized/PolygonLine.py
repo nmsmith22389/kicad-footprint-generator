@@ -16,6 +16,7 @@
 from collections.abc import Sequence
 from typing import Self
 
+from KicadModTree.nodes.base.Line import Line
 from KicadModTree.nodes.Node import Node
 from KicadModTree.nodes.NodeShape import NodeShape
 from KicadModTree.util.line_style import LineStyle
@@ -43,11 +44,7 @@ class PolygonLine(NodeShape, GeomPolygon):
     def __init__(
         self,
         shape: (
-            Self
-            | GeomPolygon
-            | GeomRectangle
-            | BoundingBox
-            | Sequence[Vec2DCompatible]
+            Self | GeomPolygon | GeomRectangle | BoundingBox | Sequence[Vec2DCompatible]
         ),
         layer: str = "F.SilkS",
         width: float | None = None,
@@ -88,13 +85,22 @@ class PolygonLine(NodeShape, GeomPolygon):
         if offset:
             self.inflate(amount=offset)
 
-    def getVirtualChilds(self):
+    def get_flattened_nodes(self) -> list[Node]:
+        """Return the nodes to serialize."""
+        if self._virtual_children is None:
+            self._update_virtual_children()
+        return self._virtual_children
+
+    def get_child_nodes(self) -> list[Node]:
+        """Return the direct child nodes."""
         if self._virtual_children is None:
             self._update_virtual_children()
         return self._virtual_children
 
     def lineItems(self):
-        return iter(self.virtual_children)
+        if self._virtual_children is None:
+            self._update_virtual_children()
+        return iter(self._virtual_children)
 
     def pointItems(self):
         return iter(self.points)
@@ -116,8 +122,6 @@ class PolygonLine(NodeShape, GeomPolygon):
         return self
 
     def _update_virtual_children(self):
-        from KicadModTree.nodes.base.Line import Line
-
         nodes = []
         for line_start, line_end in zip(self.points, self.points[1:]):
             new_node = Line(
@@ -156,7 +160,3 @@ class PolygonLine(NodeShape, GeomPolygon):
             render_text += " ,".join(node_strings[-3:])
         render_text += "]"
         return render_text
-
-    @property
-    def virtual_children(self):
-        return self.getVirtualChilds()

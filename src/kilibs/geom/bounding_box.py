@@ -120,6 +120,21 @@ class BoundingBox:
             self.include_point(bbox.max)
         return self
 
+    def translate(self, vector: Vector2D = Vector2D.zero()) -> BoundingBox:
+        """Move the bounding box.
+
+        Args:
+            vector: The direction and distance in mm.
+
+        Returns:
+            The translated bounding box.
+        """
+        if self.min is not None:
+            assert self.max is not None
+            self.min += vector
+            self.max += vector
+        return self
+
     def inflate(self, amount: float) -> BoundingBox:
         """Expand the bounding box by the given amount in all directions.
 

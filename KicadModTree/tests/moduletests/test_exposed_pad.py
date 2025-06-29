@@ -32,8 +32,8 @@ class TestExposedPads(SerialisationTest):
         kicad_mod = Footprint("exposedpad_simple", FootprintType.SMD)
 
         kicad_mod.append(ExposedPad(
-            number=3, at=[0, 1], size=[2.1, 3],
-            mask_size=[2.1, 2.1], paste_layout=[2, 3], via_layout=[3, 2],
+            number=3, at=Vector2D(0, 1), size=Vector2D(2.1, 3),
+            mask_size=Vector2D(2.1, 2.1), paste_layout=[2, 3], via_layout=[3, 2],
             round_radius_handler=DEFAULT_CU_RAD_HANDLER,
             paste_radius_handler=DEFAULT_PASTE_RAD_HANDLER,
         ))
@@ -44,8 +44,8 @@ class TestExposedPads(SerialisationTest):
         kicad_mod = Footprint("exposedpad_no_rounding", FootprintType.SMD)
 
         kicad_mod.append(ExposedPad(
-            number=3, at=[0, 1], size=[2.1, 3],
-            mask_size=[2.1, 2.1], paste_layout=[2, 3], via_layout=[3, 2],
+            number=3, at=Vector2D(0, 1), size=Vector2D(2.1, 3),
+            mask_size=Vector2D(2.1, 2.1), paste_layout=[2, 3], via_layout=[3, 2],
             grid_round_base=None, size_round_base=0,
             round_radius_handler=DEFAULT_CU_RAD_HANDLER,
             paste_radius_handler=DEFAULT_PASTE_RAD_HANDLER,
@@ -92,10 +92,10 @@ class TestExposedPads(SerialisationTest):
         kicad_mod = Footprint("exposedpad_autogen_inner_outer", FootprintType.SMD)
 
         kicad_mod.append(ExposedPad(
-            number=3, size=[12, 8], paste_between_vias=2,
+            number=3, size=Vector2D(12, 8), paste_between_vias=2,
             paste_rings_outside=2, via_layout=3,
             paste_avoid_via=True, paste_coverage=0.7, via_grid=[3, 2],
-            via_paste_clarance=0.25, min_annular_ring=0.25, at=[7, 5],
+            via_paste_clarance=0.25, min_annular_ring=0.25, at=Vector2D(7, 5),
             round_radius_handler=DEFAULT_CU_RAD_HANDLER,
             paste_radius_handler=DEFAULT_PASTE_RAD_HANDLER,
         ))
@@ -142,15 +142,15 @@ class TestExposedPads(SerialisationTest):
         kicad_mod = Footprint("exposedpad_autogen_bottom_pad", FootprintType.SMD)
 
         kicad_mod.append(ExposedPad(
-            number=3, size=[2, 2], via_layout=[1, 1], at=[-2, -2],
-            paste_coverage=0.65, via_grid=1, bottom_pad_Layers=None,
+            number=3, size=Vector2D(2, 2), via_layout=[1, 1], at=Vector2D(-2, -2),
+            paste_coverage=0.65, via_grid=1, bottom_pad_layers=None,
             round_radius_handler=DEFAULT_CU_RAD_HANDLER,
             paste_radius_handler=DEFAULT_PASTE_RAD_HANDLER,
         ))
 
         kicad_mod.append(ExposedPad(
-            number=3, size=[2, 2], via_layout=[1, 1], at=[2, -2],
-            paste_coverage=0.65, via_grid=1, bottom_pad_Layers=['B.Cu', 'B.Mask'],
+            number=3, size=Vector2D(2, 2), via_layout=[1, 1], at=Vector2D(2, -2),
+            paste_coverage=0.65, via_grid=1, bottom_pad_layers=['B.Cu', 'B.Mask'],
             bottom_pad_min_size=[3, 3],
             round_radius_handler=DEFAULT_CU_RAD_HANDLER,
             paste_radius_handler=DEFAULT_PASTE_RAD_HANDLER,
@@ -184,7 +184,7 @@ class TestExposedPads(SerialisationTest):
         kicad_mod = Footprint("exposedpad_autogen_edgecase1", FootprintType.SMD)
 
         kicad_mod.append(ExposedPad(
-            number=3, size=[2, 2], via_layout=[2, 1], at=[-2, -2],
+            number=3, size=Vector2D(2, 2), via_layout=[2, 1], at=Vector2D(-2, -2),
             paste_coverage=0.65, paste_layout=[1, 2],
             paste_avoid_via=True,
             round_radius_handler=DEFAULT_CU_RAD_HANDLER,
@@ -192,7 +192,7 @@ class TestExposedPads(SerialisationTest):
         ))
 
         kicad_mod.append(ExposedPad(
-            number=3, size=[2, 2], via_layout=[2, 1], at=[2, -2],
+            number=3, size=Vector2D(2, 2), via_layout=[2, 1], at=Vector2D(2, -2),
             paste_coverage=0.65, paste_layout=[1, 2],
             paste_avoid_via=True,
             round_radius_handler=DEFAULT_CU_RAD_HANDLER,
@@ -200,7 +200,7 @@ class TestExposedPads(SerialisationTest):
         ))
 
         kicad_mod.append(ExposedPad(
-            number=3, size=[3, 3], via_layout=[2, 1], at=[0, 3],
+            number=3, size=Vector2D(3, 3), via_layout=[2, 1], at=Vector2D(0, 3),
             paste_coverage=0.65, paste_layout=[1, 2], mask_size=[2, 2],
             paste_avoid_via=True,
             round_radius_handler=DEFAULT_CU_RAD_HANDLER,
@@ -213,7 +213,7 @@ class TestExposedPads(SerialisationTest):
         kicad_mod = Footprint("exposedpad_via_tented", FootprintType.SMD)
 
         kicad_mod.append(ExposedPad(
-            number=3, size=[3, 3], via_layout=[2, 1], at=[-2, -2],
+            number=3, size=Vector2D(3, 3), via_layout=[2, 1], at=Vector2D(-2, -2),
             paste_coverage=0.65, paste_layout=[1, 2], mask_size=[2, 2],
             paste_avoid_via=True, via_tented=ExposedPad.VIA_NOT_TENTED,
             round_radius_handler=DEFAULT_CU_RAD_HANDLER,
@@ -221,7 +221,7 @@ class TestExposedPads(SerialisationTest):
         ))
 
         kicad_mod.append(ExposedPad(
-            number=3, size=[3, 3], via_layout=[2, 1], at=[2, -2],
+            number=3, size=Vector2D(3, 3), via_layout=[2, 1], at=Vector2D(2, -2),
             paste_coverage=0.65, paste_layout=[1, 2], mask_size=[2, 2],
             paste_avoid_via=True, via_tented=ExposedPad.VIA_TENTED_BOTTOM_ONLY,
             round_radius_handler=DEFAULT_CU_RAD_HANDLER,
@@ -229,7 +229,7 @@ class TestExposedPads(SerialisationTest):
         ))
 
         kicad_mod.append(ExposedPad(
-            number=3, size=[3, 3], via_layout=[2, 1], at=[-2, 2],
+            number=3, size=Vector2D(3, 3), via_layout=[2, 1], at=Vector2D(-2, 2),
             paste_coverage=0.65, paste_layout=[1, 2], mask_size=[2, 2],
             paste_avoid_via=True, via_tented=ExposedPad.VIA_TENTED_TOP_ONLY,
             round_radius_handler=DEFAULT_CU_RAD_HANDLER,
@@ -237,7 +237,7 @@ class TestExposedPads(SerialisationTest):
         ))
 
         kicad_mod.append(ExposedPad(
-            number=3, size=[3, 3], via_layout=[2, 1], at=[2, 2],
+            number=3, size=Vector2D(3, 3), via_layout=[2, 1], at=Vector2D(2, 2),
             paste_coverage=0.65, paste_layout=[1, 2], mask_size=[2, 2],
             paste_avoid_via=True, via_tented=ExposedPad.VIA_TENTED,
             round_radius_handler=DEFAULT_CU_RAD_HANDLER,

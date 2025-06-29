@@ -1,6 +1,10 @@
-from KicadModTree import Node, Vector2D, Polygon, Rectangle
+from KicadModTree.nodes.base.Polygon import Polygon
+from KicadModTree.nodes.base.Rectangle import Rectangle
+from KicadModTree.nodes.Node import Node
+from KicadModTree.nodes.NodeShape import NodeShape
 from KicadModTree.util.corner_handling import ChamferSizeHandler
 from KicadModTree.util.corner_selection import CornerSelection
+from kilibs.geom.vector import Vector2D
 
 
 class ChamferRect(Node):
@@ -29,7 +33,8 @@ class ChamferRect(Node):
         self.fill = fill
         self.at = at
 
-    def getVirtualChilds(self):
+    def get_flattened_nodes(self) -> list[Node]:
+        """Return the nodes to serialize."""
 
         children: list[Node] = []
 
@@ -38,7 +43,7 @@ class ChamferRect(Node):
         tl = Vector2D(0, 0) - self.size / 2 + self.at
         br = Vector2D(0, 0) + self.size / 2 + self.at
 
-        if self.corners.isAnySelected():
+        if self.corners.is_any_selected():
             chamfer_size: float = self.chamfer.getChamferSize(
                 min(self.size.x, self.size.y)
             )

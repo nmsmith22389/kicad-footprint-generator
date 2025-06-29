@@ -149,7 +149,7 @@ def cleanSilkOverMask(
     )
     tidy_silk = _cleanSilkByMask(silk_shapes, mask_shapes)
     for node in silk_shapes:
-        footprint.remove(node, traverse=True, virtual=True)
+        footprint.remove(node, traverse=True)
     for node in tidy_silk:
         footprint.append(node)
     return footprint

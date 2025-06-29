@@ -1,75 +1,113 @@
-# KicadModTree is free software: you can redistribute it and/or
-# modify it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
+# kilibs is free software: you can redistribute it and/or modify it under the terms of
+# the GNU General Public License as published by the Free Software Foundation, either
+# version 3 of the License, or (at your option) any later version.
 #
-# KicadModTree is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
+# kilibs is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+# without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+# PURPOSE. See the GNU General Public License for more details.
 #
-# You should have received a copy of the GNU General Public License
-# along with kicad-footprint-generator. If not, see < http://www.gnu.org/licenses/ >.
+# You should have received a copy of the GNU General Public License along with kilibs.
+# If not, see < http://www.gnu.org/licenses/ >.
 #
 # (C) 2024 by C. Kuhlmann, gitlab @CKuhlmann
 
+"""Class definition for groups."""
+
 from __future__ import annotations
+
+from typing import Any
 
 from KicadModTree.nodes.Node import Node, TStamp
 
 
 class Group(Node):
-    def __init__(self, name: str = "", uuid: TStamp | None = None,
-                 member_tstamps: list[TStamp] | list[str] | None = None,
-                 member_nodes: list[Node] | None = None, ) -> None:
+    """A group."""
+
+    _name: str
+    """Name of the group."""
+    _member_nodes: list[Node]
+    """List of nodes that are part of the group."""
+    _gathered_member_tstamp_str_set: set[str]
+    """The set containing the timestamps of the member nodes."""
+
+    def __init__(
+        self,
+        name: str = "",
+        uuid: TStamp | None = None,
+        member_tstamps: list[TStamp] | list[str] = [],
+        member_nodes: list[Node] = [],
+    ) -> None:
+        """Create a group.
+
+        Args:
+            name: Name of the group.
+            uuid: UUID of the group.
+            member_tstamps: List of the UUIDs of the members.
+            member_nodes: List of th member nodes.
+        """
         super().__init__()
 
-        self._name: str = name
-        self._member_nodes: list[Node] | None = member_nodes
+        self._name = name
+        self._member_nodes = member_nodes
         # self._member_tstamps:set[TStamp]|set[str]|None  = member_tstamps
 
         self._gathered_member_tstamp_str_set = set()
 
-        if member_tstamps is not None:
-            for m in member_tstamps:
-                self._gathered_member_tstamp_str_set.add(str(m))
-        if member_nodes is not None:
-            for mn in member_nodes:
-                ts = mn.getTStamp()
-                self._gathered_member_tstamp_str_set.add(str(ts))
+        for m in member_tstamps:
+            self._gathered_member_tstamp_str_set.add(str(m))
+        for mn in member_nodes:
+            ts = mn.getTStamp()
+            self._gathered_member_tstamp_str_set.add(str(ts))
         pass
 
-    def getGroupName(self):
+    def getGroupName(self) -> str:
+        """Return the group name."""
         return str(self._name)
 
-    def getSortedGroupMemberTStamps(self):
+    def getSortedGroupMemberTStamps(self) -> list[str]:
+        """Return sorted timestamps of the group members."""
         return sorted(self._gathered_member_tstamp_str_set)
 
-    def getGroupMemberTStamps(self):
+    def getGroupMemberTStamps(self) -> set[str]:
+        """Return the unsorted timestamps of the group members."""
         return self._gathered_member_tstamp_str_set
 
-    def getGroupMemberNodes(self):
+    def getGroupMemberNodes(self) -> list[Node] | None:
+        """Return the list of group member nodes."""
         return self._member_nodes
 
-    def append(self, new_member_node_or_tsamp):
-        if hasattr(new_member_node_or_tsamp, 'getTStamp'):
-            ts = str(new_member_node_or_tsamp.getTStamp())
+    def append(self, node_or_tstamp: Node | TStamp | str) -> None:
+        """Append a new member node or timestamp."""
+        if isinstance(node_or_tstamp, Node):
+            ts = str(node_or_tstamp.getTStamp())
+            if node_or_tstamp not in self._member_nodes:
+                self._member_nodes.append(node_or_tstamp)
+        elif isinstance(node_or_tstamp, TStamp):
+            ts = str(node_or_tstamp.getTStamp())
         else:
-            ts = str(new_member_node_or_tsamp)
+            ts = str(node_or_tstamp)
         if ts not in self._gathered_member_tstamp_str_set:
             self._gathered_member_tstamp_str_set.add(ts)
-            self._member_nodes.append(new_member_node_or_tsamp)
 
-    def remove(self, old_member_node_or_tsamp):
-        if hasattr(old_member_node_or_tsamp, 'getTStamp'):
-            ts = str(old_member_node_or_tsamp.getTStamp())
+    def remove(self, node_or_tstamp: Node | TStamp | str) -> None:
+        if isinstance(node_or_tstamp, Node):
+            ts = str(node_or_tstamp.getTStamp())
+            while node_or_tstamp in self._member_nodes:
+                self._member_nodes.remove(node_or_tstamp)
+        elif isinstance(node_or_tstamp, TStamp):
+            ts = str(node_or_tstamp.getTStamp())
         else:
-            ts = str(old_member_node_or_tsamp)
-        rem = []
+            ts = str(node_or_tstamp)
         if ts in self._gathered_member_tstamp_str_set:
             self._gathered_member_tstamp_str_set.remove(ts)
-            for idx, nd in enumerate(self._member_nodes):
-                if str(nd.getTStamp()) == ts:
-                    rem += nd
-            for r in rem:
-                self._member_nodes.remove(r)
+
+    def get_flattened_nodes(self) -> list[Group]:
+        """Return the nodes to serialize."""
+        return [self]
+
+    def __repr__(self) -> str:
+        """The string representation of the group."""
+        return (
+            f"Group(name={self._name}, "
+            f"member timestamps={self._gathered_member_tstamp_str_set})"
+        )

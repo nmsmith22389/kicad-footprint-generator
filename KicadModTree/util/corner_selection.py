@@ -1,94 +1,119 @@
-# KicadModTree is free software: you can redistribute it and/or
-# modify it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
+# kilibs is free software: you can redistribute it and/or modify it under the terms of
+# the GNU General Public License as published by the Free Software Foundation, either
+# version 3 of the License, or (at your option) any later version.
 #
-# KicadModTree is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
+# kilibs is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+# without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+# PURPOSE. See the GNU General Public License for more details.
 #
-# You should have received a copy of the GNU General Public License
-# along with kicad-footprint-generator. If not, see < http://www.gnu.org/licenses/ >.
+# You should have received a copy of the GNU General Public License along with kilibs.
+# If not, see < http://www.gnu.org/licenses/ >.
 #
-# (C) 2024 KiCad Library Team
+# (C) The KiCad Librarian Team
+
+"""Class definition for a handling corner selections."""
+
+from __future__ import annotations
+from collections.abc import Sequence
+from typing import Generator, Literal, Self
+
 
 class CornerSelection():
-    """Class for handling corner selection.
-
-    Args:
-        corner_selection: Can be a `list` of 4 `bools`, a `dict` or an `int` with the
-            following interpretation:
-
-            * A list of bools do directly set the corners (top left,
-              top right, bottom right, bottom left);
-            * A dict with keys (constants see below);
-            * The integer 1 means all corners;
-            * The integer 0 means no corners.
-
-    :constants:
-        * CornerSelection.TOP_LEFT
-        * CornerSelection.TOP_RIGHT
-        * CornerSelection.BOTTOM_RIGHT
-        * CornerSelection.BOTTOM_LEFT
-    """
+    """Class for handling corner selection."""
 
     TOP_LEFT = 'tl'
+    """The top left corner."""
     TOP_RIGHT = 'tr'
+    """The top right corner."""
     BOTTOM_RIGHT = 'br'
+    """The bottom right corner."""
     BOTTOM_LEFT = 'bl'
+    """The bottom left corner."""
 
-    def __init__(self, corner_selection: list[bool] | dict | int | None):
+    top_left: bool
+    """Whether the top left corner is selected."""
+    top_right: bool
+    """Whether the top right corner is selected."""
+    bottom_right: bool
+    """Whether the bottom right corner is selected."""
+    bottom_left: bool
+    """Whether the bottom left corner is selected."""
+
+    def __init__(
+        self,
+        corner_selection: CornerSelection | Sequence[bool] | dict[str, str | bool | int] | int | None,
+    ) -> None:
+        """Create a corner selection.
+
+        Args:
+            corner_selection: Can be a `list` of 4 `bools`, a `dict` or an `int` with
+            the following interpretation:
+
+                * A list of bools do directly set the corners (top left, top right,
+                  bottom right, bottom left);
+                * A dict with keys (constants see below);
+                * The integer 1 means all corners;
+                * The integer 0 means no corners.
+        """
         self.top_left = False
         self.top_right = False
         self.bottom_right = False
         self.bottom_left = False
 
-        if corner_selection == 1:
-            self.selectAll()
-            return
-
-        if corner_selection == 0 or corner_selection is None:
-            return
-
-        if type(corner_selection) is dict:
+        if isinstance(corner_selection, int | None):
+            if corner_selection == 1:
+                self.select_all()
+                return
+            elif corner_selection == 0 or corner_selection is None:
+                return
+            else:
+                raise ValueError(f"Invalid value {corner_selection} for corner_selection.")
+        elif isinstance(corner_selection, dict):
             for key in corner_selection:
                 self[key] = bool(corner_selection[key])
         else:
             for i, value in enumerate(corner_selection):
                 self[i] = bool(value)
 
-    def selectAll(self):
+    def select_all(self) -> None:
+        """Select all corners."""
         for i in range(len(self)):
             self[i] = True
 
-    def clearAll(self):
+    def clear_all(self) -> None:
+        """Select no corners."""
         for i in range(len(self)):
             self[i] = False
 
-    def setLeft(self, value=1):
+    def set_left(self, value: int | bool = 1) -> None:
+        """Select left corners."""
         self.top_left = bool(value)
         self.bottom_left = bool(value)
 
-    def setTop(self, value=1):
+    def set_top(self, value: int | bool = 1) -> None:
+        """Select top corners."""
         self.top_left = bool(value)
         self.top_right = bool(value)
 
-    def setRight(self, value=1):
+    def set_right(self, value: int | bool = 1) -> None:
+        """Select right corners."""
         self.top_right = bool(value)
         self.bottom_right = bool(value)
 
-    def setBottom(self, value=1):
+    def set_bottom(self, value: int | bool = 1) -> None:
+        """Select bottom corners."""
         self.bottom_left = bool(value)
         self.bottom_right = bool(value)
 
-    def isAnySelected(self):
+    def is_any_selected(self) -> bool:
+        """Check if any corner is selected."""
         for v in self:
             if v:
                 return True
         return False
 
-    def rotateCW(self):
+    def rotate_clockwise(self) -> Self:
+        """Rotate the corner selection clockwise."""
         top_left_old = self.top_left
 
         self.top_left = self.bottom_left
@@ -97,7 +122,8 @@ class CornerSelection():
         self.top_right = top_left_old
         return self
 
-    def rotateCCW(self):
+    def rotate_counter_clockwise(self) -> Self:
+        """Rotate the corner selection counter clockwise."""
         top_left_old = self.top_left
 
         self.top_left = self.top_right
@@ -106,32 +132,39 @@ class CornerSelection():
         self.bottom_left = top_left_old
         return self
 
-    def __or__(self, other):
-        return CornerSelection([s or o for s, o in zip(self, other)])
+    def __or__(self, other: Self | Sequence[bool]) -> Self:
+        """Apply bitwise logic or operation."""
+        return self.__class__([s or o for s, o in zip(self, other)])
 
-    def __ior__(self, other):
+    def __ior__(self, other: Self | Sequence[bool]) -> Self:
+        """Apply bitwise logic or operation inplace."""
         for i in range(len(self)):
             self[i] |= other[i]
         return self
 
-    def __and__(self, other):
-        return CornerSelection([s and o for s, o in zip(self, other)])
+    def __and__(self, other: Self | Sequence[bool]) -> Self:
+        """Apply bitwise logic and operation."""
+        return self.__class__([s and o for s, o in zip(self, other)])
 
-    def __iand__(self, other):
+    def __iand__(self, other: Self | Sequence[bool]) -> Self:
+        """Apply bitwise logic and operation inplace."""
         for i in range(len(self)):
             self[i] &= other[i]
         return self
 
-    def __len__(self):
+    def __len__(self) -> Literal[4]:
+        """Number of items."""
         return 4
 
-    def __iter__(self):
+    def __iter__(self) -> Generator[bool, None, None]:
+        """Return an iterator for all its items."""
         yield self.top_left
         yield self.top_right
         yield self.bottom_right
         yield self.bottom_left
 
-    def __getitem__(self, item):
+    def __getitem__(self, item: int | str) -> bool:
+        """Get the given item."""
         if item in [0, CornerSelection.TOP_LEFT]:
             return self.top_left
         if item in [1, CornerSelection.TOP_RIGHT]:
@@ -140,10 +173,10 @@ class CornerSelection():
             return self.bottom_right
         if item in [3, CornerSelection.BOTTOM_LEFT]:
             return self.bottom_left
-
         raise IndexError('Index {} is out of range'.format(item))
 
-    def __setitem__(self, item, value):
+    def __setitem__(self, item: int | str, value: bool | int | str) -> None:
+        """Set the given item."""
         if item in [0, CornerSelection.TOP_LEFT]:
             self.top_left = bool(value)
         elif item in [1, CornerSelection.TOP_RIGHT]:
@@ -155,7 +188,8 @@ class CornerSelection():
         else:
             raise IndexError('Index {} is out of range'.format(item))
 
-    def to_dict(self):
+    def to_dict(self) -> dict[str, bool]:
+        """Convert the corner selection to a dictionary."""
         return {
             CornerSelection.TOP_LEFT: self.top_left,
             CornerSelection.TOP_RIGHT: self.top_right,
@@ -163,5 +197,6 @@ class CornerSelection():
             CornerSelection.BOTTOM_LEFT: self.bottom_left
             }
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """Return a string representation of the corner selection."""
         return str(self.to_dict())
