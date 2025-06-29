@@ -60,8 +60,6 @@ class Cross(NodeShape, GeomCross):
         Example:
             The constructor either takes a `shape` argument or `center` and `size`.
 
-            .. code-block::
-
             >>> cross1 = Cross(center=(0, 0), size=1)
             >>> cross2 = Cross(shape=cross1)
         """

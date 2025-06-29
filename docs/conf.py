@@ -27,8 +27,7 @@ autodoc_typehints = "description"
 
 #napoleon_preprocess_types = True
 napoleon_use_param = True
-#autodoc_type_aliases = {'Vec2DCompatible': ':data:`.Vec2DCompatible`'}  # Uncomment for type alias (type 2)
-#autodoc_type_aliases = {'Vec2DCompatible': 'Vec2DCompatible'}  # Uncomment for type alias (type 1)
+
 #typehints_fully_qualified = True
 intersphinx_mapping = {'python': ('https://docs.python.org/3', None)}
 
@@ -161,3 +160,7 @@ texinfo_documents = [
      author, 'KiCad Librarian Team', 'One line description of project.',
      'Miscellaneous'),
 ]
+
+autodoc_default_options = {
+    'inherited-members': False,
+}

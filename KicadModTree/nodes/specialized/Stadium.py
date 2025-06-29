@@ -63,8 +63,6 @@ class Stadium(NodeShape, GeomStadium):
         Example:
             The following 3 stadiums are identical:
 
-            .. code-block::
-
             >>> stadium1 = Stadium(center_1=(-1, 0), center_2=(+1, 0), radius = 1.0)
             >>> stadium2 = Stadium(shape=stadium1)
             >>> stadium3 = Stadium(shape=GeomRectangle(center=(0, 0), size=(4, 2)))

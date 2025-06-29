@@ -75,7 +75,12 @@ class Group(Node):
         return self._member_nodes
 
     def append(self, node_or_tstamp: Node | TStamp | str) -> None:
-        """Append a new member node or timestamp."""
+        """Append a new member node or timestamp.
+
+        Args:
+            node_or_tstamp: The node or the timestamp that shall be added to the
+                group.
+        """
         if isinstance(node_or_tstamp, Node):
             ts = str(node_or_tstamp.getTStamp())
             if node_or_tstamp not in self._member_nodes:
@@ -88,6 +93,12 @@ class Group(Node):
             self._gathered_member_tstamp_str_set.add(ts)
 
     def remove_group_item(self, node_or_tstamp: Node | TStamp | str) -> None:
+        """Remove an item from the group.
+
+        Args:
+            node_or_tstamp: The node or timestamp that identifies the node that shall
+                be removed.
+        """
         if isinstance(node_or_tstamp, Node):
             ts = str(node_or_tstamp.getTStamp())
             while node_or_tstamp in self._member_nodes:

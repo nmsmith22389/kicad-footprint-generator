@@ -11,7 +11,7 @@
 #
 # (C) The KiCad Librarian Team
 
-"""Class definition for a handling corner selections."""
+"""Class definition for handling corner selections."""
 
 from __future__ import annotations
 from collections.abc import Sequence

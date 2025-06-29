@@ -13,6 +13,7 @@
 #
 # Copyright The KiCad Developers.
 
+from __future__ import annotations
 
 from operator import itemgetter
 from typing import Self
@@ -39,7 +40,7 @@ from scripts.tools.global_config_files.global_config import GlobalConfig
 class CourtyardBuilder:
     SCALE_FACTOR = 1e6
 
-    def __init__(self, global_config: GlobalConfig) -> Self:
+    def __init__(self, global_config: GlobalConfig) -> None:
         self.global_config = global_config
         self.src_pts: list[float] = []  # source points
         self.crt_pts: list[float] = []  # courtyard points
@@ -54,7 +55,7 @@ class CourtyardBuilder:
         offset_fab: float,
         offset_pads: float | None = None,
         outline: Node | GeomRectangle | BoundingBox | GeomPolygon | None = None,
-    ) -> Self:
+    ) -> CourtyardBuilder:
         """
         Derives a courtyard with minimal area from the pads and primitives on the
         fabrication layer of the footprint and adds it to the footprint. Alternatively,
@@ -85,7 +86,7 @@ class CourtyardBuilder:
     @property
     def bbox(self) -> BoundingBox:
         """
-        Get the bounding box of the courtyard
+        Get the bounding box of the courtyard.
         """
         if self._bbox is None:
             top = min(self.crt_pts, key=itemgetter(1))[1]
@@ -102,7 +103,7 @@ class CourtyardBuilder:
     @property
     def node(self) -> Node:
         """
-        Get the courtyard node
+        Get the courtyard node.
         """
         if self._node is None:
             return self._build()
@@ -111,7 +112,7 @@ class CourtyardBuilder:
 
     def _build(self) -> Node:
         """
-        Calculate and return the courtyard node
+        Calculate and return the courtyard node.
         """
         if len(self.src_pts) == 0:
             raise RuntimeError("Insufficient shapes to build a courtyard from.")
@@ -152,9 +153,9 @@ class CourtyardBuilder:
         offset_fab: float,
         offset_pads: float | None = None,
         use_fab_layer: bool = True,
-    ):
+    ) -> None:
         """
-        Add an element (node or geometric primitive) to the list of courtyard points
+        Add an element (node or geometric primitive) to the list of courtyard points.
         """
         if offset_pads is None:
             offset_pads = offset_fab
@@ -179,9 +180,9 @@ class CourtyardBuilder:
         elif isinstance(node, PadArray):
             self.add_pad_array(node, offset_pads)
 
-    def add_rectangle(self, rectangle: GeomRectangle | BoundingBox, offset: float):
+    def add_rectangle(self, rectangle: GeomRectangle | BoundingBox, offset: float) -> None:
         """
-        Add a GeomRectangle or BoundingBox to the list of courtyard points
+        Add a GeomRectangle or BoundingBox to the list of courtyard points.
         """
         self.src_pts.append(
             [
@@ -193,9 +194,9 @@ class CourtyardBuilder:
         )
         self._node = None  # invalidate previous node calculations
 
-    def add_rect(self, rect: Rectangle | RectLine, offset: float):
+    def add_rect(self, rect: Rectangle | RectLine, offset: float) -> None:
         """
-        Add a Rectangle or RectLine to the list of courtyard points
+        Add a Rectangle or RectLine to the list of courtyard points.
         """
         if isinstance(rect, Rectangle):
             left = rect.left - offset
@@ -212,9 +213,9 @@ class CourtyardBuilder:
         )
         self._node = None  # invalidate previous node calculations
 
-    def add_polygon(self, pl: PolygonLine | GeomPolygon, offset: float):
+    def add_polygon(self, pl: PolygonLine | GeomPolygon, offset: float) -> None:
         """
-        Add a Polygon to the list of courtyard points
+        Add a Polygon to the list of courtyard points.
         """
         polygon = []
         for point in pl.points:
@@ -243,9 +244,9 @@ class CourtyardBuilder:
             self.src_pts.append(polygon[0])
             self._node = None  # invalidate previous node calculations
 
-    def add_line(self, line: Line, offset: float):
+    def add_line(self, line: Line, offset: float) -> None:
         """
-        Add a Line to the list of courtyard points
+        Add a Line to the list of courtyard points.
         """
         delta_parallel = (line.end - line.start).normalize() * offset
         delta_orthogonal = delta_parallel.orthogonal().normalize() * offset
@@ -257,9 +258,9 @@ class CourtyardBuilder:
         self.src_pts.append([[pt.x, pt.y] for pt in pts])
         self._node = None  # invalidate previous node calculations
 
-    def add_pad(self, pad: Pad | ExposedPad, offset: float):
+    def add_pad(self, pad: Pad | ExposedPad, offset: float) -> None:
         """
-        Add a Pad or ExposedPad to the list of courtyard points
+        Add a Pad or ExposedPad to the list of courtyard points.
         """
         left = pad.at.x - pad.size.x / 2 - offset
         right = pad.at.x + pad.size.x / 2 + offset
@@ -270,9 +271,9 @@ class CourtyardBuilder:
         )
         self._node = None  # invalidate previous node calculations
 
-    def add_pad_array(self, padarray: PadArray, offset: float):
+    def add_pad_array(self, padarray: PadArray, offset: float) -> None:
         """
-        Add a PadArray to the list of courtyard points
+        Add a PadArray to the list of courtyard points.
         """
         children = padarray.get_pads()
         if not children:

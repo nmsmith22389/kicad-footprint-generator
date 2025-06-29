@@ -13,6 +13,8 @@
 #
 # (C) 2016 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 
+"""Utility classes and methods."""
+
 from .corner_handling import ChamferSizeHandler, RoundRadiusHandler
 from .corner_selection import CornerSelection
 from .line_style import LineStyle

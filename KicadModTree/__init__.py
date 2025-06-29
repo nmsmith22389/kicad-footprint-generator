@@ -13,6 +13,8 @@
 #
 # (C) 2016 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 
+"""The 'node' library."""
+
 from KicadModTree.KicadFileHandler import KicadFileHandler, KicadPrettyLibrary
 from KicadModTree.ModArgparser import ModArgparser
 from KicadModTree.nodes import (

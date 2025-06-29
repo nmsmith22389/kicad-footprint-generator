@@ -51,28 +51,43 @@ DEFAULT_WIDTH_POLYGON_PAD = 0.0
 
 
 class SerializerPriority:
+    """A class to sort nodes according to their priorities."""
 
     class NodePriority(Enum):
         """Node priorities."""
 
         SHAPE = 100
+        """Priority of shape nodes."""
         TEXT = 200
+        """Priority of text nodes."""
         PAD = 300
+        """Priority of pad nodes."""
         ZONE = 400
+        """Priority of zone nodes."""
         GROUP = 600
+        """Priority of group nodes."""
         EMBEDDED_FONT = 1000
+        """Priority of embedded font nodes."""
         MODEL = 1100
+        """Priority of model nodes."""
 
     class ShapePriority(Enum):
         """Shape priorities."""
 
         LINE = 0
+        """Priority of a line node."""
         RECTANGLE = 1
+        """Priority of a rectangle node."""
         ARC = 2
+        """Priority of an arc node."""
         CIRCLE = 3
+        """Priority of a circle node."""
         POLYGON = 4
+        """Priority of a polygon node."""
         COMPOUND_POLYGON = 4
+        """Priority of a compound polygon node."""
         BEZIER = 5
+        """Priority of a bezier node."""
 
     LAYER_PRIORITY_MAP = {
         # These are specials in this order in formatLayers()
@@ -362,7 +377,7 @@ class Serializer:
     """A class to serialize properties."""
 
     indent: str
-    """The current indent level."""
+    """The current indentation level."""
     content: list[str]
     """The content of the serializer."""
 
@@ -370,7 +385,7 @@ class Serializer:
         """Create an instance of a serializer.
 
         Args:
-            indent: The initial indent level.
+            indent: The initial indentation level.
         """
         self.indent = indent
         self.content = []

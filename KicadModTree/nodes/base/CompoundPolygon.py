@@ -92,6 +92,7 @@ class CompoundPolygon(NodeShape, GeomCompoundPolygon):
             return cast(list[Node], self.to_child_nodes(list(self.get_atomic_shapes())))
 
     def get_fp_poly_elements(self) -> list[Vector2D | Arc]:
+        """Return arcs and dots that define the compound polygon."""
         if not self._fp_poly_elements:
             self._fp_poly_elements: list[Vector2D | Arc] = []
             for geom in self.get_points_and_arcs():

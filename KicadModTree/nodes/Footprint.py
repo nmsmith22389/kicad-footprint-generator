@@ -25,9 +25,14 @@ from KicadModTree.nodes.Node import Node
 
 
 class FootprintType(Enum):
+    """An enum class for footprint types."""
+
     UNSPECIFIED = 0
+    """Footprint type not specified."""
     SMD = 1
+    """SMD footprint."""
     THT = 2
+    """THT footprint."""
 
 
 class Footprint(Node):

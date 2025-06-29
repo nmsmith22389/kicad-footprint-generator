@@ -47,6 +47,14 @@ class ReferencedPad(Node):
     def __init__(
         self, reference_pad: Pad, number: str | int, at: Vector2D, angle: float = 0.0
     ) -> None:
+        """Create a referenced pad.
+
+        Args:
+            reference_pad: The pad that is referenced.
+            number: The new pad number or name.
+            at: The new position of the pad.
+            angle: The new angle of the pad.
+        """
         Node.__init__(self)
         self.reference_pad = reference_pad
         self.number = number
@@ -147,17 +155,28 @@ class Pad(Node):
     """A pad."""
 
     TYPE_THT = "thru_hole"
+    """Pad type: THT."""
     TYPE_SMT = "smd"
+    """Pad type: SMD."""
     TYPE_CONNECT = "connect"
+    """Pad type: connect."""
     TYPE_NPTH = "np_thru_hole"
+    """Pad type: non plated through hole."""
     _TYPES = [TYPE_THT, TYPE_SMT, TYPE_CONNECT, TYPE_NPTH]
+    """List of all supported pad types."""
 
     SHAPE_CIRCLE = "circle"
+    """Pad shape: circle."""
     SHAPE_OVAL = "oval"
+    """Pad shape: oval."""
     SHAPE_RECT = "rect"
+    """Pad shape: rectangular."""
     SHAPE_ROUNDRECT = "roundrect"
+    """Pad shape: rounded rectangular."""
     SHAPE_TRAPEZE = "trapezoid"
+    """Pad shape: trapezoid."""
     SHAPE_CUSTOM = "custom"
+    """Pad shape: custom."""
     _SHAPES = [
         SHAPE_CIRCLE,
         SHAPE_OVAL,
@@ -166,32 +185,50 @@ class Pad(Node):
         SHAPE_TRAPEZE,
         SHAPE_CUSTOM,
     ]
+    """List of all supported pad shapes."""
 
     LAYERS_SMT = ["F.Cu", "F.Paste", "F.Mask"]
+    """Layer set for SMT."""
     LAYERS_THT = ["*.Cu", "*.Mask"]
+    """Layer set for THT."""
     LAYERS_NPTH = ["*.Cu", "*.Mask"]
+    """Layer set for NPTH."""
     LAYERS_CONNECT_FRONT = ["F.Cu", "F.Mask"]
+    """Layer set for front connect."""
     LAYERS_CONNECT_BACK = ["B.Cu", "B.Mask"]
+    """Layer set for back connect."""
 
     ANCHOR_CIRCLE = "circle"
+    """Anchor is a circle."""
     ANCHOR_RECT = "rect"
+    """Anchor is a rectangle."""
     _ANCHOR_SHAPE = [ANCHOR_CIRCLE, ANCHOR_RECT]
+    """List of supported anchor shapes."""
 
     SHAPE_IN_ZONE_CONVEX = "convexhull"
+    """Shape in zone connect is: convex hull."""
     SHAPE_IN_ZONE_OUTLINE = "outline"
+    """Shape in zone connect is: outline."""
     _SHAPE_IN_ZONE = [SHAPE_IN_ZONE_CONVEX, SHAPE_IN_ZONE_OUTLINE]
+    """List of supported shape in zone types."""
 
     class FabProperty(enum.Enum):
-        """Type-safe pad fabrication property"""
+        """Type-safe pad fabrication property."""
 
         # Note that these constants do not necessarily correspond to the strings used in
         # the KiCad file format:
         BGA = "bga"
+        """Fab property: BGA."""
         FIDUCIAL_GLOBAL = "fiducial_global"
+        """Fab property: global fiducial."""
         FIDUCIAL_LOCAL = "fiducial_local"
+        """Fab property: local fiducial."""
         TESTPOINT = "testpoint"
+        """Fab property: test point."""
         HEATSINK = "heatsink"
+        """Fab property: heatsink."""
         CASTELLATED = "castellated"
+        """Fab property: castellated."""
 
     class ZoneConnection(enum.Enum):
         """Type-safe pad zone connection."""
@@ -210,24 +247,26 @@ class Pad(Node):
     class UnconnectedLayerMode(enum.Enum):
         """Behaviour of a Padstack on layers without connection.
 
-        (Should move to Padstack when implemented)
+        (Should move to Padstack when implemented).
         """
 
         KEEP_ALL = 0
+        """Unconnected layer mode: keep all."""
         REMOVE_ALL = 1
+        """Unconnected layer mode: remove all."""
         REMOVE_EXCEPT_START_AND_END = 2
+        """Unconnected layer mode: remove all except from start and end."""
 
     @dataclasses.dataclass
     class TuningProperties:
         """
-        Complete decription of a pad's die/tuning properties
+        Complete decription of a pad's die/tuning properties.
         """
 
-        die_length: float = 0
+        die_length: float = 0.0
         """
-        The die length between the component pad and the physical
-        chip bond pad inside the component package (in mm).
-        KiCad uses 0 to mean not specfied.
+        The die length between the component pad and the physical chip bond pad inside
+        the component package (in mm). KiCad uses 0 to mean not specfied.
         """
         # die_delay: float // Will be in v10 (units?)
 

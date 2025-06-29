@@ -13,6 +13,8 @@
 #
 # (C) 2016 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 
+"""Node classes."""
+
 # Node must be on top to prevent cyclic imports:
 from .Node import MultipleParentsError, Node, RecursionDetectedError  # isort: skip
 
