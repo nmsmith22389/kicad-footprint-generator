@@ -3,6 +3,7 @@ Converter_DCDC_Murata_NCS1SxxxxSC_THT:
   description: "Murata NCS1SxxxxSC"
   datasheet: "https://power.murata.com/data/power/ncl/kdc_ncs1.pdf"
   tags: "Murata NCS1SxxxxSC"
+  arrow_points: North
   # Midpoints of (1.92, 2.62) and (2.87, 3.52)
   at: [-2.27, 3.195]
   # Max case size

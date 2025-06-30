@@ -4,6 +4,7 @@ Converter_DCDC_TRACO_TEA1-xxxx_THT:
   datasheet: "https://www.tracopower.com/products/tea1.pdf"
   tags: "DCDC-Converter TRACO TEA1 THT SIP-4 1W"
   extratexts: []
+  arrow_points: East
   at: [-0.9, 2.03]
   size: [6, 11.68]
   pins: [
@@ -19,6 +20,7 @@ Converter_DCDC_TRACO_TEA1-xxxxE_THT:
   datasheet: "https://www.tracopower.com/products/tea1e.pdf"
   tags: "DCDC-Converter TRACO TEA1E THT SIP-7 1W"
   extratexts: []
+  arrow_points: East
   at: [-5.1, 2.4]
   size: [6, 19.5]
   pins: [
@@ -34,6 +36,7 @@ Converter_DCDC_TRACO_TME_03xxS_05xxS_12xxS_Single_THT:
   datasheet: "https://www.tracopower.com/products/tme.pdf"
   tags: "DCDC-Converter TRACO TME THT SIP-7 1W"
   extratexts: []
+  arrow_points: East
   at: [-1.675, 1.9]
   size: [6.1, 11.5]
   pins: [
@@ -49,6 +52,7 @@ Converter_DCDC_TRACO_TME_24xxS_Single_THT:
   datasheet: "https://www.tracopower.com/products/tme.pdf"
   tags: "DCDC-Converter TRACO TME THT SIP-7 1W"
   extratexts: []
+  arrow_points: East
   at: [-1.675, 1.9]
   size: [7.1, 11.5]
   pins: [
@@ -64,6 +68,7 @@ Converter_DCDC_TRACO_TEA1-xxxxHI_THT:
   datasheet: "https://www.tracopower.com/products/tea1hi.pdf"
   tags: "DCDC-Converter TRACO TEA1HI THT SIP-7 1W"
   extratexts: []
+  arrow_points: East
   at: [-5.1, 2.4]
   size: [6, 19.5]
   pins: [
@@ -79,6 +84,7 @@ Converter_DCDC_TRACO_TSR1-xxxxE_THT:
   datasheet: "https://www.tracopower.com/products/tsr1e.pdf"
   tags: "DCDC-Converter SWITCHING-REGULATOR STEP-DOWN TRACO TSR1E 2.54MM THT SIP-3 1A"
   extratexts: []
+  arrow_points: East
   at: [-2.05, 3.26]
   size: [7.5, 11.6]
   pins: [
@@ -93,6 +99,7 @@ Converter_DCDC_TRACO_TBA2-xxxx_Single_THT:
   datasheet: "https://www.tracopower.com/products/tba2.pdf"
   tags: "DCDC-Converter TRACO TBA2 THT SIP-7 2W"
   extratexts: []
+  arrow_points: East
   at: [-6.25, 2.4]
   size: [7.6, 19.55]
   pins: [
@@ -108,6 +115,7 @@ Converter_DCDC_TRACO_TBA2-xxxx_Dual_THT:
   datasheet: "https://www.tracopower.com/products/tba2.pdf"
   tags: "DCDC-Converter TRACO TBA2 THT SIP-7 2W"
   extratexts: []
+  arrow_points: East
   at: [-6.25, 2.4]
   size: [7.6, 19.55]
   pins: [
@@ -124,6 +132,7 @@ Converter_DCDC_TRACO_TBA1-xxxxE_Single_THT:
   datasheet: "https://www.tracopower.com/products/tba1e.pdf"
   tags: "DCDC-Converter TRACO TBA1E THT SIP-7 1W"
   extratexts: []
+  arrow_points: East
   at: [-4.65, 2.4]
   size: [6, 19.5]
   pins: [
@@ -139,6 +148,7 @@ Converter_DCDC_TRACO_TBA1-xxxxE_Dual_THT:
   datasheet: "https://www.tracopower.com/products/tba1e.pdf"
   tags: "DCDC-Converter TRACO TBA1E THT SIP-7 1W"
   extratexts: []
+  arrow_points: East
   at: [-4.65, 2.4]
   size: [6, 19.5]
   pins: [
@@ -170,6 +180,7 @@ Converter_DCDC_TRACO_TMA-05xxS_12xxS_Single_THT:
   datasheet: "https://www.tracopower.com/products/tma.pdf"
   tags: "DCDC-Converter TRACO TMA THT SIP-7 1W"
   extratexts: []
+  arrow_points: East
   at: [-4.925, 2.1]
   size: [6.1, 19.5]
   pins: [
@@ -185,6 +196,7 @@ Converter_DCDC_TRACO_TMA-05xxD_12xxD_Dual_THT:
   datasheet: "https://www.tracopower.com/products/tma.pdf"
   tags: "DCDC-Converter TRACO TMA THT SIP-7 1W"
   extratexts: []
+  arrow_points: East
   at: [-4.925, 2.1]
   size: [6.1, 19.5]
   pins: [
@@ -201,6 +213,7 @@ Converter_DCDC_TRACO_TMA-15xxS_24xxS_Single_THT:
   datasheet: "https://www.tracopower.com/products/tma.pdf"
   tags: "DCDC-Converter TRACO TMA THT SIP-7 1W"
   extratexts: []
+  arrow_points: East
   at: [-5.925, 2.1]
   size: [7.1, 19.5]
   pins: [
@@ -216,6 +229,7 @@ Converter_DCDC_TRACO_TMA-15xxD_24xxD_Dual_THT:
   datasheet: "https://www.tracopower.com/products/tma.pdf"
   tags: "DCDC-Converter TRACO TMA THT SIP-7 1W"
   extratexts: []
+  arrow_points: East
   at: [-5.925, 2.1]
   size: [7.1, 19.5]
   pins: [
@@ -232,6 +246,7 @@ Converter_DCDC_TRACO_TMU3-05xx_12xx_THT:
   datasheet: "https://www.tracopower.com/products/tmu3.pdf"
   tags: "DCDC-Converter TRACO TMU3 THT SIP-4 3W"
   extratexts: []
+  arrow_points: East
   at: [-2.475, 1.9]
   size: [8.6, 11.5]
   pins: [
@@ -247,6 +262,7 @@ Converter_DCDC_TRACO_TMU3-24xx_THT:
   datasheet: "https://www.tracopower.com/products/tmu3.pdf"
   tags: "DCDC-Converter TRACO TMU3 THT SIP-4 3W"
   extratexts: []
+  arrow_points: East
   at: [-2.475, 1.9]
   size: [9.6, 11.5]
   pins: [
@@ -262,6 +278,7 @@ Converter_DCDC_TRACO_TRI1-xxxx_THT:
   datasheet: "https://www.tracopower.com/products/tri1.pdf"
   tags: "DCDC-Converter TRACO TRI1 THT SIP-7 1W"
   extratexts: []
+  arrow_points: East
   at: [-5.625, 3.5]
   size: [7.5, 22]
   pins: [
@@ -277,6 +294,7 @@ Converter_DCDC_TRACO_TMR4-xxxxWI_THT:
   datasheet: "https://www.tracopower.com/products/tmr4wi.pdf"
   tags: "DCDC-Converter TRACO TMR4WI THT SIP-8 4W"
   extratexts: []
+  arrow_points: East
   at: [-2, 2.575]
   size: [21.8, 9.3]
   pins: [
@@ -440,6 +458,7 @@ Converter_DCDC_TRACO_TEC3-24xxUI_THT:
   datasheet: "https://www.tracopower.com/products/tec3ui.pdf"
   tags: "DCDC-Converter TRACO TEC3UI THT SIP-8 3W"
   extratexts: []
+  arrow_points: East
   at: [-6.6, 2.26]
   size: [10, 22.3]
   body_size_tolerance: [0.5, 0.5]
@@ -521,6 +540,7 @@ Converter_DCDC_TRACO_TSR0.6-48xxWI_TSR0.6-48xxxWI_THT:
   datasheet: "https://www.tracopower.com/products/tsr0.6wi.pdf"
   tags: "DCDC-Converter SWITCHING-REGULATOR STEP-DOWN TRACO TSR0.6WI 2.54MM THT SIP-3 0.6A"
   extratexts: []
+  arrow_points: East
   at: [-5.6, 3.42]
   size: [8.6, 12]
   body_position_tolerance: [0.5, 0.5]
@@ -570,6 +590,7 @@ Converter_DCDC_TRACO_TSR2-24xxN_TSR2-24xxxN_THT:
     # https://www.tracopower.com/products/tsr3n.pdf
     - TSR3N
   extratexts: []
+  arrow_points: East
   at: [-6.16, 4.46]
   size: [7.6, 14]
   body_position_tolerance: [0.5, 0.5]
@@ -587,6 +608,7 @@ Converter_DCDC_TRACO_TRA3-xxxx_THT:
   datasheet: "https://www.tracopower.com/products/tra3.pdf"
   tags: "DCDC-Converter TRACO TRA3 THT SIP-7 3W"
   extratexts: []
+  arrow_points: East
   at: [-6.42, 2.1]
   size: [7.6, 19.5]
   body_position_tolerance: [0.25, 0.25]
@@ -605,6 +627,7 @@ Converter_DCDC_TRACO_TSR2-xxxx_THT:
   datasheet: "https://www.tracopower.com/products/tsr2.pdf"
   tags: "DCDC-Converter SWITCHING-REGULATOR STEP-DOWN TRACO TSR2 2.54MM THT SIP-3 2A"
   extratexts: []
+  arrow_points: East
   at: [-3.89, 4.42]
   size: [7.5, 14]
   body_position_tolerance: [0.5, 0.5]
@@ -699,6 +722,7 @@ Converter_DCDC_TRACO_TRN3-xx1x_Single_THT:
   datasheet: "https://www.tracopower.com/products/trn3.pdf"
   tags: "DCDC-Converter TRACO TRN3 THT SIP-5 3W"
   extratexts: []
+  arrow_points: East
   at: [-3.7, 1.5]
   size: [7.7, 11.9]
   body_position_tolerance: [0.5, 0.5]
@@ -717,6 +741,7 @@ Converter_DCDC_TRACO_TRN3-xx2x_Dual_THT:
   datasheet: "https://www.tracopower.com/products/trn3.pdf"
   tags: "DCDC-Converter TRACO TRN3 THT SIP-5 3W"
   extratexts: []
+  arrow_points: East
   at: [-3.7, 1.5]
   size: [7.7, 11.9]
   body_position_tolerance: [0.5, 0.5]
@@ -736,6 +761,7 @@ Converter_DCDC_TRACO_TSR0.5-24xx_TSR0.5-24xxx_THT:
   datasheet: "https://www.tracopower.com/products/tsr0.5.pdf"
   tags: "DCDC-Converter SWITCHING-REGULATOR STEP-DOWN TRACO TSR0.5 2.54MM THT SIP-3 0.5A"
   extratexts: []
+  arrow_points: East
   at: [-2.125, 3.2]
   size: [7.55, 11.5]
   body_position_tolerance: [0.5, 0.5]
@@ -789,6 +815,7 @@ Converter_DCDC_TRACO_TMR10-24xxWIR_48xxWIR_72xxWIR_THT:
   datasheet: "https://www.tracopower.com/products/tmr10wir.pdf"
   tags: "DCDC-Converter TRACO TMR10WIR THT SIP-8 10W"
   extratexts: []
+  arrow_points: East
   at: [-5.9, 2.1]
   size: [9.6, 22]
   body_position_tolerance: [0.5, 0.5]
@@ -813,6 +840,7 @@ Converter_DCDC_TRACO_TEC2-12xxWI_24xxWI_48xxWI_THT:
   compatible_mpns:
     # https://www.tracopower.com/products/tmr2.pdf
     - TMR2
+  arrow_points: East
   extratexts: []
   # TEC2 specifies 2.0 pin 8 to edge (i.e. y here would be 2.02)
   # TMR2 has 2.0 pin 1 to edge (so y here would be 2.00)
@@ -838,6 +866,7 @@ Converter_DCDC_TRACO_TBA1-xxxx_THT:
   datasheet: "https://www.tracopower.com/products/tba1.pdf"
   tags: "DCDC-Converter TRACO TBA1 THT SIP-4 1W"
   extratexts: []
+  arrow_points: East
   at: [-1.35, 2.03]
   size: [6, 11.68]
   body_size_tolerance: [0.5, 0.5]
@@ -866,4 +895,3 @@ Converter_DCDC_TRACO_TSR1.5-24xxE_24120E_THT:
     ["tht", "2", 0, -2.54, 2.2, 2.2, 1.4],
     ["tht", "3", 0, -5.08, 2.2, 2.2, 1.4]
   ]
-

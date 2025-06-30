@@ -24,7 +24,8 @@ from kilibs.declarative_defs.packages.smd_inductor_properties import (
     InductorSeriesProperties,
     SmdInductorProperties,
 )
-from kilibs.geom import Vector2D
+from kilibs.geom import Direction, Vector2D
+from scripts.tools.drawing_tools_silk import SilkArrowSize
 from scripts.tools.footprint_generator import FootprintGenerator
 from scripts.tools.nodes.layouts.n_pad_box_layout import (
     NPadBoxLayout,
@@ -94,6 +95,15 @@ class InductorGenerator(FootprintGenerator):
             is_polarized=series_data.has_orientation,
         )
         layout.silk_clearance = NPadBoxLayout.SilkClearance.KEEP_TOP_BOTTOM
+
+        if part_dimension.min_val < 2:
+            layout.silk_arrow_size = SilkArrowSize.SMALL
+        else:
+            layout.silk_arrow_size = SilkArrowSize.MEDIUM
+
+        # We never want the arrow to point in from the left even if the pad
+        # is entirely inside the body.
+        layout.silk_arrow_direction_if_inside = Direction.SOUTH
 
         kicad_mod += layout
 

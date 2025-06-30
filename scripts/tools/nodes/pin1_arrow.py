@@ -1,10 +1,28 @@
+import abc
 from typing import Union
 
 from KicadModTree import Node, Polygon
-from kilibs.geom import Direction, Vector2D
+from kilibs.geom import Direction, GeomPolygon, Vector2D
 
 
-class Pin1SilkscreenArrow(Node):
+class SilkscreenArrow(Node, abc.ABC):
+    """
+    Generic silkscreen arrow base class
+    """
+
+    def __init__(self):
+        super().__init__()
+
+    @abc.abstractmethod
+    def as_polygon(self, inflation: float = 0) -> GeomPolygon:
+        """
+        Get this arrow's bounding polygon, possibly with inflation.
+
+        This is useful for clearing a space for the arrow in other silk features.
+        """
+        pass
+
+class Pin1SilkscreenArrow(SilkscreenArrow):
 
     pos: Vector2D
     angle: float
@@ -39,7 +57,7 @@ class Pin1SilkscreenArrow(Node):
         :param layer: layer of the arrow
         :param line_width_mm: line width of the arrow (can be 0)
         """
-        Node.__init__(self)
+        super().__init__()
 
         pos = Vector2D(apex_position)
 
@@ -48,21 +66,29 @@ class Pin1SilkscreenArrow(Node):
 
         arrow_pts = [
             pos,
-            pos + [-length, size * 0.50],
-            pos + [-length, -size * 0.50],
+            pos + Vector2D.from_floats(-length, size * 0.50),
+            pos + Vector2D.from_floats(-length, -size * 0.50),
             pos
         ]
 
-        self._poly = Polygon(shape=arrow_pts, layer=layer, width=line_width_mm, fill=True)
+        self._gpoly = GeomPolygon(shape=arrow_pts)
+
         # Rotate the arrow backwards (so it points in the right direction)
-        self._poly.rotate(angle=-angle, origin=pos)
-    
+        self._gpoly.rotate(angle=-angle, origin=pos)
+
+        self._poly = Polygon(
+            shape=self._gpoly, layer=layer, width=line_width_mm, fill=True
+        )
+
+    def as_polygon(self, inflation: float = 0) -> GeomPolygon:
+        return self._gpoly.inflated(inflation)
+
     def get_flattened_nodes(self) -> list[Polygon]:
         """Return the nodes to serialize."""
         return [self._poly]
 
 
-class Pin1SilkScreenArrow45Deg(Node):
+class Pin1SilkScreenArrow45Deg(SilkscreenArrow):
     """
     Makea 45-degree filled triangle with H/V sides of equal length
 
@@ -80,18 +106,16 @@ class Pin1SilkScreenArrow45Deg(Node):
         self, apex_position: Vector2D, angle: Union[float, Direction],
         size: float, layer: str, line_width_mm: float
     ):
-        Node.__init__(self)
+        super().__init__()
 
         arrow_pts = [
             apex_position,
-            apex_position + [-size, 0],
-            apex_position + [0, -size],
+            apex_position + Vector2D.from_floats(-size, 0),
+            apex_position + Vector2D.from_floats(0, -size),
             apex_position,
         ]
 
-        self._poly = Polygon(
-            shape=arrow_pts, layer=layer, width=line_width_mm, fill=True
-        )
+        self._gpoly = GeomPolygon(shape=arrow_pts)
 
         if isinstance(angle, Direction):
             angle = angle.value
@@ -100,7 +124,14 @@ class Pin1SilkScreenArrow45Deg(Node):
         angle = angle - Direction.SOUTHEAST.value
 
         if angle != 0:
-            self._poly.rotate(-angle, origin=apex_position)
+            self._gpoly.rotate(-angle, origin=apex_position)
+
+        self._poly = Polygon(
+            shape=self._gpoly, layer=layer, width=line_width_mm, fill=True
+        )
+
+    def as_polygon(self, inflation: float = 0) -> GeomPolygon:
+        return self._gpoly.inflated(inflation)
 
     def get_flattened_nodes(self) -> list[Polygon]:
         """Return the nodes to serialize."""

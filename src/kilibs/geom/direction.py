@@ -35,3 +35,11 @@ class Direction(enum.Enum):
     """Down-right."""
     SOUTHWEST = 225
     """Down-left."""
+
+    def is_cardinal(self) -> bool:
+        return self in [
+            Direction.NORTH,
+            Direction.SOUTH,
+            Direction.EAST,
+            Direction.WEST,
+        ]

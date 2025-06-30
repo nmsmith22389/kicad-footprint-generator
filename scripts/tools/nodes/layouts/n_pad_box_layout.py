@@ -85,6 +85,13 @@ class NPadBoxLayout(FootprintLayoutNode):
     silk_arrow_size: drawing_tools_silk.SilkArrowSize | None = (
         drawing_tools_silk.SilkArrowSize.MEDIUM
     )
+
+    silk_arrow_direction_if_inside: Direction | None = None
+    """
+    If the pin1 pad is completely inside the body, define a direction for the arrow.
+    If not given, the arrow is placed pointing in from the nearest side
+    """
+
     """The size of the silk arrow to draw around the body, if the footprint is polarized.
     If None, no arrow is drawn."""
 
@@ -209,49 +216,21 @@ class NPadBoxLayout(FootprintLayoutNode):
             end=Vector2D(silk_rect_right, silk_rect_bottom),
         )
 
-        # Add the silk arrow - fow now we only support a southward arrow style, but
-        # we can do U-shape if needed in the future.
+        # Add the silk arrow - fow now we defer to the auto arrow
+        # method, but if we have U-shaped silk, we will need to skip.
         if self.is_polarized and self.silk_arrow_size is not None:
-            arrow_size = self.silk_arrow_size
-            silk_arrow_size, silk_arrow_length = (
-                drawing_tools_silk.getStandardSilkArrowSize(
-                    arrow_size, self.global_config.silk_line_width
-                )
+            arrow = drawing_tools_silk.auto_silk_triangle_for_pad_and_box(
+                self.global_config,
+                pad_nodes[0],
+                silk_rect,
+                self.silk_arrow_size,
+                direction_if_inside=self.silk_arrow_direction_if_inside,
             )
 
-            # figure out which side is closer to the pad 0and put the arrow there
-            if abs(pad_nodes[0].at.x - silk_rect.left) < abs(
-                pad_nodes[0].at.y - silk_rect.top
-            ):
-                direction = pin1_arrow.Direction.EAST
-            else:
-                direction = pin1_arrow.Direction.SOUTH
-
-            if direction == pin1_arrow.Direction.EAST:
-                apex_x = min(pad_bbox.left, silk_rect.left)
-                apex_pos = Vector2D.from_floats(apex_x, pad_nodes[0].at.y)
-            else:
-                apex_y = min(pad_bbox.top, silk_rect.top)
-                apex_pos = Vector2D.from_floats(pad_nodes[0].at.x, apex_y)
-
-            arrow = pin1_arrow.Pin1SilkscreenArrow(
-                apex_position=apex_pos,
-                angle=direction,
-                size=silk_arrow_size,
-                length=silk_arrow_length,
-                layer="F.SilkS",
-                line_width_mm=self.global_config.silk_line_width,
-            )
+            arrow_poly = arrow.as_polygon(self.global_config.silk_line_width * 2)
+            keepouts.append(arrow_poly)
 
             parent += arrow
-
-            # Make a little keepout for the arrow tip
-            keepouts.append(
-                GeomRectangle(
-                    center=apex_pos,
-                    size=Vector2D(self.global_config.silk_line_width * 6),
-                )
-            )
 
         # Add the body silk graphics
 

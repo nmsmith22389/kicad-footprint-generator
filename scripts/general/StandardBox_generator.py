@@ -4,7 +4,7 @@ import sys
 from typing import Any, Generator
 
 from KicadModTree import Footprint, FootprintType, KicadPrettyLibrary, ModArgparser, Pad, Model, Node, Text
-from kilibs.geom import Vector2D
+from kilibs.geom import Direction, Vector2D
 from scripts.tools.drawing_tools_silk import SilkArrowSize
 from scripts.tools.global_config_files import global_config
 from scripts.tools.declarative_def_tools import common_metadata
@@ -93,6 +93,29 @@ def build_extra_texts(text_data: list[list[str | float]]) -> list[Node]:
     return nodes
 
 
+def arrow_nesw_from_str(s: str | None) -> Direction | None:
+    """
+    Convert a string representing an arrow direction to a cardinal direction.
+    """
+
+    if not s:  # None or empty string
+        return None
+
+    match s.upper():
+        case "NORTH":
+            return Direction.NORTH
+        case "SOUTH":
+            return Direction.SOUTH
+        case "EAST":
+            return Direction.EAST
+        case "WEST":
+            return Direction.WEST
+        case _:
+            pass
+
+    raise ValueError(f"Invalid arrow direction: {s}. Expected one of: NORTH, SOUTH, EAST, WEST.")
+
+
 def converter(args: dict[str, Any]) -> None:
 
     metadata = common_metadata.CommonMetadata(args)
@@ -107,6 +130,8 @@ def converter(args: dict[str, Any]) -> None:
     body_size_tolerance = Vector2D(args["body_size_tolerance"])
     courtyard = float(args["courtyard"])
     automatic_pin1_mark = bool(args["automatic_pin1_mark"])
+
+    arrow_points = arrow_nesw_from_str(args["arrow_points"])
 
     # Until this can be passed in properly, use the default global config
     global_cfg = global_config.DefaultGlobalConfig()
@@ -174,6 +199,9 @@ def converter(args: dict[str, Any]) -> None:
     layout.fab_to_silk_clearance = fab_to_silk_clearance
     layout.body_to_courtyard_clearance = courtyard_clearance
 
+    # Set the pin 1 arrow direction override (None -> no override)
+    layout.silk_arrow_direction_if_inside = arrow_points
+
     min_body_size = size.min_val
 
     # Basic heuristic to determine the silk arrow size based on the body size
@@ -218,6 +246,7 @@ def main(args):
     parser.add_parameter("courtyard", type=float, required=False, default=ipc_default_courtyard_clearance)
     parser.add_parameter("extratexts", type=list, required=False, default=[])
     parser.add_parameter("automatic_pin1_mark", type=bool, required=False, default=True)
+    parser.add_parameter("arrow_points", type=str, required=False)
 
     # now run our script which handles the whole part of parsing the files
     parser.run()
