@@ -93,7 +93,6 @@ exclude = [
     "scripts",
     "src/kilibs/declarative_defs",
     "KicadModTree/util",
-    "KicadModTree/ModArgparser.py",
     "KicadModTree/nodes/specialized/RectLine.py",
     "KicadModTree/nodes/specialized/PolygonLine.py",
     "KicadModTree/nodes/specialized/ChamferedNativePad.py",
@@ -113,7 +112,6 @@ exclude = ["**/__pycache__"]
 ignore = [
     "src/kilibs/declarative_defs",
     "KicadModTree/util",
-    "KicadModTree/ModArgparser.py",
     "KicadModTree/nodes/specialized/RectLine.py",
     "KicadModTree/nodes/specialized/PolygonLine.py",
     "KicadModTree/nodes/specialized/ChamferedNativePad.py",
