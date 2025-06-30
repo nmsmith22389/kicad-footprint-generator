@@ -260,10 +260,6 @@ WQFN-20-1EP_3x3mm_P0.4mm_EP1.7x1.7mm:
     tolerance: 0.05
   EP_num_paste_pads: [2, 2]
 
-  # NOTE: Different thermal via layout than in the Texas RUK0020B
-  # datasheet since the generator currently doesn't support cross-
-  # shaped vias. TODO: Add support for cross-shaped vias
-  # and then enable paste_avoid_via: True
   thermal_vias:
     count: [2, 2]
     grid: [1.2, 1.2]
@@ -305,7 +301,8 @@ Texas_RUK0020B_WQFN-20-1EP_3x3mm_P0.4mm_EP1.7x1.7mm_ThermalVias:
     tolerance: 0.05
   EP_num_paste_pads: [2, 2]
   thermal_vias:
-    count: [3, 3]               # script not currently support the cross pattern
+    count: [3, 3]
+    remove_corner_vias: True
     drill: 0.2
     EP_paste_coverage: 0.78
     paste_avoid_via: False

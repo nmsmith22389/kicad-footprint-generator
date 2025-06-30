@@ -536,6 +536,7 @@ class GullwingGenerator(FootprintGenerator):
                     paste_rings_outside=thermals.get('paste_rings_outside'),
                     via_drill=thermals.get('drill', 0.3),
                     via_grid=thermals.get('grid'),
+                    remove_corner_vias=thermals.get('remove_corner_vias'),
                     paste_avoid_via=paste_avoid_via,
                     via_paste_clarance=thermals.get('paste_via_clearance', DEFAULT_VIA_PASTE_CLEARANCE),
                     min_annular_ring=thermals.get('min_annular_ring', DEFAULT_MIN_ANNULAR_RING),

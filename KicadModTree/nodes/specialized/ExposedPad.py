@@ -116,6 +116,7 @@ class ExposedPad(Node):
         via_tented: str = VIA_TENTED,
         via_layout: list[int] = [0, 0],
         via_grid: Vector2D | None = None,
+        remove_corner_vias: bool = False,
         paste_avoid_via: bool = False,
         paste_coverage: float = 0.65,
         paste_between_vias: list[int] | None = None,
@@ -154,6 +155,7 @@ class ExposedPad(Node):
                 and y-direction. If only a single integer given, x- and y-direction use
                 the same count. If none is given then the via grid will be automatically
                 calculated to have them distributed across the main pad.
+            remove_corner_vias: Remove vias in the corners of the pad.
             paste_avoid_via: Paste automatically generated to avoid vias.
             paste_coverage: The amount of the mask's free area that is covered with
                 paste.
@@ -196,6 +198,7 @@ class ExposedPad(Node):
             bottom_pad_layers=bottom_pad_layers,
             via_layout=via_layout,
             via_grid=via_grid,
+            remove_corner_vias=remove_corner_vias,
             grid_round_base=grid_round_base if grid_round_base is not None else 0.0,
         )
         self._init_paste(
@@ -249,6 +252,7 @@ class ExposedPad(Node):
         bottom_pad_layers: list[str] | None,
         via_layout: list[int],
         via_grid: Vector2D | None,
+        remove_corner_vias: bool,
         grid_round_base: float,
     ) -> None:
         """Initialize the thermal vias.
@@ -271,6 +275,7 @@ class ExposedPad(Node):
                 and y-direction. If only a single integer given, x- and y-direction use
                 the same count. If none is given then the via grid will be automatically
                 calculated to have them distributed across the main pad.
+            remove_corner_vias: Remove vias in the corners of the pad.
             grid_round_base: Base used for rounding calculated grids. 0.0 means no
                 rounding.
         """
@@ -281,6 +286,14 @@ class ExposedPad(Node):
         self.via_size = self.via_drill + 2 * min_annular_ring
         self._init_via_grid(via_grid, grid_round_base)
         self.via_tented = via_tented
+
+        self.remove_corner_vias = remove_corner_vias
+        if (
+            self.remove_corner_vias
+            and self.via_layout[0] <= 2
+            and self.via_layout[1] <= 2
+        ):
+            raise ValueError("All vias would be deleted by remove_corner_vias option.")
 
         self.bottom_pad_layers = bottom_pad_layers
 
@@ -759,22 +772,27 @@ class ExposedPad(Node):
 
         pads: list[Pad | ReferencedPad] = []
         cy = -((self.via_layout[1] - 1) * self.via_grid.y) / 2 + self.at.y
-        for _ in range(self.via_layout[1]):
-            pads.extend(
-                PadArray(
-                    center=[self.at.x, cy],
-                    initial=self.number,
-                    increment=0,
-                    pincount=self.via_layout[0],
-                    x_spacing=self.via_grid.x,
-                    size=self.via_size,
-                    type=Pad.TYPE_THT,
-                    shape=Pad.SHAPE_CIRCLE,
-                    fab_property=Pad.FabProperty.HEATSINK,
-                    drill=self.via_drill,
-                    layers=via_layers,
-                ).get_pads()
-            )
+
+        for row in range(self.via_layout[1]):
+            vias_in_row = self.via_layout[0]
+            if self.remove_corner_vias and (row == 0 or row == self.via_layout[1] - 1):
+                vias_in_row = vias_in_row - 2
+            if vias_in_row > 0:
+                pads.extend(
+                    PadArray(
+                        center=[self.at.x, cy],
+                        initial=self.number,
+                        increment=0,
+                        pincount=vias_in_row,
+                        x_spacing=self.via_grid.x,
+                        size=self.via_size,
+                        type=Pad.TYPE_THT,
+                        shape=Pad.SHAPE_CIRCLE,
+                        fab_property=Pad.FabProperty.HEATSINK,
+                        drill=self.via_drill,
+                        layers=via_layers,
+                    ).get_pads()
+                )
             cy += self.via_grid.y
 
         if self.add_bottom_pad and self.bottom_pad_layers:
