@@ -78,22 +78,6 @@ class GeomStadium(GeomShapeClosed):
             )
         self._shapes = []
 
-    def get_shapes_back_compatible(self) -> list[GeomLine | GeomArc]:
-        """Return a list containing the shapes that this shape is composed of."""
-        c1 = self.centers[0]
-        c2 = self.centers[1]
-        # centre 1 to centre 2 vector
-        c_vec = c2 - c1
-        perp_vec = c_vec.orthogonal().resize(self.radius)
-        # Vector from centre 2 to arc mid point
-        c_to_arc_mid = c_vec.resize(self.radius)
-        return [
-            GeomArc(start=c1 + perp_vec, mid=c1 - c_to_arc_mid, end=c1 - perp_vec),
-            GeomLine(start=c1 - perp_vec, end=c2 - perp_vec),
-            GeomArc(start=c2 + perp_vec, end=c2 - perp_vec, mid=c2 + c_to_arc_mid),
-            GeomLine(start=c1 + perp_vec, end=c2 + perp_vec),
-        ]
-
     def get_shapes(self) -> list[GeomLine | GeomArc]:
         """Return a list containing the shapes that this shape is composed of in
         clockwise order."""

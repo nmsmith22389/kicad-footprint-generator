@@ -1411,7 +1411,7 @@ class CrystalResonatorOscillatorGenerator(FootprintGenerator):
         silk_stadium.width = self.global_config.silk_line_width
 
         kicad_modg += makeNodesWithKeepout(
-            list(silk_stadium.get_shapes_back_compatible()),
+            list(silk_stadium.get_shapes()),
             layer="F.SilkS",
             width=self.global_config.silk_line_width,
             keepouts=keepouts,

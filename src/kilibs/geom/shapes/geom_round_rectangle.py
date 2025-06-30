@@ -126,34 +126,6 @@ class GeomRoundRectangle(GeomShapeClosed):
                     child.rotate(angle=self.angle, origin=self.center, use_degrees=True)
         return self._shapes
 
-    def get_shapes_back_compatible(self) -> list[GeomLine | GeomArc | GeomRectangle]:
-        """Return a list containing the shapes that this shape is composed of."""
-        if self._shapes:
-            return self._shapes
-        cr = self.corner_radius
-        size = self.size
-        at = self.center - self.size / 2
-        self._shapes = []
-        if self.corner_radius == 0:
-            self._shapes = [GeomRectangle(start=at, end=[at.x + size.x, at.y + size.y])]
-        else:
-            # fmt: off
-            self._shapes = [
-                GeomLine(start=[at.x + cr, at.y],                        end=[at.x + size.x - cr, at.y]),                        # NOQA
-                GeomLine(start=[at.x + size.x, at.y + cr],               end=[at.x + size.x, at.y + size.y - cr]),               # NOQA
-                GeomLine(start=[at.x + size.x - cr, at.y + size.y],      end=[at.x + cr, at.y + size.y]),                        # NOQA
-                GeomLine(start=[at.x, at.y + size.y - cr],               end=[at.x, at.y + cr]),                                 # NOQA
-                GeomArc(center=[at.x + cr, at.y + cr],                   start=[at.x, at.y + cr],                   angle=90),   # NOQA
-                GeomArc(center=[at.x + size.x - cr, at.y + cr],          start=[at.x + size.x - cr, at.y],          angle=90),   # NOQA
-                GeomArc(center=[at.x + cr, at.y + size.y - cr],          start=[at.x, at.y + size.y - cr],          angle=-90),  # NOQA
-                GeomArc(center=[at.x + size.x - cr, at.y + size.y - cr], start=[at.x + size.x, at.y + size.y - cr], angle=90),   # NOQA
-            ]
-            # fmt: on
-            if self.angle:
-                for child in self._shapes:
-                    child.rotate(angle=self.angle, origin=self.center, use_degrees=True)
-        return self._shapes
-
     def translate(self, vector: Vector2D) -> GeomRoundRectangle:
         """Move the round rectangle.
 

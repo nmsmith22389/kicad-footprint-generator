@@ -96,6 +96,4 @@ class Trapezoid(NodeShape, GeomTrapezoid):
 
     def get_flattened_nodes(self) -> list[Node]:
         """Return the nodes to serialize."""
-        return cast(
-            list[Node], self.to_child_nodes(list(self.get_shapes_back_compatible()))
-        )
+        return cast(list[Node], self.to_child_nodes(list(self.get_shapes())))
