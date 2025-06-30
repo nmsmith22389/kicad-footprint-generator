@@ -110,7 +110,7 @@ class Footprint(Node):
         self.zone_connection = Pad.ZoneConnection.INHERIT
 
         if tstamp_seed is not None:
-            self.getTStampCls().setTStampSeed(tstamp_seed=tstamp_seed)
+            self.get_timestamp_class().set_timestamp_seed(tstamp_seed=tstamp_seed)
 
         # All footprints from v9 have an embedded_fonts node even if it's not enabled.
         self._embedded_fonts = EmbeddedFonts()
@@ -197,7 +197,7 @@ class Footprint(Node):
 
         self.pasteMarginRatio = value
 
-    def cleanSilkMaskOverlap(
+    def clean_silk_mask_overlap(
         self,
         side: str = "F",
         silk_pad_clearance: float = 0.2,
@@ -211,9 +211,9 @@ class Footprint(Node):
             silk_line_width: The line width of the silk screen (used to calculate the
                 clearance).
         """
-        from KicadModTree.util.silkmask_util import cleanSilkOverMask
+        from KicadModTree.util.silkmask_util import clean_silk_over_mask
 
-        cleanSilkOverMask(
+        clean_silk_over_mask(
             footprint=self,
             side=side,
             silk_pad_clearance=silk_pad_clearance,

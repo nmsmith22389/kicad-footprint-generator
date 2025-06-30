@@ -74,7 +74,7 @@ def get_pad_top_left_corner_midpoint(pad: Pad) -> Vector2D:
 
         # Move into the corner slightly down and right to account for the radius
         # being on the inside of the bounding box, not the corner.
-        inset = (1 - (sqrt(2) / 2)) * pad.roundRadius
+        inset = (1 - (sqrt(2) / 2)) * pad.round_radius
         tl_corner += [inset, inset]
     else:
         raise ValueError("Unsupported pad shape: {}".format(pad.shape))

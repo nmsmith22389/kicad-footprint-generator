@@ -63,7 +63,7 @@ class TStamp(object):
     """The parent node."""
 
     @staticmethod
-    def parseAsUUID(tstamp_uuid: str | uuid.UUID) -> uuid.UUID:
+    def parse_as_uuid(tstamp_uuid: str | uuid.UUID) -> uuid.UUID:
         """Convert the argument to a UUID.
 
         Args:
@@ -78,7 +78,7 @@ class TStamp(object):
             return uuid.UUID(str(tstamp_uuid))
 
     @staticmethod
-    def parseTStamp(tstamp: TStamp | str) -> TStamp:
+    def parse_timestamp(tstamp: TStamp | str) -> TStamp:
         """Convert the argument to a timestamp.
 
         Args:
@@ -90,25 +90,25 @@ class TStamp(object):
         if isinstance(tstamp, TStamp):
             return tstamp
         else:
-            return TStamp(tstamp=TStamp.parseAsUUID(tstamp))
+            return TStamp(tstamp=TStamp.parse_as_uuid(tstamp))
 
-    def setUniqueID(self, unique_id: uuid.UUID) -> None:
+    def set_unique_id(self, unique_id: uuid.UUID) -> None:
         """Set the UUID.
 
         Args:
             unique_id: The UUID.
         """
         self._unique_id = str(unique_id)
-        self.updateTStampConditionally()
+        self.update_timestamp_conditionally()
 
-    def unsetTStamp(self) -> None:
+    def unset_timestamp(self) -> None:
         """Unset the timestamp."""
         self._tstamp = None
         self._tstamp_seed = None
         self._unique_id = None
         self._isTStampManualFixed = False
 
-    def setParentNode(self, node: Node) -> None:
+    def set_parent_node(self, node: Node) -> None:
         """Set the parent node.
 
         Args:
@@ -116,27 +116,27 @@ class TStamp(object):
         """
         self._parentNode = node
 
-    def getParentNode(self) -> Node | None:
+    def get_parent_node(self) -> Node | None:
         """Return the parent node."""
         return self._parentNode
 
-    def isTStampValid(self) -> bool:
+    def is_timestamp_valid(self) -> bool:
         """Return if the timestamp is valid or not."""
         return (self._tstamp is not None) and (self._tstamp != "")
 
-    def isTStampSeedValid(self) -> bool:
+    def is_timestamp_seed_valid(self) -> bool:
         """Return if the timestamp seed is valid or not."""
         return (self._tstamp_seed is not None) and (self._tstamp_seed != "")
 
-    def getUniqueID(self) -> str | None:
+    def get_unique_id(self) -> str | None:
         """Return the UUID."""
         return self._unique_id
 
-    def getTStamp(self) -> uuid.UUID | str | None:
+    def get_timestamp(self) -> uuid.UUID | str | None:
         """Return the timestamp."""
         return self._tstamp
 
-    def setTStamp(self, tstamp: uuid.UUID | str, tstamp_fixed: bool = True) -> None:
+    def set_timestamp(self, tstamp: uuid.UUID | str, tstamp_fixed: bool = True) -> None:
         """ "Set the timestamp.
 
         Args:
@@ -146,7 +146,7 @@ class TStamp(object):
         self._tstamp = uuid.UUID(str(tstamp))
         self._isTStampManualFixed = tstamp_fixed
 
-    def returnDerivedTStamp(
+    def return_derived_timestamp(
         self,
         unique_id: str | None = None,
         obj: object | None = None,
@@ -199,48 +199,48 @@ class TStamp(object):
                 f"Timestamp of node {repr(self._parentNode)} was not initialized before requesting it."
             )
 
-    def reCalcTStamp(self) -> uuid.UUID | str | None:
+    def recalculate_timestamp(self) -> uuid.UUID | str | None:
         """If the timestamp is not manually fixed, update the timestamp by using the
         parent node as object to derive the timestamp from (see:
         `returnDerivedTStamp()`)."""
         if not self._isTStampManualFixed:
-            self._tstamp = self.returnDerivedTStamp(
-                unique_id=self.getUniqueID(),
+            self._tstamp = self.return_derived_timestamp(
+                unique_id=self.get_unique_id(),
                 obj=self._parentNode,
-                seed=self.getTStampSeed(),
+                seed=self.get_timestamp_seed(),
                 use_obj_hash=True,
             )
         else:
             print("WARNING: TStamp is fixed at:")
             print_stack()
-        return self.getTStamp()
+        return self.get_timestamp()
 
-    def getTStampSeed(self) -> uuid.UUID | None:
+    def get_timestamp_seed(self) -> uuid.UUID | None:
         """Return the timestamp seed."""
         return self._tstamp_seed
 
-    def initializeTStampSeed(self) -> uuid.UUID | None:
+    def initialize_timestamp_seed(self) -> uuid.UUID | None:
         """Initialize the timestamp seed and return it."""
-        self.setTStampSeed(
+        self.set_timestamp_seed(
             uuid.uuid5(
                 namespace=uuid.uuid1(),
                 name=f"KicadModTree.Node.{str(self.__class__.__name__)}.{str(self._unique_id)}",
             )
         )
-        return self.getTStampSeed()
+        return self.get_timestamp_seed()
 
-    def updateTStampConditionally(self) -> uuid.UUID | str | None:
+    def update_timestamp_conditionally(self) -> uuid.UUID | str | None:
         """Update the timestamp if it is not manually fixed and return it."""
         if (self._tstamp is None) or (not self._isTStampManualFixed):
-            return self.reCalcTStamp()
+            return self.recalculate_timestamp()
         else:
-            return self.getTStamp()
+            return self.get_timestamp()
 
-    def setTStampSeed(self, tstamp_seed: uuid.UUID | str | None) -> None:
+    def set_timestamp_seed(self, tstamp_seed: uuid.UUID | str | None) -> None:
         """Set the timestamp seed."""
         self._tstamp_seed = uuid.UUID(str(tstamp_seed))
         if tstamp_seed is not None:
-            self.updateTStampConditionally()
+            self.update_timestamp_conditionally()
 
     def __init__(
         self,
@@ -258,11 +258,11 @@ class TStamp(object):
             unique_id: The optinoal UUID.
         """
         if tstamp is not None:
-            tstamp = self.parseAsUUID(tstamp)
+            tstamp = self.parse_as_uuid(tstamp)
         self._tstamp = tstamp
 
         if tstamp_seed is not None:
-            tstamp_seed = self.parseAsUUID(tstamp_seed)
+            tstamp_seed = self.parse_as_uuid(tstamp_seed)
         self._tstamp_seed = tstamp_seed
 
         fixed = (tstamp is not None) and (tstamp_seed is None)
@@ -276,13 +276,13 @@ class TStamp(object):
 
     def __str__(self) -> str:
         """Return the timestamp as a string."""
-        return str(self.getTStamp())
+        return str(self.get_timestamp())
 
     def __repr__(self) -> str:
         """Return the string representation of the timestamp."""
         return (
-            f"TStamp(tstamp='{str(self.getTStamp())}', "
-            + f"tstamp_seed='{self.getTStampSeed()}', unique_id='{self.getUniqueID()}')"
+            f"TStamp(tstamp='{str(self.get_timestamp())}', "
+            + f"tstamp_seed='{self.get_timestamp_seed()}', unique_id='{self.get_unique_id()}')"
         )
 
 
@@ -302,35 +302,37 @@ class Node(ABC):
         self._childs = []
         self._tstamp = TStamp(parent=self)
 
-    def hasValidTStamp(self) -> bool:
+    def has_valid_timestamp(self) -> bool:
         """Return whether the node has a valid timestamp or not."""
-        return self._tstamp.isTStampValid()
+        return self._tstamp.is_timestamp_valid()
 
-    def hasValidSeedForTStamp(self) -> bool:
+    def has_valid_seed_for_timestamp(self) -> bool:
         """Return whether the node has a valid timestamp seed or not."""
-        return self._tstamp.isTStampSeedValid()
+        return self._tstamp.is_timestamp_seed_valid()
 
-    def setTStampSeedFromNode(self, node: Node) -> None:
+    def set_timestamp_seed_from_node(self, node: Node) -> None:
         """Sets the timestamp by using the nodes' timestamps' seed."""
-        if node.getTStampCls().getTStampSeed() is not None:
-            return self._tstamp.setTStampSeed(node.getTStampCls().getTStampSeed())
+        if node.get_timestamp_class().get_timestamp_seed() is not None:
+            return self._tstamp.set_timestamp_seed(
+                node.get_timestamp_class().get_timestamp_seed()
+            )
         else:
             return None
 
-    def getTStampCls(self) -> TStamp:
+    def get_timestamp_class(self) -> TStamp:
         """Return the timestamp object (class) of the node."""
         return self._tstamp
 
-    def setTStamp(self, tstamp: uuid.UUID | str | TStamp) -> None:
+    def set_timestamp(self, tstamp: uuid.UUID | str | TStamp) -> None:
         """Return the timestamp UUID of the node."""
         if isinstance(tstamp, TStamp):
             self._tstamp = tstamp
         else:
-            self._tstamp.setTStamp(tstamp)
+            self._tstamp.set_timestamp(tstamp)
 
-    def getTStamp(self) -> uuid.UUID | str | None:
+    def get_timestamp(self) -> uuid.UUID | str | None:
         """Return the timestamp of the node."""
-        return self._tstamp.getTStamp()
+        return self._tstamp.get_timestamp()
 
     @staticmethod
     def cleanup_to_hash_dict(obj_dict: dict[str, Any]) -> dict[str, Any]:
@@ -403,10 +405,10 @@ class Node(ABC):
         self._childs.append(node)
 
         node._parent = self
-        if (node.getTStampCls().getTStampSeed() is None) and (
-            self.getTStampCls().getTStampSeed() is not None
+        if (node.get_timestamp_class().get_timestamp_seed() is None) and (
+            self.get_timestamp_class().get_timestamp_seed() is not None
         ):
-            node.setTStampSeedFromNode(self)
+            node.set_timestamp_seed_from_node(self)
 
     def extend(self, nodes: Sequence[Node]) -> None:
         """Add a list of nodes as child nodes."""
@@ -420,10 +422,10 @@ class Node(ABC):
         # when all went smooth by now, we can set the parent nodes to ourself
         for node in new_nodes:
             node._parent = self
-            if (node.getTStampCls().getTStampSeed() is None) and (
-                self.getTStampCls().getTStampSeed() is not None
+            if (node.get_timestamp_class().get_timestamp_seed() is None) and (
+                self.get_timestamp_class().get_timestamp_seed() is not None
             ):
-                node.setTStampSeedFromNode(self)
+                node.set_timestamp_seed_from_node(self)
 
         self._childs.extend(new_nodes)
 
@@ -437,7 +439,7 @@ class Node(ABC):
         return self
 
     @staticmethod
-    def _removeNode(*, parent: Node, node: Node) -> None:
+    def _remove_node(*, parent: Node, node: Node) -> None:
         """Remove a child from the list of child nodes of a given parent node.
 
         Args:
@@ -458,11 +460,11 @@ class Node(ABC):
                 within their children.
         """
         if not traverse:
-            Node._removeNode(parent=self, node=node)
+            Node._remove_node(parent=self, node=node)
         else:
             if node == self:
                 if node._parent:
-                    Node._removeNode(parent=node._parent, node=node)
+                    Node._remove_node(parent=node._parent, node=node)
             else:
                 for child in self.get_child_nodes():
                     child.remove(node, traverse=traverse)
@@ -557,18 +559,18 @@ class Node(ABC):
         """Return the direct child nodes."""
         return self._childs
 
-    def getParent(self) -> Node | None:
+    def get_parent(self) -> Node | None:
         """Return the parent node of this node."""
         return self._parent
 
-    def getRootNode(self) -> Node:
+    def get_root_node(self) -> Node:
         """Return the root node of this node."""
 
         # TODO: recursion detection
         if not self._parent:
             return self
         else:
-            return self._parent.getRootNode()
+            return self._parent.get_root_node()
 
     def bbox(self) -> BoundingBox:
         """
@@ -599,11 +601,11 @@ class Node(ABC):
         class_name = self.__class__.__name__
         return f"{class_name}(parent={self._parent})"
 
-    def _getRenderTreeSymbol(self) -> str:
+    def _get_render_tree_symbol(self) -> str:
         """Symbol which is displayed when generating a render tree."""
         return "+" if self._parent is None else "*"
 
-    def getRenderTree(self, rendered_nodes: set[Node] = set()) -> str:
+    def get_render_tree(self, rendered_nodes: set[Node] = set()) -> str:
         """Return the render tree of this node including only the real children.
 
         Args:
@@ -615,15 +617,17 @@ class Node(ABC):
 
         rendered_nodes.add(self)
 
-        tree_str = f"{self._getRenderTreeSymbol()} {self.__repr__()}"
+        tree_str = f"{self._get_render_tree_symbol()} {self.__repr__()}"
 
         for child in self.get_child_nodes():
             tree_str += "\n  "
-            tree_str += "  ".join(child.getRenderTree(rendered_nodes).splitlines(True))
+            tree_str += "  ".join(
+                child.get_render_tree(rendered_nodes).splitlines(True)
+            )
 
         return tree_str
 
-    def getCompleteRenderTree(self, rendered_nodes: set[Node] = set()) -> str:
+    def get_complete_render_tree(self, rendered_nodes: set[Node] = set()) -> str:
         """Return the render tree of this node including the real and the virtual
         children.
 
@@ -636,12 +640,12 @@ class Node(ABC):
 
         rendered_nodes.add(self)
 
-        tree_str = f"{self._getRenderTreeSymbol()} {self.__repr__()}"
+        tree_str = f"{self._get_render_tree_symbol()} {self.__repr__()}"
 
         for child in self.get_child_nodes():
             tree_str += "\n  "
             tree_str += "  ".join(
-                child.getCompleteRenderTree(rendered_nodes).splitlines(True)
+                child.get_complete_render_tree(rendered_nodes).splitlines(True)
             )
 
         return tree_str

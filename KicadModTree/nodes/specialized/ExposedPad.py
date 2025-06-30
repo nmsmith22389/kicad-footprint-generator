@@ -797,7 +797,7 @@ class ExposedPad(Node):
     def _create_pads(self) -> None:
         """Return the nodes to serialize."""
         if self.has_vias:
-            self.round_radius_handler.limitMaxRadius(self.via_size / 2)
+            self.round_radius_handler.limit_max_radius(self.via_size / 2)
         self._pads = self._create_main_pad()
         if self.has_vias:
             self._pads += self._create_vias()
@@ -819,6 +819,6 @@ class ExposedPad(Node):
         """Return the list of pads."""
         return self._pads
 
-    def getRoundRadius(self) -> float:
+    def get_round_radius(self) -> float:
         """Return the round radius."""
-        return self.round_radius_handler.getRoundRadius(min(self.size))
+        return self.round_radius_handler.get_round_radius(min(self.size))

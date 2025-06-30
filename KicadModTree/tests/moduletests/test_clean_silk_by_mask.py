@@ -65,6 +65,6 @@ class TestCleanSilkByMask(SerialisationTest):
 
         kicad_mod = gen_footprint()
 
-        kicad_mod.cleanSilkMaskOverlap(silk_pad_clearance=0.0, silk_line_width=0.12)
+        kicad_mod.clean_silk_mask_overlap(silk_pad_clearance=0.0, silk_line_width=0.12)
 
         self.assert_serialises_as(kicad_mod, 'test_clean_silk_by_mask.test_clean_over_smd_rect.kicad_mod')

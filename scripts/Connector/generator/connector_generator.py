@@ -703,7 +703,7 @@ def generate_one_footprint(
 
     ## clean silk
     if fp_config.clean_silk:
-        kicad_mod.cleanSilkMaskOverlap(
+        kicad_mod.clean_silk_mask_overlap(
             side="F",
             silk_pad_clearance=global_config.silk_pad_clearance,
             silk_line_width=global_config.silk_line_width,

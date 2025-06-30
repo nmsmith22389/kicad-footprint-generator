@@ -94,7 +94,7 @@ class TestPadSerialisation(SerialisationTest):
         kicad_mod.append(pad)
 
         # check the corner and handlers are set
-        assert pad.chamfer_size_handler.chamferRequested()
+        assert pad.chamfer_size_handler.chamfer_requested()
         assert pad.chamfer_ratio == 0.25
         assert pad.radius_ratio == 0.25
         assert pad.chamfer_corners.bottom_left

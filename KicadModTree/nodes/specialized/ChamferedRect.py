@@ -44,7 +44,7 @@ class ChamferRect(Node):
         br = Vector2D(0, 0) + self.size / 2 + self.at
 
         if self.corners.is_any_selected():
-            chamfer_size: float = self.chamfer.getChamferSize(
+            chamfer_size: float = self.chamfer.get_chamfer_size(
                 min(self.size.x, self.size.y)
             )
 

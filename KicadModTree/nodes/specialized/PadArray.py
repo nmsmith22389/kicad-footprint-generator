@@ -498,7 +498,7 @@ def get_pad_radius_from_arrays(pad_arrays: list[PadArray]) -> float:
         if pad_radius == 0.0:
             pads = pa.get_pads()
             if len(pads):
-                pad_radius = pads[0].getRoundRadius()
+                pad_radius = pads[0].get_round_radius()
     return pad_radius
 
 

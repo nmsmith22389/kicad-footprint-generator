@@ -551,7 +551,7 @@ class GullwingGenerator(FootprintGenerator):
                 )
 
             kicad_mod.append(EP)
-            EP_round_radius = EP.getRoundRadius()
+            EP_round_radius = EP.get_round_radius()
 
         # # ############################ CrtYd ##################################
         courtyard_offset = ipc_offsets.courtyard

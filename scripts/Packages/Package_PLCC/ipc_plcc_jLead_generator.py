@@ -373,7 +373,7 @@ class PLCCGenerator(FootprintGenerator):
 
         # # ######################## Fabrication Layer ###########################
 
-        fab_bevel_size = self.global_config.fab_bevel.getChamferSize(
+        fab_bevel_size = self.global_config.fab_bevel.get_chamfer_size(
             min(size_x, size_y)
         )
         fab_bevel_y = fab_bevel_size / math.sqrt(2)

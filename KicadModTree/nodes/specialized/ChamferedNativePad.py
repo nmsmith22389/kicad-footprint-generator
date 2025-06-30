@@ -150,8 +150,8 @@ class ChamferedNativePad(Node):
         ):
             is_chamfered = True
 
-        radius = self.round_radius_handler.getRoundRadius(min(self.size))
-        chamfer = self.chamfer_size_handler.getChamferSize(min(self.size))
+        radius = self.round_radius_handler.get_round_radius(min(self.size))
+        chamfer = self.chamfer_size_handler.get_chamfer_size(min(self.size))
 
         if is_chamfered:
             if (
@@ -223,5 +223,5 @@ class ChamferedNativePad(Node):
         chamfer_size = Vector2D([x if x > 0 else 0 for x in chamfer_size])
         return chamfer_size
 
-    def getRoundRadius(self):
-        return self.pad.getRoundRadius()
+    def get_round_radius(self):
+        return self.pad.get_round_radius()

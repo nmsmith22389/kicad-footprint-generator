@@ -34,7 +34,7 @@ class RoundRadiusHandler(object):
         self.maximum_radius = maximum_radius
         self.round_radius_exact = round_radius_exact
 
-    def getRadiusRatio(self, shortest_sidelength: float) -> float:
+    def get_radius_ratio(self, shortest_sidelength: float) -> float:
         r"""get the resulting round radius ratio
 
         :param shortest_sidelength: shortest sidelength of a pad
@@ -57,15 +57,15 @@ class RoundRadiusHandler(object):
 
         return self.radius_ratio
 
-    def getRoundRadius(self, shortest_sidelength: float) -> float:
+    def get_round_radius(self, shortest_sidelength: float) -> float:
         r"""get the resulting round radius
 
         :param shortest_sidelength: shortest sidelength of a pad
         :return: the resulting round radius to be used for the pad
         """
-        return self.getRadiusRatio(shortest_sidelength)*shortest_sidelength
+        return self.get_radius_ratio(shortest_sidelength)*shortest_sidelength
 
-    def roundingRequested(self) -> bool:
+    def rounding_requested(self) -> bool:
         r"""Check if the pad has a rounded corner
 
         :return: True if rounded corners are required
@@ -81,13 +81,13 @@ class RoundRadiusHandler(object):
 
         return True
 
-    def limitMaxRadius(self, limit: float) -> None:
+    def limit_max_radius(self, limit: float) -> None:
         r"""Set a new maximum limit
 
         :param limit: the new limit.
         """
 
-        if not self.roundingRequested():
+        if not self.rounding_requested():
             return
         if self.maximum_radius is not None:
             self.maximum_radius = min(self.maximum_radius, limit)
@@ -151,7 +151,7 @@ class ChamferSizeHandler(object):
         self.chamfer_exact = getOptionalNumberTypeParam(
             kwargs, 'chamfer_exact', default_value=chamfer_size)
 
-    def getChamferRatio(self, shortest_sidelength: float) -> float:
+    def get_chamfer_ratio(self, shortest_sidelength: float) -> float:
         r"""get the resulting chamfer ratio
 
         :param shortest_sidelength: shortest sidelength of a pad
@@ -175,15 +175,15 @@ class ChamferSizeHandler(object):
 
         return self.chamfer_ratio
 
-    def getChamferSize(self, shortest_sidelength) -> float:
+    def get_chamfer_size(self, shortest_sidelength) -> float:
         r"""get the resulting chamfer size
 
         :param shortest_sidelength: shortest sidelength of a pad
         :return: the resulting chamfer size to be used for the pad
         """
-        return self.getChamferRatio(shortest_sidelength) * shortest_sidelength
+        return self.get_chamfer_ratio(shortest_sidelength) * shortest_sidelength
 
-    def chamferRequested(self):
+    def chamfer_requested(self):
         r"""Check if the handler indicates a non-zero chamfer
 
         :return: True if a chamfer is requested
@@ -199,12 +199,12 @@ class ChamferSizeHandler(object):
 
         return True
 
-    def limitMaxChamfer(self, limit) -> None:
+    def limit_max_chamfer(self, limit) -> None:
         r"""Set a new maximum limit
 
         :param limit: the new limit.
         """
-        if not self.chamferRequested():
+        if not self.chamfer_requested():
             return
         if self.maximum_chamfer is not None:
             self.maximum_chamfer = min(self.maximum_chamfer, limit)

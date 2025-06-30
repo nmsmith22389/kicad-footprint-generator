@@ -241,7 +241,7 @@ class ArcPadPrimitive(Node):
         )
         return (self.width - line_width) / (required_arcs - 1)
 
-    def _getArcPrimitives(self) -> list[Arc | Line]:
+    def _get_arc_primitives(self) -> list[Arc | Line]:
         line_width = self.round_radius * 2
         step = self._get_step()
 
@@ -261,9 +261,9 @@ class ArcPadPrimitive(Node):
         nodes.append(ref_arc)
 
         if self.start_line is not None:
-            nodes = self.__cutArcs(nodes, self.start_line, 1)
+            nodes = self._cut_arcs(nodes, self.start_line, 1)
         if self.end_line is not None:
-            nodes = self.__cutArcs(nodes, self.end_line, 0)
+            nodes = self._cut_arcs(nodes, self.end_line, 0)
         arcs_and_lines: list[Arc | Line] = cast(list[Arc | Line], nodes)
         arcs_and_lines.append(
             Line(start=nodes[0].end, end=nodes[-1].end, width=line_width)
@@ -274,7 +274,7 @@ class ArcPadPrimitive(Node):
 
         return arcs_and_lines
 
-    def __cutArcs(
+    def _cut_arcs(
         self, arcs: list[Arc], line: GeomLine | None, index_to_keep: int
     ) -> list[Arc]:
         if line is None:
@@ -295,7 +295,7 @@ class ArcPadPrimitive(Node):
     def get_flattened_nodes(self) -> list[Node]:
         """Return the nodes to serialize."""
         at = self.reference_arc.mid
-        primitives = self._getArcPrimitives()
+        primitives = self._get_arc_primitives()
         for p in primitives:
             p.translate(-at)
         return cast(
@@ -529,7 +529,7 @@ class RingPad(Node):
         for i in range(1, self.num_paste_zones):
             self.pads.append(pad.copy().rotate(i * ref_angle, origin=self.at))
 
-    def _generateMaskPads(self) -> None:
+    def _generate_mask_pads(self) -> None:
         w = self.width + 2 * self.solder_mask_margin
         self.pads.append(
             RingPadPrimitive(
@@ -558,7 +558,7 @@ class RingPad(Node):
             # bug in kicad so any clearance other than 0 needs a workaround
             layers.append("F.Mask")
         else:
-            self._generateMaskPads()
+            self._generate_mask_pads()
         self.pads.append(
             RingPadPrimitive(
                 number=self.number,

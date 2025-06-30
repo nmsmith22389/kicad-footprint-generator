@@ -19,7 +19,7 @@ from KicadModTree.nodes import Circle, Node, NodeShape, Pad, Rectangle
 from kilibs.geom import GeomShape, GeomShapeAtomic, GeomShapeClosed
 
 
-def _collectNodesAsGeometricShapes(
+def _collect_nodes_as_geometric_shapes(
     node: Node,
     layer: str | list[str],
     select_drill: bool = False,
@@ -86,7 +86,7 @@ def _collectNodesAsGeometricShapes(
         ):
             shapes.append(c)
         else:
-            shapes += _collectNodesAsGeometricShapes(
+            shapes += _collect_nodes_as_geometric_shapes(
                 node=c,
                 layer=layer,
                 select_drill=select_drill,
@@ -95,7 +95,7 @@ def _collectNodesAsGeometricShapes(
     return shapes
 
 
-def _cleanSilkByMask(
+def _clean_silk_by_mask(
     silk_shapes: list[NodeShape], mask_shapes: list[NodeShape]
 ) -> list[NodeShape]:
     """Applies the mask as a keepout to the silk screen shapes.
@@ -118,7 +118,7 @@ def _cleanSilkByMask(
     return silk_shapes
 
 
-def cleanSilkOverMask(
+def clean_silk_over_mask(
     footprint: Node,
     *,
     side: str,
@@ -137,17 +137,17 @@ def cleanSilkOverMask(
         ignore_paste: If set to `True`, then paste is ignored in calculating the
             silk/mask overlap.
     """
-    silk_shapes = _collectNodesAsGeometricShapes(footprint, layer=f"{side:s}.SilkS")
+    silk_shapes = _collect_nodes_as_geometric_shapes(footprint, layer=f"{side:s}.SilkS")
     mask_layers = [f"{side:s}.Mask"]
     if not ignore_paste:
         mask_layers.append(f"{side:s}.Paste")
-    mask_shapes = _collectNodesAsGeometricShapes(
+    mask_shapes = _collect_nodes_as_geometric_shapes(
         footprint,
         layer=mask_layers,
         select_drill=True,
         silk_pad_clearance=silk_pad_clearance + 0.5 * silk_line_width,
     )
-    tidy_silk = _cleanSilkByMask(silk_shapes, mask_shapes)
+    tidy_silk = _clean_silk_by_mask(silk_shapes, mask_shapes)
     for node in silk_shapes:
         footprint.remove(node, traverse=True)
     for node in tidy_silk:

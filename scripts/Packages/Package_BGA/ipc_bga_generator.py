@@ -247,7 +247,7 @@ class BGAGenerator(FootprintGenerator):
         t1 = 0.15 * s1[0]
         t2 = 0.15 * s2[0]
 
-        chamfer = self.global_config.fab_bevel.getChamferSize(min(pkgX, pkgY))
+        chamfer = self.global_config.fab_bevel.get_chamfer_size(min(pkgX, pkgY))
 
         crtYdOffset = self.global_config.get_courtyard_offset(GC.GlobalConfig.CourtyardType.BGA)
 
@@ -297,7 +297,7 @@ class BGAGenerator(FootprintGenerator):
         silkSizeX = pkgX + 2 * (xSilkOffset - self.global_config.silk_fab_offset)
         silkSizeY = pkgY + 2 * (ySilkOffset - self.global_config.silk_fab_offset)
 
-        silkChamfer = self.global_config.fab_bevel.getChamferSize(
+        silkChamfer = self.global_config.fab_bevel.get_chamfer_size(
             min(silkSizeX, silkSizeY)
         )
 

@@ -136,9 +136,9 @@ class ReferencedPad(Node):
         self.rotation += angle if use_degrees else math.degrees(angle)
         return self
 
-    def getRoundRadius(self) -> float:
+    def get_round_radius(self) -> float:
         """Get the round radius of the pad."""
-        return self.reference_pad.getRoundRadius()
+        return self.reference_pad.get_round_radius()
 
     def __repr__(self) -> str:
         """The string representation of the referenced pad."""
@@ -467,7 +467,7 @@ class Pad(Node):
                     chamfer_size=chamfer_size,
                     chamfer_exact=chamfer_exact,
                 )
-            self.chamfer_ratio = self.chamfer_size_handler.getChamferRatio(
+            self.chamfer_ratio = self.chamfer_size_handler.get_chamfer_ratio(
                 min(self.size)
             )
             self._chamfer_corners = CornerSelection(chamfer_corners)
@@ -603,7 +603,7 @@ class Pad(Node):
 
         return new
 
-    def getRoundRadius(self) -> float:
+    def get_round_radius(self) -> float:
         """Get the round radius of the pad."""
         if self.shape == Pad.SHAPE_CUSTOM:
             r_max = 0.0
@@ -614,10 +614,10 @@ class Pad(Node):
                     r_max = r
             return r_max
         if self._round_radius_handler:
-            return self._round_radius_handler.getRoundRadius(min(self.size))
+            return self._round_radius_handler.get_round_radius(min(self.size))
         else:
             raise RuntimeError(
-                "getRoundRadius() called but _round_radius_handler is None."
+                "get_round_radius() called but _round_radius_handler is None."
             )
 
     @property
@@ -660,9 +660,9 @@ class Pad(Node):
         self._thermal_bridge_angle = angle
 
     @property
-    def roundRadius(self) -> float:
+    def round_radius(self) -> float:
         """The round radius of the pad."""
-        return self.getRoundRadius()
+        return self.get_round_radius()
 
     @property
     def radius_ratio(self) -> float:
@@ -670,7 +670,9 @@ class Pad(Node):
         # A pad shape that doesn't support round radii will return 0.0
         if not self._round_radius_handler:
             return 0.0
-        return self._round_radius_handler.getRadiusRatio(min(self.size.x, self.size.y))
+        return self._round_radius_handler.get_radius_ratio(
+            min(self.size.x, self.size.y)
+        )
 
     @property
     def chamfer_corners(self) -> CornerSelection | None:

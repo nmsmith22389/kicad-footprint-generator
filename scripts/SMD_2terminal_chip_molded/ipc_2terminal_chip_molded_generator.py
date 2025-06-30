@@ -309,7 +309,7 @@ class TwoTerminalSMD:
             layers=layers_main,
             **merge_dicts(pad_details, pad_shape_details),
         )
-        pad_radius = P1.getRoundRadius()
+        pad_radius = P1.get_round_radius()
 
         kicad_mod.append(P1)
         pad_details["at"][0] *= -1

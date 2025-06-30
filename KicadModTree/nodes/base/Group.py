@@ -54,23 +54,23 @@ class Group(Node):
         for m in member_tstamps:
             self._gathered_member_tstamp_str_set.add(str(m))
         for mn in member_nodes:
-            ts = mn.getTStamp()
+            ts = mn.get_timestamp()
             self._gathered_member_tstamp_str_set.add(str(ts))
         pass
 
-    def getGroupName(self) -> str:
+    def get_group_name(self) -> str:
         """Return the group name."""
         return str(self._name)
 
-    def getSortedGroupMemberTStamps(self) -> list[str]:
+    def get_sorted_group_member_timestamps(self) -> list[str]:
         """Return sorted timestamps of the group members."""
         return sorted(self._gathered_member_tstamp_str_set)
 
-    def getGroupMemberTStamps(self) -> set[str]:
+    def get_group_member_timestamp(self) -> set[str]:
         """Return the unsorted timestamps of the group members."""
         return self._gathered_member_tstamp_str_set
 
-    def getGroupMemberNodes(self) -> list[Node] | None:
+    def get_group_member_nodes(self) -> list[Node] | None:
         """Return the list of group member nodes."""
         return self._member_nodes
 
@@ -82,11 +82,11 @@ class Group(Node):
                 group.
         """
         if isinstance(node_or_tstamp, Node):
-            ts = str(node_or_tstamp.getTStamp())
+            ts = str(node_or_tstamp.get_timestamp())
             if node_or_tstamp not in self._member_nodes:
                 self._member_nodes.append(node_or_tstamp)
         elif isinstance(node_or_tstamp, TStamp):
-            ts = str(node_or_tstamp.getTStamp())
+            ts = str(node_or_tstamp.get_timestamp())
         else:
             ts = str(node_or_tstamp)
         if ts not in self._gathered_member_tstamp_str_set:
@@ -100,11 +100,11 @@ class Group(Node):
                 be removed.
         """
         if isinstance(node_or_tstamp, Node):
-            ts = str(node_or_tstamp.getTStamp())
+            ts = str(node_or_tstamp.get_timestamp())
             while node_or_tstamp in self._member_nodes:
                 self._member_nodes.remove(node_or_tstamp)
         elif isinstance(node_or_tstamp, TStamp):
-            ts = str(node_or_tstamp.getTStamp())
+            ts = str(node_or_tstamp.get_timestamp())
         else:
             ts = str(node_or_tstamp)
         if ts in self._gathered_member_tstamp_str_set:

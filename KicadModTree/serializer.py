@@ -361,9 +361,9 @@ class SerializerPriority:
     def get_sort_key_group(group: Group) -> list[Any]:
         """Return the sort key of the group."""
         keys: list[Any] = [SerializerPriority.NodePriority.GROUP.value]
-        if group.hasValidTStamp():
-            keys += [group.getTStamp()]
-        if member_nodes := group.getGroupMemberNodes():
+        if group.has_valid_timestamp():
+            keys += [group.get_timestamp()]
+        if member_nodes := group.get_group_member_nodes():
             keys += [len(member_nodes)]
         return keys
 
@@ -1190,14 +1190,14 @@ class Serializer:
         Args:
             group: The group.
         """
-        self.start_block(f'group "{group.getGroupName()}"')
-        if group.hasValidTStamp():
-            tstamp_uuid = str(group.getTStamp())
+        self.start_block(f'group "{group.get_group_name()}"')
+        if group.has_valid_timestamp():
+            tstamp_uuid = str(group.get_timestamp())
         else:
-            if group.hasValidSeedForTStamp():
-                group.getTStampCls().reCalcTStamp()
-                if group.hasValidTStamp():
-                    tstamp_uuid = str(group.getTStamp())
+            if group.has_valid_seed_for_timestamp():
+                group.get_timestamp_class().recalculate_timestamp()
+                if group.has_valid_timestamp():
+                    tstamp_uuid = str(group.get_timestamp())
                 else:
                     raise ValueError(
                         "TStamp for Group must be valid once serialization happpens"
@@ -1208,7 +1208,7 @@ class Serializer:
                 )
         self.add_string("uuid", tstamp_uuid)
         grp_member_ids: list[str] = []
-        for gid in group.getSortedGroupMemberTStamps():
+        for gid in group.get_sorted_group_member_timestamps():
             grp_member_ids.append(gid)
         grp_member_ids.sort()  # sort IDs, this is what KiCad does. ToDo: check order
         self.add_strings("members", grp_member_ids)
@@ -1237,5 +1237,5 @@ class Serializer:
         Args:
             model: The time stamp.
         """
-        if tstamp.isTStampValid():
-            self.add_string("tstamp", str(tstamp.getTStamp()))
+        if tstamp.is_timestamp_valid():
+            self.add_string("tstamp", str(tstamp.get_timestamp()))
