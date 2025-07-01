@@ -36,16 +36,16 @@ def make_pad_from_data(
         size = Vector2D.from_floats(float(n[4]), float(n[5]))
 
     if pad_type == "smd":
-        pad_type = Pad.TYPE_SMT
         shape = Pad.SHAPE_ROUNDRECT
+        pad_type = Pad.TYPE_SMT
         layers = Pad.LAYERS_SMT
     elif pad_type in ["tht", "thtr"]:
+        shape = Pad.SHAPE_ROUNDRECT if pad_type == "thtr" else Pad.SHAPE_OVAL
         pad_type = Pad.TYPE_THT
-        shape = Pad.SHAPE_ROUNDRECT if number == "1" else Pad.SHAPE_OVAL
         layers = Pad.LAYERS_THT
     elif pad_type == "npth":
-        pad_type = Pad.TYPE_NPTH
         shape = Pad.SHAPE_OVAL
+        pad_type = Pad.TYPE_NPTH
         layers = Pad.LAYERS_NPTH
     else:
         raise ValueError(f"Unknown pad type: {pad_type}")

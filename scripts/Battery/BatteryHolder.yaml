@@ -11,7 +11,7 @@ BatteryHolder_Bulgin_BX0123_1xCR123:
   automatic_pin1_mark: False
   body_size_tolerance: [0.25, 0.25]
   pins:
-    - ["tht", "1", 0, 0, 3.0, 3.0, 1.6]
+    - ["thtr", "1", 0, 0, 3.0, 3.0, 1.6]
     - ["tht", "2", 37.8, 0, 3.0, 3.0, 1.6]
     - ["npth", "", 10.425, 0, 3.2, 0, 3.2]
     - ["npth", "", 27.375, 0, 3.2, 0, 3.2]
@@ -71,7 +71,7 @@ BatteryHolder_Keystone_2479_3xAAA:
   automatic_pin1_mark: False
   body_size_tolerance: [0.25, 0.25]
   pins:
-    - ["tht", "1", 0, 0, 3.0, 3.0, 1.1]
+    - ["thtr", "1", 0, 0, 3.0, 3.0, 1.1]
     - ["tht", "2", 0, -12.70, 3.0, 3.0, 1.1]
     - ["npth", "", 23.72, 0, 3.45, 0, 3.45]
     - ["npth", "", 23.72, -24.00, 3.45, 0, 3.45]
@@ -113,7 +113,7 @@ BatteryHolder_MPD_BH-18650-PC:
   automatic_pin1_mark: False
   body_size_tolerance: [0.5, 0.5]
   pins:
-    - ["tht", "1", 0, 0,  3.0, 3.0, 1.57]
+    - ["thtr", "1", 0, 0,  3.0, 3.0, 1.57]
     - ["tht", "2", 72.90, 0,  3.0, 3.0, 1.57]
     - ["npth", "", 8.445, 0.0, 3.2, 0, 3.2]
     - ["npth", "", 64.055, 0.0, 3.2, 0, 3.2]
@@ -131,7 +131,7 @@ BatteryHolder_MPD_BK-18650-PC2:
   automatic_pin1_mark: False
   body_size_tolerance: [0.5, 0.5]
   pins:
-    - ["tht", "1", 0, 0, 3.0, 3.0, 1.57]
+    - ["thtr", "1", 0, 0, 3.0, 3.0, 1.57]
     - ["tht", "2", 72.90, 0, 3.0, 3.0, 1.57]
     - ["npth", "", 8.445, 0.0, 3.2, 0, 3.2]
     - ["npth", "", 64.055, 0.0, 3.2, 0, 3.2]
@@ -148,7 +148,7 @@ BatteryHolder_TruPower_BH-331P_3xAA:
   automatic_pin1_mark: False
   body_size_tolerance: [0.5, 0.5]
   pins:
-    - ["tht", "1", 0, 0, 3.0, 3.0, 1.2]
+    - ["thtr", "1", 0, 0, 3.0, 3.0, 1.2]
     - ["tht", "2", 0, -12.8, 3.0, 3.0, 1.2]
     - ["npth", "", 26.7, 0.0, 4.0, 0, 4.0]
     - ["npth", "", 26.7, -30.0, 4.0, 0, 4.0]
