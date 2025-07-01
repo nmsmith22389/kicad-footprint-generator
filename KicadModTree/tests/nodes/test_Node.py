@@ -24,18 +24,18 @@ class HelperTestChildNode(Node):
         Node.__init__(self)
 
 
-class HelperNodeWithVirtualChilds(Node):
-    def __init__(self, *, normal_childs: list[Node], virtual_childs: list[Node] = []):
+class HelperNodeWithVirtualChildren(Node):
+    def __init__(self, *, normal_children: list[Node], virtual_children: list[Node] = []):
         Node.__init__(self)
-        for c in normal_childs:
+        for c in normal_children:
             self.append(c)
-        self._virtual_childs: list[Node] = []
-        for c in virtual_childs:
-            self._virtual_childs.append(c)
+        self._virtual_children: list[Node] = []
+        for c in virtual_children:
+            self._virtual_children.append(c)
             c._parent = self
 
     def get_child_nodes(self) -> list[Node]:
-        return self._childs + self._virtual_childs
+        return self._children + self._virtual_children
 
 
 def testInit():
@@ -249,7 +249,7 @@ def testInsert():
     assert len(childNode2.get_child_nodes()) == 1
 
 
-def testInsertWithManyChilds():
+def testInsertWithManyChildren():
     node = Node()
     assert len(node.get_child_nodes()) == 0
 
@@ -303,9 +303,9 @@ def testRemoveTraversed():
 
 
 def testIter():
-    node = HelperNodeWithVirtualChilds(
-        normal_childs=[Node() for _ in range(3)],
-        virtual_childs=[Node() for _ in range(5)],
+    node = HelperNodeWithVirtualChildren(
+        normal_children=[Node() for _ in range(3)],
+        virtual_children=[Node() for _ in range(5)],
     )
     assert len(node) == 8
 

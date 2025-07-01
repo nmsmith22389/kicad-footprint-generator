@@ -46,7 +46,7 @@ class Translation(Node):
         """
         raw_nodes: list[Node] = []
         transformed_nodes: list[Node] = []
-        for child in self._childs:
+        for child in self._children:
             raw_nodes.extend(child.get_flattened_nodes())
         for n in raw_nodes:
             transformed_nodes.append(n.translated(vector=self.offset))
@@ -55,7 +55,7 @@ class Translation(Node):
     def bbox(self) -> BoundingBox:
         """Return the translated bounding box of every child node."""
         bbox = BoundingBox()
-        for child in self._childs:
+        for child in self._children:
             child_bbox = child.bbox()
             bbox.include_bbox(child_bbox)
         if bbox.min is not None and bbox.max is not None:

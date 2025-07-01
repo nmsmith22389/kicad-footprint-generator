@@ -46,7 +46,7 @@ class Rotation(Node):
         """
         raw_nodes: list[Node] = []
         transformed_nodes: list[Node] = []
-        for child in self._childs:
+        for child in self._children:
             raw_nodes.extend(child.get_flattened_nodes())
         for n in raw_nodes:
             transformed_nodes.append(n.rotated(angle=self.angle, origin=self.origin))
@@ -55,7 +55,7 @@ class Rotation(Node):
     def bbox(self) -> BoundingBox:
         """Return the rotated bounding box of every child node."""
         bbox = BoundingBox()
-        for child in self._childs:
+        for child in self._children:
             child_bbox = child.rotated(angle=self.angle, origin=self.origin).bbox()
             bbox.include_bbox(child_bbox)
         return bbox

@@ -291,7 +291,7 @@ class Node(ABC):
 
     _parent: Node | None
     """The parent node."""
-    _childs: list[Node]
+    _children: list[Node]
     """"The child nodes."""
     _tstamp: TStamp
     """The timestamp."""
@@ -299,7 +299,7 @@ class Node(ABC):
     def __init__(self) -> None:
         """Create a node."""
         self._parent = None
-        self._childs = []
+        self._children = []
         self._tstamp = TStamp(parent=self)
 
     def has_valid_timestamp(self) -> bool:
@@ -402,7 +402,7 @@ class Node(ABC):
         if node._parent:
             raise MultipleParentsError("muliple parents are not allowed!")
 
-        self._childs.append(node)
+        self._children.append(node)
 
         node._parent = self
         if (node.get_timestamp_class().get_timestamp_seed() is None) and (
@@ -427,7 +427,7 @@ class Node(ABC):
             ):
                 node.set_timestamp_seed_from_node(self)
 
-        self._childs.extend(new_nodes)
+        self._children.extend(new_nodes)
 
     def __add__(self, nodes: Node | Sequence[Node]) -> Self:
         """Convenience function to allow simple append/extend to a Node."""
@@ -476,7 +476,7 @@ class Node(ABC):
         Args:
             node: The node that becomes the new parent node of this node's children.
         """
-        for child in copy.copy(self._childs):
+        for child in copy.copy(self._children):
             self.remove(child)
             node.append(child)
         self.append(node)
@@ -551,7 +551,7 @@ class Node(ABC):
 
     def get_child_nodes(self) -> list[Node]:
         """Return the direct child nodes."""
-        return self._childs
+        return self._children
 
     def get_parent(self) -> Node | None:
         """Return the parent node of this node."""
