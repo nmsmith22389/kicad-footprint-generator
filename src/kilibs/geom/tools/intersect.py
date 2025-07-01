@@ -341,13 +341,13 @@ def _merge_arcs(
     arc1 = cast(GeomArc, handle.atoms[shape_idx][seg_idx1])
     arc2 = cast(GeomArc, handle.atoms[shape_idx][seg_idx2])
     if (
-        arc1.center.is_equal_accelerated(point=arc2.center, tol=handle.tol)
+        arc1.center.is_equal(point=arc2.center, tol=handle.tol)
         and abs(arc1.radius - arc2.radius) <= handle.tol
     ):
-        if arc1.start.is_equal_accelerated(point=arc2.end, tol=handle.tol):
+        if arc1.start.is_equal(point=arc2.end, tol=handle.tol):
             # Arc2 comes before arc1 when sorting clockwise.
             arc1.set_start(arc2.start)
-        elif arc1.end.is_equal_accelerated(point=arc2.start, tol=handle.tol):
+        elif arc1.end.is_equal(point=arc2.start, tol=handle.tol):
             pass  # All good, arc1 comes before arc2 when sorting clowckwise.
         else:
             return 0  # Arc1 anc arc2 are not continuous. We cannot merge.
@@ -386,11 +386,9 @@ def _merge_lines(
     # `_merge_segments()` already identified the two segments as being lines:
     line1 = cast(GeomLine, handle.atoms[shape_idx][seg_idx1])
     line2 = cast(GeomLine, handle.atoms[shape_idx][seg_idx2])
-    if line1.end.is_equal_accelerated(
+    if line1.end.is_equal(
         point=line2.start, tol=handle.tol
-    ) and line1.unit_direction.is_equal_accelerated(
-        point=line2.unit_direction, tol=handle.tol
-    ):
+    ) and line1.unit_direction.is_equal(point=line2.unit_direction, tol=handle.tol):
         line1.end = line2.end
         del handle.atoms[shape_idx][seg_idx2]
         del handle.atoms_inside_other_shape[shape_idx][seg_idx2]
@@ -428,8 +426,8 @@ def _create_arcs_from_arc_and_points(
     start = arc.start
     end = arc.end
     radius = arc.radius
-    insert_start = False if start.is_equal_accelerated(sorted_pts[0][2]) else True
-    insert_end = False if end.is_equal_accelerated(sorted_pts[-1][2]) else True
+    insert_start = False if start.is_equal(sorted_pts[0][2]) else True
+    insert_end = False if end.is_equal(sorted_pts[-1][2]) else True
     pts_or_none = cast(list[tuple[float, float, Vector2D | None]], sorted_pts)
     if insert_start:
         pts_or_none.insert(0, (radius, 0, None))
@@ -518,10 +516,10 @@ def _create_lines_from_line_and_points(
     sorted_intersections: list[Vector2D | None] = [p.copy() for p in sorted_pts]
     start = line.start
     end = line.end
-    if not start.is_equal_accelerated(sorted_pts[0], tol):
+    if not start.is_equal(sorted_pts[0], tol):
         sorted_pts.insert(0, line.start)
         sorted_intersections.insert(0, None)
-    if not end.is_equal_accelerated(sorted_pts[-1], tol):
+    if not end.is_equal(sorted_pts[-1], tol):
         sorted_pts.append(line.end)
         sorted_intersections.append(None)
     lines: list[GeomLine] = []

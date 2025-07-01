@@ -480,7 +480,7 @@ class GeomPolygon(GeomShapeClosed):
         for i, segment in enumerate(segments):
             ip = intersect_upwards_ray_with_line(ray_start=point, line=segment, tol=tol)
             if ip:
-                if ip[0].is_equal_accelerated(segment.end, tol=tol):
+                if ip[0].is_equal(segment.end, tol=tol):
                     if segment.start.x < point.x - tol:
                         num_intersections += is_next_segment_on_right((i + 1) % n, n, i)
                     else:
@@ -617,7 +617,7 @@ class GeomPolygon(GeomShapeClosed):
         # Open polygons don't have the line from the last point to the first point
         i = 0 if self.close else 1
         while i < len(self.points) and len(self.points) > 1:
-            if self.points[i].is_equal_accelerated(self.points[i - 1], tol=tol):
+            if self.points[i].is_equal(self.points[i - 1], tol=tol):
                 del self.points[i - 1]
             else:
                 i += 1

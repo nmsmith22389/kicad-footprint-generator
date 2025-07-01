@@ -74,19 +74,19 @@ def test_init() -> None:
 
 def test_round_to() -> None:
     p1 = Vector2D([1.234, 5.678]).round_to(0)
-    assert p1.is_equal((1.234, 5.678))
+    assert p1.is_equal(Vector2D(1.234, 5.678))
 
     p2 = Vector2D([1.234, 5.678]).round_to(0.1)
-    assert p2.is_equal((1.2, 5.7))
+    assert p2.is_equal(Vector2D(1.2, 5.7))
 
     p3 = Vector2D([1.234, 5.678]).round_to(0.01)
-    assert p3.is_equal((1.23, 5.68))
+    assert p3.is_equal(Vector2D(1.23, 5.68))
 
     p4 = Vector2D([1.234, 5.678]).round_to(0.001)
-    assert p4.is_equal((1.234, 5.678))
+    assert p4.is_equal(Vector2D(1.234, 5.678))
 
     p5 = Vector2D([1.234, 5.678]).round_to(0.0001)
-    assert p5.is_equal((1.234, 5.678))
+    assert p5.is_equal(Vector2D(1.234, 5.678))
 
 
 def test_add() -> None:
@@ -189,23 +189,23 @@ def test_div() -> None:
 
 def test_polar() -> None:
     p1 = Vector2D.from_polar(math.sqrt(2), 45, use_degrees=True)
-    assert p1.is_equal((1, 1))
+    assert p1.is_equal(Vector2D(1, 1))
 
     p1 = Vector2D.from_polar(2, -90, use_degrees=True, origin=(6, 1))
-    assert p1.is_equal((6, -1))
+    assert p1.is_equal(Vector2D(6, -1))
 
     r, a = p1.to_polar(use_degrees=True, origin=(6, 1))
     assert r == pytest.approx(2)
     assert a == pytest.approx(-90)
 
     p1.rotate(90, use_degrees=True, origin=Vector2D(6, 1))
-    assert p1.is_equal((8, 1))
+    assert p1.is_equal(Vector2D(8, 1))
 
     p1 = Vector2D.from_polar(math.sqrt(2), 135, use_degrees=True)
-    assert p1.is_equal((-1, 1))
+    assert p1.is_equal(Vector2D(-1, 1))
 
     p1.rotate(90, origin=Vector2D(0, 0), use_degrees=True)
-    assert p1.is_equal((-1, -1))
+    assert p1.is_equal(Vector2D(-1, -1))
 
     r, a = p1.to_polar(use_degrees=True)
     assert r == pytest.approx(math.sqrt(2))
@@ -214,7 +214,7 @@ def test_polar() -> None:
 
 def test_right_mul() -> None:
     p = 3 * Vector2D(1, 2)
-    assert p.is_equal((3, 6))
+    assert p.is_equal(Vector2D(3, 6))
 
 
 def test_norm_arg() -> None:

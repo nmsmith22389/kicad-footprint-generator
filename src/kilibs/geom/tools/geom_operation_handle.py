@@ -171,9 +171,7 @@ class GeomOperationHandle:
         """
         new_intersection_added = False
         for old_intersection in intersection_list:
-            if new_intersection.is_equal_accelerated(
-                point=old_intersection, tol=self.tol
-            ):
+            if new_intersection.is_equal(point=old_intersection, tol=self.tol):
                 pt_mid = (new_intersection + old_intersection) / 2
                 old_intersection = pt_mid
                 new_intersection_added = True
@@ -189,7 +187,7 @@ class GeomOperationHandle:
         """
         i = 0
         while i < len(self.intersections):
-            if self.intersections[i].is_equal_accelerated(point=point, tol=self.tol):
+            if self.intersections[i].is_equal(point=point, tol=self.tol):
                 del self.intersections[i]
                 break
             else:
@@ -198,6 +196,6 @@ class GeomOperationHandle:
     def is_point_an_intersection(self, point: Vector2D) -> bool:
         """Return if the point is an intersection point or not."""
         for ip in self.intersections:
-            if point.is_equal_accelerated(ip, tol=self.tol):
+            if point.is_equal(ip, tol=self.tol):
                 return True
         return False

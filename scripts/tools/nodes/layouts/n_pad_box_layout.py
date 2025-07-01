@@ -178,7 +178,7 @@ class NPadBoxLayout(FootprintLayoutNode):
         silk_rect = body_rect.copy()
 
         # If we have a fab to silk clearance, then use that
-        if self.fab_to_silk_clearance.is_nullvec_accelerated():
+        if self.fab_to_silk_clearance.is_nullvec():
             # No extra clearance, use the global config value
             silk_rect.inflate(self.global_config.silk_fab_offset)
         else:

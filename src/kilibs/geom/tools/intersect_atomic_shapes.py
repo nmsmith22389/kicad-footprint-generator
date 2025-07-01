@@ -624,7 +624,7 @@ def intersect_upwards_ray_with_line(
         # If the intersection happens to be on the start of the segment, it means that
         # it is also on the end of the previous segment. We don't want to count
         # the same intersectino twice, so we ignore it in that case:
-        if pt.is_equal_accelerated(line.start, tol=tol):
+        if pt.is_equal(line.start, tol=tol):
             return []
         else:
             return [pt]
@@ -706,6 +706,6 @@ def intersect_upwards_ray_with_arc(
             # If the intersection happens to be on the start of the segment, it means that
             # it is also on the end of the previous segment. We don't want to count
             # the same intersectino twice, so we ignore it in that case:
-            if not pt.is_equal_accelerated(arc.start, tol=tol):
+            if not pt.is_equal(arc.start, tol=tol):
                 intersections.append(pt)
     return intersections

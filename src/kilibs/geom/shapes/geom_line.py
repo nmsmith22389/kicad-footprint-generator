@@ -177,10 +177,7 @@ class GeomLine(GeomShapeOpen):
             pe_length = hypot(e.x - point.x, e.y - point.y)
             if seg_length + 2 * tol >= ps_length + pe_length:
                 if exclude_segment_ends:
-                    return not (
-                        point.is_equal_accelerated(s, tol)
-                        or point.is_equal_accelerated(e, tol)
-                    )
+                    return not (point.is_equal(s, tol) or point.is_equal(e, tol))
                 return True
         return False
 
@@ -220,9 +217,9 @@ class GeomLine(GeomShapeOpen):
             return False
         else:
             if exclude_segment_ends:
-                if point.is_equal_accelerated(self.start, tol=tol):
+                if point.is_equal(self.start, tol=tol):
                     return False
-                if point.is_equal_accelerated(self.end, tol=tol):
+                if point.is_equal(self.end, tol=tol):
                     return False
             return True
 
@@ -241,9 +238,9 @@ class GeomLine(GeomShapeOpen):
         Returns:
             `True` if the lines are equal, `False` otherwise.
         """
-        if not self.start.is_equal_accelerated(point=other.start, tol=tol):
+        if not self.start.is_equal(point=other.start, tol=tol):
             return False
-        if not self.end.is_equal_accelerated(point=other.end, tol=tol):
+        if not self.end.is_equal(point=other.end, tol=tol):
             return False
         return True
 

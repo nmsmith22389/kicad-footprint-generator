@@ -179,11 +179,11 @@ class GeomArc(GeomShapeOpen):
         Returns:
             `True` if the arcs are equal, `False` otherwise.
         """
-        if not self._start.is_equal_accelerated(point=other._start, tol=tol):
+        if not self._start.is_equal(point=other._start, tol=tol):
             return False
         if abs(self._angle - other._angle) > tol:
             return False
-        if not self.center.is_equal_accelerated(point=other.center, tol=tol):
+        if not self.center.is_equal(point=other.center, tol=tol):
             return False
         return True
 

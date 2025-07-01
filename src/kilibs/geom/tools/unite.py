@@ -172,7 +172,7 @@ def _unite_segments_from_both_shapes(
         idx_current_shape = (idx_current_shape + 1) % 2
         num_segments = len(segments)
         if (
-            point.is_equal_accelerated(first_point, handle.tol)
+            point.is_equal(first_point, handle.tol)
             or num_segments >= total_expected_number_of_segments
         ):
             if num_segments > total_expected_number_of_segments:
@@ -268,13 +268,13 @@ def _merge_colinear_segments(
         seg1 = segments[i - 1]
         seg2 = segments[i]
         if isinstance(seg1, GeomLine) and isinstance(seg2, GeomLine):
-            if unit_directions[i - 1].is_equal_accelerated(unit_directions[i], tol=tol):
+            if unit_directions[i - 1].is_equal(unit_directions[i], tol=tol):
                 seg1.end = seg2.end
                 del segments[i]
                 del unit_directions[i]
                 i -= 1
         elif isinstance(seg1, GeomArc) and isinstance(seg2, GeomArc):
-            if unit_directions[i - 1].is_equal_accelerated(unit_directions[i], tol=tol):
+            if unit_directions[i - 1].is_equal(unit_directions[i], tol=tol):
                 seg1.angle += seg2.angle
                 del segments[i]
                 del unit_directions[i]
@@ -297,7 +297,7 @@ def _find_first_point_that_is_not_an_intersection(
     for segment in handle.segs[idx_shape]:
         start_is_on_intersection = False
         for point in handle.intersections:
-            if segment.start.is_equal_accelerated(point, handle.tol):
+            if segment.start.is_equal(point, handle.tol):
                 start_is_on_intersection = True
                 continue
         if not start_is_on_intersection:
@@ -359,7 +359,7 @@ def _get_all_outside_segments_after_point(
     i = 0
     num = len(handle.segs[idx_shape])
     segment = handle.segs[idx_shape][i]
-    while not segment.start.is_equal_accelerated(point=point, tol=handle.tol):
+    while not segment.start.is_equal(point=point, tol=handle.tol):
         i += 1
         if i == num:
             return None
@@ -399,7 +399,7 @@ def _get_all_outside_segments_till_next_intersection(
     i = 0
     num = len(handle.segs[idx_shape])
     segment = handle.segs[idx_shape][i]
-    while not segment.start.is_equal_accelerated(point=point, tol=handle.tol):
+    while not segment.start.is_equal(point=point, tol=handle.tol):
         i += 1
         if i == num:
             return None
@@ -418,8 +418,8 @@ def _get_all_outside_segments_till_next_intersection(
             segment = handle.segs[idx_shape][i]
         if not handle.segs[idx_shape]:
             return segments
-        if segment.end.is_equal_accelerated(first_point, tol=handle.tol):
+        if segment.end.is_equal(first_point, tol=handle.tol):
             return segments
         for point in handle.intersections:
-            if segment.end.is_equal_accelerated(point, tol=handle.tol):
+            if segment.end.is_equal(point, tol=handle.tol):
                 return segments

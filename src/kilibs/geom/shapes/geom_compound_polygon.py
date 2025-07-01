@@ -107,7 +107,7 @@ class GeomCompoundPolygon(GeomShapeClosed):
             if (
                 self.close
                 and self._end
-                and not self._segments[0].start.is_equal_accelerated(self._end)
+                and not self._segments[0].start.is_equal(self._end)
             ):
                 self._append_geometry(self._segments[0].start)
 
@@ -131,7 +131,7 @@ class GeomCompoundPolygon(GeomShapeClosed):
                 if (
                     last_point
                     and isinstance(points_and_arcs[-1], Vector2D)
-                    and last_point.is_equal_accelerated(segment.start)
+                    and last_point.is_equal(segment.start)
                 ):
                     del points_and_arcs[-1]
                 points_and_arcs.append(segment)
@@ -147,7 +147,7 @@ class GeomCompoundPolygon(GeomShapeClosed):
             first_point
             and last_point
             and isinstance(points_and_arcs[-1], Vector2D)
-            and last_point.is_equal_accelerated(first_point)
+            and last_point.is_equal(first_point)
         ):
             del points_and_arcs[-1]
         return points_and_arcs
@@ -315,7 +315,7 @@ class GeomCompoundPolygon(GeomShapeClosed):
                         # acute angle of 0°. The forward direction is the same as the
                         # direction of the first segment:
                         forward_resized = d1.copy().resize(new_len=amount, tol=tol)
-                if s1.end.is_equal_accelerated(s2.start):
+                if s1.end.is_equal(s2.start):
                     # No need to build an arc with 0 radius. We move on to the next
                     # corner:
                     i += 1
@@ -572,7 +572,7 @@ class GeomCompoundPolygon(GeomShapeClosed):
                     ray_start=point, line=segment, tol=tol
                 )
                 for ip in ips:
-                    if ip.is_equal_accelerated(segment.end, tol=tol):
+                    if ip.is_equal(segment.end, tol=tol):
                         if segment.start.x < point.x - tol:
                             num_intersections += is_next_segment_on_right(
                                 (i + 1) % n, n, i
@@ -588,7 +588,7 @@ class GeomCompoundPolygon(GeomShapeClosed):
                     ray_start=point, arc=segment, tol=tol
                 )
                 for ip in ips:
-                    if ip.is_equal_accelerated(segment.end, tol=tol):
+                    if ip.is_equal(segment.end, tol=tol):
                         bbox = segment.bbox()
                         if bbox.left < point.x - tol:
                             num_intersections += is_next_segment_on_right(
@@ -658,7 +658,7 @@ class GeomCompoundPolygon(GeomShapeClosed):
     ) -> bool:
         """Check if the point is equal to the last added point."""
         if self._end:
-            return self._end.is_equal_accelerated(point, tol=tol)
+            return self._end.is_equal(point, tol=tol)
         else:
             return False
 

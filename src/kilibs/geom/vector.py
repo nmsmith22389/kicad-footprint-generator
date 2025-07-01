@@ -161,22 +161,8 @@ class Vector2D:
         point = Vector2D(point)
         return hypot(point.x - self.x, point.y - self.y)
 
-    def is_equal(self, point: Vec2DCompatible, tol: float = TOL_MM) -> float:
+    def is_equal(self, point: Vector2D, tol: float = TOL_MM) -> bool:
         """Check if two points are close to each other.
-
-        Args:
-            point: The other point.
-            tol: The maximum distance between the points that is tolerated to still
-                qualify them as being close to each other.
-
-        Returns:
-            `True` if the points are close, `False` otherwise.
-        """
-        return self.distance_to(point) <= tol
-
-    def is_equal_accelerated(self, point: Vector2D, tol: float = TOL_MM) -> bool:
-        """Check if two points are close to each other. This is not as precise as
-        `is_equal()`, but much faster.
 
         Args:
             point: The other point.
@@ -357,21 +343,8 @@ class Vector2D:
         """Check if the vector is equal to the null-vector.
 
         Args:
-            tol: Distance that the vector is allowed to be away from (0, 0) and still be
-                considered equal to (0, 0).
-
-        Returns:
-            `True` if the vector is a null-vector, `False` otherwise.
-        """
-        return Vector2D.norm(self) <= tol
-
-    def is_nullvec_accelerated(self, tol: float = TOL_MM) -> bool:
-        """Check if the vector is equal to the null-vector. This is a faster
-        implementation thatn `is_nullvec()`, but slightly less precise.
-
-        Args:
-            tol: Distance that the vector is allowed to be away from (0, 0) and still be
-                considered equal to (0, 0).
+            tol: Manhattan distance that the vector is allowed to be away from (0, 0)
+                and still be considered equal to (0, 0).
 
         Returns:
             `True` if the vector is a null-vector, `False` otherwise.

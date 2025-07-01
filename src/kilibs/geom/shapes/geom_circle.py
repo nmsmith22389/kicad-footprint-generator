@@ -179,7 +179,7 @@ class GeomCircle(GeomShapeClosed):
         """
         if abs(self.radius - other.radius) > tol:
             return False
-        if not self.center.is_equal_accelerated(point=other.center, tol=tol):
+        if not self.center.is_equal(point=other.center, tol=tol):
             return False
         return True
 
