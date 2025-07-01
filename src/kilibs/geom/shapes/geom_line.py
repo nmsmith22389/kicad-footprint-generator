@@ -100,21 +100,18 @@ class GeomLine(GeomShapeOpen):
         self,
         angle: float,
         origin: Vector2D = Vector2D.zero(),
-        use_degrees: bool = True,
     ) -> GeomLine:
         """Rotate the line around a given point.
 
         Args:
-            angle: Rotation angle.
+            angle: Rotation angle in degrees.
             origin: Coordinates (in mm) of the point around which to rotate.
-            use_degrees: `True` if rotation angle is given in degrees, `False` if given
-                in radians.
 
         Returns:
             The rotated line.
         """
-        self.start.rotate(angle=angle, origin=origin, use_degrees=use_degrees)
-        self.end.rotate(angle=angle, origin=origin, use_degrees=use_degrees)
+        self.start.rotate(angle=angle, origin=origin)
+        self.end.rotate(angle=angle, origin=origin)
         return self
 
     def is_point_on_self(

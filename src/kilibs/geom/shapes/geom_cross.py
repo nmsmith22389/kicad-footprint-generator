@@ -39,8 +39,7 @@ class GeomCross(GeomShapeOpen):
         shape: GeomCross | None = None,
         center: Vec2DCompatible | None = None,
         size: Vec2DCompatible | float | None = None,
-        angle: float = 0,
-        use_degrees: bool = True,
+        angle: float = 0.0,
     ) -> None:
         """Create a geometric cross.
 
@@ -48,9 +47,7 @@ class GeomCross(GeomShapeOpen):
             shape: Shape from which to derive the parameters of the cross.
             center: Coordinates (in mm) of the center point of the cross.
             size: Size in mm of the cross.
-            angle: Angle of the cross.
-            use_degrees: `True` if rotation angle is given in degrees, `False` if given
-                in radians.
+            angle: Angle of the cross in degrees.
         """
         if shape is not None:
             self.center = Vector2D(shape.center)
@@ -62,8 +59,6 @@ class GeomCross(GeomShapeOpen):
                 self.size = Vector2D(size, size)
             else:
                 self.size = Vector2D(size)
-            if use_degrees is False:
-                angle = math.degrees(angle)
             self.angle = angle
         else:
             raise KeyError("Either 'shape' or 'center' and 'size' must be provided.")
@@ -105,21 +100,18 @@ class GeomCross(GeomShapeOpen):
         self,
         angle: float,
         origin: Vector2D = Vector2D.zero(),
-        use_degrees: bool = True,
     ) -> GeomCross:
         """Rotate the cross around a given point.
 
         Args:
-            angle: Rotation angle.
+            angle: Rotation angle in degrees.
             origin: Coordinates (in mm) of the point around which to rotate.
-            use_degrees: `True` if rotation angle is given in degrees, `False` if given
-                in radians.
 
         Returns:
             The rotated cross.
         """
         if angle:
-            self.center.rotate(angle=angle, origin=origin, use_degrees=use_degrees)
+            self.center.rotate(angle=angle, origin=origin)
             self._shapes = []
         return self
 

@@ -43,7 +43,6 @@ class GeomArc(GeomShapeOpen):
         mid: Vec2DCompatible | None = None,
         end: Vec2DCompatible | None = None,
         angle: float | None = None,
-        use_degrees: bool = True,
         long_way: bool = False,
     ) -> None:
         """Create a geometric arc.
@@ -57,9 +56,7 @@ class GeomArc(GeomShapeOpen):
             start: Coordinates (in mm) of the start point of the arc.
             mid: Coordinates (in mm) of the mid point of the arc.
             end: Coordinates (in mm) of the end point of the arc.
-            angle: Angle of the arc in radians or degrees (internally stored in
-                degrees).
-            use_degrees: Whether to interpret the angle in degrees or in radians.
+            angle: Angle of the arc in degrees.
             long_way: Used when constructing the arc with the center, start and end
                 point to specify if the longer of the 2 possible resulting arcs or the
                 shorter one shall be constructed.
@@ -73,24 +70,22 @@ class GeomArc(GeomShapeOpen):
                 self._end = Vector2D(end)
                 angle = self.point_to_angle_relative_to_self(self._end)
                 if (angle > 0 and self._angle > 0) or (angle < 0 and self._angle < 0):
-                    self._init_angle(angle, True)
+                    self._init_angle(angle)
                 else:
-                    self._init_angle(360 - angle, True)  # not sure if this is correct
+                    self._init_angle(360 - angle)  # not sure if this is correct
             elif start is not None:
                 self._start = Vector2D(start)
                 angle = self.point_to_angle_relative_to_self(self._start)
                 if (angle > 0 and self._angle > 0) or (angle < 0 and self._angle < 0):
-                    self._init_angle(self._angle - angle, True)
+                    self._init_angle(self._angle - angle)
                 else:
                     self._init_angle(
-                        360 - (self._angle - angle), True
+                        360 - (self._angle - angle)
                     )  # not sure if this is correct
                 self._end = None
         elif center is not None:
             if angle is not None:
-                self._init_from_center_angle_point(
-                    center, angle, start, mid, end, use_degrees
-                )
+                self._init_from_center_angle_point(center, angle, start, mid, end)
             elif start is not None and end is not None:
                 self._init_from_center_start_end(center, start, end, long_way)
             else:
@@ -136,21 +131,18 @@ class GeomArc(GeomShapeOpen):
         self,
         angle: float,
         origin: Vector2D = Vector2D.zero(),
-        use_degrees: bool = True,
     ) -> GeomArc:
         """Rotate the arc around a given point.
 
         Args:
-            angle: Rotation angle.
+            angle: Rotation angle in degrees.
             origin: Coordinates (in mm) of the point around which to rotate.
-            use_degrees: `True` if rotation angle is given in degrees, `False` if given
-                in radians.
 
         Returns:
             The rotated arc.
         """
-        self.center.rotate(angle=angle, origin=origin, use_degrees=use_degrees)
-        self._start.rotate(angle=angle, origin=origin, use_degrees=use_degrees)
+        self.center.rotate(angle=angle, origin=origin)
+        self._start.rotate(angle=angle, origin=origin)
         self._end = None
         return self
 
@@ -424,9 +416,9 @@ class GeomArc(GeomShapeOpen):
         ang_s = (self._start - self.center).arg()
         angle = ang_e - ang_s
         if self._angle * angle >= 0:
-            self._init_angle(angle, True)
+            self._init_angle(angle)
         else:
-            self._init_angle(copysign(1, self._angle) * 360 + angle, True)
+            self._init_angle(copysign(1, self._angle) * 360 + angle)
 
     @property
     def start(self) -> Vector2D:
@@ -441,7 +433,7 @@ class GeomArc(GeomShapeOpen):
         ang_s = (self._start - self.center).arg()
         ang_p = (start - self.center).arg()
         angle = ang_s - ang_p
-        self._init_angle(self._angle + angle, True)
+        self._init_angle(self._angle + angle)
         self._start = start
 
     def set_start(self, start: Vector2D) -> None:
@@ -476,19 +468,15 @@ class GeomArc(GeomShapeOpen):
             return -1
         return 0
 
-    def _init_angle(self, angle: float, use_degrees: bool) -> float:
+    def _init_angle(self, angle: float) -> float:
         """Convert the angle to a value between -360° and + 360°.
 
         Args:
-            angle: Angle in radians or degrees.
-            use_degrees: `True` if rotation angle is given in degrees, `False` if given
-                in radians.
+            angle: Angle in degrees.
 
         Returns:
             The converted angle in degrees.
         """
-        if not use_degrees:
-            angle = degrees(angle)
         angle = angle % 720
         if angle > 360:
             angle -= 720
@@ -502,41 +490,37 @@ class GeomArc(GeomShapeOpen):
         start: Vec2DCompatible | None = None,
         mid: Vec2DCompatible | None = None,
         end: Vec2DCompatible | None = None,
-        use_degrees: bool = True,
     ) -> None:
         """Create an arc by using the center, the angle and a point.
 
         Args:
             center: Coordinates (in mm) of the center of the arc.
-            angle: Angle of the arc.
+            angle: Angle of the arc in degrees.
             start: Coordinates (in mm) of the atart point of the arc.
             mid: Coordinates (in mm) of the mid point of the arc.
             end: Coordinates (in mm) of the end point of the arc.
-            use_degrees: Whether to interpret the angle in degrees or radians.
         """
         self.center = Vector2D(center)
-        self._init_angle(angle, use_degrees)
+        self._init_angle(angle)
 
         if start is not None:
             self._start = Vector2D(start)
             self._end = None
         elif mid is not None:
-            mp_r, mp_a = Vector2D(mid).to_polar(origin=self.center, use_degrees=True)
+            mp_r, mp_a = Vector2D(mid).to_polar(origin=self.center)
             self._start = Vector2D.from_polar(
                 radius=mp_r,
                 angle=mp_a - self._angle / 2,
                 origin=self.center,
-                use_degrees=True,
             )
             self._end = None
         elif end is not None:
             self._end = Vector2D(end)
-            mp_r, mp_a = self._end.to_polar(origin=self.center, use_degrees=True)
+            mp_r, mp_a = self._end.to_polar(origin=self.center)
             self._start = Vector2D.from_polar(
                 radius=mp_r,
                 angle=mp_a - self._angle,
                 origin=self.center,
-                use_degrees=True,
             )
         else:
             raise KeyError(
@@ -566,14 +550,14 @@ class GeomArc(GeomShapeOpen):
         self.center = Vector2D(center)
         self._start = Vector2D(start)
         self._end = Vector2D(end)
-        sp_r, sp_a = self._start.to_polar(origin=self.center, use_degrees=True)
-        ep_r, ep_a = self._end.to_polar(origin=self.center, use_degrees=True)
+        sp_r, sp_a = self._start.to_polar(origin=self.center)
+        ep_r, ep_a = self._end.to_polar(origin=self.center)
 
         if abs(sp_r - ep_r) > TOL_MM:
             raise ValueError(
                 "Start and end points must be at equal distance from the center point."
             )
-        self._init_angle(angle=ep_a - sp_a, use_degrees=True)
+        self._init_angle(angle=ep_a - sp_a)
 
         if long_way:
             if abs(self._angle) < 180:
@@ -679,7 +663,7 @@ class GeomArc(GeomShapeOpen):
 
         # Store arc properties
         self.center = center
-        self._init_angle(angle=sweep_angle, use_degrees=False)
+        self._init_angle(angle=degrees(sweep_angle))
 
     def __repr__(self) -> str:
         """Return the string representation of the arc."""

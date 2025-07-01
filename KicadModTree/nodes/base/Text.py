@@ -91,20 +91,16 @@ class _TextBase(Node):
         self,
         angle: float,
         origin: Vector2D = Vector2D.zero(),
-        use_degrees: bool = True,
     ) -> Self:
         """Rotate text around a given origin.
 
         Args:
             angle: The rotation angle.
             origin: The origin point for the rotation.
-            use_degrees: `True` if the angle shall be interpreted in degrees, `False` if
-                the angle is given in radians.
         """
-        self.at.rotate(angle=angle, origin=origin, use_degrees=use_degrees)
-        a = angle if use_degrees else math.degrees(angle)
+        self.at.rotate(angle=angle, origin=origin)
         # subtraction because kicad text field rotation is the wrong way round
-        self.rotation -= a
+        self.rotation -= angle
         return self
 
     def translate(self, vector: Vector2D) -> Self:

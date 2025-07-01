@@ -39,8 +39,7 @@ class Cruciform(NodeShape, GeomCruciform):
         tail_w: float | None = None,
         tail_h: float | None = None,
         center: Vec2DCompatible = (0, 0),
-        angle: float = 0,
-        use_degrees: bool = True,
+        angle: float = 0.0,
     ) -> None:
         """Create a geometric cruciform.
 
@@ -78,9 +77,7 @@ class Cruciform(NodeShape, GeomCruciform):
             tail_w: Width of the tail of the cruciform in mm.
             tail_h: Height of the tail of the cruciform in mm.
             center: Coordinates of the center point of the cruciform in mm.
-            angle: Rotation angle of the cruciform in mm.
-            use_degrees: `True` if the rotation angle is given in degrees, `False` if
-                given in radians.
+            angle: Rotation angle of the cruciform in degrees.
         """
         NodeShape.__init__(self, layer=layer, width=width, style=style, fill=fill)
         GeomCruciform.__init__(
@@ -92,7 +89,6 @@ class Cruciform(NodeShape, GeomCruciform):
             tail_h=tail_h,
             center=center,
             angle=angle,
-            use_degrees=use_degrees,
         )
         if offset:
             self.inflate(amount=offset)

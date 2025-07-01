@@ -78,21 +78,18 @@ class GeomCircle(GeomShapeClosed):
         self,
         angle: float,
         origin: Vector2D = Vector2D.zero(),
-        use_degrees: bool = True,
     ) -> GeomCircle:
         """Rotate the circle around a given point.
 
         Args:
-            angle: Rotation angle.
+            angle: Rotation angle in degrees.
             origin: Coordinates (in mm) of the point around which to rotate.
-            use_degrees: `True` if rotation angle is given in degrees, `False` if given
-                in radians.
 
         Returns:
             The rotated circle.
         """
         if angle:
-            self.center.rotate(angle=angle, origin=origin, use_degrees=use_degrees)
+            self.center.rotate(angle=angle, origin=origin)
         return self
 
     def inflate(self, amount: float, tol: float = TOL_MM) -> GeomCircle:

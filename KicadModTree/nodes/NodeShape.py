@@ -144,22 +144,17 @@ class NodeShape(Node, GeomShape):
         self,
         angle: float,
         origin: Vector2D = Vector2D.zero(),
-        use_degrees: bool = True,
     ) -> Self:
         """Rotate the node around a given point.
 
         Args:
-            angle: Rotation angle.
+            angle: Rotation angle in degrees.
             origin: Coordinates (in mm) of the point around which to rotate.
-            use_degrees: `True` if rotation angle is given in degrees, `False` if given
-                in radians.
 
         Returns:
             The rotated node.
         """
-        return super(Node, self).rotate(
-            angle=angle, origin=origin, use_degrees=use_degrees
-        )
+        return super(Node, self).rotate(angle=angle, origin=origin)
 
     def cut(  # type: ignore
         self,

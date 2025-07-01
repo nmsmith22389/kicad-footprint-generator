@@ -39,8 +39,7 @@ class Cross(NodeShape, GeomCross):
         shape: Cross | GeomCross | None = None,
         center: Vec2DCompatible | None = None,
         size: Vec2DCompatible | float | None = None,
-        angle: float = 0,
-        use_degrees: bool = True,
+        angle: float = 0.0,
     ) -> None:
         """Create a cross node.
 
@@ -53,9 +52,7 @@ class Cross(NodeShape, GeomCross):
             center: Coordinates (in mm) of the center point of the cross.
             size: Size in mm of the cross. If a vector is given, the two lines of the
                 cross have the length of the respective vector coordinates.
-            angle: Angle of the cross.
-            use_degrees: `True` if rotation angle is given in degrees, `False` if given
-                in radians.
+            angle: Angle of the cross in degrees.
 
         Example:
             The constructor either takes a `shape` argument or `center` and `size`.
@@ -70,7 +67,6 @@ class Cross(NodeShape, GeomCross):
             center=center,
             size=size,
             angle=angle,
-            use_degrees=use_degrees,
         )
 
     def get_flattened_nodes(self) -> list[Node]:

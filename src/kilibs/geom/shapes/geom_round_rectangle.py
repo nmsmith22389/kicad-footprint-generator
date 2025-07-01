@@ -46,8 +46,7 @@ class GeomRoundRectangle(GeomShapeClosed):
         center: Vec2DCompatible | None = None,
         start: Vec2DCompatible | None = None,
         corner_radius: float | None = None,
-        angle: float = 0,
-        use_degrees: bool = True,
+        angle: float = 0.0,
     ) -> None:
         r"""Create a geometric round rectangle. That is a rectangle with all four
         corners rounded:
@@ -69,9 +68,7 @@ class GeomRoundRectangle(GeomShapeClosed):
             center: Coordinates of the center point of the round rectangle in mm.
             start: Coordinates of the first corner of the (round) rectangle in mm.
             corner_radius: Radius of the rounding of the corners in mm.
-            angle: Rotation angle of the round rectangle (internally stored in degrees).
-            use_degrees: `True` if the rotation angle is given in degrees, `False` if
-                given in radians.
+            angle: Rotation angle of the round rectangle in degrees.
         """
         if shape is not None:
             self.size = Vector2D(shape.size)
@@ -83,8 +80,6 @@ class GeomRoundRectangle(GeomShapeClosed):
             self.corner_radius = corner_radius
             if corner_radius < 0:
                 raise ValueError("Corner_radius must be >= 0.")
-            if use_degrees is False:
-                angle = math.degrees(angle)
             self.angle = angle
             if center is not None:
                 self.center = Vector2D(center)
@@ -123,7 +118,7 @@ class GeomRoundRectangle(GeomShapeClosed):
             # fmt: on
             if self.angle:
                 for child in self._shapes:
-                    child.rotate(angle=self.angle, origin=self.center, use_degrees=True)
+                    child.rotate(angle=self.angle, origin=self.center)
         return self._shapes
 
     def translate(self, vector: Vector2D) -> GeomRoundRectangle:
@@ -143,21 +138,18 @@ class GeomRoundRectangle(GeomShapeClosed):
         self,
         angle: float,
         origin: Vector2D = Vector2D.zero(),
-        use_degrees: bool = True,
     ) -> GeomRoundRectangle:
         """Rotate the round rectangle around a given point.
 
         Args:
-            angle: Rotation angle.
+            angle: Rotation angle in degrees.
             origin: Coordinates (in mm) of the point around which to rotate.
-            use_degrees: `True` if rotation angle is given in degrees, `False` if given
-                in radians.
 
         Returns:
             The rotated round rectangle.
         """
         if angle:
-            self.center.rotate(angle=angle, origin=origin, use_degrees=use_degrees)
+            self.center.rotate(angle=angle, origin=origin)
             self._shapes = []
         return self
 
@@ -221,7 +213,6 @@ class GeomRoundRectangle(GeomShapeClosed):
             center=self.center,
             size=Vector2D(self.size.x, self.size.y - 2 * self.corner_radius),
             angle=self.angle,
-            use_degrees=True,
         )
         if rect1.is_point_inside_self(
             point=point, strictly_inside=strictly_inside, tol=tol
@@ -231,7 +222,6 @@ class GeomRoundRectangle(GeomShapeClosed):
             center=self.center,
             size=Vector2D(self.size.x - 2 * self.corner_radius, self.size.y),
             angle=self.angle,
-            use_degrees=True,
         )
         if rect2.is_point_inside_self(
             point=point, strictly_inside=strictly_inside, tol=tol

@@ -170,21 +170,18 @@ class GeomCompoundPolygon(GeomShapeClosed):
         self,
         angle: float,
         origin: Vector2D = Vector2D.zero(),
-        use_degrees: bool = True,
     ) -> GeomCompoundPolygon:
         """Rotate the compound polygon around a given point.
 
         Args:
-            angle: Rotation angle.
+            angle: Rotation angle in degrees.
             origin: Coordinates (in mm) of the point around which to rotate.
-            use_degrees: `True` if rotation angle is given in degrees, `False` if given
-                in radians.
 
         Returns:
             The rotated compound polygon.
         """
         for segment in self._segments:
-            segment.rotate(angle=angle, origin=origin, use_degrees=use_degrees)
+            segment.rotate(angle=angle, origin=origin)
         self._bbox = None
         return self
 

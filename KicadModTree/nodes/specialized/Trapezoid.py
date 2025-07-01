@@ -32,15 +32,14 @@ class Trapezoid(NodeShape, GeomTrapezoid):
         width: float | None = None,
         style: LineStyle = LineStyle.SOLID,
         fill: bool = False,
-        offset: float = 0,
+        offset: float = 0.0,
         shape: Trapezoid | GeomTrapezoid | None = None,
         size: Vec2DCompatible | None = None,
         center: Vec2DCompatible | None = None,
         start: Vec2DCompatible | None = None,
         corner_radius: float | None = None,
         side_angle: float | None = None,
-        rotation_angle: float = 0,
-        use_degrees: bool = True,
+        rotation_angle: float = 0.0,
     ) -> None:
         r"""Create a geometric isosceles trapezoid. That is a trapezoid with a symmetry
         axis. It has the option to round its corners.
@@ -71,13 +70,8 @@ class Trapezoid(NodeShape, GeomTrapezoid):
             start: Coordinates of the top left corner of the trapezoid in mm.
             corner_radius: Radius of the rounding of the corners in mm. Defaults to zero
                 if `None`.
-            side_angle: Angle as depicted in the figure above (internally stored in
-                degrees).
-            rotation_angle: Rotation angle of the trapezoid (internally stored in
-                degrees).
-            use_degrees: `True` if the rotation angle is given in degrees, `False` if
-                given in radians.
-            use_degrees: bool = True,
+            side_angle: Angle as depicted in the figure above in degrees.
+            rotation_angle: Rotation angle of the trapezoid in degrees.
         """
         NodeShape.__init__(self, layer=layer, width=width, style=style, fill=fill)
         GeomTrapezoid.__init__(
@@ -89,7 +83,6 @@ class Trapezoid(NodeShape, GeomTrapezoid):
             corner_radius=corner_radius,
             side_angle=side_angle,
             rotation_angle=rotation_angle,
-            use_degrees=use_degrees,
         )
         if offset:
             self.inflate(amount=offset)

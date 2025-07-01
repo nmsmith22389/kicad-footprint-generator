@@ -107,15 +107,12 @@ class GeomShape(ABC):
         self,
         angle: float,
         origin: Vector2D = Vector2D.zero(),
-        use_degrees: bool = True,
     ) -> Self:
         """Rotate the shape around a given point.
 
         Args:
-            angle: Rotation angle.
+            angle: Rotation angle ind egrees.
             origin: Coordinates (in mm) of the point around which to rotate.
-            use_degrees: `True` if rotation angle is given in degrees, `False` if given
-                in radians.
 
         Returns:
             The rotated shape.
@@ -126,20 +123,17 @@ class GeomShape(ABC):
         self,
         angle: float,
         origin: Vector2D = Vector2D.zero(),
-        use_degrees: bool = True,
     ) -> Self:
         """Create a copy of itself and rotate it.
 
         Args:
-            angle: Rotation angle.
+            angle: Rotation angle in degrees.
             origin: Coordinates (in mm) of the point around which to rotate.
-            use_degrees: `True` if rotation angle is given in degrees, `False` if given
-                in radians.
 
         Returns:
             The rotated copy.
         """
-        return self.copy().rotate(angle=angle, origin=origin, use_degrees=use_degrees)
+        return self.copy().rotate(angle=angle, origin=origin)
 
     def intersect(
         self,

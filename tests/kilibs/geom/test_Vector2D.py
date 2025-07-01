@@ -188,26 +188,26 @@ def test_div() -> None:
 
 
 def test_polar() -> None:
-    p1 = Vector2D.from_polar(math.sqrt(2), 45, use_degrees=True)
+    p1 = Vector2D.from_polar(math.sqrt(2), 45)
     assert p1.is_equal(Vector2D(1, 1))
 
-    p1 = Vector2D.from_polar(2, -90, use_degrees=True, origin=(6, 1))
+    p1 = Vector2D.from_polar(2, -90, origin=(6, 1))
     assert p1.is_equal(Vector2D(6, -1))
 
-    r, a = p1.to_polar(use_degrees=True, origin=(6, 1))
+    r, a = p1.to_polar(origin=(6, 1))
     assert r == pytest.approx(2)
     assert a == pytest.approx(-90)
 
-    p1.rotate(90, use_degrees=True, origin=Vector2D(6, 1))
+    p1.rotate(90, origin=Vector2D(6, 1))
     assert p1.is_equal(Vector2D(8, 1))
 
-    p1 = Vector2D.from_polar(math.sqrt(2), 135, use_degrees=True)
+    p1 = Vector2D.from_polar(math.sqrt(2), 135)
     assert p1.is_equal(Vector2D(-1, 1))
 
-    p1.rotate(90, origin=Vector2D(0, 0), use_degrees=True)
+    p1.rotate(90, origin=Vector2D(0, 0))
     assert p1.is_equal(Vector2D(-1, -1))
 
-    r, a = p1.to_polar(use_degrees=True)
+    r, a = p1.to_polar()
     assert r == pytest.approx(math.sqrt(2))
     assert a == pytest.approx(-135)
 
@@ -220,9 +220,7 @@ def test_right_mul() -> None:
 def test_norm_arg() -> None:
     assert Vector2D(1, 1).norm() == pytest.approx(math.sqrt(2))
     assert Vector2D(1, 1).arg() == pytest.approx(45)
-    assert Vector2D(1, 1).arg(use_degrees=False) == pytest.approx(math.pi / 4)
     assert Vector2D(-1, -1).arg() == pytest.approx(-135)
-    assert Vector2D(-1, -1).arg(use_degrees=False) == pytest.approx(-3 * math.pi / 4)
 
 
 def test_inner_product() -> None:

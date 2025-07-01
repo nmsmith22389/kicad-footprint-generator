@@ -39,7 +39,6 @@ class Rectangle(NodeShape, GeomRectangle):
         center: Vec2DCompatible | None = None,
         size: Vec2DCompatible | None = None,
         angle: float = 0.0,
-        use_degrees: bool = True,
     ) -> None:
         """Create a rectangle.
 
@@ -57,8 +56,7 @@ class Rectangle(NodeShape, GeomRectangle):
             size: Size in mm of the rectangle.
             start: Coordinates (in mm) of the top left corner of the rectangle.
             stop: Coordinates (in mm) of the bottom right corner of the rectangle.
-            angle: Rotation angle of the rectangle.
-            use_degrees: Whether the rotation angle is given in degrees or radians.
+            angle: Rotation angle of the rectangle in degrees.
         """
         NodeShape.__init__(self, layer=layer, width=width, style=style, fill=fill)
         GeomRectangle.__init__(
@@ -69,7 +67,6 @@ class Rectangle(NodeShape, GeomRectangle):
             center=center,
             size=size,
             angle=angle,
-            use_degrees=use_degrees,
         )
         if offset:
             self.inflate(amount=offset)

@@ -196,20 +196,18 @@ class ArcPadPrimitive(Node):
         self,
         angle: float,
         origin: Vector2D = Vector2D.zero(),
-        use_degrees: bool = True,
     ) -> ArcPadPrimitive:
         """Rotate around given origin.
 
         Args:
-            angle: Rotation angle.
+            angle: Rotation angle in degrees.
             origin: Origin point for the rotation.
-            use_degrees: Rotation angle is given in degrees.
         """
-        self.reference_arc.rotate(angle=angle, origin=origin, use_degrees=use_degrees)
+        self.reference_arc.rotate(angle=angle, origin=origin)
         if self.start_line is not None:
-            self.start_line.rotate(angle=angle, origin=origin, use_degrees=use_degrees)
+            self.start_line.rotate(angle=angle, origin=origin)
         if self.end_line is not None:
-            self.end_line.rotate(angle=angle, origin=origin, use_degrees=use_degrees)
+            self.end_line.rotate(angle=angle, origin=origin)
         return self
 
     def translate(self, vector: Vector2D) -> ArcPadPrimitive:

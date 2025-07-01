@@ -126,22 +126,18 @@ class GeomPolygon(GeomShapeClosed):
         self,
         angle: float,
         origin: Vector2D = Vector2D.zero(),
-        use_degrees: bool = True,
     ) -> GeomPolygon:
         """Rotate the cross around a given point.
 
         Args:
-            angle: Rotation angle.
-            origin: Coordinates (in mm) of the point around which to rotate.
-            use_degrees: `True` if rotation angle is given in degrees, `False` if given
-                in radians.
+            angle: Rotation angle in degrees.
 
         Returns:
             The rotated cross.
         """
         if angle:
             for point in self.points:
-                point.rotate(angle=angle, origin=origin, use_degrees=use_degrees)
+                point.rotate(angle=angle, origin=origin)
         self._segments = []
         return self
 

@@ -112,18 +112,15 @@ class Vector2D:
         radius: float,
         angle: float,
         origin: Vec2DCompatible = (0, 0),
-        use_degrees: bool = True,
     ) -> Vector2D:
         """Generate a vector from a polar representation.
 
         Args:
             radius: The length of the vector.
-            angle: The angle of the vector.
+            angle: The angle of the vector in degrees.
             origin: The origin point for the polar conversion.
-            use_degrees: Whether the angle is given in degrees or radians.
         """
-        if use_degrees:
-            angle = radians(angle)
+        angle = radians(angle)
         x = radius * cos(angle)
         y = radius * sin(angle)
         return Vector2D.from_floats(x, y) + Vector2D(origin)
@@ -224,21 +221,17 @@ class Vector2D:
         self,
         angle: float,
         origin: Vector2D,
-        use_degrees: bool = True,
     ) -> Vector2D:
         """Rotate the point around a given point.
 
         Args:
-            angle: Rotation angle.
+            angle: Rotation angle in degrees.
             origin: Coordinates (in mm) of the point around which to rotate.
-            use_degrees: `True` if rotation angle is given in degrees, `False` if given
-                in radians.
 
         Returns:
             The rotated point.
         """
-        if use_degrees:
-            angle = radians(angle)
+        angle = radians(angle)
         cosa = cos(angle)
         sina = sin(angle)
         xo = self.x - origin.x
@@ -251,33 +244,28 @@ class Vector2D:
         self,
         angle: float,
         origin: Vector2D,
-        use_degrees: bool = True,
     ) -> Vector2D:
         """Create a copy of itself and rotate it.
 
         Args:
-            angle: Rotation angle.
+            angle: Rotation angle in degrees.
             origin: Coordinates (in mm) of the point around which to rotate.
-            use_degrees: `True` if rotation angle is given in degrees, `False` if given
-                in radians.
 
         Returns:
             The rotated copy of the vector.
         """
         new_vec = self.copy()
-        new_vec.rotate(angle, origin, use_degrees)
+        new_vec.rotate(angle, origin)
         return new_vec
 
     def to_polar(
         self,
         origin: Vec2DCompatible = (0, 0),
-        use_degrees: bool = True,
     ) -> tuple[float, float]:
         """Get polar representation of the vector.
 
         Args:
             origin: The origin point for the polar conversion.
-            use_degrees: Whether to return the angle in degrees or radians.
 
         Returns:
             A tuple containing (radius, angle) with the polar representation. The angle
@@ -286,26 +274,20 @@ class Vector2D:
         op = Vector2D(origin)
         diff = self - op
         radius = diff.norm()
-        angle = diff.arg(use_degrees)
+        angle = diff.arg()
         return (radius, angle)
 
     def norm(self) -> float:
         """Calculate the length (cartesian norm) of the vector."""
         return hypot(*self)
 
-    def arg(self, use_degrees: bool = True) -> float:
+    def arg(self) -> float:
         """Calculate the angle of the vector with respect to the origin (0, 0).
 
-        Args:
-            use_degrees: Whether to return the angle in degrees or in radians.
-
         Returns:
-            The Angle of the vector in the range of (-pi, +pi] or (-180°, 180°].
+            The Angle of the vector in degrees in the range of (-180°, 180°].
         """
-        phi = atan2(self.y, self.x)
-        if use_degrees:
-            phi = degrees(phi)
-        return phi
+        return degrees(atan2(self.y, self.x))
 
     def dot_product(self, other: Vector2D) -> float:
         r"""Calculate the inner product of this vector with another vector:

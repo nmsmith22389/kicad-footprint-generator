@@ -34,7 +34,6 @@ class Arc(NodeShape, GeomArc):
         mid: Vec2DCompatible | None = None,
         end: Vec2DCompatible | None = None,
         angle: float | None = None,
-        use_degrees: bool = True,
         long_way: bool = False,
     ) -> None:
         """Create an arc.
@@ -49,9 +48,7 @@ class Arc(NodeShape, GeomArc):
             start: Coordinates (in mm) of the start point of the arc.
             mid: Coordinates (in mm) of the mid point of the arc.
             end: Coordinates (in mm) of the end point of the arc.
-            angle: Angle of the arc in radians or degrees (internally stored in
-                degrees).
-            use_degrees: Whether to interpret the angle in degrees or in radians.
+            angle: Angle of the arc in degrees.
             long_way: Used when constructing the arc with the center, start and end
                 point to specify if the longer of the 2 possible resulting arcs or the
                 shorter one shall be constructed.
@@ -65,6 +62,5 @@ class Arc(NodeShape, GeomArc):
             mid=mid,
             end=end,
             angle=angle,
-            use_degrees=use_degrees,
             long_way=long_way,
         )

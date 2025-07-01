@@ -276,24 +276,14 @@ def test_rotate(shape: GeomShape, rel: float = TOL_MM) -> None:
     rotated_shape = shape.copy()
     origin = Vector2D(1, -1)
     angle_degs = [90, 120, 160, -10]
-    angle_rads = [radians(angle_deg) for angle_deg in angle_degs]
 
     # Perform rotations in degrees and test that the shapes are not equal anymore:
     for angle_deg in angle_degs[:-1]:
-        rotated_shape.rotate(angle=angle_deg, origin=origin, use_degrees=True)
+        rotated_shape.rotate(angle=angle_deg, origin=origin)
         assert not is_equal_geom_shapes(shape, rotated_shape, rel)
 
     # Perform a rotation in degrees back to origin and test that the shapes are equal:
-    rotated_shape.rotate(angle=angle_degs[-1], origin=origin, use_degrees=True)
-    assert is_equal_geom_shapes(shape, rotated_shape, rel)
-
-    # Perform rotations in radians and test that the shapes are not equal anymore:
-    for angle_rad in angle_rads[:-1]:
-        rotated_shape.rotate(angle=angle_rad, origin=origin, use_degrees=False)
-        assert not is_equal_geom_shapes(shape, rotated_shape, rel)
-
-    # Perform a rotation in radians back to origin and test that the shapes are equal:
-    rotated_shape.rotate(angle=angle_rads[-1], origin=origin, use_degrees=False)
+    rotated_shape.rotate(angle=angle_degs[-1], origin=origin)
     assert is_equal_geom_shapes(shape, rotated_shape, rel)
 
 

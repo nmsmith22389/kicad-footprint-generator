@@ -35,8 +35,7 @@ class RectLine(PolygonLine):
         size: Optional[Vec2DCompatible] = None,
         start: Optional[Vec2DCompatible] = None,
         end: Optional[Vec2DCompatible] = None,
-        angle: float = 0,
-        use_degrees: bool = True,
+        angle: float = 0.0,
     ):
         """Create a rectangle.
 
@@ -52,8 +51,7 @@ class RectLine(PolygonLine):
             size: Size of the rectangle.
             start: Top left corner of the rectangle
             end: Bottom right corner of the rectangle
-            angle: angle of the rectangle.
-            use_degrees: Whether the angle is given in degrees or radians.
+            angle: angle of the rectangle in degrees.
         """
         # New code. Currently commented out and the old code is used for backwards compatibility.
         # Node.__init__(self)
@@ -71,8 +69,7 @@ class RectLine(PolygonLine):
         #     size=size,
         #     start=start,
         #     end=end,
-        #     angle=angle,
-        #     use_degrees=use_degrees)
+        #     angle=angle)
         # self.size += 2* offset
         if shape is not None:
             self.start = shape.top_left

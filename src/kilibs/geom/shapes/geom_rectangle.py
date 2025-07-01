@@ -48,8 +48,7 @@ class GeomRectangle(GeomShapeClosed):
         size: Vec2DCompatible | None = None,
         start: Vec2DCompatible | None = None,
         end: Vec2DCompatible | None = None,
-        angle: float = 0,
-        use_degrees: bool = True,
+        angle: float = 0.0,
     ) -> None:
         """Create a geometric rectangle.
 
@@ -59,12 +58,11 @@ class GeomRectangle(GeomShapeClosed):
             size: Size in mm of the rectangle.
             start: Coordinates (in mm) of the top left corner of the rectangle.
             stop: Coordinates (in mm) of the bottom right corner of the rectangle.
-            angle: Rotation angle of the rectangle.
-            use_degrees: Whether the rotation angle is given in degrees or radians.
+            angle: Rotation angle of the rectangle in degrees.
         """
         self._corner_pts = None
         self._bbox = None
-        self._update_angle(angle, use_degrees)
+        self._update_angle(angle)
         if center is not None and size is not None:
             self.center = Vector2D(center)
             self.size = Vector2D(size).positive()
@@ -124,24 +122,19 @@ class GeomRectangle(GeomShapeClosed):
         self,
         angle: float,
         origin: Vector2D = Vector2D.zero(),
-        use_degrees: bool = True,
     ) -> GeomRectangle:
         """Rotate the rectangle around a given point.
 
         Args:
-            angle: Rotation angle.
+            angle: Rotation angle in degrees.
             origin: Coordinates (in mm) of the point around which to rotate.
-            use_degrees: `True` if rotation angle is given in degrees, `False` if given
-                in radians.
 
         Returns:
             The rotated rectangle.
         """
         if angle:
-            self.center.rotate(angle=angle, origin=origin, use_degrees=use_degrees)
-            if not use_degrees:
-                angle = math.degrees(angle)
-            self._update_angle(angle + self.angle, use_degrees=True)
+            self.center.rotate(angle=angle, origin=origin)
+            self._update_angle(angle + self.angle)
             self._corner_pts = None
             self._bbox = None
         return self
@@ -435,12 +428,13 @@ class GeomRectangle(GeomShapeClosed):
         self._corner_pts = None
         self._bbox = None
 
-    def _update_angle(self, angle: float, use_degrees: bool = True) -> None:
+    def _update_angle(self, angle: float) -> None:
         """Update the angle property of the rectangle. May affect also its size
         property.
+
+        Args:
+            The angle in degrees.
         """
-        if not use_degrees:
-            angle = math.degrees(angle)
         self._angle = (angle + 180) % 360 - 180
         if (n := self._number_of_90_deg_rotations(self._angle)) is not None:
             self._angle = 0

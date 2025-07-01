@@ -32,14 +32,13 @@ class RoundRectangle(NodeShape, GeomRoundRectangle):
         width: float | None = None,
         style: LineStyle = LineStyle.SOLID,
         fill: bool = False,
-        offset: float = 0,
+        offset: float = 0.0,
         shape: RoundRectangle | GeomRoundRectangle | None = None,
         size: Vec2DCompatible | None = None,
         start: Vec2DCompatible | None = None,
         center: Vec2DCompatible | None = None,
         corner_radius: float | None = None,
-        angle: float = 0,
-        use_degrees: bool = True,
+        angle: float = 0.0,
     ) -> None:
         r"""Create a geometric round rectangle. That is a rectangle with all four
         corners rounded:
@@ -69,9 +68,7 @@ class RoundRectangle(NodeShape, GeomRoundRectangle):
             center: Coordinates of the center point of the round rectangle in mm.
             corner_radius: Radius of the rounding of the corners in mm.
             start: Coordinates of the first corner of the (round) rectangle in mm.
-            angle: Rotation angle of the round rectangle (internally stored in degrees).
-            use_degrees: `True` if the rotation angle is given in degrees, `False` if
-                given in radians.
+            angle: Rotation angle of the round rectangle in degrees.
         """
         NodeShape.__init__(self, layer=layer, width=width, style=style, fill=fill)
         GeomRoundRectangle.__init__(
@@ -82,7 +79,6 @@ class RoundRectangle(NodeShape, GeomRoundRectangle):
             center=center,
             corner_radius=corner_radius,
             angle=angle,
-            use_degrees=use_degrees,
         )
         if offset:
             self.inflate(amount=offset)

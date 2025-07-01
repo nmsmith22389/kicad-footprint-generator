@@ -514,15 +514,12 @@ class Node(ABC):
         self,
         angle: float,
         origin: Vector2D = Vector2D.zero(),
-        use_degrees: bool = True,
     ) -> Self:
         """Rotate the node around a given point.
 
         Args:
-            angle: Rotation angle.
+            angle: Rotation angle in degrees.
             origin: Coordinates (in mm) of the point around which to rotate.
-            use_degrees: `True` if rotation angle is given in degrees, `False` if given
-                in radians.
 
         Returns:
             The rotated node.
@@ -534,20 +531,17 @@ class Node(ABC):
         self,
         angle: float,
         origin: Vector2D = Vector2D.zero(),
-        use_degrees: bool = True,
     ) -> Self:
         """Create a copy of the node and rotate it around a given point.
 
         Args:
-            angle: Rotation angle.
+            angle: Rotation angle in degrees.
             origin: Coordinates (in mm) of the point around which to rotate.
-            use_degrees: `True` if rotation angle is given in degrees, `False` if given
-                in radians.
 
         Returns:
             The rotated copy of the node.
         """
-        return self.copy().rotate(angle=angle, origin=origin, use_degrees=use_degrees)
+        return self.copy().rotate(angle=angle, origin=origin)
 
     def get_flattened_nodes(self) -> list[Node]:
         """Return a flattened list of all the child nodes. The child nodes that are

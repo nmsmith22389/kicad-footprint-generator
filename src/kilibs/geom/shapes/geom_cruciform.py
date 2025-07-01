@@ -51,8 +51,7 @@ class GeomCruciform(GeomShapeClosed):
         tail_w: float | None = None,
         tail_h: float | None = None,
         center: Vec2DCompatible = (0, 0),
-        angle: float = 0,
-        use_degrees: bool = True,
+        angle: float = 0.0,
     ) -> None:
         """Create a geometric cruciform.
 
@@ -82,9 +81,7 @@ class GeomCruciform(GeomShapeClosed):
             tail_w: Width of the tail of the cruciform in mm.
             tail_h: Height of the tail of the cruciform in mm.
             center: Coordinates of the center point of the cruciform in mm.
-            angle: Rotation angle of the cruciform (internally stored in degrees).
-            use_degrees: `True` if the rotation angle is given in degrees, `False` if
-                given in radians.
+            angle: Rotation angle of the cruciform in degrees.
         """
         if shape is not None:
             self.overall_w: float = shape.overall_w
@@ -104,8 +101,6 @@ class GeomCruciform(GeomShapeClosed):
             self.tail_w = float(tail_w)
             self.tail_h = float(tail_h)
             self.center = Vector2D(center)
-            if use_degrees is False:
-                angle = math.degrees(angle)
             self.angle = angle
             if overall_w < tail_w:
                 raise ValueError("overall_w must be greater than tail_w")
@@ -127,7 +122,6 @@ class GeomCruciform(GeomShapeClosed):
                 center=self.center,
                 size=size,
                 angle=self.angle,
-                use_degrees=True,
             )
         else:
             r1_size_2 = Vector2D(self.overall_w, self.tail_h) / 2
@@ -169,21 +163,18 @@ class GeomCruciform(GeomShapeClosed):
         self,
         angle: float,
         origin: Vector2D = Vector2D.zero(),
-        use_degrees: bool = True,
     ) -> GeomCruciform:
         """Rotate the cruciform around a given point.
 
         Args:
-            angle: Rotation angle.
+            angle: Rotation angle in degrees.
             origin: Coordinates (in mm) of the point around which to rotate.
-            use_degrees: `True` if rotation angle is given in degrees, `False` if given
-                in radians.
 
         Returns:
             The rotated cruciform.
         """
         if angle:
-            self.center.rotate(angle=angle, origin=origin, use_degrees=use_degrees)
+            self.center.rotate(angle=angle, origin=origin)
             self._shape = None
         return self
 
@@ -237,7 +228,6 @@ class GeomCruciform(GeomShapeClosed):
             center=self.center,
             size=Vector2D(self.tail_w, self.overall_h),
             angle=self.angle,
-            use_degrees=True,
         )
         if rect1.is_point_inside_self(
             point=point, strictly_inside=strictly_inside, tol=tol
@@ -247,7 +237,6 @@ class GeomCruciform(GeomShapeClosed):
             center=self.center,
             size=Vector2D(self.overall_w, self.tail_h),
             angle=self.angle,
-            use_degrees=True,
         )
         if rect2.is_point_inside_self(
             point=point, strictly_inside=strictly_inside, tol=tol

@@ -122,18 +122,15 @@ class ReferencedPad(Node):
         self,
         angle: float,
         origin: Vector2D = Vector2D.zero(),
-        use_degrees: bool = True,
     ) -> ReferencedPad:
         """Rotate the pad around the given origin.
 
         Args:
-            angle: The rotation angle.
+            angle: The rotation angle in degrees.
             origin: The coordinates of the point around which the pad is rotated.
-            use_degrees: `True` if the angle is given in degrees, `False` if given in
-                radians.
         """
-        self.at.rotate(angle=angle, origin=origin, use_degrees=use_degrees)
-        self.rotation += angle if use_degrees else math.degrees(angle)
+        self.at.rotate(angle=angle, origin=origin)
+        self.rotation += angle
         return self
 
     def get_round_radius(self) -> float:
@@ -524,19 +521,16 @@ class Pad(Node):
         self,
         angle: float,
         origin: Vector2D = Vector2D.zero(),
-        use_degrees: bool = True,
     ) -> Pad:
         """Rotate the pad around the given origin.
 
         Args:
             angle: The rotation angle.
             origin: The coordinates of the point around which the pad is rotated.
-            use_degrees: `True` if the angle is given in degrees, `False` if given in
-                radians.
         """
-        self.at.rotate(angle=angle, origin=origin, use_degrees=use_degrees)
+        self.at.rotate(angle=angle, origin=origin)
         # The sign of the rotation is historically negative. Why? No idea.
-        self.rotation -= angle if use_degrees else math.degrees(angle)
+        self.rotation -= angle
         return self
 
     def translate(self, vector: Vector2D) -> Pad:

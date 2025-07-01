@@ -51,8 +51,7 @@ class GeomTrapezoid(GeomShapeClosed):
         start: Vec2DCompatible | None = None,
         corner_radius: float | None = None,
         side_angle: float | None = None,
-        rotation_angle: float = 0,
-        use_degrees: bool = True,
+        rotation_angle: float = 0.0,
     ) -> None:
         r"""Create a geometric isosceles trapezoid. That is a trapezoid with a symmetry
         axis. It has the option to round its corners.
@@ -75,13 +74,8 @@ class GeomTrapezoid(GeomShapeClosed):
             start: Coordinates of the top left corner of the trapezoid in mm.
             corner_radius: Radius of the rounding of the corners in mm. Defaults to zero
                 if `None`.
-            side_angle: Angle as depicted in the figure above (internally stored in
-                degrees).
-            rotation_angle: Rotation angle of the trapezoid (internally stored in
-                degrees).
-            use_degrees: `True` if the rotation angle is given in degrees, `False` if
-                given in radians.
-            use_degrees: bool = True,
+            side_angle: Angle as depicted in the figure above in degrees.
+            rotation_angle: Rotation angle of the trapezoid in degrees.
         """
         if shape is not None:
             self.size = Vector2D(shape.size)
@@ -101,9 +95,6 @@ class GeomTrapezoid(GeomShapeClosed):
             self.corner_radius = 0 if corner_radius is None else corner_radius
             if self.corner_radius < 0:
                 raise ValueError("`corner_radius` must be >= 0.")
-            if not use_degrees:
-                side_angle = math.degrees(side_angle)
-                rotation_angle = math.degrees(side_angle)
             self.side_angle = side_angle
             self.rotation_angle = rotation_angle
         else:
@@ -191,9 +182,7 @@ class GeomTrapezoid(GeomShapeClosed):
 
         if self.rotation_angle:
             for shape in self._shapes:
-                shape.rotate(
-                    angle=self.rotation_angle, origin=self.center, use_degrees=True
-                )
+                shape.rotate(angle=self.rotation_angle, origin=self.center)
         return self._shapes
 
     def translate(self, vector: Vector2D) -> GeomTrapezoid:
@@ -213,21 +202,18 @@ class GeomTrapezoid(GeomShapeClosed):
         self,
         angle: float,
         origin: Vector2D = Vector2D.zero(),
-        use_degrees: bool = True,
     ) -> GeomTrapezoid:
         """Rotate the trapezoid around a given point.
 
         Args:
-            angle: Rotation angle.
+            angle: Rotation angle in degrees.
             origin: Coordinates (in mm) of the point around which to rotate.
-            use_degrees: `True` if rotation angle is given in degrees, `False` if given
-                in radians.
 
         Returns:
             The rotated trapezoid.
         """
         if angle:
-            self.center.rotate(angle=angle, origin=origin, use_degrees=use_degrees)
+            self.center.rotate(angle=angle, origin=origin)
             self._shapes = []
         return self
 
