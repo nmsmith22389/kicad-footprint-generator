@@ -232,7 +232,9 @@ def auto_silk_triangle_for_pad_and_box(
     #
     # We do this if the pad is entirely inside the body bbox, or if we have a
     # given direction to use.
-    arrow_points_inwards = body_bbox.contains_bbox(pad_bbox) or direction_if_inside is not None
+    arrow_points_inwards = (
+        body_bbox.contains_bbox(pad_bbox) or direction_if_inside is not None
+    )
 
     if arrow_points_inwards:
 
@@ -282,13 +284,22 @@ def auto_silk_triangle_for_pad_and_box(
         # Place either pointing directly at the arrow from the side if there is space,
         # else nestle into the corner
 
+        # Apex any closer than this, and the corner of the arrow will hit the body outline
+        arrow_closest_body_approach = (
+            silk_arrow_size / 2 + 3 * global_config.silk_line_width
+        )
+
+        # Min space require to fit the arrow at the side of the pad rather in the corner
+        # More than half the arrow size, so that the apex isn't right at the pad corner
+        min_arrow_pad_side_space = silk_arrow_size * 0.7
+
         if l_dist < 0:  # Stick out of left
 
-            if -l_dist > silk_arrow_size and t_dist > 0:
+            if -l_dist > min_arrow_pad_side_space and t_dist > 0:
                 # it sticks out enough to fit arrow, bot not at the top
                 arrow_direction = Direction.SOUTH
                 apex_pos = Vector2D.from_floats(
-                    body_bbox.left - silk_arrow_size / 2, pad_silk_bbox.top
+                    body_bbox.left - arrow_closest_body_approach, pad_silk_bbox.top
                 )
             else:
                 # Point into corner
@@ -296,10 +307,10 @@ def auto_silk_triangle_for_pad_and_box(
                 apex_pos = Vector2D.from_floats(body_bbox.left, pad_silk_bbox.top)
         elif t_dist < 0:
             # Sticks out of the top (but not the left)
-            if -t_dist > silk_arrow_size:
+            if -t_dist > min_arrow_pad_side_space:
                 arrow_direction = Direction.EAST
                 apex_pos = Vector2D.from_floats(
-                    pad_silk_bbox.left, body_bbox.top - silk_arrow_size / 2
+                    pad_silk_bbox.left, body_bbox.top - arrow_closest_body_approach
                 )
             else:
                 # Point into corner
@@ -307,11 +318,11 @@ def auto_silk_triangle_for_pad_and_box(
                 apex_pos = Vector2D.from_floats(pad_silk_bbox.left, body_bbox.top)
         elif r_dist < 0:
             # Sticks out of the right
-            if -r_dist > silk_arrow_size and t_dist > 0:
+            if -r_dist > min_arrow_pad_side_space and t_dist > 0:
                 # it sticks out enough to fit arrow, bot not at the top
                 arrow_direction = Direction.SOUTH
                 apex_pos = Vector2D.from_floats(
-                    body_bbox.right + silk_arrow_size / 2, pad_silk_bbox.top
+                    body_bbox.right + arrow_closest_body_approach, pad_silk_bbox.top
                 )
             else:
                 # Point into corner
@@ -319,10 +330,10 @@ def auto_silk_triangle_for_pad_and_box(
                 apex_pos = Vector2D.from_floats(body_bbox.right, pad_silk_bbox.top)
         elif b_dist < 0:
             # Sticks out of the top (but not the left or right
-            if -b_dist > silk_arrow_size:
+            if -b_dist > min_arrow_pad_side_space:
                 arrow_direction = Direction.EAST
                 apex_pos = Vector2D.from_floats(
-                    pad_silk_bbox.left, body_bbox.bottom + silk_arrow_size / 2
+                    pad_silk_bbox.left, body_bbox.bottom + arrow_closest_body_approach
                 )
             else:
                 # Point into corner
@@ -348,7 +359,8 @@ def auto_silk_triangle_for_pad_and_box(
         arrow = pin1_arrow.Pin1SilkScreenArrow45Deg(
             apex_position=apex_pos,
             angle=arrow_direction,
-            size=silk_arrow_size,
+            # Compensate for the chunkier 45 degree arrow
+            size=silk_arrow_size * 0.8,
             layer="F.SilkS",
             line_width_mm=global_config.silk_line_width,
         )
