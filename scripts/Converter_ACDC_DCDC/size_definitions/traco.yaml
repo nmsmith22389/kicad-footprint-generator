@@ -936,3 +936,21 @@ Converter_DCDC_TRACO_TES1-052x_122x_242x_Dual_SMD:
     ["smd", "7", 5.2, -2.54, 2.0, 1.2, 0],
     ["smd", "10", 5.2, 5.08, 2.0, 1.2, 0]
   ]
+
+Converter_ACDC_TRACO_TMPW25_1xx_THT:
+  library_name: 'Converter_ACDC'
+  description: "ACDC-Converter, TRACO, TMPW 25, 25W, Rev. June 16. 2025"
+  datasheet: "https://www.tracopower.com/products/tmpw25.pdf"
+  tags: "ACDC-Converter TRACO TMPW25 THT 2.07\"x1.08\" 25W"
+  extratexts: []
+  at: [-3.4, 3.6]
+  size: [52.5, 27.5]
+  body_position_tolerance: [0.5, 0.5]
+  # For future use
+  height: 23.5
+  pins: [
+    ["thtr", "1", 0, 0, 2.3, 2.3, 1.5],
+    ["tht", "2", 0, -20.3, 2.3, 2.3, 1.5],
+    ["tht", "3", 45.7, 0, 2.3, 2.3, 1.5],
+    ["tht", "4", 45.7, -21.5, 2.3, 2.3, 1.5]
+  ]
