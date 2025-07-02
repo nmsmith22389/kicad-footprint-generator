@@ -15,8 +15,6 @@
 
 from __future__ import annotations
 
-import math
-
 from kilibs.geom.bounding_box import BoundingBox
 from kilibs.geom.shapes.geom_polygon import GeomPolygon
 from kilibs.geom.shapes.geom_rectangle import GeomRectangle

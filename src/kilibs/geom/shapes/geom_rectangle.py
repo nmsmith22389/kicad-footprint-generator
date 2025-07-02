@@ -14,8 +14,6 @@
 """Class definition for a geometric rectangle."""
 from __future__ import annotations
 
-import math
-
 from kilibs.geom.bounding_box import BoundingBox
 from kilibs.geom.shapes.geom_line import GeomLine
 from kilibs.geom.shapes.geom_shape import GeomShapeClosed

@@ -15,8 +15,6 @@
 
 from __future__ import annotations
 
-import math
-
 from kilibs.geom.shapes.geom_arc import GeomArc
 from kilibs.geom.shapes.geom_line import GeomLine
 from kilibs.geom.shapes.geom_rectangle import GeomRectangle

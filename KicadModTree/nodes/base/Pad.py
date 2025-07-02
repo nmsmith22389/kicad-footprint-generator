@@ -20,7 +20,6 @@ from __future__ import annotations
 import copy
 import dataclasses
 import enum
-import math
 from collections.abc import Sequence
 from typing import Any
 
