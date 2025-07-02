@@ -458,7 +458,6 @@ class Pad(Node):
                 self.chamfer_size_handler = chamfer_size_handler
             else:
                 self.chamfer_size_handler = ChamferSizeHandler(
-                    must_be_square=True,
                     maximum_chamfer=maximum_chamfer,
                     chamfer_size=chamfer_size,
                     chamfer_exact=chamfer_exact,

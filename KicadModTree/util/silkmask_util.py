@@ -1,22 +1,26 @@
-# KicadModTree is free software: you can redistribute it and/or
-# modify it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
+# kilibs is free software: you can redistribute it and/or modify it under the terms of
+# the GNU General Public License as published by the Free Software Foundation, either
+# version 3 of the License, or (at your option) any later version.
 #
-# KicadModTree is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
+# kilibs is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+# without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+# PURPOSE. See the GNU General Public License for more details.
 #
-# You should have received a copy of the GNU General Public License
-# along with kicad-footprint-generator. If not, see < http://www.gnu.org/licenses/ >.
+# You should have received a copy of the GNU General Public License along with kilibs.
+# If not, see < http://www.gnu.org/licenses/ >.
 #
 # (C) 2022 by Armin Schoisswohl, @armin.sch
+# (C) The KiCad Librarian Team
 
 import sys
 
-from KicadModTree.nodes import Circle, Node, NodeShape, Pad, Rectangle
-from kilibs.geom import GeomShape, GeomShapeAtomic, GeomShapeClosed
+from KicadModTree.nodes.base.Arc import Arc
+from KicadModTree.nodes.base.Circle import Circle
+from KicadModTree.nodes.base.Line import Line
+from KicadModTree.nodes.base.Pad import Pad
+from KicadModTree.nodes.base.Rectangle import Rectangle
+from KicadModTree.nodes.Node import Node
+from KicadModTree.nodes.NodeShape import NodeShape
 
 
 def _collect_nodes_as_geometric_shapes(
@@ -24,7 +28,7 @@ def _collect_nodes_as_geometric_shapes(
     layer: str | list[str],
     select_drill: bool = False,
     silk_pad_clearance: float = 0.0,
-) -> list[Node]:
+) -> list[NodeShape]:
     """Collect all geometric nodes and pads from a specific layer as geometric nodes
     (Arc, Line, Circle, Rectangle, etc.).
 
@@ -44,14 +48,14 @@ def _collect_nodes_as_geometric_shapes(
         - Drills are (optionally) included as circles (other shapes not yet supported).
         - `silk_pad_clearance` is an additional offset around pads and holes.
     """
-    if not isinstance(layer, str) and isinstance(layer, list):
+    if isinstance(layer, list):
         layers = layer
     else:
         layers = [layer]
     for layer in layers[:]:
         if layer.startswith("F.") or layer.startswith("B."):
             layers.append("*.%s" % layer.split(".", maxsplit=1)[-1])
-    shapes = []
+    shapes: list[NodeShape] = []
     for c in node:
         if isinstance(c, Pad):
             if any(_ in c.layers for _ in layers):
@@ -60,8 +64,6 @@ def _collect_nodes_as_geometric_shapes(
                         Rectangle(
                             start=c.at - 0.5 * c.size - silk_pad_clearance,
                             end=c.at + 0.5 * c.size + silk_pad_clearance,
-                            layer=layer,
-                            width=0.01,
                         ).rotate(angle=-c.rotation, origin=c.at)
                     )
                 elif c.shape == Pad.SHAPE_CIRCLE:
@@ -81,9 +83,7 @@ def _collect_nodes_as_geometric_shapes(
                 shapes.append(
                     Circle(center=c.at, radius=c.drill[0] * 0.5 + silk_pad_clearance)
                 )
-        elif (
-            hasattr(c, "layer") and c.layer in layers and isinstance(c, GeomShapeAtomic)
-        ):
+        elif isinstance(c, Arc | Line | Circle) and c.layer in layers:
             shapes.append(c)
         else:
             shapes += _collect_nodes_as_geometric_shapes(
@@ -111,7 +111,7 @@ def _clean_silk_by_mask(
             to the module.
     """
     for mask in mask_shapes:
-        kept_out_silk = []
+        kept_out_silk: list[NodeShape] = []
         for silk in silk_shapes:
             kept_out_silk += mask.keepout(silk)
         silk_shapes = kept_out_silk
@@ -125,7 +125,7 @@ def clean_silk_over_mask(
     silk_pad_clearance: float,
     silk_line_width: float,
     ignore_paste: bool = False,
-):
+) -> Node:
     """Clean the silkscreen contours by removing overlap with pads and holes.
 
     This is not perfect, but mostly does a very good job.

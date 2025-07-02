@@ -1,32 +1,50 @@
-from kilibs.util.param_util import getOptionalNumberTypeParam, toVectorUseCopyIfNumber
+# kilibs is free software: you can redistribute it and/or modify it under the terms of
+# the GNU General Public License as published by the Free Software Foundation, either
+# version 3 of the License, or (at your option) any later version.
+#
+# kilibs is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+# without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+# PURPOSE. See the GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along with kilibs.
+# If not, see < http://www.gnu.org/licenses/ >.
+#
+# (C) The KiCad Librarian Team
+
+"""Classes for handling pad corners."""
+
+from kilibs.geom.vector import Vector2D
 
 
-class RoundRadiusHandler(object):
-    r"""Handles round radius setting of a corner
-
-    :Keyword Arguments:
-        * *radius_ratio* (``float`` [0 <= r <= 0.5]``) --
-          The radius ratio of the rounded rectangle.
-        * *maximum_radius* (``float``) --
-          The maximum radius for the rounded rectangle.
-          If the radius produced by the radius_ratio parameter for the pad would
-          exceed the maximum radius, the ratio is reduced to limit the radius.
-          (This is useful for IPC-7351C compliance as it suggests 25% ratio with limit 0.25mm)
-        * *round_radius_exact* (``float``) --
-          Set an exact round radius for a pad.
-    """
+class RoundRadiusHandler:
+    """Handler for the round radius setting of a corner."""
 
     radius_ratio: float
-    # Maxiumum radius for the rounded rectangle, if any
+    """The ratio between the shorter length of a pad and the rounding radius."""
     maximum_radius: float | None
-    round_radius_exact: bool
+    """Maxiumum radius in mm for the rounded rectangle."""
+    round_radius_exact: float | None
+    """The exact raounding radius in mm."""
 
     def __init__(
         self,
         radius_ratio: float,
         maximum_radius: float | None = None,
-        round_radius_exact: float | None = None
-    ):
+        round_radius_exact: float | None = None,
+    ) -> None:
+        """Initializes the RoundRadiusHandler.
+
+        Args:
+            radius_ratio: The radius ratio of the rounded rectangle. Must be in the
+                range [0, 0.5].
+            maximum_radius: The maximum radius for the rounded rectangle. Defaults to
+                `None`, meaning no maximum limit.
+            round_radius_exact: An exact round radius to set for a pad. Defaults to
+                `None`, meaning `radius_ratio` and `maximum_radius` will be used.
+
+        Raises:
+            ValueError: If `radius_ratio` is not within the range [0, 0.5].
+        """
         if radius_ratio < 0 or radius_ratio > 0.5:
             raise ValueError("radius_ratio must be in range [0, 0.5]")
 
@@ -35,56 +53,78 @@ class RoundRadiusHandler(object):
         self.round_radius_exact = round_radius_exact
 
     def get_radius_ratio(self, shortest_sidelength: float) -> float:
-        r"""get the resulting round radius ratio
+        """Get the resulting round radius ratio.
 
-        :param shortest_sidelength: shortest sidelength of a pad
-        :return: the resulting round radius ratio to be used for the pad
+        Calculates the effective radius ratio to be used for the pad, considering
+        `round_radius_exact`, `maximum_radius`, and `radius_ratio` in that order of
+        precedence.
+
+        Args:
+            shortest_sidelength: The shortest sidelength of a pad.
+
+        Returns:
+            The resulting round radius ratio to be used for the pad.
+
+        Raises:
+            ValueError: If the `round_radius_exact` is too large for the pad size.
         """
         if self.round_radius_exact is not None:
-            if self.round_radius_exact > shortest_sidelength/2:
+            if self.round_radius_exact > shortest_sidelength / 2:
                 raise ValueError(
-                    "requested round radius of {} is too large for pad size of {}"
-                    .format(self.round_radius_exact, shortest_sidelength)
+                    "requested round radius of {} is too large for pad size of {}".format(
+                        self.round_radius_exact, shortest_sidelength
                     )
+                )
             if self.maximum_radius is not None:
-                return min(self.round_radius_exact, self.maximum_radius)/shortest_sidelength
+                return (
+                    min(self.round_radius_exact, self.maximum_radius)
+                    / shortest_sidelength
+                )
             else:
-                return self.round_radius_exact/shortest_sidelength
+                return self.round_radius_exact / shortest_sidelength
 
         if self.maximum_radius is not None:
-            if self.radius_ratio*shortest_sidelength > self.maximum_radius:
-                return self.maximum_radius/shortest_sidelength
+            if self.radius_ratio * shortest_sidelength > self.maximum_radius:
+                return self.maximum_radius / shortest_sidelength
 
         return self.radius_ratio
 
     def get_round_radius(self, shortest_sidelength: float) -> float:
-        r"""get the resulting round radius
+        """Get the resulting round radius.
 
-        :param shortest_sidelength: shortest sidelength of a pad
-        :return: the resulting round radius to be used for the pad
+        Args:
+            shortest_sidelength: The shortest sidelength of a pad.
+
+        Returns:
+            The resulting round radius to be used for the pad.
         """
-        return self.get_radius_ratio(shortest_sidelength)*shortest_sidelength
+        return self.get_radius_ratio(shortest_sidelength) * shortest_sidelength
 
     def rounding_requested(self) -> bool:
-        r"""Check if the pad has a rounded corner
+        """Check if the pad has a rounded corner.
 
-        :return: True if rounded corners are required
+        Returns:
+            `True` if rounded corners are required (i.e., radius is non-zero), `False`
+            otherwise.
         """
-        if self.maximum_radius == 0:
+        if self.maximum_radius == 0.0:
             return False
-
-        if self.round_radius_exact == 0:
+        if self.round_radius_exact == 0.0:
             return False
-
-        if self.radius_ratio == 0:
+        if self.radius_ratio == 0.0:
             return False
-
         return True
 
     def limit_max_radius(self, limit: float) -> None:
-        r"""Set a new maximum limit
+        """Set a new maximum radius limit.
 
-        :param limit: the new limit.
+        If rounding is requested and a maximum radius is already set, this method
+        updates `maximum_radius` to the minimum of its current value and the given
+        `limit`. If no maximum radius was set, it sets `maximum_radius` to the given
+        `limit`.
+
+        Args:
+            limit: The new maximum radius limit.
         """
 
         if not self.rounding_requested():
@@ -94,115 +134,157 @@ class RoundRadiusHandler(object):
         else:
             self.maximum_radius = limit
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """Returns a string representation of the RoundRadiusHandler.
+
+        Returns:
+            A string showing the current radius ratio, maximum radius, and exact radius.
+        """
         return "ratio {}, max {}, exact {}".format(
-                    self.radius_ratio, self.maximum_radius,
-                    self.round_radius_exact
-                    )
+            self.radius_ratio, self.maximum_radius, self.round_radius_exact
+        )
 
 
-class ChamferSizeHandler(object):
-    r"""Handles chamfer setting of a pad
+class ChamferSizeHandler:
+    """Handler for the chamfer setting of a corner."""
 
-    :param \**kwargs:
-        See below
+    maximum_chamfer: float | None
+    chamfer_exact: float | None
+    chamfer_ratio: float
 
-    :Keyword Arguments:
-        * *chamfer_ratio* (``float [0 <= r <= 0.5]``) --
-          The chamfer ratio of the rounded rectangle. (default set by default_chamfer_ratio)
-        * *maximum_chamfer* (``float``) --
-          The maximum chamfer size.
-          If the chamfer produced by the chamfer_ratio parameter for the pad would
-          exceed the maximum size, the ratio is reduced to limit the size.
-          (This is useful for IPC-7351C compliance as it suggests 25% ratio with limit 0.25mm)
-        * *chamfer_exact* (``float``) --
-          Set an exact round chamfer size for a pad.
-        * *default_chamfer_ratio* (``float [0 <= r <= 0.5]``) --
-          This parameter allows to set the default chamfer ratio
-    """
+    def __init__(
+        self,
+        maximum_chamfer: float | None = None,
+        chamfer_ratio: float | None = None,
+        chamfer_exact: float | None = None,
+        chamfer_size: float | Vector2D | None = None,
+        default_chamfer_ratio: float = 0.25,
+    ) -> None:
+        """Initializes the ChamferSizeHandler.
 
-    def __init__(self, **kwargs) -> None:
-        default_chamfer_ratio = getOptionalNumberTypeParam(
-            kwargs, 'default_chamfer_ratio', default_value=0.25,
-            low_limit=0, high_limit=0.5)
-        self.chamfer_ratio = getOptionalNumberTypeParam(
-            kwargs, 'chamfer_ratio', default_value=default_chamfer_ratio,
-            low_limit=0, high_limit=0.5)
+        Args:
+            **kwargs: Keyword arguments for configuring the chamfer settings.
+                Possible keys include:
+                * `chamfer_ratio` (``float [0 <= r <= 0.5]``): The chamfer ratio
+                  of the chamfered pad. Defaults to `default_chamfer_ratio`.
+                * `maximum_chamfer` (``float``): The maximum chamfer size.
+                * `chamfer_exact` (``float``): An exact chamfer size for a pad.
+                * `chamfer_size` (``float | Vector2D``): A single number or a
+                  Vector2D specifying the chamfer size. If a Vector2D, both
+                  x and y components must be equal for native pads.
+                * `default_chamfer_ratio` (``float [0 <= r <= 0.5]``): This
+                  parameter allows to set the default chamfer ratio. Defaults to 0.25.
 
-        self.maximum_chamfer = getOptionalNumberTypeParam(
-            kwargs, 'maximum_chamfer')
+        Raises:
+            ValueError: If `chamfer_ratio` or `default_chamfer_ratio` are not
+                within the range [0, 0.5], or if `chamfer_size` is a non-square
+                vector.
+        """
 
-        if kwargs.get('chamfer_size', None) is not None:
+        def exception_if_not_within_range(name: str, param: float) -> None:
+            if param < 0.0:
+                raise ValueError(f"{name} must be larger than 0.")
+            elif param > 0.5:
+                raise ValueError(f"{name} must be smaller than 0.5.")
+
+        exception_if_not_within_range("default_chamfer_ratio", default_chamfer_ratio)
+        if chamfer_ratio is None:
+            chamfer_ratio = default_chamfer_ratio
+        exception_if_not_within_range("chamfer_ratio", chamfer_ratio)
+        self.chamfer_ratio = chamfer_ratio
+        self.maximum_chamfer = maximum_chamfer
+        if chamfer_size is not None:
             # Support the same vector or single number input as ChamferedPad
             # does, but native pads can only have a chamfer_size vector that is the
             # equal.
-            chamfer_size = toVectorUseCopyIfNumber(
-                kwargs["chamfer_size"], low_limit=0, must_be_larger=False
-            )
-
+            chamfer_size = Vector2D(chamfer_size)
             if chamfer_size.x != chamfer_size.y:
                 raise ValueError("chamfer_size must be a square vector for native pads")
-
-            chamfer_size = chamfer_size[0]
+            chamfer_size = chamfer_size.x
         else:
             chamfer_size = None
 
         # Override with chamfer_exact if it is set
-        self.chamfer_exact = getOptionalNumberTypeParam(
-            kwargs, 'chamfer_exact', default_value=chamfer_size)
+        if chamfer_exact is None:
+            self.chamfer_exact = chamfer_size
+        else:
+            self.chamfer_exact = chamfer_exact
 
     def get_chamfer_ratio(self, shortest_sidelength: float) -> float:
-        r"""get the resulting chamfer ratio
+        """Get the chamfer ratio.
 
-        :param shortest_sidelength: shortest sidelength of a pad
-        :return: the resulting chamfer ratio to be used for the pad
+        Calculates the effective chamfer ratio to be used for the pad, considering
+        `chamfer_exact`, `maximum_chamfer`, and `chamfer_ratio` in that order of
+        precedence.
+
+        Args:
+            shortest_sidelength: The shortest sidelength of a pad.
+
+        Returns:
+            The resulting chamfer ratio to be used for the pad.
+
+        Raises:
+            ValueError: If the `chamfer_exact` is too large for the pad size.
         """
-
         if self.chamfer_exact is not None:
-            if self.chamfer_exact > shortest_sidelength/2:
+            if self.chamfer_exact > shortest_sidelength / 2:
                 raise ValueError(
-                    "requested chamfer of {} is too large for pad size of {}"
-                    .format(self.chamfer_exact, shortest_sidelength)
+                    "requested chamfer of {} is too large for pad size of {}".format(
+                        self.chamfer_exact, shortest_sidelength
+                    )
                 )
             if self.maximum_chamfer is not None:
-                return min(self.chamfer_exact, self.maximum_chamfer)/shortest_sidelength
+                return (
+                    min(self.chamfer_exact, self.maximum_chamfer) / shortest_sidelength
+                )
             else:
-                return self.chamfer_exact/shortest_sidelength
+                return self.chamfer_exact / shortest_sidelength
 
         if self.maximum_chamfer is not None:
-            if self.chamfer_ratio*shortest_sidelength > self.maximum_chamfer:
-                return self.maximum_chamfer/shortest_sidelength
+            if self.chamfer_ratio * shortest_sidelength > self.maximum_chamfer:
+                return self.maximum_chamfer / shortest_sidelength
 
         return self.chamfer_ratio
 
-    def get_chamfer_size(self, shortest_sidelength) -> float:
-        r"""get the resulting chamfer size
+    def get_chamfer_size(self, shortest_sidelength: float) -> float:
+        """Get the resulting chamfer size.
 
-        :param shortest_sidelength: shortest sidelength of a pad
-        :return: the resulting chamfer size to be used for the pad
+        Calculates the actual chamfer size based on the chamfer ratio and the shortest
+        sidelength of the pad.
+
+        Args:
+            shortest_sidelength: The shortest sidelength of a pad.
+
+        Returns:
+            The resulting chamfer size to be used for the pad.
         """
         return self.get_chamfer_ratio(shortest_sidelength) * shortest_sidelength
 
-    def chamfer_requested(self):
-        r"""Check if the handler indicates a non-zero chamfer
+    def chamfer_requested(self) -> bool:
+        """Check if the handler indicates a non-zero chamfer.
 
-        :return: True if a chamfer is requested
+        Returns:
+            `True` if a chamfer is requested (i.e., chamfer size is non-zero), `False`
+            otherwise.
         """
         if self.maximum_chamfer == 0:
             return False
-
         if self.chamfer_exact == 0:
             return False
-
         if self.chamfer_ratio == 0:
             return False
-
         return True
 
-    def limit_max_chamfer(self, limit) -> None:
-        r"""Set a new maximum limit
+    def limit_max_chamfer(self, limit: float) -> None:
+        """Set a new maximum chamfer limit.
 
-        :param limit: the new limit.
+        If a chamfer is requested and a maximum chamfer is already set, this method
+        updates `maximum_chamfer` to the minimum of its current value and the given
+        `limit`. If no maximum chamfer was set, it sets `maximum_chamfer` to the given
+        `limit`.
+
+        Args:
+            limit: The new maximum chamfer limit.
         """
         if not self.chamfer_requested():
             return
@@ -212,7 +294,12 @@ class ChamferSizeHandler(object):
             self.maximum_chamfer = limit
 
     def __str__(self) -> str:
+        """Returns a string representation of the ChamferSizeHandler.
+
+        Returns:
+            A string showing the current chamfer ratio, maximum chamfer, and exact
+            chamfer.
+        """
         return "ratio {}, max {}, exact {}".format(
-            self.chamfer_ratio, self.maximum_chamfer,
-            self.chamfer_exact
+            self.chamfer_ratio, self.maximum_chamfer, self.chamfer_exact
         )

@@ -14,20 +14,21 @@
 """Class definition for handling corner selections."""
 
 from __future__ import annotations
+
 from collections.abc import Sequence
 from typing import Generator, Self
 
 
-class CornerSelection():
+class CornerSelection:
     """Class for handling corner selection."""
 
-    TOP_LEFT = 'tl'
+    TOP_LEFT = "tl"
     """The top left corner."""
-    TOP_RIGHT = 'tr'
+    TOP_RIGHT = "tr"
     """The top right corner."""
-    BOTTOM_RIGHT = 'br'
+    BOTTOM_RIGHT = "br"
     """The bottom right corner."""
-    BOTTOM_LEFT = 'bl'
+    BOTTOM_LEFT = "bl"
     """The bottom left corner."""
 
     top_left: bool
@@ -41,7 +42,9 @@ class CornerSelection():
 
     def __init__(
         self,
-        corner_selection: CornerSelection | Sequence[bool] | dict[str, str | bool | int] | int | None,
+        corner_selection: (
+            CornerSelection | Sequence[bool] | dict[str, str | bool | int] | int | None
+        ),
     ) -> None:
         """Create a corner selection.
 
@@ -67,7 +70,9 @@ class CornerSelection():
             elif corner_selection == 0 or corner_selection is None:
                 return
             else:
-                raise ValueError(f"Invalid value {corner_selection} for corner_selection.")
+                raise ValueError(
+                    f"Invalid value {corner_selection} for corner_selection."
+                )
         elif isinstance(corner_selection, dict):
             for key in corner_selection:
                 self[key] = bool(corner_selection[key])
@@ -173,7 +178,7 @@ class CornerSelection():
             return self.bottom_right
         if item in [3, CornerSelection.BOTTOM_LEFT]:
             return self.bottom_left
-        raise IndexError('Index {} is out of range'.format(item))
+        raise IndexError("Index {} is out of range".format(item))
 
     def __setitem__(self, item: int | str, value: bool | int | str) -> None:
         """Set the given item."""
@@ -186,7 +191,7 @@ class CornerSelection():
         elif item in [3, CornerSelection.BOTTOM_LEFT]:
             self.bottom_left = bool(value)
         else:
-            raise IndexError('Index {} is out of range'.format(item))
+            raise IndexError("Index {} is out of range".format(item))
 
     def to_dict(self) -> dict[str, bool]:
         """Convert the corner selection to a dictionary."""
@@ -194,8 +199,8 @@ class CornerSelection():
             CornerSelection.TOP_LEFT: self.top_left,
             CornerSelection.TOP_RIGHT: self.top_right,
             CornerSelection.BOTTOM_RIGHT: self.bottom_right,
-            CornerSelection.BOTTOM_LEFT: self.bottom_left
-            }
+            CornerSelection.BOTTOM_LEFT: self.bottom_left,
+        }
 
     def __str__(self) -> str:
         """Return a string representation of the corner selection."""

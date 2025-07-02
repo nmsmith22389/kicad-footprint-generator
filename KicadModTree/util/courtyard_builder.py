@@ -1,51 +1,63 @@
-# KicadModTree is free software: you can redistribute it and/or
-# modify it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
+# kilibs is free software: you can redistribute it and/or modify it under the terms of
+# the GNU General Public License as published by the Free Software Foundation, either
+# version 3 of the License, or (at your option) any later version.
 #
-# KicadModTree is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
+# kilibs is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+# without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+# PURPOSE. See the GNU General Public License for more details.
 #
-# You should have received a copy of the GNU General Public License
-# along with kicad-footprint-generator. If not, see < http://www.gnu.org/licenses/ >.
+# You should have received a copy of the GNU General Public License along with kilibs.
+# If not, see < http://www.gnu.org/licenses/ >.
 #
-# Copyright The KiCad Developers.
+# (C) The KiCad Librarian Team
+
 
 from __future__ import annotations
 
 from operator import itemgetter
-from typing import Self
 
-import pyclipper
+import pyclipper  # type: ignore
 
-from KicadModTree import (
-    ExposedPad,
-    Line,
-    Node,
-    Pad,
-    PadArray,
-    PolygonLine,
-    Rectangle,
-    RectLine,
-    Vector2D,
-    ReferencedPad,
-)
-from kilibs.geom import BoundingBox, GeomPolygon, GeomRectangle
+from KicadModTree.nodes.base.Line import Line
+from KicadModTree.nodes.base.Pad import Pad, ReferencedPad
+from KicadModTree.nodes.base.Polygon import Polygon
+from KicadModTree.nodes.base.Rectangle import Rectangle
+from KicadModTree.nodes.Node import Node
+from KicadModTree.nodes.NodeShape import NodeShape
+from KicadModTree.nodes.specialized.ExposedPad import ExposedPad
+from KicadModTree.nodes.specialized.PadArray import PadArray
+from KicadModTree.nodes.specialized.PolygonLine import PolygonLine
+from KicadModTree.nodes.specialized.RectLine import RectLine
+from kilibs.geom.bounding_box import BoundingBox
+from kilibs.geom.shapes.geom_polygon import GeomPolygon
+from kilibs.geom.shapes.geom_rectangle import GeomRectangle
 from kilibs.geom.tools import is_polygon_clockwise, round_to_grid_increasing_area
+from kilibs.geom.vector import Vector2D
 from scripts.tools.global_config_files.global_config import GlobalConfig
 
 
 class CourtyardBuilder:
     SCALE_FACTOR = 1e6
+    """Scale factor that allows to convert between the KiCad resolution (1 nm) and the
+    resolution of an integer (1)."""
+
+    global_config: GlobalConfig
+    """The global config."""
+    src_pts: list[list[list[float]]]
+    """List of the source polygons."""
+    crt_pts: list[list[float]]
+    """The courtyard polygon."""
+    _node: NodeShape | None
+    """The courtyard node."""
+    _bbox: BoundingBox | None
+    """The bounding box of the courtyard."""
 
     def __init__(self, global_config: GlobalConfig) -> None:
         self.global_config = global_config
-        self.src_pts: list[float] = []  # source points
-        self.crt_pts: list[float] = []  # courtyard points
-        self._node: Node | None = None
-        self._bbox: BoundingBox | None = None
+        self.src_pts = []  # source points
+        self.crt_pts = []  # courtyard points
+        self._node = None
+        self._bbox = None
 
     @classmethod
     def from_node(
@@ -65,8 +77,10 @@ class CourtyardBuilder:
         Args:
             node: a node (typically the footprint).
             global_config: the global config.
-            offset_fab: minimum clearance between courtyard and primitives on the fabrication layer.
-            offset_pads: minimum clearance between courtyard and the pads. If omitted, the value of offset_fab is used.
+            offset_fab: minimum clearance between courtyard and primitives on the
+                fabrication layer.
+            offset_pads: minimum clearance between courtyard and the pads. If omitted,
+                the value of offset_fab is used.
             outline: optional outline of the component body.
 
         Returns:
@@ -85,66 +99,72 @@ class CourtyardBuilder:
 
     @property
     def bbox(self) -> BoundingBox:
-        """
-        Get the bounding box of the courtyard.
-        """
+        """Get the bounding box of the courtyard."""
         if self._bbox is None:
             top = min(self.crt_pts, key=itemgetter(1))[1]
             bottom = max(self.crt_pts, key=itemgetter(1))[1]
             left = min(self.crt_pts, key=itemgetter(0))[0]
             right = max(self.crt_pts, key=itemgetter(0))[0]
-            p1 = Vector2D(left, top)
-            p2 = Vector2D(right, bottom)
-            self._bbox = BoundingBox(p1, p2)
+            p1 = Vector2D.from_floats(left, top)
+            p2 = Vector2D.from_floats(right, bottom)
+            self._bbox = BoundingBox.from_vector2d(p1, p2)
             return self._bbox
         else:
             return self._bbox
 
     @property
-    def node(self) -> Node:
-        """
-        Get the courtyard node.
-        """
+    def node(self) -> NodeShape:
+        """The courtyard node."""
         if self._node is None:
             return self._build()
         else:
             return self._node
 
-    def _build(self) -> Node:
-        """
-        Calculate and return the courtyard node.
-        """
+    def _build(self) -> NodeShape:
+        """Calculate and return the courtyard node and return it."""
         if len(self.src_pts) == 0:
             raise RuntimeError("Insufficient shapes to build a courtyard from.")
-        pc = pyclipper.Pyclipper()
-        pc.AddPaths(
-            pyclipper.scale_to_clipper(self.src_pts, CourtyardBuilder.SCALE_FACTOR),
-            pyclipper.PT_SUBJECT,
-            True,
+        pc = pyclipper.Pyclipper()  # pyright: ignore
+        pc.AddPaths(  # pyright: ignore
+            pyclipper.scale_to_clipper(  # pyright: ignore
+                self.src_pts, CourtyardBuilder.SCALE_FACTOR
+            ),
+            pyclipper.PT_SUBJECT,  # pyright: ignore
+            True,  # pyright: ignore
         )
-        result = pc.Execute(
-            pyclipper.CT_UNION, pyclipper.PFT_NONZERO, pyclipper.PFT_NONZERO
+        result: list[list[list[float]]] = pc.Execute(  # pyright: ignore
+            pyclipper.CT_UNION,  # pyright: ignore
+            pyclipper.PFT_NONZERO,  # pyright: ignore
+            pyclipper.PFT_NONZERO,  # pyright: ignore
         )
-        if len(result) != 1:
-            result = CourtyardBuilder._remove_holes(result)
-        if len(result) != 1:
-            result = CourtyardBuilder._unite_disjunct_courtyards(result)
+        if len(result) != 1:  # pyright: ignore
+            result = CourtyardBuilder._remove_holes(result)  # pyright: ignore
+        if len(result) != 1:  # pyright: ignore
+            result = CourtyardBuilder._unite_disjunct_courtyards(
+                result  # pyright: ignore
+            )
         round_to_grid_increasing_area(
-            result[0],
+            result[0],  # pyright: ignore
             int(self.global_config.courtyard_grid * CourtyardBuilder.SCALE_FACTOR),
         )
-        result = CourtyardBuilder._simplify(result)
-        crt_pts = pyclipper.scale_from_clipper(result, CourtyardBuilder.SCALE_FACTOR)[0]
+        result = CourtyardBuilder._simplify(result)  # pyright: ignore
+        crt_pts: list[list[float]] = pyclipper.scale_from_clipper(  # pyright: ignore
+            result, CourtyardBuilder.SCALE_FACTOR
+        )[0]
         self.crt_pts = crt_pts
 
         width = self.global_config.courtyard_line_width
-        if len(crt_pts) == 4:
-            p1 = crt_pts[0]
-            p2 = crt_pts[2]
-            self._node = Rectangle(width=width, layer="F.CrtYd", start=p1, end=p2)
+        if len(crt_pts) == 4:  # pyright: ignore
+            p1 = crt_pts[0]  # pyright: ignore
+            p2 = crt_pts[2]  # pyright: ignore
+            self._node = Rectangle(
+                width=width, layer="F.CrtYd", start=p1, end=p2  # pyright: ignore
+            )
         else:
-            crt_pts.append(crt_pts[0])  # close the courtyard
-            self._node = PolygonLine(shape=crt_pts, width=width, layer="F.CrtYd")
+            crt_pts.append(crt_pts[0])  # close the courtyard  # pyright: ignore
+            self._node = PolygonLine(
+                shape=crt_pts, width=width, layer="F.CrtYd"  # pyright: ignore
+            )
         return self._node
 
     def add_element(
@@ -168,7 +188,7 @@ class CourtyardBuilder:
         elif isinstance(node, GeomRectangle | BoundingBox):
             self.add_rectangle(node, offset_fab)
         elif (
-            isinstance(node, PolygonLine | GeomPolygon)
+            isinstance(node, PolygonLine | Polygon)
             and node.layer == "F.Fab"
             and use_fab_layer
         ):
@@ -180,7 +200,9 @@ class CourtyardBuilder:
         elif isinstance(node, PadArray):
             self.add_pad_array(node, offset_pads)
 
-    def add_rectangle(self, rectangle: GeomRectangle | BoundingBox, offset: float) -> None:
+    def add_rectangle(
+        self, rectangle: GeomRectangle | BoundingBox, offset: float
+    ) -> None:
         """
         Add a GeomRectangle or BoundingBox to the list of courtyard points.
         """
@@ -204,10 +226,10 @@ class CourtyardBuilder:
             top = rect.top - offset
             bottom = rect.bottom + offset
         else:
-            left = min(rect.start.x, rect.end.x) - offset
-            right = max(rect.start.x, rect.end.x) + offset
-            top = min(rect.start.y, rect.end.y) - offset
-            bottom = max(rect.start.y, rect.end.y) + offset
+            left = min(rect.start.x, rect.end.x) - offset  # pyright: ignore
+            right = max(rect.start.x, rect.end.x) + offset  # pyright: ignore
+            top = min(rect.start.y, rect.end.y) - offset  # pyright: ignore
+            bottom = max(rect.start.y, rect.end.y) + offset  # pyright: ignore
         self.src_pts.append(
             [[right, top], [right, bottom], [left, bottom], [left, top]]
         )
@@ -217,9 +239,9 @@ class CourtyardBuilder:
         """
         Add a Polygon to the list of courtyard points.
         """
-        polygon = []
+        polygon: list[list[float]] = []
         for point in pl.points:
-            if isinstance(point, Vector2D):
+            if isinstance(point, Vector2D):  # pyright: ignore
                 polygon.append([point.x, point.y])
 
         if len(polygon) < 2:
@@ -227,27 +249,35 @@ class CourtyardBuilder:
             return
         elif len(polygon) == 2:
             # polygons with 2 vertices are just lines
-            self.add_line(Line(start=polygon[0], end=polygon[1]), offset)
+            self.add_line(
+                Line(start=polygon[0], end=polygon[1]), offset
+            )  # pyright: ignore
             return
         else:
             # add offset around polygon
-            pco = pyclipper.PyclipperOffset()
-            polygon = pyclipper.scale_to_clipper(polygon, CourtyardBuilder.SCALE_FACTOR)
-            pco.AddPath(polygon, pyclipper.JT_MITER, pyclipper.ET_CLOSEDPOLYGON)
-            polygon = pyclipper.scale_from_clipper(
-                pco.Execute(int(offset * CourtyardBuilder.SCALE_FACTOR)),
-                CourtyardBuilder.SCALE_FACTOR,
+            pco = pyclipper.PyclipperOffset()  # pyright: ignore
+            polygon = pyclipper.scale_to_clipper(  # pyright: ignore
+                polygon, CourtyardBuilder.SCALE_FACTOR
             )
+            pco.AddPath(  # pyright: ignore
+                polygon,
+                pyclipper.JT_MITER,  # pyright: ignore
+                pyclipper.ET_CLOSEDPOLYGON,  # pyright: ignore
+            )
+            polygon = pyclipper.scale_from_clipper(  # pyright: ignore
+                pco.Execute(  # pyright: ignore
+                    int(offset * CourtyardBuilder.SCALE_FACTOR)
+                ),
+                CourtyardBuilder.SCALE_FACTOR,
+            )[0]
             # make sure that the polygon is defined in clockwise direction
-            if not is_polygon_clockwise(polygon[0]):
-                polygon[0].reverse()
-            self.src_pts.append(polygon[0])
+            if not is_polygon_clockwise(polygon):  # pyright: ignore
+                polygon.reverse()  # pyright: ignore
+            self.src_pts.append(polygon)  # pyright: ignore
             self._node = None  # invalidate previous node calculations
 
     def add_line(self, line: Line, offset: float) -> None:
-        """
-        Add a Line to the list of courtyard points.
-        """
+        """Add a Line to the list of courtyard points."""
         delta_parallel = (line.end - line.start).normalize() * offset
         delta_orthogonal = delta_parallel.orthogonal().normalize() * offset
         pts: list[Vector2D] = []
@@ -258,7 +288,7 @@ class CourtyardBuilder:
         self.src_pts.append([[pt.x, pt.y] for pt in pts])
         self._node = None  # invalidate previous node calculations
 
-    def add_pad(self, pad: Pad | ExposedPad, offset: float) -> None:
+    def add_pad(self, pad: Pad | ExposedPad | ReferencedPad, offset: float) -> None:
         """
         Add a Pad or ExposedPad to the list of courtyard points.
         """
@@ -298,24 +328,28 @@ class CourtyardBuilder:
 
         # increase offset around polygons and unite them
         # (PyclipperOffset automatically unites overlapping polygons)
-        pco = pyclipper.PyclipperOffset()
-        pco.AddPaths(crts, pyclipper.JT_MITER, pyclipper.ET_CLOSEDPOLYGON)
-        crts = pco.Execute(offset)
+        pco = pyclipper.PyclipperOffset()  # pyright: ignore
+        pco.AddPaths(  # pyright: ignore
+            crts, pyclipper.JT_MITER, pyclipper.ET_CLOSEDPOLYGON  # pyright: ignore
+        )
+        crts = pco.Execute(offset)  # pyright: ignore
 
         # decrease offset around polygons
-        pco.Clear()
-        pco.AddPaths(crts, pyclipper.JT_MITER, pyclipper.ET_CLOSEDPOLYGON)
-        crts = pco.Execute(-offset)
+        pco.Clear()  # pyright: ignore
+        pco.AddPaths(  # pyright: ignore
+            crts, pyclipper.JT_MITER, pyclipper.ET_CLOSEDPOLYGON  # pyright: ignore
+        )
+        crts = pco.Execute(-offset)  # pyright: ignore
 
-        if len(crts) != 1:
+        if len(crts) != 1:  # pyright: ignore
             raise ValueError(f"Failed to unite courtyards.")
             # If this error is thrown, try increasing the value of 'offset'.
 
-        return crts
+        return crts  # pyright: ignore
 
     @staticmethod
     def _remove_holes(crts: list[list[list[float]]]) -> list[list[list[float]]]:
-        crts_without_holes = []
+        crts_without_holes: list[list[list[float]]] = []
         for crt in crts:
             if is_polygon_clockwise(crt):
                 crts_without_holes.append(crt)
@@ -323,5 +357,5 @@ class CourtyardBuilder:
 
     @staticmethod
     def _simplify(crts: list[list[list[float]]]) -> list[list[list[float]]]:
-        pc = pyclipper.Pyclipper()
-        return pyclipper.SimplifyPolygons(crts, pyclipper.PFT_NONZERO)
+        pc = pyclipper.Pyclipper()  # pyright: ignore
+        return pyclipper.SimplifyPolygons(crts, pyclipper.PFT_NONZERO)  # type: ignore
