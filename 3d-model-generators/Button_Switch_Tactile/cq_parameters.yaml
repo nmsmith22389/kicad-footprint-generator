@@ -1795,8 +1795,8 @@ SW_Push_1P1T_NO_CK_PTS125Sx73PSMTR:
     [0,  4.5, 1.5, -1.7, z, 0.2, chamfer, [0.25, 0.25]],
   ]
 
-SW_SPST_PTS645:
-  modelName: SW_SPST_PTS645
+SW_SPST_PTS645Sx43SMTR92:
+  modelName: SW_SPST_PTS645Sx43SMTR92
   model_class: tactile
 
   body_width: 6.0
@@ -1825,7 +1825,7 @@ SW_SPST_PTS645:
   actuator_type: top-round
   actuator_height: 4.3
   actuator_diameter: 3.5
-  actuator_shell_gap: 0.01
+  actuator_shell_gap: 0.05
   actuator_top_fillet: 0.2
 
   pin_type: gullwing
