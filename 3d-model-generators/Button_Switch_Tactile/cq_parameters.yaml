@@ -1929,7 +1929,7 @@ SW_SPST_PTS810:
   pin_thickness: 0.1
   pin_length: 0.8
   pin_top_height: 0.5
-  pin_top_length: 0.2
+  pin_top_length: 0.125
   pin_corner_radius: 0.1
   pins: [
     [-2.3,  1.075, 180],
