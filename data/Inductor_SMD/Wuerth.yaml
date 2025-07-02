@@ -1,3 +1,21 @@
+- series: HCI
+  manufacturer: Wuerth
+  datasheet: "https://www.we-online.com/en/components/products/WE-HCI"
+  # There are two 1890 series, the only difference is the lead width
+  # (4.2 and 3.2mm). FPs are the same. Include the wider one.
+  csv: Wuerth_hci.csv
+  3d:
+    type: 2
+    bodyColor: dark grey body
+    pinColor: metal grey pins
+    padThickness: 0.05
+  tags:
+    - flat-wire
+    - shielded
+    - Würth
+    - SMT
+  library_name: Inductor_SMD
+
 - series: MAPI
   manufacturer: Wuerth
   datasheet: "https://www.we-online.com/en/components/products/WE-MAPI?kicad"
