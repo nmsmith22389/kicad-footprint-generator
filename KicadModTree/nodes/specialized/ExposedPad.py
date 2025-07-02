@@ -137,7 +137,7 @@ class ExposedPad(Node):
             paste_radius_handler: The radius handler for the paste pads.
             at: The center of the exposed pad.
             mask_size: Size of the mask cutout (If not given, mask will be part of the
-                main pad)
+                top pad)
             size_round_base: Base used for rounding calculated sizes. 0.0 means no
                 rounding.
             grid_round_base: Base used for rounding calculated grids. 0.0 means no
@@ -154,7 +154,7 @@ class ExposedPad(Node):
             via_grid: Thermal via grid specification. Grid used for thermal vias in x-
                 and y-direction. If only a single integer given, x- and y-direction use
                 the same count. If none is given then the via grid will be automatically
-                calculated to have them distributed across the main pad.
+                calculated to have them distributed across the top pad.
             remove_corner_vias: Remove vias in the corners of the pad.
             paste_avoid_via: Paste automatically generated to avoid vias.
             paste_coverage: The amount of the mask's free area that is covered with
@@ -274,7 +274,7 @@ class ExposedPad(Node):
             via_grid: Thermal via grid specification. Grid used for thermal vias in x-
                 and y-direction. If only a single integer given, x- and y-direction use
                 the same count. If none is given then the via grid will be automatically
-                calculated to have them distributed across the main pad.
+                calculated to have them distributed across the top pad.
             remove_corner_vias: Remove vias in the corners of the pad.
             grid_round_base: Base used for rounding calculated grids. 0.0 means no
                 rounding.
@@ -722,13 +722,13 @@ class ExposedPad(Node):
             pads += self._create_paste_ignore_via()
         return pads
 
-    def _create_main_pad(self) -> list[Pad | ReferencedPad]:
-        """Create the main pads."""
+    def _create_top_pad(self) -> list[Pad | ReferencedPad]:
+        """Create the top pad(s)."""
         pads: list[Pad | ReferencedPad] = []
         if self.size == self.mask_size:
-            layers_main = ["F.Cu", "F.Mask"]
+            layers_top = ["F.Cu", "F.Mask"]
         else:
-            layers_main = ["F.Cu"]
+            layers_top = ["F.Cu"]
             pads.append(
                 Pad(
                     number="",
@@ -749,7 +749,7 @@ class ExposedPad(Node):
                 shape=Pad.SHAPE_ROUNDRECT,
                 type=Pad.TYPE_SMT,
                 fab_property=Pad.FabProperty.HEATSINK,
-                layers=layers_main,
+                layers=layers_top,
                 round_radius_handler=self.round_radius_handler,
                 zone_connection=Pad.ZoneConnection.SOLID,
             )
@@ -816,7 +816,7 @@ class ExposedPad(Node):
         """Return the nodes to serialize."""
         if self.has_vias:
             self.round_radius_handler.limit_max_radius(self.via_size / 2)
-        self._pads = self._create_main_pad()
+        self._pads = self._create_top_pad()
         if self.has_vias:
             self._pads += self._create_vias()
         self._pads += self._create_paste()
