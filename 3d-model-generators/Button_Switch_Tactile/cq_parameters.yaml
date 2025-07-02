@@ -2236,8 +2236,11 @@ SW_PUSH-12mm_Wuerth-430476085716:
     [add, cylinder, [-4.25,  4.25, 3.75], [1.3, 0.5], fillet, [">Z", 0.4]],
     [add, cylinder, [ 4.25, -4.25, 3.75], [1.3, 0.5], fillet, [">Z", 0.4]],
     [add, cylinder, [ 4.25,  4.25, 3.75], [1.3, 0.5], fillet, [">Z", 0.4]],
-    [cut, box, [0, 0, 0.05], [12, 5, 0.1]],
-    [cut, box, [0, 0, 0.05], [5, 12, 0.1]],
+    [cut, box, [0, 0, 0.05], [12, 12, 0.1]],
+    [add, box, [-4.25, -4.25, 0.05], [3.5, 3.5, 0.1], fillet, ["|Z and ((<X and <Y) or (>X and >Y))", 1]],
+    [add, box, [-4.25,  4.25, 0.05], [3.5, 3.5, 0.1], fillet, ["|Z and ((<X and >Y) or (>X and <Y))", 1]],
+    [add, box, [ 4.25, -4.25, 0.05], [3.5, 3.5, 0.1], fillet, ["|Z and ((>X and <Y) or (<X and >Y))", 1]],
+    [add, box, [ 4.25,  4.25, 0.05], [3.5, 3.5, 0.1], fillet, ["|Z and ((>X and >Y) or (<X and <Y))", 1]],
   ]
 
   shell_width: 11.0
@@ -2267,7 +2270,7 @@ SW_PUSH-12mm_Wuerth-430476085716:
     [0.05, -0.70],
     [0.75, -2.10],
   ]
-  pin_corner_radius: 0.5
+  pin_corner_radius: 0.3
   pin_tip_chamfer: [0.2, 1.0]
   pins: [
     [-6.25,  2.5, 180],
