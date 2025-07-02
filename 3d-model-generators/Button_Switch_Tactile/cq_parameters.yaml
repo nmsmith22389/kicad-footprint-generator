@@ -1687,14 +1687,14 @@ SW_Push_1P1T_NO_CK_PTS125Sx43SMTR: &SW_Push_1P1T_NO_CK_PTS125Sx43SMTR
   body_width: 12.0
   body_length: 12.0
   body_height: 3.3
-  body_corner_chamfer: 1.5
+  body_corner_chamfer: 1.1
   body_features: [
-    [cut, box, [0, 0, 3.15], [10.3, 10.3, 0.3], chamfer, ["|Z", 1]], # op, type, pos, dim, extra
-    [cut, box, [0, 0, 3.15], [1.35, 12.0, 0.3]],
-    [add, cylinder, [-3.9, -3.9, 3.3], [1.3, 0.6], fillet, [">Z", 0.2]],
-    [add, cylinder, [-3.9,  3.9, 3.3], [1.3, 0.6], fillet, [">Z", 0.2]],
-    [add, cylinder, [ 3.9, -3.9, 3.3], [1.3, 0.6], fillet, [">Z", 0.2]],
-    [add, cylinder, [ 3.9,  3.9, 3.3], [1.3, 0.6], fillet, [">Z", 0.2]],
+    [cut, box, [0, 0, 3.15], [10.4, 10.4, 0.3], chamfer, ["|Z", 0.65]], # op, type, pos, dim, extra
+    [cut, box, [0, 0, 3.15], [12.0, 1.6, 0.3]],
+    [add, cylinder, [-3.9, -3.9, 3.3], [1.5, 0.6], fillet, [">Z", 0.2]],
+    [add, cylinder, [-3.9,  3.9, 3.3], [1.5, 0.6], fillet, [">Z", 0.2]],
+    [add, cylinder, [ 3.9, -3.9, 3.3], [1.5, 0.6], fillet, [">Z", 0.2]],
+    [add, cylinder, [ 3.9,  3.9, 3.3], [1.5, 0.6], fillet, [">Z", 0.2]],
     [cut, box, [0, 0, 0.1], [12, 7, 0.2]],
     [cut, box, [0, 0, 0.1], [7, 12, 0.2]],
     [cut, box, [0, -5.775, 0.1], [12.0, 0.45, 0.2]],
@@ -1707,14 +1707,14 @@ SW_Push_1P1T_NO_CK_PTS125Sx43SMTR: &SW_Push_1P1T_NO_CK_PTS125Sx43SMTR
     [cut, poly, [0, 0, 0.1], [0.2,  6, 6,  4, 6,  6, 4]],
   ]
 
-  shell_width: 9.7
-  shell_length: 9.7
+  shell_width: 10
+  shell_length: 10
   shell_height: 3.3
   shell_thickness: 0.3
-  shell_corner_chamfer: 0.825
+  shell_corner_chamfer: 0.5
   shell_top_lips: [
-    [cut, [90, 270], -1.5, -0.45, 0.9, 0.9], # op, direction, offs, len, base_w, tip_w
-    [cut, [90, 270],  1.5, -0.45, 0.9, 0.9],
+    [cut, [0, 90, 180, 270], -2.25, -0.25, 0.9, 0.9], # op, direction, offs, len, base_w, tip_w
+    [cut, [0, 90, 180, 270],  2.25, -0.25, 0.9, 0.9],
   ]
 
   actuator_type: top-round
@@ -1729,7 +1729,6 @@ SW_Push_1P1T_NO_CK_PTS125Sx43SMTR: &SW_Push_1P1T_NO_CK_PTS125Sx43SMTR
   pin_length: 1.65
   pin_top_height: 1.3
   pin_top_length: 0.6
-  pin_bottom_height: -0.05
   pin_bottom_length: 0.7
   pin_corner_radius: 0.5
   pins: [
@@ -1752,7 +1751,7 @@ SW_Push_1P1T_NO_CK_PTS125Sx85SMTR:
 
   actuator_height: 8.5
 
-SW_Push_1P1T_NO_CK_PTS125Sx73SMTR: &SW_Push_1P1T_NO_CK_PTS125Sx73SMTR
+SW_Push_1P1T_NO_CK_PTS125Sx73SMTR:
   <<: *SW_Push_1P1T_NO_CK_PTS125Sx43SMTR
   modelName: SW_Push_1P1T_NO_CK_PTS125Sx73SMTR
 
@@ -1772,6 +1771,34 @@ SW_Push_1P1T_NO_CK_PTS125Sx43PSMTR: &SW_Push_1P1T_NO_CK_PTS125Sx43PSMTR
   <<: *SW_Push_1P1T_NO_CK_PTS125Sx43SMTR
   modelName: SW_Push_1P1T_NO_CK_PTS125Sx43PSMTR
 
+  body_corner_chamfer: 1.5
+  body_features: [
+    [cut, box, [0, 0, 3.15], [10.3, 10.3, 0.3], chamfer, ["|Z", 1]], # op, type, pos, dim, extra
+    [cut, box, [0, 0, 3.15], [1.35, 12.0, 0.3]],
+    [add, cylinder, [-3.9, -3.9, 3.3], [1.3, 0.6], fillet, [">Z", 0.2]],
+    [add, cylinder, [-3.9,  3.9, 3.3], [1.3, 0.6], fillet, [">Z", 0.2]],
+    [add, cylinder, [ 3.9, -3.9, 3.3], [1.3, 0.6], fillet, [">Z", 0.2]],
+    [add, cylinder, [ 3.9,  3.9, 3.3], [1.3, 0.6], fillet, [">Z", 0.2]],
+    [cut, box, [0, 0, 0.1], [12, 7, 0.2]],
+    [cut, box, [0, 0, 0.1], [7, 12, 0.2]],
+    [cut, box, [0, -5.775, 0.1], [12.0, 0.45, 0.2]],
+    [cut, box, [0,  5.775, 0.1], [12.0, 0.45, 0.2]],
+    [cut, box, [-5.775, 0, 0.1], [0.45, 12.0, 0.2]],
+    [cut, box, [ 5.775, 0, 0.1], [0.45, 12.0, 0.2]],
+    [cut, poly, [0, 0, 0.1], [0.2, -6,-6, -4,-6, -6,-4]],
+    [cut, poly, [0, 0, 0.1], [0.2, -6, 6, -4, 6, -6, 4]],
+    [cut, poly, [0, 0, 0.1], [0.2,  6,-6,  4,-6,  6,-4]],
+    [cut, poly, [0, 0, 0.1], [0.2,  6, 6,  4, 6,  6, 4]],
+  ]
+
+  shell_width: 9.7
+  shell_length: 9.7
+  shell_corner_chamfer: 0.825
+  shell_top_lips: [
+     [cut, [90, 270], -1.5, -0.45, 0.9, 0.9], # op, direction, offs, len, base_w, tip_w
+     [cut, [90, 270],  1.5, -0.45, 0.9, 0.9],
+   ]
+
   pegs: [
     [0, -4.5, 1.5, -1.7, z, 0.2, chamfer, [0.25, 0.25]], # x, y, diameter, height, extra params
     [0,  4.5, 1.5, -1.7, z, 0.2, chamfer, [0.25, 0.25]],
@@ -1780,6 +1807,8 @@ SW_Push_1P1T_NO_CK_PTS125Sx43PSMTR: &SW_Push_1P1T_NO_CK_PTS125Sx43PSMTR
   actuator_diameter: 7.0
   actuator_top_fillet: 0.1
 
+  pin_bottom_height: -0.05
+
 SW_Push_1P1T_NO_CK_PTS125Sx85PSMTR:
   <<: *SW_Push_1P1T_NO_CK_PTS125Sx43PSMTR
   modelName: SW_Push_1P1T_NO_CK_PTS125Sx85PSMTR
@@ -1787,13 +1816,20 @@ SW_Push_1P1T_NO_CK_PTS125Sx85PSMTR:
   actuator_height: 8.5
 
 SW_Push_1P1T_NO_CK_PTS125Sx73PSMTR:
-  <<: *SW_Push_1P1T_NO_CK_PTS125Sx73SMTR
+  <<: *SW_Push_1P1T_NO_CK_PTS125Sx43PSMTR
   modelName: SW_Push_1P1T_NO_CK_PTS125Sx73PSMTR
 
-  pegs: [
-    [0, -4.5, 1.5, -1.7, z, 0.2, chamfer, [0.25, 0.25]], # x, y, diameter, height, extra params
-    [0,  4.5, 1.5, -1.7, z, 0.2, chamfer, [0.25, 0.25]],
-  ]
+  actuator_type: top-rectangle
+  actuator_round_base_height: 4.0
+  actuator_round_base_diameter: 7
+  actuator_round_base_fillet: 0.1
+  actuator_height: [5.3, 5.3, 7.3]
+  actuator_width: [3.0, 3.0, 3.8, 3.8]
+  actuator_fillet: [0, 0, 0.1, 0.1]
+  actuator_top_hole_diameter: 2.0
+  actuator_top_hole_depth: 2.1
+  actuator_top_hole_chamfer: [0.2, 0.2]
+  actuator_shell_gap: 0.2
 
 SW_SPST_PTS645Sx43SMTR92:
   modelName: SW_SPST_PTS645Sx43SMTR92
