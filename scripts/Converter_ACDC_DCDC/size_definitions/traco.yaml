@@ -895,3 +895,44 @@ Converter_DCDC_TRACO_TSR1.5-24xxE_24120E_THT:
     ["tht", "2", 0, -2.54, 2.2, 2.2, 1.4],
     ["tht", "3", 0, -5.08, 2.2, 2.2, 1.4]
   ]
+
+Converter_DCDC_TRACO_TES1-051x_121x_241x_Single_SMD:
+  library_name: 'Converter_DCDC'
+  description: "DCDC-Converter, TRACO, TES1-051x, TES1-121x, TES1-241x, Single, 1W, Rev. July 1. 2025"
+  datasheet: "https://www.tracopower.com/products/tes1.pdf"
+  tags: "DCDC-Converter TRACO TES1 SMD SMD8 1W"
+  smd_tht: smd
+  extratexts: []
+  at: [-4.2, 6.85]
+  size: [8.4, 13.7]
+  body_position_tolerance: [0.25, 0.25]
+  # For future use
+  height: 6.7
+  pins: [
+    ["smd", "1", -5.2, 3.81, 2.0, 1.2, 0],
+    ["smd", "2", -5.2, 1.27, 2.0, 1.2, 0],
+    ["smd", "4", -5.2, -3.81, 2.0, 1.2, 0],
+    ["smd", "5", 5.2, -3.81, 2.0, 1.2, 0],
+    ["smd", "8", 5.2, 3.81, 2.0, 1.2, 0]
+  ]
+
+Converter_DCDC_TRACO_TES1-052x_122x_242x_Dual_SMD:
+  library_name: 'Converter_DCDC'
+  description: "DCDC-Converter, TRACO, TES1-052x, TES1-122x, TES1-242x, Dual, 1W, Rev. July 1. 2025"
+  datasheet: "https://www.tracopower.com/products/tes1.pdf"
+  tags: "DCDC-Converter TRACO TES1 SMD SMD10 1W"
+  smd_tht: smd
+  extratexts: []
+  at: [-4.2, 8.12]
+  size: [8.4, 16.24]
+  body_position_tolerance: [0.25, 0.25]
+  # For future use
+  height: 6.9
+  pins: [
+    ["smd", "1", -5.2, 5.08, 2.0, 1.2, 0],
+    ["smd", "2", -5.2, 2.54, 2.0, 1.2, 0],
+    ["smd", "4", -5.2, -2.54, 2.0, 1.2, 0],
+    ["smd", "5", -5.2, -5.08, 2.0, 1.2, 0],
+    ["smd", "7", 5.2, -2.54, 2.0, 1.2, 0],
+    ["smd", "10", 5.2, 5.08, 2.0, 1.2, 0]
+  ]
