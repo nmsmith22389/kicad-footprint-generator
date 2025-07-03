@@ -81,7 +81,8 @@ class Inductor3DProperties:
     pin_color: str
     pad_thickness: float
     body_type: int | str
-    corner_radius: float
+    corner_radius: float | None
+    top_fillet_radius: float | None
     coil_color: str
     coil_style: int | None
     has_body: bool
@@ -106,7 +107,8 @@ class Inductor3DProperties:
         self.pad_color = data.get("pinColor", "metal grey pins")
         self.pad_thickness = data.get("padThickness", 0.05)
 
-        self.corner_radius = data.get("cornerRadius", 0)
+        self.corner_radius = data.get("cornerRadius", None)
+        self.top_fillet_radius = data.get("topFilletRadius", None)
 
 
 def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
@@ -323,11 +325,31 @@ class SmdInductorGenerator:
             print(f"seriesCornerRadius = {series_3d_props.corner_radius}")
         rotation = 0
         case = cq.Workplane("XY").box(widthX, lengthY, height, (True, True, False))
-        if series_3d_props.corner_radius == 0:
-            case = case.edges("|Z").fillet(min(lengthY, widthX) / 20)
-        else:
-            case = case.edges("|Z").fillet(series_3d_props.corner_radius)
-        case = case.edges(">Z").fillet(min(lengthY, widthX) / 20)
+
+        corner_fillet_radius = part_data.corner_radius
+
+        if corner_fillet_radius is None:
+            corner_fillet_radius = series_3d_props.corner_radius
+
+        if corner_fillet_radius is None:
+            # If no corner fillet radius, the default is 5%
+            corner_fillet_radius = min(lengthY, widthX) / 20
+
+        if corner_fillet_radius > 0:
+            case = case.edges("|Z").fillet(corner_fillet_radius)
+
+        top_fillet_radius = part_data.top_fillet_radius
+
+        if top_fillet_radius is None:
+            top_fillet_radius = series_3d_props.top_fillet_radius
+
+        if top_fillet_radius is None:
+            # If no top fillet radius, the default is 5%
+            top_fillet_radius = min(lengthY, widthX) / 20
+
+        if top_fillet_radius > 0:
+            case = case.edges(">Z").fillet(top_fillet_radius)
+
         if series_3d_props.body_type == 2:  # Exposed "wings"
             pad_thickness = min(3, height * 0.3)
         else:

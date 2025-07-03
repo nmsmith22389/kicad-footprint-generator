@@ -34,7 +34,9 @@ class SmdInductorProperties:
     height: float
     """Height of the inductor in mm."""
     corner_radius: float | None
-    """Optional corner radius of the inductor in mm."""
+    """Optional (vertical) corner radius of the inductor in mm."""
+    top_fillet_radius: float | None
+    """Optional (horizontal) top fillet radius of the inductor in mm."""
     core_diameter: float | None
     """Optional diameter of the core in mm."""
     landing_dims: TwoPadDimensions
@@ -57,7 +59,12 @@ class SmdInductorProperties:
         self.height = float(part_block["height"])
         self.corner_radius = (
             float(part_block["cornerRadius"])
-            if part_block.get("cornerRadius")
+            if part_block.get("cornerRadius") is not None
+            else None
+        )
+        self.top_fillet_radius = (
+            float(part_block["topFilletRadius"])
+            if part_block.get("topFilletRadius") is not None
             else None
         )
         self.core_diameter = (
