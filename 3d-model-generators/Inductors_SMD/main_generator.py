@@ -56,6 +56,7 @@ ___ver___ = "2.0.0"
 import glob
 import os
 from pathlib import Path
+from typing import Any
 
 import cadquery as cq
 import yaml
@@ -77,17 +78,29 @@ class Inductor3DProperties:
     SMD inductor 3D properties
     """
 
-    body_color: str
-    pin_color: str
-    pad_thickness: float
-    body_type: int | str
-    corner_radius: float | None
-    top_fillet_radius: float | None
-    coil_color: str
-    coil_style: int | None
-    has_body: bool
+    def __init__(self, data: dict[str, Any]):
 
-    def __init__(self, data: dict):
+        self.has_body: bool
+        """Whether the inductor has a body or not (some are bare coils)"""
+        self.body_color: str
+        """Color of the body, if there is one"""
+        self.pad_color: str
+        """Color of the pads"""
+        self.pad_thickness: float
+        """Thickness of the pads"""
+        self.body_type: int | str | None
+        """Type of the body, if there is one"""
+        self.corner_radius: float | None
+        """Corner radius (parallel to the Z axis) of the body, if any"""
+        self.top_fillet_radius: float | None
+        """Top fillet radius (parallel to the XY plane) of the body, if any"""
+        self.coil_color: str | None
+        """Color of the coil, if drawn"""
+        self.coil_style: int | None
+        """Style of the coil, if drawn"""
+        self.wire_dia: float
+        """Diameter of the wire, if drawn"""
+
         self.has_body = data.get("has_body", True)
         self.coil_style = data.get("coil_style", None)
 
@@ -99,9 +112,9 @@ class Inductor3DProperties:
 
         if self.coil_style is not None:
             self.coil_color = data.get("wireColor", "metal dark cu")
-            self.wire_dia = data.get("wireDia", {})
+            self.wire_dia = data.get("wireDia", 0)
         else:
-            self.coil_color = ""
+            self.coil_color = None
             self.wire_dia = 0
 
         self.pad_color = data.get("pinColor", "metal grey pins")
@@ -111,7 +124,11 @@ class Inductor3DProperties:
         self.top_fillet_radius = data.get("topFilletRadius", None)
 
 
-def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
+def make_models(
+    model_to_build: str | None = None,
+    output_dir_prefix: str | None = None,
+    enable_vrml: bool = True,
+):
     """
     Main entry point into this generator.
     """
@@ -130,7 +147,7 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
         print("No YAML files found to process.")
         return
 
-    fileList = None
+    fileList = []
 
     if model_to_build != "all":
         for yamlFile in allYamlFiles:
@@ -143,7 +160,7 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
     # or fileList is empty (didn't find file, or building all)
 
     # Trying to build a specific file and it was not found
-    if model_to_build != "all" and fileList is None:
+    if model_to_build != "all" and not fileList:
         print(f"Could not find YAML for model {model_to_build}")
         return
     elif model_to_build == "all":
@@ -172,7 +189,7 @@ class SmdInductorGenerator:
     def __init__(self, output_prefix: Path):
         self.output_prefix = output_prefix
 
-    def generate_series(self, series_block: dict, csv_dir: Path):
+    def generate_series(self, series_block: dict[str, Any], csv_dir: Path):
         series_data = InductorSeriesProperties(series_block, csv_dir)
 
         if "3d" not in series_block:
@@ -304,7 +321,11 @@ class SmdInductorGenerator:
             add_license.STR_int_licPreProc,
         )
 
-    def generate_cubic_inductor(self, part_data, series_3d_props):
+    def generate_cubic_inductor(
+        self,
+        part_data: SmdInductorProperties,
+        series_3d_props: Inductor3DProperties,
+    ):
         # Physical dimensions
         widthX = part_data.width_x
         lengthY = part_data.length_y
@@ -378,7 +399,11 @@ class SmdInductorGenerator:
         pins = pins.rotate((0, 0, 0), (0, 0, 1), rotation)
         return case, pins
 
-    def genenerate_shielded_drum_model(self, part_data, series_3d_props):
+    def genenerate_shielded_drum_model(
+        self,
+        part_data: SmdInductorProperties,
+        series_3d_props: Inductor3DProperties,
+    ):
 
         # Required model parameters
         assert (

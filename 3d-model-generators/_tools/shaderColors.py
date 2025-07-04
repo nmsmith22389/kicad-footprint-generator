@@ -105,7 +105,7 @@ class shaderColor:
             int(self.diffuseColor[2] * 255),
         )
 
-    def getDiffuseFloat(self):
+    def getDiffuseFloat(self) -> tuple[float, float, float]:
         return self.diffuseColor[0], self.diffuseColor[1], self.diffuseColor[2]
 
     def __str__(self):
