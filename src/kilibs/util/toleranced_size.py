@@ -28,6 +28,22 @@ class TolerancedSize:
         unit: str | None = None,
     ) -> None:
 
+        # Instance attributes:
+        self.minimum: float
+        """Minimum dimension."""
+        self.nominal: float
+        """Nominal dimension."""
+        self.maximum: float
+        """Maximum dimension."""
+        self.ipc_tol: float
+        """Total tolerance (difference between maximum and minimum tolerance)."""
+        self.ipc_tol_RMS: float
+        """Total RMS tolerance."""
+        self.maximum_RMS: float
+        """RMS of the maximum tolerance."""
+        self.minimum_RMS: float
+        """RMS of the minimum tolerance."""
+
         if nominal is not None:
             self.nominal = nominal
         else:

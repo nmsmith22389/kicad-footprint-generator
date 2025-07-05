@@ -15,6 +15,8 @@
 
 from __future__ import annotations
 
+from dataclasses import dataclass
+
 from kilibs.geom import (
     GeomArc,
     GeomLine,
@@ -26,9 +28,11 @@ from kilibs.geom import (
 from kilibs.geom.tolerances import MIN_SEGMENT_LENGTH, TOL_MM
 
 
+@dataclass
 class GeomOperationHandle:
     """A handle class for geometric operations."""
 
+    # Instance attributes:
     min_segment_length: float
     """Minimum length a segment is allowed to have. Segments smaller than that are
     removed from the solution space."""

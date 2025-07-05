@@ -42,39 +42,6 @@ class Footprint(Node):
     """A regular expression to fix a technical debt with comma-separated empty
     values."""
 
-    name: str
-    """Name of the footprint."""
-    _description: str | None
-    """Description of the footprint."""
-    _tags: list[str]
-    """Tags of the footprint."""
-    _embedded_fonts: EmbeddedFonts
-    """Embedded fonts."""
-    zone_connection: Pad.ZoneConnection
-    """Zone connection."""
-    clearance: float | None
-    """Clearance of the pads."""
-    maskMargin: float | None
-    """Mask margin of the pads."""
-    pasteMargin: float | None
-    """Past margin of the pads."""
-    pasteMarginRatio: float | None
-    """Past margin ratio of the pads."""
-    _footprintType: FootprintType
-    """Footprint type."""
-    not_in_schematic: bool
-    """If `True` the footprint is not in the schematics."""
-    excludeFromBOM: bool
-    """If `True` the footprint is excluded from the BOM."""
-    excludeFromPositionFiles: bool
-    """If `True` the footprint is excluded from the position files."""
-    allow_soldermask_bridges: bool
-    """If `True` solder mask bridges are allowed in the footprint."""
-    allow_missing_courtyard: bool
-    """If `True` the courtyard can be omitted."""
-    dnp: bool
-    """If `True` the component is not populated."""
-
     def __init__(
         self,
         name: str,
@@ -88,6 +55,41 @@ class Footprint(Node):
             footprint_type: Type of the footprint.
             tstamp_seed: The seed for the time stamp.
         """
+
+        # Instance attributes:
+        self.name: str
+        """Name of the footprint."""
+        self._description: str | None
+        """Description of the footprint."""
+        self._tags: list[str]
+        """Tags of the footprint."""
+        self._embedded_fonts: EmbeddedFonts
+        """Embedded fonts."""
+        self.zone_connection: Pad.ZoneConnection
+        """Zone connection."""
+        self.clearance: float | None
+        """Clearance of the pads."""
+        self.maskMargin: float | None
+        """Mask margin of the pads."""
+        self.pasteMargin: float | None
+        """Past margin of the pads."""
+        self.pasteMarginRatio: float | None
+        """Past margin ratio of the pads."""
+        self._footprintType: FootprintType
+        """Footprint type."""
+        self.not_in_schematic: bool
+        """If `True` the footprint is not in the schematics."""
+        self.excludeFromBOM: bool
+        """If `True` the footprint is excluded from the BOM."""
+        self.excludeFromPositionFiles: bool
+        """If `True` the footprint is excluded from the position files."""
+        self.allow_soldermask_bridges: bool
+        """If `True` solder mask bridges are allowed in the footprint."""
+        self.allow_missing_courtyard: bool
+        """If `True` the courtyard can be omitted."""
+        self.dnp: bool
+        """If `True` the component is not populated."""
+
         Node.__init__(self)
         self.name = name
         self._description = None

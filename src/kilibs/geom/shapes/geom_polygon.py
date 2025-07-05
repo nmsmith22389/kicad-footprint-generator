@@ -30,13 +30,6 @@ from kilibs.geom.vector import Vec2DCompatible, Vector2D
 class GeomPolygon(GeomShapeClosed):
     """A gemoetric polygon."""
 
-    close: bool
-    """Whether the polygon is closed or not."""
-    points: list[Vector2D]
-    """Coordintes of the corner points of the polygon in mm."""
-    _segments: list[GeomLine]
-    """List of segments the polygon is made of."""
-
     def __init__(
         self,
         shape: (
@@ -62,6 +55,15 @@ class GeomPolygon(GeomShapeClosed):
                 This argument is ignored when constructing from a `BoundingBox` or a
                 `GeomRectangle`.
         """
+
+        # Instance attributes:
+        self.close: bool
+        """Whether the polygon is closed or not."""
+        self.points: list[Vector2D]
+        """Coordintes of the corner points of the polygon in mm."""
+        self._segments: list[GeomLine]
+        """List of segments the polygon is made of."""
+
         self.close = close
         self.points = []
         if isinstance(shape, GeomPolygon):

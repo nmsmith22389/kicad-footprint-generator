@@ -20,16 +20,11 @@ from kilibs.geom.vector import Vec2DCompatible, Vector2D
 class BoundingBox:
     """A bounding box."""
 
-    min: Vector2D | None
-    """The top left corner of the bounding box or `None` if uninitialized."""
-    max: Vector2D | None
-    """The bottom right corner of the bounding box or `None` if uninitialized."""
-
     def __init__(
         self,
         corner1: Vec2DCompatible | None = None,
         corner2: Vec2DCompatible | None = None,
-    ):
+    ) -> None:
         """Initialize a bounding box with the given corner points.
         Passing None for both min and max will create a "null" bounding box that
         can't be used for much until more points are included.
@@ -38,6 +33,13 @@ class BoundingBox:
             corner1: Corner of the bounding box.
             corner2: Other corner of the bounding box.
         """
+
+        # Instance attributes:
+        self.min: Vector2D | None
+        """The top left corner of the bounding box or `None` if uninitialized."""
+        self.max: Vector2D | None
+        """The bottom right corner of the bounding box or `None` if uninitialized."""
+
         if (corner1 is None) != (corner2 is None):
             raise ValueError("Must provide both corner1 and corner2 or neither")
 

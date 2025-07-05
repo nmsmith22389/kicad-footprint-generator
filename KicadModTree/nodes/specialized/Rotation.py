@@ -21,11 +21,6 @@ from kilibs.geom import BoundingBox, Vector2D
 class Rotation(Node):
     """A rotation that is applied to every child node."""
 
-    angle: float
-    """The rotation angle in degrees."""
-    origin: Vector2D
-    """The coordinates of the point (in mm) around which the child nodes are rotated."""
-
     def __init__(self, angle: float = 0.0, origin: Vector2D = Vector2D.zero()) -> None:
         """Create a rotation node.
 
@@ -34,6 +29,13 @@ class Rotation(Node):
             origin: The coordinates of the point (in mm) around which the child nodes
                 are rotated.
         """
+
+        # Instance attributes:
+        self.angle: float
+        """The rotation angle in degrees."""
+        self.origin: Vector2D
+        """The coordinates of the point (in mm) around which the child nodes are rotated."""
+
         Node.__init__(self)
         self.angle = angle
         self.origin = origin

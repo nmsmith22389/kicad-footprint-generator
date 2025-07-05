@@ -26,11 +26,6 @@ from kilibs.geom.vector import Vec2DCompatible, Vector2D
 class GeomLine(GeomShapeOpen):
     """A geometric line."""
 
-    start: Vector2D
-    """The coordinates of the start point in mm."""
-    end: Vector2D
-    """The coordinates of the start point in mm."""
-
     def __init__(
         self,
         shape: GeomLine | None = None,
@@ -44,6 +39,13 @@ class GeomLine(GeomShapeOpen):
             start: Coordinates (in mm) of the start point of the line.
             end: Coordinates (in mm) of the end point of the line.
         """
+
+        # Instance attributes:
+        self.start: Vector2D
+        """The coordinates of the start point in mm."""
+        self.end: Vector2D
+        """The coordinates of the start point in mm."""
+
         if shape is not None:
             self.start = shape.start.copy()
             self.end = shape.end.copy()

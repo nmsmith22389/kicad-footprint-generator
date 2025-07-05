@@ -31,18 +31,6 @@ from kilibs.geom.vector import Vec2DCompatible, Vector2D
 class GeomCompoundPolygon(GeomShapeClosed):
     """A geometric compound polygon (polygon with arc segments)."""
 
-    serialize_as_fp_poly: bool = False
-    """If `True`, the compound polygon is serialized as polygon with line approximations
-    for the arcs."""
-    close: bool
-    """Whether to close the compound polygon or not."""
-    _segments: list[GeomArc | GeomLine]
-    """The arc and line segments the compound polygon is composed of."""
-    _bbox: BoundingBox | None
-    """The bounding box."""
-    _end: Vector2D | None = None
-    """Internal variable storing the coordinates of the last point added."""
-
     def __init__(
         self,
         shape: (
@@ -65,6 +53,20 @@ class GeomCompoundPolygon(GeomShapeClosed):
                 true arcs in the FP editor but no single primitive.
             close: `True` if the compound polygon shall be closed, `False` otherwise.
         """
+
+        # Instance attributes:
+        self.serialize_as_fp_poly: bool = False
+        """If `True`, the compound polygon is serialized as polygon with line
+        approximations for the arcs."""
+        self.close: bool
+        """Whether to close the compound polygon or not."""
+        self._segments: list[GeomArc | GeomLine]
+        """The arc and line segments the compound polygon is composed of."""
+        self._bbox: BoundingBox | None
+        """The bounding box."""
+        self._end: Vector2D | None = None
+        """Internal variable storing the coordinates of the last point added."""
+
         if isinstance(shape, GeomCompoundPolygon):
             self.serialize_as_fp_poly = shape.serialize_as_fp_poly
             self.close = shape.close

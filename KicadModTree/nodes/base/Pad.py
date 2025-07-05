@@ -34,15 +34,6 @@ class ReferencedPad(Node):
     """A pad class for creating copies of an existing pad with different name and
     location."""
 
-    reference_pad: Pad
-    """The pad that is copied."""
-    number: str | int
-    """The number of the pad (used instead of the number of the referenced pad)."""
-    at: Vector2D
-    """The position of the pad (used instead of the position of the referenced pad)."""
-    rotation: float
-    """The rotation of the pad (used instead of the rotation of the referenced pad)."""
-
     def __init__(
         self, reference_pad: Pad, number: str | int, at: Vector2D, angle: float = 0.0
     ) -> None:
@@ -54,6 +45,17 @@ class ReferencedPad(Node):
             at: The new position of the pad.
             angle: The new angle of the pad.
         """
+
+        # Instance attributes:
+        self.reference_pad: Pad
+        """The pad that is copied."""
+        self.number: str | int
+        """The number of the pad (used instead of the number of the referenced pad)."""
+        self.at: Vector2D
+        """The position of the pad (used instead of the position of the referenced pad)."""
+        self.rotation: float
+        """The rotation of the pad (used instead of the rotation of the referenced pad)."""
+
         Node.__init__(self)
         self.reference_pad = reference_pad
         self.number = number
@@ -266,64 +268,6 @@ class Pad(Node):
         """
         # die_delay: float // Will be in v10 (units?)
 
-    number: str | int
-    """Pad number."""
-    type: str
-    """Pad type."""
-    shape: str
-    """Pad shape."""
-    _fab_property: FabProperty | None
-    """Fab property."""
-    layers: list[str]
-    """Layers of the pad."""
-    at: Vector2D
-    """Position of the pad."""
-    size: Vector2D
-    """Size of the pad."""
-    offset: Vector2D
-    """Offset of the pad."""
-    rotation: float
-    """Rotation angle of the pad in degrees."""
-    drill: Vector2D | None
-    """Drill dimensions in mm."""
-    solder_paste_margin_ratio: float
-    """Solder paste margin ratio."""
-    solder_paste_margin: float
-    """Solder paste margin."""
-    solder_mask_margin: float
-    """Solder mask margin."""
-    tuning_properties: TuningProperties | None
-    """Tuning properties."""
-    _round_radius_handler: RoundRadiusHandler | None
-    """Round radius handler."""
-    zone_connection: ZoneConnection
-    """Zone connection."""
-    shape_in_zone: str
-    """Shape in zone."""
-    unconnected_layer_mode: UnconnectedLayerMode
-    """Unconnected layer mode."""
-    clearance: float | None
-    """Optional clearance in mm."""
-    thermal_bridge_width: float | None
-    """Optional thermal bridge width. `None` means inherit from the footprint (like
-    KiCad)."""
-    _thermal_bridge_angle: float | None
-    """Optional thermal bridge angle."""
-    thermal_gap: float | None
-    """Optional thermal gap. `None` means inherit from the footprint (like KiCad)."""
-    anchor_shape: str
-    """Anchor shape."""
-    _chamfer_corners: CornerSelection | None
-    """Chamfer corners."""
-    chamfer_size_handler: ChamferSizeHandler | None
-    """Chamfer size handler."""
-    chamfer_ratio: float | None
-    """Chamfer ratio."""
-    primitives: list[NodeShape]
-    """List of primitives defining the pad shape."""
-    mirror: list[float | None]
-    """Location of the optional mirror."""
-
     def __init__(
         self,
         type: str,
@@ -416,6 +360,67 @@ class Pad(Node):
             >>> Pad(number=1, type=Pad.TYPE_THT, shape=Pad.SHAPE_RECT,
             ...     at=[0, 0], size=[2, 2], drill=1.2, layers=Pad.LAYERS_THT)
         """
+
+        # Instance attributes:
+        self.number: str | int
+        """Pad number."""
+        self.type: str
+        """Pad type."""
+        self.shape: str
+        """Pad shape."""
+        self._fab_property: Pad.FabProperty | None
+        """Fab property."""
+        self.layers: list[str]
+        """Layers of the pad."""
+        self.at: Vector2D
+        """Position of the pad."""
+        self.size: Vector2D
+        """Size of the pad."""
+        self.offset: Vector2D
+        """Offset of the pad."""
+        self.rotation: float
+        """Rotation angle of the pad in degrees."""
+        self.drill: Vector2D | None
+        """Drill dimensions in mm."""
+        self.solder_paste_margin_ratio: float
+        """Solder paste margin ratio."""
+        self.solder_paste_margin: float
+        """Solder paste margin."""
+        self.solder_mask_margin: float
+        """Solder mask margin."""
+        self.tuning_properties: Pad.TuningProperties | None
+        """Tuning properties."""
+        self._round_radius_handler: RoundRadiusHandler | None
+        """Round radius handler."""
+        self.zone_connection: Pad.ZoneConnection
+        """Zone connection."""
+        self.shape_in_zone: str
+        """Shape in zone."""
+        self.unconnected_layer_mode: Pad.UnconnectedLayerMode
+        """Unconnected layer mode."""
+        self.clearance: float | None
+        """Optional clearance in mm."""
+        self.thermal_bridge_width: float | None
+        """Optional thermal bridge width. `None` means inherit from the footprint (like
+        KiCad)."""
+        self._thermal_bridge_angle: float | None
+        """Optional thermal bridge angle."""
+        self.thermal_gap: float | None
+        """Optional thermal gap. `None` means inherit from the footprint (like
+        KiCad)."""
+        self.anchor_shape: str
+        """Anchor shape."""
+        self._chamfer_corners: CornerSelection | None
+        """Chamfer corners."""
+        self.chamfer_size_handler: ChamferSizeHandler | None
+        """Chamfer size handler."""
+        self.chamfer_ratio: float | None
+        """Chamfer ratio."""
+        self.primitives: list[NodeShape]
+        """List of primitives defining the pad shape."""
+        self.mirror: list[float | None]
+        """Location of the optional mirror."""
+
         Node.__init__(self)
         self.number = number
         self.type = type
@@ -476,7 +481,7 @@ class Pad(Node):
                 raise ValueError(
                     f"{shape_in_zone} is an illegal specifier for the shape in zone option"
                 )
-            self.primitives: list[NodeShape] = []
+            self.primitives = []
             if primitives:
                 for primitive in primitives:
                     self.primitives.append(primitive)

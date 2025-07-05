@@ -44,15 +44,6 @@ from kilibs.geom import (
 class NodeShape(Node, GeomShape):
     """A node class for shapes."""
 
-    layer: str
-    """The layer on which the node is drawn."""
-    width: float | None
-    """The width of the outline of the shape."""
-    style: LineStyle
-    """The line style used to draw the outline of the shape."""
-    fill: bool
-    """Whether the shape is filled, `False` for open shapes."""
-
     def __init__(
         self,
         layer: str = "F.SilkS",
@@ -70,6 +61,17 @@ class NodeShape(Node, GeomShape):
             fill: `True` if the rectangle is filled, `False` if only the outline is
                 visible. `False` for open shapes.
         """
+
+        # Instance attributes:
+        self.layer: str
+        """The layer on which the node is drawn."""
+        self.width: float | None
+        """The width of the outline of the shape."""
+        self.style: LineStyle
+        """The line style used to draw the outline of the shape."""
+        self.fill: bool
+        """Whether the shape is filled, `False` for open shapes."""
+
         Node.__init__(self)
         self.layer = layer
         self.width = width

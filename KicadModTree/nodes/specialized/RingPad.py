@@ -32,17 +32,6 @@ from kilibs.geom import GeomArc, GeomLine, Vec2DCompatible, Vector2D
 class RingPadPrimitive(Node):
     """A ring pad primitive."""
 
-    at: Vector2D
-    """Position of the center of the ring pad."""
-    radius: float
-    """Middle radius of the ring."""
-    width: float
-    """Width of the ring (outer radius - inner radius)."""
-    layers: list[str]
-    """Layers used for creating the pad."""
-    number: str | int
-    """Number/name of the pad."""
-
     def __init__(
         self,
         radius: float,
@@ -60,6 +49,19 @@ class RingPadPrimitive(Node):
             layers: Layers used for creating the pad.
             number: Number/name of the pad.
         """
+
+        # Instance attributes:
+        self.at: Vector2D
+        """Position of the center of the ring pad."""
+        self.radius: float
+        """Middle radius of the ring."""
+        self.width: float
+        """Width of the ring (outer radius - inner radius)."""
+        self.layers: list[str]
+        """Layers used for creating the pad."""
+        self.number: str | int
+        """Number/name of the pad."""
+
         Node.__init__(self)
         self.at = Vector2D(at)
         self.radius = radius

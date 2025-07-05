@@ -33,11 +33,6 @@ from kilibs.geom.tolerances import TOL_MM
 class ChamferedPad(Pad):
     """A chamfered pad."""
 
-    corner_selection: CornerSelection
-    """The corner selection."""
-    chamfer_size: Vector2D
-    """The chamfer size."""
-
     def __init__(
         self,
         size: float | Vector2D,
@@ -116,6 +111,13 @@ class ChamferedPad(Pad):
             x_mirror: Mirror x direction around offset "point".
             y_mirror: Mirror y direction around offset "point".
         """
+
+        # Instance attributes:
+        self.corner_selection: CornerSelection
+        """The corner selection."""
+        self.chamfer_size: Vector2D
+        """The chamfer size."""
+
         Node.__init__(self)
         size = Vector2D(size)
         self.corner_selection = CornerSelection(corner_selection)

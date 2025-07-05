@@ -26,17 +26,6 @@ from kilibs.geom.vector import Vec2DCompatible, Vector2D
 class GeomRoundRectangle(GeomShapeClosed):
     """A geometric rectangle with rounded corners."""
 
-    size: Vector2D
-    """The size in mm."""
-    center: Vector2D
-    """The coordinates of the center in mm."""
-    corner_radius: float
-    """The radius of the round corners in mm."""
-    angle: float
-    """The rotation angle of the shape."""
-    _shapes: list[GeomLine | GeomArc | GeomRectangle]
-    """The list of the shapes the rounded rectangle is composed of."""
-
     def __init__(
         self,
         shape: GeomRoundRectangle | None = None,
@@ -68,6 +57,19 @@ class GeomRoundRectangle(GeomShapeClosed):
             corner_radius: Radius of the rounding of the corners in mm.
             angle: Rotation angle of the round rectangle in degrees.
         """
+
+        # Instance attributes:
+        self.size: Vector2D
+        """The size in mm."""
+        self.center: Vector2D
+        """The coordinates of the center in mm."""
+        self.corner_radius: float
+        """The radius of the round corners in mm."""
+        self.angle: float
+        """The rotation angle of the shape."""
+        self._shapes: list[GeomLine | GeomArc | GeomRectangle]
+        """The list of the shapes the rounded rectangle is composed of."""
+
         if shape is not None:
             self.size = Vector2D(shape.size)
             self.center = Vector2D(shape.center)

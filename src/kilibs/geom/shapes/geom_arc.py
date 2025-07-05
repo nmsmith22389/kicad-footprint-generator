@@ -26,15 +26,6 @@ from kilibs.geom.vector import Vec2DCompatible, Vector2D
 class GeomArc(GeomShapeOpen):
     """A geometric arc."""
 
-    center: Vector2D
-    """The center point of the arc."""
-    _start: Vector2D
-    """The start point of the arc."""
-    _end: Vector2D | None
-    """The end point of the arc."""
-    _angle: float
-    """The angle of the arc."""
-
     def __init__(
         self,
         shape: GeomArc | None = None,
@@ -61,6 +52,17 @@ class GeomArc(GeomShapeOpen):
                 point to specify if the longer of the 2 possible resulting arcs or the
                 shorter one shall be constructed.
         """
+
+        # Instance attributes:
+        self.center: Vector2D
+        """The center point of the arc."""
+        self._start: Vector2D
+        """The start point of the arc."""
+        self._end: Vector2D | None
+        """The end point of the arc."""
+        self._angle: float
+        """The angle of the arc."""
+
         if shape is not None:
             self.center = shape.center.copy()
             self._start = shape._start.copy()

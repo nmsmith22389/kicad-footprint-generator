@@ -376,17 +376,19 @@ class SerializerPriority:
 class Serializer:
     """A class to serialize properties."""
 
-    indent: str
-    """The current indentation level."""
-    content: list[str]
-    """The content of the serializer."""
-
     def __init__(self, indent: str = "") -> None:
         """Create an instance of a serializer.
 
         Args:
             indent: The initial indentation level.
         """
+
+        # Instance attributes:
+        self.indent: str
+        """The current indentation level."""
+        self.content: list[str]
+        """The content of the serializer."""
+
         self.indent = indent
         self.content = []
 

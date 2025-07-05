@@ -23,15 +23,6 @@ from kilibs.geom.vector import Vec2DCompatible, Vector2D
 class GeomCross(GeomShapeOpen):
     """A geometric cross."""
 
-    center: Vector2D
-    """The coordinates of the center in mm."""
-    size: Vector2D
-    """The size in mm."""
-    angle: float
-    """The rotation angle."""
-    _shapes: list[GeomLine]
-    """KiCad native shape that describes this cross."""
-
     def __init__(
         self,
         shape: GeomCross | None = None,
@@ -47,6 +38,17 @@ class GeomCross(GeomShapeOpen):
             size: Size in mm of the cross.
             angle: Angle of the cross in degrees.
         """
+
+        # Instance attributes:
+        self.center: Vector2D
+        """The coordinates of the center in mm."""
+        self.size: Vector2D
+        """The size in mm."""
+        self.angle: float
+        """The rotation angle."""
+        self._shapes: list[GeomLine]
+        """KiCad native shape that describes this cross."""
+
         if shape is not None:
             self.center = Vector2D(shape.center)
             self.size = Vector2D(shape.size)

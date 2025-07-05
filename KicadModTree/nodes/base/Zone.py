@@ -30,11 +30,6 @@ class PadConnection(Node):
     NO = "no"
     THERMAL_RELIEF = "thermal_relief"
 
-    clearance: float
-    """Clearance around the pad."""
-    type: str
-    """Type of pad connection."""
-
     def __init__(self, clearance: float = 0.0, type: str = THERMAL_RELIEF) -> None:
         """Create a pad connection.
 
@@ -42,6 +37,13 @@ class PadConnection(Node):
             clearance: Clearance around the pad.
             type: Type of pad connection.
         """
+
+        # Instance attributes:
+        self.clearance: float
+        """Clearance around the pad."""
+        self.type: str
+        """Type of pad connection."""
+
         if type not in [self.THRU_HOLE_ONLY, self.FULL, self.NO, self.THERMAL_RELIEF]:
             raise ValueError("Invalid pad connection type: %s" % type)
         Node.__init__(self)

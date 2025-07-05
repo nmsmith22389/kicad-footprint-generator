@@ -86,29 +86,6 @@ class PadArray(Node):
         ...          layers=Pad.LAYERS_SMT)
     """
 
-    starting_position: Vector2D
-    """Coordinates of the first pad of the array in mm."""
-    spacing: Vector2D
-    """Distance between two adjacent pads."""
-    size: Vector2D
-    """Size of the pads."""
-    pincount: int
-    """Number of pads in the array."""
-    initial_pin: int | str
-    """Number of the first pin of the array."""
-    increment: (
-        int
-        | Callable[[int | str | None], int | str | None]
-        | Generator[int | str | None, None, None]
-    )
-    """Pad number increment."""
-    exclude_pin_list: list[int]
-    """List of pins to exclude."""
-    hidden_pins: Sequence[int]
-    """List of pins that are hidden."""
-    _pads: list[Pad | ReferencedPad]
-    """The pads of the array."""
-
     def __init__(
         self,
         type: str,
@@ -142,6 +119,31 @@ class PadArray(Node):
         pad_overrides: PadOverrides | None = None,
         end_pads_size_reduction: dict[str, float] | None = None,
     ) -> None:
+
+        # Instance attributes:
+        self.starting_position: Vector2D
+        """Coordinates of the first pad of the array in mm."""
+        self.spacing: Vector2D
+        """Distance between two adjacent pads."""
+        self.size: Vector2D
+        """Size of the pads."""
+        self.pincount: int
+        """Number of pads in the array."""
+        self.initial_pin: int | str
+        """Number of the first pin of the array."""
+        self.increment: (
+            int
+            | Callable[[int | str | None], int | str | None]
+            | Generator[int | str | None, None, None]
+        )
+        """Pad number increment."""
+        self.exclude_pin_list: list[int]
+        """List of pins to exclude."""
+        self.hidden_pins: Sequence[int]
+        """List of pins that are hidden."""
+        self._pads: list[Pad | ReferencedPad]
+        """The pads of the array."""
+
         Node.__init__(self)
         self.increment = increment
         self._init_pincount(pincount, hidden_pins, deleted_pins)

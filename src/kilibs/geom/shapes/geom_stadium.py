@@ -27,13 +27,6 @@ from kilibs.geom.vector import Vec2DCompatible, Vector2D
 class GeomStadium(GeomShapeClosed):
     """A geometric stadium."""
 
-    centers: list[Vector2D]
-    """The coordinates of the two arc centers in mm."""
-    radius: float
-    """The radius of the two arcs in mm."""
-    _shapes: list[GeomLine | GeomArc]
-    """The list of shapes the stadium is composed of."""
-
     def __init__(
         self,
         shape: GeomStadium | GeomRectangle | None = None,
@@ -51,6 +44,15 @@ class GeomStadium(GeomShapeClosed):
             center_2: Coordinates (in mm) of the center of the second semi-circle.
             radius: The radius of the semi-circles in mm.
         """
+
+        # Instance attributes:
+        self.centers: list[Vector2D]
+        """The coordinates of the two arc centers in mm."""
+        self.radius: float
+        """The radius of the two arcs in mm."""
+        self._shapes: list[GeomLine | GeomArc]
+        """The list of shapes the stadium is composed of."""
+
         if shape is not None:
             if isinstance(shape, GeomStadium):
                 self.centers = [shape.centers[0].copy(), shape.centers[1].copy()]

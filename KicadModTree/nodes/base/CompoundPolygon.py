@@ -36,8 +36,6 @@ from kilibs.geom import (
 class CompoundPolygon(NodeShape, GeomCompoundPolygon):
     """A compound polygon."""
 
-    _fp_poly_elements: list[Vector2D | Arc]
-
     def __init__(
         self,
         shape: (
@@ -76,6 +74,11 @@ class CompoundPolygon(NodeShape, GeomCompoundPolygon):
             close: If `True` the polygon will form a closed shape. If `False` there
                 won't be any connecting line between the last and the first point.
         """
+
+        # Instance attributes:
+        self._fp_poly_elements: list[Vector2D | Arc]
+        """List of arcs and points that define the compound polygon."""
+
         self._fp_poly_elements = []
         NodeShape.__init__(self, layer=layer, width=width, style=style, fill=fill)
         GeomCompoundPolygon.__init__(
@@ -94,7 +97,7 @@ class CompoundPolygon(NodeShape, GeomCompoundPolygon):
     def get_fp_poly_elements(self) -> list[Vector2D | Arc]:
         """Return arcs and dots that define the compound polygon."""
         if not self._fp_poly_elements:
-            self._fp_poly_elements: list[Vector2D | Arc] = []
+            self._fp_poly_elements = []
             for geom in self.get_points_and_arcs():
                 if isinstance(geom, Vector2D):
                     self._fp_poly_elements.append(geom)

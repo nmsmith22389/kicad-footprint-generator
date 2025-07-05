@@ -27,11 +27,6 @@ from kilibs.geom.vector import Vec2DCompatible, Vector2D
 class GeomCircle(GeomShapeClosed):
     """A geometric circle."""
 
-    center: Vector2D
-    """The coordinates of the center in mm."""
-    radius: float
-    """The radius in mm."""
-
     def __init__(
         self,
         shape: GeomCircle | GeomArc | None = None,
@@ -45,6 +40,13 @@ class GeomCircle(GeomShapeClosed):
             center: Coordinates (in mm) of the center of the circle.
             radius: Radius of the circle in mm.
         """
+
+        # Instance attributes:
+        self.center: Vector2D
+        """The coordinates of the center in mm."""
+        self.radius: float
+        """The radius in mm."""
+
         if shape is not None:
             self.center = Vector2D(shape.center)
             self.radius = float(shape.radius)

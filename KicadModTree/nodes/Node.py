@@ -51,16 +51,50 @@ class HasCallableHashDict(Protocol):
 class TStamp(object):
     """A timestamp."""
 
-    _tstamp: uuid.UUID | str | None
-    """The timestamp."""
-    _tstamp_seed: uuid.UUID | None
-    """The timestamp seed."""
-    _unique_id: str | None
-    """The unique ID."""
-    _isTStampManualFixed: bool
-    """`True` if the timestamp is manually fixed."""
-    _parentNode: Node | None
-    """The parent node."""
+    def __init__(
+        self,
+        tstamp: uuid.UUID | str | None = None,
+        tstamp_seed: uuid.UUID | None = None,
+        parent: Node | None = None,
+        unique_id: str | None = None,
+    ) -> None:
+        """Create a timestamp.
+
+        Args:
+            tstamp: The optional value of the timestamp.
+            tstamp_seed: The optional seed of the timestamp.
+            parent: The optional parent Node of the timestamp.
+            unique_id: The optinoal UUID.
+        """
+
+        # Instance attributes:
+        self._tstamp: uuid.UUID | str | None
+        """The timestamp."""
+        self._tstamp_seed: uuid.UUID | None
+        """The timestamp seed."""
+        self._unique_id: str | None
+        """The unique ID."""
+        self._isTStampManualFixed: bool
+        """`True` if the timestamp is manually fixed."""
+        self._parentNode: Node | None
+        """The parent node."""
+
+        if tstamp is not None:
+            tstamp = self.parse_as_uuid(tstamp)
+        self._tstamp = tstamp
+
+        if tstamp_seed is not None:
+            tstamp_seed = self.parse_as_uuid(tstamp_seed)
+        self._tstamp_seed = tstamp_seed
+
+        fixed = (tstamp is not None) and (tstamp_seed is None)
+        self._isTStampManualFixed = fixed
+
+        if unique_id is not None:
+            unique_id = str(unique_id)
+        self._unique_id = unique_id
+
+        self._parentNode = parent
 
     @staticmethod
     def parse_as_uuid(tstamp_uuid: str | uuid.UUID) -> uuid.UUID:
@@ -242,38 +276,6 @@ class TStamp(object):
         if tstamp_seed is not None:
             self.update_timestamp_conditionally()
 
-    def __init__(
-        self,
-        tstamp: uuid.UUID | str | None = None,
-        tstamp_seed: uuid.UUID | None = None,
-        parent: Node | None = None,
-        unique_id: str | None = None,
-    ) -> None:
-        """Create a timestamp.
-
-        Args:
-            tstamp: The optional value of the timestamp.
-            tstamp_seed: The optional seed of the timestamp.
-            parent: The optional parent Node of the timestamp.
-            unique_id: The optinoal UUID.
-        """
-        if tstamp is not None:
-            tstamp = self.parse_as_uuid(tstamp)
-        self._tstamp = tstamp
-
-        if tstamp_seed is not None:
-            tstamp_seed = self.parse_as_uuid(tstamp_seed)
-        self._tstamp_seed = tstamp_seed
-
-        fixed = (tstamp is not None) and (tstamp_seed is None)
-        self._isTStampManualFixed = fixed
-
-        if unique_id is not None:
-            unique_id = str(unique_id)
-        self._unique_id = unique_id
-
-        self._parentNode = parent
-
     def __str__(self) -> str:
         """Return the timestamp as a string."""
         return str(self.get_timestamp())
@@ -289,15 +291,17 @@ class TStamp(object):
 class Node(ABC):
     """The abstract base node."""
 
-    _parent: Node | None
-    """The parent node."""
-    _children: list[Node]
-    """"The child nodes."""
-    _tstamp: TStamp
-    """The timestamp."""
-
     def __init__(self) -> None:
         """Create a node."""
+
+        # Instance attributes:
+        self._parent: Node | None
+        """The parent node."""
+        self._children: list[Node]
+        """"The child nodes."""
+        self._tstamp: TStamp
+        """The timestamp."""
+
         self._parent = None
         self._children = []
         self._tstamp = TStamp(parent=self)

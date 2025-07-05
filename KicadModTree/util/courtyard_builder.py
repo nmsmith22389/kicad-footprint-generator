@@ -41,18 +41,20 @@ class CourtyardBuilder:
     """Scale factor that allows to convert between the KiCad resolution (1 nm) and the
     resolution of an integer (1)."""
 
-    global_config: GlobalConfig
-    """The global config."""
-    src_pts: list[list[list[float]]]
-    """List of the source polygons."""
-    crt_pts: list[list[float]]
-    """The courtyard polygon."""
-    _node: NodeShape | None
-    """The courtyard node."""
-    _bbox: BoundingBox | None
-    """The bounding box of the courtyard."""
-
     def __init__(self, global_config: GlobalConfig) -> None:
+
+        # Instance attributes:
+        self.global_config: GlobalConfig
+        """The global config."""
+        self.src_pts: list[list[list[float]]]
+        """List of the source polygons."""
+        self.crt_pts: list[list[float]]
+        """The courtyard polygon."""
+        self._node: NodeShape | None
+        """The courtyard node."""
+        self._bbox: BoundingBox | None
+        """The bounding box of the courtyard."""
+
         self.global_config = global_config
         self.src_pts = []  # source points
         self.crt_pts = []  # courtyard points

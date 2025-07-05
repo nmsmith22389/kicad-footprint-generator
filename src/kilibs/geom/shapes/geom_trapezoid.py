@@ -30,19 +30,6 @@ from kilibs.geom.vector import Vec2DCompatible, Vector2D
 class GeomTrapezoid(GeomShapeClosed):
     """A geometric trapezoid."""
 
-    size: Vector2D
-    """The size in mm."""
-    center: Vector2D
-    """The coordinates of the center in mm."""
-    corner_radius: float
-    """The radius of the round corners in mm."""
-    side_angle: float
-    """The angle of the sides in degrees."""
-    rotation_angle: float
-    """The rotation angle of the shape."""
-    _shapes: list[GeomShape]
-    """The list of the shapes the trapezoid is composed of."""
-
     def __init__(
         self,
         shape: GeomTrapezoid | None = None,
@@ -77,6 +64,21 @@ class GeomTrapezoid(GeomShapeClosed):
             side_angle: Angle as depicted in the figure above in degrees.
             rotation_angle: Rotation angle of the trapezoid in degrees.
         """
+
+        # Instance attributes:
+        self.size: Vector2D
+        """The size in mm."""
+        self.center: Vector2D
+        """The coordinates of the center in mm."""
+        self.corner_radius: float
+        """The radius of the round corners in mm."""
+        self.side_angle: float
+        """The angle of the sides in degrees."""
+        self.rotation_angle: float
+        """The rotation angle of the shape."""
+        self._shapes: list[GeomShape]
+        """The list of the shapes the trapezoid is composed of."""
+
         if shape is not None:
             self.size = Vector2D(shape.size)
             self.center = Vector2D(shape.center)

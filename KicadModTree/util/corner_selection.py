@@ -31,15 +31,6 @@ class CornerSelection:
     BOTTOM_LEFT = "bl"
     """The bottom left corner."""
 
-    top_left: bool
-    """Whether the top left corner is selected."""
-    top_right: bool
-    """Whether the top right corner is selected."""
-    bottom_right: bool
-    """Whether the bottom right corner is selected."""
-    bottom_left: bool
-    """Whether the bottom left corner is selected."""
-
     def __init__(
         self,
         corner_selection: (
@@ -58,6 +49,17 @@ class CornerSelection:
                 * The integer 1 means all corners;
                 * The integer 0 means no corners.
         """
+
+        # Instance attributes:
+        self.top_left: bool
+        """Whether the top left corner is selected."""
+        self.top_right: bool
+        """Whether the top right corner is selected."""
+        self.bottom_right: bool
+        """Whether the bottom right corner is selected."""
+        self.bottom_left: bool
+        """Whether the bottom left corner is selected."""
+
         self.top_left = False
         self.top_right = False
         self.bottom_right = False

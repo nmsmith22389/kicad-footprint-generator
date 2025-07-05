@@ -69,13 +69,6 @@ class ModArgparser(object):
         >>> parser.run()
     """
 
-    _footprint_function: Callable[[dict[str, Any]], None]
-    """A function which is called for every footprint we want to generate."""
-    _params: dict[str, Any]
-    """The parameters."""
-    output_dir: Path | None
-    """The output directory for generated footprints."""
-
     def __init__(self, footprint_function: Callable[[dict[str, Any]], None]) -> None:
         """Create a ModArgparser.
 
@@ -83,6 +76,15 @@ class ModArgparser(object):
             footprint_function: A function which is called for every footprint we want
                 to generate.
         """
+
+        # Instance attributes:
+        self._footprint_function: Callable[[dict[str, Any]], None]
+        """A function which is called for every footprint we want to generate."""
+        self._params: dict[str, Any]
+        """The parameters."""
+        self.output_dir: Path | None
+        """The output directory for generated footprints."""
+
         self._footprint_function = footprint_function
         self._params = {}
 
@@ -93,11 +95,12 @@ class ModArgparser(object):
             name: Name of the parameter.
             **kwargs: Additional keyword arguments defining the parameter's properties.
                 Possible keys include:
+
                 * `type` (``type``): Type of the argument (e.g., str, int, float, bool).
                 * `required` (``bool``): Whether the argument is required or optional.
-                    Defaults to False.
+                  Defaults to False.
                 * `default` (``Any``): The default value which is used when there is no
-                    value defined for an optional parameter.
+                  value defined for an optional parameter.
 
         Example:
             >>> from KicadModTree import *

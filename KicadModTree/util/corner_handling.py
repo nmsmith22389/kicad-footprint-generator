@@ -19,13 +19,6 @@ from kilibs.geom.vector import Vector2D
 class RoundRadiusHandler:
     """Handler for the round radius setting of a corner."""
 
-    radius_ratio: float
-    """The ratio between the shorter length of a pad and the rounding radius."""
-    maximum_radius: float | None
-    """Maxiumum radius in mm for the rounded rectangle."""
-    round_radius_exact: float | None
-    """The exact raounding radius in mm."""
-
     def __init__(
         self,
         radius_ratio: float,
@@ -45,6 +38,15 @@ class RoundRadiusHandler:
         Raises:
             ValueError: If `radius_ratio` is not within the range [0, 0.5].
         """
+
+        # Instance attributes:
+        self.radius_ratio: float
+        """The ratio between the shorter length of a pad and the rounding radius."""
+        self.maximum_radius: float | None
+        """Maxiumum radius in mm for the rounded rectangle."""
+        self.round_radius_exact: float | None
+        """The exact raounding radius in mm."""
+
         if radius_ratio < 0 or radius_ratio > 0.5:
             raise ValueError("radius_ratio must be in range [0, 0.5]")
 
@@ -148,10 +150,6 @@ class RoundRadiusHandler:
 class ChamferSizeHandler:
     """Handler for the chamfer setting of a corner."""
 
-    maximum_chamfer: float | None
-    chamfer_exact: float | None
-    chamfer_ratio: float
-
     def __init__(
         self,
         maximum_chamfer: float | None = None,
@@ -163,23 +161,27 @@ class ChamferSizeHandler:
         """Initializes the ChamferSizeHandler.
 
         Args:
-            **kwargs: Keyword arguments for configuring the chamfer settings.
-                Possible keys include:
-                * `chamfer_ratio` (``float [0 <= r <= 0.5]``): The chamfer ratio
-                  of the chamfered pad. Defaults to `default_chamfer_ratio`.
-                * `maximum_chamfer` (``float``): The maximum chamfer size.
-                * `chamfer_exact` (``float``): An exact chamfer size for a pad.
-                * `chamfer_size` (``float | Vector2D``): A single number or a
-                  Vector2D specifying the chamfer size. If a Vector2D, both
-                  x and y components must be equal for native pads.
-                * `default_chamfer_ratio` (``float [0 <= r <= 0.5]``): This
-                  parameter allows to set the default chamfer ratio. Defaults to 0.25.
+            chamfer_ratio: The chamfer ratio of the chamfered pad. Defaults to
+                `default_chamfer_ratio`.
+            maximum_chamfer: The maximum chamfer size.
+            chamfer_exact: The exact chamfer size for a pad.
+            chamfer_size: A single number or a Vector2D specifying the chamfer size. If
+                a Vector2D, both x- and y- components must be equal for native pads.
+            default_chamfer_ratio: This parameter allows to set the default chamfer
+                ratio.
 
         Raises:
-            ValueError: If `chamfer_ratio` or `default_chamfer_ratio` are not
-                within the range [0, 0.5], or if `chamfer_size` is a non-square
-                vector.
+            ValueError: If `chamfer_ratio` or `default_chamfer_ratio` are not within the
+            range [0, 0.5], or if `chamfer_size` is a non-square vector.
         """
+
+        # Instance attributes:
+        self.maximum_chamfer: float | None
+        """The maximum chamfer size."""
+        self.chamfer_exact: float | None
+        """The exact chamfer size."""
+        self.chamfer_ratio: float
+        """The ratio between the chamfer size and the shorter length of a pad."""
 
         def exception_if_not_within_range(name: str, param: float) -> None:
             if param < 0.0:

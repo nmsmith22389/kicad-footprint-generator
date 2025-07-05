@@ -89,15 +89,6 @@ class KicadFileHandler(FileHandler):
         Group: Serializer.add_group,
     }
 
-    kicad_mod: Footprint
-    """The footprint node."""
-    properties: list[Property]
-    """The property nodes."""
-    nodes: list[Node]
-    """The non-property nodes."""
-    serializer: Serializer
-    """The serializer."""
-
     def __init__(self, kicad_mod: Footprint) -> None:
         """Create an instance of the KiCad file handler.
 
@@ -110,6 +101,17 @@ class KicadFileHandler(FileHandler):
             >>> file_handler = KicadFileHandler(kicad_mod)
             >>> file_handler.writeFile('example_footprint.kicad_mod')
         """
+
+        # Instance attributes:
+        self.kicad_mod: Footprint
+        """The footprint node."""
+        self.properties: list[Property]
+        """The property nodes."""
+        self.nodes: list[Node]
+        """The non-property nodes."""
+        self.serializer: Serializer
+        """The serializer."""
+
         super().__init__()
         self.serializer = Serializer()
         self.kicad_mod = kicad_mod
@@ -210,9 +212,6 @@ class KicadPrettyLibrary(KicadModLibrary):
     write).
     """
 
-    path: Path
-    """The path to which the footprints are saved."""
-
     def __init__(self, lib_name: str, output_dir: Path | None) -> None:
         """Create a footprint library.
 
@@ -220,6 +219,10 @@ class KicadPrettyLibrary(KicadModLibrary):
             lib_name: The name of the library.
             output_dir: The output directory.
         """
+
+        # Instance attributes:
+        self.path: Path
+        """The path to which the footprints are saved."""
 
         if not lib_name.endswith(".pretty"):
             lib_name += ".pretty"

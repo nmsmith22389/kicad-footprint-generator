@@ -47,60 +47,6 @@ class ExposedPad(Node):
     VIA_NOT_TENTED = "none"
     """Via not tented."""
 
-    at: Vector2D
-    """The center of the exposed pad."""
-    size_round_base: float
-    """Base used for rounding calculated sizes."""
-    grid_round_base: float
-    """Base used for rounding calculated grids."""
-    round_radius_handler: RoundRadiusHandler
-    """The radius handler for the copper pads."""
-    paste_round_radius_handler: RoundRadiusHandler
-    """The radius handler for the paste pads."""
-    number: str | int
-    """ Number or name of the pad."""
-    size: Vector2D
-    """Size of the pad."""
-    mask_size: Vector2D
-    """Size of the mask cutout."""
-    has_vias: bool
-    """Whether the exposed pad has vias."""
-    via_layout: list[int]
-    """The number of vias in x- and y-direction."""
-    via_drill: float
-    """Via drill diameter."""
-    via_size: float
-    """Outer diameter of the vias."""
-    via_grid: Vector2D
-    """Grid used for thermal vias in x- and y-direction."""
-    via_tented: str
-    """which side of the thermal vias is covered in solder mask."""
-    bottom_pad_layers: list[str] | None
-    """ Select layers for the bottom pad."""
-    add_bottom_pad: bool
-    """Whether to add a bottom pad."""
-    bottom_size: Vector2D
-    """Size of the bottom pad."""
-    paste_avoid_via: bool
-    """Whether to place the paste so to avoid the vias."""
-    paste_reduction: float
-    """The length to remove from the border of the maximally sized paste mask openings
-    to obtain the desired paste coverage."""
-    paste_area_size: Vector2D
-    """The effective size of the paste areas."""
-    vias_in_mask: list[int]
-    """The number of vias in x- and y-direction."""
-    via_clarance: float
-    """Clearance between paste and via drills."""
-    paste_between_vias: list[int]
-    """How many pads will be between 4 vias in x- and y-direction."""
-    paste_rings_outside: list[int]
-    """The number of rings outside of the vias in x- and y-direction."""
-    paste_layout: list[int]
-    """The number of pads in x- and y-direction."""
-    _pads: list[Pad | ReferencedPad]
-    """The pads (and vias) the exposed pad is composed of."""
-
     def __init__(
         self,
         number: str | int,
@@ -176,6 +122,62 @@ class ExposedPad(Node):
             bottom_pad_layers: Select layers for the bottom pad. Ignored if no thermal
                 vias are added or if `None` (then no bottom pad is added).
         """
+
+        # Instance attributes:
+        self.at: Vector2D
+        """The center of the exposed pad."""
+        self.size_round_base: float
+        """Base used for rounding calculated sizes."""
+        self.grid_round_base: float
+        """Base used for rounding calculated grids."""
+        self.round_radius_handler: RoundRadiusHandler
+        """The radius handler for the copper pads."""
+        self.paste_round_radius_handler: RoundRadiusHandler
+        """The radius handler for the paste pads."""
+        self.number: str | int
+        """ Number or name of the pad."""
+        self.size: Vector2D
+        """Size of the pad."""
+        self.mask_size: Vector2D
+        """Size of the mask cutout."""
+        self.has_vias: bool
+        """Whether the exposed pad has vias."""
+        self.via_layout: list[int]
+        """The number of vias in x- and y-direction."""
+        self.via_drill: float
+        """Via drill diameter."""
+        self.via_size: float
+        """Outer diameter of the vias."""
+        self.via_grid: Vector2D
+        """Grid used for thermal vias in x- and y-direction."""
+        self.via_tented: str
+        """which side of the thermal vias is covered in solder mask."""
+        self.bottom_pad_layers: list[str] | None
+        """ Select layers for the bottom pad."""
+        self.add_bottom_pad: bool
+        """Whether to add a bottom pad."""
+        self.bottom_size: Vector2D
+        """Size of the bottom pad."""
+        self.paste_avoid_via: bool
+        """Whether to place the paste so to avoid the vias."""
+        self.paste_reduction: float
+        """The length to remove from the border of the maximally sized paste mask openings
+        to obtain the desired paste coverage."""
+        self.paste_area_size: Vector2D
+        """The effective size of the paste areas."""
+        self.vias_in_mask: list[int]
+        """The number of vias in x- and y-direction."""
+        self.via_clarance: float
+        """Clearance between paste and via drills."""
+        self.paste_between_vias: list[int]
+        """How many pads will be between 4 vias in x- and y-direction."""
+        self.paste_rings_outside: list[int]
+        """The number of rings outside of the vias in x- and y-direction."""
+        self.paste_layout: list[int]
+        """The number of pads in x- and y-direction."""
+        self._pads: list[Pad | ReferencedPad]
+        """The pads (and vias) the exposed pad is composed of."""
+
         Node.__init__(self)
         self._pads = []
         self.at = at

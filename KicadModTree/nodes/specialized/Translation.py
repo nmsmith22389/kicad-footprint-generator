@@ -22,9 +22,6 @@ from kilibs.geom.vector import Vector2D
 class Translation(Node):
     """A translation that is applied to every child node."""
 
-    offset: Vector2D
-    """The direction and distance in mm of the translation."""
-
     def __init__(self, x: float | Vector2D, y: float = 0.0) -> None:
         """Create a translation node.
 
@@ -32,6 +29,11 @@ class Translation(Node):
             x: The distance in mm in the x-direction.
             y: The distance in mm in the y-direction.
         """
+
+        # Instance attributes:
+        self.offset: Vector2D
+        """The direction and distance in mm of the translation."""
+
         Node.__init__(self)
         if isinstance(x, Vector2D):
             self.offset = x

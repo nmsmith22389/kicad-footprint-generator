@@ -26,19 +26,6 @@ from kilibs.geom.vector import Vec2DCompatible, Vector2D
 class GeomRectangle(GeomShapeClosed):
     """A geometric rectangle with rounded corners."""
 
-    size: Vector2D
-    """The size in mm."""
-    center: Vector2D
-    """The coordinates of the center in mm."""
-    corner_radius: float
-    """The radius of the round corners in mm."""
-    _angle: float
-    """The rotation angle of the shape."""
-    _corner_pts: list[Vector2D] | None
-    """The corners of the rectangle."""
-    _bbox: BoundingBox | None
-    """The bounding box of the rectangle."""
-
     def __init__(
         self,
         shape: GeomRectangle | BoundingBox | None = None,
@@ -58,6 +45,21 @@ class GeomRectangle(GeomShapeClosed):
             stop: Coordinates (in mm) of the bottom right corner of the rectangle.
             angle: Rotation angle of the rectangle in degrees.
         """
+
+        # Instance attributes:
+        self.size: Vector2D
+        """The size in mm."""
+        self.center: Vector2D
+        """The coordinates of the center in mm."""
+        self.corner_radius: float
+        """The radius of the round corners in mm."""
+        self._angle: float
+        """The rotation angle of the shape."""
+        self._corner_pts: list[Vector2D] | None
+        """The corners of the rectangle."""
+        self._bbox: BoundingBox | None
+        """The bounding box of the rectangle."""
+
         self._corner_pts = None
         self._bbox = None
         self._update_angle(angle)

@@ -25,11 +25,6 @@ from kilibs.geom.tolerances import TOL_MM
 class Vector2D:
     """A 2D vector."""
 
-    x: float
-    """The x-coordinate."""
-    y: float
-    """The y-coordinate."""
-
     def __init__(
         self,
         coordinates: Vec2DCompatible | float | int,
@@ -51,6 +46,13 @@ class Vector2D:
             >>> Vector2D({'x': 0, 'y':0})
             >>> Vector2D(Vector2D(0, 0))
         """
+
+        # Instance attributes:
+        self.x: float
+        """The x-coordinate."""
+        self.y: float
+        """The y-coordinate."""
+
         # parse constructor
         if isinstance(coordinates, float | int):
             self.x = float(coordinates)

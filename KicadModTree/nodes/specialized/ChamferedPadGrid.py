@@ -41,15 +41,6 @@ class ChamferSelPadGrid(CornerSelection):
     LEFT_EDGE = "l"
     """Corners on the left edge are chamfered."""
 
-    top_edge: bool
-    """Whether the top edge is selected."""
-    right_edge: bool
-    """Whether the right edge is selected."""
-    bottom_edge: bool
-    """Whether the bottom edge is selected."""
-    left_edge: bool
-    """Whether the left edge is selected."""
-
     def __init__(
         self,
         chamfer_select: (
@@ -68,6 +59,17 @@ class ChamferSelPadGrid(CornerSelection):
                 * The integer 1 means all corners and edges
                 * The integer 0 means no corners, no edges
         """
+
+        # Instance attributes:
+        self.top_edge: bool
+        """Whether the top edge is selected."""
+        self.right_edge: bool
+        """Whether the right edge is selected."""
+        self.bottom_edge: bool
+        """Whether the bottom edge is selected."""
+        self.left_edge: bool
+        """Whether the left edge is selected."""
+
         self.top_edge = False
         self.right_edge = False
         self.bottom_edge = False
@@ -178,27 +180,6 @@ class ChamferSelPadGrid(CornerSelection):
 class ChamferedPadGrid(Node):
     """A chamfered pad grid."""
 
-    number: str | int
-    """Pad number or name."""
-    center: Vector2D
-    """Center position of the pad grid."""
-    size: Vector2D
-    """Size of the pads."""
-    type: str
-    """Type of the pad."""
-    layers: list[str]
-    """Layers which are used for the pad."""
-    pincount: list[int]
-    """Pad count in x- and y-direction."""
-    grid: Vector2D
-    """Pad grid in x- and y- direction."""
-    chamfer_selection: ChamferSelPadGrid
-    """Select which corner and edge pads to chamfer."""
-    chamfer_size: Vector2D
-    """Size of the chamfer."""
-    round_radius_handler: RoundRadiusHandler
-    """An instance of a `RoundRadiusHandler`."""
-
     def __init__(
         self,
         pincount: int | Sequence[int],
@@ -230,6 +211,29 @@ class ChamferedPadGrid(Node):
             number: Number or name of the pads.
             center: Center position of the pad grid.
         """
+
+        # Instance attributes:
+        self.number: str | int
+        """Pad number or name."""
+        self.center: Vector2D
+        """Center position of the pad grid."""
+        self.size: Vector2D
+        """Size of the pads."""
+        self.type: str
+        """Type of the pad."""
+        self.layers: list[str]
+        """Layers which are used for the pad."""
+        self.pincount: list[int]
+        """Pad count in x- and y-direction."""
+        self.grid: Vector2D
+        """Pad grid in x- and y- direction."""
+        self.chamfer_selection: ChamferSelPadGrid
+        """Select which corner and edge pads to chamfer."""
+        self.chamfer_size: Vector2D
+        """Size of the chamfer."""
+        self.round_radius_handler: RoundRadiusHandler
+        """An instance of a `RoundRadiusHandler`."""
+
         Node.__init__(self)
         self.number = number
         self.center = center

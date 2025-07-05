@@ -26,21 +26,6 @@ from kilibs.geom.vector import Vec2DCompatible, Vector2D
 class GeomCruciform(GeomShapeClosed):
     """A geometric cruciform."""
 
-    overall_w: float
-    """Overall width of the cruciform in mm."""
-    overall_h: float
-    """Overall height of the cruciform in mm."""
-    tail_w: float
-    """Width of the tail in mm."""
-    tail_h: float
-    """Height of the tail in mm."""
-    center: Vector2D
-    """Coordinates of the center in mm."""
-    angle: float
-    """Rotation angle of the shape in degrees."""
-    _shape: GeomPolygon | GeomRectangle | None
-    """KiCad native shape that describes this cruciform."""
-
     def __init__(
         self,
         shape: GeomCruciform | None = None,
@@ -81,11 +66,28 @@ class GeomCruciform(GeomShapeClosed):
             center: Coordinates of the center point of the cruciform in mm.
             angle: Rotation angle of the cruciform in degrees.
         """
+
+        # Instance attributes:
+        self.overall_w: float
+        """Overall width of the cruciform in mm."""
+        self.overall_h: float
+        """Overall height of the cruciform in mm."""
+        self.tail_w: float
+        """Width of the tail in mm."""
+        self.tail_h: float
+        """Height of the tail in mm."""
+        self.center: Vector2D
+        """Coordinates of the center in mm."""
+        self.angle: float
+        """Rotation angle of the shape in degrees."""
+        self._shape: GeomPolygon | GeomRectangle | None
+        """KiCad native shape that describes this cruciform."""
+
         if shape is not None:
-            self.overall_w: float = shape.overall_w
-            self.overall_h: float = shape.overall_h
-            self.tail_w: float = shape.tail_w
-            self.tail_h: float = shape.tail_h
+            self.overall_w = shape.overall_w
+            self.overall_h = shape.overall_h
+            self.tail_w = shape.tail_w
+            self.tail_h = shape.tail_h
             self.center = Vector2D(shape.center)
             self.angle = shape.angle
         elif (

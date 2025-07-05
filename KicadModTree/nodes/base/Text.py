@@ -25,25 +25,6 @@ from kilibs.geom import BoundingBox, Vec2DCompatible, Vector2D
 class _TextBase(Node):
     """The base node of Text and Property."""
 
-    text: str
-    """Content that is shown."""
-    at: Vector2D
-    """Coordinates of the text."""
-    rotation: float
-    """Rotation in degrees of the text field."""
-    mirror: bool
-    """Whether the text is mirrored or not."""
-    layer: str
-    """On which layer the text is drawn."""
-    size: Vector2D
-    """Size of the text."""
-    thickness: float
-    """Thickness of the text."""
-    justify: str | None
-    """Justification of the text (default: 'center')."""
-    hide: bool
-    """`True` if the text shall be hidden."""
-
     def __init__(
         self,
         text: str,
@@ -75,6 +56,27 @@ class _TextBase(Node):
             >>> Property(name='Value', text="footprint name", at=[0, 3], layer='F.Fab')
             >>> Text(text='test', at=[0, 0], layer='Cmts.User')
         """
+
+        # Instance attributes:
+        self.text: str
+        """Content that is shown."""
+        self.at: Vector2D
+        """Coordinates of the text."""
+        self.rotation: float
+        """Rotation in degrees of the text field."""
+        self.mirror: bool
+        """Whether the text is mirrored or not."""
+        self.layer: str
+        """On which layer the text is drawn."""
+        self.size: Vector2D
+        """Size of the text."""
+        self.thickness: float
+        """Thickness of the text."""
+        self.justify: str | None
+        """Justification of the text (default: 'center')."""
+        self.hide: bool
+        """`True` if the text shall be hidden."""
+
         Node.__init__(self)
         self.text = text
         self.at = Vector2D(at)
@@ -216,9 +218,6 @@ class Property(_TextBase):
     FOOTPRINT = "Footprint"
     """Standard designator for footprints."""
 
-    _name: str
-    """The name of the property."""
-
     def __init__(
         self,
         name: str,
@@ -245,6 +244,11 @@ class Property(_TextBase):
             justify: Justification of the text (default: 'center').
             hide: `True` if the text shall be hidden.
         """
+
+        # Instance attributes:
+        self._name: str
+        """The name of the property."""
+
         super().__init__(
             text=text,
             at=at,
