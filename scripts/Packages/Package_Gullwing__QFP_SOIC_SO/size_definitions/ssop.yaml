@@ -88,6 +88,28 @@ SSOP-10-1EP_3.9x4.9mm_P1.00mm_EP2.1x3.3mm:
     paste_avoid_via: False
 
 ##############################################################################
+# 0.80 PITCH
+##############################################################################
+
+SSOP-40_8.8x17.5mm_P0.8mm:
+# Used by TMPZ84C00AP from Toshiba
+  device_type: 'SSOP' # temporary
+  size_source: 'JEITA/EIAJ ED-7311-20 variation 40-001-GABB, 2.40mm body thickness, https://www.jeita.or.jp/japanese/standard/book/ED-7311-20/#target/page_no=114'
+  compatible_mpns:
+    - 'P-SSOP40-08.80x17.50-0.80' # JEITA external type
+    - 'P-SSOP40-0450-0.80' # JEITA old description
+    - 'Toshiba_SSOP40-P-450' # https://datasheets.chipdb.org/Toshiba/Z80/tmpz84c00.pdf#page=56, https://www.bitsavers.org/components/toshiba/_dataBook/1990_Toshiba_8-Bit_Microprocessor_TLCS-Z80_85.pdf#page=69
+  body_size_x: 8.80 # JEITA E
+  body_size_y: 17.50 # JEITA D
+  overall_size_x: 11.93 # JEITA He
+  overall_height: 2.29 .. 2.80 # minimum is JEITA A1_min + A2_min, maximum is JEITA A_max
+  lead_width: 0.25 .. 0.35 .. 0.45 # JEITA bp
+  lead_len: 0.80 # JEITA L; Lp is missing in this variation
+  pitch: 0.80
+  num_pins_x: 0
+  num_pins_y: 20
+
+##############################################################################
 # 0.65 PITCH
 ##############################################################################
 
