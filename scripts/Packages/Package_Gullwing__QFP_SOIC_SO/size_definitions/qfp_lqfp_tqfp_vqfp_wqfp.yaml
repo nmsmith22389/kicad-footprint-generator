@@ -109,6 +109,18 @@ PQFP-80_14x20mm_P0.8mm:
   num_pins_x: 16
   num_pins_y: 24
 
+Hitachi_PQFP-80_14x20mm_P0.8mm:
+  inherit: PQFP-80_14x20mm_P0.8mm
+  manufacturer: 'Hitachi'
+  size_source: 'Hitachi FP-80B, 2.70mm body thickness, https://www.icbase.com/pdf/HTH/HTH14270106.pdf#page=9, https://bitsavers.trailing-edge.com/components/hitachi/_dataBooks/1994_M24T026_Hitachi_LCD_Controller_Driver_LSI_Data_Book.pdf#page=28'
+  compatible_mpns:
+    - 'Hitachi_FP-80B'
+  overall_size_x: 18.8 +/- 0.4
+  overall_size_y: 24.8 +/- 0.4
+  overall_height: 2.70 .. 3.10
+  # lead_width: 0.37 +/- 0.08 # same of JEITA bp / JEDEC b parent footprint
+  lead_len: 1.2 +/- 0.2
+
 PQFP-128_28x28mm_P0.8mm:
   device_type: 'PQFP'
   size_source: 'JEITA/EIAJ ED-7311A (variation 128-001-KD) / JEDEC MS-022 (variation DB-2), 3.40mm body thickness, https://www.jeita.or.jp/japanese/standard/book/ED-7311A/#target/page_no=78, https://www.jedec.org/document_search?search_api_views_fulltext=MS-022'
