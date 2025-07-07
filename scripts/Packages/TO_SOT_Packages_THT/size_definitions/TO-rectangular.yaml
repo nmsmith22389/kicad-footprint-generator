@@ -217,6 +217,25 @@ TO-220-9_Staggered:
   pad_hole_diameter: 0.7
   pad_dimensions_xy: [1.5, 1.5]
 
+TO-220-9_P1.93x5.08mm_StaggerOdd_Lead3.378mm_Vertical: # 'Lead3.378mm' --> it's the distance between plastic front and the staggered pins (it's calculated in the script)
+# TO-220-2 probably need some fixes, so we are not inheriting here
+# converting values from controling dimension in inch, using 3 decimal
+  device_type: "TO-220"
+  size_source: "Texas Instruments NEC0009A, https://www.ti.com/lit/ml/mpsf023/mpsf023.pdf?ts=1736330780857"
+  additional_tags: [ "Texas_NEC0009A", "Texas_TA09A-(Rev-C)" ]
+  plastic_dimensions_xyz: [ 10.16, 8.687, 4.572 ]  # [ 0.400", 0.342", 0.180" ]
+  metal_dimensions_xyz: [ 10.16, 14.986, 1.27 ]    # [ 0.400", 0.248" + 0.342", 0.050" ]
+  mounting_hole_position: [ 5.08, null ]           # [ metal_dimensions_x / 2, don't matter ]
+  mounting_hole_diameter_on_package: 3.835         # 0.151"
+  number_of_pins: 9
+  pitch: 0.965                       # .038", it will result in pitch 1.93mm between pins in the same row
+  staggered_pitch: [ 5.08, null ]    # there's no horizontal staggered_pitch in this package
+  pin_offset_z: 2.87                 # z-offset of back-pins in staggered mode
+  pin_width_height: [ 0.508, 0.381 ] # [0.020", 0.015"]
+  pad_hole_diameter: 0.85            # IPC level B --> pin_diagonal + 0.20mm = sqrt(0.508^2 + 0.381^2) + 0.20mm = 0.835mm --> 0.85mm drill size
+  pad_dimensions_xy: [ 1.50, 1.50 ]  # width/height of pads
+  generate_footprint_type: vertical-odd
+
 TO-220-11_Staggered:
   inherit: TO-220-4_Staggered
   size_source: "http://www.st.com/resource/en/datasheet/tda7391lv.pdf"
