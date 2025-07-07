@@ -89,6 +89,26 @@ PQFP-64_14x14mm_P0.8mm:
   num_pins_x: 16
   num_pins_y: 16
 
+PQFP-80_14x20mm_P0.8mm:
+# replacing hand-made footprint, it was using suggested land-patten from Onsemi
+  device_type: 'PQFP'
+  size_source: 'JEITA/EIAJ ED-7311A (variation 80-001-PB) / JEDEC MS-022 (variation GB-2), 2.70mm body thickness, https://www.jeita.or.jp/japanese/standard/book/ED-7311A/#target/page_no=91, https://www.jedec.org/document_search?search_api_views_fulltext=MS-022'
+  compatible_mpns:
+    - 'P-QFP080-14.00x20.00-0.80' # JEITA external type
+    - 'P-QFP080-1420-0.80' # EIAJ old description
+    - 'MQFP-80' # JEDEC 'metric'
+    - 'Onsemi_PQFP80-14x20-/-QIP80E Onsemi_CASE-122BS' # it differs a little in some sizes, overall_height for example is 3.0mm max, but generated footprint is compatible, https://www.onsemi.com/pub/Collateral/122BS.PDF
+  body_size_x: 14.00 # JEITA D / JEDEC D1
+  body_size_y: 20.00 # JEITA E / JEDEC E1
+  overall_size_x: 17.20 # JEITA HD / JEDEC D, JEITA document swap these sizes but it's probably a typo
+  overall_size_y: 23.20 # JEITA HE / JEDEC E
+  overall_height: 2.50 .. 2.80 .. 3.15 # minimum: JEITA A1_min + A2_min; nominal: JEITA A1_nom + A2_nom; maximum: JEITA A_max
+  lead_width: 0.29 .. 0.45 # JEITA bp / JEDEC b
+  lead_len: 0.73 .. 0.88 .. 1.03 # JEITA Lp; nominal value from JEDEC L
+  pitch: 0.80 # e
+  num_pins_x: 16
+  num_pins_y: 24
+
 PQFP-128_28x28mm_P0.8mm:
   device_type: 'PQFP'
   size_source: 'JEITA/EIAJ ED-7311A (variation 128-001-KD) / JEDEC MS-022 (variation DB-2), 3.40mm body thickness, https://www.jeita.or.jp/japanese/standard/book/ED-7311A/#target/page_no=78, https://www.jedec.org/document_search?search_api_views_fulltext=MS-022'
