@@ -1,3 +1,14 @@
+- series: DEMxxxxC
+  manufacturer: Murata
+  datasheet: "https://www.murata.com/~/media/webrenewal/products/inductor/chip/tokoproducts/wirewoundferritetypeforpl/m_dem3518c.ashx"
+  library_name: Inductor_SMD
+  csv: murata_dem.csv
+  3d:
+    type: 2 # best effort, this has a double chamfer on one side
+  tags:
+    - power
+    - shielded
+
 - series: DFE2016
   manufacturer: Murata
   csv: murata_dfe2016.csv
