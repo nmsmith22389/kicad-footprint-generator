@@ -44,7 +44,7 @@ class RecursionDetectedError(RuntimeError):
 
 
 @runtime_checkable
-class HasCallableHashDict(Protocol):
+class _HasCallableHashDict(Protocol):
     def hashdict(self) -> str: ...
 
 
@@ -207,7 +207,7 @@ class TStamp(object):
         if use_obj_hash:
             if obj is not None:
                 d: str | dict[str, Any]
-                if isinstance(obj, HasCallableHashDict):
+                if isinstance(obj, _HasCallableHashDict):
                     d = obj.hashdict()
                 else:
                     # consider using hash_str = sha1( str(obj.__hash__()).encode('utf-8') ).hexdigest()
@@ -357,7 +357,7 @@ class Node(ABC):
                 continue
             if hasattr(v, "_deterministic_hash"):
                 v = v._deterministic_hash()
-            elif isinstance(v, HasCallableHashDict):
+            elif isinstance(v, _HasCallableHashDict):
                 v = v.hashdict()
             elif (
                 isinstance(v, str)

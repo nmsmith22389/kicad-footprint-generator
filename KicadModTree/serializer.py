@@ -36,7 +36,7 @@ from KicadModTree.util.line_style import LineStyle
 from kilibs.geom.tolerances import TOL_MM
 from kilibs.geom.vector import Vector2D
 
-DEFAULT_LAYER_WIDTH = {
+_DEFAULT_LAYER_WIDTH = {
     "F.SilkS": 0.12,
     "B.SilkS": 0.12,
     "F.Fab": 0.10,
@@ -44,16 +44,19 @@ DEFAULT_LAYER_WIDTH = {
     "F.CrtYd": 0.05,
     "B.CrtYd": 0.05,
 }
+"""Default width for the most common layers."""
 
-DEFAULT_WIDTH = 0.15
+_DEFAULT_WIDTH = 0.15
+"""Default width for the layers not listed in _DEFAULT_LAYER_WIDTH."""
 
-DEFAULT_WIDTH_POLYGON_PAD = 0.0
+_DEFAULT_WIDTH_POLYGON_PAD = 0.0
+"""Default width of the outline of custom sized pads."""
 
 
 class SerializerPriority:
     """A class to sort nodes according to their priorities."""
 
-    class NodePriority(Enum):
+    class _NodePriority(Enum):
         """Node priorities."""
 
         SHAPE = 100
@@ -71,7 +74,7 @@ class SerializerPriority:
         MODEL = 1100
         """Priority of model nodes."""
 
-    class ShapePriority(Enum):
+    class _ShapePriority(Enum):
         """Shape priorities."""
 
         LINE = 0
@@ -89,7 +92,7 @@ class SerializerPriority:
         BEZIER = 5
         """Priority of a bezier node."""
 
-    LAYER_PRIORITY_MAP = {
+    _LAYER_PRIORITY_MAP = {
         # These are specials in this order in formatLayers()
         # which come first
         "*.Cu": -1000,
@@ -164,7 +167,7 @@ class SerializerPriority:
         """
         # Approximate sorting order from PCB_IO_KICAD_SEXPR::formatLayers()
         try:
-            return SerializerPriority.LAYER_PRIORITY_MAP[layer]
+            return SerializerPriority._LAYER_PRIORITY_MAP[layer]
         except KeyError:
             # inner layers: even numbers from 4
             if m := re.match(r"^In(\d+)\.Cu$", layer):
@@ -179,7 +182,7 @@ class SerializerPriority:
     def get_sort_key_text(text: Text) -> list[Any]:
         """Return the sort key of the text."""
         return [
-            SerializerPriority.NodePriority.TEXT.value,
+            SerializerPriority._NodePriority.TEXT.value,
             SerializerPriority.get_layer_priority(text.layer),
         ]
 
@@ -187,9 +190,9 @@ class SerializerPriority:
     def get_sort_key_line(line: Line) -> list[Any]:
         """Return the sort key of the line."""
         return [
-            SerializerPriority.NodePriority.SHAPE.value,
+            SerializerPriority._NodePriority.SHAPE.value,
             SerializerPriority.get_layer_priority(line.layer),
-            SerializerPriority.ShapePriority.LINE.value,
+            SerializerPriority._ShapePriority.LINE.value,
             round(line.start.x, 6),
             round(line.start.y, 6),
             round(line.end.x, 6),
@@ -206,9 +209,9 @@ class SerializerPriority:
         if arc.angle < 0:
             start, end = end, start
         return [
-            SerializerPriority.NodePriority.SHAPE.value,
+            SerializerPriority._NodePriority.SHAPE.value,
             SerializerPriority.get_layer_priority(arc.layer),
-            SerializerPriority.ShapePriority.ARC.value,
+            SerializerPriority._ShapePriority.ARC.value,
             round(start.x, 6),
             round(start.y, 6),
             round(end.x, 6),
@@ -221,9 +224,9 @@ class SerializerPriority:
     def get_sort_key_circle(circle: Circle) -> list[Any]:
         """Return the sort key of the circle."""
         return [
-            SerializerPriority.NodePriority.SHAPE.value,
+            SerializerPriority._NodePriority.SHAPE.value,
             SerializerPriority.get_layer_priority(circle.layer),
-            SerializerPriority.ShapePriority.CIRCLE.value,
+            SerializerPriority._ShapePriority.CIRCLE.value,
             round(circle.center.x, 6),
             round(circle.center.y, 6),
             round(circle.radius, 6),
@@ -233,9 +236,9 @@ class SerializerPriority:
     def get_sort_key_rectangle(rectangle: Rectangle) -> list[Any]:
         """Return the sort key of the rectangle."""
         return [
-            SerializerPriority.NodePriority.SHAPE.value,
+            SerializerPriority._NodePriority.SHAPE.value,
             SerializerPriority.get_layer_priority(rectangle.layer),
-            SerializerPriority.ShapePriority.RECTANGLE.value,
+            SerializerPriority._ShapePriority.RECTANGLE.value,
             round(rectangle.top_left.x, 6),
             round(rectangle.top_left.y, 6),
             round(rectangle.bottom_right.x, 6),
@@ -246,9 +249,9 @@ class SerializerPriority:
     def get_sort_key_polygon(polygon: Polygon) -> list[Any]:
         """Return the sort key of the polygon."""
         return [
-            SerializerPriority.NodePriority.SHAPE.value,
+            SerializerPriority._NodePriority.SHAPE.value,
             SerializerPriority.get_layer_priority(polygon.layer),
-            SerializerPriority.ShapePriority.POLYGON.value,
+            SerializerPriority._ShapePriority.POLYGON.value,
             len(polygon.points),
         ] + [[round(pt.x, 6), round(pt.y, 6)] for pt in polygon.points]
 
@@ -272,9 +275,9 @@ class SerializerPriority:
             #         ]
             #     )
         return [
-            SerializerPriority.NodePriority.SHAPE.value,
+            SerializerPriority._NodePriority.SHAPE.value,
             SerializerPriority.get_layer_priority(cpoly.layer),
-            SerializerPriority.ShapePriority.POLYGON.value,
+            SerializerPriority._ShapePriority.POLYGON.value,
             len(points_and_arcs),
             keys,
         ]
@@ -283,7 +286,7 @@ class SerializerPriority:
     def get_sort_key_zone(zone: Zone) -> list[Any]:
         """Return the sort key of the zone."""
         return [
-            SerializerPriority.NodePriority.ZONE.value,
+            SerializerPriority._NodePriority.ZONE.value,
             zone.priority if zone.priority else 0,
             [SerializerPriority.get_layer_priority(layer) for layer in zone.layers],
             len(zone.nodes.points),
@@ -327,7 +330,7 @@ class SerializerPriority:
         # Approximate sorting order from FOOTPRINT::cmp_pads in KiCad's
         # pcbnew/footprint.cpp.
         return [
-            SerializerPriority.NodePriority.PAD.value,
+            SerializerPriority._NodePriority.PAD.value,
             SerializerPriority._pad_num_key(str(pad.number)),
             round(pad.at.x, 6),
             round(pad.at.y, 6),
@@ -342,7 +345,7 @@ class SerializerPriority:
         """Return the sort key of the referenced pad."""
         ref_pad = referenced_pad.reference_pad
         return [
-            SerializerPriority.NodePriority.PAD.value,
+            SerializerPriority._NodePriority.PAD.value,
             SerializerPriority._pad_num_key(str(referenced_pad.number)),
             round(referenced_pad.at.x, 6),
             round(referenced_pad.at.y, 6),
@@ -355,12 +358,12 @@ class SerializerPriority:
     @staticmethod
     def get_sort_key_embedded_fonts(fonts: EmbeddedFonts) -> list[Any]:
         """Return the sort key of the embedded fonts."""
-        return [SerializerPriority.NodePriority.EMBEDDED_FONT.value]
+        return [SerializerPriority._NodePriority.EMBEDDED_FONT.value]
 
     @staticmethod
     def get_sort_key_group(group: Group) -> list[Any]:
         """Return the sort key of the group."""
-        keys: list[Any] = [SerializerPriority.NodePriority.GROUP.value]
+        keys: list[Any] = [SerializerPriority._NodePriority.GROUP.value]
         if group.has_valid_timestamp():
             keys += [group.get_timestamp()]
         if member_nodes := group.get_group_member_nodes():
@@ -370,7 +373,7 @@ class SerializerPriority:
     @staticmethod
     def get_sort_key_model(model: Model) -> list[Any]:
         """Return the sort key of the embedded font."""
-        return [SerializerPriority.NodePriority.MODEL.value]
+        return [SerializerPriority._NodePriority.MODEL.value]
 
 
 class Serializer:
@@ -553,7 +556,7 @@ class Serializer:
         """
         ser = Serializer(self.indent)
         if width is None:
-            width = DEFAULT_LAYER_WIDTH.get(layer, DEFAULT_WIDTH)
+            width = _DEFAULT_LAYER_WIDTH.get(layer, _DEFAULT_WIDTH)
         ser.start_block("stroke")
         ser.add_float("width", width)
         ser.add_symbol("type", style.value)
@@ -1009,7 +1012,7 @@ class Serializer:
                     self._add_arc_points_back_compatible(p)
                 else:
                     raise TypeError("Unsuported type of primitive for custom pad.")
-                width = DEFAULT_WIDTH_POLYGON_PAD if p.width is None else p.width
+                width = _DEFAULT_WIDTH_POLYGON_PAD if p.width is None else p.width
                 self.add_float("width", width)
                 if fill:
                     self.add_symbol("fill", "yes")

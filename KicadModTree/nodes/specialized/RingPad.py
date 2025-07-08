@@ -29,7 +29,7 @@ from KicadModTree.nodes.NodeShape import NodeShape
 from kilibs.geom import GeomArc, GeomLine, Vec2DCompatible, Vector2D
 
 
-class RingPadPrimitive(Node):
+class _RingPadPrimitive(Node):
     """A ring pad primitive."""
 
     def __init__(
@@ -69,8 +69,8 @@ class RingPadPrimitive(Node):
         self.layers = layers
         self.number = number
 
-    def copy(self) -> RingPadPrimitive:
-        return RingPadPrimitive(
+    def copy(self) -> _RingPadPrimitive:
+        return _RingPadPrimitive(
             at=self.at,
             radius=self.radius,
             width=self.width,
@@ -102,7 +102,7 @@ class RingPadPrimitive(Node):
         )
 
 
-class ArcPadPrimitive(Node):
+class _ArcPadPrimitive(Node):
     """An arc pad primitive."""
 
     reference_arc: GeomArc
@@ -182,8 +182,8 @@ class ArcPadPrimitive(Node):
         else:
             self.end_line = None
 
-    def copy(self) -> ArcPadPrimitive:
-        return ArcPadPrimitive(
+    def copy(self) -> _ArcPadPrimitive:
+        return _ArcPadPrimitive(
             reference_arc=self.reference_arc,
             width=self.width,
             round_radius=self.round_radius,
@@ -198,7 +198,7 @@ class ArcPadPrimitive(Node):
         self,
         angle: float,
         origin: Vector2D = Vector2D.zero(),
-    ) -> ArcPadPrimitive:
+    ) -> _ArcPadPrimitive:
         """Rotate around given origin.
 
         Args:
@@ -212,7 +212,7 @@ class ArcPadPrimitive(Node):
             self.end_line.rotate(angle=angle, origin=origin)
         return self
 
-    def translate(self, vector: Vector2D) -> ArcPadPrimitive:
+    def translate(self, vector: Vector2D) -> _ArcPadPrimitive:
         """Move the arc pad primitive.
 
         Args:
@@ -349,7 +349,7 @@ class RingPad(Node):
     """Number of anchor pads around the circle."""
     anchor_to_edge_clearance: float
     """Clearance from anchor pad to edge of the ring pad, needed for NPTH center pads."""
-    pads: list[Pad | ArcPadPrimitive | RingPadPrimitive]
+    pads: list[Pad | _ArcPadPrimitive | _RingPadPrimitive]
     """List of generated pad primitives."""
     solder_paste_margin: float
     """Solder paste margin of the pad."""
@@ -502,7 +502,7 @@ class RingPad(Node):
             center=self.at, start=self.at + (self.paste_center, 0), angle=ref_angle
         )
 
-        pad = ArcPadPrimitive(
+        pad = _ArcPadPrimitive(
             number="",
             width=self.paste_width,
             round_radius_ratio=self.paste_round_radius_radio,
@@ -532,7 +532,7 @@ class RingPad(Node):
     def _generate_mask_pads(self) -> None:
         w = self.width + 2 * self.solder_mask_margin
         self.pads.append(
-            RingPadPrimitive(
+            _RingPadPrimitive(
                 number="", at=self.at, width=w, layers=["F.Mask"], radius=self.radius
             )
         )
@@ -545,7 +545,7 @@ class RingPad(Node):
                 layers.append("F.Paste")
             else:
                 self.pads.append(
-                    RingPadPrimitive(
+                    _RingPadPrimitive(
                         number="",
                         at=self.at,
                         width=self.width + 2 * self.solder_paste_margin,
@@ -560,7 +560,7 @@ class RingPad(Node):
         else:
             self._generate_mask_pads()
         self.pads.append(
-            RingPadPrimitive(
+            _RingPadPrimitive(
                 number=self.number,
                 at=self.at,
                 width=self.width,

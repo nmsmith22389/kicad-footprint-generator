@@ -26,7 +26,7 @@ from kilibs.geom import Vec2DCompatible, Vector2D
 from scripts.tools.declarative_def_tools.pad_overrides import PadOverrides
 
 
-class ApplyOverrideResult(NamedTuple):
+class _ApplyOverrideResult(NamedTuple):
     """A named tuple containing the result of the pad override."""
 
     number: int | str
@@ -382,7 +382,7 @@ class PadArray(Node):
         pad_position: Vector2D,
         pad_size: Vector2D,
         pad_overrides: PadOverrides | None,
-    ) -> ApplyOverrideResult:
+    ) -> _ApplyOverrideResult:
         """Apply pad overrides to the current pad position and parameters.
 
         Args:
@@ -397,14 +397,14 @@ class PadArray(Node):
         """
         # No overrides? Just return input
         if pad_overrides is None:
-            return ApplyOverrideResult(pad_number, pad_position, pad_size)
+            return _ApplyOverrideResult(pad_number, pad_position, pad_size)
 
         # Check if pad number is in dictionary
         this_pad_override = pad_overrides.overrides.get(pad_number)
 
         # No overrides for this pad? Just return input
         if this_pad_override is None:
-            return ApplyOverrideResult(pad_number, pad_position, pad_size)
+            return _ApplyOverrideResult(pad_number, pad_position, pad_size)
 
         # Copy input variables (to avoid changing the outer state)
         pad_position = pad_position.copy()
@@ -449,7 +449,7 @@ class PadArray(Node):
         # Pleeease use this only as a way of last resort :-)
         pad_number = this_pad_override.override_number or pad_number
 
-        return ApplyOverrideResult(pad_number, pad_position, pad_size)
+        return _ApplyOverrideResult(pad_number, pad_position, pad_size)
 
     def get_flattened_nodes(self) -> list[Node]:
         """Return the nodes to serialize."""

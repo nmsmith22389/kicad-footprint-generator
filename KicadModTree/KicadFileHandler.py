@@ -43,19 +43,19 @@ from KicadModTree.serializer import Serializer, SerializerPriority
 #
 # The version number is a date in the format YYYYMMDD and corresponds to the
 # version in the pcb_io_kicad_sexpr.h file for a stable release of KiCad.
-FORMAT_VERSION: int = 20241229
+_FORMAT_VERSION: int = 20241229
 
 # The name of the generator (this is put in the .kicad_mod file)
 #
 # In theory, this could also encode which sub-generator was used, but for now
 # this is just a fixed string, same as for KiCad v7 generators.
-GENERATOR_NAME: str = "kicad-footprint-generator"
+_GENERATOR_NAME: str = "kicad-footprint-generator"
 
 
 class KicadFileHandler(FileHandler):
     """Implementation of the `FileHandler` for `.kicad_mod` files."""
 
-    NODE_SORT_KEY_MAP: dict[type[Node], Callable[[Any], list[Any]]] = {
+    _NODE_SORT_KEY_MAP: dict[type[Node], Callable[[Any], list[Any]]] = {
         Text: SerializerPriority.get_sort_key_text,
         Line: SerializerPriority.get_sort_key_line,
         Arc: SerializerPriority.get_sort_key_arc,
@@ -72,7 +72,7 @@ class KicadFileHandler(FileHandler):
         Group: SerializerPriority.get_sort_key_group,
     }
 
-    NODE_SERIALIZER_MAP: dict[type[Node], Callable[[Serializer, Any], None]] = {
+    _NODE_SERIALIZER_MAP: dict[type[Node], Callable[[Serializer, Any], None]] = {
         Text: Serializer.add_text,
         Line: Serializer.add_line,
         Arc: Serializer.add_arc,
@@ -135,7 +135,7 @@ class KicadFileHandler(FileHandler):
                 other_nodes.append(node)
 
         # Reorder the nodes to the KiCad native order:
-        other_nodes.sort(key=lambda item: self.NODE_SORT_KEY_MAP[type(item)](item))
+        other_nodes.sort(key=lambda item: self._NODE_SORT_KEY_MAP[type(item)](item))
         self.property_nodes = property_nodes
         self.nodes = other_nodes
 
@@ -145,8 +145,8 @@ class KicadFileHandler(FileHandler):
         """
         kicad_mod = self.kicad_mod
         self.serializer.start_block(f'footprint "{kicad_mod.name}"')
-        self.serializer.add_int("version", FORMAT_VERSION)
-        self.serializer.add_string("generator", GENERATOR_NAME)
+        self.serializer.add_int("version", _FORMAT_VERSION)
+        self.serializer.add_string("generator", _GENERATOR_NAME)
         self.serializer.add_string("layer", "F.Cu")
         if kicad_mod.description:
             self.serializer.add_string("descr", kicad_mod.description)
@@ -191,7 +191,7 @@ class KicadFileHandler(FileHandler):
             self.serializer.add_symbols("attr", attributes)
         # Serialize the ordered nodes:
         for node in self.nodes:
-            self.NODE_SERIALIZER_MAP[type(node)](self.serializer, node)
+            self._NODE_SERIALIZER_MAP[type(node)](self.serializer, node)
         self.serializer.end_block()
         return self.serializer.to_string()
 
