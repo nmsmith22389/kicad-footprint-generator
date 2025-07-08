@@ -109,9 +109,10 @@ PQFP-80_14x20mm_P0.8mm:
   num_pins_x: 16
   num_pins_y: 24
 
-Hitachi_PQFP-80_14x20mm_P0.8mm:
+Hitachi_FP80B_PQFP-80_14x20mm_P0.8mm:
   inherit: PQFP-80_14x20mm_P0.8mm
   manufacturer: 'Hitachi'
+  part_number: 'FP80B' # there's a 'FP-80' (older package) which has even bigger overall_size_x/y and lead_len
   size_source: 'Hitachi FP-80B, 2.70mm body thickness, https://www.icbase.com/pdf/HTH/HTH14270106.pdf#page=9, https://bitsavers.trailing-edge.com/components/hitachi/_dataBooks/1994_M24T026_Hitachi_LCD_Controller_Driver_LSI_Data_Book.pdf#page=28'
   compatible_mpns:
     - 'Hitachi_FP-80B'
