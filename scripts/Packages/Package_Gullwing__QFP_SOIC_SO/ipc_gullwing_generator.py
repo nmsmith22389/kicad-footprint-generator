@@ -9,7 +9,8 @@ from KicadModTree import (
     ExposedPad,
     Footprint,
     FootprintType,
-    Pad,
+    ChamferRect,
+    CornerSelection,
     PolygonLine,
 )
 
@@ -791,21 +792,14 @@ class GullwingGenerator(FootprintGenerator):
 
         # # ######################## Fabrication Layer ###########################
 
-        fab_bevel_size = self.global_config.get_fab_bevel_size(min(size_x, size_y))
-
-        poly_fab = [
-            {'x': body_rect.left + fab_bevel_size, 'y': body_rect.top},
-            {'x': body_rect.right, 'y': body_rect.top},
-            {'x': body_rect.right, 'y': body_rect.bottom},
-            {'x': body_rect.left, 'y': body_rect.bottom},
-            {'x': body_rect.left, 'y': body_rect.top + fab_bevel_size},
-            {'x': body_rect.left + fab_bevel_size, 'y': body_rect.top},
-        ]
-
-        kicad_mod.append(PolygonLine(
-            shape=poly_fab,
-            width=fab_line_width,
-            layer="F.Fab"))
+        kicad_mod += ChamferRect(
+                at=body_rect.center,
+                size=body_rect.size,
+                chamfer=self.global_config.fab_bevel,
+                corners=CornerSelection({CornerSelection.TOP_LEFT: True}),
+                layer="F.Fab",
+                width=fab_line_width,
+            )
 
         # ########################## Top heat slugs ###############################
 
