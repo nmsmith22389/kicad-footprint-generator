@@ -1,0 +1,14 @@
+- series: LMLPD
+  manufacturer: AVX
+  datasheet: "https://datasheets.avx.com/LMLPD.pdf"
+  library_name: Inductor_SMD
+  series_description: LMLP
+  additional_description: Style D
+  csv: avx_lmlpd.csv
+  3d:
+    type: 2
+  tags:
+    - AVX-Kyocera
+    - power
+    - shielded
+    - low-profile

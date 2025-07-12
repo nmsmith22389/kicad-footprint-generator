@@ -165,6 +165,14 @@ class SmdInductorProperties:
 class InductorSeriesProperties:
     """Object that represents the definition of a series of inductors, read from a dict,
     probably from a YAML file.
+
+    A series is a collection of inductors that share some common properties,
+    and can be generated from one CSV file or list of part definitions.
+
+    A series may or may not correspond one-to-one with a manufacturer's series.
+    For example, a manufacturer may have a series that contains different
+    shapes of inductors and we can define a 'series' for each one, but they
+    are all part of the same series in the manufacturer's catalog.
     """
 
     name: str
@@ -180,6 +188,13 @@ class InductorSeriesProperties:
     """`True` if the inductors have an orientation and require a pin 1 marker."""
     library_name: str
     """The name of the library to store the output in."""
+    series_description: str | None = None
+    """Optional name of the series, used in the footprint description if the part
+    number isn't enough."""
+    additional_description: str | None = None
+    """Optional additional description for the series, used in the footprint
+    description, after the series. Can be useful when the 'series' def is only
+    a subset of the manufacturer-described series."""
     parts: list[SmdInductorProperties]
     """List of the part definitions in the series."""
 
@@ -199,6 +214,9 @@ class InductorSeriesProperties:
         self.datasheet = series_block.get("datasheet", "")
         # space delimited list of the tags
         self.tags = series_block.get("tags", [])
+        self.series_description = series_block.get("series_description", None)
+        self.additional_description = series_block.get("additional_description", None)
+
         self.has_orientation = series_block.get("has_orientation", False)
         self.library_name = series_block["library_name"]
 

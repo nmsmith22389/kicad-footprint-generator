@@ -76,7 +76,17 @@ class InductorGenerator(FootprintGenerator):
 
         desc = [
             f"Inductor",
-            f"{series_data.manufacturer}, {part_data.part_number}",
+            series_data.manufacturer,
+            part_data.part_number,
+        ]
+
+        if series_data.series_description:
+            desc.append(f"{series_data.series_description} series")
+
+        if series_data.additional_description:
+            desc.append(series_data.additional_description)
+
+        desc += [
             f"{part_data.width_x}x{part_data.length_y}x{part_data.height}mm",
             f"({datasheet_url})",
             self.global_config.get_generated_by_description(os.path.basename(__file__)),
