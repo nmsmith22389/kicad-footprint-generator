@@ -53,6 +53,7 @@ __Comment__ = """This generator loads cadquery model scripts and generates step/
 
 ___ver___ = "2.0.0"
 
+import abc
 import glob
 import os
 from pathlib import Path
@@ -68,6 +69,7 @@ from kilibs.declarative_defs.packages.smd_inductor_properties import (
     InductorSeriesProperties,
     SmdInductorProperties,
 )
+from kilibs.declarative_defs.packages.two_pad_dimensions import TwoPadDimensions
 
 from .src.make_coil_model import DSectionFootAirCoreCoil
 
@@ -216,27 +218,30 @@ class SmdInductorGenerator:
         # Add the parts to the assembly
         pins = None
         if series_3d_props.has_body:
+
+            model_builder: InductorModelBuilder
+
+            # Dispatch the body type to the appropriate function
             if series_3d_props.body_type in (1, 2):
-                (
-                    case,
-                    pins,
-                ) = self.generate_cubic_inductor(part_data, series_3d_props)
+                model_builder = CubicInductorBuilder(part_data, series_3d_props)
             elif series_3d_props.body_type == "shielded_drum_rounded_rectangular_base":
-                (
-                    case,
-                    pins,
-                ) = self.genenerate_shielded_drum_model(part_data, series_3d_props)
+                model_builder = ShieldedDrumModelBuilder(part_data, series_3d_props)
             else:
-                raise ValueError("Invalid 'body_type'.")
+                raise ValueError(f"Invalid body_type: {series_3d_props.body_type}")
+
+            case, pins = model_builder.build()
+
             stepBodyColor = shaderColors.named_colors[
                 series_3d_props.body_color
             ].getDiffuseFloat()
+
             component.add(
                 case,
                 color=cq_color_correct.Color(
                     stepBodyColor[0], stepBodyColor[1], stepBodyColor[2]
                 ),
             )
+
         if series_3d_props.coil_style is not None:
             aCoil = DSectionFootAirCoreCoil(part_data, series_3d_props)
             (
@@ -321,17 +326,84 @@ class SmdInductorGenerator:
             add_license.STR_int_licPreProc,
         )
 
-    def generate_cubic_inductor(
+
+def build_pins(
+    pin_dims: TwoPadDimensions, pad_thickness: float, body_width: float | None
+) -> cq.Workplane:
+    """
+    Build two simple rectangular pins based on the given dimensions.
+
+    Parameters:
+        - pin_dims: TwoPadDimensions object containing the dimensions of the pins.
+        - pad_thickness: Thickness of the pads (in z)
+        - body_width: Width of the body, used to adjust pin positions if necessary.
+    """
+    pin1 = (
+        cq.Workplane("XY")
+        .box(
+            pin_dims.size_inline,
+            pin_dims.size_crosswise,
+            pad_thickness,
+            (True, True, False),
+        )
+        .translate((-pin_dims.spacing_centre / 2, 0, 0))
+    )
+    pin2 = (
+        cq.Workplane("XY")
+        .box(
+            pin_dims.size_inline,
+            pin_dims.size_crosswise,
+            pad_thickness,
+            (True, True, False),
+        )
+        .translate((pin_dims.spacing_centre / 2, 0, 0))
+    )
+
+    # If the body and pins are the same, bump the pins out a bit so they are definitely visible
+    if body_width is not None and abs(body_width - pin_dims.spacing_outside) < 0.01:
+        translateAmount = 0.01
+        pin1 = pin1.translate((-translateAmount, 0, 0))
+        pin2 = pin2.translate((translateAmount, 0, 0))
+
+    return pin1.union(pin2)
+
+
+class InductorModelBuilder(abc.ABC):
+    """
+    Abstract base class for building inductor models.
+    """
+
+    def __init__(
+        self, part_data: SmdInductorProperties, series_3d_props: Inductor3DProperties
+    ):
+        self.part_data = part_data
+        self.series_3d_props = series_3d_props
+
+    @abc.abstractmethod
+    def build(self) -> tuple[cq.Workplane, cq.Workplane]:
+        """
+        Build the inductor model and return the case and pins.
+        """
+        pass
+
+
+class CubicInductorBuilder(InductorModelBuilder):
+
+    def __init__(
         self,
         part_data: SmdInductorProperties,
         series_3d_props: Inductor3DProperties,
     ):
+        super().__init__(part_data, series_3d_props)
+
+    def build(self) -> tuple[cq.Workplane, cq.Workplane]:
+
         # Physical dimensions
-        widthX = part_data.width_x
-        lengthY = part_data.length_y
-        height = part_data.height
-        landing = part_data.landing_dims
-        pad_dims = part_data.device_pad_dims
+        widthX = self.part_data.width_x
+        lengthY = self.part_data.length_y
+        height = self.part_data.height
+        landing = self.part_data.landing_dims
+        pad_dims = self.part_data.device_pad_dims
         # Handy debug section to help copy/paste into CQ-editor to play with design
         if False:
             print(f"widthX = {widthX}")
@@ -347,10 +419,10 @@ class SmdInductorGenerator:
         rotation = 0
         case = cq.Workplane("XY").box(widthX, lengthY, height, (True, True, False))
 
-        corner_fillet_radius = part_data.corner_radius
+        corner_fillet_radius = self.part_data.corner_radius
 
         if corner_fillet_radius is None:
-            corner_fillet_radius = series_3d_props.corner_radius
+            corner_fillet_radius = self.series_3d_props.corner_radius
 
         if corner_fillet_radius is None:
             # If no corner fillet radius, the default is 5%
@@ -359,10 +431,10 @@ class SmdInductorGenerator:
         if corner_fillet_radius > 0:
             case = case.edges("|Z").fillet(corner_fillet_radius)
 
-        top_fillet_radius = part_data.top_fillet_radius
+        top_fillet_radius = self.part_data.top_fillet_radius
 
         if top_fillet_radius is None:
-            top_fillet_radius = series_3d_props.top_fillet_radius
+            top_fillet_radius = self.series_3d_props.top_fillet_radius
 
         if top_fillet_radius is None:
             # If no top fillet radius, the default is 5%
@@ -371,83 +443,83 @@ class SmdInductorGenerator:
         if top_fillet_radius > 0:
             case = case.edges(">Z").fillet(top_fillet_radius)
 
-        if series_3d_props.body_type == 2:  # Exposed "wings"
+        if self.series_3d_props.body_type == 2:  # Exposed "wings"
             pad_thickness = min(3, height * 0.3)
         else:
-            pad_thickness = series_3d_props.pad_thickness
-        pin1 = cq.Workplane("XY").box(
-            pad_dims.size_inline,
-            pad_dims.size_crosswise,
-            pad_thickness,
-            (True, True, False),
-        )
-        pin2 = cq.Workplane("XY").box(
-            pad_dims.size_inline,
-            pad_dims.size_crosswise,
-            pad_thickness,
-            (True, True, False),
-        )
-        translateAmount = pad_dims.spacing_centre / 2
-        if series_3d_props.body_type == 2:
-            # Exposed "wings", bump it out so it is visible
-            translateAmount += 0.01
-        pin1 = pin1.translate((-translateAmount, 0, 0))
-        pin2 = pin2.translate((translateAmount, 0, 0))
-        pins = pin1.union(pin2)
+            pad_thickness = self.series_3d_props.pad_thickness
+
+        pins = build_pins(pad_dims, pad_thickness, widthX)
         case = case.cut(pins)
+
         case = case.rotate((0, 0, 0), (0, 0, 1), rotation)
         pins = pins.rotate((0, 0, 0), (0, 0, 1), rotation)
+
         return case, pins
 
-    def genenerate_shielded_drum_model(
+
+class ShieldedDrumModelBuilder(InductorModelBuilder):
+
+    def __init__(
         self,
         part_data: SmdInductorProperties,
         series_3d_props: Inductor3DProperties,
     ):
+        super().__init__(part_data, series_3d_props)
 
+    def build(self) -> tuple[cq.Workplane, cq.Workplane]:
         # Required model parameters
         assert (
-            part_data.core_diameter is not None and part_data.corner_radius is not None
+            self.part_data.core_diameter is not None
+            and self.part_data.corner_radius is not None
         )
 
         # Create a baseplate for the inductor to rest on
         baseplate = (
             cq.Workplane("XY")
-            .box(part_data.width_x, part_data.length_y, 1.2, (True, True, False))
+            .box(
+                self.part_data.width_x,
+                self.part_data.length_y,
+                1.2,
+                (True, True, False),
+            )
             .edges("|Z")
             .chamfer(
-                (part_data.length_y - part_data.device_pad_dims.size_crosswise) / 2
+                (
+                    self.part_data.length_y
+                    - self.part_data.device_pad_dims.size_crosswise
+                )
+                / 2
             )
         )
+
         # Create the shield that encases the inductor. Start with a cuboid with rounded edges.
         shield = (
             cq.Workplane("XY")
             .workplane(centerOption="CenterOfMass", offset=1.2)
             .box(
-                part_data.width_x,
-                part_data.length_y,
-                part_data.height - 1.2,
+                self.part_data.width_x,
+                self.part_data.length_y,
+                self.part_data.height - 1.2,
                 (True, True, False),
             )
             .edges("|Z")
-            .fillet(part_data.corner_radius)
+            .fillet(self.part_data.corner_radius)
         )
         # Drill a hole in the center and four more into the corners
-        drill_hole_diam = (
-            part_data.corner_radius
-        )  # This is a guess and was measured for the MSS110 series
+        # This is a guess and was measured for the MSS110 series
+        drill_hole_diam = self.part_data.corner_radius
         shield = (
             shield.faces(">Z")
             .workplane()
             .cboreHole(
-                part_data.core_diameter + 0.75,
-                cboreDiameter=part_data.core_diameter + 1.25,
+                self.part_data.core_diameter + 0.75,
+                cboreDiameter=self.part_data.core_diameter + 1.25,
                 cboreDepth=0.25,
             )
             .moveTo(0, 0)
             .rect(
-                0.5**0.5 * (part_data.core_diameter + 0.75),
-                0.5**0.5 * (part_data.core_diameter + 0.75),
+                0.5**0.5 * (self.part_data.core_diameter + 0.75),
+                0.5**0.5 * (self.part_data.core_diameter + 0.75),
                 centered=True,
                 forConstruction=True,
             )
@@ -463,13 +535,13 @@ class SmdInductorGenerator:
         shield = shield.union(
             cq.Workplane("XY")
             .workplane(centerOption="CenterOfMass", offset=1.2)
-            .circle((part_data.core_diameter + 0.75) / 2)
-            .extrude(part_data.height - 1.2 - 0.5)
+            .circle((self.part_data.core_diameter + 0.75) / 2)
+            .extrude(self.part_data.height - 1.2 - 0.5)
             .faces(">Z")
             .workplane()
-            .circle(part_data.core_diameter / 2)
+            .circle(self.part_data.core_diameter / 2)
             .workplane(offset=0.5)
-            .circle((part_data.core_diameter - 1) / 2)
+            .circle((self.part_data.core_diameter - 1) / 2)
             .loft()
         )
         # We neither draw the actual inductor nor its core. So we are done.
@@ -477,28 +549,12 @@ class SmdInductorGenerator:
         case = shield.union(baseplate)
 
         # Create the pins
-        pin1 = (
-            cq.Workplane("XY")
-            .box(
-                part_data.device_pad_dims.size_inline,
-                part_data.device_pad_dims.size_crosswise,
-                series_3d_props.pad_thickness,
-                (True, True, False),
-            )
-            .translate((-part_data.device_pad_dims.spacing_centre / 2, 0, 0))
-        )
-        pin2 = (
-            cq.Workplane("XY")
-            .box(
-                part_data.device_pad_dims.size_inline,
-                part_data.device_pad_dims.size_crosswise,
-                series_3d_props.pad_thickness,
-                (True, True, False),
-            )
-            .translate((part_data.device_pad_dims.spacing_centre / 2, 0, 0))
+        pins = build_pins(
+            self.part_data.device_pad_dims,
+            self.series_3d_props.pad_thickness,
+            self.part_data.width_x,
         )
 
-        pins = pin1.union(pin2)
         case = case.cut(pins)
 
         return case, pins
