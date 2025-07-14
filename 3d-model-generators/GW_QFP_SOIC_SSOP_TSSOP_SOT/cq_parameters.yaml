@@ -6549,7 +6549,7 @@ SOP-4_4.4x2.6mm_P1.27mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://www.vishay.com/docs/83510/tcmt1100.pdf#page=7'
 
-SOP-16_3.9x9.9mm_P1.27mm:
+JEITA_SOIC-16_3.9x9.9mm_P1.27mm:
   the: 12.0
   tb_s: 0.15
   c: 0.2
@@ -6573,12 +6573,13 @@ SOP-16_3.9x9.9mm_P1.27mm:
   npy: 0
   epad: null
   excluded_pins: null
-  model_name: SOP-16_3.9x9.9mm_P1.27mm
+  model_name: JEITA_SOIC-16_3.9x9.9mm_P1.27mm
   rotation: -90
   body_color_key: 'black body'
   pin_color_key: 'metal grey pins'
   mark_color_key: 'light brown label'
   destination_dir: 'Package_SO.3dshapes'
+  # PENDING, source needs to change: 'JEITA/EIAJ ED-7311-19, variation 16-001-ABA, https://www.jeita.or.jp/japanese/standard/book/ED-7311-19/#target/page_no=31'
   source: 'https://www.diodes.com/assets/Package-Files/SO-16.pdf'
 
 SOP-16_4.4x10.4mm_P1.27mm:

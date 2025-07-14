@@ -1502,7 +1502,7 @@ SOIC-16_3.9x9.9mm_P1.27mm:
     - 'R-16-S'        # https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/soic-narrow-sensor/R-16-S.pdf
     - 'D0016A'        # https://www.ti.com/lit/ml/mpds432a/mpds432a.pdf
     - 'M2B'           # https://ww1.microchip.com/downloads/aemDocuments/documents/package-outline-drawings/c04-21317a.pdf
-    - 'SO16 SOT109-1' # https://www.nxp.com/docs/en/package-information/SOT109-1.pdf
+    - 'SO16 SOT109-1' # PENDING: remove, already used in 'SO-16_3.9x9.9mm_P1.27mm', https://www.nxp.com/docs/en/package-information/SOT109-1.pdf
     - '751B'          # https://www.onsemi.com/download/package-drawing/pdf/751b.pdf
     - 'SOIC_N'        # '_N' stands for narrow, used by some manufacturers
   additional_tags:
@@ -1510,6 +1510,7 @@ SOIC-16_3.9x9.9mm_P1.27mm:
   body_size_x: 3.90 +/- 0.10 # JEDEC + tolerance from Analog Devices
   body_size_y: 9.90 +/- 0.10
   overall_height:
+    # minimum 1.35 mm in JEDEC (0.10 + 1.25, first is A1_min and second is from second figure in first page)
     maximum: 1.75
 
   overall_size_x: 6.00 +/- 0.20 # JEDEC + tolerance from Analog Devices
@@ -1520,8 +1521,39 @@ SOIC-16_3.9x9.9mm_P1.27mm:
   num_pins_x: 0
   num_pins_y: 8
 
+# SOIC-14-16_3.9x9.9mm_P1.27mm:
+# This footprint is already in the library, PENDING new entry here
+#  inherit: SOIC-16_3.9x9.9mm_P1.27mm
+#  device_type: 'SOIC'
+#  size_source: 'JEDEC MS-012, variation AC, custom pads from Texas Instruments, https://www.ti.com/lit/ds/symlink/ucc256301.pdf#page=69, https://www.jedec.org/document_search?search_api_views_fulltext=MS-012'
+#  compatible_mpns:
+#    - 'Texas-Instruments-DDB0014A'
+#  [...]
+
+JEITA_SOIC-16_3.9x9.9mm_P1.27mm:
+  # formerly SOP-16_3.9x9.9mm_P1.27mm, it was previously in sop.yaml file (using JEDEC sizes)
+  device_type: 'SOIC' # temporary
+  size_source: 'JEITA/EIAJ ED-7311-19, variation 16-001-ABA, https://www.jeita.or.jp/japanese/standard/book/ED-7311-19/#target/page_no=30'
+  manufacturer: 'JEITA'
+  compatible_mpns:
+    - 'P-SOP-16' # some manufacturers use 'SOP-16'
+    - 'P-SOP16-03.90x09.90-1.27' # JEITA external type
+    - 'P-SOP16-0225-1.27' # JEITA old nominal dimensions
+    - 'SOIC_N'
+  additional_tags:
+    - 'narrow'
+  body_size_x: 3.90 # E
+  body_size_y: 9.90 # D
+  overall_height: 1.70 .. 2.00 # minimum: JEITA A1_min + A2_min; maximum: JEITA A_max
+  overall_size_x: 6.40 # HE
+  lead_len: 0.45 .. 0.75 # Lp, main difference from JEDEC here, generates smaller pads
+  lead_width: 0.35 .. 0.55 # bp
+  pitch: 1.27 # e
+  num_pins_x: 0
+  num_pins_y: 8
+
 SO-16_3.9x9.9mm_P1.27mm:
-  # it was previously in so.yaml file
+  # it was previously in so.yaml file, pending renaming: NXP_SOIC-16_3.9x9.9mm_P1.27mm
   device_type: 'SO' # temporary
   size_source: 'https://www.nxp.com/docs/en/package-information/SOT109-1.pdf'
   body_size_x: 3.8 .. 3.9 .. 4.0
@@ -1537,66 +1569,16 @@ SO-16_3.9x9.9mm_P1.27mm:
     - "SOT109-1"
 
 STC_SOP-16_3.9x9.9mm_P1.27mm:
-  # it was previously in sop.yaml file
-  # it can be JEDEC MS-012 (max height match, but not lead length)
-  # and also JEITA 16-001-ABA (but max height = 2.00 there; lead length match better here)
+  # it was previously in sop.yaml file, pending renaming: STC_SOIC-16_3.9x9.9mm_P1.27mm
   device_type: 'SOP' # temporary
   size_source: 'https://www.stcmicro.com/datasheet/STC15F2K60S2-en.pdf#page=156'
   manufacturer: 'STC'
-  body_size_x: # E1
-    minimum: 3.80
-    nominal: 3.90
-    maximum: 4.00
-  body_size_y: # D
-    minimum: 9.80
-    nominal: 9.90
-    maximum: 10.00
-  overall_height: # A
-    minimum: 1.35
-    nominal: 1.60
-    maximum: 1.75
-  overall_size_x: # E
-    minimum: 5.80
-    nominal: 6.00
-    maximum: 6.20
-  lead_len: # L
-    minimum: 0.45
-    nominal: 0.60
-    maximum: 0.80
-  lead_width: # b
-    minimum: 0.35
-    nominal: 0.40
-    maximum: 0.45
-
-  pitch: 1.27 # e
-  num_pins_x: 0
-  num_pins_y: 8
-
-SOP-16_3.9x9.9mm_P1.27mm:
-  # it was previously in sop.yaml file
-  # probably JEDEC MS-012, should be SOIC, see lead length (it's 0.835 +/- 0.435 mm), JEITA is tighter (0.45 .. 0.75mm)
-  # height also does not match, in JEITA 16-001-ABA it's max 2.00mm
-  device_type: 'SOP' # temporary
-  size_source: 'https://www.diodes.com/assets/Datasheets/PAM8403.pdf'
-  body_size_x: # E1
-    minimum: 3.80
-    maximum: 4.00
-  body_size_y: # D
-    minimum: 9.80
-    maximum: 10.00
-  overall_height: # A
-    minimum: 1.35
-    maximum: 1.75
-  overall_size_x: # E
-    minimum: 5.80
-    maximum: 6.30
-  lead_len: # L
-    minimum: 0.40
-    maximum: 1.27
-  lead_width: # b
-    minimum: 0.33
-    maximum: 0.51
-
+  body_size_x: 3.80 .. 3.90 .. 4.00 # E1
+  body_size_y: 9.80 .. 9.90 .. 10.00 # D
+  overall_height: 1.35 .. 1.60 .. 1.75 # A, similar to JEDEC
+  overall_size_x: 5.80 .. 6.00 .. 6.20 # E
+  lead_len: 0.45 .. 0.60 .. 0.80 # L, similar to JEITA 16-001-ABA
+  lead_width: 0.35 .. 0.40 .. 0.45 # b
   pitch: 1.27 # e
   num_pins_x: 0
   num_pins_y: 8
