@@ -93,7 +93,7 @@ def keepout(
         min_segment_length=min_segment_length,
         tol=tol,
     )
-    if handle.number_cuts_performed[0] == 0:
+    if handle.number_cuts_performed[0] == 0 and not handle.intersections:
         if handle.atoms_inside_other_shape[0][0] is False:
             handle.kept_out_shapes = [handle.shape[0]]
         else:
