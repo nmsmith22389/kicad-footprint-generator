@@ -12,84 +12,70 @@
 # (C) The KiCad Librarian Team
 """Classes for SMD inductor properties."""
 
+import abc
 import csv
 import logging
 from pathlib import Path
 from typing import Any
 
 from kilibs.declarative_defs.packages.two_pad_dimensions import TwoPadDimensions
+from kilibs.geom import Vector3D
+from kilibs.util import dict_tools
 
 
-class SmdInductorProperties:
-    """Object that represents the definition of a single inductor part.
+def _get_key_as_float_or_none(d: dict[str, Any], key: str) -> float | None:
+    """Return the key as a `float` or, if the key is not present in the dictionary,
+    then `None` is returned.
 
-    This may not be a complete definition, as some parts may be defined
-    partly in the series definition, and partly in the part definition.
+    Args:
+        d: The dictionary.
+        key: The key.
+    """
+    try:
+        return float(d[key])
+    except KeyError:
+        return None
+
+
+class InductorBodyParameters(abc.ABC):
+    """Parameters for the body of an inductor."""
+
+    @abc.abstractmethod
+    def get_body_size(self) -> Vector3D:
+        """Get the size of the body of the inductor for naming purposes."""
+        pass
+
+
+class TwoPadInductorParameters(InductorBodyParameters):
+    """
+    Parameters for any simple two-pad inductor model.
     """
 
-    width_x: float
-    """Width of the inductor in mm."""
-    length_y: float
-    """Length of the inductor in mm."""
-    height: float
-    """Height of the inductor in mm."""
-    corner_radius: float | None
-    """Optional (vertical) corner radius of the inductor in mm."""
-    top_fillet_radius: float | None
-    """Optional (horizontal) top fillet radius of the inductor in mm."""
-    core_diameter: float | None
-    """Optional diameter of the core in mm."""
-    landing_dims: TwoPadDimensions
-    """Dimensions of PCB landing pads in mm."""
-    device_pad_dims: TwoPadDimensions
-    """Dimensions of pads on the inductorin mm."""
-    part_number: str
-    """Part number of the inductor."""
-    datasheet: str | None
-    """Datasheet of the inductor or `None` if the series datasheet is used."""
+    def __init__(self, data: dict[str, Any]):
+        self.width_x: float
+        """Width of the inductor in mm."""
+        self.length_y: float
+        """Length of the inductor in mm."""
+        self.height: float
+        """Overall height of the inductor in mm."""
+        landing_dims: TwoPadDimensions
+        """Dimensions of PCB landing pads in mm."""
+        device_pad_dims: TwoPadDimensions
+        """Dimensions of pads on the inductor in mm."""
 
-    def __init__(self, part_block: dict[str, str]) -> None:
-        """Create an instance of `SmdInductorProperties`.
+        self.width_x = float(data["widthX"])
+        self.length_y = float(data["lengthY"])
+        self.height = float(data["height"])
+        self.landing_dims = self._derive_landing_size(data)
+        self.device_pad_dims = self._derive_pad_spacing(data)
 
-        Args:
-            part_block: The dictionary containing the properties of the inductor.
+    def get_body_size(self) -> Vector3D:
+        """Get the size of the body of the inductor for naming purposes.
+
+        Returns:
+            The size of the body of the inductor as a `Vector2D`.
         """
-        self.width_x = float(part_block["widthX"])
-        self.length_y = float(part_block["lengthY"])
-        self.height = float(part_block["height"])
-        self.corner_radius = (
-            float(part_block["cornerRadius"])
-            if part_block.get("cornerRadius") is not None
-            else None
-        )
-        self.top_fillet_radius = (
-            float(part_block["topFilletRadius"])
-            if part_block.get("topFilletRadius") is not None
-            else None
-        )
-        self.core_diameter = (
-            float(part_block["coreDiameter"])
-            if part_block.get("coreDiameter")
-            else None
-        )
-        self.landing_dims = self._derive_landing_size(part_block)
-        self.device_pad_dims = self._derive_pad_spacing(part_block)
-        self.part_number = part_block["PartNumber"]
-        self.datasheet = part_block.get("datasheet", None)
-
-    @staticmethod
-    def _get_key_as_float_or_none(d: dict[str, Any], key: str) -> float | None:
-        """Return the key as a `float` or, if the key is not present in the dictionary,
-        then `None` is returned.
-
-        Args:
-            d: The dictionary.
-            key: The key.
-        """
-        try:
-            return float(d[key])
-        except KeyError:
-            return None
+        return Vector3D(self.width_x, self.length_y, self.height)
 
     def _derive_landing_size(self, data: dict[str, Any]) -> TwoPadDimensions:
         """Handle the various methods of providing sufficient dimensions to derive the
@@ -103,10 +89,10 @@ class SmdInductorProperties:
             from the given `dict`.
         """
         landing_y = float(data["landingY"])
-        xin = self._get_key_as_float_or_none(data, "landingX")
-        spc_c = self._get_key_as_float_or_none(data, "landingSpacingX")
-        spc_ix = self._get_key_as_float_or_none(data, "landingInsideX")
-        spc_ox = self._get_key_as_float_or_none(data, "landingOutsideX")
+        xin = _get_key_as_float_or_none(data, "landingX")
+        spc_c = _get_key_as_float_or_none(data, "landingSpacingX")
+        spc_ix = _get_key_as_float_or_none(data, "landingInsideX")
+        spc_ox = _get_key_as_float_or_none(data, "landingOutsideX")
         try:
             return TwoPadDimensions(landing_y, xin, spc_c, spc_ix, spc_ox)
         except ValueError:
@@ -131,7 +117,7 @@ class SmdInductorProperties:
             An instance of `TwoPadDimensions` containing the pad dimensions extracted
             from the given `dict`.
         """
-        pad_y = self._get_key_as_float_or_none(data, "padY")
+        pad_y = _get_key_as_float_or_none(data, "padY")
         if pad_y is None:
             logging.info(
                 "No physical pad dimensions (padY) found - using body and PCB landing "
@@ -139,10 +125,10 @@ class SmdInductorProperties:
             )
             pad_y = min(self.landing_dims.size_crosswise, self.length_y)
 
-        spc_c = self._get_key_as_float_or_none(data, "padSpacingX")
-        spc_ix = self._get_key_as_float_or_none(data, "padInsideX")
-        spc_ox = self._get_key_as_float_or_none(data, "padOutsideX")
-        pad_x = self._get_key_as_float_or_none(data, "padX")
+        spc_c = _get_key_as_float_or_none(data, "padSpacingX")
+        spc_ix = _get_key_as_float_or_none(data, "padInsideX")
+        spc_ox = _get_key_as_float_or_none(data, "padOutsideX")
+        pad_x = _get_key_as_float_or_none(data, "padX")
         try:
             pad_dims = TwoPadDimensions(pad_y, pad_x, spc_c, spc_ix, spc_ox)
         except ValueError:
@@ -162,6 +148,116 @@ class SmdInductorProperties:
         return pad_dims
 
 
+class CuboidParameters(TwoPadInductorParameters):
+    """
+    Parameters for the cuboid inductor model.
+    """
+
+    def __init__(self, data: dict[str, Any], bottom_pads: bool):
+        super().__init__(data)
+
+        self.corner_radius: float | None
+        """Optional corner radius of the inductor in mm."""
+        self.top_fillet_radius: float | None
+        """Optional top fillet radius of the inductor in mm."""
+        self.bottom_pads: bool
+        """Whether the inductor has pads on the bottom side of the body."""
+
+        self.corner_radius = _get_key_as_float_or_none(data, "cornerRadius")
+        self.top_fillet_radius = _get_key_as_float_or_none(data, "topFilletRadius")
+
+        self.bottom_pads = bottom_pads
+
+
+class HorizontalAirCoreParameters(TwoPadInductorParameters):
+    """
+    Parameters for the horizontal air core D-foot inductor model.
+
+    This is a special case of the two-pad inductor, where the pads are on the
+    sides of the inductor, and the coil is mounted horizontally.
+    """
+
+    def __init__(self, data: dict[str, Any]):
+        super().__init__(data)
+
+        # This default comes from what was used for the Coilcraft SQ series
+        # Probably would be better to specify this.
+        self.wire_size: float = data.get(
+            "wireSize", self.landing_dims.size_inline * 0.5
+        )
+        """The size of the wire used in the coil in mm."""
+
+        self.foot_shape: str = data["footShape"]
+        """The shape of the foot of the inductor, e.g. 'd_section'"""
+
+        # Round and rectangular foot shapes may be needed in the future,
+        if self.foot_shape not in ["d_section"]:
+            raise ValueError(
+                f"Unknown foot shape '{self.foot_shape}' for horizontal air core inductor."
+            )
+
+
+class ShieldedDrumRoundedRectBlockParameters(TwoPadInductorParameters):
+    """
+    Parameters for the shielded drum block inductor model.
+
+    Example series for this type: Coilcraft MSS1246:
+    https://www.coilcraft.com/getmedia/960fadbe-0ca0-40e2-ae20-64edb15f3a07/mss1246.pdf
+    """
+
+    def __init__(self, data: dict[str, Any]):
+        super().__init__(data)
+
+        self.core_diameter: float
+        """Diameter of the core of the inductor in mm."""
+        self.corner_radius: float
+        """Optional corner radius of the inductor in mm."""
+
+        self.core_diameter = float(data["coreDiameter"])
+        self.corner_radius = float(data["cornerRadius"])
+
+
+class SmdInductorProperties:
+    """Object that represents the definition of a single inductor part.
+
+    This is a complete defintion of a single inductor, which may be being
+    constructed from a merged dictionary of series and part definitions.
+    """
+
+    def __init__(self, part_block: dict[str, str]) -> None:
+        """Create an instance of `SmdInductorProperties`.
+
+        Args:
+            part_block: The dictionary containing the properties of the inductor.
+        """
+
+        self.part_number: str
+        """Part number of the inductor."""
+        self.datasheet: str | None
+        """Datasheet of the inductor or `None` if the series datasheet is used."""
+        self.body: InductorBodyParameters
+        """The body parameters of the inductor, which determine both how the
+        footprint may be drawn and how the 3D model is generated."""
+
+        self.part_number = part_block["PartNumber"]
+        self.datasheet = part_block.get("datasheet", None)
+
+        body_type_key = part_block.get("3d", {}).get("type", 1)
+
+        # Switch the inductor type based on the 'type' key
+        match body_type_key:
+            case 1 | 2:  # "cuboid":
+                self.body = CuboidParameters(part_block, body_type_key == 1)
+            case "horizontal_air_core":
+                self.body = HorizontalAirCoreParameters(part_block)
+            case "shielded_drum_rounded_rectangular_base":
+                self.body = ShieldedDrumRoundedRectBlockParameters(part_block)
+            case _:
+                raise ValueError(
+                    f"Unknown inductor type '{body_type_key}' for part {self.part_number}"
+                )
+
+
 class InductorSeriesProperties:
     """Object that represents the definition of a series of inductors, read from a dict,
     probably from a YAML file.
@@ -179,9 +275,6 @@ class InductorSeriesProperties:
     """The name of the series."""
     manufacturer: str
     """The manufacturer of the inductors."""
-    datasheet: str | None
-    """The series datasheet or `None` if each inductor of the series has its own
-    datasheet."""
     tags: list[str]
     """The tags."""
     has_orientation: bool
@@ -210,8 +303,6 @@ class InductorSeriesProperties:
         self.name = series_block["series"]
         logging.info(f"Processing properties for series: {self.name}")
         self.manufacturer = series_block["manufacturer"]
-        # allow empty datasheet in case of unique per-part datasheets
-        self.datasheet = series_block.get("datasheet", "")
         # space delimited list of the tags
         self.tags = series_block.get("tags", [])
         self.series_description = series_block.get("series_description", None)
@@ -228,6 +319,17 @@ class InductorSeriesProperties:
                 return False
             return True
 
+        def construct_part_properties(
+            part_block: dict[str, str],
+        ) -> SmdInductorProperties:
+            """Combine the part dictionary with the series block to create a complete
+            part definition.
+
+            We do this because the series block may contain common parameters that
+            all parts should inherit."""
+            combined = dict_tools.dictMerge(series_block, part_block)
+            return SmdInductorProperties(combined)
+
         if "csv" in series_block:
             csv_file = series_block["csv"]
             if csv_dir is not None:
@@ -237,10 +339,10 @@ class InductorSeriesProperties:
                 filtered_rows = filter(csv_line_filter, f)
                 # Read the CSV file and create SmdInductorProperties instances from each row
                 self.parts = [
-                    SmdInductorProperties(x) for x in csv.DictReader(filtered_rows)
+                    construct_part_properties(x) for x in csv.DictReader(filtered_rows)
                 ]
         elif "parts" in series_block:
             # Load directly from the YAML (for a single-size series, for example)
-            self.parts = [SmdInductorProperties(x) for x in series_block["parts"]]
+            self.parts = [construct_part_properties(x) for x in series_block["parts"]]
         else:
             raise RuntimeError("Data block must contain a 'csv' or 'parts' key")

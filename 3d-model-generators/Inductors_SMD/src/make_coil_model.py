@@ -31,6 +31,10 @@ import cadquery as cq
 
 import numpy as np
 
+from kilibs.declarative_defs.packages.smd_inductor_properties import (
+    HorizontalAirCoreParameters,
+)
+
 
 class DSectionFoot:
     r"""
@@ -58,7 +62,9 @@ class DSectionFoot:
     +-----------------+
     """
 
-    def __init__(self, length_x, sq_height, overall_height, width_y):
+    def __init__(
+        self, length_x: float, sq_height: float, overall_height: float, width_y: float
+    ):
         self.length_x = length_x
         self.sq_height = sq_height
         self.overall_height = overall_height
@@ -130,7 +136,7 @@ def _coil_spline_points(diameter, length, wire_size, num_turns):
     return points
 
 
-def make_coil(wire_size, part_length, coil_diameter):
+def make_coil(wire_size: float, part_length: float, coil_diameter: float):
     """
     Make a coil with a given wire size, length, and diameter.
 
@@ -166,7 +172,7 @@ def make_coil(wire_size, part_length, coil_diameter):
     return coil, pin_connections
 
 
-def _make_connector(wire_size, base, tip):
+def _make_connector(wire_size: float, base, tip):
     """
     Make a circular cross-section (circular in planes parallel to XY) "connector"
     between two points.
@@ -184,13 +190,13 @@ def _make_connector(wire_size, base, tip):
 
 class DSectionFootAirCoreCoil:
 
-    def __init__(self, part_data, series_3d_props):
-        self.part_data = part_data
-        self.series_3d_props = series_3d_props
-        self.wireSize = part_data.landing_dims.size_inline * 0.5
+    def __init__(self, body_params: HorizontalAirCoreParameters):
+        self.body_params = body_params
 
-        self.coilLength = self.part_data.width_x - self.wireSize * 0.75
-        self.coilTurns, self.coilTurnsRem = divmod(self.coilLength, self.wireSize)
+        self.coilLength = self.body_params.width_x - self.body_params.wire_size * 0.75
+        self.coilTurns, self.coilTurnsRem = divmod(
+            self.coilLength, self.body_params.wire_size
+        )
 
     def make_coil(self):
         """
@@ -198,17 +204,17 @@ class DSectionFootAirCoreCoil:
         """
 
         # Centre-to-centre distance between the pins
-        pinX = self.part_data.device_pad_dims.spacing_centre / 2
+        pinX = self.body_params.device_pad_dims.spacing_centre / 2
 
-        foot_len = self.part_data.device_pad_dims.size_crosswise
-        foot_height = self.wireSize
+        foot_len = self.body_params.device_pad_dims.size_crosswise
+        foot_height = self.body_params.wire_size
 
         # Create the pins
         dfoot = DSectionFoot(
             length_x=foot_len,
-            sq_height=self.wireSize * 0.75,
+            sq_height=self.body_params.wire_size * 0.75,
             overall_height=foot_height,
-            width_y=self.wireSize,
+            width_y=self.body_params.wire_size,
         )
 
         # Rotate the feet to be aligned to Y
@@ -217,17 +223,19 @@ class DSectionFootAirCoreCoil:
         pin1 = pin.translate((-pinX, 0, 0))
 
         # Centre-line diameter of the coil
-        coil_dia = self.part_data.length_y - self.wireSize
+        coil_dia = self.body_params.length_y - self.body_params.wire_size
 
         coil, coil_connection_points = make_coil(
             coil_diameter=coil_dia,
-            wire_size=self.wireSize,
+            wire_size=self.body_params.wire_size,
             part_length=self.coilLength,
         )
 
         # Shift the coil to sit on the surface
-        surface_coil_z_gap = max(0, self.part_data.height - self.part_data.length_y)
-        coil_offset_z = coil_dia / 2.0 + self.wireSize / 2.0 + surface_coil_z_gap
+        surface_coil_z_gap = max(0, self.body_params.height - self.body_params.length_y)
+        coil_offset_z = (
+            coil_dia / 2.0 + self.body_params.wire_size / 2.0 + surface_coil_z_gap
+        )
 
         coil = coil.translate((0, 0, coil_offset_z))
 
@@ -241,13 +249,13 @@ class DSectionFootAirCoreCoil:
         # Figure out the pin foot connection point
         conn_pt = (
             pinX,
-            -foot_len / 2 + self.wireSize / 2,
+            -foot_len / 2 + self.body_params.wire_size / 2,
             foot_height,
         )
 
         # Create the connector between the coil and the pin
         pin_coil_joiner = _make_connector(
-            self.wireSize,
+            self.body_params.wire_size,
             coil_end_point,
             conn_pt,
         )

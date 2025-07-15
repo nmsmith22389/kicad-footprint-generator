@@ -66,7 +66,10 @@ from _tools import add_license, cq_color_correct, export_tools, shaderColors
 from exportVRML.export_part_to_VRML import export_VRML
 
 from kilibs.declarative_defs.packages.smd_inductor_properties import (
+    CuboidParameters,
+    HorizontalAirCoreParameters,
     InductorSeriesProperties,
+    ShieldedDrumRoundedRectBlockParameters,
     SmdInductorProperties,
 )
 from kilibs.declarative_defs.packages.two_pad_dimensions import TwoPadDimensions
@@ -81,49 +84,20 @@ class Inductor3DProperties:
     """
 
     def __init__(self, data: dict[str, Any]):
-
-        self.has_body: bool
-        """Whether the inductor has a body or not (some are bare coils)"""
         self.body_color: str
         """Color of the body, if there is one"""
         self.pad_color: str
         """Color of the pads"""
         self.pad_thickness: float
         """Thickness of the pads"""
-        self.body_type: int | str | None
-        """Type of the body, if there is one"""
-        self.corner_radius: float | None
-        """Corner radius (parallel to the Z axis) of the body, if any"""
-        self.top_fillet_radius: float | None
-        """Top fillet radius (parallel to the XY plane) of the body, if any"""
         self.coil_color: str | None
         """Color of the coil, if drawn"""
-        self.coil_style: int | None
-        """Style of the coil, if drawn"""
-        self.wire_dia: float
-        """Diameter of the wire, if drawn"""
 
-        self.has_body = data.get("has_body", True)
-        self.coil_style = data.get("coil_style", None)
-
-        if self.has_body:
-            self.body_color = data.get("bodyColor", "black body")
-            self.body_type = data.get("type", 1)
-        else:
-            self.body_type = None
-
-        if self.coil_style is not None:
-            self.coil_color = data.get("wireColor", "metal dark cu")
-            self.wire_dia = data.get("wireDia", 0)
-        else:
-            self.coil_color = None
-            self.wire_dia = 0
-
+        self.body_color = data.get("bodyColor", "black body")
+        self.coil_color = data.get("wireColor", "metal dark cu")
         self.pad_color = data.get("pinColor", "metal grey pins")
-        self.pad_thickness = data.get("padThickness", 0.05)
 
-        self.corner_radius = data.get("cornerRadius", None)
-        self.top_fillet_radius = data.get("topFilletRadius", None)
+        self.pad_thickness = data.get("padThickness", 0.05)
 
 
 def make_models(
@@ -181,6 +155,7 @@ def make_models(
 
             # For each series block in the yaml file, we process the CSV
             for series_block in data_loaded:
+                print(f"  Processing series: {series_block["series"]}")
                 generator.generate_series(series_block, csv_dir)
 
 
@@ -199,12 +174,13 @@ class SmdInductorGenerator:
             # (presumably a footprint-only definition)
             return
 
-        # Construct an 3D properties object, which will use defaults
-        # if not given
-        series_3d_props = Inductor3DProperties(series_block["3d"])
-
         for part_data in series_data.parts:
-            self._generate_model(series_data, series_3d_props, part_data)
+            # Construct an 3D properties object, which will use defaults
+            # if not given
+            model_props = Inductor3DProperties(series_block["3d"])
+            print("  Part number:", part_data.part_number)
+
+            self._generate_model(series_data, model_props, part_data)
 
     def _generate_model(
         self,
@@ -213,59 +189,54 @@ class SmdInductorGenerator:
         part_data: SmdInductorProperties,
     ):
 
+        model_builder: InductorModelBuilder
+
+        # Dispatch the body type to the appropriate function
+        if isinstance(part_data.body, CuboidParameters):
+            model_builder = CubicInductorBuilder(part_data, series_3d_props)
+        elif isinstance(part_data.body, HorizontalAirCoreParameters):
+            model_builder = HoriziontalAirCoreBuilder(part_data)
+        elif isinstance(part_data.body, ShieldedDrumRoundedRectBlockParameters):
+            model_builder = ShieldedDrumModelBuilder(part_data, series_3d_props)
+        else:
+            raise ValueError(f"Invalid body_type: {type(part_data.body)}")
+
+        model_parts = model_builder.build()
+
         # Used to wrap all the parts into an assembly
         component = cq.Assembly()
-        # Add the parts to the assembly
-        pins = None
-        if series_3d_props.has_body:
 
-            model_builder: InductorModelBuilder
-
-            # Dispatch the body type to the appropriate function
-            if series_3d_props.body_type in (1, 2):
-                model_builder = CubicInductorBuilder(part_data, series_3d_props)
-            elif series_3d_props.body_type == "shielded_drum_rounded_rectangular_base":
-                model_builder = ShieldedDrumModelBuilder(part_data, series_3d_props)
-            else:
-                raise ValueError(f"Invalid body_type: {series_3d_props.body_type}")
-
-            case, pins = model_builder.build()
-
+        if model_parts.case is not None:
             stepBodyColor = shaderColors.named_colors[
                 series_3d_props.body_color
             ].getDiffuseFloat()
 
             component.add(
-                case,
+                model_parts.case,
                 color=cq_color_correct.Color(
                     stepBodyColor[0], stepBodyColor[1], stepBodyColor[2]
                 ),
             )
 
-        if series_3d_props.coil_style is not None:
-            aCoil = DSectionFootAirCoreCoil(part_data, series_3d_props)
-            (
-                coil,
-                pins,
-            ) = aCoil.make_coil()
-
+        if model_parts.coil is not None:
             stepCoilColor = shaderColors.named_colors[
                 series_3d_props.coil_color
             ].getDiffuseFloat()
             component.add(
-                coil,
+                model_parts.coil,
                 color=cq_color_correct.Color(
                     stepCoilColor[0], stepCoilColor[1], stepCoilColor[2]
                 ),
             )
 
-        stepPinColor = shaderColors.named_colors[
-            series_3d_props.pad_color
-        ].getDiffuseFloat()
+        if model_parts.pins is not None:
 
-        if pins is not None:
+            stepPinColor = shaderColors.named_colors[
+                series_3d_props.pad_color
+            ].getDiffuseFloat()
+
             component.add(
-                pins,
+                model_parts.pins,
                 color=cq_color_correct.Color(
                     stepPinColor[0], stepPinColor[1], stepPinColor[2]
                 ),
@@ -300,14 +271,14 @@ class SmdInductorGenerator:
         # Dec 2022- do not use CadQuery VRML export, it scales/uses inches.
         PartList = []
         ColorList = []
-        if series_3d_props.has_body:
-            PartList.append(case)
+        if model_parts.case is not None:
+            PartList.append(model_parts.case)
             ColorList.append(series_3d_props.body_color)
-        if series_3d_props.coil_style is not None:
-            PartList.append(coil)
+        if model_parts.coil:
+            PartList.append(model_parts.coil)
             ColorList.append(series_3d_props.coil_color)
-        if pins is not None:
-            PartList.append(pins)
+        if model_parts.pins is not None:
+            PartList.append(model_parts.pins)
             ColorList.append(series_3d_props.pad_color)
         export_VRML(
             os.path.join(output_dir, file_name + ".wrl"),
@@ -368,6 +339,22 @@ def build_pins(
     return pin1.union(pin2)
 
 
+class InductorParts:
+
+    def __init__(
+        self,
+        case: cq.Workplane | None,
+        pins: cq.Workplane | None,
+        coil: cq.Workplane | None,
+    ):
+        self.case = case
+        """The case of the inductor, if there is one"""
+        self.pins = pins
+        """The pins of the inductor"""
+        self.coil = coil
+        """The coil of the inductor, if applicable"""
+
+
 class InductorModelBuilder(abc.ABC):
     """
     Abstract base class for building inductor models.
@@ -380,7 +367,7 @@ class InductorModelBuilder(abc.ABC):
         self.series_3d_props = series_3d_props
 
     @abc.abstractmethod
-    def build(self) -> tuple[cq.Workplane, cq.Workplane]:
+    def build(self) -> InductorParts:
         """
         Build the inductor model and return the case and pins.
         """
@@ -396,14 +383,17 @@ class CubicInductorBuilder(InductorModelBuilder):
     ):
         super().__init__(part_data, series_3d_props)
 
-    def build(self) -> tuple[cq.Workplane, cq.Workplane]:
+    def build(self) -> InductorParts:
+
+        body_data = self.part_data.body
+        assert isinstance(body_data, CuboidParameters)
 
         # Physical dimensions
-        widthX = self.part_data.width_x
-        lengthY = self.part_data.length_y
-        height = self.part_data.height
-        landing = self.part_data.landing_dims
-        pad_dims = self.part_data.device_pad_dims
+        widthX = body_data.width_x
+        lengthY = body_data.length_y
+        height = body_data.height
+        landing = body_data.landing_dims
+        pad_dims = body_data.device_pad_dims
         # Handy debug section to help copy/paste into CQ-editor to play with design
         if False:
             print(f"widthX = {widthX}")
@@ -419,31 +409,27 @@ class CubicInductorBuilder(InductorModelBuilder):
         rotation = 0
         case = cq.Workplane("XY").box(widthX, lengthY, height, (True, True, False))
 
-        corner_fillet_radius = self.part_data.corner_radius
-
-        if corner_fillet_radius is None:
-            corner_fillet_radius = self.series_3d_props.corner_radius
-
-        if corner_fillet_radius is None:
-            # If no corner fillet radius, the default is 5%
-            corner_fillet_radius = min(lengthY, widthX) / 20
+        # If no corner radius, the default is 5%
+        corner_fillet_radius = (
+            body_data.corner_radius
+            if body_data.corner_radius is not None
+            else min(lengthY, widthX) / 20
+        )
 
         if corner_fillet_radius > 0:
             case = case.edges("|Z").fillet(corner_fillet_radius)
 
-        top_fillet_radius = self.part_data.top_fillet_radius
-
-        if top_fillet_radius is None:
-            top_fillet_radius = self.series_3d_props.top_fillet_radius
-
-        if top_fillet_radius is None:
-            # If no top fillet radius, the default is 5%
-            top_fillet_radius = min(lengthY, widthX) / 20
+        # If no top fillet radius, the default is 5%
+        top_fillet_radius = (
+            body_data.top_fillet_radius
+            if body_data.top_fillet_radius is not None
+            else min(lengthY, widthX) / 20
+        )
 
         if top_fillet_radius > 0:
             case = case.edges(">Z").fillet(top_fillet_radius)
 
-        if self.series_3d_props.body_type == 2:  # Exposed "wings"
+        if not body_data.bottom_pads:  # Exposed "wings"
             pad_thickness = min(3, height * 0.3)
         else:
             pad_thickness = self.series_3d_props.pad_thickness
@@ -454,7 +440,27 @@ class CubicInductorBuilder(InductorModelBuilder):
         case = case.rotate((0, 0, 0), (0, 0, 1), rotation)
         pins = pins.rotate((0, 0, 0), (0, 0, 1), rotation)
 
-        return case, pins
+        return InductorParts(case, pins, None)
+
+
+class HoriziontalAirCoreBuilder(InductorModelBuilder):
+    """
+    Builder for horizontal air core D-section foot inductors.
+    """
+
+    def __init__(
+        self,
+        part_data: SmdInductorProperties,
+    ):
+        assert isinstance(part_data.body, HorizontalAirCoreParameters)
+        assert part_data.body.foot_shape == "d_section"
+
+        self.coil_builder = DSectionFootAirCoreCoil(part_data.body)
+
+    def build(self) -> InductorParts:
+        # Create the coil model
+        coil, pins = self.coil_builder.make_coil()
+        return InductorParts(None, pins, coil)
 
 
 class ShieldedDrumModelBuilder(InductorModelBuilder):
@@ -466,30 +472,22 @@ class ShieldedDrumModelBuilder(InductorModelBuilder):
     ):
         super().__init__(part_data, series_3d_props)
 
-    def build(self) -> tuple[cq.Workplane, cq.Workplane]:
-        # Required model parameters
-        assert (
-            self.part_data.core_diameter is not None
-            and self.part_data.corner_radius is not None
-        )
+    def build(self) -> InductorParts:
+
+        body = self.part_data.body
+        assert isinstance(body, ShieldedDrumRoundedRectBlockParameters)
 
         # Create a baseplate for the inductor to rest on
         baseplate = (
             cq.Workplane("XY")
             .box(
-                self.part_data.width_x,
-                self.part_data.length_y,
+                body.width_x,
+                body.length_y,
                 1.2,
                 (True, True, False),
             )
             .edges("|Z")
-            .chamfer(
-                (
-                    self.part_data.length_y
-                    - self.part_data.device_pad_dims.size_crosswise
-                )
-                / 2
-            )
+            .chamfer((body.length_y - body.device_pad_dims.size_crosswise) / 2)
         )
 
         # Create the shield that encases the inductor. Start with a cuboid with rounded edges.
@@ -497,29 +495,29 @@ class ShieldedDrumModelBuilder(InductorModelBuilder):
             cq.Workplane("XY")
             .workplane(centerOption="CenterOfMass", offset=1.2)
             .box(
-                self.part_data.width_x,
-                self.part_data.length_y,
-                self.part_data.height - 1.2,
+                body.width_x,
+                body.length_y,
+                body.height - 1.2,
                 (True, True, False),
             )
             .edges("|Z")
-            .fillet(self.part_data.corner_radius)
+            .fillet(body.corner_radius)
         )
         # Drill a hole in the center and four more into the corners
         # This is a guess and was measured for the MSS110 series
-        drill_hole_diam = self.part_data.corner_radius
+        drill_hole_diam = body.corner_radius
         shield = (
             shield.faces(">Z")
             .workplane()
             .cboreHole(
-                self.part_data.core_diameter + 0.75,
-                cboreDiameter=self.part_data.core_diameter + 1.25,
+                body.core_diameter + 0.75,
+                cboreDiameter=body.core_diameter + 1.25,
                 cboreDepth=0.25,
             )
             .moveTo(0, 0)
             .rect(
-                0.5**0.5 * (self.part_data.core_diameter + 0.75),
-                0.5**0.5 * (self.part_data.core_diameter + 0.75),
+                0.5**0.5 * (body.core_diameter + 0.75),
+                0.5**0.5 * (body.core_diameter + 0.75),
                 centered=True,
                 forConstruction=True,
             )
@@ -535,13 +533,13 @@ class ShieldedDrumModelBuilder(InductorModelBuilder):
         shield = shield.union(
             cq.Workplane("XY")
             .workplane(centerOption="CenterOfMass", offset=1.2)
-            .circle((self.part_data.core_diameter + 0.75) / 2)
-            .extrude(self.part_data.height - 1.2 - 0.5)
+            .circle((body.core_diameter + 0.75) / 2)
+            .extrude(body.height - 1.2 - 0.5)
             .faces(">Z")
             .workplane()
-            .circle(self.part_data.core_diameter / 2)
+            .circle(body.core_diameter / 2)
             .workplane(offset=0.5)
-            .circle((self.part_data.core_diameter - 1) / 2)
+            .circle((body.core_diameter - 1) / 2)
             .loft()
         )
         # We neither draw the actual inductor nor its core. So we are done.
@@ -550,11 +548,11 @@ class ShieldedDrumModelBuilder(InductorModelBuilder):
 
         # Create the pins
         pins = build_pins(
-            self.part_data.device_pad_dims,
+            body.device_pad_dims,
             self.series_3d_props.pad_thickness,
-            self.part_data.width_x,
+            body.width_x,
         )
 
         case = case.cut(pins)
 
-        return case, pins
+        return InductorParts(case, pins, None)

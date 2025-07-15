@@ -23,6 +23,7 @@ from KicadModTree import Footprint, FootprintType, Line
 from kilibs.declarative_defs.packages.smd_inductor_properties import (
     InductorSeriesProperties,
     SmdInductorProperties,
+    TwoPadInductorParameters,
 )
 from kilibs.geom import Direction, Vector2D
 from scripts.tools.drawing_tools_silk import SilkArrowSize
@@ -54,15 +55,9 @@ class InductorGenerator(FootprintGenerator):
         self, series_data: InductorSeriesProperties, part_data: SmdInductorProperties
     ) -> None:
 
-        part_dimension = Vector2D(part_data.width_x, part_data.length_y)
+        part_dimension = part_data.body.get_body_size()
 
-        # If the CSV has unique data sheets, then use that. Otherwise, if the column
-        # is missing, then use the series datasheet for all
-        if part_data.datasheet is not None:
-            datasheet_url = part_data.datasheet
-        elif series_data.datasheet is not None:
-            datasheet_url = series_data.datasheet
-        else:
+        if part_data.datasheet is None:
             # If datasheet was not defined in YAML nor CSV, terminate
             raise RuntimeError(
                 f"No datasheet defined for {part_data.part_number} - terminating."
@@ -87,52 +82,59 @@ class InductorGenerator(FootprintGenerator):
             desc.append(series_data.additional_description)
 
         desc += [
-            f"{part_data.width_x}x{part_data.length_y}x{part_data.height}mm",
-            f"({datasheet_url})",
+            f"{part_dimension.x}x{part_dimension.y}x{part_dimension.z}mm",
+            f"({part_data.datasheet})",
             self.global_config.get_generated_by_description(os.path.basename(__file__)),
         ]
 
         kicad_mod.description = ", ".join(desc)
         kicad_mod.tags = series_data.tags
 
+        xy_body_size = Vector2D.from_floats(part_dimension.x, part_dimension.y)
+
         # For now, all supported inductors are two-pad SMD inductors,
         # but this is where we would dispatch to different layouts
-        layout = make_layout_for_smd_two_pad_dimensions(
-            global_config=self.global_config,
-            pad_dims=part_data.landing_dims,
-            body_size=part_dimension,
-            silk_style=NPadBoxLayout.SilkStyle.BODY_RECT,
-            is_polarized=series_data.has_orientation,
-        )
-        layout.silk_clearance = NPadBoxLayout.SilkClearance.KEEP_TOP_BOTTOM
-
-        if part_dimension.min_val < 2:
-            layout.silk_arrow_size = SilkArrowSize.SMALL
-        else:
-            layout.silk_arrow_size = SilkArrowSize.MEDIUM
-
-        # We never want the arrow to point in from the left even if the pad
-        # is entirely inside the body.
-        layout.silk_arrow_direction_if_inside = Direction.SOUTH
-
-        kicad_mod += layout
-
-        # And add an extra fab orientation line if the inductor is polarized
-        if series_data.has_orientation:
-            # This will always produce a gap between the line and the body chamfer
-            line_y = part_dimension.y * self.global_config.fab_bevel_size_relative
-
-            # 10% of the way into the device, but don't let it get too close to the edge
-            line_x = min(
-                part_dimension.x * 0.4,
-                part_dimension.x / 2 - self.global_config.fab_line_width * 2,
+        if isinstance(part_data.body, TwoPadInductorParameters):
+            layout = make_layout_for_smd_two_pad_dimensions(
+                global_config=self.global_config,
+                pad_dims=part_data.body.landing_dims,
+                body_size=xy_body_size,
+                silk_style=NPadBoxLayout.SilkStyle.BODY_RECT,
+                is_polarized=series_data.has_orientation,
             )
+            layout.silk_clearance = NPadBoxLayout.SilkClearance.KEEP_TOP_BOTTOM
 
-            kicad_mod += Line(
-                start=Vector2D.from_floats(-line_x, line_y),
-                end=Vector2D.from_floats(-line_x, -line_y),
-                width=self.global_config.fab_line_width,
-                layer="F.Fab",
+            if xy_body_size.min_val < 2:
+                layout.silk_arrow_size = SilkArrowSize.SMALL
+            else:
+                layout.silk_arrow_size = SilkArrowSize.MEDIUM
+
+            # We never want the arrow to point in from the left even if the pad
+            # is entirely inside the body.
+            layout.silk_arrow_direction_if_inside = Direction.SOUTH
+
+            kicad_mod += layout
+
+            # And add an extra fab orientation line if the inductor is polarized
+            if series_data.has_orientation:
+                # This will always produce a gap between the line and the body chamfer
+                line_y = part_dimension.y * self.global_config.fab_bevel_size_relative
+
+                # 10% of the way into the device, but don't let it get too close to the edge
+                line_x = min(
+                    part_dimension.x * 0.4,
+                    part_dimension.x / 2 - self.global_config.fab_line_width * 2,
+                )
+
+                kicad_mod += Line(
+                    start=Vector2D.from_floats(-line_x, line_y),
+                    end=Vector2D.from_floats(-line_x, -line_y),
+                    width=self.global_config.fab_line_width,
+                    layer="F.Fab",
+                )
+        else:
+            raise RuntimeError(
+                f"Unsupported inductor body type {type(part_data.body)} for {footprint_name}."
             )
 
         # No variants, so we can just use the footprint name

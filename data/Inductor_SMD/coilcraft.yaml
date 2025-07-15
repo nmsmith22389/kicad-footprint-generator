@@ -62,9 +62,9 @@
   manufacturer: Coilcraft
   datasheet: "https://www.coilcraft.com/getmedia/a4eed406-a97e-4630-9d8e-771bb470867f/1515sq.pdf"
   csv: coilcraft_sq.csv
+  footShape: d_section
   3d:
-    has_body: false
-    coil_style: 1
+    type: horizontal_air_core
     wireColor: metal copper
     pinColor: metal grey pins
   tags:
