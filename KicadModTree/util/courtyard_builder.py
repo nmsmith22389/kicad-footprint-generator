@@ -173,7 +173,7 @@ class CourtyardBuilder:
 
     def add_element(
         self,
-        node: Node | GeomRectangle | BoundingBox | GeomPolygon,
+        node: Node | GeomShape | BoundingBox,
         offset_fab: float,
         offset_pads: float | None = None,
         use_fab_layer: bool = True,
@@ -191,12 +191,12 @@ class CourtyardBuilder:
                     self.add_polygon(node, offset_fab)
                 elif isinstance(node, Line):
                     self.add_line(node, offset_fab)
-        elif isinstance(node, GeomShape):
+        elif isinstance(node, GeomShape | BoundingBox):
             if isinstance(node, GeomRectangle | BoundingBox):
                 self.add_rectangle(node, offset_fab)
             elif isinstance(node, GeomPolygon):
                 self.add_polygon(node, offset_fab)
-            elif isnstance(node, GeomLine):
+            elif isinstance(node, GeomLine):
                 self.add_line(node, offset_fab)
         else:
             if isinstance(node, Pad | ExposedPad):
@@ -280,7 +280,7 @@ class CourtyardBuilder:
             self.src_pts.append(polygon)  # pyright: ignore
             self._node = None  # invalidate previous node calculations
 
-    def add_line(self, line: Line, offset: float) -> None:
+    def add_line(self, line: Line | GeomLine, offset: float) -> None:
         """Add a Line to the list of courtyard points."""
         delta_parallel = (line.end - line.start).normalize() * offset
         delta_orthogonal = delta_parallel.orthogonal().normalize() * offset
