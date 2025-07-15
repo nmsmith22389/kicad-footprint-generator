@@ -182,6 +182,12 @@ class BoundingBox:
         else:
             return False
 
+    def is_defined(self) -> bool:
+        """Return `True` if the bounding box is defined."""
+        if self.min is not None and self.max is not None:
+            return True
+        return False
+
     @property
     def top(self) -> float:
         """Return the left-most coordinate of the bounding box.
