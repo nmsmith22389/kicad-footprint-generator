@@ -8,6 +8,7 @@ Fiducial marking generator
 
 import argparse
 from dataclasses import dataclass, asdict
+from typing import Any
 
 from kilibs.geom import GeomCircle
 from KicadModTree import *  # NOQA
@@ -15,19 +16,21 @@ from scripts.tools.footprint_generator import FootprintGenerator
 from scripts.tools.footprint_text_fields import addTextFields
 from scripts.tools.global_config_files.global_config import GlobalConfig
 
+
 class FiducialGenerator(FootprintGenerator):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
     @dataclass
     class FPconfiguration():
+
         library_name: str
         fp_name: str
-        # @param mask_diameter diameter of soldermask and F.Fab circle
+        """Footprint name pattern"""
         mask_diameter: float
-        # @param marking_width diameter of marker circle or line width of cross
+        """Diameter of soldermask and F.Fab circle."""
         marking_width: float
-        # @param courtyard_offset extra radius around F.Fab circle for the courtyard
+        """Diameter of marker circle or line width of cross."""
         courtyard_offset: float
         pad_clearance_outset: float
         """Extra clearance around the pad beyond the solder mask aperture.
@@ -41,18 +44,19 @@ class FiducialGenerator(FootprintGenerator):
         misaligned when manufactured but without taking too much of a bite
         from the fill.
         """
-        # @param variant sub-type eg. Cross
         variant: str
-        # @param _variant sub-type prefixed with underscore eg. _Cross
+        """Variant sub-type, e.g., Cross."""
         _variant: str
-        # @param human_variant human-readable variant with commas eg. ', Cross variant'
+        """Variant sub-type with leading underscore, e.g., _Cross."""
         human_variant: str
-        # @param description footprint description
+        """Human-readable variant with commas, e.g., ', Cross variant'."""
         description: str
-        # @param comment to be added to end of size description
+        """Footprint description."""
         comment: str
+        """To be added to end of size description."""
 
-        def __init__(self, spec: dict, global_config: GlobalConfig):
+        def __init__(self, spec: dict[str, Any], global_config: GlobalConfig):
+
             self.library_name = spec.get("library", "Fiducial")
             self.fp_name = spec["fp_name"]
             self.mask_diameter = spec["mask_diameter"]
@@ -65,13 +69,15 @@ class FiducialGenerator(FootprintGenerator):
 
             self.pad_clearance_outset = spec["pad_clearance_outset"]
 
-        def setVariant(self, variant: str) -> dict:
+        def setVariant(self, variant: str) -> None:
             if variant:
                 self.variant = variant
                 self._variant = f"_{variant}"
                 self.human_variant = f", {variant} variant"
             else:
-                self.variant = self._variant = self.human_variant = ""
+                self.variant = ""
+                self._variant = ""
+                self.human_variant = ""
 
         def formatString(self, s: str) -> str:
             return s.format(**asdict(self))
@@ -82,7 +88,9 @@ class FiducialGenerator(FootprintGenerator):
         def getDescription(self) -> str:
             return self.formatString(self.description)
 
-    def generateFootprint(self, spec: dict, pkg_id: str, header_info: dict):
+    def generateFootprint(
+        self, spec: dict[str, Any], pkg_id: str, header_info: dict[str, Any]
+    ):
         fp_config = self.FPconfiguration(spec, self.global_config)
         self.generateFootprintVariant(fp_config)
 
