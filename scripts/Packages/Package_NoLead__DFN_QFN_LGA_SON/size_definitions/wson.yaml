@@ -962,3 +962,25 @@ Texas_DRX_WSON-10_2.5x2.5mm_P0.5mm:
   #suffix: '_PullBack'
   #include_suffix_in_3dpath: 'False'
   #include_pad_size: 'fp_name_only' # 'both' | 'none' (default)
+
+Texas_DSQ0010A_WSON-10-1EP_2x2mm_P0.4mm_EP0.9x1.5mm:
+  device_type: 'WSON'
+  manufacturer: 'Texas'
+  part_number: 'DSQ0010A'
+  size_source: 'https://www.ti.com/lit/pdf/mpds335b'
+  body_size_x: 2.0 +/- 0.1
+  body_size_y: 2.0 +/- 0.1
+  overall_height: 0.8 #max
+  lead_width: 0.15 .. 0.25
+  lead_len: 0.2 .. 0.4
+  EP_size_x: 0.8 .. 1.0
+  EP_size_y: 1.4 .. 1.6
+
+  EP_paste_coverage: 0.87
+
+  pitch: 0.4
+  num_pins_x: 0
+  num_pins_y: 5
+  thermal_vias:
+    count: [1,2]
+    drill: 0.2
