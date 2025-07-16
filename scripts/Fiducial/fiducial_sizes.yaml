@@ -3,6 +3,7 @@ FileHeader:
   description: 'Circular Fiducial{human_variant:s}, {marking_width:.3g}mm bare copper, {mask_diameter:.3g}mm soldermask opening{comment:s}'
   comment: ''
   fp_name: 'Fiducial{_variant:s}_{marking_width:.3g}mm_Mask{mask_diameter:.3g}mm'
+  pad_clearance_outset: 0.1
 
 Fiducial_0.5mm_Mask1mm:
   inherit: 'FileHeader'

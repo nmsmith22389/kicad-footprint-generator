@@ -29,6 +29,18 @@ class FiducialGenerator(FootprintGenerator):
         marking_width: float
         # @param courtyard_offset extra radius around F.Fab circle for the courtyard
         courtyard_offset: float
+        pad_clearance_outset: float
+        """Extra clearance around the pad beyond the solder mask aperture.
+
+        If the clearance is exactly the same as the mask aperture, then
+        tolerance issues in the polygonal void in a zone fill can cause
+        DRC to detect bridging between the pad and a surrounding fill.
+
+        Ideally, have this large enough so there is a better
+        chance that the zone doesn't peek out of the mask aperture if slightly
+        misaligned when manufactured but without taking too much of a bite
+        from the fill.
+        """
         # @param variant sub-type eg. Cross
         variant: str
         # @param _variant sub-type prefixed with underscore eg. _Cross
@@ -50,6 +62,8 @@ class FiducialGenerator(FootprintGenerator):
             self.description = spec.get("description", "")
             self.courtyard_offset = spec.get('courtyard_offset',
                 global_config.get_courtyard_offset(GlobalConfig.CourtyardType.DEFAULT))
+
+            self.pad_clearance_outset = spec["pad_clearance_outset"]
 
         def setVariant(self, variant: str) -> dict:
             if variant:
@@ -103,10 +117,13 @@ class FiducialGenerator(FootprintGenerator):
 
         # create Pad
         pad_radius = fp_config.marking_width / 2
-        pad_clearance = radius - pad_radius
+
+        pad_mask_clearance = radius - pad_radius
+        pad_clearance = pad_mask_clearance + fp_config.pad_clearance_outset
+
         pad = Pad(type=Pad.TYPE_SMT, shape=Pad.SHAPE_CIRCLE, at=center,
               layers=['F.Cu', 'F.Mask'], clearance=pad_clearance,
-              size=fp_config.marking_width, solder_mask_margin=pad_clearance)
+              size=fp_config.marking_width, solder_mask_margin=pad_mask_clearance)
         kicad_mod.append(pad)
 
         # handle variants
