@@ -8,13 +8,21 @@ Fiducial marking generator
 
 import argparse
 from dataclasses import dataclass, asdict
+import enum
 from typing import Any
 
-from kilibs.geom import GeomCircle
-from KicadModTree import *  # NOQA
+from kilibs.geom import GeomCircle, Vector2D
+from KicadModTree import Footprint, FootprintType, Circle, Pad, Rectangle
 from scripts.tools.footprint_generator import FootprintGenerator
 from scripts.tools.footprint_text_fields import addTextFields
 from scripts.tools.global_config_files.global_config import GlobalConfig
+
+
+class MarkingType(enum.Enum):
+    """Enum for marking types."""
+
+    CIRCLE = "circle"
+    CROSS = "cross"
 
 
 class FiducialGenerator(FootprintGenerator):
@@ -22,15 +30,19 @@ class FiducialGenerator(FootprintGenerator):
         super().__init__(**kwargs)
 
     @dataclass
-    class FPconfiguration():
+    class FPconfiguration:
 
         library_name: str
         fp_name: str
         """Footprint name pattern"""
         mask_diameter: float
         """Diameter of soldermask and F.Fab circle."""
-        marking_width: float
+        marking_type: MarkingType
+        """Type (shape) of marking"""
+        marking_size: float
         """Diameter of marker circle or line width of cross."""
+        marking_width: float | None
+        """Width of the marking line, if it is a cross."""
         courtyard_offset: float
         pad_clearance_outset: float
         """Extra clearance around the pad beyond the solder mask aperture.
@@ -44,12 +56,6 @@ class FiducialGenerator(FootprintGenerator):
         misaligned when manufactured but without taking too much of a bite
         from the fill.
         """
-        variant: str
-        """Variant sub-type, e.g., Cross."""
-        _variant: str
-        """Variant sub-type with leading underscore, e.g., _Cross."""
-        human_variant: str
-        """Human-readable variant with commas, e.g., ', Cross variant'."""
         description: str
         """Footprint description."""
         comment: str
@@ -60,27 +66,46 @@ class FiducialGenerator(FootprintGenerator):
             self.library_name = spec.get("library", "Fiducial")
             self.fp_name = spec["fp_name"]
             self.mask_diameter = spec["mask_diameter"]
-            self.marking_width = spec["marking_width"]
-            self.setVariant(spec.get("variant", ""))
+            self.marking_size = spec["marking_size"]
+            self.marking_width = spec.get("marking_width", None)
             self.comment = spec.get("comment", "")
             self.description = spec.get("description", "")
-            self.courtyard_offset = spec.get('courtyard_offset',
-                global_config.get_courtyard_offset(GlobalConfig.CourtyardType.DEFAULT))
+            self.courtyard_offset = spec.get(
+                "courtyard_offset",
+                global_config.get_courtyard_offset(GlobalConfig.CourtyardType.DEFAULT),
+            )
 
             self.pad_clearance_outset = spec["pad_clearance_outset"]
 
-        def setVariant(self, variant: str) -> None:
-            if variant:
-                self.variant = variant
-                self._variant = f"_{variant}"
-                self.human_variant = f", {variant} variant"
-            else:
-                self.variant = ""
-                self._variant = ""
-                self.human_variant = ""
+            if "marking_type" not in spec:
+                raise ValueError(
+                    "marking_type must be specified in the spec, "
+                    "e.g., 'marking_type: circle' or 'marking_type: cross'"
+                )
 
-        def formatString(self, s: str) -> str:
-            return s.format(**asdict(self))
+            match spec["marking_type"]:
+                case "circle":
+                    self.marking_type = MarkingType.CIRCLE
+                case "cross":
+                    self.marking_type = MarkingType.CROSS
+                case _:
+                    raise ValueError(f"Unknown marking_type: {spec['marking_type']}")
+
+        def formatString(self, pattern: str) -> str:
+
+            format_params = asdict(self)
+
+            # Fill in non-default variant parameters
+            if self.marking_type == MarkingType.CIRCLE:
+                format_params["shape"] = ""
+                format_params["human_variant"] = ", circular marking"
+            elif self.marking_type == MarkingType.CROSS:
+                format_params["shape"] = "Cross"
+                format_params["human_variant"] = ", cross variant"
+
+            s = pattern.format(**format_params)
+
+            return s.replace("__", "_")
 
         def getFootprintName(self) -> str:
             return self.formatString(self.fp_name)
@@ -90,15 +115,9 @@ class FiducialGenerator(FootprintGenerator):
 
     def generateFootprint(
         self, spec: dict[str, Any], pkg_id: str, header_info: dict[str, Any]
-    ):
+    ) -> None:
         fp_config = self.FPconfiguration(spec, self.global_config)
-        self.generateFootprintVariant(fp_config)
 
-        for v in spec.get("variants", []):
-            fp_config.setVariant(v)
-            self.generateFootprintVariant(fp_config)
-
-    def generateFootprintVariant(self, fp_config: FPconfiguration):
         # assemble footprint name
         fp_name = fp_config.getFootprintName()
 
@@ -123,30 +142,60 @@ class FiducialGenerator(FootprintGenerator):
         kicad_mod.append(fab_outline)
         body_edges = GeomCircle(center=center, radius=radius).bbox()
 
-        # create Pad
-        pad_radius = fp_config.marking_width / 2
+        # handle variants
+        if fp_config.marking_type == MarkingType.CROSS:
 
-        pad_mask_clearance = radius - pad_radius
+            assert fp_config.marking_width is not None
+
+            rect_size = Vector2D.from_floats(
+                fp_config.marking_size, fp_config.marking_width
+            )
+
+            # cross in the middle
+            primitives = [
+                Rectangle(
+                    center=Vector2D.zero(),
+                    size=rect_size,
+                    layer="F.Cu",
+                    width=0,
+                    fill=True,
+                ),
+                Rectangle(
+                    center=Vector2D.zero(),
+                    size=Vector2D.from_floats(rect_size.y, rect_size.x),
+                    layer="F.Cu",
+                    width=0,
+                    fill=True,
+                ),
+            ]
+
+            kicad_mod += Pad(
+                type=Pad.TYPE_SMT,
+                shape=Pad.SHAPE_CUSTOM,
+                at=center,
+                layers=["F.Cu", "F.Mask"],
+                size=fp_config.marking_width,
+                primitives=primitives,
+            )
+            pad_circle_size = fp_config.marking_width
+        else:
+            pad_circle_size = fp_config.marking_size
+
+        # We always add the circle pad, because it also makes the soldermask and fill
+        # clearance.
+        pad_mask_clearance = radius - pad_circle_size / 2
         pad_clearance = pad_mask_clearance + fp_config.pad_clearance_outset
 
-        pad = Pad(type=Pad.TYPE_SMT, shape=Pad.SHAPE_CIRCLE, at=center,
-              layers=['F.Cu', 'F.Mask'], clearance=pad_clearance,
-              size=fp_config.marking_width, solder_mask_margin=pad_mask_clearance)
+        pad = Pad(
+            type=Pad.TYPE_SMT,
+            shape=Pad.SHAPE_CIRCLE,
+            at=center,
+            layers=["F.Cu", "F.Mask"],
+            size=pad_circle_size,
+            clearance=pad_clearance,
+            solder_mask_margin=pad_mask_clearance,
+        )
         kicad_mod.append(pad)
-
-        # handle variants
-        if fp_config.variant == "Cross":
-            # cross in the middle
-
-            # vertical: marking_width x mask_diameter
-            r = Rectangle(start=[-pad_radius, -radius], end=[pad_radius, radius],
-                 layer='F.Cu', width=0, fill=True)
-            kicad_mod.append(r)
-
-            # horizontal: mask_diameter x marking_width
-            r = Rectangle(start=[-radius, -pad_radius], end=[radius, pad_radius],
-                 layer='F.Cu', width=0, fill=True)
-            kicad_mod.append(r)
 
         # calculate CourtYard
         cy_radius = radius + fp_config.courtyard_offset
@@ -160,6 +209,7 @@ class FiducialGenerator(FootprintGenerator):
 
         lib_name = fp_config.library_name
         self.write_footprint(kicad_mod, lib_name)
+
 
 if __name__ == "__main__":
 
