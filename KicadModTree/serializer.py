@@ -648,6 +648,18 @@ class Serializer:
         self.add_2_floats("start", line.start.x, line.start.y)
         self.add_2_floats("end", line.end.x, line.end.y)
 
+    def _add_rect_points(self, rect: Rectangle) -> None:
+        """Serialize the start/end corners points of a rectangle.
+
+        Args:
+            rect: The rectangle.
+        """
+        if not rect.angle:
+            self.add_2_floats("start", rect.top_left.x, rect.top_left.y)
+            self.add_2_floats("end", rect.bottom_right.x, rect.bottom_right.y)
+        else:
+            raise ValueError("Cannot serialize a rotated rectangle as two points")
+
     def add_line(self, line: Line) -> None:
         """Serialize a line.
 
@@ -739,21 +751,26 @@ class Serializer:
         """
         if not rect.angle:
             self.start_block("fp_rect")
-            self.add_2_floats("start", rect.top_left.x, rect.top_left.y)
-            self.add_2_floats("end", rect.bottom_right.x, rect.bottom_right.y)
-            self._add_stroke(rect)
-            self._add_fill(rect)
-            self._add_layer(rect)
-            self.end_block()
+            self._add_rect_points(rect)
+        else:
+            # Treat as a polygon
+            self.start_block("fp_poly")
+            self._add_polygon_point_list(rect.points)
 
-    def _add_polygon_points(self, polygon: Polygon) -> None:
+        # These are the same for both rectangles and polygons
+        self._add_stroke(rect)
+        self._add_fill(rect)
+        self._add_layer(rect)
+        self.end_block()
+
+    def _add_polygon_point_list(self, points: list[Vector2D]) -> None:
         """Serialize the points of a polygon.
 
         Args:
             polygon: The polygon.
         """
         self.start_block("pts")
-        for point in polygon.points:
+        for point in points:
             self.add_2_floats("xy", point.x, point.y)
         self.end_block()
 
@@ -764,7 +781,7 @@ class Serializer:
             polygon: The polygon
         """
         self.start_block("fp_poly")
-        self._add_polygon_points(polygon)
+        self._add_polygon_point_list(polygon.points)
         self._add_stroke(polygon)
         self._add_fill(polygon)
         self._add_layer(polygon)
@@ -970,7 +987,7 @@ class Serializer:
         """
         from KicadModTree.nodes.base import Arc, Circle, Line, Polygon
 
-        SUPPORTED_TYPES = ["Arc", "Circle", "Line", "Pad", "Polygon", "Text"]
+        SUPPORTED_TYPES = ["Arc", "Circle", "Rectangle", "Line", "Pad", "Polygon", "Text"]
 
         all_primitives: list[NodeShape] = []
         for p in pad.primitives:
@@ -998,11 +1015,22 @@ class Serializer:
                 fill = None
                 if isinstance(p, Polygon):
                     self.start_block("gr_poly")
-                    self._add_polygon_points(p)
+                    self._add_polygon_point_list(p.points)
                     fill = p.fill
                 elif isinstance(p, Line):
                     self.start_block("gr_line")
                     self._add_line_points(p)
+                elif isinstance(p, Rectangle):
+                    if not p.angle:
+                        # Rectangle without angle
+                        self.start_block("gr_rect")
+                        self._add_rect_points(p)
+                        fill = p.fill
+                    else:
+                        # Rectangle with angle, treated as a polygon
+                        self.start_block("gr_poly")
+                        self._add_polygon_point_list(p.points)
+                        fill = p.fill
                 elif isinstance(p, Circle):
                     self.start_block("gr_circle")
                     self._add_circle_points(p)
