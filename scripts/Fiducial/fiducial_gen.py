@@ -128,6 +128,9 @@ class FiducialGenerator(FootprintGenerator):
         kicad_mod = Footprint(fp_name, FootprintType.SMD)
         kicad_mod.excludeFromBOM = True
 
+        # By default, the fiducial is in the position files
+        kicad_mod.excludeFromPositionFiles = False
+
         # set the FP description
         description = fp_config.getDescription()
         kicad_mod.description = description
