@@ -29,77 +29,22 @@ import math
 
 import cadquery as cq
 
-
-def make_body_features(body, params):
-    features = params.get("body_features", [])
-
-    for feature_index, feature in enumerate(features):
-        op = feature[0]
-        feature_type = feature[1]
-        pos = feature[2]
-        dim = feature[3]
-        extra = feature[4:]
-
-        feature_body = cq.Workplane("XY", origin=pos)
-
-        if feature_type == "box":
-            feature_body = feature_body.box(*dim)
-        elif feature_type == "cylinder":
-            r = dim[0] / 2
-            h = dim[1]
-            feature_body = feature_body.cylinder(h, r)
-        elif feature_type == "poly":
-            dim = dim.copy()
-            h = dim.pop(0)
-            x = dim.pop(0)
-            y = dim.pop(0)
-            feature_body = feature_body.moveTo(x, y)
-            while dim:
-                x = dim.pop(0)
-                y = dim.pop(0)
-                feature_body = feature_body.lineTo(x, y)
-            feature_body = feature_body.close()
-            feature_body = feature_body.extrude(h / 2, both=True)
-        else:
-            raise ValueError(
-                f"body_features[{feature_index}]: Unrecognized feature type: {feature_type}"
-            )
-
-        while extra:
-            extra_name = extra.pop(0)
-            if extra_name == "chamfer":
-                edges, chamfer = extra.pop(0)
-                feature_body = feature_body.edges(edges).chamfer(chamfer)
-            elif extra_name == "fillet":
-                edges, fillet = extra.pop(0)
-                feature_body = feature_body.edges(edges).fillet(fillet)
-            else:
-                raise ValueError(
-                    f"body_features[{feature_index}]: Unrecognized extra parameter: {extra_name}"
-                )
-
-        if op == "add":
-            body = body.union(feature_body)
-        elif op == "cut":
-            body = body.cut(feature_body)
-        else:
-            raise ValueError(
-                f"body_features[{feature_index}]: Unrecognized feature operation: {op}"
-            )
-
-    return body
+from _tools.utils import as_list
 
 
-def make_body_top_clip_pocket(body, params):
-    if "top_clip_direction" not in params:
+def make_body_shell_top_clip_pocket(body, params):
+    if "shell_top_clip_direction" not in params:
         return body
 
-    d = params["top_clip_pocket_depth"]
-    z = params["shell_height"] - d
-    w = params["top_clip_pocket_width"]
-    l = params["top_clip_pocket_length"]
+    d = params["shell_top_clip_pocket_depth"]
+    w = params["shell_top_clip_pocket_width"]
+    l = params["shell_top_clip_pocket_length"]
 
-    pocket = cq.Workplane("XY", origin=(params["top_clip_x"], params["top_clip_y"], z))
+    x = params["shell_top_clip_x"]
+    y = params["shell_top_clip_y"]
+    z = params["shell_height"] - d
+
+    pocket = cq.Workplane("XY", origin=(x, y, z))
     pocket = pocket.rect(w, l)
     pocket = pocket.extrude(d)
 
@@ -144,27 +89,37 @@ def make_body_pegs(body, params):
     for peg_index, peg_params in enumerate(pegs):
         x = peg_params.pop(0)
         y = peg_params.pop(0)
-        radius = peg_params.pop(0) / 2
-        height = peg_params.pop(0)
+        z = body_board_distance
+        r = peg_params.pop(0) / 2
+        h = peg_params.pop(0) - body_board_distance
 
-        peg_body = cq.Workplane("XY", origin=(x, y, body_board_distance))
-        peg_body = peg_body.circle(radius)
-        peg_body = peg_body.extrude(height - body_board_distance)
+        chamfer = None
 
         while peg_params:
             peg_param_name = peg_params.pop(0)
             peg_param_value = peg_params.pop(0)
             if peg_param_name == "z":
-                peg_body = peg_body.translate((0, 0, peg_param_value))
+                z += peg_param_value
             elif peg_param_name == "chamfer":
-                peg_body = peg_body.edges("<Z")
-                peg_body = peg_body.chamfer(peg_param_value[1], peg_param_value[0])
+                chamfer = peg_param_value
             else:
                 raise ValueError(
                     f"pegs[{peg_index}]: Unknown extra parameter: {peg_param_name}"
                 )
 
-        body = body.union(peg_body)
+        peg = cq.Workplane("XZ", origin=(x, y, z))
+        peg = peg.moveTo(0, h)
+        peg = peg.lineTo(0, 0)
+        peg = peg.lineTo(r, 0)
+        if chamfer:
+            peg = peg.lineTo(r, h + chamfer[1])
+            peg = peg.lineTo(r - chamfer[0], h)
+        else:
+            peg = peg.lineTo(r, h)
+        peg = peg.close()
+        peg = peg.revolve()
+
+        body = body.union(peg)
 
     return body
 
@@ -296,9 +251,7 @@ def make_body_shell_sides(body, params):
     shell_sides = params.get("shell_sides", [])
 
     for side_index, side_params in enumerate(shell_sides):
-        side_directions = side_params["direction"]
-        if type(side_directions) is not list:
-            side_directions = [side_directions]
+        side_directions = as_list(side_params["direction"])
 
         for side_direction in side_directions:
             if side_direction in [0, 180]:

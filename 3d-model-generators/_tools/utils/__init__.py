@@ -19,6 +19,15 @@
 
 import math
 
+import cadquery as cq
+
+
+def as_list(v):
+    if type(v) is list:
+        return v
+    else:
+        return [v]
+
 
 class V2:
     def __init__(self, x, y):
@@ -28,30 +37,37 @@ class V2:
     def __getitem__(self, i):
         return [self.x, self.y][i]
 
-    def __add__(self, o):
-        if type(o) is V2:
-            return V2(self.x + o.x, self.y + o.y)
-        else:
-            return V2(self.x + o, self.y + o)
+    def __repr__(self):
+        return f"V({self.x}, {self.y})"
 
-    def __sub__(self, o):
-        if type(o) is V2:
-            return V2(self.x - o.x, self.y - o.y)
+    def __add__(self, v):
+        if type(v) is V2:
+            return V2(self.x + v.x, self.y + v.y)
         else:
-            return V2(self.x - o, self.y - o)
+            return V2(self.x + v, self.y + v)
 
-    def __mul__(self, o):
-        if type(o) is V2:
-            return V2(self.x * o.x, self.y * o.y)
+    def __sub__(self, v):
+        if type(v) is V2:
+            return V2(self.x - v.x, self.y - v.y)
         else:
-            return V2(self.x * o, self.y * o)
+            return V2(self.x - v, self.y - v)
 
-    def dist(self, o):
-        return math.sqrt((self.x - o.x) ** 2 + (self.y - o.y) ** 2)
+    def __mul__(self, v):
+        if type(v) is V2:
+            return V2(self.x * v.x, self.y * v.y)
+        else:
+            return V2(self.x * v, self.y * v)
+
+    def dist(self, v):
+        return math.sqrt((self.x - v.x) ** 2 + (self.y - v.y) ** 2)
 
     def normalized(self):
         d = self.dist(V2(0, 0))
         return V2(self.x / d, self.y / d)
+
+    @staticmethod
+    def from_angle(a):
+        return V2(math.cos(a), math.sin(a))
 
 
 class Line:
@@ -100,19 +116,17 @@ def get_back_side(p0, p1, p2, th):
     if a1 < 0:
         a1 += math.pi * 2
 
-    # Get slopes
-    m0 = math.tan(a0)
-    m1 = math.tan(a1)
-
-    # Get perpendicular angles
-    ap0 = a0 + math.pi / 2
-    ap1 = a1 - math.pi / 2
+    # Get perpendiculars
+    pa0 = a0 + math.pi / 2
+    pa1 = a1 - math.pi / 2
 
     # Get back points
-    p0_b = p1 + V2(math.cos(ap0), math.sin(ap0)) * th
-    p1_b = p1 + V2(math.cos(ap1), math.sin(ap1)) * th
+    p0_b = p1 + V2(math.cos(pa0), math.sin(pa0)) * th
+    p1_b = p1 + V2(math.cos(pa1), math.sin(pa1)) * th
 
     # Get back lines
+    m0 = math.tan(a0)
+    m1 = math.tan(a1)
     l0 = Line(m0, p0_b.y - p0_b.x * m0)
     l1 = Line(m1, p1_b.y - p1_b.x * m1)
 
@@ -122,86 +136,180 @@ def get_back_side(p0, p1, p2, th):
     return c
 
 
-def make_rounded_corner(body, p0, p1, p2, r, pt):
-    # Get angles
+def make_rounded_corner(body, p0, p1, p2, r):
+    # Make a sharp corner if the corner radius is too small:
+    if r <= 0:
+        body = body.lineTo(p1.x, p1.y)
+        return body, p1
+
+    # Get side angles:
     a0 = math.atan2(p0.y - p1.y, p0.x - p1.x)
     a1 = math.atan2(p2.y - p1.y, p2.x - p1.x)
-    if a0 < 0:
-        a0 += math.pi * 2
-    if a1 < 0:
-        a1 += math.pi * 2
-
-    # Get slopes
     m0 = math.tan(a0)
     m1 = math.tan(a1)
 
-    # Get distance between angles
-    d = a1 - a0
-    # assert(d > 0)
-    if d < 0:
-        d += math.pi * 2
+    # Get corner angle:
+    ca = a0 - a1
+    if ca < 0:
+        ca += math.pi * 2
 
-    # Check if it's inner corner
-    if d >= math.pi:
-        r -= pt
-
-    if r <= 0:
-        body = body.lineTo(p1.x, p1.y)
-        return body
-
-    # Get perpendicular angles
-    if d < math.pi:
-        ap0 = a0 + math.pi / 2
-        ap1 = a1 - math.pi / 2
-        rev = False
+    # Get side perpendicular angles depending on the corner direction:
+    if ca < math.pi:
+        pa0 = a0 - math.pi / 2
+        pa1 = a1 + math.pi / 2
     else:
-        ap0 = a0 - math.pi / 2
-        ap1 = a1 + math.pi / 2
-        rev = True
+        pa0 = a0 + math.pi / 2
+        pa1 = a1 - math.pi / 2
 
-    p0_b = p1 + V2(math.cos(ap0), math.sin(ap0)) * r
-    p1_b = p1 + V2(math.cos(ap1), math.sin(ap1)) * r
-    l0 = Line(m0, p0_b.y - p0_b.x * m0)
-    l1 = Line(m1, p1_b.y - p1_b.x * m1)
+    # Get side perpendiculars:
+    pp0 = V2.from_angle(pa0) * r
+    pp1 = V2.from_angle(pa1) * r
+    pb0 = p1 + pp0
+    pb1 = p1 + pp1
 
+    # Get corner arc center:
+    l0 = Line(m0, pb0.y - pb0.x * m0)
+    l1 = Line(m1, pb1.y - pb1.x * m1)
     c = l0.get_line_intersection(l1)
-    s = c + V2(-math.cos(ap0), -math.sin(ap0)) * r
-    e = c + V2(-math.cos(ap1), -math.sin(ap1)) * r
 
-    if rev:
+    # Get arc start and end points:
+    s = c - pp0
+    e = c - pp1
+
+    # Reverse the arc direction depending on the corner direction:
+    if ca < math.pi:
         r = -r
+
+    # Draw a line to arc start if necessary:
     if p0.dist(s) > 0.00001:
-        body = body.lineTo(s.x, s.y)
-    body = body.radiusArc((e.x, e.y), r)
+        body = body.lineTo(*s)
+
+    # Draw the rounded corner:
+    body = body.radiusArc(tuple(e), r)
+
+    return body, e
+
+
+def make_rounded_corner_th(body, p0, p1, p2, r, th):
+    # Get side angles:
+    a0 = math.atan2(p0.y - p1.y, p0.x - p1.x)
+    a1 = math.atan2(p2.y - p1.y, p2.x - p1.x)
+
+    # Get angle between sides:
+    ca = a0 - a1
+    if ca < 0:
+        ca += math.pi * 2
+
+    # Reduce corner radius by the thickness if it's an inner corner:
+    if ca < math.pi:
+        r -= th
+
+    return make_rounded_corner(body, p0, p1, p2, r)
+
+
+def make_rounded_corner_shape(workplane, p, r):
+    p = p.copy()
+    r = r.copy()
+
+    r += [r[-1]] * (len(p) - len(r))
+
+    p.insert(0, V2(0, p[0].y))
+    p.append(V2(0, p[-1].y))
+    p.append(p[0])
+    r.append(0)
+
+    body = workplane.moveTo(*p[0])
+    prev = p[0]
+    for i in range(1, len(p) - 1):
+        if p[i].dist(prev) < 0.00001:
+            p[i] = prev
+            continue
+
+        body, prev = make_rounded_corner(body, prev, p[i], p[i + 1], r[i - 1])
+
+    body = body.close()
 
     return body
 
 
-def _make_z_operation(body, vals, func_name):
-    if not vals:
+def _make_operation(body, edges, val, func_name):
+    if not val:
         return body
 
-    if type(vals) is not list:
-        vals = [vals] * 4
-
-    if len(vals) != 4:
-        raise ValueError(f"z {func_name} operation must have exactly 4 numbers")
-
-    if vals[0]:
-        body = getattr(body.edges("|Z and >X and >Y"), func_name)(vals[0])
-    if vals[1]:
-        body = getattr(body.edges("|Z and <X and >Y"), func_name)(vals[1])
-    if vals[2]:
-        body = getattr(body.edges("|Z and <X and <Y"), func_name)(vals[2])
-    if vals[3]:
-        body = getattr(body.edges("|Z and >X and <Y"), func_name)(vals[3])
+    body = body.edges(edges)
+    body = getattr(body, func_name)(val)
 
     return body
 
 
-def make_z_chamfer(body, vals):
-    return _make_z_operation(body, vals, "chamfer")
+def make_chamfer(body, edges, val):
+    return _make_operation(body, edges, val, "chamfer")
 
 
-def make_z_fillet(body, vals):
-    return _make_z_operation(body, vals, "fillet")
+def make_fillet(body, edges, val):
+    return _make_operation(body, edges, val, "fillet")
+
+
+def make_asymmetric_chamfer(body, chamfer, w, d, pos, a):
+    if not chamfer:
+        return
+
+    w0 = w / 2 - chamfer[0]
+    w1 = w / 2
+    y0 = 0
+    y1 = chamfer[1]
+
+    if w0 < 0:
+        raise ValueError(f"Chamfer is too big")
+
+    cut = cq.Workplane("YX")
+    cut = cut.moveTo(-w0, y0)
+    cut = cut.lineTo(-w1, y0)
+    cut = cut.lineTo(-w1, y1)
+    cut = cut.close()
+    cut = cut.moveTo(w0, y0)
+    cut = cut.lineTo(w1, y0)
+    cut = cut.lineTo(w1, y1)
+    cut = cut.close()
+    cut = cut.extrude(d / 2, both=True)
+    cut = cut.rotate((0, 0, 0), (0, -1, 0), a)
+    cut = cut.translate(tuple(pos))
+
+    body = body.cut(cut)
+
+    return body
+
+
+def _make_z_edges_action(body, values, action):
+    if values is None:
+        return body
+
+    if type(values) is not list:
+        values = [values] * 4
+
+    if len(values) != 4:
+        raise ValueError("Either on number or 4 numbers must be provided")
+
+    edges = [
+        "|Z and >X and >Y",
+        "|Z and >X and <Y",
+        "|Z and <X and <Y",
+        "|Z and <X and >Y",
+    ]
+
+    for edge, value in zip(edges, values):
+        if not value:
+            continue
+
+        body = body.edges(edge)
+        body = getattr(body, action)(value)
+
+    return body
+
+
+def make_z_chamfers(body, chamfers):
+    return _make_z_edges_action(body, chamfers, "chamfer")
+
+
+def make_z_fillets(body, fillets):
+    return _make_z_edges_action(body, fillets, "fillet")

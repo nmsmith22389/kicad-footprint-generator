@@ -29,7 +29,7 @@ import math
 
 import cadquery as cq
 
-from _tools.utils import pingen
+from _tools.utils import as_list, pingen
 
 
 def make_shell_top_lips(body, params):
@@ -38,7 +38,7 @@ def make_shell_top_lips(body, params):
     for lip_index, lip_params in enumerate(lips):
         lip_params = lip_params.copy()
         operation = lip_params.pop(0)
-        directions = lip_params.pop(0)
+        directions = as_list(lip_params.pop(0))
         offset = lip_params.pop(0)
         length = lip_params.pop(0)
         base_width = lip_params.pop(0)
@@ -46,9 +46,6 @@ def make_shell_top_lips(body, params):
 
         if lip_params:
             raise ValueError(f"shell_top_lips[{lip_index}]: Too many parameters")
-
-        if type(directions) is not list:
-            directions = [directions]
 
         for direction in directions:
             if direction in [0, 180]:
@@ -92,56 +89,56 @@ def make_shell_top_lips(body, params):
 
 
 def make_shell_top_clip(body, params):
-    if "top_clip_direction" not in params:
+    if "shell_top_clip_direction" not in params:
         return body
 
-    pocket_w = params["top_clip_pocket_width"]
-    pocket_l = params["top_clip_pocket_length"]
+    w = params["shell_top_clip_width"]
+    l = params["shell_top_clip_length"]
+    d = params["shell_top_clip_depth"]
 
-    pocket = cq.Workplane("XY", origin=(params["top_clip_x"], params["top_clip_y"]))
-    pocket = pocket.rect(pocket_w, pocket_l)
-    pocket = pocket.extrude(params["shell_height"])
-    body = body.cut(pocket)
-
-    direction = params["top_clip_direction"]
-
-    x = params["top_clip_x"]
-    y = params["top_clip_y"]
+    x = params["shell_top_clip_x"]
+    y = params["shell_top_clip_y"]
     z = params["shell_height"]
 
-    l = params["top_clip_length"]
-    t = params["shell_thickness"]
+    st = params["shell_thickness"]
 
-    pl = params["top_clip_length"]
+    pocket_w = params["shell_top_clip_pocket_width"]
+    pocket_l = params["shell_top_clip_pocket_length"]
+
+    pocket = cq.Workplane("XY", origin=(x, y))
+    pocket = pocket.rect(pocket_w, pocket_l)
+    pocket = pocket.extrude(z)
+    body = body.cut(pocket)
+
+    direction = params["shell_top_clip_direction"]
+    corner_r = params["shell_top_clip_corner_radius"]
 
     clip = pingen.make_gullwing_pin(
         {
-            "pin_width": params["top_clip_width"],
-            "pin_thickness": t,
-            "pin_length": pl,
-            "pin_top_height": params["top_clip_depth"],
+            "pin_width": w,
+            "pin_thickness": st,
+            "pin_length": l,
+            "pin_top_height": d,
             "pin_top_length": l * 0.4,
             "pin_bottom_length": l * 0.4,
-            "pin_corner_radius": params["top_clip_corner_radius"],
+            "pin_corner_radius": corner_r,
         }
     )
 
     clip = clip.rotate((0, 0, 0), (0, 0, 1), direction)
 
     if direction == 0:
-        x -= params["top_clip_pocket_width"] / 2 - pl
+        x -= pocket_w / 2 - l
     elif direction == 180:
-        x += params["top_clip_pocket_width"] / 2 - pl
+        x += pocket_w / 2 - l
     elif direction == 90:
-        y -= params["top_clip_pocket_length"] / 2 - pl
+        y -= pocket_l / 2 - l
     elif direction == 270:
-        y += params["top_clip_pocket_length"] / 2 - pl
+        y += pocket_l / 2 - l
     else:
-        raise ValueError(
-            f"Top shell clip's direction can only be in steps of 90 degrees"
-        )
+        raise ValueError(f"shell_top_clip_direction can only be in steps of 90 degrees")
 
-    clip = clip.translate((x, y, z - params["top_clip_depth"]))
+    clip = clip.translate((x, y, z - d))
     body = body.union(clip)
 
     return body
@@ -207,9 +204,17 @@ def _make_shell_side(params, side_params, shell_length):
         side_top = side_params["side_top_height"]
         body = body.lineTo(w / 2, side_top)
         body = body.lineTo(side_w / 2, side_top)
-        body = body.lineTo(side_w / 2, bot)
+        if corner_chamfer:
+            body = body.lineTo(side_w / 2, bot + corner_chamfer[1])
+            body = body.lineTo(side_w / 2 - corner_chamfer[0], bot)
+        else:
+            body = body.lineTo(side_w / 2, bot)
     else:
-        body = body.lineTo(w / 2, bot)
+        if corner_chamfer:
+            body = body.lineTo(w / 2, bot + corner_chamfer[1])
+            body = body.lineTo(w / 2 - corner_chamfer[0], bot)
+        else:
+            body = body.lineTo(w / 2, bot)
 
     if hole_w is not None:
         hole_bot = side_params.get("hole_bottom_height")
@@ -235,10 +240,6 @@ def _make_shell_side(params, side_params, shell_length):
     body = body.close()
     body = body.extrude(params["shell_thickness"])
 
-    if corner_chamfer:
-        body = body.edges("|X and <Z and >Y").chamfer(
-            corner_chamfer[1], corner_chamfer[0]
-        )
     if corner_fillet:
         body = body.edges("|X and <Z and >Y").fillet(corner_fillet)
 
@@ -264,9 +265,7 @@ def make_shell_sides(body, params):
     shell_sides = params.get("shell_sides", [])
 
     for side_index, side_params in enumerate(shell_sides):
-        side_directions = side_params["direction"]
-        if type(side_directions) is not list:
-            side_directions = [side_directions]
+        side_directions = as_list(side_params["direction"])
 
         for side_direction in side_directions:
             if side_direction in [0, 180]:

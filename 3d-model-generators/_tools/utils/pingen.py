@@ -29,7 +29,14 @@ import math
 
 import cadquery as cq
 
-from _tools.utils import V2, get_back_side, get_side_to_tip_corner, make_rounded_corner
+from _tools.utils import (
+    V2,
+    as_list,
+    get_back_side,
+    get_side_to_tip_corner,
+    make_asymmetric_chamfer,
+    make_rounded_corner_th,
+)
 
 
 def make_gullwing_pin(params, namespace="pin"):
@@ -83,13 +90,13 @@ def make_gullwing_pin(params, namespace="pin"):
     body = cq.Workplane("XZ", origin=(0, 0, 0))
 
     body = body.moveTo(*tip_b)
-    body = make_rounded_corner(body, tip_b, ankle_b, knee_b, corner_r, pt)
-    body = make_rounded_corner(body, ankle_b, knee_b, start_b, corner_r, pt)
+    body, e = make_rounded_corner_th(body, tip_b, ankle_b, knee_b, corner_r, pt)
+    body, e = make_rounded_corner_th(body, e, knee_b, start_b, corner_r, pt)
     body = body.lineTo(*start_b)
 
     body = body.lineTo(*start_f)
-    body = make_rounded_corner(body, start_f, knee_f, ankle_f, corner_r, pt)
-    body = make_rounded_corner(body, knee_f, ankle_f, tip_f, corner_r, pt)
+    body, e = make_rounded_corner_th(body, start_f, knee_f, ankle_f, corner_r, pt)
+    body, e = make_rounded_corner_th(body, e, ankle_f, tip_f, corner_r, pt)
     body = body.lineTo(*tip_f)
 
     body = body.close()
@@ -116,13 +123,13 @@ def make_top_jbend_pin(params):
     body = cq.Workplane("XZ")
 
     body = body.moveTo(start_f.x, start_f.y)
-    body = make_rounded_corner(body, start_f, top_f, mid_f, tr, pt)
-    body = make_rounded_corner(body, top_f, mid_f, tip_f, cr, pt)
+    body, e = make_rounded_corner_th(body, start_f, top_f, mid_f, tr, pt)
+    body, e = make_rounded_corner_th(body, e, mid_f, tip_f, cr, pt)
     body = body.lineTo(tip_f.x, tip_f.y)
 
     body = body.lineTo(tip_b.x, tip_b.y)
-    body = make_rounded_corner(body, tip_b, mid_b, top_b, cr, pt)
-    body = make_rounded_corner(body, mid_b, top_b, start_b, tr, pt)
+    body, e = make_rounded_corner_th(body, tip_b, mid_b, top_b, cr, pt)
+    body, e = make_rounded_corner_th(body, e, top_b, start_b, tr, pt)
     body = body.lineTo(start_b.x, start_b.y)
 
     body = body.close()
@@ -146,12 +153,12 @@ def make_bottom_jbend_pin(params):
     body = cq.Workplane("XZ")
 
     body = body.moveTo(tip_f.x, tip_f.y)
-    body = make_rounded_corner(body, tip_f, mid_f, start_f, cr, pt)
-    body = make_rounded_corner(body, mid_f, start_f, start_b, sr, pt)
+    body, e = make_rounded_corner_th(body, tip_f, mid_f, start_f, cr, pt)
+    body, e = make_rounded_corner_th(body, e, start_f, start_b, sr, pt)
 
     if sr < pt:
         body = body.lineTo(start_b.x, start_b.y)
-    body = make_rounded_corner(body, start_b, mid_b, tip_b, cr, pt)
+    body, e = make_rounded_corner_th(body, start_b, mid_b, tip_b, cr, pt)
     body = body.lineTo(tip_b.x, tip_b.y)
 
     body = body.close()
@@ -172,50 +179,63 @@ def make_flat_pin(params):
 
 
 def make_through_hole_pin(params, pin_index=0):
+    pw = params["pin_width"]
     pt = params["pin_thickness"]
+
+    bot = V2(0, params["pin_bottom_height"])
 
     base_h = params["pin_base_height"]
     if type(base_h) is list:
         base_h = params["pin_base_height"][pin_index]
     base = V2(params["pin_base_offset"], base_h)
 
-    bot = V2(0, params["pin_bottom_height"])
-
     corners = params["pin_corners"]
     if corners and type(corners[0][0]) is list:
         corners = corners[pin_index]
 
-    cr = params.get("pin_corner_radius", 0)
+    corners_r = as_list(params.get("pin_corner_radius", 0))
 
-    f = map(lambda c: V2(*c), corners)
-    f = list(f)
+    f = list(map(lambda c: V2(*c), corners))
     f.insert(0, base)
     f.append(get_side_to_tip_corner(f[-1], bot, pt, False))
 
     b = []
+    b_corners_r = []
     b.append(f[-1] + (bot - f[-1]).normalized() * pt)
-    b.append(V2(base.x, base.y - pt))
+    base_angle = math.atan2(f[1].y - f[0].y, f[1].x - f[0].x) - math.pi / 2
+    b.append(base + V2.from_angle(base_angle) * pt)
 
     body = cq.Workplane("XZ")
 
     body = body.moveTo(*f[0])
+    e = f[0]
     for i in range(1, len(f) - 1):
+        cr = corners_r[min(i - 1, len(corners_r) - 1)]
         b.insert(1, get_back_side(f[i - 1], f[i], f[i + 1], pt))
-        body = make_rounded_corner(body, f[i - 1], f[i], f[i + 1], cr, pt)
+        b_corners_r.insert(0, cr)
+        body, e = make_rounded_corner_th(body, e, f[i], f[i + 1], cr, pt)
     body = body.lineTo(*f[-1])
 
     body = body.lineTo(*b[0])
+    e = b[0]
     for i in range(1, len(b) - 1):
-        body = make_rounded_corner(body, b[i - 1], b[i], b[i + 1], cr, pt)
+        cr = b_corners_r[min(i - 1, len(b_corners_r) - 1)]
+        body, e = make_rounded_corner_th(body, e, b[i], b[i + 1], cr, pt)
     body = body.lineTo(*b[-1])
 
     body = body.close()
     body = body.extrude(params["pin_width"] / 2, both=True)
 
-    tip_chamfer = params.get("pin_tip_chamfer", 0)
-    tip_fillet = params.get("pin_tip_fillet", 0)
+    tip_chamfer = params.get("pin_tip_chamfer")
     if tip_chamfer:
-        body = body.faces("<Z").edges("not |Y").chamfer(tip_chamfer[1], tip_chamfer[0])
+        tip_chamfer_pos = (0, 0, bot.y)
+        tip_angle = math.atan2(f[-2].y - f[-1].y, f[-2].x - f[-1].x)
+        tip_angle = math.degrees(tip_angle)
+        body = make_asymmetric_chamfer(
+            body, tip_chamfer, pw, pt, tip_chamfer_pos, tip_angle
+        )
+
+    tip_fillet = params.get("pin_tip_fillet", 0)
     if tip_fillet:
         body = body.faces("<Z").edges("not |Y").fillet(tip_fillet)
 

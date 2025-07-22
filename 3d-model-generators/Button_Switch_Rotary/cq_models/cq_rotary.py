@@ -27,7 +27,7 @@
 import cadquery as cq
 
 from _tools import fonts
-from _tools.utils import bodygen, make_z_chamfer, make_z_fillet, pingen, shellgen
+from _tools.utils import bodygen, features, make_chamfer, make_fillet, pingen, shellgen
 
 
 def _make_body_dial_pocket(body, params):
@@ -49,11 +49,13 @@ def make_body(params):
     body = body.rect(params["body_width"], params["body_length"])
     body = body.extrude(params["body_height"] - body_board_distance)
 
-    body = make_z_chamfer(body, params.get("body_corner_chamfer"))
-    body = make_z_fillet(body, params.get("body_corner_fillet"))
+    body = make_chamfer(body, "|Z", params.get("body_corner_chamfer"))
+    body = make_fillet(body, "|Z", params.get("body_corner_fillet"))
     body = _make_body_dial_pocket(body, params)
     body = bodygen.make_body_shell_sides(body, params)
-    body = bodygen.make_body_features(body, params)
+    body = features.make_features(
+        body, params.get("body_features", []), "body_features"
+    )
 
     return body
 
@@ -96,8 +98,8 @@ def _make_shell_top(params):
     body = body.circle(params["dial_diameter"] / 2)
     body = body.extrude(params["shell_thickness"])
 
-    body = make_z_chamfer(body, params.get("shell_corner_chamfer"))
-    body = make_z_fillet(body, params.get("shell_corner_fillet"))
+    body = make_chamfer(body, "|Z", params.get("shell_corner_chamfer"))
+    body = make_fillet(body, "|Z", params.get("shell_corner_fillet"))
     body = shellgen.make_shell_top_lips(body, params)
 
     return body

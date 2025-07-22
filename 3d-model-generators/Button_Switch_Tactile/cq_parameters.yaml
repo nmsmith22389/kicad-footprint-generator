@@ -12,100 +12,47 @@
 # body_length:      plastic body length, not including any protruding parts
 # body_height:      plastic body height, not including the metal shell on top
 # body_board_distance: (optional) space under the plastic body
-# body_corner_chamfer: (optional) plastic body vertical corners chamfer (accepts list)
-# body_corner_fillet:  (optional) plastic body vertical corners fillet (accepts list)
-# body_body_features:  (optional) list of additional pads and pockets
+# body_corner_chamfer: (optional) plastic body vertical corners chamfer
+# body_corner_fillet:  (optional) plastic body vertical corners fillet
+# body_features:       (optional) list of additional features
 # pegs:                (optional) list of cylindrical pegs, extruded down from the bottom body
 #
 # shell_width:      shell top width, not including any additional shell parts
 # shell_length:     shell top length, not including any additional shell parts
 # shell_height:     very top of the shell, not including any additional shell parts
 # shell_thickness:  shell thickness, including top, sides, and shell GND pins
-# shell_corner_chamfer: (optional) shell top vertical corners chamfer (accepts list)
-# shell_corner_fillet:  (optional) shell top vertical corners fillet (accepts list)
+# shell_corner_chamfer: (optional) shell top vertical corners chamfer
+# shell_corner_fillet:  (optional) shell top vertical corners fillet
+# shell_top_features:   (optional) list of additional features
 # shell_top_lips:       (optional) list of extrusions or cuts on the top of the shell
 #
-# actuator_type:      shape and direction of the actuator
-#   top-round             top circle shaped actuator
-#   top-obround           top obround shaped actuator
-#   top-rectangle         top rectangle shaped actuator
-#   top-rectangle-round   top overlapping ractangle and circle shaped actuator
-#   top-hex               top hex shaped actuator
-#   side-rectangle        side rectangle shaped actuator
+# shell_top_cover_type:   shell cover around the actuator
+#   round             round shaped cover
+#   rectangle         rectangular shaped cover
 #
-# Parameters for 'actuator_type: top-*':
-#   actuator_height:      top of the actuator
-#   actuator_shell_gap:   horizontal gap between the actuator and the shell
+# Parameters for 'shell_top_cover_type: round':
+#   shell_top_cover_height:        top of the cover (accepts list)
+#   shell_top_cover_diameter:      lowest diameter (accepts list)
+#   shell_top_cover_corner_radius: (optional) corner radius (accepts list)
 #
-# Parameters for 'actuator_type: top-round':
-#   actuator_height:      top of the actuator (accepts list)
-#   actuator_diameter:    diameter (accepts list)
-#   actuator_zcut:        (optional) rectangular cut from top to bottom (rarely used)
-#   actuator_top_chamfer: (optional) chamfer on the top edges of the actuator
-#   actuator_top_fillet:  (optional) fillet on the top edges of the actuator
+# Parameters for 'shell_top_cover_type: rectangle':
+#   shell_top_cover_height:        top of the cover (accepts list)
+#   shell_top_cover_width:         cover width (accepts list)
+#   shell_top_cover_length:        (optional) cover length (accepts list)
+#   shell_top_cover_diameter:      (optional) intersecting circle diameter (accepts list)
+#   shell_top_cover_corner_radius: (optional) horizontal corner radius (accepts list)
+#   shell_top_cover_vertical_corner_chamfer: (optional) corners chamfer
 #
-# Parameters for 'actuator_type: top-obround':
-#   actuator_width:       total width
-#   actuator_length:      total length
-#   actuator_top_chamfer: (optional) chamfer on the top edges of the actuator
-#   actuator_top_fillet:  (optional) fillet on the top edges of the actuator
-#
-# Parameters for 'actuator_type: top-rectangle':
-#   actuator_round_base_height:   top of the round base
-#   actuator_round_base_diameter: diameter of the round base
-#   actuator_round_base_fillet:   top edge fillet of the base
-#   actuator_height:              height of the rectangle (accepts list)
-#   actuator_width:               width of the rectangle (accepts list)
-#   actuator_length:              (optional) length of the rectangle (accepts list)
-#   actuator_chamfer:             (optional) chamfer on all edges (accepts list)
-#   actuator_fillet:              (optional) fillet on all edges (accepts list)
-#   actuator_top_hole_diameter:   (optional) hole on the very top of the head
-#   actuator_top_hole_depth:      (optional) depth of the hole
-#   actuator_top_hole_chamfer:    (optional) chamfer on the hole edge
-#   actuator_top_hole_fillet:     (optional) fillet on the hole edge
-#
-# Parameters for 'actuator_type: top-rectangle-round':
-#   actuator_width:       rectangle width
-#   actuator_length:      rectangle length
-#   actuator_diameter:    circle diameter
-#
-# Parameters for 'actuator_type: top-hex':
-#   actuator_width:       total width
-#   actuator_mid_length:  length of middle part
-#   actuator_side_length: length of side parts
-#
-# Parameters for 'actuator_type: side-rectangle':
-#   actuator_direction:          horizontal facing direction
-#   actuator_width:              actuator head width
-#   actuator_top_height:         top of the head
-#   actuator_bottom_height:      bottom of the head
-#   actuator_distance:           distance from component center to front of head
-#   actuator_thickness:          distance from front to back of head
-#   actuator_neck_width:         neck width
-#   actuator_neck_top_height:    top of the neck
-#   actuator_neck_bottom_height: bottom of the neck
-#   actuator_neck_gaps:          (optional) list rectangular neck gaps, top to bottom
-#   actuator_bottom_chamfer:     (optional) chamfer at the front bottom of the head
-#   actuator_bottom_fillet:      (optional) fillet at the front bottom of the head
-#
-# base_width:          (optional) base plate width under the actuator; otherwise no base plate
-# base_length:         (optional) base plate length
-# base_height:         (optional) very top of base plate
-# base_top_chamfer:    (optional) top edges chamfer
-# base_top_fillet:     (optional) top edges fillet
-# base_corner_chamfer: (optional) corners chamfer
-# base_corner_fillet:  (optional) corners fillet
-#
-# top_clip_direction:      (optional) facing direction of the clip
-# top_clip_x:              (optional) x offset of hole and clip from center
-# top_clip_y:              (optional) y offset of hole and clip from center
-# top_clip_width:          (optional) clip width
-# top_clip_length:         (optional) clip length
-# top_clip_depth:          (optional) depth from the top of the shell
-# top_clip_pocket_width:   (optional) hole width
-# top_clip_pocket_length:  (optional) hole height
-# top_clip_pocket_depth:   (optional) depth from the top of the shell
-# top_clip_corner_radius:  (optional) shell clip curves radius
+# shell_top_clip_direction:      (optional) facing direction of the clip
+# shell_top_clip_x:              (optional) x offset of hole and clip from center
+# shell_top_clip_y:              (optional) y offset of hole and clip from center
+# shell_top_clip_width:          (optional) clip width
+# shell_top_clip_length:         (optional) clip length
+# shell_top_clip_depth:          (optional) depth from the top of the shell
+# shell_top_clip_pocket_width:   (optional) hole width
+# shell_top_clip_pocket_length:  (optional) hole height
+# shell_top_clip_pocket_depth:   (optional) depth from the top of the shell
+# shell_top_clip_corner_radius:  (optional) shell clip curves radius
 #
 # shell_sides:  (optional) list of shell sides
 #
@@ -126,26 +73,101 @@
 #   holder_fillet:          (optional) protruded plastic holders top fillet
 #   extrusions:             (optional) list of extrusions from the shell side bottom
 #
-# actuator_cover_type:   shell cover around the actuator
-#   round         round shaped cover, which can consist of 1 or 2 levels
-#   rectangular   rectangular shaped cover
+# actuator_type:      shape and direction of the actuator
+#   top-round             top circle shaped actuator
+#   top-obround           top obround shaped actuator
+#   top-rectangle         top rectangle shaped actuator
+#   top-rectangle-round   top overlapping ractangle and circle shaped actuator
+#   top-hex               top hex shaped actuator
+#   side-rectangle        side rectangle shaped actuator
 #
-# Parameters for 'actuator_cover_type: round':
-#   actuator_cover_height:           very top of cover
-#   actuator_cover_diameter:         lowest diameter
-#   actuator_cover_mid_height:       (optional) mid part height for 2 levels; otherwise only 1 level
-#   actuator_cover_mid_outer_fillet: (optional) mid part outer fillet when 2 levels
-#   actuator_cover_mid_inner_fillet: (optional) mid part inner fillet when 2 levels
-#   actuator_cover_top_diameter:     (optional) highest diameter when 2 levels
-#   actuator_cover_top_fillet:       (optional) highest part fillet
-#   actuator_cover_bottom_fillet:    (optional) lowest part fillet
+# Parameters for 'actuator_type: top-*':
+#   actuator_height:      top of the actuator
+#   actuator_top_chamfer: (optional) chamfer on the top edges of the actuator
+#   actuator_top_fillet:  (optional) fillet on the top edges of the actuator
 #
-# Parameters for 'actuator_cover_type: rectangular':
-#   actuator_cover_width:            cover bottom width
-#   actuator_cover_length:           cover bottom length
-#   actuator_cover_height:           very top of cover
-#   actuator_cover_taper:            taper angle, top the bottom
-#   actuator_cover_corner_chamfer:   (optional) corners chamfer
+# Parameters for 'actuator_type: top-round':
+#   actuator_height:              top of the actuator (accepts list)
+#   actuator_diameter:            diameter (accepts list)
+#   actuator_corner_radius:       (optional) corner fillet radius (accepts lists)
+#   actuator_shell_hole_diameter: shell hole diameter around the actuator
+#
+# Parameters for 'actuator_type: top-obround':
+#   actuator_width:             total width
+#   actuator_length:            total length
+#   actuator_shell_hole_width:  shell hole width around the actuator
+#   actuator_shell_hole_length: shell hole length around the actuator
+#
+# Parameters for 'actuator_type: top-rectangle':
+#   actuator_height:                height of the rectangle (accepts list)
+#   actuator_width:                 width of the rectangle (accepts list)
+#   actuator_length:                (optional) length of the rectangle (accepts list)
+#   actuator_shell_hole_width:      (if no round bottom) shell hole width around the actuator
+#   actuator_shell_hole_length:     (if no round bottom) (optional) shell hole length around the actuator
+#   actuator_shell_hole_corner_chamfer: (if no round bottom) (optional) shell hole vertical corners fillet
+#   actuator_shell_hole_corner_fillet:  (if no round bottom) (optional) shell hole vertical corners fillet
+#   actuator_shell_hole_diameter:   (if round bottom) shell hole diameter around the actuator
+#   actuator_chamfer:               (optional) chamfer on all edges (accepts list)
+#   actuator_fillet:                (optional) fillet on all edges (accepts list)
+#   actuator_top_hole_diameter:     (optional) hole on the very top of the head
+#   actuator_top_hole_depth:        (optional) depth of the hole
+#   actuator_top_hole_chamfer:      (optional) chamfer on the hole edge
+#   actuator_top_hole_fillet:       (optional) fillet on the hole edge
+#   actuator_round_bottom_height:   (optional) top of the round bottom part
+#   actuator_round_bottom_diameter: (optional) diameter of the round bottom part
+#   actuator_round_bottom_chamfer:  (optional) top edge chamfer of round bottom part
+#   actuator_round_bottom_fillet:   (optional) top edge fillet of round bottom part
+#
+# Parameters for 'actuator_type: top-rectangle-round':
+#   actuator_width:               rectangle width
+#   actuator_length:              rectangle length
+#   actuator_diameter:            circle diameter
+#   actuator_corner_chamfer:      (optional) vertical corners chamfer
+#   actuator_corner_fillet:       (optional) vertical corners fillet
+#   actuator_shell_hole_width:    shell hole width around the actuator
+#   actuator_shell_hole_length:   shell hole length around the actuator
+#   actuator_shell_hole_diameter: shell hole diameter around the actuator
+#   actuator_shell_hole_corner_chamfer: (optional) shell hole vertical corners fillet
+#   actuator_shell_hole_corner_fillet:  (optional) shell hole vertical corners fillet
+#
+# Parameters for 'actuator_type: top-hex':
+#   actuator_width:                     total width
+#   actuator_mid_length:                length in the middle of the actuator
+#   actuator_side_length:               length on the sides of the actuator
+#   actuator_corner_chamfer:            (optional) vertical corners chamfer
+#   actuator_corner_fillet:             (optional) vertical corners fillet
+#   actuator_shell_hole_width:          shell hole width
+#   actuator_shell_hole_mid_length:     shell hole length in the middle of the actuator
+#   actuator_shell_hole_side_length:    shell hole length on the sides of the actuator
+#   actuator_shell_hole_corner_chamfer: (optional) shell hole vertical corners fillet
+#   actuator_shell_hole_corner_fillet:  (optional) shell hole vertical corners fillet
+#
+# Parameters for 'actuator_type: side-rectangle':
+#   actuator_direction:          horizontal facing direction
+#   actuator_width:              actuator head width
+#   actuator_top_height:         top of the head
+#   actuator_bottom_height:      bottom of the head
+#   actuator_distance:           distance from component center to front of head
+#   actuator_thickness:          distance from front to back of head
+#   actuator_neck_width:         neck width
+#   actuator_neck_top_height:    top of the neck
+#   actuator_neck_bottom_height: bottom of the neck
+#   actuator_neck_gaps:          (optional) list rectangular neck gaps, top to bottom
+#   actuator_corner_chamfer:     (optional) front vertical corners chamfer
+#   actuator_corner_fillet:      (optional) front vertical corners fillet
+#   actuator_bottom_chamfer:     (optional) chamfer at the front bottom of the head
+#   actuator_bottom_fillet:      (optional) fillet at the front bottom of the head
+#
+# actuator_base_height:         (optional) very top of base plate, otherwise no base plate
+# actuator_base_width:          (optional) base plate width
+# actuator_base_length:         (optional) base plate length
+# actuator_base_diameter:       (optional) base plate diameter (for round base plate)
+# actuator_base_corner_chamfer: (optional) corners chamfer
+# actuator_base_corner_fillet:  (optional) corners fillet
+# actuator_base_top_chamfer:    (optional) top edges chamfer
+# actuator_base_top_fillet:     (optional) top edges fillet
+#
+# actuator_features: (optional) list of additional features
 #
 # pin_type:       type of pins
 #   gullwing      gullwing shape
@@ -180,7 +202,7 @@
 #   pin_top_height:     highest part
 #   pin_top_length:     horizontal length of the top part, where the pin tip is
 #   pin_start_radius:   (optional) corner radius at the base of the pin
-#   pin_corner_radius:  (optional) bottom corner radius, where the pin curves up
+#   pin_corner_radius:  (optional) bottom corner radius, where the pin curves up (accepts list)
 #
 # Parameters for 'pin_type: flat':
 #   pin_length:         base to tip length
@@ -198,17 +220,17 @@
 #   gullwing        pin with a gullwing shape
 #   straight        pin starts at top of shell and goes straight down
 #
-# body_color_key:   plastic body color (usually 'black body')
-# shell_color_key:  metal shell color (always 'metal silver')
-# actuator_color_key: color of the actuator (usually 'black body', but often differs depending on operating force)
-# base_color_key:   (optional) the color of the base, if used (often same as 'actuator_color_key')
-# pins_color_key:   pins color (should always be 'metal grey pins' or 'gold pins')
+# body_color_key:           plastic body color (usually 'black body')
+# shell_color_key:          metal shell color (always 'metal silver')
+# actuator_color_key:       color of the actuator (usually 'black body', but often differs depending on operating force)
+# actuator_base_color_key:  (optional) the color of the base, if used (often same as 'actuator_color_key')
+# pins_color_key:           pins color (should always be 'metal grey pins' or 'gold pins')
 #
 # destination_dir:  packages directory name
 # source:           datasheet URL
 
-SW_TH_Tactile_Omron_B3F-10xx: &SW_TH_Tactile_Omron_B3F-10xx
-  modelName: SW_TH_Tactile_Omron_B3F-10xx
+SW_TH_Tactile_Omron_B3F-100x: &SW_TH_Tactile_Omron_B3F-100x
+  modelName: SW_TH_Tactile_Omron_B3F-100x
   model_class: tactile
 
   translation: [3.25, -2.25, 0]
@@ -243,7 +265,7 @@ SW_TH_Tactile_Omron_B3F-10xx: &SW_TH_Tactile_Omron_B3F-10xx
   actuator_type: top-round
   actuator_height: 4.3
   actuator_diameter: 3.5
-  actuator_shell_gap: 0.05
+  actuator_shell_hole_diameter: 3.6
   actuator_top_fillet: 0.2
 
   pin_type: through-hole
@@ -273,9 +295,34 @@ SW_TH_Tactile_Omron_B3F-10xx: &SW_TH_Tactile_Omron_B3F-10xx
   destination_dir: Button_Switch_THT.3dshapes
   source: https://omronfs.omron.com/en_US/ecb/products/pdf/en-b3f.pdf
 
-SW_TH_Tactile_Omron_B3F-11xx:
-  <<: *SW_TH_Tactile_Omron_B3F-10xx
-  modelName: SW_TH_Tactile_Omron_B3F-11xx
+SW_TH_Tactile_Omron_B3F-102x:
+  <<: *SW_TH_Tactile_Omron_B3F-100x
+  modelName: SW_TH_Tactile_Omron_B3F-102x
+
+  actuator_height: 5.0
+
+  actuator_color_key: black body
+
+SW_TH_Tactile_Omron_B3F-106x:
+  <<: *SW_TH_Tactile_Omron_B3F-100x
+  modelName: SW_TH_Tactile_Omron_B3F-102x
+
+  actuator_height: 7.0
+
+  actuator_color_key: black body
+
+SW_TH_Tactile_Omron_B3F-107x:
+  <<: *SW_TH_Tactile_Omron_B3F-100x
+  modelName: SW_TH_Tactile_Omron_B3F-102x
+
+  actuator_height: [3.1, 3.4, 9.5]
+  actuator_diameter: [3.5, 3.5, 3.0]
+
+  actuator_color_key: black body
+
+SW_TH_Tactile_Omron_B3F-110x: &SW_TH_Tactile_Omron_B3F-110x
+  <<: *SW_TH_Tactile_Omron_B3F-100x
+  modelName: SW_TH_Tactile_Omron_B3F-110x
 
   shell_top_lips: [
     [cut, 90, 0, -0.15, 2.4, 2.1], # op, direction, offs, len, base_w, tip_w
@@ -283,6 +330,33 @@ SW_TH_Tactile_Omron_B3F-11xx:
 
   gnd_pin: [
     [straight, 270, 0.0, -4.25, -3.5, 0.7, tip_chamfer, [0.2, 1.0], top_width, 1.5, mid_top_height, 0.8, mid_bottom_height, 0.1], # type, direction, x, y, bottom_height, width, extra params
+  ]
+
+SW_TH_Tactile_Omron_B3F-112x: &SW_TH_Tactile_Omron_B3F-112x
+  <<: *SW_TH_Tactile_Omron_B3F-110x
+  modelName: SW_TH_Tactile_Omron_B3F-112x
+
+  actuator_height: 5.0
+
+  actuator_color_key: black body
+
+SW_TH_Tactile_Omron_B3F-1110:
+  <<: *SW_TH_Tactile_Omron_B3F-112x
+  modelName: SW_TH_Tactile_Omron_B3F-1110
+
+  translation: [3.75, -2.25, 0]
+
+  pin_base_offset: -0.75
+  pin_corners: [
+    [0.20,  1.1],
+    [0.75, -2.2],
+  ]
+  pin_corner_radius: [0.80, 0.45]
+  pins: [
+    [-3.75,  2.25, 180],
+    [-3.75, -2.25, 180],
+    [ 3.75, -2.25,   0],
+    [ 3.75,  2.25,   0],
   ]
 
 SW_SPST_Omron_B3FS-100xP: &SW_SPST_Omron_B3FS-100xP
@@ -329,7 +403,7 @@ SW_SPST_Omron_B3FS-100xP: &SW_SPST_Omron_B3FS-100xP
   actuator_type: top-round
   actuator_height: 3.1
   actuator_diameter: 3.0
-  actuator_shell_gap: 0.1
+  actuator_shell_hole_diameter: 3.2
   actuator_top_fillet: 0.2
 
   pin_type: gullwing
@@ -363,15 +437,15 @@ SW_SPST_Omron_B3FS-105xP:
   modelName: SW_SPST_Omron_B3FS-105xP
 
   actuator_type: top-rectangle
-  actuator_round_base_height: 3.1
-  actuator_round_base_diameter: 3.0
-  actuator_round_base_fillet: 0.2
-  actuator_height: [5.5, 5.5, 7.3]
+  actuator_height: [2.45, 5.5, 5.5, 7.3]
   actuator_width: [1.6, 1.6, 2.4, 2.4]
   actuator_fillet: [0.3, 0, 0.3, 0.3]
   actuator_top_hole_diameter: 1.4
   actuator_top_hole_depth: 1.8
-  actuator_shell_gap: 0.1
+  actuator_round_bottom_height: 3.1
+  actuator_round_bottom_diameter: 3.0
+  actuator_round_bottom_fillet: 0.2
+  actuator_shell_hole_diameter: 3.2
 
 SW_SPST_B3S-1000: &SW_SPST_B3S-1000
   modelName: SW_SPST_B3S-1000
@@ -411,7 +485,7 @@ SW_SPST_B3S-1000: &SW_SPST_B3S-1000
   actuator_type: top-round
   actuator_height: 4.3
   actuator_diameter: 3.3
-  actuator_shell_gap: 0.15
+  actuator_shell_hole_diameter: 3.6
   actuator_top_fillet: 0.15
 
   pin_type: gullwing
@@ -488,13 +562,11 @@ SW_SPST_B3SL-1002P: &SW_SPST_B3SL-1002P
   actuator_type: top-round
   actuator_height: 3.4
   actuator_diameter: 2.5
-  actuator_shell_gap: 0.35
+  actuator_shell_hole_diameter: 3.2
   actuator_top_fillet: 0.2
 
-  base_width: 6.1
-  base_length: 6.1
-  base_height: 2.35
-  base_corner_fillet: 3
+  actuator_base_height: 2.35
+  actuator_base_diameter: 6.1
 
   pin_type: bottom-jbend
   pin_width: 0.7
@@ -514,7 +586,7 @@ SW_SPST_B3SL-1002P: &SW_SPST_B3SL-1002P
   body_color_key: black body
   shell_color_key: metal silver
   actuator_color_key: green body
-  base_color_key: green body
+  actuator_base_color_key: green body
   pins_color_key: metal grey pins
   destination_dir: Button_Switch_SMD.3dshapes
   source: https://omronfs.omron.com/en_US/ecb/products/pdf/en-b3sl.pdf
@@ -526,7 +598,7 @@ SW_SPST_B3SL-1022P:
   actuator_height: 5.1
 
   actuator_color_key: grey body
-  base_color_key: grey body
+  actuator_base_color_key: grey body
 
 SW_SPST_B3U-1000P: &SW_SPST_B3U-1000P
   modelName: SW_SPST_B3U-1000P
@@ -562,9 +634,11 @@ SW_SPST_B3U-1000P: &SW_SPST_B3U-1000P
   actuator_type: top-round
   actuator_height: 1.6
   actuator_diameter: 1.5
-  actuator_shell_gap: 0.05
-  actuator_top_fillet: 0.2
-  actuator_zcut: [0.6, 90] # distance, direction
+  actuator_shell_hole_diameter: 1.6
+  actuator_features: [
+    [cut, box, [0, 0.9, 0.8], [1.5, 0.6, 1.6]], # op, type, pos, dim, extra
+    [fillet, "not <Z", 0.2],
+  ]
 
   pin_type: flat
   pin_width: 1.4
@@ -620,21 +694,21 @@ SW_SPST_B3U-3000P: &SW_SPST_B3U-3000P
     [add, box, [0,  1.0875, 0.3], [1.8, 0.325, 0.6]],
   ]
 
-  top_clip_direction: 270
-  top_clip_x: 0
-  top_clip_y: 0
-  top_clip_width:  1.1
-  top_clip_length: 1.0
-  top_clip_depth: 0.45
-  top_clip_pocket_width: 1.6
-  top_clip_pocket_length: 1.3
-  top_clip_pocket_depth: 0.5
-  top_clip_corner_radius: 0.2
-
   shell_width: 3.0
   shell_length: 2.0
   shell_height: 1.2
   shell_thickness: 0.12
+
+  shell_top_clip_direction: 270
+  shell_top_clip_x: 0
+  shell_top_clip_y: 0
+  shell_top_clip_width:  1.1
+  shell_top_clip_length: 1.0
+  shell_top_clip_depth: 0.45
+  shell_top_clip_pocket_width: 1.6
+  shell_top_clip_pocket_length: 1.3
+  shell_top_clip_pocket_depth: 0.5
+  shell_top_clip_corner_radius: 0.2
 
   shell_sides: [
     {
@@ -759,14 +833,14 @@ SW_SPST_EVPBF:
   actuator_type: top-round
   actuator_height: 3.5
   actuator_diameter: 3.4
-  actuator_shell_gap: 0.15
+  actuator_shell_hole_diameter: 3.7
   actuator_top_fillet: 0.2
 
-  base_width: 5.4
-  base_length: 5.4
-  base_height: 2.35
-  base_top_fillet: 0.2
-  base_corner_fillet: 0.5
+  actuator_base_height: 2.35
+  actuator_base_width: 5.4
+  actuator_base_length: 5.4
+  actuator_base_top_fillet: 0.2
+  actuator_base_corner_fillet: 0.5
 
   pin_type: bottom-jbend
   pin_width: 0.8
@@ -785,7 +859,7 @@ SW_SPST_EVPBF:
   body_color_key: black body
   shell_color_key: metal silver
   actuator_color_key: white body
-  base_color_key: white body
+  actuator_base_color_key: white body
   pins_color_key: metal grey pins
   destination_dir: Button_Switch_SMD.3dshapes
   source: https://industrial.panasonic.com/cdbs/www-data/pdf/ATK0000/ATK0000C432.pdf
@@ -795,18 +869,27 @@ SW_SPST_EVQP0:
   model_class: tactile
 
   body_width: 6.0
-  body_length: 6.0
+  body_length: 5.5
   body_height: 1.65
+  body_features: [
+    [chamfer, "|Z and >X and >Y", 0.1],  # op, edges, chamfer/fillet amount
+    [fillet,  "|Z and >X and <Y", 0.1],
+    [fillet,  "|Z and <X and <Y", 0.1],
+    [fillet,  "|Z and <X and >Y", 0.1],
+  ]
 
   shell_width: 6.0
-  shell_length: 6.0
+  shell_length: 5.6
   shell_height: 1.8
   shell_thickness: 0.15
-  shell_corner_fillet: 0.3
   shell_top_lips: [
     [add, [0, 180], -2.25, 0.1, 0.7, 0.7], # op, direction, offs, len, base_w, tip_w
     [add, [0, 180],  2.25, 0.1, 0.7, 0.7],
   ]
+
+  shell_top_cover_type: round
+  shell_top_cover_height: [1.65, 1.8, 1.7, 1.7]
+  shell_top_cover_diameter: [3.0, 3.0, 2.8, 2.5]
 
   shell_sides: [
     {
@@ -818,7 +901,7 @@ SW_SPST_EVQP0:
     },
     {
       direction: [90, 270],
-      distance: 3.25,
+      distance: 3,
       width: 3.5,
       bottom_height: 0.55,
       hole_width: 2.8,
@@ -833,7 +916,7 @@ SW_SPST_EVQP0:
   actuator_type: top-round
   actuator_height: 2.5
   actuator_diameter: 2
-  actuator_shell_gap: 0.05
+  actuator_shell_hole_diameter: 2.5
   actuator_top_fillet: 0.2
 
   pin_type: bottom-jbend
@@ -841,7 +924,7 @@ SW_SPST_EVQP0:
   pin_thickness: 0.2
   pin_length: 1.3
   pin_top_height: 0.8
-  pin_top_length: 0.3
+  pin_top_length: 0.15
   pin_corner_radius: 0.2
   pins: [
     [-3.3,  2.0, 180],
@@ -904,7 +987,7 @@ SW_SPST_EVQP2_MiddlePushTravel_H2.5mm: &SW_SPST_EVQP2_MiddlePushTravel
   actuator_type: top-round
   actuator_height: 2.5
   actuator_diameter: 1.8
-  actuator_shell_gap: 0.1
+  actuator_shell_hole_diameter: 2.0
   actuator_top_fillet: 0.1
 
   pin_type: bottom-jbend
@@ -934,12 +1017,15 @@ SW_SPST_EVQP2_ShortPushTravel_H2.1mm: &SW_SPST_EVQP2_ShortPushTravel
 
   actuator_type: top-rectangle-round
   actuator_height: 2.1
-  actuator_diameter: 2.0
   actuator_width: 2.6
   actuator_length: 1.6
-  actuator_shell_gap: 0.1
+  actuator_diameter: 2.0
   actuator_corner_fillet: 0.1
   actuator_top_fillet: 0.1
+  actuator_shell_hole_width: 2.8
+  actuator_shell_hole_length: 1.8
+  actuator_shell_hole_diameter: 2.2
+  actuator_shell_hole_corner_fillet: 0.1
 
   actuator_color_key: white body
 
@@ -962,17 +1048,6 @@ SW_SPST_EVQP7A: &SW_SPST_EVQP7A
     [add, box, [0, 1.375, 0.35], [1.9, 0.15, 0.7]], # op, type, pos, dim, extra
   ]
 
-  top_clip_direction: 90
-  top_clip_x: 0
-  top_clip_y: 0.08
-  top_clip_width:  1.0
-  top_clip_length: 1.02
-  top_clip_depth: 0.45
-  top_clip_pocket_width: 1.5
-  top_clip_pocket_length: 1.3
-  top_clip_pocket_depth: 0.5
-  top_clip_corner_radius: 0.2
-
   shell_width: 3.1
   shell_length: 2.4
   shell_height: 1.35
@@ -983,6 +1058,17 @@ SW_SPST_EVQP7A: &SW_SPST_EVQP7A
     [add, [0, 180], -1.000, 0.15, 0.50, 0.50],
     [add, [0, 180], 0.975, 0.15, 0.45, 0.45],
   ]
+
+  shell_top_clip_direction: 90
+  shell_top_clip_x: 0
+  shell_top_clip_y: 0.08
+  shell_top_clip_width:  1.0
+  shell_top_clip_length: 1.02
+  shell_top_clip_depth: 0.45
+  shell_top_clip_pocket_width: 1.5
+  shell_top_clip_pocket_length: 1.3
+  shell_top_clip_pocket_depth: 0.5
+  shell_top_clip_corner_radius: 0.2
 
   shell_sides: [
     {
@@ -1064,15 +1150,15 @@ SW_SPST_Panasonic_EVQPL_3PL_5PL_PT_A08: &SW_SPST_Panasonic_EVQPL_3PL_5PL_PT_A08
   body_width: 4.6
   body_length: 4.6
   body_height: 0.7
-  body_corner_chamfer: [0.2, 0, 0, 0]
-  body_corner_fillet: [0, 0.2, 0.2, 0.2]
+  body_corner_chamfer: [0.0, 0.2, 0.0, 0.0]
+  body_corner_fillet: [0.2, 0.0, 0.2, 0.2]
 
   shell_width: 4.35
   shell_length: 4.35
   shell_height: 0.8
   shell_thickness: 0.1
-  shell_corner_fillet: [0, 0.3, 0.3, 0.3]
-  shell_corner_chamfer: [0.3, 0, 0, 0]
+  shell_corner_chamfer: [0.0, 0.3, 0.0, 0.0]
+  shell_corner_fillet: [0.3, 0.0, 0.3, 0.3]
   shell_top_lips: [
     [add, [0, 180], -1.2, 0.225, 0.4, 0.4], # op, direction, offs, len, base_w, tip_w
     [add, [0, 180],  1.2, 0.225, 0.4, 0.4],
@@ -1101,7 +1187,7 @@ SW_SPST_Panasonic_EVQPL_3PL_5PL_PT_A08: &SW_SPST_Panasonic_EVQPL_3PL_5PL_PT_A08
   actuator_type: top-round
   actuator_height: 0.8
   actuator_diameter: 3.2
-  actuator_shell_gap: 0.0
+  actuator_shell_hole_diameter: 3.2
   actuator_top_fillet: 0.05
 
   pin_type: bottom-jbend
@@ -1129,18 +1215,16 @@ SW_SPST_Panasonic_EVQPL_3PL_5PL_PT_A15:
   <<: *SW_SPST_Panasonic_EVQPL_3PL_5PL_PT_A08
   modelName: SW_SPST_Panasonic_EVQPL_3PL_5PL_PT_A15
 
+  shell_top_cover_type: rectangle
+  shell_top_cover_width: [3.8, 3.4]
+  shell_top_cover_height: [0.8, 1.2]
+  shell_top_cover_diameter: [4.4, 4.0]
+
   actuator_type: top-round
   actuator_height: 1.5
   actuator_diameter: 2.2
-  actuator_shell_gap: 0.1
+  actuator_shell_hole_diameter: 2.4
   actuator_top_fillet: 0.05
-
-  actuator_cover_type: rectangular
-  actuator_cover_width: 3.8
-  actuator_cover_length: 3.8
-  actuator_cover_height: 1.2
-  actuator_cover_taper: 22
-  actuator_cover_corner_chamfer: [0.8, 0.8]
 
   actuator_color_key: metal silver
 
@@ -1156,17 +1240,6 @@ Panasonic_EVQPUJ_EVQPUA: &Panasonic_EVQPUJ_EVQPUA
     [add, box, [0,  1.65, 0.5], [2.4, 0.2, 1]],
   ]
 
-  top_clip_direction: 270
-  top_clip_x: 0
-  top_clip_y: -0.28
-  top_clip_width:  1.0
-  top_clip_length: 0.85
-  top_clip_depth: 0.45
-  top_clip_pocket_width: 1.5
-  top_clip_pocket_length: 1.2
-  top_clip_pocket_depth: 0.5
-  top_clip_corner_radius: 0.2
-
   shell_width: 4.25
   shell_length: 3.1
   shell_height: 1.65
@@ -1175,6 +1248,17 @@ Panasonic_EVQPUJ_EVQPUA: &Panasonic_EVQPUJ_EVQPUA
     [add, [0, 180], -1.225, 0.17, 0.65, 0.65], # op, direction, offs, len, base_w, tip_w
     [add, [0, 180],  1.225, 0.17, 0.65, 0.65],
   ]
+
+  shell_top_clip_direction: 270
+  shell_top_clip_x: 0
+  shell_top_clip_y: -0.28
+  shell_top_clip_width:  1.0
+  shell_top_clip_length: 0.85
+  shell_top_clip_depth: 0.45
+  shell_top_clip_pocket_width: 1.5
+  shell_top_clip_pocket_length: 1.2
+  shell_top_clip_pocket_depth: 0.5
+  shell_top_clip_corner_radius: 0.2
 
   shell_sides: [
     {
@@ -1312,9 +1396,12 @@ SW_Push_1P1T_NO_CK_KMR2: &SW_Push_1P1T_NO_CK_KMR2
   actuator_width: 2.11
   actuator_mid_length: 1.61
   actuator_side_length: 1.20
-  actuator_shell_gap: 0.05
   actuator_corner_fillet: 0.5
   actuator_top_fillet: 0.125
+  actuator_shell_hole_width: 2.21
+  actuator_shell_hole_mid_length: 1.71
+  actuator_shell_hole_side_length: 1.30
+  actuator_shell_hole_corner_fillet: 0.5
 
   pin_type: flat
   pin_width: 0.6
@@ -1375,6 +1462,11 @@ SW_Tactile_Straight_KSA0Axx1LFTR: &SW_Tactile_Straight_KSA0Axx1LFTR
     [add, [0, 180], 0, 0.40, 3.2, 2.5],
   ]
 
+  shell_top_cover_type: round
+  shell_top_cover_diameter: [5.20, 4.80, 4.80]
+  shell_top_cover_height:   [2.64, 2.64, 3.74]
+  shell_top_cover_corner_radius: [0.0, 0.2, 0.35]
+
   shell_sides: [
     {
       direction: [90, 270],
@@ -1388,22 +1480,16 @@ SW_Tactile_Straight_KSA0Axx1LFTR: &SW_Tactile_Straight_KSA0Axx1LFTR
     },
   ]
 
-  base_width: 7.0
-  base_length: 7.0
-  base_height: 2.39
-  base_corner_fillet: 0.5
-
   actuator_type: top-round
-  actuator_height: [4.7, 4.7, 4.5, 4.4, 4.3]
-  actuator_diameter: [3.0, 2.5, 2.1, 1.2, 0.9]
-  actuator_shell_gap: 0.05
+  actuator_height: [2.39, 4.7, 4.7, 4.5, 4.4, 4.3]
+  actuator_diameter: [3.0, 3.0, 2.5, 2.1, 1.2, 0.9]
+  actuator_shell_hole_diameter: 3.1
   actuator_top_fillet: 0.1
 
-  actuator_cover_type: round
-  actuator_cover_height: 3.74
-  actuator_cover_diameter: 4.8
-  actuator_cover_top_fillet: 0.35
-  actuator_cover_bottom_fillet: 0.2
+  actuator_base_height: 2.39
+  actuator_base_width: 7.0
+  actuator_base_length: 7.0
+  actuator_base_corner_fillet: 0.5
 
   pin_type: through-hole
   pin_width: 0.53
@@ -1429,7 +1515,7 @@ SW_Tactile_Straight_KSA0Axx1LFTR: &SW_Tactile_Straight_KSA0Axx1LFTR
   body_color_key: black body
   shell_color_key: metal silver
   actuator_color_key: blue body
-  base_color_key: white body
+  actuator_base_color_key: white body
   pins_color_key: gold pins
   destination_dir: Button_Switch_THT.3dshapes
   source: https://www.ckswitches.com/media/1457/ksa_ksl.pdf
@@ -1460,6 +1546,11 @@ SW_Push_1P1T_NO_CK_KSC6xxJ: &SW_Push_1P1T_NO_CK_KSC6xxJ
     [add, [90, 270], 0, 0.325, 3.22, 2.57], # op, direction, offs, len, base_w, tip_w
   ]
 
+  shell_top_cover_type: round
+  shell_top_cover_height: [2.9, 2.9, 4.0, 4.0, 4.5]
+  shell_top_cover_diameter: [5.2, 4.7, 4.7, 3.4, 3.4]
+  shell_top_cover_corner_radius: [0.0, 0.25, 0.45, 0.15, 0.0]
+
   shell_sides: [
     {
       direction: [90, 270],
@@ -1475,22 +1566,13 @@ SW_Push_1P1T_NO_CK_KSC6xxJ: &SW_Push_1P1T_NO_CK_KSC6xxJ
   actuator_type: top-round
   actuator_height: 7.68
   actuator_diameter: 2.9
-  actuator_shell_gap: 0.05
+  actuator_shell_hole_diameter: 3.0
   actuator_top_fillet: 0.1
 
-  base_width: 6.2
-  base_length: 5.6
-  base_height: 2.7
-  base_corner_chamfer: [0.8, 0.8]
-
-  actuator_cover_type: round
-  actuator_cover_height: 4.5
-  actuator_cover_diameter: 4.7
-  actuator_cover_mid_height: 4.0
-  actuator_cover_mid_outer_fillet: 0.45
-  actuator_cover_mid_inner_fillet: 0.15
-  actuator_cover_top_diameter: 3.4
-  actuator_cover_bottom_fillet: 0.25
+  actuator_base_height: 2.7
+  actuator_base_width: 6.2
+  actuator_base_length: 5.6
+  actuator_base_corner_chamfer: 0.8
 
   pin_type: top-jbend
   pin_width: 0.75
@@ -1510,7 +1592,7 @@ SW_Push_1P1T_NO_CK_KSC6xxJ: &SW_Push_1P1T_NO_CK_KSC6xxJ
   body_color_key: black body
   shell_color_key: metal silver
   actuator_color_key: black body
-  base_color_key: blue body
+  actuator_base_color_key: blue body
   pins_color_key: gold pins
   destination_dir: Button_Switch_SMD.3dshapes
   source: https://www.ckswitches.com/media/1972/ksc6.pdf
@@ -1566,13 +1648,13 @@ SW_Push_1P1T_NO_CK_KSC7xxJ:
   actuator_type: top-round
   actuator_height: 4.4
   actuator_diameter: 3.0
-  actuator_shell_gap: 0.15
+  actuator_shell_hole_diameter: 3.3
   actuator_top_fillet: 0.1
 
-  base_width: 6.2
-  base_length: 5.6
-  base_height: 2.7
-  base_corner_chamfer: [0.8, 0.8]
+  actuator_base_height: 2.7
+  actuator_base_width: 6.2
+  actuator_base_length: 5.6
+  actuator_base_corner_chamfer: 0.8
 
   pin_type: top-jbend
   pin_width: 0.7
@@ -1592,20 +1674,76 @@ SW_Push_1P1T_NO_CK_KSC7xxJ:
   body_color_key: black body
   shell_color_key: metal silver
   actuator_color_key: blue body
-  base_color_key: blue body
+  actuator_base_color_key: blue body
   pins_color_key: gold pins
   destination_dir: Button_Switch_SMD.3dshapes
   source: https://www.ckswitches.com/media/1973/ksc7.pdf
 
 SW_Push_1P1T_NO_CK_KSC9xxG:
-  <<: *SW_Push_1P1T_NO_CK_KSC6xxG
   modelName: SW_Push_1P1T_NO_CK_KSC9xxG
+  model_class: tactile
 
-  actuator_height:   [5.6, 5.6, 6.6, 6.6, 7.0, 7.7, 7.7, 7.5]
-  actuator_diameter: [2.9, 2.7, 2.7, 2.9, 2.9, 2.5, 1.6, 1.4]
-  actuator_top_fillet: 0
+  body_width: 6.2
+  body_length: 5.6
+  body_height: 2.0
+  body_board_distance: 0.1
 
+  shell_width: 6.2
+  shell_length: 5.6
+  shell_height: 2.9
+  shell_thickness: 0.2
+  shell_top_lips: [
+    [add, [90, 270], 0, 0.325, 3.22, 2.57], # op, direction, offs, len, base_w, tip_w
+  ]
+
+  shell_top_cover_type: round
+  shell_top_cover_height: [2.9, 2.9, 4.0, 4.0, 4.5]
+  shell_top_cover_diameter: [5.2, 4.7, 4.7, 3.4, 3.4]
+  shell_top_cover_corner_radius: [0.0, 0.25, 0.45, 0.15, 0.0]
+
+  shell_sides: [
+    {
+      direction: [90, 270],
+      distance: 3.125,
+      width: 5.4,
+      bottom_height: 0.4,
+      hole_width: 4.1,
+      hole_bottom_height: 0.8,
+      corner_fillet: 0.5,
+    },
+  ]
+
+  actuator_type: top-round
+  actuator_height:   [2.70, 5.60, 5.60, 6.60, 6.60, 7.00, 7.70, 7.70, 7.50]
+  actuator_diameter: [2.95, 2.95, 2.70, 2.70, 2.95, 2.95, 2.50, 1.60, 1.40]
+  actuator_shell_hole_diameter: 3.05
+
+  actuator_base_height: 2.7
+  actuator_base_width: 6.2
+  actuator_base_length: 5.6
+  actuator_base_corner_chamfer: 0.8
+
+  pin_type: gullwing
+  pin_width: 0.75
+  pin_thickness: 0.25
+  pin_length: 1.9
+  pin_top_height: 1.3
+  pin_top_length: 0.55
+  pin_bottom_length: 1.0
+  pin_corner_radius: 0.35
+  pins: [
+    [-5.0,  2.0, 180],
+    [-5.0, -2.0, 180],
+    [ 5.0, -2.0,   0],
+    [ 5.0,  2.0,   0],
+  ]
+
+  body_color_key: black body
+  shell_color_key: metal silver
   actuator_color_key: white body
+  actuator_base_color_key: blue body
+  pins_color_key: gold pins
+  destination_dir: Button_Switch_SMD.3dshapes
   source: https://www.ckswitches.com/media/1975/ksc9.pdf
 
 SW_PUSH_1P1T_6x3.5mm_H4.3_APEM_MJTP1243: &APEM_MJTP1243
@@ -1636,7 +1774,8 @@ SW_PUSH_1P1T_6x3.5mm_H4.3_APEM_MJTP1243: &APEM_MJTP1243
   actuator_width: 3.5
   actuator_length: 1.5
   actuator_fillet: [0.2, 0.2]
-  actuator_shell_gap: 0.1
+  actuator_shell_hole_width: 3.7
+  actuator_shell_hole_length: 1.7
 
   pin_type: through-hole
   pin_width: 1.0
@@ -1679,6 +1818,7 @@ SW_PUSH_1P1T_6x3.5mm_H5.0_APEM_MJTP1250:
 
   actuator_height: 5.0
   actuator_width: 3.0
+  actuator_shell_hole_width: 3.2
 
 SW_Push_1P1T_NO_CK_PTS125Sx43SMTR: &SW_Push_1P1T_NO_CK_PTS125Sx43SMTR
   modelName: SW_Push_1P1T_NO_CK_PTS125Sx43SMTR
@@ -1720,7 +1860,7 @@ SW_Push_1P1T_NO_CK_PTS125Sx43SMTR: &SW_Push_1P1T_NO_CK_PTS125Sx43SMTR
   actuator_type: top-round
   actuator_height: 4.3
   actuator_diameter: 7.2
-  actuator_shell_gap: 0.1
+  actuator_shell_hole_diameter: 7.4
   actuator_top_fillet: 0.5
 
   pin_type: gullwing
@@ -1756,16 +1896,16 @@ SW_Push_1P1T_NO_CK_PTS125Sx73SMTR:
   modelName: SW_Push_1P1T_NO_CK_PTS125Sx73SMTR
 
   actuator_type: top-rectangle
-  actuator_round_base_height: 4.0
-  actuator_round_base_diameter: 6.9
-  actuator_round_base_fillet: 0.1
-  actuator_height: [5.3, 5.3, 7.3]
+  actuator_height: [3.3, 5.3, 5.3, 7.3]
   actuator_width: [3.0, 3.0, 3.75, 3.75]
   actuator_fillet: [0, 0, 0.1, 0.1]
   actuator_top_hole_diameter: 2.0
   actuator_top_hole_depth: 2.1
-  actuator_top_hole_chamfer: [0.2, 0.2]
-  actuator_shell_gap: 0.2
+  actuator_top_hole_chamfer: 0.2
+  actuator_round_bottom_height: 4.0
+  actuator_round_bottom_diameter: 6.9
+  actuator_round_bottom_fillet: 0.1
+  actuator_shell_hole_diameter: 7.3
 
 SW_Push_1P1T_NO_CK_PTS125Sx43PSMTR: &SW_Push_1P1T_NO_CK_PTS125Sx43PSMTR
   <<: *SW_Push_1P1T_NO_CK_PTS125Sx43SMTR
@@ -1805,6 +1945,7 @@ SW_Push_1P1T_NO_CK_PTS125Sx43PSMTR: &SW_Push_1P1T_NO_CK_PTS125Sx43PSMTR
   ]
 
   actuator_diameter: 7.0
+  actuator_shell_hole_diameter: 7.2
   actuator_top_fillet: 0.1
 
   pin_bottom_height: -0.05
@@ -1820,16 +1961,16 @@ SW_Push_1P1T_NO_CK_PTS125Sx73PSMTR:
   modelName: SW_Push_1P1T_NO_CK_PTS125Sx73PSMTR
 
   actuator_type: top-rectangle
-  actuator_round_base_height: 4.0
-  actuator_round_base_diameter: 7
-  actuator_round_base_fillet: 0.1
-  actuator_height: [5.3, 5.3, 7.3]
+  actuator_height: [3.3, 5.3, 5.3, 7.3]
   actuator_width: [3.0, 3.0, 3.8, 3.8]
   actuator_fillet: [0, 0, 0.1, 0.1]
   actuator_top_hole_diameter: 2.0
   actuator_top_hole_depth: 2.1
-  actuator_top_hole_chamfer: [0.2, 0.2]
-  actuator_shell_gap: 0.2
+  actuator_top_hole_chamfer: 0.2
+  actuator_round_bottom_height: 4.0
+  actuator_round_bottom_diameter: 7
+  actuator_round_bottom_fillet: 0.1
+  actuator_shell_hole_diameter: 7.4
 
 SW_SPST_PTS645Sx43SMTR92:
   modelName: SW_SPST_PTS645Sx43SMTR92
@@ -1861,7 +2002,7 @@ SW_SPST_PTS645Sx43SMTR92:
   actuator_type: top-round
   actuator_height: 4.3
   actuator_diameter: 3.5
-  actuator_shell_gap: 0.05
+  actuator_shell_hole_diameter: 3.6
   actuator_top_fillet: 0.2
 
   pin_type: gullwing
@@ -1921,7 +2062,8 @@ SW_SPST_PTS810:
   actuator_height: 2.5
   actuator_width: 3.0
   actuator_length: 2.2
-  actuator_shell_gap: 0.1
+  actuator_shell_hole_width: 3.2
+  actuator_shell_hole_length: 2.4
   actuator_top_fillet: 0.2
 
   pin_type: bottom-jbend
@@ -1986,7 +2128,7 @@ SW_SPST_SKQG_WithoutStem: &SW_SPST_SKQG_WithoutStem
   actuator_type: top-round
   actuator_height: 0.8
   actuator_diameter: 3.0
-  actuator_shell_gap: 0.0
+  actuator_shell_hole_diameter: 3.0
   actuator_top_fillet: 0.05
 
   pin_type: gullwing
@@ -2015,18 +2157,16 @@ SW_SPST_SKQG_WithStem:
   <<: *SW_SPST_SKQG_WithoutStem
   modelName: SW_SPST_SKQG_WithStem
 
+  shell_top_cover_type: rectangle
+  shell_top_cover_height: [0.8, 1.2]
+  shell_top_cover_width: [3.7, 3.5]
+  shell_top_cover_vertical_corner_chamfer: 0.6
+
   actuator_type: top-round
   actuator_height: 1.5
   actuator_diameter: 2.0
-  actuator_shell_gap: 0.2
+  actuator_shell_hole_diameter: 2.4
   actuator_top_fillet: 0.25
-
-  actuator_cover_type: rectangular
-  actuator_cover_width: 3.7
-  actuator_cover_length: 3.7
-  actuator_cover_height: 1.2
-  actuator_cover_taper: 9
-  actuator_cover_corner_chamfer: [0.6, 0.6]
 
   actuator_color_key: metal silver
 
@@ -2079,7 +2219,7 @@ SW_Push_SPST_NO_Alps_SKRK:
   actuator_type: top-round
   actuator_height: 2.0
   actuator_diameter: 1.8
-  actuator_shell_gap: 0.2
+  actuator_shell_hole_diameter: 2.2
   actuator_top_fillet: 0.1
 
   pin_type: flat
@@ -2128,7 +2268,7 @@ SW_Push_1P1T_NO_E-Switch_TL3301NxxxxxG:
   actuator_type: top-round
   actuator_height: 4.3
   actuator_diameter: 3.5
-  actuator_shell_gap: 0.1
+  actuator_shell_hole_diameter: 3.7
   actuator_top_fillet: 0.15
 
   pin_type: gullwing
@@ -2181,7 +2321,7 @@ SW_SPST_TL3305A: &SW_SPST_TL3305A
   actuator_type: top-round
   actuator_height: 3.8
   actuator_diameter: 2.5
-  actuator_shell_gap: 0.05
+  actuator_shell_hole_diameter: 2.6
   actuator_top_fillet: 0.15
 
   pin_type: gullwing
@@ -2256,7 +2396,7 @@ SW_PUSH-12mm_Wuerth-430476085716:
   actuator_type: top-round
   actuator_height: 8.5
   actuator_diameter: 7.0
-  actuator_shell_gap: 0.05
+  actuator_shell_hole_diameter: 7.1
   actuator_top_fillet: 0.2
 
   pin_type: through-hole

@@ -24,9 +24,26 @@
 # Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 
+
+import math
+
 import cadquery as cq
 
-from _tools.utils import bodygen, make_z_chamfer, make_z_fillet, pingen, shellgen
+from _tools.utils import (
+    V2,
+    Line,
+    as_list,
+    bodygen,
+    features,
+    make_asymmetric_chamfer,
+    make_chamfer,
+    make_fillet,
+    make_rounded_corner_shape,
+    make_z_chamfers,
+    make_z_fillets,
+    pingen,
+    shellgen,
+)
 
 
 def _make_body_gnd_straight_pin_pocket(params, gnd_pin_index, gnd_pin_params):
@@ -98,126 +115,329 @@ def make_body(params):
     body = body.rect(params["body_width"], params["body_length"])
     body = body.extrude(params["body_height"] - body_board_distance)
 
-    body = make_z_chamfer(body, params.get("body_corner_chamfer"))
-    body = make_z_fillet(body, params.get("body_corner_fillet"))
-    body = bodygen.make_body_top_clip_pocket(body, params)
+    body = make_z_chamfers(body, params.get("body_corner_chamfer"))
+    body = make_z_fillets(body, params.get("body_corner_fillet"))
+    body = bodygen.make_body_shell_top_clip_pocket(body, params)
     body = bodygen.make_body_shell_sides(body, params)
     body = _make_body_gnd_pin_pockets(body, params)
     body = bodygen.make_body_pin_pockets(body, params)
-    body = bodygen.make_body_features(body, params)
-    # Pegs must be under features:
+    body = features.make_features(
+        body, params.get("body_features", []), "body_features"
+    )
+    # Pegs must be after features:
     body = bodygen.make_body_pegs(body, params)
 
     return body
 
 
-def _make_actuator_cover_round(params):
-    body = cq.Workplane("XZ")
+def _make_shell_top(params):
+    body = cq.Workplane(
+        "XY", origin=(0, 0, params["shell_height"] - params["shell_thickness"])
+    )
+    body = body.rect(params["shell_width"], params["shell_length"])
+    body = body.extrude(params["shell_thickness"])
 
-    top_height = params["actuator_cover_height"]
-    mid_height = params.get("actuator_cover_mid_height")
-
-    body = body.moveTo(0, params["shell_height"])
-
-    if mid_height is None:
-        r = params["actuator_cover_diameter"] / 2
-
-        top_fillet = params.get("actuator_cover_top_fillet", 0)
-        bot_fillet = params.get("actuator_cover_bottom_fillet", 0)
-
-        body = body.lineTo(r + bot_fillet, params["shell_height"])
-        if bot_fillet:
-            body = body.radiusArc((r, params["shell_height"] + bot_fillet), bot_fillet)
-
-        body = body.lineTo(r, top_height - top_fillet)
-        if top_fillet:
-            body = body.radiusArc((r - top_fillet, top_height), -top_fillet)
-    else:
-        mid_r = params["actuator_cover_diameter"] / 2
-        top_r = params["actuator_cover_top_diameter"] / 2
-
-        bot_fillet = params.get("actuator_cover_bottom_fillet", 0)
-        mid_outer_fillet = params.get("actuator_cover_mid_outer_fillet", 0)
-        mid_inner_fillet = params.get("actuator_cover_mid_inner_fillet", 0)
-
-        body = body.lineTo(mid_r + bot_fillet, params["shell_height"])
-        if bot_fillet:
-            body = body.radiusArc(
-                (mid_r, params["shell_height"] + bot_fillet), bot_fillet
-            )
-
-        body = body.lineTo(mid_r, mid_height - mid_outer_fillet)
-        if mid_outer_fillet:
-            body = body.radiusArc(
-                (mid_r - mid_outer_fillet, mid_height), -mid_outer_fillet
-            )
-
-        body = body.lineTo(top_r + mid_inner_fillet, mid_height)
-        if mid_inner_fillet:
-            body = body.radiusArc(
-                (top_r, mid_height + mid_inner_fillet), mid_inner_fillet
-            )
-
-        body = body.lineTo(top_r, top_height)
-
-    body = body.lineTo(0, top_height)
-    body = body.close()
-    body = body.revolve()
+    body = make_z_chamfers(body, params.get("shell_corner_chamfer"))
+    body = make_z_fillets(body, params.get("shell_corner_fillet"))
+    body = features.make_features(
+        body, params.get("shell_top_features", []), "shell_top_features"
+    )
+    # Clips and lips go after features:
+    body = shellgen.make_shell_top_clip(body, params)
+    body = shellgen.make_shell_top_lips(body, params)
 
     return body
 
 
-def _make_actuator_cover_rectangular(params):
-    corner_chamfer = params.get("actuator_cover_corner_chamfer")
+def _make_shell_top_cover_shape(workplane, params, d_param_name):
+    h = as_list(params["shell_top_cover_height"])
+    d = as_list(params[d_param_name])
+    r = as_list(params.get("shell_top_cover_corner_radius", 0))
 
-    body = cq.Workplane("XY", origin=(0, 0, params["shell_height"]))
-    body = body.rect(params["actuator_cover_length"], params["actuator_cover_width"])
-    body = body.extrude(
-        params["actuator_cover_height"] - params["shell_height"],
-        taper=params.get("actuator_cover_taper"),
+    if len(d) != len(h):
+        raise ValueError(
+            f"Parameters '{d_param_name}' and 'shell_top_cover_height' must have the same number of elements"
+        )
+
+    if len(r) > len(h):
+        raise ValueError(
+            f"Parameter 'shell_top_cover_corner_radius' can't have more elements than 'shell_top_cover_height'"
+        )
+
+    if len(h) == 1:
+        h.insert(0, params["shell_height"])
+        d.insert(0, d[0])
+
+    p = list(map(lambda v: V2(v[0] / 2, v[1]), zip(d, h)))
+
+    cover = make_rounded_corner_shape(workplane, p, r)
+
+    return cover
+
+
+def _make_shell_top_cover_round(body, params):
+    if params.get("shell_top_cover_diameter") is None:
+        raise ValueError(f"Parameter 'shell_top_cover_diameter' must be set")
+
+    h = as_list(params["shell_top_cover_height"])
+
+    if min(h) < params["shell_height"]:
+        hole_d = max(as_list(params["shell_top_cover_diameter"]))
+        hole_h = params["shell_thickness"]
+        hole_z = params["shell_height"] - hole_h / 2
+        hole = cq.Workplane("XY", origin=(0, 0, hole_z))
+        hole = hole.cylinder(hole_h, hole_d / 2)
+        body = body.cut(hole)
+
+    cover = _make_shell_top_cover_shape(
+        cq.Workplane("XZ"), params, "shell_top_cover_diameter"
+    )
+    cover = cover.revolve()
+    body = body.union(cover)
+
+    return body
+
+
+def _make_shell_top_cover_rectangle(body, params):
+    w = params.get("shell_top_cover_width")
+    l = params.get("shell_top_cover_length")
+
+    if w is None and l is None:
+        raise ValueError(
+            f"Parameters 'shell_top_cover_width' and/or 'shell_top_cover_length' must be provided"
+        )
+
+    if l is None:
+        l = w
+        w_shape = _make_shell_top_cover_shape(
+            cq.Workplane("XZ"), params, "shell_top_cover_width"
+        )
+        l_shape = _make_shell_top_cover_shape(
+            cq.Workplane("YZ"), params, "shell_top_cover_width"
+        )
+    elif w is None:
+        w = l
+        w_shape = _make_shell_top_cover_shape(
+            cq.Workplane("XZ"), params, "shell_top_cover_length"
+        )
+        l_shape = _make_shell_top_cover_shape(
+            cq.Workplane("YZ"), params, "shell_top_cover_length"
+        )
+    else:
+        w_shape = _make_shell_top_cover_shape(
+            cq.Workplane("XZ"), params, "shell_top_cover_width"
+        )
+        l_shape = _make_shell_top_cover_shape(
+            cq.Workplane("YZ"), params, "shell_top_cover_length"
+        )
+
+    w_shape = w_shape.extrude(-max(l) / 2)
+    l_shape = l_shape.extrude(max(w) / 2)
+    cover = w_shape.intersect(l_shape)
+
+    if params.get("shell_top_cover_diameter", 0):
+        circle = _make_shell_top_cover_shape(
+            cq.Workplane("XZ"), params, "shell_top_cover_diameter"
+        )
+        circle = circle.revolve()
+        cover = cover.intersect(circle)
+
+    cover = cover.union(cover.mirror("XZ"))
+    cover = cover.union(cover.mirror("YZ"))
+    cover = make_chamfer(
+        cover,
+        "(not (|X or |Y)) and (not (<Z or >Z))",
+        params.get("shell_top_cover_vertical_corner_chamfer", 0),
     )
 
-    if corner_chamfer:
-        body = body.edges("not(<Z or >Z)")
-        body = body.chamfer(*corner_chamfer)
+    body = body.union(cover)
 
     return body
 
 
-def _make_shell_top_actuator_hole(shell_body, params):
+def _make_shell_top_cover(body, params):
+    cover_type = params.get("shell_top_cover_type")
+
+    if cover_type == "round":
+        body = _make_shell_top_cover_round(body, params)
+    elif cover_type == "rectangle":
+        body = _make_shell_top_cover_rectangle(body, params)
+    elif cover_type:
+        raise ValueError(f"Unknown shell_top_cover_type: {cover_type}")
+
+    return body
+
+
+def _get_shell_top_hole_bot_top(params):
+    top = params["shell_height"]
+    bot = params["shell_height"] - params["shell_thickness"]
+
+    cover_height = params.get("shell_top_cover_height")
+    if cover_height is not None:
+        cover_height = max(as_list(cover_height))
+        top = max(top, cover_height)
+
+    return bot, top
+
+
+def _make_shell_top_round_actuator_hole(body, params):
+    bot, top = _get_shell_top_hole_bot_top(params)
+    h = top - bot
+    d = params["actuator_shell_hole_diameter"]
+
+    hole = cq.Workplane("XY", origin=(0, 0, bot + h / 2))
+    hole = hole.cylinder(h, d / 2)
+    body = body.cut(hole)
+
+    return body
+
+
+def _make_shell_top_obround_actuator_hole(body, params):
+    bot, top = _get_shell_top_hole_bot_top(params)
+    h = top - bot
+    w = params["actuator_shell_hole_width"]
+    l = params["actuator_shell_hole_length"]
+
+    if l < w:
+        d = l
+        rect_w = w - d
+        rect_l = l
+        cylinder_x = rect_w / 2
+        cylinder_y = 0
+    else:
+        d = l
+        rect_w = w
+        rect_l = l - d
+        cylinder_x = 0
+        cylinder_y = rect_l / 2
+
+    box = cq.Workplane("XY", origin=(0, 0, bot + h / 2))
+    box = box.box(rect_w, rect_l, h)
+    cylinder = cq.Workplane("XY", origin=(cylinder_x, cylinder_y, bot + h / 2))
+    cylinder = cylinder.cylinder(h, d / 2)
+    cylinders = cylinder.union(cylinder.translate((-rect_w, 0, 0)))
+    hole = box.union(cylinders)
+
+    body = body.cut(hole)
+
+    return body
+
+
+def _make_shell_top_rectangle_actuator_hole(body, params):
+    bot, top = _get_shell_top_hole_bot_top(params)
+    h = top - bot
+
+    hole = cq.Workplane("XY", origin=(0, 0, bot + h / 2))
+
+    if params.get("actuator_round_bottom_height") is not None:
+        d = params["actuator_shell_hole_diameter"]
+        hole = hole.cylinder(h, d / 2)
+    else:
+        w = params["actuator_shell_hole_width"]
+        l = params.get("actuator_shell_hole_length", w)
+        hole = hole.box(w, l, h)
+        hole = make_chamfer(
+            hole, "|Z", params.get("actuator_shell_hole_corner_chamfer")
+        )
+        hole = make_fillet(hole, "|Z", params.get("actuator_shell_hole_corner_fillet"))
+
+    body = body.cut(hole)
+
+    return body
+
+
+def _make_shell_top_rectangle_round_actuator_hole(body, params):
+    bot, top = _get_shell_top_hole_bot_top(params)
+    h = top - bot
+    w = params["actuator_shell_hole_width"]
+    l = params["actuator_shell_hole_length"]
+    d = params["actuator_shell_hole_diameter"]
+
+    hole = cq.Workplane("XY", origin=(0, 0, bot + h / 2))
+    hole_box = hole.box(w, l, h)
+    hole_cylinder = hole.cylinder(h, d / 2)
+    hole = hole_box.union(hole_cylinder)
+
+    hole = make_chamfer(
+        hole,
+        "|Z and (<X or >X or <Y or >Y)",
+        params.get("actuator_shell_hole_corner_chamfer"),
+    )
+    hole = make_fillet(
+        hole,
+        "|Z and (<X or >X or <Y or >Y)",
+        params.get("actuator_shell_hole_corner_fillet"),
+    )
+
+    body = body.cut(hole)
+
+    return body
+
+
+def _make_shell_top_hex_actuator_hole(body, params):
+    bot, top = _get_shell_top_hole_bot_top(params)
+    h = top - bot
+    w = params["actuator_shell_hole_width"]
+    m = params["actuator_shell_hole_mid_length"]
+    s = params["actuator_shell_hole_side_length"]
+
+    hole = cq.Workplane("XY", origin=(0, 0, bot))
+    hole = hole.move(0, m / 2)
+    hole = hole.lineTo(w / 2, s / 2)
+    hole = hole.lineTo(w / 2, -s / 2)
+    hole = hole.lineTo(0, -m / 2)
+    hole = hole.close()
+
+    hole = hole.extrude(h)
+    hole = hole.union(hole.mirror("YZ"))
+
+    hole = make_chamfer(hole, "|Z", params.get("actuator_shell_hole_corner_chamfer"))
+    hole = make_fillet(hole, "|Z", params.get("actuator_shell_hole_corner_fillet"))
+
+    body = body.cut(hole)
+
+    return body
+
+
+def _make_shell_top_actuator_hole(body, params):
     actuator_type = params["actuator_type"]
+
     if actuator_type == "top-round":
-        return _make_shell_top_round_actuator_hole(shell_body, params)
+        body = _make_shell_top_round_actuator_hole(body, params)
     elif actuator_type == "top-obround":
-        return _make_shell_top_obround_actuator_hole(shell_body, params)
+        body = _make_shell_top_obround_actuator_hole(body, params)
     elif actuator_type == "top-rectangle":
-        return _make_shell_top_rectangle_actuator_hole(shell_body, params)
+        body = _make_shell_top_rectangle_actuator_hole(body, params)
     elif actuator_type == "top-rectangle-round":
-        return _make_shell_top_rectangle_round_actuator_hole(shell_body, params)
+        body = _make_shell_top_rectangle_round_actuator_hole(body, params)
     elif actuator_type == "top-hex":
-        return _make_shell_top_hex_actuator_hole(shell_body, params)
+        body = _make_shell_top_hex_actuator_hole(body, params)
     elif actuator_type == "side-rectangle":
-        return shell_body
+        body = body
     else:
         raise ValueError(f"Unknown actuator type: {actuator_type}")
 
+    return body
+
 
 def _make_shell_straight_pin(params, gnd_pin_index, gnd_pin_params):
+    pt = params["shell_thickness"]
+
     gnd_pin_params = gnd_pin_params[1:]
     direction = gnd_pin_params.pop(0) % 360
     px = gnd_pin_params.pop(0)
     py = gnd_pin_params.pop(0)
-    bottom_height = gnd_pin_params.pop(0)
+    bot = gnd_pin_params.pop(0)
     w = gnd_pin_params.pop(0)
 
-    top_height = params["shell_height"] - params["shell_thickness"]
+    top_height = params["shell_height"] - pt
     bridge_width = w
 
     tip_chamfer = None
     tip_fillet = None
     top_width = None
     mid_top_height = None
-    mid_bottom_height = None
+    mid_bot = None
 
     while gnd_pin_params:
         param_name = gnd_pin_params.pop(0)
@@ -232,13 +452,13 @@ def _make_shell_straight_pin(params, gnd_pin_index, gnd_pin_params):
         elif param_name == "mid_top_height":
             mid_top_height = param_value
         elif param_name == "mid_bottom_height":
-            mid_bottom_height = param_value
+            mid_bot = param_value
         else:
             raise ValueError(
                 f"gnd_pin {gnd_pin_index}: Unknown extra parameter: {param_name}"
             )
 
-    if top_width is not None and None in [mid_top_height, mid_bottom_height]:
+    if top_width is not None and None in [mid_top_height, mid_bot]:
         raise ValueError(
             f"gnd_pin {gnd_pin_index}: The 'top_width' parameter also needs 'mid_top_height' and 'mid_bottom_height' parameters"
         )
@@ -265,29 +485,30 @@ def _make_shell_straight_pin(params, gnd_pin_index, gnd_pin_params):
         )
 
     body = cq.Workplane("YZ")
-    body = body.moveTo(w / -2, bottom_height)
+    body = body.moveTo(w / -2, bot)
     if top_width is not None:
-        body = body.lineTo(w / -2, mid_bottom_height)
+        body = body.lineTo(w / -2, mid_bot)
         body = body.lineTo(top_width / -2, mid_top_height)
         body = body.lineTo(top_width / -2, top_height)
         body = body.lineTo(top_width / 2, top_height)
         body = body.lineTo(top_width / 2, mid_top_height)
-        body = body.lineTo(w / 2, mid_bottom_height)
+        body = body.lineTo(w / 2, mid_bot)
     else:
         body = body.lineTo(w / -2, top_height)
         body = body.lineTo(w / 2, top_height)
-    body = body.lineTo(w / 2, bottom_height)
+    body = body.lineTo(w / 2, bot)
     body = body.close()
 
-    body = body.extrude(-params["shell_thickness"])
+    body = body.extrude(-pt)
+
+    if tip_chamfer:
+        tip_chamfer_pos = (-pt / 2, 0, bot)
+        body = make_asymmetric_chamfer(body, tip_chamfer, w, pt, tip_chamfer_pos, 90)
+
+    body = make_fillet(body, "<Z and |X", tip_fillet)
 
     body = body.rotate((0, 0, 0), (0, 0, 1), direction)
     body = body.translate((px, py, 0))
-
-    if tip_chamfer:
-        body = body.edges("<Z and |Y").chamfer(tip_chamfer[1], tip_chamfer[0])
-    if tip_fillet:
-        body = body.edges("<Z and |Y").fillet(tip_fillet)
 
     bridge = shellgen._make_shell_side_bridge(
         params, bridge_shell_length, bridge_side_distance, bridge_width, bridge_x
@@ -381,154 +602,90 @@ def _make_shell_gullwing_pin(params, gnd_pin_index, gnd_pin_params):
     return body
 
 
-def _make_gnd_pin(params, gnd_pin_index, gnd_pin_params):
-    pin_type = gnd_pin_params[0]
+def _make_gnd_pins(body, params):
+    gnd_pins = params.get("gnd_pin", [])
+    for gnd_pin_index, gnd_pin_params in enumerate(gnd_pins):
+        pin_type = gnd_pin_params[0]
 
-    if pin_type == "straight":
-        body = _make_shell_straight_pin(params, gnd_pin_index, gnd_pin_params)
-    elif pin_type == "gullwing":
-        body = _make_shell_gullwing_pin(params, gnd_pin_index, gnd_pin_params)
-    else:
-        raise ValueError(f"gnd_pin {gnd_pin_index + 1}: Unknown pin type: {pin_type}")
+        if pin_type == "straight":
+            pin = _make_shell_straight_pin(params, gnd_pin_index, gnd_pin_params)
+        elif pin_type == "gullwing":
+            pin = _make_shell_gullwing_pin(params, gnd_pin_index, gnd_pin_params)
+        else:
+            raise ValueError(
+                f"gnd_pin {gnd_pin_index + 1}: Unknown pin type: {pin_type}"
+            )
 
-    return body
-
-
-def _make_shell_top(params):
-    body = cq.Workplane(
-        "XY", origin=(0, 0, params["shell_height"] - params["shell_thickness"])
-    )
-    body = body.rect(params["shell_width"], params["shell_length"])
-    body = body.extrude(params["shell_thickness"])
-
-    body = make_z_chamfer(body, params.get("shell_corner_chamfer"))
-    body = make_z_fillet(body, params.get("shell_corner_fillet"))
-    body = shellgen.make_shell_top_clip(body, params)
-    body = shellgen.make_shell_top_lips(body, params)
+        body = body.union(pin)
 
     return body
 
 
 def make_shell(params):
     body = _make_shell_top(params)
-
-    actuator_cover_type = params.get("actuator_cover_type")
-    if actuator_cover_type == "round":
-        body = body.union(_make_actuator_cover_round(params))
-    elif actuator_cover_type == "rectangular":
-        body = body.union(_make_actuator_cover_rectangular(params))
-    elif actuator_cover_type:
-        raise ValueError(f"Unknown actuator cover type: {actuator_cover_type}")
-
+    body = _make_shell_top_cover(body, params)
     body = _make_shell_top_actuator_hole(body, params)
     body = shellgen.make_shell_sides(body, params)
-
-    gnd_pins = params.get("gnd_pin", [])
-    for gnd_pin_index, gnd_pin_params in enumerate(gnd_pins):
-        gnd_pin_body = _make_gnd_pin(params, gnd_pin_index, gnd_pin_params)
-        body = body.union(gnd_pin_body)
+    body = _make_gnd_pins(body, params)
 
     return body
 
 
-def make_base(params):
-    if not params.get("base_width") and not params.get("base_height"):
+def make_actuator_base(params):
+    if params.get("actuator_base_height") is None:
         return
 
-    w = params["base_width"]
-    l = params["base_length"]
+    h = params["actuator_base_height"] - params["body_height"]
+    z = params["body_height"] + h / 2
 
-    body = cq.Workplane("XY", origin=(0, 0, params["body_height"]))
-    body = body.rect(w, l)
-    body = body.extrude(params["base_height"] - params["body_height"])
+    body = cq.Workplane("XY", origin=(0, 0, z))
 
-    if params.get("base_corner_chamfer"):
-        body = body.edges("|Z").chamfer(*params["base_corner_chamfer"])
-    if params.get("base_corner_fillet"):
-        body = body.edges("|Z").fillet(params["base_corner_fillet"])
+    d = params.get("actuator_base_diameter")
+    if d is not None:
+        body = body.cylinder(h, d / 2)
+    else:
+        w = params["actuator_base_width"]
+        l = params["actuator_base_length"]
+        body = body.box(w, l, h)
+        body = make_chamfer(body, "|Z", params.get("actuator_base_corner_chamfer"))
+        body = make_fillet(body, "|Z", params.get("actuator_base_corner_fillet"))
 
-    if params.get("base_top_chamfer"):
-        body = body.edges(">Z").chamfer(*params["base_top_chamfer"])
-    if params.get("base_top_fillet"):
-        body = body.edges(">Z").fillet(params["base_top_fillet"])
+    body = make_chamfer(body, ">Z", params.get("actuator_base_top_chamfer"))
+    body = make_fillet(body, ">Z", params.get("actuator_base_top_fillet"))
 
     return body
-
-
-def _make_shell_top_round_actuator_hole(shell_body, params):
-    p = params.copy()
-    if type(p["actuator_height"]) is list:
-        p["actuator_height"] = p["actuator_height"][0]
-    if type(p["actuator_diameter"]) is list:
-        p["actuator_diameter"] = p["actuator_diameter"][0]
-    p["actuator_diameter"] += params["actuator_shell_gap"] * 2
-    p["actuator_zcut"] = None
-    p["actuator_top_chamfer"] = None
-    p["actuator_top_fillet"] = None
-
-    actuator_body = _make_top_round_actuator(p)
-    shell_body = shell_body.cut(actuator_body)
-    return shell_body
 
 
 def _make_top_round_actuator(params):
-    body_height = params["body_height"]
-    shell_bottom = params["shell_height"] - params["shell_thickness"]
-    bot = shell_bottom if shell_bottom < body_height else body_height
+    h = as_list(params["actuator_height"])
+    d = as_list(params["actuator_diameter"])
+    r = as_list(params.get("actuator_corner_radius", 0))
 
-    top_list = params["actuator_height"]
-    if type(top_list) is not list:
-        top_list = [top_list]
-
-    dia_list = params["actuator_diameter"]
-    if type(dia_list) is not list:
-        dia_list = [dia_list]
-
-    if len(top_list) != len(dia_list):
+    if len(d) != len(h):
         raise ValueError(
-            f"Parameters 'actuator_height' and 'actuator_diameter' must have the same amount elements"
+            f"Parameters 'actuator_diameter' and 'actuator_height' must have the same number of elements"
         )
 
+    if len(r) > len(h):
+        raise ValueError(
+            f"Parameter 'actuator_corner_radius' can't have more elements than 'actuator_height'"
+        )
+
+    if len(h) == 1:
+        shell_bot = params["shell_height"] - params["shell_thickness"]
+        bot = min(params["body_height"], shell_bot)
+        h.insert(0, bot)
+        d.insert(0, d[0])
+
+    p = list(map(lambda v: V2(v[0] / 2, v[1]), zip(d, h)))
     body = cq.Workplane("XZ")
-    body = body.moveTo(0, bot)
-    body = body.lineTo(dia_list[0] / 2, bot)
-    for index, dia in enumerate(dia_list):
-        top = top_list[index]
-        body = body.lineTo(dia / 2, top)
-    body = body.lineTo(0, top_list[-1])
-    body = body.close()
+    body = make_rounded_corner_shape(body, p, r)
     body = body.revolve()
 
-    actuator_zcut = params.get("actuator_zcut")
-    if actuator_zcut:
-        zcut_distance = actuator_zcut[0]
-        zcut_direction = actuator_zcut[1]
-
-        r = dia_list[0] / 2
-        zcut = cq.Workplane("XY", origin=(zcut_distance + r, 0, 0))
-        zcut = zcut.rect(r * 2, r * 2)
-        zcut = zcut.extrude(params["actuator_height"])
-        zcut = zcut.rotate((0, 0, 0), (0, 0, 1), 90.0)
-        body = body.cut(zcut)
-
-    if params.get("actuator_top_fillet"):
-        body = body.edges("not <Z").fillet(params["actuator_top_fillet"])
-    if params.get("actuator_top_chamfer"):
-        body = body.edges("not <Z").chamfer(*params["actuator_top_chamfer"])
+    body = make_chamfer(body, ">Z", params.get("actuator_top_chamfer"))
+    body = make_fillet(body, ">Z", params.get("actuator_top_fillet"))
 
     return body
-
-
-def _make_shell_top_obround_actuator_hole(shell_body, params):
-    params = params.copy()
-    params["actuator_width"] += params["actuator_shell_gap"] * 2
-    params["actuator_length"] += params["actuator_shell_gap"] * 2
-    params["actuator_top_chamfer"] = None
-    params["actuator_top_fillet"] = None
-
-    actuator_body = _make_top_obround_actuator(params)
-    shell_body = shell_body.cut(actuator_body)
-    return shell_body
 
 
 def _make_top_obround_actuator(params):
@@ -551,103 +708,51 @@ def _make_top_obround_actuator(params):
     body = body.extrude(params["actuator_height"] - body_h)
     body = body.union(body.mirror("YZ"))
 
-    if params.get("actuator_top_fillet"):
-        body = body.edges(">Z").fillet(params["actuator_top_fillet"])
-    if params.get("actuator_top_chamfer"):
-        body = body.edges(">Z").chamfer(*params["actuator_top_chamfer"])
-
-    return body
-
-
-def _make_shell_top_rectangle_actuator_hole(body, params):
-    params = params.copy()
-
-    if params.get("actuator_round_base_diameter"):
-        params["actuator_round_base_diameter"] += params["actuator_shell_gap"] * 2
-        params["actuator_round_base_chamfer"] = None
-        params["actuator_round_base_fillet"] = None
-
-    w = params["actuator_width"]
-    w = w.copy() if type(w) is list else [w]
-    for i in range(len(w)):
-        w[i] += params["actuator_shell_gap"] * 2
-    params["actuator_width"] = w
-
-    if params.get("actuator_length") is not None:
-        l = params["actuator_length"]
-        l = l.copy() if type(l) is list else [l]
-        for i in range(len(l)):
-            l[i] += params["actuator_shell_gap"] * 2
-        params["actuator_length"] = l
-
-    params["actuator_chamfer"] = None
-    params["actuator_fillet"] = None
-
-    actuator = _make_top_rectangle_actuator(params)
-    body = body.cut(actuator)
+    body = make_chamfer(body, ">Z", params.get("actuator_top_chamfer"))
+    body = make_fillet(body, ">Z", params.get("actuator_top_fillet"))
 
     return body
 
 
 def _make_top_rectangle_actuator(params):
-    h = params["actuator_height"]
-    h = h.copy() if type(h) is list else [h]
+    shell_bot = params["shell_height"] - params["shell_thickness"]
+    bot = min(params["body_height"], shell_bot)
 
-    if len(h) == 0:
-        raise ValueError(f"Parameter 'actuator_height' must have at least one element")
+    h = as_list(params["actuator_height"]).copy()
+    w = as_list(params["actuator_width"]).copy()
+    l = as_list(params.get("actuator_length", w)).copy()
 
-    w = params["actuator_width"]
-    w = w.copy() if type(w) is list else [w]
-
-    l = params.get("actuator_length", w)
-    l = l.copy() if type(l) is list else [l]
-
-    if len(w) == 0:
-        raise ValueError(f"Parameter 'actuator_width' must have at least one element")
-
-    if len(l) != len(w):
+    if len(w) != len(h):
         raise ValueError(
-            f"Parameters 'actuator_length' and 'actuator_width' must have the same amount elements"
+            f"Parameters 'actuator_width' and 'actuator_height' must have the same number of elements"
         )
 
-    if len(w) == 1:
-        w.append(w[0])
-        l.append(l[0])
-    if len(w) != len(h) + 1:
+    if len(l) != len(h):
         raise ValueError(
-            f"When 'actuator_width' is more than one element, then it must be exactly one element more than 'actuator_height'"
+            f"Parameters 'actuator_length' and 'actuator_height' must have the same number of elements"
         )
 
-    bot = params["body_height"]
-    shell_bottom_h = params["shell_height"] - params["shell_thickness"]
-    if bot > shell_bottom_h:
-        bot = shell_bottom_h
-    h.insert(0, bot)
+    if len(h) == 1:
+        h.insert(0, bot)
+        w.insert(0, w[0])
+        l.insert(0, l[0])
 
-    chamfers = params.get("actuator_chamfer", [])
-    if type(chamfers) is not list:
-        chamfers = [chamfers]
+    chamfers = as_list(params.get("actuator_chamfer", []))
+    fillets = as_list(params.get("actuator_fillet", []))
 
-    fillets = params.get("actuator_fillet", [])
-    if type(fillets) is not list:
-        fillets = [fillets]
+    if params.get("actuator_round_bottom_height") is not None:
+        base_h = params["actuator_round_bottom_height"] - bot
+        base_d = params["actuator_round_bottom_diameter"]
 
-    body = None
+        base = cq.Workplane("XY", origin=(0, 0, bot + base_h / 2))
+        base = base.cylinder(base_h, base_d / 2)
 
-    if params.get("actuator_round_base_height") is not None:
-        base_h = params["actuator_round_base_height"]
-        base_r = params["actuator_round_base_diameter"] / 2
-
-        base = cq.Workplane("XY", origin=(0, 0, h[0]))
-        base = base.circle(base_r)
-        base = base.extrude(base_h - h[0])
-
-        if params.get("actuator_round_base_fillet"):
-            base = base.edges(">Z").fillet(params["actuator_round_base_fillet"])
-        if params.get("actuator_round_base_chamfer"):
-            base = base.edges(">Z").chamfer(*params["actuator_round_base_chamfer"])
+        base = make_chamfer(base, ">Z", params.get("actuator_round_bottom_chamfer"))
+        base = make_fillet(base, ">Z", params.get("actuator_round_bottom_fillet"))
 
         body = base
+    else:
+        body = None
 
     def _make_edges(func_name, part, edges_list, edges_index):
         jobs = {"b": 0, "m": 0, "t": 0}
@@ -706,29 +811,14 @@ def _make_top_rectangle_actuator(params):
         hole = hole.extrude(-params["actuator_top_hole_depth"])
 
         body = body.cut(hole)
-        if params.get("actuator_top_hole_chamfer"):
-            body = body.edges("%CIRCLE and >Z").chamfer(
-                *params["actuator_top_hole_chamfer"]
-            )
-        if params.get("actuator_top_hole_fillet"):
-            body = body.edges("%CIRCLE and >Z").fillet(
-                params["actuator_top_hole_fillet"]
-            )
+        body = make_chamfer(
+            body, "%CIRCLE and >Z", params.get("actuator_top_hole_chamfer")
+        )
+        body = make_fillet(
+            body, "%CIRCLE and >Z", params.get("actuator_top_hole_fillet")
+        )
 
     return body
-
-
-def _make_shell_top_rectangle_round_actuator_hole(shell_body, params):
-    params = params.copy()
-    params["actuator_width"] += params["actuator_shell_gap"] * 2
-    params["actuator_length"] += params["actuator_shell_gap"] * 2
-    params["actuator_diameter"] += params["actuator_shell_gap"] * 2
-    params["actuator_top_chamfer"] = None
-    params["actuator_top_fillet"] = None
-
-    actuator_body = _make_top_rectangle_round_actuator(params)
-    shell_body = shell_body.cut(actuator_body)
-    return shell_body
 
 
 def _make_top_rectangle_round_actuator(params):
@@ -745,10 +835,8 @@ def _make_top_rectangle_round_actuator(params):
     rect = rect.rect(w, l)
     rect = rect.extrude(params["actuator_height"] - body_h)
 
-    if params.get("actuator_corner_fillet"):
-        rect = rect.edges("|Z").fillet(params["actuator_corner_fillet"])
-    if params.get("actuator_corner_chamfer"):
-        rect = rect.edges("|Z").chamfer(*params["actuator_corner_chamfer"])
+    rect = make_chamfer(rect, "|Z", params.get("actuator_corner_chamfer"))
+    rect = make_fillet(rect, "|Z", params.get("actuator_corner_fillet"))
 
     circ = cq.Workplane("XY", origin=(0, 0, body_h))
     circ = circ.circle(r)
@@ -756,25 +844,10 @@ def _make_top_rectangle_round_actuator(params):
 
     body = rect.union(circ)
 
-    if params.get("actuator_top_fillet"):
-        body = body.edges(">Z").fillet(params["actuator_top_fillet"])
-    if params.get("actuator_top_chamfer"):
-        body = body.edges(">Z").chamfer(*params["actuator_top_chamfer"])
+    body = make_chamfer(body, ">Z", params.get("actuator_top_chamfer"))
+    body = make_fillet(body, ">Z", params.get("actuator_top_fillet"))
 
     return body
-
-
-def _make_shell_top_hex_actuator_hole(shell_body, params):
-    params = params.copy()
-    params["actuator_width"] += params["actuator_shell_gap"] * 2
-    params["actuator_mid_length"] += params["actuator_shell_gap"] * 2
-    params["actuator_side_length"] += params["actuator_shell_gap"] * 2
-    params["actuator_top_chamfer"] = None
-    params["actuator_top_fillet"] = None
-
-    actuator_body = _make_top_hex_actuator(params)
-    shell_body = shell_body.cut(actuator_body)
-    return shell_body
 
 
 def _make_top_hex_actuator(params):
@@ -783,28 +856,25 @@ def _make_top_hex_actuator(params):
     if shell_bottom_h < body_h:
         body_h = shell_bottom_h
 
-    width = params["actuator_width"]
-    mid_length = params["actuator_mid_length"]
-    side_length = params["actuator_side_length"]
+    w = params["actuator_width"]
+    m = params["actuator_mid_length"]
+    s = params["actuator_side_length"]
 
     body = cq.Workplane("XY", origin=(0, 0, body_h))
-    body = body.move(0, mid_length / 2)
-    body = body.lineTo(width / 2, side_length / 2)
-    body = body.lineTo(width / 2, -side_length / 2)
-    body = body.lineTo(0, -mid_length / 2)
+    body = body.move(0, m / 2)
+    body = body.lineTo(w / 2, s / 2)
+    body = body.lineTo(w / 2, -s / 2)
+    body = body.lineTo(0, -m / 2)
     body = body.close()
 
     body = body.extrude(params["actuator_height"] - body_h)
     body = body.union(body.mirror("YZ"))
 
-    corner_fillet = params.get("actuator_corner_fillet")
-    if corner_fillet:
-        body = body.edges("|Z").fillet(corner_fillet)
+    body = make_chamfer(body, "|Z", params.get("actuator_corner_chamfer"))
+    body = make_fillet(body, "|Z", params.get("actuator_corner_fillet"))
 
-    if params.get("actuator_top_fillet"):
-        body = body.edges(">Z").fillet(params["actuator_top_fillet"])
-    if params.get("actuator_top_chamfer"):
-        body = body.edges(">Z").chamfer(*params["actuator_top_chamfer"])
+    body = make_chamfer(body, ">Z", params.get("actuator_top_chamfer"))
+    body = make_fillet(body, ">Z", params.get("actuator_top_fillet"))
 
     return body
 
@@ -819,10 +889,6 @@ def _make_side_rectangle_actuator(params):
     head_h = head_top_h - head_bot_h
     head_dist = params["actuator_distance"]
     head_start_dist = head_dist - head_t
-    head_corner_fillet = params.get("actuator_corner_fillet")
-    head_corner_chamfer = params.get("actuator_corner_chamfer")
-    head_bottom_fillet = params.get("actuator_bottom_fillet")
-    head_bottom_chamfer = params.get("actuator_bottom_chamfer")
 
     neck_w = params["actuator_neck_width"]
     neck_top_h = params["actuator_neck_top_height"]
@@ -838,21 +904,24 @@ def _make_side_rectangle_actuator(params):
         raise ValueError(f"Side actuator direction can only in steps of 90 degrees")
     neck_l = head_start_dist - neck_start_dist
 
-    head = cq.Workplane("YZ", origin=(head_start_dist, 0, head_bot_h + head_h / 2))
-    head = head.rect(head_w, head_h)
-    head = head.extrude(head_t)
+    corner_chamfer = params.get("actuator_corner_chamfer")
 
-    if head_corner_chamfer:
-        head = head.edges(">X and |Z").chamfer(
-            head_corner_chamfer[1], head_corner_chamfer[0]
-        )
-    if head_corner_fillet:
-        head = head.edges(">X and |Z").fillet(head_corner_fillet)
+    head = cq.Workplane("XY", origin=(head_start_dist, 0, head_bot_h))
+    head = head.moveTo(0, 0)
+    head = head.lineTo(0, head_w / 2)
+    if corner_chamfer:
+        head = head.lineTo(head_t - corner_chamfer[1], head_w / 2)
+        head = head.lineTo(head_t, head_w / 2 - corner_chamfer[0])
+    else:
+        head = head.lineTo(head_t, head_w / 2)
+    head = head.lineTo(head_t, 0)
+    head = head.close()
+    head = head.extrude(head_h)
+    head = head.union(head.mirror("XZ"))
 
-    if head_bottom_chamfer:
-        head = head.edges(">X and |Z").chamfer(*head_bottom_chamfer)
-    if head_bottom_fillet:
-        head = head.edges("<Z and >X").fillet(head_bottom_fillet)
+    head = make_fillet(head, ">X and |Z", params.get("actuator_corner_fillet"))
+    head = make_chamfer(head, "<Z and >X", params.get("actuator_bottom_chamfer"))
+    head = make_fillet(head, "<Z and >X", params.get("actuator_bottom_fillet"))
 
     neck = cq.Workplane("YZ", origin=(neck_start_dist, 0, neck_bot_h + neck_h / 2))
     neck = neck.rect(neck_w, neck_h)
@@ -888,6 +957,10 @@ def make_actuator(params):
         body = _make_side_rectangle_actuator(params)
     else:
         raise ValueError(f"Unknown actuator type: {actuator_type}")
+
+    body = features.make_features(
+        body, params.get("actuator_features", []), "actuator_features"
+    )
 
     return body
 

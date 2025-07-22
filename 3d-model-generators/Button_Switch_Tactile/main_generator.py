@@ -93,12 +93,12 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
         actuator_color = shaderColors.named_colors[
             all_params[model]["actuator_color_key"]
         ].getDiffuseFloat()
-        if all_params[model].get("base_color_key"):
-            base_color = shaderColors.named_colors[
-                all_params[model]["base_color_key"]
+        if all_params[model].get("actuator_base_color_key"):
+            actuator_base_color = shaderColors.named_colors[
+                all_params[model]["actuator_base_color_key"]
             ].getDiffuseFloat()
         else:
-            base_color = None
+            actuator_base_color = None
         pins_color = shaderColors.named_colors[
             all_params[model]["pins_color_key"]
         ].getDiffuseFloat()
@@ -114,7 +114,7 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
         shell = cqm.make_shell(all_params[model])
         pins = cqm.make_pins(all_params[model])
         actuator = cqm.make_actuator(all_params[model])
-        base = cqm.make_base(all_params[model])
+        actuator_base = cqm.make_actuator_base(all_params[model])
 
         if all_params[model].get("rotation"):
             body = body.rotate((0, 0, 0), (0, 0, 1), all_params[model]["rotation"])
@@ -123,16 +123,20 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
             actuator = actuator.rotate(
                 (0, 0, 0), (0, 0, 1), all_params[model]["rotation"]
             )
-            if base:
-                base = base.rotate((0, 0, 0), (0, 0, 1), all_params[model]["rotation"])
+            if actuator_base:
+                actuator_base = actuator_base.rotate(
+                    (0, 0, 0), (0, 0, 1), all_params[model]["rotation"]
+                )
 
         if all_params[model].get("translation"):
             body = body.translate(all_params[model]["translation"])
             shell = shell.translate(all_params[model]["translation"])
             pins = pins.translate(all_params[model]["translation"])
             actuator = actuator.translate(all_params[model]["translation"])
-            if base:
-                base = base.translate(all_params[model]["translation"])
+            if actuator_base:
+                actuator_base = actuator_base.translate(
+                    all_params[model]["translation"]
+                )
 
         # Wrap the component parts in an assembly so that we can attach colors
         component = cq.Assembly(name=model)
@@ -140,8 +144,10 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
         component.add(shell, color=cq_color_correct.Color(*shell_color))
         component.add(pins, color=cq_color_correct.Color(*pins_color))
         component.add(actuator, color=cq_color_correct.Color(*actuator_color))
-        if base:
-            component.add(base, color=cq_color_correct.Color(*base_color))
+        if actuator_base:
+            component.add(
+                actuator_base, color=cq_color_correct.Color(*actuator_base_color)
+            )
 
         # Create the output directory if it does not exist
         if not os.path.exists(output_dir):
@@ -171,9 +177,9 @@ def make_models(model_to_build=None, output_dir_prefix=None, enable_vrml=True):
                 all_params[model]["actuator_color_key"],
             ]
 
-            if base:
-                meshes.append(base)
-                colors.append(all_params[model]["base_color_key"])
+            if actuator_base:
+                meshes.append(actuator_base)
+                colors.append(all_params[model]["actuator_base_color_key"])
 
             export_VRML(os.path.join(output_dir, model + ".wrl"), meshes, colors)
 
