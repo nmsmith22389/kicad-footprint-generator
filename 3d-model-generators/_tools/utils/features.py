@@ -23,29 +23,34 @@ import cadquery as cq
 def _make_shape_feature(feature):
     shape_type = feature[1]
     pos = feature[2]
-    dim = feature[3]
-    extra = feature[4:]
-
-    shape = cq.Workplane("XY", origin=pos)
 
     if shape_type == "box":
+        dim = feature[3]
+        extra = feature[4:]
+        shape = cq.Workplane("XY", origin=pos)
         shape = shape.box(*dim)
     elif shape_type == "cylinder":
-        r = dim[0] / 2
-        h = dim[1]
+        plane = feature[3]
+        h = feature[4]
+        r = feature[5] / 2
+        extra = feature[6:]
+        shape = cq.Workplane(plane, origin=pos)
         shape = shape.cylinder(h, r)
     elif shape_type == "poly":
-        dim = dim.copy()
-        h = dim.pop(0)
-        x = dim.pop(0)
-        y = dim.pop(0)
+        plane = feature[3]
+        depth = feature[4]
+        coords = feature[5].copy()
+        extra = feature[6:]
+        shape = cq.Workplane(plane, origin=pos)
+        x = coords.pop(0)
+        y = coords.pop(0)
         shape = shape.moveTo(x, y)
-        while dim:
-            x = dim.pop(0)
-            y = dim.pop(0)
+        while coords:
+            x = coords.pop(0)
+            y = coords.pop(0)
             shape = shape.lineTo(x, y)
         shape = shape.close()
-        shape = shape.extrude(h / 2, both=True)
+        shape = shape.extrude(depth / 2, both=True)
     else:
         raise ValueError(
             f"{namespace}[{feature_index}]: Unrecognized feature shape type: {shape_type}"
@@ -68,6 +73,44 @@ def _make_shape_feature(feature):
 
 
 def make_features(body, features, namespace):
+    """Make a feature.
+
+    Feature types:
+
+    : [add, SHAPE ...] -- adds a shape
+    : [cut, SHAPE ...] -- cuts a shape
+    : [chamfer, EDGES, CHAMFER_SIZE] -- adds a chamfer to specified EDGES
+    : [fillet, EDGES, FILLET_SIZE]   -- adds a fillet to specified EDGES
+
+    Features 'add' and 'cut' can use several shapes, each having their
+    own unique arguments:
+
+    : [add/cut, box,      [X, Y, Z], [WIDTH, LENGTH, HEIGHT]]
+    : [add/cut, cylinder, [X, Y, Z], WORKPLAIN, DEPTH, DIAMETER]
+    : [add/cut, poly,     [X, Y, Z], WORKPLAIN, DEPTH, [COORD_X, COORD_Y, ...]]
+
+    Features 'add' and 'cut' can also have optional arguments:
+
+    : [add/cut, SHAPE ... , chamfer, [EDGES, CHAMFER_SIZE]]
+    : [add/cut, SHAPE ... , fillet,  [EDGES, FILLET_SIZE]]
+
+    == Example: Adding a cylinder ==
+
+    : [add, cylinder, [0, 0, 1.5], XY, 3.0, 2.5, fillet, [">Z", 0.2]]
+
+    This adds a cylindrical shape and has the following specs:
+
+    - Its center is positioned 1.5 mm on the Z axis
+    - Is orientated on the XY workplain
+    - Has depth/height 3.0 mm and diameter 2.5 mm
+    - Has a 0.2 mm fillet on the top
+
+    == Example: Adding a chamfer ==
+
+    : [chamfer, "|Z and >X and >Y", 0.1]
+
+    This adds a chamfer to one of the vertical corners.
+    """
     for feature_index, feature in enumerate(features):
         feature_type = feature[0]
 

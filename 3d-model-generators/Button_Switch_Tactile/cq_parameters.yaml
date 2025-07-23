@@ -240,10 +240,10 @@ SW_TH_Tactile_Omron_B3F-100x: &SW_TH_Tactile_Omron_B3F-100x
   body_height: 3.1
   body_corner_chamfer: 0.2
   body_features: [
-    [add, cylinder, [-2.15, -2.15, 3.5], [1.2, 0.8], fillet, [">Z", 0.2]], # op, type, pos, dim, extra
-    [add, cylinder, [-2.15,  2.15, 3.5], [1.2, 0.8], fillet, [">Z", 0.2]],
-    [add, cylinder, [ 2.15, -2.15, 3.5], [1.2, 0.8], fillet, [">Z", 0.2]],
-    [add, cylinder, [ 2.15,  2.15, 3.5], [1.2, 0.8], fillet, [">Z", 0.2]],
+    [add, cylinder, [-2.15, -2.15, 3.5], XY, 0.8, 1.2, fillet, [">Z", 0.2]], # op, type, pos, dim, extra
+    [add, cylinder, [-2.15,  2.15, 3.5], XY, 0.8, 1.2, fillet, [">Z", 0.2]],
+    [add, cylinder, [ 2.15, -2.15, 3.5], XY, 0.8, 1.2, fillet, [">Z", 0.2]],
+    [add, cylinder, [ 2.15,  2.15, 3.5], XY, 0.8, 1.2, fillet, [">Z", 0.2]],
     [cut, box, [0, 0, 0.2], [6, 1.8, 0.4]],
     [cut, box, [0, -2.15, 0.325], [3.1, 1.7, 0.65]],
     [cut, box, [0,  2.15, 0.325], [3.1, 1.7, 0.65]],
@@ -1449,8 +1449,16 @@ SW_Tactile_Straight_KSA0Axx1LFTR: &SW_Tactile_Straight_KSA0Axx1LFTR
   body_length: 6.26
   body_height: 1.87
   body_features: [
-    [cut, box, [0, 0, 0.22], [4.00, 6.26, 0.44]], # op, type, pos, dim, extra
-    [cut, box, [0, 0, 0.22], [6.65, 4.26, 0.44]],
+    [add, box, [0, -1.025, 1.71], [7.4, 0.95, 0.32]], # op, type, pos, dim, extra
+    [add, box, [0,  1.025, 1.71], [7.4, 0.95, 0.32]],
+    [cut, poly, [0, 0, 0], YZ, 6.65, [2.13,0.00, 2.13,0.09, 1.78,0.44, -2.13,0.44, -2.13,0.00]],
+    [cut, box, [0, 0, 0.22], [4.04, 6.26, 0.44]],
+    [cut, box, [-3.1725, 0, 0.425], [0.305, 6.26, 0.85]],
+    [cut, box, [ 3.1725, 0, 0.425], [0.305, 6.26, 0.85]],
+    [cut, cylinder, [-1.63, -2.045, 0.22], XY, 0.44, 2],
+    [cut, cylinder, [-1.63,  2.045, 0.22], XY, 0.44, 2],
+    [cut, cylinder, [ 1.63, -2.045, 0.22], XY, 0.44, 2],
+    [cut, cylinder, [ 1.63,  2.045, 0.22], XY, 0.44, 2],
   ]
 
   shell_width: 6.4
@@ -1831,20 +1839,20 @@ SW_Push_1P1T_NO_CK_PTS125Sx43SMTR: &SW_Push_1P1T_NO_CK_PTS125Sx43SMTR
   body_features: [
     [cut, box, [0, 0, 3.15], [10.4, 10.4, 0.3], chamfer, ["|Z", 0.65]], # op, type, pos, dim, extra
     [cut, box, [0, 0, 3.15], [12.0, 1.6, 0.3]],
-    [add, cylinder, [-3.9, -3.9, 3.3], [1.5, 0.6], fillet, [">Z", 0.2]],
-    [add, cylinder, [-3.9,  3.9, 3.3], [1.5, 0.6], fillet, [">Z", 0.2]],
-    [add, cylinder, [ 3.9, -3.9, 3.3], [1.5, 0.6], fillet, [">Z", 0.2]],
-    [add, cylinder, [ 3.9,  3.9, 3.3], [1.5, 0.6], fillet, [">Z", 0.2]],
+    [add, cylinder, [-3.9, -3.9, 3.3], XY, 0.6, 1.5, fillet, [">Z", 0.2]],
+    [add, cylinder, [-3.9,  3.9, 3.3], XY, 0.6, 1.5, fillet, [">Z", 0.2]],
+    [add, cylinder, [ 3.9, -3.9, 3.3], XY, 0.6, 1.5, fillet, [">Z", 0.2]],
+    [add, cylinder, [ 3.9,  3.9, 3.3], XY, 0.6, 1.5, fillet, [">Z", 0.2]],
     [cut, box, [0, 0, 0.1], [12, 7, 0.2]],
     [cut, box, [0, 0, 0.1], [7, 12, 0.2]],
     [cut, box, [0, -5.775, 0.1], [12.0, 0.45, 0.2]],
     [cut, box, [0,  5.775, 0.1], [12.0, 0.45, 0.2]],
     [cut, box, [-5.775, 0, 0.1], [0.45, 12.0, 0.2]],
     [cut, box, [ 5.775, 0, 0.1], [0.45, 12.0, 0.2]],
-    [cut, poly, [0, 0, 0.1], [0.2, -6,-6, -4,-6, -6,-4]],
-    [cut, poly, [0, 0, 0.1], [0.2, -6, 6, -4, 6, -6, 4]],
-    [cut, poly, [0, 0, 0.1], [0.2,  6,-6,  4,-6,  6,-4]],
-    [cut, poly, [0, 0, 0.1], [0.2,  6, 6,  4, 6,  6, 4]],
+    [cut, poly, [0, 0, 0.1], XY, 0.2, [-6,-6, -4,-6, -6,-4]],
+    [cut, poly, [0, 0, 0.1], XY, 0.2, [-6, 6, -4, 6, -6, 4]],
+    [cut, poly, [0, 0, 0.1], XY, 0.2, [ 6,-6,  4,-6,  6,-4]],
+    [cut, poly, [0, 0, 0.1], XY, 0.2, [ 6, 6,  4, 6,  6, 4]],
   ]
 
   shell_width: 10
@@ -1915,20 +1923,20 @@ SW_Push_1P1T_NO_CK_PTS125Sx43PSMTR: &SW_Push_1P1T_NO_CK_PTS125Sx43PSMTR
   body_features: [
     [cut, box, [0, 0, 3.15], [10.3, 10.3, 0.3], chamfer, ["|Z", 1]], # op, type, pos, dim, extra
     [cut, box, [0, 0, 3.15], [1.35, 12.0, 0.3]],
-    [add, cylinder, [-3.9, -3.9, 3.3], [1.3, 0.6], fillet, [">Z", 0.2]],
-    [add, cylinder, [-3.9,  3.9, 3.3], [1.3, 0.6], fillet, [">Z", 0.2]],
-    [add, cylinder, [ 3.9, -3.9, 3.3], [1.3, 0.6], fillet, [">Z", 0.2]],
-    [add, cylinder, [ 3.9,  3.9, 3.3], [1.3, 0.6], fillet, [">Z", 0.2]],
+    [add, cylinder, [-3.9, -3.9, 3.3], XY, 0.6, 1.3, fillet, [">Z", 0.2]],
+    [add, cylinder, [-3.9,  3.9, 3.3], XY, 0.6, 1.3, fillet, [">Z", 0.2]],
+    [add, cylinder, [ 3.9, -3.9, 3.3], XY, 0.6, 1.3, fillet, [">Z", 0.2]],
+    [add, cylinder, [ 3.9,  3.9, 3.3], XY, 0.6, 1.3, fillet, [">Z", 0.2]],
     [cut, box, [0, 0, 0.1], [12, 7, 0.2]],
     [cut, box, [0, 0, 0.1], [7, 12, 0.2]],
     [cut, box, [0, -5.775, 0.1], [12.0, 0.45, 0.2]],
     [cut, box, [0,  5.775, 0.1], [12.0, 0.45, 0.2]],
     [cut, box, [-5.775, 0, 0.1], [0.45, 12.0, 0.2]],
     [cut, box, [ 5.775, 0, 0.1], [0.45, 12.0, 0.2]],
-    [cut, poly, [0, 0, 0.1], [0.2, -6,-6, -4,-6, -6,-4]],
-    [cut, poly, [0, 0, 0.1], [0.2, -6, 6, -4, 6, -6, 4]],
-    [cut, poly, [0, 0, 0.1], [0.2,  6,-6,  4,-6,  6,-4]],
-    [cut, poly, [0, 0, 0.1], [0.2,  6, 6,  4, 6,  6, 4]],
+    [cut, poly, [0, 0, 0.1], XY, 0.2, [-6,-6, -4,-6, -6,-4]],
+    [cut, poly, [0, 0, 0.1], XY, 0.2, [-6, 6, -4, 6, -6, 4]],
+    [cut, poly, [0, 0, 0.1], XY, 0.2, [ 6,-6,  4,-6,  6,-4]],
+    [cut, poly, [0, 0, 0.1], XY, 0.2, [ 6, 6,  4, 6,  6, 4]],
   ]
 
   shell_width: 9.7
@@ -1981,10 +1989,10 @@ SW_SPST_PTS645Sx43SMTR92:
   body_height: 3.15
   body_corner_fillet: 0.3
   body_features: [
-    [add, cylinder, [-1.65, -1.65, 3.45], [0.7, 0.6], fillet, [">Z", 0.25]], # op, type, pos, dim, extra
-    [add, cylinder, [-1.65,  1.65, 3.45], [0.7, 0.6], fillet, [">Z", 0.25]],
-    [add, cylinder, [ 1.65, -1.65, 3.45], [0.7, 0.6], fillet, [">Z", 0.25]],
-    [add, cylinder, [ 1.65,  1.65, 3.45], [0.7, 0.6], fillet, [">Z", 0.25]],
+    [add, cylinder, [-1.65, -1.65, 3.45], XY, 0.6, 0.7, fillet, [">Z", 0.25]], # op, type, pos, dim, extra
+    [add, cylinder, [-1.65,  1.65, 3.45], XY, 0.6, 0.7, fillet, [">Z", 0.25]],
+    [add, cylinder, [ 1.65, -1.65, 3.45], XY, 0.6, 0.7, fillet, [">Z", 0.25]],
+    [add, cylinder, [ 1.65,  1.65, 3.45], XY, 0.6, 0.7, fillet, [">Z", 0.25]],
     [cut, box, [0, 0, 0.15], [6.0, 2.5, 0.3]],
     [cut, box, [0, 0, 0.15], [2.5, 6.0, 0.3]],
   ]
@@ -2036,10 +2044,9 @@ SW_SPST_PTS810:
   body_height: 1.8
   body_corner_fillet: 0.2
   body_features: [
-    [ # op, type, pos, dim, extra
-      cut, poly, [0, 0, 1.6],
+    [ # op, type, pos, plane, depth, coords, extra
+      cut, poly, [0, 0, 1.6], XY, 0.4,
       [
-         0.4,
         -2.1, -0.4,
         -0.9, -1.6,
          0.9, -1.6,
@@ -2248,10 +2255,10 @@ SW_Push_1P1T_NO_E-Switch_TL3301NxxxxxG:
   body_height: 3.3
   body_corner_fillet: 0.2
   body_features: [
-    [add, cylinder, [-2.2, -2.2, 3.65], [0.75, 0.7], fillet, [">Z", 0.35]], # op, type, pos, dim, extra
-    [add, cylinder, [-2.2,  2.2, 3.65], [0.75, 0.7], fillet, [">Z", 0.35]],
-    [add, cylinder, [ 2.2, -2.2, 3.65], [0.75, 0.7], fillet, [">Z", 0.35]],
-    [add, cylinder, [ 2.2,  2.2, 3.65], [0.75, 0.7], fillet, [">Z", 0.35]],
+    [add, cylinder, [-2.2, -2.2, 3.65], XY, 0.7, 0.75, fillet, [">Z", 0.35]], # op, type, pos, dim, extra
+    [add, cylinder, [-2.2,  2.2, 3.65], XY, 0.7, 0.75, fillet, [">Z", 0.35]],
+    [add, cylinder, [ 2.2, -2.2, 3.65], XY, 0.7, 0.75, fillet, [">Z", 0.35]],
+    [add, cylinder, [ 2.2,  2.2, 3.65], XY, 0.7, 0.75, fillet, [">Z", 0.35]],
     [cut, box, [0, 0, 0.2], [2.7, 6.0, 0.4]],
     [cut, box, [-2.75, -2.25, 0.2], [0.5, 1.5, 0.4]],
     [cut, box, [-2.75,  2.25, 0.2], [0.5, 1.5, 0.4]],
@@ -2303,10 +2310,10 @@ SW_SPST_TL3305A: &SW_SPST_TL3305A
   body_height: 2.7
   body_corner_fillet: 0.4
   body_features: [
-    [add, cylinder, [-1.55, -1.55, 3.05], [0.65, 0.7], fillet, [">Z", 0.3]], # op, type, pos, dim, extra
-    [add, cylinder, [-1.55,  1.55, 3.05], [0.65, 0.7], fillet, [">Z", 0.3]], # op, type, pos, dim, extra
-    [add, cylinder, [ 1.55, -1.55, 3.05], [0.65, 0.7], fillet, [">Z", 0.3]], # op, type, pos, dim, extra
-    [add, cylinder, [ 1.55,  1.55, 3.05], [0.65, 0.7], fillet, [">Z", 0.3]], # op, type, pos, dim, extra
+    [add, cylinder, [-1.55, -1.55, 3.05], XY, 0.7, 0.65, fillet, [">Z", 0.3]], # op, type, pos, dim, extra
+    [add, cylinder, [-1.55,  1.55, 3.05], XY, 0.7, 0.65, fillet, [">Z", 0.3]], # op, type, pos, dim, extra
+    [add, cylinder, [ 1.55, -1.55, 3.05], XY, 0.7, 0.65, fillet, [">Z", 0.3]], # op, type, pos, dim, extra
+    [add, cylinder, [ 1.55,  1.55, 3.05], XY, 0.7, 0.65, fillet, [">Z", 0.3]], # op, type, pos, dim, extra
     [cut, box, [0,  0, 0.15], [4.5, 1.2, 0.3]],
     [cut, box, [0, -2, 0.15], [2.4, 0.5, 0.3]],
     [cut, box, [0,  2, 0.15], [2.4, 0.5, 0.3]],
@@ -2372,10 +2379,10 @@ SW_PUSH-12mm_Wuerth-430476085716:
   body_features: [
     [cut, box, [0, 0, 3.425], [11, 11, 0.15], fillet, ["|Z", 0.5]], # op, type, pos, dim, extra
     [cut, box, [0, 0, 3.425], [1.6, 12, 0.15]],
-    [add, cylinder, [-4.25, -4.25, 3.75], [1.3, 0.5], fillet, [">Z", 0.4]],
-    [add, cylinder, [-4.25,  4.25, 3.75], [1.3, 0.5], fillet, [">Z", 0.4]],
-    [add, cylinder, [ 4.25, -4.25, 3.75], [1.3, 0.5], fillet, [">Z", 0.4]],
-    [add, cylinder, [ 4.25,  4.25, 3.75], [1.3, 0.5], fillet, [">Z", 0.4]],
+    [add, cylinder, [-4.25, -4.25, 3.75], XY, 0.5, 1.3, fillet, [">Z", 0.4]],
+    [add, cylinder, [-4.25,  4.25, 3.75], XY, 0.5, 1.3, fillet, [">Z", 0.4]],
+    [add, cylinder, [ 4.25, -4.25, 3.75], XY, 0.5, 1.3, fillet, [">Z", 0.4]],
+    [add, cylinder, [ 4.25,  4.25, 3.75], XY, 0.5, 1.3, fillet, [">Z", 0.4]],
     [cut, box, [0, 0, 0.05], [12, 12, 0.1]],
     [add, box, [-4.25, -4.25, 0.05], [3.5, 3.5, 0.1], fillet, ["|Z and ((<X and <Y) or (>X and >Y))", 1]],
     [add, box, [-4.25,  4.25, 0.05], [3.5, 3.5, 0.1], fillet, ["|Z and ((<X and >Y) or (>X and <Y))", 1]],
