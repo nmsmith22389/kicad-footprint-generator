@@ -2172,7 +2172,7 @@ SW_SPST_SKQG_WithStem:
   actuator_type: top-round
   actuator_height: 1.5
   actuator_diameter: 2.0
-  actuator_shell_hole_diameter: 2.4
+  actuator_shell_hole_diameter: 2.2
   actuator_top_fillet: 0.25
 
   actuator_color_key: metal silver
