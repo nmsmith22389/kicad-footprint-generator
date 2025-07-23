@@ -2110,3 +2110,32 @@ ucBGA-64_4x4mm_Layout8x8_P0.4mm:
   body_color_key: "black body"
   pins_color_key: "metal grey pins"
   marking_color_key: "light brown label"
+
+csBGA-64_5x5mm_Layout8x8_P0.5mm:
+  #from https://www.latticesemi.com/view_document?document_id=213
+  fp_r: 0.4
+  fp_d: 0.08
+  fp_z: 0.01
+  ef: 0.0
+  cff: null
+  cf: null
+  D: 5.0
+  E: 5.0
+  D1: null
+  E1: null
+  A1: 0.15
+  A2: null
+  A: 1.1
+  b: 0.3
+  e: 0.5
+  ex: null
+  sp: 0.0
+  npx: 8
+  npy: 8
+  excluded_pins: null
+  molded: null
+  rotation: -90
+  body_bot_color_key: "dark green body"
+  body_color_key: "black body"
+  pins_color_key: "metal grey pins"
+  marking_color_key: "light brown label"

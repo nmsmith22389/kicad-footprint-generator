@@ -1131,6 +1131,18 @@ ucBGA-64_4x4mm_Layout8x8_P0.4mm:
   paste_margin: -0.04
   layout_x: 8
   layout_y: 8
+csBGA-64_5x5mm_Layout8x8_P0.5mm:
+  device_type: "csBGA"
+  description: "csBGA-64"
+  size_source: "https://www.latticesemi.com/view_document?document_id=213"
+  body_size_x: 5
+  body_size_y: 5
+  pitch: 0.5
+  pad_diameter: 0.35
+  mask_margin: -0.05
+  paste_margin: -0.05
+  layout_x: 8
+  layout_y: 8
 ST_UFBGA-59_5x5mm_Layout8x8_P0.5mm:
   device_type: "UFBGA"
   manufacturer: "ST"
