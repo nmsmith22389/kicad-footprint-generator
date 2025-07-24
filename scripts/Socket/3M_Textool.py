@@ -20,12 +20,12 @@ def textool(args):
     maxWidth = args["max"]
     lib_name = "Socket"
 
-    widths = "_W" + str(minWidth)
+    widths = "_W" + str(minWidth) + "mm"
     for i in range(0, 15):
         w = i * 2.54
         if w > minWidth and w < maxWidth:
-            widths = widths + "_W" + str(w)
-    widths = widths + "_W" + str(maxWidth)
+            widths = widths + "_W" + str(w) + "mm"
+    widths = widths + "_W" + str(maxWidth) + "mm"
 
     footprint_name = "DIP_Socket-" + str(nPads) + widths + "_3M_" + name
 
