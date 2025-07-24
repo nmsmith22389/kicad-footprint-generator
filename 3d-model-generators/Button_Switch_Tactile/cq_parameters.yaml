@@ -42,6 +42,9 @@
 #   shell_top_cover_diameter:      (optional) intersecting circle diameter (accepts list)
 #   shell_top_cover_corner_radius: (optional) horizontal corner radius (accepts list)
 #   shell_top_cover_vertical_corner_chamfer: (optional) corners chamfer
+#   shell_top_cover_vertical_corner_fillet: (optional) corners fillet
+#   shell_top_cover_top_chamfer:   (optional) chamfer on the top
+#   shell_top_cover_top_fillet:    (optional) fillet on the top
 #
 # shell_top_clip_direction:      (optional) facing direction of the clip
 # shell_top_clip_x:              (optional) x offset of hole and clip from center
@@ -2202,6 +2205,7 @@ SW_SPST_SKQG_WithStem:
   shell_top_cover_height: [0.8, 1.2]
   shell_top_cover_width: [3.7, 3.5]
   shell_top_cover_vertical_corner_chamfer: 0.6
+  shell_top_cover_top_fillet: 0.2
 
   actuator_type: top-round
   actuator_height: 1.5

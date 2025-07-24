@@ -249,6 +249,14 @@ def _make_shell_top_cover_rectangle(body, params):
         "(not (|X or |Y)) and (not (<Z or >Z))",
         params.get("shell_top_cover_vertical_corner_chamfer", 0),
     )
+    cover = make_fillet(
+        cover,
+        "(not (|X or |Y)) and (not (<Z or >Z))",
+        params.get("shell_top_cover_vertical_corner_fillet", 0),
+    )
+
+    cover = make_chamfer(cover, ">Z", params.get("shell_top_cover_top_chamfer"))
+    cover = make_fillet(cover, ">Z", params.get("shell_top_cover_top_fillet"))
 
     body = body.union(cover)
 
