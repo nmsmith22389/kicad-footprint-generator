@@ -245,8 +245,8 @@ SW_TH_Tactile_Omron_B3F-100x: &SW_TH_Tactile_Omron_B3F-100x
     [add, cylinder, [ 2.15, -2.15, 3.5], XY, 0.8, 1.2, fillet, [">Z", 0.2]],
     [add, cylinder, [ 2.15,  2.15, 3.5], XY, 0.8, 1.2, fillet, [">Z", 0.2]],
     [cut, box, [0, 0, 0.2], [6, 1.8, 0.4]],
-    [cut, box, [0, -2.15, 0.325], [3.1, 1.7, 0.65]],
-    [cut, box, [0,  2.15, 0.325], [3.1, 1.7, 0.65]],
+    [cut, box, [0, -2.15, 0.2], [3.1, 1.7, 0.4]],
+    [cut, box, [0,  2.15, 0.2], [3.1, 1.7, 0.4]],
     [cut, box, [-2.75, -2.15, 0.325], [0.5, 1.7, 0.65]],
     [cut, box, [-2.75,  2.15, 0.325], [0.5, 1.7, 0.65]],
     [cut, box, [ 2.75, -2.15, 0.325], [0.5, 1.7, 0.65]],
@@ -326,6 +326,18 @@ SW_TH_Tactile_Omron_B3F-110x: &SW_TH_Tactile_Omron_B3F-110x
 
   shell_top_lips: [
     [cut, 90, 0, -0.15, 2.4, 2.1], # op, direction, offs, len, base_w, tip_w
+    [cut, [0, 180], 0, -0.15, 2.8, 2.5],
+    [add, [0, 180], 0, -0.15, 1.5, 1.8],
+  ]
+
+  shell_sides: [
+    {
+      direction: [0, 180],
+      distance: 3.4,
+      width: 1.5,
+      bottom_height: 2.0,
+      corner_fillet: 0.3,
+    }
   ]
 
   gnd_pin: [
