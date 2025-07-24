@@ -86,8 +86,8 @@ def make_features(body, features, namespace):
     own unique arguments:
 
     : [add/cut, box,      [X, Y, Z], [WIDTH, LENGTH, HEIGHT]]
-    : [add/cut, cylinder, [X, Y, Z], WORKPLAIN, DEPTH, DIAMETER]
-    : [add/cut, poly,     [X, Y, Z], WORKPLAIN, DEPTH, [COORD_X, COORD_Y, ...]]
+    : [add/cut, cylinder, [X, Y, Z], WORKPLANE, DEPTH, DIAMETER]
+    : [add/cut, poly,     [X, Y, Z], WORKPLANE, DEPTH, [COORD_X, COORD_Y, ...]]
 
     Features 'add' and 'cut' can also have optional arguments:
 
@@ -101,7 +101,7 @@ def make_features(body, features, namespace):
     This adds a cylindrical shape and has the following specs:
 
     - Its center is positioned 1.5 mm on the Z axis
-    - Is orientated on the XY workplain
+    - Is orientated on the XY workplane
     - Has depth/height 3.0 mm and diameter 2.5 mm
     - Has a 0.2 mm fillet on the top
 
