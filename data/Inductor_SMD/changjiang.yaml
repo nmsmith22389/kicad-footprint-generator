@@ -14,6 +14,22 @@
     - shielded
   library_name: Inductor_SMD
 
+- series: FTC
+  3d:
+    type: 1
+  # CSV fields: Series,L,G/Typ,W,W,E,T,A,B,C,(0.1 for FTCxxxxxxD|0.2 for FTCxxxxxxS)
+  csv: changjiang_ftc.csv
+  datasheet: "http://www.cjiang.com.cn/Pr_download_id_1117.html"
+  library_name: Inductor_SMD
+  manufacturer: Changjiang
+  tags:
+    - cjiang
+    - ftc
+    - molded
+    - power
+    - shielded
+  topFilletRadius: 0.1
+
 - series: FXL
   library_name: Inductor_SMD
   manufacturer: Changjiang
