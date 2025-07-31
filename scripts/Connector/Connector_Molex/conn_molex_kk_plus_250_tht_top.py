@@ -111,7 +111,7 @@ def generate_one_footprint(
     silk_w = configuration["silk_line_width"]
     fab_w = configuration["fab_line_width"]
     nudge: float = silk_w / 2  # configuration["silk_fab_offset"]
-    body_to_pin = 2.45  # from first/last pin to edge
+    body_to_pin = 2.75 if pincount == 2 else 2.45  # from first/last pin to edge
     body_width = end_pos_x - start_pos_x + (2 * body_to_pin)
     body_height = 5.4  # from datasheet
 
@@ -198,14 +198,24 @@ def generate_one_footprint(
 
     if pincount <= 3:
         # ? for 2 & 3 pin the key slot is on bottom (bottom left corner)
+
+        kslot_left_inset = 0.6
+
+        kslot_coords: Dict[str, float] = {
+            "left": body_edge["left"] + kslot_left_inset,
+            "right": body_edge["left"] + kslot_width + kslot_left_inset,
+            "top": body_edge["bottom"],
+            "bottom": body_edge["bottom"] + kslot_height,
+        }
+
         kslot_shape: list[Vec2DCompatible] = [
-            {"x": body_edge["left"], "y": body_edge["bottom"]},
-            {"x": body_edge["left"], "y": body_edge["bottom"] + kslot_height},
+            {"x": kslot_coords["left"], "y": kslot_coords["top"]},
+            {"x": kslot_coords["left"], "y": kslot_coords["bottom"]},
             {
-                "x": body_edge["left"] + kslot_width,
-                "y": body_edge["bottom"] + kslot_height,
+                "x": kslot_coords["right"],
+                "y": kslot_coords["bottom"],
             },
-            {"x": body_edge["left"] + kslot_width, "y": body_edge["bottom"]},
+            {"x": kslot_coords["right"], "y": kslot_coords["top"]},
         ]
     else:
         # ? for 4+ pin the key slot is on top (top left corner)
